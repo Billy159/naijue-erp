@@ -1,0 +1,68 @@
+{
+  "atUtc": "2026-10-23T03:37:42.772616+00:00",
+  "status": "PUBLIC_CODE_AND_METADATA_CHECKPOINT_ONLY_NOT_EXECUTION_GRANT",
+  "files": [
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/join-once.mjs",
+      "snapshot": "join-once.mjs",
+      "bytes": 21253,
+      "sha256": "8e0874922d78bd94d10b3dce4059ec804040a68927186873ebc74dda2767aee0"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-core.mjs",
+      "snapshot": "join-core.mjs",
+      "bytes": 11225,
+      "sha256": "1c655536bf1d4580071670bd984f7c952cfd1e8399525b4b8a9f1051bd215360"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-io.mjs",
+      "snapshot": "join-io.mjs",
+      "bytes": 14690,
+      "sha256": "b79fca44df86bab1c1d9826ba599622fd776c3d6f62db139e0813e83b2b4a758"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/current-header-actual-inputs1/EXECUTION-CONTRACT.json",
+      "snapshot": "EXECUTION-CONTRACT.json",
+      "bytes": 29891,
+      "sha256": "d2b361c6ae34e1221443568778e3ae460056088c32312ae8393e6c1e5739b9da"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/K-CODE-MANIFEST.json",
+      "snapshot": "K-CODE-MANIFEST.json",
+      "bytes": 5907,
+      "sha256": "65749b3cdafbebcbd427182474130967b66f2acad431bdd258f2a23c9c5eee1a"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/RESULT.json",
+      "snapshot": "D3-RESULT.json",
+      "bytes": 4090,
+      "sha256": "9d726d8d338cd5a6479a73b36ad3e7e07e7c9cfc04332b3e45f4641e50ffa897"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/SYNTHETIC-RESULT.json",
+      "snapshot": "SYNTHETIC-RESULT.json",
+      "bytes": 4760,
+      "sha256": "b402f38c3d8696b8d5bb3ce19af10d1efe339fcbf572f8896de98927a83bb32c"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/WINDOW-DRAFT-NOT-AUTHORIZED.json",
+      "snapshot": "WINDOW-DRAFT-NOT-AUTHORIZED.json",
+      "bytes": 18953,
+      "sha256": "32af1aa73d40624ddc249f2a6a4221a7ae0fcfc822ff6f4f417e404cbf523654"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/C-LAUNCH-PREPARATION.json",
+      "snapshot": "C-LAUNCH-PREPARATION.json",
+      "bytes": 7066,
+      "sha256": "c387b42045f6523892396254cff0cb7944bea47100842360077f26702f5a0f8f"
+    },
+    {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice143-qb142-f01-incomplete-close-fix1/RESULT.json",
+      "snapshot": "QB143-RESULT.json",
+      "bytes": 11008,
+      "sha256": "7201d9b3ef5a17f7897724277e7634bd7a17665decc620a6335bc88e25ca1c67"
+    }
+  ],
+  "noPrivateDataCopied": true,
+  "next": "C prepares fresh parent/resources then signs a NEW one-time finite-copy window. Physical data/join/MAIN/PUBLISH not authorized by this snapshot."
+}

@@ -1,0 +1,197 @@
+{
+  "taskId": "QB143",
+  "findingId": "QB142-F01",
+  "atUtc": "2026-10-23T03:33:32.711645+00:00",
+  "result": "PASS",
+  "status": "PASS_QB142_F01_EXACT_FIX1_ONLY",
+  "scope": "Only original incomplete-manifest temporary FD close first-error repair. No old10/source/synthetic5/guard26/Header reruns or physical join.",
+  "exactArtifacts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/RESULT.json",
+      "bytes": 4090,
+      "sha256": "9d726d8d338cd5a6479a73b36ad3e7e07e7c9cfc04332b3e45f4641e50ffa897"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/join-once.mjs",
+      "bytes": 21253,
+      "sha256": "8e0874922d78bd94d10b3dce4059ec804040a68927186873ebc74dda2767aee0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/K-CODE-MANIFEST.json",
+      "bytes": 5907,
+      "sha256": "65749b3cdafbebcbd427182474130967b66f2acad431bdd258f2a23c9c5eee1a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/SYNTHETIC-RESULT.json",
+      "bytes": 4760,
+      "sha256": "b402f38c3d8696b8d5bb3ce19af10d1efe339fcbf572f8896de98927a83bb32c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/WINDOW-DRAFT-NOT-AUTHORIZED.json",
+      "bytes": 18953,
+      "sha256": "32af1aa73d40624ddc249f2a6a4221a7ae0fcfc822ff6f4f417e404cbf523654"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/C-LAUNCH-PREPARATION.json",
+      "bytes": 7066,
+      "sha256": "c387b42045f6523892396254cff0cb7944bea47100842360077f26702f5a0f8f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/incomplete-close-targeted.test.mjs",
+      "bytes": 4199,
+      "sha256": "d9719a27187aca2faf66a571400699bcead19487787d89e2cdfbd225a3e22f1e"
+    }
+  ],
+  "main": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/join-once.mjs",
+    "bytes": 21253,
+    "sha256": "8e0874922d78bd94d10b3dce4059ec804040a68927186873ebc74dda2767aee0"
+  },
+  "codeManifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/K-CODE-MANIFEST.json",
+    "bytes": 5907,
+    "sha256": "65749b3cdafbebcbd427182474130967b66f2acad431bdd258f2a23c9c5eee1a"
+  },
+  "checks": {
+    "independentFaultCases": 2,
+    "passed": 2,
+    "caseDetails": [
+      {
+        "outerFails": false,
+        "primarySameObject": true,
+        "safeJoinStatePreserved": true,
+        "temporaryAndOuterCloseAttemptsEachOnce": true,
+        "cleanupErrors": [
+          "INCOMPLETE_MANIFEST_FD_CLOSE_FAILED"
+        ],
+        "finalCleanupErrors": []
+      },
+      {
+        "outerFails": true,
+        "primarySameObject": true,
+        "safeJoinStatePreserved": true,
+        "temporaryAndOuterCloseAttemptsEachOnce": true,
+        "cleanupErrors": [
+          "INCOMPLETE_MANIFEST_FD_CLOSE_FAILED"
+        ],
+        "finalCleanupErrors": [
+          "WRITER_FD_CLOSE_FAILED",
+          "INPUT_FDS_CLOSE_FAILED",
+          "BOOTSTRAP_FD_CLOSE_FAILED",
+          "STATE_FD_CLOSE_FAILED"
+        ]
+      }
+    ],
+    "D3NewFault1Adopted": 1,
+    "D3Rerun": 0,
+    "notSummedAcrossQBAndD3": true,
+    "onlySourceChanges": "Guard temporary fd.close failure; adjust HERE to parent for versioned main while unchanged core/io/guard paths remain fixed",
+    "reverseDeltaToOriginalMainExact": true,
+    "newMainManifestSyntheticUnsignedDraftPinsConsistent": true
+  },
+  "closedFinding": {
+    "id": "QB142-F01",
+    "forExactFix1Only": true,
+    "primaryErrorIdentityAndCodePreserved": true,
+    "safeJoinStateAssigned": true,
+    "cleanupErrorsRecordsTemporaryCloseFailure": true,
+    "temporaryCloseAttemptedOnce": true,
+    "allOtherHandlesIndependentlyAttemptedOnceEvenWhenTheyThrow": true,
+    "stateWrittenAfterTemporaryCloseFailure": true
+  },
+  "oldNeedFixRetained": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice142-final-transfer-document-join-code/RESULT.json",
+    "bytes": 18158,
+    "sha256": "9d2778899db0b3f0683ee923e6285559afc1230b98a0c99fecc6aa4675ecb20e"
+  },
+  "findings": [],
+  "nonActions": {
+    "old10GroupsRerun": 0,
+    "old5SyntheticRerun": 0,
+    "runtimeGuard26Retested": 0,
+    "Header139Or141Retested": 0,
+    "actualMain": 0,
+    "syntheticMain": 0,
+    "applicationModuleImports": 0,
+    "physicalHeaderLineOrLargeDataReads": 0,
+    "PG": 0,
+    "server": 0,
+    "browser": 0,
+    "build": 0,
+    "newWindowSigned": 0,
+    "RSourceOrGitWrites": 0,
+    "KNonQBWrites": 0,
+    "subagents": 0
+  },
+  "notTested": [
+    "Actual final Line261641 and Header14279 document join",
+    "Actual docSHA/counts/IOquota/RSS/time/cleanup at scale",
+    "All11/PG/MAIN/PUBLISH",
+    "A new C execution window"
+  ],
+  "remaining": "C adopts/freezes exact corrected main/codeManifest/synthetic/draft/launch recipe, supplies Header-only outside pin and fresh0700parent/identity/resources/deadline, then separately signs one finaljoin finite-copy window. Old spent windows are not authority. No launch by QB.",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/RESULT.json",
+      "bytes": 4090,
+      "sha256": "9d726d8d338cd5a6479a73b36ad3e7e07e7c9cfc04332b3e45f4641e50ffa897"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/join-once.mjs",
+      "bytes": 21253,
+      "sha256": "8e0874922d78bd94d10b3dce4059ec804040a68927186873ebc74dda2767aee0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/K-CODE-MANIFEST.json",
+      "bytes": 5907,
+      "sha256": "65749b3cdafbebcbd427182474130967b66f2acad431bdd258f2a23c9c5eee1a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/SYNTHETIC-RESULT.json",
+      "bytes": 4760,
+      "sha256": "b402f38c3d8696b8d5bb3ce19af10d1efe339fcbf572f8896de98927a83bb32c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/WINDOW-DRAFT-NOT-AUTHORIZED.json",
+      "bytes": 18953,
+      "sha256": "32af1aa73d40624ddc249f2a6a4221a7ae0fcfc822ff6f4f417e404cbf523654"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/C-LAUNCH-PREPARATION.json",
+      "bytes": 7066,
+      "sha256": "c387b42045f6523892396254cff0cb7944bea47100842360077f26702f5a0f8f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/incomplete-close-targeted.test.mjs",
+      "bytes": 4199,
+      "sha256": "d9719a27187aca2faf66a571400699bcead19487787d89e2cdfbd225a3e22f1e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/round143-qb142-f01-fix1-inputs/INPUT-BINDINGS.json",
+      "bytes": 2611,
+      "sha256": "1a652c9eff7ec22d4ed39666a2475bd02403dd49e683543ac88ef0efd0bafa3a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/round143-qb142-f01-fix1-inputs/F01.diff",
+      "bytes": 4180,
+      "sha256": "21bad79d3508daa3c2fca468a7002e1a9c31ac09418058760459180fcf0d9b61"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/round143-qb142-f01-fix1-inputs/QB-F01-RETEST.mjs",
+      "bytes": 4061,
+      "sha256": "78da92e5f6247f4bde0b0d22200bed4b83bd4e36c65a2e8fb52532056c0ee4e7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/round143-qb142-f01-fix1-inputs/QB-EXACT-REPAIRED-CATCH-FINALLY.mjs",
+      "bytes": 4521,
+      "sha256": "65b98fc21d4d502c282e202ac40ac8b19de38c998e39827cc62d22bd8ecc2a85"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/round143-qb142-f01-fix1-inputs/QB-F01-RETEST-RESULT.json",
+      "bytes": 1131,
+      "sha256": "ee152282f4bc3d3bbbc38a5967937d56ebeaa89cc7f68f5d728273eb768088b7"
+    }
+  ],
+  "next": "C may close only QB142-F01 for exact fix1. Next queued C123 release-guard review is separate and does not repeat backend suites.",
+  "requestedExecutionSettings": "gpt-6.1-sol/xhigh Fast off requested; actual runtime settings not independently verified"
+}

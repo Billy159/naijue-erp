@@ -1,0 +1,81 @@
+{
+  "status": "SYNTHETIC_FINAL_JOIN_CARRIER_READY_NO_PHYSICAL_GRANT",
+  "findingId": "QB142-F01",
+  "codePins": {
+    "main": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/join-once.mjs",
+      "bytes": 21253,
+      "sha256": "8e0874922d78bd94d10b3dce4059ec804040a68927186873ebc74dda2767aee0"
+    },
+    "core": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-core.mjs",
+      "bytes": 11225,
+      "sha256": "1c655536bf1d4580071670bd984f7c952cfd1e8399525b4b8a9f1051bd215360"
+    },
+    "io": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-io.mjs",
+      "bytes": 14690,
+      "sha256": "b79fca44df86bab1c1d9826ba599622fd776c3d6f62db139e0813e83b2b4a758"
+    },
+    "contract": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/current-header-actual-inputs1/EXECUTION-CONTRACT.json",
+      "bytes": 29891,
+      "sha256": "d2b361c6ae34e1221443568778e3ae460056088c32312ae8393e6c1e5739b9da"
+    },
+    "kCodeManifest": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/K-CODE-MANIFEST.json",
+      "bytes": 5907,
+      "sha256": "65749b3cdafbebcbd427182474130967b66f2acad431bdd258f2a23c9c5eee1a"
+    },
+    "runtimeGuard": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/capture-once.mjs",
+      "bytes": 29323,
+      "sha256": "36c89d89a1f3b98b4cee2ad4bd798ed35b480eb00c0a54caf3ba3edaae412d54"
+    },
+    "runtimeClosure": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/RUNTIME-CLOSURE.json",
+      "bytes": 27399,
+      "sha256": "28f85d8efac8378aa345e80a1ee85c809e94b4fb3b09cb822f47ce184e07fd2e"
+    },
+    "header": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-header-source26.mjs",
+      "bytes": 25454,
+      "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd"
+    },
+    "line": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-transfer-line-source26.mjs",
+      "bytes": 32974,
+      "sha256": "a8ac7e2a5f847d386a825d1ad0769e3d0db47a5ba0cebaaf3d46d1eb6aebbcbe"
+    },
+    "codec": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-typed-closure.ts",
+      "bytes": 36837,
+      "sha256": "0a995599ed1a78b9f319b41365362a655a243e7b043e58a2104281cea06b2446"
+    }
+  },
+  "newTargetedTest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/incomplete-close-targeted.test.mjs",
+    "bytes": 4199,
+    "sha256": "d9719a27187aca2faf66a571400699bcead19487787d89e2cdfbd225a3e22f1e"
+  },
+  "newTests": {
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "durationMs": 40.779125,
+    "node": "24.21.0",
+    "heapMiB": 1024,
+    "serial": 1,
+    "scope": "Exact catch body extracted from frozen old/new main with fake lstat/open/temporary FD/outer resources. Reproduces old caught secondary/no safe state, verifies fixed primary identity/safe state/writes and all remaining FD attempts both write-success and write-failure variants."
+  },
+  "previousSameScopeFiveSyntheticChecksReused": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/current-header-actual-inputs1/SYNTHETIC-RESULT.json",
+    "bytes": 4582,
+    "sha256": "bcf3305c68d96493b2f6d5e5684b5a18e88b94eb846029e32f434d88975aed8b"
+  },
+  "mainFunctionInvoked": false,
+  "oldSuitesRepeated": false,
+  "physicalPayloadReads": 0,
+  "PG": 0,
+  "UUIDs": 0
+}

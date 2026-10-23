@@ -1,0 +1,97 @@
+{
+  "version": "TRANSFER_FINAL_JOIN_K_CODE_SET_V1",
+  "files": {
+    "main": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/join-once.mjs",
+      "bytes": 21253,
+      "sha256": "8e0874922d78bd94d10b3dce4059ec804040a68927186873ebc74dda2767aee0"
+    },
+    "core": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-core.mjs",
+      "bytes": 11225,
+      "sha256": "1c655536bf1d4580071670bd984f7c952cfd1e8399525b4b8a9f1051bd215360"
+    },
+    "io": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-io.mjs",
+      "bytes": 14690,
+      "sha256": "b79fca44df86bab1c1d9826ba599622fd776c3d6f62db139e0813e83b2b4a758"
+    },
+    "runtimeGuard": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/capture-once.mjs",
+      "bytes": 29323,
+      "sha256": "36c89d89a1f3b98b4cee2ad4bd798ed35b480eb00c0a54caf3ba3edaae412d54"
+    }
+  },
+  "runtimeClosure": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-header-full-projection-capture1/QB137-F01-fix1/RUNTIME-CLOSURE.json",
+    "bytes": 27399,
+    "sha256": "28f85d8efac8378aa345e80a1ee85c809e94b4fb3b09cb822f47ce184e07fd2e"
+  },
+  "contract": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/current-header-actual-inputs1/EXECUTION-CONTRACT.json",
+    "bytes": 29891,
+    "sha256": "d2b361c6ae34e1221443568778e3ae460056088c32312ae8393e6c1e5739b9da"
+  },
+  "staticNonBuiltinImports": 0,
+  "staticBuiltins": [
+    "node:crypto",
+    "node:fs",
+    "node:fs/promises",
+    "node:path",
+    "node:url"
+  ],
+  "dynamicImports": 7,
+  "closedDynamicRecipes": [
+    "main: io code pin fixed HERE/join-io.mjs",
+    "main: core code pin fixed HERE/join-core.mjs",
+    "main: guard code pin fixed corrected capture directory",
+    "main: Line module fixed accepted runtime root and full AST graph",
+    "main: closure codec fixed accepted runtime root and full AST graph",
+    "main: request hash fixed accepted runtime root and full AST graph",
+    "inactive imported capture main: Header module fixed full AST graph; SELF execution guard prevents running under join"
+  ],
+  "preImportPolicy": "Bootstrap hashes and holds main/core/io/guard and K manifest before first K dynamic import. Existing guard verifies all26 source+readonly-runtime/package inventories and retained descriptors before application imports. Signed C window outside-pins this whole set; no arbitrary module path.",
+  "parserVersion": "5.9.2",
+  "applicationModulesExecuted": 0,
+  "businessPayloadReads": 0,
+  "metadataAmendmentOnly": {
+    "baseline": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/K-CODE-MANIFEST.json",
+      "bytes": 3550,
+      "sha256": "7d9f1ec84d4e04cc98eba0aba1cfbbab090ab3a7dfab02068f36e94eb209fce8"
+    },
+    "actualHeaderInputBinding": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/current-header-actual-inputs1/ACTUAL-HEADER-INPUT-BINDING.json",
+      "bytes": 10170,
+      "sha256": "d57cb4c0b41e413b9b56d5d42853fc818fdfde4cce5a9e845bcdae55e4122f6a"
+    },
+    "runtimeCodeChanged": false,
+    "applicationGraphChanged": false
+  },
+  "generatorEvidenceForPriorUnchangedGraph": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/build-k-code-manifest.mjs",
+    "bytes": 3622,
+    "sha256": "0da723ddc6e2ceb2826188cc9f7dd2770f3553ac818ceecc062664bb9765058d"
+  },
+  "derivation": {
+    "finding": "QB142-F01",
+    "baselineManifest": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/current-header-actual-inputs1/K-CODE-MANIFEST.json",
+      "bytes": 4417,
+      "sha256": "72bc5b7514fcb36f249969d6ed31b5531b308509fd39c693a86e4f88f21eec3b"
+    },
+    "baselineMain": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-once.mjs",
+      "bytes": 21175,
+      "sha256": "9d4c0526b014dca81f5c60b5ff5acc929bf7fe5de046bda3866ab6393f74db9c"
+    },
+    "onlyMainCodeChanged": true,
+    "targetedTest": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/QB142-F01-fix1/incomplete-close-targeted.test.mjs",
+      "bytes": 4199,
+      "sha256": "d9719a27187aca2faf66a571400699bcead19487787d89e2cdfbd225a3e22f1e"
+    },
+    "exactDiff": "Versioned main HERE resolves parent to preserve original core/io/guard paths; temporary incomplete-manifest FD close is caught and bounded into cleanup. No import/dependency/docSHA/IO/resource rule change.",
+    "original26GraphAndThreeOtherKModulesReused": true
+  }
+}
