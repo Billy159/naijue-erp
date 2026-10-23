@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T11:46:15.188902+00:00",
+  "updatedAt": "2026-10-23T18:05:27.950761+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3641,6 +3641,30 @@
           "path": "apps/web/src/components/inventory-page-size.tsx",
           "group": "F06_ORIGINAL_SHARED_PAGINATION_SOURCE_HOST",
           "fieldGate": "OPTIONAL_DOM_CLASS_AND_ACCESSIBLE_LABEL_PASS_THROUGH_DEFAULTS_UNCHANGED"
+        },
+        {
+          "path": "apps/web/src/sales/commands/controller.test.ts",
+          "group": "V11_FRONTEND_LEGACY_DRAFT_TEST_TYPE_NARROW_ONLY",
+          "fieldGate": "USER_APPROVED_NARROWED_V11_NO_NEW_BACKEND_CONTRACT",
+          "boundary": "Only original legacy-draft test narrowing to draft in SAVE union; preserve actual assertions/hash/failure evidence; do not skip tests."
+        },
+        {
+          "path": "apps/web/src/sales/commands/editor-session.test.ts",
+          "group": "V11_FRONTEND_LEGACY_DRAFT_TEST_TYPE_NARROW_ONLY",
+          "fieldGate": "USER_APPROVED_NARROWED_V11_NO_NEW_BACKEND_CONTRACT",
+          "boundary": "Only original legacy-draft test narrowing to draft in SAVE union; preserve actual assertions/hash/failure evidence; do not skip tests."
+        },
+        {
+          "path": "apps/web/src/sales/commands/http-client.test.ts",
+          "group": "V11_FRONTEND_LEGACY_DRAFT_TEST_TYPE_NARROW_ONLY",
+          "fieldGate": "USER_APPROVED_NARROWED_V11_NO_NEW_BACKEND_CONTRACT",
+          "boundary": "Only original legacy-draft test narrowing to draft in SAVE union; preserve actual assertions/hash/failure evidence; do not skip tests."
+        },
+        {
+          "path": "apps/web/src/transfers/commands/controller.test.ts",
+          "group": "V11_FRONTEND_LEGACY_DRAFT_TEST_TYPE_NARROW_ONLY",
+          "fieldGate": "USER_APPROVED_NARROWED_V11_NO_NEW_BACKEND_CONTRACT",
+          "boundary": "Only original legacy-draft test narrowing to draft in SAVE union; preserve actual assertions/hash/failure evidence; do not skip tests."
         }
       ]
     }
