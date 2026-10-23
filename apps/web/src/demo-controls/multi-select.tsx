@@ -33,6 +33,7 @@ export function DemoMultiSelect(props: DemoMultiSelectProps) {
   const id = useId(); const host = useRef<HTMLDivElement>(null); const trigger = useRef<HTMLButtonElement>(null);
   const attached = useRef(false); const generation = useRef(0); const sequence = useRef(0);
   const pending = useRef<Promise<void> | null>(null); const styles = useRef<StyleLease | null>(null);
+  const preparedView = useRef<ComponentType<DemoMultiSelectActionProps> | null>(null);
   const owned = useRef<Activation | null>(null); const live = useRef(props); live.current = props;
   const focusReturn = useRef<symbol | null>(null); const [, invalidate] = useReducer((value: number) => value + 1, 0);
   const [activation, setActivation] = useState<Activation | null>(null);
@@ -40,7 +41,7 @@ export function DemoMultiSelect(props: DemoMultiSelectProps) {
   const [phase, setPhase] = useState<'idle' | 'loading' | 'error'>('idle');
   const available = () => attached.current && live.current.scope.active && live.current.active !== false && !live.current.disabled
     && !!live.current.popupHost && !live.current.popupHost.controller.disposed;
-  const releaseStyles = () => { styles.current?.dispose(); styles.current = null; };
+  const releaseStyles = () => { styles.current?.dispose(); styles.current = null; preparedView.current = null; };
   const cancelPending = () => {
     if (!pending.current) return;
     generation.current++; pending.current = null; releaseStyles(); setPhase('idle');
@@ -91,7 +92,9 @@ export function DemoMultiSelect(props: DemoMultiSelectProps) {
   const prepare = (open: boolean) => {
     if (!available()) return;
     if (open) acquire();
-    if (View || pending.current) return;
+    if (View) return;
+    if (preparedView.current) { if (open && owned.current?.ownership.active) setView(() => preparedView.current); return; }
+    if (pending.current) return;
     const current = ++generation.current; const parent = live.current.scope; setPhase('loading');
     const owns = () => available() && live.current.scope === parent && generation.current === current;
     pending.current = Promise.resolve().then(props.loadAction ?? loadAction).then(async module => {
@@ -99,7 +102,11 @@ export function DemoMultiSelect(props: DemoMultiSelectProps) {
       const lease = module.createDemoMultiSelectStyles(host.current.ownerDocument); styles.current = lease;
       await lease.load();
       if (!owns()) return;
-      setView(() => module.DemoMultiSelectAction); setPhase('idle');
+      preparedView.current = module.DemoMultiSelectAction;
+      // Focus may finish preparing before pointerup/click. Keep that trigger
+      // mounted until explicit open ownership exists, so its first click lands.
+      if (owned.current?.ownership.active) setView(() => module.DemoMultiSelectAction);
+      setPhase('idle');
     }).catch(() => {
       if (owns()) { pending.current = null; generation.current++; releaseStyles(); setPhase('error'); owned.current?.ownership.close(); }
     }).finally(() => { if (generation.current === current) pending.current = null; });

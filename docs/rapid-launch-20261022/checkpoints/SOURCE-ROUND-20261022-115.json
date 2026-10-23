@@ -1,0 +1,107 @@
+{
+  "atUtc": "2026-10-23T02:27:38.240983+00:00",
+  "parent": "826af55bd65a88f8fc899c449c79fcb3e1eb50e8",
+  "groups": [
+    {
+      "slice": "F1 chunk62 preserve idle trigger until explicit open",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/DELIVERY.json",
+      "receiptSha256": "d8dcfa6ddc0af50394c3849fd6649aaad96a124a70d3f5689aee78befaf8ce70",
+      "receiptSnapshot": {
+        "chunk": 62,
+        "taskId": "F1-S01-COLD-MULTI-FIRST-POINTER",
+        "atUtc": "2026-10-23T02:18:01.494807+00:00",
+        "status": "READY_EXACT1_COLD_FOCUS_POINTER_SHELL",
+        "files": [
+          {
+            "path": "apps/web/src/demo-controls/multi-select.tsx",
+            "beforeSha256": "a3950a3e2c151c91443a611a2766e406477ca47efc19d4e9afd6dba8c4dc1e1d",
+            "sha256": "1f46aeb0bd2e23c98a5251c950274716b54a5b06391f50075709359c3a24ee64"
+          }
+        ],
+        "checks": {
+          "cold-red-2": "REPRODUCED_REAL_SHELL_FAILURE",
+          "cold-green-3": "EXIT0_USER_EVENT_ACTUAL_SHELL_ACTION_SALES_HOST",
+          "types-1": "EXIT0_STRICT_SCOPED_NOEMIT"
+        },
+        "notTested": [
+          "Next actual fixed browser first pointer cold modules/CSS",
+          "Whole S01/new complete SALE page",
+          "PG/native save/performance/deployment"
+        ],
+        "blockers": [],
+        "next": "C fixed source/QF affected event seam; continue full SALE migration under new C human decision, no old Demo Chat restore.",
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/SOURCE.diff",
+            "sha256": "196e71107224aaea55e52af9139414bc020aec26edfb58c2ef658a5204597606"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/SOURCE-CHECK.json",
+            "sha256": "23a53b696f6d74cd29178e3355652a0c49f8cfead169888cdf0c5342212e8011"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/RESULT.json",
+            "sha256": "0a692214207b924e11d903ce2caeaec605767bc0baefee64c847564ff8397465"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/COLD-TRACE-BEFORE.json",
+            "sha256": "0aa5ae6d1069fd54f159475cbaee1eb908290599f6526c638cf9eac1ce64ed16"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/COLD-TRACE.json",
+            "sha256": "d6a071f243a42cb0853550395918aa3c50446390c227322adaf638f6245a038c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/PROBE-NOTES.json",
+            "sha256": "3e4438cd3f65e927682265e6c16e04e44734d8fb45229b32f0ac04aed72debc1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/REPORT.md",
+            "sha256": "12f198dc37f60b34368eca859ea0e7d7bada4d140a7cae47dad56f3d6c6b08e6"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/cold-red-1.log",
+            "sha256": "2b2745a9fa1cee55b66979c3366d10c3196339f415326bee26a1e4e42b2df4fa"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/cold-red-2.log",
+            "sha256": "355bf60aa5eee1c3ff5239b406d5aca8d8b4383e8bc8feeff6885a9e820b06a1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/cold-green-1.log",
+            "sha256": "930dbf33693c38108517947a8726800d034b4f2be70766be6f67631494640fc3"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/cold-green-2.log",
+            "sha256": "9e014d3858af0759e52535d3fc28cb11d9608c668eb96e8b4b21019d1a104b16"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/cold-green-3.log",
+            "sha256": "5ca557e148084c886c99146101d3a37bebac73dcf2be32c8d9f2bbd99e8afcdb"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/types-1.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/pointer-harness/package.json",
+            "sha256": "2672fc7ac0c14c135026875928e58691025d99ccc10c6b8d7a7baf3fe4b9f7a7"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-62/pointer-harness/package-lock.json",
+            "sha256": "7332d66d1d6bc01834d75d1caa48fcf03b586d37b47ae9dd5a682b2cc231e07f"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/demo-controls/multi-select.tsx",
+          "owner": "F1",
+          "bytes": 11352,
+          "sha256": "1f46aeb0bd2e23c98a5251c950274716b54a5b06391f50075709359c3a24ee64"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze exact1 existing cold pointer WIP. Original normal pointer/keyboard realhost RED-to-GREEN + strict scoped checks adopted, independent/source/browser review consolidated into next complete page candidate per latest human directive; no singleCSS build. No backend/PG/new permission or business outcome."
+}
