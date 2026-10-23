@@ -6,6 +6,9 @@
 .demo-idle-selection{display:flex;align-items:center;gap:4px;min-width:0;overflow:hidden;white-space:nowrap;pointer-events:none;font-family:var(--ca-font-sans)}
 .demo-idle-reference>.demo-idle-selection{position:absolute;inset:1px 31px 1px 8px}
 .demo-idle-token{box-sizing:border-box;display:inline-flex;align-items:center;flex:none;max-width:calc(100% - 42px);height:23px;line-height:23px;padding:0 8px;border:0;border-radius:3px;background:var(--ca-surface);color:var(--ca-ink);font-size:12px;font-weight:500;box-shadow:none}
+/* The reference carrier already reserves the arrow area. Reserve token-count
+   space only when that count exists, rather than subtracting it for one tag. */
+.demo-idle-reference>.demo-idle-selection:not(:has(.demo-idle-token-count))>.demo-idle-token{max-width:100%}
 .demo-idle-token-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .demo-idle-token-remove{position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;width:12px;height:16px;margin:0 0 0 4px;padding:0;border:0;background:transparent;color:var(--ca-ink-2);font:inherit;line-height:0;cursor:pointer;pointer-events:auto}
 .demo-idle-token-remove::before{content:'';position:absolute;top:50%;left:50%;width:16px;height:16px;transform:translate(-50%,-50%);border-radius:50%;background:transparent}

@@ -1,0 +1,60 @@
+{
+  "atUtc": "2026-10-23T18:58:44.394391+00:00",
+  "parent": "e743339dcc283b55c260c7d8c650a97f9615dcc8",
+  "taskId": "QF2-P01-IDLE-FILTER-SURFACE-01",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-controls.css",
+      "bytes": 2015,
+      "sha256": "79b8d4cca00c6480d3332d87350ffdfd88817ed0edd81e78787c057d4f27d60c",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/demo-controls/idle-selection-tokens.css",
+      "bytes": 3165,
+      "sha256": "5a27662474d6ecfa380987e93a934964294bfe601a7b680f5e5312b1e1d16b0b",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-101/DELIVERY.json",
+  "ownerReceiptSha256": "46e553818e4f569d654300aea8e80d48ad18984569ad21f794ba36aedf30c5dc",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh",
+    "status": "SOURCE_READY_QF2_P01_IDLE_FILTER_SURFACE_ONLY_ACTUAL_OPEN",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-controls.css",
+        "bytes": 2015,
+        "sha256": "79b8d4cca00c6480d3332d87350ffdfd88817ed0edd81e78787c057d4f27d60c"
+      },
+      {
+        "path": "apps/web/src/demo-controls/idle-selection-tokens.css",
+        "bytes": 3165,
+        "sha256": "5a27662474d6ecfa380987e93a934964294bfe601a7b680f5e5312b1e1d16b0b"
+      }
+    ],
+    "defect": "QF2-P01-IDLE-FILTER-SURFACE-01",
+    "changes": [
+      "Only unselected original finder shell native Arco input gets source muted/transparent view surface with stronger scoped cross-import adapter; source focus border/surface retained, ordinary inputs and selected carrier excluded",
+      "Reference token carrier already reserves8/31px; when no collapsed count exists token max-width100percent consumes available carrier instead of subtracting42again. Actual count keeps old42px budget; JS/font/label/remove/lazy behavior untouched"
+    ],
+    "affectedConsumers": [
+      "Shared original CandidateSelector empty product finder, including P01 and other import consumers",
+      "Shared DemoMultiSelect idle reference with single/no-count or actual collapsed count; activated Arco leaf unchanged"
+    ],
+    "checks": {
+      "before-1": "RED actual original idle component token resolved calc100percent-minus42 while source carrier already inset; actualQF browser evidence separately binds79/tag label47",
+      "after-1": "Harness cannot resolve inherited CSS-variable colors in JSDOM, no production changes made for this limitation",
+      "after-2": "PASS original React idle reference/CandidateSelector on actual shell+product CSS graphs, single100percent/countoriginal42, ordinary input unaffected,0activation/read/links/popups; three exact semantic token literals substituted locally only",
+      "cssClosures": "Actual shell/products/inventory source CSS closures build0warnings; exact bytes/hashes/inputs in CSS-CONSUMER-RESULT"
+    },
+    "limitations": [
+      "No actual Chrome label48/tag80/muted/focus pixel pass, C newcandidate/QF/QF2 own actual recheck",
+      "Source arithmetic80 fits121 is not measured browser layout",
+      "No full publiccontrol/48/wholepage/PG rerun or closure of actual rapidqty/mixedprice/rowEnter findings"
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "SOURCE_FIXED_PUBLIC_ORIGINAL_CONSUMERS_TARGETED_ONLY; independent source and actual newcandidate stillrequired; no production/browser/performance completion"
+}

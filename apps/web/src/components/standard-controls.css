@@ -3,6 +3,10 @@
 .erp-select.arco-select,.erp-date.arco-picker{width:100%;min-width:0;background:var(--ca-surface,#fff);border:1px solid var(--ca-line,#e5e6eb);border-radius:4px}
 .erp-input.arco-input,.erp-textarea.arco-textarea{min-width:0;font:inherit;color:var(--ca-ink,#1d2129);background:var(--ca-surface,#fff);border:1px solid var(--ca-line,#e5e6eb);border-radius:4px}
 .erp-input.arco-input:focus,.erp-textarea.arco-textarea:focus,.erp-select.arco-select-focused,.erp-date.arco-picker-focused{border-color:var(--ca-primary,#165dff)}
+/* Frozen product finder view owns this surface, including across CSS imports.
+   Selected finders retain their separate transparent inner-input carrier. */
+.iw-product-search-shell:not(.iw-product-search-shell--selected)>.erp-input.arco-input.iw-product-input{border-color:transparent;background:var(--ca-surface-muted)}
+.iw-product-search-shell:not(.iw-product-search-shell--selected)>.erp-input.arco-input.iw-product-input:focus{border-color:var(--ca-control-focus-border);background:var(--ca-surface)}
 .erp-date.arco-picker input,.erp-select.arco-select input{height:auto;min-height:0;padding:0;border:0;border-radius:0;outline:none;background:transparent;box-shadow:none;font:inherit}
 .erp-checkbox.arco-checkbox{display:inline-flex;align-items:center;gap:3px;font:inherit;white-space:nowrap}
 .erp-checkbox.arco-checkbox input[type=checkbox]{position:absolute;width:0;height:0;margin:0;padding:0;opacity:0}
