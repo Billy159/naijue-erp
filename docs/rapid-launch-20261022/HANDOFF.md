@@ -1,3 +1,9 @@
+增量实绩 2026-10-23T08:22:05.538648+00:00：已批准v7实际C76在2.2224289048463106秒COMPLETED/exit0，单函数guard_successor_publication26已COMMIT_RETURNED_SUCCESS并读回bodya055abd4，新目录canonical14cc20e5d1c2b750a3d4bb3285e48495940e6313f5cb9bf595d39ffd6402c71b；owner/search_path/definer/ACL及原其余120函数/迁移1..26保持。实际49accounts/49staff/57source/2audit2receipt及VALIDATING1/1、原STAGE/CHUNK请求hash/时间前后保持，0business DML/PUBLISH/nativeCREATE/正式切换。原74在PATCH前因C载体函数名parser未识别数字26而NOT_ATTEMPTED；76只修载体识别合法原函数名且仍exact1，不改已审SQL/issuer，旧失败保留。原只读压缩public export完整取得，先前本机cleanup调用不存在函数的收集异常已保留说明并按CLI原inline teardown修订，未重SQL/任务。
+
+原QB正在新v9目录及四purpose有限outside配对，复用160/166/169既有源及权限结论。C75原D2 PUBLISH-only程序已一次编译固定C154/693260B/8ad42c4b/93inputs，原batch/key/hash/time不变，尚未执行。实际编译cwd按工具观察C74目录固定，初准备声明已在打包前纠正、无重构建；不因相对metafile误认源码逃逸。原source+producer+resume入口均保留。新C15357858页面可开，QF当前模块未释放，QF2只排已就绪新output实操；原未知诊断稿不动。GitHub已独立effd5f2，正式数据/切换和104整页0状态不变。下一新v9outside→原PUBLISH-only→nativeCREATE→原H06；目标ACTIVE，遇具体新失败读回后定向续，不重已提交步骤。
+
+以下历史保留。
+
 增量实绩 2026-10-23T08:11:51.000311+00:00：C153完整新候选已一次原build及3关键HTTP逐字200，http://127.0.0.1:57858/synthetic-unified.html ，source f3b20351a51bd7f23bdf226931cdd107027411a9/build ui-preview-f3b2035-01-build01；HTML3146892B/931ea8de，identity2be131e7/provenance9fc114c0，403输入386源码+981锁依赖=1367、undeclared0。原103款只读NDJSON由实际F2reader消费，未新增身份/能力/fixture/写成功；原audit0声明移debugpanel保留真边界，CSP仅frame-src self供原srcdoc。不是真实PG/业务/性能或正式发布。原QF仍在147必要filled模块，收尾后交QF2只新完整输出/背景；当前尚未交浏览器lease。原未知稿保护，单一临时target串行交接，不冒真正隔离。QF2 C153单route限定sourcePASS采用，不重152/旧48。
 
 用户已批v7原D1精确5已固定C154 e28a71ea1adbe0c247328f7a0937aadfb3a3ccbe，原guard body d26b985e→a055abd4、issuer精确26_v9_empty_history_publication_dispatch，3fixture仅私有label；新3SQLsource+受影响3共6/strict4roots有效采用，尚非实际SQL通过。原QB正在新5限定验收；C74原单函数执行载体已按49accounts/57source/2audit2receipt/VALIDATING1/1准备，不要求清空已提交步骤，不执行PUBLISH或重STAGE/CHUNK；等待原QBsource结论后沿既有通道实际安装和目录读回，再原D2同key/time恢复。GitHub已独立核b2f847b（150–153+v7批准记录共5commit）；154和本记录下一非强推。104/local48/整页0保持，正式数据/切换仍false，目标ACTIVE。
