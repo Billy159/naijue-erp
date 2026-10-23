@@ -1,6 +1,6 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { UIButton } from '../components/standard-controls.tsx';
-import { StandardOverlay } from '../components/standard-overlay.tsx';
+import { SourceDocumentDialog, StandardOverlay } from '../components/standard-overlay.tsx';
 import { DocumentOutputActions } from '../components/document-output.tsx';
 import { salesDocumentOutput } from '../components/document-output-contracts.ts';
 import { SalesHistoryAction } from '../sales/history-view.tsx';
@@ -41,6 +41,7 @@ function SavedSalesDocument({ model, ...props }: SalesCommandFormProps & { reado
   return <><SalesProposalForm session={state.proposal} close={leave} {...(props.scope ? { scope: props.scope } : {})} {...(props.product ? { product: props.product } : {})}
     saved={{ number: original.document.header.number, actions, ...(native.notice || owner.notice ? { feedback: <p role="status">{owner.notice ?? native.notice}</p> } : {}) }}
     preparation={{ preparing: state.preparing, notice: state.notice, save: () => { void props.session.save(); }, cancel: () => model.cancelPreparation() }} />
-    {confirm && <StandardOverlay role="alertdialog" title="确认操作" label="确认销货单操作" closeLabel="关闭销货单操作确认" close={() => setConfirm(null)} width={620} initialFocus="[data-erp-keep-input]"><p>{confirm === 'leave' ? '离开将放弃本次未保存输入，已保存单据不变。' : confirm === 'APPROVE' ? '审核将按本单实际明细追加库存效果，并计入收退统计。允许负库存。' : '作废仅作用于已保存未审核单据，不改库存。'}</p><UIButton data-erp-keep-input onClick={() => setConfirm(null)}>保留输入</UIButton><UIButton className="iw-primary" onClick={() => { const action = confirm; setConfirm(null); if (action === 'leave') { if (props.session.discardEditor(true)) props.close(); } else void props.session.submit(action); }}>{confirm === 'leave' ? '放弃修改并返回' : confirm === 'APPROVE' ? '确认审核' : '确认作废'}</UIButton></StandardOverlay>}
+    {confirm === 'leave' && <SourceDocumentDialog title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setConfirm(null)} className="source-discard-dialog" initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setConfirm(null)}>继续编辑</button><button type="button" className="btn primary" onClick={() => { setConfirm(null); if (props.session.discardEditor(true)) props.close(); }}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>离开后，本次未保存的修改将丢失。</p></div></SourceDocumentDialog>}
+    {confirm && confirm !== 'leave' && <StandardOverlay role="alertdialog" title="确认操作" label="确认销货单操作" closeLabel="关闭销货单操作确认" close={() => setConfirm(null)} width={620} initialFocus="[data-erp-keep-input]"><p>{confirm === 'APPROVE' ? '审核将按本单实际明细追加库存效果，并计入收退统计。允许负库存。' : '作废仅作用于已保存未审核单据，不改库存。'}</p><UIButton data-erp-keep-input onClick={() => setConfirm(null)}>保留输入</UIButton><UIButton className="iw-primary" onClick={() => { const action = confirm; setConfirm(null); void props.session.submit(action); }}>{confirm === 'APPROVE' ? '确认审核' : '确认作废'}</UIButton></StandardOverlay>}
   </>;
 }

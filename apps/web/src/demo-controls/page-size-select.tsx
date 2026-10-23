@@ -29,6 +29,7 @@ export function DemoPageSizeSelect(props: DemoPageSizeSelectProps) {
   const requested = useRef(false);
   const pending = useRef<Promise<void> | null>(null);
   const styles = useRef<DemoSingleSelectStyles | null>(null);
+  const preparedView = useRef<ComponentType<DemoSingleSelectActionProps> | null>(null);
   const actionFocus = useRef<DemoSingleSelectFocusHandle | null>(null);
   const focusReturn = useRef<{ readonly scope: ReadScope; readonly generation: number; disabledObserved: boolean } | null>(null);
   const live = useRef(props); live.current = props;
@@ -37,7 +38,7 @@ export function DemoPageSizeSelect(props: DemoPageSizeSelectProps) {
   const [open, setOpen] = useState(false);
   const available = () => attached.current && live.current.scope === props.scope && live.current.scope.active && live.current.active !== false && !live.current.disabled;
   const dismiss = () => { requested.current = false; setOpen(false); };
-  const releaseStyles = () => { styles.current?.dispose(); styles.current = null; };
+  const releaseStyles = () => { styles.current?.dispose(); styles.current = null; preparedView.current = null; };
   // Scope ownership must be ready before the first visible enabled interaction.
   useLayoutEffect(() => {
     attached.current = true;
@@ -83,6 +84,10 @@ export function DemoPageSizeSelect(props: DemoPageSizeSelectProps) {
     if (!available()) return;
     if (wantOpen) requested.current = true;
     if (leaf?.scope === props.scope) { if (wantOpen) setOpen(true); return; }
+    if (preparedView.current) {
+      if (wantOpen) { setLeaf({ View: preparedView.current, focus: true, scope: props.scope }); setOpen(true); }
+      return;
+    }
     if (pending.current) return;
     const current = ++generation.current;
     setPhase('loading');
@@ -93,9 +98,14 @@ export function DemoPageSizeSelect(props: DemoPageSizeSelectProps) {
       const lease = module.createDemoSingleSelectStyles(host.current!.ownerDocument); styles.current = lease;
       await lease.load();
       if (!owns()) return;
+      preparedView.current = module.DemoSingleSelectAction;
       const focused = !!host.current?.contains(host.current.ownerDocument.activeElement);
-      setLeaf({ View: module.DemoSingleSelectAction, focus: focused && available(), scope: props.scope });
-      setOpen(requested.current && focused && available()); setPhase('idle');
+      // Focus preparation can finish before pointerup/click. Keep that button
+      // mounted until its explicit action, as in the shared multi-select shell.
+      if (requested.current && focused && available()) {
+        setLeaf({ View: module.DemoSingleSelectAction, focus: true, scope: props.scope }); setOpen(true);
+      }
+      setPhase('idle');
     }).catch(() => {
       if (owns()) {
         releaseStyles(); requested.current = false; setOpen(false); setPhase('error');
