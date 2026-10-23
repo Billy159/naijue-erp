@@ -1,0 +1,168 @@
+{
+  "atUtc": "2026-10-23T22:54:48.854313+00:00",
+  "parent": "99a21242b495c5e875ecd21e2b4d86b83c047ea0",
+  "taskId": "F2_QF2_P16P18_FRAME_ANCESTOR_01",
+  "files": [
+    {
+      "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+      "bytes": 36729,
+      "sha256": "5c9fca55c2efd32ffc0b68aed59bc6505b430e123185cd69dd5eb5342aeae256",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "8b7d7142b80d74b3a5a521fca0cbbb8a2cb625bf2b70de249aabd269f23716e1",
+  "ownerDelivery": {
+    "taskId": "QF2-P16P18-FRAME-ANCESTOR-01",
+    "parentTask": "F04-P16-P18-EXISTING-WHOLE-MIGRATION",
+    "owner": "F2",
+    "atUtc": "2026-10-23T22:53:25.249807+00:00",
+    "status": "SOURCE_READY_EXACT1_CSS_ONLY_LOCAL_ACTUAL_FRAME_CHECK_PASS_PENDING_C_PIN_QF2",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "model": "gpt-6.1-sol/xhigh; Fast not verified"
+    },
+    "completedScope": "Map six private native #page ancestor references to actual DemoFrame .demo-page with :is(#page,.demo-page), retaining original ID specificity, private root guards, all declarations and source order. Public Frame/DOM/reader/search/P19 untouched.",
+    "files": [
+      {
+        "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+        "bytes": 36729,
+        "sha256": "5c9fca55c2efd32ffc0b68aed59bc6505b430e123185cd69dd5eb5342aeae256",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/source/apps/web/src/product-settings/size-groups/source-dictionary.css",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/before/apps/web/src/product-settings/size-groups/source-dictionary.css",
+          "bytes": 36633,
+          "sha256": "c24f86e417f95c5d0a00b6949e96ee59e5265d9dbbae8bfcb863ff1da4af2775"
+        }
+      }
+    ],
+    "checks": {
+      "status": "PASS_LOCAL_REAL_DEMOFRAME_ANCESTOR_MATCH_AND_STYLES_ONLY",
+      "change": "Only6 private #page tokens -> :is(#page,.demo-page); original ID specificity retained by :is max branch; root guards/declarations/order unchanged",
+      "before": {
+        "actualNoPageId": true,
+        "noProductsWorkspace": true,
+        "ancestorMatches": [
+          {
+            "source": "styles.css:37",
+            "matches": 0
+          },
+          {
+            "source": "golden-consistency.css:3",
+            "matches": 0
+          },
+          {
+            "source": "golden-consistency.css:4",
+            "matches": 0
+          },
+          {
+            "source": "golden-consistency.css:79",
+            "matches": 0
+          },
+          {
+            "source": "product-inventory-unified.css:4",
+            "matches": 0
+          },
+          {
+            "source": "product-rework.css:83",
+            "matches": 0
+          }
+        ],
+        "paddingBottom": "16px"
+      },
+      "after": [
+        {
+          "kind": "groups",
+          "ancestor": "<main class=\"demo-page\"><div class=\"pc-workbench pc-settings-page pc-readonly-se",
+          "id": "",
+          "paddingBottom": "64px",
+          "minHeight": "0px",
+          "flexGrow": "1",
+          "margin": "0px",
+          "overflow": "auto",
+          "overscrollBehavior": "contain",
+          "pagerPosition": "fixed",
+          "pagerBottom": "0px"
+        },
+        {
+          "kind": "seasons",
+          "ancestor": "<main class=\"demo-page\"><div class=\"pc-workbench pc-settings-page pc-readonly-se",
+          "id": "",
+          "paddingBottom": "64px",
+          "minHeight": "0px",
+          "flexGrow": "1",
+          "margin": "0px",
+          "overflow": "auto",
+          "overscrollBehavior": "contain",
+          "pagerPosition": "fixed",
+          "pagerBottom": "0px"
+        }
+      ],
+      "checks": {
+        "cssParse": true,
+        "leafCssBundleWarnings": 0,
+        "frameCssBundleWarnings": 0,
+        "actualComponentBundleWarnings": [
+          "\"import.meta\" is not available with the \"cjs\" output format and will be empty"
+        ],
+        "old630Rerun": false,
+        "oldPageBusinessSuiteRerun": false,
+        "publicFrameChanged": false
+      },
+      "qualification": "Actual DemoFrame/ReadOnlyProductSettingsHost component tree mounted in JSDOM; declaration/match/computed-style evidence only. No actual viewport layout/pixels/48px displacement claim, Chrome or containing candidate build."
+    },
+    "retainedHistoricalQualification": "Original230 nativeHTML630 comparisons remain valid for source selectors/declaration mapping only; they did not prove actual DemoFrame ancestor coverage. This new check uses real DemoFrame and real ReadOnlyProductSettingsHost components, no synthetic main#page or products-workspace wrapper.",
+    "untested": [
+      "No actual browser viewport/pixels/scroll or claimed48px displacement",
+      "No full candidate build/realHTTP/PG/business/write/deployment",
+      "No old630/page-business/protocol/P19 suite rerun; CSS-only no TS rerun"
+    ],
+    "warning": "Test-only CommonJS component bundle reports existing empty-import-meta warning. Recorded, no public/source runtime workaround. Actual tested path does not open page-size action or resolve its style URL; CSS bundles both0 warnings.",
+    "blocker": "None in source. F2 NO_CHROME; containing pinned candidate and original QF2 F01/affected actual remain.",
+    "next": "C pin exact1 delta over230 -> containing candidate -> original QF2 only F01+affected scope; preserve original230 source and old630 evidence qualification, do not mark browser failure/wholepagePASS.",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/SOURCE-MANIFEST.json",
+        "bytes": 2579,
+        "sha256": "edd58e23e750e30445fe24715e3031202223ae65e2eeb0aa5d0cf5c4cfc15f1e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/ANCESTOR-MAP.json",
+        "bytes": 2811,
+        "sha256": "62614b1ffdff408ffccc1a65500f8d4f3dbdf5b3680cdef56ae2c500081d8a86"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/CHECKS.json",
+        "bytes": 2245,
+        "sha256": "648147eb5f01c7f2026474d43a4611b1cc53899a58f6ce45eb31d2913eced638"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/checks.log",
+        "bytes": 335,
+        "sha256": "876e332b77bd30e9fe2b95e774671d7b87bcf371a1f6413e0951b317981dc646"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/bundle-warnings.json",
+        "bytes": 703,
+        "sha256": "2d89f275b4d4b6cba0cc937363b17b1583b49234dab94c55f5e28304f10a326e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/verify-frame.mjs",
+        "bytes": 8624,
+        "sha256": "f32869104c4a17a68801a0019bd8dd55ff3bf7f791ab830e413c5150432067a3"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/source.diff",
+        "bytes": 45395,
+        "sha256": "ab65a9c20a794a39d78f3bb903726b3846bafa58951d1797f23fdb48f102ebb9"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P16P18-FRAME-ANCESTOR-01/actual-frame-dom.html",
+        "bytes": 9854,
+        "sha256": "37c0638f9026ae3d8e2a44a3e8ee8f8061924a047378c1d2b719d5d44fdafc77"
+      }
+    ]
+  },
+  "qualification": "Only affected realFrame selectors or selected-workline state mapping correction. Original owner minimal RED/GREEN adopted; independent source/nextfixed browser actual pending; not in229, no business/performance or wholepage pass."
+}
