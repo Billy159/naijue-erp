@@ -1,3 +1,4 @@
+import type { DictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import type { SalesDraftDto } from '../sales/commands/contracts.ts';
 import type { CurrentFormPage, CurrentFormProduct, CurrentFormSku, CurrentSalesReferenceItem, CurrentSalesReferenceQuery } from '../../../../packages/application/src/current-form-ports.ts';
 import { businessDate, entityId, minorAmount, quantity } from '../../../../packages/domain/src/values.ts';
@@ -9,7 +10,7 @@ import { currentBusinessDate } from './business-date.ts';
 import { DocumentScanController } from '../components/document-scan-controller.ts';
 import { salesBusinessMode, salesBusinessType, type SalesBusinessMode } from './sales-business-mode.ts';
 export type SalesProposalReader = Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readSalesReferences' | 'readProducts' | 'readProductSkus'>
-  & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode'>>;
+  & Partial<Pick<ReturnType<typeof createCurrentFormHttpReader>, 'readBarcode' | 'readSizeGroups'>>;
 export type SalesProposalPicker = CurrentSalesReferenceQuery['kind'] | 'product' | 'sku';
 export interface SalesProposalLine {
   readonly key: string;
@@ -21,10 +22,10 @@ export interface SalesSpecChoice { readonly id: string; readonly name: string }
 export interface SalesProposalEntry {
   readonly key: string; readonly order: number | null; readonly pricingRule: SalesProposalLine['pricingRule']; readonly discount: string; readonly isGift: boolean; readonly zeroConfirmed: boolean;
   readonly product: CurrentFormProduct | null; readonly sku: CurrentFormSku | null;
-  readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly skuPage: number;
+  readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly size: SalesSpecChoice | null; readonly sizeGroup: SalesSpecChoice | null; readonly skuPage: number;
   readonly query: string; readonly quantity: string; readonly dealPrice: string;
 }
-const emptyEntry = (direction: 'IN' | 'OUT', key: string): SalesProposalEntry => ({ key, order: null, product: null, sku: null, color: null, fit: null, skuPage: 1, query: '', quantity: direction === 'IN' ? '-1' : '1', dealPrice: '', pricingRule: 'UNIT_PRICE', discount: '', isGift: false, zeroConfirmed: false });
+const emptyEntry = (direction: 'IN' | 'OUT', key: string): SalesProposalEntry => ({ key, order: null, product: null, sku: null, color: null, fit: null, size: null, sizeGroup: null, skuPage: 1, query: '', quantity: direction === 'IN' ? '-1' : '1', dealPrice: '', pricingRule: 'UNIT_PRICE', discount: '', isGift: false, zeroConfirmed: false });
 const emptyEntries = () => ({ IN: [emptyEntry('IN', 'entry-IN-0')], OUT: [emptyEntry('OUT', 'entry-OUT-0')] });
 export interface SalesProposal {
   readonly businessType: 'SALE' | 'RETURN' | 'EXCHANGE'; readonly businessDate: string; readonly note: string; readonly orderDiscount: string;
@@ -39,10 +40,11 @@ export interface SalesProposalSnapshot {
   readonly totals: { readonly grossMinor: string; readonly netDueMinor: string; readonly settledMinor: string; readonly balanced: boolean } | null;
   readonly entries: Readonly<Record<'IN' | 'OUT', readonly SalesProposalEntry[]>>;
   /** A pending identity change never mutates the original draft line. */
-  readonly lineEdit: { readonly key: string; readonly original: SalesProposalLine; readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null; readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly skuPage: number } | null;
+  readonly lineEdit: { readonly key: string; readonly original: SalesProposalLine; readonly product: CurrentFormProduct; readonly sku: CurrentFormSku | null; readonly color: SalesSpecChoice | null; readonly fit: SalesSpecChoice | null; readonly size: SalesSpecChoice | null; readonly sizeGroup: SalesSpecChoice | null; readonly skuPage: number } | null;
+  readonly sizeGroups: { readonly phase: 'unavailable' | 'ready'; readonly groups: readonly DictionarySizeGroup[] };
   readonly picker: { readonly kind: SalesProposalPicker; readonly search: string; readonly page: number;
     readonly product: CurrentFormProduct | null; readonly method: CurrentSalesReferenceItem | null;
-    readonly phase: 'loading' | 'ready' | 'error'; readonly result: CurrentFormPage<Candidate> | null } | null;
+    readonly phase: 'loading' | 'ready' | 'error'; readonly result: CurrentFormPage<Candidate> | null; readonly specSkus?: readonly CurrentFormSku[] } | null;
 }
 const empty = (): SalesProposal => ({ businessType: 'SALE', businessDate: currentBusinessDate(), note: '', orderDiscount: '0.00', hall: null, customer: null, salesperson: null, warehouse: null, lines: [], settlements: [] });
 function freeze<T>(value: T): T { if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); } return value; }
@@ -87,10 +89,11 @@ export function salesProposalMoney(draft: SalesProposal): { readonly grossMinor:
 export class SalesProposalSession {
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
   #seeded = false;
+  readonly #specSkus = new Map<string, readonly CurrentFormSku[]>();
   #savedWarehouse: { readonly hallId: string; readonly warehouseId: string } | null = null;
   readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: SalesDraftDto['lines'][number]['snapshot']; readonly product: CurrentFormProduct }>();
   #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null; #revision = 0; #entryTarget: { readonly direction: 'IN' | 'OUT'; readonly key: string } | null = null; #nextEntry = 0; #nextEntryOrder = 0; #inlineSettlement = false;
-  #state: SalesProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, totals: null, picker: null, lineEdit: null, entries: emptyEntries() });
+  #state: SalesProposalSnapshot = freeze({ draft: empty(), dirty: false, disposed: false, errors: [], notice: null, totals: null, sizeGroups: { phase: 'unavailable', groups: [] }, picker: null, lineEdit: null, entries: emptyEntries() });
   constructor(scope: ReadScope, reader: SalesProposalReader, onAccessFailure?: (error: HttpQueryError) => void) { this.#scope = scope; this.#reader = reader; this.#onAccessFailure = onAccessFailure; scope.signal.addEventListener('abort', this.dispose, { once: true }); if (!scope.active) this.dispose(); }
   readonly getSnapshot = (): SalesProposalSnapshot => this.#state;
   readonly subscribe = (listener: () => void): (() => void) => { this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
@@ -163,7 +166,7 @@ export class SalesProposalSession {
     if (this.#state.lineEdit && this.#state.lineEdit.key !== key) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return false; }
     if (!this.#state.lineEdit) {
       this.closePicker(); this.#settlementTarget = null; this.#entryTarget = null;
-      this.#publish({ lineEdit: { key, original, product: original.product, sku: original.sku, color: { id: original.sku.colorId, name: original.sku.colorName }, fit: { id: original.sku.fitId, name: original.sku.fitName }, skuPage: 1 } });
+      this.#publish({ lineEdit: { key, original, product: original.product, sku: original.sku, color: { id: original.sku.colorId, name: original.sku.colorName }, fit: { id: original.sku.fitId, name: original.sku.fitName }, size: { id: original.sku.sizeId, name: original.sku.sizeName }, sizeGroup: null, skuPage: 1 } });
     }
     return true;
   }
@@ -173,7 +176,8 @@ export class SalesProposalSession {
   }
   confirmLineEdit(): boolean {
     const edit = this.#state.lineEdit, draft = this.#state.draft;
-    if (this.#state.disposed || this.#state.picker || !edit?.sku || edit.sku.productId !== edit.product.id) return false;
+    if (this.#state.disposed || this.#state.picker || !edit) return false;
+    if (!edit.sku || edit.sku.productId !== edit.product.id) { this.#publish({ notice: '所选尺码的真实 SKU 尚未建立；改选及原单输入均已保留。' }); return false; }
     if (draft.lines.find(row => row.key === edit.key) !== edit.original) { this.#publish({ notice: '原行已变化，请取消改选后重新选择。' }); return false; }
     const changed = this.#edit({ ...draft, lines: draft.lines.map(row => {
       if (row.key !== edit.key) return row;
@@ -213,7 +217,7 @@ export class SalesProposalSession {
   }
   updateEntry(direction: 'IN' | 'OUT', patch: Partial<Pick<SalesProposalEntry, 'query' | 'quantity' | 'dealPrice' | 'pricingRule' | 'discount' | 'isGift' | 'zeroConfirmed'>>, key?: string): void {
     const entry = this.#entry(direction, key); if (this.#state.disposed || !entry) return;
-    this.#replaceEntry(direction, { ...entry, ...patch, ...(patch.query !== undefined && patch.query !== entry.product?.code ? { product: null, sku: null, color: null, fit: null, skuPage: 1 } : {}) });
+    this.#replaceEntry(direction, { ...entry, ...patch, ...(patch.query !== undefined && patch.query !== entry.product?.code ? { product: null, sku: null, color: null, fit: null, size: null, sizeGroup: null, skuPage: 1 } : {}) });
   }
   clearEntry(direction: 'IN' | 'OUT', key?: string): void {
     const entry = this.#entry(direction, key); if (this.#state.disposed || !entry) return;
@@ -227,18 +231,28 @@ export class SalesProposalSession {
     this.#entryTarget = { direction, key: entry.key }; this.#settlementTarget = null; this.#inlineSettlement = false;
     await this.#read(kind, kind === 'product' ? entry.query : '', kind === 'sku' ? entry.skuPage : 1, kind === 'sku' ? entry.product : null, null);
   }
-  /** Each option is projected from the currently read actual SKU page. Color and
-   * fit narrow explicitly; only the size choice binds one exact SKU ID. */
+  /** Size membership comes from the complete native dictionary. A selected
+   * coordinate is local input until a real SKU matches product/color/fit/size. */
   selectSpec(kind: 'color' | 'fit' | 'size', id: string): boolean {
     const picker = this.#state.picker, target = this.#entryTarget, edit = this.#state.lineEdit;
     const selection = edit ?? (target ? this.#entry(target.direction, target.key) : null);
     if (this.#state.disposed || picker?.kind !== 'sku' || picker.phase !== 'ready' || !selection?.product || picker.product?.id !== selection.product.id) return false;
-    const rows = picker.result!.items as readonly CurrentFormSku[];
-    const row = rows.find(row => row.productId === selection.product!.id && (kind === 'color' ? row.colorId === id
-      : row.colorId === selection.color?.id && (kind === 'fit' ? row.fitId === id : row.fitId === selection.fit?.id && row.id === id)));
-    if (!row) return false;
-    const patch = kind === 'color' ? { color: { id: row.colorId, name: row.colorName }, fit: null, sku: null }
-      : kind === 'fit' ? { fit: { id: row.fitId, name: row.fitName }, sku: null } : { sku: row };
+    const rows = picker.specSkus ?? picker.result!.items as readonly CurrentFormSku[];
+    let patch: Partial<Pick<SalesProposalEntry, 'color' | 'fit' | 'size' | 'sizeGroup' | 'sku'>>;
+    if (kind === 'size') {
+      const group = this.#state.sizeGroups.groups.find(group => group.sizes.some(size => size.id === id));
+      const size = group?.sizes.find(size => size.id === id);
+      const legacy = rows.find(row => row.id === id || row.sizeId === id);
+      const chosen = size ?? (legacy ? { id: legacy.sizeId, name: legacy.sizeName } : null);
+      if (!chosen || !selection.color || !selection.fit) return false;
+      const sku = rows.find(row => row.productId === selection.product!.id && row.colorId === selection.color!.id && row.fitId === selection.fit!.id && row.sizeId === chosen.id) ?? null;
+      patch = { size: { id: chosen.id, name: chosen.name }, sizeGroup: group ? { id: group.id, name: group.name } : null, sku };
+    } else {
+      const row = rows.find(row => kind === 'color' ? row.colorId === id : row.colorId === selection.color?.id && row.fitId === id);
+      if (!row) return false;
+      patch = kind === 'color' ? { color: { id: row.colorId, name: row.colorName }, fit: null, size: null, sizeGroup: null, sku: null }
+        : { fit: { id: row.fitId, name: row.fitName }, size: null, sizeGroup: null, sku: null };
+    }
     if (edit) this.#publish({ lineEdit: { ...edit, ...patch, skuPage: picker.page } });
     else if (target) { const entry = this.#entry(target.direction, target.key); if (entry) this.#replaceEntry(target.direction, { ...entry, ...patch, skuPage: picker.page }); }
     this.closePicker(); return true;
@@ -246,7 +260,7 @@ export class SalesProposalSession {
   appendEntry(direction: 'IN' | 'OUT', key?: string): boolean {
     const entry = this.#entry(direction, key), draft = this.#state.draft;
     if (this.#state.disposed || this.#state.lineEdit || !entry?.product || entry.query !== entry.product.code || !entry.sku || entry.sku.productId !== entry.product.id || entry.sku.colorId !== entry.color?.id || entry.sku.fitId !== entry.fit?.id) {
-      this.#publish({ notice: '请选择款号、颜色、版型及实际尺码后完成录入。' }); return false;
+      this.#publish({ notice: entry?.size && !entry.sku ? `所选 ${entry.product?.code ?? ''} / ${entry.color?.name ?? ''} / ${entry.fit?.name ?? ''} / ${entry.size.name} 尚无真实 SKU；数量、价格及尺码输入已保留。` : '请选择款号、颜色、版型及尺码后完成录入。' }); return false;
     }
     if (draft.lines.length >= 200 || !/^-?[1-9]\d{0,18}$/.test(entry.quantity) || entry.quantity.startsWith('-') !== (direction === 'IN') || direction === 'IN' && draft.businessType === 'SALE') {
       this.#publish({ notice: '请核对当前分区的数量方向及 200 行上限；输入已保留。' }); return false;
@@ -342,7 +356,29 @@ export class SalesProposalSession {
       const hallId = hall ? entityId('hall', hall.id) : null;
       let result: CurrentFormPage<Candidate>;
       if (kind === 'product') result = await this.#reader.readProducts({ context: { kind: 'SALES', hallId: hallId! }, search, page, pageSize: 20 }, signal);
-      else if (kind === 'sku') result = await this.#reader.readProductSkus({ context: { kind: 'SALES', hallId: hallId! }, productId: product!.id, page, pageSize: 20 }, signal);
+      else if (kind === 'sku') {
+        const query = { context: { kind: 'SALES' as const, hallId: hallId! }, productId: product!.id, page, pageSize: 20 as const };
+        result = await this.#reader.readProductSkus(query, signal);
+        const key = `${hallId}:${product!.id}`;
+        if (!this.#specSkus.has(key)) {
+          const rows = [...result.items] as CurrentFormSku[];
+          for (let next = 1; BigInt(next - 1) * 20n < result.exactTotal; next++) {
+            if (next !== page) rows.push(...(await this.#reader.readProductSkus({ ...query, page: next }, signal)).items);
+          }
+          if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
+          this.#specSkus.set(key, Object.freeze(rows));
+        }
+        if (this.#reader.readSizeGroups && this.#state.sizeGroups.phase !== 'ready') {
+          const groups: DictionarySizeGroup[] = [];
+          for (let next = 1; ; next++) {
+            const data = await this.#reader.readSizeGroups({ search: '', page: next, pageSize: 100 }, signal);
+            groups.push(...data.items);
+            if (next * data.pageSize >= data.total) break;
+          }
+          if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
+          this.#publish({ sizeGroups: { phase: 'ready', groups } });
+        }
+      }
       else {
         const query: CurrentSalesReferenceQuery = kind === 'hall' ? { kind, hallId: null, search, page, pageSize: 20 }
           : kind === 'paymentAccount' ? { kind, hallId: hallId!, paymentMethodId: entityId('paymentMethod', method!.id), search, page, pageSize: 20 }
@@ -350,7 +386,7 @@ export class SalesProposalSession {
         result = await this.#reader.readSalesReferences(query, signal);
       }
       if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
-      this.#publish({ picker: { kind, search, page, product, method, phase: 'ready', result } });
+      this.#publish({ picker: { kind, search, page, product, method, phase: 'ready', result, ...(kind === 'sku' ? { specSkus: this.#specSkus.get(`${hallId}:${product!.id}`) ?? [] } : {}) } });
     } catch (error) {
       if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
       if (error instanceof HttpQueryError && ['unauthenticated', 'forbidden'].includes(error.kind)) { this.#scope.dispose(); try { this.#onAccessFailure?.(error); } catch { /* Scope already cleared. */ } return; }
@@ -362,11 +398,11 @@ export class SalesProposalSession {
     const item = p.result?.items.find(row => row.id === id); if (!item) return false;
     if (p.kind === 'product' && (this.#entryTarget || this.#state.lineEdit)) {
       const product = item as CurrentFormProduct, target = this.#entryTarget;
-      if (this.#state.lineEdit) this.#publish({ lineEdit: { ...this.#state.lineEdit, product, sku: null, color: null, fit: null, skuPage: 1 } });
+      if (this.#state.lineEdit) this.#publish({ lineEdit: { ...this.#state.lineEdit, product, sku: null, color: null, fit: null, size: null, sizeGroup: null, skuPage: 1 } });
       else if (target) {
         const entry = this.#entry(target.direction, target.key); if (!entry) return false;
         if (this.#state.draft.lines.length + Object.values(this.#state.entries).flat().filter(row => row.product || row.query.trim()).length > 200) { this.#publish({ notice: '已达 200 行上限。请修改现有行。' }); return false; }
-        this.#replaceEntry(target.direction, { ...entry, product, query: product.code, sku: null, color: null, fit: null, skuPage: 1 });
+        this.#replaceEntry(target.direction, { ...entry, product, query: product.code, sku: null, color: null, fit: null, size: null, sizeGroup: null, skuPage: 1 });
       }
       this.closePicker(); return true;
     }
@@ -388,7 +424,7 @@ export class SalesProposalSession {
     if (p.kind === 'sku') {
       if (this.#state.lineEdit) {
         if ((item as CurrentFormSku).productId !== p.product?.id) return false;
-        this.#publish({ lineEdit: { ...this.#state.lineEdit, product: p.product!, sku: item as CurrentFormSku, color: { id: (item as CurrentFormSku).colorId, name: (item as CurrentFormSku).colorName }, fit: { id: (item as CurrentFormSku).fitId, name: (item as CurrentFormSku).fitName } } });
+        this.#publish({ lineEdit: { ...this.#state.lineEdit, product: p.product!, sku: item as CurrentFormSku, color: { id: (item as CurrentFormSku).colorId, name: (item as CurrentFormSku).colorName }, fit: { id: (item as CurrentFormSku).fitId, name: (item as CurrentFormSku).fitName }, size: { id: (item as CurrentFormSku).sizeId, name: (item as CurrentFormSku).sizeName }, sizeGroup: null } });
         this.closePicker(); return true;
       }
       if (initialQuantity !== '1' && initialQuantity !== '-1' || initialQuantity === '-1' && draft.businessType === 'SALE') return false;
@@ -449,8 +485,8 @@ export class SalesProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
-    this.#savedLines.clear(); this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
+    this.#savedLines.clear(); this.#specSkus.clear(); this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
-  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedLines.clear(); this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
+  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedLines.clear(); this.#specSkus.clear(); this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
 }

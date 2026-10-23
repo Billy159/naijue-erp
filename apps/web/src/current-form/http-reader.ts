@@ -1,3 +1,5 @@
+import type { DictionaryListQuery } from '../../../../packages/application/src/dictionary-read-ports.ts';
+import { validateDictionaryPage, validateDictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-validation.ts';
 import type { CurrentFormBarcodeQuery, CurrentFormBarcodeResult, CurrentFormPage, CurrentFormProduct, CurrentFormProductQuery, CurrentFormProductSkuQuery, CurrentFormSku,
   CurrentFormSkuBatchQuery, CurrentSalesReferenceItem, CurrentSalesReferenceQuery, CurrentTransferWarehouse, CurrentTransferWarehouseQuery } from '../../../../packages/application/src/current-form-ports.ts';
 import { parseCurrentSalesReferenceQuery, parseCurrentTransferWarehouseQuery, parseCurrentFormProductQuery,
@@ -73,6 +75,9 @@ function sku(value: unknown): CurrentFormSku {
 export function createCurrentFormHttpReader(options: HttpQueryOptions) {
   const http = createHttpJsonQuery(options);
   return Object.freeze({
+    readSizeGroups(parameters: DictionaryListQuery, signal: AbortSignal) {
+      return http.post('/dictionary-read/size-groups/query', parameters, signal, value => validateDictionaryPage(value, parameters, validateDictionarySizeGroup));
+    },
     readBarcode(parameters: CurrentFormBarcodeQuery, signal: AbortSignal): Promise<CurrentFormBarcodeResult> {
       const parsed = parseCurrentFormBarcodeQuery(parameters);
       return http.post('/current-form/barcode/query', parsed, signal, value => {
