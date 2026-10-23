@@ -34,7 +34,8 @@
       "businessRelease": false
     },
     "normalGitProtocolPushSucceeded": false,
-    "remoteNormalBranchFastForwardSucceeded": true
+    "remoteNormalBranchFastForwardSucceeded": true,
+    "lastVerifiedRemoteCommit": "32f017803a0741c4e41ae75fe86ff83c382ce34e"
   },
   "concurrency": {
     "chats": 10,
@@ -963,9 +964,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T20:31:12.560677+00:00",
+  "updatedAt": "2026-10-23T20:48:11.509222+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "024aa9ce565014a4184bfed02a33cd167b449bb4",
+  "lastVerifiedRemoteCommit": "32f017803a0741c4e41ae75fe86ff83c382ce34e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2484,12 +2485,13 @@
     }
   ],
   "newPendingReviews": [
-    "QFsole217 actualSALE209/T02 215+216 thenaccurateclean/release",
-    "QF2offline219fullEmpty source then217I07newUI/P01residual actuallease afterQF;218/219actualonlynewcontainingcandidate",
-    "OriginalQB human/toolresume actualQA101fourpurpose/R1C103;C102disabled,noissuer/nobusinessrunner",
-    "V13 humanconfirmation pending onlyrelatedDDL/writer waits",
-    "B07 realretainedDRAFT inputscaptured butapproved/NULLdate/v12/currentWRITE missing",
-    "220customer host sourceQF2PASS; realProductionHost consume/permissions/Save stilluntested"
+    "QF217 actualcomplete report/104matrix offline; explicitclean accepted, no moreChrome",
+    "QF2 sole220 actual218size/219completeEmpty/217P01residual/newI07UI; effectiveold scopes reused",
+    "OriginalF1 T02 originalLEFTNAV targetedfix chunk109; samefinding no duplicatetask",
+    "OriginalQB human/toolresume actualQA101fourpurpose/R1C103; C102disabled,noissuer/nobusinessrunner",
+    "V13 humanconfirmation onlyrelatedDDL/writer waits",
+    "B07 retainedactualDRAFT inputs captured, APPROVED/NULLdate/v12/currentWRITE missing",
+    "C original214 install-only bounded Linux job prepared/executed next, independent app metadata; not alreadyLinuxPASS"
   ],
   "openFindingsCurrent": [
     {
@@ -2755,46 +2757,48 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T19:18:24.117273+00:00",
-    "sourceRound": 209,
-    "sourceCheckpoint": "dfe348acbaf4597434eff2add5dc52f4d1b2600b",
+    "atUtc": "2026-10-23T20:48:11.509222+00:00",
+    "sourceRound": 220,
+    "sourceCheckpoint": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "sourceRound": 207,
-      "sourceCommit": "fa9dc429b62a317062dc98dc5dc8df5c79d0ada3",
-      "buildId": "ui-preview-fa9dc42-01-build01",
-      "url": "http://127.0.0.1:57869/synthetic-unified.html",
+      "sourceRound": 220,
+      "sourceCommit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
+      "buildId": "ui-preview-1b46a5d-01-build01",
+      "url": "http://127.0.0.1:57873/synthetic-unified.html",
       "resources": [
         {
           "path": "synthetic-unified.html",
           "status": 200,
-          "bytes": 3387809,
-          "sha256": "dbea0f5f94afda0d504e0df1444544aad186940c2d917d7bcf2a4979f5af4f1a",
+          "bytes": 3414020,
+          "sha256": "726295ed1157ef2f9c9fbb50404331ff69d9b39fd8c66af83da6aa7d1bcadb58",
           "sameImmutableBuild": true
         },
         {
           "path": "candidate-identity.json",
           "status": 200,
-          "bytes": 2894,
-          "sha256": "2729d487907638d92a1bc3e5044d24ecd3ddccd33ccd4ff797f9befc2144ba62",
+          "bytes": 4443,
+          "sha256": "eded4be77dcdca056eaa048207732b57f692812bcf7a8b5846e2723192c560db",
           "sameImmutableBuild": true
         },
         {
           "path": "provenance.json",
           "status": 200,
-          "bytes": 51370,
-          "sha256": "afef66c94a57b133f471d3f96b3bc971714492152b77ffee25f5ff1b8f753d09",
+          "bytes": 51504,
+          "sha256": "9206a14c4860f8354067ee1f5ff58f4c82b9c31e7fbf9fda1f5a4825654f7645",
           "sameImmutableBuild": true
         }
       ],
-      "serverPid": 90719,
-      "serverSession": 10167,
+      "serverPid": 6596,
+      "serverSession": 55096,
       "actualBuildInvocations": 1,
       "postbuildAdditionalBuildInvocations": 0,
       "actualHTTPKeyResources": 3,
+      "actualInputCount": 413,
+      "actualModuleInputCountIncludingDependencies": 1368,
       "syntheticOnly": true,
-      "scope": "198 product recovery plus200 stableowner/201 transfer and204sales page topSAVE/205inset/206cancel/207publicidle. Not208newledger/209SALElocalEnter ornewF2fixes. Commands/receipts refused, no PG.",
+      "scope": "Includes218same-group native size click and219complete Empty region, inherited217newfiction-only24row ledger/P01 residual. productionmount220 not consumed. Original commands/receipts refused.",
       "wholePageAccepted": false,
       "realBusinessAccepted": false,
       "formalPerformanceAccepted": false
@@ -2804,7 +2808,7 @@
     "qa": "C101 actual v11 COMMIT0/3.575635193s/newcanonical5717b1be/122routines/newdeferred trigger; current50/original49/productv2/12auditreceipt/stock0 preserved. Business SAVE8groups NOT_TESTED.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Original3 business decisions remain; narrowedv11 alreadyapproved. OriginalQB runtime toolresume action requested. Newv13 exact2columns/guard concreteconfirmation requested; only itswritebranch waits.",
-    "github": "Verified5bb47b923613b8440980c1889e5f9e5732e2ef05; current206-209 andcontinuation next exact sync",
+    "github": "Verified32f017803a0741c4e41ae75fe86ff83c382ce34e; current C220actual continuation next exact sync.",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -2816,7 +2820,7 @@
       "partial": 7,
       "waitingIntegration": 9,
       "approvedException": 1,
-      "latestReceipt": "QF v0294 +QF2 C1435 scopedclosures; no logical coverage expansion,104/local48/whole0"
+      "latestReceipt": "QFv058 per-scope adoption; current217actualmodule reportpending,220newactualinprogress; no logical coverage expansion"
     },
     "isolatedMorePreview": {
       "url": "http://127.0.0.1:57849/component-more.html",
@@ -2829,11 +2833,11 @@
     },
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "QFv050 source cancelfinding closed at206; QFv051207public sourcePASS actualP01pending. QF2source198 recoveryP2closedlimited. QF2actual196 clean released, newsizeDropdown/emptyP2 originalF2 repair. Current207 actualcompile0 with0compile graphpostresume exact6unchangednewlytraversedinputs; threeHTTPpassed, QFexplicitsolelease same2targets CLASS+originalfast evidence. Source209SALElocal-spec rowEnter/view actualproductID ready, no actual/PGclaim; notin207. Rapidqty/mixedprice causeUNKNOWN open.",
+    "uiMigration": "QF217 SALE209 named localEnter/Tab/cancel/confirm/edit/view-return actual passed; T02 4+2 cancel/merge6/change7 actual limited evidence, anothercolor9 not available; full original report follows offline. QF217 clean explicitlyreleased. T02 original LEFTNAV stillopen, originalF1 chunk109 inprogress. QF2 sole new220 size218/completeEmpty219/P01residual217/newfictionI07 actual; not realbusiness/performance.",
     "backend": "C102 original normalSAVE inputcomplete, actual101 bound to newQA5717b1be and42274B983c47cc; independentreviewPENDING/PLANdisabled/issuer0/PG0. OriginalQB Chat read/list valid but3 sends notfound; human originalQB resume requested, noQB2. New208D3 numberedledger readonlysource ready originalQB pending; F2 native consumer inprogress. BeforeAfter2columns v13 proposal exactuserconfirmationpending, noDDL/writer changes. B07source203 noissuer/host/actual.",
-    "productionBuild": "C202 fixed79553bb build actualexit0/4.535s, pack0/225members/1282380B6dadf748/oneextract. Exactapproved v8-v11 patches now packaged by originalclosure;33release testsPASS. NotprivateStage/business/formal.",
+    "productionBuild": "C214fixed1eef32a actual localbuild0/4.659s andpack0/225members/1291565B9d9b8b96/oneextract. Current C originalinstall-only214 bounded Linux job prep decoupled frommetadata/app/PG; not yet installed. No newapp/dataReady/publicswitch.",
     "actualQFBrowser": {
-      "owner": "QF",
+      "owner": "QF2",
       "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
       "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
       "viewport": "1470x668/DPR2",
@@ -2843,12 +2847,16 @@
       ],
       "oldCandidate8B3": "No target found, not reused",
       "login": "Human newDemo login acknowledged and QF2 actual confirmed. No credentials read.",
-      "status": "C_EXPLICIT_SOLE_QF_C207_ACTUAL_GRANTED",
+      "status": "C_EXPLICIT_SOLE_QF2_C220_ACTUAL_GRANTED",
       "candidateScrollTop": 0,
       "demoTableScrollTop": 0,
-      "cleanReceipt": "QF2/c196-inventory-native-actual-01/BROWSER-RELEASE.json",
-      "candidateVersion": "C207fa9dc42/ui-preview-fa9dc42-01-build01",
-      "candidateUrl": "http://127.0.0.1:57869/synthetic-unified.html"
+      "cleanReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-753bd09-actual/BROWSER-CLEAN-RELEASE.json",
+      "candidateVersion": "1b46a5d975d1e9c1b25bb695dd666c04cc342740/ui-preview-1b46a5d-01-build01",
+      "candidateUrl": "http://127.0.0.1:57873/synthetic-unified.html",
+      "scope": "218 size;219completeEmpty;217P01residual actualconsumer;newI07UI only. No old48/source recheck or realSave.",
+      "cleanReceiptBytes": 2803,
+      "cleanReceiptSha256": "edd42c835d159d26d8169635cda6e8f700d215ef99e1c9748769533049dcc357",
+      "isolation": "Not proven independent contexts; serialized exclusive same two owned targets. QF/F1/F2/C no Chrome."
     },
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
@@ -3760,7 +3768,7 @@
       ]
     },
     "latestRound220": {
-      "atUtc": "2026-10-23T20:31:12.560677+00:00",
+      "atUtc": "2026-10-23T20:48:11.509222+00:00",
       "source": {
         "round": 220,
         "commit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
@@ -3776,17 +3784,58 @@
         "scope": "SOURCE220_DEFAULT_CUSTOMER_EXISTING_HOST_READER_ONLY; realconsumer/permissions/business stilluntested",
         "adoption": "Original independent conclusion adopted, no duplicate technical check"
       },
-      "nextCandidate": "ui-preview-1b46a5d-01 PREPARING_NOT_BUILT; originalsame18synthetic adapters",
-      "browser": "OriginalQF sole217 actualSALE/T02; QF2offline then217I07/P01 afterclean",
+      "nextCandidate": "ACTUAL_ONE_BUILD0_SERVE_AND_THREE_HTTP_READY",
+      "browser": "QF2 sole220 actual granted after originalQF217 explicitclean; QFoffline matrix/report; originalF1 LEFTNAV targetedfixinprogress",
       "backend": "OriginalQB newactual review/toolhumanresume andv13 confirmation remainonlyrelateddependencies; C102disabled",
-      "storeCustomer": "ExistingF3 directory/PartyClient reused withlazy candidate read; originalgatefalse, noAPI/schema/grant added"
+      "storeCustomer": "ExistingF3 directory/PartyClient reused withlazy candidate read; originalgatefalse, noAPI/schema/grant added",
+      "served": {
+        "sourceRound": 220,
+        "sourceCommit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
+        "buildId": "ui-preview-1b46a5d-01-build01",
+        "url": "http://127.0.0.1:57873/synthetic-unified.html",
+        "resources": [
+          {
+            "path": "synthetic-unified.html",
+            "status": 200,
+            "bytes": 3414020,
+            "sha256": "726295ed1157ef2f9c9fbb50404331ff69d9b39fd8c66af83da6aa7d1bcadb58",
+            "sameImmutableBuild": true
+          },
+          {
+            "path": "candidate-identity.json",
+            "status": 200,
+            "bytes": 4443,
+            "sha256": "eded4be77dcdca056eaa048207732b57f692812bcf7a8b5846e2723192c560db",
+            "sameImmutableBuild": true
+          },
+          {
+            "path": "provenance.json",
+            "status": 200,
+            "bytes": 51504,
+            "sha256": "9206a14c4860f8354067ee1f5ff58f4c82b9c31e7fbf9fda1f5a4825654f7645",
+            "sameImmutableBuild": true
+          }
+        ],
+        "serverPid": 6596,
+        "serverSession": 55096,
+        "actualBuildInvocations": 1,
+        "postbuildAdditionalBuildInvocations": 0,
+        "actualHTTPKeyResources": 3,
+        "actualInputCount": 413,
+        "actualModuleInputCountIncludingDependencies": 1368,
+        "syntheticOnly": true,
+        "scope": "Includes218same-group native size click and219complete Empty region, inherited217newfiction-only24row ledger/P01 residual. productionmount220 not consumed. Original commands/receipts refused.",
+        "wholePageAccepted": false,
+        "realBusinessAccepted": false,
+        "formalPerformanceAccepted": false
+      }
     }
   },
   "latestReadySource": {
     "round": 220,
     "commit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
-    "latestServedPreviewRound": 217,
-    "qualification": "218size/219fullEmpty/220customerhost sourceQA limitedPASS; actualorrealbusiness notaccepted; 220notin217preview"
+    "latestServedPreviewRound": 220,
+    "qualification": "Fixed220 actually built/served/threeHTTP matched. 218/219/220source limitedQA adopted; new220browser QF2inprogress. no realbusiness/wholepage acceptance."
   },
   "pendingUserDecision": [
     {
