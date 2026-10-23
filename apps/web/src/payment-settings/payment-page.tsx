@@ -3,6 +3,7 @@ import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react'
 import { IconSearch } from '@arco-design/web-react/icon';
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { LatestQuery } from '../loading/latest-query.ts';
+import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { DemoSettingsTabs, DemoSettingsPager, DemoSettingsSingleSelect } from '../settings/demo-settings-controls.tsx';
 import { useDialogFocusReturn } from '../components/use-dialog-focus-return.ts';
@@ -12,10 +13,13 @@ import type { SettingsReference } from '../settings/stores/maintenance-contracts
 import { initialPaymentSettingsQuery } from './contracts.ts';
 import type { PaymentSettingsPage as PageData, PaymentSettingsProps, PaymentSettingsQuery, PaymentSettingsKind, PaymentSettingsRecord } from './contracts.ts';
 import { PaymentSettingsController } from './controller.ts';
-import { PaymentMethodForm } from './payment-method-form.tsx';
-import { PaymentAccountForm } from './payment-account-form.tsx';
 import './payment-settings.css';
 
+const paymentForms = new AsyncLeafRegistry({ 'payment-maintenance': { load: async () => {
+  const [method, account] = await Promise.all([import('./payment-method-form.tsx'), import('./payment-account-form.tsx')]);
+  return { PaymentMethodForm: method.PaymentMethodForm, PaymentAccountForm: account.PaymentAccountForm };
+} } }, { maxRetainedEntries: 1 });
+type PaymentFormViews = Awaited<ReturnType<typeof paymentForms.load<'payment-maintenance'>>>;
 type Queries = { readonly list: LatestQuery<PaymentSettingsQuery, PageData>; readonly detail: LatestQuery<{ readonly id: string }, PaymentSettingsRecord | null> };
 const emptyRead = Object.freeze({ phase: 'idle' as const, request: null, success: null, error: null });
 const noSubscribe = () => () => {};
@@ -44,16 +48,17 @@ function PaymentTabView(props: PaymentSettingsProps) {
     onExecuted={query => setExecuted(value => ({ ...value, [tab]: query }))} selectedMethod={method} onSelectedMethod={setMethod} />;
 }
 function PaymentContent(props: PaymentTabViewProps) {
-  const [queries, setQueries] = useState<Queries | null>(null);
+  const [binding, setBinding] = useState<{ readonly scope: PaymentSettingsProps['scope']; readonly reader: PaymentSettingsProps['reader']; readonly kind: PaymentSettingsKind; readonly queries: Queries } | null>(null);
   useEffect(() => {
-    if (!props.reader || !props.scope.active) { setQueries(null); return; }
+    if (!props.reader || !props.scope.active) { setBinding(null); return; }
     const reader = props.reader, current: Queries = {
       list: new LatestQuery({ scope: props.scope, execute: read => reader.readList(props.kind, read) }),
       detail: new LatestQuery({ scope: props.scope, execute: read => reader.readDetail(props.kind, read) }),
     };
-    setQueries(current); void current.list.run(props.lastQuery);
+    setBinding({ scope: props.scope, reader, kind: props.kind, queries: current }); void current.list.run(props.lastQuery);
     return () => { current.list.dispose(); current.detail.dispose(); };
   }, [props.scope, props.reader, props.kind]);
+  const queries = binding?.scope === props.scope && binding.reader === props.reader && binding.kind === props.kind ? binding.queries : null;
   return <PaymentList {...props} queries={queries} />;
 }
 function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly queries: Queries | null }) {
@@ -101,12 +106,13 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
   }, [scope, active, result, props.tableScroll]);
   if (!active) return null;
   const statusColumn = { title: '状态', width: 100, render: (_: unknown, row: PaymentSettingsRecord) => <Tag className={`iw-status ${row.enabled ? 'normal' : 'off'}`}>{row.enabled ? '正常' : '已停用'}</Tag> };
-  const actionColumn = { title: '操作', width: 76, render: (_: unknown, row: PaymentSettingsRecord) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare || busy || editor !== null} onClick={event => { if (active && queries) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditingId(row.id); void queries.detail.run({ id: row.id }); } }}>编辑</Button></div> };
+  const preparing = editingId !== null, unavailableOwner = !!props.workspace && !workspace;
+  const actionColumn = { title: '操作', width: 76, render: (_: unknown, row: PaymentSettingsRecord) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare || busy || editor !== null || preparing || unavailableOwner} onClick={event => { if (active && queries && !editor && !editingId) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); setEditingId(row.id); void queries.detail.run({ id: row.id }); } }}>编辑</Button></div> };
   const columns = props.kind === 'methods' ? [{ title: '名称', dataIndex: 'name' }, statusColumn, actionColumn]
     : [{ title: '账户名称', dataIndex: 'name' }, { title: '所属收款方式', render: (_: unknown, row: PaymentSettingsRecord) => row.kind === 'accounts' ? settingsReferenceName(row.paymentMethod) : '' },
       statusColumn, actionColumn];
   return <section className="demo-settings-workbench store-settings-workbench payment-settings-workbench bs-page iw-workbench iw-arco-controls" aria-label="收款配置">
-    <header className="bs-head iw-head"><h1>收款配置</h1><div className="bs-head-actions"><SettingsAuditEntry scope={scope} {...(props.audit ? { capability: props.audit } : {})} onAccessFailure={props.onAccessFailure} localHasUnresolvedWrite={() => props.workspace?.hasUnresolvedWrite() ?? editor?.hasUnresolvedWrite ?? false} /><Button type="primary" disabled={!props.canPrepare || editor !== null} onClick={event => { if (active) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); openEditor(null); } }}>新增{label}</Button></div></header>
+    <header className="bs-head iw-head"><h1>收款配置</h1><div className="bs-head-actions"><SettingsAuditEntry scope={scope} {...(props.audit ? { capability: props.audit } : {})} onAccessFailure={props.onAccessFailure} localHasUnresolvedWrite={() => props.workspace?.hasUnresolvedWrite() ?? editor?.hasUnresolvedWrite ?? false} /><Button type="primary" disabled={!props.canPrepare || editor !== null || preparing || unavailableOwner} onClick={event => { if (active && !editor && !editingId) { if (event.currentTarget instanceof HTMLElement) focus.capture(event.currentTarget); openEditor(null); } }}>新增{label}</Button></div></header>
     <DemoSettingsTabs scope={scope} label="收款配置" value={props.kind} restoreFocus={props.restoreFocus} items={[{ value: 'methods', label: '收款方式' }, { value: 'accounts', label: '资金账户' }]} onChange={changeTab} />
       <form className="bs-toolbar" role="search" onSubmit={event => { event.preventDefault(); run({ ...draft, page: 1, pageSize: applied.pageSize }); }}>
         <div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label={props.kind === 'methods' ? '搜索收款方式' : '搜索账户名称'} placeholder={props.kind === 'methods' ? '搜索收款方式' : '搜索账户名称'} maxLength={200} value={draft.search} onChange={search => setDraft(value => ({ ...value, search }))} suffix={<IconSearch />} allowClear /></div>
@@ -114,7 +120,7 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
           <div className="bs-filter"><DemoSettingsSingleSelect scope={scope} label="状态" placeholder="状态" value={draft.status} options={[{ value: 'normal', label: '正常' }, { value: 'disabled', label: '已停用' }, { value: 'all', label: '全部' }]} onChange={status => setDraft(value => ({ ...value, status: status as PaymentSettingsQuery['status'] }))} /></div>
         </div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" htmlType="submit" disabled={!queries || busy}>查询</Button><Button className="btn iw-reset" disabled={!queries || busy} onClick={() => { const reset = { ...initialPaymentSettingsQuery, pageSize: applied.pageSize }; props.onFilterDraft(reset); setMethod(null); run(reset); }}>重置</Button></div>
       </form>
-      {!queries && <p className="payment-empty-state" role="status">{label}资料读取暂未开放。{settingsSaveUnavailable}</p>}
+      {!queries && <p className="payment-empty-state" role="status">{props.reader ? '正在准备资料…' : `${label}资料读取暂未开放。${settingsSaveUnavailable}`}</p>}
       {list.phase === 'loading' && <p className="settings-note" role="status">正在读取资料…</p>}
       {list.phase === 'error' && <p className="settings-note" role="alert">资料读取失败。<Button type="text" onClick={() => run(list.request?.parameters ?? applied)}>重试</Button></p>}
       {result && list.phase !== 'success' && <p className="settings-note">下方为上次成功读取的结果。</p>}
@@ -122,7 +128,36 @@ function PaymentList(props: Parameters<typeof PaymentContent>[0] & { readonly qu
         if (scrollReady.current && active && result) { props.tableScroll.top = event.currentTarget.scrollTop; props.tableScroll.left = event.currentTarget.scrollLeft; }
       }}><Table size="small" rowKey="id" columns={columns} data={result ? [...result.items] : []} pagination={false} noDataElement={<Empty description={!queries ? '资料暂不可用' : !result ? '尚未读到资料' : '暂无符合条件的数据'} />} /></div>
       <DemoSettingsPager label="收款配置列表分页" scope={scope} page={applied.page} size={applied.pageSize} total={result?.total ?? null} busy={busy} onPage={page => run({ ...applied, page })} onSize={pageSize => run({ ...applied, page: 1, pageSize })} />
-    {editor && (props.kind === 'methods' ? <PaymentMethodForm controller={editor} close={close} /> : <PaymentAccountForm {...props} controller={editor} close={close} />)}
+    {editor && <PaymentMaintenanceForm scope={scope} {...(props.directory ? { directory: props.directory } : {})} controller={editor} close={close} />}
     {editingId && !editor && <Modal className="demo-ui bs-modal demo-settings-modal iw-arco-modal iw-arco-controls" autoFocus={false} focusLock visible title={`编辑${label}`} maskClosable={false} onCancel={close} okText="确定" cancelText="取消" okButtonProps={{ disabled: true }}><p role="status">{detail.phase === 'loading' ? '正在读取当前资料…' : detail.phase === 'success' ? '记录不存在或不可访问。' : '当前资料读取失败。'}</p>{detail.phase === 'error' && <Button onClick={() => { void queries?.detail.run({ id: editingId }); }}>重试读取</Button>}</Modal>}
   </section>;
+}
+
+/** Only code is retained between openings. Queries and subscriptions belong to
+ * the mounted form; the authenticated workspace remains the draft owner. */
+function PaymentMaintenanceForm(props: Pick<PaymentSettingsProps, 'scope' | 'directory'> & { readonly controller: PaymentSettingsController; readonly close: () => void }) {
+  const { controller, scope } = props;
+  const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
+  const [views, setViews] = useState<PaymentFormViews | null>(null), [failed, setFailed] = useState(false), [attempt, retry] = useState(0);
+  useEffect(() => {
+    let current = true;
+    setFailed(false);
+    void paymentForms.load('payment-maintenance', scope).then(loaded => {
+      if (current && scope.active && !controller.getSnapshot().disposed) setViews(loaded);
+    }, () => { if (current && scope.active && !controller.getSnapshot().disposed) setFailed(true); });
+    return () => { current = false; };
+  }, [scope, controller, attempt]);
+  if (!scope.active || state.disposed) return null;
+  if (views) return controller.kind === 'methods'
+    ? <views.PaymentMethodForm controller={controller} close={props.close} />
+    : <views.PaymentAccountForm {...props} />;
+  return <Modal className="demo-ui bs-modal demo-settings-modal iw-arco-modal iw-arco-controls" visible
+    title={`${controller.record ? '编辑' : '新增'}${controller.kind === 'methods' ? '收款方式' : '资金账户'}`} maskClosable={false} autoFocus={false} focusLock
+    okText="确定" cancelText="取消" okButtonProps={{ disabled: true }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
+    {failed ? <p className="settings-note" role="alert">维护表单暂未加载。<Button onClick={() => retry(value => value + 1)}>重试加载表单</Button></p>
+      : <p className="settings-note" role="status">正在准备维护表单…</p>}
+    {state.closePrompt && <section className="settings-close-prompt" role="alert"><strong>放弃本次填写？</strong><p>关闭后将清除本次未保存的内容。</p><div className="bs-row-actions">
+      <Button onClick={() => controller.keepEditing()}>继续填写</Button><Button onClick={() => { if (controller.discard()) props.close(); }}>放弃本次填写</Button>
+    </div></section>}
+  </Modal>;
 }

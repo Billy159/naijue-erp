@@ -42,7 +42,8 @@ export function parseOrganizationListQuery(input: unknown, kind: OrganizationMai
   organizationKind(kind);
   if (!input || typeof input !== "object" || Array.isArray(input) || Object.getPrototypeOf(input) !== Object.prototype) invalid();
   const r = input as Record<string, unknown>, filtered = kind === "STAFF" && Object.hasOwn(r, "role");
-  const keys = ["search", "status", "hallId", "page", "pageSize", ...(filtered ? ["role"] : [])];
+  const methodFiltered = kind === "PAYMENT_ACCOUNT" && Object.hasOwn(r, "paymentMethodId");
+  const keys = ["search", "status", "hallId", "page", "pageSize", ...(filtered ? ["role"] : []), ...(methodFiltered ? ["paymentMethodId"] : [])];
   if (Reflect.ownKeys(r).length !== keys.length || !keys.every(k => Object.hasOwn(r, k)) || typeof r.search !== "string" || r.search.length > 200 || r.search.includes("\0")
     || !["normal", "disabled", "all"].includes(r.status as string) || typeof r.page !== "number" || !Number.isSafeInteger(r.page) || r.page < 1
     || (r.pageSize !== 20 && r.pageSize !== 50 && r.pageSize !== 100) || !Number.isSafeInteger((r.page - 1) * r.pageSize)) invalid();
@@ -50,8 +51,12 @@ export function parseOrganizationListQuery(input: unknown, kind: OrganizationMai
   let hallId: string | null = null;
   try { if (r.hallId !== null) { if (typeof r.hallId !== "string") invalid(); hallId = entityId("hall", r.hallId); } } catch { invalid(); }
   if (kind === "PAYMENT_METHOD" && hallId !== null) invalid();
+  let paymentMethodId: string | null = null;
+  if (methodFiltered && r.paymentMethodId !== null) {
+    try { if (typeof r.paymentMethodId !== "string") invalid(); paymentMethodId = entityId("paymentMethod", r.paymentMethodId); } catch { invalid(); }
+  }
   const query: OrganizationListQuery = { search: r.search, status: r.status as OrganizationListQuery["status"], hallId, page: r.page, pageSize: r.pageSize };
-  return filtered ? { ...query, role: r.role as StaffRoleFilter } : query;
+  return filtered ? { ...query, role: r.role as StaffRoleFilter } : methodFiltered ? { ...query, paymentMethodId } : query;
 }
 /** Projection rejects malformed facts and removes provider-only fields, including credentials. */
 export function projectOrganizationRecord(input: unknown, kind: OrganizationMaintenanceKind): OrganizationMaintenanceRecord {

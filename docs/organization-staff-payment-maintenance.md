@@ -39,6 +39,20 @@ Other families reject the added role field. `loginStatus` is not accepted: its
 no-account classification remains pending, and this change advertises no login
 filter or inference about effective login eligibility.
 
+PAYMENT_ACCOUNT additionally accepts its own exact six-field body: the original
+five fields plus `paymentMethodId`, either explicit null for all methods or the
+canonical UUID of an existing method identity to match. The filter compares the
+stored `payment_account.payment_method_id` in the same matched CTE before count
+and pagination. A valid UUID with no matching accounts returns an empty page;
+invalid UUID input is rejected. Existing account status, hall membership, name
+search, stable ordering and the complete multi-hall response remain unchanged.
+Method enablement is not an extra read filter; disabled historical method
+references remain readable. Current ADMIN or WAREHOUSE authorization still runs
+before the account count/page query. Other kinds reject `paymentMethodId`, and
+it cannot be combined with the STAFF-only `role` field. Legacy five-field reads
+and all response DTOs remain unchanged; no new tables, fields, indexes, grants or
+write contracts are introduced.
+
 Lists return `{kind,page,pageSize,total,items}`. Count and one page are from one
 SQL statement. STAFF normal/disabled means the stored 在职/离职 state; ACCOUNT
 normal/disabled means its stored loginEnabled flag. An enabled login flag does not

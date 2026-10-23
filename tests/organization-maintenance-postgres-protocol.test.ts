@@ -22,13 +22,13 @@ function record(kind: OrganizationMaintenanceKind): Record<string, unknown> {
     case "PAYMENT_ACCOUNT": return { ...base, name: "PAYMENT ACCOUNT", enabled: true, paymentMethod: reference(41), halls: [reference(42), reference(43)] };
   }
 }
-function setup(kind: OrganizationMaintenanceKind, role: "ADMIN" | "WAREHOUSE" | "SALESPERSON" = "ADMIN", raw = record(kind), total = "1") {
+function setup(kind: OrganizationMaintenanceKind, role: "ADMIN" | "WAREHOUSE" | "SALESPERSON" = "ADMIN", raw: Record<string, unknown> | null = record(kind), total = "1") {
   const calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = [];
   const pool = { async connect() { return { async query(sql: string, values: unknown[] = []) {
     calls.push({ sql, values: structuredClone(values) });
     if (sql.includes("maintenance:identity")) return { rows: [{ account_id: actor.accountId, staff_id: id(901), login_enabled: true, employment_status: "在职", role, hall_id: actor.hallId }], rowCount: 1 };
     if (sql.includes("maintenance:hall")) return { rows: [{ id: actor.hallId, enabled: true }], rowCount: 1 };
-    if (sql.startsWith("WITH matched")) return { rows: [{ total, items: [raw] }], rowCount: 1 };
+    if (sql.startsWith("WITH matched")) return { rows: [{ total, items: raw === null ? [] : [raw] }], rowCount: 1 };
     return { rows: [], rowCount: 0 };
   }, release(error?: unknown) { releases.push(error); } }; } };
   return { calls, releases, service: createOrganizationMaintenanceReadService(new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool))) };
@@ -118,4 +118,58 @@ test("staff-role v1 request role never grants ADMIN and malformed native boolean
   const raw = record("STAFF"), account = raw.account as Record<string, unknown>;
   const malformed = setup("STAFF", "ADMIN", { ...raw, account: { ...account, loginEnabled: null } });
   await assert.rejects(malformed.service.list(actor, "STAFF", { ...query, role: "" }), { code: "INVALID_DATABASE_VALUE" });
+});
+
+test("payment-method-filter v1 preserves exact5 and validates PAYMENT_ACCOUNT-only exact6 before connection", async () => {
+  assert.deepEqual(parseOrganizationListQuery(query, "PAYMENT_ACCOUNT"), query);
+  for (const paymentMethodId of [null, id(41)])
+    assert.deepEqual(parseOrganizationListQuery({ ...query, paymentMethodId }, "PAYMENT_ACCOUNT"), { ...query, paymentMethodId });
+  // The existing STAFF role extension is a separate accepted shape, never a combined filter.
+  assert.deepEqual(parseOrganizationListQuery({ ...query, role: "WAREHOUSE" }, "STAFF"), { ...query, role: "WAREHOUSE" });
+  const f = setup("PAYMENT_ACCOUNT");
+  for (const paymentMethodId of [undefined, "", true, 0, [], {}, "not-uuid", "AAAAAAAA-0000-0000-0000-000000000041", "' OR true --"])
+    await assert.rejects(f.service.list(actor, "PAYMENT_ACCOUNT", { ...query, paymentMethodId }), { code: "INVALID_ORGANIZATION_QUERY" });
+  for (const input of [{ paymentMethodId: id(41) }, { ...query, page: undefined, paymentMethodId: null },
+    { ...query, paymentMethodId: id(41), role: "ADMIN" }, { ...query, paymentMethodId: null, extra: true }])
+    await assert.rejects(f.service.list(actor, "PAYMENT_ACCOUNT", input), { code: "INVALID_ORGANIZATION_QUERY" });
+  for (const kind of ["HALL", "WAREHOUSE", "STAFF", "ACCOUNT", "PAYMENT_METHOD"] as const)
+    await assert.rejects(f.service.list(actor, kind, { ...query, paymentMethodId: null }), { code: "INVALID_ORGANIZATION_QUERY" });
+  assert.equal(f.calls.length, 0);
+});
+test("payment-method-filter v1 uses one matched count/page predicate after current authorization and preserves account halls", async () => {
+  const raw = { ...record("PAYMENT_ACCOUNT"), enabled: false, paymentMethod: { ...reference(41), enabled: false } };
+  for (const currentRole of ["ADMIN", "WAREHOUSE"] as const) {
+    const f = setup("PAYMENT_ACCOUNT", currentRole, raw, "21"), search = "literal %' --";
+    const page = await f.service.list(actor, "PAYMENT_ACCOUNT", { ...query, search, status: "disabled", hallId: id(42), page: 2, paymentMethodId: id(41) });
+    assert.equal(page.total, 21); assert.equal(page.page, 2); assert.equal(page.items.length, 1); assert.deepEqual(page.items[0], raw);
+    const index = f.calls.findIndex(c => c.sql.startsWith("WITH matched")), call = f.calls[index]!;
+    assert.ok(f.calls.slice(0, index).some(c => c.sql.includes("maintenance:identity")));
+    assert.deepEqual(call.values, [search, "disabled", id(42), 20, 20, null, id(41)]);
+    assert.match(call.sql, /AND \(\$7::uuid IS NULL OR m\.payment_method_id=\$7::uuid\)/);
+    assert.ok(call.sql.indexOf("m.payment_method_id=$7::uuid") < call.sql.indexOf("page AS"));
+    assert.match(call.sql, /SELECT count\(\*\)::text FROM matched/); assert.match(call.sql, /ORDER BY display_name COLLATE "C",id LIMIT \$4 OFFSET \$5/);
+    assert.match(call.sql, /EXISTS\(SELECT 1 FROM naijue_erp\.payment_account_hall/);
+    assert.equal(f.calls.filter(c => c.sql.startsWith("WITH matched")).length, 1);
+    assert.ok(!call.sql.includes(search)); assert.ok(!call.sql.includes(id(41))); assert.ok(!call.sql.includes("m.role=$7"));
+    assert.ok(!/WHERE pm\.enabled|AND pm\.enabled/.test(call.sql));
+    assert.ok(f.calls.every(c => !/password_hash|token_hash|INSERT|UPDATE naijue|DELETE FROM/.test(c.sql)));
+    assert.deepEqual(f.releases, [undefined]);
+  }
+  for (const input of [query, { ...query, paymentMethodId: null }]) {
+    const f = setup("PAYMENT_ACCOUNT"), page = await f.service.list(actor, "PAYMENT_ACCOUNT", input);
+    assert.equal(page.total, 1); assert.deepEqual(page.items[0], record("PAYMENT_ACCOUNT"));
+    const call = f.calls.find(c => c.sql.startsWith("WITH matched"))!;
+    assert.deepEqual(call.values, ["", "all", null, 20, 0, null, ...(Object.hasOwn(input, "paymentMethodId") ? [null] : [])]);
+    if (!Object.hasOwn(input, "paymentMethodId")) assert.ok(!call.sql.includes("$7"));
+  }
+  const missing = setup("PAYMENT_ACCOUNT", "ADMIN", null, "0");
+  assert.deepEqual((await missing.service.list(actor, "PAYMENT_ACCOUNT", { ...query, paymentMethodId: id(499) })).items, []);
+});
+test("payment-method-filter v1 cannot bypass denial or turn malformed count/reference data into an empty success", async () => {
+  const denied = setup("PAYMENT_ACCOUNT", "SALESPERSON");
+  await assert.rejects(denied.service.list(actor, "PAYMENT_ACCOUNT", { ...query, paymentMethodId: id(41) }), { code: "FORBIDDEN" });
+  assert.ok(!denied.calls.some(c => c.sql.startsWith("WITH matched"))); assert.equal(denied.calls.at(-1)!.sql, "ROLLBACK");
+  for (const f of [setup("PAYMENT_ACCOUNT", "ADMIN", record("PAYMENT_ACCOUNT"), "0"),
+    setup("PAYMENT_ACCOUNT", "ADMIN", { ...record("PAYMENT_ACCOUNT"), paymentMethod: null })])
+    await assert.rejects(f.service.list(actor, "PAYMENT_ACCOUNT", { ...query, paymentMethodId: null }), { code: "INVALID_DATABASE_VALUE" });
 });

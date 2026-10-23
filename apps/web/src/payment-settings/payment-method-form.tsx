@@ -21,7 +21,7 @@ export function PaymentSettingsModal(props: { readonly title: string; readonly c
     visible title={props.title} maskClosable={false} autoFocus={false} focusLock okText="确定" cancelText={write.phase === 'committed' ? '关闭' : '取消'}
     okButtonProps={{ disabled: !controller.writesEnabled || controller.locked || Boolean(controller.record && !state.dirty), loading: write.phase === 'submitting' }}
     onOk={() => { void controller.submit(); }} onCancel={() => { if (controller.requestClose()) props.close(); }}>
-    <div onBlur={() => { if (!controller.locked) controller.validate(); }}>{props.children}</div>
+    <div>{props.children}</div>
     {!controller.writesEnabled && !controller.hasUnresolvedWrite && write.phase !== 'committed' && <p className="settings-note" role="status">此版本暂未开放保存，填写的内容不会保存。</p>}
     {pending && <p className="settings-note" role="status">{write.phase === 'submitting' ? '正在保存，请等待结果。' : '正在查询原提交的回执…'}</p>}
     {write.phase === 'committed' && <p className="settings-note" role="status">保存成功。</p>}

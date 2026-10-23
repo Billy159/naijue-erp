@@ -1,0 +1,550 @@
+{
+  "atUtc": "2026-10-23T02:42:18.947606+00:00",
+  "parent": "c637c149b5507e76a8c8ea9aa30f0fd6de3d8698",
+  "groups": [
+    {
+      "slice": "B05_PAYMENT_ACCOUNT_METHOD_READ_FILTER",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/payment-method-read-filter-v1/RESULT.json",
+      "receiptSha256": "06752b6f2718010e79bf9b97eaf7804ab96dea03afd9b245673312ba1b19573a",
+      "receiptSnapshot": {
+        "format": "D2_PAYMENT_METHOD_READ_FILTER_DELIVERY_V1",
+        "taskId": "B05_PAYMENT_ACCOUNT_METHOD_READ_FILTER",
+        "status": "SOURCE_DONE_NEW4_PLUS_AFFECTED2_AND_STRICT_PASS_NOT_PG_OR_UI",
+        "recordedAtUtc": "2026-10-23T02:36:00.036Z",
+        "authority": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanProgressAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2 plus C relayed current direct human backend skills/payment-list request",
+          "modelRequested": "gpt-6.1-sol/xhigh",
+          "fastObserved": "UNKNOWN_TOOL_DOES_NOT_EXPOSE_SPEED",
+          "scope": "Six existing registered D2 files; no new R path, frontend or other-owner edits"
+        },
+        "headAtStart": "728861f13b1322d18963c1fea87b1b2b94484486",
+        "headAtReceiptObserved": "c637c149b5507e76a8c8ea9aa30f0fd6de3d8698",
+        "candidateCommit": null,
+        "files": [
+          {
+            "path": "packages/application/src/organization-maintenance-ports.ts",
+            "beforeSha256": "2d85aadcc84f58c1ec7e14ef0b4c2e82b95987a7d4aefbfd5ba11ce408b94f25",
+            "afterSha256": "9551909914aabd3678eed177e9948272bf0ff3375a8d01e41c716e21497b8e8a"
+          },
+          {
+            "path": "packages/application/src/organization-maintenance-validation.ts",
+            "beforeSha256": "416d16645d6c886363b301745fb5b74c078accc39a5c0f2275a2489f5b5411da",
+            "afterSha256": "791bb1849d20936a901bf55b3739288a63e31517d75297e9cd1e1e50b9682414"
+          },
+          {
+            "path": "adapters/postgres/src/organization-maintenance-store.ts",
+            "beforeSha256": "f55fa7db93794b95178dd5de04a0a3875e65559996d67628c719ec81c543bd20",
+            "afterSha256": "cab32ada2370dad00a910767d52ee7a209173b6b2fcef943abdabd3dc7eb1aab"
+          },
+          {
+            "path": "apps/api/src/organization-maintenance-http.test.ts",
+            "beforeSha256": "f82079d847f1304838fc9ea9e3bba96699e771c53ead913fe6ac5bf8fb5ab05b",
+            "afterSha256": "9d49b304e4bb1f2a689de2c3b984e9d5bb326ef16897be859eb3af8554810fdb"
+          },
+          {
+            "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+            "beforeSha256": "25cf914211345dab377fcbbc4d0f46e5d463133ddb00815bd78e79af2961df91",
+            "afterSha256": "2322dad2e4197ba0631c44aa82bb037ba0746e47e50bfa64300dac39bae0e00a"
+          },
+          {
+            "path": "docs/organization-staff-payment-maintenance.md",
+            "beforeSha256": "c57eb0bb74311a4b6129d740b1b46bb29c3fd8db48b3f00189ec83633d96281d",
+            "afterSha256": "8a2f4c3618506753597c8cbd49ae6ef0b522566be81f1fcc568228e254850357"
+          }
+        ],
+        "change": "PAYMENT_ACCOUNT accepts additive exact6 paymentMethodId null/UUID; parameterized predicate in original matched CTE before shared count/page; original current-role authorization preserved.",
+        "checks": [
+          {
+            "name": "New4 red before implementation",
+            "status": "REPRODUCED",
+            "passed": 0,
+            "failed": 4,
+            "log": "red.log",
+            "sha256": "627125cb406a9b7a0332f399f1f0320eb88f865ab009f83a9319a0b676ccdbed",
+            "meaning": "Original parser/HTTP rejects new6 as INVALID_ORGANIZATION_QUERY/400"
+          },
+          {
+            "name": "New4 protocol and Fastify inject",
+            "status": "PASS",
+            "passed": 4,
+            "failed": 0,
+            "log": "green.log",
+            "sha256": "98316972b207f6caa69eff1d88be27e36abf9e584587a6fd77f8e592a4f71d92",
+            "command": "Node24 --test --test-concurrency=1 --test-name-pattern='payment-method-filter v1' tests/organization-maintenance-postgres-protocol.test.ts apps/api/src/organization-maintenance-http.test.ts"
+          },
+          {
+            "name": "Strict run1",
+            "status": "FAILED_NEW_TEST_ARRAY_INDEX_MAY_BE_UNDEFINED",
+            "log": "types-run1.log",
+            "sha256": "80c92df9b2d3ba3559f284a530bf11a4ebe6f812be1a19f256a8e7d24d8ac43a",
+            "resolution": "Fixed newly-added HTTP payload list to readonly tuple; no production type/config weakening."
+          },
+          {
+            "name": "Affected2 after test tuple and invalid canonical UUID edit",
+            "status": "PASS",
+            "passed": 2,
+            "failed": 0,
+            "log": "affected-green.log",
+            "sha256": "3532484ed59f970cbe22c11da8a2128c4360e605e1c18fd9e2d06acf997858fd",
+            "meaning": "Only HTTP and parser new cases rerun. Other unchanged two new cases reuse first pass."
+          },
+          {
+            "name": "Five changed TypeScript entries strict run2",
+            "status": "PASS",
+            "exitCode": 0,
+            "log": "types-run2.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "flags": "noEmit strict noUncheckedIndexedAccess exactOptionalPropertyTypes noFallthroughCasesInSwitch noImplicitOverride verbatimModuleSyntax allowImportingTsExtensions NodeNext ES2023 skipLibCheck node ES2023,DOM"
+          },
+          {
+            "name": "Exact6 diff whitespace",
+            "status": "PASS",
+            "exitCode": 0
+          }
+        ],
+        "coverage": [
+          "Old5/null6/UUID6 and STAFF role6 compatibility; malformed/partial/extra/cross-kind/cross-role input fails before connect",
+          "Matched CTE $7 UUID predicate before shared count/page, old search/status/hall/page2/total21 protocol binding, disabled method reference and full multi-hall metadata",
+          "Current ADMIN/WAREHOUSE allowed, SALESPERSON denial before page/count; malformed reference/count remains failure",
+          "Original HTTP200/no-store and 400/401/403; inject has no listener"
+        ],
+        "skillApplication": {
+          "read": [
+            {
+              "path": "/Users/billy/.codex/skills/nodejs-backend-patterns/SKILL.md",
+              "sha256": "d52e1150accdc27e916f0962c9ba0872fcbe8a7d849d905dcc795c0f9d05aeae"
+            },
+            {
+              "path": "/Users/billy/.codex/skills/supabase-postgres-best-practices/SKILL.md",
+              "sha256": "ad65e776f45e761bafc609d3f506c77c1032225aa65e0c4c02f241b8071e5855"
+            },
+            {
+              "path": "/Users/billy/.codex/skills/supabase-postgres-best-practices/references/security-privileges.md",
+              "sha256": "095909274a4fb43df785d7144cf674eeb40284d2d45628f14af4108737b93663"
+            },
+            {
+              "path": "/Users/billy/.codex/skills/supabase-postgres-best-practices/references/data-pagination.md",
+              "sha256": "73c9fa10a3d439bedea0e11b640bd25bf30dd50f0d9006cf85baf7c3151543fa"
+            },
+            {
+              "path": "/Users/billy/.codex/skills/supabase-postgres-best-practices/references/data-n-plus-one.md",
+              "sha256": "21a44905e5b16a42741892ec34bb1bfef124d049b140a76934a9acd0f46f5fc2"
+            }
+          ],
+          "applied": [
+            "Typed validation and injected existing Fastify read boundary",
+            "Original authorization before count/page; no DB grants changed",
+            "One bounded existing query without N+1; parameterized method identity",
+            "Existing OFFSET contract retained despite generic cursor suggestion",
+            "No new framework/ORM/Supabase/PgBouncer/APM/extension/pool/cache/timeout/index"
+          ],
+          "authority": "AGENTS/DECISIONS/current task and accepted QA override generic skill examples"
+        },
+        "unchangedReadOnlyPins": {
+          "packages/application/src/organization-maintenance-service.ts": "98ba253a5ae2e03481e801e23f065c1610e534c16c54c2d11d1998fc5f17dfdd",
+          "apps/api/src/organization-maintenance-http.ts": "32500228478c0f0e40785af88d676fa10be00c2209ac4bde1fe1326340431f68",
+          "adapters/postgres/src/maintenance-command-unit-of-work.ts": "ae4b43c965c839285dff84fcabd561b6708ccd6bc362fbfb98281a5b09659390",
+          "apps/web/src/payment-settings/http-client.ts": "657d454ae7a090b443f1458bd38ae7fa72d6b53d0a37f88b1e3cba89a8734d9b",
+          "apps/web/src/settings/stores/maintenance-http-client.ts": "4debfe2557b95545f033dc76786a79a510f9ccbb072466f2173762bb8258acc8"
+        },
+        "notTested": [
+          "Actual PostgreSQL/filter result/count/ACL",
+          "Real scale cold1+repeat2 <=2000ms",
+          "F3 HTTP capability/selector/browser",
+          "Host/deployment/production",
+          "Old accepted settings/role/media suites not rerun"
+        ],
+        "newRPaths": [],
+        "sourceFileCount": 6,
+        "databaseConnection": false,
+        "gitMutation": false,
+        "frontendEdits": false,
+        "schemaIndexGrantDependencyWriteChange": false,
+        "browserBuildOrHost": false,
+        "artifacts": {
+          "API.json": "036a8b4abdf0ea88c76ae0a97ed1a73319e695e1a30608c0daf8843b58d44de6",
+          "HANDOFF.txt": "51cb492c7dbe1654a5b4c54325db9c79993c30480d2cc4ea03d75e6f9af6219a",
+          "BASELINE.json": "185fd3c39e74257c9ad8d51da1bac8506446f718a4a2c5c56a56a47025232eb3",
+          "applied-exact6.diff": "14c631096d7b8d4e7757703dc174d0d098ceae4e32cd662f580b08f74956c44e"
+        },
+        "blockers": [],
+        "next": "C fixes/pins exact6 and registers the additive read contract, original QB reviews only new payment filter scope, then F3 pairs its actual HTTP reader. C alone owns real PG/timings. Files released for C; no further edits without concrete issue."
+      },
+      "files": [
+        {
+          "path": "packages/application/src/organization-maintenance-ports.ts",
+          "owner": "D2",
+          "bytes": 6237,
+          "sha256": "9551909914aabd3678eed177e9948272bf0ff3375a8d01e41c716e21497b8e8a"
+        },
+        {
+          "path": "packages/application/src/organization-maintenance-validation.ts",
+          "owner": "D2",
+          "bytes": 9835,
+          "sha256": "791bb1849d20936a901bf55b3739288a63e31517d75297e9cd1e1e50b9682414"
+        },
+        {
+          "path": "adapters/postgres/src/organization-maintenance-store.ts",
+          "owner": "D2",
+          "bytes": 16973,
+          "sha256": "cab32ada2370dad00a910767d52ee7a209173b6b2fcef943abdabd3dc7eb1aab"
+        },
+        {
+          "path": "apps/api/src/organization-maintenance-http.test.ts",
+          "owner": "D2",
+          "bytes": 7188,
+          "sha256": "9d49b304e4bb1f2a689de2c3b984e9d5bb326ef16897be859eb3af8554810fdb"
+        },
+        {
+          "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+          "owner": "D2",
+          "bytes": 15516,
+          "sha256": "2322dad2e4197ba0631c44aa82bb037ba0746e47e50bfa64300dac39bae0e00a"
+        },
+        {
+          "path": "docs/organization-staff-payment-maintenance.md",
+          "owner": "D2",
+          "bytes": 4782,
+          "sha256": "8a2f4c3618506753597c8cbd49ae6ef0b522566be81f1fcc568228e254850357"
+        }
+      ]
+    },
+    {
+      "slice": "F05/PAYMENT-COMPLETE-UI-v1",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/RESULT.json",
+      "receiptSha256": "89bd8ce9a347752b78bfeaef399dc0fe48da3b2cb768165f66472bbc88947359",
+      "receiptSnapshot": {
+        "taskId": "F05/PAYMENT-COMPLETE-UI-v1",
+        "owner": "F3",
+        "clientDate": "2026-10-23",
+        "generatedAtObservedUtc": "2026-10-23T02:34:42.740018+00:00",
+        "status": "SOURCE_READY_PAYMENT_PAGE_AND_MAINTENANCE_ASSEMBLY_FOR_C_CHECKPOINT_QF",
+        "scope": "B05/B06 plus O-B05/O-B06 and optional O-B08 consumer: retain complete frozen layout and existing native fields, close explicit maintenance lazy/loading/retry/cancel/reentrant-preparation and reader-binding gaps. Not a whole-page actual-browser/business PASS.",
+        "baselineHead": "826af55bd65a88f8fc899c449c79fcb3e1eb50e8",
+        "observedHeadAtReceipt": "c637c149b5507e76a8c8ea9aa30f0fd6de3d8698",
+        "frozenDemoCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+        "files": [
+          {
+            "path": "apps/web/src/payment-settings/payment-page.tsx",
+            "beforeSha256": "bb2c777b6291c2cbda62b6bd4c35da0a89989ac451b102d0a4d38397fd47f20f",
+            "afterSha256": "a725fa4249e1a15c058a2110f16e959c976fc03a1d05f48833e49fce796a8ca5"
+          },
+          {
+            "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+            "beforeSha256": "dcdadfe71b276d7dbdd442f61ad62faf99b0982f6b68c585d07479af66b5a797",
+            "afterSha256": "9a7ceca62833026b5e9da7f96f680dc6ad5106563ba62e2bbd429dd3c798e257"
+          }
+        ],
+        "newRFiles": [],
+        "patch": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/exact2.patch",
+          "sha256": "5591493e87926c6808a0a97c9330dfa4a5f5f9a2ccfba1a1f79978b1dccf509f"
+        },
+        "changes": [
+          "Existing PaymentMethodForm/PaymentAccountForm dynamic imports via one bounded code-only AsyncLeafRegistry; no maintenance evaluation on list entry. Explicit open displays native loading Modal, load failure exposes retry; no new UI library or cached data.",
+          "Mounted code-loader owns only code/error. Original session editor owns draft/id/version/key/receipt; cancellation/current/scope guards ignore late code, retry retains same editor.",
+          "Prepare/edit-detail state blocks duplicate new/row actions; cancellation aborts only detail read and late result cannot reopen. Native detail still supplies current immutable IDs/version/relations.",
+          "Payment reader-query binding checks exact scope/reader/kind before consuming snapshots; no old reader result is displayed under new binding.",
+          "Remove shared payment Modal unguarded form blur validation after local focus-only reproduction; unchanged explicit submit/parser/required/byte limits remain. Same Modal/fields/style imports and handlers retained."
+        ],
+        "completeSourceMap": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/DEMO-TO-SOURCE-MAP.json",
+        "regionsMapped": 6,
+        "checks": {
+          "newLocalSourceDomGroups": {
+            "status": "PASS_NEW_PAYMENT_PAGE_ASSEMBLY_SCOPE",
+            "groups": [
+              {
+                "name": "page entry defers maintenance and audit code/data",
+                "status": "PASS",
+                "evidence": "CHECK-after-run1.json"
+              },
+              {
+                "name": "edit read blocks duplicate new and row actions; cancelled detail cannot reopen",
+                "status": "PASS",
+                "evidence": "CHECK-after-run1.json"
+              },
+              {
+                "name": "focus-only empty account preparation does not validate before submit",
+                "status": "PASS",
+                "evidence": "CHECK-after-run1.json"
+              },
+              {
+                "name": "first activation loading then cancel ignores late code result",
+                "status": "PASS",
+                "evidence": "CHECK-after-run1.json"
+              },
+              {
+                "name": "failed module has explicit retry and uses original editor without losing input",
+                "status": "PASS",
+                "evidence": "CHECK-after-retest.json"
+              },
+              {
+                "name": "method and account edit preserve exact current native fields/relations",
+                "status": "PASS",
+                "evidence": "CHECK-after-run1.json"
+              },
+              {
+                "name": "scope invalidation ignores pending maintenance module and clears no newer owner",
+                "status": "PASS",
+                "evidence": "CHECK-after-run1.json"
+              },
+              {
+                "name": "actual optional audit0 is independent/lazy and closing keeps filter input",
+                "status": "PASS",
+                "evidence": "CHECK-after-retest.json"
+              },
+              {
+                "name": "new reader binding never displays the previous reader result while preparing",
+                "status": "PASS",
+                "evidence": "CHECK-after-retest.json"
+              }
+            ],
+            "groupCount": 9,
+            "commands": 0,
+            "requestKeys": 0,
+            "explicitSyntheticAudit0Only": true,
+            "sourceFormLateModuleAndReadGuards": "PASS_LOCAL_DOM",
+            "actualBrowser": false,
+            "pixelGeometry": "NOT_MEASURED",
+            "businessSave": "NOT_RUN",
+            "testDriverCorrections": "Run1 audit check used wrong Arco close class and tried a programmatic header action while another modal was open. Corrected targeted case checks actual allowed entry with a list filter draft, uses native close-icon, and retains query draft after close. Local owner.update is now in act. Only those cases plus new reader binding were run in retest; original passed groups reused. Run1 artifacts preserved."
+          },
+          "affectedStrictTypes": {
+            "exitCode": 0,
+            "scope": "Exact2 plus payment-account form, F1 payment route and transitive sources; strict/noEmit",
+            "initialFailure": "explicit optional directory property required conditional spread; original strict error preserved"
+          },
+          "leafResourceGraph": {
+            "status": "PASS_LEAF_MODULE_RESOURCE_GRAPH_ONLY",
+            "dynamicMaintenanceEdges": [
+              {
+                "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+                "kind": "dynamic-import",
+                "original": "./payment-method-form.tsx"
+              },
+              {
+                "path": "apps/web/src/payment-settings/payment-account-form.tsx",
+                "kind": "dynamic-import",
+                "original": "./payment-account-form.tsx"
+              }
+            ],
+            "scope": "esbuild write:false in-memory leaf only; no full integrated build/artifact/runtime"
+          },
+          "diffCheckExitCode": 0,
+          "protectedOtherRegisteredF3Files": 68,
+          "sourceCommandControllerClientValidatorsUnchanged": true,
+          "sharedCSSThemePagerPopupAndAudit113Unchanged": true
+        },
+        "preserved": [
+          "Frozen basic-settings title/tab/filter/table/pager/new/edit/1040-audit presentation translated with exact source map",
+          "Original SALE/RETURN/EXCHANGE not touched; no SKU/quantity/money business changes",
+          "Funds multi-hall native relationships and explicit empty set, edit method immutable, precise old native command action/id/version/key/transaction",
+          "Original actual reader total/paging/permissions/unknown/stale/cancel guards",
+          "Old valid parent viewport/pager/cross-tab scroll/popup88/source-auth113 evidence reused without retest",
+          "No old storage/global script execution, no fake successful save or fabricated audit from action"
+        ],
+        "testQualification": {
+          "allDataSynthetic": true,
+          "commands": 0,
+          "requestKeys": 0,
+          "audit0": "One local optional actual Entry/Drawer consumer proof only; no real saved record generation or formal0 assertion.",
+          "driverIssuesPreserved": "Initial strict optional-property error repaired by omitting absent directory. After-run1 failed audit close lookup; targeted retest uses actual native close-icon and reachable header state, plus act wrapper and new reader-binding case. Original passed groups reused. First leaf graph check lacked virtual output path; in-memory setup corrected, write:false retained. All failure logs kept.",
+          "oldSuitesNotRepeated": [
+            "W4/W5/W7/W8/native writes/recovery/audit backend",
+            "C11310auth cases",
+            "Parent viewport/pager/cross-tab scroll",
+            "Shared popup88"
+          ]
+        },
+        "notTested": [
+          "New fixed centralized actual browser for the complete payment page/new/edit/candidate/query/error states",
+          "Formal isolated native save/read/permissions/reject/receipt or actual DB business acceptance; previous native tests reused only in their accepted source scope",
+          "Native funding paymentMethodId filtering (D2 exact6 now assigned/pending), no fake supports flag set",
+          "Default formal host preparation/audit executable capabilities",
+          "Formal populated audit rows/current identity/credential redaction under real data",
+          "Formal performance or production deployment"
+        ],
+        "hostDependencies": [
+          {
+            "id": "PAYMENT-PRODUCTION-PREPARE-CAP",
+            "owner": "C/F1",
+            "path": "apps/web/src/production-host/mount.tsx",
+            "actualCondition": "Default payment view has canPrepare:false; current mount rejects any canPrepare:true. Existing root/session route supports explicit commands with writesEnabled:false.",
+            "request": "Original host owner compose approved session-bound preparation when its native backend/QA gate allows; preserve actual auth/scope/current/unknown command protections. Do not remove guard by F3 or pass fake successful save."
+          },
+          {
+            "id": "DATA-SRC-003/formal payment audit",
+            "owner": "C/F1",
+            "paths": [
+              "apps/web/src/production-host/mount.tsx",
+              "apps/web/src/production-host/entry.ts"
+            ],
+            "actualCondition": "Payment leaf/view optional audit seam exists. Default actual production startup has none. C113 K overlay contains explicit synthetic audit0 only, with no real audit source proof.",
+            "request": "Choose explicit native read capability/real aggregate pending guard under actual authenticated host. Audit0 suitable for visual test only, never formal0 records."
+          },
+          {
+            "id": "PAYMENT-METHOD-READ-FILTER",
+            "owner": "C/D2",
+            "paths": [
+              "apps/web/src/payment-settings/http-client.ts",
+              "packages/application/src/organization-maintenance-ports.ts"
+            ],
+            "actualCondition": "Native read has search/status/hall/page/pageSize, no paymentMethodId; frontend reader rejects nonnull and exposes no supportsPaymentMethodFilter. Funding select retains disabled original visual control.",
+            "request": "If required for full matching behavior, freeze a separate approved existing-method-ID read extension with backend owner; F3 must not enable a fake capability. This is a bounded read-port gap, no schema/write-field addition requested here.",
+            "state": "C_ASSIGNED_D2_NATIVE_READ_EXACT6_PENDING_FIXED_QB",
+            "acceptedDirectionFromC": "PAYMENT_ACCOUNT-only exact6, original5+paymentMethodId explicit null/all or UUID existing native foreign key; no schema/write change; wait fixed source/backend checks and exact pins before adapter supports=true."
+          }
+        ],
+        "blockersForOwnedSource": [],
+        "next": "C freeze exact2; QF review complete source map plus new loading/preparation/current guard boundaries, then C-only central build/new actual QA for unmeasured page states. F3 native method-filter adapter follows only after D2 fixed/QB/pins, separate source checkpoint. Later hall/parties/staff-account work remains original queue.",
+        "safetyFacts": {
+          "writesEnabledChanged": false,
+          "newSchemaOrBusinessRule": false,
+          "backendEdited": false,
+          "F1RootOrSharedFilesEdited": false,
+          "CPreviewOverlayEdited": false,
+          "actualChromeUsed": false,
+          "actualBrowserHarnessUsed": false,
+          "activeBrowserOperations": false,
+          "database": false,
+          "serverStarted": false,
+          "integratedBuildRun": false,
+          "gitMutation": false,
+          "newApplicationFiles": []
+        },
+        "authorization": {
+          "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+          "humanProgressAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+          "userCurrentDecision": "Whole frozen-Demo UI migration; existing original owners; Demo chat closed, no messages/restart/new duplicate chat",
+          "model": "gpt-6.1-sol",
+          "reasoningEffort": "xhigh",
+          "fastRequested": false,
+          "fastEnabledByF3": false,
+          "actualFastUi": "NOT_OBSERVED"
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/BASELINE.json",
+            "sha256": "c60fe59f15f2f9f15832586611ad7bddcb23c055b7e59ade7c98e42f7b8a256d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/CHECK-SUMMARY.json",
+            "sha256": "19545dd38b295c2a04bf24abe96267f5b67b0f05bc67c0d13a063c457400c2e5"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/CHECK-after-retest.json",
+            "sha256": "24ac041eee2c599bb5343d3a4c771060410d803a30c207255d92cccc9978622d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/CHECK-after-run1.json",
+            "sha256": "87fe56bcd47024d7031575314f6c3a6df1f495eafb90893c9489ba4e30c5668f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/CHECK-before.json",
+            "sha256": "6cbc18a83a3f20be69038c04bc6a60fa639fbe00dcd80330e80e75f2ee0c21cd"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/DEMO-TO-SOURCE-MAP.json",
+            "sha256": "76d29b6e3bce3533192a6b0f82b5cf8137c7a5cb5b28255e3517a1765e36a14a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/HOST-DEPENDENCIES.json",
+            "sha256": "8c9fa796e768daf699ed8e6868b111105870f2a5fc27504514ffe924e4bd5852"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/LEAF-GRAPH-CHECK.json",
+            "sha256": "d323a759faed46c508823c2f14c38977e9c109d9b526ad47b331d604e1747aeb"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/PRIOR-ACCEPTED-SCOPE-REUSE.json",
+            "sha256": "fc9278aa3649180d4ef1317bb65e2df24bf1fb652e575e3fb6f28484af07bdf3"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/SKILL-APPLICATION.json",
+            "sha256": "33914ef1e5868f5d2e6ebde05b72eddf9c7126ef4c0ad833d8ee0a3b56c92203"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/SOURCE-PROTECTION.json",
+            "sha256": "68aeccd7133f9f29eb398106aa71a274727bc2587520bc636df76a7d605f8f5d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/TYPE-CHECK.json",
+            "sha256": "8a486c17201195a2223823782b0ee27c2d5bec59a46a45ed6ee3bbe4105f29de"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/after-run1.log",
+            "sha256": "485b452ab0659a425c1711186ba11328a806132e157ca7dd1ecc84c3feeb3f25"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/after-targeted-retest.log",
+            "sha256": "947fa7aa437785882ba238445ad16f47ac5a153987e665a1c292ad7016c6620b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/before.log",
+            "sha256": "492ec3d62527c92d13ccc1fb135919618c984b5214f9346bd48317755dcd71c2"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/check-complete-ui.mjs",
+            "sha256": "597ff35c832c9c91e0ca74ce591ca83e5574601314530dd6ea87c72688e0c21e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/check-leaf-graph.mjs",
+            "sha256": "fb0c12c0da4b5b18616e811b55112e7898fc1454a432efd01afd4005370c245e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/entry-after-retest.mjs",
+            "sha256": "e2ea73dc0db342785993047c39743d82fabf49d58888526a0e4b90fe2f041c2d"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/entry-after.mjs",
+            "sha256": "d0498cfca9aa7f99803bfb17b7352c5b6bdfe346645d936700860e309cb90897"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/entry-before.mjs",
+            "sha256": "ddeda0ab7a34fea401354a89990730d59cb3ac7c9dae26f27cd0a1300aeb5730"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/exact2.patch",
+            "sha256": "5591493e87926c6808a0a97c9330dfa4a5f5f9a2ccfba1a1f79978b1dccf509f"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/leaf-graph-run2.log",
+            "sha256": "fdfdc2b5107abb4037c87d313e9dc77fde2e7f82cc8891c7eaa74d8e4ca7c8ab"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/leaf-graph-setup-run1.log",
+            "sha256": "c76d5b533b3f8ebfe17d91079586c964fd30dc12f1b50a9d18bb411289a0d8f6"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/tsconfig.json",
+            "sha256": "75e3673ae079b80bb6d60a6013ac56e6d4b1e3df7683c0bf929dfb7676a53183"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/types-run1.log",
+            "sha256": "6fb2207395fdc6625130c4dde0cb757d52faf51935524827b95b9eac02bac1c1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/payment-complete-ui-v1/types-run2.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ]
+      },
+      "files": [
+        {
+          "path": "apps/web/src/payment-settings/payment-page.tsx",
+          "owner": "F3",
+          "bytes": 18766,
+          "sha256": "a725fa4249e1a15c058a2110f16e959c976fc03a1d05f48833e49fce796a8ca5"
+        },
+        {
+          "path": "apps/web/src/payment-settings/payment-method-form.tsx",
+          "owner": "F3",
+          "bytes": 4224,
+          "sha256": "9a7ceca62833026b5e9da7f96f680dc6ad5106563ba62e2bbd429dd3c798e257"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze original D2 exact6 additive existing PAYMENT_ACCOUNT read filter and original F3 exact2 whole payment assembly. Source/protocol/DOM and scoped type checks adopted; original QB/QF receive only new scope. Actual PostgreSQL, browser whole-page, scale/performance, integrated build and deployment remain separate/unmeasured. No schema/index/permission/write-contract change."
+}

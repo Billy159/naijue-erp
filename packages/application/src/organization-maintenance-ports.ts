@@ -9,7 +9,9 @@ export interface OrganizationListQuery {
 /** Additive STAFF-only role filter; legacy five-field queries remain unchanged. */
 export type StaffRoleFilter = "" | "ADMIN" | "WAREHOUSE" | "SALESPERSON";
 export interface StaffRoleListQuery extends OrganizationListQuery { readonly role: StaffRoleFilter }
-export type OrganizationReadListQuery = OrganizationListQuery | StaffRoleListQuery;
+/** PAYMENT_ACCOUNT-only exact existing method identity; null retains all methods. */
+export interface PaymentAccountMethodListQuery extends OrganizationListQuery { readonly paymentMethodId: string | null }
+export type OrganizationReadListQuery = OrganizationListQuery | StaffRoleListQuery | PaymentAccountMethodListQuery;
 export interface OrganizationReference { readonly id: string; readonly name: string; readonly enabled: boolean }
 interface Base { readonly id: string; readonly version: number; readonly createdAt: string | null; readonly updatedAt: string | null }
 export type OrganizationMaintenanceRecord =
