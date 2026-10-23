@@ -1,0 +1,42 @@
+{
+  "atUtc": "2026-10-23T14:17:15.907656+00:00",
+  "parent": "aa28412f1d2bdbaad934b7096133909851232ef0",
+  "taskId": "F01_DEMO_SHARED_SALES_READONLY_BODY",
+  "files": [
+    {
+      "path": "apps/web/src/sales/detail-content.tsx",
+      "bytes": 9619,
+      "sha256": "b4d9de9884d19ebc65c4d30e26012d32dcb054d044c2f503d3c0fff694e0429f",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/detail-header.tsx",
+      "bytes": 1861,
+      "sha256": "5b351677a065df4104197f1e1a81349140e40ebc2c32b039485ef2d3f9168db8",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal.css",
+      "bytes": 79401,
+      "sha256": "27263ceafec63358337b7e499a1ceaeecd57217d4f5cb019e9377c3cd8b0bfdf",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-93/DELIVERY.json",
+  "ownerReceiptSha256": "d4b67aad198952904bca716a0d185b26482654902ef4b4a038df22410bb71b9d",
+  "scope": [
+    "Same final frozen new/edit page CSS cascade now applies readonly root as well",
+    "Source readonly field label/datehost/number/note/native status/final funds read DOM",
+    "Current names supplements remain explicit; original historical quantities/IDs/amounts unchanged"
+  ],
+  "checksAdopted": [
+    "Actual public SalesDetailContent original author saved-exchange-view local DOM consumer EXIT0",
+    "Final strict TypeScript exact2 TS entry closure types-1 EXIT0",
+    "Actual sales-detail CSS-only closure0warnings"
+  ],
+  "qualification": "SOURCE_FIXED_OWNER_AFFECTED_SELFCHECK_ONLY. New immutable runtime and independent affected QA needed. No browser/HTTP/PG/SAVE/wholepage/formalperformance/deployment accepted. Original173 and current184 candidate do not include this source.",
+  "remaining": [
+    "Output/history actions, public shell/account/scan/source dialogs still require complete-page actual comparison; not complete same-page handoff",
+    "No wholeapp build/Chrome/PG/nativeSAVE/production claim"
+  ]
+}

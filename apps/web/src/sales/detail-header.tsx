@@ -1,4 +1,3 @@
-import { SalesStatusTag } from './sales-status-tag.tsx';
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
 import type { SalesHeaderDto } from './contracts.ts';
 import { SalesHistoryAction, type SalesHistoryCapability } from './history-view.tsx';
@@ -13,7 +12,7 @@ export function SalesDetailHeader({ close, status, history, salesId, output }: {
     if (document.activeElement === document.body || document.activeElement?.closest('.sales-detail-loading, [data-document-list="sales"][hidden]')) back.current?.focus({ preventScroll: true });
   }, []);
   return <div className="tc-head sale-head sales-document-state"><h1>查看销货单</h1>
-    {status && <><SalesStatusTag status={status} /><span className="sale-muted">· 已保存 · 只读</span></>}
+    {status && <><span className={`tc-status ${status === 'APPROVED' ? 'doc-effective' : status === 'VOID' ? 'doc-void' : 'doc-pending'}`}>{status === 'APPROVED' ? '已审核' : status === 'VOID' ? '已作废' : '未审核'}</span><span id="sale-save-state" className="sale-muted">· 已保存</span></>}
     <div className="actions"><button ref={back} type="button" className="btn" onClick={close}>返回列表</button>{output ?? ['导出', '打印'].map(label => <button key={label} type="button" className="btn" disabled title="保存并读取单据后可输出">{label}</button>)}<SalesHistoryAction {...(history ? { capability: history } : {})} {...(salesId ? { salesId } : {})} /></div>
   </div>;
 }
