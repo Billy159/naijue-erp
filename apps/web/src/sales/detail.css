@@ -491,3 +491,14 @@
 .sales-proposal-editor .sale-source-dialog p{margin:0}
 /* Native single-select host inserted after the source line direction select. */
 .sales-proposal-editor .sale-line-direction{display:block;width:100%;min-width:0;height:32px;flex:1 1 auto}
+
+/* Frozen styles.css btn foundation + sales-golden.css208-225 for the same
+ * saved/read-only document toolbar. Existing Arco output/history owners remain. */
+.sales-detail-facts .btn{font:inherit;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:var(--ui-control);height:var(--ui-control);padding:0 11px;border:1px solid var(--ca-button-secondary-border);border-radius:var(--ca-radius-control);background:var(--ca-button-secondary-bg);color:var(--ca-button-secondary-text);font-size:var(--ui-font);font-weight:500;white-space:nowrap}
+.sales-detail-facts .sale-head .actions>.btn{height:var(--ui-control);min-height:var(--ui-control);padding:3px 8px;border:0;border-radius:4px;background:transparent;color:var(--ca-ink-2);font-size:13px}
+.sales-detail-facts .sale-head .actions>.btn.primary{color:var(--ca-primary-ink)}
+.sales-detail-facts .sale-head .actions>.sale-delete-action{color:var(--ca-danger,#b42318)}
+.sales-detail-facts .sale-head .actions>.btn:hover:not(:disabled){background:var(--ca-primary-hover-soft);color:var(--ca-primary-ink)}
+.sales-detail-facts .sale-head .actions>.btn:disabled{background:transparent}
+.sales-detail-facts .sale-row-actions>.btn.sale-link{min-height:26px;height:26px;padding:0 4px;border:0;background:transparent;color:var(--ca-primary,#165dff);font-size:12px}
+.sales-detail-facts .sale-row-actions>.btn.sale-link:disabled{color:var(--ca-ink-3,#86909c)}

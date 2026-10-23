@@ -1,0 +1,71 @@
+{
+  "atUtc": "2026-10-23T09:43:36.391241+00:00",
+  "parent": "570f1b45a5b2aa3f5ebf671cb27a8e8ccc654127",
+  "taskId": "F02_S04_T03_COMMON_EDIT_VIEW",
+  "files": [
+    {
+      "path": "apps/web/src/sales/detail-header.tsx",
+      "bytes": 1727,
+      "beforeSha256": "2977648f7e69214a475d567f4c816bc508988ea9a3cd74bc415398588380a5cd",
+      "sha256": "2416dc590e76bac0c69fe1d6324f95574124df5b457e9b254cff43ca98c6e6da",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/detail-content.tsx",
+      "bytes": 9292,
+      "beforeSha256": "aa9d9f1edb17f694465b635c2efebac026ca3ef85becf9f56def7223944d67a8",
+      "sha256": "8613db9a254c01073ef6f9c95984b7c2e2e90364a0e71d18af3d1ec6daabe81e",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/detail.css",
+      "bytes": 36909,
+      "beforeSha256": "3a29f14916fb7d2cc592f18a021b5c0ff6c550a980de5cbfaabced6327829efa",
+      "sha256": "26108102b8878a25fe9f7bbca90055668155d97beb63af774c10ad835204f810",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/commands/form.tsx",
+      "bytes": 22614,
+      "beforeSha256": "8df73ddd866b3f51c65ad4e0879f5e3a28a36e5cdf7f77f2b553f5db1da43089",
+      "sha256": "46d8c932b613ebcf89ba0d8c4ab55f652d65c03ad484e35bf29e81fc7aff4ede",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/detail-content.tsx",
+      "bytes": 10890,
+      "beforeSha256": "5e31fc3ca6b1fda518811f11efcf1e8e054a2b140acf837a3a66ad4ccc56e9fa",
+      "sha256": "8ae845c7b1413ad47c943813af3c90ade8da2824b6f2ddd4bd1bb17821a0d32c",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "bytes": 13092,
+      "beforeSha256": "da8b5b45308cc8422c04374cbca728920348cb36a5f2d4082b57093759a99821",
+      "sha256": "d8ca811cdde5908daf9de200e1eeecc0ed3ab0b601ff918e5f13d0ed8590a61b",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-80/DELIVERY.json",
+  "ownerReceiptSha256": "56dd23e2a74e103dd860c253714531305ef44b3d4f0f5d23e2e28cf2e9d29583",
+  "scope": [
+    "Original readonly SALE/combined returns and T03 date/header/action/matrix-heading consumers",
+    "Original native fallback saved editor toolbar/date/leave and zero confirmation consumes existing migrated source layer",
+    "Full proposal-backed saved editor stays on original existing bridge, no second form/capability/DTO"
+  ],
+  "checksAdopted": {
+    "runtime": "Node24.21.0",
+    "sixSavedCompositions": "pages-1 EXIT0",
+    "affectedStrict": "types-2 EXIT0",
+    "finalCss": "css-1 EXIT0 no warnings"
+  },
+  "notTested": [
+    "C exact6 pin/build fixed candidate then QF actual related whole saved/view pages",
+    "Genuine original full existing-proposal capability absent from author saved-edit fixture; prior bridge source/closed scope reused, not fabricated new cap",
+    "Real native save/approve/version/idempotency/receipt recovery/permissions/PG",
+    "Actual Escape/top-layer/focus and page pixel geometry",
+    "Full site/product barcode/price/warehouse stock tabs remain original owners"
+  ],
+  "previousSetupFailurePreserved": "types-1 EXIT2 wrong label prop on existing DemoSingleSelectAction; corrected to existing controlled contract only, not a library contract change",
+  "next": "Next latest complete candidate162 includes retained158 fullnewSALE/T02 and160 recovery. Supersede160 PREBUILD before any actualbuild, no oldcandidate mutation or duplicatebuild. OriginalQF current158 unaffected SALEmodule finishes, then newestrelatedsaved module; QF2 only160actualrecovery on latest fixed version after seriallease handoff."
+}

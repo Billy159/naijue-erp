@@ -5,6 +5,7 @@ import { DocumentOutputActions } from '../../components/document-output.tsx';
 import { transferDocumentOutput } from '../../components/document-output-contracts.ts';
 import { TransferHistoryAction, type TransferHistoryCapability } from '../history-view.tsx';
 import { TransferStatusTag } from '../transfer-status-tag.tsx';
+import { SourceDocumentDialog } from '../../components/standard-overlay.tsx';
 import { UIDate, UIButton, UIInput } from '../../components/standard-controls.tsx';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import type { TransferCommandCapability, TransferFormInput } from './contracts.ts';
@@ -28,6 +29,7 @@ export function TransferCommandForm(props: TransferCommandFormProps) {
 export function TransferNativeCommandForm({ capability, scope, close, history, presentation }: TransferCommandFormProps) {
   const { workspace } = capability, state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
+  const [discard, setDiscard] = useState(false);
   useEffect(() => { heading.current?.focus(); }, []);
   const editor = state.editor, write = state.write;
   const committedRead = useRef<{ owner: typeof workspace; operationId: string } | null>(null);
@@ -37,6 +39,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
     committedRead.current = { owner: workspace, operationId: write.result.operationId };
     void workspace.readCurrent();
   }, [workspace, scope, write.phase, write.result, editor?.transferId, editor?.current, editor?.readError, editor?.phase]);
+  useEffect(() => { setDiscard(false); }, [workspace, editor?.transferId, write.phase]);
   if (!scope.active || state.disposed || !editor) return null;
   const savedReadback = write.phase === 'committed' ? editor.current : null;
   const detail = savedReadback ?? editor.detail;
@@ -46,23 +49,23 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
   const editable = editor.phase === 'ready' && !!editor.draft && !!input && !unresolved && !state.stale && !editor.current && write.phase !== 'committed';
   const locked = !editable, dirty = workspace.hasDirtyDraft;
   const update = (next: TransferFormInput) => { workspace.updateInput(next); };
-  const leave = () => { if (workspace.canLeave()) { workspace.suspend(); close(); } };
+  const leave = () => { if (unresolved) return; if (dirty) setDiscard(true); else if (workspace.canLeave()) { workspace.suspend(); close(); } };
   const lines = savedReadback?.document.lines ?? editor.draft?.lines ?? detail?.document.lines ?? [];
   const names = detail?.references;
   return <DocumentProductPresentation scope={scope} {...(presentation?.productCapability ? { capability: presentation.productCapability } : {})} returnLabel="返回调拨单" viewLabel="调拨商品查看" documentLabel="调拨">{openProduct => <section className="tc-workbench tc-editor transfer-editor transfer-command-editor" aria-label="调拨单编辑">
     <div className="tc-head"><h1 ref={heading} tabIndex={-1}>{editor.detail || write.phase === 'committed' ? '调拨单' : editor.mode === 'CREATE' ? '新增调拨单' : '调拨单'}</h1><TransferStatusTag status={status} /><div className="actions">
-      <UIButton type="button" className="iw-text-button tc-back-link" onClick={leave} disabled={!workspace.canLeave()}>返回列表</UIButton>
-      {status === 'DRAFT' && <><UIButton type="button" className="iw-text-button" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('VOID'); }}>作废</UIButton>
-        <UIButton type="button" className="iw-text-button" disabled={locked || !dirty || editor.inputError} onClick={() => { void workspace.submit('SAVE'); }}>保存</UIButton>
-        <UIButton type="button" className="iw-text-button" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('APPROVE'); }}>审核</UIButton></>}
-      {status === 'APPROVED' && <UIButton type="button" className="iw-text-button" disabled={unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('UNAPPROVE'); }}>弃审</UIButton>}
+      <button type="button" className="btn tc-back-link" onClick={leave} disabled={unresolved || !workspace.canLeave() && !dirty}>返回列表</button>
+      {status === 'DRAFT' && <><button type="button" className="btn" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('VOID'); }}>作废</button>
+        <button type="button" className="btn" disabled={locked || !dirty || editor.inputError} onClick={() => { void workspace.submit('SAVE'); }}>保存</button>
+        <button type="button" className="btn" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('APPROVE'); }}>审核</button></>}
+      {status === 'APPROVED' && <button type="button" className="btn" disabled={unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('UNAPPROVE'); }}>弃审</button>}
       <DocumentOutputActions sourceKey={detail ? `${detail.document.header.id}:${detail.document.header.version}` : "unsaved"} {...(detail && (write.phase !== 'committed' || !!savedReadback) && !unresolved && (!state.stale || !!savedReadback) && (!dirty || !!savedReadback) ? { getDocument: () => transferDocumentOutput(detail) } : {})} unavailableReason="请先完成保存并读取当前单据" />
       <TransferHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { transferId: detail.document.header.id } : {})} />
     </div></div>
     {editor.phase === 'loading' && <p className="transfer-command-notice" role="status">正在读取调拨单…</p>}
     {editor.readError && <p className="transfer-command-notice" role="alert">单据读取未完成。<UIButton type="button" className="iw-link" disabled={unresolved} onClick={() => { void workspace.readCurrent(); }}>重新读取当前单据</UIButton></p>}
     {header && <><div className="tc-doc-header"><div className="tc-gold-doc-fields">
-      <div className="tc-gold-field"><span>单据日期 *</span>{input ? <UIDate aria-label="单据日期" value={input.businessDate} disabled={locked} onChange={value => update({ ...input, businessDate: value })} /> : <span className="transfer-read-value">{header.businessDate}</span>}</div>
+      <div className="tc-gold-field"><span>单据日期 *</span>{input ? <UIDate aria-label="单据日期" value={input.businessDate} disabled={locked} onChange={value => update({ ...input, businessDate: value })} /> : <UIDate aria-label="单据日期" value={header.businessDate} disabled onChange={() => {}} />}</div>
       <div className="tc-gold-field"><span>调出仓库</span><span className="transfer-read-value" title={names?.fromWarehouseName ?? undefined}>{names?.fromWarehouseName ?? '仓库名称未提供'}</span></div>
       <div className="tc-gold-field"><span>调入仓库</span><span className="transfer-read-value" title={names?.toWarehouseName ?? undefined}>{names?.toWarehouseName ?? '仓库名称未提供'}</span></div>
       <div className="tc-gold-field tc-gold-doc-number"><span>单号</span><strong className="transfer-read-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong></div>
@@ -77,9 +80,10 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
     {write.phase === 'committed' && <p className="transfer-command-notice" role="status">原操作已确认：版本 {write.result?.version}，{write.result ? transferStatusLabels[write.result.status] : ''}。库存流水 {write.result?.ledgerEntryIds.length} 条。{savedReadback ? '下方显示重新读取的已保存单据；继续操作前请采用当前单据。' : '正在核对已保存内容；读取失败可重试，保存不会重复提交。'}</p>}
     {!unresolved && (editor.detail && write.phase !== 'idle' || write.phase === 'committed') && <UIButton type="button" className="iw-button transfer-read-current" disabled={editor.phase === 'loading'} onClick={() => { void workspace.readCurrent(); }}>读取当前单据</UIButton>}
     {editor.current && <p className="transfer-command-notice" role="status">已读取当前版本 {editor.current.document.header.version}，尚未替换原草稿。<UIButton type="button" className="iw-button" onClick={() => workspace.adoptCurrent()}>采用当前单据</UIButton></p>}
+    <div className="tc-section-head"><strong>调拨明细</strong></div>
     <TransferEditableLines {...(openProduct ? { onOpenProduct: (skuId, target) => openProduct(skuId, 'TRANSFER', target) } : {})} detail={detail} draft={savedReadback ? null : editor.draft} input={input} locked={locked} invalid={savedReadback ? false : editor.inputError} update={update} />
     <TransferDocumentSummary lines={lines.map(line => ({ productId: detail?.catalog.skus.find(sku => sku.skuId === line.skuId)?.productId, quantity: input ? input.quantities[line.id] ?? '' : line.quantity }))} />
-    {dirty && !unresolved && write.phase !== 'committed' && <UIButton className="iw-text-button" onClick={() => { if (workspace.discardEditor()) close(); }}>放弃未保存修改</UIButton>}
+    {discard && <SourceDocumentDialog title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setDiscard(false)} className="source-discard-dialog" initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setDiscard(false)}>继续编辑</button><button type="button" className="btn primary" onClick={() => { setDiscard(false); if (workspace.discardEditor()) close(); }}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>离开后，本次未保存的修改将丢失。</p></div></SourceDocumentDialog>}
     {detail && <TransferSavedRecords data={detail} />}
   </section>}</DocumentProductPresentation>;
 }
