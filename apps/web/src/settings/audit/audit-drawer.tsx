@@ -5,7 +5,7 @@ import { DemoSettingsPager, DemoSettingsSingleSelect } from '../demo-settings-co
 import { useDialogFocusReturn } from '../../components/use-dialog-focus-return.ts';
 import { HttpQueryError } from '../../transport/http-query.ts';
 import { auditActionLabels, auditActions, auditModuleLabels, type SettingsAuditDrawerProps, type SettingsAuditItem, type SettingsAuditModule, type SettingsAuditValue } from './contracts.ts';
-import { SettingsAuditController } from './controller.ts';
+import { SettingsAuditController, type SettingsAuditViewState } from './controller.ts';
 import './audit.css';
 
 /** Preserve source subsecond precision while displaying the actual instant in Shanghai. */
@@ -24,24 +24,45 @@ export function formatSettingsAuditValue(field: string, value: SettingsAuditValu
   return value.value === '' ? '空字符串' : String(value.value);
 }
 const label = (value: string | null) => value === null ? '未提供' : value === '' ? '空字符串' : value;
+interface AuditOwner {
+  readonly scope: SettingsAuditDrawerProps['scope']; readonly reader: SettingsAuditDrawerProps['reader']; readonly modulesKey: string;
+  readonly targetModule: SettingsAuditModule | undefined; readonly targetId: string | undefined;
+}
+interface AuditBinding extends AuditOwner { readonly controller: SettingsAuditController }
+function sameOwner(owner: AuditOwner | null, props: SettingsAuditDrawerProps): boolean {
+  return !!owner && owner.scope === props.scope && owner.reader === props.reader && owner.modulesKey === props.allowedModules.join('|')
+    && owner.targetModule === props.target?.module && owner.targetId === props.target?.objectId;
+}
 export function SettingsAuditDrawer(props: SettingsAuditDrawerProps) {
   const latest = useRef(props); latest.current = props;
   const modulesKey = props.allowedModules.join('|'), targetModule = props.target?.module, targetId = props.target?.objectId;
-  const [binding, setBinding] = useState<{ readonly scope: SettingsAuditDrawerProps['scope']; readonly reader: SettingsAuditDrawerProps['reader']; readonly modulesKey: string; readonly targetModule: SettingsAuditModule | undefined; readonly targetId: string | undefined; readonly controller: SettingsAuditController } | null>(null);
+  const [binding, setBinding] = useState<AuditBinding | null>(null);
+  const retained = useRef<(AuditOwner & { readonly view: SettingsAuditViewState }) | null>(null);
+  const release = (owned: AuditBinding) => {
+    const view = owned.controller.getViewState();
+    if (!owned.scope.active || !sameOwner(owned, latest.current)) retained.current = null;
+    else if (view) retained.current = { scope: owned.scope, reader: owned.reader, modulesKey: owned.modulesKey, targetModule: owned.targetModule, targetId: owned.targetId, view };
+    owned.controller.dispose();
+  };
   const focus = useDialogFocusReturn(props.scope, props.visible), wasOpen = useRef(false);
   useLayoutEffect(() => { if (props.visible && !wasOpen.current && document.activeElement instanceof HTMLElement && document.activeElement !== document.body) focus.capture(document.activeElement); wasOpen.current = props.visible; }, [props.visible, focus]);
   useEffect(() => {
-    if (!props.visible || !props.scope.active) { setBinding(null); return; }
+    if (!sameOwner(retained.current, props) || !props.scope.active) retained.current = null;
+    const clear = () => { retained.current = null; setBinding(null); };
+    props.scope.signal.addEventListener('abort', clear, { once: true });
+    if (!props.visible || !props.scope.active) { setBinding(null); return () => props.scope.signal.removeEventListener('abort', clear); }
     const controller = new SettingsAuditController({ scope: props.scope, ...(props.reader ? { reader: props.reader } : {}), allowedModules: [...props.allowedModules], ...(targetModule && targetId ? { target: { module: targetModule, objectId: targetId } } : {}),
+      ...(retained.current ? { retainedView: retained.current.view } : {}),
       onAccessFailure: kind => latest.current.onAccessFailure(kind), hasUnresolvedWrite: () => latest.current.hasUnresolvedWrite?.() ?? false });
-    setBinding({ scope: props.scope, reader: props.reader, modulesKey, targetModule, targetId, controller }); controller.start(); return () => controller.dispose();
+    const owned = { scope: props.scope, reader: props.reader, modulesKey, targetModule, targetId, controller };
+    setBinding(owned); controller.start(); return () => { props.scope.signal.removeEventListener('abort', clear); release(owned); };
   }, [props.visible, props.scope, props.reader, modulesKey, targetModule, targetId]);
-  const controller = binding?.scope === props.scope && binding.reader === props.reader && binding.modulesKey === modulesKey && binding.targetModule === targetModule && binding.targetId === targetId ? binding.controller : null;
-  if (!props.visible || !controller) return null;
-  return <AuditContents controller={controller} close={() => { controller.dispose(); focus.request(); props.onClose(); }} />;
+  if (!props.visible || !binding || !sameOwner(binding, props)) return null;
+  return <AuditContents controller={binding.controller} close={() => { release(binding); focus.request(); props.onClose(); }} />;
 }
 function AuditContents(props: { readonly controller: SettingsAuditController; readonly close: () => void }) {
   const { controller } = props, state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot), read = useSyncExternalStore(controller.query.subscribe, controller.query.getSnapshot, controller.query.getSnapshot);
+  const filters = useRef<HTMLFormElement>(null);
   if (state.disposed || !state.draft || !controller.scope.active) return null;
   const draft = state.draft, busy = read.phase === 'loading', applied = read.success?.parameters ?? read.request?.parameters, page = applied?.page ?? 1, pageSize = applied?.pageSize ?? 20;
   const authError = read.error instanceof HttpQueryError && (read.error.kind === 'forbidden' || read.error.kind === 'unauthenticated');
@@ -60,7 +81,20 @@ function AuditContents(props: { readonly controller: SettingsAuditController; re
   const errors = Object.values(state.errors);
   return <Drawer visible width={1040} title={<span title="日期与时间按上海时区显示。对象和操作人名称为当前资料；变化值保留原记录。">基础设置操作记录</span>} onCancel={props.close} maskClosable={false} className="demo-ui demo-settings-audit bs-audit-drawer settings-audit-drawer iw-arco-controls" unmountOnExit
     footer={<DemoSettingsPager label="操作记录分页" scope={controller.scope} page={page} size={pageSize} total={result?.total ?? null} busy={busy} disabled={!active || !!restricted} onPage={next => controller.page(next)} onSize={next => controller.pageSize(next)} />}>
-    <form className="bs-log-filters" role="search" onSubmit={event => { event.preventDefault(); controller.apply(); }}>
+    <form ref={filters} className="bs-log-filters" role="search" onSubmit={event => { event.preventDefault(); controller.apply(); }} onKeyDownCapture={event => {
+      if (event.key !== 'Escape' || event.nativeEvent.isComposing || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || !(event.target instanceof HTMLElement)) return;
+      const host = event.target.closest('.demo-settings-single');
+      if (!host || !filters.current?.contains(host) || !host.querySelector('.arco-select-popup')) return;
+      // Let Arco consume the first Escape. Its disappearing popup must hand focus
+      // back inside this drawer so the next Escape reaches the drawer owner.
+      const form = filters.current;
+      queueMicrotask(() => {
+        if (!controller.available || !form.isConnected) return;
+        const active = form.ownerDocument.activeElement;
+        if (active && active !== form.ownerDocument.body && active.isConnected && !host.contains(active)) return;
+        form.querySelector<HTMLInputElement>('input[aria-label="数据对象"]')?.focus({ preventScroll: true });
+      });
+    }}>
       <DemoSettingsSingleSelect scope={controller.scope} label="模块" placeholder="全部模块" clear value={draft.module === 'ALL' ? '' : draft.module} disabled={!active || controller.targetLocked} options={controller.allowedModules.map(module => ({ value: module, label: auditModuleLabels[module] }))} onChange={module => controller.update({ module: (module || 'ALL') as typeof draft.module })} />
       <Input className="iw-arco-input" aria-label="数据对象" disabled={!active} value={draft.objectSearch} onChange={objectSearch => controller.update({ objectSearch })} placeholder="数据对象" allowClear maxLength={200} />
       <Input className="iw-arco-input" aria-label="操作人" disabled={!active} value={draft.actorSearch} onChange={actorSearch => controller.update({ actorSearch })} placeholder="操作人" allowClear maxLength={200} />

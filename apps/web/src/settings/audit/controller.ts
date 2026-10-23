@@ -6,19 +6,24 @@ import { parseSettingsAuditQuery, validAuditDate, validateSettingsAuditPage } fr
 export interface SettingsAuditControllerOptions {
   readonly scope: ReadScope; readonly reader?: SettingsAuditReader; readonly allowedModules: readonly SettingsAuditModule[]; readonly target?: SettingsAuditTarget;
   readonly onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void; readonly hasUnresolvedWrite?: () => boolean;
+  /** In-memory presentation state from this exact mounted owner; never contains results. */
+  readonly retainedView?: SettingsAuditViewState;
 }
 export interface SettingsAuditSnapshot { readonly draft: SettingsAuditDraft | null; readonly errors: Readonly<Record<string, string>>; readonly disposed: boolean; readonly readDenied: boolean }
+export interface SettingsAuditViewState { readonly draft: SettingsAuditDraft; readonly applied: SettingsAuditQuery | null }
 /** One user-opened read layer, independent of every command/recovery workspace. */
 export class SettingsAuditController {
   readonly scope: ReadScope; readonly query: LatestQuery<SettingsAuditQuery, SettingsAuditPage>; readonly allowedModules: readonly SettingsAuditModule[];
   readonly #options: SettingsAuditControllerOptions; readonly #listeners = new Set<() => void>(); readonly #initial: SettingsAuditDraft; readonly #unwatchQuery: () => void;
+  readonly #resumeQuery: SettingsAuditQuery | null;
   #snapshot: SettingsAuditSnapshot; #started = false;
   constructor(options: SettingsAuditControllerOptions) {
     if (new Set(options.allowedModules).size !== options.allowedModules.length || options.allowedModules.some(module => !auditModules.includes(module))) throw new TypeError('Invalid explicit audit presentation capabilities');
     this.#options = options; this.allowedModules = Object.freeze([...options.allowedModules]);
     this.scope = new ReadScope(options.scope.identity, `${options.scope.routeInstanceId}:settings-audit`, options.target?.objectId ?? null, () => {});
     this.#initial = Object.freeze({ ...blankAuditDraft, ...(options.target ? { module: options.target.module, objectId: options.target.objectId } : {}) });
-    this.#snapshot = Object.freeze({ draft: this.#initial, errors: Object.freeze({}), disposed: false, readDenied: false });
+    this.#resumeQuery = options.retainedView?.applied ?? null;
+    this.#snapshot = Object.freeze({ draft: options.retainedView?.draft ?? this.#initial, errors: Object.freeze({}), disposed: false, readDenied: false });
     this.query = new LatestQuery({ scope: this.scope, execute: async read => {
       if (!options.reader) throw new HttpQueryError('not-implemented', 'SETTINGS_AUDIT_NOT_CONFIGURED');
       const page = validateSettingsAuditPage(await options.reader.readQuery(read), read.parameters);
@@ -39,6 +44,11 @@ export class SettingsAuditController {
   subscribe = (listener: () => void): (() => void) => { if (this.#snapshot.disposed) return () => {}; this.#listeners.add(listener); return () => { this.#listeners.delete(listener); }; };
   get available(): boolean { return this.scope.active && this.#options.scope.active && !this.#snapshot.disposed && !!this.#options.reader && this.allowedModules.length > 0; }
   get targetLocked(): boolean { return this.#options.target !== undefined; }
+  getViewState(): SettingsAuditViewState | null {
+    if (!this.scope.active || this.#snapshot.disposed || !this.#snapshot.draft) return null;
+    const read = this.query.getSnapshot();
+    return Object.freeze({ draft: this.#snapshot.draft, applied: read.request?.parameters ?? read.success?.parameters ?? null });
+  }
   update(patch: Partial<Omit<SettingsAuditDraft, 'objectId'>>): void {
     const old = this.#snapshot.draft; if (!old || !this.scope.active || this.#snapshot.disposed) return;
     const module = this.targetLocked ? old.module : patch.module ?? old.module;
@@ -47,7 +57,7 @@ export class SettingsAuditController {
       action: patch.action ?? old.action, dateFrom: patch.dateFrom === undefined ? old.dateFrom : patch.dateFrom, dateTo: patch.dateTo === undefined ? old.dateTo : patch.dateTo });
     this.#publish({ ...this.#snapshot, draft, errors: Object.freeze({}) });
   }
-  start(): void { if (this.#started || !this.available) return; this.#started = true; this.apply(); }
+  start(): void { if (this.#started || !this.available) return; this.#started = true; if (this.#resumeQuery) void this.#run(this.#resumeQuery); else this.apply(); }
   apply(): void { const draft = this.#snapshot.draft; if (!draft || !this.available || !this.#valid(draft)) return; const previous = this.query.getSnapshot(); void this.#run({ ...draft, page: 1, pageSize: previous.success?.parameters.pageSize ?? previous.request?.parameters.pageSize ?? 20 }); }
   reset(): void { if (!this.scope.active || this.#snapshot.disposed) return; this.#publish({ ...this.#snapshot, draft: this.#initial, errors: Object.freeze({}) }); this.apply(); }
   retry(): void { const state = this.query.getSnapshot(); if (this.available && state.phase === 'error' && state.request) void this.#run(state.request.parameters); }

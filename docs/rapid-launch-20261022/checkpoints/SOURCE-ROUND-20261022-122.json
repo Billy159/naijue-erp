@@ -1,0 +1,104 @@
+{
+  "atUtc": "2026-10-23T03:07:30.382140+00:00",
+  "parent": "952fcdffcfbb743aee45ce9ea54be197e607f9a8",
+  "groups": [
+    {
+      "slice": "F3 existing payment audit focus and same-scope filter retention",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-audit-focus-retention-v1/RESULT.json",
+      "receiptSha256": "bc6b2b4153ee3ef93136fe9c277da1ca6957bdfa8703f08c135875bc1aad806b",
+      "receiptSnapshot": {
+        "taskId": "DATA-SRC-003/AUDIT-UI-FOCUS-RETENTION-v1",
+        "atUtc": "2026-10-23T03:06:20.882829+00:00",
+        "status": "READY_SOURCE_EXACT2_FOR_C_FREEZE_AND_QF_AFFECTED_UI",
+        "baseHead": "f3ab765526e6eb281ce1ea9aa5b76d670ec5d6a4",
+        "observedHeadAtDelivery": "952fcdffcfbb743aee45ce9ea54be197e607f9a8",
+        "findings": [
+          "AUDIT-UI-FOCUS-01",
+          "AUDIT-UI-FILTER-RETENTION-01"
+        ],
+        "scope": "Original payment audit owner; retained same-page draft and executed query conditions only; no response cache",
+        "files": [
+          {
+            "path": "apps/web/src/settings/audit/controller.ts",
+            "beforeSha256": "368f017d2528ec03539e29c3d5f9207daf10c7e8eaa4065dfeec464bdf731d44",
+            "sha256": "645636153c502ba40dc12578c628c6a86c2c4f2733a90268544e379080d12f0e",
+            "bytes": 9577
+          },
+          {
+            "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+            "beforeSha256": "fdf07c42e99392716c03f1035dc94ae4da5b355c16e95cbd4cd342af37923853",
+            "sha256": "404ec345d0fc8fceeb608fa14588eb2776cc744d78b85d6ec5ec38c6d4ce84ba",
+            "bytes": 12974
+          }
+        ],
+        "changes": [
+          "Audit-local first Escape capture lets native Select close then returns focus to data-object input; second Escape follows original Drawer close owner. No shared Select seam change.",
+          "Close snapshots draft and separately latest executed query parameters in mounted Drawer owner, immediately disposes pending read/controller/results. Reopen uses a fresh native read with retained executed range.",
+          "Exact scope/reader/module-range/target owner mismatch or scope abort clears retained view; no localStorage/global data cache; invalidation and late-result behavior remain."
+        ],
+        "checks": {
+          "before": "2 original findings reproduced in real source entry/Arco DOM",
+          "after": "14 new local source/DOM groups PASS;12 reused and2 driver-only corrected targeted retests",
+          "types": "PASS actual strict transitive program",
+          "diffCheck": "PASS",
+          "protectedOtherF3Files": 68,
+          "auth113Section": "BYTE_IDENTICAL_REUSED_NOT_RERUN",
+          "backendChecksRerun": false
+        },
+        "evidence": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v023-qf-1578a5b-affected/FINDINGS.json",
+            "sha256": "fdd68083976bbc0987aa7580b766905828e1fb0544e4226b0c2a1c08cffe5e8a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v023-qf-1578a5b-affected/candidate-audit-escape-sequence.json",
+            "sha256": "cc022a5959685ee6f9eb698b9f661c361599b2525001ccdd60a83436d2bf015c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v023-qf-1578a5b-affected/demo-audit-escape-sequence.json",
+            "sha256": "d9db386f1fffcc6772d912a9249b41b6eb2424414282345fb74cc6daf882168a"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v023-qf-1578a5b-affected/candidate-audit-focus-settlement-check.json",
+            "sha256": "ad6081eb60ac5a415858d0e855294c8da30fc2e479edc2fb5f5691758fcd2bb8"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v023-qf-1578a5b-affected/candidate-audit-query-enter.json",
+            "sha256": "b9170cab66e27c45d601e2c45f9e72d6e51f5fb30c1c65c7c6e0dd0c65f51463"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v023-qf-1578a5b-affected/demo-audit-query-enter.json",
+            "sha256": "ba1085f6bdc9a51f3c0adb5b2ec26bb009bc298d3ef2226831bb98ef70f491ff"
+          }
+        ],
+        "checksReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-audit-focus-retention-v1/CHECK-FINAL.json",
+        "patch": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/data-src-003-audit-focus-retention-v1/exact2.patch",
+          "sha256": "ab861cfe1133dc231d83508356d3208b375046e3820b38284995a5992a477602"
+        },
+        "unmeasured": [
+          "Actual Chrome stable focus and two-Escape sequence pending QF",
+          "Actual same-context reopen under next centrally built exact source candidate pending QF",
+          "No actual PG/production ACL/formal audit rows/performance/server/deployment/whole-page acceptance"
+        ],
+        "blockers": [],
+        "next": "C freezes exact2; next necessary integrated candidate QF retests only these2 original audit consumers, preserving C113 source-protocol and existing accepted proofs. No F1 seam needed."
+      },
+      "files": [
+        {
+          "path": "apps/web/src/settings/audit/controller.ts",
+          "owner": "F3",
+          "bytes": 9577,
+          "sha256": "645636153c502ba40dc12578c628c6a86c2c4f2733a90268544e379080d12f0e"
+        },
+        {
+          "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+          "owner": "F3",
+          "bytes": 12974,
+          "sha256": "404ec345d0fc8fceeb608fa14588eb2776cc744d78b85d6ec5ec38c6d4ce84ba"
+        }
+      ]
+    }
+  ],
+  "controllerScope": "Freeze originalF3 exact2 for actual113 twoP2.14 scoped actual React/Arco DOM groups/type checks adopted; QF only affected two issues/current consumers in next necessary shared candidate. C113 auth/refusal ordering preserved. Current actualC120 has not incorporated this fix. No realaudit/PG/permission/performance/wholepage claim."
+}
