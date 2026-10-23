@@ -1,0 +1,73 @@
+{
+  "atUtc": "2026-10-23T22:21:00.638662+00:00",
+  "parent": "f178ace6e49456b0b27b5f2431ecbef38e1d6944",
+  "taskId": "F1_USER_UI_DATES_NATIVE_FINAL_PADDING",
+  "files": [
+    {
+      "path": "apps/web/src/components/standard-controls.css",
+      "bytes": 2230,
+      "sha256": "87471baaaaeb2e4805ab0028d8b160fb54d91d22dff86a018afa3a666e3b94c8",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-115/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "eef1c9799f066c87272c9fb3bed6ac4dc45eb00b168336978f5155c7412899c9",
+  "ownerDelivery": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/xhigh; Fast not verified",
+    "finding": "Original USER-UI-DATES calendar body matched padding",
+    "status": "SOURCE_READY_SCOPED_FINAL_DEMO_DATE_BODY_PADDING_ACTUAL_PENDING",
+    "files": [
+      {
+        "path": "apps/web/src/components/standard-controls.css",
+        "bytes": 2230,
+        "sha256": "87471baaaaeb2e4805ab0028d8b160fb54d91d22dff86a018afa3a666e3b94c8"
+      }
+    ],
+    "change": "Only .erp-date-host .arco-panel-date-inner .arco-picker-body padding0 from matched final Demo; no hardcoded dimensions or date JS.",
+    "checks": {
+      "before-1": "Harness inherited JS before-loader but this CSS-only receipt snapshots CSS only; removed unused loader, no production change.",
+      "before-2": "RED actual original I07 six rows/42 dates body computed0 16px14 instead of final Demo0.",
+      "after-1": "PASS real original I07 six rows/42 dates computed four padding sides0; no extra ledger read; bare non-UIDate original Arco body outside scope keeps original14px bottom. Pixel dimensions not measured locally."
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-115/REPORT.md",
+        "bytes": 659,
+        "sha256": "a388522a629ae2e78638cfaf662ec8771f8046ad9c47c2900c90ac60260021e1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-115/PROOF.json",
+        "bytes": 5302,
+        "sha256": "7094b45c9f1ea24064822c1bf123051434591810727dd80a61663ae43757706b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-115/RESULT.json",
+        "bytes": 293,
+        "sha256": "0275b52dd5ee73253209484b6469788bd59a2e2a9c45eb086051f637f45132fa"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-115/BEFORE-PADDING.json",
+        "bytes": 180,
+        "sha256": "07e89abb2c0577c468006d6b61c7fa5d854048617ff4a9acef9a5a6d78e24c6f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-115/AFTER-PADDING.json",
+        "bytes": 177,
+        "sha256": "17930ad51c2c8d1a666817bc4ba3ed7d6171b95073e0cb12b3c2727dda8d55e4"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-115/SOURCE.diff",
+        "bytes": 1053,
+        "sha256": "4c5cd2d1c6c8a1f19cc45244a0908a184388969d9a54e975c24e51827c5e0424"
+      }
+    ],
+    "limitations": [
+      "Actual panel width/height/row positions remain pending containing candidate; local JSDOM padding is not pixel PASS.",
+      "No browser/HTTP/PG/whole build/Git; no old pointer/Today semantic retest.",
+      "227 Today JS,223header/224mode untouched."
+    ],
+    "sourceFrozenUntilCPin": true
+  },
+  "qualification": "Scoped native final zero padding restoration with original I07 computed before/after. No hard geometry, actual pixels pending; no Chrome/business/performance acceptance."
+}
