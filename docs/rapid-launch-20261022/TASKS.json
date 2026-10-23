@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
+    "headObserved": "af9e77f27bc7be94d4d15a2e9ef4265b80970b1d",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "024aa9ce565014a4184bfed02a33cd167b449bb4",
+    "remoteHeadVerified": "3bb5f6958296073551ce672bf64fa0631711d214",
     "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "32f017803a0741c4e41ae75fe86ff83c382ce34e"
+    "lastVerifiedRemoteCommit": "3bb5f6958296073551ce672bf64fa0631711d214"
   },
   "concurrency": {
     "chats": 10,
@@ -964,9 +964,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T21:30:12.177318+00:00",
+  "updatedAt": "2026-10-23T22:20:24.809338+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "8ad69f4caba87e2d8f237c268d9defd3a439ce00",
+  "lastVerifiedRemoteCommit": "3bb5f6958296073551ce672bf64fa0631711d214",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1426,23 +1426,52 @@
     "deploymentTools": "C63_ACTUAL_PRODUCTION_CI_NATIVE_APP_PROXY_KEY_RESOURCES_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 220,
-      "commit": "1b46a5d975d1e9c1b25bb695dd666c04cc342740",
-      "latestServedPreviewRound": 217,
-      "qualification": "218size/219fullEmpty/220customerhost sourceQA limitedPASS; actualorrealbusiness notaccepted; 220notin217preview"
+      "round": 227,
+      "commit": "af9e77f27bc7be94d4d15a2e9ef4265b80970b1d",
+      "latestServedPreviewRound": 222,
+      "qualification": "223/224 limitedsourceQFpassed,225testQB195passed,226/227sourcefixednextcandidatepending"
     },
     "currentPreview": {
-      "sourceRound": 217,
-      "sourceCommit": "753bd09b115fce1118b1680d77daaf2032683ab0",
-      "buildId": "ui-preview-753bd09-01-build01",
-      "url": "http://127.0.0.1:57872/synthetic-unified.html",
-      "htmlBytes": 3412884,
-      "htmlSha256": "8dacbc00ad7ace2c24249261f5354e862b84f0a133bec9c6467fac36956c5988",
-      "actualInputs": 413,
-      "actualModulesIncludingDependencies": 1368,
-      "pid": 3888,
-      "session": 31695,
-      "qualification": "Explicit18synthetic overlays, finiteI07UI24rows withfictionmetadata/UNKNOWNtransitions. No218/219; no realPG/permissions/save/formalperformance."
+      "sourceRound": 222,
+      "sourceCommit": "4c0cf711772d4426da03bf9a768a8f4d6abc3418",
+      "buildId": "ui-preview-4c0cf71-01-build01",
+      "url": "http://127.0.0.1:57875/synthetic-unified.html",
+      "resources": [
+        {
+          "path": "synthetic-unified.html",
+          "status": 200,
+          "bytes": 3415012,
+          "sha256": "c9c2b79ceeb1a69e21b498e07d2c7de74bd853b0aa5e4962eb8e2a84049bcfca",
+          "sameImmutableBuild": true
+        },
+        {
+          "path": "candidate-identity.json",
+          "status": 200,
+          "bytes": 4683,
+          "sha256": "301e59a8cfc7006648cc5e942b5135f9f281cd51da6e7bcf7cac74ad295d5208",
+          "sameImmutableBuild": true
+        },
+        {
+          "path": "provenance.json",
+          "status": 200,
+          "bytes": 51504,
+          "sha256": "42091729d48b3b080083029c8d932cb8922d0780cbb11ee8f2d93b17acee679c",
+          "sameImmutableBuild": true
+        }
+      ],
+      "serverPid": 13963,
+      "serverSession": 51535,
+      "actualBuildInvocations": 1,
+      "postbuildAdditionalBuildInvocations": 0,
+      "actualHTTPKeyResources": 3,
+      "actualInputCount": 413,
+      "actualModuleInputCountIncludingDependencies": 1368,
+      "syntheticOnly": true,
+      "scope": "Same original222 build resumed after proven stopped process; identity GET200 exact3pins preserved, no rebuild. Named mouse-open actualPASS, Today and calendar geometry open;226/227 not yet in this candidate.18syntheticadapters no actualbusiness/performance.",
+      "wholePageAccepted": false,
+      "realBusinessAccepted": false,
+      "formalPerformanceAccepted": false,
+      "runtimeResumeReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-4c0cf71-01/RUNTIME-RESUME-20261024-01.json"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -1696,7 +1725,8 @@
       "allOthers": "NO_BROWSER; serialized only; no independent contexts proven",
       "sourceCommit": "753bd09b115fce1118b1680d77daaf2032683ab0",
       "url": "http://127.0.0.1:57872/synthetic-unified.html"
-    }
+    },
+    "qbToolState": "RECOVERED originalChat191-196 actualreviews received, no manualresume gate now"
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -2572,17 +2602,157 @@
       "result": "PASS_NAMED_T02_LEFTNAV_NATIVE_ACTUAL221_AND_CLEAN",
       "scope": "T02 original LEFTNAV named actual pass: X/Continue/Esc retain nativeSKU70 quantity7 and ownnote; confirm actualInventory; reenterNew noteempty/noSKU70quantity/noownnote; returnInventory directly no layer. No Save or command attempted.",
       "adoption": "Original QF seven-field stage plus fixedclean contains result. Long report follows, no savedfull/unknown-key business acceptance"
+    },
+    {
+      "id": "QF-V064",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v064-qf-c222-date-native-trigger-source/RESULT.json",
+      "bytes": 4775,
+      "sha256": "f2134708ac47a8c7dd87c417aa881241093e26d8979447ce030c71d8ca3bb012",
+      "result": "PASS_BOUNDED_C222_ORIGINAL_UIDATE_NATIVE_TRIGGER_SOURCE_ACTUAL_PENDING",
+      "scope": "Limited original UI/source evidence only; whole page/business/performance not implied",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QF-V065",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v065-qf-c221-transfer-leftnav-actual/RESULT.json",
+      "bytes": 6280,
+      "sha256": "a8d9a0917f851b59bab917483f9db5638999bec7dff5ef8f8d3f1d4418482fa8",
+      "result": "PASS_NAMED_C221_T02_DIRTY_LEFT_NAV_NATIVE_ACTUAL_ONLY",
+      "scope": "Limited original UI/source evidence only; whole page/business/performance not implied",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QF-V066",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v066-qf-adopt-qf2-c220-ledger-final/RESULT.json",
+      "bytes": 4984,
+      "sha256": "45a6bde8f4073b33e654f84eaf25f22711e5010c00d016b98e43f889f80e3feb",
+      "result": "ADOPTED_QF2_C220_LEDGER_FINAL_NEED_FIX_TWO_ORIGINAL_UI_FINDINGS",
+      "scope": "Limited original UI/source evidence only; whole page/business/performance not implied",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QF-V067",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v067-qf-sales-provenance-and-mode-effects/RESULT.json",
+      "bytes": 7731,
+      "sha256": "3ef58d2b3a7562b8018580d54429c69d6983ca83ee7c16b6ea0c30a5d1a0cf64",
+      "result": "ADOPTED_EXISTING_SALES_MIGRATION_PROVENANCE_VISIBLE_MODE_EFFECTS_OPEN",
+      "scope": "Limited original UI/source evidence only; whole page/business/performance not implied",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QF-V068",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v068-qf-c223-optional-header-close-source/RESULT.json",
+      "bytes": 6716,
+      "sha256": "2e8c71289e1c42d61f2d8dd11ffdc2e46ea346c37470792b1e768ebda5900f4c",
+      "result": "PASS_BOUNDED_C223_OPTIONAL_HEADER_CLOSE_SOURCE_CONSUMER_ACTUAL_PENDING",
+      "scope": "Limited original UI/source evidence only; whole page/business/performance not implied",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QF-V069",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v069-qf-c224-sales-confirmed-mode-effects-source/RESULT.json",
+      "bytes": 8721,
+      "sha256": "d1b766cddab31ff941694169ad6b77ef19a8c0454dec22679a9b33ceaad691d7",
+      "result": "PASS_BOUNDED_C224_CONFIRMED_MODE_EFFECTS_SOURCE_ACTUAL_PENDING_ORIGINAL_GATE_RESIDUAL_OPEN",
+      "scope": "Limited original UI/source evidence only; whole page/business/performance not implied",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QF-V070",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v070-qf-c222-today-draft-dedup/RESULT.json",
+      "bytes": 3823,
+      "sha256": "1940e09518a772a61f68fcd797a1a56d12ab58f61ed4f7107ea67e16426832d9",
+      "result": "REGISTERED_C222_TODAY_DRAFT_SCOPE_UNDER_EXISTING_DATES_NO_DUPLICATE_DISPATCH",
+      "scope": "Limited original UI/source evidence only; whole page/business/performance not implied",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QB-SLICE-191",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice191-c101-actual-v11-exact4-pairing/RESULT.json",
+      "bytes": 18595,
+      "sha256": "823f03a17fbeed0b4f5554a56583dcde9bed7e90167ebb94aaa66526f5c7c2c4",
+      "result": "PASS",
+      "scope": "Metadata/source/actual evidence exactly as original receipt:191/192 metadata only,193 helper EXEC P1 open,194 test assertion fixed225/195,196 actual105 fixture failure no business pass",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QB-SLICE-192",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice192-c103-r1-unix-v11-five-read-purpose/RESULT.json",
+      "bytes": 14048,
+      "sha256": "acfa42d9a077cb5954779d806b6afde010ecefab0e6789cfb9709fd2a64d950c",
+      "result": "PASS",
+      "scope": "Metadata/source/actual evidence exactly as original receipt:191/192 metadata only,193 helper EXEC P1 open,194 test assertion fixed225/195,196 actual105 fixture failure no business pass",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QB-SLICE-193",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice193-c203-history-numeric-source/RESULT.json",
+      "bytes": 7098,
+      "sha256": "858d72bcd3aa21d40cf2a330709f6e001bda57c30ba0d32cde0621ee8744c858",
+      "result": "NEED_FIX_SOURCE_RUNTIME_HELPER_ACL",
+      "scope": "Metadata/source/actual evidence exactly as original receipt:191/192 metadata only,193 helper EXEC P1 open,194 test assertion fixed225/195,196 actual105 fixture failure no business pass",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QB-SLICE-194",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice194-c208-ledger-numbered-source/RESULT.json",
+      "bytes": 8190,
+      "sha256": "e82ac90f56bc28c78b448f852f93978a3bde377aa70ee8f4237162afe3994029",
+      "result": "NEED_FIX_AFFECTED_SOURCE_TEST_CONTRACT",
+      "scope": "Metadata/source/actual evidence exactly as original receipt:191/192 metadata only,193 helper EXEC P1 open,194 test assertion fixed225/195,196 actual105 fixture failure no business pass",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QB-SLICE-195",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice195-c225-ledger-source-assertion-fix/RESULT.json",
+      "bytes": 6616,
+      "sha256": "3844adfcf786cb4e6de52c74407db507efb457a19133d4984184f5881b9225d5",
+      "result": "PASS_LIMITED_SOURCE_QB194_F01_CLOSED",
+      "scope": "Metadata/source/actual evidence exactly as original receipt:191/192 metadata only,193 helper EXEC P1 open,194 test assertion fixed225/195,196 actual105 fixture failure no business pass",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QB-SLICE-196",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice196-c105-actual-normal-fixture-failure/RESULT.json",
+      "bytes": 10524,
+      "sha256": "52b07f37668abd6d41c735f836f83a933673c8dec38a56d1a24fa93c61e2b592",
+      "result": "ACTUAL_FAILED_FIXTURE_OUTCOME_RECOVERY_REQUIRED_NO_BUSINESS_PASS",
+      "scope": "Metadata/source/actual evidence exactly as original receipt:191/192 metadata only,193 helper EXEC P1 open,194 test assertion fixed225/195,196 actual105 fixture failure no business pass",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
+    },
+    {
+      "id": "QF2-C222-DATE-ACTUAL-FINAL",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c222-date-pointer-affected-actual-01/RESULT.json",
+      "bytes": 1907,
+      "sha256": "365c3f8b6fedb32a520ea621e183337f52b4982b80d957351f8f9cf7a636ca71",
+      "result": "NEED_FIX",
+      "scope": "Named mouse opening PASS; Today and calendar geometry OPEN; no whole date, page, real business or formal performance acceptance",
+      "adoption": "Original independent conclusion adopted within its stated scope; no duplicate technical verification",
+      "adoptedAtUtc": "2026-10-23T22:20:24.809338+00:00"
     }
   ],
   "newPendingReviews": [
-    "QF222 exact2publicUIDate source andlong221actual report offline; totalmatrix newI07 final/results adoption no retest",
-    "F2sole222 bounded I07 carrier finalstyle capture then clean/release and originalledgerfix, no DATE/F1writes",
-    "QF2 NO_CHROME untilCexplicitnextfixedDATEconsumer grant; effectiveold220scopes reused",
-    "OriginalF1 wholeSales directcopy remaining-or-existing-provenance delivery, no duplicate migration from oldregisterlabels",
-    "OriginalQB human/toolresume actualQA101fourpurpose/R1C103; C102disabled/noissuer/businessrunner",
-    "V13 explicit humanconfirmation onlyrelatedDDL/writer waits",
-    "B07 retainedactualDRAFT captured, approved/NULLdate/v12/currentWRITE stillmissing",
-    "C214 actualLinuxci/native complete; newapp metadata/issuer waits originalQB, do not repeat successfulinstall"
+    "QF227 Today exact1 source delta only; subsequent115calendarCSS inprogress",
+    "QF2 next immutable candidate226carrier+227Today+pending115geometry actualaffected-only; noChrome now",
+    "F1 originalO-S14 pending-only zero-completed-lines trigger residual afterToday/geometry",
+    "C106 original105product key/account outcome recovery and conditionalnormaldisable; preserve5fixtures",
+    "D1 originalPRODUCT_SCHEME_REQUIRED accuratefixturecontract; no oldkeys replay",
+    "C107 newR1v11 appTCP metadata witness; QB192Unix validnotappTCP",
+    "C rootHREVv12 dedicatedinstaller exactwriterrole+twohelperEXEC in one tx; QB193F01open",
+    "v13 explicituserconfirmation onlynewDDL/writers wait; no QB2"
   ],
   "openFindingsCurrent": [
     {
@@ -2877,9 +3047,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-23T21:30:12.177318+00:00",
-    "sourceRound": 222,
-    "sourceCheckpoint": "4c0cf711772d4426da03bf9a768a8f4d6abc3418",
+    "atUtc": "2026-10-23T22:20:24.809338+00:00",
+    "sourceRound": 227,
+    "sourceCheckpoint": "af9e77f27bc7be94d4d15a2e9ef4265b80970b1d",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -2910,39 +3080,41 @@
           "sameImmutableBuild": true
         }
       ],
-      "serverPid": 11736,
-      "serverSession": 56799,
+      "serverPid": 13963,
+      "serverSession": 51535,
       "actualBuildInvocations": 1,
       "postbuildAdditionalBuildInvocations": 0,
       "actualHTTPKeyResources": 3,
       "actualInputCount": 413,
       "actualModuleInputCountIncludingDependencies": 1368,
       "syntheticOnly": true,
-      "scope": "Contains221namedLEFTNAV nowactualpassed on221;222UIDate pointer source/actualQA pending. Originalledgercarrier unchanged/F2onlystylesdiagnostic.18Cfiction-onlyadapters/commandsreceipts refused.",
+      "scope": "Same original222 build resumed after proven stopped process; identity GET200 exact3pins preserved, no rebuild. Named mouse-open actualPASS, Today and calendar geometry open;226/227 not yet in this candidate.18syntheticadapters no actualbusiness/performance.",
       "wholePageAccepted": false,
       "realBusinessAccepted": false,
-      "formalPerformanceAccepted": false
+      "formalPerformanceAccepted": false,
+      "runtimeResumeReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-4c0cf71-01/RUNTIME-RESUME-20261024-01.json"
     },
     "nextPreview": null,
-    "r1": "C103 actualCOMPLETED0/3.224639846s/v11 approved schema COMMIT+readback; R1 runtime-role canonical53ea114e/122routines/newdeferred trigger. All56business/source counts0 except schema26 unchanged. No newmetadata/issuer/app/data/publicswitch.",
-    "qa": "C101 actual v11 COMMIT0/3.575635193s/newcanonical5717b1be/122routines/newdeferred trigger; current50/original49/productv2/12auditreceipt/stock0 preserved. Business SAVE8groups NOT_TESTED.",
+    "r1": "C103 v11 Unix metadata53ea114e/122 acceptedQB192; appTCP witness stillmissing. C107 finite read-only witness preparation active, no newapp/issuer/publicswitch.214 actualLinuxinstall/native preserved; not latestUIdeployed.",
+    "qa": "C105 actual attempted originalD1 runner, five fixture COMMITs; product key unknown at PRODUCT_SCHEME_REQUIRED. Current account state and original49/product/group unchanged not established by early-failure false flags. Recover original key/account first, preservefixtures, normalDISABLE only if needed. Eight businessgroups NOT_STARTED.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "Original3 business decisions remain; narrowedv11 alreadyapproved. OriginalQB runtime toolresume action requested. Newv13 exact2columns/guard concreteconfirmation requested; only itswritebranch waits.",
-    "github": "Verified8ad69f4caba87e2d8f237c268d9defd3a439ce00; fixed222 andactual221/222 continuation next exact sync",
+    "waiting": "v13/three old business decisions only affected branches; originalQB tool recovered. C106 recovering105original product key/current QAaccount; no old105 replay. HREV v12 exact writer-role installer seam pending C, no SQL installed.",
+    "github": "Verified3bb5f6958296073551ce672bf64fa0631711d214; source223-227 and current controller update next exact sync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
-      "localDeduplicated": 52,
+      "pages": 37,
+      "overlayClasses": 67,
+      "localDeduplicated": 55,
+      "legacyBaselineLocalDeduplicated": 48,
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
-      "notRun": 54,
+      "notRun": 47,
       "uiDifference": 31,
       "partial": 10,
-      "waitingIntegration": 8,
+      "waitingIntegration": 15,
       "approvedException": 1,
-      "latestReceipt": "QFv063 onlysevenrow metadata correction from actual/source evidence; no retest; I07 twoP2open; additional221actualreport notyet includedinmatrix snapshot",
-      "legacyBaselineLocalDeduplicated": 48,
-      "logicalCountQualification": "52 knownindexed accepted logicalscopes in affectedmetadata scope; not wholepages or complete fullsite census. Repeatedversions/arrowclicks/reentries not newcases."
+      "qualification": "55 known indexed logical scopes, not whole-site completed census or whole-page pass. Repeated versions/actions are not new cases. Sole QF owns104 matrix."
     },
     "isolatedMorePreview": {
       "url": "http://127.0.0.1:57849/component-more.html",
@@ -2955,8 +3127,8 @@
     },
     "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
-    "uiMigration": "QFv059 original217SALE/T02local flow namedactual adopted. QF2 actual220 originalsize immediateclose/fullEmpty5regions/P01tokenx+font allclosed scoped. Groupunused/foreignactual/realSave remainuntested. OriginalT02LEFTNAV fixedsource221 exact5 inQFindependent source; newactualonlyaftercontainingfixedcandidate. QF2stillsole220 newI07 fictionUI.",
-    "backend": "C102 original normalSAVE inputcomplete, actual101 bound to newQA5717b1be and42274B983c47cc; independentreviewPENDING/PLANdisabled/issuer0/PG0. OriginalQB Chat read/list valid but3 sends notfound; human originalQB resume requested, noQB2. New208D3 numberedledger readonlysource ready originalQB pending; F2 native consumer inprogress. BeforeAfter2columns v13 proposal exactuserconfirmationpending, noDDL/writer changes. B07source203 noissuer/host/actual.",
+    "uiMigration": "Fixed223 optional public header-close sourcePASSv068,224 confirmed sales modeeffects sourcePASSv069 with originalO-S14 pending-only trigger remaining;225 test-only D3 fix QB195PASS;226 nativeledger carrier source ready;227 Today pointer/blur source ready originalQF incremental review. Same222 remains actual until successor.",
+    "backend": "QB191/192 accepted new v11 metadata only. C104 actual proved private/public JSON value equality and differing serialization byte hashes, strict bytepair corrected. C105 actualPG failed PRODUCT_SCHEME_REQUIRED at NORMAL_PRODUCT_FIXTURE after4COLOR+1CUSTOMER commits; original product key UNKNOWN, eightgroups NOT_STARTED. OriginalD1 precise fixture diagnosis + C106 original-key/account recovery active. No formal write/publicswitch.",
     "productionBuild": "C214fixed1eef32a actual localbuild/pack plus targetLinux originaloffline npmci0/native Sharp loaded0/dispatcher31.3484s;111installedrecords/payload3121be15d58f. Protected5containers unchanged, owned3stopped networknone. No newapp/metadata/issuer/PG/data/publicswitch. Source220 remains localUI only.",
     "actualQFBrowser": {
       "owner": "F2",
@@ -4191,6 +4363,28 @@
       "dateActual": "NOT_ACCEPTED_PENDING_QF2_CONTAINING_CANDIDATE",
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
+    },
+    "browserOwner": "NONE; QF2 final222 clean/STOP/release accepted, C owns handover; no concurrentChrome. Wait next immutable containing candidate, protectedDB7/3BC unchanged.",
+    "operationalReceipts": {
+      "c03-c101-c102-result-bytepair-20261024-104": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
+        "bytes": 2966,
+        "sha256": "c5c2cdf3c31a6f06188961177d14dd279cfb2d26253ef8ac6fb7e4f534ae3f74",
+        "status": "PASS_PRIVATE_ORIGINAL_AND_PUBLIC_EXPORT_EXACT_JSON_VALUES_PAIRED",
+        "phase": null,
+        "firstError": null
+      },
+      "c03-native-v11-normal-save-bytepair-resume-20261024-105": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-native-v11-normal-save-bytepair-resume-20261024-105/release-submission/release-receipts/c03-native-v11-normal-save-bytepair-resume-20261024-105/engine-result.json",
+        "bytes": 16714,
+        "sha256": "957fa90d752b5859c40ef1f011da42809bbb0b71c62d0a4c35d2a02254a00573",
+        "status": "FAILED_FIRST_ERROR_PRESERVED_NO_REPLAY",
+        "phase": "ONE_V11_NORMAL_GROUP_SAVE_REPLAY_ROLLBACK_AND_TRANSFER_CONSERVATION",
+        "firstError": {
+          "code": "PRODUCT_SCHEME_REQUIRED",
+          "phase": "NORMAL_PRODUCT_FIXTURE"
+        }
+      }
     }
   },
   "latestReadySource": {

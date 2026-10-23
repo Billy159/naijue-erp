@@ -1,3 +1,15 @@
+当前接续（2026-10-24北京时间；固定源码227／当前可看222）：
+
+- 当前入口 http://127.0.0.1:57875/synthetic-unified.html ，原source222=4c0cf711772d4426da03bf9a768a8f4d6abc3418/build ui-preview-4c0cf71-01-build01。原进程停后已证socket拒绝/lsof空/PID消失，恢复同一serve PID13963/session51535，无重构建；identity GET200与原3资源pin一致。18合成适配，不冒真实保存、权限或正式性能。
+- 新源223公共header-close接缝／224销货确认切换effect已分别QFv068/069限定sourcePASS；原O-S14仍有零完成行只pendingraw时错误确认残余，原F1继续。225只D3原测试断言修复，QB195关闭F01；226= b816edc9 为F2完整native流水弹窗carrier，227=af9e77f2 为Today原Arco指针/blur修复。226/227尚未进222；不混版本，等待同下一完整候选。F1继续原日历最终padding和O-S14，非新迁移工程。
+- QF2已final222并clean/STOP还C；鼠标首开/稳定重开命名范围实际PASS，Today真实双侧差异和267×355对267×341几何仍OPEN。F2 carrier源码交付，后继只补受影响像素/close；原20+4、503、取消等有效范围复用。浏览器当前无人占用，未证明独立会话，不并抢；保护DB7/3BC及其它标签。
+- 唯一QF矩阵当前104=37页+67类，47未检查/31差异/10局部/15待接入/1批准例外；55个明确索引逻辑范围，历史48保留，整页0/整类0，未完104。已采用v064–070及QF2 final，无重复技术验收。
+- 原QB工具已恢复，191/192新v11元数据限定结论采用，不再等人类重启。C104实际证明C101导出与服务器原件JSON值完全相同、序列化字节不同；原102错误pin按原件精确修订，旧失败不重放。C105实际PG执行exit2/11.801976626秒，4COLOR+1CUSTOMER正常提交后商品fixture报PRODUCT_SCHEME_REQUIRED；原商品request key结果未知，八组V11保存未开始。原D1核准确scheme缺项，C106只读恢复原键/当前账号，必要时正常禁用，不SQLreset/换键/清fixture。失败标记false不当成实时身份或数据变化证明。
+- C107只准备新R1 v11 appTCP有限只读证明；QB192 Unix证据不能当appTCP。实际214 Linux离线npm ci/native成功复用，无新应用/数据就绪/公网切换；226/227未部署。HREV v12 helper两EXEC仍待C专用writer installer接缝，QB193P1未关；不写入read-only schema19 ACL或猜权限。v13未批，不写DDL/新writer。
+- 原12h备份截止2026-10-23T23:36:33.695668Z不延长，执行时真实准入。GitHub最近准确3bb5f695，223–227及本段下一精确同步；在途WIP不覆盖。沿原十角色/22任务，gpt-6.1-sol/xhigh，Fast工具无开关未核，目标ACTIVE。
+
+下方为保留历史，以本段和TASKS.currentContinuation为当前事实。
+
 当前接续（2026-10-24北京时间；固定源码及可看候选222）：
 
 - 当前入口 http://127.0.0.1:57875/synthetic-unified.html ，source222=4c0cf711772d4426da03bf9a768a8f4d6abc3418/build ui-preview-4c0cf71-01-build01；一次原build0，413输入/1368模块，HTML3415012B/c9c2b79c…，PID11736/session56799，三关键HTTP逐字与版本头一致。18合成适配不覆盖业务UI/CSS，命令收据拒绝、真实PG/保存权限/正式性能未通过。221/220旧候选保留准确原证。
