@@ -1,3 +1,9 @@
+接续实证 2026-10-23T18:28:52.689312+00:00：C100原QA调拨SAVE及真实锁等待撤权已PASS0/5.180230516秒：同一QA账号正常RESTORE→原unusedSAVE创建DRAFTv1→pg_locks真实等待10次观察→新正常DISABLEv4/auth4提交→等待SAVE与原成功key重放均FORBIDDEN。audit/receipt12，库存0/原49/正式3服务保持，pool关闭bg0；不是v11或正式发布通过。C101已按QB190/source194准备新v11仅SQL+catalog，尚未执行/签新用途，D1normalfixture runner已交待实际4purpose及新目录。
+
+最新已可打开196 http://127.0.0.1:57868/synthetic-unified.html ，source0930113/build ui-preview-0930113-01-build01，HTML3362641B2a6ceab7、406inputs/1361modules，1build1serve3HTTP，PID80463。QF184 exactclean后C明确solelease QF2同3A913/7F93/1470x668DPR2，先付款两P2→新资料库存模块；QF离线。197/198恢复、199SAVEtransport、200stableowner不在196，不混actual。源码已到20000a5c2f；198只修V1underV2原body保持，199只transport页面mapping在途，200stableowner源就绪未真实恢复。C200完整productionbuild/pack仅新输入准备，未执行，原正式URL未切换。GitHub已核8de9844，本段下一精确推送；目标ACTIVE，104/48/whole0保持。
+
+下方历史保留，以本段与TASKS.currentContinuation为准。
+
 最新接续 2026-10-23T18:16:26.736409+00:00：
 
 - 修订v11已按实际商品组硬边界完成原22生产源：185D2内部append、190应用API、194完整D1adapter/SQL；QB187/188/190均仅source/SQL/protocol限定PASS。新v11需要122函数、新deferred trigger和含PRODUCT_SEASONS_READ准确实际purpose；旧v10/QB185三purpose不替代。实际SQL/8组PG尚未执行，F1原96页面同SAVE映射仍未完，B07/v12WIP不混。

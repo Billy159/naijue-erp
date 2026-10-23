@@ -1,0 +1,60 @@
+{
+  "atUtc": "2026-10-23T18:28:52.689312+00:00",
+  "taskId": "C03_ORIGINAL_SPEC02_TRANSFER_CURRENT_IDENTITY",
+  "jobId": "c03-native-qa99-transfer-resume-20261024-100",
+  "status": "PASS_ACTUAL_TRANSFER_WAIT_CURRENT_IDENTITY_AND_ORIGINAL_KEY_REPLAY_DENIED",
+  "exitCode": 0,
+  "elapsedSeconds": 5.180230516009033,
+  "sourceCommit": "4d35e1bcdaec27549ed764c73745e55d526f8629",
+  "catalog": "32dc259fb55e7cdd7e15120995b9393eeef6d972ac2d2fd97d1982dac8a48bb0",
+  "patchLevel": "26_v10_native_creation_record_scope",
+  "commits": [
+    "NormalACCOUNT RESTORE neworiginalQAaccount v2→3/auth3",
+    "Original unusedtransferSAVE key op105 DRAFTv1",
+    "FreshnormalACCOUNT DISABLE v3→4/auth4"
+  ],
+  "actualWait": {
+    "actualPgLockWaitObserved": true,
+    "observations": 10
+  },
+  "staleSave": "FORBIDDEN",
+  "originalSuccessfulSaveKeyReplayAfterDisable": "FORBIDDEN",
+  "after": {
+    "accounts": 50,
+    "staff": 50,
+    "warehouses": 2,
+    "products": 1,
+    "rootVersion": 2,
+    "skus": 1,
+    "barcodes": 1,
+    "audits": 12,
+    "receipts": 12,
+    "sourceRows": 57,
+    "importRecords": 2,
+    "claims": 2,
+    "inventoryLedger": 0,
+    "inventoryBalance": 0,
+    "accountLoginEnabled": false,
+    "accountVersion": 4,
+    "accountAuthVersion": 4,
+    "original49Unchanged": true,
+    "formal3Unchanged": true,
+    "transfers": 1,
+    "transferVersion": 1,
+    "transferStatus": "DRAFT",
+    "actualPgLockWaitObserved": true,
+    "staleSave": "FORBIDDEN",
+    "originalSuccessfulKeyReplayAfterRevoke": "FORBIDDEN"
+  },
+  "original49Unchanged": true,
+  "inventoryStateUnchanged": true,
+  "formal3Unchanged": true,
+  "cleanup": "Allleasesreleased,ownedpooldisposed,driverended,background0",
+  "notTested": [
+    "Newv11sametransactionmissingSKUcases",
+    "FullformalHTTP/PGuserUAT",
+    "Representativequeryperformance",
+    "Productioncutover"
+  ],
+  "goalComplete": false
+}
