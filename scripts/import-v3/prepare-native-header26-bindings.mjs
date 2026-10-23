@@ -5,9 +5,18 @@ import {prepareV3HistoryHeader} from '../../packages/application/src/import-v3-h
 import {v2MoneyApprovalSet} from '../../packages/application/src/import-v2.ts';
 import {historySettlementRequestHash as checkedHash} from '../../packages/application/src/import-v3-history-settlement.ts';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
+import {stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
 const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>{const d=Object.getOwnPropertyDescriptor(v,k);return d?.enumerable&&Object.hasOwn(d,'value');});
 const must=(ok,code)=>{if(!ok)throw Object.assign(Error(code),{code});},text=v=>typeof v==='string'&&v.length>0&&v.length<=65536&&!v.includes('\0'),uuid=v=>typeof v==='string'&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(v),hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 const nativeColumns={HALL:['id','name','version','default_customer_id','default_sales_warehouse_id','enabled'],WAREHOUSE:['id','name','version','hall_id','enabled','created_operation_id'],STAFF:['id','name','version','hall_id','role','contact','employment_status'],CUSTOMER:['id','name','version','code','enabled','created_at','updated_at']};
+/** Source-backed identity candidate only. No full header/hall/native-reference
+ * preparation, allocation-registry UUID, SQL state or import authority. */
+export function prepareSalesHeaderSourceIdentity26(binding,record){
+ must(exact(binding,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&uuid(binding.batchId)&&text(binding.fixedSourceNamespace)&&hash(binding.selectionSha256),'HEADER26_BINDING_SCOPE');
+ const s=record.source,sel=record.selection;must(s?.entityType==='SALES_HEADER'&&s.batchId===binding.batchId&&sel?.entity==='SALES_HEADER'&&sel.source==='BASE_V2'&&sel.selectionSha256===binding.selectionSha256,'HEADER26_SALES_IDENTITY_SCOPE');
+ must(uuid(s.id)&&text(s.sourceKey)&&hash(s.sourceFileSha256)&&hash(s.rowSha256)&&s.rawFields?.来源编号===s.sourceKey&&s.normalizedFields?.来源编号===s.sourceKey,'HEADER26_SALES_IDENTITY_SOURCE');
+ return {sourceKey:s.sourceKey,nativeId:stableImportId('history-sales-header',binding.fixedSourceNamespace,s.sourceKey),sourceRowId:s.id,sourceFileSha256:s.sourceFileSha256,rowSha256:s.rowSha256,version:1};
+}
 export function createNativeHeader26BindingPreparer(options){
  must(exact(options,['binding','parties','historicalCustomers','moneyApprovals','expected']),'HEADER26_BINDING_OPTIONS');checkedHash(options);const o=structuredClone(options),b=o.binding;
  must(exact(b,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&uuid(b.batchId)&&text(b.fixedSourceNamespace)&&text(b.cutoffAt)&&hash(b.selectionSha256),'HEADER26_BINDING_SCOPE');

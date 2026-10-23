@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp,writeFile,readFile,realpath,rm,lstat } from 'node:fs/promises';
+import { mkdtemp,writeFile,readFile,realpath,rm,lstat,open } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { gzipSync } from 'node:zlib';
 import { openVerifiedHeaderSource } from './verified-header-source.mjs';
+import {stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
 const sha=b=>createHash('sha256').update(b).digest('hex'),pin='a'.repeat(64),id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
 async function fixture(t,alter=()=>{}){
  const dir=await mkdtemp(join(await realpath(tmpdir()),'verified-headers-synthetic-'));t.after(()=>rm(dir,{recursive:true,force:true}));
@@ -15,6 +16,11 @@ async function fixture(t,alter=()=>{}){
  const receipt={taskId:'B06-HEADER-SOURCE-ONLY-GZIP-ONE-WINDOW',status:'PASS_COMPLETE_42561_HEADER_SOURCE_ONLY_NO_SQL',sql:false,stage:false,publish:false,readerReturned:true,readerClosed:true,sourceChecks:'SOURCE_ONLY_COUNTS_AND_ORIGINAL_CELLS_VERIFIED_NOT_NATIVE_BINDINGS',...binding,actualRows:2,actualCounts:{SALES_HEADER:1,TRANSFER_HEADER:1},preservedCompressedSource:{path:spoolFile,bytes:stored.length,sha256:sha(stored),rawBytes:raw.length,rawSha256:sha(raw)}};
  const mutable={receipt,stored,raw,records};alter(mutable);stored=mutable.stored;raw=mutable.raw;const rb=Buffer.from(JSON.stringify(receipt));await writeFile(spoolFile,stored,{mode:0o600});await writeFile(receiptFile,rb,{mode:0o600});return {options:{spoolFile,receiptFile,trustedReceiptSha256:sha(rb),binding,limits:{maxStoredBytes:134217728,maxRawBytes:536870912,maxLineBytes:4194304}},records,spoolFile,receiptFile,stored};
 }
+test('sales source identities: collect only six fields after complete EOF using one source stream, no hall mapping or rows rescan',async t=>{
+ const change=m=>{for(const r of m.records){r.source.rawFields.来源编号=r.source.normalizedFields.来源编号=r.source.sourceKey;r.source.rawFields.所属厅来源编号=r.source.normalizedFields.所属厅来源编号='';}m.raw=Buffer.from(m.records.map(r=>JSON.stringify(r)+'\n').join(''));m.stored=gzipSync(m.raw);Object.assign(m.receipt.preservedCompressedSource,{bytes:m.stored.length,sha256:sha(m.stored),rawBytes:m.raw.length,rawSha256:sha(m.raw)});};const f=await fixture(t,change),h=await open(f.spoolFile,'r'),prototype=Object.getPrototypeOf(h),original=prototype.createReadStream;await h.close();let streams=0,reader;
+ try{prototype.createReadStream=function(...args){streams++;return Reflect.apply(original,this,args);};reader=await openVerifiedHeaderSource({...f.options,collectSalesIdentities:true});assert.equal(streams,1);assert.equal(reader.report.nativeBindingsVerified,false);assert.equal(reader.report.salesSourceIdentityCandidates,1);const rows=[];for await(const row of reader.salesHeaderSourceIdentities())rows.push(row);const s=f.records[0].source;assert.deepEqual(rows,[{sourceKey:s.sourceKey,nativeId:stableImportId('history-sales-header',f.options.binding.fixedSourceNamespace,s.sourceKey),sourceRowId:s.id,sourceFileSha256:s.sourceFileSha256,rowSha256:s.rowSha256,version:1}]);assert.equal(streams,1);assert.equal(f.records[0].source.normalizedFields.所属厅来源编号,'');await reader.close();await assert.rejects(reader.salesHeaderSourceIdentities().next(),/CLOSED/);}finally{prototype.createReadStream=original;await reader?.close();}
+ const bad=await fixture(t,m=>{change(m);m.receipt.preservedCompressedSource.rawSha256='b'.repeat(64);});await assert.rejects(openVerifiedHeaderSource({...bad.options,collectSalesIdentities:true}),/CONTENT_CHANGED/);
+});
 test('verified gzip source validates complete bytes before rows, authorizes exact record and retains original raw/date/overlay',async t=>{
  const f=await fixture(t),s=await openVerifiedHeaderSource(f.options);t.after(()=>s.close());assert.equal(s.report.rows,2);assert.equal(s.report.nativeBindingsVerified,false);assert.equal(s.report.noSql,true);
  const rows=[];for await(const row of s.rows())rows.push(row);assert.deepEqual(rows,f.records);await s.authorizeSource(rows[0]);

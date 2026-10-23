@@ -8,6 +8,7 @@ import { Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import { isAbsolute } from 'node:path';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
+import { prepareSalesHeaderSourceIdentity26 } from './prepare-native-header26-bindings.mjs';
 const must=(ok,code)=>{if(!ok)throw Object.assign(Error(code),{code});};
 const hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v);
 const same=(a,b)=>['dev','ino','size','mode','mtimeMs','ctimeMs'].every(k=>a[k]===b[k]);
@@ -15,12 +16,13 @@ const exact=(x,keys)=>x&&Object.getPrototypeOf(x)===Object.prototype&&Reflect.ow
 const entities=['SALES_HEADER','TRANSFER_HEADER'];
 const sourceKey=r=>JSON.stringify([r.source.entityType,r.source.sourceKey]);
 export async function openVerifiedHeaderSource(options){
- must(exact(options,['spoolFile','receiptFile','trustedReceiptSha256','binding','limits',...(Object.hasOwn(options??{},'signal')?['signal']:[])]),'VERIFIED_HEADER_CONFIG');
+ must(exact(options,['spoolFile','receiptFile','trustedReceiptSha256','binding','limits',...(Object.hasOwn(options??{},'signal')?['signal']:[]),...(Object.hasOwn(options??{},'collectSalesIdentities')?['collectSalesIdentities']:[])]),'VERIFIED_HEADER_CONFIG');
+ const collectSalesIdentities=options.collectSalesIdentities===true;must(options.collectSalesIdentities===undefined||typeof options.collectSalesIdentities==='boolean','VERIFIED_HEADER_CONFIG');
  const {spoolFile,receiptFile,trustedReceiptSha256,signal}=options;requestHash(options.binding);const binding=structuredClone(options.binding),limits=structuredClone(options.limits);
  must([spoolFile,receiptFile].every(p=>typeof p==='string'&&isAbsolute(p))&&hash(trustedReceiptSha256),'VERIFIED_HEADER_OUTSIDE_PIN');
  must(exact(limits,['maxStoredBytes','maxRawBytes','maxLineBytes'])&&Number.isSafeInteger(limits.maxStoredBytes)&&limits.maxStoredBytes>0&&limits.maxStoredBytes<=134217728
   &&Number.isSafeInteger(limits.maxRawBytes)&&limits.maxRawBytes>0&&limits.maxRawBytes<=536870912&&Number.isSafeInteger(limits.maxLineBytes)&&limits.maxLineBytes>0&&limits.maxLineBytes<=4194304,'VERIFIED_HEADER_LIMIT');
- let closed=false;const readers=new Set(),index=new Map();
+ let closed=false;const readers=new Set(),index=new Map(),salesIdentities=[];
  const active=()=>must(!closed&&!signal?.aborted,'VERIFIED_HEADER_CLOSED');active();
  const receiptIdentity=await lstat(receiptFile);must(receiptIdentity.isFile()&&!receiptIdentity.isSymbolicLink()&&receiptIdentity.size<=4194304,'VERIFIED_HEADER_RECEIPT');
  const receiptBytes=await readFile(receiptFile);must(same(receiptIdentity,await lstat(receiptFile))&&createHash('sha256').update(receiptBytes).digest('hex')===trustedReceiptSha256,'VERIFIED_HEADER_RECEIPT_CHANGED');
@@ -58,14 +60,15 @@ export async function openVerifiedHeaderSource(options){
    must(rows===receipt.actualRows&&entities.every(e=>counts[e]===receipt.actualCounts[e]),'VERIFIED_HEADER_ROW_COUNT');must(same(identity,await fd.stat()),'VERIFIED_HEADER_FILE_CHANGED');await verify();
   }finally{for(const stream of entry.streams)stream.destroy();if(entry.done)await Promise.allSettled([entry.done]);await fd.close();readers.delete(entry);}
  }
- async function close(){if(closed)return;closed=true;for(const entry of readers)for(const stream of entry.streams)stream.destroy();await Promise.allSettled([...readers].flatMap(e=>[...(e.done?[e.done]:[]),e.fd.close()]));index.clear();}
+ async function close(){if(closed)return;closed=true;for(const entry of readers)for(const stream of entry.streams)stream.destroy();await Promise.allSettled([...readers].flatMap(e=>[...(e.done?[e.done]:[]),e.fd.close()]));index.clear();salesIdentities.length=0;}
  const onAbort=()=>{void close();};signal?.addEventListener('abort',onAbort,{once:true});
  try{
   // Every byte, gzip CRC, UTF-8 row, raw digest and expected count is checked
   // before the first external row can be yielded. Retain hashes, not 399MB rows.
-  for await(const r of scan())index.set(sourceKey(r),requestHash(r));
+  for await(const r of scan()){index.set(sourceKey(r),requestHash(r));if(collectSalesIdentities&&r.source.entityType==='SALES_HEADER')salesIdentities.push(prepareSalesHeaderSourceIdentity26(binding,r));}
   must(index.size===receipt.actualRows,'VERIFIED_HEADER_ROW_COUNT');
-  return{report:Object.freeze({kind:'VERIFIED_HEADER_SOURCE_GZIP_V1',rows:index.size,counts:{...receipt.actualCounts},storedBytes:spool.bytes,rawBytes:spool.rawBytes,sourceOnly:true,nativeBindingsVerified:false,importReady:false,noSql:true}),verify,
+  return{report:Object.freeze({kind:'VERIFIED_HEADER_SOURCE_GZIP_V1',rows:index.size,counts:{...receipt.actualCounts},storedBytes:spool.bytes,rawBytes:spool.rawBytes,sourceOnly:true,nativeBindingsVerified:false,importReady:false,noSql:true,...(collectSalesIdentities?{salesSourceIdentityCandidates:salesIdentities.length}:{})}),verify,
+   ...(collectSalesIdentities?{async *salesHeaderSourceIdentities(){await verify();for(const row of salesIdentities){active();yield {...row};active();}await verify();}}:{}),
    async *rows(entity){must(entity===undefined||entities.includes(entity),'VERIFIED_HEADER_ENTITY');for await(const r of scan()){must(index.get(sourceKey(r))===requestHash(r),'VERIFIED_HEADER_RECORD_CHANGED');if(entity===undefined||r.source.entityType===entity)yield r;}},
    async authorizeSource(value){await verify();const r=record(value);must(index.get(sourceKey(r))===requestHash(r),'VERIFIED_HEADER_RECORD_CHANGED');await verify();},
    async close(){signal?.removeEventListener('abort',onAbort);await close();}};
