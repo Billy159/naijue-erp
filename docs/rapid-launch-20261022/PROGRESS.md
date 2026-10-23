@@ -1,3 +1,15 @@
+增量实绩 2026-10-23T06:47:24.824247+00:00：原C144有限Sales80918/Settlement25779读取一次245.27555s exit0，106697来源+106697原mappertyped投影已固定4产物SHA/0600，2reader/1payment迭代，cache释放；refonly/nativeBindingsVerified=false，0PG/MAIN/PUBLISH/all11，actualPayloadHash=null，不称正式导入。QB162历史ledger5与QF2 C145 paired2有限源码结论均采用，实际PG/页面未验。QF2 143原5actual限定关闭，Chrome已cleanrelease归C，下批只验新sticky实际受影响项。
+
+当前接续 2026-10-23T06:45:46.261088+00:00：最新固定源码C145 `1ae784b8683b8af29a4e7b1c24705095b00866d2`；实际浏览器候选仍C143 http://127.0.0.1:57856/synthetic-unified.html / ui-preview-3d04251-01-build01。C145原调拨旧单440离开层exact1已QF源码通过，D3已批HISTORY_REVISION ledger5已QB162源码协议通过，F2paired2 QF2离线核查；尚未新构建/实际页面通过。F1原首次分页事件/SALE旧leave/readonly最长轴与F2新操作列sticky继续原owner，不每CSSbuild。
+
+十角色/原22任务已落实：QF143关闭方向弹层、mixedOUT Tab、默认历史只读单表、普通行高39四具名项；QF2 143关闭商品primary及库存四视觉问题，原137设置focus/clip两P2采用。新QF2-I01-ACTION-COLUMN-STICKY-01已派F2，仅左中右固定列复验。QF唯一汇总矩阵；两组已cleanrelease，浏览器现归C等待下一固定完整模块，无真正独立控制会话，不准并抢Chrome。104/局部48/整页整类0，禁用态未测及真实业务缺口不冒通过。
+
+实际后端：C63完整锁定生产依赖安装/Sharp/私有应用代理/真实资源通过，依赖A+B解除，正式地址未切换。C66新QA1032586/catalog56785e66全部metadata/23权限已取，QB160限定通过。C67首STAGE实际失败23514；C68只读确认全部相关记录0、batch/原key receipt空，确切invalid versioned field provenance / guard_history_insert line22。D2明确fields.bootstrap_accounts裸7key与通用origin/reason/raw envelope互斥，纯K无合法解，已交原D1核既有合同和最小修复/确认边界；未改guard、未DDL、未重放。D1同Chat已恢复，H06等真实CREATE，不误记QB积压。
+
+QB159 SKU5来源、QB161原C144有限cache/caller有效采用；C一次80918/25779实际源/typed投影正在运行，未到回执，0PG/MAIN/PUBLISH/all11。D3继续原B03不依赖该窗口的ledger/filter/count/full-output缺口，新增字段/依赖合同仍按原确认。GitHub独立已核a135cfc，144/145及本记录待精确非强推；旧QA/Demo/源数据/原三服务保留。显式gpt-6.1-sol/xhigh；Fast要求off但工具无开关不冒核。目标ACTIVE未完成，从本段/TASKS接续。
+
+以下历史保留。
+
 当前接续 2026-10-23T06:11:12.412218+00:00：完整C143固定候选已实际可打开 http://127.0.0.1:57856/synthetic-unified.html ，source3d042517681ac1b58f98a12fa16bde8e4fb814a4 / ui-preview-3d04251-01-build01，HTML3119555B/492d2dc6、400输入383源码+981锁依赖=1364、三关键HTTP逐字200。中断前原build实际exit0，接续未重跑；141仅PREBUILD被143合批替代、从未监听。新9前端文件包含F174完整单据接缝、商品primary及库存四视觉修复/已有ledger消费者，closedcap/W0/原单1SKU/拒写保持，非正式业务/性能PASS。
 
 QF2第一轮实际已交：C137商品列表原几何及F3初始焦点5消费者/厅仓与付款弹层裁切原两P2限定通过；新增P01primary及C139库存queryprimary/resultsframe/toolsrow/settingssurface四P2都已原F2源码修到143，尚未实际关闭。QF2清自身草稿/弹层并明确释放，C交回原QF独占两标签；QF正在139未变T02模块收尾、再同标签143定向单据公共。QF2新5source结论可采用，等明确模块交接再actual143。总矩阵QF唯一汇总，C不技术重验。37+67=104、去重局部48/整页整类0不缩不加，待接入及未测保持。
