@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T09:37:05.884379+00:00",
+  "updatedAt": "2026-10-23T11:46:15.188902+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3236,6 +3236,30 @@
           "group": "SHARED_PAGE_SIZE_FIRST_OPEN_01_EXISTING_LAZY_EVENT_WIRING",
           "fieldGate": "EXISTING_UI_ONLY_NO_QUERY_OR_BUSINESS_CHANGE",
           "scope": "QF C143 first native focus/pointer click; existing shared lazy shell only; common primary QA QF"
+        },
+        {
+          "path": "apps/web/src/application/styles/parties.css",
+          "group": "F01_ARCO_CSS_SINGLE_EXISTING_APPLICATION_BASE",
+          "fieldGate": "NO_SCHEMA_OR_CONTRACT_CHANGE",
+          "boundary": "F1 sole writer: delete only redundant installed-Arco import lines from original exact5 CSS. Existing shell application base, Demo declarations/order, lazy style leases and public paths remain. No buildconfig/lock/TSX/backend modifications."
+        },
+        {
+          "path": "apps/web/src/demo-controls/single-select.css",
+          "group": "F01_ARCO_CSS_SINGLE_EXISTING_APPLICATION_BASE",
+          "fieldGate": "NO_SCHEMA_OR_CONTRACT_CHANGE",
+          "boundary": "F1 sole writer: delete only redundant installed-Arco import lines from original exact5 CSS. Existing shell application base, Demo declarations/order, lazy style leases and public paths remain. No buildconfig/lock/TSX/backend modifications."
+        },
+        {
+          "path": "apps/web/src/demo-controls/multi-select.css",
+          "group": "F01_ARCO_CSS_SINGLE_EXISTING_APPLICATION_BASE",
+          "fieldGate": "NO_SCHEMA_OR_CONTRACT_CHANGE",
+          "boundary": "F1 sole writer: delete only redundant installed-Arco import lines from original exact5 CSS. Existing shell application base, Demo declarations/order, lazy style leases and public paths remain. No buildconfig/lock/TSX/backend modifications."
+        },
+        {
+          "path": "apps/web/src/components/product-candidate-action.css",
+          "group": "F01_ARCO_CSS_SINGLE_EXISTING_APPLICATION_BASE",
+          "fieldGate": "NO_SCHEMA_OR_CONTRACT_CHANGE",
+          "boundary": "F1 sole writer: delete only redundant installed-Arco import lines from original exact5 CSS. Existing shell application base, Demo declarations/order, lazy style leases and public paths remain. No buildconfig/lock/TSX/backend modifications."
         }
       ]
     }
@@ -3590,6 +3614,25 @@
       "atUtc": "2026-10-23T06:12:55.951486+00:00",
       "source": "User confirmed all C01-20261022-v1 A-D; FIELD-APPROVAL-C01-v1.json. SCHEMA-CHANGE-CONFIRMATION.md:290-291 explicitly approves inventory_ledger HISTORY_REVISION and source history columns.",
       "change": "D3 original ledger enum/parser C01 condition fulfilled only for already approved HISTORY_REVISION read branch; no new enum invented/DDL/write contract approval. F2 remains sole web consumer writer. Existing synthetic finite-source cache N+1 fix released to original D3 sealed-payment-source/test paths, no new file or permission."
+    },
+    {
+      "atUtc": "2026-10-23T11:46:15.188902+00:00",
+      "owner": "F1",
+      "group": "F01_ARCO_CSS_SINGLE_EXISTING_APPLICATION_BASE",
+      "files": [
+        "apps/web/src/application/styles/parties.css",
+        "apps/web/src/application/styles/transfers.css",
+        "apps/web/src/demo-controls/single-select.css",
+        "apps/web/src/demo-controls/multi-select.css",
+        "apps/web/src/components/product-candidate-action.css"
+      ],
+      "newlyRegistered": [
+        "apps/web/src/application/styles/parties.css",
+        "apps/web/src/demo-controls/single-select.css",
+        "apps/web/src/demo-controls/multi-select.css",
+        "apps/web/src/components/product-candidate-action.css"
+      ],
+      "reason": "Human full-site component reuse and actual performance scope; C166 original production graph proves10 library CSS input kinds repeated. F1 originalchunk83 exact5 minimal proposal, no otherrole edits. Single existing base only, no new architecture or UI redesign."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
