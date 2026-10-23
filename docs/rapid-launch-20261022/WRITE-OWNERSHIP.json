@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T19:16:42.569891+00:00",
+  "updatedAt": "2026-10-23T19:24:33.159327+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3718,6 +3718,12 @@
           "group": "F1_LOCAL_SPEC_LINE_KNOWN_CONSUMER_TYPE_NARROWING",
           "fieldGate": "TEST_TYPE_ONLY_NO_BUSINESS_ASSERTION_WEAKEN",
           "scope": "Original knownSKU .sku nonnull assertion and legacy SAVE draft discriminator only; preserve all expected quantities/hash/precision; no skips"
+        },
+        {
+          "path": "apps/web/src/application/contracts.ts",
+          "group": "I07_I08_EXISTING_ROUTE_READONLY_DOCUMENT_TARGET",
+          "fieldGate": "FRONTEND_READ_TARGET_ONLY_NO_SERVER_AUTHORITY",
+          "scope": "Temporary sole F1 writer for RoutePreparation explicit readonly initialDocument SALES/TRANSFER actual-ID union and necessary type only. No new API or permission/command policy. C does not write until explicit F1 frozen release; restore C reservation after checkpoint."
         }
       ]
     }
@@ -3729,7 +3735,6 @@
       "package-lock.json",
       "tsconfig.json",
       "tsconfig.build.json",
-      "apps/web/src/application/contracts.ts",
       "docs/rapid-launch-20261022/**",
       "references/demo-ui-baseline/**",
       "references/rapid-launch-taskbook-20261022/**",
@@ -4310,6 +4315,14 @@
       "D3Released": true,
       "source": "D3 exact explicit handoff in this C message, both paths confirmed absent/no in-flight store work",
       "scope": "Only approved C01 numeric history transaction implementation; no second endpoint/schema or broad unapproved edit"
+    },
+    {
+      "atUtc": "2026-10-23T19:24:33.159327+00:00",
+      "path": "apps/web/src/application/contracts.ts",
+      "from": "C",
+      "to": "F1",
+      "CReleased": true,
+      "scope": "Only original I07/I08 document-source explicit click typed readonly route target. Unique file writer F1 until source delivery; no parallel C edits."
     }
   ]
 }

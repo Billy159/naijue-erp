@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "00a5c2f42bf773a7d0f5485cfde38cbb90d6b557",
+    "headObserved": "443329a173a27a1797e9723cb0a132ed8de44f0a",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "8de984455c5d7e74f5ceff837700c6e98d8af3a9",
+    "remoteHeadVerified": "cd6046a238e7b779f1deae2a96472c9d1141be54",
     "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -963,9 +963,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-23T19:18:24.117273+00:00",
+  "updatedAt": "2026-10-23T19:38:19.596117+00:00",
   "stage": "ACTIVE_PHASED_IMPLEMENTATION_AND_REAL_ISOLATED_VALIDATION",
-  "lastVerifiedRemoteCommit": "8de984455c5d7e74f5ceff837700c6e98d8af3a9",
+  "lastVerifiedRemoteCommit": "cd6046a238e7b779f1deae2a96472c9d1141be54",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1409,7 +1409,7 @@
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
-    "schema": "EXACT1..26_PLUS_APPROVED_V6_V7_TWO_FUNCTIONS_ACTUAL_C89",
+    "schema": "R1_ACTUAL_C103_V11_122_ROUTINES_CATALOG53ea114e; QA_ACTUAL_C101_V11_CATALOG5717b1be; NOT_NEW_RUNTIME_REVIEW",
     "runtimeAcl": "C38_BASELINE_READ_AUTH_PLUS_EXACT_CLASSIFIER_EXECUTE_AND_SOURCE3_SELECT_ONLY",
     "realAccountsCaptured": 49,
     "accountsWithExactOldEmployeeLink": 45,
@@ -1425,30 +1425,19 @@
     "deploymentTools": "C63_ACTUAL_PRODUCTION_CI_NATIVE_APP_PROXY_KEY_RESOURCES_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 180,
-      "commit": "2fc317cb277a3cc6363b64f9ef734169234ba713",
-      "actualPreviewRound": 173,
-      "actualPreviewSource": "10a0d007a34d030d7d368afcad8ce7d43b5622ed",
-      "qualification": "Source180 current actual product group/read recommendation; F1 group UI91 WIP not fixed.175 editor主体+funds and177base/178P01 not yet one runtime whole-page accepted."
+      "round": 213,
+      "commit": "443329a173a27a1797e9723cb0a132ed8de44f0a",
+      "latestServedPreviewRound": 207,
+      "qualification": "210ledger/211empty/212hostdispose/213sizepopup fixed not yet built or browser accepted; original103 docnav still in flight"
     },
     "currentPreview": {
-      "sourceRound": 173,
-      "sourceCommit": "10a0d007a34d030d7d368afcad8ce7d43b5622ed",
-      "buildId": "ui-preview-10a0d00-01-build01",
-      "url": "http://127.0.0.1:57865/synthetic-unified.html",
-      "htmlBytes": 3148220,
-      "htmlSha256": "0709bb6d1923d4c25e56d244f0e8e1bcafe06cbcdc87d79b3c8573232d94c658",
-      "identitySha256": "441e8324fdde6fdaa856c873a2c89bfff4ce3856815a1b7341cd1f6ae4036597",
-      "provenanceSha256": "7c92cd1d7160e7acf446c8e7d7da2e0625f43d17a272655d79c8a0fc705ee622",
-      "serverPid": 50115,
-      "serverSession": 76356,
-      "actualBuildInvocations": 1,
-      "actualHTTPKeyResources": 3,
-      "syntheticOnly": true,
-      "scope": "Fixed173 B05/B06/O-B05/O-B06. Not174/175/176/177/178/180 and not group correction UI.",
-      "wholePageAccepted": false,
-      "realBusinessAccepted": false,
-      "formalPerformanceAccepted": false
+      "sourceRound": 207,
+      "sourceCommit": "fa9dc429b62a317062dc98dc5dc8df5c79d0ada3",
+      "buildId": "ui-preview-fa9dc42-01-build01",
+      "url": "http://127.0.0.1:57869/synthetic-unified.html",
+      "htmlBytes": 3387809,
+      "htmlSha256": "dbea0f5f94afda0d504e0df1444544aad186940c2d917d7bcf2a4979f5af4f1a",
+      "qualification": "SYNTHETIC_ONLY; no210-213/noPG/save/approval/formalperformance"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -1686,7 +1675,21 @@
       "nativeCreateAttempted": false,
       "issuerIssued": false
     },
-    "v11DatabasePatchExecuted": false
+    "v11DatabasePatchExecuted": false,
+    "browserLease": {
+      "owner": "QF2",
+      "scope": "C207 P01 inset/source205 and shared idle/source207 affected actual only",
+      "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
+      "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
+      "viewport": "1470x668 DPR2",
+      "previousClean": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v052-qf-c207-spec-class-rapid-actual/BROWSER-CLEAN.json",
+      "previousCleanSha256": "8723ec57d193780a8a20575d10f0d51438a8c7bd5e46b39e34124a37c4de5716",
+      "protectedTargets": [
+        "DB7CA658365B213EEE3EB1333946E5BA",
+        "3BC874911D0D2415D093603E264B0D67"
+      ],
+      "allOthers": "NO_BROWSER; serialized only; no independent contexts proven"
+    }
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -2358,11 +2361,12 @@
     }
   ],
   "newPendingReviews": [
-    "Original QB runtime toolhumanresume: actualQA101fourpurpose andR1C103 exactmetadata; source203B07/208ledger queued next, no repeatedoldops",
-    "C102 actualv11 normalSAVE prepared and101bound, independentreview stillpending; noissuer/PG executed",
-    "QF sole207 actualCLASS andoriginalfast evidence; offline209limitedsource. QF2 offline200stableowner source and196 reports, then new207P01 affected only afterexactclean",
-    "F1 originalT02localEnter/source docnavhost followups; F2 originalI07/I08 fullnative ledgerconsumer plusnewsizeDropdown/empty targetedfixes",
-    "V13 exact2nullableledger transitioncolumns pluscheck/beforeguard requires original humanconfirmation; noDDL/writer untilreply"
+    "Original QB human/toolresume: QA101 fourpurpose andR1C103 exactmetadata; B07source203/ledger208 pending. No QB2/repeated oldops.",
+    "C102 normalSAVE prepared/disabled; independent newmetadata review pending; no issuer oractual runner execution.",
+    "QF offline final207CLASS/fast andsource209; QF2 source212/new210 then sole207P01 actual. No213fix actual in207.",
+    "F1 originalchunk103 readonly source-doc host exact11, temporary contracts.ts owner; T02 local Enter next.",
+    "Newcomplete213 UI/production prepare; actualbuild afterQF2 measurement clean.",
+    "V13 two nullable ledger quantities/check/beforeguard human confirmation pending; onlythisbranch waits."
   ],
   "openFindingsCurrent": [
     {
@@ -2593,16 +2597,23 @@
     {
       "id": "QF2-P-SIZE-DROPDOWN-OPEN-01",
       "owner": "F2",
-      "status": "NEW_C196_ACTUAL_P2_ORIGINAL_OWNER_DIRECTED_REPAIR",
-      "version": "C196",
+      "status": "SOURCE213_FIXED_NEW_CANDIDATE_ACTUAL_RETEST_PENDING",
+      "version": "213",
       "actualBrowserReproduced": true
     },
     {
       "id": "QF2-I01-EMPTY-ICON-SIZE-01",
       "owner": "F2",
-      "status": "NEW_C196_ACTUAL_P2_ORIGINAL_OWNER_DIRECTED_REPAIR",
-      "version": "C196",
+      "status": "SOURCE211_FIXED_NEW_CANDIDATE_ACTUAL_RETEST_PENDING",
+      "version": "211",
       "actualBrowserReproduced": true
+    },
+    {
+      "id": "QF2-P-RECOVERY-HOST-DISPOSE-CALLBACK-01",
+      "severity": "P2",
+      "owner": "F1",
+      "status": "SOURCE212_FIXED_QF2_AFFECTED_SOURCE_RETEST_IN_PROGRESS",
+      "version": "212"
     }
   ],
   "historicalFailuresPreserved": true,
@@ -3310,12 +3321,10 @@
       "approval": "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
       "answer": "确认修订 v11 组内保存细节",
       "scope": "Exact22 D1=19 D2=3 D3=0; hard currentproduct group; newSKU only nonzero actualSAVE use",
-      "pending": [
-        "SKU code rule",
-        "Document-purpose delegated append and exact SAVE/proof/SQL contract"
-      ],
+      "pending": [],
       "allSystemGroupsAllowed": false,
-      "pendingProposal": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.md, v2 exact22files notold29"
+      "pendingProposal": "WRITE-CONTRACT-SUPPLEMENT-v11-ALL-SIZE-SAVE.md, v2 exact22files notold29",
+      "approvedSaveDetails": "Explicit narrowed v11 call_5a599b4fb02548d18f3d029c883d1148; implementation/actual acceptance remain incomplete"
     },
     "qa80": {
       "job": "c03-native-qa-new-warehouse-transfer-auth-20261023-80",
@@ -3394,13 +3403,39 @@
       "D1FixedSource": "47f9d307469f63da2a292555a71cb0dbb7cdac4c",
       "requiredRuntime": "Newv11 122routines/committrigger andexactpurpose inclPRODUCT_SEASONS_READ; oldv10 121/QB1853purpose notvalid",
       "frontendSaveConsumer": "F1chunk96transportREADY_pendingCPin_page_mappingNOTDONE"
+    },
+    "latestRound213": {
+      "atUtc": "2026-10-23T19:38:19.596117+00:00",
+      "source210": "225fa38435973a27a675bffa9cf58e3a9a45b0a0",
+      "source211": "0b4cce5a10c7d50659885e3af87df9ab9e9db9e1",
+      "source212": "28ac1e643be47aa77987743bdf467ed38f2b69ef",
+      "source213": "443329a173a27a1797e9723cb0a132ed8de44f0a",
+      "independentReview": "QF2 affected source212 then new210; 211/213 actual only on new candidate",
+      "browserLease": {
+        "owner": "QF2",
+        "scope": "C207 P01 inset/source205 and shared idle/source207 affected actual only",
+        "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
+        "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
+        "viewport": "1470x668 DPR2",
+        "previousClean": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v052-qf-c207-spec-class-rapid-actual/BROWSER-CLEAN.json",
+        "previousCleanSha256": "8723ec57d193780a8a20575d10f0d51438a8c7bd5e46b39e34124a37c4de5716",
+        "protectedTargets": [
+          "DB7CA658365B213EEE3EB1333946E5BA",
+          "3BC874911D0D2415D093603E264B0D67"
+        ],
+        "allOthers": "NO_BROWSER; serialized only; no independent contexts proven"
+      },
+      "newPreview": "ui-preview-443329a-01 PREPARING_NOT_BUILT",
+      "newProduction": "r1-c213-production-prep-20261024-01 PREPARING_NOT_BUILT;209 retained unexecuted superseded input",
+      "B07Baseline": "Existing real publication run2 retained but threeDRAFT/nonNULLdate; no actual IDs/OID/currentmetadata captured; D1 narrow continuation pending",
+      "openP1": "Rapid quantity/mixedprice causeUNKNOWN; one new nonreproduction does not close"
     }
   },
   "latestReadySource": {
-    "round": 209,
-    "commit": "dfe348acbaf4597434eff2add5dc52f4d1b2600b",
+    "round": 213,
+    "commit": "443329a173a27a1797e9723cb0a132ed8de44f0a",
     "latestServedPreviewRound": 207,
-    "qualification": "209localSALEspecrows notin207;208ledger andF2freshrepairs notin207; whole/business/performance incomplete"
+    "qualification": "210ledger/211empty/212hostdispose/213sizepopup fixed not yet built or browser accepted; original103 docnav still in flight"
   },
   "pendingUserDecision": [
     {

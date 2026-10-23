@@ -1,3 +1,14 @@
+最新接续（2026-10-24 北京时间，source213）：
+
+- 新增固定源码：210=225fa384（F2 原 I07/I08 流水筛选、精确总数、20条编号及完整 Demo 界面消费者5文件）；211=0b4cce5（库存空态图标仅56→48）；212=28ac1e6（F1 整宿主关闭时退休恢复回调1文件）；213=443329a（F2 新增规格尺码下拉复用既有公共单选1文件）。原owner定向检查采用，QF2仅验新增/受影响范围，未登记整页或真实业务通过。
+- 尺码修复没有改组成员、分页读取、保存校验或SKU身份：原AddSku真实公共组件检查能打开非空所属组、选择未使用成员并排除其他组同名项；原Chrome事件根因仍有限制，必须在新候选实际复验。207不包含210–213，不拿旧页面代表新修复。
+- QF已完成207 CLASS及原快速输入模块并准确清场，clean1693B/8723ec57…交C。CLASS仅限定实测一致；快速数量与退换单价本次各一次未复现，原因UNKNOWN，原P1继续OPEN。C已给QF2同两个受控目标独占207，仅复看P01 inset/idle；保护DB7未保存和3BC未知。QF离线收报告及209源验，双方不抢Chrome。
+- 下一完整UI候选和生产包准备均绑定213，旧209 PREBUILD未执行并保留，因更新完整模块而替代，不做无用旧包构建。当前仍仅207/http://127.0.0.1:57869/synthetic-unified.html 实际可开；新的编译、HTTP、实际浏览器及部署尚未发生。
+- B07找到原真实非空 publication run-2 保全物，schema1–19/PG17、FINAL1/claim5/receipt3/audit3；三单均DRAFT且日期非空，OID/实际UUID/manifest哈希仍未捕获。不是当前v12/HREV可验基线，APPROVED及NULL-date必测仍缺，已交原D1收窄准备，不重STAGE/PUBLISH或sealed18。
+- QB原接续工具阻塞与用户v13两列/守卫确认仍准确等待，仅相关分支停；QA101/R1C103均只是已批v11实际schema证据，C102 normal SAVE的独立review仍PENDING、执行关闭。字段、事实、数据保护及正式分批条件继续保留。
+
+GitHub上一准确回读为cd6046a，本段及210–213下一次精确推送。104／局部48／整页0／整类0，整体ACTIVE；执行gpt-6.1-sol/xhigh，Fast无工具开关未核验。下方历史保留，当前以本段和TASKS.currentContinuation为准。
+
 最新接续（2026-10-24 北京时间）：
 
 - 当前实际可打开为 C207：http://127.0.0.1:57869/synthetic-unified.html ，source fa9dc429b62a317062dc98dc5dc8df5c79d0ada3／build ui-preview-fa9dc42-01-build01。HTML3387809B／dbea0f5f…，412输入／1367模块。一次编译exit0；原后置检查误把6个新遍历的既有模块当源码变更，已用精确原图边及196/207同字节证明，0再编译完成接续，1serve PID90719/session10167、3HTTP逐字一致。原失败记录保留，不是删断言放行。
