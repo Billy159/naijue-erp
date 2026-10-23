@@ -22,6 +22,6 @@ export function preparePaymentSettingsSession(input: RoutePreparation, onAccessF
   const workspace = createPaymentSettingsWorkspace({ scope: input.scope, client: createPaymentSettingsCommandClient(input.http),
     newRequestKey: commands.newRequestKey, writesEnabled: commands.writesEnabled, onAccessFailure });
   return { workspace, prepare(route: RoutePreparation, accessFailure: typeof onAccessFailure) {
-    return preparePaymentSettingsRoute({ ...route, configuration: { ...route.configuration, paymentSettings: { ...configuration, view: { ...configuration.view, workspace } } } }, accessFailure);
+    return preparePaymentSettingsRoute({ ...route, configuration: { ...route.configuration, paymentSettings: { ...configuration, view: { ...configuration.view, canPrepare: commands.writesEnabled(), workspace } } } }, accessFailure);
   } };
 }

@@ -44,15 +44,23 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
   const root = input.document.getElementById('naijue-erp-root');
   if (!root || mounted.has(root)) throw new TypeError('One unowned production application root is required.');
   const http = { ...configuration.http, fetch: input.fetch };
+  const maintenance = configuration.routes.maintenance;
+  let controller: ReturnType<typeof createApplication>['controller'] | null = null;
+  const writesEnabled = (enabled: boolean | undefined, adminOnly = false) => () => {
+    const authentication = controller?.authentication.getSnapshot(), role = authentication?.principal?.role;
+    return enabled === true && authentication?.phase === 'authenticated' && (role === 'ADMIN' || !adminOnly && role === 'WAREHOUSE');
+  };
   const staffView = configuration.routes.staffSettings ? input.settingsViews?.staffSettings
-    ?? { reader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: false } : undefined;
+    ?? { reader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: maintenance?.staffSettings === true } : undefined;
   const paymentView = configuration.routes.paymentSettings ? input.settingsViews?.paymentSettings
-    ?? { reader: createPaymentSettingsHttpReader(http), canPrepare: false } : undefined;
+    ?? { reader: createPaymentSettingsHttpReader(http), canPrepare: maintenance?.paymentSettings === true } : undefined;
   const accountView = configuration.routes.accountSettings ? input.settingsViews?.accountSettings
-    ?? { reader: createAccountSettingsHttpReader(http), staffReader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: false } : undefined;
-  // Session ownership is integrated; production preparation/write gates still
-  // wait for the controller's exact backend and isolated-PG approval.
-  if (staffView?.canPrepare || paymentView?.canPrepare || accountView?.canPrepare) throw new TypeError('Editable settings require a configured maintenance session owner.');
+    ?? { reader: createAccountSettingsHttpReader(http), staffReader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: maintenance?.accountSettings === true } : undefined;
+  // A trusted existing workspace is a valid single owner. Otherwise only the
+  // explicit presentation opt-in composes the original native session factory.
+  if (staffView?.canPrepare && !staffView.workspace && maintenance?.staffSettings !== true
+    || paymentView?.canPrepare && !paymentView.workspace && maintenance?.paymentSettings !== true
+    || accountView?.canPrepare && !accountView.workspace && maintenance?.accountSettings !== true) throw new TypeError('Editable settings require a configured maintenance session owner.');
   const crypto = input.document.defaultView?.crypto;
   if ((configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit || configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace || configuration.routes.accountSettings && !accountView?.workspace)
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
@@ -71,7 +79,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
       ...(configuration.routes.transferProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader(http, ['prices', 'barcodes', 'stock']) } } : {}),
       ...(configuration.routes.transferInitialSizeGroupId ? { initialSizeGroup: { id: configuration.routes.transferInitialSizeGroupId, reader: createDictionaryHttpReader(http) } } : {}),
       ...(configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit ? { commands: { newRequestKey, ...(configuration.routes.transferManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.transferExistingEdit ? { existingPreparation: createTransferExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
-    ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, readOnly: true as const } } : {}),
+    ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, ...(configuration.routes.parties.readOnly ? { readOnly: true as const } : {}) } } : {}),
     ...(configuration.routes.products ? { products: { stylesheet: stylesheet('products'), ...(configuration.routes.productViewer ? { product: { stylesheet: createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, assets.productDrawerStyles) }) } } : {}),
       ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }, ['prices', 'barcodes', 'stock']) } } : {}) } } : {}),
     ...(configuration.routes.productCategories ? { productCategories: { stylesheet: stylesheet('product-categories') } } : {}),
@@ -81,16 +89,17 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
       ...(configuration.routes.productSettings.groups ? ['groups' as const] : []), ...(configuration.routes.productSettings.seasons ? ['seasons' as const] : []),
     ], initialTab: configuration.routes.productSettings.initialTab } } : {}),
     ...(configuration.routes.storeSettings ? { storeSettings: { stylesheet: stylesheet('store-settings'), allowedTabs: configuration.routes.storeSettings.allowedTabs,
-      initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead, commands: { newRequestKey, writesEnabled: () => false } } } : {}),
-    ...(accountView ? { accountSettings: { stylesheet: stylesheet('staff-settings'), view: accountView, ...(!accountView.workspace ? { commands: { newRequestKey, writesEnabled: () => false } } : {}) } } : {}),
+      initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead, commands: { newRequestKey, writesEnabled: writesEnabled(maintenance?.storeSettings) } } } : {}),
+    ...(accountView ? { accountSettings: { stylesheet: stylesheet('staff-settings'), view: accountView, ...(!accountView.workspace ? { commands: { newRequestKey, writesEnabled: writesEnabled(maintenance?.accountSettings, true) } } : {}) } } : {}),
     ...(staffView ? { staffSettings: { stylesheet: stylesheet('staff-settings'), view: staffView,
-      ...(!staffView.workspace ? { commands: { newRequestKey, writesEnabled: () => false } } : {}) } } : {}),
+      ...(!staffView.workspace ? { commands: { newRequestKey, writesEnabled: writesEnabled(maintenance?.staffSettings, true) } } : {}) } } : {}),
     ...(paymentView ? { paymentSettings: { stylesheet: stylesheet('payment-settings'), view: paymentView,
-      ...(!paymentView.workspace ? { commands: { newRequestKey, writesEnabled: () => false } } : {}) } } : {}),
+      ...(!paymentView.workspace ? { commands: { newRequestKey, writesEnabled: writesEnabled(maintenance?.paymentSettings) } } : {}) } } : {}),
   } });
+  controller = app.controller;
   mounted.add(root);
   try { app.mount(root); } catch { app.dispose(); mounted.delete(root); throw new Error('Production application could not mount.'); }
   void app.controller.authentication.resolveSession();
   let disposed = false;
-  return Object.freeze({ controller: app.controller, dispose() { if (disposed) return; disposed = true; app.dispose(); mounted.delete(root); } });
+  return Object.freeze({ controller: app.controller, dispose() { if (disposed) return; disposed = true; controller = null; app.dispose(); mounted.delete(root); } });
 }

@@ -12,7 +12,9 @@ export interface ProductionHostConfiguration {
     readonly salesExistingEdit?: boolean; readonly transferExistingEdit?: boolean;
     readonly products?: boolean; readonly productCategories?: boolean; readonly barcodeSchemes?: boolean;
     readonly productViewer?: boolean; readonly productFullPage?: boolean; readonly salesProductFullPage?: boolean; readonly transferProductFullPage?: boolean; readonly transferInitialSizeGroupId?: string;
-    readonly parties?: false | { readonly readOnly: true };
+    readonly parties?: false | { readonly readOnly: boolean };
+    /** Explicit UI composition only; omitted flags stay false. Server authorizes every operation. */
+    readonly maintenance?: { readonly storeSettings?: boolean; readonly staffSettings?: boolean; readonly paymentSettings?: boolean; readonly accountSettings?: boolean };
     readonly productSettings?: false | { readonly colors: boolean; readonly fits: boolean; readonly groups: boolean; readonly seasons: boolean; readonly initialTab: 'colors' | 'fits' | 'groups' | 'seasons' };
     readonly storeSettings?: false | { readonly allowedTabs: readonly ('stores' | 'warehouses')[]; readonly initialTab: 'stores' | 'warehouses'; readonly allowHallDirectoryRead: boolean };
   };
@@ -39,7 +41,7 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
     || origin.origin !== http.origin || origin.username || origin.password || http.basePath !== '/api' || session.verifyOnMount !== true
     || typeof assets.basePath !== 'string' || !/^\/assets\/(?:[A-Za-z0-9_-]+\/)*$/.test(assets.basePath)) return invalid();
   const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'salesExistingEdit', 'transferExistingEdit', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'salesProductFullPage', 'transferProductFullPage', 'staffSettings', 'paymentSettings', 'accountSettings'] as const;
-  const routes = record(row.routes, ['inventory', 'sales', 'transfers'], [...booleanKeys.slice(3), 'parties', 'productSettings', 'storeSettings', 'transferInitialSizeGroupId']);
+  const routes = record(row.routes, ['inventory', 'sales', 'transfers'], [...booleanKeys.slice(3), 'parties', 'productSettings', 'storeSettings', 'transferInitialSizeGroupId', 'maintenance']);
   for (const key of booleanKeys) if (Object.hasOwn(routes, key) && typeof routes[key] !== 'boolean') return invalid();
   for (const [child, parent] of [['inventoryLedger', 'inventory'], ['salesManualCreate', 'sales'], ['transferManualCreate', 'transfers'], ['salesExistingEdit', 'sales'], ['transferExistingEdit', 'transfers'], ['productViewer', 'products'], ['productFullPage', 'products'], ['salesProductFullPage', 'sales'], ['transferProductFullPage', 'transfers']] as const) {
     if (routes[child] === true && routes[parent] !== true) return invalid();
@@ -53,7 +55,13 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
   }
   if (Object.hasOwn(routes, 'parties')) {
     if (routes.parties === false) extras.parties = false;
-    else { if (record(routes.parties, ['readOnly']).readOnly !== true) return invalid(); extras.parties = Object.freeze({ readOnly: true }); }
+    else { const readOnly = record(routes.parties, ['readOnly']).readOnly; if (typeof readOnly !== 'boolean') return invalid(); extras.parties = Object.freeze({ readOnly }); }
+  }
+  if (Object.hasOwn(routes, 'maintenance')) {
+    const names = ['storeSettings', 'staffSettings', 'paymentSettings', 'accountSettings'] as const;
+    const maintenance = record(routes.maintenance, [], names);
+    for (const name of names) if (Object.hasOwn(maintenance, name) && (typeof maintenance[name] !== 'boolean' || maintenance[name] === true && !routes[name])) return invalid();
+    extras.maintenance = Object.freeze({ ...maintenance });
   }
   if (Object.hasOwn(routes, 'productSettings')) {
     if (routes.productSettings === false) extras.productSettings = false;

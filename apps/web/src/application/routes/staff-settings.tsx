@@ -22,6 +22,6 @@ export function prepareStaffSettingsSession(input: RoutePreparation, onAccessFai
   const workspace = createStaffSettingsWorkspace({ scope: input.scope, roles: configuration.view.roles, reader: createStaffSettingsHttpReader(input.http), client: createStaffSettingsCommandClient(input.http),
     newRequestKey: commands.newRequestKey, writesEnabled: commands.writesEnabled, onAccessFailure, hasOtherUnresolvedWrite });
   return { workspace, prepare(route: RoutePreparation, accessFailure: typeof onAccessFailure) {
-    return prepareStaffSettingsRoute({ ...route, configuration: { ...route.configuration, staffSettings: { ...configuration, view: { ...configuration.view, workspace } } } }, accessFailure);
+    return prepareStaffSettingsRoute({ ...route, configuration: { ...route.configuration, staffSettings: { ...configuration, view: { ...configuration.view, canPrepare: commands.writesEnabled(), workspace } } } }, accessFailure);
   } };
 }
