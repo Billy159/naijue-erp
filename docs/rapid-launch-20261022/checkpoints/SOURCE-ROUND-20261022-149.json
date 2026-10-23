@@ -1,0 +1,69 @@
+{
+  "atUtc": "2026-10-23T07:13:34.487119+00:00",
+  "parent": "6adf9c1a60dbc2fb8dee3679fdc1ee2aecb52e77",
+  "taskId": "USER_APPROVED_V6_BOOTSTRAP_PROVENANCE_CORRECTION",
+  "files": [
+    {
+      "path": "packages/application/src/import-v3-history-header-native-reference.ts",
+      "owner": "D1",
+      "bytes": 19233,
+      "sha256": "baa010ea5258dbbc056bcca0393fe8fdbcfa000f3e7ec56c1644cf8014fec501"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql",
+      "owner": "D1",
+      "bytes": 12032,
+      "sha256": "f1e0438c8a75bdee8850c55c86b842e7db0a863cb36ed1674423a2344bef9cc3"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "owner": "D1",
+      "bytes": 62203,
+      "sha256": "9f9426b4208a932922a467e5c3aa394488e8330ba428fbc35270d04f9812265d"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "owner": "D1",
+      "bytes": 16963,
+      "sha256": "829c842ba299cb3d0a846ec9a584332b842ff1879ef72b2ddfc152c8e4ffeeb7"
+    },
+    {
+      "path": "tests/product-media-write-capability.test.ts",
+      "owner": "D1",
+      "bytes": 8791,
+      "sha256": "eaafe8e1cf3762ed424d025fe30617fbe6dc18ca2947b9ca2b36b980cdea5858"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "owner": "D1",
+      "bytes": 52007,
+      "sha256": "489f29a52bdd3baff860114a0e3af45365fdb896d99b873d86ed8c75cb8921ee"
+    }
+  ],
+  "approval": "WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json",
+  "KProducer": {
+    "owner": "D2",
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/actual-stage-add-read-v1/synthetic-baseline26-v1.mjs",
+    "sha256": "c7d32c67503b0fa5218afd3679ba0be498729cf14740b0a7f3e0ec60b709bb59",
+    "old67Preserved": true,
+    "literal57Sha256": "e97664fdf3d60d6f01de1b3079921a0ccd3d54a1a796f3e4dbebdf0a0217b364"
+  },
+  "oldBodySha256": "1e700172f68beb831eb36fdf2788154971438c577a9d8915f13e5969923c32ac",
+  "newBodySha256": "69b87a72c52a81aba7f9fd380f3acbcb8df8fbcaa6ca72ccca4ac20e26ab42c7",
+  "patchLevel": "26_v8_bootstrap_field_provenance",
+  "scope": [
+    "Original generic field validation then strict7 underraw",
+    "Independent onefunction successorpatch, original0011/0016/0026 unchanged",
+    "Only exact issuer bodypin+patchlabel, no oldv7 compatibility or broaderpurpose",
+    "Existing private fixture3 literals align exact source, assertions unchanged"
+  ],
+  "checksAdopted": {
+    "D1": "New3 targeted positive/negative/singleSQLbody plus affectedissuer1/host1 and strict5roots PASS; initialred preserved",
+    "D2": "Originalproducer raw deep equal49/allfields generic predicate and57source164typed pureprepare PASS; no actualpool/PG"
+  },
+  "notTested": [
+    "Actual newQA patch/catalogue/issuer/firstSTAGE/PUBLISH/nativeCREATE/H06",
+    "Real49/MAIN/production"
+  ],
+  "next": "OriginalQB only fixed6+Kcarrier newcontract delta thenC newQA onefunction apply/readback and originalkey newjob"
+}

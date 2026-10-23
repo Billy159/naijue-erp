@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T07:04:09.732546+00:00",
+  "updatedAt": "2026-10-23T07:10:21.136110+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -38,7 +38,8 @@
         {
           "path": "apps/api/src/production-provider-composition.test.ts",
           "group": "B01_NO_FIELD_CHANGE_FIRST_WINDOW",
-          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "currentV6AffectedScope": "Only existing private synthetic review fixture patchLevel literal 26_v7_media_color_swap→26_v8_bootstrap_field_provenance to match approved exact source; no assertions/scope/metadata authority weakened"
         },
         {
           "path": "adapters/postgres/src/sales-unit-of-work.ts",
@@ -358,12 +359,14 @@
         {
           "path": "tests/native-runtime26-capability.test.ts",
           "group": "EXPLICIT_OUTSIDE_REVIEW_AND_REAL_CONTEXT_CAPABILITY",
-          "fieldGate": "NO_NEW_SCHEMA_OR_DATA_AUTHORITY"
+          "fieldGate": "NO_NEW_SCHEMA_OR_DATA_AUTHORITY",
+          "currentV6AffectedScope": "Only existing private synthetic review fixture patchLevel literal 26_v7_media_color_swap→26_v8_bootstrap_field_provenance to match approved exact source; no assertions/scope/metadata authority weakened"
         },
         {
           "path": "tests/product-media-write-capability.test.ts",
           "group": "EXPLICIT_OUTSIDE_REVIEW_AND_REAL_CONTEXT_CAPABILITY",
-          "fieldGate": "NO_NEW_SCHEMA_OR_DATA_AUTHORITY"
+          "fieldGate": "NO_NEW_SCHEMA_OR_DATA_AUTHORITY",
+          "currentV6AffectedScope": "Only existing private synthetic review fixture patchLevel literal 26_v7_media_color_swap→26_v8_bootstrap_field_provenance to match approved exact source; no assertions/scope/metadata authority weakened"
         },
         {
           "path": "apps/api/src/sales-preparation-input.ts",
@@ -2033,7 +2036,8 @@
           "path": "apps/web/src/transport/response-validation.ts",
           "group": "F04_EXISTING_PRODUCT_READ_OPTIONAL_FIELDS_COMPATIBILITY",
           "fieldGate": "EXISTING_APPROVED_DB_FIELDS_ONLY_NO_SCHEMA_CHANGE",
-          "scope": "Only productBasicsResponse/productImagesResponse optional compatible field decoding; other functions unchanged. F2 sole file writer this slice."
+          "scope": "Only productBasicsResponse/productImagesResponse optional compatible field decoding; other functions unchanged. F2 sole file writer this slice.",
+          "fullInventoryOutputScope": "Extract existing inventoryResponse singleproduct loop verbatim into exported inventoryProductResponse(value,filter,warehouseLabels); original inventoryResponse uses same helper, no altered validation/rules/otherDTOs"
         },
         {
           "path": "apps/web/src/inventory/tests/run-display-projection-dom-tests.mjs",
@@ -2046,6 +2050,12 @@
           "group": "F03_NATIVE_DEMO_DOM_ORACLE_ADAPTATION",
           "scope": "Only source markup/selectors and explicit source-selection carrier; retain all exact quantity/identity/query/cancel/paging assertions, no skips or weaker criteria.",
           "fieldGate": "NO_SCHEMA_CHANGE"
+        },
+        {
+          "path": "apps/web/src/inventory/inventory-output.tsx",
+          "group": "F03_EXISTING_DEMO_FULL_FILTER_EXPORT_PRINT",
+          "fieldGate": "READ_ONLY_EXISTING_FIELDS_NO_SCHEMA_OR_WRITE_CHANGE",
+          "scope": "Lazy originalDemo export/print dialogs/requestlifecycle; no newUI system/syntheticcap/retailunit defaults"
         }
       ]
     },

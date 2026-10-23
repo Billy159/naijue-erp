@@ -130,9 +130,9 @@ export function prepareV3HistoryHeaderNativeReferenceChunk(inputs:readonly Histo
       &&!Array.isArray(s.fieldProvenance.fields),'HISTORY_HEADER_REFERENCE_PROVENANCE');
     const fields:JsonObject={...(s.fieldProvenance.fields as JsonObject)};
     for(const [key,field] of Object.entries(fields)){
-      if(key==='bootstrap_accounts'){assertBootstrapAccountMetadata(input,field);continue;}
       const f=field as JsonObject;require(f&&['ORIGINAL','MIGRATION_DERIVED','UNKNOWN'].includes(String(f.origin))&&typeof f.reason==='string'
         &&Object.hasOwn(f,'raw')&&(f.origin!=='MIGRATION_DERIVED'||text(f.evidence_ref)),'HISTORY_HEADER_REFERENCE_PROVENANCE');
+      if(key==='bootstrap_accounts')assertBootstrapAccountMetadata(input,f.raw);
     }
     for(const c of historical?Object.keys(raw).map(name=>({name})):table!.columns)fields[c.name]={origin:raw[c.name]===''?'UNKNOWN':'ORIGINAL',reason:raw[c.name]===''?'SOURCE_EMPTY':'SOURCE_PRESERVED',raw:raw[c.name]!};
     require(n&&Object.keys(n).length===columns[entity].length&&columns[entity].every(k=>Object.hasOwn(n,k))&&uuid(n.id)

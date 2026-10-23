@@ -265,7 +265,7 @@ SELECT manifest->'identity' AS identity,manifest->'migration_versions' AS migrat
  (pg_catalog.jsonb_array_length(manifest->'routines')=121 AND NOT EXISTS(
    SELECT 1 FROM (VALUES
     ('assert_history_typed_closure','b0551d6a80e9fdd9709d6ed63820dc8b5a7577e8bfb9deaa19cb0e387de54bce'),
-    ('assert_native_bootstrap_accounts','1e700172f68beb831eb36fdf2788154971438c577a9d8915f13e5969923c32ac'),
+    ('assert_native_bootstrap_accounts','69b87a72c52a81aba7f9fd380f3acbcb8df8fbcaa6ca72ccca4ac20e26ab42c7'),
     ('assert_native_product_season_source','3a753b412fa4a648e26c4a2e398a4b52cc694c04dc1352a98513cb2220d4d661'),
     ('assert_retained_sku_reference','4c956a82b9531b1f385f9aecd9c6d20fa84ce6d434bb0a41d2a0c96ebb7fae5d'),
     ('assign_runtime_document_number','bca336abcd0ef4a57c22d2ee19564e7ea744257303fb8eec06c822efd551500e'),
@@ -478,8 +478,8 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || catalog.patchLevel !== "26_v7_media_color_swap")
-    throw runtime26Error("Exact reviewed v7 catalog digest required; v6 does not prove the approved image guard");
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || catalog.patchLevel !== "26_v8_bootstrap_field_provenance")
+    throw runtime26Error("Exact reviewed v8 catalog digest required; prior catalogs do not prove the approved bootstrap envelope");
   const purposes = ownArray(review.purposes);
   if (purposes.length === 0 || purposes.length > runtime26Purposes.length || new Set(purposes).size !== purposes.length
     || purposes.some(p => !runtime26Purposes.includes(p as Runtime26Purpose))) throw runtime26Error("Finite explicitly reviewed runtime purposes required");
