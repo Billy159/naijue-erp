@@ -11080,10 +11080,22 @@
         "New219actual rect/pixels",
         "HTTP/PG/business/permission/performance/deploy"
       ]
+    },
+    {
+      "id": "QF2-C220",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-store-default-customer-host-source-01/RESULT.json",
+      "bytes": 1767,
+      "sha256": "c97c7c94b2993995363122abb72aaf49b43fd01279f6fc9cab6ea71607f33ab9",
+      "result": "PASS_SOURCE_LIMITED_EXISTING_DEFAULT_CUSTOMER_HOST_WIRING",
+      "scope": "SOURCE220_DEFAULT_CUSTOMER_EXISTING_HOST_READER_ONLY; realconsumer/permissions/business stilluntested",
+      "adoption": "Original independent conclusion adopted, no duplicate technical check",
+      "notTested": [
+        "RealProductionHost browser/HTTP/PG/permission/Save/performance/deploy"
+      ]
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-23T20:24:31.452948+00:00",
+  "updatedAt": "2026-10-23T20:31:12.560677+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -12400,7 +12412,7 @@
   },
   "currentControllerContinuation": {
     "atUtc": "2026-10-23T20:22:55.572731+00:00",
-    "latestSource": 219,
+    "latestSource": 220,
     "servedPreview": 217,
     "browserOwner": "QF sole217 documents; QF2 next distinctI07/P01 consumer scope",
     "adopted": [
@@ -12457,10 +12469,20 @@
         "result": "PASS_SOURCE_LIMITED_COMPLETE_NATIVE_EMPTY_REGION_ACTUAL_PENDING",
         "scope": "SOURCE219_COMPLETE_NATIVE_EMPTY_REGION_ONLY; newactualgeometrypending",
         "adoption": "Original independent conclusion adopted, no C technical repeat"
+      },
+      {
+        "id": "QF2-C220",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c220-store-default-customer-host-source-01/RESULT.json",
+        "bytes": 1767,
+        "sha256": "c97c7c94b2993995363122abb72aaf49b43fd01279f6fc9cab6ea71607f33ab9",
+        "result": "PASS_SOURCE_LIMITED_EXISTING_DEFAULT_CUSTOMER_HOST_WIRING",
+        "scope": "SOURCE220_DEFAULT_CUSTOMER_EXISTING_HOST_READER_ONLY; realconsumer/permissions/business stilluntested",
+        "adoption": "Original independent conclusion adopted, no duplicate technical check"
       }
     ],
     "actualUI217Checkpoint": "docs/rapid-launch-20261022/operational-checkpoints/C03-UI217-HTTP-LEDGER-UI.json",
     "countsUnchanged": "104total/48partial/0wholepage/0wholeoverlay",
-    "notAccepted": "218actual/219fullregionactual/I07realbusiness/formalperformance"
+    "notAccepted": "218actual/219fullregionactual/I07realbusiness/formalperformance",
+    "nextCandidate": "220 PREPARING_NOT_BUILT"
   }
 }

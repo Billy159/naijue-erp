@@ -1,3 +1,5 @@
+Latest source220=1b46a5d975d1e9c1b25bb695dd666c04cc342740: original customer candidate host adapter fixed and QF2 source-limited accepted. Current served source217/57872 and QF sole documents remain; next220 candidate preparation only, no newactual/realbusiness PASS. Latest verified GitHub024aa9ce, this source+note pending immediate exact sync.
+
 C219 Empty complete-region QF2 source acceptance received and adopted; original geometry finding remains OPEN pending a successor containing219. Current served217 does not contain218/219.
 
 最新接续（2026-10-24 北京时间；源码219、运行候选217）：
