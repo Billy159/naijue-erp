@@ -1,3 +1,5 @@
+C219 Empty complete-region QF2 source acceptance received and adopted; original geometry finding remains OPEN pending a successor containing219. Current served217 does not contain218/219.
+
 最新接续（2026-10-24 北京时间；源码219、运行候选217）：
 
 - 当前实际入口：http://127.0.0.1:57872/synthetic-unified.html 。固定217=753bd09b115fce1118b1680d77daaf2032683ab0／build ui-preview-753bd09-01-build01；1次编译0、HTML3412884B／8dacbc00…、413输入／1368模块，PID3888/session31695，3关键HTTP逐字和版本头一致。18个明确C合成适配，业务UI/CSS来自固定源码，不是覆盖开发页面。原214/207保留。
