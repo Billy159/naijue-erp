@@ -1,0 +1,42 @@
+{
+  "version": "v15-CATEGORY-ORDER-UNDO",
+  "status": "WAITING_EXPLICIT_HUMAN_CONFIRMATION_NOT_IMPLEMENTED",
+  "atUtc": "2026-10-24T02:26:44.111085+00:00",
+  "sourceProposal": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/CATEGORY-REORDER-UNDO-PROPOSAL-v1.md",
+    "bytes": 13295,
+    "sha256": "64e17e214f6f43e55f09cbeb2642bb4c781e71fd712920073fb3d109a2770679",
+    "owner": "D2"
+  },
+  "newTables": 0,
+  "newColumns": 0,
+  "newEnums": 0,
+  "newIndexes": 0,
+  "newForeignKeys": 0,
+  "newActions": [
+    "CATEGORY.REORDER",
+    "CATEGORY.UNDO_REORDER"
+  ],
+  "businessScope": [
+    "Same actual parent and complete undeleted siblings; preserve otherrelativeorder",
+    "CAS every original sibling, update only changed order/version",
+    "One operation/aggregate audit/receipt/transaction, all affectedguarded",
+    "One latest sameactor undo restoring exact original integers, rejects any changed poststate; versions increase",
+    "Original idempotency/current authority/unknownCOMMIT receipt recovery retained"
+  ],
+  "notIncluded": [
+    "Crossparent move/reparent/name/delete/productclassification",
+    "New redo/undo stack, restored old versions or overwriting later modifications",
+    "Otherfamily permissions, v13, six barcode scheme initialization or source hall v5"
+  ],
+  "fullFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v15-CATEGORY-ORDER-UNDO.md",
+  "implementationOwners": [
+    "D2 existing catalogue contract/service/store/http",
+    "D1 original maintenance UOW/exact SQL guard patch/runtime selector",
+    "F4 exact unique catalogue tree/client/state consumers"
+  ],
+  "databaseExecuted": false,
+  "writerImplemented": false,
+  "humanApproved": false,
+  "questionAlreadyAsked": false
+}

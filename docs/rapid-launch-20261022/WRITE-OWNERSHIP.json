@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T01:51:04.352923+00:00",
+  "updatedAt": "2026-10-24T02:29:34.521324+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -1895,22 +1895,54 @@
         {
           "path": "scripts/import-v2/authorized-sales-detail-reader.mjs",
           "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
-          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING",
+          "currentCapturedContinuation": {
+            "releasedAtUtc": "2026-10-24T02:12:14.552503+00:00",
+            "task": "Original B06 captured C144 source12/typed21|11 input consumer",
+            "scope": "Add finite existing-reader input adapter using original accepted manifest/four pins, selection/32money and independently authorized exact native binding context; no new importer/API or source identity/hall/SKU inference",
+            "authority": "Current user continue full import+reuse evidence; C explicit finite D3 release, no new DB field/write contract",
+            "noSourceRescan": "Reuse C144 retained artifacts and prior proof; do not rerun245s physical capture/hash large registry/guess unknown facts",
+            "sharedSealedPaymentExcludedUntilConcreteNeed": true
+          }
         },
         {
           "path": "scripts/import-v2/authorized-sales-detail-reader.test.mjs",
           "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
-          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING",
+          "currentCapturedContinuation": {
+            "releasedAtUtc": "2026-10-24T02:12:14.552503+00:00",
+            "task": "Original B06 captured C144 source12/typed21|11 input consumer",
+            "scope": "Add finite existing-reader input adapter using original accepted manifest/four pins, selection/32money and independently authorized exact native binding context; no new importer/API or source identity/hall/SKU inference",
+            "authority": "Current user continue full import+reuse evidence; C explicit finite D3 release, no new DB field/write contract",
+            "noSourceRescan": "Reuse C144 retained artifacts and prior proof; do not rerun245s physical capture/hash large registry/guess unknown facts",
+            "sharedSealedPaymentExcludedUntilConcreteNeed": true
+          }
         },
         {
           "path": "scripts/import-v2/authorized-settlement-reader.mjs",
           "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
-          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING",
+          "currentCapturedContinuation": {
+            "releasedAtUtc": "2026-10-24T02:12:14.552503+00:00",
+            "task": "Original B06 captured C144 source12/typed21|11 input consumer",
+            "scope": "Add finite existing-reader input adapter using original accepted manifest/four pins, selection/32money and independently authorized exact native binding context; no new importer/API or source identity/hall/SKU inference",
+            "authority": "Current user continue full import+reuse evidence; C explicit finite D3 release, no new DB field/write contract",
+            "noSourceRescan": "Reuse C144 retained artifacts and prior proof; do not rerun245s physical capture/hash large registry/guess unknown facts",
+            "sharedSealedPaymentExcludedUntilConcreteNeed": true
+          }
         },
         {
           "path": "scripts/import-v2/authorized-settlement-reader.test.mjs",
           "group": "B06_ORIGINAL_SALES_LINES_AND_SETTLEMENTS_SOURCE_CONSUMER",
-          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING"
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE_NO_GUESSED_BINDING",
+          "currentCapturedContinuation": {
+            "releasedAtUtc": "2026-10-24T02:12:14.552503+00:00",
+            "task": "Original B06 captured C144 source12/typed21|11 input consumer",
+            "scope": "Add finite existing-reader input adapter using original accepted manifest/four pins, selection/32money and independently authorized exact native binding context; no new importer/API or source identity/hall/SKU inference",
+            "authority": "Current user continue full import+reuse evidence; C explicit finite D3 release, no new DB field/write contract",
+            "noSourceRescan": "Reuse C144 retained artifacts and prior proof; do not rerun245s physical capture/hash large registry/guess unknown facts",
+            "sharedSealedPaymentExcludedUntilConcreteNeed": true
+          }
         },
         {
           "path": "scripts/import-v2/sealed-payment-source.mjs",

@@ -11095,7 +11095,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-24T01:52:39.822598+00:00",
+  "updatedAt": "2026-10-24T02:32:01.806141+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -13135,99 +13135,166 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-24T01:52:39.822598+00:00",
-    "sourceRound": 262,
-    "candidate258": {
-      "candidateId": "ui-preview-932cce3-01",
-      "source": "932cce3853e5ff82541b195e3a632f738cec8708",
-      "build": "ui-preview-932cce3-01-build01",
-      "url": "http://127.0.0.1:57881/synthetic-unified.html",
-      "htmlBytes": 3478058,
-      "htmlSha256": "d2f13883600eaf2b93844c700651ad690e1d63d9c496346db331c189a3d2bef6",
-      "pid": 57865,
-      "execSession": 56604,
-      "buildExit": 0,
-      "inputCount": 414,
+    "atUtc": "2026-10-24T02:32:01.806141+00:00",
+    "sourceRound": 274,
+    "currentPreview": {
+      "candidateId": "ui-preview-62435e5-01",
+      "source": "62435e5f0cd4fd6c7bc85d2c202985a6291da342",
+      "build": "ui-preview-62435e5-01-build01",
+      "url": "http://127.0.0.1:57882/synthetic-unified.html",
+      "htmlBytes": 3512632,
+      "htmlSha256": "961e42401c5b1e5824ea872946d1969bc4b826674afe07ee1ceb0831fd631802",
+      "actualInputCount": 414,
       "moduleCount": 1369,
-      "http": "Three original identity headers and byte matches200",
+      "buildExit": 0,
+      "pid": 70403,
+      "execSession": 46702,
+      "http": "three bodies and original identity headers200",
       "syntheticOnly": true,
       "wholePagePassed": false,
-      "browserOwner": "QF2",
-      "scope": "253-258 affected product module; dates/default-scheme prior valid252 evidence adopted"
+      "notIncluded": [
+        267,
+        268,
+        269,
+        270
+      ]
     },
-    "v14": {
-      "status": "D1_261_D3_262_FIXED_FOR_ORIGINAL_QB_SOURCE_SCOPE_ACTUAL0",
-      "approval": "WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
-      "humanUserMessageId": "01a16b7f-3cf4-7041-b338-0aa2e693001b",
-      "D1": "Originalstore/sharedtypes2/accountant/singlev14patch+hostproof",
-      "D3": "Originalhost/run/bootstrap/party scope115/resume/currenttyped/full22carryforward",
-      "D2": "Original3settingsreadleaf CORE_MEMBERS exact22hall22warehouse + sameRRtrustedproof",
-      "actualExecutions": 0,
-      "v13NotApproved": true,
-      "D1Commit": "08befd0b3e52ec6b4e0819d726c84d9006b6dc20",
-      "D3Commit": "35046237881fe355b557a20e01cf14a52d56b447",
-      "D2Commit": "5c44f3c3b2f7550ced22d3243135cdb9fa3813fd",
-      "sourceModuleReviews": "259/QB205 and260/QB206 adopted;261/262 new originalQB delta inprogress"
+    "nextPreview": {
+      "status": "FIXED273_COMPLETE_MODULE_AND_EXPLICIT_SALES_INPUT_PREPARING_NOT_BUILT",
+      "source": "c7ea2361084a75b5ab93d5f97001fcc0f58644e5",
+      "candidate": "ui-preview-c7ea236-01",
+      "port": 57883,
+      "scope": "269savedSALE +273T03 +268270P14 +271P19 and source272 optionalroute type, explicitsalesModulePreview derived original actualauthor; nohistory relabel",
+      "actualBuilt": false
     },
-    "read114": {
-      "status": "FAILED_TYPED_RESULT_CAPTURE",
-      "jobId": "c03-p10-sku-page-and-filter-readonly-20261024-114",
-      "exitCode": 2,
-      "firstError": "NODE_TYPED_PROCESS_OUTPUT_CAP",
-      "elapsedSeconds": 3.274896043119952,
-      "actualExceededStream": "UNKNOWN_NO_SIZES_RECORDED",
-      "actualSQLAndCleanup": "UNKNOWN_NO_TYPED_RESULT",
-      "preserved": true,
-      "replayed": false
-    },
+    "browserOwner": "NONE",
+    "realInitialization": "Humanv14 approved; exact261/262 source implemented/frozen, independentQB new delta running. ActualDDL/CORE still0; fullMAIN source remains unbound, no dataReady/publicswitch",
     "read115": {
-      "status": "SUBMITTED_NEW_REVISED_COMPACT_READONLY_ONCE_AWAIT_COLLECT",
+      "status": "ACTUAL_COMPLETED0_AWAIT_ORIGINAL_QB",
       "jobId": "c03-p10-sku-page-and-filter-compact-readonly-20261024-115",
       "source": "ea827cda80a2316579c4a6993984048cd0c77e5b",
       "method": "Lossless codec decode exactvalues; stdout/stderr/body caps65536 unchanged,12reads4detail1pageAbort preserved",
-      "actualResults": "NOT_YET_COLLECTED",
-      "noNewDDL_DML_GRANT": true
+      "actualResults": "RETURNED_SUCCESS_ROLE_HTTP_SCALE_NOT_ACCEPTED",
+      "noNewDDL_DML_GRANT": true,
+      "elapsedSeconds": 3.4244481490459293,
+      "engineSha256": "77e51cb09e4638e19012bbf07fb8581915b31e10b6ee0defe0ecedde8ce29ead",
+      "actualSha256": "b4c85a55804da51a5f92973c4076e4a83bcbbbf253c92b04c428b991cf8eb87a",
+      "result": "12SKU reads4detail1PAGEabort;20leases/live0/end/cleanup0; counts/account unchanged; small isolatedadapter only",
+      "independentReview": {
+        "path": "QB/slice209-c115-actual-p10-sku-page-filter-readonly/RESULT.json",
+        "bytes": 11492,
+        "sha256": "c367795c0a80c2f25b7dcd6e12f96a384a045f93d45ae4f88c03fa4d51c9f34d",
+        "status": "PASS_LIMITED_ISOLATED_SERVICE_ADAPTER_READONLY",
+        "nodeStdoutBytes": 31317,
+        "nodeStderrBytes": 0,
+        "pageMs": [
+          117.222,
+          124.609
+        ],
+        "dtoBytes": [
+          218,
+          815,
+          2027
+        ]
+      }
     },
-    "browserOwner": "QF2",
-    "coverage": {
-      "denominator": 104,
-      "pages": 37,
-      "overlays": 67,
-      "rows": {
-        "NOT_RUN": 44,
-        "WAITING_INTEGRATION": 12,
-        "UI_DIFFERENCE": 26,
-        "PARTIAL_UI_CHECKED": 21,
-        "APPROVED_VISUAL_EXCEPTION": 1
+    "qa116": {
+      "status": "FAILED_CLONE_CATALOG_EQUALITY_V14_NOT_ATTEMPTED",
+      "jobId": "c03-v14-empty-qa-install-20261024-116",
+      "exitCode": 2,
+      "elapsedSeconds": 3.7754267919808626,
+      "target": "erp_qa_rapid26_core_20261024_01",
+      "databaseOid": "1034834",
+      "schemaRestore": "COMMIT_RETURNED_SUCCESS",
+      "businessTables": 55,
+      "allBusinessEmpty": true,
+      "schemaMigration": 26,
+      "routines": 122,
+      "sourceBodiesMatch": true,
+      "cloneCanonical": "c76fdea87c6574603dc898b235f999c903d0a112635093ff33d5c9dbb2a46e06",
+      "originalCanonical": "5717b1becbb2657c6458ac4152ae1c55fdde33c3b8be97d1cb6e104dc26b755f",
+      "patchOutcome": "NOT_ATTEMPTED",
+      "firstError": "EXACT_V11_SCHEMA_ONLY_CLONE",
+      "rootCause": "UNKNOWN_PENDING_PRECISE_CATALOG_DIFF",
+      "ownedSessionsRemaining": 0,
+      "newDataImported": 0,
+      "preserved": true,
+      "replay": false
+    },
+    "qa118": {
+      "status": "READONLY_EXACT_CATALOG_DIAGNOSTIC_PREPARING",
+      "scope": "OnlynewcloneOID1034834 fullcatalog once vs accepted nativeQA101 original5717; R1-103 catalog is different target and excluded",
+      "newDDL": false
+    },
+    "qa117": {
+      "status": "PREPARED_DISABLED_CORE_KEY_CONTRACT_RUNNER",
+      "source262": "35046237881fe355b557a20e01cf14a52d56b447",
+      "needs": "New actual v14 target/acting nonowner/ACL/catalog plus new independent metadata review and C final synthetic execution authorization",
+      "actualExecutions": 0
+    },
+    "newPerformance": {
+      "authority": {
+        "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+        "userMessageId": "01a16bb2-4ef1-76e3-82b7-035bc329b4f1",
+        "humanText": "Send all four issues to main controller",
+        "verifiedByC": "read_thread direct human"
       },
-      "wholePagesPass": 0,
-      "wholeOverlaysPass": 0,
-      "logicalPartialCases": 55,
-      "soleMatrixOwner": "QF",
-      "source": "SITE-REUSE-REGISTER.json actual unchanged scopes reused"
+      "D1": {
+        "tasks": [
+          "B01",
+          "B02"
+        ],
+        "package": "Static proof repeated work and transient failure permanent revocation in one capability module",
+        "state": "DISPATCHED_EXISTING_OWNER",
+        "next": "Fixedmodule originalQB limitedreview; affected measured before/after only"
+      },
+      "D3": {
+        "tasks": [
+          "B03",
+          "B06"
+        ],
+        "package": "Fullfilter qualification cost and streaming export connection hold in same reader/HTTP owner",
+        "state": "QUEUED_AFTER_IN_FLIGHT_CAPTURED_INPUT_ADAPTER",
+        "constraints": "Accurate authorizedtotal/sum/snapshot/unknown/COMMIT complete/cancel; no truncation"
+      },
+      "F2": {
+        "tasks": [
+          "F03",
+          "F06"
+        ],
+        "package": "Default inventory windowing/local rendering and bounded output consumer",
+        "state": "DISPATCHED_EXISTING_OWNER",
+        "sharedOutputOwner": "F1"
+      },
+      "F1": {
+        "tasks": [
+          "F01",
+          "F06"
+        ],
+        "package": "Shared output XML/ZIP responsiveness afterT03; exactF2seam plus existing audit glue",
+        "state": "NEXT_READY_ORIGINAL_OWNER",
+        "constraints": "No secondUI/exportplatform/zip engine without evidence; originalfullmodel/draft/focus/amount preserved"
+      },
+      "notNewTasks": true,
+      "originalTaskCount": 22,
+      "noWholeRegression": true,
+      "doesNotReplaceActualLaunch": true
     },
-    "frontendLanes": {
-      "F1": [
-        "S02销售完整开单/S03混合退换，采用原已过局部，修最新真实剩余",
-        "S04共用销货查看编辑→T03既有调拨对应状态",
-        "Chrome仅约束actual；原已有接口/UI继续，真实保存要隔离证据"
+    "schemaV15": {
+      "status": "WAITING_EXPLICIT_HUMAN_CONFIRMATION_NOT_IMPLEMENTED",
+      "fullFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v15-CATEGORY-ORDER-UNDO.md",
+      "newTables": 0,
+      "newColumns": 0,
+      "actions": [
+        "CATEGORY.REORDER",
+        "CATEGORY.UNDO_REORDER"
       ],
-      "F2": [
-        "商品新增编辑及六页签剩余；258源码已改/源验通过，QF2 actual在途不重复派修",
-        "当前商品模块完成后接库存既有未闭合项",
-        "产品组内范围硬边界；新增未批写合同仅该分支等待"
-      ],
-      "F3": [
-        "B01营业厅/B02仓库关联完整页面和原弹层",
-        "B04员工账号→B05B06收款资金→B03往来原模块",
-        "实际CORE尚0；不挡原UI/现成接口接线"
-      ],
-      "F4": [
-        "独立分类/颜色版型/方案完整模块，复用已有有效迁入",
-        "其余独立字典和方案；尺码组/季节保持只读",
-        "只32登记叶，公共控件/路由接缝交F1；无Chrome租约"
-      ]
+      "onlyRelatedBranchWaits": true,
+      "humanApproved": false,
+      "writerImplemented": false,
+      "questionBeingSentNow": false,
+      "questionAlreadyAsked": true
     },
-    "wholeGoalComplete": false
+    "goalComplete": false
   }
 }

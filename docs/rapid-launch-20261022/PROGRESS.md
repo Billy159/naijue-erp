@@ -1,3 +1,15 @@
+当前上线接续（源码274／实际候选266／下一完整候选273准备）：
+
+- 最终目标仍为前端＋后端＋真实来源数据在原正式地址实际可用并完成交接。当前只读合成候选、局部通过、health或打包都不是正式上线。四条前端开发线只是其中一条工作流，不等待全站对比才推进具备条件的首批。
+- 实际可看 http://127.0.0.1:57882/synthetic-unified.html ，固定62435e5f0cd4fd6c7bc85d2c202985a6291da342/build ui-preview-62435e5-01-build01，一次build0/414inputs1369modules、HTML3512632B/961e4240…、3HTTP字节及原身份头200、PID70403/session46702。QF2真实266最小链已关闭P10加载P1（首次+两重入3SKU/2无绑定/21条精确详情/两入口/关闭Esc焦点）；颜色版型23条20+3搜索页底、厅仓263真实跨模块双tabdraft-applied-hall-page2-scroll140/freshread/dirty保留通过限定范围。20+1默认50无size入口、目录维护缺cap/P04停用MAINonly及错误样例明确未测。两个owned已cleanSTOP，Chrome当前NONE。Demo再次过期后用户本C已明确重登，不用过期底层retainedDOM假称已登录。
+- 新完整页源码已固定：267 D1真实production CORE配置链/QB210通过；268+270 F4分类native资料区/QF2源限定通过、atomic排序仍待新合同；269 F1销货saved取消修改→原freshread同单只读→修改/QFv097通过；271 F4完整方案列表弹层待QF2新源；272 C只增现有party可选audit类型slot，实际注入F1在途，未当接通；273 F1调拨Native作废确认/状态标题/fullsaved工具栏待原QF；274 D3原C144 retained source12/typed21|11入口待原QB。所有含版actual另绑，旧266不冒含267以后。
+- 下一固定273/c7ea2361084a75b5ab93d5f97001fcc0f58644e5候选57883纯准备，继承18覆层后合明确salesModulePreview=1原合法RUNTIME/DRAFT作者同单metadata闭包及AVAILABLE三资金输入；0新doc、旧history不改标，970031/970032仅新FICTION账户code均NULL，command409/receipt403保持。目录editor仅显式合成cap准备，所有维护保存仍拒绝，真实业务不由本预览代替。
+- C115真实SKU-page/filter已QB209限定PASS：12reads/4detail/1PAGEabort、20leases/live0/end/cleanup0，源/计数/账号v7禁登前后不变；stdout31317B/stderr0，无损codec203SQL/20outer/19RR，三个65536上限保持。117.222–124.609ms/DTO218/815/2027B仅小QA基线，非正式scale/非ownerTCP/真实权限。C114原失败不重放、不改判成功。
+- C116已实际CREATE新QA erp_qa_rapid26_core_20261024_01/OID1034834，schema restore COMMIT成功、55业务表全0/迁移26/函数122/v11sourcebody真；clonecanonical c76fdea8…与old5717b1be不等，首错EXACT_V11_SCHEMA_ONLY_CLONE，FAILED2/3.775426792秒，v14补丁NOT_ATTEMPTED，原owned会话0。保留新库和116现场，不重建覆盖。118仅只读新clone精确catalog差异诊断准备，旧正确nativecatalog来自101（不能用R1-103）；不能删断言或猜差异等价。117正常CORE/组合负向COMMIT/原key回读消费者已准备disabled，等新实际target/非ownerACL/catalog/原QB独立review和C最终开关；实际v14/真实49/115初始化仍0。
+- 用户跨Chat直接01a16bb2-4ef1-76e3-82b7-035bc329b4f1四项性能修复已核授权入原22项：D1同模块重复证明与暂态失败恢复；D3库存资格及导出同快照落private有界spool；F2默认矩阵按需/局部render及完整输出消费；F1共享async XML/ZIP及公共audit接线。各唯一owner实施，不新工程/不重开已修SPEC，先最小代表实测，不因优化暂停初始化/导入/页面。
+- v15分类同父原子排序/一次防覆盖撤销完整确认单已提交用户，0新表列但新增两CATEGORY动作/聚合审计回执/准确守卫，仅该writer等待，未实施。旧六方案42值及UUID已完整，原已问分类/初始化问题仍待答，21旧码/组内v11/v14不重复问；v13/历史厅v5未列差异不扩批。D3已准确接续C144106697源typed，未重245秒捕获/大文件hash，不把referenceOnly当fullnative；全MAIN仍未绑定。
+- GitHub最近已核de8edb2a3bec176c2ee3918303b2005b96757580，263–274及本控制记录立即精确非强制推送。实际私有应用仍229、252正式包未stage、正式 https://1n5635n614.goho.co/ 未切；C112原server保全3890/106f9a10…截止11:35:38.679556UTC。所有派工Sol61/xhigh，Fast工具未核；整体ACTIVE、未完成。
+
 当前接续（固定源码262／实际候选258／四条前端开发线）：
 
 - 258真实一次构建成功，固定932cce3853e5ff82541b195e3a632f738cec8708/build ui-preview-932cce3-01-build01；http://127.0.0.1:57881/synthetic-unified.html 已3HTTP身份头及字节200，HTML3478058B/d2f13883…，PID57865/session56604。QF2唯一Chrome查本次P03控件/P07原2列概览/P10真实SKU粒度及精确详情，旧252日期hover/name有效结果不重；输入default编辑与productReadOnly=1同ADMIN省maintenance合成预览分别绑定，不当真实角色/PG/保存通过。

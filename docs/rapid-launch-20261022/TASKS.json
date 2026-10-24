@@ -66,7 +66,10 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Integrate next complete copied page; exact Git sync; actualC91 original-key read and v10 repair execution; no duplicate tech acceptance"
+      "currentWork": "Remote de8e verified;263-266 frozen; actual115 passed; fresh v14 QA116/117 prep",
+      "currentPackage": "Remote de8e verified;263-266 frozen; actual115 passed; fresh v14 QA116/117 prep",
+      "nextReadyPackage": "Runtime review; real R1 CORE49/115; actual host integration/deploy and full data reconciliation",
+      "currentDependencies": "Formal URL unchanged, fullMAIN unbound, current112 backup/7containers protected"
     },
     "F1": {
       "title": "前端单据与公共界面",
@@ -83,8 +86,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "S02销售完整开单/S03混合退换，采用原已过局部，修最新真实剩余",
-      "currentPackage": "S02销售完整开单/S03混合退换，采用原已过局部，修最新真实剩余",
-      "nextReadyPackage": "S04共用销货查看编辑→T03既有调拨对应状态",
+      "currentPackage": "T03 complete module fixed273; existing audit slots/route glue now next active",
+      "nextReadyPackage": "Shared output async/chunk interface withF2 after audit source; newQA concrete findings",
       "currentDependencies": "Chrome仅约束actual；原已有接口/UI继续，真实保存要隔离证据",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -109,8 +112,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "商品新增编辑及六页签剩余；258源码已改/源验通过，QF2 actual在途不重复派修",
-      "currentPackage": "商品新增编辑及六页签剩余；258源码已改/源验通过，QF2 actual在途不重复派修",
-      "nextReadyPackage": "当前商品模块完成后接库存既有未闭合项",
+      "currentPackage": "265P1 source fixed, actual266 inprogress; inventory default windowing/localrender/output consumer now active",
+      "nextReadyPackage": "F1 output shared seam and backendD3 exportconsumer",
       "currentDependencies": "产品组内范围硬边界；新增未批写合同仅该分支等待",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -134,8 +137,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "B01营业厅/B02仓库关联完整页面和原弹层",
-      "currentPackage": "B01营业厅/B02仓库关联完整页面和原弹层",
-      "nextReadyPackage": "B04员工账号→B05B06收款资金→B03往来原模块",
+      "currentPackage": "All existing modules source ready; new263ctx actual266 pending; no active WIP",
+      "nextReadyPackage": "Newactual staff/payment/party module findings; common audit glue F1/C272",
       "currentDependencies": "实际CORE尚0；不挡原UI/现成接口接线",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -160,7 +163,10 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Implement exact22 narrowed missing same-group SAVE core/guard scope with D2 helper; B07 independent approved numeric implementation continues. v10/C94 independent."
+      "currentWork": "Source261/QB207-v2 accepted; active production CORE profile actual entry wiring",
+      "currentPackage": "267/QB210 source complete; active performance proof+transient recovery one module",
+      "nextReadyPackage": "Newv14 engine/runtime concrete failure and realR1 actual stage host",
+      "currentDependencies": "Actual target/catalog/role/CORE receipt supplied by C; no invented readiness"
     },
     "D2": {
       "title": "后端商品与基础资料维护",
@@ -175,7 +181,10 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Implement only approvedv2 exact3 same-tx append helper and borrowed-client normal store, preserve currentproduct hard-group validateReferences; no crossgroup projection/read changes."
+      "currentWork": "Source260/QB206; source257 actual115/QB209 limited accepted; existing barcode facts/read consumers",
+      "currentPackage": "P14 atomicreorder/undo complete narrow proposal delivered, waitingC human review before writer",
+      "nextReadyPackage": "Approved exactreorder interface/writer or newactualAPI finding",
+      "currentDependencies": "Await exact new actual evidence when no source gap is ready"
     },
     "D3": {
       "title": "后端库存历史与导入",
@@ -191,7 +200,10 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "No v11 production changes; original stock-provider/read/B07 effective179 facts adopted, original main/ledger group semantics preserved."
+      "currentWork": "Source259/262 adopted; current C144 captured source to native/full11 continuation",
+      "currentPackage": "C144 captured input original4leaf adapter active",
+      "nextReadyPackage": "Inventory qualification/export same-reader backendperformance3+4",
+      "currentDependencies": "Full MAIN digest null; unapproved schemes/hall differences block only corresponding branch"
     },
     "QF": {
       "title": "前端独立验收：单据与公共界面",
@@ -221,7 +233,10 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "Affected170 year read-source review only;181 adopted;80actual failed awaiting precise fix/new result, not queue overload"
+      "currentWork": "207-v2/208 source261262 and209 actual115 limited PASS closed",
+      "currentPackage": "207-v2/208 source261262 and209 actual115 limited PASS closed",
+      "nextReadyPackage": "C116 actual catalog and ACL; C117 true CORE critical contract",
+      "currentDependencies": "Await exact new artifacts; no repeated prior suites"
     },
     "QF2": {
       "title": "资料与库存独立验收",
@@ -253,8 +268,8 @@
       "fastRequested": false,
       "fastToolVerified": false,
       "currentWork": "独立分类/颜色版型/方案完整模块，复用已有有效迁入",
-      "currentPackage": "独立分类/颜色版型/方案完整模块，复用已有有效迁入",
-      "nextReadyPackage": "其余独立字典和方案；尺码组/季节保持只读",
+      "currentPackage": "P15/P17 source266, P14source268270, P19source271 completed/frozen",
+      "nextReadyPackage": "OriginalQF2 actual concretefindings or human-approved atomicreorder, readonlyP16/P18 valid evidence reused",
       "currentDependencies": "只32登记叶，公共控件/路由接缝交F1；无Chrome租约",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -803,7 +818,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "OriginalQF2 actual240238tabheight and new originalcustomer provider first-use. Audit remains explicit NOT_CONNECTED until real original provider hookup.",
+      "nextAction": "Store audit connected243 adopted, staff/payment/party existing consumers source ready; C272optionalpublicslot and F1 sharedroute/mount audit glue next; actual266 newcrossmodule then complete staff/payment/party modules",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F3",
@@ -812,7 +827,7 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "OriginalQF2 actual240238tabheight and new originalcustomer provider first-use. Audit remains explicit NOT_CONNECTED until real original provider hookup."
+      "next": "Store audit connected243 adopted, staff/payment/party existing consumers source ready; C272optionalpublicslot and F1 sharedroute/mount audit glue next; actual266 newcrossmodule then complete staff/payment/party modules"
     },
     {
       "id": "F06",
@@ -3844,35 +3859,46 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T01:52:39.822598+00:00",
-    "sourceRound": 262,
-    "sourceCheckpoint": "35046237881fe355b557a20e01cf14a52d56b447",
+    "atUtc": "2026-10-24T02:32:01.806141+00:00",
+    "sourceRound": 274,
+    "sourceCheckpoint": "2f290f41ff6fb8e2bad8dc49f2f0bf3d7ad77951",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "candidateId": "ui-preview-932cce3-01",
-      "source": "932cce3853e5ff82541b195e3a632f738cec8708",
-      "build": "ui-preview-932cce3-01-build01",
-      "url": "http://127.0.0.1:57881/synthetic-unified.html",
-      "htmlBytes": 3478058,
-      "htmlSha256": "d2f13883600eaf2b93844c700651ad690e1d63d9c496346db331c189a3d2bef6",
-      "pid": 57865,
-      "execSession": 56604,
-      "buildExit": 0,
-      "inputCount": 414,
+      "candidateId": "ui-preview-62435e5-01",
+      "source": "62435e5f0cd4fd6c7bc85d2c202985a6291da342",
+      "build": "ui-preview-62435e5-01-build01",
+      "url": "http://127.0.0.1:57882/synthetic-unified.html",
+      "htmlBytes": 3512632,
+      "htmlSha256": "961e42401c5b1e5824ea872946d1969bc4b826674afe07ee1ceb0831fd631802",
+      "actualInputCount": 414,
       "moduleCount": 1369,
-      "http": "Three original identity headers and byte matches200",
+      "buildExit": 0,
+      "pid": 70403,
+      "execSession": 46702,
+      "http": "three bodies and original identity headers200",
       "syntheticOnly": true,
       "wholePagePassed": false,
-      "browserOwner": "QF2",
-      "scope": "253-258 affected product module; dates/default-scheme prior valid252 evidence adopted"
+      "notIncluded": [
+        267,
+        268,
+        269,
+        270
+      ]
     },
-    "nextPreview": "Only next complete owner delivery;258 actual inprogress, do not rebuild CSS or activeWIP",
+    "nextPreview": {
+      "status": "FIXED273_COMPLETE_MODULE_AND_EXPLICIT_SALES_INPUT_PREPARING_NOT_BUILT",
+      "source": "c7ea2361084a75b5ab93d5f97001fcc0f58644e5",
+      "candidate": "ui-preview-c7ea236-01",
+      "port": 57883,
+      "scope": "269savedSALE +273T03 +268270P14 +271P19 and source272 optionalroute type, explicitsalesModulePreview derived original actualauthor; nohistory relabel",
+      "actualBuilt": false
+    },
     "r1": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
-    "github": "Last verified0ec30eae0e8c39dfab83ea724890d182becd60aa;258-262 and this controller checkpoint exactsync next",
+    "github": "Verifiedde8edb2a3bec176c2ee3918303b2005b96757580 exact original6commits normalFFreadback",
     "goalComplete": false,
     "demoCoverage": {
       "denominator": 104,
@@ -3903,30 +3929,9 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "QB202 independentlyaccepted actualC113 native defaultFK queryadapter readOnly and cancellationcleanup, source201 retained. SKU-scoped sameAPI read contract now originalD2 implements from approved existing columns, no newDBfield/write; fullSKUlist-with-no-barcode summary gap separately located, notsolvedbyfilter.",
+    "backend": "Source v14 new modules independently accepted; real CORE is0. New116 schema-only isolated target/install/catalog and117 actual critical CORE prep proceed. Production profile originalD1 active; real account/data import and formal deployment not complete.",
     "productionBuild": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
-    "actualQFBrowser": {
-      "owner": "QF2",
-      "status": "C_SOLE_252_DATE_HOVER_THEN_P10_RO",
-      "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
-      "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
-      "viewport": "1470x668/DPR2",
-      "candidateVersion": "06fa5f51f4fbbd131175cd2983892540439209d0/ui-preview-06fa5f5-01-build01",
-      "candidateUrl": "http://127.0.0.1:57880/synthetic-unified.html",
-      "scope": "Two date placement and closehover immediateboundedPASS, formalpending;then declaredproductReadOnly=1 P10module.253255256notin252.",
-      "trueBrowserIsolationProven": false,
-      "protected": [
-        "DB7CA658365B213EEE3EB1333946E5BA unsaved",
-        "3BC874911D0D2415D093603E264B0D67 unknown",
-        "all other tabs"
-      ],
-      "nextOwner": "QF only after final clean release; selected O-S14 summary/cancel/confirm retention only",
-      "releaseBefore": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-06fa5f5-mode-pointer-actual/BROWSER-RELEASE.json",
-        "bytes": 5959,
-        "sha256": "ea8c03115fb9f9f6cd91b8699047456f74896af138427a7f2d399a665882abd5"
-      }
-    },
+    "actualQFBrowser": "QF2 actual266 module closed cleanSTOP; no one controlsChrome; QF273source andQF2P19source only",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
@@ -5138,7 +5143,7 @@
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     },
-    "browserOwner": "QF2",
+    "browserOwner": "NONE",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
@@ -5360,31 +5365,36 @@
       "D1Commit": "08befd0b3e52ec6b4e0819d726c84d9006b6dc20",
       "D3Commit": "35046237881fe355b557a20e01cf14a52d56b447",
       "D2Commit": "5c44f3c3b2f7550ced22d3243135cdb9fa3813fd",
-      "sourceModuleReviews": "259/QB205 and260/QB206 adopted;261/262 new originalQB delta inprogress"
+      "sourceModuleReviews": "QB205259/QB206260/QB207-v2261/QB208262 PASS_LIMITED; no actual v14 engine/role/init"
     },
-    "sourceCommit": "35046237881fe355b557a20e01cf14a52d56b447",
+    "sourceCommit": "2f290f41ff6fb8e2bad8dc49f2f0bf3d7ad77951",
     "browserLease": {
-      "status": "EXCLUSIVE_QF2_FIXED258_PRODUCT_MODULE",
+      "status": "ALL_STOP_NO_CONTROLLER_UNTIL_NEW_FIXED273_READY",
       "candidateTab": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
       "demoTab": "7F93D5A61A99F1C00FB3C0F089081F1F",
       "protectedTabs": [
         "DB7CA658365B213EEE3EB1333946E5BA",
         "3BC874911D0D2415D093603E264B0D67"
       ],
-      "url": "http://127.0.0.1:57881/synthetic-unified.html",
-      "source": "932cce3853e5ff82541b195e3a632f738cec8708",
-      "build": "ui-preview-932cce3-01-build01",
-      "scope": "Only253-258 affected product module, no date/name/shared/backend repeat; QF waiting browser clean release",
+      "url": "http://127.0.0.1:57882/synthetic-unified.html",
+      "source": "62435e5f0cd4fd6c7bc85d2c202985a6291da342",
+      "build": "ui-preview-62435e5-01-build01",
+      "scope": "265 P10 actual P1 minretest +266 colors/fits complete native pages +263 store crossmodule;264 disabledMAINonly sample missing explicit",
       "inputModes": [
         "product-edit-v1 default",
         "product-readonly-v1 ?productReadOnly=1 same ADMIN/data maintenance omitted"
       ],
       "viewport": "1470x668 DPR2",
       "oldRelease": "QF2/c252-readonly-product-actual-01/BROWSER-RELEASE.json 5560/042462ae88ad67bd7f9383300465a43f2eeb607f89e40ad67c4bcf3db4e5366b",
-      "humanDemoLoggedIn": "Latest direct user says Demo 已登录; preserve unsaved prior tab"
+      "humanDemoLoggedIn": "Direct current user reply to call_e60b2dda65e54f6d8c65a98937c7a0f3: Demo logged in; no credentials",
+      "previousRelease": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c266-associated-modules-actual-01/BROWSER-RELEASE.json",
+        "bytes": 3367,
+        "sha256": "17514d846b4de85c60f94566d62c991732317a4f6fd814578d7ac3421337a6dc"
+      }
     },
     "frontendLaneAdjustment": {
-      "status": "F4_CREATED_EXACT_OWNERSHIP_TRANSFERRED_FOUR_DEVELOPMENT_LANES",
+      "status": "FOUR_LINES_ACTIVE_F4_FIRST_COMPLETE_NATIVE_MODULE_FIXED266",
       "authority": {
         "sourceThreadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
         "sourceTitle": "重构任务书",
@@ -5419,12 +5429,191 @@
       "replayed": false
     },
     "p10Actual115": {
-      "status": "SUBMITTED_NEW_REVISED_COMPACT_READONLY_ONCE_AWAIT_COLLECT",
+      "status": "ACTUAL_COMPLETED0_AWAIT_ORIGINAL_QB",
       "jobId": "c03-p10-sku-page-and-filter-compact-readonly-20261024-115",
       "source": "ea827cda80a2316579c4a6993984048cd0c77e5b",
       "method": "Lossless codec decode exactvalues; stdout/stderr/body caps65536 unchanged,12reads4detail1pageAbort preserved",
-      "actualResults": "NOT_YET_COLLECTED",
-      "noNewDDL_DML_GRANT": true
+      "actualResults": "RETURNED_SUCCESS_ROLE_HTTP_SCALE_NOT_ACCEPTED",
+      "noNewDDL_DML_GRANT": true,
+      "elapsedSeconds": 3.4244481490459293,
+      "engineSha256": "77e51cb09e4638e19012bbf07fb8581915b31e10b6ee0defe0ecedde8ce29ead",
+      "actualSha256": "b4c85a55804da51a5f92973c4076e4a83bcbbbf253c92b04c428b991cf8eb87a",
+      "result": "12SKU reads4detail1PAGEabort;20leases/live0/end/cleanup0; counts/account unchanged; small isolatedadapter only",
+      "independentReview": {
+        "path": "QB/slice209-c115-actual-p10-sku-page-filter-readonly/RESULT.json",
+        "bytes": 11492,
+        "sha256": "c367795c0a80c2f25b7dcd6e12f96a384a045f93d45ae4f88c03fa4d51c9f34d",
+        "status": "PASS_LIMITED_ISOLATED_SERVICE_ADAPTER_READONLY",
+        "nodeStdoutBytes": 31317,
+        "nodeStderrBytes": 0,
+        "pageMs": [
+          117.222,
+          124.609
+        ],
+        "dtoBytes": [
+          218,
+          815,
+          2027
+        ]
+      }
+    },
+    "p10SkuActualFinding": {
+      "id": "QF2-C258-P10-SKU-LOAD-01",
+      "severity": "P1",
+      "candidate": "ui-preview-932cce3-01",
+      "status": "ACTUAL266_MINIMUM_LOADING_CHAIN_PASSED_QF2_STAGE_ACCEPTED_LIMITED",
+      "owner": "F2",
+      "scope": "RO SKU first/retry/reentry fails; rootnull-prototype LatestQuery->strictparser hypothesis sent, not yet fixed",
+      "minimalRetest": "New readonlySKU page/exactdetail/pagination/closing only; reuseP03andstockactual",
+      "cause": "LatestQuery frozen null-prototype parameters rejected by strict SDK application parser before fetch; plain input-only tests missed actual boundary",
+      "fix": "Original SDK plain explicit projection preserves view/skuId; no shared validator/snapshot/fallback changes",
+      "actualScope": "First +2reentries3SKU/2zero/21exactSKUdetail/bothopeners/closeEscfocus/SYN1natural0SKU; formalreceipt follows",
+      "notTested": "20+1 UI unreachable atdefault50/no pageSizecontrol;503null/P04disabledMAIN-only no natural sample; no realrole/PG/wholepage"
+    },
+    "schemeInitializationCurrent": {
+      "status": "EXISTING_COMPLETE_SIX_ROWS_WAITING_PREVIOUS_HUMAN_REPLY_ONLY_RELATED_BRANCH",
+      "confirmation": "BARCODE-SCHEME-INITIALIZATION-CONFIRMATION-v1.md",
+      "proposal": "BARCODE-SCHEME-INITIALIZATION-PROPOSAL-v1.json",
+      "alreadyAsked": true,
+      "reask": false,
+      "facts": "Six7-field42value rows and six stablecandidateUUIDs exist; proposal consumes safe original workbook facts. No need rescan/re-ID",
+      "decision": "2026CURRENT and5HISTORICAL vs allCURRENT plus exact original narrow controlled initialization contract",
+      "notApprovedByV14": true,
+      "barcodeIdentitySeparate": "15018 genuine barcode native identities/full producer still separate, schemeUUIDs not barcodeUUIDs",
+      "noWrite": true
+    },
+    "backendInputsCore": {
+      "status": "EXISTING_METADATA_REFS_ADOPTED_NO_RAW_CREDENTIAL_READ",
+      "party": "Accepted628party manifest/component/reference review existing pins;115core closure retained",
+      "identity49": "Originalcandidate49/45+4 and native-account-identity-review49-v2 retained",
+      "facts": "C02-13 safe originalfacts20091 file is0644; deployment must copy exact pinnedbytes to newprivate0600, preserve original receipt",
+      "approvedPlan": "Original49employee confirmedplan86155 includes4explicitrelations; not an invented4rowreplacement",
+      "serverRawCapture": "Existing C02-11 server-only private136474 remains referenced, never print/download credentials",
+      "executionReview": "NewCOREexecutionreview and actualtarget/runtime/catalog C-only; no real49init yet"
+    },
+    "v14Qa116": {
+      "status": "FAILED_CLONE_CATALOG_EQUALITY_V14_NOT_ATTEMPTED",
+      "jobId": "c03-v14-empty-qa-install-20261024-116",
+      "exitCode": 2,
+      "elapsedSeconds": 3.7754267919808626,
+      "target": "erp_qa_rapid26_core_20261024_01",
+      "databaseOid": "1034834",
+      "schemaRestore": "COMMIT_RETURNED_SUCCESS",
+      "businessTables": 55,
+      "allBusinessEmpty": true,
+      "schemaMigration": 26,
+      "routines": 122,
+      "sourceBodiesMatch": true,
+      "cloneCanonical": "c76fdea87c6574603dc898b235f999c903d0a112635093ff33d5c9dbb2a46e06",
+      "originalCanonical": "5717b1becbb2657c6458ac4152ae1c55fdde33c3b8be97d1cb6e104dc26b755f",
+      "patchOutcome": "NOT_ATTEMPTED",
+      "firstError": "EXACT_V11_SCHEMA_ONLY_CLONE",
+      "rootCause": "UNKNOWN_PENDING_PRECISE_CATALOG_DIFF",
+      "ownedSessionsRemaining": 0,
+      "newDataImported": 0,
+      "preserved": true,
+      "replay": false
+    },
+    "v14Qa118": {
+      "status": "READONLY_EXACT_CATALOG_DIAGNOSTIC_PREPARING",
+      "scope": "OnlynewcloneOID1034834 fullcatalog once vs accepted nativeQA101 original5717; R1-103 catalog is different target and excluded",
+      "newDDL": false
+    },
+    "v14Qa117": {
+      "status": "PREPARED_DISABLED_CORE_KEY_CONTRACT_RUNNER",
+      "source262": "35046237881fe355b557a20e01cf14a52d56b447",
+      "needs": "New actual v14 target/acting nonowner/ACL/catalog plus new independent metadata review and C final synthetic execution authorization",
+      "actualExecutions": 0
+    },
+    "performanceRepairPackages": {
+      "authority": {
+        "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+        "userMessageId": "01a16bb2-4ef1-76e3-82b7-035bc329b4f1",
+        "humanText": "Send all four issues to main controller",
+        "verifiedByC": "read_thread direct human"
+      },
+      "D1": {
+        "tasks": [
+          "B01",
+          "B02"
+        ],
+        "package": "Static proof repeated work and transient failure permanent revocation in one capability module",
+        "state": "DISPATCHED_EXISTING_OWNER",
+        "next": "Fixedmodule originalQB limitedreview; affected measured before/after only"
+      },
+      "D3": {
+        "tasks": [
+          "B03",
+          "B06"
+        ],
+        "package": "Fullfilter qualification cost and streaming export connection hold in same reader/HTTP owner",
+        "state": "QUEUED_AFTER_IN_FLIGHT_CAPTURED_INPUT_ADAPTER",
+        "constraints": "Accurate authorizedtotal/sum/snapshot/unknown/COMMIT complete/cancel; no truncation"
+      },
+      "F2": {
+        "tasks": [
+          "F03",
+          "F06"
+        ],
+        "package": "Default inventory windowing/local rendering and bounded output consumer",
+        "state": "DISPATCHED_EXISTING_OWNER",
+        "sharedOutputOwner": "F1"
+      },
+      "F1": {
+        "tasks": [
+          "F01",
+          "F06"
+        ],
+        "package": "Shared output XML/ZIP responsiveness afterT03; exactF2seam plus existing audit glue",
+        "state": "NEXT_READY_ORIGINAL_OWNER",
+        "constraints": "No secondUI/exportplatform/zip engine without evidence; originalfullmodel/draft/focus/amount preserved"
+      },
+      "notNewTasks": true,
+      "originalTaskCount": 22,
+      "noWholeRegression": true,
+      "doesNotReplaceActualLaunch": true
+    },
+    "categoryReorderV15": {
+      "status": "WAITING_EXPLICIT_HUMAN_CONFIRMATION_NOT_IMPLEMENTED",
+      "fullFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v15-CATEGORY-ORDER-UNDO.md",
+      "newTables": 0,
+      "newColumns": 0,
+      "actions": [
+        "CATEGORY.REORDER",
+        "CATEGORY.UNDO_REORDER"
+      ],
+      "onlyRelatedBranchWaits": true,
+      "humanApproved": false,
+      "writerImplemented": false,
+      "questionBeingSentNow": false,
+      "questionAlreadyAsked": true
+    },
+    "actualProduct266": {
+      "status": "QF2_STAGE_PASSED_NEW_SCOPES_WITH_EXPLICIT_SAMPLE_GAPS",
+      "source": "62435e5f0cd4fd6c7bc85d2c202985a6291da342",
+      "P15P17": "Native readonly23items/20+3/query/empty/footer/reentry limitedpass, actual editorcap omitted NOT_TESTED",
+      "store263": "Actual crossmoduletab/draft/applied/hall/page2/scroll140/freshread/dirtykeep-discard limitedpass",
+      "wholePagePass": false,
+      "soleMatrixOwner": "QF"
+    },
+    "capturedSource274": {
+      "source": "2f290f41ff6fb8e2bad8dc49f2f0bf3d7ad77951",
+      "scope": "Original4 C144 captured sales/settlement source-reader input adapter",
+      "status": "OWNER6_NEW_CHECKS_PASSED_FIXED_ORIGINAL_QB_NEW_DELTA_PENDING",
+      "actualPayloadConsumed": false,
+      "fullMAINBound": false
+    },
+    "source267Independent": {
+      "path": "QB/slice210-c267-v14-production-core-consumer/RESULT.json",
+      "bytes": 15848,
+      "sha256": "e3a3e722212d900803292b0a9dac3a8dd61e1eeb13fff6440cb331ee03bbef4e",
+      "status": "PASS_LIMITED_SOURCE_REAL_PRODUCTION_CORE_CONSUMER"
+    },
+    "source269Independent": {
+      "path": "ui-demo-comparison-20261022/v097-qf-c269-saved-cancel-readonly-edit-source/RESULT.json",
+      "bytes": 3144,
+      "sha256": "a8c7bbfb315f5bd31cd82950b2083c99ac08c18770e8635feddb7f70f2abbc8c",
+      "status": "SCOPED_EXACT4_SOURCE_CHECKED_NO_NEW_FINDING_ACTUAL_PENDING"
     }
   },
   "latestReadySource": {
