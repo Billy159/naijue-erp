@@ -1,15 +1,20 @@
 {
   "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
-  "phase": "PHASE1_COPY_RUNTIME_PENDING_ACCEPTANCE",
+  "phase": "PHASE1_COMPLETE_ORIGINAL_BRIDGE_RUNTIME_PENDING_BROWSER",
   "frontendFilesCopied": 325,
   "newBackendConnected": false,
   "realDataImported": false,
   "phase2Started": false,
   "entry": "http://127.0.0.1:57896/#inventory",
   "entryDataAdaptation": [
-    "REAL_DATA_MODE false uses original Demo sample implementations",
-    "No real-data-bridge execution",
-    "Explicit credential-free sample identity on this new localhost origin"
+    "Original REAL_DATA_MODE=true and complete real-data-bridge retained",
+    "Classic local fixture transport before auth-entry; no actual8878 or DB",
+    "Old sample-bootstrap injection retired; no old rewritten UI imported"
   ],
-  "originalFrontendBytesChanged": false
+  "originalFrontendBytesChanged": false,
+  "runtimeVersion": "phase1-runtime-02-full-original-bridge",
+  "fixtureTransport": {
+    "bytes": 16941,
+    "sha256": "061ca49c31b0b922eca59eec6cba24e8945176ca82706a2c947e44fc57c09b44"
+  }
 }
