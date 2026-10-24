@@ -4,9 +4,11 @@ import type { ProductQuery } from "./product-query-ports.ts";
 
 export type ProductDetailsPageSize = 20 | 50 | 100;
 export interface ProductDetailsPageQuery extends ProductQuery { readonly page: number; readonly pageSize: ProductDetailsPageSize }
+export interface ProductBarcodeQuery extends ProductDetailsPageQuery { readonly skuId?: string }
 export type ProductDetailsReadIntent =
   | { readonly kind: "prices"; readonly parameters: ProductQuery }
-  | { readonly kind: "barcodes" | "stock"; readonly parameters: ProductDetailsPageQuery };
+  | { readonly kind: "barcodes"; readonly parameters: ProductBarcodeQuery }
+  | { readonly kind: "stock"; readonly parameters: ProductDetailsPageQuery };
 /** Explicit per-tab authority. A basics/drawer/candidate grant does not imply nine-price access. */
 export interface ProductDetailsReadGrant { readonly kind: ProductDetailsReadIntent["kind"]; readonly productId: string }
 export interface ProductDetailsQueryAuthorization {
@@ -33,6 +35,8 @@ export interface ProductBarcodePage {
   readonly total: number; readonly items: readonly ProductBarcodeDetails[];
   /** Legacy schema1–19 is unavailable; verified native reads preserve the actual product FK or NULL. */
   readonly defaultScheme: ProductDefaultScheme;
+  /** Present only for an explicitly SKU-scoped request, after verifying product membership. */
+  readonly skuId?: string;
 }
 export interface ProductWarehouseStockItem {
   readonly warehouseId: string; readonly warehouseName: string; readonly skuId: string;
@@ -66,7 +70,7 @@ export interface ProductStockOverviewResult {
 }
 export interface ProductDetailsSnapshotReader {
   readPrices(read: ProductDetailsScopedRead<ProductQuery>): Promise<ProductPriceDetails | null>;
-  readBarcodes(read: ProductDetailsScopedRead<ProductDetailsPageQuery>): Promise<ProductBarcodePage | null>;
+  readBarcodes(read: ProductDetailsScopedRead<ProductBarcodeQuery>): Promise<ProductBarcodePage | null>;
 }
 /** D3-owned reader. It MUST independently authorize the current inventory/warehouse scope and
  * certify SKU membership/publication/admission before returning a known zero. A product grant

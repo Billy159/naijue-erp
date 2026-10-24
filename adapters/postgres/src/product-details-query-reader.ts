@@ -1,4 +1,4 @@
-import type { ProductBarcodeDetails, ProductBarcodePage, ProductDefaultScheme, ProductDetailsPageQuery, ProductDetailsScopedRead, ProductDetailsSnapshotReader, ProductPriceDetails } from "../../../packages/application/src/product-details-query-ports.ts";
+import type { ProductBarcodeDetails, ProductBarcodePage, ProductBarcodeQuery, ProductDefaultScheme, ProductDetailsScopedRead, ProductDetailsSnapshotReader, ProductPriceDetails } from "../../../packages/application/src/product-details-query-ports.ts";
 import { checkedProductDetailsScope } from "../../../packages/application/src/product-details-query-validation.ts";
 import type { ProductQuery } from "../../../packages/application/src/product-query-ports.ts";
 import { activeProductRead } from "../../../packages/application/src/product-query-validation.ts";
@@ -62,7 +62,7 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
       return { ...target, prices: Object.freeze(prices) };
     });
   }
-  async readBarcodes(read: ProductDetailsScopedRead<ProductDetailsPageQuery>): Promise<ProductBarcodePage | null> {
+  async readBarcodes(read: ProductDetailsScopedRead<ProductBarcodeQuery>): Promise<ProductBarcodePage | null> {
     checkedProductDetailsScope(read); requireDomain(read.intent.kind === "barcodes", "FORBIDDEN", "Barcode-tab grant required");
     const p = read.parameters;
     return this.snapshot(read.signal, async (query, client) => {
@@ -74,18 +74,23 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
         ? { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" }
         : targets[0]!.default_barcode_scheme_id === null ? { state: "NOT_SET" }
         : { state: "AVAILABLE", schemeId: entityId("product", stringValue(targets[0]!.default_barcode_scheme_id)) };
+      if (p.skuId !== undefined) {
+        const skus = (await query("SELECT s.id, s.product_id FROM naijue_erp.sku s WHERE s.id = $1::uuid AND s.product_id = $2::uuid", [p.skuId, p.productId])).rows;
+        requireDomain(skus.length <= 1 && skus.every(s => s.id === p.skuId && s.product_id === p.productId), "INVALID_DATABASE_VALUE", "Invalid SKU target membership");
+        if (skus.length === 0) return null;
+      }
       const counts = (await query(`SELECT count(*)::text AS total FROM naijue_erp.sku_barcode b
-        JOIN naijue_erp.sku s ON s.id = b.sku_id WHERE s.product_id = $1::uuid`, [p.productId])).rows;
+        JOIN naijue_erp.sku s ON s.id = b.sku_id WHERE s.product_id = $1::uuid${p.skuId === undefined ? "" : " AND s.id = $2::uuid"}`, p.skuId === undefined ? [p.productId] : [p.productId, p.skuId])).rows;
       requireDomain(counts.length === 1, "INVALID_DATABASE_VALUE", "Expected one barcode count"); const total = count(counts[0]!.total);
       const rows = (await query(`SELECT b.id, b.barcode, b.sku_id, b.barcode_kind, b.scheme_id, b.enabled,
         s.product_id, s.sku_code, s.color_id, s.fit_id, s.size_id FROM naijue_erp.sku_barcode b
-        JOIN naijue_erp.sku s ON s.id = b.sku_id WHERE s.product_id = $1::uuid
-        ORDER BY b.barcode COLLATE "C", b.id LIMIT $2 OFFSET $3`, [p.productId, p.pageSize, (p.page - 1) * p.pageSize])).rows;
+        JOIN naijue_erp.sku s ON s.id = b.sku_id WHERE s.product_id = $1::uuid${p.skuId === undefined ? "" : " AND s.id = $4::uuid"}
+        ORDER BY b.barcode COLLATE "C", b.id LIMIT $2 OFFSET $3`, p.skuId === undefined ? [p.productId, p.pageSize, (p.page - 1) * p.pageSize] : [p.productId, p.pageSize, (p.page - 1) * p.pageSize, p.skuId])).rows;
       requireDomain(rows.length === Math.min(p.pageSize, Math.max(0, total - (p.page - 1) * p.pageSize)), "INVALID_DATABASE_VALUE", "Inconsistent barcode page");
       const ids = new Set<string>(), rawCodes = new Set<string>();
       const items = rows.map((row): ProductBarcodeDetails => {
         const id = entityId("barcode", stringValue(row.id)), barcode = stringValue(row.barcode);
-        requireDomain(row.product_id === p.productId && barcode.length > 0 && !ids.has(id) && !rawCodes.has(barcode)
+        requireDomain(row.product_id === p.productId && (p.skuId === undefined || row.sku_id === p.skuId) && barcode.length > 0 && !ids.has(id) && !rawCodes.has(barcode)
           && (row.barcode_kind === "MAIN" || row.barcode_kind === "CONFIRMED_OLD"), "INVALID_DATABASE_VALUE", "Invalid retained barcode identity");
         ids.add(id); rawCodes.add(barcode); const scheme = nullableString(row.scheme_id), skuCode = stringValue(row.sku_code);
         requireDomain(skuCode.length > 0, "INVALID_DATABASE_VALUE", "Missing SKU code");
@@ -93,7 +98,7 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
           fitId: entityId("fit", stringValue(row.fit_id)), sizeId: entityId("size", stringValue(row.size_id)), kind: row.barcode_kind,
           schemeId: scheme === null ? null : entityId("product", scheme), enabled: booleanValue(row.enabled) };
       });
-      return { ...target, page: p.page, pageSize: p.pageSize, total, items, defaultScheme };
+      return { ...target, page: p.page, pageSize: p.pageSize, total, items, defaultScheme, ...(p.skuId === undefined ? {} : { skuId: p.skuId }) };
     });
   }
 }

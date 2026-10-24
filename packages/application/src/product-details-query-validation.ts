@@ -1,7 +1,7 @@
 import { DomainError, requireDomain } from "../../domain/src/errors.ts";
 import { entityId, quantity } from "../../domain/src/values.ts";
 import { checkedProductActor, parseProductQuery } from "./product-query-validation.ts";
-import type { ProductDefaultScheme, ProductDetailsPageQuery, ProductDetailsReadIntent, ProductDetailsScopedRead, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewScopedRead, ProductStockOverviewResult, ProductStockOverviewItem } from "./product-details-query-ports.ts";
+import type { ProductBarcodePage, ProductBarcodeQuery, ProductDefaultScheme, ProductDetailsPageQuery, ProductDetailsReadIntent, ProductDetailsScopedRead, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewScopedRead, ProductStockOverviewResult, ProductStockOverviewItem } from "./product-details-query-ports.ts";
 
 export function checkedProductDefaultScheme(value: unknown): ProductDefaultScheme {
   requireDomain(value !== null && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype && Object.hasOwn(value, "state"),
@@ -26,13 +26,30 @@ export function parseProductDetailsPageQuery(value: unknown): ProductDetailsPage
     || !Number.isSafeInteger((row.page - 1) * row.pageSize)) invalidProductDetailsQuery();
   return Object.freeze({ productId, page: row.page, pageSize: row.pageSize });
 }
+export function parseProductBarcodeQuery(value: unknown): ProductBarcodeQuery {
+  if (!value || typeof value !== "object" || Array.isArray(value) || Object.getPrototypeOf(value) !== Object.prototype) invalidProductDetailsQuery();
+  const row = value as Record<string, unknown>, filtered = Object.hasOwn(row, "skuId");
+  if (Reflect.ownKeys(row).length !== (filtered ? 4 : 3) || !["productId", "page", "pageSize"].every(key => Object.hasOwn(row, key))) invalidProductDetailsQuery();
+  const p = parseProductDetailsPageQuery({ productId: row.productId, page: row.page, pageSize: row.pageSize });
+  if (!filtered) return p;
+  let skuId: string;
+  try { if (typeof row.skuId !== "string") return invalidProductDetailsQuery(); skuId = entityId("sku", row.skuId); }
+  catch { return invalidProductDetailsQuery(); }
+  return Object.freeze({ ...p, skuId });
+}
+export function checkedProductBarcodeResult(value: ProductBarcodePage, parameters: ProductBarcodeQuery): ProductBarcodePage {
+  requireDomain(Object.hasOwn(value, "skuId") === Object.hasOwn(parameters, "skuId")
+    && (parameters.skuId === undefined || value.skuId === parameters.skuId && Array.isArray(value.items) && value.items.every(item => item.skuId === parameters.skuId)),
+    "INVALID_DATABASE_VALUE", "Barcode response differs from the requested SKU scope");
+  return { ...value, defaultScheme: checkedProductDefaultScheme(value.defaultScheme) };
+}
 export function checkedProductDetailsScope<P extends ProductDetailsScopedRead>(read: P): P {
   checkedProductActor(read.actor);
   requireDomain(read.signal instanceof AbortSignal && !read.signal.aborted, "PRODUCT_READ_ABORTED", "Product read is no longer active");
   const kind = read.intent?.kind;
   requireDomain(kind === "prices" || kind === "barcodes" || kind === "stock", "INVALID_PRODUCT_DETAILS_QUERY", "Invalid product tab");
-  const parameters = kind === "prices" ? parseProductQuery(read.parameters) : parseProductDetailsPageQuery(read.parameters);
-  const intended = kind === "prices" ? parseProductQuery(read.intent.parameters) : parseProductDetailsPageQuery(read.intent.parameters);
+  const parse = kind === "prices" ? parseProductQuery : kind === "barcodes" ? parseProductBarcodeQuery : parseProductDetailsPageQuery;
+  const parameters = parse(read.parameters), intended = parse(read.intent.parameters);
   requireDomain(JSON.stringify(parameters) === JSON.stringify(intended), "FORBIDDEN", "Intent and product parameters differ");
   const grant = read.grant;
   requireDomain(grant && Reflect.ownKeys(grant).length === 2 && Object.hasOwn(grant, "kind") && Object.hasOwn(grant, "productId")
@@ -58,7 +75,8 @@ export function checkedProductStockPage(value: ProductWarehouseStockPage, parame
   return { productId: value.productId, page: value.page, pageSize: value.pageSize, total: value.total, items };
 }
 export function productDetailsIntent(kind: "prices", parameters: ReturnType<typeof parseProductQuery>): ProductDetailsReadIntent;
-export function productDetailsIntent(kind: "barcodes" | "stock", parameters: ProductDetailsPageQuery): ProductDetailsReadIntent;
+export function productDetailsIntent(kind: "barcodes", parameters: ProductBarcodeQuery): ProductDetailsReadIntent;
+export function productDetailsIntent(kind: "stock", parameters: ProductDetailsPageQuery): ProductDetailsReadIntent;
 export function productDetailsIntent(kind: ProductDetailsReadIntent["kind"], parameters: ReturnType<typeof parseProductQuery> | ProductDetailsPageQuery): ProductDetailsReadIntent {
   if (kind === "prices") return Object.freeze({ kind, parameters });
   return Object.freeze({ kind, parameters: parameters as ProductDetailsPageQuery });

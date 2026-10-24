@@ -8,6 +8,37 @@ import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
 import { actor, sid } from "../../../tests/support/synthetic-fixtures.ts";
 const productId = sid("product", 7301), page = { productId, page: 1, pageSize: 20 };
+test("SKU barcode HTTP: the original route distinguishes missing target, zero bindings and invalid cross-tab parameters", async t => {
+  const skuId = sid("sku", 7310), statements: string[] = [];
+  let grants = 0;
+  const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createProductDetailsQueryHttpPlugin({ authenticate: async () => actor, dependencies: {
+    authorization: { async authorize(_actor, intent) { grants++; return { kind: intent.kind, productId: intent.parameters.productId }; } },
+    reader: new PostgresProductDetailsQueryReader({ async connect() { return {
+      async query(sql, values = []) {
+        statements.push(sql); let rows: Record<string, unknown>[] = [];
+        if (sql.startsWith("SELECT p.id")) rows = [{ id: productId, version: 1 }];
+        if (sql.startsWith("SELECT s.id") && values[0] === skuId && values[1] === productId) rows = [{ id: skuId, product_id: productId }];
+        if (sql.startsWith("SELECT count")) rows = [{ total: "0" }];
+        return { rows, rowCount: rows.length };
+      }, release() {}
+    }; } }), stockReader: null
+  } }));
+  const request = { ...page, skuId };
+  const zero = await app.inject({ method: "POST", url: "/products/barcodes/query", payload: request });
+  assert.equal(zero.statusCode, 200, zero.body); assert.equal(zero.json().skuId, skuId); assert.equal(zero.json().total, 0); assert.deepEqual(zero.json().items, []);
+  assert.equal(zero.headers["cache-control"], "no-store");
+  const missing = await app.inject({ method: "POST", url: "/products/barcodes/query", payload: { ...request, skuId: sid("sku", 999) } });
+  assert.equal(missing.statusCode, 200, missing.body); assert.equal(missing.json(), null);
+  const old = await app.inject({ method: "POST", url: "/products/barcodes/query", payload: page });
+  assert.equal(old.statusCode, 200, old.body); assert.equal(Object.hasOwn(old.json(), "skuId"), false);
+  const before = statements.length, beforeGrants = grants;
+  for (const [url, payload] of [["/products/barcodes/query", { ...request, skuId: null }], ["/products/barcodes/query", { ...request, skuId: "bad" }],
+    ["/products/stock/query", request], ["/products/prices/query", { productId, skuId }], ["/products/stock-overview/query", { productId, warehouseMode: "ALL", skuId }]] as const) {
+    const rejected = await app.inject({ method: "POST", url, payload }); assert.equal(rejected.statusCode, 400, rejected.body);
+  }
+  assert.equal(statements.length, before); assert.equal(grants, beforeGrants); assert.equal(app.server.listening, false);
+});
 test("product detail HTTP: authenticated price/retained-code reads reach old-field SQL; stock unavailable is explicit 503", async t => {
   const statements: string[] = [];
   const app = Fastify({ logger: false }); t.after(() => app.close());

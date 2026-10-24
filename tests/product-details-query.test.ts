@@ -3,7 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createProductDetailsQueryService } from "../packages/application/src/product-details-query-service.ts";
 import type { ProductBarcodePage, ProductDefaultScheme, ProductDetailsQueryDependencies, ProductWarehouseStockPage, ProductStockOverviewResult } from "../packages/application/src/product-details-query-ports.ts";
-import { parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, checkedProductDefaultScheme } from "../packages/application/src/product-details-query-validation.ts";
+import { parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, checkedProductDefaultScheme, parseProductBarcodeQuery, checkedProductDetailsScope } from "../packages/application/src/product-details-query-validation.ts";
 import { DomainError } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const productId = sid("product", 7101), warehouseId = sid("warehouse", 7102), skuId = sid("sku", 7103);
@@ -18,6 +18,37 @@ function setup(change: Partial<ProductDetailsQueryDependencies> = {}) {
   };
   return { service: createProductDetailsQueryService(dependencies), reads: () => reads };
 }
+test("SKU barcode query: only barcodes accept an exact optional UUID and preserve the original request shape", async () => {
+  assert.deepEqual(parseProductBarcodeQuery(parameters), parameters); assert.equal(Object.hasOwn(parseProductBarcodeQuery(parameters), "skuId"), false);
+  const query = { ...parameters, skuId };
+  assert.deepEqual(parseProductBarcodeQuery(query), query);
+  let authorized = 0;
+  const f = setup({ authorization: { async authorize(_actor, intent) { authorized++; return { kind: intent.kind, productId }; } } });
+  for (const value of [null, undefined, 1, "", "not-a-uuid"]) await assert.rejects(f.service.readBarcodes(actor, { ...parameters, skuId: value }, signal()), { code: "INVALID_PRODUCT_DETAILS_QUERY" });
+  await assert.rejects(f.service.readBarcodes(actor, { ...query, extra: true }, signal()), { code: "INVALID_PRODUCT_DETAILS_QUERY" });
+  await assert.rejects(f.service.readStock(actor, query, signal()), { code: "INVALID_PRODUCT_DETAILS_QUERY" });
+  await assert.rejects(f.service.readPrices(actor, { productId, skuId }, signal()), { code: "INVALID_PRODUCT_QUERY" });
+  await assert.rejects(f.service.readStockOverview(actor, { productId, warehouseMode: "ALL", skuId }, signal()), { code: "INVALID_PRODUCT_DETAILS_QUERY" });
+  assert.equal(authorized, 0); assert.equal(f.reads(), 0);
+  assert.throws(() => checkedProductDetailsScope({ actor, parameters: query, intent: { kind: "barcodes", parameters: { ...query, skuId: sid("sku", 999) } }, grant: { kind: "barcodes", productId }, signal: signal() }), { code: "FORBIDDEN" });
+});
+test("SKU barcode response: original authorization precedes the reader and exact echo cannot widen the target", async () => {
+  const query = { ...parameters, skuId };
+  for (const echo of [undefined, sid("sku", 999), skuId]) {
+    let authorized = false;
+    const f = setup({ authorization: { async authorize(_actor, intent) { assert.deepEqual(intent, { kind: "barcodes", parameters: query }); authorized = true; return { kind: intent.kind, productId }; } },
+      reader: { async readPrices() { return null; }, async readBarcodes(scope) {
+        assert.equal(authorized, true); assert.deepEqual(scope.parameters, query);
+        return { ...parameters, version: 1, total: 0, items: [], defaultScheme: { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" }, ...(echo === undefined ? {} : { skuId: echo }) };
+      } } });
+    if (echo === skuId) assert.equal((await f.service.readBarcodes(actor, query, signal()))!.skuId, skuId);
+    else await assert.rejects(f.service.readBarcodes(actor, query, signal()), { code: "INVALID_DATABASE_VALUE" });
+  }
+  const f = setup({ authorization: { async authorize() { throw new DomainError("FORBIDDEN", "synthetic denial"); } } });
+  await assert.rejects(f.service.readBarcodes(actor, query, signal()), { code: "FORBIDDEN" }); assert.equal(f.reads(), 0);
+  const g = setup({ reader: { async readPrices() { return null; }, async readBarcodes() { return { ...parameters, version: 1, total: 0, items: [], skuId, defaultScheme: { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" } }; } } });
+  await assert.rejects(g.service.readBarcodes(actor, parameters, signal()), { code: "INVALID_DATABASE_VALUE" });
+});
 test("product details: per-tab denial/mismatched grant precedes all reads and unavailable stock", async () => {
   for (const authorization of [
     { async authorize() { throw new DomainError("FORBIDDEN", "synthetic denial"); } },

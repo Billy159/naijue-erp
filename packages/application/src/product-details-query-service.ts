@@ -1,7 +1,7 @@
 import { DomainError } from "../../domain/src/errors.ts";
 import { activeProductRead, checkedProductActor, parseProductQuery } from "./product-query-validation.ts";
 import { checkedProductDetailsScope, checkedProductStockPage, parseProductDetailsPageQuery, productDetailsIntent,
-  parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, checkedProductDefaultScheme } from "./product-details-query-validation.ts";
+  parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, parseProductBarcodeQuery, checkedProductBarcodeResult } from "./product-details-query-validation.ts";
 import type { ActorContext } from "./ports.ts";
 import type { ProductQuery } from "./product-query-ports.ts";
 import type { ProductDetailsQueryDependencies, ProductDetailsReadIntent, ProductDetailsScopedRead } from "./product-details-query-ports.ts";
@@ -27,10 +27,10 @@ export function createProductDetailsQueryService(dependencies: ProductDetailsQue
       const p = parseProductQuery(input); return read(actor, productDetailsIntent("prices", p), p, signal, scope => reader.readPrices(scope));
     },
     async readBarcodes(actor: ActorContext, input: unknown, signal: AbortSignal) {
-      const p = parseProductDetailsPageQuery(input);
+      const p = parseProductBarcodeQuery(input);
       return read(actor, productDetailsIntent("barcodes", p), p, signal, async scope => {
         const result = await reader.readBarcodes(scope);
-        return result === null ? null : { ...result, defaultScheme: checkedProductDefaultScheme(result.defaultScheme) };
+        return result === null ? null : checkedProductBarcodeResult(result, p);
       });
     },
     async readStockOverview(actor: ActorContext, input: unknown, signal: AbortSignal) {
