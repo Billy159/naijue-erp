@@ -56,9 +56,10 @@ export function prepareProductsRoute(input: ProductsRoutePreparation, onAccessFa
   const product = configuration.product ? { reader: createProductHttpReader(input.http), loadStyles: () => configuration.product!.stylesheet.load() } : undefined;
   // Both capabilities are explicit host opt-ins. A product grant or ADMIN
   // role alone does not imply dictionary-description access.
-  const dictionary = configuration.maintenance && !configuration.maintenance.barcodeSchemeReader && input.configuration.barcodeSchemes
+  const barcodes = configuration.fullPage?.allowedTabs.includes('barcodes') ? configuration.fullPage.reader.barcodes : undefined;
+  const dictionary = input.configuration.barcodeSchemes && (barcodes && !barcodes.schemeReader || configuration.maintenance && !configuration.maintenance.barcodeSchemeReader)
     ? createDictionaryHttpReader(input.http) : null;
-  const maintenance = configuration.maintenance && dictionary ? { ...configuration.maintenance, barcodeSchemeReader: {
+  const schemeReader = dictionary ? {
     readBarcodeScheme: async (read: Parameters<typeof dictionary.readBarcodeScheme>[0]) => {
       if (!input.scope.active || read.signal.aborted) throw new InactiveReadScopeError();
       const signal = AbortSignal.any([input.scope.signal, read.signal]);
@@ -66,13 +67,17 @@ export function prepareProductsRoute(input: ProductsRoutePreparation, onAccessFa
       if (!input.scope.active || signal.aborted) throw new InactiveReadScopeError();
       return result;
     },
-  } } : configuration.maintenance;
+  } : null;
+  const maintenance = configuration.maintenance && !configuration.maintenance.barcodeSchemeReader && schemeReader
+    ? { ...configuration.maintenance, barcodeSchemeReader: schemeReader } : configuration.maintenance;
+  const fullPage = configuration.fullPage && barcodes && !barcodes.schemeReader && schemeReader
+    ? { ...configuration.fullPage, reader: { ...configuration.fullPage.reader, barcodes: { ...barcodes, schemeReader } } } : configuration.fullPage;
   let leaveGuard: (() => boolean) | null = null;
   const onCanLeaveChange = (guard: (() => boolean) | null) => { if (input.scope.active) leaveGuard = guard; };
   input.scope.signal.addEventListener('abort', () => { leaveGuard = null; }, { once: true });
   return {
     canLeave: () => !input.scope.active || leaveGuard === null || leaveGuard() === true,
     View: ({ scope }: ApplicationRouteProps) => <ProductsPageView {...navigation} scope={scope} reader={reader} onAccessFailure={accessFailure} onCanLeaveChange={onCanLeaveChange}
-      {...(product ? { product } : {})} {...(configuration.fullPage ? { fullPage: configuration.fullPage } : {})} {...(maintenance ? { maintenance } : {})} />,
+      {...(product ? { product } : {})} {...(fullPage ? { fullPage } : {})} {...(maintenance ? { maintenance } : {})} />,
   };
 }

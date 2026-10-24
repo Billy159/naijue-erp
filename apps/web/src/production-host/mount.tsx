@@ -75,13 +75,20 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     return createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, filename) });
   };
   const productStyles = configuration.routes.products ? stylesheet('products') : null;
+  const dictionaryReader = configuration.routes.barcodeSchemes || maintenance?.products ? createDictionaryHttpReader(http) : null;
+  const productFullPageReads = configuration.routes.productFullPage || configuration.routes.salesProductFullPage || configuration.routes.transferProductFullPage
+    ? createProductFullPageHttpReader(http, ['prices', 'barcodes', 'stock']) : null;
+  // A single explicitly composed readonly reader serves all enabled full-page
+  // entrances. Maintenance alone never supplies its dictionary-description gate.
+  const productFullPageReader = productFullPageReads?.barcodes && configuration.routes.barcodeSchemes && dictionaryReader
+    ? { ...productFullPageReads, barcodes: { ...productFullPageReads.barcodes, schemeReader: { readBarcodeScheme: dictionaryReader.readBarcodeScheme } } } : productFullPageReads;
   const app = createApplication({ http, presentation: { renderRouteState, renderWorkspace: createDemoFrameWorkspaceRenderer() }, routes: {
     ...(configuration.routes.inventory ? { inventory: { stylesheet: stylesheet('inventory'), actions: {}, ...(configuration.routes.inventoryLedger ? { ledger: true as const } : {}) } } : {}),
     ...(configuration.routes.sales ? { sales: { stylesheet: stylesheet('sales'), detailStylesheet: stylesheet('sales-detail'),
-      ...(configuration.routes.salesProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }, ['prices', 'barcodes', 'stock']) } } : {}),
+      ...(configuration.routes.salesProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}),
       ...(configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit ? { commands: { newRequestKey, ...(configuration.routes.salesManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.salesExistingEdit ? { existingPreparation: createSalesExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
     ...(configuration.routes.transfers ? { transfers: { stylesheet: stylesheet('transfers'), detailStylesheet: stylesheet('transfer-detail'), product: { stylesheet: stylesheet('transfer-product') },
-      ...(configuration.routes.transferProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader(http, ['prices', 'barcodes', 'stock']) } } : {}),
+      ...(configuration.routes.transferProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}),
       ...(configuration.routes.transferInitialSizeGroupId ? { initialSizeGroup: { id: configuration.routes.transferInitialSizeGroupId, reader: createDictionaryHttpReader(http) } } : {}),
       ...(configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit ? { commands: { newRequestKey, ...(configuration.routes.transferManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.transferExistingEdit ? { existingPreparation: createTransferExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
     ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, ...(configuration.routes.parties.readOnly ? { readOnly: true as const } : {}) } } : {}),
@@ -93,10 +100,10 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
         onRecoveryRequired: (command, identity) => { controller?.productRecovery.retain(command, identity); },
         recovery: { read: (identity, productId) => controller?.productRecovery.read(identity, productId) ?? null,
           resolved: (identity, requestKey) => { controller?.productRecovery.resolved(identity, requestKey); } },
-        productReader: createProductHttpReader(http), dictionaryReader: createDictionaryHttpReader(http), media: createProductEditorMediaHttpReader(http), mediaUpload: createProductMediaUploadHttpClient(http),
+        productReader: createProductHttpReader(http), dictionaryReader: dictionaryReader!, media: createProductEditorMediaHttpReader(http), mediaUpload: createProductMediaUploadHttpClient(http),
         ...(configuration.routes.productFullPage ? { stock: createProductFullPageHttpReader(http, ['stock']).stock } : {}),
       } } : {}),
-      ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: createProductFullPageHttpReader({ ...configuration.http, fetch: input.fetch }, ['prices', 'barcodes', 'stock']) } } : {}) } } : {}),
+      ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}) } } : {}),
     ...(configuration.routes.productCategories ? { productCategories: { stylesheet: stylesheet('product-categories') } } : {}),
     ...(configuration.routes.barcodeSchemes ? { barcodeSchemes: { stylesheet: stylesheet('barcode-schemes') } } : {}),
     ...(configuration.routes.productSettings ? { productSettings: { stylesheet: stylesheet('product-settings'), allowedTabs: [
