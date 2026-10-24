@@ -71,6 +71,8 @@ import { createProductDetailsQueryHttpPlugin } from "./product-details-query-htt
 import { PostgresProductDetailsQueryReader } from "../../../adapters/postgres/src/product-details-query-reader.ts";
 import { PostgresProductWarehouseStockReader } from "../../../adapters/postgres/src/product-warehouse-stock-reader.ts";
 import { PostgresMaintenanceCommandUnitOfWork } from "../../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
+import { PostgresCatalogueMaintenanceUnitOfWork } from "../../../adapters/postgres/src/catalogue-maintenance-store.ts";
+import { createCatalogueMaintenanceHttpPlugin } from "./catalogue-maintenance-http.ts";
 import { PostgresOrganizationMaintenanceReadUnitOfWork } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
 import { createOrganizationMaintenanceReadHttpPlugin } from "./organization-maintenance-http.ts";
 import { createNativeRuntime26Issuer } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
@@ -493,6 +495,11 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       await app.ready(); const readyApp = app;
       return Object.freeze({ app: readyApp, close: () => readyApp.close(), trustedOrigin: host.trustedOrigin,
         get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; } });
+    }
+    if (issuer?.categoryOrderWrite) {
+      app.register(createCatalogueMaintenanceHttpPlugin({ authenticate, categoryOnly: true,
+        dependencies: { unitOfWork: new PostgresCatalogueMaintenanceUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), issuer.categoryOrderWrite),
+          now: host.now, newId: () => randomUUID() } }));
     }
     const productReader = new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null);
     let productMedia = host.media;

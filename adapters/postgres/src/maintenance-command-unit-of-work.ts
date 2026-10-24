@@ -4,6 +4,8 @@ import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
+import { checkedCategoryOrderEvidence, checkedCategoryOrderResult } from "../../../packages/application/src/catalogue-maintenance-validation.ts";
+import type { CategoryOrderResult } from "../../../packages/application/src/catalogue-maintenance-ports.ts";
 import type { DocumentSpecificationSaveScope } from "../../../packages/application/src/document-specification.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
@@ -17,7 +19,7 @@ type Query = MaintenancePgContext["client"]["query"];
 // Only this constructor/transaction can register a driver or active context.
 // Structural copies, caller booleans and a public prepare method are not proof.
 const ownedDrivers = new WeakMap<object, PgSalesPool>();
-const ownedContexts = new WeakMap<object, { pool: PgSalesPool; client: PgSalesClient; evidence: Evidence; assertActive: () => void }>();
+const ownedContexts = new WeakMap<object, { pool: PgSalesPool; client: PgSalesClient; evidence: Evidence; assertActive: () => void; categoryOrderGuard?: () => Promise<void> }>();
 interface DocumentAppendScope { readonly parent: DocumentSpecificationSaveScope; readonly productId: string; readonly operationId: string; readonly requestKey: string; readonly expectedVersion: number; readonly skuFacts: readonly Record<string, string | number | boolean>[] }
 /** Identity-bearing token, issued only after this borrowed context completed its
  * exact append. A shape-compatible object or an arbitrary current xid is not proof. */
@@ -35,6 +37,14 @@ export function maintenanceContextClient(context: object, pool: PgSalesPool): Pg
   requireDomain(owned !== undefined && owned.pool === pool, "NATIVE_RUNTIME26_NOT_READY", "Original active maintenance context required");
   owned.assertActive(); return owned.client;
 }
+/** The exact v15 issuer registers its recheck only after proving this original
+ * context. It runs again before the CATEGORY aggregate's outer COMMIT. */
+export function bindMaintenanceCategoryOrderGuard(context: object, pool: PgSalesPool, guard: () => Promise<void>): void {
+  maintenanceContextClient(context, pool);
+  requireDomain(typeof guard === "function", "NATIVE_RUNTIME26_NOT_READY", "Actual category order runtime recheck required");
+  const owned = ownedContexts.get(context)!;
+  owned.categoryOrderGuard ??= guard; owned.evidence.enableCategoryOrder();
+}
 export function assertMaintenanceProductImagesPrepared(context: object, pool: PgSalesPool, completion: MaintenanceCompletion): void {
   maintenanceContextClient(context, pool);
   ownedContexts.get(context)!.evidence.assertProductImagesPrepared(completion);
@@ -46,13 +56,52 @@ function key(value: string): string {
   requireDomain(typeof value === "string" && value.length > 0 && value.length <= 200 && !/[\x00-\x1f\x7f]/.test(value), "INVALID_REQUEST_KEY", "Original bounded request key required"); return value;
 }
 function integer(value: unknown): value is number { return typeof value === "number" && Number.isInteger(value) && value > 0 && value <= 2147483647; }
-function checkedResult(value: unknown, expectedKind: MaintenanceKind): MaintenanceResult {
+function categoryOrder(kind: MaintenanceKind, action: string): boolean { return kind === "CATEGORY" && (action === "REORDER" || action === "UNDO_REORDER"); }
+function checkedResult(value: unknown, expectedKind: MaintenanceKind, action: string): MaintenanceResult {
+  if (categoryOrder(expectedKind, action)) {
+    const result = checkedCategoryOrderResult(value);
+    requireDomain((action === "REORDER") === (result.order.undoOfOperationId === null), "INVALID_DATABASE_VALUE", "Category order receipt action differs from undo origin");
+    return Object.freeze(result);
+  }
   requireDomain(value !== null && typeof value === "object" && !Array.isArray(value) && Reflect.ownKeys(value).length === 4,
     "INVALID_DATABASE_VALUE", "Exact maintenance receipt result required");
   const r = value as Record<string, unknown>;
   requireDomain(typeof r.operationId === "string" && r.kind === expectedKind && typeof r.targetId === "string" && integer(r.version),
     "INVALID_DATABASE_VALUE", "Invalid maintenance receipt identities/version");
   return Object.freeze({ operationId: uuid(r.operationId), kind: expectedKind, targetId: uuid(r.targetId), version: r.version });
+}
+/** Complete sibling evidence belongs only to the two approved CATEGORY actions.
+ * Ordinary roots retain their exact four-field result and sparse root evidence. */
+function categoryOrderResult(value: MaintenanceCompletion): CategoryOrderResult {
+  const beforeRoot = value.beforeValues, afterRoot = value.afterValues;
+  const exactRoot = (root: unknown): boolean => root !== null && typeof root === "object" && !Array.isArray(root)
+    && Reflect.ownKeys(root).length === 3 && ["version", "display_order", "category_order"].every(k => Object.hasOwn(root, k));
+  requireDomain(exactRoot(beforeRoot) && exactRoot(afterRoot), "INVALID_MAINTENANCE_EVIDENCE", "Exact category anchor and complete sibling evidence required");
+  const before = checkedCategoryOrderEvidence(beforeRoot!.category_order), after = checkedCategoryOrderEvidence(afterRoot.category_order);
+  requireDomain(before.parent_id === after.parent_id && before.moved_id === after.moved_id
+    && before.undo_of_operation_id === after.undo_of_operation_id && before.rows.length === after.rows.length
+    && before.rows.every((r, i) => r.id === after.rows[i]!.id
+      && after.rows[i]!.version === r.version + (r.display_order === after.rows[i]!.display_order ? 0 : 1))
+    && (value.action === "REORDER" ? after.undo_of_operation_id === null : after.undo_of_operation_id !== null && after.undo_of_operation_id !== value.operationId),
+  "INVALID_MAINTENANCE_EVIDENCE", "Category order must preserve full sibling identities and advance only changed versions");
+  const changed = after.rows.filter((r, i) => r.display_order !== before.rows[i]!.display_order);
+  const anchorIndex = before.rows.findIndex(r => r.id === value.targetId), old = before.rows[anchorIndex], next = after.rows[anchorIndex];
+  requireDomain(changed.length > 0 && old && next && changed.some(r => r.id === value.targetId)
+    && old.version === value.oldVersion && next.version === value.newVersion
+    && old.display_order === beforeRoot!.display_order && next.display_order === afterRoot.display_order
+    && (value.action !== "REORDER" || changed[0]!.id === value.targetId),
+  "INVALID_MAINTENANCE_EVIDENCE", "Category order requires the exact changed anchor");
+  const byOrder = (a: { id: string; display_order: number }, b: { id: string; display_order: number }) => a.display_order - b.display_order || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+  const ordered = [...after.rows].sort(byOrder);
+  if (value.action === "REORDER") {
+    const original = [...before.rows].sort(byOrder).map(r => r.id), final = ordered.map(r => r.id);
+    requireDomain(ordered.every((r, i) => r.display_order === i) && requestHash(original) !== requestHash(final)
+      && requestHash(original.filter(id => id !== before.moved_id)) === requestHash(final.filter(id => id !== after.moved_id)),
+    "INVALID_MAINTENANCE_EVIDENCE", "Only the selected sibling may move into a complete contiguous order");
+  }
+  return checkedCategoryOrderResult({ operationId: value.operationId, kind: "CATEGORY", targetId: value.targetId, version: value.newVersion,
+    order: { parentId: after.parent_id, undoOfOperationId: after.undo_of_operation_id,
+      members: ordered.map(r => ({ id: r.id, version: r.version, displayOrder: r.display_order })) } });
 }
 function boundedEvidence(value: unknown): void {
   const serialized = JSON.stringify(value);
@@ -81,7 +130,10 @@ class Evidence implements MaintenanceEvidenceSession {
   private readonly query: Query; private readonly assertActive: () => void;
   private readonly document: DocumentAppendScope | undefined;
   private completion: MaintenanceCompletion | undefined;
+  private categoryOrderReady = false;
   constructor(query: Query, assertActive: () => void, document?: DocumentAppendScope) { this.query = query; this.assertActive = assertActive; this.document = document; }
+  enableCategoryOrder(): void { this.assertActive(); this.categoryOrderReady = true; }
+  hasCategoryOrderCompletion(): boolean { return this.completion !== undefined && categoryOrder(this.completion.kind, this.completion.action); }
   documentCompletion(): MaintenanceCompletion {
     this.assertActive(); requireDomain(this.document && this.completed && this.completion, 'TRANSACTION_SCOPE', 'Actual exact document append must complete');
     return structuredClone(this.completion);
@@ -144,7 +196,8 @@ class Evidence implements MaintenanceEvidenceSession {
       FROM naijue_erp.operation_receipt WHERE actor_account_id=$1::uuid AND request_key=$2`, [actorAccountId, originalKey])).rows;
     requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Original key must resolve one receipt"); if (!rows.length) return undefined;
     const row = rows[0]!; requireDomain(row.target_type === family, "IDEMPOTENCY_CONFLICT", "Original actor/key belongs to another family");
-    const result = checkedResult(row.result_data, family);
+    requireDomain(typeof row.action === "string" && maintenanceActions[family].includes(row.action), "INVALID_DATABASE_VALUE", "Persisted maintenance action unavailable");
+    const result = checkedResult(row.result_data, family, row.action);
     requireDomain(row.id === result.operationId && row.target_id === result.targetId && typeof row.request_hash === "string" && /^[0-9a-f]{64}$/.test(row.request_hash)
       && typeof row.action === "string" && maintenanceActions[family].includes(row.action) && typeof row.completed_at === "string",
     "INVALID_DATABASE_VALUE", "Persisted maintenance receipt is incoherent");
@@ -156,13 +209,15 @@ class Evidence implements MaintenanceEvidenceSession {
     requireDomain(!this.completed && this.receipt?.key === value.requestKey && this.receipt.kind === value.kind
       && this.allowed.has(`${value.kind}:${value.action}`) && maintenanceActions[value.kind].includes(value.action),
     "TRANSACTION_SCOPE", "Completion requires the original locked and authorized command");
-    const result: MaintenanceResult = checkedResult({ operationId: value.operationId, kind: value.kind, targetId: value.targetId, version: value.newVersion }, value.kind);
     requireDomain(/^[0-9a-f]{64}$/.test(value.requestHash) && (value.oldVersion === null || integer(value.oldVersion))
       && value.newVersion === (value.oldVersion ?? 0) + 1 && typeof value.completedAt === "string" && !Number.isNaN(Date.parse(value.completedAt))
       && /(?:Z|[+-]\d{2}:\d{2})$/.test(value.completedAt) && value.afterValues?.version === value.newVersion
       && (value.oldVersion === null ? value.beforeValues === null : value.beforeValues?.version === value.oldVersion),
     "INVALID_MAINTENANCE_EVIDENCE", "Exact old/new version and actual completion time required");
     boundedEvidence(value.beforeValues); boundedEvidence(value.afterValues);
+    requireDomain(!categoryOrder(value.kind, value.action) || this.categoryOrderReady, "CATALOGUE_ORDER_NOT_READY", "Original verified v15 category context required");
+    const result: MaintenanceResult = categoryOrder(value.kind, value.action) ? categoryOrderResult(value)
+      : checkedResult({ operationId: value.operationId, kind: value.kind, targetId: value.targetId, version: value.newVersion }, value.kind, value.action);
     if (this.document) {
       const d = this.document;
       requireDomain(value.kind === 'PRODUCT' && value.action === 'EDIT' && value.targetId === d.productId && value.operationId === d.operationId
@@ -188,6 +243,7 @@ class Evidence implements MaintenanceEvidenceSession {
   }
   async complete(input: MaintenanceCompletion): Promise<MaintenanceResult> {
     const { value, result } = this.checkedCompletion(input);
+    requireDomain(!categoryOrder(value.kind, value.action) || this.preparationAttempted, "TRANSACTION_SCOPE", "Prepare the category aggregate audit before every sibling mutation");
     if (!this.preparationAttempted) await this.prepare(value);
     requireDomain(this.preparedFingerprint !== undefined && this.preparedFingerprint === requestHash(value),
       "INVALID_MAINTENANCE_EVIDENCE", "Completion cannot change or bypass the original prepared audit");
@@ -196,7 +252,7 @@ class Evidence implements MaintenanceEvidenceSession {
       VALUES($1::uuid,$2::uuid,$3,$4,$5,$6,$7::uuid,'COMMITTED',$8::jsonb,$9::timestamptz) RETURNING result_data`,
     [value.operationId, value.actorAccountId, value.requestKey, value.requestHash, value.action, value.kind, value.targetId, JSON.stringify(result), value.completedAt])).rows;
     requireDomain(rows.length === 1, "INVALID_DATABASE_VALUE", "Actual maintenance receipt insert required");
-    const persisted = checkedResult(rows[0]!.result_data, value.kind);
+    const persisted = checkedResult(rows[0]!.result_data, value.kind, value.action);
     requireDomain(JSON.stringify(persisted) === JSON.stringify(result), "INVALID_DATABASE_VALUE", "Committed receipt result differs from saved root");
     this.completed = true; this.completion = structuredClone(value); return persisted;
   }
@@ -256,7 +312,13 @@ export class PostgresMaintenanceCommandUnitOfWork implements MaintenancePgUnitOf
     ownedContexts.set(context, { pool: this.pool, client, evidence, assertActive });
     try {
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
-      const result = await work(context); active = false; commitAttempted = true; await client.query("COMMIT"); return result;
+      const result = await work(context);
+      if (evidence.hasCategoryOrderCompletion()) {
+        const guard = ownedContexts.get(context)?.categoryOrderGuard;
+        requireDomain(guard, "CATALOGUE_ORDER_NOT_READY", "Category aggregate requires the original v15 precommit guard");
+        await guard(); assertActive();
+      }
+      active = false; commitAttempted = true; await client.query("COMMIT"); return result;
     } catch (error) {
       active = false; if (!began || commitAttempted) discard = error instanceof Error ? error : Error("Maintenance transaction outcome unknown");
       if (began && !commitAttempted) try { await client.query("ROLLBACK"); } catch (rollbackError) {

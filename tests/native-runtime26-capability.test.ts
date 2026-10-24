@@ -10,8 +10,10 @@ import { mkdtempSync, readFileSync, writeFileSync, rmSync, chmodSync, symlinkSyn
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
+import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
+import type { MaintenancePgContext } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
+import type { MaintenanceCompletion } from "../packages/application/src/maintenance-commit-ports.ts";
 const digest = "a".repeat(64), hash = (v: string) => createHash("sha256").update(v).digest("hex");
 const target = { database: "SYNTHETIC_ONLY", databaseOid: "123", actingRole: "synthetic_owner", sessionUser: "synthetic_session", serverAddress: null, serverPort: null, postmasterStart: "2026-10-23 00:00:00+00" };
 function observation() { return { identity: { database: target.database, database_oid: target.databaseOid, database_owner: "synthetic_owner", current_user: target.actingRole,
@@ -323,4 +325,71 @@ test('F01 issuer lifecycle: real sanitizer handoff recovers genuine transport ca
    else{await assert.rejects(issuer.pool.connect(),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(calls.length,at);}
   }finally{f.cleanup();}
  }
+});
+
+test("v15 exact routine pins preserve v14 and every original non-category routine branch", () => {
+  const sql = readFileSync(new URL('../adapters/postgres/patches/0026-category-reorder-undo.sql', import.meta.url), 'utf8');
+  const original = readFileSync(new URL('../adapters/postgres/migrations/0021_native_maintenance_receipts.sql', import.meta.url), 'utf8');
+  const routines = [...sql.matchAll(/CREATE(?: OR REPLACE)? FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)];
+  assert.equal(routines.length, 4);
+  for (const m of routines) assert.ok(NATIVE_RUNTIME26_V15_METADATA_PROBE.includes(`('${m[1]}','${hash(m[2]!)}')`), m[1]);
+  assert.ok(NATIVE_RUNTIME26_V15_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=124"));
+  assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=123"));
+  assert.ok(NATIVE_RUNTIME26_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=122"));
+  const body = (source: string, name: string) => new RegExp(`CREATE(?: OR REPLACE)? FUNCTION naijue_erp\\.${name}\\([^;]*?AS \\$\\$(.*?)\\$\\$;`, 's').exec(source)![1]!;
+  assert.equal(body(sql, 'maintenance_action_allowed'), body(original, 'maintenance_action_allowed').replace("WHEN 'CATEGORY' THEN action IN ('CREATE','EDIT','DELETE')", "WHEN 'CATEGORY' THEN action IN ('CREATE','EDIT','DELETE','REORDER','UNDO_REORDER')"));
+  const oldRoot = body(original, 'validate_maintenance_root_commit'), newRoot = body(sql, 'validate_maintenance_root_commit');
+  const rootMarker = '  SELECT * INTO a FROM naijue_erp.audit_change WHERE object_type=family AND object_id=NEW.id AND new_version=NEW.version;';
+  assert.ok(newRoot.startsWith(oldRoot.slice(0, oldRoot.indexOf(rootMarker))));
+  assert.ok(newRoot.endsWith(oldRoot.slice(oldRoot.indexOf(rootMarker))));
+  assert.equal(body(sql, 'validate_maintenance_receipt_commit').replace(/  IF NEW.target_type='CATEGORY' AND NEW.action IN \('REORDER','UNDO_REORDER'\) THEN.*?  END IF;\n/s, ''), body(original, 'validate_maintenance_receipt_commit'));
+  assert.ok(sql.includes('cmin::text::bigint<=audit_command'));
+  assert.ok(sql.includes('REVOKE ALL ON FUNCTION naijue_erp.maintenance_check_category_order(naijue_erp.audit_change) FROM PUBLIC'));
+  assert.equal((sql.match(/CREATE TRIGGER|DROP TRIGGER|DISABLE TRIGGER|ADD COLUMN|CREATE TABLE|CREATE INDEX/g) ?? []).length, 0);
+});
+test("v15 category capability is absent for old profiles and unreviewed maintenance purpose", async () => {
+  const f = fixture(); try {
+    for (const patchLevel of ['26_v11_document_specification_save', '26_v14_core_initialization', '26_v15_category_order_undo']) {
+      const probe = patchLevel.includes('v11') ? NATIVE_RUNTIME26_METADATA_PROBE : patchLevel.includes('v14') ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_V15_METADATA_PROBE;
+      const pool = { async connect() { return { async query(sql: string) { assert.equal(sql, probe); return { rows: [observation()], rowCount: 1 }; }, release() {} }; } };
+      const issuer = await createNativeRuntime26Issuer(pool, f.options({ ...f.review, catalog: { ...f.review.catalog, patchLevel }, purposes: ['IMPORT_STAGE'] }));
+      assert.equal(Object.hasOwn(issuer, 'categoryOrderWrite'), false);
+    }
+    const p = scripted(), issuer = await createNativeRuntime26Issuer(p.pool, f.options()); assert.equal(issuer.categoryOrderWrite, undefined);
+  } finally { f.cleanup(); }
+});
+test("v15 category original context unwraps the real managed lease and rechecks exact metadata before COMMIT", async () => {
+  for (const drift of [false, true]) {
+    const f = fixture(); try {
+      const actorId = '00000000-0000-4000-8000-000000000001', id = '00000000-0000-4000-8000-000000000002', other = '00000000-0000-4000-8000-000000000004', op = '00000000-0000-4000-8000-000000000003';
+      const calls: string[] = [], releases: unknown[] = []; let saved = false;
+      const pool = { async connect() { return { async query(sql: string, values: unknown[] = []) {
+        calls.push(sql);
+        if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return { rows: [{ ...observation(), source_routines_match: !(saved && drift) }], rowCount: 1 };
+        const rows = sql.includes('maintenance:identity') ? [{ account_id: actorId, staff_id: other, login_enabled: true, role: 'ADMIN', employment_status: '在职', hall_id: null }]
+          : sql.includes('maintenance:complete') ? [{ result_data: JSON.parse(values[7] as string) }] : [];
+        if (sql.includes('maintenance:complete')) saved = true;
+        return { rows, rowCount: sql.includes('maintenance:audit') ? 1 : rows.length };
+      }, release(error?: unknown) { releases.push(error); } }; } };
+      const issuer = await createNativeRuntime26Issuer(pool, f.options({ ...f.review, catalog: { ...f.review.catalog, patchLevel: '26_v15_category_order_undo' } }));
+      assert.deepEqual(Reflect.ownKeys(issuer.categoryOrderWrite!).sort(), ['assertReady', 'profile']);
+      const uow = new PostgresMaintenanceCommandUnitOfWork(issuer.pool); let escaped: MaintenancePgContext | undefined;
+      const save = uow.transaction(async context => {
+        escaped = context; const before = calls.length;
+        await assert.rejects(issuer.categoryOrderWrite!.assertReady({ ...context }), { code: 'NATIVE_RUNTIME26_NOT_READY' }); assert.equal(calls.length, before);
+        await issuer.categoryOrderWrite!.assertReady(context); assert.equal(calls.length, before + 1);
+        await context.evidence.assertAllowed({ accountId: actorId as never, hallId: null }, 'CATEGORY', 'REORDER');
+        await context.evidence.getReceipt(actorId, 'v15-original-key', 'CATEGORY');
+        const metadata = (after: boolean) => ({ parent_id: null, moved_id: other, undo_of_operation_id: null,
+          rows: [{ id, version: after ? 2 : 1, display_order: after ? 1 : 10 }, { id: other, version: after ? 2 : 1, display_order: after ? 0 : 10 }] });
+        const completion: MaintenanceCompletion = { operationId: op, actorAccountId: actorId, requestKey: 'v15-original-key', requestHash: 'a'.repeat(64), kind: 'CATEGORY', action: 'REORDER',
+          targetId: id, oldVersion: 1, newVersion: 2, completedAt: '2026-10-24T00:00:00Z', beforeValues: { version: 1, display_order: 10, category_order: metadata(false) },
+          afterValues: { version: 2, display_order: 1, category_order: metadata(true) } };
+        await context.evidence.prepare!(completion); await context.client.query('/* synthetic:category-leaf */ UPDATE SYNTHETIC_ONLY'); return context.evidence.complete(completion);
+      });
+      if (drift) { await assert.rejects(save, { code: 'NATIVE_RUNTIME26_NOT_READY' }); assert.ok(!calls.includes('COMMIT')); assert.equal(calls.filter(s => s === 'ROLLBACK').length, 1); assert.ok(releases.at(-1) instanceof Error); }
+      else { await save; assert.equal(calls.filter(s => s === NATIVE_RUNTIME26_V15_METADATA_PROBE).length, 4); assert.equal(calls.filter(s => s === 'COMMIT').length, 1); assert.deepEqual(releases, [undefined, undefined]); }
+      const at = calls.length; await assert.rejects(issuer.categoryOrderWrite!.assertReady(escaped!), { code: 'NATIVE_RUNTIME26_NOT_READY' }); assert.equal(calls.length, at);
+    } finally { f.cleanup(); }
+  }
 });

@@ -8,7 +8,8 @@ import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
 import type { CatalogueRetainedDeleteCapability, ProductSeasonArrayCapability } from "./product-query-reader.ts";
 import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import type { ProductMediaWriteCapability } from "./product-maintenance-store.ts";
-import { assertMaintenanceDriverPool, maintenanceContextClient, assertMaintenanceProductImagesPrepared } from "./maintenance-command-unit-of-work.ts";
+import type { CategoryOrderWriteCapability } from "./catalogue-maintenance-store.ts";
+import { assertMaintenanceDriverPool, maintenanceContextClient, assertMaintenanceProductImagesPrepared, bindMaintenanceCategoryOrderGuard } from "./maintenance-command-unit-of-work.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { GUARD_CAPABILITY } from "./inventory-publication-guards.ts";
 import type { PgSalesClient } from "./sales-unit-of-work.ts";
@@ -412,6 +413,16 @@ export const NATIVE_RUNTIME26_V14_METADATA_PROBE = NATIVE_RUNTIME26_METADATA_PRO
   .replace("('validate_import_accounting_claim_commit','03a517d099491d51f97e50b8bbf9e5729c1fd9f67a68a9445328379391f1fdf7')", "('validate_import_accounting_claim_commit','ad8e19c3f36b85ebbda107a2ca8e3c00ad10ca3005a232bd033bbab7613be756')")
   .replace("('assert_history_typed_closure','b0551d6a80e9fdd9709d6ed63820dc8b5a7577e8bfb9deaa19cb0e387de54bce')", "('assert_history_typed_closure','8556e917e6a251dd1eb97974fbb6f793d3e46a1ef10f6ef7fd77fb7ad539d00f')");
 
+/** Exact v14 successor, with only three replaced routines and one private helper.
+ * The v11/v14 probes and their consumers remain unchanged. */
+export const NATIVE_RUNTIME26_V15_METADATA_PROBE = [
+  ["jsonb_array_length(manifest->'routines')=123", "jsonb_array_length(manifest->'routines')=124"],
+  ["SELECT 1 FROM (VALUES", "SELECT 1 FROM (VALUES\n    ('maintenance_check_category_order','77c86d2788e88f2922a66c662a91b95c0f76d6ea00587148c36421feabde281e'),"],
+  ["('maintenance_action_allowed','186f88822ba597874734cb3349d0b9d95f63e5f8d8a34d3d05014e3420033c17')", "('maintenance_action_allowed','50b2fa0fbf733d7c98b40aa612107a20262cb063852cb3f2cabbefc750742c4a')"],
+  ["('validate_maintenance_receipt_commit','7a42aeef2738c9009bc9eaa4ecbf41feefb43b759fbed2514a005166d20ac384')", "('validate_maintenance_receipt_commit','77679e1e21858ae64ac1225660cf7a692f63b097d538254829def8164ea33ac5')"],
+  ["('validate_maintenance_root_commit','8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512')", "('validate_maintenance_root_commit','002818dfd8d764e99221bb0548da1141054871ae674aba6bb9f6ce59c9d92d1c')"],
+].reduce((probe, [before, after]) => replaceOne(probe, before!, after!), NATIVE_RUNTIME26_V14_METADATA_PROBE);
+
 /** Metadata approval only. Whole-source, batch, actor, receipt, conservation and
  * publication authorizers remain separate mandatory ports at their callers. */
 type Runtime26Purpose = Parameters<NativeRuntime26Capability["assertReady"]>[1];
@@ -495,6 +506,7 @@ export interface NativeRuntime26Issuer {
   readonly productSeasonArray: ProductSeasonArrayCapability;
   readonly historicalCustomerExclusion: HistoricalCustomerExclusionCapability;
   readonly productMediaWrite: ProductMediaWriteCapability;
+  readonly categoryOrderWrite?: CategoryOrderWriteCapability;
   readonly imageColorSwap: {
     readonly profile: "product-image-color-swap-v4";
     readonly assertVerified: ProductMediaWriteCapability["assertVerified"];
@@ -521,9 +533,10 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization"] as readonly unknown[]).includes(catalog.patchLevel))
-    throw runtime26Error("Exact reviewed v11 catalog digest required; earlier catalogs do not prove the document append closure");
-  const metadataProbe = catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo"] as readonly unknown[]).includes(catalog.patchLevel))
+    throw runtime26Error("Exact independently reviewed v11, v14 or v15 catalog required");
+  const metadataProbe = catalog.patchLevel === "26_v15_category_order_undo" ? NATIVE_RUNTIME26_V15_METADATA_PROBE
+    : catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;
   const purposes = ownArray(review.purposes);
   if (purposes.length === 0 || purposes.length > runtime26Purposes.length || new Set(purposes).size !== purposes.length
     || purposes.some(p => !runtime26Purposes.includes(p as Runtime26Purpose))) throw runtime26Error("Finite explicitly reviewed runtime purposes required");
@@ -622,10 +635,16 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
   } });
   const imageColorSwap = Object.freeze({ profile: "product-image-color-swap-v4" as const,
     assertVerified: productMediaWrite.assertVerified, assertReady: productMediaWrite.assertPrepared });
+  const categoryOrderWrite: CategoryOrderWriteCapability | undefined = catalog.patchLevel === "26_v15_category_order_undo" && allowed.has("PRODUCT_MAINTENANCE")
+    ? Object.freeze({ profile: "CATEGORY_ORDER_UNDO_V15", async assertReady(context: Parameters<CategoryOrderWriteCapability["assertReady"]>[0]): Promise<void> {
+      await verify(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
+      bindMaintenanceCategoryOrderGuard(context, pool, () => verify(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE"));
+    } }) : undefined;
   issuedPools.add(originalPool);
   try {
     const first = await pool.connect(); first.release();
-    return Object.freeze({ pool, runtime26, catalogueRetainedDelete, productSeasonArray, historicalCustomerExclusion, productMediaWrite, imageColorSwap });
+    return Object.freeze({ pool, runtime26, catalogueRetainedDelete, productSeasonArray, historicalCustomerExclusion, productMediaWrite, imageColorSwap,
+      ...(categoryOrderWrite === undefined ? {} : { categoryOrderWrite }) });
   } catch (error) { revoked = true; throw error; }
 }
 function exactVersions26(value: unknown): boolean {

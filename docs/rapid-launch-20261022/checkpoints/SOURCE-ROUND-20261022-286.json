@@ -1,0 +1,254 @@
+{
+  "atUtc": "2026-10-24T03:53:20.577578+00:00",
+  "parent": "5dd68305be13f7047a6b3716ccde858815de2681",
+  "taskId": "V15_EXACT_CATEGORY_ORDER_TRANSACTION_GUARDS_PROFILE_AND_HOST",
+  "files": [
+    {
+      "path": "packages/application/src/maintenance-commit-ports.ts",
+      "bytes": 4107,
+      "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "bytes": 28921,
+      "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 69974,
+      "sha256": "2e606aeb4239a5e5510ed0a0162e3c567173977906458b6d3836a664ca2b5f3a",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "bytes": 29325,
+      "sha256": "7c6c22cd60e931c6bc32d198bc730a2d42232c7ff17c768f248ceef2c724c006",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "bytes": 56777,
+      "sha256": "6ae012bdd55d0785e87918abcb162ab6458cee1965f94bbaf3aa1d3b042925cf",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/maintenance-command-postgres-protocol.test.ts",
+      "bytes": 27139,
+      "sha256": "c7f5ea0ab0d12cc4869f6ae287f534e965086552baf6c661282bb560656781ea",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 38137,
+      "sha256": "5a3a86189b5f5e55a5a86f25e07a13429ab56b35d52d073a4ce0370d6cfb1e87",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "bytes": 73336,
+      "sha256": "dfa865f42798ec93c696ecde46dcdecc3aff93d8c75f1a86a5690283ddad9b22",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V15-CATEGORY-ORDER-SOURCE-v1.json",
+  "ownerReceiptSha256AtPin": "e7083895bd652c3d53c0d10da7a9b1c2d7dc54e768ce51111fe2beeaaa73d1bb",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1/v15-category-order-undo",
+      "atUtc": "2026-10-24T03:37:26.346808+00:00",
+      "model": "gpt-6.1-sol/xhigh required by current C delegation; tool setting is not an independent model attestation",
+      "fastSwitchVerified": false,
+      "authority": [
+        "docs/rapid-launch-20261022/REPORTING-AUTHORIZATION.json#01a161f7-a5e8-7e10-9059-9537c28910c2",
+        "docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+        "C explicit adoption of exact-v15 categoryOnly host seam in current D1 thread"
+      ]
+    },
+    "completedScope": {
+      "status": "SOURCE_READY_SYNTHETIC_CHECKS_PASS_NOT_PG_OR_BUSINESS_ACCEPTANCE",
+      "sharedEvidence": "Only CATEGORY gains REORDER/UNDO_REORDER; old actions retain strict four-field result. New aggregate evidence requires complete canonical sibling sets, exact parent/moved/undo metadata, changed-row +1, exact changed anchor and same immutable prepare/complete fingerprint. REORDER preserves all nonmoved relative order and creates 0..N-1; UNDO result retains exact original negative/duplicate/gapped integer values with fresh versions. Existing 16MiB/depth16/500000 evidence limits unchanged.",
+      "transaction": "Original active maintenance context and issuer-managed lease only. Exact v15 assertReady registers its same-context precommit metadata recheck; new aggregate prepare is mandatory before writes. Failed precommit rolls back; unknown COMMIT preserves original failure, discards and does not rollback/retry. Current identity/role/key locks retained.",
+      "sql": {
+        "patch": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+        "predecessor": "Exact migration1..26 plus v11 and v14 (123 routines); no v12/v13 installation. Refuses already-v15 or different predecessor, not a rerun/recovery script.",
+        "profile": "26_v15_category_order_undo",
+        "routineCount": 124,
+        "replacedRoutines": [
+          "maintenance_action_allowed",
+          "validate_maintenance_receipt_commit",
+          "validate_maintenance_root_commit"
+        ],
+        "newPrivateInvoker": "naijue_erp.maintenance_check_category_order(naijue_erp.audit_change)",
+        "routineBodySha256": {
+          "maintenance_check_category_order": "77c86d2788e88f2922a66c662a91b95c0f76d6ea00587148c36421feabde281e",
+          "maintenance_action_allowed": "50b2fa0fbf733d7c98b40aa612107a20262cb063852cb3f2cabbefc750742c4a",
+          "validate_maintenance_receipt_commit": "77679e1e21858ae64ac1225660cf7a692f63b097d538254829def8164ea33ac5",
+          "validate_maintenance_root_commit": "002818dfd8d764e99221bb0548da1141054871ae674aba6bb9f6ce59c9d92d1c"
+        },
+        "objectsAdded": {
+          "tables": 0,
+          "columns": 0,
+          "indexes": 0,
+          "enums": 0,
+          "foreignKeys": 0,
+          "triggers": 0
+        },
+        "proof": "Existing per-row deferred root trigger checks every actual OLD/NEW, preserving name,parent,deleted and all other fields. Existing receipt trigger performs full closure once: exact complete undeleted siblings/final values, only changed rows written in this xid, audit cmin precedes their tuple cmin, one current operation/audit/receipt, current ADMIN/WAREHOUSE, exact receipt, and same-actor original REORDER poststate/old integers on undo. Original bootstrap and otherfamily function tails preserved. Existing global immutable audit, unique operation and reciprocal FKs remain.",
+        "acl": "New helper explicitly REVOKE ALL FROM PUBLIC; C independently reviews exact helper EXECUTE for original runtime role and final full catalog/ACL digest. No new ordinary write grant or generic SQL lease.",
+        "databaseExecuted": false
+      },
+      "host": "No configuration/CLI change. Only actual issuer.categoryOrderWrite for exact v15 + independently reviewed PRODUCT_MAINTENANCE mounts D2 original categoryOnly plugin through original shared pool/UOW. Old v11/v14 or absent maintenance purpose mount no writer; CORE early return remains authentication/settings-only; COLOR/FIT/other maintenance not mounted. Original one pool, source280 spool configuration and source279 producer unchanged.",
+      "dependencies": {
+        "D2": "C fixed SOURCE281 original five source/three test leaves; receipt directory fix below is required successor, not silent reuse of old281 hash. D1 edited no D2 leaf.",
+        "D2ReceiptFixReport": "../D2/V15-RECEIPT-DIRECTORY-FIX-v1.json",
+        "D2ReceiptFixPins": [
+          {
+            "path": "packages/application/src/catalogue-maintenance-service.ts",
+            "bytes": 13707,
+            "sha256": "06689ec8704408e8b3e44dc45ae1dc5c4d593bb75ea23db408ceb85605435408"
+          },
+          {
+            "path": "apps/api/src/catalogue-maintenance-http.test.ts",
+            "bytes": 15454,
+            "sha256": "53a56bcd1902549f9c493a76a14ccbade1dae1a5a61a14beb9ebcadf2a43446e"
+          }
+        ],
+        "retainedBaselines": [
+          "C SOURCE278 F01 origin/performance source",
+          "C SOURCE279 D3 inventory four leaves",
+          "C SOURCE280 output host three leaves; only API/test receive this explicit v15 successor delta"
+        ],
+        "inventoryOutputReport": "INVENTORY-OUTPUT-SPOOL-HOST-v1.json"
+      }
+    },
+    "changedFiles": [
+      {
+        "path": "packages/application/src/maintenance-commit-ports.ts",
+        "bytes": 4107,
+        "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e"
+      },
+      {
+        "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "bytes": 28921,
+        "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+      },
+      {
+        "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 69974,
+        "sha256": "2e606aeb4239a5e5510ed0a0162e3c567173977906458b6d3836a664ca2b5f3a"
+      },
+      {
+        "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+        "bytes": 29325,
+        "sha256": "7c6c22cd60e931c6bc32d198bc730a2d42232c7ff17c768f248ceef2c724c006"
+      },
+      {
+        "path": "apps/api/src/postgres-read-api.ts",
+        "bytes": 56777,
+        "sha256": "6ae012bdd55d0785e87918abcb162ab6458cee1965f94bbaf3aa1d3b042925cf"
+      },
+      {
+        "path": "tests/maintenance-command-postgres-protocol.test.ts",
+        "bytes": 27139,
+        "sha256": "c7f5ea0ab0d12cc4869f6ae287f534e965086552baf6c661282bb560656781ea"
+      },
+      {
+        "path": "tests/native-runtime26-capability.test.ts",
+        "bytes": 38137,
+        "sha256": "5a3a86189b5f5e55a5a86f25e07a13429ab56b35d52d073a4ce0370d6cfb1e87"
+      },
+      {
+        "path": "apps/api/src/production-provider-composition.test.ts",
+        "bytes": 73336,
+        "sha256": "dfa865f42798ec93c696ecde46dcdecc3aff93d8c75f1a86a5690283ddad9b22"
+      }
+    ],
+    "checks": {
+      "newUniqueCases": 9,
+      "affectedExistingCases": 4,
+      "finalFailures": 0,
+      "skips": 0,
+      "sourceOnly": true,
+      "runs": [
+        {
+          "toolChunk": "1870cc",
+          "scope": "4 new shared category protocol cases",
+          "result": "3 PASS; first assertion initially matched COMMITTED in BEGIN instead of exact COMMIT. Fixed test-only matcher; no backend change for this assertion."
+        },
+        {
+          "toolChunk": "9a004d",
+          "scope": "Only that failed new shared case after matcher correction",
+          "result": "1/1 PASS 0skip"
+        },
+        {
+          "toolChunk": "635a9a",
+          "scope": "3 new v15 runtime probe/body preservation/old-cap absence/live original context and precommit mismatch cases",
+          "result": "3/3 PASS 0skip"
+        },
+        {
+          "toolChunk": "d52481/f07b2c",
+          "scope": "2 new production host cases",
+          "result": "Host exact selectors PASS; real original service/store/shared UOW save and same-key replay PASS, GET receipt FAIL500 due missing D2 directory lock. Reported to C/original D2; no D2 leaf edited by D1."
+        },
+        {
+          "toolChunk": "d09e62",
+          "scope": "Only failed production service/receipt case after D2 pinned two-leaf fix",
+          "result": "1/1 PASS 0skip. Save, exact replay, readback GET, directory-before-identity, same lease, 1audit/1receipt, same-key altered content409 and salesperson403 covered."
+        },
+        {
+          "toolChunk": "227ea5",
+          "scope": "4 affected original shared cases: same lease/uncertain COMMIT/prepared audit ordering/prepared evidence rejection",
+          "result": "4/4 PASS 0skip"
+        }
+      ],
+      "strict": {
+        "sevenOriginalRoots": "3c4f51/220d5f exit0: four changed TS source roots and three direct test roots",
+        "postD2FixHostRoot": "a0eb57/aafc9b exit0, affected production-provider-composition.test.ts only",
+        "flags": "--noEmit ES2023 NodeNext strict noUncheckedIndexedAccess exactOptionalPropertyTypes noFallthroughCasesInSwitch noImplicitOverride verbatimModuleSyntax rewriteRelativeImportExtensions skipLibCheck types=node lib=ES2023,DOM jsx=react-jsx"
+      },
+      "sqlStatic": {
+        "parser": "existing /tmp/naijue-v14-sql-parser pglast7.21, no database",
+        "sqlStatements": 9,
+        "plpgsqlFunctions": 3,
+        "doBlocks": 2,
+        "status": "PASS after one initial unparenthesized CASE expression parse failure was corrected; 4 final routine body hashes checked against exact v15 probe. SQL/PLpgSQL parsing is not catalog binding, runtime execution or role proof.",
+        "toolChunks": [
+          "2ad3a0",
+          "4ab747",
+          "de7235"
+        ]
+      },
+      "databaseConnections": 0,
+      "databaseTests": 0,
+      "ssh": 0,
+      "builds": 0,
+      "listeners": 0,
+      "git": 0,
+      "frontendFilesChanged": 0,
+      "oldMigrationFilesChanged": 0,
+      "privateSpoolDirectoriesCreated": 0,
+      "reuse": "No sealed18run2, H06, generic239, SPEC or full settings/backend rerun. Adopted D2 original 10 new cases rather than repeating them."
+    },
+    "notTested": [
+      "Actual PostgreSQL installation, routine catalog binding, cmin/xmin execution, exact helper permissions and effective role ACL; C sole executor with original QB new-delta acceptance.",
+      "Actual transaction positives: same-parent full reorder including unchanged rows, undo restores original negative/duplicate/gapped integers with increasing versions and original anchor; final exact result/receipt readback.",
+      "Actual PG negatives: missing sibling, altered membership/version, missing/extra row write, audit after mutation, name/parent/deleted change, orphan audit/receipt, extra operation, forged anchor, wrong actor/source operation, changed undo poststate, second undo/new key, and transaction failure closure. C coordinates necessary new DB tests only.",
+      "Browser/UI/drag acceptance, actual HTTP listener/deployment, full import/publication and real business opening. F4 frontend owned elsewhere and untouched.",
+      "No measured latency claim for v15. C reported C124 actual fixed278 availability/review-file behavior and no read latency improvement; D1 has not independently rerun or verified that actual job here."
+    ],
+    "blockers": {
+      "source": [],
+      "runtime": [
+        "Exact8 source checkpoint and original QB review pending C",
+        "Exact v14-to-v15 target, helper ACL and catalog metadata review/actual tests owned by C",
+        "Full real data import remains incomplete; STAGED remains hidden and PUBLISH restrictions unchanged"
+      ]
+    },
+    "next": "C freeze these exact8 D1 leaves and the D2 two-leaf receipt successor; route only v15 delta to original QB. Coordinate actual v14->v15 installation/negative closure/role/receipt tests on approved isolated target before enabling this host capability. Preserve source278/279/280 and C117 fixed262 evidence, do not rerun adopted scopes. Warehouse/original SKU/unit conservation, nullable missing historical people/time, frontend required fields, and exclusion of 2958 anomalous product-level barcodes remain unchanged."
+  },
+  "stage": "FIXED_SOURCE_ORIGINAL_QB_NEW_V15_MODULE_PENDING_REAL124_PROFILE_AND_PG_UNTESTED",
+  "actualPG": false,
+  "deployed": false
+}

@@ -40,7 +40,7 @@ export interface MaintenanceEvidenceSession {
   complete(input: MaintenanceCompletion): Promise<MaintenanceResult>;
 }
 export const maintenanceActions: Readonly<Record<MaintenanceKind, readonly string[]>> = Object.freeze({
-  PRODUCT: ["CREATE", "EDIT", "DISABLE", "RESTORE", "DELETE"], CATEGORY: ["CREATE", "EDIT", "DELETE"],
+  PRODUCT: ["CREATE", "EDIT", "DISABLE", "RESTORE", "DELETE"], CATEGORY: ["CREATE", "EDIT", "DELETE", "REORDER", "UNDO_REORDER"],
   COLOR: ["CREATE", "EDIT", "DISABLE", "RESTORE", "DELETE"], FIT: ["CREATE", "EDIT", "DISABLE", "RESTORE", "DELETE"],
   HALL: ["CREATE", "EDIT", "DISABLE", "RESTORE"], WAREHOUSE: ["CREATE", "EDIT", "DISABLE", "RESTORE"],
   STAFF: ["CREATE", "EDIT", "LEAVE", "REINSTATE"], ACCOUNT: ["CREATE", "EDIT", "DISABLE", "RESTORE", "RESET_PASSWORD"],

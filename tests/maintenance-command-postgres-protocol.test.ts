@@ -1,10 +1,11 @@
 /** Scripted protocol only; no PostgreSQL, real identities or durability evidence. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
+import { PostgresMaintenanceCommandUnitOfWork, bindMaintenanceCategoryOrderGuard } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import type { MaintenancePgContext } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import { maintenanceKinds, maintenanceActions } from "../packages/application/src/maintenance-commit-ports.ts";
 import type { MaintenanceCompletion, MaintenanceResult } from "../packages/application/src/maintenance-commit-ports.ts";
+import type { CategoryOrderResult } from "../packages/application/src/catalogue-maintenance-ports.ts";
 import { entityId } from "../packages/domain/src/values.ts";
 import type { PgProductMaintenanceDriver } from "../adapters/postgres/src/product-maintenance-store.ts";
 import { createNodeCredentialRequestTag } from "../packages/authentication/src/passwords.ts";
@@ -177,4 +178,108 @@ test("hall maintenance acquires the shared administrator mutex before key identi
   assert.ok(admin < p.calls.findIndex(c => c.values[0] === `naijue:receipt:${JSON.stringify([account, "hall-original-key"])}`));
   assert.deepEqual(p.calls[admin]!.values, ["naijue:maintenance:available-admin:v1"]);
   assert.equal(p.calls.filter(c => c.sql.includes("maintenance:administrator-lock")).length, 1);
+});
+
+const orderIds = [target, "00000000-0000-4000-8000-000000000005", "00000000-0000-4000-8000-000000000006"] as const;
+function categoryCompletion(undo = false): MaintenanceCompletion {
+  const original = orderIds.map((id, i) => ({ id, version: [7, 11, 4][i]!, display_order: [-3, -3, 40][i]! }));
+  const reordered = original.map((r, i) => ({ ...r, version: r.version + 1, display_order: [1, 2, 0][i]! }));
+  const restored = original.map((r, i) => ({ ...r, version: reordered[i]!.version + 1 }));
+  const rows = undo ? reordered : original, next = undo ? restored : reordered;
+  const metadata = (values: typeof rows) => ({ parent_id: null, moved_id: orderIds[2], undo_of_operation_id: undo ? operation : null, rows: values });
+  return { ...completion(), kind: "CATEGORY", action: undo ? "UNDO_REORDER" : "REORDER", requestKey: undo ? "undo-key" : "category-key",
+    operationId: undo ? "00000000-0000-4000-8000-000000000007" : operation,
+    oldVersion: rows[0]!.version, newVersion: next[0]!.version,
+    beforeValues: { version: rows[0]!.version, display_order: rows[0]!.display_order, category_order: metadata(rows) },
+    afterValues: { version: next[0]!.version, display_order: next[0]!.display_order, category_order: metadata(next) } };
+}
+function categoryProtocol(options: { prior?: { action: string; result: unknown }; failCommit?: boolean; failGuard?: boolean; disabled?: boolean; tamperResult?: boolean } = {}) {
+  const calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = [], failure = Error("SYNTHETIC_CATEGORY_FAILURE");
+  const pool = { async connect() { return { async query(sql: string, values: unknown[] = []) {
+    calls.push({ sql, values }); if (sql === "COMMIT" && options.failCommit) throw failure;
+    const rows = sql.includes("maintenance:identity") ? [{ account_id: account, staff_id: orderIds[1], login_enabled: !options.disabled, role: "ADMIN", employment_status: "在职", hall_id: null }]
+      : sql.includes("maintenance:receipt") && options.prior ? [{ id: operation, target_type: "CATEGORY", target_id: target, action: options.prior.action,
+        result_data: options.prior.result, request_hash: "a".repeat(64), completed_at: "2026-10-22T00:00:00Z" }]
+      : sql.includes("maintenance:complete") ? [{ result_data: options.tamperResult ? { ...JSON.parse(values[7] as string), order: {} } : JSON.parse(values[7] as string) }] : [];
+    return { rows, rowCount: sql.includes("maintenance:audit") ? 1 : rows.length };
+  }, release(error?: unknown) { releases.push(error); } }; } };
+  const uow = new PostgresMaintenanceCommandUnitOfWork(pool);
+  function verified(context: MaintenancePgContext) {
+    // Protocol callback only. The issuer tests separately prove actual ownership,
+    // exact v15 selector and same managed lease, with no PostgreSQL claim here.
+    bindMaintenanceCategoryOrderGuard(context, pool, async () => { calls.push({ sql: "synthetic:v15-precommit", values: [] }); if (options.failGuard) throw failure; });
+  }
+  return { uow, calls, releases, failure, verified };
+}
+async function categorySave(p: ReturnType<typeof categoryProtocol>, value = categoryCompletion()): Promise<CategoryOrderResult> {
+  return p.uow.transaction(async context => {
+    p.verified(context);
+    await context.evidence.assertAllowed(actor, "CATEGORY", value.action);
+    await context.evidence.getReceipt(account, value.requestKey, "CATEGORY");
+    await context.evidence.prepare!(value);
+    await context.client.query("/* synthetic:category-orders */ UPDATE SYNTHETIC_ONLY");
+    return await context.evidence.complete(value) as CategoryOrderResult;
+  });
+}
+test("v15 category evidence returns complete ordered result with one prepared audit receipt and original precommit recheck", async () => {
+  const p = categoryProtocol(), result = await categorySave(p);
+  assert.deepEqual(result, { operationId: operation, kind: "CATEGORY", targetId: target, version: 8,
+    order: { parentId: null, undoOfOperationId: null, members: [
+      { id: orderIds[2], version: 5, displayOrder: 0 }, { id: orderIds[0], version: 8, displayOrder: 1 }, { id: orderIds[1], version: 12, displayOrder: 2 }
+    ] } });
+  const index = (v: string) => p.calls.findIndex(c => c.sql.includes(v));
+  assert.ok(index("maintenance:audit") < index("synthetic:category-orders"));
+  assert.ok(index("synthetic:category-orders") < index("maintenance:complete"));
+  assert.ok(index("maintenance:complete") < index("synthetic:v15-precommit") && index("synthetic:v15-precommit") < p.calls.findIndex(c => c.sql === "COMMIT"));
+  assert.equal(p.calls.filter(c => c.sql.includes("maintenance:audit")).length, 1);
+  assert.equal(p.calls.filter(c => c.sql.includes("maintenance:complete")).length, 1); assert.deepEqual(p.releases, [undefined]);
+});
+test("v15 category undo evidence preserves duplicate negative original integers with fresh versions and original operation", async () => {
+  const result = await categorySave(categoryProtocol(), categoryCompletion(true));
+  assert.equal(result.order.undoOfOperationId, operation);
+  assert.deepEqual(result.order.members, [{ id: orderIds[0], version: 9, displayOrder: -3 }, { id: orderIds[1], version: 13, displayOrder: -3 }, { id: orderIds[2], version: 6, displayOrder: 40 }]);
+});
+test("v15 category evidence rejects missing capability preparation changed anchors and incoherent complete sets before receipt", async () => {
+  const missing = categoryProtocol(); await assert.rejects(missing.uow.transaction(async ({ evidence }) => {
+    const c = categoryCompletion(); await evidence.assertAllowed(actor, "CATEGORY", c.action); await evidence.getReceipt(account, c.requestKey, "CATEGORY"); await evidence.prepare!(c);
+  }), { code: "CATALOGUE_ORDER_NOT_READY" }); assert.ok(!missing.calls.some(c => c.sql.includes("maintenance:audit")));
+  const noPrepare = categoryProtocol(); await assert.rejects(noPrepare.uow.transaction(async context => {
+    noPrepare.verified(context); const c = categoryCompletion(); await context.evidence.assertAllowed(actor, "CATEGORY", c.action); await context.evidence.getReceipt(account, c.requestKey, "CATEGORY"); return context.evidence.complete(c);
+  }), { code: "TRANSACTION_SCOPE" }); assert.ok(!noPrepare.calls.some(c => c.sql.includes("INSERT")));
+  const changes: ((c: MaintenanceCompletion) => MaintenanceCompletion)[] = [
+    c => ({ ...c, afterValues: { ...c.afterValues, name: "EXTRA" } }),
+    c => ({ ...c, targetId: orderIds[1], oldVersion: 11, newVersion: 12, beforeValues: { ...c.beforeValues!, version: 11 }, afterValues: { ...c.afterValues, version: 12, display_order: 2 } }),
+    c => ({ ...c, afterValues: { ...c.afterValues, display_order: 2 } }),
+    c => ({ ...c, afterValues: { ...c.afterValues, category_order: { ...c.afterValues.category_order as object, parent_id: orderIds[1] } } }),
+    c => ({ ...c, afterValues: { ...c.afterValues, category_order: { ...c.afterValues.category_order as object, rows: [
+      { id: orderIds[0], version: 8, display_order: 2 }, { id: orderIds[1], version: 12, display_order: 1 }, { id: orderIds[2], version: 5, display_order: 0 }
+    ] }, display_order: 2 } }),
+    c => ({ ...c, afterValues: { ...c.afterValues, category_order: { ...c.afterValues.category_order as object, rows: [
+      { id: orderIds[0], version: 8, display_order: 1 }, { id: orderIds[1], version: 11, display_order: 2 }, { id: orderIds[2], version: 5, display_order: 0 }
+    ] } } })
+  ];
+  for (const change of changes) {
+    const p = categoryProtocol(); await assert.rejects(categorySave(p, change(categoryCompletion())), { code: "INVALID_MAINTENANCE_EVIDENCE" });
+    assert.ok(!p.calls.some(c => c.sql.includes("maintenance:audit") || c.sql.includes("maintenance:complete")));
+  }
+  const changed = categoryProtocol(); await assert.rejects(changed.uow.transaction(async context => {
+    changed.verified(context); const c = categoryCompletion(); await context.evidence.assertAllowed(actor, "CATEGORY", c.action); await context.evidence.getReceipt(account, c.requestKey, "CATEGORY");
+    await context.evidence.prepare!(c); return context.evidence.complete({ ...c, requestHash: "b".repeat(64) });
+  }), { code: "INVALID_MAINTENANCE_EVIDENCE" }); assert.ok(!changed.calls.some(c => c.sql.includes("maintenance:complete")));
+});
+test("v15 category guard failure rolls back while unknown COMMIT discards once and original receipt recovery requires current authority", async () => {
+  const guard = categoryProtocol({ failGuard: true }); await assert.rejects(categorySave(guard), error => error === guard.failure);
+  assert.equal(guard.calls.filter(c => c.sql === "ROLLBACK").length, 1); assert.ok(!guard.calls.some(c => c.sql === "COMMIT"));
+  const uncertain = categoryProtocol({ failCommit: true }); await assert.rejects(categorySave(uncertain), error => error === uncertain.failure);
+  assert.equal(uncertain.calls.filter(c => c.sql === "COMMIT").length, 1); assert.ok(!uncertain.calls.some(c => c.sql === "ROLLBACK")); assert.deepEqual(uncertain.releases, [uncertain.failure]);
+  const result = await categorySave(categoryProtocol()), replay = categoryProtocol({ prior: { action: "REORDER", result } });
+  const receipt = await replay.uow.transaction(({ evidence }) => evidence.getReceipt(account, "category-key", "CATEGORY"));
+  assert.deepEqual(receipt!.result, result); assert.ok(!replay.calls.some(c => c.sql.includes("INSERT")));
+  const disabled = categoryProtocol({ disabled: true, prior: { action: "REORDER", result } });
+  await assert.rejects(disabled.uow.transaction(({ evidence }) => evidence.getReceipt(account, "category-key", "CATEGORY")), { code: "FORBIDDEN" });
+  const oldAction = categoryProtocol({ prior: { action: "EDIT", result } });
+  await assert.rejects(oldAction.uow.transaction(({ evidence }) => evidence.getReceipt(account, "category-key", "CATEGORY")), { code: "INVALID_DATABASE_VALUE" });
+  const stripped = categoryProtocol({ prior: { action: "REORDER", result: { operationId: operation, kind: "CATEGORY", targetId: target, version: 8 } } });
+  await assert.rejects(stripped.uow.transaction(({ evidence }) => evidence.getReceipt(account, "category-key", "CATEGORY")), { code: "INVALID_DATABASE_VALUE" });
+  const bad = categoryProtocol({ tamperResult: true }); await assert.rejects(categorySave(bad), { code: "INVALID_DATABASE_VALUE" }); assert.ok(!bad.calls.some(c => c.sql === "COMMIT"));
 });

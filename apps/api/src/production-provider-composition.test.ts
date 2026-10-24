@@ -17,7 +17,7 @@ import { createHash, pbkdf2Sync } from "node:crypto";
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname as pathDirectory, join } from "node:path";
-import { NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
+import { NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
 import { historyDetailQuery, historyListQuery } from "../../../tests/support/imported-history-query-fixtures.ts";
 import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
 import { createPostgresApplicationApi, createPostgresRuntime26DocumentApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
@@ -684,4 +684,87 @@ test('production inventory spool: existing plugin receives captured host resourc
   assert.equal(directoryChecks,2);assert.equal(producerQueries,0);assert.equal(api.app.hasRoute({method:'POST',url:'/inventory/query'}),true);
  }finally{await api?.close();fsPromises.lstat=original;syncBuiltinESMExports();}
  assert.equal(ends,1);
+});
+
+function categoryProductionFixture(patchLevel: string, maintenance: boolean, core = false) {
+  const f = core ? coreProductionFixture() : exact26Fixture();
+  const review = JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile, 'utf8'));
+  review.catalog.patchLevel = patchLevel;
+  if (maintenance) review.purposes.push('PRODUCT_MAINTENANCE');
+  const body = JSON.stringify(review); writeFileSync(f.configuration.runtime26Review.reviewFile, body, { mode: 0o600 });
+  return { ...f, configuration: { ...f.configuration, runtime26Review: { ...f.configuration.runtime26Review,
+    trustedReviewSha256: createHash('sha256').update(body).digest('hex') } } };
+}
+test('production v15 category: only precise reviewed maintenance mounts original CATEGORY routes; CORE and old profiles remain closed', async () => {
+  for (const [patch, maintenance, core] of [
+    ['26_v11_document_specification_save', true, false], ['26_v14_core_initialization', true, false],
+    ['26_v15_category_order_undo', false, false], ['26_v15_category_order_undo', true, false], ['26_v15_category_order_undo', true, true]
+  ] as const) {
+    const f = categoryProductionFixture(patch, maintenance, core);
+    const probe = patch.includes('v11') ? NATIVE_RUNTIME26_METADATA_PROBE : patch.includes('v14') ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_V15_METADATA_PROBE;
+    const p = exact26Driver(f.observation, sql => sql === probe ? [structuredClone(f.observation)] : undefined);
+    try {
+      const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+      try {
+        assert.equal(api.app.server.listening, false); assert.equal(p.counts().allocations, 1);
+        const enabled = patch === '26_v15_category_order_undo' && maintenance && !core;
+        assert.equal(api.app.hasRoute({ method: 'POST', url: '/catalogue/categories/commands' }), enabled);
+        assert.equal(api.app.hasRoute({ method: 'GET', url: '/catalogue/categories/receipts/:requestKey' }), enabled);
+        for (const family of ['colors', 'fits']) assert.equal(api.app.hasRoute({ method: 'POST', url: `/catalogue/${family}/commands` }), false);
+        assert.equal(api.app.hasRoute({ method: 'POST', url: '/sales/commands' }), false);
+      } finally { await api.close(); }
+      assert.equal(p.counts().ends, 1);
+    } finally { f.cleanup(); }
+  }
+});
+test('production v15 category: original service adapter evidence same pool save exact replay and receipt use current role', async () => {
+  const f = categoryProductionFixture('26_v15_category_order_undo', true), first = '00000000-0000-4000-8000-000000000010', last = '00000000-0000-4000-8000-000000000011';
+  const siblings = [{ id: first, name: 'SYNTHETIC_FIRST', version: 7, parent_id: null, display_order: -10 }, { id: last, name: 'SYNTHETIC_LAST', version: 9, parent_id: null, display_order: 30 }];
+  let role = 'ADMIN', receipt: Record<string, unknown> | undefined;
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003',
+      login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED_CREDENTIAL', login_enabled: true, auth_version: 1, role, employment_status: '在职', hall_id: role === 'SALESPERSON' ? hall : null }];
+    if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
+    if (sql.includes('maintenance:receipt')) return receipt ? [receipt] : [];
+    if (sql.includes('category-order:siblings')) return structuredClone(siblings);
+    if (sql.includes('maintenance:audit')) return [{}];
+    if (sql.includes('category-order:update')) {
+      const row = siblings.find(s => s.id === values[0]); assert.ok(row); assert.equal(row.version, values[3]); assert.equal(row.display_order, values[5]);
+      row.display_order = values[1] as number; row.version = values[2] as number; return [{}];
+    }
+    if (sql.includes('maintenance:complete')) {
+      const result = JSON.parse(values[7] as string);
+      receipt = { id: values[0], request_hash: values[3], action: values[4], target_type: values[5], target_id: values[6], result_data: result, completed_at: values[8] };
+      return [{ result_data: result }];
+    }
+    return undefined;
+  });
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try {
+      const payload = { action: 'REORDER', requestKey: 'production-v15-original-key', parentId: null, movedId: last,
+        expectedSiblings: siblings.map(s => ({ id: s.id, expectedVersion: s.version })), orderedIds: [last, first] };
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+      const response = await api.app.inject({ method: 'POST', url: '/catalogue/categories/commands', headers, payload }); assert.equal(response.statusCode, 200, response.body);
+      const result = response.json(); assert.deepEqual(result.order.members, [{ id: last, version: 10, displayOrder: 0 }, { id: first, version: 8, displayOrder: 1 }]);
+      assert.equal(result.targetId, first); assert.equal(result.version, 8); assert.equal(result.kind, 'CATEGORY');
+      const saveCalls = p.calls.filter(c => c.sql.includes('maintenance:complete') || c.sql.includes('maintenance:audit') || c.sql.includes('category-order:update'));
+      assert.equal(new Set(saveCalls.map(c => c.lease)).size, 1); assert.equal(saveCalls.filter(c => c.sql.includes('maintenance:audit')).length, 1);
+      assert.equal(saveCalls.filter(c => c.sql.includes('category-order:update')).length, 2); assert.equal(saveCalls.filter(c => c.sql.includes('maintenance:complete')).length, 1);
+      role = 'WAREHOUSE'; const replay = await api.app.inject({ method: 'POST', url: '/catalogue/categories/commands', headers, payload });
+      assert.equal(replay.statusCode, 200, replay.body); assert.deepEqual(replay.json(), result);
+      const recovered = await api.app.inject({ method: 'GET', url: '/catalogue/categories/receipts/production-v15-original-key', headers });
+      assert.equal(recovered.statusCode, 200, recovered.body); assert.deepEqual(recovered.json().result, result);
+      const recoveredLease = p.calls.at(-1)!.lease, recovery = p.calls.filter(c => c.lease === recoveredLease);
+      const directory = recovery.findIndex(c => c.values[0] === 'naijue:catalogue-maintenance'), identity = recovery.findIndex(c => c.sql.includes('maintenance:identity'));
+      assert.ok(directory >= 0 && directory < identity); // Actual D2 adapter's readiness requires this order.
+      const writes = p.calls.filter(c => c.sql.includes('category-order:update')).length;
+      const conflict = await api.app.inject({ method: 'POST', url: '/catalogue/categories/commands', headers, payload: { ...payload, movedId: first } }); assert.equal(conflict.statusCode, 409, conflict.body);
+      role = 'SALESPERSON'; const denied = await api.app.inject({ method: 'POST', url: '/catalogue/categories/commands', headers, payload }); assert.equal(denied.statusCode, 403, denied.body);
+      assert.equal(p.calls.filter(c => c.sql.includes('category-order:update')).length, writes);
+      assert.equal(p.counts().allocations, 1); assert.equal(api.app.server.listening, false);
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
 });
