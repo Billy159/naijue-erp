@@ -16,6 +16,13 @@ import { TransferSavedRecords } from '../saved-records.tsx';
 import type { ReadScope } from '../../loading/read-scope.ts';
 
 export interface TransferCommandFormProps { readonly presentation?: TransferProposalPresentation; readonly history?: TransferHistoryCapability; readonly capability: TransferCommandCapability; readonly scope: ReadScope; readonly close: () => void }
+/** Frozen transfer delete-doc uses the common compact confirmation surface. */
+export function TransferVoidConfirmation({ number, close, confirm }: { readonly number: string; readonly close: () => void; readonly confirm: () => void }) {
+  return <SourceDocumentDialog title="确认作废调拨单" label="确认作废调拨单" closeLabel="关闭弹窗" close={close} className="transfer-source-discard" initialFocus="[data-erp-keep-input]"
+    footer={<><button type="button" className="btn" data-erp-keep-input onClick={close}>取消</button><button type="button" className="btn primary" onClick={confirm}>确认作废</button></>}>
+    <div className="ui-confirm-body"><p>确定作废调拨单 {number} 吗？作废后不能再编辑或审核，操作记录会保留。</p></div>
+  </SourceDocumentDialog>;
+}
 /** Source full-page editor, not a generic modal. This bounded first edit slice
  * changes only saved actual-line quantities/date/note; identities stay native. */
 export function TransferCommandForm(props: TransferCommandFormProps) {
@@ -36,6 +43,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
   const { workspace } = capability, state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
   const [discard, setDiscard] = useState(false);
+  const [voidTarget, setVoidTarget] = useState<{ readonly id: string; readonly version: number } | null>(null);
   useEffect(() => { heading.current?.focus(); }, []);
   const editor = state.editor, write = state.write;
   useDocumentLeave({ dirty: workspace.hasDirtyDraft || workspace.hasUnresolvedWrite, canDiscard: scope.active && !workspace.hasUnresolvedWrite,
@@ -48,6 +56,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
     void workspace.readCurrent();
   }, [workspace, scope, write.phase, write.result, editor?.transferId, editor?.current, editor?.readError, editor?.phase]);
   useEffect(() => { setDiscard(false); }, [workspace, editor?.transferId, write.phase]);
+  useEffect(() => { setVoidTarget(null); }, [workspace, editor?.transferId, editor?.detail?.document.header.version, editor?.phase, editor?.input, state.stale, write.phase]);
   if (!scope.active || state.disposed) return null;
   if (!editor) return <section className="tc-workbench tc-editor transfer-editor transfer-command-editor" aria-label="调拨单编辑"><div className="tc-head"><h1 ref={heading} tabIndex={-1}>新增调拨单</h1></div><TransferCommandRecovery workspace={workspace} />{state.notice && <p className="transfer-command-notice" role="status">{state.notice}</p>}</section>;
   const savedReadback = write.phase === 'committed' ? editor.current : null;
@@ -62,9 +71,9 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
   const lines = savedReadback?.document.lines ?? editor.draft?.lines ?? detail?.document.lines ?? [];
   const names = detail?.references;
   return <DocumentProductPresentation scope={scope} {...(presentation?.productCapability ? { capability: presentation.productCapability } : {})} returnLabel="返回调拨单" viewLabel="调拨商品查看" documentLabel="调拨">{openProduct => <section className="tc-workbench tc-editor transfer-editor transfer-command-editor" aria-label="调拨单编辑">
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>{editor.detail || write.phase === 'committed' ? '调拨单' : editor.mode === 'CREATE' ? '新增调拨单' : '调拨单'}</h1><TransferStatusTag status={status} /><div className="actions">
+    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>{editor.mode === 'CREATE' && !detail && write.phase !== 'committed' ? '新增调拨单' : locked ? '查看调拨单' : '编辑调拨单'}</h1><TransferStatusTag status={status} />{(detail || write.phase === 'committed') && <span className="transfer-save-state">{status === 'APPROVED' ? '' : dirty ? '· 有未保存修改' : '· 已保存'}</span>}<div className="actions">
       <button type="button" className="btn tc-back-link" onClick={leave} disabled={unresolved || !workspace.canLeave() && !dirty}>返回列表</button>
-      {status === 'DRAFT' && <><button type="button" className="btn" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('VOID'); }}>作废</button>
+      {status === 'DRAFT' && <><button type="button" className="btn" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { if (editor.detail) setVoidTarget({ id: editor.transferId, version: editor.detail.document.header.version }); }}>作废</button>
         <button type="button" className="btn" disabled={locked || !dirty || editor.inputError} onClick={() => { void workspace.submit('SAVE'); }}>保存</button>
         <button type="button" className="btn" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('APPROVE'); }}>审核</button></>}
       {status === 'APPROVED' && <button type="button" className="btn" disabled={unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('UNAPPROVE'); }}>弃审</button>}
@@ -92,6 +101,10 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
     <TransferEditableLines {...(openProduct ? { onOpenProduct: (skuId, target) => openProduct(skuId, 'TRANSFER', target) } : {})} detail={detail} draft={savedReadback ? null : editor.draft} input={input} locked={locked} invalid={savedReadback ? false : editor.inputError} update={update} />
     <TransferDocumentSummary lines={lines.map(line => ({ productId: detail?.catalog.skus.find(sku => sku.skuId === line.skuId)?.productId, quantity: input ? input.quantities[line.id] ?? '' : line.quantity }))} />
     {discard && <SourceDocumentDialog title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setDiscard(false)} className="source-discard-dialog" initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setDiscard(false)}>继续编辑</button><button type="button" className="btn primary" onClick={() => { setDiscard(false); if (workspace.discardEditor()) close(); }}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>离开后，本次未保存的修改将丢失。</p></div></SourceDocumentDialog>}
+    {voidTarget && detail && voidTarget.id === editor.transferId && voidTarget.version === detail.document.header.version && !unresolved && !dirty && !state.stale && !editor.current && editor.phase === 'ready' && <TransferVoidConfirmation number={detail.document.header.number} close={() => setVoidTarget(null)} confirm={() => {
+      const target = voidTarget, current = workspace.getSnapshot().editor; setVoidTarget(null);
+      if (scope.active && current?.transferId === target.id && current.detail?.document.header.version === target.version) void workspace.submit('VOID');
+    }} />}
     {detail && <TransferSavedRecords data={detail} />}
   </section>}</DocumentProductPresentation>;
 }

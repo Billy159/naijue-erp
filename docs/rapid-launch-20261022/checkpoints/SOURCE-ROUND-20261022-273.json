@@ -1,0 +1,156 @@
+{
+  "atUtc": "2026-10-24T02:23:50.161606+00:00",
+  "parent": "37d3a38f673aab7a7218b51b1422685173971f84",
+  "taskId": "T03_NATIVE_VOID_CONFIRMATION_STATE_TITLE_AND_SAVED_TOOLBAR",
+  "files": [
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "bytes": 16039,
+      "sha256": "cdb6fbf2f71e964791990c5d2e6eb688325c5ad2a14864639b584ea05bcfc3ec",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+      "bytes": 5565,
+      "sha256": "7087e241a7bf03f6a4404cf5b6fc6c3a5e948ed62f8e650ee1a014cc9a7306cb",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 35353,
+      "sha256": "589536f0c85a5bd982c459483e8879bf540e6761ab83273a78c8b3a076a79267",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "e75c270a74ec80cee7225b2a67d5e3f4ad5fcdaba5d20558e2588e089714d207",
+  "ownerDelivery": {
+    "taskId": "F1_T03_EXISTING_TRANSFER_SAVED_READONLY_STATE_MODULE",
+    "status": "SOURCE_READY_RELATED_T03_LOCAL_CHECKS_PASS_BROWSER_PENDING",
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/transfers/commands/form.tsx",
+        "bytes": 16039,
+        "sha256": "cdb6fbf2f71e964791990c5d2e6eb688325c5ad2a14864639b584ea05bcfc3ec"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/transfer-existing-document-form.tsx",
+        "bytes": 5565,
+        "sha256": "7087e241a7bf03f6a4404cf5b6fc6c3a5e948ed62f8e650ee1a014cc9a7306cb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/transfer-proposal-form.tsx",
+        "bytes": 35353,
+        "sha256": "589536f0c85a5bd982c459483e8879bf540e6761ab83273a78c8b3a076a79267"
+      }
+    ],
+    "checks": {
+      "before-1": "EXIT1 invalid local fixture used null where original typed creator-name requires string, so detail rejected; not product RED",
+      "before-2": "EXIT1 same fixture diagnosis, original parser left unchanged; no unsupported null DTO accepted",
+      "before-3": "EXIT1 valid original typed fixture, old native Void sent1 command/key immediately with no confirmation and generic title",
+      "after-1": "EXIT1 same pre-correction local fixture, not new source defect",
+      "after-2": "EXIT0 native/full saved/approved/void/history local flow",
+      "after-3": "EXIT0 unchanged cases inadvertently invoked after a test-edit command failed before writing; not counted as new acceptance",
+      "after-4": "EXIT0 final7 related cases incl current-input/identity invalidation, synthetic uncertain owner and full saved original matrix7/line pointer",
+      "types-1": "EXIT0 strict exact3 imported closure, no source changes since",
+      "frozen269": "Sales exact4 matches original269/chunk131 source, no edits"
+    },
+    "notTested": [
+      "No browser/pixel/current candidate or PG acceptance",
+      "Three purely synthetic VOID provider invocations (native rejected, uncertain, full saved rejected); no HTTP/committed save/audit/reverse",
+      "No T02 217 quantity/bottom/replace/keyboard or221leave/date/toolbar suites repeated",
+      "No new current full-saved browser author; C owns that fixture"
+    ],
+    "sourceFrozenUntilCPin": true,
+    "next": "C pins exact3 and integrates one complete candidate. Original QF targeted T03 native/full-saved states/VOID/readonly using declared author; keep real SAVE/approve/reverse/warehouse posting in original isolated business QA.",
+    "blocker": "C exact3 pin/containing build + original QF native/fullsaved actual; no F1 Chrome lease",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/REPORT.md",
+        "bytes": 1087,
+        "sha256": "4e000e67de664ebd082ecd1d10460a4736d21f0e8da0b836500510ae06f475a0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/PROOF.json",
+        "bytes": 6251,
+        "sha256": "c0fd1d7fd6ce21ede28e25b93ee0c3df840aa357c87aa8a04e3aa2501c0e12f1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/SOURCE-REUSE.json",
+        "bytes": 1309,
+        "sha256": "e921aeff04d075b711ea0be9c50f6a3082761834099486356c498d3bf3eb8c4d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/SOURCE.diff",
+        "bytes": 19024,
+        "sha256": "b1884cc682049a114cb625c3fd9aa30f1f90714e30ba536a2d309a03d202935a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/RESULT.json",
+        "bytes": 3016,
+        "sha256": "269acaed63f97cf7d07a52b183ca3a16b391496b9b1472a5004e87fb75aaba27"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/BEFORE.json",
+        "bytes": 83,
+        "sha256": "6f9340cff3cae468d1a4a5ef2151938649d4b197d3523541372c22689e5c1af9"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/AFTER-NATIVE.json",
+        "bytes": 117,
+        "sha256": "5b04cdf5575594dedab3e19332e7d611f9a6ca3b60e9281789b7947b81c89fbb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/before-1.log",
+        "bytes": 763,
+        "sha256": "d47eeac4f619f50e115f2ad805bcadfce4e7d29e100434109004e9793ce3c6b3"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/before-2.log",
+        "bytes": 763,
+        "sha256": "af64736aa8ed0761b6989bd9539179f1637044a236a38240573b10e6b6bcd7ef"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/before-3.log",
+        "bytes": 563,
+        "sha256": "8b35326b00cdf8606bce7203ffc293960fc55d82ac104e620af6720a096ef614"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/after-1.log",
+        "bytes": 763,
+        "sha256": "d47eeac4f619f50e115f2ad805bcadfce4e7d29e100434109004e9793ce3c6b3"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/after-2.log",
+        "bytes": 375,
+        "sha256": "0cb75efbd9c52947c281ffdbbb2bf5440701d875bd86dcda36e5bd107935d17a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/after-3.log",
+        "bytes": 375,
+        "sha256": "0cb75efbd9c52947c281ffdbbb2bf5440701d875bd86dcda36e5bd107935d17a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/after-4.log",
+        "bytes": 375,
+        "sha256": "0cb75efbd9c52947c281ffdbbb2bf5440701d875bd86dcda36e5bd107935d17a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/transfer-module-check.mjs",
+        "bytes": 16118,
+        "sha256": "9b417157277443c9cfafdd5b3b6021475874dbf5b3cbafd5a9fb74567e79d7e6"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-132/tsconfig.json",
+        "bytes": 880,
+        "sha256": "7edf49b51b26b05070d02f5af7cec1c0c033353e590e02c2b9425ac3d2635334"
+      }
+    ]
+  },
+  "qualification": "Actual source Frozen transfer has no sales-cancel-edit; do not copy that state. Only native VOID confirmation, accurate title/state and fullsaved toolbar order. Owner new validbefore/7affected after+strict adopted; actual containing candidate/real backend writes and independentQA pending. Source269 unaffected; fixed266 not retroactively includes273."
+}
