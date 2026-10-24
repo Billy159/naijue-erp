@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "14b9ab0f12bd5baa30f9504ae0dc9555a5a9dbbc",
+    "headObserved": "5a811a17202e0f609aff4405fbb3e064acb73db2",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "14b9ab0f12bd5baa30f9504ae0dc9555a5a9dbbc",
+    "remoteHeadVerified": "5a811a17202e0f609aff4405fbb3e064acb73db2",
     "remoteReadbackMethod": "Exact4 original objects/nonforcedFF/independentGET; next docs/source repair not yet synced",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "14b9ab0f12bd5baa30f9504ae0dc9555a5a9dbbc"
+    "lastVerifiedRemoteCommit": "5a811a17202e0f609aff4405fbb3e064acb73db2"
   },
   "concurrency": {
     "chats": 11,
@@ -1141,9 +1141,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T09:51:56.337528+00:00",
-  "stage": "ACTIVE_WHITE_CLOSED_QF299_PASS_LINUX149_INSTALLED_QB233_ACCEPTED_REAL_CORE154_SOURCE_PREFLIGHT_FIX_D3",
-  "lastVerifiedRemoteCommit": "14b9ab0f12bd5baa30f9504ae0dc9555a5a9dbbc",
+  "updatedAt": "2026-10-24T10:13:06.745964+00:00",
+  "stage": "ACTIVE_QB234_SOURCE300_ACCEPTED_REAL_CORE157_RUNNING_WHITE_CLOSED_APP299_READY_INSTALL",
+  "lastVerifiedRemoteCommit": "5a811a17202e0f609aff4405fbb3e064acb73db2",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -3904,7 +3904,9 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice233-c148-real-r1-minimal-column-acl/RESULT.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice233-c148-real-r1-minimal-column-acl/SOCKET-RESULT.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice233-c148-real-r1-minimal-column-acl/ACCEPTED-RUNTIME-METADATA.json",
-    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice233-c148-real-r1-minimal-column-acl/ACCEPTED-SOCKET-RUNTIME-METADATA.json"
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice233-c148-real-r1-minimal-column-acl/ACCEPTED-SOCKET-RUNTIME-METADATA.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice234-c300-approved-four-null-batch-seam/RESULT.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice234-c300-approved-four-null-batch-seam/ACCEPTED-SOURCE-DELTA.json"
   ],
   "newPendingReviews": [
     "C139fixed293 actualNORMAL/replay/login under QB228 newmetadata; no oldnegative replay",
@@ -4277,9 +4279,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T09:51:56.337528+00:00",
-    "sourceRound": 299,
-    "sourceCheckpoint": "f43e943317825951ef1f4a28c2396f8bad995eb3",
+    "atUtc": "2026-10-24T10:13:06.745964+00:00",
+    "sourceRound": 300,
+    "sourceCheckpoint": "5a811a17202e0f609aff4405fbb3e064acb73db2",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -6876,7 +6878,7 @@
       "physicalPrint": false,
       "inFlightCancel": false
     },
-    "nextActualAction": "OriginalD3 precise sourcebatch4 guard integration fix, preserve154failure. No crossbatchfallback/noidentityreapproval. Freeze/affectedQB/source-host compile onlyiftruefix; sameoriginalkey/digest, no newDBschema/metaQA. OriginalC137complexhelper continueslatest299 startup prep awaitingACTUAL committedCORE triple, notplanvalues.112deadline11:35:38Z.",
+    "nextActualAction": "Collect original157 only: RUNNING, no duplicate run. After actualCORE/receipt/readback/cleanup success, adopt validmodule and originalQB onlynewrealCORE, C137finalizeactualbinding/start299. Onerror preserve anddirect originalowner. No wholebackend repeats.",
     "corePreflightHistory": {
       "128": "FAILED_EXACT_FLAT_FILE_CLOSURE_beforeprivatecopyPG;publicPRIVATE-INPUT-PINS omittedbyunchangedclientfilenamefilter",
       "151": "READONLYpriorentry/noPG, firstlognameinitiallynotselected",
@@ -6884,14 +6886,53 @@
       "153": "ACTUALsafeerrors128EXACT_FLAT_FILE_CLOSURE/152C152_PRIOR_PRECONDITION_ROOT_CAUSE_MISMATCH,755/5e1a2d2416ef9de362472e7f65114395366339eb00b625695380395c70575e33",
       "154": "ACTUALconfirmedonlyomittedpublicmanifest;renameINPUT-REFERENCE-PINS passedunchangedfilterandclosure;SOURCE_HOST_PREFLIGHT_ACCOUNT_IDENTITY_FAILED;noCORECommit",
       "155": "READONLYsourcecapturepredicateaggregationPG0/credentialfieldsnotaccessed/no privatevaluesexport"
+    },
+    "latestAuxiliaryImporter": {
+      "round": 300,
+      "commit": "5a811a17202e0f609aff4405fbb3e064acb73db2",
+      "task": "D3-C154-REAL49-APPROVED-FOUR-NULL-BATCH-SEAM",
+      "status": "QB234_LIMITED_SOURCE300_NEW2_PASS_ACTUAL_CORE157_RUNNING",
+      "sourceFiles": [
+        "scripts/import-v3/native-bootstrap.mjs",
+        "scripts/import-v3/native-bootstrap.test.mjs"
+      ],
+      "predicate": "OnlyexplicitNULL and exact originalapprovedPlanLink; preserveNULL/IDtext/uniqueness/sourcepin/crossbatchguard",
+      "newActualEvidence156": "490/e9e49cfc0a70c486cc92ee4cd7a83f7b253b2785ce6f15eeaf6ed3c0e5d908f4:4NULL/0nonnull/4employeeNULL/4approvedexact",
+      "compile157": {
+        "bytes": 763852,
+        "sha256": "7288c5164aa89d7d0da432d75cc46b5fdbdba7efff274ee71abddd075f57b9f7",
+        "graph": 68,
+        "same": 67,
+        "changed": 1,
+        "PG": 0,
+        "executionEnabled": false
+      },
+      "QB234": {
+        "resultBytes": 12381,
+        "resultSha256": "9adad12cf74a7ad7a12b1f721b37c592b340cd41e719fc5219d56aeee6a49460",
+        "acceptedBytes": 1934,
+        "acceptedSha256": "5e6356346c0a2472c3ccaa740f64757165e58ac04b5e4c580c98ebd04096ee15"
+      }
+    },
+    "actualCORE157": {
+      "jobId": "c03-r1-v14-real49-core-initialization-20261024-157",
+      "source": "5a811a17202e0f609aff4405fbb3e064acb73db2",
+      "compiledBytes": 763852,
+      "compiledSha256": "7288c5164aa89d7d0da432d75cc46b5fdbdba7efff274ee71abddd075f57b9f7",
+      "status": "RUNNING",
+      "actualCommit": null,
+      "sourceReview": "QB234 accepted; prior233R1f6af/123 remains",
+      "requestKey": "c128_real_core_20261024_01",
+      "privateWindowPreserved": "finite20min, before112deadline",
+      "PGResultNotYetClaimed": true
     }
   },
   "latestReadySource": {
-    "round": 299,
-    "commit": "f43e943317825951ef1f4a28c2396f8bad995eb3",
+    "round": 300,
+    "commit": "5a811a17202e0f609aff4405fbb3e064acb73db2",
     "latestServedPreviewRound": 299,
-    "actualBrowserRound": 297,
-    "qualification": "299contains298T02+299readonlysemanticanddisableddatepalette;actualbuildHTTPbutnative3residualspending.297formalLinuxinstalled145;R1v14installed147 butCOREpermissions/purpose/data/init/appstartnotready."
+    "actualBrowserRound": 299,
+    "qualification": "300 changes importer scripts/test only. ExistingUI299+formal299/C149 remain exact valid separate artifacts. Newsource300compiled68graph/67same1leafchanged; no application rebuild required for importer-only change. ActualCOREnotcommitted."
   },
   "pendingUserDecision": [
     {

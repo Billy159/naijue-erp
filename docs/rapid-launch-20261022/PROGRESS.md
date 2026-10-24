@@ -1,3 +1,13 @@
+CURRENT QB234 SOURCE300 ACCEPTED / REAL CORE157 RUNNING (2026-10-24)
+
+原QB234固定300窄差异限定PASS：RESULT12381/9adad12cf74a7ad7a12b1f721b37c592b340cd41e719fc5219d56aeee6a49460，ACCEPTED-SOURCE-DELTA1934/5e6356346c0a2472c3ccaa740f64757165e58ac04b5e4c580c98ebd04096ee15。独立新2测试及5反例通过，旧身份/函数/权限范围复用。C157固定compiled763852/7288c5164aa89d7d0da432d75cc46b5fdbdba7efff274ee71abddd075f57b9f7与14私有文件已准确接线，C原来源批准/目标/命令/键均不变，正式提交后实际RUNNING；仅collect，不重run，未把待结果记COMMIT。C137继续等待真实返回绑定，source299应用不为300辅助脚本重打包。GitHub source300=5a811a17202e0f609aff4405fbb3e064acb73db2已独立回读，本控制增量待有限推送。白带已关闭、三UI299PASS、149安装/233元数据仍有效，goal未完成。
+
+CURRENT SOURCE300 FROZEN / C157 ORIGINAL68 GRAPH COMPILED / QB NEW DELTA (2026-10-24)
+
+原D3已交还冻结exact2，source300=5a811a17202e0f609aff4405fbb3e064acb73db2。仅原native-bootstrap行批次判定增加“明确NULL＋原exactPlanLink全链通过”分支，保留每行NULL，不接受其他跨批/缺键/空串/旧关联NULL/未批计划；新2小测RED→GREEN，49身份与sourcepins复用。实际156490/e9e49cfc0a70c486cc92ee4cd7a83f7b253b2785ce6f15eeaf6ed3c0e5d908f4准确4/0/4/4。原QB234只核新增2叶差异，在途，不重验233/数据库函数/QA144。
+
+C157原68运行图一次必要编译成功：67叶与原296同，仅native-bootstrap变化，763852/7288c5164aa89d7d0da432d75cc46b5fdbdba7efff274ee71abddd075f57b9f7。原C117_FIXED262_CORE_EXTERNAL_CLOSURE_V1格式及14外部pg依赖不变，当前执行disabled，待QB后实际CORE原键一次接续。300仅辅助导入器，实际浏览器/正式已安装应用仍准确source299，UI三项有效结果复用，无需为脚本窄修重build/install299。R1 f6af/123和元数据233不变。真实CORE至今尚未COMMIT，原154FAILED保留，原C137继续只准备299启动并等真实返回三绑定。白带整窗关闭，不再清理浏览器。
+
 CURRENT REAL CORE154 SOURCE PREFLIGHT FINDING / ORIGINAL D3 FIX (2026-10-24)
 
 传输根因已由实际153定位：原128首错EXACT_FLAT_FILE_CLOSURE，client把公开PRIVATE-INPUT-PINS文件名过滤，PLAN仍期待该文件。152因C假设首错名称不准确被守卫在PG前阻止；两次均无carrier/private目录，不改判。154依据实际原manifest逐项确认仅缺该公开元数据清单，改名INPUT-REFERENCE-PINS后通过原过滤/闭包/配置/授权检查，原保护不放宽。
