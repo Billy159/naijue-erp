@@ -67,8 +67,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "C141 diagnostic rootcause proven; C142 originalsinglefunction repair/newmetadata next; QF295 documentstates parallel",
-      "currentPackage": "144actualPASS/231independentreview;126final296 consumer preparation; F1threeP2repair then fixedUIcandidate",
-      "nextReadyPackage": "231adopt ->126realR1fullv14/metadata ->131socketmetadata ->128realCORE; newfinalformalbuild/stage with exactfingerprints",
+      "currentPackage": "297UIactual/QFretest/formal297pack/145Linuxprep/146readonlyTCPdiagnostic",
+      "nextReadyPackage": "146concretefailure -> preciseR1successor/metadata ->131/128;145Linux -> originalprivateappstage afterrealCORE",
       "currentDependencies": "Formal URL unchanged, fullMAIN unbound, current112 backup/7containers protected",
       "fastToolVerified": false
     },
@@ -87,8 +87,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "275audit+277asyncoutput delivered/adopted; existingT03 fullsame-document fixture input seam now dispatched withoutRwrite",
-      "currentPackage": "QF295newdate/toolbar/leave-danger-hover3P2 samefamily repairinprogress",
-      "nextReadyPackage": "Release exactsource -> Cfixedpreview -> QF3affected actual; oldvalidstates reused",
+      "currentPackage": "chunk139exact4fixed297;dateandstrictPASS/localtoolbarJSDOM EXIT1 kept",
+      "nextReadyPackage": "WAIT_ONLY_QF297threeaffected: noindependentreadysourcework per originalqueuecheck",
       "currentDependencies": "Chrome仅约束actual；原已有接口/UI继续，真实保存要隔离证据",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -224,10 +224,10 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "NO_CHROME;3specificnewfindings assignedoriginalF1 onefamily",
+      "currentWork": "SoleChrome2973P2andminimalactualsharedconsumer",
       "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
       "matrixOwner": true,
-      "currentPackage": "v109295actual3P2NEED_FIX/cleanSTOP adopted;104stagesunchanged/66partialindices/whole0",
+      "currentPackage": "v1093P2OPENpending297actual;oldvalidstatesreused",
       "nextReadyPackage": "Containing fixednewcandidate minimum3affected retest, reuse priorvalidstates",
       "fastToolVerified": false
     },
@@ -244,8 +244,8 @@
       "sourceWriteEnabled": false,
       "fastRequested": false,
       "currentWork": "228accepted actual138 metadata only; waiting precise newheapfixsource, no repeatedreview",
-      "currentPackage": "230142metadataPASS adopted;231144actualnormal/replay/freshness/login limitedreview",
-      "nextReadyPackage": "126realR1 newmetadata actual after itexecutes, no repeat144 suite",
+      "currentPackage": "231144actualPASSadopted;126nonewmetadata",
+      "nextReadyPackage": "OnlynewR1actualmetadata aftersuccessor,no146operationalduplicateQA",
       "currentDependencies": "Await exact new artifacts; no repeated prior suites",
       "fastToolVerified": false
     },
@@ -1141,9 +1141,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T07:11:22.308588+00:00",
-  "stage": "ACTIVE_C144_ACTUAL_CORE_NORMAL_REPLAY_FRESHNESS_LOGIN_PASS_QB231_FINAL_R1_CONSUMERS_NEXT",
-  "lastVerifiedRemoteCommit": "02533ecf7a67546ebeca15e4c72974035611b86d",
+  "updatedAt": "2026-10-24T07:37:59.297132+00:00",
+  "stage": "ACTIVE_SOURCE297_UI_SERVED_QF_RETEST_FORMAL297_PACKED_C126_PREPATCH_TCP_FAILURE_C146_DIAGNOSTIC",
+  "lastVerifiedRemoteCommit": "1196fd49be8ffd67156f31ce663e70a990205477",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1587,7 +1587,7 @@
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
-    "schema": "R1 remains v11/122/53ea114e; coreQA actual142 v14/123/145200748da24a00ea8fca09c06e2041b7405a501a9e86e64caae0ea093c78f9; newQB metadata pending",
+    "schema": "R1v11/122 actual126before;patchNOTATTEMPTED. QA1452/123 with144committedsyntheticCORE,notrealR1.",
     "runtimeAcl": "C38_BASELINE_READ_AUTH_PLUS_EXACT_CLASSIFIER_EXECUTE_AND_SOURCE3_SELECT_ONLY",
     "realAccountsCaptured": 49,
     "accountsWithExactOldEmployeeLink": 45,
@@ -1603,26 +1603,27 @@
     "deploymentTools": "C63_ACTUAL_PRODUCTION_CI_NATIVE_APP_PROXY_KEY_RESOURCES_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 296,
-      "commit": "95248dd5dcfb6645c3f8bd57d6bd142a9710e58d",
-      "latestServedPreviewRound": 295,
+      "round": 297,
+      "commit": "f22b30126bce13323f8b3c80b6ef2bc3ab1d15a0",
+      "latestServedPreviewRound": 297,
       "qualification": "New233preparationonly; 229actualQAandproductionLinux actual separatelybound"
     },
     "currentPreview": {
-      "candidateId": "ui-preview-17d2e89-01",
-      "source": "17d2e89603233e07c0cfe8c344934148f7463536",
-      "build": "ui-preview-17d2e89-01-build01",
-      "url": "http://127.0.0.1:57887/synthetic-unified.html",
-      "htmlBytes": 3592317,
-      "htmlSha256": "9a56340c51a35ff84dffd1bb86ef3476041d97d930becf7c0302fb81d0e82445",
+      "candidateId": "ui-preview-f22b301-01",
+      "source": "f22b30126bce13323f8b3c80b6ef2bc3ab1d15a0",
+      "build": "ui-preview-f22b301-01-build01",
+      "url": "http://127.0.0.1:57888/synthetic-unified.html",
+      "htmlBytes": 3594645,
+      "htmlSha256": "a22b1bef7a43aa7556954bc1cd58b36d4942b1e181ec856649a4ed12175b7e20",
       "actualInputs": 415,
       "actualModules": 1370,
       "buildExit": 0,
-      "HTTP": "3exact200",
-      "pid": 14352,
-      "execSession": 49718,
+      "HTTP": "3exact200bodypinsandidentityheaders",
+      "pid": 24181,
+      "execSession": 77681,
       "syntheticOnly": true,
-      "wholePagePass": false
+      "wholePagePass": false,
+      "actualBrowser": "QF3affectedPENDING"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -1862,10 +1863,10 @@
     },
     "v11DatabasePatchExecuted": false,
     "browserLease": {
-      "owner": "NONE",
+      "owner": "QF",
       "candidateTarget": "5B69FD73D86A2D051EE5D18378D8C767",
       "demoTarget": "F0B417F6BC85EE5917A5286AAD0FB04A",
-      "scope": "QF295v109cleanSTOP; await containing fixedsource date/toolbar/leavehover candidate",
+      "scope": "2973P2native/minimalactualsharedconsumers",
       "otherReviewers": "NO_CHROME",
       "oldTargetsMissingCause": "UNKNOWN",
       "protectedTargetsNotTouched": true
@@ -2089,7 +2090,29 @@
       "tcpLoginProven": false,
       "BIND": false,
       "MAIN_PUBLISH": false,
-      "QB": "WAIT_ORIGINAL_QB231"
+      "QB": {
+        "taskId": "QB231",
+        "result": "PASS_LIMITED_ACTUAL_SYNTHETIC_MODULE_ONLY",
+        "acceptedBytes": 2749,
+        "acceptedSha256": "0235d636168de77c793bcc1e1eb209751a079ff628810624ec5c7363e123a06e"
+      }
+    },
+    "r1Schema126": {
+      "status": "FAILED_FIRST_ERROR_PRESERVED_NO_REPLAY",
+      "exitCode": 2,
+      "elapsedSeconds": 1.871671395841986,
+      "firstFailedPhase": "tcp-before",
+      "childStdoutBytes": 330,
+      "childStderrBytes": 0,
+      "specificFailure": "UNKNOWN_TYPED_CHILD_JSON_NOT_FORWARDED",
+      "patchOutcome": "NOT_ATTEMPTED",
+      "R1BeforeRoutines": 122,
+      "COREExecuted": false,
+      "businessDML": false,
+      "ownedSessionsRemaining": 0,
+      "engineBytes": 17206,
+      "engineSha256": "e60d35ba437223e3cb377a3199a3658747555ba0e395a42b7bf5652ddb0976d4",
+      "next": "146boundedreadonlyfirsterror capture;not126retry"
     }
   },
   "supplementalRoles": {
@@ -4142,37 +4165,37 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T07:11:22.308588+00:00",
-    "sourceRound": 296,
-    "sourceCheckpoint": "95248dd5dcfb6645c3f8bd57d6bd142a9710e58d",
+    "atUtc": "2026-10-24T07:37:59.297132+00:00",
+    "sourceRound": 297,
+    "sourceCheckpoint": "f22b30126bce13323f8b3c80b6ef2bc3ab1d15a0",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "candidateId": "ui-preview-17d2e89-01",
-      "source": "17d2e89603233e07c0cfe8c344934148f7463536",
-      "build": "ui-preview-17d2e89-01-build01",
-      "url": "http://127.0.0.1:57887/synthetic-unified.html",
-      "htmlBytes": 3592317,
-      "htmlSha256": "9a56340c51a35ff84dffd1bb86ef3476041d97d930becf7c0302fb81d0e82445",
+      "candidateId": "ui-preview-f22b301-01",
+      "source": "f22b30126bce13323f8b3c80b6ef2bc3ab1d15a0",
+      "build": "ui-preview-f22b301-01-build01",
+      "url": "http://127.0.0.1:57888/synthetic-unified.html",
+      "htmlBytes": 3594645,
+      "htmlSha256": "a22b1bef7a43aa7556954bc1cd58b36d4942b1e181ec856649a4ed12175b7e20",
       "actualInputs": 415,
       "actualModules": 1370,
       "buildExit": 0,
-      "HTTP": "3exact200",
-      "pid": 14352,
-      "execSession": 49718,
+      "HTTP": "3exact200bodypinsandidentityheaders",
+      "pid": 24181,
+      "execSession": 77681,
       "syntheticOnly": true,
-      "wholePagePass": false
+      "wholePagePass": false,
+      "actualBrowser": "QF3affectedPENDING"
     },
     "nextPreview": {
-      "status": "NO_NEW_FRONTEND_BUILD_REQUIRED_FOR_CURRENT_QF_SCOPE",
-      "source": "17d2e89603233e07c0cfe8c344934148f7463536",
-      "reason": "Current295 contains fixedfront consumers; backend heap fix does not change these UI states"
+      "status": "CURRENT297_SERVED",
+      "next": "QF3affected actual; fixonlynewfailures"
     },
     "r1": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
-    "github": "Last verified02533ecf7a67546ebeca15e4c72974035611b86d; this144/v109 checkpoint finitepush next",
+    "github": "Verified1196fd49be8ffd67156f31ce663e70a990205477;297+thisrecord finitepushnext",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -4201,9 +4224,9 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "C144 actual0/19.560730305034667s PASS_ACTUAL_SYNTHETIC_CORE_MINIMAL_ONLY. Fixed296/new1421452/230; singleclient normalCOMMIT49/115/22, exactsamekeyreplay/countssame/carry22, postcommit oldheap3369!=newtop3371 otherflags true -> exact23514 originalhelperline90 thenROLLBACK/freshcommittedbaseline same; syntheticADMIN login/resolve/logout/revoke succeeded.14leasesreleased/live0/end/dispose/bg0. OriginalQB231 onlynewactual review underway;126/128/131 finalsource296 consumers originalO resumed. No realR1/data/MAIN/PUBLISH/BIND/formalpass.",
-    "productionBuild": "Formal294 actualbuild/pack andC140 Linuxci/native passed only; no294 appstart/CORE/publicswitch. Current runtime229. Next formal rebuild/consumer126128131 revisions held until corrected NORMAL actual passes, avoiding intermediate churn; cannot start294 against future different fingerprint.",
-    "actualQFBrowser": "NONE/QF295v109cleanSTOP at original2ownedtargets, bothdefaultI01waiting/no layers/pending; 11unknown/protected3 untouched. OriginalF1 fixing3specificP2 samefamily, nextcontainingcandidate then QFminimalretest.",
+    "backend": "QB231actual144 limitedPASS adopted.126 failed2/1.871671s tcp-before childexit2/stdout330/stderr0, concreteerrorUNKNOWN becausepsqlstderr-only extractor discardedtypedchildJSON. PatchNOTATTEMPTED/R1Before122/CORE0/businessDML0/owned0.146boundedreadonlysamebeforeTCPdiagnostic prepares; no126replay/DDL/roles/servicechange.",
+    "productionBuild": "Formal297 actualbuild0/4.575s,pack228/oneextract/1339969/daf99b14993c684d621d3bd3ebccc00f115f3ecaaa126c4d50292203af22e266/manifestcd0333062a647224fffd7ed9bfcdaf1affa4fae113534d53faac5d2096576eda;145Linuxprepare,notinstalled/appstarted/published.",
+    "actualQFBrowser": "QFsolelease297native3P2/minimalactualsharedconsumers,existingcandidate5B at57888/DemoF0,1470x668DPR2scale1;11unknown/protected3unchanged.",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
@@ -6735,11 +6758,11 @@
     }
   },
   "latestReadySource": {
-    "round": 296,
-    "commit": "95248dd5dcfb6645c3f8bd57d6bd142a9710e58d",
-    "latestServedPreviewRound": 295,
+    "round": 297,
+    "commit": "f22b30126bce13323f8b3c80b6ef2bc3ab1d15a0",
+    "latestServedPreviewRound": 297,
     "actualBrowserRound": 295,
-    "qualification": "296 trueheap witness source only; originalQB source review and142actual pending.295UI unchanged/native limitedPASS; formal294 installedonly."
+    "qualification": "297 built/HTTP; native3P2pending. LocaltoolbarJSDOM EXIT1 retained. Formal297packonly.126prepatchTCPfailed,146readonlydiagnosticnext."
   },
   "pendingUserDecision": [
     {
