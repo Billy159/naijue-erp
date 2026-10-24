@@ -1,5 +1,5 @@
 import { DocumentProductPresentation } from '../sales/document-presentation.tsx';
-import { TransferMatrixTable, TransferDocumentSummary } from './document-presentation.tsx';
+import { TransferDocumentBody, TransferDocumentMatrixRow, TransferDocumentPage, TransferMatrixTable, TransferDocumentSummary } from './document-presentation.tsx';
 import type { TransferProposalPresentation } from '../current-form/transfer-proposal-form.tsx';
 import { DocumentOutputActions } from '../components/document-output.tsx';
 import { transferDocumentOutput } from '../components/document-output-contracts.ts';
@@ -31,11 +31,11 @@ export function TransferDetailContent(props: TransferDetailContentProps) {
   }, [query, props.transferId, props.scope]);
   if (!props.scope.active) return null;
   if (snapshot.success && (snapshot.phase === 'success' || snapshot.phase === 'stale')) return <DetailFacts {...(props.presentation ? { presentation: props.presentation } : {})} {...(props.reader.readHistory ? { history: { scope: props.scope, reader: { readHistory: read => props.reader.readHistory!(read) } } } : {})} data={snapshot.success.data} scope={props.scope} accessScope={props.accessScope} close={props.close} {...(props.product ? { product: props.product } : {})} />;
-  return <section className="tc-workbench transfer-detail-loading" aria-label="调拨单详情"><div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><button type="button" className="btn" onClick={props.close}>返回列表</button></div>
-    {snapshot.phase === 'disposed' ? <p role="status" className="iw-inline-state">读取已取消。<button type="button" className="iw-link" onClick={() => setQuery(createTransferDetailQuery(props.scope, props.reader, props.accessScope))}>重新读取</button></p>
+  return <TransferDocumentPage headingRef={heading} ariaLabel="调拨单详情" className="transfer-detail-loading" title="查看调拨单" actions={<button type="button" className="btn" onClick={props.close}>返回列表</button>}>
+    <TransferDocumentBody beforeLines={snapshot.phase === 'disposed' ? <p role="status" className="iw-inline-state">读取已取消。<button type="button" className="iw-link" onClick={() => setQuery(createTransferDetailQuery(props.scope, props.reader, props.accessScope))}>重新读取</button></p>
       : snapshot.phase === 'error' ? <p role="alert" className="iw-inline-state">调拨单读取失败。请检查登录及读取权限。<button type="button" className="iw-link" onClick={() => { void query.run(transferTarget(props.transferId)); }}>重试详情</button></p>
-        : <p role="status" className="iw-inline-state">正在读取调拨单…<button type="button" className="iw-link" onClick={() => query.dispose()}>取消读取</button></p>}
-  </section>;
+        : <p role="status" className="iw-inline-state">正在读取调拨单…<button type="button" className="iw-link" onClick={() => query.dispose()}>取消读取</button></p>} />
+  </TransferDocumentPage>;
 }
 function DetailFacts(props: { readonly presentation?: TransferProposalPresentation; readonly history?: TransferHistoryCapability; readonly data: TransferDetailDto; readonly scope: ReadScope; readonly accessScope: ReadScope; readonly close: () => void; readonly product?: TransferProductCapability }) {
   const { data } = props; const { header, lines } = data.document; const sections = transferMatrix(data);
@@ -50,24 +50,34 @@ function DetailFacts(props: { readonly presentation?: TransferProposalPresentati
   const warehouse = (label: string, id: string, name: string, title: string) => <div className="tc-gold-field"><span>{label}</span><div title={title}><DemoSingleSelectAction label={label} presentation="flat" popupWidth={300} disabled open={false} onOpenChange={() => {}} value={id} options={[{ value: id, label: name }]} onChange={() => {}} /></div></div>;
   return <DocumentProductPresentation scope={props.scope} {...(props.presentation?.productCapability ? { capability: props.presentation.productCapability } : {})} returnLabel="返回调拨单" viewLabel="调拨商品查看" documentLabel="调拨">{openFullProduct => {
     const viewProduct = (id: string, label: string) => { const sku = data.catalog.skus.find(sku => sku.productId === id); if (openFullProduct && sku) openFullProduct(sku.skuId, 'TRANSFER', { id, label }); else if (props.product) openProduct(id, label); };
-    return <section className="tc-workbench tc-editor transfer-editor" aria-label="调拨单详情">
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>查看调拨单</h1><TransferStatusTag status={header.status} /><span className="transfer-muted">· 只读</span><div className="actions"><button type="button" className="btn tc-back-link" onClick={props.close}>返回列表</button>{actions.map(label => <button key={label} type="button" className="btn" disabled title="当前为只读详情">{label}</button>)}<DocumentOutputActions sourceKey={`${header.id}:${header.version}`} getDocument={() => transferDocumentOutput(data)} /><TransferHistoryAction {...(props.history ? { capability: props.history } : {})} transferId={header.id} /></div></div>
-    <div className="tc-doc-header"><div className="tc-gold-doc-fields"><div className="tc-gold-field"><span>单据日期</span><UIDate aria-label="单据日期" value={header.businessDate} disabled onChange={() => {}} /></div>{warehouse('调出仓库', header.fromWarehouseId, data.references.fromWarehouseName, `${data.references.fromHallName} / ${data.references.fromWarehouseName}`)}{warehouse('调入仓库', header.toWarehouseId, data.references.toWarehouseName, `${data.references.toHallName} / ${data.references.toWarehouseName}`)}
-      <div className="tc-gold-field tc-gold-doc-number"><span>单号</span><strong className="transfer-read-value" title={header.number}>{header.number}</strong></div>{field('创建者', data.references.createdByName)}<div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="只读单据不能扫码录入">扫码录入</UIButton></div></div></div>
-    <div className="tc-note-row"><span>备注</span><span className="tc-note-read">{header.note || '—'}</span></div>
-    {(data.stockBasis === 'CUTOFF_HISTORY' || header.status === 'VOID' || header.status === 'APPROVED') && <p className="transfer-readonly-note">{data.stockBasis === 'CUTOFF_HISTORY' ? '历史修订尚未接通，当前仅可查看。' : header.status === 'VOID' ? '此单已作废，仅可查看历史。' : '已审核，单据只读。'}</p>}
-    <div className="tc-section-head"><strong>调拨明细</strong></div>
-    {display.mode === 'paged-lines' ? <TransferSparseLines data={data} {...(props.product || openFullProduct ? { onOpenProduct: viewProduct } : {})} /> : <div className="transfer-matrix-scroll" role="region" aria-label="调拨数量矩阵" tabIndex={0}>
-      {sections.map(section => <TransferMatrixTable key={section.group.sizeGroupId} sizes={section.group.members.map(size => ({ id: size.sizeId, label: size.name }))} columnCount={columnCount} label={`${section.group.name} · 当前规范规格 · 本单数量`}>
-        {sizes => section.rows.map(row => <tr key={row.key}><td className="mx-product"><span className="mx-product-line"><strong title={row.current.productCode}>{row.current.productCode}</strong><span title={row.current.productName}>{row.current.productName}</span></span></td><td className="mx-color" title={row.current.colorName}>{row.current.colorName}</td><td className="mx-fit-col" title={row.current.fitName}>{row.current.fitName}</td>
-          {sizes.map(size => { if (size.empty) return <td key={size.id} className="mx-size-gap" aria-hidden="true" />; const sku = row.skus.get(size.id), value = sku ? row.quantities.get(sku.skuId) : undefined, label = `${row.current.productCode} ${row.current.colorName} ${row.current.fitName} ${size.label}`;
-            return <td className={sku ? 'transfer-quantity' : 'mx-size-blank'} key={size.id} aria-label={`${label} ${!sku ? '无此规格' : value === undefined ? '无单据明细' : `本单数量 ${value}`}`}>{!sku ? '—' : value === undefined ? '' : transferCount(value.toString())}</td>; })}<td className="tc-subtotal">{transferCount(row.total.toString())}</td><td className="ui-action-cell"><div className="mx-actions"><UIButton className="iw-link" disabled={!props.product && !openFullProduct} onClick={() => viewProduct(row.current.productId, `${row.current.productCode} · ${row.current.productName}`)}>查看</UIButton></div></td></tr>)}
-      </TransferMatrixTable>)}
-      {sections.length === 0 && <p className="tc-empty">本单没有实际明细行</p>}
-    </div>}
-    <TransferDocumentSummary lines={lines.map(line => ({ productId: data.catalog.skus.find(sku => sku.skuId === line.skuId)?.productId, quantity: line.quantity }))} />
-    <TransferSavedRecords data={data} />
+    return <TransferDocumentPage headingRef={heading} ariaLabel="调拨单详情" className="transfer-detail-content" title="查看调拨单" status={<TransferStatusTag status={header.status} />} saveState={<span className="transfer-muted">· 只读</span>}
+      actions={<><button type="button" className="btn tc-back-link" onClick={props.close}>返回列表</button>{actions.map(label => <button key={label} type="button" className="btn" disabled title="当前为只读详情">{label}</button>)}<DocumentOutputActions sourceKey={`${header.id}:${header.version}`} getDocument={() => transferDocumentOutput(data)} /><TransferHistoryAction {...(props.history ? { capability: props.history } : {})} transferId={header.id} /></>}>
+    <TransferDocumentBody
+      header={<div className="tc-gold-doc-fields"><div className="tc-gold-field"><span>单据日期</span><UIDate aria-label="单据日期" value={header.businessDate} disabled onChange={() => {}} /></div>{warehouse('调出仓库', header.fromWarehouseId, data.references.fromWarehouseName, `${data.references.fromHallName} / ${data.references.fromWarehouseName}`)}{warehouse('调入仓库', header.toWarehouseId, data.references.toWarehouseName, `${data.references.toHallName} / ${data.references.toWarehouseName}`)}
+        <div className="tc-gold-field tc-gold-doc-number"><span>单号</span><strong className="transfer-read-value" title={header.number}>{header.number}</strong></div>{field('创建者', data.references.createdByName)}<div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="只读单据不能扫码录入">扫码录入</UIButton></div></div>}
+      note={<div className="tc-note-row"><span>备注</span><span className="tc-note-read">{header.note || '—'}</span></div>}
+      status={(data.stockBasis === 'CUTOFF_HISTORY' || header.status === 'VOID' || header.status === 'APPROVED') && <p className="transfer-readonly-note">{data.stockBasis === 'CUTOFF_HISTORY' ? '历史修订尚未接通，当前仅可查看。' : header.status === 'VOID' ? '此单已作废，仅可查看历史。' : '已审核，单据只读。'}</p>}
+      lines={display.mode === 'paged-lines' ? <TransferSparseLines data={data} {...(props.product || openFullProduct ? { onOpenProduct: viewProduct } : {})} /> : <div className="transfer-matrix-scroll" role="region" aria-label="调拨数量矩阵" tabIndex={0}>
+        {sections.map(section => <TransferMatrixTable key={section.group.sizeGroupId} sizes={section.group.members.map(size => ({ id: size.sizeId, label: size.name }))} columnCount={columnCount} label={`${section.group.name} · 当前规范规格 · 本单数量`}>
+          {sizes => section.rows.map(row => <TransferDocumentMatrixRow key={row.key}
+            productCode={row.current.productCode}
+            productName={row.current.productName}
+            color={row.current.colorName}
+            colorTitle={row.current.colorName}
+            fit={row.current.fitName}
+            fitTitle={row.current.fitName}
+            sizeCells={sizes.map(size => { if (size.empty) return <td key={size.id} className="mx-size-gap" aria-hidden="true" />; const sku = row.skus.get(size.id), value = sku ? row.quantities.get(sku.skuId) : undefined, label = `${row.current.productCode} ${row.current.colorName} ${row.current.fitName} ${size.label}`;
+              return <td className={sku ? 'transfer-quantity' : 'mx-size-blank'} key={size.id} aria-label={`${label} ${!sku ? '无此规格' : value === undefined ? '无单据明细' : `本单数量 ${value}`}`}>{!sku ? '—' : value === undefined ? '' : transferCount(value.toString())}</td>; })}
+            subtotal={transferCount(row.total.toString())}
+            actions={<div className="mx-actions"><UIButton className="iw-link" disabled={!props.product && !openFullProduct} onClick={() => viewProduct(row.current.productId, `${row.current.productCode} · ${row.current.productName}`)}>查看</UIButton></div>}
+          />)}
+        </TransferMatrixTable>)}
+        {sections.length === 0 && <p className="tc-empty">本单没有实际明细行</p>}
+      </div>}
+      summary={<TransferDocumentSummary lines={lines.map(line => ({ productId: data.catalog.skus.find(sku => sku.skuId === line.skuId)?.productId, quantity: line.quantity }))} />}
+      records={<TransferSavedRecords data={data} />}
+    />
     {product && props.product && <TransferProductActivation key={`${product.id}:${product.activation}`} parent={props.scope} accessScope={props.accessScope} product={product} capability={props.product} close={closeProduct} />}
-  </section>;
+  </TransferDocumentPage>;
   }}</DocumentProductPresentation>;
 }

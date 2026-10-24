@@ -1,6 +1,6 @@
 import { DocumentProductPresentation } from '../../sales/document-presentation.tsx';
 import { useDocumentLeave } from '../../demo-presentation/document-navigation.tsx';
-import { TransferDocumentPage, TransferDocumentSummary } from '../document-presentation.tsx';
+import { TransferDocumentBody, TransferDocumentPage, TransferDocumentSummary } from '../document-presentation.tsx';
 import type { TransferProposalPresentation } from '../../current-form/transfer-proposal-form.tsx';
 import { DocumentOutputActions } from '../../components/document-output.tsx';
 import { transferDocumentOutput } from '../../components/document-output-contracts.ts';
@@ -31,7 +31,7 @@ export function TransferCommandForm(props: TransferCommandFormProps) {
   const [failedOwner, setFailedOwner] = useState<typeof workspace | null>(null), enabled = workspace.canUseExistingProposal;
   useEffect(() => { if (!enabled) return; let live = true; void import('../../current-form/transfer-existing-document-form.tsx').then(module => { if (live) setBridge({ owner: workspace, View: module.TransferExistingDocumentForm }); }, () => { if (live) setFailedOwner(workspace); }); return () => { live = false; }; }, [workspace, enabled]);
   if (enabled && bridge?.owner === workspace) return <bridge.View {...props} />;
-  if (enabled && workspace.editableExistingProposal && failedOwner !== workspace) return <TransferDocumentPage ariaLabel="调拨单编辑" className="transfer-command-editor" title="编辑调拨单"><p role="status">正在准备完整旧单编辑页…</p></TransferDocumentPage>;
+  if (enabled && workspace.editableExistingProposal && failedOwner !== workspace) return <TransferDocumentPage ariaLabel="调拨单编辑" className="transfer-command-editor" title="编辑调拨单"><TransferDocumentBody beforeLines={<p role="status">正在准备完整旧单编辑页…</p>} /></TransferDocumentPage>;
   return <TransferNativeCommandForm {...props} key={state.editor?.transferId} />;
 }
 function TransferCommandRecovery({ workspace }: { readonly workspace: TransferCommandCapability['workspace'] }) {
@@ -58,7 +58,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
   useEffect(() => { setDiscard(false); }, [workspace, editor?.transferId, write.phase]);
   useEffect(() => { setVoidTarget(null); }, [workspace, editor?.transferId, editor?.detail?.document.header.version, editor?.phase, editor?.input, state.stale, write.phase]);
   if (!scope.active || state.disposed) return null;
-  if (!editor) return <TransferDocumentPage headingRef={heading} ariaLabel="调拨单编辑" className="transfer-command-editor" title="新增调拨单"><TransferCommandRecovery workspace={workspace} />{state.notice && <p className="transfer-command-notice" role="status">{state.notice}</p>}</TransferDocumentPage>;
+  if (!editor) return <TransferDocumentPage headingRef={heading} ariaLabel="调拨单编辑" className="transfer-command-editor" title="新增调拨单"><TransferDocumentBody beforeLines={<><TransferCommandRecovery workspace={workspace} />{state.notice && <p className="transfer-command-notice" role="status">{state.notice}</p>}</>} /></TransferDocumentPage>;
   const savedReadback = write.phase === 'committed' ? editor.current : null;
   const detail = savedReadback ?? editor.detail;
   const header = detail?.document.header ?? editor.draft?.header, input = savedReadback ? null : editor.input;
@@ -83,32 +83,31 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
       <TransferHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { transferId: detail.document.header.id } : {})} />
     </>}
   >
-    {existingDocumentNotice && <p className="transfer-command-notice" role="status">{existingDocumentNotice}</p>}
-    {editor.phase === 'loading' && <p className="transfer-command-notice" role="status">正在读取调拨单…</p>}
-    {editor.readError && <p className="transfer-command-notice" role="alert">单据读取未完成。<UIButton type="button" className="iw-link" disabled={unresolved} onClick={() => { void workspace.readCurrent(); }}>重新读取当前单据</UIButton></p>}
-    {header && <><div className="tc-doc-header"><div className="tc-gold-doc-fields">
-      <div className="tc-gold-field"><span>单据日期 *</span>{input ? <UIDate aria-label="单据日期" value={input.businessDate} disabled={locked} onChange={value => update({ ...input, businessDate: value })} /> : <UIDate aria-label="单据日期" value={header.businessDate} disabled onChange={() => {}} />}</div>
-      <div className="tc-gold-field"><span>调出仓库</span><span className="transfer-read-value" title={names?.fromWarehouseName ?? undefined}>{names?.fromWarehouseName ?? '仓库名称未提供'}</span></div>
-      <div className="tc-gold-field"><span>调入仓库</span><span className="transfer-read-value" title={names?.toWarehouseName ?? undefined}>{names?.toWarehouseName ?? '仓库名称未提供'}</span></div>
-      <div className="tc-gold-field tc-gold-doc-number"><span>单号</span><strong className="transfer-read-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong></div>
-      <div className="tc-gold-field"><span>创建者</span><span className="transfer-read-value">{names?.createdByName ?? (detail ? '未知' : '保存后记录')}</span></div>
-      <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="当前商品选择及原生条码读取尚未接入">扫码录入</UIButton></div>
-    </div></div>
-    <label className="tc-note-row"><span>备注</span>{input ? <UIInput aria-label="备注" className="iw-control transfer-note-input" maxLength={10000} value={input.note} disabled={locked} onChange={nextValue => update({ ...input, note: nextValue })} /> : <span className="tc-note-read">{header.note || '—'}</span>}</label></>}
-    {(detail?.stockBasis === 'CUTOFF_HISTORY' || status === 'APPROVED' || status === 'VOID') && <p className="transfer-readonly-note">{detail?.stockBasis === 'CUTOFF_HISTORY' ? '历史修订尚未接通，当前仅可查看。' : status === 'APPROVED' ? '已审核，弃审后才能修改。' : '此单已作废，仅可查看。'}</p>}
-    {state.notice && <p className="transfer-command-notice" role={editor.inputError || write.phase === 'rejected' ? 'alert' : 'status'}>{state.notice}</p>}
-    <TransferCommandRecovery workspace={workspace} />
-    {write.phase === 'committed' && <p className="transfer-command-notice" role="status">原操作已确认：版本 {write.result?.version}，{write.result ? transferStatusLabels[write.result.status] : ''}。库存流水 {write.result?.ledgerEntryIds.length} 条。{savedReadback ? '下方显示重新读取的已保存单据；继续操作前请采用当前单据。' : '正在核对已保存内容；读取失败可重试，保存不会重复提交。'}</p>}
-    {!unresolved && (editor.detail && write.phase !== 'idle' || write.phase === 'committed') && <UIButton type="button" className="iw-button transfer-read-current" disabled={editor.phase === 'loading'} onClick={() => { void workspace.readCurrent(); }}>读取当前单据</UIButton>}
-    {editor.current && <p className="transfer-command-notice" role="status">已读取当前版本 {editor.current.document.header.version}，尚未替换原草稿。<UIButton type="button" className="iw-button" onClick={() => workspace.adoptCurrent()}>采用当前单据</UIButton></p>}
-    <div className="tc-section-head"><strong>调拨明细</strong></div>
-    <TransferEditableLines {...(openProduct ? { onOpenProduct: (skuId, target) => openProduct(skuId, 'TRANSFER', target) } : {})} detail={detail} draft={savedReadback ? null : editor.draft} input={input} locked={locked} invalid={savedReadback ? false : editor.inputError} update={update} />
-    <TransferDocumentSummary lines={lines.map(line => ({ productId: detail?.catalog.skus.find(sku => sku.skuId === line.skuId)?.productId, quantity: input ? input.quantities[line.id] ?? '' : line.quantity }))} />
+    <TransferDocumentBody
+      beforeHeader={<>{existingDocumentNotice && <p className="transfer-command-notice" role="status">{existingDocumentNotice}</p>}{editor.phase === 'loading' && <p className="transfer-command-notice" role="status">正在读取调拨单…</p>}{editor.readError && <p className="transfer-command-notice" role="alert">单据读取未完成。<UIButton type="button" className="iw-link" disabled={unresolved} onClick={() => { void workspace.readCurrent(); }}>重新读取当前单据</UIButton></p>}</>}
+      header={header ? <div className="tc-gold-doc-fields">
+        <div className="tc-gold-field"><span>单据日期 *</span>{input ? <UIDate aria-label="单据日期" value={input.businessDate} disabled={locked} onChange={value => update({ ...input, businessDate: value })} /> : <UIDate aria-label="单据日期" value={header.businessDate} disabled onChange={() => {}} />}</div>
+        <div className="tc-gold-field"><span>调出仓库</span><span className="transfer-read-value" title={names?.fromWarehouseName ?? undefined}>{names?.fromWarehouseName ?? '仓库名称未提供'}</span></div>
+        <div className="tc-gold-field"><span>调入仓库</span><span className="transfer-read-value" title={names?.toWarehouseName ?? undefined}>{names?.toWarehouseName ?? '仓库名称未提供'}</span></div>
+        <div className="tc-gold-field tc-gold-doc-number"><span>单号</span><strong className="transfer-read-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong></div>
+        <div className="tc-gold-field"><span>创建者</span><span className="transfer-read-value">{names?.createdByName ?? (detail ? '未知' : '保存后记录')}</span></div>
+        <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="当前商品选择及原生条码读取尚未接入">扫码录入</UIButton></div>
+      </div> : undefined}
+      note={header && <label className="tc-note-row"><span>备注</span>{input ? <UIInput aria-label="备注" className="iw-control transfer-note-input" maxLength={10000} value={input.note} disabled={locked} onChange={nextValue => update({ ...input, note: nextValue })} /> : <span className="tc-note-read">{header.note || '—'}</span>}</label>}
+      status={<>{(detail?.stockBasis === 'CUTOFF_HISTORY' || status === 'APPROVED' || status === 'VOID') && <p className="transfer-readonly-note">{detail?.stockBasis === 'CUTOFF_HISTORY' ? '历史修订尚未接通，当前仅可查看。' : status === 'APPROVED' ? '已审核，弃审后才能修改。' : '此单已作废，仅可查看。'}</p>}{state.notice && <p className="transfer-command-notice" role={editor.inputError || write.phase === 'rejected' ? 'alert' : 'status'}>{state.notice}</p>}</>}
+      beforeLines={<><TransferCommandRecovery workspace={workspace} />
+        {write.phase === 'committed' && <p className="transfer-command-notice" role="status">原操作已确认：版本 {write.result?.version}，{write.result ? transferStatusLabels[write.result.status] : ''}。库存流水 {write.result?.ledgerEntryIds.length} 条。{savedReadback ? '下方显示重新读取的已保存单据；继续操作前请采用当前单据。' : '正在核对已保存内容；读取失败可重试，保存不会重复提交。'}</p>}
+        {!unresolved && (editor.detail && write.phase !== 'idle' || write.phase === 'committed') && <UIButton type="button" className="iw-button transfer-read-current" disabled={editor.phase === 'loading'} onClick={() => { void workspace.readCurrent(); }}>读取当前单据</UIButton>}
+        {editor.current && <p className="transfer-command-notice" role="status">已读取当前版本 {editor.current.document.header.version}，尚未替换原草稿。<UIButton type="button" className="iw-button" onClick={() => workspace.adoptCurrent()}>采用当前单据</UIButton></p>}
+      </>}
+      lines={<TransferEditableLines {...(openProduct ? { onOpenProduct: (skuId, target) => openProduct(skuId, 'TRANSFER', target) } : {})} detail={detail} draft={savedReadback ? null : editor.draft} input={input} locked={locked} invalid={savedReadback ? false : editor.inputError} update={update} />}
+      summary={<TransferDocumentSummary lines={lines.map(line => ({ productId: detail?.catalog.skus.find(sku => sku.skuId === line.skuId)?.productId, quantity: input ? input.quantities[line.id] ?? '' : line.quantity }))} />}
+      records={detail && <TransferSavedRecords data={detail} />}
+    />
     {discard && <SourceDocumentDialog title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setDiscard(false)} className="source-discard-dialog" initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setDiscard(false)}>继续编辑</button><button type="button" className="btn primary" onClick={() => { setDiscard(false); if (workspace.discardEditor()) close(); }}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>离开后，本次未保存的修改将丢失。</p></div></SourceDocumentDialog>}
     {voidTarget && detail && voidTarget.id === editor.transferId && voidTarget.version === detail.document.header.version && !unresolved && !dirty && !state.stale && !editor.current && editor.phase === 'ready' && <TransferVoidConfirmation number={detail.document.header.number} close={() => setVoidTarget(null)} confirm={() => {
       const target = voidTarget, current = workspace.getSnapshot().editor; setVoidTarget(null);
       if (scope.active && current?.transferId === target.id && current.detail?.document.header.version === target.version) void workspace.submit('VOID');
     }} />}
-    {detail && <TransferSavedRecords data={detail} />}
   </TransferDocumentPage>}</DocumentProductPresentation>;
 }

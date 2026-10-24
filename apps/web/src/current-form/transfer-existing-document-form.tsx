@@ -5,7 +5,7 @@ import { DocumentOutputActions } from '../components/document-output.tsx';
 import { transferDocumentOutput } from '../components/document-output-contracts.ts';
 import { TransferHistoryAction } from '../transfers/history-view.tsx';
 import { TransferSavedRecords } from '../transfers/saved-records.tsx';
-import { TransferDocumentPage } from '../transfers/document-presentation.tsx';
+import { TransferDocumentBody, TransferDocumentPage } from '../transfers/document-presentation.tsx';
 import { TransferNativeCommandForm, TransferVoidConfirmation, type TransferCommandFormProps } from '../transfers/commands/form.tsx';
 import type { TransferExistingDocumentSession } from './transfer-existing-document.ts';
 import { TransferProposalForm } from './transfer-proposal-form.tsx';
@@ -15,7 +15,7 @@ export function TransferExistingDocumentForm(props: TransferCommandFormProps) {
   const [model, setModel] = useState<TransferExistingDocumentSession | null>(null);
   useEffect(() => { const current = workspace.prepareExistingDocument(); setModel(current); if (current) void current.initialize(); }, [workspace, state.editor?.detail]);
   if (!model || model !== workspace.existingDocument) return workspace.editableExistingProposal
-    ? <TransferDocumentPage ariaLabel="调拨单编辑" className="transfer-command-editor" title="编辑调拨单"><p role="status">正在读取原单实际规格…</p></TransferDocumentPage>
+    ? <TransferDocumentPage ariaLabel="调拨单编辑" className="transfer-command-editor" title="编辑调拨单"><TransferDocumentBody beforeLines={<p role="status">正在读取原单实际规格…</p>} /></TransferDocumentPage>
     : <TransferNativeCommandForm {...props} />;
   return <SavedTransferDocument {...props} model={model} />;
 }
@@ -25,7 +25,7 @@ function SavedTransferDocument({ model, ...props }: TransferCommandFormProps & {
   const [confirm, setConfirm] = useState<'leave' | 'APPROVE' | 'VOID' | null>(null), original = model.original;
   useEffect(() => { setConfirm(null); }, [native.write.phase, native.editor?.detail]);
   if (state.disposed || !original) return <TransferNativeCommandForm {...props} />;
-  if (state.phase === 'idle' || state.phase === 'loading') return <TransferDocumentPage ariaLabel="调拨单编辑" className="transfer-command-editor" title="编辑调拨单"><p role="status">正在读取原单实际规格，输入已保留…</p></TransferDocumentPage>;
+  if (state.phase === 'idle' || state.phase === 'loading') return <TransferDocumentPage ariaLabel="调拨单编辑" className="transfer-command-editor" title="编辑调拨单"><TransferDocumentBody beforeLines={<p role="status">正在读取原单实际规格，输入已保留…</p>} /></TransferDocumentPage>;
   if (state.phase !== 'ready' || !state.proposal) return <TransferNativeCommandForm {...props} existingDocumentNotice={state.notice} />;
   if (!workspace.editableExistingProposal) return <TransferNativeCommandForm {...props} />;
   const dirty = workspace.hasDirtyDraft;

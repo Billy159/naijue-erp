@@ -27,6 +27,34 @@ export function TransferDocumentPage({ sectionRef, headingRef, ariaLabel, classN
   </section>;
 }
 
+/** Shared frozen-Demo document body hierarchy. Callers keep ownership of the
+ * actual values, read/write permissions, status and callbacks; this component
+ * only places the existing presentation slots in one consistent order. */
+export function TransferDocumentBody({ beforeHeader, header, note, status, beforeLines, lines, afterLines, summary, records }: {
+  readonly beforeHeader?: ReactNode;
+  readonly header?: ReactNode;
+  readonly note?: ReactNode;
+  readonly status?: ReactNode;
+  readonly beforeLines?: ReactNode;
+  readonly lines?: ReactNode;
+  readonly afterLines?: ReactNode;
+  readonly summary?: ReactNode;
+  readonly records?: ReactNode;
+}) {
+  return <>
+    {beforeHeader}
+    {header !== undefined && <div className="tc-doc-header">{header}</div>}
+    {note}
+    {status}
+    <div className="tc-section-head"><strong>调拨明细</strong></div>
+    {beforeLines}
+    {lines}
+    {afterLines}
+    {summary}
+    {records}
+  </>;
+}
+
 export interface TransferSizeGroupCapability {
   readonly id: string; readonly reader: Pick<DictionaryBrowserReader, 'readSizeGroups'>;
   readonly onUnauthorized?: () => void;
@@ -84,6 +112,31 @@ export function TransferMatrixTable({ sizes, children, showHeader = true, classN
       <tbody>{children(visible)}</tbody>
     </table>
   </section>;
+}
+
+/** Shared Demo row hierarchy for actual document rows. Size cells and actions
+ * remain caller-owned nodes so source identity and each state’s current
+ * permission/interaction contract pass through unchanged. */
+export function TransferDocumentMatrixRow({ productCode, productName, color, colorTitle, fit, fitTitle, sizeCells, subtotal, actions, className }: {
+  readonly productCode: string;
+  readonly productName: string;
+  readonly color: ReactNode;
+  readonly colorTitle?: string;
+  readonly fit: ReactNode;
+  readonly fitTitle?: string;
+  readonly sizeCells: readonly ReactNode[];
+  readonly subtotal: ReactNode;
+  readonly actions: ReactNode;
+  readonly className?: string;
+}) {
+  return <tr className={className}>
+    <td className="mx-product"><span className="mx-product-line"><strong title={productCode}>{productCode}</strong><span title={productName}>{productName}</span></span></td>
+    <td className="mx-color" title={colorTitle}>{color}</td>
+    <td className="mx-fit-col" title={fitTitle}>{fit}</td>
+    {sizeCells}
+    <td className="tc-subtotal">{subtotal}</td>
+    <td className="ui-action-cell">{actions}</td>
+  </tr>;
 }
 export function transferDisplayQuantity(rows: readonly { readonly quantity: string }[]): string {
   return rows.every(row => /^(?:0|[1-9]\d{0,18})$/.test(row.quantity)) ? rows.reduce((sum, row) => sum + BigInt(row.quantity), 0n).toString() : '待校验';
