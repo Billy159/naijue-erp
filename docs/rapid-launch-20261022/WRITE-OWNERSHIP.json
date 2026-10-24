@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T17:07:41.267754+00:00",
+  "updatedAt": "2026-10-24T17:12:55.124912+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -5057,7 +5057,10 @@
       "originalFrontendChanged": false,
       "replicaEntryOwner": "C",
       "fixtureImplementationOwner": "F1",
-      "browserOwner": "NONE_UNTIL_C_FIXED_SOURCE_HTTP"
+      "browserOwner": "QF",
+      "sourceCommit": "0b10cd9d81e697e53f4fc37373b2d2b8acbd040b",
+      "runtimeReady": true,
+      "httpEvidence": "K/reports/controller/rapid-launch-20261022/demo-replica-phase1/HTTP-RUNTIME-03.json"
     }
   }
 }

@@ -1,3 +1,7 @@
+SOURCE342 ACTUALLY SERVED / 0b10cd9 / phase1-runtime-03-saved-state-fixtures
+
+同一个 http://127.0.0.1:57896/#inventory 已从固定342实际启动（指定Node24.21/session80806），HTML、fixture、identity、合成SVG、完整原bridge五项HTTP200、connect-src none；原325源和7原构建未变。原QF已独占新工作tab，显式Solmedium，只补G01-G04保存状态/历史/错误恢复/有图/原登录表单；此前340资料/设置/F4有效证据直接复用。未连接新后端、无真实写入，未开始第二阶段；第一阶段最终判定待本轮原QF结果。旧5用户草稿未刷新/清空/关闭。
+
 CURRENT342 SOURCE STAGED / ACTUAL179 + QB251 / 2026-10-25
 
 原QF已完成SOURCE340上F4六页+条码只读详情的限定外观实操，两工作tab自然1470x724/DPR2、最终0弹层，已交回；QF2中断前B05/B06第5组结果已落盘采用，不重验。F1 chunk167已交25428/1a063642…，原列表可进入保存DRAFT/已审核/作废调拨和销货、历史独立尺码/操作记录、一次读失败恢复、流水成功/空/失败，有图为C明示合成SVG；原DOM/DTO定向通过，未浏览器/真实写入。C已合源342暂存，同一目录/57896，原325文件/7构建不改；当前需仅重启自有57896形成runtime03后交QF G01-G04，未开第二阶段。
