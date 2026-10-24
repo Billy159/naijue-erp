@@ -1,3 +1,4 @@
+import {openCapturedSalesSettlementSource} from './authorized-sales-detail-reader.mjs';
 import {openSealedPaymentSource} from './sealed-payment-source.mjs';
 import {prepareHistorySettlementChunk,validatePreparedHistorySettlementChunk,historySettlementRequestHash} from '../../packages/application/src/import-v3-history-settlement.ts';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
@@ -13,6 +14,7 @@ export function resolveSettlementSourceBinding(query,headers,accounts,methods){
 /** Exact selected source authority is independent from the mandatory actual
  * readonly header/account/original-method binding resolver used for STAGE. */
 export async function openAuthorizedSettlementReader(options){
+ if(Object.hasOwn(options??{},'capturedSource'))return openCapturedSalesSettlementSource(options,'SETTLEMENT');
  const source=await openSealedPaymentSource(options,'SETTLEMENT'),{config}=source,resolveBinding=config.resolveNativeBinding;
  return {report:source.report,rows:source.rows,close:source.close,
   async authorize(original){

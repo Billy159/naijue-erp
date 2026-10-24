@@ -2,7 +2,7 @@
 import {createHash} from 'node:crypto';
 import {createReadStream} from 'node:fs';
 import {lstat,realpath,mkdtemp,chmod,open,rm,readFile} from 'node:fs/promises';
-import {resolve,join} from 'node:path';
+import {resolve,join,isAbsolute} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {preflightV2} from './run.mjs';
 import {openReviewedMaterializedSource} from '../import-v3/verified-offset-source.mjs';
@@ -10,7 +10,9 @@ import {IMPORT_V2_TABLES} from '../../packages/application/src/import-v2-contrac
 import {v2MoneyApprovalSet,v2ApprovedCents,v2Cents} from '../../packages/application/src/import-v2.ts';
 import {stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
-import {prepareHistorySalesDetailChunk,validatePreparedHistorySalesDetailChunk,historySalesDetailRequestHash} from '../../packages/application/src/import-v3-history-sales-detail.ts';
+import {prepareHistorySettlementChunk,validatePreparedHistorySettlementChunk,historySettlementRequestHash,HISTORY_SETTLEMENT_VERSION} from '../../packages/application/src/import-v3-history-settlement.ts';
+import {historyClosureProjectionRow26} from '../../packages/application/src/history-typed-closure.ts';
+import {prepareHistorySalesDetailChunk,validatePreparedHistorySalesDetailChunk,historySalesDetailRequestHash,HISTORY_SALES_DETAIL_VERSION} from '../../packages/application/src/import-v3-history-sales-detail.ts';
 const fail=code=>{throw Error(code);},sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v),uuid=v=>typeof v==='string'&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(v);
 const text=v=>typeof v==='string'&&v.length>0&&v.length<=65536&&!v.includes('\0');
@@ -34,6 +36,7 @@ async function* checkedFile(path,size,expectedHash){const stat=await lstat(path)
  * Resolver must independently prove actual header/source and old-alias/native IDs;
  * source IDs/names are never converted to UUIDs or used as binding heuristics. */
 export async function openAuthorizedSalesDetailReader(options){
+  if(Object.hasOwn(options??{},'capturedSource'))return openCapturedSalesSettlementSource(options,'SALES_LINE');
   const {trustedApprovalSha256,approvedMoneyOverlaySha256,batchId,fixedSourceNamespace,resolveNativeBinding}=options;
   if(!hash(trustedApprovalSha256)||!hash(approvedMoneyOverlaySha256))fail('SALES_DETAIL_READER_PINS_REQUIRED');
   if(!uuid(batchId)||typeof fixedSourceNamespace!=='string'||!/^[a-z][a-z0-9_.:-]{0,127}$/.test(fixedSourceNamespace))fail('SALES_DETAIL_READER_BATCH');
@@ -113,4 +116,90 @@ export async function openAuthorizedSalesDetailReader(options){
       const expected=prepareHistorySalesDetailChunk({batchId,fixedSourceNamespace,selection,moneyApprovals:approvedSet,rows:authorized});
       if(historySalesDetailRequestHash(expected)!==historySalesDetailRequestHash(chunk))fail('SALES_DETAIL_READER_PREPARED_NOT_AUTHORIZED');assertOpen();
     },close};
+}
+
+// The two existing readers share only this retained-input path. The sealed
+// PAYMENT collector and original/materialized source paths are unchanged.
+const capturedOwn=(value,keys)=>{
+ if(!value||Object.getPrototypeOf(value)!==Object.prototype||Reflect.ownKeys(value).length!==keys.length)fail('CAPTURED_HISTORY_SHAPE');
+ const result={};for(const key of keys){const d=Object.getOwnPropertyDescriptor(value,key);if(!d?.enumerable||!Object.hasOwn(d,'value'))fail('CAPTURED_HISTORY_SHAPE');result[key]=d.value;}return result;
+};
+export async function openCapturedSalesSettlementSource(options,entity){
+ if(!['SALES_LINE','SETTLEMENT'].includes(entity))fail('CAPTURED_HISTORY_ENTITY');
+ const option=key=>{const d=Object.getOwnPropertyDescriptor(options??{},key);if(!d?.enumerable||!Object.hasOwn(d,'value'))fail('CAPTURED_HISTORY_OPTIONS');return d.value;};
+ const captured=capturedOwn(option('capturedSource'),['manifestFile','trustedManifestSha256','selection','moneyApprovals','read','verify','close']);
+ const read=capturedOwn(captured.read,['sourceRows','typedRow']);
+ if(typeof captured.verify!=='function'||typeof captured.close!=='function'||Object.values(read).some(fn=>typeof fn!=='function'))fail('CAPTURED_HISTORY_CAPABILITY');
+ let closed=false,closing;const known=new Map(),active=()=>{if(closed)fail('CAPTURED_HISTORY_CLOSED');};
+ const close=()=>{if(closing)return closing;closed=true;known.clear();closing=Promise.resolve().then(()=>captured.close());return closing;};
+ try{
+  const batchId=option('batchId'),fixedSourceNamespace=option('fixedSourceNamespace'),trustedApprovalSha256=option('trustedApprovalSha256'),approvedMoneyOverlaySha256=option('approvedMoneyOverlaySha256');
+  if(!uuid(batchId)||typeof fixedSourceNamespace!=='string'||!/^[a-z][a-z0-9_.:-]{0,127}$/.test(fixedSourceNamespace)||!hash(trustedApprovalSha256)||!hash(approvedMoneyOverlaySha256))fail('CAPTURED_HISTORY_BINDING');
+  const resolverDescriptor=Object.getOwnPropertyDescriptor(options,'resolveNativeBinding');
+  if(resolverDescriptor&&(!resolverDescriptor.enumerable||!Object.hasOwn(resolverDescriptor,'value')||typeof resolverDescriptor.value!=='function'))fail('CAPTURED_HISTORY_NATIVE_RESOLVER');
+  const resolveBinding=resolverDescriptor?.value;
+  historySettlementRequestHash({selection:captured.selection,moneyApprovals:captured.moneyApprovals});
+  const selection=structuredClone(captured.selection),moneyApprovals=structuredClone(captured.moneyApprovals);
+  if(selection.entity!==entity||selection.approvalSha256!==trustedApprovalSha256||selection.moneyApprovalSha256!==approvedMoneyOverlaySha256||!(moneyApprovals instanceof Map)||moneyApprovals.size!==32)fail('CAPTURED_HISTORY_SELECTION_MONEY');
+  const values=[...moneyApprovals.values()],checked=v2MoneyApprovalSet(values,values);
+  if(historySettlementRequestHash(checked)!==historySettlementRequestHash(moneyApprovals))fail('CAPTURED_HISTORY_SELECTION_MONEY');
+  const manifestFile=captured.manifestFile,manifestSha256=captured.trustedManifestSha256;
+  if(typeof manifestFile!=='string'||!isAbsolute(manifestFile)||!hash(manifestSha256))fail('CAPTURED_HISTORY_MANIFEST_PIN');
+  const before=await lstat(manifestFile);active();
+  if(!before.isFile()||before.isSymbolicLink()||before.size>4*1024*1024)fail('CAPTURED_HISTORY_MANIFEST_PIN');
+  const bytes=await readFile(manifestFile),after=await lstat(manifestFile);active();
+  if(bytes.length!==before.size||['dev','ino','size','mtimeMs','ctimeMs'].some(k=>before[k]!==after[k])||sha(bytes)!==manifestSha256)fail('CAPTURED_HISTORY_MANIFEST_PIN');
+  const manifest=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));historySettlementRequestHash(manifest);
+  if(manifest.status!=='ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY'||manifest.referenceOnly!==true||manifest.nativeBindingsVerified!==false||manifest.PG!==false||manifest.MAIN!==false||manifest.PUBLISH!==false||manifest.all11!==false||manifest.actualPayloadHash!==null||!Array.isArray(manifest.artifacts))fail('CAPTURED_HISTORY_MANIFEST_SCOPE');
+  const descriptors=manifest.artifacts;
+  for(const d of descriptors)if(typeof d.path!=='string'||!isAbsolute(d.path)||!hash(d.sha256)||!Number.isSafeInteger(d.bytes)||d.bytes<=0||!Number.isSafeInteger(d.rows)||d.rows<=0||d.rows>1_000_000||d.mode!=='0600'||!['SALES_LINE','SETTLEMENT'].includes(d.entity)||![12,d.entity==='SALES_LINE'?21:11].includes(d.actualColumns))fail('CAPTURED_HISTORY_DESCRIPTOR');
+  const sourceMatches=descriptors.filter(d=>d.entity===entity&&d.actualColumns===12),typedMatches=descriptors.filter(d=>d.entity===entity&&d.actualColumns===(entity==='SALES_LINE'?21:11));
+  if(sourceMatches.length!==1||typedMatches.length!==1||sourceMatches[0].rows!==typedMatches[0].rows||new Set(descriptors.map(d=>d.path)).size!==descriptors.length||descriptors.filter(d=>d.actualColumns===12).reduce((n,d)=>n+d.rows,0)!==manifest.sourceRows||descriptors.filter(d=>d.actualColumns!==12).reduce((n,d)=>n+d.rows,0)!==manifest.typedRows)fail('CAPTURED_HISTORY_DESCRIPTOR');
+  const source=structuredClone(sourceMatches[0]),typed=structuredClone(typedMatches[0]);
+  const context={batchId,fixedSourceNamespace,selection,manifest:{path:manifestFile,bytes:before.size,sha256:manifestSha256},source,typed,moneyApprovalFingerprint:historySettlementRequestHash(moneyApprovals)};
+  // C's existing retained reader verifies accepted exact-byte/source proof and
+  // current lease. This module never rehashes either large data file.
+  const verify=async()=>{active();if(await captured.verify(structuredClone(context))!==undefined)fail('CAPTURED_HISTORY_SOURCE_AUTHORITY');active();};
+  const sales=entity==='SALES_LINE',prepare=sales?prepareHistorySalesDetailChunk:prepareHistorySettlementChunk,validate=sales?validatePreparedHistorySalesDetailChunk:validatePreparedHistorySettlementChunk;
+  const stagingKey=sales?'history_sales_detail_staging':'history_settlement_staging',validator=sales?HISTORY_SALES_DETAIL_VERSION:HISTORY_SETTLEMENT_VERSION,relation=sales?'history_sales_line':'history_sales_settlement';
+  const projection=(value,expectedRelation)=>{historySettlementRequestHash(value);const row=capturedOwn(value,['relation','key','projection']),canonical=historyClosureProjectionRow26(expectedRelation,row.projection);if(row.relation!==expectedRelation||requestHash(row)!==requestHash(canonical))fail('CAPTURED_HISTORY_PROJECTION');return canonical;};
+  const sourceProjection=(row)=>historyClosureProjectionRow26('import_source_row',{id:row.source.id,batch_id:row.source.batchId,entity_type:row.source.entityType,source_key:row.source.sourceKey,file_ref:row.source.fileRef,sheet:row.source.sheet,row_no:row.source.rowNo,source_file_sha256:row.source.sourceFileSha256,row_sha256:row.source.rowSha256,raw_fields:row.source.rawFields,normalized_fields:row.source.normalizedFields,field_provenance:{...row.fieldProvenance,[stagingKey]:{validator_version:validator,fingerprint:row.fingerprint,selection:{...selection},header:{...row.header},...(sales?{sku:{...row.sku}}:{account:{...row.account},method:row.method?{...row.method}:null})}}});
+  await verify();
+  const reader={report:{kind:sales?'V3_SALES_DETAIL_SOURCE_READER':'HISTORY_SETTLEMENT_SOURCE_READER',importReady:false,noSql:true,preflight:null,selectedRows:source.rows,rawRowsScanned:0,originalWorkbooksReparsed:false,nativeBindingsVerified:false,capturedSource:structuredClone(context)},
+   async *rows(requested){
+    active();if(requested!==undefined&&requested!==entity)fail('CAPTURED_HISTORY_ENTITY');await verify();let count=0,previous;
+    for await(const raw of read.sourceRows(structuredClone(source))){
+     active();const capturedRow=projection(raw,'import_source_row'),s=capturedRow.projection;
+     if(++count>source.rows||previous!==undefined&&Buffer.compare(Buffer.from(previous),Buffer.from(capturedRow.key))>=0||s.batch_id!==batchId||s.entity_type!==entity||s.id!==stableImportId('source-row',fixedSourceNamespace,entity,s.source_key))fail('CAPTURED_HISTORY_SOURCE_IDENTITY_ORDER');previous=capturedRow.key;
+     const staged=capturedOwn(s.field_provenance[stagingKey],['validator_version','fingerprint','selection','header',...(sales?['sku']:['account','method'])]);
+     if(staged.validator_version!==validator||requestHash(staged.selection)!==requestHash(selection))fail('CAPTURED_HISTORY_STAGING');
+     // Invert only the deterministic augmentation performed by the original
+     // C144 producer. Recomputed mapper fingerprint proves the exact round trip.
+     const fields=Object.fromEntries(Object.entries(s.raw_fields).map(([key,value])=>[key,{origin:'ORIGINAL',reason:'EXACT_ORIGINAL_SNAPSHOT_CELL',raw:value}]));
+     if(sales){if(s.raw_fields['SKU来源编号']!==s.normalized_fields['SKU来源编号'])fields['SKU来源编号']={origin:'MIGRATION_DERIVED',reason:'VERIFIED_OLD_TO_CANONICAL_ALIAS',raw:s.raw_fields['SKU来源编号'],evidence_ref:ALIAS};fields.__source_row_hash={origin:'ORIGINAL',reason:'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1',raw:s.row_sha256};}
+     const original={id:s.id,batchId:s.batch_id,entityType:s.entity_type,sourceKey:s.source_key,fileRef:s.file_ref,sheet:s.sheet,rowNo:s.row_no,sourceFileSha256:s.source_file_sha256,rowSha256:s.row_sha256,rawFields:s.raw_fields,normalizedFields:s.normalized_fields,fieldProvenance:{schema_version:1,fields}};
+     const bindings=sales?{header:staged.header,sku:staged.sku}:{header:staged.header,account:staged.account,method:staged.method};
+     const prepared=prepare({batchId,fixedSourceNamespace,selection,moneyApprovals,rows:[{source:original,...bindings}]}),row=prepared.rows[0],expected=historyClosureProjectionRow26(relation,sales?row.line:row.settlement);
+     if(staged.fingerprint!==row.fingerprint||requestHash(sourceProjection(row))!==requestHash(capturedRow))fail('CAPTURED_HISTORY_SOURCE_ROUNDTRIP');
+     const typedValue=await read.typedRow(structuredClone(typed),expected.key);active();
+     if(requestHash(projection(typedValue,relation))!==requestHash(expected))fail('CAPTURED_HISTORY_TYPED_MISMATCH');
+     const record={source:original,selection},entry={source:requestHash(record),bindings:requestHash(bindings),fingerprint:row.fingerprint};
+     const prior=known.get(original.id);if(prior&&requestHash(prior)!==requestHash(entry))fail('CAPTURED_HISTORY_SOURCE_CHANGED');known.set(original.id,entry);
+     yield {...structuredClone(record),moneyApprovals:structuredClone(moneyApprovals)};active();
+    }
+    if(count!==source.rows)fail('CAPTURED_HISTORY_SOURCE_COUNT');await verify();
+   },
+   async authorize(original){
+    active();if(typeof resolveBinding!=='function')fail('CAPTURED_HISTORY_NATIVE_RESOLVER_REQUIRED');historySettlementRequestHash(original);validate(original);const chunk=structuredClone(original),input=chunk.input;
+    if(input.batchId!==batchId||input.fixedSourceNamespace!==fixedSourceNamespace||requestHash(input.selection)!==requestHash(selection)||historySettlementRequestHash(input.moneyApprovals)!==historySettlementRequestHash(moneyApprovals))fail('CAPTURED_HISTORY_CONTEXT');await verify();const authorized=[];
+    for(const row of input.rows){
+     const expected=known.get(row.source.id);if(!expected||expected.source!==requestHash({source:row.source,selection:input.selection}))fail('CAPTURED_HISTORY_SOURCE_NOT_AUTHORIZED');
+     const query={entity,sourceKey:row.source.sourceKey,rawFields:row.source.rawFields,normalizedFields:row.source.normalizedFields};
+     const resolved=await resolveBinding(structuredClone(query));active();historySettlementRequestHash(resolved);const bindings=sales?{header:row.header,sku:row.sku}:{header:row.header,account:row.account,method:row.method};
+     if(requestHash(resolved)!==expected.bindings||requestHash(bindings)!==expected.bindings)fail('CAPTURED_HISTORY_NATIVE_BINDING_MISMATCH');authorized.push({source:row.source,...structuredClone(resolved)});
+    }
+    const recomputed=prepare({batchId,fixedSourceNamespace,selection,moneyApprovals,rows:authorized});
+    if(historySettlementRequestHash(recomputed)!==historySettlementRequestHash(chunk)||recomputed.rows.some(row=>row.fingerprint!==known.get(row.source.id).fingerprint))fail('CAPTURED_HISTORY_PREPARED_NOT_AUTHORIZED');await verify();
+   },close};return reader;
+ }catch(error){try{await close();}catch(cleanup){throw new AggregateError([error,cleanup],'Captured history construction and cleanup failed');}throw error;}
 }
