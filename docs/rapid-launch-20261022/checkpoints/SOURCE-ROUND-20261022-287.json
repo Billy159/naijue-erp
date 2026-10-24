@@ -1,0 +1,96 @@
+{
+  "atUtc": "2026-10-24T04:39:20.442350+00:00",
+  "parent": "5c44cf0579450e32aeead2b1b1a69f7b6b4df402",
+  "taskId": "F4_QF2_C285_CATALOGUE_MODAL_AND_P14_P19_INSET_FIX",
+  "files": [
+    {
+      "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+      "bytes": 7701,
+      "sha256": "88b829f17b1cebeb347477a25642c747bf00acd925ba18e2debb7d8f183173e5",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+      "bytes": 42767,
+      "sha256": "c81fe43a8d5a2cc29e4e2600aaf9b2363a2b45de2cc1aeed163fa350f96d3d23",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/product-categories/source-product-categories.css",
+      "bytes": 20694,
+      "sha256": "ffa4015c575ec72e2d71f11cad3e12afb9ebfd2d0e7375fb6c637b77c4c4e3b2",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+      "bytes": 19784,
+      "sha256": "42a3fe927009dc6dbed6ce9afc9b5def9e31945d6bf17b985490cda58f020d19",
+      "owner": "F4"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F4/QF2-C285-P15P17-MODAL-BODY-01/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "4a419de984f2dd6adf42d623643bc8fb8d809a2541d68be33a642f1002c6294b",
+  "ownerDelivery": {
+    "taskId": "F04/QF2-C285-P15P17-MODAL-BODY-01",
+    "atUtc": "2026-10-24T04:31:41.362989+00:00",
+    "findings": [
+      "QF2-C285-P15-P17-MODAL-BODY-GEOMETRY-01",
+      "QF2-C285-P14-P19-PAGE-INSET-4PX-01"
+    ],
+    "scope": "Four exact F4 leaves only. Shared COLOR/FIT native form body correction plus original F1 chunk136 four exact selector replacements. No shared frame/Overlay, v15 client/flags, backend, browser, build, PG or Git writes.",
+    "changedFiles": [
+      {
+        "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+        "bytes": 7701,
+        "sha256": "88b829f17b1cebeb347477a25642c747bf00acd925ba18e2debb7d8f183173e5"
+      },
+      {
+        "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+        "bytes": 42767,
+        "sha256": "c81fe43a8d5a2cc29e4e2600aaf9b2363a2b45de2cc1aeed163fa350f96d3d23"
+      },
+      {
+        "path": "apps/web/src/product-categories/source-product-categories.css",
+        "bytes": 20694,
+        "sha256": "ffa4015c575ec72e2d71f11cad3e12afb9ebfd2d0e7375fb6c637b77c4c4e3b2"
+      },
+      {
+        "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+        "bytes": 19784,
+        "sha256": "42a3fe927009dc6dbed6ce9afc9b5def9e31945d6bf17b985490cda58f020d19"
+      }
+    ],
+    "cause": [
+      "Actual leaf source DOM before has pc-modal-body padding0; frozen product-current.css:9 body has padding16/overflowauto/max-height68vh. Missing 16px each side accounts for452vs420 width.",
+      "Frozen product-current.js:208 openDict uses bare pc-dict-name/code divs, mounted light by product-arco.jsx:244; current source instead added pc-arco-host with margin4px0px12px. Removing this product-editor-only host margin restores source field flow.",
+      "Modal private font13 follows frozen product-arco.jsx; removed approximate input font shorthand and obsolete host-margin rule. Original Arco fields/controlled values and existing overlay lifecycle retained.",
+      "F1 chunk136 proved golden body-not-inventory #page rule missing actual main.demo-page alias, and P14 native head/actions loses equal-specificity late common rules. Exact four replacements adopted with all declaration blocks unchanged."
+    ],
+    "sourceProvenance": [
+      "Frozen b8bcfe3 frontend/product-current.js:208 openDict and field helper:4",
+      "Frozen frontend/product-arco.jsx:45-55 modal font/field rules;111 TextInput;244 mountLight",
+      "Frozen frontend/product-current.css:9 native inner body padding16; not #pc-dialog-only fallback padding12/14",
+      "K/F1/chunk-136/DELIVERY.json + REPLACEMENTS.json, before2pins matched and resulting2CSS byte-identical to proposed-F4"
+    ],
+    "checks": {
+      "modalRedGreen": "PASS Node24 actual CatalogueEntryEditor/Arco source DOM/CSSOM: before padding0 plus two margin4/12 hosts fails; after COLOR/FIT padding16 and bare ID-host structure passes.",
+      "targetedBehavior": "PASS one raw000285/dirty-continue/discard and clean Esc focus return; 480 source carrier retained; no write invoked.",
+      "typecheck": "PASS Node24 scoped colors tsconfig noEmit",
+      "css": "PASS three changed CSS parse0warnings; two inset files declaration lists identical before/after",
+      "insetSourceAdoption": "PASS exact4 replacements; beforepins and resulting bytes match original F1 proposal; prior F1 cascade proof reused",
+      "diff": "PASS git diff --check"
+    },
+    "notTested": [
+      "No actual new browser rectangles/screenshots/outer-footer geometry or real font metrics; QF2 minimal containing-candidate retest required.",
+      "No old paging/filter/all-modals/backend regression repeated. Existing scoped functional results retained.",
+      "No genuine PG/role/transaction/profile activation/performance or production deployment."
+    ],
+    "blockers": [],
+    "next": "C freeze these four pins with already ready T03/large200 changes into one necessary candidate; original QF2 empty COLOR+FIT input/label/480/footer rects plus one dirtycontinue-discard/Escfocus group, and original P14/P19 inset with unchanged P14 detailY. Do not mark actual findings closed before that.",
+    "modelRequired": "gpt-6.1-sol/xhigh",
+    "fastVerified": false
+  },
+  "stage": "FIXED_SOURCE_COMPONENT_CHECKS_PASS_INTEGRATED_BROWSER_RETEST_PENDING",
+  "actualPG": false,
+  "deployed": false
+}

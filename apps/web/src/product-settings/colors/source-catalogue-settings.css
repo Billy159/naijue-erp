@@ -33,7 +33,6 @@
 .catalogue-workbench:not(.pc-catalogue-settings) .catalogue-pagination input{box-sizing:border-box;width:42px;height:28px;padding:3px 5px;border:1px solid var(--ca-control-border);border-radius:var(--ca-radius-control);text-align:center;background:var(--ca-surface);color:var(--ca-ink)}
 .catalogue-entry-modal .pc-delete-left{margin-right:auto}
 .catalogue-entry-modal .field{display:flex;flex-direction:column;gap:4px;margin:0 0 9px;color:var(--ca-ink-2);font-size:12px}
-.catalogue-entry-modal .field input{box-sizing:border-box;width:100%;height:32px;padding:5px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);color:var(--ca-ink);font:13px var(--ca-font-sans)}
 .catalogue-entry-modal .field .pc-text-block{margin:0;padding:5px 9px;line-height:22px;background:var(--ca-surface-muted);color:var(--ca-ink)}
 .catalogue-entry-modal .catalogue-view-note,.catalogue-entry-modal .catalogue-version{margin:0 0 10px;font-size:12px;line-height:20px;color:var(--ca-ink-2)}
 @media(max-width:900px){.catalogue-workbench:not(.pc-catalogue-settings) .catalogue-pagination{flex-wrap:wrap}.catalogue-workbench:not(.pc-catalogue-settings) .catalogue-pagination .actions{margin-left:0}}
@@ -75,9 +74,13 @@
 .catalogue-entry-modal .btn:disabled{background:var(--ca-control-disabled-bg);color:var(--ca-control-disabled-text);border-color:var(--ca-control-disabled-border)}
 .catalogue-entry-modal .pc-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px}
 .catalogue-entry-modal .pc-delete-left{margin-right:auto;color:var(--ca-critical)}
+/* Frozen product-current.css .pc-modal-body and product-arco.jsx modal font.
+   openDict mounts TextInput into bare #pc-dict-name/code hosts; the product
+   editor's .pc-arco-host margin is intentionally absent from this form. */
+.erp-overlay.erp-overlay-catalogue.arco-modal.catalogue-entry-modal{font:13px var(--ca-font-sans)}
+.catalogue-entry-modal .pc-modal-body{padding:16px;overflow:auto;max-height:68vh}
 .catalogue-entry-modal .pc-modal-body .field{display:flex;flex-direction:column;gap:4px;margin:0 0 9px;color:var(--ca-ink-2);font-size:12px}
 .catalogue-entry-modal .pc-modal-body input{box-sizing:border-box;height:32px;font-size:13px}
-.catalogue-entry-modal .pc-modal-body .pc-arco-host{margin:4px 0 12px}
 
 /* BEGIN complete frozen P15/P17 native pages; only private scope/ancestor and
  * original native-input isolation selectors adapted. Earlier P19 rules retained. */
