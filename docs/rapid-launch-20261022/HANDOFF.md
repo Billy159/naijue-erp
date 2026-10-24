@@ -1,3 +1,12 @@
+CURRENT CONTINUATION: fixed288 / actual UI285 / C133 technical ACL actual PASS (2026-10-24)
+
+- Human window handback accepted. QF273 v103 completed/cleanSTOP; QF2 exclusively owns registered08AC+Demo for285. Human7-item draft3A and DB7CA/3BC untouched. Matrix104=41NOT_RUN/9WAITING/23UI_DIFF/30PARTIAL/1EXCEPTION; whole pages/overlays0;57 explicit partial scopes only.
+- SOURCE287 F4 exact4 modal16px/P14P19 inset, SOURCE288 F3 exact1 audit closedSelect Esc fixed. F1 K proposal only; component/strict checks adopted. Three actual findings remainOPEN pending containing candidate. Next single candidate preparing288+T03 full author inputs+large200 opt-in, not built.
+- QF2 actual sparse103products/2warehouses/total4444:208 details export/print match; FIT actual-2/window/scroll scopedPASS. New output return-focus BODY P2 immediately dispatched originalF2; not dense200/500/formalperformance, in-flight cancel NOT_TESTED.
+- C132 exact42501 row-lock root cause identified. C133 single GRANT UPDATE(source_row_id) to original QA technical role actually COMMIT; before42501 after00000/0rows. Other columns/tableUPDATE/DELETE/TRUNCATE unchangedfalse;123routines/immutable guards unchanged;businessDML0. Newcanonical3b896d4f...; oldQB217/a579 not valid for newhash. QB new actual delta review then original full C134 negative/normal49-115-22/replay/login. C130/C132 failed evidence preserved; no replay.
+- Formal280/r1-33feae5-20261024-01 actual build0/4.416s;pack228members1322647B/60f1ac2c...,extract readbackPASS. Runtime SQL inline; readFileSync only review metadata; v14 installed separatelyC126, no missing runtime SQL demonstrated. Not Linux install/appstart/deploy. Private actual remains229 and formal URL unchanged. Real128 and R1socket131 preparation continues; no raw credentials read/download or parser relaxation.
+- Last remote verified5c44cf0579450e32aeead2b1b1a69f7b6b4df402;287/288 and this continuation pending finite push. Backup112 deadline2026-10-24T11:35:38.679556Z unchanged. Original7services/data/Demo protected. All dispatch gpt-6.1-sol/xhigh, Fast tool switch unverified.11roles/original22tasks;goalACTIVE/incomplete.
+
 最新可接续状态（源码286／实际候选285，2026-10-24）：
 
 - 前端交付已进入实际整合/验收：285=5dd68305be13f7047a6b3716ccde858815de2681，http://127.0.0.1:57884/synthetic-unified.html 已单次构建成功、414inputs/1369modules、18overlay17同1仅身份、3HTTP精确200；HTML3586266B/935af82b…，build ui-preview-5dd6830-01-build01/PID92543/session50022。含275审计/277异步公共输出/281284新合同/282分类UI/283取消修复/285库存默认窗口和完整输出，不含286后端124函数profile。合成UI，真实保存/PG/角色/规模/正式上线不据此通过。
