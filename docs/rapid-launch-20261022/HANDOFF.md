@@ -1,3 +1,12 @@
+接续更新（源253／最新可看252／QF2仍实操243）：
+
+- http://127.0.0.1:57880/synthetic-unified.html 已可打开，固定source06fa5f51f4fbbd131175cd2983892540439209d0/build ui-preview-06fa5f5-01-build01，原一次build0/414输入1369模块，HTML3459562B/b722d1c6…、identity6762B/909643eb…、provenance51633B/43754a79…，3HTTP逐字/原身份头200，PID47447/session71446。18合成覆层14同4变；新增一个明确FICTION历史方案供原SYN2默认FK与独立dictionary同对象派生，未给真实六scheme定性，不造新商品/SKU/条码。默认product-edit-v1；?productReadOnly=1仅构造省略maintenance自然走原查看分支，同ADMIN/同源/单Application，非真实角色授权。QA按源码/构建/URL/输入批次绑定。
+- 新包含244hover、247/249原native date祖先定位、250类型singlemouse、248/251/252默认方案真名称及同一独立dictionary reader。后继253=f4a4a90ad566664b579b2ba531e3391ba52d0894原四参考selector map同LABEL转发重复读取已定向修，尚不在252；普通input合法label、无匹配T02不动。QFv088和v089源结论采用，修后actual只在包含版本复验，不追活WIP。
+- C113真实PG只读实际COMPLETED0/4.427840693秒，原QB202独立限定通过。两商品×两页×firstobserved+两重复=12RRREADONLY，默认FK逐项等真实SELECT；含空后页及零barcode商品，NULL无现样本明确未测。116.949–121.228ms/DTO196或584UTF8B，2次metadataprobe112.814–115.668ms，仅小规模基线不是正式规模≤2000ms或纯server/wire（后两null）。真实count后Abort→无PAGE/COMMIT→ROLLBACK/一次release，16leases全部回/live0/end成功/cleanup[]/bg0。前后8counts/2产品版本FK/QA账号v7auth7disabled逐项不变，0DML/DDL/GRANT/启用账号。原outerSETROLE/QAowner与sessiont15Unix如实限定，不当app用户/HTTP/密码/权限通过；不重201/owner8/运维验证。
+- 当前QF2唯一Chrome243 module未完，audit首次+2重开已限定通过。P02九字段空/已填、geometry和自己draftretain/discard通过；P05九价格位置/raw0与blank保留、P06五类空媒体底部tile通过，不冒保存或有图业务。P03颜色modal新P2 QF2-P03-TRANSFER-CONTROLS-SCOPE-01已有最终双侧CSS证据，原F2补native控件祖先/最终样式；fit同消费者不重派。P07实为LegacyStock三列，readOverview未注入，完整native overview待接入不算通过。只读完整页在ADMIN EDIT分支不可达，旧Inventory三tabdrawer不能代替，252明确只读输入已为后继准备。
+- 原D2按同一批准字段读端口继续skuId限定的原barcode API，旧无sku请求兼容、真实SKU归属/空0vs不存在/服务端分页total准确；缺条码SKU整表摘要是否有现成能力另核，不能用pagegroup冒完整SKU表或造码。source subtype/originalSpec/历史和银泰字段缺口仍准确未完；v14只待人类原确认，0CORE执行，其他继续。
+- QFv086–090/202等固定证据采用，唯一104矩阵当前44未检查/13待接入/34差异/12局部/1批准例外，55明确逻辑索引/整页0/整类0、来源84待核/19最小适配/1未接入/0重新仿写。GitHub最近已精确回读f23aede734dd3fce95c76c17d31324a6ab39522c，249–253及本断点继续原对象非强推。原C112保全/私有229与正式未切事实保留；Sol61/xhigh，Fast无开关未核，目标ACTIVE。
+
 当前断点（源248／最新可看243／Chrome仍固定240／私有服务器229）：
 
 - 新可看 http://127.0.0.1:57879/synthetic-unified.html ，source415af7d344a843256dc8772960589517669fab46/build ui-preview-415af7d-01-build01，原一次build0/414输入1369模块；HTML3451824B/7fd394b1…，identity5604B/a8072632…，provenance51633B/b0711f1d…，3HTTP逐字/原身份头200，PID41616/session21155。18合成覆层16同2变：原空0审计reader同能力显式接store与payment，用root真实hasRetainedUnresolvedWrite替代canLeave，customer接线保持；真实backendextensions/角色/日志未测，不冒空库事实。QFv085已限定源码通过，后继实际待独占窗口。
