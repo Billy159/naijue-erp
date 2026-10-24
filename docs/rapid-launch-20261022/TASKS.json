@@ -67,8 +67,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "Integrate full37packages andoriginalC137new299privateapp start withreal157receipt, preserveuniqueops",
-      "currentPackage": "147actualR1v14/QB232+D1COREACLgap;299UIactual/QF3residuals;whiteviewportcleanupadopted",
-      "nextReadyPackage": "Close originalCOREminimumexecutionidentity/purpose against147ACL then131/128;QF299actualonlyaffected",
+      "currentPackage": "C137 actual299 private startup PASS; integrate303-305 and released modulepackages",
+      "nextReadyPackage": "Fixed module UI candidate/actual CORE reader; one accurate history header contract confirmation",
       "currentDependencies": "Formal URL unchanged, fullMAIN unbound, current112 backup/7containers protected",
       "fastToolVerified": false,
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
@@ -87,10 +87,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "source302frame WIP2DOMfail + allstate normalDemoBODY seam; Solmedium; not sharedwrapper=wholemigration",
-      "currentPackage": "chunk140141exact3frozen299;QFactualpending",
-      "nextReadyPackage": "OnlyexactQF299failure or originalalreadyreadywork, no duplicatepipeline",
-      "currentDependencies": "Chrome仅约束actual；原已有接口/UI继续，真实保存要隔离证据",
+      "currentWork": "Solmedium shared controller/configuration/mount CATEGORY/COLOR/FIT capability seam",
+      "currentPackage": "Solmedium shared controller/configuration/mount CATEGORY/COLOR/FIT capability seam",
+      "nextReadyPackage": "LunaMAX entire transfer BODY/allstate normal routes then sales/returns and common9pages",
+      "currentDependencies": "Only sharedowner modifies controller/configuration/mount. Next Luna stage after technical handoff; no interruption.",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -129,13 +129,13 @@
       "prompt": "角色派工提示词/F2-前端库存与商品.txt",
       "threadId": "01a161d2-6bd9-7181-8386-1ecddddd386a",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "medium",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "I01 wholeUI existingready, Solmedium known7behavior/normalentry interfaces; D3ownsledger",
-      "currentPackage": "295sourcechoicecancel exact1 delivered/fixed;actualnativepending",
-      "nextReadyPackage": "OnlyQF2 newcancel finding iffails; olddense/output/289focus adopted",
+      "currentWork": "LunaMAX P01-P13 product list and six tabs; I01 source304 handedC",
+      "currentPackage": "LunaMAX P01-P13 product list and six tabs; I01 source304 handedC",
+      "nextReadyPackage": "Solmedium normal wiring then QF2 fullmodule affected evidence",
       "currentDependencies": "产品组内范围硬边界；新增未批写合同仅该分支等待",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -168,8 +168,15 @@
         "current": "I01库存整页、筛选结果矩阵输出流水弹层",
         "next": "P01-P13商品列表及六页签编辑/查看全部"
       },
-      "currentPhase": "TECHNICAL_HANDOFF_AFTER_UI_SOURCE_PACKAGE",
-      "nextPureUIModel": "gpt-6-luna/max"
+      "currentPhase": "WHOLE_PAGE_UI_MIGRATION",
+      "nextPureUIModel": "gpt-6-luna/max",
+      "lastActualDispatch": {
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "atUtc": "2026-10-24T11:29:21.184294+00:00",
+        "toolResult": "COMPLETED",
+        "FastToolVerified": false
+      }
     },
     "F3": {
       "title": "前端基础设置",
@@ -179,14 +186,14 @@
       "prompt": "角色派工提示词/F3-前端基础设置.txt",
       "threadId": "01a161d2-6f11-7412-8001-14719ced78d0",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "medium",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "B01/B02 wholeUI26pins ready, Solmedium actualCOREread/audit/normalentry seam",
-      "currentPackage": "288 audit closed Select Esc exact1 delivered/frozen, component strict PASS; actual issueOPEN",
-      "nextReadyPackage": "Original QF source + QF2 containing candidate actual; no unrelated settings rewrite",
-      "currentDependencies": "实际CORE尚0；不挡原UI/现成接口接线",
+      "currentWork": "LunaMAX B03/B08 customer/supplier; B01/B02 source303 handedC",
+      "currentPackage": "LunaMAX B03/B08 customer/supplier; B01/B02 source303 handedC",
+      "nextReadyPackage": "Solmedium wiring; staff/accounts/funds/payment remaining8page scope",
+      "currentDependencies": "CORE157 realcommitted; B01/B02 integration/QA parallel, not blocked realPG for pureUI",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -212,8 +219,15 @@
         "current": "B01/B02厅仓整页全状态，真实CORE资料已就绪",
         "next": "B03/B08客供、B04/B07员工账号、B05/B06收款资金"
       },
-      "currentPhase": "TECHNICAL_HANDOFF_AFTER_UI_SOURCE_PACKAGE",
-      "nextPureUIModel": "gpt-6-luna/max"
+      "currentPhase": "WHOLE_PAGE_UI_MIGRATION",
+      "nextPureUIModel": "gpt-6-luna/max",
+      "lastActualDispatch": {
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "atUtc": "2026-10-24T11:29:21.184294+00:00",
+        "toolResult": "COMPLETED",
+        "FastToolVerified": false
+      }
     },
     "D1": {
       "title": "后端宿主事务与公共迁移",
@@ -351,10 +365,10 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "fastToolVerified": false,
-      "currentWork": "P14-P19 sixUI sourcepackages ready, Solmedium normalroute/profile/v15cap seams",
-      "currentPackage": "290 singleCSS inherited lineheight fix delivered/frozen; actualmodal pending",
-      "nextReadyPackage": "QF2 containing candidate geometry and one lifecycle; no production-v15 enablement",
-      "currentDependencies": "只32登记叶，公共控件/路由接缝交F1；无Chrome租约",
+      "currentWork": "P14-P19 six source packages delivered; waitF1 sharedHost",
+      "currentPackage": "P14-P19 six source packages delivered; waitF1 sharedHost",
+      "nextReadyPackage": "C fixed candidate then QF2 missing normal-entry actual; no duplicate sixpage review",
+      "currentDependencies": "WaitF1 shared capability; ownsource scope checked, no invented tasks.",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -1237,7 +1251,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T10:54:39.635282+00:00",
+  "updatedAt": "2026-10-24T11:29:21.184294+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
   "lastVerifiedRemoteCommit": "1352e75fa5a3acd541c24a13ba255a87353ffef9",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1688,13 +1702,12 @@
     "bootMetadata": "JOBS12_13_READONLY_PASS; JOB14_BOOT_ACTOR_PROJECTION_QUEUED",
     "accountIdentity45": "QB35_SCOPED_PASS_C_OUTSIDE_PIN",
     "accountIdentityAdditional4": "QB42_IDENTITY_ONLY_ACCEPTED_FALSE_EXECUTION",
-    "deploymentTools": "C63_ACTUAL_PRODUCTION_CI_NATIVE_APP_PROXY_KEY_RESOURCES_PASS_NOT_BUSINESS",
+    "deploymentTools": "C149_INSTALL_AND_C137_PRIVATE_APP_PROXY_RESOURCE_ACTUAL_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 299,
-      "commit": "f43e943317825951ef1f4a28c2396f8bad995eb3",
-      "latestServedPreviewRound": 299,
-      "qualification": "299actualUI/actualformal149 install separatelybound; privateapp andrealR1CORE notdone."
+      "round": 305,
+      "commit": "fb47538393eee50023f2712b076cb14d5d516ceb",
+      "qualification": "303F3exact2/304F2exact1/305F1exact2 limitedhandoffs, no wholepage pass. SharedF1/unrelated test WIP preserved. App/browser299 separate."
     },
     "currentPreview": {
       "candidateId": "ui-preview-f43e943-01",
@@ -2305,6 +2318,45 @@
       "sourceCodeChangeNeeded": false,
       "oldEvidencePinsUnchanged": true,
       "latestHumanWindowHandoff": "call_8dd15120aa754a17bc3a92cc4eb95a1a explicit窗口已交回继续验收"
+    },
+    "latestPrivateApplication": {
+      "jobId": "c03-c280-core-private-app-start-20261024-137",
+      "status": "CANDIDATE_STAGED_HEALTH_ONLY_NOT_BUSINESS",
+      "source": "f43e943317825951ef1f4a28c2396f8bad995eb3",
+      "build": "r1-f43e943-20261024-01",
+      "engine": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c280-core-private-app-start-20261024-137/release-submission/release-receipts/c03-c280-core-private-app-start-20261024-137/engine-result.json",
+        "bytes": 3273,
+        "sha256": "c647e19ad3bf20f70d676e87f6d442f3c81ef0372f24e6ef640ee1244c41dd44"
+      },
+      "healthApp": 200,
+      "healthProxy": 200,
+      "resources": [
+        {
+          "bytes": 2229,
+          "releaseManifestMatched": true,
+          "status": 200,
+          "url": "/"
+        },
+        {
+          "bytes": 256162,
+          "releaseManifestMatched": true,
+          "status": 200,
+          "url": "/assets/r1-f43e943-20261024-01/application.js"
+        },
+        {
+          "bytes": 624692,
+          "releaseManifestMatched": true,
+          "status": 200,
+          "url": "/assets/r1-f43e943-20261024-01/application.css"
+        }
+      ],
+      "installCalls": 0,
+      "coreReadProfile": "COMMITTED_CORE_SETTINGS_V14",
+      "originalSevenContainersPreserved": true,
+      "productionEntryChanged": false,
+      "businessAcceptance": false,
+      "dataReady": false
     }
   },
   "supplementalRoles": {
@@ -3996,7 +4048,13 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice234-c300-approved-four-null-batch-seam/RESULT.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice234-c300-approved-four-null-batch-seam/ACCEPTED-SOURCE-DELTA.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice235-c157-real-core-normal-same-key-actual/RESULT.json",
-    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice235-c157-real-core-normal-same-key-actual/ACCEPTED-ACTUAL-MODULE.json"
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice235-c157-real-core-normal-same-key-actual/ACCEPTED-ACTUAL-MODULE.json",
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice236-c301-history-host-composition/RESULT.json",
+      "sha256": "81ddfa7c61c83e6451b2665a4ebfae208ea3f30525293c5d418ef32b7c5b690e",
+      "result": "LIMITED_SOURCE_HOST_PASS_ONLY",
+      "scope": "301 exact3 composition; v14 failclosed HREV, no actual writer"
+    }
   ],
   "newPendingReviews": [
     "C139fixed293 actualNORMAL/replay/login under QB228 newmetadata; no oldnegative replay",
@@ -4369,9 +4427,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T10:13:06.745964+00:00",
-    "sourceRound": 302,
-    "sourceCheckpoint": "c535fd0b801cb6bbb6ab6587d5e8ff3b87f8d4fa",
+    "atUtc": "2026-10-24T11:29:21.184294+00:00",
+    "sourceRound": 305,
+    "sourceCheckpoint": "fb47538393eee50023f2712b076cb14d5d516ceb",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -4392,10 +4450,10 @@
       "actualBrowser": "QF299_THREE_RESIDUALS_LIMITED_ACTUAL_PASS_NOT_WHOLE"
     },
     "nextPreview": {
-      "status": "CURRENT299_SERVED",
-      "next": "No rebuild for completed three residuals; next complete ready page only"
+      "status": "NEW_COMPLETE_MODULE_CANDIDATE_NEEDED",
+      "next": "From fixed303/304 packages + released sharedseam, no mutable WIP"
     },
-    "r1": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
+    "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
@@ -7092,9 +7150,9 @@
     }
   },
   "latestReadySource": {
-    "round": 302,
-    "commit": "c535fd0b801cb6bbb6ab6587d5e8ff3b87f8d4fa",
-    "qualification": "302partialtransferFRAME WIP,2DOMfail atNode24.19 preserved, no wholepagepass.301 historyhostseam failsclosed without HREV.300importer CORE actualpassed. Installed/browser299 remains separatevalidexactcandidate."
+    "round": 305,
+    "commit": "fb47538393eee50023f2712b076cb14d5d516ceb",
+    "qualification": "303F3exact2/304F2exact1/305F1exact2 limitedhandoffs, no wholepage pass. SharedF1/unrelated test WIP preserved. App/browser299 separate."
   },
   "pendingUserDecision": [
     {
@@ -7175,7 +7233,13 @@
       "wholeOverlaysAccepted": 0,
       "partialOrDifferenceCheckedPages": 34,
       "notRunOrWaitingPages": 3,
-      "qualification": "34是局部检查/差异覆盖，不等于已迁入34页。逐页迁入完成/部分/未开始由原QF按源复用+正常入口证据补齐；未知不得冒称完成或未开始。"
+      "qualification": "QFv112: pages2sourceUI/routerpending+20partial+2approvednew+13unknown=37; overlays0+15+2+50=67. Old34 checkcoverage not migration. Unknown not unstarted.",
+      "sourceUIPortedRouterPendingPages": 2,
+      "partialSourceUIPages": 20,
+      "approvedNewWithoutDemoPages": 2,
+      "unknownMigrationPages": 13,
+      "partialOrSourceOnlyPages": 22,
+      "pendingClassificationOrNewPages": 15
     },
     "states": [
       "新建",
@@ -7204,8 +7268,8 @@
           "S03",
           "S04"
         ],
-        "current": "公用页壳及T01-T03调拨整页全状态，正常入口",
-        "next": "S01-S04销货退换整页全状态；A01/A02公壳账号菜单"
+        "current": "Solmedium shared controller/configuration/mount CATEGORY/COLOR/FIT capability seam",
+        "next": "LunaMAX entire transfer BODY/allstate normal routes then sales/returns and common9pages"
       },
       "F2": {
         "pages": [
@@ -7224,8 +7288,8 @@
           "P12",
           "P13"
         ],
-        "current": "I01库存整页、筛选结果矩阵输出流水弹层",
-        "next": "P01-P13商品列表及六页签编辑/查看全部"
+        "current": "LunaMAX P01-P13 product list and six tabs; I01 source304 handedC",
+        "next": "Solmedium normal wiring then QF2 fullmodule affected evidence"
       },
       "F3": {
         "pages": [
@@ -7238,8 +7302,8 @@
           "B07",
           "B08"
         ],
-        "current": "B01/B02厅仓整页全状态，真实CORE资料已就绪",
-        "next": "B03/B08客供、B04/B07员工账号、B05/B06收款资金"
+        "current": "LunaMAX B03/B08 customer/supplier; B01/B02 source303 handedC",
+        "next": "Solmedium wiring; staff/accounts/funds/payment remaining8page scope"
       },
       "F4": {
         "pages": [
@@ -7250,8 +7314,8 @@
           "P18",
           "P19"
         ],
-        "current": "P14分类整页及排序撤销弹层",
-        "next": "P15-P18四字典与P19条码方案整页"
+        "current": "P14-P19 six source packages delivered; waitF1 sharedHost",
+        "next": "C fixed candidate then QF2 missing normal-entry actual; no duplicate sixpage review"
       }
     },
     "historyEditing": {
@@ -7284,10 +7348,10 @@
     "acceptance": "整页合批独立一次，只新改失败受影响，复用有效同版证据；1冷2重复，正式查询<=2000ms，服务端传输解析渲染分计。",
     "reportFormat": "页面｜迁入未开始/部分/完成｜状态覆盖｜接口未接/只读/可写｜验收｜发布｜卡点owner下一步。全站页/弹层分开，旧UI分支点名。",
     "extraAgents": "不新增镜像团队/多层助手；不为拷贝hash打包开agent。原137复杂helper已交付释放，后续C直接脚本。",
-    "goalToolLimit": "active goal工具只有状态修改无objective正文编辑；不假完成换卡。TASKS当前口径覆盖旧卡35/65与xhigh。",
-    "atUtc": "2026-10-24T10:27:22.773479+00:00",
+    "goalToolLimit": "Human edited live goal successfully; current ACTIVE objective verified37/67 and LunaMAX/Solmedium. Earlier old-card35/65 notes historical.",
+    "atUtc": "2026-10-24T11:29:21.184294+00:00",
     "dispatchObserved": {
-      "frontend4": "All4 UI-phase LunaMAX delivered source/partialpackages; current same4Chats explicitly switchedSol61medium forinterfaces/states. No newChats/helpers.",
+      "frontend4": "F1 activeSolmedium sharedHost; F2P01-P13/F3B03B08 actuallydispatched LunaMAX; F4awaitsF1 sixsourcepackagesready. No newChats/helpers.",
       "backend": "D1D2D3QB explicitSol61medium accepted; in-flight oldresults preserved",
       "QF": "Originalmatrix task resumed after idlewhite-only final; no duplicatecase orGUI",
       "QF2": "Existingevidence transfer completed, waitsfullmodule candidate",
@@ -7296,8 +7360,10 @@
   },
   "currentGoal": {
     "status": "ACTIVE",
-    "objective": "全站37页+67类弹层及有效新增整页直接迁入冻结Demo，全部适用状态接正常入口与真实业务，历史按权限可编辑，业务权限数据性能通过后原网址分批上线并完成Dot交接。",
-    "latestAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
+    "objective": "你是奈爵 ERP 重构主控。持续执行现有任务，保留当前成果、在途工作和有效验收，不重新开工、不另建一套团队。以下目标覆盖此前冲突的局部修补范围及模型档位。\n\n最终目标：全站整套迁入冻结 Demo 界面，接通新后端、真实数据和业务操作，让系统在原正式网址实际可用；历史单据按权限可编辑，必要性能验证完成，持续保存 GitHub 检查点和 Dot 接续说明。允许分批上线，但不能缩小全站最终范围。\n\n一、界面整页迁入\n\n冻结 Demo 为同项目“奈爵服饰-8877-Demo”，基线 commit：\\\nb8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3。\n\nDemo 只读，直接复用其页面结构、布局、样式、控件和交互。开发使用现行重构工程：\\\n/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022\n\n沿用已确定的架构、React19、Arco、正式接口和业务合同。迁入界面时保留新系统的数据访问、权限、事务、精确运算和性能机制，不把 Demo 的旧业务底层整套搬回来，不重新选架构。\n\n范围包括全站37页、67类弹层及已批准新增功能，发现遗漏补登记：\n\n- F1：公共壳、账号菜单、调拨、销货及退换，共9页。\n- F2：库存、商品列表及全部商品页签，共14页。\n- F3：营业厅、仓库、客户、供应商、员工、账号、收款和资金配置，共8页。\n- F4：分类、颜色、尺码组、版型、季节、条码方案，共6页。\n\n每页覆盖全部适用状态：新建、查看、编辑、已保存未审核、已审核、弃审后、作废、历史，以及加载、空、错误、恢复和相关弹层。\n\n迁入必须接到正常默认入口。同业务、同状态与 Demo 对照，不能仅特殊预览参数显示新页面，其他入口或状态继续使用不同的旧界面。只复制标题、工具栏或共用页框，正文仍未迁入的，标为“部分完成”。\n\n已经直接复用且有有效一致性证据的部分保留，不为证明工作量重复抄写。仍有系统性差异的页面，先完成整页复用与接入，不再依赖用户逐条截图、逐项修补。\n\n用户已经提出的全部差异及后续有效裁决继续落实，包括公共账号菜单、真实多选、“全部”选项、查询条件修改提示、显示版型时必要查询、完整尺码组、多尺码组兼容、颜色小计与商品合计、流水、导出打印、日期控件、历史分类、单据字段编辑等。Demo 自身已被用户明确纠正的行为按新裁决实现。\n\n二、后端、真实数据与历史编辑\n\n最终目标必须包含后端和真实业务链路，不能只推进前端。\n\nD1、D2、D3按既有职责完成正式宿主与接口能力、基础资料维护、权限、事务、库存与流水、保存、审核、弃审、作废、历史修订及已批准真实数据的导入、读回和对账。\n\n明确区分：\n\n- 真实数据来源包已准备；\n- 程序和接口已实现；\n- 真实数据库已导入并读回；\n- 前端正常入口已接通；\n- 正式环境已部署并可操作。\n\n合成数据、健康检查、源码检查和基础资料导入，不能代替完整业务数据与正式业务链路的完成证明。\n\n历史单据可编辑是本轮必交。沿用B07受控修订与有效投影合同，原始来源保留，修订记录有真实操作人、原因、版本和前后值；库存按差额处理，金额单改不动库存，调拨守恒，历史基线不重复过账。展示创建者与真实审计操作人分开。\n\n已明确要求的未审核单据日期、调出仓库、调入仓库、创建者等可编辑需求纳入实现。真正新增或改变表字段、约束、写合同的准确差异，一次汇总给用户确认；仅暂停依赖确认的分支，其他工作继续，不重复询问功能是否需要。\n\n三、性能、组件与结构\n\n落实按需加载、按需请求、按需渲染：点击相应页面或功能才加载必要内容，不能提前读取和渲染全站数据。\n\n服务端筛选、分页、汇总与实际授权数据规模匹配。复用共同组件和状态实现，避免同一业务多个界面分支长期不一致。\n\n导出打印必须覆盖合同要求的结果，不能只导出当前可见页。保留已完成的性能优化，只针对新增影响和实际问题补必要测量，不凭源码推断性能通过，不借此重写框架或新增庞大基础设施。\n\n四、模型、并行与交接\n\n实际使用以下档位，覆盖旧统一xhigh安排：\n\n- 纯界面搬运、样式素材整理、明确标准下的外观核对：Luna-MAX，gpt-6-luna/max。\n- 接口接线、交互状态、后端数据库、权限、历史编辑、性能、集成发布及主控技术调度：Sol6.1-medium，gpt-6.1-sol/medium。\n\n每次派工、接续和重试实际指定，不继承旧档位、不自行升级。工具无法切换时如实说明，不用修改文档冒充实际切换。\n\n复用现有开发和验收Chat，不开镜像团队、多层助手，不为复制、哈希、清单或打包单独开智能体。文件保持唯一owner，共享宿主、合同和根配置由登记owner修改。\n\n工作顺序：Sol明确接入边界→Luna迁入整页界面→Sol接通功能→Luna核对外观→Sol完成必要业务和性能验证。\n\n主控负责接缝：界面交付后，直接安排同Chat接续技术阶段；完整模块就绪即交原验收Chat，同时推进下一整页包。不能把SOURCE_UI_READY当整页完成，也不能交完源码后长期无人接线。\n\n先检查F1、F4及其他角色当前在途任务，避免重复派工。确有阻塞时列明缺口、责任人、解除条件，并继续其他独立就绪工作。\n\n五、最小验收与快速上线\n\n按完整模块合批验收。复用同版本、同范围的有效证据，只复验新增、失败及受影响项，主控采用有效结论，不重复技术验收。\n\n保留必要的权限、数量金额、保存审核、数据读回和性能验证。不得删测试、放宽断言、隐藏缺陷或使用假数据冒充真实链路通过。已延期的长压测等项目不重新设为上线前置。\n\n具备条件的完整模块按已有授权，在原正式网址分批测试和发布：\\\n[https://1n5635n614.goho.co/#inventory](https://1n5635n614.goho.co/#inventory)\n\n保留现有备份、恢复和数据保护要求，不重复索要同范围授权。某模块可以先上线，其他模块继续推进；分批上线不能变成永久遗漏。\n\n六、GitHub、汇报和完成条件\n\n每完成一段，即使测试失败或尚未完成，也保存允许上传的源码WIP和简明进度到GitHub并核实远端；明确已通过、失败、未测，不能为了提交伪装通过。不上传真实业务数据、凭据和密钥。\n\n同步现有TASKS.json、PROGRESS.md、HANDOFF.md，让Dot或其他主控能直接知道源码版本、已完成范围、缺口、责任人和下一步，不需要重新审查全部历史。\n\n每次汇报分别说明：\n\n- 哪些页面整页迁入完成，哪些仍部分迁入，哪些状态还走旧界面；\n- 哪些已接只读、哪些已接可写；\n- 哪些已验收、哪些已正式发布；\n- 后端、真实数据、历史编辑和性能还缺什么；\n- 正在执行什么，卡点由谁处理，下一步是什么。\n\n不要用局部检查数量代替整页完成数量，不要只报前端。\n\n整体完成必须同时满足：\n\n1. 全站登记页面、弹层及有效新增范围完成迁入，全部适用状态从正常入口可用，前后端真实业务、历史编辑、数据对账和必要性能满足现行合同；正式部署版本明确，上线必要阻塞关闭。\n2. 最新允许上传成果已保存GitHub，Dot接续记录完整，遗留和延期项如实披露。\n\n完成任务包、交源码、局部测试通过、暂时没有可派任务，都不能单独作为整体完成理由。目标未达成时继续推进；真实阻塞如实说明，不能标记完成。\n\n若工具不能直接修改现有目标卡正文，保持原目标ACTIVE，将这份正文作为现有执行记录的当前权威目标，不通过假完成再创建来换卡。",
+    "latestAuthority": "HUMAN_EDITED_LIVE_GOAL_VERIFIED_20261024",
+    "liveGoalUpdatedAt": 1792840499,
+    "verifiedAtUtc": "2026-10-24T11:29:21.184294+00:00"
   },
   "historyHeaderProposal": {
     "status": "PROPOSED_NOT_APPROVED_NOT_YET_ASKED_USER",
@@ -7336,5 +7402,9 @@
     "inventoryLedgerQueryReaderServiceContractsProtocol": "D3 retained, D2no transfer/no write",
     "numericHistoryStoreAndGuards": "D1",
     "historyContractsReaderServiceHTTP": "D3"
+  },
+  "runtimeApproved": {
+    "node24_21": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node",
+    "source": "Existing approved runtime"
   }
 }
