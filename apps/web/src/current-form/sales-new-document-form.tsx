@@ -25,7 +25,7 @@ export function SalesNewDocumentForm({ session, scope, close, historyReader, pro
     return !rejectedCreate || session.editor.discardEditor(true);
   };
   const closeSource = () => { if (rejectedCreate && !commands.hasUnresolvedWrite) session.editor.discardEditor(true); close(); };
-  return <SalesProposalForm session={session.proposal} scope={scope} close={closeSource} {...(product ? { product } : {})}
+  return <SalesProposalForm identity={{ ...(session.editor.responsibleStaff ? { capability: session.editor.responsibleStaff } : {}), onAccessFailure: session.editor.responsibleAccessFailure }} session={session.proposal} scope={scope} close={closeSource} {...(product ? { product } : {})}
     navigationLeave={{ canDiscard, discard: discardSource }}
     preparation={{ save: () => { void session.save(); }, disabled: !canSave, preparing: state.preparing, notice: state.notice, cancel: () => session.cancelPreparation(), feedback }} />;
 }

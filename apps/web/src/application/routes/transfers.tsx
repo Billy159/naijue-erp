@@ -55,6 +55,7 @@ export function prepareTransferSession(input: RoutePreparation, onAccessFailure:
     || configuration.existingPreparation && typeof configuration.existingPreparation.prepareExisting !== 'function'
     || configuration.manualCreate !== undefined && configuration.manualCreate !== true) throw new TypeError('Explicit transfer command capability is required.');
   const workspace = new TransferCommandWorkspace({ scope: input.scope, reader: createTransferHttpReader(input.http), client: createTransferCommandHttpClient(input.http), newRequestKey: configuration.newRequestKey, onAccessFailure,
+    ...(configuration.responsibleStaff ? { responsibleStaff: configuration.responsibleStaff } : {}),
     ...(configuration.existingPreparation ? { existingPreparation: configuration.existingPreparation, existingReader: createCurrentFormHttpReader(input.http) } : {}) });
   const newDocumentAccessFailure = (error: HttpQueryError) => onAccessFailure(new TransferCommandError(error.kind === 'unauthenticated' ? 'unauthenticated' : 'forbidden', error.kind === 'unauthenticated' ? 'UNAUTHENTICATED' : 'FORBIDDEN', 'read'));
   let currentNewDocument: TransferNewDocumentSession | null = null;

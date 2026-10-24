@@ -35,7 +35,8 @@ function choice(value: unknown, choices: readonly unknown[]): void { if (!choice
 export function validateSalesDraft(value: unknown): SalesDraftDto {
   const copy: unknown = structuredClone(value);
   const root = object(copy, ['header', 'lines', 'settlements']);
-  const h = object(root.header, ['id', 'number', 'businessType', 'businessDate', 'hallId', 'customerId', 'salespersonId', 'warehouseId', 'grossAmount', 'orderDiscount', 'netDue', 'note']);
+  const h = object(root.header, ['id', 'number', 'businessType', 'businessDate', 'hallId', 'customerId', 'salespersonId', 'warehouseId', 'grossAmount', 'orderDiscount', 'netDue', 'note', ...(typeof root.header === 'object' && root.header !== null && Object.hasOwn(root.header, 'responsibleStaffId') ? ['responsibleStaffId'] : [])]);
+  if (Object.hasOwn(h, 'responsibleStaffId')) id(h.responsibleStaffId);
   id(h.id); text(h.number); if (!h.number.length) invalid(); choice(h.businessType, ['SALE', 'RETURN', 'EXCHANGE']); text(h.businessDate); businessDate(h.businessDate);
   id(h.hallId); id(h.customerId); if (h.salespersonId !== null) id(h.salespersonId); id(h.warehouseId);
   exact(h.grossAmount); exact(h.orderDiscount, true); exact(h.netDue); if (h.note !== null) text(h.note);

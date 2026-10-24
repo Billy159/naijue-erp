@@ -16,6 +16,7 @@ export function prepareSalesCommandSession(input: RoutePreparation, onAccessFail
     || commands.preparation && (typeof commands.preparation.prepareCreate !== 'function' || typeof commands.preparation.prepareEdit !== 'function') || commands.existingPreparation && typeof commands.existingPreparation.prepareExisting !== 'function' || commands.manualCreate !== undefined && commands.manualCreate !== true) throw new TypeError('Explicit sales command capability is required.');
   const reader = createSalesHttpReader(input.http);
   const workspace = new SalesEditorSession({ scope: input.scope, principal: input.principal, reader,
+    ...(commands.responsibleStaff ? { responsibleStaff: commands.responsibleStaff } : {}),
     client: createSalesCommandHttpClient(input.http), newRequestKey: commands.newRequestKey, onAccessFailure,
     ...(commands.preparation ? { preparation: commands.preparation } : {}),
     ...(commands.existingPreparation ? { existingPreparation: commands.existingPreparation, existingReader: createCurrentFormHttpReader(input.http) } : {}) });

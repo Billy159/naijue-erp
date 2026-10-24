@@ -36,7 +36,7 @@ function SavedTransferDocument({ model, ...props }: TransferCommandFormProps & {
     <DocumentOutputActions sourceKey={`${original.document.header.id}:${original.document.header.version}`} {...(!dirty ? { getDocument: () => transferDocumentOutput(original) } : {})} unavailableReason="请先保存并采用当前单据" />
     <TransferHistoryAction {...(props.history ? { capability: props.history } : {})} transferId={original.document.header.id} />
   </>;
-  return <><TransferProposalForm {...props.presentation} scope={props.scope} creatorName={original.references.createdByName ?? '未知'} responsibleName={original.references.responsibleName} session={state.proposal} close={leave}
+  return <><TransferProposalForm {...props.presentation} scope={props.scope} identity={{ creatorName: original.references.createdByName, responsible: original.document.header.responsibleStaffId ? { id: original.document.header.responsibleStaffId, name: original.references.responsibleName } : null, ...(workspace.responsibleStaff ? { capability: workspace.responsibleStaff } : {}), onAccessFailure: workspace.responsibleAccessFailure }} session={state.proposal} close={leave}
     navigationLeave={{ canDiscard: !state.preparing && workspace.editableExistingProposal,
       discard: () => props.scope.active && workspace.existingDocument === model && !model.getSnapshot().preparing && workspace.discardEditor() }}
     saved={{ number: original.document.header.number, beforeSave, actions, records: <TransferSavedRecords data={original} />, ...(native.notice ? { feedback: <p role="status">{native.notice}</p> } : {}) }}

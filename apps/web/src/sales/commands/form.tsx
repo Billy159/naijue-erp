@@ -1,3 +1,4 @@
+import { DocumentResponsibilityFields } from '../../components/document-responsibility.tsx';
 import { SalesDocumentColumns, SalesDocumentColumnHead, SalesDocumentPresentation, SalesDocumentSummary, SalesProductPresentation, salesPaymentBalance, salesPaymentKind, salesDisplayedDiscount, salesRawLinePrice, salesDocumentType, type SalesProductCapability } from '../document-presentation.tsx';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import { SourceDocumentDialog, StandardOverlay } from '../../components/standard-overlay.tsx';
@@ -58,6 +59,9 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
   const lock = !session.editable, stable = !!editor?.detail && editor.phase === 'ready' && !editor.current && !command.stale && !unresolved
     && write.phase !== 'committed' && editor.detail.stockBasis === 'RUNTIME_LEDGER';
   const names = detail?.referenceNames, settlementNames = new Map<string, SalesDetailDto['settlementNames'][number]>(detail?.settlementNames.map(row => [row.settlementId, row]));
+  const responsibleId = savedReadback ? savedReadback.document.header.responsibleStaffId : base?.header.responsibleStaffId ?? detail?.document.header.responsibleStaffId ?? null;
+  const selectedResponsible = session.existingDocument?.getSnapshot().proposal?.getSnapshot().draft.responsible;
+  const responsibleLabel = !savedReadback && selectedResponsible?.id === responsibleId ? selectedResponsible.name : responsibleId === detail?.document.header.responsibleStaffId ? names?.responsibleName ?? null : null;
   const change = (next: SalesFormInput) => { session.updateInput(next); };
   const changeLine = (id: string, patch: Partial<SalesFormInput['lines'][number]>) => { if (input) change({ ...input, lines: input.lines.map(row => row.id === id ? { ...row, ...patch } : row) }); };
   const field = (label: string, content: ReactNode, className = '') => <div className={`tc-gold-field ${className}`}><span className="sale-field-label">{label}</span>{content}</div>;
@@ -102,6 +106,7 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
       {field('营业厅', read(names?.hallName))}{field('营业员', read(names?.salespersonName ?? (header.salespersonId === null ? '未指定' : null)))}
       {field('客户', read(names?.customerName))}{field('出库仓', read(names?.warehouseName))}
       {field('单号', <strong className="sale-number-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong>, 'sale-number-field')}
+      <DocumentResponsibilityFields {...(scope ? { scope } : {})} saved={!!detail || write.phase === 'committed'} creatorName={names?.createdByName ?? null} value={responsibleId ? { id: responsibleId, name: responsibleLabel } : null} readOnly valueClassName="sale-read-value" />
       {field('整单优惠 / 抹零', input ? <UIInput className="iw-control" aria-label="整单优惠 / 抹零" inputMode="decimal" value={input.orderDiscount} disabled={lock || header.businessType !== 'SALE'} onChange={nextValue => change({ ...input, orderDiscount: nextValue })} /> : read(salesInputMoney(header.orderDiscount)), 'sale-discount-field')}
       {field('应结金额', <strong className="sale-due-value">{due === null ? '输入尚未校验' : `${due.startsWith('-') ? '-¥' : '¥'}${salesInputMoney(due.replace(/^-/, ''))}`}</strong>, 'sale-due-field')}
       {field('收款', <><div className="sale-payment-rows">{settlements.map(row => {

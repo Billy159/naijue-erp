@@ -1,3 +1,4 @@
+import { DocumentResponsibilityFields } from '../components/document-responsibility.tsx';
 import { SalesDocumentColumns, SalesDocumentColumnHead, SalesDocumentPresentation, SalesDocumentSummary, SalesProductPresentation, salesPaymentBalance, salesPaymentKind, type SalesProductCapability } from './document-presentation.tsx';
 import { DocumentOutputActions } from '../components/document-output.tsx';
 import { salesDocumentOutput } from '../components/document-output-contracts.ts';
@@ -42,6 +43,7 @@ function DetailFacts({ data, scope, close, history, product }: { readonly scope:
       {field('客户', data.referenceNames.customerName)}
       {field('出库仓', data.referenceNames.warehouseName)}
       <label className="tc-gold-field tc-gold-meta sale-number-field"><span className="sale-field-label">单号</span><strong className="sale-number-value">{header.number}</strong></label>
+      <DocumentResponsibilityFields scope={scope} saved creatorName={data.referenceNames.createdByName} value={header.responsibleStaffId ? { id: header.responsibleStaffId, name: data.referenceNames.responsibleName } : null} readOnly valueClassName="sale-read-value" />
       {field('整单优惠 / 抹零', header.businessType === 'SALE' ? `¥${salesMoney(header.orderDiscount)}` : '', 'sale-discount-field')}
       <label className="tc-gold-field sale-due-field"><span className="sale-field-label">应结金额</span><strong className="sale-due-value" data-sale-due>{header.netDue.startsWith('-') ? '-¥' + salesMoney(header.netDue.slice(1)) : '¥' + salesMoney(header.netDue)}</strong></label>
       <div className="tc-gold-field sale-payment-field" data-funds-field><span className="sale-field-label">收款</span><div className="sale-payment-rows">{settlements.map(line => {

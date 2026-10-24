@@ -1,3 +1,4 @@
+import { DocumentResponsibilityFields } from '../../components/document-responsibility.tsx';
 import { DocumentProductPresentation } from '../../sales/document-presentation.tsx';
 import { useDocumentLeave } from '../../demo-presentation/document-navigation.tsx';
 import { TransferDocumentBody, TransferDocumentPage, TransferDocumentSummary } from '../document-presentation.tsx';
@@ -70,6 +71,9 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
   const leave = () => { if (unresolved) return; if (dirty) setDiscard(true); else if (workspace.canLeave()) { workspace.suspend(); close(); } };
   const lines = savedReadback?.document.lines ?? editor.draft?.lines ?? detail?.document.lines ?? [];
   const names = detail?.references;
+  const responsibleId = savedReadback ? savedReadback.document.header.responsibleStaffId : editor.draft?.header.responsibleStaffId ?? detail?.document.header.responsibleStaffId ?? null;
+  const selectedResponsible = workspace.existingDocument?.getSnapshot().proposal?.getSnapshot().draft.responsible;
+  const responsibleLabel = !savedReadback && selectedResponsible?.id === responsibleId ? selectedResponsible.name : responsibleId === detail?.document.header.responsibleStaffId ? names?.responsibleName ?? null : null;
   return <DocumentProductPresentation scope={scope} {...(presentation?.productCapability ? { capability: presentation.productCapability } : {})} returnLabel="返回调拨单" viewLabel="调拨商品查看" documentLabel="调拨">{openProduct => <TransferDocumentPage headingRef={heading} ariaLabel="调拨单编辑" className="transfer-command-editor"
     title={editor.mode === 'CREATE' && !detail && write.phase !== 'committed' ? '新增调拨单' : locked ? '查看调拨单' : '编辑调拨单'} status={<TransferStatusTag status={status} />}
     saveState={(detail || write.phase === 'committed') && <span className="transfer-save-state">{status === 'APPROVED' ? '' : dirty ? '· 有未保存修改' : '· 已保存'}</span>}
@@ -90,8 +94,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
         <div className="tc-gold-field"><span>调出仓库</span><span className="transfer-read-value" title={names?.fromWarehouseName ?? undefined}>{names?.fromWarehouseName ?? '仓库名称未提供'}</span></div>
         <div className="tc-gold-field"><span>调入仓库</span><span className="transfer-read-value" title={names?.toWarehouseName ?? undefined}>{names?.toWarehouseName ?? '仓库名称未提供'}</span></div>
         <div className="tc-gold-field tc-gold-doc-number"><span>单号</span><strong className="transfer-read-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong></div>
-        <div className="tc-gold-field"><span>创建者</span><span className="transfer-read-value">{names?.createdByName ?? (detail ? '未知' : '保存后记录')}</span></div>
-        <div className="tc-gold-field"><span>负责人</span><span className="transfer-read-value" title="负责人修改尚未接通">{names?.responsibleName ?? '未知'}</span></div>
+        <DocumentResponsibilityFields scope={scope} saved={!!detail || write.phase === 'committed'} creatorName={names?.createdByName ?? null} value={responsibleId ? { id: responsibleId, name: responsibleLabel } : null} readOnly />
         <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="当前商品选择及原生条码读取尚未接入">扫码录入</UIButton></div>
       </div> : undefined}
       note={header && <label className="tc-note-row"><span>备注</span>{input ? <UIInput aria-label="备注" className="iw-control transfer-note-input" maxLength={10000} value={input.note} disabled={locked} onChange={nextValue => update({ ...input, note: nextValue })} /> : <span className="tc-note-read">{header.note || '—'}</span>}</label>}

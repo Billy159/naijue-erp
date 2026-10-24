@@ -10,14 +10,15 @@ import { TransferProposalSession, type TransferProposal } from './transfer-propo
 export interface TransferCreatePreparation { prepareCreate(proposal: NativeTransferCreateProposal, signal: AbortSignal): Promise<TransferDraftDto> }
 export function transferPreparationIntent(proposal: TransferProposal): NativeTransferCreateProposal {
   if (!proposal.from || !proposal.to) throw new TypeError('Select both warehouses.');
-  return frozenSnapshot({ businessDate: proposal.businessDate, note: proposal.note === '' ? null : proposal.note,
+  return frozenSnapshot({ ...(proposal.responsible ? { responsibleStaffId: proposal.responsible.id } : {}), businessDate: proposal.businessDate, note: proposal.note === '' ? null : proposal.note,
     fromWarehouseId: proposal.from.id, toWarehouseId: proposal.to.id,
     lines: proposal.lines.map(row => { if (!row.sku) throw new TypeError('Local specifications require native SAVE.'); return { skuId: row.sku.id, quantity: row.quantity }; }) });
 }
 function checkedIntent(input: NativeTransferCreateProposal): NativeTransferCreateProposal {
   const value = structuredClone(input);
-  if (!value || Object.keys(value).sort().join() !== 'businessDate,fromWarehouseId,lines,note,toWarehouseId'
+  if (!value || Object.keys(value).sort().join() !== ['businessDate','fromWarehouseId','lines','note','toWarehouseId', ...(Object.hasOwn(value, 'responsibleStaffId') ? ['responsibleStaffId'] : [])].sort().join()
     || value.note !== null && (typeof value.note !== 'string' || value.note.length > TRANSFER_PREPARE_MAX_NOTE_LENGTH)) throw new TypeError('Invalid create proposal.');
+  if (Object.hasOwn(value, 'responsibleStaffId')) entityId('staff', value.responsibleStaffId!);
   businessDate(value.businessDate); entityId('warehouse', value.fromWarehouseId); entityId('warehouse', value.toWarehouseId);
   if (value.fromWarehouseId === value.toWarehouseId || !Array.isArray(value.lines) || !value.lines.length || value.lines.length > TRANSFER_PREPARE_MAX_LINES) throw new TypeError('Invalid create proposal.');
   const ids = new Set<string>();
@@ -29,7 +30,7 @@ function checkedIntent(input: NativeTransferCreateProposal): NativeTransferCreat
 }
 function checkedPreparation(value: unknown, intent: NativeTransferCreateProposal): TransferDraftDto {
   const draft = validateTransferDraft(value), h = draft.header;
-  if (h.businessDate !== intent.businessDate || h.note !== intent.note || h.fromWarehouseId !== intent.fromWarehouseId || h.toWarehouseId !== intent.toWarehouseId
+  if (h.responsibleStaffId !== intent.responsibleStaffId || h.businessDate !== intent.businessDate || h.note !== intent.note || h.fromWarehouseId !== intent.fromWarehouseId || h.toWarehouseId !== intent.toWarehouseId
     || draft.lines.length !== intent.lines.length || draft.lines.some((row, index) => row.skuId !== intent.lines[index]!.skuId || row.quantity !== intent.lines[index]!.quantity
       || row.lineNo !== index + 1 || typeof row.snapshot.barcode !== 'string' || !row.snapshot.barcode.trim())) throw new TypeError('Preparation does not match the selected intent.');
   return draft;

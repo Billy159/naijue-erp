@@ -8,6 +8,7 @@ import { SalesCommandError } from './contracts.ts';
 import { SalesCommandWorkspace } from './controller.ts';
 import { compileSalesForm, salesFormInput, type SalesFormInput } from './form-model.ts';
 import { frozenSnapshot } from './validation.ts';
+import type { DocumentResponsibleStaffCapability } from '../../application/contracts.ts';
 
 export interface SalesEditorSnapshot {
   readonly command: SalesCommandSnapshot; readonly input: SalesFormInput | null;
@@ -16,12 +17,15 @@ export interface SalesEditorSnapshot {
   readonly viewOnly: boolean;
 }
 export interface SalesEditorSessionOptions extends SalesCommandWorkspaceOptions {
+  readonly responsibleStaff?: DocumentResponsibleStaffCapability;
   readonly principal: AuthenticationPrincipal; readonly preparation?: SalesFormPreparationProvider;
   readonly existingPreparation?: SalesExistingPreparation; readonly existingReader?: ReturnType<typeof createCurrentFormHttpReader>;
 }
 /** Session owner for BOTH invalid raw input and the original native operation.
  * Route unmount never discards either. Current references are not fabricated. */
 export class SalesEditorSession {
+  get responsibleStaff(): DocumentResponsibleStaffCapability | undefined { return this.#options.responsibleStaff; }
+  readonly responsibleAccessFailure = (kind: 'unauthenticated' | 'forbidden'): void => { this.#options.scope.dispose(); try { this.#options.onAccessFailure(new SalesCommandError(kind, kind === 'unauthenticated' ? 'UNAUTHENTICATED' : 'FORBIDDEN', 'read', kind === 'unauthenticated' ? 401 : 403)); } catch { /* identity already retired */ } };
   readonly commands: SalesCommandWorkspace;
   readonly #options: SalesEditorSessionOptions;
   readonly #listeners = new Set<() => void>();

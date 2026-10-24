@@ -318,9 +318,20 @@ export class ApplicationController {
     const scope = this.#context.createScope(`application-route-${++this.#sequence}`);
     this.#publish({ phase: 'loading', route, scope, prepared: null, notice: null });
     const principal = this.authentication.getSnapshot().principal!;
-    const input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope, route), ...(initialDocument ? { initialDocument } : {}) };
+    let input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope, route), ...(initialDocument ? { initialDocument } : {}) };
     try {
       let prepared: PreparedApplicationRoute;
+      if (principal.role !== 'ADMIN') {
+        const sales = input.configuration.sales, transfers = input.configuration.transfers;
+        if (sales?.commands?.responsibleStaff) {
+          const { responsibleStaff: _staff, ...commands } = sales.commands;
+          input = { ...input, configuration: { ...input.configuration, sales: { ...sales, commands } } };
+        }
+        if (transfers?.commands?.responsibleStaff) {
+          const { responsibleStaff: _staff, ...commands } = transfers.commands;
+          input = { ...input, configuration: { ...input.configuration, transfers: { ...transfers, commands } } };
+        }
+      }
       if (route === 'inventory') prepared = (await this.#leaves.load('inventory', scope)).prepareInventoryRoute(input, error => this.#readAccessFailure(scope, error.kind), { ...(trip ? { initialProduct: trip.request.product, returnToProduct: () => this.#returnFromInventory(scope, trip) } : {}), onOpenSource: entry => this.#openLedgerSource(scope, entry) });
       else if (route === 'sales') {
         const module = await this.#leaves.load('sales', scope);

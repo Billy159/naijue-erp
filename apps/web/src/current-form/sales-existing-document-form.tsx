@@ -40,7 +40,7 @@ function SavedSalesDocument({ model, ...props }: SalesCommandFormProps & { reado
     <DocumentOutputActions sourceKey={`${original.document.header.id}:${original.document.header.version}`} {...(!dirty ? { getDocument: () => salesDocumentOutput(original) } : {})} unavailableReason="请先保存并采用当前单据" />
     <SalesHistoryAction {...(props.history ? { capability: props.history } : {})} salesId={original.document.header.id} />
   </>;
-  return <><SalesProposalForm session={state.proposal} close={leave} {...(props.scope ? { scope: props.scope } : {})} {...(props.product ? { product: props.product } : {})}
+  return <><SalesProposalForm identity={{ creatorName: original.referenceNames.createdByName, responsible: original.document.header.responsibleStaffId ? { id: original.document.header.responsibleStaffId, name: original.referenceNames.responsibleName } : null, ...(props.session.responsibleStaff ? { capability: props.session.responsibleStaff } : {}), onAccessFailure: props.session.responsibleAccessFailure }} session={state.proposal} close={leave} {...(props.scope ? { scope: props.scope } : {})} {...(props.product ? { product: props.product } : {})}
     navigationLeave={{ canDiscard: !state.preparing && props.session.editable, discard: () => props.session.discardEditor(true) }}
     saved={{ number: original.document.header.number, beforeSave, actions, ...(native.editor?.readError ? { feedback: <p role="alert">当前单据未能重新读取，本次输入已保留。可再次取消修改以重新读取；尚未采用其他资料。</p> } : native.notice || owner.notice ? { feedback: <p role="status">{owner.notice ?? native.notice}</p> } : {}) }}
     preparation={{ preparing: state.preparing, disabled: !props.session.editable, notice: state.notice, save: () => { void props.session.save(); }, cancel: () => model.cancelPreparation() }} />

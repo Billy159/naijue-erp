@@ -13,7 +13,8 @@ function id(value: unknown): asserts value is string { if (!validTransferId(valu
 function array(value: unknown, maximum: number): readonly unknown[] { if (!Array.isArray(value) || value.length > maximum) invalid(); return value; }
 export function validateTransferDraft(value: unknown): TransferDraftDto {
   const copy: unknown = structuredClone(value), root = object(copy, ['header', 'lines']);
-  const h = object(root.header, ['id', 'number', 'businessDate', 'fromWarehouseId', 'toWarehouseId', 'note']);
+  const h = object(root.header, ['id', 'number', 'businessDate', 'fromWarehouseId', 'toWarehouseId', 'note', ...(typeof root.header === 'object' && root.header !== null && Object.hasOwn(root.header, 'responsibleStaffId') ? ['responsibleStaffId'] : [])]);
+  if (Object.hasOwn(h, 'responsibleStaffId')) id(h.responsibleStaffId);
   id(h.id); text(h.number); if (!h.number.trim()) invalid(); text(h.businessDate); businessDate(h.businessDate); id(h.fromWarehouseId); id(h.toWarehouseId);
   if (h.fromWarehouseId === h.toWarehouseId) invalid(); if (h.note !== null) text(h.note);
   const lines = array(root.lines, 2000); if (!lines.length) invalid(); const seen = new Set<string>(), positions = new Set<number>();

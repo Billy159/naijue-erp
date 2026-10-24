@@ -37,6 +37,7 @@ export interface SalesProposalEntry {
 const emptyEntry = (direction: 'IN' | 'OUT', key: string): SalesProposalEntry => ({ key, order: null, product: null, sku: null, color: null, fit: null, size: null, sizeGroup: null, skuPage: 1, query: '', quantity: direction === 'IN' ? '-1' : '1', dealPrice: '', pricingRule: 'UNIT_PRICE', discount: '', isGift: false, zeroConfirmed: false });
 const emptyEntries = () => ({ IN: [emptyEntry('IN', 'entry-IN-0')], OUT: [emptyEntry('OUT', 'entry-OUT-0')] });
 export interface SalesProposal {
+  readonly responsible?: { readonly id: string; readonly name: string };
   readonly businessType: 'SALE' | 'RETURN' | 'EXCHANGE'; readonly businessDate: string; readonly note: string; readonly orderDiscount: string;
   readonly hall: CurrentSalesReferenceItem | null; readonly customer: CurrentSalesReferenceItem | null;
   readonly salesperson: CurrentSalesReferenceItem | null; readonly warehouse: CurrentSalesReferenceItem | null;
@@ -140,6 +141,10 @@ export class SalesProposalSession {
     this.#publish({ draft: { ...draft, businessType }, dirty: true, errors: [], notice: null, totals: null }); return true;
   }
   setHeader(patch: Pick<Partial<SalesProposal>, 'businessDate' | 'note' | 'orderDiscount'>): boolean { return this.#edit({ ...this.#state.draft, ...patch }); }
+  selectResponsibleStaff(value: { readonly id: string; readonly name: string }): boolean {
+    try { entityId('staff', value.id); if (typeof value.name !== 'string') return false; } catch { return false; }
+    return this.#edit({ ...this.#state.draft, responsible: { id: value.id, name: value.name } });
+  }
   setBusinessType(businessType: SalesProposal['businessType']): boolean {
     if (!['SALE', 'RETURN', 'EXCHANGE'].includes(businessType)) return false;
     // SALE has no incoming-entry section. Keep its unfinished input visible in
@@ -558,7 +563,7 @@ export class SalesProposalSession {
       }
       const businessType = salesBusinessType(salesBusinessMode(draft.businessType), lines.map(row => row.quantity));
       if (!salesProposalMoney({ ...draft, businessType, lines: pricing })) throw Error();
-      const proposal = parseNativeSalesSaveProposal({ salesId, businessType, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note,
+      const proposal = parseNativeSalesSaveProposal({ ...(draft.responsible ? { responsibleStaffId: draft.responsible.id } : {}), salesId, businessType, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note,
         hallId: draft.hall.id, customerId: draft.customer.id, salespersonId: draft.salesperson?.id ?? null, warehouseId: draft.warehouse.id, orderDiscount: yuan(draft.orderDiscount), lines,
         settlements: draft.settlements.map(row => { if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id) throw Error(); return { existingSettlementId: originalSettlements.has(row.key) ? row.key : null,
           paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: yuan(row.amount) }; }) });

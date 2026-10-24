@@ -1,3 +1,4 @@
+import { HttpQueryError } from '../transport/http-query.ts';
 import { createAccountSettingsHttpReader } from '../account-settings/http-client.ts';
 import { createSalesExistingPreparationHttpClient, createTransferExistingPreparationHttpClient } from '../current-form/existing-document-preparation.ts';
 import { createDictionaryHttpReader } from '../product-settings/size-groups/http-reader.ts';
@@ -5,7 +6,7 @@ import { createCatalogueMaintenanceHttpClient, type CatalogueMaintenanceAction }
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 import { UIButton } from '../components/standard-controls.tsx';
 import { createApplication, createDemoFrameWorkspaceRenderer, createRouteStylesheet } from '../application/index.tsx';
-import type { ApplicationConfiguration, ApplicationPresentation } from '../application/contracts.ts';
+import type { ApplicationConfiguration, ApplicationPresentation, DocumentResponsibleStaffCapability } from '../application/contracts.ts';
 import { createProductFullPageHttpReader } from '../products/product-page-http-reader.ts';
 import { createProductHttpReader } from '../transport/product-http-reader.ts';
 import { createProductMaintenanceHttpClientV2, createProductMaintenanceHttpReaderV2, createProductEditorMediaHttpReader, createProductMediaUploadHttpClient } from '../products/product-maintenance-http-client.ts';
@@ -74,6 +75,19 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
   if ((maintenance?.products || maintenance?.categories || maintenance?.colors || maintenance?.fits || configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit || configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace || configuration.routes.accountSettings && !accountView?.workspace)
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
   const newRequestKey = () => { if (typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is unavailable.'); return crypto.randomUUID(); };
+  const responsibleReader = configuration.routes.documentResponsibleReady === true ? createStaffSettingsHttpReader(http) : null;
+  const responsibleStaff: DocumentResponsibleStaffCapability | undefined = responsibleReader ? Object.freeze({
+    async readCandidates(read: Parameters<DocumentResponsibleStaffCapability['readCandidates']>[0]) {
+      const authentication = controller?.authentication.getSnapshot(), current = controller?.getSnapshot().scope;
+      if (authentication?.phase !== 'authenticated') throw new HttpQueryError('unauthenticated', 'UNAUTHENTICATED');
+      if (authentication.principal?.role !== 'ADMIN' || !current?.active || current.identity.accountId !== read.identity.accountId
+        || current.identity.sessionRevision !== read.identity.sessionRevision || current.identity.permissionRevision !== read.identity.permissionRevision) throw new HttpQueryError('forbidden', 'FORBIDDEN');
+      if (read.signal.aborted) throw new HttpQueryError('aborted', 'QUERY_ABORTED');
+      const page = await responsibleReader.readList({ ...read, parameters: { search: read.parameters.search, page: read.parameters.page, pageSize: 20, employmentStatus: 'all', role: '', hallId: null, loginStatus: '' } });
+      if (read.signal.aborted) throw new HttpQueryError('aborted', 'QUERY_ABORTED');
+      return { page: page.page, pageSize: 20 as const, total: page.total, items: page.items.map(row => ({ id: row.id, name: row.name })) };
+    },
+  }) : undefined;
   const catalogue = (kind: CatalogueMaintenanceCapability['kind'], enabled: boolean | undefined): CatalogueMaintenanceCapability | undefined => {
     if (enabled !== true) return;
     const allowedActions: readonly CatalogueMaintenanceAction[] = kind === 'CATEGORY'
@@ -104,11 +118,11 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     ...(configuration.routes.inventory ? { inventory: { stylesheet: stylesheet('inventory'), actions: {}, ...(configuration.routes.inventoryLedger ? { ledger: true as const } : {}) } } : {}),
     ...(configuration.routes.sales ? { sales: { stylesheet: stylesheet('sales'), detailStylesheet: stylesheet('sales-detail'),
       ...(configuration.routes.salesProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}),
-      ...(configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit ? { commands: { newRequestKey, ...(configuration.routes.salesManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.salesExistingEdit ? { existingPreparation: createSalesExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
+      ...(configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit ? { commands: { newRequestKey, ...(responsibleStaff ? { responsibleStaff } : {}), ...(configuration.routes.salesManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.salesExistingEdit ? { existingPreparation: createSalesExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
     ...(configuration.routes.transfers ? { transfers: { stylesheet: stylesheet('transfers'), detailStylesheet: stylesheet('transfer-detail'), product: { stylesheet: stylesheet('transfer-product') },
       ...(configuration.routes.transferProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}),
       ...(configuration.routes.transferInitialSizeGroupId ? { initialSizeGroup: { id: configuration.routes.transferInitialSizeGroupId, reader: createDictionaryHttpReader(http) } } : {}),
-      ...(configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit ? { commands: { newRequestKey, ...(configuration.routes.transferManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.transferExistingEdit ? { existingPreparation: createTransferExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
+      ...(configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit ? { commands: { newRequestKey, ...(responsibleStaff ? { responsibleStaff } : {}), ...(configuration.routes.transferManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.transferExistingEdit ? { existingPreparation: createTransferExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
     ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, audit: settingsAudit!, ...(configuration.routes.parties.readOnly ? { readOnly: true as const } : {}) } } : {}),
     ...(configuration.routes.products ? { products: { stylesheet: productStyles!, ...(configuration.routes.productViewer ? { product: { stylesheet: createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, assets.productDrawerStyles) }) } } : {}),
       ...(maintenance?.products ? { maintenance: { loadStyles: () => productStyles!.load(), reader: createProductMaintenanceHttpReaderV2(http), client: createProductMaintenanceHttpClientV2(http), newRequestKey,

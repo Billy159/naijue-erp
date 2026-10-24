@@ -20,6 +20,8 @@ function safeReadError(error: unknown): TransferCommandError {
 /** One bounded, session-owned document workspace. The host retains it across route
  * detach and disposes on identity/permission change. No reads at construction. */
 export class TransferCommandWorkspace {
+  get responsibleStaff(): import('../../application/contracts.ts').DocumentResponsibleStaffCapability | undefined { return this.#options.responsibleStaff; }
+  readonly responsibleAccessFailure = (kind: 'unauthenticated' | 'forbidden'): void => { this.#access(new TransferCommandError(kind, kind === 'unauthenticated' ? 'UNAUTHENTICATED' : 'FORBIDDEN', 'read', kind === 'unauthenticated' ? 401 : 403)); };
   readonly #options: TransferCommandWorkspaceOptions;
   readonly #listeners = new Set<() => void>();
   readonly #usedKeys = new Set<string>();

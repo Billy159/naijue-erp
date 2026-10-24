@@ -1,7 +1,7 @@
 import type { DictionaryListQuery, DictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { TRANSFER_PREPARE_MAX_LINES, TRANSFER_PREPARE_MAX_NOTE_LENGTH } from '../../../../packages/application/src/transfer-payload-budget.ts';
 import type { CurrentFormPage, CurrentFormProduct, CurrentFormSku, CurrentTransferWarehouse } from '../../../../packages/application/src/current-form-ports.ts';
-import { businessDate, quantity } from '../../../../packages/domain/src/values.ts';
+import { businessDate, entityId, quantity } from '../../../../packages/domain/src/values.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { createCurrentFormHttpReader } from './http-reader.ts';
@@ -40,6 +40,7 @@ export interface TransferPendingEntry {
 }
 const emptyPending = (): TransferPendingEntry => ({ query: '', product: null, color: null, fit: null, skus: [], page: 1, exactTotal: null, phase: 'idle', quantities: {}, sizeQuantities: {}, userEdited: false, unmapped: [] });
 export interface TransferProposal {
+  readonly responsible?: { readonly id: string; readonly name: string };
   readonly businessDate: string; readonly note: string;
   readonly from: TransferWarehouseSelection | null; readonly to: TransferWarehouseSelection | null;
   readonly lines: readonly TransferProposalLine[];
@@ -125,6 +126,10 @@ export class TransferProposalSession {
   }
   setHeader(patch: Pick<Partial<TransferProposal>, 'businessDate' | 'note'>): boolean {
     return this.#edit({ ...this.#state.draft, ...patch });
+  }
+  selectResponsibleStaff(value: { readonly id: string; readonly name: string }): boolean {
+    try { entityId('staff', value.id); if (typeof value.name !== 'string') return false; } catch { return false; }
+    return this.#edit({ ...this.#state.draft, responsible: { id: value.id, name: value.name } });
   }
   setQuantity(skuId: string, value: string): boolean {
     if (!this.#state.draft.lines.some(row => row.sku?.id === skuId)) return false;
@@ -438,7 +443,7 @@ export class TransferProposalSession {
         }
         if (!filled && !replacement) throw Error();
       }
-      const proposal = parseNativeTransferSaveProposal({ transferId, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note, fromWarehouseId: draft.from.id, toWarehouseId: draft.to.id, lines });
+      const proposal = parseNativeTransferSaveProposal({ ...(draft.responsible ? { responsibleStaffId: draft.responsible.id } : {}), transferId, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note, fromWarehouseId: draft.from.id, toWarehouseId: draft.to.id, lines });
       this.#publish({ errors: [], notice: null }); return freeze(proposal);
     } catch { this.#publish({ errors: ['请核对当前尺码组、行改选和数量；重复规格请在原行调整，原输入已保留。'], notice: '保存资料未通过校验，未发送业务命令。' }); return null; }
   }

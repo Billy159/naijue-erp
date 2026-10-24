@@ -28,7 +28,7 @@ export function TransferNewDocumentForm({ session, scope, close, historyReader, 
     return !rejectedCreate || session.workspace.discardEditor();
   };
   const closeSource = () => { if (rejectedCreate && !session.workspace.hasUnresolvedWrite) session.workspace.discardEditor(); close(); };
-  return <TransferProposalForm {...presentation} scope={scope} session={session.proposal} close={closeSource}
+  return <TransferProposalForm {...presentation} identity={{ ...(session.workspace.responsibleStaff ? { capability: session.workspace.responsibleStaff } : {}), onAccessFailure: session.workspace.responsibleAccessFailure }} scope={scope} session={session.proposal} close={closeSource}
     navigationLeave={{ canDiscard: scope.active && !state.preparing && !session.workspace.hasUnresolvedWrite,
       discard: discardSource }}
     preparation={{ save: () => { void session.save(); }, preparing: state.preparing, notice: state.notice, cancel: () => session.cancelPreparation(), canSave, feedback: writeFeedback }} />;
