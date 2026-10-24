@@ -70,7 +70,13 @@ export class TransferNewDocumentSession {
   #publish(patch: Partial<TransferCreateSnapshot>): void { this.#state = Object.freeze({ ...this.#state, ...patch }); for (const listener of [...this.#listeners]) { try { listener(); } catch { /* preserve cleanup */ } } }
   cancelPreparation(): void { this.#sequence++; this.#request?.abort(); this.#request = null; if (!this.#state.disposed) this.#publish({ preparing: false, notice: null }); }
   async save(): Promise<boolean> {
-    if (this.#state.disposed || this.#state.nativeHandoff || this.#state.preparing || !this.#scope.active || this.workspace.getSnapshot().editor || !this.workspace.canLeave()) return false;
+    const command = this.workspace.getSnapshot(), retryRejectedCreate = command.write.phase === 'rejected' && command.write.command?.action === 'SAVE' && command.editor?.mode === 'CREATE';
+    if (this.#state.disposed || this.#state.preparing || !this.#scope.active || !retryRejectedCreate && (this.#state.nativeHandoff || command.editor || !this.workspace.canLeave())) return false;
+    if (retryRejectedCreate && !(this.proposal.hasSpecificationInputs ? this.proposal.saveProposal(null) : this.proposal.validate())) return false;
+    if (retryRejectedCreate) {
+      if (!this.workspace.discardEditor()) return false;
+      this.#publish({ nativeHandoff: false, notice: null });
+    }
     if (this.proposal.hasSpecificationInputs) {
       const intent = this.proposal.saveProposal(null); if (!intent) return false;
       const captured = this.proposal.getSnapshot(), sequence = ++this.#sequence, request = new AbortController(); this.#request = request;
