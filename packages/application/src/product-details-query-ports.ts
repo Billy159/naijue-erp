@@ -24,11 +24,15 @@ export interface ProductBarcodeDetails {
   readonly colorId: string; readonly fitId: string; readonly sizeId: string;
   readonly kind: "MAIN" | "CONFIRMED_OLD"; readonly schemeId: string | null; readonly enabled: boolean;
 }
+export type ProductDefaultScheme =
+  | { readonly state: "UNAVAILABLE"; readonly reason: "NO_PRODUCT_SCHEME_FIELD" }
+  | { readonly state: "AVAILABLE"; readonly schemeId: string }
+  | { readonly state: "NOT_SET" };
 export interface ProductBarcodePage {
   readonly productId: string; readonly version: number; readonly page: number; readonly pageSize: ProductDetailsPageSize;
   readonly total: number; readonly items: readonly ProductBarcodeDetails[];
-  /** There is no product-level scheme field in schema1–19. Never infer it from a binding. */
-  readonly defaultScheme: { readonly state: "UNAVAILABLE"; readonly reason: "NO_PRODUCT_SCHEME_FIELD" };
+  /** Legacy schema1–19 is unavailable; verified native reads preserve the actual product FK or NULL. */
+  readonly defaultScheme: ProductDefaultScheme;
 }
 export interface ProductWarehouseStockItem {
   readonly warehouseId: string; readonly warehouseName: string; readonly skuId: string;

@@ -1,7 +1,19 @@
 import { DomainError, requireDomain } from "../../domain/src/errors.ts";
 import { entityId, quantity } from "../../domain/src/values.ts";
 import { checkedProductActor, parseProductQuery } from "./product-query-validation.ts";
-import type { ProductDetailsPageQuery, ProductDetailsReadIntent, ProductDetailsScopedRead, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewScopedRead, ProductStockOverviewResult, ProductStockOverviewItem } from "./product-details-query-ports.ts";
+import type { ProductDefaultScheme, ProductDetailsPageQuery, ProductDetailsReadIntent, ProductDetailsScopedRead, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewScopedRead, ProductStockOverviewResult, ProductStockOverviewItem } from "./product-details-query-ports.ts";
+
+export function checkedProductDefaultScheme(value: unknown): ProductDefaultScheme {
+  requireDomain(value !== null && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype && Object.hasOwn(value, "state"),
+    "INVALID_DATABASE_VALUE", "Invalid product default scheme response");
+  const row = value as Record<string, unknown>, keys = Reflect.ownKeys(row);
+  if (row.state === "NOT_SET" && keys.length === 1) return { state: "NOT_SET" };
+  if (row.state === "UNAVAILABLE" && keys.length === 2 && Object.hasOwn(row, "reason") && row.reason === "NO_PRODUCT_SCHEME_FIELD")
+    return { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" };
+  requireDomain(row.state === "AVAILABLE" && keys.length === 2 && Object.hasOwn(row, "schemeId") && typeof row.schemeId === "string",
+    "INVALID_DATABASE_VALUE", "Invalid product default scheme response");
+  return { state: "AVAILABLE", schemeId: entityId("product", row.schemeId) };
+}
 
 export function invalidProductDetailsQuery(): never { throw new DomainError("INVALID_PRODUCT_DETAILS_QUERY", "Invalid product detail parameters"); }
 export function parseProductDetailsPageQuery(value: unknown): ProductDetailsPageQuery {

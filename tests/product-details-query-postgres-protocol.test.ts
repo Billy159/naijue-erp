@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { PostgresProductDetailsQueryReader } from "../adapters/postgres/src/product-details-query-reader.ts";
 import type { PgProductQueryClient } from "../adapters/postgres/src/product-query-reader.ts";
 import type { ProductDetailsScopedRead } from "../packages/application/src/product-details-query-ports.ts";
+import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const productId = sid("product", 7201), parameters = { productId, page: 1, pageSize: 20 as const };
@@ -12,7 +13,7 @@ function read(kind: "prices" | "barcodes") {
   return { actor, parameters: p, intent: { kind, parameters: p }, grant: { kind, productId }, signal: new AbortController().signal } as ProductDetailsScopedRead<typeof parameters>;
 }
 interface Step { sql: RegExp; rows?: Record<string, unknown>[]; error?: Error; inspect?: (sql: string, values: unknown[]) => void }
-function setup(steps: Step[]) {
+function setup(steps: Step[], nativeVerify?: (client: PgProductQueryClient) => Promise<void>) {
   const calls: string[] = [], releases: (Error | boolean | undefined)[] = [];
   const client: PgProductQueryClient = {
     async query(sql, values = []) {
@@ -20,7 +21,15 @@ function setup(steps: Step[]) {
       if (step.error) throw step.error; return { rows: step.rows ?? [], rowCount: step.rows?.length ?? 0 };
     }, release(error) { releases.push(error); }
   };
-  return { reader: new PostgresProductDetailsQueryReader({ async connect() { return client; } }), calls, releases,
+  const pool = { async connect() { return client; } };
+  const retained = nativeVerify === undefined ? null : { profile: "catalogue-retained-delete-v22" as const, assertVerified(target: object) { assert.equal(target, pool); } };
+  const runtime26: NativeRuntime26Capability | undefined = nativeVerify === undefined ? undefined : {
+    profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1", async assertReady(target, purpose) {
+      assert.equal(target, client); assert.equal(purpose, "PRODUCT_SEASONS_READ"); assert.equal(calls.length, 1);
+      await nativeVerify(client);
+    }
+  };
+  return { reader: new PostgresProductDetailsQueryReader(pool, retained, runtime26), calls, releases,
     done() { assert.equal(steps.length, 0); assert.equal(releases.length, 1); } };
 }
 const begin = () => ({ sql: /^BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY$/ }), commit = () => ({ sql: /^COMMIT$/ }), rollback = () => ({ sql: /^ROLLBACK$/ });
@@ -54,6 +63,46 @@ test("product details pg: raw disabled historical barcode stays verbatim; paging
   const result = await f.reader.readBarcodes(read("barcodes")); assert.equal(result!.items[0]!.barcode, "0000123 ");
   assert.equal(result!.items[0]!.enabled, false); assert.equal(result!.items[0]!.schemeId, null);
   assert.deepEqual(result!.defaultScheme, { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" }); f.done();
+});
+test("native default scheme: actual product FK is independent of barcode bindings and an empty later page", async () => {
+  const schemeId = sid("product", 7210), oldSchemeId = sid("product", 7211);
+  for (const page of [1, 2]) {
+    let verified = 0;
+    const f = setup([begin(), { sql: /^SELECT p.id, p.version, p.default_barcode_scheme_id/, rows: [{ id: productId, version: 4, default_barcode_scheme_id: schemeId }], inspect(sql, values) {
+      assert.match(sql, /p.deleted_at IS NULL/); assert.doesNotMatch(sql, /naijue_erp\.(?:barcode_scheme|sku_barcode)/); assert.deepEqual(values, [productId]);
+    } }, { sql: /^SELECT count/, rows: [{ total: "1" }], inspect(sql, values) {
+      assert.match(sql, /WHERE s.product_id = \$1::uuid/); assert.deepEqual(values, [productId]);
+    } }, { sql: /^SELECT b.id/, rows: page === 1 ? [{ ...barcode(), scheme_id: oldSchemeId }] : [], inspect(sql, values) {
+      assert.match(sql, /WHERE s.product_id = \$1::uuid/); assert.deepEqual(values, [productId, 20, (page - 1) * 20]);
+    } }, commit()], async () => { verified++; });
+    const scope = read("barcodes"), p = { ...parameters, page };
+    const result = await f.reader.readBarcodes({ ...scope, parameters: p, intent: { kind: "barcodes", parameters: p } });
+    assert.equal(verified, 1); assert.equal(result!.total, 1); assert.equal(result!.items.length, page === 1 ? 1 : 0);
+    assert.deepEqual(result!.defaultScheme, { state: "AVAILABLE", schemeId });
+    if (page === 1) assert.equal(result!.items[0]!.schemeId, oldSchemeId);
+    f.done();
+  }
+});
+test("native default scheme: only actual NULL is NOT_SET; missing or malformed storage is an error", async () => {
+  for (const value of [null, undefined, "invalid scheme identity"]) {
+    const successful = value === null;
+    const f = setup([begin(), { sql: /^SELECT p.id, p.version, p.default_barcode_scheme_id/, rows: [{ id: productId, version: 4, default_barcode_scheme_id: value }] },
+      ...(successful ? [{ sql: /^SELECT count/, rows: [{ total: "0" }] }, { sql: /^SELECT b.id/, rows: [] }, commit()] : [rollback()])], async () => {});
+    if (successful) assert.deepEqual((await f.reader.readBarcodes(read("barcodes")))!.defaultScheme, { state: "NOT_SET" });
+    else await assert.rejects(f.reader.readBarcodes(read("barcodes")), error => error instanceof Error && "code" in error && ["INVALID_DATABASE_VALUE", "INVALID_ID"].includes(String(error.code)));
+    f.done();
+  }
+});
+test("native default scheme: capability denial, storage failure and original grant denial never become NOT_SET", async () => {
+  const denied = Error("SYNTHETIC runtime denial"), unavailable = Error("SYNTHETIC missing native column");
+  const f = setup([begin(), rollback()], async () => { throw denied; });
+  await assert.rejects(f.reader.readBarcodes(read("barcodes")), denied); assert.equal(f.calls.length, 2); f.done();
+  const g = setup([begin(), { sql: /^SELECT p.id, p.version, p.default_barcode_scheme_id/, error: unavailable }, rollback()], async () => {});
+  await assert.rejects(g.reader.readBarcodes(read("barcodes")), unavailable); g.done();
+  let verified = 0;
+  const h = setup([], async () => { verified++; });
+  await assert.rejects(h.reader.readBarcodes({ ...read("barcodes"), grant: { kind: "prices", productId } }), { code: "FORBIDDEN" });
+  assert.equal(verified, 0); assert.deepEqual(h.calls, []); assert.deepEqual(h.releases, []);
 });
 test("product details pg: missing product ends before dependent reads; invalid grants never acquire a connection", async () => {
   const f = setup([begin(), { sql: /^SELECT p.id/, rows: [] }, commit()]); assert.equal(await f.reader.readBarcodes(read("barcodes")), null); f.done();

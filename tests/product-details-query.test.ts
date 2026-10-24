@@ -2,8 +2,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createProductDetailsQueryService } from "../packages/application/src/product-details-query-service.ts";
-import type { ProductDetailsQueryDependencies, ProductWarehouseStockPage, ProductStockOverviewResult } from "../packages/application/src/product-details-query-ports.ts";
-import { parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult } from "../packages/application/src/product-details-query-validation.ts";
+import type { ProductBarcodePage, ProductDefaultScheme, ProductDetailsQueryDependencies, ProductWarehouseStockPage, ProductStockOverviewResult } from "../packages/application/src/product-details-query-ports.ts";
+import { parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, checkedProductDefaultScheme } from "../packages/application/src/product-details-query-validation.ts";
 import { DomainError } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const productId = sid("product", 7101), warehouseId = sid("warehouse", 7102), skuId = sid("sku", 7103);
@@ -29,6 +29,24 @@ test("product details: per-tab denial/mismatched grant precedes all reads and un
   }
   const f = setup();
   await assert.rejects(f.service.readStock(actor, parameters, signal()), { code: "PRODUCT_STOCK_NOT_READY" }); assert.equal(f.reads(), 0);
+});
+test("product default scheme response: legacy and native variants have exact closed fields", () => {
+  const valid: ProductDefaultScheme[] = [{ state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" }, { state: "NOT_SET" }, { state: "AVAILABLE", schemeId: sid("product", 7110) }];
+  for (const value of valid) assert.deepEqual(checkedProductDefaultScheme(value), value);
+  for (const value of [null, undefined, {}, { state: "NOT_SET", schemeId: null }, { state: "UNAVAILABLE", reason: "READ_FAILED" },
+    { state: "AVAILABLE" }, { state: "AVAILABLE", schemeId: null }, { state: "AVAILABLE", schemeId: "not-a-uuid" },
+    { state: "AVAILABLE", schemeId: sid("product", 7110), reason: "NO_PRODUCT_SCHEME_FIELD" }]) assert.throws(() => checkedProductDefaultScheme(value));
+});
+test("product default scheme response: original service validates returned variants after the per-tab grant", async () => {
+  const values: unknown[] = [{ state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" }, { state: "NOT_SET" }, { state: "AVAILABLE", schemeId: sid("product", 7110) }, { state: "NOT_SET", reason: "READ_FAILED" }];
+  for (const defaultScheme of values) {
+    let authorized = false;
+    const f = setup({ authorization: { async authorize(_actor, intent) { authorized = true; return { kind: intent.kind, productId }; } },
+      reader: { async readPrices() { return null; }, async readBarcodes() { assert.equal(authorized, true); return { ...parameters, version: 4, total: 0, items: [], defaultScheme } as ProductBarcodePage; } } });
+    if (Object.hasOwn(defaultScheme as object, "reason") && (defaultScheme as { state: string }).state === "NOT_SET")
+      await assert.rejects(f.service.readBarcodes(actor, parameters, signal()), { code: "INVALID_DATABASE_VALUE" });
+    else assert.deepEqual((await f.service.readBarcodes(actor, parameters, signal()))!.defaultScheme, defaultScheme);
+  }
 });
 
 const overviewQuery = { productId, warehouseMode: "NON_ZERO" as const };

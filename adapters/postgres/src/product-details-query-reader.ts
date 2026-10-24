@@ -1,4 +1,4 @@
-import type { ProductBarcodeDetails, ProductBarcodePage, ProductDetailsPageQuery, ProductDetailsScopedRead, ProductDetailsSnapshotReader, ProductPriceDetails } from "../../../packages/application/src/product-details-query-ports.ts";
+import type { ProductBarcodeDetails, ProductBarcodePage, ProductDefaultScheme, ProductDetailsPageQuery, ProductDetailsScopedRead, ProductDetailsSnapshotReader, ProductPriceDetails } from "../../../packages/application/src/product-details-query-ports.ts";
 import { checkedProductDetailsScope } from "../../../packages/application/src/product-details-query-validation.ts";
 import type { ProductQuery } from "../../../packages/application/src/product-query-ports.ts";
 import { activeProductRead } from "../../../packages/application/src/product-query-validation.ts";
@@ -7,8 +7,9 @@ import type { CataloguePriceKey } from "../../../packages/application/src/catalo
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { booleanValue, nullableString, stringValue, versionFromSql } from "./codec.ts";
-import type { PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
+import type { PgProductQueryClient, PgProductQueryPool, PgProductQueryResult } from "./product-query-reader.ts";
 import { catalogueRetainedDeleteEnabled, type CatalogueRetainedDeleteCapability } from "./product-query-reader.ts";
+import { checkedNativeRuntime26Capability, type NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 
 type Query = (sql: string, values?: unknown[]) => Promise<PgProductQueryResult>;
 function count(value: unknown): number {
@@ -30,16 +31,19 @@ function price(value: unknown): string | null {
 export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshotReader {
   private readonly pool: PgProductQueryPool;
   private readonly retainedDelete: boolean;
-  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null) {
+  private readonly runtime26: NativeRuntime26Capability | undefined;
+  constructor(pool: PgProductQueryPool, capability: CatalogueRetainedDeleteCapability | null = null, runtime26?: NativeRuntime26Capability) {
     if (typeof pool?.connect !== "function") throw new TypeError("Product details require an explicit PostgreSQL pool");
     this.pool = pool; this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
+    this.runtime26 = checkedNativeRuntime26Capability(runtime26);
+    if (this.runtime26 !== undefined && !this.retainedDelete) throw new TypeError("Native product details require the original retained catalogue capability");
   }
-  private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
+  private async snapshot<T>(signal: AbortSignal, work: (query: Query, client: PgProductQueryClient) => Promise<T>): Promise<T> {
     activeProductRead(signal); const client = await this.pool.connect(); let began = false, committing = false; let discard: Error | undefined;
     const query: Query = (sql, values = []) => { activeProductRead(signal); return client.query(sql, values); };
     try {
       await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
-      const result = await work(query); activeProductRead(signal); committing = true; await client.query("COMMIT"); return result;
+      const result = await work(query, client); activeProductRead(signal); committing = true; await client.query("COMMIT"); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Product details snapshot failed");
       if (began && !committing) try { await client.query("ROLLBACK"); }
@@ -61,9 +65,15 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
   async readBarcodes(read: ProductDetailsScopedRead<ProductDetailsPageQuery>): Promise<ProductBarcodePage | null> {
     checkedProductDetailsScope(read); requireDomain(read.intent.kind === "barcodes", "FORBIDDEN", "Barcode-tab grant required");
     const p = read.parameters;
-    return this.snapshot(read.signal, async query => {
-      const target = product((await query(`SELECT p.id, p.version FROM naijue_erp.product p WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [p.productId])).rows, p.productId);
+    return this.snapshot(read.signal, async (query, client) => {
+      if (this.runtime26 !== undefined) await this.runtime26.assertReady(client, "PRODUCT_SEASONS_READ");
+      const targets = (await query(`SELECT p.id, p.version${this.runtime26 === undefined ? "" : ", p.default_barcode_scheme_id"} FROM naijue_erp.product p WHERE p.id = $1::uuid${this.retainedDelete ? " AND p.deleted_at IS NULL" : ""}`, [p.productId])).rows;
+      const target = product(targets, p.productId);
       if (target === null) return null;
+      const defaultScheme: ProductDefaultScheme = this.runtime26 === undefined
+        ? { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" }
+        : targets[0]!.default_barcode_scheme_id === null ? { state: "NOT_SET" }
+        : { state: "AVAILABLE", schemeId: entityId("product", stringValue(targets[0]!.default_barcode_scheme_id)) };
       const counts = (await query(`SELECT count(*)::text AS total FROM naijue_erp.sku_barcode b
         JOIN naijue_erp.sku s ON s.id = b.sku_id WHERE s.product_id = $1::uuid`, [p.productId])).rows;
       requireDomain(counts.length === 1, "INVALID_DATABASE_VALUE", "Expected one barcode count"); const total = count(counts[0]!.total);
@@ -83,8 +93,7 @@ export class PostgresProductDetailsQueryReader implements ProductDetailsSnapshot
           fitId: entityId("fit", stringValue(row.fit_id)), sizeId: entityId("size", stringValue(row.size_id)), kind: row.barcode_kind,
           schemeId: scheme === null ? null : entityId("product", scheme), enabled: booleanValue(row.enabled) };
       });
-      return { ...target, page: p.page, pageSize: p.pageSize, total, items,
-        defaultScheme: { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" } };
+      return { ...target, page: p.page, pageSize: p.pageSize, total, items, defaultScheme };
     });
   }
 }

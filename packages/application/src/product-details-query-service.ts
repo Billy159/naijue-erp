@@ -1,12 +1,12 @@
 import { DomainError } from "../../domain/src/errors.ts";
 import { activeProductRead, checkedProductActor, parseProductQuery } from "./product-query-validation.ts";
 import { checkedProductDetailsScope, checkedProductStockPage, parseProductDetailsPageQuery, productDetailsIntent,
-  parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult } from "./product-details-query-validation.ts";
+  parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, checkedProductDefaultScheme } from "./product-details-query-validation.ts";
 import type { ActorContext } from "./ports.ts";
 import type { ProductQuery } from "./product-query-ports.ts";
 import type { ProductDetailsQueryDependencies, ProductDetailsReadIntent, ProductDetailsScopedRead } from "./product-details-query-ports.ts";
 
-/** Additional old-field reads only. No new schema, command, default scheme or inventory writer. */
+/** Target-only reads of existing fields; no schema, command or inventory writer. */
 export function createProductDetailsQueryService(dependencies: ProductDetailsQueryDependencies) {
   if (typeof dependencies?.authorization?.authorize !== "function" || typeof dependencies?.reader?.readPrices !== "function"
     || typeof dependencies.reader.readBarcodes !== "function" || !Object.hasOwn(dependencies, "stockReader")
@@ -27,7 +27,11 @@ export function createProductDetailsQueryService(dependencies: ProductDetailsQue
       const p = parseProductQuery(input); return read(actor, productDetailsIntent("prices", p), p, signal, scope => reader.readPrices(scope));
     },
     async readBarcodes(actor: ActorContext, input: unknown, signal: AbortSignal) {
-      const p = parseProductDetailsPageQuery(input); return read(actor, productDetailsIntent("barcodes", p), p, signal, scope => reader.readBarcodes(scope));
+      const p = parseProductDetailsPageQuery(input);
+      return read(actor, productDetailsIntent("barcodes", p), p, signal, async scope => {
+        const result = await reader.readBarcodes(scope);
+        return result === null ? null : { ...result, defaultScheme: checkedProductDefaultScheme(result.defaultScheme) };
+      });
     },
     async readStockOverview(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const p = parseProductStockOverviewQuery(input), current = checkedProductActor(actor); activeProductRead(signal);
