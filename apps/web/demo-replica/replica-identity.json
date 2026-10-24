@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+  "phase": "PHASE1_COPY_RUNTIME_PENDING_ACCEPTANCE",
+  "frontendFilesCopied": 325,
+  "newBackendConnected": false,
+  "realDataImported": false,
+  "phase2Started": false,
+  "entry": "http://127.0.0.1:57896/#inventory",
+  "entryDataAdaptation": [
+    "REAL_DATA_MODE false uses original Demo sample implementations",
+    "No real-data-bridge execution",
+    "Explicit credential-free sample identity on this new localhost origin"
+  ],
+  "originalFrontendBytesChanged": false
+}

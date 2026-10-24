@@ -1,0 +1,8 @@
+node_modules/
+frontend/assets/*.bundle.js
+frontend/assets/*.bundle.css
+frontend/assets/product-media/
+frontend/verification/
+# Frozen JS contains embedded legacy business examples; preserve locally, do not upload source records.
+frontend/*.js
+.runtime/

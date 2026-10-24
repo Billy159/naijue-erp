@@ -4040,7 +4040,8 @@
       "scripts/release/**",
       "scripts/verify-dependencies.mjs",
       "apps/web/src/application/contracts.ts",
-      "apps/web/unified-browser-harness/harness.css"
+      "apps/web/unified-browser-harness/harness.css",
+      "apps/web/demo-replica/**"
     ],
     "D1": [
       "adapters/postgres/migrations/**",
@@ -5016,6 +5017,7 @@
       "protectedTargetsNotTouched": true
     },
     "sourceWrites": "Existinguniqueowners; F1 new document-responsibility.tsx and existingv16 localchain registered. No mutableWIP in326.",
-    "syntheticAuthCssScope": "C sole exact harness.css login-only suppression; password dialog original form retained; no credential endpoint enabled"
+    "syntheticAuthCssScope": "C sole exact harness.css login-only suppression; password dialog original form retained; no credential endpoint enabled",
+    "phase1Replica": "C sole initial byte copy/shared entry/build/sample boundary; F1-F4 read-only completeness in own old report folders; phase2 exact leaf reallocation after fixed phase1."
   }
 }

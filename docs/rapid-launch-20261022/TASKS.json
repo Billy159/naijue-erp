@@ -87,10 +87,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "chunk159 three-role Host delivered fixed335",
-      "currentPackage": "335 source checks pass; browser/PG readback not passed",
-      "nextReadyPackage": "Solmedium Snormalstates +QF-C314-TRANSFER-REFUSED-SAVE-BODY-01 specificprepared/refused branch andfinalv16typedwrite when ready",
-      "currentDependencies": "C combined335 candidate",
+      "currentWork": "Original source handed back; actual Luna max dispatch for replica completeness",
+      "currentPackage": "T01-T03 and A01-A02",
+      "nextReadyPackage": "S01-S04",
+      "currentDependencies": "C original replica build/sample launch; UI does not wait DB",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -117,8 +117,16 @@
         "current": "公用页壳及T01-T03调拨整页全状态，正常入口",
         "next": "S01-S04销货退换整页全状态；A01/A02公壳账号菜单"
       },
-      "currentPhase": "WHOLE_PAGE_UI_MIGRATION",
-      "nextPureUIModel": "gpt-6-luna/max"
+      "currentPhase": "PHASE1_FROZEN_DEMO_REPLICA",
+      "nextPureUIModel": "gpt-6-luna/max",
+      "lastActualDispatch": {
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "atUtc": "2026-10-24T15:25:50.211619+00:00",
+        "toolAccepted": true,
+        "actualRuntimeModelAck": "PENDING",
+        "FastToolVerified": false
+      }
     },
     "F2": {
       "title": "前端库存与商品",
@@ -133,10 +141,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "P01P02exact1SOURCE318component/typePASS; currentP03spec/P05nineprice +P04barcodes/P06images/P07stock normalstate packages closedasSOURCE partialactual",
-      "currentPackage": "LunaMAX P01-P13 product list and six tabs; I01 source304 handedC",
-      "nextReadyPackage": "Only newprecise ownleaf sourcefinding orrealconsumerinput; existingstock/images/21barcodeactualgaps QF2 once newfixture ready",
-      "currentDependencies": "F1sharedProductEditorCapability.catalogueMaintenance COLOR/FIT createport notinjected; no ordinarymedia classifiedImagesprecondition",
+      "currentWork": "Original source handed back; actual Luna max dispatch for replica completeness",
+      "currentPackage": "I01 inventory",
+      "nextReadyPackage": "P01-P13 products all tabs/states",
+      "currentDependencies": "C original replica build/sample launch; UI does not wait DB",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -168,13 +176,14 @@
         "current": "I01库存整页、筛选结果矩阵输出流水弹层",
         "next": "P01-P13商品列表及六页签编辑/查看全部"
       },
-      "currentPhase": "TECHNICAL_WIRING",
+      "currentPhase": "PHASE1_FROZEN_DEMO_REPLICA",
       "nextPureUIModel": "gpt-6-luna/max",
       "lastActualDispatch": {
         "model": "gpt-6-luna",
         "reasoningEffort": "max",
-        "atUtc": "2026-10-24T11:29:21.184294+00:00",
-        "toolResult": "COMPLETED",
+        "atUtc": "2026-10-24T15:25:50.211619+00:00",
+        "toolAccepted": true,
+        "actualRuntimeModelAck": "PENDING",
         "FastToolVerified": false
       }
     },
@@ -190,10 +199,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "B05B06/B04B07/B03B08 complete source/necessarytargetedstates packages delivered; SOURCE319 null label fix",
-      "currentPackage": "LunaMAX B03/B08 customer/supplier; B01/B02 source303 handedC",
-      "nextReadyPackage": "Newcandidate QF2 affectedstaffOPEN+null display; onlynewownsourcefinding then originalsettings next",
-      "currentDependencies": "Productionpublic flags/readwriteprofile/actualdata androle/PG C; CLOSED noaccountsemantic onlythatbranch",
+      "currentWork": "Original source handed back; actual Luna max dispatch for replica completeness",
+      "currentPackage": "B01-B02 hall/warehouse",
+      "nextReadyPackage": "B03/B08 parties, B04/B07 staff/account, B05/B06 payment/funds",
+      "currentDependencies": "C original replica build/sample launch; UI does not wait DB",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -219,13 +228,14 @@
         "current": "B01/B02厅仓整页全状态，真实CORE资料已就绪",
         "next": "B03/B08客供、B04/B07员工账号、B05/B06收款资金"
       },
-      "currentPhase": "WHOLE_PAGE_UI_MIGRATION",
+      "currentPhase": "PHASE1_FROZEN_DEMO_REPLICA",
       "nextPureUIModel": "gpt-6-luna/max",
       "lastActualDispatch": {
         "model": "gpt-6-luna",
         "reasoningEffort": "max",
-        "atUtc": "2026-10-24T11:29:21.184294+00:00",
-        "toolResult": "COMPLETED",
+        "atUtc": "2026-10-24T15:25:50.211619+00:00",
+        "toolAccepted": true,
+        "actualRuntimeModelAck": "PENDING",
         "FastToolVerified": false
       }
     },
@@ -366,10 +376,10 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "fastToolVerified": false,
-      "currentWork": "SOURCE306 normal sharedcap gap closed; P14P19 currentsource consumersready,technicalclosure306 accepted",
-      "currentPackage": "P14-P19 six source packages delivered; waitF1 sharedHost",
-      "nextReadyPackage": "QF2 remainingactualwrite/visual onlywhen Cprofile/data/realv15cap ready; no repeatold6pages",
-      "currentDependencies": "C actualprofile/cataloguedata+dictionary grants; P14orderrealv15/v16-from-v15 needed, currentQA/R1fromv14 cannotfakeenable",
+      "currentWork": "Original source handed back; actual Luna max dispatch for replica completeness",
+      "currentPackage": "P14 categories",
+      "nextReadyPackage": "P15-P18 dictionaries and P19 barcode schemes",
+      "currentDependencies": "C original replica build/sample launch; UI does not wait DB",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -392,8 +402,16 @@
         "current": "P14分类整页及排序撤销弹层",
         "next": "P15-P18四字典与P19条码方案整页"
       },
-      "currentPhase": "TECHNICAL_HANDOFF_AFTER_UI_SOURCE_PACKAGE",
-      "nextPureUIModel": "gpt-6-luna/max"
+      "currentPhase": "PHASE1_FROZEN_DEMO_REPLICA",
+      "nextPureUIModel": "gpt-6-luna/max",
+      "lastActualDispatch": {
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "atUtc": "2026-10-24T15:25:50.211619+00:00",
+        "toolAccepted": true,
+        "actualRuntimeModelAck": "PENDING",
+        "FastToolVerified": false
+      }
     }
   },
   "tasks": [
@@ -1274,7 +1292,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T14:56:38.723850+00:00",
+  "updatedAt": "2026-10-24T15:28:41.913837+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
   "lastVerifiedRemoteCommit": "ca99abca671ed4ebf302b4226b81e21deed5cddc",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -2502,7 +2520,8 @@
       "C169": "ACTUAL normal COLOR/FIT CREATE commits and original-key conflicts; QB248 limited PASS adopted; 2roots+2audit+2receipt retained",
       "nonemptyPublish": "NOT_EXECUTED",
       "v16LiveAndHistoryBusiness": "NOT_PASSED"
-    }
+    },
+    "latestQaMaterialization": "C172 actual Linux original6 generators exit0/83 inputs, original168 raw used. Not grant/DB/MAIN/PUBLISH. Local exported authorization was redacted; only server original pins for execution."
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -4627,7 +4646,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T14:56:38.723850+00:00",
+    "atUtc": "2026-10-24T15:25:50.211619+00:00",
     "sourceRound": 335,
     "sourceCheckpoint": "717653500f9520fc7d8a1434fd6200086390edbd",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
@@ -6209,7 +6228,7 @@
       "sourceModuleReviews": "QB205259/QB206260/QB207-v2261/QB208262 PASS_LIMITED; no actual v14 engine/role/init"
     },
     "sourceCommit": "17d2e89603233e07c0cfe8c344934148f7463536",
-    "browserLease": "NONE_C327_QF_CLEAN_STOP",
+    "browserLease": "NONE_QF335_CLEAN_STOP",
     "frontendLaneAdjustment": {
       "status": "FOUR_LINES_ACTIVE_F4_FIRST_COMPLETE_NATIVE_MODULE_FIXED266",
       "authority": {
@@ -7484,7 +7503,15 @@
       "QB248": "C169 normal COLOR/FIT exact create/replay/conflicts limited; not EDIT/PG full business/performance",
       "QF327": "ADMIN creator/responsible selection retained, known refusal BODY retained; staleprogress source334 pendingbrowser",
       "QFMatrix": "v118 whole0/37 and0/67,22partial,15pendingclassification-new"
-    }
+    },
+    "frontendPhase": "PHASE1_FULL_DEMO_REPLICA",
+    "replicaDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
+    "phase1CopiedFrontendFiles": 325,
+    "phase1Runtime": "RUNNING_ORIGINAL_DEMO_SAMPLES_57896",
+    "phase1WholePagesAccepted": 0,
+    "phase2ReplicaWiring": "NOT_STARTED",
+    "phase1Entry": "http://127.0.0.1:57896/#inventory",
+    "phase1OriginalEntryDataAdaptation": "Server uses original sample mode and omits real-data-bridge; credential-free explicit local sample actor, no markup/body redesign"
   },
   "latestReadySource": {
     "round": 335,
@@ -7549,167 +7576,23 @@
     "fast": "UNVERIFIED_TOOL_NO_SWITCH"
   },
   "currentUnifiedDirective": {
-    "source": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正",
-    "objective": "全站37页+67类弹层及有效新增整页直接迁入冻结Demo，全部适用状态接正常入口与真实业务，历史按权限可编辑，业务权限数据性能通过后原网址分批上线并完成Dot交接。",
-    "modelPolicy": {
-      "pureUI": {
-        "model": "gpt-6-luna",
-        "reasoningEffort": "max"
-      },
-      "technical": {
-        "model": "gpt-6.1-sol",
-        "reasoningEffort": "medium"
-      },
-      "flow": "Sol界定接入边界→Luna整页迁入→Sol接线→Luna外观→Sol必要业务性能。每次实际指定，保全旧档在途与有效证据，不重跑、不自行换档；Fast请求OFF工具未核。",
-      "controllerHotSwitch": "当前turn无热切模型工具，不以文档冒充切换；同主控后续消息显式指定medium。",
-      "strictTaskBoundary": "Luna only clearly bounded DOM/JSX/CSS/assets/explicitvisualcompare. Events, interactionstate, loading/errors, data, permissions, DB/history, performance and integration require Solmedium. Mixed boundary unclear=>Solmedium. Actual model/thinking each phase; no entireline blanketLuna."
-    },
-    "denominator": {
-      "pages": 37,
-      "overlays": 67,
-      "wholePagesAccepted": 0,
-      "wholeOverlaysAccepted": 0,
-      "partialOrDifferenceCheckedPages": 34,
-      "notRunOrWaitingPages": 3,
-      "qualification": "QFv112: pages2sourceUI/routerpending+20partial+2approvednew+13unknown=37; overlays0+15+2+50=67. Old34 checkcoverage not migration. Unknown not unstarted.",
-      "sourceUIPortedRouterPendingPages": 2,
-      "partialSourceUIPages": 20,
-      "approvedNewWithoutDemoPages": 2,
-      "unknownMigrationPages": 13,
-      "partialOrSourceOnlyPages": 22,
-      "pendingClassificationOrNewPages": 15
-    },
-    "states": [
-      "新建",
-      "查看",
-      "编辑",
-      "已保存未审核",
-      "已审核",
-      "弃审后",
-      "作废",
-      "历史",
-      "加载",
-      "空",
-      "错误",
-      "恢复"
-    ],
-    "wholePagePackages": {
-      "F1": {
-        "pages": [
-          "A01",
-          "A02",
-          "T01",
-          "T02",
-          "T03",
-          "S01",
-          "S02",
-          "S03",
-          "S04"
-        ],
-        "current": "Solmedium shared controller/configuration/mount CATEGORY/COLOR/FIT capability seam",
-        "next": "LunaMAX entire transfer BODY/allstate normal routes then sales/returns and common9pages"
-      },
-      "F2": {
-        "pages": [
-          "I01",
-          "P01",
-          "P02",
-          "P03",
-          "P04",
-          "P05",
-          "P06",
-          "P07",
-          "P08",
-          "P09",
-          "P10",
-          "P11",
-          "P12",
-          "P13"
-        ],
-        "current": "LunaMAX P01-P13 product list and six tabs; I01 source304 handedC",
-        "next": "Solmedium normal wiring then QF2 fullmodule affected evidence"
-      },
-      "F3": {
-        "pages": [
-          "B01",
-          "B02",
-          "B03",
-          "B04",
-          "B05",
-          "B06",
-          "B07",
-          "B08"
-        ],
-        "current": "LunaMAX B03/B08 customer/supplier; B01/B02 source303 handedC",
-        "next": "Solmedium wiring; staff/accounts/funds/payment remaining8page scope"
-      },
-      "F4": {
-        "pages": [
-          "P14",
-          "P15",
-          "P16",
-          "P17",
-          "P18",
-          "P19"
-        ],
-        "current": "Source306 shared gap actuallyclosed; P14-P19 source package complete, realdefaultprofile/actualdata/write/visual needC-QF2",
-        "next": "C fixed candidate then QF2 missing normal-entry actual; no duplicate sixpage review"
-      }
-    },
-    "historyEditing": {
-      "backendTask": "B07（区别于UI矩阵B07登录账号页）",
-      "owner": "D3",
-      "hostOwner": "D1",
-      "frontendOwner": "F1",
-      "mandatoryThisRound": true,
-      "contract": "复用受控修订与有效投影；原来源头行不覆盖；版本原因真实actor前后值原key；库存只差额、金额单改不动库存、调拨守恒、历史基线不重复过账；头日期/调出调入仓/展示创建者按未审核规则可编辑，展示创建者与审计actor分开。",
-      "gate": "新表列约束写合同准确差异一次汇C确认，仅相关分支等；不再问功能是否需要。",
-      "responsibleAmendment": "User approved v16 with immutable creator plus independent responsible employee. Unknown responsibility remains null, no creator/admin/actor fallback. D1/D3/F1 actual consumers must change semantics, not labels only."
-    },
-    "knownIssues": [
-      "公壳角色账号菜单按Demo与本人改密统一",
-      "库存分类仓库真正多选；供应商版型季节全部恢复/取消一致；脏条件提示；显示版型必要单次查询",
-      "库存成功且有权限时真实导出刷新打印，查看悬浮协调",
-      "多尺码组代表矩阵分区/颜色小计商品总计；流水错误不可当空",
-      "调拨日期控件键盘焦点/全部状态仓库/收起筛选纠正蓝态/真实历史分类",
-      "全部单据状态同一新UI，历史可编辑落地前保持未完成标记",
-      "所属有效尺码组全量不截SKU不跨组不造SKU；真实款号品名"
-    ],
-    "sourceScaleNotImported": {
-      "products": 2956,
-      "sku": 14999,
-      "inventoryBaseline": 38303,
-      "salesHeads": 28282,
-      "salesLines": 80918,
-      "transferHeads": 14279,
-      "transferLines": 261641
-    },
-    "acceptance": "整页合批独立一次，只新改失败受影响，复用有效同版证据；1冷2重复，正式查询<=2000ms，服务端传输解析渲染分计。",
-    "reportFormat": "页面｜迁入未开始/部分/完成｜状态覆盖｜接口未接/只读/可写｜验收｜发布｜卡点owner下一步。全站页/弹层分开，旧UI分支点名。",
-    "extraAgents": "不新增镜像团队/多层助手；不为拷贝hash打包开agent。原137复杂helper已交付释放，后续C直接脚本。",
-    "goalToolLimit": "Human edited live goal successfully; current ACTIVE objective verified37/67 and LunaMAX/Solmedium. Earlier old-card35/65 notes historical.",
-    "atUtc": "2026-10-24T11:29:21.184294+00:00",
-    "dispatchObserved": {
-      "frontend4": "F1 activeSolmedium sharedHost; F2P01-P13/F3B03B08 actuallydispatched LunaMAX; F4awaitsF1 sixsourcepackagesready. No newChats/helpers.",
-      "backend": "D1D2D3QB explicitSol61medium accepted; in-flight oldresults preserved",
-      "QF": "v113 mechanicalmerge requestedLunaMAX actualtoolaccepted; QF reportsactiveplatformgpt-6.1-sol,nohot-switch available. Mechanicalupdatealreadyperformed; NOT verifiedLunaMAX/no rerun. Future modelmismatch keepbreakpoint peruser.",
-      "QF2": "Existingevidence transfer completed, waitsfullmodule candidate",
-      "controller": "SameChat explicitSol61medium continuation accepted; no currentturnhot-switch claim"
-    }
+    "authority": "LATEST_HUMAN_STRICT_TWO_PHASE_DEMO_REPLICA",
+    "recordedAt": "2026-10-24T15:25:50.211619+00:00",
+    "uniqueDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
+    "uniqueEntry": "apps/web/demo-replica/serve.mjs 57896",
+    "phase1": "325 frontend files copied byte-identical; original7 Vite builds PASS; 81entry resources present; localhost57896 actual200; browser completeness pending",
+    "phase2": "Not started on replica until complete Phase1 fixed",
+    "oldFrontend": "337 preserved for history/rollback; old-body development stopped and all4 F owners handed back",
+    "goalCard": "Tool cannot edit existing active goal objective; keep ACTIVE, this record is latest authority, no fake completion/recreation"
   },
   "currentGoal": {
     "status": "ACTIVE",
-    "objective": "你是奈爵 ERP 重构主控。持续执行现有任务，保留当前成果、在途工作和有效验收，不重新开工、不另建一套团队。以下目标覆盖此前冲突的局部修补范围及模型档位。\n\n最终目标：全站整套迁入冻结 Demo 界面，接通新后端、真实数据和业务操作，让系统在原正式网址实际可用；历史单据按权限可编辑，必要性能验证完成，持续保存 GitHub 检查点和 Dot 接续说明。允许分批上线，但不能缩小全站最终范围。\n\n一、界面整页迁入\n\n冻结 Demo 为同项目“奈爵服饰-8877-Demo”，基线 commit：\\\nb8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3。\n\nDemo 只读，直接复用其页面结构、布局、样式、控件和交互。开发使用现行重构工程：\\\n/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022\n\n沿用已确定的架构、React19、Arco、正式接口和业务合同。迁入界面时保留新系统的数据访问、权限、事务、精确运算和性能机制，不把 Demo 的旧业务底层整套搬回来，不重新选架构。\n\n范围包括全站37页、67类弹层及已批准新增功能，发现遗漏补登记：\n\n- F1：公共壳、账号菜单、调拨、销货及退换，共9页。\n- F2：库存、商品列表及全部商品页签，共14页。\n- F3：营业厅、仓库、客户、供应商、员工、账号、收款和资金配置，共8页。\n- F4：分类、颜色、尺码组、版型、季节、条码方案，共6页。\n\n每页覆盖全部适用状态：新建、查看、编辑、已保存未审核、已审核、弃审后、作废、历史，以及加载、空、错误、恢复和相关弹层。\n\n迁入必须接到正常默认入口。同业务、同状态与 Demo 对照，不能仅特殊预览参数显示新页面，其他入口或状态继续使用不同的旧界面。只复制标题、工具栏或共用页框，正文仍未迁入的，标为“部分完成”。\n\n已经直接复用且有有效一致性证据的部分保留，不为证明工作量重复抄写。仍有系统性差异的页面，先完成整页复用与接入，不再依赖用户逐条截图、逐项修补。\n\n用户已经提出的全部差异及后续有效裁决继续落实，包括公共账号菜单、真实多选、“全部”选项、查询条件修改提示、显示版型时必要查询、完整尺码组、多尺码组兼容、颜色小计与商品合计、流水、导出打印、日期控件、历史分类、单据字段编辑等。Demo 自身已被用户明确纠正的行为按新裁决实现。\n\n二、后端、真实数据与历史编辑\n\n最终目标必须包含后端和真实业务链路，不能只推进前端。\n\nD1、D2、D3按既有职责完成正式宿主与接口能力、基础资料维护、权限、事务、库存与流水、保存、审核、弃审、作废、历史修订及已批准真实数据的导入、读回和对账。\n\n明确区分：\n\n- 真实数据来源包已准备；\n- 程序和接口已实现；\n- 真实数据库已导入并读回；\n- 前端正常入口已接通；\n- 正式环境已部署并可操作。\n\n合成数据、健康检查、源码检查和基础资料导入，不能代替完整业务数据与正式业务链路的完成证明。\n\n历史单据可编辑是本轮必交。沿用B07受控修订与有效投影合同，原始来源保留，修订记录有真实操作人、原因、版本和前后值；库存按差额处理，金额单改不动库存，调拨守恒，历史基线不重复过账。展示创建者与真实审计操作人分开。\n\n已明确要求的未审核单据日期、调出仓库、调入仓库、创建者等可编辑需求纳入实现。真正新增或改变表字段、约束、写合同的准确差异，一次汇总给用户确认；仅暂停依赖确认的分支，其他工作继续，不重复询问功能是否需要。\n\n三、性能、组件与结构\n\n落实按需加载、按需请求、按需渲染：点击相应页面或功能才加载必要内容，不能提前读取和渲染全站数据。\n\n服务端筛选、分页、汇总与实际授权数据规模匹配。复用共同组件和状态实现，避免同一业务多个界面分支长期不一致。\n\n导出打印必须覆盖合同要求的结果，不能只导出当前可见页。保留已完成的性能优化，只针对新增影响和实际问题补必要测量，不凭源码推断性能通过，不借此重写框架或新增庞大基础设施。\n\n四、模型、并行与交接\n\n实际使用以下档位，覆盖旧统一xhigh安排：\n\n- 纯界面搬运、样式素材整理、明确标准下的外观核对：Luna-MAX，gpt-6-luna/max。\n- 接口接线、交互状态、后端数据库、权限、历史编辑、性能、集成发布及主控技术调度：Sol6.1-medium，gpt-6.1-sol/medium。\n\n每次派工、接续和重试实际指定，不继承旧档位、不自行升级。工具无法切换时如实说明，不用修改文档冒充实际切换。\n\n复用现有开发和验收Chat，不开镜像团队、多层助手，不为复制、哈希、清单或打包单独开智能体。文件保持唯一owner，共享宿主、合同和根配置由登记owner修改。\n\n工作顺序：Sol明确接入边界→Luna迁入整页界面→Sol接通功能→Luna核对外观→Sol完成必要业务和性能验证。\n\n主控负责接缝：界面交付后，直接安排同Chat接续技术阶段；完整模块就绪即交原验收Chat，同时推进下一整页包。不能把SOURCE_UI_READY当整页完成，也不能交完源码后长期无人接线。\n\n先检查F1、F4及其他角色当前在途任务，避免重复派工。确有阻塞时列明缺口、责任人、解除条件，并继续其他独立就绪工作。\n\n五、最小验收与快速上线\n\n按完整模块合批验收。复用同版本、同范围的有效证据，只复验新增、失败及受影响项，主控采用有效结论，不重复技术验收。\n\n保留必要的权限、数量金额、保存审核、数据读回和性能验证。不得删测试、放宽断言、隐藏缺陷或使用假数据冒充真实链路通过。已延期的长压测等项目不重新设为上线前置。\n\n具备条件的完整模块按已有授权，在原正式网址分批测试和发布：\\\n[https://1n5635n614.goho.co/#inventory](https://1n5635n614.goho.co/#inventory)\n\n保留现有备份、恢复和数据保护要求，不重复索要同范围授权。某模块可以先上线，其他模块继续推进；分批上线不能变成永久遗漏。\n\n六、GitHub、汇报和完成条件\n\n每完成一段，即使测试失败或尚未完成，也保存允许上传的源码WIP和简明进度到GitHub并核实远端；明确已通过、失败、未测，不能为了提交伪装通过。不上传真实业务数据、凭据和密钥。\n\n同步现有TASKS.json、PROGRESS.md、HANDOFF.md，让Dot或其他主控能直接知道源码版本、已完成范围、缺口、责任人和下一步，不需要重新审查全部历史。\n\n每次汇报分别说明：\n\n- 哪些页面整页迁入完成，哪些仍部分迁入，哪些状态还走旧界面；\n- 哪些已接只读、哪些已接可写；\n- 哪些已验收、哪些已正式发布；\n- 后端、真实数据、历史编辑和性能还缺什么；\n- 正在执行什么，卡点由谁处理，下一步是什么。\n\n不要用局部检查数量代替整页完成数量，不要只报前端。\n\n整体完成必须同时满足：\n\n1. 全站登记页面、弹层及有效新增范围完成迁入，全部适用状态从正常入口可用，前后端真实业务、历史编辑、数据对账和必要性能满足现行合同；正式部署版本明确，上线必要阻塞关闭。\n2. 最新允许上传成果已保存GitHub，Dot接续记录完整，遗留和延期项如实披露。\n\n完成任务包、交源码、局部测试通过、暂时没有可派任务，都不能单独作为整体完成理由。目标未达成时继续推进；真实阻塞如实说明，不能标记完成。\n\n若工具不能直接修改现有目标卡正文，保持原目标ACTIVE，将这份正文作为现有执行记录的当前权威目标，不通过假完成再创建来换卡。",
+    "objective": "Strict two phases under latest human directive: Phase1 complete running frozen Demo frontend replica at apps/web/demo-replica, all original pages/styles/resources/controls/routes/interactions, marked isolated Demo samples, no new requirements or old rewrite body or real DB. After original QA completeness/representative states and fixed baseline, Phase2 modify only this replica for approved requirements and connect existing new backend/real data/history editing. Full37 pages/67 overlays and additions; approved additions absent in Demo are Phase2 only. Existing backend continues independently. Preserve creator/responsible v16 semantics, precision/permissions/source/SKU/transactions/idempotency/original-key unknown recovery/inventory delta/conservation. On-demand loading/pagination/windowed same matrix, no fake pagination/zero or dropped duplicates. Same original roles and unique file owners, Luna max pure UI and Sol medium technical/mixed, actual tool parameters. Preserve old337 and WIP/rollback; no old-body normal runtime fallback. GitHub allowed source checkpoints, no credentials or real business datasets; existing records support Dot. Phase1 replica is not real business or deployment; Phase2 qualified modules release original URL with existing authorizations and required affected acceptance. Final full business/history/performance/formal URL completion must be evidenced.",
     "latestAuthority": "HUMAN_EDITED_LIVE_GOAL_VERIFIED_20261024",
     "liveGoalUpdatedAt": 1792840499,
     "verifiedAtUtc": "2026-10-24T11:29:21.184294+00:00",
-    "latestBusinessAmendment": {
-      "source": "human reply call_0cc0334318204cc885d62fa3b0c82bee",
-      "creator": "Immutable actual creating identity; oldsource and realactor preserved",
-      "responsible": "Independent selectable employee under original permission/state; oldunknownNULL, no guessedadmin/actor/default, no explicitNULL clear approved",
-      "overrides": "Older goal text implying editable creator or display creator; historical/source originals retained",
-      "implementation": "F1 inprogress same registered v16UI/optionalUUID chain; backend315/QB239 andQA schema242 separate from truebusiness write validation"
-    }
+    "latestBusinessAmendment": "Creator immutable real creation identity; responsible separate nullable staff; approved v16 remains approved.",
+    "latestHumanAuthority": "2026-10-24 latest strict two-phase full Demo replica instruction"
   },
   "historyHeaderProposal": {
     "id": "v16_HISTORY_HEAD_AND_RESPONSIBLE",
