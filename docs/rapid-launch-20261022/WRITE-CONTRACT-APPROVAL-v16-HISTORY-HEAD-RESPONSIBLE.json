@@ -1,0 +1,67 @@
+{
+  "id": "v16_HISTORY_HEAD_AND_RESPONSIBLE",
+  "status": "APPROVED_WITH_SUPERSEDING_BUSINESS_DEFINITION",
+  "atUtc": "2026-10-24T11:47:04.471747+00:00",
+  "source": "Direct human response call_0cc0334318204cc885d62fa3b0c82bee in this controllerChat",
+  "userAnswer": "补充并覆盖我刚才“页面只显示一个创建者”的说法：现在确定统一采用“创建者＋负责人”，销货单和调拨单都使用这两个名称。\n1. 创建者：实际在系统里创建单据的身份，自动记录，不因修改负责人而改变。\n2. 负责人：这张单据在业务上归谁负责，可选择员工，按已批准的权限和单据状态指定或修改。不叫开单人、经办人或展示创建者。\nv16原计划用于“展示创建者”的员工引用，调整为承载“负责人”；历史单据沿用既有受控修订机制。负责人修改不能覆盖原创建账号、真实操作人和原始来源，也不自动改变现有权限规则。\n旧记录不猜测负责人、不批量默认填成管理员，未知允许留空。页面、接口说明和任务记录统一这两个含义，不能只改名称却仍改写原创建身份。\n按上述业务定义落实v16，复用已有实现，采用必要的最小改动。其他页面迁入、后端和上线工作继续并行。",
+  "displayTerms": {
+    "createdBy": "创建者: actual creation identity; immutable for responsibility changes; real audit actor/source remain separate",
+    "responsible": "负责人: chosen employee business responsibility; may be unknown/null; no inferred default"
+  },
+  "database": {
+    "newTables": 0,
+    "newColumns": [
+      {
+        "table": "sales_header",
+        "column": "responsible_staff_id",
+        "type": "uuid",
+        "nullable": true,
+        "default": "NULL; no actor/admin/creator default",
+        "foreignKey": "staff(id) ON UPDATE NO ACTION ON DELETE NO ACTION"
+      },
+      {
+        "table": "transfer_header",
+        "column": "responsible_staff_id",
+        "type": "uuid",
+        "nullable": true,
+        "default": "NULL; no actor/admin/creator default",
+        "foreignKey": "staff(id) ON UPDATE NO ACTION ON DELETE NO ACTION"
+      }
+    ],
+    "legacyRows": "No backfill; NULL is unknown responsible, never fall back to creator for responsible display"
+  },
+  "history": {
+    "newTables": 0,
+    "newColumns": 0,
+    "headerChanges": [
+      "businessDate",
+      "fromWarehouseId",
+      "toWarehouseId",
+      "responsibleStaffId"
+    ],
+    "personMeaning": "responsibleStaffId is responsible employee, never mutate createdBy/createdByAccountId/source creator",
+    "persistence": "Existing controlled revision before_facts/after_facts and effective projection; missing historical responsible remains unknown/null, no creator/actor fallback",
+    "states": "Existing approved head-edit state and permission rules retained; numeric approved stock delta behavior unchanged"
+  },
+  "preserved": [
+    "Real creating account and audit actor remain truthful",
+    "Original source/head/line/history retained",
+    "No permission widening from chosen responsible",
+    "Existing original request-key hash/replay/CAS/transaction/unknown-COMMIT recovery",
+    "Draft save no stock; approval posting/reversal and history net delta unchanged",
+    "No bulk assumption or new default responsible"
+  ],
+  "schemaScope": "Original v16 finite current-base HREV SQL/issuer/ACL and LIVE guard/audit changes apply with responsible semantics, not old display-creator meaning",
+  "oldProposal": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/confirmation-history/v16-before-responsible-amendment-20261024.json",
+    "status": "SUPERSEDED_REFERENCE_NOT_IMPLEMENTATION_AUTHORITY"
+  },
+  "implementationStatus": "AUTHORIZED_NOT_YET_IMPLEMENTED_OR_INSTALLED",
+  "owners": {
+    "D1": "SQL/store/issuer/LIVE types and transactions",
+    "D3": "History contract/service/effective reader",
+    "F1": "Document UI/API wiring; presentational source retained",
+    "C": "Shared allocations, actual DB/build/deploy, records"
+  },
+  "requiresAnotherConfirmationForThisExactScope": false
+}

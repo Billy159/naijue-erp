@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T06:40:25.618636+00:00",
+  "updatedAt": "2026-10-24T11:52:35.073668+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -794,6 +794,36 @@
           "group": "C141_ACTUAL_GUARD_HEAP_VERSION_WITNESS_FIX",
           "fieldGate": "EXISTING_APPROVED_V14_INTENT_NO_SCHEMA_OR_WRITE_SEMANTICS_WIDENING",
           "scope": "QA1034834 single assert_core_initialization_v14 successor from3163e687; preserve original batch row lock, compare actual table-alias heap xmin to original top xid low32 in creation and BIND. Other122/OID/ACL/config unchanged. C sole PG executor; no production or v15 install from this path."
+        },
+        {
+          "path": "packages/domain/src/documents.ts",
+          "group": "V16_APPROVED_HISTORY_HEAD_AND_RESPONSIBLE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+          "scope": "Only approved v16 responsible + current-base HREV necessary consumers; creator/source/actor immutable; no other writer",
+          "basePin": {
+            "bytes": 3726,
+            "sha256": "1e140d723c25292e568cfd478d6c364537aff1f4440ae16307a0cc13e9a4cd01"
+          }
+        },
+        {
+          "path": "packages/application/src/sales-change-evidence.ts",
+          "group": "V16_APPROVED_HISTORY_HEAD_AND_RESPONSIBLE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+          "scope": "Only approved v16 responsible + current-base HREV necessary consumers; creator/source/actor immutable; no other writer",
+          "basePin": {
+            "bytes": 3655,
+            "sha256": "44a53299d1a56891154afdcca2549e64343f37d4ebce8f878c17d8e80d6b1b12"
+          }
+        },
+        {
+          "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+          "group": "V16_APPROVED_HISTORY_HEAD_AND_RESPONSIBLE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+          "scope": "Only approved v16 responsible + current-base HREV necessary consumers; creator/source/actor immutable; no other writer",
+          "basePin": null
         }
       ]
     },
@@ -2080,6 +2110,13 @@
           "group": "I07_I08_ORIGINAL_LEDGER_READ_FILTER_COUNT_NATIVE_PROJECTION",
           "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_DATABASE_FIELD_OR_WRITE_CONTRACT_CHANGE",
           "scope": "Original existing ledger API only: backward compatible keyset and20 numbered page/filter, same permission+RR authoritative total/count/page, source number/operator/business type from actual facts. No source-ID nav grant, guessed0 or new DB/writes."
+        },
+        {
+          "path": "tests/support/imported-history-query-fixtures.ts",
+          "group": "V16_APPROVED_RESPONSIBLE_TYPED_CLOSURE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "scope": "Only add responsibleStaffId:null,responsibleName:null to historyHeader base fixture; no other fixture behavior/oldassertion weakening",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json"
         }
       ]
     },
@@ -4541,6 +4578,60 @@
         "adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql"
       ],
       "scope": "C141 observed record xmin1860 vs actual heap/top3361; register exact single-function bugfix path. No new human approval implied or needed for preserving approved physical predicate. Original D1 other four registered leaves continue; no new task."
+    },
+    {
+      "atUtc": "2026-10-24T11:47:04.471747+00:00",
+      "id": "V16_RESPONSIBLE_SHARED_ALLOCATIONS",
+      "owner": "D1",
+      "registered": [
+        {
+          "path": "packages/domain/src/documents.ts",
+          "group": "V16_APPROVED_HISTORY_HEAD_AND_RESPONSIBLE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+          "scope": "Only approved v16 responsible + current-base HREV necessary consumers; creator/source/actor immutable; no other writer",
+          "basePin": {
+            "bytes": 3726,
+            "sha256": "1e140d723c25292e568cfd478d6c364537aff1f4440ae16307a0cc13e9a4cd01"
+          }
+        },
+        {
+          "path": "packages/application/src/sales-change-evidence.ts",
+          "group": "V16_APPROVED_HISTORY_HEAD_AND_RESPONSIBLE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+          "scope": "Only approved v16 responsible + current-base HREV necessary consumers; creator/source/actor immutable; no other writer",
+          "basePin": {
+            "bytes": 3655,
+            "sha256": "44a53299d1a56891154afdcca2549e64343f37d4ebce8f878c17d8e80d6b1b12"
+          }
+        },
+        {
+          "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+          "group": "V16_APPROVED_HISTORY_HEAD_AND_RESPONSIBLE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+          "scope": "Only approved v16 responsible + current-base HREV necessary consumers; creator/source/actor immutable; no other writer",
+          "basePin": null
+        }
+      ],
+      "source": "Direct human amended approval call_0cc0334318204cc885d62fa3b0c82bee",
+      "CServerOwnerUnchanged": true
+    },
+    {
+      "atUtc": "2026-10-24T11:52:35.073668+00:00",
+      "id": "F1_UIDATE_CURRENT_VERSION_MOUSE_SCOPE_20261024",
+      "owner": "F1",
+      "path": "apps/web/src/components/standard-controls.tsx",
+      "basePin": {
+        "bytes": 6905,
+        "sha256": "16d4b6ba08224d691f5bf300d600ba27c20ec319fa6e2c1a11d78f2d64dde9c0"
+      },
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "scope": "Explicit unique F1 checkpoint for UIDate actual firstmouse opening only. Oldc220 symptom is not current failure; first adopt existing newversion evidence or QF2current306 minimal consumer test. If failure persists, record cause/event trace and minimal fix. No unrelated CSS/control/API or16px workaround. Source changes only justified current failure.",
+      "source": "User latest model boundary and existing F01 originalUIDate authority; QF2current browser owner",
+      "otherWriters": false
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
