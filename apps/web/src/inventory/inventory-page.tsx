@@ -76,6 +76,12 @@ function InventoryPageContent({ scope, reader, productReader, actions = noInvent
   const [settings, setSettings] = useState<InventoryDisplaySettings>(defaultDisplaySettings);
   const [outputRequest, setOutputRequest] = useState<{ kind: 'export' | 'print'; filter: InventoryFilter; settings: InventoryDisplaySettings } | null>(null);
   const outputTrigger = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (outputRequest) return;
+    const trigger = outputTrigger.current; outputTrigger.current = null;
+    // Restore only after the trigger is enabled and the dialog has unmounted.
+    if (scope.active && trigger?.isConnected && !trigger.disabled) trigger.focus();
+  }, [outputRequest, scope]);
   const [collapsedProducts, setCollapsedProducts] = useState<ReadonlySet<string>>(new Set());
   const [collapsedColors, setCollapsedColors] = useState<ReadonlySet<string>>(new Set());
   const resultsElement=useRef<HTMLDivElement>(null);
@@ -137,7 +143,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = noInvent
     <InventoryPagination scope={scope} page={result?.page??1} pageSize={displayedPageSize} total={result?.exactTotalProducts??null} busy={busy} onPage={page=>{if(success)run({...success.parameters,page});}} onPageSize={setSize}/>
     {ledger&&ledgerTarget&&<InventoryLedgerDrawer key={`${ledgerTarget.warehouse.id}:${ledgerTarget.skuId}`} parent={scope} target={ledgerTarget} currentQuantity={ledgerQuantity} capability={ledger} close={()=>setLedgerTarget(null)}/>}
     {product&&<ProductDrawerHost key={`${product.id}:${productSequence.current}`} parentScope={scope} product={product} reader={productReader} close={closeProduct}/>}
-    {output&&outputRequest&&<InventoryOutputHost {...outputRequest} scope={scope} capability={output} close={()=>{setOutputRequest(null);outputTrigger.current?.focus();}}/>}
+    {output&&outputRequest&&<InventoryOutputHost {...outputRequest} scope={scope} capability={output} close={()=>setOutputRequest(null)}/>}
     {scopeOpen&&success&&<StandardOverlay className="iw-scope-dialog" title="已执行查询范围" label="本次查询使用的条件" closeLabel="关闭查询范围" close={()=>{setScopeOpen(false);scopeTrigger.current?.focus();}} width={480}><ul>{scopeLines(success.parameters.filter).map(line=><li key={line}>{line}</li>)}</ul><p className="muted">每页 {success.parameters.pageSize} 款 · 第 {success.parameters.page} 页。当前编辑条件不改变此结果。</p></StandardOverlay>}
   </div>;
 }
