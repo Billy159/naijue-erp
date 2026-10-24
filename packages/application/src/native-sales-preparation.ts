@@ -11,11 +11,18 @@ import type { DocumentSkuSelection } from './document-specification.ts';
 import type { StoredSales } from './ports.ts';
 import type { EntityId } from '../../domain/src/values.ts';
 
+function responsibleKeys(value: unknown): string[] {
+  return value !== null && typeof value === 'object' && Object.hasOwn(value, 'responsibleStaffId') ? ['responsibleStaffId'] : [];
+}
+function responsibleIntent(row: Record<string, unknown>): { readonly responsibleStaffId?: string } {
+  return Object.hasOwn(row, 'responsibleStaffId') ? { responsibleStaffId: entityId('staff', row.responsibleStaffId as string) } : {};
+}
 /** Manual sales/independent-return/exchange proposal: IDs and explicit pricing intent, never labels,
  * barcode, reference/minimum-price authority, calculated totals or document IDs.
  * RETURN/EXCHANGE reuse independent signed economics: nonzero ± rows, no original
  * sale association, zero whole discount/allocation. Settlement equality is APPROVE-only. */
 export interface NativeSalesCreateProposal {
+  readonly responsibleStaffId?: string;
   readonly businessType: "SALE" | "RETURN" | "EXCHANGE"; readonly businessDate: string; readonly note: string | null;
   readonly hallId: string; readonly customerId: string; readonly salespersonId: string | null; readonly warehouseId: string;
   readonly orderDiscount: string;
@@ -93,7 +100,7 @@ export function createNativeSalesPreparation(dependencies: SalesDependencies) {
     const header = { id, number: sourceConfirmedCreateDocumentNumber("SALE", id), businessType: proposal.businessType,
       businessDate: businessDate(proposal.businessDate), hallId: entityId("hall", proposal.hallId), customerId: entityId("customer", proposal.customerId),
       salespersonId: proposal.salespersonId === null ? null : entityId("staff", proposal.salespersonId), warehouseId: entityId("warehouse", proposal.warehouseId),
-      note: proposal.note, orderDiscount: money(proposal.orderDiscount), grossAmount: zero, netDue: zero };
+      note: proposal.note, ...(proposal.responsibleStaffId === undefined ? {} : { responsibleStaffId: entityId("staff", proposal.responsibleStaffId) }), orderDiscount: money(proposal.orderDiscount), grossAmount: zero, netDue: zero };
     requireDomain(header.businessType === "SALE" || header.orderDiscount === 0n, "INDEPENDENT_RETURN_DISCOUNT",
       "Independent return/exchange requires zero whole-document discount");
     const lines: SalesLineRow[] = proposal.lines.map((line, index) => {
@@ -178,7 +185,7 @@ function existingArray(input: unknown, minimum: number, maximum: number): unknow
 }
 /** Separate closed successor parser; the original CREATE parser/hash is untouched. */
 export function parseNativeSalesExistingProposal(input: unknown): NativeSalesExistingProposal {
-  const p = existingData(input, ["salesId", "expectedVersion", "businessType", "businessDate", "note", "hallId", "customerId", "salespersonId", "warehouseId", "orderDiscount", "lines", "settlements"]);
+  const p = existingData(input, ["salesId", "expectedVersion", "businessType", "businessDate", "note", "hallId", "customerId", "salespersonId", "warehouseId", "orderDiscount", "lines", "settlements", ...responsibleKeys(input)]);
   const text = (v: unknown): string => { requireDomain(typeof v === "string", "INVALID_HTTP_INPUT", "Explicit proposal text required"); return v; };
   const pointer = (v: unknown, kind: "salesLine" | "settlement"): string | null => v === null ? null : entityId(kind, text(v));
   requireDomain(typeof p.expectedVersion === "number" && Number.isInteger(p.expectedVersion) && p.expectedVersion > 0 && p.expectedVersion <= 2147483647,
@@ -208,14 +215,14 @@ export function parseNativeSalesExistingProposal(input: unknown): NativeSalesExi
   });
   const proposal: NativeSalesExistingProposal = { salesId: entityId("sales", text(p.salesId)), expectedVersion: p.expectedVersion, businessType: p.businessType,
     businessDate: businessDate(text(p.businessDate)), note, hallId: entityId("hall", text(p.hallId)), customerId: entityId("customer", text(p.customerId)),
-    salespersonId: p.salespersonId === null ? null : entityId("staff", text(p.salespersonId)), warehouseId: entityId("warehouse", text(p.warehouseId)), orderDiscount: text(p.orderDiscount), lines, settlements };
+    salespersonId: p.salespersonId === null ? null : entityId("staff", text(p.salespersonId)), warehouseId: entityId("warehouse", text(p.warehouseId)), orderDiscount: text(p.orderDiscount), lines, settlements, ...responsibleIntent(p) };
   money(proposal.orderDiscount);
   requireDomain(proposal.businessType === "SALE" || money(proposal.orderDiscount) === 0n, "INDEPENDENT_RETURN_DISCOUNT", "Independent return/exchange whole discount must be zero");
   requireDomain(salesJsonByteLength(proposal) <= SALES_PREPARE_MAX_REQUEST_BYTES, "SALES_PAYLOAD_TOO_LARGE", "Preparation exceeds request budget"); return proposal;
 }
 
 export function parseNativeSalesSaveProposal(input:unknown):NativeSalesSaveProposal {
-  const p=existingData(input,['salesId','businessType','businessDate','note','hallId','customerId','salespersonId','warehouseId','orderDiscount','lines','settlements']);
+  const p=existingData(input,['salesId','businessType','businessDate','note','hallId','customerId','salespersonId','warehouseId','orderDiscount','lines','settlements', ...responsibleKeys(input)]);
   requireDomain(p.businessType==='SALE'||p.businessType==='RETURN'||p.businessType==='EXCHANGE','INVALID_HTTP_INPUT','Explicit sales type required');
   requireDomain(p.salesId===null||typeof p.salesId==='string','INVALID_HTTP_INPUT','Actual target or explicit new target required');
   requireDomain(p.note===null||typeof p.note==='string'&&p.note.length<=SALES_PREPARE_MAX_NOTE_LENGTH,'INVALID_HTTP_INPUT','Bounded note required');
@@ -239,7 +246,7 @@ export function parseNativeSalesSaveProposal(input:unknown):NativeSalesSavePropo
   });
   const proposal:NativeSalesSaveProposal={salesId:p.salesId===null?null:entityId('sales',p.salesId as string),businessType:p.businessType,businessDate:businessDate(p.businessDate as string),
     note:p.note as string|null,hallId:entityId('hall',p.hallId as string),customerId:entityId('customer',p.customerId as string),salespersonId:p.salespersonId===null?null:entityId('staff',p.salespersonId as string),
-    warehouseId:entityId('warehouse',p.warehouseId as string),orderDiscount:(money(p.orderDiscount),p.orderDiscount as string),lines,settlements};
+    warehouseId:entityId('warehouse',p.warehouseId as string),orderDiscount:(money(p.orderDiscount),p.orderDiscount as string),lines,settlements,...responsibleIntent(p)};
   requireDomain(proposal.salesId!==null||lines.every(l=>l.existingLineId===null)&&settlements.every(s=>s.existingSettlementId===null),'INVALID_HTTP_INPUT','New document cannot adopt old rows');
   requireDomain(proposal.businessType==='SALE'||money(proposal.orderDiscount)===0n,'INDEPENDENT_RETURN_DISCOUNT','Independent return/exchange whole discount must be zero');
   requireDomain(salesJsonByteLength(proposal)<=SALES_PREPARE_MAX_REQUEST_BYTES,'SALES_PAYLOAD_TOO_LARGE','Bounded proposal required');return proposal;
@@ -341,7 +348,7 @@ export function createNativeSalesExistingPreparation(dependencies: SalesDependen
         const linePointers = new Set<string>(), settlementPointers = new Set<string>(), fresh = new Set<string>();
         const header = { id: salesId, number: previous.header.number, businessType: proposal.businessType, businessDate: businessDate(proposal.businessDate),
           hallId: entityId("hall", proposal.hallId), customerId: entityId("customer", proposal.customerId), salespersonId: proposal.salespersonId === null ? null : entityId("staff", proposal.salespersonId),
-          warehouseId: entityId("warehouse", proposal.warehouseId), note: proposal.note, orderDiscount: money(proposal.orderDiscount), grossAmount: zero, netDue: zero };
+          warehouseId: entityId("warehouse", proposal.warehouseId), note: proposal.note, ...(proposal.responsibleStaffId === undefined ? {} : { responsibleStaffId: entityId("staff", proposal.responsibleStaffId) }), orderDiscount: money(proposal.orderDiscount), grossAmount: zero, netDue: zero };
         const lines: SalesLineRow[] = proposal.lines.map((row, index) => {
           const old = row.existingLineId === null ? undefined : oldLines.get(row.existingLineId);
           requireDomain(row.existingLineId === null || old?.salesId === salesId && old.isCurrent && !linePointers.has(row.existingLineId), "INVALID_HTTP_INPUT", "Existing line pointer must be unique, current and owned by this document");

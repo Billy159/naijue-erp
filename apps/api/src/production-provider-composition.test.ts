@@ -887,3 +887,22 @@ test('production CORE audit: source claim actor and module failures deny before 
     } finally { await api.close(); }
   } finally { f.cleanup(); }
 });
+
+import {NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE as V16HistoryProbe} from '../../../adapters/postgres/src/native-import-accounting-capability.ts';
+test('v16 B07 production host: exact HISTORY successor mounts original protected routes without enabling LIVE commands',async()=>{
+ const f=categoryProductionFixture('26_v16_history_responsible_from_v14',false);
+ const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));review.purposes.push('HISTORY_REVISION');
+ const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
+ const config={...f.configuration,runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
+ const p=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);let grants=0;
+ const api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{authorization:{async authorize(actor,command){grants++;return{dataset:'HISTORY',kind:command.kind,documentId:command.documentId,actorAccountId:actor.accountId};}}},p.factory);
+ try{
+  for(const path of ['/imported-history/sales/revise','/imported-history/transfers/revise']){
+   assert.equal(api.app.hasRoute({method:'POST',url:path}),true);
+   assert.equal((await api.app.inject({method:'POST',url:path,headers:{origin:PRODUCTION_PUBLIC_ORIGIN},payload:{}})).statusCode,401);
+   assert.equal((await api.app.inject({method:'POST',url:path,headers:{origin:'https://foreign.invalid'},payload:{}})).statusCode,401);
+  }
+  assert.equal(api.app.hasRoute({method:'POST',url:'/sales/commands'}),false);assert.equal(api.app.hasRoute({method:'POST',url:'/transfers/commands'}),false);assert.equal(api.app.server.listening,false);assert.equal(grants,0);
+ }finally{await api.close();f.cleanup();}
+ assert.equal(p.counts().allocations,1);assert.equal(p.counts().ends,1);assert.equal(p.counts().connects,p.counts().releases);
+});

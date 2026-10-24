@@ -30,7 +30,7 @@ function header(row: Record<string, unknown>): RuntimeTransferHeader {
   return { id: id("transfer", row.id), number: stringValue(row.number), businessDate: businessDate(stringValue(row.business_date)),
     fromWarehouseId: id("warehouse", row.from_warehouse_id), toWarehouseId: id("warehouse", row.to_warehouse_id),
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version), note: nullableString(row.note),
-    createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
+    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
     createdRole: choice(row.created_role, ["ADMIN", "WAREHOUSE", "SALESPERSON"]), createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at),
     approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at) };
 }
@@ -193,7 +193,7 @@ class PostgresTransferTransaction implements TransferTransaction {
   async getTransfer(transferId: EntityId<"transfer">): Promise<StoredTransfer | undefined> {
     requireDomain(this.loaded === undefined, "TRANSACTION_SCOPE", "Load exactly one transfer per command");
     await this.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:transfer:${transferId}`]);
-    const row = (await this.query(`SELECT id, number, to_char(business_date, 'YYYY-MM-DD') AS business_date, from_warehouse_id, to_warehouse_id, status, version, note,
+    const row = (await this.query(`SELECT id, number, to_char(business_date, 'YYYY-MM-DD') AS business_date, from_warehouse_id, to_warehouse_id, status, version, note, responsible_staff_id,
       created_by_account_id, created_hall_id, created_role, ${stamp("created_at")} AS created_at, ${stamp("updated_at")} AS updated_at,
       approved_by_account_id, ${stamp("approved_at")} AS approved_at, stock_basis FROM naijue_erp.transfer_header WHERE id = $1 FOR UPDATE`, [transferId])).rows[0];
     if (!row) { this.loaded = { id: transferId, version: null, stockBasis: "RUNTIME_LEDGER" }; return undefined; }
@@ -265,11 +265,15 @@ class PostgresTransferTransaction implements TransferTransaction {
     requireDomain(loaded?.id === h.id, "TRANSACTION_SCOPE", "Transfer must be read before writing");
     requireDomain(loaded.stockBasis === "RUNTIME_LEDGER", "HISTORICAL_POSTING_NOT_IMPLEMENTED", "Cutoff history is not a runtime posting");
     requireDomain(h.version === (loaded.version === null ? 1 : loaded.version + 1), "VERSION_CONFLICT", "Transfer version must advance exactly once");
-    const values: unknown[] = [h.id,h.number,h.businessDate,h.fromWarehouseId,h.toWarehouseId,h.status,versionToSql(h.version),h.note,h.createdByAccountId,h.createdHallId,h.createdRole,h.createdAt,h.updatedAt,h.approvedByAccountId,h.approvedAt];
-    const columns = "id, number, business_date, from_warehouse_id, to_warehouse_id, status, version, note, created_by_account_id, created_hall_id, created_role, created_at, updated_at, approved_by_account_id, approved_at";
+    if (h.responsibleStaffId !== null) {
+      const responsible = await this.query("/* document:responsible-staff */ SELECT id FROM naijue_erp.staff WHERE id=$1::uuid FOR SHARE", [h.responsibleStaffId]);
+      requireDomain(responsible.rows.length === 1, "RESPONSIBLE_STAFF_UNAVAILABLE", "Responsible employee does not exist");
+    }
+    const values: unknown[] = [h.id,h.number,h.businessDate,h.fromWarehouseId,h.toWarehouseId,h.status,versionToSql(h.version),h.note,h.createdByAccountId,h.createdHallId,h.createdRole,h.createdAt,h.updatedAt,h.approvedByAccountId,h.approvedAt,h.responsibleStaffId];
+    const columns = "id, number, business_date, from_warehouse_id, to_warehouse_id, status, version, note, created_by_account_id, created_hall_id, created_role, created_at, updated_at, approved_by_account_id, approved_at, responsible_staff_id";
     const written = loaded.version === null
       ? await this.query(`INSERT INTO naijue_erp.transfer_header (${columns}, stock_basis) VALUES (${values.map((_v,i) => `$${i+1}`).join(",")}, 'RUNTIME_LEDGER') ON CONFLICT (id) DO NOTHING`, values)
-      : await this.query(`UPDATE naijue_erp.transfer_header SET ${columns.split(", ").slice(1).map((field,i) => `${field} = $${i+2}`).join(", ")} WHERE id = $1 AND version = $16 AND stock_basis = 'RUNTIME_LEDGER'`, [...values,versionToSql(loaded.version)]);
+      : await this.query(`UPDATE naijue_erp.transfer_header SET ${columns.split(", ").slice(1).map((field,i) => `${field} = $${i+2}`).join(", ")} WHERE id = $1 AND version = $17 AND stock_basis = 'RUNTIME_LEDGER'`, [...values,versionToSql(loaded.version)]);
     requireDomain(written.rowCount === 1, "VERSION_CONFLICT", "Transfer compare-and-swap failed");
     // Sparse audit reflects actual row transitions. Deferred current-position uniqueness
     // permits swaps without transient deactivate-all/rewrite-all mutations.

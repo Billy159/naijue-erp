@@ -1,0 +1,180 @@
+{
+  "atUtc": "2026-10-24T12:24:15.686612+00:00",
+  "parent": "015d8de5887fa1d0a7f9dcaf5a79ad5e79195971",
+  "taskId": {
+    "id": "D1/v16-history-head-responsible-current-base",
+    "atUtc": "2026-10-24T12:22:06.410140+00:00",
+    "status": "SOURCE_READY_EXACT26_LEAVES_PENDING_QB_AND_ISOLATED_PG",
+    "approval": "docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+    "humanAuthority": "Direct human call_0cc0334318204cc885d62fa3b0c82bee via C; current unified37/67 directive; meaningful seven-field reporting01a161f7",
+    "requestedModel": "gpt-6.1-sol/medium",
+    "fastOFF": "Requested; toolUNVERIFIED; no model-hot-switch claim"
+  },
+  "files": [
+    {
+      "path": "packages/domain/src/documents.ts",
+      "bytes": 3867,
+      "sha256": "15c905972158f1db66055673cfe67ca17b0807f9d65df5ba11fab3ad370df51f",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/ports.ts",
+      "bytes": 7287,
+      "sha256": "75b5b743fe2f410cc1cd79714d0aee097672c96ce86ce9964ecbdc7b80cd7045",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/transfer-ports.ts",
+      "bytes": 7933,
+      "sha256": "bf73f4a4fac82f57a6e7e8085b80f91b9910216163333ec8174f1c52a2830bf3",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/sales-change-evidence.ts",
+      "bytes": 3677,
+      "sha256": "b0afa1915998281c17896ea4e038e6e8db1ec190ed4c5e22017d2c209c7448c5",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/input.ts",
+      "bytes": 7225,
+      "sha256": "38ac615309c0800d4cd778f841f588cd6cba41f2404ab353b43ddf40910106b5",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/transfer-input.ts",
+      "bytes": 4985,
+      "sha256": "ee34de6ae6416d62596961b75160d7e29e8b8ce01991a80808b818569eef9759",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/native-sales-preparation.ts",
+      "bytes": 40495,
+      "sha256": "38ac43dc2281cd277ed1752b80fca724a350f2d62cf6b68c0da1cf6e9de17977",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/native-transfer-preparation.ts",
+      "bytes": 24247,
+      "sha256": "59628194cde3083f339db490ed850bb30a000ba18543e9cf5db556f20e822762",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/sales-service.ts",
+      "bytes": 16284,
+      "sha256": "6162e9d8914ef6ec1aced01270b971d5a9bbd7810fe57dd13fdfc0ad76b96e8e",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/transfer-service.ts",
+      "bytes": 14459,
+      "sha256": "e359b553e17c701e1e889958e2c794b6c973a4a3a8f3f71d4a200c468161cf23",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/sales-unit-of-work.ts",
+      "bytes": 37985,
+      "sha256": "87bbaaff82ed1cf41d525654b41fff7b730a9c178521977b09fcb850126caa6d",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "bytes": 27177,
+      "sha256": "f515cc4972c9175901f349dd9095a4421936af5757572729496b02edf8545654",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/sales-query-ports.ts",
+      "bytes": 8775,
+      "sha256": "9395c7da866b09f60191e3d1dd5885cafa738a6fd1304bcf95b7848889dc4dcc",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/application/src/transfer-query-ports.ts",
+      "bytes": 7057,
+      "sha256": "b8a5593343b9996ee8d5d1b2fd4898b1b5d5e16d7f3b790d7fa8c0be6d7a6f42",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/sales-query-reader.ts",
+      "bytes": 25806,
+      "sha256": "b4668582c9d1ce77e62bf628a433b3260e4c3036022a61ff3e3cec03955efe5d",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/transfer-query-reader.ts",
+      "bytes": 24912,
+      "sha256": "ec556911f94d13e92ddda398871149f5cdb1b4365fc9cc00d1dde416b7ec0e9e",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/history-revision-store.ts",
+      "bytes": 25766,
+      "sha256": "ea8d4221911d73924eff007c07d5cac8b27024d8dc5e9ba862e5aab5179f3cad",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+      "bytes": 80332,
+      "sha256": "5fb5953364c1b82349ea2f1fc28ebb9b451a4144f9278d9cf6ed00e9b5eef56e",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 74035,
+      "sha256": "ce6859caad690df1ee624b59f1799a55658ff81eadf0648a721031e741c11294",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/transfer-service.test.ts",
+      "bytes": 20419,
+      "sha256": "b9fb0c8e77cd319d5410514915e275552ff5b2615978bb7c57118397f450d8ae",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-sales-preparation.test.ts",
+      "bytes": 23119,
+      "sha256": "0afb3edaa9b70ea624309678207e0d9dfaf38e7a0344f1bbeda21b84fa6a0b2b",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 46188,
+      "sha256": "2cce3c5c85def5bc94263c5b2854da515ea4b3f5a7ad9f61fd68a61b262f7908",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/history-revision-postgres-protocol.test.ts",
+      "bytes": 15744,
+      "sha256": "d9e142aad6fe2c21238564c90fa4eb56b31586662a919063950904061cf9d806",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "bytes": 86274,
+      "sha256": "2727c96939ffdda3832b5f8e9dccaf2a247eccee5242c06c1d81eff3753f0a4f",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/sales-http.ts",
+      "bytes": 11760,
+      "sha256": "31bd52aaa8d74715595e8d2f75f19c9c24e379f664663bec32c4ea81097b5352",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/transfer-http.ts",
+      "bytes": 12535,
+      "sha256": "6d0e23751319b1e4770af863c0565258c606e89e1ea1ee0d440df87c07df14a9",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V16-HISTORY-RESPONSIBLE-SOURCE-v1.json",
+  "ownerReceiptBytes": 23220,
+  "ownerReceiptSha256": "7b03c5c6db0b028dba2671ca7cc5c981c9ea4100e8477e707f66340168943d7e",
+  "ownerSourceReleased": true,
+  "stage": "APPROVED_V16_SOURCE_EXACT26_11_NEW_AFFECTED_PASS_STRICT_AND_PG_GRAMMAR_ONLY_NOT_INSTALLED",
+  "actualPostgresAccepted": false,
+  "historyWriteAccepted": false,
+  "wholePageAccepted": false,
+  "deployed": false
+}

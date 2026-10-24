@@ -201,3 +201,30 @@ test("SYNTHETIC existing prepare keeps independent signed RETURN/EXCHANGE intent
   await assert.rejects(h.existing.prepareExisting(actor, { ...input, lines: [{ ...input.lines[0]!, existingLineId: null }] }), { code: "SALES_PAYLOAD_TOO_LARGE" });
   assert.ok(!h.trace.some(v => v.startsWith("WRITE:")));
 });
+
+import {fixture as v16SalesFixture, syntheticDraft as v16SalesDraft, actor as v16SalesActor, ids as v16SalesIds, sid as v16SalesId} from './support/synthetic-fixtures.ts';
+
+test("v16 LIVE sales responsible does not rewrite creation or financial facts and old payloads preserve responsibility",async()=>{
+ const f=v16SalesFixture(), d=v16SalesDraft(), staff=v16SalesId('staff',7001);
+ await f.service.execute({action:'SAVE',actor:v16SalesActor,requestKey:'v16-old',expectedVersion:null,draft:d});
+ assert.equal(f.document().header.responsibleStaffId,null);
+ const q={action:'SAVE' as const,actor:v16SalesActor,requestKey:'v16-responsible',expectedVersion:version(1),draft:{...d,header:{...d.header,responsibleStaffId:staff}}};
+ const r=await f.service.execute(q); assert.deepEqual(await f.service.execute(q),r);
+ assert.equal(f.document().header.createdByAccountId,v16SalesActor.accountId);
+ assert.equal(f.document().header.responsibleStaffId,staff);assert.equal(f.store.snapshot().ledger.length,0);
+ assert.equal(f.document().header.netDue,d.header.netDue);
+ await f.service.execute({action:'SAVE',actor:v16SalesActor,requestKey:'v16-omit',expectedVersion:version(2),draft:d});
+ assert.equal(f.document().header.responsibleStaffId,staff);
+ const audit=f.store.snapshot().audit.at(-2)!;assert.equal(audit.before!.header.responsibleStaffId,null);assert.equal(audit.after.header.responsibleStaffId,staff);
+ assert.equal(v16SalesIds.sales,f.document().header.id);
+});
+
+import {PostgresSalesQueryReader as V16SalesReader} from '../adapters/postgres/src/sales-query-reader.ts';
+test('v16 LIVE sales read: real creator label and nullable responsible label remain distinct',async()=>{
+ const calls:string[]=[];let releases=0;
+ const row={id:v16SalesIds.sales,number:'SYNTHETIC',business_type:'SALE',business_date:'2026-10-20',hall_id:v16SalesIds.hall,customer_id:v16SalesIds.customer,salesperson_id:null,warehouse_id:v16SalesIds.warehouse,status:'DRAFT',version:1,gross_amount:'2.50',order_discount:'0.00',net_due:'2.50',updated_at:'2026-10-20T00:00:00Z',hall_name:'H',warehouse_name:'W',customer_name:'C',salesperson_name:null,responsible_staff_id:null,responsible_name:null,created_by_name:'TRUE STORED CREATOR'};
+ const reader=new V16SalesReader({async connect(){return{async query(sql:string){calls.push(sql);const rows=sql.startsWith('SELECT COUNT')?[{exact_total:'1'}]:sql.startsWith('SELECT page.id')?[{sales_id:v16SalesIds.sales,quantity:'2',incoming_quantity:'0',outgoing_quantity:'2'}]:sql.startsWith('SELECT h.id')?[row]:[];return{rows,rowCount:rows.length};},release(){releases++;}};}});
+ const page=await reader.readList({actor:v16SalesActor,scope:{kind:'all'},signal:new AbortController().signal,parameters:{filter:{startDate:null,endDate:null,statuses:[],businessTypes:[],hallIds:[],salespersonIds:[],customerIds:[],warehouseIds:[],number:null},page:1,pageSize:20}});
+ assert.equal(page.items[0]!.createdByName,'TRUE STORED CREATOR');assert.equal(page.items[0]!.responsibleStaffId,null);assert.equal(page.items[0]!.responsibleName,null);
+ assert.ok(calls.some(sql=>sql.includes('creator_account.id=h.created_by_account_id')&&sql.includes('creator.id=creator_account.staff_id')));assert.equal(releases,1);
+});

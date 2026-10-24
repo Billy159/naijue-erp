@@ -456,3 +456,26 @@ test("v15 category original context unwraps the real managed lease and rechecks 
     } finally { f.cleanup(); }
   }
 });
+
+import {NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE,NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE} from '../adapters/postgres/src/native-import-accounting-capability.ts';
+
+test("v16 HISTORY issuer requires exact current successor and preserves base CORE and category fingerprints",async()=>{
+ for(const [patch,probe,count,category] of [
+  ['26_v16_history_responsible_from_v14',NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE,129,false],
+  ['26_v16_history_responsible_from_v15',NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE,130,true]
+ ] as const){
+  const f=fixture();try{
+   const pool={async connect(){return{async query(sql:string){assert.equal(sql,probe);return{rows:[observation()],rowCount:1};},release(){}};}};
+   const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,patchLevel:patch},purposes:['HISTORY_REVISION','PRODUCT_MAINTENANCE']}));
+   const c=await issuer.pool.connect();await issuer.runtime26.assertReady(c,'HISTORY_REVISION');c.release();assert.equal(issuer.categoryOrderWrite!==undefined,category);
+   assert.ok(probe.includes(`jsonb_array_length(manifest->'routines')=${count}`));
+   assert.ok(probe.includes("('assert_core_initialization_v14','5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d')"));
+   const source=readFileSync(new URL('../adapters/postgres/patches/0026-history-revision-current-base.sql',import.meta.url),'utf8');
+   const definitions=[...source.matchAll(/CREATE(?: OR REPLACE)? FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)];assert.equal(definitions.length,13);
+   for(const m of definitions)assert.ok(probe.includes(`('${m[1]}','${hash(m[2]!)}')`),m[1]);
+  }finally{f.cleanup();}
+ }
+ for(const patch of ['26_v11_document_specification_save','26_v14_core_initialization','26_v15_category_order_undo']){
+  const f=fixture();try{let connects=0;await assert.rejects(createNativeRuntime26Issuer({async connect(){connects++;throw Error('old profile must fail before PG');}},f.options({...f.review,catalog:{...f.review.catalog,patchLevel:patch},purposes:['HISTORY_REVISION']})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(connects,0);}finally{f.cleanup();}
+ }
+});

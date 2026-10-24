@@ -27,33 +27,34 @@ function count(value: unknown): bigint {
 }
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 const SUMMARY_COLUMNS = `h.id, h.number, to_char(h.business_date, 'YYYY-MM-DD') AS business_date,
-  h.from_warehouse_id, h.to_warehouse_id, h.status, h.version, h.created_by_account_id, ${stamp("h.created_at")} AS created_at, ${stamp("h.updated_at")} AS updated_at`;
+  h.responsible_staff_id, h.from_warehouse_id, h.to_warehouse_id, h.status, h.version, h.created_by_account_id, ${stamp("h.created_at")} AS created_at, ${stamp("h.updated_at")} AS updated_at`;
 const HEADER_COLUMNS = `${SUMMARY_COLUMNS}, h.note, h.created_hall_id, h.created_role,
   h.approved_by_account_id, ${stamp("h.approved_at")} AS approved_at, h.stock_basis`;
 const REFERENCES = `fw.name AS from_warehouse_name, tw.name AS to_warehouse_name, fh.name AS from_hall_name, th.name AS to_hall_name,
-  creator.name AS created_by_name, approver.name AS approved_by_name`;
+  responsible.name AS responsible_name, creator.name AS created_by_name, approver.name AS approved_by_name`;
 /** Count and page use the SAME native relation joins; a missing reference is not a fabricated display label. */
 const RELATIONS = `FROM naijue_erp.transfer_header h
   JOIN naijue_erp.warehouse fw ON fw.id = h.from_warehouse_id JOIN naijue_erp.warehouse tw ON tw.id = h.to_warehouse_id
   JOIN naijue_erp.hall fh ON fh.id = fw.hall_id JOIN naijue_erp.hall th ON th.id = tw.hall_id
   JOIN naijue_erp.user_account ca ON ca.id = h.created_by_account_id JOIN naijue_erp.staff creator ON creator.id = ca.staff_id
+  LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id
   LEFT JOIN naijue_erp.user_account aa ON aa.id = h.approved_by_account_id LEFT JOIN naijue_erp.staff approver ON approver.id = aa.staff_id`;
 function decodeReferences(row: Record<string, unknown>): TransferReferenceNames {
-  return { fromWarehouseName: stringValue(row.from_warehouse_name), toWarehouseName: stringValue(row.to_warehouse_name),
+  return { responsibleName: nullableString(row.responsible_name), fromWarehouseName: stringValue(row.from_warehouse_name), toWarehouseName: stringValue(row.to_warehouse_name),
     fromHallName: stringValue(row.from_hall_name), toHallName: stringValue(row.to_hall_name), createdByName: stringValue(row.created_by_name), approvedByName: nullableString(row.approved_by_name) };
 }
 function decodeSummary(row: Record<string, unknown>, totalQuantity: bigint): TransferSummary {
   return { id: id("transfer", row.id), number: stringValue(row.number), businessDate: businessDate(stringValue(row.business_date)),
     fromWarehouseId: id("warehouse", row.from_warehouse_id), toWarehouseId: id("warehouse", row.to_warehouse_id),
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version),
-    createdByAccountId: id("account", row.created_by_account_id), createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at), totalQuantity, ...decodeReferences(row) };
+    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at), totalQuantity, ...decodeReferences(row) };
 }
 function decodeHeader(row: Record<string, unknown>): RuntimeTransferHeader {
   const fromWarehouseId = id("warehouse", row.from_warehouse_id); const toWarehouseId = id("warehouse", row.to_warehouse_id);
   requireDomain(fromWarehouseId !== toWarehouseId, "INVALID_DATABASE_VALUE", "Persisted transfer warehouses must differ");
   return { id: id("transfer", row.id), number: stringValue(row.number), businessDate: businessDate(stringValue(row.business_date)), fromWarehouseId, toWarehouseId,
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version), note: nullableString(row.note),
-    createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
+    responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
     createdRole: choice(row.created_role, ["ADMIN", "WAREHOUSE", "SALESPERSON"]), createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at),
     approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at) };
 }

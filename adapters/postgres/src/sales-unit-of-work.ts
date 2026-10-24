@@ -43,7 +43,7 @@ function choice<T extends string>(value: unknown, choices: readonly T[]): T {
 }
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 const HEADER_SELECT = `SELECT id, number, business_type, to_char(business_date, 'YYYY-MM-DD') AS business_date, hall_id, customer_id, salesperson_id, warehouse_id,
-  status, version, gross_amount::text, order_discount::text, net_due::text, note, created_by_account_id, created_hall_id,
+  responsible_staff_id, status, version, gross_amount::text, order_discount::text, net_due::text, note, created_by_account_id, created_hall_id,
   ${stamp("created_at")} AS created_at, ${stamp("updated_at")} AS updated_at,
   approved_by_account_id, ${stamp("approved_at")} AS approved_at, stock_basis
   FROM naijue_erp.sales_header WHERE id = $1 FOR UPDATE`;
@@ -60,7 +60,7 @@ function decodeHeader(row: Record<string, unknown>): SalesHeaderRow {
     businessDate: businessDate(stringValue(row.business_date)), hallId: id("hall", row.hall_id), customerId: id("customer", row.customer_id),
     salespersonId: nullableId("staff", row.salesperson_id), warehouseId: id("warehouse", row.warehouse_id), status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]),
     version: versionFromSql(row.version), grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due),
-    note: nullableString(row.note), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
+    note: nullableString(row.note), responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
     createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at), approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at) };
 }
 function decodeLine(row: Record<string, unknown>): SalesLineRow {
@@ -310,16 +310,20 @@ class PostgresSalesTransaction implements SalesTransaction {
       && h.createdHallId === loaded.creation.createdHallId && h.createdAt === loaded.creation.createdAt
       : this.receiptActor !== undefined && h.createdByAccountId === this.receiptActor,
     "IMMUTABLE_CREATION_FACTS", "Sales creation facts must preserve the loaded header, and new creators must match the receipt actor");
+    if (h.responsibleStaffId !== null) {
+      const responsible = await this.query("/* document:responsible-staff */ SELECT id FROM naijue_erp.staff WHERE id=$1::uuid FOR SHARE", [h.responsibleStaffId]);
+      requireDomain(responsible.rows.length === 1, "RESPONSIBLE_STAFF_UNAVAILABLE", "Responsible employee does not exist");
+    }
     const values: unknown[] = [h.id, h.number, h.businessType, h.businessDate, h.hallId, h.customerId, h.salespersonId, h.warehouseId, h.status,
       versionToSql(h.version), moneyToSql(h.grossAmount), moneyToSql(h.orderDiscount), moneyToSql(h.netDue), h.note, h.createdByAccountId, h.createdHallId,
-      h.createdAt, h.updatedAt, h.approvedByAccountId, h.approvedAt];
-    const columns = "id, number, business_type, business_date, hall_id, customer_id, salesperson_id, warehouse_id, status, version, gross_amount, order_discount, net_due, note, created_by_account_id, created_hall_id, created_at, updated_at, approved_by_account_id, approved_at";
+      h.createdAt, h.updatedAt, h.approvedByAccountId, h.approvedAt, h.responsibleStaffId];
+    const columns = "id, number, business_type, business_date, hall_id, customer_id, salesperson_id, warehouse_id, status, version, gross_amount, order_discount, net_due, note, created_by_account_id, created_hall_id, created_at, updated_at, approved_by_account_id, approved_at, responsible_staff_id";
     let result: PgSalesResult;
     if (loaded.version === null) {
       result = await this.query(`INSERT INTO naijue_erp.sales_header (${columns}, stock_basis) VALUES (${values.map((_value, index) => `$${index + 1}`).join(", ")}, 'RUNTIME_LEDGER') ON CONFLICT (id) DO NOTHING`, values);
     } else {
       const fields = columns.split(", ");
-      result = await this.query(`UPDATE naijue_erp.sales_header SET ${fields.slice(1).map((field, index) => `${field} = $${index + 2}`).join(", ")} WHERE id = $1 AND version = $21 AND stock_basis = 'RUNTIME_LEDGER'`, [...values, versionToSql(loaded.version)]);
+      result = await this.query(`UPDATE naijue_erp.sales_header SET ${fields.slice(1).map((field, index) => `${field} = $${index + 2}`).join(", ")} WHERE id = $1 AND version = $22 AND stock_basis = 'RUNTIME_LEDGER'`, [...values, versionToSql(loaded.version)]);
     }
     requireDomain(result.rowCount === 1, "VERSION_CONFLICT", "Document compare-and-swap failed");
     const changedLines = document.lines.filter(line => {

@@ -423,11 +423,75 @@ export const NATIVE_RUNTIME26_V15_METADATA_PROBE = [
   ["('validate_maintenance_root_commit','8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512')", "('validate_maintenance_root_commit','002818dfd8d764e99221bb0548da1141054871ae674aba6bb9f6ce59c9d92d1c')"],
 ].reduce((probe, [before, after]) => replaceOne(probe, before!, after!), NATIVE_RUNTIME26_V14_METADATA_PROBE);
 
+/** Approved v16 successor: exact history/responsible bodies on either existing
+ * base. The old v11/v14/v15 manifests remain unchanged. */
+function historyResponsibleProbe(base: string, oldCount: number): string {
+  let probe = replaceOne(base, `jsonb_array_length(manifest->'routines')=${oldCount}`,
+    `jsonb_array_length(manifest->'routines')=${oldCount + 6}`);
+  for (const [before, after] of [
+  [
+    "SELECT 1 FROM (VALUES",
+    "SELECT 1 FROM (VALUES\n    ('history_numeric_current_facts','dadecb6cce657834ce3719eb339f56f95dbbf27d6e0a92216940ed91697cadc8'),"
+  ],
+  [
+    "SELECT 1 FROM (VALUES",
+    "SELECT 1 FROM (VALUES\n    ('history_numeric_money','8c588f3b6145cb1609898dd46e3abfb7b1bd37b3b9318f1863dcfac530ee200b'),"
+  ],
+  [
+    "('history_revision_not_enabled','af9df40d3b0ea2128a2f879f0e6092c13ba8447ae28383742020aa9fc0bfba70')",
+    "('history_revision_not_enabled','1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c')"
+  ],
+  [
+    "('history_effective_writes_closed','1110bb0854c27ad0ae2178742e7414bf49aa5509c57bbecf4a595f9f2ed19b97')",
+    "('history_effective_writes_closed','c06027597f11a9cf7f2ae06bf5e47e5c21349b54851fb21df6895ef22a2855b7')"
+  ],
+  [
+    "SELECT 1 FROM (VALUES",
+    "SELECT 1 FROM (VALUES\n    ('guard_history_numeric_ledger','b32ccd2af06876d91fe4b33a4e2309a3f79af7d012ddf301ce84b773118e5794'),"
+  ],
+  [
+    "SELECT 1 FROM (VALUES",
+    "SELECT 1 FROM (VALUES\n    ('validate_history_numeric_revision_commit','6cc941ed8ea63927fea7f372da6477c5def8e809a8dde1c348d07331ff9be0b6'),"
+  ],
+  [
+    "SELECT 1 FROM (VALUES",
+    "SELECT 1 FROM (VALUES\n    ('validate_history_numeric_receipt_commit','e69f92651dc7a8313e354d47bd4f1ffc1c97fb30aa5c56dcfc49f69511a1d7d6'),"
+  ],
+  [
+    "SELECT 1 FROM (VALUES",
+    "SELECT 1 FROM (VALUES\n    ('validate_history_numeric_balance_commit','fab0bf7a3f1681d6034b09dbb5c7ad8efa606c6fa82f24fc101bc5b70636a837'),"
+  ],
+  [
+    "('validate_sparse_balance_commit','84c96a25df3dc2442445d6bbf71444a62d231e30cf83cb635968cc8f6a0cdd09')",
+    "('validate_sparse_balance_commit','937b31d7ab0f1e5d8fb7febc26c051690b2df9dc79d451088eff73d75046399d')"
+  ],
+  [
+    "('reject_unimplemented_cutoff_write','ac0a450bbd02ec19764b8ed3be32acde2177e394c4f9488230d39ff7c3a41509')",
+    "('reject_unimplemented_cutoff_write','2e108a1bd9e9304f63cde9eb8b726c448ebcb2d2b371f8b3a8a41aebb6d21e0a')"
+  ],
+  [
+    "('validate_sales_settlement','d862252df7c25f0a57db82754bba56a812e3c88b8cd6150f5a198212fd47a591')",
+    "('validate_sales_settlement','c0ab9b6a91951a809e5fbfb6c34ed52fb164b76119d58d469d411c0b58e734a3')"
+  ],
+  [
+    "('keep_transfer_header_provenance','92fe79370e044f341cf8290a6d723a588ce53f7591077ceb45f1c9a201ad08c9')",
+    "('keep_transfer_header_provenance','68d1af54e61704be47e9fe4097592e812d3f7a910dc2d7190351c2b427267bf6')"
+  ],
+  [
+    "('transfer_header_audit_values','2bd919b807e2bd27e2ef2c3c2520524c84f8ddbd81e9dfc71947c9292ea1f624')",
+    "('transfer_header_audit_values','0c92b020490243f55132a5acb15ecee8caca92fb88db5f75e877e2f2430ec8ad')"
+  ]
+] as const) probe = replaceOne(probe, before, after);
+  return probe;
+}
+export const NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE = historyResponsibleProbe(NATIVE_RUNTIME26_V14_METADATA_PROBE, 123);
+export const NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE = historyResponsibleProbe(NATIVE_RUNTIME26_V15_METADATA_PROBE, 124);
+
 /** Metadata approval only. Whole-source, batch, actor, receipt, conservation and
  * publication authorizers remain separate mandatory ports at their callers. */
 type Runtime26Purpose = Parameters<NativeRuntime26Capability["assertReady"]>[1];
 const runtime26Purposes: readonly Runtime26Purpose[] = Object.freeze(["IMPORT_STAGE", "IMPORT_PRODUCT_SEASONS", "IMPORT_PUBLISH", "PRODUCT_SEASONS_READ",
-  "PRODUCT_MAINTENANCE", "INVENTORY_ADMISSION", "HISTORY_READ", "CURRENT_FORM_READ", "CURRENT_CUSTOMER_READ_WRITE"]);
+  "PRODUCT_MAINTENANCE", "INVENTORY_ADMISSION", "HISTORY_READ", "CURRENT_FORM_READ", "CURRENT_CUSTOMER_READ_WRITE", "HISTORY_REVISION"]);
 const issuedPools = new WeakSet<object>();
 const runtime26Error = (message: string): Error => Object.assign(Error(message), { code: "NATIVE_RUNTIME26_NOT_READY" });
 function exactData(value: unknown, keys: readonly string[]): Record<string, unknown> {
@@ -533,13 +597,17 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo"] as readonly unknown[]).includes(catalog.patchLevel))
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15"] as readonly unknown[]).includes(catalog.patchLevel))
     throw runtime26Error("Exact independently reviewed v11, v14 or v15 catalog required");
-  const metadataProbe = catalog.patchLevel === "26_v15_category_order_undo" ? NATIVE_RUNTIME26_V15_METADATA_PROBE
+  const historyResponsible = catalog.patchLevel === "26_v16_history_responsible_from_v14" || catalog.patchLevel === "26_v16_history_responsible_from_v15";
+  const metadataProbe = catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
+    : catalog.patchLevel === "26_v16_history_responsible_from_v15" ? NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE
+    : catalog.patchLevel === "26_v15_category_order_undo" ? NATIVE_RUNTIME26_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;
   const purposes = ownArray(review.purposes);
   if (purposes.length === 0 || purposes.length > runtime26Purposes.length || new Set(purposes).size !== purposes.length
     || purposes.some(p => !runtime26Purposes.includes(p as Runtime26Purpose))) throw runtime26Error("Finite explicitly reviewed runtime purposes required");
+  if (purposes.includes("HISTORY_REVISION") && !historyResponsible) throw runtime26Error("HISTORY writes require the exact current-base v16 successor");
   const allowed = new Set(purposes as Runtime26Purpose[]);
   const independent = exactData(review.independentReview, ["path", "sha256", "result"]);
   if (!metadataText(independent.path) || !sha(independent.sha256) || independent.result !== "PASS") throw runtime26Error("Pinned independent PASS receipt required");
@@ -635,7 +703,7 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
   } });
   const imageColorSwap = Object.freeze({ profile: "product-image-color-swap-v4" as const,
     assertVerified: productMediaWrite.assertVerified, assertReady: productMediaWrite.assertPrepared });
-  const categoryOrderWrite: CategoryOrderWriteCapability | undefined = catalog.patchLevel === "26_v15_category_order_undo" && allowed.has("PRODUCT_MAINTENANCE")
+  const categoryOrderWrite: CategoryOrderWriteCapability | undefined = (catalog.patchLevel === "26_v15_category_order_undo" || catalog.patchLevel === "26_v16_history_responsible_from_v15") && allowed.has("PRODUCT_MAINTENANCE")
     ? Object.freeze({ profile: "CATEGORY_ORDER_UNDO_V15", async assertReady(context: Parameters<CategoryOrderWriteCapability["assertReady"]>[0]): Promise<void> {
       await verify(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
       bindMaintenanceCategoryOrderGuard(context, pool, () => verify(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE"));

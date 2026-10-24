@@ -1,7 +1,7 @@
 import type { SalesDocument, SalesLineRow, SalesSettlementRow } from "../../domain/src/documents.ts";
 import type { SalesAuditValues } from "./ports.ts";
 
-const headerFields = ["number", "businessType", "businessDate", "hallId", "salespersonId", "customerId", "warehouseId", "status",
+const headerFields = ["responsibleStaffId", "number", "businessType", "businessDate", "hallId", "salespersonId", "customerId", "warehouseId", "status",
   "grossAmount", "orderDiscount", "netDue", "note", "updatedAt", "approvedByAccountId", "approvedAt"] as const;
 const lineFields = ["id", "salesId", "lineNo", "skuId", "quantity", "referencePrice", "dealPrice", "pricingRule", "discountTenths",
   "zeroConfirmed", "lineAmount", "allocatedDiscount", "isGift", "isCurrent"] as const;

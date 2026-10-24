@@ -56,11 +56,11 @@ function settlement(value: unknown): SalesSettlementRow {
 }
 function draft(value: unknown): SalesDraft {
   const row = object(value, ["header", "lines", "settlements"]);
-  const header = object(row.header, ["id", "number", "businessType", "businessDate", "hallId", "customerId", "salespersonId", "warehouseId", "grossAmount", "orderDiscount", "netDue", "note"]);
+  const header = object(row.header, ["id", "number", "businessType", "businessDate", "hallId", "customerId", "salespersonId", "warehouseId", "grossAmount", "orderDiscount", "netDue", "note", ...(row.header && typeof row.header === "object" && Object.hasOwn(row.header, "responsibleStaffId") ? ["responsibleStaffId"] : [])]);
   return { header: { id: id("sales", header.id), number: string(header.number), businessType: choice(header.businessType, ["SALE", "RETURN", "EXCHANGE"]),
     businessDate: businessDate(string(header.businessDate)), hallId: id("hall", header.hallId), customerId: id("customer", header.customerId),
     salespersonId: header.salespersonId === null ? null : id("staff", header.salespersonId), warehouseId: id("warehouse", header.warehouseId),
-    grossAmount: minorAmount(string(header.grossAmount)), orderDiscount: minorAmount(string(header.orderDiscount)), netDue: minorAmount(string(header.netDue)), note: nullableString(header.note) },
+    grossAmount: minorAmount(string(header.grossAmount)), orderDiscount: minorAmount(string(header.orderDiscount)), netDue: minorAmount(string(header.netDue)), note: nullableString(header.note), ...(Object.hasOwn(header, "responsibleStaffId") ? { responsibleStaffId: id("staff", header.responsibleStaffId) } : {}) },
     lines: array(row.lines).map(line), settlements: array(row.settlements).map(settlement) };
 }
 export function parseSalesCommand(body: unknown, actor: ActorContext): SalesCommand {

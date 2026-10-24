@@ -143,3 +143,48 @@ test("SYNTHETIC transfer references: disabled SKU SAVE may retain/reduce trusted
   await f.service.execute(save(draft(["1","2"]),2,"reduce"));await assert.rejects(f.service.execute(action("APPROVE",3)),{code:"SKU_UNAVAILABLE"});
   assert.equal(f.balance(ids.fromWarehouse),0n);assert.equal(f.store.snapshot().ledger.length,0);
 });
+
+test("v16 LIVE transfer responsible stays independent from creator and omission preserves same-key behavior", async () => {
+  const f=fixture(), employee=sid('staff',7001), other=sid('staff',7002);
+  await f.service.execute(save());
+  assert.equal(f.document().header.responsibleStaffId,null);
+  const selected={...draft(),header:{...draft().header,responsibleStaffId:employee}};
+  const q=save(selected,1,'responsible-change'), result=await f.service.execute(q);
+  assert.equal(f.document().header.responsibleStaffId,employee);
+  assert.equal(f.document().header.createdByAccountId,actor.accountId);
+  assert.equal(f.document().header.createdHallId,actor.hallId);
+  assert.equal(f.document().header.createdRole,actor.role);
+  assert.equal(f.store.snapshot().ledger.length,0);
+  assert.deepEqual(await f.service.execute(q),result);
+  await assert.rejects(f.service.execute(save({...selected,header:{...selected.header,responsibleStaffId:other}},1,'responsible-change')),{code:'IDEMPOTENCY_CONFLICT'});
+  await f.service.execute(save(draft(),2,'legacy-omission'));
+  assert.equal(f.document().header.responsibleStaffId,employee);
+  const evidence=f.store.snapshot().audit.at(-2)!;
+  assert.equal(evidence.before!.header.responsibleStaffId,null);
+  assert.equal(evidence.after.header.responsibleStaffId,employee);
+  await f.service.execute(action('APPROVE',3));
+  await assert.rejects(f.service.execute(save(selected,4,'approved-refuse')),{code:'INVALID_STATE'});
+});
+
+import {parseTransferCommand as parseV16TransferCommand} from '../apps/api/src/transfer-input.ts';
+
+test('v16 LIVE input: responsibility is an optional staff selection, never creator or null clear intent',()=>{
+ const body={action:'SAVE',requestKey:'v16-wire',expectedVersion:null,draft:JSON.parse(JSON.stringify(draft(),(_k,v)=>typeof v==='bigint'?v.toString():v))};
+ const old=parseV16TransferCommand(body,actor);assert.equal(old.action,'SAVE');if(old.action!=='SAVE'||!('draft'in old))throw Error('Expected original draft');assert.equal(Object.hasOwn(old.draft.header,'responsibleStaffId'),false);
+ const employee=sid('staff',7001), withStaff=parseV16TransferCommand({...body,draft:{...body.draft,header:{...body.draft.header,responsibleStaffId:employee}}},actor);
+ if(withStaff.action!=='SAVE'||!('draft'in withStaff))throw Error('Expected original draft');assert.equal(withStaff.draft.header.responsibleStaffId,employee);
+ for(const bad of [null,'','NOT-A-STAFF-ID'])assert.throws(()=>parseV16TransferCommand({...body,draft:{...body.draft,header:{...body.draft.header,responsibleStaffId:bad}}},actor));
+ assert.throws(()=>parseV16TransferCommand({...body,draft:{...body.draft,header:{...body.draft.header,createdByAccountId:employee}}},actor));
+});
+
+import {PostgresTransferQueryReader as V16TransferReader} from '../adapters/postgres/src/transfer-query-reader.ts';
+test('v16 LIVE read projection: unknown responsible stays null while creator and permission remain real',async()=>{
+ for(const selected of [null,sid('staff',7001)]){
+  const calls:string[]=[];let releases=0;
+  const row={id:ids.transfer,number:'SYNTHETIC',business_date:'2026-10-20',from_warehouse_id:ids.fromWarehouse,to_warehouse_id:ids.toWarehouse,status:'DRAFT',version:1,created_by_account_id:actor.accountId,created_at:'2026-10-20T00:00:00Z',updated_at:'2026-10-20T00:00:00Z',responsible_staff_id:selected,responsible_name:selected===null?null:'RESPONSIBLE ONLY',created_by_name:'TRUE CREATOR',approved_by_name:null,from_warehouse_name:'FROM',to_warehouse_name:'TO',from_hall_name:'HALL1',to_hall_name:'HALL2'};
+  const reader=new V16TransferReader({async connect(){return{async query(sql:string){calls.push(sql);const rows=sql.startsWith('SELECT COUNT')?[{exact_total:'1'}]:sql.startsWith('SELECT page.id')?[{transfer_id:ids.transfer,total_quantity:'2'}]:sql.startsWith('SELECT h.id')?[row]:[];return{rows,rowCount:rows.length};},release(){releases++;}};}});
+  const page=await reader.readList({actor,scope:{kind:'restricted',clauses:[{createdHallId:actor.hallId!,createdRole:'SALESPERSON'}]},signal:new AbortController().signal,parameters:{filter:{startDate:null,endDate:null,statuses:[],fromWarehouseIds:[],toWarehouseIds:[],number:null},page:1,pageSize:20}});
+  assert.equal(page.items[0]!.responsibleStaffId,selected);assert.equal(page.items[0]!.responsibleName,selected===null?null:'RESPONSIBLE ONLY');assert.equal(page.items[0]!.createdByAccountId,actor.accountId);assert.equal(page.items[0]!.createdByName,'TRUE CREATOR');
+  assert.ok(calls.some(sql=>sql.includes('LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id')));assert.ok(calls.some(sql=>sql.includes('h.created_hall_id')));assert.equal(releases,1);
+ }
+});

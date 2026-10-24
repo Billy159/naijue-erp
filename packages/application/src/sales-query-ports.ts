@@ -53,8 +53,8 @@ export interface SalesScopedRead<P> { readonly actor: ActorContext; readonly sco
 export interface SalesSummaryQuantities {
   readonly quantity: bigint; readonly incomingQuantity: bigint; readonly outgoingQuantity: bigint;
 }
-export type SalesSummary = Pick<SalesHeaderRow, "id" | "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status" | "version" | "grossAmount" | "orderDiscount" | "netDue" | "updatedAt"> & SalesSummaryQuantities & {
-  readonly hallName: string; readonly warehouseName: string; readonly customerName: string; readonly salespersonName: string | null;
+export type SalesSummary = Pick<SalesHeaderRow, "id" | "number" | "businessType" | "businessDate" | "hallId" | "salespersonId" | "customerId" | "warehouseId" | "status" | "version" | "grossAmount" | "orderDiscount" | "netDue" | "updatedAt" | "responsibleStaffId"> & SalesSummaryQuantities & {
+  readonly hallName: string; readonly warehouseName: string; readonly customerName: string; readonly salespersonName: string | null; readonly responsibleName: string | null; readonly createdByName: string;
 };
 // The native line snapshot has no historical category. No category summary is
 // exposed or reconstructed from today's product catalog.
@@ -71,7 +71,7 @@ export interface SalesDetail {
   /** Current actual lines only. Inactive provenance remains in persistence, not the editable detail. */
   readonly document: SalesDocument; readonly stockBasis: "RUNTIME_LEDGER" | "CUTOFF_HISTORY";
   /** Current master names, including disabled references, in this document's authorized snapshot. */
-  readonly referenceNames: Pick<SalesSummary, "hallName" | "salespersonName" | "customerName" | "warehouseName">;
+  readonly referenceNames: Pick<SalesSummary, "hallName" | "salespersonName" | "customerName" | "warehouseName" | "responsibleName" | "createdByName">;
   readonly settlementNames: readonly SalesSettlementNames[];
 }
 /** Operation history is metadata, not arbitrary persisted JSON or a document-catalog projection.

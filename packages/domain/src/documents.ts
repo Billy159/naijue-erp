@@ -13,6 +13,7 @@ export interface SalesHeaderRow {
   readonly salespersonId: EntityId<"staff"> | null; readonly warehouseId: EntityId<"warehouse">;
   readonly status: DocumentStatus; readonly version: Version;
   readonly grossAmount: MinorAmount; readonly orderDiscount: MinorAmount; readonly netDue: MinorAmount;
+  readonly responsibleStaffId: EntityId<"staff"> | null;
   readonly note: string | null; readonly createdByAccountId: EntityId<"account">;
   readonly createdHallId: EntityId<"hall"> | null; readonly createdAt: string; readonly updatedAt: string;
   readonly approvedByAccountId: EntityId<"account"> | null; readonly approvedAt: string | null;
@@ -40,7 +41,7 @@ export interface SalesDocument {
   readonly lines: readonly SalesLineRow[];
   readonly settlements: readonly SalesSettlementRow[];
 }
-export type SalesDraftHeader = Omit<SalesHeaderRow, "status" | "version" | "createdByAccountId" | "createdHallId" | "createdAt" | "updatedAt" | "approvedByAccountId" | "approvedAt">;
+export type SalesDraftHeader = Omit<SalesHeaderRow, "status" | "version" | "createdByAccountId" | "createdHallId" | "createdAt" | "updatedAt" | "approvedByAccountId" | "approvedAt" | "responsibleStaffId"> & { readonly responsibleStaffId?: EntityId<"staff"> | null };
 export interface SalesDraft { readonly header: SalesDraftHeader; readonly lines: readonly SalesLineRow[]; readonly settlements: readonly SalesSettlementRow[] }
 
 export interface TransferHeaderRow {

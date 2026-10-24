@@ -95,9 +95,12 @@ async function current(query: Query, command: HistoryRevisionCommand, header: Ro
     FROM naijue_erp.history_${family}_effective WHERE header_id=$1::uuid FOR UPDATE`, [command.documentId])).rows;
   must(headRows.length <= 1); const head = headRows[0];
   const version = integer(head?.version ?? header.version);
+  let effectiveFacts: Row | undefined;
   if (head) {
-    const revision = one((await query(`/* history-revise:head-chain */ SELECT id,document_kind,sales_id,transfer_id,from_version,to_version,operation_id
+    const revision = one((await query(`/* history-revise:head-chain */ SELECT id,document_kind,sales_id,transfer_id,from_version,to_version,operation_id,after_facts
       FROM naijue_erp.history_revision WHERE id=$1::uuid FOR SHARE`, [head.revision_id])).rows);
+    must(revision.after_facts !== null && typeof revision.after_facts === "object" && !Array.isArray(revision.after_facts));
+    effectiveFacts = revision.after_facts as Row;
     must(revision.document_kind === kind && revision[command.kind === 'sales' ? 'sales_id' : 'transfer_id'] === command.documentId
       && revision[command.kind === 'sales' ? 'transfer_id' : 'sales_id'] === null && revision.to_version === version
       && integer(revision.from_version) + 1 === version); uuid(revision.operation_id);
@@ -125,9 +128,10 @@ async function current(query: Query, command: HistoryRevisionCommand, header: Ro
   return { kind: command.kind, documentId: command.documentId, version, previousRevisionId: head ? uuid(head.revision_id) : null,
     importBatchId: uuid(header.batch_id), publishedOperationId: uuid(header.published_operation_id), documentManifestHash: text(header.document_manifest_hash),
     sourceStatus: text(header.source_status) as HistoryRevisionCurrent['sourceStatus'],
-    baselineEffect: header.source_status === 'APPROVED' ? 'INCLUDED_APPROVED' : 'EXCLUDED_NOT_EFFECTIVE', businessDate: header.business_date === null ? null : text(header.business_date),
+    baselineEffect: header.source_status === 'APPROVED' ? 'INCLUDED_APPROVED' : 'EXCLUDED_NOT_EFFECTIVE', businessDate: effectiveFacts ? (effectiveFacts.businessDate === null ? null : text(effectiveFacts.businessDate)) : header.business_date === null ? null : text(header.business_date),
+    responsibleStaffId: effectiveFacts?.responsibleStaffId == null ? null : uuid(effectiveFacts.responsibleStaffId),
     warehouseId: command.kind === 'sales' ? uuid(header.warehouse_id) : null,
-    fromWarehouseId: command.kind === 'transfers' ? uuid(header.from_warehouse_id) : null, toWarehouseId: command.kind === 'transfers' ? uuid(header.to_warehouse_id) : null,
+    fromWarehouseId: command.kind === 'transfers' ? uuid(effectiveFacts?.fromWarehouseId ?? header.from_warehouse_id) : null, toWarehouseId: command.kind === 'transfers' ? uuid(effectiveFacts?.toWarehouseId ?? header.to_warehouse_id) : null,
     lines: lines.map(l => ({ lineId: uuid(l.id), skuId: uuid(l.sku_id), quantity: text(l.quantity), ...(command.kind === 'sales'
       ? { dealPrice: text(l.deal_price), lineAmount: text(l.line_amount), allocatedDiscount: l.allocated_discount === null ? null : text(l.allocated_discount) } : {}) })),
     totals: command.kind === 'sales' ? { grossAmount: text(head?.gross_amount ?? header.gross_amount), orderDiscount: text(head?.order_discount ?? header.order_discount), netDue: text(head?.net_due ?? header.net_due) } : null, settlements };
@@ -176,7 +180,10 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
         FROM naijue_erp.operation_receipt WHERE actor_account_id=$1::uuid AND request_key=$2`,[actor.accountId,command.requestKey])).rows;
       must(receipts.length<=1);
       await query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[`naijue:history:${command.kind}:${command.documentId}`]);
-      const header=await source(query,command); await authorize(query,actor,command,header);
+      const header=await source(query,command);
+      const before=await current(query,command,header);
+      const effectiveHeader={...header,from_warehouse_id:before.fromWarehouseId,to_warehouse_id:before.toWarehouseId};
+      await authorize(query,actor,command,effectiveHeader);
       let result:HistoryRevisionReceipt;
       if(receipts[0]) {
         const old=receipts[0]; must(old.request_hash===hash && old.target_type===targetTypes[command.kind] && old.target_id===command.documentId
@@ -186,7 +193,16 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
           && r.version===command.expectedVersion+1 && Array.isArray(r.ledgerEntryIds)); uuid(r.revisionId); r.ledgerEntryIds.forEach(uuid);
         result=structuredClone(r);
       } else {
-        const before=await current(query,command,header);
+        if (command.header?.responsibleStaffId !== undefined) {
+          const staff=await query('/* history-revise:responsible */ SELECT id FROM naijue_erp.staff WHERE id=$1::uuid FOR SHARE',[command.header.responsibleStaffId]);
+          must(staff.rows.length===1,'HISTORY_REVISION_FOREIGN_ROW');
+        }
+        if (command.kind==='transfers' && command.header && (command.header.fromWarehouseId!==undefined || command.header.toWarehouseId!==undefined)) {
+          const from=command.header.fromWarehouseId??before.fromWarehouseId, to=command.header.toWarehouseId??before.toWarehouseId;
+          const refs=await query('/* history-revise:proposed-warehouses */ SELECT w.id,w.enabled,EXISTS(SELECT 1 FROM naijue_erp.inventory_balance b WHERE b.warehouse_id=w.id AND b.quantity<>0) AS has_nonzero_inventory FROM naijue_erp.warehouse w WHERE w.id=ANY($1::uuid[]) ORDER BY w.id FOR SHARE OF w',[[from,to]]);
+          must(from!==to && refs.rows.length===2 && refs.rows.every(w=> (w.id===before.fromWarehouseId || w.id===before.toWarehouseId) || w.enabled===true || w.id===from && w.has_nonzero_inventory===true),'HISTORY_REVISION_FOREIGN_ROW');
+          await authorize(query,actor,command,{...header,from_warehouse_id:from,to_warehouse_id:to});
+        }
         const operationId=uuid(this.newId('operation')),revisionId=uuid(this.newId('revision'));
         must(operationId!==revisionId);const plan=planHistoryRevision(before,command,revisionId);
         const effects=plan.effects.map(effect=>({...effect,ledgerEntryId:uuid(this.newId('ledger'))}));

@@ -43,9 +43,10 @@ export interface TransferScopedRead<P> { readonly actor: TransferActor; readonly
 export interface TransferReferenceNames {
   readonly fromWarehouseName: string; readonly toWarehouseName: string;
   readonly fromHallName: string; readonly toHallName: string;
+  readonly responsibleName: string | null;
   readonly createdByName: string; readonly approvedByName: string | null;
 }
-export type TransferSummary = Pick<RuntimeTransferHeader, "id" | "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "status" | "version" | "createdByAccountId" | "createdAt" | "updatedAt"> & TransferReferenceNames & { readonly totalQuantity: bigint };
+export type TransferSummary = Pick<RuntimeTransferHeader, "id" | "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "status" | "version" | "createdByAccountId" | "createdAt" | "updatedAt" | "responsibleStaffId"> & TransferReferenceNames & { readonly totalQuantity: bigint };
 /** Exact count is serialized as a decimal string, not an unsafe JS number. */
 export interface TransferListPage { readonly page: number; readonly pageSize: number; readonly exactTotal: bigint; readonly items: readonly TransferSummary[] }
 /** Current native identities/labels, never replacements for saved line snapshots.

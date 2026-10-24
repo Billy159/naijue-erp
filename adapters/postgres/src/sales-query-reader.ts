@@ -38,7 +38,7 @@ function aggregateMoney(value: unknown) { return decimalToMinor(stringValue(valu
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 const SUMMARY_COLUMNS = `h.id, h.number, h.business_type, to_char(h.business_date, 'YYYY-MM-DD') AS business_date,
   h.hall_id, h.customer_id, h.salesperson_id, h.warehouse_id, h.status, h.version,
-  h.gross_amount::text, h.order_discount::text, h.net_due::text, ${stamp("h.updated_at")} AS updated_at`;
+  h.responsible_staff_id, responsible.name AS responsible_name, creator.name AS created_by_name, h.gross_amount::text, h.order_discount::text, h.net_due::text, ${stamp("h.updated_at")} AS updated_at`;
 const HEADER_COLUMNS = `${SUMMARY_COLUMNS}, h.note, h.created_by_account_id, h.created_hall_id,
   ${stamp("h.created_at")} AS created_at,
   h.approved_by_account_id, ${stamp("h.approved_at")} AS approved_at, h.stock_basis`;
@@ -47,7 +47,7 @@ function decodeSummary(row: Record<string, unknown>, quantities: SalesSummaryQua
     businessDate: businessDate(stringValue(row.business_date)), hallId: id("hall", row.hall_id), customerId: id("customer", row.customer_id),
     salespersonId: nullableId("staff", row.salesperson_id), warehouseId: id("warehouse", row.warehouse_id),
     status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), version: versionFromSql(row.version),
-    grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due), updatedAt: stringValue(row.updated_at), ...quantities,
+    grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due), updatedAt: stringValue(row.updated_at), ...quantities, responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name), createdByName: stringValue(row.created_by_name),
     hallName: stringValue(row.hall_name), warehouseName: stringValue(row.warehouse_name), customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name) };
 }
 function decodeHeader(row: Record<string, unknown>): SalesHeaderRow {
@@ -55,7 +55,7 @@ function decodeHeader(row: Record<string, unknown>): SalesHeaderRow {
     businessDate: businessDate(stringValue(row.business_date)), hallId: id("hall", row.hall_id), customerId: id("customer", row.customer_id),
     salespersonId: nullableId("staff", row.salesperson_id), warehouseId: id("warehouse", row.warehouse_id), status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]),
     version: versionFromSql(row.version), grossAmount: moneyFromSql(row.gross_amount), orderDiscount: moneyFromSql(row.order_discount), netDue: moneyFromSql(row.net_due),
-    note: nullableString(row.note), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
+    note: nullableString(row.note), responsibleStaffId: nullableId("staff", row.responsible_staff_id), createdByAccountId: id("account", row.created_by_account_id), createdHallId: nullableId("hall", row.created_hall_id),
     createdAt: stringValue(row.created_at), updatedAt: stringValue(row.updated_at), approvedByAccountId: nullableId("account", row.approved_by_account_id), approvedAt: nullableString(row.approved_at) };
 }
 function decodeLine(row: Record<string, unknown>): SalesLineRow {
@@ -173,7 +173,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
       const rows = (await query(`SELECT ${SUMMARY_COLUMNS}, hall.name AS hall_name, wh.name AS warehouse_name, c.name AS customer_name, sp.name AS salesperson_name
         FROM naijue_erp.sales_header h JOIN naijue_erp.hall hall ON hall.id = h.hall_id
         JOIN naijue_erp.warehouse wh ON wh.id = h.warehouse_id JOIN naijue_erp.customer c ON c.id = h.customer_id
-        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id WHERE ${p.where()}
+        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id JOIN naijue_erp.staff creator ON creator.id=creator_account.staff_id WHERE ${p.where()}
         ORDER BY h.updated_at DESC, h.number COLLATE "C" ASC, h.id ASC ${paging}`, p.values)).rows;
       requireDomain(rows.length <= parameters.pageSize && BigInt(rows.length) <= exactTotal, "INVALID_DATABASE_VALUE", "Sales page exceeds exact scope");
       // Only authorized, already-paged native IDs enter this one bounded batch.
@@ -204,7 +204,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
       const rows = (await query(`SELECT ${HEADER_COLUMNS}, hall.name AS hall_name, wh.name AS warehouse_name, c.name AS customer_name, sp.name AS salesperson_name
         FROM naijue_erp.sales_header h JOIN naijue_erp.hall hall ON hall.id = h.hall_id
         JOIN naijue_erp.warehouse wh ON wh.id = h.warehouse_id JOIN naijue_erp.customer c ON c.id = h.customer_id
-        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id WHERE ${p.where()}`, p.values)).rows;
+        LEFT JOIN naijue_erp.staff sp ON sp.id = h.salesperson_id LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id JOIN naijue_erp.user_account creator_account ON creator_account.id=h.created_by_account_id JOIN naijue_erp.staff creator ON creator.id=creator_account.staff_id WHERE ${p.where()}`, p.values)).rows;
       requireDomain(rows.length > 0, "DOCUMENT_NOT_FOUND", "Sales document is unavailable");
       const row = rowOf({ rows, rowCount: rows.length }); const header = decodeHeader(row);
       const lineRows = (await query(`SELECT id, sales_id, line_no, sku_id, quantity::text, reference_price::text, deal_price::text, line_amount::text,
@@ -220,7 +220,7 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
       requireDomain(settlementRows.length <= 3, "INVALID_DATABASE_VALUE", "Sales detail exceeds approved settlement count");
       const document: SalesDocument = { header, lines: lineRows.map(decodeLine), settlements: settlementRows.map(decodeSettlement) };
       return { document, stockBasis: choice(row.stock_basis, ["RUNTIME_LEDGER", "CUTOFF_HISTORY"]),
-        referenceNames: { hallName: stringValue(row.hall_name), warehouseName: stringValue(row.warehouse_name),
+        referenceNames: { responsibleName: nullableString(row.responsible_name), createdByName: stringValue(row.created_by_name), hallName: stringValue(row.hall_name), warehouseName: stringValue(row.warehouse_name),
           customerName: stringValue(row.customer_name), salespersonName: nullableString(row.salesperson_name) },
         settlementNames: settlementRows.map(settlement => ({ settlementId: id("settlement", settlement.id), paymentAccountId: id("paymentAccount", settlement.payment_account_id),
           accountNameSnapshot: stringValue(settlement.account_name_snapshot), methodNameSnapshot: stringValue(settlement.method_name_snapshot),

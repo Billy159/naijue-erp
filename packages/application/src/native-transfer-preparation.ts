@@ -9,8 +9,15 @@ import { parseDocumentSkuSelection } from './document-specification.ts';
 import type { DocumentSkuSelection } from './document-specification.ts';
 import type { StoredTransfer } from './transfer-ports.ts';
 
+function responsibleKeys(value: unknown): string[] {
+  return value !== null && typeof value === 'object' && Object.hasOwn(value, 'responsibleStaffId') ? ['responsibleStaffId'] : [];
+}
+function responsibleIntent(row: Record<string, unknown>): { readonly responsibleStaffId?: string } {
+  return Object.hasOwn(row, 'responsibleStaffId') ? { responsibleStaffId: entityId('staff', row.responsibleStaffId as string) } : {};
+}
 /** Manual current SKU selection only. No caller-supplied labels, barcode or number. */
 export interface NativeTransferCreateProposal {
+  readonly responsibleStaffId?: string;
   readonly businessDate: string; readonly note: string | null;
   readonly fromWarehouseId: string; readonly toWarehouseId: string;
   readonly lines: readonly { readonly skuId: string; readonly quantity: string }[];
@@ -25,7 +32,7 @@ export interface NativeTransferSaveProposal extends Omit<NativeTransferCreatePro
   readonly lines:readonly (DocumentSkuSelection & {readonly existingLineId:string|null;readonly quantity:string})[];
 }
 export function parseNativeTransferSaveProposal(input:unknown):NativeTransferSaveProposal {
-  const p=proposalObject(input,['transferId','businessDate','note','fromWarehouseId','toWarehouseId','lines']);
+  const p=proposalObject(input,['transferId','businessDate','note','fromWarehouseId','toWarehouseId','lines', ...responsibleKeys(input)]);
   requireDomain(p.transferId===null||typeof p.transferId==='string','INVALID_HTTP_INPUT','Actual target or explicit new target required');
   requireDomain(p.note===null||typeof p.note==='string'&&p.note.length<=TRANSFER_PREPARE_MAX_NOTE_LENGTH,'INVALID_HTTP_INPUT','Bounded note required');
   requireDomain(Array.isArray(p.lines)&&p.lines.length>0&&p.lines.length<=TRANSFER_PREPARE_MAX_LINES,'INVALID_LINES','Bounded current lines required');
@@ -38,7 +45,7 @@ export function parseNativeTransferSaveProposal(input:unknown):NativeTransferSav
     return {...parseDocumentSkuSelection({[which]:line[which]}),existingLineId:pointer,quantity:line.quantity};
   });
   const result={transferId:p.transferId===null?null:entityId('transfer',p.transferId as string),businessDate:businessDate(p.businessDate as string),
-    note:p.note as string|null,fromWarehouseId:entityId('warehouse',p.fromWarehouseId as string),toWarehouseId:entityId('warehouse',p.toWarehouseId as string),lines};
+    note:p.note as string|null,fromWarehouseId:entityId('warehouse',p.fromWarehouseId as string),toWarehouseId:entityId('warehouse',p.toWarehouseId as string),lines,...responsibleIntent(p)};
   requireDomain(result.transferId!==null||lines.every(l=>l.existingLineId===null),'INVALID_HTTP_INPUT','New target cannot adopt old rows');
   requireDomain(transferJsonByteLength(result)<=TRANSFER_PREPARE_MAX_REQUEST_BYTES,'TRANSFER_PAYLOAD_TOO_LARGE','Bounded proposal required');return result;
 }
@@ -117,7 +124,7 @@ export function createNativeTransferPreparation(dependencies: TransferDependenci
       "TRANSFER_PAYLOAD_TOO_LARGE", "Transfer preparation exceeds its bounded request budget");
     const id = entityId("transfer", dependencies.newId("transfer"));
     const header = { id, number: sourceConfirmedCreateDocumentNumber("TRANSFER", id), businessDate: businessDate(proposal.businessDate),
-      fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note };
+      fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note, ...(proposal.responsibleStaffId === undefined ? {} : { responsibleStaffId: entityId("staff", proposal.responsibleStaffId) }) };
     const lineIds = new Set<string>();
     const lines = proposal.lines.map((line, index) => {
       const lineId = entityId("transferLine", dependencies.newId("transferLine"));
@@ -161,7 +168,7 @@ function transferExistingData(input: unknown, keys: readonly string[]): Record<s
 }
 /** Closed existing-document read proposal, independent of the original CREATE parser. */
 export function parseNativeTransferExistingProposal(input: unknown): NativeTransferExistingProposal {
-  const row = transferExistingData(input, ["transferId", "expectedVersion", "businessDate", "note", "fromWarehouseId", "toWarehouseId", "lines"]);
+  const row = transferExistingData(input, ["transferId", "expectedVersion", "businessDate", "note", "fromWarehouseId", "toWarehouseId", "lines", ...responsibleKeys(input)]);
   const text = (v: unknown): string => { requireDomain(typeof v === "string", "INVALID_HTTP_INPUT", "Explicit transfer text required"); return v; };
   requireDomain(typeof row.expectedVersion === "number" && Number.isInteger(row.expectedVersion) && row.expectedVersion >= 1 && row.expectedVersion <= 2147483647,
     "INVALID_VERSION", "Actual native integer version required");
@@ -177,7 +184,7 @@ export function parseNativeTransferExistingProposal(input: unknown): NativeTrans
     return { existingLineId: line.existingLineId === null ? null : entityId("transferLine", text(line.existingLineId)), skuId: entityId("sku", text(line.skuId)), quantity: count };
   });
   const proposal: NativeTransferExistingProposal = { transferId: entityId("transfer", text(row.transferId)), expectedVersion: row.expectedVersion,
-    businessDate: businessDate(text(row.businessDate)), note, fromWarehouseId: entityId("warehouse", text(row.fromWarehouseId)), toWarehouseId: entityId("warehouse", text(row.toWarehouseId)), lines };
+    businessDate: businessDate(text(row.businessDate)), note, fromWarehouseId: entityId("warehouse", text(row.fromWarehouseId)), toWarehouseId: entityId("warehouse", text(row.toWarehouseId)), lines, ...responsibleIntent(row) };
   requireDomain(transferJsonByteLength(proposal) <= TRANSFER_PREPARE_MAX_REQUEST_BYTES, "TRANSFER_PAYLOAD_TOO_LARGE", "Existing transfer preparation exceeds request budget");
   return proposal;
 }
@@ -224,7 +231,7 @@ export function createNativeTransferExistingPreparation(dependencies: TransferDe
         for (const row of previous.lines) used.add(row.id);
         const oldLines = new Map(previous.lines.map(row => [row.id as string, row])), pointers = new Set<string>(), fresh = new Set<string>();
         const header: TransferDraft["header"] = { id: transferId, number: previous.header.number, businessDate: businessDate(proposal.businessDate),
-          fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note };
+          fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note, ...(proposal.responsibleStaffId === undefined ? {} : { responsibleStaffId: entityId("staff", proposal.responsibleStaffId) }) };
         const lines: TransferDraft["lines"] = proposal.lines.map((row, index) => {
           const old = row.existingLineId === null ? undefined : oldLines.get(row.existingLineId);
           requireDomain(row.existingLineId === null || old?.transferId === transferId && old.isCurrent && !pointers.has(row.existingLineId), "INVALID_HTTP_INPUT", "Line pointer must be unique, current and owned by the actual transfer");

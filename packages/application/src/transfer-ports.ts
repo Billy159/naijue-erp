@@ -12,13 +12,14 @@ export type TransferAction = "SAVE" | "APPROVE" | "UNAPPROVE" | "VOID";
 export type TransferRole = "ADMIN" | "WAREHOUSE" | "SALESPERSON";
 export interface TransferActor extends ActorContext { readonly role: TransferRole }
 export interface RuntimeTransferHeader extends TransferHeaderRow {
+  readonly responsibleStaffId: EntityId<"staff"> | null;
   readonly note: string | null;
   readonly createdByAccountId: EntityId<"account">; readonly createdHallId: EntityId<"hall"> | null;
   readonly createdRole: TransferRole; readonly createdAt: string; readonly updatedAt: string;
   readonly approvedByAccountId: EntityId<"account"> | null; readonly approvedAt: string | null;
 }
 export interface TransferDocument { readonly header: RuntimeTransferHeader; readonly lines: readonly TransferLineRow[] }
-export type TransferDraftHeader = Pick<RuntimeTransferHeader, "id" | "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "note">;
+export type TransferDraftHeader = Pick<RuntimeTransferHeader, "id" | "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "note"> & { readonly responsibleStaffId?: EntityId<"staff"> | null };
 export interface TransferDraft { readonly header: TransferDraftHeader; readonly lines: readonly TransferLineRow[] }
 export type LegacyTransferCommand = { readonly actor: TransferActor; readonly requestKey: string } & (
   { readonly action: "SAVE"; readonly expectedVersion: Version | null; readonly draft: TransferDraft }
@@ -36,7 +37,7 @@ export interface TransferReceiptRow {
   readonly status: "COMMITTED"; readonly result: TransferResult; readonly completedAt: string;
 }
 export interface TransferAuditValues {
-  readonly header: Pick<RuntimeTransferHeader, "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "status" | "version" | "note">;
+  readonly header: Pick<RuntimeTransferHeader, "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "status" | "version" | "note" | "responsibleStaffId">;
   /** Sparse actual changed rows only; unchanged/retained rows are not copied. Posting-only actions have an empty array. */
   readonly lines: readonly Omit<TransferLineRow, "transferId">[];
 }
