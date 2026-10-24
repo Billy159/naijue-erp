@@ -4714,9 +4714,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T21:56:18.086746+00:00",
-    "sourceRound": 363,
-    "sourceCheckpoint": "SOURCE361 remote verified; SOURCE362 only current preview/QA/source-runner continuation records",
+    "atUtc": "2026-10-24T22:17:57.817460+00:00",
+    "sourceRound": 364,
+    "sourceCheckpoint": "SOURCE364 amended with existing records before any push/build; SOURCE363 remote verified4e694a74eaca12a12d0f9e95e195d01ab03ea165",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4747,16 +4747,17 @@
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
-      "status": "CURRENT361_ACTUAL_HTTP_SERVED_QF_TARGETED_NEW_DOCUMENT_SCOPE",
+      "status": "SOURCE364_FIXED_ASSOCIATED_BUILD_NEXT",
       "owner": "C",
-      "notFormal": true,
-      "resources": 134,
-      "browserStrictExit": 0,
-      "browserStrictSeconds": 4.999,
-      "buildExit": 0,
-      "buildSeconds": 2.486,
-      "HTTPKeyPaths": 5,
-      "next": "F1 original productDrawer/scan and exact approved role label gap; next whole related packet after current QF evidence"
+      "packets": [
+        "F1182exact14",
+        "F2outputpreviewexact2",
+        "Capprovedv16style+finiteoutputroute"
+      ],
+      "sourceRound": 364,
+      "currentServedSource": 361,
+      "syntheticOnly": true,
+      "notYetServed": true
     },
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
@@ -7878,9 +7879,9 @@
     },
     "phase2Queue": {
       "F1": {
-        "current": "181exact9source frozen as WIP only;182 inprogress on original Demo dateCss/SourceDate positioning+default matrix/template/finalstyle+dirtynav",
-        "next": "C combine181+182 once fixed build; originalQF onlythreefailed/affected consumers, reuse361knownSKU save and358Drawer",
-        "status": "IN_PROGRESS_ORIGINAL_PAGE_CONSUMER_FIX_NO_FULLPAGE_PASS",
+        "current": "182 exact14 fixed incl181 successors + C approvedv16 seven-column style; build364 next",
+        "next": "QF onlythreefailedIDs+actualSourceDate consumers; reuse361knownSKU save/358Drawer. Mechanicalrole label pureLuna breakpoint remains",
+        "status": "FIXED_SOURCE_BUILD_NEXT_NOT_FULLPAGE_UI_PASS",
         "model": "gpt-6.1-sol/medium",
         "packets": [
           "chunk-178-transfer-history",
@@ -7888,9 +7889,9 @@
         ]
       },
       "F2": {
-        "current": "14 source pages delivered; actual inventory original drawer + retry limited PASS SOURCE358",
-        "next": "Original QF/QF2 affected new fixed page acceptance; no invented duplicate source tasks",
-        "status": "SOURCE_READY_PARTIAL_ACTUAL_NOT_WHOLEPAGE_BUSINESS"
+        "current": "Original output consumer alreadyconnected; exact finite output adapter/test2 frozen and Cwrapper route/optin paired",
+        "next": "Fixedcandidate source+actual output verification; preserve formal backend spool/real data untested. Product40 explicitfinite sample stillgap",
+        "status": "FIXED_FINITE_OUTPUT_SOURCE_NOT_FORMAL"
       },
       "F3": {
         "current": "8 source pages delivered, current normal synthetic candidate; exact real capabilities remain module-scoped",
@@ -8061,7 +8062,7 @@
       "owner": "C",
       "sourceAndAcl": "D1/D3",
       "review": "QB",
-      "status": "C196_FIXED_CATALOGUE_ONLY_CARRIER_AND_FINITE_KEY_READBACK_QB_REVIEW_NO_STAGE",
+      "status": "PASS_ACTUAL_CATALOGUE344_ONLY_QB273_COMMITS_PLUS_QB275_EXACT_READBACK_ADOPTED",
       "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
       "scope": "Original344dictionaries only; no MAIN/BIND_FULL/claim/PUBLISH/product/SKU/stock/CORE replay",
       "knownBaselineMissingBits": 68,
@@ -8071,9 +8072,9 @@
       "currentCanonical": "5207f9d64fa8acb702a19eaecebb1e614dabdb8e3189af98e9a9b356dfe088cc",
       "businessDML": 0,
       "grantExecuted": true,
-      "nativeStageExecuted": false,
+      "nativeStageExecuted": true,
       "originalNinePreserved": true,
-      "next": "QB finite196 source/carrier review; fill only reviewpin then original C one dispatch, retain prefixes/unknown and344keyreadback",
+      "next": "Post196 data preservation; original approvedR1v16 patch129 then neededv15/130; precise next3native ACL observations and supplier222/product2956/SKU14999 components. Not MAIN/PUBLISH/fullimport/HTTP/perf.",
       "actualGrantJob": "c03-real-r1-catalogue-exact68-acl-20261025-195",
       "addedColumnPrivilegeBits": 68,
       "allOtherCatalogObjectsPreserved": true,
@@ -8095,7 +8096,21 @@
         "databaseWrites": 0
       },
       "runnerSource": "C196 new single graph27=24SOURCE352+2D1+1C helperexport, original frozen D1entry/runner preserved",
-      "fixedCarrierPath": "K/reports/controller/rapid-launch-20261022/server-jobs/c03-real-r1-native-catalogue344-stage-20261025-196/bundle"
+      "fixedCarrierPath": "K/reports/controller/rapid-launch-20261022/server-jobs/c03-real-r1-native-catalogue344-stage-20261025-196/bundle",
+      "committedOriginalChunks": 10,
+      "inserted": 344,
+      "replayed": 0,
+      "sourceRows": 459,
+      "typedBindings": 344,
+      "readbackJob": "c03-real-r1-catalogue344-readback-alias-only-20261025-197",
+      "readbackStatus": "QB275_ACTUAL_ALL344_SOURCE_BINDING_NATIVE_FULL_MATCH_MISMATCH0",
+      "readbackQueryCount": 6,
+      "readbackLeases": 2,
+      "actualReviews": [
+        "QB/slice273-c196-actual-stage-commits-readback-failed",
+        "QB/slice275-c197-actual344-key-readback"
+      ],
+      "failed196Readback": "42702 rollback original failure retained;10commits confirmed not replayed"
     },
     "accountMenuActual": {
       "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-account-menu-actual-01",
@@ -8105,6 +8120,13 @@
       "model": "Luna max requested in tool, worker reported actual Sol; no designated-Luna acceptance signature",
       "sharedDemoBehavior": "Tab leaves open menu; Esc outside trigger does not close either side, preserve as common observation not candidate-only defect",
       "cleanLeaseReturned": true
+    },
+    "backendNextRealPrerequisites": {
+      "currentR1": "5207/v14/123 +CORE115+real344catalogue, source459/binding344 exact",
+      "approvedUpgrade": "Originalv16patch80332/5fb595...->129 then requiredcompatiblev15patch47325/09fb...->130; actualcurrenttarget metadata after, not QA a970",
+      "nextNative": "Originalsupplier222 thenPRODUCT2956 thenSKU14999;1142products need143supplierrefs,1814suppliernull preserved, no guessed143subset",
+      "coupling": "Components independent ofv5/MAIN/BIND_FULL; full11/historyclosure/PUBLISH still relatedv5 wait",
+      "owners": "D1exact3componentACL75037/d512bfb8...+approvedupgradefiles ready;D3suppliercapture entry5464/9d3cac9... ready;C sole execution,QB limited actual"
     }
   },
   "latestReadySource": {

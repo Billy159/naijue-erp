@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { isValidElement, useState, type ReactNode } from 'react';
 import Select from '@arco-design/web-react/es/Select';
 import Trigger from '@arco-design/web-react/es/Trigger';
 import { SourceControl } from '../inventory/candidates.tsx';
@@ -28,6 +28,9 @@ export function ProposalPopup(p:{session:SalesProposalSession;picker:NonNullable
  {picker.phase==='loading'?<p role="status">正在查找…</p>:picker.phase==='error'?<p role="alert">查询失败 <button className="btn" onClick={()=>void p.session.retry()}>重试</button></p>:p.spec?<><div className="mx-spec-menu-head">选择{{color:'颜色',fit:'版型',size:'尺码'}[p.spec]}<span>{options.length} 项</span></div><div className="mx-spec-menu-options" role="listbox">{options.map(option=><button type="button" className="btn" role="option" aria-selected={p.selection?.[p.spec!]?.id===option.id} data-sale-candidate key={option.id} onClick={()=>p.choose(option.id)}><span>{option.name}</span>{p.selection?.[p.spec!]?.id===option.id&&<span aria-hidden>✓</span>}</button>)}{!options.length&&<p>本组暂无可用规格</p>}</div></>:<div className="pf-layout"><div className="pf-list" role="listbox"><div className="pf-heading"><span>商品款号</span><span>商品名称</span></div>{products.map(row=><button type="button" data-sale-candidate key={row.id} role="option" aria-selected={preview===row.id} onMouseEnter={()=>setPreview(row.id)} onFocus={()=>setPreview(row.id)} onMouseDown={e=>e.preventDefault()} onClick={()=>p.choose(row.id)}><strong>{row.code}</strong><span>{row.name}</span></button>)}{!products.length&&<p>没有匹配结果，请继续输入</p>}{picker.result&&picker.result.exactTotal>20n&&<footer><button className="btn" disabled={picker.page<=1} onClick={()=>void p.session.page(picker.page-1)}>上一页</button><small>共{picker.result.exactTotal.toString()}项</small><button className="btn" disabled={BigInt(picker.page)*20n>=picker.result.exactTotal} onClick={()=>void p.session.page(picker.page+1)}>下一页</button></footer>}</div>{(preview??products[0]?.id)&&<div className="pf-preview"><ProductCandidatePreview key={preview??products[0]!.id} productId={preview??products[0]!.id} reader={p.productReader} scope={p.scope} portal={document.body} onAccessFailure={p.denied}/></div>}</div>}
  </div>;
 }
-export function ProposalTrigger(p:{visible:boolean;popup:()=>ReactNode;close:()=>void;children:ReactNode;spec?:boolean}) {
- return <Trigger popupVisible={p.visible} trigger="click" position="bl" popup={p.popup} unmountOnExit autoAlignPopupWidth={false} popupStyle={{width:p.spec?250:660,maxWidth:'calc(100vw - 16px)'}} onVisibleChange={visible=>{if(!visible)p.close();}}>{p.children}</Trigger>;
+export function ProposalTrigger(p:{visible:boolean;popup:()=>ReactNode;close:()=>void;children:ReactNode;spec?:boolean;width?:number}) {
+ // Arco moves a disabled button class to a wrapper span; retain the original
+ // disabled source button instead. It has no popup action until available.
+ if(isValidElement<{disabled?:boolean}>(p.children)&&p.children.props.disabled)return <>{p.children}</>;
+ return <Trigger popupVisible={p.visible} trigger="click" position="bl" popup={p.popup} unmountOnExit autoAlignPopupWidth={false} popupStyle={{width:p.width??(p.spec?250:660),maxWidth:'calc(100vw - 16px)'}} onVisibleChange={visible=>{if(!visible)p.close();}}>{p.children}</Trigger>;
 }

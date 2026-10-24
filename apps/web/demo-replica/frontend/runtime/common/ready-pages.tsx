@@ -31,7 +31,7 @@ export interface ReadyPageOptions {
   readonly inventory: Pick<InventoryMountOptions, 'ledgerDialog' | 'createWorkbook'> & Pick<InventoryMountOptions, 'onOpenSource'>;
   readonly catalogue: Pick<CatalogueRuntimeOptions, 'maintenance' | 'onChanged'>;
 }
-export interface MountedReplicaPage { readonly dispose: () => void; readonly canLeave: () => boolean }
+export interface MountedReplicaPage { readonly dispose: () => void; readonly canLeave: () => boolean;readonly canDiscard?:()=>boolean;readonly discard?:()=>boolean }
 const roles = Object.freeze([
   { value: 'ADMIN', label: '管理员', requiresHall: false },
   { value: 'WAREHOUSE', label: '仓库', requiresHall: false },
@@ -81,6 +81,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     if ((route==='transfer'||route.startsWith('transfer/'))&&config.transfers){
       const [module,factory,products]=await Promise.all([import('../documents/transfers-entry.tsx'),import('../documents/transfers-session.ts'),import('../../../../src/transport/product-http-reader.ts')]);
       if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
+      if(route==='transfer/new'&&transfers?.scope.active&&transfers.workspace.getSnapshot().editor&&factory.transferCanLeave(transfers)){transfers.dispose();transfers=null;}
       if(!transfers?.scope.active)transfers=factory.createReplicaTransferSession(session,{instanceId:'replica-transfer-owner',newRequestKey:options.newRequestKey,responsibleReady:config.documentResponsibleReady===true});
       transferView??=module.newTransferListViewState();
       // Frozen transfer-current.openProductDetail uses the same original three-tab

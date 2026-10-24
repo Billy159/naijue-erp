@@ -4,6 +4,8 @@ import { parseProductBarcodeQuery,parseProductDetailsPageQuery,parseProductStock
 import type { ProductBarcodeDetails,ProductBarcodeSkuRow,ProductDefaultScheme,ProductWarehouseStockItem,ProductStockOverviewItem } from '../../../../../../packages/application/src/product-details-query-ports.ts';
 import { productPricesResponse,productBarcodesResponse,productStockResponse,productStockOverviewResponse } from '../../../../src/products/product-page-validation.ts';
 import { productBasicsResponse,productSpecificationsResponse,inventoryResponse } from '../../../../src/transport/response-validation.ts';
+import { parseInventoryOutputQuery } from '../../../../../../packages/application/src/inventory-query-validation.ts';
+import type { InventoryFilter } from '../../../../src/inventory/contracts.ts';
 import { emptyInventoryFilter } from '../../../../src/inventory/contracts.ts';
 
 /** Explicit PREVIEW ONLY declaration. No inferred codes, enabled flags or absent bindings. */
@@ -22,8 +24,10 @@ export interface SyntheticProductPreviewOptions {
  readonly barcodeSnapshots?:ReadonlyMap<string,SyntheticBarcodeSnapshot>;
  /** C explicitly declares UI-only unbound rows, not original codes/status/bindings. */
  readonly syntheticUnboundBarcodeFixture?:true;
+ /** Explicit complete finite preview output, never a production fallback. */
+ readonly syntheticFiniteInventoryOutput?:true;
 }
-const paths=new Set(['/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
+const paths=new Set(['/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
 const json=(body:unknown,status=200)=>new Response(JSON.stringify(body),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-data-source':'SYNTHETIC-PREVIEW-ONLY'}});
 const unavailable=()=>json({error:{code:'SYNTHETIC_PRODUCT_FACTS_NOT_DECLARED',message:'This synthetic target has no complete declared facts for this read; no real service was called.'}},501);
 class FixtureResponse extends Error {readonly response:Response;constructor(response:Response){super('Existing synthetic fixture rejected this read.');this.response=response;}}
@@ -36,10 +40,34 @@ export function createSyntheticProductPreviewTransport(options:SyntheticProductP
  return Object.freeze({canHandle,async request(input:URL|string,init:RequestInit):Promise<Response>{
   const url=new URL(String(input)),path=url.pathname.slice(4);
   if(url.origin!==options.origin||url.search||url.hash||!url.pathname.startsWith('/api/')||!canHandle(path,init.method??'GET'))return unavailable();
-  const active=()=>{if(init.signal?.aborted)throw new DOMException('Synthetic preview read aborted','AbortError');};
+  let operationInit=init;
+  const active=()=>{if(operationInit.signal?.aborted)throw new DOMException('Synthetic preview read aborted','AbortError');};
   active();let body:unknown;try{body=JSON.parse(String(init.body));}catch{return json({error:{code:'INVALID_PRODUCT_DETAILS_QUERY'}},400);}
-  const load=async(leaf:string,parameters:unknown)=>{active();const response=await options.existingFetch(options.origin+'/api'+leaf,{...init,method:'POST',body:JSON.stringify(parameters)});active();if(!response.ok)throw new FixtureResponse(response);const data:unknown=await response.json();active();return data;};
+  const load=async(leaf:string,parameters:unknown)=>{active();const response=await options.existingFetch(options.origin+'/api'+leaf,{...operationInit,method:'POST',body:JSON.stringify(parameters)});active();if(!response.ok)throw new FixtureResponse(response);const data:unknown=await response.json();active();return data;};
   try{
+   if(path==='/inventory/output/query'){
+    if(options.syntheticFiniteInventoryOutput!==true)return unavailable();
+    parseInventoryOutputQuery(body);const {filter}=body as {filter:InventoryFilter};
+    const cancellation=new AbortController();operationInit={...init,signal:init.signal?AbortSignal.any([init.signal,cancellation.signal]):cancellation.signal};
+    const parameters={filter,page:1,pageSize:100 as const};
+    const first=inventoryResponse(await load('/inventory/query',parameters),parameters);
+    async function* frames(){
+     const summary={readReference:first.readReference,exactTotalProducts:first.exactTotalProducts,warehouseLabels:first.warehouseLabels,allMatchesTotal:first.allMatchesTotal};
+     yield {kind:'summary',...summary};let page=first,emitted=0,sum=0n;
+     for(;;){
+      active();if(page.exactTotalProducts!==summary.exactTotalProducts||page.readReference!==summary.readReference||JSON.stringify(page.warehouseLabels)!==JSON.stringify(summary.warehouseLabels)||JSON.stringify(page.allMatchesTotal)!==JSON.stringify(summary.allMatchesTotal))throw new Error('Synthetic finite output changed between pages.');
+      for(const product of page.products){active();emitted++;sum+=BigInt(product.total.knownQuantity);yield {kind:'product',product};}
+      if(emitted===summary.exactTotalProducts)break;
+      if(!page.products.length||emitted>summary.exactTotalProducts)throw new Error('Synthetic finite output did not finish its declared scope.');
+      const next={...parameters,page:page.page+1};page=inventoryResponse(await load('/inventory/query',next),next);
+     }
+     active();if(sum.toString()!==summary.allMatchesTotal.knownQuantity)throw new Error('Synthetic complete output summary mismatch.');
+     yield {kind:'complete',readReference:summary.readReference,exactTotalProducts:summary.exactTotalProducts,emittedProducts:emitted,allMatchesTotal:summary.allMatchesTotal};
+    }
+    const iterator=frames(),encoder=new TextEncoder();let cancelled=false;
+    const stream=new ReadableStream<Uint8Array>({async pull(controller){try{const item=await iterator.next();active();if(cancelled)return;if(item.done)controller.close();else controller.enqueue(encoder.encode(JSON.stringify(item.value)+'\n'));}catch(error){if(!cancelled)controller.error(error);}},cancel(){cancelled=true;cancellation.abort();void iterator.return(undefined).catch(()=>{});}});
+    return new Response(stream,{headers:{'content-type':'application/x-ndjson','cache-control':'no-store','x-data-source':'SYNTHETIC-PREVIEW-ONLY','x-inventory-read-reference':first.readReference}});
+   }
    if(path==='/products/prices/query'){
     const query=parseProductQuery(body),base=productBasicsResponse(await load('/products/basics/query',query),query);if(!base)return unavailable();
     const prices=Object.fromEntries(CATALOGUE_PRICE_KEYS.map(key=>[key,key==='retail_price'?base.retailPrice:null]));

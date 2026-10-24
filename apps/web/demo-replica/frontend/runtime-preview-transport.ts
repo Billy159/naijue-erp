@@ -1,5 +1,5 @@
 import {createSyntheticUnifiedTransport} from '../../unified-browser-harness/synthetic-transport.ts';
-const detailPaths=new Set(['/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
+const detailPaths=new Set(['/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
 type Call={method:string;path:string;phase:'pending'|'completed'|'aborted'|'failed';started:number;finished?:number};
 /** Explicit local SYNTHETIC preview only. Never selected as a production fallback. */
 export function createReplicaPreviewTransport(){
@@ -8,7 +8,7 @@ export function createReplicaPreviewTransport(){
  let settings:Promise<ReturnType<typeof import('./runtime/settings/synthetic-preview-transport.ts')['createSettingsPreviewTransport']>>|undefined;
  let documents:Promise<ReturnType<typeof import('./runtime/documents/synthetic-preview-transport.ts')['createSyntheticDocumentPreviewTransport']>>|undefined;
  const document=()=>documents??=import('./runtime/documents/synthetic-preview-transport.ts').then(m=>m.createSyntheticDocumentPreviewTransport({syntheticOnly:true,origin:base.http.origin,existingFetch:base.http.fetch}));
- const product=()=>products??=import('./runtime/products/synthetic-preview-transport.ts').then(m=>m.createSyntheticProductPreviewTransport({origin:base.http.origin,existingFetch:base.http.fetch,snapshotVersion:1,syntheticUnboundBarcodeFixture:true}));
+ const product=()=>products??=import('./runtime/products/synthetic-preview-transport.ts').then(m=>m.createSyntheticProductPreviewTransport({origin:base.http.origin,existingFetch:base.http.fetch,snapshotVersion:1,syntheticUnboundBarcodeFixture:true,syntheticFiniteInventoryOutput:true}));
  const setting=()=>settings??=import('./runtime/settings/synthetic-preview-transport.ts').then(m=>m.createSettingsPreviewTransport());
  const fetch=async(input:string,init:RequestInit):Promise<Response>=>{
   const url=new URL(input);if(url.origin!==base.http.origin||url.username||url.password||!url.pathname.startsWith('/api/'))throw new TypeError('Closed synthetic preview origin');

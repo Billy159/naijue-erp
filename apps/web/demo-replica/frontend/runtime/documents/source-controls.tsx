@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react';
 import DatePicker from '@arco-design/web-react/es/DatePicker';
 import Select from '@arco-design/web-react/es/Select';
 import TreeSelect from '@arco-design/web-react/es/TreeSelect';
@@ -9,8 +9,16 @@ import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { SalesReference, SalesReferenceKind, SalesReferenceReader } from '../../../../src/sales/contracts.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 
-export function SourceDate(p:{label:string;value:string;change?:(value:string)=>void;required?:boolean;disabled?:boolean}) {
- return <SourceControl css={dateCss}>{(portal,host)=><DatePicker value={p.value} format="YYYY-MM-DD" placeholder={p.label} aria-label={p.label} allowClear={!p.required} disabled={p.disabled??false} getPopupContainer={()=>portal} onVisibleChange={()=>portal.style.setProperty('--transfer-popup-left',Math.max(8,Math.min(host.getBoundingClientRect().left,innerWidth-275))+'px')} {...(p.change?{onChange:(value:string|string[])=>p.change!(typeof value==='string'?value:'')}:{})}/>}</SourceControl>;
+// Original transfer-date.jsx viewport correction; only this document control uses it.
+const documentDateCss=dateCss.replace('#portal .arco-trigger{','#portal .arco-trigger{left:var(--transfer-popup-left)!important;');
+interface SourceDateProps{label:string;value:string;change?:(value:string)=>void;required?:boolean;disabled?:boolean}
+export function SourceDate(p:SourceDateProps) {
+ return <SourceControl css={documentDateCss}>{(portal,host)=><DocumentDateControl {...p} portal={portal} host={host}/>}</SourceControl>;
+}
+function DocumentDateControl(p:SourceDateProps&{portal:HTMLElement;host:HTMLElement}){
+ const align=()=>p.portal.style.setProperty('--transfer-popup-left',Math.max(8,Math.min(p.host.getBoundingClientRect().left,innerWidth-275))+'px');
+ useLayoutEffect(()=>{align();p.host.addEventListener('pointerdown',align,true);p.host.addEventListener('focusin',align);return()=>{p.host.removeEventListener('pointerdown',align,true);p.host.removeEventListener('focusin',align);};},[p.portal,p.host]);
+ return <DatePicker value={p.value} format="YYYY-MM-DD" placeholder={p.label} aria-label={p.label} allowClear={!p.required} disabled={p.disabled??false} getPopupContainer={()=>p.portal} onVisibleChange={align} {...(p.change?{onChange:(value:string|string[])=>p.change!(typeof value==='string'?value:'')}:{})}/>;
 }
 export function SourceSingle(p:{label:string;value:string;items:readonly{value:string;label:string}[];change?:(value:string)=>void;disabled?:boolean}) {
  return <div className="ui-single-host"><SourceControl css={singleCss}>{portal=><Select className="ui-flat-select" aria-label={p.label} value={p.value} options={[...p.items]} disabled={p.disabled??false} showSearch={false} getPopupContainer={()=>portal} {...(p.change?{onChange:p.change}:{})} renderFormat={()=> <span className="ui-single-tag">{p.items.find(x=>x.value===p.value)?.label??p.value}</span>}/>}</SourceControl></div>;

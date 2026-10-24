@@ -1,6 +1,7 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
+import {SaleDialog} from '../documents/native-dialog.tsx';
 import { LoginView } from './login-view.tsx';
 import { AccountMenuView, ChangeOwnPasswordDialogView, type OwnPasswordFields, type OwnPasswordErrors } from './account-menu.tsx';
 import { createReadyPageMounts, type ReadyPageOptions, type MountedReplicaPage } from './ready-pages.tsx';
@@ -9,6 +10,7 @@ import type { ReplicaSession } from './session.ts';
 
 const emptyPasswords = (): OwnPasswordFields => ({ currentPassword: '', newPassword: '', confirmation: '' });
 const captions: Readonly<Record<string, string>> = {
+ transfer:'库存管理 / 调拨单列表','transfer/new':'库存管理 / 新增调拨单',sales:'销售管理 / 销货单列表','sales/new':'销售管理 / 新增销货单',products:'商品管理 / 商品信息',
  inventory: '库存管理 / 库存状况表', 'product-categories': '商品管理 / 商品分类', 'product-settings': '商品管理 / 商品设置', 'barcode-schemes': '商品管理 / 条码方案',
  'settings/stores': '基础设置 / 营业厅与仓库', 'settings/warehouses': '基础设置 / 营业厅与仓库', 'settings/parties': '基础设置 / 客户', customers: '基础设置 / 客户', suppliers: '基础设置 / 供应商',
  'settings/staff': '基础设置 / 员工', 'settings/accounts': '基础设置 / 登录账号', 'settings/payments': '基础设置 / 收款配置', 'settings/fundAccounts': '基础设置 / 收款配置',
@@ -63,14 +65,22 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
  let identity: object | null = null, toastTimer: number | undefined;
  const toast = (message: string) => { let node = document.getElementById('toast'); if (!node) { node = document.createElement('div'); node.id = 'toast'; node.setAttribute('role', 'status'); document.body.append(node); } node.textContent = message; node.style.display = 'block'; window.clearTimeout(toastTimer); toastTimer = window.setTimeout(() => { if (node) node.style.display = 'none'; }, 4200); };
  const canLeave = () => !pages.hasUnresolvedWrite() && (current?.canLeave() ?? true);
- const clearPage = () => { serial++; current?.dispose(); current = null; scope?.dispose(); scope = null; page.replaceChildren(); };
+ const leaveHost=document.createElement('div');leaveHost.dataset.documentLeave='';document.body.append(leaveHost);const leaveRoot=createRoot(leaveHost);
+ let pendingLeave:{next:string;replace:boolean;owner:MountedReplicaPage;scope:ReadScope|null}|null=null;
+ const dismissLeave=()=>{pendingLeave=null;leaveRoot.render(null);};
+ const askLeave=(next:string,replace:boolean)=>{
+  if(pendingLeave||!current||!current.canDiscard?.()||pages.hasUnresolvedWrite())return;
+  pendingLeave={next,replace,owner:current,scope};
+  leaveRoot.render(<SaleDialog variant="transfer" className="tc-confirm tc-danger" title="有未保存的修改" close={dismissLeave} footer={<><button type="button" className="btn" onClick={dismissLeave}>继续编辑</button><button type="button" className="btn primary" onClick={()=>{const decision=pendingLeave;if(!decision||current!==decision.owner||scope!==decision.scope||!scope?.active){dismissLeave();return;}if(pages.hasUnresolvedWrite()||!current.canDiscard?.()||!current.discard?.()){dismissLeave();toast('当前操作尚未结束，输入已保留。');return;}dismissLeave();void navigate(decision.next,decision.replace);}}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SaleDialog>);
+ };
+ const clearPage = () => { dismissLeave();serial++; current?.dispose(); current = null; scope?.dispose(); scope = null; page.replaceChildren(); };
  const status = (message: string, retry?: () => void) => { page.replaceChildren(); const box = document.createElement('div'); box.className = 'iw-state'; box.setAttribute('role', retry ? 'alert' : 'status'); box.textContent = message; if (retry) { const button = document.createElement('button'); button.className = 'btn'; button.textContent = '重试加载资料'; button.onclick = retry; box.append(' ', button); } page.append(box); };
  async function navigate(next: string, replace = false): Promise<boolean> {
   if (disposed || !session.auth.getSnapshot().principal) return false;
   if (next === route && current && scope?.active) return true;
-  if (!canLeave()) { toast('请先保存或取消当前编辑，当前输入已保留。'); return false; }
+  if (!canLeave()) { if(!pages.hasUnresolvedWrite()&&current?.canDiscard?.())askLeave(next,replace);else toast('请先保存或取消当前编辑，当前输入已保留。');return false; }
   clearPage(); route = next; const request = serial;
-  breadcrumb.textContent = captions[next] ?? '业务页面';
+  breadcrumb.textContent = captions[next] ?? (next.startsWith('transfer/')?'库存管理 / 调拨单':next.startsWith('sales/')?'销售管理 / 销货单':next.startsWith('products/')?'商品管理 / 商品信息':'业务页面');
   document.querySelectorAll<HTMLAnchorElement>('.sidebar a[data-route]').forEach(link => { const selected = link.dataset.route === next || next === 'settings/parties' && link.dataset.route === 'customers' || next.startsWith('transfer/') && next!=='transfer/new' && link.dataset.route==='transfer' || next.startsWith('sales/') && next!=='sales/new' && link.dataset.route==='sales' || next.startsWith('products/') && link.dataset.route==='products'; link.classList.toggle('selected', selected); if (selected) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
   if (replace) history.replaceState(null, '', '#' + next); else if (location.hash !== '#' + next) history.pushState(null, '', '#' + next);
   status('正在加载页面…');
@@ -104,5 +114,5 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
  chromeRoot.render(<SessionChrome session={session} accountHost={options.accountHost} mayChangeIdentity={canLeave} notice={toast} />);
  document.addEventListener('click', click); window.addEventListener('hashchange', hash); window.addEventListener('beforeunload', beforeUnload);
  authChanged(); if (session.auth.getSnapshot().phase === 'unresolved') void session.auth.resolveSession();
- return { navigate, session, dispose() { if (disposed) return; disposed = true; window.clearTimeout(toastTimer); unsubscribe(); document.removeEventListener('click', click); window.removeEventListener('hashchange', hash); window.removeEventListener('beforeunload', beforeUnload); clearPage(); pages.dispose(); chromeRoot.unmount(); chromeHost.remove(); app.inert = false; session.dispose(); } };
+ return { navigate, session, dispose() { if (disposed) return; disposed = true; window.clearTimeout(toastTimer); unsubscribe(); document.removeEventListener('click', click); window.removeEventListener('hashchange', hash); window.removeEventListener('beforeunload', beforeUnload); clearPage(); pages.dispose(); leaveRoot.unmount();leaveHost.remove();chromeRoot.unmount(); chromeHost.remove(); app.inert = false; session.dispose(); } };
 }

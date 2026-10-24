@@ -10,6 +10,13 @@ const groups: Readonly<Record<string, readonly string[]>> = {
 };
 const slots = new Map(order.map(name => {const anchor=document.createComment('frozen-style:'+name);document.head.append(anchor);return [name,anchor] as const;}));
 const loaded = new Map<string,{node:HTMLLinkElement;ready:Promise<void>}>();
+// Approved v16 adds a separate responsible employee to the original document header.
+// Keep the original narrow-screen layout; this selector applies only to the paired consumer.
+const approvedDocumentHeaderStyle=document.createElement('style');
+approvedDocumentHeaderStyle.dataset.approvedContract='v16-document-responsibility';
+approvedDocumentHeaderStyle.textContent='@media(min-width:1351px){.tc-editor .tc-gold-doc-fields[data-document-responsibility=v16]{grid-template-columns:160px minmax(180px,1fr) minmax(180px,1fr) minmax(155px,.7fr) minmax(130px,.55fr) minmax(130px,.55fr) auto}}';
+document.head.append(approvedDocumentHeaderStyle);
+
 function ensure(name:string):Promise<void>{
  const existing=loaded.get(name);if(existing)return existing.ready;
  const node=document.createElement('link');node.rel='stylesheet';node.href='/source-styles/'+name;node.dataset.frozenStyle=name;
