@@ -1,0 +1,35 @@
+{
+  "atUtc": "2026-10-24T13:17:31.781255+00:00",
+  "parent": "0d2730f4284a3dedfd4995534ee259e01533fc74",
+  "taskId": "F1_S_NORMAL_PREPARED_OUTCOME_BODY_01",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-new-document-form.tsx",
+      "bytes": 3579,
+      "sha256": "6722234fac4f5169e729a6d84b900984fb48e11214f28cbab56f55b5836d73d8",
+      "baseSha256": "4d664ae36441dcbea9de64d89849a2ac8697ff35baa527d20f78753a77eabaaf",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-create.ts",
+      "bytes": 15691,
+      "sha256": "93017a53973065b954dc657e6e8bb621d9caaccd4dd783b7a631f5ffa91f16bb",
+      "baseSha256": "56ec55364db19607f9d2598fbff3a53279ba67e1801157d15d10fa836044d2a9",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 55456,
+      "sha256": "49d7035c1f502ae8eee32d91e4f5ba99a2fd4768434b85f45f2e5a25a6f7c212",
+      "baseSha256": "703229439a0dd941824c064429792ec4572e6fcf741ce89f2d307edc39dbadd8",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-152/DELIVERY.json",
+  "ownerReceiptBytes": 3014,
+  "ownerReceiptSha256": "b7836efd83785c5a7cab3ad8ef4db52c79648d3495a3439ca4542a453bc009a5",
+  "stage": "SOURCE_9_MEMORY_STATES_AND_SCOPED_TYPES_PASS_NOT_BROWSER",
+  "currentPreviewIncludesChange": false,
+  "wholePageAccepted": false,
+  "deployed": false
+}

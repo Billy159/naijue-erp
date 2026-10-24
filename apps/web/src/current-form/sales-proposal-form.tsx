@@ -198,7 +198,7 @@ function CandidatePopup({ session, picker, spec, selection, choose, close, keybo
     {picker.phase === 'ready' && picker.result && !spec && picker.result.exactTotal > 20n && <footer><span>第 {picker.page} 页 / 共 {picker.result?.exactTotal.toString()} 个{spec ? '实际规格' : '候选'}</span><button type="button" className="btn" disabled={picker.page <= 1} onClick={() => { void session.page(picker.page - 1); }}>上一页</button><button type="button" className="btn" disabled={!picker.result || BigInt(picker.page) * 20n >= picker.result.exactTotal} onClick={() => { void session.page(picker.page + 1); }}>下一页</button></footer>}
   </div>;
 }
-export function SalesProposalForm({ session, close, preparation, scope, product: productCapability, saved, navigationLeave }: { readonly navigationLeave?: { readonly canDiscard: boolean; readonly discard: () => boolean }; readonly scope?: ReadScope; readonly product?: SalesProductCapability; readonly session: SalesProposalSession; readonly close: () => void; readonly saved?: { readonly number: string; readonly actions: ReactNode; readonly beforeSave?: ReactNode; readonly feedback?: ReactNode }; readonly preparation?: { readonly save: () => void; readonly preparing: boolean; readonly disabled?: boolean; readonly notice: string | null; readonly cancel: () => void } }) {
+export function SalesProposalForm({ session, close, preparation, scope, product: productCapability, saved, navigationLeave }: { readonly navigationLeave?: { readonly canDiscard: boolean; readonly discard: () => boolean }; readonly scope?: ReadScope; readonly product?: SalesProductCapability; readonly session: SalesProposalSession; readonly close: () => void; readonly saved?: { readonly number: string; readonly actions: ReactNode; readonly beforeSave?: ReactNode; readonly feedback?: ReactNode }; readonly preparation?: { readonly save: () => void; readonly preparing: boolean; readonly disabled?: boolean; readonly notice: string | null; readonly cancel: () => void; readonly feedback?: ReactNode } }) {
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
   useDocumentLeave({ dirty: state.dirty || !!state.lineEdit, canDiscard: navigationLeave?.canDiscard ?? !preparation?.preparing, saved: !!saved, discard: navigationLeave?.discard ?? (() => session.reset(true)) });
   const [confirm, setConfirm] = useState<'reset' | 'cancel' | null>(null), [pendingMode, setPendingMode] = useState<SalesBusinessMode | null>(null);
@@ -265,7 +265,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     if (draft.lines.length || Object.values(state.entries).flat().some(entry => !!entry.product)) { modeToConfirm.current = mode; setPendingMode(mode); }
     else session.setBusinessMode(mode);
   };
-  const discard = (action: 'reset' | 'cancel', confirmed = false) => { const ok = action === 'reset' ? session.reset(confirmed) : session.cancel(confirmed); if (!ok) setConfirm(action); else { setConfirm(null); if (action === 'cancel') close(); } };
+  const discard = (action: 'reset' | 'cancel', confirmed = false) => { if (navigationLeave?.canDiscard === false) return; const ok = action === 'reset' ? session.reset(confirmed) : session.cancel(confirmed); if (!ok) setConfirm(action); else { setConfirm(null); if (action === 'cancel') close(); } };
   const completeEntry = (direction: 'IN' | 'OUT', key: string) => {
     const appended = session.appendEntry(direction, key);
     if (appended) requestAnimationFrame(() => {
@@ -322,7 +322,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     </div></div>
   }
     note={<label className="sale-note-row"><span className="sale-field-label">备注</span><input data-sale-field="note" aria-label="备注" placeholder="输入本单备注（可选）" maxLength={10000} value={draft.note} onChange={event => { const value = event.currentTarget.value; return session.setHeader({ note: value }); }} /></label>}
-    status={<div id="sale-error" className="sales-proposal-feedback">{state.notice && <p role="status">{state.notice}</p>}{state.errors.map(error => <p role="alert" key={error}>{error}</p>)}{preparation?.notice && <p role="status">{preparation.notice}</p>}{preparation?.preparing && <button type="button" className="btn" onClick={preparation.cancel}>{saved ? '取消准备' : '取消新单准备'}</button>}</div>}
+    status={<div id="sale-error" className="sales-proposal-feedback">{state.notice && <p role="status">{state.notice}</p>}{state.errors.map(error => <p role="alert" key={error}>{error}</p>)}{preparation?.notice && <p role="status">{preparation.notice}</p>}{preparation?.preparing && <button type="button" className="btn" onClick={preparation.cancel}>{saved ? '取消准备' : '取消新单准备'}</button>}{preparation?.feedback}</div>}
     lines={<>{sections.map(section => {
       const active = true;
       return <section className="sale-entry-section" key={section.key} data-business-section="out"><div className="tc-section-head sale-section-head"><strong>{section.title}</strong><div>
