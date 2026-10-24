@@ -4714,9 +4714,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T21:37:25.602496+00:00",
-    "sourceRound": 361,
-    "sourceCheckpoint": "SOURCE359 1906633ab8bba18ccdaef1cfdca17a5a357a7abb remote verified; SOURCE360 existing records actual195/QB271, no new frontend build",
+    "atUtc": "2026-10-24T21:44:00.652663+00:00",
+    "sourceRound": 362,
+    "sourceCheckpoint": "SOURCE361 remote verified; SOURCE362 only current preview/QA/source-runner continuation records",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4727,32 +4727,36 @@
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
       "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "ec3a4df8aecacb2ed429cc9fbd645bca422a31ff",
-      "runtimeVersion": "phase2-normal-ec3a4df-05",
+      "sourceCommit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
+      "runtimeVersion": "phase2-normal-2c54222-06",
       "htmlBytes": 3154,
-      "htmlSha256": "aa257dabf234a3b791282c111bdf46e43b143efc67cc1b88d864ba5752774f31",
+      "htmlSha256": "1bdf2596b5cf62070905df8f43219c6477d3910a292230fab5fae5e689b382c7",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
-      "sourceRound": 358,
-      "serverSession": 69444,
+      "sourceRound": 361,
+      "serverSession": 60261,
       "fixtureBytes": 25766,
       "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
       "phase2Started": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-ec3a4df-phase2-05/build",
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-2c54222-phase2-06/build",
       "phase1Accepted": false,
-      "phase2Candidate": "QF358 targeted retry actual PASS; QF356 other drawer evidence reused; not whole-page or real business",
+      "phase2Candidate": "Actual fixed HTTP134resources and original normal SALE/transfer/new consumers; QF targeted actual next, synthetic only",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
-      "status": "SOURCE361_FIXED_BUILD_NEXT",
-      "scope": "Original F1 normal sales/transfer list,new,readback consumers; existing/history source but finite old fixture does not provide edit/status/HREV",
+      "status": "CURRENT361_ACTUAL_HTTP_SERVED_QF_TARGETED_NEW_DOCUMENT_SCOPE",
       "owner": "C",
-      "adapter": "F1 chunk180 exact one leaf; same original finite unified store/SAVE/receipt, old CUTOFF seed excluded NOT_PUBLISHED, no real backend",
-      "newModel": "gpt-6.1-sol/medium technical",
-      "report": "K/reports/frontend/rapid-launch-20261022/F1/chunk-180-synthetic-normal-documents/RESULT.json"
+      "notFormal": true,
+      "resources": 134,
+      "browserStrictExit": 0,
+      "browserStrictSeconds": 4.999,
+      "buildExit": 0,
+      "buildSeconds": 2.486,
+      "HTTPKeyPaths": 5,
+      "next": "F1 original productDrawer/scan and exact approved role label gap; next whole related packet after current QF evidence"
     },
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
@@ -6291,11 +6295,11 @@
       "D2Commit": "5c44f3c3b2f7550ced22d3243135cdb9fa3813fd",
       "sourceModuleReviews": "QB205259/QB206260/QB207-v2261/QB208262 PASS_LIMITED; no actual v14 engine/role/init"
     },
-    "sourceCommit": "1906633ab8bba18ccdaef1cfdca17a5a357a7abb",
+    "sourceCommit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
     "browserLease": {
       "owner": "QF",
-      "scope": "Source358 only untested public shell/account menu pure appearance+clear cancel/Esc; no drawer repeat",
-      "requestedModel": "gpt-6-luna/max",
+      "scope": "Current361 normal new transfer/Sale minimal affected mixed actual; five draft tabs protected",
+      "requestedModel": "gpt-6.1-sol/medium",
       "actualRuntimeSwitchVerified": false,
       "protectedDraftTabs": 5
     },
@@ -6690,9 +6694,9 @@
       "sha256": "19e8659bcb8fd36dac7e6cbe50e011fe1089e2dce8e0bb9be3a6d660847a463f"
     },
     "githubLatestVerified": {
-      "sourceRound": 359,
-      "commit": "1906633ab8bba18ccdaef1cfdca17a5a357a7abb",
-      "receipt": "K/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source359-20261025-01/RESULT.json",
+      "sourceRound": 361,
+      "commit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
+      "receipt": "K/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source361-20261025-01/RESULT.json",
       "remoteVerified": true
     },
     "actualPerformance122": {
@@ -7853,9 +7857,9 @@
     },
     "phase2Queue": {
       "F1": {
-        "current": "178/179 normal documents fixed359 +180 exact synthetic seam now wired by C for fixed361 build",
-        "next": "Original three-tab product drawer/scan; finite candidate existing save/status/HREV remain explicitly unavailable until real pairing",
-        "status": "BUILD_NEXT_NOT_FULL_PAGE_PASS",
+        "current": "Current361 normal/new/readback finite candidate targeted actual QF; F1 next original three-tab product Drawer and scanner",
+        "next": "Account role label S360-UI-01 classify/dedup using existing original labels; remaining existing save/status/HREV real pairing still incomplete",
+        "status": "ACTUAL_CANDIDATE_QF_IN_PROGRESS_NO_PAGE_PASS",
         "model": "gpt-6.1-sol/medium",
         "packets": [
           "chunk-178-transfer-history",
@@ -8048,14 +8052,31 @@
       "grantExecuted": true,
       "nativeStageExecuted": false,
       "originalNinePreserved": true,
-      "next": "D1 original store runner consumed by C fixed exact catalogue-only source/carrier; QB finite review then C sole stage10 original chunks",
+      "next": "C exact196 carrier and RAM genuine driver/sourcegrant; bind alreadyacceptedQB271 metadata/CORE/source pins, finite QB review then actual10stage. EXECUTION-INPUT remains disabled without fixedCarrier.",
       "actualGrantJob": "c03-real-r1-catalogue-exact68-acl-20261025-195",
       "addedColumnPrivilegeBits": 68,
       "allOtherCatalogObjectsPreserved": true,
       "originalCoreStatePreserved": true,
       "metadataReview": "QB/slice271-c195-actual68-and-catalogue-only-metadata/ACCEPTED-RUNTIME-METADATA.json",
       "metadataScope": "ONLY_IMPORT_STAGE_EXACT_TARGET_METADATA_ONLY_NOT_REAL_SOURCE_EXECUTION",
-      "originalPrivateR1Host": "Container untouched; old f6af metadata now stale. New runtime profile pairing required before claiming host usable; no blind restart"
+      "originalPrivateR1Host": "Container untouched; old f6af metadata now stale. New runtime profile pairing required before claiming host usable; no blind restart",
+      "runnerCompiled": {
+        "path": "K/reports/controller/rapid-launch-20261022/real-catalogue-component-20261025-01/catalogue-stage-source.mjs",
+        "bytes": 152631,
+        "sha256": "7fee2915b76377fdfbee9f9d29be494d31b12db4140a647d957680e7249cc6b5",
+        "sourceInputs": 26,
+        "originalFixed352": 24,
+        "D1Consumer": 2
+      }
+    },
+    "accountMenuActual": {
+      "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-account-menu-actual-01",
+      "source": 358,
+      "actualObservation": "Approved change-password entry above logout; modal/cancel/focus observed, no values read or submission",
+      "issue": "S360-UI-01 ADMIN vs Chinese role label sent original F1, synthetic loginName separate data difference",
+      "model": "Luna max requested in tool, worker reported actual Sol; no designated-Luna acceptance signature",
+      "sharedDemoBehavior": "Tab leaves open menu; Esc outside trigger does not close either side, preserve as common observation not candidate-only defect",
+      "cleanLeaseReturned": true
     }
   },
   "latestReadySource": {
