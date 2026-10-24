@@ -1,3 +1,11 @@
+C180 ACTUAL CATEGORY INSTALL / F2 READ PACKAGE SAVED
+
+Original approved v15 category patch installed after v16 on isolated CORE QA only, actual130 routines/canonical a97002057a1763b3bd650141461228773d54a81a833a1e7c8e5d96313f82b415. Exact existing role two UPDATE columns + private helper EXEC; 19 data counts/old QA/9 services unchanged, no business command or production mutation. Original QB now finite130 PRODUCT_MAINTENANCE metadata, then C181 original service category fixtures/order/undo; no PUBLISH/v5 dependency. F2 P01/P08-P13 eight new leaves read package delivered targeted checks, no HTTP/browser/real business acceptance. v17 approved implementation D2/F2 continues.
+
+V17 EXPLICIT HUMAN APPROVAL / SOURCE344 REMOTE VERIFIED
+
+User confirmed ordinary-product SKU selection/generation v17; original D2 implements and F2 consumes original ProductV2 contract, not a new API. Only new save-created missing tuples, preserve existing/disabled IDs and codes, no barcode/inventory, original atomic permission/CAS/idempotency/rollback. Approval stored WRITE-CONTRACT-APPROVAL-v17-PRODUCT-SKU-SELECTION.json. Source344 29b8e5741108891ec01382dc47b404cd435ef2b0 actually GitHub readback verified. Earlier v17 waiting labels are historical and superseded. Original v5 historical blank hall still pending.
+
 SOURCE344 - PHASE2 READY PACKAGES / NORMAL ENTRY INTEGRATION / BUSINESS NOT YET ACCEPTED
 
 Phase1 SOURCE343 accepted by original QF: runnable full frozen original copy and necessary representative states, 35 original pages/65 overlays. Approved two new pages/two overlays remain Phase2; overall37/67 unchanged. Current http://127.0.0.1:57896/#inventory serves immutable K/reports/controller/rapid-launch-20261022/demo-replica-phase1/runtime343-fixed (session21792), not mutable WIP. No new backend, real business/performance/formal release acceptance.

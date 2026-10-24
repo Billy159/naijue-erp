@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+    "headObserved": "29b8e5741108891ec01382dc47b404cd435ef2b0",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+    "remoteHeadVerified": "29b8e5741108891ec01382dc47b404cd435ef2b0",
     "remoteReadbackMethod": "Exact4 original objects/nonforcedFF/independentGET; next docs/source repair not yet synced",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "85cb60a011200815db11279435cefe11955b0b15"
+    "lastVerifiedRemoteCommit": "29b8e5741108891ec01382dc47b404cd435ef2b0"
   },
   "concurrency": {
     "chats": 11,
@@ -2669,6 +2669,19 @@
       "status": "APPROVED_WITH_SUPERSEDING_BUSINESS_DEFINITION",
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
       "userSource": "Direct human response call_0cc0334318204cc885d62fa3b0c82bee in this controllerChat"
+    },
+    {
+      "version": "v17",
+      "status": "EXPLICIT_HUMAN_APPROVED",
+      "atUtc": "2026-10-24T18:39:29.956214+00:00",
+      "source": "Direct human reply to request_user_input_async call_ab06ee7d793347118464b4eaecbfa7c4 in controller01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "answer": "确认 v17 商品规格生成方案",
+      "document": "WRITE-CONTRACT-SUPPLEMENT-v17-PRODUCT-SKU-SELECTION.md",
+      "documentSha256": "81d23efbc17213fe2de7885d969f1891bf0e18b68af9f71f8550e7d9da4588de",
+      "noNewTablesOrColumns": true,
+      "implementationOwner": "D2",
+      "consumerOwner": "F2",
+      "actualBusinessPassed": false
     }
   ],
   "latestAcceptedReceiptRefs": [
@@ -4713,8 +4726,8 @@
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "Existing v5 original historical blank hall and new ordinary-product generated SKU selection/number contract only. v16 and group boundary already approved.",
-    "github": "SOURCE344_STAGED_REMOTE_PENDING; latest verified51b65753ac15dc64f1bfbf28d1159c61b8318485",
+    "waiting": "Original historical blank hall v5 pending only; v17 explicitly approved, D2/F2 implementation in progress",
+    "github": "REMOTE_EXACT_VERIFIED_29b8e5741108891ec01382dc47b404cd435ef2b0",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -4743,7 +4756,7 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "CORE QA v16fromv14/129 da42844a QB251 finite metadata accepted. D2 approved v15-v16 ordering compatibility and D1 CORE category host exact2 staged344; QB source then new C180 patch/ACL/metadata; no MAIN/PUBLISH.",
+    "backend": "C180 actual approved category patch129->130 and minimum2column/helper ACL COMMIT PASS1.82076s, canonical a97002057a1763b3bd650141461228773d54a81a833a1e7c8e5d96313f82b415; QB new PRODUCT_MAINTENANCE metadata in progress, no business command yet. v5 historical source separate pending.",
     "productionBuild": "Formal299sourcef43e943/r1-f43e943-20261024-01 archive1339201/1f5a5b0537d1233f1e61bd7418d13db105c9e679c7a9be62f5d290ef06fa7e25, manifest43b445b07819f154a0659f3cc885b5b5cf5eb59a38679c41c2c1c193737c49ce. Actual149Linuxci/nativePASS0/25.931508s,111records/payload3154d2c5685488740606e98b86814605254780c92925b5449d8fcf802fcd3876,engine9717/78218751fc6689f5064e6e92610a270e2ae19ef05a71e831cbad179b52297cc9.0DB/appstart/publicswitch.",
     "actualQFBrowser": "CLOSED: current completeChrome native2940x1690 and humanQF current image show sidebar/content reach bottom. Top automationinfobar consumes~56CSSpx;668legitimatecurrentwindow,old724notinvariant. Prior668=>recurrence derivative judgement withdrawn. Allrawmeasurements/failedprobes retained. QFNO_GUI/Cnativeclickattemptblockedbeforeinputduehuman appchange;0successfulclick/navigation. No repeateddiagnosis/windowrequest.",
     "frontendAcceptance": {
@@ -7806,8 +7819,8 @@
         "status": "IN_PROGRESS"
       },
       "F2": {
-        "current": "Product list/six readonly tabs/images/schemes; inventory I01 delivered",
-        "next": "Product generated-SKU write after precise approval",
+        "current": "Inventory I01 and product list+six readonly page source packages delivered; six CREATE/EDIT tabs/v17 intent in progress",
+        "next": "Approved v17 ProductV2 selection intent with original D2; actual QA pending",
         "status": "IN_PROGRESS_ONLY_NEW_SKU_GENERATION_WAITS"
       },
       "F3": {
