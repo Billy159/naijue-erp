@@ -1,0 +1,107 @@
+{
+  "atUtc": "2026-10-24T01:02:03.154054+00:00",
+  "parent": "06fa5f51f4fbbd131175cd2983892540439209d0",
+  "taskId": "F1_DOC_SOURCE03_RELATED_NATIVE_LABEL_REFERENCE_SELECTORS",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-proposal-form.tsx",
+      "bytes": 55054,
+      "sha256": "67ef8e575a76a3a6feee74adc8344e214f9621ede7d62c5144f1fb27a35c033f",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/RELATED-DELIVERY.json",
+  "ownerReceiptSha256AtPin": "f1acd508002055c7baab45668c252b1a28aba1d8834e28dd9dc6bf9a890a6bcc",
+  "ownerDelivery": {
+    "taskId": "DOC-SOURCE-03 / original native LABEL-hidden-input finite consumer followup",
+    "scope": "Only actual matched four original current-form reference selectors; no cross-owner or all-site audit",
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal-form.tsx",
+        "bytes": 55054,
+        "sha256": "67ef8e575a76a3a6feee74adc8344e214f9621ede7d62c5144f1fb27a35c033f"
+      }
+    ],
+    "checks": {
+      "similar-before-3": "EXIT1 expected RED 2 native clicks !=1; four records written before assertion",
+      "similar-after-3": "EXIT0 exact original full SalesNewDocumentForm finite four-pointer check",
+      "similar-types-2": "EXIT0 strict original form imported closure"
+    },
+    "notMeasured": [
+      "No repaired candidate browser acceptance",
+      "No whole-page/SAVE/old keyboard or confirmation suites repeated",
+      "No build/serve/HTTP/PG/business/deploy"
+    ],
+    "next": "C pin this exact1 together with pending129/F2 P10 actual name; next integrated immutable build then original QF actual affected page verification. F1 no Chrome.",
+    "sourceFrozenUntilCPin": true,
+    "blocked": "C exact1 pin and next containing integrated candidate browser verification",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/RELATED-PROOF.json",
+        "bytes": 2316,
+        "sha256": "20569cfb6e83e07798e6547483f5fdbd8327e9ebd4c57d59b1c444114c9b797e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/RELATED-REPORT.md",
+        "bytes": 800,
+        "sha256": "4c5743f33adb4c981d45ecdc066a88a0ff01c8b2f624a498b1580fa70749277d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/RELATED-SOURCE.diff",
+        "bytes": 3258,
+        "sha256": "30219e7e60e5a1e5c67889281617a9fc1caf685aa8839b29b9bef1b228da9345"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/SIMILAR-BOUNDARY-CHECK-01.json",
+        "bytes": 5716,
+        "sha256": "4784523476ff3cef93013f616dfd57c868be99edba5d417dbd6b3b4c7730ca8b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/SIMILAR-BEFORE-SOURCE-CANDIDATES.json",
+        "bytes": 1464,
+        "sha256": "e5fdc577f4bdbfe66febc17e330165c57d1368b2f55bef3596836ebbdfe5c6eb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/SIMILAR-BEFORE-POINTER-PROBES.json",
+        "bytes": 2238,
+        "sha256": "31eeedc5506de6fbc0a19a378927c22377f9e6d79fd0d46371da64bfea2ffde1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/SIMILAR-AFTER-SOURCE-CANDIDATES.json",
+        "bytes": 949,
+        "sha256": "767d579256c169f88111ae0a068c29bf8f3d634c2368bcc580c4ec9836261aae"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/SIMILAR-AFTER-POINTER-PROBES.json",
+        "bytes": 1433,
+        "sha256": "08fb4382e78b708c31aa86ffdf0519336fc2bc833199adfaebf03c5f8425adbe"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/SIMILAR-BOUNDARY-AFTER-02.json",
+        "bytes": 5201,
+        "sha256": "8c116bbbcbcc6304754e1d42c1fc20e2b4875bd29c62f207d636c6898b522cf4"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/similar-before-3.log",
+        "bytes": 978,
+        "sha256": "758a4f4fb5daec1aa9a9286be67d92c8bb1069822d2576e38344ae44b8b56a95"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/similar-after-3.log",
+        "bytes": 562,
+        "sha256": "71824e37cfdaa432804999adf38a1629406562668f760d41960cea319640018a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/similar-types-2.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-128/related-native-label-check.mjs",
+        "bytes": 16209,
+        "sha256": "34fe9cfe81532b789ce0204892df6738dc1178f9e672b9624517831bea396aa4"
+      }
+    ]
+  },
+  "qualification": "Finite same-mechanism followup: four reference selector wrappers LABEL→DIV only after actual fullform pointer probe each2callback/2read, after1click1open1read. Ordinary date/note native labels and transfer unmatched paths unchanged. Local before stayedopen, not claimed actual collapse. Newsource53 not in fixed252 preview preparation, independent affectedsource/actual pending; no repeated wholeform/public/backend QA."
+}
