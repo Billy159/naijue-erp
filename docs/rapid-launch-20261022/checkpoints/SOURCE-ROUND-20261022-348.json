@@ -1,0 +1,51 @@
+{
+  "parent": "f854b4db6350a95ff9a6abc949f5c5404675bfb6",
+  "scope": "F2 six product editor tabs/v17 consumer source-ready, actual HTTP/database/browser pending",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-entry.tsx",
+      "bytes": 917,
+      "sha256": "d66f9275769ad46470ad9db67ee5a0541b2d2d7efa5b7eb39fd9c58fc5ab0808"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "bytes": 15117,
+      "sha256": "11e6fba05133915c275f027654c05c77a7612b15f6ce843824c8ee9a7bc48d17"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-fields.tsx",
+      "bytes": 7847,
+      "sha256": "1ec7403aa5865f29dd4fadb43188d2f5b227dc7ee3bc13c59960100c3e686a23"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-control-css.ts",
+      "bytes": 2332,
+      "sha256": "10f8419a6894729fbe3af4fdc75f025294d47ae499111c2af4eebfc95a8db667"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-size-group.tsx",
+      "bytes": 1309,
+      "sha256": "0cf506ff3219750d5a091632a44c0156f0c293e104c869e10d55071bbfd52864"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-barcodes.tsx",
+      "bytes": 4468,
+      "sha256": "ce696793fa46301afec0244987a820a80954ed2b9a658040e5fd3a0091a1dc53"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-media.tsx",
+      "bytes": 6907,
+      "sha256": "c6ad7404bf81b44ee181c23ac145db98d4d10154d6989b10d2ecce0b3740e302"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-stock.tsx",
+      "bytes": 2582,
+      "sha256": "a14ab106f8117afabfa236695e6643aa981898c8c758a41e4c2ea0876d34c93c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+      "bytes": 13872,
+      "sha256": "4637a26eee17290dd8878e1d5644aff87b8d2326f0815624e4e749ab0d7f9911"
+    }
+  ]
+}
