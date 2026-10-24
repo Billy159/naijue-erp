@@ -1253,7 +1253,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-24T11:29:21.184294+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "2cd552928d73c9a104557cd04fbb8466ee878279",
+  "lastVerifiedRemoteCommit": "e2f3e173aaf4f67a5162467dddb39d8f7c7da123",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -4082,6 +4082,13 @@
       "sha256": "81ddfa7c61c83e6451b2665a4ebfae208ea3f30525293c5d418ef32b7c5b690e",
       "result": "LIMITED_SOURCE_HOST_PASS_ONLY",
       "scope": "301 exact3 composition; v14 failclosed HREV, no actual writer"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice237-c308-v16-history-head-responsible/RESULT.json",
+      "sha256": "4676a09807e0db3366a80bf7501076b4bef8f48c435413c54ed9b77b063ddad3",
+      "result": "PASS_LIMITED_FIXED_SOURCE308_V16_HISTORY_HEAD_RESPONSIBLE_CONTRACT_PLANNER_EFFECTIVE_PROJECTION_AND_NEW5_TESTS_ONLY",
+      "scope": "D3exact9source andnew5 only; D1actualSQL/store/issuer/PG notpassed",
+      "historyWriteAccepted": false
     }
   ],
   "newPendingReviews": [
@@ -6409,7 +6416,7 @@
       "bytes": 15785,
       "sha256": "19e8659bcb8fd36dac7e6cbe50e011fe1089e2dce8e0bb9be3a6d660847a463f"
     },
-    "githubLatestVerified": "e1ba792eabcc4124a886c30e7fdb950972f93476",
+    "githubLatestVerified": "e2f3e173aaf4f67a5162467dddb39d8f7c7da123",
     "actualPerformance122": {
       "status": "FAILED2_FIRST_ERROR_TYPED_OUTPUT_MASKED_ACTUAL_UNKNOWN_NO_REPLAY",
       "elapsedSeconds": 1.6708132710773498,
@@ -7135,13 +7142,14 @@
       "F1": "307BODYtechnical+currentdate evidence, nooldc220blindfix"
     },
     "v16Responsible": {
-      "status": "APPROVED_D3_SOURCE308_READY_QB_NEW_DELTA_RUNNING_D1_SOURCE_IN_PROGRESS",
+      "status": "D3_SOURCE308_QB237_LIMITED_PASS_D1_SQL_STORE_ISSUER_AND_ACTUAL_QA_PENDING",
       "creatorImmutable": true,
       "responsibleUnknown": "NULL/no creator-actor-admin fallback",
       "D1NewPhysicalColumns": 2,
       "actualDDLExecuted": false,
       "actualHistorySavePassed": false,
-      "F1": "original307BODYtechnical typedconsumer inprogress"
+      "F1": "original307BODYtechnical typedconsumer inprogress",
+      "acceptedQB237": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice237-c308-v16-history-head-responsible/RESULT.json"
     },
     "uidateI07Current306": {
       "status": "CLOSED_FIRST_NATIVE_MOUSE_OPEN_ONLY",
@@ -7149,6 +7157,23 @@
       "oldSource": "1b46a5d oldfailure retained",
       "currentSource": "f430f2594d43759b05cfa16a03cfd438509d8abd",
       "sharedControlChangedForOldFinding": false
+    },
+    "fixture309": {
+      "source": "e2f3e173aaf4f67a5162467dddb39d8f7c7da123",
+      "scope": "Cexact2synthetic unknownresponsible null only",
+      "F1SourceFixturesAllocated": [
+        "apps/web/src/sales/tests/fixtures.ts",
+        "apps/web/src/transfers/tests/fixtures.ts"
+      ],
+      "wholeWebTypes": "F1originalpending after ownfixture closure, no excludedfile"
+    },
+    "qf2Actual306Final": {
+      "report": "QF2/c306-full-module-actual-01/RESULT.json",
+      "bytes": 2032,
+      "sha256": "58fdc8429ad8afeb242d7905f2489a151dc44d2ead365aa85ed5cf0275f062ae",
+      "scope": "Fourmodule partialsyntheticactual,308files148screenshots; no wholepage/realbusiness/perfPASS",
+      "matrixOwner": "QF LunaMAX mechanicalmerge inprogress",
+      "browser": "CLEAN_STOP_NO_GUI"
     }
   },
   "latestReadySource": {
