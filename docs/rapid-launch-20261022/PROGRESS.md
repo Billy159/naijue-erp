@@ -1,3 +1,11 @@
+SOURCE343 / FIXTURE DISPLAY DTO ONLY / QF AFFECTED RETEST PENDING
+
+F1 chunk168仅补合成历史SIZE sourceName/sourceCode/standardGroup和display-only标记，25766/e115b230…；保原两个ID/数量0+1，原DOM定向格1+4、行5、底5、打印矩阵5、原popup分离通过。原UI宽/严格匹配差异仍原样，真实缺映射数据不能套这项合成声明。C在QF CLEAN_STOP后固定343，不改原325/7构建/入口或重启服务，仅待HTTP与QF该行/历史popup/必要打印复验；342已过G02四销货状态/G03失败恢复与原登录/G04流水成功空错和有图开关直接采用。
+
+044绑定旧5B一次accept:false实际返回No dialog is showing，成功处理0；page_info旧beforeunload不能再当当前确认/用户全局阻塞的实证。原草稿未处理、未刷新关闭。QF已交lease，C只处理自有副本，下一轮仍原两cleanworktab。阶段一最终副本结论尚待343最小复验，第二阶段未开。
+
+342 ACTUAL NEW FINDING IN PROGRESS：QF正常已审调拨中历史165/S格1、普通170/M格4、底部5件，但商品行小计4。原F1已定向接续判fixture模型/原Demo函数原因并只暂存修复，不删历史样例、不改0、不合并ID、不改原325取PASS。QF继续其余独立G02-G04，当前342入口不变。最新允许源码/接续已推GitHub并核远端2e5cfa8；本发现作为当前WIP待原owner结果合下一检查点。
+
 SOURCE342 ACTUALLY SERVED / 0b10cd9 / phase1-runtime-03-saved-state-fixtures
 
 同一个 http://127.0.0.1:57896/#inventory 已从固定342实际启动（指定Node24.21/session80806），HTML、fixture、identity、合成SVG、完整原bridge五项HTTP200、connect-src none；原325源和7原构建未变。原QF已独占新工作tab，显式Solmedium，只补G01-G04保存状态/历史/错误恢复/有图/原登录表单；此前340资料/设置/F4有效证据直接复用。未连接新后端、无真实写入，未开始第二阶段；第一阶段最终判定待本轮原QF结果。旧5用户草稿未刷新/清空/关闭。

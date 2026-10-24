@@ -1,0 +1,33 @@
+{
+  "atUtc": "2026-10-24T17:29:50.813619+00:00",
+  "parent": "2e5cfa8226e84ccf1d6ff9205506353eca98fd2b",
+  "taskId": "F1_RP1_HISTORY_SIZE_SUBTOTAL_FIXTURE_DTO",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/fixture-transport.mjs",
+      "bytes": 25766,
+      "sha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/demo-replica/replica-identity.json",
+      "bytes": 1209,
+      "sha256": "afb3d7276ca57dcdf0096f15fe4615ed4257aed3f9480d61453b4524fc1c844f",
+      "owner": "C"
+    },
+    {
+      "path": "apps/web/demo-replica/COPY-BASELINE.json",
+      "bytes": 881,
+      "sha256": "268cf6ce4afc197f439ef9814ea13948dfabc42f421731691df776fd225ffa57",
+      "owner": "C"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-168/HANDOFF.md",
+  "stage": "OWNER_DIRECTED_DOM_PASS_FIXED_SOURCE_PENDING_QF_ACTUAL",
+  "scope": "Only synthetic sourceName/sourceCode/standardGroup/display-only metadata; original two IDs/0+1/row5/footer5 preserved",
+  "original325FilesChanged": false,
+  "original7BundlesChanged": false,
+  "serverRestartNeeded": false,
+  "deployed": false,
+  "phase2Started": false
+}

@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T17:12:55.124912+00:00",
+  "updatedAt": "2026-10-24T17:29:50.813619+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -4762,6 +4762,13 @@
       },
       "browserRelease": "QF finished source340 F4, no dialogs final and turn completed; five user drafts preserved",
       "phase2": false
+    },
+    {
+      "atUtc": "2026-10-24T17:29:50.813619+00:00",
+      "sourceRound": 343,
+      "scope": "F1 only exact delivered fixture metadata correction, C fixes runtime identity/baseline; no original UI change",
+      "F1Delivery": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-168/HANDOFF.md",
+      "browserReleased": "QF explicit CLEAN_STOP, 044 bound oldtarget no active dialog; no protected draft handled"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

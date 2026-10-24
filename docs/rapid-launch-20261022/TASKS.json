@@ -87,10 +87,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "chunk167 exact fixture delivered, original DOM/DTO targeted pass; C integrating342",
-      "currentPackage": "Phase1 chunk167 delivered/fixed342, targeted actual QF gaps",
+      "currentWork": "342 actual row subtotal finding directed cause/fix, staged only; current342 immutable duringQF",
+      "currentPackage": "Original same Phase1 fixture task, one history-size identity/subtotal discrepancy",
       "nextReadyPackage": "Phase2 original final Demo sales/transfer UI consumes existing new services only after phase1 baseline fixed; any actual342 fixture finding first",
-      "currentDependencies": "Next fixed342 QF actual G01-G04 findings only; no waiting vague new tasks",
+      "currentDependencies": "Distinguish fixture projection vs frozen baseline behavior; preserve source identity and quantities; no raw Demo UI patch",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -1298,9 +1298,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T17:12:55.124912+00:00",
+  "updatedAt": "2026-10-24T17:29:50.813619+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "3d99649b1dc355c22c8f159410367d1251f7426a",
+  "lastVerifiedRemoteCommit": "2e5cfa8226e84ccf1d6ff9205506353eca98fd2b",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -4697,7 +4697,7 @@
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
-    "github": "REMOTE_EXACT_VERIFIED_3d99649b1dc355c22c8f159410367d1251f7426a",
+    "github": "REMOTE_EXACT_VERIFIED_2e5cfa8226e84ccf1d6ff9205506353eca98fd2b",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -5996,7 +5996,7 @@
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     },
-    "browserOwner": "QF",
+    "browserOwner": "C",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
@@ -6226,7 +6226,7 @@
     },
     "sourceCommit": "17d2e89603233e07c0cfe8c344934148f7463536",
     "browserLease": {
-      "owner": "QF",
+      "owner": "C_FIX_SOURCE343",
       "demoTarget": "E8DD365505C23397FA3F5F329CC00328",
       "replicaTarget": "345D521566930D671CB045311376DECA",
       "protectedOldDrafts": 5,
@@ -7527,7 +7527,7 @@
       "evidence": "QF/demo-replica-phase1-runtime-02/RESULT.json",
       "remaining": "Pure visual/module completeness and unsupported sample reads/writes separate; no full-page or businessPASS"
     },
-    "phase1Next": "Adopt originalQF342 G01-G04 actual result; if necessary representative completeness passes, fixedPhase1 original Demo replica baseline then assign originalF1-F4 phase2 module packages. Do not wait real v5 historical source for phase1.",
+    "phase1Next": "Source343 original F1 corrected synthetic display metadata, no restart/build. C HTTP binds exact source then QF only affected row/popup/print and single barcode geometry. Adopt342 G02-G04 limitedactual, no repeat.",
     "actualRuntimeFacts": {
       "QF": "340 original multirow actual: first100.25 persists add/remove/leavecancel; T note cancellation; original category branch restored",
       "resources": "82 same-origin records, no8878; favicon404; empty tool event drain does not prove zero console errors",
@@ -7675,7 +7675,39 @@
       "blockingHumanDecision": "Existing original v5 history_sales_header.hall_id nullable proposal still WAIT_EXPLICIT_HUMAN_APPROVAL; do not re-ask already pending question or guess hall",
       "action": "Only source27/hall-null branch waits original approval; no new guard exemptions, no synthetic source172 PUBLISH. Frontend independent continues."
     },
-    "rolesState": "OriginalF1 chunk167 delivered; F2/F3/F4 rawcopy source closures complete. No fabricated copying tasks. QF phase1 missingstates actual now; QF2 account usage failure preserved. D3 original genuine-source continuation blocked only original v5; QB251 actual metadata adopted. C integrates/releases originalroutes."
+    "rolesState": "OriginalF1 chunk167 delivered; F2/F3/F4 rawcopy source closures complete. No fabricated copying tasks. QF phase1 missingstates actual now; QF2 account usage failure preserved. D3 original genuine-source continuation blocked only original v5; QB251 actual metadata adopted. C integrates/releases originalroutes.",
+    "phase1Runtime03NewFinding": {
+      "id": "QF-RP1-342-HISTORY-SIZE-ROW-SUBTOTAL",
+      "source": "342/0b10cd9",
+      "page": "FIXTURE-TR-AUDITED normal detail",
+      "observed": "Historical165/S cell1 +170/M cell4; row subtotal4 while footer5",
+      "expected": "Preserve two actual size IDs and consistent full row/document totals, exact cause to identify",
+      "owner": "F1",
+      "status": "F1_EXACT_FIX_DELIVERED_C_FIXED343_QF_ACTUAL_PENDING",
+      "scope": "Only original fixture/model seam; do not delete sample/zero qty/merge IDs or modify original325 to fake phase1",
+      "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase1-runtime03-gaps-actual-01/008-transfer-audited-readonly +009-transfer-historical-size-row22",
+      "next": "QF continues independent G02-G04. C next fixed version only if needed, then affected row/popup/footer retest.",
+      "cause": "Synthetic legacy display DTO omitted declared standardGroup; original matrix cell matching broader than row sum; no raw UI algorithm changed",
+      "source343FixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941"
+    },
+    "source343": {
+      "runtimeVersion": "phase1-runtime-04-size-display-dto",
+      "status": "FIXED_SOURCE_NOT_QF_BROWSER",
+      "fixtureBytes": 25766,
+      "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
+      "original325SourceChanged": false,
+      "original7BundlesChanged": false,
+      "actualOther342GroupsReused": true,
+      "realSourceMappingApprovedByFixture": false
+    },
+    "browserDialogObservation": {
+      "report": "QF/phase1-runtime03-gaps-actual-01/044-bound-cancel-leave-once.json",
+      "pageInfoOldFrame": "5B69FD73D86A2D051EE5D18378D8C767 beforeunload",
+      "actualBoundCommandResult": "No dialog is showing",
+      "successfulDialogOperations": 0,
+      "protectedDraftsUntouched": true,
+      "action": "Do not retry target or clear browser state. Own two clean work tabs only."
+    }
   },
   "latestReadySource": {
     "round": 340,

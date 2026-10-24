@@ -12,12 +12,13 @@
     "Old sample-bootstrap injection retired; no old rewritten UI imported"
   ],
   "originalFrontendBytesChanged": false,
-  "runtimeVersion": "phase1-runtime-03-saved-state-fixtures",
+  "runtimeVersion": "phase1-runtime-04-size-display-dto",
   "fixtureTransport": {
-    "bytes": 25428,
-    "sha256": "1a0636420ea1d0039a92f8be7823f62080212b60c824d6deaf53600cb2d462cb"
+    "bytes": 25766,
+    "sha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941"
   },
-  "candidateSourceRound": 342,
+  "candidateSourceRound": 343,
   "approvedNewFeatures": "PHASE2_ONLY",
-  "representativeSnapshots": "2 original DRAFT transfers retained +2 synthetic audited/voided transfers +4 synthetic sales snapshots. Commands remain explicitly unimplemented; no real business writes."
+  "representativeSnapshots": "2 original DRAFT transfers retained +2 synthetic audited/voided transfers +4 synthetic sales snapshots. Commands remain explicitly unimplemented; no real business writes.",
+  "fixtureDisplayMapping": "One explicit synthetic display group only; not real currentGroup/SKU mapping, separate original IDs retained"
 }

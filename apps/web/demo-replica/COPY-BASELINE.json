@@ -8,7 +8,7 @@
   "runtimeEntry": "http://127.0.0.1:57896/#inventory",
   "approvedNewFeatures": "PHASE2_ONLY",
   "realBusinessConnection": false,
-  "runtimeVersion": "phase1-runtime-03-saved-state-fixtures",
-  "candidateSourceRound": 342,
+  "runtimeVersion": "phase1-runtime-04-size-display-dto",
+  "candidateSourceRound": 343,
   "originalFrontendBytesChanged": false
 }

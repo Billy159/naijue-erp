@@ -108,7 +108,12 @@
     if (!historical) throw Error('原历史尺码样例行缺失');
     const firstSku = catalog.skus.find(s => s.product_id==='fixture-product:M26001');
     const historicalSku = {...copy(firstSku),id:'fixture-sku:M26001:historical-row-22',
-      options:{COLOR:copy(firstSku.options.COLOR),SIZE:copy(historical)}};
+      options:{COLOR:copy(firstSku.options.COLOR),SIZE:{...copy(historical),
+        sourceName:historical.name,sourceCode:historical.code,
+        // Declared membership of this synthetic display scenario, not a migration
+        // decision or a binding to the separate current-size/SKU identity.
+        standardGroup:firstSku.options.SIZE.standardGroup,
+        fixtureProjection:'SYNTHETIC_DISPLAY_ONLY'}}};
     catalog.skus.push(historicalSku);refs.sizes.push(copy(historical));
     catalog.barcodes.push({product_id:historicalSku.product_id,sku_id:historicalSku.id,
       barcode:'FIXTURE-HISTORY-M26001-165-S',generated:false,demo:true});
