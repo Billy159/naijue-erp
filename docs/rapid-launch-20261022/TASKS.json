@@ -67,7 +67,7 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "Current source286 fixed; actual285 candidate57884+273restored; Gitcheckpoint; C130negative diagnosis/R1CORE transport/execution parallel",
-      "currentPackage": "Actual289 served57885/QF2; C134newP0002 negative issue originalD1/QB; 135fixed280 Linux install prep; real128factory derivation actualUNAPPROVED",
+      "currentPackage": "135Linux280 actualPASS;136normalCOMMIT22P02 oldfailed preserved; two-function138metadata repair prep waitingD1fixed; UI291harness constructor fix/fullmount preparing; existingreal128/126/131 unaffected waits",
       "nextReadyPackage": "Execute valid C134 then original R1v14/real49; combined frontend next immutable candidate + affected QA; original phased release",
       "currentDependencies": "Formal URL unchanged, fullMAIN unbound, current112 backup/7containers protected",
       "fastToolVerified": false
@@ -87,7 +87,7 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "275audit+277asyncoutput delivered/adopted; existingT03 fullsame-document fixture input seam now dispatched withoutRwrite",
-      "currentPackage": "chunk135 T03 full-author input and137 audit K diagnosis delivered; no R audit write",
+      "currentPackage": "291 exact2 inventory-only responsebudget delivered/frozen; sharedcontracts returned C; actualnextcandidate pending",
       "nextReadyPackage": "Actual document/public findings only; original F3 owns audit leaf",
       "currentDependencies": "Chrome仅约束actual；原已有接口/UI继续，真实保存要隔离证据",
       "dispatch": {
@@ -168,7 +168,7 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "286 approvedv15SQL/shared/profile/categoryOnlyhost exact8 frozen originalQBsourcepending;278availabilityactual219limitedPASS",
-      "currentPackage": "286 approvedv15SQL/shared/profile/categoryOnlyhost exact8 frozen originalQBsourcepending;278availabilityactual219limitedPASS",
+      "currentPackage": "Priority C136actual SQL22P02 guard fix/fingerprints/QA successor; parallel COREaudit host scope withD2",
       "nextReadyPackage": "OriginalQB exactfindings; C realCOREdiagnosis ifactualbackendfailure; no speculativeSQL/latencychange",
       "currentDependencies": "Actual target/catalog/role/CORE receipt supplied by C; no invented readiness",
       "fastToolVerified": false
@@ -187,7 +187,7 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "281 v15application exact8 plus284 receiptlock exact2 frozen; oldfailurepreserved",
-      "currentPackage": "281 v15application exact8 plus284 receiptlock exact2 frozen; oldfailurepreserved",
+      "currentPackage": "292 W13 CORE audit scope exact2 frozen/QB225limitedPASS; next D1consumer and realQA only",
       "nextReadyPackage": "OriginalQB v15module/receipt newaffected review; waitactualrepairfindings, no wholemaintenance rerun",
       "currentDependencies": "Await exact new actual evidence when no source gap is ready",
       "fastToolVerified": false
@@ -227,7 +227,7 @@
       "currentWork": "SoleChrome owned08AC afterdirecthumanhandback;273funds/T03 remaining, samebytes273service restored",
       "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
       "matrixOwner": true,
-      "currentPackage": "104limitedsource287/288 PASS adopted; noChrome; next289T03 author full actual afterQF2",
+      "currentPackage": "289T03 limitedactual done/cleanSTOP; offline final unique matrix adoption",
       "nextReadyPackage": "Original document T03 complete same-author successor actual after QF2 handoff; no duplicate old scopes",
       "fastToolVerified": false
     },
@@ -265,7 +265,7 @@
       "currentWork": "282v15 and285matrix/output limitedsourcePASS; newactual285candidate ready, NO_CHROME untilQFcleanSTOP",
       "authorizationSource": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "fastVerification": "Tool has no exposed switch; requested off, actual unverified",
-      "currentPackage": "285final NEED_FIX_LIMITED adopted/cleanSTOP; new289fourissue+explicitdense200 actual assigned",
+      "currentPackage": "289actualfinal3closed/modalPARTIAL/largeentryBLOCKED; noChrome waitingcorrectedcandidate",
       "nextReadyPackage": "CleanSTOP final receipt; containing new candidate minfixactual plus dense200",
       "fastToolVerified": false
     },
@@ -282,7 +282,7 @@
       "fastRequested": false,
       "fastToolVerified": false,
       "currentWork": "282 categoryorder UI exact7 delivered;QF2sourcePASS;productionreadyfalse untilprecisev15profile",
-      "currentPackage": "287 modal body/P14P19 inset exact4 delivered/frozen; component strict PASS; actual issuesOPEN",
+      "currentPackage": "290 singleCSS inherited lineheight fix delivered/frozen; actualmodal pending",
       "nextReadyPackage": "QF2 containing candidate geometry and one lifecycle; no production-v15 enablement",
       "currentDependencies": "只32登记叶，公共控件/路由接缝交F1；无Chrome租约",
       "dispatch": {
@@ -1141,9 +1141,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T04:54:09.163818+00:00",
-  "stage": "ACTIVE_SOURCE289_SERVED_NEW_QF2_ACTUAL_C134_NEGATIVE_COMMIT_REJECTED_P0002_NOT_EXPECTED_NORMAL_NOT_RUN",
-  "lastVerifiedRemoteCommit": "fcf911abe56b05e8746ec187996a0d5a349bb87d",
+  "updatedAt": "2026-10-24T05:22:16.575656+00:00",
+  "stage": "ACTIVE_SOURCE292_FIXED_NEXT_UI291_PREPARING_136_JSON_PRECEDENCE_D1_FIX_135_LINUX_PASS",
+  "lastVerifiedRemoteCommit": "c588049fd4caf7a610a8cef3aa88a4198ba380dd",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -3615,13 +3615,50 @@
       "result": "ORIGINAL_LIMITED_RESULT_ADOPTED",
       "adoption": "Direct original valid evidence adoption only, not C technical reacceptance",
       "adoptedAtUtc": "2026-10-24T04:54:09.163818+00:00"
+    },
+    {
+      "id": "QB-SLICE-224",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice224-c134-combined-negative-commit-rejection/RESULT.json",
+      "bytes": 13660,
+      "sha256": "28b4bebe7581943993066037e409b3818b0fd4c6049dcf1e901dd1d66a00f54c",
+      "result": "PASS_LIMITED_C134_COMBINED_NEGATIVE_COMMIT_REJECTION_AND_WHOLE_TRACKED_ROLLBACK_ONLY",
+      "adoptedAtUtc": "2026-10-24T04:58:02.659165+00:00",
+      "adoption": "Original combined actual evidence adopted as scoped; failed C134 unchanged; no C reacceptance/SQL change/negative replay"
+    },
+    {
+      "id": "QF2-C289-ACTUAL",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c289-four-fixes-large-inventory-actual-01/RESULT.json",
+      "bytes": 2256,
+      "sha256": "2a83f6e0d2ba91b0b009edebc6a7d10622a0b3da4ae6398f6f9ce54606f4e383",
+      "result": "LIMITED_ACTUAL_3_CLOSED_MODAL_PARTIAL_LARGE_BLOCKED",
+      "adoptedAtUtc": "2026-10-24T05:12:02.040761+00:00",
+      "adoption": "Original limited actual evidence directly adopted, no C duplicate QA"
+    },
+    {
+      "id": "QB-SLICE-225",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice225-c292-core-settings-audit-read-scope/RESULT.json",
+      "bytes": 8138,
+      "sha256": "8ad8c5374ab293d30880e2fb14b1b3c2151d62b3709c6015cc0fb70feb7fb81e",
+      "result": "PASS_LIMITED_SOURCE292_COMMITTED_CORE_SETTINGS_AUDIT_ADAPTER_PROTOCOL_ONLY",
+      "adoptedAtUtc": "2026-10-24T05:22:16.575656+00:00",
+      "adoption": "Direct valid original conclusion, no C duplicate technical QA"
+    },
+    {
+      "id": "QF-V105",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v105-qf-c289-t03-full-author-edit-actual/RESULT.json",
+      "bytes": 3506,
+      "sha256": "58a9ba0aa30e7addda58d439ac505f5d9ba970c591aea10b242e23bd9a440517",
+      "result": "ORIGINAL_LIMITED_ACTUAL_SCOPE",
+      "adoptedAtUtc": "2026-10-24T05:22:16.575656+00:00",
+      "adoption": "Direct valid original conclusion, no C duplicate technical QA"
     }
   ],
   "newPendingReviews": [
-    "QB C134actual new combinednegative P0002/source line5 versus carrier23514 assumption; normal notrun",
-    "QF2 new289fourfixactual+explicitdense200 then cleanSTOP",
-    "QF original289T03 fullsameauthor actual after handoff",
-    "C135fixed280 actualLinuxinstall then realR1metadata/CORE/stage without production test writes"
+    "D1 C136 predicate-preserving SQL repair/fingerprint then newactual metadata; old136 failed not replayed",
+    "D2/D1 CORE22 storeaudit exact actualreader wiring not fakeempty",
+    "F1 inventory-only readbudget seam+Coverlay corrected complete mount selfcheck",
+    "Newfixedcandidate containing290+seam then QF2 remainingmodal andlarge200 only",
+    "137 only fixed corrected fullformal candidate/actualdata then stage;280 install historicalvalid"
   ],
   "openFindingsCurrent": [
     {
@@ -3917,40 +3954,67 @@
       "id": "QF2-C285-P14-P19-PAGE-INSET-4PX-01",
       "owner": "F4",
       "candidate": "5dd68305be13f7047a6b3716ccde858815de2681",
-      "status": "SOURCE_FIXED_ACTUAL_RETEST_PENDING",
+      "status": "C289_ACTUAL_AFFECTED_SCOPE_CLOSED",
       "severity": "P2",
-      "fixSourceRound": 287
+      "fixSourceRound": 287,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c289-four-fixes-large-inventory-actual-01/RESULT.json"
     },
     {
       "id": "QF2-C285-P15-P17-MODAL-BODY-GEOMETRY-01",
       "owner": "F4",
       "candidate": "5dd68305be13f7047a6b3716ccde858815de2681",
-      "status": "SOURCE_FIXED_ACTUAL_RETEST_PENDING",
+      "status": "C289_ACTUAL_PARTIAL_SOURCE290_REPAIRED_PENDING_CONTAINING_ACTUAL",
       "severity": "P2",
-      "fixSourceRound": 287
+      "fixSourceRound": 290,
+      "residual": "Height2.640625 and centered fieldsY1.3203125 remain; original inputwidth andspacingfixed; no tolerance invented"
     },
     {
       "id": "QF2-C285-SETTINGS-AUDIT-ESC-FOCUS-01",
       "owner": "F3",
       "candidate": "5dd68305be13f7047a6b3716ccde858815de2681",
-      "status": "SOURCE_FIXED_ACTUAL_RETEST_PENDING",
+      "status": "C289_ACTUAL_AFFECTED_SCOPE_CLOSED",
       "severity": "P2",
-      "fixSourceRound": 288
+      "fixSourceRound": 288,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c289-four-fixes-large-inventory-actual-01/RESULT.json"
     },
     {
       "id": "QF2-C285-INVENTORY-OUTPUT-RETURN-FOCUS-01",
       "owner": "F2",
       "candidate": "5dd68305be13f7047a6b3716ccde858815de2681",
-      "status": "SOURCE_FIXED_ACTUAL_RETEST_PENDING",
+      "status": "C289_ACTUAL_AFFECTED_SCOPE_CLOSED",
       "severity": "P2",
-      "fixSourceRound": 289
+      "fixSourceRound": 289,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c289-four-fixes-large-inventory-actual-01/RESULT.json"
+    },
+    {
+      "id": "QF2-C289-LARGE-INVENTORY-ENTRY-RESOURCE-LIMIT-01",
+      "owner": "C/F1",
+      "status": "ACTUAL_ENTRY_BLOCKED_INVENTORY_ONLY_HTTP_SEAM_FIXING",
+      "candidate": "df9bd556fec1f7744b5b825e67b96e5c26267d9e",
+      "severity": "P1_SYNTHETIC_HARNESS_ONLY",
+      "scope": "Global optin16MiB reaches productcommand max2MiB constructor; no inventoryquery. Remove C globaloverride, originalF1 inventory-only option, production defaults unchanged"
+    },
+    {
+      "id": "C136-CORE-NORMAL-COMMIT-22P02-01",
+      "owner": "D1",
+      "status": "ACTUAL_NORMAL_COMMIT_FAILED_SQL_PREDICATE_PRESERVING_FIX_IN_PROGRESS",
+      "candidate": "35046237881fe355b557a20e01cf14a52d56b447",
+      "severity": "P1_CORE_INITIALIZATION_BLOCKER",
+      "scope": "Original123-profile assertcore JSON IF actual parse error; no data success and no old136 replay"
+    },
+    {
+      "id": "CORE-STORE-AUDIT-READ-SEAM-01",
+      "owner": "D1/D2",
+      "status": "SOURCE280_REAL_BUTTON_BACKEND_READER_GAP_DIRECTED_ORIGINAL_OWNERS",
+      "severity": "P1_BATCH_FUNCTION_GAP",
+      "scope": "Existing read-only audit route must bind committedCORE native22 members on originallease; no fakeempty/hide/writer"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T04:54:09.163818+00:00",
-    "sourceRound": 289,
-    "sourceCheckpoint": "df9bd556fec1f7744b5b825e67b96e5c26267d9e",
+    "atUtc": "2026-10-24T05:22:16.575656+00:00",
+    "sourceRound": 292,
+    "sourceCheckpoint": "3ee4ab5c8ac8e43d425c48acf1b810d80c7557d3",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -3977,12 +4041,12 @@
       "source274andLaterNotIncluded": true
     },
     "nextPreview": {
-      "status": "ACTUAL273_BUILT0_SERVED_HTTP_VERIFIED_QF_BROWSER_GRANTED",
-      "source": "c7ea2361084a75b5ab93d5f97001fcc0f58644e5",
-      "candidate": "ui-preview-c7ea236-01",
-      "port": 57883,
-      "scope": "269savedSALE +273T03 +268270P14 +271P19 and source272 optionalroute type, explicitsalesModulePreview derived original actualauthor; nohistory relabel",
-      "actualBuilt": false
+      "status": "PREPARING_FIXED291_C_HARNESS_ENTRY_CORRECTION",
+      "source": "d2c30814e5ebfb2bfc17bd32286f5047a61bc5c6",
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-d2c3081-01",
+      "port": 57886,
+      "built": false,
+      "changes": "290modal source font inheritedlineheight +291inventory-only readslot + Cremove global16MiB/scope explicit inventoryoptin; prior3closed/T03 intact"
     },
     "r1": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
@@ -5233,7 +5297,7 @@
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     },
-    "browserOwner": "QF2_EXCLUSIVE_NEW289_AFTER_285_CLEAN_STOP",
+    "browserOwner": "NONE_QF289_CLEAN_STOP_OFFLINE_MATRIX",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
@@ -5461,9 +5525,9 @@
       "D2Commit": "5c44f3c3b2f7550ced22d3243135cdb9fa3813fd",
       "sourceModuleReviews": "QB205259/QB206260/QB207-v2261/QB208262 PASS_LIMITED; no actual v14 engine/role/init"
     },
-    "sourceCommit": "df9bd556fec1f7744b5b825e67b96e5c26267d9e",
+    "sourceCommit": "3ee4ab5c8ac8e43d425c48acf1b810d80c7557d3",
     "browserLease": {
-      "status": "QF2_EXCLUSIVE289_AFTER_285_CLEAN_STOP",
+      "status": "NONE_QF289_CLEAN_STOP",
       "candidateTab": "08AC4587BE12A7F2DAB8D10EECC74992",
       "demoTab": "7F93D5A61A99F1C00FB3C0F089081F1F",
       "protectedTabs": [
@@ -5474,12 +5538,12 @@
       "url": "http://127.0.0.1:57885/synthetic-unified.html",
       "source": "df9bd556fec1f7744b5b825e67b96e5c26267d9e",
       "build": "ui-preview-df9bd55-01-build01",
-      "scope": "Four P2 minimal containing-version retests, then explicitly synthetic dense200 window/output/performance baseline",
+      "scope": "QF289 T03 finished; exact final release/receipt follows offline; wait next fixedcandidate",
       "inputModes": [
         "salesModulePreview=1",
         "separate original existingTransferPreview only after ownclear/reload"
       ],
-      "viewport": "285actual001-134:1470x668DPR2; cleanup135+:1470x724UNKNOWN cause. Restore/verify current before comparable geometry, do not relabel old evidence",
+      "viewport": "1470x668DPR2 both targets",
       "oldRelease": "QF2/c252-readonly-product-actual-01/BROWSER-RELEASE.json 5560/042462ae88ad67bd7f9383300465a43f2eeb607f89e40ad67c4bcf3db4e5366b",
       "humanDemoLoggedIn": "Direct current user reply to call_e60b2dda65e54f6d8c65a98937c7a0f3: Demo logged in; no credentials",
       "previousRelease": {
@@ -6190,7 +6254,15 @@
       "disposeReturned": true,
       "normalExecuted": false,
       "expectedNegativePassed": false,
-      "next": "OriginalD1 source read/QB newactual classify exact combined fault; no guard/expectation loosening or reexecution of C134"
+      "next": "OriginalD1 source read/QB newactual classify exact combined fault; no guard/expectation loosening or reexecution of C134",
+      "independentLimitedAdoption": {
+        "reviewer": "QB224",
+        "result": "PASS_LIMITED_C134_COMBINED_NEGATIVE_COMMIT_REJECTION_AND_WHOLE_TRACKED_ROLLBACK_ONLY",
+        "rawJobRemains": "FAILED_EXIT2",
+        "noReplay": true,
+        "singleClaimGuardIsolation": "NOT_PROVEN_NO_NEW_GATE",
+        "next": "C136 original normal/replay/carry22/login with original preconditions; no repeat combined fault"
+      }
     },
     "frontendFixed288": {
       "sourceRound": 288,
@@ -6272,14 +6344,156 @@
       "rawAccountCaptureRead": false,
       "authorityIssued": false,
       "qualification": "Socket expected target provisional from original registered R1 postmaster; actual131 must match before execution; not CORE initialization"
+    },
+    "v14Core136": {
+      "status": "ACTUAL_FAILED_NORMAL_COMMIT_SQL_22P02_NO_RETRY",
+      "jobId": "c03-v14-core-normal-continuation-20261024-136",
+      "source": "35046237881fe355b557a20e01cf14a52d56b447",
+      "negative": "Adopted exact134+QB224, notrerun",
+      "normalCallbackReturned": true,
+      "claimInsertsReturned": 22,
+      "checkpointCas": true,
+      "actualCommits": 0,
+      "firstSqlstate": "22P02",
+      "frame": "assert_core_initialization_v14 body17 IF; checkpoint guard body7 PERFORM",
+      "pgRoutine": "json_errsave_error",
+      "independentCountsAfter": "NOT_RUN_CANNOT_CLAIM_INDEPENDENT_ZERO_READBACK",
+      "leasesReleased": 4,
+      "live": 0,
+      "disposeReturned": true,
+      "backgroundFailures": 0,
+      "originalSevenPreserved": true,
+      "replay": "NOT_RUN",
+      "login": "NOT_RUN",
+      "next": "OriginalD1 predicate-preserving SQL precedence diagnosis/fix and exact123-profile metadata fingerprint/single-function successor QA repair; no old136 rerun"
+    },
+    "formalInstall135": {
+      "status": "PASS_ISOLATED_C280_LINUX_INSTALL_AND_NATIVE_LOAD_ONLY",
+      "jobId": "c03-c280-linux-install-only-20261024-135",
+      "source": "33feae5e3a746f2d2abd75300613d3afd4c00055",
+      "build": "r1-33feae5-20261024-01",
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c280-linux-install-only-20261024-135/release-submission/release-receipts/c03-c280-linux-install-only-20261024-135/engine-result.json",
+        "bytes": 9716,
+        "sha256": "ad017a4e42640e60dbf5731de12d4efdfc8ee19546acb92ad03f146e332683e3"
+      },
+      "elapsedSeconds": 25.62757182214409,
+      "releaseDirectory": "/srv/naijue-erp/rapid-launch-20261022/releases/r1-33feae5-20261024-01-install-only",
+      "installedPayloadSha256": "89dfed9f405a7c4cbe16a2d36e44e9053e6865aff0d5e3e51d2135c65392a235",
+      "installedPackageRecords": 111,
+      "nativeLoad": {
+        "platform": "linux",
+        "arch": "x64",
+        "node": "24.21.0",
+        "sharp": "0.35.5",
+        "vips": "8.18.7",
+        "nativeLoaded": true
+      },
+      "existingContainersUnchanged": true,
+      "appStarted": false,
+      "webStarted": false,
+      "PG": false,
+      "productionEntryChanged": false,
+      "qualification": "Historical exact280 actual complete production dependency install/native success. Does not claim future corrected source installed or app started."
+    },
+    "qf2First289Actual": {
+      "scope": "Actual visual subset only; detailed receipt/final pending",
+      "status": "P14_P19_INSET_PASS_MODAL_BODY_PARTIAL_RESIDUAL",
+      "viewport": "Both owned targets restored1470x668DPR2 via documented per-target Emulation; no globalwindow/zoom change",
+      "inset": "P14top62/deletex532/formgeometry and P19table229,102,1220 now match originalDemo; detailY retained",
+      "modal": "Input x525/w420 and63.8515625 spacing match; current modal height280.203125 vsDemo282.84375 andfieldsY1.3203125 above remainPARTIAL; originalF4 directed",
+      "otherIssues": "audit/output next, not yet accepted"
+    },
+    "formalStage137": {
+      "status": "WAIT_FIXED_SUCCESSOR_SOURCE_WITH_288_AND_CORE_AUDIT",
+      "stageReady": false,
+      "actualAppStart": false,
+      "reason": "Source280 real ADMIN/WAREHOUSE storeaudit button opens; COREbackend missing audit reader and288Esc absent. OriginalD1+D2 real scoped reader wiring needed, no hidden button/fakeempty.",
+      "latestPackInstalledClaim": false,
+      "requiredActual": [
+        "validsyntheticCOREnormal+QB",
+        "126correctedV14actualTCPmetadata+QB",
+        "131actualsocketmetadata+QB",
+        "128realCORECOMMIT/readback",
+        "fixedsuccessor buildpack/install/stage withrealCOREconfig"
+      ]
+    },
+    "qf2Current289": {
+      "status": "FINAL_LIMITED_ACTUAL_3_CLOSED_1_PARTIAL_LARGE_ENTRY_BLOCKED",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c289-four-fixes-large-inventory-actual-01",
+      "closed": [
+        "QF2-C285-P14-P19-PAGE-INSET-4PX-01",
+        "QF2-C285-SETTINGS-AUDIT-ESC-FOCUS-01",
+        "QF2-C285-INVENTORY-OUTPUT-RETURN-FOCUS-01"
+      ],
+      "partial": "QF2-C285-P15-P17-MODAL-BODY-GEOMETRY-01",
+      "newHarnessFinding": "QF2-C289-LARGE-INVENTORY-ENTRY-RESOURCE-LIMIT-01",
+      "largeActualQueries": 0,
+      "largePerformance": "NOT_RUN_ENTRY_INITIALIZATION_TYPEERROR",
+      "viewport": "1470x668DPR2 documented exacttarget override; no globalwindow/zoom",
+      "browser": "RELEASED_CLEAN_STOP"
+    },
+    "qfCurrent289T03": {
+      "status": "MEANINGFUL_ACTUAL_COMPLETE_CLEAN_STOP_FINAL_RECEIPT_PENDING",
+      "scope": "Same originalDRAFT qty3to7/dirtykeep/nativeEsc keeps7/discard tolist/freshsameoriginal qty3note/read1to2/fourgroupmembers;0commands",
+      "notProven": "No addedSalesreadonlymode, no real save/role/PG/fullpage/performance",
+      "browser": "NONE"
+    },
+    "source291": {
+      "commit": "d2c30814e5ebfb2bfc17bd32286f5047a61bc5c6",
+      "scope": "Only optional inventory route maxResponseBytes passed to inventory reader; defaults/global/product/ledger/output/commands unchanged",
+      "owner": "F1 delivered and released sharedcontract backC",
+      "stage": "OriginalApplication/reader RED_GREEN/strictPASS only",
+      "next": "C complete harness mount on corrected inventory-only overlay; actual UI candidate preparing"
+    },
+    "source292": {
+      "commit": "3ee4ab5c8ac8e43d425c48acf1b810d80c7557d3",
+      "scope": "Existing W13 optional committedCORE HALL/WAREHOUSE true22members scoped SQL reader, same matched total/page",
+      "owner": "D2",
+      "stage": "QB225 limited source/protocol PASS",
+      "host": "D1 inprogress separatecap/mount; no actualPG/HTTP acceptance"
+    },
+    "v14Repair138": {
+      "status": "PREPARING_WAIT_FIXED_D1_INPUTS_DISABLED",
+      "target": "Only sameQA1034834 and two123-profile functions. No R1/oldQA/role/DDLfield/businessDML",
+      "beforeCanonical": "3b896d4fb4abef4f26f3d5c862a06e1b7b5166396b696aec4de5935601e6d0f5",
+      "rootCause": "pglast AST proves doc->(unknown-key - ARRAY) instead of (doc->key)-ARRAY; actual136 COMMIT22P02 agrees",
+      "scope": "Two affected v14functions threeexpressions, v15uninstalledconstraint oneexpression sourcefix; predicates intended same",
+      "mustPreserve": "Same two functionOID/ACL/other121functions/schema/roles",
+      "newSourceInputs": "UNSET_WAIT_RELEASE",
+      "expectedNewBodies": "UNSET",
+      "countsAfter136": "19 COUNT pre-repair will independently prove actual rollback; no cleanup",
+      "afterProbe": "Must use new fixed source fingerprint, old262 runtime issuer cannot sign repaired body"
+    },
+    "real128AfterGuardFix": {
+      "status": "WAIT_CORRECTED_FIXED_SOURCE_COMPILE_AND_ACTUAL126_131_METADATA",
+      "pureDeriveRemains": "Original source factory digest2589b25c... from actual49/115/22; no authority issued",
+      "runtimeCode": "Existing released128 core-source.mjs759976 built262 includes old fingerprint; must recompile exact existing64-module entry at guard-fixed source before actual execution. Purederivation source unchanged accepted only for data digest.",
+      "privateInputUpload": "NOT_YET",
+      "realCoreCommit": false
+    },
+    "qf105": {
+      "status": "ADOPTED_LIMITED_T03_FULL_AUTHOR_ACTUAL",
+      "matrixTotal": 104,
+      "notRun": 41,
+      "waiting": 8,
+      "uiDiff": 23,
+      "partial": 31,
+      "exception": 1,
+      "explicitPartialScopeIndex": 58,
+      "wholePagesPassed": 0,
+      "wholeOverlaysPassed": 0,
+      "next": "QF solematrix adopts QF2 actual285/289; currentmatrix before that adoption preserved",
+      "actualCommands": 0,
+      "realPG": false
     }
   },
   "latestReadySource": {
-    "round": 289,
-    "commit": "df9bd556fec1f7744b5b825e67b96e5c26267d9e",
+    "round": 292,
+    "commit": "3ee4ab5c8ac8e43d425c48acf1b810d80c7557d3",
     "latestServedPreviewRound": 289,
-    "actualBrowserRound": 285,
-    "qualification": "289 actual one build/threeHTTP PASS; QF2 new289 actual dispatched; four fixed issues remainOPEN until affected retest"
+    "actualBrowserRound": 289,
+    "qualification": "291 inventory-only read slot sourcefixed;292 COREaudit reader protocol only. Next UI291 samefrontend newer292backendunused; source293 guardfix notyetdelivered. ActualUI289 scoped evidence retained."
   },
   "pendingUserDecision": [
     {
