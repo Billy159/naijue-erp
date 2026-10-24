@@ -6,6 +6,8 @@ export function createReplicaPreviewTransport(){
  const base=createSyntheticUnifiedTransport();base.authorize();const records:Call[]=[];
  let products:Promise<Awaited<ReturnType<typeof import('./runtime/products/synthetic-preview-transport.ts')['createSyntheticProductPreviewTransport']>>>|undefined;
  let settings:Promise<ReturnType<typeof import('./runtime/settings/synthetic-preview-transport.ts')['createSettingsPreviewTransport']>>|undefined;
+ let documents:Promise<ReturnType<typeof import('./runtime/documents/synthetic-preview-transport.ts')['createSyntheticDocumentPreviewTransport']>>|undefined;
+ const document=()=>documents??=import('./runtime/documents/synthetic-preview-transport.ts').then(m=>m.createSyntheticDocumentPreviewTransport({syntheticOnly:true,origin:base.http.origin,existingFetch:base.http.fetch}));
  const product=()=>products??=import('./runtime/products/synthetic-preview-transport.ts').then(m=>m.createSyntheticProductPreviewTransport({origin:base.http.origin,existingFetch:base.http.fetch,snapshotVersion:1,syntheticUnboundBarcodeFixture:true}));
  const setting=()=>settings??=import('./runtime/settings/synthetic-preview-transport.ts').then(m=>m.createSettingsPreviewTransport());
  const fetch=async(input:string,init:RequestInit):Promise<Response>=>{
@@ -21,6 +23,7 @@ export function createReplicaPreviewTransport(){
    if(path.startsWith('/organization/')||path.startsWith('/organization-maintenance/')||path.startsWith('/staff/')||path.startsWith('/accounts/')||path.startsWith('/payment/')||path==='/settings/audit/query'||/^\/(customers|suppliers)(?:\/|$)/.test(path)){
     const adapter=await setting();if(adapter.canHandle(path,method))return adapter.request(url,init);
    }
+   if(/^\/(?:sales|transfers|current-form|dictionary-read)(?:\/|$)/.test(path)){const adapter=await document();if(adapter.canHandle(path,method))return adapter.request(url,init);}
    return base.http.fetch(input,init);
   });
   void pending.then(response=>{if(signal?.aborted)void response.body?.cancel().catch(()=>{});},()=>{});
