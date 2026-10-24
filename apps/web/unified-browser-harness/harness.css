@@ -8,6 +8,6 @@ html,body{margin:0;background:#fff;font-family:Arial,'Microsoft YaHei',sans-seri
 /* Synthetic host never offers credentials. Default hides the formal account
  * band for frozen-Demo geometry; an explicit fixture-only layout toggle reveals
  * that same synthetic identity band to check real-host available height. */
-#unified-root .auth-form,#unified-root .auth-session,#unified-root .auth-panel>[role=status],#unified-root .auth-panel>.auth-actions,#unified-root .auth-panel>.auth-hint{display:none!important}
+#unified-root .auth-form[aria-label="账号登录"],#unified-root .auth-session,#unified-root .auth-panel>[role=status],#unified-root .auth-panel>.auth-actions,#unified-root .auth-panel>.auth-hint{display:none!important}
 
 #unified-root.show-synthetic-session .auth-session{display:flex!important}

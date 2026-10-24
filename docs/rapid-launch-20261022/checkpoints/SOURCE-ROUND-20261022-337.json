@@ -1,0 +1,17 @@
+{
+  "atUtc": "2026-10-24T15:13:21.821269+00:00",
+  "parent": "8b8ae4a9c44c1f9a2eda632087a28b28cd0fc4af",
+  "taskId": "C335_SYNTHETIC_PASSWORD_FORM_VISIBILITY",
+  "files": [
+    {
+      "path": "apps/web/unified-browser-harness/harness.css",
+      "bytes": 2351,
+      "sha256": "0fc12ec2e3822197a8176e826c540b4e9932e8b9f28b8a3c5ad624030ef99e37",
+      "owner": "C"
+    }
+  ],
+  "rootCause": "Synthetic harness CSS hid every .auth-form, including approved real PasswordDialog. Scope suppression only to aria-label=账号登录; original auth component/observer/endpoints unchanged.",
+  "stage": "SOURCE_CSS_FIX_DIFFCHECK_ONLY_BROWSER_PENDING",
+  "wholePageAccepted": false,
+  "deployed": false
+}

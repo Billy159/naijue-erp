@@ -4039,7 +4039,8 @@
       "references/rapid-launch-taskbook-20261022/**",
       "scripts/release/**",
       "scripts/verify-dependencies.mjs",
-      "apps/web/src/application/contracts.ts"
+      "apps/web/src/application/contracts.ts",
+      "apps/web/unified-browser-harness/harness.css"
     ],
     "D1": [
       "adapters/postgres/migrations/**",
@@ -5014,6 +5015,7 @@
       "scale": 1,
       "protectedTargetsNotTouched": true
     },
-    "sourceWrites": "Existinguniqueowners; F1 new document-responsibility.tsx and existingv16 localchain registered. No mutableWIP in326."
+    "sourceWrites": "Existinguniqueowners; F1 new document-responsibility.tsx and existingv16 localchain registered. No mutableWIP in326.",
+    "syntheticAuthCssScope": "C sole exact harness.css login-only suppression; password dialog original form retained; no credential endpoint enabled"
   }
 }
