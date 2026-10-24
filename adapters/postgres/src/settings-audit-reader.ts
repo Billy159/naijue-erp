@@ -1,4 +1,4 @@
-import { requireDomain } from "../../../packages/domain/src/errors.ts";
+import { DomainError, requireDomain } from "../../../packages/domain/src/errors.ts";
 import { checkedProductActor } from "../../../packages/application/src/product-query-validation.ts";
 import { maintenanceKinds } from "../../../packages/application/src/maintenance-commit-ports.ts";
 import type { MaintenanceKind } from "../../../packages/application/src/maintenance-commit-ports.ts";
@@ -6,9 +6,17 @@ import { SETTINGS_AUDIT_FIELDS } from "../../../packages/application/src/setting
 import type { SettingsAuditModule, SettingsAuditQuery, SettingsAuditRawPage, SettingsAuditReader } from "../../../packages/application/src/settings-audit-ports.ts";
 import { activeSettingsAudit, parseSettingsAuditQuery, settingsAuditModulesFor } from "../../../packages/application/src/settings-audit-validation.ts";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
-import type { MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
+import type { StoreSettingsScope } from "../../../packages/application/src/store-settings-read-ports.ts";
+import { storeSettingsId } from "../../../packages/application/src/store-settings-read-validation.ts";
+import type { MaintenancePgContext, MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
 import { EXACT_HISTORICAL_CUSTOMER_EXCLUSION, historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
 import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
+
+/** Host derives these exact native members on the original active maintenance context. */
+export interface SettingsAuditCoreReadCapability {
+  readonly profile: "COMMITTED_CORE_SETTINGS_V14";
+  readonly assertReady: (context: MaintenancePgContext, actor: ActorContext, signal: AbortSignal) => Promise<Pick<Extract<StoreSettingsScope, { kind: "CORE_MEMBERS" }>, "hallIds" | "warehouseIds">>;
+}
 
 const objects: Readonly<Record<SettingsAuditModule, readonly [string, string, string]>> = {
   PRODUCT: ["product", "name", "product_code"], CATEGORY: ["product_category", "name", "NULL::text"],
@@ -33,10 +41,10 @@ function projection(column: "before_values" | "after_values", modules: readonly 
         FROM unnest(ARRAY[${keys}]::text[]) AS f(k) WHERE a.${column} ? k)`;
     }).join("\n")} ELSE '{"invalid":true}'::jsonb END END`;
 }
-function statement(modules: readonly SettingsAuditModule[], excludeHistorical: boolean): string {
-  const nativeObjects = modules.map(module => {
+function statement(modules: readonly SettingsAuditModule[], excludeHistorical: boolean, core: boolean): string {
+  const nativeObjects = modules.map((module, index) => {
     const [table, name, code] = objects[module];
-    return `SELECT '${module}'::text AS module,id,${name} AS name,${code} AS code FROM naijue_erp.${table}${module === "CUSTOMER" && excludeHistorical ? ` WHERE ${EXACT_HISTORICAL_CUSTOMER_EXCLUSION}` : ""}`;
+    return `SELECT '${module}'::text AS module,id,${name} AS name,${code} AS code FROM naijue_erp.${table}${core ? ` WHERE id=ANY($${10 + index}::uuid[])` : module === "CUSTOMER" && excludeHistorical ? ` WHERE ${EXACT_HISTORICAL_CUSTOMER_EXCLUSION}` : ""}`;
   }).join(" UNION ALL ");
   return `/* settings-audit:page */ WITH objects AS (${nativeObjects}), matched AS MATERIALIZED (
     SELECT a.id,a.operation_id,a.object_type AS module,a.object_id,o.name AS object_name,o.code AS object_code,
@@ -76,23 +84,45 @@ function statement(modules: readonly SettingsAuditModule[], excludeHistorical: b
 export class PostgresSettingsAuditUnitOfWork implements SettingsAuditReader {
   private readonly driver: MaintenancePgUnitOfWork;
   private readonly excludeHistorical: boolean;
-  constructor(driver: MaintenancePgUnitOfWork, capability: HistoricalCustomerExclusionCapability | null = null) {
+  private readonly core: SettingsAuditCoreReadCapability | undefined;
+  constructor(driver: MaintenancePgUnitOfWork, capability: HistoricalCustomerExclusionCapability | null = null, core?: SettingsAuditCoreReadCapability) {
     if (typeof driver?.transaction !== "function") throw TypeError("Settings logs require the shared authorized driver");
     this.driver = driver; this.excludeHistorical = historicalCustomerExclusionEnabled(driver, capability);
+    if (core !== undefined) {
+      if (core === null || Object.getPrototypeOf(core) !== Object.prototype) throw TypeError("Explicit committed CORE settings audit capability required");
+      const profile = Object.getOwnPropertyDescriptor(core, "profile"), verifier = Object.getOwnPropertyDescriptor(core, "assertReady");
+      if (Reflect.ownKeys(core).length !== 2 || !profile || !("value" in profile) || profile.value !== "COMMITTED_CORE_SETTINGS_V14"
+        || !verifier || !("value" in verifier) || typeof verifier.value !== "function") throw TypeError("Explicit committed CORE settings audit capability required");
+      this.core = Object.freeze({ profile: "COMMITTED_CORE_SETTINGS_V14", assertReady: verifier.value.bind(core) });
+    }
   }
   async read(actorInput: ActorContext, input: SettingsAuditQuery, signal: AbortSignal): Promise<SettingsAuditRawPage> {
     const actor = checkedProductActor(actorInput), query = parseSettingsAuditQuery(input); activeSettingsAudit(signal);
-    const result = await this.driver.transaction(async ({ client, evidence }) => {
+    const result = await this.driver.transaction(async context => {
+      const { client, evidence } = context;
       // HALL obtains D1's administrator mutex BEFORE identity row locks, including ALL-module reads.
       await evidence.assertAllowed(actor, "HALL", "LIST"); activeSettingsAudit(signal);
       const roles = (await client.query(`/* settings-audit:role */ SELECT a.id AS account_id,s.role
         FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id WHERE a.id=$1::uuid`, [actor.accountId])).rows;
       requireDomain(roles.length === 1 && roles[0]!.account_id === actor.accountId && (roles[0]!.role === "ADMIN" || roles[0]!.role === "WAREHOUSE"), "FORBIDDEN", "Current log identity unavailable");
-      const role = roles[0]!.role as "ADMIN" | "WAREHOUSE", modules = settingsAuditModulesFor(role, query);
+      const role = roles[0]!.role as "ADMIN" | "WAREHOUSE";
+      let modules = settingsAuditModulesFor(role, query); let memberIds: readonly string[][] = [];
+      if (this.core !== undefined) {
+        requireDomain(query.module === "ALL" || query.module === "HALL" || query.module === "WAREHOUSE", "FORBIDDEN", "Committed CORE logs are limited to native stores and warehouses");
+        const scope = await this.core.assertReady(context, actor, signal); activeSettingsAudit(signal);
+        requireDomain(scope !== null && typeof scope === "object" && Array.isArray(scope.hallIds) && scope.hallIds.length === 22
+          && Array.isArray(scope.warehouseIds) && scope.warehouseIds.length === 22, "FORBIDDEN", "Exact committed CORE log members unavailable");
+        let hallIds: string[], warehouseIds: string[];
+        try { hallIds = scope.hallIds.map(storeSettingsId); warehouseIds = scope.warehouseIds.map(storeSettingsId); }
+        catch { throw new DomainError("FORBIDDEN", "Exact committed CORE log members unavailable"); }
+        requireDomain(new Set(hallIds).size === 22 && new Set(warehouseIds).size === 22, "FORBIDDEN", "Exact committed CORE log members unavailable");
+        modules = modules.filter(module => module === "HALL" || module === "WAREHOUSE");
+        memberIds = modules.map(module => module === "HALL" ? hallIds : warehouseIds);
+      }
       for (const module of modules) if (maintenanceKinds.includes(module as MaintenanceKind)) await evidence.assertAllowed(actor, module as MaintenanceKind, "LIST");
       activeSettingsAudit(signal);
-      const rows = (await client.query(statement(modules, this.excludeHistorical), [modules, query.objectId, query.objectSearch, query.actorSearch,
-        query.action === "ALL" ? null : query.action, query.dateFrom, query.dateTo, query.pageSize, (query.page - 1) * query.pageSize])).rows;
+      const rows = (await client.query(statement(modules, this.excludeHistorical, this.core !== undefined), [modules, query.objectId, query.objectSearch, query.actorSearch,
+        query.action === "ALL" ? null : query.action, query.dateFrom, query.dateTo, query.pageSize, (query.page - 1) * query.pageSize, ...memberIds])).rows;
       activeSettingsAudit(signal);
       requireDomain(rows.length === 1 && rows[0]!.too_large === false && Array.isArray(rows[0]!.items), "INVALID_SETTINGS_AUDIT_DATA", "Bounded operation log page unavailable");
       return { role, total: rows[0]!.total, items: rows[0]!.items as readonly unknown[] };

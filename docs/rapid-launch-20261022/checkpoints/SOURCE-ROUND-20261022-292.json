@@ -1,0 +1,142 @@
+{
+  "atUtc": "2026-10-24T05:15:28.700483+00:00",
+  "parent": "d2c30814e5ebfb2bfc17bd32286f5047a61bc5c6",
+  "taskId": "D2_W13_COMMITTED_CORE_SCOPE_REAL_AUDIT_READ_ADAPTER",
+  "files": [
+    {
+      "path": "adapters/postgres/src/settings-audit-reader.ts",
+      "bytes": 12147,
+      "sha256": "135de199e6cdeea99f2eb0f30a0e4b05e296d244793bade2fb410e5918cad32c",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/settings-audit-postgres-protocol.test.ts",
+      "bytes": 14140,
+      "sha256": "0add31d63543ac95927e773132189755483ce9fe7dd84a75eae4bdc851aa7354",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W13-CORE-AUDIT-v1.json",
+  "ownerReceiptSha256AtPin": "3654fd1486c60423226635416f24491a85c4a67b8f08a337aea1360bc9040bcd",
+  "ownerDelivery": {
+    "task": {
+      "id": "D2-W13-CORE-SETTINGS-AUDIT-V1",
+      "date": "2026-10-24",
+      "recordedAt": "2026-10-24T05:14:18.594280+00:00",
+      "status": "REGISTERED_SOURCE_AND_DIRECT_PROTOCOL_STRICT_PASS_PENDING_D1_HOST_QB_AND_ACTUAL_STAGE",
+      "authorization": "C original D2 W13 CORE read-only wiring dispatch; direct human reporting authorization 01a161f7-a5e8-7e10-9059-9537c28910c2 remains valid; no DDL, write contract or additional human approval required",
+      "modelRequested": "gpt-6.1-sol/xhigh",
+      "actualModelAndFastSetting": "NOT_INDEPENDENTLY_VERIFIED"
+    },
+    "behavior": {
+      "problem": "CORE early-return host branch lacks original settings audit plugin although ADMIN/WAREHOUSE stores and warehouse pages expose audit controls.",
+      "implemented": "Original reader accepts an optional third CORE adapter capability; CORE ALL resolves to HALL/WAREHOUSE only and native objects use exact current committed member UUID arrays before the unchanged matched/count/page/projection query.",
+      "explicitOtherModule": "FORBIDDEN / existing HTTP 403 mapping",
+      "outOfMemberObjectId": "No special empty response or count rewrite. Original SQL executes with both actual member predicate and original objectId filter.",
+      "importCoreAudit": "No IMPORT to HALL/WAREHOUSE remapping; initial aggregate import audit remains outside native per-object query.",
+      "uiButtons": "No UI edits or hiding."
+    },
+    "contract": {
+      "constructor": "new PostgresSettingsAuditUnitOfWork(driver, historicalCustomerCapability = null, core?: SettingsAuditCoreReadCapability)",
+      "compatibility": "Omitting the third argument retains original role/module behavior and optional historical customer exclusion capability. Original service, HTTP, DTO, projection fields, count semantics and current role rules are unchanged.",
+      "capability": {
+        "exportedFrom": "adapters/postgres/src/settings-audit-reader.ts",
+        "exportName": "SettingsAuditCoreReadCapability",
+        "profile": "COMMITTED_CORE_SETTINGS_V14",
+        "assertReady": "(context: MaintenancePgContext, actor: ActorContext, signal: AbortSignal) => Promise<Pick<Extract<StoreSettingsScope, { kind: \"CORE_MEMBERS\" }>, \"hallIds\" | \"warehouseIds\">>",
+        "members": "Each returned array must contain exactly 22 distinct native UUIDs. Existing StoreSettingsScope member type and storeSettingsId validation are reused. No additional grant/intent/DTO or browser flag.",
+        "registration": "Trusted server constructor parameter; copied/bound original two-field capability. No writer, pool, context or ownership issuer is created here."
+      }
+    },
+    "seam": {
+      "order": [
+        "Original shared maintenance transaction",
+        "Original HALL LIST administrator mutex and current identity/hall locks",
+        "Existing current role query and module authorization",
+        "CORE assertReady receives the exact original active MaintenancePgContext, checked actor and same signal",
+        "Validate exact members; original selected-module evidence checks",
+        "One original matched/count/page statement; unchanged projection",
+        "Original shared driver commit/release"
+      ],
+      "sql": {
+        "all": "$10::uuid[] = hallIds; $11::uuid[] = warehouseIds",
+        "singleModule": "$10::uuid[] = the selected module's members only; no unused bound parameter",
+        "nativeObjects": "hall.id / warehouse.id = ANY(member array), then original audit/COMMITTED receipt/native object joins. Warehouse scope is warehouse.id, never warehouse.hall_id.",
+        "snapshot": "COUNT and bounded page still derive from the same original matched CTE and one statement snapshot.",
+        "filters": "Original module, objectId, objectSearch, actorSearch, action, Shanghai date bounds, limit and offset remain parameterized."
+      },
+      "d1Required": "D1 derives capability from createCommittedCoreSettingsRead same-lease source/22 claims/current members, unwraps actual maintenance client via original ownership helper, and registers existing audit plugin before CORE early return.",
+      "d1HostOrContextEdited": false
+    },
+    "validation": {
+      "kind": "Scripted PostgreSQL protocol using actual shared PostgresMaintenanceCommandUnitOfWork; no PostgreSQL engine, ACL or actual data claim",
+      "newUniqueCases": 4,
+      "selectedOldRegressionCases": 2,
+      "finalUniquePassingCases": 6,
+      "scope": [
+        "CORE ALL current ADMIN and WAREHOUSE; original owned context, identity-lock ordering and one lease; exact 22/22 member arrays and unchanged SQL result total/items",
+        "HALL/WAREHOUSE single-module queries preserve object/date/search/actor/action/page filters; out-of-member object ID still executes original SQL",
+        "Every explicit non-core module denied; disabled/departed/stale-hall/salesperson identity denied before capability/page SQL",
+        "Failed proof, cancellation, null/short/duplicate/invalid UUID member scopes, malformed capability denied without query widening or fabricated results",
+        "Selected original default WAREHOUSE shared-lease/module behavior",
+        "Selected original two-argument exact26 exclusion and existing SQL/oversize failure behavior"
+      ],
+      "runs": [
+        {
+          "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W13-CORE-AUDIT-run1.tap",
+          "exitCode": 1,
+          "tests": 6,
+          "pass": 5,
+          "fail": 1,
+          "skipped": 0,
+          "issue": "One new filter fixture used UPDATE, which the existing action contract rejects; production code unchanged for this repair."
+        },
+        {
+          "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W13-CORE-AUDIT-filter-rerun.tap",
+          "exitCode": 0,
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "skipped": 0,
+          "affectedOnly": true,
+          "repair": "Use existing EDIT action in new filter fixture."
+        }
+      ],
+      "strict": {
+        "initialExitCode": 2,
+        "initialLog": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W13-CORE-AUDIT-types.log",
+        "initialIssue": "Same unsupported UPDATE test fixture literal.",
+        "finalExitCode": 0,
+        "finalLog": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W13-CORE-AUDIT-types-final.log",
+        "roots": [
+          "adapters/postgres/src/settings-audit-reader.ts",
+          "tests/settings-audit-postgres-protocol.test.ts"
+        ],
+        "mode": "No emit; strict; noUncheckedIndexedAccess; exactOptionalPropertyTypes; original dependency graph"
+      },
+      "oldFullSuiteRepeated": false
+    },
+    "files": {
+      "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "production": [
+        "adapters/postgres/src/settings-audit-reader.ts"
+      ],
+      "tests": [
+        "tests/settings-audit-postgres-protocol.test.ts"
+      ],
+      "modifiedLeaves": 2,
+      "newSourceFiles": 0,
+      "pins": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/W13-CORE-AUDIT-SOURCE-PINS.json",
+      "otherOwnersEdited": false
+    },
+    "next": {
+      "owner": "C / original D1 / original QB",
+      "required": "C fixes these exact two leaves as a new incremental candidate for original QB new-module review; D1 completes original host capability/registration; actual stage only after complete candidate in C's original isolation environment.",
+      "historicalEvidence": "Current SOURCE280/289 and previous actual receipts do not include this new wiring and are not represented as testing it.",
+      "actualPgSshBuildChromeGitDeploymentExecuted": false
+    }
+  },
+  "stage": "FIXED_SOURCE_PROTOCOL_STRICT_ONLY_HOST_AND_REAL_PG_NOT_YET",
+  "actualPG": false,
+  "deployed": false
+}
