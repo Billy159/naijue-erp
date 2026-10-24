@@ -1,0 +1,266 @@
+{
+  "atUtc": "2026-10-24T00:32:31.711710+00:00",
+  "parent": "3bece77ff4ffb74dfe046322949e4764c96a2f66",
+  "taskId": "F2_P10_EXISTING_PRODUCT_DEFAULT_SCHEME_VIEW_CONSUMER",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-page-contracts.ts",
+      "bytes": 3236,
+      "sha256": "a018a8f243731e5e4fed5cf56a30bf062ec46c2b442ffa7cd0bd9cf5900ec1e1",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-configuration.ts",
+      "bytes": 5650,
+      "sha256": "5cd2b7d1af97ca92f1c361ab7a98c3384a2857acdee2145e4de863fa2d6bffd3",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-reader.ts",
+      "bytes": 2982,
+      "sha256": "068edd10b8da9403b2d6e040d3e5cb7358034683637b5aa8c69075046854156c",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-validation.ts",
+      "bytes": 5488,
+      "sha256": "3310e238e7764fc19e029ec3e98017e22a6c6839141ace2c550ad6795e22fbc1",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-validation.test.ts",
+      "bytes": 9829,
+      "sha256": "5a42d63d9f762940c5a592061533e3dc5342646cc712f81b40cf63d351f81af1",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-barcodes.tsx",
+      "bytes": 11376,
+      "sha256": "ea11af494c2f315a62bf1bd09fd57c853c6ae6796637396d3a019db55105a242",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-editor-barcodes.tsx",
+      "bytes": 9222,
+      "sha256": "04cf4605cb13ed9689a286d5caeb03fe1eaaa76ef79ef95f83bc558da2426009",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "fb09f16d08ac6f027a005bf8fdd26cb4aea6b533c1ed4d239a6e781ef3f38cef",
+  "ownerDelivery": {
+    "taskId": "F04-P10-EXISTING-DEFAULT-SCHEME-READ",
+    "owner": "F2",
+    "status": "SOURCE_READY_EXACT7_LOCAL_PARSER_GUARD_CONSUMER_PASS_C_HOST_DICTIONARY_OPTIN_AND_ACTUAL_PENDING",
+    "authority": {
+      "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "model": "gpt-6.1-sol/xhigh; Fast not verified"
+    },
+    "completedScope": "Consume original D2/C approved defaultScheme closed union; legacy/current parser and truthful three-state native header; explicit independent schemeReader capture+existing denial guard; reuse original scheme preview from existing readonly leaf, editor uses same extracted component. No backend/shared/routes/default-scheme inference or complete-barcode-history changes.",
+    "files": [
+      {
+        "path": "apps/web/src/products/product-page-contracts.ts",
+        "bytes": 3236,
+        "sha256": "a018a8f243731e5e4fed5cf56a30bf062ec46c2b442ffa7cd0bd9cf5900ec1e1",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/source/apps/web/src/products/product-page-contracts.ts",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/before/apps/web/src/products/product-page-contracts.ts",
+          "bytes": 2981,
+          "sha256": "b18aeb0a88fb82d756789cd985143345425615a66fa2727576a9b473a777b83e"
+        }
+      },
+      {
+        "path": "apps/web/src/products/product-page-configuration.ts",
+        "bytes": 5650,
+        "sha256": "5cd2b7d1af97ca92f1c361ab7a98c3384a2857acdee2145e4de863fa2d6bffd3",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/source/apps/web/src/products/product-page-configuration.ts",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/before/apps/web/src/products/product-page-configuration.ts",
+          "bytes": 5342,
+          "sha256": "943272e018f4ccd69505cc7fe2690ee1a885ac2e0e9796b862d91bf84bdbcc2e"
+        }
+      },
+      {
+        "path": "apps/web/src/products/product-page-reader.ts",
+        "bytes": 2982,
+        "sha256": "068edd10b8da9403b2d6e040d3e5cb7358034683637b5aa8c69075046854156c",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/source/apps/web/src/products/product-page-reader.ts",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/before/apps/web/src/products/product-page-reader.ts",
+          "bytes": 2669,
+          "sha256": "d66544bec480c1b4002b1451b880ac54fe4754bbcf8bc89d03272614512481b0"
+        }
+      },
+      {
+        "path": "apps/web/src/products/product-page-validation.ts",
+        "bytes": 5488,
+        "sha256": "3310e238e7764fc19e029ec3e98017e22a6c6839141ace2c550ad6795e22fbc1",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/source/apps/web/src/products/product-page-validation.ts",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/before/apps/web/src/products/product-page-validation.ts",
+          "bytes": 5196,
+          "sha256": "b112b498cf67b137532b4029f69d75a0271469f2295a17cb19c75dd208744c47"
+        }
+      },
+      {
+        "path": "apps/web/src/products/product-page-validation.test.ts",
+        "bytes": 9829,
+        "sha256": "5a42d63d9f762940c5a592061533e3dc5342646cc712f81b40cf63d351f81af1",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/source/apps/web/src/products/product-page-validation.test.ts",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/before/apps/web/src/products/product-page-validation.test.ts",
+          "bytes": 6857,
+          "sha256": "4a0499328f19d329910b340699a8eca3d817f8a2e7bbcb3135f1add1a34630e6"
+        }
+      },
+      {
+        "path": "apps/web/src/products/product-page-barcodes.tsx",
+        "bytes": 11376,
+        "sha256": "ea11af494c2f315a62bf1bd09fd57c853c6ae6796637396d3a019db55105a242",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/source/apps/web/src/products/product-page-barcodes.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/before/apps/web/src/products/product-page-barcodes.tsx",
+          "bytes": 7043,
+          "sha256": "a346cd15e13de58eb9cc687d2b3177dc4d422251735519dc59f2608f1244e8d9"
+        }
+      },
+      {
+        "path": "apps/web/src/products/product-editor-barcodes.tsx",
+        "bytes": 9222,
+        "sha256": "04cf4605cb13ed9689a286d5caeb03fe1eaaa76ef79ef95f83bc558da2426009",
+        "frozenPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/source/apps/web/src/products/product-editor-barcodes.tsx",
+        "before": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/before/apps/web/src/products/product-editor-barcodes.tsx",
+          "bytes": 12028,
+          "sha256": "106139478232145fb04e5c7bc8bea5d60d0ba0c2b64f0c3485a6152936658f86"
+        }
+      }
+    ],
+    "api": {
+      "existingMethod": "DictionaryBrowserReader.readBarcodeScheme(QueryRead<{schemeId}>)",
+      "composition": "products.fullPage.reader.barcodes.schemeReader?: Pick<DictionaryBrowserReader,readBarcodeScheme>",
+      "gate": "Caller must explicitly opt in both product barcodes and independent dictionary description ability. Never construct a default dictionary client in UI; product grant does not imply dictionary grant.",
+      "example": "Existing C/F1 products route may compose { ...barcodes, schemeReader: { readBarcodeScheme: read => dictionary.readBarcodeScheme(read) } } only under its current explicit dictionary optin and current scope; guardedProductPageReader wraps it with existing denial owner.",
+      "notMaintenance": "Readonly scheme lookup does not require or borrow product maintenance detail/writer; no new API, no CURRENT inference.",
+      "states": {
+        "UNAVAILABLE": "Legacy absence: not provided, view disabled",
+        "NOT_SET": "Actual native NULL: not set, view disabled",
+        "AVAILABLE": "Actual product FK: set; view enabled only with explicit schemeReader; click reads this exact FK, not item.schemeId. Header does not invent unread dictionary text."
+      },
+      "sharedPreview": "ProductBarcodeSchemePreview now exported by existing product-page-barcodes.tsx and imported by existing editor; same original modal/query UI, no readonly maintenance import or new application file."
+    },
+    "checks": {
+      "unit": "Only two new P10 named tests pass2/fail0: three closed variants and malformed/mixed rejects; no construction IO; explicit dictionary ability, true-null detail/current denial/canceled late denial.",
+      "types": "Changed seven roots full strict imported closure0 diagnostics, no exclusion",
+      "dom": {
+        "status": "PASS_NEW_P10_READONLY_DEFAULT_SCHEME_CONSUMER_ONLY",
+        "states": [
+          "UNAVAILABLE",
+          "NOT_SET",
+          "AVAILABLE"
+        ],
+        "lookup": "Exact product default FK; independently supplied dictionary reader; no constructor or header eager IO; page barcode scheme is different",
+        "lifecycle": [
+          "normal/historical and null detail",
+          "close returns actual trigger focus",
+          "close and hidden abort pending + ignore late result/denial",
+          "return tab never reopens or queries scheme automatically",
+          "current403 clears current product scope"
+        ],
+        "notRun": "Actual HTTP/PG/browser pixels/host double-optin integration/new native26 runtime; old six-tab/P10/scheme public suites not rerun"
+      },
+      "reused": "Old raw barcode/page/identity/prices/stock and six-tab/P10 scopes not rerun. Existing modal rendering/method/lifecycle extraction preserves editor component; maintained source props preserve explicit editor onAccessFailure.",
+      "harnessCorrection": "First new DOM assertion compared a null-prototype snapshotted parameter object to plain object. Corrected test value comparison only; no production change.",
+      "warnings": "Existing installed Arco React19 ref deprecation retained; local bundle warnings in consumer-bundle-warnings.json."
+    },
+    "backend245Receipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/P10-DEFAULT-SCHEME-READ-v1.json",
+      "bytes": 8096,
+      "sha256": "98a981f49a9b0d195ef7b67216321aa924784829c2281206423b017e89b23159"
+    },
+    "backendProductionPins": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-ports.ts",
+        "bytes": 5469,
+        "sha256": "4217a26a4a406e1b350145ccb79b091b1de22660a0ef820bf5c8d0143e334f3c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-validation.ts",
+        "bytes": 11896,
+        "sha256": "a081d16568da63515f5637a628947e93cb59d50401b006601fe88e15d53c6db9"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-service.ts",
+        "bytes": 4513,
+        "sha256": "40337ed27ec214c52a8ea1a09503bb54acdbc2b79dafa4adceb851ad5c8471b2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/product-details-query-reader.ts",
+        "bytes": 8640,
+        "sha256": "226016428a7839eb0160083225373be31d50e6aa5603f5a5e7bd374bacb7c99c"
+      }
+    ],
+    "untested": [
+      "Original C/F1 application route composition of barcodes+dictionary explicit optin",
+      "New native26 actualPG/read/session grant/browser/real data/full deployment",
+      "P10 subtype/originalSpec/single-SKU complete history/six-scheme CURRENT classification remain separate; no full-product fetch used as history",
+      "No old six-tab/P10/default public suites or backend tests rerun"
+    ],
+    "blocker": "F2 source complete; host composition belongs original C/F1, native runtime issuer26 binding belongs original C/D1. No implicit client or maintenance privilege promotion.",
+    "next": "C pin exact7 with original D2fixed245/read host246 -> original route owner explicitly composes schemeReader only with independent dictionary optin -> original QF2 only new defaultScheme states and scheme target/lifecycle. Date ancestor optin is separate queued exact2 on fixed247; no Chrome.",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/SOURCE-MANIFEST.json",
+        "bytes": 7604,
+        "sha256": "3f2a91d27b81b3d23a0e2751b3f6a58dcc0ba4b732d40d976fe586af4739462f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/CONSUMER-API.json",
+        "bytes": 1393,
+        "sha256": "1f71ee7e6f2f8ab03f0a1154a1a8b70cc0ec53f36f46029e2f3c032d947fae83"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/source.diff",
+        "bytes": 23096,
+        "sha256": "3b654040fc2c15b706bcd230e46b170b1444fca15f7763243097b83efd61bb95"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/unit.log",
+        "bytes": 338,
+        "sha256": "95d74600336412d7fbf6f4f4d698a84ed8cf2014e1f42cc9a7dc874613bd3b6e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/strict.log",
+        "bytes": 77,
+        "sha256": "3bbaca2724fa4592963a38c5019cda7c3d98bb78dc01fa0a43161b5c8115b0c2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/types.log",
+        "bytes": 124,
+        "sha256": "ca45c53e1dd31fd8ba33900426bf9ce328cdb90097537a00f09886b8ba87b7dc"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/DOM-CHECKS.json",
+        "bytes": 714,
+        "sha256": "79314eded514745a3c8cc8a57b5f3ee6daa54e1fe121d26e846641474a525023"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/dom.log",
+        "bytes": 580,
+        "sha256": "6a60d2241fcd8643fe599971a1090fde2ba8c52e8c59841d1943ff75b413bd22"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/verify-consumer.mjs",
+        "bytes": 8571,
+        "sha256": "767cb91c4886582a2a7a98e811b0504f8003d082e391e8d19839f531d360e8dd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-DEFAULT-SCHEME-READ-01/consumer-bundle-warnings.json",
+        "bytes": 3,
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+      }
+    ]
+  },
+  "qualification": "Approved actual default FK three-state readonly parser/config/guard and one shared original scheme preview, optional independent dictionary read. Owner new2 named tests+strict+originalReactView targeted checks adopted. F1 explicit fullpage/dictionary composition pending; actualPG/HTTP/browser/realrole/performance untested. Does not infer CURRENT or barcode-record scheme; no newfields/API/DDL/write/secondpreview."
+}

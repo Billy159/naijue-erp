@@ -33,8 +33,11 @@ export function productPricesResponse(value: unknown, parameters: ProductParamet
 export function productBarcodesResponse(value: unknown, parameters: ProductDetailsPageQuery): ProductBarcodePage | null {
   if (value === null) return null;
   const row = object(value, ['productId', 'version', 'page', 'pageSize', 'total', 'items', 'defaultScheme']); target(row, parameters, true);
-  const scheme = object(row.defaultScheme, ['state', 'reason']);
-  if (scheme.state !== 'UNAVAILABLE' || scheme.reason !== 'NO_PRODUCT_SCHEME_FIELD') invalid();
+  const state = (row.defaultScheme as { readonly state?: unknown } | null)?.state;
+  if (state === 'UNAVAILABLE') { const scheme = object(row.defaultScheme, ['state', 'reason']); if (scheme.reason !== 'NO_PRODUCT_SCHEME_FIELD') invalid(); }
+  else if (state === 'AVAILABLE') { const scheme = object(row.defaultScheme, ['state', 'schemeId']); id(scheme.schemeId); }
+  else if (state === 'NOT_SET') object(row.defaultScheme, ['state']);
+  else invalid();
   const ids = new Set<string>(), barcodes = new Set<string>();
   for (const value of paged(row, parameters)) {
     const item = object(value, ['id', 'barcode', 'skuId', 'skuCode', 'colorId', 'fitId', 'sizeId', 'kind', 'schemeId', 'enabled']);

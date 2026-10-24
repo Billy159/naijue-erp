@@ -32,7 +32,10 @@ export function captureProductFullPageConfiguration(value: unknown): ProductFull
     let classified:Classified|undefined;
     if(Object.hasOwn(x,'classified')){const c=own(x.classified,['media','readSpecifications']),m=own(c.media,['readImages','readOriginal']);classified=Object.freeze({readSpecifications:method(c.readSpecifications) as Classified['readSpecifications'],media:Object.freeze({readImages:method(m.readImages) as Classified['media']['readImages'],readOriginal:method(m.readOriginal) as Classified['media']['readOriginal']})});}
     reader.images = Object.freeze({ read: method(x.read) as Images['read'], readImage: method(x.readImage) as Images['readImage'],...(classified?{classified}:{}) }); }
-  if (Object.hasOwn(input, 'barcodes')) { const x = own(input.barcodes, ['read']); reader.barcodes = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['barcodes']>['read'] }); }
+  if (Object.hasOwn(input, 'barcodes')) { const x = own(input.barcodes, ['read'], ['schemeReader']);
+    type Barcodes=NonNullable<ProductFullPageReadOnlyReader['barcodes']>;
+    const scheme=Object.hasOwn(x,'schemeReader')?own(x.schemeReader,['readBarcodeScheme']):null;
+    reader.barcodes = Object.freeze({ read: method(x.read) as Barcodes['read'], ...(scheme?{schemeReader:Object.freeze({readBarcodeScheme:method(scheme.readBarcodeScheme) as NonNullable<Barcodes['schemeReader']>['readBarcodeScheme']})}:{}) }); }
   if (Object.hasOwn(input, 'prices')) { const x = own(input.prices, ['read']); reader.prices = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['prices']>['read'] }); }
   if (Object.hasOwn(input, 'stock')) { const x = own(input.stock, ['read'], ['readOverview']); reader.stock = Object.freeze({ read: method(x.read) as NonNullable<ProductFullPageReadOnlyReader['stock']>['read'], ...(Object.hasOwn(x,'readOverview')?{readOverview:method(x.readOverview) as NonNullable<NonNullable<ProductFullPageReadOnlyReader['stock']>['readOverview']>}: {}) }); }
   if (!productPageTabAvailable(reader, row.initialTab as ProductReadOnlyPageTab)) return invalid();

@@ -1,14 +1,10 @@
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 import { UIButton } from '../components/standard-controls.tsx';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
 import { useProductPanelActive, ProductReadState, useProductRead } from '../inventory/product-tab-state.tsx';
 import { assertProductSpecifications } from '../inventory/product-model.ts';
-import { LatestQuery } from '../loading/latest-query.ts';
-import { validateDictionaryScheme } from '../../../../packages/application/src/dictionary-read-validation.ts';
-import type { DictionaryBarcodeScheme, DictionarySchemeQuery } from '../../../../packages/application/src/dictionary-read-ports.ts';
-import { HttpQueryError } from '../transport/http-query.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
-import { ProductBarcodeSourceBody } from './product-page-barcodes.tsx';
+import { ProductBarcodeSourceBody, ProductBarcodeSchemePreview } from './product-page-barcodes.tsx';
 import { ProductCandidateSelect } from './product-editor-base.tsx';
 import type { ProductEditorProps, ProductMaintenanceDetail, ProductWriteValues, ProductSkuInput, ProductBarcodeInput } from './product-editor-contracts.ts';
 
@@ -54,19 +50,4 @@ function BarcodeSpecLabels(p:ProductEditorBarcodeProps&{readonly setNames:(value
  const data=snapshot.phase==='success'?snapshot.success?.data:null;
  useEffect(()=>{if(data)p.setNames(Object.fromEntries([...data.colors.map(x=>[`colors:${x.id}`,x.label]),...data.fits.map(x=>[`fits:${x.id}`,x.label]),...data.sizes.map(x=>[`sizes:${x.id}`,x.label])]));},[data]);
  return snapshot.phase==='success'?null:<ProductReadState phase={snapshot.phase} retry={read} cancel={cancel} cancelled={cancelled} empty={!data}>{null}</ProductReadState>;
-}
-interface BarcodeSchemePreviewProps {readonly scope:ReadScope;readonly schemeId:string;readonly reader:NonNullable<ProductEditorProps['capability']['barcodeSchemeReader']>;readonly onAccessFailure:ProductEditorProps['onAccessFailure'];readonly close:()=>void}
-function ProductBarcodeSchemePreview(p:BarcodeSchemePreviewProps){
- const [query,setQuery]=useState<LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>|null>(null);
- useEffect(()=>{const next=new LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>({scope:p.scope,execute:async read=>{try{const value=await p.reader.readBarcodeScheme(read);if(value===null)return null;const result=validateDictionaryScheme(value);if(result.id!==read.parameters.schemeId)throw new Error('Invalid scheme target');return result;}catch(error){if(p.scope.active&&!read.signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden')){next.dispose();p.onAccessFailure(error);}throw error;}}});setQuery(next);return()=>next.dispose();},[p.scope,p.reader,p.schemeId]);
- return query&&p.scope.active?<ProductBarcodeSchemeDetail {...p} query={query}/>:null;
-}
-function ProductBarcodeSchemeDetail(p:BarcodeSchemePreviewProps&{readonly query:LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>}){
- const snapshot=useSyncExternalStore(p.query.subscribe,p.query.getSnapshot,p.query.getSnapshot),data=snapshot.phase==='success'?snapshot.success?.data:null;
- const run=()=>{if(p.scope.active)void p.query.run({schemeId:p.schemeId});};
- return <StandardOverlay presentation="catalogue" title="查看条码方案" closeLabel="关闭查看条码方案" className="pc-arco-modal product-source-modal product-source-ui product-barcode-scheme-modal" width={640} close={p.close} onReady={()=>{if(p.query.getSnapshot().phase==='idle')run();}} footer={close=><div className="pc-modal-foot"><button type="button" className="btn" onClick={close}>关闭</button></div>}>
-  <ProductReadState phase={snapshot.phase} retry={run} cancel={()=>p.query.cancel()} cancelled={snapshot.phase==='idle'} empty={snapshot.phase==='success'&&data===null}>
-   {data&&<dl className="pc-rule"><dt>方案名称</dt><dd>{data.name}</dd><dt>条码类型</dt><dd>{data.barcodeType}</dd><dt>编码规则</dt><dd>{data.ruleDescription}</dd><dt>总长度</dt><dd>{data.codeLength===null?'未提供':`${data.codeLength} 位`}</dd></dl>}
-  </ProductReadState>
- </StandardOverlay>;
 }

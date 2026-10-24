@@ -7,7 +7,8 @@ import { createProductFullPageHttpReader } from './product-page-http-reader.ts';
 import { captureProductFullPageConfiguration } from './product-page-configuration.ts';
 import { guardedProductPageReader } from './product-page-reader.ts';
 import { ReadContext } from '../loading/read-scope.ts';
-import { LatestQuery } from '../loading/latest-query.ts';
+import { LatestQuery, type QueryRead } from '../loading/latest-query.ts';
+import type { DictionarySchemeQuery } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
@@ -70,4 +71,31 @@ test('new page capabilities preserve current denial clearing and independently s
   const reader = guardedProductPageReader(scope, { prices: { read: async () => { throw new HttpQueryError('forbidden', 'FORBIDDEN', 403); } } }, () => { notices++; assert.equal(scope.active, false); });
   await assert.rejects(() => reader.prices!.read({ parameters: { productId }, signal: scope.signal, entityId: productId, identity: scope.identity, routeInstanceId: scope.routeInstanceId }));
   assert.equal(notices, 1); ctx.clear();
+});
+
+test('P10 default scheme three closed variants preserve native FK, actual null and legacy absence', () => {
+  for (const defaultScheme of [{state:'UNAVAILABLE',reason:'NO_PRODUCT_SCHEME_FIELD'},{state:'AVAILABLE',schemeId:id(8)},{state:'NOT_SET'}]) {
+    const value={...barcodes(),defaultScheme};
+    assert.deepEqual(productBarcodesResponse(value,parameters)!.defaultScheme,defaultScheme);
+    assert.equal(productBarcodesResponse(value,parameters)!.items[0]!.barcode,'0001234567');
+  }
+  for (const defaultScheme of [null,{}, {state:'AVAILABLE'}, {state:'AVAILABLE',schemeId:null}, {state:'AVAILABLE',schemeId:'CURRENT'}, {state:'AVAILABLE',schemeId:id(8),reason:'NO_PRODUCT_SCHEME_FIELD'}, {state:'NOT_SET',schemeId:id(8)}, {state:'UNAVAILABLE',reason:'OTHER'}, {state:'UNAVAILABLE',reason:'NO_PRODUCT_SCHEME_FIELD',schemeId:id(8)}]) {
+    assert.throws(()=>productBarcodesResponse({...barcodes(),defaultScheme},parameters));
+  }
+});
+
+test('P10 scheme description is explicit own capability with no construction IO and current denial owner', async () => {
+  const ctx=new ReadContext({accountId:id(100),sessionRevision:'1',permissionRevision:'1'}),scope=ctx.createScope('product',productId);
+  let calls=0,notices=0,deny=false,rejectLate:((error:unknown)=>void)|null=null;
+  const readBarcodeScheme=async (read:QueryRead<DictionarySchemeQuery>)=>{calls++;assert.equal(read.parameters.schemeId,id(8));if(deny)throw new HttpQueryError('forbidden','FORBIDDEN',403);if(calls===2)return await new Promise<null>((_,reject)=>{rejectLate=reject;});return null;};
+  const plain={stylesheet:{load:async()=>{},dispose(){}},reader:{barcodes:{read:async()=>null}},allowedTabs:['barcodes'],initialTab:'barcodes'};
+  assert.equal(captureProductFullPageConfiguration(plain).reader.barcodes!.schemeReader,undefined);
+  const configured=captureProductFullPageConfiguration({...plain,reader:{barcodes:{read:async()=>null,schemeReader:{readBarcodeScheme}}}});
+  assert.equal(calls,0);
+  const reader=guardedProductPageReader(scope,configured.reader,()=>{notices++;assert.equal(scope.active,false);});
+  const controller=new AbortController();
+  const input={parameters:{schemeId:id(8)},identity:scope.identity,routeInstanceId:scope.routeInstanceId,entityId:productId,signal:controller.signal};
+  assert.equal(await reader.barcodes!.schemeReader!.readBarcodeScheme(input),null);
+  const pending=reader.barcodes!.schemeReader!.readBarcodeScheme(input);controller.abort();assert.ok(rejectLate);(rejectLate as (error:unknown)=>void)(new HttpQueryError('forbidden','FORBIDDEN',403));await assert.rejects(pending);assert.equal(notices,0);assert.equal(scope.active,true);
+  deny=true;await assert.rejects(()=>reader.barcodes!.schemeReader!.readBarcodeScheme({...input,signal:new AbortController().signal}));assert.equal(notices,1);assert.equal(calls,3);ctx.clear();
 });

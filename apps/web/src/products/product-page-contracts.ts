@@ -1,4 +1,5 @@
 import type { ProductEditorMediaReader } from './product-editor-contracts.ts';
+import type { DictionaryBrowserReader } from '../product-settings/size-groups/contracts.ts';
 import type { RouteStylesheet } from '../application/contracts.ts';
 import type { ProductReadOnlyReader, ProductParameters } from '../inventory/product-contracts.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
@@ -11,7 +12,9 @@ export type ProductReadOnlyPageTab = typeof productReadOnlyPageTabs[number];
 export interface ProductFullPageReadOnlyReader {
   readonly base?: { readonly read: ProductReadOnlyReader['readProductBasics'] };
   readonly specs?: { readonly read: ProductReadOnlyReader['readProductSpecifications'] };
-  readonly barcodes?: { readonly read: (read: QueryRead<ProductDetailsPageQuery>) => Promise<ProductBarcodePage | null> };
+  readonly barcodes?: { readonly read: (read: QueryRead<ProductDetailsPageQuery>) => Promise<ProductBarcodePage | null>;
+    /** Independent dictionary-description opt-in; a product read grants none. */
+    readonly schemeReader?: Pick<DictionaryBrowserReader, 'readBarcodeScheme'> };
   readonly prices?: { readonly read: (read: QueryRead<ProductParameters>) => Promise<ProductPriceDetails | null> };
   readonly stock?: { readonly read: (read: QueryRead<ProductDetailsPageQuery>) => Promise<ProductWarehouseStockPage | null>;
     /** Independent whole-scope contract; absent methods keep the legacy page only. */
