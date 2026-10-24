@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T01:23:43.727389+00:00",
+  "updatedAt": "2026-10-24T01:51:04.352923+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -2092,38 +2092,6 @@
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
-          "path": "apps/web/src/product-categories/product-categories-page.tsx",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/product-categories/category-tree.tsx",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/product-categories/source-product-categories.css",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/product-settings/read-only-settings-host.tsx",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/contracts.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/entry-page.tsx",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/entry-view.tsx",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
           "path": "apps/web/src/inventory/ledger-contracts.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
@@ -2192,14 +2160,6 @@
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
-          "path": "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/product-settings/catalogue-maintenance-state.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
           "path": "apps/web/src/inventory/ledger.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
@@ -2210,33 +2170,6 @@
         {
           "path": "apps/web/src/products/product-page-validation.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
-          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
-          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES"
-        },
-        {
-          "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
-          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
-          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES"
-        },
-        {
-          "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
-          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
-          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES"
-        },
-        {
-          "path": "apps/web/src/product-settings/size-groups/setting-page.tsx",
-          "group": "CAT_UI_01_03_P16_P18_FROZEN_UI",
-          "fieldGate": "READ_ONLY_UI_NO_SCHEMA_OR_WRITE",
-          "boundary": "F2 soleowner, read-only specific scope; preserve P19 sharedCSS consumer and unrelated color/fit current proof; no shared StandardTabs/Table edits"
-        },
-        {
-          "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
-          "group": "CAT_UI_01_03_P16_P18_FROZEN_UI",
-          "fieldGate": "READ_ONLY_UI_NO_SCHEMA_OR_WRITE",
-          "boundary": "F2 soleowner, read-only specific scope; preserve P19 sharedCSS consumer and unrelated color/fit current proof; no shared StandardTabs/Table edits"
         },
         {
           "path": "apps/web/src/products/candidate-window.ts",
@@ -2270,90 +2203,6 @@
         },
         {
           "path": "apps/web/src/products/query-controller.ts",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/colors-page.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/http-reader.ts",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/pagination.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/read-owner.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/colors/read-state.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/fits/fits-page.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/seasons/seasons-page.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/size-groups/contracts.ts",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/size-groups/http-reader.ts",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/size-groups/pagination.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/size-groups/read-owner.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/size-groups/read-state.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-settings/size-groups/size-groups-page.tsx",
-          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
-          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
-          "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
-        },
-        {
-          "path": "apps/web/src/product-categories/tree-model.ts",
           "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
           "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
           "boundary": "F2 sole existing leaf; whole frozenDemo UI migration/minimal React adapter, no oldstorage/global scripts; sharedC root/lock/backend excluded"
@@ -3753,6 +3602,224 @@
           "scope": "Only original knownSKU assert.ok nonnull or legacy SAVE assert.ok draft discriminator. Preserve original expected identities/hash/quantities, no skipped or expanded tests."
         }
       ]
+    },
+    "F4": {
+      "proposal": "Human-approved single added frontend lane; not a new task queue",
+      "sourceWriteEnabled": true,
+      "registeredFiles": [
+        {
+          "path": "apps/web/src/product-categories/product-categories-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-categories/category-tree.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-categories/source-product-categories.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/read-only-settings-host.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/contracts.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-page.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/catalogue-maintenance-state.ts",
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
+          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
+          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
+          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+          "group": "FROZEN_DEMO_P19_BARCODE_SCHEME_LEAF_PRESENTATION",
+          "fieldGate": "READ_ONLY_EXISTING_NATIVE_SCHEME_FIELDS_NO_RULE_INFERENCE_OR_WRITES",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/setting-page.tsx",
+          "group": "CAT_UI_01_03_P16_P18_FROZEN_UI",
+          "fieldGate": "READ_ONLY_UI_NO_SCHEMA_OR_WRITE",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+          "group": "CAT_UI_01_03_P16_P18_FROZEN_UI",
+          "fieldGate": "READ_ONLY_UI_NO_SCHEMA_OR_WRITE",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/colors-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/http-reader.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/pagination.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/read-owner.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/read-state.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/fits/fits-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/seasons/seasons-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/contracts.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/http-reader.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/pagination.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/read-owner.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/read-state.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/size-groups-page.tsx",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-categories/tree-model.ts",
+          "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
+          "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
+          "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
+          "transferredFrom": "F2"
+        },
+        {
+          "path": "apps/web/src/product-categories/tree-model.test.ts",
+          "group": "F4_EXISTING_AFFECTED_CATALOGUE_TEST_LEAF",
+          "fieldGate": "NO_NEW_FIELDS_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/http-reader.test.ts",
+          "group": "F4_EXISTING_AFFECTED_CATALOGUE_TEST_LEAF",
+          "fieldGate": "NO_NEW_FIELDS_OR_WRITE_CONTRACT"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/http-reader.test.ts",
+          "group": "F4_EXISTING_AFFECTED_CATALOGUE_TEST_LEAF",
+          "fieldGate": "NO_NEW_FIELDS_OR_WRITE_CONTRACT"
+        }
+      ],
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "fastRequested": false,
+      "fastVerified": false
     }
   },
   "reservedSharedFiles": {
@@ -4380,6 +4447,183 @@
       "F1Released": true,
       "source": "Original F1 chunk103 explicit human-authorized seven-field release and exact11 frozen source214",
       "scope": "Temporary I07/I08 route target seam delivered; C shared reservation restored. F1 will not write this file absent a new explicit transfer."
+    },
+    {
+      "atUtc": "2026-10-24T01:51:04.352923+00:00",
+      "from": "F2",
+      "to": "F4",
+      "authority": {
+        "sourceThreadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+        "sourceTitle": "重构任务书",
+        "userTurnId": "01a16b94-1ceb-7910-a15f-2655f47bd041",
+        "userMessageId": "01a16b94-1d51-7ab3-9d2e-a75efdc109f7",
+        "directText": "ok你告诉主控这么弄吧",
+        "verifiedByC": "read_thread direct human plus immediately preceding four-lane proposal",
+        "scope": "One F4 development chat; F1 docs F2 products F3 settings F4 independent catalogue; QF/QF2 unchanged; original22tasks unchanged"
+      },
+      "baseCommit": "35046237881fe355b557a20e01cf14a52d56b447",
+      "preservedWIP": "All29 matched committedHEAD; no WIP rewritten",
+      "files": [
+        {
+          "path": "apps/web/src/product-categories/product-categories-page.tsx",
+          "bytes": 15446,
+          "sha256": "af4f42d0f56789d4072498f6be6177d2cddcf745f3d633fd70f64e1a88bb51f0"
+        },
+        {
+          "path": "apps/web/src/product-categories/category-tree.tsx",
+          "bytes": 4519,
+          "sha256": "e02cef1e38e60340681108fc68ce0a31a7f507c65e8b737b52d8cb9af96e4c3a"
+        },
+        {
+          "path": "apps/web/src/product-categories/source-product-categories.css",
+          "bytes": 4522,
+          "sha256": "6cb3a6f6f19f1b1f7ec2bcf3be956c864c682ea1bfd2079358f9c39d79ceb02a"
+        },
+        {
+          "path": "apps/web/src/product-settings/read-only-settings-host.tsx",
+          "bytes": 5032,
+          "sha256": "c3c2f27aa27ed3c3f3a2370bfaea2285f8af4ca5a24b77093fe4631f28e235d9"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/contracts.ts",
+          "bytes": 2392,
+          "sha256": "8b2c2efb137bbda1d674d4c3e74dcd6e5f27c12a0003591a259d94c637c0b121"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-page.tsx",
+          "bytes": 7876,
+          "sha256": "91049d582b2583e2118458e971694109888ec11a1ea4d160133b9692b4a81b36"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/entry-view.tsx",
+          "bytes": 7742,
+          "sha256": "07a112535c46b91d30b6a8442807d7766698f54b455b827e55657eca060582ed"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/source-catalogue-settings.css",
+          "bytes": 10608,
+          "sha256": "91f2d9019495f733f74ccee947837c0972feef19e824949e08cc9b4b0c3acbe4"
+        },
+        {
+          "path": "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
+          "bytes": 17649,
+          "sha256": "a0cd0afb86d4b8b74317e3bfa728ab050b591c4bfea7e46fc45a0437df118dc8"
+        },
+        {
+          "path": "apps/web/src/product-settings/catalogue-maintenance-state.ts",
+          "bytes": 7901,
+          "sha256": "a581b16ff7032dd216b4a2a21c846defa4b099ff8eb030d720fd9766b46559d3"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
+          "bytes": 2577,
+          "sha256": "d62dd5d6261e746efc6140bcd0aa3340592bc1a0a2e6a9f04df4b414ed02e942"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+          "bytes": 5365,
+          "sha256": "5baaca8a294f88643867b35ccb30e16f4b0e544e61c40da91cd905876a15cad1"
+        },
+        {
+          "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+          "bytes": 2208,
+          "sha256": "653bdd6029a8c3b019048c8ae6f47e159fb0aeba3b313905edc902261aaac394"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/setting-page.tsx",
+          "bytes": 11309,
+          "sha256": "f6862f31f3ebdcacbff20015a90fc8d21891c3b8bda97fba5d8e49c160969dd4"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/source-dictionary.css",
+          "bytes": 37110,
+          "sha256": "2bd21647371ab72f5a9e8466f842d8851c9e7aca20f2f72f83dc220e9441698a"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/colors-page.tsx",
+          "bytes": 237,
+          "sha256": "51c9505f29eb85e44c85f06206329993af9d2b368f64b30fb65ca6d9609b6133"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/http-reader.ts",
+          "bytes": 1456,
+          "sha256": "b42d1e08ae0958450d149a2a776bce0e88d9bbc98e1ffa5acd5b3ed5c175db9d"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/pagination.tsx",
+          "bytes": 1800,
+          "sha256": "90ae8a3b201256790c348d42c1464db234267ef45024c419203206138dd4b139"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/read-owner.tsx",
+          "bytes": 2421,
+          "sha256": "d601075822bf5cbdcc3e75d17637b9894fe8cec88b45cab86bf0e6ba601d5a1e"
+        },
+        {
+          "path": "apps/web/src/product-settings/colors/read-state.tsx",
+          "bytes": 2057,
+          "sha256": "462356a5566d79e9264072a71a96b468033387c28adc1cce05a57909590f254a"
+        },
+        {
+          "path": "apps/web/src/product-settings/fits/fits-page.tsx",
+          "bytes": 249,
+          "sha256": "e06cf55221806f807b0b958a3110243f8a205265bcedb47dbb274cf82c99a830"
+        },
+        {
+          "path": "apps/web/src/product-settings/seasons/seasons-page.tsx",
+          "bytes": 271,
+          "sha256": "69cb97b174e41cddd894dd3acbe1e79ec479a2c1fda77ee20bec444abd74b611"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/contracts.ts",
+          "bytes": 1738,
+          "sha256": "9ebb87ea9410ad8c64392d89d289685e34e550b99aa8fa519e1f178da5d28b69"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/http-reader.ts",
+          "bytes": 1735,
+          "sha256": "5cfbc90b5d2d535eec907b986efb88101d4609f998112c99945d45fee558798a"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/pagination.tsx",
+          "bytes": 1726,
+          "sha256": "ba26eda9f0f93d176c33db49b48963095021957b067df5da00959fa647f64b81"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/read-owner.tsx",
+          "bytes": 3321,
+          "sha256": "28798bbcf9c339a034e805adbc0426da46c0421632f7f76d961887f589a555ac"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/read-state.tsx",
+          "bytes": 1389,
+          "sha256": "f2c8e672bf9705d7557c5499a9ffca94246bd977c610cab1417d1ea4d23a6cce"
+        },
+        {
+          "path": "apps/web/src/product-settings/size-groups/size-groups-page.tsx",
+          "bytes": 252,
+          "sha256": "01ba35ced4f0772cc5c003ed840cd7c1d7ebc9ce8d5869ca2223f69477136747"
+        },
+        {
+          "path": "apps/web/src/product-categories/tree-model.ts",
+          "bytes": 4721,
+          "sha256": "77bd7fa0710981d8cc49f631bbe5fc196d38f6477284290590f5ce9fd7c4713c"
+        }
+      ],
+      "addedExistingTests": [
+        "apps/web/src/product-categories/tree-model.test.ts",
+        "apps/web/src/product-settings/colors/http-reader.test.ts",
+        "apps/web/src/product-settings/size-groups/http-reader.test.ts"
+      ],
+      "excluded": [
+        "apps/web/src/products/**",
+        "apps/web/src/inventory/**",
+        "apps/web/src/application/**",
+        "apps/web/src/components/**",
+        "apps/web/src/demo-controls/**",
+        "backend/root/build/config/locks"
+      ],
+      "next": "One F4 same taskF04 subrange, first complete color/fit module then category then remaining readonly dictionaries/scheme; originalQA2 routes retained"
     }
   ]
 }

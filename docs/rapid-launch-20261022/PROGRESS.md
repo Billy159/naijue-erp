@@ -1,3 +1,12 @@
+当前接续（固定源码262／实际候选258／四条前端开发线）：
+
+- 258真实一次构建成功，固定932cce3853e5ff82541b195e3a632f738cec8708/build ui-preview-932cce3-01-build01；http://127.0.0.1:57881/synthetic-unified.html 已3HTTP身份头及字节200，HTML3478058B/d2f13883…，PID57865/session56604。QF2唯一Chrome查本次P03控件/P07原2列概览/P10真实SKU粒度及精确详情，旧252日期hover/name有效结果不重；输入default编辑与productReadOnly=1同ADMIN省maintenance合成预览分别绑定，不当真实角色/PG/保存通过。
+- v14已批源码D1完整10叶261=08befd0b…、D3bootstrap/host/run6叶262=35046237…已固定交原QB，只新delta；D3party259/QB205及D2精确22厅22仓260/QB206通过范围直接采用。实际DDL、49/115初始化、登录及一次fullbind仍0，不把source-ready当上线。v13未批独立等待，完整MAIN未绑定继续。
+- C114实际FAILED2/3.274896s，首错NODE_TYPED_PROCESS_OUTPUT_CAP，首超限流/SQL/cleanup无typed回执而UNKNOWN。保留旧尝试；C115新无损紧凑编码保留12read+4detail+pageAbort及65536三限额，原113真实JSON57446→23100B、有限压力74451→38993B逐值还原证明，非实际PG。C已沿原T45提交一次新115，等待collect不重run，先完成旧v11只读再安排v14QA。
+- 人类「重构任务书」直接01a16b94-1d51-7ab3-9d2e-a75efdc109f7授权已工具核实。新增唯一F4 Chat01a16b9a-b8eb-7a40-bcae-eff6d87a196f，原F2的29独立分类/字典/条码资料生产叶clean固定移交，另3既有测试叶，商品editor/六页签仍F2，公共/路由F1。现在11角色含主控、仍原22任务，QF/QF2不增加，Chrome串行。F1已续S02/S03→S04/T03，F2商品剩余→库存，F3厅仓→员工/资金/往来，F4独立资料；各currentPackage/nextReadyPackage/依赖/成功派工记录在TASKS.roles。
+- QFsole104矩阵最新44未检查/12待接入/26差异/21局部/1例外，55显式局部索引、整页及整弹层0；不同来源/版本/actual不能混。252正式build02/pack已成功但未stage，实际229私有应用/正式地址未切。C112保全原件3890/106f9a10…截止2026-10-24T11:35:38.679556Z，未来actual必须用该server原件，非public副本。
+- GitHub最近已核0ec30eae0e8c39dfab83ea724890d182becd60aa；258–262和本接续立即精确非强制同步。全部派工gpt-6.1-sol/xhigh，Fast工具开关未核；目标ACTIVE，业务完整上线与交接未完成。
+
 当前增量（v14真实批准后已开工；源257，候选252）：
 
 - 原D1/D3已读取批准并开始实施，D2保留原settings读三叶，CORE_MEMBERS按22厅22仓精确集合同RR可信已提交证明核验；C仍唯一真实SQL/初始化执行，当前0v14实际提交。v13及其他未列差异不扩批，后续继续完整业务导入。
