@@ -3,11 +3,45 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import Fastify from "fastify";
 import { createCatalogueMaintenanceHttpPlugin } from "./catalogue-maintenance-http.ts";
+import { PostgresCatalogueMaintenanceUnitOfWork } from "../../../adapters/postgres/src/catalogue-maintenance-store.ts";
+import { maintenanceContextClient, PostgresMaintenanceCommandUnitOfWork } from "../../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
+import type { PgSalesClient, PgSalesPool } from "../../../adapters/postgres/src/sales-unit-of-work.ts";
 import type { CatalogueMaintenanceDependencies, CategoryOrderResult, CategoryWriteRecord } from "../../../packages/application/src/catalogue-maintenance-ports.ts";
 import type { MaintenanceCompletion, MaintenanceReceipt } from "../../../packages/application/src/maintenance-commit-ports.ts";
 import { checkedCategoryOrderEvidence, checkedCategoryOrderResult } from "../../../packages/application/src/catalogue-maintenance-validation.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { actor, sid } from "../../../tests/support/synthetic-fixtures.ts";
+test("v15 receipt recovery integration: original directory lock precedes identity/key locks through real service, store and shared UOW", async t => {
+  const calls: { sql: string; values: unknown[] }[] = [], releases: (Error | boolean | undefined)[] = [];
+  const operationId = sid("operation", 2050), first = sid("category", 2051), second = sid("category", 2052), key = "committed-order";
+  const result: CategoryOrderResult = { operationId, kind: "CATEGORY", targetId: first, version: 4,
+    order: { parentId: null, undoOfOperationId: null, members: [{ id: second, version: 5, displayOrder: 0 }, { id: first, version: 4, displayOrder: 1 }] } };
+  const client: PgSalesClient = { async query(sql, values = []) {
+    calls.push({ sql, values: structuredClone(values) }); let rows: Record<string, unknown>[] = [];
+    if (sql.includes("maintenance:identity")) rows = [{ account_id: actor.accountId, staff_id: sid("staff", 2053), login_enabled: true, employment_status: "在职", role: "ADMIN", hall_id: actor.hallId }];
+    if (sql.includes("maintenance:hall")) rows = [{ id: actor.hallId, enabled: true }];
+    if (sql.includes("maintenance:receipt")) rows = [{ id: operationId, request_hash: "a".repeat(64), action: "REORDER", target_type: "CATEGORY", target_id: first, result_data: result, completed_at: "2026-10-24T03:00:00.000000Z" }];
+    return { rows, rowCount: rows.length };
+  }, release(error) { releases.push(error); } };
+  const pool: PgSalesPool = { async connect() { return client; } };
+  let capChecks = 0;
+  const dependencies: CatalogueMaintenanceDependencies = {
+    unitOfWork: new PostgresCatalogueMaintenanceUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), { profile: "CATEGORY_ORDER_UNDO_V15", async assertReady(context) {
+      assert.equal(maintenanceContextClient(context, pool), client); capChecks++;
+    } }), now() { throw Error("Receipt cannot create a new completion time"); }, newId() { throw Error("Receipt cannot allocate a new operation"); }
+  };
+  const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createCatalogueMaintenanceHttpPlugin({ authenticate: async () => actor, dependencies, categoryOnly: true }));
+  const response = await app.inject({ method: "GET", url: `/catalogue/categories/receipts/${key}` });
+  assert.equal(response.statusCode, 200, response.body);
+  assert.deepEqual(response.json(), { requestKey: key, action: "REORDER", status: "COMMITTED", completedAt: "2026-10-24T03:00:00.000000Z", result });
+  assert.equal(capChecks, 1); assert.equal(calls[0]!.sql, "BEGIN ISOLATION LEVEL READ COMMITTED");
+  assert.deepEqual(calls[1]!.values, ["naijue:catalogue-maintenance"]);
+  const identityIndex = calls.findIndex(c => c.sql.includes("maintenance:identity")), keyIndex = calls.findIndex(c => typeof c.values[0] === "string" && c.values[0].startsWith("naijue:receipt:"));
+  assert.ok(identityIndex > 1 && keyIndex > 1); assert.equal(calls.at(-1)!.sql, "COMMIT");
+  assert.ok(calls.every(c => !/\bINSERT\b|\bUPDATE\b|\bDELETE\b|ROLLBACK/.test(c.sql))); assert.deepEqual(releases, [undefined]);
+  assert.equal(response.headers["cache-control"], "no-store"); assert.equal(app.server.listening, false);
+});
 function orderDependencies(ready = true) {
   const a = sid("category", 2100), b = sid("category", 2101);
   const rows = new Map<string, CategoryWriteRecord>([[a, { id: a, kind: "CATEGORY", name: "A", parentId: null, displayOrder: -1, version: 2, deletedAt: null }], [b, { id: b, kind: "CATEGORY", name: "B", parentId: null, displayOrder: 40, version: 3, deletedAt: null }]]);

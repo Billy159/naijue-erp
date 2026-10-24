@@ -1,0 +1,132 @@
+{
+  "atUtc": "2026-10-24T03:34:20.748636+00:00",
+  "parent": "bab2bfef54b653bf3510c27cdb7da9927c953871",
+  "taskId": "V15_RECEIPT_TAKE_DIRECTORY_LOCK_BEFORE_IDENTITY_AND_KEY",
+  "files": [
+    {
+      "path": "packages/application/src/catalogue-maintenance-service.ts",
+      "bytes": 13707,
+      "sha256": "06689ec8704408e8b3e44dc45ae1dc5c4d593bb75ea23db408ceb85605435408",
+      "owner": "D2"
+    },
+    {
+      "path": "apps/api/src/catalogue-maintenance-http.test.ts",
+      "bytes": 15454,
+      "sha256": "53a56bcd1902549f9c493a76a14ccbade1dae1a5a61a14beb9ebcadf2a43446e",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V15-RECEIPT-DIRECTORY-FIX-v1.json",
+  "ownerReceiptSha256AtPin": "b85036c810490a31dcd0cb190d639b64f2e21aba6928f88f3417bce1700059d2",
+  "ownerDelivery": {
+    "task": {
+      "id": "D2-V15-RECEIPT-DIRECTORY-FIX-V1",
+      "date": "2026-10-24",
+      "recordedAt": "2026-10-24T03:32:17.669250+00:00",
+      "status": "SOURCE_MINIMAL_NEW_INTEGRATION_AND_STRICT_PASS_PENDING_D1_HOST_ACTUAL",
+      "approval": "R/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+      "authorization": "C dispatch to repair the receipt transaction directory lock before identity/key locks; original v15 direct human confirmation and reporting authorization remain valid",
+      "modelRequested": "gpt-6.1-sol/xhigh",
+      "actualModelAndFastSetting": "NOT_INDEPENDENTLY_VERIFIED",
+      "baseline": {
+        "source": "SOURCE281",
+        "commit": "4a0710a5ebd602a0a8603ea690e6a015992409c1",
+        "originalReportPreserved": true,
+        "originalPinsPreserved": true
+      }
+    },
+    "behavior": {
+      "problem": "Committed CATEGORY REORDER receipt recovery returned HTTP 500 because categoryOrder.assertReady requires the directory lock and receipt() did not acquire it.",
+      "change": "Acquire the original tx.lockDirectory() at the start of the existing receipt transaction before authorization identity and original-key locks, matching execute().",
+      "productionChange": "Exactly one await statement added to receipt(); reconstructing the source without that statement exactly matches the recorded SOURCE281 SHA-256."
+    },
+    "contract": {
+      "unchanged": [
+        "Current actor/role/hall authorization and action reauthorization",
+        "Original request key, hash-backed receipt lookup, committed result and time",
+        "V15 capability recheck on the same active original transaction context",
+        "No new operation ID, completion time, or write during receipt recovery"
+      ],
+      "lockOrder": [
+        "Original shared driver BEGIN",
+        "Original catalogue directory advisory lock",
+        "Current identity/authorization and original request-key receipt locks",
+        "V15 same-context capability recheck",
+        "Original shared driver COMMIT"
+      ]
+    },
+    "seam": {
+      "path": [
+        "Actual Fastify category-only plugin with app.inject",
+        "Actual CatalogueMaintenanceService receipt()",
+        "Actual PostgresCatalogueMaintenanceUnitOfWork",
+        "Actual PostgresMaintenanceCommandUnitOfWork and maintenanceContextClient ownership validation",
+        "Scripted synthetic PgSalesClient"
+      ],
+      "underlyingClientIdentityAsserted": true,
+      "sharedUowEdited": false,
+      "d1SqlHostOrF4Edited": false,
+      "actualDatabaseEngineExercised": false
+    },
+    "validation": {
+      "newUniqueCases": 1,
+      "oldTenRepeated": false,
+      "testName": "v15 receipt recovery integration: original directory lock precedes identity/key locks through real service, store and shared UOW",
+      "before": {
+        "exitCode": 1,
+        "statusCode": 500,
+        "expectedStatusCode": 200,
+        "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V15-RECEIPT-DIRECTORY-before.tap"
+      },
+      "after": {
+        "exitCode": 0,
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0,
+        "statusCode": 200,
+        "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V15-RECEIPT-DIRECTORY-after.tap",
+        "assertions": [
+          "Exact original committed receipt and extended order result recovered",
+          "Directory advisory lock immediately follows BEGIN and precedes identity/key locks",
+          "Capability checked once against exact driver-managed underlying client",
+          "COMMIT and one clean client release",
+          "No DML, rollback, listening server, or new ID/time allocation",
+          "Cache-Control no-store"
+        ]
+      },
+      "strict": {
+        "exitCode": 0,
+        "roots": [
+          "packages/application/src/catalogue-maintenance-service.ts",
+          "apps/api/src/catalogue-maintenance-http.test.ts"
+        ],
+        "log": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V15-RECEIPT-DIRECTORY-types.log",
+        "logBytes": 0,
+        "mode": "No emit; strict; noUncheckedIndexedAccess; exactOptionalPropertyTypes; original dependency graph"
+      },
+      "testDeltaMatchesSource281AfterRemovingOnlyNewCaseAndThreeImports": true
+    },
+    "files": {
+      "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "production": [
+        "packages/application/src/catalogue-maintenance-service.ts"
+      ],
+      "tests": [
+        "apps/api/src/catalogue-maintenance-http.test.ts"
+      ],
+      "modifiedLeaves": 2,
+      "newSourceFiles": 0,
+      "pins": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V15-RECEIPT-DIRECTORY-SOURCE-PINS.json"
+    },
+    "next": {
+      "owner": "D1/C",
+      "required": "Integrate these exact two pinned D2 leaves with the existing D1 v15 shared UOW/SQL/host work. Only affected actual-PG receipt recovery if required by the original integration contract. C owns source snapshot, build, QA, deployment and Git.",
+      "d2ActualPgBuildDeployGitExecuted": false,
+      "deliveryClaim": "Source fix and one new protocol integration case plus affected strict type check only; no engine QA or deployment claim."
+    }
+  },
+  "stage": "FIXED_SOURCE_ORIGINAL_REVIEW_AFFECTED_SCOPE_ONLY_PENDING",
+  "actualPG": false,
+  "deployed": false
+}

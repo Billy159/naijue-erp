@@ -113,7 +113,7 @@ export function createCatalogueMaintenanceService(dependencies: CatalogueMainten
     },
     async receipt(actorInput, kindInput, keyInput) {
       const actor = checkedProductActor(actorInput), kind = catalogueMaintenanceKind(kindInput), key = partyRequestKey(keyInput);
-      return dependencies.unitOfWork.transaction(async tx => { await authorizeCatalogueMaintenance(tx.evidence, actor, kind, "RECEIPT"); const original = await tx.evidence.getReceipt(actor.accountId, key, kind); requireDomain(original && original.result.kind === kind, "RECEIPT_NOT_FOUND", "Original catalogue receipt unavailable"); await authorizeCatalogueMaintenance(tx.evidence, actor, kind, original.action);
+      return dependencies.unitOfWork.transaction(async tx => { await tx.lockDirectory(); await authorizeCatalogueMaintenance(tx.evidence, actor, kind, "RECEIPT"); const original = await tx.evidence.getReceipt(actor.accountId, key, kind); requireDomain(original && original.result.kind === kind, "RECEIPT_NOT_FOUND", "Original catalogue receipt unavailable"); await authorizeCatalogueMaintenance(tx.evidence, actor, kind, original.action);
         const order = original.action === "REORDER" || original.action === "UNDO_REORDER";
         if (order) { requireDomain(kind === "CATEGORY" && tx.categoryOrder, "CATALOGUE_ORDER_NOT_READY", "Verified category order receipt is unavailable"); await tx.categoryOrder.assertReady(); }
         return { requestKey: key, action: original.action, status: "COMMITTED" as const, completedAt: original.completedAt, result: order ? checkedCategoryOrderResult(original.result) : original.result }; });
