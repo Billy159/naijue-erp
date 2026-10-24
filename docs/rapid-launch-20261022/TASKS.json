@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "f4a4a90ad566664b579b2ba531e3391ba52d0894",
+    "headObserved": "619e16c3a1043c0e8d8a297f8048c2084a1f64af",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "f23aede734dd3fce95c76c17d31324a6ab39522c",
+    "remoteHeadVerified": "a333e1519ad91471cb433f5098f5d4f273cab4a1",
     "remoteReadbackMethod": "Exact12 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "f23aede734dd3fce95c76c17d31324a6ab39522c"
+    "lastVerifiedRemoteCommit": "a333e1519ad91471cb433f5098f5d4f273cab4a1"
   },
   "concurrency": {
     "chats": 10,
@@ -1050,9 +1050,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T01:09:19.890561+00:00",
+  "updatedAt": "2026-10-24T01:16:23.439975+00:00",
   "stage": "ACTIVE_SOURCE241_FIXED_UI240_ACTUAL229_PRIVATE_APP_STAGE_AND_C112_BACKUP_PASS_NO_FORMAL_SWITCH",
-  "lastVerifiedRemoteCommit": "f23aede734dd3fce95c76c17d31324a6ab39522c",
+  "lastVerifiedRemoteCommit": "a333e1519ad91471cb433f5098f5d4f273cab4a1",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -3358,6 +3358,36 @@
       "scope": "252 fixed build/serve/3keyHTTP matched; explicit previewfixturemodes and one fictional historical scheme pair, no realdata business assertion",
       "adoption": "Original owner/independent limited evidence adopted without duplicate C technical tests",
       "adoptedAtUtc": "2026-10-24T01:09:19.890561+00:00"
+    },
+    {
+      "id": "QF-V091",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v091-qf-c253-reference-label-consumer-source/RESULT.json",
+      "bytes": 2534,
+      "sha256": "06d1623d62530c12095f53a95b871129688331700881e82ba34c7b80ffac4e01",
+      "result": "SEE_FIXED_RECEIPT",
+      "scope": "253 four referencewrapper LABEL delta independentlysourcePASS, newactualnotin252",
+      "adoption": "Original independent limited conclusion adopted without repeated C technical checks",
+      "adoptedAtUtc": "2026-10-24T01:16:23.439975+00:00"
+    },
+    {
+      "id": "QF2-C243-EDITOR-FIVE-TABS",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c243-product-native-actual-01/RESULT.json",
+      "bytes": 1664,
+      "sha256": "6cc292468625bd3ddb00bcac6693516bbfbc0df69759779e878bc014146f1037",
+      "result": "NEED_FIX_P03_TRANSFER_CONSUMER_WITH_SCOPED_PASSES_AND_CAPABILITY_GAPS",
+      "scope": "Formal2435editor tabs boundedPASS with singleP03transfercontrol failure andP07overview capmissing; notreadonly/P04P10 or business",
+      "adoption": "Original independent limited conclusion adopted without repeated C technical checks",
+      "adoptedAtUtc": "2026-10-24T01:16:23.439975+00:00"
+    },
+    {
+      "id": "QF2-C248-C252-P10-SOURCE",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c248-c252-default-scheme-source-01/RESULT.json",
+      "bytes": 1350,
+      "sha256": "46f6b4a5ee8af6752da1007e35aea061a8de3ef6d13e51fee496d74d924cda00",
+      "result": "PASS_SOURCE_LIMITED_FINAL248_PLUS252_CONSUMER_ACTUAL_PENDING",
+      "scope": "Final2486unchanged+252nameleaf sharedtargetread/lazy modal sourcePASS, actualcontaining252pending",
+      "adoption": "Original independent limited conclusion adopted without repeated C technical checks",
+      "adoptedAtUtc": "2026-10-24T01:16:23.439975+00:00"
     }
   ],
   "newPendingReviews": [
@@ -3661,9 +3691,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T01:09:19.890561+00:00",
-    "sourceRound": 253,
-    "sourceCheckpoint": "f4a4a90ad566664b579b2ba531e3391ba52d0894",
+    "atUtc": "2026-10-24T01:16:23.439975+00:00",
+    "sourceRound": 255,
+    "sourceCheckpoint": "619e16c3a1043c0e8d8a297f8048c2084a1f64af",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -3717,12 +3747,12 @@
       "actualBrowserAccepted": false,
       "scope": "Includes244247249 date/hover,250modepointer,248251252P10truefictionname+originalindependentdictionary; does NOT include253relatedfour selectors. 18C overlays14same4changed, controllededit/readonlyinputs sameADMIN singleApplication."
     },
-    "nextPreview": "252nowactual57880 ready. CurrentQF2sole243 five-editor-tabs tofinish+clean, then exact252datehover/P10readOnly normalmodeinput window; QFpointeractual next onlycleantransfer.253notin252, no versionmix.",
+    "nextPreview": "Fixed252actualready57880, QFsolemodepointer thenclean; QF2nextsame252datehover+P10 name+readonlyinput.253255 notin252.OriginalC03productionprep fixed252(readonlyproducts7bool explicitprivateconfiguration),0actualbuildyet, no dataReady/publicswitch.",
     "r1": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Only unapproved v13 and existing precise business decisions/CORE-dependent write contract wait; HREV v12 nonowner writer target/installer inputs missing, no reader ACL substitution.",
-    "github": "Verifiedf23aede734dd3fce95c76c17d31324a6ab39522c exact6commitFF;249–253 and this continuation nextsync",
+    "github": "Verifieda333e1519ad91471cb433f5098f5d4f273cab4a1 exact6 originalcommitsFF;254255 andcurrentcontinuation nextsync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -3754,14 +3784,14 @@
     "backend": "QB202 independentlyaccepted actualC113 native defaultFK queryadapter readOnly and cancellationcleanup, source201 retained. SKU-scoped sameAPI read contract now originalD2 implements from approved existing columns, no newDBfield/write; fullSKUlist-with-no-barcode summary gap separately located, notsolvedbyfilter.",
     "productionBuild": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "actualQFBrowser": {
-      "owner": "QF2",
-      "status": "C_SOLE_243_FIVE_EDITOR_TABS_IN_PROGRESS",
+      "owner": "QF",
+      "status": "C_SOLE_252_MODE_MOUSE_ONLY_IN_PROGRESS",
       "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
       "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
       "viewport": "1470x668/DPR2",
-      "candidateVersion": "415af7d344a843256dc8772960589517669fab46/ui-preview-415af7d-01-build01",
-      "candidateUrl": "http://127.0.0.1:57879/synthetic-unified.html",
-      "scope": "P02/P03/P05/P06/P07 original normaleditor, never claim P08readonly; P04P10supersededstop. Current243auditcomplete, readonly path unreachable underEDIT grant; no fake role switch.",
+      "candidateVersion": "06fa5f51f4fbbd131175cd2983892540439209d0/ui-preview-06fa5f5-01-build01",
+      "candidateUrl": "http://127.0.0.1:57880/synthetic-unified.html",
+      "scope": "Onlysource250 mode first singlepointer field/arrow/value andpartial selected state; do nottest253fourreferences/date/P10",
       "trueBrowserIsolationProven": false,
       "protected": [
         "DB7CA658365B213EEE3EB1333946E5BA unsaved",
@@ -3770,9 +3800,9 @@
       ],
       "nextOwner": "QF only after final clean release; selected O-S14 summary/cancel/confirm retention only",
       "releaseBefore": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-dc71344-os14-actual/BROWSER-RELEASE.json",
-        "bytes": 5475,
-        "sha256": "b2e5a60f34dcfdfbd2675aa56306b1824373b59a4cbc090cc5a9fdba325e63b1"
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c243-product-native-actual-01/BROWSER-RELEASE.json",
+        "bytes": 5499,
+        "sha256": "e34bbb6e0eba615ac20fce935d91d12493adbc1e9bb4d5bdc9a0b72296e6f3fd"
       }
     },
     "frontendAcceptance": {
@@ -4977,7 +5007,7 @@
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     },
-    "browserOwner": "QF2_SOLE_243_EDITOR_FIVE_NONBARCODE_TABS",
+    "browserOwner": "QF_SOLE_252_MODE_MOUSE_AFFECTED_ACTUAL",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
@@ -5158,14 +5188,36 @@
       "P06": "Emptyfiveimagecategories+bottomtile/hittest boundedPASS, no populatedmedia sample/upload/delete/download/realimageclaim",
       "P07": "ObservedLegacyStock3cols undercurrentmissingreadOverviewcap; nativeoverviewNOT_CONNECTED/NOT_TESTED, no sumfrom3rows; no wholepagePASS",
       "scopeQualification": "QF2sourceonlyleaf/P10 and actual243module separate, originalQFsole104matrix adopts formalpartialreports only"
+    },
+    "latestSkuRead": "254c190204 existingbarcode endpoint optional SKU exactscope sourcefixed; originalQB independent onlynew6scopes active, no actual254SQL yet. OriginalD2 next explicitviewSKU distincttotalSkus paginatedrealSKUs incl0bindingdisabled/currentpageonlybatchsummary, preciseoneSKUdetailsvia254. Existingall5000specs or transactioncandidate not replacement; no source/manual/originalSpec fabrication.",
+    "latestP03TransferSource": "255619e16c same actual sharedcolorfitconsumer getsFrozeniw-arco-controls andfinal26rules, owneroneconsumer/strict/CSS sourcePASS adopted, originalQF2 targetedsourcepending, actualnotin252.",
+    "latestP07Composition": "OriginalF1 production config/mount only productStockOverview explicitflag +existingfactorythirdstockOverview option and sharedmaintenance stock provider inprogress; oldomitted/falsekeepslegacy; current252productordinary reader still lacksOverview, docreaderhascap. No newAPI/DBfields/writes;Cpreviewfutureexplicitwiring needed.",
+    "productionNext252": {
+      "status": "PREPARATION_ONLY_NOT_BUILD_NOT_STARTED",
+      "source": "06fa5f51f4fbbd131175cd2983892540439209d0",
+      "build": "r1-06fa5f5-20261024-01",
+      "enabledFrontendOnly": [
+        "products",
+        "productViewer",
+        "productFullPage",
+        "barcodeSchemes",
+        "salesProductFullPage",
+        "transferProductFullPage"
+      ],
+      "existingInventorySalesTransferLedger": "Keep original229values",
+      "allWriteAndMaintenanceSwitches": "Keep original229values, no expansion",
+      "dataReady": false,
+      "publicEntryChanged": false,
+      "sameLockDependencies": "Package/lock/builders/issuer identical229;Cactualstagecanreuseverifiedinstalleddeps without newci,notyetexecuted",
+      "qualification": "UIconfigdoesnotgrantbackendpermissions/actualrole/readydata;sourceentry/build/manifestwillbesamefixedcandidate"
     }
   },
   "latestReadySource": {
-    "round": 253,
-    "commit": "f4a4a90ad566664b579b2ba531e3391ba52d0894",
+    "round": 255,
+    "commit": "619e16c3a1043c0e8d8a297f8048c2084a1f64af",
     "latestServedPreviewRound": 252,
-    "actualBrowserUnderTestRound": 243,
-    "qualification": "253newfourreference pointer fix not in252;252immutable browserfixturemodebatch,server229actualseparate."
+    "actualBrowserUnderTestRound": 252,
+    "qualification": "254skuAPI/255P03CSS are newerfixedsource not inactual252;253fourreference also absent."
   },
   "pendingUserDecision": [
     {

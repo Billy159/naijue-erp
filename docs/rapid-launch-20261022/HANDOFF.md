@@ -1,3 +1,11 @@
+最近增量（源255，实际252，当前QF唯一鼠标窗口）：
+
+- 原QFv091限定通过253四参考字段LABEL边界源码，QF2正式243五editor页回执及最终248＋252默认方案name消费者源码结论采用，不重复旧技术验收。原QF2已clean/STOP5499B/e34bbb6e…；QF现唯一252只验250业务类型singlemouse入口，后继同252日期/hover/P10给QF2，不能并抢Chrome或把253/255新源码记入252。
+- 254=c1902049170bfef876acdef9db9dd32f6ae11a98沿原barcode endpoint增加可选skuId同真实product归属读取、同RR准确total/page，0绑定与不存在区分；旧无filter响应/SQL、启停绑定及raw身份保留，原6新case/strict通过，QB仅此新增source scope在途，实际PG未测。原D2继续已明确viewSKU读模式：真实SKU为主表含无码/停用，独立totalSkus及本页一次批量binding摘要；点查看沿254详细分页，不取5000规格或全条码假分页，不用旧码推未有来源分类。0新DB字段/DDL/写语义，未批六scheme与v14不混入。
+- 255=619e16c3a1043c0e8d8a297f8048c2084a1f64af为原P03共享颜色/版型弹窗真实祖先及完整Frozen26条最终控件规则接入，保旧CSS前缀、页码/ID/extraSKU和后生效operation padding。owner一次共享实际consumer＋CSS/strict源检查通过，原QF2仅新source/后继含版短验，不重公共/size/后台，旧243P2未倒改。原P07现成readOverview接口/factory/consumer都有，缺生产组合，原F1正补明确开关/同reader复用，0新API/写授权，Legacy三列不算nativeoverview通过。
+- 原C03唯一owner在准备固定252正式生产输入r1-06fa5f5-20261024-01（未实际build/stage）。C只明确本次私有前端产品只读7项路由展示开关，保229写和maintenance开关、原runtime用途不提升；dataReady/businessReady=false/正式网址未切。package/lock/原builder与229一致，可安全复用已验依赖，不把准备当应用启动/业务就绪；后继253等源码不追进固定252。原229私有应用仍保留。
+- GitHub已准确回读a333e1519ad91471cb433f5098f5d4f273cab4a1（6原提交非强制FF），254/255及本增量继续同步。真实113/QB202/新C112保全和v14单分支待确认均见下段；原十角色22任务持续，Sol61/xhigh，Fast无开关未核，目标ACTIVE。
+
 接续更新（源253／最新可看252／QF2仍实操243）：
 
 - http://127.0.0.1:57880/synthetic-unified.html 已可打开，固定source06fa5f51f4fbbd131175cd2983892540439209d0/build ui-preview-06fa5f5-01-build01，原一次build0/414输入1369模块，HTML3459562B/b722d1c6…、identity6762B/909643eb…、provenance51633B/43754a79…，3HTTP逐字/原身份头200，PID47447/session71446。18合成覆层14同4变；新增一个明确FICTION历史方案供原SYN2默认FK与独立dictionary同对象派生，未给真实六scheme定性，不造新商品/SKU/条码。默认product-edit-v1；?productReadOnly=1仅构造省略maintenance自然走原查看分支，同ADMIN/同源/单Application，非真实角色授权。QA按源码/构建/URL/输入批次绑定。

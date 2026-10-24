@@ -11095,7 +11095,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-24T01:09:19.890561+00:00",
+  "updatedAt": "2026-10-24T01:16:23.439975+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -13012,6 +13012,36 @@
       "scope": "252 fixed build/serve/3keyHTTP matched; explicit previewfixturemodes and one fictional historical scheme pair, no realdata business assertion",
       "adoption": "Original owner/independent limited evidence adopted without duplicate C technical tests",
       "adoptedAtUtc": "2026-10-24T01:09:19.890561+00:00"
+    },
+    {
+      "id": "QF-V091",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v091-qf-c253-reference-label-consumer-source/RESULT.json",
+      "bytes": 2534,
+      "sha256": "06d1623d62530c12095f53a95b871129688331700881e82ba34c7b80ffac4e01",
+      "result": "SEE_FIXED_RECEIPT",
+      "scope": "253 four referencewrapper LABEL delta independentlysourcePASS, newactualnotin252",
+      "adoption": "Original independent limited conclusion adopted without repeated C technical checks",
+      "adoptedAtUtc": "2026-10-24T01:16:23.439975+00:00"
+    },
+    {
+      "id": "QF2-C243-EDITOR-FIVE-TABS",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c243-product-native-actual-01/RESULT.json",
+      "bytes": 1664,
+      "sha256": "6cc292468625bd3ddb00bcac6693516bbfbc0df69759779e878bc014146f1037",
+      "result": "NEED_FIX_P03_TRANSFER_CONSUMER_WITH_SCOPED_PASSES_AND_CAPABILITY_GAPS",
+      "scope": "Formal2435editor tabs boundedPASS with singleP03transfercontrol failure andP07overview capmissing; notreadonly/P04P10 or business",
+      "adoption": "Original independent limited conclusion adopted without repeated C technical checks",
+      "adoptedAtUtc": "2026-10-24T01:16:23.439975+00:00"
+    },
+    {
+      "id": "QF2-C248-C252-P10-SOURCE",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c248-c252-default-scheme-source-01/RESULT.json",
+      "bytes": 1350,
+      "sha256": "46f6b4a5ee8af6752da1007e35aea061a8de3ef6d13e51fee496d74d924cda00",
+      "result": "PASS_SOURCE_LIMITED_FINAL248_PLUS252_CONSUMER_ACTUAL_PENDING",
+      "scope": "Final2486unchanged+252nameleaf sharedtargetread/lazy modal sourcePASS, actualcontaining252pending",
+      "adoption": "Original independent limited conclusion adopted without repeated C technical checks",
+      "adoptedAtUtc": "2026-10-24T01:16:23.439975+00:00"
     }
   ],
   "coverageGroups": [
@@ -13051,10 +13081,10 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-24T01:09:19.890561+00:00",
+    "atUtc": "2026-10-24T01:16:23.439975+00:00",
     "latestSource": 220,
     "servedPreview": 217,
-    "browserOwner": "QF2_SOLE_243_EDITOR_FIVE_NONBARCODE_TABS",
+    "browserOwner": "QF_SOLE_252_MODE_MOUSE_AFFECTED_ACTUAL",
     "adopted": [
       {
         "id": "QF-V056",
@@ -13380,8 +13410,8 @@
       "approvedException": 1,
       "qualification": "OriginalQFv090 current counts,104=37+67/explicit55scopeindex/whole0; notallpending scopes covered."
     },
-    "latestSourceRound": 253,
-    "latestSourceCheckpoint": "f4a4a90ad566664b579b2ba531e3391ba52d0894",
+    "latestSourceRound": 255,
+    "latestSourceCheckpoint": "619e16c3a1043c0e8d8a297f8048c2084a1f64af",
     "currentBackend": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
@@ -13505,7 +13535,7 @@
       "old105Replayed": false,
       "runtimePurposeMetadataOnlyReviewReused": "QB191"
     },
-    "latestGitHubVerified": "f23aede734dd3fce95c76c17d31324a6ab39522c",
+    "latestGitHubVerified": "a333e1519ad91471cb433f5098f5d4f273cab4a1",
     "actualR1TCP": {
       "atUtc": "2026-10-23T22:47:16.998756+00:00",
       "taskId": "C03_R1_CURRENT_V11_TCP_WITNESS",
@@ -13635,7 +13665,7 @@
       "publicSwitch": false
     },
     "newApp": "Actual229 private app/proxy started health200/resources200, dataReadyfalse/no publicswitch",
-    "nextPreview": "252nowactual57880 ready. CurrentQF2sole243 five-editor-tabs tofinish+clean, then exact252datehover/P10readOnly normalmodeinput window; QFpointeractual next onlycleantransfer.253notin252, no versionmix.",
+    "nextPreview": "Fixed252actualready57880, QFsolemodepointer thenclean; QF2nextsame252datehover+P10 name+readonlyinput.253255 notin252.OriginalC03productionprep fixed252(readonlyproducts7bool explicitprivateconfiguration),0actualbuildyet, no dataReady/publicswitch.",
     "freshBackup": {
       "ageSecondsAtReadback": 0.081091,
       "backupId": "rapid-launch-current-20261024-112",
@@ -13763,6 +13793,8 @@
       "P06": "Emptyfiveimagecategories+bottomtile/hittest boundedPASS, no populatedmedia sample/upload/delete/download/realimageclaim",
       "P07": "ObservedLegacyStock3cols undercurrentmissingreadOverviewcap; nativeoverviewNOT_CONNECTED/NOT_TESTED, no sumfrom3rows; no wholepagePASS",
       "scopeQualification": "QF2sourceonlyleaf/P10 and actual243module separate, originalQFsole104matrix adopts formalpartialreports only"
-    }
+    },
+    "latestSkuRead": "254c190204 existingbarcode endpoint optional SKU exactscope sourcefixed; originalQB independent onlynew6scopes active, no actual254SQL yet. OriginalD2 next explicitviewSKU distincttotalSkus paginatedrealSKUs incl0bindingdisabled/currentpageonlybatchsummary, preciseoneSKUdetailsvia254. Existingall5000specs or transactioncandidate not replacement; no source/manual/originalSpec fabrication.",
+    "latestP03TransferSource": "255619e16c same actual sharedcolorfitconsumer getsFrozeniw-arco-controls andfinal26rules, owneroneconsumer/strict/CSS sourcePASS adopted, originalQF2 targetedsourcepending, actualnotin252."
   }
 }
