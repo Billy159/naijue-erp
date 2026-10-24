@@ -3,7 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { PostgresProductDetailsQueryReader } from "../adapters/postgres/src/product-details-query-reader.ts";
 import type { PgProductQueryClient } from "../adapters/postgres/src/product-query-reader.ts";
-import type { ProductBarcodeQuery, ProductDetailsScopedRead } from "../packages/application/src/product-details-query-ports.ts";
+import type { ProductBarcodeRecordQuery, ProductBarcodeSkuQuery, ProductDetailsScopedRead } from "../packages/application/src/product-details-query-ports.ts";
 import type { NativeRuntime26Capability } from "../packages/application/src/native-import-schema-contract.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
@@ -37,7 +37,7 @@ const target = () => ({ sql: /^SELECT p.id, p.version FROM/, rows: [{ id: produc
 const barcode = () => ({ id: sid("barcode", 7202), product_id: productId, barcode: "0000123 ", sku_id: sid("sku", 7203),
   sku_code: "ORIGINAL SKU", color_id: sid("color", 7204), fit_id: sid("fit", 7205), size_id: sid("size", 7206), barcode_kind: "CONFIRMED_OLD", scheme_id: null, enabled: false });
 const filteredSkuId = sid("sku", 7203);
-function skuRead(page = 1): ProductDetailsScopedRead<ProductBarcodeQuery> {
+function skuRead(page = 1): ProductDetailsScopedRead<ProductBarcodeRecordQuery> {
   const p = { ...parameters, skuId: filteredSkuId, page };
   return { ...read("barcodes"), parameters: p, intent: { kind: "barcodes", parameters: p } };
 }
@@ -46,6 +46,70 @@ function skuTarget(): Step {
     assert.deepEqual(values, [filteredSkuId, productId]); assert.match(sql, /s.id = \$1::uuid AND s.product_id = \$2::uuid/); assert.doesNotMatch(sql, /enabled/);
   } };
 }
+function skuPageRead(page = 1): ProductDetailsScopedRead<ProductBarcodeSkuQuery> {
+  const p: ProductBarcodeSkuQuery = { ...parameters, page, view: "SKU" };
+  return { ...read("barcodes"), parameters: p, intent: { kind: "barcodes", parameters: p } };
+}
+const nativeSku = (id = filteredSkuId) => ({ id, product_id: productId, sku_code: "0001 ", enabled: true,
+  color_id: sid("color", 7204), color_label: "原色", fit_id: sid("fit", 7205), fit_label: "原版", size_id: sid("size", 7206), size_label: "001" });
+const summaryBinding = (row: ReturnType<typeof barcode>) => ({ id: row.id, barcode: row.barcode, kind: row.barcode_kind, schemeId: row.scheme_id, enabled: row.enabled });
+test("SKU page: real zero-binding and disabled SKUs remain; bounded summaries match detailed native bindings", async () => {
+  const disabledSku = sid("sku", 7220);
+  const bindings = [
+    { ...barcode(), id: sid("barcode", 7221), barcode: "0000 MAIN ", barcode_kind: "MAIN", enabled: true },
+    { ...barcode(), id: sid("barcode", 7222), barcode: "0001 DISABLED MAIN", barcode_kind: "MAIN", enabled: false },
+    { ...barcode(), id: sid("barcode", 7223), barcode: "0002 OLD ", enabled: false },
+    { ...barcode(), id: sid("barcode", 7224), barcode: "0003 OLD", enabled: true }
+  ];
+  const f = setup([begin(), target(), { sql: /^SELECT count.*FROM naijue_erp.sku s/, rows: [{ total: "2" }] },
+    { sql: /^SELECT s.id, s.product_id, s.sku_code/, rows: [nativeSku(), { ...nativeSku(disabledSku), sku_code: "0002", enabled: false, color_label: null }], inspect(sql, values) {
+      assert.deepEqual(values, [productId, 20, 0]); assert.match(sql, /LEFT JOIN naijue_erp.color/); assert.doesNotMatch(sql, /sku_barcode|WHERE[^]*enabled/);
+      assert.match(sql, /ORDER BY s.sku_code COLLATE "C" NULLS LAST, s.id LIMIT \$2 OFFSET \$3/);
+    } }, { sql: /^WITH ranked AS/, rows: [{ sku_id: filteredSkuId, binding_count: "4", enabled_main_count: "1", disabled_main_count: "1", confirmed_old_count: "2", enabled_main: summaryBinding(bindings[0]!), first_confirmed_old: summaryBinding(bindings[2]!) }], inspect(sql, values) {
+      assert.deepEqual(values, [[filteredSkuId, disabledSku]]); assert.match(sql, /WHERE b.sku_id=ANY\(\$1::uuid\[\]\)/);
+      assert.match(sql, /row_number\(\) OVER/); assert.match(sql, /state_order=1/); assert.match(sql, /kind_order=1/);
+    } }, commit()]);
+  const result = await f.reader.readBarcodes(skuPageRead());
+  assert.equal(result!.kind, "SKU_PAGE"); assert.equal(result!.totalSkus, 2); assert.equal(Object.hasOwn(result!, "total"), false);
+  assert.equal(result!.items[0]!.skuCode, "0001 "); assert.equal(result!.items[0]!.bindingCount, 4);
+  assert.deepEqual(result!.items[0]!.main, summaryBinding(bindings[0]!)); assert.equal(result!.items[0]!.disabledMainCount, 1);
+  assert.equal(result!.items[0]!.confirmedOldCount, 2); assert.deepEqual(result!.items[0]!.firstConfirmedOld, summaryBinding(bindings[2]!));
+  assert.equal(result!.items[1]!.skuEnabled, false); assert.equal(result!.items[1]!.colorLabel, null);
+  assert.equal(result!.items[1]!.bindingCount, 0); assert.equal(result!.items[1]!.main, null); assert.equal(result!.items[1]!.firstConfirmedOld, null); f.done();
+  const detail = setup([begin(), target(), skuTarget(), { sql: /^SELECT count/, rows: [{ total: "4" }] }, { sql: /^SELECT b.id/, rows: bindings }, commit()]);
+  const codes = await detail.reader.readBarcodes(skuRead());
+  assert.equal(codes!.total, result!.items[0]!.bindingCount);
+  assert.deepEqual(codes!.items.filter(item => item.kind === "MAIN" && item.enabled).map(item => ({ id: item.id, barcode: item.barcode, kind: item.kind, schemeId: item.schemeId, enabled: item.enabled })), [result!.items[0]!.main]);
+  assert.equal(codes!.items.filter(item => item.kind === "CONFIRMED_OLD").length, result!.items[0]!.confirmedOldCount); detail.done();
+});
+test("SKU page: exact SKU count and one bound current-page summary do not truncate at 200", async () => {
+  const rows = Array.from({ length: 5 }, (_, i) => ({ ...nativeSku(sid("sku", 7230 + i)), sku_code: `00${i}` }));
+  const f = setup([begin(), { sql: /^SELECT p.id, p.version, p.default_barcode_scheme_id/, rows: [{ id: productId, version: 4, default_barcode_scheme_id: null }] },
+    { sql: /^SELECT count.*FROM naijue_erp.sku s/, rows: [{ total: "205" }], inspect(sql, values) { assert.deepEqual(values, [productId]); assert.doesNotMatch(sql, /enabled|sku_barcode/); } },
+    { sql: /^SELECT s.id, s.product_id, s.sku_code/, rows, inspect(_sql, values) { assert.deepEqual(values, [productId, 20, 200]); } },
+    { sql: /^WITH ranked AS/, rows: [], inspect(_sql, values) { assert.deepEqual(values, [rows.map(row => row.id)]); } }, commit()], async () => {});
+  const result = await f.reader.readBarcodes(skuPageRead(11));
+  assert.equal(result!.totalSkus, 205); assert.equal(result!.items.length, 5); assert.deepEqual(result!.defaultScheme, { state: "NOT_SET" });
+  assert.ok(result!.items.every(row => row.bindingCount === 0)); assert.equal(f.calls.length, 6); f.done();
+});
+test("SKU page: missing product is null; zero real SKUs and empty later pages never query binding summaries", async () => {
+  const f = setup([begin(), { sql: /^SELECT p.id/, rows: [] }, commit()]);
+  assert.equal(await f.reader.readBarcodes(skuPageRead()), null); f.done();
+  for (const [total, page] of [["0", 1], ["2", 2]] as const) {
+    const g = setup([begin(), target(), { sql: /^SELECT count.*FROM naijue_erp.sku s/, rows: [{ total }] }, { sql: /^SELECT s.id, s.product_id, s.sku_code/, rows: [] }, commit()]);
+    const result = await g.reader.readBarcodes(skuPageRead(page)); assert.equal(result!.totalSkus, Number(total)); assert.deepEqual(result!.items, []);
+    assert.ok(g.calls.every(sql => !/sku_barcode/.test(sql))); g.done();
+  }
+});
+test("SKU page: multiple enabled MAINs, inconsistent aggregates and foreign targets are integrity errors", async () => {
+  const base = { sku_id: filteredSkuId, binding_count: "2", enabled_main_count: "2", disabled_main_count: "0", confirmed_old_count: "0", enabled_main: summaryBinding({ ...barcode(), barcode_kind: "MAIN", enabled: true }), first_confirmed_old: null };
+  for (const aggregate of [base, { ...base, binding_count: "1", enabled_main_count: "0", enabled_main: null }, { ...base, sku_id: sid("sku", 999) }]) {
+    const f = setup([begin(), target(), { sql: /^SELECT count/, rows: [{ total: "1" }] }, { sql: /^SELECT s.id, s.product_id, s.sku_code/, rows: [nativeSku()] }, { sql: /^WITH ranked AS/, rows: [aggregate] }, rollback()]);
+    await assert.rejects(f.reader.readBarcodes(skuPageRead()), { code: "INVALID_DATABASE_VALUE" }); f.done();
+  }
+  const g = setup([begin(), target(), { sql: /^SELECT count/, rows: [{ total: "1" }] }, { sql: /^SELECT s.id, s.product_id, s.sku_code/, rows: [{ ...nativeSku(), product_id: sid("product", 999) }] }, rollback()]);
+  await assert.rejects(g.reader.readBarcodes(skuPageRead()), { code: "INVALID_DATABASE_VALUE" }); g.done();
+});
 test("SKU barcode scope: count and bounded pages retain active/inactive bindings beyond record 200", async () => {
   for (const page of [1, 11]) {
     const rows = Array.from({ length: page === 1 ? 20 : 5 }, (_, i) => ({ ...barcode(), id: sid("barcode", 8000 + i),

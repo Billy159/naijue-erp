@@ -1,0 +1,213 @@
+{
+  "atUtc": "2026-10-24T01:21:59.462716+00:00",
+  "parent": "ee5e4cb4301dae42319217df5d391e23dcc6e615",
+  "taskId": "D2_P10_REAL_SKU_PAGE_WITH_BOUNDED_CURRENT_PAGE_BARCODE_SUMMARY",
+  "files": [
+    {
+      "path": "packages/application/src/product-details-query-ports.ts",
+      "bytes": 7031,
+      "sha256": "834eda0edce2a579634e057959542acee34d08f2c074562627d9457370a8e599",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/product-details-query-validation.ts",
+      "bytes": 17754,
+      "sha256": "43603e6b970e44987e06d4670cb88d4c6185ada65b564e35107c5f5813273889",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/product-details-query-service.ts",
+      "bytes": 5070,
+      "sha256": "76e69fd573ca9508f991e8f56cac1a36bbc6f22900daff03057ed9ba86e7b058",
+      "owner": "D2"
+    },
+    {
+      "path": "adapters/postgres/src/product-details-query-reader.ts",
+      "bytes": 14314,
+      "sha256": "b83e106739a50157813db3236d9be62c59d99ef9810ad348017db356a9c8c35e",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/product-details-query-postgres-protocol.test.ts",
+      "bytes": 20910,
+      "sha256": "0def17f34338bfb87ff825171476d8bd016974edc9ab263f360b4cc759a30e23",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/product-details-query.test.ts",
+      "bytes": 20409,
+      "sha256": "6cf485ef36628adcbf7d462f984a7dcfe4afa760da7294cbf5e786d9f765c73e",
+      "owner": "D2"
+    },
+    {
+      "path": "apps/api/src/product-details-query-http.test.ts",
+      "bytes": 15106,
+      "sha256": "6b255a63bf4eb8820d9aa956f3c891b87dac7dff90b1fbda58466a59039d2daf",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/P10-SKU-PAGE-v1.json",
+  "ownerReceiptSha256AtPin": "13467cca5130703b93032fb53fbbdc72a462e53653b8d915593e6a3f6bcb343c",
+  "ownerDelivery": {
+    "task": {
+      "id": "D2-P10-SKU-PAGE-V1",
+      "atUtc": "2026-10-24T01:20:33.402495+00:00",
+      "status": "SOURCE_NEW_SKU_GRAIN7_AND_STRICT_PASS_NOT_ACTUAL_PG",
+      "baseline": "C SOURCE254 c1902049170bfef876acdef9db9dd32f6ae11a98 原7叶skuId filter交付采用，不重做。",
+      "authority": "C最新明确原P10已有字段只读SKUgrain合同，0DB字段/DDL/写/新endpoint。",
+      "modelRequested": "gpt-6.1-sol/xhigh",
+      "actualModelAndFastSetting": "NOT_INDEPENDENTLY_VERIFIED"
+    },
+    "outcome": {
+      "completed": "原/products/barcodes/query新增显式view:SKU模式，主表sku准确分页，真实无条码/停用SKU保留，当前页真实SKU集合一次批量窗口条码聚合。",
+      "oldCompatibility": "无view仍原barcode-record分页，skuId仍原单SKU明细分页；两者不增加kind/totalSkus，不改原total口径。view和skuId互斥，只barcodes接口接受。",
+      "noSyntheticFacts": "不计算Demo笛卡尔SKU、不造码、不断言无码代表无需或未生成。CONFIRMED_OLD仅原native分类，不冒源历史或人工subtype已知。",
+      "profile": "原native26 defaultScheme三态、实际client证明与原product grant均沿用；旧无26保持UNAVAILABLE；六scheme CURRENT及v14写分支不获批准。"
+    },
+    "frozenContract": {
+      "publicPath": "POST /api/products/barcodes/query",
+      "request": "{productId,page,pageSize:20|50|100,view:\"SKU\"}；与skuId严格互斥。原无view3/4键请求继续原合同。",
+      "resultType": "ProductBarcodeQueryResult = ProductBarcodePage | ProductBarcodeSkuPage；只有新SKU模式有kind。",
+      "response": {
+        "kind": "SKU_PAGE",
+        "productId": "actual requested product UUID",
+        "version": "same RR product version",
+        "page": "echo request",
+        "pageSize": "echo20|50|100",
+        "totalSkus": "exact whole-product retained SKU count, integer safe range",
+        "defaultScheme": "original closed UNAVAILABLE(reason) | AVAILABLE(schemeId) | NOT_SET",
+        "items": "ProductBarcodeSkuRow[] only current server SKU page"
+      },
+      "row": {
+        "skuId": "actual UUID",
+        "skuCode": "original TEXT NOT NULL value unchanged, no trim/generation",
+        "skuEnabled": "actual boolean",
+        "colorId": "actual UUID",
+        "colorLabel": "actual text|null",
+        "fitId": "actual UUID",
+        "fitLabel": "actual text|null",
+        "sizeId": "actual UUID",
+        "sizeLabel": "actual text|null",
+        "bindingCount": "all enabled/disabled native bindings count",
+        "main": "actual sole enabled MAIN ProductBarcodeSummary|null",
+        "disabledMainCount": "all disabled MAIN bindings count",
+        "confirmedOldCount": "all enabled/disabled CONFIRMED_OLD bindings count",
+        "firstConfirmedOld": "stable first retained CONFIRMED_OLD ProductBarcodeSummary|null"
+      },
+      "summary": "Pick<ProductBarcodeDetails,id|barcode|kind|schemeId|enabled>，闭合{id,barcode,kind,schemeId,enabled}，原id/raw/前导零/空格/NULL scheme/停用原值保持。",
+      "counts": "bindingCount = (main存在?1:0)+disabledMainCount+confirmedOldCount，数字准确安全整数；confirmedOldCount为0 iff firstConfirmedOld=null。",
+      "labels": "LEFT JOIN实际字典，缺label真NULL，无猜测/默认文案，原UUID不改；missing response列/SQL错误不伪NULL或零。",
+      "missingAndErrors": "不存在product仍原HTTP200 null。真实0SKU才totalSkus0；空后页保留非零totalSkus。授权拒绝/SQL/完整性错误不补空。沿原HTTP错误脱敏，no-store、取消、session/Origin不变。",
+      "skuCodeSchemaEvidence": "adapters/postgres/migrations/0001_runtime_sales.sql:70 sku_code text NOT NULL UNIQUE；因此DTO为string，保留原文本，NULL为完整性异常。排序显式NULLS LAST不改变原可空性。"
+    },
+    "implementation": {
+      "files": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-ports.ts",
+          "bytes": 7031,
+          "sha256": "834eda0edce2a579634e057959542acee34d08f2c074562627d9457370a8e599"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-validation.ts",
+          "bytes": 17754,
+          "sha256": "43603e6b970e44987e06d4670cb88d4c6185ada65b564e35107c5f5813273889"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-service.ts",
+          "bytes": 5070,
+          "sha256": "76e69fd573ca9508f991e8f56cac1a36bbc6f22900daff03057ed9ba86e7b058"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/product-details-query-reader.ts",
+          "bytes": 14314,
+          "sha256": "b83e106739a50157813db3236d9be62c59d99ef9810ad348017db356a9c8c35e"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/product-details-query-postgres-protocol.test.ts",
+          "bytes": 20910,
+          "sha256": "0def17f34338bfb87ff825171476d8bd016974edc9ab263f360b4cc759a30e23"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/product-details-query.test.ts",
+          "bytes": 20409,
+          "sha256": "6cf485ef36628adcbf7d462f984a7dcfe4afa760da7294cbf5e786d9f765c73e"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/product-details-query-http.test.ts",
+          "bytes": 15106,
+          "sha256": "6b255a63bf4eb8820d9aa956f3c891b87dac7dff90b1fbda58466a59039d2daf"
+        }
+      ],
+      "sourceFilesChanged": 7,
+      "newSourceFiles": 0,
+      "httpProductionRouteChanges": 0,
+      "queryFlow": [
+        "原每请求product/barcodes grant先于reader连接，旧同RR READ ONLY及实际product目标/retained-delete条件保持。",
+        "SKU模式SELECT COUNT(*) FROM sku WHERE product_id；不按enabled筛掉SKU，不依赖barcode存在。",
+        "SELECT本页真实sku+坐标+LEFT JOIN labels；按sku_code COLLATE C NULLS LAST,id稳定，原LIMIT/OFFSET20|50|100。",
+        "只有本页非空时，一次WHERE sku_id=ANY($1::uuid[])批量条码窗口+聚合；没有每SKU查询/N+1或全商品bindings装配。",
+        "row_number按barcode COLLATE C,id选每组第一项；jsonb_agg仅过滤到first行形成至多1个MAIN/1个OLD摘要，不聚合数千旧码进响应。",
+        "activeMAIN计数>1或聚合/明细目标不一致即INVALID_DATABASE_VALUE，不任取首项掩盖异常；main唯一依据原0009 partial UNIQUE约束。",
+        "新闭合响应validator核kind/目标/page/totalSkus/精确键、唯一SKU、摘要kind/启用语义/计数及重复摘要；原service调用，response和request模式错配拒绝。"
+      ],
+      "existingConstraint": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql:52–53 sku_barcode_one_current_main ON(sku_id) WHERE enabled AND barcode_kind=MAIN，未修改。",
+      "forbiddenChanges": {
+        "ui": 0,
+        "sharedHostIssuer": 0,
+        "ddlSqlApplyPgSsh": 0,
+        "buildGit": 0,
+        "permissionPurpose": 0,
+        "sourceMetadataInference": 0
+      }
+    },
+    "validation": {
+      "newUniqueCases": 7,
+      "firstRuntimeRun": {
+        "log": "P10-SKU-PAGE-run1.tap",
+        "exit": 0,
+        "pass": 7,
+        "fail": 0,
+        "skip": 0
+      },
+      "coverage": [
+        "无条码SKU保留、停用SKU保留、NULL标签/原码文本；列表main/旧码摘要和单SKU原详细nativebindings事实一致。",
+        "SKU total205/page11只返回5个；仅该页SKU数组一次聚合，无200截断，无全量伪分页。",
+        "不存在商品null、真实0SKU和空后页准确total，不查绑定摘要。",
+        "重复启用MAIN/聚合计数错/外来SKU或错product完整性拒绝。",
+        "view仅SKU且与skuId互斥，stock/prices/overview不接受view，错误参数在授权/reader前拒绝。",
+        "新response闭合独立kind及totalSkus、原授权先于数据，旧/新响应模式不匹配拒绝。",
+        "原HTTP endpoint Fastify inject读取SKU页、保留两个旧记录模式无新字段、缺商品200null及400错误，未listen。"
+      ],
+      "strict": {
+        "firstLog": "P10-SKU-PAGE-types-first.log",
+        "firstExit": 2,
+        "firstIssue": "旧单SKU测试在新增response union后直接取skuId未窄化，TS2339；仅该原断言加in窄化，不改变业务预期。",
+        "finalLog": "P10-SKU-PAGE-types-final.log",
+        "finalExit": 0,
+        "finalBytes": 0,
+        "scope": "原7叶与依赖图，工程strict flags/noEmit。"
+      },
+      "reusedNotRetested": [
+        "原C254 skuId6项及defaultScheme245/2468项。",
+        "C113/QB202默认FK真实限定PASS；未测NULL实际样本保持NOT_TESTED。"
+      ],
+      "notRun": [
+        "实际PostgreSQL解析/查询/角色/新SKU页PG，C唯一后续执行",
+        "239/49/旧48/sealed18/全reader或事务套",
+        "HTTP监听/浏览器/正式规模性能/整页验收/构建发布"
+      ]
+    },
+    "handoff": {
+      "frontend": "原F2已收到view/skuId互斥、准确ProductBarcodeQueryResult union、SKU_PAGE行与摘要字段；用新真实SKU页替换原currentbarcodepage grouping，不抓5000规格作假分页。点查看继续原skuId明细分页，主/旧码只摘要+更多数量，保留原layout。",
+      "apiComposition": "原同reader/service与HTTProute，无新组合参数/issuer/purpose，C/D1现有默认FK配对直接使用；D2没有修改公共APIowner或UI。",
+      "scopeLimits": "字典方案详情仍独立权限；native旧码没有source/manual subtype/originalSpec新事实，UNKNOWN保持；六scheme CURRENT/写裁决未实施。",
+      "sourceOnly": "本次7个协议/service/HTTP inject检查与strict通过，不代表实际PG/角色/真实来源历史/规模<=2000ms或整页正式验收通过。"
+    },
+    "next": {
+      "controller": "C固定原7叶与交付回执，沿原单scope QB和C唯一受控实际窗口验证SKUgrain；不重已过默认FK/旧skuId模块范围。",
+      "frontend": "原F2同步严格request/response parser和原SKU列表消费者，保留分页grain区分及取消/陈旧响应保护。",
+      "reportingAuthorization": "人类01a161f7-a5e8-7e10-9059-9537c28910c2/REPORTING-AUTHORIZATION.json 原七项主动回C授权。"
+    }
+  },
+  "qualification": "Samebarcodeendpoint explicitSKUview/totalSkus, originalperrequestgrant/RR with sku principal includesdisabled+0bindings. Onebatchedsummary currentpageonly, uniqueactiveMAIN/OLDfirst+count, noN+1/fullcatalog/identityinference. Oldrecord/skuIddetailmode anddefault201202 preserved. Owner7newtests+strict adopted, independentQB/newrealPG and frontendconsumer pending.0DBfields/DDL/writes/newAPI, notfullsourcehistory."
+}

@@ -2,8 +2,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createProductDetailsQueryService } from "../packages/application/src/product-details-query-service.ts";
-import type { ProductBarcodePage, ProductDefaultScheme, ProductDetailsQueryDependencies, ProductWarehouseStockPage, ProductStockOverviewResult } from "../packages/application/src/product-details-query-ports.ts";
-import { parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, checkedProductDefaultScheme, parseProductBarcodeQuery, checkedProductDetailsScope } from "../packages/application/src/product-details-query-validation.ts";
+import type { ProductBarcodePage, ProductBarcodeSkuPage, ProductDefaultScheme, ProductDetailsQueryDependencies, ProductWarehouseStockPage, ProductStockOverviewResult } from "../packages/application/src/product-details-query-ports.ts";
+import { parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, checkedProductDefaultScheme, parseProductBarcodeQuery, checkedProductDetailsScope, checkedProductBarcodeSkuPage } from "../packages/application/src/product-details-query-validation.ts";
 import { DomainError } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const productId = sid("product", 7101), warehouseId = sid("warehouse", 7102), skuId = sid("sku", 7103);
@@ -18,6 +18,34 @@ function setup(change: Partial<ProductDetailsQueryDependencies> = {}) {
   };
   return { service: createProductDetailsQueryService(dependencies), reads: () => reads };
 }
+test("SKU view query: explicit mode is mutually exclusive with SKU filtering and cannot leak to stock or prices", async () => {
+  const query = { ...parameters, view: "SKU" as const };
+  assert.deepEqual(parseProductBarcodeQuery(query), query);
+  let grants = 0;
+  const f = setup({ authorization: { async authorize(_actor, intent) { grants++; return { kind: intent.kind, productId }; } } });
+  for (const input of [{ ...query, skuId }, { ...query, skuId: undefined }, { ...query, view: "RECORDS" }, { ...query, view: undefined }, { ...query, view: null }, { ...query, extra: true }])
+    await assert.rejects(f.service.readBarcodes(actor, input, signal()), { code: "INVALID_PRODUCT_DETAILS_QUERY" });
+  await assert.rejects(f.service.readStock(actor, query, signal()), { code: "INVALID_PRODUCT_DETAILS_QUERY" });
+  await assert.rejects(f.service.readPrices(actor, { productId, view: "SKU" }, signal()), { code: "INVALID_PRODUCT_QUERY" });
+  await assert.rejects(f.service.readStockOverview(actor, { productId, warehouseMode: "ALL", view: "SKU" }, signal()), { code: "INVALID_PRODUCT_DETAILS_QUERY" });
+  assert.equal(grants, 0); assert.equal(f.reads(), 0);
+});
+test("SKU view response: closed grain is explicit, original authorization precedes all data and mode mismatch fails", async () => {
+  const query = { ...parameters, view: "SKU" as const };
+  const page: ProductBarcodeSkuPage = { kind: "SKU_PAGE", ...parameters, version: 1, totalSkus: 0, items: [], defaultScheme: { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" } };
+  assert.deepEqual(checkedProductBarcodeSkuPage(page, parameters), page);
+  for (const bad of [{ ...page, total: 0 }, { ...page, skuId }, { ...page, kind: "BARCODE_PAGE" }, { ...page, totalSkus: -1 }]) assert.throws(() => checkedProductBarcodeSkuPage(bad, parameters));
+  let granted = false;
+  const f = setup({ authorization: { async authorize(_actor, intent) { assert.deepEqual(intent, { kind: "barcodes", parameters: query }); granted = true; return { kind: "barcodes", productId }; } },
+    reader: { async readPrices() { return null; }, async readBarcodes(scope) { assert.equal(granted, true); assert.deepEqual(scope.parameters, query); return page; } } });
+  assert.deepEqual(await f.service.readBarcodes(actor, query, signal()), page);
+  const old: ProductBarcodePage = { ...parameters, version: 1, total: 0, items: [], defaultScheme: page.defaultScheme };
+  const g = setup({ reader: { async readPrices() { return null; }, async readBarcodes(scope) { return "view" in scope.parameters ? old : page; } } });
+  await assert.rejects(g.service.readBarcodes(actor, query, signal()), { code: "INVALID_DATABASE_VALUE" });
+  await assert.rejects(g.service.readBarcodes(actor, parameters, signal()), { code: "INVALID_DATABASE_VALUE" });
+  const denied = setup({ authorization: { async authorize() { throw new DomainError("FORBIDDEN", "synthetic denial"); } } });
+  await assert.rejects(denied.service.readBarcodes(actor, query, signal()), { code: "FORBIDDEN" }); assert.equal(denied.reads(), 0);
+});
 test("SKU barcode query: only barcodes accept an exact optional UUID and preserve the original request shape", async () => {
   assert.deepEqual(parseProductBarcodeQuery(parameters), parameters); assert.equal(Object.hasOwn(parseProductBarcodeQuery(parameters), "skuId"), false);
   const query = { ...parameters, skuId };
@@ -41,7 +69,7 @@ test("SKU barcode response: original authorization precedes the reader and exact
         assert.equal(authorized, true); assert.deepEqual(scope.parameters, query);
         return { ...parameters, version: 1, total: 0, items: [], defaultScheme: { state: "UNAVAILABLE", reason: "NO_PRODUCT_SCHEME_FIELD" }, ...(echo === undefined ? {} : { skuId: echo }) };
       } } });
-    if (echo === skuId) assert.equal((await f.service.readBarcodes(actor, query, signal()))!.skuId, skuId);
+    if (echo === skuId) { const result = await f.service.readBarcodes(actor, query, signal()); assert.ok(result && "skuId" in result); assert.equal(result.skuId, skuId); }
     else await assert.rejects(f.service.readBarcodes(actor, query, signal()), { code: "INVALID_DATABASE_VALUE" });
   }
   const f = setup({ authorization: { async authorize() { throw new DomainError("FORBIDDEN", "synthetic denial"); } } });

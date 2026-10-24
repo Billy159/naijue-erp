@@ -1,7 +1,7 @@
 import { DomainError, requireDomain } from "../../domain/src/errors.ts";
 import { entityId, quantity } from "../../domain/src/values.ts";
 import { checkedProductActor, parseProductQuery } from "./product-query-validation.ts";
-import type { ProductBarcodePage, ProductBarcodeQuery, ProductDefaultScheme, ProductDetailsPageQuery, ProductDetailsReadIntent, ProductDetailsScopedRead, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewScopedRead, ProductStockOverviewResult, ProductStockOverviewItem } from "./product-details-query-ports.ts";
+import type { ProductBarcodePage, ProductBarcodeQuery, ProductBarcodeQueryResult, ProductBarcodeSkuPage, ProductBarcodeSummary, ProductDefaultScheme, ProductDetailsPageQuery, ProductDetailsReadIntent, ProductDetailsScopedRead, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewScopedRead, ProductStockOverviewResult, ProductStockOverviewItem } from "./product-details-query-ports.ts";
 
 export function checkedProductDefaultScheme(value: unknown): ProductDefaultScheme {
   requireDomain(value !== null && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype && Object.hasOwn(value, "state"),
@@ -28,20 +28,62 @@ export function parseProductDetailsPageQuery(value: unknown): ProductDetailsPage
 }
 export function parseProductBarcodeQuery(value: unknown): ProductBarcodeQuery {
   if (!value || typeof value !== "object" || Array.isArray(value) || Object.getPrototypeOf(value) !== Object.prototype) invalidProductDetailsQuery();
-  const row = value as Record<string, unknown>, filtered = Object.hasOwn(row, "skuId");
-  if (Reflect.ownKeys(row).length !== (filtered ? 4 : 3) || !["productId", "page", "pageSize"].every(key => Object.hasOwn(row, key))) invalidProductDetailsQuery();
+  const row = value as Record<string, unknown>, filtered = Object.hasOwn(row, "skuId"), skuView = Object.hasOwn(row, "view");
+  if (filtered && skuView || Reflect.ownKeys(row).length !== (filtered || skuView ? 4 : 3)
+    || !["productId", "page", "pageSize"].every(key => Object.hasOwn(row, key))) invalidProductDetailsQuery();
   const p = parseProductDetailsPageQuery({ productId: row.productId, page: row.page, pageSize: row.pageSize });
+  if (skuView) { if (row.view !== "SKU") invalidProductDetailsQuery(); return Object.freeze({ ...p, view: "SKU" }); }
   if (!filtered) return p;
   let skuId: string;
   try { if (typeof row.skuId !== "string") return invalidProductDetailsQuery(); skuId = entityId("sku", row.skuId); }
   catch { return invalidProductDetailsQuery(); }
   return Object.freeze({ ...p, skuId });
 }
-export function checkedProductBarcodeResult(value: ProductBarcodePage, parameters: ProductBarcodeQuery): ProductBarcodePage {
+export function checkedProductBarcodeResult(value: ProductBarcodeQueryResult, parameters: ProductBarcodeQuery): ProductBarcodeQueryResult {
+  if (parameters.view === "SKU") return checkedProductBarcodeSkuPage(value, parameters);
+  requireDomain(!Object.hasOwn(value, "kind") && !Object.hasOwn(value, "totalSkus"), "INVALID_DATABASE_VALUE", "Unexpected SKU page for a barcode record request");
+  const result = value as ProductBarcodePage;
   requireDomain(Object.hasOwn(value, "skuId") === Object.hasOwn(parameters, "skuId")
-    && (parameters.skuId === undefined || value.skuId === parameters.skuId && Array.isArray(value.items) && value.items.every(item => item.skuId === parameters.skuId)),
+    && (parameters.skuId === undefined || result.skuId === parameters.skuId && Array.isArray(result.items) && result.items.every(item => item.skuId === parameters.skuId)),
     "INVALID_DATABASE_VALUE", "Barcode response differs from the requested SKU scope");
-  return { ...value, defaultScheme: checkedProductDefaultScheme(value.defaultScheme) };
+  return { ...result, defaultScheme: checkedProductDefaultScheme(result.defaultScheme) };
+}
+export function checkedProductBarcodeSkuPage(value: unknown, parameters: ProductDetailsPageQuery): ProductBarcodeSkuPage {
+  const data = (ok: unknown): void => requireDomain(ok, "INVALID_DATABASE_VALUE", "Invalid SKU barcode page response");
+  const object = (input: unknown, keys: readonly string[]): Record<string, unknown> => {
+    data(input !== null && typeof input === "object" && Object.getPrototypeOf(input) === Object.prototype);
+    const row = input as Record<string, unknown>; data(Reflect.ownKeys(row).length === keys.length && keys.every(key => Object.hasOwn(row, key))); return row;
+  };
+  const integer = (v: unknown): number => { data(typeof v === "number" && Number.isSafeInteger(v) && v >= 0); return v as number; };
+  const id = (v: unknown): string => { data(typeof v === "string"); return entityId("product", v as string); };
+  const text = (v: unknown): string => { data(typeof v === "string"); return v as string; };
+  const label = (v: unknown): string | null => v === null ? null : text(v);
+  const summary = (v: unknown, kind: ProductBarcodeSummary["kind"], enabledMain = false): ProductBarcodeSummary | null => {
+    if (v === null) return null;
+    const b = object(v, ["id", "barcode", "kind", "schemeId", "enabled"]);
+    data(b.kind === kind && typeof b.enabled === "boolean" && (!enabledMain || b.enabled === true) && typeof b.barcode === "string" && b.barcode.length > 0);
+    return { id: id(b.id), barcode: text(b.barcode), kind, schemeId: b.schemeId === null ? null : id(b.schemeId), enabled: b.enabled as boolean };
+  };
+  const page = object(value, ["kind", "productId", "version", "page", "pageSize", "totalSkus", "defaultScheme", "items"]);
+  data(page.kind === "SKU_PAGE" && page.productId === parameters.productId && page.page === parameters.page && page.pageSize === parameters.pageSize
+    && Number.isSafeInteger(page.version) && (page.version as number) > 0 && (page.version as number) <= 2147483647);
+  const totalSkus = integer(page.totalSkus); data(Array.isArray(page.items));
+  const raw = page.items as unknown[];
+  data(raw.length === Math.min(parameters.pageSize, Math.max(0, totalSkus - (parameters.page - 1) * parameters.pageSize)));
+  const ids = new Set<string>(), barcodeIds = new Set<string>();
+  const items = raw.map(input => {
+    const r = object(input, ["skuId", "skuCode", "skuEnabled", "colorId", "colorLabel", "fitId", "fitLabel", "sizeId", "sizeLabel", "bindingCount", "main", "disabledMainCount", "confirmedOldCount", "firstConfirmedOld"]);
+    const skuId = id(r.skuId); data(!ids.has(skuId) && typeof r.skuEnabled === "boolean"); ids.add(skuId);
+    const bindingCount = integer(r.bindingCount), disabledMainCount = integer(r.disabledMainCount), confirmedOldCount = integer(r.confirmedOldCount);
+    const main = summary(r.main, "MAIN", true), firstConfirmedOld = summary(r.firstConfirmedOld, "CONFIRMED_OLD");
+    data(BigInt(bindingCount) === BigInt(disabledMainCount) + BigInt(confirmedOldCount) + (main === null ? 0n : 1n)
+      && (confirmedOldCount === 0) === (firstConfirmedOld === null));
+    for (const b of [main, firstConfirmedOld]) if (b !== null) { data(!barcodeIds.has(b.id)); barcodeIds.add(b.id); }
+    return { skuId, skuCode: text(r.skuCode), skuEnabled: r.skuEnabled as boolean, colorId: id(r.colorId), colorLabel: label(r.colorLabel),
+      fitId: id(r.fitId), fitLabel: label(r.fitLabel), sizeId: id(r.sizeId), sizeLabel: label(r.sizeLabel), bindingCount, main, disabledMainCount, confirmedOldCount, firstConfirmedOld };
+  });
+  return { kind: "SKU_PAGE", productId: parameters.productId, version: page.version as number, page: parameters.page, pageSize: parameters.pageSize,
+    totalSkus, defaultScheme: checkedProductDefaultScheme(page.defaultScheme), items };
 }
 export function checkedProductDetailsScope<P extends ProductDetailsScopedRead>(read: P): P {
   checkedProductActor(read.actor);

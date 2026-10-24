@@ -4,7 +4,7 @@ import { checkedProductDetailsScope, checkedProductStockPage, parseProductDetail
   parseProductStockOverviewQuery, checkedProductStockOverviewScope, checkedProductStockOverviewResult, parseProductBarcodeQuery, checkedProductBarcodeResult } from "./product-details-query-validation.ts";
 import type { ActorContext } from "./ports.ts";
 import type { ProductQuery } from "./product-query-ports.ts";
-import type { ProductDetailsQueryDependencies, ProductDetailsReadIntent, ProductDetailsScopedRead } from "./product-details-query-ports.ts";
+import type { ProductBarcodePage, ProductBarcodeQueryResult, ProductBarcodeRecordQuery, ProductBarcodeSkuPage, ProductBarcodeSkuQuery, ProductDetailsQueryDependencies, ProductDetailsReadIntent, ProductDetailsScopedRead } from "./product-details-query-ports.ts";
 
 /** Target-only reads of existing fields; no schema, command or inventory writer. */
 export function createProductDetailsQueryService(dependencies: ProductDetailsQueryDependencies) {
@@ -22,17 +22,21 @@ export function createProductDetailsQueryService(dependencies: ProductDetailsQue
     if (result !== null && result.productId !== parameters.productId) throw Error("Mismatched trusted product detail result");
     return result;
   }
+  function readBarcodes(actor: ActorContext, input: ProductBarcodeSkuQuery, signal: AbortSignal): Promise<ProductBarcodeSkuPage | null>;
+  function readBarcodes(actor: ActorContext, input: ProductBarcodeRecordQuery, signal: AbortSignal): Promise<ProductBarcodePage | null>;
+  function readBarcodes(actor: ActorContext, input: unknown, signal: AbortSignal): Promise<ProductBarcodeQueryResult | null>;
+  async function readBarcodes(actor: ActorContext, input: unknown, signal: AbortSignal): Promise<ProductBarcodeQueryResult | null> {
+    const p = parseProductBarcodeQuery(input);
+    return read(actor, productDetailsIntent("barcodes", p), p, signal, async scope => {
+      const result = await reader.readBarcodes(scope);
+      return result === null ? null : checkedProductBarcodeResult(result, p);
+    });
+  }
   return Object.freeze({
     async readPrices(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const p = parseProductQuery(input); return read(actor, productDetailsIntent("prices", p), p, signal, scope => reader.readPrices(scope));
     },
-    async readBarcodes(actor: ActorContext, input: unknown, signal: AbortSignal) {
-      const p = parseProductBarcodeQuery(input);
-      return read(actor, productDetailsIntent("barcodes", p), p, signal, async scope => {
-        const result = await reader.readBarcodes(scope);
-        return result === null ? null : checkedProductBarcodeResult(result, p);
-      });
-    },
+    readBarcodes,
     async readStockOverview(actor: ActorContext, input: unknown, signal: AbortSignal) {
       const p = parseProductStockOverviewQuery(input), current = checkedProductActor(actor); activeProductRead(signal);
       // Authorization compatibility only. This never reads or aggregates the legacy stock page.

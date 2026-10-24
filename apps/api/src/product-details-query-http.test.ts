@@ -8,6 +8,38 @@ import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
 import { actor, sid } from "../../../tests/support/synthetic-fixtures.ts";
 const productId = sid("product", 7301), page = { productId, page: 1, pageSize: 20 };
+test("SKU view HTTP: one original endpoint exposes exact SKU grain and keeps both record modes unchanged", async t => {
+  const skuId = sid("sku", 7320), statements: string[] = [];
+  const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createProductDetailsQueryHttpPlugin({ authenticate: async () => actor, dependencies: {
+    authorization: { async authorize(_actor, intent) { return { kind: intent.kind, productId: intent.parameters.productId }; } },
+    reader: new PostgresProductDetailsQueryReader({ async connect() { return { async query(sql, values = []) {
+      statements.push(sql); let rows: Record<string, unknown>[] = [];
+      if (sql.startsWith("SELECT p.id") && values[0] === productId) rows = [{ id: productId, version: 1 }];
+      if (sql.startsWith("SELECT count")) rows = [{ total: /FROM naijue_erp.sku s WHERE/.test(sql) ? "1" : "0" }];
+      if (sql.startsWith("SELECT s.id, s.product_id, s.sku_code")) rows = [{ id: skuId, product_id: productId, sku_code: "00001 ", enabled: false,
+        color_id: sid("color", 7321), color_label: null, fit_id: sid("fit", 7322), fit_label: "原版", size_id: sid("size", 7323), size_label: "001" }];
+      else if (sql.startsWith("SELECT s.id")) rows = [{ id: skuId, product_id: productId }];
+      return { rows, rowCount: rows.length };
+    }, release() {} }; } }), stockReader: null
+  } }));
+  const response = await app.inject({ method: "POST", url: "/products/barcodes/query", payload: { ...page, view: "SKU" } });
+  assert.equal(response.statusCode, 200, response.body); assert.equal(response.json().kind, "SKU_PAGE"); assert.equal(response.json().totalSkus, 1); assert.equal(Object.hasOwn(response.json(), "total"), false);
+  assert.equal(response.json().items[0].skuId, skuId); assert.equal(response.json().items[0].skuEnabled, false); assert.equal(response.json().items[0].bindingCount, 0);
+  assert.equal(response.headers["cache-control"], "no-store");
+  for (const payload of [page, { ...page, skuId }]) {
+    const old = await app.inject({ method: "POST", url: "/products/barcodes/query", payload });
+    assert.equal(old.statusCode, 200, old.body); assert.equal(old.json().total, 0); assert.equal(Object.hasOwn(old.json(), "kind"), false); assert.equal(Object.hasOwn(old.json(), "totalSkus"), false);
+    assert.equal(Object.hasOwn(old.json(), "skuId"), Object.hasOwn(payload, "skuId"));
+  }
+  const missing = await app.inject({ method: "POST", url: "/products/barcodes/query", payload: { ...page, productId: sid("product", 999), view: "SKU" } });
+  assert.equal(missing.statusCode, 200, missing.body); assert.equal(missing.json(), null);
+  const before = statements.length;
+  for (const [url, payload] of [["/products/barcodes/query", { ...page, view: "SKU", skuId }], ["/products/barcodes/query", { ...page, view: "bad" }],
+    ["/products/stock/query", { ...page, view: "SKU" }], ["/products/prices/query", { productId, view: "SKU" }]] as const)
+    assert.equal((await app.inject({ method: "POST", url, payload })).statusCode, 400);
+  assert.equal(statements.length, before); assert.equal(app.server.listening, false);
+});
 test("SKU barcode HTTP: the original route distinguishes missing target, zero bindings and invalid cross-tab parameters", async t => {
   const skuId = sid("sku", 7310), statements: string[] = [];
   let grants = 0;

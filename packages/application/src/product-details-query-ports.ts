@@ -4,7 +4,9 @@ import type { ProductQuery } from "./product-query-ports.ts";
 
 export type ProductDetailsPageSize = 20 | 50 | 100;
 export interface ProductDetailsPageQuery extends ProductQuery { readonly page: number; readonly pageSize: ProductDetailsPageSize }
-export interface ProductBarcodeQuery extends ProductDetailsPageQuery { readonly skuId?: string }
+export interface ProductBarcodeRecordQuery extends ProductDetailsPageQuery { readonly skuId?: string; readonly view?: never }
+export interface ProductBarcodeSkuQuery extends ProductDetailsPageQuery { readonly view: "SKU"; readonly skuId?: never }
+export type ProductBarcodeQuery = ProductBarcodeRecordQuery | ProductBarcodeSkuQuery;
 export type ProductDetailsReadIntent =
   | { readonly kind: "prices"; readonly parameters: ProductQuery }
   | { readonly kind: "barcodes"; readonly parameters: ProductBarcodeQuery }
@@ -38,6 +40,21 @@ export interface ProductBarcodePage {
   /** Present only for an explicitly SKU-scoped request, after verifying product membership. */
   readonly skuId?: string;
 }
+export type ProductBarcodeSummary = Pick<ProductBarcodeDetails, "id" | "barcode" | "kind" | "schemeId" | "enabled">;
+export interface ProductBarcodeSkuRow {
+  readonly skuId: string; readonly skuCode: string; readonly skuEnabled: boolean;
+  readonly colorId: string; readonly colorLabel: string | null;
+  readonly fitId: string; readonly fitLabel: string | null;
+  readonly sizeId: string; readonly sizeLabel: string | null;
+  readonly bindingCount: number; readonly main: ProductBarcodeSummary | null;
+  readonly disabledMainCount: number; readonly confirmedOldCount: number; readonly firstConfirmedOld: ProductBarcodeSummary | null;
+}
+export interface ProductBarcodeSkuPage {
+  readonly kind: "SKU_PAGE"; readonly productId: string; readonly version: number;
+  readonly page: number; readonly pageSize: ProductDetailsPageSize; readonly totalSkus: number;
+  readonly defaultScheme: ProductDefaultScheme; readonly items: readonly ProductBarcodeSkuRow[];
+}
+export type ProductBarcodeQueryResult = ProductBarcodePage | ProductBarcodeSkuPage;
 export interface ProductWarehouseStockItem {
   readonly warehouseId: string; readonly warehouseName: string; readonly skuId: string;
   readonly quantity: string | null; readonly state: "KNOWN" | "UNKNOWN" | "MISSING" | "UNMAPPED" | "READ_FAILED";
@@ -70,7 +87,7 @@ export interface ProductStockOverviewResult {
 }
 export interface ProductDetailsSnapshotReader {
   readPrices(read: ProductDetailsScopedRead<ProductQuery>): Promise<ProductPriceDetails | null>;
-  readBarcodes(read: ProductDetailsScopedRead<ProductBarcodeQuery>): Promise<ProductBarcodePage | null>;
+  readBarcodes(read: ProductDetailsScopedRead<ProductBarcodeQuery>): Promise<ProductBarcodeQueryResult | null>;
 }
 /** D3-owned reader. It MUST independently authorize the current inventory/warehouse scope and
  * certify SKU membership/publication/admission before returning a known zero. A product grant
