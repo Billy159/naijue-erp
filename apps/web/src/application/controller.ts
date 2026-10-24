@@ -6,7 +6,7 @@ import { snapshotQueryParameters } from '../loading/query-parameters.ts';
 import type { ProductMaintenanceCommand } from '../products/product-editor-contracts.ts';
 import type { InventoryLedgerEntry } from '../inventory/ledger-contracts.ts';
 import { captureProductFullPageConfiguration, ownProductFullPageConfiguration } from '../products/product-page-configuration.ts';
-import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet } from './contracts.ts';
+import type { ApplicationConfiguration, ApplicationRoute, ApplicationSnapshot, PartySession, SalesSession, TransferSession, PreparedApplicationRoute, RoutePreparation, RouteStylesheet, DocumentResponsibleStaffCapability } from './contracts.ts';
 import type { preparePaymentSettingsSession } from './routes/payment-settings.tsx';
 import type { prepareStoreSettingsSession } from './routes/store-settings.tsx';
 import type { prepareAccountSettingsSession } from './routes/account-settings.tsx';
@@ -321,13 +321,15 @@ export class ApplicationController {
     let input: RoutePreparation = { scope, principal, configuration: this.#configuration.routes, http: this.#httpForScope(scope, route), ...(initialDocument ? { initialDocument } : {}) };
     try {
       let prepared: PreparedApplicationRoute;
-      if (principal.role !== 'ADMIN') {
+      {
         const sales = input.configuration.sales, transfers = input.configuration.transfers;
-        if (sales?.commands?.responsibleStaff) {
+        const supportsRole = (port: DocumentResponsibleStaffCapability) =>
+          port.allowedRoles?.some(role => role === principal.role) ?? principal.role === 'ADMIN';
+        if (sales?.commands?.responsibleStaff && !supportsRole(sales.commands.responsibleStaff)) {
           const { responsibleStaff: _staff, ...commands } = sales.commands;
           input = { ...input, configuration: { ...input.configuration, sales: { ...sales, commands } } };
         }
-        if (transfers?.commands?.responsibleStaff) {
+        if (transfers?.commands?.responsibleStaff && !supportsRole(transfers.commands.responsibleStaff)) {
           const { responsibleStaff: _staff, ...commands } = transfers.commands;
           input = { ...input, configuration: { ...input.configuration, transfers: { ...transfers, commands } } };
         }

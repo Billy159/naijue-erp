@@ -1,0 +1,19 @@
+{
+  "atUtc": "2026-10-24T14:38:08.072057+00:00",
+  "parent": "b24ea02af60bc9cfa50b1614c04e2002849e2f95",
+  "taskId": "F1_V16_RESPONSIBLE_ROLE_METADATA_01",
+  "files": [
+    {
+      "path": "apps/web/src/application/controller.ts",
+      "bytes": 62546,
+      "sha256": "875fc413c4d511189553ed0f8a39d3ff6282f566bd4cec3b98c95e55d0cbaaf7",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-157/DELIVERY.json",
+  "ownerReceiptBytes": 2895,
+  "ownerReceiptSha256": "f54d8561e1ae5522658e797180d3fe6b7112f8f38413423cd71eadab44bf041f",
+  "stage": "SOURCE_TARGETED_COMPONENT_PROTOCOL_AND_SCOPED_TYPES_PASS_NOT_BROWSER",
+  "wholePageAccepted": false,
+  "deployed": false
+}
