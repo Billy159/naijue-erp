@@ -12,6 +12,8 @@ export interface ProductionHostConfiguration {
     readonly salesExistingEdit?: boolean; readonly transferExistingEdit?: boolean;
     readonly products?: boolean; readonly productCategories?: boolean; readonly barcodeSchemes?: boolean;
     readonly productViewer?: boolean; readonly productFullPage?: boolean; readonly salesProductFullPage?: boolean; readonly transferProductFullPage?: boolean; readonly transferInitialSizeGroupId?: string;
+    /** Existing stock overview provider must be explicitly enabled by this host. */
+    readonly productStockOverview?: boolean;
     readonly parties?: false | { readonly readOnly: boolean };
     /** Explicit UI composition only; omitted flags stay false. Server authorizes every operation. */
     readonly maintenance?: { readonly products?: boolean; readonly storeSettings?: boolean; readonly staffSettings?: boolean; readonly paymentSettings?: boolean; readonly accountSettings?: boolean };
@@ -40,12 +42,13 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
   if (row.kind !== 'naijue-erp-production-host' || typeof http.origin !== 'string' || origin.protocol !== 'https:'
     || origin.origin !== http.origin || origin.username || origin.password || http.basePath !== '/api' || session.verifyOnMount !== true
     || typeof assets.basePath !== 'string' || !/^\/assets\/(?:[A-Za-z0-9_-]+\/)*$/.test(assets.basePath)) return invalid();
-  const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'salesExistingEdit', 'transferExistingEdit', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'salesProductFullPage', 'transferProductFullPage', 'staffSettings', 'paymentSettings', 'accountSettings'] as const;
+  const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'salesExistingEdit', 'transferExistingEdit', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'salesProductFullPage', 'transferProductFullPage', 'staffSettings', 'paymentSettings', 'accountSettings', 'productStockOverview'] as const;
   const routes = record(row.routes, ['inventory', 'sales', 'transfers'], [...booleanKeys.slice(3), 'parties', 'productSettings', 'storeSettings', 'transferInitialSizeGroupId', 'maintenance']);
   for (const key of booleanKeys) if (Object.hasOwn(routes, key) && typeof routes[key] !== 'boolean') return invalid();
   for (const [child, parent] of [['inventoryLedger', 'inventory'], ['salesManualCreate', 'sales'], ['transferManualCreate', 'transfers'], ['salesExistingEdit', 'sales'], ['transferExistingEdit', 'transfers'], ['productViewer', 'products'], ['productFullPage', 'products'], ['salesProductFullPage', 'sales'], ['transferProductFullPage', 'transfers']] as const) {
     if (routes[child] === true && routes[parent] !== true) return invalid();
   }
+  if (routes.productStockOverview === true && !['productFullPage', 'salesProductFullPage', 'transferProductFullPage'].some(key => routes[key] === true)) return invalid();
   const switches = Object.fromEntries(booleanKeys.filter(key => Object.hasOwn(routes, key)).map(key => [key, routes[key]]));
   const extras: Record<string, unknown> = {};
   if (Object.hasOwn(routes, 'transferInitialSizeGroupId')) {

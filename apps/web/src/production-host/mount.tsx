@@ -77,7 +77,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
   const productStyles = configuration.routes.products ? stylesheet('products') : null;
   const dictionaryReader = configuration.routes.barcodeSchemes || maintenance?.products ? createDictionaryHttpReader(http) : null;
   const productFullPageReads = configuration.routes.productFullPage || configuration.routes.salesProductFullPage || configuration.routes.transferProductFullPage
-    ? createProductFullPageHttpReader(http, ['prices', 'barcodes', 'stock']) : null;
+    ? createProductFullPageHttpReader(http, ['prices', 'barcodes', 'stock'], configuration.routes.productStockOverview ? { stockOverview: true } : {}) : null;
   // A single explicitly composed readonly reader serves all enabled full-page
   // entrances. Maintenance alone never supplies its dictionary-description gate.
   const productFullPageReader = productFullPageReads?.barcodes && configuration.routes.barcodeSchemes && dictionaryReader
@@ -101,7 +101,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
         recovery: { read: (identity, productId) => controller?.productRecovery.read(identity, productId) ?? null,
           resolved: (identity, requestKey) => { controller?.productRecovery.resolved(identity, requestKey); } },
         productReader: createProductHttpReader(http), dictionaryReader: dictionaryReader!, media: createProductEditorMediaHttpReader(http), mediaUpload: createProductMediaUploadHttpClient(http),
-        ...(configuration.routes.productFullPage ? { stock: createProductFullPageHttpReader(http, ['stock']).stock } : {}),
+        ...(configuration.routes.productFullPage ? { stock: productFullPageReader!.stock } : {}),
       } } : {}),
       ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}) } } : {}),
     ...(configuration.routes.productCategories ? { productCategories: { stylesheet: stylesheet('product-categories') } } : {}),
