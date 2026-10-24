@@ -70,3 +70,47 @@
 .product-season-hint{display:block;margin-top:3px;color:var(--ca-ink-3);font-size:12px}.product-season-hint .iw-link{font-size:12px}
 .product-raw-barcode{white-space:pre-wrap;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}.product-barcode-read-codes{display:flex;flex-direction:column;gap:4px}.product-barcode-read-codes small{color:var(--ca-ink-3);font-size:12px}
 .product-source-modal .pc-rule dd{white-space:pre-line}
+
+/* Frozen inventory-workbench.css:70-84,95-111, at the original transfer
+ * consumer only. Preserve declarations/order; the zero-weight subtree guard
+ * leaves the overlay close button and extra paging controls with their owner. */
+.product-spec-transfer-modal.iw-arco-controls{--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2);font-family:var(--ca-font-sans)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-btn{height:var(--ui-control);border-radius:var(--ca-radius-control);font-size:13px;padding-inline:9px}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-btn.arco-btn-primary:not(.arco-btn-disabled){background:var(--primary-fill);border-color:var(--primary-fill)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-btn.arco-btn-primary:not(.arco-btn-disabled):hover{background:var(--primary-hover);border-color:var(--primary-hover)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-btn.arco-btn-secondary:not(.arco-btn-disabled){background:var(--ca-surface);border:1px solid var(--ca-control-border);color:var(--ca-ink)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-btn.arco-btn-secondary:not(.arco-btn-disabled):hover{background:var(--ca-surface-subtle);border-color:var(--ca-control-hover-border)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-btn.arco-btn-text:not(.arco-btn-disabled){color:var(--ca-primary-ink);background:transparent}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-btn.arco-btn-text:not(.arco-btn-disabled):hover{background:var(--ca-primary-hover-soft)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-query-actions>.btn{width:72px}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-wrapper,.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-picker{box-sizing:border-box;height:var(--ui-control);min-height:var(--ui-control);padding:4px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;font-size:13px}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-wrapper:hover,.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-picker:hover{border-color:var(--ca-control-hover-border)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-wrapper:focus-within,.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-picker:focus-within{border-color:var(--ca-control-focus-border);box-shadow:none}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input input.arco-input,.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-picker input{box-sizing:border-box;width:100%;height:22px;min-height:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;outline:0;font-size:13px;color:var(--ca-ink)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input input.arco-input:focus,.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input input.arco-input:hover,.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .arco-picker input:focus{border:0;box-shadow:none;outline:0;background:transparent}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input input::placeholder{color:var(--ca-control-placeholder)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) input.iw-arco-input.arco-input{box-sizing:border-box;height:var(--ui-control);min-height:var(--ui-control);padding:4px 9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;font-size:13px}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) input.iw-arco-input.arco-input:hover{border-color:var(--ca-control-hover-border)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) input.iw-arco-input.arco-input:focus{border-color:var(--ca-control-focus-border);box-shadow:none;outline:0}
+
+/* Arco Input adds an inner wrapper for clear/suffix/password controls. Adapt that
+   real wrapper once, rather than putting different dimensions in each page. */
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-inner-wrapper,
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper{box-sizing:border-box;width:100%;height:var(--ui-control);min-height:var(--ui-control);padding-inline:9px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none;align-items:center}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-group-wrapper{width:100%;display:inline-flex;vertical-align:middle}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-inner-wrapper:hover,
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper:hover{border-color:var(--ca-control-hover-border)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-inner-wrapper:focus-within,
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-arco-input.arco-input-group-wrapper .arco-input-inner-wrapper:focus-within{border-color:var(--ca-control-focus-border);box-shadow:none}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-search-input .arco-input{height:auto;line-height:normal;font-size:inherit}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-search-input .arco-input-inner-wrapper:hover{border-color:transparent}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-search-input .arco-input-inner-wrapper:focus-within{border-color:var(--ca-control-focus-border);background:var(--ca-surface)}
+.product-spec-transfer-modal.iw-arco-controls :where(.pc-spec-transfer) .iw-search-input .arco-input-group-suffix>.arco-icon{width:var(--ui-small);height:var(--ui-small);font-size:var(--ui-small);color:var(--ca-ink-2)}
+
+/* The native Arco transfer rule follows the workspace adapter in Demo.
+ * Preserve that final padding when transporting the adapter into this sheet. */
+.product-spec-transfer-modal.iw-arco-controls .arco-transfer-operations-words .arco-btn {
+  width: 100%;
+  padding: 0 12px;
+  text-align: left;
+}

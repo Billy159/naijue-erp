@@ -1,0 +1,123 @@
+{
+  "atUtc": "2026-10-24T01:13:45.607648+00:00",
+  "parent": "c1902049170bfef876acdef9db9dd32f6ae11a98",
+  "taskId": "F2_P03_TRANSFER_CONTROLS_FROZEN_NATIVE_SCOPE",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-editor-specs.tsx",
+      "bytes": 19138,
+      "sha256": "09255826ee5e1a6233039869f1bbc938401d8737c1cbea94129791a909a79e31",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page.css",
+      "bytes": 15017,
+      "sha256": "5e98910e28942f9570852355af49f8e0064be40db78530e3efaa4f5bd03d111b",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/QF2-P03-TRANSFER-CONTROLS-SCOPE-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "2b400f87ecc14e7ab736c71e0f29008cdb535d680c37a98864c6fcbe63def70b",
+  "ownerDelivery": {
+    "task": "QF2-P03-TRANSFER-CONTROLS-SCOPE-01",
+    "issueIdStatus": "QF2 proposed local P2 finding; QF dedup final ID pending; no duplicate fit issue",
+    "status": "SOURCE_READY_LOCAL_CHECKS_PASS_ACTUAL_UI_PENDING",
+    "createdAt": "2026-10-24T01:12:01.057072+00:00",
+    "role": "F2",
+    "reportTo": "C",
+    "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+    "requestedExecution": {
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "fast": "NOT_EXPOSED_NOT_VERIFIED"
+    },
+    "scope": {
+      "trigger": "actual243 product P03 Edit colors modal; fits uses same SpecSelectionContent",
+      "sourceFinding": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c243-product-native-actual-01/P03-FINDING.json",
+      "rootCause": [
+        "Missing actual iw-arco-controls modal ancestor",
+        "Existing transported inventory native CSS only matches inventory-source-workbench and cannot reach this product modal",
+        "Product modal generic input declarations override unadapted transfer text search"
+      ],
+      "change": [
+        "Add iw-arco-controls to shared existing StandardOverlay className only",
+        "Append complete native control dependency blocks from frozen inventory-workbench.css70-84 and95-111 in original relative order and with exact declarations, privately scoped to modal plus zero-specificity original pc-spec-transfer subtree guard",
+        "Retain native Arco final transfer operations words rule width100%/padding0 12px/text-alignleft, which follows workspace adapters in Demo"
+      ],
+      "preserved": [
+        "All earlier product-page.css bytes",
+        "All other product-editor-specs.tsx bytes",
+        "Original selection identity/order/query/180ms search/paging/ID/actual SKU logic",
+        "Close and extra paging controls remain in their original styling owner",
+        "No fixed modal height or removal of extra data/paging/hints"
+      ]
+    },
+    "files": [
+      {
+        "path": "apps/web/src/products/product-editor-specs.tsx",
+        "bytes": 19138,
+        "sha256": "09255826ee5e1a6233039869f1bbc938401d8737c1cbea94129791a909a79e31",
+        "beforeBytes": 19121,
+        "beforeSha256": "4f98a427513aad0f4d36214831e861d57ca83183d444ab04722c701a65c0fd17"
+      },
+      {
+        "path": "apps/web/src/products/product-page.css",
+        "bytes": 15017,
+        "sha256": "5e98910e28942f9570852355af49f8e0064be40db78530e3efaa4f5bd03d111b",
+        "beforeBytes": 8180,
+        "beforeSha256": "21fb11837ec650667e3ce9066815f222b46a9d2f6442c411fc8ab7efe6303402"
+      }
+    ],
+    "checks": {
+      "strictImportedClosureDiagnostics": 0,
+      "strictRoot": "apps/web/src/products/product-editor-specs.tsx",
+      "strictAfterCheckNote": "Whitespace-only return indent restored after first strict pass; no semantic or type change after pass",
+      "nativeControlRules": 26,
+      "transportedRules": 27,
+      "nativeDeclarationsAndRelativeOrder": "EXACT",
+      "cssAndActualConsumerBundlesWarnings": 0,
+      "consumer": "One actual shared SpecSelectionContent using installed React and Arco in JSDOM; test-only ephemeral private export, no production export change",
+      "effectiveSourceSearch": "22px height/min-height0/padding0/border0/transparent/line-heightnormal; exact original actual243 Demo captured cascade compared with zero-unit normalization",
+      "effectiveSourceOperation": "var(--ui-control), captured Demo resolves32px; native operation padding0 12px retained",
+      "originalReads": 1,
+      "query": {
+        "kind": "colors",
+        "search": "",
+        "page": 1,
+        "pageSize": 50
+      },
+      "total": 181,
+      "originalPagingAndHint": "PRESENT",
+      "selectionChanges": 0,
+      "unrelatedModalMatches": 0,
+      "overlayCloseAndExtraPagingControls": 3,
+      "newRulesMatchingThoseExtraControls": 0,
+      "logs": [
+        "strict.log",
+        "consumer.log",
+        "CHECKS.json"
+      ],
+      "harnessCorrections": [
+        "Restored one accidental leading whitespace in source to retain exact one-class change",
+        "Normalized CSSOM zero-unit string0px and source0 in test comparison"
+      ],
+      "nonfatalExistingWarning": "Installed Arco emits React19 element.ref access warning in consumer DOM; no source/runtime shim or warning suppression added"
+    },
+    "notTested": [
+      "Actual Chrome pixel/layout/focus/hover verification on new containing candidate",
+      "Whole P03/size popup/7roots/backend suites not rerun",
+      "No full preview build, PG, servers, production/role/save or online acceptance"
+    ],
+    "blocking": "No F2 source blocker. Main C to freeze next independent batch after in-flight252; QF dedup and original QF2 actual short check pending.",
+    "next": "C include exact two-file pins in next separate candidate and route original QF2 only the shared modal operation height/text input scope check. Do not merge into in-flight252 or repeat P03 full suite.",
+    "evidence": {
+      "sourceManifest": "SOURCE-MANIFEST.json",
+      "diff": "source.diff",
+      "checks": "CHECKS.json",
+      "frozenClosure": "frozen-controls.css",
+      "arcoFinalOperation": "arco-operation-padding.css",
+      "consumer": "actual-consumer.html"
+    }
+  },
+  "qualification": "Frozen26 controlrules complete in original order scoped to actualsharedcolorfitTransfer; onlyiw-arco-controls class addition, old8180CSSprefix retained. Effective32button/22search from actual243 pairedCSS, no page/ID/SKU/functionremoved. Owneroneconsumer+strict/CSS adopted, independentQF2source/containingbrowser pending. Not infixed252."
+}
