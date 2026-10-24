@@ -114,8 +114,8 @@ function LedgerResults({ query, target, scope, capability, initialFilter }: {
   if (snapshot.phase === 'disposed') return null;
   return <div className="inventory-ledger-content">
     <form id="ledger-filter" className="mini-filter" aria-label="库存流水筛选" onSubmit={event => { event.preventDefault(); submit(); }}>
-      <span data-ledger-date="start" title="按北京时间筛选，包含开始日期"><UIDate aria-label="开始日期" placeholder="开始日期" value={draft.dateFrom ?? ''} disabled={unavailable} onChange={dateFrom => setDraft(old => ({ ...old, dateFrom: dateFrom || null }))} /></span>
-      <span data-ledger-date="end" title="按北京时间筛选，包含结束日期"><UIDate aria-label="结束日期" placeholder="结束日期" value={draft.dateTo ?? ''} disabled={unavailable} onChange={dateTo => setDraft(old => ({ ...old, dateTo: dateTo || null }))} /></span>
+      <span data-ledger-date="start" title="按北京时间筛选，包含开始日期"><UIDate popupMount="ancestor" aria-label="开始日期" placeholder="开始日期" value={draft.dateFrom ?? ''} disabled={unavailable} onChange={dateFrom => setDraft(old => ({ ...old, dateFrom: dateFrom || null }))} /></span>
+      <span data-ledger-date="end" title="按北京时间筛选，包含结束日期"><UIDate popupMount="ancestor" aria-label="结束日期" placeholder="结束日期" value={draft.dateTo ?? ''} disabled={unavailable} onChange={dateTo => setDraft(old => ({ ...old, dateTo: dateTo || null }))} /></span>
       <LedgerTypeSelect scope={scope} value={draft.businessType} disabled={unavailable} onChange={businessType => setDraft(old => ({ ...old, businessType }))} />
       <span data-ledger-source><UIInput aria-label="来源单号" placeholder="来源单号" value={draft.source} disabled={unavailable} allowClear onChange={source => setDraft(old => ({ ...old, source }))}
         suffix={<UIButton className="ledger-source-search" variant="text" aria-label="查询来源单号" disabled={unavailable} onClick={submit}><IconSearch aria-hidden /></UIButton>} /></span>

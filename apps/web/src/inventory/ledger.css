@@ -78,3 +78,7 @@
 /* Final native interaction-common.css ui-icon hover overrides the original
  * ledger-close grey hover; retain its token and important priority locally. */
 .inventory-ledger.arco-drawer .erp-overlay-close:hover{background:var(--primary-light)!important}
+
+/* Frozen date portals resolve against the outer drawer. The body is not a
+ * positioned calendar ancestor; other controls retain their own local hosts. */
+.inventory-ledger.arco-drawer .arco-drawer-content{position:static}
