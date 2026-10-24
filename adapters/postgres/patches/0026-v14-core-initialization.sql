@@ -35,6 +35,7 @@ DECLARE b naijue_erp.import_batch%ROWTYPE; r naijue_erp.operation_receipt%ROWTYP
  cr naijue_erp.operation_receipt%ROWTYPE; ca naijue_erp.audit_change%ROWTYPE; e naijue_erp.native_party_import_evidence%ROWTYPE;
  birth jsonb; members jsonb; item jsonb; cp jsonb; full_binding jsonb; member jsonb; step jsonb; state jsonb; actual jsonb; field record;
  ma naijue_erp.audit_change%ROWTYPE; mr naijue_erp.operation_receipt%ROWTYPE; before_root jsonb; after_root jsonb; table_name text; n bigint;
+ batch_heap_xmin bigint; receipt_heap_xmin bigint;
  zero_cp jsonb:='{"sequence":0,"cursor":0,"counts":{"WAREHOUSE":0,"SKU":0,"INVENTORY_LEDGER":0,"IMPORT_BATCH":0},"expected":{}}';
  core_cp jsonb:='{"sequence":1,"cursor":22,"counts":{"WAREHOUSE":22,"SKU":0,"INVENTORY_LEDGER":0,"IMPORT_BATCH":0},"expected":{}}';
 BEGIN
@@ -108,9 +109,10 @@ BEGIN
     OR NOT EXISTS(SELECT 1 FROM jsonb_array_elements(members->'parties') x WHERE x->>'entity'='WAREHOUSE' AND x->>'nativeId'=c.target_id::text))) THEN
   RAISE EXCEPTION 'CORE must retain its22 exact original warehouse claims and creator records' USING ERRCODE='23514'; END IF;
  IF creation THEN
+  SELECT actual_batch.xmin::text::bigint INTO STRICT batch_heap_xmin FROM naijue_erp.import_batch actual_batch WHERE actual_batch.id=selected_batch;
   IF r.id<>cr.id OR b.status<>'STAGED' OR b.checkpoint<>core_cp OR b.history_payload_hash IS NOT NULL OR b.history_expected_counts IS NOT NULL
    OR b.history_actual_counts IS NOT NULL OR b.history_validation_passed OR b.completed_at IS NOT NULL
-   OR b.xmin::text::bigint<>mod(pg_current_xact_id()::text::numeric,4294967296)::bigint
+   OR batch_heap_xmin<>mod(pg_current_xact_id()::text::numeric,4294967296)::bigint
    OR (SELECT count(*) FROM naijue_erp.import_batch)<>1
    OR (SELECT count(*) FROM naijue_erp.native_party_import_evidence WHERE batch_id=b.id)<>115
    OR (SELECT count(*) FROM naijue_erp.import_source_row WHERE batch_id=b.id)<>115
@@ -149,7 +151,8 @@ BEGIN
   AND NOT EXISTS(SELECT 1 FROM naijue_erp.import_record_accounting_claim WHERE operation_id=r.id)) IS DISTINCT FROM TRUE THEN
   RAISE EXCEPTION 'Full binding must preserve progress and freeze genuine complete metadata once' USING ERRCODE='23514'; END IF;
 
- IF r.xmin::text::bigint=mod(pg_current_xact_id()::text::numeric,4294967296)::bigint THEN
+ SELECT actual_receipt.xmin::text::bigint INTO STRICT receipt_heap_xmin FROM naijue_erp.operation_receipt actual_receipt WHERE actual_receipt.id=selected_operation;
+ IF receipt_heap_xmin=mod(pg_current_xact_id()::text::numeric,4294967296)::bigint THEN
   IF b.status<>'STAGED' OR b.completed_at IS NOT NULL OR b.history_validation_passed OR b.history_actual_counts IS NOT NULL
    OR b.checkpoint IS DISTINCT FROM cp
    OR NOT EXISTS(SELECT 1 FROM naijue_erp.user_account u JOIN naijue_erp.staff s ON s.id=u.staff_id LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id

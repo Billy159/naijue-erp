@@ -402,7 +402,7 @@ FROM observed`;
 /** Same original catalog query with only the approved v14 routine bodies and one private helper. */
 export const NATIVE_RUNTIME26_V14_METADATA_PROBE = NATIVE_RUNTIME26_METADATA_PROBE
   .replace("jsonb_array_length(manifest->'routines')=122", "jsonb_array_length(manifest->'routines')=123")
-  .replace("SELECT 1 FROM (VALUES", "SELECT 1 FROM (VALUES\n    ('assert_core_initialization_v14','3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46'),")
+  .replace("SELECT 1 FROM (VALUES", "SELECT 1 FROM (VALUES\n    ('assert_core_initialization_v14','5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d'),")
   .replace("('assert_native_bootstrap_accounts','69b87a72c52a81aba7f9fd380f3acbcb8df8fbcaa6ca72ccca4ac20e26ab42c7')", "('assert_native_bootstrap_accounts','171c59ba962a287dd02bb9eac993512e114783a470063108a07ba5e206cbabca')")
   .replace("('guard_import_batch','0275164994ce931e93d334b753f0f616d039661a73239ac5dbd4482f0720e749')", "('guard_import_batch','f0e35d2d5978c92d26c1eab6525a87d2ae3450a525daa14131b479b03856d29a')")
   .replace("('guard_history_publication','297d9859c6efad3e48e9c8931ab11a810c6b1c73c16ddf262b34ffbc5d11001e')", "('guard_history_publication','6ad32797b7fe81e6427b3abec90aca378778be9af30b014b55966fbed0bff77e')")

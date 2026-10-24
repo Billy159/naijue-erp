@@ -204,28 +204,67 @@ test("v14 exact routine pins cover the single approved patch while original v11 
  assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=123"));
 });
 
+function v14BeforeHeapWitnessRepair(full: string): string {
+  return full.replace(' batch_heap_xmin bigint; receipt_heap_xmin bigint;\n', '')
+    .replace('  SELECT actual_batch.xmin::text::bigint INTO STRICT batch_heap_xmin FROM naijue_erp.import_batch actual_batch WHERE actual_batch.id=selected_batch;\n', '')
+    .replace(' SELECT actual_receipt.xmin::text::bigint INTO STRICT receipt_heap_xmin FROM naijue_erp.operation_receipt actual_receipt WHERE actual_receipt.id=selected_operation;\n', '')
+    .replace('OR batch_heap_xmin<>mod(', 'OR b.xmin::text::bigint<>mod(')
+    .replace('IF receipt_heap_xmin=mod(', 'IF r.xmin::text::bigint=mod(');
+}
+
 test("v14 JSON precedence repair preserves every original predicate and changes only two reviewed function bodies", () => {
   const full = readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-initialization.sql', import.meta.url), 'utf8');
   const repair = readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql', import.meta.url), 'utf8');
   const order = readFileSync(new URL('../adapters/postgres/patches/0026-category-reorder-undo.sql', import.meta.url), 'utf8');
   const grouped = ["(birth->'authority')", "(full_binding->'coreMaintenanceBinding')", "(core_a->'authority')"];
-  let original = full;
-  for (const text of grouped) { assert.equal(full.split(text).length, 2); original = original.replace(text, text.slice(1, -1)); }
+  const beforeHeapRepair = v14BeforeHeapWitnessRepair(full);
+  let original = beforeHeapRepair;
+  for (const text of grouped) { assert.equal(beforeHeapRepair.split(text).length, 2); original = original.replace(text, text.slice(1, -1)); }
   assert.equal(hash(original), 'd1c41d61846fa48e64f178125f4e58610cf6be11d908c88c695ba2ade7d26d1b');
   assert.ok(order.includes("(result_data->'order')-ARRAY['parentId','undoOfOperationId','members']"));
   assert.equal(hash(order.replace("(result_data->'order')-ARRAY", "result_data->'order'-ARRAY")
-    .replace('3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46', '665501c212a0576bf154ecd230d32fae36e9f50656e3c17d58bb268b50279bd1')),
+    .replace('5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d', '665501c212a0576bf154ecd230d32fae36e9f50656e3c17d58bb268b50279bd1')),
   '7c6c22cd60e931c6bc32d198bc730a2d42232c7ff17c768f248ceef2c724c006');
   const functions = [...repair.matchAll(/CREATE OR REPLACE FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)];
   assert.deepEqual(functions.map(m => m[1]), ['assert_core_initialization_v14', 'assert_native_bootstrap_accounts']);
   for (const m of functions) {
-    const source = new RegExp(`CREATE(?: OR REPLACE)? FUNCTION naijue_erp\\.${m[1]}\\([^;]*?AS \\$\\$(.*?)\\$\\$;`, 's').exec(full)!;
-    assert.equal(m[2], source[1]); assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes(`('${m[1]}','${hash(m[2]!)}')`));
-    assert.ok(NATIVE_RUNTIME26_V15_METADATA_PROBE.includes(`('${m[1]}','${hash(m[2]!)}')`));
+    const source = new RegExp(`CREATE(?: OR REPLACE)? FUNCTION naijue_erp\\.${m[1]}\\([^;]*?AS \\$\\$(.*?)\\$\\$;`, 's').exec(beforeHeapRepair)!;
+    assert.equal(m[2], source[1]);
   }
   assert.ok(repair.includes("current_database()<>'erp_qa_rapid26_core_20261024_01'"));
   assert.ok(repair.includes("<>'1034834'")); assert.ok(repair.includes('after_routines IS DISTINCT FROM before_routines'));
   assert.equal((repair.match(/DROP FUNCTION|ALTER TABLE|GRANT |REVOKE |CREATE TRIGGER|DISABLE TRIGGER/g) ?? []).length, 0);
+});
+
+test("v14 heap witness repair preserves the exact predecessor predicates and replaces only the QA core helper", () => {
+  const full = readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-initialization.sql', import.meta.url), 'utf8');
+  const repair = readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql', import.meta.url), 'utf8');
+  const before = v14BeforeHeapWitnessRepair(full);
+  assert.equal(hash(before), '164d93af957a775abb383d093124808e7f4ab3000d000c61ec825ebe4c59fa0d');
+  const source = /CREATE FUNCTION naijue_erp\.assert_core_initialization_v14\([^;]*?AS \$\$(.*?)\$\$;/s.exec(full)!;
+  const original = /CREATE FUNCTION naijue_erp\.assert_core_initialization_v14\([^;]*?AS \$\$(.*?)\$\$;/s.exec(before)!;
+  assert.equal(hash(original[1]!), '3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46');
+  assert.equal(hash(source[1]!), '5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d');
+  assert.ok(source[1]!.includes('SELECT * INTO STRICT b FROM naijue_erp.import_batch WHERE id=selected_batch FOR UPDATE;'));
+  assert.ok(source[1]!.includes('actual_batch.xmin::text::bigint INTO STRICT batch_heap_xmin FROM naijue_erp.import_batch actual_batch WHERE actual_batch.id=selected_batch;'));
+  assert.ok(source[1]!.includes('OR batch_heap_xmin<>mod(pg_current_xact_id()::text::numeric,4294967296)::bigint'));
+  assert.ok(source[1]!.includes('actual_receipt.xmin::text::bigint INTO STRICT receipt_heap_xmin FROM naijue_erp.operation_receipt actual_receipt WHERE actual_receipt.id=selected_operation;'));
+  assert.ok(source[1]!.includes('IF receipt_heap_xmin=mod(pg_current_xact_id()::text::numeric,4294967296)::bigint THEN'));
+  const definitions = [...repair.matchAll(/CREATE OR REPLACE FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)];
+  assert.deepEqual(definitions.map(m => m[1]), ['assert_core_initialization_v14']);
+  assert.equal(definitions[0]![2], source[1]);
+  assert.ok(repair.includes("current_database()<>'erp_qa_rapid26_core_20261024_01'"));
+  assert.ok(repair.includes("<>'1034834'"));
+  assert.ok(repair.includes("encode(pg_catalog.sha256(convert_to(prosrc,'UTF8')),'hex')='3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46'"));
+  assert.ok(repair.includes("CASE WHEN p.oid=target THEN ARRAY['prosrc']::text[] ELSE ARRAY[]::text[] END"));
+  assert.ok(repair.includes('after_routines IS DISTINCT FROM before_routines'));
+  assert.equal((repair.match(/DROP FUNCTION|ALTER TABLE|GRANT |REVOKE |CREATE TRIGGER|DISABLE TRIGGER/g) ?? []).length, 0);
+  const order = readFileSync(new URL('../adapters/postgres/patches/0026-category-reorder-undo.sql', import.meta.url), 'utf8');
+  for (const sql of [full, order]) for (const m of sql.matchAll(/CREATE(?: OR REPLACE)? FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)) {
+    for (const row of m[2]!.matchAll(/\b(\w+)\s+[\w.]+%ROWTYPE\b/g)) {
+      assert.doesNotMatch(m[2]!, new RegExp(`\\b${row[1]}\\.(xmin|cmin|ctid)\\b`), `${m[1]} composite ${row[1]}`);
+    }
+  }
 });
 
 test("runtime performance: unchanged review files are hashed once per issuer while every original lease and explicit verification still probes actual metadata", async () => {

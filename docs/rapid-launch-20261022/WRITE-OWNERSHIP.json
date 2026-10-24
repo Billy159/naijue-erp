@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T05:14:23.957411+00:00",
+  "updatedAt": "2026-10-24T06:40:25.618636+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -788,6 +788,12 @@
             "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
             "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
           }
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql",
+          "group": "C141_ACTUAL_GUARD_HEAP_VERSION_WITNESS_FIX",
+          "fieldGate": "EXISTING_APPROVED_V14_INTENT_NO_SCHEMA_OR_WRITE_SEMANTICS_WIDENING",
+          "scope": "QA1034834 single assert_core_initialization_v14 successor from3163e687; preserve original batch row lock, compare actual table-alias heap xmin to original top xid low32 in creation and BIND. Other122/OID/ACL/config unchanged. C sole PG executor; no production or v15 install from this path."
         }
       ]
     },
@@ -4527,6 +4533,14 @@
         "apps/web/src/product-categories/tree-model.ts"
       ],
       "scope": "Human approved v15 exact consumer types/tree ordering; original tree-model.test.ts already registered; no new backend/public UI system"
+    },
+    {
+      "atUtc": "2026-10-24T06:40:25.618636+00:00",
+      "owner": "D1",
+      "paths": [
+        "adapters/postgres/patches/0026-v14-core-heap-xmin-repair.sql"
+      ],
+      "scope": "C141 observed record xmin1860 vs actual heap/top3361; register exact single-function bugfix path. No new human approval implied or needed for preserving approved physical predicate. Original D1 other four registered leaves continue; no new task."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
