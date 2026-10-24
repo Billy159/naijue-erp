@@ -46,14 +46,15 @@ function LoginForm({ controller, state }: { readonly controller: AuthenticationC
   };
   const busy = controller.busy;
   return <form ref={form} className="auth-form" noValidate onSubmit={submit} aria-label="账号登录" aria-busy={state.phase === 'logging-in'}>
-    <h2>账号登录</h2>
+    <h1>登录</h1>
     <label htmlFor={`${id}-login`}>登录账号</label>
-    <UIInput id={`${id}-login`} name="loginName" autoComplete="username" required disabled={busy} spellCheck={false} />
+    <UIInput id={`${id}-login`} name="loginName" autoComplete="username" autoFocus required disabled={busy} spellCheck={false} />
     <label htmlFor={`${id}-password`}>密码</label>
     <UIInput ref={password} id={`${id}-password`} name="password" type="password" value={passwordValue} onChange={setPasswordValue} autoComplete="current-password" required disabled={busy} />
     {validation && <p role="alert">{validation}</p>}
-    <UIButton type="submit" disabled={busy}>{state.phase === 'logging-in' ? '正在登录…' : state.operation === 'login' && state.error ? '重新登录' : '登录'}</UIButton>
-    <p className="auth-hint">仅使用当前站点的安全会话。密码不会保存为草稿。</p>
+    <Status state={state} />
+    <UIButton className="auth-entry-submit primary" type="submit" disabled={busy}>{state.phase === 'logging-in' ? '正在登录…' : state.operation === 'login' && state.error ? '重新登录' : '登录'}</UIButton>
+    <p className="auth-hint">忘记密码请联系管理员重置。</p>
   </form>;
 }
 function PasswordDialog({ controller, close }: { readonly controller: AuthenticationController; readonly close: () => void }) {
@@ -113,9 +114,10 @@ export function AuthenticationPanel({ controller, children }: AuthenticationPane
   useEffect(() => () => { controller.cancel(); }, [controller]);
   const closePassword = () => { setPasswordOpen(false); const target = passwordReturnTarget.current ?? changeButton.current; if (target?.isConnected) target.focus({ preventScroll: true }); };
   const openPassword = (target: HTMLElement | null) => { passwordReturnTarget.current = target; setPasswordOpen(true); };
-  return <section className="auth-panel" aria-label="登录与账号安全">
-    {!(passwordOpen && state.principal && state.operation === 'password') && <Status state={state} />}
-    {state.principal ? <AuthenticationAccountContext.Provider value={{ principal: state.principal, busy: controller.busy, registerSlot,
+  return <section className={state.principal ? 'auth-panel' : 'auth-panel demo-ui auth-entry-screen'} aria-label="登录与账号安全">
+    {state.principal ? <>
+      {!(passwordOpen && state.operation === 'password') && <Status state={state} />}
+      <AuthenticationAccountContext.Provider value={{ principal: state.principal, busy: controller.busy, registerSlot,
       changePassword: openPassword, logout: () => { setPasswordOpen(false); void controller.logout(); } }}>
       {accountSlots === 0 && <div className="auth-session"><p>当前账号：<strong>{state.principal.loginName}</strong> <span>{roleLabel(state.principal.role)}</span></p>
         <div className="auth-actions"><UIButton ref={changeButton} type="button" disabled={controller.busy} onClick={event => openPassword(event.currentTarget)}>修改密码</UIButton>
@@ -123,15 +125,18 @@ export function AuthenticationPanel({ controller, children }: AuthenticationPane
       }
       {children?.(state.principal)}
       {passwordOpen && <PasswordDialog controller={controller} close={closePassword} />}
-    </AuthenticationAccountContext.Provider> : <>
-      {state.phase === 'unresolved' && <p role="status">尚未核验当前登录状态。</p>}
-      {state.phase === 'resolving' && <p role="status">正在核验登录状态…</p>}
-      {state.phase === 'logging-out' && <p role="status">正在退出登录…</p>}
+      </AuthenticationAccountContext.Provider>
+      {controller.busy && <UIButton type="button" className="auth-cancel" onClick={() => controller.cancel()}>取消请求</UIButton>}
+    </> : <div className="auth-entry-card login-panel">
+      <div className="brand" aria-label="奈爵服饰"><span className="brand-mark" aria-hidden="true">奈</span><span className="brand-name">奈爵服饰</span></div>
       <LoginForm controller={controller} state={state} />
-      <div className="auth-actions"><UIButton type="button" disabled={controller.busy} onClick={() => { void controller.resolveSession(); }}>{state.operation === 'resolve' && state.error ? '重试核验' : '核验登录状态'}</UIButton>
+      {state.phase === 'unresolved' && <p className="auth-entry-phase" role="status">尚未核验当前登录状态。</p>}
+      {state.phase === 'resolving' && <p className="auth-entry-phase" role="status">正在核验登录状态…</p>}
+      {state.phase === 'logging-out' && <p className="auth-entry-phase" role="status">正在退出登录…</p>}
+      <div className="auth-actions auth-entry-actions"><UIButton variant="text" className="auth-entry-verify" type="button" disabled={controller.busy} onClick={() => { void controller.resolveSession(); }}>{state.operation === 'resolve' && state.error ? '重试核验' : '核验登录状态'}</UIButton>
         {state.operation === 'logout' && !controller.busy && <UIButton type="button" onClick={() => { void controller.logout(); }}>重试退出登录</UIButton>}
       </div>
-    </>}
-    {controller.busy && <UIButton type="button" className="auth-cancel" onClick={() => controller.cancel()}>取消请求</UIButton>}
+      {controller.busy && <UIButton type="button" className="auth-cancel" onClick={() => controller.cancel()}>取消请求</UIButton>}
+    </div>}
   </section>;
 }

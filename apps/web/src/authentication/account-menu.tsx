@@ -1,4 +1,5 @@
-import { Dropdown, Menu } from '@arco-design/web-react';
+import { Avatar, Divider, Dropdown, Menu, Space, Typography } from '@arco-design/web-react';
+import { IconDown } from '@arco-design/web-react/icon';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { UIButton } from '../components/standard-controls.tsx';
 import type { AuthenticationPrincipal } from './contracts.ts';
@@ -25,6 +26,8 @@ export function AuthenticationAccountMenu() {
   }, [actions?.registerSlot]);
   if (!actions) return null;
   const close = (restoreFocus = false) => { setVisible(false); keyboardOpen.current = false; if (restoreFocus) trigger.current?.focus({ preventScroll: true }); };
+  const accountName = actions.principal.loginName;
+  const accountRole = roleLabel(actions.principal.role);
   const items = <div className="auth-account-options" ref={element => {
     if (element && keyboardOpen.current) { keyboardOpen.current = false; element.querySelector<HTMLElement>('[role="menuitem"]')?.focus(); }
   }} onKeyDown={event => {
@@ -46,12 +49,23 @@ export function AuthenticationAccountMenu() {
       actions.changePassword(trigger.current);
     }
     if (key === 'logout') actions.logout();
-  }}><Menu.Item key="password" disabled={actions.busy}>修改密码</Menu.Item><Menu.Item key="logout" disabled={actions.busy}>退出登录</Menu.Item></Menu></div>;
+  }}><Menu.ItemGroup title={<Space direction="vertical" size="mini">
+    <Typography.Text bold>{accountName}</Typography.Text>
+    <Typography.Text type="secondary">{accountRole}</Typography.Text>
+  </Space>}>
+    <Divider style={{ margin: '8px 0' }} />
+    <Menu.Item key="password" disabled={actions.busy}>修改密码</Menu.Item>
+    <Menu.Item key="logout" disabled={actions.busy}><Typography.Text type="error">退出登录</Typography.Text></Menu.Item>
+  </Menu.ItemGroup></Menu></div>;
   return <Dropdown trigger="click" position="br" popupVisible={visible} disabled={actions.busy} onVisibleChange={next => setVisible(next)} droplist={items}>
     <UIButton ref={trigger} type="button" className="auth-account-trigger" aria-label={`账号菜单：${actions.principal.loginName}`} aria-haspopup="menu" aria-expanded={visible} disabled={actions.busy}
       onKeyDown={event => {
         if (['ArrowDown', 'Enter', ' '].includes(event.key)) { event.preventDefault(); keyboardOpen.current = true; setVisible(true); }
         if (event.key === 'Escape') { event.preventDefault(); close(true); }
-      }}><span>{actions.principal.loginName}</span><small>{roleLabel(actions.principal.role)}</small><span aria-hidden="true">⌄</span></UIButton>
+      }}><Space align="center" size={8}>
+        <Avatar size={24}>{Array.from(accountName)[0] ?? ''}</Avatar>
+        <Typography.Text className="auth-account-summary">{accountName} · {accountRole}</Typography.Text>
+        <IconDown />
+      </Space></UIButton>
   </Dropdown>;
 }

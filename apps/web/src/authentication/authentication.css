@@ -21,9 +21,62 @@
 .auth-cancel { display: block; margin: 14px auto; }
 @media (max-width: 520px) { .auth-form { padding: 0 14px; } .auth-password-dialog .auth-form { padding: 0; } .auth-session { align-items: stretch; flex-direction: column; } }
 .auth-password-dialog.arco-modal .arco-modal-content { max-height: calc(100dvh - 140px); overflow-y: auto; }
-.auth-account-trigger.arco-btn { display: inline-flex; align-items: center; gap: 8px; max-width: 300px; padding: 4px 8px; border: 0; background: transparent; color: #1d2129; }
-.auth-account-trigger>span:first-child { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.auth-account-trigger small { color: #86909c; font-size: 12px; font-weight: 400; }
-.auth-account-options { min-width: 148px; border: 1px solid #e5e6eb; border-radius: 4px; background: #fff; box-shadow: 0 4px 16px #00000014; }
-.auth-account-options .arco-menu { padding: 4px; }
+.auth-account-trigger.arco-btn { display: inline-flex; align-items: center; max-width: 300px; padding: 4px 8px; border: 0; background: transparent; color: var(--ca-ink, #1d2129); }
+.auth-account-trigger .arco-space { min-width: 0; }
+.auth-account-trigger .arco-avatar { flex: 0 0 24px; }
+.auth-account-summary.arco-typography { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.auth-account-options { min-width: 200px; }
+.auth-account-options .arco-menu { min-width: 200px; padding: 4px 0; }
+.auth-account-options .arco-menu-group-title { height: auto; min-height: 0; padding: 8px 16px; white-space: normal; }
 .production-route-state { padding: 24px; }
+
+/* The unauthenticated entry adopts the frozen Demo login card while keeping
+ * its fields and notices inside the existing authentication owner. */
+.auth-panel.auth-entry-screen {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 24px;
+  color: var(--ca-ink, #232a36);
+  background: var(--ca-bg, #fff);
+  font: var(--ui-font, 13px)/1.5 var(--ca-font-sans, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif);
+}
+.auth-entry-screen .auth-entry-card.login-panel {
+  width: min(420px, 90vw);
+  margin: 0;
+  padding: 36px;
+  border: 1px solid var(--ca-line, #e1e4e8);
+  border-radius: var(--ca-radius-card, 6px);
+  background: var(--ca-surface, #fff);
+}
+.auth-entry-screen .login-panel .brand { margin: 0 0 16px; padding: 0; }
+.auth-entry-screen .login-panel .auth-form { width: 100%; max-width: none; margin: 0; padding: 0; }
+.auth-entry-screen .auth-form h1 { margin: 0 0 12px; font-size: 24px; line-height: 1.3; font-weight: 600; }
+.auth-entry-screen .auth-form label { margin: 20px 0 0; font-weight: 400; }
+.auth-entry-screen .auth-form .erp-input.arco-input {
+  width: 100%;
+  height: 32px;
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--ca-line-strong, #c9ced6);
+  border-radius: var(--ca-radius-control, 4px);
+  background: var(--ca-surface, #fff);
+  font: inherit;
+}
+.auth-entry-screen .auth-form .erp-input.arco-input:focus {
+  border-color: var(--ca-control-focus-border, #1978ff);
+  box-shadow: var(--ca-focus-ring, 0 0 0 2px rgb(25 120 255 / 24%));
+}
+.auth-entry-screen .auth-form .auth-entry-submit.arco-btn-primary { width: 100%; border-color: var(--ca-primary-fill, #166ff2); background: var(--ca-primary-fill, #166ff2); color: var(--ca-on-primary, #fff); }
+.auth-entry-screen .auth-form .auth-hint { margin: 12px 0 0; color: var(--ca-ink-2, #4f596b); font-size: 12px; }
+.auth-entry-screen .auth-form [role=status] { margin: 8px 0 0; padding: 8px 10px; border-radius: 4px; background: var(--ca-primary-soft, #ecf4ff); color: var(--ca-ink-2, #4f596b); }
+.auth-entry-screen .auth-form [role=alert] { margin: 8px 0 0; padding: 8px 10px; border-color: var(--ca-critical, #b23d42); border-radius: 4px; background: var(--ca-critical-soft, #fff0f0); color: var(--ca-critical, #b23d42); }
+.auth-entry-screen .auth-entry-phase { margin: 12px 0 0; color: var(--ca-ink-2, #4f596b); font-size: 12px; }
+.auth-entry-screen .auth-entry-actions { margin-top: 8px; }
+.auth-entry-screen .auth-entry-verify.arco-btn-text { min-height: 28px; height: 28px; padding: 0 8px; border: 0; background: transparent; color: var(--ca-link, #0d5dce); }
+.auth-entry-screen .auth-entry-verify.arco-btn-text:hover { background: var(--ca-primary-hover-soft, #f3f8ff); }
+.auth-entry-screen .auth-cancel { margin: 12px auto 0; }
+@media (max-width: 520px) {
+  .auth-entry-screen { padding: 16px; }
+  .auth-entry-screen .auth-entry-card.login-panel { width: min(420px, 90vw); padding: 28px 24px; }
+}
