@@ -95,7 +95,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
       <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="当前商品选择及原生条码读取尚未接入">扫码录入</UIButton></div>
     </div></div>
     <label className="tc-note-row"><span>备注</span>{input ? <UIInput aria-label="备注" className="iw-control transfer-note-input" maxLength={10000} value={input.note} disabled={locked} onChange={nextValue => update({ ...input, note: nextValue })} /> : <span className="tc-note-read">{header.note || '—'}</span>}</label></>}
-    {(editor.detail?.stockBasis === 'CUTOFF_HISTORY' || status === 'APPROVED' || status === 'VOID') && <p className="transfer-readonly-note">{editor.detail?.stockBasis === 'CUTOFF_HISTORY' ? '历史单据仅供查看。' : status === 'APPROVED' ? '已审核，弃审后才能修改。' : '此单已作废，仅可查看。'}</p>}
+    {(detail?.stockBasis === 'CUTOFF_HISTORY' || status === 'APPROVED' || status === 'VOID') && <p className="transfer-readonly-note">{detail?.stockBasis === 'CUTOFF_HISTORY' ? '历史修订尚未接通，当前仅可查看。' : status === 'APPROVED' ? '已审核，弃审后才能修改。' : '此单已作废，仅可查看。'}</p>}
     {state.notice && <p className="transfer-command-notice" role={editor.inputError || write.phase === 'rejected' ? 'alert' : 'status'}>{state.notice}</p>}
     <TransferCommandRecovery workspace={workspace} />
     {write.phase === 'committed' && <p className="transfer-command-notice" role="status">原操作已确认：版本 {write.result?.version}，{write.result ? transferStatusLabels[write.result.status] : ''}。库存流水 {write.result?.ledgerEntryIds.length} 条。{savedReadback ? '下方显示重新读取的已保存单据；继续操作前请采用当前单据。' : '正在核对已保存内容；读取失败可重试，保存不会重复提交。'}</p>}
