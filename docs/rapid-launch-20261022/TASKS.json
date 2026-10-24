@@ -4714,9 +4714,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T22:27:55.262724+00:00",
-    "sourceRound": 365,
-    "sourceCheckpoint": "SOURCE364 amended with existing records before any push/build; SOURCE363 remote verified4e694a74eaca12a12d0f9e95e195d01ab03ea165",
+    "atUtc": "2026-10-24T22:40:36.092501+00:00",
+    "sourceRound": 366,
+    "sourceCheckpoint": "SOURCE36514a6ad7959de296efda99d7550efb419c18871b0 remoteverified incl parent364; SOURCE366 existingrecords QFfinal+QF2handoff only",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4743,7 +4743,7 @@
       "newBackendConnected": false,
       "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-f475cea-phase2-07/build",
       "phase1Accepted": false,
-      "phase2Candidate": "Actualserved135resource fixed candidate; originalQF3IDs passed preliminary, formalreport/cleanlease next; QF2output source ready browserwaiting",
+      "phase2Candidate": "Current364HTTP135resource; originalQF3affectedIDs PASS adopted; QF2newfiniteoutput browser inprogress; not formal/wholepage/business pass",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
@@ -5118,6 +5118,29 @@
         "correction": "Instantaneous BODY after Tab not a signed independent focus defect; final Tab commits group and focuses product search, original behavior must compare",
         "notFormalBusiness": true,
         "browserLeaseReturned": true
+      },
+      "source364Actual": {
+        "status": "PASS_TARGETED_RETEST_ONLY",
+        "owner": "QF",
+        "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source364-retest-actual-01/RESULT.json",
+        "closedIssues": [
+          "S361-DATE-01",
+          "S361-UI-01",
+          "S361-NAV-01"
+        ],
+        "newFindings": [],
+        "commands": 0,
+        "reused": [
+          "SOURCE361knownSKU1SAVEandlist/detailreadback",
+          "SOURCE358inventoryDrawer"
+        ],
+        "sharedSalesDate": "Both Demo/candidate popupx456; candidate-only residual finding retracted, no approved redesign added",
+        "notWholePagePass": true,
+        "stillOpen": [
+          "S360rolelabelnotinserved364",
+          "product40finitebasics/images/exactbarcodeFOUND",
+          "realexistingSAVE/status/HREV/permissions/performance/formal"
+        ]
       }
     },
     "qaEmptyTargetRegistration": {
@@ -6319,8 +6342,8 @@
     },
     "sourceCommit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
     "browserLease": {
-      "owner": "QF",
-      "scope": "Source3643affectedIDretest+salesSourceDate representative only; preliminarythreePASS, formalcleanreport pending; QF2sourceonly",
+      "owner": "QF2",
+      "scope": "Onlysource364finiteinventoryoutputactual; QFstoppedclean/commands0; originaltwoinventorytargets1470x724DPR2/dialog0,5draftprotected",
       "requestedModel": "gpt-6.1-sol/medium",
       "actualRuntimeSwitchVerified": false,
       "protectedDraftTabs": 5
@@ -6349,12 +6372,14 @@
       "FastToolVerified": false,
       "F4ThreadId": "01a16b9a-b8eb-7a40-bcae-eff6d87a196f",
       "QF2Output364": {
-        "status": "ACTIVE_NEW_TECHNICAL_SCOPE_SOURCE_READY_BROWSER_WAIT_ORIGINAL_QF_LEASE",
+        "status": "SOURCE_REVIEW_PASS_BROWSER_LEASE_GRANTED_BY_C_AFTER_QF_CLEAN",
         "owner": "QF2",
         "modelRequest": "gpt-6.1-sol/medium",
         "priorFailedPureUIQueue": "not resumed, historicalB05B06receipt recovered/source340 not attributed364",
         "sourceScope": "onlyF2 finiteoutput+Cwrapper; source349consumer andowner103/4444/XLSXprint tests reused, not rerun",
-        "browser": "No independentcontext, originalQFsolelease; C onehandoff afterclean"
+        "browser": "C single handoff granted original two targets; current364 only output full103/successfilter/draftfilter/EOF/exportprint; no parallelChrome",
+        "report": "K/reports/qa-frontend/rapid-launch-20261022/QF2/c364-output-finite-source-01/RESULT.json",
+        "sourceReportSha256": "91bcad3cb7d5e0dc86ec4d8b9f6931ac3766604dddbb61530cc548b76158c626"
       }
     },
     "p10Actual114": {
@@ -6724,10 +6749,11 @@
       "sha256": "19e8659bcb8fd36dac7e6cbe50e011fe1089e2dce8e0bb9be3a6d660847a463f"
     },
     "githubLatestVerified": {
-      "sourceRound": 361,
-      "commit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
-      "receipt": "K/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source361-20261025-01/RESULT.json",
-      "remoteVerified": true
+      "sourceRound": 365,
+      "commit": "14a6ad7959de296efda99d7550efb419c18871b0",
+      "remoteVerified": true,
+      "receipt": "K/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source365-20261025-01/RESULT.json",
+      "originalCommitsPublished": 2
     },
     "actualPerformance122": {
       "status": "FAILED2_FIRST_ERROR_TYPED_OUTPUT_MASKED_ACTUAL_UNKNOWN_NO_REPLAY",
@@ -7887,9 +7913,9 @@
     },
     "phase2Queue": {
       "F1": {
-        "current": "182fixed364 actuallyserved/QF3IDs preliminarypass;183rolelabelpureUIexactsourcefixed365notserved",
-        "next": "Onlynewactualfindings or nextrelatednormalhost/allstate/realconsumer dependencies; no separatebuildforfewlabels",
-        "status": "ACTUAL_TARGETED_RETEST_IN_PROGRESS_FULLPAGE_NOT_PASS",
+        "current": "182threeIDactualPASS on364 adopted;183pureUIrolelabel fixedsource365notserved",
+        "next": "New qualified copied production/real host and actual allstate dependencies or specificnew findings; no oldscope recheck",
+        "status": "SOURCE_READY_ACTUAL_AFFECTED_PASS_NOT_FULLPAGE_REALBUSINESS",
         "model": "gpt-6.1-sol/medium",
         "packets": [
           "chunk-178-transfer-history",
@@ -7897,9 +7923,9 @@
         ]
       },
       "F2": {
-        "current": "Original output consumer alreadyconnected; exact finite output adapter/test2 frozen and Cwrapper route/optin paired",
-        "next": "Fixedcandidate source+actual output verification; preserve formal backend spool/real data untested. Product40 explicitfinite sample stillgap",
-        "status": "FIXED_FINITE_OUTPUT_SOURCE_NOT_FORMAL"
+        "current": "Finiteoutput source364independentQF2 sourcePASS, actualbrowser inprogress",
+        "next": "Only concrete findings fromQF2 or product40previewfacts gap; formaloutput actual needsoriginalspool/authorization/realinventory",
+        "status": "SOURCE_READY_QF2_ACTUAL_NEW_SCOPE"
       },
       "F3": {
         "current": "8 source pages delivered, current normal synthetic candidate; exact real capabilities remain module-scoped",
@@ -7912,9 +7938,9 @@
         "status": "SOURCE_READY_NOT_WHOLEPAGE_OR_REAL_BUSINESS"
       },
       "D1": {
-        "current": "C195 exact68 actual +QB271 new5207 metadata adopted; preparing original catalogue-only runner/entry for C",
-        "next": "C fixed carrier/sourcegrant independent finite QB review then actual stage; no reinit or BIND/PUBLISH",
-        "status": "IN_PROGRESS_ORIGINAL_CATALOGUE_CONSUMER"
+        "current": "Realcatalogue344completed; approvedR1v16/v15 exactpatch andnext3componentACL matrix delivered",
+        "next": "C post196 data preservation+originalv16→129/neededv15→130 actualsinglewindow/newprofile then minACL; no extraSQLinvented",
+        "status": "WAITING_C_APPROVED_DATABASE_EXECUTION_NOT_QB_BACKLOG"
       },
       "D2": {
         "current": "Human v17 approved; actual189 + QB260 limited service transaction proof adopted",
@@ -7922,9 +7948,9 @@
         "status": "ACTUAL_ISOLATED_LIMITED_PASS_NOT_FORMAL"
       },
       "D3": {
-        "current": "Original product2956 next native dependency check using prior prepared evidence, not fullsource rescan",
-        "next": "Exact current missingrefs/MAIN-bind-v5 actual coupling or independent original nextcomponent input for C",
-        "status": "IN_PROGRESS_ORIGINAL_REAL_IMPORT_NEXT_DEPENDENCIES"
+        "current": "Originalsupplier222firstcapture actuallycompleted+indexed; product143supplier dependencyprecise",
+        "next": "NewR1profile/ACL Cthenoriginalsupplier222stage→PRODUCT2956→SKU14999; source/main/v5 boundaries unchanged",
+        "status": "SOURCE_CAPTURE_DONE_WAIT_ORIGINAL_C_TARGET_EXECUTION"
       }
     },
     "performanceOwners": {
