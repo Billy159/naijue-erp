@@ -66,6 +66,8 @@ export interface TransferRouteConfiguration {
 }
 export interface PartiesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
+  /** Existing independent audit reader; omission leaves its action unavailable. */
+  readonly audit?: SettingsAuditCapability;
   /** Required real host key provider. Never fabricated, reused across actions or defaulted. */
   readonly newRequestKey: () => string;
   /** Explicit presentation-only read mode. Not a server authorization grant;
