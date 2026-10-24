@@ -148,8 +148,9 @@ test('V2 source plan/facts pin is mandatory and plan-key, source-account facts o
  }
  const b=await openNativeImportBootstrap(f.options);t.after(()=>b.close());await writeFile(identityProof.factsFile,'{}');const untouched=client(f);await assert.rejects(b.stageBootstrap.stageNewBatch(untouched,context(f)),/FILE_CHANGED/);assert.equal(untouched.calls.length,0);
 });
-async function coreBootstrapFixture(t){
+async function coreBootstrapFixture(t,mutateSource=()=>{}){
  const f=await exact26Fixture(t),source=JSON.parse(await readFile(f.options.accountSourceFile,'utf8')),decisions=JSON.parse(await readFile(f.options.accountDecisionFile,'utf8')),review=JSON.parse(await readFile(f.options.reviewFile,'utf8')),facts=JSON.parse(await readFile(f.options.identityProof.factsFile,'utf8')),rows=[];
+ mutateSource({source,decisions});
  const add=(entity,i)=>{const table=IMPORT_V2_TABLES.find(t=>t.entity===entity),fields=Object.fromEntries(table.columns.map(c=>[c.name,''])),sourceKey=`CORE-${entity}-${i}`,nativeId=id(3000+['CUSTOMER','HALL','WAREHOUSE'].indexOf(entity)*100+i);fields.来源编号=sourceKey;let nativeSnapshot,bindings={},enumMappings={状态:{raw:'正常',native:true,evidenceRef:'synthetic-enabled'}};fields.状态='正常';
   if(entity==='CUSTOMER'){Object.assign(fields,{原编码:`00${i}`,名称:`SYNTHETIC customer${i}`});nativeSnapshot={id:nativeId,code:fields.原编码,name:fields.名称,enabled:true,version:1,created_at:null,updated_at:null};}
   if(entity==='HALL'){Object.assign(fields,{厅名称:`SYNTHETIC hall${i}`,默认客户来源编号:`CORE-CUSTOMER-${i}`,默认销货仓来源编号:`CORE-WAREHOUSE-${i}`});nativeSnapshot={id:nativeId,name:fields.厅名称,default_customer_id:id(3000+i),default_sales_warehouse_id:id(3200+i),enabled:true,version:1};bindings={默认客户来源编号:{sourceKey:fields.默认客户来源编号,nativeId:id(3000+i)},默认销货仓来源编号:{sourceKey:fields.默认销货仓来源编号,nativeId:id(3200+i)}};}
@@ -171,4 +172,29 @@ test('v14 bootstrap derives non-self-referential exact CORE49/115 command with22
  await b.authorizeStageSourceActor(f.binding.actorAccountId,command);const closure=await f.party.corePartyClosure([...f.inputs.keys()]),proof=closure.chunks.flatMap(c=>c.rows).find(r=>r.entity==='STAFF').input.source.fieldProvenance.fields.bootstrap_accounts.raw;assert.equal(proof.binding.stage_command_sha256,requestHash(command));assert.equal(proof.binding.authorized_payload_sha256,f.binding.coreSourceDigest);assert.equal(proof.accounts[0].native_snapshot.created_at,f.bootstrapAt);assert.equal(JSON.stringify(command).includes('SYNTHETIC_EXACT26_'),false);assert.equal(JSON.stringify(command).includes('password'),false);
  const changed=structuredClone(command);changed.items[0].nativeRecord.id=id(99999);await assert.rejects(b.authorizeStageSourceActor(f.binding.actorAccountId,changed),/STAGE_SOURCE_AUTHORIZATION/);
  const original=nativeCoreSourceDigest26({binding:f.binding,bootstrapAt:f.bootstrapAt,authority:f.authority,coreSourceMembers:f.coreSourceMembers,sourceInputs:f.closure.sourceInputs}),differentReview=nativeCoreSourceDigest26({binding:f.binding,bootstrapAt:f.bootstrapAt,authority:{...f.authority,bootstrap_execution_review_sha256:'f'.repeat(64)},coreSourceMembers:f.coreSourceMembers,sourceInputs:f.closure.sourceInputs});assert.equal(original,differentReview);const changedInputs=structuredClone(f.closure.sourceInputs);changedInputs[0].nativeSnapshot.name+='changed';assert.notEqual(original,nativeCoreSourceDigest26({binding:f.binding,bootstrapAt:f.bootstrapAt,authority:f.authority,coreSourceMembers:f.coreSourceMembers,sourceInputs:changedInputs}));
+});
+test('C02 captured batch seam: explicit NULL only for original approved four retains49 CORE identities and immutable source binding',async t=>{
+ // Change only batch metadata in the existing synthetic fixture; no real capture or credentials are inputs.
+ const f=await coreBootstrapFixture(t,({source})=>{for(const row of source.rows)if(row.sourceEmployeeNativeId===null)row.oldSourceBatchId=null;});
+ const b=await openNativeImportBootstrap26(f.options);t.after(()=>b.close());
+ assert.equal(b.report.sourceAccounts,49);assert.equal(b.report.preparedAccounts,49);assert.equal(b.report.planLinkedAccounts,4);
+ assert.equal(b.command.coreInitialization.coreSourceMembers.parties.length,115);assert.equal(b.command.items.length,22);
+ assert.equal(b.command.coreInitialization.authority.account_capture_sha256,f.options.trustedAccountSourceSha256);
+ await b.authorizeStageSourceActor(f.binding.actorAccountId,b.command);assert.equal(f.c.calls.length,0);
+ const bytes=await readFile(f.options.accountSourceFile),capture=JSON.parse(bytes);assert.equal(sha(bytes),f.options.trustedAccountSourceSha256);
+ assert.equal(capture.rows.filter(row=>row.oldSourceBatchId===null).length,4);assert.equal(capture.rows.filter(row=>row.oldSourceBatchId===capture.oldSourceBatchId).length,45);
+ assert.equal(b.command.coreInitialization.authority.old_source_batch_id,capture.oldSourceBatchId);
+});
+test('C02 captured batch seam: explicit cross-batch, missing, empty and unapproved NULL rows still reject before SQL',async t=>{
+ const cases=[
+  ['other batch',({source})=>{source.rows[45].oldSourceBatchId='SYNTHETIC_OTHER_BATCH';}],
+  ['missing batch',({source})=>{delete source.rows[45].oldSourceBatchId;}],
+  ['empty batch',({source})=>{source.rows[45].oldSourceBatchId='';}],
+  ['NULL on old employee',({source})=>{source.rows[0].oldSourceBatchId=null;}],
+  ['unapproved plan link',({decisions})=>{decisions.accounts[45].identityLink.currentPersonKey='SYNTHETIC_NOT_APPROVED';}]
+ ];
+ for(const [label,change]of cases){
+  const f=await coreBootstrapFixture(t,context=>{for(const row of context.source.rows)if(row.sourceEmployeeNativeId===null)row.oldSourceBatchId=null;change(context);});
+  await assert.rejects(openNativeImportBootstrap26(f.options),error=>error.code==='NATIVE_BOOTSTRAP_ACCOUNT_IDENTITY',label);assert.equal(f.c.calls.length,0);
+ }
 });

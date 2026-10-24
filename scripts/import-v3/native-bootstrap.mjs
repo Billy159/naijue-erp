@@ -126,7 +126,11 @@ async function openBootstrap(options, exact26) {
       && p.role === row.sourceRole && p.employmentStatusRequested === row.sourceEmploymentStatus && p.loginRequestedByUser === row.sourceLoginEnabled;
   }
   for (const row of source.rows) {
-    must(text(row.sourceAccountId) && !sourceById.has(row.sourceAccountId) && row.oldSourceBatchId === source.oldSourceBatchId, 'NATIVE_BOOTSTRAP_ACCOUNT_IDENTITY');
+    // C02 exports the joined employee's batch. An approved current-person
+    // link retains NULL here; the pinned envelope still binds the capture.
+    const batchBound = row.oldSourceBatchId === source.oldSourceBatchId || row.oldSourceBatchId === null
+      && decisions.accounts.some(mapping => mapping.sourceAccountId === row.sourceAccountId && exactPlanLink(mapping, row));
+    must(text(row.sourceAccountId) && !sourceById.has(row.sourceAccountId) && batchBound, 'NATIVE_BOOTSTRAP_ACCOUNT_IDENTITY');
     sourceById.set(row.sourceAccountId, row);
     // All captured formats are checked, including retained unlinked records. No password is read.
     wrapTrustedLegacyCredential({ salt: row.credentialSalt, hash: row.credentialHash });
