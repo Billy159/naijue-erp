@@ -25,14 +25,14 @@ function stamp(value: unknown) {
   text(value);
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/.test(value) || Number.isNaN(Date.parse(value)) || new Date(value).toISOString().slice(0, 19) !== value.slice(0, 19)) invalid();
 }
-const baseFields = ['id', 'number', 'businessDate', 'fromWarehouseId', 'toWarehouseId', 'status', 'version'] as const;
-const referenceFields = ['fromWarehouseName', 'toWarehouseName', 'fromHallName', 'toHallName', 'createdByName', 'approvedByName'] as const;
+const baseFields = ['id', 'number', 'businessDate', 'fromWarehouseId', 'toWarehouseId', 'status', 'version', 'responsibleStaffId'] as const;
+const referenceFields = ['fromWarehouseName', 'toWarehouseName', 'fromHallName', 'toHallName', 'createdByName', 'approvedByName', 'responsibleName'] as const;
 function header(row: Record<string, unknown>) {
   id('transfer', row.id); named(row.number); text(row.businessDate); businessDate(row.businessDate);
   id('warehouse', row.fromWarehouseId); id('warehouse', row.toWarehouseId); if (row.fromWarehouseId === row.toWarehouseId) invalid();
-  choice(row.status, ['DRAFT', 'APPROVED', 'VOID']); integer(row.version);
+  choice(row.status, ['DRAFT', 'APPROVED', 'VOID']); integer(row.version); nullableId('staff', row.responsibleStaffId);
 }
-function references(row: Record<string, unknown>) { referenceFields.slice(0, -1).forEach(field => named(row[field])); nullableText(row.approvedByName); }
+function references(row: Record<string, unknown>) { ['fromWarehouseName', 'toWarehouseName', 'fromHallName', 'toHallName', 'createdByName'].forEach(field => named(row[field])); nullableText(row.approvedByName); nullableText(row.responsibleName); }
 function page(row: Record<string, unknown>, parameters: { readonly page: number; readonly pageSize: number }, items: readonly unknown[]) {
   integer(row.page); integer(row.pageSize); exact(row.exactTotal);
   if (row.page !== parameters.page || row.pageSize !== parameters.pageSize) invalid();

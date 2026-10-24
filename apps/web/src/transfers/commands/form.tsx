@@ -91,6 +91,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
         <div className="tc-gold-field"><span>调入仓库</span><span className="transfer-read-value" title={names?.toWarehouseName ?? undefined}>{names?.toWarehouseName ?? '仓库名称未提供'}</span></div>
         <div className="tc-gold-field tc-gold-doc-number"><span>单号</span><strong className="transfer-read-value">{detail ? header.number : write.phase === 'committed' ? '已保存，待读取单号' : header.number}</strong></div>
         <div className="tc-gold-field"><span>创建者</span><span className="transfer-read-value">{names?.createdByName ?? (detail ? '未知' : '保存后记录')}</span></div>
+        <div className="tc-gold-field"><span>负责人</span><span className="transfer-read-value" title="负责人修改尚未接通">{names?.responsibleName ?? '未知'}</span></div>
         <div className="tc-gold-entry-actions"><UIButton type="button" className="iw-button iw-primary" disabled title="当前商品选择及原生条码读取尚未接入">扫码录入</UIButton></div>
       </div> : undefined}
       note={header && <label className="tc-note-row"><span>备注</span>{input ? <UIInput aria-label="备注" className="iw-control transfer-note-input" maxLength={10000} value={input.note} disabled={locked} onChange={nextValue => update({ ...input, note: nextValue })} /> : <span className="tc-note-read">{header.note || '—'}</span>}</label>}
