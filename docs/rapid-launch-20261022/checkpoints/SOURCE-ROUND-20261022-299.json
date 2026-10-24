@@ -1,0 +1,146 @@
+{
+  "atUtc": "2026-10-24T08:04:10.514380+00:00",
+  "parent": "30a7f6e666519b5809cf14e61f97b9b623dd66d0",
+  "taskId": "F1_C297_READONLY_TOOLBAR_AND_DISABLED_DATE_RESIDUALS",
+  "files": [
+    {
+      "path": "apps/web/src/sales/commands/form.tsx",
+      "owner": "F1",
+      "bytes": 23378,
+      "sha256": "fd9c10b230b5242c10d57bf2e91fc8e7b3acba720b38c1832ae39909cf56c512"
+    },
+    {
+      "path": "apps/web/src/components/standard-controls.css",
+      "owner": "F1",
+      "bytes": 5667,
+      "sha256": "fe568c8e25ac30d8838f8b487a397d04a2c6b3a4069003b1163512e912faaa3f"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "d1c7ba288abb355d1ee27febb7a583ac256ecc9bf38157db382ec822d4f94097",
+  "ownerDelivery": {
+    "taskId": "F01_F02_EXISTING_DATES_AND_TOOLBAR_GROUP",
+    "status": "SOURCE_READY_FROZEN_RELEASED_LOCAL_SCOPED_PASS_ACTUAL_PENDING",
+    "atUtc": "2026-10-24T07:56:38.484277+00:00",
+    "baseline": "source298 d26108463fdd6d04afce7632e6f00396d66b6dcc, UI actual297 f22b301",
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/commands/form.tsx",
+        "bytes": 23378,
+        "sha256": "fd9c10b230b5242c10d57bf2e91fc8e7b3acba720b38c1832ae39909cf56c512"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/standard-controls.css",
+        "bytes": 5667,
+        "sha256": "fe568c8e25ac30d8838f8b487a397d04a2c6b3a4069003b1163512e912faaa3f"
+      }
+    ],
+    "sourceFrozenUntilCPin": true,
+    "sourceWriterReleased": true,
+    "issueInputs": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-f22b301-document-controls-retest/ISSUE-TOOLBAR-READONLY-RESIDUAL.json",
+        "bytes": 7509,
+        "sha256": "4b0fefae490fc214f3d7d8cd51f388ffd9f5cf8522d8bce9b3c1228ef1b8b304"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-f22b301-document-controls-retest/DISABLED-DATE-QUALIFICATION.json",
+        "bytes": 9354,
+        "sha256": "6d386bd83987f8f4c82d2e09a135a297fb3988dcee38454e08c0ae264c7e554a"
+      }
+    ],
+    "checks": {
+      "check-1": "EXIT0 original complete saved owner readonly branch, actual enabled semantic classes and disabled date alias/noninteraction",
+      "types-1": "EXIT0 changed TSX strict imported closure",
+      "source-contract": "PASS exact2 class value edits and disabled colors-only CSS extension; original handlers/guards/sharedJS/passed139 styles and298T02 retained"
+    },
+    "unchangedInheritedT02": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/transfer-proposal-form.tsx",
+      "bytes": 35330,
+      "sha256": "f733047f350ed08fcd4263a8fdf1d50e632e47c2cb91628e0410e9228175b62c"
+    },
+    "sourceReuse": {
+      "arco": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/node_modules/@arco-design/web-react/dist/css/arco.css",
+        "bytes": 675991,
+        "sha256": "6e565215fc2c919a3b4bcef0a8b8b328bb33e7c86c6e7111e63131b049812aeb",
+        "lines": "1430-1459",
+        "declarations": "Disabled picker input/carrier color and -webkit-text-fill-color var(--color-text-4)"
+      },
+      "overridingOriginalRule": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal.css",
+        "lines": "22-24",
+        "declaration": "Generic input:disabled color var(--ca-control-disabled-text)"
+      },
+      "actualCarrierColor": "201,205,212 already correct; actual input138,147,160 must match Demo201,205,212"
+    },
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/REPORT.md",
+        "bytes": 2040,
+        "sha256": "55864cc476d092e820391d674d4d6e8a0ee2665e4c39762fd7a14c7beafa0af6"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/SOURCE.diff",
+        "bytes": 4952,
+        "sha256": "9e2135acfa8c4551c4834bd0f2873161d5f8bca519629b362f22eaf1debd6513"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/SOURCE-CONTRACT-RESULT.json",
+        "bytes": 1699,
+        "sha256": "ac9b5a22ad3d653b2957b9667cd85529c6d5ab11011ba4acfa596616311575ba"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/RESULT.json",
+        "bytes": 1898,
+        "sha256": "ecfb4dfb1468fa641f110148d8379b0608ccbd1288338305a0e8651bcc3a869d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/check-1.log",
+        "bytes": 523,
+        "sha256": "c09768a864c3dcf2572e4d191bb9d33110c157203042c59f1d8cc9b1c1d663e7"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/tsconfig.json",
+        "bytes": 471,
+        "sha256": "0c06908ec6fbe6def4fa99ca6fc95c8a7a4f83add478392a4260dd58fd7ba9a7"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/readonly-date-check.mjs",
+        "bytes": 11935,
+        "sha256": "e890a528cc31bba7fd2ddf738cecf50afeb3049fa7d1513dcf9e057ffbe7693c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/ADDED-DISABLED-PALETTE.css",
+        "bytes": 559,
+        "sha256": "78a4964ef4d4de71d131aa5cd828f86b94a9bd43af99645cc0e255ffe03d5221"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/before-sales-command-form.tsx",
+        "bytes": 23351,
+        "sha256": "b1aa59eb5fc7392235dc5fcdb8f1d39145baf431e9e741edbb76ffdb80bb0f01"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-141/before-standard-controls.css",
+        "bytes": 5108,
+        "sha256": "caa459666a8bf7e763d733b5763de1932960d0baee1df2fb9a14ba5c460893a6"
+      }
+    ],
+    "notTested": [
+      "No browser RGB/geometry/focus/hover acceptance",
+      "No PG/SSH/Git/fullbuild/service/businessSAVE",
+      "No editor toolbar/full date lifecycle repeated suite"
+    ],
+    "blocker": "No source/type blocker; C containing group build and original QF actual3 residuals needed",
+    "next": "C integrate exact2 with inherited298 T02 once; originalQF only readonly toolbar semantic color, disabled date palette, T02 geometry. Preserve297 editor toolbar/date/danger accepts."
+  },
+  "stage": "FIXED_SOURCE_LOCAL_STRUCTURAL_AND_STRICT_PASS_NATIVE_THREE_RESIDUALS_PENDING",
+  "qualification": "299 includes fixed298T02. Actual readonly colors/disabledpalette/T02geometry remainQFpending. Original297 editorfocus/nativeboxShadownone/dateS02/dangerhover accepted unchanged. Browserwhite56px was fixedtarget668 vsnatural724 cleanup,notpageCSS.",
+  "actualPG": false,
+  "deployed": false
+}

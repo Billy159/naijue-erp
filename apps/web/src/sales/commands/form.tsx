@@ -82,10 +82,10 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
       <span className="sale-muted">{session.hasDirtyDraft ? '· 有未保存输入' : '· 已保存'}</span><div className="actions">
         <button type="button" className="btn" disabled={unresolved} onClick={leave}>返回列表</button>
         {session.canCancelEditing && <button type="button" className="btn" onClick={() => { if (session.hasDirtyDraft) setConfirm('cancel-edit'); else void session.cancelEditing(); }}>取消修改</button>}
-        {status === 'DRAFT' && <button type="button" className="btn" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('VOID')} onClick={() => setConfirm('VOID')}>作废</button>}
+        {status === 'DRAFT' && <button type="button" className="btn sale-delete-action" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('VOID')} onClick={() => setConfirm('VOID')}>作废</button>}
         {session.canBeginEditing && <button type="button" className="btn" onClick={() => session.beginEditing()}>修改</button>}
         {(editor?.mode === 'CREATE' || !lock) && <button type="button" className="btn" disabled={lock || !session.hasDirtyDraft} onClick={save}>保存</button>}
-        {status === 'DRAFT' && <button type="button" className="btn" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('APPROVE') || !base || !settlementBalanced(base)} title="审核须先保存并读取当前单据，收款减退款与应结金额精确配平" onClick={() => setConfirm('APPROVE')}>审核</button>}
+        {status === 'DRAFT' && <button type="button" className="btn primary" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('APPROVE') || !base || !settlementBalanced(base)} title="审核须先保存并读取当前单据，收款减退款与应结金额精确配平" onClick={() => setConfirm('APPROVE')}>审核</button>}
         {status === 'APPROVED' && <button type="button" className="btn" disabled={!stable || !session.actionAllowed('UNAPPROVE')} title={session.actionAllowed('UNAPPROVE') ? undefined : '业务员不能弃审'} onClick={() => setConfirm('UNAPPROVE')}>弃审</button>}
         <DocumentOutputActions sourceKey={detail ? `${detail.document.header.id}:${detail.document.header.version}` : "unsaved"} {...(detail && (write.phase !== 'committed' || !!savedReadback) && !unresolved && (!command.stale || !!savedReadback) && (!session.hasDirtyDraft || !!savedReadback) ? { getDocument: () => salesDocumentOutput(detail) } : {})} unavailableReason="请先完成保存并读取当前单据" />
         <SalesHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { salesId: detail.document.header.id } : {})} />
