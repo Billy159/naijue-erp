@@ -9,6 +9,8 @@ import { createProductHttpReader } from '../transport/product-http-reader.ts';
 import { createProductMaintenanceHttpClientV2, createProductMaintenanceHttpReaderV2, createProductEditorMediaHttpReader, createProductMediaUploadHttpClient } from '../products/product-maintenance-http-client.ts';
 import { createStaffSettingsHttpReader } from '../staff-settings/http-client.ts';
 import { createPaymentSettingsHttpReader } from '../payment-settings/http-client.ts';
+import { createSettingsAuditHttpReader } from '../settings/audit/http-reader.ts';
+import { auditModules } from '../settings/audit/contracts.ts';
 import { parseProductionHostAssets, parseProductionHostConfiguration, productionAssetUrl } from './configuration.ts';
 
 export interface ProductionHostEnvironment {
@@ -102,7 +104,10 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
       ...(configuration.routes.productSettings.groups ? ['groups' as const] : []), ...(configuration.routes.productSettings.seasons ? ['seasons' as const] : []),
     ], initialTab: configuration.routes.productSettings.initialTab } } : {}),
     ...(configuration.routes.storeSettings ? { storeSettings: { stylesheet: stylesheet('store-settings'), allowedTabs: configuration.routes.storeSettings.allowedTabs,
-      initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead, commands: { newRequestKey, writesEnabled: writesEnabled(maintenance?.storeSettings),
+      initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead,
+      audit: { reader: createSettingsAuditHttpReader(http), allowedModules: auditModules,
+        hasUnresolvedWrite: () => controller?.hasRetainedUnresolvedWrite() ?? true },
+      commands: { newRequestKey, writesEnabled: writesEnabled(maintenance?.storeSettings),
         customers: { candidates: async (kind, parameters, signal) => (await import('../parties/http-client.ts')).createPartyHttpClient(http).candidates(kind, parameters, signal) },
       } } } : {}),
     ...(accountView ? { accountSettings: { stylesheet: stylesheet('staff-settings'), view: accountView, ...(!accountView.workspace ? { commands: { newRequestKey, writesEnabled: writesEnabled(maintenance?.accountSettings, true) } } : {}) } } : {}),

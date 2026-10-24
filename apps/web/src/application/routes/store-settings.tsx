@@ -3,6 +3,8 @@ import { createOrganizationStoreSettingsReader, createOrganizationSettingsDirect
 import { createStoreMaintenanceWorkspace, type StoreMaintenanceWorkspace } from '../../settings/stores/maintenance-controller.ts';
 import { StoreSettingsMaintenanceHost } from '../../settings/stores/maintenance-host.tsx';
 import type { ApplicationRouteProps, PreparedApplicationRoute, RoutePreparation } from '../contracts.ts';
+import { settingsAuditModulesFor } from '../../../../../packages/application/src/settings-audit-validation.ts';
+import { blankAuditDraft } from '../../settings/audit/contracts.ts';
 
 export function prepareStoreSettingsRoute(input: RoutePreparation, onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void, workspace?: StoreMaintenanceWorkspace): PreparedApplicationRoute {
   const configuration = input.configuration.storeSettings;
@@ -14,13 +16,18 @@ export function prepareStoreSettingsRoute(input: RoutePreparation, onAccessFailu
   if (input.principal.accountId !== input.scope.identity.accountId) throw new TypeError('Store settings identity does not match its scope.');
   if (workspace && !workspace.matches(input.scope)) throw new TypeError('Store workspace identity does not match this route.');
   const reader = createOrganizationStoreSettingsReader(input.http);
+  // This is the current authenticated UI scope; the audit endpoint authorizes
+  // the role and each requested module again on every read.
+  const modules = input.principal.role === 'ADMIN' || input.principal.role === 'WAREHOUSE'
+    ? settingsAuditModulesFor(input.principal.role, { ...blankAuditDraft, page: 1, pageSize: 20 }) : [];
+  const audit = configuration.audit ? { ...configuration.audit, allowedModules: configuration.audit.allowedModules.filter(module => modules.includes(module)) } : undefined;
   if (workspace) {
     const directory = createOrganizationSettingsDirectory({ scope: input.scope, http: input.http, ...(configuration.commands?.customers ? { customers: configuration.commands.customers } : {}) });
     return { canLeave: () => workspace.canLeave(), View: ({ scope }: ApplicationRouteProps) => <StoreSettingsMaintenanceHost scope={scope} reader={reader} workspace={workspace} directory={directory}
-      allowedTabs={configuration.allowedTabs} initialTab={configuration.initialTab} allowHallDirectoryRead={configuration.allowHallDirectoryRead} onAccessFailure={onAccessFailure} /> };
+      {...(audit ? { audit } : {})} allowedTabs={configuration.allowedTabs} initialTab={configuration.initialTab} allowHallDirectoryRead={configuration.allowHallDirectoryRead} onAccessFailure={onAccessFailure} /> };
   }
   return { View: ({ scope }: ApplicationRouteProps) => <ReadOnlyStoreSettingsHost scope={scope} reader={reader} allowedTabs={configuration.allowedTabs}
-    initialTab={configuration.initialTab} allowHallDirectoryRead={configuration.allowHallDirectoryRead} onAccessFailure={onAccessFailure} /> };
+    {...(audit ? { audit } : {})} initialTab={configuration.initialTab} allowHallDirectoryRead={configuration.allowHallDirectoryRead} onAccessFailure={onAccessFailure} /> };
 }
 
 /** The authenticated session owns both bounded editors; route retries only replace reads. */

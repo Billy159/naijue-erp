@@ -128,6 +128,7 @@ export class ApplicationController {
     if (storeCommands && (typeof storeCommands.newRequestKey !== 'function' || typeof storeCommands.writesEnabled !== 'function'
       || storeCommands.customers !== undefined && typeof storeCommands.customers?.candidates !== 'function')) throw new TypeError('Store commands require explicit key/write gates and valid optional customer candidates.');
     const storeSettings = routes.storeSettings ? Object.freeze({ stylesheet: stylesheet(routes.storeSettings.stylesheet), allowedTabs: Object.freeze([...routes.storeSettings.allowedTabs]), initialTab: routes.storeSettings.initialTab, allowHallDirectoryRead: routes.storeSettings.allowHallDirectoryRead,
+      ...(routes.storeSettings.audit ? { audit: Object.freeze({ ...routes.storeSettings.audit, allowedModules: Object.freeze([...routes.storeSettings.audit.allowedModules]) }) } : {}),
       ...(storeCommands ? { commands: Object.freeze({ ...storeCommands }) } : {}) }) : undefined;
     if (routes.staffSettings && (typeof routes.staffSettings.view?.canPrepare !== 'boolean' || !Array.isArray(routes.staffSettings.view.roles))
       || routes.paymentSettings && typeof routes.paymentSettings.view?.canPrepare !== 'boolean') throw new TypeError('Explicit settings view dependencies are required.');
@@ -231,6 +232,19 @@ export class ApplicationController {
   }
   /** Only the current bounded document round trip retains a second render owner. */
   get retainedDocument(): ApplicationSnapshot | null { return this.#documentTrip?.origin ?? null; }
+  /** Store audit reads may coexist with any retained command owner. Ordinary
+   * dirty inputs are separate. Product editors hand unresolved commands to
+   * productRecovery when their route is detached, before store audit can open. */
+  hasRetainedUnresolvedWrite(): boolean {
+    return this.#productRecovery.size > 0
+      || this.#partySession?.workspace.hasUnresolvedWrite() === true
+      || this.#salesSession?.workspace.commands.hasUnresolvedWrite === true
+      || this.#transferSession?.workspace.hasUnresolvedWrite === true
+      || this.#storeSession?.workspace.hasUnresolvedWrite() === true
+      || this.#paymentWorkspace()?.hasUnresolvedWrite() === true
+      || this.#staffWorkspace()?.hasUnresolvedWrite() === true
+      || this.#accountWorkspace()?.hasUnresolvedWrite() === true;
+  }
   readonly subscribe = (listener: () => void): (() => void) => {
     if (this.#disposed) return () => {};
     this.#listeners.add(listener); return () => { this.#listeners.delete(listener); };
