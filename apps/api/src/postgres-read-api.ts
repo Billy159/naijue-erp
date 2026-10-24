@@ -5,6 +5,7 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import { randomUUID } from "node:crypto";
 import { createSettingsAuditHttpPlugin } from "./settings-audit-http.ts";
 import { PostgresSettingsAuditUnitOfWork } from "../../../adapters/postgres/src/settings-audit-reader.ts";
+import type { SettingsAuditCoreReadCapability } from "../../../adapters/postgres/src/settings-audit-reader.ts";
 import Fastify from "fastify";
 import type { FastifyInstance } from "fastify";
 import { isAbsolute, resolve } from "node:path";
@@ -41,6 +42,7 @@ import { createAuthenticatedDocumentCommandsPlugin } from "./authenticated-docum
 import { createStoreSettingsReadHttpPlugin } from "./store-settings-read-http.ts";
 import { PostgresStoreSettingsReadReader } from "../../../adapters/postgres/src/store-settings-read-reader.ts";
 import { PostgresSalesUnitOfWork } from "../../../adapters/postgres/src/sales-unit-of-work.ts";
+import type { PgSalesPool } from "../../../adapters/postgres/src/sales-unit-of-work.ts";
 import { PostgresTransferUnitOfWork } from "../../../adapters/postgres/src/transfer-unit-of-work.ts";
 import type { NativeCatalogueCompletenessVerifier } from "../../../adapters/postgres/src/sales-native-facts.ts";
 import type { SalesDependencies } from "../../../packages/application/src/ports.ts";
@@ -70,7 +72,7 @@ import type { ProductDetailsQueryAuthorization } from "../../../packages/applica
 import { createProductDetailsQueryHttpPlugin } from "./product-details-query-http.ts";
 import { PostgresProductDetailsQueryReader } from "../../../adapters/postgres/src/product-details-query-reader.ts";
 import { PostgresProductWarehouseStockReader } from "../../../adapters/postgres/src/product-warehouse-stock-reader.ts";
-import { PostgresMaintenanceCommandUnitOfWork } from "../../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
+import { PostgresMaintenanceCommandUnitOfWork, maintenanceContextClient } from "../../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import { PostgresCatalogueMaintenanceUnitOfWork } from "../../../adapters/postgres/src/catalogue-maintenance-store.ts";
 import { createCatalogueMaintenanceHttpPlugin } from "./catalogue-maintenance-http.ts";
 import { PostgresOrganizationMaintenanceReadUnitOfWork } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
@@ -492,6 +494,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       app.register(createAuthenticationHttpPlugin(authentication));
       app.register(createStoreSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: core.authorization,
         reader: new PostgresStoreSettingsReadReader(pool, core.capability) } }));
+      app.register(createSettingsAuditHttpPlugin({ authenticate,
+        reader: new PostgresSettingsAuditUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), null, core.auditCapability) }));
       await app.ready(); const readyApp = app;
       return Object.freeze({ app: readyApp, close: () => readyApp.close(), trustedOrigin: host.trustedOrigin,
         get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; } });
@@ -601,8 +605,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
 }
 
 /** Proof-derived CORE directory policy. The reader rechecks on its original RR client before any data query. */
-export function createCommittedCoreSettingsRead(pool: PgReadAuthorizationPool, runtime26: NativeRuntime26Capability, binding: CommittedCoreReadBinding): {
-  readonly authorization: StoreSettingsReadAuthorization; readonly capability: StoreSettingsCoreReadCapability;
+export function createCommittedCoreSettingsRead(pool: PgSalesPool, runtime26: NativeRuntime26Capability, binding: CommittedCoreReadBinding): {
+  readonly authorization: StoreSettingsReadAuthorization; readonly capability: StoreSettingsCoreReadCapability; readonly auditCapability: SettingsAuditCoreReadCapability;
 } {
   const fixed = Object.freeze(structuredClone(binding));
   const permit = (value: unknown): void => requireDomain(value, "FORBIDDEN", "Committed CORE member authority unavailable");
@@ -652,6 +656,11 @@ export function createCommittedCoreSettingsRead(pool: PgReadAuthorizationPool, r
       const actual = await scopeOn(client, read.actor, read.signal), proposed = read.grant.scope;
       permit(proposed.kind === "CORE_MEMBERS" && JSON.stringify([...proposed.hallIds].sort()) === JSON.stringify(actual.hallIds)
         && JSON.stringify([...proposed.warehouseIds].sort()) === JSON.stringify(actual.warehouseIds));
+    } }),
+    auditCapability: Object.freeze<SettingsAuditCoreReadCapability>({ profile: "COMMITTED_CORE_SETTINGS_V14", async assertReady(context, actor, signal) {
+      const actual = await scopeOn(maintenanceContextClient(context, pool), actor, signal);
+      maintenanceContextClient(context, pool);
+      return Object.freeze({ hallIds: actual.hallIds, warehouseIds: actual.warehouseIds });
     } })
   });
 }

@@ -768,3 +768,91 @@ test('production v15 category: original service adapter evidence same pool save 
     assert.equal(p.counts().ends, 1);
   } finally { f.cleanup(); }
 });
+
+function coreAuditHostFixture() {
+  const f = coreProductionFixture(), staff = f.coreSourceMembers.accounts[0]!.staff_id;
+  const warehouse = f.coreSourceMembers.parties.find(p => p.entity === 'WAREHOUSE')!.nativeId;
+  const state = { role: 'ADMIN', sources: true, claims: true, member: true, failPage: false };
+  const id = (i: number) => `16000000-0000-4000-8000-${String(i).padStart(12, '0')}`;
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql === NATIVE_RUNTIME26_V14_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes('maintenance:administrator-lock')) return [];
+    if (sql.includes('core-settings:committed-proof')) return [{ after_values: { coreSourceMembers: f.coreSourceMembers }, sources_match: state.sources, claims_match: state.claims }];
+    if (sql.includes('core-settings:current-identity')) return [{ id: account, staff_id: state.member ? staff : id(900), login_enabled: true,
+      role: state.role, employment_status: '在职', hall_id: hall, hall_enabled: true }];
+    if (sql.includes('settings-audit:role')) return [{ account_id: account, role: state.role }];
+    if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
+    if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s')) return [{ account_id: account, staff_id: state.member ? staff : id(900),
+      login_name: 'SYNTHETIC_CORE_ACTOR', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role: state.role, employment_status: '在职', hall_id: hall }];
+    if (sql.includes('settings-audit:page')) {
+      if (state.failPage) throw Error('SYNTHETIC_AUDIT_QUERY_FAILURE');
+      const modules = values[0] as string[], selected = values[1] as string | null;
+      const memberArrays = values.slice(9) as string[][];
+      assert.equal(memberArrays.length, modules.length); for (const ids of memberArrays) assert.equal(ids.length, 22);
+      assert.ok(modules.every(m => m === 'HALL' || m === 'WAREHOUSE'));
+      assert.doesNotMatch(sql, /SELECT '(?:PRODUCT|STAFF|ACCOUNT|CUSTOMER)'::text AS module/);
+      assert.match(sql, /WHERE id=ANY\(\$10::uuid\[\]\)/);
+      assert.match(sql, /count\(\*\)::text FROM matched/); assert.match(sql, /ORDER BY occurred_at DESC NULLS LAST,id DESC LIMIT \$8 OFFSET \$9/);
+      const absent = selected !== null && !memberArrays.some(ids => ids.includes(selected));
+      const count = absent ? 0 : values[8] === 20 ? 3 : 1;
+      const items = Array.from({ length: count }, (_, i) => ({ id: id(i + 1), operation_id: id(i + 20), module: modules[0],
+        object_id: selected ?? hall, object_name: '%_中文 SYNTHETIC_CORE_OBJECT', object_code: null, actor_account_id: account, actor_staff_id: staff,
+        actor_name: 'SYNTHETIC_CORE_ACTOR', actor_login_name: 'SYNTHETIC_CORE_ACTOR', action: 'EDIT', old_version: i + 1, new_version: i + 2,
+        occurred_at: '2026-10-24T01:00:00.123456Z', before_values: { name: 'SYNTHETIC_OLD' }, after_values: { name: 'SYNTHETIC_NEW' }, credential_actions: [] }));
+      return [{ total: absent ? '0' : values[8] === 20 ? '23' : '1', items, too_large: false }];
+    }
+    return undefined;
+  });
+  const payload = { module: 'ALL', objectId: null as string | null, objectSearch: '%_中文', actorSearch: 'SYNTHETIC', action: 'EDIT',
+    dateFrom: '2026-10-01', dateTo: '2026-10-24', page: 2, pageSize: 20 };
+  return { f, p, state, warehouse, payload, headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` } };
+}
+test('production CORE audit: original endpoint binds committed members current role and exact filtered count/page on one maintenance lease', async () => {
+  const { f, p, state, warehouse, payload, headers } = coreAuditHostFixture();
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try {
+      assert.equal(api.app.hasRoute({ method: 'POST', url: '/settings/audit/query' }), true); assert.equal(api.app.server.listening, false);
+      const response = await api.app.inject({ method: 'POST', url: '/settings/audit/query', headers, payload }); assert.equal(response.statusCode, 200, response.body);
+      const page = response.json(); assert.equal(page.total, 23); assert.equal(page.page, 2); assert.equal(page.items.length, 3);
+      assert.deepEqual(page.items[0].changes, [{ field: 'name', label: '名称', before: { state: 'VALUE', value: 'SYNTHETIC_OLD' }, after: { state: 'VALUE', value: 'SYNTHETIC_NEW' } }]);
+      assert.equal(page.items[0].occurredAt, '2026-10-24T01:00:00.123456Z');
+      const data = p.calls.find(c => c.sql.includes('settings-audit:page'))!, calls = p.calls.filter(c => c.lease === data.lease);
+      assert.deepEqual(data.values.slice(0, 9), [['HALL', 'WAREHOUSE'], null, '%_中文', 'SYNTHETIC', 'EDIT', '2026-10-01', '2026-10-24', 20, 20]);
+      const at = (tag: string) => calls.findIndex(c => c.sql.includes(tag));
+      assert.ok(at('maintenance:administrator-lock') < at('maintenance:identity'));
+      assert.ok(at('maintenance:identity') < at('core-settings:committed-proof') && at('core-settings:current-identity') < at('settings-audit:page'));
+      assert.equal(calls.filter(c => c.sql.includes('settings-audit:page')).length, 1); assert.equal(calls.at(-1)!.sql, 'COMMIT');
+      assert.ok(calls.some(c => c.sql === NATIVE_RUNTIME26_V14_METADATA_PROBE));
+      assert.ok(!response.body.includes('coreSourceMembers') && !response.body.includes('password') && !response.body.includes(f.configuration.coreInitializationRead!.coreSourceDigest));
+      state.role = 'WAREHOUSE';
+      const single = await api.app.inject({ method: 'POST', url: '/settings/audit/query', headers,
+        payload: { ...payload, module: 'WAREHOUSE', objectId: warehouse, objectSearch: '', actorSearch: '', page: 1 } });
+      assert.equal(single.statusCode, 200, single.body); assert.equal(single.json().total, 1); assert.equal(single.json().items[0].object.id, warehouse);
+      assert.equal(p.counts().allocations, 1);
+      for (const url of ['/settings/audit/commands', '/catalogue/categories/commands', '/products/v2/commands', '/inventory/query', '/sales/commands', '/current-form/products/query'])
+        assert.equal(api.app.hasRoute({ method: 'POST', url }), false, url);
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+test('production CORE audit: source claim actor and module failures deny before page SQL; genuine absent scope and SQL errors are not fabricated success', async () => {
+  const { f, p, state, payload, headers } = coreAuditHostFixture();
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try {
+      const request = (body: Record<string, unknown> = payload) => api.app.inject({ method: 'POST', url: '/settings/audit/query', headers, payload: body });
+      const before = p.calls.filter(c => c.sql.includes('settings-audit:page')).length;
+      for (const field of ['sources', 'claims', 'member'] as const) { state[field] = false; const denied = await request(); assert.equal(denied.statusCode, 403, denied.body); state[field] = true; }
+      state.role = 'SALESPERSON'; assert.equal((await request()).statusCode, 403); state.role = 'ADMIN';
+      for (const module of ['PRODUCT', 'CUSTOMER', 'ACCOUNT']) assert.equal((await request({ ...payload, module })).statusCode, 403);
+      assert.equal(p.calls.filter(c => c.sql.includes('settings-audit:page')).length, before);
+      const unauthenticated = await api.app.inject({ method: 'POST', url: '/settings/audit/query', headers: { origin: PRODUCTION_PUBLIC_ORIGIN }, payload }); assert.equal(unauthenticated.statusCode, 401);
+      const absent = await request({ ...payload, module: 'HALL', objectId: '16000000-0000-4000-8000-000000009999', page: 1 });
+      assert.equal(absent.statusCode, 200, absent.body); assert.deepEqual(absent.json(), { total: 0, items: [], page: 1, pageSize: 20 });
+      assert.equal(p.calls.filter(c => c.sql.includes('settings-audit:page')).length, before + 1);
+      state.failPage = true; const failure = await request(); assert.equal(failure.statusCode, 500, failure.body); assert.ok(!failure.body.includes('SYNTHETIC_AUDIT_QUERY_FAILURE'));
+      assert.ok(!p.calls.some(c => /^\s*(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)));
+    } finally { await api.close(); }
+  } finally { f.cleanup(); }
+});
