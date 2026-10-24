@@ -4,7 +4,7 @@ import {entityId} from '../../../../../../packages/domain/src/values.ts';
 import {parseSalesListQuery,parseSalesDetailQuery} from '../../../../../../packages/application/src/sales-query-validation.ts';
 import {parseTransferListQuery,parseTransferDetailQuery} from '../../../../../../packages/application/src/transfer-query-validation.ts';
 import {parseSalesFilterReferenceQuery} from '../../../../../../packages/application/src/sales-reference-query-validation.ts';
-import {parseCurrentFormProductQuery,parseCurrentFormSkuBatchQuery} from '../../../../../../packages/application/src/current-form-validation.ts';
+import {parseCurrentFormProductQuery,parseCurrentFormSkuBatchQuery,parseCurrentFormBarcodeQuery} from '../../../../../../packages/application/src/current-form-validation.ts';
 import {parseDictionaryListQuery,validateDictionaryPage,validateDictionarySizeGroup} from '../../../../../../packages/application/src/dictionary-read-validation.ts';
 import type {CurrentFormContext,CurrentFormSku} from '../../../../../../packages/application/src/current-form-ports.ts';
 import {createCurrentFormHttpReader} from '../../../../src/current-form/http-reader.ts';
@@ -20,7 +20,7 @@ import {normalSalesResponse,normalTransferResponse,type NormalSalesRow,type Norm
 import {detail as declaredTransferFixture} from '../../../../src/transfers/tests/fixtures.ts';
 
 interface Options{readonly syntheticOnly:true;readonly origin:string;readonly existingFetch:(input:string,init:RequestInit)=>Promise<Response>}
-const paths=new Set(['/sales/query','/transfers/query','/sales/detail/query','/transfers/detail/query','/current-form/products/query','/current-form/sku-batch/query','/dictionary-read/size-groups/query','/sales/references/query','/sales/commands','/transfers/commands','/sales/prepare-existing','/transfers/prepare-existing','/sales/history/query','/transfers/history/query']);
+const paths=new Set(['/sales/query','/transfers/query','/sales/detail/query','/transfers/detail/query','/current-form/products/query','/current-form/sku-batch/query','/current-form/barcode/query','/dictionary-read/size-groups/query','/sales/references/query','/sales/commands','/transfers/commands','/sales/prepare-existing','/transfers/prepare-existing','/sales/history/query','/transfers/history/query']);
 const json=(value:unknown,status=200)=>new Response(JSON.stringify(value),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-data-source':'SYNTHETIC-DOCUMENT-PREVIEW-ONLY'}});
 const unavailable=(code='SYNTHETIC_DOCUMENT_OPERATION_NOT_DECLARED')=>json({error:{code,message:'Finite preview fixture does not provide this operation; no real service or alternative business store was called.'}},501);
 class FixtureRejected extends Error{constructor(readonly response:Response){super('Original synthetic fixture rejected this operation.');}}
@@ -80,6 +80,7 @@ export function createSyntheticDocumentPreviewTransport(options:Options){
    if(path==='/current-form/products/query'){
     const q=parseCurrentFormProductQuery(body),data=await current.readProducts(q,signal),skus=await allSkus(q.context);return json({...data,exactTotal:data.exactTotal.toString(),items:data.items.map(product=>{const group=declaredProductGroups.get(product.id);return group&&skus.filter(sku=>sku.productId===product.id).every(sku=>sku.sizeGroupId===group)?{...product,sizeGroupId:group}:product;})});
    }
+   if(path==='/current-form/barcode/query'){parseCurrentFormBarcodeQuery(body);return unavailable('SYNTHETIC_BARCODE_BINDINGS_NOT_DECLARED');}
    if(path==='/current-form/sku-batch/query'){const q=parseCurrentFormSkuBatchQuery(body),skus=await allSkus(q.context),result=q.skuIds.map(id=>skus.find(sku=>sku.id===id));if(result.some(row=>!row))return unavailable('SYNTHETIC_SKU_ID_NOT_DECLARED');return json(result);}
    if(path==='/dictionary-read/size-groups/query'){
     const q=parseDictionaryListQuery(body),all=[];for(let page=1;;page++){const query={search:'',page,pageSize:100 as const},data=validateDictionaryPage(await load(path,query),query,validateDictionarySizeGroup);all.push(...data.items);if(page*100>=data.total)break;}

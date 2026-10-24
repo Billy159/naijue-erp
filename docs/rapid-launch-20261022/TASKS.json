@@ -4714,8 +4714,8 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T21:44:00.652663+00:00",
-    "sourceRound": 362,
+    "atUtc": "2026-10-24T21:56:18.086746+00:00",
+    "sourceRound": 363,
     "sourceCheckpoint": "SOURCE361 remote verified; SOURCE362 only current preview/QA/source-runner continuation records",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
@@ -5096,6 +5096,27 @@
         "scrollFinding": "P2-QF349-03_CLOSED",
         "wholePagePass": false,
         "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source351-visual-scroll-actual-01/RESULT.json"
+      },
+      "source361Actual": {
+        "owner": "QF",
+        "status": "NEED_FIX",
+        "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source361-transfer-actual-01",
+        "passedSyntheticOnly": [
+          "original normal transfer new route",
+          "warehouses20to21/date2026-10-24",
+          "real fixture group complete4members",
+          "one knownSKU70 quantity1 SAVE/detail/list/view readback",
+          "original return-list confirmation keeps draft",
+          "sales new mount/type-popup/Esc"
+        ],
+        "issues": [
+          "S361-DATE-01",
+          "S361-UI-01",
+          "S361-NAV-01"
+        ],
+        "correction": "Instantaneous BODY after Tab not a signed independent focus defect; final Tab commits group and focuses product search, original behavior must compare",
+        "notFormalBusiness": true,
+        "browserLeaseReturned": true
       }
     },
     "qaEmptyTargetRegistration": {
@@ -6297,8 +6318,8 @@
     },
     "sourceCommit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
     "browserLease": {
-      "owner": "QF",
-      "scope": "Current361 normal new transfer/Sale minimal affected mixed actual; five draft tabs protected",
+      "owner": "NONE_CLEAN_RETURN_QF361",
+      "scope": "Original two targets inventory/default natural1470x724/dialog0; five drafts preserved",
       "requestedModel": "gpt-6.1-sol/medium",
       "actualRuntimeSwitchVerified": false,
       "protectedDraftTabs": 5
@@ -7857,9 +7878,9 @@
     },
     "phase2Queue": {
       "F1": {
-        "current": "Current361 normal/new/readback finite candidate targeted actual QF; F1 next original three-tab product Drawer and scanner",
-        "next": "Account role label S360-UI-01 classify/dedup using existing original labels; remaining existing save/status/HREV real pairing still incomplete",
-        "status": "ACTUAL_CANDIDATE_QF_IN_PROGRESS_NO_PAGE_PASS",
+        "current": "181exact9source frozen as WIP only;182 inprogress on original Demo dateCss/SourceDate positioning+default matrix/template/finalstyle+dirtynav",
+        "next": "C combine181+182 once fixed build; originalQF onlythreefailed/affected consumers, reuse361knownSKU save and358Drawer",
+        "status": "IN_PROGRESS_ORIGINAL_PAGE_CONSUMER_FIX_NO_FULLPAGE_PASS",
         "model": "gpt-6.1-sol/medium",
         "packets": [
           "chunk-178-transfer-history",
@@ -7892,9 +7913,9 @@
         "status": "ACTUAL_ISOLATED_LIMITED_PASS_NOT_FORMAL"
       },
       "D3": {
-        "current": "History lineCatalog source357/QB266 delivered; real catalogue344 original10 chunks factory verified",
-        "next": "Real independent catalogue stage after precise C/QB current permission/source seam; products/SKU follow actual dependencies",
-        "status": "PARTIAL_REAL_CORE_ONLY_HISTORY_V5_RELATED_WAIT"
+        "current": "Original product2956 next native dependency check using prior prepared evidence, not fullsource rescan",
+        "next": "Exact current missingrefs/MAIN-bind-v5 actual coupling or independent original nextcomponent input for C",
+        "status": "IN_PROGRESS_ORIGINAL_REAL_IMPORT_NEXT_DEPENDENCIES"
       }
     },
     "performanceOwners": {
@@ -8040,7 +8061,7 @@
       "owner": "C",
       "sourceAndAcl": "D1/D3",
       "review": "QB",
-      "status": "ACTUAL_C195_EXACT68_GRANTED_QB271_ACCEPTED_NEW_METADATA_ONLY_STAGE_NOT_RUN",
+      "status": "C196_FIXED_CATALOGUE_ONLY_CARRIER_AND_FINITE_KEY_READBACK_QB_REVIEW_NO_STAGE",
       "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
       "scope": "Original344dictionaries only; no MAIN/BIND_FULL/claim/PUBLISH/product/SKU/stock/CORE replay",
       "knownBaselineMissingBits": 68,
@@ -8052,7 +8073,7 @@
       "grantExecuted": true,
       "nativeStageExecuted": false,
       "originalNinePreserved": true,
-      "next": "C exact196 carrier and RAM genuine driver/sourcegrant; bind alreadyacceptedQB271 metadata/CORE/source pins, finite QB review then actual10stage. EXECUTION-INPUT remains disabled without fixedCarrier.",
+      "next": "QB finite196 source/carrier review; fill only reviewpin then original C one dispatch, retain prefixes/unknown and344keyreadback",
       "actualGrantJob": "c03-real-r1-catalogue-exact68-acl-20261025-195",
       "addedColumnPrivilegeBits": 68,
       "allOtherCatalogObjectsPreserved": true,
@@ -8067,7 +8088,14 @@
         "sourceInputs": 26,
         "originalFixed352": 24,
         "D1Consumer": 2
-      }
+      },
+      "originalInputsStaged": {
+        "files": 3,
+        "bytes": 2329640,
+        "databaseWrites": 0
+      },
+      "runnerSource": "C196 new single graph27=24SOURCE352+2D1+1C helperexport, original frozen D1entry/runner preserved",
+      "fixedCarrierPath": "K/reports/controller/rapid-launch-20261022/server-jobs/c03-real-r1-native-catalogue344-stage-20261025-196/bundle"
     },
     "accountMenuActual": {
       "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-account-menu-actual-01",
