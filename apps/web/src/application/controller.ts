@@ -353,10 +353,16 @@ export class ApplicationController {
         if (!this.#current(scope)) return false;
         this.#productRecoveryIdentity = scope.identity;
         const products = input.configuration.products, maintenance = products?.maintenance;
+        if (maintenance?.catalogueMaintenance) this.#catalogueRecoveryIdentity = scope.identity;
+        const canMaintain = input.principal.role === 'ADMIN' || input.principal.role === 'WAREHOUSE';
         // Mirror the current native maintenance role rule for UI affordances.
         // The server still authorizes each request independently.
         const productInput = products && maintenance ? { ...input, configuration: { ...input.configuration, products: { ...products, maintenance: { ...maintenance,
-          allowedActions: input.principal.role === 'ADMIN' || input.principal.role === 'WAREHOUSE' ? maintenance.allowedActions : [],
+          allowedActions: canMaintain ? maintenance.allowedActions : [],
+          ...(!canMaintain && maintenance.catalogueMaintenance ? { catalogueMaintenance: {
+            ...(maintenance.catalogueMaintenance.colors ? { colors: { ...maintenance.catalogueMaintenance.colors, allowedActions: [] } } : {}),
+            ...(maintenance.catalogueMaintenance.fits ? { fits: { ...maintenance.catalogueMaintenance.fits, allowedActions: [] } } : {}),
+          } } : {}),
         } } } } : input;
         prepared = module.prepareProductsRoute(productInput, error => this.#readAccessFailure(scope, error.kind), {
           ...(this.#configuration.routes.inventory ? { openInventory: async (request: ProductInventoryNavigationRequest) => {

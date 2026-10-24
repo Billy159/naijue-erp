@@ -1,0 +1,28 @@
+{
+  "atUtc": "2026-10-24T13:09:33.454592+00:00",
+  "parent": "8b7b3ceff7e85bf22c6dd6e3b4271863e8e638fc",
+  "taskId": "F1_P03_CATALOGUE_HOST_INJECTION_01",
+  "files": [
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 17215,
+      "sha256": "5fc9192cdb2174e576bb81723252b454c6ec12d49d4bda94b33093558dcb653e",
+      "baseSha256": "cbaec6a62d989a95645031510161de2b510d994c5e6845098faad1b5068c1bce",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/controller.ts",
+      "bytes": 61629,
+      "sha256": "a1f1dc667b4239b22cbdf7c81d3c50829d30316c0edc914bf3e9f598814440c2",
+      "baseSha256": "410609cc4969fb5b06c35d4af3c8f8c67b22dc352c906540a1cadd9c427a7318",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-151/DELIVERY.json",
+  "ownerReceiptBytes": 2319,
+  "ownerReceiptSha256": "b6195a499683e8d62223e9ce92023f163cefa4c1cae9f18825d31db56bfdc770",
+  "stage": "SOURCE_COMPOSITION_ROLES_RECOVERY_AND_TYPES_PASS_NOT_BROWSER",
+  "currentPreviewIncludesChange": false,
+  "wholePageAccepted": false,
+  "deployed": false
+}

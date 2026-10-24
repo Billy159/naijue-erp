@@ -119,6 +119,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
         recovery: { read: (identity, productId) => controller?.productRecovery.read(identity, productId) ?? null,
           resolved: (identity, requestKey) => { controller?.productRecovery.resolved(identity, requestKey); } },
         productReader: createProductHttpReader(http), dictionaryReader: dictionaryReader!, media: createProductEditorMediaHttpReader(http), mediaUpload: createProductMediaUploadHttpClient(http),
+        ...(colorMaintenance || fitMaintenance ? { catalogueMaintenance: { ...(colorMaintenance ? { colors: colorMaintenance } : {}), ...(fitMaintenance ? { fits: fitMaintenance } : {}) } } : {}),
         ...(configuration.routes.productFullPage ? { stock: productFullPageReader!.stock } : {}),
       } } : {}),
       ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}) } } : {}),
