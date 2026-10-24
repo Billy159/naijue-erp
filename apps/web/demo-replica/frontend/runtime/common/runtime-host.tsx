@@ -71,7 +71,7 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
   if (!canLeave()) { toast('请先保存或取消当前编辑，当前输入已保留。'); return false; }
   clearPage(); route = next; const request = serial;
   breadcrumb.textContent = captions[next] ?? '业务页面';
-  document.querySelectorAll<HTMLAnchorElement>('.sidebar a[data-route]').forEach(link => { const selected = link.dataset.route === next || next === 'settings/parties' && link.dataset.route === 'customers'; link.classList.toggle('selected', selected); if (selected) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
+  document.querySelectorAll<HTMLAnchorElement>('.sidebar a[data-route]').forEach(link => { const selected = link.dataset.route === next || next === 'settings/parties' && link.dataset.route === 'customers' || next.startsWith('transfer/') && next!=='transfer/new' && link.dataset.route==='transfer' || next.startsWith('sales/') && next!=='sales/new' && link.dataset.route==='sales' || next.startsWith('products/') && link.dataset.route==='products'; link.classList.toggle('selected', selected); if (selected) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
   if (replace) history.replaceState(null, '', '#' + next); else if (location.hash !== '#' + next) history.pushState(null, '', '#' + next);
   status('正在加载页面…');
   try {

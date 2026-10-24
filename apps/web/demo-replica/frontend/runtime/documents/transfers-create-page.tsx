@@ -1,0 +1,19 @@
+import {useEffect,useState,useSyncExternalStore} from 'react';
+import type {ReplicaTransferSession} from './transfers-session.ts';
+import {transferCanLeave} from './transfers-session.ts';
+import type {ProductReadOnlyReader} from '../../../../src/inventory/product-contracts.ts';
+import type {HttpQueryError} from '../../../../src/transport/http-query.ts';
+import type {ReadScope} from '../../../../src/loading/read-scope.ts';
+import {TransferProposalForm} from './transfer-proposal-form.tsx';
+import {SaleDialog} from './native-dialog.tsx';
+
+export default function NewTransfer(p:{session:ReplicaTransferSession;scope:ReadScope;productReader:ProductReadOnlyReader;denied:(error:HttpQueryError)=>void;navigate:(route:string)=>void;reset:()=>void;viewProduct?:((product:{id:string;label:string})=>void)}){
+ const s=p.session,created=useSyncExternalStore(s.create.subscribe,s.create.getSnapshot,s.create.getSnapshot),command=useSyncExternalStore(s.workspace.subscribe,s.workspace.getSnapshot,s.workspace.getSnapshot),write=command.write;
+ const [discard,setDiscard]=useState(false),[recovery,setRecovery]=useState(true),[notice,setNotice]=useState<string|null>(null);
+ useEffect(()=>{if(write.phase==='uncertain')setRecovery(true);},[write.phase]);
+ const busy=created.preparing||['submitting','checking','replaying','uncertain','committed'].includes(write.phase);
+ const done=()=>{const current=s.workspace.getSnapshot().write;if(current.phase==='committed'&&current.result){const id=current.result.transferId;p.reset();p.navigate('transfer/view/'+encodeURIComponent(id));}};
+ const save=async()=>{setNotice(null);try{await s.create.save();done();}catch{if(p.scope.active)setNotice('保存尚未完成，输入已保留。');}};
+ const recover=async(task:Promise<boolean>)=>{await task;done();};
+ return <><TransferProposalForm {...(p.viewProduct?{viewProduct:p.viewProduct}:{})} session={s.proposal} scope={p.scope} productReader={p.productReader} denied={p.denied} busy={busy} notice={notice??created.notice??command.notice} {...(s.workspace.responsibleStaff?{responsibleStaff:s.workspace.responsibleStaff}:{})} actions={<><button type="button" className="btn" disabled={busy} onClick={()=>transferCanLeave(s)?p.navigate('transfer'):setDiscard(true)}>返回列表</button><button type="button" className="btn primary" disabled={busy} onClick={()=>void save()}>保存</button></>}/>{['submitting','checking','replaying'].includes(write.phase)&&<p role="status">正在处理原操作… <button type="button" className="btn" onClick={()=>s.workspace.cancelWaiting()}>停止等待</button></p>}{write.phase==='committed'&&<button type="button" className="btn" onClick={done}>读取已保存单据</button>}{write.phase==='uncertain'&&(recovery?<SaleDialog variant="transfer" title="核实原操作" close={()=>setRecovery(false)} footer={<><button type="button" className="btn" onClick={()=>void recover(s.workspace.checkReceipt())}>查询原回执</button><button type="button" className="btn" onClick={()=>void recover(s.workspace.replayOriginal())}>按原请求重试</button></>}><p>{command.notice??'原操作结果尚未确认，草稿和原请求已保留。'}</p></SaleDialog>:<button type="button" className="btn" onClick={()=>setRecovery(true)}>核实原操作</button>)}{discard&&<SaleDialog variant="transfer" title="有未保存的修改" close={()=>setDiscard(false)} footer={<><button type="button" className="btn" onClick={()=>setDiscard(false)}>继续编辑</button><button type="button" className="btn primary" onClick={()=>{if(!s.create.getSnapshot().preparing&&!s.workspace.hasUnresolvedWrite&&s.workspace.discardEditor()&&s.proposal.reset(true)){p.reset();p.navigate('transfer');}}}>放弃修改</button></>}><p>本次未保存的修改将丢失。</p></SaleDialog>}</>;
+}

@@ -1,5 +1,7 @@
 import { createRoot, type Root } from 'react-dom/client';
 import type { ReactNode } from 'react';
+import type {ReplicaTransferSession} from '../documents/transfers-session.ts';
+import type {TransferListViewState} from '../documents/transfers-list.tsx';
 import type { ReplicaSalesSession } from '../documents/sales-session.ts';
 import type { SalesListViewState } from '../documents/sales-list.tsx';
 import type { ReplicaSession } from './session.ts';
@@ -41,11 +43,12 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
   const { session } = options;
   let owner: ReadScope | null = null;
   let sales: ReplicaSalesSession | null = null, salesView: SalesListViewState | null = null;
+  let transfers:ReplicaTransferSession|null=null,transferView:TransferListViewState|null=null;
   const productRecovery = new Map<string | null, ProductMaintenanceCommand>();
   let stores: StoreMaintenanceWorkspace | undefined, parties: PartyWorkspace | undefined;
   let staff: StaffSettingsWorkspace | undefined, accounts: AccountSettingsWorkspace | undefined, payments: PaymentSettingsWorkspace | undefined;
   const access = (kind: 'unauthenticated' | 'forbidden') => session.onAccessFailure({ kind });
-  const unresolved = () => !!(sales?.scope.active && sales.editor.commands.hasUnresolvedWrite || sales?.scope.active&&[...sales.historyOwners.values()].some(entry=>entry.owner.unresolved)) || !!owner?.active && !!(stores?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite() || staff?.hasUnresolvedWrite() || accounts?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite());
+  const unresolved = () => !!(transfers?.scope.active&&(transfers.workspace.hasUnresolvedWrite||[...transfers.historyOwners.values()].some(entry=>entry.owner.unresolved))) || !!(sales?.scope.active && sales.editor.commands.hasUnresolvedWrite || sales?.scope.active&&[...sales.historyOwners.values()].some(entry=>entry.owner.unresolved)) || !!owner?.active && !!(stores?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite() || staff?.hasUnresolvedWrite() || accounts?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite());
   const ownerScope = () => {
     if (!owner?.active) {
       owner = session.reads.createScope('replica-settings-session');
@@ -70,10 +73,17 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     if ((route==='sales'||route==='sales/new'||route.startsWith('sales/view/')||route.startsWith('sales/edit/')||route.startsWith('sales/history/')) && config.sales) {
       const [module,factory,references,products] = await Promise.all([import('../documents/sales-entry.tsx'),import('../documents/sales-session.ts'),import('../../../../src/sales/http-reader.ts'),import('../../../../src/transport/product-http-reader.ts')]);
       if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
-      if(!sales?.scope.active)sales=factory.createReplicaSalesSession(session,{instanceId:'replica-sales-owner',newRequestKey:options.newRequestKey});
+      if(!sales?.scope.active)sales=factory.createReplicaSalesSession(session,{instanceId:'replica-sales-owner',newRequestKey:options.newRequestKey,responsibleReady:config.documentResponsibleReady===true});
       salesView??=module.newSalesListViewState();
       const resetSales=()=>{sales?.dispose();sales=null;};
       return module.mountSales(host,route,{principal,session:sales,scope,view:salesView,references:references.createSalesFilterReferenceHttpReader(http),productReader:products.createProductHttpReader(http),http,historyRevision:options.historyRevision?.sales===true,newRequestKey:options.newRequestKey,manualCreate:config.salesManualCreate===true,existingEdit:config.salesExistingEdit===true,denied:session.onAccessFailure,navigate,onCommitted:resetSales,onDiscarded:resetSales});
+    }
+    if ((route==='transfer'||route.startsWith('transfer/'))&&config.transfers){
+      const [module,factory,products]=await Promise.all([import('../documents/transfers-entry.tsx'),import('../documents/transfers-session.ts'),import('../../../../src/transport/product-http-reader.ts')]);
+      if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
+      if(!transfers?.scope.active)transfers=factory.createReplicaTransferSession(session,{instanceId:'replica-transfer-owner',newRequestKey:options.newRequestKey,responsibleReady:config.documentResponsibleReady===true});
+      transferView??=module.newTransferListViewState();
+      return module.mountTransfers(host,route,{manualCreate:config.transferManualCreate===true,reset:()=>{transfers?.dispose();transfers=null;transferView!.reload=true;},productReader:products.createProductHttpReader(http),session:transfers,scope,view:transferView,existingEdit:config.transferExistingEdit===true,http,historyRevision:options.historyRevision?.transfers===true,newRequestKey:options.newRequestKey,denied:session.onAccessFailure,navigate,...(config.transferProductFullPage?{viewProduct:product=>navigate('products/view/'+encodeURIComponent(product.id))}:{})});
     }
     if (route === 'inventory' && config.inventory) {
       const module = await import('../inventory/index.tsx');
@@ -202,5 +212,5 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       throw new Error('此页面尚未接入当前版本。');
     } catch (error) { release(); throw error; }
   }
-  return { mount, hasUnresolvedWrite: unresolved, dispose: () => { sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
+  return { mount, hasUnresolvedWrite: unresolved, dispose: () => { transfers?.dispose();transfers=null;sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
 }

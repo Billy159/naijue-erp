@@ -1,3 +1,4 @@
+import {createResponsibleCapability} from './responsible-capability.ts';
 import type { DocumentResponsibleStaffCapability } from '../../../../src/application/contracts.ts';
 import { createCurrentFormHttpReader } from '../../../../src/current-form/http-reader.ts';
 import { createSalesExistingPreparationHttpClient } from '../../../../src/current-form/existing-document-preparation.ts';
@@ -21,13 +22,14 @@ import type { ReplicaSession } from '../common/session.ts';
 export function createReplicaSalesSession(runtime: ReplicaSession, options: {
   readonly instanceId: string;
   readonly newRequestKey: () => string;
-  readonly responsibleStaff?: DocumentResponsibleStaffCapability;
+  readonly responsibleStaff?: DocumentResponsibleStaffCapability;readonly responsibleReady?:boolean;
 }) {
   const historyOwners=new Map<string,{scope:import('../../../../src/loading/read-scope.ts').ReadScope;owner:HistoryRevisionOwner}>();
   const selection:{row:NormalSalesRow|null}={row:null};
   const principal = runtime.auth.getSnapshot().principal;
   if (!principal) throw new Error('An authenticated session is required to open sales.');
   const scope = runtime.reads.createScope(options.instanceId);
+  const responsibleStaff=options.responsibleStaff??(options.responsibleReady===true?createResponsibleCapability(runtime,scope):undefined);
   const reader = createSalesHttpReader(runtime.http);
   const current = createCurrentFormHttpReader(runtime.http);
   const normalReader=createNormalListReader(runtime.http);
@@ -41,7 +43,7 @@ export function createReplicaSalesSession(runtime: ReplicaSession, options: {
     onAccessFailure: runtime.onAccessFailure,
     existingPreparation: createSalesExistingPreparationHttpClient(runtime.http),
     existingReader: current,
-    ...(options.responsibleStaff ? { responsibleStaff: options.responsibleStaff } : {}),
+    ...(responsibleStaff ? {responsibleStaff} : {}),
   });
   const create = new SalesNewDocumentSession({ scope, proposal, editor,
     preparation: createSalesPreparationHttpClient(runtime.http),

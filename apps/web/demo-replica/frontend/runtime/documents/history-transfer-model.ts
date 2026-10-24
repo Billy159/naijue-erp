@@ -1,0 +1,41 @@
+import type {CompleteHistoryDocument} from './history-reader.ts';
+import type {HistoryRevisionCommand,HistoryRevisionHeaderChange} from '../../../../../../packages/application/src/history-revision-contracts.ts';
+import type {ImportedHistoryTransferHeader,ImportedHistoryLineCatalog,ImportedHistoryLine} from '../../../../../../packages/application/src/imported-history-query-ports.ts';
+import {parseHistoryRevisionCommand} from '../../../../../../packages/application/src/history-revision-service.ts';
+import {isHistoryQuantity} from '../../../../../../packages/application/src/history-storage-contract.ts';
+import type {ReadScope} from '../../../../src/loading/read-scope.ts';
+function freeze<T>(value:T):T{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;}
+interface HistoryTransferInput {readonly quantities:Readonly<Record<string,string>>;readonly businessDate:string;readonly fromWarehouseId:string;readonly toWarehouseId:string;readonly responsibleStaffId:string|null;readonly responsibleName:string|null;readonly fromName:string|null;readonly toName:string|null}
+export interface HistoryTransferSnapshot {readonly complete:CompleteHistoryDocument|null;readonly input:HistoryTransferInput|null;readonly dirty:boolean;readonly notice:string|null;readonly disposed:boolean}
+/** A complete original document, with raw invalid quantities kept until explicit validation. */
+export class HistoryTransferModel{
+ readonly #scope:ReadScope;readonly #listeners=new Set<()=>void>();#baseline:HistoryTransferInput|null;#state:HistoryTransferSnapshot;
+ constructor(scope:ReadScope,complete:CompleteHistoryDocument){if(complete.document.kind!=='transfers'||complete.settlements.length)throw new Error('历史调拨资料不完整。');this.#scope=scope;const source=freeze(structuredClone(complete)),header=source.document as ImportedHistoryTransferHeader;const input:HistoryTransferInput=freeze({quantities:Object.fromEntries(source.lines.map(row=>[row.id,row.quantity])),businessDate:header.businessDate??'',fromWarehouseId:header.fromWarehouseId,toWarehouseId:header.toWarehouseId,responsibleStaffId:header.responsibleStaffId,responsibleName:header.responsibleName,fromName:null,toName:null});this.#baseline=input;this.#state=Object.freeze({complete:source,input,dirty:false,notice:null,disposed:false});scope.signal.addEventListener('abort',this.dispose,{once:true});if(!scope.active)this.dispose();}
+ readonly getSnapshot=()=>this.#state;
+ readonly subscribe=(listener:()=>void)=>{this.#listeners.add(listener);return()=>{this.#listeners.delete(listener);};};
+ #publish(patch:Partial<HistoryTransferSnapshot>){this.#state=Object.freeze({...this.#state,...patch});for(const listener of [...this.#listeners]){try{listener();}catch{/* Keep ownership invalidation. */}}}
+ #edit(input:HistoryTransferInput){if(!this.#scope.active||this.#state.disposed)return false;input=freeze(input);this.#publish({input,dirty:JSON.stringify({...input,responsibleName:null,fromName:null,toName:null})!==JSON.stringify({...this.#baseline,responsibleName:null,fromName:null,toName:null}),notice:null});return true;}
+ setQuantity(lineId:string,raw:string){const input=this.#state.input;if(!input||!Object.hasOwn(input.quantities,lineId)||typeof raw!=='string')return false;return this.#edit({...input,quantities:{...input.quantities,[lineId]:raw}});}
+ #head(patch:Partial<HistoryTransferInput>){const state=this.#state;if(state.complete?.document.sourceStatus!=='DRAFT'||!state.input)return false;return this.#edit({...state.input,...patch});}
+ setDate(businessDate:string){return this.#head({businessDate});}
+ selectWarehouse(direction:'FROM'|'TO',value:{id:string;name:string}){return this.#head(direction==='FROM'?{fromWarehouseId:value.id,fromName:value.name}:{toWarehouseId:value.id,toName:value.name});}
+ selectResponsible(value:{id:string;name:string}){return this.#head({responsibleStaffId:value.id,responsibleName:value.name});}
+ command(reason:string,newRequestKey:()=>string):HistoryRevisionCommand|null{
+  const {complete,input}=this.#state,baseline=this.#baseline;if(!this.#scope.active||!complete||!input||!baseline||complete.document.kind!=='transfers')return null;
+  try{const lines=complete.lines.flatMap(row=>input.quantities[row.id]!==row.quantity?[{lineId:row.id,quantity:input.quantities[row.id]!}]:[]),header:HistoryRevisionHeaderChange={...(input.businessDate!==baseline.businessDate?{businessDate:input.businessDate}:{}),...(input.fromWarehouseId!==baseline.fromWarehouseId?{fromWarehouseId:input.fromWarehouseId}:{}),...(input.toWarehouseId!==baseline.toWarehouseId?{toWarehouseId:input.toWarehouseId}:{}),...(input.responsibleStaffId!==baseline.responsibleStaffId&&input.responsibleStaffId!==null?{responsibleStaffId:input.responsibleStaffId}:{})};if(!lines.length&&!Object.keys(header).length){this.#publish({notice:'内容未改变，无需保存。'});return null;}const command=parseHistoryRevisionCommand({kind:'transfers',documentId:complete.document.documentId,expectedVersion:complete.document.version,requestKey:newRequestKey(),reason,lines,totals:null,settlements:[],...(Object.keys(header).length?{header}:{})});return freeze(command);}catch{this.#publish({notice:'请填写有效的原行数量、日期、仓库或修订原因；输入已保留，未发送请求。'});return null;}
+ }
+ total():string|null{if(!this.#state.input)return null;const values=Object.values(this.#state.input?.quantities??{});return values.every(isHistoryQuantity)?values.reduce((sum,value)=>sum+BigInt(value),0n).toString():null;}
+ readonly dispose=()=>{if(this.#state.disposed)return;this.#scope.signal.removeEventListener('abort',this.dispose);this.#baseline=null;this.#publish({complete:null,input:null,dirty:false,notice:null,disposed:true});this.#listeners.clear();};
+}
+export interface HistoricalTransferMatrixRow {readonly key:string;readonly productId:string;readonly colorId:string;readonly fitId:string;readonly cells:ReadonlyMap<string,ImportedHistoryLine>;readonly lines:readonly ImportedHistoryLine[]}
+export interface HistoricalTransferProjection {readonly state:'COMPLETE'|'PARTIAL'|'UNAVAILABLE';readonly sections:readonly {readonly group:ImportedHistoryLineCatalog['groups'][number];readonly rows:readonly HistoricalTransferMatrixRow[]}[];readonly unknown:readonly ImportedHistoryLine[];readonly productCount:number|null}
+/** Bind by exact source IDs. Duplicate cells occupy another lane; no line ID is summed away. */
+export function historicalTransferProjection(data:Pick<CompleteHistoryDocument,'lines'|'lineCatalog'>):HistoricalTransferProjection{
+ if(!data.lineCatalog)return {state:'UNAVAILABLE',sections:[],unknown:data.lines,productCount:null};
+ const byLine=new Map(data.lineCatalog.items.map(row=>[row.lineId,row])),groups=new Map(data.lineCatalog.groups.map(group=>[group.groupId,group])),sections=new Map<string,HistoricalTransferMatrixRow[]>(),unknown:ImportedHistoryLine[]=[],products=new Set<string>();let missingProduct=false;
+ for(const line of data.lines){const metadata=byLine.get(line.id);if(!metadata||metadata.skuId!==line.skuId)throw new Error('原规格与明细身份不一致。');if(metadata.identity.state==='UNKNOWN')missingProduct=true;else products.add(metadata.identity.productId);
+  if(metadata.identity.state!=='BOUND'||metadata.sourceGroup.state!=='BOUND'){unknown.push(line);continue;}const identity=metadata.identity,group=groups.get(metadata.sourceGroup.groupId);if(!group||!group.sizes.some(size=>size.sizeId===identity.sizeId))throw new Error('原尺码组与明细身份不一致。');let rows=sections.get(group.groupId);if(!rows){rows=[];sections.set(group.groupId,rows);}const coordinate=JSON.stringify([identity.productId,identity.colorId,identity.fitId]);const index=rows.findIndex(row=>JSON.stringify([row.productId,row.colorId,row.fitId])===coordinate&&!row.cells.has(identity.sizeId));
+  if(index<0)rows.push({key:JSON.stringify([group.groupId,coordinate,line.id]),productId:identity.productId,colorId:identity.colorId,fitId:identity.fitId,cells:new Map([[identity.sizeId,line]]),lines:[line]});else{const row=rows[index]!;rows[index]={...row,cells:new Map([...row.cells,[identity.sizeId,line]]),lines:[...row.lines,line]};}
+ }
+ return {state:unknown.length?'PARTIAL':'COMPLETE',sections:[...sections].map(([id,rows])=>({group:groups.get(id)!,rows})),unknown,productCount:missingProduct?null:products.size};
+}
