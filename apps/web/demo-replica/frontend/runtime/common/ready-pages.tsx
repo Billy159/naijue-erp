@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type { ReplicaSalesSession } from '../documents/sales-session.ts';
 import type { SalesListViewState } from '../documents/sales-list.tsx';
 import type { ReplicaSession } from './session.ts';
+import {loadInventoryProductDrawerModule} from './inventory-product-loader.ts';
 import {createInventoryProductActivation} from './inventory-product-activation.ts';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { ProductionHostConfiguration } from '../../../../src/production-host/configuration.ts';
@@ -78,8 +79,8 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       const module = await import('../inventory/index.tsx');
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       const marker='inventory-product:'+scope.routeInstanceId;
-      const activation=createInventoryProductActivation({scope,host,load:async()=>{
-        const [drawer,reader]=await Promise.all([import('../products/inventory-drawer.tsx'),import('../../../../src/transport/product-http-reader.ts'),import('../../runtime-styles.ts').then(styles=>styles.prepareInventoryProductDrawerStyles(scope.signal))]);
+      const activation=createInventoryProductActivation({scope,host,load:async mode=>{
+        const [drawer,reader]=await Promise.all([loadInventoryProductDrawerModule(mode),import('../../../../src/transport/product-http-reader.ts'),import('../../runtime-styles.ts').then(styles=>styles.prepareInventoryProductDrawerStyles(scope.signal))]);
         return {open:context=>drawer.openInventoryProductDrawer({...context,reader:reader.createProductHttpReader(http),onAccessFailure:session.onAccessFailure})};
       },feedback:state=>{
         const toast=host.ownerDocument.getElementById('toast');if(!toast)return;

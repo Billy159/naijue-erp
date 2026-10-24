@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "ae1dc67b9eed7ca15a14053c4b90b725ce066401",
+    "headObserved": "b9101ab0ef79077ec75e2508cd3f5a3f8898b5fc",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "ae1dc67b9eed7ca15a14053c4b90b725ce066401",
+    "remoteHeadVerified": "b9101ab0ef79077ec75e2508cd3f5a3f8898b5fc",
     "remoteReadbackMethod": "SOURCE351 exact original Git object nonforcedFF and independent remote GET verified",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "ae1dc67b9eed7ca15a14053c4b90b725ce066401"
+    "lastVerifiedRemoteCommit": "b9101ab0ef79077ec75e2508cd3f5a3f8898b5fc"
   },
   "concurrency": {
     "chats": 11,
@@ -1310,9 +1310,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T20:35:31.252048+00:00",
+  "updatedAt": "2026-10-24T20:59:19.393683+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "ae1dc67b9eed7ca15a14053c4b90b725ce066401",
+  "lastVerifiedRemoteCommit": "b9101ab0ef79077ec75e2508cd3f5a3f8898b5fc",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -4715,8 +4715,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T19:57:17.215456+00:00",
-    "sourceRound": 357,
-    "sourceCheckpoint": "parentf8c1a98f95c5ed8bc8dd33b365ad54f2243b4261, exactD3lineCatalog4+originalAPI readcontract",
+    "sourceRound": 358,
+    "sourceCheckpoint": "parentb9101ab0ef79077ec75e2508cd3f5a3f8898b5fc, exactcommon5 retry patch staged notworkingWIP",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -7973,7 +7973,7 @@
       "fact": "Approved menu additions explain+66px content height; nav/window metrics alone insufficient to diagnose original aside.sidebar scrollowner. QF directed one precise aside computed overflow/height/rect/client/scrollHeight/top nativewheel before/after and payment link rect, no speculative CSS fix."
     },
     "inventoryViewDrawer": {
-      "status": "SOURCE356_ACTUALLY_BUILT_SERVED_QF_IN_PROGRESS",
+      "status": "QF356_NEED_FIX_ONLY_S356_I01_01_SOURCE_REPAIRED_BUILD_NEXT",
       "uiOwner": "F2",
       "hostCallbackOwner": "F1",
       "current": "View routes product6tabs",
@@ -7988,19 +7988,43 @@
         "visual original drawer",
         "focus and matrix two-axis restoration",
         "real backend"
-      ]
+      ],
+      "finding": "S356-I01-01",
+      "retryPatchSha256": "7bab3f9d419d46efb084a68c59cbdcf7e0c8d8a1672e05ed05fbc80b37e022c2",
+      "reuse": "QF356 actual otherDrawer/focus/imageEsc/close/cancel/late passes"
     },
     "normalListActualShape": {
       "nativeV11": "INCOMPATIBLE_MISSING_SALES_AND_TRANSFER_RESPONSIBLE_STAFF_ID; QB264_PURPOSE_METADATA_NOT_CONSUMER_ADMISSION",
       "coreV16": "QB265 accepted exactsource-profile/purposes; consumer preparing, no actual normalSQL yet",
       "owner": "D1 preparation/C actual/QB finite metadata",
-      "source": "SOURCE352 reader +353 scope, no NULL placeholders or DDL workaround"
+      "source": "SOURCE352 reader +353 scope, no NULL placeholders or DDL workaround",
+      "actual193": {
+        "status": "QB267_LIMITED_PREPUBLICATION_NORMAL_SQL_PASS",
+        "services": 6,
+        "businessSql": 12,
+        "queries": 58,
+        "leases": 11,
+        "businessDML": 0,
+        "businessDDL": 0,
+        "httpVerified": false,
+        "actualAllCounts": "0",
+        "historyCoverage": "NOT_PUBLISHED"
+      }
     },
     "historyCanonicalRead": {
       "owner": "D3",
       "frontend": "F1",
-      "status": "SOURCE_FIXED_OWNER5NEW13AFFECTED_STRICT_PASS_PENDING_QB_ACTUALPG_F1",
+      "status": "QB266_SOURCE_ONLY_LIMITED_PASS_F1_CONSUMING_ACTUAL_NONEMPTY_PENDING",
       "scope": "Original HISTORY detail sameRR optional lineCatalog/sourcegroup snapshots; no DB schema or write contract change"
+    },
+    "realCatalogueIndependentStage": {
+      "owner": "C",
+      "sourceAndAcl": "D1/D3",
+      "review": "QB",
+      "status": "PREPARING_EXACT_CATALOGUE_ONLY_TARGET_SOURCE_AND_ACL_NO_GRANT_OR_DATA_EXECUTED",
+      "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+      "scope": "Original344dictionaries only; no MAIN/BIND_FULL/claim/PUBLISH/product/SKU/stock/CORE replay",
+      "knownBaselineMissingBits": 68
     }
   },
   "latestReadySource": {
