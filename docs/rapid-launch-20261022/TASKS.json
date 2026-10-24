@@ -5256,7 +5256,7 @@
       "qualification": "Only T02 metadata corrected by originalQF v084; zero wholepage acceptance."
     },
     "v14CoreInitialization": {
-      "status": "APPROVED_EXACT_SCOPE_IMPLEMENTATION_RELEASED_NOT_EXECUTED",
+      "status": "QA_SCHEMA_PATCH_ACTUAL_PASS_CORE_INITIALIZATION_NOT_EXECUTED",
       "confirmation": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.md",
       "technical": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.json",
       "askedOnce": true,
@@ -5270,7 +5270,11 @@
       "approvalRecord": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
       "approvalSourceUserMessageId": "01a16b7f-3cf4-7041-b338-0aa2e693001b",
       "scopeImplementationReleased": true,
-      "databaseExecuted": false
+      "databaseExecuted": true,
+      "databaseExecutionScope": "C119 isolatedQA schema+exactNOLOGIN ACL only",
+      "COREExecuted": false,
+      "real49Initialized": false,
+      "R1SchemaPatchExecuted": false
     },
     "p10ReadSeam": "Source245246QB201+actual113QB202accepted; frontend248/251/252 fixedactual252 with one explicitfictionhistoricalscheme pair same existingSYN2, source251QFv089accepted, F2leafQF2source+newbrowserpending. Source252true scheme.name replacesgeneric已设置 and read owner shared; no real6schemeclassification.",
     "dateSeam": "247public and249consumers independentlysourcePASS,244hoverPASS; now containedinactual252but no newbrowserplacement/hover yet. Original240font/Today/glyph/Xfocus adopted.",
@@ -5635,12 +5639,83 @@
       "ownedSessionsRemaining": 0
     },
     "v14Qa119": {
-      "status": "PREPARING_DISABLED_EXACT_EXISTING_TARGET_PATCH_THEN_QA_NONOWNER_MINIMUM_ACL_METADATA",
+      "status": "PASS_EXISTING_V14_PATCH_EXACT_TECHNICAL_ROLE_ACL_METADATA_ONLY",
       "databaseOid": "1034834",
       "requires": "QB212E01 actual linked4rows accepted plus exactsource261/112/7containers/c76empty122+26",
       "technicalRole": "erp_qa_v14_core_runtime_20261024_01 NOLOGIN dangerousflagsfalse membership0",
       "publicFunctionGrant": false,
-      "realRoleOrCoreExecuted": false
+      "realRoleOrCoreExecuted": false,
+      "elapsedSeconds": 4.476080465130508,
+      "patchOutcome": "COMMIT_RETURNED_SUCCESS",
+      "roleAclOutcome": "COMMIT_RETURNED_SUCCESS",
+      "actualCatalog": {
+        "bytes": 1174079,
+        "canonicalSha256": "a579f05fe2d58c60504392ba964854284ea64b3cce011997fab2e4f3058efd6a",
+        "file": "runtime-catalog-canonical.json",
+        "identity": {
+          "current_user": "erp_qa_v14_core_runtime_20261024_01",
+          "database": "erp_qa_rapid26_core_20261024_01",
+          "database_oid": "1034834",
+          "database_owner": "erp_qa_owner_20261022_01",
+          "postmaster_start": "2026-10-04 08:16:07.895273+00",
+          "replication_role": "origin",
+          "server_addr": null,
+          "server_port": null,
+          "server_version_num": "170011",
+          "session_user": "t15_prod_bootstrap"
+        },
+        "metadataOnly": true,
+        "patchLevel": "26_v14_core_initialization",
+        "serverRawSha256": "a022d6a7d9deec9b0f2d21c7d54faf5b6ac3e71617fd81a4436cb0ad75e66855"
+      },
+      "actualRuntime": {
+        "actingRole": "erp_qa_v14_core_runtime_20261024_01",
+        "database": "erp_qa_rapid26_core_20261024_01",
+        "databaseOid": "1034834",
+        "databaseOwner": "erp_qa_owner_20261022_01",
+        "postmasterStart": "2026-10-04 08:16:07.895273+00",
+        "serverAddress": null,
+        "serverPort": null,
+        "sessionUser": "t15_prod_bootstrap"
+      },
+      "actualRole": {
+        "memberships": 0,
+        "name": "erp_qa_v14_core_runtime_20261024_01",
+        "rolbypassrls": false,
+        "rolcanlogin": false,
+        "rolcreatedb": false,
+        "rolcreaterole": false,
+        "rolinherit": false,
+        "rolreplication": false,
+        "rolsuper": false
+      },
+      "allBusinessEmpty": true,
+      "oldQaPreserved": true,
+      "sevenPreserved": true,
+      "ownedSessionsRemaining": 0,
+      "evidence": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-existing-qa-patch-and-role-20261024-119/release-submission/release-receipts/c03-v14-existing-qa-patch-and-role-20261024-119/engine-result.json",
+          "bytes": 37556,
+          "sha256": "bcd29a316057eff346d8b8ac5ec228dc363bec8c452fab67605197a4395b257e"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-existing-qa-patch-and-role-20261024-119/release-submission/release-receipts/c03-v14-existing-qa-patch-and-role-20261024-119/runtime-acl-observation.json",
+          "bytes": 62425,
+          "sha256": "9a09a07823af348f805ffcad08121d38b95311cc14e8af1ed271700fc0f79432"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-existing-qa-patch-and-role-20261024-119/release-submission/release-receipts/c03-v14-existing-qa-patch-and-role-20261024-119/runtime-catalog-canonical.json",
+          "bytes": 1393663,
+          "sha256": "d045a668a7668279f031d4de1c5342e34d974fa8d5565e54aca1e04a53ad2c6d"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-existing-qa-patch-and-role-20261024-119/release-submission/release-receipts/c03-v14-existing-qa-patch-and-role-20261024-119/next117-actual-metadata-inputs.json",
+          "bytes": 1940,
+          "sha256": "c2168009f5e695838b22366721b90550996ae2709948a2aa557c64589ea5ef1e"
+        }
+      ],
+      "next": "OriginalQB actualmetadata/preciseACL independentreview; existing117 finalinputs only, then C actual isolatednegative/CORE/replay/login; no119replay"
     },
     "performance276": {
       "source": "dbd1b23191768362d5f46589aeada7d14eb06f0e",
@@ -5669,10 +5744,15 @@
     },
     "browserStatusRisk": "Direct human replied 有操作该窗口. Preserve current transfer draft; await explicit handback or truly isolated session, no automatic draft discard. Offline acceptance/backend continue.",
     "performance278": {
-      "status": "FIXED_ORIGINAL_QB_F01_ONLY_REVIEW_PENDING",
+      "status": "QB216_LIMITED_SOURCE_ACCEPTED_F01_CLOSED_ACTUAL_AFTER_PENDING",
       "sourceRound": 278,
       "original276NeedFixPreserved": true,
-      "source": "b204222466a12c9eb0f43afa18fc3d871c34c0a8"
+      "source": "b204222466a12c9eb0f43afa18fc3d871c34c0a8",
+      "sourceReview": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice216-c278-f01-real-sanitizer-closure/RESULT.json",
+        "bytes": 13055,
+        "sha256": "77a377ea6b79267bce16564caeb2c3d2934e694f29a374f678f07e497697ba13"
+      }
     },
     "inventory279": {
       "status": "FIXED_ORIGINAL_QB_NEW7_AND_HOST_INTEGRATION_PENDING",
@@ -5701,6 +5781,51 @@
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice214-c120-two-unique-trigger-links/RESULT.json",
       "bytes": 15785,
       "sha256": "19e8659bcb8fd36dac7e6cbe50e011fe1089e2dce8e0bb9be3a6d660847a463f"
+    },
+    "githubLatestVerified": {
+      "commit": "85193402aebb8d3f7b890f5e487404a824e1ee19",
+      "status": "PASS_EXACT_ORIGINAL_OBJECTS_NONFORCED_NORMAL_BRANCH_FF_READBACK",
+      "sourceRound": 279,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-c279-v15-20261024-01/RESULT.json"
+    },
+    "actualPerformance122": {
+      "status": "FAILED2_FIRST_ERROR_TYPED_OUTPUT_MASKED_ACTUAL_UNKNOWN_NO_REPLAY",
+      "elapsedSeconds": 1.6708132710773498,
+      "firstError": "ONE_BOUNDED_METADATA_RESULT",
+      "stdoutBytes": 0,
+      "stderrBytes": 944,
+      "runnerEntered": "UNKNOWN",
+      "PGorNegativeOutcome": "UNKNOWN",
+      "evidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-runtime-proof-performance-after-20261024-122/release-submission/release-receipts/c03-runtime-proof-performance-after-20261024-122/engine-result.json",
+        "bytes": 15855,
+        "sha256": "af25b46af8512b547a175167bb266a71425975a18f9f2cbeeb7a9bfcc5639ae6"
+      },
+      "localConfirmedDefect": "Missing result.details initialization; failure-finally masks original exception. Does not prove actual initial server error.",
+      "next": "Originalhelper prepares corrected newC124 and sanitized firstfailure evidence; no122 replay/no cap increase"
+    },
+    "readOnlyScale123": {
+      "status": "PARTIAL_OLD_PROD_METADATA_BOUND_STOP_R1_NOT_ATTEMPTED",
+      "elapsedSeconds": 0.8694917710963637,
+      "firstError": "METADATA_BOUND_EXCEEDED_NO_AUTO_EXPANSION",
+      "relationCountSentinel": 129,
+      "limit": 128,
+      "oldProdOid": "24577",
+      "observedAt": "2026-10-24T03:12:43.7231Z",
+      "exactEntityCounts": "UNKNOWN",
+      "ownedSessionsRemaining": 0,
+      "evidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-readonly-data-scale-20261024-123/release-submission/release-receipts/c03-readonly-data-scale-20261024-123/engine-result.json",
+        "bytes": 14826,
+        "sha256": "22d3dcacd46b5829f4ca8a40040ea4e91a041886621c6b1b74ea4edbff2b8ab7"
+      },
+      "next": "new125 exactR1only counts, nooldcatalogreplay/noincreasedcap/noJSONblobscan"
+    },
+    "inventory280": {
+      "source": "33feae5e3a746f2d2abd75300613d3afd4c00055",
+      "status": "ORIGINAL_HOST_SPOOL_SOURCE_FIXED_QB_WITH279_PENDING",
+      "actualMountConfigured": false,
+      "performancePassed": false
     }
   },
   "latestReadySource": {

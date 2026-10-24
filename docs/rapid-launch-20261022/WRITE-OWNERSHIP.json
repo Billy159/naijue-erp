@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T03:02:20.953204+00:00",
+  "updatedAt": "2026-10-24T03:06:09.981041+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3721,7 +3721,11 @@
           "path": "apps/web/src/product-settings/colors/contracts.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
-          "transferredFrom": "F2"
+          "transferredFrom": "F2",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Only exact CATEGORY two action types and same-parent complete-sibling moved-node ordering; COLOR/FIT rights unchanged"
+          }
         },
         {
           "path": "apps/web/src/product-settings/colors/entry-page.tsx",
@@ -3892,7 +3896,11 @@
           "group": "EXISTING_WHOLE_PAGE_UI_MIGRATION_20261023",
           "fieldGate": "UI_ADAPTER_ONLY_KEEP_EXISTING_BACKEND_DTO_PERMISSION_TRANSACTION_CONTRACT",
           "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
-          "transferredFrom": "F2"
+          "transferredFrom": "F2",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Only exact CATEGORY two action types and same-parent complete-sibling moved-node ordering; COLOR/FIT rights unchanged"
+          }
         },
         {
           "path": "apps/web/src/product-categories/tree-model.test.ts",
@@ -4505,6 +4513,15 @@
       },
       "originalTaskCount": 22,
       "newParallelTask": false
+    },
+    {
+      "atUtc": "2026-10-24T03:06:09.981041+00:00",
+      "owner": "F4",
+      "existingPathsOnly": [
+        "apps/web/src/product-settings/colors/contracts.ts",
+        "apps/web/src/product-categories/tree-model.ts"
+      ],
+      "scope": "Human approved v15 exact consumer types/tree ordering; original tree-model.test.ts already registered; no new backend/public UI system"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
