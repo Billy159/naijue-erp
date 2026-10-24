@@ -1,0 +1,37 @@
+{
+  "version": "C14-CORE-FIRST-REAL49-v1",
+  "status": "APPROVED_EXACT_V14_CORE_AND_ONE_TIME_FULL_BIND",
+  "recordedAtUtc": "2026-10-24T01:23:43.727389+00:00",
+  "source": {
+    "kind": "DIRECT_HUMAN_REPLY_IN_EXISTING_ERP_CHAT_VERIFIED_BY_READ_THREAD",
+    "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+    "threadTitle": "重构任务书",
+    "turnId": "01a16b7f-3ce1-7f62-b75e-bf89a83a48eb",
+    "userMessageId": "01a16b7f-3cf4-7041-b338-0aa2e693001b",
+    "userText": "我确认 ，你帮我跟主控说",
+    "verifiedByC": "mcp__codex_app__read_thread turnLimit3 shows direct user input after explicit v14 linked explanation",
+    "transferredBy": "Existing source Chat requested user-authorized message to C",
+    "questionItemId": null,
+    "noSyntheticLocalReply": true
+  },
+  "confirmedOriginalFiles": {
+    "markdown": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.md",
+    "markdownSha256BeforeApprovalStatusNote": "ec7e7c13dc5ca9467d2637fa1e0818ac048bd4d087670ad759026c95c2bfc3e1",
+    "technical": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.json",
+    "technicalSha256BeforeApprovalStatusNote": "4192a1e299f3e39ed190f071fe7dd4917282423185d3a2c738d67c3bd54ea652"
+  },
+  "scope": [
+    "Samebatch49originalaccounts+115realdependency parties(STAFF49/HALL22/WAREHOUSE22/CURRENTCUSTOMER22)",
+    "Originalpassword/role/employment/enabled/hall facts preserved; login/current permitted22hall22warehousereads/approvedownpassword only",
+    "ExactCORE22claim accounting/seq1cursor22/audit1→2; one later full binding and original22claimcarryforward",
+    "Atomicity/idempotency/unknowncommitrecovery/currentcredentials sessions/legalmaintenanceprotection as fullv14"
+  ],
+  "notApproved": [
+    "v13ledgertransitions",
+    "AnyotherunlistedDBfield/constraint/writecontract",
+    "WholeERPready/stock_sales_transfer_businessrelease"
+  ],
+  "implemented": false,
+  "databaseExecuted": false,
+  "next": "OriginalD1D3implementation released for exact approved scope, originalD2 retains exactsettingsreadfiles; C remains soleactual DB/runtime/deploy andGit"
+}

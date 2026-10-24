@@ -265,7 +265,7 @@
         "FIELD-APPROVAL-C01-v1.json"
       ],
       "notTested": [],
-      "nextAction": "Await user exact v14 CORE/bind write-contract confirmation and existing v13 etc only affected branches; v11 confirmed and actualQA199 adopted. Existing approved default FK readonly port wiring continues under taskbook54 without new DB field/write change.",
+      "nextAction": "v14approved by directhumanexistingChat verifiedCread_thread, no reask; implement exact contract originalD1D3 andD2readscope. v13/otherunlisteddecisionsremainpending.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -552,7 +552,7 @@
         "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-dc71344-01/HTTP-RESULT.json"
       ],
       "notTested": [],
-      "nextAction": "Generic239 independentlyQB200 sourcePASS. CORE115/49 full proposal ready for C exact original-contract human confirmation, not activated. FullMAIN remains null, actual initialization not executed.",
+      "nextAction": "Humanapprovedv14 CORE+oncefullbind. OriginalD3 sourcehost/coordinator/proofresume implementedunderexactapprovedscope next, D1atomicstore/guards, no realrununtilfixedQA+runtime/backup. Keep fullrealimport moving afterCORE, no login=complete.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "D3",
@@ -1050,7 +1050,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T01:16:23.439975+00:00",
+  "updatedAt": "2026-10-24T01:23:43.727389+00:00",
   "stage": "ACTIVE_SOURCE241_FIXED_UI240_ACTUAL229_PRIVATE_APP_STAGE_AND_C112_BACKUP_PASS_NO_FORMAL_SWITCH",
   "lastVerifiedRemoteCommit": "a333e1519ad91471cb433f5098f5d4f273cab4a1",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -2014,7 +2014,44 @@
     "WRITE-CONTRACT-APPROVAL-v4-MEDIA-COLOR-SWAP.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v6-BOOTSTRAP-PROVENANCE.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v7-EMPTY-HISTORY-PUBLISH.json",
-    "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json"
+    "WRITE-CONTRACT-APPROVAL-v11-ALL-SIZE-SAVE.json",
+    {
+      "version": "C14-CORE-FIRST-REAL49-v1",
+      "status": "APPROVED_EXACT_V14_CORE_AND_ONE_TIME_FULL_BIND",
+      "recordedAtUtc": "2026-10-24T01:23:43.727389+00:00",
+      "source": {
+        "kind": "DIRECT_HUMAN_REPLY_IN_EXISTING_ERP_CHAT_VERIFIED_BY_READ_THREAD",
+        "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+        "threadTitle": "重构任务书",
+        "turnId": "01a16b7f-3ce1-7f62-b75e-bf89a83a48eb",
+        "userMessageId": "01a16b7f-3cf4-7041-b338-0aa2e693001b",
+        "userText": "我确认 ，你帮我跟主控说",
+        "verifiedByC": "mcp__codex_app__read_thread turnLimit3 shows direct user input after explicit v14 linked explanation",
+        "transferredBy": "Existing source Chat requested user-authorized message to C",
+        "questionItemId": null,
+        "noSyntheticLocalReply": true
+      },
+      "confirmedOriginalFiles": {
+        "markdown": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.md",
+        "markdownSha256BeforeApprovalStatusNote": "ec7e7c13dc5ca9467d2637fa1e0818ac048bd4d087670ad759026c95c2bfc3e1",
+        "technical": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.json",
+        "technicalSha256BeforeApprovalStatusNote": "4192a1e299f3e39ed190f071fe7dd4917282423185d3a2c738d67c3bd54ea652"
+      },
+      "scope": [
+        "Samebatch49originalaccounts+115realdependency parties(STAFF49/HALL22/WAREHOUSE22/CURRENTCUSTOMER22)",
+        "Originalpassword/role/employment/enabled/hall facts preserved; login/current permitted22hall22warehousereads/approvedownpassword only",
+        "ExactCORE22claim accounting/seq1cursor22/audit1→2; one later full binding and original22claimcarryforward",
+        "Atomicity/idempotency/unknowncommitrecovery/currentcredentials sessions/legalmaintenanceprotection as fullv14"
+      ],
+      "notApproved": [
+        "v13ledgertransitions",
+        "AnyotherunlistedDBfield/constraint/writecontract",
+        "WholeERPready/stock_sales_transfer_businessrelease"
+      ],
+      "implemented": false,
+      "databaseExecuted": false,
+      "next": "OriginalD1D3implementation released for exact approved scope, originalD2 retains exactsettingsreadfiles; C remains soleactual DB/runtime/deploy andGit"
+    }
   ],
   "latestAcceptedReceiptRefs": [
     {
@@ -3691,7 +3728,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T01:16:23.439975+00:00",
+    "atUtc": "2026-10-24T01:23:43.727389+00:00",
     "sourceRound": 255,
     "sourceCheckpoint": "619e16c3a1043c0e8d8a297f8048c2084a1f64af",
     "allModels": "gpt-6.1-sol/xhigh",
@@ -3751,7 +3788,7 @@
     "r1": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "Only unapproved v13 and existing precise business decisions/CORE-dependent write contract wait; HREV v12 nonowner writer target/installer inputs missing, no reader ACL substitution.",
+    "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
     "github": "Verifieda333e1519ad91471cb433f5098f5d4f273cab4a1 exact6 originalcommitsFF;254255 andcurrentcontinuation nextsync",
     "goalComplete": false,
     "demoCoverage": {
@@ -5050,7 +5087,7 @@
       }
     },
     "actualV11": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
-    "realInitialization": "D3 complete CORE-first115/49 proposal only, new dependent write contract pending concrete human confirmation; generic239 source independentlyQB200 accepted. Current full11/MAIN whole hash still required; real initialization NOT_EXECUTED. No fabricated empty sources/partial source writes.",
+    "realInitialization": "v14 humanAPPROVED/exactoriginalsourceverified; originalD1D3implementation authorized, actualCORE stillNOTEXECUTED. D2 exact22/22readscope existingowner retained. FullMAIN stillnull/unbound, no dataReady/publicswitch.",
     "latestRound240": {
       "source": "dc71344d4ee249b1299fae2b777fac67a2089b4a",
       "actualPreview": {
@@ -5119,7 +5156,7 @@
       "qualification": "Only T02 metadata corrected by originalQF v084; zero wholepage acceptance."
     },
     "v14CoreInitialization": {
-      "status": "PENDING_HUMAN_NOT_IMPLEMENTED",
+      "status": "APPROVED_EXACT_SCOPE_IMPLEMENTATION_RELEASED_NOT_EXECUTED",
       "confirmation": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.md",
       "technical": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.json",
       "askedOnce": true,
@@ -5129,7 +5166,11 @@
         "IMPORT_CORE_STAGE",
         "IMPORT_BIND_FULL_SOURCE"
       ],
-      "scope": "Existing49 accounts+real115 dependency party closure; exact22hall22warehouse current-role read only; initial real22claims seq1/cursor22+unique audit1→2, later one full bind seq+1/no newclaim and MAIN carryforward original22. OriginalD1 exact deferred/accounting guard supplement included. No realbootstrap/DDL/source branch activation."
+      "scope": "Existing49 accounts+real115 dependency party closure; exact22hall22warehouse current-role read only; initial real22claims seq1/cursor22+unique audit1→2, later one full bind seq+1/no newclaim and MAIN carryforward original22. OriginalD1 exact deferred/accounting guard supplement included. No realbootstrap/DDL/source branch activation.",
+      "approvalRecord": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
+      "approvalSourceUserMessageId": "01a16b7f-3cf4-7041-b338-0aa2e693001b",
+      "scopeImplementationReleased": true,
+      "databaseExecuted": false
     },
     "p10ReadSeam": "Source245246QB201+actual113QB202accepted; frontend248/251/252 fixedactual252 with one explicitfictionhistoricalscheme pair same existingSYN2, source251QFv089accepted, F2leafQF2source+newbrowserpending. Source252true scheme.name replacesgeneric已设置 and read owner shared; no real6schemeclassification.",
     "dateSeam": "247public and249consumers independentlysourcePASS,244hoverPASS; now containedinactual252but no newbrowserplacement/hover yet. Original240font/Today/glyph/Xfocus adopted.",

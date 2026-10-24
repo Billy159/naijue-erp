@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-23T19:46:19.026969+00:00",
+  "updatedAt": "2026-10-24T01:23:43.727389+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -737,6 +737,27 @@
           "fieldGate": "PENDING_EXPLICIT_USER_V13_CONFIRMATION",
           "sourceWriteEnabled": false,
           "scope": "Reserved exact proposal path only; no SQL source/DDL/writer change before explicit reply. No new authority from this reservation."
+        },
+        {
+          "path": "packages/application/src/inventory-cutoff-import.ts",
+          "group": "HUMAN_APPROVED_V14_CORE_ONE_TIME_BIND_20261024",
+          "fieldGate": "EXACT_V14_APPROVED_CONTRACT_ONLY",
+          "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
+          "scope": "Existing samebatch finiteCORE/onceBIND types/accounting or oneincrementalSQLpatch;oldmigrationsimmutable,0newtablecolumn"
+        },
+        {
+          "path": "packages/application/src/native-import-record-accounting.ts",
+          "group": "HUMAN_APPROVED_V14_CORE_ONE_TIME_BIND_20261024",
+          "fieldGate": "EXACT_V14_APPROVED_CONTRACT_ONLY",
+          "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
+          "scope": "Existing samebatch finiteCORE/onceBIND types/accounting or oneincrementalSQLpatch;oldmigrationsimmutable,0newtablecolumn"
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+          "group": "HUMAN_APPROVED_V14_CORE_ONE_TIME_BIND_20261024",
+          "fieldGate": "EXACT_V14_APPROVED_CONTRACT_ONLY",
+          "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
+          "scope": "Existing samebatch finiteCORE/onceBIND types/accounting or oneincrementalSQLpatch;oldmigrationsimmutable,0newtablecolumn"
         }
       ]
     },
@@ -4280,6 +4301,21 @@
       "atUtc": "2026-10-23T19:46:19.026969+00:00",
       "id": "C_F1_CHUNK105_KNOWN_CONSUMER_EXACT2",
       "scope": "Two concrete original T02 test paths reported by F1 strict closure, same narrowly authorized source209 pattern; no other test/production source ownership changed."
+    },
+    {
+      "atUtc": "2026-10-24T01:23:43.727389+00:00",
+      "scope": "Human-approvedv14 exact implementation released",
+      "newSharedLeafOwner": "D1 only two application source types and exactv14patch",
+      "retainedReadOwner": {
+        "D2": [
+          "packages/application/src/store-settings-read-ports.ts",
+          "packages/application/src/store-settings-read-validation.ts",
+          "adapters/postgres/src/store-settings-read-reader.ts"
+        ]
+      },
+      "D1D3OriginalLeaves": "Retainedoriginalregisteredscopes;no concurrenttransfer",
+      "actualExecutor": "C only",
+      "approval": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

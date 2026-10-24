@@ -1,3 +1,9 @@
+v14批准已核实并放行（2026-10-24）：
+
+- C通过原Chat读取工具直接核实「重构任务书」01a16189-fe73-7a81-b7ad-3c24ede6fd24的人类消息01a16b7f-3cf4-7041-b338-0aa2e693001b：“我确认 ，你帮我跟主控说”。前文明确链接本完整v14，非Agent自行批准，不伪造本C questionItemId。批准记录WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json，原确认单及STATUS已更新。
+- 原D1/D3获批实施49账号+115依赖、22真实claim精确记账、一次fullbind及原22进度接续/改密会话维护保护；D1新增两既有application共享类型叶和单v14补丁唯一归属已登记。原D2三个settings读叶保持唯一owner，不与D1双写，负责精确22厅22仓读取接缝。C仍唯一DB/构建/服务器/发布/Git。
+- v14现不再WAITING_USER，但尚未实现SQL或执行CORE；v13及其他未列差异未扩批，dataReady和正式切换未通过。后续按新增合同必要自检/独立模块验收/固定候选/已授权实际初始化执行，并继续全量真实业务导入，不能把可登录当最终完成。其他页面/后端/候选验收继续。
+
 最近增量（源255，实际252，当前QF唯一鼠标窗口）：
 
 - 原QFv091限定通过253四参考字段LABEL边界源码，QF2正式243五editor页回执及最终248＋252默认方案name消费者源码结论采用，不重复旧技术验收。原QF2已clean/STOP5499B/e34bbb6e…；QF现唯一252只验250业务类型singlemouse入口，后继同252日期/hover/P10给QF2，不能并抢Chrome或把253/255新源码记入252。
