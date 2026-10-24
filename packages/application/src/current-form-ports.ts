@@ -15,7 +15,9 @@ export interface CurrentFormSearch { readonly search: string; readonly page: num
 /** Only account lookup carries a selected method; omission is not an all-method grant. */
 export type CurrentSalesReferenceQuery = CurrentFormSearch & (
   { readonly kind: "hall"; readonly hallId: null }
-  | { readonly kind: "customer" | "salesperson" | "warehouse" | "paymentMethod"; readonly hallId: EntityId<"hall"> }
+  /** Explicit null selects shared in-job staff references without inventing a sales hall. */
+  | { readonly kind: "salesperson"; readonly hallId: EntityId<"hall"> | null }
+  | { readonly kind: "customer" | "warehouse" | "paymentMethod"; readonly hallId: EntityId<"hall"> }
   | { readonly kind: "paymentAccount"; readonly hallId: EntityId<"hall">; readonly paymentMethodId: EntityId<"paymentMethod"> }
 );
 export interface CurrentSalesReferenceItem {
