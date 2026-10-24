@@ -54,10 +54,13 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     const authentication = controller?.authentication.getSnapshot(), role = authentication?.principal?.role;
     return enabled === true && authentication?.phase === 'authenticated' && (role === 'ADMIN' || !adminOnly && role === 'WAREHOUSE');
   };
+  const settingsAudit = configuration.routes.staffSettings || configuration.routes.paymentSettings || configuration.routes.parties
+    ? { reader: createSettingsAuditHttpReader(http), allowedModules: auditModules,
+      hasUnresolvedWrite: () => controller?.hasRetainedUnresolvedWrite() ?? true } : undefined;
   const staffView = configuration.routes.staffSettings ? input.settingsViews?.staffSettings
-    ?? { reader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: maintenance?.staffSettings === true } : undefined;
+    ?? { reader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: maintenance?.staffSettings === true, audit: settingsAudit! } : undefined;
   const paymentView = configuration.routes.paymentSettings ? input.settingsViews?.paymentSettings
-    ?? { reader: createPaymentSettingsHttpReader(http), canPrepare: maintenance?.paymentSettings === true } : undefined;
+    ?? { reader: createPaymentSettingsHttpReader(http), canPrepare: maintenance?.paymentSettings === true, audit: settingsAudit! } : undefined;
   const accountView = configuration.routes.accountSettings ? input.settingsViews?.accountSettings
     ?? { reader: createAccountSettingsHttpReader(http), staffReader: createStaffSettingsHttpReader(http), roles: staffRoles, canPrepare: maintenance?.accountSettings === true } : undefined;
   // A trusted existing workspace is a valid single owner. Otherwise only the
@@ -91,7 +94,7 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
       ...(configuration.routes.transferProductFullPage ? { productFullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}),
       ...(configuration.routes.transferInitialSizeGroupId ? { initialSizeGroup: { id: configuration.routes.transferInitialSizeGroupId, reader: createDictionaryHttpReader(http) } } : {}),
       ...(configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit ? { commands: { newRequestKey, ...(configuration.routes.transferManualCreate ? { manualCreate: true as const } : {}), ...(configuration.routes.transferExistingEdit ? { existingPreparation: createTransferExistingPreparationHttpClient(http) } : {}) } } : {}) } } : {}),
-    ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, ...(configuration.routes.parties.readOnly ? { readOnly: true as const } : {}) } } : {}),
+    ...(configuration.routes.parties ? { parties: { stylesheet: stylesheet('parties'), newRequestKey, audit: settingsAudit!, ...(configuration.routes.parties.readOnly ? { readOnly: true as const } : {}) } } : {}),
     ...(configuration.routes.products ? { products: { stylesheet: productStyles!, ...(configuration.routes.productViewer ? { product: { stylesheet: createRouteStylesheet({ document: input.document, origin: configuration.http.origin, href: productionAssetUrl(configuration, assets.productDrawerStyles) }) } } : {}),
       ...(maintenance?.products ? { maintenance: { loadStyles: () => productStyles!.load(), reader: createProductMaintenanceHttpReaderV2(http), client: createProductMaintenanceHttpClientV2(http), newRequestKey,
         allowedActions: ['CREATE', 'EDIT', 'DISABLE', 'RESTORE', 'DELETE'] as const,

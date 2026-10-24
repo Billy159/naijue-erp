@@ -3,6 +3,8 @@ import { createOrganizationSettingsDirectory } from '../../settings/stores/maint
 import { createPaymentSettingsWorkspace } from '../../payment-settings/controller.ts';
 import { createPaymentSettingsCommandClient } from '../../payment-settings/http-client.ts';
 import type { ApplicationRouteProps, PreparedApplicationRoute, RoutePreparation } from '../contracts.ts';
+import { settingsAuditModulesFor } from '../../../../../packages/application/src/settings-audit-validation.ts';
+import { blankAuditDraft } from '../../settings/audit/contracts.ts';
 
 export function preparePaymentSettingsRoute(input: RoutePreparation, onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void): PreparedApplicationRoute {
   const configuration = input.configuration.paymentSettings;
@@ -11,8 +13,11 @@ export function preparePaymentSettingsRoute(input: RoutePreparation, onAccessFai
   const workspace = configuration.view.workspace;
   if (workspace && !workspace.matches(input.scope)) throw new TypeError('Payment workspace identity does not match this route.');
   const directory = configuration.view.directory ?? createOrganizationSettingsDirectory({ scope: input.scope, http: input.http });
+  const modules = input.principal.role === 'ADMIN' || input.principal.role === 'WAREHOUSE'
+    ? settingsAuditModulesFor(input.principal.role, { ...blankAuditDraft, page: 1, pageSize: 20 }) : [];
+  const audit = configuration.view.audit ? { ...configuration.view.audit, allowedModules: configuration.view.audit.allowedModules.filter(module => modules.includes(module)) } : undefined;
   return { ...(workspace ? { canLeave: () => workspace.canLeave() } : {}),
-    View: ({ scope }: ApplicationRouteProps) => <PaymentSettingsPage {...configuration.view} directory={directory} scope={scope} onAccessFailure={onAccessFailure} /> };
+    View: ({ scope }: ApplicationRouteProps) => <PaymentSettingsPage {...configuration.view} {...(audit ? { audit } : {})} directory={directory} scope={scope} onAccessFailure={onAccessFailure} /> };
 }
 
 /** Called once with a session scope; normal route teardown never owns this key. */

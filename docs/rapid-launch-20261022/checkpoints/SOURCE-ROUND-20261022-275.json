@@ -1,0 +1,148 @@
+{
+  "atUtc": "2026-10-24T02:41:40.466253+00:00",
+  "parent": "02d587f36f5c110aa871adaec29e5d944d1e7375",
+  "taskId": "CONNECT_EXISTING_STAFF_PAYMENT_PARTY_AUDIT_AND_SCOPED_RECOVERY",
+  "files": [
+    {
+      "path": "apps/web/src/production-host/mount.tsx",
+      "bytes": 15257,
+      "sha256": "3bfc358d91034d9afa2c8ee70520bc65d3a8e124fcf2789256eedfef44e8019c",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/controller.ts",
+      "bytes": 58041,
+      "sha256": "41d08b4a5a82110849acb54f2291f00779849ecf23a9516e49d3705dfc269792",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/staff-settings.tsx",
+      "bytes": 3626,
+      "sha256": "ea31f656a8d730031e82d4774879a3c9871992f27739993adbb53c1a387ef29f",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/payment-settings.tsx",
+      "bytes": 3305,
+      "sha256": "39720316b15483bdfa0a31b2b1c210c3507ae66c631e1fc4119fd117529ddcf5",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/application/routes/parties.tsx",
+      "bytes": 1929,
+      "sha256": "41b9f30b47fdcce4456704210055dba656b23eca32064a98b7b7b5f5ad9d9cbb",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "b2423251cc7caf1a81a7bf39133ee48724897db52e3312c8096afed66dabb564",
+  "ownerDelivery": {
+    "taskId": "F1_SETTINGS_AUDIT_EXISTING_CONSUMER_COMPOSITION",
+    "status": "SOURCE_READY_LOCAL_PASS_BROWSER_PENDING",
+    "atUtc": "2026-10-24T02:34:47.524620+00:00",
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/production-host/mount.tsx",
+        "bytes": 15257,
+        "sha256": "3bfc358d91034d9afa2c8ee70520bc65d3a8e124fcf2789256eedfef44e8019c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/controller.ts",
+        "bytes": 58041,
+        "sha256": "41d08b4a5a82110849acb54f2291f00779849ecf23a9516e49d3705dfc269792"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/routes/staff-settings.tsx",
+        "bytes": 3626,
+        "sha256": "ea31f656a8d730031e82d4774879a3c9871992f27739993adbb53c1a387ef29f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/routes/payment-settings.tsx",
+        "bytes": 3305,
+        "sha256": "39720316b15483bdfa0a31b2b1c210c3507ae66c631e1fc4119fd117529ddcf5"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/application/routes/parties.tsx",
+        "bytes": 1929,
+        "sha256": "41b9f30b47fdcce4456704210055dba656b23eca32064a98b7b7b5f5ad9d9cbb"
+      }
+    ],
+    "checks": {
+      "before-1": "EXIT1 valid old mounted staff entry disabled/no audit capability",
+      "after-1": "EXIT1 invalid test expectation: original salesperson cannot navigate customers; product unchanged",
+      "after-2": "EXIT1 valid customer audit403 then retry retained disposed party session",
+      "after-3": "EXIT0 actual header action/query/roles/retained original request/access lifecycle",
+      "types-1": "EXIT0 strict exact5 imported closure"
+    },
+    "sourceFrozenUntilCPin": true,
+    "notTested": [
+      "Browser page comparison/real HTTP PG audit/real SAVE",
+      "Store243 and F3 accepted suite not repeated"
+    ],
+    "next": "C exact5 pin/integrated candidate and original QF page module; F1 then public async workbook seam",
+    "blocker": "Containing build + original QF actual, F1 NO_CHROME",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/REPORT.md",
+        "bytes": 1642,
+        "sha256": "88a2fe330134ada8a48f9d5f7c4835b32d38d510383850f92816d74725725a6d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/SOURCE.diff",
+        "bytes": 13201,
+        "sha256": "57de8b7bb7a0e5ad152d0ba52b04f95c615a420534730ca96b2bd9d0ce39e01d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/HOST-RESULT.json",
+        "bytes": 3177,
+        "sha256": "344ae99280a621e1999bf148e3922e26e7b6df31ad58f7520c9d87c5f21aab4f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/BEFORE-ENTRY.json",
+        "bytes": 162,
+        "sha256": "15a79e990d4c7a473ce323cef7449a1169681a5ee818d07679f78b082e722414"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/AFTER-ENTRY.json",
+        "bytes": 157,
+        "sha256": "29d5595ee16b78a9908f431302dcea30e3d8f0f87296172456f82cadab52a49a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/before-1.log",
+        "bytes": 1131,
+        "sha256": "dab972084692eb1a88c440c7ef22c501ba4689380c2170cc3ae860e28a118bd5"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/after-1.log",
+        "bytes": 1598,
+        "sha256": "bcbbeb897a5a34e2da73e634d2b44f6f5f5aa96bbf6d07424658781f67601e43"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/after-2.log",
+        "bytes": 1600,
+        "sha256": "3382d543ce0089a093fea45a863f5f36d18ab821e48bc775ffcefdb34474c448"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/after-3.log",
+        "bytes": 663,
+        "sha256": "990dda8f0f7be9912b501db7523a9565e66e9ffbc23203b60ba0ecb2f9a221a1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/types-1.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/audit-consumer-composition-check.mjs",
+        "bytes": 13963,
+        "sha256": "868ae933c3ea651279cbae67214dc12fbae90541661e1c4ee39dccda6db90f96"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-133/tsconfig.json",
+        "bytes": 1186,
+        "sha256": "2bde8f490dfc5eed67162b441d099da70d9e645784689b0bf1018ac87d93ffe0"
+      }
+    ]
+  },
+  "qualification": "Only released original owner leaves; owner targeted necessary checks adopted, independent source and actual containing runtime/performance not accepted. Fixed273 stays immutable; no active other-owner source or tests WIP staged."
+}

@@ -96,7 +96,8 @@ export class ApplicationController {
     const transfers = routes.transfers ? Object.freeze({ stylesheet: stylesheet(routes.transfers.stylesheet), ...(transferProduct ? { productFullPage: transferProduct } : {}), ...(sizeGroup ? { initialSizeGroup: sizeGroup } : {}), detailStylesheet: stylesheet(routes.transfers.detailStylesheet), ...(routes.transfers.product ? { product: Object.freeze({ stylesheet: stylesheet(routes.transfers.product.stylesheet) }) } : {}), ...(routes.transfers.commands ? { commands: Object.freeze({ ...routes.transfers.commands }) } : {}) }) : undefined;
     if (sales?.commands && (typeof sales.commands.newRequestKey !== 'function' || !sales.detailStylesheet)
       || transfers?.commands && typeof transfers.commands.newRequestKey !== 'function') throw new TypeError('Command routes require explicit key providers and document styles.');
-    const parties = routes.parties ? Object.freeze({ ...routes.parties, stylesheet: stylesheet(routes.parties.stylesheet) }) : undefined;
+    const parties = routes.parties ? Object.freeze({ ...routes.parties, stylesheet: stylesheet(routes.parties.stylesheet),
+      ...(routes.parties.audit ? { audit: Object.freeze({ ...routes.parties.audit, allowedModules: Object.freeze([...routes.parties.audit.allowedModules]) }) } : {}) }) : undefined;
     if (parties && typeof parties.newRequestKey !== 'function') throw new TypeError('A party request-key provider is required.');
     if (parties && parties.readOnly !== undefined && parties.readOnly !== true) throw new TypeError('Party read-only mode must be explicitly true or omitted.');
     const fullPage = routes.products ? ownProductFullPageConfiguration(routes.products) : undefined;
@@ -419,7 +420,13 @@ export class ApplicationController {
         if (!this.#current(scope)) return false;
         if (!this.#partySession) {
           const workspaceScope = this.#context.createScope(`application-party-session-${++this.#sequence}`);
-          this.#partySession = module.preparePartySession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire());
+          this.#partySession = module.preparePartySession({ ...input, scope: workspaceScope, http: this.#httpForScope(workspaceScope) }, () => this.authentication.expire(), (auditRoute, kind) => {
+            if (this.#state.route !== auditRoute || !this.#state.scope) return;
+            this.#readAccessFailure(this.#state.scope, kind);
+            // The audit owner retires its party session scope on access denial.
+            // Retire the matching workspace too so an explicit retry can prepare afresh.
+            if (kind === 'forbidden' && this.#state.phase === 'error') { this.#partySession?.workspace.dispose(); this.#partySession = null; }
+          });
         }
         prepared = this.#partySession.prepare(route);
       } else throw new TypeError('Route preparation is unavailable.');
