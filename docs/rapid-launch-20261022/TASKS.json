@@ -4716,7 +4716,7 @@
   "currentContinuation": {
     "atUtc": "2026-10-24T22:48:39.815747+00:00",
     "sourceRound": 368,
-    "sourceCheckpoint": "SOURCE374 9a52c8b4d1268c256d9677eecd47094b9704f95c remoteverified; SOURCE375 R1v16/v15 actualschema limitedPASS/C203actualminimumACLobservation inprogress; currentHTTPserved364 unchanged/copied372Linuxinstalled notappstarted",
+    "sourceCheckpoint": "SOURCE375 f9ba24d60592011d0fab03fbf4d9dc52a5700fcd remoteverified; SOURCE376 actual52+4GRANT/QB277 newtarget and productSKU capture complete limited scope; fixedfrontend372 installed only/served364 unchanged",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4792,7 +4792,7 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "RealR1 actual v16-from-v15/130/ac9d9ff1a7706def15534eb4f7bea8a97021e11dfe04b25f7e6338d7e345ea01 schemaonly; genuine sourceprobeTRUE/trackedCOREcounts and169bits/9services unchanged. Old5207profile invalid afterDDL; newtargetpurpose notsigned. Catalogue344closed273+275; supplier222sourceonly/productSKUstockhistory/fullpublish pending.",
+    "backend": "RealR1 v16-from-v15/130/currentcanonical5a6a5cda81a406cf4c62200e8b1696019fa8a93d1b84c08215eaabe5b3cb50ce; sourceprobeTRUE. Exact52nativecol+4technicalkeyUPDATE committed; QB277 currentmetadata-only IMPORT_STAGE+IMPORT_PRODUCT_SEASONS accepted, realImportExecutionAuthorizedfalse. Native344stageclosed, Supplier222/Product2956/SKU14999 sourcecapturecomplete butDBstage pending. No real fullimport/history/pub/formalUI claim.",
     "productionBuild": "Formal299sourcef43e943/r1-f43e943-20261024-01 archive1339201/1f5a5b0537d1233f1e61bd7418d13db105c9e679c7a9be62f5d290ef06fa7e25, manifest43b445b07819f154a0659f3cc885b5b5cf5eb59a38679c41c2c1c193737c49ce. Actual149Linuxci/nativePASS0/25.931508s,111records/payload3154d2c5685488740606e98b86814605254780c92925b5449d8fcf802fcd3876,engine9717/78218751fc6689f5064e6e92610a270e2ae19ef05a71e831cbad179b52297cc9.0DB/appstart/publicswitch.",
     "actualQFBrowser": "CLOSED: current completeChrome native2940x1690 and humanQF current image show sidebar/content reach bottom. Top automationinfobar consumes~56CSSpx;668legitimatecurrentwindow,old724notinvariant. Prior668=>recurrence derivative judgement withdrawn. Allrawmeasurements/failedprobes retained. QFNO_GUI/Cnativeclickattemptblockedbeforeinputduehuman appchange;0successfulclick/navigation. No repeateddiagnosis/windowrequest.",
     "frontendAcceptance": {
@@ -8238,7 +8238,7 @@
       "browserLease": "RETURNED_CLEAN_TWO_ORIGINAL_INVENTORY_TABS_NATURAL_VIEWPORT_FIVE_DRAFTS_UNTOUCHED",
       "notClaimed": "wholeI01/37pagePASS/realHTTP/PG/formalperformance/printinghardware"
     },
-    "nextAction": "Collect203 actualmissingbits; originalQB finitegrantdelta review, necessarygrants/newprofile thennative supplier222→product2956→SKU14999/privatecopied372appHTTPS. D3 product/SKUsourcecaptureentry inparallel. No schema/344replay.",
+    "nextAction": "OriginalC build concrete supplier222-only source/execution carrier using compiledD1 runner and QB277 current5a metadata, independent finite carrier review then actualsource stage. Preserve204FAILEDtransport and adopt actualCOMMIT; never GRANT/schema/catalogue replay. Original158physicalbackup deadline2026-10-25T00:02:34.387747Z nearing: maintain original backup requirements, refresh through same originalowner/mechanism asneeded, not falsefreshness. Product/SKU sourcecapturescomplete no reread. New372privateapp/HTTPS/data/historicaledit/perf/formal remainincomplete.",
     "latestHumanV17Reply": "Repeated/latest explicit confirmation adopted without duplicate implementation; D2 actual189/QB260 limited PG service proof already adopted; normalHTTP/front-end/nonowner/formalperformance pending",
     "copied372LinuxInstall": {
       "previous": "c03-copied372-linux-install-only-20261025-198 failed SAME_PROVEN_OFFLINE_LOCK_REQUIRED before any docker installer run, payload/cachecopy preserved; generic ATTEMPTED_UNKNOWN refers call entry not npm sideeffect",
@@ -8292,18 +8292,87 @@
       "priorFailure": "C200 v16committed, Cinline readonly query omitted semicolon before helperROLLBACK. C201readonly reproduced syntaxerror atROLLBACK/noDDL.202 correctedcallerterminators/read2colsFK thenoriginalunattemptedv15.200/201failedreceipts preserved/no schema replay."
     },
     "realR1Next3AclCurrent": {
-      "job": "c03-real-r1-next3-minimum-acl-observation-20261025-203",
-      "status": "DISPATCHED_ONCE_READONLY_NO_GRANT",
-      "matrix": "D1/R1-NEXT3-COMPONENT-MINIMUM-ACL-v1.json",
-      "requiredObservationColumns": 273,
+      "observationJob": "c03-real-r1-next3-minimum-acl-observation-20261025-203",
+      "status": "ACTUAL56_BITS_COMMITTED_QB277_LIMITED_METADATA_PASS_TRANSPORT_FAILED_POSTPRINT_RETAINED",
+      "requiredObserved": 273,
+      "actualMissingBefore": 56,
+      "nativeMissingSelected": 52,
+      "technicalKeyLockUpdates": 4,
       "rowLockTables": 16,
-      "executeFunctions": 7,
-      "rule": "Observeall normalv16delta but do notgrantwritebits merelyforreadonlyhost; ANYexistingUPDATEfirst, no blanket/alltable/superuser"
+      "executeFunctionsAlreadyEffective": 7,
+      "normalHeaderWriteBitsDeferred": 4,
+      "normalResponsibleSelectAlreadyEffective": true,
+      "proposalReview": "QB/slice276-c203-next3-minimum-acl-proposal/RESULT.json PASS",
+      "actualJob": "c03-real-r1-next3-exact-minimum-grants-20261025-204",
+      "actualCommit": "COMMIT_RETURNED_SUCCESS",
+      "actualTypedStatus": "PASS_ACTUAL_REAL_R1_EXACT52_NATIVE_BITS_PLUS4_LOCK_BITS_ONLY_NO_BUSINESS",
+      "transportStatus": "FAILED_EXIT1_AFTER_FINAL_CHECKPOINT_STALE_V16_SUMMARY_KEYS",
+      "diagnosis": "B/server-jobs/c03-real-r1-next3-exact-minimum-grants-20261025-204/TERMINAL-SUMMARY-DIAGNOSIS.json; samepureexpression+actualengine dict reproduced KeyError v16Outcome; no extra remote traceback claimed/no GRANT replay",
+      "newCanonical": "5a6a5cda81a406cf4c62200e8b1696019fa8a93d1b84c08215eaabe5b3cb50ce",
+      "changedPhysicalColumnAcls": 47,
+      "allOtherCatalogueObjectsPreserved": true,
+      "trackedStateCoreAndNineServicesPreserved": true,
+      "independentActualDeltaReview": "QB/slice277-c204-actual56-and-next3-metadata/RESULT.json PASS",
+      "acceptedMetadata": "QB/slice277-c204-actual56-and-next3-metadata/ACCEPTED-RUNTIME-METADATA.json 1110/053f59c14bb036032980e71466e2619f39fd0eb30134dce1c151675842214c4b",
+      "purposes": [
+        "IMPORT_STAGE",
+        "IMPORT_PRODUCT_SEASONS"
+      ],
+      "scope": "EXACT_TARGET_METADATA_ONLY",
+      "realImportExecutionAuthorized": false
     },
     "d3NextCapture": {
-      "status": "ACTUAL_SOL_MEDIUM_DISPATCHED_EXISTING_IDLE_D3",
-      "scope": "OriginalPRODUCT2956/SKU14999 captureentry+accurateinput/source-only, no supplier222recapture/DB/full11preflight/v5wait",
-      "owner": "D3 original"
+      "status": "ACTUAL_FIRST_CAPTURE_AND_SOURCE_ID_CONSUMPTION_COMPLETE_NOT_DB",
+      "proof": "B/real-product-sku-components-20261025-01/SOURCE-CAPTURE.json 2107/d4edce35a8f6b53b676bacd413cb3cd8b20ecb7fa61351f70ee2fe762e7b4032",
+      "product": {
+        "rows": 2956,
+        "chunks": 30,
+        "manifest": "F/native-product2956-source352-capture-20261025-C-run1/PRODUCT2956-CAPTURE.json",
+        "bytes": 12296,
+        "sha256": "caa7aa5b6e7c71f4a25cfffc7943424bf3e2a7cf5b915f7efae579ff2091c44c",
+        "fullGraphInputs": 44,
+        "source352ProductionFilesByteCompared": 43,
+        "CEntry": 1,
+        "newNativeUUIDs": 0,
+        "multipleSeasons": 310,
+        "unknownSeasons": 48
+      },
+      "sku": {
+        "rows": 14999,
+        "oldAliases": 15121,
+        "manifest": "F/native-sku14999-source352-capture-20261025-C-run1/SKU14999-CAPTURE.json",
+        "bytes": 3117,
+        "sha256": "33b4add85817b985909356c5cd7ce89e1fae96763d86ac00646ec3e0bf8f88c6",
+        "jsonlBytes": 138250702,
+        "jsonlSha256": "221c737fb93eef87502c182e35ba3afea0226862fe66c7410fb9301969c7a686",
+        "fullGraphInputs": 45,
+        "source352ProductionFilesByteCompared": 44,
+        "CEntry": 1
+      },
+      "D3NewCaptureConsumptionCheck": "14999 SKU references/product native snapshots/product_id/group IDs match new2956 product capture,0mismatch;2533products referenced/423notreferenced sourcefactnotmissing-SKUdefect",
+      "executionAuthorized": false,
+      "target": null,
+      "runtimeProfile": null,
+      "databaseCalls": 0,
+      "supplier222Capture": "retained existing, not reopened/recaptured/re-authorized"
+    },
+    "currentActualR1": {
+      "database": "erp_rewrite_20261022_r1",
+      "oid": "1027659",
+      "runtimeAndSession": "erp_rewrite_runtime_20261022",
+      "patchLevel": "26_v16_history_responsible_from_v15",
+      "routines": 130,
+      "canonical": "5a6a5cda81a406cf4c62200e8b1696019fa8a93d1b84c08215eaabe5b3cb50ce",
+      "authority": "QB277 limited targetmetadata; not source/execution/MAIN/HREV/PUBLISH/normalSAVE grant"
+    },
+    "d1SupplierNext": {
+      "status": "SOURCE_CONSUMER_READY_COMPILED29_INPUTS_NOT_EXECUTED_CARRIER_NOT_YET_REVIEWED",
+      "directory": "D1/SUPPLIER222-ACTUAL-PREP-v1",
+      "runner": "supplier-stage-runner.mjs 13620/050266c1f96c49e062942e8d141491af59332153fc1b013fb6332e2f68122801",
+      "readbackSql": "SUPPLIER-READBACK.sql 2818/d84d64e4d68002881632bac6a1536bdba84999840e340ccdafb5eafe7a657ad8",
+      "compiled": "B/real-supplier-component-20261025-02/supplier-stage-source.mjs",
+      "fullGraph": "29inputs=27immutableSOURCE352productionactualbytecomparedGit+2exactD1files, no newwriteSQL/DTO",
+      "next": "C newmetadata review relocation only/QB277; exactoriginalsupplier222 source grant/3chunk private inputs+genuine pool carrier thenfiniteQB review/once actualstage; no full11preflight/v5wait/schema/344replay"
     }
   },
   "latestReadySource": {
