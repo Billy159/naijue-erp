@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T17:29:50.813619+00:00",
+  "updatedAt": "2026-10-24T17:49:29.187095+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -4769,6 +4769,48 @@
       "scope": "F1 only exact delivered fixture metadata correction, C fixes runtime identity/baseline; no original UI change",
       "F1Delivery": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-168/HANDOFF.md",
       "browserReleased": "QF explicit CLEAN_STOP, 044 bound oldtarget no active dialog; no protected draft handled"
+    },
+    {
+      "atUtc": "2026-10-24T17:49:29.187095+00:00",
+      "scope": "Phase1 original full-copy343 accepted; phase2 same copy in-place real-contract wiring, original4lines",
+      "phase1AcceptedSource": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+      "uniqueNewModuleWriters": {
+        "F1": [
+          "apps/web/demo-replica/frontend/runtime/common/",
+          "apps/web/demo-replica/frontend/runtime/documents/",
+          "apps/web/demo-replica/frontend/runtime/entry.tsx"
+        ],
+        "F2": [
+          "apps/web/demo-replica/frontend/runtime/inventory/",
+          "apps/web/demo-replica/frontend/runtime/products/"
+        ],
+        "F3": [
+          "apps/web/demo-replica/frontend/runtime/settings/"
+        ],
+        "F4": [
+          "apps/web/demo-replica/frontend/runtime/catalogue/"
+        ]
+      },
+      "existingPureBusinessModels": "Original registered owners retain exact non-UI models/http/commands; no old rewritten body import or fallback",
+      "reservedShared": "C only serve/index/real-data-bridge/build/root config/lock/global styles. Original325 source edits only after exact C file transfer; no parallel product-current.js/product-arco.jsx writes. New source portions copied from accepted original view/functions with minimal React adaptation, no redraw/second app.",
+      "runtimeEntry": "Same unique replica directory/57896; no parallel preview/app, C integrates complete package into original normal entry",
+      "models": "Technical/mixed gpt-6.1-sol/medium; pure UI sameChat gpt-6-luna/max only when actually dispatched; Fast unverified"
+    },
+    {
+      "atUtc": "2026-10-24T17:53:43.140221+00:00",
+      "owner": "D2",
+      "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "scope": "Original approved v15 exact implementation compatibility with existing approved v16-from-v14 QA target; preserve all existing v15 statements/business constraints and v16 changes, exact successor final130 profile only; no DB execution byD2. New schema/field/business differences remain confirmation-gated."
+    },
+    {
+      "atUtc": "2026-10-24T18:11:42.284362+00:00",
+      "owner": "C",
+      "files": [
+        "apps/web/demo-replica/tsconfig.runtime.json",
+        "tsconfig.json",
+        "package.json"
+      ],
+      "scope": "Existing typecheck command still checks ALL source via Node project + dedicated browserESM project; strict flags inherited, runtime not hidden. Single copied React declarations across imported pure models; no dependency/lock/package-type or business changes."
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
@@ -5032,6 +5074,20 @@
       "scope": "Inventory-only read budget slot completed; shared C reservation restored. No F1 writes absent next explicit transfer.",
       "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/DELIVERY.json",
       "afterSha256": "d1ffc5baa984c5f94e4a6e5163467f49464acc9acbd93d8764235038175053ed"
+    },
+    {
+      "atUtc": "2026-10-24T18:11:42.284362+00:00",
+      "fromOwner": "C",
+      "to": "F1",
+      "paths": [
+        "apps/web/demo-replica/frontend/auth-entry.js",
+        "apps/web/demo-replica/frontend/topbar-account.jsx",
+        "apps/web/demo-replica/frontend/sales-current.js",
+        "apps/web/demo-replica/frontend/real-data-bridge.mjs"
+      ],
+      "scope": "Phase2 same accepted original UI copy, common/session and sales only plus shared bridge unique writer coordinates exact F2/F3/F4 seams. Pure UI phase copies view structure only; request/auth/commit changes technical Sol after. C not parallel editing bridge while released toF1. Frozen Demo original untouched.",
+      "currentServedArtifact": "343 immutable existing candidate; R source editing does not mutate current57896",
+      "realHttps": "Do not relax existing HTTPS/same-origin auth contract. C pairs real API tests through existing original HTTPS deployment channel; local synthetic UI evidence separate."
     }
   ],
   "latestControllerIntegration": {

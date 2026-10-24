@@ -31,7 +31,7 @@ export interface StaffSettingsDraft {
 }
 export interface StaffSettingsProps {
   /** Optional actual audit read capability; absent remains unavailable. */
-  readonly audit?: import('../settings/audit/audit-entry.tsx').SettingsAuditCapability;
+  readonly audit?: import('../settings/audit/contracts.ts').SettingsAuditCapability;
   readonly scope: ReadScope; readonly reader?: StaffSettingsReader;
   readonly directory?: SettingsDirectoryReader; readonly roles: readonly StaffRoleOption[];
   readonly canPrepare: boolean;

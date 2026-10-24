@@ -518,6 +518,11 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin });
     const authenticate = createSalesSessionAuthenticator(authentication);
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);
+    if (issuer?.categoryOrderWrite) {
+      app.register(createCatalogueMaintenanceHttpPlugin({ authenticate, categoryOnly: true,
+        dependencies: { unitOfWork: new PostgresCatalogueMaintenanceUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), issuer.categoryOrderWrite),
+          now: host.now, newId: () => randomUUID() } }));
+    }
     if (capabilities?.coreInitializationRead) {
       if (!issuer) throw new TypeError("CORE settings require the original independently reviewed issuer");
       const core = createCommittedCoreSettingsRead(pool, issuer.runtime26, capabilities.coreInitializationRead);
@@ -529,11 +534,6 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       await app.ready(); const readyApp = app;
       return Object.freeze({ app: readyApp, close: () => readyApp.close(), trustedOrigin: host.trustedOrigin,
         get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; } });
-    }
-    if (issuer?.categoryOrderWrite) {
-      app.register(createCatalogueMaintenanceHttpPlugin({ authenticate, categoryOnly: true,
-        dependencies: { unitOfWork: new PostgresCatalogueMaintenanceUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), issuer.categoryOrderWrite),
-          now: host.now, newId: () => randomUUID() } }));
     }
     const productReader = new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null);
     let productMedia = host.media;

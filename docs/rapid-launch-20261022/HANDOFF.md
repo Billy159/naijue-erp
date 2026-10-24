@@ -1,3 +1,23 @@
+SOURCE344 - PHASE2 READY PACKAGES / NORMAL ENTRY INTEGRATION / BUSINESS NOT YET ACCEPTED
+
+Phase1 SOURCE343 accepted by original QF: runnable full frozen original copy and necessary representative states, 35 original pages/65 overlays. Approved two new pages/two overlays remain Phase2; overall37/67 unchanged. Current http://127.0.0.1:57896/#inventory serves immutable K/reports/controller/rapid-launch-20261022/demo-replica-phase1/runtime343-fixed (session21792), not mutable WIP. No new backend, real business/performance/formal release acceptance.
+
+F1 actually idle then dispatched Sol6.1-medium: integrate normal session/routes, complete original SALE list/editor/funds body/events; ready inventory/settings/catalogue should not wait for all SALE. F2 inventory12 leaves delivered, product list/six readonly tabs/images progressing; only new ordinary-product auto-SKU generation write awaits precise contract. F3 all eight pages/four packages and F4 six pages source-ready, targeted owner checks reused, not actual HTTP/browser/real-save acceptance. F1 pureview170 is partial host/public views, not full SALE body.
+
+C owns unified build/dependencies/global styles. F1 owns explicitly transferred original bridge/entry seams. Retire full references/catalog/products/documents startup; identity and current first page only, route/action code/styles/data lazy. Reuse effective scope/query/cancel/pagination/window/draft/precision/commands; never return old rewritten UI or permanent historical readonly behavior. Approved controlled revisions/delta/creator-responsible remain. Real AuthHTTP remains HTTPS same-origin, no TLS/CORS relaxation. C will use existing bounded HTTPS stage channel. Actual graph/request/bytes/render measurements pending, not inferred from lazy/memo.
+
+D2 approved v15-v16 installation-order compatibility and D1 CORE original category registration exact2 fixed344, original QB source review next, then new unique C180 patch/minimum ACL/metadata and independent actual category QA. PRODUCT_MAINTENANCE independent of full PUBLISH and pending v5 historical blank hall. Real full data/history edits/formal release incomplete. WIP/private source/media/credentials retained; unrelated tests excluded. Fast OFF requested, tool readback unavailable.
+
+PHASE1 COMPLETE — SOURCE343 ACCEPTED / PHASE2 STARTS ON SAME COPY
+
+原QF实际采纳51b6575/runtime04为“完整原Demo前端副本运行＋必要代表检查完成”：35原页65原弹层源闭包、325文件/7原构建、原完整最终覆盖层；复用340资料/设置/F4、342G02-G04，343已审/作废行1+4=5/底5、历史popup双成员0/1、软件打印5实际关闭。两侧条码稳定rect480x438.703125/字体/transform none/zoom1/scale1相同，旧差未稳定重现，不追溯断言唯一动画原因。新2页2弹层仅第二阶段，37/67总分母保留。该副本完成不是全站真实业务/性能/正式上线通过。唯一目录与57896入口不变，GitHub51b6575已核；原COPY-BASELINE内pending为该构建时状态，当前验收以QF固定回执及本段为准。
+
+已核原F1/F2/F3 idle、F4 completed/notLoaded非用户关闭；接续第二阶段同四线，不新队伍。唯一新内部接线文件边界已在WRITE-OWNERSHIP登记：runtime/common+documents+entry归F1；inventory+products归F2；settings归F3；catalogue归F4。各原纯业务模型/HTTP/命令仍沿原owner复用；C独占serve/index/共享bridge/build/锁/全局样式及三记录，copied325文件需具体交还后才改，不撞product-current/product-arco共享文件。保留原完整页面/样式/交互与最终覆盖，只做必要内部React/数据/状态接线，禁止旧重写正文/根/自动回退、新App/新UI系统/重复DTO。
+
+当前/下一：F1公共会话路由＋销售完整开单→混合退换/保存查看编辑及调拨；F2库存整页接口矩阵/输出流水→商品六页签；F3厅仓→客供/员工账号/收款资金；F4分类字典→条码方案与消费者。技术/混合实际Solmedium，纯UI段同Chat实际LunaMAX，Fast工具未核。先交准确文件/源函数/入口接缝即在唯一owner范围实施，不等所有后端或v5历史确认。C完整包即固定/原QA独立验收，旧有效证据复用。当前仍服务已验阶段一副本，第二阶段WIP不混进正在验的固定载体。
+
+实际后台179最小ACL/QB251 metadata已采用，新da42844a不能用旧6e83签issuer；真实source季节c05与两历史客证据已齐但强制两原历史单空厅，原v5依旧待明确批准，仅相关历史数据接续等待。整37正式业务/真实数据全量/历史编辑/性能/正式发布仍未完成。以下历史保留。
+
 SOURCE343 / FIXTURE DISPLAY DTO ONLY / QF AFFECTED RETEST PENDING
 
 F1 chunk168仅补合成历史SIZE sourceName/sourceCode/standardGroup和display-only标记，25766/e115b230…；保原两个ID/数量0+1，原DOM定向格1+4、行5、底5、打印矩阵5、原popup分离通过。原UI宽/严格匹配差异仍原样，真实缺映射数据不能套这项合成声明。C在QF CLEAN_STOP后固定343，不改原325/7构建/入口或重启服务，仅待HTTP与QF该行/历史popup/必要打印复验；342已过G02四销货状态/G03失败恢复与原登录/G04流水成功空错和有图开关直接采用。

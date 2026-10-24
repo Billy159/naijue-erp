@@ -29,6 +29,7 @@
     "apps/**/*.tsx"
   ],
   "exclude": [
-    "apps/web/unified-browser-harness/review-builds/**"
+    "apps/web/unified-browser-harness/review-builds/**",
+    "apps/web/demo-replica/frontend/runtime/**"
   ]
 }

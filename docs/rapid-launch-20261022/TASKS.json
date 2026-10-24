@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "5a811a17202e0f609aff4405fbb3e064acb73db2",
+    "headObserved": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "5a811a17202e0f609aff4405fbb3e064acb73db2",
+    "remoteHeadVerified": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
     "remoteReadbackMethod": "Exact4 original objects/nonforcedFF/independentGET; next docs/source repair not yet synced",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -87,10 +87,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "342 actual row subtotal finding directed cause/fix, staged only; current342 immutable duringQF",
-      "currentPackage": "Original same Phase1 fixture task, one history-size identity/subtotal discrepancy",
-      "nextReadyPackage": "Phase2 original final Demo sales/transfer UI consumes existing new services only after phase1 baseline fixed; any actual342 fixture finding first",
-      "currentDependencies": "Distinguish fixture projection vs frozen baseline behavior; preserve source identity and quantities; no raw Demo UI patch",
+      "currentWork": "Accepted phase1 source343. Technical implementation first exact package, unique allocated module leaves; no source copy repeat",
+      "currentPackage": "公共壳/会话/正常路由＋销货完整开单接线",
+      "nextReadyPackage": "混合退换/保存查看编辑全状态，随后调拨全状态",
+      "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -117,15 +117,20 @@
         "current": "公用页壳及T01-T03调拨整页全状态，正常入口",
         "next": "S01-S04销货退换整页全状态；A01/A02公壳账号菜单"
       },
-      "currentPhase": "PHASE1_TECHNICAL_SAMPLE_BOUNDARY",
+      "currentPhase": "PHASE2_TECHNICAL_WIRING_ON_ORIGINAL_COPY",
       "nextPureUIModel": "gpt-6-luna/max",
       "lastActualDispatch": {
         "model": "gpt-6.1-sol",
         "reasoningEffort": "medium",
-        "atUtc": "2026-10-24T16:49:04.132153+00:00",
-        "toolAccepted": true,
+        "atUtc": "2026-10-24T17:49:29.187095+00:00",
+        "status": "CURRENT_PHASE_DISPATCH_TO_FOLLOW",
         "FastToolVerified": false
-      }
+      },
+      "phase2WritePrefixes": [
+        "apps/web/demo-replica/frontend/runtime/common/",
+        "apps/web/demo-replica/frontend/runtime/documents/",
+        "apps/web/demo-replica/frontend/runtime/entry.tsx"
+      ]
     },
     "F2": {
       "title": "前端库存与商品",
@@ -140,10 +145,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "I01 and P01-P13 original-copy source closures delivered; actual model UNKNOWN not falsely reported Luna",
-      "currentPackage": "Original14-page source completeness no missing baseline file",
-      "nextReadyPackage": "Phase2 original copy inventory/product read contracts and approved multi-select/range behavior after fixedPhase1; no oldbody reuse",
-      "currentDependencies": "C/F1 complete original final bridge runtime; no database dependence for UI closure",
+      "currentWork": "Accepted phase1 source343. Technical implementation first exact package, unique allocated module leaves; no source copy repeat",
+      "currentPackage": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
+      "nextReadyPackage": "P01-P13商品六页签及全部编辑查看状态",
+      "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -175,16 +180,19 @@
         "current": "I01库存整页、筛选结果矩阵输出流水弹层",
         "next": "P01-P13商品列表及六页签编辑/查看全部"
       },
-      "currentPhase": "PHASE1_FROZEN_DEMO_REPLICA",
+      "currentPhase": "PHASE2_TECHNICAL_WIRING_ON_ORIGINAL_COPY",
       "nextPureUIModel": "gpt-6-luna/max",
       "lastActualDispatch": {
-        "model": "gpt-6-luna",
-        "reasoningEffort": "max",
-        "atUtc": "2026-10-24T15:25:50.211619+00:00",
-        "toolAccepted": true,
-        "actualRuntimeModelAck": "PENDING",
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "medium",
+        "atUtc": "2026-10-24T17:49:29.187095+00:00",
+        "status": "CURRENT_PHASE_DISPATCH_TO_FOLLOW",
         "FastToolVerified": false
-      }
+      },
+      "phase2WritePrefixes": [
+        "apps/web/demo-replica/frontend/runtime/inventory/",
+        "apps/web/demo-replica/frontend/runtime/products/"
+      ]
     },
     "F3": {
       "title": "前端基础设置",
@@ -198,10 +206,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "All4 source-closure groups covering original8-page registry delivered; new independent account/vendor portions phase2",
-      "currentPackage": "B01-B02 hall/warehouse",
-      "nextReadyPackage": "Phase2 original copy hall/warehouse and staff/customer approved identity/permissions wiring after fixedPhase1",
-      "currentDependencies": "C/F1 full final runtime and browser lease",
+      "currentWork": "Accepted phase1 source343. Technical implementation first exact package, unique allocated module leaves; no source copy repeat",
+      "currentPackage": "B01/B02厅仓整页正式读取/维护接线",
+      "nextReadyPackage": "客供拆分/员工账号/收款资金，新增B07/B08按已批",
+      "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -227,16 +235,18 @@
         "current": "B01/B02厅仓整页全状态，真实CORE资料已就绪",
         "next": "B03/B08客供、B04/B07员工账号、B05/B06收款资金"
       },
-      "currentPhase": "PHASE1_FROZEN_DEMO_REPLICA",
+      "currentPhase": "PHASE2_TECHNICAL_WIRING_ON_ORIGINAL_COPY",
       "nextPureUIModel": "gpt-6-luna/max",
       "lastActualDispatch": {
-        "model": "gpt-6-luna",
-        "reasoningEffort": "max",
-        "atUtc": "2026-10-24T15:25:50.211619+00:00",
-        "toolAccepted": true,
-        "actualRuntimeModelAck": "PENDING",
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "medium",
+        "atUtc": "2026-10-24T17:49:29.187095+00:00",
+        "status": "CURRENT_PHASE_DISPATCH_TO_FOLLOW",
         "FastToolVerified": false
-      }
+      },
+      "phase2WritePrefixes": [
+        "apps/web/demo-replica/frontend/runtime/settings/"
+      ]
     },
     "D1": {
       "title": "后端宿主事务与公共迁移",
@@ -382,10 +392,10 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "fastToolVerified": false,
-      "currentWork": "P14-P19 all original source closures delivered; no missing original files",
-      "currentPackage": "P14 categories",
-      "nextReadyPackage": "Phase2 original copy dictionary/category/barcode approved read/write consumers after fixedPhase1",
-      "currentDependencies": "C/F1 full final runtime and browser lease",
+      "currentWork": "Accepted phase1 source343. Technical implementation first exact package, unique allocated module leaves; no source copy repeat",
+      "currentPackage": "P14分类及P15-P18字典完整正式读取/维护接线",
+      "nextReadyPackage": "P19真实条码方案读取/详情及实际消费者",
+      "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -408,16 +418,18 @@
         "current": "P14分类整页及排序撤销弹层",
         "next": "P15-P18四字典与P19条码方案整页"
       },
-      "currentPhase": "PHASE1_FROZEN_DEMO_REPLICA",
+      "currentPhase": "PHASE2_TECHNICAL_WIRING_ON_ORIGINAL_COPY",
       "nextPureUIModel": "gpt-6-luna/max",
       "lastActualDispatch": {
-        "model": "gpt-6-luna",
-        "reasoningEffort": "max",
-        "atUtc": "2026-10-24T15:25:50.211619+00:00",
-        "toolAccepted": true,
-        "actualRuntimeModelAck": "PENDING",
+        "model": "gpt-6.1-sol",
+        "reasoningEffort": "medium",
+        "atUtc": "2026-10-24T17:49:29.187095+00:00",
+        "status": "CURRENT_PHASE_DISPATCH_TO_FOLLOW",
         "FastToolVerified": false
-      }
+      },
+      "phase2WritePrefixes": [
+        "apps/web/demo-replica/frontend/runtime/catalogue/"
+      ]
     }
   },
   "tasks": [
@@ -1298,9 +1310,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T17:29:50.813619+00:00",
+  "updatedAt": "2026-10-24T18:36:33.453710+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "2e5cfa8226e84ccf1d6ff9205506353eca98fd2b",
+  "lastVerifiedRemoteCommit": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -4667,37 +4679,42 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T17:12:55.124912+00:00",
-    "sourceRound": 342,
-    "sourceCheckpoint": "0b10cd9d81e697e53f4fc37373b2d2b8acbd040b",
+    "atUtc": "2026-10-24T18:36:33.453710+00:00",
+    "sourceRound": 343,
+    "sourceCheckpoint": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
       "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "0b10cd9d81e697e53f4fc37373b2d2b8acbd040b",
-      "runtimeVersion": "phase1-runtime-03-saved-state-fixtures",
+      "sourceCommit": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+      "runtimeVersion": "phase1-runtime-04-size-display-dto",
       "htmlBytes": 9908,
       "htmlSha256": "320c79f117bcbdfd63030620e6796fe8e416b011688867b7ce50183262cee635",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
-      "sourceRound": 342,
-      "serverSession": 80806,
-      "fixtureBytes": 25428,
-      "fixtureSha256": "1a0636420ea1d0039a92f8be7823f62080212b60c824d6deaf53600cb2d462cb",
+      "sourceRound": 343,
+      "serverSession": 21792,
+      "fixtureBytes": 25766,
+      "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
-      "phase2Started": false
+      "phase2Started": true,
+      "newBackendConnected": false,
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/demo-replica-phase1/runtime343-fixed",
+      "phase1Accepted": true
     },
     "nextPreview": {
-      "status": "SOURCE342_0b10cd9_RUNTIME03_HTTP_READY_QF_G01_G04_IN_PROGRESS",
-      "next": "Only affected actual gap fixes; original325/seven bundles same, no old rewritten body"
+      "status": "PHASE2_SOURCE_PACKAGES_READY_NORMAL_ENTRY_INTEGRATION_F1",
+      "owner": "F1 technical Sol6.1-medium",
+      "buildOwner": "C",
+      "next": "Fixed single build after ready modules mount; retire replaced old route listeners and full bootstrap; HTTPS same-origin auth remains mandatory"
     },
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
-    "github": "REMOTE_EXACT_VERIFIED_2e5cfa8226e84ccf1d6ff9205506353eca98fd2b",
+    "waiting": "Existing v5 original historical blank hall and new ordinary-product generated SKU selection/number contract only. v16 and group boundary already approved.",
+    "github": "SOURCE344_STAGED_REMOTE_PENDING; latest verified51b65753ac15dc64f1bfbf28d1159c61b8318485",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -4726,7 +4743,7 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "Isolated COREQA v16/6e83: actual174 target/source scope PASS and178 original source/product/all11 closure PASS, no runtime issuer/MAIN/PUBLISH yet. SOURCE341/QB250 bigint fix accepted. RealR1 still CORE/private299-v14; full real import/history writable/formal release incomplete.",
+    "backend": "CORE QA v16fromv14/129 da42844a QB251 finite metadata accepted. D2 approved v15-v16 ordering compatibility and D1 CORE category host exact2 staged344; QB source then new C180 patch/ACL/metadata; no MAIN/PUBLISH.",
     "productionBuild": "Formal299sourcef43e943/r1-f43e943-20261024-01 archive1339201/1f5a5b0537d1233f1e61bd7418d13db105c9e679c7a9be62f5d290ef06fa7e25, manifest43b445b07819f154a0659f3cc885b5b5cf5eb59a38679c41c2c1c193737c49ce. Actual149Linuxci/nativePASS0/25.931508s,111records/payload3154d2c5685488740606e98b86814605254780c92925b5449d8fcf802fcd3876,engine9717/78218751fc6689f5064e6e92610a270e2ae19ef05a71e831cbad179b52297cc9.0DB/appstart/publicswitch.",
     "actualQFBrowser": "CLOSED: current completeChrome native2940x1690 and humanQF current image show sidebar/content reach bottom. Top automationinfobar consumes~56CSSpx;668legitimatecurrentwindow,old724notinvariant. Prior668=>recurrence derivative judgement withdrawn. Allrawmeasurements/failedprobes retained. QFNO_GUI/Cnativeclickattemptblockedbeforeinputduehuman appchange;0successfulclick/navigation. No repeateddiagnosis/windowrequest.",
     "frontendAcceptance": {
@@ -5996,7 +6013,7 @@
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     },
-    "browserOwner": "C",
+    "browserOwner": "NONE",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
@@ -6226,7 +6243,7 @@
     },
     "sourceCommit": "17d2e89603233e07c0cfe8c344934148f7463536",
     "browserLease": {
-      "owner": "C_FIX_SOURCE343",
+      "owner": "NONE_QF343_CLEAN_STOP",
       "demoTarget": "E8DD365505C23397FA3F5F329CC00328",
       "replicaTarget": "345D521566930D671CB045311376DECA",
       "protectedOldDrafts": 5,
@@ -6759,12 +6776,37 @@
       "notFormalScaleHTTPorBusiness": true
     },
     "frontQueueCurrent": {
-      "QF": "PURE_UI requested Luna/max; one-time unstarted F4 P14-P19 actual handoff, shared browser exclusive; own v120 state gap already delivered",
-      "QF2": "SystemError usage limit; preserved5modules, no replay/model downgrade/limit reset",
-      "F1": "Solmedium same fixture staged saved/history/errors/ledger/sample image; runtime340 immutable until clean QA release",
-      "F2": "original14page copy source closure delivered; no source-gap to invent, phase2 pending fixed replica",
-      "F3": "original8page source closure/limitedactual modules delivered; phase2 pending fixed replica",
-      "F4": "original6page source closure delivered; originalQF new actual check in progress"
+      "F1": {
+        "current": "公共壳/会话/正常路由＋销货完整开单接线",
+        "next": "混合退换/保存查看编辑全状态，随后调拨全状态",
+        "uniquePrefix": [
+          "apps/web/demo-replica/frontend/runtime/common/",
+          "apps/web/demo-replica/frontend/runtime/documents/",
+          "apps/web/demo-replica/frontend/runtime/entry.tsx"
+        ]
+      },
+      "F2": {
+        "current": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
+        "next": "P01-P13商品六页签及全部编辑查看状态",
+        "uniquePrefix": [
+          "apps/web/demo-replica/frontend/runtime/inventory/",
+          "apps/web/demo-replica/frontend/runtime/products/"
+        ]
+      },
+      "F3": {
+        "current": "B01/B02厅仓整页正式读取/维护接线",
+        "next": "客供拆分/员工账号/收款资金，新增B07/B08按已批",
+        "uniquePrefix": [
+          "apps/web/demo-replica/frontend/runtime/settings/"
+        ]
+      },
+      "F4": {
+        "current": "P14分类及P15-P18字典完整正式读取/维护接线",
+        "next": "P19真实条码方案读取/详情及实际消费者",
+        "uniquePrefix": [
+          "apps/web/demo-replica/frontend/runtime/catalogue/"
+        ]
+      }
     },
     "qf2Source282": {
       "adoptedByC": true,
@@ -7509,12 +7551,12 @@
       "QF327": "ADMIN creator/responsible selection retained, known refusal BODY retained; staleprogress source334 pendingbrowser",
       "QFMatrix": "v118 whole0/37 and0/67,22partial,15pendingclassification-new"
     },
-    "frontendPhase": "PHASE1_FULL_DEMO_REPLICA",
+    "frontendPhase": "PHASE2_IMPLEMENTATION_ON_ACCEPTED_ORIGINAL_COPY",
     "replicaDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
     "phase1CopiedFrontendFiles": 325,
     "phase1Runtime": "FULL_ORIGINAL_BRIDGE_RUNNING_QF_TARGETED_PAYMENT_FINDING_CLOSED",
     "phase1WholePagesAccepted": 0,
-    "phase2ReplicaWiring": "NOT_STARTED",
+    "phase2ReplicaWiring": "STARTED_SOURCE_IMPLEMENTATION_NOT_INTEGRATED_OR_REAL_BUSINESS",
     "phase1Entry": "http://127.0.0.1:57896/#inventory",
     "phase1OriginalEntryDataAdaptation": "Original REAL_DATA_MODE=true/full bridge and all final UI overrides; exact fixture-transport sync before auth intercepts data in RAM, no real8878 or DB. Original false bootstrap retired.",
     "phase1RuntimeFinding": {
@@ -7527,7 +7569,7 @@
       "evidence": "QF/demo-replica-phase1-runtime-02/RESULT.json",
       "remaining": "Pure visual/module completeness and unsupported sample reads/writes separate; no full-page or businessPASS"
     },
-    "phase1Next": "Source343 original F1 corrected synthetic display metadata, no restart/build. C HTTP binds exact source then QF only affected row/popup/print and single barcode geometry. Adopt342 G02-G04 limitedactual, no repeat.",
+    "phase1Next": "Phase1 fixed accepted; original4frontlines phase2 current/next packages on unique copy, C only integrate/build/normal entry. No repeat copy/source100/whole QA.",
     "actualRuntimeFacts": {
       "QF": "340 original multirow actual: first100.25 persists add/remove/leavecancel; T note cancellation; original category branch restored",
       "resources": "82 same-origin records, no8878; favicon404; empty tool event drain does not prove zero console errors",
@@ -7683,12 +7725,13 @@
       "observed": "Historical165/S cell1 +170/M cell4; row subtotal4 while footer5",
       "expected": "Preserve two actual size IDs and consistent full row/document totals, exact cause to identify",
       "owner": "F1",
-      "status": "F1_EXACT_FIX_DELIVERED_C_FIXED343_QF_ACTUAL_PENDING",
+      "status": "CLOSED_SOURCE343_ACTUAL_QF",
       "scope": "Only original fixture/model seam; do not delete sample/zero qty/merge IDs or modify original325 to fake phase1",
       "evidence": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase1-runtime03-gaps-actual-01/008-transfer-audited-readonly +009-transfer-historical-size-row22",
       "next": "QF continues independent G02-G04. C next fixed version only if needed, then affected row/popup/footer retest.",
       "cause": "Synthetic legacy display DTO omitted declared standardGroup; original matrix cell matching broader than row sum; no raw UI algorithm changed",
-      "source343FixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941"
+      "source343FixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
+      "actual": "Audited/voided cell1+4,row5/footer5/software print5; popup two members0/1; exact IDs from immutable DTO not DOM"
     },
     "source343": {
       "runtimeVersion": "phase1-runtime-04-size-display-dto",
@@ -7707,6 +7750,82 @@
       "successfulDialogOperations": 0,
       "protectedDraftsUntouched": true,
       "action": "Do not retry target or clear browser state. Own two clean work tabs only."
+    },
+    "phase1Baseline": {
+      "status": "COMPLETE_ORIGINAL_DEMO_FRONTEND_COPY_RUNNABLE_LIMITED_REPRESENTATIVES_ACCEPTED",
+      "sourceCommit": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+      "frozenDemo": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "runtime": "phase1-runtime-04-size-display-dto",
+      "originalPagesCopied": 35,
+      "originalOverlaysCopied": 65,
+      "originalFrontendFiles": 325,
+      "originalBundles": 7,
+      "approvedPhase2Only": [
+        "B07",
+        "B08",
+        "O-A03",
+        "O-B09"
+      ],
+      "overallPages": 37,
+      "overallOverlays": 67,
+      "QFReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/phase1-runtime04-affected-actual-01/RESULT.json",
+      "QFReceiptSha256": "a9b6b09aa75f0d964072b31946e39b9aef20b4c80ca649b4434f0ee04e739c52",
+      "necessaryRepresentatives": "SOURCE340 groups/F4 +342 G02-G04 +343 affected subtotal/history/print and settled modal geometry",
+      "fullRealBusinessOrPerformanceOrReleaseAccepted": false,
+      "baselineMetadataBuildTimePendingLabelNotLiveVerdict": true,
+      "unchangedRuntimeWhilePhase2Wip": true
+    },
+    "phase1BarcodeGeometry": {
+      "status": "NO_STABLE_DIFFERENCE_REPRODUCED",
+      "actualBothRect": [
+        495,
+        142.6484375,
+        480,
+        438.703125
+      ],
+      "transform": "none",
+      "zoom": 1,
+      "scale": 1,
+      "originalCause": "Old measurements lacked same-time transforms; not proven",
+      "noCssFix": true
+    },
+    "phase2IntegrationRules": "Only same accepted copy UI; preserve original DOM/style/final overrides; reuse existing data/state/HTTP/commands; no old rewritten app root/body. Share one React/Arco build, page/layer on demand, stable drafts/roots, precise backend facts. Each completed package C fixed integration and original QA affected scope; no full-backend waiting.",
+    "phase1Accepted": {
+      "source": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+      "originalPages": 35,
+      "originalOverlays": 65,
+      "decision": "PHASE1_ORIGINAL_FRONTEND_COPY_RUNNABLE_LIMITED_REPRESENTATIVE_ACCEPTANCE_COMPLETE",
+      "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase1-runtime04-affected-actual-01/RESULT.json",
+      "approvedAdditionsPhase2Only": 4,
+      "realBusinessOrPerformanceOrReleasePassed": false
+    },
+    "phase2Queue": {
+      "F1": {
+        "current": "Actual Solmedium dispatch after idle: common session/routes and complete original SALE body/events; integrate ready inventory/settings/catalogue now",
+        "next": "Full transfer all-state original UI and controlled historical revision",
+        "status": "IN_PROGRESS"
+      },
+      "F2": {
+        "current": "Product list/six readonly tabs/images/schemes; inventory I01 delivered",
+        "next": "Product generated-SKU write after precise approval",
+        "status": "IN_PROGRESS_ONLY_NEW_SKU_GENERATION_WAITS"
+      },
+      "F3": {
+        "current": "All eight pages in four source packages delivered",
+        "next": "Normal-entry integration then original QA affected findings",
+        "status": "SOURCE_READY_NOT_BROWSER_OR_REAL_BUSINESS"
+      },
+      "F4": {
+        "current": "Six catalogue pages delivered; exact original listener retirement seams supplied",
+        "next": "Normal-entry QA and approved v15 command integration",
+        "status": "SOURCE_READY_NOT_BROWSER_OR_REAL_BUSINESS"
+      }
+    },
+    "performanceOwners": {
+      "sharedBuildDependenciesStyles": "C single build/runtime and final styles; F1 route import seams",
+      "startupData": "F1 retire legacy full bridge bootstrap, auth and actual first-page only",
+      "inventoryPayload": "D3 server assembly; F2 page model and windowed DOM; actual measurement pending",
+      "reuse": "Existing pure scope/query/cancel/pagination/precision/draft/commands; never old UI or permanent historical readonly guards"
     }
   },
   "latestReadySource": {
@@ -7801,7 +7920,11 @@
     "liveGoalUpdatedAt": 1792840499,
     "verifiedAtUtc": "2026-10-24T11:29:21.184294+00:00",
     "latestBusinessAmendment": "Creator immutable real creation identity; responsible separate nullable staff; approved v16 remains approved.",
-    "latestHumanAuthority": "2026-10-24 latest strict two-phase full Demo replica instruction"
+    "latestHumanAuthority": "2026-10-24 latest strict two-phase full Demo replica instruction",
+    "phase1AcceptedSource": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+    "currentPhase": "PHASE2_EXISTING_ORIGINAL_COPY_BUSINESS_ADAPTATION",
+    "phase1": "COMPLETE_LIMITED_REPRESENTATIVE_ACCEPTANCE_SOURCE343",
+    "phase2": "IN_PROGRESS_ON_SAME_COPY"
   },
   "historyHeaderProposal": {
     "id": "v16_HISTORY_HEAD_AND_RESPONSIBLE",

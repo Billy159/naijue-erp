@@ -27,6 +27,12 @@ export interface SettingsAuditItem {
 }
 export interface SettingsAuditPage { readonly items: readonly SettingsAuditItem[]; readonly total: number; readonly page: number; readonly pageSize: 20 | 50 | 100 }
 export interface SettingsAuditReader { readQuery(read: QueryRead<SettingsAuditQuery>): Promise<SettingsAuditPage> }
+/** Current authenticated host's presentation capabilities; reads still authorize on the server. */
+export interface SettingsAuditCapability {
+  readonly reader: SettingsAuditReader;
+  readonly allowedModules: readonly SettingsAuditModule[];
+  readonly hasUnresolvedWrite: () => boolean;
+}
 export interface SettingsAuditTarget { readonly module: SettingsAuditModule; readonly objectId: string }
 export interface SettingsAuditDrawerProps {
   readonly visible: boolean; readonly scope: ReadScope; readonly reader?: SettingsAuditReader;

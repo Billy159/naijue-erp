@@ -1,0 +1,2 @@
+/* Approved multi-hall field keeps selected tags visible across candidate pages. */
+.runtime-payment-halls .arco-select.arco-select-multiple .arco-select-view{height:auto;max-height:none;min-height:32px}

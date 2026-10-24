@@ -3,15 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import { AsyncLeafRegistry } from '../../loading/async-leaf-registry.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import { useDialogFocusReturn } from '../../components/use-dialog-focus-return.ts';
-import { auditModules, type SettingsAuditDrawerProps, type SettingsAuditModule, type SettingsAuditReader } from './contracts.ts';
+import { auditModules, type SettingsAuditDrawerProps, type SettingsAuditCapability } from './contracts.ts';
 
 /** Explicit host capability only. It carries no browser role assertion or write grant. */
-export interface SettingsAuditCapability {
-  readonly reader: SettingsAuditReader;
-  readonly allowedModules: readonly SettingsAuditModule[];
-  /** Aggregate every business workspace, including routes not currently mounted. */
-  readonly hasUnresolvedWrite: () => boolean;
-}
+export type { SettingsAuditCapability } from './contracts.ts';
 interface SettingsAuditEntryProps {
   readonly scope: ReadScope; readonly capability?: SettingsAuditCapability;
   /** Required for activation; an unknown parent auth bridge keeps the button disabled. */

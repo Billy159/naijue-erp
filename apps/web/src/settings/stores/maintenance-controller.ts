@@ -202,8 +202,7 @@ export interface StoreSettingsViewState {
   readonly tabs: Record<StoreSettingsKind, StoreSettingsQueryUi>;
 }
 export function createStoreSettingsViewState(tab: StoreSettingsKind = 'stores'): StoreSettingsViewState {
-  const tableScroll = { top: 0, left: 0 };
-  const empty = (): StoreSettingsQueryUi => ({ draft: { ...initialStoreSettingsQuery }, applied: { ...initialStoreSettingsQuery }, hallSelection: null, tableScroll });
+  const empty = (): StoreSettingsQueryUi => ({ draft: { ...initialStoreSettingsQuery }, applied: { ...initialStoreSettingsQuery }, hallSelection: null, tableScroll: { top: 0, left: 0 } });
   return { tab, tabs: { stores: empty(), warehouses: empty() } };
 }
 export interface StoreWorkspaceOptions extends Omit<StoreEditorOptions, 'hasOtherUnresolvedWrite'> { readonly scope: ReadScope }

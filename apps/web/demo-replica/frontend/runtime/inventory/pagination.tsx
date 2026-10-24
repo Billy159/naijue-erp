@@ -1,0 +1,13 @@
+import { useEffect, useState, Fragment } from 'react';
+import Select from '@arco-design/web-react/es/Select';
+import { SourceControl } from './candidates.tsx';
+import { singleCss } from './source-control-css.ts';
+export function SingleChoice(p:{label:string;value:string;items:readonly {value:string;label:string}[];change:(value:string)=>void;pagination?:boolean}){return <SourceControl css={singleCss}>{portal=><Select className={p.pagination?'ui-page-size-select':'ui-flat-select'} aria-label={p.label} value={p.value} options={p.items.map(x=>({...x}))} showSearch={false} getPopupContainer={()=>portal} triggerProps={{position:'bl'}} onChange={p.change}/>}</SourceControl>;}
+export function Pagination(p:{page:number;size:number;total:number|bigint;change:(page:number)=>void;sizeChange?:(size:number)=>void;ledger?:boolean;busy?:boolean}){
+ const total=BigInt(p.total),pages=(total+BigInt(p.size)-1n)/BigInt(p.size)||1n;const [jump,setJump]=useState(String(p.page));useEffect(()=>setJump(String(p.page)),[p.page]);const nums=[...new Set([1,p.page-1,p.page,p.page+1,...(pages<=BigInt(Number.MAX_SAFE_INTEGER)?[Number(pages)]:[])])].filter(x=>x>=1&&BigInt(x)<=pages).sort((a,b)=>a-b);let previous=0;
+ return <div className={'iw-pagination'+(p.ledger?'':'')}>
+ {!p.ledger&&<div className="ui-single-host"><SingleChoice pagination label="每页商品款数" value={String(p.size)} items={[100,200,500].map(x=>({value:String(x),label:x+'款/页'}))} change={x=>p.sizeChange?.(Number(x))}/></div>}
+ {!p.ledger&&<span>共 {String(total)} 款{total>0n?`，当前第 ${(p.page-1)*p.size+1}–${String(BigInt(p.page*p.size)<total?BigInt(p.page*p.size):total)} 款`:''}</span>}
+ {pages>1n&&<div className="actions"><button className="btn iw-page-arrow" aria-label="上一页" disabled={p.busy||p.page<=1} onClick={()=>p.change(p.page-1)}>‹</button>{nums.map(n=>{const gap=n-previous>1;previous=n;return <Fragment key={n}>{gap&&<span className="iw-page-ellipsis">…</span>}<button className="btn iw-page-number" aria-label={'第'+n+'页'} aria-current={n===p.page?'page':undefined} disabled={p.busy} onClick={()=>p.change(n)}>{n}</button></Fragment>;})}<button className="btn iw-page-arrow" aria-label="下一页" disabled={p.busy||BigInt(p.page)>=pages} onClick={()=>p.change(p.page+1)}>›</button>{!p.ledger&&<><label className="iw-jump">跳至 <input type="text" inputMode="numeric" aria-label="目标页码" value={jump} onChange={e=>setJump(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'){const n=Number(jump);if(Number.isSafeInteger(n)&&n>=1&&BigInt(n)<=pages)p.change(n);}}}/> 页</label><button className="btn iw-jump-go" disabled={p.busy} onClick={()=>{const n=Number(jump);if(Number.isSafeInteger(n)&&n>=1&&BigInt(n)<=pages)p.change(n);}}>跳转</button></>}</div>}
+ </div>;
+}

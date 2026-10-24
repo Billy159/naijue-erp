@@ -30,7 +30,7 @@ export interface PaymentSettingsDraft {
 }
 export interface PaymentSettingsProps {
   /** Optional actual audit read capability; absent remains unavailable. */
-  readonly audit?: import('../settings/audit/audit-entry.tsx').SettingsAuditCapability;
+  readonly audit?: import('../settings/audit/contracts.ts').SettingsAuditCapability;
   readonly scope: ReadScope; readonly reader?: PaymentSettingsReader;
   readonly directory?: SettingsDirectoryReader; readonly canPrepare: boolean;
   readonly initialTab?: PaymentSettingsKind;

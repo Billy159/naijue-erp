@@ -1,0 +1,64 @@
+import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react';
+import { IconSearch } from '@arco-design/web-react/icon';
+import { useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
+import { LatestQuery, type QuerySnapshot } from '../../../../src/loading/latest-query.ts';
+import { HttpQueryError } from '../../../../src/transport/http-query.ts';
+import { initialPaymentSettingsQuery, type PaymentSettingsKind, type PaymentSettingsPage, type PaymentSettingsProps, type PaymentSettingsQuery, type PaymentSettingsRecord } from '../../../../src/payment-settings/contracts.ts';
+import { createPaymentSettingsViewState, PaymentSettingsController } from '../../../../src/payment-settings/controller.ts';
+import { Pager, readMessage, ReferenceSelect, SmallSelect } from './controls.tsx';
+import '../../basic-settings-v2.css';
+import './settings-runtime.css';
+const names={methods:'收款方式',accounts:'资金账户'} as const,idle=Object.freeze({phase:'idle' as const,request:null,success:null,error:null}),noSubscribe=()=>()=>{};
+const emptyWorkspace=Object.freeze({methods:null,accounts:null});
+type Reads={list:LatestQuery<PaymentSettingsQuery,PaymentSettingsPage>;detail:LatestQuery<{id:string},PaymentSettingsRecord|null>};
+export function PaymentsRuntime(props:PaymentSettingsProps){return <PaymentPage key={`${props.scope.routeInstanceId}:${props.scope.identity.accountId}:${props.scope.identity.sessionRevision}:${props.scope.identity.permissionRevision}`} {...props}/>;}
+function PaymentPage(props:PaymentSettingsProps){
+ const workspace=props.workspace?.matches(props.scope)?props.workspace:undefined,[view]=useState(()=>workspace?.getViewState(props.initialTab)??createPaymentSettingsViewState(props.initialTab)),[tab,setTab]=useState(view.tab);
+ const scroll=useRef({methods:{top:0,left:0},accounts:{top:0,left:0}}),initialized=useRef(false);
+ if(!initialized.current){scroll.current[view.tab]={...view.tableScroll};initialized.current=true;}
+ return <div id="basic-settings-v2"><PaymentTab key={tab} {...props} kind={tab} view={view} scroll={scroll.current[tab]} onTab={kind=>{view.tab=kind;Object.assign(view.tableScroll,scroll.current[kind]);setTab(kind);}}/></div>;
+}
+function PaymentTab(props:PaymentSettingsProps&{kind:PaymentSettingsKind;view:ReturnType<typeof createPaymentSettingsViewState>;scroll:{top:number;left:number};onTab:(kind:PaymentSettingsKind)=>void}){
+ const workspace=props.workspace?.matches(props.scope)?props.workspace:undefined,{kind,view}=props;
+ const [binding,setBinding]=useState<{scope:PaymentSettingsProps['scope'];reader:PaymentSettingsProps['reader'];queries:Reads}|null>(null);
+ useEffect(()=>{if(!props.reader||!props.scope.active){setBinding(null);return;}const reader=props.reader,queries:Reads={list:new LatestQuery({scope:props.scope,execute:read=>reader.readList(kind,read)}),detail:new LatestQuery({scope:props.scope,execute:read=>reader.readDetail(kind,read)})};setBinding({scope:props.scope,reader,queries});void queries.list.run(view.executed[kind]);return()=>{queries.list.dispose();queries.detail.dispose();};},[props.scope,props.reader,kind,view]);
+ const queries=binding?.scope===props.scope&&binding.reader===props.reader?binding.queries:null;
+ const list=useSyncExternalStore<QuerySnapshot<PaymentSettingsQuery,PaymentSettingsPage>>(queries?.list.subscribe??noSubscribe,queries?.list.getSnapshot??(()=>idle),queries?.list.getSnapshot??(()=>idle));
+ const detail=useSyncExternalStore<QuerySnapshot<{id:string},PaymentSettingsRecord|null>>(queries?.detail.subscribe??noSubscribe,queries?.detail.getSnapshot??(()=>idle),queries?.detail.getSnapshot??(()=>idle));
+ const snapshot=useSyncExternalStore(workspace?.subscribe??noSubscribe,workspace?.getSnapshot??(()=>emptyWorkspace),workspace?.getSnapshot??(()=>emptyWorkspace));
+ const [local,setLocal]=useState<PaymentSettingsController|null>(null),editor=workspace?snapshot[kind]:local,[selected,setSelected]=useState<string|null>(null),[,redraw]=useReducer(value=>value+1,0);
+ const editorState=useSyncExternalStore(editor?.subscribe??noSubscribe,editor?.getSnapshot??(()=>null),editor?.getSnapshot??(()=>null));
+ const [form,setForm]=useState<typeof import('./payment-form.tsx')|null>(null),[formError,setFormError]=useState(false),[attempt,retry]=useReducer(value=>value+1,0),needsForm=!!(editor||selected);
+ const [audit,setAudit]=useState<typeof import('./audit-drawer.tsx')|null>(null),[auditOpen,setAuditOpen]=useState(false),[auditError,setAuditError]=useState(false),[auditAttempt,retryAudit]=useReducer(value=>value+1,0);
+ const table=useRef<HTMLDivElement>(null),trigger=useRef<HTMLElement|null>(null),refreshed=useRef<string|null>(null),[redacted,setRedacted]=useState(false);
+ const denied=list.phase==='error'&&list.error instanceof HttpQueryError&&['forbidden','unauthenticated'].includes(list.error.kind);
+ useEffect(()=>{if(denied)setRedacted(true);else if(list.phase==='success')setRedacted(false);},[denied,list.phase]);
+ useEffect(()=>{const error=list.error??detail.error;if(error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden')){if(error.kind==='forbidden'&&workspace?.hasUnresolvedWrite())return;if(error.kind==='unauthenticated')workspace?.dispose();props.scope.dispose();props.onAccessFailure(error.kind);}},[list.error,detail.error,workspace,props.scope,props.onAccessFailure]);
+ useEffect(()=>{if(!needsForm||form)return;let active=true;setFormError(false);void import('./payment-form.tsx').then(module=>{if(active&&props.scope.active)setForm(module);},()=>{if(active&&props.scope.active)setFormError(true);});return()=>{active=false;};},[needsForm,form,attempt,props.scope]);
+ useEffect(()=>{if(!auditOpen||audit)return;let active=true;setAuditError(false);void import('./audit-drawer.tsx').then(module=>{if(active&&props.scope.active)setAudit(module);},()=>{if(active&&props.scope.active)setAuditError(true);});return()=>{active=false;};},[auditOpen,audit,auditAttempt,props.scope]);
+ useEffect(()=>()=>local?.dispose(),[local]);
+ useLayoutEffect(()=>{if(table.current&&list.phase==='success'){table.current.scrollTop=props.scroll.top;table.current.scrollLeft=props.scroll.left;}},[list.phase,list.success,props.scroll]);
+ const run=(query:PaymentSettingsQuery)=>{view.executed[kind]={...query};void queries?.list.run(view.executed[kind]);};
+ useEffect(()=>{const current=list.phase==='success'?list.success:null;if(current&&current.parameters.page>Math.max(1,Math.ceil(current.data.total/current.parameters.pageSize)))run({...current.parameters,page:Math.max(1,Math.ceil(current.data.total/current.parameters.pageSize))});},[list.phase,list.success,queries]);
+ useEffect(()=>{const result=editorState?.write.phase==='committed'?editorState.write.result:null;if(result&&refreshed.current!==result.operationId){refreshed.current=result.operationId;run(view.executed[kind]);}},[editorState?.write,queries]);
+ const restore=()=>queueMicrotask(()=>{if(trigger.current?.isConnected)trigger.current.focus({preventScroll:true});});
+ const close=()=>{if(workspace&&!workspace.close(kind))return;if(!workspace){local?.dispose();setLocal(null);}setSelected(null);queries?.detail.cancel();restore();};
+ const open=(record:PaymentSettingsRecord|null)=>{if(workspace)workspace.open(kind,record);else setLocal(new PaymentSettingsController(props.scope,kind,record));setSelected(null);queries?.detail.cancel();};
+ const activate=(id:string|null)=>{if(!props.canPrepare)return;trigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;if(id){setSelected(id);void queries?.detail.run({id});}else open(null);};
+ if(!props.scope.active||list.phase==='disposed')return null;
+ const current=redacted||denied?null:list.success,data=current?.data,applied=current?.parameters??view.executed[kind],draft=view.drafts[kind],busy=list.phase==='loading';
+ const update=(patch:Partial<PaymentSettingsQuery>)=>{view.drafts[kind]={...view.drafts[kind],...patch};redraw();};
+ return <section className="bs-page iw-workbench iw-arco-controls runtime-settings"><header className="bs-head iw-head"><h1>收款配置</h1><div className="bs-head-actions"><Button type="text" disabled={!props.audit} onClick={()=>{trigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setAuditOpen(true);}}>操作记录</Button><Button type="primary" disabled={!props.canPrepare} onClick={()=>activate(null)}>新增{names[kind]}</Button></div></header>
+ <nav className="bs-tabs" role="tablist">{(['methods','accounts'] as const).map(id=><button type="button" role="tab" key={id} aria-selected={id===kind} onClick={()=>props.onTab(id)}>{names[id]}</button>)}</nav>
+ <div className="bs-toolbar"><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label={kind==='methods'?'搜索收款方式':'搜索账户名称'} placeholder={kind==='methods'?'搜索收款方式':'搜索账户名称'} suffix={<IconSearch/>} value={draft.search} allowClear onChange={search=>update({search})}/></div>
+ {kind==='accounts'&&<div className="bs-filter"><ReferenceSelect scope={props.scope} reader={props.directory} kind="payment-methods" label="全部收款方式" placeholder="全部收款方式" selected={view.method} disabled={!props.reader?.supportsPaymentMethodFilter} onChange={method=>{view.method=method;update({paymentMethodId:method?.id??null});}}/></div>}
+ <div className="bs-filter"><SmallSelect label="状态" value={draft.status} items={[{value:'normal',label:'正常'},{value:'disabled',label:'已停用'},{value:'all',label:'全部'}]} onChange={status=>{if(status==='normal'||status==='disabled'||status==='all')update({status});}}/></div></div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" onClick={()=>{props.scroll.top=0;run({...draft,page:1,pageSize:applied.pageSize});}}>查询</Button><Button className="btn iw-reset" onClick={()=>{view.drafts[kind]={...initialPaymentSettingsQuery,pageSize:applied.pageSize};if(kind==='accounts')view.method=null;props.scroll.top=0;redraw();run(view.drafts[kind]);}}>重置</Button></div></div>
+ {!props.reader&&<p className="runtime-settings-note" role="status">收款配置读取尚未接入。</p>}{!workspace&&<p className="runtime-settings-note" role="status">维护保存尚未接入。</p>}{list.phase==='error'&&<div className="bs-error" role="alert">{readMessage(list.error)}<Button onClick={()=>run(list.request?.parameters??view.executed[kind])}>重试</Button></div>}
+ <div ref={table} className="bs-table-wrap iw-arco-table" onScroll={event=>{props.scroll.top=event.currentTarget.scrollTop;props.scroll.left=event.currentTarget.scrollLeft;Object.assign(view.tableScroll,props.scroll);}}><Table<PaymentSettingsRecord> size="small" rowKey="id" pagination={false} loading={busy} data={[...(data?.items??[])]} noDataElement={<Empty description="暂无符合条件的数据"/>} columns={[
+ {title:kind==='methods'?'名称':'账户名称',dataIndex:'name'},...(kind==='accounts'?[{title:'所属收款方式',render:(_:unknown,row:PaymentSettingsRecord)=>row.kind==='accounts'?row.paymentMethod.name??'名称未提供':''}]:[]),{title:'状态',width:100,render:(_,row)=><Tag className={`iw-status ${row.enabled?'normal':'off'}`}>{row.enabled?'正常':'已停用'}</Tag>},{title:'操作',width:76,render:(_,row)=><div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare||busy} onClick={()=>activate(row.id)}>编辑</Button></div>}]}/></div>
+ <Pager total={data?.total??0} page={applied.page} size={applied.pageSize} disabled={busy} onPage={page=>run({...applied,page})} onSize={pageSize=>run({...applied,page:1,pageSize})}/>
+ {needsForm&&(form?<form.default {...props} kind={kind} editor={editor??null} detail={queries?.detail??null} onRecord={open} close={close}/>:<Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={names[kind]} maskClosable={false} onCancel={()=>{if(!editor||editor.requestClose())close();}} footer={<Button onClick={()=>{if(!editor||editor.requestClose())close();}}>取消</Button>}><p role={formError?'alert':'status'}>{formError?'维护表单暂未加载，输入已保留。':'正在准备维护表单…'}{formError&&<Button onClick={retry}>重试加载表单</Button>}</p>{editorState?.closePrompt&&<section role="alert"><Button onClick={()=>editor?.keepEditing()}>继续填写</Button><Button onClick={()=>{if(editor?.discard())close();}}>放弃本次填写</Button></section>}</Modal>)}
+ {auditOpen&&props.audit&&(audit?<audit.default scope={props.scope} capability={props.audit} onAccessFailure={props.onAccessFailure} close={()=>{setAuditOpen(false);restore();}}/>:<Modal visible title="基础设置操作记录" maskClosable={false} onCancel={()=>{setAuditOpen(false);restore();}} footer={<Button onClick={()=>{setAuditOpen(false);restore();}}>取消</Button>}><p role={auditError?'alert':'status'}>{auditError?'操作记录暂未加载。':'正在读取操作记录…'}{auditError&&<Button onClick={retryAudit}>重试加载</Button>}</p></Modal>)}
+ </section>;
+}
+export default PaymentsRuntime;
