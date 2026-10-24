@@ -43,7 +43,9 @@ type MatrixProps = {
   readonly actions: InventoryActions;
   readonly windowing?: InventoryMatrixWindowing | InventoryMatrixMeasuredWindowing;
   /** Internal source choose() callback; carries only existing native cell targets. */
-  readonly chooseSources?:(targets:readonly InventoryCellTarget[])=>void;
+  readonly chooseSources?:(targets:readonly InventoryCellTarget[],trigger:HTMLSpanElement)=>void;
+  /** The owned source dialog temporarily keeps the stock keyboard position. */
+  readonly sourceChoiceOpen?:boolean;
   readonly projectColors?:(product:InventoryProduct)=>readonly InventoryDisplayColor[];
 };
 /** Column-first geometry follows frozen inventory-matrix-experiment.js, not
@@ -55,13 +57,24 @@ export const InventoryMatrix = memo(function InventoryMatrix(props: MatrixProps)
     return () => signal?.removeEventListener('abort', callback);
   }, () => signal?.aborted ?? false, () => signal?.aborted ?? false);
   const [choices,setChoices]=useState<readonly InventoryCellTarget[]|null>(null);
+  const sourceTrigger=useRef<{element:HTMLSpanElement;data:InventoryPage;signal:AbortSignal|undefined}|null>(null);
+  const chooseSources=useCallback((targets:readonly InventoryCellTarget[],trigger:HTMLSpanElement)=>{
+    sourceTrigger.current={element:trigger,data:props.data,signal};
+    trigger.focus({preventScroll:true});setChoices(targets);
+  },[props.data,signal]);
   const projections=useMemo(()=>new WeakMap<InventoryProduct,readonly InventoryDisplayColor[]>(),[props.data]);
   const projectColors=useCallback((product:InventoryProduct)=>{let value=projections.get(product);if(!value){value=projectInventoryColors(product);projections.set(product,value);}return value;},[projections]);
   useEffect(()=>setChoices(null),[props.data]);
+  useEffect(()=>{
+    if(choices)return;
+    const origin=sourceTrigger.current;sourceTrigger.current=null;
+    // Cancel restores the exact trigger after unmount; selection clears it first.
+    if(origin?.data===props.data&&origin.signal===signal&&!signal?.aborted&&origin.element.isConnected)origin.element.focus({preventScroll:true});
+  },[choices,props.data,signal]);
   if (aborted) return null;
-  const sourceProps={...props,chooseSources:setChoices,projectColors};
+  const sourceProps={...props,chooseSources,sourceChoiceOpen:!!choices,projectColors};
   return <div className="inventory-source-matrix">{props.windowing?('mode' in props.windowing?<MeasuredInventoryMatrix {...sourceProps} windowing={props.windowing}/>:<WindowedInventoryMatrix {...sourceProps} windowing={props.windowing}/>):<EagerInventoryMatrix {...sourceProps}/>}
-  {choices&&<InventorySourceChoice choices={choices} products={props.data.products} close={()=>setChoices(null)} select={target=>props.actions.onOpenCell?.(target)}/>}</div>;
+  {choices&&<InventorySourceChoice choices={choices} products={props.data.products} close={()=>setChoices(null)} select={target=>{sourceTrigger.current=null;props.actions.onOpenCell?.(target);}}/>}</div>;
 });
 /** Direct inventory-fit-projection.js choose(): original dialog/head/buttons.
  * Native source identities are already supplied by the retained formal projection. */
@@ -69,7 +82,7 @@ function InventorySourceChoice(p:{readonly choices:readonly InventoryCellTarget[
  const dialog=useRef<HTMLDialogElement>(null),title=useId();
  useEffect(()=>{const element=dialog.current;if(element&&!element.open)element.showModal();return()=>{if(element?.open)element.close();};},[]);
  const close=()=>{dialog.current?.close();p.close();};
- return <dialog ref={dialog} className="inventory-source-choice" aria-labelledby={title} onCancel={p.close}><h3 id={title}>选择要查看的版型资料</h3>{p.choices.map(target=><button type="button" className="btn" key={target.skuId} onClick={()=>{close();p.select(target);}}>{target.fit.label} · {p.products.find(product=>product.id===target.productId)?.code??target.productId}</button>)}<button type="button" className="btn" onClick={close}>关闭</button></dialog>;
+ return <dialog ref={dialog} className="inventory-source-choice" aria-labelledby={title} onCancel={event=>{event.preventDefault();close();}}><h3 id={title}>选择要查看的版型资料</h3>{p.choices.map(target=><button type="button" className="btn" key={target.skuId} onClick={()=>{close();p.select(target);}}>{target.fit.label} · {p.products.find(product=>product.id===target.productId)?.code??target.productId}</button>)}<button type="button" className="btn" onClick={close}>关闭</button></dialog>;
 }
 
 function EagerInventoryMatrix(props: MatrixProps) {
@@ -176,10 +189,10 @@ function WarehouseRow(props: MatrixProps & { readonly product: InventoryProduct;
       const multipleSources=!!sources&&sources.length>1;
       const available=!!props.actions.onOpenCell&&(!!target||multipleSources&&!!props.chooseSources);
       const explanation=multipleSources?'选择要查看的版型资料':available?`查看该仓库 / SKU 库存流水${target?` · ${target.fit.label}`:''}`:'库存流水尚未接入';
-      const open=()=>{if(!available)return;if(multipleSources){props.chooseSources?.(sources!.map(source=>({productId:source.productId,productLabel:`${product.code} ${product.name}`,color:source.color,fit:source.fit,size:source.size,warehouse:source.warehouse,skuId:source.cell.skuId,readReference:props.data.readReference})));}else if(target)props.actions.onOpenCell?.(target);};
+      const open=(trigger:HTMLSpanElement)=>{if(!available)return;if(multipleSources){props.chooseSources?.(sources!.map(source=>({productId:source.productId,productLabel:`${product.code} ${product.name}`,color:source.color,fit:source.fit,size:source.size,warehouse:source.warehouse,skuId:source.cell.skuId,readReference:props.data.readReference})),trigger);}else if(target)props.actions.onOpenCell?.(target);};
       const binding=address?props.window?.bindCell(address):undefined;
       return <td key={size.id} data-mx-stock="" data-product={product.id} data-color={group.color.id} data-size={size.id} data-warehouse={row.warehouse.id} className={`mx-number${cell.quantity.startsWith('-')?' minus':cell.quantity==='0'?' mx-zero':''}`} aria-colindex={props.window?index+4:undefined}>
-       <span className={`iw-number mx-stock${cell.quantity.startsWith('-')?' mx-negative':''}`} role="button" tabIndex={available?0:-1} {...(binding?{ref:binding.ref,onFocus:binding.onFocus}:{})} data-stock-address={props.window?JSON.stringify(address):undefined} data-inventory-source-count={sources?.length??1} aria-disabled={!available} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${cell.quantity}${multipleSources?`，${explanation}`:''}`} onClick={open} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){if(available){event.preventDefault();open();}}else binding?.onKeyDown(event);}}>{formatQuantity(cell.quantity)}</span>
+       <span className={`iw-number mx-stock${cell.quantity.startsWith('-')?' mx-negative':''}`} role="button" tabIndex={available?0:-1} {...(binding?{ref:binding.ref,onFocus:binding.onFocus}:{})} data-stock-address={props.window?JSON.stringify(address):undefined} data-inventory-source-count={sources?.length??1} aria-disabled={!available} title={explanation} aria-label={`${product.code} ${group.color.label} ${fitLabel} ${row.warehouse.label} ${size.label} 库存${cell.quantity}${multipleSources?`，${explanation}`:''}`} onClick={event=>open(event.currentTarget)} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){if(available){event.preventDefault();open(event.currentTarget);}}else binding?.onKeyDown(event);}}>{formatQuantity(cell.quantity)}</span>
       </td>;
     }} /><td className="mx-total-cell" aria-colindex={props.window ? product.sizes.length + 4 : undefined} title={totalLabel(row.total)}>{totalLabel(row.total)}</td><td className="ui-action-cell" aria-colindex={props.window ? product.sizes.length + 5 : undefined}><ViewProduct product={product} actions={props.actions} /></td>
   </tr>;
@@ -353,7 +366,7 @@ function WindowedInventoryMatrix(props: MatrixProps & { readonly windowing: Inve
   return <div ref={host} data-inventory-windowed={windowing.fixedWidths?'measured-default':'opt-in'} style={{ height: plan.height, position: 'relative', minWidth: '100%', width: '100%' }} onFocusCapture={event => {
     if (!(event.target instanceof HTMLElement) || !event.target.closest('[data-stock-address]')) { pending.current = null; setFocus(null); }
   }} onBlurCapture={event => {
-    if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) { pending.current = null; setFocus(null); }
+    if (!props.sourceChoiceOpen&&(!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget))) { pending.current = null; setFocus(null); }
   }}>
     <p className="sr-only">当前矩阵按可见范围呈现。库存单元格可用方向键及 Home、End 导航；商品与颜色折叠按钮仍可使用 Tab 访问。</p>
     {plan.sections.map(entry => {
