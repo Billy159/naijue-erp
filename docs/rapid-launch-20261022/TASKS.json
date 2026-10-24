@@ -66,7 +66,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "SOURCE351 QF affected actual; C189 v17 actual PASS pendingQB; SOURCE352 exact10 union freeze; CORE read actual next",
+      "currentWork": "C192 original CORE service actualPASS handedQB; source355 checkpoint; F2 drawer/F1 normaltransfer inprogress",
       "currentPackage": "Existing normal candidate integration and original isolated business execution",
       "nextReadyPackage": "CORE ready read original issued host actual, then normal union actual once lawful data/publication ready",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
@@ -262,7 +262,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "NORMAL-DOCUMENT-LISTS-UNION-v1 exact10 delivered; source frozen byC, QB newdifference next",
+      "currentWork": "CORE actual192 limitedmodulePG PASS received, originalnormal352/QB261 sourcePASS; actualHTTP/HISTORY normalPG still pending",
       "currentPackage": "Current147realACL minimumCORElockedreads/write/emptyguard/purpose contractmatrix, noDBmutations",
       "nextReadyPackage": "Original CORE-ready reads actual runner preparation; no second host or DB",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
@@ -1310,7 +1310,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T20:18:05.015919+00:00",
+  "updatedAt": "2026-10-24T20:20:35.030364+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
   "lastVerifiedRemoteCommit": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -4715,8 +4715,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T19:57:17.215456+00:00",
-    "sourceRound": 354,
-    "sourceCheckpoint": "parent49eb4ecc92562bb74d1efed2ef47bdffeb290fbb; F1 frozen175 source only",
+    "sourceRound": 355,
+    "sourceCheckpoint": "parent09bf7a00078bc43f1bdef3125c75715999f2dd91; C first-open originalinventorydrawer style API and actual192 receipt",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -7944,9 +7944,17 @@
     },
     "coreReadActualNext": {
       "metadata": "QB259 accepted CURRENT_FORM_READ only",
-      "status": "BOUNDED_ACTUAL_IN_PROGRESS_PRIOR190191_PRE_ISSUER_ERRORS_PRESERVED",
+      "status": "C192_ACTUAL_ORIGINAL_CORE_SERVICES_PG_PASS_PENDING_QB_NOT_HTTP",
       "sessionFact": "C139 original synthetic auth session was explicitly logged out; RAM random credential disposed. No assumed live cookie or password reset. Existing HTTP runner honestly waits for original authorized session; direct original service/reader actual PG can proceed without claiming HTTP.",
-      "job": "c03-core-ready-module-reads-registered-input-20261025-192"
+      "job": "c03-core-ready-module-reads-registered-input-20261025-192",
+      "serviceCases": 22,
+      "queries": 222,
+      "leases": 31,
+      "businessDML": 0,
+      "businessDDL": 0,
+      "allCore19CountsUnchanged": true,
+      "httpVerified": false,
+      "productionChanged": false
     },
     "historyTransferScope": {
       "owner": "D3+C",
@@ -7970,13 +7978,14 @@
       "hostCallbackOwner": "F1",
       "current": "View routes product6tabs",
       "expected": "Original frozen Demo inventory3tabdrawer",
-      "sourceApproval": "No approved redesign, original I01 scope"
+      "sourceApproval": "No approved redesign, original I01 scope",
+      "styleSeam": "C prepareInventoryProductDrawerStyles(signal) originalgroup lazy/preservecurrentinventory; F1 dynamicparallel use afterF2fixed"
     }
   },
   "latestReadySource": {
-    "round": 352,
-    "commit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
-    "qualification": "Fixed D1 exact10 normal-list union; pending QB/actualPG/F1. Servedfrontend351 is separately fixed and QA affected inprogress."
+    "round": 354,
+    "commit": "09bf7a00078bc43f1bdef3125c75715999f2dd91",
+    "qualification": "F1 normalSALE/HISTORY chunk175 fixed source only; currentlyserved351 separateimmutable; source355 style seam notactive until F2/F1 pair"
   },
   "pendingUserDecision": [
     {

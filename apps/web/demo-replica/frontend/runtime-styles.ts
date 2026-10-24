@@ -24,3 +24,10 @@ export async function prepareReplicaStyles(route:string,signal:AbortSignal):Prom
  if(signal.aborted)throw new DOMException('Route cancelled','AbortError');
  for(const [name,value] of loaded)if(!wanted.has(name)){value.node.remove();loaded.delete(name);}
 }
+
+/** Original inventory product drawer styles load with its first open; keep current page styles. */
+export async function prepareInventoryProductDrawerStyles(signal:AbortSignal):Promise<void>{
+ if(signal.aborted)throw new DOMException('Drawer cancelled','AbortError');
+ await Promise.all(groups.products!.map(ensure));
+ if(signal.aborted)throw new DOMException('Drawer cancelled','AbortError');
+}
