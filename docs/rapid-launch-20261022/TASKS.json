@@ -4089,6 +4089,15 @@
       "result": "PASS_LIMITED_FIXED_SOURCE308_V16_HISTORY_HEAD_RESPONSIBLE_CONTRACT_PLANNER_EFFECTIVE_PROJECTION_AND_NEW5_TESTS_ONLY",
       "scope": "D3exact9source andnew5 only; D1actualSQL/store/issuer/PG notpassed",
       "historyWriteAccepted": false
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice238-c310-staff-login-filter/RESULT.json",
+      "sha256": "55410d752ed275886a828e7ea8144e7aa786505fa2a91b1623b34ce02d0da2ee",
+      "result": "PASS_LIMITED_FIXED_SOURCE310_STAFF_ALL_OPEN_LOGIN_FILTER_AND_AUTHORIZED_CLOSED_NOT_READY_WITH_NEW_AFFECTED5_TESTS",
+      "actualPostgresAccepted": false,
+      "closedSemanticsAccepted": false,
+      "frontendAccepted": false,
+      "deployed": false
     }
   ],
   "newPendingReviews": [
@@ -4463,8 +4472,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T11:29:21.184294+00:00",
-    "sourceRound": 308,
-    "sourceCheckpoint": "ddfbe6e6715bf4840eb89708800f3eeecc5b3c1b",
+    "sourceRound": 314,
+    "sourceCheckpoint": "c0bd3e56c7b1582b7ecd7b7ed14c7a0593fb2103",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -7054,7 +7063,7 @@
       "physicalPrint": false,
       "inFlightCancel": false
     },
-    "nextActualAction": "Use actual158 originalreceipt/deadline for nextC isolatedvalidforeigngroupsize bounded verification; collectD1v16source ready andQB308review; integrateF1bodytechnical package thenoneQFactual candidate; QF2final306modulepacket adopted no repeat. FullMAIN data authority/source stillincomplete noformal switch.",
+    "nextActualAction": "Integrate fixed314 source with exactdeclared synthetic adapters for newresponsible DTO before one latestBODY+staffmodule build; originalQF/QF2noGUI now. D1finalv16source→QBnewdelta→CregisteredisolatedPG; C158freshdeadline00:02:34Z. OriginalQAvalidforeigngroupsize negative inputready/Csoleexecution. FullMAIN nativebindings/pendingbusinessdecisions remainnoformalbusiness switch.",
     "corePreflightHistory": {
       "128": "FAILED_EXACT_FLAT_FILE_CLOSURE_beforeprivatecopyPG;publicPRIVATE-INPUT-PINS omittedbyunchangedclientfilenamefilter",
       "151": "READONLYpriorentry/noPG, firstlognameinitiallynotselected",
@@ -7136,10 +7145,10 @@
       "restoreRehearsalRepeated": false
     },
     "newPendingSourceOwners": {
-      "D1": "v16 LIVEresponsible/store/SQL/issuer WIP source, noDB",
-      "D3": "v16historycontract/effectiveprojection WIP,5newtargeted checksreportedpass typesfinalpending",
-      "D2": "stafflogin serverreadfilter inprogress; onlyclosed-no-account semanticpending",
-      "F1": "307BODYtechnical+currentdate evidence, nooldc220blindfix"
+      "D1": "Actualv16 responsible SQL/store/issuer WIP, exactheadercreatorname readseam requested; noactualDDL/QAyet",
+      "F1": "CurrentTbody/read/focus delivered312/314; S01-S04pureUI boundary nextSol, realcreatorname notresponsiblefallback",
+      "F2": "Productsource24/13 andreadnormalcapsready; QF2306partialactual adopted, actualdata/perfnotready",
+      "F3": "Staff313paired310source ready; other8pageUI samefullscope, allwholeunaccepted"
     },
     "v16Responsible": {
       "status": "D3_SOURCE308_QB237_LIMITED_PASS_D1_SQL_STORE_ISSUER_AND_ACTUAL_QA_PENDING",
@@ -7174,12 +7183,24 @@
       "scope": "Fourmodule partialsyntheticactual,308files148screenshots; no wholepage/realbusiness/perfPASS",
       "matrixOwner": "QF LunaMAX mechanicalmerge inprogress",
       "browser": "CLEAN_STOP_NO_GUI"
+    },
+    "webTypeClosure": {
+      "runtime": "v24.21.0",
+      "exitCode": 0,
+      "handle": 43601,
+      "scope": "Allweb currentWIP atchecktime afterresponsiblefixtureexactfield fix, F1chunk147alsoownerwebtypesPASS; not wholeUI orDBPASS"
+    },
+    "qfMatrix113": {
+      "status": "24namedscoped facts appended only;0status/whole/classification/count change",
+      "path": "v113-qf-adopt-qf2-c306-named-actual/RESULT.json",
+      "wholePagesAccepted": 0,
+      "wholeOverlaysAccepted": 0
     }
   },
   "latestReadySource": {
-    "round": 308,
-    "commit": "ddfbe6e6715bf4840eb89708800f3eeecc5b3c1b",
-    "qualification": "D3exact9 responsiblehistorycontract/projection source5new+strictPASS, originalQBindependentnewdelta dispatched; D1actualSQL/store/issuer andPGnotpassed; preview306 separate"
+    "round": 314,
+    "commit": "c0bd3e56c7b1582b7ecd7b7ed14c7a0593fb2103",
+    "qualification": "310D2staff filterQB238limitedPASS;311Cfixtureclosed;312F1transferBODYstate/read/focus source;313F3staff all/openpartialclient;314F1salesreaddecoder. Actualpreview remains306/no newUIwrite acceptance"
   },
   "pendingUserDecision": [
     {
@@ -7382,7 +7403,7 @@
     "dispatchObserved": {
       "frontend4": "F1 activeSolmedium sharedHost; F2P01-P13/F3B03B08 actuallydispatched LunaMAX; F4awaitsF1 sixsourcepackagesready. No newChats/helpers.",
       "backend": "D1D2D3QB explicitSol61medium accepted; in-flight oldresults preserved",
-      "QF": "Originalmatrix task resumed after idlewhite-only final; no duplicatecase orGUI",
+      "QF": "v113 mechanicalmerge requestedLunaMAX actualtoolaccepted; QF reportsactiveplatformgpt-6.1-sol,nohot-switch available. Mechanicalupdatealreadyperformed; NOT verifiedLunaMAX/no rerun. Future modelmismatch keepbreakpoint peruser.",
       "QF2": "Existingevidence transfer completed, waitsfullmodule candidate",
       "controller": "SameChat explicitSol61medium continuation accepted; no currentturnhot-switch claim"
     }
