@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
 import { UIButton } from '../components/standard-controls.tsx';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
 import { LatestQuery } from '../loading/latest-query.ts';
@@ -10,25 +10,55 @@ import { validateDictionaryScheme } from '../../../../packages/application/src/d
 import type { ProductBarcodeDetails, ProductBarcodePage } from '../../../../packages/application/src/product-details-query-ports.ts';
 import type { ProductSpecifications } from '../inventory/product-contracts.ts';
 import { assertProductSpecifications } from '../inventory/product-model.ts';
-import { ProductReadState, useProductPanelActive, useProductRead } from '../inventory/product-tab-state.tsx';
+import { ProductPanelActivity, ProductReadState, useProductPanelActive, useProductQueryActivity, useProductRead } from '../inventory/product-tab-state.tsx';
 import { productBarcodesResponse } from './product-page-validation.ts';
 import { ProductPagedRead, type ProductPageTabProps } from './product-page-view.tsx';
 
+type SchemeReader=Pick<DictionaryBrowserReader,'readBarcodeScheme'>;
+type SchemeQuery=LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>;
+interface SchemeTarget { readonly scope:ReadScope;readonly productId:string;readonly version:number;readonly schemeId:string }
 export function View({ scope, reader }: ProductPageTabProps) {
-  return <ProductPagedRead<ProductBarcodePage> scope={scope} read={reader.barcodes!.read} validate={productBarcodesResponse} label="商品条码分页">{data => <>
-    <DefaultSchemeTools key={`${data.productId}:${data.version}:${data.page}:${data.pageSize}:${data.defaultScheme.state==='AVAILABLE'?data.defaultScheme.schemeId:data.defaultScheme.state}`} scope={scope} reader={reader} data={data} />
+  const [target,setTarget]=useState<SchemeTarget|null>(null),[owner,setOwner]=useState<{scope:ReadScope;reader:SchemeReader;target:SchemeTarget;query:SchemeQuery}|null>(null);
+  const [fieldVisible,setFieldVisible]=useState(false),panelActive=useProductPanelActive(),schemeReader=reader.barcodes?.schemeReader;
+  const receiveTarget=useCallback((next:SchemeTarget|null,visible:boolean)=>{if(visible)setTarget(previous=>previous?.scope===next?.scope&&previous?.productId===next?.productId&&previous?.version===next?.version&&previous?.schemeId===next?.schemeId?previous:next);setFieldVisible(visible);},[]);
+  useLayoutEffect(()=>{
+    if(!target||target.scope!==scope||!scope.active||!schemeReader){setOwner(null);return;}
+    const query=createSchemeQuery(scope,schemeReader);setOwner({scope,reader:schemeReader,target,query});return()=>query.dispose();
+  },[scope,schemeReader,target]);
+  const current=owner?.scope===scope&&owner.reader===schemeReader&&owner.target===target&&scope.active?owner:null;
+  return <><ProductPanelActivity.Provider value={panelActive&&fieldVisible}><SchemeNameActivity query={current?.query??null} schemeId={current?.target.schemeId??null}/></ProductPanelActivity.Provider><ProductPagedRead<ProductBarcodePage> scope={scope} read={reader.barcodes!.read} validate={productBarcodesResponse} label="商品条码分页">{data => <>
+    <DefaultSchemeTools key={`${data.productId}:${data.version}:${data.defaultScheme.state==='AVAILABLE'?data.defaultScheme.schemeId:data.defaultScheme.state}`} scope={scope} reader={reader} data={data} receiveTarget={receiveTarget} query={current&&current.target.productId===data.productId&&current.target.version===data.version&&data.defaultScheme.state==='AVAILABLE'&&current.target.schemeId===data.defaultScheme.schemeId?current.query:null}/>
     {data.items.length && reader.specs ? <LabeledPage key={`${data.productId}:${data.version}:${data.page}:${data.pageSize}`} scope={scope} reader={reader} data={data} />
       : <BarcodeGroups data={data} specifications={null} />}
-  </>}</ProductPagedRead>;
+  </>}</ProductPagedRead></>;
+}
+function SchemeNameActivity(p:{readonly query:SchemeQuery|null;readonly schemeId:string|null}){
+  useProductQueryActivity(p.query,p.schemeId?{schemeId:p.schemeId}:null);return null;
 }
 
-function DefaultSchemeTools({ scope, reader, data }: ProductPageTabProps & { readonly data: ProductBarcodePage }) {
-  const active=useProductPanelActive(),[viewing,setViewing]=useState(false),scheme=data.defaultScheme;
+function DefaultSchemeField(p:{readonly value:string;readonly disabled:boolean;readonly title?:string;readonly open:()=>void}){
+  return <div className="pc-barcode-tools product-barcode-tools"><div className="field"><span className="pc-field-caption">主条码默认方案</span><div id="pc-detail-scheme" className="pc-arco-host"><span className="pc-read-value" title={p.title}>{p.value}</span></div></div><button type="button" className="btn ghost" disabled={p.disabled} onClick={p.open}>查看方案</button></div>;
+}
+function DefaultSchemeTools({ scope, reader, data,receiveTarget,query }: ProductPageTabProps & { readonly data: ProductBarcodePage;readonly receiveTarget:(target:SchemeTarget|null,visible:boolean)=>void;readonly query:SchemeQuery|null }) {
+  const scheme=data.defaultScheme;
   const schemeReader=reader.barcodes?.schemeReader;
+  useLayoutEffect(()=>{const target=scheme.state==='AVAILABLE'&&schemeReader?{scope,productId:data.productId,version:data.version,schemeId:scheme.schemeId}:null;receiveTarget(target,true);return()=>receiveTarget(target,false);},[scope,data.productId,data.version,scheme.state,scheme.state==='AVAILABLE'?scheme.schemeId:null,schemeReader,receiveTarget]);
+  if(scheme.state==='AVAILABLE'&&schemeReader&&query)return <DefaultSchemeName scope={scope} schemeId={scheme.schemeId} reader={schemeReader} query={query}/>;
+  const title=scheme.state==='NOT_SET'?'未设置默认方案':scheme.state==='AVAILABLE'&&!schemeReader?'默认方案已记录，当前无法读取方案名称':null;
+  return <DefaultSchemeField value={scheme.state==='NOT_SET'?'—':scheme.state==='UNAVAILABLE'?'未提供':schemeReader?'正在读取方案…':'方案资料未提供'} {...(title?{title}:{})} disabled open={()=>{}}/>;
+}
+function DefaultSchemeName(p:{readonly scope:ReadScope;readonly schemeId:string;readonly reader:SchemeReader;readonly query:SchemeQuery}){
+  const active=useProductPanelActive(),[viewing,setViewing]=useState(false),snapshot=useSyncExternalStore(p.query.subscribe,p.query.getSnapshot,p.query.getSnapshot);
   useEffect(()=>{if(!active)setViewing(false);},[active]);
+  if(!p.scope.active||snapshot.phase==='disposed')return null;
+  const data=snapshot.phase==='success'?snapshot.success?.data:null;
+  const value=snapshot.phase==='success'?(data?.name??'方案资料未提供'):snapshot.phase==='error'?'方案读取失败':snapshot.phase==='idle'&&snapshot.request?'方案读取已取消':'正在读取方案…';
+  const retry=()=>{if(active&&p.scope.active)void p.query.run({schemeId:p.schemeId});};
   return <>
-    <div className="pc-barcode-tools product-barcode-tools"><div className="field"><span className="pc-field-caption">主条码默认方案</span><div id="pc-detail-scheme" className="pc-arco-host"><span className="pc-read-value">{scheme.state==='AVAILABLE'?'已设置':scheme.state==='NOT_SET'?'未设置':'未提供'}</span></div></div><button type="button" className="btn ghost" disabled={!active||scheme.state!=='AVAILABLE'||!schemeReader} title={scheme.state==='AVAILABLE'&&!schemeReader?'方案资料暂不可读取':undefined} onClick={()=>{if(active&&scheme.state==='AVAILABLE'&&schemeReader)setViewing(true);}}>查看方案</button></div>
-    {active&&viewing&&scheme.state==='AVAILABLE'&&schemeReader&&<ProductBarcodeSchemePreview scope={scope} schemeId={scheme.schemeId} reader={schemeReader} close={()=>setViewing(false)}/>}
+    <DefaultSchemeField value={value} disabled={!active} open={()=>{if(active)setViewing(true);}}/>
+    {snapshot.phase==='error'&&<p className="product-field-hint" role="alert">默认方案名称暂不可读取。<UIButton type="button" className="iw-link" disabled={!active} onClick={retry}>重试读取方案</UIButton></p>}
+    {snapshot.phase==='idle'&&snapshot.request&&<p className="product-field-hint" role="status">方案读取已取消。<UIButton type="button" className="iw-link" disabled={!active} onClick={retry}>重新读取方案</UIButton></p>}
+    {active&&viewing&&<ProductBarcodeSchemePreview scope={p.scope} schemeId={p.schemeId} reader={p.reader} query={p.query} close={()=>setViewing(false)}/>}
   </>;
 }
 
@@ -93,16 +123,23 @@ export function ProductBarcodeSourceBody(p:{readonly rows:readonly ProductBarcod
 
 /** Shared original preview: readonly uses the existing guarded page reader;
  * maintenance keeps its explicit access-failure owner callback. */
-interface BarcodeSchemePreviewProps {readonly scope:ReadScope;readonly schemeId:string;readonly reader:Pick<DictionaryBrowserReader,'readBarcodeScheme'>;readonly onAccessFailure?:(error:HttpQueryError)=>void;readonly close:()=>void}
-export function ProductBarcodeSchemePreview(p:BarcodeSchemePreviewProps){
- const [query,setQuery]=useState<LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>|null>(null);
- useEffect(()=>{const next=new LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>({scope:p.scope,execute:async read=>{try{const value=await p.reader.readBarcodeScheme(read);if(value===null)return null;const result=validateDictionaryScheme(value);if(result.id!==read.parameters.schemeId)throw new Error('Invalid scheme target');return result;}catch(error){if(p.scope.active&&!read.signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden')){next.dispose();p.onAccessFailure?.(error);}throw error;}}});setQuery(next);return()=>next.dispose();},[p.scope,p.reader,p.schemeId]);
- return query&&p.scope.active?<ProductBarcodeSchemeDetail {...p} query={query}/>:null;
+interface BarcodeSchemePreviewProps {readonly scope:ReadScope;readonly schemeId:string;readonly reader:SchemeReader;readonly onAccessFailure?:(error:HttpQueryError)=>void;readonly close:()=>void;readonly query?:SchemeQuery}
+function createSchemeQuery(scope:ReadScope,reader:SchemeReader,onAccessFailure?:(error:HttpQueryError)=>void):SchemeQuery{
+ const next=new LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>({scope,execute:async read=>{try{const value=await reader.readBarcodeScheme(read);if(value===null)return null;const result=validateDictionaryScheme(value);if(result.id!==read.parameters.schemeId)throw new Error('Invalid scheme target');return result;}catch(error){if(scope.active&&!read.signal.aborted&&error instanceof HttpQueryError&&(error.kind==='unauthenticated'||error.kind==='forbidden')){next.dispose();onAccessFailure?.(error);}throw error;}}});return next;
 }
-function ProductBarcodeSchemeDetail(p:BarcodeSchemePreviewProps&{readonly query:LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>}){
+export function ProductBarcodeSchemePreview(p:BarcodeSchemePreviewProps){
+ if(p.query)return p.scope.active?<ProductBarcodeSchemeDetail {...p} query={p.query}/>:null;
+ return <OwnedProductBarcodeSchemePreview {...p}/>;
+}
+function OwnedProductBarcodeSchemePreview(p:BarcodeSchemePreviewProps){
+ const [query,setQuery]=useState<LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>|null>(null);
+ useEffect(()=>{const next=createSchemeQuery(p.scope,p.reader,p.onAccessFailure);setQuery(next);return()=>next.dispose();},[p.scope,p.reader,p.schemeId]);
+ return query&&p.scope.active?<ProductBarcodeSchemeDetail {...p} query={query} initialRead/>:null;
+}
+function ProductBarcodeSchemeDetail(p:BarcodeSchemePreviewProps&{readonly query:SchemeQuery;readonly initialRead?:boolean}){
  const snapshot=useSyncExternalStore(p.query.subscribe,p.query.getSnapshot,p.query.getSnapshot),data=snapshot.phase==='success'?snapshot.success?.data:null;
  const run=()=>{if(p.scope.active)void p.query.run({schemeId:p.schemeId});};
- return <StandardOverlay presentation="catalogue" title="查看条码方案" closeLabel="关闭查看条码方案" className="pc-arco-modal product-source-modal product-source-ui product-barcode-scheme-modal" width={640} close={p.close} onReady={()=>{if(p.query.getSnapshot().phase==='idle')run();}} footer={close=><div className="pc-modal-foot"><button type="button" className="btn" onClick={close}>关闭</button></div>}>
+ return <StandardOverlay presentation="catalogue" title="查看条码方案" closeLabel="关闭查看条码方案" className="pc-arco-modal product-source-modal product-source-ui product-barcode-scheme-modal" width={640} close={p.close} onReady={()=>{if(p.initialRead&&p.query.getSnapshot().phase==='idle')run();}} footer={close=><div className="pc-modal-foot"><button type="button" className="btn" onClick={close}>关闭</button></div>}>
   <ProductReadState phase={snapshot.phase} retry={run} cancel={()=>p.query.cancel()} cancelled={snapshot.phase==='idle'} empty={snapshot.phase==='success'&&data===null}>
    {data&&<dl className="pc-rule"><dt>方案名称</dt><dd>{data.name}</dd><dt>条码类型</dt><dd>{data.barcodeType}</dd><dt>编码规则</dt><dd>{data.ruleDescription}</dd><dt>总长度</dt><dd>{data.codeLength===null?'未提供':`${data.codeLength} 位`}</dd></dl>}
   </ProductReadState>
