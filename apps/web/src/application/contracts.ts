@@ -6,6 +6,7 @@ import type { ApplicationController } from './controller.ts';
 import type { AuthenticationPrincipal } from '../authentication/contracts.ts';
 import type { InventoryActions } from '../inventory/contracts.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
+import type { QueryRead } from '../loading/latest-query.ts';
 import type { HttpQueryOptions } from '../transport/http-query.ts';
 import type { PartyWorkspace } from '../parties/controller.ts';
 import type { PartyClient } from '../parties/contracts.ts';
@@ -36,6 +37,23 @@ export interface InventoryRouteConfiguration {
   /** Explicit ledger UI opt-in; each real request retains current server authorization. */
   readonly ledger?: true;
 }
+/** Minimal document staff reference capability. It conveys a reviewed read port,
+ * never general staff administration or a new server permission. Omission keeps
+ * the responsible employee visible without enabling selection. */
+export interface DocumentResponsibleStaffQuery {
+  readonly search: string;
+  readonly page: number;
+  readonly pageSize: 20;
+}
+export interface DocumentResponsibleStaffPage {
+  readonly page: number;
+  readonly pageSize: 20;
+  readonly total: number;
+  readonly items: readonly { readonly id: string; readonly name: string }[];
+}
+export interface DocumentResponsibleStaffCapability {
+  readonly readCandidates: (read: QueryRead<DocumentResponsibleStaffQuery>) => Promise<DocumentResponsibleStaffPage>;
+}
 export interface SalesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
   /** Explicit complete product read-only action; absent stays unavailable.
@@ -47,7 +65,7 @@ export interface SalesRouteConfiguration {
   readonly detailStylesheet?: RouteStylesheet;
   /** Explicit write-host opt-in only, after native server reference/economics
    * composition is available. Omission preserves the existing read-only route. */
-  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: SalesFormPreparationProvider; readonly existingPreparation?: SalesExistingPreparation; readonly manualCreate?: true };
+  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: SalesFormPreparationProvider; readonly existingPreparation?: SalesExistingPreparation; readonly manualCreate?: true; readonly responsibleStaff?: DocumentResponsibleStaffCapability };
 }
 export interface TransferRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
@@ -64,7 +82,7 @@ export interface TransferRouteConfiguration {
   readonly detailStylesheet: RouteStylesheet;
   /** Omit when the real shared action-style handshake is unavailable. */
   readonly product?: { readonly stylesheet: RouteStylesheet };
-  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: TransferFormPreparationProvider; readonly existingPreparation?: TransferExistingPreparation; readonly manualCreate?: true };
+  readonly commands?: { readonly newRequestKey: () => string; readonly preparation?: TransferFormPreparationProvider; readonly existingPreparation?: TransferExistingPreparation; readonly manualCreate?: true; readonly responsibleStaff?: DocumentResponsibleStaffCapability };
 }
 export interface PartiesRouteConfiguration {
   readonly stylesheet: RouteStylesheet;

@@ -3751,6 +3751,12 @@
           "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
           "scope": "Only responsibleStaffId:null and responsibleName:null in exact old fixture header/detail/summary required positions, no fabricatedcreator fallback, no changedbehavior/assertions",
           "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json"
+        },
+        {
+          "path": "apps/web/src/components/document-responsibility.tsx",
+          "group": "V16_DOCUMENT_RESPONSIBLE_EMPLOYEE_FIELD",
+          "fieldGate": "APPROVED_V16_FRONTEND_ONLY_EXISTING_OPTIONAL_UUID_CONTRACT",
+          "scope": "Shared Demo selector/read-only truecreator/responsible display; no new backend permission or null-clear intent"
         }
       ]
     },
@@ -4686,6 +4692,11 @@
       "owner": "F1",
       "source": "SOURCE315 actualreadquery createdByName separate responsible; directuser v16creatorimmutable",
       "scope": "Exact fixture readlabel & removefromderivedheader only, no schema/write change"
+    },
+    {
+      "atUtc": "2026-10-24T13:27:34.311167+00:00",
+      "owner": "C",
+      "scope": "F1 registered shared document-responsibility.tsx; C adds only optional commands.responsibleStaff read port to application/contracts.ts; existing employee policy preserved"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
