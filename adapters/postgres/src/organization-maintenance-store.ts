@@ -115,6 +115,9 @@ function specification(kind: OrganizationMaintenanceKind): Specification {
 async function page(context: MaintenancePgContext, kind: OrganizationMaintenanceKind, q: OrganizationReadListQuery, targetId: string | null): Promise<OrganizationMaintenancePage> {
   organizationKind(kind); const checked = parseOrganizationListQuery(q, kind); if (targetId !== null) entityId("hall", targetId);
   const role = "role" in checked ? checked.role : undefined;
+  const loginStatus = "loginStatus" in checked ? checked.loginStatus : undefined;
+  requireDomain(loginStatus !== "closed", "STAFF_LOGIN_FILTER_NOT_READY", "Closed-login no-account classification is pending");
+  const loginParameter = role === undefined ? 7 : 8;
   const paymentMethodId = "paymentMethodId" in checked ? checked.paymentMethodId : undefined;
   const s = specification(kind);
   const search = kind === "STAFF"
@@ -125,10 +128,10 @@ async function page(context: MaintenancePgContext, kind: OrganizationMaintenance
   const rows = (await context.client.query(`WITH matched AS (SELECT ${s.columns},${s.display} AS display_name,
     ${timestamp("created_at")} AS created_at_value,${timestamp("updated_at")} AS updated_at_value FROM ${s.from}
     WHERE ${search} AND ($2::text='all' OR ($2='normal' AND ${s.normal}) OR ($2='disabled' AND ${s.disabled}))
-    AND ($3::uuid IS NULL OR ${s.hallFilter}) AND ($6::uuid IS NULL OR m.id=$6::uuid)${role === undefined ? "" : " AND ($7::text='' OR m.role=$7::text)"}${paymentMethodId === undefined ? "" : " AND ($7::uuid IS NULL OR m.payment_method_id=$7::uuid)"}),
+    AND ($3::uuid IS NULL OR ${s.hallFilter}) AND ($6::uuid IS NULL OR m.id=$6::uuid)${role === undefined ? "" : " AND ($7::text='' OR m.role=$7::text)"}${loginStatus === undefined ? "" : ` AND ($${loginParameter}::text='' OR a.login_enabled IS TRUE)`}${paymentMethodId === undefined ? "" : " AND ($7::uuid IS NULL OR m.payment_method_id=$7::uuid)"}),
     page AS (SELECT * FROM matched ORDER BY display_name COLLATE "C",id LIMIT $4 OFFSET $5)
     SELECT (SELECT count(*)::text FROM matched) AS total,COALESCE((SELECT jsonb_agg(${s.record} ORDER BY m.display_name COLLATE "C",m.id) FROM page m),'[]'::jsonb) AS items`,
-  [q.search, q.status, q.hallId, q.pageSize, (q.page - 1) * q.pageSize, targetId, ...(role === undefined ? [] : [role]), ...(paymentMethodId === undefined ? [] : [paymentMethodId])])).rows;
+  [q.search, q.status, q.hallId, q.pageSize, (q.page - 1) * q.pageSize, targetId, ...(role === undefined ? [] : [role]), ...(loginStatus === undefined ? [] : [loginStatus]), ...(paymentMethodId === undefined ? [] : [paymentMethodId])])).rows;
   requireDomain(rows.length === 1 && typeof rows[0]!.total === "string" && /^(?:0|[1-9]\d*)$/.test(rows[0]!.total)
     && BigInt(rows[0]!.total) <= BigInt(Number.MAX_SAFE_INTEGER) && Array.isArray(rows[0]!.items), "INVALID_DATABASE_VALUE", "Invalid native settings page");
   const total = Number(rows[0]!.total), items = (rows[0]!.items as unknown[]).map(row => projectOrganizationRecord(row, kind));

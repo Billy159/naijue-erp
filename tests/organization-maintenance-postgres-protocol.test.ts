@@ -79,7 +79,7 @@ test("staff-role v1 exact5 compatibility and STAFF-only exact6 reject invalid or
   for (const input of [
     ...[null, undefined, true, [], {}, "admin", "LEGACY_ROLE", "ADMIN' OR true --"].map(role => ({ ...query, role })),
     { role: "ADMIN" }, { ...query, page: undefined, role: "ADMIN" },
-    { ...query, role: "ADMIN", loginStatus: "closed" }, { ...query, loginStatus: "" }, { ...query, role: "", extra: true }
+    { ...query, role: "ADMIN", loginStatus: "unknown" }, { ...query, loginStatus: false }, { ...query, role: "", extra: true }
   ]) await assert.rejects(f.service.list(actor, "STAFF", input), { code: "INVALID_ORGANIZATION_QUERY" });
   for (const kind of ["HALL", "WAREHOUSE", "ACCOUNT", "PAYMENT_METHOD", "PAYMENT_ACCOUNT"] as const)
     await assert.rejects(f.service.list(actor, kind, { ...query, role: "ADMIN" }), { code: "INVALID_ORGANIZATION_QUERY" });
@@ -139,7 +139,7 @@ test("staff-search F05: one literal search matches original staff name OR the li
   const noAccount = { ...original, account: null }, f = setup("STAFF", "ADMIN", noAccount);
   assert.deepEqual((await f.service.list(actor, "STAFF", { ...query, search: "SOURCE STAFF" })).items, [noAccount]);
 });
-test("staff-search F05: account search does not grant staff access, alter other families, or introduce the pending login-status filter", async () => {
+test("staff-search F05: account search preserves other families and pending closed never reaches page SQL", async () => {
   for (const role of ["WAREHOUSE", "SALESPERSON"] as const) {
     const denied = setup("STAFF", role); await assert.rejects(denied.service.list(actor, "STAFF", { ...query, search: "SOURCE LOGIN" }), { code: "FORBIDDEN" });
     assert.ok(!denied.calls.some(c => c.sql.startsWith("WITH matched"))); assert.equal(denied.calls.at(-1)!.sql, "ROLLBACK");
@@ -150,8 +150,48 @@ test("staff-search F05: account search does not grant staff access, alter other 
     assert.ok(!sql.includes("COALESCE(a.login_name")); assert.match(sql, new RegExp(`WHERE strpos\\(lower\\(m\\.${kind === "ACCOUNT" ? "login_name" : "name"}\\),lower\\(\\$1::text\\)\\)>0 AND`));
   }
   const f = setup("STAFF");
-  await assert.rejects(f.service.list(actor, "STAFF", { ...query, search: "SOURCE LOGIN", loginStatus: "closed" }), { code: "INVALID_ORGANIZATION_QUERY" });
-  assert.equal(f.calls.length, 0);
+  await assert.rejects(f.service.list(actor, "STAFF", { ...query, search: "SOURCE LOGIN", loginStatus: "closed" }), { code: "STAFF_LOGIN_FILTER_NOT_READY" });
+  assert.ok(f.calls.some(c => c.sql.includes("maintenance:identity"))); assert.ok(!f.calls.some(c => c.sql.startsWith("WITH matched")));
+  assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
+});
+
+test("staff-login v1 ALL/open filters combine with original search employment hall role before exact count and page", async () => {
+  const staff = record("STAFF"), account = staff.account as Record<string, unknown>;
+  for (const loginStatus of ["", "open"]) for (const withRole of [false, true]) {
+    const raw = loginStatus === "open" ? { ...staff, account: { ...account, loginEnabled: true } } : { ...staff, account: null };
+    const f = setup("STAFF", "ADMIN", raw, "21");
+    const input = { ...query, search: "LOGIN %_ ' literal", status: "disabled", hallId: id(1), page: 2, ...(withRole ? { role: "WAREHOUSE" } : {}), loginStatus };
+    const result = await f.service.list(actor, "STAFF", input);
+    assert.equal(result.total, 21); assert.deepEqual(result.items, [raw]);
+    const index = f.calls.findIndex(c => c.sql.startsWith("WITH matched")), call = f.calls[index]!;
+    assert.ok(f.calls.slice(0, index).some(c => c.sql.includes("maintenance:identity")));
+    assert.deepEqual(call.values, [input.search, "disabled", id(1), 20, 20, null, ...(withRole ? ["WAREHOUSE"] : []), loginStatus]);
+    const parameter = withRole ? 8 : 7;
+    assert.ok(call.sql.includes(`AND ($${parameter}::text='' OR a.login_enabled IS TRUE)`));
+    assert.ok(call.sql.indexOf("a.login_enabled IS TRUE") < call.sql.indexOf("page AS"));
+    assert.match(call.sql, /SELECT count\(\*\)::text FROM matched/); assert.match(call.sql, /LIMIT \$4 OFFSET \$5/);
+    assert.doesNotMatch(call.sql, /COALESCE\(a\.login_enabled|password_hash|token_hash/);
+    assert.equal(f.calls.filter(c => c.sql.startsWith("WITH matched")).length, 1); assert.deepEqual(f.releases, [undefined]);
+  }
+  const empty = setup("STAFF", "ADMIN", null, "21");
+  const result = await empty.service.list(actor, "STAFF", { ...query, page: 3, loginStatus: "open" });
+  assert.equal(result.total, 21); assert.deepEqual(result.items, []);
+});
+test("staff-login v1 strict STAFF-only enums preserve current ADMIN authority and legacy no-account projection", async () => {
+  for (const loginStatus of [undefined, null, false, 0, "all", "enabled", "OPEN", {}, []]) {
+    const f = setup("STAFF");
+    await assert.rejects(f.service.list(actor, "STAFF", { ...query, loginStatus }), { code: "INVALID_ORGANIZATION_QUERY" }); assert.equal(f.calls.length, 0);
+  }
+  for (const kind of ["HALL", "WAREHOUSE", "ACCOUNT", "PAYMENT_METHOD", "PAYMENT_ACCOUNT"] as const) {
+    const f = setup(kind); await assert.rejects(f.service.list(actor, kind, { ...query, loginStatus: "open" }), { code: "INVALID_ORGANIZATION_QUERY" }); assert.equal(f.calls.length, 0);
+  }
+  for (const role of ["WAREHOUSE", "SALESPERSON"] as const) for (const loginStatus of ["open", "closed"]) {
+    const f = setup("STAFF", role);
+    await assert.rejects(f.service.list(actor, "STAFF", { ...query, loginStatus }), { code: "FORBIDDEN" });
+    assert.ok(!f.calls.some(c => c.sql.startsWith("WITH matched"))); assert.equal(f.calls.at(-1)!.sql, "ROLLBACK");
+  }
+  const raw = { ...record("STAFF"), account: null }, f = setup("STAFF", "ADMIN", raw);
+  assert.deepEqual((await f.service.list(actor, "STAFF", query)).items, [raw]);
 });
 
 test("payment-method-filter v1 preserves exact5 and validates PAYMENT_ACCOUNT-only exact6 before connection", async () => {

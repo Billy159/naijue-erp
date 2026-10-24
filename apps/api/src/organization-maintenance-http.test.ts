@@ -25,7 +25,7 @@ test("B05 HTTP: twelve read routes coexist with existing party/settings routes; 
   current = false; assert.equal((await app.inject({ method: "POST", url: "/staff/query", payload: query })).statusCode, 401); assert.equal(app.server.listening, false);
 });
 
-test("staff-role v1 HTTP accepts real STAFF role6 without advertising login filters or weakening authenticated boundaries", async t => {
+test("staff-login v1 HTTP accepts original role plus ALL/open and isolates pending closed after current authorization", async t => {
   let current = true, allow = true, pages = 0;
   const seen: unknown[] = [];
   const uow: OrganizationReadUnitOfWork = { async transaction(work) { return work({ evidence: {
@@ -35,17 +35,21 @@ test("staff-role v1 HTTP accepts real STAFF role6 without advertising login filt
   const app = Fastify({ logger: false }); t.after(() => app.close());
   app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate: async () => current ? actor : null, unitOfWork: uow })); await app.ready();
   const payload = { ...query, role: "ADMIN" };
-  for (const body of [query, payload]) {
+  const bodies = [query, payload, { ...query, loginStatus: "" }, { ...payload, loginStatus: "open" }];
+  for (const body of bodies) {
     const response = await app.inject({ method: "POST", url: "/staff/query", payload: body });
     assert.equal(response.statusCode, 200, response.body); assert.equal(response.headers["cache-control"], "no-store");
     assert.deepEqual(response.json(), { kind: "STAFF", page: 1, pageSize: 20, total: 0, items: [] });
   }
-  assert.deepEqual(seen, [query, payload]); assert.equal(pages, 2);
-  for (const [url, body] of [["/staff/query?role=ADMIN", query], ["/accounts/query", payload], ["/staff/query", { ...payload, loginStatus: "closed" }], ["/staff/query", { ...payload, role: null }]] as const)
+  assert.deepEqual(seen, bodies); assert.equal(pages, 4);
+  for (const [url, body] of [["/staff/query?role=ADMIN", query], ["/accounts/query", payload], ["/accounts/query", { ...query, loginStatus: "open" }], ["/staff/query", { ...payload, loginStatus: false }], ["/staff/query", { ...payload, extra: true }], ["/staff/query", { ...payload, role: null }]] as const)
     assert.equal((await app.inject({ method: "POST", url, payload: body })).statusCode, 400);
-  assert.equal(pages, 2);
-  allow = false; assert.equal((await app.inject({ method: "POST", url: "/staff/query", payload })).statusCode, 403); assert.equal(pages, 2);
-  current = false; assert.equal((await app.inject({ method: "POST", url: "/staff/query", payload })).statusCode, 401); assert.equal(pages, 2);
+  const closed = await app.inject({ method: "POST", url: "/staff/query", payload: { ...payload, loginStatus: "closed" } });
+  assert.equal(closed.statusCode, 503); assert.equal(closed.json().error.code, "STAFF_LOGIN_FILTER_NOT_READY"); assert.equal(pages, 4);
+  allow = false;
+  for (const loginStatus of ["open", "closed"]) assert.equal((await app.inject({ method: "POST", url: "/staff/query", payload: { ...payload, loginStatus } })).statusCode, 403);
+  assert.equal(pages, 4);
+  current = false; assert.equal((await app.inject({ method: "POST", url: "/staff/query", payload: { ...payload, loginStatus: "open" } })).statusCode, 401); assert.equal(pages, 4);
   assert.equal(app.server.listening, false);
 });
 

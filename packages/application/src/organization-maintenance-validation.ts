@@ -1,6 +1,6 @@
 import { DomainError, requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
-import type { OrganizationListQuery, OrganizationReadListQuery, StaffRoleFilter, OrganizationMaintenanceKind, OrganizationMaintenanceRecord, OrganizationReference, OrganizationWriteKind, OrganizationWriteCommand, HallWriteValues, WarehouseWriteValues } from "./organization-maintenance-ports.ts";
+import type { OrganizationListQuery, OrganizationReadListQuery, StaffRoleFilter, StaffLoginStatusFilter, OrganizationMaintenanceKind, OrganizationMaintenanceRecord, OrganizationReference, OrganizationWriteKind, OrganizationWriteCommand, HallWriteValues, WarehouseWriteValues } from "./organization-maintenance-ports.ts";
 import { partyName, partyObject, partyRequestKey } from "./party-maintenance-validation.ts";
 const kinds: readonly string[] = ["HALL", "WAREHOUSE", "STAFF", "ACCOUNT", "PAYMENT_METHOD", "PAYMENT_ACCOUNT"];
 function invalidCommand(): never { throw new DomainError("INVALID_ORGANIZATION_COMMAND", "Invalid hall/warehouse command"); }
@@ -42,12 +42,14 @@ export function parseOrganizationListQuery(input: unknown, kind: OrganizationMai
   organizationKind(kind);
   if (!input || typeof input !== "object" || Array.isArray(input) || Object.getPrototypeOf(input) !== Object.prototype) invalid();
   const r = input as Record<string, unknown>, filtered = kind === "STAFF" && Object.hasOwn(r, "role");
+  const loginFiltered = kind === "STAFF" && Object.hasOwn(r, "loginStatus");
   const methodFiltered = kind === "PAYMENT_ACCOUNT" && Object.hasOwn(r, "paymentMethodId");
-  const keys = ["search", "status", "hallId", "page", "pageSize", ...(filtered ? ["role"] : []), ...(methodFiltered ? ["paymentMethodId"] : [])];
+  const keys = ["search", "status", "hallId", "page", "pageSize", ...(filtered ? ["role"] : []), ...(loginFiltered ? ["loginStatus"] : []), ...(methodFiltered ? ["paymentMethodId"] : [])];
   if (Reflect.ownKeys(r).length !== keys.length || !keys.every(k => Object.hasOwn(r, k)) || typeof r.search !== "string" || r.search.length > 200 || r.search.includes("\0")
     || !["normal", "disabled", "all"].includes(r.status as string) || typeof r.page !== "number" || !Number.isSafeInteger(r.page) || r.page < 1
     || (r.pageSize !== 20 && r.pageSize !== 50 && r.pageSize !== 100) || !Number.isSafeInteger((r.page - 1) * r.pageSize)) invalid();
   if (filtered && r.role !== "" && r.role !== "ADMIN" && r.role !== "WAREHOUSE" && r.role !== "SALESPERSON") invalid();
+  if (loginFiltered && r.loginStatus !== "" && r.loginStatus !== "open" && r.loginStatus !== "closed") invalid();
   let hallId: string | null = null;
   try { if (r.hallId !== null) { if (typeof r.hallId !== "string") invalid(); hallId = entityId("hall", r.hallId); } } catch { invalid(); }
   if (kind === "PAYMENT_METHOD" && hallId !== null) invalid();
@@ -56,7 +58,7 @@ export function parseOrganizationListQuery(input: unknown, kind: OrganizationMai
     try { if (typeof r.paymentMethodId !== "string") invalid(); paymentMethodId = entityId("paymentMethod", r.paymentMethodId); } catch { invalid(); }
   }
   const query: OrganizationListQuery = { search: r.search, status: r.status as OrganizationListQuery["status"], hallId, page: r.page, pageSize: r.pageSize };
-  return filtered ? { ...query, role: r.role as StaffRoleFilter } : methodFiltered ? { ...query, paymentMethodId } : query;
+  return { ...query, ...(filtered ? { role: r.role as StaffRoleFilter } : {}), ...(loginFiltered ? { loginStatus: r.loginStatus as StaffLoginStatusFilter } : {}), ...(methodFiltered ? { paymentMethodId } : {}) };
 }
 /** Projection rejects malformed facts and removes provider-only fields, including credentials. */
 export function projectOrganizationRecord(input: unknown, kind: OrganizationMaintenanceKind): OrganizationMaintenanceRecord {

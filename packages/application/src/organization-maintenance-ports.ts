@@ -6,12 +6,15 @@ export interface OrganizationListQuery {
   readonly search: string; readonly status: "normal" | "disabled" | "all"; readonly hallId: string | null;
   readonly page: number; readonly pageSize: 20 | 50 | 100;
 }
-/** Additive STAFF-only role filter; legacy five-field queries remain unchanged. */
+/** Additive STAFF-only filters; legacy five-field queries remain unchanged. */
 export type StaffRoleFilter = "" | "ADMIN" | "WAREHOUSE" | "SALESPERSON";
+/** CLOSED is recognized but unavailable until no-account classification is decided. */
+export type StaffLoginStatusFilter = "" | "open" | "closed";
 export interface StaffRoleListQuery extends OrganizationListQuery { readonly role: StaffRoleFilter }
+export interface StaffLoginStatusListQuery extends OrganizationListQuery { readonly role?: StaffRoleFilter; readonly loginStatus: StaffLoginStatusFilter }
 /** PAYMENT_ACCOUNT-only exact existing method identity; null retains all methods. */
 export interface PaymentAccountMethodListQuery extends OrganizationListQuery { readonly paymentMethodId: string | null }
-export type OrganizationReadListQuery = OrganizationListQuery | StaffRoleListQuery | PaymentAccountMethodListQuery;
+export type OrganizationReadListQuery = OrganizationListQuery | StaffRoleListQuery | StaffLoginStatusListQuery | PaymentAccountMethodListQuery;
 export interface OrganizationReference { readonly id: string; readonly name: string; readonly enabled: boolean }
 interface Base { readonly id: string; readonly version: number; readonly createdAt: string | null; readonly updatedAt: string | null }
 export type OrganizationMaintenanceRecord =

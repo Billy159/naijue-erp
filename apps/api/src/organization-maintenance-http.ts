@@ -67,7 +67,7 @@ export function createOrganizationMaintenanceReadHttpPlugin(options: Organizatio
     app.addHook("onResponse", async request => { actors.delete(request); });
     app.setErrorHandler((error, _request, reply) => {
       if (error instanceof DomainError) {
-        const status = ["INVALID_ORGANIZATION_QUERY", "INVALID_HTTP_INPUT", "INVALID_ID"].includes(error.code) ? 400 : error.code === "FORBIDDEN" ? 403 : undefined;
+        const status = ["INVALID_ORGANIZATION_QUERY", "INVALID_HTTP_INPUT", "INVALID_ID"].includes(error.code) ? 400 : error.code === "FORBIDDEN" ? 403 : error.code === "STAFF_LOGIN_FILTER_NOT_READY" ? 503 : undefined;
         if (status !== undefined) return reply.code(status).send({ error: { code: error.code, message: status === 403 ? "Access denied" : "Settings read rejected" } });
       }
       const code = (error as { code?: string }).code;
