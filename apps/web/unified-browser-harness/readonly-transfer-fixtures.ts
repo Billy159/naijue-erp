@@ -14,7 +14,7 @@ export function createReadonlyTransferFixtures() {
   });
   const summaries: readonly TransferSummaryDto[] = details.map(data => {
     const h = data.document.header;
-    return { responsibleStaffId: null, responsibleName: null, id: h.id, number: h.number, businessDate: h.businessDate, fromWarehouseId: h.fromWarehouseId, toWarehouseId: h.toWarehouseId, status: h.status, version: h.version, createdByAccountId: h.createdByAccountId, createdAt: h.createdAt, updatedAt: h.updatedAt, ...data.references, totalQuantity: data.document.lines.reduce((sum, line) => sum + BigInt(line.quantity), 0n).toString() };
+    return { responsibleStaffId: null, id: h.id, number: h.number, businessDate: h.businessDate, fromWarehouseId: h.fromWarehouseId, toWarehouseId: h.toWarehouseId, status: h.status, version: h.version, createdByAccountId: h.createdByAccountId, createdAt: h.createdAt, updatedAt: h.updatedAt, ...data.references, totalQuantity: data.document.lines.reduce((sum, line) => sum + BigInt(line.quantity), 0n).toString() };
   });
   const catalog = details[0]!.catalog, sku = catalog.skus[0]!, group = catalog.sizeGroups[0]!;
   const basics: ProductBasics = { productId: sku.productId, code: sku.productCode, name: sku.productName, categoryLabel: null, yearLabel: null, seasonLabel: null, supplierLabel: null, systemCode: null, retailPrice: null };
