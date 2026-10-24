@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-10-24T15:52:31.195934+00:00",
+  "parent": "da1f6105ed10bc4d7bbb93a49cc024f8d727505e",
+  "taskId": "D3_SOURCE_HOST_V16_CONTINUATION_METADATA",
+  "files": [
+    {
+      "path": "scripts/import-v3/production-source-host.mjs",
+      "bytes": 37969,
+      "sha256": "c287b5715d0c9e0763dc46d38369a6e9d2e41743d57412fd74a6b021ac63fcf3",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.test.mjs",
+      "bytes": 35918,
+      "sha256": "680cf673dc59ace3ca573695dfa1dc67969b0d66f3857bc911afe45ab7dd7821",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "ownerReceiptSha256": "72a0d8b190dbe0c17d999d5b42a51139ac3f91a1cb5633f868dc78073138da5d",
+  "stage": "SOURCE_TARGETED_3_CHECKS_PASS_NOT_QB_OR_DB",
+  "wholePageAccepted": false,
+  "deployed": false
+}
