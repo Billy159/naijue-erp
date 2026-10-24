@@ -29,6 +29,8 @@ export interface RouteStylesheet {
 }
 export interface InventoryRouteConfiguration {
   readonly stylesheet: RouteStylesheet;
+  /** Explicit inventory-reader response budget only; omission retains shared HTTP defaults. */
+  readonly maxResponseBytes?: number;
   /** Omit unavailable stock-ledger actions, rather than installing dummy success. */
   readonly actions: Pick<InventoryActions, 'onOpenCell'>;
   /** Explicit ledger UI opt-in; each real request retains current server authorization. */

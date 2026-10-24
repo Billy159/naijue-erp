@@ -10,7 +10,8 @@ import type { InventoryLedgerCapability } from '../../inventory/ledger-contracts
 
 export function prepareInventoryRoute(input: RoutePreparation, onAccessFailure?: (error: HttpQueryError) => void, navigation: { readonly initialProduct?: Selection; readonly returnToProduct?: () => Promise<boolean>; readonly onOpenSource?: InventoryLedgerCapability['onOpenSource'] } = {}): PreparedApplicationRoute {
   if (!input.configuration.inventory) throw new TypeError('Inventory capability was not configured.');
-  const reader = createInventoryHttpReader(input.http), productReader = createProductHttpReader(input.http);
+  const maxResponseBytes = input.configuration.inventory.maxResponseBytes;
+  const reader = createInventoryHttpReader(maxResponseBytes === undefined ? input.http : { ...input.http, maxResponseBytes }), productReader = createProductHttpReader(input.http);
   const actions = input.configuration.inventory.actions;
   if (input.configuration.inventory.ledger && typeof onAccessFailure !== 'function') throw new TypeError('Inventory ledger requires the current route access owner.');
   const { onOpenSource, ...pageNavigation } = navigation;
