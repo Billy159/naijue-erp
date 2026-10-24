@@ -83,9 +83,10 @@ export interface ProductMaintenanceDetailV2 extends Omit<ProductMaintenanceDetai
   readonly values: ProductWriteValuesV2;
   readonly references: Omit<ProductDetailReferences, "season" | "seasons"> & { readonly seasons: readonly ProductDetailReference[] };
 }
+export interface ProductSkuSelection { readonly colorIds: readonly string[]; readonly fitIds: readonly string[] }
 export type ProductMaintenanceCommandV2 = { readonly requestKey: string } & (
-  { readonly action: "CREATE"; readonly values: ProductWriteValuesV2 & { readonly seasonIds: readonly string[] }; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[] }
-  | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: number; readonly values: ProductWriteValuesV2; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[] }
+  { readonly action: "CREATE"; readonly values: ProductWriteValuesV2 & { readonly seasonIds: readonly string[] }; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[]; readonly skuSelection?: ProductSkuSelection }
+  | { readonly action: "EDIT"; readonly id: string; readonly expectedVersion: number; readonly values: ProductWriteValuesV2; readonly skus: readonly ProductSkuInput[]; readonly barcodes: readonly ProductBarcodeInput[]; readonly skuSelection?: ProductSkuSelection }
   | { readonly action: "DISABLE" | "RESTORE" | "DELETE"; readonly id: string; readonly expectedVersion: number }
 );
 export interface ProductMaintenanceResult { readonly operationId: string; readonly kind: "PRODUCT"; readonly targetId: string; readonly version: number }
@@ -125,6 +126,8 @@ export interface ProductMaintenanceTransaction {
   load(id: string): Promise<ProductAggregate | undefined>;
   readReferences(product: ProductStoredRecord): Promise<ProductDetailReferences>;
   readCandidates(query: ProductMaintenanceCandidateQuery): Promise<ProductMaintenanceCandidatePage>;
+  /** v17: lock selected enabled color/fit references and every real member of this exact group in the original product transaction. */
+  readSkuSelectionSizes?(productId: string, sizeGroupId: string, selection: ProductSkuSelection): Promise<readonly string[]>;
   /** Same-transaction reference locks, size-group membership and enabled/new-selection rules. */
   validateReferences(previous: ProductAggregate | undefined, next: ProductAggregate): Promise<void>;
   /** D3-owned trusted ALL-warehouse/SKU zero and reference guard; unknown/negative/nonzero must reject. */

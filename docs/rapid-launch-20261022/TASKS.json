@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "29b8e5741108891ec01382dc47b404cd435ef2b0"
+    "lastVerifiedRemoteCommit": "8b21197e10c390aacd194c8202599a028978de22"
   },
   "concurrency": {
     "chats": 11,
@@ -4727,7 +4727,7 @@
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Original historical blank hall v5 pending only; v17 explicitly approved, D2/F2 implementation in progress",
-    "github": "REMOTE_EXACT_VERIFIED_29b8e5741108891ec01382dc47b404cd435ef2b0",
+    "github": "REMOTE_EXACT_VERIFIED_8b21197e10c390aacd194c8202599a028978de22",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -7839,6 +7839,12 @@
       "startupData": "F1 retire legacy full bridge bootstrap, auth and actual first-page only",
       "inventoryPayload": "D3 server assembly; F2 page model and windowed DOM; actual measurement pending",
       "reuse": "Existing pure scope/query/cancel/pagination/precision/draft/commands; never old UI or permanent historical readonly guards"
+    },
+    "v17": {
+      "status": "D2_SOURCE_READY_TARGETED_CHECKS_NOT_ACTUAL_POSTGRES",
+      "files": 9,
+      "consumer": "F2 in progress",
+      "next": "QB finite source then C actual isolated product transaction/rollback and F2 normal UI"
     }
   },
   "latestReadySource": {

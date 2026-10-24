@@ -10,6 +10,31 @@ import { actor, sid } from "./support/synthetic-fixtures.ts";
 import type { ProductMediaWriteCapability, PgProductMaintenanceContext, ProductImageColorSwapCapability } from "../adapters/postgres/src/product-maintenance-store.ts";
 import type { ProductMaintenanceImageMetadata } from "../packages/application/src/product-maintenance-ports.ts";
 const id = (n: number) => sid("product", n);
+test("v17 selection leaf locks original group and enabled selected references and reads only complete native group members in bounded batches", async () => {
+  const calls: { sql: string; values: unknown[] }[] = [], group = id(4), product = id(17001), color = id(6), fit = id(7), sizes = [id(8), id(9)];
+  let invalid = false;
+  const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: { async assertAllowed() {}, async getReceipt() { return undefined; }, async complete() { throw Error("UNEXPECTED_WRITE"); } }, client: { async query(sql, values = []) {
+    calls.push({ sql, values }); let rows: Record<string, unknown>[] = [];
+    if (sql.includes("product-selection:group")) rows = [{ id: group }];
+    if (sql.includes("product-selection:references")) rows = (values[0] as string[]).map(id => ({ id, enabled: !invalid, retained: true }));
+    if (sql.includes("product-selection:members")) rows = sizes.map(size_id => ({ size_id }));
+    return { rows, rowCount: rows.length };
+  } } }); } };
+  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null });
+  await uow.transaction(async tx => {
+    await assert.rejects(tx.readSkuSelectionSizes!(product, group, { colorIds: [color], fitIds: [fit] }), { code: "TRANSACTION_SCOPE" }); assert.equal(calls.length, 0);
+    assert.equal(await tx.load(product), undefined);
+    assert.deepEqual(await tx.readSkuSelectionSizes!(product, group, { colorIds: [color], fitIds: [fit] }), sizes);
+  });
+  const members = calls.find(c => c.sql.includes("product-selection:members"))!;
+  assert.deepEqual(members.values, [group, 5001]); assert.match(members.sql, /WHERE m\.size_group_id=\$1::uuid ORDER BY m\.size_id LIMIT \$2 FOR SHARE OF m,z/);
+  assert.match(members.sql, /JOIN naijue_erp\.size z ON z\.id=m\.size_id/); assert.doesNotMatch(members.sql, /sku|default|CROSS JOIN/);
+  assert.equal(calls.filter(c => c.sql.includes("product-selection:references")).length, 2);
+  assert.ok(calls.every(c => !/^(BEGIN|COMMIT|ROLLBACK|INSERT|UPDATE|DELETE)/.test(c.sql)));
+  invalid = true; const n = calls.length;
+  await assert.rejects(uow.transaction(async tx => { await tx.load(product); return tx.readSkuSelectionSizes!(product, group, { colorIds: [color], fitIds: [fit] }); }), { code: "PRODUCT_REFERENCE_UNAVAILABLE" });
+  assert.ok(!calls.slice(n).some(c => c.sql.includes("product-selection:members")));
+});
 function imageProtocol(options: { absent?: boolean; rows?: readonly Record<string, unknown>[]; fail?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = []; let authorized = false;
   const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE"); };

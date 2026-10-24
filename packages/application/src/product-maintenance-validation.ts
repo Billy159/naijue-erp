@@ -3,7 +3,7 @@ import { entityId } from "../../domain/src/values.ts";
 import { validateCompleteCataloguePrices } from "./catalogue-price-input.ts";
 import { partyName, partyObject, partyRequestKey } from "./party-maintenance-validation.ts";
 import type { ProductBarcodeInput, ProductMaintenanceCandidateQuery, ProductMaintenanceCommand, ProductMaintenanceCommandV2, ProductSkuInput, ProductWriteValues, ProductWriteValuesV2 } from "./product-maintenance-ports.ts";
-import type { ProductImageChange, ProductMaintenanceMediaCommandV2, ProductMaintenanceImageMetadata } from "./product-maintenance-ports.ts";
+import type { ProductImageChange, ProductMaintenanceMediaCommandV2, ProductMaintenanceImageMetadata, ProductSkuSelection } from "./product-maintenance-ports.ts";
 export const PRODUCT_MAINTENANCE_MAX_SKUS = 5000, PRODUCT_MAINTENANCE_MAX_BARCODES = 20000;
 function invalid(): never { throw new DomainError("INVALID_PRODUCT_MAINTENANCE", "Invalid product maintenance command"); }
 function bag(input: unknown, keys: readonly string[]) { try { return partyObject(input, keys); } catch { return invalid(); } }
@@ -45,7 +45,8 @@ function parseCommand(input: unknown, version: 1 | 2): ProductMaintenanceCommand
   if (!input || typeof input !== "object" || Array.isArray(input)) invalid(); const action = (input as Record<string, unknown>).action;
   if (!["CREATE", "EDIT", "DISABLE", "RESTORE", "DELETE"].includes(action as string)) invalid();
   const full = action === "CREATE" || action === "EDIT";
-  const keys = ["action", "requestKey", ...(action === "CREATE" ? [] : ["id", "expectedVersion"]), ...(full ? ["values", "skus", "barcodes"] : [])];
+  const selected = version === 2 && full && Object.hasOwn(input, "skuSelection");
+  const keys = ["action", "requestKey", ...(action === "CREATE" ? [] : ["id", "expectedVersion"]), ...(full ? ["values", "skus", "barcodes"] : []), ...(selected ? ["skuSelection"] : [])];
   const r = bag(input, keys), requestKey = partyRequestKey(r.requestKey);
   if (!full) return { action: action as "DISABLE" | "RESTORE" | "DELETE", requestKey, id: id(r.id)!, expectedVersion: productMaintenanceVersion(r.expectedVersion) };
   const data = values(r.values, version);
@@ -65,7 +66,16 @@ function parseCommand(input: unknown, version: 1 | 2): ProductMaintenanceCommand
     coordinates.add(key); if (skuId !== null) skuIds.add(skuId);
     return { id: skuId, expectedVersion: s.expectedVersion === null ? null : productMaintenanceVersion(s.expectedVersion), skuCode: text(s.skuCode)!, colorId, fitId, sizeId, enabled: bool(s.enabled) };
   });
-  requireDomain(action !== "CREATE" || skus.length > 0, "PRODUCT_SPEC_REQUIRED", "New product requires an explicit actual SKU");
+  let skuSelection: ProductSkuSelection | undefined;
+  if (selected) {
+    const selection = bag(r.skuSelection, ["colorIds", "fitIds"]);
+    const ids = (value: unknown): readonly string[] => {
+      if (!Array.isArray(value) || Object.keys(value).length !== value.length || value.length > PRODUCT_MAINTENANCE_MAX_SKUS) invalid();
+      const parsed = value.map(v => id(v)!); if (new Set(parsed).size !== parsed.length) invalid(); return Object.freeze(parsed.sort());
+    };
+    skuSelection = { colorIds: ids(selection.colorIds), fitIds: ids(selection.fitIds) };
+  }
+  requireDomain(action !== "CREATE" || skus.length > 0 || (skuSelection && skuSelection.colorIds.length > 0 && skuSelection.fitIds.length > 0), "PRODUCT_SPEC_REQUIRED", "New product requires actual or selected specifications");
   const raw = new Set<string>(), barcodeIds = new Set<string>();
   const barcodes: ProductBarcodeInput[] = r.barcodes.map(value => {
     const b = bag(value, ["id", "barcode", "colorId", "fitId", "sizeId", "kind", "schemeId", "enabled"]), barcodeId = id(b.id, true);
@@ -74,8 +84,8 @@ function parseCommand(input: unknown, version: 1 | 2): ProductMaintenanceCommand
     raw.add(b.barcode); if (barcodeId !== null) barcodeIds.add(barcodeId);
     return { id: barcodeId, barcode: b.barcode, colorId: id(b.colorId)!, fitId: id(b.fitId)!, sizeId: id(b.sizeId)!, kind: b.kind as "MAIN" | "CONFIRMED_OLD", schemeId: id(b.schemeId, true), enabled: bool(b.enabled) };
   });
-  if (action === "CREATE") return { action, requestKey, values: data, skus, barcodes } as ProductMaintenanceCommand | ProductMaintenanceCommandV2;
-  return { action: "EDIT", requestKey, id: id(r.id)!, expectedVersion: productMaintenanceVersion(r.expectedVersion), values: data, skus, barcodes } as ProductMaintenanceCommand | ProductMaintenanceCommandV2;
+  if (action === "CREATE") return { action, requestKey, values: data, skus, barcodes, ...(skuSelection === undefined ? {} : { skuSelection }) } as ProductMaintenanceCommand | ProductMaintenanceCommandV2;
+  return { action: "EDIT", requestKey, id: id(r.id)!, expectedVersion: productMaintenanceVersion(r.expectedVersion), values: data, skus, barcodes, ...(skuSelection === undefined ? {} : { skuSelection }) } as ProductMaintenanceCommand | ProductMaintenanceCommandV2;
 }
 
 export function parseProductMaintenanceCommand(input: unknown): ProductMaintenanceCommand { return parseCommand(input, 1) as ProductMaintenanceCommand; }
@@ -87,7 +97,7 @@ export function parseProductMaintenanceMediaCommandV2(input: unknown): ProductMa
     if (!input || typeof input !== "object" || Array.isArray(input)) invalid();
     const r = input as Record<string, unknown>;
     if (r.action !== "CREATE" && r.action !== "EDIT") invalid();
-    bag(r, ["action", "requestKey", ...(r.action === "EDIT" ? ["id", "expectedVersion"] : []), "values", "skus", "barcodes", "imageChanges"]);
+    bag(r, ["action", "requestKey", ...(r.action === "EDIT" ? ["id", "expectedVersion"] : []), "values", "skus", "barcodes", "imageChanges", ...(Object.hasOwn(r, "skuSelection") ? ["skuSelection"] : [])]);
     const { imageChanges, ...old } = r, legacy = parseProductMaintenanceCommandV2(old);
     if (legacy.action !== "CREATE" && legacy.action !== "EDIT") invalid();
     if (!Array.isArray(imageChanges) || imageChanges.length > 1000 || Object.keys(imageChanges).length !== imageChanges.length) invalid();

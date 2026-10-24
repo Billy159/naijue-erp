@@ -205,6 +205,27 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
             && !different([...previous.product.seasonIds].sort(), command.values.seasonIds) ? previous.product.seasonIds : command.values.seasonIds;
           nextProduct = { ...command.values, seasonIds, seasonId: previous?.product.seasonId ?? null, id, version: (previous?.product.version ?? 0) + 1, deletedAt: null };
         } else nextProduct = { ...command.values, id, version: (previous?.product.version ?? 0) + 1, deletedAt: null };
+        const generated: { colorId: string; fitId: string; sizeId: string }[] = [];
+        if ("skuSelection" in command && command.skuSelection !== undefined) {
+          const selection = command.skuSelection;
+          requireDomain(!previous || previous.product.sizeGroupId === nextProduct.sizeGroupId, "PRODUCT_SIZE_GROUP_MISMATCH", "Selection generation cannot migrate an existing product group");
+          if (selection.colorIds.length && selection.fitIds.length) {
+            requireDomain(typeof tx.readSkuSelectionSizes === "function", "PRODUCT_SPEC_GENERATION_NOT_READY", "Original transaction selection reader required");
+            const rawSizes = await tx.readSkuSelectionSizes(id, nextProduct.sizeGroupId, selection);
+            requireDomain(Array.isArray(rawSizes) && rawSizes.length > 0 && rawSizes.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_SPEC_REQUIRED", "Complete nonempty product size group required");
+            const sizes = rawSizes.map(size => entityId("size", size));
+            requireDomain(new Set(sizes).size === sizes.length, "INVALID_DATABASE_VALUE", "Repeated group member identity");
+            requireDomain(BigInt(selection.colorIds.length) * BigInt(selection.fitIds.length) * BigInt(sizes.length) <= BigInt(PRODUCT_MAINTENANCE_MAX_SKUS), "PRODUCT_MAINTENANCE_TOO_LARGE", "Selected specifications exceed the existing SKU bound");
+            const explicitNew = new Set(command.skus.filter(s => s.id === null).map(coordinate));
+            const existing = new Set([...skus.values()].map(coordinate));
+            for (const colorId of selection.colorIds) for (const fitId of selection.fitIds) for (const sizeId of sizes) {
+              const spec = { colorId, fitId, sizeId }, key = coordinate(spec);
+              requireDomain(!explicitNew.has(key), "PRODUCT_SPEC_CONFLICT", "Explicit and selected new specifications overlap");
+              if (!existing.has(key)) generated.push(spec);
+            }
+            requireDomain(skus.size + command.skus.filter(s => s.id === null).length + generated.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "Saved aggregate would exceed the existing SKU bound");
+          }
+        }
         for (const item of command.skus) {
           if (item.id === null) {
             requireDomain(![...skus.values()].some(s => coordinate(s) === coordinate(item)), "PRODUCT_SPEC_CONFLICT", "Existing SKU coordinate cannot be recreated");
@@ -217,6 +238,12 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
             if (old.enabled !== item.enabled) { requireDomain(old.version < 2147483647, "VERSION_STORAGE_OVERFLOW", "SKU version exhausted"); skus.set(old.id, { ...old, enabled: item.enabled, version: old.version + 1 }); }
           }
         }
+        for (const spec of generated) {
+          const skuId = entityId("sku", dependencies.newId("sku"));
+          requireDomain(!skus.has(skuId), "PRODUCT_SPEC_CONFLICT", "New SKU id already exists");
+          skus.set(skuId, newSkuRecord({ ...spec, skuCode: `NJNEW-${skuId.replaceAll("-", "")}`, enabled: true }, skuId, id, operationId));
+        }
+        requireDomain(command.action !== "CREATE" || skus.size > 0, "PRODUCT_SPEC_REQUIRED", "New product requires a real SKU");
         const byCoordinate = new Map([...skus.values()].map(s => [coordinate(s), s]));
         for (const item of command.barcodes) {
           const sku = byCoordinate.get(coordinate(item)); requireDomain(sku, "PRODUCT_SPEC_NOT_FOUND", "Barcode needs a real retained SKU");

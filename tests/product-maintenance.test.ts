@@ -51,7 +51,8 @@ function values(): ProductWriteValues {
 function sku(colorId = gid(806)): ProductSkuInput { return { id: null, expectedVersion: null, skuCode: `SKU-${colorId}`, colorId, fitId: gid(807), sizeId: gid(808), enabled: true }; }
 function barcode(item: ProductSkuInput, raw = "000012345 "): ProductBarcodeInput { return { id: null, barcode: raw, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId, kind: "MAIN", schemeId: gid(805), enabled: true }; }
 function command(key = "create") { const s = sku(); return { action: "CREATE" as const, requestKey: key, values: values(), skus: [s], barcodes: [barcode(s)] }; }
-function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false) {
+function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false, groupSizes?: readonly string[]) {
+  let selectionReads = 0;
   let sequence = 900, product: ProductAggregate | undefined, allow = true, failComplete = false, references = true, deletable = true;
   const receipts = new Map<string, NonNullable<Awaited<ReturnType<ProductMaintenanceEvidence["getReceipt"]>>>>();
   const audit: { before: ProductAuditObject | null; after: ProductAuditObject }[] = []; let writes = 0;
@@ -71,6 +72,7 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
         }
       };
       const tx: ProductMaintenanceTransaction = { evidence,
+        ...(groupSizes === undefined ? {} : { async readSkuSelectionSizes(_productId: string, groupId: string) { selectionReads++; assert.equal(groupId, gid(804)); return groupSizes!; } }),
         async load(id) { return product?.product.id === id ? structuredClone(product) : undefined; },
         async readReferences(p) { return { ...(Object.hasOwn(p, "seasonIds") ? { seasons: (p.seasonIds ?? []).map(id => ({ id, name: `SYNTHETIC ${id}` })) } : {}), categoryPath: [{ id: p.categoryId, name: "SYNTHETIC CATEGORY" }], sizeGroup: { id: p.sizeGroupId, name: "SYNTHETIC GROUP" },
           supplier: p.supplierId === null ? null : { id: p.supplierId, name: "SYNTHETIC SUPPLIER", enabled: true }, season: p.seasonId === null ? null : { id: p.seasonId, name: "SYNTHETIC SEASON" },
@@ -85,7 +87,7 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
       try { return await work(tx); } catch (error) { product = before; receipts.clear(); for (const [k, v] of receiptBefore) receipts.set(k, v); audit.length = auditLength; writes = writeCount; throw error; }
     }
   } };
-  return { dependencies, service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes,
+  return { dependencies, service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes, selectionReads: () => selectionReads,
     activate: () => Object.defineProperty(dependencies.unitOfWork, "seasonContract", { value: "product-season-array-v1" }), seed: (value: ProductAggregate) => { product = structuredClone(value); }, revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
 }
 test("prepared product: root and SKU/barcode writes require prepared exact evidence; missing/failing capability writes nothing", async () => {
@@ -143,6 +145,54 @@ test("product write: reference/receipt faults roll back root plus all children; 
 function commandV2(key = "v2", seasons: readonly string[] | null = [gid(850), gid(803)]) {
   const { seasonId: _scalar, ...data } = values(); return { ...command(key), values: { ...data, seasonIds: seasons } };
 }
+test("v17 selection creates only saved full-group tuples with new-system codes and canonical original-key replay", async () => {
+  const f = fixture("ready", true, [gid(808), gid(809), gid(810)]);
+  const c = { ...commandV2("v17-create"), skus: [], barcodes: [], skuSelection: { colorIds: [gid(812), gid(806)], fitIds: [gid(813), gid(807)] } };
+  assert.equal(f.selectionReads(), 0); assert.equal(f.state(), undefined);
+  const saved = await f.service.executeV2(actor, c), state = f.state()!;
+  assert.equal(state.skus.length, 12); assert.equal(state.product.version, 1); assert.equal(state.barcodes.length, 0);
+  assert.equal(f.audit.length, 1); assert.equal(f.selectionReads(), 1);
+  for (const sku of state.skus) { assert.equal(sku.skuCode, `NJNEW-${sku.id.replaceAll("-", "")}`); assert.equal(sku.skuCode.length, 38); assert.equal(sku.version, 1); assert.equal(sku.createdOperationId, saved.operationId); }
+  const writes = f.writes();
+  assert.deepEqual(await f.service.executeV2(actor, { ...c, skuSelection: { colorIds: [...c.skuSelection.colorIds].reverse(), fitIds: [...c.skuSelection.fitIds].reverse() } }), saved);
+  assert.equal(f.writes(), writes); assert.equal(f.selectionReads(), 1);
+  await assert.rejects(f.service.executeV2(actor, { ...c, skuSelection: { colorIds: [gid(806)], fitIds: c.skuSelection.fitIds } }), { code: "IDEMPOTENCY_CONFLICT" });
+  f.revoke(); await assert.rejects(f.service.executeV2(actor, c), { code: "FORBIDDEN" }); assert.equal(f.selectionReads(), 1);
+});
+test("v17 editing fills missing only and preserves retained IDs codes disabled states and shrinking selections", async () => {
+  const f = fixture("ready", true, [gid(808), gid(809), gid(810)]), first = await f.service.executeV2(actor, commandV2("v17-explicit-old"));
+  const original = f.state()!, old = { ...original, skus: [{ ...original.skus[0]!, enabled: false }] }; f.seed(old);
+  const c = { action: "EDIT" as const, requestKey: "v17-append", id: first.targetId, expectedVersion: 1, values: commandV2().values,
+    skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
+  await f.service.executeV2(actor, c); const next = f.state()!;
+  assert.equal(next.skus.length, 3); assert.deepEqual(next.skus.find(s => s.id === old.skus[0]!.id), old.skus[0]); assert.deepEqual(next.barcodes, old.barcodes);
+  assert.equal(next.product.version, 2); assert.equal((f.audit[1]!.after.skus as unknown[]).length, 2);
+  const reads = f.selectionReads();
+  await f.service.executeV2(actor, { ...c, requestKey: "v17-shrink", expectedVersion: 2, values: { ...c.values, name: "Changed label" }, skuSelection: { colorIds: [], fitIds: [] } });
+  assert.deepEqual(f.state()!.skus, next.skus); assert.equal(f.selectionReads(), reads);
+  await assert.rejects(f.service.executeV2(actor, { ...c, requestKey: "v17-group-change", expectedVersion: 3, values: { ...c.values, sizeGroupId: gid(899) } }), { code: "PRODUCT_SIZE_GROUP_MISMATCH" });
+});
+test("v17 malformed input overlap complete-group bounds and missing original reader reject without writes", async () => {
+  const c = { ...commandV2("v17-negative"), skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
+  for (const skuSelection of [null, true, { colorIds: [gid(806)], fitIds: [] , extra: true }, { colorIds: [gid(806), gid(806)], fitIds: [gid(807)] }, { colorIds: ["bad"], fitIds: [gid(807)] }])
+    assert.throws(() => parseProductMaintenanceCommandV2({ ...c, skuSelection }), { code: "INVALID_PRODUCT_MAINTENANCE" });
+  const overlap = fixture("ready", true, [gid(808)]);
+  await assert.rejects(overlap.service.executeV2(actor, { ...c, skus: [sku()] }), { code: "PRODUCT_SPEC_CONFLICT" }); assert.equal(overlap.writes(), 0);
+  const missing = fixture("ready", true);
+  await assert.rejects(missing.service.executeV2(actor, c), { code: "PRODUCT_SPEC_GENERATION_NOT_READY" }); assert.equal(missing.writes(), 0);
+  const empty = fixture("ready", true, []); await assert.rejects(empty.service.executeV2(actor, c), { code: "PRODUCT_SPEC_REQUIRED" }); assert.equal(empty.writes(), 0);
+  const huge = fixture("ready", true, Array.from({ length: 2501 }, (_, n) => gid(30000 + n)));
+  await assert.rejects(huge.service.executeV2(actor, { ...c, skuSelection: { colorIds: [gid(806), gid(812)], fitIds: [gid(807)] } }), { code: "PRODUCT_MAINTENANCE_TOO_LARGE" }); assert.equal(huge.writes(), 0);
+  assert.throws(() => parseProductMaintenanceCommandV2({ ...c, imageChanges: undefined }), { code: "INVALID_PRODUCT_MAINTENANCE" });
+});
+test("v17 generated writes roll back with original failed completion and valid legacy/media shapes remain exact", async () => {
+  const c = { ...commandV2("v17-rollback"), skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
+  const f = fixture("ready", true, [gid(808), gid(809)]); f.fault(true);
+  await assert.rejects(f.service.executeV2(actor, c), /SYNTHETIC RECEIPT FAULT/);
+  assert.equal(f.state(), undefined); assert.equal(f.writes(), 0); assert.equal(f.audit.length, 0); assert.equal(f.receipts.size, 0);
+  const old = parseProductMaintenanceCommandV2(commandV2()); assert.ok(!Object.hasOwn(old, "skuSelection"));
+  assert.deepEqual(parseProductMaintenanceMediaCommandV2({ ...c, imageChanges: [] }).skuSelection, c.skuSelection);
+});
 function appendInput(): DocumentProductSkuAppendInput {
   const operationId = gid(42000), productId = gid(41000), skuId = gid(42001);
   return { actor, productId, expectedVersion: 7, operationId, requestKey: `doc-spec:${gid(41999)}:${productId}`,

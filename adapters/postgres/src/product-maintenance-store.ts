@@ -7,7 +7,7 @@ import type { ProductAggregate, ProductBarcodeRecord, ProductDetailReferences, P
 import { parseProductMaintenanceCandidates, parseProductSeasonIds, PRODUCT_MAINTENANCE_MAX_BARCODES, PRODUCT_MAINTENANCE_MAX_SKUS, planProductImageWrites } from "../../../packages/application/src/product-maintenance-validation.ts";
 import { productSeasonArrayEnabled, type ProductSeasonArrayCapability, type PgProductQueryResult } from "./product-query-reader.ts";
 import type { MaintenancePgUnitOfWork } from "./maintenance-command-unit-of-work.ts";
-import type { ProductMaintenanceImageSnapshot, ProductMaintenanceImageMetadata } from "../../../packages/application/src/product-maintenance-ports.ts";
+import type { ProductMaintenanceImageSnapshot, ProductMaintenanceImageMetadata, ProductSkuSelection } from "../../../packages/application/src/product-maintenance-ports.ts";
 import { booleanValue, integerValue, nullableString, stringValue, versionFromSql } from "./codec.ts";
 
 export interface PgProductMaintenanceContext {
@@ -296,6 +296,22 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     const skus = s.map(skuRow), barcodes = b.map(barcodeRow), ids = new Set(skus.map(row => row.id));
     requireDomain(ids.size === skus.length && skus.every(row => row.productId === id) && barcodes.every(row => ids.has(row.skuId)), "INVALID_DATABASE_VALUE", "Invalid aggregate child identity");
     return { product: p, skus, barcodes };
+  }
+  async readSkuSelectionSizes(productId: string, sizeGroupId: string, selection: ProductSkuSelection): Promise<readonly string[]> {
+    requireDomain(productId === this.loadedId, "TRANSACTION_SCOPE", "Selection must use the original locked product");
+    const group = (await this.query("/* product-selection:group */ SELECT id FROM naijue_erp.size_group WHERE id=$1::uuid FOR SHARE", [sizeGroupId])).rows;
+    requireDomain(group.length === 1 && group[0]!.id === sizeGroupId, "PRODUCT_REFERENCE_UNAVAILABLE", "Actual product size group unavailable");
+    for (const [table, ids] of [["color", selection.colorIds], ["fit", selection.fitIds]] as const) {
+      const rows = (await this.query(`/* product-selection:references */ SELECT id,enabled,deleted_at IS NULL AS retained FROM naijue_erp.${table} WHERE id=ANY($1::uuid[]) ORDER BY id FOR SHARE`, [[...ids]])).rows;
+      requireDomain(rows.length === ids.length && new Set(rows.map(r => uuid(r.id))).size === ids.length
+        && rows.every(r => ids.includes(uuid(r.id)) && r.enabled === true && r.retained === true), "PRODUCT_REFERENCE_UNAVAILABLE", "Selected color and fit must be enabled and retained");
+    }
+    const rows = (await this.query(`/* product-selection:members */ SELECT m.size_id FROM naijue_erp.size_group_member m
+      JOIN naijue_erp.size z ON z.id=m.size_id WHERE m.size_group_id=$1::uuid ORDER BY m.size_id LIMIT $2 FOR SHARE OF m,z`, [sizeGroupId, PRODUCT_MAINTENANCE_MAX_SKUS + 1])).rows;
+    requireDomain(rows.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "Complete group exceeds the existing SKU bound");
+    const sizes = rows.map(r => uuid(r.size_id));
+    requireDomain(sizes.length > 0 && new Set(sizes).size === sizes.length, "PRODUCT_SPEC_REQUIRED", "Complete nonempty group required");
+    return sizes;
   }
   async validateReferences(previous: ProductAggregate | undefined, next: ProductAggregate): Promise<void> {
     const p = next.product;

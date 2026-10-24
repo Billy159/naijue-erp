@@ -1,0 +1,54 @@
+{
+  "scope": "ApprovedV17 originalD2 finite9files",
+  "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+  "files": [
+    {
+      "path": "packages/application/src/product-maintenance-ports.ts",
+      "bytes": 13288,
+      "sha256": "53213504ae29d384a84bbf433c71227fd4296b20a29eec5c0f77c55d3ba872bc"
+    },
+    {
+      "path": "packages/application/src/product-maintenance-validation.ts",
+      "bytes": 14886,
+      "sha256": "374261e28235241167114c95e992032d6f2838b6661446edf46beb3c532c0585"
+    },
+    {
+      "path": "packages/application/src/product-maintenance-service.ts",
+      "bytes": 38975,
+      "sha256": "e758e65d8fb5ac8b7fad82d574e406d66a1d78889ea00af69cd0012ad47cb41e"
+    },
+    {
+      "path": "adapters/postgres/src/product-maintenance-store.ts",
+      "bytes": 43994,
+      "sha256": "bf4b202e9cb7a6dcc7f60be4ac35ab0ddc4e5920430902c9aa42f644a5a9205e"
+    },
+    {
+      "path": "apps/api/src/product-maintenance-http.ts",
+      "bytes": 7720,
+      "sha256": "05b0c1d465184f711b9ca618a7d67633df70e8160ded07f24e128a442bc4de26"
+    },
+    {
+      "path": "tests/product-maintenance.test.ts",
+      "bytes": 50377,
+      "sha256": "360932ad23cc2e21d68d28e9d5fd6fa8a7d589dad8d07d8f8e13edfbe6b00f50"
+    },
+    {
+      "path": "tests/product-maintenance-postgres-protocol.test.ts",
+      "bytes": 44060,
+      "sha256": "68ca6f2a0ab5beb2f3c5726e1da63fb12f1933bd4f77517a181a2d1c0f595008"
+    },
+    {
+      "path": "apps/api/src/product-maintenance-http.test.ts",
+      "bytes": 14944,
+      "sha256": "2a9f836aa4546c4d9b680f9844b655b3c8f906a90b79c84bbf362a5f040a1b82"
+    },
+    {
+      "path": "docs/product-maintenance.md",
+      "bytes": 8228,
+      "sha256": "9c6759a4edaa30ce999268f382223a86abb9c0777e6f9e4145330e0bfaf0f254"
+    }
+  ],
+  "parent": "8b21197e10c390aacd194c8202599a028978de22",
+  "atUtc": "2026-10-24T18:45:50.320348+00:00",
+  "status": "V17_SOURCE_OWNER_TARGETED_CHECKS_PASS_NOT_ACTUAL_POSTGRES_OR_BROWSER"
+}

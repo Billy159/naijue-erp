@@ -1,3 +1,7 @@
+SOURCE346 V17 SOURCE READY / REAL QA STILL PENDING
+
+Original D2 delivered exact nine leaves implementing approved optional skuSelection(colorIds,fitIds) on original V2 CREATE/EDIT; existing skus/barcodes and old requests preserved, explicit stored group boundary and original atomic semantics. Owner new6 directed cases and strict types passed, no actual Postgres/HTTP/browser/performance/release claim. Original F2 consumes same contract on copied Demo UI; C fixes source then original QB new scope, actual C isolated QA next. Existing current37/67 second-phase whole-page UI/real-business/formal release remain incomplete.
+
 C180 ACTUAL CATEGORY INSTALL / F2 READ PACKAGE SAVED
 
 Original approved v15 category patch installed after v16 on isolated CORE QA only, actual130 routines/canonical a97002057a1763b3bd650141461228773d54a81a833a1e7c8e5d96313f82b415. Exact existing role two UPDATE columns + private helper EXEC; 19 data counts/old QA/9 services unchanged, no business command or production mutation. Original QB now finite130 PRODUCT_MAINTENANCE metadata, then C181 original service category fixtures/order/undo; no PUBLISH/v5 dependency. F2 P01/P08-P13 eight new leaves read package delivered targeted checks, no HTTP/browser/real business acceptance. v17 approved implementation D2/F2 continues.

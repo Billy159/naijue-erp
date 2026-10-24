@@ -81,8 +81,26 @@ new SKU has explicit id:null and expectedVersion:null; the server assigns its UU
 and current created_operation_id. Existing coordinate/code identities cannot change.
 Barcode inputs are `{id,barcode,colorId,fitId,sizeId,kind,schemeId,enabled}`. New rows
 use id:null; existing raw binding/provenance cannot be changed. Missing child rows
-are retained, not deleted/recreated. Do not create a Cartesian SKU matrix. Changes
+are retained, not deleted/recreated. Explicit legacy SKU inputs do not imply a Cartesian matrix. Changes
 to a product default scheme never regenerate or rebind existing barcodes.
+
+Approved v17 adds optional `skuSelection: {colorIds: UUID[], fitIds: UUID[]}` only
+to the original V2 CREATE/EDIT command (also with `imageChanges`). Keep `skus` and
+`barcodes` present; a selection-only save uses `skus: []`, without client-created
+SKU codes. IDs must be unique; sets are canonically sorted for the original key.
+The server locks the actual group and enabled selected color/fit references,
+reads all real group sizes, and creates only missing color × fit × size tuples.
+New SKU IDs use the original server allocator and codes `NJNEW-<UUID32>`; no
+barcode or inventory record is generated. Existing IDs, codes and disabled state
+remain unchanged; shrinking/empty selections never delete or disable old SKUs.
+An EDIT with this intent cannot change the persisted product size group.
+Explicit new SKU inputs cannot overlap generated targets. More than 5000 final
+SKUs fails instead of truncating. The existing permission/CAS/original-key and
+single product/SKU/audit/receipt transaction rules apply. Exact replay returns the
+original result without re-reading members or allocating IDs. Unsupported older
+transaction providers return `PRODUCT_SPEC_GENERATION_NOT_READY` (503); real
+reference/group conflicts remain 409 and invalid input 400. This source contract
+does not claim actual PostgreSQL, consumer or deployment acceptance.
 
 DISABLE, RESTORE and DELETE require exactly action, requestKey, id, expectedVersion.
 DELETE retains the product identity/deleted_at and is unavailable without D3's

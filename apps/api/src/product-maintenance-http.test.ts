@@ -34,6 +34,28 @@ const values: ProductWriteValues = { productCode: "SYNTHETIC_01", name: "SYNTHET
   prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === "retail_price" ? "0.00" : null])) as ProductWriteValues["prices"] };
 const command: ProductMaintenanceCommand = { action: "CREATE", requestKey: "synthetic-http-create", values,
   skus: [{ id: null, expectedVersion: null, skuCode: "EXACT-SKU", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true }], barcodes: [] };
+test("v17 HTTP original V2 accepts selection without client SKU codes; unsupported original provider is503 and unrelated wire fields remain400", async t => {
+  let current = true, granted = true, mutations = 0;
+  const unexpected = async (): Promise<never> => { mutations++; throw Error("UNEXPECTED_WRITE"); };
+  const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => current ? actor : null, dependencies: {
+    now: () => "2026-10-25T00:00:00Z", newId: kind => sid(kind, 17100), unitOfWork: { seasonContract: "product-season-array-v1", async transaction(work) {
+      return work({ evidence: { async assertAllowed() { if (!granted) throw new DomainError("FORBIDDEN", "PRIVATE_ROLE"); }, async getReceipt() { return undefined; }, complete: unexpected },
+        async load() { return undefined; }, readReferences: unexpected, readCandidates: unexpected, validateReferences: unexpected, assertCanDelete: unexpected, putProduct: unexpected, putSku: unexpected, putBarcode: unexpected });
+    } }
+  } }));
+  const { seasonId, ...old } = values;
+  const body = { ...command, values: { ...old, seasonIds: [seasonId] }, skus: [], barcodes: [], skuSelection: { colorIds: [id(6)], fitIds: [id(7)] } };
+  const response = await app.inject({ method: "POST", url: "/products/v2/commands", payload: body });
+  assert.equal(response.statusCode, 503, response.body); assert.equal(response.json().error.code, "PRODUCT_SPEC_GENERATION_NOT_READY");
+  assert.equal(response.headers["cache-control"], "no-store"); assert.equal(mutations, 0);
+  for (const payload of [{ ...body, actor }, { ...body, skuSelection: { ...body.skuSelection, sizes: [id(8)] } }, { ...body, skuSelection: { ...body.skuSelection, skuCode: "INVENTED" } }])
+    assert.equal((await app.inject({ method: "POST", url: "/products/v2/commands", payload })).statusCode, 400);
+  assert.equal((await app.inject({ method: "POST", url: "/products/commands", payload: { ...command, skuSelection: body.skuSelection } })).statusCode, 400);
+  granted = false; assert.equal((await app.inject({ method: "POST", url: "/products/v2/commands", payload: body })).statusCode, 403);
+  current = false; assert.equal((await app.inject({ method: "POST", url: "/products/v2/commands", payload: body })).statusCode, 401);
+  assert.equal(mutations, 0); assert.equal(app.server.listening, false);
+});
 test("W17 media extended V2 is closed before mutation without actual stage/driver capability and malformed changes stay 400", async t => {
   let touched = 0; const unexpected = async (): Promise<never> => { touched++; throw Error("UNEXPECTED_MUTATION"); };
   const tx = { evidence: { async assertAllowed() {}, async getReceipt() { return undefined; }, complete: unexpected }, load: unexpected, readReferences: unexpected,
