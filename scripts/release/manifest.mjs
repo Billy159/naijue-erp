@@ -50,8 +50,10 @@ const roleExtensions = {
   evidence: new Set(['.json']),
 };
 const productEditorMediaRuntimeSource = 'apps/web/src/products/product-editor-media.tsx';
-const reviewedRuntimeMediaMember = (value, role) => role === 'frontend'
-  && /^web\/chunks\/product-editor-media-[A-Z0-9]{8}\.js$/.test(value);
+const reviewedRuntimeSource = (value, role) => role !== 'frontend' ? null
+  : /^web\/chunks\/product-editor-media-[A-Z0-9]{8}\.js$/.test(value) ? productEditorMediaRuntimeSource
+    : /^web\/chunks\/original-workbook-[A-Z0-9]{8}\.js$/.test(value) ? 'apps/web/demo-replica/frontend/runtime/common/original-workbook.ts' : null;
+const reviewedRuntimeMember = (value, role) => reviewedRuntimeSource(value, role) !== null;
 export function relativeName(value, allowDot = false) {
   requireRelease(typeof value === 'string' && value.length <= 1024 && (allowDot && value === '.'
     || value.length > 0 && !value.startsWith('/') && !/[\\\x00-\x20\x7f:]/.test(value)
@@ -68,12 +70,12 @@ function allowedSource(value) {
     && !(index === segments.length - 1 && (registeredProductionStyles.has(value)
       || /\.(?:tsx?|[cm]?js)$/.test(part) && !/synthetic|fixture|(?:^|[.-])test(?:[.-]|$)/i.test(part))))
     && ( /\.(?:tsx?|[cm]?js)$/.test(value) || !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value))
-    && !/\.(?:test|spec)\.[^.]+$/i.test(value) && (sourceExtensions.has(path.posix.extname(value))||value===copiedFontLicenseSource), 'NON_PRODUCTION_SOURCE');
+    && !/\.(?:test|spec)\.[^.]+$/i.test(value) && (sourceExtensions.has(path.posix.extname(value))||value===copiedFontLicenseSource||value==='apps/web/demo-replica/frontend/runtime.html'), 'NON_PRODUCTION_SOURCE');
 }
 export function allowedMember(value, role) {
   relativeName(value);
   if (role === 'migration' && (reviewedMigrationMembers.has(value) || [...runtimeSqlPatches.values()].includes(value))) return;
-  const runtimeMedia = reviewedRuntimeMediaMember(value, role), segments = value.split('/');
+  const runtimeMedia = reviewedRuntimeMember(value, role), segments = value.split('/');
   requireRelease(Object.hasOwn(roleExtensions, role) && (roleExtensions[role].has(path.posix.extname(value))||role==='frontend'&&value===copiedFontLicenseMember)
     && !segments.some((part, index) => (excludedSegment.test(part)
       && !(runtimeMedia && index === segments.length - 1) && value!=='web/source-styles/ui-tokens.css') || part === 'node_modules')
@@ -242,7 +244,7 @@ function htmlResources(html) {
 }
 
 // One exact frozen icon in its two document CSS consumers, never a general data-URL allowance.
-const inlineDocumentCssSources = new Set(['apps/web/src/sales/detail.css', 'apps/web/src/current-form/transfer-proposal.css']);
+const inlineDocumentCssSources = new Set(['apps/web/src/sales/detail.css', 'apps/web/src/current-form/transfer-proposal.css', 'apps/web/demo-replica/frontend/golden-consistency.css']);
 function exactEmbeddedCssSvg(kind, owner, item, bytes) {
   return kind === 'frontend' && item?.external === true && item.kind === 'url-token'
     && path.posix.extname(owner) === '.css' && typeof item.path === 'string'
@@ -283,7 +285,8 @@ async function verifyGraph(kind, component, context) {
         const imported = graphPath(sourceRoot, component.workingDirectory, item.path);
         allowedSource(imported);
         requireRelease(Object.hasOwn(graph.inputs, item.path) || Object.keys(graph.inputs).some(candidate => graphPath(sourceRoot, component.workingDirectory, candidate) === imported), 'UNRESOLVED_GRAPH_INPUT');
-      } else requireRelease((inlineDocumentCssSources.has(relative)
+      } else requireRelease((kind==='frontend' && relative==='node_modules/jszip/dist/jszip.min.js' && item.external===true && item.kind==='import-statement' && item.path==='<runtime>')
+        || (inlineDocumentCssSources.has(relative)
         && exactEmbeddedCssSvg(kind, relative, item, sourceBytes.get(relative)))
         || (kind === 'backend' && (nodeBuiltins.has(item.path)
         || Object.hasOwn(packageJson.dependencies ?? {}, dependencyName(item.path)))), 'UNDECLARED_EXTERNAL_DEPENDENCY');
@@ -304,10 +307,10 @@ async function verifyGraph(kind, component, context) {
     requireRelease(files.get(relative)?.role === kind && !outputs.has(relative) && details && details.bytes === files.get(relative).bytes
       && details.inputs && typeof details.inputs === 'object' && !Array.isArray(details.inputs), 'GRAPH_OUTPUT_NOT_PACKAGED');
     for (const input of Object.keys(details.inputs)) requireRelease(inputs.has(graphPath(sourceRoot, component.workingDirectory, input)), 'UNKNOWN_OUTPUT_INPUT');
-    if (reviewedRuntimeMediaMember(relative, kind)) {
+    if (reviewedRuntimeMember(relative, kind)) {
       requireRelease(details.entryPoint !== undefined
-        && graphPath(sourceRoot, component.workingDirectory, details.entryPoint) === productEditorMediaRuntimeSource
-        && sources.has(productEditorMediaRuntimeSource),
+        && graphPath(sourceRoot, component.workingDirectory, details.entryPoint) === reviewedRuntimeSource(relative, kind)
+        && sources.has(reviewedRuntimeSource(relative, kind)),
       'RUNTIME_MEDIA_CHUNK_SOURCE_REQUIRED');
     }
     if (details.entryPoint !== undefined) {
@@ -342,7 +345,7 @@ async function verifyGraph(kind, component, context) {
   // Require the exact frozen source in this entry's static output closure;
   // an unrelated output or a future dynamic import cannot satisfy the guard.
   for (const [name] of outputs) {
-    if (!reviewedRuntimeMediaMember(name, kind)) continue;
+    if (!reviewedRuntimeMember(name, kind)) continue;
     const pending = [name], visited = new Set(); let sourcePresent = false;
     while (pending.length && !sourcePresent) {
       const current = pending.pop();
@@ -351,7 +354,7 @@ async function verifyGraph(kind, component, context) {
       const details = outputs.get(current);
       sourcePresent = Object.entries(details.inputs).some(([input, contribution]) => Number.isSafeInteger(contribution?.bytesInOutput)
         && contribution.bytesInOutput > 0
-        && graphPath(sourceRoot, component.workingDirectory, input) === productEditorMediaRuntimeSource);
+        && graphPath(sourceRoot, component.workingDirectory, input) === reviewedRuntimeSource(name, kind));
       for (const item of details.imports) {
         if (item.external || item.kind !== 'import-statement') continue;
         const target = [path.resolve(workingAbsolute, item.path), path.resolve(buildRoot, path.dirname(current), item.path)]

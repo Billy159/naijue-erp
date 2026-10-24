@@ -47,7 +47,7 @@ body.inventory-workbench #gold-drawer .ledger-scroll table{font:12px Arial,"Ping
 @media(max-width:1100px){
  .iw-query-row{grid-template-columns:minmax(220px,2fr) minmax(135px,1fr) minmax(135px,1fr)}
  .iw-query-actions{display:flex;grid-column:1/-1;justify-content:flex-start;gap:8px;margin:0;height:32px}
- .iw-query-actions .iw-filter-toggle{width:116px}.iw-query-actions [data-i=query]{width:58px}.iw-query-actions .iw-reset{width:82px}
+ .iw-query-actions .iw-filter-toggle{width:116px}.iw-query-actions :is([data-i=query],.iw-query-button){width:58px}.iw-query-actions .iw-reset{width:82px}
  .iw-extra{width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:740px){.iw-query-row{grid-template-columns:repeat(2,minmax(0,1fr))}.iw-query-row .iw-product-field{grid-column:1/-1}.iw-extra{grid-template-columns:1fr 1fr}.iw-extra-field{flex-direction:column;align-items:stretch;gap:3px}.iw-extra-field .iw-select{flex:none;width:100%}}.iw-quick-detail:hover{text-decoration:underline}

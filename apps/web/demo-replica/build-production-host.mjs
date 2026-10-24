@@ -23,7 +23,7 @@ export async function buildProductionHost({configuration,outdir,sourceCheckpoint
   builder.onResolve({filter:/\?(?:inline|inventory-drawer-retry)$/},async args=>{const inline=args.path.endsWith('?inline'),request=args.path.slice(0,args.path.lastIndexOf('?')),resolved=await builder.resolve(request,{resolveDir:args.resolveDir,kind:args.kind});if(resolved.errors.length)return {errors:resolved.errors};const namespace=inline?'replica-inline-style':'replica-drawer-retry';namespaceSources.set(namespace+':'+resolved.path,relative(resolved.path));return {path:resolved.path,namespace};});
   builder.onLoad({filter:/.*/,namespace:'replica-inline-style'},async args=>({contents:await input(args.path),loader:'text'}));
   builder.onLoad({filter:/.*/,namespace:'replica-drawer-retry'},async args=>({contents:await input(args.path),loader:'tsx',resolveDir:path.dirname(args.path)}));
-  builder.onLoad({filter:/.*/,namespace:'file'},async args=>{const bytes=await input(args.path);if(args.path===path.join(frontend,'inventory-workbench.css'))return {contents:bytes.toString().replace('.iw-query-actions [data-i=query]','.iw-query-actions :is([data-i=query],.iw-query-button)'),loader:'css',resolveDir:frontend};return undefined;});
+  builder.onLoad({filter:/.*/,namespace:'file'},async args=>{await input(args.path);return undefined;});
  }}]});
  // Preserve the raw namespace identities, and give the existing release checker physical input names.
  await writeFile(path.join(outdir,'metafile-raw.json'),JSON.stringify(result.metafile,null,2)+'\n');

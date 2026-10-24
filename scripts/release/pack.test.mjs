@@ -68,14 +68,14 @@ async function fixture(name) {
 }
 const rejects = async (f, code) => assert.rejects(packRelease(f.options), error => error.code === code);
 
-async function runtimeMediaChunkFixture(label, mutation) {
+async function runtimeMediaChunkFixture(label, mutation, workbook = false) {
   const f = await fixture('runtime-media-' + label);
-  const sourceName = 'apps/web/src/products/product-editor-media.tsx';
+  const sourceName = workbook ? 'apps/web/demo-replica/frontend/runtime/common/original-workbook.ts' : 'apps/web/src/products/product-editor-media.tsx';
   const sourceText = 'export const ProductEditorMedia = () => null;\n';
   await put(f.sourceRoot, sourceName, sourceText);
   const sourceRecord = record(sourceName, sourceText); f.source.files.push(sourceRecord);
   const component = f.build.components.frontend, graph = JSON.parse(f.buildData[component.metafile]);
-  const member = 'web/chunks/product-editor-media-ABCDEFG2.js', emitted = 'export const ProductEditorMedia=()=>null;\n';
+  const member = workbook ? 'web/chunks/original-workbook-ABCDEFG2.js' : 'web/chunks/product-editor-media-ABCDEFG2.js', emitted = 'export const ProductEditorMedia=()=>null;\n';
   const output = path.relative(f.sourceRoot, path.join(f.buildRoot, member)).split(path.sep).join('/');
   graph.inputs[sourceName] = { bytes: Buffer.byteLength(sourceText), imports: [] };
   graph.inputs[component.entrySource].imports.push({ path: sourceName, kind: 'dynamic-import' });
@@ -325,4 +325,13 @@ test('retired rewritten entry cannot be a new release entry', async () => {
  const f=await fixture('retired-entry');f.build.components.frontend.entrySource='apps/web/src/production-host/entry.ts';
  const bytes='export const retired=1;\n';f.source.files.push(record('apps/web/src/production-host/entry.ts',bytes));await put(f.sourceRoot,'apps/web/src/production-host/entry.ts',bytes);await f.save();
  await assert.rejects(validateRelease(f.options),error=>error.code==='PRODUCTION_ENTRY_SOURCE_REQUIRED');
+});
+
+test('copied workbook lazy chunk requires its exact source and static positive contribution', async () => {
+ for(const mutation of [undefined,'facade-static','wrong-entry','zero-source','facade-dynamic','facade-unrelated']){
+  const f=await runtimeMediaChunkFixture('workbook-'+(mutation??'valid'),mutation,true);
+  if(mutation===undefined||mutation==='facade-static')assert.equal((await validateRelease(f.options)).manifest.buildId,'tool-check-1');
+  else await assert.rejects(validateRelease(f.options),error=>error.code==='RUNTIME_MEDIA_CHUNK_SOURCE_REQUIRED');
+ }
+ for(const path of ['web/chunks/original-data-ABCDEFG2.js','web/originals/original-workbook-ABCDEFG2.js'])assert.throws(()=>allowedMember(path,'frontend'),error=>error.code==='NON_RELEASE_MEMBER');
 });
