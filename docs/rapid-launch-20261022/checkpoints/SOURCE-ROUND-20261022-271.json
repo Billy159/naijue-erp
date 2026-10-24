@@ -1,0 +1,71 @@
+{
+  "atUtc": "2026-10-24T02:15:38.806345+00:00",
+  "parent": "5bed6b696f5e1210fa1002db2c0cb02a641f925e",
+  "taskId": "P19_COMPLETE_NATIVE_SCHEME_LIST_AND_MODAL_SOURCE_MIGRATION",
+  "files": [
+    {
+      "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+      "bytes": 5265,
+      "sha256": "4e27c93cb5e18b6cdd7bb7ae07dac58b3ba58248654f603e87737bd2652012ec",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
+      "bytes": 2667,
+      "sha256": "efa3b058d4b1f837fc9a19933b19f4d7293324a0aeaf742d0de2eacd17f0c439",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+      "bytes": 19768,
+      "sha256": "2d637a44ef7df46618bb9e54cc7fca822f2884937da763c69e744a212131f4cd",
+      "owner": "F4"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F4/P19-NATIVE-SCHEMES-01/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "7702f6ef42e4e3688491d56217c8fdde79f58723abc2a052e809d746e8963ac6",
+  "ownerDelivery": {
+    "taskId": "F04/P19-NATIVE-SCHEMES-01",
+    "atUtc": "2026-10-24T02:10:34.985422+00:00",
+    "scope": "Frozen native barcode scheme page/table/view with existing read-only dictionary ports. No scheme seed/import/current designation/default inference/write action.",
+    "changedFiles": [
+      {
+        "path": "apps/web/src/barcode-schemes/barcode-schemes-page.tsx",
+        "bytes": 5265,
+        "sha256": "4e27c93cb5e18b6cdd7bb7ae07dac58b3ba58248654f603e87737bd2652012ec"
+      },
+      {
+        "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
+        "bytes": 2667,
+        "sha256": "efa3b058d4b1f837fc9a19933b19f4d7293324a0aeaf742d0de2eacd17f0c439"
+      },
+      {
+        "path": "apps/web/src/barcode-schemes/barcode-schemes.css",
+        "bytes": 19768,
+        "sha256": "2d637a44ef7df46618bb9e54cc7fca822f2884937da763c69e744a212131f4cd"
+      }
+    ],
+    "changes": [
+      "Native Frozen workspaceHead/table/7columns/row action, preserve real page/total pagination adapter only when needed.",
+      "Existing Arco catalogue modal owns focus/identity/cancel; native pc-modal-body/dl/pc-modal-foot/button and full final styles. Raw stored text/type/length/status from existing dictionary DTO only; null remains 未提供.",
+      "69 applicable Frozen CSS rules from 9 actual ordered sources including product-arco injected modal; root scope and actual .demo-page ancestor aliases only; ruleDescription keeps stored line breaks."
+    ],
+    "checks": {
+      "strict": "PASS Node24.21.0 strict/noEmit exact page entry with real dependencies",
+      "readerUnit": "PASS Node24.21.0 dictionary HTTP reader 3/3; no invented applicability or static arrays",
+      "dom": "PASS reused original F2 SCHEME-UI-P19 module exercise plus new native DOM/body/footer assertions; same-name native identity, long detail, null/wrong-id, real query 41row pages and50/20size, stale503/retry, mask/Tab/Esc/footer/focus and scope/late result cleanup",
+      "css": "PASS css-tree parse,69 selected blocks original declarations preserved"
+    },
+    "notTested": [
+      "No Chrome/Demo pixel/layout/actual cold1-repeat2 or real API/PG/authenticated role/scheme initialization.",
+      "No production build/serve/deploy/Git performed by F4.",
+      "No full P19 actual page/overlay acceptance claimed."
+    ],
+    "blockers": [
+      "Six-scheme initialization proposal remains WAITING_EXPLICIT_HUMAN_CONFIRMATION_NOT_EXECUTABLE/executed:false. This does not block native read-only source; do not populate UI with proposed rows."
+    ],
+    "next": "C freeze three exact leaves; QF2 necessary new native list/view source+actual in one fixed candidate. P16/P18 already native/final styles with valid c230-c240 scoped evidence: keep without duplicate migration; F4 awaits only concrete QF2 finding or approved category reorder contract.",
+    "priorPackages": "SOURCE266 colors/fits four leaves kept fixed; P14 last delivered report governs two own leaves."
+  },
+  "qualification": "Complete native list7cols and same existing catalogue carrier modal/body/footer69rules/9sources; current actual DTO/ID/unknown facts/late result and server pagination retained. Owner necessary source checks adopted, originalQF2 source and future runtime actual pending. Six real schemes still previous human question unapproved, no seed or new rule. Not in fixed266."
+}

@@ -1,4 +1,3 @@
-import { UIButton } from '../components/standard-controls.tsx';
 import { useMemo, useSyncExternalStore } from 'react';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
 import type { QueryRead } from '../loading/latest-query.ts';
@@ -12,9 +11,9 @@ export function BarcodeSchemeView(props: DictionaryPageProps & { readonly scheme
     const result = validateDictionaryScheme(value); if (result.id !== read.parameters.schemeId) throw new Error('Invalid scheme target'); return result;
   }, [props.reader, props.schemeId]);
   const owner = useDictionaryOwner(props, execute, { schemeId: props.schemeId });
-  return <StandardOverlay presentation="catalogue" title="查看条码方案" className="erp-scheme-modal" closeLabel="关闭查看条码方案" close={props.close} maskClosable={false}
-    footer={close => <UIButton onClick={close}>关闭</UIButton>}>
-    {owner ? <SchemeDetail owner={owner} schemeId={props.schemeId} /> : <p role="status">正在准备读取…</p>}
+  return <StandardOverlay presentation="catalogue" title="查看条码方案" className="erp-scheme-modal pc-arco-modal iw-arco-controls pc-native-scheme-modal" closeLabel="关闭查看条码方案" close={props.close} maskClosable={false}
+    footer={close => <div className="pc-modal-foot"><button type="button" className="btn" onClick={close}>关闭</button></div>}>
+    <div className="pc-modal-body">{owner ? <SchemeDetail owner={owner} schemeId={props.schemeId} /> : <p role="status">正在准备读取…</p>}</div>
   </StandardOverlay>;
 }
 function SchemeDetail({ owner, schemeId }: { readonly owner: NonNullable<ReturnType<typeof useDictionaryOwner<DictionarySchemeQuery, import('../product-settings/size-groups/contracts.ts').DictionaryBarcodeScheme | null>>>; readonly schemeId: string }) {
