@@ -52,6 +52,8 @@ export interface DocumentResponsibleStaffPage {
   readonly items: readonly { readonly id: string; readonly name: string }[];
 }
 export interface DocumentResponsibleStaffCapability {
+  /** Port-supported readers only; this is presentation metadata, never server authorization. Omission preserves ADMIN-only. */
+  readonly allowedRoles?: readonly ('ADMIN' | 'WAREHOUSE' | 'SALESPERSON')[];
   readonly readCandidates: (read: QueryRead<DocumentResponsibleStaffQuery>) => Promise<DocumentResponsibleStaffPage>;
 }
 export interface SalesRouteConfiguration {

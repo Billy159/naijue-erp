@@ -1,0 +1,17 @@
+{
+  "atUtc": "2026-10-24T14:26:21.970104+00:00",
+  "parent": "05a9759fe968c1294e0f21f2f4183b195984ff24",
+  "taskId": "C_DOCUMENT_RESPONSIBLE_EXISTING_REFERENCE_ROLE_PORT",
+  "files": [
+    {
+      "path": "apps/web/src/application/contracts.ts",
+      "owner": "C",
+      "bytes": 13568,
+      "sha256": "a92d6f1ba59e306c3180653467e404ac1f0cc6960a47200595067cfd710f343e"
+    }
+  ],
+  "stage": "OPTIONAL_SUPPORTED_READ_ROLES_METADATA_ONLY_DEFAULT_ADMIN_UNCHANGED_NOT_AUTHORITY",
+  "basis": "T05 line61 and current-form-reader215-222 existing three-role in-job employee reference port; optional frontend contract only",
+  "wholePageAccepted": false,
+  "deployed": false
+}
