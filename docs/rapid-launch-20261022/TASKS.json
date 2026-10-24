@@ -38,9 +38,9 @@
     "lastVerifiedRemoteCommit": "a333e1519ad91471cb433f5098f5d4f273cab4a1"
   },
   "concurrency": {
-    "chats": 10,
+    "chats": 11,
     "controller": 1,
-    "frontendDevelopers": 3,
+    "frontendDevelopers": 4,
     "backendDevelopers": 3,
     "independentReviewers": 3,
     "heavyResourceWindows": "coordinated by C; source development continues concurrently",
@@ -67,8 +67,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "C141 diagnostic rootcause proven; C142 originalsinglefunction repair/newmetadata next; QF295 documentstates parallel",
-      "currentPackage": "145installed297/146exactreaderrorcaptured/147R1successorprepare/298T02fixedandF1twofurtherresidues",
-      "nextReadyPackage": "147onceactualv14metadata -> exactR1ACL/purposes/coreminimumgate ->131/128; combinedfrontendresidualcandidateafterQFmodulefinal",
+      "currentPackage": "147actualR1v14/QB232+D1COREACLgap;299UIactual/QF3residuals;whiteviewportcleanupadopted",
+      "nextReadyPackage": "Close originalCOREminimumexecutionidentity/purpose against147ACL then131/128;QF299actualonlyaffected",
       "currentDependencies": "Formal URL unchanged, fullMAIN unbound, current112 backup/7containers protected",
       "fastToolVerified": false
     },
@@ -87,8 +87,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "275audit+277asyncoutput delivered/adopted; existingT03 fullsame-document fixture input seam now dispatched withoutRwrite",
-      "currentPackage": "chunk140T02extraiwcontrolremovedfixed298;297readonlyS04semantic/disableddatepalette residuals inprogress",
-      "nextReadyPackage": "Release exactremainingleaves;onecombinedcandidate then originalQFminimumresidualactual",
+      "currentPackage": "chunk140141exact3frozen299;QFactualpending",
+      "nextReadyPackage": "OnlyexactQF299failure or originalalreadyreadywork, no duplicatepipeline",
       "currentDependencies": "Chrome仅约束actual；原已有接口/UI继续，真实保存要隔离证据",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -168,8 +168,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "C141 true heapversion witness fix; new exact QAonlyrepair leaf registered",
-      "currentPackage": "Finite realR1v14minimumCOREACL/purpose gap versus existingC109/QB198,wait147actual; noDB/sourcegrant",
-      "nextReadyPackage": "Exact147actualACL delta only;newwrite semantics beyondapprovedv14 must beexplicit",
+      "currentPackage": "Current147realACL minimumCORElockedreads/write/emptyguard/purpose contractmatrix, noDBmutations",
+      "nextReadyPackage": "Concreteapprovedscope and exactgap proposal;do notinferfromQA144 or bypasscurrentruntime",
       "currentDependencies": "Actual target/catalog/role/CORE receipt supplied by C; no invented readiness",
       "fastToolVerified": false
     },
@@ -224,10 +224,10 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "SoleChrome2973P2andminimalactualsharedconsumer",
+      "currentWork": "SoleChrome299three residuals afterfreshhumanhandoff;naturalviewport724",
       "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
       "matrixOwner": true,
-      "currentPackage": "v1093P2OPENpending297actual;oldvalidstatesreused",
+      "currentPackage": "v1103affectedlimitedfactsadopted;whiteenvironment56pxresolved;299nativepending",
       "nextReadyPackage": "Containing fixednewcandidate minimum3affected retest, reuse priorvalidstates",
       "fastToolVerified": false
     },
@@ -244,8 +244,8 @@
       "sourceWriteEnabled": false,
       "fastRequested": false,
       "currentWork": "228accepted actual138 metadata only; waiting precise newheapfixsource, no repeatedreview",
-      "currentPackage": "231144actualPASSadopted;126nonewmetadata",
-      "nextReadyPackage": "OnlynewR1actualmetadata aftersuccessor,no146operationalduplicateQA",
+      "currentPackage": "232newR1installedv14catalog/ACLreview only",
+      "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Await exact new artifacts; no repeated prior suites",
       "fastToolVerified": false
     },
@@ -1141,9 +1141,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T07:56:47.880172+00:00",
-  "stage": "ACTIVE_145_LINUX297_ACTUAL_PASS_146_COUNTS42501_CAPTURED_147_ROLE_CORRECT_PRECHECK_PREPARING_298_T02_FIXED",
-  "lastVerifiedRemoteCommit": "ea4c59affe320bb68f3dc22a50afa84e2f9addb4",
+  "updatedAt": "2026-10-24T08:20:36.951732+00:00",
+  "stage": "ACTIVE_R1_V14_147_ACTUAL_INSTALLED_READONLY_ROLE_GAP_299_UI_SERVED_QF_RESIDUAL_RETEST_WHITE_VIEWPORT_RESTORED",
+  "lastVerifiedRemoteCommit": "30a7f6e666519b5809cf14e61f97b9b623dd66d0",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1587,7 +1587,7 @@
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
-    "schema": "R1v11/122 actual126before;patchNOTATTEMPTED. QA1452/123 with144committedsyntheticCORE,notrealR1.",
+    "schema": "R1actual147 v14/123/canonical54e20a2065106d66c3a6866b77999540328abb501bfdd20cfc896270fe227e3d;55business tables0. QA1421452/123/144syntheticCORE preserved. RealR1COREnotexecuted.",
     "runtimeAcl": "C38_BASELINE_READ_AUTH_PLUS_EXACT_CLASSIFIER_EXECUTE_AND_SOURCE3_SELECT_ONLY",
     "realAccountsCaptured": 49,
     "accountsWithExactOldEmployeeLink": 45,
@@ -1603,27 +1603,27 @@
     "deploymentTools": "C63_ACTUAL_PRODUCTION_CI_NATIVE_APP_PROXY_KEY_RESOURCES_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 298,
-      "commit": "d26108463fdd6d04afce7632e6f00396d66b6dcc",
-      "latestServedPreviewRound": 297,
+      "round": 299,
+      "commit": "f43e943317825951ef1f4a28c2396f8bad995eb3",
+      "latestServedPreviewRound": 299,
       "qualification": "New233preparationonly; 229actualQAandproductionLinux actual separatelybound"
     },
     "currentPreview": {
-      "candidateId": "ui-preview-f22b301-01",
-      "source": "f22b30126bce13323f8b3c80b6ef2bc3ab1d15a0",
-      "build": "ui-preview-f22b301-01-build01",
-      "url": "http://127.0.0.1:57888/synthetic-unified.html",
-      "htmlBytes": 3594645,
-      "htmlSha256": "a22b1bef7a43aa7556954bc1cd58b36d4942b1e181ec856649a4ed12175b7e20",
+      "candidateId": "ui-preview-f43e943-01",
+      "source": "f43e943317825951ef1f4a28c2396f8bad995eb3",
+      "build": "ui-preview-f43e943-01-build01",
+      "url": "http://127.0.0.1:57889/synthetic-unified.html",
+      "htmlBytes": 3595098,
+      "htmlSha256": "a94d091b47487bd9ea1bc6e5454b95342a057a6f2484410c51a83acb6e38b320",
       "actualInputs": 415,
       "actualModules": 1370,
       "buildExit": 0,
-      "HTTP": "3exact200bodypinsandidentityheaders",
-      "pid": 24181,
-      "execSession": 77681,
+      "HTTP": "3bodypinsandidentityheads200",
+      "pid": 28729,
+      "execSession": 35595,
       "syntheticOnly": true,
       "wholePagePass": false,
-      "actualBrowser": "QF3affectedPENDING"
+      "actualBrowser": "ORIGINAL_QF_THREE_RESIDUALS_IN_PROGRESS"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -1866,10 +1866,17 @@
       "owner": "QF",
       "candidateTarget": "5B69FD73D86A2D051EE5D18378D8C767",
       "demoTarget": "F0B417F6BC85EE5917A5286AAD0FB04A",
-      "scope": "2973P2native/minimalactualsharedconsumers",
+      "scope": "299onlyT02dategeometry/S04readonlysemantic/disabledpalette",
       "otherReviewers": "NO_CHROME",
       "oldTargetsMissingCause": "UNKNOWN",
-      "protectedTargetsNotTouched": true
+      "protectedTargetsNotTouched": true,
+      "viewportPolicy": "NATURAL_MATCHING_VIEWPORT_DEFAULT_TEMPORARY_OVERRIDE_MUST_CLEAR_ON_RELEASE",
+      "actualNaturalViewport": [
+        1470,
+        724,
+        2
+      ],
+      "humanHandoff": "call_8dd15120aa754a17bc3a92cc4eb95a1a"
     },
     "qbToolState": "RECOVERED originalChat191-196 actualreviews received, no manualresume gate now",
     "v11Actual": {
@@ -2151,6 +2158,65 @@
       "engineSha256": "c7f7cf372d53d4dfc07ec0c51ac200be05516272310e7c77829c2e53489eec29",
       "notA146TcpPass": true,
       "next": "147authorizedowner same56COUNT /runtime ownACL, no COUNT-drivenGRANT"
+    },
+    "r1Schema147": {
+      "status": "PASS_R1_V14_PATCH_ONE_HELPER_EXECUTE_REAL_RUNTIME_TCP_METADATA_ONLY",
+      "elapsedSeconds": 3.3240023718681186,
+      "source": "95248dd5dcfb6645c3f8bd57d6bd142a9710e58d",
+      "patchOutcome": "COMMIT_RETURNED_SUCCESS",
+      "routines": 123,
+      "catalogSha256": "54e20a2065106d66c3a6866b77999540328abb501bfdd20cfc896270fe227e3d",
+      "engineBytes": 37737,
+      "engineSha256": "545e2144fc02df8699c08bd89942d489942e4cb08e803cc557b1e5a0d7e4cf19",
+      "metadataBytes": 791,
+      "metadataSha256": "25f6e448d2da94488dd7f88d274ac2667636735c77ab801247f97e33e56c1e7a",
+      "catalogBytes": 1393868,
+      "catalogFileSha256": "f9c98cc66501c70b8b84328eec048dd1a0d3c516a25d1e85482b0c3ee1bb0157",
+      "aclBytes": 58485,
+      "aclSha256": "947fcfd50bf1e264de2b735a853b072a76df998055cc2894a04600b0e68c5514",
+      "ownerOperationalTablesCheckedBeforeAfter": 56,
+      "ownerBusinessEmptyBeforeAfter": 55,
+      "runtimeCounts": "NOT_GRANTED_NOT_EXECUTED",
+      "tablesWithoutFullTableSelect": 13,
+      "runtimeTableColumnAclsPreserved": true,
+      "newHelperExecuteOnly": true,
+      "runtimeTcpSetRole": false,
+      "runtimeTcpCleanup": true,
+      "ownedSessionsRemaining": 0,
+      "oldQaSevenPreserved": true,
+      "COREExecuted": false,
+      "BINDExecuted": false,
+      "businessDML": false,
+      "newRoleCreated": false,
+      "serviceSwitch": false,
+      "qbReview": "ORIGINAL_QB232_PENDING_IMPORT_STAGE_NOT_AUTHORIZED"
+    },
+    "browserViewportCleanup": {
+      "humanIssue": "Bottomwhite band inprovidedDemo+candidate Chrome screenshots",
+      "cause": "TargetEmulationfixed668 vsactualnatural724;56CSSpxoutsidepage",
+      "resolved": true,
+      "before": [
+        1470,
+        668,
+        2
+      ],
+      "after": [
+        1470,
+        724,
+        2
+      ],
+      "windowBounds": [
+        1470,
+        845
+      ],
+      "windowUnchanged": true,
+      "currentValuesScrollFocusURLPreserved": true,
+      "noNavigationReloadOrKeys": true,
+      "releaseAddonBytes": 5770,
+      "releaseAddonSha256": "c1d227dae8c649260c1fc47eddedd1d1b0ef4b27e6a33ea0a0dae446178e34a3",
+      "sourceCodeChangeNeeded": false,
+      "oldEvidencePinsUnchanged": true,
+      "latestHumanWindowHandoff": "call_8dd15120aa754a17bc3a92cc4eb95a1a explicit窗口已交回继续验收"
     }
   },
   "supplementalRoles": {
@@ -4203,27 +4269,27 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T07:56:47.880172+00:00",
-    "sourceRound": 298,
-    "sourceCheckpoint": "d26108463fdd6d04afce7632e6f00396d66b6dcc",
+    "atUtc": "2026-10-24T08:20:36.951732+00:00",
+    "sourceRound": 299,
+    "sourceCheckpoint": "f43e943317825951ef1f4a28c2396f8bad995eb3",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "candidateId": "ui-preview-f22b301-01",
-      "source": "f22b30126bce13323f8b3c80b6ef2bc3ab1d15a0",
-      "build": "ui-preview-f22b301-01-build01",
-      "url": "http://127.0.0.1:57888/synthetic-unified.html",
-      "htmlBytes": 3594645,
-      "htmlSha256": "a22b1bef7a43aa7556954bc1cd58b36d4942b1e181ec856649a4ed12175b7e20",
+      "candidateId": "ui-preview-f43e943-01",
+      "source": "f43e943317825951ef1f4a28c2396f8bad995eb3",
+      "build": "ui-preview-f43e943-01-build01",
+      "url": "http://127.0.0.1:57889/synthetic-unified.html",
+      "htmlBytes": 3595098,
+      "htmlSha256": "a94d091b47487bd9ea1bc6e5454b95342a057a6f2484410c51a83acb6e38b320",
       "actualInputs": 415,
       "actualModules": 1370,
       "buildExit": 0,
-      "HTTP": "3exact200bodypinsandidentityheaders",
-      "pid": 24181,
-      "execSession": 77681,
+      "HTTP": "3bodypinsandidentityheads200",
+      "pid": 28729,
+      "execSession": 35595,
       "syntheticOnly": true,
       "wholePagePass": false,
-      "actualBrowser": "QF3affectedPENDING"
+      "actualBrowser": "ORIGINAL_QF_THREE_RESIDUALS_IN_PROGRESS"
     },
     "nextPreview": {
       "status": "CURRENT297_SERVED",
@@ -4233,7 +4299,7 @@
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
-    "github": "Verifiedea4c59affe320bb68f3dc22a50afa84e2f9addb4 after oneAPI tree timeout preserved; reusedfirst uploadedsourceobject and boundedresumed onlymissingcontrolcommit,nonforceFF exact.298+thisrecordpushnext.",
+    "github": "Verified30a7f6e666519b5809cf14e61f97b9b623dd66d0;299+thisrecordfinitepushnext",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -4262,9 +4328,9 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "146 captured exactCOUNTS42501 after originalruntimeTCP/RR/122/source/target53ea prechecks. Safe rollback/release/endtrue/7same.147 originalR1schema successor prepares moving unchanged56counts to authorizedowner, same55emptyguard remains. Runtime only ownmetadata/ACL observation, no blanketSELECT. Original128OFF pending actualnewR1ACL/purpose/minimumCOREpermission evidence;D1finitegapmatrixprepares.",
+    "backend": "147actualCOMMIT0/3.3240023718681186s R1fullv14/123/newcanonical54e20a2065106d66c3a6866b77999540328abb501bfdd20cfc896270fe227e3d/privatehelper5ca EXECUTE. Ownerexistingidentity prepost56counts55business0/26migrations; runtimeTCPnoSETROLE/source/identity/readonlyCOMMIT/release/end/owned0/oldQA7same. No tableACL widening/CORE/BIND/data/init/publicswitch. OriginalQB232onlynewinstalledmetadata review; D1finiteCOREminACL/purpose proof gap inprogress,real128OFF. Runtimehas13tableswithoutfullSELECT and originalCORElock/write permissions notimplied.",
     "productionBuild": "145actual297 Linuxci/nativePASS0/25.982770325848833s,111records/payload5baa464fa125ec4035a290a0c1f1075116b7bfa520a83c2c8450717b0ca40aac/Linuxx64Node24.21Sharp0.35.5vips8.18.7/7same.0DB/appstart/publicswitch. Formalarchive1339969/daf99b... manifestcd033306... remainsexact297,not298.",
-    "actualQFBrowser": "QFsolelease297native3P2/minimalactualsharedconsumers,existingcandidate5B at57888/DemoF0,1470x668DPR2scale1;11unknown/protected3unchanged.",
+    "actualQFBrowser": "Newdirecthuman call_8dd15120aa754a17bc3a92cc4eb95a1a explicitly window已交回. QFsolelease2993residuals onexisting5B/F0;natural matching1470x724DPR2 preferred, preserveuserpaymentdraftifany before navigation.",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
@@ -6796,11 +6862,11 @@
     }
   },
   "latestReadySource": {
-    "round": 298,
-    "commit": "d26108463fdd6d04afce7632e6f00396d66b6dcc",
-    "latestServedPreviewRound": 297,
-    "actualBrowserRound": 295,
-    "qualification": "298 oneT02consumer sourcefix only; current297actuallyserved/QFfurtherreadonlytoolbaranddisableddatepalette residues originalF1pending.297formalLinux145actuallypassedonly;R1patchnotattempted."
+    "round": 299,
+    "commit": "f43e943317825951ef1f4a28c2396f8bad995eb3",
+    "latestServedPreviewRound": 299,
+    "actualBrowserRound": 297,
+    "qualification": "299contains298T02+299readonlysemanticanddisableddatepalette;actualbuildHTTPbutnative3residualspending.297formalLinuxinstalled145;R1v14installed147 butCOREpermissions/purpose/data/init/appstartnotready."
   },
   "pendingUserDecision": [
     {
