@@ -87,7 +87,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "323 exact2 product catalogue Host frozen/pushed. Current sales refused/unknown BODY exact3; next approved v16 visible creator/responsible head gap.",
+      "currentWork": "326 optional port available; original v16 visible immutablecreator and responsible staff UI + localUUID chain, sourceWIP excluded from326",
       "currentPackage": "Source307 f0bda2035cc45cc223c493059263fb41946f41a4 exact7 presentationREADY notbrowserPASS",
       "nextReadyPackage": "Solmedium Snormalstates +QF-C314-TRANSFER-REFUSED-SAVE-BODY-01 specificprepared/refused branch andfinalv16typedwrite when ready",
       "currentDependencies": "QF2solecurrent306browser; oldc220UIDate notcurrentbug; currentminimalconsumerproof pending",
@@ -263,7 +263,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original310/QB238 source adopted. Prepare existingCOREQA STAFF all/open read-only actualrunner if same actual not already delivered; no new credential/sample writes.",
+      "currentWork": "167 actualoriginal staff read accepted QB246; source310 unchanged, no duplicate PG/review",
       "currentPackage": "292reader exact2 released/QB225limitedPASS",
       "nextReadyPackage": "ActualCORE audit/sourceconsumer evidence only, old6tests adopted",
       "currentDependencies": "Onlyclosed-no-account semanticswaits; all/opened andothers independent",
@@ -299,11 +299,11 @@
       "prompt": "角色派工提示词/QF-前端独立验收.txt",
       "threadId": "01a161d2-717e-7f50-87bc-73a2d91f90a3",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "medium",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "C322 exclusive browser T refused SAVE minimum regression then S shared BODY states",
+      "currentWork": "C322 final partial and Trefusal limitedclosed/v116 adopted. Current purevisual existing same-state screenshot pairs only NO_GUI",
       "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
       "matrixOwner": true,
       "currentPackage": "v1103affectedlimitedfactsadopted;whiteenvironment56pxresolved;299nativepending",
@@ -324,7 +324,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "243 proposal adopted;244 actual165 ACL/catalogue delta review only, no purpose signed.",
+      "currentWork": "246 actual167 limitedread done; no queued duplicate. Next original actualnewbusiness/source evidence only",
       "currentPackage": "232newR1installedv14catalog/ACLreview only",
       "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Await exact new artifacts; no repeated prior suites",
@@ -344,7 +344,7 @@
       "fastRequested": false,
       "scope": "商品列表与六页签、分类/字典/条码/图片、库存、基础设置、客户供应商、员工账号、收款配置及相关弹层",
       "reportRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2",
-      "currentWork": "C322 fixed inputs accepted NO_GUI; await explicit C handoff after QF release for staffOPEN/nullfalse/productfocus",
+      "currentWork": "C322 productfocus/cancel limitedPASS; C326 solebrowser STAFF ALL3/nullfalse/P03nestedcap only; no repeatOPEN/paging/focus",
       "authorizationSource": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "fastVerification": "Tool has no exposed switch; requested off, actual unverified",
       "currentPackage": "291final limited passed/cleanSTOP;295nativecancel-only assigned",
@@ -1273,9 +1273,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T13:17:10.269209+00:00",
+  "updatedAt": "2026-10-24T13:40:04.457710+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "4d508eea07945d8d5f74a7e49ae56aa618c47292",
+  "lastVerifiedRemoteCommit": "da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1751,23 +1751,22 @@
     "deploymentTools": "C149_INSTALL_AND_C137_PRIVATE_APP_PROXY_RESOURCE_ACTUAL_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 323,
-      "commit": "4d508eea07945d8d5f74a7e49ae56aa618c47292",
-      "currentPreviewStill": "C322",
-      "qualification": "323 source only, not current browser"
+      "round": 326,
+      "commit": "da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
+      "qualification": "Current fixed326 build+HTTP only; F1 v16 component/intent WIP excluded"
     },
     "currentPreview": {
-      "candidateId": "ui-preview-34bb6a4-01",
-      "businessCommit": "34bb6a433ea4977beac2df85eab59faf9767d79e",
-      "sourceVersion": "C322 fixed315-322 released salesBODY/transfer refused SAVE/productfocus/stafflabel/strictcreator; declared synthetic staffOPEN fix; browser pending, not wholepage pass",
-      "previewOverlaySha256": "96fa770499c57adab783d12b7d20f08abf8042c062de9df69b612d479fce98ff",
-      "buildId": "ui-preview-34bb6a4-01-build01",
-      "htmlSha256": "d85996491abb6e7ff72aa957bb289f9501159c3d4f59a006c23cbeab39a4ed64",
-      "htmlBytes": 3603302,
+      "candidateId": "ui-preview-da28eba-01",
+      "businessCommit": "da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
+      "sourceVersion": "C326 fixed323-326 product catalogue seam, sales prepared outcome BODY, transfer unknown discard and optional responsible port; declared synthetic ALL fix; browser pending not wholepage pass",
+      "previewOverlaySha256": "15259a4dde849caa655524792e270971a80eb28e4db0a1852533f107416869ae",
+      "buildId": "ui-preview-da28eba-01-build01",
+      "htmlSha256": "b1b029f43e8d021298e16973a1f5ca231248780ea84149d8f519fc7496d99719",
+      "htmlBytes": 3605758,
       "actualInputCount": 415,
       "sourceModuleInputCount": 398,
-      "actualBuildInputSha256": "ccceead6a5ceda0afcec9eb1752392e210b914daf8595599bd8f6a77dd1ea9fb",
-      "actualModuleGraphSha256": "b57a79c32de9504b67c90baa50c7257715f95c762b60da20186a01200773b63c",
+      "actualBuildInputSha256": "2256eeaa4294ed3df90ba33d750d7451370d4310aa95ceeb0b30a02f94fb9f26",
+      "actualModuleGraphSha256": "ad4a9b42379ffb07cf73a1151d66cc18b2695d5bda9bb225b0e3684a66488b1f",
       "actualModuleInputCountIncludingDependencies": 1370,
       "dependencyModuleCount": 972,
       "undeclaredDifferences": 0,
@@ -1785,21 +1784,25 @@
         "inventoryLargePreview=1": "Explicit SYNTHETIC200x4x8x12 paircolor input; maxresponse16MiB; default original8MiB unchanged"
       },
       "knownBoundaries": [
-        "Explicit synthetic preview. No real PostgreSQL save/review/permissions/inventory/performance acceptance.",
-        "HISTORY writes not enabled; latest QA schema install is separate from this browser preview.",
-        "Closed STAFF login unsupported; no account remains unknown/not opened; no new closed semantics."
+        "Synthetic preview only. All save/receipt transports remain403, not real permissions/save/review/stock/performance.",
+        "Creator/responsible actual UI chain is separate inprogress F1 work, optional326 type does not enable it.",
+        "STAFF closed remains unsupported. No synthetic data marked formal, no sourcebusiness overlays."
       ],
       "newAffectedScope": [
-        "315 real creator/responsible read contract and 321 strict parser;316 complete sales BODY;318 product editor focus;319 account unknown label;320 transfer proposal retained across explicit refused SAVE.",
-        "C-only synthetic STAFF OPEN filter fixed across complete dataset before pagination; only synthetic evidence."
+        "323 shared product nested COLOR/FIT capability;324 Sales proposal BODY retained until confirmed outcome;325 Transfer unknown cannot reset/discard;326 optional document responsible read port (not enabled).",
+        "C-only synthetic STAFF ALL empty-string restored alongside OPEN; normal product editor nested catalogue capability shares same explicit synthetic clients, all commands remain403."
       ],
       "realPostgresPerformance": "NOT_MEASURED",
       "realSaveReviewInventoryBusiness": "NOT_ACCEPTED",
-      "url": "http://127.0.0.1:57892/synthetic-unified.html",
-      "pid": 76662,
-      "execSession": 53660,
-      "httpEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-34bb6a4-01/HTTP-CHECK.json",
-      "actualBrowser": "QF_C322_TREFUSAL_S_BODY_IN_PROGRESS_NOT_ACCEPTED"
+      "url": "http://127.0.0.1:57893/synthetic-unified.html",
+      "pid": 82370,
+      "execSession": 27465,
+      "httpEvidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-da28eba-01/HTTP-CHECK.json",
+        "bytes": 864,
+        "sha256": "a66640cd73ca03a7819fd5ea0f6fed6570651a23e2f456716d2f5ad8ba151557"
+      },
+      "actualBrowser": "QF2_C326_STAFF_ALL_LABELS_PRODUCT_NESTED_CAP_NEXT_IN_PROGRESS"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -2039,11 +2042,11 @@
     },
     "v11DatabasePatchExecuted": false,
     "browserLease": {
-      "owner": "QF",
+      "owner": "QF2",
       "candidateTarget": "5B69FD73D86A2D051EE5D18378D8C767",
       "demoTarget": "F0B417F6BC85EE5917A5286AAD0FB04A",
-      "scope": "C322 normal transfer refusal delta then sales shared BODY affected states",
-      "otherReviewers": "QF2_NO_GUI_PENDING_C_HANDOFF",
+      "scope": "C326 STAFF ALL3 and null/false labels plus P03 nested COLOR/FIT normal entry/cancel",
+      "otherReviewers": "QF_NO_GUI_LUNA_VISUAL_EXISTING_C322_PAIRS_ONLY",
       "actualNaturalViewport": [
         1470,
         668,
@@ -2451,6 +2454,38 @@
       "publishedBaseline": "NOT_READY_CORE_STAGED_ORIGINAL_GUARD_RETAINED",
       "independentActualReview": "QB244_IN_PROGRESS",
       "observerQualification": "Two sequence relation ACL objects changed; old default projection uses uppercase S instead of sequence s, owner implicit ACL raw NULL was not exported. Do not infer owner real privilege change from projected text; preserve existing canonical contract."
+    },
+    "qaStaffRead167": {
+      "status": "QB246_PASS_LIMITED_ACTUAL_ORIGINAL_ADMIN_CORE_STAFF_ALL_OPEN_READ_ONLY",
+      "actual": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v16-core-staff-read-export-fix-20261024-167/release-submission/release-receipts/c03-v16-core-staff-read-export-fix-20261024-167/staff-read-actual.json",
+        "bytes": 3764,
+        "sha256": "834c596e63157882fca3a687e763fb80946db943959a79292b7bbb0a891e98e3"
+      },
+      "engine": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v16-core-staff-read-export-fix-20261024-167/release-submission/release-receipts/c03-v16-core-staff-read-export-fix-20261024-167/engine-result.json",
+        "bytes": 5661,
+        "sha256": "b5dcd7b5d5139f6aa768cef78594d0ef8a0c50993a23c31ac7ebd2c05b2e8dac"
+      },
+      "pageCounts": [
+        20,
+        20,
+        9,
+        0
+      ],
+      "total": 49,
+      "samples": "existing synthetic49; no disabled/noaccount samples",
+      "trace": "69queries/11acquired11released/live0/endtrue/0DML_DDL",
+      "previous166": "FAILED C module selectedexport missed existing maintenanceContextClient; oldfailure retained;167 adds only export, same19source modules and D2runner",
+      "notAccepted": [
+        "CLOSED",
+        "disabled/null sample",
+        "nonADMIN",
+        "HTTP/browser",
+        "formal performance",
+        "business writes",
+        "production"
+      ]
     }
   },
   "supplementalRoles": {
@@ -4570,23 +4605,23 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T13:05:44.041321+00:00",
-    "sourceRound": 323,
-    "sourceCheckpoint": "4d508eea07945d8d5f74a7e49ae56aa618c47292",
+    "atUtc": "2026-10-24T13:40:04.457710+00:00",
+    "sourceRound": 326,
+    "sourceCheckpoint": "da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "candidateId": "ui-preview-34bb6a4-01",
-      "businessCommit": "34bb6a433ea4977beac2df85eab59faf9767d79e",
-      "sourceVersion": "C322 fixed315-322 released salesBODY/transfer refused SAVE/productfocus/stafflabel/strictcreator; declared synthetic staffOPEN fix; browser pending, not wholepage pass",
-      "previewOverlaySha256": "96fa770499c57adab783d12b7d20f08abf8042c062de9df69b612d479fce98ff",
-      "buildId": "ui-preview-34bb6a4-01-build01",
-      "htmlSha256": "d85996491abb6e7ff72aa957bb289f9501159c3d4f59a006c23cbeab39a4ed64",
-      "htmlBytes": 3603302,
+      "candidateId": "ui-preview-da28eba-01",
+      "businessCommit": "da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
+      "sourceVersion": "C326 fixed323-326 product catalogue seam, sales prepared outcome BODY, transfer unknown discard and optional responsible port; declared synthetic ALL fix; browser pending not wholepage pass",
+      "previewOverlaySha256": "15259a4dde849caa655524792e270971a80eb28e4db0a1852533f107416869ae",
+      "buildId": "ui-preview-da28eba-01-build01",
+      "htmlSha256": "b1b029f43e8d021298e16973a1f5ca231248780ea84149d8f519fc7496d99719",
+      "htmlBytes": 3605758,
       "actualInputCount": 415,
       "sourceModuleInputCount": 398,
-      "actualBuildInputSha256": "ccceead6a5ceda0afcec9eb1752392e210b914daf8595599bd8f6a77dd1ea9fb",
-      "actualModuleGraphSha256": "b57a79c32de9504b67c90baa50c7257715f95c762b60da20186a01200773b63c",
+      "actualBuildInputSha256": "2256eeaa4294ed3df90ba33d750d7451370d4310aa95ceeb0b30a02f94fb9f26",
+      "actualModuleGraphSha256": "ad4a9b42379ffb07cf73a1151d66cc18b2695d5bda9bb225b0e3684a66488b1f",
       "actualModuleInputCountIncludingDependencies": 1370,
       "dependencyModuleCount": 972,
       "undeclaredDifferences": 0,
@@ -4604,31 +4639,35 @@
         "inventoryLargePreview=1": "Explicit SYNTHETIC200x4x8x12 paircolor input; maxresponse16MiB; default original8MiB unchanged"
       },
       "knownBoundaries": [
-        "Explicit synthetic preview. No real PostgreSQL save/review/permissions/inventory/performance acceptance.",
-        "HISTORY writes not enabled; latest QA schema install is separate from this browser preview.",
-        "Closed STAFF login unsupported; no account remains unknown/not opened; no new closed semantics."
+        "Synthetic preview only. All save/receipt transports remain403, not real permissions/save/review/stock/performance.",
+        "Creator/responsible actual UI chain is separate inprogress F1 work, optional326 type does not enable it.",
+        "STAFF closed remains unsupported. No synthetic data marked formal, no sourcebusiness overlays."
       ],
       "newAffectedScope": [
-        "315 real creator/responsible read contract and 321 strict parser;316 complete sales BODY;318 product editor focus;319 account unknown label;320 transfer proposal retained across explicit refused SAVE.",
-        "C-only synthetic STAFF OPEN filter fixed across complete dataset before pagination; only synthetic evidence."
+        "323 shared product nested COLOR/FIT capability;324 Sales proposal BODY retained until confirmed outcome;325 Transfer unknown cannot reset/discard;326 optional document responsible read port (not enabled).",
+        "C-only synthetic STAFF ALL empty-string restored alongside OPEN; normal product editor nested catalogue capability shares same explicit synthetic clients, all commands remain403."
       ],
       "realPostgresPerformance": "NOT_MEASURED",
       "realSaveReviewInventoryBusiness": "NOT_ACCEPTED",
-      "url": "http://127.0.0.1:57892/synthetic-unified.html",
-      "pid": 76662,
-      "execSession": 53660,
-      "httpEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-34bb6a4-01/HTTP-CHECK.json",
-      "actualBrowser": "QF_C322_TREFUSAL_S_BODY_IN_PROGRESS_NOT_ACCEPTED"
+      "url": "http://127.0.0.1:57893/synthetic-unified.html",
+      "pid": 82370,
+      "execSession": 27465,
+      "httpEvidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-da28eba-01/HTTP-CHECK.json",
+        "bytes": 864,
+        "sha256": "a66640cd73ca03a7819fd5ea0f6fed6570651a23e2f456716d2f5ad8ba151557"
+      },
+      "actualBrowser": "QF2_C326_STAFF_ALL_LABELS_PRODUCT_NESTED_CAP_NEXT_IN_PROGRESS"
     },
     "nextPreview": {
-      "status": "C322_CURRENT_BROWSER_SOURCE323_NEXT_MODULE_BATCH",
-      "next": "323 product host; F1 current sales refused/unknown BODY and next visible creator/responsible"
+      "status": "C326_CURRENT_BROWSER",
+      "next": "QF2 newfinite delta then QF S324/T325 affected only; originalF1 v16 UI chain current"
     },
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
-    "qa": "QB240 actual valid foreign size negative adopted; QB242 actual v16 schema/metadata only adopted; LIVE finite ACL proposal33 reviewing QB, no GRANT/runtimepurpose/newbusiness yet.",
+    "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
-    "github": "REMOTE_EXACT_VERIFIED_4d508eea07945d8d5f74a7e49ae56aa618c47292",
+    "github": "REMOTE_EXACT_VERIFIED_da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -6157,11 +6196,11 @@
     },
     "sourceCommit": "17d2e89603233e07c0cfe8c344934148f7463536",
     "browserLease": {
-      "owner": "QF",
+      "owner": "QF2",
       "candidateTarget": "5B69FD73D86A2D051EE5D18378D8C767",
       "demoTarget": "F0B417F6BC85EE5917A5286AAD0FB04A",
-      "scope": "C322 normal transfer refusal delta then sales shared BODY affected states",
-      "otherReviewers": "QF2_NO_GUI_PENDING_C_HANDOFF",
+      "scope": "C326 STAFF ALL3 and null/false labels plus P03 nested COLOR/FIT normal entry/cancel",
+      "otherReviewers": "QF_NO_GUI_LUNA_VISUAL_EXISTING_C322_PAIRS_ONLY",
       "actualNaturalViewport": [
         1470,
         668,
