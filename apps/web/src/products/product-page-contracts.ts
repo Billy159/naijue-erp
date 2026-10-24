@@ -3,7 +3,7 @@ import type { DictionaryBrowserReader } from '../product-settings/size-groups/co
 import type { RouteStylesheet } from '../application/contracts.ts';
 import type { ProductReadOnlyReader, ProductParameters } from '../inventory/product-contracts.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
-import type { ProductBarcodePage, ProductDetailsPageQuery, ProductPriceDetails, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-ports.ts';
+import type { ProductBarcodeQuery, ProductBarcodeQueryResult, ProductDetailsPageQuery, ProductPriceDetails, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-ports.ts';
 
 export const productReadOnlyPageTabs = ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const;
 export type ProductReadOnlyPageTab = typeof productReadOnlyPageTabs[number];
@@ -12,7 +12,7 @@ export type ProductReadOnlyPageTab = typeof productReadOnlyPageTabs[number];
 export interface ProductFullPageReadOnlyReader {
   readonly base?: { readonly read: ProductReadOnlyReader['readProductBasics'] };
   readonly specs?: { readonly read: ProductReadOnlyReader['readProductSpecifications'] };
-  readonly barcodes?: { readonly read: (read: QueryRead<ProductDetailsPageQuery>) => Promise<ProductBarcodePage | null>;
+  readonly barcodes?: { readonly read: (read: QueryRead<ProductBarcodeQuery>) => Promise<ProductBarcodeQueryResult | null>;
     /** Independent dictionary-description opt-in; a product read grants none. */
     readonly schemeReader?: Pick<DictionaryBrowserReader, 'readBarcodeScheme'> };
   readonly prices?: { readonly read: (read: QueryRead<ProductParameters>) => Promise<ProductPriceDetails | null> };

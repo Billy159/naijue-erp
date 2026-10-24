@@ -20,6 +20,49 @@ const barcodes = () => ({ productId, version: 2, page: 1, pageSize: 50, total: 1
   items: [{ id: id(2), barcode: '0001234567', skuId: id(3), skuCode: 'SKU-BLUE-A-S', colorId: id(4), fitId: id(5), sizeId: id(6), kind: 'CONFIRMED_OLD', schemeId: null, enabled: true }] });
 const stock = () => ({ productId, page: 1, pageSize: 50, total: 5, items: ['KNOWN', 'UNKNOWN', 'MISSING', 'UNMAPPED', 'READ_FAILED'].map((state, n) => ({ warehouseId: id(7), warehouseName: '仓库', skuId: id(20 + n), state, quantity: state === 'KNOWN' ? '-9007199254740993' : null })) });
 
+const skuPage = () => ({ kind: 'SKU_PAGE', productId, version: 2, page: 1, pageSize: 50, totalSkus: 1,
+  defaultScheme: { state: 'NOT_SET' }, items: [{ skuId: id(3), skuCode: ' 000SKU ', skuEnabled: false,
+    colorId: id(4), colorLabel: null, fitId: id(5), fitLabel: 'A版', sizeId: id(6), sizeLabel: '165/S',
+    bindingCount: 0, main: null, disabledMainCount: 0, confirmedOldCount: 0, firstConfirmedOld: null }] });
+
+test('P10 SKU mode response maps its frozen validator into the browser error contract and preserves null versus zero', () => {
+  const query = { ...parameters, view: 'SKU' as const };
+  const parsed = productBarcodesResponse(skuPage(), query)!;
+  assert.equal(parsed.totalSkus, 1); assert.equal(parsed.items[0]!.skuCode, ' 000SKU ');
+  assert.equal(parsed.items[0]!.skuEnabled, false); assert.equal(parsed.items[0]!.bindingCount, 0); assert.equal(parsed.items[0]!.colorLabel, null);
+  assert.equal(productBarcodesResponse(null, query), null);
+  assert.equal(productBarcodesResponse({ ...skuPage(), items: [], totalSkus: 0 }, query)!.totalSkus, 0);
+  for (const [value, request] of [[barcodes(), query], [skuPage(), parameters], [{ ...skuPage(), productId: id(99) }, query]] as const) {
+    assert.throws(() => productBarcodesResponse(value, request), (error: unknown) => error instanceof HttpQueryError && error.kind === 'malformed-response');
+  }
+});
+
+test('P10 SKU detail echo and every record use the requested native SKU while old responses remain closed', () => {
+  const query = { ...parameters, skuId: id(3) }, page = { ...barcodes(), skuId: id(3) };
+  assert.equal(productBarcodesResponse(page, query)!.items[0]!.barcode, '0001234567');
+  assert.equal(productBarcodesResponse(null, query), null);
+  assert.equal(productBarcodesResponse({ ...page, total: 0, items: [] }, query)!.total, 0);
+  assert.ok(!Object.hasOwn(productBarcodesResponse(barcodes(), parameters)!, 'skuId'));
+  for (const value of [barcodes(), { ...page, skuId: id(99) }, { ...page, items: [{ ...page.items[0]!, skuId: id(99) }] }]) assert.throws(() => productBarcodesResponse(value, query));
+  assert.throws(() => productBarcodesResponse(page, parameters));
+});
+
+test('P10 SKU HTTP branch preserves exact new modes and the original body with no construction request', async () => {
+  const bodies: unknown[] = [];
+  const reader = createProductFullPageHttpReader({ origin: 'https://erp.example', basePath: '/api', fetch: async (_url, options) => {
+    const body = JSON.parse(String(options?.body)); bodies.push(body);
+    return new Response(JSON.stringify(body.view === 'SKU' ? skuPage() : body.skuId ? { ...barcodes(), skuId: body.skuId } : barcodes()), { status: 200, headers: { 'Content-Type': 'application/json' } });
+  } }, ['barcodes']);
+  assert.equal(bodies.length, 0);
+  const context = new ReadContext({ accountId: id(50), sessionRevision: '1', permissionRevision: '1' }), scope = context.createScope('p10-new-http', productId);
+  try {
+    for (const query of [{ ...parameters, view: 'SKU' as const }, { ...parameters, skuId: id(3) }, parameters]) {
+      await reader.barcodes!.read({ parameters: query, signal: scope.signal, identity: scope.identity, routeInstanceId: scope.routeInstanceId, entityId: productId });
+    }
+    assert.deepEqual(bodies, [{ ...parameters, view: 'SKU' }, { ...parameters, skuId: id(3) }, parameters]);
+  } finally { context.clear(); }
+});
+
 test('nine explicit exact yuan fields preserve null and zero; missing/extra/number/fraction rejects', () => {
   const data = productPricesResponse(prices(), { productId })!;
   assert.equal(data.prices.retail_price, '0.00'); assert.equal(data.prices.purchase_price, null);

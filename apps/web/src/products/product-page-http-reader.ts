@@ -2,7 +2,7 @@ import type { ProductEditorMediaReader } from './product-editor-contracts.ts';
 import type { QueryRead } from '../loading/latest-query.ts';
 import type { ProductStockOverviewQuery } from '../../../../packages/application/src/product-details-query-ports.ts';
 import { createHttpJsonQuery, type HttpQueryOptions } from '../transport/http-query.ts';
-import { parseProductDetailsPageQuery, parseProductStockOverviewQuery } from '../../../../packages/application/src/product-details-query-validation.ts';
+import { parseProductBarcodeQuery, parseProductDetailsPageQuery, parseProductStockOverviewQuery } from '../../../../packages/application/src/product-details-query-validation.ts';
 import type { ProductReadOnlyReader } from '../inventory/product-contracts.ts';
 import { existingProductFullPageReader, type ProductFullPageReadOnlyReader } from './product-page-contracts.ts';
 /** Explicit host composition remains inert and keeps product DTO validators out
@@ -28,7 +28,7 @@ export function createProductFullPageHttpReader(options: HttpQueryOptions, detai
       return http.post('/products/prices/query', { productId: read.parameters.productId }, read.signal, value => validation.productPricesResponse(value, read.parameters));
     } } } : {}),
     ...(enabled.has('barcodes') ? { barcodes: { read: async read => {
-      const parameters = parseProductDetailsPageQuery({ productId: read.parameters.productId, page: read.parameters.page, pageSize: read.parameters.pageSize });
+      const parameters = parseProductBarcodeQuery(read.parameters);
       const validation = await import('./product-page-validation.ts');
       return http.post('/products/barcodes/query', parameters, read.signal, value => validation.productBarcodesResponse(value, parameters));
     } } } : {}),

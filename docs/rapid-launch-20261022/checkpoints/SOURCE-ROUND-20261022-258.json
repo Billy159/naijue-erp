@@ -1,0 +1,270 @@
+{
+  "atUtc": "2026-10-24T01:29:59.436682+00:00",
+  "parent": "0ec30eae0e8c39dfab83ea724890d182becd60aa",
+  "taskId": "F2_P10_REAL_SKU_PAGE_AND_LAZY_EXACT_SKU_BARCODE_DETAILS",
+  "files": [
+    {
+      "path": "apps/web/src/products/product-page-contracts.ts",
+      "bytes": 3267,
+      "sha256": "0d0a15cb12a27e7366d0e09a3c645436369a731d96ea8e3d690e7d2f4b07e0f2",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-http-reader.ts",
+      "bytes": 4951,
+      "sha256": "b0fa74c5d3659f63752210765021c7627a1593e1b39f2bfc1f7786087ff20038",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-validation.ts",
+      "bytes": 6358,
+      "sha256": "11c6854ae1f56d65bb453e3341efae4e1ed1a56f024e7da3c0d904344c71c15e",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-validation.test.ts",
+      "bytes": 13209,
+      "sha256": "90e850a58d0006e452c7057635e8f9a006e012b6e6a19de8ed2ba1a9bfdd23d2",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/products/product-page-barcodes.tsx",
+      "bytes": 17163,
+      "sha256": "fac19ec6b0004cf1aa91743b5ff0c81becc84e2850dec40986166ac3ad3ea87f",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/P10-SKU-PAGE-READ-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "de674e9c0bad0745245a48aba2a7cfc410dd164f512cc958ca93a210cbe34cb8",
+  "ownerDelivery": {
+    "task": "F2-P10-SKU-PAGE-READ-01",
+    "status": "SOURCE_READY_TARGETED_CHECKS_PASS_NOT_ACTUAL_PG_OR_UI",
+    "atUtc": "2026-10-24T01:28:32.823611+00:00",
+    "humanReportingAuthorization": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+    "reportTo": "C",
+    "requestedExecution": {
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "xhigh",
+      "fast": "NOT_EXPOSED_NOT_VERIFIED"
+    },
+    "authority": "C same original P10/taskbook54 existing fields readonly SKU list and exact clicked-SKU detail continuation; C SOURCE257 frozen D2 backend",
+    "backend": {
+      "delivery": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/P10-SKU-PAGE-v1.json",
+      "bytes": 10523,
+      "sha256": "13467cca5130703b93032fb53fbbdc72a462e53653b8d915593e6a3f6bcb343c",
+      "productionFiles": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-ports.ts",
+          "bytes": 7031,
+          "sha256": "834eda0edce2a579634e057959542acee34d08f2c074562627d9457370a8e599"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-validation.ts",
+          "bytes": 17754,
+          "sha256": "43603e6b970e44987e06d4670cb88d4c6185ada65b564e35107c5f5813273889"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/product-details-query-service.ts",
+          "bytes": 5070,
+          "sha256": "76e69fd573ca9508f991e8f56cac1a36bbc6f22900daff03057ed9ba86e7b058"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/product-details-query-reader.ts",
+          "bytes": 14314,
+          "sha256": "b83e106739a50157813db3236d9be62c59d99ef9810ad348017db356a9c8c35e"
+        }
+      ],
+      "allSevenDeliveryPinsMatchedBeforeEdits": true,
+      "fourProductionPinsMatchedAtFreeze": true
+    },
+    "scope": {
+      "fixed": "Original per-barcode-record page grouping omitted real zero-binding SKU rows. List now requests exact server SKU grain and displays every retained SKU on the current server page, including disabled/zero bindings.",
+      "requestModes": {
+        "list": {
+          "productId": "native target UUID",
+          "page": 1,
+          "pageSize": 50,
+          "view": "SKU"
+        },
+        "detail": {
+          "productId": "same native product UUID",
+          "page": 1,
+          "pageSize": 50,
+          "skuId": "clicked native SKU UUID"
+        },
+        "old": "Original productId/page/pageSize record-page request unchanged; view and skuId remain mutually exclusive"
+      },
+      "responseModes": "Only SKU_PAGE has kind/totalSkus; old product/filtered record pages preserve total with exact optional skuId echo. Each filtered record skuId must equal requested native target.",
+      "parser": "New SKU page reuses exact D2 checkedProductBarcodeSkuPage, mapping failure to existing malformed-response HttpQueryError. Original frontend record own-key/defaultScheme/raw validators retained, with exact SKU scope validation added.",
+      "transport": "Only barcodes branch now uses parseProductBarcodeQuery(read.parameters); exact new fields no longer stripped. Existing lazy validation/client, sameOrigin session/no construction IO preserved. Stock/prices common paging unchanged.",
+      "ui": "Native six-column table and shared scheme preview bytes preserved. Rows use native skuId key; main is exact enabled MAIN summary; OLD first raw plus remaining count and click button; no active MAIN/OLD uses emdash, no NOT_REQUIRED/generated inference. Original five-column detail displays retained current SKU records with server paging and disabled status. Source and historical specification remain unavailable.",
+      "lifecycle": "One local barcode page owner replaces original barcode use of generic ProductPagedRead; existing LatestQuery/useProductQueryActivity/guarded reader remain. Detail mounts only explicit click; close/hide/target/scope teardown cancels pending read. No per-row detail fetch or whole-specifications read.",
+      "preserved": "Source252 default name owner prefix and SchemeNameActivity/Field/Tools/Name code bytes exact except data common union type; native ProductBarcodeSourceBody and shared scheme preview tail byte exact. Source255 P03 untouched. Old tests retained and not rerun.",
+      "writes": "No application root, public F1 controls, endpoint/DB/schema/permissions/source metadata/add-old-barcode writes. No new app files."
+    },
+    "files": [
+      {
+        "path": "apps/web/src/products/product-page-contracts.ts",
+        "bytes": 3267,
+        "sha256": "0d0a15cb12a27e7366d0e09a3c645436369a731d96ea8e3d690e7d2f4b07e0f2",
+        "beforeBytes": 3236,
+        "beforeSha256": "a018a8f243731e5e4fed5cf56a30bf062ec46c2b442ffa7cd0bd9cf5900ec1e1"
+      },
+      {
+        "path": "apps/web/src/products/product-page-http-reader.ts",
+        "bytes": 4951,
+        "sha256": "b0fa74c5d3659f63752210765021c7627a1593e1b39f2bfc1f7786087ff20038",
+        "beforeBytes": 5018,
+        "beforeSha256": "530721538a699b42da10d5ca24acdb441ac3fd6168e6187d07d0cf288ab957c9"
+      },
+      {
+        "path": "apps/web/src/products/product-page-validation.ts",
+        "bytes": 6358,
+        "sha256": "11c6854ae1f56d65bb453e3341efae4e1ed1a56f024e7da3c0d904344c71c15e",
+        "beforeBytes": 5488,
+        "beforeSha256": "3310e238e7764fc19e029ec3e98017e22a6c6839141ace2c550ad6795e22fbc1"
+      },
+      {
+        "path": "apps/web/src/products/product-page-validation.test.ts",
+        "bytes": 13209,
+        "sha256": "90e850a58d0006e452c7057635e8f9a006e012b6e6a19de8ed2ba1a9bfdd23d2",
+        "beforeBytes": 9829,
+        "beforeSha256": "5a42d63d9f762940c5a592061533e3dc5342646cc712f81b40cf63d351f81af1"
+      },
+      {
+        "path": "apps/web/src/products/product-page-barcodes.tsx",
+        "bytes": 17163,
+        "sha256": "fac19ec6b0004cf1aa91743b5ff0c81becc84e2850dec40986166ac3ad3ea87f",
+        "beforeBytes": 15831,
+        "beforeSha256": "0039d898cc3a6b961b7691e4d1fbc1adfecc2a34b0660bc8b53fe50099b72484"
+      }
+    ],
+    "checks": {
+      "unit": {
+        "newCases": 3,
+        "pass": 3,
+        "fail": 0,
+        "skip": 0,
+        "selection": "--test-name-pattern=P10 SKU",
+        "log": "unit-final.tap"
+      },
+      "strict": {
+        "diagnostics": 0,
+        "roots": [
+          "product-page-barcodes.tsx",
+          "product-editor-barcodes.tsx existing caller",
+          "product-page-contracts.ts",
+          "product-page-http-reader.ts",
+          "product-page-validation.ts",
+          "product-page-validation.test.ts"
+        ],
+        "scope": "Exact engineering strict options and full imported graph; no whole project build",
+        "log": "strict-final-run.log"
+      },
+      "consumer": {
+        "status": "PASS_NEW_SKU_PAGE_AND_CLICK_ONLY_DETAIL_LOCAL_DOM",
+        "bundleWarnings": 0,
+        "checks": [
+          "hidden first visit0 IO; first active exactviewSKU one read",
+          "0binding row and disabled SKU retained with exact native SKU identity and nullable labels",
+          "native MAIN and firstOLD raw strings with +2more count; no subtype/source inference",
+          "serverSKU total205 page5 IDs300..304 retained, no200 cutoff",
+          "click only exact skuId detail, 205records page5 last5 includes disabled/raw leading zeros",
+          "readonly five native detail columns, source/originalSpec unavailable, no writes",
+          "close aborts exact pending detail; newer SKU unaffected by old late403",
+          "hide aborts detail; return retains list page and does not reopen/read details",
+          "null target distinct from actual0 SKU page"
+        ],
+        "wholeSpecificationReads": 0,
+        "unexpectedDenials": 0,
+        "requests": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 5,
+            "pageSize": 50,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000300"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 5,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000300"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000300"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000301"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "page": 1,
+            "pageSize": 50,
+            "skuId": "00000000-0000-4000-8000-000000000302"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "page": 1,
+            "pageSize": 50,
+            "view": "SKU"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000004",
+            "page": 1,
+            "pageSize": 50,
+            "view": "SKU"
+          }
+        ],
+        "qualification": "Actual View/React19/installed Arco local JSDOM with synthetic deferred providers. No real PG/HTTP roles/browser pixels/performance/allP10 acceptance; original default-name/source252 and source255 checks reused."
+      },
+      "preservation": "PRESERVATION-CHECKS.json",
+      "initialCheckCorrections": [
+        "Strict initially found two unbranded productId literal parameters; replaced both with exact backend parseProductBarcodeQuery. No casts or weakened type flags.",
+        "New HTTP fixture initially used unsupported apiBase/csrfToken options; fixed fixture to existing origin/basePath. Reran only this new three-case group and the changed strict imported closure; no prior module suite."
+      ],
+      "nonfatalExistingWarning": "Installed Arco React19 element.ref warning in local component mount retained; no runtime shim or suppression."
+    },
+    "notTested": [
+      "Actual PG, C114, actual HTTP listener/session/roles and real response counts",
+      "Actual Chrome/browser layout or UI interaction acceptance",
+      "Production performance, full P10, all source barcode history and source/manual/originalSpec unknowns",
+      "Default8, old six tabs, source254 six, backend seven and source255 P03 not rerun; accepted prior evidence reused"
+    ],
+    "integration": {
+      "newPublicOptIn": "NONE required. Existing explicitly enabled barcodes read capability/method is extended to ProductBarcodeQuery/Result; same registered F2 createProductFullPageHttpReader handles all modes. C/F1 existing root/provider assembly remains owner and independent dictionary schemeReader grant stays unchanged.",
+      "releasePairing": "Freeze these five leaves together with C257 backend contract in a coherent candidate. Legacy backend/custom provider ignoring view must not be used as a SKU page or silently fall back to old grouping.",
+      "blocked": "No F2 source blocker. C/QB/C114 actual backend validation and original QF containing candidate actual UI pending.",
+      "next": "C fix exact five pins and route only new SKU page0binding/disabled/summary and click detail target/paging actual check on containing next candidate; no duplicate source252 name or P03 acceptance."
+    },
+    "evidence": [
+      "SOURCE-MANIFEST.json",
+      "source.diff",
+      "unit-final.tap",
+      "strict-final-run.log",
+      "CONSUMER-CHECKS.json",
+      "consumer.log",
+      "PRESERVATION-CHECKS.json",
+      "before/",
+      "source/"
+    ]
+  },
+  "qualification": "ExactSKU_PAGE/view request+totalSkus preserve0bindingdisablednativeSKUs and originalFrozen six-column table; exactSKUdetail oldbinding pagination on click. Existing252scheme name/sharedquery andoriginal source table/preview bytes retained, no swallowedview/skuId, oldprovider incompatible not silentlyfallback. Owner3newtests+actualViewtargetedDOM+strict adopted; independentQF2/realC114/containingbrowser pending.0newDBfields/write/API/globalfactowner."
+}

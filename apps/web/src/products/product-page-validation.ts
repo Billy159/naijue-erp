@@ -1,7 +1,7 @@
-import { checkedProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-validation.ts';
+import { checkedProductBarcodeSkuPage, checkedProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-validation.ts';
 import { entityId, quantity } from '../../../../packages/domain/src/values.ts';
 import { CATALOGUE_PRICE_KEYS } from '../../../../packages/application/src/catalogue-price-input.ts';
-import type { ProductBarcodePage, ProductDetailsPageQuery, ProductPriceDetails, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-ports.ts';
+import type { ProductBarcodePage, ProductBarcodeQuery, ProductBarcodeRecordQuery, ProductBarcodeSkuQuery, ProductBarcodeSkuPage, ProductBarcodeQueryResult, ProductDetailsPageQuery, ProductPriceDetails, ProductWarehouseStockPage, ProductStockOverviewQuery, ProductStockOverviewResult } from '../../../../packages/application/src/product-details-query-ports.ts';
 import type { ProductParameters } from '../inventory/product-contracts.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 
@@ -30,9 +30,15 @@ export function productPricesResponse(value: unknown, parameters: ProductParamet
   for (const key of CATALOGUE_PRICE_KEYS) if (prices[key] !== null && (typeof prices[key] !== 'string' || !/^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(prices[key] as string))) invalid();
   return value as ProductPriceDetails;
 }
-export function productBarcodesResponse(value: unknown, parameters: ProductDetailsPageQuery): ProductBarcodePage | null {
+export function productBarcodesResponse(value: unknown, parameters: ProductBarcodeSkuQuery): ProductBarcodeSkuPage | null;
+export function productBarcodesResponse(value: unknown, parameters: ProductBarcodeRecordQuery): ProductBarcodePage | null;
+export function productBarcodesResponse(value: unknown, parameters: ProductBarcodeQuery): ProductBarcodeQueryResult | null;
+export function productBarcodesResponse(value: unknown, parameters: ProductBarcodeQuery): ProductBarcodeQueryResult | null {
   if (value === null) return null;
-  const row = object(value, ['productId', 'version', 'page', 'pageSize', 'total', 'items', 'defaultScheme']); target(row, parameters, true);
+  if (parameters.view === 'SKU') { try { return checkedProductBarcodeSkuPage(value, parameters); } catch { return invalid(); } }
+  const filtered = Object.hasOwn(parameters, 'skuId');
+  const row = object(value, ['productId', 'version', 'page', 'pageSize', 'total', 'items', 'defaultScheme', ...(filtered ? ['skuId'] : [])]); target(row, parameters, true);
+  if (filtered && id(row.skuId) !== parameters.skuId) invalid();
   const state = (row.defaultScheme as { readonly state?: unknown } | null)?.state;
   if (state === 'UNAVAILABLE') { const scheme = object(row.defaultScheme, ['state', 'reason']); if (scheme.reason !== 'NO_PRODUCT_SCHEME_FIELD') invalid(); }
   else if (state === 'AVAILABLE') { const scheme = object(row.defaultScheme, ['state', 'schemeId']); id(scheme.schemeId); }
@@ -43,6 +49,7 @@ export function productBarcodesResponse(value: unknown, parameters: ProductDetai
     const item = object(value, ['id', 'barcode', 'skuId', 'skuCode', 'colorId', 'fitId', 'sizeId', 'kind', 'schemeId', 'enabled']);
     const key = id(item.id); text(item.barcode); text(item.skuCode);
     for (const field of ['skuId', 'colorId', 'fitId', 'sizeId']) id(item[field]);
+    if (filtered && item.skuId !== parameters.skuId) invalid();
     if (item.schemeId !== null) id(item.schemeId);
     if (!['MAIN', 'CONFIRMED_OLD'].includes(item.kind as string) || typeof item.enabled !== 'boolean' || ids.has(key) || barcodes.has(item.barcode as string)) invalid();
     ids.add(key); barcodes.add(item.barcode as string);

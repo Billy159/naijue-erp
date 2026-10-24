@@ -7,12 +7,12 @@ import { HttpQueryError } from '../transport/http-query.ts';
 import type { DictionaryBrowserReader } from '../product-settings/size-groups/contracts.ts';
 import type { DictionaryBarcodeScheme, DictionarySchemeQuery } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { validateDictionaryScheme } from '../../../../packages/application/src/dictionary-read-validation.ts';
-import type { ProductBarcodeDetails, ProductBarcodePage } from '../../../../packages/application/src/product-details-query-ports.ts';
-import type { ProductSpecifications } from '../inventory/product-contracts.ts';
-import { assertProductSpecifications } from '../inventory/product-model.ts';
-import { ProductPanelActivity, ProductReadState, useProductPanelActive, useProductQueryActivity, useProductRead } from '../inventory/product-tab-state.tsx';
+import type { ProductBarcodeQuery, ProductBarcodeQueryResult, ProductBarcodeSkuPage, ProductBarcodeSkuRow, ProductBarcodeSummary } from '../../../../packages/application/src/product-details-query-ports.ts';
+import { ProductPanelActivity, ProductReadState, useProductPanelActive, useProductQueryActivity } from '../inventory/product-tab-state.tsx';
+import { parseProductBarcodeQuery } from '../../../../packages/application/src/product-details-query-validation.ts';
 import { productBarcodesResponse } from './product-page-validation.ts';
-import { ProductPagedRead, type ProductPageTabProps } from './product-page-view.tsx';
+import type { ProductPageTabProps } from './product-page-view.tsx';
+import { StandardPagination } from '../components/standard-pagination.tsx';
 
 type SchemeReader=Pick<DictionaryBrowserReader,'readBarcodeScheme'>;
 type SchemeQuery=LatestQuery<DictionarySchemeQuery,DictionaryBarcodeScheme|null>;
@@ -26,11 +26,10 @@ export function View({ scope, reader }: ProductPageTabProps) {
     const query=createSchemeQuery(scope,schemeReader);setOwner({scope,reader:schemeReader,target,query});return()=>query.dispose();
   },[scope,schemeReader,target]);
   const current=owner?.scope===scope&&owner.reader===schemeReader&&owner.target===target&&scope.active?owner:null;
-  return <><ProductPanelActivity.Provider value={panelActive&&fieldVisible}><SchemeNameActivity query={current?.query??null} schemeId={current?.target.schemeId??null}/></ProductPanelActivity.Provider><ProductPagedRead<ProductBarcodePage> scope={scope} read={reader.barcodes!.read} validate={productBarcodesResponse} label="商品条码分页">{data => <>
+  return <><ProductPanelActivity.Provider value={panelActive&&fieldVisible}><SchemeNameActivity query={current?.query??null} schemeId={current?.target.schemeId??null}/></ProductPanelActivity.Provider>{scope.entityId&&<BarcodePagedRead scope={scope} read={reader.barcodes!.read} initial={parseProductBarcodeQuery({productId:scope.entityId,page:1,pageSize:50,view:'SKU'})} label="商品规格条码分页">{data => <>
     <DefaultSchemeTools key={`${data.productId}:${data.version}:${data.defaultScheme.state==='AVAILABLE'?data.defaultScheme.schemeId:data.defaultScheme.state}`} scope={scope} reader={reader} data={data} receiveTarget={receiveTarget} query={current&&current.target.productId===data.productId&&current.target.version===data.version&&data.defaultScheme.state==='AVAILABLE'&&current.target.schemeId===data.defaultScheme.schemeId?current.query:null}/>
-    {data.items.length && reader.specs ? <LabeledPage key={`${data.productId}:${data.version}:${data.page}:${data.pageSize}`} scope={scope} reader={reader} data={data} />
-      : <BarcodeGroups data={data} specifications={null} />}
-  </>}</ProductPagedRead></>;
+    {'kind' in data&&<BarcodeSkuRows key={`${data.productId}:${data.version}:${data.page}:${data.pageSize}`} scope={scope} reader={reader} data={data}/>}
+  </>}</BarcodePagedRead>}</>;
 }
 function SchemeNameActivity(p:{readonly query:SchemeQuery|null;readonly schemeId:string|null}){
   useProductQueryActivity(p.query,p.schemeId?{schemeId:p.schemeId}:null);return null;
@@ -39,7 +38,7 @@ function SchemeNameActivity(p:{readonly query:SchemeQuery|null;readonly schemeId
 function DefaultSchemeField(p:{readonly value:string;readonly disabled:boolean;readonly title?:string;readonly open:()=>void}){
   return <div className="pc-barcode-tools product-barcode-tools"><div className="field"><span className="pc-field-caption">主条码默认方案</span><div id="pc-detail-scheme" className="pc-arco-host"><span className="pc-read-value" title={p.title}>{p.value}</span></div></div><button type="button" className="btn ghost" disabled={p.disabled} onClick={p.open}>查看方案</button></div>;
 }
-function DefaultSchemeTools({ scope, reader, data,receiveTarget,query }: ProductPageTabProps & { readonly data: ProductBarcodePage;readonly receiveTarget:(target:SchemeTarget|null,visible:boolean)=>void;readonly query:SchemeQuery|null }) {
+function DefaultSchemeTools({ scope, reader, data,receiveTarget,query }: ProductPageTabProps & { readonly data: ProductBarcodeQueryResult;readonly receiveTarget:(target:SchemeTarget|null,visible:boolean)=>void;readonly query:SchemeQuery|null }) {
   const scheme=data.defaultScheme;
   const schemeReader=reader.barcodes?.schemeReader;
   useLayoutEffect(()=>{const target=scheme.state==='AVAILABLE'&&schemeReader?{scope,productId:data.productId,version:data.version,schemeId:scheme.schemeId}:null;receiveTarget(target,true);return()=>receiveTarget(target,false);},[scope,data.productId,data.version,scheme.state,scheme.state==='AVAILABLE'?scheme.schemeId:null,schemeReader,receiveTarget]);
@@ -62,56 +61,47 @@ function DefaultSchemeName(p:{readonly scope:ReadScope;readonly schemeId:string;
   </>;
 }
 
-function LabeledPage({ scope, reader, data }: ProductPageTabProps & { readonly data: ProductBarcodePage }) {
-  const { snapshot, read, cancel, cancelled } = useProductRead(scope, input => reader.specs!.read(input), assertProductSpecifications);
-  // The page attachment owns this label read. Loading/error/cancel never reuse
-  // an earlier success, and a new product/version/page remounts the attachment.
-  const specifications = scope.active && snapshot.phase === 'success' && snapshot.success?.parameters.productId === data.productId
-    ? snapshot.success.data : null;
-  return <>
-    {snapshot.phase === 'loading' && <p className="product-field-hint" role="status">正在读取规格名称… <UIButton type="button" className="iw-link" onClick={cancel}>取消读取</UIButton></p>}
-    {snapshot.phase === 'error' && <p className="product-field-hint" role="alert">规格名称暂不可读取。<UIButton type="button" className="iw-link" onClick={read}>重试</UIButton></p>}
-    {snapshot.phase === 'idle' && cancelled && <p className="product-field-hint" role="status">规格名称读取已取消。<UIButton type="button" className="iw-link" onClick={read}>重新读取</UIButton></p>}
-    {snapshot.phase !== 'disposed' && <BarcodeGroups data={data} specifications={specifications} />}
-  </>;
+/** SKU pages and record pages keep their own server count and exact request.
+ * This owner is local to the existing barcode leaf; shared stock/prices paging stays unchanged. */
+function BarcodePagedRead(p:{readonly scope:ReadScope;readonly read:NonNullable<ProductPageTabProps['reader']['barcodes']>['read'];readonly initial:ProductBarcodeQuery;readonly label:string;readonly children:(data:ProductBarcodeQueryResult)=>ReactNode}){
+ const [owner,setOwner]=useState<{scope:ReadScope;read:typeof p.read;initial:ProductBarcodeQuery;query:LatestQuery<ProductBarcodeQuery,ProductBarcodeQueryResult|null>}|null>(null);
+ useEffect(()=>{
+  const query=new LatestQuery<ProductBarcodeQuery,ProductBarcodeQueryResult|null>({scope:p.scope,execute:async read=>productBarcodesResponse(await p.read(read),read.parameters)});
+  setOwner({scope:p.scope,read:p.read,initial:p.initial,query});return()=>query.dispose();
+ },[p.scope,p.read,p.initial.view,p.initial.skuId]);
+ const query=owner?.scope===p.scope&&owner.read===p.read&&owner.initial.view===p.initial.view&&owner.initial.skuId===p.initial.skuId?owner.query:null;
+ useProductQueryActivity(query,p.initial);
+ return query&&p.scope.active?<BarcodePagedResults scope={p.scope} query={query} label={p.label}>{p.children}</BarcodePagedResults>:null;
 }
-
-interface BarcodeGroup {
-  /** First actual barcode record is the render key, never a new SKU identity. */
-  readonly id: string; readonly skuId: string; readonly colorId: string; readonly fitId: string; readonly sizeId: string;
-  readonly records: ProductBarcodeDetails[];
+function BarcodePagedResults(p:{readonly scope:ReadScope;readonly query:LatestQuery<ProductBarcodeQuery,ProductBarcodeQueryResult|null>;readonly label:string;readonly children:(data:ProductBarcodeQueryResult)=>ReactNode}){
+ const active=useProductPanelActive(),snapshot=useSyncExternalStore(p.query.subscribe,p.query.getSnapshot,p.query.getSnapshot),[cancelled,setCancelled]=useState(false);
+ const data=snapshot.success?.data,parameters=snapshot.request?.parameters;
+ return <ProductReadState phase={snapshot.phase} cancelled={cancelled} empty={!data} cancel={()=>{setCancelled(true);p.query.cancel();}} retry={()=>{if(active&&parameters){setCancelled(false);void p.query.run(parameters);}}}>
+  {data&&<>{p.children(data)}<StandardPagination label={p.label} scope={p.scope} active={active} page={data.page} pageSize={data.pageSize} total={'kind' in data?data.totalSkus:data.total} disabled={snapshot.phase==='loading'} onPage={page=>{if(active&&snapshot.success)void p.query.run({...snapshot.success.parameters,page});}}/></>}
+ </ProductReadState>;
 }
-function currentPageGroups(items: readonly ProductBarcodeDetails[]): readonly BarcodeGroup[] {
-  const groups = new Map<string, BarcodeGroup>();
-  for (const item of items) {
-    const key = JSON.stringify([item.skuId, item.colorId, item.fitId, item.sizeId]);
-    const group = groups.get(key);
-    if (group) group.records.push(item);
-    else groups.set(key, { id: item.id, skuId: item.skuId, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId, records: [item] });
-  }
-  return [...groups.values()];
+function BarcodeSummary({value}:{readonly value:ProductBarcodeSummary|null}){
+ return value?<span data-barcode-id={value.id}><span className="product-raw-barcode">{value.barcode}</span>{!value.enabled&&<small>（停用）</small>}</span>:<>—</>;
 }
-function Codes({ records }: { readonly records: readonly ProductBarcodeDetails[] }) {
-  return records.length ? <div className="product-barcode-read-codes">{records.map(record => <span key={record.id} data-barcode-id={record.id}>
-    <span className="product-raw-barcode">{record.barcode}</span>{!record.enabled && <small>（停用）</small>}
-  </span>)}</div> : <span className="product-field-hint">当前页未提供</span>;
+function BarcodeSkuRows({scope,reader,data}:ProductPageTabProps&{readonly data:ProductBarcodeSkuPage}){
+ const active=useProductPanelActive(),[viewing,setViewing]=useState<ProductBarcodeSkuRow|null>(null);
+ useEffect(()=>{if(!active)setViewing(null);},[active]);
+ const show=(row:ProductBarcodeSkuRow)=>{if(active&&scope.active&&row.bindingCount>0)setViewing(row);};
+ return <>
+  <ProductBarcodeSourceBody className="product-readonly-barcode-table" rows={data.items.map(row=>({key:row.skuId,skuId:row.skuId,color:row.colorLabel??'—',fit:row.fitLabel??'—',size:row.sizeLabel??'—',current:<BarcodeSummary value={row.main}/>,extras:row.firstConfirmedOld?<><BarcodeSummary value={row.firstConfirmedOld}/><button type="button" className="btn ghost" onClick={()=>show(row)}>{row.confirmedOldCount>1?'+'+(row.confirmedOldCount-1)+' 更多':'查看'}</button></>:<>—</>,actions:<>{!row.skuEnabled&&<span className="product-field-hint">（停用）</span>}{row.bindingCount>0&&<button type="button" className="btn ghost" onClick={()=>show(row)}>查看</button>}</>}))}/>
+  {active&&viewing&&<BarcodeSkuDetails key={viewing.skuId} scope={scope} reader={reader} row={viewing} close={()=>setViewing(null)}/>}
+ </>;
 }
-function BarcodeGroups({ data, specifications }: { readonly data: ProductBarcodePage; readonly specifications: ProductSpecifications | null }) {
-  const rows = currentPageGroups(data.items);
-  const skus = new Map(specifications?.skus.map(sku => [sku.id, sku]));
-  const labels = { colors: new Map(specifications?.colors.map(value => [value.id, value.label])),
-    fits: new Map(specifications?.fits.map(value => [value.id, value.label])), sizes: new Map(specifications?.sizes.map(value => [value.id, value.label])) };
-  const label = (group: BarcodeGroup, axis: keyof typeof labels) => {
-    const sku = skus.get(group.skuId);
-    // Labels do not supply or repair bindings. A changed/missing SKU in the
-    // independently read specifications leaves its native barcode names unknown.
-    if (!sku || sku.colorId !== group.colorId || sku.fitId !== group.fitId || sku.sizeId !== group.sizeId) return '未提供';
-    return labels[axis].get(axis === 'colors' ? group.colorId : axis === 'fits' ? group.fitId : group.sizeId) ?? '未提供';
-  };
-  return <>
-    <p className="product-field-hint product-barcode-page-note">当前第{data.page}页，本页{data.items.length}条／共{data.total}条条码记录；按本页规格坐标展示，其他页可能包含同一规格的条码。</p>
-    <ProductBarcodeSourceBody className="product-readonly-barcode-table" rows={rows.map(group=>({key:group.id,skuId:group.skuId,color:label(group,'colors'),fit:label(group,'fits'),size:label(group,'sizes'),current:<Codes records={group.records.filter(record=>record.kind==='MAIN')}/>,extras:<Codes records={group.records.filter(record=>record.kind==='CONFIRMED_OLD')}/>,actions:<button type="button" className="btn ghost" disabled>查看</button>}))}/>
-  </>;
+function BarcodeSkuDetails(p:ProductPageTabProps&{readonly row:ProductBarcodeSkuRow;readonly close:()=>void}){
+ return <StandardOverlay presentation="catalogue" title="查看全部条码" closeLabel="关闭查看全部条码" className="pc-arco-modal pc-wide product-source-modal product-source-ui product-barcode-detail-modal" width={780} close={p.close} footer={close=><div className="pc-modal-foot"><button type="button" className="btn" onClick={close}>关闭</button></div>}>
+  <div className="pc-modal-body"><p className="spaced">商品规格：{[p.row.colorLabel??'—',p.row.fitLabel??'—',p.row.sizeLabel??'—'].join(' / ')}</p>
+   <BarcodePagedRead scope={p.scope} read={p.reader.barcodes!.read} initial={parseProductBarcodeQuery({productId:p.scope.entityId,page:1,pageSize:50,skuId:p.row.skuId})} label="当前规格条码记录分页">{data=>'kind' in data?null:<>
+    <p className="product-field-hint">当前第{data.page}页，本页{data.items.length}条／共{data.total}条已保留条码记录。</p>
+    <table className="pc-barcode-view-table"><thead><tr>{['条码','类型','来源','历史规格','操作'].map(label=><th key={label}>{label}</th>)}</tr></thead><tbody>{data.items.map(record=><tr key={record.id} data-barcode-id={record.id}><td className="product-raw-barcode">{record.barcode}</td><td>{record.kind==='MAIN'?'主条码':'已确认旧条码'}{!record.enabled&&<small>（停用）</small>}</td><td>未提供</td><td>未提供</td><td/></tr>)}</tbody></table>
+    {!data.items.length&&<div className="empty">当前没有已保留的条码记录</div>}
+   </>}</BarcodePagedRead><p className="hint">这里展示当前规格已保留的条码记录，包含停用记录。</p>
+  </div>
+ </StandardOverlay>;
 }
 
 export interface ProductBarcodeSourceRow {readonly key:string;readonly skuId?:string;readonly color:ReactNode;readonly fit:ReactNode;readonly size:ReactNode;readonly current:ReactNode;readonly extras:ReactNode;readonly actions:ReactNode}
