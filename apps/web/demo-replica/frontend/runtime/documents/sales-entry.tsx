@@ -12,22 +12,26 @@ import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { salesInputMoney } from '../../../../src/sales/commands/form-model.ts';
 import { salesStatusLabels } from '../../../../src/sales/model.ts';
 import { entityId } from '../../../../../../packages/domain/src/values.ts';
+import type { HttpQueryOptions } from '../../../../src/transport/http-query.ts';
 import type { AuthenticationPrincipal } from '../../../../src/authentication/contracts.ts';
 import type { SalesExistingDocumentSession } from '../../../../src/current-form/sales-existing-document.ts';
 
+const ImportedHistory=lazy(()=>import('./history-page.tsx'));
 const History=lazy(()=>import('./sales-history.tsx'));
 export {newSalesListViewState};
 export function salesCanLeave(session:ReplicaSalesSession):boolean {
  if(!session.scope.active)return true;
+ if([...session.historyOwners.values()].some(entry=>entry.owner.unresolved))return false;
  if(session.editor.getSnapshot().command.write.phase==='committed')return true;
  const proposal=session.proposal.getSnapshot();
  return session.editor.canLeave()&&!session.create.getSnapshot().preparing&&!proposal.dirty&&!proposal.lineEdit&&!Object.values(proposal.entries).flat().some(row=>row.product||row.query.trim());
 }
-interface Options {principal:AuthenticationPrincipal;session:ReplicaSalesSession;scope:ReadScope;references:SalesReferenceReader;productReader:ProductReadOnlyReader;view:SalesListViewState;manualCreate:boolean;existingEdit:boolean;denied:(error:HttpQueryError)=>void;navigate:(route:string)=>void;onCommitted:()=>void;onDiscarded:()=>void}
+interface Options {http:HttpQueryOptions;historyRevision:boolean;newRequestKey:()=>string;principal:AuthenticationPrincipal;session:ReplicaSalesSession;scope:ReadScope;references:SalesReferenceReader;productReader:ProductReadOnlyReader;view:SalesListViewState;manualCreate:boolean;existingEdit:boolean;denied:(error:HttpQueryError)=>void;navigate:(route:string)=>void;onCommitted:()=>void;onDiscarded:()=>void}
+function historyRouteTarget(route:string){const parts=route.split('/');if(parts.length!==5)throw new Error('历史单据地址无效。');const batchId=decodeURIComponent(parts[2]!),documentId=decodeURIComponent(parts[3]!),effectiveVersion=Number(parts[4]);if(!/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(batchId)||!Number.isSafeInteger(effectiveVersion)||effectiveVersion<1)throw new Error('历史单据地址无效。');entityId('sales',documentId);return {kind:'sales' as const,batchId,documentId,effectiveVersion};}
 export function mountSales(host:HTMLElement,route:string,p:Options){
  document.body.classList.add('sale-mode','gold-mode');
- const root=createRoot(host);const canLeave=()=>salesCanLeave(p.session);
- root.render(route==='sales'?<SalesList session={p.session} view={p.view} references={p.references} canCreate={p.manualCreate} open={id=>p.navigate('sales/view/'+encodeURIComponent(id))} create={()=>p.navigate('sales/new')} onAccessFailure={p.denied}/>:route==='sales/new'&&p.manualCreate?<NewDocument {...p}/>:route.startsWith('sales/edit/')&&p.existingEdit?<EditDocument {...p} id={decodeURIComponent(route.slice('sales/edit/'.length))}/>:route.startsWith('sales/view/')?<ReadDocument {...p} id={decodeURIComponent(route.slice('sales/view/'.length))}/>:<p role="alert">当前版本未开放此销货操作。</p>);
+ const root=createRoot(host);let pageGuard:(()=>boolean)|null=null;const canLeave=()=>salesCanLeave(p.session)&&(pageGuard?.()??true);
+ root.render(route.startsWith('sales/history/')?<Suspense fallback={<p role="status">正在加载单据…</p>}><ImportedHistory session={p.session} scope={p.scope} http={p.http} target={historyRouteTarget(route)} canEdit={p.historyRevision} newRequestKey={p.newRequestKey} denied={p.denied} navigate={p.navigate} guard={value=>{pageGuard=value;}} committed={()=>{p.view.reload=true;}}/></Suspense>:route==='sales'?<SalesList session={p.session} view={p.view} references={p.references} canCreate={p.manualCreate} open={row=>{p.session.selection.row=row;p.navigate(row.dataset==='LIVE'?'sales/view/'+encodeURIComponent(row.documentId):'sales/history/'+encodeURIComponent(row.batchId)+'/'+encodeURIComponent(row.documentId)+'/'+row.effectiveVersion);}} create={()=>p.navigate('sales/new')} onAccessFailure={p.denied}/>:route==='sales/new'&&p.manualCreate?<NewDocument {...p}/>:route.startsWith('sales/edit/')&&p.existingEdit?<EditDocument {...p} id={decodeURIComponent(route.slice('sales/edit/'.length))}/>:route.startsWith('sales/view/')?<ReadDocument {...p} id={decodeURIComponent(route.slice('sales/view/'.length))}/>:<p role="alert">当前版本未开放此销货操作。</p>);
  return {dispose:()=>{root.unmount();document.body.classList.remove('sale-mode','gold-mode');p.session.create.cancelPreparation();p.session.editor.suspend();},canLeave:()=>canLeave()};
 }
 function WriteRecovery(p:{session:ReplicaSalesSession;committed:()=>void}) {

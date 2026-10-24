@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+    "headObserved": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+    "remoteHeadVerified": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb",
     "remoteReadbackMethod": "SOURCE351 exact original Git object nonforcedFF and independent remote GET verified",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a"
+    "lastVerifiedRemoteCommit": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb"
   },
   "concurrency": {
     "chats": 11,
@@ -87,7 +87,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Accepted phase1 source343. Technical implementation first exact package, unique allocated module leaves; no source copy repeat",
+      "currentWork": "chunk175 exact18 delivered/staged; transfer normal session/history opener next; I01 drawer callback afterF2",
       "currentPackage": "公共壳/会话/正常路由＋销货完整开单接线",
       "nextReadyPackage": "混合退换/保存查看编辑全状态，随后调拨全状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -145,7 +145,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Accepted phase1 source343. Technical implementation first exact package, unique allocated module leaves; no source copy repeat",
+      "currentWork": "Original inventory View3tabdrawer whole-consumer seam assigned, preserve source351 productscroll PASS",
       "currentPackage": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
       "nextReadyPackage": "P01-P13商品六页签及全部编辑查看状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -303,7 +303,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original history primitives QB258 accepted; approved salesperson historical transfer detail/revise scope seam file proposal requested",
+      "currentWork": "SOURCE353 QB262 source limitedPASS; actual source-specific rolePG/HREV remains C execution",
       "currentPackage": "279+280 reader/host limitedsource218 adopted;283 HTTPpoststatF01 fixexact2 frozen",
       "nextReadyPackage": "Necessary exact owned history consumers afterC filehandoff",
       "currentDependencies": "Original v5 null-hall approval for mandatory two real historical sales; no season guard widening required",
@@ -1310,9 +1310,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T20:04:23.382529+00:00",
+  "updatedAt": "2026-10-24T20:18:05.015919+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+  "lastVerifiedRemoteCommit": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -4715,8 +4715,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T19:57:17.215456+00:00",
-    "sourceRound": 353,
-    "sourceCheckpoint": "parent f086e1fc2f0ddc819ebed2257b02773f4664665a, D3 exact6+C host2 explicit transfer hall consumer",
+    "sourceRound": 354,
+    "sourceCheckpoint": "parent49eb4ecc92562bb74d1efed2ef47bdffeb290fbb; F1 frozen175 source only",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -5078,7 +5078,13 @@
           "next": "P15-P18四字典与P19条码方案整页"
         }
       },
-      "countsQualification": "Wholepageaccepted0/37 overlay0/67;34partial/difference checked and3notrun/waiting arecoverageonly. OriginalQF updatingmigration complete/partial/notstarted/unknown truth, not convertchecked34 tomigrated34."
+      "countsQualification": "Wholepageaccepted0/37 overlay0/67;34partial/difference checked and3notrun/waiting arecoverageonly. OriginalQF updatingmigration complete/partial/notstarted/unknown truth, not convertchecked34 tomigrated34.",
+      "source351": {
+        "status": "LIMITED_PASS_WITH_UNVERIFIED_SIDEBAR_WHEEL",
+        "scrollFinding": "P2-QF349-03_CLOSED",
+        "wholePagePass": false,
+        "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source351-visual-scroll-actual-01/RESULT.json"
+      }
     },
     "qaEmptyTargetRegistration": {
       "database": "erp_qa_rapid26_native_20261023_01",
@@ -7929,7 +7935,7 @@
     },
     "normalListUnion": {
       "owner": "D1",
-      "status": "SOURCE_READY_PENDING_QB_ACTUAL_PG_F1",
+      "status": "QB261_SOURCE_ONLY_LIMITED_PASS; ACTUAL_PG_AND_F1_PENDING",
       "files": 10,
       "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/NORMAL-DOCUMENT-LISTS-UNION-v1.json",
       "sha256": "d3ba19b1d2a62fd2549ff9823cebfc62071c2bd7e20ceb9c224b0757c962d4fa",
@@ -7938,15 +7944,33 @@
     },
     "coreReadActualNext": {
       "metadata": "QB259 accepted CURRENT_FORM_READ only",
-      "status": "D1 original runner preparing; C sole actual owner",
-      "sessionFact": "C139 original synthetic auth session was explicitly logged out; RAM random credential disposed. No assumed live cookie or password reset. Existing HTTP runner honestly waits for original authorized session; direct original service/reader actual PG can proceed without claiming HTTP."
+      "status": "BOUNDED_ACTUAL_IN_PROGRESS_PRIOR190191_PRE_ISSUER_ERRORS_PRESERVED",
+      "sessionFact": "C139 original synthetic auth session was explicitly logged out; RAM random credential disposed. No assumed live cookie or password reset. Existing HTTP runner honestly waits for original authorized session; direct original service/reader actual PG can proceed without claiming HTTP.",
+      "job": "c03-core-ready-module-reads-registered-input-20261025-192"
     },
     "historyTransferScope": {
       "owner": "D3+C",
-      "status": "SOURCE_READY_AND_TARGETED_CHECKS_PASS_PENDING_QB_ACTUAL_PG",
+      "status": "QB262_SOURCE_ONLY_LIMITED_PASS_PENDING_ACTUAL_PG_HTTP_HREV",
       "files": 8,
       "grant": "TRANSFER_HALL_IDS",
       "externalHistoryWriteAuthorization": "Original mandatory private trusted input still separate; no fabricated generic policy"
+    },
+    "sidebar351": {
+      "id": "S351-NAV-01",
+      "status": "RETRACTED_CONFIRMED_DEFECT; ACTUAL_ASIDE_RANGE66_VISIBLE_AT66; WHEEL_INPUT_UNVERIFIED_NO_FIX",
+      "owner": "F1/C",
+      "reviewOwner": "QF",
+      "candidate": "d9ae87d043cb36a5c2124c770444f9bd62359364",
+      "evidence": "QF/phase2-source351-visual-scroll-actual-01/029-demo-halls and030-source351-halls",
+      "fact": "Approved menu additions explain+66px content height; nav/window metrics alone insufficient to diagnose original aside.sidebar scrollowner. QF directed one precise aside computed overflow/height/rect/client/scrollHeight/top nativewheel before/after and payment link rect, no speculative CSS fix."
+    },
+    "inventoryViewDrawer": {
+      "status": "SOURCE_SEAM_ASSIGNED_VERIFY_SAME_ACTION_THEN_COMPLETE_ORIGINAL_DRAWER",
+      "uiOwner": "F2",
+      "hostCallbackOwner": "F1",
+      "current": "View routes product6tabs",
+      "expected": "Original frozen Demo inventory3tabdrawer",
+      "sourceApproval": "No approved redesign, original I01 scope"
     }
   },
   "latestReadySource": {

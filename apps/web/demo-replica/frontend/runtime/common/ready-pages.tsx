@@ -22,6 +22,8 @@ export interface ReadyPageOptions {
   readonly session: ReplicaSession;
   readonly routes: ProductionHostConfiguration['routes'];
   readonly newRequestKey: () => string;
+  /** C opts in only when the original private HREV write capability is paired. Server authorizes independently. */
+  readonly historyRevision?: Readonly<Partial<Record<'sales'|'transfers',boolean>>>;
   readonly inventory: Pick<InventoryMountOptions, 'ledgerDialog' | 'createWorkbook'> & Pick<InventoryMountOptions, 'onOpenSource'>;
   readonly catalogue: Pick<CatalogueRuntimeOptions, 'maintenance' | 'onChanged'>;
 }
@@ -41,7 +43,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
   let stores: StoreMaintenanceWorkspace | undefined, parties: PartyWorkspace | undefined;
   let staff: StaffSettingsWorkspace | undefined, accounts: AccountSettingsWorkspace | undefined, payments: PaymentSettingsWorkspace | undefined;
   const access = (kind: 'unauthenticated' | 'forbidden') => session.onAccessFailure({ kind });
-  const unresolved = () => !!(sales?.scope.active && sales.editor.commands.hasUnresolvedWrite) || !!owner?.active && !!(stores?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite() || staff?.hasUnresolvedWrite() || accounts?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite());
+  const unresolved = () => !!(sales?.scope.active && sales.editor.commands.hasUnresolvedWrite || sales?.scope.active&&[...sales.historyOwners.values()].some(entry=>entry.owner.unresolved)) || !!owner?.active && !!(stores?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite() || staff?.hasUnresolvedWrite() || accounts?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite());
   const ownerScope = () => {
     if (!owner?.active) {
       owner = session.reads.createScope('replica-settings-session');
@@ -63,13 +65,13 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     const principal = session.auth.getSnapshot().principal;
     if (!principal || principal.accountId !== scope.identity.accountId || !scope.active) throw new Error('当前登录身份尚未确认。');
     const http = session.http, config = options.routes, flags = config.maintenance;
-    if ((route==='sales'||route==='sales/new'||route.startsWith('sales/view/')||route.startsWith('sales/edit/')) && config.sales) {
+    if ((route==='sales'||route==='sales/new'||route.startsWith('sales/view/')||route.startsWith('sales/edit/')||route.startsWith('sales/history/')) && config.sales) {
       const [module,factory,references,products] = await Promise.all([import('../documents/sales-entry.tsx'),import('../documents/sales-session.ts'),import('../../../../src/sales/http-reader.ts'),import('../../../../src/transport/product-http-reader.ts')]);
       if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
       if(!sales?.scope.active)sales=factory.createReplicaSalesSession(session,{instanceId:'replica-sales-owner',newRequestKey:options.newRequestKey});
       salesView??=module.newSalesListViewState();
       const resetSales=()=>{sales?.dispose();sales=null;};
-      return module.mountSales(host,route,{principal,session:sales,scope,view:salesView,references:references.createSalesFilterReferenceHttpReader(http),productReader:products.createProductHttpReader(http),manualCreate:config.salesManualCreate===true,existingEdit:config.salesExistingEdit===true,denied:session.onAccessFailure,navigate,onCommitted:resetSales,onDiscarded:resetSales});
+      return module.mountSales(host,route,{principal,session:sales,scope,view:salesView,references:references.createSalesFilterReferenceHttpReader(http),productReader:products.createProductHttpReader(http),http,historyRevision:options.historyRevision?.sales===true,newRequestKey:options.newRequestKey,manualCreate:config.salesManualCreate===true,existingEdit:config.salesExistingEdit===true,denied:session.onAccessFailure,navigate,onCommitted:resetSales,onDiscarded:resetSales});
     }
     if (route === 'inventory' && config.inventory) {
       const module = await import('../inventory/index.tsx');

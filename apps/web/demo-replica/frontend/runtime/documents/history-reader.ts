@@ -1,0 +1,44 @@
+import type { ImportedHistoryDetail,ImportedHistoryHeader,ImportedHistoryKind,ImportedHistoryDetailQuery,ImportedHistoryPage } from '../../../../../../packages/application/src/imported-history-query-ports.ts';
+import { parseImportedHistoryDetailQuery,validateImportedHistoryLine,validateImportedHistorySettlement } from '../../../../../../packages/application/src/imported-history-query-validation.ts';
+import { isExactHistoryMoney } from '../../../../../../packages/application/src/history-storage-contract.ts';
+import { businessDate } from '../../../../../../packages/domain/src/values.ts';
+import { createHttpJsonQuery,type HttpQueryOptions } from '../../../../src/transport/http-query.ts';
+import type { QueryRead } from '../../../../src/loading/latest-query.ts';
+export interface HistoryTarget {readonly kind:ImportedHistoryKind;readonly batchId:string;readonly documentId:string;readonly effectiveVersion:number}
+function bad():never{throw new TypeError('Invalid historical detail response.');}
+function record(value:unknown,fields:readonly string[]):Record<string,unknown>{if(!value||typeof value!=='object'||Object.getPrototypeOf(value)!==Object.prototype||Reflect.ownKeys(value).length!==fields.length)bad();const row:Record<string,unknown>={};for(const field of fields){const d=Object.getOwnPropertyDescriptor(value,field);if(!d?.enumerable||!Object.hasOwn(d,'value'))bad();row[field]=d.value;}return row;}
+function text(value:unknown):asserts value is string{if(typeof value!=='string'||value.includes('\0')||value.length>65536)bad();}
+function nullableText(value:unknown){if(value!==null)text(value);}
+function uuid(value:unknown):asserts value is string{text(value);if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(value))bad();}
+function nullableId(value:unknown){if(value!==null)uuid(value);}
+function positive(value:unknown){if(typeof value!=='number'||!Number.isSafeInteger(value)||value<1||value>2147483645)bad();}
+function stamp(value:unknown,instant:boolean){if(value===null)return;text(value);if(!(instant?/^(?!0000)\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{6}Z$/:/^(?!0000)\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{6}$/).test(value))bad();const ms=value.slice(0,23)+'Z';if(!Number.isFinite(Date.parse(ms))||new Date(ms).toISOString()!==ms)bad();}
+function person(value:unknown){const row=record(value,['state','staffId']);if(!['UNKNOWN','UNRESOLVED','BOUND'].includes(String(row.state)))bad();nullableId(row.staffId);if((row.state==='BOUND')!==(row.staffId!==null))bad();}
+/** Response shape/target validation only. Server grant validation is never simulated in the browser. */
+function header(value:unknown,target:HistoryTarget):ImportedHistoryHeader{
+ const kind=target.kind,keys=['dataset','kind','batchId','documentId','version','number','businessDate','sourceStatus','note','createdBy','approvedBy','responsibleStaffId','responsibleName','createdHallId','createdHallProvenance','createdLocalAt','updatedLocalAt','approvedLocalAt','createdInstant','updatedInstant','approvedInstant'];
+ const row=record(value,[...keys,...(kind==='sales'?['businessType','hallId','customerId','warehouseId','salespersonId','grossAmount','orderDiscount','netDue']:['fromWarehouseId','toWarehouseId'])]);
+ if(row.dataset!=='HISTORY'||row.kind!==kind||row.documentId!==target.documentId||row.batchId!==target.batchId)bad();uuid(row.documentId);uuid(row.batchId);positive(row.version);text(row.number);if(row.businessDate!==null){text(row.businessDate);businessDate(row.businessDate);}nullableText(row.note);if(!['DRAFT','APPROVED','VOID'].includes(String(row.sourceStatus)))bad();person(row.createdBy);person(row.approvedBy);nullableId(row.responsibleStaffId);nullableText(row.responsibleName);if(row.responsibleStaffId===null&&row.responsibleName!==null)bad();nullableId(row.createdHallId);if(!['ORIGINAL','MIGRATION_DERIVED','UNKNOWN'].includes(String(row.createdHallProvenance))||(row.createdHallProvenance==='UNKNOWN')!==(row.createdHallId===null))bad();
+ for(const key of ['createdLocalAt','updatedLocalAt','approvedLocalAt'])stamp(row[key],false);for(const key of ['createdInstant','updatedInstant','approvedInstant'])stamp(row[key],true);
+ if(kind==='sales'){if(!['SALE','RETURN','EXCHANGE'].includes(String(row.businessType)))bad();for(const key of ['hallId','customerId','warehouseId'])uuid(row[key]);nullableId(row.salespersonId);for(const key of ['grossAmount','orderDiscount','netDue'])if(!isExactHistoryMoney(row[key]))bad();}else{uuid(row.fromWarehouseId);uuid(row.toWarehouseId);}
+ return value as ImportedHistoryHeader;
+}
+function page<T extends {id:string;lineNo:number}>(value:unknown,n:number,size:number,decode:(value:unknown)=>T):ImportedHistoryPage<T>{const row=record(value,['page','pageSize','total','items']);if(row.page!==n||row.pageSize!==size||typeof row.total!=='string'||!/^(0|[1-9]\d{0,127})$/.test(row.total)||!Array.isArray(row.items)||row.items.length>size)bad();const items=row.items.map(decode),remain=BigInt(row.total)-BigInt(n-1)*BigInt(size),expected=remain<0n?0n:remain>BigInt(size)?BigInt(size):remain;if(BigInt(items.length)!==expected||new Set(items.map(item=>item.id)).size!==items.length||items.some((item,index)=>index>0&&items[index-1]!.lineNo>=item.lineNo))bad();return {page:n,pageSize:size as ImportedHistoryPage<T>['pageSize'],total:row.total,items};}
+export function historyDetailResponse(value:unknown,target:HistoryTarget,q:ImportedHistoryDetailQuery):ImportedHistoryDetail{
+ const row=record(value,['dataset','kind','document','lines','settlements']);if(row.dataset!=='HISTORY'||row.kind!==target.kind)bad();const document=row.document===null?null:header(row.document,target);
+ const lines=page(row.lines,q.linePage,q.linePageSize,item=>validateImportedHistoryLine(item,target.kind)),settlements=page(row.settlements,q.settlementPage,q.settlementPageSize,validateImportedHistorySettlement);
+ if(document===null&&(lines.total!=='0'||settlements.total!=='0')||target.kind==='transfers'&&settlements.total!=='0')bad();
+ return {dataset:'HISTORY',kind:target.kind,document,lines,settlements};
+}
+export function createHistoryReader(options:HttpQueryOptions){const http=createHttpJsonQuery(options);return Object.freeze({readDetail(target:HistoryTarget,read:QueryRead<ImportedHistoryDetailQuery>){const query=parseImportedHistoryDetailQuery({...read.parameters},target.kind);if(query.documentId!==target.documentId)bad();return http.post('/imported-history/'+target.kind+'/detail/query',query,read.signal,value=>historyDetailResponse(value,target,query));}});}
+export interface CompleteHistoryDocument {readonly document:ImportedHistoryHeader;readonly lines:ImportedHistoryDetail['lines']['items'];readonly settlements:ImportedHistoryDetail['settlements']['items']}
+/** Explicit edit action only: consume all bounded pages before enabling a revision. Never replace from a partial page. */
+export async function collectHistoryDocument(reader:ReturnType<typeof createHistoryReader>,target:HistoryTarget,read:QueryRead<ImportedHistoryDetailQuery>):Promise<CompleteHistoryDocument>{
+ let linePage=1,settlementPage=1,headerValue:ImportedHistoryHeader|null=null,lineTotal:string|null=null,settlementTotal:string|null=null;const lines:ImportedHistoryDetail['lines']['items'][number][]=[],settlements:ImportedHistoryDetail['settlements']['items'][number][]=[],lineIds=new Set<string>(),settlementIds=new Set<string>();let linesDone=false,settlementsDone=false;
+ while(!linesDone||!settlementsDone){if(read.signal.aborted)throw read.signal.reason??new DOMException('已取消读取','AbortError');const data=await reader.readDetail(target,{...read,parameters:{documentId:target.documentId,linePage,linePageSize:200,settlementPage,settlementPageSize:200}});if(!data.document||data.document.version!==target.effectiveVersion)throw new Error('历史单据版本已更新，请返回列表重新查询。');if(headerValue&&JSON.stringify(headerValue)!==JSON.stringify(data.document))throw new Error('读取期间历史单据已变化，尚未进入修改。');headerValue=data.document;
+  if(lineTotal!==null&&lineTotal!==data.lines.total||settlementTotal!==null&&settlementTotal!==data.settlements.total)throw new Error('历史明细数量已变化，尚未进入修改。');lineTotal=data.lines.total;settlementTotal=data.settlements.total;
+  if(!linesDone){for(const item of data.lines.items){if(lineIds.has(item.id)||lines.length&&lines[lines.length-1]!.lineNo>=item.lineNo)bad();lineIds.add(item.id);lines.push(item);}linesDone=BigInt(lines.length)===BigInt(lineTotal);if(!linesDone)linePage++;}
+  if(!settlementsDone){for(const item of data.settlements.items){if(settlementIds.has(item.id)||settlements.length&&settlements[settlements.length-1]!.lineNo>=item.lineNo)bad();settlementIds.add(item.id);settlements.push(item);}settlementsDone=BigInt(settlements.length)===BigInt(settlementTotal);if(!settlementsDone)settlementPage++;}
+ }
+ if(!headerValue)bad();return {document:headerValue,lines,settlements};
+}
