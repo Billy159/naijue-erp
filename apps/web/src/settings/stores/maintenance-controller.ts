@@ -1,3 +1,5 @@
+import { initialStoreSettingsQuery } from './controller.ts';
+import type { StoreSettingsListQuery } from './contracts.ts';
 import type { ReadScope } from '../../loading/read-scope.ts';
 import type { SettingsErrors } from './maintenance-contracts.ts';
 
@@ -189,10 +191,26 @@ export class StoreMaintenanceController {
   }
 }
 
+/** Bounded input context from the frozen App; never stores rows or read owners. */
+export interface StoreSettingsQueryUi {
+  draft: StoreSettingsListQuery; applied: StoreSettingsListQuery;
+  hallSelection: { id: string; name: string } | null;
+  readonly tableScroll: { top: number; left: number };
+}
+export interface StoreSettingsViewState {
+  tab: StoreSettingsKind;
+  readonly tabs: Record<StoreSettingsKind, StoreSettingsQueryUi>;
+}
+export function createStoreSettingsViewState(tab: StoreSettingsKind = 'stores'): StoreSettingsViewState {
+  const tableScroll = { top: 0, left: 0 };
+  const empty = (): StoreSettingsQueryUi => ({ draft: { ...initialStoreSettingsQuery }, applied: { ...initialStoreSettingsQuery }, hallSelection: null, tableScroll });
+  return { tab, tabs: { stores: empty(), warehouses: empty() } };
+}
 export interface StoreWorkspaceOptions extends Omit<StoreEditorOptions, 'hasOtherUnresolvedWrite'> { readonly scope: ReadScope }
 /** Two bounded session editors. No localStorage, shared global cache or route-owned command. */
 export function createStoreMaintenanceWorkspace(options: StoreWorkspaceOptions) {
   let snapshot: Readonly<Record<StoreSettingsKind, StoreMaintenanceController | null>> = Object.freeze({ stores: null, warehouses: null });
+  let viewState: StoreSettingsViewState | null = null;
   const listeners = new Set<() => void>();
   const notify = () => { for (const listener of [...listeners]) { try { listener(); } catch { /* Consumer only. */ } } };
   const matches = (scope: ReadScope) => options.scope.active && scope.active
@@ -203,8 +221,9 @@ export function createStoreMaintenanceWorkspace(options: StoreWorkspaceOptions) 
     if (editor && !editor.discard()) return false;
     snapshot = Object.freeze({ ...snapshot, [kind]: null }); notify(); return true;
   };
-  options.scope.signal.addEventListener('abort', () => { for (const editor of Object.values(snapshot)) editor?.dispose(); snapshot = Object.freeze({ stores: null, warehouses: null }); notify(); listeners.clear(); }, { once: true });
+  options.scope.signal.addEventListener('abort', () => { for (const editor of Object.values(snapshot)) editor?.dispose(); snapshot = Object.freeze({ stores: null, warehouses: null }); viewState = null; notify(); listeners.clear(); }, { once: true });
   return Object.freeze({ scope: options.scope, matches, writesEnabled: () => options.scope.active && options.writesEnabled() === true,
+    getViewState: (initialTab?: StoreSettingsKind): StoreSettingsViewState | null => options.scope.active ? viewState ??= createStoreSettingsViewState(initialTab) : null,
     getSnapshot: () => snapshot,
     subscribe: (listener: () => void) => { listeners.add(listener); return () => { listeners.delete(listener); }; },
     open(kind: StoreSettingsKind, record: StoreSettingsEntry | null): StoreMaintenanceController | null {

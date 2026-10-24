@@ -8,33 +8,28 @@ import type { StoreSettingsKind, StoreSettingsListQuery, StoreSettingsPageProps 
 import { initialStoreSettingsQuery, StoreSettingsReadController } from './controller.ts';
 import { StoreSettingsReadState } from './read-state.tsx';
 import { storeSettingsReferenceLabel } from './detail-modal.tsx';
+import { createStoreSettingsViewState, type StoreSettingsQueryUi } from './maintenance-controller.ts';
 import { DemoStoreView } from './demo-store-view.tsx';
 import './source-store-settings.css';
 
 const noEditors = Object.freeze({ stores: null, warehouses: null });
 const noSubscribe = () => () => {};
-interface StoreQueryUi {
-  draft: StoreSettingsListQuery; applied: StoreSettingsListQuery;
-  hallSelection: { id: string; name: string } | null;
-  readonly tableScroll: { top: number; left: number };
-}
 interface StoreRouteUi {
   readonly reader: StoreSettingsPageProps['reader'];
   readonly workspace: import('./maintenance-controller.ts').StoreMaintenanceWorkspace | undefined;
-  readonly tabs: Record<StoreSettingsKind, StoreQueryUi>;
+  readonly tabs: Record<StoreSettingsKind, StoreSettingsQueryUi>;
 }
-// Query controls only: two tabs per explicit route scope, never rows/results,
-// permissions, commands or credentials. Read-only keyed mounts share the same
-// route UI; every return still creates a new read owner and fresh native query.
+// A configured session workspace owns ordinary menu-return input context.
+// This existing route-only fallback serves hosts without that capability; neither
+// path retains rows, read owners, permissions, commands or credentials.
 const routeQueryUi = new WeakMap<ReadScope, StoreRouteUi>();
-function queryUi(props: StoreSettingsPageProps, kind: StoreSettingsKind): StoreQueryUi {
+function queryUi(props: StoreSettingsPageProps, kind: StoreSettingsKind): StoreSettingsQueryUi {
+  const workspace = props.maintenance?.workspace;
+  const retained = workspace?.matches(props.scope) ? workspace.getViewState() : null;
+  if (retained) return retained.tabs[kind];
   let state = routeQueryUi.get(props.scope);
   if (!state || state.reader !== props.reader || state.workspace !== props.maintenance?.workspace) {
-    // Frozen App keeps one table viewport while changing its tab/columns. Share
-    // only that UI position across the two tab states; never retain table facts.
-    const tableScroll = { top: 0, left: 0 };
-    const empty = (): StoreQueryUi => ({ draft: { ...initialStoreSettingsQuery }, applied: { ...initialStoreSettingsQuery }, hallSelection: null, tableScroll });
-    state = { reader: props.reader, workspace: props.maintenance?.workspace, tabs: { stores: empty(), warehouses: empty() } };
+    state = { reader: props.reader, workspace: props.maintenance?.workspace, tabs: createStoreSettingsViewState().tabs };
     routeQueryUi.set(props.scope, state);
     props.scope.signal.addEventListener('abort', () => routeQueryUi.delete(props.scope), { once: true });
   }
@@ -51,7 +46,7 @@ export function StoreSettingsPage(props: StoreSettingsPageProps & { readonly kin
   }, [props.scope, props.reader, props.kind, props.onAccessFailure, props.allowHallDirectoryRead, props.maintenance?.workspace]);
   return owner && owner.props.scope === props.scope && owner.props.reader === props.reader && owner.kind === props.kind && owner.props.onAccessFailure === props.onAccessFailure && owner.props.allowHallDirectoryRead === props.allowHallDirectoryRead && owner.props.maintenance?.workspace === props.maintenance?.workspace ? <StoreSettingsContent key={owner.scope.routeInstanceId} {...props} controller={owner} ui={ui} /> : null;
 }
-function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: StoreSettingsKind; readonly controller: StoreSettingsReadController; readonly ui: StoreQueryUi }) {
+function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: StoreSettingsKind; readonly controller: StoreSettingsReadController; readonly ui: StoreSettingsQueryUi }) {
   const { controller } = props, { list, scope } = controller, snapshot = useSyncExternalStore(list.subscribe, list.getSnapshot, list.getSnapshot), hallSnapshot = useSyncExternalStore(controller.hallDirectory.subscribe, controller.hallDirectory.getSnapshot, controller.hallDirectory.getSnapshot);
   const [draft, setDraftState] = useState<StoreSettingsListQuery>(() => ({ ...props.ui.draft })), [hallSelection, setHallSelectionState] = useState(props.ui.hallSelection);
   const setDraft = (next: StoreSettingsListQuery | ((value: StoreSettingsListQuery) => StoreSettingsListQuery)) => {

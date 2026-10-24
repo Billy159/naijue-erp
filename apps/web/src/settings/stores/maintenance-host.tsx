@@ -57,12 +57,18 @@ export function StoreSettingsMaintenanceHost(props: StoreSettingsPageProps & {
   const [tab, setTab] = useState(() => {
     const workspace = props.workspace ?? props.maintenance?.workspace;
     if (!workspace?.matches(props.scope)) return props.initialTab;
-    const editors = workspace.getSnapshot();
+    const editors = workspace.getSnapshot(), view = workspace.getViewState(props.initialTab);
     return props.allowedTabs.find(kind => editors[kind]?.hasUnresolvedWrite)
-      ?? props.allowedTabs.find(kind => editors[kind]?.getSnapshot().dirty) ?? props.initialTab;
+      ?? props.allowedTabs.find(kind => editors[kind]?.getSnapshot().dirty)
+      ?? (view && props.allowedTabs.includes(view.tab) ? view.tab : props.initialTab);
   }), focusTab = useRef(false);
   if (!props.allowedTabs.includes(props.initialTab)) throw new TypeError('Initial settings tab must be explicitly allowed');
-  return <StoreSettingsPage {...props} kind={tab} focusTab={focusTab.current} maintenance={{ ...props.maintenance, ...(props.directory ? { directory: props.directory } : {}), ...(props.workspace ? { workspace: props.workspace } : {}) }} onTab={next => { if (props.scope.active && props.allowedTabs.includes(next)) { focusTab.current = true; setTab(next); } }} />;
+  return <StoreSettingsPage {...props} kind={tab} focusTab={focusTab.current} maintenance={{ ...props.maintenance, ...(props.directory ? { directory: props.directory } : {}), ...(props.workspace ? { workspace: props.workspace } : {}) }} onTab={next => { if (props.scope.active && props.allowedTabs.includes(next)) {
+    const workspace = props.workspace ?? props.maintenance?.workspace;
+    const view = workspace?.matches(props.scope) ? workspace.getViewState(props.initialTab) : null;
+    if (view) view.tab = next;
+    focusTab.current = true; setTab(next);
+  } }} />;
 }
 export function StoreMaintenanceHost(props: StoreSettingsPageProps & {
   readonly kind: StoreSettingsKind; readonly targetId: string | null; readonly close: () => void; readonly onPrepared?: () => void;
