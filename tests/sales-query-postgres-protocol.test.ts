@@ -285,3 +285,61 @@ test("sales detail pg protocol: original method identity comes only from nullabl
     const detail = await reader(client).readDetail(read({ salesId: ids.sales })); assert.equal(detail.document.settlements[0]!.paymentMethodId, original); client.done();
   }
 });
+
+const normalSalesSummary = (overrides: Record<string, unknown> = {}) => ({ exact_total: '2', history_valid: true, history_published: true,
+  quantity: null, incoming_quantity: null, outgoing_quantity: null, gross_amount: '90071992547409.94', order_discount: '0.00', net_due: '90071992547409.94', ...overrides });
+const normalProduct = { product_count: '1', product_items: [{ productId: sid('product', 300), productCodeSnapshot: 'ORIGINAL', productNameSnapshot: 'ORIGINAL SNAPSHOT' }], product_has_more: false };
+const normalIdentity = (role: 'ADMIN' | 'WAREHOUSE' | 'SALESPERSON' = 'ADMIN'): Step => ({ sql: /read-authorization:identity/, rows: [{ account_id: actor.accountId, staff_id: sid('staff', 301), login_enabled: true,
+  role, employment_status: '在职', hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }] });
+function normalSalesReader(client: ProtocolClient, proof?: () => void) {
+  return new PostgresSalesQueryReader({ async connect() { return client; } }, { profile: 'source-confirmed-normal-document-lists-v1', runtime26: {
+    profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(actual, purpose) { assert.equal(actual, client); assert.equal(purpose, 'HISTORY_READ'); assert.equal(client.calls[0]!.sql, 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); proof?.(); }
+  } });
+}
+test('normal sales union: exact same-client authorization precedes published effective count/totals and one bounded snapshot product projection', async () => {
+  let proofs = 0; const input = parameters(); Object.assign(input.filter, { hallIds: [ids.hall], warehouseIds: [ids.warehouse], businessTypes: ['SALE'], number: "%_\\'literal" });
+  const live = { ...summary(), dataset: 'LIVE', batch_id: null, responsible_staff_id: null, responsible_name: null, created_by_name: 'ORIGINAL LIVE', ...quantities(), ...normalProduct };
+  const historical = { ...live, dataset: 'HISTORY', batch_id: sid('operation', 400), business_date: null, updated_at: null, status: 'DRAFT', version: 3,
+    quantity: null, incoming_quantity: null, outgoing_quantity: null, created_by_name: null, created_local_at: null, updated_local_at: null, gross_amount: '0.01', net_due: '0.01' };
+  let bound: unknown[] = [];
+  const client = new ProtocolClient([begin(), normalIdentity('SALESPERSON'), { sql: /normal-document-list:totals/, rows: [normalSalesSummary()], inspect(values, sql) {
+    bound = values; assert.match(sql, /UNION ALL SELECT dataset,batch_id/); assert.match(sql, /history_base AS MATERIALIZED/);
+    assert.match(sql, /b\.status='IMPORTED'/); assert.match(sql, /r\.action='IMPORT_PUBLISH'/); assert.match(sql, /history_revision er/);
+    assert.match(sql, /bool_and\(effective_valid IS TRUE AND lines_valid IS TRUE\)/); assert.match(sql, /IS NOT TRUE\) AS lines_valid/);
+    assert.match(sql, /count\(\*\) FILTER\(WHERE is_gift IS NULL\)>0 THEN NULL/); assert.match(sql, /h\.hall_id=ANY/); assert.match(sql, /h\.warehouse_id=ANY/);
+    assert.ok(values.includes("%_\\'literal")); assert.ok(!sql.includes("%_\\'literal")); assert.ok(!/naijue_erp\.product(?:\s|$)|product_category|auth_session/.test(sql));
+  } }, { sql: /normal-document-list:page/, rows: [live, historical], inspect(values, sql) {
+    assert.deepEqual(values.slice(0, -2), bound); assert.deepEqual(values.slice(-2), [20, '0']);
+    assert.match(sql, /ORDER BY updated_at DESC NULLS LAST,id ASC,dataset ASC LIMIT/); assert.match(sql, /page_lines AS MATERIALIZED/);
+    assert.match(sql, /coalesce\(product_id::text,'line:'\|\|line_id::text\)/); assert.match(sql, /FILTER\(WHERE preview_row<=3\)/);
+    assert.doesNotMatch(sql, /SELECT.*FROM naijue_erp\.product\b/);
+  } }, commit()]);
+  const result = await normalSalesReader(client, () => proofs++).readList(read(input)); assert.ok('totals' in result);
+  assert.equal(proofs, 1); assert.equal(result.exactTotal, 2n); assert.equal(result.historyCoverage, 'PUBLISHED_AUTHORIZED'); assert.equal(result.totals.quantity, null);
+  assert.equal(result.totals.grossAmount, 9007199254740994n); assert.equal(result.items[0]!.quantity, 9007199254740993n);
+  const h = result.items[1]!; assert.equal(h.dataset, 'HISTORY'); assert.equal(h.id, result.items[0]!.id); assert.equal(h.effectiveVersion, 3);
+  assert.equal(h.updatedAt, null); assert.equal(h.businessDate, null); assert.equal(h.createdByName, null); assert.equal(h.quantity, null); assert.equal(h.status, 'DRAFT');
+  assert.equal(h.productSummary.productCount, 1n); assert.equal(h.productSummary.items[0]!.productNameSnapshot, 'ORIGINAL SNAPSHOT');
+  assert.equal(client.calls.length, 5); client.done();
+});
+test('normal sales union: corrupt effective facts and current identity reject before page; SQL error remains an error and abort rolls back', async () => {
+  for (const mode of ['header-line', 'identity', 'sql', 'abort'] as const) {
+    const controller = new AbortController();
+    const identity = normalIdentity(); if (mode === 'identity') identity.rows![0]!.login_enabled = false;
+    const steps: Step[] = [begin(), identity];
+    if (mode !== 'identity') steps.push({ sql: /normal-document-list:totals/, ...(mode === 'sql' ? { error: Error('ACTUAL_SQL_FAILURE') } : { rows: [normalSalesSummary({ history_valid: mode !== 'header-line' })] }), inspect() { if (mode === 'abort') controller.abort(); } });
+    steps.push(rollback()); const client = new ProtocolClient(steps);
+    await assert.rejects(normalSalesReader(client).readList(read(parameters(), scope, controller.signal)));
+    assert.ok(!client.calls.some(c => c.sql.includes('normal-document-list:page'))); client.done();
+  }
+});
+test('normal sales union: zero published batches is explicit and empty exact totals are not publication proof', async () => {
+  const client = new ProtocolClient([begin(), normalIdentity(), { sql: /normal-document-list:totals/, rows: [normalSalesSummary({ exact_total: '0', history_published: false, quantity: '0', incoming_quantity: '0', outgoing_quantity: '0', gross_amount: '0.00', order_discount: '0.00', net_due: '0.00' })] }, { sql: /normal-document-list:page/, rows: [] }, commit()]);
+  const result = await normalSalesReader(client).readList(read(parameters())); assert.ok('totals' in result); assert.equal(result.historyCoverage, 'NOT_PUBLISHED'); assert.equal(result.totals.netDue, 0n); client.done();
+});
+
+test('normal sales union: missing original HISTORY purpose rejects on the same lease without native-only fallback', async () => {
+  const client = new ProtocolClient([begin(), rollback()]);
+  await assert.rejects(normalSalesReader(client, () => { throw Error('HISTORY_PURPOSE_DENIED'); }).readList(read(parameters())), /HISTORY_PURPOSE_DENIED/);
+  assert.ok(!client.calls.some(c => /read-authorization:identity|normal-document-list:/.test(c.sql))); client.done();
+});

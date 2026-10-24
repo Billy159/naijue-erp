@@ -1,3 +1,4 @@
+import type { DocumentListIdentity, DocumentHistoryCoverage } from "./sales-query-ports.ts";
 import type { DocumentStatus } from "../../domain/src/documents.ts";
 import type { BusinessDate, EntityId, Version } from "../../domain/src/values.ts";
 import type { RuntimeTransferHeader, TransferAction, TransferActor, TransferDocument, TransferRole } from "./transfer-ports.ts";
@@ -49,6 +50,18 @@ export interface TransferReferenceNames {
 export type TransferSummary = Pick<RuntimeTransferHeader, "id" | "number" | "businessDate" | "fromWarehouseId" | "toWarehouseId" | "status" | "version" | "createdByAccountId" | "createdAt" | "updatedAt" | "responsibleStaffId"> & TransferReferenceNames & { readonly totalQuantity: bigint };
 /** Exact count is serialized as a decimal string, not an unsafe JS number. */
 export interface TransferListPage { readonly page: number; readonly pageSize: number; readonly exactTotal: bigint; readonly items: readonly TransferSummary[] }
+/** Explicit exact26 normal-list projection; historical unknowns never weaken LIVE headers. */
+export type TransferUnifiedSummary = (TransferSummary & DocumentListIdentity & { readonly dataset: "LIVE"; readonly batchId: null })
+  | (Omit<TransferSummary, "businessDate" | "createdByAccountId" | "createdAt" | "updatedAt" | "createdByName" | "fromWarehouseName" | "toWarehouseName" | "fromHallName" | "toHallName" | "totalQuantity"> & DocumentListIdentity & {
+    readonly dataset: "HISTORY"; readonly batchId: string; readonly businessDate: BusinessDate | null; readonly createdByAccountId: null;
+    readonly createdAt: string | null; readonly updatedAt: string | null; readonly createdLocalAt: string | null; readonly updatedLocalAt: string | null;
+    readonly createdByName: string | null; readonly fromWarehouseName: string | null; readonly toWarehouseName: string | null;
+    readonly fromHallName: string | null; readonly toHallName: string | null; readonly totalQuantity: bigint | null;
+  });
+export interface TransferUnifiedListPage {
+  readonly page: number; readonly pageSize: number; readonly exactTotal: bigint; readonly items: readonly TransferUnifiedSummary[];
+  readonly historyCoverage: DocumentHistoryCoverage; readonly totals: { readonly totalQuantity: bigint | null };
+}
 /** Current native identities/labels, never replacements for saved line snapshots.
  * Includes every native SKU size in each current-line product/color/FIT tuple, not unrelated tuples. */
 export interface TransferCatalogSku {
@@ -73,7 +86,7 @@ export interface TransferDetail {
 export interface TrustedTransferSnapshotReader {
   /** Older independent readers remain structurally valid; history fails closed when absent. */
   readHistory?(read: TransferScopedRead<TransferHistoryQuery>): Promise<TransferHistoryPage>;
-  readList(read: TransferScopedRead<TransferListQuery>): Promise<TransferListPage>;
+  readList(read: TransferScopedRead<TransferListQuery>): Promise<TransferListPage | TransferUnifiedListPage>;
   readDetail(read: TransferScopedRead<TransferDetailQuery>): Promise<TransferDetail>;
   readWarehouses(read: TransferScopedRead<TransferWarehouseQuery>): Promise<TransferWarehousePage>;
 }

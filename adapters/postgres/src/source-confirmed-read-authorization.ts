@@ -28,7 +28,7 @@ export interface SourceConfirmedPostgresReadAuthorization {
 /** Existing scope validation permits at most 1000 warehouses. Read one extra and reject overflow. */
 export const NATIVE_READ_MAX_AUTHORIZED_WAREHOUSES = 1000;
 type Role = "ADMIN" | "WAREHOUSE" | "SALESPERSON";
-interface CurrentIdentity { readonly role: Role; readonly hallId: EntityId<"hall"> | null }
+export interface CurrentIdentity { readonly role: Role; readonly hallId: EntityId<"hall"> | null }
 type Query = (sql: string, values?: unknown[]) => Promise<PgReadAuthorizationResult>;
 
 function denied(): never { throw new DomainError("FORBIDDEN", "Current account is not authorized for business reads"); }
@@ -56,6 +56,14 @@ async function currentIdentity(query: Query, actor: ActorContext): Promise<Curre
     || (hallId === null && (row.native_hall_id !== null || row.hall_enabled !== null))
     || (hallId !== null && (nativeId("hall", row.native_hall_id) !== hallId || row.hall_enabled !== true))) denied();
   return Object.freeze({ role: row.role, hallId });
+}
+
+/** Reuse current source policy facts on the caller's original active read client. */
+export async function sourceConfirmedReadIdentityOn(client: Pick<PgReadAuthorizationClient, "query">, actor: ActorContext, signal: AbortSignal): Promise<CurrentIdentity> {
+  if (signal.aborted) denied();
+  const identity = await currentIdentity((sql, values) => client.query(sql, values), checkedInventoryActor(actor));
+  if (signal.aborted || ("role" in actor && actor.role !== identity.role)) denied();
+  return identity;
 }
 
 async function allInventoryWarehouses(query: Query): Promise<InventoryReadScope> {

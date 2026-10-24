@@ -18,11 +18,11 @@ async function setup(t: TestContext, options: { authenticate?: SalesQueryHttpOpt
   const reader: TrustedSalesSnapshotReader = {
     async readReferences(read) { check(); return { page: read.parameters.page, exactTotal: 1n, items: [{ id: ids.hall, label: "SYNTHETIC HALL" }] }; },
     async readList(read) { check(); return { page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: 9007199254740993n, items: [{
-      ...syntheticDraft().header, status: "APPROVED", version: version(2), hallName: "SYNTHETIC", customerName: "SYNTHETIC", warehouseName: "SYNTHETIC", salespersonName: null,
+      ...syntheticDraft().header, responsibleStaffId: null, responsibleName: null, createdByName: "SYNTHETIC CREATOR", status: "APPROVED", version: version(2), hallName: "SYNTHETIC", customerName: "SYNTHETIC", warehouseName: "SYNTHETIC", salespersonName: null,
       grossAmount: minorAmount("9007199254740993"), orderDiscount: minorAmount("0"), netDue: minorAmount("9007199254740993"),
       quantity: 9007199254740993n, incomingQuantity: 0n, outgoingQuantity: 9007199254740993n, updatedAt: "2026-10-20T00:00:00.000000Z" }] }; },
-    async readDetail() { check(); return { document: { ...syntheticDraft(), header: { ...syntheticDraft().header, status: "DRAFT", version: version(1), createdByAccountId: actor.accountId,
-      createdHallId: actor.hallId, createdAt: "2026-10-20T00:00:00Z", updatedAt: "2026-10-20T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, stockBasis: "RUNTIME_LEDGER", referenceNames: { hallName: "SYNTHETIC HALL", salespersonName: null, customerName: "SYNTHETIC CUSTOMER", warehouseName: "SYNTHETIC WAREHOUSE" }, settlementNames: syntheticDraft().settlements.map(row => ({ settlementId: row.id, paymentAccountId: row.paymentAccountId,
+    async readDetail() { check(); return { document: { ...syntheticDraft(), header: { ...syntheticDraft().header, responsibleStaffId: null, status: "DRAFT", version: version(1), createdByAccountId: actor.accountId,
+      createdHallId: actor.hallId, createdAt: "2026-10-20T00:00:00Z", updatedAt: "2026-10-20T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, stockBasis: "RUNTIME_LEDGER", referenceNames: { responsibleName: null, createdByName: "SYNTHETIC CREATOR", hallName: "SYNTHETIC HALL", salespersonName: null, customerName: "SYNTHETIC CUSTOMER", warehouseName: "SYNTHETIC WAREHOUSE" }, settlementNames: syntheticDraft().settlements.map(row => ({ settlementId: row.id, paymentAccountId: row.paymentAccountId,
         accountNameSnapshot: "SYNTHETIC original account", methodNameSnapshot: "SYNTHETIC original method", currentAccountName: "SYNTHETIC current account", currentMethodName: "SYNTHETIC current method" })) }; },
     async readHistory(read) { check(); return { salesId: read.parameters.salesId, page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: 1n,
       items: [{ id: sid("audit", 500), operationId: sid("operation", 501), actorAccountId: actor.accountId, action: "SAVE", occurredAt: "2026-10-20T00:00:00Z", oldVersion: null, newVersion: version(1) }] }; },
@@ -47,7 +47,7 @@ test("SYNTHETIC sales query HTTP: five read routes use current trusted actor/pol
   assert.equal(references.statusCode, 200); assert.equal(references.json().exactTotal, "1"); assert.equal(references.json().items[0].label, "SYNTHETIC HALL");
   assert.equal(references.headers["cache-control"], "no-store");
   const detail = await f.post("/sales/detail/query", { salesId: ids.sales }); assert.equal(detail.statusCode, 200); assert.equal(detail.json().document.lines[0].quantity, "2");
-  assert.deepEqual(detail.json().referenceNames, { hallName: "SYNTHETIC HALL", salespersonName: null, customerName: "SYNTHETIC CUSTOMER", warehouseName: "SYNTHETIC WAREHOUSE" });
+  assert.deepEqual(detail.json().referenceNames, { responsibleName: null, createdByName: "SYNTHETIC CREATOR", hallName: "SYNTHETIC HALL", salespersonName: null, customerName: "SYNTHETIC CUSTOMER", warehouseName: "SYNTHETIC WAREHOUSE" });
   assert.equal(detail.json().settlementNames.length, detail.json().document.settlements.length);
   assert.deepEqual(detail.json().settlementNames[0], { settlementId: sid("settlement", 15), paymentAccountId: ids.payment,
     accountNameSnapshot: "SYNTHETIC original account", methodNameSnapshot: "SYNTHETIC original method", currentAccountName: "SYNTHETIC current account", currentMethodName: "SYNTHETIC current method" });
@@ -198,4 +198,27 @@ test("SYNTHETIC sales query HTTP: the total body cap remains independent of vali
     const result = await f.post(url, payload); assert.equal(result.statusCode, 413); assert.equal(result.json().error.code, "BODY_TOO_LARGE");
   }
   assert.deepEqual(f.counts(), { policyCalls: 0, readCalls: 0 });
+});
+
+test('normal sales HTTP: original POST preserves HISTORY composite identity nullable facts and exact full-union totals', async t => {
+  const { PostgresSalesQueryReader } = await import('../../../adapters/postgres/src/sales-query-reader.ts');
+  let published = true, businessReads = 0;
+  const client = { async query(sql: string) {
+    if (sql.includes('read-authorization:identity')) return { rows: [{ account_id: actor.accountId, staff_id: sid('staff', 850), login_enabled: true, role: 'ADMIN', employment_status: '在职', hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }], rowCount: 1 };
+    if (sql.includes('normal-document-list:totals')) { businessReads++; return { rows: [{ exact_total: '1', history_valid: published, history_published: true, quantity: null, incoming_quantity: null, outgoing_quantity: null, gross_amount: '90071992547409.93', order_discount: '0.00', net_due: '90071992547409.93' }], rowCount: 1 }; }
+    if (sql.includes('normal-document-list:page')) return { rows: [{ dataset: 'HISTORY', batch_id: sid('operation', 851), id: ids.sales, number: 'SYNTHETIC_HISTORY', business_type: 'SALE', business_date: null, status: 'DRAFT', version: 2,
+      hall_id: ids.hall, warehouse_id: ids.warehouse, customer_id: ids.customer, salesperson_id: null, responsible_staff_id: null, responsible_name: null, created_by_name: null, hall_name: null, warehouse_name: null, customer_name: null, salesperson_name: null,
+      created_local_at: null, updated_local_at: null, updated_at: null, quantity: null, incoming_quantity: null, outgoing_quantity: null, gross_amount: '90071992547409.93', order_discount: '0.00', net_due: '90071992547409.93', product_count: null, product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: 'ORIGINAL SNAPSHOT' }], product_has_more: false }], rowCount: 1 };
+    return { rows: [], rowCount: 0 };
+  }, release() {} };
+  const reader = new PostgresSalesQueryReader({ async connect() { return client; } }, { profile: 'source-confirmed-normal-document-lists-v1', runtime26: { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(actual, purpose) { assert.equal(actual, client); assert.equal(purpose, 'HISTORY_READ'); } } });
+  const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createSalesQueryHttpPlugin({ authenticate: async () => actor, dependencies: { authorization: { async authorize() { return { kind: 'all' }; } }, reader } })); await app.ready();
+  const response = await app.inject({ method: 'POST', url: '/sales/query', payload: input() }); assert.equal(response.statusCode, 200, response.body);
+  const body = response.json(); assert.equal(body.exactTotal, '1'); assert.equal(body.historyCoverage, 'PUBLISHED_AUTHORIZED'); assert.equal(body.totals.grossAmount, '9007199254740993'); assert.equal(body.totals.quantity, null);
+  assert.equal(body.items[0].dataset, 'HISTORY'); assert.equal(body.items[0].batchId, sid('operation', 851)); assert.equal(body.items[0].documentId, ids.sales); assert.equal(body.items[0].effectiveVersion, 2);
+  assert.equal(body.items[0].createdByName, null); assert.equal(body.items[0].updatedAt, null); assert.equal(body.items[0].quantity, null); assert.equal(body.items[0].productSummary.productCount, null);
+  assert.equal(response.headers['cache-control'], 'no-store'); assert.equal(app.server.listening, false);
+  assert.equal((await app.inject({ method: 'POST', url: '/sales/query', payload: { ...input(), dataset: 'HISTORY' } })).statusCode, 400); assert.equal(businessReads, 1);
+  published = false; const corrupt = await app.inject({ method: 'POST', url: '/sales/query', payload: input() }); assert.equal(corrupt.statusCode, 500); assert.ok(!corrupt.body.includes('revision'));
 });

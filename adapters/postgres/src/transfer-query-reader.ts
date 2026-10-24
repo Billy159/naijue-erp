@@ -1,3 +1,6 @@
+import { normalDocumentListOn, documentProductSummary, normalNullableQuantity, type NativeDocumentListOptions } from "./sales-query-reader.ts";
+import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import type { TransferUnifiedListPage, TransferUnifiedSummary } from "../../../packages/application/src/transfer-query-ports.ts";
 import type { Pool } from "pg";
 import type { TransferLineRow } from "../../../packages/domain/src/documents.ts";
 import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
@@ -155,16 +158,22 @@ async function readCatalog(query: ReadQuery, lines: readonly TransferLineRow[]):
  * Each invocation uses one acquired client and one read-only REPEATABLE READ snapshot. */
 export class PostgresTransferQueryReader implements TrustedTransferSnapshotReader {
   private readonly pool: PgTransferQueryPool;
-  constructor(pool: PgTransferQueryPool) {
+  private readonly normalLists: NativeDocumentListOptions | undefined;
+  constructor(pool: PgTransferQueryPool, normalLists?: NativeDocumentListOptions) {
+    if (normalLists !== undefined) {
+      const runtime26 = checkedNativeRuntime26Capability(normalLists.runtime26);
+      if (normalLists.profile !== "source-confirmed-normal-document-lists-v1" || runtime26 === undefined) throw new TypeError("Explicit original runtime and normal-list historical policy required");
+      this.normalLists = { profile: normalLists.profile, runtime26 };
+    }
     if (typeof pool?.connect !== "function") throw new TypeError("Transfer query reader requires an explicit PostgreSQL pool"); this.pool = pool;
   }
-  private async snapshot<T>(signal: AbortSignal, work: (query: ReadQuery) => Promise<T>): Promise<T> {
+  private async snapshot<T>(signal: AbortSignal, work: (query: ReadQuery, client: PgTransferQueryClient) => Promise<T>): Promise<T> {
     activeTransferRead(signal);
     const client = await this.pool.connect(); let began = false; let committing = false; let discard: Error | undefined;
     const query: ReadQuery = (sql, values = []) => { activeTransferRead(signal); return client.query(sql, values); };
     try {
       activeTransferRead(signal); await query("BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY"); began = true;
-      const result = await work(query); activeTransferRead(signal); committing = true; await query("COMMIT"); return result;
+      const result = await work(query, client); activeTransferRead(signal); committing = true; await query("COMMIT"); return result;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error("Transfer snapshot failed");
       if (began) {
@@ -177,8 +186,25 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
       throw error;
     } finally { client.release(discard); }
   }
-  async readList(read: TransferScopedRead<TransferListQuery>): Promise<TransferListPage> {
-    const parameters = parseTransferListQuery(read.parameters); const p = new Predicate(checkedTransferReadScope(read.scope)); p.filter(parameters);
+  async readList(read: TransferScopedRead<TransferListQuery>): Promise<TransferListPage | TransferUnifiedListPage> {
+    const parameters = parseTransferListQuery(read.parameters); const p = new Predicate(checkedTransferReadScope(read.scope));
+    if (this.normalLists !== undefined) return this.snapshot(read.signal, async (_query, client) => {
+      const result = await normalDocumentListOn(client, this.normalLists!, "transfers", { ...read, parameters }, { from: RELATIONS.replace(/^FROM /, ""), columns: `${SUMMARY_COLUMNS},${REFERENCES}`, scope: p.where(), values: p.values });
+      const items: TransferUnifiedSummary[] = result.rows.map(row => {
+        const documentId = id("transfer", row.id), effectiveVersion = versionFromSql(row.version), productSummary = documentProductSummary(row);
+        if (row.dataset === "LIVE") { requireDomain(row.batch_id === null, "INVALID_DATABASE_VALUE", "LIVE has no import batch");
+          return { ...decodeSummary(row, count(row.quantity)), dataset: "LIVE", batchId: null, documentId, effectiveVersion, productSummary }; }
+        requireDomain(row.dataset === "HISTORY" && row.created_by_account_id === null, "INVALID_DATABASE_VALUE", "Historical actor account is not inferred from current staff");
+        return { dataset: "HISTORY", batchId: id("operation", row.batch_id), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary,
+          number: stringValue(row.number), businessDate: row.business_date === null ? null : businessDate(stringValue(row.business_date)), status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]),
+          fromWarehouseId: id("warehouse", row.from_warehouse_id), toWarehouseId: id("warehouse", row.to_warehouse_id), responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name),
+          createdByAccountId: null, createdByName: nullableString(row.created_by_name), approvedByName: nullableString(row.approved_by_name), createdAt: nullableString(row.created_at), updatedAt: nullableString(row.updated_at),
+          createdLocalAt: nullableString(row.created_local_at), updatedLocalAt: nullableString(row.updated_local_at), fromWarehouseName: nullableString(row.from_warehouse_name), toWarehouseName: nullableString(row.to_warehouse_name),
+          fromHallName: nullableString(row.from_hall_name), toHallName: nullableString(row.to_hall_name), totalQuantity: normalNullableQuantity(row.quantity) };
+      });
+      return { page: parameters.page, pageSize: parameters.pageSize, exactTotal: result.exactTotal, items, historyCoverage: result.historyCoverage, totals: { totalQuantity: normalNullableQuantity(result.totals.quantity) } };
+    });
+    p.filter(parameters);
     return this.snapshot(read.signal, async query => {
       const exactTotal = count(one(await query(`SELECT COUNT(*)::text AS exact_total ${RELATIONS} WHERE ${p.where()}`, [...p.values])).exact_total);
       const paging = p.page(parameters.page, parameters.pageSize);

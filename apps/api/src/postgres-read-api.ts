@@ -595,8 +595,11 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     app.register(createAuthenticationHttpPlugin(authentication));
     app.register(createInventoryHttpPlugin({ authenticate, ...(host.inventoryOutputSpool === undefined ? {} : { outputSpool: host.inventoryOutputSpool }), dependencies: { authorization: policies.inventory, reader: new PostgresInventoryQueryReader(pool, issuer?.productSeasonArray ?? null, issuer?.runtime26) } }));
     app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryLedgerQueryReader(pool, issuer?.runtime26) } }));
-    app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool) } }));
-    app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool) } }));
+    // A separately explicit source-confirmed historical list policy; CORE already returned above.
+    const normalDocumentLists = issuer !== null && host.authorization.kind === "source-confirmed-native" && capabilities?.nativeReadExtensions
+      ? { profile: "source-confirmed-normal-document-lists-v1" as const, runtime26: issuer.runtime26 } : undefined;
+    app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool, normalDocumentLists) } }));
+    app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool, normalDocumentLists) } }));
     app.register(createProductQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.products, reader: productReader, media: productMedia } }));
     if (host.currentForms !== null) app.register(createCurrentFormHttpPlugin({ authenticate,
       reader: new PostgresCurrentFormReader(pool, host.currentForms, issuer === null ? undefined : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion }) }));

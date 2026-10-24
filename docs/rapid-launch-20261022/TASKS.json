@@ -8,10 +8,10 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "65c8637d722bbdbe6338945d7a5841ac66554965",
+    "headObserved": "d9ae87d043cb36a5c2124c770444f9bd62359364",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "65c8637d722bbdbe6338945d7a5841ac66554965",
-    "remoteReadbackMethod": "Exact4 original objects/nonforcedFF/independentGET; next docs/source repair not yet synced",
+    "remoteHeadVerified": "d9ae87d043cb36a5c2124c770444f9bd62359364",
+    "remoteReadbackMethod": "SOURCE351 exact original Git object nonforcedFF and independent remote GET verified",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
       "status": "PRIVATE_DRAFT_UPLOAD_DOWNLOAD_SHA_AND_BUNDLE_VERIFY_PASS",
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "65c8637d722bbdbe6338945d7a5841ac66554965"
+    "lastVerifiedRemoteCommit": "d9ae87d043cb36a5c2124c770444f9bd62359364"
   },
   "concurrency": {
     "chats": 11,
@@ -66,9 +66,9 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Source342 runtime03 actually running/HTTP ready, originalQF technical gaps in progress; actual179/QB251 finite metadata adopted",
-      "currentPackage": "Phase1 complete replica representative acceptance and original isolated full11 execution",
-      "nextReadyPackage": "Original full26 nonowner execution/publish then D1 realLIVE/HREV; QF2 page modules independent",
+      "currentWork": "SOURCE351 QF affected actual; C189 v17 actual PASS pendingQB; SOURCE352 exact10 union freeze; CORE read actual next",
+      "currentPackage": "Existing normal candidate integration and original isolated business execution",
+      "nextReadyPackage": "CORE ready read original issued host actual, then normal union actual once lawful data/publication ready",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
       "fastToolVerified": false,
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
@@ -262,9 +262,9 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "C172 v5 originalshared entry/options prepared, C compiled actual124module graph",
+      "currentWork": "NORMAL-DOCUMENT-LISTS-UNION-v1 exact10 delivered; source frozen byC, QB newdifference next",
       "currentPackage": "Current147realACL minimumCORElockedreads/write/emptyguard/purpose contractmatrix, noDBmutations",
-      "nextReadyPackage": "Original LIVE/HREV after actualQA PUBLISH under finite proper runtime",
+      "nextReadyPackage": "Original CORE-ready reads actual runner preparation; no second host or DB",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
       "fastToolVerified": false,
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
@@ -303,9 +303,9 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Exact full11 ACL and original-source route delivered; C179 physical delta done/QB251 adopted",
+      "currentWork": "Original history primitives QB258 accepted; approved salesperson historical transfer detail/revise scope seam file proposal requested",
       "currentPackage": "279+280 reader/host limitedsource218 adopted;283 HTTPpoststatF01 fixexact2 frozen",
-      "nextReadyPackage": "Only actual originalexecution newissue or real pending decisions; no duplicate sourceaudit",
+      "nextReadyPackage": "Necessary exact owned history consumers afterC filehandoff",
       "currentDependencies": "Original v5 null-hall approval for mandatory two real historical sales; no season guard widening required",
       "fastToolVerified": false,
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
@@ -1310,9 +1310,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T18:36:33.453710+00:00",
+  "updatedAt": "2026-10-24T19:57:17.215456+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
+  "lastVerifiedRemoteCommit": "d9ae87d043cb36a5c2124c770444f9bd62359364",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -4692,31 +4692,31 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T18:36:33.453710+00:00",
-    "sourceRound": 351,
-    "sourceCheckpoint": "parent ee1674f887c7532a3ade94c54dfd7bc103049628, new351 exact frontend3",
+    "atUtc": "2026-10-24T19:57:17.215456+00:00",
+    "sourceRound": 352,
+    "sourceCheckpoint": "parent d9ae87d043cb36a5c2124c770444f9bd62359364; exact D1 ten-leaf normal union successor",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
       "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "65c8637d722bbdbe6338945d7a5841ac66554965",
-      "runtimeVersion": "phase2-normal-65c8637-02",
+      "sourceCommit": "d9ae87d043cb36a5c2124c770444f9bd62359364",
+      "runtimeVersion": "phase2-normal-d9ae87d-03",
       "htmlBytes": 3154,
-      "htmlSha256": "b0da1b4d56df49fcda9ab0a683a7b0c4d8fa4043c5d84c8e828fc58b70c2bee2",
+      "htmlSha256": "971c63a7af45a441918ef3b22bf07f671bd5f15c76066dfe9aab25567084be0b",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
       "sourceRound": 343,
-      "serverSession": 54908,
+      "serverSession": 74662,
       "fixtureBytes": 25766,
       "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
       "phase2Started": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-65c8637-phase2-02/build",
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-d9ae87d-phase2-03/build",
       "phase1Accepted": false,
-      "phase2Candidate": "QF349 named2 read failures closed; affected DOM/query reuse and explicit pending->aborted synthetic client passed, document scroll return P2-QF349-03 remains actualOPEN until newfixed",
+      "phase2Candidate": "Original QF Luna/max affected scroll/shared styles actual in progress",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
@@ -7886,6 +7886,33 @@
       },
       "cpuImprovementProven": false,
       "next": "QB new exact2 then actual published representative QA; body size not solved by windowed DOM"
+    },
+    "v17Actual": {
+      "job": "c03-v17-native-product-selection-count-alias-fixed-20261025-189",
+      "status": "PASS_ACTUAL_LIMITED_ORIGINAL_SERVICE_PENDING_QB",
+      "products": 3,
+      "skus": 7,
+      "auditsAndReceipts": 29,
+      "dml": 14,
+      "ddl": 0,
+      "leasesReleased": 18,
+      "productionChanged": false,
+      "notTested": [
+        "nonowner privileges",
+        "HTTP/browser",
+        "foreign absent group",
+        "representative performance",
+        "production"
+      ]
+    },
+    "normalListUnion": {
+      "owner": "D1",
+      "status": "SOURCE_READY_PENDING_QB_ACTUAL_PG_F1",
+      "files": 10,
+      "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/NORMAL-DOCUMENT-LISTS-UNION-v1.json",
+      "sha256": "d3ba19b1d2a62fd2549ff9823cebfc62071c2bd7e20ceb9c224b0757c962d4fa",
+      "actualHistoryDetailGapOwner": "D3",
+      "frontendOwner": "F1"
     }
   },
   "latestReadySource": {

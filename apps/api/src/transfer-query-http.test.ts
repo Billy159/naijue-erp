@@ -15,8 +15,8 @@ const input = (): TransferListQuery => ({ filter: { startDate: null, endDate: nu
 const warehouseInput = (): TransferWarehouseQuery => ({ search: "", selectedIds: [], page: 1, pageSize: 20 });
 const routes = () => [{ kind: "list", url: "/transfers/query", payload: input() }, { kind: "detail", url: "/transfers/detail/query", payload: { transferId: ids.transfer } },
   { kind: "warehouses", url: "/transfers/warehouses/query", payload: warehouseInput() }] as const;
-const references = { fromWarehouseName: "SYNTHETIC SOURCE", toWarehouseName: "SYNTHETIC DESTINATION", fromHallName: "SYNTHETIC SOURCE HALL", toHallName: "SYNTHETIC DESTINATION HALL", createdByName: "SYNTHETIC CREATOR", approvedByName: null };
-const document = () => ({ ...draft(["9007199254740993"]), header: { ...draft().header, status: "DRAFT" as const, version: version(1), createdByAccountId: actor.accountId,
+const references = { responsibleName: null, fromWarehouseName: "SYNTHETIC SOURCE", toWarehouseName: "SYNTHETIC DESTINATION", fromHallName: "SYNTHETIC SOURCE HALL", toHallName: "SYNTHETIC DESTINATION HALL", createdByName: "SYNTHETIC CREATOR", approvedByName: null };
+const document = () => ({ ...draft(["9007199254740993"]), header: { ...draft().header, responsibleStaffId: null, status: "DRAFT" as const, version: version(1), createdByAccountId: actor.accountId,
   createdHallId: actor.hallId, createdRole: actor.role, createdAt: "2026-10-20T00:00:00Z", updatedAt: "2026-10-20T12:34:56Z", approvedByAccountId: null, approvedAt: null } });
 const catalog = (): TransferDetailCatalog => {
   const tuple = { productId: sid("product", 300), productCode: "SYNTHETIC CURRENT CODE", productName: "SYNTHETIC CURRENT PRODUCT", colorId: sid("color", 301),
@@ -38,7 +38,7 @@ async function setup(t: TestContext, options: { authenticate?: TransferQueryHttp
   const reader: TrustedTransferSnapshotReader = {
     async readList(read) { check("list", read); const header = document().header; return { page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: options.empty ? 0n : 9007199254740993n,
       items: options.empty ? [] : [{ id: header.id, number: header.number, businessDate: header.businessDate, fromWarehouseId: header.fromWarehouseId, toWarehouseId: header.toWarehouseId,
-        status: header.status, version: header.version, createdByAccountId: header.createdByAccountId, createdAt: header.createdAt, updatedAt: header.updatedAt, totalQuantity: 9007199254740993n, ...references }] }; },
+        status: header.status, version: header.version, responsibleStaffId: null, createdByAccountId: header.createdByAccountId, createdAt: header.createdAt, updatedAt: header.updatedAt, totalQuantity: 9007199254740993n, ...references }] }; },
     async readDetail(read) { check("detail", read); return { document: document(), stockBasis: "RUNTIME_LEDGER", references, catalog: catalog() }; },
     async readWarehouses(read) { check("warehouses", read); return { page: read.parameters.page, pageSize: read.parameters.pageSize, exactTotal: options.empty ? 0n : 9007199254740995n,
       items: options.empty ? [] : [{ id: ids.fromWarehouse, name: "SYNTHETIC DISABLED WAREHOUSE", hallId: ids.hall, hallName: "SYNTHETIC DISABLED HALL", enabled: false, hallEnabled: false }] }; }
@@ -177,4 +177,27 @@ test("SYNTHETIC transfer query HTTP: strict transport rejects query strings, mal
     assert.equal((await f.app.inject({ method: "POST", url, headers: { "content-type": "application/json" }, payload: JSON.stringify({ data: "x".repeat(65536) }) })).statusCode, 413);
   }
   assert.deepEqual(f.counts(), { policyCalls: 0, readCalls: 0 }); assert.equal(f.app.server.listening, false);
+});
+
+test('normal transfer HTTP: original POST carries explicit dataset exact totals and unknown historical creator without a write route', async t => {
+  const { PostgresTransferQueryReader } = await import('../../../adapters/postgres/src/transfer-query-reader.ts');
+  const client = { async query(sql: string) {
+    if (sql.includes('read-authorization:identity')) return { rows: [{ account_id: actor.accountId, staff_id: sid('staff', 950), login_enabled: true, role: actor.role, employment_status: '在职', hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }], rowCount: 1 };
+    if (sql.includes('normal-document-list:totals')) return { rows: [{ exact_total: '1', history_valid: true, history_published: true, quantity: '9007199254740993', incoming_quantity: '0', outgoing_quantity: '9007199254740993' }], rowCount: 1 };
+    if (sql.includes('normal-document-list:page')) return { rows: [{ dataset: 'HISTORY', batch_id: sid('operation', 951), id: ids.transfer, number: 'SYNTHETIC_HISTORY', business_date: null, status: 'DRAFT', version: 2,
+      from_warehouse_id: ids.fromWarehouse, to_warehouse_id: ids.toWarehouse, responsible_staff_id: null, responsible_name: null, created_by_account_id: null, created_by_name: null, approved_by_name: null,
+      created_at: null, updated_at: null, created_local_at: null, updated_local_at: null, from_warehouse_name: null, to_warehouse_name: null, from_hall_name: null, to_hall_name: null,
+      quantity: '9007199254740993', product_count: '0', product_items: [], product_has_more: false }], rowCount: 1 };
+    return { rows: [], rowCount: 0 };
+  }, release() {} };
+  const reader = new PostgresTransferQueryReader({ async connect() { return client; } }, { profile: 'source-confirmed-normal-document-lists-v1', runtime26: { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(actual, purpose) { assert.equal(actual, client); assert.equal(purpose, 'HISTORY_READ'); } } });
+  const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createTransferQueryHttpPlugin({ authenticate: async () => actor, dependencies: { authorization: { async authorize() { return { kind: 'all' }; } }, reader } })); await app.ready();
+  const response = await app.inject({ method: 'POST', url: '/transfers/query', payload: input() }); assert.equal(response.statusCode, 200, response.body);
+  const body = response.json(); assert.equal(body.totals.totalQuantity, '9007199254740993'); assert.equal(body.items[0].totalQuantity, '9007199254740993');
+  assert.equal(body.items[0].dataset, 'HISTORY'); assert.equal(body.items[0].batchId, sid('operation', 951)); assert.equal(body.items[0].documentId, ids.transfer); assert.equal(body.items[0].effectiveVersion, 2);
+  assert.equal(body.items[0].createdByAccountId, null); assert.equal(body.items[0].createdAt, null); assert.equal(body.items[0].status, 'DRAFT');
+  assert.equal(body.historyCoverage, 'PUBLISHED_AUTHORIZED'); assert.equal(response.headers['cache-control'], 'no-store'); assert.equal(app.server.listening, false);
+  assert.equal(app.hasRoute({ method: 'POST', url: '/transfers/commands' }), false);
+  assert.equal((await app.inject({ method: 'POST', url: '/transfers/query', payload: { ...input(), batchId: sid('operation', 951) } })).statusCode, 400);
 });

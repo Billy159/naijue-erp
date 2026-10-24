@@ -232,3 +232,36 @@ test("transfer pg query: abort after canonical SKU read prevents remaining metad
     { sql: /^SELECT s.id/, rows: [sku()], inspect() { controller.abort(); } }, rollback()]);
   await assert.rejects(() => reader(client).readDetail(read({ transferId: ids.transfer }, scope, controller.signal)), { code: "TRANSFER_READ_ABORTED" }); client.done();
 });
+
+function normalTransferReader(client: ProtocolClient) {
+  return new PostgresTransferQueryReader({ async connect() { return client; } }, { profile: 'source-confirmed-normal-document-lists-v1', runtime26: {
+    profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(actual, purpose) { assert.equal(actual, client); assert.equal(purpose, 'HISTORY_READ'); assert.equal(client.calls[0]!.sql, 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); }
+  } });
+}
+const normalTransferIdentity = (): Step => ({ sql: /read-authorization:identity/, rows: [{ account_id: actor.accountId, staff_id: sid('staff', 401), login_enabled: true, role: actor.role,
+  employment_status: '在职', hall_id: actor.hallId, native_hall_id: actor.hallId, hall_enabled: true }] });
+test('normal transfer union: source-bound effective endpoints or ORIGINAL creator hall authorize history independently before global count/page', async () => {
+  const live = { ...header(), dataset: 'LIVE', batch_id: null, responsible_staff_id: null, responsible_name: null, quantity: '9007199254740993', incoming_quantity: '0', outgoing_quantity: '9007199254740993',
+    product_count: '1', product_items: [{ productId: catalogIds.product, productCodeSnapshot: 'ORIGINAL', productNameSnapshot: 'ORIGINAL' }], product_has_more: false };
+  const historical = { ...live, dataset: 'HISTORY', batch_id: sid('operation', 402), business_date: null, status: 'DRAFT', version: 4, created_by_account_id: null, created_by_name: null,
+    created_at: null, updated_at: null, created_local_at: null, updated_local_at: null, quantity: '7', incoming_quantity: '0', outgoing_quantity: '7', product_count: null,
+    product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false };
+  const input = parameters(); Object.assign(input.filter, { fromWarehouseIds: [ids.fromWarehouse], toWarehouseIds: [ids.toWarehouse], statuses: ['DRAFT'] });
+  const client = new ProtocolClient([begin(), normalTransferIdentity(), { sql: /normal-document-list:totals/, rows: [{ exact_total: '2', history_valid: true, history_published: true, quantity: '9007199254741000', incoming_quantity: '0', outgoing_quantity: '9007199254741000' }], inspect(values, sql) {
+    assert.match(sql, /scope_fw\.id=\(CASE WHEN e\.header_id IS NULL/); assert.match(sql, /scope_tw\.hall_id=/);
+    assert.match(sql, /wr_read\.import_batch_id=h\.batch_id/); assert.match(sql, /wr_read\.target_id=h\.from_warehouse_id/);
+    assert.match(sql, /created_hall_provenance='ORIGINAL'/); assert.match(sql, /field_provenance->'fields'->'created_hall_id'->>'origin'='ORIGINAL'/);
+    assert.match(sql, /h\.created_role_source='SALESPERSON'/); assert.match(sql, /h\.from_warehouse_id=ANY/); assert.match(sql, /h\.to_warehouse_id=ANY/);
+    assert.ok(!sql.includes('creator.hall_id') && !sql.includes('creator.role')); assert.ok(values.some(v => Array.isArray(v) && v[0] === ids.fromWarehouse));
+  } }, { sql: /normal-document-list:page/, rows: [live, historical], inspect(_values, sql) { assert.match(sql, /ORDER BY h.updated_at DESC NULLS LAST,h.id ASC,h.dataset ASC/); assert.match(sql, /p\.dataset='HISTORY' AND l.batch_id=p.batch_id AND l.header_id=p.id/); } }, commit()]);
+  const result = await normalTransferReader(client).readList(read(input)); assert.ok('totals' in result);
+  assert.equal(result.exactTotal, 2n); assert.equal(result.totals.totalQuantity, 9007199254741000n); assert.equal(result.historyCoverage, 'PUBLISHED_AUTHORIZED');
+  assert.equal(result.items[0]!.totalQuantity, 9007199254740993n); const h = result.items[1]!;
+  assert.equal(h.dataset, 'HISTORY'); assert.equal(h.id, result.items[0]!.id); assert.equal(h.status, 'DRAFT'); assert.equal(h.createdByAccountId, null); assert.equal(h.createdAt, null);
+  assert.equal(h.productSummary.productCount, null); assert.equal(h.productSummary.items[0]!.productId, null); client.done();
+});
+test('normal transfer union: contradictory published branch never becomes a smaller successful page', async () => {
+  const client = new ProtocolClient([begin(), normalTransferIdentity(), { sql: /normal-document-list:totals/, rows: [{ exact_total: '0', history_valid: false, history_published: true, quantity: '0', incoming_quantity: '0', outgoing_quantity: '0' }] }, rollback()]);
+  await assert.rejects(normalTransferReader(client).readList(read(parameters())), { code: 'INVALID_DATABASE_VALUE' });
+  assert.ok(!client.calls.some(c => c.sql.includes('normal-document-list:page'))); client.done();
+});

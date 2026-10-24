@@ -60,6 +60,31 @@ export type SalesSummary = Pick<SalesHeaderRow, "id" | "number" | "businessType"
 // exposed or reconstructed from today's product catalog.
 /** Exact bigint counts serialize as decimal strings at the HTTP boundary, never unsafe JS numbers. */
 export interface SalesListPage { readonly page: number; readonly pageSize: SalesQueryPageSize; readonly exactTotal: bigint; readonly items: readonly SalesSummary[] }
+/** Exact26 normal-list response. Legacy native-only providers retain SalesListPage. */
+export type DocumentHistoryCoverage = "PUBLISHED_AUTHORIZED" | "NOT_PUBLISHED" | "AUTHORIZATION_UNAVAILABLE";
+export interface DocumentProductSummary {
+  readonly productCount: bigint | null;
+  readonly items: readonly { readonly productId: string | null; readonly productCodeSnapshot: string | null; readonly productNameSnapshot: string | null }[];
+  readonly hasMore: boolean;
+}
+export interface DocumentListIdentity {
+  readonly dataset: "LIVE" | "HISTORY"; readonly batchId: string | null; readonly documentId: string;
+  readonly effectiveVersion: number; readonly productSummary: DocumentProductSummary;
+}
+export type SalesUnifiedSummary = (SalesSummary & DocumentListIdentity & { readonly dataset: "LIVE"; readonly batchId: null })
+  | (Omit<SalesSummary, "businessDate" | "updatedAt" | "createdByName" | "quantity" | "incomingQuantity" | "outgoingQuantity" | "grossAmount" | "orderDiscount" | "netDue" | "hallName" | "warehouseName" | "customerName"> & DocumentListIdentity & {
+    readonly dataset: "HISTORY"; readonly batchId: string; readonly businessDate: BusinessDate | null; readonly updatedAt: string | null;
+    readonly createdLocalAt: string | null; readonly updatedLocalAt: string | null;
+    readonly createdByName: string | null; readonly hallName: string | null; readonly warehouseName: string | null; readonly customerName: string | null;
+    readonly quantity: bigint | null; readonly incomingQuantity: bigint | null; readonly outgoingQuantity: bigint | null;
+    readonly grossAmount: bigint | null; readonly orderDiscount: bigint | null; readonly netDue: bigint | null;
+  });
+export interface SalesUnifiedListPage {
+  readonly page: number; readonly pageSize: SalesQueryPageSize; readonly exactTotal: bigint;
+  readonly items: readonly SalesUnifiedSummary[]; readonly historyCoverage: DocumentHistoryCoverage;
+  readonly totals: { readonly quantity: bigint | null; readonly incomingQuantity: bigint | null; readonly outgoingQuantity: bigint | null;
+    readonly grossAmount: bigint | null; readonly orderDiscount: bigint | null; readonly netDue: bigint | null };
+}
 export interface SalesSettlementNames {
   readonly settlementId: EntityId<"settlement">; readonly paymentAccountId: EntityId<"paymentAccount">;
   /** Authoritative historical display, captured by the document write, not refreshed from master names. */
@@ -95,7 +120,7 @@ export interface TrustedSalesSnapshotReader {
   /** Reuses current LIST authorization with a neutral bounded query. No new role/hall grants or
    * master-catalog permissions. Scope precedes count, search, DISTINCT and pagination. */
   readReferences(read: SalesScopedRead<SalesFilterReferenceQuery>): Promise<SalesFilterReferencePage>;
-  readList(read: SalesScopedRead<SalesListQuery>): Promise<SalesListPage>;
+  readList(read: SalesScopedRead<SalesListQuery>): Promise<SalesListPage | SalesUnifiedListPage>;
   readDetail(read: SalesScopedRead<SalesDetailQuery>): Promise<SalesDetail>;
   readHistory(read: SalesScopedRead<SalesHistoryQuery>): Promise<SalesHistoryPage>;
   readSettlementStatistics(read: SalesScopedRead<SalesListQuery>): Promise<SalesSettlementStatistics>;
