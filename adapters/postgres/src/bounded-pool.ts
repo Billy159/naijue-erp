@@ -65,6 +65,13 @@ export class PostgresResourceError extends Error {
   readonly code: ResourceCode;
   constructor(code: ResourceCode) { super(messages[code]); this.name = "PostgresResourceError"; this.code = code; }
 }
+// Only the real bounded driver rejection path can retain this internal fact.
+// Neither a public property nor constructing a sanitized error supplies origin.
+const knownTransportQueryErrors = new WeakSet<object>();
+const knownDriverTransportCodes = new Set(["ETIMEDOUT", "ECONNRESET", "ECONNREFUSED", "EPIPE", "ENETDOWN", "ENETUNREACH", "EHOSTUNREACH"]);
+export function isKnownPostgresTransportQueryError(error: unknown): boolean {
+  return error !== null && typeof error === "object" && knownTransportQueryErrors.has(error);
+}
 /** Preserve only SQLSTATE and the two constraint identities used by current adapter conflict mapping. */
 export class PostgresQueryError extends Error {
   readonly code: string | undefined;
@@ -231,6 +238,9 @@ export class BoundedPostgresPool {
               if (closed) return;
               rejectQuery = undefined; tainted = true;
               const safe = new PostgresQueryError(error);
+              const driverCode = error instanceof Error ? Object.getOwnPropertyDescriptor(error, "code") : undefined;
+              if (driverCode && "value" in driverCode && typeof driverCode.value === "string" && knownDriverTransportCodes.has(driverCode.value))
+                knownTransportQueryErrors.add(safe);
               // A pg read timeout is NOT SQL cancellation. Non-SQLSTATE failures
               // (including that timeout and transport failures) retire the connection.
               if (!safe.code) try { lease.close(true); } catch { this.#backgroundFailures++; }

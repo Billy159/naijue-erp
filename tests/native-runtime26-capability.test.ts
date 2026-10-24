@@ -1,6 +1,7 @@
+import { EventEmitter } from "node:events";
 import fs from "node:fs";
 import { syncBuiltinESMExports } from "node:module";
-import { PostgresQueryError, PostgresResourceError } from "../adapters/postgres/src/bounded-pool.ts";
+import { BoundedPostgresPool, PostgresQueryError, PostgresResourceError, isKnownPostgresTransportQueryError } from "../adapters/postgres/src/bounded-pool.ts";
 import { PostgresSalesUnitOfWork } from "../adapters/postgres/src/sales-unit-of-work.ts";
 /** Protocol fakes and synthetic pinned metadata only; no PostgreSQL or real grant. */
 import test from "node:test";
@@ -213,7 +214,7 @@ test("runtime performance: unchanged review files are hashed once per issuer whi
  }finally{fs.readFileSync=original;syncBuiltinESMExports();f.cleanup();}
 });
 test("runtime availability: timeout transport and bounded resource failures poison only the current lease; a new request must fully reverify without automatic retries",async()=>{
- for(const failure of [new PostgresQueryError({code:'57014'}),new PostgresQueryError({code:'ECONNRESET'}),new PostgresResourceError('PG_CLIENT_CLOSED')]){
+ for(const failure of [new PostgresQueryError({code:'57014'}),await boundedSanitizedFailure(Object.assign(Error('SYNTHETIC_TRANSPORT'),{code:'ECONNRESET'})),new PostgresResourceError('PG_CLIENT_CLOSED')]){
   const f=fixture();try{
    const calls:string[]=[],releases:unknown[]=[];let nextFailure:Error|undefined;
    const pool={async connect(){return{async query(sql:string){calls.push(sql);if(sql===NATIVE_RUNTIME26_METADATA_PROBE&&nextFailure){const current=nextFailure;nextFailure=undefined;throw current;}return{rows:sql===NATIVE_RUNTIME26_METADATA_PROBE?[observation()]:[],rowCount:sql===NATIVE_RUNTIME26_METADATA_PROBE?1:0};},release(error?:unknown){releases.push(error);}};}};
@@ -267,4 +268,59 @@ test("runtime performance: identical-byte rewrite with restored mtime still revo
   assert.equal(p.calls.length,count);await client.query('ROLLBACK');client.release();
   await assert.rejects(issuer.pool.connect(),{code:'NATIVE_RUNTIME26_NOT_READY'});
  }finally{f.cleanup();}
+});
+
+/** Exercise the actual bounded query catch, not a class reconstructed by a test. */
+async function boundedSanitizedFailure(failure: unknown): Promise<PostgresQueryError> {
+ const raw=Object.assign(new EventEmitter(),{async query(){throw failure;},release(){}});
+ const driver=Object.assign(new EventEmitter(),{async connect(){return raw;},async end(){}});
+ const pool=new BoundedPostgresPool({target:{host:'synthetic.invalid',port:55432,database:'SYNTHETIC_F01',user:'SYNTHETIC_F01',password:'SYNTHETIC_ONLY',ssl:false},
+  max:1,maxPendingAcquisitions:1,connectionTimeoutMillis:100,acquisitionTimeoutMillis:50,queryTimeoutMillis:200,statementTimeoutMillis:100,
+  lockTimeoutMillis:30,idleInTransactionTimeoutMillis:300,idlePoolTimeoutMillis:100,disposeGraceMillis:0,disposeTimeoutMillis:100},()=>driver);
+ const client=await pool.connect();
+ try {
+  await client.query('SELECT SYNTHETIC_F01_FAILURE');throw Error('Expected bounded driver failure');
+ }catch(error){assert.ok(error instanceof PostgresQueryError);return error;}
+ finally{client.release();await pool.dispose();}
+}
+test('F01 sanitizer provenance: only actual known transport retains private origin; unknown SQLSTATE TypeError and forged tags stay unclassified and sanitized',async()=>{
+ const cases:[unknown,boolean][]=[
+  [Object.assign(Error('RAW-SECRET private_password'),{code:'ECONNRESET'}),true],
+  [Object.assign(Error('RAW-SECRET private_password'),{code:'EPIPE'}),true],
+  [Object.assign(Error('RAW-SECRET private_password'),{code:'ZZ001'}),false],
+  [new TypeError('RAW-SECRET private_password'),false],
+  [Object.assign(Error('RAW-SECRET private_password'),{knownTransport:true,transport:true}),false],
+  [Object.assign(Error('RAW-SECRET private_password'),{code:'42501'}),false]
+ ];
+ for(const [raw,expected]of cases){const safe=await boundedSanitizedFailure(raw);assert.equal(isKnownPostgresTransportQueryError(safe),expected);
+  assert.ok(!JSON.stringify(safe).includes('RAW-SECRET')&&!String(safe).includes('private_password'));assert.equal((safe as {cause?:unknown}).cause,undefined);
+ }
+ assert.equal(isKnownPostgresTransportQueryError(new PostgresQueryError({code:'ECONNRESET'})),false);
+ assert.equal(isKnownPostgresTransportQueryError({knownTransport:true,transport:true}),false);
+ assert.equal(isKnownPostgresTransportQueryError(Object.create(PostgresQueryError.prototype)),false);
+});
+test('F01 issuer lifecycle: real sanitizer handoff recovers genuine transport cancellation or closed client, but wrapped unknown failures permanently revoke',async()=>{
+ const cases:[unknown,boolean][]=[
+  [await boundedSanitizedFailure(Object.assign(Error('SYNTHETIC_TRANSPORT'),{code:'ECONNRESET'})),true],
+  [await boundedSanitizedFailure(Object.assign(Error('SYNTHETIC_CANCEL'),{code:'57014'})),true],
+  [new PostgresResourceError('PG_CLIENT_CLOSED'),true],
+  [await boundedSanitizedFailure(Object.assign(Error('SYNTHETIC_UNKNOWN_STATE'),{code:'ZZ001'})),false],
+  [await boundedSanitizedFailure(new TypeError('SYNTHETIC_UNKNOWN_DRIVER')),false],
+  [await boundedSanitizedFailure(Object.assign(Error('SYNTHETIC_PERMISSION'),{code:'42501'})),false],
+  [new PostgresQueryError({code:'ECONNRESET',knownTransport:true}),false],
+  [Object.assign(Error('SYNTHETIC_FORGED_TAG'),{knownTransport:true}),false]
+ ];
+ for(const [error,recoverable]of cases){
+  const f=fixture();try{
+   let pending:unknown;const calls:string[]=[],releases:unknown[]=[];
+   const pool={async connect(){return{async query(sql:string){calls.push(sql);if(pending){const failure=pending;pending=undefined;throw failure;}return{rows:sql===NATIVE_RUNTIME26_METADATA_PROBE?[observation()]:[],rowCount:sql===NATIVE_RUNTIME26_METADATA_PROBE?1:0};},release(reason?:unknown){releases.push(reason);}};}};
+   const issuer=await createNativeRuntime26Issuer(pool,f.options()),lease=await issuer.pool.connect();await lease.query('BEGIN');pending=error;
+   await assert.rejects(issuer.runtime26.assertReady(lease,'IMPORT_STAGE'),actual=>actual===error);
+   const before=calls.length;await assert.rejects(lease.query('COMMIT'),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(calls.length,before);
+   await lease.query('ROLLBACK');lease.release();assert.equal(releases.at(-1),error);
+   const at=calls.length;
+   if(recoverable){const next=await issuer.pool.connect();assert.equal(calls.length,at+1);next.release();}
+   else{await assert.rejects(issuer.pool.connect(),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(calls.length,at);}
+  }finally{f.cleanup();}
+ }
 });

@@ -1,7 +1,7 @@
 import { constants, closeSync, fstatSync, lstatSync, openSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import type { BigIntStats } from "node:fs";
-import { PostgresQueryError, PostgresResourceError } from "./bounded-pool.ts";
+import { PostgresQueryError, PostgresResourceError, isKnownPostgresTransportQueryError } from "./bounded-pool.ts";
 import { isAbsolute } from "node:path";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
@@ -474,7 +474,7 @@ function metadataFileUnchanged(pin: FilePin): void {
  * changed reviewed target. Each next request must acquire and fully verify anew. */
 function transientMetadataFailure(error: unknown): boolean {
   const code = error !== null && typeof error === "object" ? (error as { code?: unknown }).code : undefined;
-  if (error instanceof PostgresQueryError && code === undefined) return true;
+  if (error instanceof PostgresQueryError && code === undefined) return isKnownPostgresTransportQueryError(error);
   if (error instanceof PostgresResourceError && ["PG_POOL_OVERLOADED", "PG_ACQUIRE_TIMEOUT", "PG_ACQUIRE_FAILED", "PG_CLIENT_CLOSED", "PG_QUERY_FAILED"].includes(error.code)) return true;
   return typeof code === "string" && (/^(?:08|53)/.test(code)
     || ["57014", "55P03", "57P01", "57P02", "57P03", "ETIMEDOUT", "ECONNRESET", "ECONNREFUSED", "EPIPE", "ENETDOWN", "ENETUNREACH", "EHOSTUNREACH", "EMFILE", "ENFILE", "ENOMEM", "EAGAIN", "EIO"].includes(code));
