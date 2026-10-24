@@ -32,7 +32,7 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
   const state = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
   const [zeroLine, setZeroLine] = useState<string | null>(null);
-  const [confirm, setConfirm] = useState<'leave' | 'adopt' | 'APPROVE' | 'UNAPPROVE' | 'VOID' | null>(null);
+  const [confirm, setConfirm] = useState<'leave' | 'cancel-edit' | 'adopt' | 'APPROVE' | 'UNAPPROVE' | 'VOID' | null>(null);
   useEffect(() => { heading.current?.focus({ preventScroll: true }); }, []);
   const { command } = state, { editor, write } = command;
   const committedRead = useRef<{ owner: SalesEditorSession; operationId: string } | null>(null);
@@ -45,7 +45,7 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
     void session.commands.readCurrent();
   }, [session, write.phase, write.result, editor?.salesId, editor?.current, editor?.readError, editor?.phase]);
   const savedReadback = write.phase === 'committed' ? editor?.current : null;
-  const detail = savedReadback ?? editor?.detail, input = savedReadback ? null : state.input;
+  const detail = savedReadback ?? editor?.detail, input = savedReadback || state.viewOnly ? null : state.input;
   useEffect(() => { setConfirm(null); }, [editor?.salesId, editor?.detail?.document.header.version, editor?.current, write.phase, input]);
   if (command.disposed) return <p role="status">身份或权限已改变，旧身份单据输入已清除。</p>;
   const unresolved = session.commands.hasUnresolvedWrite, working = ['submitting', 'checking', 'replaying'].includes(write.phase);
@@ -66,6 +66,7 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
   const confirmAction = () => {
     const action = confirm; setConfirm(null);
     if (action === 'leave') { if (session.discardEditor(true)) close(); }
+    else if (action === 'cancel-edit') void session.cancelEditing(true);
     else if (action === 'adopt') session.adoptCurrent(true);
     else if (action) void session.submit(action);
   };
@@ -80,16 +81,18 @@ export function SalesNativeCommandForm({ session, close, history, scope, product
       <SalesStatusTag status={status} />
       <span className="sale-muted">{session.hasDirtyDraft ? '· 有未保存输入' : '· 已保存'}</span><div className="actions">
         <button type="button" className="btn" disabled={unresolved} onClick={leave}>返回列表</button>
-        <button type="button" className="btn" disabled={lock || !session.hasDirtyDraft} onClick={save}>保存</button>
-        {status === 'DRAFT' && <><button type="button" className="btn" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('APPROVE') || !base || !settlementBalanced(base)} title="审核须先保存并读取当前单据，收款减退款与应结金额精确配平" onClick={() => setConfirm('APPROVE')}>审核</button>
-          <button type="button" className="btn" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('VOID')} onClick={() => setConfirm('VOID')}>作废</button></>}
+        {session.canCancelEditing && <button type="button" className="btn" onClick={() => { if (session.hasDirtyDraft) setConfirm('cancel-edit'); else void session.cancelEditing(); }}>取消修改</button>}
+        {status === 'DRAFT' && <button type="button" className="btn" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('VOID')} onClick={() => setConfirm('VOID')}>作废</button>}
+        {session.canBeginEditing && <button type="button" className="btn" onClick={() => session.beginEditing()}>修改</button>}
+        {(editor?.mode === 'CREATE' || !lock) && <button type="button" className="btn" disabled={lock || !session.hasDirtyDraft} onClick={save}>保存</button>}
+        {status === 'DRAFT' && <button type="button" className="btn" disabled={!stable || session.hasDirtyDraft || !session.actionAllowed('APPROVE') || !base || !settlementBalanced(base)} title="审核须先保存并读取当前单据，收款减退款与应结金额精确配平" onClick={() => setConfirm('APPROVE')}>审核</button>}
         {status === 'APPROVED' && <button type="button" className="btn" disabled={!stable || !session.actionAllowed('UNAPPROVE')} title={session.actionAllowed('UNAPPROVE') ? undefined : '业务员不能弃审'} onClick={() => setConfirm('UNAPPROVE')}>弃审</button>}
         <DocumentOutputActions sourceKey={detail ? `${detail.document.header.id}:${detail.document.header.version}` : "unsaved"} {...(detail && (write.phase !== 'committed' || !!savedReadback) && !unresolved && (!command.stale || !!savedReadback) && (!session.hasDirtyDraft || !!savedReadback) ? { getDocument: () => salesDocumentOutput(detail) } : {})} unavailableReason="请先完成保存并读取当前单据" />
         <SalesHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { salesId: detail.document.header.id } : {})} />
       </div></div>
-    {confirm === 'leave' && <SourceDocumentDialog title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setConfirm(null)} className="source-discard-dialog" initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setConfirm(null)}>继续编辑</button><button type="button" className="btn primary" onClick={confirmAction}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>离开后，本次未保存的修改将丢失。</p></div></SourceDocumentDialog>}
-    {confirm && confirm !== 'leave' && <StandardOverlay role="alertdialog" title="确认操作" label="确认销货单操作" closeLabel="关闭销货单操作确认" close={() => setConfirm(null)} width={620}><p>{confirm === 'adopt' ? '采用当前单据将替换本次未保存输入，原单据不会被强制覆盖。' : confirm === 'APPROVE' ? '审核将按本单实际明细追加库存效果，并计入收退统计。允许负库存。' : confirm === 'UNAPPROVE' ? '弃审将追加原审核库存效果的反向流水，并退出收退统计；确认后还需读取当前单据。' : '作废仅作用于已保存未审核单据，不改库存，作废后不能继续编辑。'}</p><UIButton type="button" className="iw-button" onClick={() => setConfirm(null)}>取消</UIButton><UIButton type="button" className="iw-button iw-primary" onClick={confirmAction}>{confirm === 'adopt' ? '确认采用当前单据' : `确认${confirm === 'APPROVE' ? '审核' : confirm === 'UNAPPROVE' ? '弃审' : '作废'}`}</UIButton></StandardOverlay>}
-    {state.preparing && <p role="status">正在准备当前授权新单资料…<UIButton type="button" className="iw-link" onClick={() => { session.suspend(); close(); }}>取消准备</UIButton></p>}
+    {(confirm === 'leave' || confirm === 'cancel-edit') && <SourceDocumentDialog title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setConfirm(null)} className="source-discard-dialog" initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setConfirm(null)}>继续编辑</button><button type="button" className="btn primary" onClick={confirmAction}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>离开后，本次未保存的修改将丢失。</p></div></SourceDocumentDialog>}
+    {confirm && confirm !== 'leave' && confirm !== 'cancel-edit' && <StandardOverlay role="alertdialog" title="确认操作" label="确认销货单操作" closeLabel="关闭销货单操作确认" close={() => setConfirm(null)} width={620}><p>{confirm === 'adopt' ? '采用当前单据将替换本次未保存输入，原单据不会被强制覆盖。' : confirm === 'APPROVE' ? '审核将按本单实际明细追加库存效果，并计入收退统计。允许负库存。' : confirm === 'UNAPPROVE' ? '弃审将追加原审核库存效果的反向流水，并退出收退统计；确认后还需读取当前单据。' : '作废仅作用于已保存未审核单据，不改库存，作废后不能继续编辑。'}</p><UIButton type="button" className="iw-button" onClick={() => setConfirm(null)}>取消</UIButton><UIButton type="button" className="iw-button iw-primary" onClick={confirmAction}>{confirm === 'adopt' ? '确认采用当前单据' : `确认${confirm === 'APPROVE' ? '审核' : confirm === 'UNAPPROVE' ? '弃审' : '作废'}`}</UIButton></StandardOverlay>}
+    {state.preparing && <p role="status">{editor?.mode === 'EXISTING' ? '正在重新读取当前单据，输入已保留…' : '正在准备当前授权新单资料…'}<UIButton type="button" className="iw-link" onClick={() => { session.suspend(); if (editor?.mode !== 'EXISTING') close(); }}>{editor?.mode === 'EXISTING' ? '取消读取' : '取消准备'}</UIButton></p>}
     {editor?.phase === 'loading' && <p role="status">正在读取销货单…</p>}
     {editor?.readError && <p className="iw-alert" role="alert">当前单据未能读取。<UIButton type="button" className="iw-link" disabled={unresolved} onClick={() => { void session.commands.readCurrent(); }}>重新读取当前单据</UIButton></p>}
     {header && <><div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">

@@ -13,6 +13,7 @@ export interface SalesEditorSnapshot {
   readonly command: SalesCommandSnapshot; readonly input: SalesFormInput | null;
   readonly errors: Readonly<Record<string, string>>; readonly preparing: boolean; readonly notice: string | null;
   readonly commitRevision: number;
+  readonly viewOnly: boolean;
 }
 export interface SalesEditorSessionOptions extends SalesCommandWorkspaceOptions {
   readonly principal: AuthenticationPrincipal; readonly preparation?: SalesFormPreparationProvider;
@@ -35,7 +36,7 @@ export class SalesEditorSession {
     if (!options.principal || options.principal.accountId !== options.scope.identity.accountId) throw new TypeError('Current sales principal must match its session scope.');
     this.#options = Object.freeze({ ...options, principal: Object.freeze({ ...options.principal }) });
     this.commands = new SalesCommandWorkspace(options);
-    this.#state = Object.freeze({ command: this.commands.getSnapshot(), input: null, errors: Object.freeze({}), preparing: false, notice: null, commitRevision: 0 });
+    this.#state = Object.freeze({ command: this.commands.getSnapshot(), input: null, errors: Object.freeze({}), preparing: false, notice: null, commitRevision: 0, viewOnly: false });
     this.#unsubscribe = this.commands.subscribe(() => {
       const command = this.commands.getSnapshot();
       let commitRevision = this.#state.commitRevision;
@@ -60,7 +61,7 @@ export class SalesEditorSession {
   canLeave(): boolean { return !this.#state.preparing && !this.hasDirtyDraft && this.commands.canLeave() && this.#existing?.canLeave() !== false; }
   get canUseExistingProposal(): boolean {
     const state = this.#state.command, editor = state.editor;
-    return !!this.#options.existingPreparation && !!this.#options.existingReader && !state.disposed && editor?.mode === 'EXISTING' && !!editor.detail && !!editor.draft && !!this.#state.input
+    return !this.#state.viewOnly && !!this.#options.existingPreparation && !!this.#options.existingReader && !state.disposed && editor?.mode === 'EXISTING' && !!editor.detail && !!editor.draft && !!this.#state.input
       && editor.detail.stockBasis === 'RUNTIME_LEDGER' && editor.detail.document.header.status === 'DRAFT';
   }
   get existingDocument(): SalesExistingDocumentSession | null { return this.#existing; }
@@ -83,9 +84,36 @@ export class SalesEditorSession {
     return this.commands.submitPreparedExistingSave(() => this.#existing === model && stillCurrent() && this.#state.input === preparedInput && this.commands.getSnapshot().editor?.draft === preparedDraft && this.commands.getSnapshot().editor?.detail === model.original);
   }
   get editable(): boolean {
+    return !this.#state.viewOnly && this.#canEdit();
+  }
+  #canEdit(): boolean {
     const { editor, write, stale, disposed } = this.#state.command;
     return !disposed && !this.#state.preparing && !!editor?.draft && editor.phase === 'ready' && !editor.current && !stale
       && !['submitting', 'checking', 'replaying', 'uncertain', 'committed'].includes(write.phase) && this.actionAllowed('SAVE');
+  }
+  get canBeginEditing(): boolean { return this.#state.viewOnly && this.#state.command.editor?.mode === 'EXISTING' && this.#canEdit(); }
+  beginEditing(): boolean {
+    if (!this.canBeginEditing) return false;
+    this.#publish({ ...this.#state, viewOnly: false }); return true;
+  }
+  get canCancelEditing(): boolean {
+    const { editor, write, stale, disposed } = this.#state.command;
+    return !this.#state.viewOnly && !this.#state.preparing && !disposed && editor?.mode === 'EXISTING' && !!editor.detail && !!editor.draft
+      && !editor.current && !stale && !this.commands.hasUnresolvedWrite && write.phase !== 'committed' && this.actionAllowed('SAVE');
+  }
+  /** Frozen cancel-edit rereads the same document before dropping local input.
+   * The original read/adopt owner still validates current status and authority. */
+  async cancelEditing(discardEdits = false): Promise<boolean> {
+    if (!this.canCancelEditing || this.hasDirtyDraft && !discardEdits) return false;
+    const sequence = ++this.#sequence;
+    this.#publish({ ...this.#state, preparing: true, notice: null });
+    try {
+      if (!await this.commands.readCurrent() || sequence !== this.#sequence || !this.#options.scope.active) return false;
+      if (!this.adoptCurrent(true)) return false;
+      this.#publish({ ...this.#state, viewOnly: true }); return true;
+    } finally {
+      if (sequence === this.#sequence && !this.#state.command.disposed) this.#publish({ ...this.#state, preparing: false });
+    }
   }
   /** UI affordances mirror only the confirmed action rule, never grant authority. */
   actionAllowed(action: SalesCommandDto['action']): boolean {
@@ -100,6 +128,7 @@ export class SalesEditorSession {
   async openExisting(salesId: string): Promise<boolean> {
     if (!this.canLeave()) return false;
     this.#clearExisting();
+    this.#publish({ ...this.#state, viewOnly: false });
     const sequence = ++this.#sequence, ok = await this.commands.openExisting(salesId);
     if (sequence !== this.#sequence || !this.#options.scope.active) return false;
     this.#adoptInput(); return ok;
@@ -168,7 +197,7 @@ export class SalesEditorSession {
     if (!preserveExisting) this.#clearExisting();
     const draft = this.commands.getSnapshot().editor?.draft; const input = draft ? salesFormInput(draft) : null;
     this.#baseline = input ? JSON.stringify(input) : null;
-    this.#publish({ ...this.#state, input, errors: Object.freeze({}), notice: null });
+    this.#publish({ ...this.#state, input, errors: Object.freeze({}), notice: null, viewOnly: false });
   }
   #notice(notice: string): void { if (!this.#state.command.disposed) this.#publish({ ...this.#state, notice }); }
   #publish(state: SalesEditorSnapshot): void { this.#state = Object.freeze(state); for (const listener of [...this.#listeners]) { try { listener(); } catch { /* One view cannot prevent session cleanup. */ } } }
