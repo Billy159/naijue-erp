@@ -4714,9 +4714,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T21:28:05.688687+00:00",
-    "sourceRound": 359,
-    "sourceCheckpoint": "parentb9101ab0ef79077ec75e2508cd3f5a3f8898b5fc, exactcommon5 retry patch staged notworkingWIP",
+    "atUtc": "2026-10-24T21:36:19.805360+00:00",
+    "sourceRound": 360,
+    "sourceCheckpoint": "SOURCE359 1906633ab8bba18ccdaef1cfdca17a5a357a7abb remote verified; SOURCE360 existing records actual195/QB271, no new frontend build",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -6289,16 +6289,13 @@
       "D2Commit": "5c44f3c3b2f7550ced22d3243135cdb9fa3813fd",
       "sourceModuleReviews": "QB205259/QB206260/QB207-v2261/QB208262 PASS_LIMITED; no actual v14 engine/role/init"
     },
-    "sourceCommit": "17d2e89603233e07c0cfe8c344934148f7463536",
+    "sourceCommit": "1906633ab8bba18ccdaef1cfdca17a5a357a7abb",
     "browserLease": {
-      "owner": "NONE_QF343_CLEAN_STOP",
-      "demoTarget": "E8DD365505C23397FA3F5F329CC00328",
-      "replicaTarget": "345D521566930D671CB045311376DECA",
-      "protectedOldDrafts": 5,
-      "parallelBrowser": false,
-      "source": "342 runtime03",
-      "scope": "Only G01-G04 original saved/history/error/image/login representative state gaps; source340 valid groups reused",
-      "technicalModel": "gpt-6.1-sol/medium"
+      "owner": "QF",
+      "scope": "Source358 only untested public shell/account menu pure appearance+clear cancel/Esc; no drawer repeat",
+      "requestedModel": "gpt-6-luna/max",
+      "actualRuntimeSwitchVerified": false,
+      "protectedDraftTabs": 5
     },
     "frontendLaneAdjustment": {
       "status": "FOUR_LINES_ACTIVE_F4_FIRST_COMPLETE_NATIVE_MODULE_FIXED266",
@@ -6690,7 +6687,12 @@
       "bytes": 15785,
       "sha256": "19e8659bcb8fd36dac7e6cbe50e011fe1089e2dce8e0bb9be3a6d660847a463f"
     },
-    "githubLatestVerified": "e2f3e173aaf4f67a5162467dddb39d8f7c7da123",
+    "githubLatestVerified": {
+      "sourceRound": 359,
+      "commit": "1906633ab8bba18ccdaef1cfdca17a5a357a7abb",
+      "receipt": "K/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source359-20261025-01/RESULT.json",
+      "remoteVerified": true
+    },
     "actualPerformance122": {
       "status": "FAILED2_FIRST_ERROR_TYPED_OUTPUT_MASKED_ACTUAL_UNKNOWN_NO_REPLAY",
       "elapsedSeconds": 1.6708132710773498,
@@ -7874,9 +7876,9 @@
         "status": "SOURCE_READY_NOT_WHOLEPAGE_OR_REAL_BUSINESS"
       },
       "D1": {
-        "current": "CORE ready reads actual192 and normal empty union193 adopted; real catalogue exact ACL seam delivered",
-        "next": "C194 finite QB review then exact catalogue privileges/source execution pairing",
-        "status": "WAITING_C_ACTUAL_EXECUTION_NOT_QB_BACKLOG"
+        "current": "C195 exact68 actual +QB271 new5207 metadata adopted; preparing original catalogue-only runner/entry for C",
+        "next": "C fixed carrier/sourcegrant independent finite QB review then actual stage; no reinit or BIND/PUBLISH",
+        "status": "IN_PROGRESS_ORIGINAL_CATALOGUE_CONSUMER"
       },
       "D2": {
         "current": "Human v17 approved; actual189 + QB260 limited service transaction proof adopted",
@@ -8032,19 +8034,26 @@
       "owner": "C",
       "sourceAndAcl": "D1/D3",
       "review": "QB",
-      "status": "ACTUAL_C194_GENUINE_R1_READONLY_169_BITS_OBSERVED_68_MISSING_QB_MINIMAL_GRANT_NEXT",
+      "status": "ACTUAL_C195_EXACT68_GRANTED_QB271_ACCEPTED_NEW_METADATA_ONLY_STAGE_NOT_RUN",
       "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
       "scope": "Original344dictionaries only; no MAIN/BIND_FULL/claim/PUBLISH/product/SKU/stock/CORE replay",
       "knownBaselineMissingBits": 68,
       "actualJob": "c03-real-r1-catalogue-current-readonly-20261025-194",
       "actualRequiredColumnBits": 169,
-      "actualMissingColumnBits": 68,
-      "currentCanonical": "f6afb2d418904db1f9da14d7652fe7b9c26353845bfd6464912c9a2dae030620",
+      "actualMissingColumnBits": 0,
+      "currentCanonical": "5207f9d64fa8acb702a19eaecebb1e614dabdb8e3189af98e9a9b356dfe088cc",
       "businessDML": 0,
-      "grantExecuted": false,
+      "grantExecuted": true,
       "nativeStageExecuted": false,
       "originalNinePreserved": true,
-      "next": "QB adopt finite actual194 receipt and return exact68 grant/current metadata/source seam; C sole execution, no all11/CORE widening"
+      "next": "D1 original store runner consumed by C fixed exact catalogue-only source/carrier; QB finite review then C sole stage10 original chunks",
+      "actualGrantJob": "c03-real-r1-catalogue-exact68-acl-20261025-195",
+      "addedColumnPrivilegeBits": 68,
+      "allOtherCatalogObjectsPreserved": true,
+      "originalCoreStatePreserved": true,
+      "metadataReview": "QB/slice271-c195-actual68-and-catalogue-only-metadata/ACCEPTED-RUNTIME-METADATA.json",
+      "metadataScope": "ONLY_IMPORT_STAGE_EXACT_TARGET_METADATA_ONLY_NOT_REAL_SOURCE_EXECUTION",
+      "originalPrivateR1Host": "Container untouched; old f6af metadata now stale. New runtime profile pairing required before claiming host usable; no blind restart"
     }
   },
   "latestReadySource": {
