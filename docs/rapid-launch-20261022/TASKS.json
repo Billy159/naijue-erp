@@ -4714,9 +4714,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T22:44:31.463335+00:00",
-    "sourceRound": 367,
-    "sourceCheckpoint": "SOURCE3664ab282f22a0c546a7f4bd1941995268474dbd44a remoteverified;SOURCE367 currentQF2actual+F2exclusivehandoff records, currentserved364notchanged",
+    "atUtc": "2026-10-24T22:48:39.815747+00:00",
+    "sourceRound": 368,
+    "sourceCheckpoint": "SOURCE3677663f6b8f352e3d5f7b8b052da5debf2a3d58d1e remoteverified;SOURCE368 exactownerdiagnosis+currentQF2handoff, source364stillserved",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -6342,8 +6342,8 @@
     },
     "sourceCommit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
     "browserLease": {
-      "owner": "F2",
-      "scope": "Onlysource364candidate actualfilter diagnosis shadowRoot/deepfocus/geometry/console/lifecycle; QF/QF2stopped, 5draftprotected. F2mustcleanreturnC beforeQF2blockedbranchretest.",
+      "owner": "QF2",
+      "scope": "Current364onlyblocked2filter-output branches; F2stoppedcleanemptytext/popupsclosed/dialog0/1470x724DPR2/fivedraftuntouched, no source/service changes",
       "requestedModel": "gpt-6.1-sol/medium",
       "actualRuntimeSwitchVerified": false,
       "protectedDraftTabs": 5
@@ -6372,20 +6372,24 @@
       "FastToolVerified": false,
       "F4ThreadId": "01a16b9a-b8eb-7a40-bcae-eff6d87a196f",
       "QF2Output364": {
-        "status": "ACTUAL_FULL_OUTPUT_SUBITEM_PASS_REQUIRED_FILTER_BRANCHES_BLOCKED_F2_DIAGNOSIS",
+        "status": "ACTUAL_FULL_OUTPUT_PASS_FILTER_CONTROLS_NATIVE_WORKING_F2_DIAGNOSIS_QF2_ONLY_TWO_BRANCH_RETEST",
         "owner": "QF2",
         "modelRequest": "gpt-6.1-sol/medium",
         "priorFailedPureUIQueue": "not resumed, historicalB05B06receipt recovered/source340 not attributed364",
         "sourceScope": "onlyF2 finiteoutput+Cwrapper; source349consumer andowner103/4444/XLSXprint tests reused, not rerun",
-        "browser": "QF2cleanreturned/0newtabs/hardware0/businesscommands0/downloadsdefault;C handedF2 onlydiagnosis originalcandidate",
+        "browser": "F2cleanreturned thenCsinglehandoffbacktoQF2; onlydirtyselectedfiltervs executedfilter output andsimpleexecutedfilter output, no full103rerun",
         "report": "K/reports/qa-frontend/rapid-launch-20261022/QF2/c364-output-finite-source-01/RESULT.json",
         "sourceReportSha256": "91bcad3cb7d5e0dc86ec4d8b9f6931ac3766604dddbb61530cc548b76158c626",
         "sourceReport": "K/reports/qa-frontend/rapid-launch-20261022/QF2/c364-output-finite-source-01/SOURCE-RESULT.json",
         "actualReport": "K/reports/qa-frontend/rapid-launch-20261022/QF2/c364-output-finite-source-01/RESULT.json",
-        "actualReportSha256": "d5aeef9eab014d64957af448152c1442ec2e4ac1e28b33f0514b64e61b4dc07f",
+        "actualReportSha256": "2ddc1388ea5457905c3d5417f0f87584e29f998c6a2c00b3d443efb25a7ae9e2",
         "passed": "3XLSX and3renderedprintHTML each103products/208detail/TEST103/knownsum4444 while page100;exportcancel no newdownload",
         "notTested": "dirty filter draft vs executedfilter and simpleexecutedfilteredoutput blocked by reportedcontrolinteraction, no formalHTTP/PG/perf/hardware",
-        "finding": "QF2-I01-FILTER-CONTROLS-364-01"
+        "finding": "QF2-I01-FILTER-CONTROLS-364-01",
+        "actualReportStatus": "BLOCKED_PENDING_OWNER_SHADOW_DOM_DIAGNOSIS supersedes d5ae classification, oldfulloutputpassesunchanged",
+        "ownerDiagnosis": "K/reports/frontend/rapid-launch-20261022/F2/FILTER-SHADOW-DIAG-SOURCE364/RESULT.json",
+        "ownerDiagnosisSha256": "cdc861c97fbd9926b4ccffbc04fedf5c8cb34131d5308867293eecd750f735b9",
+        "diagnosis": "Native product inputfocus/TEST001 candidate andwarehousefilterboth work inopenShadowDOM; publicemptydivnot unmountedproof; oldfailure rootnotreproduced, no confirmedimplementationbug/no sourcepatch"
       }
     },
     "p10Actual114": {
@@ -6755,10 +6759,10 @@
       "sha256": "19e8659bcb8fd36dac7e6cbe50e011fe1089e2dce8e0bb9be3a6d660847a463f"
     },
     "githubLatestVerified": {
-      "sourceRound": 366,
-      "commit": "4ab282f22a0c546a7f4bd1941995268474dbd44a",
+      "sourceRound": 367,
+      "commit": "7663f6b8f352e3d5f7b8b052da5debf2a3d58d1e",
       "remoteVerified": true,
-      "receipt": "K/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source366-20261025-01/RESULT.json"
+      "receipt": "K/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source367-20261025-01/RESULT.json"
     },
     "actualPerformance122": {
       "status": "FAILED2_FIRST_ERROR_TYPED_OUTPUT_MASKED_ACTUAL_UNKNOWN_NO_REPLAY",
@@ -7928,9 +7932,9 @@
         ]
       },
       "F2": {
-        "current": "Source364unfilteredoutputactualsubsetPASS adopted; originalF2 diagnosing reportedproduct/warehouse filtercontrols viaexclusivebrowser",
-        "next": "Only genuine minimalconsumerfix ifconfirmed, or evidence of shadowDOM observationerror; then originalQF2 onlyblocked2filterbranches, no fulloutputrerun",
-        "status": "IN_PROGRESS_ACTUAL_FILTER_INTERACTION_DIAGNOSIS_NOT_FILTER_ALGORITHM_FAILURE"
+        "current": "Actualshadowfilter diagnosis showsmounted/nativelyfunctional, no codefix; originalQF2supplementing onlytwo blockedbranches",
+        "next": "Only newgenuinefinding/qualifiedreal data+productionhost integration, no unnecessarycontrolrewrite or fulloutputrerun",
+        "status": "DIAGNOSIS_DONE_NO_SOURCE_CHANGE_QF2_TARGETED_RETEST_ACTIVE"
       },
       "F3": {
         "current": "8 source pages delivered, current normal synthetic candidate; exact real capabilities remain module-scoped",
