@@ -1,5 +1,5 @@
 import type { FastifyPluginAsync } from "fastify";
-import type { PartyActor, PartyReadDependencies } from "../../../packages/application/src/party-read-ports.ts";
+import type { PartyActor, PartyKind, PartyReadDependencies } from "../../../packages/application/src/party-read-ports.ts";
 import { createPartyReadService } from "../../../packages/application/src/party-read-service.ts";
 import { checkedPartyActor, parsePartySearch } from "../../../packages/application/src/party-maintenance-validation.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
@@ -8,10 +8,12 @@ import { assertNoQuery } from "./input.ts";
 export interface PartyReadHttpOptions {
   readonly authenticate: (input: PartyAuthenticationInput) => Promise<PartyActor | null>;
   readonly dependencies: PartyReadDependencies;
+  readonly kinds?: readonly PartyKind[];
 }
 /** Six GET only. No maintenance service/UoW, command, receipt, allocator or fallback authorization. */
 export function createPartyReadHttpPlugin(options: PartyReadHttpOptions): FastifyPluginAsync {
   if (typeof options?.authenticate !== "function") throw TypeError("Explicit party read authentication required");
+  if (options.kinds !== undefined && (!Array.isArray(options.kinds) || options.kinds.length === 0 || new Set(options.kinds).size !== options.kinds.length || options.kinds.some(k => k !== "CUSTOMER" && k !== "SUPPLIER"))) throw TypeError("Explicit native party read families required");
   const authenticate = options.authenticate, service = createPartyReadService(options.dependencies);
   return async function partyReadHttp(app) {
     const contexts = new WeakMap<object, { actor: PartyActor | null; controller: AbortController; cleanup(): void }>();
@@ -37,6 +39,7 @@ export function createPartyReadHttpPlugin(options: PartyReadHttpOptions): Fastif
     });
     const context = (request: object) => { const value = contexts.get(request); if (!value?.actor) throw Error("Missing trusted party read context"); return { ...value, actor: value.actor }; };
     for (const [path, kind] of [["customers", "CUSTOMER"], ["suppliers", "SUPPLIER"]] as const) {
+      if (options.kinds !== undefined && !options.kinds.includes(kind)) continue;
       app.get(`/${path}`, async request => {
         const { actor, controller } = context(request);
         return service.search(actor, kind, parsePartySearch(request.query, false, true), false, controller.signal);

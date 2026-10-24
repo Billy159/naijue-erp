@@ -247,3 +247,27 @@ test("payment-method-filter v1 cannot bypass denial or turn malformed count/refe
     setup("PAYMENT_ACCOUNT", "ADMIN", { ...record("PAYMENT_ACCOUNT"), paymentMethod: null })])
     await assert.rejects(f.service.list(actor, "PAYMENT_ACCOUNT", { ...query, paymentMethodId: null }), { code: "INVALID_DATABASE_VALUE" });
 });
+
+test('CORE organization protocol: original evidence gates birth IDs and joined references before matched count/page', async () => {
+  for (const kind of ['HALL', 'WAREHOUSE', 'STAFF', 'ACCOUNT'] as const) {
+    const calls: { sql: string; values: unknown[] }[] = [];
+    let checked = false;
+    const pool = { async connect() { return { async query(sql: string, values: unknown[] = []) {
+      calls.push({ sql, values });
+      if (sql.includes('maintenance:identity')) return { rows: [{ account_id: actor.accountId, staff_id: id(901), login_enabled: true, employment_status: '在职', role: 'ADMIN', hall_id: actor.hallId }], rowCount: 1 };
+      if (sql.includes('maintenance:hall')) return { rows: [{ id: actor.hallId, enabled: true }], rowCount: 1 };
+      if (sql.startsWith('WITH matched')) { assert.equal(checked, true); assert.match(sql, /m\.id=ANY\(\$7::uuid\[\]\)/); assert.ok(sql.indexOf('m.id=ANY') < sql.indexOf('page AS')); assert.deepEqual(values[6], [nativeId]);
+        assert.match(sql, kind === 'HALL' ? /m\.default_customer_id=ANY/ : kind === 'WAREHOUSE' ? /m\.hall_id=ANY/ : kind === 'STAFF' ? /a\.id=ANY/ : /m\.staff_id=ANY/);
+        return { rows: [{ total: '1', items: [record(kind)] }], rowCount: 1 }; }
+      return { rows: [], rowCount: 0 };
+    }, release() {} }; } };
+    const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
+    const reader = new PostgresOrganizationMaintenanceReadUnitOfWork(driver, { profile: 'COMMITTED_CORE_SETTINGS_V14', async assertReady(context, current, selected) {
+      assert.equal(current.accountId, actor.accountId); assert.equal(selected, kind); assert.ok(calls.some(c => c.sql.includes('maintenance:identity')));
+      assert.equal(typeof context.client.query, 'function'); checked = true;
+      return { ids: [nativeId], hallIds: [id(1)], warehouseIds: [id(3)], customerIds: [id(2)], staffIds: [id(31)], accountIds: [id(21)] };
+    } });
+    const page = await createOrganizationMaintenanceReadService(reader).list(actor, kind, query); assert.equal(page.total, 1); assert.equal(page.items[0]!.id, nativeId);
+    assert.equal(calls.at(-1)!.sql, 'COMMIT');
+  }
+});

@@ -11,6 +11,10 @@ export interface PgCatalogueSettingsClient { query(text: string, values?: unknow
 export interface PgCatalogueSettingsPool { connect(): Promise<PgCatalogueSettingsClient> }
 type PgPoolCompatibility = Pool extends PgCatalogueSettingsPool ? true : never;
 const pgPoolCompatibility: PgPoolCompatibility = true; void pgPoolCompatibility;
+export interface CatalogueSettingsCoreReadCapability {
+  readonly profile: 'COMMITTED_CORE_SETTINGS_V14';
+  assertReady(client: PgCatalogueSettingsClient, read: CatalogueSettingsScopedRead): Promise<readonly string[]>;
+}
 type Query = (sql: string, values?: unknown[]) => Promise<PgCatalogueSettingsResult>;
 function nativeId(value: unknown): string { try { return catalogueSettingsId(value); } catch { throw new DomainError('INVALID_DATABASE_VALUE', 'Invalid persisted catalogue identity'); } }
 function count(value: unknown): number {
@@ -24,9 +28,10 @@ function total(rows: readonly Record<string, unknown>[]): number { requireDomain
  * it CANNOT cancel an in-flight pg query/acquisition. Host must set statement/lock/pool
  * timeouts. Unknown COMMIT or failed rollback discards the client; never auto-retries. */
 export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsReader {
+  private readonly coreRead: CatalogueSettingsCoreReadCapability | null;
   private readonly pool: PgCatalogueSettingsPool;
   private readonly retainedDelete: boolean;
-  constructor(pool: PgCatalogueSettingsPool, capability: CatalogueRetainedDeleteCapability | null = null) {
+  constructor(pool: PgCatalogueSettingsPool, capability: CatalogueRetainedDeleteCapability | null = null, coreRead: CatalogueSettingsCoreReadCapability | null = null) { this.coreRead = coreRead;
     this.pool = pool; if (typeof pool?.connect !== 'function') throw new TypeError('Catalogue settings reader requires an explicit PostgreSQL pool');
     this.retainedDelete = catalogueRetainedDeleteEnabled(pool, capability);
   }
@@ -35,12 +40,12 @@ export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsRea
     const grant = checkedCatalogueSettingsGrant(read.grant, intent); activeCatalogueSettingsRead(read.signal);
     requireDomain(intent.kind === kind, 'CATALOGUE_SETTINGS_FORBIDDEN', 'Mismatched catalogue reader kind'); return { intent, grant };
   }
-  private async snapshot<T>(signal: AbortSignal, work: (query: Query) => Promise<T>): Promise<T> {
+  private async snapshot<T>(signal: AbortSignal, work: (query: Query, client: PgCatalogueSettingsClient) => Promise<T>): Promise<T> {
     activeCatalogueSettingsRead(signal); const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
     const query: Query = (sql, values = []) => { activeCatalogueSettingsRead(signal); return client.query(sql, values); };
     try {
       activeCatalogueSettingsRead(signal); await query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); began = true;
-      const value = await work(query); activeCatalogueSettingsRead(signal); committing = true; await query('COMMIT'); activeCatalogueSettingsRead(signal); return value;
+      const value = await work(query, client); activeCatalogueSettingsRead(signal); committing = true; await query('COMMIT'); activeCatalogueSettingsRead(signal); return value;
     } catch (error) {
       if (!began || committing) discard = error instanceof Error ? error : new Error('Catalogue snapshot failed');
       if (began) try { await client.query('ROLLBACK'); } catch (rollbackError) {
@@ -52,12 +57,14 @@ export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsRea
   }
   private async list(read: CatalogueSettingsScopedRead, kind: 'colors' | 'fits'): Promise<CatalogueSettingsPage<CatalogueSettingsEntry>> {
     const { intent } = this.validate(read, kind); if (intent.operation !== 'list') throw new Error('Expected catalogue list'); const parameters = intent.parameters;
-    return this.snapshot(read.signal, async query => {
+    return this.snapshot(read.signal, async (query, client) => {
+      const scopeIds = this.coreRead === null ? null : await this.coreRead.assertReady(client, read);
       const table = kind === 'colors' ? 'color' : 'fit'; // Fixed internal identifiers only.
-      const predicate = `${this.retainedDelete ? "deleted_at IS NULL AND " : ""}strpos(lower(name || ' ' || code), lower($1::text)) > 0`;
-      const n = total((await query(`SELECT count(*)::text AS total FROM naijue_erp.${table} WHERE ${predicate}`, [parameters.search])).rows);
-      const rows = (await query(`SELECT id, code, name, enabled, version FROM naijue_erp.${table} WHERE ${predicate} ORDER BY code COLLATE "C", id LIMIT $2 OFFSET $3`,
-        [parameters.search, parameters.pageSize, (parameters.page - 1) * parameters.pageSize])).rows;
+      const predicate = `${this.retainedDelete ? "deleted_at IS NULL AND " : ""}strpos(lower(name || ' ' || code), lower($1::text)) > 0${scopeIds === null ? '' : ' AND id=ANY($2::uuid[])'}`;
+      const values: unknown[] = [parameters.search, ...(scopeIds === null ? [] : [scopeIds])];
+      const n = total((await query(`SELECT count(*)::text AS total FROM naijue_erp.${table} WHERE ${predicate}`, values)).rows);
+      const rows = (await query(`SELECT id, code, name, enabled, version FROM naijue_erp.${table} WHERE ${predicate} ORDER BY code COLLATE "C", id LIMIT $${values.length + 1} OFFSET $${values.length + 2}`,
+        [...values, parameters.pageSize, (parameters.page - 1) * parameters.pageSize])).rows;
       requireDomain(rows.length <= parameters.pageSize, 'INVALID_DATABASE_VALUE', 'Catalogue page exceeded requested bound');
       const items = rows.map(row => validateCatalogueSettingsEntry({ id: nativeId(row.id), code: stringValue(row.code), name: stringValue(row.name), enabled: booleanValue(row.enabled), version: integerValue(row.version) }));
       return validateCatalogueSettingsPage({ page: parameters.page, pageSize: parameters.pageSize, total: n, items }, parameters);
@@ -67,11 +74,15 @@ export class PostgresCatalogueSettingsReadReader implements CatalogueSettingsRea
   readFits(read: CatalogueSettingsScopedRead): Promise<CatalogueSettingsPage<CatalogueSettingsEntry>> { return this.list(read, 'fits'); }
   async readCategories(read: CatalogueSettingsScopedRead): Promise<CatalogueSettingsTree> {
     const { intent, grant } = this.validate(read, 'categories'); if (intent.kind !== 'categories' || grant.kind !== 'categories') throw new Error('Expected category tree');
-    return this.snapshot(read.signal, async query => {
-      const retained = this.retainedDelete ? ' WHERE deleted_at IS NULL' : '';
-      const n = total((await query(`SELECT count(*)::text AS total FROM naijue_erp.product_category${retained}`)).rows);
+    return this.snapshot(read.signal, async (query, client) => {
+      const scopeIds = this.coreRead === null ? null : await this.coreRead.assertReady(client, read);
+      requireDomain(this.coreRead === null || grant.productCounts === 'NONE', 'CATALOGUE_SETTINGS_FORBIDDEN', 'CORE reads have no complete product-count authority');
+      const predicates = [...(this.retainedDelete ? ['deleted_at IS NULL'] : []), ...(scopeIds === null ? [] : ['id=ANY($1::uuid[])'])];
+      const retained = predicates.length === 0 ? '' : ` WHERE ${predicates.join(' AND ')}`;
+      const values: unknown[] = scopeIds === null ? [] : [scopeIds];
+      const n = total((await query(`SELECT count(*)::text AS total FROM naijue_erp.product_category${retained}`, values)).rows);
       requireDomain(n <= CATALOGUE_SETTINGS_MAX_CATEGORIES, 'CATALOGUE_SETTINGS_READ_TOO_LARGE', 'Category tree exceeds technical response bound');
-      const rows = (await query(`SELECT id, parent_id, name, display_order, version FROM naijue_erp.product_category${retained} ORDER BY display_order, id LIMIT $1`, [CATALOGUE_SETTINGS_MAX_CATEGORIES + 1])).rows;
+      const rows = (await query(`SELECT id, parent_id, name, display_order, version FROM naijue_erp.product_category${retained} ORDER BY display_order, id LIMIT $${values.length + 1}`, [...values, CATALOGUE_SETTINGS_MAX_CATEGORIES + 1])).rows;
       requireDomain(rows.length <= CATALOGUE_SETTINGS_MAX_CATEGORIES, 'CATALOGUE_SETTINGS_READ_TOO_LARGE', 'Category tree exceeds technical response bound');
       const items: CatalogueSettingsCategory[] = rows.map(row => ({ id: nativeId(row.id), parentId: row.parent_id === null ? null : nativeId(row.parent_id),
         name: stringValue(row.name), displayOrder: integerValue(row.display_order), version: integerValue(row.version), code: null, productCount: null, childCount: 0 }));

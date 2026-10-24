@@ -906,3 +906,99 @@ test('v16 B07 production host: exact HISTORY successor mounts original protected
  }finally{await api.close();f.cleanup();}
  assert.equal(p.counts().allocations,1);assert.equal(p.counts().ends,1);assert.equal(p.counts().connects,p.counts().releases);
 });
+
+test('production CORE read modules: explicit private selection rejects duplicates unsupported and unbound values before pool creation', async () => {
+  const f = coreProductionFixture();
+  try {
+    const selected = { ...f.configuration, coreReadModules: ['organization', 'customers', 'catalogue'] as const };
+    assert.deepEqual(parseProductionRuntime26Configuration(selected).coreReadModules, selected.coreReadModules);
+    assert.equal(parseProductionRuntime26Configuration(f.configuration).coreReadModules, undefined);
+    for (const modules of [undefined, null, true, ['customers', 'customers'], ['suppliers'], ['payment'], ['catalogue', 'history']]) {
+      let allocations = 0;
+      await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: modules }, () => { allocations++; throw Error('NO_POOL'); }), TypeError);
+      assert.equal(allocations, 0);
+    }
+    const { coreInitializationRead: _core, ...withoutCore } = f.configuration;
+    assert.throws(() => parseProductionRuntime26Configuration({ ...withoutCore, coreReadModules: [] }), TypeError);
+    assert.throws(() => parseProductionRuntimeConfiguration(selected), TypeError);
+  } finally { f.cleanup(); }
+});
+
+test('production CORE read modules: selected normal HTTP reads use original member and CREATE proof before count/page; staged roots and unselected modules remain hidden', async () => {
+  const f = coreProductionFixture(), staff = f.coreSourceMembers.accounts[0]!.staff_id;
+  const warehouse = f.coreSourceMembers.parties.find(p => p.entity === 'WAREHOUSE')!.nativeId;
+  const customer = f.coreSourceMembers.parties.find(p => p.entity === 'CUSTOMER')!.nativeId;
+  const maintained = '14000000-0000-4000-8000-000000008001', staged = '14000000-0000-4000-8000-000000009999';
+  let sourcesMatch = true, role = 'ADMIN', proofRole: string | null = null;
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql === NATIVE_RUNTIME26_V14_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes('core-settings:committed-proof')) return [{ after_values: { coreSourceMembers: f.coreSourceMembers }, sources_match: sourcesMatch, claims_match: true }];
+    if (sql.includes('core-settings:current-identity')) return [{ id: account, staff_id: staff, login_enabled: true, role: proofRole ?? role, employment_status: '在职', hall_id: hall, hall_enabled: true }];
+    if (sql.includes('maintenance:identity') || sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s')) return [{ account_id: account, staff_id: staff, login_name: 'SYNTHETIC_CORE_READ', password_hash: 'UNUSED', login_enabled: true, auth_version: 1, role, employment_status: '在职', hall_id: hall }];
+    if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
+    if (sql.includes('maintenance:administrator-lock')) return [];
+    if (sql.startsWith('WITH matched')) {
+      assert.match(sql, /m\.id=ANY\(\$7::uuid\[\]\)/); assert.equal((values[6] as string[]).length, 22); assert.ok(!(values[6] as string[]).includes(staged));
+      assert.match(sql, /m\.hall_id=ANY\(\$8::uuid\[\]\)/);
+      return [{ total: '1', items: [{ kind: 'WAREHOUSE', id: warehouse, version: 1, createdAt: null, updatedAt: null, name: 'SYNTHETIC_CORE_WAREHOUSE', enabled: true, hall: { id: hall, name: 'SYNTHETIC_CORE_HALL', enabled: true } }] }];
+    }
+    if (sql.includes('core-settings:maintained-roots')) {
+      assert.match(sql, /a\.action='CREATE'/); assert.match(sql, /r\.status='COMMITTED'/); assert.match(sql, /a\.actor_account_id=ANY\(\$2::uuid\[\]\)/);
+      assert.equal((values[1] as string[]).length, 49); return [{ id: maintained }];
+    }
+    if (sql.includes('FROM naijue_erp.customer WHERE')) {
+      assert.match(sql, /id=ANY\(\$3::uuid\[\]\)/); assert.equal((values[2] as string[]).length, 22); assert.ok(!(values[2] as string[]).includes(staged));
+      return sql.includes('count(*)') ? [{ total: '1' }] : [{ id: customer, code: 'ORIGINAL', name: 'SYNTHETIC_CORE_CUSTOMER', enabled: true, version: 1, created_at: null, updated_at: null }];
+    }
+    if (sql.includes('FROM naijue_erp.color WHERE')) {
+      assert.match(sql, /id=ANY\(\$2::uuid\[\]\)/); assert.deepEqual(values[1], [maintained]);
+      return sql.includes('count(*)') ? [{ total: '1' }] : [{ id: maintained, code: 'ORIGINAL_COLOR', name: 'SYNTHETIC_MAINTAINED', enabled: true, version: 1 }];
+    }
+    if (sql.includes('FROM naijue_erp.product_category WHERE')) {
+      assert.match(sql, /id=ANY\(\$1::uuid\[\]\)/); assert.deepEqual(values[0], [maintained]);
+      return sql.includes('count(*)') ? [{ total: '1' }] : [{ id: maintained, parent_id: null, name: 'SYNTHETIC_MAINTAINED', display_order: 0, version: 1 }];
+    }
+    return undefined;
+  });
+  try {
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: ['organization', 'customers', 'catalogue'] }, p.factory);
+    try {
+      for (const path of ['/organization/halls', '/organization/warehouses', '/staff', '/accounts']) for (const suffix of ['/query', '/detail/query']) assert.equal(api.app.hasRoute({ method: 'POST', url: path + suffix }), true);
+      for (const path of ['/payment/methods/query', '/payment/accounts/query', '/inventory/query', '/products/query', '/sales/query', '/transfers/query', '/imported-history/sales/query', '/current-form/products/query', '/dictionary-read/seasons/query']) assert.equal(api.app.hasRoute({ method: 'POST', url: path }), false);
+      assert.equal(api.app.hasRoute({ method: 'GET', url: '/suppliers' }), false);
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+      const requests = [
+        { method: 'POST' as const, url: '/organization/warehouses/query', payload: { search: '', status: 'all', hallId: null, page: 1, pageSize: 20 } },
+        { method: 'GET' as const, url: '/customers?search=&enabled=ALL&page=1&pageSize=20' },
+        { method: 'POST' as const, url: '/catalogue-settings-read/colors/query', payload: { search: '', page: 1, pageSize: 20 } },
+        { method: 'POST' as const, url: '/catalogue-settings-read/categories/query', payload: {} }
+      ] as const;
+      for (const request of requests) {
+        const response = await api.app.inject({ ...request, headers }); assert.equal(response.statusCode, 200, response.body);
+        assert.equal(response.headers['cache-control'], 'no-store'); assert.ok(!response.body.includes(staged)); assert.equal(response.json().total, 1);
+        if (request.url.includes('/categories/')) assert.equal(response.json().items[0].productCount, null);
+      }
+      const business = () => p.calls.filter(c => c.sql.startsWith('WITH matched') || /FROM naijue_erp\.(customer|color|product_category) WHERE/.test(c.sql));
+      for (const data of business()) {
+        const lease = p.calls.filter(c => c.lease === data.lease), start = lease.findIndex(c => c.sql.startsWith('BEGIN'));
+        assert.ok(start >= 0); assert.ok(lease.findIndex(c => c.sql.includes('core-settings:committed-proof')) > start);
+        assert.ok(lease.findIndex(c => c.sql.includes('core-settings:current-identity')) < lease.indexOf(data));
+        if (!data.sql.startsWith('WITH matched')) assert.match(lease[start]!.sql, /REPEATABLE READ READ ONLY/);
+      }
+      assert.ok(!p.calls.some(c => /FROM naijue_erp\.product(?:\s|$)/.test(c.sql)));
+      let before = business().length; sourcesMatch = false;
+      for (const request of requests) assert.equal((await api.app.inject({ ...request, headers })).statusCode, 403);
+      assert.equal(business().length, before); sourcesMatch = true; role = 'WAREHOUSE';
+      assert.equal((await api.app.inject({ method: 'POST', url: '/staff/query', headers, payload: requests[0]!.payload })).statusCode, 403);
+      assert.equal(business().length, before); role = 'ADMIN'; proofRole = 'WAREHOUSE';
+      assert.equal((await api.app.inject({ method: 'POST', url: '/staff/query', headers, payload: requests[0]!.payload })).statusCode, 403);
+      assert.equal(business().length, before); proofRole = null; role = 'SALESPERSON';
+      assert.equal((await api.app.inject({ ...requests[0]!, headers })).statusCode, 403);
+      assert.equal((await api.app.inject({ ...requests[1]!, headers })).statusCode, 403);
+      assert.equal((await api.app.inject({ method: 'GET', url: '/customers/candidates?search=&page=1&pageSize=20', headers })).statusCode, 200);
+      assert.equal((await api.app.inject({ ...requests[2]!, headers })).statusCode, 200);
+      assert.equal(api.app.server.listening, false);
+    } finally { await api.close(); }
+    assert.equal(p.counts().allocations, 1); assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
+  } finally { f.cleanup(); }
+});

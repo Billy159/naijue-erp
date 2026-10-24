@@ -52,13 +52,13 @@ import type { ProductManagementQueryAuthorization } from "../../../packages/appl
 import type { CatalogueSettingsReadAuthorization } from "../../../packages/application/src/catalogue-settings-read-ports.ts";
 import type { DictionaryReadAuthorization } from "../../../packages/application/src/dictionary-read-ports.ts";
 import { PostgresProductManagementQueryReader } from "../../../adapters/postgres/src/product-management-query-reader.ts";
-import { PostgresCatalogueSettingsReadReader } from "../../../adapters/postgres/src/catalogue-settings-read-reader.ts";
+import { PostgresCatalogueSettingsReadReader, type CatalogueSettingsCoreReadCapability } from "../../../adapters/postgres/src/catalogue-settings-read-reader.ts";
 import { PostgresDictionaryReadReader } from "../../../adapters/postgres/src/dictionary-read-reader.ts";
 import { createProductManagementQueryHttpPlugin } from "./product-management-query-http.ts";
 import { createCatalogueSettingsReadHttpPlugin } from "./catalogue-settings-read-http.ts";
 import { createDictionaryReadHttpPlugin } from "./dictionary-read-http.ts";
 import type { PartyReadAuthorization } from "../../../packages/application/src/party-read-ports.ts";
-import { PostgresPartyReadReader } from "../../../adapters/postgres/src/party-read-reader.ts";
+import { PostgresPartyReadReader, type PartyCoreReadCapability } from "../../../adapters/postgres/src/party-read-reader.ts";
 import { createPartyReadHttpPlugin } from "./party-read-http.ts";
 import { createPartySessionAuthenticator } from "./party-authentication.ts";
 import type { ImportedHistoryReadAuthorization } from "../../../packages/application/src/imported-history-query-ports.ts";
@@ -78,7 +78,7 @@ import { PostgresProductWarehouseStockReader } from "../../../adapters/postgres/
 import { PostgresMaintenanceCommandUnitOfWork, maintenanceContextClient } from "../../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import { PostgresCatalogueMaintenanceUnitOfWork } from "../../../adapters/postgres/src/catalogue-maintenance-store.ts";
 import { createCatalogueMaintenanceHttpPlugin } from "./catalogue-maintenance-http.ts";
-import { PostgresOrganizationMaintenanceReadUnitOfWork } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
+import { PostgresOrganizationMaintenanceReadUnitOfWork, type OrganizationCoreReadCapability } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
 import { createOrganizationMaintenanceReadHttpPlugin } from "./organization-maintenance-http.ts";
 import { createNativeRuntime26Issuer } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PrivateProductMediaStage } from "../../../adapters/media/src/product-media-stage.ts";
@@ -146,8 +146,14 @@ export interface PostgresDocumentCommandsCapability {
 export interface CommittedCoreReadBinding {
   readonly profile: "COMMITTED_CORE_SETTINGS_V14"; readonly batchId: string; readonly operationId: string; readonly coreSourceDigest: string;
 }
+export type CoreReadModule = "organization" | "customers" | "catalogue";
+export function checkedCoreReadModules(value: unknown): readonly CoreReadModule[] {
+  if (!Array.isArray(value) || new Set(value).size !== value.length || value.some(v => !["organization", "customers", "catalogue"].includes(v))) throw new TypeError("Explicit CORE read modules required");
+  return Object.freeze([...value]) as readonly CoreReadModule[];
+}
 export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   readonly coreInitializationRead?: CommittedCoreReadBinding;
+  readonly coreReadModules?: readonly CoreReadModule[];
   /** Closed trusted production selector. It installs independently defined read
    * policies below, never commands or a fallback from LIVE to HISTORY. */
   readonly nativeReadExtensions?: { readonly profile: "source-confirmed-r1-v1" };
@@ -160,7 +166,7 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   /** Explicit historical policy only. Native/LIVE authorization never enables this dataset. */
   readonly importedHistoryRead?: { readonly authorization: ImportedHistoryReadAuthorization };
 }
-type ApplicationCapabilities = { readonly coreInitializationRead: CommittedCoreReadBinding | null; readonly commands: PostgresDocumentCommandsCapability | null;
+type ApplicationCapabilities = { readonly coreReadModules: readonly CoreReadModule[]; readonly coreInitializationRead: CommittedCoreReadBinding | null; readonly commands: PostgresDocumentCommandsCapability | null;
   readonly nativeReadExtensions: boolean;
   readonly settings: StoreSettingsReadAuthorization | null;
   readonly productManagement: ProductManagementQueryAuthorization | null;
@@ -204,6 +210,8 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
       throw new TypeError("CORE host mounts only original authentication and exact committed member settings reads");
     coreInitializationRead = Object.freeze(core as unknown as CommittedCoreReadBinding);
   }
+  const coreReadModules = "coreReadModules" in options ? checkedCoreReadModules(ownData(options, "coreReadModules")) : [];
+  if ("coreReadModules" in options && coreInitializationRead === null) throw new TypeError("CORE read modules require an exact committed CORE binding");
   const nativeReadExtensions = "nativeReadExtensions" in options;
   if (nativeReadExtensions) {
     const extension = exactBag(ownData(options, "nativeReadExtensions"), ["profile"]);
@@ -258,7 +266,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     const bag = exactBag(ownData(options, "importedHistoryRead"), ["authorization"]);
     importedHistory = Object.freeze({ authorize: method<ImportedHistoryReadAuthorization["authorize"]>(bag.authorization, "authorize") });
   }
-  return Object.freeze({ coreInitializationRead, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
+  return Object.freeze({ coreInitializationRead, coreReadModules, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
 }
 
 export interface SourceConfirmedApplicationReadAuthorization {
@@ -531,6 +539,13 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
         reader: new PostgresStoreSettingsReadReader(pool, core.capability) } }));
       app.register(createSettingsAuditHttpPlugin({ authenticate,
         reader: new PostgresSettingsAuditUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), null, core.auditCapability) }));
+      if (capabilities.coreReadModules.includes("organization")) app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate,
+        kinds: ["HALL", "WAREHOUSE", "STAFF", "ACCOUNT"],
+        unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), core.organizationCapability) }));
+      if (capabilities.coreReadModules.includes("customers")) app.register(createPartyReadHttpPlugin({ authenticate: createPartySessionAuthenticator(authentication), kinds: ["CUSTOMER"],
+        dependencies: { authorization: core.partyAuthorization, reader: new PostgresPartyReadReader(pool, null, core.partyCapability) } }));
+      if (capabilities.coreReadModules.includes("catalogue")) app.register(createCatalogueSettingsReadHttpPlugin({ authenticate,
+        dependencies: { authorization: core.catalogueAuthorization, reader: new PostgresCatalogueSettingsReadReader(pool, null, core.catalogueCapability) } }));
       await app.ready(); const readyApp = app;
       return Object.freeze({ app: readyApp, close: () => readyApp.close(), trustedOrigin: host.trustedOrigin,
         get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; } });
@@ -644,10 +659,15 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
 /** Proof-derived CORE directory policy. The reader rechecks on its original RR client before any data query. */
 export function createCommittedCoreSettingsRead(pool: PgSalesPool, runtime26: NativeRuntime26Capability, binding: CommittedCoreReadBinding): {
   readonly authorization: StoreSettingsReadAuthorization; readonly capability: StoreSettingsCoreReadCapability; readonly auditCapability: SettingsAuditCoreReadCapability;
+  readonly organizationCapability: OrganizationCoreReadCapability; readonly partyAuthorization: PartyReadAuthorization;
+  readonly partyCapability: PartyCoreReadCapability; readonly catalogueAuthorization: CatalogueSettingsReadAuthorization;
+  readonly catalogueCapability: CatalogueSettingsCoreReadCapability;
 } {
   const fixed = Object.freeze(structuredClone(binding));
   const permit = (value: unknown): void => requireDomain(value, "FORBIDDEN", "Committed CORE member authority unavailable");
-  async function scopeOn(client: object, actor: ActorContext, signal: AbortSignal): Promise<Extract<StoreSettingsScope, { kind: "CORE_MEMBERS" }>> {
+  async function membersOn(client: object, actor: ActorContext, signal: AbortSignal, references = false): Promise<{
+    scope: Extract<StoreSettingsScope, { kind: "CORE_MEMBERS" }>; members: CoreSourceMembers; role: "ADMIN" | "WAREHOUSE" | "SALESPERSON";
+  }> {
     permit(!signal.aborted && fixed.profile === "COMMITTED_CORE_SETTINGS_V14");
     await runtime26.assertReady(client, "CURRENT_FORM_READ");
     const query = method<(sql: string, values?: unknown[]) => Promise<{ rows: Record<string, unknown>[] }>>(client, "query");
@@ -675,12 +695,20 @@ export function createCommittedCoreSettingsRead(pool: PgSalesPool, runtime26: Na
       FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id WHERE a.id=$1::uuid LIMIT 2`, [actor.accountId])).rows;
     const current = identity[0];
     permit(!signal.aborted && identity.length === 1 && current?.login_enabled === true && current.employment_status === "在职"
-      && (current.role === "ADMIN" || current.role === "WAREHOUSE") && current.hall_id === actor.hallId
+      && current.id === actor.accountId && (current.role === "ADMIN" || current.role === "WAREHOUSE" || references && current.role === "SALESPERSON" && actor.hallId !== null)
+      && (!("role" in actor) || actor.role === current.role) && current.hall_id === actor.hallId
       && (current.hall_id === null || current.hall_enabled === true)
       && birth.coreSourceMembers.accounts.some(account => account.id === current.id && account.staff_id === current.staff_id));
-    return Object.freeze({ kind: "CORE_MEMBERS", hallIds: Object.freeze(birth.coreSourceMembers.parties.filter(row => row.entity === "HALL").map(row => row.nativeId).sort()),
+    const scope = Object.freeze({ kind: "CORE_MEMBERS" as const, hallIds: Object.freeze(birth.coreSourceMembers.parties.filter(row => row.entity === "HALL").map(row => row.nativeId).sort()),
       warehouseIds: Object.freeze(birth.coreSourceMembers.parties.filter(row => row.entity === "WAREHOUSE").map(row => row.nativeId).sort()) });
+    return { scope, members: birth.coreSourceMembers, role: current!.role as "ADMIN" | "WAREHOUSE" | "SALESPERSON" };
   }
+  const scopeOn = async (client: object, actor: ActorContext, signal: AbortSignal) => (await membersOn(client, actor, signal)).scope;
+  async function authorizeReferences(actor: ActorContext, signal: AbortSignal) {
+    const client = await pool.connect();
+    try { return await membersOn(client, actor, signal, true); } finally { client.release(); }
+  }
+
   return Object.freeze({
     authorization: Object.freeze<StoreSettingsReadAuthorization>({ async authorize(actor, intent, signal) {
       const client = await pool.connect();
@@ -693,6 +721,45 @@ export function createCommittedCoreSettingsRead(pool: PgSalesPool, runtime26: Na
       const actual = await scopeOn(client, read.actor, read.signal), proposed = read.grant.scope;
       permit(proposed.kind === "CORE_MEMBERS" && JSON.stringify([...proposed.hallIds].sort()) === JSON.stringify(actual.hallIds)
         && JSON.stringify([...proposed.warehouseIds].sort()) === JSON.stringify(actual.warehouseIds));
+    } }),
+    organizationCapability: Object.freeze<OrganizationCoreReadCapability>({ profile: "COMMITTED_CORE_SETTINGS_V14", async assertReady(context, actor, kind) {
+      permit(["HALL", "WAREHOUSE", "STAFF", "ACCOUNT"].includes(kind));
+      const actual = await membersOn(maintenanceContextClient(context, pool), actor, new AbortController().signal);
+      permit((kind !== "STAFF" && kind !== "ACCOUNT") || actual.role === "ADMIN");
+      const ids = (entity: "HALL" | "WAREHOUSE" | "CUSTOMER" | "STAFF") => actual.members.parties.filter(p => p.entity === entity).map(p => p.nativeId).sort();
+      const accountIds = actual.members.accounts.map(a => a.id).sort();
+      return { ids: kind === "ACCOUNT" ? accountIds : ids(kind as "HALL" | "WAREHOUSE" | "STAFF"),
+        hallIds: ids("HALL"), warehouseIds: ids("WAREHOUSE"), customerIds: ids("CUSTOMER"), staffIds: ids("STAFF"), accountIds };
+    } }),
+    partyAuthorization: Object.freeze<PartyReadAuthorization>({ async authorize(actor, intent, signal) {
+      permit(intent.kind === "CUSTOMER" && ["LIST", "DETAIL", "CANDIDATES"].includes(intent.operation));
+      const actual = await authorizeReferences(actor, signal); permit(intent.operation === "CANDIDATES" || actual.role !== "SALESPERSON");
+      return { kind: intent.kind, operation: intent.operation, targetId: intent.operation === "DETAIL" ? intent.id : null };
+    } }),
+    partyCapability: Object.freeze<PartyCoreReadCapability>({ profile: "COMMITTED_CORE_SETTINGS_V14", async assertReady(client, read) {
+      permit(read.intent.kind === "CUSTOMER");
+      const actual = await membersOn(client, read.actor, read.signal, true); permit(read.intent.operation === "CANDIDATES" || actual.role !== "SALESPERSON");
+      return actual.members.parties.filter(p => p.entity === "CUSTOMER").map(p => p.nativeId).sort();
+    } }),
+    catalogueAuthorization: Object.freeze<CatalogueSettingsReadAuthorization>({ async authorize(actor, intent, signal) {
+      permit(intent.kind === "categories" ? intent.operation === "tree" : (intent.kind === "colors" || intent.kind === "fits") && intent.operation === "list");
+      await authorizeReferences(actor, signal);
+      return intent.kind === "categories" ? { kind: "categories", operation: "tree", productCounts: "NONE" } : { kind: intent.kind, operation: "list" };
+    } }),
+    catalogueCapability: Object.freeze<CatalogueSettingsCoreReadCapability>({ profile: "COMMITTED_CORE_SETTINGS_V14", async assertReady(client, read) {
+      const actual = await membersOn(client, read.actor, read.signal, true);
+      const kind = read.intent.kind === "categories" ? "CATEGORY" : read.intent.kind === "colors" ? "COLOR" : "FIT";
+      const table = kind === "CATEGORY" ? "product_category" : kind === "COLOR" ? "color" : "fit";
+      const rows = (await client.query(`/* core-settings:maintained-roots */ SELECT DISTINCT n.id FROM naijue_erp.${table} n
+        JOIN naijue_erp.audit_change a ON a.object_id=n.id AND a.object_type=$1 AND a.action='CREATE'
+        JOIN naijue_erp.operation_receipt r ON r.id=a.operation_id AND r.target_id=a.object_id AND r.target_type=a.object_type AND r.action=a.action
+        WHERE n.deleted_at IS NULL AND a.old_version IS NULL AND a.new_version=1 AND a.before_values IS NULL
+          AND r.status='COMMITTED' AND r.actor_account_id=a.actor_account_id AND r.completed_at=a.occurred_at
+          AND a.after_values->>'id'=n.id::text AND a.after_values->'version'='1'::jsonb
+          AND r.result_data->>'operationId'=r.id::text AND r.result_data->>'kind'=$1
+          AND r.result_data->>'targetId'=n.id::text AND r.result_data->'version'='1'::jsonb
+          AND a.actor_account_id=ANY($2::uuid[]) ORDER BY n.id`, [kind, actual.members.accounts.map(a => a.id)])).rows;
+      return rows.map(row => entityId("category", row.id as string));
     } }),
     auditCapability: Object.freeze<SettingsAuditCoreReadCapability>({ profile: "COMMITTED_CORE_SETTINGS_V14", async assertReady(context, actor, signal) {
       const actual = await scopeOn(maintenanceContextClient(context, pool), actor, signal);

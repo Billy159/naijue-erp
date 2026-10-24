@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "29b8e5741108891ec01382dc47b404cd435ef2b0",
+    "headObserved": "65c8637d722bbdbe6338945d7a5841ac66554965",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "29b8e5741108891ec01382dc47b404cd435ef2b0",
+    "remoteHeadVerified": "65c8637d722bbdbe6338945d7a5841ac66554965",
     "remoteReadbackMethod": "Exact4 original objects/nonforcedFF/independentGET; next docs/source repair not yet synced",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "d24b83b867b83dd59b04eebf04351f59f9b0cde2"
+    "lastVerifiedRemoteCommit": "65c8637d722bbdbe6338945d7a5841ac66554965"
   },
   "concurrency": {
     "chats": 11,
@@ -4693,43 +4693,42 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T18:36:33.453710+00:00",
-    "sourceRound": 348,
-    "sourceCheckpoint": "f854b4db6350a95ff9a6abc949f5c5404675bfb6 plus staged348 F2 editors",
+    "sourceRound": 350,
+    "sourceCheckpoint": "parent65c8637d722bbdbe6338945d7a5841ac66554965 / exact350 backend13",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
       "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "f854b4db6350a95ff9a6abc949f5c5404675bfb6",
-      "runtimeVersion": "phase2-normal-f854b4d-01",
-      "htmlBytes": 3148,
-      "htmlSha256": "f93b7ee85f396992af9b34917b3d4944a092067a6b8addf296c02153296cd8b0",
+      "sourceCommit": "65c8637d722bbdbe6338945d7a5841ac66554965",
+      "runtimeVersion": "phase2-normal-65c8637-02",
+      "htmlBytes": 3154,
+      "htmlSha256": "b0da1b4d56df49fcda9ab0a683a7b0c4d8fa4043c5d84c8e828fc58b70c2bee2",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
       "sourceRound": 343,
-      "serverSession": 1273,
+      "serverSession": 54908,
       "fixtureBytes": 25766,
       "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
       "phase2Started": true,
       "newBackendConnected": false,
-      "fixedArtifact": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-f854b4d-phase2-01/build",
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-65c8637-phase2-02/build",
       "phase1Accepted": false,
-      "phase2Candidate": "SOURCE347 immutable QF technical NEED_FIX: 3product detail tabs and store list absent preview read coverage; originalboot/inventory/category lazy successes reused, pending abort direct evidence not passed",
+      "phase2Candidate": "Actual349 fixed strict/build/HTTP; QF named3 product tabs/hall/payment now complete, heavy DOM/query retention pass; document scroll tab-return new finding assigned F2; direct cancellation evidence in progress. Not pure visual/real business.",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
-      "status": "SOURCE349_WIP_READY_MODULES_OUTPUT_TABS_AND_PREVIEW_FIXES_FIXED_BUILD_NEXT",
+      "status": "WAIT_F2_AFFECTED_SCROLL_DELTA_OR_OTHER_COMPLETE_READY_MODULE",
       "owner": "C",
-      "normalEntry": "runtime.html",
-      "note": "F1 nativeSALE partial source preserved but flag remains disabled; no wholeSALE pass; source349 preview-only adapters do not enter formal business transport"
+      "qa": "Original QF only failed/affected; no old347 retests"
     },
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Original historical blank hall v5 pending only; v17 explicitly approved, D2/F2 implementation in progress",
-    "github": "REMOTE_EXACT_VERIFIED_d24b83b867b83dd59b04eebf04351f59f9b0cde2",
+    "github": "REMOTE_EXACT_VERIFIED_65c8637d722bbdbe6338945d7a5841ac66554965",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -4758,7 +4757,7 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "C180 actual approved category patch129->130 and minimum2column/helper ACL COMMIT PASS1.82076s, canonical a97002057a1763b3bd650141461228773d54a81a833a1e7c8e5d96313f82b415; QB new PRODUCT_MAINTENANCE metadata in progress, no business command yet. v5 historical source separate pending.",
+    "backend": "CORE readiness11 source exact350 (D1) + imported-history SQL primitives2 (D3); original QB finite review next. Native v17 actual184 returned no typed output;185 recovered original0351 roots/SKU/audits/receipts all0, precise loader error named Pool export from CJS internal path.186 fixed original installed PG ESM package entry inert validation pending, no business replay.",
     "productionBuild": "Formal299sourcef43e943/r1-f43e943-20261024-01 archive1339201/1f5a5b0537d1233f1e61bd7418d13db105c9e679c7a9be62f5d290ef06fa7e25, manifest43b445b07819f154a0659f3cc885b5b5cf5eb59a38679c41c2c1c193737c49ce. Actual149Linuxci/nativePASS0/25.931508s,111records/payload3154d2c5685488740606e98b86814605254780c92925b5449d8fcf802fcd3876,engine9717/78218751fc6689f5064e6e92610a270e2ae19ef05a71e831cbad179b52297cc9.0DB/appstart/publicswitch.",
     "actualQFBrowser": "CLOSED: current completeChrome native2940x1690 and humanQF current image show sidebar/content reach bottom. Top automationinfobar consumes~56CSSpx;668legitimatecurrentwindow,old724notinvariant. Prior668=>recurrence derivative judgement withdrawn. Allrawmeasurements/failedprobes retained. QFNO_GUI/Cnativeclickattemptblockedbeforeinputduehuman appchange;0successfulclick/navigation. No repeateddiagnosis/windowrequest.",
     "frontendAcceptance": {
@@ -7836,7 +7835,7 @@
         "status": "SOURCE_READY_NOT_BROWSER_OR_REAL_BUSINESS"
       },
       "D1": {
-        "current": "CORE ready modules original HTTP/capability wiring",
+        "current": "CORE read11 ready source350/QB pending; consumes D3 delivered SQL primitives for normal union implementation",
         "next": "Normal document list same-snapshot LIVE+published effective HISTORY read union, original D3 fragments",
         "status": "IN_PROGRESS"
       },
@@ -7846,7 +7845,7 @@
         "status": "IN_PROGRESS"
       },
       "D3": {
-        "current": "Inventory exact2 source347 QB finite review; historical normal list read seam handed D1/F1",
+        "current": "Two original history SQL primitive exports source350 ready; original standalone guard unchanged",
         "next": "Original history fragment and qualified actual inventory measurements when published representative target",
         "status": "NO_FAKE_PUBLISH_OR_UNMEASURED_PERFORMANCE_PASS"
       }
@@ -7859,7 +7858,7 @@
       "export": "F2 original NDJSON output reader/contracts + runtime consumer; F1 original workbook async rows/single ZIP; retain complete/EOF and cancel; actual memory pending"
     },
     "v17": {
-      "status": "QB254_SOURCE_PASS_C183_ACTUAL_PUBLISHED_NATIVE_REFRESH_QB257_METADATA_ACCEPTED_ACTUAL_COMMANDS_NEXT",
+      "status": "ACTUAL_NOT_PASSED_184_STARTUP_FAILED_NO_COMMITTED_NEW_DATA_185_RECOVERY_ZERO_186_INERT_ESM_FIX",
       "files": 9,
       "consumer": "F2 in progress",
       "next": "QB finite source then C actual isolated product transaction/rollback and F2 normal UI",

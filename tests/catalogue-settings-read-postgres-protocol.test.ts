@@ -184,3 +184,23 @@ test('QB-R1 capability: management candidate count/page use the same explicit sc
     assert.equal(result.exactTotal, 1); assert.equal(result.items[0]!.id, r1Product); assert.ok(calls.filter(sql => sql.includes('product-management:candidate')).every(sql => sql.includes('deleted_at IS NULL') === enabled)); assert.equal(calls.at(-1), 'COMMIT');
   }
 });
+
+test('CORE catalogue protocol: maintained IDs constrain count/page/tree and product totals remain unknown', async () => {
+  for (const kind of ['colors', 'fits', 'categories'] as const) {
+    const native = kind === 'categories' ? categories[0]! : nativeEntry, selected = native.id as string;
+    const c = new Client([begin(), { ...count(1), inspect(values, sql) {
+      assert.match(sql, /id=ANY\(\$[12]::uuid\[\]\)/); assert.deepEqual(values.at(-1), [selected]);
+    } }, { sql: /^SELECT id/, rows: [native], inspect(values, sql) {
+      assert.match(sql, kind === 'categories' ? /id=ANY\(\$1::uuid\[\]\).*LIMIT \$2/ : /id=ANY\(\$2::uuid\[\]\).*LIMIT \$3 OFFSET \$4/);
+      assert.deepEqual(values[kind === 'categories' ? 0 : 1], [selected]);
+    } }, commit()]);
+    const r = new PostgresCatalogueSettingsReadReader({ async connect() { return c; } }, null, { profile: 'COMMITTED_CORE_SETTINGS_V14', async assertReady(actual, scope) {
+      assert.equal(actual, c); assert.equal(c.calls.length, 1); assert.equal(scope.intent.kind, kind); return [selected];
+    } });
+    const result = kind === 'categories' ? await r.readCategories(read(kind)) : kind === 'colors' ? await r.readColors(read(kind)) : await r.readFits(read(kind));
+    assert.equal(result.total, 1); if (kind === 'categories') assert.equal((result.items[0] as { productCount: unknown }).productCount, null);
+    assert.ok(c.calls.every(call => !/FROM naijue_erp\.product(?:\s|$)/.test(call.sql))); c.done();
+  }
+  const c = new Client([begin(), rollback()]), r = new PostgresCatalogueSettingsReadReader({ async connect() { return c; } }, null, { profile: 'COMMITTED_CORE_SETTINGS_V14', async assertReady() { return []; } });
+  await assert.rejects(r.readCategories(read('categories', 'ALL')), { code: 'CATALOGUE_SETTINGS_FORBIDDEN' }); c.done();
+});

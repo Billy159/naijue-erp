@@ -6,6 +6,15 @@ import type { OrganizationReadListQuery, OrganizationMaintenanceKind, Organizati
 import { organizationKind, parseOrganizationListQuery, projectOrganizationRecord } from "../../../packages/application/src/organization-maintenance-validation.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
+import type { ActorContext } from "../../../packages/application/src/ports.ts";
+export interface OrganizationCoreReadScope {
+  readonly ids: readonly string[]; readonly hallIds: readonly string[]; readonly warehouseIds: readonly string[];
+  readonly customerIds: readonly string[]; readonly staffIds: readonly string[]; readonly accountIds: readonly string[];
+}
+export interface OrganizationCoreReadCapability {
+  readonly profile: "COMMITTED_CORE_SETTINGS_V14";
+  assertReady(context: MaintenancePgContext, actor: ActorContext, kind: OrganizationMaintenanceKind): Promise<OrganizationCoreReadScope>;
+}
 const object = (fields: Readonly<Record<string, string>>) => `jsonb_build_object(${Object.entries(fields).flatMap(([key, expression]) => [`'${key}'`, expression]).join(",")})`;
 const reference = (id: string, name: string, enabled: string) => object({ id, name, enabled });
 const nativeUuid = (value: unknown): string => entityId("hall", stringValue(value));
@@ -112,7 +121,7 @@ function specification(kind: OrganizationMaintenanceKind): Specification {
     };
   }
 }
-async function page(context: MaintenancePgContext, kind: OrganizationMaintenanceKind, q: OrganizationReadListQuery, targetId: string | null): Promise<OrganizationMaintenancePage> {
+async function page(context: MaintenancePgContext, kind: OrganizationMaintenanceKind, q: OrganizationReadListQuery, targetId: string | null, scope: OrganizationCoreReadScope | null = null): Promise<OrganizationMaintenancePage> {
   organizationKind(kind); const checked = parseOrganizationListQuery(q, kind); if (targetId !== null) entityId("hall", targetId);
   const role = "role" in checked ? checked.role : undefined;
   const loginStatus = "loginStatus" in checked ? checked.loginStatus : undefined;
@@ -124,14 +133,26 @@ async function page(context: MaintenancePgContext, kind: OrganizationMaintenance
     ? "(strpos(lower(m.name),lower($1::text))>0 OR strpos(lower(COALESCE(a.login_name,'')),lower($1::text))>0)"
     : `strpos(lower(${s.display}),lower($1::text))>0`;
   const timestamp = (column: "created_at" | "updated_at") => kind === "ACCOUNT" ? `to_char(m.${column} AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"')` : "NULL::text";
+  const values: unknown[] = [q.search, q.status, q.hallId, q.pageSize, (q.page - 1) * q.pageSize, targetId, ...(role === undefined ? [] : [role]), ...(loginStatus === undefined ? [] : [loginStatus]), ...(paymentMethodId === undefined ? [] : [paymentMethodId])];
+  let corePredicate = "";
+  if (scope !== null) {
+    const member = (column: string, ids: readonly string[]) => { values.push(ids); return `${column}=ANY($${values.length}::uuid[])`; };
+    const root = member("m.id", scope.ids);
+    // Joined reference data follows the same birth scope; it cannot expose staged references.
+    const references = kind === "HALL" ? `(m.default_customer_id IS NULL OR ${member("m.default_customer_id", scope.customerIds)}) AND (m.default_sales_warehouse_id IS NULL OR ${member("m.default_sales_warehouse_id", scope.warehouseIds)})`
+      : kind === "WAREHOUSE" ? member("m.hall_id", scope.hallIds)
+      : kind === "STAFF" ? `(m.hall_id IS NULL OR ${member("m.hall_id", scope.hallIds)}) AND (a.id IS NULL OR ${member("a.id", scope.accountIds)})`
+      : kind === "ACCOUNT" ? `${member("m.staff_id", scope.staffIds)} AND (s.hall_id IS NULL OR ${member("s.hall_id", scope.hallIds)})` : "false";
+    corePredicate = ` AND ${root} AND ${references}`;
+  }
   // Explicit column whitelist: account reads never select password_hash or tokens.
   const rows = (await context.client.query(`WITH matched AS (SELECT ${s.columns},${s.display} AS display_name,
     ${timestamp("created_at")} AS created_at_value,${timestamp("updated_at")} AS updated_at_value FROM ${s.from}
     WHERE ${search} AND ($2::text='all' OR ($2='normal' AND ${s.normal}) OR ($2='disabled' AND ${s.disabled}))
-    AND ($3::uuid IS NULL OR ${s.hallFilter}) AND ($6::uuid IS NULL OR m.id=$6::uuid)${role === undefined ? "" : " AND ($7::text='' OR m.role=$7::text)"}${loginStatus === undefined ? "" : ` AND ($${loginParameter}::text='' OR a.login_enabled IS TRUE)`}${paymentMethodId === undefined ? "" : " AND ($7::uuid IS NULL OR m.payment_method_id=$7::uuid)"}),
+    AND ($3::uuid IS NULL OR ${s.hallFilter}) AND ($6::uuid IS NULL OR m.id=$6::uuid)${role === undefined ? "" : " AND ($7::text='' OR m.role=$7::text)"}${loginStatus === undefined ? "" : ` AND ($${loginParameter}::text='' OR a.login_enabled IS TRUE)`}${paymentMethodId === undefined ? "" : " AND ($7::uuid IS NULL OR m.payment_method_id=$7::uuid)"}${corePredicate}),
     page AS (SELECT * FROM matched ORDER BY display_name COLLATE "C",id LIMIT $4 OFFSET $5)
     SELECT (SELECT count(*)::text FROM matched) AS total,COALESCE((SELECT jsonb_agg(${s.record} ORDER BY m.display_name COLLATE "C",m.id) FROM page m),'[]'::jsonb) AS items`,
-  [q.search, q.status, q.hallId, q.pageSize, (q.page - 1) * q.pageSize, targetId, ...(role === undefined ? [] : [role]), ...(loginStatus === undefined ? [] : [loginStatus]), ...(paymentMethodId === undefined ? [] : [paymentMethodId])])).rows;
+  values)).rows;
   requireDomain(rows.length === 1 && typeof rows[0]!.total === "string" && /^(?:0|[1-9]\d*)$/.test(rows[0]!.total)
     && BigInt(rows[0]!.total) <= BigInt(Number.MAX_SAFE_INTEGER) && Array.isArray(rows[0]!.items), "INVALID_DATABASE_VALUE", "Invalid native settings page");
   const total = Number(rows[0]!.total), items = (rows[0]!.items as unknown[]).map(row => projectOrganizationRecord(row, kind));
@@ -140,15 +161,36 @@ async function page(context: MaintenancePgContext, kind: OrganizationMaintenance
 }
 /** Current D1 identity/role gate plus one target/count/page SQL; no pool, writer or fake timestamps. */
 export class PostgresOrganizationMaintenanceReadUnitOfWork implements OrganizationReadUnitOfWork {
+  private readonly coreRead: OrganizationCoreReadCapability | null;
   private readonly driver: MaintenancePgUnitOfWork;
-  constructor(driver: MaintenancePgUnitOfWork) { if (typeof driver?.transaction !== "function") throw new TypeError("Settings reads require the explicit D1 transaction driver"); this.driver = driver; }
+  constructor(driver: MaintenancePgUnitOfWork, coreRead: OrganizationCoreReadCapability | null = null) { this.coreRead = coreRead; if (typeof driver?.transaction !== "function") throw new TypeError("Settings reads require the explicit D1 transaction driver"); this.driver = driver; }
   transaction<T>(work: (tx: OrganizationReadTransaction) => Promise<T>): Promise<T> {
-    return this.driver.transaction(async context => work({ evidence: context.evidence,
-      readList: (kind, query) => page(context, kind, query, null),
-      async readDetail(kind, id): Promise<OrganizationMaintenanceRecord | null> {
-        const result = await page(context, kind, { search: "", status: "all", hallId: null, page: 1, pageSize: 20 }, id);
-        requireDomain(result.total <= 1, "INVALID_DATABASE_VALUE", "Settings identity is not unique"); return result.items[0] ?? null;
-      }
-    }));
+    return this.driver.transaction(async context => {
+      let allowed: { kind: OrganizationMaintenanceKind; scope: OrganizationCoreReadScope } | null = null;
+      const original = context.evidence, coreRead = this.coreRead;
+      const evidence = coreRead === null ? original : {
+        async assertAllowed(actor: ActorContext, kind: Parameters<typeof original.assertAllowed>[1], action: string) {
+          allowed = null;
+          await original.assertAllowed(actor, kind, action);
+          requireDomain(["HALL", "WAREHOUSE", "STAFF", "ACCOUNT"].includes(kind) && (action === "LIST" || action === "DETAIL"), "FORBIDDEN", "CORE directory read family required");
+          const selected = kind as OrganizationMaintenanceKind;
+          allowed = { kind: selected, scope: await coreRead.assertReady(context, actor, selected) };
+        },
+        getReceipt: original.getReceipt.bind(original), complete: original.complete.bind(original),
+        ...(original.prepare === undefined ? {} : { prepare: original.prepare.bind(original) })
+      };
+      const scopeFor = (kind: OrganizationMaintenanceKind) => {
+        if (coreRead === null) return null;
+        requireDomain(allowed !== null && allowed.kind === kind, "FORBIDDEN", "Original CORE directory authorization required");
+        return allowed!.scope;
+      };
+      return work({ evidence,
+        readList: (kind, query) => page(context, kind, query, null, scopeFor(kind)),
+        async readDetail(kind, id): Promise<OrganizationMaintenanceRecord | null> {
+          const result = await page(context, kind, { search: "", status: "all", hallId: null, page: 1, pageSize: 20 }, id, scopeFor(kind));
+          requireDomain(result.total <= 1, "INVALID_DATABASE_VALUE", "Settings identity is not unique"); return result.items[0] ?? null;
+        }
+      });
+    });
   }
 }

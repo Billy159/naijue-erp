@@ -81,3 +81,25 @@ test("historical exact2: proof/missing-function failures propagate and malformed
     { profile: "historical-customer-exact2-v26", assertVerified() { throw Error("Wrong database target"); } }]) assert.throws(() => new PostgresPartyReadReader(pool, proof as never));
   assert.equal(invoked, false);
 });
+
+test('CORE customer protocol: member scope precedes count/page/detail on the original RR client; failure rolls back before business SQL', async () => {
+  const calls: { sql: string; values: unknown[] }[] = [], client = { async query(sql: string, values: unknown[] = []) {
+    calls.push({ sql, values });
+    if (sql.includes('count(*)')) return { rows: [{ total: '0' }], rowCount: 1 };
+    return { rows: [], rowCount: 0 };
+  }, release() {} };
+  let denied = false, checks = 0;
+  const reader = new PostgresPartyReadReader({ async connect() { return client; } }, null, { profile: 'COMMITTED_CORE_SETTINGS_V14', async assertReady(actual, scope) {
+    assert.equal(actual, client); assert.equal(calls.at(-1)!.sql, 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
+    assert.equal(scope.intent.kind, 'CUSTOMER'); checks++; if (denied) throw Error('UNCOMMITTED_SCOPE'); return [ids.customer];
+  } });
+  await reader.search(read()); await reader.detail(read('DETAIL')); assert.equal(checks, 2);
+  const count = calls.find(c => c.sql.includes('count(*)'))!, page = calls.find(c => c.sql.startsWith('SELECT id'))!;
+  assert.match(count.sql, /AND id=ANY\(\$3::uuid\[\]\)/); assert.deepEqual(count.values[2], [ids.customer]);
+  assert.match(page.sql, /id=ANY\(\$3::uuid\[\]\).*LIMIT \$4 OFFSET \$5/); assert.deepEqual(page.values.slice(2), [[ids.customer], 20, 20]);
+  const detail = calls.filter(c => c.sql.startsWith('SELECT id')).at(-1)!;
+  assert.match(detail.sql, /WHERE id=\$1 AND id=ANY\(\$2::uuid\[\]\)/); assert.deepEqual(detail.values, [ids.customer, [ids.customer]]);
+  const before = calls.filter(c => c.sql.startsWith('SELECT')).length; denied = true;
+  await assert.rejects(reader.search(read()), /UNCOMMITTED_SCOPE/); assert.equal(calls.at(-1)!.sql, 'ROLLBACK');
+  assert.equal(calls.filter(c => c.sql.startsWith('SELECT')).length, before);
+});

@@ -8,6 +8,7 @@ import { assertNoQuery } from "./input.ts";
 export interface OrganizationMaintenanceReadHttpOptions {
   readonly authenticate: (input: ProductQueryAuthenticationInput) => Promise<ActorContext | null>;
   readonly unitOfWork: OrganizationReadUnitOfWork;
+  readonly kinds?: readonly OrganizationMaintenanceKind[];
 }
 export interface OrganizationMaintenanceHttpOptions {
   readonly authenticate: (input: ProductQueryAuthenticationInput) => Promise<ActorContext | null>;
@@ -55,6 +56,8 @@ export function createOrganizationMaintenanceReadHttpPlugin(options: Organizatio
   const families: readonly (readonly [string, OrganizationMaintenanceKind])[] = [
     ["/organization/halls", "HALL"], ["/organization/warehouses", "WAREHOUSE"], ["/staff", "STAFF"], ["/accounts", "ACCOUNT"], ["/payment/methods", "PAYMENT_METHOD"], ["/payment/accounts", "PAYMENT_ACCOUNT"]
   ];
+  if (options.kinds !== undefined && (!Array.isArray(options.kinds) || options.kinds.length === 0 || new Set(options.kinds).size !== options.kinds.length || options.kinds.some(k => !families.some(([, kind]) => kind === k)))) throw TypeError("Explicit native organization read families required");
+  const selected = families.filter(([, kind]) => options.kinds === undefined || options.kinds.includes(kind));
   return async app => {
     const actors = new WeakMap<object, ActorContext>();
     app.addHook("onRequest", async (request, reply) => {
@@ -76,7 +79,7 @@ export function createOrganizationMaintenanceReadHttpPlugin(options: Organizatio
       if (code === "FST_ERR_CTP_INVALID_MEDIA_TYPE") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });
       return reply.code(500).send({ error: { code: "INTERNAL_ERROR", message: "Settings could not be read" } });
     });
-    for (const [path, kind] of families) for (const operation of ["list", "detail"] as const) {
+    for (const [path, kind] of selected) for (const operation of ["list", "detail"] as const) {
       app.post(`${path}/${operation === "detail" ? "detail/" : ""}query`, { bodyLimit: 8192 }, async (request, reply) => {
         assertNoQuery(request.query);
         if (request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use application/json" } });

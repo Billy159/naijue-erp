@@ -32,10 +32,11 @@ const published = `b.mapping_version='V2_HISTORY_NULLABLE_1' AND b.status='IMPOR
    AND r.target_type='IMPORT' AND r.target_id=b.id AND r.action='IMPORT_PUBLISH' AND r.status='COMMITTED'
    AND r.result_data->>'status'='IMPORTED' AND r.result_data->>'batchId'=b.id::text
    AND r.result_data->>'sequence'=b.checkpoint->>'sequence' AND r.result_data->>'cursor'=b.checkpoint->>'cursor')`;
+const manifestJoin = 'JOIN naijue_erp.import_history_closure_manifest m ON m.batch_id=b.id';
 function from(kind: ImportedHistoryKind, effective = false): string {
   const target = kind === 'sales' ? 'sales_header_id' : 'transfer_header_id', documentKind = kind === 'sales' ? 'SALES' : 'TRANSFER';
   return `naijue_erp.${tables[kind]} h JOIN naijue_erp.import_batch b ON b.id=h.batch_id
-   JOIN naijue_erp.import_history_closure_manifest m ON m.batch_id=b.id
+   ${manifestJoin}
    JOIN naijue_erp.import_history_document_manifest d ON d.batch_id=h.batch_id AND d.${target}=h.id AND d.document_kind='${documentKind}'${effective ? `
    LEFT JOIN naijue_erp.history_${kind === 'sales' ? 'sales' : 'transfer'}_effective e ON e.header_id=h.id
    LEFT JOIN naijue_erp.history_revision er ON er.id=e.revision_id
@@ -57,6 +58,17 @@ function count(rows: readonly Record<string, unknown>[]): string {
   return rows[0]!.total as string;
 }
 const dateSql = (column: string, instant = false): string => `to_char(${column}${instant ? " AT TIME ZONE 'UTC'" : ''},'YYYY-MM-DD"T"HH24:MI:SS.US${instant ? '"Z"' : ''}')`;
+function headerValidity(kind: ImportedHistoryKind): string {
+  const responsible = `(er.after_facts->>'responsibleStaffId')::uuid`;
+  return `(e.header_id IS NULL OR (${revisionPredicate(kind, 'er', 'h.id')} AND er.to_version=e.version AND e.version>h.version
+     AND er.after_facts->>'kind'='${kind}' AND er.after_facts->>'documentId'=h.id::text
+     AND er.after_facts->>'importBatchId'=h.batch_id::text AND er.after_facts->>'version'=e.version::text
+     AND er.after_facts->>'sourceStatus'=h.source_status
+     AND (${responsible} IS NULL OR responsible_staff.id IS NOT NULL)
+     AND (h.source_status='DRAFT' OR (${responsible} IS NULL
+       AND ${headColumn('business_date', true)} IS NOT DISTINCT FROM h.business_date
+       ${kind === 'transfers' ? `AND ${headColumn('from_warehouse_id', true)} IS NOT DISTINCT FROM h.from_warehouse_id AND ${headColumn('to_warehouse_id', true)} IS NOT DISTINCT FROM h.to_warehouse_id` : ''}))))`;
+}
 function headerColumns(kind: ImportedHistoryKind, effective = false): string {
   const amounts = ['gross_amount', 'order_discount', 'net_due'].map(name => effective ? `coalesce(e.${name},h.${name})::text ${name}` : `h.${name}::text`).join(',');
   const responsible = effective ? `(er.after_facts->>'responsibleStaffId')::uuid` : 'NULL::uuid';
@@ -69,15 +81,77 @@ function headerColumns(kind: ImportedHistoryKind, effective = false): string {
    (SELECT e.native_staff_id FROM naijue_erp.import_header_native_reference e WHERE e.batch_id=h.batch_id AND e.entity_type='STAFF' AND e.source_key=h.approved_by_source_key) approved_by_staff_id,
    ${['created', 'updated', 'approved'].flatMap(k => [`${dateSql(`h.${k}_local_at`)} ${k}_local_at`, `${dateSql(`h.${k}_instant`, true)} ${k}_instant`]).join(',')},
    ${kind === 'sales' ? `h.business_type,h.hall_id,h.customer_id,h.warehouse_id,h.salesperson_id,${amounts}` : warehouseColumns}${effective ? `,
-   (e.header_id IS NULL OR (${revisionPredicate(kind, 'er', 'h.id')} AND er.to_version=e.version AND e.version>h.version
-     AND er.after_facts->>'kind'='${kind}' AND er.after_facts->>'documentId'=h.id::text
-     AND er.after_facts->>'importBatchId'=h.batch_id::text AND er.after_facts->>'version'=e.version::text
-     AND er.after_facts->>'sourceStatus'=h.source_status
-     AND (${responsible} IS NULL OR responsible_staff.id IS NOT NULL)
-     AND (h.source_status='DRAFT' OR (${responsible} IS NULL
-       AND ${headColumn('business_date', true)} IS NOT DISTINCT FROM h.business_date
-       ${kind === 'transfers' ? `AND ${headColumn('from_warehouse_id', true)} IS NOT DISTINCT FROM h.from_warehouse_id AND ${headColumn('to_warehouse_id', true)} IS NOT DISTINCT FROM h.to_warehouse_id` : ''})))) AS effective_valid` : ''}`;
+   ${headerValidity(kind)} AS effective_valid` : ''}`;
 }
+function lineEffectiveJoins(kind: ImportedHistoryKind): string {
+  return `LEFT JOIN naijue_erp.history_${kind === 'sales' ? 'sales' : 'transfer'}_line_effective le ON le.line_id=l.id
+        LEFT JOIN naijue_erp.history_revision lr ON lr.id=le.revision_id`;
+}
+function lineValidity(kind: ImportedHistoryKind, version: string): string {
+  return `(le.line_id IS NULL OR (${revisionPredicate(kind, 'lr', 'l.header_id')} AND lr.to_version<=${version}))`;
+}
+function effectiveLineColumns(kind: ImportedHistoryKind, version: string): string {
+  return `l.id,l.line_no,l.sku_id,coalesce(le.quantity,l.quantity)::text quantity,
+        l.product_code_snapshot,l.product_name_snapshot,l.color_name_snapshot,l.fit_name_snapshot,l.size_name_snapshot,l.barcode_snapshot${kind === 'sales' ? `,
+        l.reference_price::text,coalesce(le.deal_price,l.deal_price)::text deal_price,coalesce(le.line_amount,l.line_amount)::text line_amount,
+        (CASE WHEN le.line_id IS NULL THEN l.allocated_discount ELSE le.allocated_discount END)::text allocated_discount,
+        l.is_gift,l.pricing_method_source,l.discount_tenths,l.ordinary_zero_confirmed` : ''},
+        ${lineValidity(kind, version)} AS effective_valid`;
+}
+
+export interface ImportedHistoryReadSql {
+  /** Append at approvalParameterIndex; all aliases below are fixed trusted SQL, not request input. */
+  readonly values: readonly [typeof COMPLETE_SCOPE_DECISION];
+  readonly publicationFrom: string; readonly headerFrom: string; readonly publishedPredicate: string; readonly headerColumns: string;
+  readonly headerValidityPredicate: string; readonly versionExpression: string; readonly baselineEffectExpression: string;
+  readonly businessDateExpression: string; readonly fromWarehouseIdExpression: string; readonly toWarehouseIdExpression: string;
+  readonly lineTable: string; readonly lineEffectiveJoins: string; readonly lineColumns: string; readonly lineValidityPredicate: string;
+  readonly sourceWarehouseBindingsPredicate: string; readonly originalCreatedHallPredicate: string;
+}
+/** Inert SQL fragments, NOT a grant, snapshot, schema proof or query executor.
+ * Caller owns the original RR client and must prove HISTORY_READ, publication,
+ * effective validity and its explicit source-specific role scope before paging.
+ * Fixed aliases: header h,b,m,d,e,er,responsible_staff; line l,le,lr.
+ * No new transfer HALL_IDS authority is issued by these source-fact predicates. */
+export function importedHistoryReadSql(kind: ImportedHistoryKind, approvalParameterIndex = 1): ImportedHistoryReadSql {
+  requireDomain(kind === 'sales' || kind === 'transfers', 'IMPORTED_HISTORY_INVALID_QUERY', 'Exact historical kind required');
+  requireDomain(Number.isSafeInteger(approvalParameterIndex) && approvalParameterIndex > 0, 'IMPORTED_HISTORY_INVALID_QUERY', 'Positive approval parameter position required');
+  const version = 'coalesce(e.version,h.version)';
+  const warehouseFields = kind === 'sales' ? [['仓库来源编号', 'warehouse_id']] : [['调出仓来源编号', 'from_warehouse_id'], ['调入仓来源编号', 'to_warehouse_id']];
+  const sourceWarehouseBindingsPredicate = `EXISTS (SELECT 1 FROM naijue_erp.import_source_row hs_read
+    WHERE hs_read.id=h.source_row_id AND hs_read.batch_id=h.batch_id AND hs_read.entity_type='${kind === 'sales' ? 'SALES_HEADER' : 'TRANSFER_HEADER'}'
+      AND ${warehouseFields.map(([field, column]) => `EXISTS (SELECT 1 FROM naijue_erp.import_record wr_read
+        JOIN naijue_erp.warehouse wh_read ON wh_read.id=wr_read.target_id
+        WHERE wr_read.import_batch_id=h.batch_id AND wr_read.status='IMPORTED' AND wr_read.target_type='WAREHOUSE'
+          AND wr_read.source_entity_type='WAREHOUSE' AND wr_read.source_key=hs_read.normalized_fields->>'${field}'
+          AND wr_read.target_id=h.${column})`).join(' AND ')})`;
+  const originalCreatedHallPredicate = `(h.created_hall_provenance='ORIGINAL' AND h.created_hall_id IS NOT NULL
+    AND EXISTS (SELECT 1 FROM naijue_erp.import_source_row ch_source
+      JOIN naijue_erp.import_header_native_reference ch_ref ON ch_ref.batch_id=ch_source.batch_id
+        AND ch_ref.entity_type='HALL' AND ch_ref.source_key=ch_source.normalized_fields->>'原创建厅编号'
+        AND ch_ref.native_hall_id=h.created_hall_id
+      WHERE ch_source.id=h.source_row_id AND ch_source.batch_id=h.batch_id AND ch_source.entity_type='${kind === 'sales' ? 'SALES_HEADER' : 'TRANSFER_HEADER'}'
+        AND ch_source.field_provenance->'fields'->'created_hall_id'->>'origin'='ORIGINAL'
+        AND ch_source.field_provenance->'fields'->'created_hall_id'->>'parsed'=h.created_hall_id::text))`;
+  return Object.freeze({ values: Object.freeze([COMPLETE_SCOPE_DECISION] as const), publicationFrom: `naijue_erp.import_batch b ${manifestJoin}`, headerFrom: from(kind, true),
+    publishedPredicate: published.replace('$1::text', `$${approvalParameterIndex}::text`), headerColumns: headerColumns(kind, true),
+    headerValidityPredicate: headerValidity(kind), versionExpression: version,
+    baselineEffectExpression: `CASE h.source_status WHEN 'APPROVED' THEN 'INCLUDED_APPROVED' ELSE 'EXCLUDED_NOT_EFFECTIVE' END`,
+    businessDateExpression: headColumn('business_date', true), fromWarehouseIdExpression: kind === 'transfers' ? headColumn('from_warehouse_id', true) : 'h.warehouse_id',
+    toWarehouseIdExpression: kind === 'transfers' ? headColumn('to_warehouse_id', true) : 'NULL::uuid',
+    lineTable: `naijue_erp.${lineTables[kind]}`, lineEffectiveJoins: lineEffectiveJoins(kind), lineColumns: effectiveLineColumns(kind, version),
+    lineValidityPredicate: lineValidity(kind, version), sourceWarehouseBindingsPredicate, originalCreatedHallPredicate });
+}
+export interface ImportedHistoryReadScopeSql { readonly predicate: string; readonly values: readonly unknown[] }
+/** Only the EXISTING checked grant. Transfer HALL_IDS continues to reject. */
+export function importedHistoryReadScopeSql(read: ImportedHistoryScopedRead, firstParameterIndex: number): ImportedHistoryReadScopeSql {
+  const actor = checkedImportedHistoryActor(read.actor), intent = checkedImportedHistoryIntent(read.intent), grant = checkedImportedHistoryGrant(read.grant, intent, actor);
+  activeImportedHistoryRead(read.signal);
+  requireDomain(Number.isSafeInteger(firstParameterIndex) && firstParameterIndex > 0, 'IMPORTED_HISTORY_INVALID_QUERY', 'Positive scope parameter position required');
+  return grant.scope.kind === 'ALL' ? Object.freeze({ predicate: 'TRUE', values: Object.freeze([]) })
+    : Object.freeze({ predicate: `h.hall_id=ANY($${firstParameterIndex}::uuid[])`, values: Object.freeze([Object.freeze([...grant.scope.hallIds])]) });
+}
+
 function person(known: unknown, staffId: unknown): ImportedHistoryPerson {
   requireDomain(typeof known === 'boolean' && (staffId === null || typeof staffId === 'string') && (known || staffId === null), 'INVALID_DATABASE_VALUE', 'Exact historical person binding required');
   return { state: !known ? 'UNKNOWN' : staffId === null ? 'UNRESOLVED' : 'BOUND', staffId: staffId as string | null };
@@ -187,14 +261,8 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
       const lineCount = count((await query(`/* imported-history:line-count */ SELECT count(*)::text total FROM naijue_erp.${lineTable} WHERE batch_id=$1::uuid AND header_id=$2::uuid`, [document.batchId, document.documentId])).rows);
       requireDomain(Number.isSafeInteger(r.line_count) && lineCount === String(r.line_count), 'INVALID_DATABASE_VALUE', 'Historical document line closure differs');
       const lineValues = [document.batchId, document.documentId, q.linePageSize, (q.linePage - 1) * q.linePageSize];
-      const lineSql = effective ? `SELECT l.id,l.line_no,l.sku_id,coalesce(le.quantity,l.quantity)::text quantity,
-        l.product_code_snapshot,l.product_name_snapshot,l.color_name_snapshot,l.fit_name_snapshot,l.size_name_snapshot,l.barcode_snapshot${intent.kind === 'sales' ? `,
-        l.reference_price::text,coalesce(le.deal_price,l.deal_price)::text deal_price,coalesce(le.line_amount,l.line_amount)::text line_amount,
-        (CASE WHEN le.line_id IS NULL THEN l.allocated_discount ELSE le.allocated_discount END)::text allocated_discount,
-        l.is_gift,l.pricing_method_source,l.discount_tenths,l.ordinary_zero_confirmed` : ''},
-        (le.line_id IS NULL OR (${revisionPredicate(intent.kind, 'lr', 'l.header_id')} AND lr.to_version<=$5::integer)) AS effective_valid
-        FROM naijue_erp.${lineTable} l LEFT JOIN naijue_erp.history_${intent.kind === 'sales' ? 'sales' : 'transfer'}_line_effective le ON le.line_id=l.id
-        LEFT JOIN naijue_erp.history_revision lr ON lr.id=le.revision_id
+      const lineSql = effective ? `SELECT ${effectiveLineColumns(intent.kind, '$5::integer')}
+        FROM naijue_erp.${lineTable} l ${lineEffectiveJoins(intent.kind)}
         WHERE l.batch_id=$1::uuid AND l.header_id=$2::uuid ORDER BY l.line_no,l.id LIMIT $3 OFFSET $4`
         : `SELECT id,line_no,sku_id,quantity::text,product_code_snapshot,product_name_snapshot,color_name_snapshot,fit_name_snapshot,size_name_snapshot,barcode_snapshot${intent.kind === 'sales' ? ',reference_price::text,deal_price::text,line_amount::text,allocated_discount::text,is_gift,pricing_method_source,discount_tenths,ordinary_zero_confirmed' : ''} FROM naijue_erp.${lineTable} WHERE batch_id=$1::uuid AND header_id=$2::uuid ORDER BY line_no,id LIMIT $3 OFFSET $4`;
       const lineRows = (await query(`/* imported-history:line-page */ ${lineSql}`, effective ? [...lineValues, document.version] : lineValues)).rows;

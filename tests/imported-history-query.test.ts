@@ -5,7 +5,7 @@ import { DomainError } from '../packages/domain/src/errors.ts';
 import { createImportedHistoryQueryService } from '../packages/application/src/imported-history-query-service.ts';
 import { checkedImportedHistoryGrant, parseImportedHistoryListQuery, validateImportedHistoryHeader, validateImportedHistoryLine, validateImportedHistoryList } from '../packages/application/src/imported-history-query-validation.ts';
 import type { ImportedHistoryKind, ImportedHistoryReadIntent, ImportedHistoryScopedRead } from '../packages/application/src/imported-history-query-ports.ts';
-import { PostgresImportedHistoryQueryReader } from '../adapters/postgres/src/imported-history-query-reader.ts';
+import { PostgresImportedHistoryQueryReader, importedHistoryReadSql, importedHistoryReadScopeSql } from '../adapters/postgres/src/imported-history-query-reader.ts';
 import { NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from '../adapters/postgres/src/native-import-accounting-capability.ts';
 import type { PgSalesClient, PgSalesPool } from '../adapters/postgres/src/sales-unit-of-work.ts';
 import type { NativeRuntime26Capability } from '../packages/application/src/native-import-schema-contract.ts';
@@ -311,4 +311,44 @@ test('v16 history projection: old missing responsible stays null and orphan name
   assert.deepEqual(detail.document!.createdBy, header('sales').createdBy);
   const bad = { ...header('sales'), responsibleStaffId: null, responsibleName: 'Not a real responsible binding' };
   assert.throws(() => validateImportedHistoryHeader(bad, 'sales', grant(intent())), { code: 'IMPORTED_HISTORY_INVALID_RESPONSE' });
+});
+
+
+test('normal list history primitives: original publication and effective header/line fragments are inert and match the existing exact26 reader', async () => {
+  for (const kind of ['sales', 'transfers'] as const) {
+    const fragments = importedHistoryReadSql(kind, 7);
+    assert.deepEqual(fragments.values, ["COMPLETE_SCOPE;ABSENT_IS_ZERO;ALL_FILES_VERIFIED;FINAL_DELTA_VERIFIED;NO_UNRESOLVED_EXCEPTIONS"]);
+    assert.match(fragments.publicationFrom, /import_batch b JOIN naijue_erp.import_history_closure_manifest m/);
+    assert.match(fragments.publishedPredicate, /f.decision_reason=\$7::text/); assert.doesNotMatch(fragments.publishedPredicate, /\$1::text/);
+    for (const required of ["b.status='IMPORTED'", 'history_validation_passed IS TRUE', 'import_record_accounting_claim', 'operation_receipt', 'audit_change', "r.action='IMPORT_PUBLISH'", 'm.document_count=']) assert.ok(fragments.publishedPredicate.includes(required));
+    assert.match(fragments.headerValidityPredicate, /er.to_version=e.version/); assert.match(fragments.headerValidityPredicate, /stock_effect_basis='CUTOFF_BASELINE_DELTA_V1'/);
+    assert.match(fragments.lineValidityPredicate, /lr.to_version<=coalesce\(e.version,h.version\)/);
+    assert.match(fragments.baselineEffectExpression, /APPROVED.*INCLUDED_APPROVED.*EXCLUDED_NOT_EFFECTIVE/);
+    assert.doesNotMatch(Object.values(fragments).filter(v => typeof v === 'string').join(' '), /FOR UPDATE|FOR SHARE|BEGIN |\bCOMMIT\b|INSERT INTO|UPDATE naijue|assert_history_typed_closure\(/);
+    const p = effectiveProtocol(kind), reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) });
+    await reader.readDetail(scoped(intent(kind, true)));
+    assert.ok(p.calls.find(c => c.tag === 'imported-history:detail')!.sql.includes(fragments.headerColumns));
+    const line = p.calls.find(c => c.tag === 'imported-history:line-page')!.sql;
+    assert.ok(line.includes(fragments.lineColumns.replaceAll(fragments.versionExpression, '$5::integer')));
+    assert.ok(line.includes(fragments.lineEffectiveJoins)); assert.equal(p.connects(), 1); assert.deepEqual(p.releases, [undefined]);
+  }
+});
+test('normal list history primitives: original warehouse and creator-hall source facts never grant current-person hall or implicit transfer scope', () => {
+  const f = importedHistoryReadSql('transfers');
+  for (const key of ['调出仓来源编号', '调入仓来源编号']) assert.ok(f.sourceWarehouseBindingsPredicate.includes(key));
+  for (const required of ["wr_read.import_batch_id=h.batch_id", "wr_read.status='IMPORTED'", "wr_read.source_entity_type='WAREHOUSE'", 'wh_read.id=wr_read.target_id', 'wr_read.target_id=h.from_warehouse_id', 'wr_read.target_id=h.to_warehouse_id']) assert.ok(f.sourceWarehouseBindingsPredicate.includes(required));
+  assert.match(f.fromWarehouseIdExpression, /er.after_facts->>'fromWarehouseId'/); assert.match(f.toWarehouseIdExpression, /er.after_facts->>'toWarehouseId'/);
+  for (const required of ["h.created_hall_provenance='ORIGINAL'", "->>'origin'='ORIGINAL'", "->>'parsed'=h.created_hall_id::text", "ch_ref.native_hall_id=h.created_hall_id", "ch_ref.source_key=ch_source.normalized_fields->>'原创建厅编号'"]) assert.ok(f.originalCreatedHallPredicate.includes(required));
+  assert.doesNotMatch(f.originalCreatedHallPredicate, /staff|responsible|MIGRATION_DERIVED|coalesce/i);
+  const read = scoped(), salesScope = { ...read, grant: { ...read.grant, scope: { kind: 'HALL_IDS' as const, hallIds: [id(2)] } } };
+  assert.deepEqual(importedHistoryReadScopeSql(salesScope, 8), { predicate: 'h.hall_id=ANY($8::uuid[])', values: [[id(2)]] });
+  assert.deepEqual(importedHistoryReadScopeSql(read, 8), { predicate: 'TRUE', values: [] });
+  const transfer = scoped(intent('transfers'));
+  assert.throws(() => importedHistoryReadScopeSql({ ...transfer, grant: { ...transfer.grant, scope: { kind: 'HALL_IDS', hallIds: [id(2)] } } }, 8), { code: 'IMPORTED_HISTORY_FORBIDDEN' });
+  assert.throws(() => importedHistoryReadScopeSql({ ...read, grant: { ...read.grant, actorAccountId: id(99) } }, 8), { code: 'IMPORTED_HISTORY_FORBIDDEN' });
+  const cancelled = new AbortController(); cancelled.abort(); assert.throws(() => importedHistoryReadScopeSql({ ...read, signal: cancelled.signal }, 8), { code: 'IMPORTED_HISTORY_READ_ABORTED' });
+});
+test('normal list history primitives: kind and bind positions cannot become request SQL', () => {
+  for (const index of [0, -1, 1.5, NaN, Infinity, "1); DROP TABLE x;--"]) assert.throws(() => importedHistoryReadSql('sales', index as number), { code: 'IMPORTED_HISTORY_INVALID_QUERY' });
+  assert.throws(() => importedHistoryReadSql('sales; DROP TABLE x' as never), { code: 'IMPORTED_HISTORY_INVALID_QUERY' });
 });
