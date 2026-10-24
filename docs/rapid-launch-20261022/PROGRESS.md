@@ -1,3 +1,13 @@
+CURRENT341 / ACTUAL178 SOURCE AUTHORITY / PHASE1 STATE FIXTURES / 2026-10-25
+
+当前副本仍为SOURCE340/430eb7f、phase1-runtime-02-full-original-bridge，http://127.0.0.1:57896/#inventory；后台341不冒充浏览器新版本。原325文件/7构建闭包不变。QF2在两条新独占工作tab实际完成商品列表/六页签、厅仓、往来单位、员工账号的限定代表实操，都是原Demo UI；有样例数据差异、图片未证及条码弹层尺寸待可比性核清，不记整页/业务PASS。新tab Demo E8DD365505C23397FA3F5F329CC00328、副本345D521566930D671CB045311376DECA；旧5草稿保护。
+
+QF已明确原Demo35页65弹层、批准新增4项留第二阶段：B07独立账号、B08独立供应商、O-A03本人改密、O-B09独立账号维护；37/67总分母不缩。原2DRAFT调拨/0销货不足覆盖保存、审核、作废、历史/错误恢复。原F1技术Solmedium已接同一fixture任务，在chunk167暂存最小只读合成快照，不改当前运行leaf、不做假保存/审核、不碰325原源；QF2清场后C一次固定候选，QF只补缺状态。第二阶段未开始，旧重写不再作为副本正文或回退。
+
+175原native MAIN -7n暴露原capture遗漏BigInt；D3仅原hash helper+测试修341/f0a03eb，QB250源级PASS采用，旧有效编码不变。176 C产品审查请求路径误定位新目录；177编译路径注释替换使helper外部pin不配；均在DB前失败、原现场保留。178保留原341编译字节并修准确接线，实际2.372s PASS原source/产品/all11闭包及PUBLISHplan一致；databaseFactoryCalls0、issuer未调用、steps0、无DB/MAIN/PUBLISH。不要重6生成器/CORE或把preflight称导入。下一为原finiteSQL/runtime用途准入与真实FULL执行、随后D1 LIVE/HREV。真实R1/private299和正式URL未切，历史保存/正式性能未通过。
+
+原全站整页通过0/37、弹层0/67不因限定代表结果上调。GitHub上一核实b27163b；341及本段待本次推送核远端。Dot只从本段和TASKS当前字段继续，以下为保留历史。
+
 CURRENT340 / ORIGINAL FINAL UI RESTORED / ACTUAL174 PRECHECK / 2026-10-25
 
 唯一副本57896现绑定430eb7f、phase1-runtime-02-full-original-bridge。339原F1 fixture16941字节，340入口保持原REAL_DATA_MODE=true与完整冻结bridge，退出false/停桥方案；325原前端字节不变/7原构建复用。QF实际关闭多行收款finding：第一笔100.25加删第二行和离开取消均保留，T取消草稿保留，分类回最终分支；无真实8878/业务写。只是技术代表通过，整页/纯视觉/真实业务/发布仍未通过。
