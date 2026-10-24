@@ -4,9 +4,10 @@ import { createHash } from 'node:crypto';
 import { lstat, readFile } from 'node:fs/promises';
 import { isAbsolute } from 'node:path';
 import { requestHash } from '../../packages/application/src/request-hash.ts';
-import { validateCutoffImportCommand, stableImportId } from '../../packages/application/src/inventory-cutoff-import.ts';
+import { validateCutoffImportCommand, stableImportId, CORE_INITIALIZATION_COUNTS } from '../../packages/application/src/inventory-cutoff-import.ts';
 import { HISTORY_MAPPING_VERSION } from '../../packages/application/src/history-storage-contract.ts';
 import { wrapTrustedLegacyCredential } from '../../packages/authentication/src/legacy-passwords.ts';
+import { assertBootstrapAccountCommandBinding } from '../../packages/application/src/import-v3-history-header-native-reference.ts';
 import { stageNativePartyImportsOnClient } from '../../adapters/postgres/src/native-party-import.ts';
 
 const must = (ok, code) => { if (!ok) throw Object.assign(Error(code), { code }); };
@@ -53,18 +54,26 @@ export const NATIVE_BOOTSTRAP26_SQL = Object.freeze({
 
 export const openNativeImportBootstrap = options => openBootstrap(options, false);
 export const openNativeImportBootstrap26 = options => openBootstrap(options, true);
+/** Non-self-referential CORE input only. The execution review and command hash
+ * are bound afterwards; neither their bytes nor enhanced STAFF proofs enter it. */
+export function nativeCoreSourceDigest26({binding,bootstrapAt,authority,coreSourceMembers,sourceInputs}) {
+  const {bootstrap_execution_review_sha256,...sourceAuthority}=authority;
+  const parties=sourceInputs.map(input=>{const copy=structuredClone(input);delete copy.source.fieldProvenance.fields.bootstrap_accounts;return copy;}).sort((a,b)=>a.source.id.localeCompare(b.source.id));
+  return requestHash({version:'CORE_INITIALIZATION_INPUT_26_V1',batchId:binding.batchId,actorAccountId:binding.actorAccountId,fixedSourceNamespace:binding.fixedSourceNamespace,cutoffAt:binding.cutoffAt,selectionSha256:binding.selectionSha256,target:binding.target,bootstrapAt,authority:sourceAuthority,coreSourceMembers:{parties:[...coreSourceMembers.parties].sort((a,b)=>a.sourceRowId.localeCompare(b.sourceRowId)),accounts:[...coreSourceMembers.accounts].sort((a,b)=>a.id.localeCompare(b.id))},parties});
+}
+
 async function openBootstrap(options, exact26) {
   const o = own(options, ['binding', 'accountSourceFile', 'trustedAccountSourceSha256', 'accountDecisionFile', 'trustedAccountDecisionSha256', 'reviewFile', 'trustedReviewSha256', 'partySource', ...(Object.hasOwn(options ?? {}, 'identityProof') ? ['identityProof'] : []),
     ...(exact26 ? ['identityReviewFile', 'trustedIdentityReviewSha256', 'bootstrapAt'] : [])]);
   // Descriptor inspection before clone/file IO; none of these fields is inferred from the command.
-  requestHash(o.binding); const b = structuredClone(o.binding);
+  requestHash(o.binding); const b = structuredClone(o.binding), core = exact26 && b.phase === 'CORE_INITIALIZATION_26_V1';
   must(b.version === (exact26 ? 'NATIVE_IMPORT_EXECUTION_26_V1' : 'NATIVE_IMPORT_EXECUTION_19_V1') && uuid(b.batchId) && uuid(b.actorAccountId) && text(b.fixedSourceNamespace)
-    && text(b.cutoffAt) && hash(b.selectionSha256) && hash(b.authorizedPayloadHash), 'NATIVE_BOOTSTRAP_BINDING');
+    && text(b.cutoffAt) && hash(b.selectionSha256) && (core ? b.authorizedPayloadHash === null && hash(b.coreSourceDigest) : !Object.hasOwn(b,'phase') && hash(b.authorizedPayloadHash)), 'NATIVE_BOOTSTRAP_BINDING');
   own(b.target, ['database', 'role', 'serverAddress', 'serverPort', 'postmasterStartedAt']);
   must(text(b.target.database) && text(b.target.role) && text(b.target.postmasterStartedAt)
     && (b.target.serverAddress === null ? b.target.serverPort === null : text(b.target.serverAddress) && Number.isInteger(b.target.serverPort)), 'NATIVE_BOOTSTRAP_TARGET');
   const party = {};
-  for (const name of ['verify', 'bootstrapPartyClosure', 'authorizePartyChunk', ...(exact26 ? ['bindBootstrapAccounts'] : [])]) {
+  for (const name of ['verify', 'bootstrapPartyClosure', 'authorizePartyChunk', ...(exact26 ? ['bindBootstrapAccounts',...(core?['corePartyClosure']:[])] : [])]) {
     const d = Object.getOwnPropertyDescriptor(o.partySource ?? {}, name); must(d?.enumerable && Object.hasOwn(d, 'value') && typeof d.value === 'function', 'NATIVE_BOOTSTRAP_PARTY_SOURCE'); party[name] = d.value.bind(o.partySource);
   }
   const source = await pinnedJson(o.accountSourceFile, o.trustedAccountSourceSha256), decisions = await pinnedJson(o.accountDecisionFile, o.trustedAccountDecisionSha256), review = await pinnedJson(o.reviewFile, o.trustedReviewSha256);
@@ -79,8 +88,8 @@ async function openBootstrap(options, exact26) {
   }
   must((decisions.version === 'NATIVE_ACCOUNT_IDENTITY_CANDIDATE_V1' || planVersion) && decisions.containsCredentials === false && decisions.containsLoginNames === false
     && decisions.sourceCaptureSha256 === o.trustedAccountSourceSha256 && Array.isArray(decisions.accounts) && Array.isArray(decisions.unlinked), 'NATIVE_BOOTSTRAP_ACCOUNT_DECISIONS');
-  must(review.version === (planVersion ? 'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V2' : 'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V1') && review.sourceCaptureSha256 === o.trustedAccountSourceSha256
-    && review.accountDecisionSha256 === o.trustedAccountDecisionSha256 && hash(review.stageCommandSha256)
+  must(review.version === (core ? 'C_NATIVE_ACCOUNT_CORE_BOOTSTRAP_REVIEW_V1' : planVersion ? 'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V2' : 'C_NATIVE_ACCOUNT_BOOTSTRAP_REVIEW_V1') && review.sourceCaptureSha256 === o.trustedAccountSourceSha256
+    && review.accountDecisionSha256 === o.trustedAccountDecisionSha256 && (core ? !Object.hasOwn(review,'stageCommandSha256') && text(review.sourceManifestRef) : hash(review.stageCommandSha256))
     && review.oldSourceBatchId === source.oldSourceBatchId && review.oldSourceManifestSha256 === source.oldSourceManifestSha256
     && requestHash(review.binding) === requestHash(b) && review.expectedSourceRows === source.rows.length
     && (!planVersion || review.expectedPreparedRows === decisions.accounts.length)
@@ -162,6 +171,19 @@ async function openBootstrap(options, exact26) {
     await verifyAuthorityFiles();
     must(await party.verify() === undefined, 'NATIVE_BOOTSTRAP_PARTY_AUTHORIZATION'); active();
   }
+  const authority = exact26 ? { account_capture_sha256:o.trustedAccountSourceSha256,account_decisions_sha256:o.trustedAccountDecisionSha256,identity_review_sha256:o.trustedIdentityReviewSha256,bootstrap_execution_review_sha256:o.trustedReviewSha256,source_identity_facts_sha256:identityProof.trustedFactsSha256,approved_employee_plan_sha256:identityProof.trustedApprovedPlanSha256,old_source_batch_id:source.oldSourceBatchId,old_source_manifest_sha256:source.oldSourceManifestSha256 } : undefined;
+  const accountSnapshot = account => ({id:account.nativeId,staff_id:account.staffId,login_enabled:account.loginEnabled,auth_version:1,version:1,created_at:o.bootstrapAt,updated_at:o.bootstrapAt});
+  let coreInitialization,coreCommand,stageCommandSha256=review.stageCommandSha256;
+  if(core){
+    const closure=await party.corePartyClosure(prepared.map(row=>row.staffSourceKey));
+    must(requestHash(closure.counts)===requestHash({HALL:22,WAREHOUSE:22,STAFF:49,CUSTOMER:22,SUPPLIER:0})&&closure.members.length===115&&closure.warehouseRecords.length===22,'NATIVE_BOOTSTRAP26_CORE_EXACT_SCOPE');
+    const coreSourceMembers={parties:closure.members,accounts:prepared.map(accountSnapshot).sort((a,b)=>a.id.localeCompare(b.id))};
+    must(nativeCoreSourceDigest26({binding:b,bootstrapAt:o.bootstrapAt,authority,coreSourceMembers,sourceInputs:closure.sourceInputs})===b.coreSourceDigest,'NATIVE_BOOTSTRAP26_CORE_INPUT_DIGEST');
+    coreInitialization={scopeVersion:'CORE_INITIALIZATION_26_V1',coreSourceDigest:b.coreSourceDigest,coreCounts:{...CORE_INITIALIZATION_COUNTS},coreSourceMembers,authority,target:structuredClone(b.target),bootstrapAt:o.bootstrapAt};
+    const inputs=new Map(closure.sourceInputs.map(row=>[row.source.id,row]));
+    coreCommand={action:'IMPORT_CORE_STAGE',actorAccountId:b.actorAccountId,requestKey:review.stageRequestKey,batchId:b.batchId,sourceName:b.fixedSourceNamespace,sourceManifestRef:review.sourceManifestRef,sourceHash:b.selectionSha256,cutoffAt:b.cutoffAt,mappingVersion:HISTORY_MAPPING_VERSION,coreInitialization,accountingVersion:'NATIVE_IMPORT_RECORD_ACCOUNTING_V1',expectedSequence:0,expectedCursor:0,items:closure.warehouseRecords.map(record=>{const input=inputs.get(record.sourceRowId);return {targetType:'WAREHOUSE',targetId:record.nativeId,sourceEntityType:'WAREHOUSE',sourceKey:record.sourceKey,sourceRecordHash:input.source.rowSha256,sourceFileRef:input.source.fileRef,nativeRecord:{id:record.id,reviewedAt:record.reviewedAt,decisionReason:record.decisionReason}};})};
+    validateCutoffImportCommand(coreCommand);stageCommandSha256=requestHash(coreCommand);
+  }
   if (exact26) {
     must(source.rows.length === 49 && linked.length === 45 && unlinked.length === 4 && prepared.length === 49, 'NATIVE_BOOTSTRAP26_EXACT49_REQUIRED');
     await party.bindBootstrapAccounts({ verify: verifyAuthorityFiles, async enhanceStaff(input) {
@@ -173,7 +195,7 @@ async function openBootstrap(options, exact26) {
       enhanced.source.fieldProvenance.fields.bootstrap_accounts = { origin: 'MIGRATION_DERIVED', reason: 'EXACT_SOURCE_ACCOUNT_BOOTSTRAP', evidence_ref: o.trustedReviewSha256, raw: {
         version: 'NATIVE_BOOTSTRAP_ACCOUNTS_PROOF_V1', profile: 'EXACT26',
         binding: { batch_id: b.batchId, fixed_source_namespace: b.fixedSourceNamespace, selection_sha256: b.selectionSha256,
-          authorized_payload_sha256: b.authorizedPayloadHash, stage_command_sha256: review.stageCommandSha256,
+          authorized_payload_sha256: core ? b.coreSourceDigest : b.authorizedPayloadHash, stage_command_sha256: stageCommandSha256,
           operation_id: review.operationId, actor_account_id: b.actorAccountId },
         authority: { account_capture_sha256: o.trustedAccountSourceSha256, account_decisions_sha256: o.trustedAccountDecisionSha256,
           identity_review_sha256: o.trustedIdentityReviewSha256, bootstrap_execution_review_sha256: o.trustedReviewSha256,
@@ -187,15 +209,16 @@ async function openBootstrap(options, exact26) {
           source_plan_row: mapping.identityLink?.sourcePlanRow ?? null,
           native_snapshot: { id: account.nativeId, staff_id: account.staffId, login_enabled: account.loginEnabled, auth_version: 1, version: 1, created_at: o.bootstrapAt, updated_at: o.bootstrapAt } }]
       } };
+      if(core)assertBootstrapAccountCommandBinding(enhanced,coreCommand,review.operationId,o.bootstrapAt);
       return enhanced;
     } });
   }
   async function authorizeStageSourceActor(actorAccountId, command) {
     active(); validateCutoffImportCommand(command);
-    must(command.action === 'IMPORT_STAGE' && actorAccountId === b.actorAccountId && command.actorAccountId === b.actorAccountId && command.batchId === b.batchId
+    must(command.action === (core ? 'IMPORT_CORE_STAGE' : 'IMPORT_STAGE') && actorAccountId === b.actorAccountId && command.actorAccountId === b.actorAccountId && command.batchId === b.batchId
       && command.mappingVersion === HISTORY_MAPPING_VERSION && command.sourceName === b.fixedSourceNamespace && command.sourceHash === b.selectionSha256
-      && command.cutoffAt === b.cutoffAt && command.historyMetadata?.payloadHash === b.authorizedPayloadHash
-      && requestHash(command) === review.stageCommandSha256, 'NATIVE_BOOTSTRAP_STAGE_SOURCE_AUTHORIZATION');
+      && command.cutoffAt === b.cutoffAt && (core ? requestHash(command.coreInitialization)===requestHash(coreInitialization) : command.historyMetadata?.payloadHash === b.authorizedPayloadHash)
+      && requestHash(command) === stageCommandSha256, 'NATIVE_BOOTSTRAP_STAGE_SOURCE_AUTHORIZATION');
     if (exact26) must(command.requestKey === review.stageRequestKey, 'NATIVE_BOOTSTRAP26_EXECUTION_BINDING');
     await verifySources();
   }
@@ -204,6 +227,7 @@ async function openBootstrap(options, exact26) {
       unlinkedRetained: decisions.unlinked.length, originalEmployeeUnlinked: unlinked.length, planLinkedAccounts: planVersion ? unlinked.length : 0, importerSourceAccountId: importer.sourceAccountId, importerNativeAccountId: importer.nativeId,
       credentialsExposed: false, newDatabaseWrites: 0, fullImportReady: false, ...(exact26 ? { schemaProfile: 'EXACT26', bootstrapAt: o.bootstrapAt, sharedPartySources: true } : {}) }),
     authorizeStageSourceActor,
+    ...(core ? {coreInitialization:structuredClone(coreInitialization),command:structuredClone(coreCommand)} : {}),
     ...(exact26 ? { now: () => o.bootstrapAt } : {}),
     [exact26 ? 'bootstrap26' : 'stageBootstrap']: { ...(exact26 ? { authorizeStageSourceActor } : {}), async [exact26 ? 'stageNewBatch26' : 'stageNewBatch'](client, input, runtime26) {
       active(); must(typeof client?.query === 'function' && input?.operationId === stableImportId('operation', b.actorAccountId, input.command?.requestKey), 'NATIVE_BOOTSTRAP_CONTEXT');
@@ -225,6 +249,7 @@ async function openBootstrap(options, exact26) {
       for (const row of prepared) {
         active(); const closure = await party.bootstrapPartyClosure(row.staffSourceKey); must(closure.staff.nativeId === row.staffId, 'NATIVE_BOOTSTRAP_STAFF_FACTS_CHANGED');
         must(await party.authorizePartyChunk(closure.chunk) === undefined, 'NATIVE_BOOTSTRAP_PARTY_AUTHORIZATION');
+        if(exact26)for(const member of closure.chunk.rows)if(member.entity==='STAFF')assertBootstrapAccountCommandBinding(member.input,input.command,input.operationId,input.now);
         await stageNativePartyImportsOnClient(client, closure.chunk, exact26 ? runtime26 : undefined);
         const saved = await client.query(exact26 ? NATIVE_BOOTSTRAP26_SQL.account.sql : `/* native-bootstrap:account */ INSERT INTO naijue_erp.user_account
           (id,staff_id,login_name,password_hash,login_enabled,auth_version,version,created_at,updated_at)

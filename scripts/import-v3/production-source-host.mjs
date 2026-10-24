@@ -56,33 +56,52 @@ export function requiredNativeSourceInputs26() {
 export function validateSourceHostJob26(value, at = Date.now()) {
   const c = bag(value, ['version', 'registrationId', 'deadlineUtc', 'maxSteps', 'binding', 'database', 'sources', 'providers']);
   must(c.version === 'NATIVE_IMPORT_SOURCE_HOST26_V1', 'IMPORT_SOURCE_HOST26_PROFILE');
-  const binding = bag(c.binding, ['version', 'batchId', 'actorAccountId', 'fixedSourceNamespace', 'cutoffAt', 'selectionSha256', 'authorizedPayloadHash', 'target']);
+  const core=c.binding?.phase==='CORE_INITIALIZATION_26_V1',resume=c.binding?.phase==='FULL_SOURCE_CONTINUATION_26_V1';
+  const phaseKeys=core?['phase','coreSourceDigest']:resume?['phase','coreSourceDigest','coreReceiptId']:[];
+  const binding = bag(c.binding, ['version', 'batchId', 'actorAccountId', 'fixedSourceNamespace', 'cutoffAt', 'selectionSha256', 'authorizedPayloadHash', 'target',...phaseKeys]);
   must(binding.version === 'NATIVE_IMPORT_EXECUTION_26_V1', 'IMPORT_SOURCE_HOST26_PROFILE');
+  if(core){
+    must(typeof c.registrationId==='string'&&/^[a-zA-Z0-9_.:-]{1,120}$/.test(c.registrationId),'IMPORT_SOURCE_HOST_REGISTRATION');
+    must(typeof c.deadlineUtc==='string'&&c.deadlineUtc.endsWith('Z')&&Date.parse(c.deadlineUtc)>at&&Date.parse(c.deadlineUtc)-at<=2147483647,'IMPORT_SOURCE_HOST_WINDOW');
+    must(Number.isSafeInteger(c.maxSteps)&&c.maxSteps>0&&c.maxSteps<=1000000,'IMPORT_SOURCE_HOST_LIMIT');
+    must(uuid(binding.batchId)&&uuid(binding.actorAccountId)&&/^[a-z][a-z0-9_.:-]*$/.test(binding.fixedSourceNamespace)&&hash(binding.selectionSha256)&&hash(binding.coreSourceDigest)&&binding.authorizedPayloadHash===null,'IMPORT_SOURCE_HOST_BINDING');
+    must(typeof binding.cutoffAt==='string'&&/(?:Z|[+-]\d\d:\d\d)$/.test(binding.cutoffAt)&&Number.isFinite(Date.parse(binding.cutoffAt)),'IMPORT_SOURCE_HOST_CUTOFF');
+    bag(binding.target,['database','role','serverAddress','serverPort','postmasterStartedAt']);
+    const db=bag(c.database,['host','port','database','user','tls','caFile','statementTimeoutMs']);
+    must(typeof db.host==='string'&&db.host.length>0&&Number.isInteger(db.port)&&db.port>0&&db.port<=65535&&db.database===binding.target.database&&db.user===binding.target.role&&Number.isSafeInteger(db.statementTimeoutMs)&&db.statementTimeoutMs>0&&db.statementTimeoutMs<=2147483647,'IMPORT_SOURCE_HOST_DATABASE');
+    must(db.tls==='verify-full'||db.tls==='local-transport','IMPORT_SOURCE_HOST_TLS');
+    if(db.tls==='local-transport')must((['127.0.0.1','::1'].includes(db.host)||isAbsolute(db.host))&&db.caFile===null,'IMPORT_SOURCE_HOST_TLS');else if(db.caFile!==null)filePath(db.caFile);
+    const sources=bag(c.sources,['reviewFile','trustedReviewSha256']),provider=bag(c.providers,['path','sha256']);filePath(sources.reviewFile);filePath(provider.path);must(hash(sources.trustedReviewSha256)&&hash(provider.sha256),'IMPORT_SOURCE_HOST_EXTERNAL_PIN_REQUIRED');
+    return structuredClone(c);
+  }
+  if(resume)must(hash(binding.coreSourceDigest)&&uuid(binding.coreReceiptId),'IMPORT_SOURCE_HOST_BINDING');
+  const ordinaryBinding={...binding};for(const key of phaseKeys)delete ordinaryBinding[key];
   const sourceKeys = ['base', 'v3Amendment', 'v3Approval', 'trustedApprovalSha256', 'approvedMoneyOverlaySha256', 'sourceRoot', 'spoolParent',
     'maxSpoolBytes', 'maxEvidenceSpoolBytes', 'referenceDecisionFile', 'trustedReferenceDecisionSha256', 'mappingFiles'];
   const sources = bag(c.sources, [...sourceKeys, 'reviewFile', 'trustedReviewSha256']);
   filePath(sources.reviewFile); must(hash(sources.trustedReviewSha256), 'IMPORT_SOURCE_HOST26_FULL_REFERENCE_PIN_REQUIRED');
   const ordinarySources = Object.fromEntries(sourceKeys.map(key => [key, sources[key]]));
   const common = validateSourceHostJob({ ...c, version: 'NATIVE_IMPORT_SOURCE_HOST19_V1',
-    binding: { ...binding, version: 'NATIVE_IMPORT_EXECUTION_19_V1' }, sources: ordinarySources }, at);
+    binding: { ...ordinaryBinding, version: 'NATIVE_IMPORT_EXECUTION_19_V1' }, sources: ordinarySources }, at);
   return { ...common, version: 'NATIVE_IMPORT_SOURCE_HOST26_V1',
-    binding: { ...common.binding, version: 'NATIVE_IMPORT_EXECUTION_26_V1' },
+    binding: { ...common.binding, version: 'NATIVE_IMPORT_EXECUTION_26_V1',...Object.fromEntries(phaseKeys.map(key=>[key,binding[key]])) },
     sources: { ...common.sources, reviewFile: sources.reviewFile, trustedReviewSha256: sources.trustedReviewSha256 } };
 }
 /** Captures the finite declared group set before opening executable source code.
  * Declarations alone are not verified source factories or native authority. */
-export function captureNativeSourceProvider26(module) {
+export function captureNativeSourceProvider26(module,phase) {
+  const requiredGroups=phase==='CORE_INITIALIZATION_26_V1'?['PARTIES']:HISTORY_CLOSURE_SOURCE_GROUPS;
   const own = key => { const d = Object.getOwnPropertyDescriptor(module ?? {}, key);
     must(d && Object.hasOwn(d, 'value') && d.enumerable, 'IMPORT_SOURCE_HOST26_PROVIDERS_REQUIRED'); return d.value; };
   const version = own('providerVersion'), groups = own('sourceGroups'), openSourceSession = own('openSourceSession');
   must(version === 'NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1' && typeof openSourceSession === 'function', 'IMPORT_SOURCE_HOST26_PROVIDERS_REQUIRED');
   must(Array.isArray(groups) && Object.getPrototypeOf(groups) === Array.prototype
-    && Object.getOwnPropertyDescriptor(groups, 'length')?.value === HISTORY_CLOSURE_SOURCE_GROUPS.length
-    && Reflect.ownKeys(groups).length === HISTORY_CLOSURE_SOURCE_GROUPS.length + 1, 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED');
-  const captured = HISTORY_CLOSURE_SOURCE_GROUPS.map((_, i) => { const d = Object.getOwnPropertyDescriptor(groups, String(i));
+    && Object.getOwnPropertyDescriptor(groups, 'length')?.value === requiredGroups.length
+    && Reflect.ownKeys(groups).length === requiredGroups.length + 1, 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED');
+  const captured = requiredGroups.map((_, i) => { const d = Object.getOwnPropertyDescriptor(groups, String(i));
     must(d && Object.hasOwn(d, 'value') && d.enumerable && typeof d.value === 'string', 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED'); return d.value; });
-  must(new Set(captured).size === HISTORY_CLOSURE_SOURCE_GROUPS.length
-    && [...captured].sort().join(',') === [...HISTORY_CLOSURE_SOURCE_GROUPS].sort().join(','), 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED');
+  must(new Set(captured).size === requiredGroups.length
+    && [...captured].sort().join(',') === [...requiredGroups].sort().join(','), 'IMPORT_SOURCE_HOST26_FACTORIES_REQUIRED');
   return Object.freeze({ providerVersion: version, sourceGroups: Object.freeze(captured), openSourceSession });
 }
 /** The source constructor may retain this capability, but cannot issue SQL while
@@ -258,6 +277,12 @@ export function createSourcePreflightRuntimeGate26(createPool,createIssuer,revie
  * stand in for independent preflight, real bootstrap, original evidence reader
  * or all11 concrete closure factories. Captures own functions without accessors. */
 export function captureNativeSourceSession26(value,binding) {
+  if(binding.phase==='CORE_INITIALIZATION_26_V1'){
+    const s=bag(value,['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight','bootstrap26','now'],'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
+    for(const key of ['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight','now'])must(typeof s[key]==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
+    const bootstrap=bag(s.bootstrap26,['authorizeStageSourceActor','stageNewBatch26'],'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');must(Object.values(bootstrap).every(fn=>typeof fn==='function'),'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
+    return Object.freeze({...s,bootstrap26:Object.freeze(bootstrap)});
+  }
   const s=bag(value,['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight',
     'openSources','closureScope','nativeProductSourceReader','bootstrap26',...(Object.hasOwn(value??{},'now')?['now']:[])],'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   for(const key of ['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight'])
@@ -268,11 +293,11 @@ export function captureNativeSourceSession26(value,binding) {
   historySettlementRequestHash(s.closureScope);const scope=structuredClone(s.closureScope);
   must(scope?.batchId===binding.batchId&&scope.fixedSourceNamespace===binding.fixedSourceNamespace
     &&scope.selectionSha256===binding.selectionSha256&&scope.authorizedPayloadHash===binding.authorizedPayloadHash,'IMPORT_SOURCE_HOST_CLOSURE_BINDING');
-  const bootstrap=bag(s.bootstrap26,['authorizeStageSourceActor','stageNewBatch26'],'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
-  must(Object.values(bootstrap).every(fn=>typeof fn==='function'),'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
+  const bootstrap=binding.phase==='FULL_SOURCE_CONTINUATION_26_V1'?null:bag(s.bootstrap26,['authorizeStageSourceActor','stageNewBatch26'],'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
+  must(bootstrap===null?s.bootstrap26===null:Object.values(bootstrap).every(fn=>typeof fn==='function'),'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
   const reader=s.nativeProductSourceReader,d=Object.getOwnPropertyDescriptor(reader??{},'authorize');
   must(d?.enumerable&&Object.hasOwn(d,'value')&&typeof d.value==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
-  return Object.freeze({...s,closureScope:scope,openSources:Object.freeze(factories),bootstrap26:Object.freeze(bootstrap)});
+  return Object.freeze({...s,closureScope:scope,openSources:Object.freeze(factories),bootstrap26:bootstrap===null?null:Object.freeze(bootstrap)});
 }
 /** Explicit exact26 host. No provider/source defaults, migrations, real49
  * bootstrap substitutes, raw-pool exposure or executable source authority. */
@@ -281,7 +306,7 @@ export function captureNativeSourceSession26(value,binding) {
 export function validateSourceHostRuntimeReview26(metadata,binding) {
   bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   must(metadata.version==='C_NATIVE_RUNTIME26_REVIEW_V1'&&metadata.decision==='ACCEPT_EXACT_RUNTIME26_TARGET_METADATA'
-    &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&metadata.catalog?.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V1'&&hash(metadata.catalog?.sha256)&&metadata.catalog?.patchLevel==='26_v11_document_specification_save','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
+    &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&metadata.catalog?.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V1'&&hash(metadata.catalog?.sha256)&&metadata.catalog?.patchLevel===(binding.phase?'26_v14_core_initialization':'26_v11_document_specification_save'),'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   const target=bag(metadata.target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW'),b=binding.target;
   must(target.database===b.database&&target.actingRole===b.role&&target.serverAddress===b.serverAddress&&target.serverPort===b.serverPort
     &&target.postmasterStart===b.postmasterStartedAt,'IMPORT_SOURCE_HOST26_RUNTIME_TARGET');
@@ -290,6 +315,8 @@ export function validateSourceHostRuntimeReview26(metadata,binding) {
 export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMPORT_JOB_FILE}) {
   must(signal instanceof AbortSignal&&!signal.aborted,'IMPORT_SOURCE_HOST_ABORTED');filePath(configFile);
   const bytes=await pinned(configFile,null,1048576),job=validateExecutableSourceHostJob26(JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes)));
+  const core=job.binding.phase==='CORE_INITIALIZATION_26_V1';
+  if(!core){
   const nativeBytes=await pinned(job.sources.referenceDecisionFile,job.sources.trustedReferenceDecisionSha256,8388608);
   const decision=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(nativeBytes));
   bag(decision,['schemaVersion','validatorVersion','schemaProfile','batchId','fixedSourceNamespace','selection','mappingFiles','decisions'],'IMPORT_SOURCE_HOST_NATIVE_DECISION_REQUIRED');
@@ -300,11 +327,12 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
   // All three are independently supplied metadata pins. Source/native scope is
   // still checked by the genuine source session and product authorizer below.
   await pinned(job.sources.reviewFile,job.sources.trustedReviewSha256,4194304);
+  }else await pinned(job.sources.reviewFile,job.sources.trustedReviewSha256,4194304);
   const metadata=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await pinned(job.runtime26Review.reviewFile,job.runtime26Review.trustedReviewSha256,65536)));
   validateSourceHostRuntimeReview26(metadata,job.binding);
   const independent=bag(metadata.independentReview,['path','sha256','result'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   must(independent.result==='PASS','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');await pinned(independent.path,independent.sha256,8388608);
-  await pinned(job.providers.path,job.providers.sha256,4194304);const module=captureNativeSourceProvider26(await import(pathToFileURL(job.providers.path).href));
+  await pinned(job.providers.path,job.providers.sha256,4194304);const module=captureNativeSourceProvider26(await import(pathToFileURL(job.providers.path).href),job.binding.phase);
   const cancellation=new AbortController(),combined=AbortSignal.any([signal,cancellation.signal]);
   const active=()=>must(!combined.aborted&&Date.now()<Date.parse(job.deadlineUtc),'IMPORT_SOURCE_HOST_ABORTED');
   const timer=setTimeout(()=>cancellation.abort(),Math.max(1,Date.parse(job.deadlineUtc)-Date.now()));timer.unref();
@@ -324,18 +352,18 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
     const closeDescriptor=Object.getOwnPropertyDescriptor(raw??{},'close');if(closeDescriptor?.enumerable&&Object.hasOwn(closeDescriptor,'value')&&typeof closeDescriptor.value==='function')sessionClose=closeDescriptor.value;
     session=captureNativeSourceSession26(raw,job.binding);
     await completed(session.preflight,structuredClone(job.binding));await completed(session.assertExecutionAllowed,structuredClone(job.binding));active();
-    product=await openNativeProductAuthorizer26({sourceReader:session.nativeProductSourceReader,referenceDecisionFile:job.sources.referenceDecisionFile,
+    if(!core){product=await openNativeProductAuthorizer26({sourceReader:session.nativeProductSourceReader,referenceDecisionFile:job.sources.referenceDecisionFile,
       trustedReferenceDecisionSha256:job.sources.trustedReferenceDecisionSha256,mappingFiles:job.sources.mappingFiles,
       reviewFile:job.sources.reviewFile,trustedReviewSha256:job.sources.trustedReviewSha256});
     closure=await openAuthorizedHistoryClosureReader26({scope:session.closureScope,openSources:session.openSources,
-      trustedSelectionSha256:job.binding.selectionSha256,trustedAuthorizedPayloadHash:job.binding.authorizedPayloadHash});
+      trustedSelectionSha256:job.binding.selectionSha256,trustedAuthorizedPayloadHash:job.binding.authorizedPayloadHash});}
     active();const runtime=await gate.activate();active();
     return {executor:{pool:runtime.pool,runtime26:runtime.runtime26,binding:structuredClone(job.binding),now:session.now??(()=>new Date().toISOString()),bootstrap26:session.bootstrap26,
       authorization:{async assertExecutionAllowed(binding){active();must(requestHash(binding)===requestHash(job.binding),'IMPORT_SOURCE_HOST_BINDING');await completed(session.assertExecutionAllowed,structuredClone(binding));active();},
         async authorizeStep(step){active();await completed(session.authorizeStep,step);if(step.kind==='PRODUCT')await product.authorize(step.payload);active();},
         async assertAllowed(actor,command){active();await completed(session.assertAllowed,actor,command);active();},
         async authorizeNativeCommand(actor,command){active();await completed(session.authorizeNativeCommand,actor,command);if(command.action==='IMPORT_PUBLISH'){const expected=await closure.expected();must(requestHash(command.historyClosure)===requestHash(expected.plan),'IMPORT_SOURCE_HOST_PUBLISH_SOURCE_MISMATCH');}active();},
-        async authorizeClosure(input){active();await closure.authorizeStage(input);active();}}},
-      source:{async *steps(){let count=0;for await(const step of session.steps()){active();must(count++<job.maxSteps,'IMPORT_SOURCE_HOST_STEP_LIMIT');yield step;}active();},close:closeSource},close};
+        async authorizeClosure(input){active();must(!core&&closure,'IMPORT_SOURCE_HOST26_CORE_ONLY');await closure.authorizeStage(input);active();}}},
+      source:{async *steps(){let count=0;for await(const step of session.steps()){active();if(core)must(step?.kind==='MAIN'&&step.payload?.action==='IMPORT_CORE_STAGE','IMPORT_SOURCE_HOST26_CORE_ONLY');must(count++<job.maxSteps,'IMPORT_SOURCE_HOST_STEP_LIMIT');yield step;}active();},close:closeSource},close};
   }catch(error){try{await close();}catch(cleanup){throw new AggregateError([error,cleanup],'Import host26 construction and cleanup failed');}throw error;}
 }

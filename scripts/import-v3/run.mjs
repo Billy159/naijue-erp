@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { open, lstat, readFile } from 'node:fs/promises';
 import { resolve, dirname, isAbsolute } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { createCutoffImportService } from '../../packages/application/src/inventory-cutoff-import.ts';
+import { createCutoffImportService, validateCutoffImportCommand } from '../../packages/application/src/inventory-cutoff-import.ts';
 import { HISTORY_MAPPING_VERSION } from '../../packages/application/src/history-storage-contract.ts';
 import { assertHistoryPublicationSchema19 } from '../../packages/application/src/history-typed-publication.ts';
 import { historySettlementRequestHash } from '../../packages/application/src/import-v3-history-settlement.ts';
@@ -25,6 +25,8 @@ import { PostgresHistoryTypedClosure19Store, PostgresHistoryTypedClosure26Store 
 
 import { checkedNativeRuntime26Capability } from '../../packages/application/src/native-import-schema-contract.ts';
 
+import { requestHash } from '../../packages/application/src/request-hash.ts';
+import { readNativeCoreWarehouseCarryForward } from '../../adapters/postgres/src/native-import-record-accounting.ts';
 const VERSION = 'NATIVE_IMPORT_EXECUTION_19_V1';
 const STAGES = Object.freeze({ PARTY: PostgresNativePartyImportStore, CATALOGUE: PostgresNativeCatalogueImportStore,
   PRODUCT: PostgresNativeProductImportStore, SKU: PostgresNativeSkuImportStore, BARCODE: PostgresNativeBarcodeImportStore,
@@ -49,10 +51,11 @@ function bag(value, keys) {
 function binding(value, expectedVersion = VERSION) {
   // Reuse the existing descriptor-only encoder, including exact approval Maps, before structuredClone.
   historySettlementRequestHash(value);
-  const b = bag(value, ['version', 'batchId', 'actorAccountId', 'fixedSourceNamespace', 'cutoffAt', 'selectionSha256', 'authorizedPayloadHash', 'target']);
+  const phase=value?.phase,core=expectedVersion===VERSION_26&&phase==='CORE_INITIALIZATION_26_V1',resume=expectedVersion===VERSION_26&&phase==='FULL_SOURCE_CONTINUATION_26_V1';
+  const b = bag(value, ['version', 'batchId', 'actorAccountId', 'fixedSourceNamespace', 'cutoffAt', 'selectionSha256', 'authorizedPayloadHash', 'target',...(core||resume?['phase','coreSourceDigest']:[]),...(resume?['coreReceiptId']:[])]);
   must(b.version === expectedVersion && uuid(b.batchId) && uuid(b.actorAccountId)
     && typeof b.fixedSourceNamespace === 'string' && /^[a-z][a-z0-9_.:-]*$/.test(b.fixedSourceNamespace)
-    && hash(b.selectionSha256) && hash(b.authorizedPayloadHash), 'IMPORT_EXECUTION_BINDING');
+    && hash(b.selectionSha256) && (core?b.authorizedPayloadHash===null:hash(b.authorizedPayloadHash)) && (!(core||resume)||hash(b.coreSourceDigest)) && (!resume||uuid(b.coreReceiptId)), 'IMPORT_EXECUTION_BINDING');
   must(typeof b.cutoffAt === 'string' && /(?:Z|[+-]\d\d:\d\d)$/.test(b.cutoffAt) && Number.isFinite(Date.parse(b.cutoffAt)), 'IMPORT_EXECUTION_CUTOFF_REQUIRED');
   const t = bag(b.target, ['database', 'role', 'serverAddress', 'serverPort', 'postmasterStartedAt']);
   must(text(t.database) && text(t.role) && text(t.postmasterStartedAt)
@@ -142,6 +145,16 @@ const STAGES_26 = Object.freeze({ PARTY: PostgresNativePartyImportStore, CATALOG
   SALES_DETAIL: PostgresHistorySalesDetailStagingStore26, SETTLEMENT: PostgresHistorySettlementStagingStore26,
   TRANSFER_LINES: PostgresV3HistoryStagingStore26 });
 function capturedStep26(original, b) {
+  const raw=bag(original,['kind','payload']);
+  if(raw.kind==='MAIN'&&['IMPORT_CORE_STAGE','IMPORT_BIND_FULL_SOURCE'].includes(raw.payload?.action)){
+    const digest=historySettlementRequestHash(raw.payload),copy=structuredClone(raw.payload);validateCutoffImportCommand(copy);
+    must(copy.batchId===b.batchId&&copy.actorAccountId===b.actorAccountId,'IMPORT_EXECUTION_MAIN_IDENTITY');
+    if(copy.action==='IMPORT_CORE_STAGE')must(b.phase==='CORE_INITIALIZATION_26_V1'&&copy.sourceName===b.fixedSourceNamespace&&copy.sourceHash===b.selectionSha256&&copy.cutoffAt===b.cutoffAt&&copy.coreInitialization.coreSourceDigest===b.coreSourceDigest&&requestHash(copy.coreInitialization.target)===requestHash(b.target),'IMPORT_EXECUTION26_CORE_BINDING');
+    else must(b.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&copy.fullBinding.authorizedPayloadHash===b.authorizedPayloadHash&&copy.fullBinding.coreSourceDigest===b.coreSourceDigest&&copy.fullBinding.coreReceiptId===b.coreReceiptId,'IMPORT_EXECUTION26_FULL_BINDING');
+    return {kind:'MAIN',payload:copy,digest};
+  }
+  must(b.phase!=='CORE_INITIALIZATION_26_V1','IMPORT_EXECUTION26_CORE_ONLY');
+  must(!(b.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&raw.kind==='MAIN'&&raw.payload?.action==='IMPORT_STAGE'),'IMPORT_EXECUTION26_NO_REBOOTSTRAP');
   const step = capturedStep(original, b), p = step.payload;
   if (['CATALOGUE','PRODUCT','SKU'].includes(step.kind)) must(p.schemaProfile === 'EXACT26', 'IMPORT_EXECUTION26_PROFILE_REQUIRED');
   if (step.kind === 'PARTY' || step.kind === 'HEADER_REFERENCE') must(Array.isArray(p.rows) && p.rows.length > 0
@@ -158,8 +171,8 @@ export function createPostgresImportExecutor26(options) {
   must(runtime26 !== undefined, 'IMPORT_EXECUTION26_RUNTIME_REQUIRED');
   const b = binding(o.binding, VERSION_26), a = bag(o.authorization, ['assertExecutionAllowed','authorizeStep','assertAllowed','authorizeNativeCommand','authorizeClosure']);
   must(Object.values(a).every(fn => typeof fn === 'function'), 'IMPORT_EXECUTION_AUTHORITY_REQUIRED');
-  const bootstrap = bag(o.bootstrap26, ['authorizeStageSourceActor','stageNewBatch26']);
-  must(Object.values(bootstrap).every(fn => typeof fn === 'function'), 'IMPORT_EXECUTION_BOOTSTRAP_REQUIRED');
+  const bootstrap = b.phase==='FULL_SOURCE_CONTINUATION_26_V1' ? null : bag(o.bootstrap26, ['authorizeStageSourceActor','stageNewBatch26']);
+  must(bootstrap===null ? o.bootstrap26===null : Object.values(bootstrap).every(fn => typeof fn === 'function'), 'IMPORT_EXECUTION_BOOTSTRAP_REQUIRED');
   const completed = async (fn, ...args) => must(await fn(...args) === undefined, 'IMPORT_EXECUTION26_AUTHORITY_RESULT');
   let targetChecked = false;
   async function checkTarget() {
@@ -183,14 +196,15 @@ export function createPostgresImportExecutor26(options) {
       throw error;
     } finally { client.release(discard); }
   }
-  const main = createCutoffImportService({ now: o.now, authorization: { assertAllowed: (actor,command) => command.action === 'IMPORT_STAGE'
+  const main = createCutoffImportService({ now: o.now, authorization: { assertAllowed: (actor,command) => (command.action === 'IMPORT_STAGE'||command.action==='IMPORT_CORE_STAGE')
     ? completed(bootstrap.authorizeStageSourceActor, actor,command) : completed(a.assertAllowed, actor,command) },
     store: new PostgresCutoffImportStore(o.pool, { runtime26, nativeAccountingAuthorization: { assertAllowed: (...args) => completed(a.authorizeNativeCommand, ...args) },
-      stageBootstrap26: { stageNewBatch26: (...args) => completed(bootstrap.stageNewBatch26, ...args) } }) });
+      coreAuthorization:{assertAllowed:(...args)=>completed(a.authorizeNativeCommand,...args)},
+      ...(bootstrap?{stageBootstrap26: { stageNewBatch26: (...args) => completed(bootstrap.stageNewBatch26, ...args) }}:{}) }) });
   return async original => {
     const step = capturedStep26(original,b);
     await completed(a.assertExecutionAllowed,structuredClone(b));
-    if (step.kind === 'MAIN' && step.payload.action === 'IMPORT_STAGE') await completed(bootstrap.authorizeStageSourceActor,b.actorAccountId,structuredClone(step.payload));
+    if (step.kind === 'MAIN' && (step.payload.action === 'IMPORT_STAGE'||step.payload.action==='IMPORT_CORE_STAGE')) await completed(bootstrap.authorizeStageSourceActor,b.actorAccountId,structuredClone(step.payload));
     const authorized = {kind:step.kind,payload:structuredClone(step.payload)};
     await completed(a.authorizeStep,authorized);
     must(historySettlementRequestHash(authorized.payload) === step.digest && authorized.kind === step.kind, 'IMPORT_EXECUTION_AUTHORIZER_MUTATION');
@@ -199,6 +213,41 @@ export function createPostgresImportExecutor26(options) {
     if (step.kind === 'CLOSURE') return new PostgresHistoryTypedClosure26Store(o.pool, { runtime26,authorizeStage: input => completed(a.authorizeClosure,input) }).stage(step.payload);
     return new STAGES_26[step.kind](o.pool,runtime26).stage(step.payload);
   };
+}
+
+/** The original full provider reads actual CORE progress before generating MAIN.
+ * This does not produce source rows/commands or turn all53 into new claims. */
+export async function readCoreImportContinuation26(options) {
+  const o=bag(options,['pool','binding','runtime26','assertExecutionAllowed','warehouses']);
+  const b=binding(o.binding,VERSION_26),runtime=checkedNativeRuntime26Capability(o.runtime26);
+  must(b.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&runtime&&typeof o.pool?.connect==='function'&&typeof o.assertExecutionAllowed==='function','IMPORT_EXECUTION26_CONTINUATION');
+  historySettlementRequestHash(o.warehouses);const warehouses=structuredClone(o.warehouses);
+  must(Array.isArray(warehouses)&&warehouses.length===53,'IMPORT_EXECUTION26_FULL_WAREHOUSES');
+  const byRecord=new Map(),targets=new Set(),sourceKeys=new Set();
+  for(const item of warehouses){
+    bag(item,['targetType','targetId','sourceEntityType','sourceKey','sourceRecordHash','sourceFileRef','nativeRecord']);
+    const record=bag(item.nativeRecord,['id','reviewedAt','decisionReason']);
+    must(item.targetType==='WAREHOUSE'&&item.sourceEntityType==='WAREHOUSE'&&uuid(item.targetId)&&text(item.sourceKey)&&hash(item.sourceRecordHash)&&text(item.sourceFileRef)&&uuid(record.id)&&text(record.decisionReason)&&Number.isFinite(Date.parse(record.reviewedAt))&&!byRecord.has(record.id)&&!targets.has(item.targetId)&&!sourceKeys.has(item.sourceKey),'IMPORT_EXECUTION26_FULL_WAREHOUSES');
+    byRecord.set(record.id,item);targets.add(item.targetId);sourceKeys.add(item.sourceKey);
+  }
+  must(await o.assertExecutionAllowed(structuredClone(b))===undefined,'IMPORT_EXECUTION26_AUTHORITY_RESULT');
+  const client=await o.pool.connect();let began=false,committing=false,discard;
+  try{
+    await runtime.assertReady(client,'IMPORT_STAGE');
+    // The original reader takes SHARE locks, so this transaction cannot be READ ONLY.
+    await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ');began=true;
+    const progress=await readNativeCoreWarehouseCarryForward(client,{batchId:b.batchId,coreReceiptId:b.coreReceiptId,coreSourceDigest:b.coreSourceDigest},runtime);
+    const claimed=new Set();
+    for(const item of progress.warehouses){const original=byRecord.get(item.nativeRecord.id);must(original&&requestHash(original)===requestHash(item)&&!claimed.has(item.nativeRecord.id),'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');claimed.add(item.nativeRecord.id);}
+    must(claimed.size===22,'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');
+    const remainingWarehouses=warehouses.filter(item=>!claimed.has(item.nativeRecord.id));must(remainingWarehouses.length===31,'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');
+    committing=true;await client.query('COMMIT');
+    return {...structuredClone(progress),remainingWarehouses};
+  }catch(error){
+    if(!began||committing)discard=error instanceof Error?error:Error('Import continuation outcome unknown');
+    else try{await client.query('ROLLBACK');}catch(rollback){discard=rollback;throw new AggregateError([error,rollback],'Import continuation read failed');}
+    throw error;
+  }finally{client.release(discard);}
 }
 
 /** One bounded sequential pass; committed DB receipts, not this journal, decide replay.
