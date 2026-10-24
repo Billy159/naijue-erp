@@ -16,6 +16,7 @@ import type { DocumentProductInventoryNavigation, DocumentProductInventoryReques
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import type { TransferRouteConfiguration } from './contracts.ts';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
+import type { CatalogueMaintenanceCommand, CatalogueMaintenanceKind } from '../product-settings/catalogue-maintenance-http-client.ts';
 
 interface ProductInventoryTrip { readonly request: ProductInventoryNavigationRequest; readonly identity: ReadScope['identity'] }
 type DocumentRoute = 'sales' | 'transfers';
@@ -35,7 +36,8 @@ function stylesheet(value: RouteStylesheet | undefined): RouteStylesheet {
 function catalogueMaintenance(value: CatalogueMaintenanceCapability | undefined, kind: CatalogueMaintenanceCapability['kind']): CatalogueMaintenanceCapability | undefined {
   if (value === undefined) return;
   if (!value || value.kind !== kind || value.client?.kind !== kind || typeof value.client.execute !== 'function' || typeof value.client.receipt !== 'function'
-    || !Array.isArray(value.allowedActions) || value.allowedActions.some(action => !['CREATE', 'EDIT', 'DELETE', 'DISABLE', 'RESTORE'].includes(action))
+    || !Array.isArray(value.allowedActions) || value.allowedActions.some(action => !['CREATE', 'EDIT', 'DELETE', 'DISABLE', 'RESTORE', ...(kind === 'CATEGORY' ? ['REORDER', 'UNDO_REORDER'] : [])].includes(action))
+    || value.categoryOrderReady !== undefined && (kind !== 'CATEGORY' || value.categoryOrderReady !== true)
     || new Set(value.allowedActions).size !== value.allowedActions.length || typeof value.newRequestKey !== 'function' || typeof value.onRecoveryRequired !== 'function') throw new TypeError('Explicit matching catalogue maintenance and recovery capabilities are required.');
   return Object.freeze({ ...value, allowedActions: Object.freeze([...value.allowedActions]) });
 }
@@ -81,6 +83,8 @@ export class ApplicationController {
   #productTrip: ProductInventoryTrip | null = null;
   #productRecoveryIdentity: ReadIdentity | null = null;
   readonly #productRecovery = new Map<string | null, ProductMaintenanceCommand>();
+  #catalogueRecoveryIdentity: ReadIdentity | null = null;
+  readonly #catalogueRecovery = new Map<CatalogueMaintenanceKind, CatalogueMaintenanceCommand>();
   #documentTrip: DocumentInventoryTrip | null = null;
   #disposed = false;
   constructor(configuration: ApplicationConfiguration) {
@@ -169,6 +173,7 @@ export class ApplicationController {
       // Required order: abort ALL old route/session scopes before the auth controller publishes a replacement principal.
       // Clear the binding first: old editor disposal can hand back its command.
       this.#productRecoveryIdentity = null; this.#productRecovery.clear();
+      this.#catalogueRecoveryIdentity = null; this.#catalogueRecovery.clear();
       replaceIdentity(change); this.#productTrip = null; this.#releaseDocumentTrip();
       this.#partySession?.workspace.dispose(); this.#partySession = null;
       this.#salesSession?.workspace.dispose(); this.#salesSession = null;
@@ -231,13 +236,30 @@ export class ApplicationController {
     const owner = this.#productRecoveryIdentity;
     return !this.#disposed && !!owner && owner.accountId === identity.accountId && owner.sessionRevision === identity.sessionRevision && owner.permissionRevision === identity.permissionRevision;
   }
+  /** Forced route disposal hands back the exact original request. Active pages
+   * keep using their existing controller's receipt/replay flow. */
+  readonly catalogueRecovery = Object.freeze({
+    retain: (kind: CatalogueMaintenanceKind, command: CatalogueMaintenanceCommand, identity: ReadIdentity): void => {
+      if (!this.#matchesCatalogueRecoveryIdentity(identity)) return;
+      const previous = this.#catalogueRecovery.get(kind);
+      if (previous && previous.requestKey !== command.requestKey) return;
+      this.#catalogueRecovery.set(kind, previous ?? snapshotQueryParameters(command));
+    },
+    read: (identity: ReadIdentity, kind: CatalogueMaintenanceKind): CatalogueMaintenanceCommand | null => this.#matchesCatalogueRecoveryIdentity(identity) ? this.#catalogueRecovery.get(kind) ?? null : null,
+    resolved: (identity: ReadIdentity, kind: CatalogueMaintenanceKind, requestKey: string): void => {
+      if (this.#matchesCatalogueRecoveryIdentity(identity) && this.#catalogueRecovery.get(kind)?.requestKey === requestKey) this.#catalogueRecovery.delete(kind);
+    },
+  });
+  #matchesCatalogueRecoveryIdentity(identity: ReadIdentity): boolean {
+    return !this.#disposed && !!this.#catalogueRecoveryIdentity && sameIdentity(this.#catalogueRecoveryIdentity, identity);
+  }
   /** Only the current bounded document round trip retains a second render owner. */
   get retainedDocument(): ApplicationSnapshot | null { return this.#documentTrip?.origin ?? null; }
   /** Store audit reads may coexist with any retained command owner. Ordinary
    * dirty inputs are separate. Product editors hand unresolved commands to
    * productRecovery when their route is detached, before store audit can open. */
   hasRetainedUnresolvedWrite(): boolean {
-    return this.#productRecovery.size > 0
+    return this.#productRecovery.size > 0 || this.#catalogueRecovery.size > 0
       || this.#partySession?.workspace.hasUnresolvedWrite() === true
       || this.#salesSession?.workspace.commands.hasUnresolvedWrite === true
       || this.#transferSession?.workspace.hasUnresolvedWrite === true
@@ -347,11 +369,24 @@ export class ApplicationController {
       }
       else if (route === 'product-categories') {
         const module = await this.#leaves.load('productCategories', scope);
-        prepared = module.prepareProductCategoriesRoute(input, kind => this.#readAccessFailure(scope, kind));
+        if (!this.#current(scope)) return false;
+        this.#catalogueRecoveryIdentity = scope.identity;
+        const category = input.configuration.productCategories, maintenance = category?.maintenance;
+        const categoryInput = category && maintenance && input.principal.role !== 'ADMIN' && input.principal.role !== 'WAREHOUSE'
+          ? { ...input, configuration: { ...input.configuration, productCategories: { ...category, maintenance: { ...maintenance, allowedActions: [] } } } } : input;
+        prepared = module.prepareProductCategoriesRoute(categoryInput, kind => this.#readAccessFailure(scope, kind));
       }
       else if (route === 'product-settings') {
         const module = await this.#leaves.load('productSettings', scope);
-        prepared = module.prepareProductSettingsRoute(input, kind => this.#readAccessFailure(scope, kind));
+        if (!this.#current(scope)) return false;
+        this.#catalogueRecoveryIdentity = scope.identity;
+        const settings = input.configuration.productSettings;
+        const settingsInput = settings?.maintenance && input.principal.role !== 'ADMIN' && input.principal.role !== 'WAREHOUSE'
+          ? { ...input, configuration: { ...input.configuration, productSettings: { ...settings, maintenance: {
+            ...(settings.maintenance.colors ? { colors: { ...settings.maintenance.colors, allowedActions: [] } } : {}),
+            ...(settings.maintenance.fits ? { fits: { ...settings.maintenance.fits, allowedActions: [] } } : {}),
+          } } } } : input;
+        prepared = module.prepareProductSettingsRoute(settingsInput, kind => this.#readAccessFailure(scope, kind));
       }
       else if (route === 'barcode-schemes') {
         const module = await this.#leaves.load('barcodeSchemes', scope);

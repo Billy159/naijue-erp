@@ -16,7 +16,10 @@ export interface ProductionHostConfiguration {
     readonly productStockOverview?: boolean;
     readonly parties?: false | { readonly readOnly: boolean };
     /** Explicit UI composition only; omitted flags stay false. Server authorizes every operation. */
-    readonly maintenance?: { readonly products?: boolean; readonly storeSettings?: boolean; readonly staffSettings?: boolean; readonly paymentSettings?: boolean; readonly accountSettings?: boolean };
+    readonly maintenance?: { readonly products?: boolean; readonly storeSettings?: boolean; readonly staffSettings?: boolean; readonly paymentSettings?: boolean; readonly accountSettings?: boolean;
+      readonly categories?: boolean; readonly colors?: boolean; readonly fits?: boolean;
+      /** Set only after the exact v15 backend profile/order capability is paired. */
+      readonly categoryOrderReady?: boolean };
     readonly productSettings?: false | { readonly colors: boolean; readonly fits: boolean; readonly groups: boolean; readonly seasons: boolean; readonly initialTab: 'colors' | 'fits' | 'groups' | 'seasons' };
     readonly storeSettings?: false | { readonly allowedTabs: readonly ('stores' | 'warehouses')[]; readonly initialTab: 'stores' | 'warehouses'; readonly allowHallDirectoryRead: boolean };
   };
@@ -62,8 +65,15 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
   }
   if (Object.hasOwn(routes, 'maintenance')) {
     const names = ['products', 'storeSettings', 'staffSettings', 'paymentSettings', 'accountSettings'] as const;
-    const maintenance = record(routes.maintenance, [], names);
+    const maintenance = record(routes.maintenance, [], [...names, 'categories', 'colors', 'fits', 'categoryOrderReady']);
     for (const name of names) if (Object.hasOwn(maintenance, name) && (typeof maintenance[name] !== 'boolean' || maintenance[name] === true && !routes[name])) return invalid();
+    for (const name of ['categories', 'colors', 'fits', 'categoryOrderReady']) if (Object.hasOwn(maintenance, name) && typeof maintenance[name] !== 'boolean') return invalid();
+    if (maintenance.categories === true && routes.productCategories !== true
+      || maintenance.categoryOrderReady === true && maintenance.categories !== true) return invalid();
+    if (maintenance.colors === true || maintenance.fits === true) {
+      const settings = record(routes.productSettings, ['colors', 'fits', 'groups', 'seasons', 'initialTab']);
+      if (maintenance.colors === true && settings.colors !== true || maintenance.fits === true && settings.fits !== true) return invalid();
+    }
     extras.maintenance = Object.freeze({ ...maintenance });
   }
   if (Object.hasOwn(routes, 'productSettings')) {

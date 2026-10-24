@@ -1,6 +1,8 @@
 import { createAccountSettingsHttpReader } from '../account-settings/http-client.ts';
 import { createSalesExistingPreparationHttpClient, createTransferExistingPreparationHttpClient } from '../current-form/existing-document-preparation.ts';
 import { createDictionaryHttpReader } from '../product-settings/size-groups/http-reader.ts';
+import { createCatalogueMaintenanceHttpClient, type CatalogueMaintenanceAction } from '../product-settings/catalogue-maintenance-http-client.ts';
+import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 import { UIButton } from '../components/standard-controls.tsx';
 import { createApplication, createDemoFrameWorkspaceRenderer, createRouteStylesheet } from '../application/index.tsx';
 import type { ApplicationConfiguration, ApplicationPresentation } from '../application/contracts.ts';
@@ -69,9 +71,22 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     || paymentView?.canPrepare && !paymentView.workspace && maintenance?.paymentSettings !== true
     || accountView?.canPrepare && !accountView.workspace && maintenance?.accountSettings !== true) throw new TypeError('Editable settings require a configured maintenance session owner.');
   const crypto = input.document.defaultView?.crypto;
-  if ((maintenance?.products || configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit || configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace || configuration.routes.accountSettings && !accountView?.workspace)
+  if ((maintenance?.products || maintenance?.categories || maintenance?.colors || maintenance?.fits || configuration.routes.salesManualCreate || configuration.routes.salesExistingEdit || configuration.routes.transferManualCreate || configuration.routes.transferExistingEdit || configuration.routes.parties || configuration.routes.storeSettings || configuration.routes.staffSettings && !staffView?.workspace || configuration.routes.paymentSettings && !paymentView?.workspace || configuration.routes.accountSettings && !accountView?.workspace)
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
   const newRequestKey = () => { if (typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is unavailable.'); return crypto.randomUUID(); };
+  const catalogue = (kind: CatalogueMaintenanceCapability['kind'], enabled: boolean | undefined): CatalogueMaintenanceCapability | undefined => {
+    if (enabled !== true) return;
+    const allowedActions: readonly CatalogueMaintenanceAction[] = kind === 'CATEGORY'
+      ? ['CREATE', 'EDIT', 'DELETE', ...(maintenance?.categoryOrderReady === true ? ['REORDER', 'UNDO_REORDER'] as const : [])]
+      : ['CREATE', 'EDIT', 'DELETE', 'DISABLE', 'RESTORE'];
+    const common = { client: createCatalogueMaintenanceHttpClient(http, kind), allowedActions, newRequestKey,
+      onRecoveryRequired: (command: Parameters<CatalogueMaintenanceCapability['onRecoveryRequired']>[0]) => {
+        const scope = controller?.getSnapshot().scope;
+        if (scope) controller?.catalogueRecovery.retain(kind, command, scope.identity);
+      } };
+    return kind === 'CATEGORY' ? { ...common, kind, ...(maintenance?.categoryOrderReady === true ? { categoryOrderReady: true as const } : {}) } : { ...common, kind };
+  };
+  const categoryMaintenance = catalogue('CATEGORY', maintenance?.categories), colorMaintenance = catalogue('COLOR', maintenance?.colors), fitMaintenance = catalogue('FIT', maintenance?.fits);
   const stylesheet = (name: keyof typeof assets.styles) => {
     const filename = assets.styles[name];
     if (!filename) throw new TypeError('An enabled page requires its emitted stylesheet.');
@@ -107,12 +122,13 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
         ...(configuration.routes.productFullPage ? { stock: productFullPageReader!.stock } : {}),
       } } : {}),
       ...(configuration.routes.productFullPage ? { fullPage: { stylesheet: stylesheet('product-full-page'), allowedTabs: ['base', 'specs', 'barcodes', 'prices', 'images', 'stock'] as const, initialTab: 'base' as const, reader: productFullPageReader! } } : {}) } } : {}),
-    ...(configuration.routes.productCategories ? { productCategories: { stylesheet: stylesheet('product-categories') } } : {}),
+    ...(configuration.routes.productCategories ? { productCategories: { stylesheet: stylesheet('product-categories'), ...(categoryMaintenance ? { maintenance: categoryMaintenance } : {}) } } : {}),
     ...(configuration.routes.barcodeSchemes ? { barcodeSchemes: { stylesheet: stylesheet('barcode-schemes') } } : {}),
     ...(configuration.routes.productSettings ? { productSettings: { stylesheet: stylesheet('product-settings'), allowedTabs: [
       ...(configuration.routes.productSettings.colors ? ['colors' as const] : []), ...(configuration.routes.productSettings.fits ? ['fits' as const] : []),
       ...(configuration.routes.productSettings.groups ? ['groups' as const] : []), ...(configuration.routes.productSettings.seasons ? ['seasons' as const] : []),
-    ], initialTab: configuration.routes.productSettings.initialTab } } : {}),
+    ], initialTab: configuration.routes.productSettings.initialTab,
+      ...(colorMaintenance || fitMaintenance ? { maintenance: { ...(colorMaintenance ? { colors: colorMaintenance } : {}), ...(fitMaintenance ? { fits: fitMaintenance } : {}) } } : {}) } } : {}),
     ...(configuration.routes.storeSettings ? { storeSettings: { stylesheet: stylesheet('store-settings'), allowedTabs: configuration.routes.storeSettings.allowedTabs,
       initialTab: configuration.routes.storeSettings.initialTab, allowHallDirectoryRead: configuration.routes.storeSettings.allowHallDirectoryRead,
       audit: { reader: createSettingsAuditHttpReader(http), allowedModules: auditModules,
