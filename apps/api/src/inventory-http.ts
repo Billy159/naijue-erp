@@ -147,7 +147,8 @@ export function createInventoryHttpPlugin(options: InventoryHttpOptions): Fastif
         // The source returns complete only after confirmed COMMIT and release.
         // Finish private bytes before exposing any success/network stream.
         await flush(); await target.sync(); active();
-        if ((await target.stat()).size !== bytes) throw Error("Complete inventory output bytes are unavailable");
+        const storedBytes = (await target.stat()).size; active();
+        if (storedBytes !== bytes) throw Error("Complete inventory output bytes are unavailable");
         stream = target.createReadStream({ start: 0, end: bytes - 1, autoClose: false, highWaterMark: 65_536 });
         stream.once("close", () => { void cleanup().catch(error => request.log.error({ err: error }, "Inventory output cleanup failed")); });
         return reply.header("X-Inventory-Read-Reference", reference).header("X-Inventory-Readiness", "ready").type("application/x-ndjson").send(stream);

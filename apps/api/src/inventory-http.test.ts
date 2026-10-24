@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { mkdtemp, realpath, readdir, rm, lstat } from "node:fs/promises";
+import { mkdtemp, realpath, readdir, rm, lstat, open, type FileHandle } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { TestContext } from "node:test";
@@ -258,4 +258,25 @@ test("inventory output spool: total deadline aborts preparation and clears its f
   let aborted = false, closed = false;
   const f = await spoolHttp(t, { ...syntheticInventoryReader(), async *readInventoryOutput(read) { try { for await (const frame of syntheticInventoryOutput(read, 2)) { if (frame.kind === "product") { await new Promise(resolve => setTimeout(resolve, 20)); aborted = read.signal.aborted; } yield frame; } } finally { closed = true; } } }, { maxDurationMs: 5 });
   const response = await f.post(); assert.equal(response.statusCode, 408); assert.equal(aborted, true); assert.equal(closed, true); assert.equal(response.body.includes('"kind":"complete"'), false); assert.deepEqual(await readdir(f.directory), []);
+});
+test("inventory output spool F01: deadline during final stat never starts a successful network stream after producer EOF", { timeout: 5000 }, async t => {
+  const directory = await realpath(await mkdtemp(join(tmpdir(), "synthetic-inventory-post-stat-"))), app = Fastify({ logger: false });
+  t.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); });
+  let signal: AbortSignal | undefined, closed = false, statEntered = false, returnedAfterAbort = false, networkStarted = false;
+  const seedPath = join(directory, "stat-prototype"), seed = await open(seedPath, "wx", 0o600);
+  const prototype = Object.getPrototypeOf(seed) as FileHandle, originalStat = prototype.stat; await seed.close(); await rm(seedPath);
+  t.mock.method(prototype, "stat", async function(this: FileHandle, ...args: Parameters<FileHandle["stat"]>) {
+    statEntered = true; assert.equal(closed, true, "The producer must have completed before final file stat"); assert.ok(signal);
+    if (!signal.aborted) await new Promise<void>(resolve => signal!.addEventListener("abort", () => resolve(), { once: true }));
+    returnedAfterAbort = signal.aborted; return Reflect.apply(originalStat, this, args);
+  }, { times: 1 });
+  app.addHook("onSend", async (_request, _reply, payload) => { if (payload && typeof payload === "object" && "pipe" in payload) networkStarted = true; return payload; });
+  app.register(createInventoryHttpPlugin({ authenticate: async () => inventoryActor, dependencies: { authorization: { async authorize() { return inventoryScope; } }, reader: {
+    ...syntheticInventoryReader(), async *readInventoryOutput(read) { signal = read.signal; try { yield* syntheticInventoryOutput(read, 2); } finally { closed = true; } }
+  } }, outputSpool: { directory, maxBytes: 536870912, maxConcurrent: 1, maxDurationMs: 100 } }));
+  await app.ready(); const response = await app.inject({ method: "POST", url: "/inventory/output/query", payload: { filter: inventoryParameters().filter } });
+  assert.equal(statEntered, true); assert.equal(returnedAfterAbort, true); assert.equal(closed, true);
+  assert.equal(response.statusCode, 408, "A deadline reached inside final stat must be checked before success");
+  assert.equal(response.json().error.code, "INVENTORY_READ_ABORTED"); assert.equal(networkStarted, false);
+  assert.equal(response.headers["x-inventory-readiness"], undefined); assert.equal(response.body.includes('"kind":"complete"'), false); assert.deepEqual(await readdir(directory), []);
 });
