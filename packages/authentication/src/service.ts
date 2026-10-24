@@ -58,8 +58,11 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
       || (account.hallId === null && account.hallEnabled !== null)) return null;
     try {
       if (typeof account.loginName !== "string" || !account.loginName) return null;
+      const hasStaffName = Object.hasOwn(account, "staffName"), staffName = account.staffName;
+      if (hasStaffName && (typeof staffName !== "string" || !staffName.trim() || staffName.includes("\0"))) return null;
       return Object.freeze({ accountId: entityId("account", account.accountId), staffId: entityId("staff", account.staffId), loginName: account.loginName,
-        role: account.role, hallId: account.hallId === null ? null : entityId("hall", account.hallId), authVersion: account.authVersion });
+        role: account.role, hallId: account.hallId === null ? null : entityId("hall", account.hallId), authVersion: account.authVersion,
+        ...(hasStaffName && typeof staffName === "string" ? { staffName } : {}) });
     } catch { return null; }
   }
   async function sessionAccount(tx: AuthenticationTransaction, hash: string): Promise<{ account: AuthenticationAccount; principal: AuthenticationPrincipal } | null> {

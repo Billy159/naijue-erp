@@ -1,0 +1,37 @@
+{
+  "atUtc": "2026-10-24T14:26:38.745741+00:00",
+  "parent": "7e4f4646e9eb5c8c6a46763d48668bdc438a613e",
+  "taskId": "D1_A02_TRUSTED_STAFF_NAME_AUTH_READ",
+  "files": [
+    {
+      "path": "adapters/postgres/src/auth-store.ts",
+      "bytes": 8651,
+      "sha256": "3ab0f2ee198f1421a66911d6bf43ab3dd0d0ea8667658c0349d72682e337c7e0",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/authentication/src/ports.ts",
+      "bytes": 3719,
+      "sha256": "db2e7af03614cb705f20f9d0a8e308d433566d41c7438b640fab48f793ca5550",
+      "owner": "D1"
+    },
+    {
+      "path": "packages/authentication/src/service.ts",
+      "bytes": 9060,
+      "sha256": "016aea3bc86463ea12f69763af0dcac21b140b6079d1f0139e966cd884c127e4",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/authentication-display-name.test.ts",
+      "bytes": 5991,
+      "sha256": "9c20dcc4095d49e33642628fb6f41fc447e66b48b75fefd3664708375b394fc4",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/A02-STAFF-NAME-READ-v1.json",
+  "ownerReceiptBytes": 3246,
+  "ownerReceiptSha256": "3312ac47b1f06fea36d32551046f2cdb47c8a2f84388f271815480f852ecb911",
+  "stage": "SOURCE_TARGETED5_AND_STRICT4ROOT_TYPES_PASS_NOT_ACTUAL_LOGIN_OR_MENU",
+  "wholePageAccepted": false,
+  "deployed": false
+}

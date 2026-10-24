@@ -2,6 +2,7 @@ import type { Pool } from "pg";
 import type { AuthenticationAccount, AuthenticationSession, AuthenticationStore, AuthenticationTransaction } from "../../../packages/authentication/src/ports.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import type { EntityId } from "../../../packages/domain/src/values.ts";
+import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { booleanValue, integerValue, nullableString, stringValue } from "./codec.ts";
 
 export interface PgAuthenticationResult { readonly rows: Record<string, unknown>[]; readonly rowCount: number | null }
@@ -15,13 +16,16 @@ const pgPoolCompatibility: PgPoolCompatibility = true;
 void pgPoolCompatibility;
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.MS"Z"')`;
 const ACCOUNT = `SELECT a.id AS account_id, a.staff_id, a.login_name, a.password_hash, a.login_enabled, a.auth_version,
-  s.role, s.employment_status, s.hall_id
+  s.role, s.employment_status, s.hall_id, s.name AS staff_name
   FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id = a.staff_id`;
 function decodeAccount(row: Record<string, unknown>): AuthenticationAccount {
+  const staffName = Object.hasOwn(row, "staff_name") ? stringValue(row.staff_name) : undefined;
+  requireDomain(staffName === undefined || staffName.trim().length > 0 && !staffName.includes("\0"), "INVALID_DATABASE_VALUE", "Trusted employee display name must be nonblank text");
   return { accountId: entityId("account", stringValue(row.account_id)), staffId: entityId("staff", stringValue(row.staff_id)),
     loginName: stringValue(row.login_name), passwordHash: stringValue(row.password_hash), loginEnabled: booleanValue(row.login_enabled),
     authVersion: integerValue(row.auth_version), role: stringValue(row.role), employmentStatus: stringValue(row.employment_status),
-    hallId: row.hall_id === null ? null : entityId("hall", stringValue(row.hall_id)), hallEnabled: row.hall_enabled === null ? null : booleanValue(row.hall_enabled) };
+    hallId: row.hall_id === null ? null : entityId("hall", stringValue(row.hall_id)), hallEnabled: row.hall_enabled === null ? null : booleanValue(row.hall_enabled),
+    ...(staffName === undefined ? {} : { staffName }) };
 }
 function decodeSession(row: Record<string, unknown>): AuthenticationSession {
   return { tokenHash: stringValue(row.token_hash), accountId: entityId("account", stringValue(row.account_id)), authVersion: integerValue(row.auth_version),

@@ -5,6 +5,8 @@ export interface AuthenticationAccount {
   readonly accountId: EntityId<"account">;
   readonly staffId: EntityId<"staff">;
   readonly loginName: string;
+  /** Optional trusted staff.name display value; never a login identifier or binding rule. */
+  readonly staffName?: string;
   readonly passwordHash: string;
   readonly loginEnabled: boolean;
   readonly authVersion: number;
@@ -62,6 +64,8 @@ export interface AuthenticationPrincipal {
   readonly accountId: EntityId<"account">;
   readonly staffId: EntityId<"staff">;
   readonly loginName: string;
+  /** Present only when trusted storage supplied the actual nonblank employee name. */
+  readonly staffName?: string;
   readonly role: string;
   readonly hallId: EntityId<"hall"> | null;
   readonly authVersion: number;
