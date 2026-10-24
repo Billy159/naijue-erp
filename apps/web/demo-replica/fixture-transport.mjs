@@ -12,6 +12,8 @@
   const logoutKey = 'demo-replica-fixture-signed-out';
   let signedIn = !new URLSearchParams(location.search).has('sample-login') && sessionStorage.getItem(logoutKey)!=='1';
   let fixture;
+  const failOnce = new URLSearchParams(location.search).get('fixture-fail-once');
+  let failureUsed = false;
   const response = (data, status = 200) => new Response(JSON.stringify(
     status === 200 ? {ok:true,data,fixture:true} : {ok:false,error:data,fixture:true}
   ), {status,headers:{'Content-Type':'application/json; charset=utf-8'}});
@@ -27,6 +29,8 @@
     // Snapshot before the original bridge replaces these collections. Never read browser storage.
     const products = copy(D.products.filter(p => /^M26\d{3}$/.test(p.id)));
     if (!products.length) throw Error('副本原商品样例缺失');
+    products[0].images=[{id:'fixture-main-image:'+products[0].id,name:'合成样例图片（非真实商品）',
+      url:'/replica-fixture-image.svg',role:'主图',colorId:''}];
     const warehouses = copy(D.warehouses.filter(w => ['main','outlet','wenzhou','reserve'].includes(w.id)));
     const customers = copy(root.SALES_MODEL.catalog.customers);
     const suppliers = copy(C.suppliers.filter(s => s.id.startsWith('demo-supplier-')));
@@ -76,7 +80,7 @@
     }
     const hallConfig = {aliases:{},stores:[{id:'hall-outlet',name:'网点营业厅',
       defaultCustomerId:'retail',defaultWarehouseId:'outlet',warehouseIds:['outlet']}]};
-    // Original normal-mode sales mock starts with no sales documents. Do not fabricate any.
+    // Preserve both original draft samples. Additional read-only view snapshots follow.
     const documents = copy(root.GOLD.documents).map(d => {
       const id = 'fixture-document:'+d.id;
       const lines = Object.entries(d.q).filter(([,n]) => Number(n)>0).map(([key,n],i) => {
@@ -85,7 +89,7 @@
         const sku = catalog.skus.find(x => x.product_id==='fixture-product:'+code &&
           x.options.COLOR.id===p.colorIds[Number(c)] && x.options.SIZE.id===p.sizeIds[Number(s)]);
         if (!sku) throw Error('原调拨样例引用未知规格：'+key);
-        return {source_id:d.id+':'+i,target_line_id:id+':'+i,sku_id:sku.id,product_id:sku.product_id,
+        return {source_id:d.id+':'+i,target_line_id:id+':'+i,target_document_id:id,sku_id:sku.id,product_id:sku.product_id,
           source_product_code:p.id,source_product_name:p.name,color_id:sku.options.COLOR.id,
           size_id:sku.options.SIZE.id,source_color_name:p.colors[Number(c)],source_size_name:p.sizes[Number(s)],
           source_quantity:String(n),unit:p.unit || '件',unit_price:null,amount:null,
@@ -98,8 +102,84 @@
           source_from_warehouse_id:d.from,source_to_warehouse_id:d.to,note:d.note || '',
           source_payload:{fixture:true}},lines,fundsRecords:[]}};
     });
+    // RP1-G01/G02: explicitly synthetic saved view states, never results of a command.
+    // The historical size is the exact original model record; no current-size inference.
+    const historical = root.PRODUCT_LEGACY_SIZES.records.find(s => s.id==='legacy:tplus:size:row:22');
+    if (!historical) throw Error('原历史尺码样例行缺失');
+    const firstSku = catalog.skus.find(s => s.product_id==='fixture-product:M26001');
+    const historicalSku = {...copy(firstSku),id:'fixture-sku:M26001:historical-row-22',
+      options:{COLOR:copy(firstSku.options.COLOR),SIZE:copy(historical)}};
+    catalog.skus.push(historicalSku);refs.sizes.push(copy(historical));
+    catalog.barcodes.push({product_id:historicalSku.product_id,sku_id:historicalSku.id,
+      barcode:'FIXTURE-HISTORY-M26001-165-S',generated:false,demo:true});
+    for (const w of warehouses) stock.push({product_id:historicalSku.product_id,product_code:'M26001',
+      variant_id:historicalSku.id,warehouse_id:w.id,color_id:historicalSku.options.COLOR.id,
+      size_id:historical.id,quantity:'0'}); // Explicit synthetic zero balances for this added sample SKU.
+    const actor = {id:'fixture-actor:phase1',name:'合成样例操作员'};
+    const snapshot = (number,type,status,body) => {
+      const id = 'fixture-document:'+number;
+      body.header.note='只读合成快照 · '+number+' · 未执行真实保存或审核';
+      body.header.source_payload={...body.header.source_payload,fixture:true,
+        fixtureSnapshot:number,v2_creator:copy(actor)};
+      for (const [i,line] of body.lines.entries()) {
+        line.source_id=number+':line:'+i;line.target_line_id=id+':line:'+i;
+        line.target_document_id=id;
+      }
+      for (const [i,fund] of body.fundsRecords.entries()) {
+        fund.source_id=number+':fund:'+i;fund.settlement_id=id+':fund:'+i;fund.target_document_id=id;
+        fund.settled_at=status==='APPROVED'?'2026-10-24T08:02:00.000Z':null;
+      }
+      const created = copy(body);created.header.note='只读合成快照 · 首次录入（未执行命令）';
+      const operations=status==='UNAUDITED'?['create','save']:['create','save',status==='APPROVED'?'approve':'delete'];
+      return {id,number,document_type:type,business_day:'2026-10-24',status,
+        version:operations.length,current_revision:operations.length,baseline_was_included:false,
+        current_effect_active:status==='APPROVED',created_at:'2026-10-24T08:00:00.000Z',
+        updated_at:'2026-10-24T08:0'+(operations.length-1)+':00.000Z',body,
+        fixture:true,history:operations.map((operation,i) => ({operation,version:i+1,revision:i+1,
+          actor_id:actor.id,actor_name:actor.name,created_at:'2026-10-24T08:0'+i+':00.000Z',
+          fixture:true,body:copy(i===0?created:body),previous_body:i===0?null:copy(i===1?created:body)}))};
+    };
+    const historicalLine = {source_id:'fixture-historical-line',target_line_id:'fixture-historical-line',
+      sku_id:historicalSku.id,product_id:historicalSku.product_id,source_product_code:'M26001',
+      source_product_name:products[0].name,color_id:historicalSku.options.COLOR.id,size_id:historical.id,
+      source_color_name:historicalSku.options.COLOR.name,source_size_name:historical.name,
+      source_quantity:'1',unit:'件',unit_price:null,amount:null,warehouse_id:'main',
+      source_lineage:{fixture:true,originalSizeRecord:historical.id}};
+    const transferBody=copy(documents[0].body);
+    transferBody.header.business_date='2026-10-24';transferBody.lines.push(copy(historicalLine));
+    documents.push(snapshot('FIXTURE-TR-AUDITED','TRANSFER','APPROVED',copy(transferBody)),
+      snapshot('FIXTURE-TR-VOIDED','TRANSFER','DELETED',copy(transferBody)));
+    const saleLine=(sku,quantity,amount) => ({sku_id:sku.id,product_id:sku.product_id,
+      source_product_code:'M26001',source_product_name:products[0].name,color_id:sku.options.COLOR.id,
+      size_id:sku.options.SIZE.id,source_color_name:sku.options.COLOR.name,source_size_name:sku.options.SIZE.name,
+      source_quantity:quantity,unit:'件',unit_price:'100.00',amount,warehouse_id:'outlet',gift:false,
+      source_lineage:{fixture:true},source_payload:{v2_reference_price_cents:10000,
+        v2_pricing_rule:'unit-price',v2_line_note:'只读合成明细'}});
+    const fund=(method,amount) => ({payment_method_id:method,fund_account_id:'fixture-account:'+method,
+      source_payment_method_name:methods.find(m => m.id===method).name,
+      source_fund_account_name:accounts.find(a => a.primary_payment_method_id===method).name,
+      amount,direction:'receipt',source_business_date:'2026-10-24',source_payload:{fixture:true}});
+    const saleBody={header:{business_date:'2026-10-24T16:00',source_party_id:'retail',
+      source_warehouse_id:'outlet',source_employee_id:'sales-1',hall_id:'hall-outlet',adjustment:'0.00',
+      source_payload:{businessType:'销售',rounding:'0.00',amountAfterRounding:'200.00'}},
+      lines:[saleLine(firstSku,'2','200.00')],fundsRecords:[fund('cash','120.00'),fund('bank','80.00')]};
+    const mixedBody=copy(saleBody);
+    mixedBody.header.source_payload={businessType:'退货/换货',rounding:'0.00',amountAfterRounding:'100.00'};
+    mixedBody.lines.push(saleLine(historicalSku,'-1','-100.00'));mixedBody.fundsRecords=[fund('cash','100.00')];
+    documents.push(snapshot('FIXTURE-SALE-DRAFT','SALE','UNAUDITED',copy(saleBody)),
+      snapshot('FIXTURE-SALE-MIXED','SALE','UNAUDITED',mixedBody),
+      snapshot('FIXTURE-SALE-AUDITED','SALE','APPROVED',copy(saleBody)),
+      snapshot('FIXTURE-SALE-VOIDED','SALE','DELETED',copy(saleBody)));
+    // One isolated DTO example, not a reconstructed ledger or posting calculation.
+    const ledgerSku=documents.find(d => d.number==='FIXTURE-TR-AUDITED').body.lines[0].sku_id;
+    const balance=Number(stock.find(s => s.variant_id===ledgerSku && s.warehouse_id==='main').quantity);
+    const ledger=[{id:'fixture-ledger:transfer-audited:1',sku:ledgerSku,warehouse:'main',
+      time:'2026-10-24T08:02:00.000Z',type:'调拨出',delta:-4,stock_delta:-4,before:balance+4,after:balance,
+      source:'FIXTURE-TR-AUDITED',source_route:'transfer/doc/FIXTURE-TR-AUDITED',
+      document_id:'fixture-document:FIXTURE-TR-AUDITED',document_type:'TRANSFER',version:3,
+      user:actor.name,phase:1,historical_only:false,fixture:true}];
     const mock = root.TRANSFER_MOCK_CORE.seed(root.GOLD.documents,products);
-    fixture = {products,refs,catalog,stock,hallConfig,documents,mock};
+    fixture = {products,refs,catalog,stock,hallConfig,documents,mock,ledger};
     return fixture;
   }
   function inventory(f, body, url) {
@@ -156,6 +236,12 @@
     }
     try {
       const f = samples();
+      const failDetail=failOnce==='transfer-detail' && path.startsWith('/runtime/document/') &&
+        f.documents.some(d => d.document_type==='TRANSFER' &&
+          [d.id,d.number].includes(decodeURIComponent(path.slice('/runtime/document/'.length))));
+      if (!failureUsed && (failDetail || failOnce==='ledger' && path==='/runtime/ledger')) {
+        failureUsed=true;return response('合成一次读取失败；本次未返回数据，请使用原入口重试',503);
+      }
       if (path==='/runtime/employees') return response([copy(admin),...copy(f.refs.employees).map(e => ({
         ...e,storeId:e.hall_id,employmentStatus:'在职',loginEnabled:false,authVersion:1,hasPassword:false}))]);
       if (path.startsWith('/reference/')) {
@@ -225,6 +311,9 @@
         const sessionId = root.TRANSFER_SERVICE.sessionId;
         const session = root.MASTER_DATA.context();
         f.mock.sessions[sessionId]=session;
+        const saved=root.LEGACY_REAL.docs.get(body.docId);
+        if (saved && !f.mock.docs.some(d => d.id===saved.id)) f.mock.docs.push(copy(saved));
+        f.mock.salesDocs=copy(root.SALES_SERVICE.docs);
         let result;
         if (body.type==='work' && body.record) {
           result = root.SALES_CORE.apply(f.mock,body,{session,catalog:root.SALES_SERVICE.catalog,
@@ -239,6 +328,20 @@
       if (path==='/runtime/recommendations') {
         if (!f.refs.halls.some(h => h.id===url.searchParams.get('hallId'))) return response('原样例中没有此营业厅',404);
         return response({accounts:[]}); // No recommendations in the original sample seed.
+      }
+      if (path==='/runtime/ledger') {
+        const query=JSON.parse(url.searchParams.get('query') || '{}'),filters=query.filters || {};
+        if (!f.catalog.skus.some(s => s.id===query.sku) || !f.refs.warehouses.some(w => w.id===query.warehouse)) {
+          return response('原样例中没有此流水规格或仓库',404);
+        }
+        const all=f.ledger.filter(row => row.sku===query.sku && row.warehouse===query.warehouse);
+        const items=all.filter(row => (!filters.start || row.time.slice(0,10)>=filters.start) &&
+          (!filters.end || row.time.slice(0,10)<=filters.end) && (!filters.type || row.type===filters.type) &&
+          (!filters.source || row.source.toLowerCase().includes(filters.source.toLowerCase())));
+        const index=(Math.max(1,Number(query.page) || 1)-1)*20;
+        const quantity=Number(f.stock.find(s => s.variant_id===query.sku && s.warehouse_id===query.warehouse).quantity);
+        return response({items:items.slice(index,index+20),total:items.length,
+          types:['库存初始化 / 期初','调拨入','调拨出','销货出库','退货入库','进货'],quantity,openingMode:null,fixture:true});
       }
       return response('第一阶段样例未实现此读取，未调用真实服务：'+method+' '+path,501);
     } catch (error) {

@@ -1,4 +1,16 @@
+CURRENT342 SOURCE STAGED / ACTUAL179 + QB251 / 2026-10-25
+
+原QF已完成SOURCE340上F4六页+条码只读详情的限定外观实操，两工作tab自然1470x724/DPR2、最终0弹层，已交回；QF2中断前B05/B06第5组结果已落盘采用，不重验。F1 chunk167已交25428/1a063642…，原列表可进入保存DRAFT/已审核/作废调拨和销货、历史独立尺码/操作记录、一次读失败恢复、流水成功/空/失败，有图为C明示合成SVG；原DOM/DTO定向通过，未浏览器/真实写入。C已合源342暂存，同一目录/57896，原325文件/7构建不改；当前需仅重启自有57896形成runtime03后交QF G01-G04，未开第二阶段。
+
+179原隔离QA最小ACL实际COMMIT/1.671s，145列对象154权限位、25函数显式EXEC，25中11项原PUBLIC已可执行，不称25项新有效能力；表ACL/role/成员/函数体/触发器/其余catalog不变、19数据与9服务不变。新canonical da42844a…；QB251独立重算/原341探针配对有限PASS，metadata仅IMPORT_STAGE/IMPORT_PRODUCT_SEASONS/IMPORT_PUBLISH，非source授权/执行通过。未调用issuer/MAIN/PUBLISH/LIVE/HREV。旧6e83不能用于新issuer。
+
+D3已找到原批准c05季节map及两真实历史客、对应两APPROVED单8行/8SKU/6商品；两强制原单都空厅，实际属于已在原v5确认单等待用户裁决的分支，不猜厅、不变状态。172合成namespace/CORE不能冒充该真实批次，不能仅替map或借115当真实等价。只挡原v5相关历史接续，副本继续；原field确认不重复提问。副本整页/业务/正式发布尚未完成，以下历史保留。
+
 CURRENT341 / ACTUAL178 SOURCE AUTHORITY / PHASE1 STATE FIXTURES / 2026-10-25
+
+CURRENT FOLLOW-UP: GitHub3d99649已实际非force推送并核远端，含341及三份接续记录。QF2在第5组B05/B06收款配置列表结果落盘后发生usageLimit/systemError，已交5组限定结果保留；未查询/重置额度、未降档。原QF一次接收未做F4六页范围，实际Luna/max参数发送，先只读确认两工作tab无草稿后继续，旧5草稿保护；F1新状态/错误/流水样例及C明确合成图片均暂存，不变更在验340。
+
+D3核实际165SQL函数发现172输入静态冲突：商品季节证明必须原批准c05 mapping，172样例为38；非空客户/历史发布仍需原两条精确历史客户及原单据来源，172合成没有。这不是新PG失败，不盲目GRANT后撞库，也不放宽守卫或造pin。D3沿原任务查已有批准私有来源的最小正确接续；178仅原source预检通过，不能当SQL发布准入。其余前端继续。
 
 当前副本仍为SOURCE340/430eb7f、phase1-runtime-02-full-original-bridge，http://127.0.0.1:57896/#inventory；后台341不冒充浏览器新版本。原325文件/7构建闭包不变。QF2在两条新独占工作tab实际完成商品列表/六页签、厅仓、往来单位、员工账号的限定代表实操，都是原Demo UI；有样例数据差异、图片未证及条码弹层尺寸待可比性核清，不记整页/业务PASS。新tab Demo E8DD365505C23397FA3F5F329CC00328、副本345D521566930D671CB045311376DECA；旧5草稿保护。
 

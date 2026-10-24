@@ -1,6 +1,6 @@
 {
   "sourceCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
-  "phase": "PHASE1_COMPLETE_ORIGINAL_BRIDGE_RUNTIME_PENDING_BROWSER",
+  "phase": "PHASE1_ORIGINAL_COPY_REPRESENTATIVE_STATE_VERIFICATION_PENDING",
   "frontendFilesCopied": 325,
   "newBackendConnected": false,
   "realDataImported": false,
@@ -12,9 +12,12 @@
     "Old sample-bootstrap injection retired; no old rewritten UI imported"
   ],
   "originalFrontendBytesChanged": false,
-  "runtimeVersion": "phase1-runtime-02-full-original-bridge",
+  "runtimeVersion": "phase1-runtime-03-saved-state-fixtures",
   "fixtureTransport": {
-    "bytes": 16941,
-    "sha256": "061ca49c31b0b922eca59eec6cba24e8945176ca82706a2c947e44fc57c09b44"
-  }
+    "bytes": 25428,
+    "sha256": "1a0636420ea1d0039a92f8be7823f62080212b60c824d6deaf53600cb2d462cb"
+  },
+  "candidateSourceRound": 342,
+  "approvedNewFeatures": "PHASE2_ONLY",
+  "representativeSnapshots": "2 original DRAFT transfers retained +2 synthetic audited/voided transfers +4 synthetic sales snapshots. Commands remain explicitly unimplemented; no real business writes."
 }

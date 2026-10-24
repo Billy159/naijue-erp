@@ -22,7 +22,7 @@ const server=createServer(async(req,res)=>{
   const url=new URL(req.url,'http://127.0.0.1:'+port);
   if(url.pathname==='/'||url.pathname==='/index.html'){res.setHeader('Content-Type',mime['.html']);res.end(req.method==='HEAD'?'':entry);return;}
   let file;
-  if(url.pathname==='/fixture-transport.mjs'||url.pathname==='/replica-identity.json')file=join(root,url.pathname.slice(1));
+  if(url.pathname==='/fixture-transport.mjs'||url.pathname==='/replica-identity.json'||url.pathname==='/replica-fixture-image.svg')file=join(root,url.pathname.slice(1));
   else {
    file=resolve(frontend,'.'+decodeURIComponent(url.pathname));
    if(!file.startsWith(frontend+sep)||url.pathname.startsWith('/verification/')){res.writeHead(404);res.end();return;}

@@ -1,0 +1,43 @@
+{
+  "atUtc": "2026-10-24T17:06:38.376679+00:00",
+  "parent": "3d99649b1dc355c22c8f159410367d1251f7426a",
+  "taskId": "C_PHASE1_REPLICA_F1_G01_G04_STATE_FIXTURES",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/fixture-transport.mjs",
+      "bytes": 25428,
+      "sha256": "1a0636420ea1d0039a92f8be7823f62080212b60c824d6deaf53600cb2d462cb",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/demo-replica/serve.mjs",
+      "bytes": 3018,
+      "sha256": "01df75ec38fb6f966a4f145a72f861d94dfc82a0eccc5a07e9147a2712cafb85",
+      "owner": "C"
+    },
+    {
+      "path": "apps/web/demo-replica/replica-fixture-image.svg",
+      "bytes": 572,
+      "sha256": "686fa451ccfb00e9b8dd81395e16e8deedc5306461243db239ffc896275731dd",
+      "owner": "C"
+    },
+    {
+      "path": "apps/web/demo-replica/replica-identity.json",
+      "bytes": 1074,
+      "sha256": "8d45aee410a8ba5ddb0d37fd4eaf3052859d8037b8f037dbc06928f90c880436",
+      "owner": "C"
+    },
+    {
+      "path": "apps/web/demo-replica/COPY-BASELINE.json",
+      "bytes": 885,
+      "sha256": "87c0854689acb856962b59581ff6eabae446a4050331505d92fd54ab02397b33",
+      "owner": "C"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-167/HANDOFF.md",
+  "stage": "OWNER_DOM_DTO_DIRECTED_PASS_C_LOCAL_FIXED_SOURCE_NOT_BROWSER_OR_REAL_BUSINESS",
+  "original325FrontendFilesChanged": false,
+  "bundlesRebuilt": false,
+  "phase2Started": false,
+  "deployed": false
+}

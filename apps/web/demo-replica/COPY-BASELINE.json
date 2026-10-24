@@ -1,11 +1,14 @@
 {
   "frozenCommit": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
   "uniqueDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
-  "phase": "PHASE1_RAW_COPY_NOT_YET_RUNNING_OR_ACCEPTED",
+  "phase": "PHASE1_COMPLETE_ORIGINAL_COPY_RUNNING_REPRESENTATIVE_ACCEPTANCE_PENDING",
   "frontendFiles": 325,
   "copyManifestLocalOnly": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/demo-replica-phase1/FROZEN-COPY-FILE-PINS.json",
   "copiedByteDigest": "9e58680e987a8eacdbaacdf68c2a87a4d03c38b7925bd9246b800c62107f73b8",
-  "runtimeEntry": "serve.mjs (C owner, pending)",
+  "runtimeEntry": "http://127.0.0.1:57896/#inventory",
   "approvedNewFeatures": "PHASE2_ONLY",
-  "realBusinessConnection": false
+  "realBusinessConnection": false,
+  "runtimeVersion": "phase1-runtime-03-saved-state-fixtures",
+  "candidateSourceRound": 342,
+  "originalFrontendBytesChanged": false
 }

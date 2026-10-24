@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T12:05:18.158886+00:00",
+  "updatedAt": "2026-10-24T17:07:41.267754+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -4748,6 +4748,20 @@
       "atUtc": "2026-10-24T14:37:07.845315+00:00",
       "owner": "D1",
       "scope": "Existing current-form ports/validation/reader remainD1; single targeted employee-reference nullable hall parser branch under T05 globalinjob permission, not schema or new write contract"
+    },
+    {
+      "atUtc": "2026-10-24T17:07:41.267754+00:00",
+      "sourceRound": 342,
+      "scope": "Phase1 existing replica runtime03 snapshots and marked image; original325 files untouched",
+      "writers": {
+        "apps/web/demo-replica/fixture-transport.mjs": "F1 staged chunk167 delivered; C only fixed integration",
+        "apps/web/demo-replica/serve.mjs": "C",
+        "apps/web/demo-replica/replica-fixture-image.svg": "C",
+        "apps/web/demo-replica/replica-identity.json": "C",
+        "apps/web/demo-replica/COPY-BASELINE.json": "C"
+      },
+      "browserRelease": "QF finished source340 F4, no dialogs final and turn completed; five user drafts preserved",
+      "phase2": false
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
@@ -5035,6 +5049,15 @@
     "syntheticAuthCssScope": "C sole exact harness.css login-only suppression; password dialog original form retained; no credential endpoint enabled",
     "phase1Replica": "C sole initial byte copy/shared entry/build/sample boundary; F1-F4 read-only completeness in own old report folders; phase2 exact leaf reallocation after fixed phase1.",
     "replicaFixtureTransportOwner": "F1 exact fixture-transport.mjs only (technical Solmedium); C serve/index/build/shared resources, original frozen frontend read-only. No live switch during QF lease.",
-    "nativeBigintHashSeam": "D3 exact existing settlement evidence capture helper and original unit test; preserve all old hashes/strict descriptor checks, support existing native bigint without Number conversion or alternate encoder."
+    "nativeBigintHashSeam": "D3 exact existing settlement evidence capture helper and original unit test; preserve all old hashes/strict descriptor checks, support existing native bigint without Number conversion or alternate encoder.",
+    "phase1ReplicaCurrent": {
+      "sourceRound": 342,
+      "sourceParent": "3d99649b1dc355c22c8f159410367d1251f7426a",
+      "runtimeVersion": "phase1-runtime-03-saved-state-fixtures",
+      "originalFrontendChanged": false,
+      "replicaEntryOwner": "C",
+      "fixtureImplementationOwner": "F1",
+      "browserOwner": "NONE_UNTIL_C_FIXED_SOURCE_HTTP"
+    }
   }
 }
