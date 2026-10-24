@@ -1,4 +1,4 @@
-import type { SalesProductCapability } from './document-presentation.tsx';
+import { SalesDocumentPresentation, type SalesProductCapability } from './document-presentation.tsx';
 import { UIButton } from '../components/standard-controls.tsx';
 import { useEffect, useState, type ComponentType } from 'react';
 import { AsyncLeafRegistry } from '../loading/async-leaf-registry.ts';
@@ -32,7 +32,8 @@ export function SalesDetailHost(props: SalesDetailActivation) {
   }, [scope, attempt, leaves]);
   if (!props.parentScope.active) return null;
   if (View && scope) return <View scope={scope} reader={props.reader} salesId={props.salesId} close={close} {...(props.product ? { product: props.product } : {})} />;
-  return <section className="sales-workbench sales-detail-loading" aria-label="销货单详情"><SalesDetailHeader close={close} />
-    {failed ? <p role="alert" className="iw-inline-state">详情组件或样式加载失败。<UIButton type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</UIButton></p> : <p role="status" className="iw-inline-state">正在准备销货单查看…</p>}
-  </section>;
+  return <section className="sales-workbench sales-detail-loading" aria-label="销货单详情"><SalesDocumentPresentation
+    header={<SalesDetailHeader close={close} />}
+    status={failed ? <p role="alert" className="iw-inline-state">详情组件或样式加载失败。<UIButton type="button" className="iw-link" onClick={() => setAttempt(value => value + 1)}>重试加载</UIButton></p> : <p role="status" className="iw-inline-state">正在准备销货单查看…</p>}
+  /></section>;
 }

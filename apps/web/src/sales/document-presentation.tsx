@@ -9,6 +9,25 @@ import { discountUnitPrice } from '../../../../packages/domain/src/sales-money.t
 import { minorAmount } from '../../../../packages/domain/src/values.ts';
 import { salesInputMoney } from './commands/form-model.ts';
 
+/** Pure slot layout for every sales document state. Fragments keep each
+ * consumer's existing CSS parent/child relationships and event owners intact. */
+export interface SalesDocumentPresentationSlots {
+  readonly header?: ReactNode;
+  readonly facts?: ReactNode;
+  readonly note?: ReactNode;
+  readonly status?: ReactNode;
+  readonly beforeLines?: ReactNode;
+  readonly lines?: ReactNode;
+  readonly summary?: ReactNode;
+  readonly afterSummary?: ReactNode;
+}
+
+/** Shared document body order without adding a DOM element. Consumers keep
+ * their original callbacks, refs, conditions and data projections in each slot. */
+export function SalesDocumentPresentation({ header, facts, note, status, beforeLines, lines, summary, afterSummary }: SalesDocumentPresentationSlots) {
+  return <>{header}{facts}{note}{status}{beforeLines}{lines}{summary}{afterSummary}</>;
+}
+
 /** Frozen sales-current.js lineTable/summary geometry, shared by the actual
  * proposal, saved editor and read-only branches. No authority or identity merge. */
 export const SALES_DOCUMENT_COLUMNS = ['款号／商品名称', '颜色', '版型', '尺码', '数量', '参考零售价', '折扣', '成交单价', '金额', '操作'] as const;

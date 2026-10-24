@@ -3,7 +3,7 @@ import { useDocumentLeave } from '../demo-presentation/document-navigation.tsx';
  * Final three-row funds DOM is real-data-bridge.mjs fundsField/paymentRow.
  * Native inputs keep raw text; React owns lifecycle and the current native API session only. */
 import { CurrentProductFinder, type CurrentProductFinderHandle } from './product-finder.tsx';
-import { SalesDocumentColumns, SalesDocumentColumnHead, SalesDocumentSummary, SalesProductPresentation, salesPaymentBalance, salesPaymentKind, salesDisplayedDiscount, type SalesProductCapability } from '../sales/document-presentation.tsx';
+import { SalesDocumentColumns, SalesDocumentColumnHead, SalesDocumentPresentation, SalesDocumentSummary, SalesProductPresentation, salesPaymentBalance, salesPaymentKind, salesDisplayedDiscount, type SalesProductCapability } from '../sales/document-presentation.tsx';
 import type { ReadScope } from '../loading/read-scope.ts';
 import { Trigger, type TriggerProps } from '@arco-design/web-react';
 import { SourceDocumentDialog } from '../components/standard-overlay.tsx';
@@ -217,7 +217,7 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
     measure(); view.addEventListener('resize', measure);
     return () => view.removeEventListener('resize', measure);
   }, [businessMenuOpen, state.disposed]);
-  if (state.disposed) return <p role="status">草稿已关闭，当前身份资料已清除。</p>;
+  if (state.disposed) return <SalesDocumentPresentation status={<p role="status">草稿已关闭，当前身份资料已清除。</p>} />;
   const { draft, picker } = state, combined = draft.businessType !== 'SALE', pricingLines = session.pricingLines;
   // Frozen chooseEntry adds selected work to doc.lines; an unselected query
   // stays outside it. SAVE readiness still uses the strict session projection.
@@ -297,13 +297,14 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
   };
   return <SalesProductPresentation {...(scope ? { scope } : {})} {...(productCapability ? { capability: productCapability } : {})}>{openProduct => <section ref={formRef} aria-label={saved ? '销货单编辑' : '新增销售草稿'} className="tc-workbench tc-editor sale-workbench sale-editor sales-proposal-editor" onKeyDown={event => {
     if (event.key === 'Escape' && state.lineEdit && !picker) { event.preventDefault(); finishIdentity(state.lineEdit.key, false); }
-  }}>
+  }}><SalesDocumentPresentation header={<>
     <div className="tc-head sale-head"><h1>{saved ? '编辑销货单' : '新增销货单'}</h1><span className="tc-status doc-pending">未审核</span><span id="sale-save-state" className="sale-muted">· {state.dirty ? '有未保存修改' : saved ? '已保存' : '未保存'}</span><div className="actions">
       <button type="button" className="btn" data-sale="list" onClick={() => saved ? close() : discard('cancel')}>返回列表</button>{saved?.beforeSave}<button type="button" className="btn" data-sale="save" disabled={!preparation || preparation.disabled || preparation.preparing || !!state.lineEdit && !session.hasSpecificationInputs || !!pendingMode} onClick={save}>保存</button>
       {saved ? saved.actions : ['审核', '导出', '打印'].map(label => <button type="button" className="btn" disabled key={label} title="请先保存单据">{label}</button>)}
     </div></div>
     {saved?.feedback}
-    <div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">
+  </>}
+    facts={<div className="tc-doc-header sale-doc-header"><div className="tc-gold-doc-fields sale-doc-fields">
       <label className="tc-gold-field sale-date-field"><span className="sale-field-label">单据日期 <span className="ui-required">*</span></span><input type="hidden" data-sale-field="date" value={draft.businessDate} /><span className="tc-arco-date-host" data-sales-date="document"><UIDate aria-label="单据日期" value={draft.businessDate} onChange={value => session.setHeader({ businessDate: value })} /></span></label>
       <div ref={businessField} className="tc-gold-field"><span className="sale-field-label">业务类型 <em>*</em></span><DemoSingleSelectAction presentation="flat" label="业务类型" disabled={!!state.lineEdit} value={salesBusinessMode(draft.businessType)} options={[{ value: 'SALE', label: '销售' }, { value: 'RETURN_EXCHANGE', label: '退货/换货' }]} popupWidth={businessPopupWidth} open={businessMenuOpen} onOpenChange={open => { if (open) dismissPicker(); setBusinessMenuOpen(open); }} onChange={value => { setBusinessMenuOpen(false); chooseMode(value as SalesBusinessMode); }} /></div>
       {(['hall', 'salesperson', 'customer', 'warehouse'] as const).map(kind => <div className="tc-gold-field" key={kind}><span className="sale-field-label">{labels[kind]}{kind !== 'salesperson' && <span className="ui-required"> *</span>}</span>{reference(kind, `选择${labels[kind]}`, `请选择${labels[kind]}`, draft[kind], () => { void session.openPicker(kind); }, !!state.lineEdit || kind !== 'hall' && !draft.hall, kind === 'salesperson' && draft.salesperson ? () => session.clearSalesperson() : undefined)}</div>)}
@@ -319,9 +320,10 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
         </div>)}
       </div><small data-funds-balance className={`sale-payment-balance ${salesPaymentKind(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, displayedLines.length)}`}>{salesPaymentBalance(totals?.netDueMinor ?? null, totals?.settledMinor ?? null, displayedLines.length)}</small></div>
     </div></div>
-    <label className="sale-note-row"><span className="sale-field-label">备注</span><input data-sale-field="note" aria-label="备注" placeholder="输入本单备注（可选）" maxLength={10000} value={draft.note} onChange={event => { const value = event.currentTarget.value; return session.setHeader({ note: value }); }} /></label>
-    <div id="sale-error" className="sales-proposal-feedback">{state.notice && <p role="status">{state.notice}</p>}{state.errors.map(error => <p role="alert" key={error}>{error}</p>)}{preparation?.notice && <p role="status">{preparation.notice}</p>}{preparation?.preparing && <button type="button" className="btn" onClick={preparation.cancel}>{saved ? '取消准备' : '取消新单准备'}</button>}</div>
-    {sections.map(section => {
+  }
+    note={<label className="sale-note-row"><span className="sale-field-label">备注</span><input data-sale-field="note" aria-label="备注" placeholder="输入本单备注（可选）" maxLength={10000} value={draft.note} onChange={event => { const value = event.currentTarget.value; return session.setHeader({ note: value }); }} /></label>}
+    status={<div id="sale-error" className="sales-proposal-feedback">{state.notice && <p role="status">{state.notice}</p>}{state.errors.map(error => <p role="alert" key={error}>{error}</p>)}{preparation?.notice && <p role="status">{preparation.notice}</p>}{preparation?.preparing && <button type="button" className="btn" onClick={preparation.cancel}>{saved ? '取消准备' : '取消新单准备'}</button>}</div>}
+    lines={<>{sections.map(section => {
       const active = true;
       return <section className="sale-entry-section" key={section.key} data-business-section="out"><div className="tc-section-head sale-section-head"><strong>{section.title}</strong><div>
         {active && <button type="button" className="btn sale-link" disabled={!session.canScan || preparation?.preparing || !!state.lineEdit} title={session.canScan ? undefined : '请先选择营业厅和仓库'} onClick={() => { dismissPicker(); setScanner({ controller: session.createScanner(section.key), direction: section.key }); }}>扫码录入</button>}
@@ -373,11 +375,13 @@ export function SalesProposalForm({ session, close, preparation, scope, product:
         </tr>;
       })}
       </tbody></table></div></section>;
-    })}
-    <SalesDocumentSummary businessType={displayedType} lines={displayedLines.map(row => ({ quantity: row.quantity, isGift: row.isGift, styleKey: row.product.id, ...(row.product.category ? { category: row.product.category } : {}) }))} grossMinor={totals?.grossMinor ?? null} discountMinor={totals?.orderDiscountMinor ?? null} netDueMinor={totals?.netDueMinor ?? null} extra={!combined && pendingPricing > 0 ? <span>{pendingPricing}条待定价</span> : undefined} />
+    })}</>}
+    summary={<SalesDocumentSummary businessType={displayedType} lines={displayedLines.map(row => ({ quantity: row.quantity, isGift: row.isGift, styleKey: row.product.id, ...(row.product.category ? { category: row.product.category } : {}) }))} grossMinor={totals?.grossMinor ?? null} discountMinor={totals?.orderDiscountMinor ?? null} netDueMinor={totals?.netDueMinor ?? null} extra={!combined && pendingPricing > 0 ? <span>{pendingPricing}条待定价</span> : undefined} />}
+    afterSummary={<>
     {scanner && <DocumentScan controller={scanner.controller} title={scanner.direction === 'IN' ? '退回商品扫码录入' : combined ? '换出商品扫码录入' : '销货扫码录入'} rows={draft.lines.filter((row): row is Extract<SalesProposalLine, { readonly sku: CurrentFormSku }> => row.sku !== null && row.quantity.startsWith('-') === (scanner.direction === 'IN'))} close={() => setScanner(null)} update={(key, value) => session.updateLine(key, { quantity: value })} remove={key => session.removeLine(key)} />}
     {zero && <SourceDocumentDialog className="source-confirm-dialog" title="确认普通零价商品" label="确认普通零价商品" closeLabel="关闭弹窗" close={() => setZeroLine(null)} initialFocus="[data-erp-keep-input]" footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setZeroLine(null)}>取消</button><button type="button" className="btn primary" onClick={confirmZero}>确认零价</button></>}><div className="ui-confirm-body"><p>此行单价为0.00元，不标为赠品，审核时仍按业务类型处理商品数量。</p></div></SourceDocumentDialog>}
     {pendingMode && <SalesModeConfirmation cancel={cancelMode} confirm={() => { const next = modeToConfirm.current; if (!next) return; cancelMode(); session.setBusinessMode(next); }} />}
     {confirm && <SourceDocumentDialog className="source-discard-dialog" title="有未保存的修改" label="有未保存的修改" closeLabel="关闭弹窗" close={() => setConfirm(null)} footer={<><button type="button" className="btn" data-erp-keep-input onClick={() => setConfirm(null)}>继续录单</button><button type="button" className="btn primary" onClick={() => discard(confirm, true)}>放弃修改并离开</button></>}><div className="ui-confirm-body"><p>此新单尚未保存。离开将放弃本次录入，不会产生销货单或库存变动。</p></div></SourceDocumentDialog>}
-  </section>}</SalesProductPresentation>;
+    </>}
+  /></section>}</SalesProductPresentation>;
 }

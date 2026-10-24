@@ -6,6 +6,7 @@ import { salesDocumentOutput } from '../components/document-output-contracts.ts'
 import { SalesHistoryAction } from '../sales/history-view.tsx';
 import { settlementBalanced } from '../sales/commands/validation.ts';
 import { SalesNativeCommandForm, type SalesCommandFormProps } from '../sales/commands/form.tsx';
+import { SalesDocumentPresentation } from '../sales/document-presentation.tsx';
 import type { SalesExistingDocumentSession } from './sales-existing-document.ts';
 import { SalesProposalForm } from './sales-proposal-form.tsx';
 
@@ -15,7 +16,7 @@ export function SalesExistingDocumentForm(props: SalesCommandFormProps) {
   const state = useSyncExternalStore(props.session.subscribe, props.session.getSnapshot, props.session.getSnapshot);
   const [model, setModel] = useState<SalesExistingDocumentSession | null>(null);
   useEffect(() => { const current = props.session.prepareExistingDocument(); setModel(current); if (current) void current.initialize(); }, [props.session, state.command.editor?.detail]);
-  if (!model || model !== props.session.existingDocument) return props.session.editable ? <p role="status">正在读取原单实际规格…</p> : <SalesNativeCommandForm {...props} />;
+  if (!model || model !== props.session.existingDocument) return props.session.editable ? <SalesDocumentPresentation status={<p role="status">正在读取原单实际规格…</p>} /> : <SalesNativeCommandForm {...props} />;
   return <SavedSalesDocument {...props} model={model} />;
 }
 function SavedSalesDocument({ model, ...props }: SalesCommandFormProps & { readonly model: SalesExistingDocumentSession }) {
@@ -25,8 +26,8 @@ function SavedSalesDocument({ model, ...props }: SalesCommandFormProps & { reado
   const original = model.original, native = owner.command;
   useEffect(() => { setConfirm(null); }, [native.write.phase, native.editor?.detail]);
   if (state.disposed || !original) return <SalesNativeCommandForm {...props} />;
-  if (state.phase === 'idle' || state.phase === 'loading') return <p role="status">正在读取原单实际规格，输入已保留…</p>;
-  if (state.phase !== 'ready' || !state.proposal) return <><p role="status">{state.notice}</p><SalesNativeCommandForm {...props} /></>;
+  if (state.phase === 'idle' || state.phase === 'loading') return <SalesDocumentPresentation status={<p role="status">正在读取原单实际规格，输入已保留…</p>} />;
+  if (state.phase !== 'ready' || !state.proposal) return <SalesDocumentPresentation status={<p role="status">{state.notice}</p>} afterSummary={<SalesNativeCommandForm {...props} />} />;
   // Original native recovery is authoritative and keeps this proposal mounted
   // in its session owner. No new preparation/key replaces an uncertain write.
   if (!props.session.editable && native.editor?.phase !== 'error') return <SalesNativeCommandForm {...props} />;
