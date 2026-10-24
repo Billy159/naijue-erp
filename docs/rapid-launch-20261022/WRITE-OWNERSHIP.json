@@ -3781,6 +3781,11 @@
           "group": "V16_DOCUMENT_RESPONSIBLE_EMPLOYEE_FIELD",
           "fieldGate": "APPROVED_V16_FRONTEND_ONLY_EXISTING_OPTIONAL_UUID_CONTRACT",
           "scope": "Shared Demo selector/read-only truecreator/responsible display; no new backend permission or null-clear intent"
+        },
+        {
+          "path": "apps/web/demo-replica/fixture-transport.mjs",
+          "reason": "Phase1 isolated sample transport for complete original frozen bridge; exact exception to C replica shared glob; no UI rewriting or real data",
+          "stage": "OPEN"
         }
       ]
     },
@@ -5018,6 +5023,7 @@
     },
     "sourceWrites": "Existinguniqueowners; F1 new document-responsibility.tsx and existingv16 localchain registered. No mutableWIP in326.",
     "syntheticAuthCssScope": "C sole exact harness.css login-only suppression; password dialog original form retained; no credential endpoint enabled",
-    "phase1Replica": "C sole initial byte copy/shared entry/build/sample boundary; F1-F4 read-only completeness in own old report folders; phase2 exact leaf reallocation after fixed phase1."
+    "phase1Replica": "C sole initial byte copy/shared entry/build/sample boundary; F1-F4 read-only completeness in own old report folders; phase2 exact leaf reallocation after fixed phase1.",
+    "replicaFixtureTransportOwner": "F1 exact fixture-transport.mjs only (technical Solmedium); C serve/index/build/shared resources, original frozen frontend read-only. No live switch during QF lease."
   }
 }

@@ -88,9 +88,9 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "Original source handed back; actual Luna max dispatch for replica completeness",
-      "currentPackage": "T01-T03 and A01-A02",
-      "nextReadyPackage": "S01-S04",
-      "currentDependencies": "C original replica build/sample launch; UI does not wait DB",
+      "currentPackage": "Complete original final bridge via isolated sample transport; exact one new adapter",
+      "nextReadyPackage": "QF final runtime and original visual closure after C fixed entry",
+      "currentDependencies": "C sole shared serve/build; QF clean release before entry switch",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -117,7 +117,7 @@
         "current": "公用页壳及T01-T03调拨整页全状态，正常入口",
         "next": "S01-S04销货退换整页全状态；A01/A02公壳账号菜单"
       },
-      "currentPhase": "PHASE1_FROZEN_DEMO_REPLICA",
+      "currentPhase": "PHASE1_TECHNICAL_SAMPLE_BOUNDARY",
       "nextPureUIModel": "gpt-6-luna/max",
       "lastActualDispatch": {
         "model": "gpt-6-luna",
@@ -141,10 +141,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original source handed back; actual Luna max dispatch for replica completeness",
-      "currentPackage": "I01 inventory",
-      "nextReadyPackage": "P01-P13 products all tabs/states",
-      "currentDependencies": "C original replica build/sample launch; UI does not wait DB",
+      "currentWork": "I01 and P01-P13 original-copy source closures delivered; actual model UNKNOWN not falsely reported Luna",
+      "currentPackage": "Original14-page source completeness no missing baseline file",
+      "nextReadyPackage": "QF2 representative runtime after original final bridge fixture fixed",
+      "currentDependencies": "C/F1 complete original final bridge runtime; no database dependence for UI closure",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -199,10 +199,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original source handed back; actual Luna max dispatch for replica completeness",
+      "currentWork": "All4 source-closure groups covering original8-page registry delivered; new independent account/vendor portions phase2",
       "currentPackage": "B01-B02 hall/warehouse",
-      "nextReadyPackage": "B03/B08 parties, B04/B07 staff/account, B05/B06 payment/funds",
-      "currentDependencies": "C original replica build/sample launch; UI does not wait DB",
+      "nextReadyPackage": "QF2 same fixed replica representative states",
+      "currentDependencies": "C/F1 full final runtime and browser lease",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -313,15 +313,15 @@
       "reasoningEffort": "max",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "C327 limited personnel actual adopted, CLEAN_STOP NO_GUI",
+      "currentWork": "First replica technical runtime done, actual Sol; no purevisual PASS",
       "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
       "matrixOwner": true,
       "currentPackage": "v1103affectedlimitedfactsadopted;whiteenvironment56pxresolved;299nativepending",
-      "nextReadyPackage": "Containing fixednewcandidate minimum3affected retest, reuse priorvalidstates",
+      "nextReadyPackage": "Only fixed original bridge affected runtime retest; purevisual actual Luna phase separate",
       "fastToolVerified": false,
       "nextTechnicalModel": "gpt-6.1-sol/medium",
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正",
-      "currentDependencies": "335 fixed candidate for only affected auth/menu and one S04 refusal notice test; technical Solmedium, purevisual LunaMAX"
+      "currentDependencies": "F1 fixture transport+C fixed shared entry, no duplicate wide checks"
     },
     "QB": {
       "title": "后端独立验收",
@@ -376,10 +376,10 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "fastToolVerified": false,
-      "currentWork": "Original source handed back; actual Luna max dispatch for replica completeness",
+      "currentWork": "P14-P19 all original source closures delivered; no missing original files",
       "currentPackage": "P14 categories",
-      "nextReadyPackage": "P15-P18 dictionaries and P19 barcode schemes",
-      "currentDependencies": "C original replica build/sample launch; UI does not wait DB",
+      "nextReadyPackage": "QF2 same fixed replica representative states",
+      "currentDependencies": "C/F1 full final runtime and browser lease",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -1292,9 +1292,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T15:28:41.913837+00:00",
+  "updatedAt": "2026-10-24T15:42:32.858956+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "ca99abca671ed4ebf302b4226b81e21deed5cddc",
+  "lastVerifiedRemoteCommit": "6c23a53bb1924752a38a996807dabdd4d4ade0b9",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -6228,7 +6228,7 @@
       "sourceModuleReviews": "QB205259/QB206260/QB207-v2261/QB208262 PASS_LIMITED; no actual v14 engine/role/init"
     },
     "sourceCommit": "17d2e89603233e07c0cfe8c344934148f7463536",
-    "browserLease": "NONE_QF335_CLEAN_STOP",
+    "browserLease": "NONE_QF_PHASE1_RUNTIME_CLEAN_STOP",
     "frontendLaneAdjustment": {
       "status": "FOUR_LINES_ACTIVE_F4_FIRST_COMPLETE_NATIVE_MODULE_FIXED266",
       "authority": {
@@ -7507,11 +7507,29 @@
     "frontendPhase": "PHASE1_FULL_DEMO_REPLICA",
     "replicaDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
     "phase1CopiedFrontendFiles": 325,
-    "phase1Runtime": "RUNNING_ORIGINAL_DEMO_SAMPLES_57896",
+    "phase1Runtime": "RUNNING_SAMPLE_CONFIG_INCOMPLETE_FINAL_BRIDGE_OVERLAYS",
     "phase1WholePagesAccepted": 0,
     "phase2ReplicaWiring": "NOT_STARTED",
     "phase1Entry": "http://127.0.0.1:57896/#inventory",
-    "phase1OriginalEntryDataAdaptation": "Server uses original sample mode and omits real-data-bridge; credential-free explicit local sample actor, no markup/body redesign"
+    "phase1OriginalEntryDataAdaptation": "Server uses original sample mode and omits real-data-bridge; credential-free explicit local sample actor, no markup/body redesign",
+    "phase1RuntimeFinding": {
+      "id": "REPLICA-PHASE1-FINAL-BRIDGE-OVERLAYS",
+      "status": "OPEN_ACTUAL_SALES_NEW_SINGLE_PAYMENT_FALLBACK",
+      "owner": "F1 exact fixture-transport.mjs + C shared serve",
+      "cause": "Entire original bridge omitted by sample wrapper, but original bridge has final UI functions and bootstrap UI overrides. Full copy is intact; actual isolated entry not final-UI complete.",
+      "action": "Preserve entire original final bridge; isolate only old data/API with explicit local samples, no old rewrite or new cosmetic implementation",
+      "wholePageAccepted": false
+    },
+    "phase1Next": "F1 Solmedium exact fixture transport preserves entire frozen final bridge; C fixes entry after fixed delivery, then original QA affected representative checks",
+    "actualRuntimeFacts": {
+      "QF": "Source6c23a53: no white screen/login block; inventory240 sample products4warehouses76262; transfer and sales new leave/continue retain note then explicit discard; no SAVE/audit/delete",
+      "resources": "82 same-origin records, no8878; favicon404; empty tool event drain does not prove zero console errors",
+      "openFinding": "QF-REPLICA-PHASE1-SALES-PAYMENT-STRUCTURE-01 (original bridge final UI skipped)",
+      "wholePagesAccepted": 0,
+      "phase2Started": false,
+      "realBusinessAccepted": false,
+      "formalPublished": false
+    }
   },
   "latestReadySource": {
     "round": 335,

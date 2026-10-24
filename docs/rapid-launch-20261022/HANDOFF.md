@@ -1,3 +1,17 @@
+PHASE1 ORIGINAL FINAL-LAYER FIX IN PROGRESS
+
+325冻结前端文件/原328含包锁构建完整复制，7原构建和81资源闭包通过；GitHub6c23a53真实非forceFF已核。QF首段技术实操确认57896正常进入，样例库存240款/4仓/76262，调拨和销货新建离开继续保备注、放弃可返回；资源82条本源，无8878，未保存审核删除。不是整页视觉/真实业务PASS。
+
+实际缺口QF-REPLICA-PHASE1-SALES-PAYMENT-STRUCTURE-01：停整段原real-data-bridge使最终多行收款等UI覆盖未运行。F1已actualidle后单独切Solmedium写唯一fixture-transport.mjs，隔离仅旧数据/认证而保整个原bridge/真实view分支；原源不改、旧重写不混入。C唯一serve/构建，QF已CLEAN_STOP，QF2暂NO_GUI等修定最终配置，不能对将换的false样例扩大验收。四线原复制静态闭包均已交，无漏源；新增独立账号/独立供应商/本人改密及独立账号弹层留第二阶段，不冒原样复制。
+
+第一阶段尚未完成验收固定，第二阶段副本需求改造和新后端接线未开始，正式未发布；后台原C172原Linux6生成器已物化，D1原26执行接缝准备继续、C独立授权/PG执行待做。准确等待是共享样例数据边界缺口，非等待整库。旧337及回退和全部在途成果保留，不主动停正式业务。以下为历史。
+
+PHASE1 ACTUAL RUNTIME GAP — NOT COMPLETE
+
+QF首次57896技术实操：库存页可进/样例查询240款、调拨新建离开继续保输入及放弃返回正常。但#sales/new仍为旧单行收款区。准确原因：冻结real-data-bridge.mjs包含最终多行收款UI及bootstrap中的其他展示覆盖；C当前停整段bridge导致未运行这些原始最终覆盖层。不能把全部325源已复制当实际最终UI完整，也不在旧正文补相似界面。
+
+F1获唯一fixture-transport.mjs例外（Solmedium技术），保完整原bridge并把旧数据/API隔离到明确本机样例；C仍唯一serve/index/build。原frontend不改，旧重写不嵌回，不连真实8878/DB；QF清场后再切固定入口，失败/未知样例请求明确报错。副本整页仍0，第二阶段未开。GitHub6c23a53已实际核实。
+
 PHASE1 REPLICA ACTUALLY RUNNING (2026-10-24)
 
 唯一入口 http://127.0.0.1:57896/#inventory；唯一目录 apps/web/demo-replica；启动为指定Node24.21 node apps/web/demo-replica/serve.mjs 57896。325原前端文件和原package/lock/build合328文件逐字节一致；原锁独立依赖230和7个原Vite构建通过，81入口脚本/样式齐全，关键HTTP200。服务器只在入口切原Demo sample模式、禁用real-data-bridge，使用清楚标记无真实凭据本机样例，不改原页面正文，不接数据库。浏览器完整性/代表状态尚未验收，不称副本完成/接线/上线。
