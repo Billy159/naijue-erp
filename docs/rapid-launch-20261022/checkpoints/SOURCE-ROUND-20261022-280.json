@@ -1,0 +1,110 @@
+{
+  "atUtc": "2026-10-24T03:10:30.513895+00:00",
+  "parent": "85193402aebb8d3f7b890f5e487404a824e1ee19",
+  "taskId": "INVENTORY_OUTPUT_SPOOL_ORIGINAL_HOST_CONFIGURATION",
+  "files": [
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "bytes": 56220,
+      "sha256": "704872a341e5550864f7dc15843cbfc5613d574495bb1057a6dcfdc5d6dd05b6",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.ts",
+      "bytes": 17051,
+      "sha256": "6864df911abb4efafcfc0fd612ac7dce5e881116b5c7c084e94eea823d951ea4",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "bytes": 65813,
+      "sha256": "4cd9a28e7c0e2bf8990eab9a417f9051d4cfa488b01a1589bc8d31c4782953a1",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/INVENTORY-OUTPUT-SPOOL-HOST-v1.json",
+  "ownerReceiptSha256AtPin": "b236912011b60a2ad75f0e419ce12737747526df7182e4087e0c3a280d271905",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1_INVENTORY_OUTPUT_SPOOL_PRODUCTION_WIRING_V1",
+      "atUtc": "2026-10-24T03:09:16.960319+00:00",
+      "model": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false,
+      "authority": "Original human01a161f7 and four-issues01a16bb2; C exact279 D1 host wiring dispatch"
+    },
+    "completedScope": {
+      "status": "SOURCE_HOST_WIRING_COMPLETE_TARGETED_PROTOCOL_AND_STRICT_PASS_NO_DEPLOYMENT",
+      "seam": "ProductionRuntimeConfiguration optional inventoryOutputSpool -> productionApplicationOptions -> captured PostgresReadApiOptions/checkedHost -> original createInventoryHttpPlugin.outputSpool. Same existing main/host/profile chain, no second reader/pool/output service.",
+      "exactPrivateConfig": {
+        "inventoryOutputSpool": {
+          "directory": "/private/inventory-exports",
+          "maxBytes": 536870912,
+          "maxConcurrent": 1,
+          "maxDurationMs": 120000
+        }
+      },
+      "selection": "Only exact approved closed4-key configuration accepted by original production base/R1/R2/R3 parsers. Absence stays unavailable503; CORE-only profile rejects inventory output configuration and never mounts its route.",
+      "ownership": "279 reader/HTTP/tests frozen4 leaves untouched; root deployment/config/release files and private directories untouched.",
+      "resourceLimit": "Uses one process-local plugin slot and the approved private file bound. No production or temporary directory created, no /tmp fallback, no additional service or PostgreSQL pool."
+    },
+    "changedFiles": [
+      {
+        "path": "apps/api/src/postgres-read-api.ts",
+        "bytes": 56220,
+        "sha256": "704872a341e5550864f7dc15843cbfc5613d574495bb1057a6dcfdc5d6dd05b6"
+      },
+      {
+        "path": "apps/api/src/production-provider-composition.ts",
+        "bytes": 17051,
+        "sha256": "6864df911abb4efafcfc0fd612ac7dce5e881116b5c7c084e94eea823d951ea4"
+      },
+      {
+        "path": "apps/api/src/production-provider-composition.test.ts",
+        "bytes": 65813,
+        "sha256": "4cd9a28e7c0e2bf8990eab9a417f9051d4cfa488b01a1589bc8d31c4782953a1"
+      }
+    ],
+    "checks": {
+      "newScopes": 2,
+      "pass": 2,
+      "skip": 0,
+      "details": [
+        "Exact tuple propagates through original production profiles; altered path/bounds/extra keys and CORE+inventory combinations reject",
+        "Original API composition passes captured spool to existing plugin: synthetic missing-mount503 occurs before producer query; two successive failures release the one slot; original pool owns auth, ordinary inventory route remains present, caller config mutation cannot change captured directory"
+      ],
+      "strict": {
+        "roots": [
+          "apps/api/src/production-provider-composition.test.ts",
+          "apps/api/src/production-main.ts"
+        ],
+        "exitCode": 0,
+        "scope": "Original strict ES2023/NodeNext noEmit flags/dependency graph",
+        "initialFailure": "Only new response variable inference TS7022; explicit narrow test response type fixed it; runtime checks already passed and were not rerun."
+      },
+      "cancellationBoundary": {
+        "sourceFacts": "Original bounded pool enforces finite acquisition/connection/query/statement limits, queryTimeoutMillis>statementTimeoutMillis, passes PostgreSQL statement_timeout/options and driver query_timeout. Original inventory reader checks AbortSignal around SQL, rolls back failed preparation and releases/discards in finally; acquisition deadline rejects pending borrow and bounded connection handling retires late/failed connections.",
+        "limit": "AbortSignal/output120-second timer does not directly cancel an in-flight PostgreSQL statement or acquisition. Post-abort connection return is bounded by those original effective settings, not promised immediate or automatically exactly120seconds. C must verify actual setting values and observed release on the actual target."
+      },
+      "databaseQueries": 0,
+      "listeners": 0,
+      "ssh": 0,
+      "builds": 0,
+      "git": 0,
+      "productionOrTemporaryDirectoriesCreated": 0
+    },
+    "notTested": [
+      "C-created0700 UID10001 build-scoped mount/capacity/quota/crash residual cleanup",
+      "Actual effective PostgreSQL timeouts/borrow return/release and full NDJSON output before slow network delivery",
+      "Actual representative>1000-uncoveredSKU inventory read/output performance;279 seven tests adopted, not rerun",
+      "Production deployment/global readiness/full import/PUBLISH; no pass asserted"
+    ],
+    "blockers": {
+      "source": "No host source/type blocker",
+      "runtime": "C alone supplies mount/UID/permissions and exact private configuration; missing mount remains accurate503. Actual timeout/connection exit and representative output remain C verification."
+    },
+    "next": "C freeze exact3 leaves and route only new host delta to originalQB;279 remains unchanged. Fill inventoryOutputSpool only in eligible nonCORE production private config, then perform original C actual resource/timeout/output validation. D1 continues already approved v15 on its separate owner leaves."
+  },
+  "stage": "FIXED_SOURCE_OWNER_CHECKS_ONLY_PENDING_ORIGINAL_QB_AFFECTED_REVIEW",
+  "actualPG": false,
+  "deployed": false
+}

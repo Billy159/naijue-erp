@@ -11,11 +11,13 @@ import { entityId } from "../../../packages/domain/src/values.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26MediaApplicationApi, createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
+import type { InventoryOutputSpoolOptions } from "./inventory-http.ts";
 import type { PostgresApplicationApiOptions, PostgresApplicationApi, CommittedCoreReadBinding } from "./postgres-read-api.ts";
 
 export const PRODUCTION_PUBLIC_ORIGIN = "https://1n5635n614.goho.co";
 export interface ProductionRuntimeConfiguration {
   readonly schemaVersion: 1;
+  readonly inventoryOutputSpool?: InventoryOutputSpoolOptions;
   readonly profile: "source-confirmed-native-v1";
   /** R1 must select DISABLED. Opening command routes is a separate explicit deployment choice. */
   readonly documentCommands: "DISABLED" | "NATIVE_RUNTIME";
@@ -41,7 +43,7 @@ function integer(value: unknown, min: number, max: number): value is number { re
 /** JSON data only, with no environment, URI, credential or policy defaults. Validation
  * precedes driver creation. The pool additionally validates every finite PG setting. */
 export function parseProductionRuntimeConfiguration(input: unknown): ProductionRuntimeConfiguration {
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication"]);
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const http = bag(c.http, ["host", "port", "acceptedHosts"]), assets = bag(c.assets, ["root", "entry"]), build = bag(c.build, ["sourceCommit", "buildId"]);
   const auth = bag(c.authentication, ["sessionTtlSeconds", "policy"]);
   const pg = bag(c.postgres, ["target", "max", "maxPendingAcquisitions", "connectionTimeoutMillis", "acquisitionTimeoutMillis", "queryTimeoutMillis", "statementTimeoutMillis",
@@ -58,12 +60,18 @@ export function parseProductionRuntimeConfiguration(input: unknown): ProductionR
     || new Set(http.acceptedHosts).size !== http.acceptedHosts.length || !text(assets.root) || !text(assets.entry)
     || typeof build.sourceCommit !== "string" || !/^[0-9a-f]{40}$/.test(build.sourceCommit) || !text(build.buildId) || build.buildId.length > 100
     || !integer(auth.sessionTtlSeconds, 1, 2147483647) || auth.policy !== "source-confirmed-v1") throw new TypeError("Invalid explicit production host or authentication configuration");
+  if (Object.hasOwn(c, "inventoryOutputSpool")) {
+    const spool = bag(c.inventoryOutputSpool, ["directory", "maxBytes", "maxConcurrent", "maxDurationMs"]);
+    if (spool.directory !== "/private/inventory-exports" || spool.maxBytes !== 536870912 || spool.maxConcurrent !== 1 || spool.maxDurationMs !== 120000)
+      throw new TypeError("Only the approved bounded private inventory output configuration is supported");
+  }
   return structuredClone(c) as unknown as ProductionRuntimeConfiguration;
 }
 
 export function productionApplicationOptions(input: unknown): PostgresApplicationApiOptions {
   const config = parseProductionRuntimeConfiguration(input);
   return {
+    ...(config.inventoryOutputSpool === undefined ? {} : { inventoryOutputSpool: config.inventoryOutputSpool }),
     postgres: config.postgres, productMedia: null, authorization: { mode: "source-confirmed-native" },
     nativeReadExtensions: { profile: "source-confirmed-r1-v1" },
     authentication: { trustedOrigin: config.publicOrigin, now: () => new Date().toISOString(), credentialCompatibility: "legacy-pbkdf2-v1",
@@ -94,7 +102,7 @@ export interface ProductionRuntime26Configuration extends Omit<ProductionRuntime
 }
 export function parseProductionRuntime26Configuration(input: unknown): ProductionRuntime26Configuration {
   const coreSelected = input !== null && typeof input === "object" && Object.hasOwn(input, "coreInitializationRead");
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", ...(coreSelected ? ["coreInitializationRead"] : [])]);
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", ...(coreSelected ? ["coreInitializationRead"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const review = bag(c.runtime26Review, ["reviewFile", "trustedReviewSha256"]);
   if (c.profile !== "source-confirmed-native-exact26-r1-v1" || c.documentCommands !== "DISABLED"
     || !text(review.reviewFile) || !path.isAbsolute(review.reviewFile) || path.resolve(review.reviewFile) !== review.reviewFile
@@ -102,6 +110,7 @@ export function parseProductionRuntime26Configuration(input: unknown): Productio
     throw new TypeError("Explicit exact26 R1 profile, disabled commands and closed independent review pin required");
   let coreInitializationRead: CommittedCoreReadBinding | undefined;
   if (coreSelected) {
+    if (Object.hasOwn(c, "inventoryOutputSpool")) throw new TypeError("CORE settings profile does not mount inventory output");
     const core = bag(c.coreInitializationRead, ["profile", "batchId", "operationId", "coreSourceDigest"]);
     entityId("operation", core.batchId as string); entityId("operation", core.operationId as string);
     if (core.profile !== "COMMITTED_CORE_SETTINGS_V14" || typeof core.coreSourceDigest !== "string" || !/^[a-f0-9]{64}$/.test(core.coreSourceDigest))
@@ -138,7 +147,7 @@ export interface ProductionRuntime26R2Configuration extends Omit<ProductionRunti
   readonly existingPreparation: { readonly sales: boolean; readonly transfers: boolean };
 }
 export function parseProductionRuntime26R2Configuration(input: unknown): ProductionRuntime26R2Configuration {
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation"]);
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation", ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const preparation = bag(c.existingPreparation, ["sales", "transfers"]);
   if (c.profile !== "source-confirmed-native-exact26-r2-v1" || c.documentCommands !== "NATIVE_RUNTIME"
     || typeof preparation.sales !== "boolean" || typeof preparation.transfers !== "boolean")
@@ -165,7 +174,7 @@ export interface ProductionRuntime26R3Configuration extends Omit<ProductionRunti
   readonly productMedia: { readonly root: string; readonly rootKey: string };
 }
 export function parseProductionRuntime26R3Configuration(input: unknown): ProductionRuntime26R3Configuration {
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation", "productMedia"]);
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation", "productMedia", ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const media = bag(c.productMedia, ["root", "rootKey"]);
   if (c.profile !== "source-confirmed-native-exact26-r3-v1" || !text(media.root) || !path.isAbsolute(media.root)
     || path.resolve(media.root) !== media.root || typeof media.rootKey !== "string" || !/^[A-Za-z0-9_-]{1,100}$/.test(media.rootKey))

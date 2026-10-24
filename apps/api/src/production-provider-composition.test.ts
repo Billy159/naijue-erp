@@ -1,3 +1,5 @@
+import fsPromises from "node:fs/promises";
+import { syncBuiltinESMExports } from "node:module";
 import sharp from "sharp";
 import { realpathSync } from "node:fs";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
@@ -642,4 +644,44 @@ test("production CORE v14: original exact26 main accepts the private CORE config
     writeFileSync(filename, JSON.stringify({ ...f.configuration, runtime26Review: { ...f.configuration.runtime26Review, reviewFile: missing } }), { mode: 0o600 });
     await assert.rejects(runProductionRuntime26Main([realpathSync(filename)]), (error: unknown) => (error as NodeJS.ErrnoException).code === "ENOENT");
   } finally { f.cleanup(); }
+});
+
+const approvedInventorySpool={directory:'/private/inventory-exports',maxBytes:536870912,maxConcurrent:1,maxDurationMs:120000} as const;
+test('production inventory spool: exact bounded options traverse original profiles and remain mutually exclusive with CORE',()=>{
+ const c={...config(),documentCommands:'DISABLED' as const,inventoryOutputSpool:approvedInventorySpool};
+ assert.deepEqual(productionApplicationOptions(c).inventoryOutputSpool,approvedInventorySpool);
+ const r1={...c,profile:'source-confirmed-native-exact26-r1-v1' as const,runtime26Review:{reviewFile:'/unopened-review.json',trustedReviewSha256:'a'.repeat(64)}};
+ assert.deepEqual(parseProductionRuntime26Configuration(r1).inventoryOutputSpool,approvedInventorySpool);
+ const r2={...r1,profile:'source-confirmed-native-exact26-r2-v1' as const,documentCommands:'NATIVE_RUNTIME' as const,existingPreparation:{sales:false,transfers:false}};
+ assert.deepEqual(parseProductionRuntime26R2Configuration(r2).inventoryOutputSpool,approvedInventorySpool);
+ assert.deepEqual(parseProductionRuntime26R3Configuration({...r2,profile:'source-confirmed-native-exact26-r3-v1',productMedia:{root:'/private/media',rootKey:'media'}}).inventoryOutputSpool,approvedInventorySpool);
+ for(const value of [undefined,{...approvedInventorySpool,directory:'/tmp/unapproved'}, {...approvedInventorySpool,maxConcurrent:2},{...approvedInventorySpool,maxBytes:536870913},{...approvedInventorySpool,maxDurationMs:120001},{...approvedInventorySpool,unknown:true}])
+  assert.throws(()=>parseProductionRuntimeConfiguration({...c,inventoryOutputSpool:value}));
+ assert.throws(()=>parseProductionRuntime26Configuration({...r1,coreInitializationRead:{profile:'COMMITTED_CORE_SETTINGS_V14',batchId:'14000000-0000-4000-8000-000000003000',operationId:'14000000-0000-4000-8000-000000003001',coreSourceDigest:'c'.repeat(64)}}));
+});
+test('production inventory spool: existing plugin receives captured host resources, missing mount returns503 before producer and frees the one slot',async()=>{
+ const original=fsPromises.lstat;let directoryChecks=0,allocations=0,ends=0,producerQueries=0;
+ fsPromises.lstat=async function(...args:unknown[]){if(args[0]===approvedInventorySpool.directory){directoryChecks++;throw Object.assign(Error('SYNTHETIC_MISSING_MOUNT'),{code:'ENOENT'});}return Reflect.apply(original,fsPromises,args);} as typeof fsPromises.lstat;
+ syncBuiltinESMExports();
+ const token=Buffer.alloc(32,42).toString('base64url'),now=new Date().toISOString(),expires=new Date(Date.now()+60000).toISOString();
+ const driver=Object.assign(new EventEmitter(),{async connect(){return Object.assign(new EventEmitter(),{async query(sql:string){
+  let rows:Record<string,unknown>[]=[];
+  if(/^(BEGIN|COMMIT|ROLLBACK)/.test(sql)){}
+  else if(sql.includes('FROM naijue_erp.auth_session'))rows=[{token_hash:sessionTokenHash(token),account_id:account,auth_version:1,created_at:now,expires_at:expires,revoked_at:null}];
+  else if(sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s'))rows=[{account_id:account,staff_id:'00000000-0000-4000-8000-000000000003',login_name:'SYNTHETIC_ONLY',password_hash:'SYNTHETIC_UNUSED',login_enabled:true,auth_version:1,role:'ADMIN',employment_status:'在职',hall_id:null}];
+  else{producerQueries++;throw Error('Output producer must not open without private mount');}
+  return{rows,rowCount:rows.length};},release(){}});},async end(){ends++;}});
+ let api:Awaited<ReturnType<typeof createProductionApplicationApi>>|undefined;
+ try{
+  const cfg={...config(),documentCommands:'DISABLED' as const,inventoryOutputSpool:{...approvedInventorySpool}};
+  api=await createProductionApplicationApi(cfg,()=>{allocations++;return driver;});
+  cfg.inventoryOutputSpool.directory='/tmp/caller-mutated-after-capture' as typeof approvedInventorySpool.directory;
+  assert.equal(api.app.server.listening,false);assert.equal(allocations,1);assert.equal(api.app.hasRoute({method:'POST',url:'/inventory/output/query'}),true);
+  for(let i=0;i<2;i++){
+   const response: {statusCode:number;body:string;json():{error:{code:string}}}=await api.app.inject({method:'POST',url:'/inventory/output/query',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${token}`},payload:{}});
+   assert.equal(response.statusCode,503,response.body);assert.equal(response.json().error.code,'INVENTORY_NOT_READY');assert.ok(!response.body.includes(approvedInventorySpool.directory));
+  }
+  assert.equal(directoryChecks,2);assert.equal(producerQueries,0);assert.equal(api.app.hasRoute({method:'POST',url:'/inventory/query'}),true);
+ }finally{await api?.close();fsPromises.lstat=original;syncBuiltinESMExports();}
+ assert.equal(ends,1);
 });

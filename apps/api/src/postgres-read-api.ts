@@ -31,6 +31,7 @@ import { createNodeMigratedLegacyPasswords } from "../../../packages/authenticat
 import { createAuthenticationHttpPlugin, createSalesSessionAuthenticator } from "./authentication.ts";
 import { createTransferSessionAuthenticator } from "./transfer-authentication.ts";
 import { createInventoryHttpPlugin } from "./inventory-http.ts";
+import type { InventoryOutputSpoolOptions } from "./inventory-http.ts";
 import { createInventoryLedgerQueryHttpPlugin } from "./inventory-ledger-query-http.ts";
 import { createSalesQueryHttpPlugin } from "./sales-query-http.ts";
 import { createTransferQueryHttpPlugin } from "./transfer-query-http.ts";
@@ -100,6 +101,8 @@ export interface PostgresReadApiNativeAuthorization {
 export type PostgresReadApiAuthorization = PostgresReadApiExplicitAuthorization | PostgresReadApiNativeAuthorization;
 
 export interface PostgresReadApiOptions {
+  /** Trusted host-only private output resources; absence keeps output unavailable. */
+  readonly inventoryOutputSpool?: InventoryOutputSpoolOptions;
   /** Explicit target, TLS choice and finite resource settings; never URI/env/pgpass discovery. */
   readonly postgres: BoundedPostgresConfig;
   readonly authentication: {
@@ -190,7 +193,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     entityId("operation", core.batchId as string); entityId("operation", core.operationId as string);
     if (core.profile !== "COMMITTED_CORE_SETTINGS_V14" || typeof core.coreSourceDigest !== "string" || !/^[a-f0-9]{64}$/.test(core.coreSourceDigest)
       || options.authorization.mode !== "source-confirmed-native" || options.productMedia !== null
-      || ["nativeReadExtensions", "documentCommands", "currentForms", "storeSettingsRead", "productManagementRead", "catalogueSettingsRead", "dictionaryRead", "partyRead", "importedHistoryRead"].some(k => k in options))
+      || ["inventoryOutputSpool", "nativeReadExtensions", "documentCommands", "currentForms", "storeSettingsRead", "productManagementRead", "catalogueSettingsRead", "dictionaryRead", "partyRead", "importedHistoryRead"].some(k => k in options))
       throw new TypeError("CORE host mounts only original authentication and exact committed member settings reads");
     coreInitializationRead = Object.freeze(core as unknown as CommittedCoreReadBinding);
   }
@@ -358,10 +361,12 @@ function checkedHost(options: PostgresReadApiOptions) {
       || typeof media.resolveThumbnails !== "function" || typeof media.resolveOriginal !== "function"))) {
     throw new TypeError("PostgreSQL read API requires explicit trusted HTTPS origin, authentication policy/clock, read authorization and media availability");
   }
+  const inventoryOutputSpool = Object.hasOwn(options, "inventoryOutputSpool")
+    ? Object.freeze({ ...exactBag(options.inventoryOutputSpool, ["directory", "maxBytes", "maxConcurrent", "maxDurationMs"]) }) as unknown as InventoryOutputSpoolOptions : undefined;
   // Capture provider methods and origins before the first await. Changing the caller's
   // configuration object later cannot replace these boundaries or enable a write plugin.
   return {
-    trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility,
+    inventoryOutputSpool, trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility,
     authorization: checkedAuthorization(options.authorization), currentForms: checkedCurrentForms(options),
     media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
       resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media),
@@ -532,7 +537,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     // Each register call deliberately preserves the existing plugin's Fastify encapsulation:
     // independent error handlers, per-request identity and independent abort controllers.
     app.register(createAuthenticationHttpPlugin(authentication));
-    app.register(createInventoryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryQueryReader(pool, issuer?.productSeasonArray ?? null, issuer?.runtime26) } }));
+    app.register(createInventoryHttpPlugin({ authenticate, ...(host.inventoryOutputSpool === undefined ? {} : { outputSpool: host.inventoryOutputSpool }), dependencies: { authorization: policies.inventory, reader: new PostgresInventoryQueryReader(pool, issuer?.productSeasonArray ?? null, issuer?.runtime26) } }));
     app.register(createInventoryLedgerQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.inventory, reader: new PostgresInventoryLedgerQueryReader(pool, issuer?.runtime26) } }));
     app.register(createSalesQueryHttpPlugin({ authenticate, dependencies: { authorization: policies.sales, reader: new PostgresSalesQueryReader(pool) } }));
     app.register(createTransferQueryHttpPlugin({ authenticate: authenticateTransfer, dependencies: { authorization: policies.transfers, reader: new PostgresTransferQueryReader(pool) } }));
