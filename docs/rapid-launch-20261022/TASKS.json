@@ -4716,7 +4716,7 @@
   "currentContinuation": {
     "atUtc": "2026-10-24T22:48:39.815747+00:00",
     "sourceRound": 368,
-    "sourceCheckpoint": "SOURCE370 65bd2236ea6cb0712069d290d620088f289696b4 remoteverified; SOURCE371 exact copied release compiler seam corrections; served364 unchanged",
+    "sourceCheckpoint": "SOURCE371 9494944f9b40c2917c6b1d4d5965680f0779a9d9 remoteverified; SOURCE372 copied static shell release parser adaptation; served364 unchanged",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8207,10 +8207,12 @@
       "resources": "shared ordered27 copied styles+4font files/license byte-identical frozenDemo; actual root React19.1.1/ReactDOM19.1.1/Arco2.66.16 singleton",
       "dependency": "exact jszip3.10.1 browser/build dev dependency; production dependency map and existing lock entries unchanged; first offline ENOTCACHED then bounded official registry success",
       "checks": "copied scoped strict0; existing release build+pack34/34; dependencycheckPASS; root typecheck preexisting fixture/responsible/command/workbook issues retained, not globallyPASS",
-      "next": "C fixed371 exactexport/fullbuild/pack; QF original targeted technical review already in progress on370 plus exact371 delta, no duplicate earlier UI checks",
+      "next": "C fixed372 exactexport/fullbuild then realpack; QF adopts only finalversion ownaffectedreview",
       "fixed369Attempt": "Preserved fixed export/full build attempt1 failed NON_PRODUCTION_SOURCE: copied original account-password.css not yet registered by old release guard; not install/application/deployment success",
       "correction": "Only exact copied runtime.html/style/member/license and workbook exactentry/staticpositivecontribution allowed. JSZip lockedbrowserdist input-only <runtime> import-statement marker recognized; output external guard unchanged. Golden CSS uses same existing212byteSVG hash. Original22byte query selector adaptation now explicit copied developmentCSS; Vite/esbuild transform removed, identical effective selector, actual raw graph input bytes preserved. Existing35build/packtestsPASS with workbook negative/staticclosure cases.",
-      "fixed370Attempt": "Preserved failed NON_PRODUCTION_SOURCE copied runtime.html; further diagnostic-only currentchecker exposed workbookchunk/source exactregistration, same212byteSVG originalCSS consumer, JSZip compiler-only runtime input marker, and build-time CSS22byte transform not matching sourcegraph. No fixedbuild PASS yet."
+      "fixed370Attempt": "Preserved failed NON_PRODUCTION_SOURCE copied runtime.html; further diagnostic-only currentchecker exposed workbookchunk/source exactregistration, same212byteSVG originalCSS consumer, JSZip compiler-only runtime input marker, and build-time CSS22byte transform not matching sourcegraph. No fixedbuild PASS yet.",
+      "fixed371Attempt": "Full exact371 compilation passed earlier source/member/graph/CSS conditions then failed UNSUPPORTED_OR_DUPLICATE_HTML_ATTRIBUTE: old HTML resource parser accepted only emptydiv shell, not copied data-ui-theme/menu/native dialogs. Preserved original attempt.",
+      "htmlCorrection": "Support only actual copied static shell elements/displayattrs/details-open; hash-only navigation separated from resourceURLs; script/link externalresources still exactreleaseclosure, events/externalanchors/duplicateattrs rejected. Existing36build/packtestsPASS. Diagnostic newchecker on371 artifacts PASS is not immutable372 buildPASS."
     },
     "qf2OutputFilterFinal": {
       "taskId": "QF2-I01-OUTPUT-FINITE-SOURCE364",

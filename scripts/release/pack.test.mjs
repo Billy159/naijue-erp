@@ -335,3 +335,14 @@ test('copied workbook lazy chunk requires its exact source and static positive c
  }
  for(const path of ['web/chunks/original-data-ABCDEFG2.js','web/originals/original-workbook-ABCDEFG2.js'])assert.throws(()=>allowedMember(path,'frontend'),error=>error.code==='NON_RELEASE_MEMBER');
 });
+
+test('copied static shell keeps hash navigation and native dialogs without allowing external anchors or handlers',async()=>{
+ for(const mutation of ['valid','external','handler']){
+ const f=await fixture('copied-shell-'+mutation);let shell='<div class="app"><aside class="sidebar"><nav aria-label="业务导航"><details class="tc-nav-group" open><summary class="nav child">调拨</summary><a class="nav child" href="#transfer/new" data-route="transfer/new">新增</a></details></nav></aside><main id="page"></main></div><dialog id="gold-drawer"></dialog>';
+ if(mutation==='external')shell=shell.replace('href="#transfer/new"','href="https://example.invalid/external"');
+ if(mutation==='handler')shell=shell.replace('<main id="page"','<main onclick="run()" id="page"');
+ f.buildData['web/index.html']=f.buildData['web/index.html'].replace('<html>','<html lang="zh-CN" data-ui-theme="brand">'+shell);Object.assign(f.build.files.find(r=>r.path==='web/index.html'),record('web/index.html',f.buildData['web/index.html']));await f.save();
+ if(mutation==='valid')assert.equal((await validateRelease(f.options)).manifest.buildId,'tool-check-1');
+ else await assert.rejects(validateRelease(f.options),e=>e.code===(mutation==='external'?'UNSUPPORTED_HTML_NAVIGATION':'UNSUPPORTED_OR_DUPLICATE_HTML_ATTRIBUTE'));
+ }
+});

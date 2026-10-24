@@ -195,8 +195,10 @@ function sameDependencyVersions(left, right) {
 
 /** Parse the generated entry's explicit HTML subset; never silently skip alternate resource-attribute syntax. */
 function htmlResources(html) {
-  const allowed = { html: ['lang'], head: [], meta: ['charset', 'name', 'content'], title: [], link: ['rel', 'href'],
-    body: [], div: ['id'], noscript: [], script: ['id', 'type', 'src'] };
+  const allowed = { html: ['lang','data-ui-theme'], head: [], meta: ['charset', 'name', 'content'], title: [], link: ['rel', 'href'],
+    body: [], div: ['id','class','aria-label','role','aria-live'], aside:['class'], span:['id','class','aria-hidden'], nav:['aria-label'],
+    a:['class','href','data-route'], details:['class','open'], summary:['class'], header:['class'], main:['id'], dialog:['id','aria-labelledby'], br:[],
+    noscript: [], script: ['id', 'type', 'src'] };
   const resources = []; let cursor = 0, configurations = 0;
   while ((cursor = html.indexOf('<', cursor)) !== -1) {
     if (html.startsWith('<!--', cursor)) {
@@ -215,7 +217,8 @@ function htmlResources(html) {
       const nameMatch = html.slice(cursor).match(/^[a-z_:][a-z0-9_:.-]*/i); requireRelease(nameMatch, 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX');
       const name = nameMatch[0].toLowerCase(); cursor += nameMatch[0].length;
       requireRelease(allowed[tag].includes(name) && !attributes.has(name), 'UNSUPPORTED_OR_DUPLICATE_HTML_ATTRIBUTE');
-      cursor += html.slice(cursor).match(/^\s*/)[0].length;
+      const afterName=cursor;cursor += html.slice(cursor).match(/^\s*/)[0].length;
+      if(tag==='details'&&name==='open'&&html[cursor]!=='='){attributes.set(name,'');cursor=afterName;continue;}
       requireRelease(html[cursor] === '=', 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX'); cursor++;
       cursor += html.slice(cursor).match(/^\s*/)[0].length;
       const quote = html[cursor]; let value;
@@ -227,7 +230,8 @@ function htmlResources(html) {
       }
       requireRelease(!/[<>\x00-\x1f\x7f]/.test(value), 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX'); attributes.set(name, value);
       if (name === 'src' || name === 'href') {
-        requireRelease(value.length > 0 && !value.includes('&'), 'UNSUPPORTED_HTML_RESOURCE_ENCODING'); resources.push(value);
+        if(tag==='a'&&name==='href')requireRelease(/^#[A-Za-z0-9_/-]+$/.test(value),'UNSUPPORTED_HTML_NAVIGATION');
+        else {requireRelease(value.length > 0 && !value.includes('&'), 'UNSUPPORTED_HTML_RESOURCE_ENCODING'); resources.push(value);}
       }
     }
     if (tag === 'script') {
