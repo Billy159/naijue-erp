@@ -1,0 +1,24 @@
+{
+  "atUtc": "2026-10-24T12:05:37.419115+00:00",
+  "parent": "f6f123e37a15a5e23119a5aa7e493b019fde7675",
+  "taskId": "C_V16_SYNTHETIC_UNKNOWN_RESPONSIBLE_CLOSURE",
+  "files": [
+    {
+      "path": "apps/web/preview-core-pages/sales-fixture.ts",
+      "owner": "C",
+      "bytes": 5043,
+      "sha256": "fe18bc459539b5d0cae7362da19bfb02c92511c7c0270d59cab3c8f34cbf732b"
+    },
+    {
+      "path": "apps/web/unified-browser-harness/readonly-transfer-fixtures.ts",
+      "owner": "C",
+      "bytes": 3431,
+      "sha256": "4bb83df10d98edd03eb1142fef6a3c5123e76181013c2c657be5dd87280dbd0b"
+    }
+  ],
+  "stage": "EXACT_NULL_UNKNOWN_FIXTURE_FIELDS_SOURCE_READY_SHARED_WEB_TYPES_PENDING_F1",
+  "authority": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json",
+  "scope": "Only required unknown responsible fields, no changedcreator/callback/businessdata/permissions/assertions",
+  "realBusinessAccepted": false,
+  "deployed": false
+}

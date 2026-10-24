@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T11:52:35.073668+00:00",
+  "updatedAt": "2026-10-24T12:05:18.158886+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -3725,6 +3725,20 @@
           "group": "F1_T02_LOCAL_SPEC_LINE_KNOWN_CONSUMER_TYPE_NARROWING",
           "fieldGate": "TEST_TYPE_ONLY_NO_BUSINESS_ASSERTION_WEAKEN",
           "scope": "Only original knownSKU assert.ok nonnull or legacy SAVE assert.ok draft discriminator. Preserve original expected identities/hash/quantities, no skipped or expanded tests."
+        },
+        {
+          "path": "apps/web/src/sales/tests/fixtures.ts",
+          "group": "V16_RESPONSIBLE_UNKNOWN_FIXTURE_TYPED_CLOSURE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "scope": "Only responsibleStaffId:null and responsibleName:null in exact old fixture header/detail/summary required positions, no fabricatedcreator fallback, no changedbehavior/assertions",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json"
+        },
+        {
+          "path": "apps/web/src/transfers/tests/fixtures.ts",
+          "group": "V16_RESPONSIBLE_UNKNOWN_FIXTURE_TYPED_CLOSURE",
+          "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
+          "scope": "Only responsibleStaffId:null and responsibleName:null in exact old fixture header/detail/summary required positions, no fabricatedcreator fallback, no changedbehavior/assertions",
+          "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json"
         }
       ]
     },
@@ -4632,6 +4646,16 @@
       "scope": "Explicit unique F1 checkpoint for UIDate actual firstmouse opening only. Oldc220 symptom is not current failure; first adopt existing newversion evidence or QF2current306 minimal consumer test. If failure persists, record cause/event trace and minimal fix. No unrelated CSS/control/API or16px workaround. Source changes only justified current failure.",
       "source": "User latest model boundary and existing F01 originalUIDate authority; QF2current browser owner",
       "otherWriters": false
+    },
+    {
+      "atUtc": "2026-10-24T12:05:18.158886+00:00",
+      "id": "V16_F1_SOURCE_FIXTURE_NULL_TYPED_CLOSURE",
+      "owner": "F1",
+      "paths": [
+        "apps/web/src/sales/tests/fixtures.ts",
+        "apps/web/src/transfers/tests/fixtures.ts"
+      ],
+      "scope": "Exact required unknown responsible2fields only; C handles preview/harness fixtures"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
