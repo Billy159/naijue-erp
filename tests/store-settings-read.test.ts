@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createStoreSettingsReadService } from '../packages/application/src/store-settings-read-service.ts';
 import type { StoreSettingsEntry, StoreSettingsReadAuthorization, StoreSettingsReadDependencies, StoreSettingsReadGrant, StoreSettingsReadIntent, StoreSettingsScopedRead } from '../packages/application/src/store-settings-read-ports.ts';
-import { parseStoreSettingsListQuery, validateStoreSettingsDetail, validateStoreSettingsEntry, validateStoreSettingsPage } from '../packages/application/src/store-settings-read-validation.ts';
+import { checkedStoreSettingsGrant, parseStoreSettingsListQuery, validateStoreSettingsDetail, validateStoreSettingsEntry, validateStoreSettingsPage } from '../packages/application/src/store-settings-read-validation.ts';
 import { actor, sid } from './support/synthetic-fixtures.ts';
 const id = sid('hall', 3101), warehouseId = sid('warehouse', 3102), customerId = sid('customer', 3103), otherHall = sid('hall', 3104);
 const parameters = { search: '', status: 'normal' as const, hallId: null, page: 1, pageSize: 20 as const };
@@ -20,6 +20,33 @@ function fixture(authorize?: StoreSettingsReadAuthorization['authorize']) {
   } };
   return { service: createStoreSettingsReadService(dependencies), dependencies, intents, reads };
 }
+const coreHalls = [id, ...Array.from({ length: 21 }, (_, i) => sid('hall', 3600 + i))];
+const coreWarehouses = [warehouseId, ...Array.from({ length: 21 }, (_, i) => sid('warehouse', 3700 + i))];
+function coreGrant(intent: StoreSettingsReadIntent): StoreSettingsReadGrant { return { ...grant(intent), scope: { kind: 'CORE_MEMBERS', hallIds: coreHalls, warehouseIds: coreWarehouses } }; }
+test('CORE grant: exact22 independent sets are server-only and malformed membership is denied before reads', async () => {
+  const intent: StoreSettingsReadIntent = { kind: 'stores', operation: 'list', parameters };
+  const accepted = checkedStoreSettingsGrant(coreGrant(intent), intent); assert.deepEqual(accepted.scope, coreGrant(intent).scope); assert.ok(Object.isFrozen(accepted.scope));
+  for (const scope of [{ kind: 'CORE_MEMBERS', hallIds: [], warehouseIds: [] }, { kind: 'CORE_MEMBERS', hallIds: coreHalls, warehouseIds: coreWarehouses.slice(1) },
+    { kind: 'CORE_MEMBERS', hallIds: [...coreHalls.slice(1), coreHalls[1]], warehouseIds: coreWarehouses }, { kind: 'CORE_MEMBERS', hallIds: coreHalls, warehouseIds: coreWarehouses, role: 'ADMIN' }]) {
+    const f = fixture(async (_a, intent) => ({ ...coreGrant(intent), scope } as never));
+    await assert.rejects(f.service.readList(actor, 'stores', parameters, signal()), { code: 'STORE_SETTINGS_FORBIDDEN' }); assert.equal(f.reads.length, 0);
+  }
+  const f = fixture();
+  for (const extra of [{ scope: { kind: 'CORE_MEMBERS', hallIds: coreHalls, warehouseIds: coreWarehouses } }, { role: 'ADMIN' }, { core: true }])
+    await assert.rejects(f.service.readList(actor, 'stores', { ...parameters, ...extra }, signal()), { code: 'STORE_SETTINGS_INVALID_QUERY' });
+  assert.equal(f.intents.length, 0);
+});
+test('CORE response: rows and names must match exact sets, with totals confined to the permitted members', async () => {
+  const f = fixture(async (_a, intent) => coreGrant(intent));
+  assert.equal((await f.service.readList(actor, 'stores', parameters, signal())).items.length, 1);
+  assert.equal((await f.service.readList(actor, 'warehouses', parameters, signal())).items.length, 1);
+  const warehouseIntent: StoreSettingsReadIntent = { kind: 'warehouses', operation: 'list', parameters }, g = coreGrant(warehouseIntent);
+  assert.throws(() => validateStoreSettingsPage({ page: 1, pageSize: 20, total: 1, items: [{ ...warehouse, id: sid('warehouse', 3999) }] }, 'warehouses', parameters, g), { code: 'STORE_SETTINGS_INVALID_RESPONSE' });
+  assert.throws(() => validateStoreSettingsPage({ page: 3, pageSize: 20, total: 43, items: [warehouse, { ...warehouse, id: coreWarehouses[1] }, { ...warehouse, id: coreWarehouses[2] }] }, 'warehouses', { ...parameters, page: 3 }, g), { code: 'STORE_SETTINGS_INVALID_RESPONSE' });
+  assert.deepEqual(validateStoreSettingsPage({ page: 3, pageSize: 20, total: 22, items: [] }, 'warehouses', { ...parameters, page: 3 }, g), { page: 3, pageSize: 20, total: 22, items: [] });
+  const names = { ...g, references: 'REFERENCES' as const };
+  assert.throws(() => validateStoreSettingsDetail({ item: { ...warehouse, hall: { id: otherHall, name: 'OUTSIDE NAME' } } }, 'warehouses', { id: warehouseId }, names), { code: 'STORE_SETTINGS_INVALID_RESPONSE' });
+});
 test('inert service requires explicit policy/reader and reauthorizes exact directory/detail scopes and native targets', async () => {
   assert.throws(() => createStoreSettingsReadService({} as never), /explicit trusted/); const f = fixture();
   assert.deepEqual((await f.service.readList(actor, 'stores', parameters, signal())).items, [store]);

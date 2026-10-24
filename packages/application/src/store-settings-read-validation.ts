@@ -39,6 +39,14 @@ export function checkedStoreSettingsGrant(value: StoreSettingsReadGrant, intent:
   const scopeInput = row.scope as StoreSettingsScope;
   let scope: StoreSettingsScope;
   if (scopeInput?.kind === 'ALL') { record(scopeInput, ['kind'], forbidden); scope = Object.freeze({ kind: 'ALL' }); }
+  else if (scopeInput?.kind === 'CORE_MEMBERS') {
+    const input = record(scopeInput, ['kind', 'hallIds', 'warehouseIds'], forbidden);
+    if (!Array.isArray(input.hallIds) || input.hallIds.length !== 22 || !Array.isArray(input.warehouseIds) || input.warehouseIds.length !== 22) forbidden();
+    let hallIds: string[], warehouseIds: string[];
+    try { hallIds = (input.hallIds as unknown[]).map(storeSettingsId); warehouseIds = (input.warehouseIds as unknown[]).map(storeSettingsId); } catch { return forbidden(); }
+    if (new Set(hallIds).size !== 22 || new Set(warehouseIds).size !== 22) forbidden();
+    scope = Object.freeze({ kind: 'CORE_MEMBERS', hallIds: Object.freeze(hallIds), warehouseIds: Object.freeze(warehouseIds) });
+  }
   else {
     const input = record(scopeInput, ['kind', 'hallIds'], forbidden);
     if (input.kind !== 'HALL_IDS' || !Array.isArray(input.hallIds) || input.hallIds.length > 5000) forbidden();
@@ -66,12 +74,22 @@ export function validateStoreSettingsEntry(value: unknown, kind: StoreSettingsKi
 function checkGrant(entry: StoreSettingsEntry, grant: StoreSettingsReadGrant): void {
   const hallId = entry.kind === 'stores' ? entry.id : entry.hall.id;
   if (grant.scope.kind === 'HALL_IDS' && !grant.scope.hallIds.includes(hallId)) invalidResponse();
+  if (grant.scope.kind === 'CORE_MEMBERS') {
+    const ids = entry.kind === 'stores' ? grant.scope.hallIds : grant.scope.warehouseIds;
+    if (!ids.includes(entry.id)) invalidResponse();
+    // Preserve actual FK identities; CORE authorizes names only inside its exact
+    // hall/warehouse sets, never an unrelated directory through a default FK.
+    const reference = entry.kind === 'stores' ? entry.defaultWarehouse : entry.hall;
+    const referenceIds = entry.kind === 'stores' ? grant.scope.warehouseIds : grant.scope.hallIds;
+    if (reference !== null && reference.name !== null && !referenceIds.includes(reference.id)) invalidResponse();
+  }
   const references = entry.kind === 'stores' ? [entry.defaultCustomer, entry.defaultWarehouse] : [entry.hall];
   if (grant.references === 'NONE' && references.some(reference => reference !== null && reference.name !== null)) invalidResponse();
 }
 export function validateStoreSettingsPage(value: unknown, kind: StoreSettingsKind, parameters: StoreSettingsListQuery, grant?: StoreSettingsReadGrant): StoreSettingsPage {
   const query = parseStoreSettingsListQuery(parameters, kind), row = record(value, ['page', 'pageSize', 'total', 'items'], invalidResponse);
   const total = integer(row.total, 0), page = integer(row.page, 1);
+  if (grant?.scope.kind === 'CORE_MEMBERS' && total > (kind === 'stores' ? grant.scope.hallIds.length : grant.scope.warehouseIds.length)) invalidResponse();
   if (page !== query.page || row.pageSize !== query.pageSize || !Array.isArray(row.items) || row.items.length !== Math.max(0, Math.min(query.pageSize, total - (page - 1) * query.pageSize))) invalidResponse();
   const items = (row.items as unknown[]).map(value => validateStoreSettingsEntry(value, kind));
   if (new Set(items.map(item => item.id)).size !== items.length) invalidResponse();

@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { PostgresStoreSettingsReadReader, type PgStoreSettingsClient, type PgStoreSettingsResult } from '../adapters/postgres/src/store-settings-read-reader.ts';
-import type { StoreSettingsKind, StoreSettingsReadGrant, StoreSettingsScopedRead } from '../packages/application/src/store-settings-read-ports.ts';
+import type { StoreSettingsCoreReadCapability, StoreSettingsKind, StoreSettingsReadGrant, StoreSettingsScopedRead } from '../packages/application/src/store-settings-read-ports.ts';
 import { actor, sid } from './support/synthetic-fixtures.ts';
 const id = sid('hall', 3201), otherHall = sid('hall', 3202), warehouseId = sid('warehouse', 3203), customerId = sid('customer', 3204);
 const store = { id, name: ' SAME NAME ', enabled: true, version: 7, default_customer_id: customerId, default_sales_warehouse_id: warehouseId, default_customer_name: null, default_warehouse_name: null };
@@ -21,6 +21,71 @@ const parameters = { search: '100%_\\原样', status: 'normal' as const, hallId:
 function read(kind: StoreSettingsKind = 'stores', references: StoreSettingsReadGrant['references'] = 'NONE', signal = new AbortController().signal): StoreSettingsScopedRead { return { actor, intent: { kind, operation: 'list', parameters }, grant: { kind, operation: 'list', targetId: null, scope: { kind: 'HALL_IDS', hallIds: [id] }, references }, signal }; }
 function detail(kind: StoreSettingsKind = 'stores', references: StoreSettingsReadGrant['references'] = 'NONE'): StoreSettingsScopedRead { const input = read(kind, references); const targetId = kind === 'stores' ? id : warehouseId; return { ...input, intent: { kind, operation: 'detail', parameters: { id: targetId } }, grant: { ...input.grant, operation: 'detail', targetId } }; }
 const reader = (client: Client) => new PostgresStoreSettingsReadReader({ async connect() { return client; } });
+const coreHalls = [id, ...Array.from({ length: 21 }, (_, i) => sid('hall', 3400 + i))];
+const coreWarehouses = [warehouseId, ...Array.from({ length: 21 }, (_, i) => sid('warehouse', 3500 + i))];
+function coreRead(kind: StoreSettingsKind = 'stores', references: StoreSettingsReadGrant['references'] = 'NONE'): StoreSettingsScopedRead {
+  const input = read(kind, references);
+  return { ...input, grant: { ...input.grant, scope: { kind: 'CORE_MEMBERS', hallIds: coreHalls, warehouseIds: coreWarehouses } } };
+}
+function coreReader(client: Client, verify?: StoreSettingsCoreReadCapability['assertReady']) {
+  return new PostgresStoreSettingsReadReader({ async connect() { return client; } }, { profile: 'COMMITTED_CORE_SETTINGS_V14', async assertReady(actual, input) {
+    assert.equal(actual, client); assert.equal(client.calls.length, 1); assert.deepEqual(input.actor, actor);
+    assert.deepEqual(input.grant.scope, { kind: 'CORE_MEMBERS', hallIds: coreHalls, warehouseIds: coreWarehouses });
+    if (verify) await verify(actual, input);
+  } });
+}
+test('CORE members: verified same-client proof precedes exact hall/warehouse count and page, including empty later pages', async () => {
+  for (const kind of ['stores', 'warehouses'] as const) {
+    const ids = kind === 'stores' ? coreHalls : coreWarehouses;
+    const c = new Client([begin(), { ...count(22), inspect(values, sql) {
+      assert.deepEqual(values.slice(0, 2), [false, ids]); assert.match(sql, /n.id = ANY\(\$2::uuid\[\]\)/);
+      if (kind === 'warehouses') assert.doesNotMatch(sql, /n.hall_id = ANY/);
+    } }, { sql: /^SELECT n.id/, rows: [], inspect(values, sql) {
+      assert.deepEqual(values.slice(0, 2), [false, ids]); assert.deepEqual(values.slice(-2), [20, 40]); assert.match(sql, /n.id = ANY\(\$2::uuid\[\]\)/);
+    } }, commit()]);
+    const input = coreRead(kind); assert.equal(input.intent.operation, 'list');
+    const result = await coreReader(c).readList({ ...input, intent: { kind, operation: 'list', parameters: { ...parameters, page: 3 } } });
+    assert.deepEqual(result, { page: 3, pageSize: 20, total: 22, items: [] }); c.done();
+  }
+});
+test('CORE members: exact warehouse identity blocks another warehouse in the same hall for page and detail', async () => {
+  const outside = { ...warehouse, id: sid('warehouse', 3999) };
+  const c = new Client([begin(), count(1), { sql: /^SELECT n.id/, rows: [outside] }, rollback()]);
+  await assert.rejects(coreReader(c).readList(coreRead('warehouses')), { code: 'STORE_SETTINGS_INVALID_RESPONSE' }); c.done();
+  const scoped = coreRead('warehouses'), targetId = outside.id;
+  const d: StoreSettingsScopedRead = { ...scoped, intent: { kind: 'warehouses', operation: 'detail', parameters: { id: targetId } }, grant: { ...scoped.grant, operation: 'detail', targetId } };
+  const absent = new Client([begin(), { sql: /^SELECT n.id/, rows: [], inspect(values, sql) { assert.deepEqual(values, [false, coreWarehouses, targetId]); assert.match(sql, /n.id = ANY\(\$2::uuid\[\]\)/); } }, commit()]);
+  assert.deepEqual(await coreReader(absent).readDetail(d), { item: null }); absent.done();
+  const leaked = new Client([begin(), { sql: /^SELECT n.id/, rows: [outside] }, rollback()]);
+  await assert.rejects(coreReader(leaked).readDetail(d), { code: 'STORE_SETTINGS_INVALID_RESPONSE' }); leaked.done();
+});
+test('CORE members: FK names join only exact permitted target sets while original FK identities remain', async () => {
+  for (const kind of ['stores', 'warehouses'] as const) {
+    const foreign = kind === 'stores' ? coreWarehouses : coreHalls;
+    const c = new Client([begin(), count(1), { sql: /^SELECT n.id/, rows: [kind === 'stores' ? { ...store, default_customer_name: 'REAL FK CUSTOMER', default_warehouse_name: 'MEMBER WAREHOUSE' } : { ...warehouse, hall_name: 'MEMBER HALL' }], inspect(values, sql) {
+      const index = kind === 'stores' ? 5 : 6;
+      assert.deepEqual(values[index - 1], foreign); assert.match(sql, new RegExp(`(?:w|h)\\.id=ANY\\(\\$${index}::uuid\\[\\]\\)`));
+    } }, commit()]);
+    const result = await coreReader(c).readList(coreRead(kind, 'REFERENCES')); assert.equal(result.items.length, 1); c.done();
+  }
+  const outsideId = sid('warehouse', 3998), input = coreRead('stores', 'REFERENCES');
+  const c = new Client([begin(), count(1), { sql: /^SELECT n.id/, rows: [{ ...store, default_sales_warehouse_id: outsideId, default_warehouse_name: null }] }, commit()]);
+  const result = await coreReader(c).readList(input); const row = result.items[0]!; assert.equal(row.kind, 'stores'); if (row.kind === 'stores') assert.deepEqual(row.defaultWarehouse, { id: outsideId, name: null }); c.done();
+  const forbiddenName = new Client([begin(), count(1), { sql: /^SELECT n.id/, rows: [{ ...store, default_sales_warehouse_id: outsideId, default_warehouse_name: 'UNGRANTED NAME' }] }, rollback()]);
+  await assert.rejects(coreReader(forbiddenName).readList(input), { code: 'STORE_SETTINGS_INVALID_RESPONSE' }); forbiddenName.done();
+});
+test('CORE members: missing proof, wrong member proof and current principal denial cannot become empty or ALL', async () => {
+  let acquired = 0;
+  await assert.rejects(new PostgresStoreSettingsReadReader({ async connect() { acquired++; throw Error('must not acquire'); } }).readList(coreRead()), { code: 'STORE_SETTINGS_FORBIDDEN' });
+  for (const scope of [{ kind: 'CORE_MEMBERS', hallIds: [], warehouseIds: [] }, { kind: 'CORE_MEMBERS', hallIds: coreHalls, warehouseIds: [...coreWarehouses.slice(1), coreWarehouses[1]] }])
+    await assert.rejects(new PostgresStoreSettingsReadReader({ async connect() { acquired++; throw Error('must not acquire'); } }).readList({ ...coreRead(), grant: { ...coreRead().grant, scope: scope as never } }), { code: 'STORE_SETTINGS_FORBIDDEN' });
+  assert.equal(acquired, 0);
+  for (const reason of ['NOT_COMMITTED', 'WRONG_MEMBER_SET', 'SALESPERSON_CURRENT_PRINCIPAL'] as const) {
+    const c = new Client([begin(), rollback()]);
+    await assert.rejects(coreReader(c, async () => { throw Object.assign(new Error(reason), { code: 'STORE_SETTINGS_FORBIDDEN' }); }).readList(coreRead()), { code: 'STORE_SETTINGS_FORBIDDEN' });
+    assert.equal(c.calls.length, 2); c.done();
+  }
+});
 test('native reader construction is inert, invalid/target-mismatched/missing scope/pre-aborted grants never acquire', async () => {
   assert.throws(() => new PostgresStoreSettingsReadReader(undefined as never), /explicit PostgreSQL pool/); let acquired = 0; const r = new PostgresStoreSettingsReadReader({ async connect() { acquired++; throw new Error('must not acquire'); } });
   for (const grant of [{ ...read().grant, scope: undefined }, { ...read().grant, targetId: id }, { ...read().grant, kind: 'warehouses' }]) await assert.rejects(() => r.readList({ ...read(), grant: grant as never }), { code: 'STORE_SETTINGS_FORBIDDEN' });

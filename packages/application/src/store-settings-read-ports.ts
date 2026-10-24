@@ -18,7 +18,8 @@ export type StoreSettingsReadIntent =
  * rows, including disabled targets and cross-hall default warehouses. NONE must
  * not read target tables and must return null names. Neither permits enumeration
  * of the referenced customer/warehouse/hall directories. */
-export type StoreSettingsScope = { readonly kind: 'ALL' } | { readonly kind: 'HALL_IDS'; readonly hallIds: readonly string[] };
+export type StoreSettingsScope = { readonly kind: 'ALL' } | { readonly kind: 'HALL_IDS'; readonly hallIds: readonly string[] }
+  | { readonly kind: 'CORE_MEMBERS'; readonly hallIds: readonly string[]; readonly warehouseIds: readonly string[] };
 export interface StoreSettingsReadGrant {
   readonly kind: StoreSettingsKind; readonly operation: 'list' | 'detail';
   readonly scope: StoreSettingsScope; readonly references: 'NONE' | 'REFERENCES';
@@ -46,6 +47,13 @@ export interface StoreSettingsReadAuthorization {
   authorize(actor: ActorContext, intent: StoreSettingsReadIntent, signal: AbortSignal): Promise<StoreSettingsReadGrant>;
 }
 export interface StoreSettingsScopedRead { readonly actor: ActorContext; readonly intent: StoreSettingsReadIntent; readonly grant: StoreSettingsReadGrant; readonly signal: AbortSignal }
+/** D1 trusted host only: rechecks the real committed v14 CORE audit/receipt/member
+ * proof, exact 22+22 sets and current ADMIN/WAREHOUSE authority on this same client.
+ * A shaped grant, browser flag or account count cannot supply this proof. */
+export interface StoreSettingsCoreReadCapability {
+  readonly profile: 'COMMITTED_CORE_SETTINGS_V14';
+  readonly assertReady: (client: object, read: StoreSettingsScopedRead) => Promise<void>;
+}
 export interface StoreSettingsReader {
   readList(read: StoreSettingsScopedRead): Promise<StoreSettingsPage>;
   readDetail(read: StoreSettingsScopedRead): Promise<StoreSettingsDetail>;
