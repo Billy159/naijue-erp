@@ -1,11 +1,16 @@
-CURRENT C299 THREE UI RESIDUALS PASS / LINUX149 INSTALLED / R1 ACL148 COMMITTED / WHITE ENV STILL OPEN (2026-10-24)
+CURRENT REAL CORE154 SOURCE PREFLIGHT FINDING / ORIGINAL D3 FIX (2026-10-24)
 
-- 原QF v111固定299三项实际通过：T02日期几何、S04只读操作语义、禁用日期色；旧有效状态复用。RESULT4054/7fe3f7a13a5c294b87f27cc03252f6fa3fb4e5377be13d187a68f25d14e71450。104条39未跑/8待接/23差异/33局部/1例外、整页0不变，不冒充真实业务或性能通过。
-- 正式299 r1-f43e943-20261024-01 已构建/打包；C149真实Linux生产锁定安装+native加载通过，111records，engine9717/78218751fc6689f5064e6e92610a270e2ae19ef05a71e831cbad179b52297cc9。未启动新应用、未切正式地址，原7服务保持。
-- C148实际精确175列权限位COMMIT，143列/37GRANT；新R1canonical f6afb2d418904db1f9da14d7652fe7b9c26353845bfd6464912c9a2dae030620；engine27188/eef28e84d89cff84fb3b4005e88e81354b0b9d87256c02e558fbf1c20528e8ea。123函数/OID、其他ACL/对象/931触发、55业务空表/26迁移、旧QA及7服务保持。原QB只核新增差异和有限IMPORT_STAGE metadata。真实CORE128仍OFF。
-- C131连接与实际metadata正确，但C把carrier canonical属性改名时漏同步JS消费者，实际值被和undefined比较而ERR_ASSERTION；ROLLBACK/release/end返回。原FAILED保留。C150只对齐一个属性，新有界验证在途，无HBA/role/grant/fallback/业务写入；不重放131。
-- 底部白带此前仅当前帧恢复，完整重入后668会复发，早先“RESOLVED”关闭撤回。用户已交回窗口。QF保持独占原2owned；正常重连driver76792→32836未重启Chrome4173/未关标签，重入仍668。环境问题继续OPEN，三项299实际724配对证据有效，不为白带重验三项。Demo出现外部导航来源UNKNOWN，保留单据，不擅自清草稿。
-- 用户已要求减少额外准备helper：开发/验收角色不变；复杂独立工作才用额外helper，机械版本/复制/hash/构建/安装由C批量现有脚本完成。本轮299构建/149安装/150定向接续均C直接完成，C148helper已释放。11角色/22任务/gpt-6.1-sol/xhigh/Fast工具无开关UNVERIFIED。GitHub已核c2089b4，有限本轮记录待推，112原截止11:35:38Z不改。goalACTIVE未完成。
+传输根因已由实际153定位：原128首错EXACT_FLAT_FILE_CLOSURE，client把公开PRIVATE-INPUT-PINS文件名过滤，PLAN仍期待该文件。152因C假设首错名称不准确被守卫在PG前阻止；两次均无carrier/private目录，不改判。154依据实际原manifest逐项确认仅缺该公开元数据清单，改名INPUT-REFERENCE-PINS后通过原过滤/闭包/配置/授权检查，原保护不放宽。
+
+真实154随后在SOURCE_HOST_PREFLIGHT失败NATIVE_BOOTSTRAP_ACCOUNT_IDENTITY，CORECommitObserved=false；core519/818fb9eca3883361e783b4a0d5085264a43b0fde578afc79cd1e57274bb1d086、engine14875/7d0ab390c0cd8c768ae5a3840202df7d4ef0f1790d78b53a47d10f9429a951ac完整保留，不重放。155仅服务器内存最小3谓词投影实际528/78878519a3e3f4e3178177bbf90f9affe6cfed7ebbd654d374bcda1bd889bf47：49账号ID非空/重复0；49行均有来源批次键、45等全局批次、4不同。不是缺字段。未输出ID/名字/凭据值，不改原资料。原D3 soleowner修native-bootstrap已批4计划身份的准确来源接缝，显式跨批仍拒绝，不重审49身份；固定新源/原QB只新差异后再接原CORE。原C137唯一复杂helper继续最新299启动准备，真实COMMIT三绑定未到不得填计划值启动。白带整窗关闭、三UI299PASS、QB233/150/149有效结果仍采用，正式地址不切，原112deadline11:35:38Z不改。
+
+CURRENT WHITE STRIP CLOSED / QB233 + SOCKET150 ACCEPTED / REAL CORE152 IN FLIGHT (2026-10-24)
+
+当前白带已按完整Chrome窗口证据关闭。C native整窗图430414B（ui-preview-f43e943-01/CHROME-WINDOW-BOUNDARY.png）及QF真人原图366060/5f5c5491454d6771cfd29910fc547abe0acfc1e56300ae74da1b71cfb753f7fc均显示侧栏/主内容到真实底边。现在668含顶部自动化提示条，合法；旧724不是恒定门槛。QF关闭纠正3676/cb170eb991fcb311d8cee685340552f5d5183d9d517c639d6d7c9e4fc30a9b7f，原测量不改；停止重复排障。三UI299实际PASS保持，104整页0不变。C原native收起提示条尝试被工具在发送前因真人app变化阻止，0成功输入/导航，立即停止，QF/C均NO_GUI。
+
+QB233新ACL delta与有限CORE IMPORT_STAGE元数据限定PASS；TCP3406/2509e85e1d603fb19fb7f7262a59ee15f3f90d5ff5248dcfa84c30c9c28e1c7a、socket3725/cbdf727443d5ad819a46f52e28bb3465c8b2186fb142fe2b0c4346d76bdc1f01分开采用，不包含BIND/普通MAIN/PUBLISH。实际150 readonlyCOMMIT、原runtime真实Unixsocket新f6af/123/26与148精确配对，engine16410/2661f76ab78aaa4a9ba1abb0c7479cae5f87b9785e1c0825b75ddc813262e9c3。131键接线失败保留。
+
+C128首次前置FAILED2/0.067s，无engine；151只读实际证明0carrier/0private目录，未触PG。C152有界后继原键c128_real_core_20261024_01/49/115/22/2589digest不变：公开引用清单重命名INPUT-REFERENCE-PINS，原禁私有payload guard不放宽；运行前须从128必要脱敏日志确认首错EXACT_ORIGINAL_TRANSPORT_SELECTION及未执行事实才继续。私有14文件1688402B仍原通道，raw账号未本地读取/下载。C真实CORE执行review已独立采用；152当前在途，未记COMMIT。其真实返回的batch/operation/digest将用于原C137新299启动，不能用计划值冒已提交。仅1额外helper并行准备137复杂整合，C直接完成机械绑定。正式299实际安装149已过，新app/正式切换仍未做。GitHub14b9ab0已核，本段待有限push；112原截止11:35:38Z不改。
 
 Prior entries below are historical; the former current-frame white-band resolution is superseded by the open recurrence above.
 
