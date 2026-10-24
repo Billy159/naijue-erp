@@ -1,6 +1,6 @@
 import { DocumentProductPresentation } from '../../sales/document-presentation.tsx';
 import { useDocumentLeave } from '../../demo-presentation/document-navigation.tsx';
-import { TransferDocumentSummary } from '../document-presentation.tsx';
+import { TransferDocumentPage, TransferDocumentSummary } from '../document-presentation.tsx';
 import type { TransferProposalPresentation } from '../../current-form/transfer-proposal-form.tsx';
 import { DocumentOutputActions } from '../../components/document-output.tsx';
 import { transferDocumentOutput } from '../../components/document-output-contracts.ts';
@@ -15,7 +15,7 @@ import { TransferEditableLines } from './editable-lines.tsx';
 import { TransferSavedRecords } from '../saved-records.tsx';
 import type { ReadScope } from '../../loading/read-scope.ts';
 
-export interface TransferCommandFormProps { readonly presentation?: TransferProposalPresentation; readonly history?: TransferHistoryCapability; readonly capability: TransferCommandCapability; readonly scope: ReadScope; readonly close: () => void }
+export interface TransferCommandFormProps { readonly presentation?: TransferProposalPresentation; readonly history?: TransferHistoryCapability; readonly capability: TransferCommandCapability; readonly scope: ReadScope; readonly close: () => void; readonly existingDocumentNotice?: string | null }
 /** Frozen transfer delete-doc uses the common compact confirmation surface. */
 export function TransferVoidConfirmation({ number, close, confirm }: { readonly number: string; readonly close: () => void; readonly confirm: () => void }) {
   return <SourceDocumentDialog title="确认作废调拨单" label="确认作废调拨单" closeLabel="关闭弹窗" close={close} className="transfer-source-discard" initialFocus="[data-erp-keep-input]"
@@ -31,7 +31,7 @@ export function TransferCommandForm(props: TransferCommandFormProps) {
   const [failedOwner, setFailedOwner] = useState<typeof workspace | null>(null), enabled = workspace.canUseExistingProposal;
   useEffect(() => { if (!enabled) return; let live = true; void import('../../current-form/transfer-existing-document-form.tsx').then(module => { if (live) setBridge({ owner: workspace, View: module.TransferExistingDocumentForm }); }, () => { if (live) setFailedOwner(workspace); }); return () => { live = false; }; }, [workspace, enabled]);
   if (enabled && bridge?.owner === workspace) return <bridge.View {...props} />;
-  if (enabled && workspace.editableExistingProposal && failedOwner !== workspace) return <p role="status">正在准备完整旧单编辑页…</p>;
+  if (enabled && workspace.editableExistingProposal && failedOwner !== workspace) return <TransferDocumentPage ariaLabel="调拨单编辑" className="transfer-command-editor" title="编辑调拨单"><p role="status">正在准备完整旧单编辑页…</p></TransferDocumentPage>;
   return <TransferNativeCommandForm {...props} key={state.editor?.transferId} />;
 }
 function TransferCommandRecovery({ workspace }: { readonly workspace: TransferCommandCapability['workspace'] }) {
@@ -39,7 +39,7 @@ function TransferCommandRecovery({ workspace }: { readonly workspace: TransferCo
   return <>{['submitting', 'checking', 'replaying'].includes(write.phase) && <p className="transfer-command-notice" role="status">{write.phase === 'checking' ? '正在核实原操作回执…' : '正在提交原操作…'}<UIButton type="button" className="iw-link" onClick={() => workspace.cancelWaiting()}>停止等待</UIButton></p>}
     {write.phase === 'uncertain' && <div className="transfer-command-recovery" role="status"><strong>原操作结果不确定，请勿重复新建操作。</strong><span>操作键：{write.command?.requestKey}</span><UIButton type="button" className="iw-button" onClick={() => { void workspace.checkReceipt(); }}>核实原操作回执</UIButton><UIButton type="button" className="iw-button" onClick={() => { void workspace.replayOriginal(); }}>重放原请求</UIButton></div>}</>;
 }
-export function TransferNativeCommandForm({ capability, scope, close, history, presentation }: TransferCommandFormProps) {
+export function TransferNativeCommandForm({ capability, scope, close, history, presentation, existingDocumentNotice }: TransferCommandFormProps) {
   const { workspace } = capability, state = useSyncExternalStore(workspace.subscribe, workspace.getSnapshot, workspace.getSnapshot);
   const heading = useRef<HTMLHeadingElement>(null);
   const [discard, setDiscard] = useState(false);
@@ -58,7 +58,7 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
   useEffect(() => { setDiscard(false); }, [workspace, editor?.transferId, write.phase]);
   useEffect(() => { setVoidTarget(null); }, [workspace, editor?.transferId, editor?.detail?.document.header.version, editor?.phase, editor?.input, state.stale, write.phase]);
   if (!scope.active || state.disposed) return null;
-  if (!editor) return <section className="tc-workbench tc-editor transfer-editor transfer-command-editor" aria-label="调拨单编辑"><div className="tc-head"><h1 ref={heading} tabIndex={-1}>新增调拨单</h1></div><TransferCommandRecovery workspace={workspace} />{state.notice && <p className="transfer-command-notice" role="status">{state.notice}</p>}</section>;
+  if (!editor) return <TransferDocumentPage headingRef={heading} ariaLabel="调拨单编辑" className="transfer-command-editor" title="新增调拨单"><TransferCommandRecovery workspace={workspace} />{state.notice && <p className="transfer-command-notice" role="status">{state.notice}</p>}</TransferDocumentPage>;
   const savedReadback = write.phase === 'committed' ? editor.current : null;
   const detail = savedReadback ?? editor.detail;
   const header = detail?.document.header ?? editor.draft?.header, input = savedReadback ? null : editor.input;
@@ -70,8 +70,10 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
   const leave = () => { if (unresolved) return; if (dirty) setDiscard(true); else if (workspace.canLeave()) { workspace.suspend(); close(); } };
   const lines = savedReadback?.document.lines ?? editor.draft?.lines ?? detail?.document.lines ?? [];
   const names = detail?.references;
-  return <DocumentProductPresentation scope={scope} {...(presentation?.productCapability ? { capability: presentation.productCapability } : {})} returnLabel="返回调拨单" viewLabel="调拨商品查看" documentLabel="调拨">{openProduct => <section className="tc-workbench tc-editor transfer-editor transfer-command-editor" aria-label="调拨单编辑">
-    <div className="tc-head"><h1 ref={heading} tabIndex={-1}>{editor.mode === 'CREATE' && !detail && write.phase !== 'committed' ? '新增调拨单' : locked ? '查看调拨单' : '编辑调拨单'}</h1><TransferStatusTag status={status} />{(detail || write.phase === 'committed') && <span className="transfer-save-state">{status === 'APPROVED' ? '' : dirty ? '· 有未保存修改' : '· 已保存'}</span>}<div className="actions">
+  return <DocumentProductPresentation scope={scope} {...(presentation?.productCapability ? { capability: presentation.productCapability } : {})} returnLabel="返回调拨单" viewLabel="调拨商品查看" documentLabel="调拨">{openProduct => <TransferDocumentPage headingRef={heading} ariaLabel="调拨单编辑" className="transfer-command-editor"
+    title={editor.mode === 'CREATE' && !detail && write.phase !== 'committed' ? '新增调拨单' : locked ? '查看调拨单' : '编辑调拨单'} status={<TransferStatusTag status={status} />}
+    saveState={(detail || write.phase === 'committed') && <span className="transfer-save-state">{status === 'APPROVED' ? '' : dirty ? '· 有未保存修改' : '· 已保存'}</span>}
+    actions={<>
       <button type="button" className="btn tc-back-link" onClick={leave} disabled={unresolved || !workspace.canLeave() && !dirty}>返回列表</button>
       {status === 'DRAFT' && <><button type="button" className="btn" disabled={!editor.detail || dirty || unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { if (editor.detail) setVoidTarget({ id: editor.transferId, version: editor.detail.document.header.version }); }}>作废</button>
         <button type="button" className="btn" disabled={locked || !dirty || editor.inputError} onClick={() => { void workspace.submit('SAVE'); }}>保存</button>
@@ -79,7 +81,9 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
       {status === 'APPROVED' && <button type="button" className="btn" disabled={unresolved || state.stale || !!editor.current || editor.phase !== 'ready' || editor.detail?.stockBasis !== 'RUNTIME_LEDGER'} onClick={() => { void workspace.submit('UNAPPROVE'); }}>弃审</button>}
       <DocumentOutputActions sourceKey={detail ? `${detail.document.header.id}:${detail.document.header.version}` : "unsaved"} {...(detail && (write.phase !== 'committed' || !!savedReadback) && !unresolved && (!state.stale || !!savedReadback) && (!dirty || !!savedReadback) ? { getDocument: () => transferDocumentOutput(detail) } : {})} unavailableReason="请先完成保存并读取当前单据" />
       <TransferHistoryAction {...(history ? { capability: history } : {})} {...(detail ? { transferId: detail.document.header.id } : {})} />
-    </div></div>
+    </>}
+  >
+    {existingDocumentNotice && <p className="transfer-command-notice" role="status">{existingDocumentNotice}</p>}
     {editor.phase === 'loading' && <p className="transfer-command-notice" role="status">正在读取调拨单…</p>}
     {editor.readError && <p className="transfer-command-notice" role="alert">单据读取未完成。<UIButton type="button" className="iw-link" disabled={unresolved} onClick={() => { void workspace.readCurrent(); }}>重新读取当前单据</UIButton></p>}
     {header && <><div className="tc-doc-header"><div className="tc-gold-doc-fields">
@@ -106,5 +110,5 @@ export function TransferNativeCommandForm({ capability, scope, close, history, p
       if (scope.active && current?.transferId === target.id && current.detail?.document.header.version === target.version) void workspace.submit('VOID');
     }} />}
     {detail && <TransferSavedRecords data={detail} />}
-  </section>}</DocumentProductPresentation>;
+  </TransferDocumentPage>}</DocumentProductPresentation>;
 }

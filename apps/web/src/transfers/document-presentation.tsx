@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode, type Ref } from 'react';
 import { Trigger } from '@arco-design/web-react';
 import type { DictionaryBrowserReader, DictionarySizeGroup } from '../product-settings/size-groups/contracts.ts';
 import { validateDictionaryPage, validateDictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-validation.ts';
@@ -6,6 +6,26 @@ import { entityId } from '../../../../packages/domain/src/values.ts';
 import { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { UIButton } from '../components/standard-controls.tsx';
+
+/** Shared full-page shell for every transfer document state. It owns only the
+ * frozen Demo presentation frame; status, actions, data and handlers stay with
+ * the existing document owners. */
+export function TransferDocumentPage({ sectionRef, headingRef, ariaLabel, className, title, status, saveState, actions, children }: {
+  readonly sectionRef?: Ref<HTMLElement>;
+  readonly headingRef?: Ref<HTMLHeadingElement>;
+  readonly ariaLabel: string;
+  readonly className: string;
+  readonly title: ReactNode;
+  readonly status?: ReactNode;
+  readonly saveState?: ReactNode;
+  readonly actions?: ReactNode;
+  readonly children?: ReactNode;
+}) {
+  return <section ref={sectionRef} aria-label={ariaLabel} className={`tc-workbench tc-editor transfer-editor ${className}`}>
+    <div className="tc-head"><h1 ref={headingRef} tabIndex={-1}>{title}</h1>{status}{saveState}<div className="actions">{actions}</div></div>
+    {children}
+  </section>;
+}
 
 export interface TransferSizeGroupCapability {
   readonly id: string; readonly reader: Pick<DictionaryBrowserReader, 'readSizeGroups'>;

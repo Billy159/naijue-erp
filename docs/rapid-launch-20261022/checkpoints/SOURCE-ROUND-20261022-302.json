@@ -1,0 +1,42 @@
+{
+  "atUtc": "2026-10-24T10:50:53.299561+00:00",
+  "parent": "aad94a52172b234ff701e5a7e2040fbb3e6b53d3",
+  "taskId": "F1_TRANSFER_PAGE_FRAME_PARTIAL_UI_HANDOFF",
+  "files": [
+    {
+      "path": "apps/web/src/transfers/document-presentation.tsx",
+      "owner": "F1",
+      "bytes": 14464,
+      "sha256": "e3208c1f3f1a76a7866eb5c4ce70c701349cf110298dd05b072b1fe65049e375"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-proposal-form.tsx",
+      "owner": "F1",
+      "bytes": 35319,
+      "sha256": "f60456dbe926a44e9b13d17d3c255c5e879fdcb2c2218d904b974e9ecf095bf5"
+    },
+    {
+      "path": "apps/web/src/transfers/commands/form.tsx",
+      "owner": "F1",
+      "bytes": 16291,
+      "sha256": "3eeb3d64b08c49d62b89ea5284752c2aafc16118b0eb28f4d2b25ca920ea5350"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document-form.tsx",
+      "owner": "F1",
+      "bytes": 5916,
+      "sha256": "52051afc9366437896f6028064621412598c5a409cdf5ed14a2dec1a249bc717"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-142/DELIVERY.json",
+  "ownerReceiptSha256": "958b9fecd7a36903ef180267e09835c93a1d109130f0ba03ef92eafc6cff6b9b",
+  "ownerSourceReleased": true,
+  "stage": "PARTIAL_PAGE_FRAME_SOURCE_ONLY_NOT_WHOLE_DEMO_MIGRATION",
+  "checks": "ScopedtypePASS atNode24.19.0(ownerenvironment mismatch), 2DOMfailures preserved; normalwholeUI/realbrowser/business notpassed",
+  "notTested": [
+    "WholeDemo body/allstates/normalentry",
+    "Node24.21 affectedcase",
+    "B07 historicalsave"
+  ],
+  "deployed": false
+}
