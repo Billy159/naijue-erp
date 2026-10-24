@@ -8,6 +8,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import { createProductionApplicationApi, createProductionRuntime26ApplicationApi, parseProductionRuntimeConfiguration, parseProductionRuntime26Configuration, productionApplicationOptions, PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
+import { createProductionRuntime26HistoryRevisionApplicationApi } from "./production-provider-composition.ts";
 import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration } from "./production-provider-composition.ts";
 import { createProductionRuntime26R3ApplicationApi, parseProductionRuntime26R3Configuration, createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
 import type { ProductionRuntime26R3Configuration, ProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
@@ -118,6 +119,7 @@ test("R1 explicit read profile installs no command or preparation routes", async
     }
     assert.equal(api.app.hasRoute({ method: "GET", url: "/customers" }), true);
     for (const path of ["/customers/commands", "/suppliers/commands"]) assert.equal(api.app.hasRoute({ method: "POST", url: path }), false);
+    for (const path of ["/imported-history/sales/revise", "/imported-history/transfers/revise"]) assert.equal(api.app.hasRoute({ method: "POST", url: path }), false);
     assert.equal(api.app.hasRoute({ method: "POST", url: "/inventory/query" }), true); assert.equal(connects, 0);
   } finally { await api.close(); }
 });
@@ -302,6 +304,35 @@ function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observati
   }); }, async end() { ends++; } });
   return { calls, token, factory: () => { allocations++; return driver; }, counts: () => ({ allocations, connects, releases, ends }) };
 }
+
+test("production B07 host: explicit write authorization and full read application are required before pool allocation", async () => {
+  const f = exact26Fixture(); let allocations = 0;
+  const driver = () => { allocations++; throw Error("must not allocate"); };
+  const policy = { authorization: { async authorize(): Promise<never> { throw Error("not a request"); } } };
+  try {
+    for (const bad of [{}, { authorization: {} }, { authorization: { authorize: true } }, { ...policy, store: {} }])
+      await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, bad as never, driver), TypeError);
+    const getter = Object.defineProperty({}, "authorization", { enumerable: true, get() { throw Error("must not read accessor"); } });
+    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, getter as never, driver), TypeError);
+    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi({ ...f.configuration,
+      coreInitializationRead: { profile: "COMMITTED_CORE_SETTINGS_V14", batchId: account, operationId: account, coreSourceDigest: "c".repeat(64) } }, policy, driver), TypeError);
+    assert.equal(allocations, 0);
+  } finally { f.cleanup(); }
+});
+
+test("production B07 host: read-only runtime metadata cannot enable HISTORY writes and the original owned pool closes", async () => {
+  const f = categoryProductionFixture("26_v11_document_specification_save", false), p = exact26Driver(f.observation); let authorizationCalls = 0;
+  try {
+    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, {
+      authorization: { async authorize(): Promise<never> { authorizationCalls++; throw Error("not a request"); } }
+    }, p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
+    const counts = p.counts(); assert.equal(counts.allocations, 1); assert.equal(counts.ends, 1);
+    assert.equal(counts.connects, counts.releases); assert.equal(authorizationCalls, 0);
+    assert.ok(p.calls.some(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+    assert.equal(p.calls.filter(call => /^(BEGIN|INSERT|UPDATE|DELETE|TRUNCATE)\b/.test(call.sql)
+      || call.sql.includes("history-revise:")).length, 0);
+  } finally { f.cleanup(); }
+});
 test("production exact26: separate closed selector refuses legacy, command, pin and provider widening before pool allocation", async () => {
   const f = exact26Fixture(); try {
     assert.deepEqual(parseProductionRuntime26Configuration(f.configuration), f.configuration);

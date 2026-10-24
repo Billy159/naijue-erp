@@ -64,6 +64,9 @@ import { createPartySessionAuthenticator } from "./party-authentication.ts";
 import type { ImportedHistoryReadAuthorization } from "../../../packages/application/src/imported-history-query-ports.ts";
 import { PostgresImportedHistoryQueryReader } from "../../../adapters/postgres/src/imported-history-query-reader.ts";
 import { createImportedHistoryQueryHttpPlugin } from "./imported-history-query-http.ts";
+import { createHistoryRevisionHttpPlugin } from "./history-revision-http.ts";
+import type { HistoryRevisionDependencies } from "../../../packages/application/src/history-revision-contracts.ts";
+import { PostgresHistoryRevisionStore } from "../../../adapters/postgres/src/history-revision-store.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
@@ -422,6 +425,31 @@ export async function createPostgresRuntime26ApplicationApi(options: PostgresApp
     Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 })) as PostgresApplicationApi;
 }
 export interface Runtime26ExistingPreparation { readonly sales: boolean; readonly transfers: boolean }
+/** Trusted host policy, independently supplied for HISTORY writes. Read policies
+ * and LIVE command providers cannot stand in for this authorization. */
+export interface Runtime26HistoryRevisionConfiguration {
+  readonly authorization: HistoryRevisionDependencies["authorization"];
+}
+/** Same application/pool/authentication, with the existing numeric HISTORY
+ * revision routes. Actual HISTORY_REVISION metadata is required before ready. */
+export async function createPostgresRuntime26HistoryRevisionApplicationApi(options: PostgresApplicationApiOptions,
+  review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, history: Runtime26HistoryRevisionConfiguration,
+  createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  if (!options || typeof options !== "object" || "documentCommands" in options || "coreInitializationRead" in options || !("currentForms" in options))
+    throw new TypeError("HISTORY revision requires the full read application and separate historical write policy");
+  const pin = exactBag(review, ["reviewFile", "trustedReviewSha256"]), selected = exactBag(history, ["authorization"]);
+  const authorization = exactBag(selected.authorization, ["authorize"]);
+  if (typeof pin.reviewFile !== "string" || !isAbsolute(pin.reviewFile) || resolve(pin.reviewFile) !== pin.reviewFile
+    || typeof pin.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(pin.trustedReviewSha256)
+    || typeof authorization.authorize !== "function") throw new TypeError("Explicit HISTORY write policy and exact runtime review required");
+  const capabilities = checkedApplicationCapabilities(options);
+  if (!capabilities.nativeReadExtensions) throw new TypeError("HISTORY revision requires the original published-history read application");
+  const fixed: HistoryRevisionDependencies["authorization"] = Object.freeze({
+    authorize: (authorization.authorize as HistoryRevisionDependencies["authorization"]["authorize"]).bind(selected.authorization)
+  });
+  return await composePostgresApi(options, createDriver, capabilities,
+    Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 }), undefined, undefined, fixed) as PostgresApplicationApi;
+}
 /** Independent R2 successor. Original command providers and catalogue proof are
  * mandatory; only the existing-prepare selectors are new, explicitly per kind. */
 export async function createPostgresRuntime26DocumentApplicationApi(options: PostgresApplicationApiOptions,
@@ -462,7 +490,8 @@ async function composeRuntime26DocumentApplicationApi(options: PostgresApplicati
 }
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
-  runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration): Promise<PostgresReadApi | PostgresApplicationApi> {
+  runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
+  runtime26HistoryAuthorization?: HistoryRevisionDependencies["authorization"]): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
@@ -472,6 +501,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if (issuer !== null) {
       const admission = await pool.connect();
       try {
+        if (runtime26HistoryAuthorization !== undefined) await issuer.runtime26.assertReady(admission, "HISTORY_REVISION");
         for (const purpose of capabilities?.coreInitializationRead ? ["CURRENT_FORM_READ"] as const : ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
           await issuer.runtime26.assertReady(admission, purpose);
       } finally { admission.release(); }
@@ -578,6 +608,13 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       dependencies: { authorization: capabilities.party, reader: new PostgresPartyReadReader(pool) } }));
     if (capabilities?.importedHistory) app.register(createImportedHistoryQueryHttpPlugin({ authenticate,
       dependencies: { authorization: capabilities.importedHistory, reader: new PostgresImportedHistoryQueryReader(pool) } }));
+    if (runtime26HistoryAuthorization !== undefined) {
+      if (issuer === null) throw new TypeError("HISTORY revision requires the original exact runtime issuer");
+      app.register(createHistoryRevisionHttpPlugin({ authenticate, dependencies: {
+        authorization: runtime26HistoryAuthorization, now: host.now,
+        store: PostgresHistoryRevisionStore.forRuntime26(pool, { runtime26: issuer.runtime26, newId: () => randomUUID() })
+      } }));
+    }
     if (capabilities?.commands) {
       const c = capabilities.commands;
       if (issuer !== null && runtime26ExistingPreparation === undefined) throw new TypeError("Exact26 commands require the independent R2 selector");

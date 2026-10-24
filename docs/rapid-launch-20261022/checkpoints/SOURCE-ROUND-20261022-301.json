@@ -1,0 +1,33 @@
+{
+  "atUtc": "2026-10-24T10:46:40.133583+00:00",
+  "parent": "5b81a5dfed5a0f519fd29ebd782d3a195f4184f7",
+  "taskId": "D1_B07_HOST_NUMERIC_COMPOSITION",
+  "files": [
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "owner": "D1",
+      "bytes": 60842,
+      "sha256": "57c9a5ab270354a74e62e18a12307e5498802d51d3bff8552ebe3b82b65ca031"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.ts",
+      "owner": "D1",
+      "bytes": 17996,
+      "sha256": "cd8e52f119bedd140c35e8d7b09d0824b82a32a8bbe8585f16b82f4e10b46a6b"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "owner": "D1",
+      "bytes": 84290,
+      "sha256": "a1b7a21b35eb1dd8370c79060bd99524fbcefc6b0694ed464a937c99505bb4b9"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-HOST-NUMERIC-COMPOSITION-v1.json",
+  "ownerReceiptBytes": 9585,
+  "ownerReceiptSha256": "d354cd842ecdebc2dd6c1a2625afd1d90a0c8604747a340abeaa1761e9b23291",
+  "ownerSourceReleased": true,
+  "checks": "Owner2new+1affected unique3PASS/strict3roots; originalnumericstore same; noSQL/PG/broadoldretest",
+  "stage": "SOURCE_HOST_SEAM_ONLY_CURRENT_ISSUER_HREV_UNAVAILABLE_FAIL_CLOSED",
+  "actualHistoryWrite": false,
+  "deployed": false
+}

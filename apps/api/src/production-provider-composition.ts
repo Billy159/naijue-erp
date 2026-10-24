@@ -11,6 +11,8 @@ import { entityId } from "../../../packages/domain/src/values.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26MediaApplicationApi, createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
+import { createPostgresRuntime26HistoryRevisionApplicationApi } from "./postgres-read-api.ts";
+import type { Runtime26HistoryRevisionConfiguration } from "./postgres-read-api.ts";
 import type { InventoryOutputSpoolOptions } from "./inventory-http.ts";
 import type { PostgresApplicationApiOptions, PostgresApplicationApi, CommittedCoreReadBinding } from "./postgres-read-api.ts";
 
@@ -137,6 +139,16 @@ export async function createProductionRuntime26ApplicationApi(input: unknown, dr
     return createPostgresRuntime26ApplicationApi({ ...coreOptions, coreInitializationRead: config.coreInitializationRead }, config.runtime26Review, driver);
   }
   return createPostgresRuntime26ApplicationApi(options, config.runtime26Review, driver);
+}
+
+/** Explicit trusted host entry. The existing private R1 configuration is reused;
+ * the separately supplied HISTORY authorization never comes from JSON/HTTP. */
+export async function createProductionRuntime26HistoryRevisionApplicationApi(input: unknown,
+  history: Runtime26HistoryRevisionConfiguration, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  const config = parseProductionRuntime26Configuration(input);
+  if (config.coreInitializationRead !== undefined) throw new TypeError("CORE initialization does not enable historical document writes");
+  return createPostgresRuntime26HistoryRevisionApplicationApi(
+    productionApplicationOptions(productionRuntime26HostConfiguration(config)), config.runtime26Review, history, driver);
 }
 
 /** Explicit R2 command entry. Neither old19 nor R1 accepts these selectors. */
