@@ -1,0 +1,1 @@
+{"extends":"../../../tsconfig.runtime.json","include":["./**/*.ts","./**/*.tsx","./assets.d.ts","../../../../src/inventory/output-adapter.test.ts"],"exclude":[]}

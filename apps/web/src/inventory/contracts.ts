@@ -101,7 +101,13 @@ export interface InventoryOutputData {
   readonly allMatchesTotal: StockTotal;
   readonly products: readonly InventoryProduct[];
 }
+/** Incremental validated facts are operation-local until matching complete + normal EOF. */
+export type InventoryOutputChunk = ({readonly kind:'summary'} & Omit<InventoryOutputData,'products'>)
+  | {readonly kind:'product';readonly product:InventoryProduct}
+  | ({readonly kind:'complete'} & Omit<InventoryOutputData,'products'>);
 export interface InventoryOutputReader {
+  /** No accumulated product DTO. Do not publish partial chunks as a successful output. */
+  streamOutput?(read: QueryRead<InventoryFilter>): AsyncIterable<InventoryOutputChunk>;
   readOutput(read: QueryRead<InventoryFilter>): Promise<InventoryOutputData>;
 }
 export interface InventoryOutputCapability {

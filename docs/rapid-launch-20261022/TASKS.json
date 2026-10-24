@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "f854b4db6350a95ff9a6abc949f5c5404675bfb6"
+    "lastVerifiedRemoteCommit": "d24b83b867b83dd59b04eebf04351f59f9b0cde2"
   },
   "concurrency": {
     "chats": 11,
@@ -4716,20 +4716,20 @@
       "newBackendConnected": false,
       "fixedArtifact": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-f854b4d-phase2-01/build",
       "phase1Accepted": false,
-      "phase2Candidate": "HTTP200/strict/build; original QF actual cold boot and I01 query+repeat2 passed limited only, remaining module/visual review active",
+      "phase2Candidate": "SOURCE347 immutable QF technical NEED_FIX: 3product detail tabs and store list absent preview read coverage; originalboot/inventory/category lazy successes reused, pending abort direct evidence not passed",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
-      "status": "PHASE2_SOURCE_PACKAGES_READY_NORMAL_ENTRY_INTEGRATION_F1",
-      "owner": "F1 technical Sol6.1-medium",
-      "buildOwner": "C",
-      "next": "Fixed single build after ready modules mount; retire replaced old route listeners and full bootstrap; HTTPS same-origin auth remains mandatory"
+      "status": "SOURCE349_WIP_READY_MODULES_OUTPUT_TABS_AND_PREVIEW_FIXES_FIXED_BUILD_NEXT",
+      "owner": "C",
+      "normalEntry": "runtime.html",
+      "note": "F1 nativeSALE partial source preserved but flag remains disabled; no wholeSALE pass; source349 preview-only adapters do not enter formal business transport"
     },
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Original historical blank hall v5 pending only; v17 explicitly approved, D2/F2 implementation in progress",
-    "github": "REMOTE_EXACT_VERIFIED_f854b4db6350a95ff9a6abc949f5c5404675bfb6",
+    "github": "REMOTE_EXACT_VERIFIED_d24b83b867b83dd59b04eebf04351f59f9b0cde2",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -7859,10 +7859,13 @@
       "export": "F2 original NDJSON output reader/contracts + runtime consumer; F1 original workbook async rows/single ZIP; retain complete/EOF and cancel; actual memory pending"
     },
     "v17": {
-      "status": "D2_SOURCE_READY_TARGETED_CHECKS_NOT_ACTUAL_POSTGRES",
+      "status": "QB254_SOURCE_PASS_C183_ACTUAL_PUBLISHED_NATIVE_REFRESH_QB257_METADATA_ACCEPTED_ACTUAL_COMMANDS_NEXT",
       "files": 9,
       "consumer": "F2 in progress",
-      "next": "QB finite source then C actual isolated product transaction/rollback and F2 normal UI"
+      "next": "QB finite source then C actual isolated product transaction/rollback and F2 normal UI",
+      "target": "native1032586/originalowner/profile122/5717b1",
+      "actualTargetRefresh": "c03-v17-native-target-readonly-refresh-20261025-183",
+      "preparationFailure": "182 FileNotFound after readonly catalogue; no writes; kept old carrier and bounded new183 corrected file path"
     },
     "categoryActual181": {
       "status": "QB255_LIMITED_ACTUAL_PASS",
@@ -7875,7 +7878,7 @@
     },
     "inventoryAssembly": {
       "sourceOwner": "D3",
-      "status": "EXACT2_READY_OWNER29_DIRECTED_CHECKS_PASS_ACTUAL_PG_UNMEASURED",
+      "status": "QB256_SOURCE_ONLY_PASS_BODY_SIZE_UNCHANGED_ACTUAL_PERFORMANCE_UNMEASURED",
       "change": "Remove repeated full catalog qualification in page balances; actual page SKU batch and authorized warehouses; membership Sets",
       "decodedModelBytes": {
         "100": 8599491,

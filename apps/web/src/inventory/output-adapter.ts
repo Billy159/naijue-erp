@@ -1,4 +1,4 @@
-import type { InventoryFilter, InventoryOutputData, InventoryOutputReader, InventoryProduct, StockTotal } from './contracts.ts';
+import type { InventoryFilter, InventoryOutputData, InventoryOutputReader, InventoryOutputChunk, InventoryProduct, StockTotal } from './contracts.ts';
 import type { InventoryDisplaySettings } from './inventory-matrix.tsx';
 import { projectInventoryColors } from './display-projection.ts';
 import { assertQuantity } from './model.ts';
@@ -46,7 +46,7 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
   const url = `${origin.origin}${options.basePath.replace(/\/$/, '')}/inventory/output/query`;
   const timeoutMs = options.timeoutMs ?? 30_000;
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 120_000) throw new TypeError('Invalid output read timeout.');
-  return Object.freeze({ async readOutput(read): Promise<InventoryOutputData> {
+  async function* streamOutput(read:Parameters<InventoryOutputReader['readOutput']>[0]):AsyncGenerator<InventoryOutputChunk> {
     const filter: InventoryFilter = Object.fromEntries((Object.keys(filterNames) as (keyof InventoryFilter)[]).map(key => [key, read.parameters[key].map(item => ({ id: item.id, label: item.label }))])) as unknown as InventoryFilter;
     let body: string;
     try { parseInventoryOutputQuery({ filter }); body = JSON.stringify({ filter }); }
@@ -54,7 +54,7 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
     if (new TextEncoder().encode(body).byteLength > 65_536) throw new HttpQueryError('too-large', 'REQUEST_TOO_LARGE');
     const controller = new AbortController(), signal = AbortSignal.any([read.signal, controller.signal]);
     const deadline = performance.now() + timeoutMs;
-    let timedOut = false, reader: ReadableStreamDefaultReader<Uint8Array> | undefined, ended = false, published=false;
+    let timedOut = false, reader: ReadableStreamDefaultReader<Uint8Array> | undefined, ended = false;
     let release=()=>{};
     const checkpoint=outputCheckpoint(signal);
     const timer = setTimeout(() => { timedOut = true; controller.abort(); }, timeoutMs);
@@ -79,10 +79,10 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
       if (response.headers.get('content-type')?.split(';')[0]?.trim().toLowerCase() !== 'application/x-ndjson' || !response.body) { void response.body?.cancel().catch(() => {}); return invalid(); }
       reader = response.body.getReader();
       let summary: Omit<InventoryOutputData, 'products'> | null = null, complete = false, sum = 0n;
-      const products: InventoryProduct[] = [], ids = new Set<string>(), skus = new Set<string>();
-      release=()=>{products.length=0;ids.clear();skus.clear();};
+      let emittedProducts=0;const ids = new Set<string>(), skus = new Set<string>();
+      release=()=>{ids.clear();skus.clear();};
       let warehouseIds: readonly string[] | null = null;
-      const consume = (parts: readonly Uint8Array[], bytes: number) => {
+      const consume = (parts: readonly Uint8Array[], bytes: number):InventoryOutputChunk|undefined => {
         active(); if (complete || !bytes) return invalid();
         const joined = new Uint8Array(bytes); let offset = 0;
         for (const part of parts) { joined.set(part, offset); offset += part.byteLength; }
@@ -95,13 +95,13 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
           if (kind !== 'summary' || typeof row.readReference !== 'string' || !/^[A-Za-z0-9._:-]{1,200}$/.test(row.readReference) || !Array.isArray(row.warehouseLabels) || row.warehouseLabels.some(label => typeof label !== 'string' || !label.trim())) return invalid();
           const exactTotalProducts = count(row.exactTotalProducts);
           if (filter.products.length && exactTotalProducts > filter.products.length) return invalid();
-          summary = { readReference: row.readReference, exactTotalProducts, warehouseLabels: row.warehouseLabels as string[], allMatchesTotal: total(row.allMatchesTotal) }; return;
+          summary = { readReference: row.readReference, exactTotalProducts, warehouseLabels: row.warehouseLabels as string[], allMatchesTotal: total(row.allMatchesTotal) }; return {kind:'summary',...summary};
         }
         if (kind === 'product') {
           const row = record(value, ['kind', 'product']);
           let product: InventoryProduct;
           try { product = inventoryProductResponse(row.product, filter, summary.warehouseLabels); } catch { return invalid(); }
-          if (ids.has(product.id) || products.length >= summary.exactTotalProducts) return invalid();
+          if (ids.has(product.id) || emittedProducts >= summary.exactTotalProducts) return invalid();
           const productSkus = new Set<string>();
           for (const group of product.colorFits) {
             const groupWarehouses = group.rows.map(row => row.warehouse.id);
@@ -110,10 +110,10 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
             for (const row of group.rows) for (const cell of Object.values(row.cells)) if (cell.state === 'known') productSkus.add(cell.skuId);
           }
           for (const sku of productSkus) { if (skus.has(sku)) return invalid(); skus.add(sku); }
-          ids.add(product.id); products.push(product); sum += BigInt(product.total.knownQuantity); return;
+          ids.add(product.id); emittedProducts++; sum += BigInt(product.total.knownQuantity); return {kind:'product',product};
         }
         const row = record(value, ['kind', 'readReference', 'exactTotalProducts', 'emittedProducts', 'allMatchesTotal']);
-        if (kind !== 'complete' || row.readReference !== summary.readReference || count(row.exactTotalProducts) !== summary.exactTotalProducts || count(row.emittedProducts) !== products.length || products.length !== summary.exactTotalProducts
+        if (kind !== 'complete' || row.readReference !== summary.readReference || count(row.exactTotalProducts) !== summary.exactTotalProducts || count(row.emittedProducts) !== emittedProducts || emittedProducts !== summary.exactTotalProducts
           || total(row.allMatchesTotal).knownQuantity !== summary.allMatchesTotal.knownQuantity || sum.toString() !== summary.allMatchesTotal.knownQuantity) return invalid();
         complete = true;
       };
@@ -127,21 +127,27 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
           if (bytes > INVENTORY_OUTPUT_FRAME_MAX_BYTES.product) throw new HttpQueryError('too-large', 'INVENTORY_OUTPUT_FRAME_TOO_LARGE');
           if (fragment.byteLength) parts.push(fragment);
           if (newline === -1) break;
-          consume(parts, bytes); parts = []; bytes = 0; start = newline + 1;
+          const chunk=consume(parts, bytes); parts = []; bytes = 0; start = newline + 1;if(chunk)yield chunk;
           await checkpoint();active();
         }
       }
-      if (bytes) consume(parts, bytes);
+      if(bytes){const chunk=consume(parts,bytes);if(chunk)yield chunk;}
       active(); if (!summary || !complete) return invalid();
-      const result=Object.freeze({ ...(summary as Omit<InventoryOutputData, 'products'>), products: Object.freeze(products) });published=true;return result;
+      yield {kind:'complete',...(summary as Omit<InventoryOutputData,'products'>)};
     } catch (error) { active(); if (error instanceof HttpQueryError) throw error; throw new HttpQueryError('network', 'INVENTORY_OUTPUT_FAILED'); }
-    finally { if(!published)release();clearTimeout(timer); signal.removeEventListener('abort', cancel); if (!ended) cancel(); try { reader?.releaseLock(); } catch { /* A failed stream cannot retain its consumer. */ } }
-  } } satisfies InventoryOutputReader);
+    finally { release();clearTimeout(timer); signal.removeEventListener('abort', cancel); if (!ended) cancel(); try { reader?.releaseLock(); } catch { /* A failed stream cannot retain its consumer. */ } }
+  }
+  return Object.freeze({streamOutput,async readOutput(read):Promise<InventoryOutputData>{
+    let summary:Omit<InventoryOutputData,'products'>|null=null;const products:InventoryProduct[]=[];let committed=false;
+    try{for await(const chunk of streamOutput(read)){if(chunk.kind==='summary'){const {kind:_,...data}=chunk;summary=data;}else if(chunk.kind==='product')products.push(chunk.product);else committed=true;}
+      if(!summary||!committed)return invalid();return Object.freeze({...summary,products:Object.freeze(products)});
+    }finally{if(!committed)products.length=0;}
+  }} satisfies InventoryOutputReader);
 }
 
 const escape = (value: string) => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!);
 const filterNames = { products: '商品', categories: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
-export function inventoryOutputScope(filter: InventoryFilter, data: InventoryOutputData): string {
+export function inventoryOutputScope(filter: InventoryFilter, data: Pick<InventoryOutputData,'warehouseLabels'>): string {
   return (Object.keys(filterNames) as (keyof InventoryFilter)[]).map(key => {
     const labels = key === 'warehouses' ? data.warehouseLabels : filter[key].map(item => item.label);
     return `${filterNames[key]}：${labels.length ? labels.join('、') : key === 'warehouses' ? '无可用仓库' : '全部'}`;
@@ -177,6 +183,44 @@ export async function* inventoryWorkbookRowsAsync(data:InventoryOutputData,filte
   for(const row of workbookRows(data,filter,settings)){await checkpoint();yield row;}
 }
 
+/** Preserve original global size-group order even when the server stream is
+ * code-sorted A/B/A. Only compact final row projections are retained, never all
+ * product DTOs plus a second table. This is not a constant-memory ZIP pipeline. */
+export async function* inventoryWorkbookRowsStream(reader:InventoryOutputReader,read:Parameters<InventoryOutputReader['readOutput']>[0],settings:InventoryDisplaySettings):AsyncGenerator<readonly string[]>{
+ if(!reader.streamOutput)throw new HttpQueryError('not-implemented','INVENTORY_OUTPUT_STREAM_NOT_CONFIGURED');
+ const checkpoint=outputCheckpoint(read.signal),groups=new Map<string,string[]>();let summary:Omit<InventoryOutputData,'products'>|null=null,complete=false;
+ try{
+  for await(const chunk of reader.streamOutput(read)){
+   await checkpoint();
+   if(chunk.kind==='summary'){const {kind:_,...data}=chunk;summary=data;continue;}
+   if(chunk.kind==='complete'){complete=true;continue;}
+   if(!summary)return invalid();
+   const product=chunk.product,key=JSON.stringify([product.sizeGroup.id,product.sizes.map(size=>[size.id,size.label])]);let group=groups.get(key);const first=!group;if(!group){group=[];groups.set(key,group);}
+   let index=0;for(const row of workbookRows({...summary,products:[product]},read.parameters,settings)){if(index++<2)continue;if(!first&&index<=4)continue;group.push(JSON.stringify(row));await checkpoint();}
+  }
+  if(!summary||!complete)return invalid();await checkpoint();
+  yield ['奈爵服饰 库存状况'];yield ['查询范围',inventoryOutputScope(read.parameters,summary)];
+  for(const [key,rows] of groups){for(let index=0;index<rows.length;index++){await checkpoint();const encoded=rows[index]!;rows[index]='';yield JSON.parse(encoded) as string[];}rows.length=0;groups.delete(key);}
+ }finally{for(const rows of groups.values())rows.length=0;groups.clear();}
+}
+
+/** Same native print fragments, grouped as before; no retained product matrix.
+ * The final preview document still occupies memory and is published after EOF. */
+export async function createInventoryPrintHtmlStream(reader:InventoryOutputReader,read:Parameters<InventoryOutputReader['readOutput']>[0],settings:InventoryDisplaySettings):Promise<string>{
+ if(!reader.streamOutput)throw new HttpQueryError('not-implemented','INVENTORY_OUTPUT_STREAM_NOT_CONFIGURED');
+ const checkpoint=outputCheckpoint(read.signal),groups=new Map<string,{head:string;parts:string[]}>();let summary:Omit<InventoryOutputData,'products'>|null=null,complete=false,detailRows=0;
+ try{
+  for await(const chunk of reader.streamOutput(read)){
+   await checkpoint();if(chunk.kind==='summary'){const {kind:_,...data}=chunk;summary=data;continue;}if(chunk.kind==='complete'){complete=true;continue;}if(!summary)return invalid();
+   const product=chunk.product,key=JSON.stringify([product.sizeGroup.id,product.sizes.map(size=>[size.id,size.label])]);const fragments=printTables({...summary,products:[product]},settings);let first=fragments.next();if(first.done)return invalid();let group=groups.get(key);if(!group){group={head:first.value,parts:[]};groups.set(key,group);}
+   let previous:string|null=null,next=fragments.next();while(!next.done){if(previous!==null)group.parts.push(previous);previous=next.value;await checkpoint();next=fragments.next();}detailRows+=next.value;
+   // The last yielded fragment closes the section; close once after all products.
+  }
+  if(!summary||!complete)return invalid();const parts:string[]=[];for(const [key,group] of groups){parts.push(group.head,group.parts.join(''),'</tbody></table></section>');group.parts.length=0;groups.delete(key);await checkpoint();}
+  const html=printDocument(summary,read.parameters,detailRows,parts.join(''));parts.length=0;await checkpoint();return html;
+ }finally{for(const group of groups.values())group.parts.length=0;groups.clear();}
+}
+
 /** Original table(...,{print:true}) and printDocument(), using the existing native
  * FIT display projection. No fold state, action column, business handlers or old global readers. */
 function* printTables(data:InventoryOutputData,settings:InventoryDisplaySettings):Generator<string,number>{
@@ -200,7 +244,7 @@ function* printTables(data:InventoryOutputData,settings:InventoryDisplaySettings
   }
   return detailRows;
 }
-function printDocument(data:InventoryOutputData,filter:InventoryFilter,detailRows:number,tables:string):string{
+function printDocument(data:Omit<InventoryOutputData,'products'>,filter:InventoryFilter,detailRows:number,tables:string):string{
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>库存状况打印</title><style>@page{size:A4 landscape;margin:9mm}body{font:11px Arial,"PingFang SC",sans-serif;color:#263440}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:4px;overflow-wrap:break-word;border:1px solid #dce1e5;text-align:right}th{background:#f3f5f7}thead{display:table-header-group}tr{break-inside:avoid}.mx-product,.mx-color,.mx-warehouse,.mx-sum-label{text-align:left}.mx-product strong{white-space:nowrap}.mx-product span{display:block}.mx-color,.mx-warehouse{word-break:keep-all}.mx-meta{display:block;color:#52616f}.mx-section h3{font-size:12px}.mx-section{break-inside:auto;margin-bottom:12px}.mx-subtotal,.mx-total{background:#f3f5f7}small{font-weight:normal}</style></head><body><h1>库存状况</h1><p>${escape(inventoryOutputScope(filter, data))}</p><p>共 ${detailRows} 条数据行 · 全量库存 ${escape(data.allMatchesTotal.knownQuantity)}。遵循颜色小计、商品合计及尺码组说明设置；打印全部展开。</p>${tables}</body></html>`;
 }
 

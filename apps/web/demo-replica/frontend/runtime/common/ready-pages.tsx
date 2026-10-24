@@ -1,5 +1,7 @@
 import { createRoot, type Root } from 'react-dom/client';
 import type { ReactNode } from 'react';
+import type { ReplicaSalesSession } from '../documents/sales-session.ts';
+import type { SalesListViewState } from '../documents/sales-list.tsx';
 import type { ReplicaSession } from './session.ts';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { ProductionHostConfiguration } from '../../../../src/production-host/configuration.ts';
@@ -9,6 +11,8 @@ import type { StoreMaintenanceWorkspace } from '../../../../src/settings/stores/
 import type { PartyWorkspace } from '../../../../src/parties/controller.ts';
 import type { StaffSettingsWorkspace } from '../../../../src/staff-settings/controller.ts';
 import type { AccountSettingsWorkspace } from '../../../../src/account-settings/controller.ts';
+import type { ProductEditorCapability, ProductMaintenanceCommand } from '../../../../src/products/product-editor-contracts.ts';
+import { snapshotQueryParameters } from '../../../../src/loading/query-parameters.ts';
 import type { PaymentSettingsWorkspace } from '../../../../src/payment-settings/controller.ts';
 import { createSettingsAuditHttpReader } from '../../../../src/settings/audit/http-reader.ts';
 import { blankAuditDraft } from '../../../../src/settings/audit/contracts.ts';
@@ -29,16 +33,19 @@ const roles = Object.freeze([
 ]);
 
 /** Session workspaces survive page unmount. Only the selected page loads code or data. */
-export function createReadyPageMounts(options: ReadyPageOptions, navigate: (route: string) => void) {
+export function createReadyPageMounts(options: ReadyPageOptions, navigate: (route: string) => void, prepareRoute?: (route: string, signal: AbortSignal) => Promise<void>) {
   const { session } = options;
   let owner: ReadScope | null = null;
+  let sales: ReplicaSalesSession | null = null, salesView: SalesListViewState | null = null;
+  const productRecovery = new Map<string | null, ProductMaintenanceCommand>();
   let stores: StoreMaintenanceWorkspace | undefined, parties: PartyWorkspace | undefined;
   let staff: StaffSettingsWorkspace | undefined, accounts: AccountSettingsWorkspace | undefined, payments: PaymentSettingsWorkspace | undefined;
   const access = (kind: 'unauthenticated' | 'forbidden') => session.onAccessFailure({ kind });
-  const unresolved = () => !!owner?.active && !!(stores?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite() || staff?.hasUnresolvedWrite() || accounts?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite());
+  const unresolved = () => !!(sales?.scope.active && sales.editor.commands.hasUnresolvedWrite) || !!owner?.active && !!(stores?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite() || staff?.hasUnresolvedWrite() || accounts?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite());
   const ownerScope = () => {
     if (!owner?.active) {
       owner = session.reads.createScope('replica-settings-session');
+      productRecovery.clear();
       stores = undefined; parties = undefined; staff = undefined; accounts = undefined; payments = undefined;
     }
     return owner;
@@ -56,6 +63,14 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     const principal = session.auth.getSnapshot().principal;
     if (!principal || principal.accountId !== scope.identity.accountId || !scope.active) throw new Error('当前登录身份尚未确认。');
     const http = session.http, config = options.routes, flags = config.maintenance;
+    if ((route==='sales'||route==='sales/new'||route.startsWith('sales/view/')||route.startsWith('sales/edit/')) && config.sales) {
+      const [module,factory,references,products] = await Promise.all([import('../documents/sales-entry.tsx'),import('../documents/sales-session.ts'),import('../../../../src/sales/http-reader.ts'),import('../../../../src/transport/product-http-reader.ts')]);
+      if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
+      if(!sales?.scope.active)sales=factory.createReplicaSalesSession(session,{instanceId:'replica-sales-owner',newRequestKey:options.newRequestKey});
+      salesView??=module.newSalesListViewState();
+      const resetSales=()=>{sales?.dispose();sales=null;};
+      return module.mountSales(host,route,{principal,session:sales,scope,view:salesView,references:references.createSalesFilterReferenceHttpReader(http),productReader:products.createProductHttpReader(http),manualCreate:config.salesManualCreate===true,existingEdit:config.salesExistingEdit===true,denied:session.onAccessFailure,navigate,onCommitted:resetSales,onDiscarded:resetSales});
+    }
     if (route === 'inventory' && config.inventory) {
       const module = await import('../inventory/index.tsx');
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
@@ -65,6 +80,36 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       const module = await import('../products/index.tsx');
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       return { dispose: module.mountProductList(host, { scope, http, onAccessFailure: session.onAccessFailure, openEditor: id => navigate(id === null ? 'products/new' : 'products/edit/' + encodeURIComponent(id)) }), canLeave: () => true };
+    }
+    if ((route === 'products/new' || route.startsWith('products/edit/')) && config.products && enabled(flags?.products)()) {
+      if (!prepareRoute) throw new Error('商品编辑样式加载尚未接入。');
+      const [module, clients, products, dictionaries, full, catalogueReaders, helpers] = await Promise.all([
+        import('../products/editor-entry.tsx'), import('../../../../src/products/product-maintenance-http-client.ts'),
+        import('../../../../src/transport/product-http-reader.ts'), import('../../../../src/product-settings/size-groups/http-reader.ts'),
+        import('../../../../src/products/product-page-http-reader.ts'), import('../../../../src/product-settings/colors/http-reader.ts'), import('./source-helpers.tsx'),
+      ]);
+      if (!scope.active) return { dispose: () => {}, canLeave: () => true };
+      const owner = ownerScope(), productId = route === 'products/new' ? null : decodeURIComponent(route.slice('products/edit/'.length));
+      const matches = (identity: typeof scope.identity) => owner.active && ['accountId','sessionRevision','permissionRevision'].every(key => identity[key as keyof typeof identity] === owner.identity[key as keyof typeof identity]);
+      let guard: (() => boolean) | null = null, inlineGuard: (() => boolean) | null = null, destination: string | null = null, queued = false;
+      const handoff = (next: string) => { guard = null; destination = next; if (!queued) { queued = true; queueMicrotask(() => { queued = false; if (scope.active && destination) navigate(destination); }); } };
+      const detailReader = full.createProductFullPageHttpReader(http, ['stock'], config.productStockOverview ? { stockOverview: true } : {});
+      const dictionary = dictionaries.createDictionaryHttpReader(http), maintenance = options.catalogue.maintenance;
+      const capability: ProductEditorCapability = {
+        loadStyles: () => prepareRoute(route, scope.signal), reader: clients.createProductMaintenanceHttpReaderV2(http), client: clients.createProductMaintenanceHttpClientV2(http), newRequestKey: options.newRequestKey,
+        allowedActions: ['CREATE','EDIT','DISABLE','RESTORE','DELETE'],
+        onRecoveryRequired: (command, identity) => { if (!matches(identity)) return; const target = command.action === 'CREATE' ? null : command.id, previous = productRecovery.get(target); if (!previous || previous.requestKey === command.requestKey) productRecovery.set(target, snapshotQueryParameters(command)); },
+        recovery: { read: (identity, target) => matches(identity) ? productRecovery.get(target) ?? null : null, resolved: (identity, key) => { if (matches(identity)) for (const [target, command] of productRecovery) if (command.requestKey === key) productRecovery.delete(target); } },
+        productReader: products.createProductHttpReader(http), dictionaryReader: dictionary, ...(config.barcodeSchemes ? { barcodeSchemeReader: dictionary } : {}),
+        ...(config.productFullPage && detailReader.stock ? { stock: detailReader.stock } : {}),
+        media: clients.createProductEditorMediaHttpReader(http), mediaUpload: clients.createProductMediaUploadHttpClient(http),
+        ...(maintenance?.COLOR || maintenance?.FIT ? { catalogueMaintenance: { ...(maintenance.COLOR ? { colors: maintenance.COLOR } : {}), ...(maintenance.FIT ? { fits: maintenance.FIT } : {}) } } : {}),
+      };
+      const dispose = module.mountProductEditor(host, { parent: scope, productId, capability, http,
+        catalogueOptions: { ...options.catalogue, scope, http, catalogue: catalogueReaders.createCatalogueSettingsHttpReader(http), dictionaries: dictionary, renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, onAccessFailure: access, onCanLeaveChange: value => { inlineGuard = value; } },
+        onAccessFailure: session.onAccessFailure, onCanLeaveChange: value => { guard = value; }, onClose: () => handoff('products'), onSaved: id => handoff('products/view/' + encodeURIComponent(id)),
+      });
+      return { dispose, canLeave: () => (guard?.() ?? true) && (inlineGuard?.() ?? true) };
     }
     if (route.startsWith('products/view/') && config.products && config.productFullPage) {
       const [module, readers] = await Promise.all([import('../products/index.tsx'), import('../../../../src/products/product-page-http-reader.ts')]);
@@ -95,12 +140,12 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     const paint = (view: ReactNode) => { if (scope.active) { root = createRoot(host); root.render(view); } };
     try {
       if ((route === 'settings/stores' || route === 'settings/warehouses') && config.storeSettings) {
-        const module = await import('../settings/index.ts');
+        const [module, customers] = await Promise.all([import('../settings/index.ts'), import('../../../../src/parties/http-client.ts')]);
         if (!scope.active) { release(); return { dispose: () => {}, canLeave: () => true }; }
         stores ??= module.createStoreMaintenanceWorkspace({ scope: ownerScope(), client: module.createStoreSettingsCommandClient(http), newRequestKey: options.newRequestKey, writesEnabled: enabled(flags?.storeSettings), onAccessFailure: access });
         const workspace = stores;
         workspace.getViewState(route === 'settings/warehouses' ? 'warehouses' : config.storeSettings.initialTab);
-        paint(<module.StoreSettingsRuntime scope={scope} reader={module.createOrganizationStoreSettingsReader(http)} maintenance={{ workspace, directory: module.createOrganizationSettingsDirectory({ scope, http }) }} allowedTabs={config.storeSettings.allowedTabs} allowHallDirectoryRead={config.storeSettings.allowHallDirectoryRead} audit={audit()} onAccessFailure={access} />);
+        paint(<module.StoreSettingsRuntime scope={scope} reader={module.createOrganizationStoreSettingsReader(http)} maintenance={{ workspace, directory: module.createOrganizationSettingsDirectory({ scope, http, customers: customers.createPartyHttpClient(http) }) }} allowedTabs={config.storeSettings.allowedTabs} allowHallDirectoryRead={config.storeSettings.allowHallDirectoryRead} audit={audit()} onAccessFailure={access} />);
         return { dispose: () => release(), canLeave: workspace.canLeave };
       }
       if ((route === 'settings/parties' || route === 'customers' || route === 'suppliers') && config.parties) {
@@ -141,5 +186,5 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       throw new Error('此页面尚未接入当前版本。');
     } catch (error) { release(); throw error; }
   }
-  return { mount, hasUnresolvedWrite: unresolved, dispose: () => { owner?.dispose(); owner = null; } };
+  return { mount, hasUnresolvedWrite: unresolved, dispose: () => { sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
 }

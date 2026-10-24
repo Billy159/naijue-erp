@@ -26,6 +26,6 @@ export { mountNormalReplica } from './common/runtime-host.tsx';
 export type { ReadyPageOptions, MountedReplicaPage } from './common/ready-pages.tsx';
 
 /** Original MATRIX_REPORT.create loads only on the output action. */
-export async function createReplicaWorkbook(rows: readonly (readonly string[])[], title: string): Promise<Uint8Array<ArrayBuffer>> {
-  return new Uint8Array(await (await import('./common/original-workbook.ts')).createOriginalWorkbook(rows, title));
+export async function createReplicaWorkbook(rows: AsyncIterable<readonly string[]> | readonly (readonly string[])[], title: string, signal?: AbortSignal): Promise<Uint8Array<ArrayBuffer>> {
+  return new Uint8Array(await (await import('./common/original-workbook.ts')).createOriginalWorkbook(rows, title, signal));
 }

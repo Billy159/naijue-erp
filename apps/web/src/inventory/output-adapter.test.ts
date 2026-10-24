@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { emptyInventoryFilter, type InventoryOutputData, type InventoryProduct, type StockTotal } from './contracts.ts';
-import { createInventoryOutputReader, createInventoryPrintHtml, inventoryWorkbookRows, createInventoryPrintHtmlAsync, inventoryWorkbookRowsAsync } from './output-adapter.ts';
+import { createInventoryOutputReader, createInventoryPrintHtml, inventoryWorkbookRows, createInventoryPrintHtmlAsync, inventoryWorkbookRowsAsync, inventoryWorkbookRowsStream, createInventoryPrintHtmlStream } from './output-adapter.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 
 const id = (value: number) => `00000000-0000-4000-8000-${String(value).padStart(12, '0')}`;
@@ -219,4 +219,48 @@ test('F03 cooperative buffered NDJSON work yields for active cancellation and st
   const pending=reader(async()=>new Response(new ReadableStream({start(controller){controller.enqueue(bytes);},cancel(){canceled=true;}}),{headers:{'content-type':'application/x-ndjson'}})).readOutput(read(abort.signal));
   const timer=setTimeout(()=>abort.abort(),0);
   try{await assert.rejects(pending,error=>error instanceof HttpQueryError&&error.kind==='aborted');assert.equal(canceled,true);}finally{clearTimeout(timer);}
+});
+
+
+test('replica stream keeps A/B/A global sections and exact full rows without readOutput DTO collection', async () => {
+ const products=[product(1),product(2),product(3)];(products[1] as {sizeGroup:{id:string;label:string}}).sizeGroup={id:id(200_001),label:'下装'};
+ const expected:InventoryOutputData={...(frames(products)[0] as unknown as InventoryOutputData),products};
+ const settings={category:true,supplier:false,fit:false,sizeGroup:false,season:false,subtotal:true,total:true,sizeDescription:true};
+ let calls=0;const source=reader(async()=>{calls++;return response(frames(products));});
+ const streaming={readOutput:async()=>{throw Error('whole DTO consumer must not run');},streamOutput:source.streamOutput!};
+ const rows=[];for await(const row of inventoryWorkbookRowsStream(streaming,read(),settings))rows.push(row);
+ assert.deepEqual(rows,inventoryWorkbookRows(expected,filter,settings));assert.equal(calls,1);
+ assert.equal(await createInventoryPrintHtmlStream(streaming,read(),settings),createInventoryPrintHtml(expected,filter,settings));assert.equal(calls,2);
+});
+
+test('replica incremental parser backpressures each product and closes an early consumer', async () => {
+ const values=frames([product(1),product(2),product(3)]);let produced=0,cancelled=false;
+ const source=reader(async()=>new Response(new ReadableStream({pull(controller){if(produced<values.length)controller.enqueue(encode([values[produced++]]));else controller.close();},cancel(){cancelled=true;}},{highWaterMark:0}),{headers:{'content-type':'application/x-ndjson'}}));
+ const iterator=source.streamOutput!(read())[Symbol.asyncIterator]();assert.equal(produced,0);assert.equal((await iterator.next()).value?.kind,'summary');assert.equal(produced,1);assert.equal((await iterator.next()).value?.kind,'product');assert.equal(produced,2);await iterator.return?.();assert.equal(cancelled,true);assert.equal(produced,2);
+});
+
+test('replica rows and print publish nothing until complete AND EOF; post-complete failure and cancellation discard projections', async () => {
+ const settings={category:true,supplier:false,fit:true,sizeGroup:false,season:false,subtotal:true,total:true,sizeDescription:true};
+ let transport!:ReadableStreamDefaultController<Uint8Array>;const source=reader(async()=>new Response(new ReadableStream({start(controller){transport=controller;controller.enqueue(encode(frames()));}}),{headers:{'content-type':'application/x-ndjson'}}));
+ let published=false;const rows=inventoryWorkbookRowsStream(source,read(),settings),first=rows.next().then(value=>{published=true;return value;});await new Promise(resolve=>setTimeout(resolve,10));assert.equal(published,false);transport.close();assert.deepEqual((await first).value,['奈爵服饰 库存状况']);await rows.return(undefined);
+ let broken!:ReadableStreamDefaultController<Uint8Array>;const failed=reader(async()=>new Response(new ReadableStream({start(controller){broken=controller;controller.enqueue(encode(frames()));}}),{headers:{'content-type':'application/x-ndjson'}}));const preview=createInventoryPrintHtmlStream(failed,read(),settings);await new Promise(resolve=>setTimeout(resolve,5));broken.error(Error('after-complete network failure'));await assert.rejects(preview,HttpQueryError);
+ const invalidFrames=frames();invalidFrames[2]={...invalidFrames[2]!,readReference:'WRONG'};await assert.rejects(inventoryWorkbookRowsStream(reader(async()=>response(invalidFrames)),read(),settings).next(),malformed);
+ const abort=new AbortController();let cancelled=false;const stalled=reader(async()=>new Response(new ReadableStream({start(controller){controller.enqueue(encode(frames().slice(0,2)));},cancel(){cancelled=true;}}),{headers:{'content-type':'application/x-ndjson'}}));const pending=inventoryWorkbookRowsStream(stalled,read(abort.signal),settings).next();await new Promise(resolve=>setTimeout(resolve,5));abort.abort();await assert.rejects(pending,error=>error instanceof HttpQueryError&&error.kind==='aborted');assert.equal(cancelled,true);
+});
+
+
+test('replica representative synthetic stream reports source bytes and row work without a memory/performance PASS claim', async t => {
+ const products=Array.from({length:100},(_,index)=>product(index+1,8,20,'9007199254740993')),values=frames(products),bytes=encode(values);
+ const source=reader(async()=>new Response(bytes,{headers:{'content-type':'application/x-ndjson'}}));const settings={category:true,supplier:false,fit:false,sizeGroup:false,season:false,subtotal:true,total:true,sizeDescription:true};
+ const started=performance.now();let rows=0,maxRowBytes=0;for await(const row of inventoryWorkbookRowsStream(source,read(),settings)){rows++;maxRowBytes=Math.max(maxRowBytes,new TextEncoder().encode(JSON.stringify(row)).byteLength);}
+ assert.equal(rows,804);t.diagnostic(JSON.stringify({environment:'Node24 synthetic single operation; not browser or real HTTP',sourceBytes:bytes.byteLength,rows,maxRowBytes,elapsedMs:Math.round((performance.now()-started)*100)/100,heapMeasured:false,peakMemoryPass:false}));
+});
+
+
+test('replica async row seam produces the original XLSX with exact text identities after validated EOF', async () => {
+ const {createOriginalWorkbook}=await import('../../demo-replica/frontend/runtime/common/original-workbook.ts');const {createRequire}=await import('node:module');const JSZip=createRequire(new URL('../../demo-replica/frontend/runtime/common/original-workbook.ts',import.meta.url))('jszip');
+ const settings={category:true,supplier:false,fit:true,sizeGroup:false,season:false,subtotal:true,total:true,sizeDescription:true};const signal=new AbortController().signal;
+ const bytes=await createOriginalWorkbook(inventoryWorkbookRowsStream(reader(async()=>response(frames())),read(signal),settings),'库存状况',signal);
+ const zip=await JSZip.loadAsync(bytes),sheet=await zip.file('xl/worksheets/sheet1.xml')!.async('string'),workbook=await zip.file('xl/workbook.xml')!.async('string');
+ assert.match(workbook,/name="库存状况"/);assert.match(sheet,/0001/);assert.match(sheet,/-9007199254740993/);assert.match(sheet,/t="inlineStr"/);assert.doesNotMatch(sheet,/颜色小计|商品合计|<script>/);assert.equal((sheet.match(/<row r=/g)??[]).length,6);
 });

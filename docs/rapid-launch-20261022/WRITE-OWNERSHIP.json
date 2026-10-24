@@ -848,6 +848,76 @@
           "group": "V16_EXISTING_STAFF_REFERENCE_NO_SALES_HALL_CONTEXT",
           "fieldGate": "READ_ONLY_EXISTING_T05_GLOBAL_EMPLOYEE_REFERENCE_NO_SCHEMA_WRITE_CHANGE",
           "scope": "Only kind salesperson permits explicit hallId:null; all other reference kinds and server identity/role/salesHall checks retained"
+        },
+        {
+          "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/organization-maintenance-store.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "adapters/postgres/src/party-read-reader.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "apps/api/src/organization-maintenance-http.test.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "apps/api/src/organization-maintenance-http.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "apps/api/src/party-read-http.test.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "apps/api/src/party-read-http.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "tests/catalogue-settings-read-postgres-protocol.test.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "tests/organization-maintenance-postgres-protocol.test.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
+        },
+        {
+          "path": "tests/party-read-postgres-protocol.test.ts",
+          "group": "CORE_COMMITTED_READ_MODULES_SCOPE_ONLY",
+          "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
+          "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
+          "previousOwner": "D2"
         }
       ]
     },
@@ -856,19 +926,11 @@
       "sourceWriteEnabled": true,
       "registeredFiles": [
         {
-          "path": "adapters/postgres/src/catalogue-settings-read-reader.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
           "path": "adapters/postgres/src/dictionary-read-reader.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
           "path": "adapters/postgres/src/party-maintenance-store.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "adapters/postgres/src/party-read-reader.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
@@ -923,14 +985,6 @@
         },
         {
           "path": "apps/api/src/party-maintenance-http.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/api/src/party-read-http.test.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/api/src/party-read-http.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
@@ -1050,10 +1104,6 @@
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
-          "path": "tests/catalogue-settings-read-postgres-protocol.test.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
           "path": "tests/catalogue-settings-read.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
@@ -1079,10 +1129,6 @@
         },
         {
           "path": "tests/party-postgres-protocol.test.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "tests/party-read-postgres-protocol.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
@@ -1134,10 +1180,6 @@
           }
         },
         {
-          "path": "adapters/postgres/src/organization-maintenance-store.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
           "path": "adapters/postgres/src/payment-maintenance-store.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
@@ -1181,14 +1223,6 @@
             "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
             "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
           }
-        },
-        {
-          "path": "apps/api/src/organization-maintenance-http.test.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "apps/api/src/organization-maintenance-http.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
           "path": "apps/api/src/payment-maintenance-http.test.ts",
@@ -1401,10 +1435,6 @@
         },
         {
           "path": "tests/integration/rapid-launch-d2-maintenance.integration.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
-        },
-        {
-          "path": "tests/organization-maintenance-postgres-protocol.test.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
         },
         {
@@ -5145,5 +5175,24 @@
       "apps/web/demo-replica/frontend/runtime/entry.tsx"
     ],
     "rule": "One writer; F2 async NDJSON/product consumption and F1 async workbook rows seam; no DTO/server/write change without exact coordination; current product editor/SALE not blocked."
+  },
+  "coreReadTransfer": {
+    "atUtc": "2026-10-24T19:09:30.172752+00:00",
+    "controllerVerifiedCleanSource": true,
+    "oldOwnerNotified": "D2",
+    "uniqueWriter": "D1",
+    "files": [
+      "adapters/postgres/src/catalogue-settings-read-reader.ts",
+      "adapters/postgres/src/organization-maintenance-store.ts",
+      "adapters/postgres/src/party-read-reader.ts",
+      "apps/api/src/organization-maintenance-http.test.ts",
+      "apps/api/src/organization-maintenance-http.ts",
+      "apps/api/src/party-read-http.test.ts",
+      "apps/api/src/party-read-http.ts",
+      "tests/catalogue-settings-read-postgres-protocol.test.ts",
+      "tests/organization-maintenance-postgres-protocol.test.ts",
+      "tests/party-read-postgres-protocol.test.ts"
+    ],
+    "next": "Original normal-list read union after this complete module"
   }
 }

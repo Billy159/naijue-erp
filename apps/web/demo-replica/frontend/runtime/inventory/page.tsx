@@ -15,7 +15,7 @@ import { Pagination } from './pagination.tsx';
 export interface InventoryPageProps {
  scope:ReadScope;reader:InventoryReader;productReader:ProductReadOnlyReader;outputReader:InventoryOutputReader;ledgerReader:InventoryLedgerReader;ledgerDialog:HTMLDialogElement;
  onAccessFailure:(error:HttpQueryError)=>void;onViewProduct:(product:Selection)=>void;onOpenSource?:(entry:InventoryLedgerEntry)=>boolean|Promise<boolean>;
- createWorkbook:(rows:readonly(readonly string[])[],title:string)=>Promise<Uint8Array<ArrayBuffer>>;
+ createWorkbook:(rows:AsyncIterable<readonly string[]>,title:string,signal:AbortSignal)=>Promise<Uint8Array<ArrayBuffer>>;
 }
 type Draft={readonly[K in keyof InventoryFilter]:readonly Selection[]|null};
 const blank=():Draft=>({products:null,categories:null,warehouses:null,suppliers:null,fits:null,seasons:null});

@@ -1,0 +1,157 @@
+{
+  "parent": "d24b83b867b83dd59b04eebf04351f59f9b0cde2",
+  "atUtc": "2026-10-24T19:21:48.278117+00:00",
+  "status": "WIP_READY_MODULES_PLUS_F1_PARTIAL_NOT_WHOLESALE_OR_REAL_BUSINESS",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/frontend/runtime-bootstrap.ts",
+      "bytes": 1887,
+      "sha256": "2c52589fd0166bc84cef588007a7a06fc9ba7409ccc5e5ac3da6d18f814417a5"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime-preview-transport.ts",
+      "bytes": 3302,
+      "sha256": "8dc705d57e1f9d3379702451cda743f084f815682ec50877c4045c91a6215ebd"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/original-workbook.ts",
+      "bytes": 4946,
+      "sha256": "cf7c18d45b5bcf7ea624b502469e8479429faf1dba80495d9d4e41bda728b0a7"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/ready-pages.tsx",
+      "bytes": 19223,
+      "sha256": "be6e146f6c0a1a26244822c09749cc2130a48f549ea9c182b79c9d3e42fbcbd4"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx",
+      "bytes": 13060,
+      "sha256": "63f898dc3eb64945c36927a55240669292af6c42b3a62aa58c3a1abae1d0433c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/native-dialog.tsx",
+      "bytes": 996,
+      "sha256": "e8c6d8681e551a56e4defab16b8add14e49ecf1152cfcb6f80245ccda5139487"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
+      "bytes": 16371,
+      "sha256": "2452f225f96878c1f72760ec8b47740b2db109383b3c3e12f55a5ec01a9e8530"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/proposal-picker.tsx",
+      "bytes": 7976,
+      "sha256": "6c8322396c425c38711968db5d122367b3e0057b1e7b95f36c0b24cc1f9bc3c5"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/sales-entry.tsx",
+      "bytes": 16481,
+      "sha256": "a5f99b74931b35da7fab226251f39ea78b5dcf98976a595c720ee4df6f82f9f2"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/sales-history.tsx",
+      "bytes": 2407,
+      "sha256": "ac8d1a3c17a9ad096d1cba9893111278615314b976ada476efaf7b19488f494e"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/sales-list.tsx",
+      "bytes": 9645,
+      "sha256": "d19ec4482185107625c2ef0d46d0353530f2e57b5ef17d296960462429914a7d"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/documents/source-controls.tsx",
+      "bytes": 5738,
+      "sha256": "ab59f4be50d3ec1b0c56233df35f29bd6828357dda8a5985ea67154120bd516f"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/entry.tsx",
+      "bytes": 1567,
+      "sha256": "b69aa20abc1e891e8632b44e97c2cb8e0fa8480c0ddb1eb1bb604b316c89e706"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/inventory-runtime.test.mjs",
+      "bytes": 15372,
+      "sha256": "25e559d525813a72aafe076f7dfafca876004f094b0c1d78b411b8c20594fbde"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/output-runtime.test.mjs",
+      "bytes": 8729,
+      "sha256": "0e8cf7b1b9177dbd8551032672edc48b9c4ad66499dd084cd1e590dba76cceb1"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/output.tsx",
+      "bytes": 5081,
+      "sha256": "2309571552e243fff25eeaf2013ef1eda7e014229bc2e947acca243ffab93ca0"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/page.tsx",
+      "bytes": 14452,
+      "sha256": "d94dcd9d0df65bce97cf91da5d694ffb4f02958e5c0c57e4a1cbdc945e0c9451"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/tsconfig.json",
+      "bytes": 162,
+      "sha256": "e2bd9c9d4c8a590102318881a553061843670e5c52c0559461716aa0d4847a23"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/detail.tsx",
+      "bytes": 17273,
+      "sha256": "dfbd69effe83e6d46cc50955d8b1a996124bf3ac9b9f7c2c4ec5c0a41e9c508c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "bytes": 15135,
+      "sha256": "46096c1d2590d0544b576ccf1c018ae9ade3e3a92dca0d0f69b79436bc1725a5"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/photos.tsx",
+      "bytes": 5217,
+      "sha256": "1cd4b290aa81f5beb8939e82daf545932a2ccd298e6dbcf39da0c0a4b361a931"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/product-runtime.test.mjs",
+      "bytes": 13814,
+      "sha256": "42b1878f544446d42003f62cc193ef6f5a4613e09cb1cb9251eac7f34b0fea1c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/synthetic-preview-transport.ts",
+      "bytes": 10174,
+      "sha256": "bae45bb21e40952a1a265fe9830cf42dcb49c31464d01de333ec9d3921d68bc8"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/settings/synthetic-preview-transport.ts",
+      "bytes": 13978,
+      "sha256": "c23d6fe4172b3d1ec3382c51bdbdb4e74c6cfe09ef3a8c42359b7ed137eeeb96"
+    },
+    {
+      "path": "apps/web/demo-replica/tsconfig.runtime.json",
+      "bytes": 883,
+      "sha256": "d227630fc83a4d0a90900a6331d854667ffff5c56e37b4c5313acb8968e88543"
+    },
+    {
+      "path": "apps/web/demo-replica/vite.runtime.config.mjs",
+      "bytes": 2789,
+      "sha256": "ad1716bbb9a0bdd837282b5a8e5ae184c6df234efdd00fcb5f14de56dd7df8ef"
+    },
+    {
+      "path": "apps/web/src/inventory/contracts.ts",
+      "bytes": 5541,
+      "sha256": "66377ec7073e7e37fbadd6c9ce0cd3580764952a46b6ca5fa7012680bd02bf36"
+    },
+    {
+      "path": "apps/web/src/inventory/output-adapter.test.ts",
+      "bytes": 27282,
+      "sha256": "a2b7ccdaac9311308aaea74aaea6558100e5c9176fe5c0fee2f29cf790ae8a95"
+    },
+    {
+      "path": "apps/web/src/inventory/output-adapter.ts",
+      "bytes": 24194,
+      "sha256": "40f7ff4626ee54c8e3c6c9b55184e501b57c2d37f1d90f735f25a622e98aec87"
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 954,
+      "sha256": "cceb20beee862fe430957662d9a91f4c691587ef302183dd8b56da95bc93fc22"
+    }
+  ]
+}
