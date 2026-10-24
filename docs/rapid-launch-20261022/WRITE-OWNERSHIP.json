@@ -5164,7 +5164,15 @@
       "apps/web/demo-replica/frontend/runtime.html",
       "apps/web/demo-replica/vite.runtime.config.mjs",
       "apps/web/demo-replica/tsconfig.runtime.json",
-      "tsconfig.json"
+      "tsconfig.json",
+      "apps/web/demo-replica/build-production-host.mjs",
+      "apps/web/demo-replica/frontend/production-bootstrap.ts",
+      "apps/web/demo-replica/frontend/frozen-style-order.ts",
+      "apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt",
+      "apps/web/demo-replica/frontend/assets/fonts/jakarta-400.woff2",
+      "apps/web/demo-replica/frontend/assets/fonts/jakarta-500.woff2",
+      "apps/web/demo-replica/frontend/assets/fonts/jakarta-600.woff2",
+      "apps/web/demo-replica/frontend/assets/fonts/jakarta-700.woff2"
     ],
     "F2_original_output_extension": [
       "apps/web/src/inventory/output-adapter.ts",

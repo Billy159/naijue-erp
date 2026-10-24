@@ -38,10 +38,10 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-const here=path.dirname(fileURLToPath(import.meta.url)), root=path.resolve(here,'../../../..'), working=path.resolve(here,'../application');
+const here=path.dirname(fileURLToPath(import.meta.url)), root=path.resolve(here,'../../..'), working=root;
 export async function buildProductionHost({ configuration,outdir,sourceCheckpoint }) {
  await mkdir(outdir);
- const result=await build({absWorkingDir:working,entryPoints:{application:path.join(here,'entry.ts')},outdir,bundle:true,platform:'browser',format:'esm',metafile:true,logLevel:'silent'});
+ const result=await build({absWorkingDir:working,entryPoints:{application:path.join(here,'frontend/production-bootstrap.ts')},outdir,bundle:true,platform:'browser',format:'esm',metafile:true,logLevel:'silent'});
  await writeFile(path.join(outdir,'metafile.json'),JSON.stringify(result.metafile));
  const inputs=[];for(const name of Object.keys(result.metafile.inputs)){const filename=path.resolve(working,name),bytes=await readFile(filename);inputs.push({path:path.relative(root,filename).split(path.sep).join('/'),bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')});}
  await writeFile(path.join(outdir,'index.html'),'<script id="naijue-erp-production-configuration" type="application/json">'+JSON.stringify({configuration})+'</script><script type="module" src="https://1n5635n614.goho.co/assets/tool-build/application.js"></script>');
@@ -57,14 +57,14 @@ async function fixture(name, dependencies = false, syntheticGraph = false) {
     'node_modules/esbuild': actualLock.packages['node_modules/esbuild'], [`node_modules/${nativePackage}`]: actualLock.packages[`node_modules/${nativePackage}`] } };
   const data = { 'package.json': JSON.stringify(pkg), 'package-lock.json': JSON.stringify(lock), 'tsconfig.json': '{}',
     'apps/web/tsconfig.json': '{}', 'apps/web/src/application/tsconfig.json': '{}',
-    'apps/web/src/production-host/build-production-host.mjs': builder,
+    'apps/web/demo-replica/build-production-host.mjs': builder,
     'apps/web/src/application/build-application.mjs': 'export const onlyToolPlaceholder = true;',
     'apps/web/src/production-host/configuration.ts': 'export const onlyToolPlaceholder = true;',
-    'apps/web/src/production-host/entry.ts': syntheticGraph ? 'import "./fixture-data.ts"; export const tiny=1;' : 'export const tiny: number=1;',
+    'apps/web/demo-replica/frontend/production-bootstrap.ts': syntheticGraph ? 'import "./fixture-data.ts"; export const tiny=1;' : 'export const tiny: number=1;',
     'apps/api/src/production-main.ts': 'import { readFile } from "node:fs/promises"; export async function unused() { return readFile("never-called"); }',
     'adapters/postgres/migrations/0001_initial.sql': '-- TOOL ONLY, never executed\nCREATE SCHEMA tool_check;\n',
     'adapters/postgres/patches/0026-v11-document-specification-save.sql': '-- TOOL ONLY, never executed\nSELECT 11;\n' };
-  if (syntheticGraph) data['apps/web/src/production-host/fixture-data.ts'] = 'export const simulated=1;';
+  if (syntheticGraph) data['apps/web/demo-replica/frontend/fixture-data.ts'] = 'export const simulated=1;';
   for (const [name, bytes] of Object.entries(data)) await put(sourceRoot, name, bytes);
   const sourceCommit = await commitFixtureTree(sourceRoot);
   if (dependencies) {
@@ -81,7 +81,7 @@ test('small real esbuild graphs produce the two frozen pack manifests without ru
   const source = JSON.parse(await readFile(path.join(f.options.manifestDirectory, 'source-manifest.json')));
   const build = JSON.parse(await readFile(path.join(f.options.manifestDirectory, 'build-manifest.json')));
   assert.equal(source.sourceCommit, f.sourceCommit); assert.equal(build.sourceCommit, f.sourceCommit);
-  assert(build.components.frontend.inputs.some(row => row.path === 'apps/web/src/production-host/entry.ts'));
+  assert(build.components.frontend.inputs.some(row => row.path === 'apps/web/demo-replica/frontend/production-bootstrap.ts'));
   assert(build.components.backend.inputs.some(row => row.path === 'apps/api/src/production-main.ts'));
   assert.equal(await readFile(path.join(f.options.buildRoot, 'migrations/0001_initial.sql'), 'utf8'), '-- TOOL ONLY, never executed\nCREATE SCHEMA tool_check;\n');
   assert.equal(await readFile(path.join(f.options.buildRoot, 'patches/0026-v11-document-specification-save.sql'), 'utf8'), '-- TOOL ONLY, never executed\nSELECT 11;\n');

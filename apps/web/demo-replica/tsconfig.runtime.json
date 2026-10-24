@@ -37,7 +37,9 @@
     "frontend/runtime/**/*.tsx",
     "frontend/runtime-bootstrap.ts",
     "frontend/runtime-styles.ts",
-    "frontend/runtime-preview-transport.ts"
+    "frontend/runtime-preview-transport.ts",
+    "frontend/production-bootstrap.ts",
+    "frontend/frozen-style-order.ts"
   ],
   "exclude": []
 }

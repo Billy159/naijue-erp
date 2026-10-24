@@ -33,6 +33,8 @@
     "apps/web/demo-replica/frontend/runtime/**",
     "apps/web/demo-replica/frontend/runtime-bootstrap.ts",
     "apps/web/demo-replica/frontend/runtime-styles.ts",
-    "apps/web/demo-replica/frontend/runtime-preview-transport.ts"
+    "apps/web/demo-replica/frontend/runtime-preview-transport.ts",
+    "apps/web/demo-replica/frontend/production-bootstrap.ts",
+    "apps/web/demo-replica/frontend/frozen-style-order.ts"
   ]
 }

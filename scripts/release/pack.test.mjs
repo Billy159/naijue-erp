@@ -22,7 +22,7 @@ async function fixture(name) {
     'package.json': JSON.stringify({ name: 'tool-only-fixture', private: true, type: 'module', dependencies: {} }),
     'package-lock.json': JSON.stringify({ name: 'tool-only-fixture', lockfileVersion: 3, packages: { '': { dependencies: {} } } }),
     'adapters/postgres/migrations/0001_initial.sql': 'CREATE SCHEMA release_tool_fixture;\n',
-    'apps/web/src/production-host/entry.ts': 'export const toolFixture = 1;\n',
+    'apps/web/demo-replica/frontend/production-bootstrap.ts': 'export const toolFixture = 1;\n',
     'apps/api/src/production-main.ts': 'export const toolFixture = 2;\n',
     'scripts/build.mjs': '/* TOOL ONLY: tiny graph fixture; no actual ERP build or service. */\n',
   };
@@ -40,7 +40,7 @@ async function fixture(name) {
   };
   const components = {};
   for (const [kind, entrySource, entryOutput] of [
-    ['frontend', 'apps/web/src/production-host/entry.ts', 'web/application.js'],
+    ['frontend', 'apps/web/demo-replica/frontend/production-bootstrap.ts', 'web/application.js'],
     ['backend', 'apps/api/src/production-main.ts', 'backend/production-main.js'],
   ]) {
     const outputKey = path.relative(sourceRoot, path.join(buildRoot, entryOutput)).split(path.sep).join('/');
@@ -249,10 +249,11 @@ test('HTML resource closure preserves canonical and alternate same-origin member
     assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
   }
 });
-test('design-token source policy accepts only the two registered production CSS sources', async () => {
+test('design-token source policy accepts only the registered production CSS sources', async () => {
   for (const [label, name] of [
     ['selection', 'apps/web/src/demo-controls/idle-selection-tokens.css'],
     ['presentation', 'apps/web/src/demo-presentation/tokens.css'],
+    ['copied-demo', 'apps/web/demo-replica/frontend/ui-tokens.css'],
   ]) {
     const f = await fixture('design-css-' + label), bytes = ':root { --tool-design-color: #123456; }\n';
     f.source.files.push(record(name, bytes)); await put(f.sourceRoot, name, bytes); await f.save();
@@ -318,4 +319,10 @@ test('package dependency identity ignores key order but rejects missing extra an
     if (scenario === 'reordered') assert.equal((await validateRelease(f.options)).manifest.buildId, 'tool-check-1');
     else await assert.rejects(validateRelease(f.options), error => error.code === 'PACKAGE_LOCK_IDENTITY_MISMATCH');
   }
+});
+
+test('retired rewritten entry cannot be a new release entry', async () => {
+ const f=await fixture('retired-entry');f.build.components.frontend.entrySource='apps/web/src/production-host/entry.ts';
+ const bytes='export const retired=1;\n';f.source.files.push(record('apps/web/src/production-host/entry.ts',bytes));await put(f.sourceRoot,'apps/web/src/production-host/entry.ts',bytes);await f.save();
+ await assert.rejects(validateRelease(f.options),error=>error.code==='PRODUCTION_ENTRY_SOURCE_REQUIRED');
 });

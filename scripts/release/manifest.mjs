@@ -12,10 +12,13 @@ export function requireRelease(condition, code) { if (!condition) throw new Rele
 const hashPattern = /^[a-f0-9]{64}$/;
 const excludedSegment = /(?:^|[-_.])(?:synthetic[^/]*|fixtures?[^/]*|tests?|test-only|secrets?|private|credentials?|passwords?|tokens?|backups?|originals?|product-media|media|provenance)(?:$|[-_.])/i;
 const excludedGraph = /(?:unified-browser-harness|new-document-browser-harness|management-browser-harness|visual-acceptance-host|development-host|local-https-application-host|fixturegraph)/i;
+const copiedFontLicenseSource='apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt';
+const copiedFontLicenseMember='web/source-styles/assets/fonts/LICENSE.txt';
 const sourceExtensions = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.css', '.json', '.sql', '.svg', '.woff', '.woff2']);
 const productionDesignTokenStyles = new Set([
   'apps/web/src/demo-controls/idle-selection-tokens.css',
   'apps/web/src/demo-presentation/tokens.css',
+  'apps/web/demo-replica/frontend/ui-tokens.css',
 ]);
 const productionMediaAdapterSources = new Set([
   'adapters/media/src/controlled-product-media.ts',
@@ -64,13 +67,13 @@ function allowedSource(value) {
     && !(index === segments.length - 1 && (productionDesignTokenStyles.has(value)
       || /\.(?:tsx?|[cm]?js)$/.test(part) && !/synthetic|fixture|(?:^|[.-])test(?:[.-]|$)/i.test(part))))
     && ( /\.(?:tsx?|[cm]?js)$/.test(value) || !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value))
-    && !/\.(?:test|spec)\.[^.]+$/i.test(value) && sourceExtensions.has(path.posix.extname(value)), 'NON_PRODUCTION_SOURCE');
+    && !/\.(?:test|spec)\.[^.]+$/i.test(value) && (sourceExtensions.has(path.posix.extname(value))||value===copiedFontLicenseSource), 'NON_PRODUCTION_SOURCE');
 }
 export function allowedMember(value, role) {
   relativeName(value);
   if (role === 'migration' && (reviewedMigrationMembers.has(value) || [...runtimeSqlPatches.values()].includes(value))) return;
   const runtimeMedia = reviewedRuntimeMediaMember(value, role), segments = value.split('/');
-  requireRelease(Object.hasOwn(roleExtensions, role) && roleExtensions[role].has(path.posix.extname(value))
+  requireRelease(Object.hasOwn(roleExtensions, role) && (roleExtensions[role].has(path.posix.extname(value))||role==='frontend'&&value===copiedFontLicenseMember)
     && !segments.some((part, index) => (excludedSegment.test(part)
       && !(runtimeMedia && index === segments.length - 1)) || part === 'node_modules')
     && !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value)
@@ -79,7 +82,7 @@ export function allowedMember(value, role) {
     : role === 'backend' ? value.startsWith('backend/')
       : role === 'migration' ? /^migrations\/[0-9]{4}_[A-Za-z0-9_-]+\.sql$/.test(value)
         : role === 'metadata' ? ['package.json', 'package-lock.json'].includes(value)
-          : /^(?:(?:frontend|backend)-)?metafile\.json$|^production-build\.json$/.test(path.posix.basename(value)), 'MEMBER_ROLE_PATH_MISMATCH');
+          : /^(?:(?:frontend|backend)-)?metafile(?:-raw)?\.json$|^production-build\.json$/.test(path.posix.basename(value)), 'MEMBER_ROLE_PATH_MISMATCH');
 }
 export async function canonicalAbsolute(value, type) {
   requireRelease(typeof value === 'string' && path.isAbsolute(value) && path.normalize(value) === value, 'EXPLICIT_CANONICAL_ABSOLUTE_PATH_REQUIRED');
@@ -252,7 +255,7 @@ async function verifyGraph(kind, component, context) {
   const { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock } = context;
   requireRelease(component && typeof component === 'object' && !Array.isArray(component), 'EXPLICIT_COMPONENT_GRAPH_REQUIRED');
   relativeName(component.workingDirectory, true); allowedSource(component.entrySource);
-  requireRelease(kind === 'frontend' ? /^apps\/web\/src\/production-host\/entry\.(?:tsx?|mjs|js)$/.test(component.entrySource)
+  requireRelease(kind === 'frontend' ? component.entrySource==='apps/web/demo-replica/frontend/production-bootstrap.ts'
     : /^apps\/api\/src\/production[-A-Za-z0-9_]*\.(?:ts|mjs|js)$/.test(component.entrySource), 'PRODUCTION_ENTRY_SOURCE_REQUIRED');
   requireRelease(sources.has(component.entrySource), 'ENTRY_SOURCE_NOT_FROZEN');
   relativeName(component.metafile); relativeName(component.entryOutput);

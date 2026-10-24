@@ -5,8 +5,8 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, ReleaseError } from './manifest.mjs';
 
-const FRONTEND_BUILDER = 'apps/web/src/production-host/build-production-host.mjs';
-const FRONTEND_ENTRY = 'apps/web/src/production-host/entry.ts';
+const FRONTEND_BUILDER = 'apps/web/demo-replica/build-production-host.mjs';
+const FRONTEND_ENTRY = 'apps/web/demo-replica/frontend/production-bootstrap.ts';
 const BACKEND_ENTRY = 'apps/api/src/production-main.ts';
 const COMMIT_PROOF = '.release-source-commit';
 const forbiddenGraph = /unified-browser-harness|new-document-browser-harness|management-browser-harness|visual-acceptance-host|development-host|local-https-application-host|fixture|synthetic|(?:^|\/)(?:tests?|test-support)(?:\/|$)|\.(?:test|spec)\./i;
@@ -142,8 +142,8 @@ export async function buildProduction(options) {
     const old = selected.get(name); requireRelease(!old || old.sha256 === record.sha256, 'BUILD_INPUT_CHANGED');
     selected.set(name, record); return record;
   }
-  for (const name of [FRONTEND_BUILDER, FRONTEND_ENTRY, BACKEND_ENTRY, 'apps/web/src/application/build-application.mjs',
-    'apps/web/src/production-host/configuration.ts', 'package.json', 'package-lock.json', 'tsconfig.json', 'apps/web/tsconfig.json', 'apps/web/src/application/tsconfig.json']) await select(name);
+  for (const name of [FRONTEND_BUILDER, FRONTEND_ENTRY, BACKEND_ENTRY,
+    'apps/web/src/production-host/configuration.ts', 'package.json', 'package-lock.json', 'tsconfig.json', 'apps/web/tsconfig.json']) await select(name);
   await mkdir(buildRoot, { mode: 0o700 }); await mkdir(manifestDirectory, { mode: 0o700 });
   const frontend = await import(pathToFileURL(path.join(sourceRoot, FRONTEND_BUILDER)).href);
   requireRelease(typeof frontend.buildProductionHost === 'function', 'F1_PRODUCTION_BUILDER_REQUIRED');
@@ -171,7 +171,7 @@ export async function buildProduction(options) {
   await writeFile(path.join(buildRoot, 'backend/metafile.json'), jsonBytes(result.metafile), { flag: 'wx' });
   const graphs = {}, graphOutputs = new Set();
   for (const [kind, workingDirectory, metafile, entrySource, entryOutput] of [
-    ['frontend', 'apps/web/src/application', 'web/metafile.json', FRONTEND_ENTRY, 'web/application.js'],
+    ['frontend', '.', 'web/metafile.json', FRONTEND_ENTRY, 'web/application.js'],
     ['backend', '.', 'backend/metafile.json', BACKEND_ENTRY, 'backend/production-main.js'],
   ]) {
     const graph = (await readJson(path.join(buildRoot, metafile))).value, inputs = [];
@@ -194,7 +194,7 @@ export async function buildProduction(options) {
   const files = [];
   for (const name of await walkFiles(buildRoot)) {
     const bytes = await boundedFile(buildRoot, name);
-    const role = ['web/metafile.json', 'web/production-build.json', 'backend/metafile.json'].includes(name) ? 'evidence'
+    const role = ['web/metafile.json', 'web/metafile-raw.json', 'web/production-build.json', 'backend/metafile.json'].includes(name) ? 'evidence'
       : name.startsWith('web/') ? 'frontend' : name.startsWith('backend/') ? 'backend' : name.startsWith('migrations/') || [...runtimeSqlPatches.values()].includes(name) ? 'migration' : 'metadata';
     const record = { path: name, bytes: bytes.length, sha256: sha256(bytes), role, member: role === 'evidence' ? null : name };
     if (role === 'metadata') record.sourcePath = name;
@@ -204,7 +204,7 @@ export async function buildProduction(options) {
       // Preserve provenance without manufacturing an esbuild output. The frozen pack contract decides whether this copy is allowed.
       const original = [...selected.values()].find(row => row.sha256 === record.sha256 && row.bytes === record.bytes);
       if (original) record.sourcePath = original.path;
-      else record.producerInputs = [FRONTEND_BUILDER, 'apps/web/src/application/build-application.mjs'];
+      else record.producerInputs = [FRONTEND_BUILDER];
     }
     files.push(record);
   }

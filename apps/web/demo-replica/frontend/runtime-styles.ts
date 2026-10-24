@@ -1,4 +1,4 @@
-const order: readonly string[] = ["ui-tokens.css", "styles.css", "gold.css", "product-current.css", "inventory-workbench.css", "transfer-current.css", "sales-current.css", "entry-shared.css", "matrix-experiments.css", "interaction-common.css", "sales-returns.css", "basic-settings.css", "ui-review.css", "final-ui.css", "brand-components.css", "inventory-refinement.css", "golden-consistency.css", "unified-single-select.css", "sales-golden.css", "transfer-scan-drawer.css", "confirmation-dialogs.css", "sales-refinement.css", "product-refinement.css", "sales-detail-alignment.css", "product-inventory-unified.css", "product-rework.css", "inventory-ledger.css"];
+import { frozenStyleOrder as order } from './frozen-style-order.ts';
 const common: readonly string[] = ["ui-tokens.css", "styles.css", "gold.css", "interaction-common.css", "ui-review.css", "final-ui.css", "brand-components.css", "golden-consistency.css", "unified-single-select.css", "confirmation-dialogs.css"];
 const groups: Readonly<Record<string, readonly string[]>> = {
  inventory:['inventory-workbench.css','inventory-refinement.css','product-inventory-unified.css','inventory-ledger.css'],
@@ -17,9 +17,16 @@ approvedDocumentHeaderStyle.dataset.approvedContract='v16-document-responsibilit
 approvedDocumentHeaderStyle.textContent='@media(min-width:1351px){.tc-editor .tc-gold-doc-fields[data-document-responsibility=v16]{grid-template-columns:160px minmax(180px,1fr) minmax(180px,1fr) minmax(155px,.7fr) minmax(130px,.55fr) minmax(130px,.55fr) auto}}';
 document.head.append(approvedDocumentHeaderStyle);
 
+let assetBase='/';
+export function configureReplicaStyleAssetBase(base:string):void { assetBase=base; }
+export async function prepareReplicaCommonStyles(signal:AbortSignal):Promise<void>{
+ if(signal.aborted)throw new DOMException('Startup cancelled','AbortError');
+ await Promise.all(common.map(ensure));
+ if(signal.aborted)throw new DOMException('Startup cancelled','AbortError');
+}
 function ensure(name:string):Promise<void>{
  const existing=loaded.get(name);if(existing)return existing.ready;
- const node=document.createElement('link');node.rel='stylesheet';node.href='/source-styles/'+name;node.dataset.frozenStyle=name;
+ const node=document.createElement('link');node.rel='stylesheet';node.href=assetBase+'source-styles/'+name;node.dataset.frozenStyle=name;
  const ready=new Promise<void>((resolve,reject)=>{node.onload=()=>resolve();node.onerror=()=>{loaded.delete(name);node.remove();reject(new Error('Stylesheet unavailable: '+name));};});
  loaded.set(name,{node,ready});slots.get(name)!.after(node);return ready;
 }
