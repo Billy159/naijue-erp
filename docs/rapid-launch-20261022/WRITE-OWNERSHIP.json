@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T03:06:09.981041+00:00",
+  "updatedAt": "2026-10-24T03:24:31.469906+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -13,7 +13,11 @@
         {
           "path": "apps/api/src/postgres-read-api.ts",
           "group": "B01_NO_FIELD_CHANGE_FIRST_WINDOW",
-          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE"
+          "fieldGate": "EXISTING_FIELDS_NO_SCHEMA_CHANGE",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Only exactV15 issuer categoryOrderWrite plus reviewed PRODUCT_MAINTENANCE, same existing pool/UOW and D2 categoryOnly route; no configuration field/CLI/otherfamily, CORE earlyreturn retained"
+          }
         },
         {
           "path": "apps/api/src/production-application-host.ts",
