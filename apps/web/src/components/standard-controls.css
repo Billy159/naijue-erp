@@ -17,6 +17,17 @@
 .iw-product-search-shell:not(.iw-product-search-shell--selected)>.erp-input.arco-input.iw-product-input{border-color:transparent;background:var(--ca-surface-muted);font-size:14px}
 .iw-product-search-shell:not(.iw-product-search-shell--selected)>.erp-input.arco-input.iw-product-input:focus{border-color:var(--ca-control-focus-border);background:var(--ca-surface)}
 .erp-date.arco-picker input,.erp-select.arco-select input{height:auto;min-height:0;padding:0;border:0;border-radius:0;outline:none;background:transparent;box-shadow:none;font:inherit}
+/* Frozen transfer-date.jsx localCss + Arco picker/input/suffix surface.
+ * The document field retains its raw-string Input trigger; give its actual
+ * carrier the same single-layer date styles, without changing filter/ledger dates. */
+:where([data-sales-date="document"],.sale-date-field,.tc-gold-doc-fields,.transfer-command-editor) .erp-date-host .erp-date-trigger .erp-date-input .arco-input-inner-wrapper{box-sizing:border-box;width:100%;height:32px;min-height:32px;padding:4px 11px 4px 4px;border:1px solid transparent;border-radius:4px;background:var(--ca-surface-muted);box-shadow:none;font:13px/1.5715 Arial,"PingFang SC",sans-serif}
+:where([data-sales-date="document"],.sale-date-field,.tc-gold-doc-fields,.transfer-command-editor) .erp-date-host .erp-date-trigger .erp-date-input .arco-input-inner-wrapper:hover{border-color:var(--ca-control-hover-border);background:var(--ca-surface-muted)}
+:where([data-sales-date="document"],.sale-date-field,.tc-gold-doc-fields,.transfer-command-editor) .erp-date-host .erp-date-trigger .erp-date-input .arco-input-inner-wrapper.arco-input-inner-wrapper-focus,
+:where([data-sales-date="document"],.sale-date-field,.tc-gold-doc-fields,.transfer-command-editor) .erp-date-host:has(.arco-picker-container) .erp-date-trigger .erp-date-input .arco-input-inner-wrapper{border-color:var(--ca-primary);background:var(--ca-surface-muted);box-shadow:none}
+:where([data-sales-date="document"],.sale-date-field,.tc-gold-doc-fields,.transfer-command-editor) .erp-date-host .erp-date-trigger .erp-date-input .arco-input-inner-wrapper input.arco-input{box-sizing:border-box;min-width:0;width:100%;height:auto;min-height:0;padding:0 0 0 8px;border:0;border-radius:0;outline:none;background:transparent;box-shadow:none;font:13px Arial,"PingFang SC",sans-serif}
+/* Frozen DateField detail uses allowClear={!detail}; no document clear icon or reserved width. */
+:where([data-sales-date="document"],.sale-date-field,.tc-gold-doc-fields,.transfer-command-editor) .erp-date-host .erp-date-trigger .erp-date-input .arco-input-clear-icon{display:none}
+:where([data-sales-date="document"],.sale-date-field,.tc-gold-doc-fields,.transfer-command-editor) .erp-date-host .erp-date-trigger .erp-date-input .arco-input-inner-wrapper .arco-input-group-suffix{width:14px;min-width:14px;height:auto;margin-left:4px;text-align:center}
 .erp-checkbox.arco-checkbox{display:inline-flex;align-items:center;gap:3px;font:inherit;white-space:nowrap}
 .erp-checkbox.arco-checkbox input[type=checkbox]{position:absolute;width:0;height:0;margin:0;padding:0;opacity:0}
 .erp-button.arco-btn{font:inherit}

@@ -56,7 +56,8 @@
 .erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>.ui-confirm-body p:last-child{margin-bottom:0}
 .erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>footer{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0;padding:0 24px 20px;border:0;background:var(--ca-surface)}
 .erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>footer .btn{min-height:32px;height:32px;padding:0 14px;font-size:14px;white-space:nowrap}
-.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog)>footer .primary{background:var(--ca-critical);border-color:var(--ca-critical);color:var(--ca-on-primary)}
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog)>footer .primary,
+.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog)>footer .primary:hover{background:var(--ca-critical);border-color:var(--ca-critical);color:var(--ca-on-primary)}
 .erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog)>footer .primary:hover{filter:brightness(.94)}
 .erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog) :focus-visible{outline:2px solid var(--ca-primary);outline-offset:2px}
 @media(max-width:480px){.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>header{padding:16px 16px 0}.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>.ui-confirm-body{padding:8px 16px 16px}.erp-source-dialog:is(.transfer-source-discard,.source-discard-dialog,.source-confirm-dialog)>footer{padding:0 16px 16px}}

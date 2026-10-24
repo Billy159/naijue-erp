@@ -485,9 +485,12 @@
   background: transparent;
   color: var(--ca-ink-2);
   font-size: 13px;
+  font-weight: 400;
 }
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions > .btn.primary { color: var(--ca-primary-ink); }
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions > .sale-delete-action { color: var(--ca-danger, #b42318); }
+/* Frozen ui-review.css keyboard outline; Arco must not add a second focus ring. */
+:is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions > :is(.btn,.erp-button):focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; box-shadow: none; }
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions > .btn:hover:not(:disabled),
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-more > summary.btn:hover { background: var(--ca-primary-hover-soft); color: var(--ca-primary-ink); }
 :is(.sales-proposal-editor,.sales-detail-facts) .sale-head .actions > .btn:disabled { background: transparent; }

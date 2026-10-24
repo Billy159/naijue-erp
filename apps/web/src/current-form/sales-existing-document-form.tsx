@@ -33,9 +33,9 @@ function SavedSalesDocument({ model, ...props }: SalesCommandFormProps & { reado
   const dirty = props.session.hasDirtyDraft, draft = native.editor?.draft;
   const leave = () => { if (dirty) setConfirm('leave'); else if (props.session.discardEditor()) props.close(); };
   const cancelEdit = () => { if (dirty) setConfirm('cancel-edit'); else void props.session.cancelEditing(); };
-  const beforeSave = <><UIButton disabled={!props.session.canCancelEditing} onClick={cancelEdit}>取消修改</UIButton><UIButton disabled={!props.session.editable || dirty || !props.session.actionAllowed('VOID')} onClick={() => setConfirm('VOID')}>作废</UIButton></>;
+  const beforeSave = <><UIButton disabled={!props.session.canCancelEditing} onClick={cancelEdit}>取消修改</UIButton><UIButton className="btn sale-delete-action" disabled={!props.session.editable || dirty || !props.session.actionAllowed('VOID')} onClick={() => setConfirm('VOID')}>作废</UIButton></>;
   const actions = <>
-    <UIButton disabled={!props.session.editable || dirty || !draft || !settlementBalanced(draft) || !props.session.actionAllowed('APPROVE')} onClick={() => setConfirm('APPROVE')}>审核</UIButton>
+    <UIButton className="btn primary" disabled={!props.session.editable || dirty || !draft || !settlementBalanced(draft) || !props.session.actionAllowed('APPROVE')} onClick={() => setConfirm('APPROVE')}>审核</UIButton>
     <DocumentOutputActions sourceKey={`${original.document.header.id}:${original.document.header.version}`} {...(!dirty ? { getDocument: () => salesDocumentOutput(original) } : {})} unavailableReason="请先保存并采用当前单据" />
     <SalesHistoryAction {...(props.history ? { capability: props.history } : {})} salesId={original.document.header.id} />
   </>;
