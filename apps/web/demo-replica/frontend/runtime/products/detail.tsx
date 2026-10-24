@@ -17,12 +17,28 @@ export const priceFields=[['purchase_price','采购价'],['retail_price','零售
 export interface ProductDetailOptions {scope:ReadScope;http:HttpQueryOptions;product:Selection;reader:ProductFullPageReadOnlyReader;onAccessFailure:(error:HttpQueryError)=>void;onOpenInventory:(product:Selection)=>void;close:()=>void}
 export function ProductDetail(p:ProductDetailOptions){
  const [tab,setTab]=useState<ProductReadOnlyPageTab>('base'),[visited,setVisited]=useState<ReadonlySet<ProductReadOnlyPageTab>>(new Set(['base'])),[heading,setHeading]=useState(p.product.label);
+ const pagePositions=useRef(new Map<ProductReadOnlyPageTab,{left:number;top:number}>()),pendingPosition=useRef<{scope:ReadScope;productId:string;tab:ProductReadOnlyPageTab;left:number;top:number}|null>(null);
+ const changeTab=(next:ProductReadOnlyPageTab)=>{
+  if(next===tab||!p.scope.active)return;
+  const scrolling=document.scrollingElement??document.documentElement;
+  pagePositions.current.set(tab,{left:scrolling.scrollLeft,top:scrolling.scrollTop});
+  pendingPosition.current={scope:p.scope,productId:p.product.id,tab:next,...(pagePositions.current.get(next)??{left:0,top:0})};
+  setVisited(old=>new Set([...old,next]));setTab(next);
+ };
+ useLayoutEffect(()=>()=>{pagePositions.current.clear();pendingPosition.current=null;},[p.scope,p.product.id]);
+ // The frozen layout scrolls the document vertically. Restore after the active
+ // tab's DOM is mounted; the barcode component separately owns horizontal scroll.
+ useLayoutEffect(()=>{
+  const position=pendingPosition.current;pendingPosition.current=null;
+  if(!position||!p.scope.active||position.scope!==p.scope||position.productId!==p.product.id||position.tab!==tab)return;
+  window.scrollTo({left:position.left,top:position.top,behavior:'instant'});
+ },[tab,p.scope,p.product.id]);
  const basic=useProductRead<{productId:string},ProductBasics|null>(p.scope,p.reader.base?.read,{productId:entityId('product',p.product.id)},tab==='base',p.onAccessFailure);
  const specs=useProductRead<{productId:string},ProductSpecifications|null>(p.scope,p.reader.specs?.read,{productId:entityId('product',p.product.id)},tab==='specs'||tab==='images',p.onAccessFailure);
  useEffect(()=>{const data=basic.snapshot.success?.data;if(data)setHeading(data.code+' · '+data.name);},[basic.snapshot.success]);
  const title=useRef<HTMLHeadingElement>(null);useLayoutEffect(()=>title.current?.focus({preventScroll:true}),[]);
  if(!p.scope.active)return null;
- return <div className="pc-detail-workbench"><div className="pc-detail-sticky"><div className="gold-head iw-head pc-page-head"><h1 ref={title} tabIndex={-1}>{heading}</h1></div><div className="tabs" role="tablist" aria-label="商品详情">{productTabs.map(([key,label])=><button type="button" role="tab" aria-selected={tab===key} className={tab===key?'active':''} key={key} onClick={()=>{setVisited(old=>new Set([...old,key]));setTab(key);}}>{label}</button>)}</div></div><section className="pc-editor-body pc-detail-body">
+ return <div className="pc-detail-workbench"><div className="pc-detail-sticky"><div className="gold-head iw-head pc-page-head"><h1 ref={title} tabIndex={-1}>{heading}</h1></div><div className="tabs" role="tablist" aria-label="商品详情">{productTabs.map(([key,label])=><button type="button" role="tab" aria-selected={tab===key} className={tab===key?'active':''} key={key} onClick={()=>changeTab(key)}>{label}</button>)}</div></div><section className="pc-editor-body pc-detail-body">
  {visited.has('base')&&<div hidden={tab!=='base'}><ReadNotice phase={basic.snapshot.phase} retry={()=>void basic.query.run({productId:entityId('product',p.product.id)})} cancel={()=>basic.query.cancel()}/>{basic.snapshot.phase==='success'&&!basic.snapshot.success?.data?<div className="empty">商品不存在</div>:basic.snapshot.success?.data&&<BaseBody data={basic.snapshot.success.data}/>}</div>}
  {visited.has('specs')&&<div hidden={tab!=='specs'}><ReadNotice phase={specs.snapshot.phase} retry={()=>void specs.query.run({productId:entityId('product',p.product.id)})} cancel={()=>specs.query.cancel()}/>{specs.snapshot.success?.data?<SpecsBody data={specs.snapshot.success.data}/>:specs.snapshot.phase==='success'&&<div className="empty">商品规格资料未取得</div>}</div>}
  {visited.has('barcodes')&&<div hidden={tab!=='barcodes'}><Barcodes {...p} active={tab==='barcodes'}/></div>}

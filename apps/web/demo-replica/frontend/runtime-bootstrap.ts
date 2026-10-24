@@ -1,7 +1,8 @@
-import '@arco-design/web-react/dist/css/arco.css';
+import sharedArcoCss from '@arco-design/web-react/dist/css/arco.css?inline';
 import {createReplicaSession,mountNormalReplica,createReplicaWorkbook} from './runtime/entry.tsx';
 import {prepareReplicaStyles} from './runtime-styles.ts';
 import type {ProductionHostConfiguration} from '../../src/production-host/configuration.ts';
+const sharedArcoStyle=document.createElement('style');sharedArcoStyle.dataset.sharedArco='2.66.16';sharedArcoStyle.textContent=sharedArcoCss;document.head.prepend(sharedArcoStyle);
 const {createReplicaPreviewTransport}=await import('./runtime-preview-transport.ts');
 const transport=createReplicaPreviewTransport();
 const session=createReplicaSession(transport.http);

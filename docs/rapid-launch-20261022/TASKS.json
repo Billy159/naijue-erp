@@ -4693,8 +4693,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T18:36:33.453710+00:00",
-    "sourceRound": 350,
-    "sourceCheckpoint": "parent65c8637d722bbdbe6338945d7a5841ac66554965 / exact350 backend13",
+    "sourceRound": 351,
+    "sourceCheckpoint": "parent ee1674f887c7532a3ade94c54dfd7bc103049628, new351 exact frontend3",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -4716,19 +4716,19 @@
       "newBackendConnected": false,
       "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-65c8637-phase2-02/build",
       "phase1Accepted": false,
-      "phase2Candidate": "Actual349 fixed strict/build/HTTP; QF named3 product tabs/hall/payment now complete, heavy DOM/query retention pass; document scroll tab-return new finding assigned F2; direct cancellation evidence in progress. Not pure visual/real business.",
+      "phase2Candidate": "QF349 named2 read failures closed; affected DOM/query reuse and explicit pending->aborted synthetic client passed, document scroll return P2-QF349-03 remains actualOPEN until newfixed",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
-      "status": "WAIT_F2_AFFECTED_SCROLL_DELTA_OR_OTHER_COMPLETE_READY_MODULE",
+      "status": "SOURCE351_SCROLL_FIX_AND_SINGLE_SHARED_ARCO_CONTENT_BUILD_NEXT",
       "owner": "C",
-      "qa": "Original QF only failed/affected; no old347 retests"
+      "qa": "Original QF only document-scroll return plus shared-CSS actual consumers; no repeated endpoint rechecks"
     },
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Original historical blank hall v5 pending only; v17 explicitly approved, D2/F2 implementation in progress",
-    "github": "REMOTE_EXACT_VERIFIED_65c8637d722bbdbe6338945d7a5841ac66554965",
+    "github": "REMOTE_EXACT_VERIFIED_ee1674f887c7532a3ade94c54dfd7bc103049628",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -7851,7 +7851,7 @@
       }
     },
     "performanceOwners": {
-      "sharedBuildDependenciesStyles": "C single build/runtime and final styles; F1 route import seams",
+      "sharedBuildDependenciesStyles": "C build source351 reuses SAME Arco ?inline module for global root + original isolated controls; removes separate full Arco CSS transfer while exact string/rule order preserved. Verify actual graph/resource/visual, not assume performance.",
       "startupData": "F1 retire legacy full bridge bootstrap, auth and actual first-page only",
       "inventoryPayload": "D3 server assembly; F2 page model and windowed DOM; actual measurement pending",
       "reuse": "Existing pure scope/query/cancel/pagination/precision/draft/commands; never old UI or permanent historical readonly guards",
