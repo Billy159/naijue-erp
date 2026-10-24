@@ -67,8 +67,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "C141 diagnostic rootcause proven; C142 originalsinglefunction repair/newmetadata next; QF295 documentstates parallel",
-      "currentPackage": "142actualCOMMIT metadataonly;230newreview and143normal next; QF295 documentcontrols/F1datefix parallel",
-      "nextReadyPackage": "D1 fixed296 -> QBsource ->142actual/newQBmetadata ->143NORMAL ->final126128131/build/stage",
+      "currentPackage": "144actualPASS/231independentreview;126final296 consumer preparation; F1threeP2repair then fixedUIcandidate",
+      "nextReadyPackage": "231adopt ->126realR1fullv14/metadata ->131socketmetadata ->128realCORE; newfinalformalbuild/stage with exactfingerprints",
       "currentDependencies": "Formal URL unchanged, fullMAIN unbound, current112 backup/7containers protected",
       "fastToolVerified": false
     },
@@ -87,8 +87,8 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "275audit+277asyncoutput delivered/adopted; existingT03 fullsame-document fixture input seam now dispatched withoutRwrite",
-      "currentPackage": "291 exact2 inventory-only responsebudget delivered/frozen; sharedcontracts returned C; actualnextcandidate pending",
-      "nextReadyPackage": "Actual document/public findings only; original F3 owns audit leaf",
+      "currentPackage": "QF295newdate/toolbar/leave-danger-hover3P2 samefamily repairinprogress",
+      "nextReadyPackage": "Release exactsource -> Cfixedpreview -> QF3affected actual; oldvalidstates reused",
       "currentDependencies": "Chrome仅约束actual；原已有接口/UI继续，真实保存要隔离证据",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -224,11 +224,11 @@
       "reasoningEffort": "xhigh",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "SoleChrome fixed295 S02/S03/legalS04 originalbuttons/date/leave-state coverage",
+      "currentWork": "NO_CHROME;3specificnewfindings assignedoriginalF1 onefamily",
       "scope": "登录与公共壳、销货/退换、调拨列表/开单/编辑/详情/相关弹层；公共控件主验",
       "matrixOwner": true,
-      "currentPackage": "v108 adopts291/295 validscopes; matrix104stagesunchanged/66partialindices/whole0",
-      "nextReadyPackage": "Return meaningful newfindings toC/originalF1; no oldpage expansion",
+      "currentPackage": "v109295actual3P2NEED_FIX/cleanSTOP adopted;104stagesunchanged/66partialindices/whole0",
+      "nextReadyPackage": "Containing fixednewcandidate minimum3affected retest, reuse priorvalidstates",
       "fastToolVerified": false
     },
     "QB": {
@@ -244,8 +244,8 @@
       "sourceWriteEnabled": false,
       "fastRequested": false,
       "currentWork": "228accepted actual138 metadata only; waiting precise newheapfixsource, no repeatedreview",
-      "currentPackage": "229296sourcePASS adopted;230actual142delta/newmetadata inprogress",
-      "nextReadyPackage": "296 onefunction source delta;142newactualcatalog;143actualNORMAL",
+      "currentPackage": "230142metadataPASS adopted;231144actualnormal/replay/freshness/login limitedreview",
+      "nextReadyPackage": "126realR1 newmetadata actual after itexecutes, no repeat144 suite",
       "currentDependencies": "Await exact new artifacts; no repeated prior suites",
       "fastToolVerified": false
     },
@@ -405,7 +405,7 @@
         "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-dc71344-01/HTTP-RESULT.json"
       ],
       "notTested": [],
-      "nextAction": "C142 exact physicalheap witness repair/newmetadata -> C143 actualNORMAL. Only after actualpass revise final126/128/131 consumers and formalbuild; originalR1 data/read/batch gates retained. QF295 originalcontrolstate actual parallel.",
+      "nextAction": "Adopt QB231 C144 scopedactual, finalize original126/131/128 fixed296 realR1 pipeline, newexactformalbuild/stage. F1/QF threeUI findings parallel; no fullbusiness/PUBLISH/publicpass from syntheticCORE.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -414,7 +414,7 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "C142 exact physicalheap witness repair/newmetadata -> C143 actualNORMAL. Only after actualpass revise final126/128/131 consumers and formalbuild; originalR1 data/read/batch gates retained. QF295 originalcontrolstate actual parallel."
+      "next": "Adopt QB231 C144 scopedactual, finalize original126/131/128 fixed296 realR1 pipeline, newexactformalbuild/stage. F1/QF threeUI findings parallel; no fullbusiness/PUBLISH/publicpass from syntheticCORE."
     },
     {
       "id": "B00",
@@ -911,7 +911,7 @@
         "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-dc71344-01/HTTP-RESULT.json"
       ],
       "notTested": [],
-      "nextAction": "C142 exact physicalheap witness repair/newmetadata -> C143 actualNORMAL. Only after actualpass revise final126/128/131 consumers and formalbuild; originalR1 data/read/batch gates retained. QF295 originalcontrolstate actual parallel.",
+      "nextAction": "Adopt QB231 C144 scopedactual, finalize original126/131/128 fixed296 realR1 pipeline, newexactformalbuild/stage. F1/QF threeUI findings parallel; no fullbusiness/PUBLISH/publicpass from syntheticCORE.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -920,7 +920,7 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "C142 exact physicalheap witness repair/newmetadata -> C143 actualNORMAL. Only after actualpass revise final126/128/131 consumers and formalbuild; originalR1 data/read/batch gates retained. QF295 originalcontrolstate actual parallel."
+      "next": "Adopt QB231 C144 scopedactual, finalize original126/131/128 fixed296 realR1 pipeline, newexactformalbuild/stage. F1/QF threeUI findings parallel; no fullbusiness/PUBLISH/publicpass from syntheticCORE."
     },
     {
       "id": "C04",
@@ -1141,9 +1141,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T06:54:56.385355+00:00",
-  "stage": "ACTIVE_C142_SINGLE_HELPER_ACTUAL_COMMIT_PASS_NEW_QB_METADATA_THEN_C143_NORMAL",
-  "lastVerifiedRemoteCommit": "87bfb5fa9356723c67a6990ae52e4c91cbc9c7ad",
+  "updatedAt": "2026-10-24T07:11:22.308588+00:00",
+  "stage": "ACTIVE_C144_ACTUAL_CORE_NORMAL_REPLAY_FRESHNESS_LOGIN_PASS_QB231_FINAL_R1_CONSUMERS_NEXT",
+  "lastVerifiedRemoteCommit": "02533ecf7a67546ebeca15e4c72974035611b86d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1862,10 +1862,10 @@
     },
     "v11DatabasePatchExecuted": false,
     "browserLease": {
-      "owner": "QF",
+      "owner": "NONE",
       "candidateTarget": "5B69FD73D86A2D051EE5D18378D8C767",
       "demoTarget": "F0B417F6BC85EE5917A5286AAD0FB04A",
-      "scope": "C295 existing document control states",
+      "scope": "QF295v109cleanSTOP; await containing fixedsource date/toolbar/leavehover candidate",
       "otherReviewers": "NO_CHROME",
       "oldTargetsMissingCause": "UNKNOWN",
       "protectedTargetsNotTouched": true
@@ -2039,8 +2039,57 @@
       "CORE": false,
       "BIND": false,
       "login": false,
-      "newRuntimeReview": "WAIT_ORIGINAL_QB230",
+      "newRuntimeReview": {
+        "status": "PASS",
+        "taskId": "QB230",
+        "path": "K/reports/qa-backend/rapid-launch-20261022/QB/slice230-c142-actual-single-helper-heap-metadata/ACCEPTED-RUNTIME-METADATA.json",
+        "bytes": 1727,
+        "sha256": "cb9332e0341c39a4d4f8638803a5ae71d9ad80278c8e2aa5070522a8388dcab2"
+      },
       "next": "C143 final fixed296 actualnormal after newliteralmetadata"
+    },
+    "normal143": {
+      "status": "FAILED_FIRST_ERROR_NO_RETRY",
+      "phase": "PRECONDITIONS",
+      "error": "FIXED262_EXISTING_CLOSURE",
+      "elapsedSeconds": 1.1197648199740797,
+      "leaseAcquired": 0,
+      "queryAttempts": 0,
+      "normalExecuted": false,
+      "specificCause": "Manifest version C143_FIXED296_ORIGINAL_CORE_EXTERNAL_CLOSURE_V1 did not match unchanged original consumer C117_FIXED262_CORE_EXTERNAL_CLOSURE_V1. Source296 and installed142 untouched.",
+      "coreBytes": 4601,
+      "coreSha256": "6a76b48bac878c1bf2537d4b3e0307a97c172cc12840f41fee53d0d3f8fb60ef",
+      "engineBytes": 29599,
+      "engineSha256": "742ff092ace341bef9008f1007c5cadaf54bc1f5f1b690794dc5669b4e21c0e1",
+      "next": "New144 corrected originalformat pairing; preserve143, no originalrun replay or compile repeat."
+    },
+    "normal144": {
+      "status": "PASS_ACTUAL_SYNTHETIC_CORE_MINIMAL_ONLY",
+      "source": "95248dd5dcfb6645c3f8bd57d6bd142a9710e58d",
+      "coreBytes": 18971,
+      "coreSha256": "826d589d8e469072d5a5e3b0e431be4fb9b6b4169748bfa707183a03d62ec165",
+      "engineBytes": 29340,
+      "engineSha256": "1e1a9e9685555bef29439c1d5011c1fe0124be5e9495fb7ffafa5c16d96c28b8",
+      "elapsedSeconds": 19.560730305034667,
+      "normalCommit": true,
+      "sameKeyReplay": true,
+      "carryForward22": true,
+      "oldRowFreshnessRejected23514": true,
+      "oldHeapXmin": "3369",
+      "newTopLow32": "3371",
+      "postNegativeCommittedBaselineUnchanged": true,
+      "syntheticLoginResolveLogoutRevokedTokenReject": true,
+      "leasesReleased": 14,
+      "live": 0,
+      "endReturned": true,
+      "disposeReturned": true,
+      "backgroundFailureCount": 0,
+      "currentFormReaderExercised": false,
+      "realSourceData": false,
+      "tcpLoginProven": false,
+      "BIND": false,
+      "MAIN_PUBLISH": false,
+      "QB": "WAIT_ORIGINAL_QB231"
     }
   },
   "supplementalRoles": {
@@ -3717,7 +3766,10 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v108-qf-adopt-qf2-c291-c295-associated-actual/RESULT.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-core-creation-guard-diagnostic-20261024-141/release-submission/release-receipts/c03-v14-core-creation-guard-diagnostic-20261024-141/core-actual.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-qa-heap-version-repair-20261024-142/release-submission/release-receipts/c03-v14-qa-heap-version-repair-20261024-142/engine-result.json",
-    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-qa-heap-version-repair-20261024-142/release-submission/release-receipts/c03-v14-qa-heap-version-repair-20261024-142/runtime-metadata.json"
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-qa-heap-version-repair-20261024-142/release-submission/release-receipts/c03-v14-qa-heap-version-repair-20261024-142/runtime-metadata.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice230-c142-actual-single-helper-heap-metadata/RESULT.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-core-normal-continuation-20261024-144/release-submission/release-receipts/c03-v14-core-normal-continuation-20261024-144/core-actual.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v109-qf-c295-document-controls-actual/RESULT.json"
   ],
   "newPendingReviews": [
     "C139fixed293 actualNORMAL/replay/login under QB228 newmetadata; no oldnegative replay",
@@ -4090,7 +4142,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T06:54:56.385355+00:00",
+    "atUtc": "2026-10-24T07:11:22.308588+00:00",
     "sourceRound": 296,
     "sourceCheckpoint": "95248dd5dcfb6645c3f8bd57d6bd142a9710e58d",
     "allModels": "gpt-6.1-sol/xhigh",
@@ -4120,7 +4172,7 @@
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
-    "github": "Verified87bfb5fa9356723c67a6990ae52e4c91cbc9c7ad exact2commits; nextactual142 controlrecord push follows",
+    "github": "Last verified02533ecf7a67546ebeca15e4c72974035611b86d; this144/v109 checkpoint finitepush next",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -4135,7 +4187,7 @@
       "wholeOverlaysPassed": 0,
       "explicitNamedPartialGroups": 66,
       "latestMatrixOwner": "QF",
-      "latestAcceptedMatrix": "v108 original QF offline adoption291+295; 7related rows limited evidence only, all104 stages unchanged/whole0"
+      "latestAcceptedMatrix": "v109 afteractual295 document controlfamily:5relatedrows partialfacts only, stages104 unchanged39/8/23/33/1,66namedpartial/whole0.3newP2originalF1inprogress."
     },
     "isolatedMorePreview": {
       "url": "http://127.0.0.1:57849/component-more.html",
@@ -4149,9 +4201,9 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "C142 actual singleheapwitness helper repair COMMIT0/3.2242435689549893s, newcanonical145200748da24a00ea8fca09c06e2041b7405a501a9e86e64caae0ea093c78f9/123/sourceRoutinesMatchtrue; other122/OID/ACL/config same,19prepost0/owned0/oldQA7safe. QB230 actualdelta/newmetadata pending, C143NORMAL/replay/login/oldrowfreshness stillNOTRUN. C139FAILED andC141ROLLBACK preserved.",
+    "backend": "C144 actual0/19.560730305034667s PASS_ACTUAL_SYNTHETIC_CORE_MINIMAL_ONLY. Fixed296/new1421452/230; singleclient normalCOMMIT49/115/22, exactsamekeyreplay/countssame/carry22, postcommit oldheap3369!=newtop3371 otherflags true -> exact23514 originalhelperline90 thenROLLBACK/freshcommittedbaseline same; syntheticADMIN login/resolve/logout/revoke succeeded.14leasesreleased/live0/end/dispose/bg0. OriginalQB231 onlynewactual review underway;126/128/131 finalsource296 consumers originalO resumed. No realR1/data/MAIN/PUBLISH/BIND/formalpass.",
     "productionBuild": "Formal294 actualbuild/pack andC140 Linuxci/native passed only; no294 appstart/CORE/publicswitch. Current runtime229. Next formal rebuild/consumer126128131 revisions held until corrected NORMAL actual passes, avoiding intermediate churn; cannot start294 against future different fingerprint.",
-    "actualQFBrowser": "QF sole lease newly dispatched USER-UI-DOC-TOOLBAR/DATES/HOVER original v038/v067, fixed295 default/existingSalesPreview; QF2cleanSTOP. Newcandidate5B69FD73D86A2D051EE5D18378D8C767 + DemoF0B;11unknown oldtargets preserved/3protectedtabs unchanged.",
+    "actualQFBrowser": "NONE/QF295v109cleanSTOP at original2ownedtargets, bothdefaultI01waiting/no layers/pending; 11unknown/protected3 untouched. OriginalF1 fixing3specificP2 samefamily, nextcontainingcandidate then QFminimalretest.",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
