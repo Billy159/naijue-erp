@@ -4714,8 +4714,8 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T22:17:57.817460+00:00",
-    "sourceRound": 364,
+    "atUtc": "2026-10-24T22:27:55.262724+00:00",
+    "sourceRound": 365,
     "sourceCheckpoint": "SOURCE364 amended with existing records before any push/build; SOURCE363 remote verified4e694a74eaca12a12d0f9e95e195d01ab03ea165",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
@@ -4727,37 +4727,37 @@
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
       "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
-      "runtimeVersion": "phase2-normal-2c54222-06",
+      "sourceCommit": "f475cea89d93b667fa59d9b37da89244f3088547",
+      "runtimeVersion": "phase2-normal-f475cea-07",
       "htmlBytes": 3154,
-      "htmlSha256": "1bdf2596b5cf62070905df8f43219c6477d3910a292230fab5fae5e689b382c7",
+      "htmlSha256": "7b9b90aa7a0ddb9c9ae76dc1190e6c3b1b79fddbebbf3465e253b95c59d45822",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
-      "sourceRound": 361,
-      "serverSession": 60261,
+      "sourceRound": 364,
+      "serverSession": 67625,
       "fixtureBytes": 25766,
       "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
       "phase2Started": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-2c54222-phase2-06/build",
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-f475cea-phase2-07/build",
       "phase1Accepted": false,
-      "phase2Candidate": "Actual fixed HTTP134resources and original normal SALE/transfer/new consumers; QF targeted actual next, synthetic only",
+      "phase2Candidate": "Actualserved135resource fixed candidate; originalQF3IDs passed preliminary, formalreport/cleanlease next; QF2output source ready browserwaiting",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
-      "status": "SOURCE364_FIXED_ASSOCIATED_BUILD_NEXT",
-      "owner": "C",
-      "packets": [
-        "F1182exact14",
-        "F2outputpreviewexact2",
-        "Capprovedv16style+finiteoutputroute"
-      ],
-      "sourceRound": 364,
-      "currentServedSource": 361,
-      "syntheticOnly": true,
-      "notYetServed": true
+      "status": "SOURCE364_CURRENT_HTTP_FIXED_PLUS183_ROLE_LABEL_SOURCE_WIP_NOT_BUILT",
+      "currentSource": "f475cea89d93b667fa59d9b37da89244f3088547",
+      "build": "phase2-normal-f475cea-07",
+      "resources": 135,
+      "strictExit": 0,
+      "strictSeconds": 4.666,
+      "buildExit": 0,
+      "buildSeconds": 2.425,
+      "serverSession": 67625,
+      "next": "No separatebuildforrolelabel; nextrelatedqualifiedpacket includes183. Formalproduction copied frontend build/HTTPS host still required",
+      "owner": "C"
     },
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
@@ -6319,8 +6319,8 @@
     },
     "sourceCommit": "2c542225bfdf446c57fcdf672485124b3ebaa360",
     "browserLease": {
-      "owner": "NONE_CLEAN_RETURN_QF361",
-      "scope": "Original two targets inventory/default natural1470x724/dialog0; five drafts preserved",
+      "owner": "QF",
+      "scope": "Source3643affectedIDretest+salesSourceDate representative only; preliminarythreePASS, formalcleanreport pending; QF2sourceonly",
       "requestedModel": "gpt-6.1-sol/medium",
       "actualRuntimeSwitchVerified": false,
       "protectedDraftTabs": 5
@@ -6347,7 +6347,15 @@
       "F4TransferredProductionLeaves": 29,
       "F4ExistingTestLeaves": 3,
       "FastToolVerified": false,
-      "F4ThreadId": "01a16b9a-b8eb-7a40-bcae-eff6d87a196f"
+      "F4ThreadId": "01a16b9a-b8eb-7a40-bcae-eff6d87a196f",
+      "QF2Output364": {
+        "status": "ACTIVE_NEW_TECHNICAL_SCOPE_SOURCE_READY_BROWSER_WAIT_ORIGINAL_QF_LEASE",
+        "owner": "QF2",
+        "modelRequest": "gpt-6.1-sol/medium",
+        "priorFailedPureUIQueue": "not resumed, historicalB05B06receipt recovered/source340 not attributed364",
+        "sourceScope": "onlyF2 finiteoutput+Cwrapper; source349consumer andowner103/4444/XLSXprint tests reused, not rerun",
+        "browser": "No independentcontext, originalQFsolelease; C onehandoff afterclean"
+      }
     },
     "p10Actual114": {
       "status": "FAILED_TYPED_RESULT_CAPTURE",
@@ -7879,9 +7887,9 @@
     },
     "phase2Queue": {
       "F1": {
-        "current": "182 exact14 fixed incl181 successors + C approvedv16 seven-column style; build364 next",
-        "next": "QF onlythreefailedIDs+actualSourceDate consumers; reuse361knownSKU save/358Drawer. Mechanicalrole label pureLuna breakpoint remains",
-        "status": "FIXED_SOURCE_BUILD_NEXT_NOT_FULLPAGE_UI_PASS",
+        "current": "182fixed364 actuallyserved/QF3IDs preliminarypass;183rolelabelpureUIexactsourcefixed365notserved",
+        "next": "Onlynewactualfindings or nextrelatednormalhost/allstate/realconsumer dependencies; no separatebuildforfewlabels",
+        "status": "ACTUAL_TARGETED_RETEST_IN_PROGRESS_FULLPAGE_NOT_PASS",
         "model": "gpt-6.1-sol/medium",
         "packets": [
           "chunk-178-transfer-history",
@@ -8062,7 +8070,7 @@
       "owner": "C",
       "sourceAndAcl": "D1/D3",
       "review": "QB",
-      "status": "PASS_ACTUAL_CATALOGUE344_ONLY_QB273_COMMITS_PLUS_QB275_EXACT_READBACK_ADOPTED",
+      "status": "PASS_CATALOGUE344_ONLY_QB273_PLUS_QB275_ADOPTED_NO_REPLAY",
       "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
       "scope": "Original344dictionaries only; no MAIN/BIND_FULL/claim/PUBLISH/product/SKU/stock/CORE replay",
       "knownBaselineMissingBits": 68,
@@ -8074,7 +8082,7 @@
       "grantExecuted": true,
       "nativeStageExecuted": true,
       "originalNinePreserved": true,
-      "next": "Post196 data preservation; original approvedR1v16 patch129 then neededv15/130; precise next3native ACL observations and supplier222/product2956/SKU14999 components. Not MAIN/PUBLISH/fullimport/HTTP/perf.",
+      "next": "One realR1 post196 data preservation+approvedv16→129/neededv15→130 DBwindow; precise next3 native privileges andnewactualprofile, originalsupplier222 first",
       "actualGrantJob": "c03-real-r1-catalogue-exact68-acl-20261025-195",
       "addedColumnPrivilegeBits": 68,
       "allOtherCatalogObjectsPreserved": true,
@@ -8110,16 +8118,19 @@
         "QB/slice273-c196-actual-stage-commits-readback-failed",
         "QB/slice275-c197-actual344-key-readback"
       ],
-      "failed196Readback": "42702 rollback original failure retained;10commits confirmed not replayed"
+      "failed196Readback": "42702 rollback original failure retained;10commits confirmed not replayed",
+      "actualReview": "QB/slice275-c197-actual344-key-readback/RESULT.json"
     },
     "accountMenuActual": {
       "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-account-menu-actual-01",
       "source": 358,
       "actualObservation": "Approved change-password entry above logout; modal/cancel/focus observed, no values read or submission",
       "issue": "S360-UI-01 ADMIN vs Chinese role label sent original F1, synthetic loginName separate data difference",
-      "model": "Luna max requested in tool, worker reported actual Sol; no designated-Luna acceptance signature",
+      "model": "Actual gpt-6-luna/max parameters accepted; no independent runtime readback. Lack of readback alone not unavailability/no invented gate",
       "sharedDemoBehavior": "Tab leaves open menu; Esc outside trigger does not close either side, preserve as common observation not candidate-only defect",
-      "cleanLeaseReturned": true
+      "cleanLeaseReturned": true,
+      "issueSourceFix": "F1chunk183exactsinglefile2df022e30b689b50fafb6b33bf76c43253d4b97b145ce540924f6b1f7d71acac staged365, not in served364",
+      "status": "SOURCE_FIXED_PENDING_NEXT_RELATED_BUILD_AND_AFFECTED_UI_CHECK"
     },
     "backendNextRealPrerequisites": {
       "currentR1": "5207/v14/123 +CORE115+real344catalogue, source459/binding344 exact",
@@ -8127,6 +8138,30 @@
       "nextNative": "Originalsupplier222 thenPRODUCT2956 thenSKU14999;1142products need143supplierrefs,1814suppliernull preserved, no guessed143subset",
       "coupling": "Components independent ofv5/MAIN/BIND_FULL; full11/historyclosure/PUBLISH still relatedv5 wait",
       "owners": "D1exact3componentACL75037/d512bfb8...+approvedupgradefiles ready;D3suppliercapture entry5464/9d3cac9... ready;C sole execution,QB limited actual"
+    },
+    "supplier222SourceCapture": {
+      "status": "ACTUAL_FIRST_OFFLINE_CAPTURE_ORIGINAL222_IN_THREE_CHUNKS_NOT_IMPORTED",
+      "sourceCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+      "manifest": "F/native-supplier222-source352-capture-20261025-C-run1/SUPPLIER222-CAPTURE.json",
+      "controllerProof": "K/reports/controller/rapid-launch-20261022/real-supplier-component-20261025-01/SOURCE-CAPTURE.json",
+      "immutableGraphInputs": 21,
+      "productionComparedToGit": 20,
+      "rows": 222,
+      "chunks": [
+        100,
+        100,
+        22
+      ],
+      "databaseCalls": 0,
+      "executionAuthorized": false,
+      "runtimeTarget": null
+    },
+    "productionReplicaEntrySeam": {
+      "owner": "C",
+      "status": "REQUIRED_NOT_IMPLEMENTED_NEW_UI_NOT_FORMALLY_RELEASED",
+      "currentReleaseBuilder": "scripts/release/build-production.mjs -> apps/web/src/production-host/build-production-host.mjs / entry.ts still old rewritten application body",
+      "required": "Make existing release/version/resource mechanism build only apps/web/demo-replica normal same-origin HTTPS entry with existing config/auth/session and actual backend capabilities. Never synthetic fallback or old rewritten body. Reuse current copied build dependencies and shared React/Arco graph, not second app/platform. Track precise production inputs/locks/resources and original licensed UI fonts only, no productmedia. Verify private qualified host before formal batch.",
+      "separateFromData": "Backend approved v16/v15 current R1 metadata/profile and needed module permissions must pair; CORE module proof is not all11/PUBLISH/realbusiness success. Do not release synthetic preview as formal."
     }
   },
   "latestReadySource": {

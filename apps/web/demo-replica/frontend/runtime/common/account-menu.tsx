@@ -16,16 +16,19 @@ export interface ReplicaAccountEmployee {
   readonly role: string;
 }
 
+const roleLabel = (role: string) => ({ ADMIN: '管理员', WAREHOUSE: '仓库人员', SALESPERSON: '营业员' })[role] ?? role;
+
 /** Arco-owned popup and menu; the host supplies the password and logout actions. */
 export function AccountMenuView({ employee, onChangePassword, onLogout }: { readonly employee: ReplicaAccountEmployee; readonly onChangePassword: () => void; readonly onLogout: () => void }) {
   const name = employee.name.trim();
+  const role = roleLabel(employee.role);
   const menu = <Menu onClickMenuItem={key => {
     if (key === 'password') onChangePassword();
     else if (key === 'logout') onLogout();
   }}>
     <Menu.ItemGroup title={<Space direction="vertical" size="mini">
       <Typography.Text bold>{name}</Typography.Text>
-      <Typography.Text type="secondary">{employee.role}</Typography.Text>
+      <Typography.Text type="secondary">{role}</Typography.Text>
     </Space>}>
       <Divider style={{ margin: '8px 0' }} />
       <Menu.Item key="password">修改密码</Menu.Item>
@@ -33,8 +36,8 @@ export function AccountMenuView({ employee, onChangePassword, onLogout }: { read
     </Menu.ItemGroup>
   </Menu>;
   return <Dropdown trigger="click" position="br" triggerProps={{ escToClose: true, autoAlignPopupWidth: true }} droplist={menu}>
-    <Button type="text" aria-label={`当前员工：${name} · ${employee.role}`}>
-      <Space align="center"><Avatar size={24}>{Array.from(name)[0]}</Avatar><Typography.Text>{name} · {employee.role}</Typography.Text><IconDown /></Space>
+    <Button type="text" aria-label={`当前员工：${name} · ${role}`}>
+      <Space align="center"><Avatar size={24}>{Array.from(name)[0]}</Avatar><Typography.Text>{name} · {role}</Typography.Text><IconDown /></Space>
     </Button>
   </Dropdown>;
 }
