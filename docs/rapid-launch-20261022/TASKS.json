@@ -8,10 +8,10 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "c1d3ba89dd0a3e95baa23f5aa30f2329f0c965ef",
+    "headObserved": "415af7d344a843256dc8772960589517669fab46",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "99a21242b495c5e875ecd21e2b4d86b83c047ea0",
-    "remoteReadbackMethod": "Exact3 original objects/nonforcedFF/independentGET",
+    "remoteHeadVerified": "162d34cb40ed800e2495b7effbacf0b26816ed55",
+    "remoteReadbackMethod": "Exact12 original objects/nonforcedFF/independentGET",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
       "status": "PRIVATE_DRAFT_UPLOAD_DOWNLOAD_SHA_AND_BUNDLE_VERIFY_PASS",
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "99a21242b495c5e875ecd21e2b4d86b83c047ea0"
+    "lastVerifiedRemoteCommit": "162d34cb40ed800e2495b7effbacf0b26816ed55"
   },
   "concurrency": {
     "chats": 10,
@@ -265,7 +265,7 @@
         "FIELD-APPROVAL-C01-v1.json"
       ],
       "notTested": [],
-      "nextAction": "Prior C01/v2B/v3A/v4 and21demotion approvals preserved. Only closed-filter classification and six descriptive scheme initialization wait human answer.",
+      "nextAction": "Await user exact v14 CORE/bind write-contract confirmation and existing v13 etc only affected branches; v11 confirmed and actualQA199 adopted. Existing approved default FK readonly port wiring continues under taskbook54 without new DB field/write change.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -615,7 +615,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "OriginalF1 consumes Csource241 audit typedslot in original route/controller/mount; aggregate actual unresolved command states, no canLeave substitute or placeholders.",
+      "nextAction": "OriginalQF newsource243 audit delta review; originalF1 dateanchor exact portal/offsetParent actual240 evidence fix. No hard-16px workaround, datefont alreadyactualpassed.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F1",
@@ -710,7 +710,7 @@
       "checks": [],
       "evidence": [],
       "notTested": [],
-      "nextAction": "OriginalQF2 actual240 only235 footer bottom; nativepaging/search/ID evidence adopted, no whole-page pass.",
+      "nextAction": "Six-tab native source awaits originalQF2 new actual; originalF2 only current closehover precise newfinding plus D2 accurate P10 existing default FK/scheme detail read wiring. No duplicate migration of inventory04 or oldPARTIAL labels.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "F2",
@@ -820,7 +820,7 @@
         "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-dc71344-01/HTTP-RESULT.json"
       ],
       "notTested": [],
-      "nextAction": "240 actual preview ready; QF2 affected browser sole then QF selected-row actual; source241 audit slot passed to originalF1; integrate next complete owner batch only.",
+      "nextAction": "QF2 actual240 finalclean returned; QF nowsoleChrome selectedwork actual. C03helper prepares fixed243 audit successor, rootCactual build/serve/HTTP once. OriginalQF2 finalreport pending, newv14 approval only relatedinitbranch waits.",
       "write_scope": {
         "registry": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
         "owner": "C",
@@ -1050,9 +1050,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T00:03:10.511597+00:00",
+  "updatedAt": "2026-10-24T00:19:31.974176+00:00",
   "stage": "ACTIVE_SOURCE241_FIXED_UI240_ACTUAL229_PRIVATE_APP_STAGE_AND_C112_BACKUP_PASS_NO_FORMAL_SWITCH",
-  "lastVerifiedRemoteCommit": "99a21242b495c5e875ecd21e2b4d86b83c047ea0",
+  "lastVerifiedRemoteCommit": "162d34cb40ed800e2495b7effbacf0b26816ed55",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -3188,6 +3188,26 @@
       "scope": "One fixed240 build/serve/three key HTTP bodies and original identity headers matched; synthetic only",
       "adoption": "Original owner or independent limited conclusion adopted; no duplicate C technical verification",
       "adoptedAtUtc": "2026-10-24T00:03:10.511597+00:00"
+    },
+    {
+      "id": "QF-V083",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v083-qf-c240-selected-work-summary-source/RESULT.json",
+      "bytes": 2252,
+      "sha256": "1ba9ef6b9913080afcca02e37649da986a0cea9822592eae13d74f02b9482d16",
+      "result": "PASS_BOUNDED_C240_SELECTED_WORK_VISIBLE_PROJECTION_SOURCE_ACTUAL_PENDING",
+      "scope": "240 selected row visible summary projection only, sourcePASS; old237 reused, actualpending",
+      "adoption": "Original independent limited conclusion adopted without duplicate C technical checks",
+      "adoptedAtUtc": "2026-10-24T00:19:31.974176+00:00"
+    },
+    {
+      "id": "QF-V084",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v084-qf-t02-existing-source-provenance-correction/RESULT.json",
+      "bytes": 2616,
+      "sha256": "fe88f126fe7992668a5eeeff9f781cc21a614273eef741efcbc0edceab74b3db",
+      "result": "T02_EXISTING_SOURCE_PROVENANCE_VERIFIED_CLASSIFICATION_CORRECTED_NO_NEW_ACTUAL",
+      "scope": "Existing T02 full native migration provenance corrected to minimal adaptation; no migration/repeated page QA",
+      "adoption": "Original independent limited conclusion adopted without duplicate C technical checks",
+      "adoptedAtUtc": "2026-10-24T00:19:31.974176+00:00"
     }
   ],
   "newPendingReviews": [
@@ -3491,9 +3511,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T00:03:10.511597+00:00",
-    "sourceRound": 241,
-    "sourceCheckpoint": "c1d3ba89dd0a3e95baa23f5aa30f2329f0c965ef",
+    "atUtc": "2026-10-24T00:19:31.974176+00:00",
+    "sourceRound": 243,
+    "sourceCheckpoint": "415af7d344a843256dc8772960589517669fab46",
     "allModels": "gpt-6.1-sol/xhigh",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -3541,12 +3561,12 @@
       "scope": "Fixed234–240 affected UI plus original lazy customer adapter; synthetic only, stores audit NOT_CONNECTED; original QF2 actual new scope active, QF source240 offline.",
       "wholePageAccepted": false
     },
-    "nextPreview": "240 is now fixed actual build and serving57878, not pending. 241 type-only audit slot is newer source, not in240. Original F1 actual audit wiring continues.",
+    "nextPreview": "Fixed243 415af7d original C03 helperpreparation ui-preview-415af7d-01/57879 ONLY, no actualbuild/serve yet. Original240 remains actualQF version.",
     "r1": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Only unapproved v13 and existing precise business decisions/CORE-dependent write contract wait; HREV v12 nonowner writer target/installer inputs missing, no reader ACL substitution.",
-    "github": "Verified99a21242b495c5e875ecd21e2b4d86b83c047ea0;232–241 and this controller checkpoint next exact object sync",
+    "github": "Verified162d34cb40ed800e2495b7effbacf0b26816ed55 exact12 originalcommitFF;242–243 and this continuation nextsync",
     "goalComplete": false,
     "demoCoverage": {
       "scopeItems": 104,
@@ -3572,27 +3592,32 @@
       "mainNativeAuthorExpanded": false,
       "actualConclusion": "DEMO108 component density/font/clamp/window-scroll residuals pass; native48 not incremented, nativeancestor and>=4native categories untested"
     },
-    "audit": "C127 actualQF closed dualEsc/focus and same-scopefilter retention",
+    "audit": "241typedslot/242retainedparty getter/243 existingroot reader/module scope/two branches/global unresolved aggregation SOURCE_READY owner ProductionHost/JSDOM delta+strictPASS, originalQF independent newsource243 pending; actualUI240 storeauditNOT_CONNECTED and actual backendextensions enabled-state unknown.",
     "demoSession": "QF observed Demo login valid; closed original comparison Chat not resumed.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
     "backend": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance. D3 complete CORE-first115/49 proposal only, new dependent write contract pending concrete human confirmation; generic239 source independentlyQB200 accepted. Current full11/MAIN whole hash still required; real initialization NOT_EXECUTED. No fabricated empty sources/partial source writes.",
     "productionBuild": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "actualQFBrowser": {
-      "owner": "QF2",
-      "status": "C_GRANTED_SOLE_240_AFFECTED_ACTUAL",
+      "owner": "QF",
+      "status": "C_GRANTED_SOLE_240_O_S14_AFFECTED_ACTUAL",
       "candidateTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
       "demoTarget": "7F93D5A61A99F1C00FB3C0F089081F1F",
       "viewport": "1470x668/DPR2",
       "candidateVersion": "dc71344d4ee249b1299fae2b777fac67a2089b4a/ui-preview-dc71344-01-build01",
       "candidateUrl": "http://127.0.0.1:57878/synthetic-unified.html",
-      "scope": "235 footer/238 tab lineheight/234236 close glyph/231datefont and precise anchor evidence/customer provider first use only; old passed scopes adopted",
+      "scope": "Only selected-workline gate/cancel/confirm retention and summary priced/pending; source243 offline separate, no oldfullsuite",
       "trueBrowserIsolationProven": false,
       "protected": [
         "DB7CA658365B213EEE3EB1333946E5BA unsaved",
         "3BC874911D0D2415D093603E264B0D67 unknown",
         "all other tabs"
       ],
-      "nextOwner": "QF only after final clean release; selected O-S14 summary/cancel/confirm retention only"
+      "nextOwner": "QF only after final clean release; selected O-S14 summary/cancel/confirm retention only",
+      "releaseBefore": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c240-targeted-actual-01/BROWSER-RELEASE.json",
+        "bytes": 4015,
+        "sha256": "b7b7d5a63969c77cf7257fd28b9ca2ac6f95570100b3e8bd60336e6786c1045e"
+      }
     },
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
@@ -4212,33 +4237,7 @@
       "qualification": "Originaljob.json only/exports0; no actualapprovedDDL/v9success claimed. Preserve83, neverreplay.",
       "next": "OriginalC helper narrowstartupcarrier diagnosis/new85; identicalSQL/target/oldhash/fresh82/transaction/catalogue guards. Private84disabled until actualR1v9 andissuerreview aligned."
     },
-    "wholePageMigrationLatest": {
-      "atUtc": "2026-10-23T12:56:08.660009+00:00",
-      "source": "Current C direct human message: abandon rewritten page UI and directly copy frozen Demo then wire formal business; seven sections and named installed skills",
-      "implementationBase": "Frozen complete page implementation only, including actual final override layers/resources/control interaction; current rewritten DOM/styles are not the migration base",
-      "firstBatch": {
-        "F1": "sales-current editor/entrySections/lineTable/entryRow plus actual final real-data-bridge.mjs fundsField/paymentRow; SALE and mixed, then existing edit/view and transfer",
-        "F2": "product-current list/editor and product-arco full tab/host with complete four original product stylesheets",
-        "F3": "basic-settings-v2 App/Filters/Fields; first payment method/account B05/B06"
-      },
-      "oldAcceptance": "Stop expansion of replaced old pages; retain only still-applicable effective evidence; independently accept fixed new pages via QF/QF2",
-      "skills": [
-        "anti-over-defense",
-        "arco-design",
-        "vercel-react-best-practices",
-        "vercel-composition-patterns",
-        "web-design-guidelines",
-        "nodejs-backend-patterns",
-        "supabase-postgres-best-practices"
-      ],
-      "notCompletion": [
-        "Source reference only",
-        "Copied classes or partial CSS",
-        "Unchanged rewritten DOM",
-        "Synthetic success as real business",
-        "Static bundle reduction as measured UI performance"
-      ]
-    },
+    "wholePageMigrationLatest": "OriginalF2 adopted existing INVENTORY-NATIVE-PAGE-04+210ledger/219Empty/235236; no new rewritten region or executable migration gap. Six-tab native source awaits actual untested states, not re-migration. P10 existing default FK read+scheme detail wiring now originalD2/F2; true subtype/history and Yintai exact output fields remain input gaps.",
     "allSizeP1": {
       "status": "NARROWED_GROUP_ONLY_SAVE_DETAILS_EXPLICITLY_APPROVED_ORIGINAL_OWNERS_IMPLEMENT",
       "owner": [
@@ -4309,7 +4308,8 @@
       "F2_P01": "Source178 fixed complete list+4originalCSS, shared176/177 pairing; source/actual review pending in latest applicable candidate. Six tabs in progress not complete.",
       "F3_PAYMENT": "Source173 fixed, actual173 partial twoP2, formalcap remains missing.",
       "F3_STORES": "Source174 fixed only, actualcandidate not yet formed.",
-      "B07": "Source179 exact effective read QB184 limitedPASS; real numeric store/guard/host missing, originalowner handed absent2 toD1; broad complete DRAFT edits outside C01 narrow contract."
+      "B07": "Source179 exact effective read QB184 limitedPASS; real numeric store/guard/host missing, originalowner handed absent2 toD1; broad complete DRAFT edits outside C01 narrow contract.",
+      "latest243": "SOURCE_READY_OWNER_TARGETED_CHECKS_PASS_INDEPENDENT_QF_PENDING_NOT_BUILD_NOT_LIVE"
     },
     "executionInterruptions": {
       "recordedAtUtc": "2026-10-23T13:47:28.032694+00:00",
@@ -4821,7 +4821,7 @@
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     },
-    "browserOwner": "QF2_SOLE_240_AFFECTED_ACTUAL",
+    "browserOwner": "QF_SOLE_240_O_S14_AFTER_QF2_FINAL_CLEAN",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
@@ -4924,13 +4924,34 @@
         "storeaudit NOT_CONNECTED",
         "real business/performance and all untested104 scope remain"
       ]
-    }
+    },
+    "sourceReuseClasses": {
+      "pending": 84,
+      "rewritten": 0,
+      "minimalAdaptation": 19,
+      "notIntegrated": 1,
+      "qualification": "Only T02 metadata corrected by originalQF v084; zero wholepage acceptance."
+    },
+    "v14CoreInitialization": {
+      "status": "PENDING_HUMAN_NOT_IMPLEMENTED",
+      "confirmation": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.md",
+      "technical": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.json",
+      "askedOnce": true,
+      "newTables": 0,
+      "newColumns": 0,
+      "actions": [
+        "IMPORT_CORE_STAGE",
+        "IMPORT_BIND_FULL_SOURCE"
+      ],
+      "scope": "Existing49 accounts+real115 dependency party closure; exact22hall22warehouse current-role read only; initial real22claims seq1/cursor22+unique audit1→2, later one full bind seq+1/no newclaim and MAIN carryforward original22. OriginalD1 exact deferred/accounting guard supplement included. No realbootstrap/DDL/source branch activation."
+    },
+    "p10ReadSeam": "OriginalD2 confirms scheme detail API and approved native default FK already exist. C authorized readonly existing-field union using trusted native26, base19UNAVAILABLE preserved, no DDL/write semantics/new human approval. Dictionary grant separate; no inferred default/extra historical subtype. Taskbook54 permits existing-field read ports/newAPI assembly."
   },
   "latestReadySource": {
-    "round": 241,
-    "commit": "c1d3ba89dd0a3e95baa23f5aa30f2329f0c965ef",
+    "round": 243,
+    "commit": "415af7d344a843256dc8772960589517669fab46",
     "latestServedPreviewRound": 240,
-    "qualification": "241 is typed slot only; actual240 immutable UI, server229 private runtime. New business/source scope not interchangeable."
+    "qualification": "243 source-only root audit;240 fixed actual for in-flight scopedQA; privateLinux229 separate."
   },
   "pendingUserDecision": [
     {

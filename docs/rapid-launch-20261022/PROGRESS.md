@@ -1,3 +1,12 @@
+最新增量（源243，运行UI仍240，原队列继续）：
+
+- 原QFv083采用240 selected工作行汇总限定源码结论；v084核实既有T02整页迁移11冻结文件/5区域/4currentcore及原祖先/实际图，将旧“重新仿写”纠正为“最小适配”，未重复迁入或扩大旧页验收。来源待核84/重新仿写0/最小适配19/未接入1；104/55/整页0不变，分类不代表全站完成。F2库存04完整native及210/219/235236有效增量沿证据保留，无新可执行仿写区域，不拿旧v3 PARTIAL重派。
+- 242=7d246669只增加原F3已有往来workspace未决命令只读聚合；243=415af7d344a843256dc8772960589517669fab46原F1接既有audit reader、241typedslot、controllercapture、store两branch/当前角色模块交集/全部保留owner精确未决聚合。owner必要ProductionHost/JSDOM beforeRED/after+strict采用，原QF只核新接缝，未实测真实backendextensions或日志。当前240不含243，storeaudit仍NOT_CONNECTED；后继243/57879仅预构建准备。
+- QF2 actual240已完成并clean/STOP，还C后现由QF唯一Chrome补selected工作行gate/取消确认保留/有价和未知汇总。release4015B/b7b7d5a6…双侧waiting/search空/滚动0/层和busy0，保护原未保存和未知标签。原QF2阶段限定PASS：P16末行露出/命中、两设置tab高度位置、客户首次/重开选择取消输入保留、日期14项fontmetrics及close图形/Xfocus。仍OPEN为日期portal定位和close hover底色，准确成对DOM/CSS证据已交原F1/F2定向修复，不重Today/12区/后台套；最终正式报告离线补，局部/合成不冒业务或性能通过。
+- v14完整确认单已向人类一次提交，仅新增CORE初始化分支等待：同批49账号+115真实主体、22真实仓库claim seq1/cursor22/唯一审计1→2、未来一次完整绑定、旧22claim带入全量而不重复记账、精确22厅22仓读取、改密/会话及合法维护保护。原D1已补BEFORE/deferred时序和真实accounting guard差异，0新表列但新写合同，尚未批准或实施，不造空来源/不把PARTIES不存在的DB回执造出来。
+- 原D2已确认方案详情API及default_barcode_scheme_id实际存在；按任务书54“已有批准字段…读取端口补齐、新API装配可先实施”，C已定向原D2补可信native26默认方案只读变体并保留旧19UNAVAILABLE，交F2复用原独立dictionary reader，0新DB字段/写语义、不猜六scheme CURRENT。单SKU完整历史/subtype/originalSpec及银泰缺准确字段仍独立缺口。
+- GitHub准确回读162d34cb40ed800e2495b7effbacf0b26816ed55（12原提交非强制FF），242/243及本增量继续同步。C112保全/私有229成功事实见下段，正式未切。原十角色/22任务/独立验收/数据保护继续；Sol61/xhigh，Fast无开关未核，目标ACTIVE。
+
 当前接续（源码241／运行UI240／私有服务器229，2026-10-24北京时间）：
 
 - 固定240已实际构建一次并可打开 http://127.0.0.1:57878/synthetic-unified.html ，source dc71344d4ee249b1299fae2b777fac67a2089b4a／ui-preview-dc71344-01-build01，413输入/1368模块，HTML3450452B/37d0721a…；PID36552/session83468，三关键HTTP逐字和原身份头200。18合成覆层16同/2改，仅原客户惰性adapter追加，写仍拒绝，storeaudit NOT_CONNECTED。235字典底部、234/236关闭SVG、237+240未完商品行保留/汇总、238设置页签和231字体在此固定版本；不含241或后继源码。QF2当前唯一浏览器受影响复验，清场后QF接O-S14；旧233失败不倒改、旧已过范围直接采用。

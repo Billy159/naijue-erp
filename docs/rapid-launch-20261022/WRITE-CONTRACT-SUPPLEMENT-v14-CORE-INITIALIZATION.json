@@ -1,0 +1,421 @@
+{
+  "version": "C14-CORE-FIRST-REAL49-v1",
+  "status": "PENDING_USER_CONFIRMATION_NOT_IMPLEMENTED",
+  "createdAtUtc": "2026-10-24T00:08:09.489432+00:00",
+  "sourceProposalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json#realInitializationBootstrap26Increment.coreFirstCompleteProposal",
+  "implemented": false,
+  "databaseExecuted": false,
+  "humanApproved": false,
+  "proposal": {
+    "atUtc": "2026-10-23T23:49:19.525689+00:00",
+    "version": "D3_CORE_FIRST_REAL49_REVIEWABLE_PROPOSAL_V1",
+    "status": "COMPLETE_PROPOSAL_ONLY_PENDING_C_CONTRACT_AND_HUMAN_CONFIRMATION_NO_BRANCH_ACTIVATION",
+    "recommendation": "Use the existing source-host/coordinator/import batch for one explicitly typed CORE first commit containing actual49 accounts and their complete115-party dependency closure only. Do not include unrelated dictionary rows or the remainder of the party source in that first transaction. After a separately authorized complete-source binding, continue existing PARTIES/CATALOGUE/native/history steps with retained identities; full PUBLISH remains a separate complete11closure requirement. This is one recommended narrow business scope, not a menu of architectures.",
+    "actualSourceEvidence": {
+      "method": "One narrow read of accepted no-credential account identity candidate49937B and original ordinary party candidate1494435B, selecting only IDs/references/counts in memory. No capture/credential/source workbook, fullproducer, original data rescan or fresh hashes. No raw IDs/names/credential facts printed.",
+      "accountDecision": "Accepted account-identity-decisions49-PENDING.json in original private candidate directory; prior C mapping confirmation,45 original/4 explicit plan relations retained.",
+      "ordinaryParty": "Accepted party-reference-candidates.json contains628 ordinary parties, not630. All49 mapped nativeStaff IDs match exactly one actual STAFF source key;49distinct staff. References recursively resolve with no missing/mismatched native target.",
+      "counts": {
+        "ordinary": {
+          "HALL": 43,
+          "WAREHOUSE": 53,
+          "STAFF": 49,
+          "CUSTOMER_CURRENT": 261,
+          "SUPPLIER": 222,
+          "total": 628
+        },
+        "independentHistoricalCustomers": 2,
+        "core": {
+          "USER_ACCOUNT": 49,
+          "STAFF": 49,
+          "HALL": 22,
+          "WAREHOUSE": 22,
+          "CUSTOMER_CURRENT": 22,
+          "SUPPLIER": 0,
+          "ordinaryPartySourceRows": 115,
+          "ordinaryPartyNativeRows": 115
+        },
+        "remainingOrdinary": {
+          "HALL": 21,
+          "WAREHOUSE": 31,
+          "STAFF": 0,
+          "CUSTOMER_CURRENT": 239,
+          "SUPPLIER": 222,
+          "total": 513
+        },
+        "links": {
+          "staffWithHall": 43,
+          "staffWithoutHall": 6,
+          "distinctRequiredHalls": 22,
+          "hallDefaultCustomer": 22,
+          "hallDefaultWarehouse": 22,
+          "warehouseBackToHall": 22
+        },
+        "errors": 0
+      },
+      "whyClosed": "Account49→STAFF49.43 staff link to22 distinct native halls;6 retain original NULL hall. Every selected hall has its actual current customer and default warehouse; selected22 warehouses point back into selected22 halls. Customer/staff/hall/warehouse source IDs/native IDs/records and raw original fields are reused, not matched by name/defaulted or regenerated. No supplier/dictionary/barcode/history dependency appears in this graph.",
+      "firstCommitNonAccountEvidence": {
+        "import_source_row": 115,
+        "native_party_import_evidence": 115,
+        "import_header_native_reference": 93,
+        "HALL": 22,
+        "WAREHOUSE": 22,
+        "STAFF": 49,
+        "CUSTOMER": 22,
+        "SUPPLIER": 0,
+        "warehouseMembershipRecordCandidates": 22,
+        "accountSafeProjectionFacts": 49,
+        "note": "HALL/CUSTOMER/STAFF header references =22+22+49. Warehouse records are the22 actual existing reviewed warehouseRecord candidates, not synthetic count increments. Their exact accounting claims/checkpoint closure is a D1 core-action implementation condition, not already executed evidence."
+      }
+    },
+    "dictionariesAndExcluded": {
+      "firstTransaction": "No catalogue rows are required by actual account/party115 references. Catalogue availability remains false/unavailable after first CORE commit; not an empty-full-dictionary success.",
+      "subsequentExistingCatalogueScope": {
+        "CATEGORY": 50,
+        "COLOR": 182,
+        "FIT": 6,
+        "SEASON": 4,
+        "SIZE_GROUP": 6,
+        "SIZE": 48,
+        "SIZE_GROUP_MEMBER": 48,
+        "total": 344,
+        "source": "Original accepted prepared344/reference decisions; original role/group/source/nullable semantics preserved. This may continue via the original catalogue capability only when its own exact phase/source grant is valid, not implicitly inside CORE49 approval."
+      },
+      "notAuthorizedByCore": [
+        "The2 independent historical customer supplements (English8 etc) remain separate original source branch; never counted as current261.",
+        "Six barcode-scheme descriptions/current-history classification and any new scheme rows.",
+        "Historical sales nullablehall/v5 records or inferred hall binding.",
+        "Login-disabled filter semantics for staff without accounts; no such classification is needed to establish these existing49 mapped accounts.",
+        "Product/SKU/price/barcode/media/stock/contributors/payment/history documents, full-source publication and real business writes."
+      ],
+      "wholeSourceTruth": "Excluded from this phase means OUT_OF_SCOPE_NOT_PROVED_EMPTY. No empty producer or zero whole-source expected count may be used to erase known nonempty real data."
+    },
+    "existingLoginAndReadFacts": {
+      "login": {
+        "source": "PostgresAuthenticationTransaction.account in adapters/postgres/src/auth-store.ts54-78; packages/authentication/src/service.ts53-60,86-98; host postgres-read-api459-461.",
+        "finding": "No import_batch/FINAL/MAIN predicate: account lookup joins current STAFF and independently reads current hall.enabled, then original trusted password verifier checks the saved wrapper. Therefore a successful CORE transaction can support an actual login attempt before PUBLISH, without declaring full dataReady.",
+        "conditions": "C original host must actually select existing credentialCompatibility legacy-pbkdf2-v1, preserve all source loginEnabled/enabled/role/employment/hall facts and required active hall. All49 accounts are created; only the originally eligible enabled/in-service/permitted role+hall accounts may log in. Disabled/left accounts remain rejected. D3 has not verified any actual password or successful real login.",
+        "sessionWrites": "Original login creates auth_session under the existing authenticated transaction. This is legitimate after CORE commit; initial bootstrap no-session guard applies to that initialization transaction, not a permanent ban on auth sessions. No password reset, forced enablement or new login identity."
+      },
+      "organization": {
+        "source": "PostgresStoreSettingsReadReader native tables/RR count/page/detail; original createSourceConfirmedApplicationReadAuthorization.settings current identity check.",
+        "finding": "No FINAL/MAIN gate. Current native rows and permitted FK reference names can be read before PUBLISH; stockFacts is already null. Original policy grants this directory to current ADMIN/WAREHOUSE, not SALESPERSON.",
+        "scopeNeeded": "The CORE host must expose only approved core22 hall IDs and22 warehouse IDs/current FK names, explicitly an authorized subset. Do not label those22 as the complete source43/53. Existing HALL_IDS can bound hall scope but cannot forever bound exact core warehouse membership when later same-hall warehouses arrive; an exact core-members scope/filter or original equivalent is required before CORE directory exposure. No global ALL fallback."
+      },
+      "catalogue": {
+        "source": "PostgresDictionaryReadReader and PostgresCatalogueSettingsReadReader query native tables under current identity, not FINAL.",
+        "finding": "Technical reads are possible without PUBLISH once actual corresponding rows exist. CORE first commit contains0 catalogue input by deliberate exclusion, so do not mount a supposedly initialized dictionary UI returning empty0. Only after original344 commit and finite actual readback can that approved catalogue scope be exposed."
+      },
+      "remainingBusinessVisibility": "Retain dataReady=false/businessReady=false and R1 whole-source readiness unset. CORE profile mounts only original login/session and exact permitted organization reads; non-scope product/inventory/sales/transfer/history/payment/write plugins remain unavailable. Do not solve first login by mounting the complete application command capability or changing global readiness. Inventory/history original FINAL predicates remain unchanged.",
+      "uiNeeded": "C/F1/F3 existing host/capability consumers must recognize CORE subset availability without a false full-data flag: show original login and allowed organization pages, leave unavailable resources explicit; no duplicate UI or removed Demo functions as acceptance. No actual session/router exposure verified in this proposal."
+    },
+    "whyOriginalContractInsufficient": {
+      "host": [
+        "captureNativeSourceSession26 requires all11 factories.",
+        "openImportHost26 additionally requires nonempty product reference decision and independent native reference review.",
+        "Full closure scope requires authorizedPayloadHash/expectedCounts even when a caller only wants first-STAGE identity initialization."
+      ],
+      "database": [
+        "Original guard_history_publication from0011 lines319-323 requires history_expected_counts and history_payload_hash at V2 first STAGE, forbids later change. Current full MAIN hash isNULL.",
+        "PostgresCutoffImportStore stage/audit/receipt assumes complete inventory checkpoint shape and immutable full binding. Its audit.after_values currently stores checkpoint only, not an independently typed CORE authorization record.",
+        "assert_native_bootstrap_accounts from current v8 body binds original IMPORT_STAGE/zero checkpoint/full batch payload. A CORE first-stage/late binding cannot be admitted just by reducing host factories or treating a read-purpose review as execution."
+      ],
+      "conclusion": "The generic6 callback source is ready under its existing complete STAGE contract. A separately executable CORE-first scope needs explicit command/JSON/guard semantics. Zero new tables/columns is feasible by reusing existing receipt/audit/batch fields, but it is still a new write-contract branch and requires confirmation before activation."
+    },
+    "proposedSingleContract": {
+      "scopeVersion": "CORE_INITIALIZATION_26_V1 (candidate, not an implemented or approved token)",
+      "sameCoordinator": "Add the finite CORE phase to the existing production-source-host.mjs/run.mjs and original PostgresCutoffImportStore, not another importer or API.",
+      "operations": [
+        {
+          "action": "IMPORT_CORE_STAGE",
+          "target": "Existing original IMPORT batch identity",
+          "meaning": "One fresh actual core initialization transaction: establish batch/source scope,115 exact dependency parties,49 account rows, their original source/reference/native evidence, actual22 warehouse membership records if their original accounting closure is valid, and one matching audit/receipt. No ledger/balance/product/history work or publication."
+        },
+        {
+          "action": "IMPORT_BIND_FULL_SOURCE",
+          "target": "Same already-core-initialized original batch only",
+          "meaning": "Bind the complete real full source once to the same already-core-initialized batch only: exact persisted core receipt/digest/source identities, fullFrozen=false derived from no committed full-binding receipt, original full metadata still NULL, no product/SKU/barcode/history/document/stock/business imports, no PUBLISH, and a separately pinned C full-source execution grant. Preserve original core state and legitimate current account/maintenance changes; initialization is never called again."
+        }
+      ],
+      "firstConfigShape": {
+        "version": "Same-host CORE config candidate version; original full26 config unaffected",
+        "phase": "CORE_INITIALIZATION_26_V1",
+        "coreBinding": "Exact target/actor/original batch/namespace/selection/cutoff/coreSourceDigest/core expected entity counts/bootstrapAt/STAGE key+operation/8authority",
+        "futureFullBinding": null,
+        "sourceGroups": [
+          "PARTIES_CORE"
+        ],
+        "noCatalogueFactoryPretence": true,
+        "fullPayloadHash": null,
+        "wholeExpectedCounts": null
+      },
+      "digest": {
+        "coreSourceDigest": "Canonical digest of the accepted scoped source rows/native identity decisions/account capture PIN and safe native account projections, dependency member IDs/counts and source temporal facts. It is an independently authorized CORE INPUT digest, never the full MAIN payload hash. Its preimage excludes the later execution-review hash and command/request hash to avoid a self-referential digest cycle; authority reviews are then separately pinned and bind this digest.",
+        "fullPayloadDigest": "RemainsNULL/unasserted until original full11 real source+mapping closure exists. Later one-time IMPORT_BIND_FULL_SOURCE binds its exact digest/whole expectedCounts with the SAME namespace/batch/source identities. The full closure includes the already-frozen enhanced STAFF proof as historical first-core execution evidence; it must not strip/recompute proof/time/fingerprints.",
+        "proofSemanticsChange": "Existing bootstrap proof field authorized_payload_sha256 may denote CORE INPUT digest only when its original operation receipt/action and strict scopeVersion prove IMPORT_CORE_STAGE. In the original full IMPORT_STAGE branch it keeps full binding meaning. D1 must explicitly validate these distinct approved contexts; never silently reinterpret the field or compare core digest as if it were a completed full MAIN."
+      },
+      "persistentJSONDelta": {
+        "old": "IMPORT_STAGE receipt result currently operationId/batchId/sequence/cursor/status/ledgerEntryIds; audit after_values checkpoint only; checkpoint expected complete inventory keys; V2 history_expected_counts/history_payload_hash mandatory immutable at STAGE.",
+        "coreAuditAfter": {
+          "schemaVersion": 1,
+          "phase": "CORE_INITIALIZED_V1",
+          "coreSourceDigest": "sha256 string",
+          "coreCounts": "Closed exact per-entity integer object listed above",
+          "coreSourceMembers": "Exact115 original sourceRowId/entity/sourceKey/nativeId tuples and49 safe account projections; no credentials or login names",
+          "authority": "Closed8 pin/source identity tuple plus original target/actor/namespace/selection/cutoff/bootstrapAt/core command hash/operation ID",
+          "checkpoint": "Actual original accountant result, never arbitrary counter flags",
+          "fullBinding": null,
+          "fullFrozen": false
+        },
+        "coreReceiptResult": "Closed separate result shape for IMPORT_CORE_STAGE: original operationId/batchId/sequence/cursor/status/ledgerEntryIds(empty) plus phase=CORE_INITIALIZED_V1,coreSourceDigest and coreCounts. No existing old action/result shape is relaxed.",
+        "importBatch": "Keep same original batch ID/source_name/source_hash/cutoff. In this explicitly proven CORE state only, existing nullable history_payload_hash/history_expected_counts remainNULL (not empty/zero full metadata), history_validation_passed=false/statusSTAGED/completed_atNULL. checkpoint counts reflect actual accounted22 warehouse records if created and original CAS sequence/cursor; expected:{} means whole-source expectation not yet bound, not expected0. Existing full decoder/guards need a separate closed CORE branch, never a broad max-version/null shortcut.",
+        "bindFullAudit": "One immutable IMPORT_BIND_FULL_SOURCE audit/receipt records the original core receipt/digest/checkpoint and closed full binding before/after. Its after_values includes phase=FULL_SOURCE_BOUND_V1, fullFrozen=true, fullBinding={authorizedPayloadHash,historyExpectedCounts,inventoryExpectedCounts,sourceClosurePins,coreReceiptId,coreSourceDigest,coreMaintenanceBinding}, with exact validated member projection/maintenance receipt references if a separately approved master change exists. The original CORE audit remains immutable with fullBinding:null/fullFrozen:false as its historical first-commit state. Effective fullFrozen is derived from the unique COMMITTED full-binding receipt, not a new column or mutable global flag. Fill batch history_payload_hash/history_expected_counts and checkpoint.expected once from genuine full values; never update the original49/115 rows/source/proof/STAGE/bootstrapAt/core receipt to make later metadata match.",
+        "schemaColumns": "0 new tables/columns proposed; these NEW command kinds/persistent JSON shapes/null-state/one-time transition semantics are substantive changes requiring C confirmation and exact schema/SQL guards. Do not claim no-schema-change means no contract approval."
+      },
+      "referenceIntegrity": "CORE membership is the115 real graph vertices. Original customer/hall/default-warehouse cyclic FK closure stays one transaction through existing writer and exact source rows; source-hall/staff NULLs preserved. Count claims use actual INSERT/row IDs and original accountant. The source staging proof must close all49/45+4 safe snapshots and one original stage operation; neither count flags nor existence alone grants adoption.",
+      "laterCatalogue": "The original344 dictionary input is independently complete and has no scheme rows. If C subsequently authorizes catalogue-only continuation, use original catalogue source/store with exact344 counts and current phase grant; it does not fill future MAINhash or imply product/history readiness. Remaining current parties513 can likewise be staged only under their exact granted original source identity. The two historical customers remain out of this CORE/current-only grant."
+    },
+    "executionAuthorityAndGuards": {
+      "CFreezes": [
+        "Actual R1 target identity/current process/role/independent exact runtime catalog and IMPORT_STAGE write purpose; do not union read purposes or reuse QA namespaces.",
+        "Actual account actor and source-established eligible ADMIN facts; same original batch/namespace/selection/cutoff, stable operationId and single request key, exact bootstrapAt and command hash.",
+        "All8 proof authority facts: account_capture_sha256,account_decisions_sha256,identity_review_sha256,bootstrap_execution_review_sha256,source_identity_facts_sha256,approved_employee_plan_sha256,old_source_batch_id,old_source_manifest_sha256. Runtime/source reviews remain separate.",
+        "Private server paths/0600 artifacts; existing49 identity acceptance not reapproved. Core membership/count manifest must be derived from accepted data and pinned before actual run, without shipping passwords/keys."
+      ],
+      "D1GuardDelta": [
+        "Extend current command/action/result/audit kind validation for only the2 new finite IMPORT actions and their closed result/JSON payload; no broad ANY action.",
+        "Explicit CORE branch in guard_history_publication permitsNULL future full fields only when matched original same-transaction core receipt/audit/source proof closes. Original mapping/full/imported paths unchanged.",
+        "Original validate_import_batch_commit/validate_import_operation/native-party warehouse-record accounting must validate genuine22 records/claims and actual checkpoint; do not invent checkpoint22 or leave unaccounted imported records. Core unknown expected:{} has its own finite decoder, never a general invalid-batch acceptance.",
+        "assert_native_bootstrap_accounts adds distinct CORE action/binding validation while preserving fresh-created source/native account facts,49/45+4, same client/current transaction/time, actual actor, exact wrapper/7key proof and strict8authority. Original full STAGE/zero-checkpoint branch remains exact.",
+        "Late full-source binding checks the persisted original core audit/receipt/digest rather than retroactively changing original source proof. Initial no-auth-session requirement applies only to first initialization; legitimate later sessions/own-password account changes are never overwritten or reset by resume.",
+        "Update original issuer exact function-body/catalog/ACL pins after C executes approved guard patch. Metadata-only review realImportExecutionAuthorized staysfalse and cannot replace independent command authority."
+      ],
+      "readScopeDelta": "D1 original host takes a finite CORE_READ profile bound to actual committed core audit/source-member proof; original settings policies retain current enabled actor/role checks. Exact hall22/warehouse22 membership must constrain both count/page/detail/FK names. Reuse existing StoreSettingsScope as far as valid; add an exact member variant if needed for warehouses instead of ALL/hall-only expansion. Authenticate uses original password compatibility, not a fake bootstrap login. No new business permissions or global ready flag."
+    },
+    "exactFileFunctionImpact": {
+      "D3": [
+        "scripts/import-v3/production-source-host.mjs/.test.mjs: finite core phase/source-session capture beside unchanged full11 mode.",
+        "scripts/import-v3/run.mjs/.test.mjs: same coordinator finite allowed steps/closed phase binding and noPUBLISH; current original registration covers run, tests ownership must be checked before edit.",
+        "scripts/import-v3/native-bootstrap.mjs/.test.mjs: approved future CORE command proof/action context and fixed source time, reuse original prepared49 and party closure; do not mutate source239 until C exact release.",
+        "scripts/import-v3/native-party-source26.mjs/.test.mjs: exact115-core selection view and core authority, SAME enhanced source instance for subsequent full PARTIES; cannot remove other real628 from the later full view."
+      ],
+      "D1": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts original command transaction/audit/receipt/CAS/bootstrap callback and finite SQL closure.",
+        "adapters/postgres/src/native-import-record-accounting.ts original actual warehouse claim/checkpoint handling; public application command/accounting types packages/application/src/inventory-cutoff-import.ts and native-import-record-accounting.ts are currently unregistered shared paths, must be assigned C/D1 exactly before changes.",
+        "packages/application/src/import-v3-history-header-native-reference.ts and original bootstrap proof validation/guard contexts; no duplicate proof class.",
+        "Original guard_history_publication, validate_import_batch_commit, validate_import_operation, assert_native_bootstrap_accounts and receipt action/result/phase checks via one C-numbered patch, with old migration1-19 bytes retained; not blindly edit old migration files.",
+        "adapters/postgres/src/native-import-accounting-capability.ts/package runtime contract exact C-reviewed profile metadata and purposes, original low-level43 SQL stays reuse unless a necessary approved core query addition is registered.",
+        "apps/api/src/postgres-read-api.ts host credentialCompatibility/current identity/core-only registration. Existing store-settings read ports/validation/PG reader and original tests only if exact core member scope cannot use existing scope. C must register each sole owner instead of D3 editing D1 settings files."
+      ],
+      "F1F3": [
+        "Existing application route/capability binding and organization read consumer can show authorized-core subset; do not change full site acceptance/readiness or omit necessary final Demo functions."
+      ],
+      "notChangedNow": "All lines above are a reviewable delta proposal, NOT edits or released implementation scope. Generic239 six leaves already frozen; original source/input artifacts and prior QA untouched."
+    },
+    "transactionsResumeRollback": {
+      "firstCommit": "One existing D1-owned actual transaction: exact empty target/state first, finite CORE source authorization, dependency parties115/accounts49/source/reference/evidence, actual warehouse claims, audit and receipt all commit together. Any failure before attemptedCOMMIT rolls back; no orphaned account/import_batch/evidence. Account grants only after confirmed COMMIT.",
+      "idempotency": "Original(actor,requestKey)+requestHash checked before fresh-bootstrap/nonempty checks. Same content returns original receipt; different content conflicts. After uncertainCOMMIT discard connection and C reads original stable operation/key on same target; do not call with new key, recreate IDs, retry old password source writes or replay source239 callbacks outside its lease.",
+      "resume": "Resume same source namespace/batch/source/native identities. Frozen enhanced STAFF/time/proof remains; do not reread source mappings to produce a new identity or overwrite a legitimate current account/session. Bind actual full source once only after its independent authority exists; original prepared PARTIES replay equality checks detect takeover/different proof.",
+      "failureProtection": "C uses existing target-specific backup/protection plan; original old production/source unaffected. Before any real business write, rollback is the precise pre-core recovery plan including sessions/account material as a set. Once real business exists, never restore pre-core/old DB and lose new records; original stop-write/preserve receipts/forward recovery boundary applies.",
+      "noPartialPublish": "No final approval import_record, completed_at, history_validation_passed, FINAL scope, source closure success or stock publication from CORE. Full imported/history/product/quantity pipelines remain hidden/denied until original genuine full closure and final PUBLISH pass.",
+      "oneTimeFullBinding": {
+        "gate": "Same original cutoff/batch locks and (actor,requestKey)+requestHash receipt lookup first. Only original committed CORE with immutable original49/115 membership/source/proof/time/core receipt and full metadata still NULL can enter the one-time transition. No prior COMMITTED IMPORT_BIND_FULL_SOURCE/fullFrozen/PUBLISH or already staged full closure. Effective core evidence is read from its original persisted audit/receipt, never inferred from account count alone.",
+        "noBusinessImported": "Reject first binding if any history sales/transfer header/line/settlement, sales/transfer runtime document, product/SKU/barcode import, import_sku_alias/import_stock_contributor, inventory ledger/balance/baseline or other non-granted business effect is already present for this target/batch. Original22 CORE WAREHOUSE import_records and independently granted later ordinary PARTIES/CATALOGUE receipts are not silently treated as business publication; every such exception remains exact and source-bound. D1 must express this finite table/record allowlist in the approved guard, not a broad nonzero-count bypass.",
+        "atomic": "One existing transaction creates only the full-binding audit/receipt and one CAS transition of the existing batch full metadata/expected checkpoint; fullFrozen becomes effective only on confirmed COMMIT. No account or original CORE source/native row INSERT/UPDATE/DELETE. Initial creation proof is neither replaced nor assigned the later full command hash.",
+        "afterFreeze": "After this unique commit, full hash/history counts/inventory expected counts/full closure pins are immutable as in the original complete-source branch. Same-key same-hash retry returns original receipt before phase/freshness checks; changed content or another key attempting a second bind conflicts. Failure before COMMIT leaves core committed and unbound; uncertain COMMIT discards connection and C reads original key/operation on the same target.",
+        "recovery": "No DROP, new batch/key identity, source remapping or old-snapshot overwrite. A committed CORE survives later failure; already-created authentication/session and approved maintenance changes survive resume. Use forward repair and exact original receipts, never rebuild bootstrap49."
+      }
+    },
+    "acceptanceAndPending": {
+      "oneNewActualOnly": "After approval and exact source/module review, C runs one minimal real first-core transaction; read back source115/type counts/account49/source/native equality and receipt. Then one eligible original-password login, original disabled/left deny as applicable without printing secrets, original ADMIN/WAREHOUSE22org reads/current names and SALESPERSON directory denial; verify non-core routes remain unavailable. Do not replay old49 capture/identity/source producers/sealed18/H06 or claim all49-login/whole-source/dataReady.",
+      "stillNeedsHuman": "This one finite CORE initial commit/partial visibility and later full-binding contract (the2 actions, new persistent JSON payloads/null-state/once transition and exact core membership profile) has not been approved. C should submit one business-scoped confirmation covering it, without reasking49 identities or asking users to choose architecture. Only this branch waits; generic239 and other existing permitted work continue.",
+      "remainingFactsToBindByC": "Server paths/current target/process/role/purpose and exact per-record core membership frozen from the accepted graph; C-generated core digest/bootstrapAt/original request key+operation/full execution review. These are C execution responsibilities, not missing business facts to be guessed or asked as UUID questions.",
+      "actualClaims": "No CORE branch implementation/SQL/metadata signatures/login/PG performed by D3; futureMAINhash remainsNULL and unapproved scheme/historyv5 semantics untouched."
+    },
+    "next": "C reviews this one complete proposed CORE49/115 write/visibility/once-full-binding/maintenance contract, obtains the already-required single user confirmation for new persistent contract fields, then assigns exact D1/D3/F owners. Generic239 six files remain frozen and independent QB continues; no further D3 source changes without a concrete finding or branch release.",
+    "resumeAndMaintenanceExactDifferences": {
+      "verifiedFacts": [
+        {
+          "path": "scripts/import-v3/native-bootstrap.mjs",
+          "function": "openBootstrap -> verifyAuthorityFiles/verifySources, bindBootstrapAccounts, authorizeStageSourceActor, bootstrap26.stageNewBatch26",
+          "fact": "Reopening currently constructs original source-derived account/staff proof and checks pinned original authority files, not live account versions; live safe account version/auth_version=1 checks and INSERTs occur only inside the fresh STAGE callback. Reconstructing with a different bootstrapAt or review rewrites proof/fingerprint and is therefore not a valid resume."
+        },
+        {
+          "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+          "function": "execute/executeOnClient IMPORT_STAGE branch",
+          "fact": "Receipt lookup precedes cutoff/batch locking and fresh-batch check; existing IMPORT_STAGE requires found batch undefined and then invokes stageNewBatch26. Resume must retain receipt-first handling and never route full binding through this fresh creation branch."
+        },
+        {
+          "path": "adapters/postgres/src/native-party-import.ts",
+          "function": "stageNativePartyImportsOnClient / native-party-import:replay and replay-complete",
+          "fact": "Existing replay compares original intent/source/reference/warehouse record and requires target existence; it does not rewrite the current native target. That is reusable for source-equal original core members."
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+          "function": "insertValidatedHistoryHeaderNativeReferences",
+          "fact": "The function locks actual natives and computes native_equal, then accepts an already matching source/reference replay before checking HISTORY_HEADER_REFERENCE_NATIVE_SNAPSHOT_CHANGED for a new insert. Thus exact persisted original references may be reused after legitimate native maintenance; new reference adoption still must match the current locked native row."
+        },
+        {
+          "path": "adapters/postgres/migrations/0026_exact_historical_customer_supplement.sql",
+          "function": "assert_native_bootstrap_accounts / validate_native_party_import_commit",
+          "fact": "Current creation-time guards require fresh transaction xmin/version1/auth_version1/no auth_session and exact original IMPORT_STAGE receipt/zero checkpoint. These checks belong exclusively to initial creation, not late binding/replay. No proposal makes sessions or password changes permanently prohibited."
+        },
+        {
+          "path": "adapters/postgres/src/auth-store.ts",
+          "function": "PostgresAuthenticationTransaction.changePassword",
+          "fact": "Existing own-password update CASes current auth_version/password_hash, increments auth_version and version, updates time and revokes current sessions. This path does not emit the ordinary master audit_change/operation_receipt. A resume rule demanding a master maintenance receipt for every account version change would wrongly reject legitimate own-password changes."
+        },
+        {
+          "path": "adapters/postgres/migrations/0021_native_maintenance_receipts.sql",
+          "function": "maintenance_complete_row_matches / maintenance_evidence_matches",
+          "fact": "These existing functions compare exact fields with numeric/time normalization only; they do not prove an authorized version-history chain. They cannot alone excuse a newer STAFF/HALL/native version."
+        },
+        {
+          "path": "adapters/postgres/migrations/0018_history_typed_publication.sql",
+          "function": "history_closure_rows / history_closure_digest; source projection producer scripts/import-v3/native-party-source26.mjs.openClosure",
+          "fact": "Database typed native rows select current hall/staff/customer/warehouse/supplier records, whereas the existing source producer emits row.nativeSnapshot from original source. A legitimately maintained core master can therefore change the full typed digest despite immutable original source/reference replay succeeding. Explicit handling is required; simply saying old proof is reusable does not close final typed equality."
+        }
+      ],
+      "proposedExactRules": [
+        "CORE resume verifies original source/proof/STAGE/bootstrapAt/account-to-staff identity against the original immutable persisted core audit/receipt. Safe account native_snapshot version1/auth_version1/time remain historical birth facts; do not compare them to current account versions or invoke assert_native_bootstrap_accounts fresh/no-session checks again. Any unexplained identity replacement/foreign target still rejects.",
+        "Preserve current user_account password_hash/login_name/login_enabled/auth_version/version/times and all auth_session rows byte-for-byte during IMPORT_BIND_FULL_SOURCE and subsequent source replay. Authentication continues existing current-state rules, including legitimate disabled users and self-password session revocation. No forced reset, auth-version downgrade, session deletion, credential recapture or privilege expansion.",
+        "A reopened full source session must consume an exact frozen original bootstrap proof/time/core receipt descriptor; it must not call bindBootstrapAccounts with a new execution review/time/full hash or rerun stageNewBatch26. Full source authorization uses its new full binding externally while the original STAFF proof.binding continues to record its original CORE digest/operation. Original PARTIES source/reference/native evidence bytes remain identical.",
+        "Initial CORE_READ mounts login/session and exact organization reads only; own-password remains available solely where already independently authorized and uses the existing route. Core visibility itself grants no master write. If C separately grants native master maintenance before full freeze, keep those current versions and original immutable source/birth proofs.",
+        "For a separately authorized change to one of the115 core master rows, D1 must validate the existing same-target COMMITTED maintenance operation/receipt and exact audit before/after/version chain from original native_snapshot to the locked current row. Reuse existing maintenance row comparison helpers for each link, never version>=1 or mere account/row existence. Account password/session changes are excluded from this master-chain requirement because their current legitimate auth path uses different evidence.",
+        "Full binding freezes a closed coreMaintenanceBinding of exact member IDs, current typed-native projections, current versions and existing maintenance receipt references (no passwords or login names). D3 party openClosure emits those separately authorized current native projections only for that exact maintained core member set; immutable source/native_party_import_evidence/import_header_native_reference projections remain original. D1 typed closure verifies the same current native projection and accepted maintenance chain. Unchanged members keep existing original output and old full imports remain exact.",
+        "After full freeze, a later separately approved master maintenance change may leave business/current account state intact, but the frozen full typed digest cannot be silently recomputed. It produces a precise affected-scope conflict until C reviews a separate closure amendment under an explicit contract; no automatic second full binding or rollback of employee changes. CORE mode does not promise unrestricted maintenance writes during this import window."
+      ],
+      "necessaryDeltas": [
+        "D3 native-bootstrap.mjs/native-party-source26.mjs: consume frozen CORE resume proof descriptor and keep same source fingerprints; separate first-creation callback from resume; openClosure exact approved current typed-native projection for maintained core members only.",
+        "D3 production-source-host.mjs/run.mjs: phase-aware original coordinator permits IMPORT_BIND_FULL_SOURCE and PARTIES continuation without fresh bootstrap callback, while requiring full11/preflight/full authorizers for genuine full mode.",
+        "D1 inventory-cutoff-import-store.ts: typed one-time bind branch, receipt-first retry, no account/session/native-source mutation; phase-specific metadata decoder and immutable effective fullFrozen.",
+        "D1 exact numbered SQL patch: assert_native_bootstrap_accounts stays creation-only; late-bind validates historical original core audit/receipt/proof and finite maintenance chain. guard_history_publication and original command/result/checkpoint/operation guards admit only the approved once transition. history_closure_rows/digest can keep current-row semantics if source current projections match the independently frozen coreMaintenanceBinding; add exact verification in the existing assert_history_typed_closure/guard, never relax global typed equality.",
+        "D1 existing capability issuer exact catalog/function-body/purpose review must include any new finite SQL and guard bodies; existing43 statement capability does not automatically authorize maintenance projection reads or CORE write actions. Register exact required reads and sole owners before implementation."
+      ],
+      "focusedValidation": [
+        "One initial-core positive fixture and changed membership/hash/action/JSON/key negatives; actual22 warehouse accountant closure.",
+        "Same original core source/proof/time replay after a session insert and existing own-password CAS version/auth-version change, preserving all current account/session bytes; no fresh bootstrap guard call or credential reset.",
+        "One legitimate existing master maintenance chain plus exact current native typed projection reaches full binding without rewriting original source/proof; unaudited/foreign-target/changed-chain projection rejects.",
+        "First bind before business effects succeeds; second-bind/new-key/changed-full-payload or preexisting product/history/stock business effect rejects. Same-key retry after fullFrozen returns original receipt.",
+        "A post-freeze changed master projection conflicts precisely without dropping core or overwriting that master; original global typed equality remains enforced. No old same-version full suites or real credential/PG work run by D3 for this proposal."
+      ],
+      "implementationState": "All of the above are precise proposed differences and source facts only, not implemented or actual-engine validated. C/D1 must approve this single contract and register exact leaves before branch edits/execution."
+    },
+    "persistentAccountSafeProjectionExactKeys": [
+      "id",
+      "staff_id",
+      "login_enabled",
+      "auth_version",
+      "version",
+      "created_at",
+      "updated_at"
+    ]
+  },
+  "reviewedByOriginalD1": true,
+  "writerEnabled": false,
+  "requiresExplicitUserReply": true,
+  "exactIncrementalPatch": {
+    "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+    "owner": "D1_AFTER_HUMAN_APPROVAL_AND_C_LEAF_REGISTRATION",
+    "newTables": 0,
+    "newColumns": 0,
+    "oldMigrationBytesUnchanged": true,
+    "requiredBase": "Current actual26 plus approvedv8/v9/v10/v11 exact bodies; v12/v13 not implicitly installed",
+    "onlyNewActions": [
+      "IMPORT_CORE_STAGE",
+      "IMPORT_BIND_FULL_SOURCE"
+    ],
+    "globalChecksPreserved": [
+      "audit new_version=COALESCE(old_version,0)+1",
+      "audit_import_checkpoint_version unique index",
+      "claim PK(import_batch_id,import_record_id)",
+      "claim.checkpoint_sequence>0",
+      "full publication conservation and uniqueFINAL",
+      "global current-native typed equality"
+    ]
+  },
+  "originalD1ExactGuardSupplement": {
+    "source": "Original D1 directed readonly seven-field report to C 2026-10-24; no code/SQL/PG changes or repeated generic239 QA",
+    "initialCore": {
+      "withinOneOriginalTransaction": [
+        "Insert actual zero import_batch seq0/cursor0/counts0/expected{}",
+        "Original same-client callback creates actual115parties/49accounts/22WAREHOUSE import_records",
+        "Original accountant inserts exactly22 new WAREHOUSE claims with checkpoint_sequence1 bound to this CORE operation",
+        "One actual CAS seq0→1 cursor0→22 countsWAREHOUSE0→22, other3counts0/expected{} statusSTAGED"
+      ],
+      "finalCheckpoint": {
+        "sequence": 1,
+        "cursor": 22,
+        "counts": {
+          "WAREHOUSE": 22,
+          "SKU": 0,
+          "INVENTORY_LEDGER": 0,
+          "IMPORT_BATCH": 0
+        },
+        "expected": {}
+      },
+      "audit": {
+        "old_version": 1,
+        "new_version": 2,
+        "before_values": "Actual original zero checkpoint",
+        "after_values": "Closed CORE object; checkpoint is actual final checkpoint"
+      },
+      "receipt": "Unique CORE receipt sequence1/cursor22/ledgerEntryIds[]; no fabricated IMPORT_STAGE/extra audit/extra receipt",
+      "deferredInsertUpdate": "Both the actual INSERT zero image and0→1 UPDATE event prove same new batch/currenttransaction/exact22claims/11549source and same unique CORE audit1→2/receipt/final row. Do not skip INSERT checks or invent new_version1 audit."
+    },
+    "onceFullBind": {
+      "sequence": "current actual sequence+1, initially1→2 unless exact later accounting operation already advanced it",
+      "cursor": "unchanged",
+      "counts": "unchanged",
+      "newClaims": 0,
+      "expected": "{}→genuine full inventory expected once only; original full fields NULL→actual full hash/historyExpectedCounts",
+      "audit": "Original global version increment remains; closed BIND before/after and one matching receipt",
+      "twoLayerTiming": "BEFORE guard checks finite unbound structure/once transition only; original deferred commit/operation checks require actual final source/audit/receipt/actor proofs. No impossible requirement that final receipt already exist BEFORE initial INSERT."
+    },
+    "mainCarryForward": {
+      "alreadyClaimed": "Read back exact22 original claim PK/record/operation/seq1/native evidence as existing progress",
+      "remainingWarehouses": 31,
+      "fullWarehouseScope": 53,
+      "preserve": "Full source includes all53; checkpoint begins at actual current seq/cursor/counts, only unclaimed records become new CHUNK claims",
+      "forbidden": [
+        "Feed53 records as53new claims",
+        "ON CONFLICT fake success",
+        "Reset counts/cursor to0",
+        "Erase original22/source/claims",
+        "Approximate or automatic conflict-ignore"
+      ]
+    },
+    "exactGuardNames": [
+      "receipt_action_by_kind",
+      "audit_action_by_kind",
+      "receipt_result_by_kind",
+      "guard_import_batch",
+      "guard_history_publication",
+      "validate_import_batch_commit",
+      "validate_import_operation",
+      "guard_import_accounting_claim",
+      "validate_import_accounting_claim_commit",
+      "validate_import_accounting_checkpoint_commit",
+      "assert_native_bootstrap_accounts",
+      "existing assert_history_typed_closure/guard finite maintenance-binding verification"
+    ],
+    "accountingAuditShape": "CORE and BIND read nested audit.after_values.checkpoint only in their exact closed action branches; unchanged CHUNK/PUBLISH keeps original bare-checkpoint predicates. CORE permits exactly22WH claims, BIND0claim; no broad new NULL/ANY-action exception.",
+    "partyCatalogueReceipts": "Existing ordinary PARTIES/CATALOGUE staging has immutable source/native evidence and external phase receipts, not IMPORT DB operation_receipt/audit. If separately authorized before full binding, verify those actual evidence types; do not demand or fabricate nonexistent DB receipts.",
+    "exactScopeReadFiles": [
+      "packages/application/src/store-settings-read-ports.ts",
+      "packages/application/src/store-settings-read-validation.ts",
+      "adapters/postgres/src/store-settings-read-reader.ts",
+      "apps/api/src/postgres-read-api.ts"
+    ],
+    "exactScopeRule": "Host derives exact22hallIDs and22warehouseIDs from committed CORE proof; grant validation/returned rows/count/page/detail/FK names enforce sets. HALL_IDS alone is insufficient for warehouse membership.",
+    "minimumAdditionalD1Leaves": [
+      "packages/application/src/inventory-cutoff-import.ts",
+      "packages/application/src/native-import-record-accounting.ts",
+      "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "adapters/postgres/src/native-import-record-accounting.ts",
+      "packages/application/src/import-v3-history-header-native-reference.ts",
+      "adapters/postgres/src/native-import-accounting-capability.ts"
+    ],
+    "runtimeReview": "Existing IMPORT_STAGE purpose may explicitly carry the two finite approved actions under exactCcommand authorization; no default purpose expansion. New private helper/nonowner EXECUTE and original table privileges require exact role/catalog review; PUBLIC remains restricted."
+  }
+}

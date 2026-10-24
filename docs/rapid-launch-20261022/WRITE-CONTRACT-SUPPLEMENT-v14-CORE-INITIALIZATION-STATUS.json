@@ -1,0 +1,19 @@
+{
+  "version": "C14-CORE-FIRST-REAL49-v1",
+  "status": "PENDING_USER_CONFIRMATION_NOT_IMPLEMENTED",
+  "confirmation": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.md",
+  "completeTechnicalDifferences": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.json",
+  "originalD1ExactGuardReviewIncluded": true,
+  "source49IdentityReapprovalRequired": false,
+  "newTables": 0,
+  "newColumns": 0,
+  "newActions": [
+    "IMPORT_CORE_STAGE",
+    "IMPORT_BIND_FULL_SOURCE"
+  ],
+  "humanApproved": false,
+  "writerEnabled": false,
+  "databaseExecuted": false,
+  "onlyAffectedBranchWaits": true,
+  "createdAtUtc": "2026-10-24T00:15:38.057178+00:00"
+}
