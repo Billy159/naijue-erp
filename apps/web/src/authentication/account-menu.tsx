@@ -18,6 +18,7 @@ const roleLabel = (role: string) => ({ ADMIN: '管理员', WAREHOUSE: '仓库人
 export function AuthenticationAccountMenu() {
   const actions = useContext(AuthenticationAccountContext);
   const trigger = useRef<HTMLButtonElement>(null), keyboardOpen = useRef(false);
+  const menu = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     if (!actions) return;
@@ -26,12 +27,20 @@ export function AuthenticationAccountMenu() {
   }, [actions?.registerSlot]);
   if (!actions) return null;
   const close = (restoreFocus = false) => { setVisible(false); keyboardOpen.current = false; if (restoreFocus) trigger.current?.focus({ preventScroll: true }); };
+  const focusFirstItem = () => {
+    const element = menu.current;
+    if (!keyboardOpen.current || !element?.isConnected) return;
+    const first = Array.from(element.querySelectorAll<HTMLElement>('[role="menuitem"]')).find(item => item.tabIndex >= 0 && item.getAttribute('aria-disabled') !== 'true');
+    first?.focus({ preventScroll: true });
+    if (first && element.ownerDocument.activeElement === first) keyboardOpen.current = false;
+  };
   const staffName = 'staffName' in actions.principal && typeof actions.principal.staffName === 'string' ? actions.principal.staffName.trim() : '';
   const accountName = staffName || actions.principal.loginName;
   const accountSummary = staffName || `账号：${actions.principal.loginName}`;
   const accountRole = roleLabel(actions.principal.role);
   const items = <div className="auth-account-options" ref={element => {
-    if (element && keyboardOpen.current) { keyboardOpen.current = false; element.querySelector<HTMLElement>('[role="menuitem"]')?.focus(); }
+    menu.current = element;
+    if (element) queueMicrotask(focusFirstItem);
   }} onKeyDown={event => {
     if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); close(true); }
     else if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
@@ -59,10 +68,10 @@ export function AuthenticationAccountMenu() {
     <Menu.Item key="password" disabled={actions.busy}>修改密码</Menu.Item>
     <Menu.Item key="logout" disabled={actions.busy}><Typography.Text type="error">退出登录</Typography.Text></Menu.Item>
   </Menu.ItemGroup></Menu></div>;
-  return <Dropdown trigger="click" position="br" popupVisible={visible} disabled={actions.busy} onVisibleChange={next => setVisible(next)} droplist={items}>
+  return <Dropdown trigger="click" position="br" popupVisible={visible} disabled={actions.busy} onVisibleChange={next => { if (next) setVisible(true); else close(); }} droplist={items}>
     <UIButton ref={trigger} type="button" className="auth-account-trigger" aria-label={staffName ? `员工菜单：${staffName}` : `账号菜单：${actions.principal.loginName}`} aria-haspopup="menu" aria-expanded={visible} disabled={actions.busy}
       onKeyDown={event => {
-        if (['ArrowDown', 'Enter', ' '].includes(event.key)) { event.preventDefault(); keyboardOpen.current = true; setVisible(true); }
+        if (['ArrowDown', 'Enter', ' '].includes(event.key)) { event.preventDefault(); keyboardOpen.current = true; setVisible(true); queueMicrotask(focusFirstItem); }
         if (event.key === 'Escape') { event.preventDefault(); close(true); }
       }}><Space align="center" size={8}>
         <Avatar size={24}>{Array.from(accountName)[0] ?? ''}</Avatar>

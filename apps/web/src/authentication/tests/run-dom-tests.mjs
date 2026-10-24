@@ -35,6 +35,7 @@ try {
   const allPasswordsBlank = () => [...host.querySelectorAll('input[type=password]')].every(field => field.value === '');
   const passwordForm = () => host.querySelector('.auth-password-dialog form');
   const entryControlsOnly = process.argv.includes('--entry-controls-only');
+  const pointerFocusOnly = process.argv.includes('--pointer-focus-only');
   if (entryControlsOnly) {
     const preferenceKey = 'naijue.ui.remembered-login-name';
     const remembered = () => dom.window.localStorage.getItem(preferenceKey);
@@ -83,7 +84,7 @@ try {
     assert.deepEqual(JSON.parse(requests[2].init.body), { loginName: 'SYNTHETIC-1', password: 'synthetic-http-only' });
     for (let index = 0; index < 3; index++) await assert.rejects(http.session(new AbortController().signal), error => error instanceof AuthClientError && error.kind === 'invalid-response');
     console.log('PASS optional staffName decoder: old DTO compatible, named session/login safely projected, malformed name and extra secret rejected; request identity/credentials envelope unchanged.');
-  } else if (!process.argv.includes('--account-only')) {
+  } else if (!process.argv.includes('--account-only') && !pointerFocusOnly) {
   await render(); assert.equal(calls.length, 0); assert.match(host.textContent, /尚未核验/);
   const invalidLoginSecret = fill('password', 'synthetic-invalid-only');
   await click(button('登录')); assert.equal(calls.length, 0); assert.equal(invalidLoginSecret.value, '');
@@ -157,6 +158,19 @@ try {
   const accountTrigger=host.querySelector('[aria-label="员工菜单：合成员工一"]'); assert.ok(accountTrigger); assert.match(accountTrigger.textContent,/合成员工一 · 管理员/);
   const menuItems=()=>Array.from(document.querySelectorAll('.auth-account-options [role="menuitem"]'));
   const waitMenu=async()=>{for(let i=0;i<20&&menuItems().length!==2;i++)await settle();assert.equal(menuItems().length,2,'Wait for Arco Portal menu');};
+  if (pointerFocusOnly) {
+    await click(accountTrigger); await waitMenu(); assert.ok(document.activeElement===accountTrigger,'Pointer open retains its trigger focus');
+    await act(async()=>accountTrigger.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}))); await settle();
+    assert.ok(document.activeElement===menuItems()[0],'ArrowDown enters an already visible Portal menu');
+    await act(async()=>document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}))); await settle();
+    assert.equal(accountTrigger.getAttribute('aria-expanded'),'false'); assert.equal(document.activeElement,accountTrigger);
+    await act(async()=>accountTrigger.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}))); await waitMenu(); await settle();
+    assert.ok(document.activeElement===menuItems()[0],'A closed menu still focuses after Portal attachment');
+    await act(async()=>document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}))); await settle();
+    await act(async()=>{accountTrigger.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}));accountTrigger.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true}));});await settle();
+    assert.equal(accountTrigger.getAttribute('aria-expanded'),'false');assert.ok(document.activeElement===accountTrigger,'Cancelled pending focus does not move away');
+    console.log('PASS affected A02 pointer-open → ArrowDown first-item focus, closed Portal attachment, Escape return and cancelled queued focus. Component DOM only; actual browser focus awaits QF.');
+  } else {
   await act(async()=>accountTrigger.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}))); await waitMenu();
   assert.deepEqual(menuItems().map(item=>item.textContent.trim()),['修改密码','退出登录']);
   assert.equal(document.activeElement,menuItems()[0]);
@@ -174,6 +188,7 @@ try {
   assert.match(host.querySelector('[aria-label="账号菜单：SYNTHETIC-2"]').textContent,/账号：SYNTHETIC-2 · 管理员/);assert.doesNotMatch(host.textContent,/合成员工一/);
   console.log('PASS account topbar slot: actual Arco Portal, password above logout, keyboard open/Escape, password focus return, logout removes old identity and menu.');
   console.log(entryControlsOnly ? 'Affected A01 controls/optional-name decoder and A02 account-slot checks passed in jsdom; no browser, production cookie or pixel-parity claim.' : process.argv.includes('--account-only') ? 'Affected account-slot checks passed; earlier authentication groups reused from the recorded first run.' : 'All 7 existing authentication groups plus account-slot checks passed in jsdom. No real accounts, browser/network service, cookie-runtime proof or pixel-parity claim.');
+  }
 } finally {
   if (root) await flush(async () => root.unmount());
   controller?.dispose(); dom.window.close(); await rm(temporary, { recursive: true, force: true });
