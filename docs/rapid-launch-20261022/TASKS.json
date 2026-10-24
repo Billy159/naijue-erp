@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb",
+    "headObserved": "ae1dc67b9eed7ca15a14053c4b90b725ce066401",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb",
+    "remoteHeadVerified": "ae1dc67b9eed7ca15a14053c4b90b725ce066401",
     "remoteReadbackMethod": "SOURCE351 exact original Git object nonforcedFF and independent remote GET verified",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb"
+    "lastVerifiedRemoteCommit": "ae1dc67b9eed7ca15a14053c4b90b725ce066401"
   },
   "concurrency": {
     "chats": 11,
@@ -87,7 +87,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "chunk175 exact18 delivered/staged; transfer normal session/history opener next; I01 drawer callback afterF2",
+      "currentWork": "chunk176 inventory callback frozen viaindex only; transfer normal/session/opener inprogress, historical sourcecatalog next",
       "currentPackage": "公共壳/会话/正常路由＋销货完整开单接线",
       "nextReadyPackage": "混合退换/保存查看编辑全状态，随后调拨全状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -145,7 +145,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original inventory View3tabdrawer whole-consumer seam assigned, preserve source351 productscroll PASS",
+      "currentWork": "Inventory View original3tabdrawer exact3 delivered; C fixed+build then originalQF actual, no duplicate producttab work",
       "currentPackage": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
       "nextReadyPackage": "P01-P13商品六页签及全部编辑查看状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -1310,9 +1310,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T20:20:35.030364+00:00",
+  "updatedAt": "2026-10-24T20:31:41.471338+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "49eb4ecc92562bb74d1efed2ef47bdffeb290fbb",
+  "lastVerifiedRemoteCommit": "ae1dc67b9eed7ca15a14053c4b90b725ce066401",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -4715,8 +4715,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T19:57:17.215456+00:00",
-    "sourceRound": 355,
-    "sourceCheckpoint": "parent09bf7a00078bc43f1bdef3125c75715999f2dd91; C first-open originalinventorydrawer style API and actual192 receipt",
+    "sourceRound": 356,
+    "sourceCheckpoint": "parentae1dc67b9eed7ca15a14053c4b90b725ce066401, exactF2drawer3+F1callback3 frozen viaindexpatch",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -7944,7 +7944,7 @@
     },
     "coreReadActualNext": {
       "metadata": "QB259 accepted CURRENT_FORM_READ only",
-      "status": "C192_ACTUAL_ORIGINAL_CORE_SERVICES_PG_PASS_PENDING_QB_NOT_HTTP",
+      "status": "QB263_ACTUAL_ORIGINAL_CORE_SERVICES_PG_LIMITED_PASS_NOT_HTTP",
       "sessionFact": "C139 original synthetic auth session was explicitly logged out; RAM random credential disposed. No assumed live cookie or password reset. Existing HTTP runner honestly waits for original authorized session; direct original service/reader actual PG can proceed without claiming HTTP.",
       "job": "c03-core-ready-module-reads-registered-input-20261025-192",
       "serviceCases": 22,
@@ -7973,13 +7973,34 @@
       "fact": "Approved menu additions explain+66px content height; nav/window metrics alone insufficient to diagnose original aside.sidebar scrollowner. QF directed one precise aside computed overflow/height/rect/client/scrollHeight/top nativewheel before/after and payment link rect, no speculative CSS fix."
     },
     "inventoryViewDrawer": {
-      "status": "SOURCE_SEAM_ASSIGNED_VERIFY_SAME_ACTION_THEN_COMPLETE_ORIGINAL_DRAWER",
+      "status": "SOURCE_FIXED_OWNER_CHECKS_PASS_C_BUILD_NEXT_ACTUAL_BROWSER_PENDING",
       "uiOwner": "F2",
       "hostCallbackOwner": "F1",
       "current": "View routes product6tabs",
       "expected": "Original frozen Demo inventory3tabdrawer",
       "sourceApproval": "No approved redesign, original I01 scope",
-      "styleSeam": "C prepareInventoryProductDrawerStyles(signal) originalgroup lazy/preservecurrentinventory; F1 dynamicparallel use afterF2fixed"
+      "styleSeam": "C prepareInventoryProductDrawerStyles(signal) originalgroup lazy/preservecurrentinventory; F1 dynamicparallel use afterF2fixed",
+      "files": 6,
+      "callbackPatchSha256": "84714fcd629e44811e4922e301ff9e317201640d07ec5c6550c5269badc52324",
+      "notTested": [
+        "actual production focusLock",
+        "preview Escape",
+        "visual original drawer",
+        "focus and matrix two-axis restoration",
+        "real backend"
+      ]
+    },
+    "normalListActualShape": {
+      "nativeV11": "INCOMPATIBLE_MISSING_SALES_AND_TRANSFER_RESPONSIBLE_STAFF_ID; QB264_PURPOSE_METADATA_NOT_CONSUMER_ADMISSION",
+      "coreV16": "QB265 accepted exactsource-profile/purposes; consumer preparing, no actual normalSQL yet",
+      "owner": "D1 preparation/C actual/QB finite metadata",
+      "source": "SOURCE352 reader +353 scope, no NULL placeholders or DDL workaround"
+    },
+    "historyCanonicalRead": {
+      "owner": "D3",
+      "frontend": "F1",
+      "status": "IN_PROGRESS_EXACT3_PRODUCTION1_TEST",
+      "scope": "Original HISTORY detail sameRR optional lineCatalog/sourcegroup snapshots; no DB schema or write contract change"
     }
   },
   "latestReadySource": {

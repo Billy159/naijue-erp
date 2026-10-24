@@ -5213,6 +5213,20 @@
       "sharedHostOwner": "C",
       "host": "apps/api/src/postgres-read-api.ts",
       "contract": "Explicit TRANSFER_HALL_IDS; same-batch source warehouse binding/effective endpoints OR ORIGINAL source creator hall facts, no ALL or MIGRATION_DERIVED replacement. Source352 normal-list fixed leaves read-only. Preserve primitive exports/complete validity and report affected consumers."
+    },
+    {
+      "sourceRound": 355,
+      "owner": "D3",
+      "scope": "Existing HISTORY detail same-RR source canonical line catalogue for approved Demo matrix",
+      "productionFiles": [
+        "packages/application/src/imported-history-query-ports.ts",
+        "packages/application/src/imported-history-query-validation.ts",
+        "adapters/postgres/src/imported-history-query-reader.ts"
+      ],
+      "testFiles": [
+        "tests/imported-history-query.test.ts"
+      ],
+      "boundary": "Optional read-only lineCatalog keyed by original lineId; exact same-batch original identity/group snapshots, unknown distinct from contradiction; no schema/write/permission changes. C only API-contract/shared composer, F1 decoder after delivery."
     }
   ]
 }

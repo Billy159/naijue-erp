@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type { ReplicaSalesSession } from '../documents/sales-session.ts';
 import type { SalesListViewState } from '../documents/sales-list.tsx';
 import type { ReplicaSession } from './session.ts';
+import {createInventoryProductActivation} from './inventory-product-activation.ts';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { ProductionHostConfiguration } from '../../../../src/production-host/configuration.ts';
 import type { CatalogueRuntimeOptions } from '../catalogue/entry.tsx';
@@ -76,7 +77,19 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     if (route === 'inventory' && config.inventory) {
       const module = await import('../inventory/index.tsx');
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
-      return { dispose: module.mountInventoryPage(host, { ...options.inventory, scope, http, onAccessFailure: session.onAccessFailure, onViewProduct: product => navigate('products/view/' + encodeURIComponent(product.id)) }), canLeave: () => true };
+      const marker='inventory-product:'+scope.routeInstanceId;
+      const activation=createInventoryProductActivation({scope,host,load:async()=>{
+        const [drawer,reader]=await Promise.all([import('../products/inventory-drawer.tsx'),import('../../../../src/transport/product-http-reader.ts'),import('../../runtime-styles.ts').then(styles=>styles.prepareInventoryProductDrawerStyles(scope.signal))]);
+        return {open:context=>drawer.openInventoryProductDrawer({...context,reader:reader.createProductHttpReader(http),onAccessFailure:session.onAccessFailure})};
+      },feedback:state=>{
+        const toast=host.ownerDocument.getElementById('toast');if(!toast)return;
+        if(state.phase==='ready'||state.phase==='disposed'){if(toast.dataset.inventoryProductOpen===marker){toast.replaceChildren();toast.style.display='none';delete toast.dataset.inventoryProductOpen;}return;}
+        toast.dataset.inventoryProductOpen=marker;toast.replaceChildren(state.phase==='loading'?'正在打开商品资料…':'商品资料未能打开，请重试。');toast.style.display='block';
+        if(state.phase==='error'&&state.retry){const retry=host.ownerDocument.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重试';retry.onclick=state.retry;toast.append(' ',retry);}
+      }});
+      let release:()=>void;
+      try{release=module.mountInventoryPage(host,{...options.inventory,scope,http,onAccessFailure:session.onAccessFailure,onViewProduct:product=>{void activation.open(product);}});}catch(error){activation.dispose();throw error;}
+      return {dispose:()=>{activation.dispose();release();},canLeave:()=>true};
     }
     if (route === 'products' && config.products) {
       const module = await import('../products/index.tsx');
