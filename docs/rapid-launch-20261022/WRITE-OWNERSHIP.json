@@ -842,6 +842,12 @@
           "group": "A02_EXISTING_AUTH_STAFF_NAME_READ_PROJECTION",
           "fieldGate": "EXISTING_EMPLOYEE_NAME_READ_ONLY_NO_SCHEMA_OR_WRITE_CHANGE",
           "scope": "Only optional trusted staffName projection; principal IDs/role/auth/session/token/password behavior unchanged; single targeted new read-contract check"
+        },
+        {
+          "path": "tests/current-form-salesperson-global-reference.test.ts",
+          "group": "V16_EXISTING_STAFF_REFERENCE_NO_SALES_HALL_CONTEXT",
+          "fieldGate": "READ_ONLY_EXISTING_T05_GLOBAL_EMPLOYEE_REFERENCE_NO_SCHEMA_WRITE_CHANGE",
+          "scope": "Only kind salesperson permits explicit hallId:null; all other reference kinds and server identity/role/salesHall checks retained"
         }
       ]
     },
@@ -4720,6 +4726,11 @@
       "atUtc": "2026-10-24T14:19:13.548826+00:00",
       "owner": "D1",
       "scope": "Existing auth-store alreadyD1 plus exact ports/service/read-display test; paired F1 strictdecoder/menu consume optional staffName, no new endpoints/columns/permissions."
+    },
+    {
+      "atUtc": "2026-10-24T14:37:07.845315+00:00",
+      "owner": "D1",
+      "scope": "Existing current-form ports/validation/reader remainD1; single targeted employee-reference nullable hall parser branch under T05 globalinjob permission, not schema or new write contract"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
