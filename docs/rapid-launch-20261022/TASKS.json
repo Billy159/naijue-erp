@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "a0b9b9aff2d048106bc1c58b2290218aee29267f",
+    "headObserved": "c2089b4f16fd4ae18cdc7dd7b77bb38840bb728c",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "a0b9b9aff2d048106bc1c58b2290218aee29267f",
+    "remoteHeadVerified": "c2089b4f16fd4ae18cdc7dd7b77bb38840bb728c",
     "remoteReadbackMethod": "Exact4 original objects/nonforcedFF/independentGET; next docs/source repair not yet synced",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "a333e1519ad91471cb433f5098f5d4f273cab4a1"
+    "lastVerifiedRemoteCommit": "c2089b4f16fd4ae18cdc7dd7b77bb38840bb728c"
   },
   "concurrency": {
     "chats": 11,
@@ -1141,9 +1141,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T08:20:36.951732+00:00",
-  "stage": "ACTIVE_R1_V14_147_ACTUAL_INSTALLED_READONLY_ROLE_GAP_299_UI_SERVED_QF_RESIDUAL_RETEST_WHITE_VIEWPORT_RESTORED",
-  "lastVerifiedRemoteCommit": "30a7f6e666519b5809cf14e61f97b9b623dd66d0",
+  "updatedAt": "2026-10-24T09:18:55.787407+00:00",
+  "stage": "ACTIVE_C299_QF_THREE_RESIDUALS_PASS_LINUX149_INSTALLED_R1_ACL148_COMMITTED_SOCKET150_RUNNING_WHITE_ENV_OPEN",
+  "lastVerifiedRemoteCommit": "c2089b4f16fd4ae18cdc7dd7b77bb38840bb728c",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1587,8 +1587,8 @@
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
-    "schema": "R1actual147 v14/123/canonical54e20a2065106d66c3a6866b77999540328abb501bfdd20cfc896270fe227e3d;55business tables0. QA1421452/123/144syntheticCORE preserved. RealR1COREnotexecuted.",
-    "runtimeAcl": "C38_BASELINE_READ_AUTH_PLUS_EXACT_CLASSIFIER_EXECUTE_AND_SOURCE3_SELECT_ONLY",
+    "schema": "R1v14/123/current148canonicalf6afb2d418904db1f9da14d7652fe7b9c26353845bfd6464912c9a2dae030620;55business0. QA144syntheticCORE preserved. RealR1COREnotexecuted.",
+    "runtimeAcl": "C148_ACTUAL_EXACT175_COLUMN_BITS_ONLY_QB_NEW_DELTA_PENDING_NOT_CORE_EXECUTION",
     "realAccountsCaptured": 49,
     "accountsWithExactOldEmployeeLink": 45,
     "accountsUnlinked": 4,
@@ -1606,7 +1606,7 @@
       "round": 299,
       "commit": "f43e943317825951ef1f4a28c2396f8bad995eb3",
       "latestServedPreviewRound": 299,
-      "qualification": "New233preparationonly; 229actualQAandproductionLinux actual separatelybound"
+      "qualification": "299actualUI/actualformal149 install separatelybound; privateapp andrealR1CORE notdone."
     },
     "currentPreview": {
       "candidateId": "ui-preview-f43e943-01",
@@ -1623,7 +1623,7 @@
       "execSession": 35595,
       "syntheticOnly": true,
       "wholePagePass": false,
-      "actualBrowser": "ORIGINAL_QF_THREE_RESIDUALS_IN_PROGRESS"
+      "actualBrowser": "QF299_THREE_RESIDUALS_LIMITED_ACTUAL_PASS_NOT_WHOLE"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -3896,7 +3896,11 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-qa-heap-version-repair-20261024-142/release-submission/release-receipts/c03-v14-qa-heap-version-repair-20261024-142/runtime-metadata.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice230-c142-actual-single-helper-heap-metadata/RESULT.json",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-core-normal-continuation-20261024-144/release-submission/release-receipts/c03-v14-core-normal-continuation-20261024-144/core-actual.json",
-    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v109-qf-c295-document-controls-actual/RESULT.json"
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v109-qf-c295-document-controls-actual/RESULT.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v111-qf-c299-three-residuals-actual/RESULT.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c299-linux-install-only-20261024-149/release-submission/release-receipts/c03-c299-linux-install-only-20261024-149/engine-result.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-core-minimal-column-acl-20261024-148/release-submission/release-receipts/c03-r1-core-minimal-column-acl-20261024-148/engine-result.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice232-c147-real-r1-v14-tcp-read-metadata/RESULT.json"
   ],
   "newPendingReviews": [
     "C139fixed293 actualNORMAL/replay/login under QB228 newmetadata; no oldnegative replay",
@@ -4269,7 +4273,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T08:20:36.951732+00:00",
+    "atUtc": "2026-10-24T09:18:55.787407+00:00",
     "sourceRound": 299,
     "sourceCheckpoint": "f43e943317825951ef1f4a28c2396f8bad995eb3",
     "allModels": "gpt-6.1-sol/xhigh",
@@ -4289,11 +4293,11 @@
       "execSession": 35595,
       "syntheticOnly": true,
       "wholePagePass": false,
-      "actualBrowser": "ORIGINAL_QF_THREE_RESIDUALS_IN_PROGRESS"
+      "actualBrowser": "QF299_THREE_RESIDUALS_LIMITED_ACTUAL_PASS_NOT_WHOLE"
     },
     "nextPreview": {
-      "status": "CURRENT297_SERVED",
-      "next": "QF3affected actual; fixonlynewfailures"
+      "status": "CURRENT299_SERVED",
+      "next": "No rebuild for completed three residuals; next complete ready page only"
     },
     "r1": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
@@ -4314,7 +4318,7 @@
       "wholeOverlaysPassed": 0,
       "explicitNamedPartialGroups": 66,
       "latestMatrixOwner": "QF",
-      "latestAcceptedMatrix": "v109 afteractual295 document controlfamily:5relatedrows partialfacts only, stages104 unchanged39/8/23/33/1,66namedpartial/whole0.3newP2originalF1inprogress."
+      "latestAcceptedMatrix": "v111 fixed299 actual3remaining T02geometry/S04readonlysemantic/disabledpalette PASS; previousvalidstates reused.104 statuses39/8/23/33/1,66namedpartial/whole0 unchanged."
     },
     "isolatedMorePreview": {
       "url": "http://127.0.0.1:57849/component-more.html",
@@ -4328,9 +4332,9 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "147actualCOMMIT0/3.3240023718681186s R1fullv14/123/newcanonical54e20a2065106d66c3a6866b77999540328abb501bfdd20cfc896270fe227e3d/privatehelper5ca EXECUTE. Ownerexistingidentity prepost56counts55business0/26migrations; runtimeTCPnoSETROLE/source/identity/readonlyCOMMIT/release/end/owned0/oldQA7same. No tableACL widening/CORE/BIND/data/init/publicswitch. OriginalQB232onlynewinstalledmetadata review; D1finiteCOREminACL/purpose proof gap inprogress,real128OFF. Runtimehas13tableswithoutfullSELECT and originalCORElock/write permissions notimplied.",
-    "productionBuild": "145actual297 Linuxci/nativePASS0/25.982770325848833s,111records/payload5baa464fa125ec4035a290a0c1f1075116b7bfa520a83c2c8450717b0ca40aac/Linuxx64Node24.21Sharp0.35.5vips8.18.7/7same.0DB/appstart/publicswitch. Formalarchive1339969/daf99b... manifestcd033306... remainsexact297,not298.",
-    "actualQFBrowser": "Newdirecthuman call_8dd15120aa754a17bc3a92cc4eb95a1a explicitly window已交回. QFsolelease2993residuals onexisting5B/F0;natural matching1470x724DPR2 preferred, preserveuserpaymentdraftifany before navigation.",
+    "backend": "C148 actualCOMMIT0/3.575171s exact175column bits/143columns/37GRANT, newR1canonicalf6afb2d418904db1f9da14d7652fe7b9c26353845bfd6464912c9a2dae030620.123routines/931triggers/26migrations/55business0; other ACL/OID/objects/oldQA/7services unchanged. OriginalQB233 only newdelta/narrowIMPORT_STAGE metadata inprogress. CORE128OFF.131 actual auth/read metadata correct but carrier renamed boot key missed hostconsumer causing ERR_ASSERTION againstundefined; explicitROLLBACK/release/end, originalFAILED retained.150 exactoneproperty successor running, not131replay.",
+    "productionBuild": "Formal299sourcef43e943/r1-f43e943-20261024-01 archive1339201/1f5a5b0537d1233f1e61bd7418d13db105c9e679c7a9be62f5d290ef06fa7e25, manifest43b445b07819f154a0659f3cc885b5b5cf5eb59a38679c41c2c1c193737c49ce. Actual149Linuxci/nativePASS0/25.931508s,111records/payload3154d2c5685488740606e98b86814605254780c92925b5449d8fcf802fcd3876,engine9717/78218751fc6689f5064e6e92610a270e2ae19ef05a71e831cbad179b52297cc9.0DB/appstart/publicswitch.",
+    "actualQFBrowser": "Human窗口已交回. QF sole owned5B69/F0B; three299residuals actually paired724PASS. Whitecurrentframe restored but navigation668 recurrence OPEN, oldRESOLVED wording superseded. Controlled driver normalreconnect old76792->32836, Chrome4173/window unchanged, no tabclose/newtab/ChromeRestart; reentrystill668. Freshdriver oneownedclear then reentry authorized if no dirty; no Demo reload/unknownpage.",
     "frontendAcceptance": {
       "source": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "parentTask": "QF01",
@@ -4501,30 +4505,38 @@
           "status": "DISPATCHED_SINGLE_BROWSER_LEASE",
           "next": "New meaningful findings to originalF1; minimum affected retest; release own2targets",
           "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v108-qf-adopt-qf2-c291-c295-associated-actual/NEXT-READY.json"
+        },
+        {
+          "owner": "QF",
+          "version": "C299 f43e943/ui-preview-f43e943-01-build01",
+          "scope": "T02datecarrier,readonlyS04semantic,disableddatepalette; prior297actualstates reused",
+          "status": "THREE_RESIDUALS_LIMITED_BROWSER_PASS",
+          "next": "Whiteenvironment recovery separate; next ready fullmodule only, no3repeat",
+          "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v111-qf-c299-three-residuals-actual/RESULT.json"
         }
       ],
       "browser": {
         "trueIsolationVerified": false,
         "toolInventory": "browsers=[]; Local browser use is disabled in Work settings",
         "mode": "SHARED_CHROME_SERIAL_MODULE_HANDOFF",
-        "currentOwner": "QF2",
-        "demoTab": "7F93D5A61A99F1C00FB3C0F089081F1F",
-        "candidateTab": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
+        "currentOwner": "QF",
+        "demoTab": "F0B417F6BC85EE5917A5286AAD0FB04A",
+        "candidateTab": "5B69FD73D86A2D051EE5D18378D8C767",
         "QF2CurrentTargets": [],
-        "QF2MayOperate": true,
+        "QF2MayOperate": false,
         "condition": "Only3A913+7F93,1470x668DPR2. QF offline newsource199. QF2 firstpaymenttwoP2 thennewdata/inventory modules; protectedDB7/3BC neveroperate.",
         "temporaryWorkingTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
         "workingTarget": "3A913C5FB1BDFC2E0E28BD678AAFF32B",
-        "candidateVersion": "C1960930113/ui-preview-0930113-01-build01",
-        "QFMayOperate": false,
+        "candidateVersion": "C299 f43e943/ui-preview-f43e943-01-build01",
+        "QFMayOperate": true,
         "protectedUnknownTarget": "3BC874911D0D2415D093603E264B0D67",
-        "owner": "QF2",
-        "status": "C_EXPLICIT_SOLE_QF2_C196_GRANTED_AFTER_QF184_CLEAN",
+        "owner": "QF",
+        "status": "ENVIRONMENT_WHITE_BAND_RECURRENCE_OPEN",
         "connection": "Existingdefaultdaemon actuallyconnected after originaldocumentedupgrade andoneactualChineseapproval. No config/profile/permissionreset or alternatebrowserdriver.",
         "cleanReceipt": "QF2/c173-payment-frozen-module-actual-01/BROWSER-RELEASE.json",
         "cleanBytes": 2327,
         "cleanSha256": "e08d718cd62971033b657d50cbed5cbc510a11891dc1e6e92ab7b7da566681ee",
-        "viewportQualification": "Both1470x668/DPR2, candidate table0, Demo table64 preserved; exact protected DB7 unsaved and3BC unknown never operate",
+        "viewportQualification": "Do not claimdurable fromcurrentframe.299threepairedproofs724valid; current668afterdriverreconnect not yetexplained. Onlyowned2/0unknowncontent/noDemowrite.",
         "protectedTargets": [
           "DB7CA658365B213EEE3EB1333946E5BA non-owned unsaved edit",
           "3BC874911D0D2415D093603E264B0D67 unknown"
@@ -6917,5 +6929,12 @@
     "skill": "/Users/billy/.agents/skills/anti-over-defense/SKILL.md",
     "source": "Current direct human instruction",
     "action": "Read and applied byC; originaleight roles informed, no new process/contract/gate/audit systems, reuse valid evidence; all prior required UI/performance/business/schema/data/release requirements preserved."
+  },
+  "helperUsageDirective": {
+    "sourceThread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+    "humanMessage": "01a16cfa-d2a9-7ef2-ba2c-46e51c9739a8",
+    "action": "KeeporiginaldevQA roles/model; extrahelpers only complex independent work. Root batches mechanicalversion/copy/hash/build/install via existing scripts. No inert3helperquota, no duplicate reportchecks. C148helper completedreleased; currently0helperactive.",
+    "allModels": "gpt-6.1-sol/xhigh",
+    "fast": "UNVERIFIED_TOOL_NO_SWITCH"
   }
 }
