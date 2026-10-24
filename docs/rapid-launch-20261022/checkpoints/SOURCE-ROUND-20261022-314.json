@@ -1,0 +1,18 @@
+{
+  "atUtc": "2026-10-24T12:12:24.905020+00:00",
+  "parent": "827959b85cb44c4ec6a2d45aa0366e9c912e00a8",
+  "taskId": "F1_SALES_V16_READ_CONTRACT_314",
+  "files": [
+    {
+      "path": "apps/web/src/sales/response-validation.ts",
+      "bytes": 10294,
+      "sha256": "8bb8953549161dd0fd1b2806b75c16438b099f0847b0faeb60594818512f9550",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-147/DELIVERY.json",
+  "ownerSourceReleased": true,
+  "stage": "STRICT_READ_DECODER_REQUIRED_RESPONSIBLE_FIELDS_AND_NODE24_WEB_TYPES_PASS_NOT_UI_WRITE",
+  "realBusinessAccepted": false,
+  "deployed": false
+}
