@@ -15,10 +15,11 @@ const excludedGraph = /(?:unified-browser-harness|new-document-browser-harness|m
 const copiedFontLicenseSource='apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt';
 const copiedFontLicenseMember='web/source-styles/assets/fonts/LICENSE.txt';
 const sourceExtensions = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.css', '.json', '.sql', '.svg', '.woff', '.woff2']);
-const productionDesignTokenStyles = new Set([
+const registeredProductionStyles = new Set([
   'apps/web/src/demo-controls/idle-selection-tokens.css',
   'apps/web/src/demo-presentation/tokens.css',
   'apps/web/demo-replica/frontend/ui-tokens.css',
+  'apps/web/demo-replica/frontend/runtime/common/account-password.css',
 ]);
 const productionMediaAdapterSources = new Set([
   'adapters/media/src/controlled-product-media.ts',
@@ -64,7 +65,7 @@ function allowedSource(value) {
   // Media/secret *data* directories are forbidden; runtime source named controlled-media.ts is legitimate code.
   requireRelease(!excludedGraph.test(value) && !segments.some((part, index) => excludedSegment.test(part)
     && !(index === 1 && part === 'media' && productionMediaAdapterSources.has(value))
-    && !(index === segments.length - 1 && (productionDesignTokenStyles.has(value)
+    && !(index === segments.length - 1 && (registeredProductionStyles.has(value)
       || /\.(?:tsx?|[cm]?js)$/.test(part) && !/synthetic|fixture|(?:^|[.-])test(?:[.-]|$)/i.test(part))))
     && ( /\.(?:tsx?|[cm]?js)$/.test(value) || !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value))
     && !/\.(?:test|spec)\.[^.]+$/i.test(value) && (sourceExtensions.has(path.posix.extname(value))||value===copiedFontLicenseSource), 'NON_PRODUCTION_SOURCE');
@@ -75,7 +76,7 @@ export function allowedMember(value, role) {
   const runtimeMedia = reviewedRuntimeMediaMember(value, role), segments = value.split('/');
   requireRelease(Object.hasOwn(roleExtensions, role) && (roleExtensions[role].has(path.posix.extname(value))||role==='frontend'&&value===copiedFontLicenseMember)
     && !segments.some((part, index) => (excludedSegment.test(part)
-      && !(runtimeMedia && index === segments.length - 1)) || part === 'node_modules')
+      && !(runtimeMedia && index === segments.length - 1) && value!=='web/source-styles/ui-tokens.css') || part === 'node_modules')
     && !/(?:^|[\/._-])(?:keys?|pem|pgpass|env)(?:$|[\/._-])/i.test(value)
     && !excludedGraph.test(value) && !/\.(?:test|spec)\.[^.]+$/i.test(value), 'NON_RELEASE_MEMBER');
   requireRelease(role === 'frontend' ? value.startsWith('web/')
