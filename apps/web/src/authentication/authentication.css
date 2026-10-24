@@ -67,6 +67,10 @@
   border-color: var(--ca-control-focus-border, #1978ff);
   box-shadow: var(--ca-focus-ring, 0 0 0 2px rgb(25 120 255 / 24%));
 }
+.auth-entry-screen .auth-entry-password { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.auth-entry-screen .auth-entry-password .erp-input { flex: 1; min-width: 0; }
+.auth-entry-screen .auth-entry-password .erp-button { flex: 0 0 auto; height: 32px; min-height: 32px; padding: 0 11px; }
+.auth-entry-screen .auth-form .auth-entry-remember.arco-checkbox { display: inline-flex; align-items: center; margin: 12px 0 4px; font-weight: 400; }
 .auth-entry-screen .auth-form .auth-entry-submit.arco-btn-primary { width: 100%; border-color: var(--ca-primary-fill, #166ff2); background: var(--ca-primary-fill, #166ff2); color: var(--ca-on-primary, #fff); }
 .auth-entry-screen .auth-form .auth-hint { margin: 12px 0 0; color: var(--ca-ink-2, #4f596b); font-size: 12px; }
 .auth-entry-screen .auth-form [role=status] { margin: 8px 0 0; padding: 8px 10px; border-radius: 4px; background: var(--ca-primary-soft, #ecf4ff); color: var(--ca-ink-2, #4f596b); }

@@ -1,4 +1,4 @@
-import { UIButton, UIInput } from '../components/standard-controls.tsx';
+import { UIButton, UICheckbox, UIInput } from '../components/standard-controls.tsx';
 import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from 'react';
 import { StandardOverlay } from '../components/standard-overlay.tsx';
 import { passwordByteLength } from './contracts.ts';
@@ -7,6 +7,23 @@ import { AuthenticationAccountContext } from './account-menu.tsx';
 import './authentication.css';
 
 const roleLabel = (role: string): string => ({ ADMIN: '管理员', WAREHOUSE: '仓库人员', SALESPERSON: '营业员' })[role] ?? role;
+const rememberedLoginNameKey = 'naijue.ui.remembered-login-name';
+function readRememberedLoginName(): string {
+  try {
+    const value = window.localStorage.getItem(rememberedLoginNameKey);
+    return value && passwordByteLength(value) <= 256 ? value : '';
+  } catch { return ''; }
+}
+/** Retain only the submitted non-secret UI preference after confirmed login. */
+function saveLoginNamePreferenceAfterSuccess(result: Promise<boolean>, loginName: string, remember: boolean): void {
+  void result.then(success => {
+    if (!success) return;
+    try {
+      if (remember) window.localStorage.setItem(rememberedLoginNameKey, loginName);
+      else window.localStorage.removeItem(rememberedLoginNameKey);
+    } catch { /* An unavailable UI preference must not change login's result. */ }
+  });
+}
 function Status({ state }: { readonly state: AuthenticationSnapshot }) {
   if (state.notice === 'password-changed') return <p role="status">密码修改成功，请使用新密码重新登录。</p>;
   if (state.notice === 'logged-out') return <p role="status">已退出登录。</p>;
@@ -23,12 +40,15 @@ function LoginForm({ controller, state }: { readonly controller: AuthenticationC
   const form = useRef<HTMLFormElement>(null);
   const password = useRef<HTMLInputElement>(null);
   const [passwordValue, setPasswordValue] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [rememberedLoginName] = useState(readRememberedLoginName);
+  const [rememberLoginName, setRememberLoginName] = useState(rememberedLoginName !== '');
   const [validation, setValidation] = useState<string | null>(null);
   useEffect(() => {
     const element = form.current;
     return () => { element?.reset(); };
   }, []);
-  useEffect(() => { setPasswordValue(''); if (password.current) password.current.value = ''; }, [controller, state.operation, state.notice]);
+  useEffect(() => { setPasswordValue(''); setPasswordVisible(false); if (password.current) password.current.value = ''; }, [controller, state.operation, state.notice]);
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (controller.busy) return;
@@ -37,20 +57,23 @@ function LoginForm({ controller, state }: { readonly controller: AuthenticationC
     const secret = password.current;
     if (!secret) return;
     const input = { loginName: login.value, password: secret.value };
-    secret.value = ''; setPasswordValue('');
+    secret.value = ''; setPasswordValue(''); setPasswordVisible(false);
     if (!input.loginName || passwordByteLength(input.loginName) > 256 || !input.password || passwordByteLength(input.password) > 1024) {
       setValidation('请填写登录账号和密码，账号最多 256 字节，密码最多 1024 字节。'); return;
     }
     setValidation(null);
-    void controller.login(input);
+    saveLoginNamePreferenceAfterSuccess(controller.login(input), input.loginName, rememberLoginName);
   };
   const busy = controller.busy;
   return <form ref={form} className="auth-form" noValidate onSubmit={submit} aria-label="账号登录" aria-busy={state.phase === 'logging-in'}>
     <h1>登录</h1>
     <label htmlFor={`${id}-login`}>登录账号</label>
-    <UIInput id={`${id}-login`} name="loginName" autoComplete="username" autoFocus required disabled={busy} spellCheck={false} />
+    <UIInput id={`${id}-login`} name="loginName" defaultValue={rememberedLoginName} autoComplete="username" autoFocus required disabled={busy} spellCheck={false} />
     <label htmlFor={`${id}-password`}>密码</label>
-    <UIInput ref={password} id={`${id}-password`} name="password" type="password" value={passwordValue} onChange={setPasswordValue} autoComplete="current-password" required disabled={busy} />
+    <div className="auth-entry-password"><UIInput ref={password} id={`${id}-password`} name="password" type={passwordVisible ? 'text' : 'password'} value={passwordValue} onChange={setPasswordValue} autoComplete="current-password" required disabled={busy} />
+      <UIButton type="button" disabled={busy} aria-controls={`${id}-password`} aria-pressed={passwordVisible} aria-label={passwordVisible ? '隐藏密码' : '显示密码'} onClick={() => setPasswordVisible(visible => !visible)}>{passwordVisible ? '隐藏' : '显示'}</UIButton>
+    </div>
+    <UICheckbox className="auth-entry-remember" checked={rememberLoginName} onChange={setRememberLoginName} disabled={busy}>记住账号</UICheckbox>
     {validation && <p role="alert">{validation}</p>}
     <Status state={state} />
     <UIButton className="auth-entry-submit primary" type="submit" disabled={busy}>{state.phase === 'logging-in' ? '正在登录…' : state.operation === 'login' && state.error ? '重新登录' : '登录'}</UIButton>

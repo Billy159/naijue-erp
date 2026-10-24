@@ -17,13 +17,17 @@ function record(value: unknown, keys: readonly string[]): Record<string, unknown
   return value as Record<string, unknown>;
 }
 function principal(value: unknown): AuthenticationPrincipal {
-  const row = record(value, ['accountId', 'staffId', 'loginName', 'role', 'hallId', 'authVersion']);
+  const hasStaffName = value !== null && typeof value === 'object' && Object.hasOwn(value, 'staffName');
+  const keys = ['accountId', 'staffId', 'loginName', 'role', 'hallId', 'authVersion'];
+  const row = record(value, hasStaffName ? [...keys, 'staffName'] : keys);
   if (typeof row.accountId !== 'string' || typeof row.staffId !== 'string' || typeof row.loginName !== 'string' || !row.loginName
     || new TextEncoder().encode(row.loginName).byteLength > 256 || typeof row.role !== 'string' || !row.role || row.role.length > 1024
-    || !Number.isSafeInteger(row.authVersion) || (row.authVersion as number) < 1 || (row.hallId !== null && typeof row.hallId !== 'string')) throw new AuthClientError('invalid-response');
+    || !Number.isSafeInteger(row.authVersion) || (row.authVersion as number) < 1 || (row.hallId !== null && typeof row.hallId !== 'string')
+    || hasStaffName && typeof row.staffName !== 'string') throw new AuthClientError('invalid-response');
   try {
     return Object.freeze({ accountId: entityId('account', row.accountId), staffId: entityId('staff', row.staffId), loginName: row.loginName,
-      role: row.role, hallId: row.hallId === null ? null : entityId('hall', row.hallId), authVersion: row.authVersion as number });
+      role: row.role, hallId: row.hallId === null ? null : entityId('hall', row.hallId), authVersion: row.authVersion as number,
+      ...(hasStaffName ? { staffName: row.staffName as string } : {}) });
   } catch { throw new AuthClientError('invalid-response'); }
 }
 function loginResult(value: unknown): LoginResult {

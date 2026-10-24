@@ -10,14 +10,15 @@ const dom = new JSDOM('<!doctype html><div id="root"></div>', { url: 'https://sy
 for (const key of ['window', 'document', 'navigator', 'HTMLElement', 'HTMLInputElement', 'HTMLIFrameElement', 'HTMLDialogElement', 'requestAnimationFrame', 'cancelAnimationFrame', 'Element', 'SVGElement', 'MutationObserver', 'getComputedStyle', 'Node', 'Event', 'MouseEvent', 'KeyboardEvent']) Object.defineProperty(globalThis, key, { configurable: true, value: dom.window[key] });
 dom.window.matchMedia=query=>({matches:false,media:query,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){},dispatchEvent(){return true;}});
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-let root, controller;
+let root, controller, flush;
 const principal = suffix => ({ accountId: `00000000-0000-0000-0000-00000000000${suffix}`, staffId: `10000000-0000-0000-0000-00000000000${suffix}`, loginName: `SYNTHETIC-${suffix}`, role: 'ADMIN', hallId: null, authVersion: 1 });
 const loginResult = suffix => ({ principal: principal(suffix), expiresAt: '2026-10-21T00:00:00.000Z' });
 const deferred = () => { let resolve, reject; const promise = new Promise((yes, no) => { resolve = yes; reject = no; }); return { promise, resolve, reject }; };
 try {
   const output = path.join(temporary, 'entry.mjs');
   await build({ entryPoints: [path.join(directory, 'dom-entry.tsx')], outfile: output, bundle: true, platform: 'node', format: 'esm', external: ['react','react/*','react-dom','react-dom/*'], banner: { js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);" }, jsx: 'automatic', loader: { '.css': 'empty' }, logLevel: 'warning' });
-  const { act, createElement, createRoot, AuthenticationPanel, AuthenticationAccountMenu, AuthenticationController, readContextAuthenticationLifecycle, ReadContext } = await import(pathToFileURL(output).href);
+  const { act, createElement, createRoot, AuthenticationPanel, AuthenticationAccountMenu, AuthenticationController, readContextAuthenticationLifecycle, ReadContext, AuthClientError, createAuthHttpClient } = await import(pathToFileURL(output).href);
+  flush = act;
   const host = document.getElementById('root');
   root = createRoot(host);
   const calls = [];
@@ -33,7 +34,56 @@ try {
   const resolve = async (index, value) => { await act(async () => calls[index].operation.resolve(value)); await settle(); };
   const allPasswordsBlank = () => [...host.querySelectorAll('input[type=password]')].every(field => field.value === '');
   const passwordForm = () => host.querySelector('.auth-password-dialog form');
-  if (!process.argv.includes('--account-only')) {
+  const entryControlsOnly = process.argv.includes('--entry-controls-only');
+  if (entryControlsOnly) {
+    const preferenceKey = 'naijue.ui.remembered-login-name';
+    const remembered = () => dom.window.localStorage.getItem(preferenceKey);
+    const rememberField = () => host.querySelector('.auth-entry-remember input[type="checkbox"]');
+    const loginPassword = () => host.querySelector('input[name="password"]');
+    dom.window.localStorage.clear();
+    await render();
+    assert.equal(calls.length, 0); assert.equal(host.querySelector('[name="loginName"]').value, ''); assert.equal(rememberField().checked, false);
+    fill('password', 'synthetic-visible-only');
+    await click(button('显示')); assert.equal(loginPassword().type, 'text'); assert.equal(loginPassword().value, 'synthetic-visible-only');
+    await click(button('隐藏')); assert.equal(loginPassword().type, 'password'); assert.equal(loginPassword().value, 'synthetic-visible-only');
+    await click(button('登录')); assert.equal(calls.length, 0); assert.equal(loginPassword().value, ''); assert.equal(remembered(), null);
+    await click(rememberField()); assert.equal(rememberField().checked, true);
+    fill('loginName', 'SYNTHETIC-1'); fill('password', 'synthetic-rejected-only');
+    await click(button('显示')); await submit(host.querySelector('form'));
+    assert.equal(calls.length, 1); assert.ok(button('正在登录…').disabled); assert.equal(loginPassword().value, ''); assert.equal(loginPassword().type, 'password'); assert.equal(rememberField().disabled, true); assert.equal(remembered(), null);
+    await act(async () => calls[0].operation.reject(new AuthClientError('credentials'))); await settle();
+    assert.ok(host.querySelector('[role="alert"]')); assert.equal(remembered(), null); assert.equal(rememberField().checked, true); assert.equal(host.querySelector('[name="loginName"]').value, 'SYNTHETIC-1');
+    fill('password', 'synthetic-cancelled-only'); await submit(host.querySelector('form')); await click(button('取消请求'));
+    assert.equal(calls[1].signal.aborted, true); assert.equal(loginPassword().value, ''); assert.equal(loginPassword().type, 'password');
+    await resolve(1, loginResult('1')); assert.equal(remembered(), null); assert.equal(host.querySelector('[data-business]'), null);
+    fill('password', 'synthetic-success-only'); await submit(host.querySelector('form')); assert.equal(remembered(), null);
+    await resolve(2, loginResult('1')); assert.equal(remembered(), 'SYNTHETIC-1'); assert.equal(dom.window.localStorage.length, 1);
+    await act(async () => root.unmount()); root = null; controller.dispose();
+    controller = new AuthenticationController({ client: { login: pending('login'), session: pending('session'), logout: pending('logout'), changeOwnPassword: pending('password') }, now: () => Date.parse('2026-10-20T00:00:00.000Z'), onIdentityChange: readContextAuthenticationLifecycle(context) });
+    root = createRoot(host); await render();
+    assert.equal(calls.length, 3, 'Remembered login name never initiates authentication'); assert.equal(host.querySelector('[name="loginName"]').value, 'SYNTHETIC-1'); assert.equal(rememberField().checked, true); assert.equal(loginPassword().value, '');
+    await click(rememberField()); fill('password', 'synthetic-unchecked-rejected'); await submit(host.querySelector('form'));
+    await act(async () => calls[3].operation.reject(new AuthClientError('credentials'))); await settle();
+    assert.equal(remembered(), 'SYNTHETIC-1', 'A rejected login does not rewrite the confirmed preference'); assert.equal(rememberField().checked, false);
+    fill('password', 'synthetic-unchecked-success'); await submit(host.querySelector('form')); await resolve(4, loginResult('1'));
+    assert.equal(remembered(), null); assert.equal(dom.window.localStorage.length, 0);
+    await act(async () => root.unmount()); root = null;
+    console.log('PASS A01 controls: empty validation, loading, rejected login, cancel/late result, password visibility with original clearing, opt-in name saved/removed only after confirmed login, no automatic login or password persistence.');
+
+    const namedPrincipal = { ...principal('1'), staffName: '合成员工一' };
+    const replies = [ { principal: principal('1') }, { principal: namedPrincipal }, { principal: namedPrincipal, expiresAt: '2026-10-25T00:00:00.000Z' },
+      { principal: { ...principal('1'), staffName: null } }, { principal: { ...principal('1'), staffName: 7 } }, { principal: { ...namedPrincipal, token: 'SYNTHETIC-FORBIDDEN' } } ];
+    const requests = [];
+    const http = createAuthHttpClient({ origin: 'https://synthetic.example', basePath: '/api', fetch: async (url, init) => {
+      requests.push({ url, init }); return new Response(JSON.stringify(replies.shift()), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    } });
+    assert.deepEqual(await http.session(new AbortController().signal), principal('1'));
+    assert.deepEqual(await http.session(new AbortController().signal), namedPrincipal);
+    assert.equal((await http.login({ loginName: 'SYNTHETIC-1', password: 'synthetic-http-only' }, new AbortController().signal)).principal.staffName, '合成员工一');
+    assert.deepEqual(JSON.parse(requests[2].init.body), { loginName: 'SYNTHETIC-1', password: 'synthetic-http-only' });
+    for (let index = 0; index < 3; index++) await assert.rejects(http.session(new AbortController().signal), error => error instanceof AuthClientError && error.kind === 'invalid-response');
+    console.log('PASS optional staffName decoder: old DTO compatible, named session/login safely projected, malformed name and extra secret rejected; request identity/credentials envelope unchanged.');
+  } else if (!process.argv.includes('--account-only')) {
   await render(); assert.equal(calls.length, 0); assert.match(host.textContent, /尚未核验/);
   const invalidLoginSecret = fill('password', 'synthetic-invalid-only');
   await click(button('登录')); assert.equal(calls.length, 0); assert.equal(invalidLoginSecret.value, '');
@@ -99,24 +149,32 @@ try {
   assert.equal(lifecycle.at(-1).reason, 'cancelled');
   console.log('PASS auth DOM: unmount clears detached password fields, cancels pending login and cannot resurrect identity.');
   } else { await act(async()=>root.unmount()); root=null; }
-  controller.dispose(); controller = new AuthenticationController({ client: {login: async()=>loginResult('1'), session: async()=>principal('1'), logout: async()=>{}, changeOwnPassword: async()=>{}}, onIdentityChange:readContextAuthenticationLifecycle(context) });
+  controller.dispose(); controller = new AuthenticationController({ client: {login: async()=>loginResult('1'), session: async()=>({...principal('1'),staffName:'合成员工一'}), logout: async()=>{}, changeOwnPassword: async()=>{}}, onIdentityChange:readContextAuthenticationLifecycle(context) });
   root = createRoot(host);
   await act(async()=>root.render(createElement(AuthenticationPanel,{controller,children:account=>createElement('div',null,createElement(AuthenticationAccountMenu),createElement('p',{'data-business':''},account.loginName))})));
   await act(async()=>controller.resolveSession()); await settle();
   assert.equal(host.querySelector('.auth-session'),null,'Workspace slot replaces standalone account strip');
-  const accountTrigger=host.querySelector('[aria-label="账号菜单：SYNTHETIC-1"]'); assert.ok(accountTrigger);
+  const accountTrigger=host.querySelector('[aria-label="员工菜单：合成员工一"]'); assert.ok(accountTrigger); assert.match(accountTrigger.textContent,/合成员工一 · 管理员/);
   const menuItems=()=>Array.from(document.querySelectorAll('.auth-account-options [role="menuitem"]'));
   const waitMenu=async()=>{for(let i=0;i<20&&menuItems().length!==2;i++)await settle();assert.equal(menuItems().length,2,'Wait for Arco Portal menu');};
   await act(async()=>accountTrigger.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowDown',bubbles:true,cancelable:true}))); await waitMenu();
   assert.deepEqual(menuItems().map(item=>item.textContent.trim()),['修改密码','退出登录']);
+  assert.equal(document.activeElement,menuItems()[0]);
+  for(const [key,index] of [['ArrowDown',1],['Home',0],['End',1],['ArrowUp',0]]) {
+    await act(async()=>document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key,bubbles:true,cancelable:true}))); assert.equal(document.activeElement,menuItems()[index]);
+  }
   await click(menuItems()[0]); await settle();assert.equal(document.activeElement.name,'currentPassword');
   await act(async()=>host.querySelector('.auth-password-dialog').dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})));await settle();
   assert.equal(host.querySelector('.auth-password-dialog'),null);assert.ok(document.activeElement===accountTrigger,'Password Escape returns to surviving account trigger');
   await click(accountTrigger);await waitMenu();await act(async()=>menuItems()[0].dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})));await settle();assert.ok(document.activeElement===accountTrigger);
   await click(accountTrigger);await waitMenu();await click(menuItems()[1]);await settle();assert.equal(host.querySelector('[data-business]'),null);assert.equal(host.querySelector('[aria-haspopup="menu"]'),null);
+  await act(async()=>root.unmount());root=null;controller.dispose();
+  controller=new AuthenticationController({client:{login:async()=>loginResult('2'),session:async()=>principal('2'),logout:async()=>{},changeOwnPassword:async()=>{}},onIdentityChange:readContextAuthenticationLifecycle(context)});
+  root=createRoot(host);await act(async()=>root.render(createElement(AuthenticationPanel,{controller,children:()=>createElement(AuthenticationAccountMenu)})));await act(async()=>controller.resolveSession());await settle();
+  assert.match(host.querySelector('[aria-label="账号菜单：SYNTHETIC-2"]').textContent,/账号：SYNTHETIC-2 · 管理员/);assert.doesNotMatch(host.textContent,/合成员工一/);
   console.log('PASS account topbar slot: actual Arco Portal, password above logout, keyboard open/Escape, password focus return, logout removes old identity and menu.');
-  console.log(process.argv.includes('--account-only') ? 'Affected account-slot checks passed; earlier authentication groups reused from the recorded first run.' : 'All 7 existing authentication groups plus account-slot checks passed in jsdom. No real accounts, browser/network service, cookie-runtime proof or pixel-parity claim.');
+  console.log(entryControlsOnly ? 'Affected A01 controls/optional-name decoder and A02 account-slot checks passed in jsdom; no browser, production cookie or pixel-parity claim.' : process.argv.includes('--account-only') ? 'Affected account-slot checks passed; earlier authentication groups reused from the recorded first run.' : 'All 7 existing authentication groups plus account-slot checks passed in jsdom. No real accounts, browser/network service, cookie-runtime proof or pixel-parity claim.');
 } finally {
-  if (root) root.unmount();
+  if (root) await flush(async () => root.unmount());
   controller?.dispose(); dom.window.close(); await rm(temporary, { recursive: true, force: true });
 }
