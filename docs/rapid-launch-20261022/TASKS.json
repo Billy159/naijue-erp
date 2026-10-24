@@ -4716,7 +4716,7 @@
   "currentContinuation": {
     "atUtc": "2026-10-24T22:48:39.815747+00:00",
     "sourceRound": 368,
-    "sourceCheckpoint": "SOURCE372 1e340ee502efa3169989b571d255c31eda18310f remoteverified; SOURCE373 completed new production fixed build/pack and independent QF adoption, C199 actual install in progress; served364 unchanged",
+    "sourceCheckpoint": "SOURCE373 f16b04311d5b05087138dbef7929e0a1c8dd27d7 remoteverified; SOURCE374 actual copied372 Linux installation PASS and approvedrealR1 schema execution in progress; served364 unchanged",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8207,7 +8207,7 @@
       "resources": "shared ordered27 copied styles+4font files/license byte-identical frozenDemo; actual root React19.1.1/ReactDOM19.1.1/Arco2.66.16 singleton",
       "dependency": "exact jszip3.10.1 browser/build dev dependency; production dependency map and existing lock entries unchanged; first offline ENOTCACHED then bounded official registry success",
       "checks": "copied scoped strict0; existing release build+pack34/34; dependencycheckPASS; root typecheck preexisting fixture/responsible/command/workbook issues retained, not globallyPASS",
-      "next": "C199 Linux original offline npm ci/native only revised exactlock validation in progress, then qualified realR1/currentprofile private HTTPS app; no automaticformal switch",
+      "next": "OriginalC new realR1approvedschema200 current; qualifyactualmetadata/minimalACL thenprivatecopied372app/HTTPS, noformalautoflip",
       "fixed369Attempt": "Preserved fixed export/full build attempt1 failed NON_PRODUCTION_SOURCE: copied original account-password.css not yet registered by old release guard; not install/application/deployment success",
       "correction": "Only exact copied runtime.html/style/member/license and workbook exactentry/staticpositivecontribution allowed. JSZip lockedbrowserdist input-only <runtime> import-statement marker recognized; output external guard unchanged. Golden CSS uses same existing212byteSVG hash. Original22byte query selector adaptation now explicit copied developmentCSS; Vite/esbuild transform removed, identical effective selector, actual raw graph input bytes preserved. Existing35build/packtestsPASS with workbook negative/staticclosure cases.",
       "fixed370Attempt": "Preserved failed NON_PRODUCTION_SOURCE copied runtime.html; further diagnostic-only currentchecker exposed workbookchunk/source exactregistration, same212byteSVG originalCSS consumer, JSZip compiler-only runtime input marker, and build-time CSS22byte transform not matching sourcegraph. No fixedbuild PASS yet.",
@@ -8238,14 +8238,41 @@
       "browserLease": "RETURNED_CLEAN_TWO_ORIGINAL_INVENTORY_TABS_NATURAL_VIEWPORT_FIVE_DRAFTS_UNTOUCHED",
       "notClaimed": "wholeI01/37pagePASS/realHTTP/PG/formalperformance/printinghardware"
     },
-    "nextAction": "Collect originalC199 actual terminal withoutresubmit; prepare approvedrealR1v16/v15 post196backup/window/currentprofile thennative supplier222→product2956→SKU14999; actualcopied372normalHTTPS/batchbusiness later",
+    "nextAction": "CollectoriginalC200actualterminal; ifschemaCOMMITprefix incomplete recovermetadata readonly notDDLreplay. OriginalQBnewactualprofile next, preciseACL→supplier222/product2956/SKU14999 andnewcopied372privateapp/HTTPS remainincomplete.",
     "latestHumanV17Reply": "Repeated/latest explicit confirmation adopted without duplicate implementation; D2 actual189/QB260 limited PG service proof already adopted; normalHTTP/front-end/nonowner/formalperformance pending",
     "copied372LinuxInstall": {
       "previous": "c03-copied372-linux-install-only-20261025-198 failed SAME_PROVEN_OFFLINE_LOCK_REQUIRED before any docker installer run, payload/cachecopy preserved; generic ATTEMPTED_UNKNOWN refers call entry not npm sideeffect",
       "current": "c03-copied372-lock-bound-install-20261025-199",
-      "status": "ACTUAL_T45_DISPATCHED_WAIT_TERMINAL",
+      "status": "PASS_ISOLATED_COPIED372_LINUX_INSTALL_AND_NATIVE_LOAD_ONLY",
       "correction": "Same originalC229 install-only flow; exact newpackage/lock pair pinned;136production lockrecords anddependency map identical actual5669; jszip dev-only browserbuild addition; no packageversion/lock edits to evade install; no ignoreerror/npm-install/onlinefallback",
-      "boundary": "Newindependentrelease/cachecopy/nonetwork/install-nativeonly; sourcecache and9protectedcontainers unchanged required;noapp/DB/config/production switch"
+      "boundary": "Newindependentrelease/cachecopy/nonetwork/install-nativeonly; sourcecache and9protectedcontainers unchanged required;noapp/DB/config/production switch",
+      "actual": {
+        "job": "c03-copied372-lock-bound-install-20261025-199",
+        "installOutcome": "RETURNED_SUCCESS",
+        "installedPackageRecords": 111,
+        "platform": "linux/x64",
+        "node": "24.21.0",
+        "sharp": "0.35.5",
+        "vips": "8.18.7",
+        "nativeLoaded": true,
+        "elapsedSeconds": 31.196,
+        "protectedContainersUnchanged": 9,
+        "sourceCacheWritten": false,
+        "appStarted": false,
+        "databaseCalls": 0,
+        "productionEntryChanged": false
+      },
+      "releaseDirectory": "/srv/naijue-erp/rapid-launch-20261022/releases/replica-production-source372-01-install-only-r2",
+      "next": "Newcandidate installation proved; application startup/data/formal switching stillseparate. Reuseinstalled372payload only at exact version, do notcalloldC229newfrontend proof"
+    },
+    "realR1ApprovedSchemaCurrent": {
+      "job": "c03-real-r1-approved-v16-v15-upgrade-20261025-200",
+      "status": "DISPATCHED_ONCE_WAIT_ACTUAL_TERMINAL",
+      "target": "erp_rewrite_20261022_r1/OID1027659",
+      "before": "v14/123/5207 fullsourceprobe andpost196 CORE/native state required",
+      "scope": "Reuseexactapproved80332v16 then47325v15originalfile, two nullable responsible cols/2FK, creator untouched;no newcontract, no grant/businessDML/CORE/native replay/production service changes",
+      "protection": "Original158physicalpreservation freshness+9originalcontainers+privatecurrentpost196fullDBdump/listreadable beforeDDL; dumpprivate/hashnotexported, listnotactualrestore",
+      "next": "CollectexactactualCOMMITprefix/newgenuineruntime metadata, originalQBnewtargetreview; neverreplay committedprefix/fakecanonical"
     }
   },
   "latestReadySource": {
