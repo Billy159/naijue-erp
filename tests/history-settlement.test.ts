@@ -1,8 +1,34 @@
 import test from "node:test";import assert from "node:assert/strict";
-import { prepareHistorySettlementChunk,validatePreparedHistorySettlementChunk,stageHistorySettlementChunk } from "../packages/application/src/import-v3-history-settlement.ts";
+import { prepareHistorySettlementChunk,validatePreparedHistorySettlementChunk,stageHistorySettlementChunk,historySettlementRequestHash } from "../packages/application/src/import-v3-history-settlement.ts";
+import { requestHash } from "../packages/application/src/request-hash.ts";
+import { validateNativeImportAccountingCommand } from "../packages/application/src/native-import-record-accounting.ts";
 import { settlementChunk } from "./support/history-settlement-fixtures.ts";
 import { paymentId as id, originalPaymentFields,PAYMENT_HASH } from "./support/native-payment-fixtures.ts";
 import { v2MoneyApprovalSet } from "../packages/application/src/import-v2.ts";
+test("request hash preserves native MAIN bigint quantities and existing typed encoding without number conversion",()=>{
+ for(const quantity of [-7n,9007199254740993n,-9223372036854775808n,9223372036854775807n]){
+  const command={action:"IMPORT_CHUNK",actorAccountId:id(1),batchId:id(2),requestKey:"SYNTHETIC-NATIVE-ACCOUNT",expectedSequence:2,expectedCursor:22,accountingVersion:"NATIVE_IMPORT_RECORD_ACCOUNTING_V1",items:[{targetType:"INVENTORY_LEDGER",sourceEntityType:"INVENTORY_BASELINE",sourceKey:"SYNTHETIC-STOCK",sourceRecordHash:PAYMENT_HASH,sourceFileRef:"synthetic-stock.json",warehouseId:id(3),skuId:id(4),quantity,businessDate:"2026-10-25"}]};
+  validateNativeImportAccountingCommand(command);
+  assert.equal(historySettlementRequestHash(command),requestHash(command));
+  assert.equal(historySettlementRequestHash(quantity),requestHash(quantity));
+  assert.notEqual(historySettlementRequestHash(command),historySettlementRequestHash({...command,items:[{...command.items[0],quantity:quantity.toString()}]}));
+ }
+ assert.equal(new Set([-7n,"-7",-7].map(historySettlementRequestHash)).size,3);
+});
+test("request hash retains Map normalization and descriptor, array, cycle and unsafe-number rejection with bigint",()=>{
+ const old=new Map<string,unknown>([["b",{amount:"7.03",line:9}],["a",null]]);
+ assert.equal(historySettlementRequestHash(old),requestHash({map_entries:[["a",null],["b",{amount:"7.03",line:9}]]}));
+ const map=new Map<string,unknown>([["b",{quantity:-7n}],["a",9223372036854775807n]]);
+ assert.equal(historySettlementRequestHash(map),requestHash({map_entries:[["a",9223372036854775807n],["b",{quantity:-7n}]]}));
+ assert.equal(historySettlementRequestHash(map),historySettlementRequestHash(new Map([...map].reverse())));
+ let getters=0;const accessor={quantity:-7n},hidden={quantity:-7n},symbol={quantity:-7n},extended=[-7n],sparse=new Array(2),cycle:Record<string,unknown>={quantity:-7n};
+ Object.defineProperty(accessor,"field",{enumerable:true,get(){getters++;return 1;}});
+ Object.defineProperty(hidden,"field",{value:1});Object.defineProperty(symbol,Symbol("field"),{value:1});Object.defineProperty(extended,"field",{value:1,enumerable:true});sparse[1]=-7n;cycle.self=cycle;
+ const overridden=new Map([["quantity",-7n]]);Object.defineProperty(overridden,"entries",{get(){getters++;return Map.prototype.entries;}});
+ const cyclicMap=new Map<string,unknown>();cyclicMap.set("self",cyclicMap);
+ for(const value of [accessor,hidden,symbol,extended,sparse,cycle,overridden,cyclicMap,new Map([[1,-7n]]),Object(-7n),Object.create({quantity:-7n}),undefined,()=>-7n,Number.MAX_SAFE_INTEGER+1,1.5,NaN,Infinity])assert.throws(()=>historySettlementRequestHash(value),{code:"HISTORY_SETTLEMENT_INPUT"});
+ assert.equal(getters,0);
+});
 test("historical account and independent original method/name snapshots never copy the account's current method",()=>{
  const input=settlementChunk(),c=prepareHistorySettlementChunk(input),r=c.rows[0]!;
  assert.equal(r.account.nativeSnapshot.payment_method_id,id(10));assert.equal(r.settlement.payment_method_id_snapshot,id(11));

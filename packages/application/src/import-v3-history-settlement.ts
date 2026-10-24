@@ -25,7 +25,7 @@ const cents=(n:bigint)=>`${n<0n?"-":""}${(n<0n?-n:n)/100n}.${((n<0n?-n:n)%100n).
 export function historySettlementRequestHash(value:unknown):string {
  const seen=new Set<object>();
  const plain=(v:unknown):unknown=>{
-  if(v===null||typeof v==="string"||typeof v==="boolean")return v;
+  if(v===null||typeof v==="string"||typeof v==="boolean"||typeof v==="bigint")return v;
   if(typeof v==="number"){must(Number.isSafeInteger(v),"Safe evidence integers only");return v;}
   must(typeof v==="object"&&!seen.has(v as object),"Acyclic plain evidence required");const o=v as object;seen.add(o);let out:unknown;
   if(Object.getPrototypeOf(o)===Map.prototype){must(Reflect.ownKeys(o).length===0,"Map overrides/hidden fields forbidden");

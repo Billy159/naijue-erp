@@ -2153,6 +2153,16 @@
           "group": "B06_ORIGINAL_FULL_SOURCE_PROVIDER_EXECUTABLE_COMPOSITION",
           "fieldGate": "EXISTING_APPROVED_FIELDS_AND_CONTRACTS_ONLY",
           "scope": "One missing concrete existing26host provider composition of original11 genuine factories/currentCORE continuation, not second importer/framework; source-only; no fabricatedempty factories/nativebinding/hash/authority or unapprovedscheme/hall decisions"
+        },
+        {
+          "path": "packages/application/src/import-v3-history-settlement.ts",
+          "group": "B06_EXISTING_NATIVE_BIGINT_CAPTURE_SEAM",
+          "reason": "Actual C175 source preflight rejected already-contracted native MAIN bigint quantity; direct hash preclone bug only, no new schema/field/command/permission"
+        },
+        {
+          "path": "tests/history-settlement.test.ts",
+          "group": "B06_EXISTING_NATIVE_BIGINT_CAPTURE_SEAM",
+          "reason": "Actual C175 source preflight rejected already-contracted native MAIN bigint quantity; direct hash preclone bug only, no new schema/field/command/permission"
         }
       ]
     },
@@ -5024,6 +5034,7 @@
     "sourceWrites": "Existinguniqueowners; F1 new document-responsibility.tsx and existingv16 localchain registered. No mutableWIP in326.",
     "syntheticAuthCssScope": "C sole exact harness.css login-only suppression; password dialog original form retained; no credential endpoint enabled",
     "phase1Replica": "C sole initial byte copy/shared entry/build/sample boundary; F1-F4 read-only completeness in own old report folders; phase2 exact leaf reallocation after fixed phase1.",
-    "replicaFixtureTransportOwner": "F1 exact fixture-transport.mjs only (technical Solmedium); C serve/index/build/shared resources, original frozen frontend read-only. No live switch during QF lease."
+    "replicaFixtureTransportOwner": "F1 exact fixture-transport.mjs only (technical Solmedium); C serve/index/build/shared resources, original frozen frontend read-only. No live switch during QF lease.",
+    "nativeBigintHashSeam": "D3 exact existing settlement evidence capture helper and original unit test; preserve all old hashes/strict descriptor checks, support existing native bigint without Number conversion or alternate encoder."
   }
 }
