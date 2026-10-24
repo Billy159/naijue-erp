@@ -1253,7 +1253,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-24T11:29:21.184294+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "85cb60a011200815db11279435cefe11955b0b15",
+  "lastVerifiedRemoteCommit": "2cd552928d73c9a104557cd04fbb8466ee878279",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1697,7 +1697,31 @@
     "newAccountsInserted": 49,
     "realImport": "CORE157_COMMITTED_FULL_BUSINESS_NOT_IMPORTED",
     "productionSwitched": false,
-    "freshBackup": "C112 original3890/106f9a10f2e64de9dceed0c19a5e941b7b8005b258793fa03621135c3f080a44; deadline2026-10-24T11:35:38.679556Z unchanged",
+    "freshBackup": {
+      "job": "c02-current-backup-20261024-158",
+      "status": "ACTUAL_PASS_FRESH_ORIGINAL_BACKUP_AND_SAFE_METADATA_READBACK_ONLY",
+      "elapsedSeconds": 588.9264660680201,
+      "finishedAtUtc": "2026-10-24T12:02:34.387747+00:00",
+      "deadlineUtc": "2026-10-25T00:02:34.387747+00:00",
+      "rawReceipt": {
+        "localPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261024-158/release-submission/release-receipts/c02-current-backup-20261024-158/current-preservation.json",
+        "serverPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c02-current-backup-20261024-158/results/current-preservation.json",
+        "bytes": 3959,
+        "sha256": "e517b97eaf67c5e5f8885f4ca5dd9f6eed0362f1e9b7b5b54129491ab2789786"
+      },
+      "safeReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261024-158/release-submission/release-receipts/c02-current-backup-20261024-158/backup158-safe-result.json",
+        "bytes": 19440,
+        "sha256": "3d06de4f6b8e73f6b06751cac3bd40e60381ab235dbac6081e19b886b56e285b"
+      },
+      "protectedContainers": 9,
+      "originalBackupSourceUnchanged": true,
+      "physicalVerifiedOnce": true,
+      "configSourceCount": 7,
+      "old112Deadline": "2026-10-24T11:35:38.679556Z unchanged expired",
+      "businessAcceptance": false,
+      "restoreRehearsalRepeated": false
+    },
     "accountCapture": "PASS_C02_JOB11",
     "bootMetadata": "JOBS12_13_READONLY_PASS; JOB14_BOOT_ACTOR_PROJECTION_QUEUED",
     "accountIdentity45": "QB35_SCOPED_PASS_C_OUTSIDE_PIN",
@@ -5131,53 +5155,29 @@
       }
     },
     "freshBackup": {
-      "ageSecondsAtReadback": 0.081091,
-      "backupId": "rapid-launch-current-20261024-112",
-      "backupMaxAgeSeconds": 43200,
-      "backupPath": "/srv/naijue-erp/rapid-launch-20261022/backups/rapid-launch-current-20261024-112",
-      "databaseFiles": 4140,
-      "finishedAtUtc": "2026-10-23T23:35:38.679556+00:00",
-      "mediaFiles": 663,
-      "originalReceipt": {
-        "bytes": 3890,
-        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c02-current-backup-20261024-112/results/current-preservation.json",
-        "sha256": "106f9a10f2e64de9dceed0c19a5e941b7b8005b258793fa03621135c3f080a44"
+      "job": "c02-current-backup-20261024-158",
+      "status": "ACTUAL_PASS_FRESH_ORIGINAL_BACKUP_AND_SAFE_METADATA_READBACK_ONLY",
+      "elapsedSeconds": 588.9264660680201,
+      "finishedAtUtc": "2026-10-24T12:02:34.387747+00:00",
+      "deadlineUtc": "2026-10-25T00:02:34.387747+00:00",
+      "rawReceipt": {
+        "localPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261024-158/release-submission/release-receipts/c02-current-backup-20261024-158/current-preservation.json",
+        "serverPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c02-current-backup-20261024-158/results/current-preservation.json",
+        "bytes": 3959,
+        "sha256": "e517b97eaf67c5e5f8885f4ca5dd9f6eed0362f1e9b7b5b54129491ab2789786"
       },
-      "pairPreservation": {
-        "bytes": 3835,
-        "finishedAtUtcPresent": false,
-        "path": "/srv/naijue-erp/rapid-launch-20261022/backups/rapid-launch-current-20261024-112/preservation.json",
-        "sha256": "4973565365e7ebc1527db581c37c5719d48726d5b13b721222f99545195852c8"
+      "safeReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261024-158/release-submission/release-receipts/c02-current-backup-20261024-158/backup158-safe-result.json",
+        "bytes": 19440,
+        "sha256": "3d06de4f6b8e73f6b06751cac3bd40e60381ab235dbac6081e19b886b56e285b"
       },
-      "physicalVerifiedOnceByOriginalScript": true,
-      "physicalVerifyRepeatedByWrapper": false,
-      "protectedArchivesOrDbManifestReopened": false,
-      "recordedArchiveStatistics": {
-        "applicationImages": {
-          "bytes": 368849920,
-          "members": null
-        },
-        "configuration": {
-          "bytes": 552960,
-          "members": 84
-        },
-        "media": {
-          "bytes": 83947520,
-          "members": 827
-        }
-      },
-      "restoreLimit": "Prior DB/media restore only; new application/new-account startup and production rollback not proven by this backup.",
-      "restoreRehearsalRepeated": false,
-      "retainedRawContainerCopy": "/tmp/rapid-launch-current-20261024-112",
-      "rollbackBoundary": "Preserve unchanged old DB. New business writes in rewrite DB must be protected; never restore old DB snapshot over new accounting.",
-      "startedAtUtc": "2026-10-23T23:26:51.729506+00:00",
-      "status": "PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED",
-      "walRangeCount": 1,
-      "source": "C112 actual safe result; actual original finished time plus original43200s age contract",
-      "deadlineUtc": "2026-10-24T11:35:38.679556Z",
-      "oldC82DeadlineUtc": "2026-10-23T23:36:33.695668Z",
-      "oldC82Extended": false,
-      "originalPrivateReceiptMustBeUsed": true
+      "protectedContainers": 9,
+      "originalBackupSourceUnchanged": true,
+      "physicalVerifiedOnce": true,
+      "configSourceCount": 7,
+      "old112Deadline": "2026-10-24T11:35:38.679556Z unchanged expired",
+      "businessAcceptance": false,
+      "restoreRehearsalRepeated": false
     },
     "cssSharing167": {
       "source": "195222fb97f2a41c352ae5fcd973700f63b0e760",
@@ -5782,7 +5782,7 @@
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     },
-    "browserOwner": "QF2",
+    "browserOwner": "NONE_QF2_CLEAN_STOP_306",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
@@ -6012,48 +6012,12 @@
     },
     "sourceCommit": "17d2e89603233e07c0cfe8c344934148f7463536",
     "browserLease": {
-      "status": "QF2_EXCLUSIVE295_SOURCECHOICE_CANCEL_ONLY",
-      "candidateTab": "08AC4587BE12A7F2DAB8D10EECC74992",
-      "demoTab": "7F93D5A61A99F1C00FB3C0F089081F1F",
-      "protectedTabs": [
-        "DB7CA658365B213EEE3EB1333946E5BA",
-        "3BC874911D0D2415D093603E264B0D67",
-        "3A913C5FB1BDFC2E0E28BD678AAFF32B"
-      ],
-      "url": "http://127.0.0.1:57887/synthetic-unified.html?inventoryLargePreview=1",
-      "source": "17d2e89603233e07c0cfe8c344934148f7463536",
-      "build": "ui-preview-17d2e89-01-build01",
-      "scope": "Only remaining cancel sourcechoice exactcanonicalfocus->End, prior291actual reused, no dense/output recheck",
-      "inputModes": [
-        "salesModulePreview=1",
-        "separate original existingTransferPreview only after ownclear/reload"
-      ],
-      "viewport": "1470x668DPR2 bothownedtargets",
-      "oldRelease": "QF2/c252-readonly-product-actual-01/BROWSER-RELEASE.json 5560/042462ae88ad67bd7f9383300465a43f2eeb607f89e40ad67c4bcf3db4e5366b",
-      "humanDemoLoggedIn": "Direct current user reply to call_e60b2dda65e54f6d8c65a98937c7a0f3: Demo logged in; no credentials",
-      "previousRelease": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/candidate-c7ea236-funds-transfer-remainder-actual/BROWSER-RELEASE.json",
-        "bytes": 2531,
-        "sha256": "e7316d0397e5cf0ce6a87228f207e6414e8e2a63f4cb581d6dcfb61ba2c4d3b8"
-      },
-      "suspension": "QF273 funds screenshot then click route became products, readonly inputs became transfer. Preserved unexpected draft; causeUNKNOWN, no forceddiscard; user text question pending. All others NO_CHROME; independent source/backend unaffected",
-      "humanWindowHandback": {
-        "kind": "DIRECT_CURRENT_USER_REPLY",
-        "questionItemId": "[\"request_user_input_async\",\"call_7e747c7a80ac4692865617d5498772db\",0]",
-        "answer": "窗口已交回",
-        "previousHumanDraftTab": "3A913C5FB1BDFC2E0E28BD678AAFF32B"
-      },
-      "humanDraftPreserved": true,
-      "prior285Release": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c285-associated-modules-actual-01/BROWSER-RELEASE.json",
-        "bytes": 3820,
-        "sha256": "c5f38ebf8faa69be6e7aabe11b950615e26bad326982f87231261d946f750fcc"
-      },
-      "prior291Release": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c291-modal-large-inventory-actual-01/BROWSER-RELEASE.json",
-        "bytes": 3411,
-        "sha256": "4724bedb18472c0d86bad020f05fd6ba63d639602df7ccb48b4b5de8d77e68a6"
-      }
+      "owner": "NONE",
+      "candidate": "5B69FD73D86A2D051EE5D18378D8C767",
+      "demo": "F0B417F6BC85EE5917A5286AAD0FB04A",
+      "released": "QF2c306 actual cleanSTOP report pendingfinalpacket",
+      "naturalViewport": "1470x668/DPR2/scale1, nooverride",
+      "protectedDraftsUnchanged": true
     },
     "frontendLaneAdjustment": {
       "status": "FOUR_LINES_ACTIVE_F4_FIRST_COMPLETE_NATIVE_MODULE_FIXED266",
@@ -7083,7 +7047,7 @@
       "physicalPrint": false,
       "inFlightCancel": false
     },
-    "nextActualAction": "Collect158stillRUNNING freshbackup; D1/D3v16sourceinprogress resumedafteractualsystemErrors preservingWIP; QF2current306actualdates/product scope; F1original307normalstate wiring; C originalQAforeigngroup negative nextactual. No CORErerun.",
+    "nextActualAction": "Use actual158 originalreceipt/deadline for nextC isolatedvalidforeigngroupsize bounded verification; collectD1v16source ready andQB308review; integrateF1bodytechnical package thenoneQFactual candidate; QF2final306modulepacket adopted no repeat. FullMAIN data authority/source stillincomplete noformal switch.",
     "corePreflightHistory": {
       "128": "FAILED_EXACT_FLAT_FILE_CLOSURE_beforeprivatecopyPG;publicPRIVATE-INPUT-PINS omittedbyunchangedclientfilenamefilter",
       "151": "READONLYpriorentry/noPG, firstlognameinitiallynotselected",
@@ -7141,12 +7105,28 @@
     },
     "backup158": {
       "job": "c02-current-backup-20261024-158",
-      "status": "RUNNING",
-      "sourceScriptOriginal": true,
+      "status": "ACTUAL_PASS_FRESH_ORIGINAL_BACKUP_AND_SAFE_METADATA_READBACK_ONLY",
+      "elapsedSeconds": 588.9264660680201,
+      "finishedAtUtc": "2026-10-24T12:02:34.387747+00:00",
+      "deadlineUtc": "2026-10-25T00:02:34.387747+00:00",
+      "rawReceipt": {
+        "localPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261024-158/release-submission/release-receipts/c02-current-backup-20261024-158/current-preservation.json",
+        "serverPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c02-current-backup-20261024-158/results/current-preservation.json",
+        "bytes": 3959,
+        "sha256": "e517b97eaf67c5e5f8885f4ca5dd9f6eed0362f1e9b7b5b54129491ab2789786"
+      },
+      "safeReceipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261024-158/release-submission/release-receipts/c02-current-backup-20261024-158/backup158-safe-result.json",
+        "bytes": 19440,
+        "sha256": "3d06de4f6b8e73f6b06751cac3bd40e60381ab235dbac6081e19b886b56e285b"
+      },
       "protectedContainers": 9,
-      "addsRegisteredR1ConfigOpaqueArchive": true,
-      "newDeadline": null,
-      "old112Deadline": "2026-10-24T11:35:38.679556Z unchanged"
+      "originalBackupSourceUnchanged": true,
+      "physicalVerifiedOnce": true,
+      "configSourceCount": 7,
+      "old112Deadline": "2026-10-24T11:35:38.679556Z unchanged expired",
+      "businessAcceptance": false,
+      "restoreRehearsalRepeated": false
     },
     "newPendingSourceOwners": {
       "D1": "v16 LIVEresponsible/store/SQL/issuer WIP source, noDB",
