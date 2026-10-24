@@ -91,7 +91,7 @@ function StaffContent(props: StaffSettingsProps & { readonly queries: Queries | 
     { title: '角色', render: (_: unknown, row: StaffSettingsRecord) => props.roles.find(role => role.value === row.role)?.label ?? '未配置' },
     { title: '所属营业厅', render: (_: unknown, row: StaffSettingsRecord) => settingsReferenceName(row.hall) },
     { title: '员工状态', width: 95, render: (_: unknown, row: StaffSettingsRecord) => <Tag className={`iw-status ${row.employmentStatus === '在职' ? 'normal' : 'off'}`}>{row.employmentStatus || '未提供'}</Tag> },
-    { title: '登录权限', width: 95, render: (_: unknown, row: StaffSettingsRecord) => <Tag className={`iw-status ${row.account?.loginEnabled ? 'normal' : 'off'}`}>{row.account?.loginEnabled ? '已开通' : '已关闭'}</Tag> },
+    { title: '登录权限', width: 95, render: (_: unknown, row: StaffSettingsRecord) => <Tag className={`iw-status ${row.account?.loginEnabled ? 'normal' : 'off'}`}>{row.account === null ? '未开通' : row.account.loginEnabled ? '已开通' : '已关闭'}</Tag> },
     { title: '操作', width: 158, render: (_: unknown, row: StaffSettingsRecord) => <div className="bs-row-actions"><Button type="text" size="small" disabled={!props.canPrepare || busy || !!editor || !!editingId} onClick={event => { if (event.currentTarget instanceof HTMLElement) openDetail(row, 'edit', event.currentTarget); }}>编辑</Button>
       <Button type="text" size="small" disabled={!props.canPrepare || busy || !!editor || !!editingId || !['在职','离职'].includes(row.employmentStatus)} onClick={event => { if (event.currentTarget instanceof HTMLElement) openDetail(row, row.employmentStatus === '离职' ? 'REINSTATE' : 'LEAVE', event.currentTarget); }}>{row.employmentStatus === '离职' ? '恢复在职' : '办理离职'}</Button></div> },
   ];
