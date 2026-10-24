@@ -1,0 +1,39 @@
+{
+  "version": "v15-CATEGORY-ORDER-UNDO",
+  "status": "APPROVED_EXACT_SCOPE",
+  "recordedAtUtc": "2026-10-24T03:02:20.953204+00:00",
+  "source": {
+    "kind": "DIRECT_HUMAN_QUESTION_REPLY_IN_CURRENT_CONTROLLER_CHAT",
+    "threadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+    "questionItemId": "[\"request_user_input_async\",\"call_d12f3db18af947ddadc99f6e7bdd4b05\",0]",
+    "userText": "确认 v15 分类排序与撤销方案"
+  },
+  "confirmedFullFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v15-CATEGORY-ORDER-UNDO.md",
+  "markdownSha256BeforeStatusNote": "458c485543925d337d7be1b8e2bc5d5b9f22cbb953178b48689368f133038ddb",
+  "newTables": 0,
+  "newColumns": 0,
+  "newActions": [
+    "CATEGORY.REORDER",
+    "CATEGORY.UNDO_REORDER"
+  ],
+  "scope": [
+    "Same actual parent and complete undeleted siblings; preserve otherrelativeorder",
+    "CAS every original sibling, update only changed order/version",
+    "One operation/aggregate audit/receipt/transaction, all affectedguarded",
+    "One latest sameactor undo restoring exact original integers, rejects any changed poststate; versions increase",
+    "Original idempotency/current authority/unknownCOMMIT receipt recovery retained"
+  ],
+  "notIncluded": [
+    "Crossparent move/reparent/name/delete/productclassification",
+    "New redo/undo stack, restored old versions or overwriting later modifications",
+    "Otherfamily permissions, v13, six barcode scheme initialization or source hall v5"
+  ],
+  "implementationOwners": [
+    "D1",
+    "D2",
+    "F4"
+  ],
+  "actualExecutor": "C original only",
+  "writerImplemented": false,
+  "databaseExecuted": false
+}

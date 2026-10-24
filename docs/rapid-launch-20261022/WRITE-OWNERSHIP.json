@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T02:29:34.521324+00:00",
+  "updatedAt": "2026-10-24T03:02:20.953204+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -205,6 +205,10 @@
             ],
             "scope": "Exact v11 function/trigger catalog pins, no new purposes/grants/legacy fallback",
             "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
+          },
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
           }
         },
         {
@@ -299,7 +303,11 @@
         {
           "path": "packages/application/src/maintenance-commit-ports.ts",
           "fieldGate": "APPROVED_C01_V1_MAINTENANCE_SHARED_UOW",
-          "group": "D1_SHARED_MAINTENANCE_PORT"
+          "group": "D1_SHARED_MAINTENANCE_PORT",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
@@ -314,6 +322,10 @@
             ],
             "scope": "Narrow internal same-client append context, never ordinary general EDIT delegation",
             "authoritativeConstraint": "Product actual sizeGroupId and complete current members remain hard boundary, not default only; no inventory/read global-group broadening"
+          },
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
           }
         },
         {
@@ -758,6 +770,20 @@
           "fieldGate": "EXACT_V14_APPROVED_CONTRACT_ONLY",
           "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
           "scope": "Existing samebatch finiteCORE/onceBIND types/accounting or oneincrementalSQLpatch;oldmigrationsimmutable,0newtablecolumn"
+        },
+        {
+          "path": "adapters/postgres/src/bounded-pool.ts",
+          "group": "QB213_F01_EXACT_INTERNAL_SANITIZED_METADATA_TRANSIENT_EVIDENCE_SEAM",
+          "fieldGate": "NO_PUBLIC_DTO_DB_FIELD_OR_BUSINESS_WRITE_CONTRACT_CHANGE",
+          "boundary": "D1 sole owner only affected sanitizer/classifier proof; preserve sensitive diagnostics masking/oldSQLSTATE handling and pool cleanup. No global retry/fallback or other adapters."
+        },
+        {
+          "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+          "group": "APPROVED_V15_CATEGORY_REORDER_UNDO",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         }
       ]
     },
@@ -1037,7 +1063,11 @@
         },
         {
           "path": "adapters/postgres/src/catalogue-maintenance-store.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "adapters/postgres/src/organization-maintenance-store.ts",
@@ -1082,7 +1112,11 @@
         },
         {
           "path": "apps/api/src/catalogue-maintenance-http.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "apps/api/src/organization-maintenance-http.test.ts",
@@ -1162,15 +1196,27 @@
         },
         {
           "path": "packages/application/src/catalogue-maintenance-ports.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "packages/application/src/catalogue-maintenance-service.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "packages/application/src/catalogue-maintenance-validation.ts",
-          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS"
+          "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "packages/application/src/organization-maintenance-authorization.ts",
@@ -3643,13 +3689,21 @@
           "path": "apps/web/src/product-categories/product-categories-page.tsx",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
-          "transferredFrom": "F2"
+          "transferredFrom": "F2",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "apps/web/src/product-categories/category-tree.tsx",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
-          "transferredFrom": "F2"
+          "transferredFrom": "F2",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "apps/web/src/product-categories/source-product-categories.css",
@@ -3691,13 +3745,21 @@
           "path": "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
-          "transferredFrom": "F2"
+          "transferredFrom": "F2",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "apps/web/src/product-settings/catalogue-maintenance-state.ts",
           "fieldGate": "NO_UNCONFIRMED_SCHEMA_OR_WRITE_SEMANTICS",
           "boundary": "F4 sole existing independent catalogue/category/barcode page leaf; formerF2 transferred by directly verified human01a16b94-1d51-7ab3-9d2e-a75efdc109f7; preserve existing valid UI/business/readonly contract and consumers. F2 product editor/barcode consumers excluded. Global shared/router/build/backend excluded.",
-          "transferredFrom": "F2"
+          "transferredFrom": "F2",
+          "approvedV15Scope": {
+            "approval": "WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+            "scope": "Exact full approved same-parent complete-sibling CAS order and one latest protected undo; no other family expansion; C sole actual PG"
+          }
         },
         {
           "path": "apps/web/src/barcode-schemes/barcode-scheme-view.tsx",
@@ -4415,6 +4477,34 @@
       "D1D3OriginalLeaves": "Retainedoriginalregisteredscopes;no concurrenttransfer",
       "actualExecutor": "C only",
       "approval": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json"
+    },
+    {
+      "atUtc": "2026-10-24T03:02:20.953204+00:00",
+      "scope": "Direct human v15 approved; original D1/D2/F4 exact existing owner routes released",
+      "approval": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+      "paths": {
+        "D1": [
+          "packages/application/src/maintenance-commit-ports.ts",
+          "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+          "adapters/postgres/src/native-import-accounting-capability.ts",
+          "adapters/postgres/patches/0026-category-reorder-undo.sql"
+        ],
+        "D2": [
+          "packages/application/src/catalogue-maintenance-ports.ts",
+          "packages/application/src/catalogue-maintenance-validation.ts",
+          "packages/application/src/catalogue-maintenance-service.ts",
+          "adapters/postgres/src/catalogue-maintenance-store.ts",
+          "apps/api/src/catalogue-maintenance-http.ts"
+        ],
+        "F4": [
+          "apps/web/src/product-categories/category-tree.tsx",
+          "apps/web/src/product-categories/product-categories-page.tsx",
+          "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
+          "apps/web/src/product-settings/catalogue-maintenance-state.ts"
+        ]
+      },
+      "originalTaskCount": 22,
+      "newParallelTask": false
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
