@@ -1,0 +1,69 @@
+{
+  "atUtc": "2026-10-24T01:32:58.689819+00:00",
+  "parent": "932cce3853e5ff82541b195e3a632f738cec8708",
+  "taskId": "D3_APPROVED_V14_CORE_PARTY_SOURCE_CLOSURE_AND_RESUME_TYPED_PROJECTION",
+  "files": [
+    {
+      "path": "scripts/import-v3/native-party-source26.mjs",
+      "bytes": 23527,
+      "sha256": "8e723b47f2b12483143f7397fd6fb386449a8d092684d00475a9bdf842e58615",
+      "owner": "D3"
+    },
+    {
+      "path": "scripts/import-v3/native-party-source26.test.mjs",
+      "bytes": 20955,
+      "sha256": "b86c6ef64fd552ce86714ef72de13b477626b2708c7431201e3dc9e6811e79ce",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json#v14CoreImplementation",
+  "ownerDelivery": {
+    "atUtc": "2026-10-24T01:29:23.665604+00:00",
+    "taskId": "D3-B06-APPROVED-V14-CORE",
+    "status": "PARTY_SOURCE_MODULE_IMPLEMENTED_REMAINING_BOOTSTRAP_HOST_RUN_IN_PROGRESS",
+    "approval": "R/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
+    "files": [
+      "scripts/import-v3/native-party-source26.mjs",
+      "scripts/import-v3/native-party-source26.test.mjs"
+    ],
+    "implemented": [
+      "corePartyClosure:115 exact vertices/22 warehouse records in dependency chunks without unrelated members",
+      "bindCoreContinuation:restore original frozen STAFF proof, preserve source/native birth evidence and validate exact115-member maintenance version chain before independently-authorized current typed projections"
+    ],
+    "checks": {
+      "newPartyTests": {
+        "passed": 2,
+        "command": "node --test --test-name-pattern='v14 party' scripts/import-v3/native-party-source26.test.mjs",
+        "actualPG": false
+      }
+    },
+    "pending": [
+      "D1 exact CORE/BIND same-client seam and finite runtime selector",
+      "original bootstrap/host/run source connection including full MAIN original22claim carryforward"
+    ],
+    "nonActions": [
+      "No real credential capture/PG/SSH/Git/build/browser/source producers",
+      "No D1/D2 leaf edits",
+      "No repeat generic239 old test suite"
+    ],
+    "next": "Continue approved exact8 leaves; C can review implemented module now without waiting full source payload.",
+    "partySourceFrozen": {
+      "atUtc": "2026-10-24T01:31:12.499229+00:00",
+      "files": [
+        {
+          "path": "scripts/import-v3/native-party-source26.mjs",
+          "bytes": 23527,
+          "sha256": "8e723b47f2b12483143f7397fd6fb386449a8d092684d00475a9bdf842e58615"
+        },
+        {
+          "path": "scripts/import-v3/native-party-source26.test.mjs",
+          "bytes": 20955,
+          "sha256": "b86c6ef64fd552ce86714ef72de13b477626b2708c7431201e3dc9e6811e79ce"
+        }
+      ],
+      "scope": "Only originalparty source/test2 leaves frozen pending C SOURCE259/QB directed findings; bootstrap/host/run continue",
+      "checksRepeated": false
+    }
+  },
+  "qualification": "Humanv14approved exact115/49 coreclosure and frozenproof/source/time reuse with explicit currenttyped maintenancebinding independently authorizedchain. Owner2newtests passed adopted, generic239notrerun. Only2frozenleaves captured;bootstrap/host/run and D1 coretypes/store/patch are WIPnotincluded. IndependentQB and actualPG/49init notperformed."
+}
