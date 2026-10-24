@@ -11,7 +11,7 @@ export function historyGrant(intent: ImportedHistoryReadIntent): ImportedHistory
 }
 export function historyHeader(kind: ImportedHistoryKind): ImportedHistorySalesHeader | ImportedHistoryTransferHeader {
   const base = { dataset: 'HISTORY' as const, documentId: historyId(3), batchId: historyId(4), version: 1, number: '历史-0001', businessDate: null, sourceStatus: 'APPROVED' as const, note: null,
-    createdBy: { state: 'UNKNOWN' as const, staffId: null }, approvedBy: { state: 'UNRESOLVED' as const, staffId: null }, createdHallId: null, createdHallProvenance: 'UNKNOWN' as const,
+    createdBy: { state: 'UNKNOWN' as const, staffId: null }, approvedBy: { state: 'UNRESOLVED' as const, staffId: null }, responsibleStaffId: null, responsibleName: null, createdHallId: null, createdHallProvenance: 'UNKNOWN' as const,
     createdLocalAt: '2026-10-04T12:00:00.123456', updatedLocalAt: null, approvedLocalAt: null, createdInstant: null, updatedInstant: null, approvedInstant: null };
   return kind === 'sales' ? { ...base, kind, businessType: 'RETURN', hallId: historyActor.hallId!, warehouseId: historyId(5), customerId: historyId(6), salespersonId: null, grossAmount: '-0.12', orderDiscount: '0.00', netDue: '-0.12' } : { ...base, kind, fromWarehouseId: historyId(5), toWarehouseId: historyId(6) };
 }

@@ -4,7 +4,7 @@ import { isExactHistoryMoney, isHistoryQuantity } from './history-storage-contra
 import { checkedImportedHistoryActor } from './imported-history-query-validation.ts';
 import type { ActorContext } from './ports.ts';
 import type { HistoryRevisionCommand, HistoryRevisionCurrent, HistoryRevisionDependencies, HistoryRevisionEffect, HistoryRevisionGrant,
-  HistoryRevisionLineChange, HistoryRevisionPlan, HistoryRevisionReceipt, HistoryRevisionTotals } from './history-revision-contracts.ts';
+  HistoryRevisionHeaderChange, HistoryRevisionLineChange, HistoryRevisionPlan, HistoryRevisionReceipt, HistoryRevisionTotals } from './history-revision-contracts.ts';
 
 const must = (ok: unknown, code = 'HISTORY_REVISION_INVALID'): void => requireDomain(ok, code, 'Historical correction rejected');
 const uuid = (v: unknown): v is string => typeof v === 'string' && /^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(v);
@@ -37,7 +37,7 @@ function cents(value: string): bigint { return BigInt(value.replace('.', '')); }
 function changed(a: unknown, b: unknown): boolean { return a !== b; }
 
 export function parseHistoryRevisionCommand(value: unknown): HistoryRevisionCommand {
-  const r = object(value, ['kind', 'documentId', 'expectedVersion', 'requestKey', 'reason', 'lines', 'totals', 'settlements']);
+  const r = object(value, ['kind', 'documentId', 'expectedVersion', 'requestKey', 'reason', 'lines', 'totals', 'settlements'], ['header']);
   must((r.kind === 'sales' || r.kind === 'transfers') && uuid(r.documentId)
     && Number.isSafeInteger(r.expectedVersion) && (r.expectedVersion as number) > 0 && (r.expectedVersion as number) < 2147483647);
   for (const [v, limit] of [[r.requestKey, 200], [r.reason, 2000]] as const) must(typeof v === 'string' && v.trim().length > 0 && v.length <= limit && !v.includes('\0'));
@@ -57,14 +57,25 @@ export function parseHistoryRevisionCommand(value: unknown): HistoryRevisionComm
   });
   must(r.kind === 'sales' || (r.totals === null && settlements.length === 0));
   const head = r.totals === null ? null : totals(r.totals);
-  must(lines.length > 0 || head !== null || settlements.length > 0, 'HISTORY_REVISION_EMPTY');
+  let header: HistoryRevisionHeaderChange | undefined;
+  if (Object.hasOwn(r, 'header')) {
+    const h = object(r.header, [], r.kind === 'sales' ? ['businessDate', 'responsibleStaffId'] : ['businessDate', 'fromWarehouseId', 'toWarehouseId', 'responsibleStaffId']);
+    must(Object.keys(h).length > 0, 'HISTORY_REVISION_EMPTY');
+    if (Object.hasOwn(h, 'businessDate')) { try { businessDate(h.businessDate as string); } catch { must(false); } }
+    for (const key of ['fromWarehouseId', 'toWarehouseId', 'responsibleStaffId']) if (Object.hasOwn(h, key)) must(uuid(h[key]));
+    header = h as HistoryRevisionHeaderChange;
+  }
+  must(lines.length > 0 || head !== null || settlements.length > 0 || header !== undefined, 'HISTORY_REVISION_EMPTY');
   return structuredClone({ kind: r.kind, documentId: r.documentId, expectedVersion: r.expectedVersion, requestKey: r.requestKey,
-    reason: r.reason, lines, totals: head, settlements }) as HistoryRevisionCommand;
+    reason: r.reason, lines, totals: head, settlements, ...(header === undefined ? {} : { header }) }) as HistoryRevisionCommand;
 }
 
 /** Pure diff planner; callers MUST invoke it from the locked source/effective transaction. */
 export function planHistoryRevision(current: HistoryRevisionCurrent, input: HistoryRevisionCommand, revisionId: string): HistoryRevisionPlan {
   const command = parseHistoryRevisionCommand(input), before = structuredClone(current), after = structuredClone(current);
+  const responsible = current.responsibleStaffId === undefined ? null : current.responsibleStaffId;
+  must(responsible === null || uuid(responsible), 'HISTORY_REVISION_BASELINE_UNPROVEN');
+  Object.assign(before, { responsibleStaffId: responsible }); Object.assign(after, { responsibleStaffId: responsible });
   must(before.kind === command.kind && before.documentId === command.documentId);
   must(before.version === command.expectedVersion, 'VERSION_CONFLICT');
   must(uuid(revisionId) && revisionId !== before.previousRevisionId);
@@ -83,6 +94,16 @@ export function planHistoryRevision(current: HistoryRevisionCurrent, input: Hist
   }
   for (const s of before.settlements) { must(uuid(s.settlementId) && !settlementIds.has(s.settlementId) && ['RECEIVE', 'REFUND'].includes(s.direction)); money(s.amount, true); settlementIds.add(s.settlementId); }
   const effects: HistoryRevisionEffect[] = []; let anyChanged = false, moneyChanged = false;
+  if (command.header !== undefined) {
+    must(before.sourceStatus === 'DRAFT' && before.baselineEffect === 'EXCLUDED_NOT_EFFECTIVE');
+    for (const key of ['businessDate', 'fromWarehouseId', 'toWarehouseId', 'responsibleStaffId'] as const) {
+      if (Object.hasOwn(command.header, key)) {
+        const value = command.header[key]!; if (before[key] !== value) anyChanged = true;
+        Object.assign(after, { [key]: value });
+      }
+    }
+    if (after.kind === 'transfers') must(after.fromWarehouseId !== after.toWarehouseId);
+  }
   const effect = (lineId: string, warehouseId: string, skuId: string, endpoint: HistoryRevisionEffect['endpoint'], delta: bigint) => {
     if (delta === 0n) return; must(isHistoryQuantity(delta.toString()), 'HISTORY_REVISION_QUANTITY_OVERFLOW');
     effects.push({ lineId, warehouseId, skuId, endpoint, quantityDelta: delta.toString() });

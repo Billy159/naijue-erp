@@ -119,22 +119,25 @@ function person(value: unknown): ImportedHistoryPerson {
   const r = bag(value, ['state', 'staffId'], invalidResponse), state = enumValue(r.state, ['UNKNOWN', 'UNRESOLVED', 'BOUND'], invalidResponse), staffId = nullableId(r.staffId, invalidResponse);
   if ((state === 'BOUND') !== (staffId !== null)) invalidResponse(); return Object.freeze({ state, staffId });
 }
-const headerKeys = ['dataset', 'kind', 'batchId', 'documentId', 'version', 'number', 'businessDate', 'sourceStatus', 'note', 'createdBy', 'approvedBy', 'createdHallId', 'createdHallProvenance', 'createdLocalAt', 'updatedLocalAt', 'approvedLocalAt', 'createdInstant', 'updatedInstant', 'approvedInstant'];
+const headerKeys = ['dataset', 'kind', 'batchId', 'documentId', 'version', 'number', 'businessDate', 'sourceStatus', 'note', 'createdBy', 'approvedBy', 'responsibleStaffId', 'responsibleName', 'createdHallId', 'createdHallProvenance', 'createdLocalAt', 'updatedLocalAt', 'approvedLocalAt', 'createdInstant', 'updatedInstant', 'approvedInstant'];
 export function validateImportedHistoryHeader(value: unknown, kind: ImportedHistoryKind, grant: ImportedHistoryReadGrant): ImportedHistoryHeader {
   const r = bag(value, [...headerKeys, ...(kind === 'sales' ? ['businessType', 'hallId', 'customerId', 'warehouseId', 'salespersonId', 'grossAmount', 'orderDiscount', 'netDue'] : ['fromWarehouseId', 'toWarehouseId'])], invalidResponse);
   if (r.dataset !== 'HISTORY' || r.kind !== kind) invalidResponse();
   const createdHallId = nullableId(r.createdHallId, invalidResponse), createdHallProvenance = enumValue(r.createdHallProvenance, ['ORIGINAL', 'MIGRATION_DERIVED', 'UNKNOWN'], invalidResponse);
   if ((createdHallProvenance === 'UNKNOWN') !== (createdHallId === null)) invalidResponse();
+  const responsibleStaffId = nullableId(r.responsibleStaffId, invalidResponse), responsibleName = nullableText(r.responsibleName, invalidResponse);
+  if (responsibleStaffId === null && responsibleName !== null) invalidResponse();
   const base = { dataset: 'HISTORY' as const, batchId: id(r.batchId, invalidResponse), documentId: id(r.documentId, invalidResponse), version: positive(r.version, invalidResponse), number: text(r.number, invalidResponse), businessDate: date(r.businessDate, invalidResponse), sourceStatus: enumValue(r.sourceStatus, ['DRAFT', 'APPROVED', 'VOID'], invalidResponse), note: nullableText(r.note, invalidResponse), createdBy: person(r.createdBy), approvedBy: person(r.approvedBy), createdHallId, createdHallProvenance, createdLocalAt: stamp(r.createdLocalAt, false), updatedLocalAt: stamp(r.updatedLocalAt, false), approvedLocalAt: stamp(r.approvedLocalAt, false), createdInstant: stamp(r.createdInstant, true), updatedInstant: stamp(r.updatedInstant, true), approvedInstant: stamp(r.approvedInstant, true) };
+  const responsible = { responsibleStaffId, responsibleName };
   if (grant.targetId !== null && base.documentId !== grant.targetId) invalidResponse();
   if (kind === 'sales') {
     const hallId = id(r.hallId, invalidResponse);
     if (grant.scope.kind === 'HALL_IDS' && !grant.scope.hallIds.includes(hallId)) invalidResponse();
-    return Object.freeze({ ...base, kind, hallId, businessType: enumValue(r.businessType, ['SALE', 'RETURN', 'EXCHANGE'], invalidResponse), customerId: id(r.customerId, invalidResponse), warehouseId: id(r.warehouseId, invalidResponse), salespersonId: nullableId(r.salespersonId, invalidResponse), grossAmount: money(r.grossAmount), orderDiscount: money(r.orderDiscount), netDue: money(r.netDue) });
+    return Object.freeze({ ...base, ...responsible, kind, hallId, businessType: enumValue(r.businessType, ['SALE', 'RETURN', 'EXCHANGE'], invalidResponse), customerId: id(r.customerId, invalidResponse), warehouseId: id(r.warehouseId, invalidResponse), salespersonId: nullableId(r.salespersonId, invalidResponse), grossAmount: money(r.grossAmount), orderDiscount: money(r.orderDiscount), netDue: money(r.netDue) });
   }
   const fromWarehouseId = id(r.fromWarehouseId, invalidResponse), toWarehouseId = id(r.toWarehouseId, invalidResponse);
   if (fromWarehouseId === toWarehouseId || grant.scope.kind !== 'ALL') invalidResponse();
-  return Object.freeze({ ...base, kind, fromWarehouseId, toWarehouseId });
+  return Object.freeze({ ...base, ...responsible, kind, fromWarehouseId, toWarehouseId });
 }
 export function validateImportedHistoryLine(value: unknown, kind: ImportedHistoryKind): ImportedHistoryLine | ImportedHistorySalesLine {
   const r = bag(value, ['id', 'lineNo', 'skuId', 'quantity', 'productCodeSnapshot', 'productNameSnapshot', 'colorNameSnapshot', 'fitNameSnapshot', 'sizeNameSnapshot', 'barcodeSnapshot', ...(kind === 'sales' ? ['referencePrice', 'dealPrice', 'lineAmount', 'allocatedDiscount', 'isGift', 'pricingMethodSource', 'discountTenths', 'ordinaryZeroConfirmed'] : [])], invalidResponse);

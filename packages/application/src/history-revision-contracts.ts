@@ -10,11 +10,18 @@ export interface HistoryRevisionLineChange {
   readonly allocatedDiscount?: string | null;
 }
 export interface HistoryRevisionTotals { readonly grossAmount: string; readonly orderDiscount: string; readonly netDue: string }
+export interface HistoryRevisionHeaderChange {
+  readonly businessDate?: string;
+  readonly fromWarehouseId?: string; readonly toWarehouseId?: string;
+  /** Selected business responsibility; never the creator or real audit actor. */
+  readonly responsibleStaffId?: string;
+}
 export interface HistoryRevisionCommand {
   readonly kind: ImportedHistoryKind; readonly documentId: string; readonly expectedVersion: number;
   readonly requestKey: string; readonly reason: string; readonly lines: readonly HistoryRevisionLineChange[];
   readonly totals: HistoryRevisionTotals | null;
   readonly settlements: readonly { readonly settlementId: string; readonly amount: string }[];
+  readonly header?: HistoryRevisionHeaderChange;
 }
 export interface HistoryRevisionLine {
   readonly lineId: string; readonly skuId: string; readonly quantity: string;
@@ -31,6 +38,8 @@ export interface HistoryRevisionCurrent {
   readonly warehouseId: string | null; readonly fromWarehouseId: string | null; readonly toWarehouseId: string | null;
   readonly lines: readonly HistoryRevisionLine[]; readonly totals: HistoryRevisionTotals | null;
   readonly settlements: readonly HistoryRevisionSettlement[];
+  /** Old numeric facts omit this key: unknown responsibility is NULL. */
+  readonly responsibleStaffId?: string | null;
 }
 export interface HistoryRevisionEffect {
   readonly lineId: string; readonly warehouseId: string; readonly skuId: string;

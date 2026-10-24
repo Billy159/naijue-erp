@@ -6,7 +6,7 @@ import { historyActor as actor } from './support/imported-history-query-fixtures
 
 const id = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 function current(kind: 'sales' | 'transfers' = 'sales'): HistoryRevisionCurrent {
-  return { kind, documentId: id(1), version: 1, previousRevisionId: null, importBatchId: id(2), publishedOperationId: id(3), documentManifestHash: 'a'.repeat(64),
+  return { kind, documentId: id(1), version: 1, previousRevisionId: null, importBatchId: id(2), publishedOperationId: id(3), documentManifestHash: 'a'.repeat(64), responsibleStaffId: null,
     sourceStatus: 'APPROVED', baselineEffect: 'INCLUDED_APPROVED', businessDate: '2026-10-04', warehouseId: kind === 'sales' ? id(4) : null,
     fromWarehouseId: kind === 'transfers' ? id(4) : null, toWarehouseId: kind === 'transfers' ? id(5) : null,
     lines: [{ lineId: id(6), skuId: id(7), quantity: '2', ...(kind === 'sales' ? { dealPrice: '10.00', lineAmount: '20.00', allocatedDiscount: null } : {}) }],
@@ -102,4 +102,27 @@ test('authorized provider mutation cannot alter captured write; invalid receipt 
   const deps: HistoryRevisionDependencies = { authorization: { async authorize(_a, q) { const g = { dataset: 'HISTORY' as const, kind: q.kind, documentId: q.documentId, actorAccountId: actor.accountId }; (q.lines[0] as { quantity: string }).quantity = '999'; return g; } },
     store: { async revise(_a, q) { assert.equal(q.lines[0]!.quantity, '3'); return { operationId: id(90), dataset: 'HISTORY', kind: q.kind, documentId: q.documentId, revisionId: id(99), version: 999, ledgerEntryIds: [] }; } }, now: () => '2026-10-22T05:00:00.000Z' };
   await assert.rejects(createHistoryRevisionService(deps).execute(actor, command(), new AbortController().signal), { code: 'HISTORY_REVISION_INVALID_RECEIPT' });
+});
+
+test('v16 history head: DRAFT date endpoints responsible revise without stock and later numeric preserves responsibility', () => {
+  const c: HistoryRevisionCurrent = { ...current('transfers'), sourceStatus: 'DRAFT', baselineEffect: 'EXCLUDED_NOT_EFFECTIVE', businessDate: null };
+  const q: HistoryRevisionCommand = { ...command('transfers'), lines: [], header: { businessDate: '2026-10-24', fromWarehouseId: id(40), toWarehouseId: id(41), responsibleStaffId: id(42) } };
+  const p = plan(c, q); assert.equal(p.before.responsibleStaffId, null); assert.equal(p.after.responsibleStaffId, id(42));
+  assert.equal(p.after.businessDate, '2026-10-24'); assert.equal(p.after.fromWarehouseId, id(40)); assert.equal(p.after.toWarehouseId, id(41));
+  assert.deepEqual(p.effects, []); assert.equal(p.moneyChanged, false); assert.equal(c.businessDate, null); assert.equal(c.responsibleStaffId, null);
+  const next = planHistoryRevision(p.after, { ...command('transfers'), expectedVersion: 2 }, id(100));
+  assert.equal(next.after.responsibleStaffId, id(42)); assert.equal(next.after.businessDate, '2026-10-24'); assert.deepEqual(next.effects, []);
+  const legacy = { ...current() }; delete (legacy as { responsibleStaffId?: string | null }).responsibleStaffId;
+  assert.equal(plan(legacy).before.responsibleStaffId, null); assert.equal(plan(legacy).after.responsibleStaffId, null);
+  assert.deepEqual(parseHistoryRevisionCommand(command()), command()); assert.equal(Object.hasOwn(parseHistoryRevisionCommand(command()), 'header'), false);
+});
+test('v16 history head: state kind invalid references and creator overrides refuse while approved numeric remains delta only', () => {
+  for (const header of [{ responsibleStaffId: null }, { responsibleStaffId: '' }, { createdByStaffId: id(40) }, { createdByAccountId: id(40) }, { businessDate: '2026-02-30' }, { fromWarehouseId: id(40) }])
+    assert.throws(() => parseHistoryRevisionCommand({ ...command(), lines: [], header }));
+  for (const sourceStatus of ['APPROVED', 'VOID'] as const)
+    assert.throws(() => plan({ ...current(), sourceStatus, baselineEffect: sourceStatus === 'APPROVED' ? 'INCLUDED_APPROVED' : 'EXCLUDED_NOT_EFFECTIVE' }, { ...command(), lines: [], header: { responsibleStaffId: id(40) } }));
+  const draft: HistoryRevisionCurrent = { ...current('transfers'), sourceStatus: 'DRAFT', baselineEffect: 'EXCLUDED_NOT_EFFECTIVE' };
+  assert.throws(() => plan(draft, { ...command('transfers'), lines: [], header: { fromWarehouseId: id(5) } }));
+  assert.throws(() => plan(draft, { ...command('transfers'), lines: [], header: { businessDate: draft.businessDate! } }), { code: 'HISTORY_REVISION_EMPTY' });
+  assert.deepEqual(plan().effects.map(x => x.quantityDelta), ['-1']);
 });

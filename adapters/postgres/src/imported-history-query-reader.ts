@@ -38,7 +38,12 @@ function from(kind: ImportedHistoryKind, effective = false): string {
    JOIN naijue_erp.import_history_closure_manifest m ON m.batch_id=b.id
    JOIN naijue_erp.import_history_document_manifest d ON d.batch_id=h.batch_id AND d.${target}=h.id AND d.document_kind='${documentKind}'${effective ? `
    LEFT JOIN naijue_erp.history_${kind === 'sales' ? 'sales' : 'transfer'}_effective e ON e.header_id=h.id
-   LEFT JOIN naijue_erp.history_revision er ON er.id=e.revision_id` : ''}`;
+   LEFT JOIN naijue_erp.history_revision er ON er.id=e.revision_id
+   LEFT JOIN naijue_erp.staff responsible_staff ON responsible_staff.id=(er.after_facts->>'responsibleStaffId')::uuid` : ''}`;
+}
+function headColumn(column: string, effective: boolean): string {
+  const key = ({ business_date: 'businessDate', from_warehouse_id: 'fromWarehouseId', to_warehouse_id: 'toWarehouseId' } as Record<string, string>)[column];
+  return effective && key ? `(CASE WHEN e.header_id IS NULL THEN h.${column} ELSE (er.after_facts->>'${key}')::${column === 'business_date' ? 'date' : 'uuid'} END)` : `h.${column}`;
 }
 function revisionPredicate(kind: ImportedHistoryKind, alias: string, document: string): string {
   return `${alias}.id IS NOT NULL AND ${alias}.document_kind='${kind === 'sales' ? 'SALES' : 'TRANSFER'}'
@@ -54,14 +59,24 @@ function count(rows: readonly Record<string, unknown>[]): string {
 const dateSql = (column: string, instant = false): string => `to_char(${column}${instant ? " AT TIME ZONE 'UTC'" : ''},'YYYY-MM-DD"T"HH24:MI:SS.US${instant ? '"Z"' : ''}')`;
 function headerColumns(kind: ImportedHistoryKind, effective = false): string {
   const amounts = ['gross_amount', 'order_discount', 'net_due'].map(name => effective ? `coalesce(e.${name},h.${name})::text ${name}` : `h.${name}::text`).join(',');
-  return `h.id,h.batch_id,${effective ? 'coalesce(e.version,h.version) AS version' : 'h.version'},h.number,to_char(h.business_date,'YYYY-MM-DD') business_date,h.source_status,h.note,
+  const responsible = effective ? `(er.after_facts->>'responsibleStaffId')::uuid` : 'NULL::uuid';
+  const warehouseColumns = ['from_warehouse_id', 'to_warehouse_id'].map(column => `${headColumn(column, effective)} AS ${column}`).join(',');
+  return `h.id,h.batch_id,${effective ? 'coalesce(e.version,h.version) AS version' : 'h.version'},h.number,to_char(${headColumn('business_date', effective)},'YYYY-MM-DD') business_date,h.source_status,h.note,
+   ${responsible} AS responsible_staff_id,${effective ? 'responsible_staff.name' : 'NULL::text'} AS responsible_name,
    h.created_hall_id,h.created_hall_provenance,
    (h.created_by_source_key IS NOT NULL) creator_known,(h.approved_by_source_key IS NOT NULL) approver_known,
    (SELECT e.native_staff_id FROM naijue_erp.import_header_native_reference e WHERE e.batch_id=h.batch_id AND e.entity_type='STAFF' AND e.source_key=h.created_by_source_key) created_by_staff_id,
    (SELECT e.native_staff_id FROM naijue_erp.import_header_native_reference e WHERE e.batch_id=h.batch_id AND e.entity_type='STAFF' AND e.source_key=h.approved_by_source_key) approved_by_staff_id,
    ${['created', 'updated', 'approved'].flatMap(k => [`${dateSql(`h.${k}_local_at`)} ${k}_local_at`, `${dateSql(`h.${k}_instant`, true)} ${k}_instant`]).join(',')},
-   ${kind === 'sales' ? `h.business_type,h.hall_id,h.customer_id,h.warehouse_id,h.salesperson_id,${amounts}` : 'h.from_warehouse_id,h.to_warehouse_id'}${effective ? `,
-   (e.header_id IS NULL OR (${revisionPredicate(kind, 'er', 'h.id')} AND er.to_version=e.version AND e.version>h.version)) AS effective_valid` : ''}`;
+   ${kind === 'sales' ? `h.business_type,h.hall_id,h.customer_id,h.warehouse_id,h.salesperson_id,${amounts}` : warehouseColumns}${effective ? `,
+   (e.header_id IS NULL OR (${revisionPredicate(kind, 'er', 'h.id')} AND er.to_version=e.version AND e.version>h.version
+     AND er.after_facts->>'kind'='${kind}' AND er.after_facts->>'documentId'=h.id::text
+     AND er.after_facts->>'importBatchId'=h.batch_id::text AND er.after_facts->>'version'=e.version::text
+     AND er.after_facts->>'sourceStatus'=h.source_status
+     AND (${responsible} IS NULL OR responsible_staff.id IS NOT NULL)
+     AND (h.source_status='DRAFT' OR (${responsible} IS NULL
+       AND ${headColumn('business_date', true)} IS NOT DISTINCT FROM h.business_date
+       ${kind === 'transfers' ? `AND ${headColumn('from_warehouse_id', true)} IS NOT DISTINCT FROM h.from_warehouse_id AND ${headColumn('to_warehouse_id', true)} IS NOT DISTINCT FROM h.to_warehouse_id` : ''})))) AS effective_valid` : ''}`;
 }
 function person(known: unknown, staffId: unknown): ImportedHistoryPerson {
   requireDomain(typeof known === 'boolean' && (staffId === null || typeof staffId === 'string') && (known || staffId === null), 'INVALID_DATABASE_VALUE', 'Exact historical person binding required');
@@ -71,6 +86,7 @@ function header(row: Record<string, unknown>, kind: ImportedHistoryKind, grant: 
   if (effective) requireDomain(row.effective_valid === true, 'INVALID_DATABASE_VALUE', 'Historical effective header revision differs from its original document');
   return validateImportedHistoryHeader({ dataset: 'HISTORY', kind, documentId: row.id, batchId: row.batch_id, version: row.version, number: row.number, businessDate: row.business_date, sourceStatus: row.source_status, note: row.note,
     createdBy: person(row.creator_known, row.created_by_staff_id), approvedBy: person(row.approver_known, row.approved_by_staff_id), createdHallId: row.created_hall_id, createdHallProvenance: row.created_hall_provenance,
+    responsibleStaffId: effective ? row.responsible_staff_id : null, responsibleName: effective ? row.responsible_name : null,
     createdLocalAt: row.created_local_at, updatedLocalAt: row.updated_local_at, approvedLocalAt: row.approved_local_at,
     createdInstant: row.created_instant, updatedInstant: row.updated_instant, approvedInstant: row.approved_instant,
     ...(kind === 'sales' ? { businessType: row.business_type, hallId: row.hall_id, customerId: row.customer_id, warehouseId: row.warehouse_id, salespersonId: row.salesperson_id, grossAmount: row.gross_amount, orderDiscount: row.order_discount, netDue: row.net_due } : { fromWarehouseId: row.from_warehouse_id, toWarehouseId: row.to_warehouse_id }) }, kind, grant);
@@ -141,19 +157,19 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
   async readList(read: ImportedHistoryScopedRead): Promise<ImportedHistoryList> {
     const { intent, grant } = this.validate(read, 'list'); if (intent.operation !== 'list') throw Error('Historical list required');
     return this.snapshot(read.signal, async query => {
-      const q = intent.parameters, values: unknown[] = [COMPLETE_SCOPE_DECISION], predicates = [published];
+      const q = intent.parameters, values: unknown[] = [COMPLETE_SCOPE_DECISION], predicates = [published], effective = this.runtime26 !== undefined;
       const bind = (value: unknown): string => { values.push(value); return '$' + values.length; };
       if (grant.scope.kind === 'HALL_IDS') predicates.push(`h.hall_id=ANY(${bind([...grant.scope.hallIds])}::uuid[])`);
       if (q.batchId !== null) predicates.push(`h.batch_id=${bind(q.batchId)}::uuid`);
       if (q.number !== '') predicates.push(`strpos(h.number,${bind(q.number)}::text)>0`);
-      if (q.businessDateFrom !== null) predicates.push(`h.business_date>=${bind(q.businessDateFrom)}::date`);
-      if (q.businessDateTo !== null) predicates.push(`h.business_date<=${bind(q.businessDateTo)}::date`);
+      if (q.businessDateFrom !== null) predicates.push(`${headColumn('business_date', effective)}>=${bind(q.businessDateFrom)}::date`);
+      if (q.businessDateTo !== null) predicates.push(`${headColumn('business_date', effective)}<=${bind(q.businessDateTo)}::date`);
       if (q.sourceStatus !== null) predicates.push(`h.source_status=${bind(q.sourceStatus)}::text`);
       for (const [key, column] of (intent.kind === 'sales' ? [['hallId', 'hall_id'], ['warehouseId', 'warehouse_id'], ['customerId', 'customer_id'], ['salespersonId', 'salesperson_id']] : [['fromWarehouseId', 'from_warehouse_id'], ['toWarehouseId', 'to_warehouse_id']]) as [keyof typeof q, string][]) {
-        if (q[key] !== null) predicates.push(`h.${column}=${bind(q[key])}::uuid`);
+        if (q[key] !== null) predicates.push(`${headColumn(column, effective)}=${bind(q[key])}::uuid`);
       }
-      const effective = this.runtime26 !== undefined, source = from(intent.kind, effective), predicate = predicates.join(' AND '), total = count((await query(`/* imported-history:list-count */ SELECT count(*)::text total FROM ${source} WHERE ${predicate}`, [...values])).rows);
-      const rows = (await query(`/* imported-history:list-page */ SELECT ${headerColumns(intent.kind, effective)} FROM ${source} WHERE ${predicate} ORDER BY h.business_date DESC NULLS LAST,h.number COLLATE "C",h.id LIMIT $${values.length + 1} OFFSET $${values.length + 2}`, [...values, q.pageSize, (q.page - 1) * q.pageSize])).rows;
+      const source = from(intent.kind, effective), predicate = predicates.join(' AND '), total = count((await query(`/* imported-history:list-count */ SELECT count(*)::text total FROM ${source} WHERE ${predicate}`, [...values])).rows);
+      const rows = (await query(`/* imported-history:list-page */ SELECT ${headerColumns(intent.kind, effective)} FROM ${source} WHERE ${predicate} ORDER BY ${headColumn('business_date', effective)} DESC NULLS LAST,h.number COLLATE "C",h.id LIMIT $${values.length + 1} OFFSET $${values.length + 2}`, [...values, q.pageSize, (q.page - 1) * q.pageSize])).rows;
       return validateImportedHistoryList({ dataset: 'HISTORY', kind: intent.kind, documents: page(q.page, q.pageSize, total, rows.map(r => header(r, intent.kind, grant, effective))) }, intent, grant);
     });
   }

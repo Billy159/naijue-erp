@@ -49,6 +49,7 @@ interface ImportedHistoryHeaderBase {
   readonly number: string; readonly businessDate: string | null;
   readonly sourceStatus: 'DRAFT' | 'APPROVED' | 'VOID'; readonly note: string | null;
   readonly createdBy: ImportedHistoryPerson; readonly approvedBy: ImportedHistoryPerson;
+  readonly responsibleStaffId: string | null; readonly responsibleName: string | null;
   readonly createdHallId: string | null;
   readonly createdHallProvenance: 'ORIGINAL' | 'MIGRATION_DERIVED' | 'UNKNOWN';
   readonly createdLocalAt: string | null; readonly updatedLocalAt: string | null; readonly approvedLocalAt: string | null;

@@ -71,6 +71,7 @@ function protocol(options: { failure?: string; final?: boolean; kind?: ImportedH
     if (tag === 'imported-history:detail') rows = options.final ? [{ ...headerRow(options.kind ?? 'sales'), line_count: options.mismatch ? 1 : 0, settlement_count: 0 }] : [];
     if (tag.endsWith('-count') && !tag.includes('list-count')) rows = [{ total: '0' }];
     if (sql.includes(' AS effective_valid')) rows = rows.map(row => ({ ...row, effective_valid: true }));
+    if (sql.includes(' AS responsible_staff_id')) rows = rows.map(row => ({ responsible_staff_id: null, responsible_name: null, ...row }));
     rows = options.transform?.(tag, sql, rows) ?? rows;
     options.afterQuery?.(tag); return { rows, rowCount: rows.length };
   }, release(error) { releases.push(error); } };
@@ -281,4 +282,33 @@ test('empty hall scope grants no SQL-visible rows; invalid input never silently 
   assert.equal(parseImportedHistoryListQuery(listQuery(), 'sales').hallId, null);
   const i = intent(); assert.deepEqual(checkedImportedHistoryGrant({ ...grant(i), scope: { kind: 'HALL_IDS', hallIds: [] } }, i, actor).scope, { kind: 'HALL_IDS', hallIds: [] });
   assert.throws(() => parseImportedHistoryListQuery({ ...listQuery(), dataset: 'LIVE' }, 'sales'), { code: 'IMPORTED_HISTORY_INVALID_QUERY' });
+});
+
+test('v16 history projection: effective date endpoints responsible drive same count page detail and retain true creator', async () => {
+  const p = protocol({ final: true, kind: 'transfers', schema: Array.from({ length: 26 }, (_, i) => i + 1), transform(tag, _sql, rows) {
+    if (tag === 'imported-history:list-page' || tag === 'imported-history:detail') return rows.map(row => ({ ...row, version: 2, source_status: 'DRAFT', business_date: '2026-10-24', from_warehouse_id: id(40), to_warehouse_id: id(41), responsible_staff_id: id(42), responsible_name: 'Synthetic responsible' }));
+    return rows;
+  } });
+  const reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) });
+  const i: ImportedHistoryReadIntent = { kind: 'transfers', operation: 'list', parameters: { ...listQuery(), businessDateFrom: '2026-10-24', fromWarehouseId: id(40) } };
+  const list = await reader.readList(scoped(i)), detail = await reader.readDetail(scoped(intent('transfers', true)));
+  assert.equal(list.documents.total, '1'); assert.deepEqual(list.documents.items[0], detail.document);
+  assert.equal(detail.document!.responsibleStaffId, id(42)); assert.equal(detail.document!.responsibleName, 'Synthetic responsible');
+  assert.deepEqual(detail.document!.createdBy, header('transfers').createdBy); assert.equal(detail.document!.createdLocalAt, header('transfers').createdLocalAt);
+  for (const call of p.calls.filter(c => ['imported-history:list-count', 'imported-history:list-page'].includes(c.tag))) {
+    assert.match(call.sql, /after_facts->>'businessDate'/); assert.match(call.sql, /after_facts->>'fromWarehouseId'/);
+    assert.ok(call.values.includes('2026-10-24') && call.values.includes(id(40)));
+  }
+  const pageSQL = p.calls.find(c => c.tag === 'imported-history:list-page')!.sql;
+  assert.match(pageSQL, /responsible_staff\.id=\(er.after_facts->>'responsibleStaffId'\)::uuid/);
+  assert.match(pageSQL, /ORDER BY \(CASE WHEN e.header_id IS NULL THEN h.business_date/);
+});
+test('v16 history projection: old missing responsible stays null and orphan name cannot become creator fallback', async () => {
+  const p = protocol({ final: true, schema: Array.from({ length: 26 }, (_, i) => i + 1) });
+  const reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) });
+  const detail = await reader.readDetail(scoped(intent('sales', true)));
+  assert.equal(detail.document!.responsibleStaffId, null); assert.equal(detail.document!.responsibleName, null);
+  assert.deepEqual(detail.document!.createdBy, header('sales').createdBy);
+  const bad = { ...header('sales'), responsibleStaffId: null, responsibleName: 'Not a real responsible binding' };
+  assert.throws(() => validateImportedHistoryHeader(bad, 'sales', grant(intent())), { code: 'IMPORTED_HISTORY_INVALID_RESPONSE' });
 });

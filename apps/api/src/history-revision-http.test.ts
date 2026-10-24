@@ -55,3 +55,12 @@ test('HISTORY HTTP refuses invalid JSON/media and payload overflow with no write
   assert.equal((await f.app.inject({ method: 'POST', url: '/api/imported-history/sales/revise', headers: { 'content-type': 'application/json' }, payload: ' '.repeat(4 * 1024 * 1024 + 1) })).statusCode, 413);
   assert.equal(f.calls, 0);
 });
+
+test('v16 HISTORY HTTP: same route accepts finite responsible header and rejects creator or clearing input', async t => {
+  const f = fixture(); t.after(() => f.app.close());
+  const payload = { ...command('transfers'), lines: [], header: { businessDate: '2026-10-24', fromWarehouseId: id(40), toWarehouseId: id(41), responsibleStaffId: id(42) } };
+  assert.equal((await f.app.inject({ method: 'POST', url: '/api/imported-history/transfers/revise', payload })).statusCode, 200);
+  for (const header of [{ responsibleStaffId: null }, { createdByStaffId: id(42) }, { actorAccountId: id(42) }])
+    assert.equal((await f.app.inject({ method: 'POST', url: '/api/imported-history/transfers/revise', payload: { ...payload, header } })).statusCode, 400);
+  assert.equal(f.calls, 1);
+});
