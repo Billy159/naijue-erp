@@ -74,3 +74,7 @@
 
 /* Final native gold.css ledger header scroll behaviour, scoped to this table. */
 .inventory-ledger .ledger-scroll .erp-read-table .arco-table-th{position:sticky;top:0;z-index:1}
+
+/* Final native interaction-common.css ui-icon hover overrides the original
+ * ledger-close grey hover; retain its token and important priority locally. */
+.inventory-ledger.arco-drawer .erp-overlay-close:hover{background:var(--primary-light)!important}
