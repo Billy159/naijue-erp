@@ -1,3 +1,7 @@
+最新执行口径：全站37页+67类弹层及有效新增、全部适用状态接正常入口与真实业务，历史可编辑本轮必交。四线F1公壳单据9页、F2库存商品14页、F3设置8页、F4分类字典条码6页，详见TASKS.currentUnifiedDirective；调拨仅例子，不缩全站。纯UI/外观Luna-MAX，技术接线/业务/性能/发布Sol6.1-medium。旧在途保全，旧PASS复用。当前整页已验0/37、弹层0/67，34局部检查/差异和3未跑待接入不冒充迁入完成。原goal卡工具不能编辑正文，保留ACTIVE，执行以最新用户口径覆盖旧xhigh/35/65。
+
+C157真实CORE已COMMIT并同键读回：49账号49员工、22厅仓客户、115来源、22claim，三绑定真实返回；core1474/bc10d82662aa4d6ac2ab0021527cd354055c246184ba0a349370459aa55e769b，engine14830/c1b8bb3f30eaa2e48a35fe2c10d43111d72e094cdcff8213cc776c44b66f22e7。235补已冻结授权摘要2906/2a006122c1e26e4c880428c25a38909acc21be92f5d2bec0922662e8940376d7后收口，不重跑。原137已交付，可用157真实core-actual直接C-RUN-ONCE.sh启动已装299私有候选；新app未启动、正式未切。白带关闭，不再排查。
+
 CURRENT QB234 SOURCE300 ACCEPTED / REAL CORE157 RUNNING (2026-10-24)
 
 原QB234固定300窄差异限定PASS：RESULT12381/9adad12cf74a7ad7a12b1f721b37c592b340cd41e719fc5219d56aeee6a49460，ACCEPTED-SOURCE-DELTA1934/5e6356346c0a2472c3ccaa740f64757165e58ac04b5e4c580c98ebd04096ee15。独立新2测试及5反例通过，旧身份/函数/权限范围复用。C157固定compiled763852/7288c5164aa89d7d0da432d75cc46b5fdbdba7efff274ee71abddd075f57b9f7与14私有文件已准确接线，C原来源批准/目标/命令/键均不变，正式提交后实际RUNNING；仅collect，不重run，未把待结果记COMMIT。C137继续等待真实返回绑定，source299应用不为300辅助脚本重打包。GitHub source300=5a811a17202e0f609aff4405fbb3e064acb73db2已独立回读，本控制增量待有限推送。白带已关闭、三UI299PASS、149安装/233元数据仍有效，goal未完成。
