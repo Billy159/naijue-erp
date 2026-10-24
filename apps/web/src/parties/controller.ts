@@ -272,6 +272,7 @@ export function createPartyWorkspace(options: PartyWorkspaceOptions) {
     }
     return controller;
   }, canLeave: () => [...controllers.values()].every(controller => controller.canLeave()),
+  hasUnresolvedWrite: () => [...controllers.values()].some(controller => controller.hasUnresolvedWrite),
   dispose: () => { options.scope.dispose(); for (const controller of controllers.values()) controller.dispose(); controllers.clear(); },
   });
 }
