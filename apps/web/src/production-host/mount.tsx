@@ -1,12 +1,13 @@
 import { HttpQueryError } from '../transport/http-query.ts';
 import { createAccountSettingsHttpReader } from '../account-settings/http-client.ts';
 import { createSalesExistingPreparationHttpClient, createTransferExistingPreparationHttpClient } from '../current-form/existing-document-preparation.ts';
+import { createCurrentFormHttpReader } from '../current-form/http-reader.ts';
 import { createDictionaryHttpReader } from '../product-settings/size-groups/http-reader.ts';
 import { createCatalogueMaintenanceHttpClient, type CatalogueMaintenanceAction } from '../product-settings/catalogue-maintenance-http-client.ts';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 import { UIButton } from '../components/standard-controls.tsx';
 import { createApplication, createDemoFrameWorkspaceRenderer, createRouteStylesheet } from '../application/index.tsx';
-import type { ApplicationConfiguration, ApplicationPresentation, DocumentResponsibleStaffCapability } from '../application/contracts.ts';
+import type { ApplicationConfiguration, ApplicationPresentation, DocumentResponsibleStaffCapability, DocumentResponsibleStaffPage } from '../application/contracts.ts';
 import { createProductFullPageHttpReader } from '../products/product-page-http-reader.ts';
 import { createProductHttpReader } from '../transport/product-http-reader.ts';
 import { createProductMaintenanceHttpClientV2, createProductMaintenanceHttpReaderV2, createProductEditorMediaHttpReader, createProductMediaUploadHttpClient } from '../products/product-maintenance-http-client.ts';
@@ -76,16 +77,32 @@ export function mountProductionHost(input: ProductionHostEnvironment & { readonl
     && typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is required.');
   const newRequestKey = () => { if (typeof crypto?.randomUUID !== 'function') throw new TypeError('Secure request key generation is unavailable.'); return crypto.randomUUID(); };
   const responsibleReader = configuration.routes.documentResponsibleReady === true ? createStaffSettingsHttpReader(http) : null;
+  const responsibleReferenceReader = responsibleReader ? createCurrentFormHttpReader(http) : null;
   const responsibleStaff: DocumentResponsibleStaffCapability | undefined = responsibleReader ? Object.freeze({
+    allowedRoles: Object.freeze(['ADMIN', 'WAREHOUSE', 'SALESPERSON'] as const),
     async readCandidates(read: Parameters<DocumentResponsibleStaffCapability['readCandidates']>[0]) {
-      const authentication = controller?.authentication.getSnapshot(), current = controller?.getSnapshot().scope;
-      if (authentication?.phase !== 'authenticated') throw new HttpQueryError('unauthenticated', 'UNAUTHENTICATED');
-      if (authentication.principal?.role !== 'ADMIN' || !current?.active || current.identity.accountId !== read.identity.accountId
-        || current.identity.sessionRevision !== read.identity.sessionRevision || current.identity.permissionRevision !== read.identity.permissionRevision) throw new HttpQueryError('forbidden', 'FORBIDDEN');
-      if (read.signal.aborted) throw new HttpQueryError('aborted', 'QUERY_ABORTED');
-      const page = await responsibleReader.readList({ ...read, parameters: { search: read.parameters.search, page: read.parameters.page, pageSize: 20, employmentStatus: 'all', role: '', hallId: null, loginStatus: '' } });
-      if (read.signal.aborted) throw new HttpQueryError('aborted', 'QUERY_ABORTED');
-      return { page: page.page, pageSize: 20 as const, total: page.total, items: page.items.map(row => ({ id: row.id, name: row.name })) };
+      const currentRole = () => {
+        if (read.signal.aborted) throw new HttpQueryError('aborted', 'QUERY_ABORTED');
+        const authentication = controller?.authentication.getSnapshot(), current = controller?.getSnapshot().scope;
+        if (authentication?.phase !== 'authenticated') throw new HttpQueryError('unauthenticated', 'UNAUTHENTICATED');
+        const role = authentication.principal?.role;
+        if ((role !== 'ADMIN' && role !== 'WAREHOUSE' && role !== 'SALESPERSON') || !current?.active || current.identity.accountId !== read.identity.accountId
+          || current.identity.sessionRevision !== read.identity.sessionRevision || current.identity.permissionRevision !== read.identity.permissionRevision) throw new HttpQueryError('forbidden', 'FORBIDDEN');
+        return role;
+      };
+      const role = currentRole();
+      let page: DocumentResponsibleStaffPage;
+      if (role === 'ADMIN') {
+        const result = await responsibleReader.readList({ ...read, parameters: { search: read.parameters.search, page: read.parameters.page, pageSize: 20, employmentStatus: 'all', role: '', hallId: null, loginStatus: '' } });
+        page = { page: result.page, pageSize: 20, total: result.total, items: result.items.map(row => ({ id: row.id, name: row.name })) };
+      } else {
+        const result = await responsibleReferenceReader!.readSalesReferences({ kind: 'salesperson', hallId: null, search: read.parameters.search, page: read.parameters.page, pageSize: 20 }, read.signal);
+        const total = Number(result.exactTotal);
+        if (!Number.isSafeInteger(total)) throw new TypeError('Employee reference count exceeds the document selector boundary.');
+        page = { page: result.page, pageSize: 20, total, items: result.items.map(row => ({ id: row.id, name: row.name })) };
+      }
+      if (currentRole() !== role) throw new HttpQueryError('forbidden', 'FORBIDDEN');
+      return page;
     },
   }) : undefined;
   const catalogue = (kind: CatalogueMaintenanceCapability['kind'], enabled: boolean | undefined): CatalogueMaintenanceCapability | undefined => {
