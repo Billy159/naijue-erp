@@ -1,0 +1,169 @@
+{
+  "atUtc": "2026-10-24T03:19:02.383133+00:00",
+  "parent": "f4faa69c8b7dd84a7007d0a72f08323bbceb32f5",
+  "taskId": "APPROVED_V15_CATEGORY_ORDER_D2_APPLICATION_AND_HTTP_MODULE",
+  "files": [
+    {
+      "path": "packages/application/src/catalogue-maintenance-ports.ts",
+      "bytes": 4728,
+      "sha256": "daf830fcd53af144cf8f4cf433f5caf471dc353c408d44cbdf6addee3e64b745",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/catalogue-maintenance-validation.ts",
+      "bytes": 7511,
+      "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7",
+      "owner": "D2"
+    },
+    {
+      "path": "packages/application/src/catalogue-maintenance-service.ts",
+      "bytes": 13681,
+      "sha256": "1548c1393a0fe2254b305fc760006c65d0c42de1e5341bb0f4626ac846927918",
+      "owner": "D2"
+    },
+    {
+      "path": "adapters/postgres/src/catalogue-maintenance-store.ts",
+      "bytes": 15168,
+      "sha256": "a505d0a62d84f9d3f457f5f9045017a2591d7bd07614b030d06db8780dca0365",
+      "owner": "D2"
+    },
+    {
+      "path": "apps/api/src/catalogue-maintenance-http.ts",
+      "bytes": 4782,
+      "sha256": "139ea28b168fb94707335f784590db275cc3f6f61ae771cfd8d0279b6cbbc6d7",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/catalogue-maintenance.test.ts",
+      "bytes": 16712,
+      "sha256": "b5ac89a6707903e04cd54e3aeb762f98f89797c346dd243d18c237f62d3b4a83",
+      "owner": "D2"
+    },
+    {
+      "path": "tests/catalogue-maintenance-postgres-protocol.test.ts",
+      "bytes": 14146,
+      "sha256": "b50060cbaaadc7338b705d70c0353ca60eea2a5022e2fe1ef43146d74ad926c0",
+      "owner": "D2"
+    },
+    {
+      "path": "apps/api/src/catalogue-maintenance-http.test.ts",
+      "bytes": 11886,
+      "sha256": "99cacfaff3d667eb10e3b160527fd8c7cc0a0daedecee06565314173c93e4cba",
+      "owner": "D2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V15-CATEGORY-ORDER-IMPLEMENTATION-v1.json",
+  "ownerReceiptSha256AtPin": "44905065508da15467320b0207f27a3d0b8a29accf906ad78418e6a7232f7ee5",
+  "ownerDelivery": {
+    "task": {
+      "id": "D2-V15-CATEGORY-REORDER-UNDO-V1",
+      "date": "2026-10-24",
+      "status": "D2_FIVE_LEAVES_SOURCE_NEW9_AND_STRICT_PASS_PENDING_D1_EXACT_GUARDS_HOST_AND_ACTUAL",
+      "approval": "R/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+      "directHuman": "C原call_d12f3db18af947ddadc99f6e7bdd4b05第0问：确认 v15 分类排序与撤销方案。",
+      "modelRequested": "gpt-6.1-sol/xhigh",
+      "actualModelAndFastSetting": "NOT_INDEPENDENTLY_VERIFIED"
+    },
+    "behavior": {
+      "reorder": "仅CATEGORY同一真实parent（含NULL）的全部未删除兄弟，完整成员和每行expectedVersion必须匹配。除movedId位置外其余相对顺序保持，同序拒绝；最终0..N-1。只改display_order实际变化行，version各+1，未变化行不空增。",
+      "undo": "只从同actor已COMMITTED CATEGORY.REORDER对应的不可变receipt/audit获取完整原整数前态；当前完整集合/每行version/order必须仍等于原后态。恢复原负数/重复/间隔整数，version继续递增，不能提交浏览器恢复值或跨父/名称/删除/商品FK变化。",
+      "atomicEvidence": "原目录互斥下，一个operationId/真实变化最小UUID锚点（UNDO沿原锚点）、一次prepare audit在所有写前、所有CAS更新、一次complete receipt。源码适配由原共享UOW包在一个事务；实际数据库闭包由D1准确v15 guards核，不在D2假装已实现共享层。",
+      "idempotency": "原每请求当前身份与权限、原actor/key/hash回执先于修改；同键同内容重放旧成功结果，同键异内容冲突。成功UNDO同键可恢复，另key二次UNDO因后态版本改变拒绝。共享未知COMMIT分支沿D1原实现，不由D2重试。",
+      "compatibility": "旧CATEGORY/COLOR/FIT动作的原单根load/put与严格4键result保持；只CATEGORY两新动作扩展。无v15 capability或原prepare方法的新请求503 CATALOGUE_ORDER_NOT_READY，不fallback多EDIT。"
+    },
+    "contract": {
+      "path": "原POST /api/catalogue/categories/commands；原GET /api/catalogue/categories/receipts/:requestKey。",
+      "requestReorder": "{action:REORDER,requestKey,parentId:null|UUID,movedId,expectedSiblings:[{id,expectedVersion}],orderedIds:[UUID]}，闭合字段，完整expected按当前displayOrder/id顺序；orderedIds唯一且同一集合。",
+      "requestUndo": "{action:UNDO_REORDER,requestKey,originalOperationId,expectedSiblings:[{id,expectedVersion}]}，不接收parent/旧order/actor/role/任意恢复字段。",
+      "result": "CategoryOrderResult：原operationId/kind:CATEGORY/targetId/version，加order:{parentId,undoOfOperationId:null|UUID,members:[{id,version,displayOrder}]}；members按displayOrder/id。新receipt原5字段内带同一extended result，旧动作仍4键结果。",
+      "audit": "锚点真实稀疏根before/after含version、display_order及category_order:{parent_id,moved_id,undo_of_operation_id,rows:[{id,version,display_order}]}；rows固定UUID升序。REORDER两侧undo_of为null，UNDO两侧均原operationId；完整成员含未变化行。",
+      "validationExports": [
+        "isCategoryOrderCommand",
+        "checkedCategoryOrderEvidence",
+        "checkedCategoryOrderResult"
+      ],
+      "errors": "400 INVALID_CATALOGUE_COMMAND等原参数错误；401/403原身份权限；404 CATALOGUE_NOT_FOUND/RECEIPT_NOT_FOUND；409 CATEGORY_ORDER_CONFLICT/CATEGORY_UNDO_CONFLICT及原版本/幂等/无变化冲突；503 CATALOGUE_ORDER_NOT_READY；实际错误500脱敏并原键恢复。",
+      "budgets": "原树技术上限5000，expected至少2且唯一；仅分类commands body1MiB，颜色/版型8192B。没有拆批或截断，未放宽共享审计限制。",
+      "httpMountOption": "createCatalogueMaintenanceHttpPlugin({authenticate,dependencies,categoryOnly?:true}); true registers CATEGORY only on existing paths; omission retains original three families. Route selection is not proof or permission."
+    },
+    "seam": {
+      "transactionPort": "CatalogueMaintenanceTransaction新增可选categoryOrder:{assertReady(),loadSiblings(parentId),loadOriginal(operationId,actorAccountId),put(previous,next)}；旧fixture/旧单根路径不需要实现该能力。",
+      "postgresConstructor": "new PostgresCatalogueMaintenanceUnitOfWork(driver,categoryOrderCapability?)",
+      "capability": "D2 store叶export CategoryOrderWriteCapability={profile:CATEGORY_ORDER_UNDO_V15,assertReady(context:MaintenancePgContext):Promise<void>}；真实原D1 host只在exact v15 profile/目标guard验证后注入。",
+      "actualContextBoundary": "传原MaintenancePgContext整体，其client为query facade；D1须从原ownedContexts取真正managed client与目标验证，不把facade/结构拷贝/flag当租约。非void结果拒绝，过期scope不可写，未注入不提供categoryOrder端口。",
+      "sqlLeaf": "同原目录锁；真实父FOR SHARE、完整未删除兄弟ORDER BY id LIMIT5001 FOR UPDATE；仅display_order/version的参数化CAS，同时匹配id/原version/parent/原order/deleted NULL。没有BEGIN/COMMIT/ROLLBACK、新池、跨scope单根混用或每行独立事务。",
+      "originalProofRead": "同actor已COMMITTED CATEGORY.REORDER；receipt与audit按operation/target/actor/family/action精确JOIN，解析原category_order前后态及extended result；不是客户端快照。",
+      "d1Required": "D1原maintenanceActions CATEGORY新两动作，原prepare/complete/checkedResult只对该动作从afterValues.category_order构建并保留extended result；原MaintenanceCompletion结构不加字段。准确SQL guards、目录/事务/角色/CAS/一次auditreceipt闭包及host注入由D1继续；D2未改其文件。",
+      "frontend": "F4已获准确请求/结果/receipt及503/409、完整兄弟与回读规则；未改F4任何文件，原cap+backend profile/consumer必须成对就绪。",
+      "hostMount": "D1 exact-profile host can pass categoryOnly:true without enabling COLOR/FIT. Only a verified original CategoryOrderWriteCapability supplies writer readiness; no second HTTP implementation or DTO.",
+      "frontendReadiness": "F4 categoryOrderReady:true is only an optional CATEGORY rendering capability; host sets it only after exact v15 profile plus actual transaction pairing, allowedActions and fresh complete tree. No browser flag supplies server authority."
+    },
+    "validation": {
+      "newUniqueCases": 10,
+      "runtimeFirst": {
+        "log": "V15-CATEGORY-ORDER-run1.tap",
+        "exit": 0,
+        "pass": 9,
+        "fail": 0,
+        "skip": 0
+      },
+      "coverage": [
+        "NULL父完整重排/一个prepare audit及receipt、原键重放与当前撤权拒绝；原负数/重复/间隔撤销和版本继续递增。",
+        "仅变化兄弟更新，原父/成员/版本/相对移动冲突；重命名等后态变化后撤销拒绝。",
+        "缺成员/删除/版本耗尽/中途更新故障在合成事务中全部回滚，不留部分audit/receipt或行。",
+        "严格CATEGORY-only命令、不可提交任意undo旧值；无cap不得调用旧单根路径。",
+        "PG叶同context证明、稳定全兄弟锁、只改排序版本及精确CAS、无嵌套事务、原immutable proof JOIN、错误CAS拒绝。",
+        "缺cap/flag/过期回调拒绝；原HTTP新5键result/receipt成对、旧动作仍4键，类别1MiB及其他8192、503和409准确。"
+      ],
+      "strict": {
+        "firstLog": "V15-CATEGORY-ORDER-types-first.log",
+        "firstExit": 0,
+        "finalLog": "V15-CATEGORY-ORDER-types-final.log",
+        "finalExit": 0,
+        "finalBytes": 0,
+        "scope": "5生产叶+原3直接tests依赖图，原工程strict/noEmit；新增测试后仅必要最终检查。",
+        "categoryOnlyFinalLog": "V15-CATEGORY-ONLY-types-final.log",
+        "categoryOnlyFinalExit": 0,
+        "categoryOnlyFinalBytes": 0
+      },
+      "evidenceLimit": "测试为合成application事务、脚本PG context/SQL协议和Fastify inject；未运行真实v15 PG解析/约束/同事务提交、真实角色或浏览器。共享D1原UOW/SQL完整集成尚待原owner交付后原范围核验。",
+      "notRepeated": "没有全settings/backend/49/旧suite、sealed18、P10/default/CORE已过范围重跑；没有build/发布/Git/SSH/真实PG。",
+      "categoryOnlyIncrement": {
+        "log": "V15-CATEGORY-ONLY-HTTP-run1.tap",
+        "exit": 0,
+        "pass": 1,
+        "fail": 0,
+        "skip": 0,
+        "priorNineNotRepeated": true,
+        "coverage": "categoryOnly:true mounts only original CATEGORY command/receipt routes; COLOR/FIT POST/GET return404; missing v15 capability remains503; omitted option retains legacy routes and exact4-key results."
+      }
+    },
+    "files": {
+      "pins": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/V15-CATEGORY-ORDER-SOURCE-PINS.json",
+      "production": [
+        "packages/application/src/catalogue-maintenance-ports.ts",
+        "packages/application/src/catalogue-maintenance-validation.ts",
+        "packages/application/src/catalogue-maintenance-service.ts",
+        "adapters/postgres/src/catalogue-maintenance-store.ts",
+        "apps/api/src/catalogue-maintenance-http.ts"
+      ],
+      "tests": [
+        "tests/catalogue-maintenance.test.ts",
+        "tests/catalogue-maintenance-postgres-protocol.test.ts",
+        "apps/api/src/catalogue-maintenance-http.test.ts"
+      ],
+      "newSourceFiles": 0,
+      "d1SqlSharedUowOrF4Edits": 0,
+      "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022"
+    },
+    "next": {
+      "controller": "固定原5叶+3tests，交原QB仅新v15范围；C协调D1准确共享JSON/result/SQL/profile及F4 consumer，实际执行C唯一。",
+      "noNewApproval": "v15已明确获批，不再等待人类；仅真实依赖接线/SQL/实际验收未完成。",
+      "notClaimed": "D2源码/局部检查通过不代表D1 shared闭包已交付、真实PG/角色/分类拖动或正式部署通过。",
+      "reportingAuthorization": "人类01a161f7-a5e8-7e10-9059-9537c28910c2主动七字段回C授权及本次直接v15批准。"
+    }
+  },
+  "stage": "FIXED_SOURCE_OWNER10_CHECKS_PENDING_ORIGINAL_QB_AND_D1_SQL_SHARED_CLOSURE",
+  "actualPG": false,
+  "deployed": false
+}
