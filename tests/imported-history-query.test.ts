@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import Fastify from 'fastify';
 import { DomainError } from '../packages/domain/src/errors.ts';
 import { createImportedHistoryQueryService } from '../packages/application/src/imported-history-query-service.ts';
-import { checkedImportedHistoryGrant, parseImportedHistoryListQuery, validateImportedHistoryHeader, validateImportedHistoryLine, validateImportedHistoryList } from '../packages/application/src/imported-history-query-validation.ts';
+import { checkedImportedHistoryGrant, parseImportedHistoryListQuery, validateImportedHistoryHeader, validateImportedHistoryLine, validateImportedHistoryList, validateImportedHistoryDetail } from '../packages/application/src/imported-history-query-validation.ts';
 import type { ImportedHistoryKind, ImportedHistoryReadIntent, ImportedHistoryScopedRead } from '../packages/application/src/imported-history-query-ports.ts';
 import { PostgresImportedHistoryQueryReader, importedHistoryReadSql, importedHistoryReadScopeSql, importedHistoryTransferHallScopeSql } from '../adapters/postgres/src/imported-history-query-reader.ts';
 import { NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from '../adapters/postgres/src/native-import-accounting-capability.ts';
@@ -58,7 +58,7 @@ test('HISTORY DTO preserves nullable persons/local microseconds/exact money; rej
 function protocol(options: { failure?: string; final?: boolean; kind?: ImportedHistoryKind; schema?: number[]; guards?: boolean; mismatch?: boolean; afterQuery?: (tag: string) => void;
   transform?: (tag: string, sql: string, rows: Record<string, unknown>[]) => Record<string, unknown>[] } = {}) {
   const calls: { tag: string; sql: string; values: unknown[] }[] = [], releases: unknown[] = [];
-  let connects = 0;
+  let connects = 0; let lastLineRows: Record<string, unknown>[] = [];
   const client: PgSalesClient = { async query(sql, values = []) {
     const tag = sql.startsWith('/*') ? sql.match(/^\/\* ([^*]+) \*\//)![1]! : sql;
     calls.push({ tag, sql, values: structuredClone(values) }); if (tag === options.failure) throw Error('SYNTHETIC:' + tag);
@@ -72,7 +72,9 @@ function protocol(options: { failure?: string; final?: boolean; kind?: ImportedH
     if (tag.endsWith('-count') && !tag.includes('list-count')) rows = [{ total: '0' }];
     if (sql.includes(' AS effective_valid')) rows = rows.map(row => ({ ...row, effective_valid: true }));
     if (sql.includes(' AS responsible_staff_id')) rows = rows.map(row => ({ responsible_staff_id: null, responsible_name: null, ...row }));
+    if (tag === 'imported-history:line-catalog') rows = lastLineRows.map(row => ({ line_id: row.id, sku_id: row.sku_id, line_source_id: null }));
     rows = options.transform?.(tag, sql, rows) ?? rows;
+    if (tag === 'imported-history:line-page') lastLineRows = rows;
     options.afterQuery?.(tag); return { rows, rowCount: rows.length };
   }, release(error) { releases.push(error); } };
   const pool: PgSalesPool = { async connect() { connects++; return client; } };
@@ -412,4 +414,101 @@ test('TRANSFER_HALL_IDS: out-of-scope detail has no child reads; contradictory r
   }
   const empty = { ...read, grant: { ...read.grant, scope: { kind: 'TRANSFER_HALL_IDS' as const, hallIds: [] } } };
   assert.equal((await new PostgresImportedHistoryQueryReader(absent.pool).readDetail(empty)).document, null);
+});
+
+
+/** Source identity protocol fixtures; deliberately disabled/current group renamed.
+ * Tests prove selected facts, emitted SQL and decoder behavior, not installed PG. */
+function catalogFixture(options: { mutate?: (rows: Record<string, unknown>[]) => Record<string, unknown>[]; groups?: Record<string, unknown>[]; denyDetail?: boolean } = {}) {
+  const sourceGroup = { id: id(60), name: '原组', code: 'SOURCE' }, sourceSize = { id: id(73), name: '原尺码A' };
+  const originalLines = [41, 42].map((n, index) => ({ id: id(n), line_no: index + 1, sku_id: id(50), quantity: String(index + 1),
+    product_code_snapshot: '原款号', product_name_snapshot: '历史品名', color_name_snapshot: '原颜色', fit_name_snapshot: '原版', size_name_snapshot: '原完整尺码', barcode_snapshot: null, effective_valid: true }));
+  const rows = originalLines.map(line => ({ line_id: line.id, sku_id: line.sku_id, line_source_id: id(line.line_no + 100),
+    line_source_entity: 'TRANSFER_LINE', expected_line_entity: 'TRANSFER_LINE', line_header_key: 'PRIVATE-header', header_source_key: 'PRIVATE-header',
+    old_sku_key: 'PRIVATE-old', canonical_sku_key: 'PRIVATE-canonical', alias_source_id: id(110), alias_sku_id: id(50), alias_canonical_key: 'PRIVATE-canonical', mapping_basis: 'EXACT_SOURCE',
+    alias_source_entity: 'SKU', alias_source_key: 'PRIVATE-old', alias_raw_key: 'PRIVATE-old', native_sku_id: id(50), product_id: id(70), color_id: id(71), fit_id: id(72), size_id: id(73),
+    sku_enabled: false, current_group_id: id(99), current_group_name: '当前新组', selection_sha256: 'a'.repeat(64), canonical_source_id: id(111), record_count: '1', record_valid: true,
+    sku_evidence: { validator_version: 'NATIVE_SKU_IMPORT_V1', native_sku_id: id(50), canonical_source_key: 'PRIVATE-canonical',
+      mapping: { oldSourceSkuId: 'PRIVATE-old', canonicalSourceSkuId: 'PRIVATE-canonical', mappingBasis: 'EXACT_SOURCE' }, selection: { selectionSha256: 'a'.repeat(64) },
+      native_sku: { id: id(50), product_id: id(70), color_id: id(71), fit_id: id(72), size_id: id(73), enabled: true },
+      references: { product: { nativeId: id(70), nativeSnapshot: { id: id(70), size_group_id: id(60) } }, color: { nativeId: id(71), nativeSnapshot: { id: id(71) } },
+        fit: { nativeId: id(72), nativeSnapshot: { id: id(72) } }, size: { nativeId: id(73), nativeSnapshot: sourceSize }, sizeGroup: { nativeId: id(60), nativeSnapshot: sourceGroup } } } }));
+  const groups = [73, 74].map(n => ({ group_id: id(60), group_snapshot: sourceGroup, member_size_id: id(n), member_snapshot: { size_group_id: id(60), size_id: id(n), display_order: n === 73 ? 10 : 0 },
+    size_snapshot: n === 73 ? sourceSize : { id: id(74), name: '原尺码B' } }));
+  const p = protocol({ kind: 'transfers', final: true, schema: Array.from({ length: 26 }, (_, i) => i + 1), transform(tag, _sql, result) {
+    if (tag === 'imported-history:detail') return options.denyDetail ? [] : result.map(row => ({ ...row, line_count: originalLines.length, transfer_scope_valid: true }));
+    if (tag === 'imported-history:line-count') return [{ total: String(originalLines.length) }];
+    if (tag === 'imported-history:line-page') return originalLines;
+    if (tag === 'imported-history:line-catalog') return options.mutate?.(structuredClone(rows)) ?? structuredClone(rows);
+    if (tag === 'imported-history:line-catalog-groups') return options.groups ?? structuredClone(groups);
+    return result;
+  } });
+  const i = intent('transfers', true), read = { ...scoped(i), grant: { ...grant(i), scope: { kind: 'TRANSFER_HALL_IDS' as const, hallIds: [id(2)] } } };
+  const reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) });
+  return { ...p, originalLines, sourceGroup, rows, groups, read, run: () => reader.readDetail(read) };
+}
+test('HISTORY lineCatalog: disabled canonical identity and original group survive current maintenance without merging repeated original lines', async () => {
+  const p = catalogFixture(), detail = await p.run(), catalog = detail.lineCatalog!;
+  assert.deepEqual(detail.lines.items.map(l => [l.id, l.skuId, l.quantity, l.sizeNameSnapshot]), [[id(41), id(50), '1', '原完整尺码'], [id(42), id(50), '2', '原完整尺码']]);
+  assert.deepEqual(catalog.items.map(v => v.identity), [0, 1].map(() => ({ state: 'BOUND', productId: id(70), colorId: id(71), fitId: id(72), sizeId: id(73) })));
+  assert.deepEqual(catalog.items.map(v => v.sourceGroup), [{ state: 'BOUND', groupId: id(60) }, { state: 'BOUND', groupId: id(60) }]);
+  assert.deepEqual(catalog.groups, [{ groupId: id(60), name: '原组', sizes: [{ sizeId: id(74), name: '原尺码B', displayOrder: 0 }, { sizeId: id(73), name: '原尺码A', displayOrder: 10 }] }]);
+  assert.doesNotMatch(JSON.stringify(detail), /PRIVATE-|sku_evidence|nativeSnapshot|current_group|当前新组|mapping_basis|source_key/);
+  assert.equal(p.connects(), 1); assert.equal(p.calls.filter(c => c.sql === 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY').length, 1);
+  const queries = p.calls.filter(c => c.tag.startsWith('imported-history:line-catalog')); assert.equal(queries.length, 2);
+  assert.deepEqual(queries[0]!.values, [id(4), id(3), [id(41), id(42)], 3]); assert.deepEqual(queries[1]!.values, [id(4), [id(60)], 1001]);
+  assert.match(queries[0]!.sql, /l.batch_id=\$1::uuid AND l.header_id=\$2::uuid AND l.id=ANY\(\$3::uuid\[\]\)/);
+  assert.match(queries[0]!.sql, /a.old_source_sku_id=ls.raw_fields->>'SKU来源编号'/);
+  assert.match(queries[1]!.sql, /g.batch_id=\$1::uuid.*g.size_group_id=ANY\(\$2::uuid\[\]\)/);
+  assert.ok(queries.every(q => !/\benabled\b|p.size_group_id|current-form|INSERT|UPDATE|assert_history_typed_closure/.test(q.sql)));
+  assert.equal(p.calls.at(-1)!.sql, 'COMMIT'); assert.deepEqual(p.releases, [undefined]);
+});
+test('HISTORY lineCatalog: missing source/alias/evidence stays UNKNOWN and missing original group does not erase bound SKU identity', async () => {
+  for (const field of ['line_source_id', 'alias_source_id', 'sku_evidence', 'canonical_source_id']) {
+    const p = catalogFixture({ mutate(rows) { return rows.map(r => ({ ...r, [field]: null })); } }), detail = await p.run();
+    assert.ok(detail.lineCatalog!.items.every(i => i.identity.state === 'UNKNOWN' && i.sourceGroup.state === 'UNKNOWN')); assert.deepEqual(detail.lineCatalog!.groups, []);
+    assert.equal(p.calls.filter(c => c.tag === 'imported-history:line-catalog-groups').length, 0);
+  }
+  for (const groups of [[], [{ group_id: id(60), group_snapshot: { id: id(60), name: '原组' }, member_size_id: null, member_snapshot: null, size_snapshot: null }]]) {
+    const p = catalogFixture({ groups }), detail = await p.run();
+    assert.ok(detail.lineCatalog!.items.every(i => i.identity.state === 'BOUND' && i.sourceGroup.state === 'UNKNOWN')); assert.deepEqual(detail.lineCatalog!.groups, []);
+  }
+  const absentGroup = catalogFixture({ mutate(rows) { for (const r of rows) delete (r.sku_evidence as { references: { sizeGroup?: unknown } }).references.sizeGroup; return rows; } });
+  assert.ok((await absentGroup.run()).lineCatalog!.items.every(i => i.identity.state === 'BOUND' && i.sourceGroup.state === 'UNKNOWN'));
+});
+test('HISTORY lineCatalog: wrong original aliases, native coordinates, source groups or member snapshots fail closed before COMMIT', async () => {
+  const mutations: ((rows: Record<string, unknown>[]) => Record<string, unknown>[])[] = [
+    rows => rows.map(r => ({ ...r, alias_sku_id: id(999) })), rows => rows.map(r => ({ ...r, alias_canonical_key: 'another-source' })),
+    rows => rows.map(r => ({ ...r, line_header_key: 'another-header' })), rows => rows.map(r => ({ ...r, line_source_entity: 'SKU' })),
+    rows => rows.map(r => ({ ...r, product_id: id(999) })), rows => rows.map(r => ({ ...r, record_valid: false })),
+    rows => rows.map(r => ({ ...r, selection_sha256: 'b'.repeat(64) })), rows => [...rows, rows[0]!],
+    rows => rows.map(r => { (r.sku_evidence as { references: { product: { nativeSnapshot: { size_group_id: string } } } }).references.product.nativeSnapshot.size_group_id = id(99); return r; })
+  ];
+  for (const mutate of mutations) {
+    const p = catalogFixture({ mutate }); await assert.rejects(p.run(), { code: 'INVALID_DATABASE_VALUE' }); assert.equal(p.calls.at(-1)!.sql, 'ROLLBACK');
+  }
+  for (const broken of [{ group_id: id(60), group_snapshot: { id: id(99), name: '原组' }, member_size_id: id(73), member_snapshot: { size_group_id: id(60), size_id: id(73), display_order: 0 }, size_snapshot: { id: id(73), name: '原尺码A' } },
+    { group_id: id(60), group_snapshot: { id: id(60), name: '原组' }, member_size_id: id(73), member_snapshot: { size_group_id: id(99), size_id: id(73), display_order: 0 }, size_snapshot: { id: id(73), name: '原尺码A' } }]) {
+    const p = catalogFixture({ groups: [broken] }); await assert.rejects(p.run(), { code: 'INVALID_DATABASE_VALUE' }); assert.equal(p.calls.at(-1)!.sql, 'ROLLBACK');
+  }
+});
+test('HISTORY lineCatalog: denied detail never reads catalog; original group bound rejects rather than returning partial members', async () => {
+  const denied = catalogFixture({ denyDetail: true }); assert.equal((await denied.run()).document, null);
+  assert.ok(!denied.calls.some(c => c.tag.startsWith('imported-history:line-catalog')));
+  const groups = Array.from({ length: 1001 }, (_, i) => ({ group_id: id(60), group_snapshot: { id: id(60), name: '原组' }, member_size_id: id(1000 + i),
+    member_snapshot: { size_group_id: id(60), size_id: id(1000 + i), display_order: i }, size_snapshot: { id: id(1000 + i), name: String(i) } }));
+  const oversized = catalogFixture({ groups }); await assert.rejects(oversized.run(), { code: 'IMPORTED_HISTORY_CATALOG_TOO_LARGE' }); assert.equal(oversized.calls.at(-1)!.sql, 'ROLLBACK');
+});
+test('HISTORY lineCatalog: public validator preserves old absent providers and rejects wrong page identity, private fields and unrelated groups', async () => {
+  const legacy = emptyDetail('transfers'), i = intent('transfers', true); if (i.operation !== 'detail') throw Error();
+  assert.deepEqual(validateImportedHistoryDetail(legacy, i, grant(i)), legacy);
+  const p = catalogFixture(), detail = await p.run(), catalog = detail.lineCatalog!;
+  const malformed = [
+    { ...catalog, items: catalog.items.slice(1) }, { ...catalog, items: [...catalog.items].reverse() },
+    { ...catalog, items: catalog.items.map(v => ({ ...v, skuId: id(999) })) },
+    { ...catalog, items: catalog.items.map(v => ({ ...v, privateSourceKey: 'do-not-publish' })) },
+    { ...catalog, groups: catalog.groups.map(g => ({ ...g, sizes: [...g.sizes].reverse() })) },
+    { ...catalog, groups: [...catalog.groups, { groupId: id(99), name: 'unrelated', sizes: [{ sizeId: id(100), name: 'X', displayOrder: 0 }] }] }
+  ];
+  for (const lineCatalog of malformed) assert.throws(() => validateImportedHistoryDetail({ ...detail, lineCatalog }, i, p.read.grant), { code: 'IMPORTED_HISTORY_INVALID_RESPONSE' });
 });

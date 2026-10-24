@@ -89,10 +89,24 @@ export interface ImportedHistoryPage<T> {
   readonly total: string; readonly items: readonly T[];
 }
 export interface ImportedHistoryList { readonly dataset: 'HISTORY'; readonly kind: ImportedHistoryKind; readonly documents: ImportedHistoryPage<ImportedHistoryHeader> }
+/** Read-only original-line coordinates. No source keys, file refs or write authority. */
+export const IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS = 1000;
+export type ImportedHistoryLineIdentity = { readonly state: 'UNKNOWN' }
+  | { readonly state: 'BOUND'; readonly productId: string; readonly colorId: string; readonly fitId: string; readonly sizeId: string };
+export type ImportedHistorySourceGroup = { readonly state: 'UNKNOWN' } | { readonly state: 'BOUND'; readonly groupId: string };
+export interface ImportedHistoryLineCatalog {
+  readonly basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1';
+  readonly items: readonly { readonly lineId: string; readonly skuId: string; readonly identity: ImportedHistoryLineIdentity; readonly sourceGroup: ImportedHistorySourceGroup }[];
+  readonly groups: readonly { readonly groupId: string; readonly name: string;
+    readonly sizes: readonly { readonly sizeId: string; readonly name: string; readonly displayOrder: number }[] }[];
+}
 export interface ImportedHistoryDetail {
   readonly dataset: 'HISTORY'; readonly kind: ImportedHistoryKind; readonly document: ImportedHistoryHeader | null;
   readonly lines: ImportedHistoryPage<ImportedHistoryLine | ImportedHistorySalesLine>;
   readonly settlements: ImportedHistoryPage<ImportedHistorySettlement>;
+  /** Missing on older providers means UNAVAILABLE, never a current-form fallback.
+   * Present items correspond exactly to this detail's current line page. */
+  readonly lineCatalog?: ImportedHistoryLineCatalog;
 }
 export interface ImportedHistoryReadAuthorization {
   authorize(actor: ActorContext, intent: ImportedHistoryReadIntent, signal: AbortSignal): Promise<ImportedHistoryReadGrant>;

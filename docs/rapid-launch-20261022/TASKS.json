@@ -1310,7 +1310,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T20:31:41.471338+00:00",
+  "updatedAt": "2026-10-24T20:35:31.252048+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
   "lastVerifiedRemoteCommit": "ae1dc67b9eed7ca15a14053c4b90b725ce066401",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1795,23 +1795,23 @@
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
       "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "d9ae87d043cb36a5c2124c770444f9bd62359364",
-      "runtimeVersion": "phase2-normal-d9ae87d-03",
+      "sourceCommit": "f8c1a98f95c5ed8bc8dd33b365ad54f2243b4261",
+      "runtimeVersion": "phase2-normal-f8c1a98-04",
       "htmlBytes": 3154,
-      "htmlSha256": "971c63a7af45a441918ef3b22bf07f671bd5f15c76066dfe9aab25567084be0b",
+      "htmlSha256": "d9193524d3d7ceb544f00f50fb416f7e7081398293934ada67eef407305c425a",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
       "sourceRound": 343,
-      "serverSession": 74662,
+      "serverSession": 67460,
       "fixtureBytes": 25766,
       "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
       "phase2Started": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-d9ae87d-phase2-03/build",
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-f8c1a98-phase2-04/build",
       "phase1Accepted": false,
-      "phase2Candidate": "Original QF Luna/max affected scroll/shared styles actual in progress",
+      "phase2Candidate": "QF actual I01 originalthree-tabdrawer interaction mixed inprogress",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "currentDatabase": {
@@ -4715,30 +4715,30 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T19:57:17.215456+00:00",
-    "sourceRound": 356,
-    "sourceCheckpoint": "parentae1dc67b9eed7ca15a14053c4b90b725ce066401, exactF2drawer3+F1callback3 frozen viaindexpatch",
+    "sourceRound": 357,
+    "sourceCheckpoint": "parentf8c1a98f95c5ed8bc8dd33b365ad54f2243b4261, exactD3lineCatalog4+originalAPI readcontract",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
       "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "d9ae87d043cb36a5c2124c770444f9bd62359364",
-      "runtimeVersion": "phase2-normal-d9ae87d-03",
+      "sourceCommit": "f8c1a98f95c5ed8bc8dd33b365ad54f2243b4261",
+      "runtimeVersion": "phase2-normal-f8c1a98-04",
       "htmlBytes": 3154,
-      "htmlSha256": "971c63a7af45a441918ef3b22bf07f671bd5f15c76066dfe9aab25567084be0b",
+      "htmlSha256": "d9193524d3d7ceb544f00f50fb416f7e7081398293934ada67eef407305c425a",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
       "sourceRound": 343,
-      "serverSession": 74662,
+      "serverSession": 67460,
       "fixtureBytes": 25766,
       "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
       "phase2Started": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-d9ae87d-phase2-03/build",
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-f8c1a98-phase2-04/build",
       "phase1Accepted": false,
-      "phase2Candidate": "Original QF Luna/max affected scroll/shared styles actual in progress",
+      "phase2Candidate": "QF actual I01 originalthree-tabdrawer interaction mixed inprogress",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
@@ -7973,7 +7973,7 @@
       "fact": "Approved menu additions explain+66px content height; nav/window metrics alone insufficient to diagnose original aside.sidebar scrollowner. QF directed one precise aside computed overflow/height/rect/client/scrollHeight/top nativewheel before/after and payment link rect, no speculative CSS fix."
     },
     "inventoryViewDrawer": {
-      "status": "SOURCE_FIXED_OWNER_CHECKS_PASS_C_BUILD_NEXT_ACTUAL_BROWSER_PENDING",
+      "status": "SOURCE356_ACTUALLY_BUILT_SERVED_QF_IN_PROGRESS",
       "uiOwner": "F2",
       "hostCallbackOwner": "F1",
       "current": "View routes product6tabs",
@@ -7999,14 +7999,14 @@
     "historyCanonicalRead": {
       "owner": "D3",
       "frontend": "F1",
-      "status": "IN_PROGRESS_EXACT3_PRODUCTION1_TEST",
+      "status": "SOURCE_FIXED_OWNER5NEW13AFFECTED_STRICT_PASS_PENDING_QB_ACTUALPG_F1",
       "scope": "Original HISTORY detail sameRR optional lineCatalog/sourcegroup snapshots; no DB schema or write contract change"
     }
   },
   "latestReadySource": {
-    "round": 354,
-    "commit": "09bf7a00078bc43f1bdef3125c75715999f2dd91",
-    "qualification": "F1 normalSALE/HISTORY chunk175 fixed source only; currentlyserved351 separateimmutable; source355 style seam notactive until F2/F1 pair"
+    "round": 356,
+    "commit": "f8c1a98f95c5ed8bc8dd33b365ad54f2243b4261",
+    "qualification": "Actual served syntheticnormalcopy originalinventory3tabDrawer; QF affectedactual pending, not wholebusiness/formal"
   },
   "pendingUserDecision": [
     {

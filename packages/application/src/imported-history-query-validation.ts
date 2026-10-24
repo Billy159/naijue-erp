@@ -2,8 +2,8 @@ import { DomainError } from '../../domain/src/errors.ts';
 import { entityId } from '../../domain/src/values.ts';
 import { isExactHistoryMoney, isHistoryQuantity } from './history-storage-contract.ts';
 import type { ActorContext } from './ports.ts';
-import { importedHistoryPageSizes } from './imported-history-query-ports.ts';
-import type { ImportedHistoryDetail, ImportedHistoryDetailQuery, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryList, ImportedHistoryListQuery, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReadIntent, ImportedHistorySalesLine, ImportedHistoryScope, ImportedHistorySettlement } from './imported-history-query-ports.ts';
+import { IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS, importedHistoryPageSizes } from './imported-history-query-ports.ts';
+import type { ImportedHistoryDetail, ImportedHistoryDetailQuery, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryLineCatalog, ImportedHistoryList, ImportedHistoryListQuery, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReadIntent, ImportedHistorySalesLine, ImportedHistoryScope, ImportedHistorySettlement } from './imported-history-query-ports.ts';
 
 type Reject = () => never;
 export function invalidImportedHistoryQuery(): never { throw new DomainError('IMPORTED_HISTORY_INVALID_QUERY', 'Invalid historical query'); }
@@ -176,8 +176,49 @@ export function validateImportedHistoryList(value: unknown, intent: Extract<Impo
   }
   return Object.freeze({ dataset: 'HISTORY', kind: intent.kind, documents });
 }
+function lineCatalog(value: unknown, lines: readonly ImportedHistoryLine[]): ImportedHistoryLineCatalog {
+  const r = bag(value, ['basis', 'items', 'groups'], invalidResponse);
+  if (r.basis !== 'PUBLISHED_SOURCE_SKU_IDENTITY_V1') invalidResponse();
+  const groups = dense(r.groups, lines.length, invalidResponse).map(value => {
+    const g = bag(value, ['groupId', 'name', 'sizes'], invalidResponse), groupId = id(g.groupId, invalidResponse);
+    const sizes = dense(g.sizes, IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS, invalidResponse).map(value => {
+      const z = bag(value, ['sizeId', 'name', 'displayOrder'], invalidResponse);
+      if (typeof z.displayOrder !== 'number' || !Number.isSafeInteger(z.displayOrder)) invalidResponse();
+      return Object.freeze({ sizeId: id(z.sizeId, invalidResponse), name: text(z.name, invalidResponse), displayOrder: z.displayOrder as number });
+    });
+    if (sizes.length === 0 || new Set(sizes.map(z => z.sizeId)).size !== sizes.length) invalidResponse();
+    for (let i = 1; i < sizes.length; i++) if (sizes[i - 1]!.displayOrder > sizes[i]!.displayOrder
+      || sizes[i - 1]!.displayOrder === sizes[i]!.displayOrder && sizes[i - 1]!.sizeId >= sizes[i]!.sizeId) invalidResponse();
+    return Object.freeze({ groupId, name: text(g.name, invalidResponse), sizes: Object.freeze(sizes) });
+  });
+  const byGroup = new Map(groups.map(g => [g.groupId, g]));
+  if (byGroup.size !== groups.length) invalidResponse();
+  const usedGroups = new Set<string>();
+  const items = dense(r.items, lines.length, invalidResponse).map((value, index) => {
+    const v = bag(value, ['lineId', 'skuId', 'identity', 'sourceGroup'], invalidResponse), line = lines[index];
+    if (!line || v.lineId !== line.id || v.skuId !== line.skuId) invalidResponse();
+    const identityState = Object.getOwnPropertyDescriptor(v.identity ?? {}, 'state')?.value;
+    const identity = identityState === 'UNKNOWN' ? bag(v.identity, ['state'], invalidResponse)
+      : bag(v.identity, ['state', 'productId', 'colorId', 'fitId', 'sizeId'], invalidResponse);
+    if (identity.state !== 'UNKNOWN' && identity.state !== 'BOUND') invalidResponse();
+    const parsedIdentity = identity.state === 'UNKNOWN' ? { state: 'UNKNOWN' as const } : { state: 'BOUND' as const,
+      productId: id(identity.productId, invalidResponse), colorId: id(identity.colorId, invalidResponse), fitId: id(identity.fitId, invalidResponse), sizeId: id(identity.sizeId, invalidResponse) };
+    const groupState = Object.getOwnPropertyDescriptor(v.sourceGroup ?? {}, 'state')?.value;
+    const sourceGroup = groupState === 'UNKNOWN' ? bag(v.sourceGroup, ['state'], invalidResponse) : bag(v.sourceGroup, ['state', 'groupId'], invalidResponse);
+    if (sourceGroup.state !== 'UNKNOWN' && sourceGroup.state !== 'BOUND') invalidResponse();
+    const parsedGroup = sourceGroup.state === 'UNKNOWN' ? { state: 'UNKNOWN' as const } : { state: 'BOUND' as const, groupId: id(sourceGroup.groupId, invalidResponse) };
+    if (parsedGroup.state === 'BOUND') {
+      if (parsedIdentity.state !== 'BOUND' || !byGroup.get(parsedGroup.groupId)?.sizes.some(z => z.sizeId === parsedIdentity.sizeId)) invalidResponse();
+      usedGroups.add(parsedGroup.groupId);
+    }
+    return Object.freeze({ lineId: line!.id, skuId: line!.skuId, identity: Object.freeze(parsedIdentity), sourceGroup: Object.freeze(parsedGroup) });
+  });
+  if (items.length !== lines.length || usedGroups.size !== groups.length) invalidResponse();
+  return Object.freeze({ basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1', items: Object.freeze(items), groups: Object.freeze(groups) });
+}
 export function validateImportedHistoryDetail(value: unknown, intent: Extract<ImportedHistoryReadIntent, { operation: 'detail' }>, grant: ImportedHistoryReadGrant): ImportedHistoryDetail {
-  const r = bag(value, ['dataset', 'kind', 'document', 'lines', 'settlements'], invalidResponse);
+  const hasCatalog = value !== null && typeof value === 'object' && Object.hasOwn(value, 'lineCatalog');
+  const r = bag(value, ['dataset', 'kind', 'document', 'lines', 'settlements', ...(hasCatalog ? ['lineCatalog'] : [])], invalidResponse);
   if (r.dataset !== 'HISTORY' || r.kind !== intent.kind) invalidResponse();
   const q = intent.parameters, document = r.document === null ? null : validateImportedHistoryHeader(r.document, intent.kind, grant);
   if (document !== null && document.documentId !== q.documentId) invalidResponse();
@@ -185,5 +226,5 @@ export function validateImportedHistoryDetail(value: unknown, intent: Extract<Im
   const settlements = page(r.settlements, q.settlementPage, q.settlementPageSize, validateImportedHistorySettlement, v => v.id);
   for (const values of [lines.items, settlements.items]) for (let i = 1; i < values.length; i++) if (values[i - 1]!.lineNo >= values[i]!.lineNo) invalidResponse();
   if (document === null && (lines.total !== '0' || settlements.total !== '0') || intent.kind === 'transfers' && settlements.total !== '0') invalidResponse();
-  return Object.freeze({ dataset: 'HISTORY', kind: intent.kind, document, lines, settlements });
+  return Object.freeze({ dataset: 'HISTORY', kind: intent.kind, document, lines, settlements, ...(hasCatalog ? { lineCatalog: lineCatalog(r.lineCatalog, lines.items) } : {}) });
 }

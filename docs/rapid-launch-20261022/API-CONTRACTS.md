@@ -40,3 +40,35 @@ D3 HISTORY revise HTTP source is fixed at 842f0db: POST /imported-history/{sales
 ## Normal document list historical read projection (current C/D1 direction, 2026-10-25)
 
 Keep original POST /sales/query and /transfers/query, query filters and page sizes. One original authorized RR client applies LIVE and published effective HISTORY branch scopes before union/count/sum/page. Each row identifies dataset LIVE|HISTORY, batchId null|UUID, documentId, effectiveVersion, with native id/version preserved. Historical unknown fields remain nullable; exact quantities/money use string codecs and correct minor-unit conversion. productSummary is one batch for page IDs only (up to3 snapshot previews plus full count/hasMore), never per-row detail loading/current-category guessing. Totals cover the entire same filtered authorized union; unknown contributors cannot be zero. historyCoverage explicitly PUBLISHED_AUTHORIZED/NOT_PUBLISHED/AUTHORIZATION_UNAVAILABLE. Both normal lists retain Demo updated DESC NULLS LAST,id ASC,dataset ASC, no fabricated time. F1 opens HISTORY via original history detail/revise and composite identity; LIVE via original endpoints. Original history permission proof stays explicit, no ALL fallback; incomplete transfer salesperson historical scope remains unfinished until verified against approved hall rule. D1 owns normal contracts/readers/HTTP; D3 supplies original publication/effective primitives. No new table/column/write contract.
+
+
+## HISTORY page source line catalogue — approved matrix read consumer (SOURCE357)
+
+Read-only additive optional `ImportedHistoryDetail.lineCatalog`; existing lines and write contracts unchanged. Exact26 authorized non-null detail may include it; legacy/default provider omission means UNAVAILABLE. Same original RR after header/page authorization, at most two batch SELECTs limited to actual original page line IDs and their proved original groups. No current-form/new-SKU eligibility or name/current-group inference.
+
+```ts
+/** Read-only original-line coordinates. No source keys, file refs or write authority. */
+export const IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS = 1000;
+export type ImportedHistoryLineIdentity = { readonly state: 'UNKNOWN' }
+  | { readonly state: 'BOUND'; readonly productId: string; readonly colorId: string; readonly fitId: string; readonly sizeId: string };
+export type ImportedHistorySourceGroup = { readonly state: 'UNKNOWN' } | { readonly state: 'BOUND'; readonly groupId: string };
+export interface ImportedHistoryLineCatalog {
+  readonly basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1';
+  readonly items: readonly { readonly lineId: string; readonly skuId: string; readonly identity: ImportedHistoryLineIdentity; readonly sourceGroup: ImportedHistorySourceGroup }[];
+  readonly groups: readonly { readonly groupId: string; readonly name: string;
+    readonly sizes: readonly { readonly sizeId: string; readonly name: string; readonly displayOrder: number }[] }[];
+}
+export interface ImportedHistoryDetail {
+  readonly dataset: 'HISTORY'; readonly kind: ImportedHistoryKind; readonly document: ImportedHistoryHeader | null;
+  readonly lines: ImportedHistoryPage<ImportedHistoryLine | ImportedHistorySalesLine>;
+  readonly settlements: ImportedHistoryPage<ImportedHistorySettlement>;
+  /** Missing on older providers means UNAVAILABLE, never a current-form fallback.
+   * Present items correspond exactly to this detail's current line page. */
+  readonly lineCatalog?: ImportedHistoryLineCatalog;
+}
+
+```
+
+Items correspond one-to-one and in order to original `lines.items`; repeated original lines sharing SKU remain distinct by `lineId`. Four-dimensional identity and original group evidence each explicitly BOUND/UNKNOWN. Group names/full size members/order use same-batch original source snapshots. Missing proof remains UNKNOWN; contradiction rejects. Disabled/retained identity is not filtered. Empty page adds no queries. Per-group existing1000 bound/global bound checked with bound+1; overflow rejects/rolls back, never truncates a successful result. Do not publish raw source/private provenance.
+
+F1 collects original pages with existing batch/version/total checks and uses original line IDs plus canonical identity/source groups for Demo matrix. An absent catalogue or UNKNOWN group is incomplete source knowledge, never an invitation to use current catalogue/names or turn summary previews into all original lines. No new write authority, new schema, SKU rebinding or changes to original history status. Existing HTTP failure mapping retained; overflow remains explicit server failure (not empty result), no fabricated transient503 or success. Actual PG/ACL and frontend matrix acceptance remain pending.

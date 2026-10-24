@@ -1,7 +1,9 @@
-import type { ImportedHistoryDetail, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryList, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReader, ImportedHistorySalesLine, ImportedHistoryScopedRead, ImportedHistorySettlement } from '../../../packages/application/src/imported-history-query-ports.ts';
+import type { ImportedHistoryDetail, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryLineCatalog, ImportedHistoryList, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReader, ImportedHistorySalesLine, ImportedHistoryScopedRead, ImportedHistorySettlement } from '../../../packages/application/src/imported-history-query-ports.ts';
 import { activeImportedHistoryRead, checkedImportedHistoryActor, checkedImportedHistoryGrant, checkedImportedHistoryIntent, validateImportedHistoryDetail, validateImportedHistoryHeader, validateImportedHistoryLine, validateImportedHistoryList, validateImportedHistorySettlement } from '../../../packages/application/src/imported-history-query-validation.ts';
 import { assertHistoryPublicationSchema19 } from '../../../packages/application/src/history-typed-publication.ts';
 import { COMPLETE_SCOPE_DECISION } from '../../../packages/application/src/inventory-cutoff-import.ts';
+import { IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS } from '../../../packages/application/src/imported-history-query-ports.ts';
+import { entityId } from '../../../packages/domain/src/values.ts';
 import { requireDomain } from '../../../packages/domain/src/errors.ts';
 import { assertNativeImportAccountingSchema19Guards } from './native-import-accounting-capability.ts';
 import { checkedNativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
@@ -168,6 +170,128 @@ export function importedHistoryReadScopeSql(read: ImportedHistoryScopedRead, fir
     : Object.freeze({ predicate: grant.scope.kind === 'TRANSFER_HALL_IDS' ? importedHistoryTransferHallScopeSql(firstParameterIndex, true) : `h.hall_id=ANY($${firstParameterIndex}::uuid[])`, values: Object.freeze([Object.freeze([...grant.scope.hallIds])]) });
 }
 
+type CatalogRow = Record<string, unknown>;
+const catalogMust = (ok: unknown): void => requireDomain(ok, 'INVALID_DATABASE_VALUE', 'Historical line catalogue contradicts its published source identity');
+function catalogObject(value: unknown): CatalogRow | null {
+  if (value === null || value === undefined) return null;
+  catalogMust(typeof value === 'object' && !Array.isArray(value)); return value as CatalogRow;
+}
+function catalogId(value: unknown): string {
+  catalogMust(typeof value === 'string'); return entityId('sku', value as string);
+}
+interface CatalogCandidate {
+  readonly lineId: string; readonly skuId: string; readonly identity: ImportedHistoryLineCatalog['items'][number]['identity'];
+  readonly groupId: string | null; readonly groupSnapshot: CatalogRow | null; readonly sizeSnapshot: CatalogRow | null;
+}
+function catalogCandidate(row: CatalogRow, line: ImportedHistoryLine): CatalogCandidate {
+  catalogMust(row.line_id === line.id && row.sku_id === line.skuId);
+  const unknown: CatalogCandidate = { lineId: line.id, skuId: line.skuId, identity: { state: 'UNKNOWN' }, groupId: null, groupSnapshot: null, sizeSnapshot: null };
+  if (row.line_source_id == null) return unknown;
+  catalogMust(row.line_source_entity === row.expected_line_entity);
+  if (row.line_header_key == null || row.header_source_key == null || row.old_sku_key == null || row.canonical_sku_key == null) return unknown;
+  catalogMust(row.line_header_key === row.header_source_key);
+  if (row.alias_source_id == null) return unknown;
+  catalogMust(row.alias_sku_id === line.skuId && row.alias_canonical_key === row.canonical_sku_key
+    && typeof row.mapping_basis === 'string' && row.mapping_basis.trim().length > 0);
+  if (row.alias_source_entity == null || row.native_sku_id == null) return unknown;
+  catalogMust(row.alias_source_entity === 'SKU' && row.alias_source_key === row.old_sku_key && row.alias_raw_key === row.old_sku_key && row.native_sku_id === line.skuId);
+  const evidence = catalogObject(row.sku_evidence);
+  if (!evidence) return unknown;
+  catalogMust(evidence.validator_version === 'NATIVE_SKU_IMPORT_V1' && evidence.native_sku_id === line.skuId && evidence.canonical_source_key === row.canonical_sku_key);
+  const mapping = catalogObject(evidence.mapping), native = catalogObject(evidence.native_sku), selection = catalogObject(evidence.selection);
+  if (!mapping || !native || !selection || row.canonical_source_id == null || row.record_count === '0') return unknown;
+  catalogMust(mapping.oldSourceSkuId === row.old_sku_key && mapping.canonicalSourceSkuId === row.canonical_sku_key && mapping.mappingBasis === row.mapping_basis
+    && selection.selectionSha256 === row.selection_sha256 && row.record_count === '1' && row.record_valid === true && native.id === line.skuId);
+  for (const key of ['product_id', 'color_id', 'fit_id', 'size_id']) catalogMust(native[key] === row[key]);
+  const identity = { state: 'BOUND' as const, productId: catalogId(row.product_id), colorId: catalogId(row.color_id), fitId: catalogId(row.fit_id), sizeId: catalogId(row.size_id) };
+  const refs = catalogObject(evidence.references);
+  const product = catalogObject(refs?.product), size = catalogObject(refs?.size), group = catalogObject(refs?.sizeGroup);
+  for (const [key, expected] of [['product', identity.productId], ['color', identity.colorId], ['fit', identity.fitId], ['size', identity.sizeId]] as const) {
+    const ref = catalogObject(refs?.[key]); if (ref) {
+      catalogMust(ref.nativeId === expected); const snapshot = catalogObject(ref.nativeSnapshot); if (snapshot) catalogMust(snapshot.id === expected);
+    }
+  }
+  const result = { ...unknown, identity };
+  const productSnapshot = catalogObject(product?.nativeSnapshot), groupSnapshot = catalogObject(group?.nativeSnapshot), sizeSnapshot = catalogObject(size?.nativeSnapshot);
+  if (!product || !group || !size || !productSnapshot || !groupSnapshot || !sizeSnapshot) return result;
+  const groupId = catalogId(group.nativeId);
+  catalogMust(groupSnapshot.id === groupId && productSnapshot.size_group_id === groupId);
+  return { ...result, groupId, groupSnapshot, sizeSnapshot };
+}
+/** Same authorized detail snapshot, current page only. Missing proof stays
+ * UNKNOWN; enabled/current names/current product group never rebind history. */
+async function readLineCatalog(query: Query, kind: ImportedHistoryKind, document: ImportedHistoryHeader, lines: readonly ImportedHistoryLine[]): Promise<ImportedHistoryLineCatalog> {
+  if (lines.length === 0) return { basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1', items: [], groups: [] };
+  const rows = (await query(`/* imported-history:line-catalog */ SELECT l.id line_id,l.sku_id,
+    ls.id line_source_id,ls.entity_type line_source_entity,'${kind === 'sales' ? 'SALES_LINE' : 'TRANSFER_LINE'}'::text expected_line_entity,
+    ls.normalized_fields->>'单据来源编号' line_header_key,hs.source_key header_source_key,
+    ls.raw_fields->>'SKU来源编号' old_sku_key,ls.normalized_fields->>'SKU来源编号' canonical_sku_key,
+    a.source_row_id alias_source_id,a.canonical_sku_id alias_sku_id,a.canonical_source_key alias_canonical_key,a.mapping_basis,
+    als.entity_type alias_source_entity,als.source_key alias_source_key,als.raw_fields->>'来源编号' alias_raw_key,
+    als.field_provenance->'native_sku_import' sku_evidence,k.id native_sku_id,k.product_id,k.color_id,k.fit_id,k.size_id,
+    b.source_hash selection_sha256,cs.id canonical_source_id,proof.record_count,proof.record_valid
+    FROM naijue_erp.${lineTables[kind]} l JOIN naijue_erp.${tables[kind]} h ON h.id=l.header_id AND h.batch_id=l.batch_id
+    JOIN naijue_erp.import_batch b ON b.id=l.batch_id
+    LEFT JOIN naijue_erp.import_source_row hs ON hs.id=h.source_row_id AND hs.batch_id=h.batch_id
+    LEFT JOIN naijue_erp.import_source_row ls ON ls.id=l.source_row_id AND ls.batch_id=l.batch_id
+    LEFT JOIN naijue_erp.import_sku_alias a ON a.batch_id=l.batch_id AND a.old_source_sku_id=ls.raw_fields->>'SKU来源编号'
+    LEFT JOIN naijue_erp.import_source_row als ON als.id=a.source_row_id AND als.batch_id=a.batch_id
+    LEFT JOIN naijue_erp.sku k ON k.id=l.sku_id
+    LEFT JOIN naijue_erp.import_source_row cs ON cs.batch_id=a.batch_id AND cs.entity_type='SKU' AND cs.source_key=a.canonical_source_key
+    LEFT JOIN LATERAL (SELECT count(*)::text record_count,
+      bool_and(r.status='IMPORTED' AND r.target_id=l.sku_id AND r.source_record_hash=cs.row_sha256 AND r.source_file_ref=cs.file_ref) record_valid
+      FROM naijue_erp.import_record r WHERE r.import_batch_id=l.batch_id AND r.source_entity_type='SKU'
+        AND r.source_key=a.canonical_source_key AND r.target_type='SKU') proof ON TRUE
+    WHERE l.batch_id=$1::uuid AND l.header_id=$2::uuid AND l.id=ANY($3::uuid[]) ORDER BY l.line_no,l.id LIMIT $4`,
+    [document.batchId, document.documentId, lines.map(line => line.id), lines.length + 1])).rows;
+  catalogMust(rows.length === lines.length);
+  const byLine = new Map(rows.map(row => [row.line_id, row])); catalogMust(byLine.size === rows.length);
+  const candidates = lines.map(line => { const row = byLine.get(line.id); catalogMust(row); return catalogCandidate(row!, line); });
+  const groupIds = [...new Set(candidates.flatMap(row => row.groupId === null ? [] : [row.groupId]))].sort();
+  const groups: ImportedHistoryLineCatalog['groups'][number][] = [];
+  if (groupIds.length) {
+    const maximum = groupIds.length * IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS;
+    const groupRows = (await query(`/* imported-history:line-catalog-groups */ SELECT g.size_group_id group_id,g.native_snapshot group_snapshot,
+      m.member_size_id,m.native_snapshot member_snapshot,z.native_snapshot size_snapshot
+      FROM naijue_erp.import_native_catalogue_binding g
+      LEFT JOIN naijue_erp.import_native_catalogue_binding m ON m.batch_id=g.batch_id AND m.entity_type='SIZE_GROUP_MEMBER' AND m.member_group_id=g.size_group_id
+      LEFT JOIN naijue_erp.import_native_catalogue_binding z ON z.batch_id=g.batch_id AND z.entity_type='SIZE' AND z.size_id=m.member_size_id
+      WHERE g.batch_id=$1::uuid AND g.entity_type='SIZE_GROUP' AND g.size_group_id=ANY($2::uuid[])
+      ORDER BY g.size_group_id,m.member_size_id LIMIT $3`, [document.batchId, groupIds, maximum + 1])).rows;
+    requireDomain(groupRows.length <= maximum, 'IMPORTED_HISTORY_CATALOG_TOO_LARGE', 'Original historical group member bound exceeded; no truncated catalogue returned');
+    const byGroup = new Map<string, CatalogRow[]>();
+    for (const row of groupRows) { const id = catalogId(row.group_id); catalogMust(groupIds.includes(id)); const values = byGroup.get(id) ?? []; values.push(row); byGroup.set(id, values); }
+    for (const groupId of groupIds) {
+      const facts = byGroup.get(groupId); if (!facts) continue;
+      requireDomain(facts.length <= IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS, 'IMPORTED_HISTORY_CATALOG_TOO_LARGE', 'Original historical group member bound exceeded; no truncated catalogue returned');
+      let missing = false; const sizes: ImportedHistoryLineCatalog['groups'][number]['sizes'][number][] = [];
+      const sourceGroup = catalogObject(facts[0]!.group_snapshot); if (!sourceGroup) continue;
+      catalogMust(sourceGroup.id === groupId && typeof sourceGroup.name === 'string');
+      for (const row of facts) {
+        const snapshot = catalogObject(row.group_snapshot); catalogMust(snapshot?.id === groupId && snapshot.name === sourceGroup.name);
+        if (row.member_size_id == null) { missing = true; continue; }
+        const sizeId = catalogId(row.member_size_id), member = catalogObject(row.member_snapshot), size = catalogObject(row.size_snapshot);
+        if (!member || !size) { missing = true; continue; }
+        catalogMust(member.size_group_id === groupId && member.size_id === sizeId && size.id === sizeId
+          && typeof size.name === 'string' && typeof member.display_order === 'number' && Number.isSafeInteger(member.display_order));
+        sizes.push({ sizeId, name: size.name as string, displayOrder: member.display_order as number });
+      }
+      catalogMust(new Set(sizes.map(z => z.sizeId)).size === sizes.length);
+      for (const candidate of candidates.filter(c => c.groupId === groupId)) {
+        catalogMust(candidate.identity.state === 'BOUND' && candidate.groupSnapshot?.name === sourceGroup.name);
+        if (candidate.identity.state === 'BOUND') {
+          const sizeId = candidate.identity.sizeId, member = sizes.find(z => z.sizeId === sizeId);
+          if (!member) missing = true; else catalogMust(member.name === candidate.sizeSnapshot?.name);
+        }
+      }
+      if (!missing) groups.push({ groupId, name: sourceGroup.name as string, sizes: sizes.sort((a, b) => a.displayOrder - b.displayOrder || (a.sizeId < b.sizeId ? -1 : a.sizeId > b.sizeId ? 1 : 0)) });
+    }
+  }
+  const provenGroups = new Set(groups.map(g => g.groupId));
+  return { basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1', items: candidates.map(c => ({ lineId: c.lineId, skuId: c.skuId, identity: c.identity,
+    sourceGroup: c.groupId !== null && provenGroups.has(c.groupId) ? { state: 'BOUND', groupId: c.groupId } : { state: 'UNKNOWN' } })), groups };
+}
+
 function person(known: unknown, staffId: unknown): ImportedHistoryPerson {
   requireDomain(typeof known === 'boolean' && (staffId === null || typeof staffId === 'string') && (known || staffId === null), 'INVALID_DATABASE_VALUE', 'Exact historical person binding required');
   return { state: !known ? 'UNKNOWN' : staffId === null ? 'UNRESOLVED' : 'BOUND', staffId: staffId as string | null };
@@ -302,7 +426,10 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
           : '/* imported-history:settlement-page */ SELECT id,line_no,payment_account_id,direction,amount::text,account_name_snapshot,method_name_snapshot,payment_method_id_snapshot FROM naijue_erp.history_sales_settlement WHERE batch_id=$1::uuid AND header_id=$2::uuid ORDER BY line_no,id LIMIT $3 OFFSET $4', effective ? [...settlementValues, document.version] : settlementValues)).rows;
       }
       requireDomain(Number.isSafeInteger(r.settlement_count) && settlementCount === String(r.settlement_count), 'INVALID_DATABASE_VALUE', 'Historical settlement closure differs');
-      return validateImportedHistoryDetail({ dataset: 'HISTORY', kind: intent.kind, document, lines: page(q.linePage, q.linePageSize, lineCount, lineRows.map(r => line(r, intent.kind, effective))), settlements: page(q.settlementPage, q.settlementPageSize, settlementCount, settlementRows.map(r => settlement(r, effective))) }, intent, grant);
+      const lineItems = lineRows.map(r => line(r, intent.kind, effective));
+      const lineCatalog = effective ? await readLineCatalog(query, intent.kind, document, lineItems) : undefined;
+      return validateImportedHistoryDetail({ dataset: 'HISTORY', kind: intent.kind, document, lines: page(q.linePage, q.linePageSize, lineCount, lineItems), settlements: page(q.settlementPage, q.settlementPageSize, settlementCount, settlementRows.map(r => settlement(r, effective))),
+        ...(lineCatalog === undefined ? {} : { lineCatalog }) }, intent, grant);
     });
   }
 }
