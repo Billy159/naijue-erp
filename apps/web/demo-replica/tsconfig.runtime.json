@@ -34,7 +34,9 @@
   },
   "include": [
     "frontend/runtime/**/*.ts",
-    "frontend/runtime/**/*.tsx"
+    "frontend/runtime/**/*.tsx",
+    "frontend/runtime-bootstrap.ts",
+    "frontend/runtime-styles.ts"
   ],
   "exclude": []
 }

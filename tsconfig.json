@@ -30,6 +30,8 @@
   ],
   "exclude": [
     "apps/web/unified-browser-harness/review-builds/**",
-    "apps/web/demo-replica/frontend/runtime/**"
+    "apps/web/demo-replica/frontend/runtime/**",
+    "apps/web/demo-replica/frontend/runtime-bootstrap.ts",
+    "apps/web/demo-replica/frontend/runtime-styles.ts"
   ]
 }

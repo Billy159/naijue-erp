@@ -21,3 +21,11 @@ export function useReplicaAuthentication() {
   const { auth } = useReplicaSession();
   return useSyncExternalStore(auth.subscribe, auth.getSnapshot, auth.getSnapshot);
 }
+
+export { mountNormalReplica } from './common/runtime-host.tsx';
+export type { ReadyPageOptions, MountedReplicaPage } from './common/ready-pages.tsx';
+
+/** Original MATRIX_REPORT.create loads only on the output action. */
+export async function createReplicaWorkbook(rows: readonly (readonly string[])[], title: string): Promise<Uint8Array<ArrayBuffer>> {
+  return new Uint8Array(await (await import('./common/original-workbook.ts')).createOriginalWorkbook(rows, title));
+}

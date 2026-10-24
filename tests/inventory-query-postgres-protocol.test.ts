@@ -75,9 +75,9 @@ class ScriptedPool implements PgInventoryQueryPool, PgInventoryQueryClient {
         const n = Number(id.slice(-12)) - 1000;
         return sizes.slice(0, 3).map((size, index) => ({ id: skuId(n, index), product_id: id, color_id: colorId, fit_id: fitId, size_id: size.id, color_name: "Native color", fit_name: "Y版（修身）" }));
       }); break;
-      case "balances": rows = (values[8] as string[]).flatMap(id => {
-        const n = Number(id.slice(-12)) - 1000;
-        return [this.negative, "0"].map((quantity, index) => ({ warehouse_id: this.scope.warehouses[0]!.id, sku_id: skuId(n, index), quantity, version: 1, last_operation_id: inventoryId("operation", 990 + n) }));
+      case "balances": rows = (values[2] as string[]).flatMap(id => {
+        const coordinate = Number(id.slice(-12)) - 10000, n = Math.floor(coordinate / 4), index = coordinate % 4;
+        return index < 2 ? [{ warehouse_id: this.scope.warehouses[0]!.id, sku_id: id, quantity: index === 0 ? this.negative : "0", version: 1, last_operation_id: inventoryId("operation", 990 + n) }] : [];
       }); break;
       case "candidate-count": rows = [{ exact_total: "1" }]; break;
       case "candidates": rows = Number(values[10]) === 0 ? [{ id: productId(0), label: "NATIVE-000000 Synthetic native product", code: "NATIVE-000000", name: "Synthetic native product", disabled: false, parent_label: null }] : []; break;
@@ -246,9 +246,12 @@ test("inventory season array: verified current selection drives full-filter summ
   pool.transform = (stage, rows) => stage === "products" ? rows.map(row => ({ ...row, season_name: "夏、秋" })) : rows;
   const p = inventoryParameters(), selected = [inventoryId("season", 42), inventoryId("season", 43)],parameters = parseInventoryQuery({ ...p, page: 2, filter: { ...p.filter, seasons: selected.map(id => ({ id, label: "untrusted label" })) } });
   const result = await reader.readInventory(read(pool, parameters)); assert.equal(result.data.products.length, 2); assert.equal(result.data.exactTotalProducts, 102); assert.equal(result.data.allMatchesTotal.knownQuantity, "-204"); assert.equal(result.data.products[0]!.seasonLabel, "夏、秋");
-  for (const stage of ["catalog-status", "products", "balances"]) {
+  for (const stage of ["catalog-status", "products"]) {
     const call = pool.calls.find(c => c.sql.includes(`inventory:${stage}`))!; assert.deepEqual(call.values[6], selected); assert.ok(call.sql.includes("p.season_ids && $7::uuid[]")); assert.equal(/p\.season_id\s*=|coalesce\([^)]*season_ids/i.test(call.sql), false);
   }
+  const balance = pool.calls.find(c => c.sql.includes("inventory:balances"))!;
+  assert.deepEqual(balance.values[2], [100, 101].flatMap(n => [0, 1, 2].map(s => skuId(n, s))));
+  assert.doesNotMatch(balance.sql, /season_ids|matched_products|filtered_skus/);
   const page = pool.calls.find(c => c.sql.includes("inventory:products"))!; assert.ok(page.sql.includes("string_agg(d.name,'、' ORDER BY d.display_order,d.id)") && page.sql.includes("WHERE d.id=ANY(p.season_ids)"));
   assert.deepEqual(stages(pool), ["BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY", "publication", "guards", "warehouses", "catalog-status", "products", "sizes", "skus", "balances", "COMMIT"]);
 });
@@ -488,7 +491,7 @@ test("SOURCE CONTRACT ONLY: no global member/SKU preload, source-history reconci
   assert.ok(!source.includes("readPublishedCutoffScope(")); assert.ok(!source.includes("sparseInventoryQuantity("));
   assert.ok(!/CROSS JOIN|INSERT INTO|UPDATE naijue_erp|DELETE FROM|inventory_ledger l/i.test(source));
   assert.ok(source.includes("WHERE s.product_id = ANY($1::uuid[])"));
-  assert.ok(source.includes("WHERE s.product_id = ANY($9::uuid[])"));
+  assert.ok(source.includes("AND b.sku_id = ANY($3::uuid[])"));
   assert.ok(source.includes("FROM filtered_skus s WHERE NOT EXISTS"));
   const guards = readFileSync(new URL("../adapters/postgres/src/inventory-publication-guards.ts", import.meta.url), "utf8");
   assert.ok(guards.includes("required.table_name") && guards.includes("required.trigger_name"));
@@ -506,7 +509,7 @@ test("inventory category SQL contract: one positive-array predicate is shared by
     const parameters = parseInventoryQuery({ ...inventoryParameters(), filter: { ...inventoryParameters().filter,
       categories: categoryIds.map(id => ({ id, label: "not a database fact" })) } });
     const result = await new PostgresInventoryQueryReader(pool).readInventory(read(pool, parameters));
-    const queries = pool.calls.filter(call => ["catalog-status", "products", "balances"].some(stage => call.sql.includes(`inventory:${stage}`)));
+    const queries = pool.calls.filter(call => ["catalog-status", "products"].some(stage => call.sql.includes(`inventory:${stage}`)));
     const prefix = (sql: string) => /WITH published_scope[\s\S]*?filtered_skus AS \([\s\S]*?\n\)/.exec(sql)?.[0];
     for (const call of queries) {
       assert.deepEqual(call.values[3], categoryIds); assert.deepEqual(call.values[0], inventoryScope.warehouses.map(row => row.id));
@@ -516,6 +519,10 @@ test("inventory category SQL contract: one positive-array predicate is shared by
       assert.ok(!/unnest\(\$4|JOIN.*\$4|\$4::uuid IS NULL/.test(call.sql));
       assert.ok(!JSON.stringify(call.values).includes("not a database fact"));
     }
+    const balance = pool.calls.find(call => call.sql.includes("inventory:balances"))!;
+    assert.deepEqual(balance.values[0], inventoryScope.warehouses.map(row => row.id)); assert.deepEqual(balance.values[1], inventoryScope.hallIds);
+    assert.deepEqual(balance.values[2], [skuId(0, 0), skuId(0, 1), skuId(0, 2)]);
+    assert.doesNotMatch(balance.sql, /product_category|matched_products|filtered_skus/);
     assert.equal(result.data.exactTotalProducts, 1); assert.equal(result.data.products.length, 1);
     assert.equal(result.data.allMatchesTotal.knownQuantity, "-2");
   }
@@ -619,4 +626,66 @@ test("inventory qualification set: returned candidate relation uses its own exac
   assert.ok(query.sql.includes("FROM candidate_skus s") && query.sql.includes("inventory_key_admission($10::uuid,s.id)")); assert.equal(stages(pool).includes("balances"), false);
   const legacy = nativeKeyPool(2, 3); await assert.rejects(new PostgresInventoryQueryReader(legacy).readCandidates(candidate(legacy)), code("INVENTORY_NOT_READY"));
   assert.equal(stages(legacy).includes("additional-sku-qualification"), false); assert.equal(stages(legacy).at(-1), "ROLLBACK");
+});
+
+for (const pageSize of [100, 200, 500] as const) test(`inventory page assembly model: ${pageSize} products retain full groups and53 authorized warehouses`, async t => {
+  for (const page of [1, 2]) {
+    const pool = new ScriptedPool(); pool.count = 731;
+    pool.scope = { hallIds: inventoryScope.hallIds, warehouses: Array.from({ length: 53 }, (_, n) => ({ id: inventoryId("warehouse", 200000 + n), hallId: inventoryScope.hallIds[0]!, label: `Native warehouse ${n}` })) };
+    const productNumber = (value: unknown) => Number(String(value).slice(-12)) - 1000;
+    const sourceSizes = (n: number) => Array.from({ length: 6 }, (_, s) => ({ id: inventoryId("size", 300000 + (n % 2) * 6 + s), label: `Complete group${n % 2} size${s}` }));
+    const actualSku = (n: number, v: number, s: number) => inventoryId("sku", 50000 + n * 8 + v * 4 + s);
+    pool.transform = (stage, rows) => {
+      if (stage === "products") return rows.map(row => ({ ...row, size_group_id: inventoryId("sizeGroup", 30 + productNumber(row.id) % 2), size_group_name: `Complete group${productNumber(row.id) % 2}` }));
+      if (stage === "sizes") return (pool.calls.at(-1)!.values[0] as string[]).flatMap(product => {
+        const n = productNumber(product); return sourceSizes(n).map((size, s) => ({ product_id: product, size_group_id: inventoryId("sizeGroup", 30 + n % 2), size_id: size.id, size_name: size.label, display_order: s }));
+      });
+      if (stage === "skus") return (pool.calls.at(-1)!.values[0] as string[]).flatMap(product => {
+        const n = productNumber(product); return [0, 1].flatMap(v => sourceSizes(n).slice(0, 4).map(size => ({ id: actualSku(n, v, sourceSizes(n).findIndex(s => s.id === size.id)), product_id: product,
+          color_id: colorId, fit_id: inventoryId("fit", 21 + v), size_id: size.id, color_name: "Native color", fit_name: `Native fit${v}` })));
+      });
+      if (stage === "balances") return (pool.calls.findLast(call => call.sql.includes("inventory:skus"))!.values[0] as string[]).flatMap(product => {
+        const n = productNumber(product); return [-3, 1].map((quantity, w) => ({ warehouse_id: pool.scope.warehouses[w]!.id, sku_id: actualSku(n, 0, 0), quantity: String(quantity), version: 1, last_operation_id: inventoryId("operation", 990 + n) }));
+      });
+      return rows;
+    };
+    const input = parseInventoryQuery({ ...inventoryParameters(page), pageSize });
+    const started = performance.now(), snapshot = await new PostgresInventoryQueryReader(pool).readInventory(read(pool, input)), readMs = performance.now() - started;
+    const encodeStarted = performance.now(), bytes = Buffer.byteLength(JSON.stringify(snapshot.data)), encodeMs = performance.now() - encodeStarted;
+    assert.equal(snapshot.data.exactTotalProducts, 731); assert.equal(snapshot.data.allMatchesTotal.knownQuantity, "-1462");
+    assert.equal(snapshot.data.products.length, Math.min(pageSize, 731 - (page - 1) * pageSize));
+    for (const product of snapshot.data.products) {
+      assert.equal(product.sizes.length, 6); assert.equal(product.colorFits.length, 2); assert.equal(product.total.knownQuantity, "-2");
+      for (const variant of product.colorFits) {
+        assert.equal(variant.rows.length, 53);
+        for (const row of variant.rows) {
+          assert.equal(Object.keys(row.cells).length, 6); assert.equal(row.cells[product.sizes[4]!.id]!.state, "not-applicable"); assert.equal(row.cells[product.sizes[5]!.id]!.state, "not-applicable");
+        }
+      }
+      assert.equal(product.colorFits[0]!.rows[0]!.cells[product.sizes[0]!.id]!.state, "known");
+      assert.deepEqual(product.colorFits[0]!.rows[0]!.cells[product.sizes[0]!.id], { state: "known", skuId: actualSku(productNumber(product.id), 0, 0), quantity: "-3" });
+      assert.deepEqual(product.colorFits[1]!.rows[52]!.cells[product.sizes[0]!.id], { state: "known", skuId: actualSku(productNumber(product.id), 1, 0), quantity: "0" });
+    }
+    for (const stage of ["catalog-status", "products", "sizes", "skus", "balances"]) assert.equal(stages(pool).filter(s => s === stage).length, 1);
+    assert.equal(pool.connects, 1); assert.deepEqual(pool.releases, [undefined]); assert.equal(stages(pool).at(-1), "COMMIT");
+    t.diagnostic(JSON.stringify({ evidence: "SYNTHETIC_PROTOCOL_MODEL_NOT_PG_OR_NETWORK", pageSize, page, products: snapshot.data.products.length, warehouses: 53, sizes: 6, variants: 2, readMs, encodeMs, jsonBytes: bytes, factQueries: 3 }));
+  }
+});
+
+test("inventory page balance batch: reuse exact page SKU identities and authorized warehouse intersection without re-scanning full filters", async () => {
+  const pool = new ScriptedPool(); pool.count = 731;
+  const input = parseInventoryQuery({ ...inventoryParameters(2), pageSize: 200 });
+  const result = await new PostgresInventoryQueryReader(pool).readInventory(read(pool, input));
+  const balance = pool.calls.find(call => call.sql.includes("inventory:balances"))!, sku = pool.calls.find(call => call.sql.includes("inventory:skus"))!;
+  assert.equal(result.data.exactTotalProducts, 731); assert.equal(result.data.allMatchesTotal.knownQuantity, "-1462");
+  assert.doesNotMatch(balance.sql, /matched_products|filtered_skus|product_category|supplier_id|season_id/);
+  assert.match(balance.sql, /JOIN naijue_erp.warehouse w ON w.id = b.warehouse_id/);
+  assert.match(balance.sql, /w.id = ANY\(\$1::uuid\[\]\) AND w.hall_id = ANY\(\$2::uuid\[\]\)/);
+  assert.match(balance.sql, /b.sku_id = ANY\(\$3::uuid\[\]\)/);
+  assert.match(balance.sql, /ORDER BY b.warehouse_id, b.sku_id LIMIT \$4/);
+  assert.deepEqual(balance.values, [pool.scope.warehouses.map(w => w.id), pool.scope.hallIds,
+    (sku.values[0] as string[]).flatMap(product => [0, 1, 2].map(s => skuId(Number(product.slice(-12)) - 1000, s))), INVENTORY_READ_MAX_PAGE_BALANCES + 1]);
+  assert.equal(pool.calls.filter(call => call.sql.includes("inventory:balances")).length, 1);
+  const status = pool.calls.find(call => call.sql.includes("inventory:catalog-status"))!;
+  assert.match(status.sql, /matched_products/); assert.doesNotMatch(status.sql, /LIMIT|OFFSET/);
 });

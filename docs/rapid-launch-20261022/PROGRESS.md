@@ -1,3 +1,11 @@
+SOURCE347 NORMAL ENTRY BUILD INPUT / ACTUAL181 CATEGORY / INVENTORY SOURCE DELTA
+
+C prepared single runtime.html/one graph boot using copied original shell, no original55 classic scripts/legacy bootstrap. Only existing explicit synthetic transport for first preview, not production. Original ordered27 CSS indexed by placeholders: shared mixed base/final layers once; page-exclusive subset on route. Need actual fixed build and original QA, not yet served. C browser strict pass once on current ready graph; F1 continues SALE, F2 edits separately. F1 entry/runtime-host current prepareRoute hook is acknowledged handed delta; source171 otherfour pins unchanged.
+
+C181 actual original service category CREATE3+REORDER+UNDO/receipt/replay/conflicts passed0/3.6247s,17 business SQL/0DDL, original current issuerPRODUCT_MAINTENANCE, leases16 all released, original categories/other17 counts/oldQA/9 services preserved. Original QB next finiteactual. V17 source346 acceptedQB254, actual product transaction pending.
+
+D3 inventory exact2 removes actual repeated page balance catalog CTE and linear membership scans;29 directed checks reused. Same decoded bytes model100=8.60MB/200=17.20MB/500=42.99MB; no credible modelCPU speedup/realPG measurement, no claim large response solved. F2 new output async consumption + F1 workbook rows/single ZIP next explicitly owned; product hidden heavy tabs next; preserve full data/EOF/cancel and Demo shape. Historical list summary seam assigned originalD3/F1, never client merge two pages/approx totals/N+1 detail preload. Final same-authorized formal release remains after actual whole-scope readiness, existing v5 human decision still separate.
+
 SOURCE346 V17 SOURCE READY / REAL QA STILL PENDING
 
 Original D2 delivered exact nine leaves implementing approved optional skuSelection(colorIds,fitIds) on original V2 CREATE/EDIT; existing skus/barcodes and old requests preserved, explicit stored group boundary and original atomic semantics. Owner new6 directed cases and strict types passed, no actual Postgres/HTTP/browser/performance/release claim. Original F2 consumes same contract on copied Demo UI; C fixes source then original QB new scope, actual C isolated QA next. Existing current37/67 second-phase whole-page UI/real-business/formal release remain incomplete.

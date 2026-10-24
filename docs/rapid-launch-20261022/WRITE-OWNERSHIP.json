@@ -5125,5 +5125,25 @@
       "runtimeReady": true,
       "httpEvidence": "K/reports/controller/rapid-launch-20261022/demo-replica-phase1/HTTP-RUNTIME-03.json"
     }
+  },
+  "phase2IntegrationIncrement": {
+    "atUtc": "2026-10-24T18:53:33.739314+00:00",
+    "C": [
+      "apps/web/demo-replica/frontend/runtime-bootstrap.ts",
+      "apps/web/demo-replica/frontend/runtime-styles.ts",
+      "apps/web/demo-replica/frontend/runtime.html",
+      "apps/web/demo-replica/vite.runtime.config.mjs",
+      "apps/web/demo-replica/tsconfig.runtime.json",
+      "tsconfig.json"
+    ],
+    "F2_original_output_extension": [
+      "apps/web/src/inventory/output-adapter.ts",
+      "apps/web/src/inventory/contracts.ts"
+    ],
+    "F1_output_next": [
+      "apps/web/demo-replica/frontend/runtime/common/original-workbook.ts",
+      "apps/web/demo-replica/frontend/runtime/entry.tsx"
+    ],
+    "rule": "One writer; F2 async NDJSON/product consumption and F1 async workbook rows seam; no DTO/server/write change without exact coordination; current product editor/SALE not blocked."
   }
 }

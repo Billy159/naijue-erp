@@ -1,0 +1,12 @@
+import '@arco-design/web-react/dist/css/arco.css';
+import {createReplicaSession,mountNormalReplica,createReplicaWorkbook} from './runtime/entry.tsx';
+import {prepareReplicaStyles} from './runtime-styles.ts';
+import type {ProductionHostConfiguration} from '../../src/production-host/configuration.ts';
+const {createSyntheticUnifiedTransport}=await import('../../unified-browser-harness/synthetic-transport.ts');
+const transport=createSyntheticUnifiedTransport();transport.authorize();
+const session=createReplicaSession(transport.http);
+const routes:ProductionHostConfiguration['routes']={inventory:true,sales:false,transfers:false,inventoryLedger:true,products:true,productFullPage:true,productCategories:true,barcodeSchemes:true,productSettings:{colors:true,fits:true,groups:true,seasons:true,initialTab:'colors'},storeSettings:{allowedTabs:['stores','warehouses'],initialTab:'stores',allowHallDirectoryRead:true},parties:{readOnly:true},staffSettings:true,accountSettings:true,paymentSettings:true};
+const element=(selector:string)=>{const node=document.querySelector<HTMLElement>(selector);if(!node)throw new Error('Missing copied host '+selector);return node;};
+const ledger=document.getElementById('gold-drawer');if(!(ledger instanceof HTMLDialogElement))throw new Error('Missing native ledger host');
+const runtime=mountNormalReplica({session,routes,newRequestKey:()=>crypto.randomUUID(),inventory:{ledgerDialog:ledger,createWorkbook:createReplicaWorkbook},catalogue:{onChanged:()=>{}},page:element('#page'),accountHost:element('.basic-account'),app:element('.app'),breadcrumb:element('#breadcrumb'),transportMode:'approved-synthetic',prepareRoute:prepareReplicaStyles});
+Object.defineProperty(window,'NAIJUE_REPLICA_PREVIEW',{value:Object.freeze({syntheticOnly:true,runtime,calls:transport.calls}),configurable:false});

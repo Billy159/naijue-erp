@@ -235,31 +235,31 @@ async function verifyCandidateMembership(query: Query, values: unknown[], kind: 
   integrity(!booleanValue(row.missing_sizes) && !booleanValue(row.invalid_category_tree) && !booleanValue(row.invalid_sku_size), "Returned native candidate catalogue relationships are inconsistent");
 }
 
-interface ProductFacts { readonly row: Row; readonly id: string; readonly groupId: string; readonly sizes: InventorySelection[]; readonly skus: SkuFacts[] }
+interface ProductFacts { readonly row: Row; readonly id: string; readonly groupId: string; readonly sizes: InventorySelection[]; readonly sizeIds: Set<string>; readonly skus: SkuFacts[] }
 interface SkuFacts { readonly id: string; readonly color: InventorySelection; readonly fit: InventorySelection; readonly sizeId: string }
 function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], skuRows: readonly Row[], balanceRows: readonly Row[], scope: InventoryReadScope): InventoryQueryProduct[] {
   const products = new Map<string, ProductFacts>();
   for (const row of productRows) {
     const productId = id("product", row.id); integrity(!products.has(productId), "Repeated native product identity");
-    products.set(productId, { row, id: productId, groupId: id("sizeGroup", row.size_group_id), sizes: [], skus: [] });
+    products.set(productId, { row, id: productId, groupId: id("sizeGroup", row.size_group_id), sizes: [], sizeIds: new Set(), skus: [] });
   }
   for (const row of sizeRows) {
     const product = products.get(id("product", row.product_id)); const sizeId = id("size", row.size_id);
-    integrity(product && product.groupId === id("sizeGroup", row.size_group_id) && !product.sizes.some(size => size.id === sizeId), "Invalid page size-group membership");
-    integerValue(row.display_order); product.sizes.push({ id: sizeId, label: label(row.size_name) });
+    integrity(product && product.groupId === id("sizeGroup", row.size_group_id) && !product.sizeIds.has(sizeId), "Invalid page size-group membership");
+    integerValue(row.display_order); product.sizeIds.add(sizeId); product.sizes.push({ id: sizeId, label: label(row.size_name) });
   }
   const skuIds = new Set<string>(); const coordinates = new Set<string>();
   for (const row of skuRows) {
     const product = products.get(id("product", row.product_id)); const skuId = id("sku", row.id); const sizeId = id("size", row.size_id);
     const color = { id: id("color", row.color_id), label: label(row.color_name) }; const fit = { id: id("fit", row.fit_id), label: label(row.fit_name) };
     const coordinate = JSON.stringify([product?.id, color.id, fit.id, sizeId]);
-    integrity(product && product.sizes.some(size => size.id === sizeId) && !skuIds.has(skuId) && !coordinates.has(coordinate), "Native SKU identity or coordinate is inconsistent");
+    integrity(product && product.sizeIds.has(sizeId) && !skuIds.has(skuId) && !coordinates.has(coordinate), "Native SKU identity or coordinate is inconsistent");
     skuIds.add(skuId); coordinates.add(coordinate); product.skus.push({ id: skuId, color, fit, sizeId });
   }
-  const balances = new Map<string, string>();
+  const balances = new Map<string, string>(), warehouseIds = new Set<string>(scope.warehouses.map(warehouse => warehouse.id));
   for (const row of balanceRows) {
     const warehouseId = id("warehouse", row.warehouse_id); const skuId = id("sku", row.sku_id); const key = `${warehouseId}:${skuId}`;
-    integrity(scope.warehouses.some(warehouse => warehouse.id === warehouseId) && skuIds.has(skuId) && !balances.has(key), "Page balance is outside its requested formal key");
+    integrity(warehouseIds.has(warehouseId) && skuIds.has(skuId) && !balances.has(key), "Page balance is outside its requested formal key");
     versionFromSql(row.version); id("operation", row.last_operation_id);
     balances.set(key, quantityFromSql(row.quantity).toString());
   }
@@ -307,7 +307,7 @@ const productSelection = (seasonArray: boolean) => `SELECT p.id, p.product_code,
           su.name AS supplier_name, se.name AS season_name FROM matched_products mp JOIN naijue_erp.product p ON p.id = mp.id
         JOIN naijue_erp.product_category c ON c.id = p.category_id JOIN naijue_erp.size_group g ON g.id = p.size_group_id
         LEFT JOIN naijue_erp.supplier su ON su.id = p.supplier_id ${productSeasonLabelJoin(seasonArray)}`;
-async function productMatrices(query: Query, values: unknown[], products: Row[], input: InventoryQuery, scope: InventoryReadScope, seasonArray: boolean): Promise<InventoryQueryProduct[]> {
+async function productMatrices(query: Query, products: Row[], input: InventoryQuery, scope: InventoryReadScope): Promise<InventoryQueryProduct[]> {
   bounded(products, input.pageSize); const pageIds = products.map(row => id("product", row.id));
   let sizes: Row[] = []; let skus: Row[] = []; let balances: Row[] = [];
   if (pageIds.length) {
@@ -323,11 +323,15 @@ async function productMatrices(query: Query, values: unknown[], products: Row[],
       ORDER BY p.id, c.code COLLATE "C", c.id, f.code COLLATE "C", f.id, m.display_order, s.size_id, s.id LIMIT $3`,
     [pageIds, input.filter.fitIds, INVENTORY_READ_MAX_PAGE_SKUS + 1])).rows;
     bounded(skus, INVENTORY_READ_MAX_PAGE_SKUS);
-    balances = (await query(`/* inventory:balances */ ${catalog(seasonArray)}
+    // The complete filter/admission proof and these exact page SKU identities
+    // already belong to this RR snapshot. Do not repeat the catalogue scan for
+    // sparse balances; retain the authorized warehouse/hall intersection in SQL.
+    balances = (await query(`/* inventory:balances */
       SELECT b.warehouse_id, b.sku_id, b.quantity::text, b.version, b.last_operation_id FROM naijue_erp.inventory_balance b
-      JOIN filtered_skus s ON s.id = b.sku_id JOIN authorized_warehouses w ON w.id = b.warehouse_id
-      WHERE s.product_id = ANY($9::uuid[]) ORDER BY b.warehouse_id, b.sku_id LIMIT $10`,
-    [...values, pageIds, INVENTORY_READ_MAX_PAGE_BALANCES + 1])).rows;
+      JOIN naijue_erp.warehouse w ON w.id = b.warehouse_id
+      WHERE w.id = ANY($1::uuid[]) AND w.hall_id = ANY($2::uuid[]) AND b.sku_id = ANY($3::uuid[])
+      ORDER BY b.warehouse_id, b.sku_id LIMIT $4`,
+    [scope.warehouses.map(warehouse => warehouse.id), scope.hallIds, skus.map(row => id("sku", row.id)), INVENTORY_READ_MAX_PAGE_BALANCES + 1])).rows;
     bounded(balances, INVENTORY_READ_MAX_PAGE_BALANCES);
   }
   return pageProducts(products, sizes, skus, balances, scope);
@@ -394,7 +398,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
         const products = (await query(`/* inventory:output-products */ ${catalog(seasonArray)} ${productSelection(seasonArray)}
           WHERE ($9::text IS NULL OR (p.product_code COLLATE "C",p.id) > ($9::text COLLATE "C",$10::uuid))
           ORDER BY p.product_code COLLATE "C",p.id LIMIT $11`, [...values, lastCode, lastId, 100])).rows;
-        const pageInput = { ...input, page: count / 100 + 1 }, matrices = await productMatrices(query, values, products, input, scope, seasonArray);
+        const pageInput = { ...input, page: count / 100 + 1 }, matrices = await productMatrices(query, products, input, scope);
         const page = checkedInventorySnapshot({ readReference, readiness: "ready", data: { page: pageInput.page, pageSize: 100, exactTotalProducts: status.exactTotal,
           products: matrices, warehouseLabels, allMatchesTotal: status.allMatchesTotal, readReference } }, pageInput, scope).data;
         for (const product of page.products) {
@@ -417,7 +421,7 @@ export class PostgresInventoryQueryReader implements TrustedInventorySnapshotRea
       const products = (await query(`/* inventory:products */ ${catalog(this.seasonArray)}
         ${productSelection(this.seasonArray)}
         ORDER BY p.product_code COLLATE "C", p.id LIMIT $9 OFFSET $10::bigint`, [...values, input.pageSize, String((input.page - 1) * input.pageSize)])).rows;
-      const matrices = await productMatrices(query, values, products, input, scope, this.seasonArray);
+      const matrices = await productMatrices(query, products, input, scope);
       const readReference = `inventory:${randomUUID()}`;
       return checkedInventorySnapshot({ readReference, readiness: "ready", data: { page: input.page, pageSize: input.pageSize, exactTotalProducts: status.exactTotal,
         products: matrices, warehouseLabels: scope.warehouses.map(row => row.label), allMatchesTotal: status.allMatchesTotal, readReference } }, input, scope);

@@ -1,0 +1,72 @@
+{
+  "parent": "3bf526cd475c7ff96958818b87057a1ae76483a9",
+  "atUtc": "2026-10-24T18:53:33.823516+00:00",
+  "status": "WIP_NORMAL_RUNTIME_BUILD_INPUT_NOT_BROWSER_OR_REAL_BUSINESS",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/entry.tsx",
+      "bytes": 1502,
+      "sha256": "3d19ec4b7b705c4850109adc0229ce11a5fb88b2fca501739e3538b510d6a68c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/ready-pages.tsx",
+      "bytes": 13108,
+      "sha256": "8dde65f22fb0b684ccffcbe3e5bccc6a83cc419c27f14becbb74056ad7361078"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx",
+      "bytes": 13038,
+      "sha256": "b68546c742513c2032cf340aa268775e374725c86b6bcfd37d7875a409f6f1d9"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/source-helpers.tsx",
+      "bytes": 5956,
+      "sha256": "2d92d57b565b9f576f9ab8335a8536e99146134044ff30fb8a1080987c5d5e2b"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/common/original-workbook.ts",
+      "bytes": 4214,
+      "sha256": "cbe8b0b3a10811eb81cc6d5400ed373f2be426f30cf53f41450873db966eca9f"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-query-reader.ts",
+      "bytes": 43163,
+      "sha256": "bb678657f8632240f7d03923c731cc0d4ca0fe0190ba08deec5f3d4292f2e1f3"
+    },
+    {
+      "path": "tests/inventory-query-postgres-protocol.test.ts",
+      "bytes": 67684,
+      "sha256": "84b9a7c0a6bb2b2c6382ac5b791c0c72f9795c36fa27f316bea2d8f734d8b4a8"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime-bootstrap.ts",
+      "bytes": 1827,
+      "sha256": "1b3a5c00cb0464c8ee71c0b9d5c7f04ae2b5a6cae3aa45dea3b01b97c0c8bcc1"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime-styles.ts",
+      "bytes": 3139,
+      "sha256": "46211769ae92a69bc18957fc65e1e262e6f290eab73b33e34dc69922a8128a80"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime.html",
+      "bytes": 2974,
+      "sha256": "a04442924f6714a44106b469713d1431a852eea6ab43cd6f2a9fd23ab22f6a07"
+    },
+    {
+      "path": "apps/web/demo-replica/vite.runtime.config.mjs",
+      "bytes": 2478,
+      "sha256": "24c52cf5f557fbf463bce5663dd99709cfd1f732061a13a6c3f5c16c45003c96"
+    },
+    {
+      "path": "apps/web/demo-replica/tsconfig.runtime.json",
+      "bytes": 838,
+      "sha256": "5bb88e21dcca54b73283c848113172713e7c119c28764cc417252bc17f6d3c29"
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 887,
+      "sha256": "f4c6a998a6ab30d0a53736288d40192d67398ef4442eceeabbb3f8dd5ef0ce87"
+    }
+  ]
+}
