@@ -9,13 +9,13 @@ import { createProductionApplicationApi, createProductionRuntime26ApplicationApi
 import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration } from "./production-provider-composition.ts";
 import { createProductionRuntime26R3ApplicationApi, parseProductionRuntime26R3Configuration, createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
 import type { ProductionRuntime26R3Configuration, ProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
-import { runProductionMain } from "./production-main.ts";
+import { runProductionMain, runProductionRuntime26Main } from "./production-main.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { createHash, pbkdf2Sync } from "node:crypto";
-import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
-import { NATIVE_RUNTIME26_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
+import { dirname as pathDirectory, join } from "node:path";
+import { NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
 import { historyDetailQuery, historyListQuery } from "../../../tests/support/imported-history-query-fixtures.ts";
 import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
 import { createPostgresApplicationApi, createPostgresRuntime26DocumentApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
@@ -557,4 +557,89 @@ test("production R3 media: real private stage, original prepared transaction, ri
     } finally { await api.close(); }
     assert.equal(p.counts().ends, 1);
   } finally { f.cleanup(); rmSync(root, { recursive: true, force: true }); }
+});
+
+/** Approved CORE configuration uses synthetic pinned review/proof only, never real data or a listener. */
+function coreProductionFixture() {
+  const f = exact26Fixture(["CURRENT_FORM_READ"]), review = JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile, "utf8"));
+  review.catalog.patchLevel = "26_v14_core_initialization";
+  const body = JSON.stringify(review); writeFileSync(f.configuration.runtime26Review.reviewFile, body, { mode: 0o600 });
+  const id = (i: number) => `14000000-0000-4000-8000-${String(i).padStart(12, "0")}`;
+  const parties: import("../../../packages/application/src/inventory-cutoff-import.ts").CoreSourceMember[] = [];
+  for (const [entity, count] of [["STAFF", 49], ["HALL", 22], ["WAREHOUSE", 22], ["CUSTOMER", 22]] as const)
+    for (let i = 0; i < count; i++) { const n = parties.length + 1; parties.push({ entity, sourceKey: `SYNTHETIC_${entity}_${i}`, sourceRowId: id(n),
+      nativeId: entity === "STAFF" && i === 0 ? "00000000-0000-4000-8000-000000000003" : entity === "HALL" && i === 0 ? hall : id(n + 1000) }); }
+  const now = new Date().toISOString();
+  const coreSourceMembers = { parties, accounts: parties.filter(p => p.entity === "STAFF").map((p, i) => ({ id: i === 0 ? account : id(2000 + i), staff_id: p.nativeId,
+    login_enabled: true, auth_version: 1 as const, version: 1 as const, created_at: now, updated_at: now })) };
+  const configuration: ProductionRuntime26Configuration = { ...f.configuration,
+    runtime26Review: { ...f.configuration.runtime26Review, trustedReviewSha256: createHash("sha256").update(body).digest("hex") },
+    coreInitializationRead: { profile: "COMMITTED_CORE_SETTINGS_V14", batchId: id(3000), operationId: id(3001), coreSourceDigest: "c".repeat(64) } };
+  return { ...f, configuration, coreSourceMembers };
+}
+test("production CORE v14: strict R1 configuration consumes only the exact committed binding; legacy and other provider profiles reject it", async () => {
+  const f = coreProductionFixture(); try {
+    const copy = parseProductionRuntime26Configuration(f.configuration); assert.deepEqual(copy, f.configuration);
+    assert.notEqual(copy.coreInitializationRead, f.configuration.coreInitializationRead);
+    assert.throws(() => parseProductionRuntimeConfiguration(f.configuration));
+    assert.throws(() => parseProductionRuntime26R2Configuration({ ...r2Configuration(f.configuration), coreInitializationRead: f.configuration.coreInitializationRead }));
+    assert.throws(() => parseProductionRuntime26R3Configuration({ ...r3Configuration(f.configuration, "/unopened"), coreInitializationRead: f.configuration.coreInitializationRead }));
+    for (const core of [undefined, true, { ...f.configuration.coreInitializationRead, extra: true }, { ...f.configuration.coreInitializationRead, coreSourceDigest: "not-a-digest" },
+      { ...f.configuration.coreInitializationRead, operationId: "not-an-id" }, { ...f.configuration.coreInitializationRead, profile: "ALL" }])
+      assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, coreInitializationRead: core }));
+    let allocations = 0;
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, currentForms: {} }, () => { allocations++; throw Error("must not allocate"); }));
+    assert.equal(allocations, 0);
+  } finally { f.cleanup(); }
+});
+test("production CORE v14: actual production factory retains legacy login and same-RR member proof with only auth and exact settings routes", async () => {
+  const f = coreProductionFixture(), password = "123456", salt = "d".repeat(48);
+  const wrapper = wrapTrustedLegacyCredential({ salt, hash: pbkdf2Sync(password, salt, 210000, 32, "sha256").toString("hex") });
+  let sourcesMatch = true, directoryRole = "ADMIN", insertedSessions = 0;
+  const warehouse = f.coreSourceMembers.parties.find(p => p.entity === "WAREHOUSE")!.nativeId;
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql === NATIVE_RUNTIME26_V14_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes("core-settings:committed-proof")) return [{ after_values: { coreSourceMembers: f.coreSourceMembers }, sources_match: sourcesMatch, claims_match: true }];
+    if (sql.includes("core-settings:current-identity")) return [{ id: account, staff_id: f.coreSourceMembers.accounts[0]!.staff_id, login_enabled: true, role: directoryRole, employment_status: "在职", hall_id: hall, hall_enabled: true }];
+    if (sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s")) return [{ account_id: account, staff_id: f.coreSourceMembers.accounts[0]!.staff_id,
+      login_name: "SYNTHETIC_CORE_LOGIN", password_hash: wrapper, login_enabled: true, auth_version: 1, role: "ADMIN", employment_status: "在职", hall_id: hall }];
+    if (sql.includes("INSERT INTO naijue_erp.auth_session")) { insertedSessions++; return [{}]; }
+    if (sql.includes("FROM naijue_erp.warehouse n")) {
+      assert.equal(values[0], false); assert.equal((values[1] as string[]).length, 22); assert.ok((values[1] as string[]).includes(warehouse));
+      assert.match(sql, /n\.id = ANY\(\$2::uuid\[\]\)/); assert.equal((values[3] as string[]).length, 22);
+      return values[2] === warehouse ? [{ id: warehouse, name: "SYNTHETIC_CORE_WAREHOUSE", enabled: true, version: 1, hall_id: hall, hall_name: "SYNTHETIC_CORE_HALL" }] : [];
+    }
+    return undefined;
+  });
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try {
+      assert.equal(api.app.server.listening, false); assert.equal(p.counts().allocations, 1);
+      for (const url of ["/auth/login", "/auth/logout", "/auth/password", "/store-settings-read/stores/query", "/store-settings-read/stores/detail/query", "/store-settings-read/warehouses/query", "/store-settings-read/warehouses/detail/query"])
+        assert.equal(api.app.hasRoute({ method: "POST", url }), true, url);
+      for (const url of ["/inventory/query", "/inventory/ledger/query", "/products/query", "/products/barcodes/query", "/sales/query", "/transfers/query", "/sales/commands", "/transfers/commands", "/products/v2/commands", "/current-form/products/query", "/imported-history/sales/query", "/imported-history/transfers/query", "/catalogue-settings-read/categories/tree/query"])
+        assert.equal(api.app.hasRoute({ method: "POST", url }), false, url);
+      const login = await api.app.inject({ method: "POST", url: "/auth/login", headers: { origin: PRODUCTION_PUBLIC_ORIGIN }, payload: { loginName: "SYNTHETIC_CORE_LOGIN", password } });
+      assert.equal(login.statusCode, 200, login.body); assert.equal(insertedSessions, 1); assert.ok(!login.body.includes(password) && !login.body.includes(wrapper));
+      const request = { method: "POST" as const, url: "/store-settings-read/warehouses/detail/query", headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` }, payload: { id: warehouse } };
+      const response = await api.app.inject(request); assert.equal(response.statusCode, 200, response.body); assert.equal(response.json().item.id, warehouse);
+      const data = p.calls.find(call => call.sql.includes("FROM naijue_erp.warehouse n"))!;
+      const rr = p.calls.filter(call => call.lease === data.lease), start = rr.findIndex(call => call.sql.startsWith("BEGIN"));
+      assert.match(rr[start]!.sql, /REPEATABLE READ/); assert.ok(rr.findIndex(call => call.sql.includes("core-settings:committed-proof")) > start);
+      assert.ok(rr.findIndex(call => call.sql.includes("core-settings:committed-proof")) < rr.findIndex(call => call.sql.includes("FROM naijue_erp.warehouse n")));
+      const before = p.calls.filter(call => call.sql.includes("FROM naijue_erp.warehouse n")).length;
+      sourcesMatch = false; assert.equal((await api.app.inject(request)).statusCode, 403);
+      sourcesMatch = true; directoryRole = "SALESPERSON"; assert.equal((await api.app.inject(request)).statusCode, 403);
+      assert.equal(p.calls.filter(call => call.sql.includes("FROM naijue_erp.warehouse n")).length, before);
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+test("production CORE v14: original exact26 main accepts the private CORE config and reaches metadata file loading before any database or listener", async () => {
+  const f = coreProductionFixture(); try {
+    const filename = join(pathDirectory(f.configuration.runtime26Review.reviewFile), "private-core-main.json");
+    const missing = join(pathDirectory(filename), "missing-core-metadata-review.json");
+    writeFileSync(filename, JSON.stringify({ ...f.configuration, runtime26Review: { ...f.configuration.runtime26Review, reviewFile: missing } }), { mode: 0o600 });
+    await assert.rejects(runProductionRuntime26Main([realpathSync(filename)]), (error: unknown) => (error as NodeJS.ErrnoException).code === "ENOENT");
+  } finally { f.cleanup(); }
 });

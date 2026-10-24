@@ -11,7 +11,7 @@ import { entityId } from "../../../packages/domain/src/values.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26MediaApplicationApi, createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
-import type { PostgresApplicationApiOptions, PostgresApplicationApi } from "./postgres-read-api.ts";
+import type { PostgresApplicationApiOptions, PostgresApplicationApi, CommittedCoreReadBinding } from "./postgres-read-api.ts";
 
 export const PRODUCTION_PUBLIC_ORIGIN = "https://1n5635n614.goho.co";
 export interface ProductionRuntimeConfiguration {
@@ -89,28 +89,45 @@ export interface ProductionRuntime26Configuration extends Omit<ProductionRuntime
   readonly profile: "source-confirmed-native-exact26-r1-v1";
   readonly documentCommands: "DISABLED";
   readonly runtime26Review: { readonly reviewFile: string; readonly trustedReviewSha256: string };
+  /** Approved v14 only: real committed CORE identity, supplied by the deployment owner. */
+  readonly coreInitializationRead?: CommittedCoreReadBinding;
 }
 export function parseProductionRuntime26Configuration(input: unknown): ProductionRuntime26Configuration {
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review"]);
+  const coreSelected = input !== null && typeof input === "object" && Object.hasOwn(input, "coreInitializationRead");
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", ...(coreSelected ? ["coreInitializationRead"] : [])]);
   const review = bag(c.runtime26Review, ["reviewFile", "trustedReviewSha256"]);
   if (c.profile !== "source-confirmed-native-exact26-r1-v1" || c.documentCommands !== "DISABLED"
     || !text(review.reviewFile) || !path.isAbsolute(review.reviewFile) || path.resolve(review.reviewFile) !== review.reviewFile
     || typeof review.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(review.trustedReviewSha256))
     throw new TypeError("Explicit exact26 R1 profile, disabled commands and closed independent review pin required");
-  const { runtime26Review: _review, ...base } = c;
+  let coreInitializationRead: CommittedCoreReadBinding | undefined;
+  if (coreSelected) {
+    const core = bag(c.coreInitializationRead, ["profile", "batchId", "operationId", "coreSourceDigest"]);
+    entityId("operation", core.batchId as string); entityId("operation", core.operationId as string);
+    if (core.profile !== "COMMITTED_CORE_SETTINGS_V14" || typeof core.coreSourceDigest !== "string" || !/^[a-f0-9]{64}$/.test(core.coreSourceDigest))
+      throw new TypeError("Exact committed CORE receipt, batch and input digest required");
+    coreInitializationRead = structuredClone(core) as unknown as CommittedCoreReadBinding;
+  }
+  const { runtime26Review: _review, coreInitializationRead: _core, ...base } = c;
   const checked = parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
   return { ...checked, profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",
-    runtime26Review: { reviewFile: review.reviewFile, trustedReviewSha256: review.trustedReviewSha256 } };
+    runtime26Review: { reviewFile: review.reviewFile, trustedReviewSha256: review.trustedReviewSha256 },
+    ...(coreInitializationRead === undefined ? {} : { coreInitializationRead }) };
 }
 /** Host-only adaptation after explicit successor validation. The metadata review
  * never enters public build/health output or the legacy application factory. */
 export function productionRuntime26HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
-  const { runtime26Review: _review, ...base } = parseProductionRuntime26Configuration(input);
+  const { runtime26Review: _review, coreInitializationRead: _core, ...base } = parseProductionRuntime26Configuration(input);
   return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
 }
 export async function createProductionRuntime26ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26Configuration(input);
-  return createPostgresRuntime26ApplicationApi(productionApplicationOptions(productionRuntime26HostConfiguration(config)), config.runtime26Review, driver);
+  const options = productionApplicationOptions(productionRuntime26HostConfiguration(config));
+  if (config.coreInitializationRead !== undefined) {
+    const { nativeReadExtensions: _extensions, currentForms: _forms, ...coreOptions } = options;
+    return createPostgresRuntime26ApplicationApi({ ...coreOptions, coreInitializationRead: config.coreInitializationRead }, config.runtime26Review, driver);
+  }
+  return createPostgresRuntime26ApplicationApi(options, config.runtime26Review, driver);
 }
 
 /** Explicit R2 command entry. Neither old19 nor R1 accepts these selectors. */

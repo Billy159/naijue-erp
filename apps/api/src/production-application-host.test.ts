@@ -184,3 +184,19 @@ test("production assets: configured build prefix resolves generated public URLs 
     assert.deepEqual(p.routed, []);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+test("production CORE v14 host: original handler accepts committed subset configuration while health/assets exclude CORE identity and metadata", async () => {
+  const root = await build(), p = apiDouble();
+  try {
+    const configuration = { ...exact26Config(root), coreInitializationRead: { profile: "COMMITTED_CORE_SETTINGS_V14" as const,
+      batchId: "14000000-0000-4000-8000-000000003000", operationId: "14000000-0000-4000-8000-000000003001", coreSourceDigest: "c".repeat(64) } };
+    const handle = await createProductionRuntime26RequestHandler({ api: p.api, configuration });
+    assert.equal(invoke(handle, "/api/store-settings-read/warehouses/query", "POST").body, "API404");
+    assert.equal(invoke(handle, "/assets/app.js").body, "SYNTHETIC_EMITTED_BUILD_ONLY");
+    const health = invoke(handle, "/healthz").body!, parsed = JSON.parse(health);
+    assert.equal(parsed.databaseChecked, false); assert.equal(parsed.dataReady, undefined); assert.equal(parsed.businessReady, undefined);
+    for (const privateValue of ["coreInitializationRead", configuration.coreInitializationRead.operationId, configuration.coreInitializationRead.batchId, configuration.coreInitializationRead.coreSourceDigest, configuration.runtime26Review.reviewFile])
+      assert.ok(!health.includes(privateValue));
+    assert.equal(p.closed(), 0); assert.equal(p.api.app.server.listening, false);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

@@ -1,0 +1,142 @@
+{
+  "atUtc": "2026-10-24T02:07:16.601240+00:00",
+  "parent": "62435e5f0cd4fd6c7bc85d2c202985a6291da342",
+  "taskId": "V14_CORE_REAL_PRODUCTION_CONFIGURATION_FACTORY_ENTRY",
+  "files": [
+    {
+      "path": "apps/api/src/production-provider-composition.ts",
+      "bytes": 15732,
+      "sha256": "3a6823461cd7de745ef72bb871a568f5fd4312822110e04e5853cc6514820fbd",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "bytes": 61036,
+      "sha256": "48a011cb80bc43215466bb8a846378d28bf6f353ae5ebb9cf1ce79b1c5b82d61",
+      "owner": "D1"
+    },
+    {
+      "path": "apps/api/src/production-application-host.test.ts",
+      "bytes": 17358,
+      "sha256": "14561b0a8914dbb3600612c4a17517de201eba4fa28b67a1855baff97e00ccd2",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V14-CORE-PRODUCTION-HOST-WIRING-v1.json",
+  "ownerReceiptSha256AtPin": "0d3e9f168d9dae43ff205169567db27676479a3404bd1f3065eaa5ff9f89c55a",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1_B01_V14_CORE_PRODUCTION_HOST_WIRING_V1",
+      "atUtc": "2026-10-24T02:05:45.334150+00:00",
+      "model": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false,
+      "reportingAuthority": "01a161f7-a5e8-7e10-9059-9537c28910c2 / REPORTING-AUTHORIZATION.json",
+      "writeContractAuthority": "Approved exact v14 /01a16b7f-3cf4-7041-b338-0aa2e693001b"
+    },
+    "completedScope": {
+      "status": "SOURCE_PRODUCTION_ENTRY_WIRING_COMPLETE_TARGETED_PROTOCOL_AND_STRICT_PASS_NO_ACTUAL_STARTUP",
+      "actualGap": "Existing strict ProductionRuntime26Configuration rejected coreInitializationRead and its factory always composed full nativeReadExtensions/currentForms. The existing main/HTTP host chain already called this exact parser/factory/adapter; no new listener or CLI was needed.",
+      "implemented": "Only the original R1 production parser adds the already approved optional CommittedCoreReadBinding. The same production factory removes full read extensions/current forms when present, forwards the exact CORE binding and original trusted metadata review to existing createPostgresRuntime26ApplicationApi. It retains original source-auth policy and legacy-pbkdf2-v1 opt-in.",
+      "publicBoundary": "The existing productionRuntime26HostConfiguration strips both runtime26Review and coreInitializationRead before delegating to original asset/API handler. Private receipt/digest metadata does not enter assets/health/startup log. No readiness flags changed.",
+      "mutualExclusion": "Legacy/R2/R3 closed parsers reject CORE binding; R1 commands remain DISABLED. Extra currentForms/providers/media/write selectors remain rejected. The approved API branch mounts only authentication/self-password and exact22 settings via D2 same-RR capability.",
+      "unchangedConsumers": [
+        {
+          "path": "apps/api/src/production-main.ts",
+          "bytes": 8206,
+          "sha256": "4ceeecb54768cb57f67060c13c4e4e75feeeecb0cf9737940e416b190d962489"
+        },
+        {
+          "path": "apps/api/src/production-application-host.ts",
+          "bytes": 13876,
+          "sha256": "46769b91b38ac8a94c0f7c08b4ffcfd3ba56b67d7ad886ad65b63f13b59a4bd1"
+        }
+      ],
+      "seam": {
+        "configurationProfile": "source-confirmed-native-exact26-r1-v1",
+        "documentCommands": "DISABLED",
+        "optionalField": {
+          "coreInitializationRead": {
+            "profile": "COMMITTED_CORE_SETTINGS_V14",
+            "batchId": "C supplies real original batch UUID",
+            "operationId": "C supplies actual committed CORE receipt UUID",
+            "coreSourceDigest": "C supplies original approved CORE input digest"
+          }
+        },
+        "metadata": "Original private runtime26Review pair; independently reviewed actual v14 target/catalog/role/purpose. Source values are never fabricated.",
+        "actualChain": [
+          "production-main.ts existing --exact26-r1 -> runProductionRuntime26Main(privatePath)",
+          "parseProductionRuntime26Configuration -> createProductionRuntime26ApplicationApi",
+          "same createPostgresRuntime26ApplicationApi -> original authentication and committed CORE settings provider",
+          "startProductionRuntime26ApplicationHost -> productionRuntime26HostConfiguration -> original production listener/handler"
+        ],
+        "runtimeTechnicalPurpose": "CURRENT_FORM_READ only for this CORE composition; per-request current principal and committed source/member proof remain independent mandatory checks"
+      }
+    },
+    "changedFiles": [
+      {
+        "path": "apps/api/src/production-provider-composition.ts",
+        "bytes": 15732,
+        "sha256": "3a6823461cd7de745ef72bb871a568f5fd4312822110e04e5853cc6514820fbd"
+      },
+      {
+        "path": "apps/api/src/production-provider-composition.test.ts",
+        "bytes": 61036,
+        "sha256": "48a011cb80bc43215466bb8a846378d28bf6f353ae5ebb9cf1ce79b1c5b82d61"
+      },
+      {
+        "path": "apps/api/src/production-application-host.test.ts",
+        "bytes": 17358,
+        "sha256": "14561b0a8914dbb3600612c4a17517de201eba4fa28b67a1855baff97e00ccd2"
+      }
+    ],
+    "checks": {
+      "newUniqueScopes": 4,
+      "newPassed": 4,
+      "affectedOldScopes": 2,
+      "affectedPassed": 2,
+      "skips": 0,
+      "newScopes": [
+        "Closed R1 production config/isolated cloned CORE binding/rejection by other profiles and unknown selectors before allocation",
+        "Actual production factory composition with synthetic v14 pinned metadata: original legacy-password verifier accepts synthetic login; authentication/self-password/settings routes present, business/current/history/product/write routes absent; exact22 warehouse IDs and same-RR proof precede data; source drift/SALESPERSON deny before data",
+        "Original runProductionRuntime26Main consumes canonical private synthetic CORE config and reaches missing metadata review ENOENT before any database connection/listener",
+        "Original production handler CORE config adaptation keeps assets/API behavior while excluding private CORE IDs/digest/review path from health; databaseChecked remains false"
+      ],
+      "affectedScopes": [
+        "Original R1 strict profile rejects legacy/command/review/provider widening before allocation",
+        "Original exact26 host adapter preserves public asset/API boundary and hides metadata"
+      ],
+      "strict": {
+        "roots": [
+          "apps/api/src/production-main.ts",
+          "apps/api/src/production-provider-composition.test.ts",
+          "apps/api/src/production-application-host.test.ts"
+        ],
+        "exitCode": 0,
+        "scope": "Original strict ES2023/NodeNext noEmit flags and complete imported dependency graph",
+        "toolChunk": "dba8cd"
+      },
+      "initialFailure": "Only new main-entry test initially supplied a /var temporary path whose realpath is /private/var. Original canonical private-file boundary correctly rejected it. New fixture now supplies realpathSync(filename); only that failed scope rerun passed. Production path validation was not relaxed.",
+      "realDatabaseQueries": 0,
+      "listenersOpened": 0,
+      "sshOperations": 0,
+      "builds": 0,
+      "gitOperations": 0,
+      "browserOperations": 0,
+      "realCredentialsOrSourcePayloadRead": false,
+      "newDdlOrWriteSemantics": false,
+      "registeredLeafBoundariesPreserved": true
+    },
+    "notTested": [
+      "Actual production process startup/listen/proxy/deployment",
+      "Real v14 target catalog/role/ACL and committed CORE receipt/digest loading",
+      "Real legacy-account login/self-password transaction and exact22 row results; synthetic driver composition is not engine acceptance",
+      "CORE/fullbind/whole real import/PUBLISH/dataReady; prior261/262/259/260/QB results not rerun or replaced"
+    ],
+    "blockers": {
+      "source": "No remaining production parser/factory/host/main consumer gap for this approved profile",
+      "actual": "C supplies real target/runtime metadata review and committed CORE identity from116/117 or later valid receipts; C alone owns actual startup and database execution. No constant/fake proof inserted into source or root config."
+    },
+    "next": "C freeze the3 registered changed leaves and give original QB this new production-only delta. Use the existing --exact26-r1 private configuration path with the exact optional CORE binding after real CORE commit; same R1 profile without that field retains original full read behavior. No new command/profile/purpose/issuer/frontend/root configuration change."
+  },
+  "qualification": "Only exact released original owner scope; owner affected evidence adopted. Independent sourceQA/actual containing runtime pending, not actual data/permissions/release. Fixed266 stays immutable; no WIP copied."
+}
