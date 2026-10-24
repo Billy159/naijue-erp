@@ -54,7 +54,7 @@ BEGIN
   AND jsonb_typeof(members->'parties')='array' AND jsonb_array_length(members->'parties')=115
   AND jsonb_typeof(members->'accounts')='array' AND jsonb_array_length(members->'accounts')=49
   AND birth->'authority' ?& ARRAY['account_capture_sha256','account_decisions_sha256','identity_review_sha256','bootstrap_execution_review_sha256','source_identity_facts_sha256','approved_employee_plan_sha256','old_source_batch_id','old_source_manifest_sha256','target','actorAccountId','batchId','namespace','selectionSha256','cutoffAt','bootstrapAt','commandHash','operationId']
-  AND birth->'authority'-ARRAY['account_capture_sha256','account_decisions_sha256','identity_review_sha256','bootstrap_execution_review_sha256','source_identity_facts_sha256','approved_employee_plan_sha256','old_source_batch_id','old_source_manifest_sha256','target','actorAccountId','batchId','namespace','selectionSha256','cutoffAt','bootstrapAt','commandHash','operationId']='{}'::jsonb
+  AND (birth->'authority')-ARRAY['account_capture_sha256','account_decisions_sha256','identity_review_sha256','bootstrap_execution_review_sha256','source_identity_facts_sha256','approved_employee_plan_sha256','old_source_batch_id','old_source_manifest_sha256','target','actorAccountId','batchId','namespace','selectionSha256','cutoffAt','bootstrapAt','commandHash','operationId']='{}'::jsonb
   AND birth->'authority'->>'actorAccountId'=cr.actor_account_id::text AND birth->'authority'->>'batchId'=b.id::text
   AND birth->'authority'->>'namespace'=b.source_name AND birth->'authority'->>'selectionSha256'=b.source_hash
   AND birth->'authority'->>'commandHash'=cr.request_hash AND birth->'authority'->>'operationId'=cr.id::text
@@ -168,7 +168,7 @@ BEGIN
  END IF;
  -- Exact current master versions: reconstruct each sparse authorized audit link from immutable source birth.
  IF (full_binding->'coreMaintenanceBinding' ?& ARRAY['version','members']
-  AND full_binding->'coreMaintenanceBinding'-ARRAY['version','members']='{}'::jsonb
+  AND (full_binding->'coreMaintenanceBinding')-ARRAY['version','members']='{}'::jsonb
   AND full_binding->'coreMaintenanceBinding'->>'version'='CORE_MAINTENANCE_BINDING_V1'
   AND jsonb_typeof(full_binding->'coreMaintenanceBinding'->'members')='array'
   AND jsonb_array_length(full_binding->'coreMaintenanceBinding'->'members')=115
@@ -270,7 +270,7 @@ BEGIN
         RAISE EXCEPTION 'Bootstrap outside-source digest is missing or malformed' USING ERRCODE='23514'; END IF;
     END LOOP;
     IF core_mode AND (binding->>'authorized_payload_sha256' IS DISTINCT FROM core_a->>'coreSourceDigest'
-      OR authority IS DISTINCT FROM core_a->'authority'-ARRAY['target','actorAccountId','batchId','namespace','selectionSha256','cutoffAt','bootstrapAt','commandHash','operationId']
+      OR authority IS DISTINCT FROM (core_a->'authority')-ARRAY['target','actorAccountId','batchId','namespace','selectionSha256','cutoffAt','bootstrapAt','commandHash','operationId']
       OR binding->>'stage_command_sha256' IS DISTINCT FROM core_a->'authority'->>'commandHash'
       OR binding->>'operation_id' IS DISTINCT FROM core_a->'authority'->>'operationId'
       OR binding->>'actor_account_id' IS DISTINCT FROM core_a->'authority'->>'actorAccountId') THEN

@@ -204,6 +204,30 @@ test("v14 exact routine pins cover the single approved patch while original v11 
  assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=123"));
 });
 
+test("v14 JSON precedence repair preserves every original predicate and changes only two reviewed function bodies", () => {
+  const full = readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-initialization.sql', import.meta.url), 'utf8');
+  const repair = readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql', import.meta.url), 'utf8');
+  const order = readFileSync(new URL('../adapters/postgres/patches/0026-category-reorder-undo.sql', import.meta.url), 'utf8');
+  const grouped = ["(birth->'authority')", "(full_binding->'coreMaintenanceBinding')", "(core_a->'authority')"];
+  let original = full;
+  for (const text of grouped) { assert.equal(full.split(text).length, 2); original = original.replace(text, text.slice(1, -1)); }
+  assert.equal(hash(original), 'd1c41d61846fa48e64f178125f4e58610cf6be11d908c88c695ba2ade7d26d1b');
+  assert.ok(order.includes("(result_data->'order')-ARRAY['parentId','undoOfOperationId','members']"));
+  assert.equal(hash(order.replace("(result_data->'order')-ARRAY", "result_data->'order'-ARRAY")
+    .replace('3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46', '665501c212a0576bf154ecd230d32fae36e9f50656e3c17d58bb268b50279bd1')),
+  '7c6c22cd60e931c6bc32d198bc730a2d42232c7ff17c768f248ceef2c724c006');
+  const functions = [...repair.matchAll(/CREATE OR REPLACE FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)];
+  assert.deepEqual(functions.map(m => m[1]), ['assert_core_initialization_v14', 'assert_native_bootstrap_accounts']);
+  for (const m of functions) {
+    const source = new RegExp(`CREATE(?: OR REPLACE)? FUNCTION naijue_erp\\.${m[1]}\\([^;]*?AS \\$\\$(.*?)\\$\\$;`, 's').exec(full)!;
+    assert.equal(m[2], source[1]); assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes(`('${m[1]}','${hash(m[2]!)}')`));
+    assert.ok(NATIVE_RUNTIME26_V15_METADATA_PROBE.includes(`('${m[1]}','${hash(m[2]!)}')`));
+  }
+  assert.ok(repair.includes("current_database()<>'erp_qa_rapid26_core_20261024_01'"));
+  assert.ok(repair.includes("<>'1034834'")); assert.ok(repair.includes('after_routines IS DISTINCT FROM before_routines'));
+  assert.equal((repair.match(/DROP FUNCTION|ALTER TABLE|GRANT |REVOKE |CREATE TRIGGER|DISABLE TRIGGER/g) ?? []).length, 0);
+});
+
 test("runtime performance: unchanged review files are hashed once per issuer while every original lease and explicit verification still probes actual metadata", async () => {
  const f=fixture(),settings=f.options(),original=fs.readFileSync;let contentReads=0;
  fs.readFileSync=function(...args:unknown[]){if(typeof args[0]==='number')contentReads++;return Reflect.apply(original,fs,args);} as typeof fs.readFileSync;syncBuiltinESMExports();

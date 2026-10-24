@@ -14,7 +14,7 @@ BEGIN
   ('maintenance_action_allowed(text,text)','186f88822ba597874734cb3349d0b9d95f63e5f8d8a34d3d05014e3420033c17'),
   ('validate_maintenance_receipt_commit()','7a42aeef2738c9009bc9eaa4ecbf41feefb43b759fbed2514a005166d20ac384'),
   ('validate_maintenance_root_commit()','8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512'),
-  ('assert_core_initialization_v14(uuid,uuid,boolean)','665501c212a0576bf154ecd230d32fae36e9f50656e3c17d58bb268b50279bd1')
+  ('assert_core_initialization_v14(uuid,uuid,boolean)','3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46')
  ) p(signature,sha256) LOOP
   IF NOT EXISTS(SELECT 1 FROM pg_catalog.pg_proc WHERE oid=to_regprocedure('naijue_erp.'||required.signature)
     AND encode(pg_catalog.sha256(convert_to(prosrc,'UTF8')),'hex')=required.sha256) THEN
@@ -377,7 +377,7 @@ BEGIN
    AND result_data->>'kind'='CATEGORY' AND jsonb_typeof(result_data->'targetId')='string' AND result_data->>'targetId'=target_id::text
    AND jsonb_typeof(result_data->'version')='number' AND result_data->>'version' ~ '^[1-9][0-9]*$'
    AND jsonb_typeof(result_data->'order')='object' AND result_data->'order' ?& ARRAY['parentId','undoOfOperationId','members']
-   AND result_data->'order'-ARRAY['parentId','undoOfOperationId','members']='{}'::jsonb
+   AND (result_data->'order')-ARRAY['parentId','undoOfOperationId','members']='{}'::jsonb
    AND jsonb_typeof(result_data->'order'->'members')='array'
   ELSE (%s) END) IS TRUE)$constraint$,old_expression);
 END $$;

@@ -1,0 +1,328 @@
+{
+  "atUtc": "2026-10-24T05:24:22.411176+00:00",
+  "parent": "53ad8c200d0ba43bd90d7b6e9416cd4bde6db546",
+  "taskId": "D1_C136_JSON_ARROW_SUBTRACTION_PRECEDENCE_FIX",
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+      "bytes": 83461,
+      "sha256": "164d93af957a775abb383d093124808e7f4ab3000d000c61ec825ebe4c59fa0d",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 69974,
+      "sha256": "402bb3fbc8cc663177c883908059f963bc4edf01fd498d1911192886af9006bd",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "bytes": 29327,
+      "sha256": "6cd7585d62079db0c6b83a0f5973baffebb0e22add2f0b2081778e897a781056",
+      "owner": "D1"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql",
+      "bytes": 37213,
+      "sha256": "85045e37db7468db82050f536589241d6f5e36156e8a23029fca67ab080fb6d6",
+      "owner": "D1"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 40402,
+      "sha256": "7e2a212c8678abd3ad8a2a2d741b2d1faea71bc9a3ca0cdae79a9e7307dbaee3",
+      "owner": "D1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/C136-JSON-PRECEDENCE-FIX-v1.json",
+  "ownerReceiptSha256AtPin": "43420468b9487b22aa138fba0b669667cd93e1c54902f16a16dd553ed36ea048",
+  "ownerDelivery": {
+    "taskId": {
+      "id": "D1/C136-json-operator-precedence-fix",
+      "atUtc": "2026-10-24T05:23:00.797779+00:00",
+      "authority": "C explicitly approved exact4 grouping corrections, two-function successor and original01a161f7/v14/v15 authorizations; no business predicate change",
+      "requiredModel": "gpt-6.1-sol/xhigh",
+      "fastSwitchVerified": false
+    },
+    "completedScope": {
+      "status": "SOURCE_FIX_READY_STATIC_AND_TARGETED_CHECKS_PASS_NOT_PG_EXECUTED",
+      "rootCause": {
+        "actual": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-core-normal-continuation-20261024-136/release-submission/release-receipts/c03-v14-core-normal-continuation-20261024-136/core-actual.json",
+          "bytes": 7797,
+          "sha256": "7aaa22aec436ca8d5f76cbe027936828d0ac65f0793abe23a81a892d2058fb0d",
+          "status": "FAILED_FIRST_ERROR_NO_RETRY",
+          "firstFailure": {
+            "bindArity": 0,
+            "category": "TRANSACTION_COMMIT",
+            "code": "22P02",
+            "executionPoint": "RAW_QUERY",
+            "globalQueryOrdinal": 2436,
+            "kind": "COMMIT",
+            "lease": 4,
+            "permissionTarget": null,
+            "phase": "NORMAL",
+            "phaseQueryOrdinal": 2431,
+            "postgresFile": "jsonfuncs.c",
+            "postgresRoutine": "json_errsave_error",
+            "queryTextSha256": "79663c1d3b43ceaf9ee728e501c64b57ae2e4d6cb36ff5c65eddcda1de27342f",
+            "registeredPlpgsqlFrames": [
+              {
+                "function": "assert_core_initialization_v14",
+                "line": 17,
+                "operation": "IF"
+              },
+              {
+                "function": "validate_import_accounting_checkpoint_commit",
+                "line": 7,
+                "operation": "PERFORM"
+              }
+            ],
+            "sqlState": "22P02",
+            "type": "error"
+          },
+          "normalCallbackReturned": true,
+          "claimInserts": 22,
+          "checkpointCas": true,
+          "commits": 0,
+          "live": 0,
+          "postNormalIndependentReadback": "NOT_RUN; no zero readback claim"
+        },
+        "parser": "Existing pglast7.21 with PostgreSQL17.7 grammar proves JSON extraction followed directly by -ARRAY parses as document -> (key - ARRAY), not extraction then subtraction. The raw key literal authority is thereby on the JSONB subtraction side; actual C136 json_errsave_error/22P02 at the encompassing body17 IF confirms this is a real SQL failure. No database was needed for the AST reproduction.",
+        "correctedAST": "(document->key) - ARRAY; same operands, key sets, equality/completeness predicates and errors. No normalization, authority bypass or test-expectation change."
+      },
+      "exactScope": [
+        {
+          "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+          "function": "assert_core_initialization_v14",
+          "sourceLines": [
+            57,
+            171
+          ],
+          "changes": [
+            "(birth->'authority')-ARRAY[...]",
+            "(full_binding->'coreMaintenanceBinding')-ARRAY[...]"
+          ],
+          "beforeBodySha256": "665501c212a0576bf154ecd230d32fae36e9f50656e3c17d58bb268b50279bd1",
+          "afterBodySha256": "3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46"
+        },
+        {
+          "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+          "function": "assert_native_bootstrap_accounts",
+          "sourceLines": [
+            273
+          ],
+          "changes": [
+            "authority IS DISTINCT FROM (core_a->'authority')-ARRAY[...]"
+          ],
+          "beforeBodySha256": "21e2cfcc34b0865e4d5bad67c281c41d2884b91fa2ae72c23a100bcc5ca76d87",
+          "afterBodySha256": "171c59ba962a287dd02bb9eac993512e114783a470063108a07ba5e206cbabca"
+        },
+        {
+          "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+          "sourceLine": 380,
+          "changes": [
+            "(result_data->'order')-ARRAY[...] in only approved v15 result constraint"
+          ],
+          "execution": "SOURCE_ONLY; not part of actual123-routine QA repair"
+        },
+        {
+          "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+          "changes": "Only two v14 routine SHA literals updated. Derived v15 inherits the corrected v14 probe; no profile fork, purpose/schema/count/ACL/guard weakening. v11 base probe unchanged."
+        },
+        {
+          "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+          "changes": "Predecessor assert_core_initialization_v14 pin updated to corrected v14 body; not an additional business predicate change."
+        }
+      ],
+      "completePatchForUninstalledR1": "Use the corrected original 0026-v14-core-initialization.sql on the approved actual v11 predecessor; do not install old261 and then replay119. Other8 v14 function bodies and all original declarations remain exact.",
+      "installedQARepair": {
+        "path": "adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql",
+        "database": "erp_qa_rapid26_core_20261024_01",
+        "databaseOid": "1034834",
+        "predecessorCanonicalSha256": "3b896d4fb4abef4f26f3d5c862a06e1b7b5166396b696aec4de5935601e6d0f5",
+        "predecessorRoutines": 123,
+        "predecessorFunctionFacts": [
+          {
+            "name": "assert_core_initialization_v14",
+            "signature": "naijue_erp.assert_core_initialization_v14(uuid,uuid,boolean)",
+            "owner": "erp_qa_owner_20261022_01",
+            "acl": "{erp_qa_owner_20261022_01=X/erp_qa_owner_20261022_01,erp_qa_v14_core_runtime_20261024_01=X/erp_qa_owner_20261022_01}",
+            "body_sha256": "665501c212a0576bf154ecd230d32fae36e9f50656e3c17d58bb268b50279bd1"
+          },
+          {
+            "name": "assert_native_bootstrap_accounts",
+            "signature": "naijue_erp.assert_native_bootstrap_accounts(uuid)",
+            "owner": "erp_qa_owner_20261022_01",
+            "acl": "{=X/erp_qa_owner_20261022_01,erp_qa_owner_20261022_01=X/erp_qa_owner_20261022_01,erp_qa_v14_core_runtime_20261024_01=X/erp_qa_owner_20261022_01}",
+            "body_sha256": "21e2cfcc34b0865e4d5bad67c281c41d2884b91fa2ae72c23a100bcc5ca76d87"
+          }
+        ],
+        "method": "One transaction and anonymous DO, exact database/OID/schema1..26/count123/both old-body checks, then CREATE OR REPLACE exactly the two original signatures. Snapshot every pg_proc field and all121 other bodies before/after, excluding ONLY prosrc for the2 selected original OIDs; require exact equality plus both corrected body SHA. No drop/recreate, GRANT, table, column, constraint, trigger, role or other routine edit. Wrong/already-repaired predecessor rejects rather than replays.",
+        "canonicalBoundary": "C must verify the full3b896... canonical under the original reviewed runtime-role context before apply; script comment records this binding, while SQL enforces exact target/two-body/count checks. SQL does not pretend to recompute the full role-sensitive catalog digest. C exports the complete after catalog and original QB verifies changes confined to2 routine entries, their OIDs/ACL/other attributes and all121 others unchanged. New digest/review required.",
+        "afterBodySha256": {
+          "assert_core_initialization_v14": "3163e6870f5bfa3e3a08f870779221649f13c7d5d6001fcf90503f74a6faba46",
+          "assert_native_bootstrap_accounts": "171c59ba962a287dd02bb9eac993512e114783a470063108a07ba5e206cbabca"
+        },
+        "notInstalled": "Neither this repair nor v15 was executed by D1. This QA-only repair deliberately refuses R1/other databases."
+      },
+      "finiteScan": {
+        "paths": [
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-category-reorder-undo.sql",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v11-document-specification-save.sql",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v12-history-numeric-revision.sql",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v14-core-initialization.sql",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/inventory-cutoff-import-store.ts",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-record-accounting.ts",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-accounting-capability.ts",
+          "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/postgres-read-api.ts"
+        ],
+        "scope": "11 original-owned SQL/embedded-SQL files before repair-source creation; normal arrow chains were classified out, not arithmetic errors. No whole-site/OPT/test queue resumed.",
+        "outOfScopeFinding": "One same-form candidate remains in UNINSTALLED v12 numeric-revision source:223 NEW.after_facts->totals-ARRAY. It is outside the C-approved four corrections and was recorded but not modified/installed/tested as part of this123/124 repair. Original C may route that precise deferred v12 source fix separately before future use."
+      },
+      "preservation": "Source reconstruction removing only the3 parentheses pairs exactly recovers old v14 full-file SHA d1c41d...; undoing only2 fingerprint literals recovers cap baseline2e606a...; undoing v15 grouping+predecessor fingerprint recovers old v15 full-file7c6c22... . No business fields, operators, arrays, predicates, original errors, metadata purposes or permission boundaries changed."
+    },
+    "changedFiles": [
+      {
+        "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+        "bytes": 83461,
+        "sha256": "164d93af957a775abb383d093124808e7f4ab3000d000c61ec825ebe4c59fa0d"
+      },
+      {
+        "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 69974,
+        "sha256": "402bb3fbc8cc663177c883908059f963bc4edf01fd498d1911192886af9006bd"
+      },
+      {
+        "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+        "bytes": 29327,
+        "sha256": "6cd7585d62079db0c6b83a0f5973baffebb0e22add2f0b2081778e897a781056"
+      },
+      {
+        "path": "adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql",
+        "bytes": 37213,
+        "sha256": "85045e37db7468db82050f536589241d6f5e36156e8a23029fca67ab080fb6d6"
+      },
+      {
+        "path": "tests/native-runtime26-capability.test.ts",
+        "bytes": 40402,
+        "sha256": "7e2a212c8678abd3ad8a2a2d741b2d1faea71bc9a3ca0cdae79a9e7307dbaee3"
+      }
+    ],
+    "checks": {
+      "newNodeCase": 1,
+      "affectedNodeCases": 2,
+      "finalFailures": 0,
+      "skips": 0,
+      "nodeRuns": [
+        {
+          "chunk": "75fdb9",
+          "result": "Existing v14/v15 routine pin cases2PASS; new preservation case initially failed because test-only ungroup matcher hit jsonb_typeof parentheses before the intended subtraction."
+        },
+        {
+          "chunk": "deb6c0",
+          "result": "Corrected only that matcher to include -ARRAY; failed case alone rerun1PASS. Production fix unchanged."
+        }
+      ],
+      "strict": {
+        "roots": [
+          "adapters/postgres/src/native-import-accounting-capability.ts",
+          "tests/native-runtime26-capability.test.ts"
+        ],
+        "chunk": "baff44",
+        "exit": 0,
+        "flags": "strict noEmit NodeNext ES2023 +noUncheckedIndexedAccess/exactOptionalPropertyTypes/noFallthroughCasesInSwitch/noImplicitOverride/verbatimModuleSyntax/rewriteRelativeImportExtensions"
+      },
+      "parserEvidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/C136-JSON-PRECEDENCE-AST-v1.json",
+        "actual": {
+          "parser": "v7.21",
+          "postgresqlParserVersion": "(17, 7)",
+          "cases": [
+            {
+              "expression": "birth.authority",
+              "beforeRoot": "->",
+              "beforeRightOperator": "-",
+              "afterRoot": "-",
+              "afterLeftOperator": "->",
+              "pass": true
+            },
+            {
+              "expression": "full_binding.coreMaintenanceBinding",
+              "beforeRoot": "->",
+              "beforeRightOperator": "-",
+              "afterRoot": "-",
+              "afterLeftOperator": "->",
+              "pass": true
+            },
+            {
+              "expression": "core_a.authority",
+              "beforeRoot": "->",
+              "beforeRightOperator": "-",
+              "afterRoot": "-",
+              "afterLeftOperator": "->",
+              "pass": true
+            },
+            {
+              "expression": "result_data.order",
+              "beforeRoot": "->",
+              "beforeRightOperator": "-",
+              "afterRoot": "-",
+              "afterLeftOperator": "->",
+              "pass": true
+            }
+          ],
+          "files": [
+            {
+              "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+              "statements": 14,
+              "plpgsqlFunctions": 10,
+              "pass": true
+            },
+            {
+              "path": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+              "statements": 9,
+              "plpgsqlFunctions": 3,
+              "pass": true
+            },
+            {
+              "path": "adapters/postgres/patches/0026-v14-core-json-precedence-repair.sql",
+              "statements": 3,
+              "plpgsqlFunctions": 2,
+              "pass": true
+            }
+          ],
+          "databaseExecutions": 0
+        }
+      },
+      "databaseExecutions": 0,
+      "grants": 0,
+      "ssh": 0,
+      "builds": 0,
+      "listeners": 0,
+      "git": 0,
+      "frontendEdits": 0,
+      "sharedContractEdits": 0,
+      "D2LeafEdits": 0,
+      "oldQAReruns": 0
+    },
+    "notTested": [
+      "C sole actual two-function repair and functionOID/ACL/full after-catalog comparison; new metadata/QB review pending.",
+      "New NORMAL actual COMMIT/readback/replay/login after the corrected two functions. Old136 not rerun.",
+      "v15 remains uninstalled; source-only correction does not equal actual124-routine coverage.",
+      "No local PostgreSQL binary was available at the known local paths; existing PG17.7 parser AST and C136 raw actual evidence were used, without starting/installing a server or touching QA/formal data."
+    ],
+    "blockers": {
+      "source": [],
+      "actual": "C exact138/139 successor and original QB new2-function/catalog delta; cannot use old runtime body/digest pins",
+      "independentCoreAudit": "D2 SOURCE292 exact interface received; D1 host/member-proof integration continues after this priority bug handoff, no D2 six-case rerun."
+    },
+    "next": "C freeze exact5 files. For installed QA only use the new2-function repair on exact3b896.../old2 bodies, read back full new metadata and route only this difference to original QB, compile original CORE consumer from new source, then execute one new NORMAL carrier rather than old136 or whole119 patch. Uninstalled R1 uses corrected full patch. Keep old failures and actual business status honest; D1 resumes the independent CORE audit host seam."
+  },
+  "stage": "FIXED_SOURCE_AST_PREDICATE_PRESERVATION_AND_TARGETED_CASES_ONLY_QA_TWO_FUNCTION_REPAIR_NOT_EXECUTED",
+  "actualPG": false,
+  "deployed": false
+}
