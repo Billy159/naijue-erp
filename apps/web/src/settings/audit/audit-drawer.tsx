@@ -84,7 +84,13 @@ function AuditContents(props: { readonly controller: SettingsAuditController; re
     <form ref={filters} className="bs-log-filters" role="search" onSubmit={event => { event.preventDefault(); controller.apply(); }} onKeyDownCapture={event => {
       if (event.key !== 'Escape' || event.nativeEvent.isComposing || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || !(event.target instanceof HTMLElement)) return;
       const host = event.target.closest('.demo-settings-single');
-      if (!host || !filters.current?.contains(host) || !host.querySelector('.arco-select-popup')) return;
+      if (!host || !filters.current?.contains(host)) return;
+      // Arco consumes Escape on a focused Select even when its popup is closed.
+      // In that state the key belongs to this drawer, not the child control.
+      if (host.querySelector('[role="combobox"]')?.getAttribute('aria-expanded') === 'false') {
+        event.preventDefault(); event.stopPropagation(); props.close(); return;
+      }
+      if (!host.querySelector('.arco-select-popup')) return;
       // Let Arco consume the first Escape. Its disappearing popup must hand focus
       // back inside this drawer so the next Escape reaches the drawer owner.
       const form = filters.current;

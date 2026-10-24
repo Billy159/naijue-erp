@@ -1,0 +1,129 @@
+{
+  "atUtc": "2026-10-24T04:39:20.507602+00:00",
+  "parent": "6442f2f2375fc273930770bb229c4a6f01ec4ab3",
+  "taskId": "F3_QF2_C285_AUDIT_CLOSED_SELECT_ESCAPE_FIX",
+  "files": [
+    {
+      "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+      "bytes": 13333,
+      "sha256": "bac574fd35dbeb1e887f2cd6a025cb31838e01e5e517122f2d06783fbdfffdf5",
+      "owner": "F3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "59a6540bc3bf0075f610b9c598ed993b04bf72385dc5602bf07109a3b77316b5",
+  "ownerDelivery": {
+    "atUtc": "2026-10-24T04:34:26.702615+00:00",
+    "taskId": "QF2-C285-SETTINGS-AUDIT-ESC-FOCUS-01",
+    "role": "F3 / original audit leaf owner",
+    "modelRequirement": "gpt-6.1-sol/xhigh",
+    "fastMode": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+    "status": "PASS_LIMITED_SOURCE_COMPONENT_STRICT_ACTUAL_QF2_RETEST_PENDING",
+    "scope": "Closed original audit Select Escape routes to Drawer owner; open popup retains original child first/Drawer second focus handoff",
+    "files": [
+      {
+        "path": "apps/web/src/settings/audit/audit-drawer.tsx",
+        "owner": "F3",
+        "beforeBytes": 12974,
+        "beforeSha256": "404ec345d0fc8fceeb608fa14588eb2776cc744d78b85d6ec5ec38c6d4ce84ba",
+        "bytes": 13333,
+        "sha256": "bac574fd35dbeb1e887f2cd6a025cb31838e01e5e517122f2d06783fbdfffdf5"
+      }
+    ],
+    "implementation": [
+      "Adopted original F1 chunk137 exact narrow K proposal on identical live404ec345 base; F1 performed no R source edit",
+      "Only audit form capture closed aria-expanded=false branch stops/prevents key and calls existing close owner once",
+      "Existing open popup microtask focus handoff, controller, read owner, retention, abort cleanup, focus restoration and original controls unchanged"
+    ],
+    "checks": {
+      "component": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/RESULT.json",
+        "bytes": 747,
+        "sha256": "3d3c7485815bfbf15a8c33d1aa240942941acd633039a169ead5b509e203274d"
+      },
+      "componentDetails": {
+        "status": "PASS_ORIGINAL_AUDIT_CLOSED_SELECT_ESCAPE_LOCAL",
+        "source": "R original F3-owned audit leaf after exact F1 hunk adoption",
+        "checks": [
+          "Real original SettingsAuditEntry+Drawer+Arco Select: natural Tab focus on closed module Select and native keyCode27 Escape close once, returning original opener focus.",
+          "Original selected warehouse/object filter retained through close/reopen; composing Escape does not close; open popup first Escape closes only child and second closes owner/returns focus. No value clear, submit or extra read on Escape."
+        ],
+        "auditReads": 3,
+        "notRun": [
+          "No Chrome/build/PG/full suite/date/other4picker",
+          "Actual payment/store containing-candidate retest stays with original QF2"
+        ]
+      },
+      "strict": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/TYPE-CHECK.json",
+        "bytes": 298,
+        "sha256": "82f6eb4ce6f8a9f282324e6882dfaace08996e2c99acf71c13fadea0fd7eb091"
+      },
+      "diagnosticCount": 0,
+      "originalF1BeforeReproductionReused": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-137/BEFORE-FIRST.json",
+        "bytes": 170,
+        "sha256": "3de631fc61e508826f08c99e7c9a730a9b2061516c5f179531e57b1bd3883838"
+      },
+      "noRepeatedBeforeRun": true,
+      "allOtherLeafBytesUnchanged": true,
+      "mockAuditReadCount": 3,
+      "actualNetworkReads": 0,
+      "writeCommands": 0,
+      "requestKeys": 0,
+      "browser": false,
+      "server": false,
+      "database": false,
+      "integratedBuild": false,
+      "gitMutation": false
+    },
+    "unmeasured": [
+      "Containing candidate payment/store native keyboard actual retest by original QF2; actual issue remains pending until that evidence",
+      "Real account49/22CORE, performance, DB writes and deployed behavior not tested",
+      "No date/other four picker/full old audit suite rerun"
+    ],
+    "blockers": [],
+    "next": "C pins exact1 and batches with existing next candidate; original QF source review, original QF2 payment/store closedSelect Escape and open-popup twoEscape/focus only. F3 does not lease Chrome or build.",
+    "authorization": {
+      "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/REPORTING-AUTHORIZATION.json",
+      "humanMessageId": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "allowedTarget": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "scope": "Meaningful completion/blocker/acceptance readiness seven fields to original C"
+    },
+    "receiptPins": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/BASELINE.json",
+        "bytes": 2813,
+        "sha256": "6911f6c036d66e10fb392beb580ead44a03fae2d278f38456908072d345ff803"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/SOURCE-PINS.json",
+        "bytes": 526,
+        "sha256": "934cef32542ede829d65cd0eb95059e7c83e13835cd4b1bdeea05d96dd3cf751"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/SOURCE.diff",
+        "bytes": 1325,
+        "sha256": "99cbc6493de42cc9f6a9e0ea259ea81d54782d837a7f3ae70d6855db500b07aa"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/TYPE-CHECK.json",
+        "bytes": 298,
+        "sha256": "82f6eb4ce6f8a9f282324e6882dfaace08996e2c99acf71c13fadea0fd7eb091"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/RESULT.json",
+        "bytes": 747,
+        "sha256": "3d3c7485815bfbf15a8c33d1aa240942941acd633039a169ead5b509e203274d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F3/audit-closed-select-escape-v1/check-closed-select-escape.mjs",
+        "bytes": 8942,
+        "sha256": "c7bc000064cda5288406648b445ee33a291c1347212c8b800c7a4f65f259a2a6"
+      }
+    ]
+  },
+  "stage": "FIXED_SOURCE_COMPONENT_CHECKS_PASS_INTEGRATED_BROWSER_RETEST_PENDING",
+  "actualPG": false,
+  "deployed": false
+}
