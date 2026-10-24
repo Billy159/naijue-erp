@@ -67,7 +67,7 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "C141 diagnostic rootcause proven; C142 originalsinglefunction repair/newmetadata next; QF295 documentstates parallel",
-      "currentPackage": "141actual/295limitedadopted/142prep; original294install preserved",
+      "currentPackage": "142actualCOMMIT metadataonly;230newreview and143normal next; QF295 documentcontrols/F1datefix parallel",
       "nextReadyPackage": "D1 fixed296 -> QBsource ->142actual/newQBmetadata ->143NORMAL ->final126128131/build/stage",
       "currentDependencies": "Formal URL unchanged, fullMAIN unbound, current112 backup/7containers protected",
       "fastToolVerified": false
@@ -168,7 +168,7 @@
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "currentWork": "C141 true heapversion witness fix; new exact QAonlyrepair leaf registered",
-      "currentPackage": "Fullv14+cap+v15pin+test existing4 leaves and1singlefunctionrepair; other122 unchanged",
+      "currentPackage": "296 exact5 frozen/229sourceaccepted/142actualsinglehelperrepair; no D1 sourcework until concreteactualfinding",
       "nextReadyPackage": "Release exact source/pins forC142; only directed actual gaps afterward",
       "currentDependencies": "Actual target/catalog/role/CORE receipt supplied by C; no invented readiness",
       "fastToolVerified": false
@@ -244,7 +244,7 @@
       "sourceWriteEnabled": false,
       "fastRequested": false,
       "currentWork": "228accepted actual138 metadata only; waiting precise newheapfixsource, no repeatedreview",
-      "currentPackage": "226293/227294/228138 adopted historicalexactscopes",
+      "currentPackage": "229296sourcePASS adopted;230actual142delta/newmetadata inprogress",
       "nextReadyPackage": "296 onefunction source delta;142newactualcatalog;143actualNORMAL",
       "currentDependencies": "Await exact new artifacts; no repeated prior suites",
       "fastToolVerified": false
@@ -1141,9 +1141,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T06:42:01.677318+00:00",
-  "stage": "ACTIVE_C141_TRUE_HEAP_WITNESS_ROOT_CAUSE_C142_REPAIR_C143_NORMAL_NEXT_QF_C295_DOCUMENT_STATES",
-  "lastVerifiedRemoteCommit": "a0b9b9aff2d048106bc1c58b2290218aee29267f",
+  "updatedAt": "2026-10-24T06:54:56.385355+00:00",
+  "stage": "ACTIVE_C142_SINGLE_HELPER_ACTUAL_COMMIT_PASS_NEW_QB_METADATA_THEN_C143_NORMAL",
+  "lastVerifiedRemoteCommit": "87bfb5fa9356723c67a6990ae52e4c91cbc9c7ad",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1587,7 +1587,7 @@
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
-    "schema": "R1 remainsv11/122/53ea114e; coreQA actual138v14/123/67d601f744889f81c0081a5fada51af672c8dcafe6571962aa32183328078350. C142 onefunction heapversion repair NOTEXECUTED.",
+    "schema": "R1 remains v11/122/53ea114e; coreQA actual142 v14/123/145200748da24a00ea8fca09c06e2041b7405a501a9e86e64caae0ea093c78f9; newQB metadata pending",
     "runtimeAcl": "C38_BASELINE_READ_AUTH_PLUS_EXACT_CLASSIFIER_EXECUTE_AND_SOURCE3_SELECT_ONLY",
     "realAccountsCaptured": 49,
     "accountsWithExactOldEmployeeLink": 45,
@@ -2019,6 +2019,28 @@
       "engineBytes": 29387,
       "engineSha256": "7abba4b2f20deda6c6eb00e3cd834391e1110535b3901118c4f5683da3e35dd7",
       "next": "D1 samefunction2 physical heapread fix -> source296 -> QB -> actualC142 -> newmetadataQB -> C143NORMAL. Keep139FAILED."
+    },
+    "coreHeapRepair142": {
+      "status": "PASS_EXACT_SINGLE_FUNCTION_HEAP_WITNESS_REPAIR_METADATA_ONLY",
+      "source": "95248dd5dcfb6645c3f8bd57d6bd142a9710e58d",
+      "elapsedSeconds": 3.2242435689549893,
+      "catalogueSha256": "145200748da24a00ea8fca09c06e2041b7405a501a9e86e64caae0ea093c78f9",
+      "oldCanonical": "67d601f744889f81c0081a5fada51af672c8dcafe6571962aa32183328078350",
+      "changedFunctions": 1,
+      "other122Unchanged": true,
+      "nineteenCountsBeforeAfterZero": true,
+      "ownedSessionsRemaining": 0,
+      "oldQaAndSevenServicesPreserved": true,
+      "engine": "reports/controller/rapid-launch-20261022/server-jobs/c03-v14-qa-heap-version-repair-20261024-142/release-submission/release-receipts/c03-v14-qa-heap-version-repair-20261024-142/engine-result.json",
+      "engineBytes": 21556,
+      "engineSha256": "47fa580d320ca8d63511e8835b675d3437787f1eb8ab7207968825d1e35e8637",
+      "metadataBytes": 783,
+      "metadataSha256": "a33fafc6262039f384e5484db005a782eebdced3f7f0504e8ab2b4c4d7ecd605",
+      "CORE": false,
+      "BIND": false,
+      "login": false,
+      "newRuntimeReview": "WAIT_ORIGINAL_QB230",
+      "next": "C143 final fixed296 actualnormal after newliteralmetadata"
     }
   },
   "supplementalRoles": {
@@ -3693,7 +3715,9 @@
       "adoption": "Original valid scoped conclusion; C does no duplicate technical QA"
     },
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v108-qf-adopt-qf2-c291-c295-associated-actual/RESULT.json",
-    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-core-creation-guard-diagnostic-20261024-141/release-submission/release-receipts/c03-v14-core-creation-guard-diagnostic-20261024-141/core-actual.json"
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-core-creation-guard-diagnostic-20261024-141/release-submission/release-receipts/c03-v14-core-creation-guard-diagnostic-20261024-141/core-actual.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-qa-heap-version-repair-20261024-142/release-submission/release-receipts/c03-v14-qa-heap-version-repair-20261024-142/engine-result.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-v14-qa-heap-version-repair-20261024-142/release-submission/release-receipts/c03-v14-qa-heap-version-repair-20261024-142/runtime-metadata.json"
   ],
   "newPendingReviews": [
     "C139fixed293 actualNORMAL/replay/login under QB228 newmetadata; no oldnegative replay",
@@ -4066,7 +4090,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-24T06:42:01.677318+00:00",
+    "atUtc": "2026-10-24T06:54:56.385355+00:00",
     "sourceRound": 296,
     "sourceCheckpoint": "95248dd5dcfb6645c3f8bd57d6bd142a9710e58d",
     "allModels": "gpt-6.1-sol/xhigh",
@@ -4096,7 +4120,7 @@
     "qa": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "v14 exact human confirmation verified in existing taskbookChat, no longer waiting user; originalD1D3 implementation release. Only other unapprovedv13/business decisions and precise actualinputs remain.",
-    "github": "Verifieda0b9b9aff2d048106bc1c58b2290218aee29267f; next exact296 repair/docs pending",
+    "github": "Verified87bfb5fa9356723c67a6990ae52e4c91cbc9c7ad exact2commits; nextactual142 controlrecord push follows",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
@@ -4125,7 +4149,7 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "C139 NORMAL callback22/CAStrue then COMMIT23514 failed. C141 diagnostic proves record xmin1860 differs from actual heap/top3361; all115/115/93/22 and batch1/creationflags correct. RawROLLBACK and fresh19counts0/5leasesreleased. D1 original singlefunction physical witness fix in progress; C142 defaultdisabled exact repair; C143 actualNORMAL after fixedsource/newQBmetadata. Producer unchanged.",
+    "backend": "C142 actual singleheapwitness helper repair COMMIT0/3.2242435689549893s, newcanonical145200748da24a00ea8fca09c06e2041b7405a501a9e86e64caae0ea093c78f9/123/sourceRoutinesMatchtrue; other122/OID/ACL/config same,19prepost0/owned0/oldQA7safe. QB230 actualdelta/newmetadata pending, C143NORMAL/replay/login/oldrowfreshness stillNOTRUN. C139FAILED andC141ROLLBACK preserved.",
     "productionBuild": "Formal294 actualbuild/pack andC140 Linuxci/native passed only; no294 appstart/CORE/publicswitch. Current runtime229. Next formal rebuild/consumer126128131 revisions held until corrected NORMAL actual passes, avoiding intermediate churn; cannot start294 against future different fingerprint.",
     "actualQFBrowser": "QF sole lease newly dispatched USER-UI-DOC-TOOLBAR/DATES/HOVER original v038/v067, fixed295 default/existingSalesPreview; QF2cleanSTOP. Newcandidate5B69FD73D86A2D051EE5D18378D8C767 + DemoF0B;11unknown oldtargets preserved/3protectedtabs unchanged.",
     "frontendAcceptance": {

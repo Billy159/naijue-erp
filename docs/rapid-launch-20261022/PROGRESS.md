@@ -1,3 +1,7 @@
+CURRENT INCREMENT: C142 actual single-helper repair COMMIT success (2026-10-24)
+
+C142 completed0/3.2242435689549893s, newcanonical 145200748da24a00ea8fca09c06e2041b7405a501a9e86e64caae0ea093c78f9 /123/sourceRoutinesMatchtrue; onlyassert_core_initialization_v14 changed3163→5ca42b, other122/OID/ACL/security/config same. Actual19before/after counts0,owned0/oldQA7safe/original7containersunchanged. Engine21556/47fa580d320ca8d63511e8835b675d3437787f1eb8ab7207968825d1e35e8637, metadata783/a33fafc6262039f384e5484db005a782eebdced3f7f0504e8ab2b4c4d7ecd605. OriginalQB229sourcePASS adopted, QB230newactualdelta/runtime metadata inprogress. C143 fixed296 NORMAL/replay/login and subsequentoldrowfreshness rejection stillNOTRUN. C139failure/C141rawROLLBACK history preserved. No R1DDL/realCORE/publicswitch; originalQF295 controls andF1specificdatefix continue. GitHub87bfb5fa9356723c67a6990ae52e4c91cbc9c7ad verified before thisincrement.
+
 CURRENT 2026-10-24: C141 actual heap witness diagnosis / C142 original repair next / QF295 document controls
 
 - C139 actualNORMAL remained FAILED: callback22/CAStrue, COMMIT23514. NewC141 deliberately diagnoses beforeCOMMIT then rawROLLBACK: record.xmin1860 differs from table heap/topLow32 both3361; batch1/counts115/115/93/22 and all other creation conditions correct. Fresh19counts0;5leasesreleased/live0/dispose/endtrue. Root is wrong row-version witness, not D3 producer or missing claims. No normalCORE/replay/login pass.
