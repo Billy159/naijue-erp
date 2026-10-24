@@ -88,7 +88,11 @@ interface Fields extends ProductEditorProps {
 }
 function EditorFields(p:Fields){
  const currentTab=useRef(p.tab);currentTab.current=p.tab;
- const workbench=useRef<HTMLDivElement>(null),stickyTitle=useRef<HTMLDivElement>(null);
+ const workbench=useRef<HTMLDivElement>(null),stickyTitle=useRef<HTMLDivElement>(null),headingRef=useRef<HTMLHeadingElement>(null);
+ useLayoutEffect(()=>{
+  const title=headingRef.current,active=title?.ownerDocument.activeElement;
+  if(p.scope.active&&title&&(!active||active===title.ownerDocument.body||!active.isConnected||active.closest('[hidden],[inert]')))title.focus({preventScroll:true});
+ },[p.scope]);
  useLayoutEffect(()=>{
   const host=workbench.current,title=stickyTitle.current;if(!host||!title)return;
   const measure=()=>{if(p.scope.active&&host.isConnected)host.style.setProperty('--product-sticky-title-height',`${title.getBoundingClientRect().height}px`);};
@@ -134,7 +138,7 @@ function EditorFields(p:Fields){
   removeNative:image=>{if(disabled)return;setRemovedImages(rows=>rows.some(row=>row.id===image.id)?rows:[...rows,image]);},removeUpload:uploadKey=>{if(disabled)return;const entry=uploadsRef.current.find(row=>row.uploadKey===uploadKey);if(entry)releaseUpload(entry);if(entry?.replace)setRemovedImages(rows=>rows.some(row=>row.id===entry.replace!.id)?rows:[...rows,entry.replace!]);setMediaUploads(rows=>rows.filter(row=>row.uploadKey!==uploadKey));},retry:uploadKey=>{if(disabled)return;const entry=uploadsRef.current.find(row=>row.uploadKey===uploadKey);if(entry)runUpload(entry);},replaceUpload:(uploadKey,files)=>{if(disabled)return;const entry=uploadsRef.current.find(row=>row.uploadKey===uploadKey);if(!entry)return;releaseUpload(entry);mediaDraft!.add(files,entry.role??'MAIN',entry.colorId,entry.replace,entry.displayOrder);setMediaUploads(rows=>rows.filter(row=>row.uploadKey!==uploadKey));}}:undefined;
  const fields={scope:p.scope,reader:p.capability.reader,values:p.values,labels:p.labels,existing,disabled,change,remember,onAccessFailure:p.onAccessFailure,...(p.capability.categoryReader?{categoryReader:p.capability.categoryReader}:{}),categoryPath:p.detail?.references.categoryPath??[],seasonOriginallyUnknown:!!p.detail&&'seasonIds' in p.detail.values&&p.detail.values.seasonIds===null};
  if(!p.scope.active||state.phase==='disposed')return null;
- const heading=<h1>{`${p.values.productCode||'新增商品'} · ${p.values.name||'未命名'}`}</h1>;
+ const heading=<h1 ref={headingRef} tabIndex={-1}>{`${p.values.productCode||'新增商品'} · ${p.values.name||'未命名'}`}</h1>;
  const actions=<>{existing&&can('DELETE')&&<button type="button" className="btn ghost pc-danger product-delete" disabled={pending} onClick={()=>p.setConfirmDelete(true)}>删除商品</button>}{existing&&can(p.values.enabled?'DISABLE':'RESTORE')&&<button type="button" className="btn" disabled={pending||dirty} onClick={()=>void save(p.values.enabled?'DISABLE':'RESTORE')}>{p.values.enabled?'停用':'恢复启用'}</button>}<button type="button" className="btn" disabled={pending} onClick={close}>取消</button><button type="button" className="btn primary" disabled={disabled||unresolvedSpecs||mediaBlocked||existing&&!dirty} onClick={()=>void save()}>保存</button></>;
  const afterHeader=<>
   <div id="pc-editor-error" className="inline-error" role="alert">{(p.error||state.error)&&<>{p.error||state.error?.message}{existing&&state.error?.kind==='conflict'&&<UIButton onClick={requestReload}>读取最新商品</UIButton>}</>}</div>
