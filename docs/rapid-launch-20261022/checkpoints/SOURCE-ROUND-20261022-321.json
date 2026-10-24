@@ -1,0 +1,26 @@
+{
+  "atUtc": "2026-10-24T13:00:20.705028+00:00",
+  "parent": "f7ad3228415d9f41d37efbb62a0c88b6aa86a256",
+  "taskId": "F1_CHUNK_150",
+  "files": [
+    {
+      "path": "apps/web/src/sales/response-validation.ts",
+      "bytes": 10368,
+      "sha256": "f59cd61f18ada2189420a1a759a1ef6c651b10b52d8b3dbcfc22a7ea3247b118",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/sales/tests/fixtures.ts",
+      "bytes": 2962,
+      "sha256": "6459876cb8cfd4bc763e3d1803eb31947e9a718774142da484cc053451652efc",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-150/DELIVERY.json",
+  "ownerReceiptBytes": 2037,
+  "ownerReceiptSha256": "7d7dc5608cb1a5a8007b22bf376e3ae06af8485797294195c360545fd67c2674",
+  "ownerSourceReleased": true,
+  "stage": "SOURCE_TARGETED_CHECK_PASS_NOT_BROWSER_BUSINESS",
+  "wholePageAccepted": false,
+  "deployed": false
+}

@@ -40,10 +40,10 @@ export function salesListResponse(value: unknown, parameters: Readonly<SalesList
   const result = record(value, ['page', 'pageSize', 'exactTotal', 'items']); const items = array(result.items, parameters.pageSize); page(result, parameters, items);
   const seen = new Set<string>();
   for (const value of items) {
-    const row = record(value, [...summaryFields, 'hallName', 'warehouseName', 'customerName', 'salespersonName', 'responsibleName', 'quantity', 'incomingQuantity', 'outgoingQuantity', 'updatedAt']); header(row);
+    const row = record(value, [...summaryFields, 'hallName', 'warehouseName', 'customerName', 'salespersonName', 'responsibleName', 'createdByName', 'quantity', 'incomingQuantity', 'outgoingQuantity', 'updatedAt']); header(row);
     exact(row.quantity); exact(row.incomingQuantity, true); exact(row.outgoingQuantity, true); stamp(row.updatedAt);
     if (BigInt(row.quantity) !== BigInt(row.outgoingQuantity) - BigInt(row.incomingQuantity)) invalid();
-    for (const label of [row.hallName, row.warehouseName, row.customerName]) text(label); nullableText(row.salespersonName); nullableText(row.responsibleName);
+    for (const label of [row.hallName, row.warehouseName, row.customerName, row.createdByName]) text(label); nullableText(row.salespersonName); nullableText(row.responsibleName);
     const f = parameters.filter;
     for (const [expected, actual] of [[f.statuses, row.status], [f.businessTypes, row.businessType], [f.hallIds, row.hallId], [f.salespersonIds, row.salespersonId], [f.customerIds, row.customerId], [f.warehouseIds, row.warehouseId]] as const) {
       if (expected.length && !(expected as readonly unknown[]).includes(actual)) invalid();
@@ -63,8 +63,8 @@ export function salesDetailResponse(value: unknown, parameters: Readonly<SalesDe
   const h = record(document.header, [...summaryFields, 'note', 'createdByAccountId', 'createdHallId', 'createdAt', 'updatedAt', 'approvedByAccountId', 'approvedAt']); header(h);
   if (h.id !== parameters.salesId) invalid(); nullableText(h.note); id('account', h.createdByAccountId); nullableId('hall', h.createdHallId);
   stamp(h.createdAt); stamp(h.updatedAt); nullableId('account', h.approvedByAccountId); if (h.approvedAt !== null) stamp(h.approvedAt);
-  const names = record(result.referenceNames, ['hallName', 'salespersonName', 'customerName', 'warehouseName', 'responsibleName']);
-  [names.hallName, names.customerName, names.warehouseName].forEach(text); nullableText(names.salespersonName); nullableText(names.responsibleName);
+  const names = record(result.referenceNames, ['hallName', 'salespersonName', 'customerName', 'warehouseName', 'responsibleName', 'createdByName']);
+  [names.hallName, names.customerName, names.warehouseName, names.createdByName].forEach(text); nullableText(names.salespersonName); nullableText(names.responsibleName);
   if ((h.salespersonId === null) !== (names.salespersonName === null)) invalid();
   const lineIds = new Set<string>(); const lineNos = new Set<number>(); let previousLine = 0;
   for (const value of array(document.lines, 2000)) {
