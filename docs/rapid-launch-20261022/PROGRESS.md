@@ -1,3 +1,15 @@
+当前接续（源码241／运行UI240／私有服务器229，2026-10-24北京时间）：
+
+- 固定240已实际构建一次并可打开 http://127.0.0.1:57878/synthetic-unified.html ，source dc71344d4ee249b1299fae2b777fac67a2089b4a／ui-preview-dc71344-01-build01，413输入/1368模块，HTML3450452B/37d0721a…；PID36552/session83468，三关键HTTP逐字和原身份头200。18合成覆层16同/2改，仅原客户惰性adapter追加，写仍拒绝，storeaudit NOT_CONNECTED。235字典底部、234/236关闭SVG、237+240未完商品行保留/汇总、238设置页签和231字体在此固定版本；不含241或后继源码。QF2当前唯一浏览器受影响复验，清场后QF接O-S14；旧233失败不倒改、旧已过范围直接采用。
+- 229目标Linux生产依赖安装及私有app/proxy启动都已实际成功。source5669bd5/build r1-5669bd5-20261024-01/包fbdb42d…/payload1efdac…，111records/Sharp0.35.5/vips8.18.7；stage COMPLETED0/18.611134秒，复用已安装目录0npm，app+proxy health200/三关键资源200，原五容器保持。dataReady=false/businessAcceptance=false/正式网址未切；本地UI240与服务器229分开。依赖安装阻塞A+B在精确229范围已解除，不冒称最新前端已正式上线。
+- C112新保全实际COMPLETED0/527.362113秒：原程序保全DB4140files/WAL1段/媒体663和应用配置，原完成2026-10-23T23:35:38.679556Z，12h截止2026-10-24T11:35:38.679556Z。未来实际操作使用原私有current-preservation.json 3890B/106f9a10…，不是本地导出SHA；旧C82截止23:36:33Z原样保留且已过期，原配置pin不删除，未重恢复。新业务后的回退仍保护新账和回执。
+- C111真实V11正常保存链已由原QB199独立限定通过；同key重放/CAS/失败回滚/孤儿提交拒绝/手工NULLMAIN/调拨双端守恒有效。原QA账号最终v7禁登，原49身份/source57/基础商品/组成员保留；真实存在的跨组尺码负例仍未实测，不把缺失成员负例替代。无重复八组验收。
+- generic239接通现有source26 bootstrap callback/共享STAFF证明，原QB200限定源码通过；实际R1初始化仍未执行。CORE-first49账号+115真实主体（员工49/厅22/仓22/当前客户22）完整窄合同已由原D3提出，因full11/非空商品/全量MAIN及0011不可变STAGE合同不容部分先提交，待C完整原确认单及用户明确确认。ordinary628剩513/字典344/历史客户2及方案等未混入，不造空源、不借读purpose写入、原49身份不重问。
+- Csource241 c1d3ba89dd0a3e95baa23f5aa30f2329f0c965ef只补既有SettingsAuditCapability可选typedslot。原F1继续原route/controller/mount准确接线及全保留workspace未决命令汇总；不借canLeave或假false代替。QF离线核240新汇总及原T02既有迁移来源登记纠正，停止扩大已替换旧页验收。
+- 新采用QF077–082/QF2实际233和235236238源码/QB199200；104=37页+67类，55已索引逻辑范围，整页0/整类0，不能冒全站通过。v13及HREV真实非owner写接缝等缺口仍准确等待。GitHub最近已核99a21242，232–241及本段立即原对象非强推；仅代码和脱敏接续入Git。原十角色/22任务/文件归属不变，gpt-6.1-sol/xhigh，Fast无开关未核，整体ACTIVE。
+
+以下历史保留，以本段及TASKS.currentContinuation为当前事实。
+
 当前接续（源码233；实际V11及229 Linux已有新结果）：
 
 - C111真实隔离V11正常保存/同key重放/失败回滚/孤儿提交拒绝/组内边界/无MAIN手工录入/调拨双端守恒已实际COMPLETED0/12.193908秒，原QB正在只验本次新增业务范围。账号同一身份4禁登仓管→5禁登营业员/厅→6恢复→7禁登，最终正常关闭；五个已提交fixture仅采用、原PRODUCTkey不换。审计/回执17→26、商品1→2、SKU1→5、流水/余额各4；source57/原49身份/原基础商品/组成员保持。不是R1非owner写ACL或正式导入/业务/性能通过。110前次变量覆盖KeyError在PG前已保全，111只修该载体问题不重旧操作。
