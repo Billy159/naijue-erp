@@ -11095,7 +11095,7 @@
     }
   ],
   "reusePreparation": "QF/QB W0 indexes completed in K; original sealed18 and exact schema19/v14 scopes retained, no blanket rerun.",
-  "updatedAt": "2026-10-24T01:16:23.439975+00:00",
+  "updatedAt": "2026-10-24T01:28:11.605190+00:00",
   "findingClosures": [
     {
       "findingId": "QB-PACK-HTML-01",
@@ -13042,6 +13042,60 @@
       "scope": "Final2486unchanged+252nameleaf sharedtargetread/lazy modal sourcePASS, actualcontaining252pending",
       "adoption": "Original independent limited conclusion adopted without repeated C technical checks",
       "adoptedAtUtc": "2026-10-24T01:16:23.439975+00:00"
+    },
+    {
+      "id": "QF-V092",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v092-qf-c252-mode-mouse-opener-actual/RESULT.json",
+      "bytes": 2655,
+      "sha256": "37b27d4b0c28eb4719606a8b6ddc5580b46b5a44c1fc94d0d5231d56a22b1a04",
+      "result": "SEE_FIXED_RECEIPT",
+      "adoption": "Original limited evidence adopted; no C duplicate technical tests",
+      "adoptedAtUtc": "2026-10-24T01:28:11.605190+00:00"
+    },
+    {
+      "id": "QF-V093",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/ui-demo-comparison-20261022/v093-qf-adopt-qf2-c243-product-editor-formal/RESULT.json",
+      "bytes": 3020,
+      "sha256": "b87cc71b858301f8e080bcda52c217ca84adf75689afc599cc3dfd442f5d2014",
+      "result": "SEE_FIXED_RECEIPT",
+      "adoption": "Original limited evidence adopted; no C duplicate technical tests",
+      "adoptedAtUtc": "2026-10-24T01:28:11.605190+00:00"
+    },
+    {
+      "id": "QB-SLICE-203",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice203-c254-product-barcode-sku-scope/RESULT.json",
+      "bytes": 10172,
+      "sha256": "534175e3509fd93a23e50dc11df752239db3d781d423fd724461896aa4953a65",
+      "result": "PASS_LIMITED_SOURCE254_EXISTING_PRODUCT_BARCODE_OPTIONAL_SKU_SCOPE",
+      "adoption": "Original limited evidence adopted; no C duplicate technical tests",
+      "adoptedAtUtc": "2026-10-24T01:28:11.605190+00:00"
+    },
+    {
+      "id": "QB-SLICE-204",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice204-c257-product-sku-page-summary/RESULT.json",
+      "bytes": 10525,
+      "sha256": "8098ac4e94173bbe982a4ce05f75ec8c8043d6720eaeb7aab56cfdc2d3ab2073",
+      "result": "PASS_LIMITED_SOURCE257_REAL_SKU_PAGE_AND_CURRENT_PAGE_BINDING_SUMMARIES",
+      "adoption": "Original limited evidence adopted; no C duplicate technical tests",
+      "adoptedAtUtc": "2026-10-24T01:28:11.605190+00:00"
+    },
+    {
+      "id": "QF2-C255-P03-SOURCE",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/c255-p03-transfer-source-01/RESULT.json",
+      "bytes": 1821,
+      "sha256": "86dd2084d879385e167752f914645ad0d4603cb908f9fe3d7a4eea2aa9bf71e6",
+      "result": "PASS_SOURCE_LIMITED_P03_PRIVATE_TRANSFER_CASCADE_ACTUAL_PENDING",
+      "adoption": "Original limited evidence adopted; no C duplicate technical tests",
+      "adoptedAtUtc": "2026-10-24T01:28:11.605190+00:00"
+    },
+    {
+      "id": "C03-C252-PACK02",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/r1-c252-production-prep-20261024-01/pack02/pack-receipt.json",
+      "bytes": 561,
+      "sha256": "65b70b151e7ac3e953c635e840c0c41ca093df5207754ac988a5ef8cac3ff625",
+      "result": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+      "adoption": "Original limited evidence adopted; no C duplicate technical tests",
+      "adoptedAtUtc": "2026-10-24T01:28:11.605190+00:00"
     }
   ],
   "coverageGroups": [
@@ -13081,10 +13135,10 @@
     "wholeOverlaysPassed": 0
   },
   "currentControllerContinuation": {
-    "atUtc": "2026-10-24T01:16:23.439975+00:00",
+    "atUtc": "2026-10-24T01:28:11.605190+00:00",
     "latestSource": 220,
     "servedPreview": 217,
-    "browserOwner": "QF_SOLE_252_MODE_MOUSE_AFFECTED_ACTUAL",
+    "browserOwner": "QF2_SOLE_252_DATE_HOVER_THEN_READONLY_P10",
     "adopted": [
       {
         "id": "QF-V056",
@@ -13404,14 +13458,14 @@
       "wholePagesAccepted": 0,
       "wholeOverlayClassesAccepted": 0,
       "notRun": 44,
-      "uiDifference": 34,
-      "partial": 12,
+      "uiDifference": 32,
+      "partial": 14,
       "waitingIntegration": 13,
       "approvedException": 1,
-      "qualification": "OriginalQFv090 current counts,104=37+67/explicit55scopeindex/whole0; notallpending scopes covered."
+      "qualification": "OriginalQFv093 exact104 currentcounts;P05P06 partialonly,55explicitindex/whole0."
     },
-    "latestSourceRound": 255,
-    "latestSourceCheckpoint": "619e16c3a1043c0e8d8a297f8048c2084a1f64af",
+    "latestSourceRound": 257,
+    "latestSourceCheckpoint": "d228da0bc08ec3f3c35a3c441c1e20ec934d6be1",
     "currentBackend": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
@@ -13629,7 +13683,27 @@
       "model": "gpt-6.1-sol/xhigh",
       "fastSwitchVerified": false
     },
-    "productionBuild": "Actual229 Linux offline npm ci/native success and private app/proxy start SUCCESS: r1-5669bd5-20261024-01/source5669bd5/payload1efdac,111records, health200 and three resources200. stage0npm/reuse installed deps; dataReadyfalse/businessfalse/formalURL unchanged. QB198 currentTCP v11/122 exact5 pairing adopted. Separate from localUI240.",
+    "productionBuild": {
+      "status": "ACTUAL_BUILD02_AND_PACK_PASS_NOT_STAGED",
+      "source": "06fa5f51f4fbbd131175cd2983892540439209d0",
+      "build": "r1-06fa5f5-20261024-02",
+      "buildExitCode": 0,
+      "elapsedSeconds": 4.359,
+      "archive": {
+        "file": "release.tar.gz",
+        "bytes": 1300907,
+        "sha256": "4c073b6147978bac1b2de64cf0d9a62e6f2164354370aee6785fdefb8af6e9a5"
+      },
+      "manifestSha256": "3e86550ebbea9d6762be28d1d50691e1efed5ed1f4ddcbde0e84b03ab4ee8c37",
+      "members": 229,
+      "archiveExtractions": 1,
+      "firstFailure": "Missing required .release-source-commit, originalreadonlyverifySourceExport ENOENT,0.033sec/nobuilddirs;originalattempt/log preserved",
+      "correction": "Exact273Bcommitobject additionalcatfile1,noarchive replay/buildersunchanged,newPUBLICCONFIG02/buildID02/newoutputs",
+      "packCLIFailure": "C relativepaths rejected beforepack; preserved PACK-FIRST-CLI-RESULT then originalabsoluteparams passed",
+      "runtimeStarted": false,
+      "dataReady": false,
+      "publicEntryChanged": false
+    },
     "actualV11": "ActualC111 independently QB199 PASS_LIMITED: SAVE/replay/CAS/rollback/orphan rejection/manual NULLMAIN/transfer -1/+1,-2/+2 net0; original5 fixtures adopted. QA account finalv7 disabled; source57/original49/base/groups retained. Real existing foreign-group valid size remains NOT_TESTED (absent nonmember tested). Not R1 nonowner write ACL or formal business/performance.",
     "actual229Linux": {
       "jobId": "c03-c229-linux-install-only-20261024-01",
@@ -13725,17 +13799,14 @@
       "qualification": "Only T02 metadata corrected by originalQF v084; zero wholepage acceptance."
     },
     "v14CoreInitialization": {
-      "status": "PENDING_HUMAN_NOT_IMPLEMENTED",
-      "confirmation": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.md",
-      "technical": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-SUPPLEMENT-v14-CORE-INITIALIZATION.json",
-      "askedOnce": true,
-      "newTables": 0,
-      "newColumns": 0,
-      "actions": [
-        "IMPORT_CORE_STAGE",
-        "IMPORT_BIND_FULL_SOURCE"
-      ],
-      "scope": "Existing49 accounts+real115 dependency party closure; exact22hall22warehouse current-role read only; initial real22claims seq1/cursor22+unique audit1→2, later one full bind seq+1/no newclaim and MAIN carryforward original22. OriginalD1 exact deferred/accounting guard supplement included. No realbootstrap/DDL/source branch activation."
+      "status": "HUMAN_APPROVED_ORIGINAL_D1_D3_D2_IMPLEMENTATION_IN_PROGRESS_NOT_EXECUTED",
+      "approval": "WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
+      "humanUserMessageId": "01a16b7f-3cf4-7041-b338-0aa2e693001b",
+      "D1": "Originalstore/sharedtypes2/accountant/singlev14patch+hostproof",
+      "D3": "Originalhost/run/bootstrap/party scope115/resume/currenttyped/full22carryforward",
+      "D2": "Original3settingsreadleaf CORE_MEMBERS exact22hall22warehouse + sameRRtrustedproof",
+      "actualExecutions": 0,
+      "v13NotApproved": true
     },
     "p10ReadSeam": "245D2+246D1 backend independentlyQB201 sourcePASS. 248F2 optionalschemeReader/strict3states/sharedoriginalpreview sourceReady; C identified header已设置 insufficient vsFrozenactualscheme.name, originalF2 finishing actualname via existingtargetreader plusF1explicitdoubleoptin. No newAPI/DBfield/write/no inferredCURRENT.",
     "dateSeam": "247 shared UIDate optionalancestor sourcefixed, defaultlocal unchanged, Frozen portal/clamp reused; F2 ledgerloop/body position consumer inprogress. No actual newgeometry yet; 244hover sourceindependentlyQF2PASS notin243.",
@@ -13795,6 +13866,7 @@
       "scopeQualification": "QF2sourceonlyleaf/P10 and actual243module separate, originalQFsole104matrix adopts formalpartialreports only"
     },
     "latestSkuRead": "254c190204 existingbarcode endpoint optional SKU exactscope sourcefixed; originalQB independent onlynew6scopes active, no actual254SQL yet. OriginalD2 next explicitviewSKU distincttotalSkus paginatedrealSKUs incl0bindingdisabled/currentpageonlybatchsummary, preciseoneSKUdetailsvia254. Existingall5000specs or transactioncandidate not replacement; no source/manual/originalSpec fabrication.",
-    "latestP03TransferSource": "255619e16c same actual sharedcolorfitconsumer getsFrozeniw-arco-controls andfinal26rules, owneroneconsumer/strict/CSS sourcePASS adopted, originalQF2 targetedsourcepending, actualnotin252."
+    "latestP03TransferSource": "255619e16c same actual sharedcolorfitconsumer getsFrozeniw-arco-controls andfinal26rules, owneroneconsumer/strict/CSS sourcePASS adopted, originalQF2 targetedsourcepending, actualnotin252.",
+    "actualP10Next": "C114 preparing originalQA currentv11 fixed257 newSKUgrain+254filter only;C113/QB202actualdefault reused;keep5SKU1barcode/account7disabled,0writes/fixture, beforev14actualQApatch coordinatedC."
   }
 }

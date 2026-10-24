@@ -1,3 +1,11 @@
+当前增量（v14真实批准后已开工；源257，候选252）：
+
+- 原D1/D3已读取批准并开始实施，D2保留原settings读三叶，CORE_MEMBERS按22厅22仓精确集合同RR可信已提交证明核验；C仍唯一真实SQL/初始化执行，当前0v14实际提交。v13及其他未列差异不扩批，后续继续完整业务导入。
+- 252正式生产02已build0/4.359秒，pack229成员/1300907B/4c073b61…，manifest3e86550e…、一次解包匹配。01缺必需rawcommit文件的首失败及C相对路径pack参数首错保留；修准确输入/绝对路径后成功，未改builder/锁/依赖/业务。尚未私有启动新252或切正式，229仍在。
+- 256=ee5e4cb原overview显式生产组合已冻结；257=ea827cda原SKU主表页和本页summary已QB204源码限定通过，254filter也QB203通过。C114实际原QA只新scope准备中，C113/QB202默认FK已验不重；源码及小样本不代真实role/正式规模/页面完成。
+- QFv092已限定通过252类型singlemouse field/arrow/value且clean交QF2。QF2同252 date/hover module即时限定通过：两端popup591/159/267×341和原祖先链同Demo，hover蓝236/244/255。formal后补；正在同声明RO输入接P10，原253四reference/255P03/256overview不在252。QFv093仅采用243P05/P06局部，当前104行44未检查/13待接入/32差异/14局部/1例外，55索引/整页0仍保留。
+- GitHub最近已核a333e151，254–257/人类v14批准及本段立即精确保存推送。Sol61/xhigh，Fast无开关未核，整体ACTIVE。
+
 v14批准已核实并放行（2026-10-24）：
 
 - C通过原Chat读取工具直接核实「重构任务书」01a16189-fe73-7a81-b7ad-3c24ede6fd24的人类消息01a16b7f-3cf4-7041-b338-0aa2e693001b：“我确认 ，你帮我跟主控说”。前文明确链接本完整v14，非Agent自行批准，不伪造本C questionItemId。批准记录WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json，原确认单及STATUS已更新。
