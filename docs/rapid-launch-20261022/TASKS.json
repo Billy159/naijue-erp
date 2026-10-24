@@ -83,11 +83,11 @@
       "prompt": "角色派工提示词/F1-前端单据与公共界面.txt",
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
       "hostId": "local",
-      "model": "gpt-6-luna",
-      "reasoningEffort": "max",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "公用页壳及T01-T03调拨整页全状态，正常入口",
+      "currentWork": "source302frame WIP2DOMfail + allstate normalDemoBODY seam; Solmedium; not sharedwrapper=wholemigration",
       "currentPackage": "chunk140141exact3frozen299;QFactualpending",
       "nextReadyPackage": "OnlyexactQF299failure or originalalreadyreadywork, no duplicatepipeline",
       "currentDependencies": "Chrome仅约束actual；原已有接口/UI继续，真实保存要隔离证据",
@@ -116,7 +116,9 @@
         ],
         "current": "公用页壳及T01-T03调拨整页全状态，正常入口",
         "next": "S01-S04销货退换整页全状态；A01/A02公壳账号菜单"
-      }
+      },
+      "currentPhase": "TECHNICAL_HANDOFF_AFTER_UI_SOURCE_PACKAGE",
+      "nextPureUIModel": "gpt-6-luna/max"
     },
     "F2": {
       "title": "前端库存与商品",
@@ -127,11 +129,11 @@
       "prompt": "角色派工提示词/F2-前端库存与商品.txt",
       "threadId": "01a161d2-6bd9-7181-8386-1ecddddd386a",
       "hostId": "local",
-      "model": "gpt-6-luna",
-      "reasoningEffort": "max",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "I01库存整页、筛选结果矩阵输出流水弹层",
+      "currentWork": "I01 wholeUI existingready, Solmedium known7behavior/normalentry interfaces; D3ownsledger",
       "currentPackage": "295sourcechoicecancel exact1 delivered/fixed;actualnativepending",
       "nextReadyPackage": "OnlyQF2 newcancel finding iffails; olddense/output/289focus adopted",
       "currentDependencies": "产品组内范围硬边界；新增未批写合同仅该分支等待",
@@ -165,7 +167,9 @@
         ],
         "current": "I01库存整页、筛选结果矩阵输出流水弹层",
         "next": "P01-P13商品列表及六页签编辑/查看全部"
-      }
+      },
+      "currentPhase": "TECHNICAL_HANDOFF_AFTER_UI_SOURCE_PACKAGE",
+      "nextPureUIModel": "gpt-6-luna/max"
     },
     "F3": {
       "title": "前端基础设置",
@@ -175,11 +179,11 @@
       "prompt": "角色派工提示词/F3-前端基础设置.txt",
       "threadId": "01a161d2-6f11-7412-8001-14719ced78d0",
       "hostId": "local",
-      "model": "gpt-6-luna",
-      "reasoningEffort": "max",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "B01/B02厅仓整页全状态，真实CORE资料已就绪",
+      "currentWork": "B01/B02 wholeUI26pins ready, Solmedium actualCOREread/audit/normalentry seam",
       "currentPackage": "288 audit closed Select Esc exact1 delivered/frozen, component strict PASS; actual issueOPEN",
       "nextReadyPackage": "Original QF source + QF2 containing candidate actual; no unrelated settings rewrite",
       "currentDependencies": "实际CORE尚0；不挡原UI/现成接口接线",
@@ -207,7 +211,9 @@
         ],
         "current": "B01/B02厅仓整页全状态，真实CORE资料已就绪",
         "next": "B03/B08客供、B04/B07员工账号、B05/B06收款资金"
-      }
+      },
+      "currentPhase": "TECHNICAL_HANDOFF_AFTER_UI_SOURCE_PACKAGE",
+      "nextPureUIModel": "gpt-6-luna/max"
     },
     "D1": {
       "title": "后端宿主事务与公共迁移",
@@ -340,12 +346,12 @@
       ],
       "threadId": "01a16b9a-b8eb-7a40-bcae-eff6d87a196f",
       "hostId": "local",
-      "model": "gpt-6-luna",
-      "reasoningEffort": "max",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
       "fastToolVerified": false,
-      "currentWork": "P14分类整页及排序撤销弹层",
+      "currentWork": "P14-P19 sixUI sourcepackages ready, Solmedium normalroute/profile/v15cap seams",
       "currentPackage": "290 singleCSS inherited lineheight fix delivered/frozen; actualmodal pending",
       "nextReadyPackage": "QF2 containing candidate geometry and one lifecycle; no production-v15 enablement",
       "currentDependencies": "只32登记叶，公共控件/路由接缝交F1；无Chrome租约",
@@ -370,7 +376,9 @@
         ],
         "current": "P14分类整页及排序撤销弹层",
         "next": "P15-P18四字典与P19条码方案整页"
-      }
+      },
+      "currentPhase": "TECHNICAL_HANDOFF_AFTER_UI_SOURCE_PACKAGE",
+      "nextPureUIModel": "gpt-6-luna/max"
     }
   },
   "tasks": [
@@ -1229,8 +1237,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T10:42:51.384283+00:00",
-  "stage": "ACTIVE_FULL37_67_LUNA_MAX_UI_SOL_MEDIUM_TECH_REAL_CORE157_COMMITTED",
+  "updatedAt": "2026-10-24T10:54:39.635282+00:00",
+  "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
   "lastVerifiedRemoteCommit": "1352e75fa5a3acd541c24a13ba255a87353ffef9",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -4362,8 +4370,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T10:13:06.745964+00:00",
-    "sourceRound": 300,
-    "sourceCheckpoint": "5a811a17202e0f609aff4405fbb3e064acb73db2",
+    "sourceRound": 302,
+    "sourceCheckpoint": "c535fd0b801cb6bbb6ab6587d5e8ff3b87f8d4fa",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -7024,7 +7032,7 @@
       "physicalPrint": false,
       "inFlightCancel": false
     },
-    "nextActualAction": "C137 ready: run original C-RUN-ONCE.sh with157actual core-actual after sameChat medium continuation; source299 pack/install reused,235actualaccepted. Do not redo preparation/source/QAs. Respect112deadline11:35:38Z. Fourfrontend wholepage packages alreadyactive, do not re-dispatch.",
+    "nextActualAction": "Priority C137 READY runwithactual157core +accepted235; currentglobal302WIP not deploy. FourfrontSol current alreadydispatched afterUI sourceReady, do not duplicateLuna or source tests. QF matrixcounts/wholeUI remainspending. Then collect exactnewmodules andsame original QA.",
     "corePreflightHistory": {
       "128": "FAILED_EXACT_FLAT_FILE_CLOSURE_beforeprivatecopyPG;publicPRIVATE-INPUT-PINS omittedbyunchangedclientfilenamefilter",
       "151": "READONLYpriorentry/noPG, firstlognameinitiallynotselected",
@@ -7073,14 +7081,20 @@
       "PGResultNotYetClaimed": false,
       "coreActualBytes": 1474,
       "coreActualSha256": "bc10d82662aa4d6ac2ab0021527cd354055c246184ba0a349370459aa55e769b"
+    },
+    "newPackages": {
+      "F1chunk142": "frameonly4changedsource302,2DOMfail pendingSol, notwholeDemo body proof",
+      "F2I01": "existing4leafsourceUIready no newcode; Solbehaviors now",
+      "F3B01B02": "PACKAGE19516/9e3bbe621dfbb4ec2ff06a8ccdd2ae57d18a02e03baf6b7fd7360d56f3944191,26leafssame oldHEAD sourceUIonly; Solactualreadseam now",
+      "F4P14P19": "existing6UI sourceReady no newcode; normalprofile/wholeactual unverified; Solseam now",
+      "D1B07source301": "exact3hostseam sourceReady, currentHREVpurposeunsupported failsclosed; QBnewsourceonly inprogress",
+      "QF2index": "reports/qa-frontend/rapid-launch-20261022/QF2/page-evidence-transfer-20261024-01/STATUS-TRANSFER.md"
     }
   },
   "latestReadySource": {
-    "round": 300,
-    "commit": "5a811a17202e0f609aff4405fbb3e064acb73db2",
-    "latestServedPreviewRound": 299,
-    "actualBrowserRound": 299,
-    "qualification": "300 changes importer scripts/test only. ExistingUI299+formal299/C149 remain exact valid separate artifacts. Newsource300compiled68graph/67same1leafchanged; no application rebuild required for importer-only change. ActualCOREnotcommitted."
+    "round": 302,
+    "commit": "c535fd0b801cb6bbb6ab6587d5e8ff3b87f8d4fa",
+    "qualification": "302partialtransferFRAME WIP,2DOMfail atNode24.19 preserved, no wholepagepass.301 historyhostseam failsclosed without HREV.300importer CORE actualpassed. Installed/browser299 remains separatevalidexactcandidate."
   },
   "pendingUserDecision": [
     {
@@ -7273,7 +7287,7 @@
     "goalToolLimit": "active goal工具只有状态修改无objective正文编辑；不假完成换卡。TASKS当前口径覆盖旧卡35/65与xhigh。",
     "atUtc": "2026-10-24T10:27:22.773479+00:00",
     "dispatchObserved": {
-      "frontend4": "All4 explicitLunaMAX requests accepted and active; no newChat",
+      "frontend4": "All4 UI-phase LunaMAX delivered source/partialpackages; current same4Chats explicitly switchedSol61medium forinterfaces/states. No newChats/helpers.",
       "backend": "D1D2D3QB explicitSol61medium accepted; in-flight oldresults preserved",
       "QF": "Originalmatrix task resumed after idlewhite-only final; no duplicatecase orGUI",
       "QF2": "Existingevidence transfer completed, waitsfullmodule candidate",
@@ -7315,7 +7329,8 @@
     "proposedDRAFTOnly": true,
     "plannedStorage": "existing history_revision before_facts/after_facts; no newtable/column proposed",
     "notUserApproved": "JSONwritecontract andnecessaryissuer delta needoneconcreteconfirmation. Functionalneedalreadyexplicit, do not askwhetherneeded.",
-    "unblocked": "oldapprovednumeric/host/UI/othermodulescontinue"
+    "unblocked": "oldapprovednumeric/host/UI/othermodulescontinue",
+    "currentNeeds": "D3 supplies concretebeforeafter/filefunctions andD1store/guard/issuerdelta once; notaskeduser yet; rootmustdisplay onecompleteconfirmationbeforepersistednewheader. Existingnumeric remainsapproved but actualpurposeunavailable notfakewrite."
   },
   "ownershipSeamCorrection": {
     "inventoryLedgerQueryReaderServiceContractsProtocol": "D3 retained, D2no transfer/no write",
