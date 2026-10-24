@@ -1,7 +1,4 @@
-import { StandardReadTable } from '../../components/standard-read-table.tsx';
-import { StandardTabs } from '../../components/standard-tabs.tsx';
-import { UIButton, UIInput } from '../../components/standard-controls.tsx';
-import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import type { QueryRead } from '../../loading/latest-query.ts';
 import { validateCatalogueSettingsPage } from '../../../../../packages/application/src/catalogue-settings-read-validation.ts';
 import type { CatalogueEntryPageProps, CatalogueSettingsEntry, CatalogueSettingsListQuery, CatalogueSettingsPage } from './contracts.ts';
@@ -11,6 +8,7 @@ import { useCatalogueReadOwner, type CatalogueReadOwner } from './read-owner.tsx
 import { CatalogueEntryEditor } from './entry-view.tsx';
 import './source-catalogue-settings.css';
 
+const settingTabs = [['colors', '颜色'], ['groups', '尺码组'], ['fits', '版型'], ['seasons', '季节']] as const;
 const initial: CatalogueSettingsListQuery = Object.freeze({ search: '', page: 1, pageSize: 20 });
 type Kind = 'colors' | 'fits';
 type Owner = CatalogueReadOwner<CatalogueSettingsListQuery, CatalogueSettingsPage<CatalogueSettingsEntry>>;
@@ -23,6 +21,7 @@ function EntryContent(props: CatalogueEntryPageProps & { readonly kind: Kind; re
   const { query, scope } = props.owner, snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
   const [search, setSearch] = useState(''), previousSearch = useRef('');
   const [initialSize, setInitialSize] = useState<CatalogueSettingsListQuery['pageSize']>(20);
+  const host = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLElement | null>(null);
   const [editTarget,setEditTarget]=useState<{entry:CatalogueSettingsEntry|null;sequence:number}|null>(null),sequence=useRef(0),leaveGuard=useRef<(()=>boolean)|null>(null),[notice,setNotice]=useState('');
   const maintenance=props.maintenance&&props.onCanLeaveChange?props.maintenance:undefined;
@@ -30,6 +29,23 @@ function EntryContent(props: CatalogueEntryPageProps & { readonly kind: Kind; re
   const receiveGuard=useCallback((guard:(()=>boolean)|null)=>{leaveGuard.current=guard;props.onCanLeaveChange?.(guard);},[props.onCanLeaveChange]);
   const openEditor=(entry:CatalogueSettingsEntry|null,element:HTMLElement)=>{if(!scope.active||!maintenance)return;trigger.current=element;setNotice('');setEditTarget({entry,sequence:++sequence.current});};
   const closeEditor=()=>{setEditTarget(null);if(scope.active&&trigger.current?.isConnected)trigger.current.focus();};
+
+  const enabledTab = (key: (typeof settingTabs)[number][0]) => key === props.kind || (!!props.onSettingTab && !!props.allowedSettingTabs?.includes(key));
+  const chooseTab = (key: (typeof settingTabs)[number][0]) => {
+    if (!scope.active || !enabledTab(key) || key === props.kind) return;
+    if (leaveGuard.current && !leaveGuard.current()) { setNotice('请先保存或取消当前编辑。'); return; }
+    props.onSettingTab?.(key);
+  };
+  useLayoutEffect(() => {
+    if (!props.focusSettingTab) return;
+    const frame = requestAnimationFrame(() => {
+      const element = host.current; if (!element?.isConnected) return;
+      const active = element.ownerDocument.activeElement;
+      if (active && active !== element.ownerDocument.body && active.isConnected && !(element.contains(active) && active.matches('[role="tab"]'))) return;
+      element.querySelector<HTMLButtonElement>('[role="tab"][aria-selected="true"]')?.focus({ preventScroll: true });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   const success = snapshot.success, result = success?.data, busy = snapshot.phase === 'loading', label = props.kind === 'colors' ? '颜色' : '版型';
   const displayed = success?.parameters ?? { ...initial, pageSize: initialSize };
@@ -48,26 +64,30 @@ function EntryContent(props: CatalogueEntryPageProps & { readonly kind: Kind; re
   if (snapshot.phase === 'disposed') return <div className="catalogue-workbench">{state}</div>;
   const canCreate=!!maintenance?.allowedActions.includes('CREATE'),canEdit=!!maintenance?.allowedActions.some(action=>action!=='CREATE');
   const unavailable=`${label}维护暂不可用。`;
-  return <div className="catalogue-workbench pc-workbench pc-settings-page">
-    <div className="pc-page-head"><h1>商品设置</h1></div>
-    <section className="pc-settings"><StandardTabs className="erp-settings-tabs catalogue-entry-tabs" label="商品设置" value={props.kind} restoreFocus={!!props.focusSettingTab}
-      items={([['colors', '颜色'], ['groups', '尺码组'], ['fits', '版型'], ['seasons', '季节']] as const).map(([key,label])=>({key,label,disabled:key!==props.kind && (!props.onSettingTab || !props.allowedSettingTabs?.includes(key))}))}
-      onChange={tab=>{if(leaveGuard.current&&!leaveGuard.current()){setNotice('请先保存或取消当前编辑。');return;}if(scope.active)props.onSettingTab?.(tab);}}>
-      <div className="pc-settings-body">
+  return <div ref={host} className="catalogue-workbench pc-workbench pc-settings-page pc-catalogue-settings">
+    <div className="gold-head iw-head pc-page-head"><h1>商品设置</h1><div className="actions iw-head-actions" /></div>
+    <section className="pc-settings">
+      <div className="tabs" role="tablist" aria-label="商品设置">{settingTabs.map(([key, text]) => <button key={key} type="button" role="tab" aria-selected={props.kind === key} tabIndex={props.kind === key ? 0 : -1} disabled={!enabledTab(key)} className={props.kind === key ? 'active' : ''} data-pc="setting" data-tab={key} onClick={() => chooseTab(key)} onKeyDown={event => {
+        if (event.nativeEvent.isComposing || event.keyCode === 229) return;
+        const enabled = settingTabs.filter(([value]) => enabledTab(value)), index = enabled.findIndex(([value]) => value === key);
+        const next = event.key === 'ArrowRight' ? enabled[(index + 1) % enabled.length]?.[0]
+          : event.key === 'ArrowLeft' ? enabled[(index + enabled.length - 1) % enabled.length]?.[0]
+          : event.key === 'Home' ? enabled[0]?.[0] : event.key === 'End' ? enabled.at(-1)?.[0]
+          : event.key === 'Enter' || event.key === ' ' ? key : undefined;
+        if (next !== undefined) { event.preventDefault(); event.stopPropagation(); chooseTab(next); }
+      }}>{text}</button>)}</div>
+      <div className="pc-editor-body pc-settings-body" role="tabpanel" aria-label={label}>
         <form className="pc-section-line" role="search" aria-label={`搜索${label}`} onSubmit={event=>{event.preventDefault();run({search,page:1,pageSize:displayed.pageSize});}}>
-          <UIInput type="search" maxLength={200} aria-label={`搜索${label}名称或编码`} placeholder={`搜索${label}名称或编码`} value={search} onChange={nextValue=>{query.cancel();setSearch(nextValue);}}/>
-          <UIButton className="primary" type="button" disabled={!canCreate} title={!maintenance?unavailable:!canCreate?'暂无新增权限':undefined} aria-description={!maintenance?unavailable:undefined} onClick={event=>openEditor(null,event.currentTarget)}>新增{label}</UIButton>
+          <input id="pc-dict-search" name="search" type="search" maxLength={200} aria-label={`搜索${label}名称或编码`} placeholder={`搜索${label}名称或编码`} value={search} onChange={event=>{query.cancel();setSearch(event.currentTarget.value);}} onKeyDown={event=>{if(event.key==='Enter'&&(event.nativeEvent.isComposing||event.keyCode===229))event.preventDefault();}}/>
+          <button className="btn primary" type="button" disabled={!canCreate} title={!maintenance?unavailable:!canCreate?'暂无新增权限':undefined} aria-description={!maintenance?unavailable:undefined} onClick={event=>openEditor(null,event.currentTarget)}>新增{label}</button>
         </form>
         {notice&&<p role="status">{notice}</p>}{state}
         {success&&(busy||snapshot.phase==='error'||search!==success.parameters.search)&&<p role="status">以下仍为上次成功读取的资料（搜索：{success.parameters.search||'全部'}，第{success.parameters.page}页）；并非本次读取结果。</p>}
-        <StandardReadTable<CatalogueSettingsEntry> label={label} tableClassName="catalogue-entry-table" rows={result?.items??[]} onRow={item=>({'data-catalogue-id':item.id})} columns={[
-          {title:'名称',dataIndex:'name'},{title:'编码',dataIndex:'code'},
-          {title:'操作',width:100,render:(_,item)=><UIButton type="button" className="view-action" aria-label={`编辑${label}：${item.name}`} disabled={busy||snapshot.phase!=='success'||search!==success?.parameters.search||!canEdit} title={!maintenance?unavailable:!canEdit?'暂无编辑权限':undefined} aria-description={!maintenance?unavailable:undefined} onClick={event=>openEditor(item,event.currentTarget)}>编辑</UIButton>},
-        ]}/>
+        <table className="catalogue-entry-table" aria-label={label}><thead><tr>{['名称','编码','操作'].map(title=><th key={title} scope="col">{title}</th>)}</tr></thead><tbody>{(result?.items??[]).map(item=><tr key={item.id} data-catalogue-id={item.id}><td>{item.name}</td><td>{item.code}</td><td><button type="button" className="btn ghost view-action" aria-label={`编辑${label}：${item.name}`} disabled={busy||snapshot.phase!=='success'||search!==success?.parameters.search||!canEdit} title={!maintenance?unavailable:!canEdit?'暂无编辑权限':undefined} aria-description={!maintenance?unavailable:undefined} onClick={event=>openEditor(item,event.currentTarget)}>编辑</button></td></tr>)}</tbody></table>
         {result&&!result.items.length&&<div className="empty" role="status">{result.total?'此页没有数据，请返回有效页。':'没有匹配的数据'}</div>}
         <CataloguePagination scope={scope} page={displayed.page} pageSize={displayed.pageSize} total={result?.total??null} busy={busy} onPage={page=>run({...displayed,page})} onPageSize={pageSize=>{setInitialSize(pageSize);run({...displayed,search:success?displayed.search:search,page:1,pageSize});}}/>
       </div>
-    </StandardTabs></section>
+    </section>
     {editTarget&&maintenance&&<CatalogueEntryEditor key={editTarget.sequence} scope={scope} capability={maintenance} entry={editTarget.entry} label={label} close={closeEditor} onAccessFailure={props.onAccessFailure} onCanLeaveChange={receiveGuard} reload={()=>run(success?.parameters??displayed)} onCommitted={()=>{closeEditor();setNotice('已保存。');run(success?.parameters??displayed);}}/>}
   </div>;
 
