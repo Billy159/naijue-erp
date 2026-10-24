@@ -8,6 +8,8 @@ export interface InventoryWindowLayout {
   readonly sizeWidth: number | ((size: InventorySize, index: number, sectionKey: string) => number);
   readonly subtotal: boolean;
   readonly total: boolean;
+  /** Display-only row projection; canonical FIT/SKU lookup remains intact. */
+  readonly hideFit?: boolean;
   readonly collapsedProducts: ReadonlySet<string>;
   /** Same JSON [product ID, color ID, FIT ID] keys as the canonical matrix. */
   readonly collapsedColors: ReadonlySet<string>;
@@ -113,7 +115,7 @@ export const inventoryColorFitKey = (productId: string, colorId: string, fitId: 
 export const inventorySectionKey = (product: InventoryProduct): string => JSON.stringify([product.sizeGroup.id, product.sizes.map(size => [size.id, size.label])]);
 const warehouseKey = (groupKey: string, warehouseId: string): string => JSON.stringify([groupKey, warehouseId]);
 interface SectionIndex { readonly section: InventoryWindowSection; readonly offsets: readonly number[]; readonly sizeIndices: ReadonlyMap<string, number>; readonly warehouseRows: readonly number[] }
-interface GroupIndex { readonly product: InventoryProduct; readonly group: InventoryColorFit; readonly sectionIndex: number; readonly warehouses: ReadonlyMap<string, InventoryRow> }
+interface GroupIndex { readonly product: InventoryProduct; readonly group: InventoryColorFit; readonly sectionIndex: number; readonly warehouses: ReadonlyMap<string, InventoryRow>; readonly displayKey: string }
 
 /**
  * Index only row/group/column metadata. It never traverses row.cells or copies
@@ -134,6 +136,8 @@ export class InventoryWindowModel {
   readonly #productFirstRows: ReadonlyMap<string, number>;
   readonly #collapsedProducts: ReadonlySet<string>;
   readonly #collapsedColors: ReadonlySet<string>;
+  readonly #hideFit: boolean;
+  readonly #displayGroups: ReadonlyMap<string, readonly GroupIndex[]>;
 
   constructor(data: InventoryPage, layout: InventoryWindowLayout) {
     for (const kind of ['section-header', 'warehouse', 'color-total', 'product-total'] as const) positive(layout.heights[kind], 'row height');
@@ -141,6 +145,7 @@ export class InventoryWindowModel {
     this.data = data;
     this.#collapsedProducts = new Set(layout.collapsedProducts);
     this.#collapsedColors = new Set(layout.collapsedColors);
+    this.#hideFit = layout.hideFit === true;
     const grouped = new Map<string, InventoryProduct[]>();
     for (const product of data.products) {
       const key = inventorySectionKey(product);
@@ -190,18 +195,26 @@ export class InventoryWindowModel {
         const productStart = rows.length;
         for (const group of product.colorFits) {
           const groupKey = inventoryColorFitKey(product.id, group.color.id, group.fit.id);
-          groups.set(groupKey, { product, group, sectionIndex: index, warehouses: new Map(group.rows.map(row => [row.warehouse.id, row])) });
+          const displayKey = this.#hideFit ? JSON.stringify([product.id, group.color.id, null]) : groupKey;
+          groups.set(groupKey, { product, group, sectionIndex: index, warehouses: new Map(group.rows.map(row => [row.warehouse.id, row])), displayKey });
           indexedWarehouseRows += group.rows.length;
+        }
+        const displayGroups = new Map<string, InventoryColorFit[]>();
+        for (const group of product.colorFits) { const key = this.#hideFit ? group.color.id : inventoryColorFitKey(product.id, group.color.id, group.fit.id); const parts = displayGroups.get(key); if (parts) parts.push(group); else displayGroups.set(key, [group]); }
+        for (const related of displayGroups.values()) {
+          const group = related[0]!;
+          const groupKey = this.#hideFit ? JSON.stringify([product.id, group.color.id, null]) : inventoryColorFitKey(product.id, group.color.id, group.fit.id);
+          const displayRows = [...new Map(related.flatMap(part => part.rows.map(row => [row.warehouse.id, row] as const))).values()];
           if (collapsed) continue;
           if (this.#collapsedColors.has(groupKey)) {
             append(index, { kind: 'color-total', key: JSON.stringify(['color-total', groupKey]), product, group, groupKey, reason: 'collapsed', firstInProduct: rows.length === productStart, firstInColorFit: true });
           } else {
-            for (const [rowIndexInGroup, source] of group.rows.entries()) {
-              visibleWarehouses.set(warehouseKey(groupKey, source.warehouse.id), rows.length);
+            for (const [rowIndexInGroup, source] of displayRows.entries()) {
+              for (const part of related) { const key = inventoryColorFitKey(product.id, part.color.id, part.fit.id); if (groups.get(key)!.warehouses.has(source.warehouse.id)) visibleWarehouses.set(warehouseKey(key, source.warehouse.id), rows.length); }
               warehouseRows.push(rows.length);
-              append(index, { kind: 'warehouse', key: JSON.stringify(['warehouse', product.id, group.color.id, group.fit.id, source.warehouse.id]), product, group, source, groupKey, rowIndexInGroup, firstInProduct: rows.length === productStart, firstInColorFit: rowIndexInGroup === 0 });
+              append(index, { kind: 'warehouse', key: JSON.stringify(['warehouse', product.id, group.color.id, this.#hideFit ? null : group.fit.id, source.warehouse.id]), product, group, source, groupKey, rowIndexInGroup, firstInProduct: rows.length === productStart, firstInColorFit: rowIndexInGroup === 0 });
             }
-            if (layout.subtotal) append(index, { kind: 'color-total', key: JSON.stringify(['color-total', groupKey]), product, group, groupKey, reason: 'subtotal', firstInProduct: rows.length === productStart, firstInColorFit: group.rows.length === 0 });
+            if (layout.subtotal) append(index, { kind: 'color-total', key: JSON.stringify(['color-total', groupKey]), product, group, groupKey, reason: 'subtotal', firstInProduct: rows.length === productStart, firstInColorFit: displayRows.length === 0 });
           }
         }
         if (collapsed || layout.total) append(index, { kind: 'product-total', key: JSON.stringify(['product-total', product.id]), product, reason: collapsed ? 'collapsed' : 'total', firstInProduct: rows.length === productStart });
@@ -216,6 +229,9 @@ export class InventoryWindowModel {
     this.#rowOffsets = offsets;
     this.#sectionIndices = sectionIndices;
     this.#groups = groups;
+    const displayGroups = new Map<string, GroupIndex[]>();
+    for (const entry of groups.values()) { const parts = displayGroups.get(entry.displayKey); if (parts) parts.push(entry); else displayGroups.set(entry.displayKey, [entry]); }
+    this.#displayGroups = displayGroups;
     this.#visibleWarehouses = visibleWarehouses;
     this.#rowIndices = new Map(rows.map(row => [row.key, row.index]));
     this.#productFirstRows = productFirstRows;
@@ -256,7 +272,18 @@ export class InventoryWindowModel {
     if (!source || columnIndex === undefined) return null;
     const cell = source.cells[address.sizeId];
     if (!cell) throw new TypeError('Unvalidated inventory cell: missing is never zero.');
-    return { address, product: entry.product, group: entry.group, source, size: entry.product.sizes[columnIndex]!, cell, sectionIndex: entry.sectionIndex, columnIndex, rowIndex: this.#visibleWarehouses.get(warehouseKey(groupKey, address.warehouseId)) ?? null, reveal: { productId: this.#collapsedProducts.has(address.productId) ? address.productId : null, colorFitKey: this.#collapsedColors.has(groupKey) ? groupKey : null } };
+    return { address, product: entry.product, group: entry.group, source, size: entry.product.sizes[columnIndex]!, cell, sectionIndex: entry.sectionIndex, columnIndex, rowIndex: this.#visibleWarehouses.get(warehouseKey(groupKey, address.warehouseId)) ?? null, reveal: { productId: this.#collapsedProducts.has(address.productId) ? address.productId : null, colorFitKey: this.#collapsedColors.has(entry.displayKey) ? entry.displayKey : null } };
+  }
+
+  /** A focus representative is always an actual applicable canonical source. */
+  #displayAddress(address: InventoryLogicalCell): InventoryLogicalCell | null {
+    if (!this.#hideFit) { const cell = this.resolveCell(address)?.cell; return cell && cell.state !== 'not-applicable' ? address : null; }
+    const parts = this.#displayGroups.get(JSON.stringify([address.productId, address.colorId, null])) ?? [];
+    for (const entry of [...parts.filter(part => part.group.fit.id === address.fitId), ...parts.filter(part => part.group.fit.id !== address.fitId)]) {
+      const cell = entry.warehouses.get(address.warehouseId)?.cells[address.sizeId];
+      if (cell && cell.state !== 'not-applicable') return { ...address, fitId: entry.group.fit.id };
+    }
+    return null;
   }
 
   cellTarget(address: InventoryLogicalCell): InventoryCellTarget | null {
@@ -279,8 +306,8 @@ export class InventoryWindowModel {
         const reverse = direction === 'left' || direction === 'row-end';
         const start = direction === 'row-start' ? 0 : direction === 'row-end' ? section.section.sizes.length - 1 : from + (reverse ? -1 : 1);
         for (let index = start; index >= 0 && index < section.section.sizes.length; index += reverse ? -1 : 1) {
-          const candidate = { ...current, sizeId: section.section.sizes[index]!.id };
-          if (this.resolveCell(candidate)!.cell.state !== 'not-applicable') { next = candidate; break; }
+          const candidate = this.#displayAddress({ ...current, sizeId: section.section.sizes[index]!.id });
+          if (candidate) { next = candidate; break; }
         }
       } else {
         const rowIndex = this.resolveCell(current)!.rowIndex!;
@@ -289,8 +316,8 @@ export class InventoryWindowModel {
         for (let index = start + delta; index >= 0 && index < section.warehouseRows.length; index += delta) {
           const row = this.rows[section.warehouseRows[index]!]!;
           if (row.kind !== 'warehouse') throw new Error('Invalid warehouse row index.');
-          const candidate = { productId: row.product.id, colorId: row.group.color.id, fitId: row.group.fit.id, warehouseId: row.source.warehouse.id, sizeId: current.sizeId };
-          if (this.resolveCell(candidate)!.cell.state !== 'not-applicable') { next = candidate; break; }
+          const candidate = this.#displayAddress({ productId: row.product.id, colorId: row.group.color.id, fitId: this.#hideFit ? current.fitId : row.group.fit.id, warehouseId: row.source.warehouse.id, sizeId: current.sizeId });
+          if (candidate) { next = candidate; break; }
         }
       }
       if (!next) break;

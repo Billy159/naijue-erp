@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { emptyInventoryFilter, type InventoryOutputData, type InventoryProduct, type StockTotal } from './contracts.ts';
-import { createInventoryOutputReader, createInventoryPrintHtml, inventoryWorkbookRows } from './output-adapter.ts';
+import { createInventoryOutputReader, createInventoryPrintHtml, inventoryWorkbookRows, createInventoryPrintHtmlAsync, inventoryWorkbookRowsAsync } from './output-adapter.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 
 const id = (value: number) => `00000000-0000-4000-8000-${String(value).padStart(12, '0')}`;
@@ -159,7 +159,7 @@ test('first click opens deferred native output; cancel/retry keep executed filte
     } } };
     await act!(async () => { root!.render(entry.createElement(entry.StrictMode, null, entry.createElement(entry.InventoryPageView, { scope, initialProduct: selected,
       reader: { readInventory: async (request: { parameters: { page: number; pageSize: number } }) => ({ ...data, page: request.parameters.page, pageSize: request.parameters.pageSize }), readCandidates: async () => ({ items: [], exactTotal: 0, page: 1 }) }, productReader: {}, output: capability }))); });
-    const click = async (text: string, within: ParentNode = host) => { const button = [...within.querySelectorAll('button')].find(value => value.textContent === text); assert.ok(button); await act!(async () => { button.click(); }); };
+    const click = async (text: string, within: ParentNode = host) => { const button = Array.from(within.querySelectorAll('button')).find(value => value.textContent === text); assert.ok(button); await act!(async () => { button.click(); }); };
     const settle = async () => { await act!(async () => { await new Promise(resolve => setTimeout(resolve, 20)); }); };
     await settle(); assert.equal(seen.length, 0);
     await click('重置'); assert.match(host.textContent!, /条件已修改/);
@@ -191,4 +191,32 @@ test('first click opens deferred native output; cancel/retry keep executed filte
     for (const [key, descriptor] of globals) if (descriptor) Object.defineProperty(globalThis, key, descriptor); else Reflect.deleteProperty(globalThis, key);
     await rm(temporary, { recursive: true, force: true });
   }
+});
+
+
+test('F03 cooperative rows are lazy across products and cancellation releases the producer before later products', async () => {
+  let firstReads=0,secondReads=0;
+  const a=product(1),b=product(2),first={...a,get colorFits(){firstReads++;return a.colorFits;}},second={...b,get colorFits(){secondReads++;return b.colorFits;}};
+  const data:InventoryOutputData={readReference:'NEW-ASYNC-ROWS',exactTotalProducts:2,warehouseLabels:['仓库0','仓库1'],allMatchesTotal:total((BigInt(a.total.knownQuantity)+BigInt(b.total.knownQuantity)).toString()),products:[first,second]};
+  const abort=new AbortController(),settings={category:true,supplier:false,fit:false,sizeGroup:false,season:false,subtotal:false,total:true,sizeDescription:false};
+  const iterator=inventoryWorkbookRowsAsync(data,filter,settings,abort.signal);
+  assert.equal(firstReads,0);assert.equal(secondReads,0);
+  for(let i=0;i<4;i++)await iterator.next();assert.equal(firstReads,0);assert.equal(secondReads,0);
+  const row=await iterator.next();assert.equal(row.done,false);assert.equal(row.value![0],'0001');assert.ok(row.value!.includes('-9007199254740993'));assert.ok(firstReads>0);assert.equal(secondReads,0);
+  abort.abort();await assert.rejects(iterator.next(),error=>error instanceof HttpQueryError&&error.kind==='aborted');assert.equal(secondReads,0);
+});
+
+test('F03 cooperative print preserves native full-model output and abort never publishes partial HTML', async () => {
+  const products=[product(1),product(2)],data:InventoryOutputData={readReference:'NEW-ASYNC-PRINT',exactTotalProducts:2,warehouseLabels:['仓库0','仓库1'],allMatchesTotal:total(products.reduce((sum,p)=>sum+BigInt(p.total.knownQuantity),0n).toString()),products};
+  const settings={category:true,supplier:false,fit:true,sizeGroup:false,season:false,subtotal:true,total:true,sizeDescription:true};
+  assert.equal(await createInventoryPrintHtmlAsync(data,filter,settings,new AbortController().signal),createInventoryPrintHtml(data,filter,settings));
+  const abort=new AbortController(),pending=createInventoryPrintHtmlAsync(data,filter,settings,abort.signal);abort.abort();await assert.rejects(pending,error=>error instanceof HttpQueryError&&error.kind==='aborted');
+});
+
+test('F03 cooperative buffered NDJSON work yields for active cancellation and still requires complete EOF', async () => {
+  const products=Array.from({length:150},(_,i)=>product(i+1,2,4,'-1')),bytes=encode(frames(products));let canceled=false;
+  const abort=new AbortController();
+  const pending=reader(async()=>new Response(new ReadableStream({start(controller){controller.enqueue(bytes);},cancel(){canceled=true;}}),{headers:{'content-type':'application/x-ndjson'}})).readOutput(read(abort.signal));
+  const timer=setTimeout(()=>abort.abort(),0);
+  try{await assert.rejects(pending,error=>error instanceof HttpQueryError&&error.kind==='aborted');assert.equal(canceled,true);}finally{clearTimeout(timer);}
 });

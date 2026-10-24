@@ -1,5 +1,5 @@
 import { StandardOverlay } from '../components/standard-overlay.tsx';
-import { useEffect, useId, useRef, useState, useSyncExternalStore, type ComponentType } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState, useSyncExternalStore, type ComponentType } from 'react';
 import type { ReadScope } from '../loading/read-scope.ts';
 import type { InventoryOutputCapability, Selection } from './contracts.ts';
 import type { InventoryOutputContentProps } from './inventory-output.tsx';
@@ -29,6 +29,7 @@ export interface InventoryPageProps {
   readonly output?: InventoryOutputCapability;
 }
 const outputLeaves = new AsyncLeafRegistry({ output: { load: () => import('./inventory-output.tsx') } }, { maxRetainedEntries: 1 });
+const noInventoryActions:InventoryActions=Object.freeze({});
 const names = { products: '商品', categories: '商品分类', warehouses: '仓库', suppliers: '供应商', fits: '版型', seasons: '季节' };
 function scopeLines(filter: InventoryFilter): string[] {
   return (Object.keys(names) as (keyof typeof names)[]).map(key => {
@@ -54,7 +55,7 @@ export function InventoryPageView(props: InventoryPageProps) {
     ? <InventoryPageContent key={props.scope.routeInstanceId} {...props} query={owner.query} /> : null;
 }
 
-function InventoryPageContent({ scope, reader, productReader, actions = {}, ledger, output, query, initialProduct, returnToProduct }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
+function InventoryPageContent({ scope, reader, productReader, actions = noInventoryActions, ledger, output, query, initialProduct, returnToProduct }: InventoryPageProps & { readonly query: ReturnType<typeof createInventoryQuery> }) {
   const snapshot = useSyncExternalStore(query.subscribe, query.getSnapshot, query.getSnapshot);
   const [draft, setDraft] = useState<InventoryFilter>(()=>({...emptyInventoryFilter(),products:initialProduct?[initialProduct]:[]}));
   const [returning,setReturning]=useState(false),[returnError,setReturnError]=useState('');
@@ -67,7 +68,7 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
   const [ledgerTarget, setLedgerTarget] = useState<InventoryCellTarget | null>(null);
   const productTrigger = useRef<HTMLElement | null>(null);
   const productSequence = useRef(0);
-  const openProduct = (target: Selection) => { productTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; productSequence.current++; setProduct(target); };
+  const openProduct = useCallback((target: Selection) => { productTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; productSequence.current++; setProduct(target); },[]);
   const closeProduct = () => { setProduct(null); if (productTrigger.current?.isConnected) productTrigger.current.focus(); };
   const settingsPopup = useInventorySettingsPopup(scope);
   const settingsOpen = settingsPopup.open;
@@ -77,6 +78,11 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
   const outputTrigger = useRef<HTMLButtonElement>(null);
   const [collapsedProducts, setCollapsedProducts] = useState<ReadonlySet<string>>(new Set());
   const [collapsedColors, setCollapsedColors] = useState<ReadonlySet<string>>(new Set());
+  const resultsElement=useRef<HTMLDivElement>(null);
+  const matrixWindowing=useMemo(()=>({mode:'measured' as const,scope,element:resultsElement}),[scope]);
+  const toggleProduct=useCallback((id:string)=>setCollapsedProducts(value=>toggle(value,id)),[]);
+  const toggleColor=useCallback((id:string)=>setCollapsedColors(value=>toggle(value,id)),[]);
+  const matrixActions=useMemo(()=>({...actions,...(ledger?{onOpenCell:(target:InventoryCellTarget)=>{if(scope.active)setLedgerTarget(target);}}:{}),onViewProduct:openProduct}),[actions,ledger,scope,openProduct]);
   const scopeTrigger = useRef<HTMLButtonElement>(null);
   const settingsTrigger = settingsPopup.trigger;
   const settingsPosition = settingsPopup.position;
@@ -124,9 +130,9 @@ function InventoryPageContent({ scope, reader, productReader, actions = {}, ledg
     </form>
     <div className="iw-result-tools"><div className="iw-stats"><span className="iw-stats-label">{busy?'正在查询':result?'查询结果':'等待查询'}</span><span>{busy?'正在更新库存结果…':result?<>{summary} · <strong>{result.exactTotalProducts.toLocaleString('zh-CN')}</strong> 款商品 · {result.warehouseLabels.length} 个仓库 · 库存 <strong>{totalLabel(result.allMatchesTotal)}</strong></>:'选择筛选条件后点击查询'}</span>{success&&!busy&&<button ref={scopeTrigger} type="button" className="btn ghost iw-scope-link" data-i="scope" title="查看本次查询使用的条件" onClick={()=>setScopeOpen(true)}>查看范围</button>}</div><div className="actions">{result&&result.products.length>0&&!busy&&<button type="button" className="btn ghost iw-plain-action" data-i="toggle-folds" title={`${collapsedProducts.size===result.products.length?'展开':'折叠'}当前页商品`} onClick={()=>setCollapsedProducts(collapsedProducts.size===result.products.length?new Set():new Set(result.products.map(product=>product.id)))}>{collapsedProducts.size===result.products.length?'展开':'折叠'}</button>}<div className="iw-settings-wrap"><button ref={settingsTrigger} type="button" className="btn ghost iw-plain-action" data-i="settings" aria-expanded={settingsOpen} onClick={settingsPopup.toggle}>显示设置</button>{settingsOpen&&<div ref={settingsPopup.panel} className="iw-pop inventory-source-settings" data-kind="settings" style={settingsPosition} role="dialog" aria-label="库存显示设置"><div className="iw-pop-head"><strong>商品辅助字段</strong></div><div className="iw-settings">{(['category','supplier','fit','sizeGroup','season']as const).map(key=><label key={key}><input type="checkbox" data-i-setting={key} checked={settings[key]} onChange={event=>{const checked=event.currentTarget.checked;setSettings(value=>({...value,[key]:checked}));}}/>{settingLabels[key]}</label>)}</div><div className="iw-pop-head"><strong>汇总显示</strong></div><div className="iw-settings">{(['subtotal','total','sizeDescription']as const).map(key=><label key={key}><input type="checkbox" data-i-setting={key} checked={settings[key]} onChange={event=>{const checked=event.currentTarget.checked;setSettings(value=>({...value,[key]:checked}));}}/>{settingLabels[key]}</label>)}</div><footer><button type="button" className="btn ghost" data-i="defaults" onClick={()=>setSettings(defaultDisplaySettings)}>恢复默认</button><button type="button" className="btn ghost" data-i="pop-close" onClick={settingsPopup.close}>关闭</button></footer></div>}</div></div></div>
     {snapshot.phase==='error'&&<div role="alert" className="iw-state iw-error">{snapshot.error instanceof Error?snapshot.error.message:'库存查询暂不可用。'} {result&&'以下保留上次成功结果，并非本次新结果。'}{sizeChangePending&&` 本次 ${requestedPageSize} 款/页读取失败，当前仍显示 ${displayedPageSize} 款/页；重试可重新读取 ${requestedPageSize} 款/页。`}<button type="button" className="btn ghost" onClick={()=>{if(snapshot.request)run(snapshot.request.parameters);}}>重试</button></div>}
-    <div id="iw-results" className={`iw-results${result?.products.length?' mx-results':''}`} tabIndex={0} role="region" aria-label="库存查询结果" aria-busy={busy}>
+    <div ref={resultsElement} id="iw-results" className={`iw-results${result?.products.length?' mx-results':''}`} tabIndex={0} role="region" aria-label="库存查询结果" aria-busy={busy}>
       {busy&&<div className="iw-loading" role="status"><span className="iw-spinner" aria-hidden/><strong>正在查询库存</strong><span>请稍候，正在整理商品与仓库数据…</span><button type="button" className="btn ghost" onClick={()=>query.cancel()}>取消本次读取</button></div>}
-      {result?.products.length?<InventoryMatrix data={result} settings={settings} collapsedProducts={collapsedProducts} collapsedColors={collapsedColors} toggleProduct={id=>setCollapsedProducts(value=>toggle(value,id))} toggleColor={id=>setCollapsedColors(value=>toggle(value,id))} actions={{...actions,...(ledger?{onOpenCell:(target:InventoryCellTarget)=>{if(scope.active)setLedgerTarget(target);}}:{}),onViewProduct:openProduct}}/>:!busy&&<div className="iw-empty-host"><div className="inventory-native-empty-root"><Empty description={<div className="inv-empty-copy"><strong>{emptyTitle}</strong><span>{emptyDescription}</span></div>}/></div></div>}
+      {result?.products.length?<InventoryMatrix data={result} settings={settings} collapsedProducts={collapsedProducts} collapsedColors={collapsedColors} toggleProduct={toggleProduct} toggleColor={toggleColor} actions={matrixActions} windowing={matrixWindowing}/>:!busy&&<div className="iw-empty-host"><div className="inventory-native-empty-root"><Empty description={<div className="inv-empty-copy"><strong>{emptyTitle}</strong><span>{emptyDescription}</span></div>}/></div></div>}
     </div>
     <InventoryPagination scope={scope} page={result?.page??1} pageSize={displayedPageSize} total={result?.exactTotalProducts??null} busy={busy} onPage={page=>{if(success)run({...success.parameters,page});}} onPageSize={setSize}/>
     {ledger&&ledgerTarget&&<InventoryLedgerDrawer key={`${ledgerTarget.warehouse.id}:${ledgerTarget.skuId}`} parent={scope} target={ledgerTarget} currentQuantity={ledgerQuantity} capability={ledger} close={()=>setLedgerTarget(null)}/>}

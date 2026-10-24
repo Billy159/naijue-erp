@@ -29,6 +29,14 @@ function wait<T>(pending: Promise<T>, signal: AbortSignal): Promise<T> {
     if (signal.aborted) abort();
   });
 }
+/** One operation-local cooperative budget; it never changes a read's facts. */
+function outputCheckpoint(signal:AbortSignal){
+  let started=performance.now();
+  return async(force=false)=>{
+    if(signal.aborted)throw new HttpQueryError('aborted','OUTPUT_ABORTED');
+    if(force||performance.now()-started>=8){await wait(new Promise<void>(resolve=>setTimeout(resolve,0)),signal);started=performance.now();if(signal.aborted)throw new HttpQueryError('aborted','OUTPUT_ABORTED');}
+  };
+}
 /** One authenticated full-filter read. No page loop, aggregate-as-row substitute,
  * global cache or JSON whole-response byte cap. Only committed, complete EOF escapes. */
 export function createInventoryOutputReader(options: HttpQueryOptions): InventoryOutputReader {
@@ -46,7 +54,9 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
     if (new TextEncoder().encode(body).byteLength > 65_536) throw new HttpQueryError('too-large', 'REQUEST_TOO_LARGE');
     const controller = new AbortController(), signal = AbortSignal.any([read.signal, controller.signal]);
     const deadline = performance.now() + timeoutMs;
-    let timedOut = false, reader: ReadableStreamDefaultReader<Uint8Array> | undefined, ended = false;
+    let timedOut = false, reader: ReadableStreamDefaultReader<Uint8Array> | undefined, ended = false, published=false;
+    let release=()=>{};
+    const checkpoint=outputCheckpoint(signal);
     const timer = setTimeout(() => { timedOut = true; controller.abort(); }, timeoutMs);
     const active = () => {
       if (read.signal.aborted) throw new HttpQueryError('aborted', 'OUTPUT_ABORTED');
@@ -70,6 +80,7 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
       reader = response.body.getReader();
       let summary: Omit<InventoryOutputData, 'products'> | null = null, complete = false, sum = 0n;
       const products: InventoryProduct[] = [], ids = new Set<string>(), skus = new Set<string>();
+      release=()=>{products.length=0;ids.clear();skus.clear();};
       let warehouseIds: readonly string[] | null = null;
       const consume = (parts: readonly Uint8Array[], bytes: number) => {
         active(); if (complete || !bytes) return invalid();
@@ -117,13 +128,14 @@ export function createInventoryOutputReader(options: HttpQueryOptions): Inventor
           if (fragment.byteLength) parts.push(fragment);
           if (newline === -1) break;
           consume(parts, bytes); parts = []; bytes = 0; start = newline + 1;
+          await checkpoint();active();
         }
       }
       if (bytes) consume(parts, bytes);
       active(); if (!summary || !complete) return invalid();
-      return Object.freeze({ ...(summary as Omit<InventoryOutputData, 'products'>), products: Object.freeze(products) });
+      const result=Object.freeze({ ...(summary as Omit<InventoryOutputData, 'products'>), products: Object.freeze(products) });published=true;return result;
     } catch (error) { active(); if (error instanceof HttpQueryError) throw error; throw new HttpQueryError('network', 'INVENTORY_OUTPUT_FAILED'); }
-    finally { clearTimeout(timer); signal.removeEventListener('abort', cancel); if (!ended) cancel(); try { reader?.releaseLock(); } catch { /* A failed stream cannot retain its consumer. */ } }
+    finally { if(!published)release();clearTimeout(timer); signal.removeEventListener('abort', cancel); if (!ended) cancel(); try { reader?.releaseLock(); } catch { /* A failed stream cannot retain its consumer. */ } }
   } } satisfies InventoryOutputReader);
 }
 
@@ -147,38 +159,62 @@ function sections(data: InventoryOutputData): readonly (readonly InventoryProduc
 const colors = (product: InventoryProduct, settings: InventoryDisplaySettings) => settings.fit ? product.colorFits : projectInventoryColors(product);
 
 /** Frozen inventory-matrix-experiment.js report(): native full-scope rows, not a DOM/page export. */
-export function inventoryWorkbookRows(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings): readonly (readonly string[])[] {
-  const rows: string[][] = [['奈爵服饰 库存状况'], ['查询范围', inventoryOutputScope(filter, data)]];
+function* workbookRows(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings):Generator<readonly string[]>{
+  yield ['奈爵服饰 库存状况'];yield ['查询范围',inventoryOutputScope(filter,data)];
   for (const products of sections(data)) {
     const first = products[0]!;
-    rows.push([first.sizeGroup.label], ['货号', '商品名称', ...(settings.fit ? ['版型'] : []), '颜色', '仓库', ...first.sizes.map(size => size.label)]);
+    yield [first.sizeGroup.label];yield ['货号', '商品名称', ...(settings.fit ? ['版型'] : []), '颜色', '仓库', ...first.sizes.map(size => size.label)];
     for (const product of products) for (const group of colors(product, settings)) for (const row of group.rows) {
-      rows.push([product.code, product.name, ...(settings.fit ? [group.fit?.label ?? ''] : []), group.color.label, row.warehouse.label,
-        ...product.sizes.map(size => { const cell = row.cells[size.id]!; return cell.state === 'known' ? cell.quantity : '—'; })]);
+      yield [product.code, product.name, ...(settings.fit ? [group.fit?.label ?? ''] : []), group.color.label, row.warehouse.label,
+        ...product.sizes.map(size => { const cell = row.cells[size.id]!; return cell.state === 'known' ? cell.quantity : '—'; })];
     }
   }
-  return rows;
+}
+export function inventoryWorkbookRows(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings): readonly (readonly string[])[] {return Array.from(workbookRows(data,filter,settings));}
+/** Pull one full-model row at a time after complete authorized EOF, never DOM rows. */
+export async function* inventoryWorkbookRowsAsync(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings,signal:AbortSignal):AsyncGenerator<readonly string[]>{
+  const checkpoint=outputCheckpoint(signal);await checkpoint(true);
+  for(const row of workbookRows(data,filter,settings)){await checkpoint();yield row;}
 }
 
 /** Original table(...,{print:true}) and printDocument(), using the existing native
  * FIT display projection. No fold state, action column, business handlers or old global readers. */
-export function createInventoryPrintHtml(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings): string {
+function* printTables(data:InventoryOutputData,settings:InventoryDisplaySettings):Generator<string,number>{
   let detailRows = 0;
-  const tables = sections(data).map(products => {
+  for(const products of sections(data)){
     const first = products[0]!;
     const aggregate = (product: InventoryProduct, label: string, kind: string, totals: Readonly<Record<string, StockTotal>>, total: StockTotal) => `<tr class="mx-${kind}"><td class="mx-product">${escape(label)}</td><td class="mx-color"></td><td class="mx-warehouse"></td>${product.sizes.map(size => `<td>${escape(totals[size.id]!.knownQuantity)}</td>`).join('')}<td class="mx-total-cell">${escape(total.knownQuantity)}</td></tr>`;
-    let body = '';
+    yield `<section class="mx-section" data-size-system="${escape(first.sizeGroup.id)}"><h3${settings.sizeDescription ? '' : ' hidden'}>${escape(first.sizeGroup.label)} <small>${first.sizes.map(size => escape(size.label)).join(' / ')}</small></h3><table class="mx-table"><colgroup><col style="width:19%"><col style="width:8%"><col style="width:10%">${first.sizes.map(() => `<col style="width:${57 / first.sizes.length}%">`).join('')}<col style="width:6%"></colgroup><thead><tr><th class="mx-product">款号／商品名称</th><th class="mx-color">颜色</th><th class="mx-warehouse">仓库</th>${first.sizes.map(size => `<th data-size-id="${escape(size.id)}">${escape(size.label)}</th>`).join('')}<th class="mx-total-cell">合计</th></tr></thead><tbody>`;
     for (const product of products) {
       for (const group of colors(product, settings)) {
         for (const row of group.rows) {
           detailRows++;
-          body += `<tr data-inventory-product="${escape(product.id)}"><td class="mx-product"><div class="mx-product-identity"><strong>${escape(product.code)}</strong><span title="${escape(product.name)}">${escape(product.name)}</span></div></td><td class="mx-color"><div class="mx-indent"><span class="mx-fold-spacer"></span>${escape(group.color.label)}</div></td><td class="mx-warehouse"><div class="mx-indent"><span class="mx-fold-spacer"></span>${escape(row.warehouse.label)}</div></td>${product.sizes.map(size => { const cell = row.cells[size.id]!; const value = cell.state === 'known' ? cell.quantity : '—'; return `<td class="${value === '0' ? 'mx-zero' : value.startsWith('-') ? 'minus' : ''}">${escape(value)}</td>`; }).join('')}<td class="mx-total-cell">${escape(row.total.knownQuantity)}</td></tr>`;
+          yield `<tr data-inventory-product="${escape(product.id)}"><td class="mx-product"><div class="mx-product-identity"><strong>${escape(product.code)}</strong><span title="${escape(product.name)}">${escape(product.name)}</span></div></td><td class="mx-color"><div class="mx-indent"><span class="mx-fold-spacer"></span>${escape(group.color.label)}</div></td><td class="mx-warehouse"><div class="mx-indent"><span class="mx-fold-spacer"></span>${escape(row.warehouse.label)}</div></td>${product.sizes.map(size => { const cell = row.cells[size.id]!; const value = cell.state === 'known' ? cell.quantity : '—'; return `<td class="${value === '0' ? 'mx-zero' : value.startsWith('-') ? 'minus' : ''}">${escape(value)}</td>`; }).join('')}<td class="mx-total-cell">${escape(row.total.knownQuantity)}</td></tr>`;
         }
-        if (settings.subtotal) body += aggregate(product, '颜色小计', 'subtotal', group.sizeTotals, group.total);
+        if (settings.subtotal) yield aggregate(product, '颜色小计', 'subtotal', group.sizeTotals, group.total);
       }
-      if (settings.total) body += aggregate(product, '商品合计', 'total', product.sizeTotals, product.total);
+      if (settings.total) yield aggregate(product, '商品合计', 'total', product.sizeTotals, product.total);
     }
-    return `<section class="mx-section" data-size-system="${escape(first.sizeGroup.id)}"><h3${settings.sizeDescription ? '' : ' hidden'}>${escape(first.sizeGroup.label)} <small>${first.sizes.map(size => escape(size.label)).join(' / ')}</small></h3><table class="mx-table"><colgroup><col style="width:19%"><col style="width:8%"><col style="width:10%">${first.sizes.map(() => `<col style="width:${57 / first.sizes.length}%">`).join('')}<col style="width:6%"></colgroup><thead><tr><th class="mx-product">款号／商品名称</th><th class="mx-color">颜色</th><th class="mx-warehouse">仓库</th>${first.sizes.map(size => `<th data-size-id="${escape(size.id)}">${escape(size.label)}</th>`).join('')}<th class="mx-total-cell">合计</th></tr></thead><tbody>${body}</tbody></table></section>`;
-  }).join('');
+
+    yield `</tbody></table></section>`;
+  }
+  return detailRows;
+}
+function printDocument(data:InventoryOutputData,filter:InventoryFilter,detailRows:number,tables:string):string{
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'"><title>库存状况打印</title><style>@page{size:A4 landscape;margin:9mm}body{font:11px Arial,"PingFang SC",sans-serif;color:#263440}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:4px;overflow-wrap:break-word;border:1px solid #dce1e5;text-align:right}th{background:#f3f5f7}thead{display:table-header-group}tr{break-inside:avoid}.mx-product,.mx-color,.mx-warehouse,.mx-sum-label{text-align:left}.mx-product strong{white-space:nowrap}.mx-product span{display:block}.mx-color,.mx-warehouse{word-break:keep-all}.mx-meta{display:block;color:#52616f}.mx-section h3{font-size:12px}.mx-section{break-inside:auto;margin-bottom:12px}.mx-subtotal,.mx-total{background:#f3f5f7}small{font-weight:normal}</style></head><body><h1>库存状况</h1><p>${escape(inventoryOutputScope(filter, data))}</p><p>共 ${detailRows} 条数据行 · 全量库存 ${escape(data.allMatchesTotal.knownQuantity)}。遵循颜色小计、商品合计及尺码组说明设置；打印全部展开。</p>${tables}</body></html>`;
+}
+
+export function createInventoryPrintHtml(data: InventoryOutputData, filter: InventoryFilter, settings: InventoryDisplaySettings): string {
+  const iterator=printTables(data,settings),parts:string[]=[];let next=iterator.next();
+  while(!next.done){parts.push(next.value);next=iterator.next();}
+  return printDocument(data,filter,next.value,parts.join(''));
+}
+export async function createInventoryPrintHtmlAsync(data:InventoryOutputData,filter:InventoryFilter,settings:InventoryDisplaySettings,signal:AbortSignal):Promise<string>{
+  const checkpoint=outputCheckpoint(signal);await checkpoint(true);
+  const iterator=printTables(data,settings),parts:string[]=[];let finished=false;
+  try{
+    let next=iterator.next();
+    while(!next.done){parts.push(next.value);await checkpoint();next=iterator.next();}
+    await checkpoint();finished=true;return printDocument(data,filter,next.value,parts.join(''));
+  }finally{if(!finished){iterator.return(0);parts.length=0;}}
 }

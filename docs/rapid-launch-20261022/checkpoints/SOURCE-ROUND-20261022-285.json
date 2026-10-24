@@ -1,0 +1,308 @@
+{
+  "atUtc": "2026-10-24T03:42:33.736879+00:00",
+  "parent": "21eb20e248fec074b7cbec67b0ae925cd4ca22ed",
+  "taskId": "F2_DEFAULT_MEASURED_MATRIX_WINDOW_AND_FULL_ASYNC_OUTPUT",
+  "files": [
+    {
+      "path": "apps/web/src/inventory/inventory-page.tsx",
+      "bytes": 21797,
+      "sha256": "eb21615f8eefe3687dbc54872f7c4325e083b9c002040c44a9c28aca6510a204",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-matrix.tsx",
+      "bytes": 47728,
+      "sha256": "3a7b62b92712dba895f68bc4e49ba068cd511aef8d7a940e3df8e5a545bb8f87",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/windowing/model.ts",
+      "bytes": 28702,
+      "sha256": "bd07b185076fb09248b4c0079caea363db5ea5efb838239825e0883f3b26e26e",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/output-adapter.ts",
+      "bytes": 19663,
+      "sha256": "c362779b77cd9ff3a578d086c1adf39efeb84286e7cffd75e317d3b3e39cca5d",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/inventory-output.tsx",
+      "bytes": 7270,
+      "sha256": "c96c3b1f116243783252d1bf6a50f9da5b9e9f631756736a1c5e47202b6cc769",
+      "owner": "F2"
+    },
+    {
+      "path": "apps/web/src/inventory/output-adapter.test.ts",
+      "bytes": 21013,
+      "sha256": "3dcee0c47674368b68ead5adbfd247e55ed9e36acf0b6def35e696ff09b36b8c",
+      "owner": "F2"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/F03-DEFAULT-WINDOW-OUTPUT-01/RESULT.json",
+  "ownerReceiptSha256AtPin": "72b24910f09c0a21fc6998e0c43a7e3d461eede23737d05f90933ad52b2930bb",
+  "ownerDelivery": {
+    "task": "F2-F03-DEFAULT-WINDOW-OUTPUT-01",
+    "status": "SOURCE_READY_OWNED_MODULE_LOCAL_CHECKS_PASS_F1_277_PAIRED_ACTUAL_QA_PENDING",
+    "atUtc": "2026-10-24T03:33:05.814891+00:00",
+    "authority": {
+      "reportingHuman": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "fourIssueHumanMessage": "01a16bb2-4ef1-76e3-82b7-035bc329b4f1 relayed and verified by C",
+      "instruction": "C originalF03 performance3+4 frontend complete package; F2 finite exclusive leaves only; C owns build/server/real data and QF2 browser.",
+      "requestedModel": "gpt-6.1-sol",
+      "requestedReasoning": "xhigh",
+      "fast": "REQUESTED_OFF_TOOL_SETTING_NOT_EXPOSED_NOT_VERIFIED"
+    },
+    "files": [
+      {
+        "path": "apps/web/src/inventory/inventory-page.tsx",
+        "bytes": 21797,
+        "sha256": "eb21615f8eefe3687dbc54872f7c4325e083b9c002040c44a9c28aca6510a204",
+        "beforeBytes": 21269,
+        "beforeSha256": "d63ccc0129b78c6bafcee020eb365cf3c04be2e2944d0be5c74d72fd8a4e9984"
+      },
+      {
+        "path": "apps/web/src/inventory/inventory-matrix.tsx",
+        "bytes": 47728,
+        "sha256": "3a7b62b92712dba895f68bc4e49ba068cd511aef8d7a940e3df8e5a545bb8f87",
+        "beforeBytes": 31328,
+        "beforeSha256": "7d0dc1b69e56f8af2a348556f4cc0b06313bf10eeecdcee16d2ecb8125497cbf"
+      },
+      {
+        "path": "apps/web/src/inventory/windowing/model.ts",
+        "bytes": 28702,
+        "sha256": "bd07b185076fb09248b4c0079caea363db5ea5efb838239825e0883f3b26e26e",
+        "beforeBytes": 26339,
+        "beforeSha256": "daf4e35efbe55fc373ed68a6942d914a07ab658920c8007a0aa98a2005c1a66c"
+      },
+      {
+        "path": "apps/web/src/inventory/output-adapter.ts",
+        "bytes": 19663,
+        "sha256": "c362779b77cd9ff3a578d086c1adf39efeb84286e7cffd75e317d3b3e39cca5d",
+        "beforeBytes": 17310,
+        "beforeSha256": "83e4253b0384c9700eb5b47c4b5146c322da37948c8a80cc8bbdb2d82bdb214b"
+      },
+      {
+        "path": "apps/web/src/inventory/inventory-output.tsx",
+        "bytes": 7270,
+        "sha256": "c96c3b1f116243783252d1bf6a50f9da5b9e9f631756736a1c5e47202b6cc769",
+        "beforeBytes": 7184,
+        "beforeSha256": "f81000b02e191e218faec129b3e5dc67a80c4d3d653a08190890ada804af4836"
+      },
+      {
+        "path": "apps/web/src/inventory/output-adapter.test.ts",
+        "bytes": 21013,
+        "sha256": "3dcee0c47674368b68ead5adbfd247e55ed9e36acf0b6def35e696ff09b36b8c",
+        "beforeBytes": 18015,
+        "beforeSha256": "de1186f6dbce3002bd981a09091212c1fa550ca4935c5c37ec9669313d065ddd"
+      }
+    ],
+    "dependency": {
+      "controllerSource": "SOURCE277 c1ec0ebd78d62dd2261f898d621e30d21b5e87e9",
+      "owner": "F1 only",
+      "file": "apps/web/src/components/document-output.tsx",
+      "bytes": 18629,
+      "sha256": "5ecd21683d38f19778c298f807d360d3e3cb98ab63ac8ca94a8a93059d85d793",
+      "api": "createWorkbookRowsAsync(rows: Iterable<readonly(string|null)[]> | AsyncIterable<readonly(string|null)[]>, options:{readonly signal:AbortSignal}):Promise<Uint8Array<ArrayBuffer>>",
+      "delivery": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/DELIVERY.json",
+      "deliveryBytes": 6329,
+      "deliverySha256": "f548ea03626bf92240c7669c2c3d1ef7900fd456b3e27e9295e9c96ecc116185",
+      "verification": "Adopt exact already-passed F1 source/ZIP/cell/cancel evidence. One consumer-level complete inventory export integration checked; did not rerun F1 shared unit suite or edit F1 source."
+    },
+    "implementation": {
+      "defaultConsumer": "InventoryPageView now passes measured windowing from the actual #iw-results scroller with the original ReadScope. Stable actions/fold callbacks and memoized product leaves isolate filter drafts/dialog state; no new route optin or reduced business page.",
+      "nativeGeometry": "Reuse original native identity/Indent/Fold/ViewProduct/table header carriers as inert hidden probes; no whole-page stock cells mounted for measurement. Separate ordinary/fold and metadata row heights, actual size/fixed column widths/description/section gaps; identical metadata text shares only a geometry probe. Scrolling/resizing/collapse uses original window model and source table markup with visible rows/columns and one logical focus. Geometry remeasurement preserves scroll extent and logical anchors; outside controls retain focus.",
+      "hiddenFIT": "Window metadata adds a display-only hiddenFIT row index, retaining canonical source product/color/FIT/SKU/warehouse maps and every original quantity. Visible products use the original projection lazily, cached per successful page object. Multi-source cells keep original chooser; navigation keeps actual canonical focused FIT even moving from a second-FIT-only cell to a multi-source cell. No manufactured FIT/SKU binding.",
+      "modelGrain": "Data, exact full-model totals, paged product identities, all sizes and 100/200/500 choices retained. Model metadata construction and render plan do not read stock cells. No DOM-derived totals/output/navigation, smaller page or removed columns.",
+      "outputConsumer": "Original NDJSON reader still requires complete commit/normal EOF, exact counts/sums/identity/permission checks. Processing buffered frames cooperatively yields with the same signal/deadline; failed/canceled partial arrays/sets released. Full validated output model becomes a lazy row producer consumed by SOURCE277 async XLSX; print HTML generated cooperatively with original exact native output. Scope/cancel/failed/late permission ownership retained; no partial file/preview publish.",
+      "noNewInfrastructure": "No new app files/dependency/worker/bundle/CSP/output framework/shared controller/DB/schema/write/field changes. Inventory CSS and other product/date/name/overview accepted sources untouched. Existing sync formatter APIs retained for compatibility; default inventory output now uses async path."
+    },
+    "checks": {
+      "comparison": {
+        "scope": "Actual default InventoryPageView and installed React/Arco in local JSDOM; explicitly synthetic geometry/data, not actual browser/production performance.",
+        "density": {
+          "currentPageProducts": 100,
+          "allFilterProducts": 200,
+          "colorFitsPerProduct": 4,
+          "displayColorsPerProduct": 2,
+          "warehouses": 8,
+          "sizes": 12,
+          "pageSizeUnchanged": 100
+        },
+        "before": {
+          "domElements": 62944,
+          "visibleDetailRows": 1600,
+          "stockButtons": 19200,
+          "draftResetMatrixRenders": 2,
+          "draftResetProductRenders": 100,
+          "coldToSettledMs": 1019.6314160000001,
+          "fullValidationRowCellGetterReads": 118400,
+          "renderProjectionRowCellGetterReads": 153600,
+          "wholeExportMs": 166.51733400000012,
+          "exportEventLoopTimerGapMs": 166.63341599999967
+        },
+        "after": {
+          "domElements": 477,
+          "visibleDetailRows": 14,
+          "stockButtons": 112,
+          "draftResetMatrixRenders": 0,
+          "draftResetProductRenders": 0,
+          "coldToSettledMs": 150.90875000000005,
+          "fullValidationRowCellGetterReads": 118400,
+          "renderProjectionRowCellGetterReads": 1536,
+          "wholeExportMs": 218.11850000000004,
+          "exportEventLoopTimerGapMs": 8.326874999999973,
+          "canceledDuringGeneration": true,
+          "completedDownloads": 1
+        },
+        "interpretation": "Current page still100/full-filter200. All input DTO/JSON/full canonical validation work remains; row/cell mounted DOM and repeated render work reduced. Async export improves cooperative response, not total serialization elapsed time. Metadata-only projection geometry and focus snapshots are scoped derived UI state, not new business facts."
+      },
+      "defaultEntry": {
+        "widthRemeasureFocusAndAnchor": true,
+        "fitToggleUsesSameMeasuredConsumer": true,
+        "newServerPageDropsOldTargetsAndKeepsFullModel": true
+      },
+      "hiddenProjection": {
+        "status": "PASS_NEW_HIDDEN_FIT_CANONICAL_TARGETS_AND_WINDOW_CONTINUITY",
+        "input": {
+          "products": 100,
+          "canonicalGroups": 400,
+          "projectedWarehouseRows": 1600,
+          "logicalRowsWithTotalsAndHeader": 1701
+        },
+        "metadataConstructionCellReads": 0,
+        "additionalSyntheticMetadata": {
+          "products": 100,
+          "canonicalGroups": 400,
+          "warehouses": 53,
+          "sizes": 12,
+          "displayWarehouseRows": 10600,
+          "logicalRows": 10701,
+          "metadataAndPlanCellReads": 0,
+          "boundedPlanRows": 14,
+          "qualification": "Synthetic53 warehouses stress, not actual current authorization/HTTP or claimed canonical worst-case"
+        },
+        "checks": [
+          "actual FIT targets map to one displayed row without changing native SKU identities",
+          "negative source -2+3 display1, exact0 and non-applicable remain distinct",
+          "merged cell opens actual FIT chooser and returns original sku/warehouse/readReference",
+          "bounded stock DOM and original repeated identity/no invented rowspan",
+          "keyboard crosses second-FIT-only to multi-source cell without losing exact focused FIT; End/ArrowDown/Home reaches offscreen size and real warehouse",
+          "collapse before viewport restores native logical anchor",
+          "full canonical input byte-equivalent after interaction; scopeabort clears DOM"
+        ],
+        "qualifications": "Installed React/JSDOM with supplied synthetic controlled geometry. Default measured entry independently checked by bench-default; no browser pixels/scanner device/production performance claims."
+      },
+      "newOutputUnit": {
+        "pattern": "F03 cooperative",
+        "pass": 3,
+        "fail": 0,
+        "skip": 0,
+        "log": "output-new.tap",
+        "scope": [
+          "lazy row projection does not touch later products before cancellation",
+          "async print exact native full result and canceled generation cannot publish partial HTML",
+          "buffered NDJSON cancellation during cooperative work, stream canceled and no incomplete EOF success"
+        ]
+      },
+      "strict": {
+        "roots": [
+          "apps/web/src/inventory/inventory-page.tsx",
+          "apps/web/src/inventory/inventory-matrix.tsx",
+          "apps/web/src/inventory/windowing/model.ts",
+          "apps/web/src/inventory/output-adapter.ts",
+          "apps/web/src/inventory/inventory-output.tsx",
+          "apps/web/src/inventory/output-adapter.test.ts"
+        ],
+        "fullImportedGraphDiagnostics": 0,
+        "log": "strict-final-run.log",
+        "compilerFlags": "Engineering strict/noEmit, no exclusions or relaxed lib flags"
+      },
+      "workbook": {
+        "status": "PASS_EXACT_BYTES_BEFORE_SYNC_AFTER_ACTUAL_UI_ASYNC_AND_INDEPENDENT_ZIP_XML",
+        "bytes": 3689217,
+        "sha256": "e90c6824f5fd479b8963b1524ed3ccbccefe4e8b26b804da7f24bee27d57addc",
+        "byteEqual": true,
+        "zipEntries": [
+          "[Content_Types].xml",
+          "_rels/.rels",
+          "xl/workbook.xml",
+          "xl/_rels/workbook.xml.rels",
+          "xl/worksheets/sheet1.xml"
+        ],
+        "zipCRC": "PASS",
+        "workbookRows": 3204,
+        "detailRows": 3200,
+        "productsFirstLast": [
+          "CODE-0",
+          "CODE-199"
+        ],
+        "eachDetailColumns": 16,
+        "completeQuantityTotal": "76800",
+        "scope": "Full-filter200 products, not current page100 or mounted14; same native hidden-FIT projection and no added subtotal/total rows.",
+        "harnessCorrection": "Initial independent row width expected17 (UI table count) corrected to actual native workbook4fields+12sizes=16, before and after bytes unchanged."
+      },
+      "print": {
+        "status": "PASS_ASYNC_PRINT_EXACT_BEFORE_HTML_FULL_MODEL",
+        "products": 200,
+        "detailRows": 3200,
+        "productTotalRows": 200,
+        "bytes": 2146282,
+        "sha256": "459ff9054328e2f9a1508d14e79e54d2db37e2882e4cdfe78f7fe7df9acfefbe",
+        "byteEquivalentOriginalSource": true,
+        "elapsedMs": 46.88425000000001,
+        "maxEventLoopTimerGapMs": 13.490917000000024,
+        "timerTicks": 5,
+        "qualification": "Original frozen before adapter source compared with current async function; complete synthetic model. Node timer proxy/local HTML parser only, not real browser iframe/print/LongTask or formal inventory facts."
+      },
+      "testScope": "Original old output suite/shared protocol/date/name/P03/P07/backend suites not repeated. Matrix-only reruns after native probe/focus changes reuse already-completed exact async export evidence; only one successful complete200-product UI async export in final output measurement, plus one canceled operation.",
+      "harnessAndTypeCorrections": [
+        "New probe NodeList iteration and one pre-existing touched-test ParentNode helper converted to Array.from for existing lib settings; flags/expectations unchanged.",
+        "Test fixture initially imported private sumTotals; corrected local fixture aggregate helper without exporting or changing application domain function.",
+        "Print reference virtual namespace resolution corrected in test-only bundler.",
+        "Independent XLSX checker initially used17 UI columns; corrected to native workbook4metadata+12sizes=16, before/after bytes unchanged.",
+        "One log path typo rejected before command execution; no external directory/source mutation."
+      ],
+      "warnings": "Existing Arco React19 element.ref warning remains where emitted; no runtime shim/suppression added."
+    },
+    "scaleContext": {
+      "controllerSuppliedNotIndependentlyRecounted": "C relayed canonical counts products2956/SKU14999/stock38303/warehouse directory53/stock-present29; p95 SKU<=12 max102,423 noSKU; colorFIT3418,p95<=2 max18.",
+      "upperExample": "C mathematical examples assuming all53 warehouses authorized: highest source-order100-page13621rows149831cells;500-page48018rows526290cells. These are assumption examples, not actual permission scope/HTTP/DOM or a global worst case.",
+      "localStress": "Additional synthetic100products/400canonicalgroups/53warehouses/12sizes produces10600 display warehouse rows/10701 logical rows; metadata+plan0 stock-cell reads,14 planned rows. Actual full DTO/JSON not reduced or benchmarked from this assumption."
+    },
+    "notTested": [
+      "Real browser viewport/layout/row-height/sticky/header/scrollbar fidelity, Long Tasks and responsive interaction on containing successor candidate",
+      "Physical scanner/device, production roles/permissions/session/API/PG or actual full production output",
+      "Browser iframe HTML parsing/real print responsiveness and native print device",
+      "Whole ERP/F03/F04/business or production performance acceptance; no full site regression/build/release"
+    ],
+    "handoff": {
+      "sourceBlocker": "NONE for this F2 owned package. Exact6 with F1 SOURCE277 dependency fixed for C integration.",
+      "next": "C integrate coherent candidate with exact6+277; original QF2 and public QF new affected scope once: native default hiddenFIT dense page, draft reset/local collapse, scroll/reflow/focus/true target, 100/200/500 unchanged, complete authorized export/cancel/print. C owns actual representative API/PG and D3 read/spool/network evidence; do not insert WIP into existing273 actual or repeat accepted scopes.",
+      "realDataBoundary": "D3 SOURCE279 backend spool/config/role/RR validation is a separate owner and evidence layer; this package does not imply its actual results.",
+      "resultScope": "Source-ready/local QA only; performance3+4 actual gate remains pending."
+    },
+    "evidence": [
+      "SOURCE-MANIFEST.json",
+      "source.diff",
+      "COMPARISON.json",
+      "before-METRICS.json",
+      "matrix-final-METRICS.json",
+      "after-METRICS.json",
+      "HIDDEN-WINDOW-CHECKS.json",
+      "WORKBOOK-CHECKS.json",
+      "PRINT-CHECKS.json",
+      "output-new.tap",
+      "strict-final-run.log",
+      "before-workbook.xlsx",
+      "after-workbook.xlsx",
+      "source/",
+      "before/"
+    ]
+  },
+  "stage": "FIXED_SOURCE_LOCAL_SYNTHETIC_CHECKS_ONLY_PENDING_ORIGINAL_QF2_AND_NEW_CANDIDATE",
+  "actualBrowserPerformance": false,
+  "actualPG": false,
+  "deployed": false
+}

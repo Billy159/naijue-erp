@@ -3,7 +3,7 @@ import type { ReadScope } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import type { InventoryFilter, InventoryOutputCapability } from './contracts.ts';
 import type { InventoryDisplaySettings } from './inventory-matrix.tsx';
-import { createInventoryPrintHtml, inventoryWorkbookRows } from './output-adapter.ts';
+import { createInventoryPrintHtmlAsync, inventoryWorkbookRowsAsync } from './output-adapter.ts';
 
 export interface InventoryOutputContentProps {
   readonly scope: ReadScope;
@@ -31,11 +31,11 @@ export function InventoryOutputContent(props: InventoryOutputContentProps) {
     try {
       const data = await props.capability.reader.readOutput({ parameters: props.filter, signal, identity: props.scope.identity, routeInstanceId: props.scope.routeInstanceId, entityId: null });
       if (!current()) return;
-      if (props.kind === 'print') setPreview({ html: createInventoryPrintHtml(data, props.filter, props.settings), sequence: own.sequence });
+      if (props.kind === 'print') { const html=await createInventoryPrintHtmlAsync(data,props.filter,props.settings,signal);if(current())setPreview({html,sequence:own.sequence}); }
       else {
-        const { createWorkbookRows } = await import('../components/document-output.tsx');
+        const { createWorkbookRowsAsync } = await import('../components/document-output.tsx');
         if (!current()) return;
-        const bytes = createWorkbookRows(inventoryWorkbookRows(data, props.filter, props.settings));
+        const bytes = await createWorkbookRowsAsync(inventoryWorkbookRowsAsync(data, props.filter, props.settings,signal),{signal});
         if (!current()) return;
         const url = URL.createObjectURL(new Blob([bytes], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
         const link = document.createElement('a'); link.href = url; link.download = '库存状况.xlsx'; link.hidden = true; document.body.append(link);
