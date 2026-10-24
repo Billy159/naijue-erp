@@ -19,7 +19,7 @@ export interface StaffSettingsPage {
 }
 export interface StaffSettingsReader {
   /** Only explicit server capabilities may enable filters; never filter one page locally. */
-  readonly capabilities?: { readonly roleFilter?: true; readonly loginStatusFilter?: true; readonly loginNameSearch?: true };
+  readonly capabilities?: { readonly roleFilter?: true; readonly loginStatusFilter?: true | 'open-only'; readonly loginNameSearch?: true };
   readList(read: QueryRead<StaffSettingsQuery>): Promise<StaffSettingsPage>;
   readDetail(read: QueryRead<{ readonly id: string }>): Promise<StaffSettingsRecord | null>;
 }
