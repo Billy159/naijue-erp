@@ -1,0 +1,18 @@
+{
+  "atUtc": "2026-10-24T16:01:41.153090+00:00",
+  "parent": "cdab051fb8777142c39f3e1ae89b88ef9cf7d249",
+  "taskId": "F1_REPLICA_COMPLETE_BRIDGE_FIXTURE_TRANSPORT",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/fixture-transport.mjs",
+      "bytes": 16941,
+      "sha256": "061ca49c31b0b922eca59eec6cba24e8945176ca82706a2c947e44fc57c09b44",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-166/FIXTURE-TRANSPORT-HANDOFF.md",
+  "ownerReceiptSha256": "47c3cb8013b99221dd7c2a2cc143e28f3d23ed8dd307b509ea508f2fda0a6479",
+  "stage": "SOURCE_DIRECTED_FULL_ORIGINAL_BRIDGE_NODE_DOM_PASS_NOT_HTTP_OR_BROWSER",
+  "wholePageAccepted": false,
+  "deployed": false
+}
