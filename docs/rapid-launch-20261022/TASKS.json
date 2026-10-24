@@ -4432,8 +4432,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T11:29:21.184294+00:00",
-    "sourceRound": 307,
-    "sourceCheckpoint": "f0bda2035cc45cc223c493059263fb41946f41a4",
+    "sourceRound": 308,
+    "sourceCheckpoint": "ddfbe6e6715bf4840eb89708800f3eeecc5b3c1b",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -6445,7 +6445,7 @@
       "bytes": 15785,
       "sha256": "19e8659bcb8fd36dac7e6cbe50e011fe1089e2dce8e0bb9be3a6d660847a463f"
     },
-    "githubLatestVerified": "85cb60a011200815db11279435cefe11955b0b15",
+    "githubLatestVerified": "e1ba792eabcc4124a886c30e7fdb950972f93476",
     "actualPerformance122": {
       "status": "FAILED2_FIRST_ERROR_TYPED_OUTPUT_MASKED_ACTUAL_UNKNOWN_NO_REPLAY",
       "elapsedSeconds": 1.6708132710773498,
@@ -7153,12 +7153,28 @@
       "D3": "v16historycontract/effectiveprojection WIP,5newtargeted checksreportedpass typesfinalpending",
       "D2": "stafflogin serverreadfilter inprogress; onlyclosed-no-account semanticpending",
       "F1": "307BODYtechnical+currentdate evidence, nooldc220blindfix"
+    },
+    "v16Responsible": {
+      "status": "APPROVED_D3_SOURCE308_READY_QB_NEW_DELTA_RUNNING_D1_SOURCE_IN_PROGRESS",
+      "creatorImmutable": true,
+      "responsibleUnknown": "NULL/no creator-actor-admin fallback",
+      "D1NewPhysicalColumns": 2,
+      "actualDDLExecuted": false,
+      "actualHistorySavePassed": false,
+      "F1": "original307BODYtechnical typedconsumer inprogress"
+    },
+    "uidateI07Current306": {
+      "status": "CLOSED_FIRST_NATIVE_MOUSE_OPEN_ONLY",
+      "report": "QF2/c306-full-module-actual-01/I07-FIRST-MOUSE-CLOSURE.json",
+      "oldSource": "1b46a5d oldfailure retained",
+      "currentSource": "f430f2594d43759b05cfa16a03cfd438509d8abd",
+      "sharedControlChangedForOldFinding": false
     }
   },
   "latestReadySource": {
-    "round": 307,
-    "commit": "f0bda2035cc45cc223c493059263fb41946f41a4",
-    "qualification": "7purepresentation BODY sourceREADY notnormalstate/browser/realbusiness passed; current306 preview separatelyfixed"
+    "round": 308,
+    "commit": "ddfbe6e6715bf4840eb89708800f3eeecc5b3c1b",
+    "qualification": "D3exact9 responsiblehistorycontract/projection source5new+strictPASS, originalQBindependentnewdelta dispatched; D1actualSQL/store/issuer andPGnotpassed; preview306 separate"
   },
   "pendingUserDecision": [
     {
