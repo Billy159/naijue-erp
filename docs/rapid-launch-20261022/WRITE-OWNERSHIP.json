@@ -3742,7 +3742,7 @@
           "path": "apps/web/src/sales/tests/fixtures.ts",
           "group": "V16_RESPONSIBLE_UNKNOWN_FIXTURE_TYPED_CLOSURE",
           "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
-          "scope": "Only responsibleStaffId:null and responsibleName:null in exact old fixture header/detail/summary required positions, no fabricatedcreator fallback, no changedbehavior/assertions",
+          "scope": "Only responsibleStaffId:null and responsibleName:null in exact old fixture header/detail/summary required positions, no fabricatedcreator fallback, no changedbehavior/assertions; explicit source315 read createdByName fixture: summary fixed TEST creator name, detail.referenceNames fixed TEST creator name, destructure it out of actual header. No fallback or existing assertion/behavior change.",
           "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json"
         },
         {
@@ -4678,6 +4678,14 @@
         "scripts/import-v3/production-source-provider26.test.mjs"
       ],
       "scope": "Fill missing executable provider artifact behind original production-source-host26; original C private authority/actualexecution/server soleownership unchanged"
+    },
+    {
+      "atUtc": "2026-10-24T12:50:55.626210+00:00",
+      "id": "V16_TRUE_CREATOR_NAME_SALES_TYPED_FIXTURE",
+      "path": "apps/web/src/sales/tests/fixtures.ts",
+      "owner": "F1",
+      "source": "SOURCE315 actualreadquery createdByName separate responsible; directuser v16creatorimmutable",
+      "scope": "Exact fixture readlabel & removefromderivedheader only, no schema/write change"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",
