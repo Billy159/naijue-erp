@@ -5194,5 +5194,25 @@
       "tests/party-read-postgres-protocol.test.ts"
     ],
     "next": "Original normal-list read union after this complete module"
-  }
+  },
+  "controllerSuccessorTransfers": [
+    {
+      "sourceRound": 352,
+      "scope": "Approved source-specific HISTORY transfer hall visibility and revision consumer seam",
+      "owner": "D3",
+      "productionFiles": [
+        "packages/application/src/imported-history-query-ports.ts",
+        "packages/application/src/imported-history-query-validation.ts",
+        "adapters/postgres/src/imported-history-query-reader.ts",
+        "adapters/postgres/src/history-revision-store.ts"
+      ],
+      "testFiles": [
+        "tests/imported-history-query.test.ts",
+        "tests/history-revision-postgres-protocol.test.ts"
+      ],
+      "sharedHostOwner": "C",
+      "host": "apps/api/src/postgres-read-api.ts",
+      "contract": "Explicit TRANSFER_HALL_IDS; same-batch source warehouse binding/effective endpoints OR ORIGINAL source creator hall facts, no ALL or MIGRATION_DERIVED replacement. Source352 normal-list fixed leaves read-only. Preserve primitive exports/complete validity and report affected consumers."
+    }
+  ]
 }

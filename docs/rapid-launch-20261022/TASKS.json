@@ -8,9 +8,9 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "d9ae87d043cb36a5c2124c770444f9bd62359364",
+    "headObserved": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "d9ae87d043cb36a5c2124c770444f9bd62359364",
+    "remoteHeadVerified": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
     "remoteReadbackMethod": "SOURCE351 exact original Git object nonforcedFF and independent remote GET verified",
     "pushPendingLocalCommits": true,
     "recoverableDraftCheckpoint": {
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "d9ae87d043cb36a5c2124c770444f9bd62359364"
+    "lastVerifiedRemoteCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a"
   },
   "concurrency": {
     "chats": 11,
@@ -1310,9 +1310,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-24T19:57:17.215456+00:00",
+  "updatedAt": "2026-10-24T20:04:23.382529+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "d9ae87d043cb36a5c2124c770444f9bd62359364",
+  "lastVerifiedRemoteCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1788,58 +1788,31 @@
     "deploymentTools": "C149_INSTALL_AND_C137_PRIVATE_APP_PROXY_RESOURCE_ACTUAL_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 326,
-      "commit": "da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
-      "qualification": "Current fixed326 build+HTTP only; F1 v16 component/intent WIP excluded"
+      "round": 352,
+      "commit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+      "qualification": "Fixed D1 exact10 normal-list union; pending QB/actualPG/F1. Servedfrontend351 is separately fixed and QA affected inprogress."
     },
     "currentPreview": {
-      "candidateId": "ui-preview-da28eba-01",
-      "businessCommit": "da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
-      "sourceVersion": "C326 fixed323-326 product catalogue seam, sales prepared outcome BODY, transfer unknown discard and optional responsible port; declared synthetic ALL fix; browser pending not wholepage pass",
-      "previewOverlaySha256": "15259a4dde849caa655524792e270971a80eb28e4db0a1852533f107416869ae",
-      "buildId": "ui-preview-da28eba-01-build01",
-      "htmlSha256": "b1b029f43e8d021298e16973a1f5ca231248780ea84149d8f519fc7496d99719",
-      "htmlBytes": 3605758,
-      "actualInputCount": 415,
-      "sourceModuleInputCount": 398,
-      "actualBuildInputSha256": "2256eeaa4294ed3df90ba33d750d7451370d4310aa95ceeb0b30a02f94fb9f26",
-      "actualModuleGraphSha256": "ad4a9b42379ffb07cf73a1151d66cc18b2695d5bda9bb225b0e3684a66488b1f",
-      "actualModuleInputCountIncludingDependencies": 1370,
-      "dependencyModuleCount": 972,
-      "undeclaredDifferences": 0,
-      "syntheticOnly": true,
-      "served": false,
-      "browserVerification": "NOT_RUN",
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
+      "url": "http://127.0.0.1:57896/#inventory",
+      "sourceCommit": "d9ae87d043cb36a5c2124c770444f9bd62359364",
+      "runtimeVersion": "phase2-normal-d9ae87d-03",
+      "htmlBytes": 3154,
+      "htmlSha256": "971c63a7af45a441918ef3b22bf07f671bd5f15c76066dfe9aab25567084be0b",
+      "originalBridgeUnchanged": true,
+      "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
-      "fixtureModes": {
-        "default": "UNCHANGED_CUTOFF_HISTORY",
-        "existingSalesPreview=1": "Original F1chunk37 one-SKU author, no new identities",
-        "existingTransferPreview=1": "Original author unchanged IDs/SKU/warehouses/group4; new explicit same-author product/product-sku/batch context input from F1chunk135",
-        "both1": "EXPLICIT_REJECTION",
-        "productReadOnly absent or not1": "product-edit-v1; original maintenance configuration",
-        "productReadOnly=1": "product-readonly-v1; same identity/data/fullPage, omit products.maintenance; reload per batch",
-        "inventoryLargePreview=1": "Explicit SYNTHETIC200x4x8x12 paircolor input; maxresponse16MiB; default original8MiB unchanged"
-      },
-      "knownBoundaries": [
-        "Synthetic preview only. All save/receipt transports remain403, not real permissions/save/review/stock/performance.",
-        "Creator/responsible actual UI chain is separate inprogress F1 work, optional326 type does not enable it.",
-        "STAFF closed remains unsupported. No synthetic data marked formal, no sourcebusiness overlays."
-      ],
-      "newAffectedScope": [
-        "323 shared product nested COLOR/FIT capability;324 Sales proposal BODY retained until confirmed outcome;325 Transfer unknown cannot reset/discard;326 optional document responsible read port (not enabled).",
-        "C-only synthetic STAFF ALL empty-string restored alongside OPEN; normal product editor nested catalogue capability shares same explicit synthetic clients, all commands remain403."
-      ],
-      "realPostgresPerformance": "NOT_MEASURED",
-      "realSaveReviewInventoryBusiness": "NOT_ACCEPTED",
-      "url": "http://127.0.0.1:57893/synthetic-unified.html",
-      "pid": 82370,
-      "execSession": 27465,
-      "httpEvidence": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-da28eba-01/HTTP-CHECK.json",
-        "bytes": 864,
-        "sha256": "a66640cd73ca03a7819fd5ea0f6fed6570651a23e2f456716d2f5ad8ba151557"
-      },
-      "actualBrowser": "QF2_C326_STAFF_ALL_LABELS_PRODUCT_NESTED_CAP_NEXT_IN_PROGRESS"
+      "sourceRound": 343,
+      "serverSession": 74662,
+      "fixtureBytes": 25766,
+      "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
+      "httpReady": true,
+      "phase2Started": true,
+      "newBackendConnected": false,
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-d9ae87d-phase2-03/build",
+      "phase1Accepted": false,
+      "phase2Candidate": "Original QF Luna/max affected scroll/shared styles actual in progress",
+      "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -2554,7 +2527,56 @@
       "databaseWrites": false,
       "MAINExecuted": false
     },
-    "nextBackend175": "Original shared124module entry compiled once1596125B; C exact source registration/productreference review and original all11 source preflight submitted, no DB activation or issuer/MAIN/PUBLISH; actual outcome pending."
+    "nextBackend175": "Original shared124module entry compiled once1596125B; C exact source registration/productreference review and original all11 source preflight submitted, no DB activation or issuer/MAIN/PUBLISH; actual outcome pending.",
+    "historicalPreviousPreview326": {
+      "candidateId": "ui-preview-da28eba-01",
+      "businessCommit": "da28ebaa9a078dd8c56aa51cf50e2aba5fdad372",
+      "sourceVersion": "C326 fixed323-326 product catalogue seam, sales prepared outcome BODY, transfer unknown discard and optional responsible port; declared synthetic ALL fix; browser pending not wholepage pass",
+      "previewOverlaySha256": "15259a4dde849caa655524792e270971a80eb28e4db0a1852533f107416869ae",
+      "buildId": "ui-preview-da28eba-01-build01",
+      "htmlSha256": "b1b029f43e8d021298e16973a1f5ca231248780ea84149d8f519fc7496d99719",
+      "htmlBytes": 3605758,
+      "actualInputCount": 415,
+      "sourceModuleInputCount": 398,
+      "actualBuildInputSha256": "2256eeaa4294ed3df90ba33d750d7451370d4310aa95ceeb0b30a02f94fb9f26",
+      "actualModuleGraphSha256": "ad4a9b42379ffb07cf73a1151d66cc18b2695d5bda9bb225b0e3684a66488b1f",
+      "actualModuleInputCountIncludingDependencies": 1370,
+      "dependencyModuleCount": 972,
+      "undeclaredDifferences": 0,
+      "syntheticOnly": true,
+      "served": false,
+      "browserVerification": "NOT_RUN",
+      "wholePageAccepted": false,
+      "fixtureModes": {
+        "default": "UNCHANGED_CUTOFF_HISTORY",
+        "existingSalesPreview=1": "Original F1chunk37 one-SKU author, no new identities",
+        "existingTransferPreview=1": "Original author unchanged IDs/SKU/warehouses/group4; new explicit same-author product/product-sku/batch context input from F1chunk135",
+        "both1": "EXPLICIT_REJECTION",
+        "productReadOnly absent or not1": "product-edit-v1; original maintenance configuration",
+        "productReadOnly=1": "product-readonly-v1; same identity/data/fullPage, omit products.maintenance; reload per batch",
+        "inventoryLargePreview=1": "Explicit SYNTHETIC200x4x8x12 paircolor input; maxresponse16MiB; default original8MiB unchanged"
+      },
+      "knownBoundaries": [
+        "Synthetic preview only. All save/receipt transports remain403, not real permissions/save/review/stock/performance.",
+        "Creator/responsible actual UI chain is separate inprogress F1 work, optional326 type does not enable it.",
+        "STAFF closed remains unsupported. No synthetic data marked formal, no sourcebusiness overlays."
+      ],
+      "newAffectedScope": [
+        "323 shared product nested COLOR/FIT capability;324 Sales proposal BODY retained until confirmed outcome;325 Transfer unknown cannot reset/discard;326 optional document responsible read port (not enabled).",
+        "C-only synthetic STAFF ALL empty-string restored alongside OPEN; normal product editor nested catalogue capability shares same explicit synthetic clients, all commands remain403."
+      ],
+      "realPostgresPerformance": "NOT_MEASURED",
+      "realSaveReviewInventoryBusiness": "NOT_ACCEPTED",
+      "url": "http://127.0.0.1:57893/synthetic-unified.html",
+      "pid": 82370,
+      "execSession": 27465,
+      "httpEvidence": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-da28eba-01/HTTP-CHECK.json",
+        "bytes": 864,
+        "sha256": "a66640cd73ca03a7819fd5ea0f6fed6570651a23e2f456716d2f5ad8ba151557"
+      },
+      "actualBrowser": "QF2_C326_STAFF_ALL_LABELS_PRODUCT_NESTED_CAP_NEXT_IN_PROGRESS"
+    }
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -4693,8 +4715,8 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T19:57:17.215456+00:00",
-    "sourceRound": 352,
-    "sourceCheckpoint": "parent d9ae87d043cb36a5c2124c770444f9bd62359364; exact D1 ten-leaf normal union successor",
+    "sourceRound": 353,
+    "sourceCheckpoint": "parent f086e1fc2f0ddc819ebed2257b02773f4664665a, D3 exact6+C host2 explicit transfer hall consumer",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
@@ -7889,7 +7911,7 @@
     },
     "v17Actual": {
       "job": "c03-v17-native-product-selection-count-alias-fixed-20261025-189",
-      "status": "PASS_ACTUAL_LIMITED_ORIGINAL_SERVICE_PENDING_QB",
+      "status": "QB260_PASS_ACTUAL_LIMITED_ORIGINAL_SERVICE_OWNER_CONTEXT",
       "products": 3,
       "skus": 7,
       "auditsAndReceipts": 29,
@@ -7913,12 +7935,24 @@
       "sha256": "d3ba19b1d2a62fd2549ff9823cebfc62071c2bd7e20ceb9c224b0757c962d4fa",
       "actualHistoryDetailGapOwner": "D3",
       "frontendOwner": "F1"
+    },
+    "coreReadActualNext": {
+      "metadata": "QB259 accepted CURRENT_FORM_READ only",
+      "status": "D1 original runner preparing; C sole actual owner",
+      "sessionFact": "C139 original synthetic auth session was explicitly logged out; RAM random credential disposed. No assumed live cookie or password reset. Existing HTTP runner honestly waits for original authorized session; direct original service/reader actual PG can proceed without claiming HTTP."
+    },
+    "historyTransferScope": {
+      "owner": "D3+C",
+      "status": "SOURCE_READY_AND_TARGETED_CHECKS_PASS_PENDING_QB_ACTUAL_PG",
+      "files": 8,
+      "grant": "TRANSFER_HALL_IDS",
+      "externalHistoryWriteAuthorization": "Original mandatory private trusted input still separate; no fabricated generic policy"
     }
   },
   "latestReadySource": {
-    "round": 340,
-    "commit": "430eb7f7a47be2dffd0a484231feeabcb871fcbe",
-    "qualification": "338 D3 host approvedv16 guard QB249 sourcePASS;339 F1 exact isolated fixture;340 complete original Demo final bridge entry HTTPpin +QF actual technical payment closure. Not wholeUI/realbusiness/formal."
+    "round": 352,
+    "commit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+    "qualification": "Fixed D1 exact10 normal-list union; pending QB/actualPG/F1. Servedfrontend351 is separately fixed and QA affected inprogress."
   },
   "pendingUserDecision": [
     {
@@ -7982,8 +8016,8 @@
     "recordedAt": "2026-10-24T15:25:50.211619+00:00",
     "uniqueDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
     "uniqueEntry": "apps/web/demo-replica/serve.mjs 57896",
-    "phase1": "325 frontend files copied byte-identical; original7 Vite builds PASS; 81entry resources present; localhost57896 actual200; browser completeness pending",
-    "phase2": "Not started on replica until complete Phase1 fixed",
+    "phase1": "COMPLETE_LIMITED_REPRESENTATIVE_ACCEPTANCE_SOURCE343; original35pages65overlays copied/run, approved additions2pages2overlays phase2",
+    "phase2": "IN_PROGRESS_ON_SAME_ORIGINAL_COPY; current SOURCE351 synthetic normal entry, no old rewritten runtime fallback; final37/67 business/UI incomplete",
     "oldFrontend": "337 preserved for history/rollback; old-body development stopped and all4 F owners handed back",
     "goalCard": "Tool cannot edit existing active goal objective; keep ACTIVE, this record is latest authority, no fake completion/recreation",
     "phase2UniqueUiClarification": {

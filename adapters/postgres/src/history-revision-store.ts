@@ -4,6 +4,7 @@ import { parseHistoryRevisionCommand, planHistoryRevision } from '../../../packa
 import type { HistoryRevisionCommand, HistoryRevisionCurrent, HistoryRevisionDependencies, HistoryRevisionGrant, HistoryRevisionReceipt } from '../../../packages/application/src/history-revision-contracts.ts';
 import type { ActorContext } from '../../../packages/application/src/ports.ts';
 import { requestHash } from '../../../packages/application/src/request-hash.ts';
+import { importedHistoryTransferHallScopeSql } from './imported-history-query-reader.ts';
 import { checkedImportedHistoryActor } from '../../../packages/application/src/imported-history-query-validation.ts';
 import { COMPLETE_SCOPE_DECISION } from '../../../packages/application/src/inventory-cutoff-import.ts';
 import { createPostgresHistoryRevisionPosting } from './inventory-posting-balances.ts';
@@ -84,9 +85,12 @@ async function authorize(query: Query, actor: ActorContext, command: HistoryRevi
   const warehouses = (await query(`/* history-revise:transfer-scope */ SELECT id,hall_id FROM naijue_erp.warehouse
     WHERE id=ANY($1::uuid[]) ORDER BY id FOR SHARE`, [[header.from_warehouse_id,header.to_warehouse_id]])).rows;
   must(warehouses.length === 2, 'FORBIDDEN');
-  must(warehouses.some(w => w.hall_id === actor.hallId)
-    || (header.created_role_source === 'SALESPERSON' && header.created_hall_id === actor.hallId
-      && header.created_hall_provenance !== 'UNKNOWN' && typeof header.created_by_source_key === 'string'), 'FORBIDDEN');
+  // Both endpoint rows stay locked through COMMIT. Source facts always bind
+  // original h, while these parameters are the locked current/proposed pair.
+  const proof = (await query(`/* history-revise:transfer-source-scope */ SELECT ${importedHistoryTransferHallScopeSql(2, false, [3, 4])} AS allowed
+    FROM naijue_erp.history_transfer_header h WHERE h.id=$1::uuid AND h.batch_id=$5::uuid`,
+    [command.documentId, [actor.hallId], header.from_warehouse_id, header.to_warehouse_id, header.batch_id])).rows;
+  must(proof.length === 1 && proof[0]!.allowed === true, 'FORBIDDEN');
 }
 
 async function current(query: Query, command: HistoryRevisionCommand, header: Row): Promise<HistoryRevisionCurrent> {

@@ -5,7 +5,7 @@ import { DomainError } from '../packages/domain/src/errors.ts';
 import { createImportedHistoryQueryService } from '../packages/application/src/imported-history-query-service.ts';
 import { checkedImportedHistoryGrant, parseImportedHistoryListQuery, validateImportedHistoryHeader, validateImportedHistoryLine, validateImportedHistoryList } from '../packages/application/src/imported-history-query-validation.ts';
 import type { ImportedHistoryKind, ImportedHistoryReadIntent, ImportedHistoryScopedRead } from '../packages/application/src/imported-history-query-ports.ts';
-import { PostgresImportedHistoryQueryReader, importedHistoryReadSql, importedHistoryReadScopeSql } from '../adapters/postgres/src/imported-history-query-reader.ts';
+import { PostgresImportedHistoryQueryReader, importedHistoryReadSql, importedHistoryReadScopeSql, importedHistoryTransferHallScopeSql } from '../adapters/postgres/src/imported-history-query-reader.ts';
 import { NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from '../adapters/postgres/src/native-import-accounting-capability.ts';
 import type { PgSalesClient, PgSalesPool } from '../adapters/postgres/src/sales-unit-of-work.ts';
 import type { NativeRuntime26Capability } from '../packages/application/src/native-import-schema-contract.ts';
@@ -351,4 +351,65 @@ test('normal list history primitives: original warehouse and creator-hall source
 test('normal list history primitives: kind and bind positions cannot become request SQL', () => {
   for (const index of [0, -1, 1.5, NaN, Infinity, "1); DROP TABLE x;--"]) assert.throws(() => importedHistoryReadSql('sales', index as number), { code: 'IMPORTED_HISTORY_INVALID_QUERY' });
   assert.throws(() => importedHistoryReadSql('sales; DROP TABLE x' as never), { code: 'IMPORTED_HISTORY_INVALID_QUERY' });
+});
+
+
+test('TRANSFER_HALL_IDS: explicit actor-hall grant never widens legacy sales HALL_IDS or crosses kinds/targets', () => {
+  for (const detail of [false, true]) {
+    const i = intent('transfers', detail), g = { ...grant(i), scope: { kind: 'TRANSFER_HALL_IDS' as const, hallIds: [actor.hallId!] } };
+    assert.deepEqual(checkedImportedHistoryGrant(g, i, actor), g);
+    for (const scope of [{ kind: 'HALL_IDS', hallIds: [id(2)] }, { kind: 'TRANSFER_HALL_IDS', hallIds: [id(99)] },
+      { kind: 'TRANSFER_HALL_IDS', hallIds: [id(2), id(2)] }, { kind: 'TRANSFER_HALL_IDS', hallIds: new Array(1) }]) {
+      assert.throws(() => checkedImportedHistoryGrant({ ...g, scope } as never, i, actor), { code: 'IMPORTED_HISTORY_FORBIDDEN' });
+    }
+    assert.throws(() => checkedImportedHistoryGrant(g, i, { ...actor, hallId: null }), { code: 'IMPORTED_HISTORY_FORBIDDEN' });
+    assert.throws(() => checkedImportedHistoryGrant({ ...g, actorAccountId: id(99) }, i, actor), { code: 'IMPORTED_HISTORY_FORBIDDEN' });
+    assert.throws(() => checkedImportedHistoryGrant({ ...g, targetId: id(99) }, i, actor), { code: 'IMPORTED_HISTORY_FORBIDDEN' });
+    const sales = intent('sales', detail);
+    assert.throws(() => checkedImportedHistoryGrant({ ...grant(sales), scope: g.scope }, sales, actor), { code: 'IMPORTED_HISTORY_FORBIDDEN' });
+    assert.throws(() => validateImportedHistoryHeader(header('sales'), 'sales', { ...grant(sales), scope: g.scope }), { code: 'IMPORTED_HISTORY_INVALID_RESPONSE' });
+  }
+});
+test('TRANSFER_HALL_IDS: scope SQL reuses original source facts with effective endpoints and no current-person hall fallback', () => {
+  const read = scoped(intent('transfers')), transferRead = { ...read, grant: { ...read.grant, scope: { kind: 'TRANSFER_HALL_IDS' as const, hallIds: [id(2)] } } };
+  const sql = importedHistoryReadScopeSql(transferRead, 8), facts = importedHistoryReadSql('transfers');
+  assert.equal(sql.predicate, importedHistoryTransferHallScopeSql(8, true)); assert.deepEqual(sql.values, [[id(2)]]);
+  for (const proof of [facts.sourceWarehouseBindingsPredicate, facts.originalCreatedHallPredicate, facts.fromWarehouseIdExpression, facts.toWarehouseIdExpression]) assert.ok(sql.predicate.includes(proof));
+  assert.match(sql.predicate, /scope_fw.hall_id=ANY\(\$8::uuid\[\]\)/);
+  assert.match(sql.predicate, /scope_tw.hall_id=ANY\(\$8::uuid\[\]\)/);
+  assert.match(sql.predicate, /h.created_role_source='SALESPERSON' AND h.created_by_source_key IS NOT NULL/);
+  assert.doesNotMatch(sql.predicate, /responsible_staff|staff\.hall_id|MIGRATION_DERIVED|\bTRUE\b/);
+  const original = importedHistoryTransferHallScopeSql(8, false); assert.doesNotMatch(original, /er.after_facts|e.header_id/);
+  const proposed = importedHistoryTransferHallScopeSql(2, false, [3, 4]);
+  assert.match(proposed, /scope_fw.id=\$3::uuid/); assert.match(proposed, /scope_tw.id=\$4::uuid/);
+  assert.ok(proposed.includes(facts.sourceWarehouseBindingsPredicate));
+  for (const index of [0, -1, 1.5, NaN, Infinity]) assert.throws(() => importedHistoryTransferHallScopeSql(index, true), { code: 'IMPORTED_HISTORY_INVALID_QUERY' });
+});
+test('TRANSFER_HALL_IDS: list count/page and detail share the explicit source scope on one original snapshot in exact19 and exact26', async () => {
+  for (const effective of [false, true]) for (const detail of [false, true]) {
+    const p = protocol({ final: true, kind: 'transfers', schema: Array.from({ length: effective ? 26 : 19 }, (_, i) => i + 1),
+      transform(_tag, sql, rows) { return sql.includes(' AS transfer_scope_valid') ? rows.map(r => ({ ...r, transfer_scope_valid: true })) : rows; } });
+    const reader = new PostgresImportedHistoryQueryReader(p.pool, effective ? { runtime26: effectiveRuntime(p) } : undefined);
+    const i = intent('transfers', detail), read = { ...scoped(i), grant: { ...grant(i), scope: { kind: 'TRANSFER_HALL_IDS' as const, hallIds: [id(2)] } } };
+    const result = detail ? await reader.readDetail(read) : await reader.readList(read); assert.equal(result.kind, 'transfers');
+    const position = detail ? 3 : 2, predicate = importedHistoryTransferHallScopeSql(position, effective);
+    for (const q of p.calls.filter(q => ['imported-history:list-count', 'imported-history:list-page', 'imported-history:detail'].includes(q.tag))) {
+      assert.ok(q.sql.includes('AND ' + predicate)); assert.deepEqual(q.values[position - 1], [id(2)]);
+      if (q.tag !== 'imported-history:list-count') assert.ok(q.sql.includes(predicate + ' AS transfer_scope_valid'));
+    }
+    assert.equal(p.connects(), 1); assert.equal(p.calls.filter(c => c.sql === 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY').length, 1);
+    assert.equal(p.calls.at(-1)!.sql, 'COMMIT'); assert.deepEqual(p.releases, [undefined]);
+  }
+});
+test('TRANSFER_HALL_IDS: out-of-scope detail has no child reads; contradictory returned proof rejects instead of exposing header', async () => {
+  const i = intent('transfers', true), read = { ...scoped(i), grant: { ...grant(i), scope: { kind: 'TRANSFER_HALL_IDS' as const, hallIds: [id(2)] } } };
+  const absent = protocol({ kind: 'transfers' }); assert.equal((await new PostgresImportedHistoryQueryReader(absent.pool).readDetail(read)).document, null);
+  assert.ok(!absent.calls.some(c => c.tag === 'imported-history:line-count' || c.tag === 'imported-history:line-page'));
+  for (const proof of [undefined, false, null]) {
+    const p = protocol({ kind: 'transfers', final: true, transform(tag, _sql, rows) { return tag === 'imported-history:detail' ? rows.map(r => ({ ...r, transfer_scope_valid: proof })) : rows; } });
+    await assert.rejects(new PostgresImportedHistoryQueryReader(p.pool).readDetail(read), { code: 'INVALID_DATABASE_VALUE' });
+    assert.equal(p.calls.at(-1)!.sql, 'ROLLBACK'); assert.ok(!p.calls.some(c => c.tag === 'imported-history:line-count'));
+  }
+  const empty = { ...read, grant: { ...read.grant, scope: { kind: 'TRANSFER_HALL_IDS' as const, hallIds: [] } } };
+  assert.equal((await new PostgresImportedHistoryQueryReader(absent.pool).readDetail(empty)).document, null);
 });

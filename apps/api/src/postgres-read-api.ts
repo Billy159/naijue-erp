@@ -328,10 +328,12 @@ export function createSourceConfirmedApplicationReadAuthorization(pool: PgReadAu
     } }),
     importedHistory: Object.freeze<ImportedHistoryReadAuthorization>({ async authorize(actor, intent, signal) {
       allowed((intent.kind === "sales" || intent.kind === "transfers") && (intent.operation === "list" || intent.operation === "detail"));
-      const role = await current(actor, signal); allowed(role !== "SALESPERSON" || intent.kind === "sales" && actor.hallId !== null);
+      const role = await current(actor, signal); allowed(role !== "SALESPERSON" || actor.hallId !== null);
       return { dataset: "HISTORY", actorAccountId: actor.accountId, kind: intent.kind, operation: intent.operation,
         targetId: intent.operation === "detail" ? intent.parameters.documentId : null,
-        scope: role === "SALESPERSON" ? { kind: "HALL_IDS", hallIds: [actor.hallId!] } : { kind: "ALL" } };
+        scope: role === "SALESPERSON" ? intent.kind === "sales"
+          ? { kind: "HALL_IDS", hallIds: [actor.hallId!] }
+          : { kind: "TRANSFER_HALL_IDS", hallIds: [actor.hallId!] } : { kind: "ALL" } };
     } }),
     productDetails: Object.freeze<ProductDetailsQueryAuthorization>({ async authorize(actor, intent, signal) {
       allowed(["prices", "barcodes", "stock"].includes(intent.kind)); await current(actor, signal);

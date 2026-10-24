@@ -28,9 +28,11 @@ export interface ImportedHistoryDetailQuery {
 export type ImportedHistoryReadIntent =
   | { readonly kind: ImportedHistoryKind; readonly operation: 'list'; readonly parameters: ImportedHistoryListQuery }
   | { readonly kind: ImportedHistoryKind; readonly operation: 'detail'; readonly parameters: ImportedHistoryDetailQuery };
-export type ImportedHistoryScope = { readonly kind: 'ALL' } | { readonly kind: 'HALL_IDS'; readonly hallIds: readonly string[] };
-/** Explicit historical policy only. No role/LIVE/native-profile fallback. Transfer
- * HALL_IDS is deliberately unavailable until its original-membership policy is reviewed. */
+export type ImportedHistoryScope = { readonly kind: 'ALL' } | { readonly kind: 'HALL_IDS'; readonly hallIds: readonly string[] }
+  | { readonly kind: 'TRANSFER_HALL_IDS'; readonly hallIds: readonly string[] };
+/** Explicit historical policy only. No role/LIVE/native-profile fallback. Sales
+ * HALL_IDS never authorizes transfers; TRANSFER_HALL_IDS requires the original
+ * source-bound warehouse/creator proof on the reader's own snapshot. */
 export interface ImportedHistoryReadGrant {
   readonly dataset: 'HISTORY';
   readonly actorAccountId: string;

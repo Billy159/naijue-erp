@@ -1,6 +1,7 @@
 /** Scripted original-client protocol only. No PostgreSQL/installed HISTORY write proof. */
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { importedHistoryTransferHallScopeSql } from '../adapters/postgres/src/imported-history-query-reader.ts';
 import { PostgresHistoryRevisionStore } from '../adapters/postgres/src/history-revision-store.ts';
 import type { HistoryRevisionCommand, HistoryRevisionReceipt } from '../packages/application/src/history-revision-contracts.ts';
 import type { PgSalesPool } from '../adapters/postgres/src/sales-unit-of-work.ts';
@@ -13,10 +14,10 @@ const now='2026-10-23T12:00:00.000000Z';
 const command=(kind:'sales'|'transfers'='sales'):HistoryRevisionCommand=>({kind,documentId:id(10),expectedVersion:1,
   requestKey:'history-numeric-original-key',reason:'SYNTHETIC numeric correction',lines:[{lineId:id(11),quantity:'3'}],totals:null,settlements:[]});
 interface Options { kind?:'sales'|'transfers'; sourceStatus?:string; revoked?:boolean; foreignHall?:boolean; published?:boolean;
-  date?:string|null; receipt?:{command:HistoryRevisionCommand;result:HistoryRevisionReceipt}; failure?:string; headVersion?:number; responsible?:string|null; missingResponsible?:boolean; effectiveDate?:string|null; missingStaff?:boolean; proposedEnabled?:boolean; proposedStock?:boolean }
+  date?:string|null; receipt?:{command:HistoryRevisionCommand;result:HistoryRevisionReceipt}; failure?:string; headVersion?:number; responsible?:string|null; missingResponsible?:boolean; effectiveDate?:string|null; missingStaff?:boolean; proposedEnabled?:boolean; proposedStock?:boolean; transferScopeResults?:readonly (boolean|null|undefined)[]; effectiveFrom?:string; effectiveTo?:string }
 function protocol(options:Options={}) {
   const kind=options.kind??'sales', calls:{sql:string;values:unknown[]}[]=[],releases:unknown[]=[],proofClients:unknown[]=[];
-  let sequence=100,connections=0;
+  let sequence=100,connections=0,scopeChecks=0;
   const client={async query(sql:string,values:unknown[]=[]){calls.push({sql,values:structuredClone(values)});let rows:Record<string,unknown>[]=[],rowCount=1;
     if(options.failure&&(options.failure==='COMMIT'?sql==='COMMIT':sql.includes(options.failure)))throw Object.assign(Error('SYNTHETIC original operation failure'),{code:'SYNTHETIC_FAULT'});
     if(sql==='BEGIN ISOLATION LEVEL READ COMMITTED'||sql==='COMMIT'||sql==='ROLLBACK'||sql.startsWith('SELECT pg_advisory_xact_lock')){}
@@ -30,11 +31,12 @@ function protocol(options:Options={}) {
       gross_amount:'2.50',order_discount:'0.00',net_due:'2.50',document_manifest_hash:'a'.repeat(64),published_operation_id:id(21),published:options.published!==false}];
     else if(sql.includes('history-revise:identity'))rows=[{id:actor.accountId,staff_id:id(3),login_enabled:!options.revoked,role:'SALESPERSON',employment_status:'在职',hall_id:actor.hallId}];
     else if(sql.includes('history-revise:hall'))rows=[{id:actor.hallId,enabled:true}];
-    else if(sql.includes('history-revise:transfer-scope'))rows=[{id:id(30),hall_id:actor.hallId},{id:id(31),hall_id:id(4)}];
+    else if(sql.includes('history-revise:transfer-scope'))rows=(values[0] as string[]).map(w=>({id:w,hall_id:w===id(30)?actor.hallId:id(4)}));
+    else if(sql.includes('history-revise:transfer-source-scope'))rows=[{allowed:options.transferScopeResults ? options.transferScopeResults[scopeChecks++] : true}];
     else if(sql.includes('history-revise:responsible'))rows=options.missingStaff?[]:[{id:values[0]}];
     else if(sql.includes('history-revise:proposed-warehouses'))rows=(values[0] as string[]).map(id=>({id,enabled:options.proposedEnabled??true,has_nonzero_inventory:options.proposedStock??false}));
     else if(sql.includes('history-revise:head-chain'))rows=[{id:id(90),document_kind:kind==='sales'?'SALES':'TRANSFER',sales_id:kind==='sales'?id(10):null,
-      transfer_id:kind==='transfers'?id(10):null,from_version:(options.headVersion??2)-1,to_version:options.headVersion,operation_id:id(91),after_facts:{businessDate:options.effectiveDate??(options.date===undefined?'2020-01-02':options.date),fromWarehouseId:id(30),toWarehouseId:id(31),...(options.missingResponsible?{}:{responsibleStaffId:options.responsible??null})}}];
+      transfer_id:kind==='transfers'?id(10):null,from_version:(options.headVersion??2)-1,to_version:options.headVersion,operation_id:id(91),after_facts:{businessDate:options.effectiveDate??(options.date===undefined?'2020-01-02':options.date),fromWarehouseId:options.effectiveFrom??id(30),toWarehouseId:options.effectiveTo??id(31),...(options.missingResponsible?{}:{responsibleStaffId:options.responsible??null})}}];
     else if(sql.includes('history-revise:head'))rows=options.headVersion?[{header_id:id(10),version:options.headVersion,revision_id:id(90),gross_amount:'2.50',order_discount:'0.00',net_due:'2.50'}]:[];
     else if(sql.includes('history-revise:lines'))rows=[{id:id(11),sku_id:id(12),quantity:'2',deal_price:'1.25',line_amount:'2.50',allocated_discount:null,effective_valid:true}];
     else if(sql.includes('history-revise:settlements'))rows=[{id:id(13),direction:'RECEIVE',amount:'2.50',effective_valid:true}];
@@ -130,4 +132,34 @@ test('v16 HISTORY store: later numeric changes retain effective responsible whil
   const call=p.calls.find(c=>c.sql.includes('history-revise:revision'))!;const before=JSON.parse(call.values[10] as string),after=JSON.parse(call.values[11] as string);
   assert.equal(before.businessDate,'2021-04-05');assert.equal(after.responsibleStaffId,legacy?null:id(41));assert.equal(before.responsibleStaffId,after.responsibleStaffId);
  }
+});
+
+
+test('TRANSFER_HALL_IDS revision: current and proposed endpoint authority reuse exact original source proof on the locked transaction', async () => {
+  const p = protocol({ kind: 'transfers', sourceStatus: 'DRAFT', headVersion: 2, effectiveFrom: id(32), effectiveTo: id(33), transferScopeResults: [true, true] });
+  const q = { ...command('transfers'), expectedVersion: 2, lines: [], header: { fromWarehouseId: id(40) } };
+  await p.run(q);
+  const checks = p.calls.filter(c => c.sql.includes('history-revise:transfer-source-scope'));
+  assert.equal(checks.length, 2);
+  assert.deepEqual(checks.map(c => c.values), [[id(10), [actor.hallId], id(32), id(33), id(20)], [id(10), [actor.hallId], id(40), id(33), id(20)]]);
+  for (const check of checks) {
+    assert.ok(check.sql.includes(importedHistoryTransferHallScopeSql(2, false, [3, 4]) + ' AS allowed'));
+    assert.match(check.sql, /FROM naijue_erp.history_transfer_header h WHERE h.id=\$1::uuid AND h.batch_id=\$5::uuid/);
+    assert.match(check.sql, /h.created_hall_provenance='ORIGINAL'/);
+    assert.match(check.sql, /ch_ref.native_hall_id=h.created_hall_id/);
+    assert.match(check.sql, /wr_read.target_id=h.from_warehouse_id/); assert.match(check.sql, /wr_read.target_id=h.to_warehouse_id/);
+    assert.doesNotMatch(check.sql, /MIGRATION_DERIVED|responsible_staff|staff\.hall_id/);
+    const at = p.calls.indexOf(check), prior = p.calls.slice(0, at).findLast(c => c.sql.includes('history-revise:transfer-scope'))!;
+    assert.match(prior.sql, /FOR SHARE/); assert.deepEqual(prior.values[0], check.values.slice(2, 4));
+  }
+  assert.equal(p.connections(), 1); assert.equal(p.calls.at(-1)!.sql, 'COMMIT'); assert.deepEqual(p.releases, [undefined]);
+  assert.equal(writes(p).filter(c => /history-posting:ledger|UPDATE naijue_erp.history_transfer_header/.test(c.sql)).length, 0);
+});
+test('TRANSFER_HALL_IDS revision: missing original source authority at current or proposed endpoints rejects before any revision or stock writes', async () => {
+  for (const decisions of [[false], [null], [undefined], [true, false], [true, null]]) {
+    const p = protocol({ kind: 'transfers', sourceStatus: 'DRAFT', transferScopeResults: decisions });
+    await assert.rejects(p.run({ ...command('transfers'), lines: [], header: { fromWarehouseId: id(40) } }), { code: 'FORBIDDEN' });
+    assert.equal(writes(p).length, 0); assert.equal(p.calls.at(-1)!.sql, 'ROLLBACK'); assert.equal(p.connections(), 1);
+    assert.equal(p.calls.filter(c => c.sql.includes('history-revise:transfer-source-scope')).length, decisions.length);
+  }
 });

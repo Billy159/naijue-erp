@@ -101,10 +101,11 @@ export function checkedImportedHistoryGrant(value: ImportedHistoryReadGrant, int
   if (scopeKind && Object.hasOwn(scopeKind, 'value') && scopeKind.value === 'ALL') { bag(r.scope, ['kind'], forbidden); scope = Object.freeze({ kind: 'ALL' }); }
   else {
     const s = bag(r.scope, ['kind', 'hallIds'], forbidden);
-    if (s.kind !== 'HALL_IDS' || intent.kind !== 'sales') forbidden();
+    if (!(s.kind === 'HALL_IDS' && intent.kind === 'sales' || s.kind === 'TRANSFER_HALL_IDS' && intent.kind === 'transfers')) forbidden();
     const hallIds = dense(s.hallIds, 5000, forbidden).map(v => id(v, forbidden));
     if (new Set(hallIds).size !== hallIds.length) forbidden();
-    scope = Object.freeze({ kind: 'HALL_IDS', hallIds: Object.freeze(hallIds) });
+    if (s.kind === 'TRANSFER_HALL_IDS' && (actor.hallId === null || hallIds.some(hallId => hallId !== actor.hallId))) forbidden();
+    scope = Object.freeze({ kind: s.kind, hallIds: Object.freeze(hallIds) });
   }
   return Object.freeze({ dataset: 'HISTORY', actorAccountId: actor.accountId, kind: intent.kind, operation: intent.operation, targetId: r.targetId as string | null, scope });
 }
@@ -132,11 +133,13 @@ export function validateImportedHistoryHeader(value: unknown, kind: ImportedHist
   if (grant.targetId !== null && base.documentId !== grant.targetId) invalidResponse();
   if (kind === 'sales') {
     const hallId = id(r.hallId, invalidResponse);
-    if (grant.scope.kind === 'HALL_IDS' && !grant.scope.hallIds.includes(hallId)) invalidResponse();
+    if (grant.scope.kind === 'TRANSFER_HALL_IDS' || grant.scope.kind === 'HALL_IDS' && !grant.scope.hallIds.includes(hallId)) invalidResponse();
     return Object.freeze({ ...base, ...responsible, kind, hallId, businessType: enumValue(r.businessType, ['SALE', 'RETURN', 'EXCHANGE'], invalidResponse), customerId: id(r.customerId, invalidResponse), warehouseId: id(r.warehouseId, invalidResponse), salespersonId: nullableId(r.salespersonId, invalidResponse), grossAmount: money(r.grossAmount), orderDiscount: money(r.orderDiscount), netDue: money(r.netDue) });
   }
   const fromWarehouseId = id(r.fromWarehouseId, invalidResponse), toWarehouseId = id(r.toWarehouseId, invalidResponse);
-  if (fromWarehouseId === toWarehouseId || grant.scope.kind !== 'ALL') invalidResponse();
+  // Source/warehouse membership is checked by the explicit reader grant on its
+  // original snapshot; the public DTO contains no private proof fields.
+  if (fromWarehouseId === toWarehouseId || !(grant.scope.kind === 'ALL' || grant.scope.kind === 'TRANSFER_HALL_IDS' && grant.scope.hallIds.length > 0)) invalidResponse();
   return Object.freeze({ ...base, ...responsible, kind, fromWarehouseId, toWarehouseId });
 }
 export function validateImportedHistoryLine(value: unknown, kind: ImportedHistoryKind): ImportedHistoryLine | ImportedHistorySalesLine {

@@ -142,14 +142,30 @@ export function importedHistoryReadSql(kind: ImportedHistoryKind, approvalParame
     lineTable: `naijue_erp.${lineTables[kind]}`, lineEffectiveJoins: lineEffectiveJoins(kind), lineColumns: effectiveLineColumns(kind, version),
     lineValidityPredicate: lineValidity(kind, version), sourceWarehouseBindingsPredicate, originalCreatedHallPredicate });
 }
+/** Same approved transfer source rule as normal lists. This SQL is not a grant.
+ * Fixed header alias h; effective reads additionally use e/er. Revision callers
+ * bind their locked current/proposed endpoints instead, retaining original h
+ * for source binding. Every position is a trusted positive bind index. */
+export function importedHistoryTransferHallScopeSql(hallIdsParameterIndex: number, effective: boolean, endpointParameterIndices?: readonly [number, number]): string {
+  requireDomain(typeof effective === 'boolean' && [hallIdsParameterIndex, ...(endpointParameterIndices ?? [])].every(n => Number.isSafeInteger(n) && n > 0)
+    && (endpointParameterIndices === undefined || endpointParameterIndices.length === 2), 'IMPORTED_HISTORY_INVALID_QUERY', 'Exact transfer scope bind positions required');
+  const facts = importedHistoryReadSql('transfers'), halls = `$${hallIdsParameterIndex}::uuid[]`;
+  const fromId = endpointParameterIndices ? `$${endpointParameterIndices[0]}::uuid` : headColumn('from_warehouse_id', effective);
+  const toId = endpointParameterIndices ? `$${endpointParameterIndices[1]}::uuid` : headColumn('to_warehouse_id', effective);
+  return `((${facts.sourceWarehouseBindingsPredicate} AND (
+    EXISTS(SELECT 1 FROM naijue_erp.warehouse scope_fw WHERE scope_fw.id=${fromId} AND scope_fw.hall_id=ANY(${halls})) OR
+    EXISTS(SELECT 1 FROM naijue_erp.warehouse scope_tw WHERE scope_tw.id=${toId} AND scope_tw.hall_id=ANY(${halls})))) OR
+    (${facts.originalCreatedHallPredicate} AND h.created_hall_id=ANY(${halls}) AND h.created_role_source='SALESPERSON' AND h.created_by_source_key IS NOT NULL))`;
+}
 export interface ImportedHistoryReadScopeSql { readonly predicate: string; readonly values: readonly unknown[] }
-/** Only the EXISTING checked grant. Transfer HALL_IDS continues to reject. */
+/** Explicit checked grant only. Legacy transfer HALL_IDS continues to reject.
+ * TRANSFER_HALL_IDS returns the effective source-bound predicate, never ALL. */
 export function importedHistoryReadScopeSql(read: ImportedHistoryScopedRead, firstParameterIndex: number): ImportedHistoryReadScopeSql {
   const actor = checkedImportedHistoryActor(read.actor), intent = checkedImportedHistoryIntent(read.intent), grant = checkedImportedHistoryGrant(read.grant, intent, actor);
   activeImportedHistoryRead(read.signal);
   requireDomain(Number.isSafeInteger(firstParameterIndex) && firstParameterIndex > 0, 'IMPORTED_HISTORY_INVALID_QUERY', 'Positive scope parameter position required');
   return grant.scope.kind === 'ALL' ? Object.freeze({ predicate: 'TRUE', values: Object.freeze([]) })
-    : Object.freeze({ predicate: `h.hall_id=ANY($${firstParameterIndex}::uuid[])`, values: Object.freeze([Object.freeze([...grant.scope.hallIds])]) });
+    : Object.freeze({ predicate: grant.scope.kind === 'TRANSFER_HALL_IDS' ? importedHistoryTransferHallScopeSql(firstParameterIndex, true) : `h.hall_id=ANY($${firstParameterIndex}::uuid[])`, values: Object.freeze([Object.freeze([...grant.scope.hallIds])]) });
 }
 
 function person(known: unknown, staffId: unknown): ImportedHistoryPerson {
@@ -157,6 +173,7 @@ function person(known: unknown, staffId: unknown): ImportedHistoryPerson {
   return { state: !known ? 'UNKNOWN' : staffId === null ? 'UNRESOLVED' : 'BOUND', staffId: staffId as string | null };
 }
 function header(row: Record<string, unknown>, kind: ImportedHistoryKind, grant: ImportedHistoryReadGrant, effective = false): ImportedHistoryHeader {
+  if (grant.scope.kind === 'TRANSFER_HALL_IDS') requireDomain(row.transfer_scope_valid === true, 'INVALID_DATABASE_VALUE', 'Historical transfer source scope must be proved on this snapshot');
   if (effective) requireDomain(row.effective_valid === true, 'INVALID_DATABASE_VALUE', 'Historical effective header revision differs from its original document');
   return validateImportedHistoryHeader({ dataset: 'HISTORY', kind, documentId: row.id, batchId: row.batch_id, version: row.version, number: row.number, businessDate: row.business_date, sourceStatus: row.source_status, note: row.note,
     createdBy: person(row.creator_known, row.created_by_staff_id), approvedBy: person(row.approver_known, row.approved_by_staff_id), createdHallId: row.created_hall_id, createdHallProvenance: row.created_hall_provenance,
@@ -233,7 +250,12 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
     return this.snapshot(read.signal, async query => {
       const q = intent.parameters, values: unknown[] = [COMPLETE_SCOPE_DECISION], predicates = [published], effective = this.runtime26 !== undefined;
       const bind = (value: unknown): string => { values.push(value); return '$' + values.length; };
-      if (grant.scope.kind === 'HALL_IDS') predicates.push(`h.hall_id=ANY(${bind([...grant.scope.hallIds])}::uuid[])`);
+      let transferScope: string | undefined;
+      if (grant.scope.kind !== 'ALL') {
+        const position = values.length + 1; bind([...grant.scope.hallIds]);
+        if (grant.scope.kind === 'TRANSFER_HALL_IDS') { transferScope = importedHistoryTransferHallScopeSql(position, effective); predicates.push(transferScope); }
+        else predicates.push(`h.hall_id=ANY($${position}::uuid[])`);
+      }
       if (q.batchId !== null) predicates.push(`h.batch_id=${bind(q.batchId)}::uuid`);
       if (q.number !== '') predicates.push(`strpos(h.number,${bind(q.number)}::text)>0`);
       if (q.businessDateFrom !== null) predicates.push(`${headColumn('business_date', effective)}>=${bind(q.businessDateFrom)}::date`);
@@ -243,7 +265,7 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
         if (q[key] !== null) predicates.push(`${headColumn(column, effective)}=${bind(q[key])}::uuid`);
       }
       const source = from(intent.kind, effective), predicate = predicates.join(' AND '), total = count((await query(`/* imported-history:list-count */ SELECT count(*)::text total FROM ${source} WHERE ${predicate}`, [...values])).rows);
-      const rows = (await query(`/* imported-history:list-page */ SELECT ${headerColumns(intent.kind, effective)} FROM ${source} WHERE ${predicate} ORDER BY ${headColumn('business_date', effective)} DESC NULLS LAST,h.number COLLATE "C",h.id LIMIT $${values.length + 1} OFFSET $${values.length + 2}`, [...values, q.pageSize, (q.page - 1) * q.pageSize])).rows;
+      const rows = (await query(`/* imported-history:list-page */ SELECT ${headerColumns(intent.kind, effective)}${transferScope ? `,${transferScope} AS transfer_scope_valid` : ''} FROM ${source} WHERE ${predicate} ORDER BY ${headColumn('business_date', effective)} DESC NULLS LAST,h.number COLLATE "C",h.id LIMIT $${values.length + 1} OFFSET $${values.length + 2}`, [...values, q.pageSize, (q.page - 1) * q.pageSize])).rows;
       return validateImportedHistoryList({ dataset: 'HISTORY', kind: intent.kind, documents: page(q.page, q.pageSize, total, rows.map(r => header(r, intent.kind, grant, effective))) }, intent, grant);
     });
   }
@@ -251,10 +273,11 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
     const { intent, grant } = this.validate(read, 'detail'); if (intent.operation !== 'detail') throw Error('Historical detail required');
     return this.snapshot(read.signal, async query => {
       const q = intent.parameters, values: unknown[] = [COMPLETE_SCOPE_DECISION, q.documentId];
-      const scoped = grant.scope.kind === 'HALL_IDS' ? ' AND h.hall_id=ANY($3::uuid[])' : '';
-      if (grant.scope.kind === 'HALL_IDS') values.push([...grant.scope.hallIds]);
       const effective = this.runtime26 !== undefined;
-      const rows = (await query(`/* imported-history:detail */ SELECT ${headerColumns(intent.kind, effective)},d.line_count,d.settlement_count FROM ${from(intent.kind, effective)} WHERE ${published} AND h.id=$2::uuid${scoped} LIMIT 2`, values)).rows;
+      const transferScope = grant.scope.kind === 'TRANSFER_HALL_IDS' ? importedHistoryTransferHallScopeSql(3, effective) : undefined;
+      const scoped = transferScope ? ` AND ${transferScope}` : grant.scope.kind === 'HALL_IDS' ? ' AND h.hall_id=ANY($3::uuid[])' : '';
+      if (grant.scope.kind !== 'ALL') values.push([...grant.scope.hallIds]);
+      const rows = (await query(`/* imported-history:detail */ SELECT ${headerColumns(intent.kind, effective)}${transferScope ? `,${transferScope} AS transfer_scope_valid` : ''},d.line_count,d.settlement_count FROM ${from(intent.kind, effective)} WHERE ${published} AND h.id=$2::uuid${scoped} LIMIT 2`, values)).rows;
       requireDomain(rows.length <= 1, 'INVALID_DATABASE_VALUE', 'Repeated historical target');
       if (!rows.length) return validateImportedHistoryDetail({ dataset: 'HISTORY', kind: intent.kind, document: null, lines: page(q.linePage, q.linePageSize, '0', []), settlements: page(q.settlementPage, q.settlementPageSize, '0', []) }, intent, grant);
       const r = rows[0]!, document = header(r, intent.kind, grant, effective), lineTable = lineTables[intent.kind];

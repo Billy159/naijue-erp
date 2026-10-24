@@ -147,7 +147,8 @@ test("R1 independent read grants use current native role, exact product/tab, ori
     const directory = policies.settings.authorize(actor, { kind: "warehouses", operation: "detail", parameters: { id: productId } }, signal);
     const partyList = policies.party.authorize({ ...actor, role }, { kind: "CUSTOMER", operation: "LIST", query: {} as never }, signal);
     if (role === "SALESPERSON") {
-      for (const attempt of [transfer, directory, partyList]) await assert.rejects(attempt, { code: "FORBIDDEN" });
+      assert.deepEqual((await transfer).scope, { kind: "TRANSFER_HALL_IDS", hallIds: [hall] });
+      for (const attempt of [directory, partyList]) await assert.rejects(attempt, { code: "FORBIDDEN" });
     } else { assert.equal((await transfer).scope.kind, "ALL"); assert.equal((await directory).targetId, productId); assert.equal((await partyList).operation, "LIST"); }
     assert.equal((await policies.party.authorize({ ...actor, role }, { kind: "CUSTOMER", operation: "CANDIDATES", query: {} as never }, signal)).operation, "CANDIDATES");
     assert.equal(reads, 10); assert.equal(releases, reads);
