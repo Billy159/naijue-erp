@@ -12,7 +12,7 @@ import './demo-store-ui.css';
 interface DemoStoreViewProps {
   readonly scope: ReadScope; readonly kind: StoreSettingsKind;
   readonly draft: StoreSettingsListQuery; readonly displayed: StoreSettingsListQuery;
-  readonly result: StoreSettingsPage | null; readonly busy: boolean; readonly emptyText: string;
+  readonly result: StoreSettingsPage | null; readonly busy: boolean; readonly unavailable: boolean; readonly emptyText: string;
   readonly onDraft: (patch: Partial<StoreSettingsListQuery>) => void;
   readonly onQuery: () => void; readonly onReset: () => void;
   readonly onPage: (page: number) => void; readonly onPageSize: (size: StoreSettingsListQuery['pageSize']) => void;
@@ -57,7 +57,7 @@ export function DemoStoreView(props: DemoStoreViewProps) {
     <div ref={table} className="bs-table-wrap iw-arco-table" aria-busy={props.busy} onScroll={event => {
       if (scrollReady.current && props.scope.active && props.result) props.onTableScroll?.({ top: event.currentTarget.scrollTop, left: event.currentTarget.scrollLeft });
     }}><Table size="small" rowKey="id" columns={columns} data={props.result ? [...props.result.items] : []} pagination={false} noDataElement={<Empty description={props.emptyText} />} /></div>
-    <DemoSettingsPager label="厅仓列表分页" scope={props.scope} page={props.displayed.page} size={props.displayed.pageSize} total={props.result?.total ?? null} busy={props.busy} onPage={props.onPage} onSize={props.onPageSize} />
+    <DemoSettingsPager label="厅仓列表分页" scope={props.scope} page={props.displayed.page} size={props.displayed.pageSize} total={props.result?.total ?? null} busy={props.busy} disabled={props.unavailable} onPage={props.onPage} onSize={props.onPageSize} />
     {props.children}
   </section>;
 }
@@ -70,14 +70,14 @@ function Status({ row }: { readonly row: StoreSettingsEntry }) {
 }
 function Filters(props: DemoStoreViewProps) {
   const filter = props.draft, fields = [];
-  const apply = () => { if (!props.busy) props.onQuery(); };
-  const input = (placeholder: string) => fields.push(<div className="bs-filter search" key="q"><Input className="iw-arco-input iw-search-input" size="default" aria-label={placeholder} value={filter.search} onChange={search => props.onDraft({ search })} placeholder={placeholder} suffix={<IconSearch />} allowClear maxLength={200} onPressEnter={apply} /></div>);
+  const apply = () => { if (!props.busy && !props.unavailable) props.onQuery(); };
+  const input = (placeholder: string) => fields.push(<div className="bs-filter search" key="q"><Input className="iw-arco-input iw-search-input" size="default" aria-label={placeholder} value={filter.search} onChange={search => props.onDraft({ search })} placeholder={placeholder} suffix={<IconSearch />} allowClear maxLength={200} disabled={props.unavailable} onPressEnter={apply} /></div>);
   const state = [{ label: '正常', value: 'normal' }, { label: '已停用', value: 'disabled' }, { label: '全部', value: 'all' }];
   if (props.kind === 'stores') input('搜索营业厅名称');
   if (props.kind === 'warehouses') {
     input('搜索仓库名称');
-    fields.push(<div className="bs-filter" key="storeId" title={props.halls.enabled ? undefined : '所属营业厅目录暂未开放'}><DemoSettingsSingleSelect scope={props.scope} label="全部营业厅" placeholder="全部营业厅" value={filter.hallId ?? ''} options={props.halls.options} search clear disabled={!props.halls.enabled || props.busy} loading={props.halls.loading} onOpen={props.halls.onOpen} onSearch={props.halls.onSearch} onChange={props.halls.onChange} footer={props.halls.footer} /></div>);
+    fields.push(<div className="bs-filter" key="storeId" title={props.halls.enabled ? undefined : '所属营业厅目录暂未开放'}><DemoSettingsSingleSelect scope={props.scope} label="全部营业厅" placeholder="全部营业厅" value={filter.hallId ?? ''} options={props.halls.options} search clear disabled={!props.halls.enabled || props.busy || props.unavailable} loading={props.halls.loading} onOpen={props.halls.onOpen} onSearch={props.halls.onSearch} onChange={props.halls.onChange} footer={props.halls.footer} /></div>);
   }
-  fields.push(<div className="bs-filter" key="status"><DemoSettingsSingleSelect scope={props.scope} label="状态" placeholder="状态" value={filter.status} options={state} onChange={status => props.onDraft({ status: status as StoreSettingsListQuery['status'] })} /></div>);
-  return <div className="bs-toolbar"><div className="bs-filter-fields">{fields}</div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" onClick={apply} disabled={props.busy}>查询</Button><Button className="btn iw-reset" onClick={props.onReset} disabled={props.busy}>重置</Button></div></div>;
+  fields.push(<div className="bs-filter" key="status"><DemoSettingsSingleSelect scope={props.scope} label="状态" placeholder="状态" value={filter.status} options={state} disabled={props.unavailable} onChange={status => props.onDraft({ status: status as StoreSettingsListQuery['status'] })} /></div>);
+  return <div className="bs-toolbar"><div className="bs-filter-fields">{fields}</div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" onClick={apply} disabled={props.busy || props.unavailable}>查询</Button><Button className="btn iw-reset" onClick={props.onReset} disabled={props.busy || props.unavailable}>重置</Button></div></div>;
 }

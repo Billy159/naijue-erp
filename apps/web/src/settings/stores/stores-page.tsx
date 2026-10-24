@@ -61,7 +61,9 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
   const refreshed = useRef<string | null>(null);
 
   const focus = useDialogFocusReturn(scope, editTarget !== null || editor !== null), label = props.kind === 'stores' ? '营业厅' : '仓库';
-  const success = snapshot.success, result = success?.data, displayed = success?.parameters ?? props.ui.applied, busy = snapshot.phase === 'loading';
+  const unavailable = snapshot.phase === 'disposed' || !scope.active;
+  const success = snapshot.success, result = unavailable ? null : success?.data ?? null,
+    displayed = unavailable ? initialStoreSettingsQuery : success?.parameters ?? props.ui.applied, busy = snapshot.phase === 'loading';
   const run = (parameters: StoreSettingsListQuery) => { if (scope.active) { props.ui.applied = { ...parameters }; void controller.queryList(parameters); } };
   const retry = () => run(snapshot.request?.parameters ?? { ...draft, page: 1 });
   useEffect(() => {
@@ -71,7 +73,7 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
   }, [controller, scope, write, displayed]);
   const closeEditor = () => { if (workspace && !workspace.close(props.kind)) return; setEditTarget(null); focus.request(); };
   const commandForm = editor && <StoreMaintenanceFormView scope={props.scope} kind={props.kind} record={editor.record} controller={editor} directory={props.maintenance?.directory} close={closeEditor} />;
-  const editBlocked = !!editor || !!editTarget || !!props.maintenance?.workspace && !workspace;
+  const editBlocked = unavailable || !!editor || !!editTarget || !!props.maintenance?.workspace && !workspace;
   const changeTab = (kind: StoreSettingsKind) => {
     if (!scope.active || kind === props.kind || editTarget) return;
     if (editor && !editor.requestClose()) return;
@@ -79,15 +81,14 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
     props.onTab?.(kind);
   };
   const state = <StoreSettingsReadState snapshot={snapshot} accessFailure={controller.accessFailure} retry={retry} cancel={() => list.cancel()} />;
-  if (snapshot.phase === 'disposed') return <section className="store-settings-workbench">{state}{commandForm}</section>;
-  const hallRead = hallSnapshot.success, hallOptions = (hallRead?.data.items ?? []).map(item => ({ value: item.id, label: item.name }));
-  if (hallSelection && !hallOptions.some(option => option.value === hallSelection.id)) hallOptions.push({ value: hallSelection.id, label: hallSelection.name });
+  const hallRead = unavailable ? null : hallSnapshot.success, hallOptions = (hallRead?.data.items ?? []).map(item => ({ value: item.id, label: item.name }));
+  if (!unavailable && hallSelection && !hallOptions.some(option => option.value === hallSelection.id)) hallOptions.push({ value: hallSelection.id, label: hallSelection.name });
   const halls = (search = '', page = 1) => { if (scope.active) void controller.queryHalls({ ...initialStoreSettingsQuery, status: 'all', search, page }); };
-  const maintenanceTitle = workspace?.writesEnabled() ? '维护资料' : props.maintenance ? '可填写表单；此版本暂未开放保存' : `${label}维护暂未接入`;
-  const staleState = success && (busy || snapshot.phase === 'error')
+  const maintenanceTitle = unavailable ? '当前读取范围已关闭，请重新进入此页' : workspace?.writesEnabled() ? '维护资料' : props.maintenance ? '可填写表单；此版本暂未开放保存' : `${label}维护暂未接入`;
+  const staleState = !unavailable && success && (busy || snapshot.phase === 'error')
     ? <p className="settings-note" role="status">下方仍为上次成功读取的资料（搜索：{displayed.search || '全部'}；状态：{displayed.status === 'normal' ? '正常' : displayed.status === 'disabled' ? '已停用' : '全部'}；第{displayed.page}页），不是待查条件的新结果。</p> : null;
-  return <DemoStoreView scope={scope} kind={props.kind} draft={draft} displayed={displayed} result={result ?? null} busy={busy}
-    emptyText={!result ? busy ? '正在读取资料' : snapshot.phase === 'error' ? '当前查询失败' : '等待查询' : result.total ? '此页没有数据，请返回有效页' : '暂无符合条件的数据'}
+  return <DemoStoreView scope={scope} kind={props.kind} draft={draft} displayed={displayed} result={result} busy={busy} unavailable={unavailable}
+    emptyText={unavailable ? '当前资料已清除，请重新进入此页' : !result ? busy ? '正在读取资料' : snapshot.phase === 'error' ? '当前查询失败' : '等待查询' : result.total ? '此页没有数据，请返回有效页' : '暂无符合条件的数据'}
     allowedTabs={props.allowedTabs} focusTab={props.focusTab} onTab={props.onTab ? changeTab : undefined}
     createDisabled={!props.maintenance || editBlocked} editDisabled={!props.maintenance || busy || editBlocked} maintenanceTitle={maintenanceTitle}
     onCreate={button => { if (scope.active && props.maintenance) { focus.capture(button); if (workspace) workspace.open(props.kind, null); else setEditTarget({ id: null }); } }}
@@ -99,7 +100,7 @@ function StoreSettingsContent(props: StoreSettingsPageProps & { readonly kind: S
     referenceLabel={storeSettingsReferenceLabel} readState={state} staleState={staleState}
     tableScroll={props.ui.tableScroll} onTableScroll={position => { props.ui.tableScroll.top = position.top; props.ui.tableScroll.left = position.left; }}
     audit={<SettingsAuditEntry scope={props.scope} {...(props.audit ? { capability: props.audit } : {})} onAccessFailure={props.onAccessFailure} localHasUnresolvedWrite={() => props.maintenance?.workspace?.hasUnresolvedWrite() ?? false} />}
-    halls={{ enabled: !!props.allowHallDirectoryRead, loading: hallSnapshot.phase === 'loading', options: hallOptions, onOpen: () => halls(), onSearch: search => halls(search),
+    halls={{ enabled: !!props.allowHallDirectoryRead && !unavailable, loading: !unavailable && hallSnapshot.phase === 'loading', options: hallOptions, onOpen: () => halls(), onSearch: search => halls(search),
       onChange: value => { const item = hallOptions.find(option => option.value === value); setHallSelection(value && item ? { id: value, name: item.label } : null); setDraft(previous => ({ ...previous, hallId: value || null })); },
       footer: <div className="settings-directory-footer"><StoreSettingsReadState snapshot={hallSnapshot} accessFailure={controller.accessFailure} retry={() => halls(hallSnapshot.request?.parameters.search ?? '', hallSnapshot.request?.parameters.page ?? 1)} cancel={() => controller.hallDirectory.cancel()} />
         {hallRead && <><span>目录共{hallRead.data.total}个，第{hallRead.parameters.page}页（仅显示本页）</span><UIButton type="button" disabled={hallSnapshot.phase === 'loading' || hallRead.parameters.page <= 1} onClick={() => halls(hallRead.parameters.search, hallRead.parameters.page - 1)}>上一页</UIButton><UIButton type="button" disabled={hallSnapshot.phase === 'loading' || hallRead.parameters.page * hallRead.parameters.pageSize >= hallRead.data.total} onClick={() => halls(hallRead.parameters.search, hallRead.parameters.page + 1)}>下一页</UIButton></>}
