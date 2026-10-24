@@ -4950,5 +4950,25 @@
       "source": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-138/DELIVERY.json",
       "afterSha256": "d1ffc5baa984c5f94e4a6e5163467f49464acc9acbd93d8764235038175053ed"
     }
-  ]
+  ],
+  "latestControllerIntegration": {
+    "atUtc": "2026-10-24T13:05:44.041321+00:00",
+    "sourceRound": 322,
+    "commit": "34bb6a433ea4977beac2df85eab59faf9767d79e",
+    "browserLease": {
+      "owner": "QF",
+      "candidateTarget": "5B69FD73D86A2D051EE5D18378D8C767",
+      "demoTarget": "F0B417F6BC85EE5917A5286AAD0FB04A",
+      "scope": "C322 normal transfer refusal delta then sales shared BODY affected states",
+      "otherReviewers": "QF2_NO_GUI_PENDING_C_HANDOFF",
+      "actualNaturalViewport": [
+        1470,
+        668,
+        2
+      ],
+      "scale": 1,
+      "protectedTargetsNotTouched": true
+    },
+    "sourceWrites": "existing unique owners unchanged; F1chunk149/150 frozen; unrelated protocol WIP protected"
+  }
 }
