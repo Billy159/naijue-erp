@@ -1,5 +1,7 @@
 import { constants, closeSync, fstatSync, lstatSync, openSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
+import type { BigIntStats } from "node:fs";
+import { PostgresQueryError, PostgresResourceError } from "./bounded-pool.ts";
 import { isAbsolute } from "node:path";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
@@ -201,7 +203,7 @@ export async function assertNativeImportAccountingGuards(client: PgSalesClient):
 /** Fixed read-only catalog query. Digest uses PostgreSQL JSONB text and built-in
  * SHA-256, never an application routine or a pretty-printed export file. */
 export const NATIVE_RUNTIME26_METADATA_PROBE = `/* native-runtime26:metadata-v7 */
-WITH observed AS (
+WITH observed AS MATERIALIZED (
 WITH ns AS (SELECT oid,nspname,nspowner,nspacl FROM pg_catalog.pg_namespace WHERE nspname='naijue_erp'),
 rels AS (SELECT c.* FROM pg_catalog.pg_class c JOIN ns ON ns.oid=c.relnamespace WHERE c.relkind IN ('r','p','v','m','S')),
 fns AS (SELECT p.*,l.lanname,pg_catalog.pg_get_function_identity_arguments(p.oid) AS args
@@ -439,21 +441,43 @@ function ownArray(value: unknown): unknown[] {
 const sha = (value: unknown): value is string => typeof value === "string" && /^[0-9a-f]{64}$/.test(value);
 function metadataText(value: unknown): value is string { return typeof value === "string" && value.length > 0 && value.length <= 512 && !/[\x00-\x1f\x7f]/.test(value); }
 type FilePin = { readonly path: string; readonly sha256: string; readonly signature: string };
-function statSignature(s: ReturnType<typeof fstatSync>): string { return JSON.stringify([s.dev, s.ino, s.mode, s.size, s.mtimeMs, s.ctimeMs]); }
-function pinnedMetadataFile(path: string, expected: string, limit: number, prior?: FilePin): { pin: FilePin; bytes: Buffer } {
+function statSignature(s: BigIntStats): string {
+  return JSON.stringify([s.dev, s.ino, s.mode, s.size, s.mtimeNs, s.ctimeNs].map(value => value.toString()));
+}
+function pinnedMetadataFile(path: string, expected: string, limit: number): { pin: FilePin; bytes: Buffer } {
   if (!isAbsolute(path) || !sha(expected)) throw runtime26Error("Absolute metadata path and independent SHA-256 required");
   let fd: number | undefined;
   try {
     fd = openSync(path, constants.O_RDONLY | constants.O_NOFOLLOW);
-    const before = fstatSync(fd);
-    if (!before.isFile() || (before.mode & 0o022) !== 0 || before.size === 0 || before.size > limit) throw runtime26Error("Bounded non-writable metadata file required");
-    const bytes = readFileSync(fd), after = fstatSync(fd), named = lstatSync(path);
+    const before = fstatSync(fd, { bigint: true });
+    if (!before.isFile() || (before.mode & 0o022n) !== 0n || before.size === 0n || before.size > BigInt(limit)) throw runtime26Error("Bounded non-writable metadata file required");
+    const bytes = readFileSync(fd), after = fstatSync(fd, { bigint: true }), named = lstatSync(path, { bigint: true });
     const signature = statSignature(before);
-    if (!named.isFile() || signature !== statSignature(after) || signature !== statSignature(named) || bytes.length !== before.size
-      || prior !== undefined && (prior.path !== path || prior.sha256 !== expected || prior.signature !== signature)
+    if (!named.isFile() || signature !== statSignature(after) || signature !== statSignature(named) || BigInt(bytes.length) !== before.size
       || createHash("sha256").update(bytes).digest("hex") !== expected) throw runtime26Error("Metadata file pin changed");
     return { pin: Object.freeze({ path, sha256: expected, signature }), bytes };
   } finally { if (fd !== undefined) closeSync(fd); }
+}
+/** Content is hashed at issuance. Every later boundary still opens no-follow and
+ * proves the same file identity/mode/size/nanosecond timestamps; any change revokes,
+ * including a rewrite to identical bytes. No cached business authorization. */
+function metadataFileUnchanged(pin: FilePin): void {
+  let fd: number | undefined;
+  try {
+    fd = openSync(pin.path, constants.O_RDONLY | constants.O_NOFOLLOW);
+    const before = fstatSync(fd, { bigint: true }), named = lstatSync(pin.path, { bigint: true }), after = fstatSync(fd, { bigint: true });
+    if (!before.isFile() || !named.isFile() || statSignature(before) !== pin.signature || statSignature(named) !== pin.signature || statSignature(after) !== pin.signature)
+      throw runtime26Error("Metadata file pin changed");
+  } finally { if (fd !== undefined) closeSync(fd); }
+}
+/** These existing driver/resource errors prove a failed request/lease, not a
+ * changed reviewed target. Each next request must acquire and fully verify anew. */
+function transientMetadataFailure(error: unknown): boolean {
+  const code = error !== null && typeof error === "object" ? (error as { code?: unknown }).code : undefined;
+  if (error instanceof PostgresQueryError && code === undefined) return true;
+  if (error instanceof PostgresResourceError && ["PG_POOL_OVERLOADED", "PG_ACQUIRE_TIMEOUT", "PG_ACQUIRE_FAILED", "PG_CLIENT_CLOSED", "PG_QUERY_FAILED"].includes(error.code)) return true;
+  return typeof code === "string" && (/^(?:08|53)/.test(code)
+    || ["57014", "55P03", "57P01", "57P02", "57P03", "ETIMEDOUT", "ECONNRESET", "ECONNREFUSED", "EPIPE", "ENETDOWN", "ENETUNREACH", "EHOSTUNREACH", "EMFILE", "ENFILE", "ENOMEM", "EAGAIN", "EIO"].includes(code));
 }
 function dataMethod(target: object, key: string): (...args: unknown[]) => unknown {
   for (let current: object | null = target; current !== null; current = Object.getPrototypeOf(current) as object | null) {
@@ -512,18 +536,23 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
   function filesReady(): void {
     if (revoked) throw runtime26Error("Runtime metadata capability revoked");
     try {
-      pinnedMetadataFile(reviewFile.pin.path, reviewFile.pin.sha256, 64 * 1024, reviewFile.pin);
-      pinnedMetadataFile(independentFile.pin.path, independentFile.pin.sha256, 8 * 1024 * 1024, independentFile.pin);
-    } catch { fail("Independent review files changed or became unavailable"); }
+      metadataFileUnchanged(reviewFile.pin);
+      metadataFileUnchanged(independentFile.pin);
+    } catch (error) {
+      if (transientMetadataFailure(error)) throw new PostgresResourceError("PG_QUERY_FAILED");
+      fail("Independent review files changed or became unavailable");
+    }
   }
-  type Lease = { raw: PgSalesClient; query: PgSalesClient["query"]; release: PgSalesClient["release"]; active: boolean; checking: boolean; pending: number };
+  type Lease = { raw: PgSalesClient; query: PgSalesClient["query"]; release: PgSalesClient["release"]; active: boolean; checking: boolean; pending: number; failed: Error | undefined };
   const leases = new WeakMap<object, Lease>(), activeRawClients = new WeakSet<object>();
   async function verify(client: object, purpose: Runtime26Purpose): Promise<void> {
     const lease = leases.get(client);
     if (lease === undefined) throw runtime26Error("Original issuer lease required");
+    if (lease.failed !== undefined) throw runtime26Error("Failed runtime lease must be discarded before a new request");
     if (!allowed.has(purpose) || !lease.active || lease.checking || lease.pending !== 0) fail("Original idle live lease and explicitly reviewed purpose required");
-    filesReady(); lease.checking = true;
+    lease.checking = true;
     try {
+      filesReady();
       const observed = await lease.query(metadataProbe);
       if (!lease.active || observed.rows.length !== 1 || observed.rowCount !== 1) fail("One actual metadata row on the original lease required");
       const row = exactData(observed.rows[0], ["identity", "migration_versions", "catalog_sha256", "source_routines_match"]);
@@ -533,7 +562,11 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
         || identity.session_user !== target.sessionUser || identity.server_addr !== target.serverAddress || identity.server_port !== target.serverPort
         || identity.postmaster_start !== target.postmasterStart || identity.replication_role !== "origin") fail("Actual runtime target, exact schema, source bodies or catalog differs from independent review");
       filesReady();
-    } catch (error) { revoked = true; throw error; } finally { lease.checking = false; }
+    } catch (error) {
+      lease.failed = error instanceof Error ? error : runtime26Error("Runtime metadata verification failed");
+      if (!transientMetadataFailure(error)) revoked = true;
+      throw error;
+    } finally { lease.checking = false; }
   }
   const pool: PgSalesPool = Object.freeze({ async connect(): Promise<PgSalesClient> {
     filesReady();
@@ -541,19 +574,22 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     if (raw === null || typeof raw !== "object" || activeRawClients.has(raw)) fail("Original pool returned an invalid or already live lease");
     const rawQuery = dataMethod(raw, "query"), rawRelease = dataMethod(raw, "release");
     const lease: Lease = { raw, query: (sql, values) => rawQuery.call(raw, sql, values) as Promise<PgSalesResult>,
-      release: error => { rawRelease.call(raw, error); }, active: true, checking: false, pending: 0 };
+      release: error => { rawRelease.call(raw, error); }, active: true, checking: false, pending: 0, failed: undefined };
     const client: PgSalesClient = Object.freeze({ async query(sql: string, values?: unknown[]): Promise<PgSalesResult> {
+      if (lease.failed !== undefined && sql !== "ROLLBACK") throw runtime26Error("Failed runtime lease permits rollback and discard only");
       if (!lease.active || lease.checking || revoked && sql !== "ROLLBACK") fail("Live verified lease required; only rollback remains available after revocation");
       // Recheck actual outside files synchronously before dispatching either PG
       // commit alias. Conservative token matching also covers comments/batches;
       // matches inside literals only add a file check, never bypass one.
-      if (/\b(?:COMMIT|END)\b/i.test(sql)) filesReady();
+      if (/\b(?:COMMIT|END)\b/i.test(sql)) {
+        try { filesReady(); } catch (error) { lease.failed = error instanceof Error ? error : runtime26Error("Commit proof unavailable"); throw error; }
+      }
       lease.pending++;
       try { return await lease.query(sql, values); } finally { lease.pending--; }
     }, release(error?: Error | boolean): void {
       if (!lease.active) throw runtime26Error("PostgreSQL lease already released");
       lease.active = false; activeRawClients.delete(raw);
-      lease.release(lease.checking || lease.pending > 0 || revoked ? error instanceof Error ? error : runtime26Error("Unusable runtime lease discarded") : error);
+      lease.release(lease.checking || lease.pending > 0 || revoked || lease.failed !== undefined ? error instanceof Error ? error : lease.failed ?? runtime26Error("Unusable runtime lease discarded") : error);
     } });
     leases.set(client, lease); activeRawClients.add(raw);
     try { await verify(client, purposes[0] as Runtime26Purpose); return client; }

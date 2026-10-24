@@ -123,7 +123,8 @@ export class PostgresSalesUnitOfWork implements SalesUnitOfWork {
     let began = false; let commitAttempted = false; let discard: Error | undefined;
     try {
       tx = new PostgresSalesTransaction(client, this.catalogueCompleteness, this.historicalCustomers, this.runtime26, this.maintainedCatalogue, this.pool);
-      if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");
+      // The first explicit runtime check is on this same client inside BEGIN,
+      // before schema/current-actor/business work; the pre-COMMIT check remains.
       // Explicit READ COMMITTED: a receipt waiter must see the previous holder's committed receipt after its advisory lock.
       await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
       if (this.runtime26) await this.runtime26.assertReady(client, "INVENTORY_ADMISSION");

@@ -1,3 +1,7 @@
+import fs from "node:fs";
+import { syncBuiltinESMExports } from "node:module";
+import { PostgresQueryError, PostgresResourceError } from "../adapters/postgres/src/bounded-pool.ts";
+import { PostgresSalesUnitOfWork } from "../adapters/postgres/src/sales-unit-of-work.ts";
 /** Protocol fakes and synthetic pinned metadata only; no PostgreSQL or real grant. */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -195,4 +199,72 @@ test("v14 exact routine pins cover the single approved patch while original v11 
  for(const m of routines)assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes(`('${m[1]}','${hash(m[2]!)}')`),m[1]);
  assert.ok(NATIVE_RUNTIME26_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=122"));
  assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=123"));
+});
+
+test("runtime performance: unchanged review files are hashed once per issuer while every original lease and explicit verification still probes actual metadata", async () => {
+ const f=fixture(),settings=f.options(),original=fs.readFileSync;let contentReads=0;
+ fs.readFileSync=function(...args:unknown[]){if(typeof args[0]==='number')contentReads++;return Reflect.apply(original,fs,args);} as typeof fs.readFileSync;syncBuiltinESMExports();
+ try {
+  const p=scripted(),issuer=await createNativeRuntime26Issuer(p.pool,settings);assert.equal(contentReads,2);
+  const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,'IMPORT_STAGE');
+  await client.query('BEGIN');await issuer.runtime26.assertReady(client,'IMPORT_STAGE');await client.query('COMMIT');client.release();
+  const next=await issuer.pool.connect();await issuer.runtime26.assertReady(next,'IMPORT_STAGE');next.release();
+  assert.equal(contentReads,2);assert.equal(p.calls.filter(sql=>sql===NATIVE_RUNTIME26_METADATA_PROBE).length,6);
+ }finally{fs.readFileSync=original;syncBuiltinESMExports();f.cleanup();}
+});
+test("runtime availability: timeout transport and bounded resource failures poison only the current lease; a new request must fully reverify without automatic retries",async()=>{
+ for(const failure of [new PostgresQueryError({code:'57014'}),new PostgresQueryError({code:'ECONNRESET'}),new PostgresResourceError('PG_CLIENT_CLOSED')]){
+  const f=fixture();try{
+   const calls:string[]=[],releases:unknown[]=[];let nextFailure:Error|undefined;
+   const pool={async connect(){return{async query(sql:string){calls.push(sql);if(sql===NATIVE_RUNTIME26_METADATA_PROBE&&nextFailure){const current=nextFailure;nextFailure=undefined;throw current;}return{rows:sql===NATIVE_RUNTIME26_METADATA_PROBE?[observation()]:[],rowCount:sql===NATIVE_RUNTIME26_METADATA_PROBE?1:0};},release(error?:unknown){releases.push(error);}};}};
+   const issuer=await createNativeRuntime26Issuer(pool,f.options()),client=await issuer.pool.connect();await client.query('BEGIN');
+   const count=calls.filter(sql=>sql===NATIVE_RUNTIME26_METADATA_PROBE).length;nextFailure=failure;
+   await assert.rejects(issuer.runtime26.assertReady(client,'IMPORT_STAGE'),error=>error===failure);
+   assert.equal(calls.filter(sql=>sql===NATIVE_RUNTIME26_METADATA_PROBE).length,count+1);
+   const before=calls.length;await assert.rejects(client.query('COMMIT'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+   await assert.rejects(issuer.runtime26.assertReady(client,'IMPORT_STAGE'),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(calls.length,before);
+   await client.query('ROLLBACK');client.release();assert.equal(releases.at(-1),failure);
+   const recovered=await issuer.pool.connect();assert.equal(calls.filter(sql=>sql===NATIVE_RUNTIME26_METADATA_PROBE).length,count+2);
+   await issuer.runtime26.assertReady(recovered,'IMPORT_STAGE');await recovered.query('SELECT SYNTHETIC_NEW_REQUEST');recovered.release();
+   assert.ok(calls.includes('SELECT SYNTHETIC_NEW_REQUEST'));assert.equal(calls.filter(sql=>sql==='COMMIT').length,0);
+  }finally{f.cleanup();}
+ }
+});
+test("runtime availability: a failed borrow is discarded and recovery cannot reuse old catalog or accept a real mismatch",async()=>{
+ const f=fixture();try{
+  let failure:Error|undefined;const row=observation(),calls:string[]=[],releases:unknown[]=[];
+  const pool={async connect(){return{async query(sql:string){calls.push(sql);if(failure){const error=failure;failure=undefined;throw error;}return{rows:[structuredClone(row)],rowCount:1};},release(error?:unknown){releases.push(error);}};}};
+  const issuer=await createNativeRuntime26Issuer(pool,f.options());failure=new PostgresQueryError({code:'57014'});
+  await assert.rejects(issuer.pool.connect(),{code:'57014'});assert.ok(releases.at(-1) instanceof Error);
+  row.catalog_sha256='b'.repeat(64);const before=calls.length;
+  await assert.rejects(issuer.pool.connect(),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(calls.length,before+1);
+  row.catalog_sha256=digest;await assert.rejects(issuer.pool.connect(),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(calls.length,before+1);
+ }finally{f.cleanup();}
+});
+test("sales runtime performance: one same-client in-transaction check plus original precommit check; drift and unknown commit remain closed",async()=>{
+ for(const outcome of ['success','catalogDrift','unknownCommit']){
+  const f=fixture();try{
+   const row=observation(),calls:string[]=[],releases:unknown[]=[];const unknown=Error('SYNTHETIC_SALES_UNKNOWN_COMMIT');
+   const pool={async connect(){return{async query(sql:string){calls.push(sql);if(sql==='COMMIT'&&outcome==='unknownCommit')throw unknown;
+    const rows=sql===NATIVE_RUNTIME26_METADATA_PROBE?[structuredClone(row)]:sql.includes('sales:current-schema')?[{current_sales_schema_ready:true}]:[];return{rows,rowCount:rows.length};},release(error?:unknown){releases.push(error);}};}};
+   const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,purposes:['INVENTORY_ADMISSION']}));
+   const driver=new PostgresSalesUnitOfWork(issuer.pool,{runtime26:issuer.runtime26,catalogueCompleteness:{async assertComplete(){throw Error('Not part of this protocol');}}});
+   const start=calls.length;const run=driver.transaction(async()=>{if(outcome==='catalogDrift')row.catalog_sha256='b'.repeat(64);return'SYNTHETIC_SALES_WORK';});
+   if(outcome==='success')assert.equal(await run,'SYNTHETIC_SALES_WORK');else await assert.rejects(run,error=>outcome==='unknownCommit'?error===unknown:(error as {code?:string}).code==='NATIVE_RUNTIME26_NOT_READY');
+   const tx=calls.slice(start);assert.equal(tx.filter(sql=>sql===NATIVE_RUNTIME26_METADATA_PROBE).length,3);
+   assert.equal(tx[0],NATIVE_RUNTIME26_METADATA_PROBE);assert.match(tx[1]!,/^BEGIN/);assert.equal(tx[2],NATIVE_RUNTIME26_METADATA_PROBE);
+   if(outcome==='catalogDrift'){assert.ok(!tx.includes('COMMIT'));assert.equal(tx.at(-1),'ROLLBACK');}
+   if(outcome==='unknownCommit'){assert.equal(tx.filter(sql=>sql==='COMMIT').length,1);assert.ok(!tx.includes('ROLLBACK'));assert.equal(releases.at(-1),unknown);}
+  }finally{f.cleanup();}
+ }
+});
+test("runtime performance: identical-byte rewrite with restored mtime still revokes the original file pin before COMMIT",async()=>{
+ const f=fixture();try{
+  const settings=f.options(),p=scripted(),issuer=await createNativeRuntime26Issuer(p.pool,settings),client=await issuer.pool.connect();
+  await client.query('BEGIN');const original=fs.readFileSync(f.independent),before=fs.statSync(f.independent);
+  fs.writeFileSync(f.independent,original);fs.utimesSync(f.independent,before.atime,before.mtime);
+  const count=p.calls.length;await assert.rejects(client.query('COMMIT'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  assert.equal(p.calls.length,count);await client.query('ROLLBACK');client.release();
+  await assert.rejects(issuer.pool.connect(),{code:'NATIVE_RUNTIME26_NOT_READY'});
+ }finally{f.cleanup();}
 });
