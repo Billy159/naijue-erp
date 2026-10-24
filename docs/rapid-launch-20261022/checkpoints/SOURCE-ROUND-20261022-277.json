@@ -1,0 +1,134 @@
+{
+  "atUtc": "2026-10-24T02:44:09.039890+00:00",
+  "parent": "dbd1b23191768362d5f46589aeada7d14eb06f0e",
+  "taskId": "SHARED_WORKBOOK_ASYNC_ITERABLE_YIELD_AND_CANCEL_SAME_BYTES",
+  "files": [
+    {
+      "path": "apps/web/src/components/document-output.tsx",
+      "bytes": 18629,
+      "sha256": "5ecd21683d38f19778c298f807d360d3e3cb98ab63ac8ca94a8a93059d85d793",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "f548ea03626bf92240c7669c2c3d1ef7900fd456b3e27e9295e9c96ecc116185",
+  "ownerDelivery": {
+    "taskId": "F1_EXISTING_PUBLIC_ASYNC_WORKBOOK_SEAM",
+    "status": "SOURCE_READY_LOCAL_PASS_F2_CONSUMER_BROWSER_PENDING",
+    "atUtc": "2026-10-24T02:42:04.463836+00:00",
+    "sourceFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/components/document-output.tsx",
+        "bytes": 18629,
+        "sha256": "5ecd21683d38f19778c298f807d360d3e3cb98ab63ac8ca94a8a93059d85d793"
+      }
+    ],
+    "sourceFrozenUntilCPin": true,
+    "api": "createWorkbookRowsAsync(rows: Iterable<readonly (string | null)[]> | AsyncIterable<readonly (string | null)[]>, options: { readonly signal: AbortSignal }): Promise<Uint8Array<ArrayBuffer>>",
+    "checks": {
+      "types-1": "EXIT2 optional async iterator typing, fixed without weaken",
+      "types-2": "EXIT0 strict exact1 imported closure",
+      "check-1": "EXIT1 harness CSS external, no product assertions executed",
+      "check-2": "EXIT0 original exact bytes/cancellation + one complete synthetic before/after performance",
+      "independentZIPXML": "EXIT0 standard CRC+XML all5 members/all30000x13 cells"
+    },
+    "performance": {
+      "environment": "Node24 local event loop; timer gaps are responsiveness proxy, not browser PerformanceObserver longtask acceptance",
+      "input": {
+        "source": "Pure synthetic complete lazy 30000rows ×13columns, never current page or DOM",
+        "rows": 30000,
+        "columns": 13
+      },
+      "bytes": 31119096,
+      "sha256": "77bc1c8c69e9b5567b440be293b16c484882ef34b274455608865e07bbae42cd",
+      "before": {
+        "elapsedMs": 890.019042,
+        "timerTicks": 3,
+        "maxResponseGapMs": 897.40525,
+        "gapsOver50ms": 1
+      },
+      "after": {
+        "elapsedMs": 1069.5712500000002,
+        "timerTicks": 119,
+        "maxResponseGapMs": 10.849040999999943,
+        "gapsOver50ms": 0
+      },
+      "threshold": "Record actuals; browser/real-model validation remains with C/QF/F2. No synthetic result promoted to real stock export acceptance."
+    },
+    "notTested": [
+      "Browser PerformanceObserver longtask/real model/source-bound export",
+      "F2 consumer lazy model rows + original scope cancellation actual",
+      "Backend snapshot/PG/HTTP cleanup/deployment"
+    ],
+    "next": "C exact1 pin; original F2 consume ready API; containing browser complete export on actual validated model",
+    "blocker": "F2 original consumer plus C containing build/actual QF, F1 NO_CHROME",
+    "evidence": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/REPORT.md",
+        "bytes": 2249,
+        "sha256": "0315a76688de488ba5eace7f630c99716419e435188d7514995a15afbe994878"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/SOURCE.diff",
+        "bytes": 14691,
+        "sha256": "cdd90a21615ca52925f84670cb692be658d0daf85e7a0438f2738c4873099ba7"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/RESULT.json",
+        "bytes": 1735,
+        "sha256": "ae30271bbb8335e2e877a5493817078139f8e8103378bd9771d9034f69538f83"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/PERFORMANCE.json",
+        "bytes": 806,
+        "sha256": "227de988391c7d51c309c623f728140a3f1cffe0c027739fcb25f779d918e8eb"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/INDEPENDENT-ZIP-XML.json",
+        "bytes": 1178,
+        "sha256": "2cb11471afe3762a5a1ceb8a222c02f376278fd9e76d2562040471c67dcaed66"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/EXACT-TEXT.xlsx",
+        "bytes": 23135,
+        "sha256": "9e400abd48d9fcc67ef6b200c6c649c3075f5b2b6b5f3093f6b13318d5db54c8"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/COMPLETE-SYNTHETIC.xlsx",
+        "bytes": 31119096,
+        "sha256": "77bc1c8c69e9b5567b440be293b16c484882ef34b274455608865e07bbae42cd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/types-1.log",
+        "bytes": 560,
+        "sha256": "b61564141abc5f643a9f37d684b1e4ffd1ff0a5bcb1e5297b5d1dbc876bed5a3"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/types-2.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/check-1.log",
+        "bytes": 1133,
+        "sha256": "d88a59f2b1c39b73afa3809d95918b8e7171ebf85ba69c1119f02e543c53ea8c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/check-2.log",
+        "bytes": 763,
+        "sha256": "d5a5975008208b52f67a68fbe11e15e7268e55aa61d7aabf3ec7681ef097f89a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/workbook-check.mjs",
+        "bytes": 8390,
+        "sha256": "ae334e9ebc5d3b9cf6a95b625f55c2278ab0d01bec835437a753e0d105977f1a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-134/tsconfig.json",
+        "bytes": 532,
+        "sha256": "498cd98b4e8361eb93c640b8744c0360f046aab53d3ed87efad38f9319b8065c"
+      }
+    ]
+  },
+  "qualification": "Shared originalXLSX path additiveasync API; originalsync preserved, bytes equal3 paths and5member independentCRC/XML. Complete synthetic30000x13 export31MB, Node timer response max897.41ms->10.85ms, not browserlongtask or actualinventory/PGperf. Owner necessary targeted checks/strict adopted. F2 realdefaultconsumer not yet coupled; originalQF newmodule independentreview and actual browser pending."
+}
