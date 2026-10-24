@@ -44,12 +44,16 @@ UISelect.Option = Select.Option;
  * A supported Arco Input trigger retains incomplete/invalid raw text instead of
  * letting DatePicker format it as "Invalid Date". Calendar selection remains
  * DatePicker's own behaviour. No timezone or numeric coercion. */
-export function UIDate({ value, onChange, disabled, className, ...inputProps }: {
+export function UIDate({ value, onChange, disabled, className, popupMount = 'local', ...inputProps }: {
   readonly value: string; readonly onChange: (value: string) => void;
   readonly disabled?: boolean; readonly className?: string;
+  /** Frozen ledger uses a static portal under the positioned drawer. The
+   * consumer also leaves its intervening body wrappers unpositioned. */
+  readonly popupMount?: 'local' | 'ancestor';
   readonly 'aria-label': string; readonly placeholder?: string;
 }) {
   const host = useRef<HTMLSpanElement>(null);
+  const portal = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const pointerInside = useRef(false);
   useEffect(() => {
@@ -65,7 +69,7 @@ export function UIDate({ value, onChange, disabled, className, ...inputProps }: 
   if (value === '' || (/^\d{4}-\d{2}-\d{2}$/.test(value) && dayjs(value).isValid() && dayjs(value).format('YYYY-MM-DD') === value)) calendarValue.current = value;
   // Input forwards click handlers to its inner input; the native trigger must
   // also contain the calendar suffix so Arco receives that same click.
-  return <span ref={host} className="erp-date-host" onPointerDownCapture={() => { pointerInside.current = true; }} onBlurCapture={event => {
+  return <span ref={host} className="erp-date-host" data-popup-mount={popupMount === 'ancestor' ? 'ancestor' : undefined} onPointerDownCapture={() => { pointerInside.current = true; }} onBlurCapture={event => {
     // A nonfocusable calendar cell/footer can move focus to the Drawer scroll
     // container on mousedown. Keep the native picker until its click selects.
     if (pointerInside.current) return;
@@ -87,6 +91,6 @@ export function UIDate({ value, onChange, disabled, className, ...inputProps }: 
       placeholder={inputProps.placeholder ?? 'YYYY-MM-DD'} onChange={next => { if (!disabled) onChange(next); }} onKeyDown={event => {
         if (!disabled && event.key === 'ArrowDown') { event.preventDefault(); setOpen(true); }
       }} /></span>}
-    popupVisible={open} onVisibleChange={visible => setOpen(!!visible)} getPopupContainer={() => host.current ?? document.body}
-    onChange={next => { if (!disabled) onChange(next || ''); }} /></span>;
+    popupVisible={open} onVisibleChange={visible => setOpen(!!visible)} getPopupContainer={() => (popupMount === 'ancestor' ? portal.current : null) ?? host.current ?? document.body}
+    onChange={next => { if (!disabled) onChange(next || ''); }} />{popupMount === 'ancestor' && <div ref={portal} className="erp-date-portal" />}</span>;
 }
