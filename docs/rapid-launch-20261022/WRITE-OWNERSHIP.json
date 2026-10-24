@@ -2117,6 +2117,18 @@
           "fieldGate": "APPROVED_V16_RESPONSIBLE_EXACT_SCOPE",
           "scope": "Only add responsibleStaffId:null,responsibleName:null to historyHeader base fixture; no other fixture behavior/oldassertion weakening",
           "approval": "WRITE-CONTRACT-APPROVAL-v16-HISTORY-HEAD-RESPONSIBLE.json"
+        },
+        {
+          "path": "scripts/import-v3/production-source-provider26.mjs",
+          "group": "B06_ORIGINAL_FULL_SOURCE_PROVIDER_EXECUTABLE_COMPOSITION",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_AND_CONTRACTS_ONLY",
+          "scope": "One missing concrete existing26host provider composition of original11 genuine factories/currentCORE continuation, not second importer/framework; source-only; no fabricatedempty factories/nativebinding/hash/authority or unapprovedscheme/hall decisions"
+        },
+        {
+          "path": "scripts/import-v3/production-source-provider26.test.mjs",
+          "group": "B06_ORIGINAL_FULL_SOURCE_PROVIDER_EXECUTABLE_COMPOSITION",
+          "fieldGate": "EXISTING_APPROVED_FIELDS_AND_CONTRACTS_ONLY",
+          "scope": "One missing concrete existing26host provider composition of original11 genuine factories/currentCORE continuation, not second importer/framework; source-only; no fabricatedempty factories/nativebinding/hash/authority or unapprovedscheme/hall decisions"
         }
       ]
     },
@@ -4656,6 +4668,16 @@
         "apps/web/src/transfers/tests/fixtures.ts"
       ],
       "scope": "Exact required unknown responsible2fields only; C handles preview/harness fixtures"
+    },
+    {
+      "atUtc": "2026-10-24T12:22:09.707339+00:00",
+      "id": "B06_CONCRETE_EXISTING_HOST_PROVIDER_D3_ALLOCATION",
+      "owner": "D3",
+      "paths": [
+        "scripts/import-v3/production-source-provider26.mjs",
+        "scripts/import-v3/production-source-provider26.test.mjs"
+      ],
+      "scope": "Fill missing executable provider artifact behind original production-source-host26; original C private authority/actualexecution/server soleownership unchanged"
     }
   ],
   "approvalRecord": "FIELD-APPROVAL-C01-v1.json",

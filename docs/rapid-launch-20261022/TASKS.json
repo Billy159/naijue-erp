@@ -83,13 +83,13 @@
       "prompt": "角色派工提示词/F1-前端单据与公共界面.txt",
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
       "hostId": "local",
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "medium",
+      "model": "gpt-6-luna",
+      "reasoningEffort": "max",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "307wholetransfer BODY technical normalstate/focus wiring; approvedv16typedconsumer when D1/D3ready",
+      "currentWork": "UsermanualLunaMAX confirmed; chunk148 S01-S04 pureFragment/JSX bodymigration",
       "currentPackage": "Source307 f0bda2035cc45cc223c493059263fb41946f41a4 exact7 presentationREADY notbrowserPASS",
-      "nextReadyPackage": "LunaMAX entire transfer BODY/allstate normal routes then sales/returns and common9pages",
+      "nextReadyPackage": "Solmedium Snormalstates +QF-C314-TRANSFER-REFUSED-SAVE-BODY-01 specificprepared/refused branch andfinalv16typedwrite when ready",
       "currentDependencies": "QF2solecurrent306browser; oldc220UIDate notcurrentbug; currentminimalconsumerproof pending",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
@@ -243,9 +243,9 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "APPROVED v16 actual sourceSQL/store/issuer/LIVE responsible implementation; creator immutable",
+      "currentWork": "315exact26frozen; existingQAcore1034834 v16actualverification runner preparation noPG",
       "currentPackage": "Current147realACL minimumCORElockedreads/write/emptyguard/purpose contractmatrix, noDBmutations",
-      "nextReadyPackage": "Concreteapprovedscope and exactgap proposal;do notinferfromQA144 or bypasscurrentruntime",
+      "nextReadyPackage": "QBsource315 findings or CactualSQL/ACL/normalserviceQA",
       "currentDependencies": "Source no longer waits approval; C fresh158 backup inprogress before any actualDB operation",
       "fastToolVerified": false,
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
@@ -284,10 +284,10 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "APPROVEDv16 history responsible contract/service/effectiveprojection source implementation",
+      "currentWork": "OriginalB06 concrete11genuineprovider sourcecomposition2registeredleaves;308QB237adopted",
       "currentPackage": "279+280 reader/host limitedsource218 adopted;283 HTTPpoststatF01 fixexact2 frozen",
       "nextReadyPackage": "OriginalQB onlyF01 successor; same-request representativePG/HTTP evidence before furtherperfchanges",
-      "currentDependencies": "D1same current-base source/typedseam; no newconfirmation forapprovedscope",
+      "currentDependencies": "Existingacceptedsourcegrants/retainedartifacts,currentCOREreceipt/carry22; unapprovedscheme6/historyhall onlyrelatedfactorywait",
       "fastToolVerified": false,
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
     },
@@ -401,7 +401,7 @@
       "title": "接手、当前源码保全、GitHub首个检查点",
       "owner": "C",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "VERIFIED",
       "startDependencies": [],
       "completionDependencies": [],
@@ -426,14 +426,15 @@
         "activation": "C explicit checkpoint message",
         "fieldGate": "C01-v1 approved; unlisted new schema still requires explicit human approval."
       },
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "C01",
       "title": "字段确认与接口冻结",
       "owner": "C",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "B00"
@@ -467,14 +468,15 @@
         "FIELD-APPROVAL-SUPPLEMENT-v2-B.json",
         "FIELD-APPROVAL-SUPPLEMENT-v3-A.json"
       ],
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "C02",
       "title": "生产运行与发布准备（和开发并行）",
       "owner": "C",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -514,14 +516,15 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "Adopt QB231 C144 scopedactual, finalize original126/131/128 fixed296 realR1 pipeline, newexactformalbuild/stage. F1/QF threeUI findings parallel; no fullbusiness/PUBLISH/publicpass from syntheticCORE."
+      "next": "Adopt QB231 C144 scopedactual, finalize original126/131/128 fixed296 realR1 pipeline, newexactformalbuild/stage. F1/QF threeUI findings parallel; no fullbusiness/PUBLISH/publicpass from syntheticCORE.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "B00",
       "title": "数据和API差异输入",
       "owner": "D1",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "CODE_DONE",
       "startDependencies": [
         "C00"
@@ -545,14 +548,15 @@
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "B01",
       "title": "真实生产宿主与端到端装配",
       "owner": "D1",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -576,14 +580,15 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "OriginalD1 supplies actual existing audit backend provider seam if missing; realR1 runtime private229 alive, business not ready; no new API or reader-purpose write ACL."
+      "next": "OriginalD1 supplies actual existing audit backend provider seam if missing; realR1 runtime private229 alive, business not ready; no new API or reader-purpose write ACL.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "B02",
       "title": "单据事务、唯一编号与保存审核闭环",
       "owner": "D1",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -607,14 +612,15 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "Adopt QB199 actualC111 normal V11 narrowPASS and guide; no repeated QA groups; true valid foreign-group branch not claimed tested."
+      "next": "Adopt QB199 actualC111 normal V11 narrowPASS and guide; no repeated QA groups; true valid foreign-group branch not claimed tested.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "B03",
       "title": "库存资格与查询热路径",
       "owner": "D3",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -638,14 +644,15 @@
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "B04",
       "title": "商品与资料能力",
       "owner": "D2",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -669,14 +676,15 @@
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "B05",
       "title": "厅仓、人员账号、往来单位、资金配置",
       "owner": "D2",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -700,14 +708,15 @@
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "B06",
       "title": "批次真实导入、发布与历史读取（R1前置）",
       "owner": "D3",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -748,12 +757,13 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "Generic239 independentlyQB200 sourcePASS. CORE115/49 full proposal ready for C exact original-contract human confirmation, not activated. FullMAIN remains null, actual initialization not executed."
+      "next": "Generic239 independentlyQB200 sourcePASS. CORE115/49 full proposal ready for C exact original-contract human confirmation, not activated. FullMAIN remains null, actual initialization not executed.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "B07",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -790,14 +800,15 @@
         "contract": "复用受控修订与有效投影；原来源头行不覆盖；版本原因真实actor前后值原key；库存只差额、金额单改不动库存、调拨守恒、历史基线不重复过账；头日期/调出调入仓/展示创建者按未审核规则可编辑，展示创建者与审计actor分开。",
         "gate": "新表列约束写合同准确差异一次汇C确认，仅相关分支等；不再问功能是否需要。"
       },
-      "currentOwner": "D3"
+      "currentOwner": "D3",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "F01",
       "title": "公共壳、认证、跨模块新增",
       "owner": "F1",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -821,14 +832,15 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "OriginalF1 consumes Csource241 audit typedslot in original route/controller/mount; aggregate actual unresolved command states, no canLeave substitute or placeholders."
+      "next": "OriginalF1 consumes Csource241 audit typedslot in original route/controller/mount; aggregate actual unresolved command states, no canLeave substitute or placeholders.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "F02",
       "title": "销货/退换与调拨",
       "owner": "F1",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -853,14 +865,15 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "237 selected row retention and240 visible summary in actual240, QF source delta and next serial actual. T02 existing proof metadata adoption, do not re-migrate already implemented page."
+      "next": "237 selected row retention and240 visible summary in actual240, QF source delta and next serial actual. T02 existing proof metadata adoption, do not re-migrate already implemented page.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "F03",
       "title": "库存",
       "owner": "F2",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -885,14 +898,15 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "OriginalQF2 actual240 glyph/font only; dateanchor still needs realDemo evidence, no oldToday/carrier suite."
+      "next": "OriginalQF2 actual240 glyph/font only; dateanchor still needs realDemo evidence, no oldToday/carrier suite.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "F04",
       "title": "商品、分类、字典、条码与图片",
       "owner": "F2",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -920,14 +934,15 @@
       "subrangeOwners": {
         "F2": "Product list/new/edit/six tabs and product barcode/image consumers",
         "F4": "P14 categories/P15colors/P16sizegroups/P17fits/P18seasons/P19independent barcode schemes by exact ownership"
-      }
+      },
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "F05",
       "title": "基础设置",
       "owner": "F3",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -951,14 +966,15 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "Store audit connected243 adopted, staff/payment/party existing consumers source ready; C272optionalpublicslot and F1 sharedroute/mount audit glue next; actual266 newcrossmodule then complete staff/payment/party modules"
+      "next": "Store audit connected243 adopted, staff/payment/party existing consumers source ready; C272optionalpublicslot and F1 sharedroute/mount audit glue next; actual266 newcrossmodule then complete staff/payment/party modules",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "F06",
       "title": "历史操作、输出及35/65差异收口",
       "owner": "F1",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -983,14 +999,15 @@
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "C03",
       "title": "同版本集成与最小验收",
       "owner": "C",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -1030,14 +1047,15 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "Adopt QB231 C144 scopedactual, finalize original126/131/128 fixed296 realR1 pipeline, newexactformalbuild/stage. F1/QF threeUI findings parallel; no fullbusiness/PUBLISH/publicpass from syntheticCORE."
+      "next": "Adopt QB231 C144 scopedactual, finalize original126/131/128 fixed296 realR1 pipeline, newexactformalbuild/stage. F1/QF threeUI findings parallel; no fullbusiness/PUBLISH/publicpass from syntheticCORE.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "C04",
       "title": "分批发布",
       "owner": "C",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "NOT_STARTED",
       "startDependencies": [
         "C02",
@@ -1063,14 +1081,15 @@
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "C05",
       "title": "最终接续与收口",
       "owner": "C",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "NOT_STARTED",
       "startDependencies": [
         "C04"
@@ -1094,14 +1113,15 @@
         "activation": "C explicit checkpoint message",
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
-      "fastRequested": false
+      "fastRequested": false,
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "QF01",
       "title": "前端独立验收任务",
       "owner": "QF",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -1145,14 +1165,15 @@
         "QF2": "商品列表与六页签、分类/字典/条码/图片、库存、基础设置、客户供应商、员工账号、收款配置及相关弹层"
       },
       "matrixOwner": "QF",
-      "next": "QF source240 delta+T02 existing provenance correction offline; QF2 sole browser240 affected data scope; then clean transferQF selected workline actual. SoleQF104 matrix/no repeated old48."
+      "next": "QF source240 delta+T02 existing provenance correction offline; QF2 sole browser240 affected data scope; then clean transferQF selected workline actual. SoleQF104 matrix/no repeated old48.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     },
     {
       "id": "QB01",
       "title": "后端独立验收任务",
       "owner": "QB",
       "model": "gpt-6.1-sol",
-      "reasoningEffort": "xhigh",
+      "reasoningEffort": "medium",
       "status": "RUNNING",
       "startDependencies": [
         "C00"
@@ -1191,7 +1212,8 @@
         "fieldGate": "New/changed fields, constraints and dependent write contracts remain unapproved."
       },
       "fastRequested": false,
-      "next": "Adopt originalQB199 realC111 limitedPASS and200 generic239 sourcePASS; no more duplicate QA. HREV and real CORE execution only after actual authorized inputs."
+      "next": "Adopt originalQB199 realC111 limitedPASS and200 generic239 sourcePASS; no more duplicate QA. HREV and real CORE execution only after actual authorized inputs.",
+      "modelPolicy": "Technicaltaskdefault; pureUI boundedphase dispatchedgpt-6-luna/max per latesthuman. Thisrecorddoesnotprove actualturnswitch."
     }
   ],
   "releaseBatches": [
@@ -1734,19 +1756,19 @@
       "qualification": "303F3exact2/304F2exact1/305F1exact2 limitedhandoffs, no wholepage pass. SharedF1/unrelated test WIP preserved. App/browser299 separate."
     },
     "currentPreview": {
-      "candidateId": "ui-preview-f430f25-01",
-      "source": "f430f2594d43759b05cfa16a03cfd438509d8abd",
-      "build": "ui-preview-f430f25-01-build01",
-      "url": "http://127.0.0.1:57890/synthetic-unified.html",
-      "htmlBytes": 3597596,
-      "htmlSha256": "31c1e5ea5c93af125bad70a95ab9f5066b9fb71aa3876f8b01982216ec55bdc2",
+      "candidateId": "ui-preview-015d8de-01",
+      "source": "015d8de5887fa1d0a7f9dcaf5a79ad5e79195971",
+      "build": "ui-preview-015d8de-01-build01",
+      "url": "http://127.0.0.1:57891/synthetic-unified.html",
+      "htmlBytes": 3599252,
+      "htmlSha256": "213b95fe6dcfb6aac733a627ada2cf20a2d22829e196eebb49e49a5bc8eb364e",
       "actualInputs": 415,
       "actualModules": 1370,
-      "pid": 55963,
-      "execSession": 31332,
       "syntheticOnly": true,
+      "pid": 66599,
+      "execSession": 45430,
       "wholePagePass": false,
-      "actualBrowser": "QF2_CURRENT306_IN_PROGRESS"
+      "actualBrowser": "QFfirstTmodulepartialactual_newREFUSED_SAVE_BODY01"
     },
     "currentDatabase": {
       "name": "erp_rewrite_20261022_r1",
@@ -4472,24 +4494,24 @@
   "historicalFailuresPreserved": true,
   "currentContinuation": {
     "atUtc": "2026-10-24T11:29:21.184294+00:00",
-    "sourceRound": 314,
-    "sourceCheckpoint": "c0bd3e56c7b1582b7ecd7b7ed14c7a0593fb2103",
+    "sourceRound": 315,
+    "sourceCheckpoint": "7d2053a0bd97c47d1e6814f7d2a605321802b25d",
     "allModels": "PURE_UI:gpt-6-luna/max; TECH:gpt-6.1-sol/medium; preserve oldinflight",
     "fast": "Requested off; actual switch not exposed by tool",
     "currentPreview": {
-      "candidateId": "ui-preview-f430f25-01",
-      "source": "f430f2594d43759b05cfa16a03cfd438509d8abd",
-      "build": "ui-preview-f430f25-01-build01",
-      "url": "http://127.0.0.1:57890/synthetic-unified.html",
-      "htmlBytes": 3597596,
-      "htmlSha256": "31c1e5ea5c93af125bad70a95ab9f5066b9fb71aa3876f8b01982216ec55bdc2",
+      "candidateId": "ui-preview-015d8de-01",
+      "source": "015d8de5887fa1d0a7f9dcaf5a79ad5e79195971",
+      "build": "ui-preview-015d8de-01-build01",
+      "url": "http://127.0.0.1:57891/synthetic-unified.html",
+      "htmlBytes": 3599252,
+      "htmlSha256": "213b95fe6dcfb6aac733a627ada2cf20a2d22829e196eebb49e49a5bc8eb364e",
       "actualInputs": 415,
       "actualModules": 1370,
-      "pid": 55963,
-      "execSession": 31332,
       "syntheticOnly": true,
+      "pid": 66599,
+      "execSession": 45430,
       "wholePagePass": false,
-      "actualBrowser": "QF2_CURRENT306_IN_PROGRESS"
+      "actualBrowser": "QFfirstTmodulepartialactual_newREFUSED_SAVE_BODY01"
     },
     "nextPreview": {
       "status": "FIXED306_SERVED_QF2_IN_PROGRESS",
@@ -5798,7 +5820,7 @@
       "I07carrier": "F2 offlineprovedmissingborder, finalheader/fontwinner requiresjustgrantedread-onlystylewindow; no sourcefixyet",
       "wholeSalesNext": "OriginalF1 must first return existing latestwholepage directcopy provenance to avoid duplicate migration; if realremaining oldrewrite region proven, continue originalwholecopy task, not endlesslocalpatches"
     },
-    "browserOwner": "NONE_QF2_CLEAN_STOP_306",
+    "browserOwner": "NONE_QF_C314_CLEAN_STOP",
     "operationalReceipts": {
       "c03-c101-c102-result-bytepair-20261024-104": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-c101-c102-result-bytepair-20261024-104/release-submission/release-receipts/c03-c101-c102-result-bytepair-20261024-104/engine-result.json",
@@ -7195,12 +7217,37 @@
       "path": "v113-qf-adopt-qf2-c306-named-actual/RESULT.json",
       "wholePagesAccepted": 0,
       "wholeOverlaysAccepted": 0
+    },
+    "newFindingC314": {
+      "id": "QF-C314-TRANSFER-REFUSED-SAVE-BODY-01",
+      "owner": "F1",
+      "status": "FOUND_NEXT_SOL_TECHNICAL_FIX_AFTER_CURRENT_S_LUNA_PACKAGE",
+      "candidateSource": "015d8de5887fa1d0a7f9dcaf5a79ad5e79195971",
+      "symptom": "NormalnewT02 prepare then syntheticcommandreject retainsnote/qty butswitchesfullmatrix toline-table withmissingwarehouse names/preparednumber. Not save/PGsuccess.",
+      "evidence": "QF/c314-transfer-module-actual-01/browser/023_024",
+      "scope": "prepared/refusednewsave branch; no guessingrootcause orreplayingwrites"
+    },
+    "F1LunaManualUnblock": {
+      "source": "Directuser call_32cbbc9f26524c369ad8edfb46639b3f",
+      "answer": "F1 已切 Luna-MAX",
+      "status": "USER_MANUAL_SWITCH_CONFIRMED_S_CHUNK148_RESUMED",
+      "dispatchModel": "gpt-6-luna/max",
+      "fast": "UNVERIFIED"
+    },
+    "qa159": {
+      "jobId": "c03-v11-valid-foreign-size-negative-20261024-159",
+      "status": "SUBMITTED_ONE_BOUNDED_ACTUAL",
+      "target": "erp_qa_rapid26_native_20261023_01/1032586",
+      "scope": "Previouslyunmeasuredexistingvalidforeigngroupnegative; oldC111/QB199allothercasesadopted",
+      "source": "OriginalC111frozen149runtime/source202, noD1v16WIP",
+      "freshBackup": "Actual158",
+      "noProductionWrites": true
     }
   },
   "latestReadySource": {
-    "round": 314,
-    "commit": "c0bd3e56c7b1582b7ecd7b7ed14c7a0593fb2103",
-    "qualification": "310D2staff filterQB238limitedPASS;311Cfixtureclosed;312F1transferBODYstate/read/focus source;313F3staff all/openpartialclient;314F1salesreaddecoder. Actualpreview remains306/no newUIwrite acceptance"
+    "round": 315,
+    "commit": "7d2053a0bd97c47d1e6814f7d2a605321802b25d",
+    "qualification": "D1exact26 v16source,11newaffected+strict+PGgrammaronly; QBnewsourceandCisolatedactualpending. Actualserved314separate"
   },
   "pendingUserDecision": [
     {
