@@ -4716,7 +4716,7 @@
   "currentContinuation": {
     "atUtc": "2026-10-24T22:48:39.815747+00:00",
     "sourceRound": 368,
-    "sourceCheckpoint": "SOURCE373 f16b04311d5b05087138dbef7929e0a1c8dd27d7 remoteverified; SOURCE374 actual copied372 Linux installation PASS and approvedrealR1 schema execution in progress; served364 unchanged",
+    "sourceCheckpoint": "SOURCE374 9a52c8b4d1268c256d9677eecd47094b9704f95c remoteverified; SOURCE375 R1v16/v15 actualschema limitedPASS/C203actualminimumACLobservation inprogress; currentHTTPserved364 unchanged/copied372Linuxinstalled notappstarted",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4762,7 +4762,7 @@
     "r1": "C149 actual locked Linux install/native PASS + C137 actual private299 app/proxy/3resources PASS. CORE157 committed/QB235accepted. Fullproducts/inventory/history unimported, formalURL unchanged.",
     "qa": "QB244 actualphysicalACL adopted;245 finiteCURRENT_FORM_READ metadata adopted;246 actual167 originalSTAFF all/open49 paging adopted. Product/LIVE still require original validnonempty published cutoff; no fake state.",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
-    "waiting": "Original historical blank hall v5 pending only; v17 explicitly approved, D2/F2 implementation in progress",
+    "waiting": "Human historicalblankhallv5 onlyrelatedfullhistory/publication branch; v11/v15/v16/v17 alreadyapproved. Actual source/schema/ACL/normalHTTP readiness separate.",
     "github": "REMOTE_EXACT_VERIFIED_ee1674f887c7532a3ade94c54dfd7bc103049628",
     "goalComplete": false,
     "demoCoverage": {
@@ -4792,7 +4792,7 @@
     "audit": "OriginalQFv085 new243 sourcePASS, actual243 declared synthetic audit0 provider+true retained owner injected via originalreader. Real backendextensions/currentroles/auditdata notproved; currentChrome240 still NOT_CONNECTED, not retroactively closed.",
     "demoSession": "Direct human Demo已登录 to call_a446cacdf23c4f47b35454657b6eab9f; new ownedF0B417F6BC85EE5917A5286AAD0FB04A, ordinary visible confirmation by QF next. Never accountstorage/credentials.",
     "uiMigration": "230fullnative+232ancestor+235realFrameblock fix;234236nativeclose;237selected retention+240visible summary;238store tab; all included240. Original233 bottom/tab actual failures retained until affected240 checks. T02 existing migration proof metadata correction under originalQF; no duplicate migration.",
-    "backend": "CORE readiness11 source exact350 (D1) + imported-history SQL primitives2 (D3); original QB finite review next. Native v17 actual184 returned no typed output;185 recovered original0351 roots/SKU/audits/receipts all0, precise loader error named Pool export from CJS internal path.186 fixed original installed PG ESM package entry inert validation pending, no business replay.",
+    "backend": "RealR1 actual v16-from-v15/130/ac9d9ff1a7706def15534eb4f7bea8a97021e11dfe04b25f7e6338d7e345ea01 schemaonly; genuine sourceprobeTRUE/trackedCOREcounts and169bits/9services unchanged. Old5207profile invalid afterDDL; newtargetpurpose notsigned. Catalogue344closed273+275; supplier222sourceonly/productSKUstockhistory/fullpublish pending.",
     "productionBuild": "Formal299sourcef43e943/r1-f43e943-20261024-01 archive1339201/1f5a5b0537d1233f1e61bd7418d13db105c9e679c7a9be62f5d290ef06fa7e25, manifest43b445b07819f154a0659f3cc885b5b5cf5eb59a38679c41c2c1c193737c49ce. Actual149Linuxci/nativePASS0/25.931508s,111records/payload3154d2c5685488740606e98b86814605254780c92925b5449d8fcf802fcd3876,engine9717/78218751fc6689f5064e6e92610a270e2ae19ef05a71e831cbad179b52297cc9.0DB/appstart/publicswitch.",
     "actualQFBrowser": "CLOSED: current completeChrome native2940x1690 and humanQF current image show sidebar/content reach bottom. Top automationinfobar consumes~56CSSpx;668legitimatecurrentwindow,old724notinvariant. Prior668=>recurrence derivative judgement withdrawn. Allrawmeasurements/failedprobes retained. QFNO_GUI/Cnativeclickattemptblockedbeforeinputduehuman appchange;0successfulclick/navigation. No repeateddiagnosis/windowrequest.",
     "frontendAcceptance": {
@@ -8238,7 +8238,7 @@
       "browserLease": "RETURNED_CLEAN_TWO_ORIGINAL_INVENTORY_TABS_NATURAL_VIEWPORT_FIVE_DRAFTS_UNTOUCHED",
       "notClaimed": "wholeI01/37pagePASS/realHTTP/PG/formalperformance/printinghardware"
     },
-    "nextAction": "CollectoriginalC200actualterminal; ifschemaCOMMITprefix incomplete recovermetadata readonly notDDLreplay. OriginalQBnewactualprofile next, preciseACL→supplier222/product2956/SKU14999 andnewcopied372privateapp/HTTPS remainincomplete.",
+    "nextAction": "Collect203 actualmissingbits; originalQB finitegrantdelta review, necessarygrants/newprofile thennative supplier222→product2956→SKU14999/privatecopied372appHTTPS. D3 product/SKUsourcecaptureentry inparallel. No schema/344replay.",
     "latestHumanV17Reply": "Repeated/latest explicit confirmation adopted without duplicate implementation; D2 actual189/QB260 limited PG service proof already adopted; normalHTTP/front-end/nonowner/formalperformance pending",
     "copied372LinuxInstall": {
       "previous": "c03-copied372-linux-install-only-20261025-198 failed SAME_PROVEN_OFFLINE_LOCK_REQUIRED before any docker installer run, payload/cachecopy preserved; generic ATTEMPTED_UNKNOWN refers call entry not npm sideeffect",
@@ -8267,12 +8267,43 @@
     },
     "realR1ApprovedSchemaCurrent": {
       "job": "c03-real-r1-approved-v16-v15-upgrade-20261025-200",
-      "status": "DISPATCHED_ONCE_WAIT_ACTUAL_TERMINAL",
+      "status": "PASS_ACTUAL_COMMITTED_V16_READBACK_AND_APPROVED_V15_ONLY_NOT_BUSINESS",
       "target": "erp_rewrite_20261022_r1/OID1027659",
       "before": "v14/123/5207 fullsourceprobe andpost196 CORE/native state required",
       "scope": "Reuseexactapproved80332v16 then47325v15originalfile, two nullable responsible cols/2FK, creator untouched;no newcontract, no grant/businessDML/CORE/native replay/production service changes",
-      "protection": "Original158physicalpreservation freshness+9originalcontainers+privatecurrentpost196fullDBdump/listreadable beforeDDL; dumpprivate/hashnotexported, listnotactualrestore",
-      "next": "CollectexactactualCOMMITprefix/newgenuineruntime metadata, originalQBnewtargetreview; neverreplay committedprefix/fakecanonical"
+      "protection": "PrivatecurrentfullDBdump beforev16 1082472bytes/beforev15 1133179bytes/rootuid0/mode0600/customTOCreadable; no privatecontent/digest export/no restore. Original158physicalproof within12h retained.",
+      "next": "203actualminimum273columns/16rowlocks/7EXEC readonly observation; originalQB exactmissingdelta review thennecessarygrant/freshprofile; no guessedcanonical/QAprofilereuse",
+      "actual": {
+        "v16Job": "c03-real-r1-approved-v16-v15-upgrade-20261025-200",
+        "v16Outcome": "COMMIT_RETURNED_SUCCESS",
+        "v16Canonical": "7946327f2e6d79c2ca1df9a0d708c81a5a72f43486684f25479d69f8f9b10e19",
+        "v15Continuation": "c03-real-r1-v16-verified-v15-continuation-20261025-202",
+        "v16Replayed": false,
+        "v15Outcome": "COMMIT_RETURNED_SUCCESS",
+        "newCanonical": "ac9d9ff1a7706def15534eb4f7bea8a97021e11dfe04b25f7e6338d7e345ea01",
+        "routines": 130,
+        "sourceRoutinesMatch": true,
+        "columns": "2nullableuuid/defaultNULL responsible_staff_id,2validatedstaffFK; creator/oldrows untouched",
+        "original169BitsRetained": true,
+        "trackedCountsCoreReceiptAndNineServicesPreserved": true,
+        "newGrantOrRole": false,
+        "runtimeReviewSigned": false
+      },
+      "priorFailure": "C200 v16committed, Cinline readonly query omitted semicolon before helperROLLBACK. C201readonly reproduced syntaxerror atROLLBACK/noDDL.202 correctedcallerterminators/read2colsFK thenoriginalunattemptedv15.200/201failedreceipts preserved/no schema replay."
+    },
+    "realR1Next3AclCurrent": {
+      "job": "c03-real-r1-next3-minimum-acl-observation-20261025-203",
+      "status": "DISPATCHED_ONCE_READONLY_NO_GRANT",
+      "matrix": "D1/R1-NEXT3-COMPONENT-MINIMUM-ACL-v1.json",
+      "requiredObservationColumns": 273,
+      "rowLockTables": 16,
+      "executeFunctions": 7,
+      "rule": "Observeall normalv16delta but do notgrantwritebits merelyforreadonlyhost; ANYexistingUPDATEfirst, no blanket/alltable/superuser"
+    },
+    "d3NextCapture": {
+      "status": "ACTUAL_SOL_MEDIUM_DISPATCHED_EXISTING_IDLE_D3",
+      "scope": "OriginalPRODUCT2956/SKU14999 captureentry+accurateinput/source-only, no supplier222recapture/DB/full11preflight/v5wait",
+      "owner": "D3 original"
     }
   },
   "latestReadySource": {
@@ -8379,7 +8410,7 @@
     "newTables": 0,
     "newColumns": 2,
     "foreignKeys": 2,
-    "implementation": "NOT_YET_IMPLEMENTED",
+    "implementation": "ACTUAL_R1_SCHEMA_V16_COMMITTED_READBACK_PASS; REAL_HISTORY_BUSINESS_AND_NORMAL_HTTP_NOT_YET_PASS",
     "creatorImmutable": true,
     "responsibleUnknownAllowed": true
   },
