@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { parseCatalogueMaintenanceCommand } from '../../../../packages/application/src/catalogue-maintenance-validation.ts';
 import { snapshotQueryParameters } from '../loading/query-parameters.ts';
 import type { ReadScope } from '../loading/read-scope.ts';
-import { CatalogueMaintenanceError, type CatalogueMaintenanceKind, type CatalogueMaintenanceClient, type CatalogueMaintenanceCommand, type CatalogueMaintenanceResult, type CatalogueMaintenanceReceipt } from './catalogue-maintenance-http-client.ts';
+import { CatalogueMaintenanceError, validateCatalogueResult, type CatalogueMaintenanceKind, type CatalogueMaintenanceClient, type CatalogueMaintenanceCommand, type CatalogueMaintenanceResult, type CatalogueMaintenanceReceipt } from './catalogue-maintenance-http-client.ts';
 import type { CatalogueMaintenanceCapability } from './colors/contracts.ts';
 type WithoutKey<T> = T extends unknown ? Omit<T,'requestKey'> : never;
 export type CatalogueEditorDraft=WithoutKey<CatalogueMaintenanceCommand>;
@@ -41,9 +41,9 @@ export class CatalogueEditorController {
   }
   async retryOriginal(): Promise<void> {
     if (this.#state.phase !== 'uncertain' || !this.#state.command || !this.#options.scope.active) throw new Error('当前没有可按原请求恢复的目录资料操作。');
-    await this.#execute(this.#state.command);
+    await this.#execute(this.#state.command, this.#state.command.action === 'REORDER' || this.#state.command.action === 'UNDO_REORDER');
   }
-  async #execute(command: CatalogueMaintenanceCommand): Promise<void> {
+  async #execute(command: CatalogueMaintenanceCommand, retainUnknownOrder = false): Promise<void> {
     const sequence = ++this.#sequence;
     this.#publish({ ...initial(), phase: 'submitting', command });
     try {
@@ -51,7 +51,7 @@ export class CatalogueEditorController {
       if (!this.#active(sequence)) return;
       this.#checkResult(result, command);
       this.#publish({ ...this.#state, phase: 'committed', result, error: null });
-    } catch (error) { if (this.#active(sequence)) this.#fail(error, false); }
+    } catch (error) { if (this.#active(sequence)) this.#fail(error, false, retainUnknownOrder); }
   }
   async recover(): Promise<void> {
     if (this.#state.phase !== 'uncertain' || !this.#state.command || !this.#options.scope.active) throw new Error('当前没有待查回的目录资料操作。');
@@ -66,11 +66,12 @@ export class CatalogueEditorController {
     } catch (error) { if (this.#active(sequence)) this.#fail(error, true); }
   }
   #checkResult(result: CatalogueMaintenanceResult, command: CatalogueMaintenanceCommand) {
-    if (result.kind !== this.#options.kind || !Number.isSafeInteger(result.version) || result.version < 1 || result.version > 2147483647 || result.version !== (command.action === 'CREATE' ? 1 : command.expectedVersion + 1) || command.action !== 'CREATE' && result.targetId !== command.id) throw new CatalogueMaintenanceError('malformed-response', 'INVALID_CATALOGUE_RESULT', 'uncertain');
+    try { validateCatalogueResult(result, command, this.#options.kind); }
+    catch { throw new CatalogueMaintenanceError('malformed-response', 'INVALID_CATALOGUE_RESULT', 'uncertain'); }
   }
-  #fail(raw: unknown, read: boolean) {
+  #fail(raw: unknown, read: boolean, retainUnknownOrder = false) {
     const error = raw instanceof CatalogueMaintenanceError ? raw : new CatalogueMaintenanceError('network', 'CATALOGUE_OUTCOME_UNKNOWN', read ? 'read' : 'uncertain');
-    this.#publish({ ...this.#state, phase: read || error.outcome === 'uncertain' ? 'uncertain' : 'rejected', error,
+    this.#publish({ ...this.#state, phase: read || retainUnknownOrder || error.outcome === 'uncertain' ? 'uncertain' : 'rejected', error,
       recovery: read ? error.kind === 'not-found' && error.code === 'RECEIPT_NOT_FOUND' ? 'absent' : 'failed' : this.#state.recovery });
     if (error.kind === 'unauthenticated' || error.kind === 'forbidden') {
       this.dispose(); this.#options.onAccessFailure(error);
@@ -79,6 +80,12 @@ export class CatalogueEditorController {
   /** Caller must reload the authoritative aggregate before editing a committed version. */
   resetAfterReload(targetId: string, version: number) {
     if (this.#state.phase !== 'committed' || !this.#state.result || targetId !== this.#state.result.targetId || !Number.isSafeInteger(version) || version > 2147483647 || version < this.#state.result.version) throw new Error('请先读取已保存的目录资料版本。');
+    this.#publish(initial());
+  }
+  /** Order owners call only after a successful authoritative complete-tree read.
+   * Later edits may have removed the original anchor; never restore old values. */
+  resetAfterOrderReload() {
+    if (this.#state.phase !== 'committed' || !this.#state.result || !this.#state.command || !['REORDER','UNDO_REORDER'].includes(this.#state.command.action)) throw new Error('请先确认排序提交并读取完整分类目录。');
     this.#publish(initial());
   }
   dispose() {

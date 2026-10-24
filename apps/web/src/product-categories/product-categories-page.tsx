@@ -10,8 +10,8 @@ import { StandardOverlay } from '../components/standard-overlay.tsx';
 import { useCatalogueEditor, type CatalogueEditorController } from '../product-settings/catalogue-maintenance-state.ts';
 import { CatalogueWriteFeedback } from '../product-settings/colors/entry-view.tsx';
 import type { CatalogueMaintenanceCapability, CatalogueSettingsCategory } from '../product-settings/colors/contracts.ts';
-import type { CategoryWriteValues, CatalogueMaintenanceResult, CatalogueMaintenanceAction } from '../product-settings/catalogue-maintenance-http-client.ts';
-import { categoryPath, categoryTreeIndex } from './tree-model.ts';
+import type { CategoryWriteValues, CatalogueMaintenanceResult, CatalogueMaintenanceAction, CategoryOrderResult } from '../product-settings/catalogue-maintenance-http-client.ts';
+import { categoryPath, categoryTreeIndex, categoryReorderDraft } from './tree-model.ts';
 import '../product-settings/colors/source-catalogue-settings.css';
 import './source-product-categories.css';
 
@@ -34,14 +34,29 @@ function CategoryContent({ owner }: { readonly owner: CatalogueReadOwner<Catalog
 
 type CategoryOwner=CatalogueReadOwner<CatalogueSettingsTreeQuery,CatalogueSettingsTree>;
 interface MaintenanceProps extends CatalogueSettingsPageProps {readonly owner:CategoryOwner;readonly capability:CatalogueMaintenanceCapability;readonly onCanLeaveChange:(guard:(()=>boolean)|null)=>void}
-function CategoryMaintenanceContent(props:MaintenanceProps){
+function CategoryMaintenanceContent(props:MaintenanceProps) {
+ const controller=useCatalogueEditor(props.owner.scope,props.capability,props.onAccessFailure);
+ return controller?<CategoryMaintenanceReady {...props} orderController={controller}/>:null;
+}
+function sameOrder(tree:CatalogueSettingsTree, saved:CategoryOrderResult):boolean {
+ const siblings=categoryTreeIndex(tree.items).children.get(saved.order.parentId)??[];
+ return siblings.length===saved.order.members.length&&siblings.every((item,index)=>{const member=saved.order.members[index];return member?.id===item.id&&member.version===item.version&&member.displayOrder===item.displayOrder;});
+}
+function CategoryMaintenanceReady(props:MaintenanceProps&{readonly orderController:CatalogueEditorController}) {
  const {scope,query}=props.owner,snapshot=useSyncExternalStore(query.subscribe,query.getSnapshot,query.getSnapshot),result=snapshot.success?.data;
+ const orderState=useSyncExternalStore(props.orderController.subscribe,props.orderController.getSnapshot,props.orderController.getSnapshot);
  const index=useMemo(()=>categoryTreeIndex(result?.items??[]),[result]);
  const [selection,setSelection]=useState<string|null>(null),[creating,setCreating]=useState<CategoryWriteValues|null>(null),[revision,setRevision]=useState(0),[notice,setNotice]=useState(''),[deferred,setDeferred]=useState<{run:()=>void}|null>(null);
- const guard=useRef<(()=>boolean)|null>(null),pending=useRef<()=>boolean>(()=>false);
+ const [lastOrder,setLastOrder]=useState<CategoryOrderResult|null>(null),[readingOrder,setReadingOrder]=useState(false);
+ const guard=useRef<(()=>boolean)|null>(null),pending=useRef<()=>boolean>(()=>false),orderBlocked=useRef(false),finishingOrder=useRef(false),submittedRead=useRef(snapshot.success);
  const selected=selection&&index.byId.has(selection)?index.byId.get(selection)!:index.children.get(null)?.[0]??null,fresh=snapshot.phase==='success';
- const receiveGuard=useCallback((next:(()=>boolean)|null,locked:()=>boolean)=>{guard.current=next;pending.current=locked;props.onCanLeaveChange(next);},[props.onCanLeaveChange]);
- const request=(run:()=>void)=>{if(!scope.active)return;if(pending.current()){setNotice('请先查回当前保存结果。');return;}if(guard.current&&!guard.current()){setDeferred({run});return;}run();};
+ const orderLocked=['submitting','checking','uncertain','committed'].includes(orderState.phase);orderBlocked.current=orderLocked;
+ const receiveGuard=useCallback((next:(()=>boolean)|null,locked:()=>boolean)=>{guard.current=next;pending.current=locked;},[]);
+ useEffect(()=>{props.onCanLeaveChange(()=>!orderBlocked.current&&(guard.current?.()??true));return()=>props.onCanLeaveChange(null);},[props.onCanLeaveChange]);
+ const ready=props.capability.kind==='CATEGORY'&&props.capability.categoryOrderReady===true&&props.capability.allowedActions.includes('REORDER')&&props.capability.allowedActions.includes('UNDO_REORDER')&&orderState.error?.code!=='CATALOGUE_ORDER_NOT_READY';
+ const conflictNeedsRead=orderState.phase==='rejected'&&['CATEGORY_ORDER_CONFLICT','CATEGORY_UNDO_CONFLICT','VERSION_CONFLICT'].includes(orderState.error?.code??'')&&snapshot.success===submittedRead.current;
+ const canOrder=ready&&fresh&&!orderLocked&&!conflictNeedsRead;
+ const request=(run:()=>void)=>{if(!scope.active)return;if(pending.current()||orderLocked){setNotice('请先确认当前保存或排序结果。');return;}if(guard.current&&!guard.current()){setDeferred({run});return;}run();};
  const refresh=()=>request(()=>{setCreating(null);setRevision(v=>v+1);setNotice('');void query.run(initial);});
  const reset=()=>{setCreating(null);setRevision(v=>v+1);};
  const create=(parentId:string|null)=>request(()=>{if(!fresh||!result)return;const siblings=index.children.get(parentId)??[],displayOrder=siblings.length?Math.max(...siblings.map(item=>item.displayOrder))+1:0;if(displayOrder>2147483647){setNotice('该层级显示顺序已达上限，暂时无法追加分类。');return;}setCreating({name:'',parentId,displayOrder});setRevision(v=>v+1);setNotice('');});
@@ -49,13 +64,36 @@ function CategoryMaintenanceContent(props:MaintenanceProps){
   if(outcome.status==='success'){const found=outcome.data.items.find(item=>item.id===saved.targetId);if(action==='DELETE'?!found:found&&found.version>=saved.version){setSelection(action==='DELETE'?null:saved.targetId);setCreating(null);setRevision(v=>v+1);setNotice('已保存。');return;}}
   setNotice('保存已提交，最新目录尚未确认，请重新读取目录。');
  };
- const readState=<CatalogueReadState accessFailure={props.owner.getAccessFailure()} snapshot={snapshot} retry={refresh} cancel={()=>query.cancel()}/>;
+ const finishOrder=async()=>{
+  const saved=props.orderController.getSnapshot();
+  if(finishingOrder.current||saved.phase!=='committed'||!saved.result||!('order' in saved.result)||!saved.command||!['REORDER','UNDO_REORDER'].includes(saved.command.action)||!scope.active)return;
+  finishingOrder.current=true;setReadingOrder(true);setNotice('排序已提交，正在读取完整目录。');
+  try {
+   const outcome=await query.run(initial);if(!scope.active)return;
+   if(outcome.status!=='success'){setNotice('排序已提交，最新目录尚未确认，请重新读取目录。');return;}
+   const matches=sameOrder(outcome.data,saved.result);
+   setLastOrder(saved.command.action==='REORDER'&&matches?saved.result:null);reset();
+   props.orderController.resetAfterOrderReload();
+   setNotice(matches?(saved.command.action==='REORDER'?'同级顺序已调整，可撤销最近一次排序。':'已撤销最近一次排序。'):'排序已提交，目录随后发生变化；请按当前目录继续操作，原排序不可撤销。');
+  } finally {finishingOrder.current=false;if(scope.active)setReadingOrder(false);}
+ };
+ const reorder=(movedId:string,targetId:string,placement:'before'|'after')=>{
+  if(!canOrder)return;const draft=categoryReorderDraft(index,movedId,targetId,placement);if(!draft)return;
+  request(()=>{submittedRead.current=snapshot.success;reset();setNotice('');void props.orderController.submit(draft).then(finishOrder).catch(()=>setNotice('排序请求未发送，请读取最新目录后重试。'));});
+ };
+ const undo=()=>{
+  if(!canOrder||!lastOrder||!result||!sameOrder(result,lastOrder))return;
+  request(()=>{submittedRead.current=snapshot.success;reset();setNotice('');void props.orderController.submit({action:'UNDO_REORDER',originalOperationId:lastOrder.operationId,expectedSiblings:(index.children.get(lastOrder.order.parentId)??[]).map(item=>({id:item.id,expectedVersion:item.version}))}).then(finishOrder).catch(()=>setNotice('撤销请求未发送，请读取最新目录后重试。'));});
+ };
+ const readState=<CatalogueReadState accessFailure={props.owner.getAccessFailure()} snapshot={snapshot} retry={orderState.phase==='committed'?()=>void finishOrder():refresh} cancel={()=>query.cancel()}/>;
  if(!scope.active||snapshot.phase==='disposed')return <div className="catalogue-workbench">{readState}</div>;
  const draft=creating??(selected?{name:selected.name,parentId:selected.parentId,displayOrder:selected.displayOrder}:null);
  const path=draft?.parentId===null?'一级分类':draft&&index.byId.has(draft.parentId!)?(creating?categoryPath(index,draft.parentId!):categoryPath(index,selected!.id)).map(item=>item.name).join(' / '):'分类路径未提供';
- return <div className="catalogue-categories pc-workbench pc-categories pc-native-categories"><div className="gold-head iw-head pc-page-head"><h1>商品分类</h1><div className="actions iw-head-actions"><button type="button" className="btn ghost" disabled={!fresh||!props.capability.allowedActions.includes('CREATE')} onClick={()=>create(null)}>新增一级分类</button><button type="button" className="btn ghost" disabled={!fresh||!selected||selected.parentId!==null||!props.capability.allowedActions.includes('CREATE')} title={selected?.parentId!==null?'请选择一级分类':''} onClick={()=>{if(selected)create(selected.id);}}>新增下级分类</button></div></div>
+ return <div className="catalogue-categories pc-workbench pc-categories pc-native-categories"><div className="gold-head iw-head pc-page-head"><h1>商品分类</h1><div className="actions iw-head-actions">{lastOrder&&<button type="button" className="btn ghost" disabled={!canOrder||!result||!sameOrder(result,lastOrder)} onClick={undo}>撤销排序</button>}<button type="button" className="btn ghost" disabled={!fresh||orderLocked||!props.capability.allowedActions.includes('CREATE')} onClick={()=>create(null)}>新增一级分类</button><button type="button" className="btn ghost" disabled={!fresh||orderLocked||!selected||selected.parentId!==null||!props.capability.allowedActions.includes('CREATE')} title={selected?.parentId!==null?'请选择一级分类':''} onClick={()=>{if(selected)create(selected.id);}}>新增下级分类</button></div></div>
   {readState}{notice&&<p role="status">{notice}</p>}{snapshot.success&&!fresh&&<p role="status">以下仍为上次成功读取的目录。</p>}
-  <div className="pc-category-layout"><aside className="pc-filter-tree">{result?<CatalogueCategoryTree index={index} selectedId={creating?null:selected?.id??null} select={id=>{if(fresh)request(()=>{setSelection(id);reset();setNotice('');});}}/>:<p className="hint">分类资料尚未读取。</p>}</aside><section className="pc-editor-body pc-category-detail" aria-label="分类资料">{draft?<CategoryEditor key={`${creating?'new':`${selected?.id}:${selected?.version??0}`}:${revision}`} scope={scope} capability={props.capability} target={creating?null:selected} initialValues={draft} path={path} fresh={fresh} cancel={()=>request(reset)} onGuard={receiveGuard} onAccessFailure={props.onAccessFailure} onCommitted={readCommitted} refresh={refresh}/>:<><h2>分类资料</h2><div role="status" className="empty">{result?'没有分类资料。':'分类资料尚未读取。'}</div></>}</section></div>
+  <CatalogueWriteFeedback state={orderState} controller={props.orderController} finish={()=>void finishOrder()}/>
+  {orderState.phase==='rejected'&&<UIButton onClick={refresh}>读取最新目录</UIButton>}{orderState.phase==='committed'&&<UIButton disabled={readingOrder} onClick={()=>void finishOrder()}>重新读取目录</UIButton>}
+  <div className="pc-category-layout"><aside className="pc-filter-tree">{result?<CatalogueCategoryTree index={index} selectedId={creating?null:selected?.id??null} select={id=>{if(fresh)request(()=>{setSelection(id);reset();setNotice('');});}} {...(canOrder?{reorder}:{})}/>:<p className="hint">分类资料尚未读取。</p>}</aside><section className="pc-editor-body pc-category-detail" aria-label="分类资料">{draft?<CategoryEditor key={`${creating?'new':`${selected?.id}:${selected?.version??0}`}:${revision}`} scope={scope} capability={props.capability} target={creating?null:selected} initialValues={draft} path={path} fresh={fresh&&!orderLocked} cancel={()=>request(reset)} onGuard={receiveGuard} onAccessFailure={props.onAccessFailure} onCommitted={readCommitted} refresh={refresh}/>:<><h2>分类资料</h2><div role="status" className="empty">{result?'没有分类资料。':'分类资料尚未读取。'}</div></>}</section></div>
   {deferred&&<StandardOverlay title="放弃未保存资料" closeLabel="关闭放弃确认" close={()=>setDeferred(null)} footer={dismiss=><><UIButton onClick={dismiss}>继续填写</UIButton><UIButton onClick={()=>{const action=deferred.run;setDeferred(null);action();}}>放弃填写</UIButton></>}><p>是否放弃当前未保存的分类资料？</p></StandardOverlay>}
  </div>;
 }

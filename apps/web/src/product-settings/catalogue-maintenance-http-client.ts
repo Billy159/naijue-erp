@@ -1,16 +1,17 @@
-import { catalogueMaintenanceKind, parseCatalogueMaintenanceCommand } from '../../../../packages/application/src/catalogue-maintenance-validation.ts';
+import { catalogueMaintenanceKind, parseCatalogueMaintenanceCommand, checkedCategoryOrderResult } from '../../../../packages/application/src/catalogue-maintenance-validation.ts';
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import type { HttpQueryOptions } from '../transport/http-query.ts';
-import type { CatalogueMaintenanceKind, CatalogueMaintenanceAction, CatalogueMaintenanceCommand } from '../../../../packages/application/src/catalogue-maintenance-ports.ts';
+import type { CatalogueMaintenanceKind, CatalogueMaintenanceAction, CatalogueMaintenanceCommand, CategoryOrderResult } from '../../../../packages/application/src/catalogue-maintenance-ports.ts';
 export type { CatalogueMaintenanceKind, CatalogueMaintenanceAction, CatalogueMaintenanceCommand, CategoryWriteValues, CatalogueEntryWriteValues } from '../../../../packages/application/src/catalogue-maintenance-ports.ts';
-export interface CatalogueMaintenanceResult {readonly operationId:string;readonly kind:CatalogueMaintenanceKind;readonly targetId:string;readonly version:number}
+export type CatalogueMaintenanceResult = {readonly operationId:string;readonly kind:CatalogueMaintenanceKind;readonly targetId:string;readonly version:number} | CategoryOrderResult;
+export type { CategoryOrderResult } from '../../../../packages/application/src/catalogue-maintenance-ports.ts';
 export interface CatalogueMaintenanceReceipt {readonly requestKey:string;readonly action:CatalogueMaintenanceAction;readonly status:'COMMITTED';readonly completedAt:string;readonly result:CatalogueMaintenanceResult}
 export interface CatalogueMaintenanceClient {readonly kind:CatalogueMaintenanceKind;execute(command:CatalogueMaintenanceCommand,signal:AbortSignal):Promise<CatalogueMaintenanceResult>;receipt(command:CatalogueMaintenanceCommand,signal:AbortSignal):Promise<CatalogueMaintenanceReceipt>}
 export type CatalogueErrorKind='invalid-request'|'unauthenticated'|'forbidden'|'not-found'|'conflict'|'network'|'timeout'|'aborted'|'malformed-response'|'server';
 export class CatalogueMaintenanceError extends Error {
  readonly kind:CatalogueErrorKind;readonly code:string;readonly outcome:'not-sent'|'rejected'|'uncertain'|'read';readonly status:number|null;
  constructor(kind:CatalogueErrorKind,code:string,outcome:'not-sent'|'rejected'|'uncertain'|'read',status:number|null=null){
-  const messages:Readonly<Record<string,string>>={VERSION_CONFLICT:'资料已被其他操作修改，请读取最新版本。',CATALOGUE_IN_USE:'仍有商品、规格、图片或下级分类引用，无法删除。',CATALOGUE_NAME_CONFLICT:'名称或编码已存在。',CATEGORY_CYCLE:'分类不能移到自身或下级分类。',CATEGORY_DEPTH:'新增或调整父级时只能选择一级分类。',NO_CATALOGUE_CHANGE:'资料没有变化。',CATALOGUE_DELETED:'资料已删除，请刷新目录。',INVALID_CATALOGUE_COMMAND:'请检查名称、编码和必填资料。'};
+  const messages:Readonly<Record<string,string>>={CATALOGUE_ORDER_NOT_READY:'分类排序暂未就绪，请稍后重试。',CATEGORY_ORDER_CONFLICT:'同级分类集合、顺序或版本已变化，请读取最新目录后重排。',CATEGORY_UNDO_CONFLICT:'该次排序后的分类已变化，无法撤销，请读取最新目录。',VERSION_CONFLICT:'资料已被其他操作修改，请读取最新版本。',CATALOGUE_IN_USE:'仍有商品、规格、图片或下级分类引用，无法删除。',CATALOGUE_NAME_CONFLICT:'名称或编码已存在。',CATEGORY_CYCLE:'分类不能移到自身或下级分类。',CATEGORY_DEPTH:'新增或调整父级时只能选择一级分类。',NO_CATALOGUE_CHANGE:'资料没有变化。',CATALOGUE_DELETED:'资料已删除，请刷新目录。',INVALID_CATALOGUE_COMMAND:'请检查名称、编码和必填资料。'};
   super(messages[code]??({ 'invalid-request':'请求未通过校验。',unauthenticated:'登录已失效。',forbidden:'无权执行当前操作。','not-found':'未找到资料或回执。',conflict:'资料版本或状态已变化。',network:'连接中断。',timeout:'请求超时。',aborted:'已停止等待请求。','malformed-response':'服务器返回无效。',server:'服务器暂未完成请求。'}as const)[kind]);this.name=kind==='aborted'?'AbortError':'CatalogueMaintenanceError';this.kind=kind;this.code=code;this.outcome=outcome;this.status=status;
  }
 }
@@ -23,6 +24,18 @@ function record(value: unknown, keys: readonly string[]): Record<string, unknown
   return row;
 }
 export function validateCatalogueResult(value: unknown, command: CatalogueMaintenanceCommand, kind: CatalogueMaintenanceKind): CatalogueMaintenanceResult {
+  if (command.action === 'REORDER' || command.action === 'UNDO_REORDER') {
+    if (kind !== 'CATEGORY') throw new TypeError('Invalid catalogue order kind');
+    const result = checkedCategoryOrderResult(value), order = result.order;
+    if (order.members.length !== command.expectedSiblings.length || (command.action === 'REORDER'
+      ? order.parentId !== command.parentId || order.undoOfOperationId !== null : order.undoOfOperationId !== command.originalOperationId)) throw new TypeError('Invalid catalogue order');
+    const expected = new Map(command.expectedSiblings.map(item=>[item.id,item.expectedVersion]));
+    const positions = command.action === 'REORDER' ? new Map(command.orderedIds.map((id,index)=>[id,index])) : null;
+    if (order.members.some(member=>{const previous=expected.get(member.id);return previous===undefined||(member.version!==previous&&member.version!==previous+1)||positions&&member.displayOrder!==positions.get(member.id);})
+      || result.version !== expected.get(result.targetId)! + 1) throw new TypeError('Invalid catalogue order members');
+    if (command.action==='REORDER'&&result.targetId!==order.members.filter(member=>member.version===expected.get(member.id)!+1).map(member=>member.id).sort()[0]) throw new TypeError('Invalid catalogue order anchor');
+    return result;
+  }
   const row = record(value, ['operationId','kind','targetId','version']);
   if (row.kind !== kind || typeof row.operationId !== 'string' || typeof row.targetId !== 'string'
     || typeof row.version !== 'number' || !Number.isSafeInteger(row.version) || row.version < 1 || row.version > 2147483647
@@ -39,10 +52,10 @@ const MAX_RESPONSE_CHUNKS = 65_536;
 const commandCodes: Readonly<Record<number, readonly string[]>> = {
   400: ['INVALID_CATALOGUE_COMMAND','INVALID_PARTY_INPUT','INVALID_ID','INVALID_HTTP_INPUT','INVALID_REQUEST','INVALID_JSON'],
   401: ['UNAUTHENTICATED'],403:['FORBIDDEN'],404:['CATALOGUE_NOT_FOUND'],
-  409: ['VERSION_CONFLICT','IDEMPOTENCY_CONFLICT','CATALOGUE_DELETED','VERSION_STORAGE_OVERFLOW','INVALID_CATALOGUE_STATE','NO_CATALOGUE_CHANGE','CATEGORY_CYCLE','CATEGORY_DEPTH','CATALOGUE_NAME_CONFLICT','CATALOGUE_IN_USE'],
-  413:['BODY_TOO_LARGE'],415:['UNSUPPORTED_MEDIA_TYPE'],500:['INTERNAL_ERROR'],
+  409: ['VERSION_CONFLICT','IDEMPOTENCY_CONFLICT','CATALOGUE_DELETED','VERSION_STORAGE_OVERFLOW','INVALID_CATALOGUE_STATE','NO_CATALOGUE_CHANGE','CATEGORY_CYCLE','CATEGORY_DEPTH','CATALOGUE_NAME_CONFLICT','CATALOGUE_IN_USE','CATEGORY_ORDER_CONFLICT','CATEGORY_UNDO_CONFLICT'],
+  413:['BODY_TOO_LARGE'],415:['UNSUPPORTED_MEDIA_TYPE'],500:['INTERNAL_ERROR'],503:['CATALOGUE_ORDER_NOT_READY'],
 };
-const receiptCodes: Readonly<Record<number, readonly string[]>> = {400:['INVALID_HTTP_INPUT','INVALID_PARTY_INPUT'],401:['UNAUTHENTICATED'],403:['FORBIDDEN'],404:['RECEIPT_NOT_FOUND'],500:['INTERNAL_ERROR']};
+const receiptCodes: Readonly<Record<number, readonly string[]>> = {400:['INVALID_HTTP_INPUT','INVALID_PARTY_INPUT'],401:['UNAUTHENTICATED'],403:['FORBIDDEN'],404:['RECEIPT_NOT_FOUND'],500:['INTERNAL_ERROR'],503:['CATALOGUE_ORDER_NOT_READY']};
 function resourceLimit(value: number | undefined, fallback: number, maximum: number): number {
   const result = value ?? fallback;
   if (!Number.isSafeInteger(result) || result < 1 || result > maximum) throw new TypeError('Invalid catalogue command HTTP resource limit.');
@@ -113,7 +126,7 @@ export function createCatalogueMaintenanceHttpClient(options: HttpQueryOptions, 
     if (write) {
       try { payload = JSON.stringify(body); if (typeof payload !== 'string') throw new Error(); }
       catch { throw fail('invalid-request', 'INVALID_CATALOGUE_COMMAND_INPUT'); }
-      if (new TextEncoder().encode(payload).byteLength > CATALOGUE_COMMAND_MAX_REQUEST_BYTES) throw fail('invalid-request', 'REQUEST_TOO_LARGE');
+      if (new TextEncoder().encode(payload).byteLength > (kind === 'CATEGORY' ? 1024 * 1024 : CATALOGUE_COMMAND_MAX_REQUEST_BYTES)) throw fail('invalid-request', 'REQUEST_TOO_LARGE');
     }
     const controller = new AbortController();
     const signal = AbortSignal.any([callerSignal, controller.signal]);
@@ -201,7 +214,7 @@ export function createCatalogueMaintenanceHttpClient(options: HttpQueryOptions, 
           throw fail('malformed-response', 'INVALID_ERROR_RESPONSE');
         }
         // Codes are route-specific. A receipt absence is always only a read outcome.
-        const rejected = response.status >= 400 && response.status < 500;
+        const rejected = response.status >= 400 && response.status < 500 || code === 'CATALOGUE_ORDER_NOT_READY';
         throw new CatalogueMaintenanceError(statusKind(response.status), code, write ? (rejected ? 'rejected' : 'uncertain') : 'read', response.status);
       }
       if (response.status !== 200) { cancelBody(response); throw fail('malformed-response', 'INVALID_RESPONSE'); }

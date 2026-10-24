@@ -1,0 +1,132 @@
+{
+  "atUtc": "2026-10-24T03:19:23.551879+00:00",
+  "parent": "4a0710a5ebd602a0a8603ea690e6a015992409c1",
+  "taskId": "APPROVED_V15_P14_ORIGINAL_TREE_AND_MAINTENANCE_CLIENT_CONSUMER",
+  "files": [
+    {
+      "path": "apps/web/src/product-categories/category-tree.tsx",
+      "bytes": 5368,
+      "sha256": "a385bd5badaabae5488a866cec3a79a1a37831e807d45b3fc13a003fe57e70cd",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/product-categories/product-categories-page.tsx",
+      "bytes": 20435,
+      "sha256": "872237b99dfed469ffb668387c340e33b6eb0829aeccf31605d5846304930a5d",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/product-categories/tree-model.ts",
+      "bytes": 5868,
+      "sha256": "26ef6cb6e9841ac4ea6ec3e5a927b1d946f9fc20066b07fdf5db80e38e574c4a",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/product-categories/tree-model.test.ts",
+      "bytes": 4850,
+      "sha256": "5afc5f9c646102eb47072d1df1d4b94e7e87c4c92d3e0a6a3f4091083a5e7c96",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
+      "bytes": 19627,
+      "sha256": "f8f0d8d6cc45cc7815e734cd1b82b1f48123dd39ac66e0ede879ac6aee607a98",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/product-settings/catalogue-maintenance-state.ts",
+      "bytes": 8375,
+      "sha256": "6e4a1608a0cd8e793af6bb2ebcecb7dcf0ef2ac3022e700b87db9395ebbbcbeb",
+      "owner": "F4"
+    },
+    {
+      "path": "apps/web/src/product-settings/colors/contracts.ts",
+      "bytes": 2708,
+      "sha256": "c6547a043c59cab5722896c0aca27c9eb4b76e6965269b103aeac3bde0283d16",
+      "owner": "F4"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F4/P14-V15-ORDER-UNDO-01/DELIVERY.json",
+  "ownerReceiptSha256AtPin": "ebeab28a6d16a99f0cb54b74e2c020adb5f223abdb8cfbd1f08910ca7ab6db49",
+  "ownerDelivery": {
+    "taskId": "F04/P14-V15-ORDER-UNDO-01",
+    "atUtc": "2026-10-24T03:18:18.450170+00:00",
+    "scope": "Exact approved CATEGORY.REORDER/UNDO_REORDER frontend consumer; same real parent/complete undeleted siblings, one atomic command, one latest protected undo. Existing Frozen page/style/tree navigation and original single-entry/other-family semantics preserved.",
+    "changedFiles": [
+      {
+        "path": "apps/web/src/product-categories/category-tree.tsx",
+        "bytes": 5368,
+        "sha256": "a385bd5badaabae5488a866cec3a79a1a37831e807d45b3fc13a003fe57e70cd"
+      },
+      {
+        "path": "apps/web/src/product-categories/product-categories-page.tsx",
+        "bytes": 20435,
+        "sha256": "872237b99dfed469ffb668387c340e33b6eb0829aeccf31605d5846304930a5d"
+      },
+      {
+        "path": "apps/web/src/product-categories/tree-model.ts",
+        "bytes": 5868,
+        "sha256": "26ef6cb6e9841ac4ea6ec3e5a927b1d946f9fc20066b07fdf5db80e38e574c4a"
+      },
+      {
+        "path": "apps/web/src/product-categories/tree-model.test.ts",
+        "bytes": 4850,
+        "sha256": "5afc5f9c646102eb47072d1df1d4b94e7e87c4c92d3e0a6a3f4091083a5e7c96"
+      },
+      {
+        "path": "apps/web/src/product-settings/catalogue-maintenance-http-client.ts",
+        "bytes": 19627,
+        "sha256": "f8f0d8d6cc45cc7815e734cd1b82b1f48123dd39ac66e0ede879ac6aee607a98"
+      },
+      {
+        "path": "apps/web/src/product-settings/catalogue-maintenance-state.ts",
+        "bytes": 8375,
+        "sha256": "6e4a1608a0cd8e793af6bb2ebcecb7dcf0ef2ac3022e700b87db9395ebbbcbeb"
+      },
+      {
+        "path": "apps/web/src/product-settings/colors/contracts.ts",
+        "bytes": 2708,
+        "sha256": "c6547a043c59cab5722896c0aca27c9eb4b76e6965269b103aeac3bde0283d16"
+      }
+    ],
+    "changes": [
+      "Arco allowDrop/onDrop same-parent before/after only; build complete-sibling request from full authorized tree, never filtered visible rows; preserve other relative order/no-op sends no request.",
+      "Reuse D2 CategoryOrderCommand/CategoryOrderResult, parseCatalogueMaintenanceCommand and checkedCategoryOrderResult; strict command/result binding, full member/version/order/anchor checks; old results remain exactly 4 keys.",
+      "Only CATEGORY body limit1MiB; colors/fits8192B. Typed new409 conflicts/503not-ready, same-origin bounded transport and original receipt paths preserved.",
+      "CATEGORY-only optional categoryOrderReady:true + both allowedActions + fresh complete tree required. No production config/flag/profile changed by F4.",
+      "Unknown order submit keeps original immutable request/key/body and route guard; explicit retry rejection cannot resolve earlier unknown commit. Success/receipt followed by real complete-tree query; failed/cancelled readback remains blocked with reread action.",
+      "One latest operation ref only; undo sends originalOperationId/current complete versions, never old displayOrder values; only server/readback results drive order. Concurrent poststate changes disable old undo. Dirty root editor must confirm discard before ordering."
+    ],
+    "checks": {
+      "runtime": "Node24.21.0",
+      "scopedStrict": "PASS colors/tsconfig includes categories, shared browser client/state and fits",
+      "treeModel": "PASS 5/5",
+      "protocol": "PASS 9/9, including inherited 4 old-client cases, 5000 siblings one request, exact extended results, new unknown-key receipt and changed-profile explicit retry",
+      "newModuleDOM": "PASS actual components + synthetic HTTP/DnD",
+      "affectedExistingDOM": "PASS existing category CREATE/EDIT/DELETE and colors/fits source/controller seams",
+      "gitDiffCheck": "PASS",
+      "retainedFailures": [
+        "New filtered-root test first expected no descendants; assertion corrected to root rows, original search unchanged.",
+        "New changed-profile retry test first failed 8/9 because a later typed rejection cleared original unknown commit; CATEGORY order retry now keeps original unknown state. Final 9/9."
+      ],
+      "notActualAcceptance": true
+    },
+    "notTested": [
+      "No actual SQL/profile install, transaction/trigger/role or genuine PG/HTTP save.",
+      "No Chrome/user draft touched; no cold1-repeat2 or real performance result.",
+      "No build/serve/deploy/Git by F4; no whole P14/browser PASS."
+    ],
+    "blockers": [
+      "Only actual activation: C/D1 exact v15 profile and D2 transaction/capability must be paired before trusted host sets categoryOrderReady:true; current default remains disabled."
+    ],
+    "next": "C freeze exact 7 leaves with D2/D1 paired inputs; original QF2 new source/necessary actual only after fixed candidate and allowed browser lease. C sole actual PG/build/deploy.",
+    "approval": "R/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json direct human question call_d12f3db18af947ddadc99f6e7bdd4b05/0",
+    "ownership": "Original4 v15 leaves plus C explicit colors/contracts.ts/tree-model.ts registration and existing tree-model.test.ts. No public route/shared components/backend writes.",
+    "reusedEvidence": "SOURCE273 original P14 native page/tree/CSS scoped evidence; no style remigration. Affected existing maintenance self-check only.",
+    "headObserved": "f4faa69c8b7dd84a7007d0a72f08323bbceb32f5",
+    "fastVerified": false
+  },
+  "stage": "FIXED_SOURCE_ORIGINAL_QF2_NEW_V15_SCOPE_PENDING_REAL_PROFILE_DISABLED",
+  "actualPG": false,
+  "deployed": false
+}

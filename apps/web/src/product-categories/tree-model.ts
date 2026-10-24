@@ -1,3 +1,4 @@
+import type { CategoryOrderCommand } from '../../../../packages/application/src/catalogue-maintenance-ports.ts';
 import type { CatalogueSettingsCategory } from '../product-settings/colors/contracts.ts';
 
 export interface CategoryTreeIndex {
@@ -69,4 +70,15 @@ export function visibleCategoryRows(index: CategoryTreeIndex, expanded: Readonly
     if (open) for (let position = children.length - 1; position >= 0; position--) pending.push({ item: children[position]!, depth: row.depth + 1, position: position + 1, siblings: children.length });
   }
   return result;
+}
+
+/** Build from the complete authorized tree, never its searched/visible rows. */
+export function categoryReorderDraft(index: CategoryTreeIndex, movedId: string, targetId: string, placement: 'before' | 'after'): Omit<Extract<CategoryOrderCommand, { readonly action: 'REORDER' }>, 'requestKey'> | null {
+  const moved = index.byId.get(movedId), target = index.byId.get(targetId);
+  if (!moved || !target || movedId === targetId || moved.parentId !== target.parentId) return null;
+  const siblings = index.children.get(moved.parentId) ?? [], orderedIds = siblings.filter(item => item.id !== movedId).map(item => item.id);
+  const position = orderedIds.indexOf(targetId); if (position < 0) return null;
+  orderedIds.splice(position + (placement === 'after' ? 1 : 0), 0, movedId);
+  if (orderedIds.every((id, position) => id === siblings[position]?.id)) return null;
+  return { action: 'REORDER', parentId: moved.parentId, movedId, expectedSiblings: siblings.map(item => ({ id: item.id, expectedVersion: item.version })), orderedIds };
 }

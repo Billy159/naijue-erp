@@ -7,7 +7,7 @@ interface NativeTreeNode { key:string; title:ReactNode; isLeaf:boolean; children
 /** Frozen CategoryTree presentation with the full authorized native hierarchy.
  * Arco renders nodes/switchers/selection. The existing iterative path search and
  * a title-slot keyboard bridge retain native depth and accessible navigation. */
-export function CatalogueCategoryTree({ index, selectedId, select }: { readonly index: CategoryTreeIndex; readonly selectedId: string | null; readonly select: (id: string) => void }) {
+export function CatalogueCategoryTree({ index, selectedId, select, reorder }: { readonly index: CategoryTreeIndex; readonly selectedId: string | null; readonly select: (id: string) => void; readonly reorder?: (movedId: string, targetId: string, placement: 'before' | 'after') => void }) {
   const [search,setSearch]=useState(''),[expanded,setExpanded]=useState<ReadonlySet<string>>(new Set()),[focused,setFocused]=useState<string|null>(null);
   const host=useRef<HTMLDivElement>(null);
   const query=search.trim();
@@ -37,7 +37,13 @@ export function CatalogueCategoryTree({ index, selectedId, select }: { readonly 
       else if(event.key==='Enter'||event.key===' ')select(row.item.id);
       else return;
       event.preventDefault();event.stopPropagation();if(next)focus(next);
-    }}><Tree aria-label="商品分类" blockNode draggable={false} autoExpandParent={false} selectedKeys={selectedId&&index.byId.has(selectedId)?[selectedId]:[]} expandedKeys={query?data.searchExpanded:[...expanded]} treeData={data.roots}
+    }}><Tree aria-label="商品分类" blockNode draggable={!!reorder} allowDrop={({dragNode,dropNode,dropPosition})=>{
+        const moved=typeof dragNode?.key==='string'?index.byId.get(dragNode.key):undefined,target=typeof dropNode?.key==='string'?index.byId.get(dropNode.key):undefined;
+        return !!reorder&&dropPosition!==0&&!!moved&&!!target&&moved.id!==target.id&&moved.parentId===target.parentId;
+      }} onDrop={({dragNode,dropNode,dropPosition})=>{
+        const moved=typeof dragNode?.key==='string'?index.byId.get(dragNode.key):undefined,target=typeof dropNode?.key==='string'?index.byId.get(dropNode.key):undefined;
+        if(reorder&&dropPosition!==0&&moved&&target&&moved.id!==target.id&&moved.parentId===target.parentId)reorder(moved.id,target.id,dropPosition<0?'before':'after');
+      }} autoExpandParent={false} selectedKeys={selectedId&&index.byId.has(selectedId)?[selectedId]:[]} expandedKeys={query?data.searchExpanded:[...expanded]} treeData={data.roots}
       onSelect={keys=>{const id=keys[0];if(typeof id==='string'&&index.byId.has(id))select(id);}}
       onExpand={keys=>{if(!query)setExpanded(new Set(keys.filter(key=>index.byId.has(key))));}}/>
     </div>{!rows.length&&<div className="empty" role="status">没有匹配的分类</div>}
