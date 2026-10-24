@@ -1,0 +1,15 @@
+{
+  "atUtc": "2026-10-24T00:00:10.431685+00:00",
+  "parent": "dc71344d4ee249b1299fae2b777fac67a2089b4a",
+  "taskId": "C_SHARED_STORE_AUDIT_TYPED_ROUTE_SEAM",
+  "files": [
+    {
+      "path": "apps/web/src/application/contracts.ts",
+      "bytes": 12176,
+      "sha256": "b2260e8680851e0eafeb68fb4c5898671d611a13025ac737ae7c39ffbab41c01",
+      "owner": "C"
+    }
+  ],
+  "ownerReceipt": "Original F1 chunk-125/DELIVERY.json",
+  "qualification": "One optional existing SettingsAuditCapability typed slot only. No runtime code, API, authority or data semantics changed. Original F1 consumes in route/mount and authoritative unresolved-command aggregation; type closure checked with consumer. Existing preview240 is fixed earlier source; this seam is not a claim of audit connection."
+}

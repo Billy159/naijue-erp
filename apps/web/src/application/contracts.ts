@@ -19,6 +19,7 @@ import type { PaymentSettingsProps } from '../payment-settings/contracts.ts';
 import type { ProductFullPageConfiguration } from '../products/product-page-contracts.ts';
 import type { CatalogueMaintenanceCapability } from '../product-settings/colors/contracts.ts';
 import type { DictionaryBrowserReader } from '../product-settings/size-groups/contracts.ts';
+import type { SettingsAuditCapability } from '../settings/audit/audit-entry.tsx';
 
 export type ApplicationRoute = 'inventory' | 'sales' | 'transfers' | 'customers' | 'suppliers' | 'products' | 'product-categories' | 'product-settings' | 'barcode-schemes' | 'store-settings' | 'staff-settings' | 'payment-settings' | 'account-settings';
 export interface RouteStylesheet {
@@ -104,6 +105,8 @@ export interface StoreSettingsRouteConfiguration {
   /** Explicit UI directory-read intent; every list/detail still requires its
    * own current server grant. Never substitutes a transaction candidate. */
   readonly allowHallDirectoryRead: boolean;
+  /** Existing authenticated audit reader; scope and unresolved commands belong to the host. */
+  readonly audit?: SettingsAuditCapability;
   /** One authenticated-session command owner. Missing customer candidates remain unavailable. */
   readonly commands?: {
     readonly newRequestKey: () => string;
