@@ -1,3 +1,12 @@
+当前断点（源248／最新可看243／Chrome仍固定240／私有服务器229）：
+
+- 新可看 http://127.0.0.1:57879/synthetic-unified.html ，source415af7d344a843256dc8772960589517669fab46/build ui-preview-415af7d-01-build01，原一次build0/414输入1369模块；HTML3451824B/7fd394b1…，identity5604B/a8072632…，provenance51633B/b0711f1d…，3HTTP逐字/原身份头200，PID41616/session21155。18合成覆层16同2变：原空0审计reader同能力显式接store与payment，用root真实hasRetainedUnresolvedWrite替代canLeave，customer接线保持；真实backendextensions/角色/日志未测，不冒空库事实。QFv085已限定源码通过，后继实际待独占窗口。
+- QF2 final240实际1171B/3aa9498f…与release4015B/b7b7d5a6…已采用；P16底部/设置tab/客户原firstopen与输入保留/日期14fontmetrics/closeglyph和Xfocus限定PASS，旧已过范围复用。两原视觉剩余分别派修：244=0997faf hover最终蓝背景已QF2 sourcePASS；247=3bece77 shareddate显式ancestor门户恢复Frozen定位，F2消费者/本ledgerbody static尚在途，不在243。新几何和hoveractual待包含候选，不能倒记。
+- QF现在独占240，仅O-S14 selected工作行gate/取消确认保留/有价与未知汇总实际。正面已见12×10→1款12件/120、取消/Esc保留、确认退回-12/-120及纯query清理；新发现原业务类型singlemouseclick仅focus、Enter可开，准确POINTER-FINDING已交F1原入口定向修，不重237/240或已过completed/query旧套。完成清场后才交浏览器。
+- 245=1a71388原D2既有defaultFK只读三态/native26与旧19兼容；246=c75d036原D1唯一实际ctor第三runtime参数，原QB201独立限定通过。248=3d1d83e653251eb0fb19f106477231ef404b97d2原F2 strict三态/可选独立dictionaryreader/共享原方案预览源码就绪；C指出真AVAILABLE时“已设置”仍不是Frozen的真实方案名，F2沿同目标reader补必要name，F1显式双optin组合，不猜CURRENT、不取第一条barcode.schemeId。原接口/权限/分页/旧身份保留，0新DB字段/DDL/写语义。C113原QA真实只读adapter验证正在原helper准备，未执行PG；外层原SET ROLE到QAowner如实记录，不冒app角色/TCP权限，账号v7继续禁登。
+- v14完整写合同已问人类一次，尚未确认/实施；新动作及115/49/22claim/一次fullbind/22旧claim进度/精确22成员读及改密维护保护见原确认单。仅该分支等答，其余继续。C112实际保全有效截止2026-10-24T11:35:38.679556Z，旧82截止不延；私有229安装/启动成功，根因原xtend4.0.2内容cache层级与npm所读_cacache错接已原54实证修好，无重下全部包或弱化npmci，真实数据/正式入口未切。
+- 原QF104矩阵最新NOT_RUN46/WAITING16/UI_DIFFERENCE31/PARTIAL10/批准例外1，55局部已索引、来源待核84/最小适配19/未接入1/重新仿写0、整页0/整类0；不是全站完成。GitHub最近精确回读48a53a6…（3原提交非强制FF），244–248及本段立即保存同步；所有WIP按owner保留。Sol61/xhigh，Fast无开关未核，原十角色22任务继续，目标ACTIVE。
+
 最新增量（源243，运行UI仍240，原队列继续）：
 
 - 原QFv083采用240 selected工作行汇总限定源码结论；v084核实既有T02整页迁移11冻结文件/5区域/4currentcore及原祖先/实际图，将旧“重新仿写”纠正为“最小适配”，未重复迁入或扩大旧页验收。来源待核84/重新仿写0/最小适配19/未接入1；104/55/整页0不变，分类不代表全站完成。F2库存04完整native及210/219/235236有效增量沿证据保留，无新可执行仿写区域，不拿旧v3 PARTIAL重派。
