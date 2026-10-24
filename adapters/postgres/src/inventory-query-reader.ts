@@ -162,22 +162,27 @@ function parameters(scope: InventoryReadScope, filter: InventoryQuery["filter"],
   return [scope.warehouses.map(row => row.id), scope.hallIds, filter.productIds, filter.categoryIds, filter.supplierIds, filter.fitIds, filter.seasonIds, batchId];
 }
 async function verifyAdditionalSkus(query: Query, prefix: string, values: unknown[], relation: "filtered_skus" | "candidate_skus"): Promise<void> {
-  const warehouseId = (values[0] as readonly string[])[0]!, batchId = id("operation", values[7]), cursorParameter = values.length + 1;
-  let cursor: string | null = null, checked = 0;
-  for (;;) {
-    const rows = (await query(`/* inventory:additional-skus */ ${prefix} SELECT s.id FROM ${relation} s
-      WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r WHERE r.import_batch_id=$8::uuid AND r.status='IMPORTED' AND r.target_type='SKU' AND r.target_id=s.id)
-        AND ($${cursorParameter}::uuid IS NULL OR s.id>$${cursorParameter}::uuid) ORDER BY s.id LIMIT 1000`, [...values, cursor])).rows;
-    integrity(rows.length <= 1000, "New SKU qualification batch exceeds the existing exact-key bound"); if (!rows.length) { integrity(checked > 0, "Uncovered SKU proof returned no matching identities"); return; }
-    const keys = rows.map(row => { const skuId = id("sku", row.id); integrity(cursor === null || skuId > cursor, "New SKU qualification did not advance"); cursor = skuId; return { warehouseId, skuId }; });
-    // Every authorized warehouse was qualified above. One such exact native
-    // dimension suffices for the public function's independent SKU basis.
-    const decisions = await readInventoryKeyAdmissions({ query }, keys);
-    for (const decision of decisions) { requireDomain(decision.admitted, "INVENTORY_NOT_READY", "New SKU creation is not qualified"); integrity(decision.publishedBatchId === batchId && decision.skuBasis === "POST_CUTOFF_CREATED", "New SKU admission differs from its cutoff/creation basis"); }
-    checked += keys.length;
-    if (rows.length < 1000) return;
-  }
+  const warehouseId = (values[0] as readonly string[])[0]!, warehouseParameter = values.length + 1;
+  // Keep the original SQL admission function authoritative over the WHOLE
+  // requested scope. Return constant-size evidence, never ship1000 IDs back to
+  // the process and query them again. No cross-account/snapshot cache is used.
+  const row = one(await query(`/* inventory:additional-sku-qualification */ ${prefix}, uncovered_skus AS MATERIALIZED (
+      SELECT s.id FROM ${relation} s WHERE NOT EXISTS (SELECT 1 FROM naijue_erp.import_record r
+        WHERE r.import_batch_id=$8::uuid AND r.status='IMPORTED' AND r.target_type='SKU' AND r.target_id=s.id)
+    ), admission_decisions AS MATERIALIZED (
+      SELECT a.* FROM uncovered_skus s LEFT JOIN LATERAL naijue_erp.inventory_key_admission($${warehouseParameter}::uuid,s.id) a ON true
+    ) SELECT (SELECT count(*)::text FROM uncovered_skus) AS sku_count,
+      (SELECT count(*)::text FROM admission_decisions) AS decision_count,
+      coalesce((SELECT bool_and((a.admitted IS TRUE AND a.published_batch_id=$8::uuid
+        AND a.warehouse_basis IN ('CUTOFF_MEMBER','POST_CUTOFF_CREATED')
+        AND a.sku_basis='POST_CUTOFF_CREATED' AND a.sku_created_operation_id IS NOT NULL
+        AND (a.warehouse_basis='CUTOFF_MEMBER' OR a.warehouse_created_operation_id IS NOT NULL)) IS TRUE)
+        FROM admission_decisions a),false) AS all_admitted`, [...values, warehouseId]));
+  const expected = count(row.sku_count), decisions = count(row.decision_count);
+  integrity(expected > 0 && decisions === expected, "Uncovered SKU qualification returned incomplete decisions");
+  requireDomain(booleanValue(row.all_admitted), "INVENTORY_NOT_READY", "New SKU creation is not qualified for the complete requested scope");
 }
+
 async function catalogStatus(query: Query, values: unknown[], seasonArray: boolean, runtime26?: NativeRuntime26Capability): Promise<{ exactTotal: number; allMatchesTotal: InventoryStockTotal }> {
   const row = one(await query(`/* inventory:catalog-status */ ${catalog(seasonArray)}
     SELECT (SELECT count(*)::text FROM matched_products) AS exact_total,

@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { mkdtemp, realpath, readdir, rm, lstat } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import type { TestContext } from "node:test";
 import Fastify from "fastify";
 import type { ActorContext } from "../../../packages/application/src/ports.ts";
@@ -16,10 +19,11 @@ async function setup(t: TestContext, options: { authenticate?: InventoryHttpOpti
     async readInventory(read) { calls.inventory++; return syntheticInventorySnapshot(read, options.count ?? 1); },
     async readCandidates(read) { calls.candidates++; return syntheticCandidateSnapshot(read); }
   };
-  app.register(createInventoryHttpPlugin({ authenticate: options.authenticate ?? (async () => inventoryActor), dependencies: {
+  const outputDirectory = reader.readInventoryOutput ? await realpath(await mkdtemp(join(tmpdir(), "synthetic-inventory-http-output-"))) : undefined;
+  app.register(createInventoryHttpPlugin({ ...(outputDirectory ? { outputSpool: { directory: outputDirectory, maxBytes: 536870912, maxConcurrent: 1, maxDurationMs: 120000 } } : {}), authenticate: options.authenticate ?? (async () => inventoryActor), dependencies: {
     reader, authorization: options.authorization ?? { async authorize() { calls.authorize++; return inventoryScope; } }
   } }));
-  t.after(() => app.close()); await app.ready();
+  t.after(async () => { await app.close(); if (outputDirectory) await rm(outputDirectory, { recursive: true, force: true }); }); await app.ready();
   const post = (body: unknown, url = "/inventory/query") => app.inject({ method: "POST", url, payload: JSON.stringify(body), headers: { "content-type": "application/json" } });
   return { app, calls, post };
 }
@@ -54,10 +58,11 @@ test("inventory full output HTTP: a failure after all product data never emits a
   assert.equal(products, 2); assert.equal(closed, true); assert.equal(body.includes('"kind":"complete"'), false); assert.ok(failed || body.length > 0);
 });
 test("inventory full output HTTP: disconnected stream aborts the original read, closes its provider and removes request listeners", async t => {
-  const app = Fastify({ logger: false }); t.after(() => app.close()); let response: import("node:http").ServerResponse | undefined, raw: import("node:http").IncomingMessage | undefined, forwarded: AbortSignal | undefined, closed = false;
+  const directory = await realpath(await mkdtemp(join(tmpdir(), "synthetic-inventory-http-cancel-")));
+  const app = Fastify({ logger: false }); t.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); }); let response: import("node:http").ServerResponse | undefined, raw: import("node:http").IncomingMessage | undefined, forwarded: AbortSignal | undefined, closed = false;
   let release!: () => void, entered!: () => void; const gate = new Promise<void>(r => { release = r; }), reading = new Promise<void>(r => { entered = r; });
   app.addHook("onRequest", async (request, reply) => { response = reply.raw; raw = request.raw; });
-  app.register(createInventoryHttpPlugin({ authenticate: async () => inventoryActor, dependencies: { authorization: { async authorize() { return inventoryScope; } }, reader: { ...syntheticInventoryReader(), async *readInventoryOutput(read) {
+  app.register(createInventoryHttpPlugin({ outputSpool: { directory, maxBytes: 536870912, maxConcurrent: 1, maxDurationMs: 120000 }, authenticate: async () => inventoryActor, dependencies: { authorization: { async authorize() { return inventoryScope; } }, reader: { ...syntheticInventoryReader(), async *readInventoryOutput(read) {
     forwarded = read.signal; try { for await (const frame of syntheticInventoryOutput(read)) { if (frame.kind === "product") { entered(); await gate; } yield frame; } } finally { closed = true; }
   } } } })); await app.ready();
   const pending = app.inject({ method: "POST", url: "/inventory/output/query", payload: { filter: inventoryParameters().filter } }).then(value => value, error => error);
@@ -202,4 +207,55 @@ test("SYNTHETIC inventory HTTP: incomplete snapshot is 503, not a partial 200 or
     const result = await f.post(body, url); assert.equal(result.statusCode, 503); assert.equal(result.json().error.code, "INVENTORY_NOT_READY");
     assert.equal(result.json().products, undefined); assert.equal(result.headers["x-inventory-readiness"], undefined);
   }
+});
+
+
+test("inventory output spool: database provider finishes before HTTP begins network consumption and temporary output is removed", async t => {
+  const directory = await realpath(await mkdtemp(join(tmpdir(), "synthetic-inventory-output-"))); const app = Fastify({ logger: false });
+  t.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); });
+  let closed = false, sentAfterRelease = false;
+  app.addHook("onSend", async (_request, _reply, payload) => { if (payload && typeof payload === "object" && "pipe" in payload) { sentAfterRelease = closed; } return payload; });
+  const base = syntheticInventoryReader(203);
+  app.register(createInventoryHttpPlugin({ authenticate: async () => inventoryActor, dependencies: { authorization: { async authorize() { return inventoryScope; } }, reader: { ...base, async *readInventoryOutput(read) {
+    try { yield* syntheticInventoryOutput(read, 203); } finally { closed = true; }
+  } } }, outputSpool: { directory, maxBytes: 536870912, maxConcurrent: 1, maxDurationMs: 120000 } } as InventoryHttpOptions));
+  await app.ready(); const response = await app.inject({ method: "POST", url: "/inventory/output/query", payload: { filter: inventoryParameters().filter } });
+  assert.equal(response.statusCode, 200, response.body); assert.equal(sentAfterRelease, true, "Network must not control the database producer's next() calls");
+  const frames = response.body.trimEnd().split("\n").map(line => JSON.parse(line)); assert.equal(frames.filter(frame => frame.kind === "product").length, 203); assert.equal(frames.at(-1).kind, "complete");
+  assert.deepEqual(await readdir(directory), []);
+});
+async function spoolHttp(t: TestContext, reader: TrustedInventorySnapshotReader, resource: Partial<NonNullable<InventoryHttpOptions["outputSpool"]>> = {}) {
+  const directory = await realpath(await mkdtemp(join(tmpdir(), "synthetic-inventory-spool-case-"))), app = Fastify({ logger: false });
+  t.after(async () => { await app.close(); await rm(directory, { recursive: true, force: true }); });
+  let response: import("node:http").ServerResponse | undefined, failed!: () => void; const preparationFailed = new Promise<void>(resolve => { failed = resolve; });
+  app.addHook("onError", async (_request, reply) => { if (reply.raw === response) failed(); });
+  app.addHook("onRequest", async (request, reply) => { if (request.url === "/inventory/output/query" && !response) response = reply.raw; });
+  app.register(createInventoryHttpPlugin({ authenticate: async () => inventoryActor, dependencies: { reader, authorization: { async authorize() { return inventoryScope; } } }, outputSpool: { directory, maxBytes: 536870912, maxConcurrent: 1, maxDurationMs: 120000, ...resource } }));
+  await app.ready(); const post = () => app.inject({ method: "POST", url: "/inventory/output/query", payload: { filter: inventoryParameters().filter } });
+  return { app, directory, post, response: () => response, preparationFailed };
+}
+test("inventory output spool: complete size failure, producer failure and missing configuration never send partial success and release resources", async t => {
+  for (const mode of ["size", "producer"] as const) {
+    let closed = 0; const f = await spoolHttp(t, { ...syntheticInventoryReader(), async *readInventoryOutput(read) { try { for await (const frame of syntheticInventoryOutput(read, 2)) { if (mode === "producer" && frame.kind === "complete") throw Error("SYNTHETIC commit failed"); yield frame; } } finally { closed++; } } }, mode === "size" ? { maxBytes: 100 } : {});
+    const result = await f.post(); assert.equal(result.statusCode, mode === "size" ? 503 : 500); assert.equal(result.body.includes('"kind":"complete"'), false); assert.equal(closed, 1); assert.deepEqual(await readdir(f.directory), []);
+    const retry = await f.post(); assert.equal(retry.statusCode, mode === "size" ? 503 : 500); assert.equal(closed, 2, "Failure must release its output slot");
+  }
+  const app = Fastify({ logger: false }); t.after(() => app.close()); let opened = 0;
+  app.register(createInventoryHttpPlugin({ authenticate: async () => inventoryActor, dependencies: { authorization: { async authorize() { return inventoryScope; } }, reader: { ...syntheticInventoryReader(), async *readInventoryOutput(read) { opened++; yield* syntheticInventoryOutput(read); } } } }));
+  await app.ready(); const noConfig = await app.inject({ method: "POST", url: "/inventory/output/query", payload: { filter: inventoryParameters().filter } }); assert.equal(noConfig.statusCode, 503); assert.equal(opened, 0);
+  const absent = await spoolHttp(t, { ...syntheticInventoryReader(), async *readInventoryOutput(read) { opened++; yield* syntheticInventoryOutput(read); } }, { directory: join(await realpath(tmpdir()), `synthetic-unmounted-inventory-${process.pid}`) });
+  const unmounted = await absent.post(); assert.equal(unmounted.statusCode, 503); assert.equal(opened, 0); assert.deepEqual(await readdir(absent.directory), []);
+});
+test("inventory output spool: one private0600 file and no export queue, ordinary pages remain available, disconnect cleans and cancels the original producer", async t => {
+  let release!: () => void, entered!: () => void, signal: AbortSignal | undefined, closed = false; const gate = new Promise<void>(resolve => { release = resolve; }), reading = new Promise<void>(resolve => { entered = resolve; });
+  const f = await spoolHttp(t, { ...syntheticInventoryReader(), async *readInventoryOutput(read) { signal = read.signal; try { for await (const frame of syntheticInventoryOutput(read, 2)) { if (frame.kind === "product") { entered(); await gate; } yield frame; } } finally { closed = true; } } });
+  const first = f.post().then(value => value, error => error); await reading; const files = await readdir(f.directory); assert.equal(files.length, 1); assert.equal((await lstat(join(f.directory, files[0]!))).mode & 0o777, 0o600);
+  const busy = await f.post(); assert.equal(busy.statusCode, 503);
+  const page = await f.app.inject({ method: "POST", url: "/inventory/query", payload: inventoryParameters() }); assert.equal(page.statusCode, 200);
+  f.response()!.emit("close"); assert.equal(signal?.aborted, true); release(); await first; await f.preparationFailed; assert.equal(closed, true); assert.deepEqual(await readdir(f.directory), []);
+});
+test("inventory output spool: total deadline aborts preparation and clears its file without completion, without claiming SQL cancellation", async t => {
+  let aborted = false, closed = false;
+  const f = await spoolHttp(t, { ...syntheticInventoryReader(), async *readInventoryOutput(read) { try { for await (const frame of syntheticInventoryOutput(read, 2)) { if (frame.kind === "product") { await new Promise(resolve => setTimeout(resolve, 20)); aborted = read.signal.aborted; } yield frame; } } finally { closed = true; } } }, { maxDurationMs: 5 });
+  const response = await f.post(); assert.equal(response.statusCode, 408); assert.equal(aborted, true); assert.equal(closed, true); assert.equal(response.body.includes('"kind":"complete"'), false); assert.deepEqual(await readdir(f.directory), []);
 });

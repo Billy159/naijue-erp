@@ -1,0 +1,142 @@
+{
+  "atUtc": "2026-10-24T03:02:20.953204+00:00",
+  "parent": "b204222466a12c9eb0f43afa18fc3d871c34c0a8",
+  "taskId": "D3_INVENTORY_PERFORMANCE_BACKEND_3_4",
+  "files": [
+    {
+      "path": "adapters/postgres/src/inventory-query-reader.ts",
+      "bytes": 42847,
+      "sha256": "78dac1af7214592bd94cba27cbc28e21dc202310d099e5b6f0c89d5b80f13dc6",
+      "owner": "D3"
+    },
+    {
+      "path": "tests/inventory-query-postgres-protocol.test.ts",
+      "bytes": 60914,
+      "sha256": "df720a95c10757ebf9f3bff312e27b794950532b2eabfc6074275d84fcdf52a2",
+      "owner": "D3"
+    },
+    {
+      "path": "apps/api/src/inventory-http.ts",
+      "bytes": 13491,
+      "sha256": "ebfe22c67327499718a8542d2aeb5003151edd0e9a9b02c03c17e02cf9bc4fd2",
+      "owner": "D3"
+    },
+    {
+      "path": "apps/api/src/inventory-http.test.ts",
+      "bytes": 26872,
+      "sha256": "d6f07c518d858c239af965e368f028263bc5a69b8e2dc498c4edb53c394c2753",
+      "owner": "D3"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/CONTINUATION-DELIVERY.json",
+  "ownerReceiptSha256AtPin": "08d5b3db5c9d8a391cd957a8df40ad77126b039515df18e5e3ffe01d0a0c9432",
+  "ownerDelivery": {
+    "atUtc": "2026-10-24T02:53:21.580520+00:00",
+    "taskId": "D3-INVENTORY-PERFORMANCE-BACKEND-3-4",
+    "status": "SOURCE_IMPLEMENTED_FROZEN_NEW7_PASS_PENDING_C_HOST_WIRING_AND_REPRESENTATIVE_PG_MEASUREMENT",
+    "authority": {
+      "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "humanFourIssuesThreadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+      "humanFourIssuesMessageId": "01a16bb2-4ef1-76e3-82b7-035bc329b4f1",
+      "reportingHumanMessageId": "01a161f7-a5e8-7e10-9059-9537c28910c2",
+      "scope": "C released original inventory reader/protocol and HTTP performance package to D3 and registered the HTTP test as the fourth exact D3 leaf. C approved one set aggregate retaining original SQL admission authority and bounded private spool; D1 host remains outside D3. gpt-6.1-sol/xhigh; actual Fast switch not verified."
+    },
+    "files": [
+      {
+        "path": "adapters/postgres/src/inventory-query-reader.ts",
+        "bytes": 42847,
+        "sha256": "78dac1af7214592bd94cba27cbc28e21dc202310d099e5b6f0c89d5b80f13dc6"
+      },
+      {
+        "path": "tests/inventory-query-postgres-protocol.test.ts",
+        "bytes": 60914,
+        "sha256": "df720a95c10757ebf9f3bff312e27b794950532b2eabfc6074275d84fcdf52a2"
+      },
+      {
+        "path": "apps/api/src/inventory-http.ts",
+        "bytes": 13491,
+        "sha256": "ebfe22c67327499718a8542d2aeb5003151edd0e9a9b02c03c17e02cf9bc4fd2"
+      },
+      {
+        "path": "apps/api/src/inventory-http.test.ts",
+        "bytes": 26872,
+        "sha256": "d6f07c518d858c239af965e368f028263bc5a69b8e2dc498c4edb53c394c2753"
+      }
+    ],
+    "releasedFrozenForC": true,
+    "issue3": {
+      "change": "Replaced client1000-key discovery/admission round trips with one full-filter aggregate query. The original D1 inventory_key_admission function still decides every uncovered SKU on the same RR client; this is not a replacement admission implementation.",
+      "integrity": "Full filtered_skus or original candidate_skus scope, original native warehouse parameter and current publication remain. LEFT JOIN retains missing per-key results as rejected NULL decisions; count equality rejects duplicates and whole predicate IS TRUE rejects unknown evidence. No LIMIT/OFFSET on qualification and no cached/current-page-only proof.",
+      "preserved": "Authorization before counts/pages/sums, full exact total and all-match quantity including negatives, native identity, zero versus UNKNOWN, original candidate scope and legacy-runtime denial.",
+      "limit": "One query removes client1000-batch round trips but retains one original admission function evaluation per uncovered SKU. Actual SQL CPU and end-to-end speed are unmeasured; no <=2-second claim."
+    },
+    "issue4": {
+      "change": "Existing full NDJSON HTTP endpoint first consumes the original checked RR/keyset producer into a private exclusive0600 file. It exposes success headers/network stream only after full EOF, confirmed producer COMMIT/release, file flush/sync and exact byte check. Slow delivery no longer extends the completed database transaction.",
+      "preserved": "Same endpoint, filters, readReference, NDJSON frame structure/order, full totals and terminal complete semantics. No new endpoint, business field, database write, page truncation or re-export producer.",
+      "cleanup": "Idempotent cleanup closes original handles, unlinks only the owned exclusive file, releases the one process slot and request listeners on completion, preparation failure, size limit, abort, disconnect and deadline. Missing/unavailable private mount or absent config returns503 before opening the producer; busy export returns503 with no queue. Ordinary pages remain available.",
+      "bounds": "64KiB pending JSON encoding plus64KiB file stream buffers, in addition to the unchanged bounded reader matrix/page DTO. Max512MiB per file, one active output per installed plugin/current API process, total120-second deadline across preparation and delivery. No all-output in-memory buffer. These are not a filesystem quota, a distributed limit, or process-crash cleanup.",
+      "cancellationLimit": "The existing AbortSignal stops subsequent work and propagates to the original producer. It cannot independently cancel an in-flight PG statement or pool acquisition. D1/C must retain actual statement_timeout and pool borrow timeout and verify connection exit; no pg_cancel authority/second PG connection added."
+    },
+    "hostIntegrationForCAndD1": {
+      "owner": "C alone owns production directory/mount/runtime/deploy and actual measurement; D1 alone edits original postgres-read-api.ts host integration. D3 edited neither.",
+      "sourceAPI": "Existing createInventoryHttpPlugin({authenticate,dependencies,outputSpool}); InventoryHttpOptions.outputSpool is optional and InventoryOutputSpoolOptions is exported by original apps/api/src/inventory-http.ts.",
+      "approvedOptions": {
+        "directory": "/private/inventory-exports",
+        "maxBytes": 536870912,
+        "maxConcurrent": 1,
+        "maxDurationMs": 120000
+      },
+      "approvedHostDirectory": "/srv/naijue-erp/rapid-launch-20261022/runtime-private/inventory-exports/<buildId>/",
+      "requiredActualSetup": "C creates exact existing canonical directory0700 with UID/GID10001, outside public dist/media, and exact bind mount to /private/inventory-exports. No default /tmp and no D3-created production directory. C checks directory capacity/quota, build-scoped residual-file cleanup/recovery, effective PG statement/pool timeouts and ordinary-read pool spare capacity before enabling real output.",
+      "currentState": "NOT_DEPLOYED_BY_D3. Missing configuration503 is an accurate disabled state, not issue4 performance completion or release readiness."
+    },
+    "checks": {
+      "newTests": 7,
+      "pass": 7,
+      "fail": 0,
+      "qualification": {
+        "tests": 3,
+        "fixture": "Synthetic protocol667products/2001newSKUs; page1/page2 exact667 and negative-1334 total; off-page false/missing decisions deny; exact candidate scope and legacy denial. Protocol doubles do not execute PostgreSQL SQL.",
+        "command": "node --test --test-name-pattern='inventory qualification set:' tests/inventory-query-postgres-protocol.test.ts"
+      },
+      "http": {
+        "tests": 4,
+        "fixture": "Synthetic producer/Fastify: producer closed before onSend; complete NDJSON/temp cleanup; max-size and producer failure/missing config/missing mount no partial success; one0600 file/no queue/ordinary reads; disconnect; deadline without SQL cancellation claim.",
+        "command": "node --test --test-name-pattern='inventory output spool:' apps/api/src/inventory-http.test.ts"
+      },
+      "preChangeRed": "New qualification tests detected the absent aggregate query and lack of off-page aggregate refusal; new HTTP test detected an unfinished producer when HTTP network consumption began.",
+      "focusedTypechecks": [
+        "tsc --noEmit -p evidence/inventory-native-reader-independent-tsconfig.json PASS",
+        "HTTP source/test focused strict ES2023 NodeNext check PASS"
+      ],
+      "necessaryAffectedReruns": "After adding unavailable-mount503 handling, reran only the affected new HTTP failure test and focused HTTP typecheck. After preserving missing per-key decision rejection via LEFT JOIN, reran new qualification3 only and its focused reader typecheck. All passed.",
+      "oldOutputSuiteRepeated": false,
+      "sealed18Repeated": false,
+      "fullBuild": false,
+      "actualPG": false,
+      "actualNetworkOrPerformance": false
+    },
+    "notPerformed": {
+      "SSH": false,
+      "PG": false,
+      "Git": false,
+      "build": false,
+      "deploy": false,
+      "Chrome": false,
+      "realBusinessWrite": false,
+      "credentialCaptureRead": false,
+      "D1HostEdit": false,
+      "newSchemaOrBusinessField": false
+    },
+    "nextForC": [
+      "Fix exact four source pins, review only this original backend3+4 delta with QB, and send D1 the exported original host option plus the approved exact mount/options. Reuse accepted old output/native-key evidence.",
+      "C performs one representative same-filter page1/page2/full-output run on an explicitly chosen authorized isolated fixture whose uncovered SKUs exceed one old1000-key batch. Prior2product/5SKU actual QA is not representative for this issue.",
+      "Bind measurements to new source/runtime/fixture. Record each SQL stage time and query count, actual assembly measurement (label derived residual if only inferred), output bytes, pool borrow/hold/release and total elapsed; verify confirmed release before slow network delivery.",
+      "If original per-SKU admission CPU remains dominant, route that precise same-request evidence to D1 under the original authority contract. Do not infer speed from removed round trips or add a cache/truncation.",
+      "Actual host wiring/private-resource limits/timeouts/pool capacity and representative runtime verification remain open. No source self-check is a deployed/performance/business-ready result."
+    ]
+  },
+  "stage": "FIXED_SOURCE_OWNER_CHECKS_ONLY_PENDING_ORIGINAL_QB_AFFECTED_REVIEW",
+  "actualPG": false,
+  "deployed": false
+}
