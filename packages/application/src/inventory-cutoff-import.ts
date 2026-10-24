@@ -33,7 +33,7 @@ export type CutoffImportItem = ApprovedSourceIdentity & (
 interface ImportEnvelope {
   readonly actorAccountId: EntityId<"account">; readonly requestKey: string; readonly batchId: string;
 }
-export type CutoffImportCommand = ImportEnvelope & (
+export type CompleteCutoffImportCommand = ImportEnvelope & (
   { readonly action: "IMPORT_STAGE"; readonly sourceName: string; readonly sourceManifestRef: string; readonly sourceHash: string;
     readonly cutoffAt: string; readonly mappingVersion: string; readonly expected: ImportCounts;
     /** Mandatory only for V2; independently authorized with the complete frozen command. */
@@ -44,10 +44,60 @@ export type CutoffImportCommand = ImportEnvelope & (
     readonly approval: { readonly completeScope: true; readonly absentMeansZero: true; readonly allFilesVerified: true;
       readonly finalDeltaVerified: true; readonly noUnresolvedExceptions: true; readonly sourceHash: string; readonly sourceManifestRef: string } }
 );
+/** Approved v14: source birth evidence stays immutable when the full source is bound later. */
+export type CorePartyEntity = "STAFF" | "HALL" | "WAREHOUSE" | "CUSTOMER";
+export interface CoreSourceMember { readonly sourceRowId: string; readonly entity: CorePartyEntity; readonly sourceKey: string; readonly nativeId: string }
+export interface CoreAccountSnapshot {
+  readonly id: string; readonly staff_id: string; readonly login_enabled: boolean; readonly auth_version: 1; readonly version: 1;
+  readonly created_at: string; readonly updated_at: string;
+}
+export interface CoreSourceMembers { readonly parties: readonly CoreSourceMember[]; readonly accounts: readonly CoreAccountSnapshot[] }
+export const CORE_INITIALIZATION_COUNTS = Object.freeze({ STAFF: 49, HALL: 22, WAREHOUSE: 22, CUSTOMER: 22, USER_ACCOUNT: 49 } as const);
+export interface CoreAuthority {
+  readonly account_capture_sha256: string; readonly account_decisions_sha256: string; readonly identity_review_sha256: string;
+  readonly bootstrap_execution_review_sha256: string; readonly source_identity_facts_sha256: string; readonly approved_employee_plan_sha256: string;
+  readonly old_source_batch_id: string; readonly old_source_manifest_sha256: string;
+}
+export interface CoreInitializationMetadata {
+  readonly scopeVersion: "CORE_INITIALIZATION_26_V1"; readonly coreSourceDigest: string;
+  readonly coreCounts: typeof CORE_INITIALIZATION_COUNTS; readonly coreSourceMembers: CoreSourceMembers; readonly authority: CoreAuthority;
+  readonly target: { readonly database: string; readonly role: string; readonly serverAddress: string | null; readonly serverPort: number | null; readonly postmasterStartedAt: string };
+  readonly bootstrapAt: string;
+}
+export interface CoreWarehouseItem extends ApprovedSourceIdentity {
+  readonly targetType: "WAREHOUSE"; readonly targetId: EntityId<"warehouse">;
+  readonly nativeRecord: { readonly id: string; readonly reviewedAt: string; readonly decisionReason: string };
+}
+export interface CoreImportCheckpoint { readonly sequence: number; readonly cursor: number; readonly counts: ImportCounts; readonly expected: Readonly<Record<string, never>> }
+export type CoreStageCommand = ImportEnvelope & {
+  readonly action: "IMPORT_CORE_STAGE"; readonly sourceName: string; readonly sourceManifestRef: string; readonly sourceHash: string;
+  readonly cutoffAt: string; readonly mappingVersion: "V2_HISTORY_NULLABLE_1"; readonly coreInitialization: CoreInitializationMetadata;
+  readonly accountingVersion: "NATIVE_IMPORT_RECORD_ACCOUNTING_V1"; readonly expectedSequence: 0; readonly expectedCursor: 0;
+  readonly items: readonly CoreWarehouseItem[];
+};
+export interface CoreMaintenanceMember extends CoreSourceMember {
+  readonly version: number; readonly nativeSnapshot: Readonly<Record<string, unknown>>;
+  readonly operations: readonly { readonly operationId: string; readonly fromVersion: number; readonly toVersion: number }[];
+}
+export interface CoreFullSourceBinding {
+  readonly authorizedPayloadHash: string; readonly historyExpectedCounts: HistoryImportStageMetadata["expectedCounts"];
+  readonly inventoryExpectedCounts: ImportCounts; readonly sourceClosurePins: readonly { readonly group: string; readonly sha256: string }[];
+  readonly coreReceiptId: string; readonly coreSourceDigest: string;
+  readonly coreMaintenanceBinding: { readonly version: "CORE_MAINTENANCE_BINDING_V1"; readonly members: readonly CoreMaintenanceMember[] };
+}
+export type BindFullSourceCommand = ImportEnvelope & {
+  readonly action: "IMPORT_BIND_FULL_SOURCE"; readonly expectedSequence: number; readonly expectedCursor: number; readonly fullBinding: CoreFullSourceBinding;
+};
+export type CoreImportCommand = CoreStageCommand | BindFullSourceCommand;
+export type CutoffImportCommand = CompleteCutoffImportCommand | CoreImportCommand;
+export function isCoreImportCommand(command: CutoffImportCommand): command is CoreImportCommand {
+  return command.action === "IMPORT_CORE_STAGE" || command.action === "IMPORT_BIND_FULL_SOURCE";
+}
 export interface CutoffImportResult {
   readonly operationId: EntityId<"operation">; readonly batchId: string; readonly sequence: number; readonly cursor: number;
   readonly status: "STAGED" | "VALIDATING" | "IMPORTED";
   readonly ledgerEntryIds: readonly EntityId<"ledger">[];
+  readonly phase?: "CORE_INITIALIZED_V1" | "FULL_SOURCE_BOUND_V1"; readonly coreSourceDigest?: string; readonly coreCounts?: typeof CORE_INITIALIZATION_COUNTS;
 }
 export interface CutoffImportStore {
   /** Atomic receipt+native data+checkpoint+audit, serialized batch/source/key identities. Never automatic retry after unknown COMMIT. */
@@ -80,6 +130,7 @@ export function validateCutoffImportCommand(command: CutoffImportCommand): void 
   entityId("operation", command.batchId); entityId("account", command.actorAccountId);
   const forbidden = ["validationPassed", "historyValidationPassed", "history_validation_passed", "historyActualCounts", "history_actual_counts"];
   requireDomain(forbidden.every(k => !Object.hasOwn(command, k)), "CALLER_HISTORY_VALIDATION_FORBIDDEN", "History validation is a same-transaction SQL result, never a caller flag");
+  if (isCoreImportCommand(command)) { validateCoreImportCommand(command); return; }
   if (command.action !== "IMPORT_STAGE") requireDomain(!Object.hasOwn(command, "historyMetadata"), "INVALID_HISTORY_IMPORT_METADATA", "Only STAGE may freeze history metadata");
   requireDomain(nonempty(command.requestKey), "INVALID_REQUEST_KEY", "A stable original import request key is required");
   if (command.action === "IMPORT_STAGE") {
@@ -122,11 +173,104 @@ export function validateCutoffImportCommand(command: CutoffImportCommand): void 
 }
 export function createCutoffImportService(dependencies: CutoffImportDependencies): { execute(command: CutoffImportCommand): Promise<CutoffImportResult> } {
   return { async execute(command) {
-    if (hasNativeImportAccountingMetadata(command)) validateNativeImportAccountingCommand(command);
+    if (!isCoreImportCommand(command) && hasNativeImportAccountingMetadata(command)) validateNativeImportAccountingCommand(command);
     const snapshot = structuredClone(command); validateCutoffImportCommand(snapshot);
     await dependencies.authorization.assertAllowed(snapshot.actorAccountId, snapshot);
     const now = dependencies.now();
     requireDomain(Number.isFinite(Date.parse(now)) && now.endsWith("Z"), "INVALID_IMPORT_TIME", "Actual UTC processing time is required");
     return dependencies.store.execute(snapshot, now);
   } };
+}
+
+const coreKeys = (value: unknown, names: readonly string[]): value is Record<string, unknown> => value !== null && typeof value === "object"
+  && Object.getPrototypeOf(value) === Object.prototype && Object.keys(value).sort().join(",") === [...names].sort().join(",");
+const coreCheck = (value: unknown): void => requireDomain(value, "INVALID_CORE_IMPORT_COMMAND", "Exact approved CORE initialization or once-only full binding required");
+export function validateCoreSourceMembers(value: CoreSourceMembers): void {
+  coreCheck(coreKeys(value, ["parties", "accounts"]) && Array.isArray(value.parties) && value.parties.length === 115 && Array.isArray(value.accounts) && value.accounts.length === 49);
+  const ids = new Set<string>(), keys = new Set<string>(), counts = { STAFF: 0, HALL: 0, WAREHOUSE: 0, CUSTOMER: 0 };
+  for (const row of value.parties) {
+    coreCheck(coreKeys(row, ["sourceRowId", "entity", "sourceKey", "nativeId"]) && Object.hasOwn(counts, row.entity) && nonempty(row.sourceKey));
+    entityId("operation", row.sourceRowId); entityId("operation", row.nativeId);
+    coreCheck(!ids.has(row.sourceRowId) && !ids.has(row.nativeId) && !keys.has(JSON.stringify([row.entity, row.sourceKey])));
+    ids.add(row.sourceRowId); ids.add(row.nativeId); keys.add(JSON.stringify([row.entity, row.sourceKey])); counts[row.entity]++;
+  }
+  coreCheck(Object.entries(counts).every(([k, v]) => v === CORE_INITIALIZATION_COUNTS[k as keyof typeof counts]));
+  const accounts = new Set<string>(), staff = new Set<string>();
+  for (const account of value.accounts) {
+    coreCheck(coreKeys(account, ["id", "staff_id", "login_enabled", "auth_version", "version", "created_at", "updated_at"])
+      && typeof account.login_enabled === "boolean" && account.auth_version === 1 && account.version === 1
+      && account.created_at === account.updated_at && Number.isFinite(Date.parse(account.created_at)));
+    entityId("account", account.id); entityId("staff", account.staff_id);
+    coreCheck(!ids.has(account.id) && !accounts.has(account.id) && !staff.has(account.staff_id)
+      && value.parties.some(row => row.entity === "STAFF" && row.nativeId === account.staff_id));
+    accounts.add(account.id); staff.add(account.staff_id);
+  }
+}
+export function validateCoreImportCommand(command: CoreImportCommand): void {
+  const seen = new Set<object>();
+  function data(value: unknown): void {
+    if (value === null || typeof value !== "object") { coreCheck(["string", "number", "boolean"].includes(typeof value) || value === null); return; }
+    coreCheck(!seen.has(value) && (Array.isArray(value) ? Object.getPrototypeOf(value) === Array.prototype : Object.getPrototypeOf(value) === Object.prototype));
+    seen.add(value);
+    for (const key of Reflect.ownKeys(value)) {
+      if (Array.isArray(value) && key === "length") continue;
+      const field = Object.getOwnPropertyDescriptor(value, key)!;
+      coreCheck(typeof key === "string" && field.enumerable && Object.hasOwn(field, "value")); data(field.value);
+    }
+    seen.delete(value);
+  }
+  data(command); requestHash(command); entityId("account", command.actorAccountId); entityId("operation", command.batchId); coreCheck(nonempty(command.requestKey));
+  const envelope = ["action", "actorAccountId", "requestKey", "batchId", "expectedSequence", "expectedCursor"];
+  if (command.action === "IMPORT_CORE_STAGE") {
+    coreCheck(coreKeys(command, [...envelope, "sourceName", "sourceManifestRef", "sourceHash", "cutoffAt", "mappingVersion", "coreInitialization", "accountingVersion", "items"])
+      && /^[a-z][a-z0-9_.:-]*$/.test(command.sourceName) && nonempty(command.sourceManifestRef) && hash(command.sourceHash)
+      && command.mappingVersion === "V2_HISTORY_NULLABLE_1" && Number.isFinite(Date.parse(command.cutoffAt))
+      && command.accountingVersion === "NATIVE_IMPORT_RECORD_ACCOUNTING_V1" && command.expectedSequence === 0 && command.expectedCursor === 0);
+    const core = command.coreInitialization;
+    coreCheck(coreKeys(core, ["scopeVersion", "coreSourceDigest", "coreCounts", "coreSourceMembers", "authority", "target", "bootstrapAt"])
+      && core.scopeVersion === "CORE_INITIALIZATION_26_V1" && hash(core.coreSourceDigest)
+      && requestHash(core.coreCounts) === requestHash(CORE_INITIALIZATION_COUNTS)
+      && typeof core.bootstrapAt === "string" && new Date(core.bootstrapAt).toISOString() === core.bootstrapAt);
+    validateCoreSourceMembers(core.coreSourceMembers);
+    coreCheck(core.coreSourceMembers.accounts.every(account => account.created_at === core.bootstrapAt));
+    const authorityKeys = ["account_capture_sha256", "account_decisions_sha256", "identity_review_sha256", "bootstrap_execution_review_sha256", "source_identity_facts_sha256", "approved_employee_plan_sha256", "old_source_batch_id", "old_source_manifest_sha256"];
+    coreCheck(coreKeys(core.authority, authorityKeys) && Object.entries(core.authority).every(([k, v]) => k === "old_source_batch_id" ? nonempty(v) : hash(v)));
+    coreCheck(coreKeys(core.target, ["database", "role", "serverAddress", "serverPort", "postmasterStartedAt"])
+      && nonempty(core.target.database) && nonempty(core.target.role) && nonempty(core.target.postmasterStartedAt)
+      && (core.target.serverAddress === null ? core.target.serverPort === null : nonempty(core.target.serverAddress) && Number.isInteger(core.target.serverPort)));
+    coreCheck(Array.isArray(command.items) && command.items.length === 22);
+    const records = new Set<string>(), warehouses = new Set<string>();
+    for (const item of command.items) {
+      coreCheck(coreKeys(item, ["targetType", "targetId", "sourceEntityType", "sourceKey", "sourceRecordHash", "sourceFileRef", "nativeRecord"])
+        && item.targetType === "WAREHOUSE" && item.sourceEntityType === "WAREHOUSE" && hash(item.sourceRecordHash) && nonempty(item.sourceFileRef)
+        && coreKeys(item.nativeRecord, ["id", "reviewedAt", "decisionReason"]) && nonempty(item.nativeRecord.decisionReason) && Number.isFinite(Date.parse(item.nativeRecord.reviewedAt)));
+      entityId("operation", item.nativeRecord.id); entityId("warehouse", item.targetId);
+      coreCheck(!records.has(item.nativeRecord.id) && !warehouses.has(item.targetId) && core.coreSourceMembers.parties.some(row => row.entity === "WAREHOUSE" && row.nativeId === item.targetId && row.sourceKey === item.sourceKey));
+      records.add(item.nativeRecord.id); warehouses.add(item.targetId);
+    }
+    return;
+  }
+  coreCheck(command.action === "IMPORT_BIND_FULL_SOURCE" && coreKeys(command, [...envelope, "fullBinding"])); counter(command.expectedSequence); counter(command.expectedCursor);
+  const full = command.fullBinding;
+  coreCheck(coreKeys(full, ["authorizedPayloadHash", "historyExpectedCounts", "inventoryExpectedCounts", "sourceClosurePins", "coreReceiptId", "coreSourceDigest", "coreMaintenanceBinding"])
+    && hash(full.authorizedPayloadHash) && hash(full.coreSourceDigest)); entityId("operation", full.coreReceiptId);
+  validateImportCounts(full.inventoryExpectedCounts); historyImportStageMetadata("V2_HISTORY_NULLABLE_1", { expectedCounts: full.historyExpectedCounts, payloadHash: full.authorizedPayloadHash });
+  coreCheck(Array.isArray(full.sourceClosurePins) && full.sourceClosurePins.length === 11 && new Set(full.sourceClosurePins.map(p => p.group)).size === 11
+    && full.sourceClosurePins.every(p => coreKeys(p, ["group", "sha256"]) && nonempty(p.group) && hash(p.sha256)));
+  const maintenance = full.coreMaintenanceBinding;
+  coreCheck(coreKeys(maintenance, ["version", "members"]) && maintenance.version === "CORE_MAINTENANCE_BINDING_V1" && Array.isArray(maintenance.members) && maintenance.members.length === 115);
+  const members = new Set<string>();
+  for (const member of maintenance.members) {
+    coreCheck(coreKeys(member, ["sourceRowId", "entity", "sourceKey", "nativeId", "version", "nativeSnapshot", "operations"])
+      && ["STAFF", "HALL", "WAREHOUSE", "CUSTOMER"].includes(member.entity) && nonempty(member.sourceKey)
+      && Number.isSafeInteger(member.version) && member.version >= 1 && member.nativeSnapshot !== null && typeof member.nativeSnapshot === "object"
+      && member.nativeSnapshot.id === member.nativeId && member.nativeSnapshot.version === member.version && Array.isArray(member.operations));
+    entityId("operation", member.sourceRowId); entityId("operation", member.nativeId); coreCheck(!members.has(member.sourceRowId)); members.add(member.sourceRowId);
+    let version = 1;
+    for (const operation of member.operations) {
+      coreCheck(coreKeys(operation, ["operationId", "fromVersion", "toVersion"]) && operation.fromVersion === version && operation.toVersion === version + 1);
+      entityId("operation", operation.operationId); version++;
+    }
+    coreCheck(version === member.version);
+  }
 }

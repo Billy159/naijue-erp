@@ -2,14 +2,14 @@ import type { NativeRuntime26Capability } from "../../../packages/application/sr
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
-import { COMPLETE_SCOPE_DECISION, stableImportId } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import { COMPLETE_SCOPE_DECISION, stableImportId, validateCoreImportCommand } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import type { CutoffImportBatch, ImportCheckpoint } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { HISTORY_MAPPING_VERSION, isHistoryQuantity } from "../../../packages/application/src/history-storage-contract.ts";
 import type { ImportSourceEvidence, JsonObject, StockContributionLineage } from "../../../packages/application/src/history-storage-contract.ts";
 import { prepareNativeStockGroup } from "../../../packages/application/src/native-stock-contributor-import.ts";
 import type { NativeStockContributorInput, NativeStockSelection } from "../../../packages/application/src/native-stock-contributor-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
-import { assertNativeRecordAccountingSchema, checkpointFromNativeImportClaims, nativeImportAccountingRequestHash,
+import { assertNativeRecordAccountingSchema, checkpointFromNativeImportClaims, checkpointFromNativeCoreClaims, nativeImportAccountingRequestHash,
   NATIVE_IMPORT_RECORD_ACCOUNTING_VERSION, NATIVE_IMPORT_STOCK_CONSERVATION_VERSION,
   nativeStockContributorsManifestHash, nativeStockEffectiveGroupsManifestHash } from "../../../packages/application/src/native-import-record-accounting.ts";
 import type { NativeAccountingBaselineItem, NativeAccountingMembershipItem, NativeImportAccountingCommand,
@@ -413,4 +413,82 @@ export async function reconcileNativeImportStockConservation(client: PgSalesClie
   return { version: NATIVE_IMPORT_STOCK_CONSERVATION_VERSION, selectionSha256: plan.selectionSha256, sourcePayloadHashRecomputed: false,
     contributorsManifestHash: contributorsHash, effectiveGroupsManifestHash: groupsHash, contributorCount: observedContributors.length,
     effectiveGroupCount: observedGroups.length, nativeBaselineCount: baselines.length, warehouses: warehouseTotals, warehouseUnits: unitTotals };
+}
+
+/** The original store calls this on its actual client AFTER its finite bootstrap callback.
+ * All record/source/native identities are proved before the original claim INSERT. */
+export async function claimNativeCoreWarehouseRecords(client: PgSalesClient,
+  input: { readonly command: import("../../../packages/application/src/inventory-cutoff-import.ts").CoreStageCommand;
+    readonly operationId: string; readonly now: string }, runtime26: NativeRuntime26Capability): Promise<import("../../../packages/application/src/inventory-cutoff-import.ts").CoreImportCheckpoint> {
+  const { command, operationId, now } = structuredClone(input);
+  validateCoreImportCommand(command);
+  check(now === command.coreInitialization.bootstrapAt && operationId === stableImportId("operation", command.actorAccountId, command.requestKey), "CORE source time/operation must remain original");
+  await checkedNativeRuntime26Capability(runtime26)!.assertReady(client, "IMPORT_STAGE");
+  const state = (await client.query(`/* native-core:accounting-batch */ SELECT checkpoint FROM naijue_erp.import_batch WHERE id=$1::uuid AND status='STAGED' AND history_payload_hash IS NULL AND history_expected_counts IS NULL FOR UPDATE`, [command.batchId])).rows;
+  check(state.length === 1 && requestHash(state[0]!.checkpoint) === requestHash({ sequence: 0, cursor: 0, counts: { WAREHOUSE: 0, SKU: 0, INVENTORY_LEDGER: 0, IMPORT_BATCH: 0 }, expected: {} }), "CORE accounting starts only at the actual zero batch");
+  const claims: NativeImportRecordClaim[] = [];
+  for (const item of [...command.items].sort((a, b) => compare(a.targetId, b.targetId))) {
+    const source = command.coreInitialization.coreSourceMembers.parties.find(row => row.entity === "WAREHOUSE" && row.nativeId === item.targetId)!;
+    const proof = (await client.query(`/* native-core:warehouse-record */ SELECT r.id FROM naijue_erp.import_record r
+      JOIN naijue_erp.import_source_row s ON s.batch_id=r.import_batch_id AND s.entity_type=r.source_entity_type AND s.source_key=r.source_key
+      JOIN naijue_erp.native_party_import_evidence e ON e.batch_id=s.batch_id AND e.source_row_id=s.id AND e.entity_type='WAREHOUSE' AND e.native_id=r.target_id
+      JOIN naijue_erp.warehouse w ON w.id=e.native_id AND to_jsonb(w)=e.native_snapshot
+      WHERE r.id=$1::uuid AND r.import_batch_id=$2::uuid AND s.id=$3::uuid AND r.source_key=$4 AND r.target_id=$5::uuid
+        AND r.source_entity_type='WAREHOUSE' AND r.target_type='WAREHOUSE' AND r.status='IMPORTED' AND r.source_record_hash=$6
+        AND r.source_file_ref=$7 AND r.reviewed_at=$8::timestamptz AND r.decision_reason=$9
+        AND s.row_sha256=r.source_record_hash AND s.file_ref=r.source_file_ref AND e.source_key=r.source_key
+        AND e.warehouse_record=$10::jsonb AND e.selection->>'selectionSha256'=$11
+        AND e.creation_xid=pg_current_xact_id() AND s.normalized_fields->>'切换范围'='本次完整核准' FOR SHARE OF r,s,e,w`,
+    [item.nativeRecord.id, command.batchId, source.sourceRowId, item.sourceKey, item.targetId, item.sourceRecordHash, item.sourceFileRef,
+      item.nativeRecord.reviewedAt, item.nativeRecord.decisionReason, JSON.stringify(item.nativeRecord), command.sourceHash])).rows;
+    check(proof.length === 1 && proof[0]!.id === item.nativeRecord.id, "CORE warehouse must have its actual fresh native/source/creator record");
+    const result = await client.query(`/* native-accounting:claim */ INSERT INTO naijue_erp.import_record_accounting_claim
+      (import_batch_id,import_record_id,target_type,target_id,operation_id,checkpoint_sequence,claimed_at,validator_version)
+      VALUES ($1::uuid,$2::uuid,$3,$4::uuid,$5::uuid,$6,$7::timestamptz,$8)
+      RETURNING import_batch_id,import_record_id,target_type,target_id,operation_id,checkpoint_sequence`,
+    [command.batchId, item.nativeRecord.id, "WAREHOUSE", item.targetId, operationId, 1, now, NATIVE_IMPORT_RECORD_ACCOUNTING_VERSION]);
+    returned(result, { import_batch_id: command.batchId, import_record_id: item.nativeRecord.id, target_type: "WAREHOUSE", target_id: item.targetId, operation_id: operationId });
+    check(result.rows[0]!.checkpoint_sequence === 1, "Actual CORE claim RETURNING sequence must be1");
+    claims.push({ batchId: command.batchId, importRecordId: item.nativeRecord.id, targetType: "WAREHOUSE", targetId: item.targetId, operationId, checkpointSequence: 1 });
+  }
+  return checkpointFromNativeCoreClaims(command, operationId, claims);
+}
+
+/** Read the22 birth claims before building the later MAIN. This never claims or skips a record. */
+export async function readNativeCoreWarehouseCarryForward(client: PgSalesClient,
+  binding: { readonly batchId: string; readonly coreReceiptId: string; readonly coreSourceDigest: string }, runtime26: NativeRuntime26Capability): Promise<{
+    readonly checkpoint: unknown; readonly claims: readonly NativeImportRecordClaim[];
+    readonly warehouses: readonly import("../../../packages/application/src/inventory-cutoff-import.ts").CoreWarehouseItem[];
+  }> {
+  entityId("operation", binding.batchId); entityId("operation", binding.coreReceiptId);
+  check(/^[a-f0-9]{64}$/.test(binding.coreSourceDigest), "Original CORE input digest required");
+  await checkedNativeRuntime26Capability(runtime26)!.assertReady(client, "IMPORT_STAGE");
+  const rows = (await client.query(`/* native-core:carry-forward */ SELECT b.checkpoint,c.import_batch_id,c.import_record_id,c.target_type,c.target_id,c.operation_id,c.checkpoint_sequence,
+    rec.source_entity_type,rec.source_key,rec.source_record_hash,rec.source_file_ref,e.warehouse_record
+    FROM naijue_erp.import_batch b JOIN naijue_erp.operation_receipt r ON r.target_id=b.id AND r.target_type='IMPORT' AND r.action='IMPORT_CORE_STAGE'
+    JOIN naijue_erp.audit_change a ON a.operation_id=r.id JOIN naijue_erp.import_record_accounting_claim c ON c.operation_id=r.id AND c.import_batch_id=b.id
+    JOIN naijue_erp.import_record rec ON rec.id=c.import_record_id AND rec.import_batch_id=b.id AND rec.target_id=c.target_id AND rec.target_type=c.target_type
+    JOIN naijue_erp.native_party_import_evidence e ON e.batch_id=b.id AND e.entity_type='WAREHOUSE' AND e.native_id=c.target_id
+    JOIN naijue_erp.import_source_row s ON s.id=e.source_row_id AND s.batch_id=b.id
+    WHERE b.id=$1::uuid AND r.id=$2::uuid AND r.status='COMMITTED' AND a.after_values->>'coreSourceDigest'=$3
+      AND a.action=r.action AND a.object_type='IMPORT' AND a.object_id=b.id AND a.actor_account_id=r.actor_account_id
+      AND a.old_version=1 AND a.new_version=2 AND a.after_values->>'phase'='CORE_INITIALIZED_V1'
+      AND c.target_type='WAREHOUSE' AND c.checkpoint_sequence=1 AND rec.status='IMPORTED' AND rec.source_entity_type='WAREHOUSE'
+      AND e.warehouse_record->>'id'=rec.id::text AND e.warehouse_record->>'decisionReason'=rec.decision_reason
+      AND (e.warehouse_record->>'reviewedAt')::timestamptz=rec.reviewed_at AND rec.source_key=e.source_key
+      AND rec.source_record_hash=s.row_sha256 AND rec.source_file_ref=s.file_ref
+      AND to_jsonb(s)=to_jsonb(jsonb_populate_record(NULL::naijue_erp.import_source_row,e.source_snapshot))
+    ORDER BY c.target_id FOR SHARE OF b,r,a,c,rec,e,s`, [binding.batchId, binding.coreReceiptId, binding.coreSourceDigest])).rows;
+  check(rows.length === 22 && new Set(rows.map(row => row.import_record_id)).size === 22 && new Set(rows.map(row => row.target_id)).size === 22,
+    "All22 original exact CORE claims must be read back; a missing/conflicting birth record cannot be silently ignored");
+  const checkpoint = jsonObject(rows[0]!.checkpoint), progress = jsonObject(checkpoint.counts);
+  check(progress.WAREHOUSE === rows.length && progress.SKU === 0 && progress.INVENTORY_LEDGER === 0 && progress.IMPORT_BATCH === 0
+    && checkpoint.cursor === 22 && typeof checkpoint.sequence === "number" && checkpoint.sequence >= 1,
+    "Carry-forward is before new MAIN effects and preserves actual original progress");
+  const claims = rows.map(row => ({ batchId: stringValue(row.import_batch_id), importRecordId: stringValue(row.import_record_id), targetType: "WAREHOUSE" as const,
+    targetId: stringValue(row.target_id), operationId: stringValue(row.operation_id), checkpointSequence: 1 }));
+  const warehouses = rows.map(row => ({ sourceEntityType: "WAREHOUSE", sourceKey: stringValue(row.source_key), sourceRecordHash: stringValue(row.source_record_hash),
+    sourceFileRef: stringValue(row.source_file_ref), targetType: "WAREHOUSE" as const, targetId: entityId("warehouse", stringValue(row.target_id)),
+    nativeRecord: structuredClone(row.warehouse_record) as import("../../../packages/application/src/inventory-cutoff-import.ts").CoreWarehouseItem["nativeRecord"] }));
+  return { checkpoint: structuredClone(checkpoint), claims, warehouses };
 }

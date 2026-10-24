@@ -1,6 +1,6 @@
 import { requireDomain } from "../../domain/src/errors.ts";
 import { entityId } from "../../domain/src/values.ts";
-import { validateCutoffImportCommand, validateImportCounts } from "./inventory-cutoff-import.ts";
+import { stableImportId, validateCutoffImportCommand, validateImportCounts } from "./inventory-cutoff-import.ts";
 import type { CutoffImportCommand, CutoffImportItem, ImportCheckpoint, ImportTarget } from "./inventory-cutoff-import.ts";
 import { requestHash } from "./request-hash.ts";
 import { assertReviewedNativeImportSchema } from "./native-import-schema-contract.ts";
@@ -233,4 +233,20 @@ export function checkpointFromNativeImportClaims(before: ImportCheckpoint, comma
 /** The hash is of the MAIN command including accountingVersion/nativeRecord, not auxiliary metadata. */
 export function nativeImportAccountingRequestHash(command: NativeImportAccountingCommand): string {
   validateNativeImportAccountingCommand(command); return requestHash(command);
+}
+
+/** v14 CORE claims are real membership records in the original operation, not a synthetic CHUNK. */
+export function checkpointFromNativeCoreClaims(command: import("./inventory-cutoff-import.ts").CoreStageCommand,
+  operationId: string, claims: readonly NativeImportRecordClaim[]): import("./inventory-cutoff-import.ts").CoreImportCheckpoint {
+  validateCutoffImportCommand(command); entityId("operation", operationId);
+  requireDomain(operationId === stableImportId("operation", command.actorAccountId, command.requestKey) && claims.length === 22, "INCOMPLETE_NATIVE_RECORD_ACCOUNTING", "CORE must own all22 actual warehouse claims");
+  const records = new Set<string>();
+  for (const claim of claims) {
+    requireDomain(claim.batchId === command.batchId && claim.operationId === operationId && claim.checkpointSequence === 1
+      && claim.targetType === "WAREHOUSE" && !records.has(claim.importRecordId)
+      && command.items.some(item => item.nativeRecord.id === claim.importRecordId && item.targetId === claim.targetId),
+    "INVALID_NATIVE_RECORD_ACCOUNTING_CLAIM", "Exact initial CORE claim identity required");
+    records.add(claim.importRecordId);
+  }
+  return { sequence: 1, cursor: claims.length, counts: { WAREHOUSE: claims.length, SKU: 0, INVENTORY_LEDGER: 0, IMPORT_BATCH: 0 }, expected: {} };
 }

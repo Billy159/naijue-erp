@@ -396,6 +396,20 @@ SELECT manifest->'identity' AS identity,manifest->'migration_versions' AS migrat
    ))) AS source_routines_match
 FROM observed`;
 
+/** Same original catalog query with only the approved v14 routine bodies and one private helper. */
+export const NATIVE_RUNTIME26_V14_METADATA_PROBE = NATIVE_RUNTIME26_METADATA_PROBE
+  .replace("jsonb_array_length(manifest->'routines')=122", "jsonb_array_length(manifest->'routines')=123")
+  .replace("SELECT 1 FROM (VALUES", "SELECT 1 FROM (VALUES\n    ('assert_core_initialization_v14','665501c212a0576bf154ecd230d32fae36e9f50656e3c17d58bb268b50279bd1'),")
+  .replace("('assert_native_bootstrap_accounts','69b87a72c52a81aba7f9fd380f3acbcb8df8fbcaa6ca72ccca4ac20e26ab42c7')", "('assert_native_bootstrap_accounts','21e2cfcc34b0865e4d5bad67c281c41d2884b91fa2ae72c23a100bcc5ca76d87')")
+  .replace("('guard_import_batch','0275164994ce931e93d334b753f0f616d039661a73239ac5dbd4482f0720e749')", "('guard_import_batch','f0e35d2d5978c92d26c1eab6525a87d2ae3450a525daa14131b479b03856d29a')")
+  .replace("('guard_history_publication','297d9859c6efad3e48e9c8931ab11a810c6b1c73c16ddf262b34ffbc5d11001e')", "('guard_history_publication','6ad32797b7fe81e6427b3abec90aca378778be9af30b014b55966fbed0bff77e')")
+  .replace("('validate_import_batch_commit','1e645ed10e00b6a56ed3820fce160f54a33aa547c815c6fff5a988ef7f7fc9f2')", "('validate_import_batch_commit','dc2e8d344085056b53469be394eb9ced344db510bf6f6dc5576f4b0a9ea20140')")
+  .replace("('validate_import_accounting_checkpoint_commit','2da056af8fcd97e2fc046d5f6b93b668a4bd523f49e0d0d5a1073bad1b933df7')", "('validate_import_accounting_checkpoint_commit','edef6846035f1780c632183b32f81b63919cae4703a78c4bc21c44c507441f47')")
+  .replace("('validate_import_operation','0bc6c348d7299fd7ce6ad1e2f98a3057b60eddce3de01e920314c0a1e3dd1e36')", "('validate_import_operation','6ffc2561abe1bd4ff7465c82143c155bcaa0ad311b90f6679bef10ceae30c62f')")
+  .replace("('guard_import_accounting_claim','d592577abd111a82d3edcb44a7d83ece90159a19f4e396740662db59c6706956')", "('guard_import_accounting_claim','298996ca170c969aa06df8dfa44219b86a9db0ae4dc1c07f726167a518f62acf')")
+  .replace("('validate_import_accounting_claim_commit','03a517d099491d51f97e50b8bbf9e5729c1fd9f67a68a9445328379391f1fdf7')", "('validate_import_accounting_claim_commit','ad8e19c3f36b85ebbda107a2ca8e3c00ad10ca3005a232bd033bbab7613be756')")
+  .replace("('assert_history_typed_closure','b0551d6a80e9fdd9709d6ed63820dc8b5a7577e8bfb9deaa19cb0e387de54bce')", "('assert_history_typed_closure','8556e917e6a251dd1eb97974fbb6f793d3e46a1ef10f6ef7fd77fb7ad539d00f')");
+
 /** Metadata approval only. Whole-source, batch, actor, receipt, conservation and
  * publication authorizers remain separate mandatory ports at their callers. */
 type Runtime26Purpose = Parameters<NativeRuntime26Capability["assertReady"]>[1];
@@ -483,8 +497,9 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || catalog.patchLevel !== "26_v11_document_specification_save")
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization"] as readonly unknown[]).includes(catalog.patchLevel))
     throw runtime26Error("Exact reviewed v11 catalog digest required; earlier catalogs do not prove the document append closure");
+  const metadataProbe = catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;
   const purposes = ownArray(review.purposes);
   if (purposes.length === 0 || purposes.length > runtime26Purposes.length || new Set(purposes).size !== purposes.length
     || purposes.some(p => !runtime26Purposes.includes(p as Runtime26Purpose))) throw runtime26Error("Finite explicitly reviewed runtime purposes required");
@@ -509,7 +524,7 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     if (!allowed.has(purpose) || !lease.active || lease.checking || lease.pending !== 0) fail("Original idle live lease and explicitly reviewed purpose required");
     filesReady(); lease.checking = true;
     try {
-      const observed = await lease.query(NATIVE_RUNTIME26_METADATA_PROBE);
+      const observed = await lease.query(metadataProbe);
       if (!lease.active || observed.rows.length !== 1 || observed.rowCount !== 1) fail("One actual metadata row on the original lease required");
       const row = exactData(observed.rows[0], ["identity", "migration_versions", "catalog_sha256", "source_routines_match"]);
       const identity = exactData(row.identity, ["database", "database_oid", "database_owner", "current_user", "session_user", "server_version_num", "server_addr", "server_port", "postmaster_start", "replication_role"]);

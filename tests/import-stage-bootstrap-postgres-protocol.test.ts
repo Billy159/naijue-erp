@@ -232,3 +232,102 @@ test("cutoff26 exact audit/receipt insert counts remain mandatory and unknown co
  assert.equal(p.calls.at(-1)!.sql,"COMMIT");assert.equal(p.calls.filter(c=>c.sql==="ROLLBACK").length,0);assert.equal(p.connects(),1);assert.deepEqual(p.released,[p.failure]);
  const old=protocol({successor:true});await assert.rejects(old.service({async stageNewBatch(){assert.fail("old bootstrap must not run26");}}).execute(stage));assert.ok(!old.calls.some(c=>c.sql.startsWith("INSERT INTO naijue_erp.import_batch")));
 });
+
+const coreTime14 = new Date(cutoffTime).toISOString();
+function coreStage14(): import('../packages/application/src/inventory-cutoff-import.ts').CoreStageCommand {
+ const id=(i:number)=>`14000000-0000-4000-8000-${String(i).padStart(12,'0')}`;
+ const parties: import('../packages/application/src/inventory-cutoff-import.ts').CoreSourceMember[]=[];
+ for(const [entity,total]of [['STAFF',49],['HALL',22],['WAREHOUSE',22],['CUSTOMER',22]] as const)
+  for(let i=0;i<total;i++){const n=parties.length+1;parties.push({entity,sourceRowId:id(n),sourceKey:`SYNTHETIC_${entity}_${i}`,nativeId:id(1000+n)});}
+ const accounts=parties.filter(p=>p.entity==='STAFF').map((p,i)=>({id:id(2000+i),staff_id:p.nativeId,login_enabled:true,auth_version:1 as const,version:1 as const,created_at:coreTime14,updated_at:coreTime14}));
+ return {action:'IMPORT_CORE_STAGE',actorAccountId:accounts[0]!.id as import('../packages/domain/src/values.ts').EntityId<'account'>,requestKey:'SYNTHETIC_CORE14',batchId:id(3000),
+  sourceName:'synthetic.core14',sourceManifestRef:'synthetic-core14',sourceHash:'a'.repeat(64),cutoffAt:coreTime14,mappingVersion:HISTORY_MAPPING_VERSION,
+  expectedSequence:0,expectedCursor:0,accountingVersion:'NATIVE_IMPORT_RECORD_ACCOUNTING_V1',
+  coreInitialization:{scopeVersion:'CORE_INITIALIZATION_26_V1',coreSourceDigest:'c'.repeat(64),coreCounts:{STAFF:49,HALL:22,WAREHOUSE:22,CUSTOMER:22,USER_ACCOUNT:49},coreSourceMembers:{parties,accounts},
+   authority:{account_capture_sha256:'a'.repeat(64),account_decisions_sha256:'a'.repeat(64),identity_review_sha256:'a'.repeat(64),bootstrap_execution_review_sha256:'a'.repeat(64),source_identity_facts_sha256:'a'.repeat(64),approved_employee_plan_sha256:'a'.repeat(64),old_source_batch_id:'SYNTHETIC',old_source_manifest_sha256:'a'.repeat(64)},
+   target:{database:'SYNTHETIC_CORE14',role:'SYNTHETIC_OWNER',serverAddress:null,serverPort:null,postmasterStartedAt:coreTime14},bootstrapAt:coreTime14},
+  items:parties.filter(p=>p.entity==='WAREHOUSE').map((p,i)=>({sourceEntityType:'WAREHOUSE',sourceKey:p.sourceKey,sourceRecordHash:'a'.repeat(64),sourceFileRef:'synthetic-wh',targetType:'WAREHOUSE',targetId:p.nativeId as import('../packages/domain/src/values.ts').EntityId<'warehouse'>,nativeRecord:{id:id(4000+i),reviewedAt:coreTime14,decisionReason:'SYNTHETIC_REVIEWED'}}))};
+}
+function coreProtocol14(mode?:'zeroClaim'|'unknownCommit'){
+ const calls:{sql:string;values:unknown[]}[]=[],released:unknown[]=[];
+ const receipts=new Map<string,Record<string,unknown>>();let batch:Record<string,unknown>|undefined,birth:unknown,callbacks=0,authorized=true;
+ const client={async query(sql:string,values:unknown[]=[]){calls.push({sql,values});let rows:Record<string,unknown>[]=[],rowCount=1;
+  if(sql.includes('native-core:carry-forward'))rows=coreStage14().items.map(item=>({checkpoint:batch!.checkpoint,import_batch_id:coreStage14().batchId,import_record_id:item.nativeRecord.id,target_type:'WAREHOUSE',target_id:item.targetId,operation_id:stableImportId('operation',coreStage14().actorAccountId,coreStage14().requestKey),checkpoint_sequence:1,source_entity_type:item.sourceEntityType,source_key:item.sourceKey,source_record_hash:item.sourceRecordHash,source_file_ref:item.sourceFileRef,warehouse_record:item.nativeRecord}));
+  else if(sql.includes('WHERE actor_account_id = $1 AND request_key = $2'))rows=receipts.has(String(values[1]))?[receipts.get(String(values[1]))!]:[];
+  else if(sql.includes('FROM naijue_erp.import_batch WHERE id = $1 FOR UPDATE'))rows=batch?[batch]:[];
+  else if(sql.includes('native-core:stage'))batch={status:'STAGED',checkpoint:JSON.parse(String(values[6])),history_expected_counts:null,history_payload_hash:null};
+  else if(sql.includes('native-core:accounting-batch'))rows=[{checkpoint:batch!.checkpoint}];
+  else if(sql.includes('native-core:warehouse-record'))rows=[{id:values[0]}];
+  else if(sql.includes('native-accounting:claim')){rowCount=mode==='zeroClaim'?0:1;rows=rowCount?[{import_batch_id:values[0],import_record_id:values[1],target_type:values[2],target_id:values[3],operation_id:values[4],checkpoint_sequence:values[5]}]:[];}
+  else if(sql.includes('native-core:checkpoint'))batch!.checkpoint=JSON.parse(String(values[1]));
+  else if(sql.includes('native-core:birth'))rows=[{after_values:birth,id:values[0]}];
+  else if(sql.includes('native-core:bind-full')){batch!.checkpoint=JSON.parse(String(values[1]));batch!.history_expected_counts=JSON.parse(String(values[2]));batch!.history_payload_hash=values[3];}
+  else if(sql.startsWith('INSERT INTO naijue_erp.audit_change')&&values[4]==='IMPORT_CORE_STAGE')birth=JSON.parse(String(values[8]));
+  else if(sql.startsWith('INSERT INTO naijue_erp.operation_receipt'))receipts.set(String(values[2]),{request_hash:values[3],action:values[4],target_type:'IMPORT',target_id:values[5],result_data:JSON.parse(String(values[6]))});
+  else if(sql==='COMMIT'&&mode==='unknownCommit')throw Error('SYNTHETIC_UNKNOWN_CORE_COMMIT');
+  return{rows,rowCount};},release(error?:unknown){released.push(error);}};
+ const runtime={profile:'EXACT26' as const,contract:'NATIVE_RUNTIME26_V1' as const,async assertReady(target:object,purpose:string){assert.equal(target,client);assert.equal(purpose,'IMPORT_STAGE');}};
+ const store=new PostgresCutoffImportStore({async connect(){return client;}},{runtime26:runtime,coreAuthorization:{async assertAllowed(){if(!authorized)throw Error('SYNTHETIC_CORE_REVOKED');}},stageBootstrap26:{async stageNewBatch26(borrowed,input,cap){callbacks++;assert.equal(input.command.action,'IMPORT_CORE_STAGE');await cap.assertReady(borrowed,'IMPORT_STAGE');await borrowed.query(target26);}}});
+ return{calls,released,store,client,runtime,callbacks:()=>callbacks,revoke(){authorized=false;}};
+}
+test('v14 CORE original transaction accounts22 exact new claims and one audit1to2; receipt replay preserves bootstrap birth',async()=>{
+ const p=coreProtocol14(),command=coreStage14(),first=await p.store.execute(command,coreTime14);
+ assert.deepEqual({sequence:first.sequence,cursor:first.cursor,status:first.status,phase:first.phase},{sequence:1,cursor:22,status:'STAGED',phase:'CORE_INITIALIZED_V1'});
+ assert.equal(p.calls.filter(c=>c.sql.includes('native-accounting:claim')).length,22);
+ const audit=p.calls.find(c=>c.sql.startsWith('INSERT INTO naijue_erp.audit_change'))!;assert.deepEqual(audit.values.slice(5,7),[1,2]);
+ assert.deepEqual(JSON.parse(String(audit.values[7])),{sequence:0,cursor:0,counts:{WAREHOUSE:0,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}});
+ const after=JSON.parse(String(audit.values[8]));assert.equal(after.checkpoint.cursor,22);assert.deepEqual(after.checkpoint.expected,{});assert.equal(after.fullBinding,null);
+ assert.equal(p.calls.filter(c=>c.sql.startsWith('INSERT INTO naijue_erp.operation_receipt')).length,1);
+ const n=p.calls.length;assert.deepEqual(await p.store.execute(command,coreTime14),first);assert.equal(p.callbacks(),1);
+ assert.ok(p.calls.slice(n).every(c=>!c.sql.includes('INSERT INTO')&&!c.sql.includes('UPDATE naijue')));
+ p.revoke();await assert.rejects(p.store.execute(command,coreTime14),/SYNTHETIC_CORE_REVOKED/);
+});
+test('v14 CORE failed actual claim return rolls back without audit; unknown COMMIT discards without retry',async()=>{
+ const failed=coreProtocol14('zeroClaim');await assert.rejects(failed.store.execute(coreStage14(),coreTime14),{code:'NATIVE_RECORD_ACCOUNTING_CONFLICT'});
+ assert.equal(failed.calls.at(-1)!.sql,'ROLLBACK');assert.ok(failed.calls.every(c=>!c.sql.startsWith('INSERT INTO naijue_erp.audit_change')));
+ const uncertain=coreProtocol14('unknownCommit');await assert.rejects(uncertain.store.execute(coreStage14(),coreTime14),/SYNTHETIC_UNKNOWN_CORE_COMMIT/);
+ assert.equal(uncertain.calls.filter(c=>c.sql==='COMMIT').length,1);assert.ok(uncertain.calls.every(c=>c.sql!=='ROLLBACK'));assert.ok(uncertain.released[0] instanceof Error);
+});
+test('v14 one full binding advances sequence only, zero new claims, original credentials and source never mutated; key retry and second binding',async()=>{
+ const p=coreProtocol14(),command=coreStage14();const core=await p.store.execute(command,coreTime14);const from=p.calls.length;
+ const binding:import('../packages/application/src/inventory-cutoff-import.ts').BindFullSourceCommand={action:'IMPORT_BIND_FULL_SOURCE',actorAccountId:command.actorAccountId,batchId:command.batchId,requestKey:'SYNTHETIC_BIND14',expectedSequence:1,expectedCursor:22,
+  fullBinding:{authorizedPayloadHash:'d'.repeat(64),historyExpectedCounts:stage.historyMetadata.expectedCounts,inventoryExpectedCounts:{WAREHOUSE:53,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:1},
+   sourceClosurePins:Array.from({length:11},(_,i)=>({group:`SYNTHETIC_GROUP_${i}`,sha256:'a'.repeat(64)})),coreReceiptId:core.operationId,coreSourceDigest:command.coreInitialization.coreSourceDigest,
+   coreMaintenanceBinding:{version:'CORE_MAINTENANCE_BINDING_V1',members:command.coreInitialization.coreSourceMembers.parties.map(row=>({...row,version:1,nativeSnapshot:{id:row.nativeId,version:1},operations:[]}))}}};
+ const result=await p.store.execute(binding,coreTime14);assert.equal(result.sequence,2);assert.equal(result.cursor,22);assert.equal(result.phase,'FULL_SOURCE_BOUND_V1');
+ const delta=p.calls.slice(from);assert.ok(delta.every(c=>!c.sql.includes('native-accounting:claim')&&!/\b(?:INSERT INTO|UPDATE|DELETE FROM) naijue_erp\.(?:user_account|auth_session|import_source_row|native_party_import_evidence)/.test(c.sql)));
+ assert.equal(p.callbacks(),1);assert.deepEqual(await p.store.execute(binding,coreTime14),result);
+ await assert.rejects(p.store.execute({...binding,requestKey:'SYNTHETIC_SECOND_BIND'},coreTime14),{code:'IMPORT_BATCH_FROZEN'});
+ await assert.rejects(p.store.execute({...binding,fullBinding:{...binding.fullBinding,authorizedPayloadHash:'e'.repeat(64)}},coreTime14),{code:'IDEMPOTENCY_CONFLICT'});
+});
+test('v14 CORE malformed membership, missing authority and changed real record scope reject before connection',async()=>{
+ const command=coreStage14();
+ const {validateCoreImportCommand}=await import('../packages/application/src/inventory-cutoff-import.ts');
+ for(const mutate of [(c:typeof command)=>{(c.coreInitialization.coreSourceMembers.parties as unknown[]).pop();},(c:typeof command)=>{(c.items as unknown[])[1]=c.items[0];},(c:typeof command)=>{(c.coreInitialization.authority as unknown as Record<string,unknown>).identity_review_sha256=null;}]){
+  const changed=structuredClone(command);mutate(changed);assert.throws(()=>validateCoreImportCommand(changed));
+ }
+});
+test('v14 committed CORE settings checks original client and current authority before exact22 grant; membership or actor changes deny',async()=>{
+ const {createCommittedCoreSettingsRead}=await import('../apps/api/src/postgres-read-api.ts');
+ const command=coreStage14(),actor={accountId:command.actorAccountId,hallId:null};
+ let sourceMatch=true,role='ADMIN';const calls:string[]=[];
+ const client={async query(sql:string){calls.push(sql);return{rows:sql.includes('core-settings:committed-proof')?[{after_values:{coreSourceMembers:command.coreInitialization.coreSourceMembers},sources_match:sourceMatch,claims_match:true}]:[{id:actor.accountId,staff_id:command.coreInitialization.coreSourceMembers.accounts[0]!.staff_id,login_enabled:true,role,employment_status:'在职',hall_id:null,hall_enabled:null}],rowCount:1};},release(){}};
+ const core=createCommittedCoreSettingsRead({async connect(){return client;}},{profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(target,purpose){assert.equal(target,client);assert.equal(purpose,'CURRENT_FORM_READ');}},
+  {profile:'COMMITTED_CORE_SETTINGS_V14',batchId:command.batchId,operationId:stableImportId('operation',command.actorAccountId,command.requestKey),coreSourceDigest:command.coreInitialization.coreSourceDigest});
+ const signal=new AbortController().signal,intent={kind:'warehouses' as const,operation:'detail' as const,parameters:{id:command.items[0]!.targetId}};
+ const grant=await core.authorization.authorize(actor,intent,signal);assert.equal(grant.scope.kind,'CORE_MEMBERS');
+ if(grant.scope.kind!=='CORE_MEMBERS')throw Error('Expected core scope');assert.equal(grant.scope.hallIds.length,22);assert.equal(grant.scope.warehouseIds.length,22);
+ await core.capability.assertReady(client,{actor,intent,grant,signal});
+ await assert.rejects(core.capability.assertReady(client,{actor,intent,grant:{...grant,scope:{...grant.scope,warehouseIds:[...grant.scope.warehouseIds.slice(1),'14000000-0000-4000-8000-000000099999']}},signal}),{code:'FORBIDDEN'});
+ role='SALESPERSON';await assert.rejects(core.authorization.authorize(actor,intent,signal),{code:'FORBIDDEN'});
+ role='ADMIN';sourceMatch=false;await assert.rejects(core.authorization.authorize(actor,intent,signal),{code:'FORBIDDEN'});
+ assert.ok(calls.every(sql=>!/(?:UPDATE|INSERT INTO|DELETE FROM)/.test(sql)));
+});
+
+test('v14 full MAIN carry-forward reads all22 exact original claims and returns progress without claiming again',async()=>{
+ const p=coreProtocol14(),command=coreStage14(),core=await p.store.execute(command,coreTime14),n=p.calls.length;
+ const {readNativeCoreWarehouseCarryForward}=await import('../adapters/postgres/src/native-import-record-accounting.ts');
+ const result=await readNativeCoreWarehouseCarryForward(p.client,{batchId:command.batchId,coreReceiptId:core.operationId,coreSourceDigest:command.coreInitialization.coreSourceDigest},p.runtime);
+ assert.equal(result.claims.length,22);assert.deepEqual(result.warehouses,command.items);assert.equal((result.checkpoint as {cursor:number}).cursor,22);
+ assert.ok(p.calls.slice(n).every(call=>!/(?:INSERT INTO|UPDATE|DELETE FROM)/.test(call.sql)));
+});

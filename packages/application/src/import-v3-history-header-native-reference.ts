@@ -188,3 +188,18 @@ export async function stageV3HistoryHeaderNativeReferences(inputs:readonly Histo
   await options.authorizeReferenceChunk!(structuredClone(chunk));const result=await options.store!.stage(chunk);
   return {mode:'STAGE',rows:chunk.rows.length,...result,published:false,importReady:false};
 }
+
+/** v14 consumes the actual immutable command, so a CORE digest can never masquerade as full MAIN. */
+export function assertBootstrapAccountCommandBinding(input: HistoryHeaderNativeReferenceInput,
+  command: Extract<import("./inventory-cutoff-import.ts").CutoffImportCommand, { action: "IMPORT_STAGE" | "IMPORT_CORE_STAGE" }>,
+  operationId: string, now: string): void {
+  const proof = (input.source.fieldProvenance.fields as JsonObject).bootstrap_accounts as JsonObject;
+  require(proof !== undefined, "BOOTSTRAP26_METADATA"); assertBootstrapAccountMetadata(input, proof.raw);
+  const raw = proof.raw as JsonObject, binding = raw.binding as JsonObject;
+  const core = command.action === "IMPORT_CORE_STAGE" ? command.coreInitialization : undefined;
+  require(binding.batch_id === command.batchId && binding.fixed_source_namespace === command.sourceName
+    && binding.selection_sha256 === command.sourceHash && binding.operation_id === operationId && binding.actor_account_id === command.actorAccountId
+    && binding.stage_command_sha256 === requestHash(command)
+    && binding.authorized_payload_sha256 === (core ? core.coreSourceDigest : command.action === "IMPORT_STAGE" ? command.historyMetadata?.payloadHash : undefined)
+    && (!core || requestHash(raw.authority) === requestHash(core.authority) && now === core.bootstrapAt), "BOOTSTRAP26_COMMAND_BINDING");
+}

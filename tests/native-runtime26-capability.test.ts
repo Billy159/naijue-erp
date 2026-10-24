@@ -1,11 +1,11 @@
 /** Protocol fakes and synthetic pinned metadata only; no PostgreSQL or real grant. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, writeFileSync, rmSync, chmodSync, symlinkSync, unlinkSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, rmSync, chmodSync, symlinkSync, unlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
+import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 const digest = "a".repeat(64), hash = (v: string) => createHash("sha256").update(v).digest("hex");
 const target = { database: "SYNTHETIC_ONLY", databaseOid: "123", actingRole: "synthetic_owner", sessionUser: "synthetic_session", serverAddress: null, serverPort: null, postmasterStart: "2026-10-23 00:00:00+00" };
@@ -177,4 +177,22 @@ test("QB92 valid pins preserve original unknown COMMIT failure and discard witho
     assert.equal(p.calls.filter(sql => sql === "COMMIT").length, 1); assert.ok(!p.calls.includes("ROLLBACK")); assert.equal(p.releases.at(-1), failure);
     assert.equal(p.connects(), 2);
   } finally { f.cleanup(); }
+});
+
+test("v14 runtime selector uses its exact123-function probe, retains metadata-only scope and independent purposes",async()=>{
+ const f=fixture();try{
+  const calls:string[]=[];const pool={async connect(){return{async query(sql:string){calls.push(sql);assert.equal(sql,NATIVE_RUNTIME26_V14_METADATA_PROBE);return{rows:[observation()],rowCount:1};},release(){}};}};
+  const options=f.options({...f.review,catalog:{...f.review.catalog,patchLevel:'26_v14_core_initialization'}});
+  const issuer=await createNativeRuntime26Issuer(pool,options),client=await issuer.pool.connect();
+  await issuer.runtime26.assertReady(client,'IMPORT_STAGE');assert.equal(calls.length,3);
+  await assert.rejects(issuer.runtime26.assertReady(client,'IMPORT_PUBLISH'),{code:'NATIVE_RUNTIME26_NOT_READY'});client.release();
+  const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,patchLevel:'26_v14_core_initialization'},realImportExecutionAuthorized:true})));assert.equal(p.connects(),0);
+ }finally{f.cleanup();}
+});
+test("v14 exact routine pins cover the single approved patch while original v11 probe stays unchanged",()=>{
+ const sql=readFileSync(new URL('../adapters/postgres/patches/0026-v14-core-initialization.sql',import.meta.url),'utf8');
+ const routines=[...sql.matchAll(/CREATE(?: OR REPLACE)? FUNCTION naijue_erp\.(\w+)\([^;]*?AS \$\$(.*?)\$\$;/gs)];assert.equal(routines.length,10);
+ for(const m of routines)assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes(`('${m[1]}','${hash(m[2]!)}')`),m[1]);
+ assert.ok(NATIVE_RUNTIME26_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=122"));
+ assert.ok(NATIVE_RUNTIME26_V14_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=123"));
 });

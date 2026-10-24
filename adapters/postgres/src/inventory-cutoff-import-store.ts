@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import type { CutoffImportBatch, CutoffImportCommand, CutoffImportItem, CutoffImportResult, CutoffImportStore, ImportCheckpoint, ImportCounts, ImportTarget } from "../../../packages/application/src/inventory-cutoff-import.ts";
-import { COMPLETE_SCOPE_DECISION, stableImportId, validateCutoffImportCommand, validateImportCounts } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import type { CutoffImportBatch, CutoffImportCommand, CutoffImportItem, CutoffImportResult, CutoffImportStore, ImportCheckpoint, ImportCounts, ImportTarget, CoreImportCommand, CoreStageCommand, CoreImportCheckpoint } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import { COMPLETE_SCOPE_DECISION, stableImportId, validateCutoffImportCommand, validateImportCounts, isCoreImportCommand } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { HISTORY_MAPPING_VERSION } from "../../../packages/application/src/history-storage-contract.ts";
 import { historyImportStageMetadata } from "../../../packages/application/src/history-import-lifecycle.ts";
@@ -12,7 +12,7 @@ import { reconcileHistoryTypedPublication } from "./history-typed-publication.ts
 import type { HistoryTypedClosurePlan } from "../../../packages/application/src/history-typed-closure.ts";
 import { authorizeNativeImportAccountingCommand, hasNativeImportAccountingMetadata, validateNativeImportAccountingCommand } from "../../../packages/application/src/native-import-record-accounting.ts";
 import type { NativeImportAccountingCommand } from "../../../packages/application/src/native-import-record-accounting.ts";
-import { createNativeImportRecordAccountant, reconcileNativeImportStockConservation } from "./native-import-record-accounting.ts";
+import { createNativeImportRecordAccountant, reconcileNativeImportStockConservation, claimNativeCoreWarehouseRecords } from "./native-import-record-accounting.ts";
 import type { NewBaselineInsertResults } from "./native-import-record-accounting.ts";
 import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
@@ -41,10 +41,12 @@ export function decodeImportCheckpoint(value: unknown): ImportCheckpoint {
 }
 function decodeResult(value: unknown): CutoffImportResult {
   const row = jsonObject(value); const sequence = integerValue(row.sequence); const cursor = integerValue(row.cursor);
-  requireDomain(Object.keys(row).length === 6 && sequence >= 0 && cursor >= 0 && Array.isArray(row.ledgerEntryIds)
+  const core = row.phase === "CORE_INITIALIZED_V1" || row.phase === "FULL_SOURCE_BOUND_V1";
+  requireDomain(Object.keys(row).length === (core ? 9 : 6) && (!core || typeof row.coreSourceDigest === "string" && /^[a-f0-9]{64}$/.test(row.coreSourceDigest) && requestHash(row.coreCounts) === requestHash({ STAFF:49,HALL:22,WAREHOUSE:22,CUSTOMER:22,USER_ACCOUNT:49 })) && sequence >= 0 && cursor >= 0 && Array.isArray(row.ledgerEntryIds)
     && (row.status === "STAGED" || row.status === "VALIDATING" || row.status === "IMPORTED"), "INVALID_DATABASE_VALUE", "Invalid persisted import receipt");
   return { operationId: entityId("operation", stringValue(row.operationId)), batchId: entityId("operation", stringValue(row.batchId)), sequence, cursor, status: row.status,
-    ledgerEntryIds: row.ledgerEntryIds.map(value => entityId("ledger", stringValue(value))) };
+    ledgerEntryIds: row.ledgerEntryIds.map(value => entityId("ledger", stringValue(value))),
+    ...(core ? { phase: row.phase as "CORE_INITIALIZED_V1" | "FULL_SOURCE_BOUND_V1", coreSourceDigest: stringValue(row.coreSourceDigest), coreCounts: row.coreCounts as CoreStageCommand["coreInitialization"]["coreCounts"] } : {}) };
 }
 async function historySchema(client: PgSalesClient, runtime26?: NativeRuntime26Capability, purpose: "IMPORT_STAGE" | "IMPORT_PUBLISH" = "IMPORT_STAGE"): Promise<readonly number[]> {
   if (runtime26) await runtime26.assertReady(client, purpose);
@@ -202,7 +204,7 @@ export interface ImportStageBootstrap {
 export interface ImportStageBootstrap26 {
   /** Independently source-authorized26 provider only. Runtime is derived by the
    * original transaction, scoped to this exact borrowed client and callback. */
-  stageNewBatch26(client: Pick<PgSalesClient, "query">, input: Parameters<ImportStageBootstrap["stageNewBatch"]>[1],
+  stageNewBatch26(client: Pick<PgSalesClient, "query">, input: { readonly command: Extract<CutoffImportCommand, { action: "IMPORT_STAGE" }> | CoreStageCommand; readonly now: string; readonly operationId: string },
     runtime26: NativeRuntime26Capability): Promise<void>;
 }
 /** Pure protocol adapter: constructing it does not connect, migrate, seed, or start a server. */
@@ -211,14 +213,19 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
   private readonly nativeAccountingAuthorization: Parameters<typeof authorizeNativeImportAccountingCommand>[1] | undefined;
   private readonly stageBootstrap: ImportStageBootstrap | undefined;
   private readonly runtime26: NativeRuntime26Capability | undefined;
+  private readonly coreAuthorization: { assertAllowed(actorAccountId: CoreImportCommand["actorAccountId"], command: CoreImportCommand): Promise<void> } | undefined;
   private readonly stageBootstrap26: ImportStageBootstrap26 | undefined;
   constructor(pool: PgSalesPool, options: {
     readonly nativeAccountingAuthorization?: Parameters<typeof authorizeNativeImportAccountingCommand>[1];
     readonly stageBootstrap?: ImportStageBootstrap;
     readonly runtime26?: NativeRuntime26Capability;
     readonly stageBootstrap26?: ImportStageBootstrap26;
+    coreAuthorization?: { assertAllowed(actorAccountId: CoreImportCommand["actorAccountId"], command: CoreImportCommand): Promise<void> };
   } = {}) {
     this.pool = pool;
+    const coreAuthorization = options.coreAuthorization;
+    requireDomain(coreAuthorization === undefined || typeof coreAuthorization.assertAllowed === "function", "NATIVE_IMPORT_AUTHORIZATION_REQUIRED", "Exact CORE source authorizer required");
+    this.coreAuthorization = coreAuthorization === undefined ? undefined : Object.freeze({ assertAllowed: coreAuthorization.assertAllowed.bind(coreAuthorization) });
     this.runtime26 = checkedNativeRuntime26Capability(options.runtime26);
     const successor = options.stageBootstrap26;
     if (successor !== undefined) {
@@ -239,7 +246,7 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     this.stageBootstrap = bootstrap === undefined ? undefined : Object.freeze({ stageNewBatch: bootstrap.stageNewBatch.bind(bootstrap) });
   }
   async execute(command: CutoffImportCommand, now: string): Promise<CutoffImportResult> {
-    const nativeRequested = hasNativeImportAccountingMetadata(command);
+    const nativeRequested = !isCoreImportCommand(command) && hasNativeImportAccountingMetadata(command);
     if (nativeRequested) {
       // Validate before clone: accessors/symbols/array named properties may not disappear before MAIN hashing.
       validateNativeImportAccountingCommand(command);
@@ -248,7 +255,7 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     }
     const snapshot = structuredClone(command); validateCutoffImportCommand(snapshot);
     if (this.runtime26) {
-      requireDomain(snapshot.action === "IMPORT_STAGE" ? snapshot.mappingVersion === HISTORY_MAPPING_VERSION && snapshot.historyMetadata !== undefined && this.stageBootstrap26
+      requireDomain(isCoreImportCommand(snapshot) ? !!this.runtime26 && !!this.coreAuthorization && (snapshot.action !== "IMPORT_CORE_STAGE" || !!this.stageBootstrap26) : snapshot.action === "IMPORT_STAGE" ? snapshot.mappingVersion === HISTORY_MAPPING_VERSION && snapshot.historyMetadata !== undefined && this.stageBootstrap26
         : nativeRequested, "IMPORT_BOOTSTRAP_REQUIRED", "Exact26 requires genuine first-stage source bootstrap or native accounting MAIN command");
       if (snapshot.action === "IMPORT_PUBLISH") requireDomain(Object.hasOwn(snapshot, "historyClosure"), "HISTORY_PUBLICATION_PLAN_MISMATCH", "Exact26 publication requires complete independently authorized typed closure");
     }
@@ -282,7 +289,10 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     }
     // Current independent source authorization is required even on an exact receipt replay.
     // The authorizer receives a separate complete clone and cannot mutate this transaction's MAIN command.
-    if (nativeCommand) await authorizeNativeImportAccountingCommand(nativeCommand, this.nativeAccountingAuthorization!);
+    if (isCoreImportCommand(command)) {
+      requireDomain(this.coreAuthorization !== undefined, "NATIVE_IMPORT_AUTHORIZATION_REQUIRED", "CORE commands require independent exact source authorization");
+      await this.coreAuthorization.assertAllowed(command.actorAccountId, structuredClone(command));
+    } else if (nativeCommand) await authorizeNativeImportAccountingCommand(nativeCommand, this.nativeAccountingAuthorization!);
     if (previous) return decodeResult(previous.result_data);
     await client.query("SELECT naijue_erp.cutoff_import_lock()");
     await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:import-batch:${command.batchId}`]);
@@ -292,6 +302,7 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
       FROM naijue_erp.import_batch WHERE id = $1 FOR UPDATE`, [command.batchId])).rows[0];
     let historyReconciliation: HistoryImportReconciliation | undefined;
     let batch: CutoffImportBatch; let before: ImportCheckpoint | null; let checkpoint: ImportCheckpoint; let status: CutoffImportResult["status"];
+    if (isCoreImportCommand(command)) return this.executeCoreInTransaction(client, command, now, operationId, digest, found);
     if (command.action === "IMPORT_STAGE") {
       requireDomain(found === undefined, "IMPORT_BATCH_EXISTS", "Resume the original batch with its original request keys");
       const metadata = historyImportStageMetadata(command.mappingVersion, command.historyMetadata);
@@ -309,33 +320,7 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
       [batch.id, batch.sourceName, batch.sourceManifestRef, batch.sourceHash, batch.cutoffAt, batch.mappingVersion, auditJson(checkpoint), now,
         ...(metadata ? [JSON.stringify(metadata.expectedCounts), metadata.payloadHash] : [])]);
       requireDomain(inserted.rowCount === 1, "IMPORT_INSERT_FAILED", "Staged batch was not inserted");
-      if (this.stageBootstrap26 && this.runtime26) {
-        const frozen = Object.freeze({ command: structuredClone(command), now, operationId }); let active = true;
-        const pending = new Set<Promise<unknown>>(); let failure: unknown;
-        const track = <T>(run: () => Promise<T>): Promise<T> => {
-          try {
-            requireDomain(active, "TRANSACTION_CLOSED", "Exact26 bootstrap callback expired");
-            requireDomain(pending.size === 0, "TRANSACTION_SCOPE", "Exact26 bootstrap work must be sequential and awaited");
-            const request = run(); pending.add(request);
-            void request.then(() => pending.delete(request), error => { pending.delete(request); failure ??= error; });
-            return request;
-          } catch (error) { failure ??= error; throw error; }
-        };
-        const borrowed = Object.freeze({ query: (sql: string, values?: unknown[]): Promise<PgSalesResult> =>
-          track(() => client.query(sql, checkedBootstrapValues(sql, values, true))) });
-        const runtime = this.runtime26;
-        const callbackRuntime: NativeRuntime26Capability = Object.freeze({ profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1",
-          assertReady: (target: object, purpose: Parameters<NativeRuntime26Capability["assertReady"]>[1]): Promise<void> => track(async () => {
-            requireDomain(target === borrowed && purpose === "IMPORT_STAGE", "TRANSACTION_SCOPE", "Exact26 bootstrap runtime is bound only to its original borrowed stage client");
-            await runtime.assertReady(client, "IMPORT_STAGE");
-          }) });
-        try {
-          const result: unknown = await this.stageBootstrap26.stageNewBatch26(borrowed, frozen, callbackRuntime);
-          requireDomain(result === undefined && pending.size === 0, "TRANSACTION_SCOPE", "Exact26 bootstrap must await all work and complete without boolean substitute");
-          if (failure !== undefined) throw failure;
-          requireDomain(requestHash(frozen.command) === digest, "IMPORT_BOOTSTRAP_COMMAND_MUTATION", "Bootstrap cannot change original stage command");
-        } finally { active = false; if (pending.size) await Promise.allSettled([...pending]); }
-      }
+      if (this.stageBootstrap26 && this.runtime26) await this.runBootstrap26(client, command, now, operationId, digest);
       if (this.stageBootstrap) {
         requireDomain(metadata !== undefined && command.mappingVersion === HISTORY_MAPPING_VERSION,
           "IMPORT_BOOTSTRAP_SOURCE_REQUIRED", "Bootstrap requires the exact reviewed native history/source STAGE");
@@ -459,6 +444,96 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     [operationId, command.actorAccountId, command.requestKey, digest, command.action, batch.id, auditJson(result), now]);
     requireDomain((nativeCommand === undefined && !(command.action === "IMPORT_STAGE" && (this.stageBootstrap || this.stageBootstrap26))) || receiptInsert.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT",
       "Native accounting requires its one actual original receipt insert before COMMIT");
+    return result;
+  }
+  private async runBootstrap26(client: PgSalesClient, command: Extract<CutoffImportCommand, { action: "IMPORT_STAGE" }> | CoreStageCommand,
+    now: string, operationId: string, digest: string): Promise<void> {
+    requireDomain(this.stageBootstrap26 && this.runtime26, "IMPORT_BOOTSTRAP_REQUIRED", "Original exact26 bootstrap required");
+        const frozen = Object.freeze({ command: structuredClone(command), now, operationId }); let active = true;
+        const pending = new Set<Promise<unknown>>(); let failure: unknown;
+        const track = <T>(run: () => Promise<T>): Promise<T> => {
+          try {
+            requireDomain(active, "TRANSACTION_CLOSED", "Exact26 bootstrap callback expired");
+            requireDomain(pending.size === 0, "TRANSACTION_SCOPE", "Exact26 bootstrap work must be sequential and awaited");
+            const request = run(); pending.add(request);
+            void request.then(() => pending.delete(request), error => { pending.delete(request); failure ??= error; });
+            return request;
+          } catch (error) { failure ??= error; throw error; }
+        };
+        const borrowed = Object.freeze({ query: (sql: string, values?: unknown[]): Promise<PgSalesResult> =>
+          track(() => client.query(sql, checkedBootstrapValues(sql, values, true))) });
+        const runtime = this.runtime26;
+        const callbackRuntime: NativeRuntime26Capability = Object.freeze({ profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1",
+          assertReady: (target: object, purpose: Parameters<NativeRuntime26Capability["assertReady"]>[1]): Promise<void> => track(async () => {
+            requireDomain(target === borrowed && purpose === "IMPORT_STAGE", "TRANSACTION_SCOPE", "Exact26 bootstrap runtime is bound only to its original borrowed stage client");
+            await runtime.assertReady(client, "IMPORT_STAGE");
+          }) });
+        try {
+          const result: unknown = await this.stageBootstrap26.stageNewBatch26(borrowed, frozen, callbackRuntime);
+          requireDomain(result === undefined && pending.size === 0, "TRANSACTION_SCOPE", "Exact26 bootstrap must await all work and complete without boolean substitute");
+          if (failure !== undefined) throw failure;
+          requireDomain(requestHash(frozen.command) === digest, "IMPORT_BOOTSTRAP_COMMAND_MUTATION", "Bootstrap cannot change original stage command");
+        } finally { active = false; if (pending.size) await Promise.allSettled([...pending]); }
+  }
+  private async executeCoreInTransaction(client: PgSalesClient, command: CoreImportCommand, now: string, operationId: string,
+    digest: string, found: Record<string, unknown> | undefined): Promise<CutoffImportResult> {
+    requireDomain(this.runtime26 !== undefined, "IMPORT_BOOTSTRAP_REQUIRED", "CORE requires independently reviewed exact26 runtime");
+    let checkpoint: CoreImportCheckpoint | ImportCheckpoint; let before: unknown; let after: unknown;
+    let coreSourceDigest: string; let coreCounts: CoreStageCommand["coreInitialization"]["coreCounts"];
+    if (command.action === "IMPORT_CORE_STAGE") {
+      requireDomain(found === undefined && now === command.coreInitialization.bootstrapAt, "IMPORT_BATCH_EXISTS", "CORE creates only the first batch at its original source time");
+      const zero: CoreImportCheckpoint = { sequence: 0, cursor: 0, counts: zeroCounts(), expected: {} }; before = zero;
+      const inserted = await client.query(`/* native-core:stage */ INSERT INTO naijue_erp.import_batch
+        (id,source_name,source_manifest_ref,source_hash,cutoff_at,mapping_version,inventory_mode,status,checkpoint,created_at,completed_at,history_expected_counts,history_payload_hash,history_actual_counts,history_validation_passed)
+        VALUES ($1::uuid,$2,$3,$4,$5::timestamptz,$6,'CUTOFF_STOCK_BASELINE','STAGED',$7::jsonb,$8::timestamptz,NULL,NULL,NULL,NULL,false)`,
+      [command.batchId, command.sourceName, command.sourceManifestRef, command.sourceHash, command.cutoffAt, command.mappingVersion, auditJson(zero), now]);
+      requireDomain(inserted.rowCount === 1, "IMPORT_INSERT_FAILED", "CORE zero batch insert required");
+      await this.runBootstrap26(client, command, now, operationId, digest);
+      checkpoint = await claimNativeCoreWarehouseRecords(client, { command, operationId, now }, this.runtime26);
+      const update = await client.query(`/* native-core:checkpoint */ UPDATE naijue_erp.import_batch SET checkpoint=$2::jsonb
+        WHERE id=$1::uuid AND status='STAGED' AND checkpoint=$3::jsonb AND history_payload_hash IS NULL AND history_expected_counts IS NULL`,
+      [command.batchId, auditJson(checkpoint), auditJson(zero)]);
+      requireDomain(update.rowCount === 1, "IMPORT_CHECKPOINT_CONFLICT", "CORE original zero checkpoint CAS required");
+      const core = command.coreInitialization; coreSourceDigest = core.coreSourceDigest; coreCounts = core.coreCounts;
+      after = { schemaVersion: 1, phase: "CORE_INITIALIZED_V1", coreSourceDigest, coreCounts, coreSourceMembers: core.coreSourceMembers,
+        authority: { ...core.authority, target: core.target, actorAccountId: command.actorAccountId, batchId: command.batchId,
+          namespace: command.sourceName, selectionSha256: command.sourceHash, cutoffAt: command.cutoffAt, bootstrapAt: core.bootstrapAt, commandHash: digest, operationId },
+        checkpoint, fullBinding: null, fullFrozen: false };
+    } else {
+      requireDomain(found !== undefined && found.status === "STAGED" && found.history_payload_hash === null && found.history_expected_counts === null,
+        "IMPORT_BATCH_FROZEN", "Only the original unbound CORE batch can bind its complete source once");
+      const current = jsonObject(found.checkpoint);
+      requireDomain(current.sequence === command.expectedSequence && current.cursor === command.expectedCursor && Object.keys(jsonObject(current.expected)).length === 0,
+        "IMPORT_CHECKPOINT_CONFLICT", "Full binding must retain exact current CORE progress");
+      const core = (await client.query(`/* native-core:birth */ SELECT a.after_values,r.id FROM naijue_erp.operation_receipt r JOIN naijue_erp.audit_change a ON a.operation_id=r.id
+        WHERE r.id=$1::uuid AND r.target_type='IMPORT' AND r.target_id=$2::uuid AND r.action='IMPORT_CORE_STAGE' AND r.status='COMMITTED' FOR SHARE OF r,a`,
+      [command.fullBinding.coreReceiptId, command.batchId])).rows;
+      requireDomain(core.length === 1, "IMPORT_BATCH_NOT_FOUND", "Original committed CORE receipt required");
+      const birth = jsonObject(core[0]!.after_values);
+      requireDomain(birth.coreSourceDigest === command.fullBinding.coreSourceDigest && birth.phase === "CORE_INITIALIZED_V1", "IMPORT_MANIFEST_CONFLICT", "Original CORE input digest is immutable");
+      coreSourceDigest = command.fullBinding.coreSourceDigest; coreCounts = birth.coreCounts as CoreStageCommand["coreInitialization"]["coreCounts"];
+      const counted = counts(current.counts, false);
+      requireDomain(targets.every(type => counted[type] <= command.fullBinding.inventoryExpectedCounts[type]), "IMPORT_EXPECTED_COUNT_EXCEEDED", "Full scope must include existing genuine CORE claims");
+      checkpoint = { sequence: command.expectedSequence + 1, cursor: command.expectedCursor, counts: counted, expected: command.fullBinding.inventoryExpectedCounts };
+      before = { checkpoint: current, fullBinding: null, fullFrozen: false, coreReceiptId: command.fullBinding.coreReceiptId, coreSourceDigest };
+      after = { schemaVersion: 1, phase: "FULL_SOURCE_BOUND_V1", coreSourceDigest, coreReceiptId: command.fullBinding.coreReceiptId,
+        checkpoint, fullBinding: command.fullBinding, fullFrozen: true };
+      const update = await client.query(`/* native-core:bind-full */ UPDATE naijue_erp.import_batch SET checkpoint=$2::jsonb,history_expected_counts=$3::jsonb,history_payload_hash=$4
+        WHERE id=$1::uuid AND status='STAGED' AND checkpoint=$5::jsonb AND history_expected_counts IS NULL AND history_payload_hash IS NULL AND NOT history_validation_passed`,
+      [command.batchId, auditJson(checkpoint), JSON.stringify(command.fullBinding.historyExpectedCounts), command.fullBinding.authorizedPayloadHash, auditJson(current)]);
+      requireDomain(update.rowCount === 1, "IMPORT_CHECKPOINT_CONFLICT", "One exact full-source binding CAS required");
+    }
+    const result: CutoffImportResult = { operationId: entityId("operation", operationId), batchId: command.batchId, sequence: checkpoint.sequence,
+      cursor: checkpoint.cursor, status: "STAGED", ledgerEntryIds: [], phase: command.action === "IMPORT_CORE_STAGE" ? "CORE_INITIALIZED_V1" : "FULL_SOURCE_BOUND_V1", coreSourceDigest, coreCounts };
+    const audit = await client.query(`INSERT INTO naijue_erp.audit_change (id,operation_id,actor_account_id,object_type,object_id,action,old_version,new_version,before_values,after_values,occurred_at)
+      VALUES ($1::uuid,$2::uuid,$3::uuid,'IMPORT',$4::uuid,$5,$6,$7,$8::jsonb,$9::jsonb,$10::timestamptz)`,
+    [stableImportId("audit", operationId), operationId, command.actorAccountId, command.batchId, command.action,
+      checkpoint.sequence, checkpoint.sequence + 1, auditJson(before), auditJson(after), now]);
+    requireDomain(audit.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT", "One CORE/binding audit required");
+    const receipt = await client.query(`INSERT INTO naijue_erp.operation_receipt (id,actor_account_id,request_key,request_hash,action,target_type,target_id,status,result_data,created_at,completed_at)
+      VALUES ($1::uuid,$2::uuid,$3,$4,$5,'IMPORT',$6::uuid,'COMMITTED',$7::jsonb,$8::timestamptz,$8::timestamptz)`,
+    [operationId, command.actorAccountId, command.requestKey, digest, command.action, command.batchId, auditJson(result), now]);
+    requireDomain(receipt.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT", "One CORE/binding receipt required");
     return result;
   }
   private async insertRecord(client: PgSalesClient, batch: CutoffImportBatch, source: Pick<CutoffImportItem, "sourceEntityType" | "sourceKey" | "sourceRecordHash" | "sourceFileRef">,

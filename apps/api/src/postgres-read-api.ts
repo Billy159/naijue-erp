@@ -1,3 +1,6 @@
+import { validateCoreSourceMembers } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import type { CoreSourceMembers } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { randomUUID } from "node:crypto";
 import { createSettingsAuditHttpPlugin } from "./settings-audit-http.ts";
@@ -41,7 +44,7 @@ import { PostgresTransferUnitOfWork } from "../../../adapters/postgres/src/trans
 import type { NativeCatalogueCompletenessVerifier } from "../../../adapters/postgres/src/sales-native-facts.ts";
 import type { SalesDependencies } from "../../../packages/application/src/ports.ts";
 import type { TransferDependencies } from "../../../packages/application/src/transfer-ports.ts";
-import type { StoreSettingsReadAuthorization } from "../../../packages/application/src/store-settings-read-ports.ts";
+import type { StoreSettingsReadAuthorization, StoreSettingsCoreReadCapability, StoreSettingsScope } from "../../../packages/application/src/store-settings-read-ports.ts";
 import type { ProductManagementQueryAuthorization } from "../../../packages/application/src/product-management-query-ports.ts";
 import type { CatalogueSettingsReadAuthorization } from "../../../packages/application/src/catalogue-settings-read-ports.ts";
 import type { DictionaryReadAuthorization } from "../../../packages/application/src/dictionary-read-ports.ts";
@@ -130,7 +133,11 @@ export interface PostgresDocumentCommandsCapability {
   readonly nativeManualSalesPreparation: true;
   readonly nativeManualTransferPreparation: true;
 }
+export interface CommittedCoreReadBinding {
+  readonly profile: "COMMITTED_CORE_SETTINGS_V14"; readonly batchId: string; readonly operationId: string; readonly coreSourceDigest: string;
+}
 export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
+  readonly coreInitializationRead?: CommittedCoreReadBinding;
   /** Closed trusted production selector. It installs independently defined read
    * policies below, never commands or a fallback from LIVE to HISTORY. */
   readonly nativeReadExtensions?: { readonly profile: "source-confirmed-r1-v1" };
@@ -143,7 +150,7 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   /** Explicit historical policy only. Native/LIVE authorization never enables this dataset. */
   readonly importedHistoryRead?: { readonly authorization: ImportedHistoryReadAuthorization };
 }
-type ApplicationCapabilities = { readonly commands: PostgresDocumentCommandsCapability | null;
+type ApplicationCapabilities = { readonly coreInitializationRead: CommittedCoreReadBinding | null; readonly commands: PostgresDocumentCommandsCapability | null;
   readonly nativeReadExtensions: boolean;
   readonly settings: StoreSettingsReadAuthorization | null;
   readonly productManagement: ProductManagementQueryAuthorization | null;
@@ -177,6 +184,16 @@ function method<T extends (...args: never[]) => unknown>(value: unknown, name: s
   throw new TypeError("Complete application provider methods required");
 }
 function checkedApplicationCapabilities(options: PostgresApplicationApiOptions): ApplicationCapabilities {
+  let coreInitializationRead: CommittedCoreReadBinding | null = null;
+  if ("coreInitializationRead" in options) {
+    const core = exactBag(ownData(options, "coreInitializationRead"), ["profile", "batchId", "operationId", "coreSourceDigest"]);
+    entityId("operation", core.batchId as string); entityId("operation", core.operationId as string);
+    if (core.profile !== "COMMITTED_CORE_SETTINGS_V14" || typeof core.coreSourceDigest !== "string" || !/^[a-f0-9]{64}$/.test(core.coreSourceDigest)
+      || options.authorization.mode !== "source-confirmed-native" || options.productMedia !== null
+      || ["nativeReadExtensions", "documentCommands", "currentForms", "storeSettingsRead", "productManagementRead", "catalogueSettingsRead", "dictionaryRead", "partyRead", "importedHistoryRead"].some(k => k in options))
+      throw new TypeError("CORE host mounts only original authentication and exact committed member settings reads");
+    coreInitializationRead = Object.freeze(core as unknown as CommittedCoreReadBinding);
+  }
   const nativeReadExtensions = "nativeReadExtensions" in options;
   if (nativeReadExtensions) {
     const extension = exactBag(ownData(options, "nativeReadExtensions"), ["profile"]);
@@ -231,7 +248,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     const bag = exactBag(ownData(options, "importedHistoryRead"), ["authorization"]);
     importedHistory = Object.freeze({ authorize: method<ImportedHistoryReadAuthorization["authorize"]>(bag.authorization, "authorize") });
   }
-  return Object.freeze({ commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
+  return Object.freeze({ coreInitializationRead, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
 }
 
 export interface SourceConfirmedApplicationReadAuthorization {
@@ -384,14 +401,14 @@ export async function createPostgresApplicationApi(options: PostgresApplicationA
  * callers cannot supply a pool, issuer, capability callback or command provider. */
 export async function createPostgresRuntime26ApplicationApi(options: PostgresApplicationApiOptions,
   review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
-  if (!options || typeof options !== "object" || "documentCommands" in options || !("currentForms" in options))
+  if (!options || typeof options !== "object" || "documentCommands" in options || (!("currentForms" in options) && !("coreInitializationRead" in options)))
     throw new TypeError("Exact26 R1 requires explicit current forms and no document commands");
   const pin = exactBag(review, ["reviewFile", "trustedReviewSha256"]);
   if (typeof pin.reviewFile !== "string" || !isAbsolute(pin.reviewFile) || resolve(pin.reviewFile) !== pin.reviewFile
     || typeof pin.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(pin.trustedReviewSha256))
     throw new TypeError("Closed exact26 independent metadata review pin required");
   const capabilities = checkedApplicationCapabilities(options);
-  if (!capabilities.nativeReadExtensions) throw new TypeError("Exact26 R1 requires the source-confirmed read policies");
+  if (!capabilities.nativeReadExtensions && capabilities.coreInitializationRead === null) throw new TypeError("Exact26 R1 requires the source-confirmed read policies");
   return await composePostgresApi(options, createDriver, capabilities,
     Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 })) as PostgresApplicationApi;
 }
@@ -446,7 +463,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if (issuer !== null) {
       const admission = await pool.connect();
       try {
-        for (const purpose of ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
+        for (const purpose of capabilities?.coreInitializationRead ? ["CURRENT_FORM_READ"] as const : ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
           await issuer.runtime26.assertReady(admission, purpose);
       } finally { admission.release(); }
     }
@@ -462,6 +479,16 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin });
     const authenticate = createSalesSessionAuthenticator(authentication);
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);
+    if (capabilities?.coreInitializationRead) {
+      if (!issuer) throw new TypeError("CORE settings require the original independently reviewed issuer");
+      const core = createCommittedCoreSettingsRead(pool, issuer.runtime26, capabilities.coreInitializationRead);
+      app.register(createAuthenticationHttpPlugin(authentication));
+      app.register(createStoreSettingsReadHttpPlugin({ authenticate, dependencies: { authorization: core.authorization,
+        reader: new PostgresStoreSettingsReadReader(pool, core.capability) } }));
+      await app.ready(); const readyApp = app;
+      return Object.freeze({ app: readyApp, close: () => readyApp.close(), trustedOrigin: host.trustedOrigin,
+        get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; } });
+    }
     const productReader = new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null);
     let productMedia = host.media;
     if (runtime26ProductMedia !== undefined) {
@@ -559,4 +586,60 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if (failures.length > 1) throw new AggregateError(failures, "PostgreSQL read API construction failed; resource cleanup is not confirmed");
     throw error;
   }
+}
+
+/** Proof-derived CORE directory policy. The reader rechecks on its original RR client before any data query. */
+export function createCommittedCoreSettingsRead(pool: PgReadAuthorizationPool, runtime26: NativeRuntime26Capability, binding: CommittedCoreReadBinding): {
+  readonly authorization: StoreSettingsReadAuthorization; readonly capability: StoreSettingsCoreReadCapability;
+} {
+  const fixed = Object.freeze(structuredClone(binding));
+  const permit = (value: unknown): void => requireDomain(value, "FORBIDDEN", "Committed CORE member authority unavailable");
+  async function scopeOn(client: object, actor: ActorContext, signal: AbortSignal): Promise<Extract<StoreSettingsScope, { kind: "CORE_MEMBERS" }>> {
+    permit(!signal.aborted && fixed.profile === "COMMITTED_CORE_SETTINGS_V14");
+    await runtime26.assertReady(client, "CURRENT_FORM_READ");
+    const query = method<(sql: string, values?: unknown[]) => Promise<{ rows: Record<string, unknown>[] }>>(client, "query");
+    const rows = (await query(`/* core-settings:committed-proof */ SELECT a.after_values,r.actor_account_id,
+      NOT EXISTS(SELECT 1 FROM jsonb_array_elements(a.after_values->'coreSourceMembers'->'parties') m
+        WHERE NOT EXISTS(SELECT 1 FROM naijue_erp.native_party_import_evidence e JOIN naijue_erp.import_source_row sr ON sr.batch_id=e.batch_id AND sr.id=e.source_row_id
+          WHERE e.batch_id=r.target_id AND e.source_row_id=(m->>'sourceRowId')::uuid AND e.entity_type=m->>'entity' AND e.source_key=m->>'sourceKey'
+            AND e.native_id=(m->>'nativeId')::uuid AND to_jsonb(sr)=to_jsonb(jsonb_populate_record(NULL::naijue_erp.import_source_row,e.source_snapshot)))) AS sources_match,
+      (SELECT count(*)=22 FROM naijue_erp.import_record_accounting_claim c JOIN naijue_erp.import_record rec ON rec.id=c.import_record_id
+        JOIN naijue_erp.native_party_import_evidence e ON e.batch_id=c.import_batch_id AND e.entity_type='WAREHOUSE' AND e.native_id=c.target_id
+        WHERE c.operation_id=r.id AND c.import_batch_id=r.target_id AND c.target_type='WAREHOUSE' AND c.checkpoint_sequence=1
+          AND rec.import_batch_id=c.import_batch_id AND rec.target_id=c.target_id AND rec.status='IMPORTED' AND rec.id=(e.warehouse_record->>'id')::uuid) AS claims_match
+      FROM naijue_erp.operation_receipt r JOIN naijue_erp.audit_change a ON a.operation_id=r.id
+      JOIN naijue_erp.import_batch b ON b.id=r.target_id
+      WHERE r.id=$1::uuid AND r.target_id=$2::uuid AND r.target_type='IMPORT' AND r.action='IMPORT_CORE_STAGE' AND r.status='COMMITTED'
+        AND a.action=r.action AND a.object_type='IMPORT' AND a.object_id=r.target_id AND a.actor_account_id=r.actor_account_id
+        AND a.old_version=1 AND a.new_version=2 AND a.after_values->>'coreSourceDigest'=$3
+        AND a.after_values->>'phase'='CORE_INITIALIZED_V1' AND a.after_values->'fullFrozen'='false'::jsonb
+        AND r.result_data->>'coreSourceDigest'=$3 AND r.result_data->>'phase'='CORE_INITIALIZED_V1'
+        AND b.mapping_version='V2_HISTORY_NULLABLE_1' LIMIT 2`, [fixed.operationId, fixed.batchId, fixed.coreSourceDigest])).rows;
+    permit(rows.length === 1 && rows[0]!.sources_match === true && rows[0]!.claims_match === true);
+    const birth = rows[0]!.after_values as { coreSourceMembers: CoreSourceMembers };
+    validateCoreSourceMembers(birth.coreSourceMembers);
+    const identity = (await query(`/* core-settings:current-identity */ SELECT a.id,a.staff_id,a.login_enabled,s.role,s.employment_status,s.hall_id,h.enabled AS hall_enabled
+      FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id WHERE a.id=$1::uuid LIMIT 2`, [actor.accountId])).rows;
+    const current = identity[0];
+    permit(!signal.aborted && identity.length === 1 && current?.login_enabled === true && current.employment_status === "在职"
+      && (current.role === "ADMIN" || current.role === "WAREHOUSE") && current.hall_id === actor.hallId
+      && (current.hall_id === null || current.hall_enabled === true)
+      && birth.coreSourceMembers.accounts.some(account => account.id === current.id && account.staff_id === current.staff_id));
+    return Object.freeze({ kind: "CORE_MEMBERS", hallIds: Object.freeze(birth.coreSourceMembers.parties.filter(row => row.entity === "HALL").map(row => row.nativeId).sort()),
+      warehouseIds: Object.freeze(birth.coreSourceMembers.parties.filter(row => row.entity === "WAREHOUSE").map(row => row.nativeId).sort()) });
+  }
+  return Object.freeze({
+    authorization: Object.freeze<StoreSettingsReadAuthorization>({ async authorize(actor, intent, signal) {
+      const client = await pool.connect();
+      try {
+        const scope = await scopeOn(client, actor, signal);
+        return { kind: intent.kind, operation: intent.operation, scope, references: "REFERENCES", targetId: intent.operation === "detail" ? intent.parameters.id : null };
+      } finally { client.release(); }
+    } }),
+    capability: Object.freeze<StoreSettingsCoreReadCapability>({ profile: "COMMITTED_CORE_SETTINGS_V14", async assertReady(client, read) {
+      const actual = await scopeOn(client, read.actor, read.signal), proposed = read.grant.scope;
+      permit(proposed.kind === "CORE_MEMBERS" && JSON.stringify([...proposed.hallIds].sort()) === JSON.stringify(actual.hallIds)
+        && JSON.stringify([...proposed.warehouseIds].sort()) === JSON.stringify(actual.warehouseIds));
+    } })
+  });
 }
