@@ -47,7 +47,7 @@ test('P10 SKU detail echo and every record use the requested native SKU while ol
   assert.throws(() => productBarcodesResponse(page, parameters));
 });
 
-test('P10 SKU HTTP branch preserves exact new modes and the original body with no construction request', async () => {
+test('P10 SKU LatestQuery HTTP branch preserves exact new modes and the original body with no construction request', async () => {
   const bodies: unknown[] = [];
   const reader = createProductFullPageHttpReader({ origin: 'https://erp.example', basePath: '/api', fetch: async (_url, options) => {
     const body = JSON.parse(String(options?.body)); bodies.push(body);
@@ -57,7 +57,12 @@ test('P10 SKU HTTP branch preserves exact new modes and the original body with n
   const context = new ReadContext({ accountId: id(50), sessionRevision: '1', permissionRevision: '1' }), scope = context.createScope('p10-new-http', productId);
   try {
     for (const query of [{ ...parameters, view: 'SKU' as const }, { ...parameters, skuId: id(3) }, parameters]) {
-      await reader.barcodes!.read({ parameters: query, signal: scope.signal, identity: scope.identity, routeInstanceId: scope.routeInstanceId, entityId: productId });
+      const owner = new LatestQuery<typeof query, Awaited<ReturnType<NonNullable<typeof reader.barcodes>['read']>>>({ scope, execute: read => {
+        assert.equal(Object.getPrototypeOf(read.parameters), null); assert.equal(Object.isFrozen(read.parameters), true);
+        return reader.barcodes!.read(read);
+      } });
+      try { const result = await owner.run(query); assert.equal(result.status, 'success', `Real frozen null-prototype query chain failed before HTTP; captured calls=${bodies.length}`); }
+      finally { owner.dispose(); }
     }
     assert.deepEqual(bodies, [{ ...parameters, view: 'SKU' }, { ...parameters, skuId: id(3) }, parameters]);
   } finally { context.clear(); }

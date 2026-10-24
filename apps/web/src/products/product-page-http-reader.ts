@@ -28,7 +28,8 @@ export function createProductFullPageHttpReader(options: HttpQueryOptions, detai
       return http.post('/products/prices/query', { productId: read.parameters.productId }, read.signal, value => validation.productPricesResponse(value, read.parameters));
     } } } : {}),
     ...(enabled.has('barcodes') ? { barcodes: { read: async read => {
-      const parameters = parseProductBarcodeQuery(read.parameters);
+      const parameters = parseProductBarcodeQuery({ productId: read.parameters.productId, page: read.parameters.page, pageSize: read.parameters.pageSize,
+        ...(Object.hasOwn(read.parameters, 'view') ? { view: read.parameters.view } : {}), ...(Object.hasOwn(read.parameters, 'skuId') ? { skuId: read.parameters.skuId } : {}) });
       const validation = await import('./product-page-validation.ts');
       return http.post('/products/barcodes/query', parameters, read.signal, value => validation.productBarcodesResponse(value, parameters));
     } } } : {}),
