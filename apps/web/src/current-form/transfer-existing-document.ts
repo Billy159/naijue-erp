@@ -91,6 +91,7 @@ export class TransferExistingDocumentSession {
       const response = checkedExistingTransferPreparation(await this.#preparation.prepareExisting(intent, AbortSignal.any([request.signal, this.#scope.signal])), intent);
       if (!stillCurrent() || this.owner.getSnapshot().editor?.input !== ownerInput || !this.owner.editableExistingProposal) return false;
       this.#validateOriginalFacts(response.draft, intent);
+      this.#publish({ notice: null });
       return await this.owner.applyExistingPrepared(this, response, ownerInput ?? null, stillCurrent);
     } catch (error) { if (!stillCurrent()) return false; if (error instanceof HttpQueryError && error.kind === 'unauthenticated') this.owner.expireExistingIdentity(); else this.#publish({ notice: error instanceof HttpQueryError && error.kind === 'forbidden' ? '本次提案无权准备，原输入已保留；未采用草稿，也未发送保存。' : '旧单资料准备未完成，输入已保留；请处理资料或版本问题后明确重试。' }); return false; }
     finally { if (this.#request === request) { this.#request = null; if (!this.#state.disposed) this.#publish({ preparing: false }); } }

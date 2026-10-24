@@ -1,0 +1,25 @@
+{
+  "atUtc": "2026-10-24T14:46:45.094389+00:00",
+  "parent": "a7dd0c593ff96be787ff9f0902fabcf6ce10eba6",
+  "taskId": "F1_S04_REFUSAL_STALE_PROGRESS_01",
+  "files": [
+    {
+      "path": "apps/web/src/current-form/sales-existing-document.ts",
+      "bytes": 21170,
+      "sha256": "ba8a4449f6976faa5611a5320053294d94fe730c23d08a078620ecb8e469f548",
+      "owner": "F1"
+    },
+    {
+      "path": "apps/web/src/current-form/transfer-existing-document.ts",
+      "bytes": 14944,
+      "sha256": "f15dec678f69c482dc5aef0e76bb347aca58f751c02bbf90cad2ebf131cdfcfa",
+      "owner": "F1"
+    }
+  ],
+  "ownerReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F1/chunk-158/DELIVERY.json",
+  "ownerReceiptBytes": 3085,
+  "ownerReceiptSha256": "47a11e0cb22b1065019a1e1de03eda9304efad9cb34a212dc81511267321f2f5",
+  "stage": "SOURCE_TARGETED_NEW_CHECKS_AND_SCOPED_TYPES_PASS_NOT_BROWSER_OR_PG",
+  "wholePageAccepted": false,
+  "deployed": false
+}

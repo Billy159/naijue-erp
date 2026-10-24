@@ -118,6 +118,7 @@ export class SalesExistingDocumentSession {
       if (!stillCurrent() || this.owner.getSnapshot().input !== ownerInput || !this.owner.editable) return false;
       this.#validateOriginalFacts(response.draft, intent);
       this.#validateDisplayedAmounts(response.draft, value);
+      this.#publish({ notice: null });
       return await this.owner.applyExistingPrepared(this, response, ownerInput, stillCurrent);
     } catch (error) {
       if (!stillCurrent()) return false;
