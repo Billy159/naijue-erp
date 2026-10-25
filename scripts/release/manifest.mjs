@@ -195,9 +195,9 @@ function sameDependencyVersions(left, right) {
 
 /** Parse the generated entry's explicit HTML subset; never silently skip alternate resource-attribute syntax. */
 function htmlResources(html) {
-  const allowed = { html: ['lang','data-ui-theme'], head: [], meta: ['charset', 'name', 'content'], title: [], link: ['rel', 'href'],
+  const allowed = { html: ['lang','data-ui-theme','data-replica-starting'], head: [], meta: ['charset', 'name', 'content'], title: [], link: ['rel', 'href','data-frozen-style'], style:['id'],
     body: [], div: ['id','class','aria-label','role','aria-live'], aside:['class'], span:['id','class','aria-hidden'], nav:['aria-label'],
-    a:['class','href','data-route'], details:['class','open'], summary:['class'], header:['class'], main:['id'], dialog:['id','aria-labelledby'], br:[],
+    a:['id','class','href','data-route'], details:['class','open'], summary:['class'], header:['class'], main:['id'], dialog:['id','aria-labelledby'], br:[],
     noscript: [], script: ['id', 'type', 'src'] };
   const resources = []; let cursor = 0, configurations = 0;
   while ((cursor = html.indexOf('<', cursor)) !== -1) {
@@ -230,9 +230,15 @@ function htmlResources(html) {
       }
       requireRelease(!/[<>\x00-\x1f\x7f]/.test(value), 'UNSUPPORTED_HTML_ATTRIBUTE_SYNTAX'); attributes.set(name, value);
       if (name === 'src' || name === 'href') {
-        if(tag==='a'&&name==='href')requireRelease(/^#[A-Za-z0-9_/-]+$/.test(value),'UNSUPPORTED_HTML_NAVIGATION');
+        if(tag==='a'&&name==='href')requireRelease(/^#[A-Za-z0-9_/-]+$/.test(value)||(attributes.get('id')==='replica-startup-retry'&&value==='./'),'UNSUPPORTED_HTML_NAVIGATION');
         else {requireRelease(value.length > 0 && !value.includes('&'), 'UNSUPPORTED_HTML_RESOURCE_ENCODING'); resources.push(value);}
       }
+    }
+    if(tag==='style'){
+      const end=html.indexOf('</style>',cursor);
+      const expected='html[data-replica-starting] .app{visibility:hidden}#replica-startup{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#4e5969;font:14px system-ui,sans-serif}#replica-startup a{color:#1677ff}';
+      requireRelease(!selfClosing&&attributes.size===1&&attributes.get('id')==='replica-startup-style'&&end!==-1&&html.slice(cursor,end)===expected,'UNSUPPORTED_HTML_STARTUP_STYLE');
+      cursor=end+8;
     }
     if (tag === 'script') {
       requireRelease(!selfClosing, 'UNSUPPORTED_HTML_SCRIPT');

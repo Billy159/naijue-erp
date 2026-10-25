@@ -5526,7 +5526,8 @@
       "apps/web/demo-replica/build-production-host.mjs",
       "apps/web/demo-replica/frontend/frozen-style-order.ts",
       "apps/web/demo-replica/frontend/runtime-styles.ts",
-      "apps/web/demo-replica/frontend/production-bootstrap.ts"
+      "apps/web/demo-replica/frontend/production-bootstrap.ts",
+      "scripts/release/manifest.mjs"
     ],
     "serverOwner": "T45",
     "F3": "Original settings leaves; shared startup/build read-only",
