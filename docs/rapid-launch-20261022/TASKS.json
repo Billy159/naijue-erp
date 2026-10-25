@@ -11686,7 +11686,7 @@
       "D1": "Original source513 and QA02/v16 alignment input delivered; actual64 lifecycle owned T45; no duplicate implementation",
       "D2": "Original legal publication path delivered; idle/no source bug; full MAIN route retained, no unapproved STAGED union",
       "D3": "Actual2471 prepared PASS; joint28282 reference+pure stage projection helper QB323 PASS; next actual full stage/closure via T45, no repeated source preparation",
-      "T45": "Actual60 schema/61 ACL/63 warehouse delta complete; current64 sameRAM normal login/SAVE lifecycle preparation, current QB324 reviews delivered; fullsales stage/closure next",
+      "T45": "Actual64 real login/cleanup PASS but prepare number reservation failed42501 transfer_header read; original65 readonly residue/3column ACL facts next, no64 replay",
       "QF": "Original519 scoped source/fixed artifact closure PASS adopted; actual business candidate validation pending T45 real chain",
       "QF2": "CORE10 fixed public candidate bound; actual IAB access disabled in Work settings, no navigation/screenshots/UI PASS; exact wait only",
       "QB": "QB323 joint helper PASS and QB324 current63 metadata delta PASS adopted; current six reviews issued to T45; next actual64 evidence along existing route"
@@ -12129,8 +12129,24 @@
       "next": "T45 original64 sameRAM QA02 lifecycle; real TCP and app login not proved by socketSETROLE",
       "reviewResult": "Q/slice324-native189-postacl-metadata/ACTUAL63-RESULT.json",
       "reviewResultSha256": "b69e31701e44d30597b2405438396d75f3c9f973a3bdc467f85050473f57b078",
-      "actualQA64": "PREPARING_NOT_PASSED"
+      "actualQA64": "FAILED_PREPARE_RESERVATION_42501_TRANSFER_HEADER_READ"
     },
-    "queueAsOfSource": 533
+    "queueAsOfSource": 533,
+    "qa64Actual": {
+      "owner": "T45",
+      "status": "FAILED_42501_PREPARE_NUMBER_RESERVE_NOT_SAVE_PASS",
+      "exitCode": 2,
+      "seconds": 6.6829,
+      "personnelSetup": "COMMITTED_2STAFF_1ACCOUNT_3MAINTENANCE_OPERATIONS",
+      "normalAppLogin": "HTTP200_REAL_NEW_QA_ADMIN",
+      "querySha256": "7b95f5cb0069a095f37634332ba783f8c994de9c707cad8ac5b3b711a0892840",
+      "failure": "Original number reserve SECURITY INVOKER trigger needs SELECT transfer_header(id,stock_basis,number)",
+      "transaction": "ROLLBACK_RETURNED_NO_COMMIT_FAILURE",
+      "saveThreeCases": "NOT_RUN",
+      "cleanup": "LOGOUT204_SESSIONNULL_NEWACCOUNT_DISABLED_V2_AUTHV2_ACTIVES0_3DRIVERS_CLOSED_CLEANUP_EMPTY",
+      "R1Changed": false,
+      "next": "T45 original65 readonly residue+threecolumn rights, narrow successor ACL/current reviews then explicitly registered new QA-only sameRAM lifecycle; no64/setup replay or old secret retrieval",
+      "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/NORMAL64-ACTUAL-RESULT.json"
+    }
   }
 }
