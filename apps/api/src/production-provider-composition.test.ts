@@ -1474,3 +1474,92 @@ test('production staff original injected tag uses original scrypt and policy; li
     } finally { await api.close(); }
   } finally { f.cleanup(); }
 });
+
+function productBaseProductionFixture(core: boolean, maintenance = true) {
+  const f = categoryProductionFixture('26_v15_category_order_undo', maintenance, core);
+  const review = JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile, 'utf8'));
+  for (const purpose of ['PRODUCT_SEASONS_READ', 'INVENTORY_ADMISSION']) if (!review.purposes.includes(purpose)) review.purposes.push(purpose);
+  const body = JSON.stringify(review); writeFileSync(f.configuration.runtime26Review.reviewFile, body, { mode: 0o600 });
+  return { ...f, configuration: { ...f.configuration, runtime26Review: { ...f.configuration.runtime26Review, trustedReviewSha256: createHash('sha256').update(body).digest('hex') } } };
+}
+test('production product base opt-in mounts original V2 commands detail and normal bounded list before CORE return without media stage', async () => {
+  for (const core of [false, true]) {
+    const f = productBaseProductionFixture(core), p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    try {
+      for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, productMaintenance: value }), TypeError);
+      assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), productMaintenance: true }), TypeError);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory);
+      try {
+        const before = p.counts().connects;
+        for (const url of ['/products/v2/commands', '/products/maintenance/v2/detail/query', '/products/maintenance/candidates/query', '/product-management/query']) {
+          assert.ok(api.app.hasRoute({ method: 'POST', url }));
+          const response = await api.app.inject({ method: 'POST', url, payload: {} }); assert.equal(response.statusCode, 401, response.body);
+        }
+        assert.ok(api.app.hasRoute({ method: 'GET', url: '/products/receipts/:requestKey' }));
+        assert.equal(p.counts().connects, before);
+        assert.equal(api.app.hasRoute({ method: 'POST', url: '/product-media/uploads' }), false);
+        for (const url of ['/staff/commands', '/payment/accounts/commands', '/customers/commands', '/catalogue/colors/commands']) assert.equal(api.app.hasRoute({ method: 'POST', url }), false);
+      } finally { await api.close(); }
+    } finally { f.cleanup(); }
+  }
+  const f = productBaseProductionFixture(true, false), p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try { assert.equal(api.app.hasRoute({ method: 'POST', url: '/products/v2/commands' }), false); } finally { await api.close(); }
+    const denied = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, denied.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    assert.equal(denied.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+
+test('production product base original receipt replay and media rejection do not read or write aggregate SKUs', async () => {
+  const f = productBaseProductionFixture(true), product = '00000000-0000-4000-8000-000000000172', operation = '00000000-0000-4000-8000-000000000173';
+  const command = { action: 'DISABLE', requestKey: 'synthetic-existing-product-key', id: product, expectedVersion: 2 };
+  const result = { operationId: operation, kind: 'PRODUCT', targetId: product, version: 3 };
+  let role = 'ADMIN';
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s') || sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003', login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role, employment_status: '在职', hall_id: hall }];
+    if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
+    if (sql.includes('maintenance:receipt')) return values[1] === command.requestKey ? [{ id: operation, request_hash: requestHash({ kind: 'PRODUCT', actorAccountId: account, command }), action: 'DISABLE', target_type: 'PRODUCT', target_id: product, result_data: result, completed_at: '2026-10-25T00:00:00.000000Z' }] : [];
+    return undefined;
+  });
+  try {
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory);
+    try {
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+      const replay = await api.app.inject({ method: 'POST', url: '/products/v2/commands', headers, payload: command }); assert.equal(replay.statusCode, 200, replay.body); assert.deepEqual(replay.json(), result);
+      const receipt = await api.app.inject({ method: 'GET', url: `/products/receipts/${command.requestKey}`, headers }); assert.equal(receipt.statusCode, 200, receipt.body); assert.deepEqual(receipt.json().result, result);
+      const conflict = await api.app.inject({ method: 'POST', url: '/products/v2/commands', headers, payload: { ...command, expectedVersion: 3 } }); assert.equal(conflict.statusCode, 409, conflict.body);
+      const media = { action: 'CREATE', requestKey: 'synthetic-base-media-is-not-success', values: { productCode: 'SYNTHETIC_01', name: 'SYNTHETIC', categoryId: product, supplierId: product, seasonIds: [product], sizeGroupId: product,
+        year: 2026, systemItemCode: '00001', thickness: null, collarPantsType: null, defaultBarcodeSchemeId: product, enabled: true, prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === 'retail_price' ? '0.00' : null])) },
+        skus: [{ id: null, expectedVersion: null, skuCode: 'SYNTHETIC-SKU', colorId: product, fitId: product, sizeId: product, enabled: true }], barcodes: [], imageChanges: [] };
+      const rejected = await api.app.inject({ method: 'POST', url: '/products/v2/commands', headers, payload: media }); assert.equal(rejected.statusCode, 503, rejected.body); assert.equal(rejected.json().error.code, 'PRODUCT_MEDIA_NOT_READY');
+      role = 'SALESPERSON'; const denied = await api.app.inject({ method: 'GET', url: `/products/receipts/${command.requestKey}`, headers }); assert.equal(denied.statusCode, 403, denied.body);
+      assert.ok(p.calls.every(c => !/^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)));
+      assert.ok(p.calls.every(c => !c.sql.includes('FROM naijue_erp.sku WHERE product_id')));
+      assert.equal(p.counts().allocations, 1);
+    } finally { await api.close(); }
+  } finally { f.cleanup(); }
+});
+
+test('production product normal stock list preserves complete-publication gate and does not invent zero or bypass to maintenance rows', async () => {
+  const f = productBaseProductionFixture(true);
+  const p = exact26Driver(f.observation, sql => {
+    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes('product-management:count')) return [{ exact_total: '0', invalid_category_tree: false }];
+    if (sql.includes('product-management:publication')) return [];
+    return undefined;
+  });
+  try {
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, productMaintenance: true }, p.factory);
+    try {
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+      const response = await api.app.inject({ method: 'POST', url: '/product-management/query', headers, payload: { filter: { productIds: [], categoryIds: [], years: [], seasonIds: [], supplierIds: [], fitIds: [], thicknesses: [], shapeCodes: [] }, page: 1, pageSize: 100 } });
+      assert.equal(response.statusCode, 503, response.body); assert.equal(response.json().error.code, 'PRODUCT_MANAGEMENT_STOCK_NOT_READY');
+      assert.ok(!response.body.includes('"items"')); assert.ok(!p.calls.some(c => c.sql.includes('product-management:page')));
+      const lease = p.calls.at(-1)!.lease, calls = p.calls.filter(c => c.lease === lease);
+      assert.equal(calls.at(-1)!.sql, 'ROLLBACK'); assert.ok(calls.every(c => c.sql !== 'COMMIT'));
+    } finally { await api.close(); }
+  } finally { f.cleanup(); }
+});

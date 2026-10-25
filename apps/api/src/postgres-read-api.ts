@@ -167,6 +167,7 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   readonly catalogueMaintenance?: true;
   readonly paymentMaintenance?: true;
   readonly partyMaintenance?: true;
+  readonly productMaintenance?: true;
   /** Stable private tag capability only; null honestly disables password-dependent branches. */
   readonly staffMaintenance?: { readonly credentialRequestTag: CredentialRequestTag | null };
   /** Closed trusted production selector. It installs independently defined read
@@ -185,6 +186,7 @@ type ApplicationCapabilities = { readonly coreReadModules: readonly CoreReadModu
   readonly catalogueMaintenance: boolean;
   readonly paymentMaintenance: boolean;
   readonly partyMaintenance: boolean;
+  readonly productMaintenance: boolean;
   readonly staffMaintenance: { readonly credentialRequestTag: CredentialRequestTag | null } | null;
   readonly nativeReadExtensions: boolean;
   readonly settings: StoreSettingsReadAuthorization | null;
@@ -225,6 +227,8 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
   if (paymentMaintenance && ownData(options, "paymentMaintenance") !== true) throw new TypeError("Explicit payment maintenance selection required");
   const partyMaintenance = "partyMaintenance" in options;
   if (partyMaintenance && ownData(options, "partyMaintenance") !== true) throw new TypeError("Explicit party maintenance selection required");
+  const productMaintenance = "productMaintenance" in options;
+  if (productMaintenance && ownData(options, "productMaintenance") !== true) throw new TypeError("Explicit product maintenance selection required");
   let staffMaintenance: ApplicationCapabilities["staffMaintenance"] = null;
   if ("staffMaintenance" in options) {
     const selected = exactBag(ownData(options, "staffMaintenance"), ["credentialRequestTag"]);
@@ -297,7 +301,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     const bag = exactBag(ownData(options, "importedHistoryRead"), ["authorization"]);
     importedHistory = Object.freeze({ authorize: method<ImportedHistoryReadAuthorization["authorize"]>(bag.authorization, "authorize") });
   }
-  return Object.freeze({ coreInitializationRead, coreReadModules, catalogueMaintenance, paymentMaintenance, partyMaintenance, staffMaintenance, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
+  return Object.freeze({ coreInitializationRead, coreReadModules, catalogueMaintenance, paymentMaintenance, partyMaintenance, productMaintenance, staffMaintenance, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
 }
 
 export interface SourceConfirmedApplicationReadAuthorization {
@@ -534,7 +538,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
   runtime26HistoryAuthorization?: HistoryRevisionDependencies["authorization"]): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
-  if ((capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
+  if ((capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
   try {
@@ -543,7 +547,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if (issuer !== null) {
       const admission = await pool.connect();
       try {
-        if (capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_MAINTENANCE");
+        if (capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_MAINTENANCE");
+        if (capabilities?.productMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_SEASONS_READ");
         if (capabilities?.partyMaintenance) await issuer.runtime26.assertReady(admission, "CURRENT_CUSTOMER_READ_WRITE");
         if (runtime26HistoryAuthorization !== undefined) await issuer.runtime26.assertReady(admission, "HISTORY_REVISION");
         for (const purpose of capabilities?.coreInitializationRead ? ["CURRENT_FORM_READ"] as const : ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
@@ -590,6 +595,17 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
         if (capabilities.coreInitializationRead || extensions === null) app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate, kinds: ["PAYMENT_METHOD", "PAYMENT_ACCOUNT"],
           unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(work) }));
       }
+    }
+    if (issuer && capabilities?.productMaintenance && runtime26ProductMedia === undefined) {
+      // Original base provider is independent of a private media stage. Its
+      // normal imageChanges contract still rejects absent media capabilities.
+      const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
+      app.register(createProductMaintenanceHttpPlugin({ authenticate, dependencies: {
+        unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, seasonCapability: issuer.productSeasonArray }),
+        now: host.now, newId: () => randomUUID(), media: host.media } }));
+      if (capabilities.coreInitializationRead || extensions === null) app.register(createProductManagementQueryHttpPlugin({ authenticate,
+        dependencies: { authorization: createSourceConfirmedApplicationReadAuthorization(pool).productManagement,
+          reader: new PostgresProductManagementQueryReader(pool, issuer.catalogueRetainedDelete, issuer.productSeasonArray, issuer.runtime26) } }));
     }
     if (issuer && capabilities?.partyMaintenance) {
       app.register(createPartyMaintenanceHttpPlugin({
