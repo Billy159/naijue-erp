@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 465,
+    "round": 466,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "9d06f1abc215433b552971f8a7d484cd02d7753c",
+    "sourceHeadBeforeThisContinuityCommit": "72350e913fb94163537cbfac596bd058162617bf",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -5047,15 +5047,15 @@
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
     "roleQueue": {
       "F1": "DOC193 delivered; awaitactualcandidatepublicentry then originaldocument nextaffectedrealcapability",
-      "F2": "465 exact2 delivered and released; C integrate. P01 same-task width awaits actualDOM geometry fromQF2, not arbitraryCSS.",
+      "F2": "465 exact2 released/integrated; P01 falsewidthissue withdrawn after actualgeometry; next only new465specificfindings or actualmaintQA dependency",
       "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
       "F4": "Allowedtabsexact2 delivered, in461; nextactualCORE03 colors/fits UI+realread",
       "D1": "COREpairing/v5factupdate delivered; actualcurrentreader candidate HTTP next",
       "D2": "Source425/QA proofs ready; actualregisteredQA maintenance window T45 pending",
       "D3": "Header actualdone; original10line activeT45, salesparent/v5 dependentwait",
       "T45": "Original10samekeycollect→backupfreshness/20install→21start→QB-reviewed22route; preservefixedcore02 first",
-      "QF": "sharedentry scopedPASS; actualHTTPS affectedrequests after22",
-      "QF2": "445 geometry narrow diagnosis Solmedium→465 fresh normal new/edit UI Luna/max; no repeated oldPASS",
+      "QF": "465 C sharedready-pages fourline limited technicalcheck Solmedium; reuse originalF2 checks, no browser",
+      "QF2": "465 fixed normal new/edit actualUI/6tabs/dirtyreturn/readonlyerror checks Luna/max aftergeometrydone; no old445retest",
       "QB": "22 scopedsource/rollbackPASS adopted; next only changedfailedrange oractualnewbackendmodule"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -5084,7 +5084,19 @@
       "checks": "F2 scopedUI/TS/diff PASS adopted; not new browser/build/businessPASS",
       "next": "fixed source465 export + one integrated SYN build; original QF2 minimal normal new/edit actual check then affected product list correction"
     },
-    "modelAudit": "All12 latest saved/actual match: C/F1-F4/D1-D3/QF/QB/T45 Solmedium; QF2 Lunamax. QF screenshot14:12 composer medium differs from actual14:06/14:09 max; display cause UNKNOWN; no Luna-medium execution today. FastUNVERIFIED."
+    "modelAudit": "All12 latest saved/actual match: C/F1-F4/D1-D3/QF/QB/T45 Solmedium; QF2 Lunamax. QF screenshot14:12 composer medium differs from actual14:06/14:09 max; display cause UNKNOWN; no Luna-medium execution today. FastUNVERIFIED.",
+    "latestLocalSynthetic": {
+      "source": "72350e913fb94163537cbfac596bd058162617bf",
+      "build": "phase2-normal-72350e9-25",
+      "url": "http://127.0.0.1:57914/",
+      "resources": 140,
+      "strictExit": 0,
+      "buildExit": 0,
+      "http": "3 fixed key resources exact bytes/200",
+      "scope": "Normal new/edit six product tabs; maintenance unavailable, SYN only; not actualCORE/publication/write"
+    },
+    "P01Geometry": "OriginalQF2 corrected previous mismatched CSS viewport: override1470 actually1205x593; actual1470x724 table/container1221 and client=scroll, ten cols visible. Originaldifference withdrawn, noCSSfix. Original445 report/observations/evidence amended, oldscreenshots preserved.",
+    "GitHub": "46572350e913fb94163537cbfac596bd058162617bf exact nonforced FF + GET readback verified"
   },
   "latestReadySource": {
     "round": 445,
