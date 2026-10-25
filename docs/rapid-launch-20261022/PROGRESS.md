@@ -1,3 +1,13 @@
+SOURCE428 NORMAL MAINTENANCE READBACK / PRODUCT HOST426 AND CATALOGUE427 FIXED
+
+D1baseProducthost fixed426c668717955ace35792dcbe2b2f5a18d666728582 consumesoriginalD2visibility425; originalQB reviewsnew5leaves only, actualSQL/nonowner/STAGED guard/detail notyetproven. OriginalprivateproductMaintenance optin, mediaimageChanges[] withoutstage still503, oldV2/v17/permissions/CAS/receipt preserved. D1nextcurrentexistingR2/HISTORYfactorymaintenanceoptionpass-through, no newauth/purposegrant.
+
+F4 normalcatalogue8leaf fixed42765619e3470f6d2fd3b767217b41053ebd9af87ca; sharedready-pages explicitlyreturnedtoC. Normalconfiguredflag/currentrole→originalclient/controller+sessionownedunknownoriginalkey/identityinvalidations/readbackbeforeclear; originalQF newtechnicalsource reviewSolmedium, notresume410interrupted andnooldUIrepeat. Candidate427 phase2-normal-65619e3-20 at57909 strict0/4.654s Vite0/2.483s132resources, syntheticreadonly defaultpreviewflags remainexplicit, notfakewritableornewformalbusiness. Original57908userdrafttargets retained.
+
+F3 NORMAL-MAINTENANCE-CONSUMER-20261025 exact6settingsleaves source-ready: Paymentdirty/unknown tabguard; Payment/Party receiptcommitted requiresauthoritativetargetkind/id/code/version beforeclose, failkeepscommittedandreadretryonly, Staffexistingordinaryaccount:null/detailreused. Originalsettingsstrict0 and8targetedSYNcasesPASS, noPG/networkbrowser/formalclaim. NextoriginalQF2onlynewreadback/tabdeltas technicalSolmedium, oldtag/filterevidencereused.
+
+QB301newstockcarrier finitePASS adopted; T45 solewriter instructedoriginalfinalize/privateupload/onceexecute immediately, no newbusinessapproval/no QA repeat. Actualstocknotyetreported; C232all14999/15121stage-onlycomplete. All37/67scope andrealwholebusiness0/37 unchanged; no formalnewrelease. GitHub425c8941321e70e59bf14afbfb61503186ca98a76ec verified;426-428nextsync.
+
 SOURCE425 PRODUCT MAINTENANCE CHILD VISIBILITY SOURCE READY
 
 OriginalD2 PRODUCT-LOAD-VISIBILITY-v1 exact2leaves delivered/fixed: product-maintenance-store49139/8d7e54362360df69043ad14149bd50a5c329ad42b0245d8c95fb2730af282b21 and originalprotocoltest46978/ac3460e28c102c5556bad74f123d02e5fdd04083d065b58132d482614ef22c5c. Original18affectedprotocolPASS+strict0, noactualPGorHTTP. OriginalSKU/barcode imported publication proof/maintenance native birth validity/committed receipt and audit/xmin checks applied before LIMIT/locks; barcodeonlyvisibleSKU; rootbasicread/oldv17save/CAS/ids/media guardunchanged. OriginalC189/QB260actualv17evidence reused, no syntheticStagewitness claim. NewSQL actualexecution/nonowner/STAGED notyetproven. D1receivedexactpins fororiginalbaseProducthost; no globalwaitforD2report.

@@ -9221,5 +9221,14 @@
     "F4": "normalcataloguemaintenance sessionownedoriginalkeyinprogress",
     "stock": "T45newcarrier QB finite review noactualstockyet",
     "staffOptionsLayers": "productionJSON true; factorythirdarg tag|null; internaloptions object"
+  },
+  "currentContinuation428": {
+    "source426": "c668717955ace35792dcbe2b2f5a18d666728582",
+    "source427": "65619e3470f6d2fd3b767217b41053ebd9af87ca",
+    "candidate427": "http://127.0.0.1:57909/#inventory SYNTHETIC_READONLY_DEFAULT_FLAGS",
+    "F3": "exact6 settings readback/tabguard source ready scopedSYN8PASS",
+    "QF": "newtechnical427source notresume410",
+    "stock": "QB301PASS adopted T45finalize/onceexecute instructed",
+    "sharedReadyPages": "C only after F4 released"
   }
 }

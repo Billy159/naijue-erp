@@ -31,6 +31,8 @@ function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceCont
   const [formModule, setFormModule] = useState<typeof import('./party-form.tsx') | null>(null), [formError, setFormError] = useState(false), [formAttempt, setFormAttempt] = useState(0);
   const [auditOpen, setAuditOpen] = useState(false), [auditModule, setAuditModule] = useState<typeof import('./audit-drawer.tsx') | null>(null), [auditError, setAuditError] = useState(false), [auditAttempt, setAuditAttempt] = useState(0);
   const [redacted, setRedacted] = useState(false);
+  const [readback,setReadback]=useState<'idle'|'loading'|'error'>('idle'),[readbackAttempt,retryReadback]=useState(0);
+  const committed=state.write.phase==='committed'?state.write.result:null;
   const denied = query.phase === 'error' && query.error instanceof PartyClientError && ['forbidden','unauthenticated'].includes(query.error.kind);
   useEffect(() => { if (denied) setRedacted(true); else if (query.phase === 'success') setRedacted(false); }, [denied, query.phase]);
   useEffect(() => {
@@ -56,8 +58,12 @@ function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceCont
   useEffect(() => { if (wasEditor.current && !state.editor) restoreFocus(); wasEditor.current = !!state.editor; }, [state.editor]);
   useEffect(() => {
     const result = state.write.phase === 'committed' ? state.write.result : null;
-    if (result && lastCommit.current !== result.operationId) { lastCommit.current = result.operationId; controller.discardEditor(); void controller.queryList(controller.executedQuery); }
+    if (result && lastCommit.current !== result.operationId) { lastCommit.current = result.operationId; void controller.queryList(controller.executedQuery); }
   }, [state.write, controller]);
+  useEffect(()=>{if(!committed||!state.editor)return;const abort=new AbortController();setReadback('loading');
+    void controller.client.detail(controller.kind,committed.partyId,AbortSignal.any([controller.scope.signal,abort.signal])).then(record=>{if(abort.signal.aborted||!controller.scope.active)return;if(record.id===committed.partyId&&record.version>=committed.version&&record.code===committed.code)controller.discardEditor();else setReadback('error');},error=>{if(abort.signal.aborted||!controller.scope.active)return;setReadback('error');if(error instanceof PartyClientError&&(error.kind==='unauthenticated'||error.kind==='forbidden')){controller.scope.dispose();props.audit?.onAccessFailure(error.kind);}});
+    return()=>abort.abort();
+  },[committed,controller,readbackAttempt]);
   useLayoutEffect(() => { if (table.current && query.phase === 'success') { table.current.scrollTop = controller.tableScroll.top; table.current.scrollLeft = controller.tableScroll.left; } }, [query.phase, query.success, controller]);
   if (state.disposed || !controller.scope.active) return null;
   const current = redacted || denied ? null : query.success, data = current?.data;
@@ -74,8 +80,9 @@ function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceCont
       {title:'名称',dataIndex:'name'}, {title:'编码',dataIndex:'code'}, {title:'状态',width:100,render:(_,row)=><Tag className={`iw-status ${row.enabled?'normal':'off'}`}>{row.enabled?'正常':'已停用'}</Tag>}, {title:'操作',width:76,render:(_,row)=><div className="bs-row-actions"><Button type="text" size="small" disabled={blocked||busy} onClick={()=>activate(()=>{void controller.openExisting(row.id,'EDIT');})}>编辑</Button></div>}
     ]}/></div>
     <Pager total={data?.total??0} page={applied.page} size={applied.pageSize} disabled={busy} onPage={page=>{void controller.queryList({...applied,page});}} onSize={pageSize=>{void controller.queryList({...applied,page:1,pageSize});}}/>
-    {state.editor && (!props.readOnly || controller.hasUnresolvedWrite) && (formModule ? <formModule.default controller={controller}/> : <Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${state.editor.action==='CREATE'?'新增':'编辑'}${label}`} maskClosable={false} autoFocus={false} onCancel={()=>{controller.requestClose();}} footer={<Button onClick={()=>{controller.requestClose();}}>取消</Button>}>
+    {state.write.phase!=='committed' && state.editor && (!props.readOnly || controller.hasUnresolvedWrite) && (formModule ? <formModule.default controller={controller}/> : <Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${state.editor.action==='CREATE'?'新增':'编辑'}${label}`} maskClosable={false} autoFocus={false} onCancel={()=>{controller.requestClose();}} footer={<Button onClick={()=>{controller.requestClose();}}>取消</Button>}>
       <p role={formError?'alert':'status'}>{formError?'维护表单暂未加载，输入已保留。':'正在准备维护表单…'}{formError&&<Button type="text" onClick={()=>setFormAttempt(value=>value+1)}>重试加载表单</Button>}</p>{state.editor.closePrompt&&<section role="alert"><p>放弃本次填写？</p><Button onClick={()=>controller.keepEditing()}>继续填写</Button><Button onClick={()=>controller.discardEditor()}>放弃本次填写</Button></section>}</Modal>)}
+    {committed&&state.editor&&<Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${label}保存已确认`} maskClosable={false} onCancel={()=>controller.discardEditor()} footer={<Button onClick={()=>controller.discardEditor()}>关闭</Button>}><p role={readback==='error'?'alert':'status'}>{readback==='error'?'当前资料读回失败，请重试读取。':'正在重新读取当前资料…'}</p>{readback==='error'&&<Button onClick={()=>retryReadback(value=>value+1)}>重试读取</Button>}</Modal>}
     {auditOpen&&props.audit&&(auditModule?<auditModule.default scope={controller.scope} capability={props.audit} onAccessFailure={props.audit.onAccessFailure} close={()=>{setAuditOpen(false);restoreFocus();}}/>:<Modal visible title="基础设置操作记录" maskClosable={false} onCancel={()=>{setAuditOpen(false);restoreFocus();}} footer={<Button onClick={()=>{setAuditOpen(false);restoreFocus();}}>取消</Button>}><p role={auditError?'alert':'status'}>{auditError?'操作记录暂未加载。':'正在读取操作记录…'}{auditError&&<Button type="text" onClick={()=>setAuditAttempt(value=>value+1)}>重试加载</Button>}</p></Modal>)}
   </section></div>;
 }

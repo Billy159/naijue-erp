@@ -16,7 +16,7 @@ function PaymentPage(props:PaymentSettingsProps){
  const workspace=props.workspace?.matches(props.scope)?props.workspace:undefined,[view]=useState(()=>workspace?.getViewState(props.initialTab)??createPaymentSettingsViewState(props.initialTab)),[tab,setTab]=useState(view.tab);
  const scroll=useRef({methods:{top:0,left:0},accounts:{top:0,left:0}}),initialized=useRef(false);
  if(!initialized.current){scroll.current[view.tab]={...view.tableScroll};initialized.current=true;}
- return <div id="basic-settings-v2"><PaymentTab key={tab} {...props} kind={tab} view={view} scroll={scroll.current[tab]} onTab={kind=>{view.tab=kind;Object.assign(view.tableScroll,scroll.current[kind]);setTab(kind);}}/></div>;
+ return <div id="basic-settings-v2"><PaymentTab key={tab} {...props} kind={tab} view={view} scroll={scroll.current[tab]} onTab={kind=>{if(kind===tab)return;const active=workspace?.getSnapshot()[tab];if(active&&!active.canLeave()){active.requestClose();return;}view.tab=kind;Object.assign(view.tableScroll,scroll.current[kind]);setTab(kind);}}/></div>;
 }
 function PaymentTab(props:PaymentSettingsProps&{kind:PaymentSettingsKind;view:ReturnType<typeof createPaymentSettingsViewState>;scroll:{top:number;left:number};onTab:(kind:PaymentSettingsKind)=>void}){
  const workspace=props.workspace?.matches(props.scope)?props.workspace:undefined,{kind,view}=props;
