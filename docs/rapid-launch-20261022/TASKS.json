@@ -12078,6 +12078,25 @@
       "globallySortedClosure": false,
       "inventoryLedgerExpected": "UNKNOWN_NOT_STOCK_GROUP_COUNT",
       "next": "Original QB new helper scoped review; T45 original QA60 then actual stage/full closure using original stores and authorities"
+    },
+    "qa60Actual": {
+      "owner": "T45",
+      "status": "PASS_NATIVE189_V11_V14_V16_ALIGNMENT_ONLY",
+      "exitCode": 0,
+      "seconds": 4.4263025829568505,
+      "canonical": "3ef5282f5e6421cc369eb47dab079dcd33d7144336d60ad0e746619b09dc0457",
+      "commitOutcomes": [
+        "COMMIT_RETURNED_SUCCESS",
+        "COMMIT_RETURNED_SUCCESS"
+      ],
+      "businessCountsAndRowTransactionsPreserved": true,
+      "existingPrivilegesPreserved": true,
+      "R1Changed": false,
+      "ownedSessionsRemaining": 0,
+      "normalSAVEExecuted": false,
+      "oldRuntimeReviewsStale": true,
+      "next": "T45 exact approved ACL61 then original QB current ownerPM/nonowner5purpose metadata reviews before normal SAVE",
+      "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/ALIGNMENT60-ACTUAL-RESULT.json"
     }
   }
 }
