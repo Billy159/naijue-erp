@@ -11891,7 +11891,9 @@
       "actualImported": false,
       "D1SeamResult": "Existing mandatory hall/store/publication and MIGRATION_DERIVED/evidence_ref support confirmed normalized business hall source key; only exact D3 mapper exception required; no SQL/DDL",
       "privateOverlayManifest": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/outputs/01a16189-history-hall/D3-confirmed-business-hall-overlay-20261026/MANIFEST.json",
-      "privateOverlayStatus": "2471 rows/12 mappings fixed; source adaptation in progress; not imported"
+      "privateOverlayStatus": "2471 rows/12 mappings fixed; source adaptation in progress; not imported",
+      "sourceCommit": "5606372848f0b1fd24dd62a57f906efd83193cf9",
+      "review": "QB321 scopedSOURCE_PASS 4a7db012a67439c3d4c1891728d2263e5cd57df329e77c508f792122228762f0"
     },
     "sourceWindow47Result": {
       "status": "STOP_FIRST_SOURCE47_FAILURE_NO_REPLAY",
@@ -11927,6 +11929,65 @@
       "appChanged": false,
       "nextOwner": "T45",
       "next": "Read required sanitized error and fix exact result parsing, no same-attempt replay"
+    },
+    "source52Actual": {
+      "status": "PASS_SOURCE_ONLY_FULL_KNOWN_SUBSET_AND_PARKED",
+      "known": 25811,
+      "parked": 2471,
+      "knownBytes": 810211896,
+      "parkedBytes": 24612712,
+      "gzipPasses": 2,
+      "actualMilliseconds": 90830,
+      "closed": true,
+      "databaseWrites": false,
+      "MAIN": false,
+      "PUBLISH": false,
+      "next": "T45 consumes only parked2471 with approved fixed overlay/source5606372; preserve known output and all failed attempts"
+    },
+    "qaFacts51Actual": {
+      "status": "PASS_CURRENT_TWO_ID_READ_ONLY",
+      "productVersion": 2,
+      "skuVersion": 1,
+      "skuCount": 1,
+      "barcodeCount": 1,
+      "imageCount": 0,
+      "sourceRows": 0,
+      "auditCount": 2,
+      "priceNullKnown": true,
+      "databaseWrites": false,
+      "next": "QB320 final exact ACL adopted"
+    },
+    "qa53Actual": {
+      "status": "FAILED_BEFORE_GRANT_SQLSTATE42703",
+      "column": "sales_header.responsible_staff_id",
+      "grantOutcome": "NOT_ATTEMPTED",
+      "databaseWrites": false,
+      "owner": "D1",
+      "next": "Reconcile approved current salesperson-only contract and actual schema/patch; no manifest deletion/owner bypass/R1 edit"
+    },
+    "productionStartup519": {
+      "sourceCommit": "c61e747667276c5de0bd6fa5c53ceba31681d50f",
+      "buildId": "replica-production-source519-core-10",
+      "directory": "replica-production-source519-core-20261026-10",
+      "rootCause": "CORE05 native JS does not automatically attach emitted component CSS; initial HTML common styles absent",
+      "change": "Initial common11 links in27 frozen cascade slots; seven original scoped component styles attach once with original module; startup/retry UI; no capability flags enabled",
+      "typecheck": "PASS strict runtime",
+      "build": "PASS exit0 3.475s",
+      "pack": "PASS exit0 1.962s one extraction197members",
+      "archiveSha256": "d33c7d02725f1bc15f551dc93cfbdbb24cab3380aa8ef26ebcbc14fa15c8692a",
+      "manifestSha256": "08bd1d383989c9c6f7bbde44b887485fb0a8bdfe202c6e0abb6ee0da780c6a31",
+      "review": "OriginalQF517/518/519 scopedsourcePASS;519 artifact delta pending",
+      "deployOwner": "T45",
+      "deployed": false,
+      "browserPassed": false,
+      "boundary": "CORE05 readonly business flags unchanged; UI delivery not real maintenance/history business PASS"
+    },
+    "nightContinuation20261026": {
+      "humanSource": "taskbook01a16189 turn01a1746f message01a1746f-54a0-7fd1-9b82-093b16c479db",
+      "instruction": "Continue while user sleeps; no duplicate existing approval, preserve data and necessary checks",
+      "priority": "Public loading/UI CSS recovery, actual normal maintenance and save, approved history source/import/publication, full system and originalQF/QF2 comparison",
+      "model": "technical gpt-6.1-sol/medium; purevisual gpt-6-luna/max; actualFast UNVERIFIED",
+      "wholeGoalComplete": false
     }
   }
 }
