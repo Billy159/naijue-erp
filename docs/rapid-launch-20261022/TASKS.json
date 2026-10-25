@@ -11681,14 +11681,14 @@
     "roleQueue": {
       "F1": "Original DOC196 source delivered and adopted; actual full document/history save/readback waits T45 current QA and real published backend; latest turn completed, notLoaded is not active work",
       "F2": "Original product image error-state fix delivered/adopted; source idle; actual real inventory/product data and current candidate checks await full publication",
-      "F3": "Original public CSS root cause delivered; shared source released C, CORE10 resources deployed; browser settings blocked, maintenance actual QA pending",
+      "F3": "Actual CORE10 hall/staff entry discrepancy diagnosed as intended local form preparation vs closed write; source0change; real maintenance QA remains pending",
       "F4": "Original category empty504 delivered/adopted; idle, actual data scope awaits legal full MAIN publication; do not fabricate another source task",
       "D1": "Original source513 and QA02/v16 alignment input delivered; actual64 lifecycle owned T45; no duplicate implementation",
       "D2": "Original legal publication path delivered; idle/no source bug; full MAIN route retained, no unapproved STAGED union",
       "D3": "Actual2471 prepared PASS; joint28282 reference+pure stage projection helper QB323 PASS; next actual full stage/closure via T45, no repeated source preparation",
-      "T45": "Actual64 real login/cleanup PASS but prepare number reservation failed42501 transfer_header read; original65 readonly residue/3column ACL facts next, no64 replay",
+      "T45": "Actual67 login/prepare/createDraft/detail passed; nullcase42501 inventory_balance technical lock permission; preserve v1 draft+originalkeys, original readonly recovery and precise successor next",
       "QF": "Original519 scoped source/fixed artifact closure PASS adopted; actual business candidate validation pending T45 real chain",
-      "QF2": "CORE10 fixed public candidate bound; actual IAB access disabled in Work settings, no navigation/screenshots/UI PASS; exact wait only",
+      "QF2": "NativeChrome limited actual shell/staff/hallwarehouse observation complete; temporary tab closed/restored; no fullpage/business PASS, IAB still disabled",
       "QB": "QB323 joint helper PASS and QB324 current63 metadata delta PASS adopted; current six reviews issued to T45; next actual64 evidence along existing route"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -12046,11 +12046,13 @@
       "formalRootChanged": false,
       "databaseCalls": 0,
       "browserOwner": "QF2",
-      "browserStatus": "QF2_BLOCKED_LOCAL_BROWSER_DISABLED_IN_WORK_SETTINGS_NO_VISUAL_PASS",
+      "browserStatus": "QF2_NATIVE_CHROME_LIMITED_ACTUAL_STAFF_HALL_WAREHOUSE_OBSERVED_NOT_FULLPAGE_PASS",
       "actualReceipts": "K/reports/controller/rapid-launch-20261022/server-execution/{CORE10-APP58,CORE10-ROUTE59}-ACTUAL-RESULT.json",
       "businessAcceptance": false,
       "publicTls": "T45 SIX_GET_200_SSL_VERIFY0",
-      "next": "Original QF2 resume same immutable candidate when local browser available; backend and source prep continue"
+      "next": "Original QF2 resume same immutable candidate when local browser available; backend and source prep continue",
+      "browserLease": "QF2 temporary tab closed; original Demo staff tab restored; no existing inputs changed",
+      "hallEntryFinding": "F3 fixed-source confirms intended form-preparation-only entries; save disabled and controller rejects before requestKey/execute when writesEnabled false; no source defect/newchange"
     },
     "confirmedHall2471SourceOnly": {
       "owner": "D3",
@@ -12162,6 +12164,28 @@
         "reviews": "QB325 affected POST66 review in progress for original67",
         "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/TRANSFER-READ66-ACTUAL-RESULT.json"
       }
+    },
+    "qa67Actual": {
+      "owner": "T45",
+      "status": "REAL_LOGIN_PREPARE_INITIAL_SAVE_READBACK_PASS_LATER_NULL_CASE_PERMISSION_FAILED",
+      "draft": "b8ed6849-3391-4444-8c65-5159c1786b34",
+      "version": 1,
+      "requestKey": "C_D1_NATIVE_QA03_CREATE_DRAFT",
+      "normalHTTP": [
+        200,
+        200,
+        200,
+        200
+      ],
+      "failedNullHTTP": 500,
+      "sqlState": "42501",
+      "querySha256": "8690f60a9a9cc37bf0cb64d018898d966a30b4696b99656fa018f42bbbcf507f",
+      "permissionTarget": "inventory_balance",
+      "casesCompleted": false,
+      "cleanup": "LOGOUT204_SESSION_REVOKED_0521_DISABLED_V2_AUTHV2_ACTIVE0_3DRIVERS_CLOSED_ERRORS_EMPTY",
+      "R1Changed": false,
+      "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/NORMAL67-ACTUAL-RESULT.json",
+      "next": "T45 originalkey currentdraft+failedNULL readonly; QB exact SQL technical-lock permission diagnosis; reuse committed v1 draft, never recreate to hide failure"
     }
   }
 }
