@@ -12,7 +12,7 @@ function text(value:unknown):asserts value is string{if(typeof value!=='string'|
 function nullableText(value:unknown){if(value!==null)text(value);}
 function uuid(value:unknown):asserts value is string{text(value);if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(value))bad();}
 function nullableId(value:unknown){if(value!==null)uuid(value);}
-function positive(value:unknown){if(typeof value!=='number'||!Number.isSafeInteger(value)||value<1||value>2147483645)bad();}
+function positive(value:unknown):asserts value is number{if(typeof value!=='number'||!Number.isSafeInteger(value)||value<1||value>2147483645)bad();}
 function stamp(value:unknown,instant:boolean){if(value===null)return;text(value);if(!(instant?/^(?!0000)\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{6}Z$/:/^(?!0000)\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{6}$/).test(value))bad();const ms=value.slice(0,23)+'Z';if(!Number.isFinite(Date.parse(ms))||new Date(ms).toISOString()!==ms)bad();}
 function person(value:unknown){const row=record(value,['state','staffId']);if(!['UNKNOWN','UNRESOLVED','BOUND'].includes(String(row.state)))bad();nullableId(row.staffId);if((row.state==='BOUND')!==(row.staffId!==null))bad();}
 /** Response shape/target validation only. Server grant validation is never simulated in the browser. */
@@ -40,7 +40,27 @@ export function historyDetailResponse(value:unknown,target:HistoryTarget,q:Impor
  if(document===null&&(lines.total!=='0'||settlements.total!=='0')||target.kind==='transfers'&&settlements.total!=='0')bad();
  return {dataset:'HISTORY',kind:target.kind,document,lines,settlements,...(hasCatalog?{lineCatalog:historyLineCatalogResponse(row.lineCatalog,lines.items)}:{})};
 }
-export function createHistoryReader(options:HttpQueryOptions){const http=createHttpJsonQuery(options);return Object.freeze({readDetail(target:HistoryTarget,read:QueryRead<ImportedHistoryDetailQuery>){const query=parseImportedHistoryDetailQuery({...read.parameters},target.kind);if(query.documentId!==target.documentId)bad();return http.post('/imported-history/'+target.kind+'/detail/query',query,read.signal,value=>historyDetailResponse(value,target,query));}});}
+export function createHistoryReader(options:HttpQueryOptions){const http=createHttpJsonQuery(options);return Object.freeze({readDetail(target:HistoryTarget,read:QueryRead<ImportedHistoryDetailQuery>){const query=parseImportedHistoryDetailQuery({...read.parameters},target.kind);if(query.documentId!==target.documentId)bad();return http.post('/imported-history/'+target.kind+'/detail/query',query,read.signal,value=>historyDetailResponse(value,target,query));},
+ /** A click-only identity lookup through the existing authorized detail read.
+  * The response supplies the current batch/version, never the ledger event. */
+ readTarget(kind:ImportedHistoryKind,read:QueryRead<{readonly documentId:string}>):Promise<HistoryTarget|null>{
+  const query=parseImportedHistoryDetailQuery({documentId:read.parameters.documentId,linePage:1,linePageSize:20,settlementPage:1,settlementPageSize:20},kind);
+  return http.post('/imported-history/'+kind+'/detail/query',query,read.signal,value=>{
+   const hasCatalog=!!value&&typeof value==='object'&&Object.hasOwn(value,'lineCatalog');
+   const row=record(value,['dataset','kind','document','lines','settlements',...(hasCatalog?['lineCatalog']:[])]);
+   if(row.dataset!=='HISTORY'||row.kind!==kind)bad();
+   if(row.document===null){
+    const lines=page(row.lines,1,20,item=>validateImportedHistoryLine(item,kind)),settlements=page(row.settlements,1,20,validateImportedHistorySettlement);
+    if(lines.total!=='0'||settlements.total!=='0')bad();
+    if(hasCatalog)historyLineCatalogResponse(row.lineCatalog,lines.items);
+    return null;
+   }
+   const candidate=row.document as Record<string,unknown>;uuid(candidate.batchId);positive(candidate.version);
+   const target:HistoryTarget={kind,documentId:query.documentId,batchId:candidate.batchId,effectiveVersion:candidate.version};
+   const detail=historyDetailResponse(value,target,query);if(!detail.document)bad();
+   return {kind,documentId:detail.document.documentId,batchId:detail.document.batchId,effectiveVersion:detail.document.version};
+  });
+ }});}
 export interface CompleteHistoryDocument {readonly document:ImportedHistoryHeader;readonly lines:ImportedHistoryDetail['lines']['items'];readonly settlements:ImportedHistoryDetail['settlements']['items'];readonly lineCatalog?:ImportedHistoryLineCatalog}
 /** Explicit edit action only: consume all bounded pages before enabling a revision. Never replace from a partial page. */
 export async function collectHistoryDocument(reader:ReturnType<typeof createHistoryReader>,target:HistoryTarget,read:QueryRead<ImportedHistoryDetailQuery>):Promise<CompleteHistoryDocument>{

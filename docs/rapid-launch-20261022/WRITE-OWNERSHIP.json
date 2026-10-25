@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-24T17:49:29.187095+00:00",
+  "updatedAt": "2026-10-25T09:11:17.107528+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -5363,5 +5363,21 @@
     "sharedRootConfigBuildOwner": "C unchanged",
     "serverOwner": "T45 unchanged",
     "status": "DELIVERED_SOURCE427_RELEASED_BACK_TO_C"
+  },
+  "inventorySourceNavigation443": {
+    "C": [
+      "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx"
+    ],
+    "F1": [
+      "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/inventory-source-navigation.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/inventory-source-navigation.test.mjs"
+    ],
+    "F2": [
+      "apps/web/demo-replica/frontend/runtime/inventory/ledger.tsx",
+      "apps/web/demo-replica/frontend/runtime/inventory/inventory-runtime.test.mjs"
+    ],
+    "handoff": "F1 and F2 exact leaves delivered and released; C integrates fixed normal host. No concurrent source writers. F4 current six-page seam read only; root/shared files excluded.",
+    "rule": "Explicit finite delegation overrides broad reserved replica directory for these leaves only; current technical models Solmedium."
   }
 }

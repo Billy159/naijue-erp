@@ -7,6 +7,8 @@ import { AccountMenuView, ChangeOwnPasswordDialogView, type OwnPasswordFields, t
 import { createReadyPageMounts, type ReadyPageOptions, type MountedReplicaPage } from './ready-pages.tsx';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { ReplicaSession } from './session.ts';
+import type { InventoryLedgerEntry } from '../../../../src/inventory/ledger-contracts.ts';
+import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 
 const emptyPasswords = (): OwnPasswordFields => ({ currentPassword: '', newPassword: '', confirmation: '' });
 const captions: Readonly<Record<string, string>> = {
@@ -59,10 +61,39 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
  const { session, page, app, breadcrumb } = options;
  if (options.transportMode === 'same-origin-https' && (location.protocol !== 'https:' || location.origin !== session.http.origin)) throw new TypeError('正常运行需要已配置的同源 HTTPS。');
  app.dataset.replicaTransport = options.transportMode;
- const pages = createReadyPageMounts(options, next => { void navigate(next); }, options.prepareRoute), chromeHost = document.createElement('div');
+ const pages = createReadyPageMounts({ ...options, inventory: { ...options.inventory, onOpenSource: options.inventory.onOpenSource ?? openInventorySource } }, next => { void navigate(next); }, options.prepareRoute), chromeHost = document.createElement('div');
  chromeHost.dataset.replicaSession = ''; document.body.append(chromeHost); const chromeRoot = createRoot(chromeHost);
  let current: MountedReplicaPage | null = null, scope: ReadScope | null = null, route = '', serial = 0, disposed = false;
  let identity: object | null = null, toastTimer: number | undefined;
+ let sourceNavigation: AbortController | null = null;
+ async function openInventorySource(entry: InventoryLedgerEntry): Promise<boolean> {
+  const activeScope = scope, activePage = current, activeSerial = serial, principal = session.auth.getSnapshot().principal;
+  const dialog = options.inventory.ledgerDialog;
+  const kind = entry.source.kind === 'HISTORY_REVISION' ? entry.source.documentKind : entry.source.kind;
+  if (!activeScope?.active || !activePage || route !== 'inventory' || !dialog.open || !principal
+    || kind === 'SALES' && !options.routes.sales || kind === 'TRANSFER' && !options.routes.transfers || kind === 'CUTOFF_BASELINE') return false;
+  sourceNavigation?.abort();
+  const controller = new AbortController(); sourceNavigation = controller;
+  const active = () => !disposed && !controller.signal.aborted && activeScope.active && scope === activeScope
+    && current === activePage && serial === activeSerial && route === 'inventory' && dialog.open && session.auth.getSnapshot().principal === principal;
+  const close = () => controller.abort();
+  dialog.addEventListener('close', close, { once: true });
+  try {
+   const { resolveInventorySourceRoute } = await import('../documents/inventory-source-navigation.ts');
+   if (!active()) return false;
+   const next = await resolveInventorySourceRoute({ entry, scope: activeScope, http: session.http, signal: controller.signal });
+   if (!active() || next === null) return false;
+   // Successful navigation disposes the old inventory scope; retain its actual result.
+   return await navigate(next);
+  } catch (error) {
+   if (!active()) return false;
+   if (error instanceof HttpQueryError && (error.kind === 'unauthenticated' || error.kind === 'forbidden')) session.onAccessFailure(error);
+   throw error;
+  } finally {
+   dialog.removeEventListener('close', close);
+   if (sourceNavigation === controller) sourceNavigation = null;
+  }
+ }
  const toast = (message: string) => { let node = document.getElementById('toast'); if (!node) { node = document.createElement('div'); node.id = 'toast'; node.setAttribute('role', 'status'); document.body.append(node); } node.textContent = message; node.style.display = 'block'; window.clearTimeout(toastTimer); toastTimer = window.setTimeout(() => { if (node) node.style.display = 'none'; }, 4200); };
  const canLeave = () => !pages.hasUnresolvedWrite() && (current?.canLeave() ?? true);
  const leaveHost=document.createElement('div');leaveHost.dataset.documentLeave='';document.body.append(leaveHost);const leaveRoot=createRoot(leaveHost);
@@ -73,7 +104,7 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
   pendingLeave={next,replace,owner:current,scope};
   leaveRoot.render(<SaleDialog variant="transfer" className="tc-confirm tc-danger" title="有未保存的修改" close={dismissLeave} footer={<><button type="button" className="btn" onClick={dismissLeave}>继续编辑</button><button type="button" className="btn primary" onClick={()=>{const decision=pendingLeave;if(!decision||current!==decision.owner||scope!==decision.scope||!scope?.active){dismissLeave();return;}if(pages.hasUnresolvedWrite()||!current.canDiscard?.()||!current.discard?.()){dismissLeave();toast('当前操作尚未结束，输入已保留。');return;}dismissLeave();void navigate(decision.next,decision.replace);}}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SaleDialog>);
  };
- const clearPage = () => { dismissLeave();serial++; current?.dispose(); current = null; scope?.dispose(); scope = null; page.replaceChildren(); };
+ const clearPage = () => { sourceNavigation?.abort(); sourceNavigation = null; dismissLeave();serial++; current?.dispose(); current = null; scope?.dispose(); scope = null; page.replaceChildren(); };
  const status = (message: string, retry?: () => void) => { page.replaceChildren(); const box = document.createElement('div'); box.className = 'iw-state'; box.setAttribute('role', retry ? 'alert' : 'status'); box.textContent = message; if (retry) { const button = document.createElement('button'); button.className = 'btn'; button.textContent = '重试加载资料'; button.onclick = retry; box.append(' ', button); } page.append(box); };
  async function navigate(next: string, replace = false): Promise<boolean> {
   if (disposed || !session.auth.getSnapshot().principal) return false;

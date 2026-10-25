@@ -1343,9 +1343,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T08:46:37.837164+00:00",
+  "updatedAt": "2026-10-25T09:11:17.107528+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "8b7e0eebac9fe31da2d58c9ed1ef569c4335a2c0",
+  "lastVerifiedRemoteCommit": "c23a91de924061b76ab6872db6952070707cdb71",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -9406,5 +9406,14 @@
     "J03": "original unit97a9048dd8ec RUNNING collectonly",
     "QF2actualModel": "gpt-6-luna/max saved+latestturn verified; FastUNVERIFIED",
     "goal": "ACTIVE_INCOMPLETE"
+  },
+  "currentContinuation443": {
+    "frontend": "F1 resolver3 + F2 ledger2 + C root1 integrated; scopedchecksPASS; independentroot/candidate pending",
+    "stock": "all38303groups/38314contributors committed80933 and384windowmatch; terminalFAILED closeEBADF; independentFINAL_READBACK missing; no restage",
+    "T45next": "13readonlyFINAL020ce then12ACL newcanonical then11TCP CURRENT_FORM_READ review then438privateappstart",
+    "private438": "08actualnative/dependencyPASS111; appnotstarted",
+    "QF2": "sixcataloguegroups browserreview openCAT01/02/03SCHEME01, no wholePASS",
+    "F4": "technicalwholepage dependency seam read in progress; UIstage explicitLunaMax later",
+    "goal": "ACTIVE_INCOMPLETE_37_67_PLUS_ADDITIONS"
   }
 }
