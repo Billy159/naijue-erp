@@ -66,7 +66,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Adopted actualsupplier222/QB279, fresh206; currentTCP208 actual; original copied37202 privatehost qualification/nextproduct execution",
+      "currentWork": "Adopted QF2 actualmatrix3PASS; new380HTTP/productionpack/Linux209PASS, next privateCORE-only host/app and actualproduct2956 carrier",
       "currentPackage": "Existing normal candidate integration and original isolated business execution",
       "nextReadyPackage": "ActualacceptedTCP metadata→copied37202 privateapp; PRODUCT2956 fixedgraph/carrier review→actualstage",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
@@ -145,7 +145,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "I01 reportedexpand/header-body-total originalbrowserdiag; C shared originalmatrixCSS restoredsourceonly",
+      "currentWork": "Actualold364 rootcause delivered/browserreturned; noownedleafchange needed; originalmatrixCSS restoredbyC380",
       "currentPackage": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
       "nextReadyPackage": "P01-P13商品六页签及全部编辑查看状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -261,7 +261,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "PRODUCT2956 consumer delivered unchanged; SKU14999 original-component consumer actually dispatched Solmedium",
+      "currentWork": "Product2956 andSKU14999 originalcomponent consumers delivered; product actualCexecution pending, no source recapture",
       "currentPackage": "SKU14999-ACTUAL-PREP-v1",
       "nextReadyPackage": "Actual product/SKU execution support onlynew blockers; no duplicate sourceaudits",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
@@ -382,14 +382,20 @@
       "fastRequested": false,
       "scope": "商品列表与六页签、分类/字典/条码/图片、库存、基础设置、客户供应商、员工账号、收款配置及相关弹层",
       "reportRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2",
-      "currentWork": "C326 two incrementalconsumer scopes limitedPASS delivered. STAFF ALL3/nullfalse closed, P03 normalnested COLOR/FIT cancel/input preserved. CLEAN_STOP NO_GUI; do not repeat absent new change.",
+      "currentWork": "SOURCE380 three affectedmatrixitems finalPASS adopted/browserreturned; no duplicate fullinventory/output",
       "authorizationSource": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "fastVerification": "Tool has no exposed switch; requested off, actual unverified",
       "currentPackage": "291final limited passed/cleanSTOP;295nativecancel-only assigned",
       "nextReadyPackage": "F4normalentry affectedscope then P01-P13/B03B08 missingfullmodule states",
       "fastToolVerified": false,
       "nextTechnicalModel": "gpt-6.1-sol/medium",
-      "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
+      "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正",
+      "lastActualDispatch": {
+        "model": "gpt-6-luna",
+        "reasoningEffort": "max",
+        "atUtc": "2026-10-25T00:49:23.350730+00:00",
+        "FastToolVerified": false
+      }
     },
     "F4": {
       "title": "前端分类字典与条码资料",
@@ -1321,9 +1327,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T00:35:15.828031+00:00",
+  "updatedAt": "2026-10-25T00:50:11.380294+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "6267e3190e5dc7125d978e6810b28082655e4e83",
+  "lastVerifiedRemoteCommit": "080cd22e9fa810b2904285bea74c5cba694fb67b",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1797,30 +1803,30 @@
     "deploymentTools": "C149_INSTALL_AND_C137_PRIVATE_APP_PROXY_RESOURCE_ACTUAL_PASS_NOT_BUSINESS",
     "bootPersistence": "QB128_AND_QB130_SOURCE_PASS_NOT_INSTALLED",
     "currentSourceCheckpoint": {
-      "round": 377,
-      "commit": "b1f60a10bd7f79e63b0ef87e2bf4b50487bbf742",
-      "qualification": "Source checkpoint; fixed compiled production artifact remainsSOURCE37202, servedHTTPsource364 synthetic"
+      "round": 380,
+      "commit": "080cd22e9fa810b2904285bea74c5cba694fb67b",
+      "qualification": "CurrentHTTPnew380matrixstyle dependency restored/independentaffectedchecks; production380 actualinstallednotstarted"
     },
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
-      "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "f475cea89d93b667fa59d9b37da89244f3088547",
-      "runtimeVersion": "phase2-normal-f475cea-07",
+      "url": "http://127.0.0.1:57897/#inventory",
+      "sourceCommit": "080cd22e9fa810b2904285bea74c5cba694fb67b",
+      "runtimeVersion": "phase2-normal-080cd22-08",
       "htmlBytes": 3154,
       "htmlSha256": "7b9b90aa7a0ddb9c9ae76dc1190e6c3b1b79fddbebbf3465e253b95c59d45822",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
-      "sourceRound": 364,
-      "serverSession": 67625,
+      "sourceRound": 380,
+      "serverSession": 47890,
       "fixtureBytes": 25766,
       "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
       "phase2Started": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-f475cea-phase2-07/build",
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-080cd22-phase2-08/build",
       "phase1Accepted": false,
-      "phase2Candidate": "Current364HTTP synthetic; QF3affectedIDs PASS and QF2 finiteinventoryoutput PASS adopted, no wholebusiness/formal",
+      "phase2Candidate": "OriginalQF2 SOURCE380 three affectedmatrixUIitems PASS actual; browserReturnedtrue; SYNnotwholebusiness/formal",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "currentDatabase": {
@@ -2060,20 +2066,7 @@
       "issuerIssued": false
     },
     "v11DatabasePatchExecuted": false,
-    "browserLease": {
-      "owner": "QF",
-      "candidateTarget": "5B69FD73D86A2D051EE5D18378D8C767",
-      "demoTarget": "F0B417F6BC85EE5917A5286AAD0FB04A",
-      "scope": "C326 pure visual same-business same-state Demo pairs; no technical/permission/SQL reassessment",
-      "otherReviewers": "QF2_CLEAN_STOP_NO_GUI",
-      "actualNaturalViewport": [
-        1470,
-        668,
-        2
-      ],
-      "scale": 1,
-      "protectedTargetsNotTouched": true
-    },
+    "browserLease": "RETURNED_TO_C;candidateA6E92D762A244ACF2809B1E45C41F1D4 new57897inventoryexpandedleft/dialog0;6drafts protected",
     "qbToolState": "RECOVERED originalChat191-196 actualreviews received, no manualresume gate now",
     "v11Actual": {
       "jobId": "c03-v11-c106-product-resume-20261024-111",
@@ -2603,6 +2596,15 @@
       "canonical": "5a6a5cda81a406cf4c62200e8b1696019fa8a93d1b84c08215eaabe5b3cb50ce",
       "metadataReview": "QB280_PASS_CURRENT_FORM_READ_ONLY_EXACT_TCP",
       "appStarted": false
+    },
+    "copied380Production": {
+      "buildId": "replica-production-source380-01",
+      "sourceCommit": "080cd22e9fa810b2904285bea74c5cba694fb67b",
+      "build": "REAL_BUILD_AND_PACK_CONTRACT_VALIDATED",
+      "pack": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+      "installed": "C209_ACTUAL_LINUX111_NATIVE_PASS",
+      "appStarted": false,
+      "formallyPublished": false
     }
   },
   "supplementalRoles": {
@@ -4740,7 +4742,7 @@
     },
     {
       "id": "I01-MATRIX-EXPAND-ALIGN-20261025-01",
-      "status": "SOURCE_SHARED_STYLE_DEPENDENCY_RESTORED_NOT_BROWSER_RETESTED",
+      "status": "CLOSED_TARGETED_SYNTHETIC_UI_SOURCE380",
       "reportedCandidate": "SOURCE364/f475cea/57896",
       "scope": [
         "expand control frame/icon",
@@ -4748,14 +4750,20 @@
         "product totals alignment"
       ],
       "owner": "F2 mixedrender diagnostic; C sharedloader/build; QF2 affectedindependentretest",
-      "businessDataChanged": false
+      "businessDataChanged": false,
+      "fixedSource": "080cd22e9fa810b2904285bea74c5cba694fb67b",
+      "fixedUrl": "http://127.0.0.1:57897/#inventory",
+      "independentResult": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/I01-MATRIX-EXPAND-ALIGN-SOURCE380-01/RESULT.json",
+      "independentResultSha256": "645981761cbeeeef5c8f9a786ce60b387b8502d6867b402c1a29a0ad5854499f",
+      "wholePagePassed": false,
+      "realBusinessPassed": false
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T00:35:15.828031+00:00",
-    "sourceRound": 380,
-    "sourceCheckpoint": "SOURCE379 actual222/QB279/currentTCP208; SOURCE380 inventory originalmatrixCSS dependency restoredsourceonly, newcandidate build/actualF2diagnosis next",
+    "atUtc": "2026-10-25T00:49:23.350730+00:00",
+    "sourceRound": 381,
+    "sourceCheckpoint": "SOURCE380080cd22 exactremoteverified; actualnew380HTTP/matrix3checks restored; current380productionpack and actualLinux209 passedonly; app/formal notstarted",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4765,44 +4773,44 @@
     "fast": "Requested OFF; tool has no switch/readback, not verified",
     "currentPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
-      "url": "http://127.0.0.1:57896/#inventory",
-      "sourceCommit": "f475cea89d93b667fa59d9b37da89244f3088547",
-      "runtimeVersion": "phase2-normal-f475cea-07",
+      "url": "http://127.0.0.1:57897/#inventory",
+      "sourceCommit": "080cd22e9fa810b2904285bea74c5cba694fb67b",
+      "runtimeVersion": "phase2-normal-080cd22-08",
       "htmlBytes": 3154,
       "htmlSha256": "7b9b90aa7a0ddb9c9ae76dc1190e6c3b1b79fddbebbf3465e253b95c59d45822",
       "originalBridgeUnchanged": true,
       "original325FrontendFilesUnchanged": true,
       "wholePageAccepted": false,
-      "sourceRound": 364,
-      "serverSession": 67625,
+      "sourceRound": 380,
+      "serverSession": 47890,
       "fixtureBytes": 25766,
       "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
       "httpReady": true,
       "phase2Started": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-f475cea-phase2-07/build",
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-080cd22-phase2-08/build",
       "phase1Accepted": false,
-      "phase2Candidate": "Current364HTTP synthetic; QF3affectedIDs PASS and QF2 finiteinventoryoutput PASS adopted, no wholebusiness/formal",
+      "phase2Candidate": "OriginalQF2 SOURCE380 three affectedmatrixUIitems PASS actual; browserReturnedtrue; SYNnotwholebusiness/formal",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
     },
     "nextPreview": {
-      "status": "SOURCE364_CURRENT_HTTP_FIXED_PLUS183_ROLE_LABEL_SOURCE_WIP_NOT_BUILT",
-      "currentSource": "f475cea89d93b667fa59d9b37da89244f3088547",
-      "build": "phase2-normal-f475cea-07",
+      "status": "CURRENT380_HTTP_THREE_AFFECTED_UI_ITEMS_QF2_PASS",
+      "currentSource": "080cd22e9fa810b2904285bea74c5cba694fb67b",
+      "build": "phase2-normal-080cd22-08",
       "resources": 135,
       "strictExit": 0,
-      "strictSeconds": 4.666,
+      "strictSeconds": 4.736,
       "buildExit": 0,
-      "buildSeconds": 2.425,
-      "serverSession": 67625,
-      "next": "No separatebuildforrolelabel; nextrelatedqualifiedpacket includes183. Formalproduction copied frontend build/HTTPS host still required",
-      "owner": "C"
+      "buildSeconds": 2.539,
+      "serverSession": 47890,
+      "owner": "C",
+      "old57896": "ImmutableSOURCE364 userdrafts only, notcurrentacceptance"
     },
     "r1": "Real v16fromv15/130/5a; CORE157+catalogue344+supplier222 actuallycommitted/readbacklimitedPASS. Product2956/SKU14999 sourcecapture only, notDBstage",
     "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Human historicalblankhallv5 onlyrelatedfullhistory/publication branch; v11/v15/v16/v17 alreadyapproved. Actual source/schema/ACL/normalHTTP readiness separate.",
-    "github": "REMOTE_EXACT_VERIFIED_6267e3190e5dc7125d978e6810b28082655e4e83",
+    "github": "REMOTE_EXACT_VERIFIED_080cd22e9fa810b2904285bea74c5cba694fb67b",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
