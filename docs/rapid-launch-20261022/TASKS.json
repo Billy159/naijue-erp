@@ -11889,7 +11889,9 @@
         }
       ],
       "actualImported": false,
-      "D1SeamResult": "Existing mandatory hall/store/publication and MIGRATION_DERIVED/evidence_ref support confirmed normalized business hall source key; only exact D3 mapper exception required; no SQL/DDL"
+      "D1SeamResult": "Existing mandatory hall/store/publication and MIGRATION_DERIVED/evidence_ref support confirmed normalized business hall source key; only exact D3 mapper exception required; no SQL/DDL",
+      "privateOverlayManifest": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/outputs/01a16189-history-hall/D3-confirmed-business-hall-overlay-20261026/MANIFEST.json",
+      "privateOverlayStatus": "2471 rows/12 mappings fixed; source adaptation in progress; not imported"
     },
     "sourceWindow47Result": {
       "status": "STOP_FIRST_SOURCE47_FAILURE_NO_REPLAY",
@@ -11902,6 +11904,29 @@
       "cleanupErrors": [],
       "nextOwner": "T45",
       "next": "New bounded source48 supplies missing four identities; preserve47; no source module bug/no heavy replay"
+    },
+    "sourceWindow48Result": {
+      "status": "STOP_AT_SOURCE_AUTHORITY_ACTIVATION",
+      "reason": "Public fixed447 historical-customer contract incorrectly required private-file mode0600",
+      "gzipPassesStarted": 0,
+      "known": 0,
+      "parked": 0,
+      "databaseWrites": false,
+      "closed": true,
+      "repairOwner": "D3",
+      "repairSha256": "b70d85ea133d11328d41dcb0ca662e3f903427f91334fc70c15eb077a9c9bbaf",
+      "affectedCheck": "One exact public-contract test PASS; private rules unchanged; original6 reused",
+      "nextOwner": "T45",
+      "next": "New49 bounded original source preparation; preserve47/48"
+    },
+    "qaFacts50": {
+      "status": "STOP_FIRST_NATIVE189_DISCOVERY_ERROR_NO_REPLAY",
+      "error": "JSONDecodeError",
+      "businessDML": false,
+      "grant": false,
+      "appChanged": false,
+      "nextOwner": "T45",
+      "next": "Read required sanitized error and fix exact result parsing, no same-attempt replay"
     }
   }
 }

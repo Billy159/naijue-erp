@@ -1,4 +1,6 @@
 
+SOURCE516（2026-10-26）：来源48在gzip前因公开fixed447合同被误用私有0600规则拒绝，known/parked/gzip均0、DB写0且关闭。D3窄修b70d85ea…，仅固定历史客户源码合同允许公开mode，原路径/内容/身份及其他私有规则保持；新增1受影响检查通过，旧6复用。T45新49继续，47/48保留。D3私有2471逐单映射已固，生产mapper/binding适配仍在途，不冒称已导入。原QA facts50实际终态JSONDecodeError，无grant/DML/app改变，T45定位解析后定向后继。全站真实业务/历史编辑/正式根址仍未完成。
+
 SOURCE515 后继实际回执：T45 source47于2026-10-26 02:41:25 CST在heavy读取前停止，REAL_SOURCE_EXTERNAL_FILE_PIN_IDENTITY，载体漏填C144四recipe文件identity；known0/parked0/gzip0/DB写0，closedtrue、cleanupErrors空。47现场及空目录保留，原T45直接新48补四真实身份，非D3源码问题、无大文件重放。D1确认0011已有MIGRATION_DERIVED/evidence_ref、0012对SALES_HEADER不强制raw=normalized；原mandatory hall/store/publication可消费已批normalized业务厅来源键，仅D3准确2471 mapper例外，不做nullable27/SQL改动。
 
 当前增量 SOURCE515（2026-10-26）：已直接核重构任务书人类原话：2471张历史销货单的12仓→业务厅映射已采纳，含舟山银泰ST2张、庆春银泰ST6张、金华银泰ST95张的明确确认及“ok那你告诉主控继续弄吧”。撤下旧v5空厅确认；不是批准NULL27。D3接原来源编号映射，D1复用mandatory hall合同，QB只验新增补充，T45唯一实际执行。canonical原空值、创建厅/创建者/时间未知及原身份/金额库存/状态保留，私有Excel/JSON不入Git。原47冻结known25811/parked2471先按在途完成，映射后续固定窗口，不热改输入、不重导已提交。SOURCE513已采用QB320独立源码PASS（41dda9d0…），真实完整业务/发布仍未通过；QAACL仍待当前两ID有限事实和精确权限/新review，不能以源码PASS放行。D3最终source47模块1e4da913…与DATA bf26e005…对齐T45 carrier356303b9…的parent+identity接口，6有限检查通过，实际窗口未完成不记执行成功。
