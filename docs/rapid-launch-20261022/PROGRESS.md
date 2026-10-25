@@ -1,3 +1,6 @@
+SOURCE545（2026-10-26）：T45 actual73 已真实 COMMIT 精确 history_sales_header INSERT27，3.8255s/newcanonical59b9999e3df09934eed14cf6d82f6382e92faaf16604d266a5c64a3c9019bd68；仅27列ACL变化，0业务DML/0DDL/0role，原业务counts/batch/CORE及18服务保留，socket与TCP真实元数据已取得。原QB正在仅核实际差异并签双purpose；74/75恢复在途。旧APP58审核当前stale，尚未测authenticated拒读，不冒充候选已恢复。销售头实际stage/MAIN/PUBLISH仍未通过。
+GitHub SOURCE544首个API只读请求连接超时，未改变远端；最后已核远端8140fe95。当前增量先本地保全，新后继从远端只读核实继续非强推。原D3闭包组合代码在途，不重原数据捕获，最终目标不缩。
+
 SOURCE544（2026-10-26）：原 T45 已准备73权限、74同CORE10私有配置后继、75原候选三路径切换载体；尚未收到实际执行成功回执。回退新增准确限制：旧issuer遇catalog失配会在进程内revoked，仅REVOKE27＋route58不足以证明恢复，须原受控旧配置新后继或仅目标58重启生成新issuer，并实际读回；不动其他服务/已提交数据。
 原 D3 已实际接续下一独立包：销售头闭包范围生产者及销售/调拨HEADERS组合，实现中，原QB仅验新增。T45单次stage消费保留统一RETAINED_SALES_HEADER_CLOSURE_INDEX_V1；以原prepared字节范围、身份、fingerprint、原codec投影hash及document4为准，实际commitjournal独立。中途两projection JSONL建议已撤回，只有一套接缝。后续闭包可能累计读取约921MB prepared范围，准确记成本，不再重来源准备/32裁决/gzip。actual71仓claim53/unclaimed0已解除旧22+31缺口；真实all11授权、MAIN非零ledger事实、全局roots和实际发布仍未完成。不新增全站PASS，不重复已验范围。
 

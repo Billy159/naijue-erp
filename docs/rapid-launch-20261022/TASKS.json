@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE544",
+    "round": "SOURCE545",
     "goal": "HUMAN_AUTHORIZED_CHAT_EXECUTION_RESUMED_FULL_SCOPE_CARD_RESUME_UNVERIFIED",
-    "sourceHeadBeforeThisContinuityCommit": "8140fe958ef71e768c905e12cad844bc26059744",
+    "sourceHeadBeforeThisContinuityCommit": "484e7527be9d1fbd6552bdb8a97e1d98c8a0646d",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12294,7 +12294,7 @@
     "r1StageAndCandidateCoupling543": {
       "owner": "T45",
       "independentReviewer": "QB",
-      "status": "PREPARING_NOT_EXECUTED",
+      "status": "ACTUAL73_INSERT27_COMMITTED_QB_POST_REVIEW_AND74_75_PENDING",
       "preReview": "QB328 PASS_LIMITED_PRE_GRANT_SOURCE_SCOPE",
       "reviewResult": "Q/slice328-r1-sales-header-stage-insert27/RESULT.json",
       "reviewSha256": "df60e7d116d4c860d4586f44cd9192abb58b08d20dad275b69f1e1dc910f8020",
@@ -12316,6 +12316,24 @@
         "grant": "t45-r1-sales-header27-stage-acl-20261026-73",
         "app": "t45-source519-core-post-r1-acl-private-app-20261026-74",
         "route": "t45-core10-post-r1-acl-candidate-route-20261026-75"
+      },
+      "actual73": {
+        "status": "COMPLETED0",
+        "seconds": 3.8255,
+        "grantOutcome": "COMMIT_RETURNED_SUCCESS",
+        "grantAtUTC": "2026-10-25T20:59:47.001349+00:00",
+        "canonical": "59b9999e3df09934eed14cf6d82f6382e92faaf16604d266a5c64a3c9019bd68",
+        "only27ColumnInsertACLChanged": true,
+        "businessDML": false,
+        "schemaDDL": false,
+        "roleChanged": false,
+        "businessCountsBatchCoreUnchanged": true,
+        "originalEighteenPreserved": true,
+        "genuineSocketAndTCPConfirmed": true,
+        "appChanged": false,
+        "runtimeReviewsIssued": false,
+        "oldApp58ReviewStale": true,
+        "receipt": "B/server-execution/SALES28282-STAGE-PREPARATION/ACTUAL73-R1-HEADER27-ACL.json"
       }
     },
     "salesClosure544": {
@@ -12332,6 +12350,10 @@
       "cost": "Later closure may cumulatively read ~921MB prepared ranges; this is not zero-read, but does not reprepare original source/32 approvals/gzip.",
       "warehouseClaims": "actual71 53 and unclaimed0 supersede old22+31 pending inference",
       "remaining": "True all11 authority, original MAIN nonzero ledger items/count, global source/typed/doc roots and actual stage/MAIN/PUBLISH remain unproved."
+    },
+    "githubCheckpoint545": {
+      "lastRemoteVerified": "8140fe958ef71e768c905e12cad844bc26059744",
+      "source544Push": "Initial GitHub API GET timed out before any remote mutation; retry starts by remote readback, never force."
     }
   }
 }
