@@ -1,3 +1,9 @@
+SOURCE430 F1 DOCUMENT EDIT RECOVERY FIXED
+
+OriginalF1 DOC186 exact2 document leaves frozen: failedTransfer initialization remains same readonly body plus fresh retry, no old edit fallback; sameID Sales retry uses fresh original open/prepare; status error current feedback retained. Original affected negative DOM checks and scoped strict PASS adopted, DOC185 valid evidence reused. Actual HTTP/PG, latest integrated browser and full save/approve/export/print remain unproved. Original responsible-staff capability/provider/output adapters still actual dependencies. No new wholepage migration/business PASS. QF next fixed packet only.
+
+SOURCE42927cad5ad93488145e5a0b7733480f198fea04ad8 GitHub remote exact GET verified. C has only two pending common/ready-pages exit guards for F3 pending-readback fix; not included in this F1 commit, waiting original F3 exact delivery. Other WIP untouched.
+
 SOURCE429 ORIGINAL R2/HISTORY MAINTENANCE COMPOSITION / QA RECEIPTS
 
 D1 UNIFIED-MAINTENANCE-COMPOSITION-01 exact2 composition leaves fixed from delivered pins; original five maintenance optins and Staff private tag forwarded through original R2/History factories. Independent purpose/preparation/role/UOW guards retained; no new public config/schema. Original scoped6 PASS and strict0 adopted; actual target/PG/HTTP not performed. QB next finite new composition delta only.
