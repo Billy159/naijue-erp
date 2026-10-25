@@ -9066,8 +9066,21 @@
     "source": "human screenshot aca472f2-cf44-4fd7-bacb-e432561e44d5",
     "owner": "F3",
     "model": "gpt-6-luna/max",
-    "status": "IN_PROGRESS",
-    "requirement": "Inventory warehouse presentation, single choice, optional All=null, preserve remote authorized paging and required validation"
+    "status": "SOURCE411_BUILD_PASS_QF2_BROWSER_PENDING",
+    "requirement": "Inventory warehouse presentation, single choice, optional All=null, preserve remote authorized paging and required validation",
+    "sourceCommit": "ffb04a17c66be1f02dc50a324ec29b04cca8564d",
+    "url": "http://127.0.0.1:57906/#settings/staff"
+  },
+  "actualModelAudit": {
+    "source": "readonly selected local threads model/effort and latest turn_context",
+    "technicalLatest": "C,F1,F2,F4,D1,D2,D3,QB gpt-6.1-sol/medium",
+    "visualLatest": "F3,QF,QF2 gpt-6-luna/max",
+    "savedDefaultMismatches": {
+      "QF": "gpt-6-luna/medium",
+      "F3": "gpt-6-luna/xhigh"
+    },
+    "fast": "UNVERIFIED",
+    "persistentUiDefaultSetter": "UNAVAILABLE_NO_APP_DB_WRITE"
   }
 },
   "currentContinuation404": "Frontend all-site user defect sweep current; preserve C228 catalogue8 committed prefix, PRODUCT23514 rollback no replay; history230 22 INSERT privileges absent, no grant; R1 SKU5586 prefix unchanged."
