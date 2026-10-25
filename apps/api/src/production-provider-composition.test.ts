@@ -1,4 +1,5 @@
 import fsPromises from "node:fs/promises";
+import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { createNodeCredentialRequestTag } from "../../../packages/authentication/src/passwords.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { syncBuiltinESMExports } from "node:module";
@@ -1562,4 +1563,137 @@ test('production product normal stock list preserves complete-publication gate a
       assert.equal(calls.at(-1)!.sql, 'ROLLBACK'); assert.ok(calls.every(c => c.sql !== 'COMMIT'));
     } finally { await api.close(); }
   } finally { f.cleanup(); }
+});
+
+const mixedMaintenance = { catalogueMaintenance: true, paymentMaintenance: true, partyMaintenance: true, staffMaintenance: true, productMaintenance: true } as const;
+function mixedProductionFixture(historyPurpose: boolean) {
+  const f = categoryProductionFixture('26_v16_history_responsible_from_v14', true);
+  const review = JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile, 'utf8'));
+  if (historyPurpose) review.purposes.push('HISTORY_REVISION');
+  const body = JSON.stringify(review); writeFileSync(f.configuration.runtime26Review.reviewFile, body, { mode: 0o600 });
+  return { ...f, configuration: { ...f.configuration, ...mixedMaintenance, runtime26Review: { ...f.configuration.runtime26Review, trustedReviewSha256: createHash('sha256').update(body).digest('hex') } } };
+}
+test('unified original R2 and HISTORY hosts retain five private maintenance selections without duplicate routes or cross-granting document commands', async () => {
+  for (const mode of ['r2-sales', 'r2-transfers', 'history'] as const) {
+    const f = mixedProductionFixture(mode === 'history'), p = exact26Driver(f.observation, sql => sql === V16HistoryProbe ? [structuredClone(f.observation)] : undefined);
+    let historyGrants = 0;
+    try {
+      const api = mode === 'history'
+        ? await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { historyGrants++; throw new DomainError('FORBIDDEN', 'SYNTHETIC_CLOSED_HISTORY'); } } }, p.factory)
+        : await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, mode === 'r2-sales', mode === 'r2-transfers'), p.factory);
+      try {
+        const before = p.counts().connects;
+        for (const [command, receipt] of [['/catalogue/colors/commands', '/catalogue/colors/receipts/:requestKey'], ['/catalogue/fits/commands', '/catalogue/fits/receipts/:requestKey'],
+          ['/payment/accounts/commands', '/payment/accounts/receipts/:requestKey'], ['/customers/commands', '/customers/receipts/:requestKey'], ['/suppliers/commands', '/suppliers/receipts/:requestKey'], ['/staff/commands', '/staff/receipts/:requestKey'], ['/products/v2/commands', '/products/receipts/:requestKey']]) {
+          assert.ok(api.app.hasRoute({ method: 'POST', url: command! })); assert.ok(api.app.hasRoute({ method: 'GET', url: receipt! }));
+          const denied = await api.app.inject({ method: 'POST', url: command!, payload: {} }); assert.equal(denied.statusCode, 401, denied.body);
+        }
+        for (const url of ['/staff/query', '/staff/detail/query', '/payment/accounts/query', '/product-management/query', '/products/maintenance/v2/detail/query']) assert.ok(api.app.hasRoute({ method: 'POST', url }));
+        assert.ok(api.app.hasRoute({ method: 'GET', url: '/customers' })); assert.ok(api.app.hasRoute({ method: 'GET', url: '/suppliers' }));
+        for (const kind of ['sales', 'transfers']) {
+          for (const detail of [false, true]) assert.ok(api.app.hasRoute({ method: 'POST', url: `/imported-history/${kind}/${detail ? 'detail/' : ''}query` }));
+          assert.equal(api.app.hasRoute({ method: 'POST', url: `/${kind}/commands` }), mode !== 'history');
+          assert.equal(api.app.hasRoute({ method: 'POST', url: `/${kind}/prepare-existing` }), mode === `r2-${kind}`);
+          assert.equal(api.app.hasRoute({ method: 'POST', url: `/imported-history/${kind}/revise` }), mode === 'history');
+        }
+        assert.equal(historyGrants, 0); assert.equal(p.counts().connects, before);
+        assert.equal(p.counts().allocations, 1); assert.equal(api.app.server.listening, false);
+      } finally { await api.close(); }
+      assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
+    } finally { f.cleanup(); }
+  }
+});
+
+test('unified R2 and HISTORY propagate only original staff private tag capability; absence stays503 and callback never grants staff authority', async () => {
+  for (const mode of ['r2', 'history'] as const) for (const available of [false, true]) {
+    const f = mixedProductionFixture(mode === 'history'); let tagged = 0;
+    const originalTag = createNodeCredentialRequestTag(Buffer.alloc(32, 73)), tag = available ? (password: string) => { tagged++; return originalTag(password); } : null;
+    const p = exact26Driver(f.observation, sql => {
+      if (sql === V16HistoryProbe) return [structuredClone(f.observation)];
+      if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s') || sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003', login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role: 'WAREHOUSE', employment_status: '在职', hall_id: hall }];
+      if (sql.includes('maintenance:administrator-lock')) return [];
+      if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
+      return undefined;
+    });
+    try {
+      const api = mode === 'history'
+        ? await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { throw Error('Staff must not invoke historical grants'); } } }, p.factory, tag)
+        : await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, false, false), p.factory, tag);
+      try {
+        const response = await api.app.inject({ method: 'POST', url: '/staff/commands', headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` }, payload: {
+          action: 'CREATE', requestKey: 'synthetic-mixed-staff-private-cap', values: { name: 'SYNTHETIC_STAFF', role: 'WAREHOUSE', hallId: null, contact: null },
+          account: { id: null, expectedVersion: null, loginName: 'SYNTHETIC_LOGIN', loginEnabled: true, password: 'SYNTHETIC_Only_42!' }
+        } });
+        assert.equal(response.statusCode, available ? 403 : 503, response.body);
+        assert.equal(response.json().error.code, available ? 'FORBIDDEN' : 'ACCOUNT_CREDENTIALS_NOT_READY'); assert.equal(tagged, available ? 1 : 0);
+        assert.ok(!p.calls.some(c => /^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)));
+        assert.equal(p.counts().allocations, 1);
+      } finally { await api.close(); }
+    } finally { f.cleanup(); }
+  }
+});
+
+test('unified selectors remain closed; maintenance and HIST read routes cannot replace independent HISTORY policy purpose or R2 preparation choices', async () => {
+  const f = mixedProductionFixture(true); let allocated = 0;
+  const driver = () => { allocated++; throw Error('No pool before strict independent configuration'); };
+  try {
+    const r2 = r2Configuration(f.configuration, false, true);
+    assert.deepEqual(parseProductionRuntime26R2Configuration(r2), r2);
+    for (const key of Object.keys(mixedMaintenance)) for (const value of [false, null, 'true', {}, undefined]) assert.throws(() => parseProductionRuntime26R2Configuration({ ...r2, [key]: value }), TypeError);
+    for (const change of [{ existingPreparation: { sales: true } }, { existingPreparation: { sales: true, transfers: 'true' } }, { existingPreparation: { sales: true, transfers: true, all: true } },
+      { authorization: {} }, { staffCredentialRequestTag: () => 'a'.repeat(64) }, { history: {} }, { coreReadModules: ['organization'] }]) await assert.rejects(createProductionRuntime26R2ApplicationApi({ ...r2, ...change }, driver), TypeError);
+    for (const policy of [undefined, {}, { authorization: {} }, { authorization: { authorize: true } }]) await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, policy as never, driver), TypeError);
+    const { staffMaintenance: _staff, ...withoutStaff } = f.configuration;
+    const tag = createNodeCredentialRequestTag(Buffer.alloc(32, 74));
+    await assert.rejects(createProductionRuntime26R2ApplicationApi(r2Configuration(withoutStaff, false, false), driver, tag), TypeError);
+    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(withoutStaff, { authorization: { async authorize(): Promise<never> { throw Error('No request'); } } }, driver, tag), TypeError);
+    assert.equal(allocated, 0);
+  } finally { f.cleanup(); }
+  const closed = mixedProductionFixture(false), p = exact26Driver(closed.observation, sql => sql === V16HistoryProbe ? [structuredClone(closed.observation)] : undefined); let grants = 0;
+  try {
+    await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(closed.configuration, { authorization: { async authorize(): Promise<never> { grants++; throw Error('No request before reviewed purpose'); } } }, p.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    assert.equal(grants, 0); assert.equal(p.counts().ends, 1);
+  } finally { closed.cleanup(); }
+  const deny = mixedProductionFixture(true), pg = exact26Driver(deny.observation, sql => sql === V16HistoryProbe ? [structuredClone(deny.observation)] : undefined);
+  try {
+    const api = await createProductionRuntime26HistoryRevisionApplicationApi(deny.configuration, { authorization: { async authorize(): Promise<never> { grants++; throw new DomainError('FORBIDDEN', 'SYNTHETIC_DENY_ORIGINAL_POLICY'); } } }, pg.factory);
+    try {
+      const response = await api.app.inject({ method: 'POST', url: '/imported-history/sales/revise', headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${pg.token}` }, payload: {
+        kind: 'sales', documentId: '00000000-0000-4000-8000-000000000181', expectedVersion: 1, requestKey: 'synthetic-mixed-history-independent-deny', reason: 'Synthetic original quantity correction',
+        lines: [{ lineId: '00000000-0000-4000-8000-000000000182', quantity: '3' }], totals: null, settlements: []
+      } });
+      assert.equal(response.statusCode, 403, response.body); assert.equal(grants, 1);
+      assert.ok(!pg.calls.some(c => c.sql.includes('history-revise:')));
+    } finally { await api.close(); }
+  } finally { deny.cleanup(); }
+});
+
+test('unified original hosts preserve normal reader and original maintenance receipt on their same pool alongside selected document routes', async () => {
+  for (const mode of ['r2', 'history'] as const) {
+    const f = mixedProductionFixture(mode === 'history');
+    const operation = '00000000-0000-4000-8000-000000000191', target = '00000000-0000-4000-8000-000000000192', key = 'synthetic-mixed-existing-payment';
+    const result = { operationId: operation, kind: 'PAYMENT_ACCOUNT', targetId: target, version: 2 };
+    const p = exact26Driver(f.observation, sql => {
+      if (sql === V16HistoryProbe) return [structuredClone(f.observation)];
+      if (sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003', login_enabled: true, role: 'ADMIN', employment_status: '在职', hall_id: hall }];
+      if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
+      if (sql.includes('maintenance:receipt')) return [{ id: operation, request_hash: 'c'.repeat(64), action: 'EDIT', target_type: 'PAYMENT_ACCOUNT', target_id: target, result_data: result, completed_at: '2026-10-25T00:00:00.000000Z' }];
+      if (sql.startsWith('WITH matched AS') && sql.includes('FROM naijue_erp.payment_account')) return [{ total: '0', items: [] }];
+      return undefined;
+    });
+    try {
+      const api = mode === 'r2' ? await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration, false, false), p.factory)
+        : await createProductionRuntime26HistoryRevisionApplicationApi(f.configuration, { authorization: { async authorize(): Promise<never> { throw Error('Maintenance reader must not invoke historical write policy'); } } }, p.factory);
+      try {
+        const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+        const receipt = await api.app.inject({ method: 'GET', url: `/payment/accounts/receipts/${key}`, headers });
+        assert.equal(receipt.statusCode, 200, receipt.body); assert.equal(receipt.json().status, 'COMMITTED'); assert.deepEqual(receipt.json().result, result);
+        const list = await api.app.inject({ method: 'POST', url: '/payment/accounts/query', headers, payload: { search: '', status: 'all', hallId: hall, paymentMethodId: null, page: 1, pageSize: 20 } });
+        assert.equal(list.statusCode, 200, list.body); assert.equal(list.json().total, 0); assert.deepEqual(list.json().items, []);
+        assert.ok(!p.calls.some(c => /^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)));
+        assert.equal(p.counts().allocations, 1); assert.equal(api.app.server.listening, false);
+      } finally { await api.close(); }
+      assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
+    } finally { f.cleanup(); }
+  }
 });

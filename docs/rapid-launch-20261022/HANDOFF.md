@@ -1,3 +1,11 @@
+SOURCE429 ORIGINAL R2/HISTORY MAINTENANCE COMPOSITION / QA RECEIPTS
+
+D1 UNIFIED-MAINTENANCE-COMPOSITION-01 exact2 composition leaves fixed from delivered pins; original five maintenance optins and Staff private tag forwarded through original R2/History factories. Independent purpose/preparation/role/UOW guards retained; no new public config/schema. Original scoped6 PASS and strict0 adopted; actual target/PG/HTTP not performed. QB next finite new composition delta only.
+
+QB302 SOURCE425+426 new5 technical leaves PASS adopted; actual PostgreSQL predicates/nonowner/STAGED/PUBLISHED remain untested, no business PASS. QF SOURCE427 exact8 normal catalogue source+existing SYNHTTP test scopedPASS adopted; browser/actualHTTP pending. QF2 SOURCE428 original8 PASS with new QF2-428-F01 P2: committed readback failure can be dismissed by Payment cancel and Party close. OriginalF3 directed fix only these/affected exits; fixed replacement and QF2 minimal recheck pending. F2 original normal-entry recovery target scope gap confirmed, owner fixing original editor-entry childscope with parent cancellation, no shared host rewrite.
+
+T45 user-directed connection check confirmed READY at15:33; C instructed original QB301 approved stock job intent lookup and once execution continuation, not repeated submission. Actual stock still unreported, C232 stage14999/15121 retained. Remote GitHub428 verified; this checkpoint next sync. Full37 pages/67 overlays plus approved additions remain incomplete, no new formal release or full-page business PASS.
+
 SOURCE428 NORMAL MAINTENANCE READBACK / PRODUCT HOST426 AND CATALOGUE427 FIXED
 
 D1baseProducthost fixed426c668717955ace35792dcbe2b2f5a18d666728582 consumesoriginalD2visibility425; originalQB reviewsnew5leaves only, actualSQL/nonowner/STAGED guard/detail notyetproven. OriginalprivateproductMaintenance optin, mediaimageChanges[] withoutstage still503, oldV2/v17/permissions/CAS/receipt preserved. D1nextcurrentexistingR2/HISTORYfactorymaintenanceoptionpass-through, no newauth/purposegrant.

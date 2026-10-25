@@ -151,17 +151,23 @@ export function productionRuntime26HostConfiguration(input: unknown): Production
   const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, productMaintenance: _product, staffMaintenance: _staff, ...base } = parseProductionRuntime26Configuration(input);
   return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
 }
-export async function createProductionRuntime26ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
-  const config = parseProductionRuntime26Configuration(input);
+type MaintenanceSelection = Pick<ProductionRuntime26Configuration,
+  "catalogueMaintenance" | "paymentMaintenance" | "partyMaintenance" | "staffMaintenance" | "productMaintenance">;
+/** Same private opt-ins across original hosts; no JSON credential or ambient write grant. */
+function maintenanceOptions(config: MaintenanceSelection, staffCredentialRequestTag: CredentialRequestTag | null) {
   if (staffCredentialRequestTag !== null && (typeof staffCredentialRequestTag !== "function" || config.staffMaintenance !== true))
     throw new TypeError("Stable staff credential capability requires explicit staff maintenance selection");
-  const options = { ...productionApplicationOptions(productionRuntime26HostConfiguration(config)),
+  return {
     ...(config.catalogueMaintenance === true ? { catalogueMaintenance: true as const } : {}),
     ...(config.paymentMaintenance === true ? { paymentMaintenance: true as const } : {}),
     ...(config.partyMaintenance === true ? { partyMaintenance: true as const } : {}),
     ...(config.productMaintenance === true ? { productMaintenance: true as const } : {}),
     ...(config.staffMaintenance === true ? { staffMaintenance: { credentialRequestTag: staffCredentialRequestTag } } : {}) };
+}
+export async function createProductionRuntime26ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
+  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
+  const config = parseProductionRuntime26Configuration(input);
+  const options = { ...productionApplicationOptions(productionRuntime26HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) };
   if (config.coreInitializationRead !== undefined) {
     const { nativeReadExtensions: _extensions, currentForms: _forms, ...coreOptions } = options;
     return createPostgresRuntime26ApplicationApi({ ...coreOptions, coreInitializationRead: config.coreInitializationRead, ...(config.coreReadModules === undefined ? {} : { coreReadModules: config.coreReadModules }) }, config.runtime26Review, driver);
@@ -172,22 +178,26 @@ export async function createProductionRuntime26ApplicationApi(input: unknown, dr
 /** Explicit trusted host entry. The existing private R1 configuration is reused;
  * the separately supplied HISTORY authorization never comes from JSON/HTTP. */
 export async function createProductionRuntime26HistoryRevisionApplicationApi(input: unknown,
-  history: Runtime26HistoryRevisionConfiguration, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  history: Runtime26HistoryRevisionConfiguration, driver?: PostgresPoolDriverFactory,
+  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26Configuration(input);
   if (config.coreInitializationRead !== undefined) throw new TypeError("CORE initialization does not enable historical document writes");
   return createPostgresRuntime26HistoryRevisionApplicationApi(
-    productionApplicationOptions(productionRuntime26HostConfiguration(config)), config.runtime26Review, history, driver);
+    { ...productionApplicationOptions(productionRuntime26HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) },
+    config.runtime26Review, history, driver);
 }
 
 /** Explicit R2 command entry. Neither old19 nor R1 accepts these selectors. */
-export interface ProductionRuntime26R2Configuration extends Omit<ProductionRuntimeConfiguration, "profile" | "documentCommands"> {
+export interface ProductionRuntime26R2Configuration extends Omit<ProductionRuntimeConfiguration, "profile" | "documentCommands">, MaintenanceSelection {
   readonly profile: "source-confirmed-native-exact26-r2-v1";
   readonly documentCommands: "NATIVE_RUNTIME";
   readonly runtime26Review: ProductionRuntime26Configuration["runtime26Review"];
   readonly existingPreparation: { readonly sales: boolean; readonly transfers: boolean };
 }
 export function parseProductionRuntime26R2Configuration(input: unknown): ProductionRuntime26R2Configuration {
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation", ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation",
+    ...(input !== null && typeof input === "object" ? ["catalogueMaintenance", "paymentMaintenance", "partyMaintenance", "staffMaintenance", "productMaintenance"].filter(key => Object.hasOwn(input, key)) : []),
+    ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const preparation = bag(c.existingPreparation, ["sales", "transfers"]);
   if (c.profile !== "source-confirmed-native-exact26-r2-v1" || c.documentCommands !== "NATIVE_RUNTIME"
     || typeof preparation.sales !== "boolean" || typeof preparation.transfers !== "boolean")
@@ -198,17 +208,21 @@ export function parseProductionRuntime26R2Configuration(input: unknown): Product
     existingPreparation: { sales: preparation.sales, transfers: preparation.transfers } };
 }
 export function productionRuntime26R2HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
-  const { runtime26Review: _review, existingPreparation: _preparation, ...base } = parseProductionRuntime26R2Configuration(input);
+  const { runtime26Review: _review, existingPreparation: _preparation,
+    catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, staffMaintenance: _staff, productMaintenance: _product,
+    ...base } = parseProductionRuntime26R2Configuration(input);
   return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
 }
-export async function createProductionRuntime26R2ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+export async function createProductionRuntime26R2ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
+  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26R2Configuration(input);
-  return createPostgresRuntime26DocumentApplicationApi(productionApplicationOptions(productionRuntime26R2HostConfiguration(config)),
+  return createPostgresRuntime26DocumentApplicationApi(
+    { ...productionApplicationOptions(productionRuntime26R2HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) },
     config.runtime26Review, config.existingPreparation, driver);
 }
 
 /** R3 uses the original media implementation with an explicit private root.
- * R1/R2 remain closed to these fields and never acquire maintenance routes. */
+ * R1/R2 remain closed to these media fields; private maintenance opt-ins do not provide a stage. */
 export interface ProductionRuntime26R3Configuration extends Omit<ProductionRuntime26R2Configuration, "profile"> {
   readonly profile: "source-confirmed-native-exact26-r3-v1";
   readonly productMedia: { readonly root: string; readonly rootKey: string };
