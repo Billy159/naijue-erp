@@ -12,7 +12,21 @@ export default function NewTransfer(p:{session:ReplicaTransferSession;scope:Read
  const stopScan=useRef<()=>void>(()=>{});
  const [discard,setDiscard]=useState(false),[recovery,setRecovery]=useState(true),[notice,setNotice]=useState<string|null>(null);
  useEffect(()=>{if(write.phase==='uncertain')setRecovery(true);},[write.phase]);
- useEffect(()=>{if(!s.workspace.responsibleStaff||s.proposal.getSnapshot().draft.responsible||!s.currentEmployee.id)return;let active=true;const signal=p.scope.signal;void(async()=>{try{if(s.currentEmployee.name){if(active&&!s.proposal.getSnapshot().draft.responsible)s.proposal.selectResponsibleStaff({id:s.currentEmployee.id,name:s.currentEmployee.name});return;}for(let page=1;;page++){const result=await s.workspace.responsibleStaff!.readCandidates({parameters:{search:'',page,pageSize:20},signal,identity:p.scope.identity,routeInstanceId:p.scope.routeInstanceId,entityId:null});if(!active||!p.scope.active)return;const exact=result.items.find(item=>item.id===s.currentEmployee.id);if(exact){if(!s.proposal.getSnapshot().draft.responsible)s.proposal.selectResponsibleStaff(exact);return;}if(page*20>=result.total)return;}}catch(error){if(active&&p.scope.active){if(error instanceof Error&&'kind'in error&&['unauthenticated','forbidden'].includes(String(error.kind)))p.denied(error as HttpQueryError);else setNotice('当前员工资料未能读取，请手动选择负责人。');}}})();return()=>{active=false;};},[s,p.scope]);
+ useEffect(()=>{
+  if(!s.workspace.responsibleStaff||s.proposal.getSnapshot().draft.responsible!==undefined||!s.currentEmployee.id||!p.scope.active)return;
+  let active=true;const signal=p.scope.signal,mayDefault=()=>active&&p.scope.active&&s.scope.active&&s.proposal.getSnapshot().draft.responsible===undefined;
+  void(async()=>{try{
+   if(s.currentEmployee.name){if(mayDefault())s.proposal.selectResponsibleStaff({id:s.currentEmployee.id,name:s.currentEmployee.name});return;}
+   for(let page=1;;page++){
+    const result=await s.workspace.responsibleStaff!.readCandidates({parameters:{search:'',page,pageSize:20},signal,identity:p.scope.identity,routeInstanceId:p.scope.routeInstanceId,entityId:null});
+    if(!mayDefault())return;
+    const exact=result.items.find(item=>item.id===s.currentEmployee.id);
+    if(exact){s.proposal.selectResponsibleStaff(exact);return;}
+    if(page*20>=result.total){setNotice('当前员工尚未在可选资料中找到，未自动指定负责人；可手动选择。');return;}
+   }
+  }catch(error){if(active&&p.scope.active){if(error instanceof Error&&'kind'in error&&['unauthenticated','forbidden'].includes(String(error.kind)))p.denied(error as HttpQueryError);else if(mayDefault())setNotice('当前员工资料未能读取，请手动选择负责人。');}}})();
+  return()=>{active=false;};
+ },[s,p.scope]);
  const busy=created.preparing||['submitting','checking','replaying','uncertain','committed'].includes(write.phase);
  const done=()=>{const current=s.workspace.getSnapshot().write;if(current.phase==='committed'&&current.result){const id=current.result.transferId;p.reset();p.navigate('transfer/view/'+encodeURIComponent(id));}};
  const save=async()=>{stopScan.current();setNotice(null);try{await s.create.save();done();}catch{if(p.scope.active)setNotice('保存尚未完成，输入已保留。');}};

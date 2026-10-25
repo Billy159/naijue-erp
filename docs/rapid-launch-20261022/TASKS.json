@@ -1343,8 +1343,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T09:30:50.692325+00:00",
-  "stage": "ACTIVE_SOURCE445_UNIFIED_SYN_PREVIEW_QF2_DELTA_J13_ACTUAL_QUEUED",
+  "updatedAt": "2026-10-25T09:44:12.016964+00:00",
+  "stage": "ACTIVE_DOC192_RESPONSIBLE_DEFAULT_RACE_FIXED_J13_FINAL_RUNNING",
   "lastVerifiedRemoteCommit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -4942,8 +4942,12 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T09:30:50.692325+00:00",
-    "preview": {
+    "atUtc": "2026-10-25T09:44:12.016964+00:00",
+    "sourceDelta": "F1 DOC192 only transfers-create-page.tsx87d4551f180892a5a75afd1f60ec27cbf141b1597dea2a9985ca1caf822502c7",
+    "fix": "Only undefined defaults; explicit null clear and selected staff survive late recommendations/remount; trusted identity exact match only",
+    "checks": "Original owner finite NewTransfer/real session+proposal DOM and scoped strict PASS adopted; not actual browser/HTTP/PG/save PASS",
+    "dependencies": "Normal root opt-in documentResponsibleReady plus actual granted staff candidates, trusted principal staffId and approvedv16prepare/SAVE/readback; current SYN901 no matching candidate and responsible prepare/save501, do not blindlyenable",
+    "currentCandidate": {
       "round": 445,
       "commit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
       "build": "phase2-normal-207e1d5-24",
@@ -4953,19 +4957,9 @@
       "wholePageAccepted": false,
       "newBackendConnected": false
     },
-    "build": "strict0/4.609s;singleVite0/2.410s;entry/runtimeJS/CSSHTTP200;server41406",
-    "QF": "SOURCE443 six leaves source+finite9rootseams PASS accepted, actualbrowser ledger no source rows and failedread remainsnotverified; F2 exact existingprovider seam diagnosis only",
-    "QF2": "Original CAT-UI-01/02/03 SCHEME-UI-01 targeted actualappearance on445 in progress LunaMax; no allpagePASS",
-    "stock13": {
-      "status": "ACTUAL_QUEUED",
-      "job": "t45-r1-stock-final-readonly-20261025-13",
-      "unit": "naijue-erp-op-5cc58239-6075894dd8aa",
-      "autoRetry": false,
-      "scope": "Only once FINAL_READBACK; no store/stage/reupload/newkey",
-      "review": "QB308 FINAL-RESULT2097/a89217eaa2cc2a039a4cba6b1e3c76c711496b96eb55d4455f6ff4779d986860 adopted; old RESULT NEED_FIX history retained separately"
-    },
-    "next": "T45 collect exact13 handle→12→11→14; QF2 delta result→F4 original owner if needed; F2 provider gap result→C sharedpreview seam",
-    "completion": "0/37 whole realbusiness/fullstate accepted; 37/67+validadditions scope retained; no new formalrelease/historyediting/MAIN/PUBLISH or realperf PASS"
+    "qa": "QF2 fixed445 original scoped UI recheck finishing; QF443 originalfinite9rootPASS reused; no repeatfullsite",
+    "backend": "Original J13 unit6075894dd8aa running onlyFINAL; no terminal actualresult yet; then12→11→14 by soleT45",
+    "next": "Save fixedoneleaf; originalQF only affecteddefault state delta; actualhost first-maintenance package D1 preparing while T45 runs"
   },
   "latestReadySource": {
     "round": 445,
@@ -9502,5 +9496,25 @@
     },
     "next": "T45 collect exact13 handle→12→11→14; QF2 delta result→F4 original owner if needed; F2 provider gap result→C sharedpreview seam",
     "completion": "0/37 whole realbusiness/fullstate accepted; 37/67+validadditions scope retained; no new formalrelease/historyediting/MAIN/PUBLISH or realperf PASS"
+  },
+  "currentContinuation447": {
+    "atUtc": "2026-10-25T09:44:12.016964+00:00",
+    "sourceDelta": "F1 DOC192 only transfers-create-page.tsx87d4551f180892a5a75afd1f60ec27cbf141b1597dea2a9985ca1caf822502c7",
+    "fix": "Only undefined defaults; explicit null clear and selected staff survive late recommendations/remount; trusted identity exact match only",
+    "checks": "Original owner finite NewTransfer/real session+proposal DOM and scoped strict PASS adopted; not actual browser/HTTP/PG/save PASS",
+    "dependencies": "Normal root opt-in documentResponsibleReady plus actual granted staff candidates, trusted principal staffId and approvedv16prepare/SAVE/readback; current SYN901 no matching candidate and responsible prepare/save501, do not blindlyenable",
+    "currentCandidate": {
+      "round": 445,
+      "commit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
+      "build": "phase2-normal-207e1d5-24",
+      "url": "http://127.0.0.1:57913/#product-settings",
+      "resources": 140,
+      "syntheticOnly": true,
+      "wholePageAccepted": false,
+      "newBackendConnected": false
+    },
+    "qa": "QF2 fixed445 original scoped UI recheck finishing; QF443 originalfinite9rootPASS reused; no repeatfullsite",
+    "backend": "Original J13 unit6075894dd8aa running onlyFINAL; no terminal actualresult yet; then12→11→14 by soleT45",
+    "next": "Save fixedoneleaf; originalQF only affecteddefault state delta; actualhost first-maintenance package D1 preparing while T45 runs"
   }
 }
