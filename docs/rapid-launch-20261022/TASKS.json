@@ -5063,7 +5063,7 @@
     "opsBlockingCondition": "CORE02 authenticated readonly acceptance waits human candidate login, not Demo login. T45 source425 detail QA execution resumed. Two source UI fixes integrated pending fixed build; no formal root switch.",
     "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
     "QF2": "CORE02 exact HTTPS opened in nativeChrome狄兰; guestlogin, user candidate login pending. Demo8877 confirmed logged in; never ask Demo login again based on another profile. Chrome lease C/user; no credential filling.",
-    "QB": "OriginalQB315 sourcePASS reused; newactual28 limited0351/401/prepost proof delivered to originalQB for onlyactualbusiness scope; no repeatedops/v17.",
+    "QB": "OriginalQB J28 decision PARTIAL adopted; actual0351 disabled identity/code/version,401,prepost increment PASS. No repeat ops/source/save. Optional published/staged witnesses and nonowner/fullhost/session/HTTPS/browser remain open.",
     "rootStrict": "FAIL16 outside delta preview/tests preserved; no fullPASS",
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
     "roleQueue": {
@@ -5077,7 +5077,7 @@
       "T45": "Actual28 bounded QA complete/partial missing optional existingwitnesses;27failure preserved/noreplay. Original CORE03 private stage duties now successor CORE04 fixed483 install/start, preserveunused461/24/25drafts and public CORE02, no public switch.",
       "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
       "QF2": "C grantednativeChrome狄兰exclusive lease afterQFactualhandoff;openfixedCORE02realentry/loginorread-only3groups;no credentialautofill orDemo relogin.",
-      "QB": "QB315 new425caller scopedsourcePASS adopted;actualSQL/ownerQA stillnotrun;not fullhost/session/nonownerACL."
+      "QB": "OriginalQB J28 decision PARTIAL adopted; actual0351 disabled identity/code/version,401,prepost increment PASS. No repeat ops/source/save. Optional published/staged witnesses and nonowner/fullhost/session/HTTPS/browser remain open."
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
     "route22Review": {
@@ -5471,7 +5471,13 @@
         "authenticatedBrowser": "NOT_TESTED"
       },
       "remaining": "Only existing registered PUBLISHED/STAGED child provenance references can enable those optional checks; do not create fixtures or replay previous setup/commands. CORE02 public unchanged; CORE03 unsubmitted.",
-      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/PRODUCT425-DETAIL28-ACTUAL-RESULT.json"
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/PRODUCT425-DETAIL28-ACTUAL-RESULT.json",
+      "independentDecision": {
+        "decision": "PARTIAL",
+        "acceptedIncrement": "PASS_ACTUAL_0351_DETAIL_DISABLED_SKU_401_AND_PREPOST_PRESERVATION",
+        "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice315-product-source425-detail-shell/J28-ACTUAL-RESULT.json",
+        "sha256": "894720e7321fa23d8c9689ae6b62480d2b84c540e583a6fbdc677b5895807b62"
+      }
     },
     "nextProductionCandidate": {
       "source": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
