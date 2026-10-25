@@ -11888,7 +11888,20 @@
           "confirmationSha256": "2b3fe399061713462f16270e88f9f925e48249810e84aa5af6bd261658127972"
         }
       ],
-      "actualImported": false
+      "actualImported": false,
+      "D1SeamResult": "Existing mandatory hall/store/publication and MIGRATION_DERIVED/evidence_ref support confirmed normalized business hall source key; only exact D3 mapper exception required; no SQL/DDL"
+    },
+    "sourceWindow47Result": {
+      "status": "STOP_FIRST_SOURCE47_FAILURE_NO_REPLAY",
+      "reason": "REAL_SOURCE_EXTERNAL_FILE_PIN_IDENTITY: carrier omitted actual identities for four C144 recipe refs",
+      "known": 0,
+      "parked": 0,
+      "gzipPassesStarted": 0,
+      "databaseWrites": false,
+      "closed": true,
+      "cleanupErrors": [],
+      "nextOwner": "T45",
+      "next": "New bounded source48 supplies missing four identities; preserve47; no source module bug/no heavy replay"
     }
   }
 }
