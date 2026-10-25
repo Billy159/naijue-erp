@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE546",
+    "round": "SOURCE547",
     "goal": "HUMAN_AUTHORIZED_CHAT_EXECUTION_RESUMED_FULL_SCOPE_CARD_RESUME_UNVERIFIED",
-    "sourceHeadBeforeThisContinuityCommit": "a77cb93445fc51958b52cd039a6b20b3ae9d5eda",
+    "sourceHeadBeforeThisContinuityCommit": "24b3586626c2e6a9c9b71c0d7cbd022fdb44e543",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12250,8 +12250,6 @@
       "salesSettlements": 0,
       "transferHeaders": 14279,
       "transferLines": 261641,
-      "warehouseClaims": 53,
-      "warehouseUnclaimed": 0,
       "headerReferences": {
         "HALL": 43,
         "STAFF": 49,
@@ -12263,7 +12261,12 @@
       "activeImportBackends": 0,
       "clientEnded": true,
       "R1Writes": false,
-      "receipt": "B/server-execution/SALES28282-STAGE-PREPARATION/ACTUAL71-CURRENT-R1-BINDING.json"
+      "receipt": "B/server-execution/SALES28282-STAGE-PREPARATION/ACTUAL71-CURRENT-R1-BINDING.json",
+      "warehouseNativeImportedRecords": 53,
+      "nativeWarehousesWithoutOriginalRecord": 0,
+      "coreAccountingWarehouseClaims": 22,
+      "remainingWarehouseAccountingClaimsForMAIN": 31,
+      "claimMeaningCorrection": "53 native import_record identities are not53 import_record_accounting_claim. Original CORE claims/checkpoint22 remain; MAIN has not accounted remaining31."
     },
     "salesStage72HistoricalCustomers": {
       "owner": "T45",
@@ -12344,7 +12347,7 @@
         "appReviewSha256": "e179ec6040bc937708f2368c40bea58ab0949f2bf9834c07c75fbdb60428b27b",
         "app74AndRoute75Passed": false
       },
-      "continuation": "T45 turn stopped idle with connection explanation; C verified terminal state and explicitly resumed original74/75, no73 replay."
+      "continuation": "T45 second short turn ended with SSH-only answer; C verified idle and resumed exact original74/75 once more. Current turn01a174e9-2033-70a1-820b-b276991b2277 active, no actual74/75 receipt yet."
     },
     "salesClosure544": {
       "owner": "D3",
@@ -12352,13 +12355,13 @@
       "thinking": "medium",
       "status": "SOURCE_IMPLEMENTED_SELF5_PASS_QB329_LIMITED_PASS_REAL_NOT_RUN",
       "current": "Sales header source/typed sorted range producer plus HEADERS sales/transfer composition; reuse original codec/doc9/all11 builder. No real largefile scan.",
-      "next": "D3 original run.mjs carry-forward22/31 bug fix; then actual full11 authority composition. T45 carrier consumes reviewed closure with real lease/index. No synthetic authority.",
+      "next": "D3 original all11 external authority/input seam; T45 restore74/75 and original2 customers/headerstage; original QB329 closure PASS adopted.",
       "stageOwner": "T45",
       "indexVersion": "RETAINED_SALES_HEADER_CLOSURE_INDEX_V1",
       "index": "Root partition pins once; per-row original prepared byte ranges, IDs, fingerprint, original source/typed codec hashes, document4. Commit journal separate.",
       "decision": "Use one D3/T45 offset schema. Earlier suggestion of two projection JSONL files withdrawn; no competing copies.",
       "cost": "One source range pass may read921827285B; bounded <=64MiB typed27 cache avoids second prepared body pass. No source reprepare/gzip/32 Map reconstruction.",
-      "warehouseClaims": "actual71 53 and unclaimed0 supersede old22+31 pending inference",
+      "warehouseClaims": "actual71 native imported records53/no missing native identity; accounting CORE22/remaining31. Earlier53 accounting interpretation withdrawn.",
       "remaining": "True all11 authority, original MAIN nonzero ledger items/count, global source/typed/doc roots and actual stage/MAIN/PUBLISH remain unproved.",
       "source": {
         "path": "O/D3/sales-header-closure-session-20261026.mjs",
@@ -12390,10 +12393,12 @@
       "owner": "D3",
       "path": "scripts/import-v3/run.mjs",
       "ownership": "roles/D3/registeredFiles/20",
-      "status": "DIRECTED_FIX_IN_PROGRESS",
-      "defect": "readCoreImportContinuation26 hardcodes claimed22 and remaining31; actual71 is53/0, so genuine continuation would refuse.",
-      "constraints": "Keep original22/31 initial state, exact53 unique membership/original IDs/hash/core receipt/current permissions/transaction; do not claim53 again or loosen unknown states.",
-      "frozen519Changed": false
+      "status": "WITHDRAWN_FALSE_DEFECT_NO_SOURCE_CHANGE",
+      "defect": "Earlier conclusion conflated native import_record53 with accounting_claim22. Actual lower reader uses original CORE22 and remaining31, so current run is compatible.",
+      "constraints": "Keep remaining31 for original MAIN accounting; do not set0 or double-account. Only a future actual accounting53/checkpoint53 successor would justify a new assessment.",
+      "frozen519Changed": false,
+      "sourceChanged": false,
+      "testsRun": false
     }
   }
 }

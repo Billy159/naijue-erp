@@ -1,3 +1,6 @@
+SOURCE547更正（2026-10-26）：撤回SOURCE546所称run续办硬编码确定缺陷。D3沿原readNativeCoreWarehouseCarryForward及actual71逐层核清：已建import_record仓库身份53/缺身份0，与CORE import_record_accounting_claim22、checkpoint/cursor22不同；MAIN receipts0/fullBind0，剩余31尚待原MAIN记账。原22/31逻辑当前兼容，未改run、未跑相关测试、未派该项QB；绝不能改remaining0漏记账。原actual71及旧误判记录保留，本段为当前准确解释。闭包c708/QB329限定PASS不受影响，D3继续真正全11authority接缝。
+T45再次出现短turn仅答SSH后idle，C已实时核终态并沿唯一74/75任务继续，现新turn01a174e9在途；不重放73/不重审核，不把密钥READY冒候选恢复。SOURCE546（含源码备份）已核GitHub远端24b35866；本更正随下一检查点保存。全量真实销售/历史编辑/正式根发布仍未完成。
+
 SOURCE546（2026-10-26）：采用原QB328 POST73实际ACL差异PASS033f9e34及socket/TCP双purpose新review，T45原74/75恢复继续；已核其原turn确实idle停在连接解释，C明确接续原任务、禁止重73，不把连接READY当部署完成。
 D3销售闭包组合helper c708c30c已实现，原5/5检查和QB329限定源码PASS9a2b9290直接采用、不重跑。单次source范围读原prepared，缓存≤64MiB typed27避免第二次921MB正文读取；原all11/doc9算法复用，真实FD/lease/总数/大流/DB仍未测。四份无业务数据源码与合成检查记录按原reports路径保存Git备份，原O固定交付仍是执行输入，不复制真实数据/私有清单。
 发现原续办run.mjs硬编码claimed22/remaining31，会拒绝真实53/0。已核登记owner就是D3（registeredFiles/20），原owner窄修并定向检查，保留CORE/原ID/hash/总53唯一性/事务，不重claim，不热改冻结519。其后原全11真实authority组合继续；新代码不阻同CORE10候选恢复。SOURCE544网络首次只读超时后，544＋545已非强推并核远端a77cb934。仍无新增整页全状态/真实业务/正式根发布PASS。
