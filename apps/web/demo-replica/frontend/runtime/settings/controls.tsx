@@ -1,4 +1,4 @@
-import { Button, Select } from '@arco-design/web-react';
+import { Button, Select, Tag } from '@arco-design/web-react';
 import { useEffect, useReducer, useRef, useState, useSyncExternalStore, type ComponentType, type ComponentProps, type ReactNode } from 'react';
 import { LatestQuery } from '../../../../src/loading/latest-query.ts';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
@@ -11,7 +11,7 @@ import { filterCss, singleCss } from '../inventory/source-control-css.ts';
 import { ALL_FILTER_VALUE } from '../inventory/filter-selection.ts';
 
 export const settingsSingleCss=singleCss+'\n.runtime-settings-directory{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 4px;font-size:12px}';
-const inventoryReferenceCss=filterCss+'\n'+singleCss+'\n:host(.inventory-reference-select) .arco-select-view .ui-single-tag{box-sizing:border-box;display:inline-flex;align-items:center;max-width:100%;height:23px;padding:1px 7px;background:#fff!important;color:var(--ca-ink)!important}\n:host(.inventory-reference-select) .arco-select-view input{min-width:32px}\n:host(.inventory-reference-select) .arco-select-view .arco-icon-hover{color:var(--ca-ink-2)}';
+const inventoryReferenceCss=filterCss+'\n'+singleCss+'\n:host(.inventory-reference-select) .arco-select-view .ui-single-tag{box-sizing:border-box;display:inline-flex;align-items:center;max-width:100%;height:23px;padding:1px 7px;background:#fff!important;color:var(--ca-ink)!important}\n:host(.inventory-reference-select) .ui-single-tag .arco-tag-content{min-width:0;overflow:hidden;text-overflow:ellipsis}\n:host(.inventory-reference-select) .ui-single-tag .arco-tag-close-btn{flex:none;margin-left:4px;color:var(--ca-ink-2)}\n:host(.inventory-reference-select) .arco-select-view input{min-width:32px}\n:host(.inventory-reference-select) .arco-select-view .arco-icon-hover{color:var(--ca-ink-2)}';
 const ControlledSelect = Select as ComponentType<Omit<ComponentProps<typeof Select>, 'value'> & { value: string | undefined }>;
 type SmallSelectProps = { inventoryReference?: boolean; value: string; items: readonly { value: string; label: string; disabled?: boolean }[]; label: string; placeholder?: string; search?: boolean; clear?: boolean; disabled?: boolean; loading?: boolean; remote?: boolean; onChange: (value: string) => void; onOpen?: () => void; onClose?: () => void; onSearch?: (value: string) => void; footer?: ReactNode };
 export function SmallSelect(props:SmallSelectProps) {
@@ -24,10 +24,12 @@ function SmallSelectContent(props:SmallSelectProps & {portal:HTMLElement;host:HT
   // Installed Arco's Portal loses its container ref during React19 StrictMode replay.
   useEffect(() => { if (!mounted || !open || props.disabled) return; let active = true; queueMicrotask(() => { if (active) refreshPortal(); }); return () => { active = false; }; }, [mounted, open, props.disabled]);
   return <ControlledSelect className="ui-flat-select" value={props.value || undefined} options={[...props.items]} aria-label={props.label} placeholder={props.placeholder ?? props.label}
-    showSearch={props.search ?? false} filterOption={!props.remote} allowClear={props.clear ?? true} disabled={props.disabled ?? false} loading={props.loading ?? false} unmountOnExit
+    showSearch={props.search ?? false} filterOption={!props.remote} allowClear={props.inventoryReference ? false : props.clear ?? true} disabled={props.disabled ?? false} loading={props.loading ?? false} unmountOnExit
     getPopupContainer={() => props.portal}
     triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: Math.min(Math.max(props.host.getBoundingClientRect().width ?? 180, 300), Math.max(180, window.innerWidth - (props.host.getBoundingClientRect().left ?? 0) - 12)) } }}
-    renderFormat={() => <span className="ui-single-tag">{props.items.find(item => item.value === props.value)?.label ?? ''}</span>}
+    renderFormat={() => props.inventoryReference ? <Tag visible className="ui-single-tag" bordered={false} closable={!!props.value && (props.clear ?? true) && !props.disabled}
+      onMouseDown={event => { if ((event.target as Element).closest('.arco-tag-close-btn')) { event.preventDefault(); event.stopPropagation(); } }}
+      onClose={event => { event.stopPropagation(); props.onChange(''); setOpen(false); props.onClose?.(); }}>{props.items.find(item => item.value === props.value)?.label ?? ''}</Tag> : <span className="ui-single-tag">{props.items.find(item => item.value === props.value)?.label ?? ''}</span>}
     popupVisible={mounted && open && !props.disabled} dropdownRender={menu => <>{menu}{props.footer}</>} onVisibleChange={visible => { setOpen(visible); if (visible) props.onOpen?.(); else props.onClose?.(); }} onSearch={value => props.onSearch?.(value)}
     onChange={(value: unknown) => { props.onChange(typeof value === 'string' ? value : (props.items.find(item=>item.value===''||item.value==='all'||item.value==='ALL')?.value ?? '')); setOpen(false); props.onClose?.(); }}/>;
 }
