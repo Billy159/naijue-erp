@@ -5020,7 +5020,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 497,
+    "round": 498,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
     "sourceHeadBeforeThisContinuityCommit": "6d0ec125b338786e73acb6d1d8de3a5330df202d",
     "fixedCandidates": {
@@ -5810,13 +5810,22 @@
       "next": "OriginalQF2 active only affected normal category/colors/fits readonly browser consumers"
     },
     "r1MaintenanceTenBits": {
-      "status": "D2_EXACT_DELTA_QB_SOURCE_SNAPSHOT_PASS_T45_CURRENT_ACTUAL_EXECUTION_QUEUED",
+      "status": "QB_TENBIT_PASS_T45_PREPARING_WAIT_CURRENT_QF2_BROWSER_THEN_COORDINATED_METADATA_REVIEW_APP_WINDOW",
       "scope": "color and fit UPDATE(name,version,deleted_at,code,enabled) only; existing INSERT/audit/receipt/identity lock privileges reused",
       "qbResult": "QB/slice316-colour-fit-normal-host-entry/R1-PM-TENBIT-RESULT.json",
       "qbResultSha256": "125f8d3b4495e66397ee2f4848b5667d8d3fd980ac29baf1a5958f72a7b08e88",
       "currentDatabaseProven": false,
       "permissionChangeExecuted": false,
-      "rule": "No physical DELETE/fulltable UPDATE/newbusinesscontract; current exact R1 metadata+actual missing bits only; no R1 testwrite; new canonical/current purpose review still required"
+      "rule": "No physical DELETE/fulltable UPDATE/newbusinesscontract; current exact R1 metadata+actual missing bits only; no R1 testwrite; new canonical/current purpose review still required",
+      "reason": "Existing issuer pins canonical356; bare GRANT invalidates current CORE05. Coordinate exact ACL actual/newcanonical/C review/current purpose/privateapp/route, never hotreplace existing issuer/review."
+    },
+    "core05BrowserBindingCorrection": {
+      "before": "QF2 onlynav hash-route observation used still-mounted source483/core04 DOM; no stylesheet links/main empty, console0; cannot count as source494 failure",
+      "action": "C confirmed noform/draft then one reload through nativeChrome; no credentials/storage/businessresponsebody reads",
+      "after": "Actual DOM494/core05 application.js,17styles; authsession200/colorsquery200; productsettings heading/tabs/search/table/read-only disabledcreate visible, total0",
+      "qualification": "Data completeness/actual valid colors unproven; no wholepage/businessPASS",
+      "browser": "DevTools closed/natural viewport restored, noedit; originalQF2 LunaMax active corrected candidate scoped recheck",
+      "f4": "Finite production-mode success/error/403 source diagnosis retained; 403 clear-body gap reproduced only synthetic, not current public cause; no sourcechanges"
     }
   },
   "latestReadySource": {
