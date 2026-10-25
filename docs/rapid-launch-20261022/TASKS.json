@@ -1343,9 +1343,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T09:44:12.016964+00:00",
-  "stage": "ACTIVE_DOC192_RESPONSIBLE_DEFAULT_RACE_FIXED_J13_FINAL_RUNNING",
-  "lastVerifiedRemoteCommit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
+  "updatedAt": "2026-10-25T09:49:38.395414+00:00",
+  "stage": "ACTIVE_STOCK_FINAL_ACTUAL_PASS_CATALOGUE_SCOPED_UI_ACCEPTED_SOURCE447_PACK_READY",
+  "lastVerifiedRemoteCommit": "34eff658e4caef590a77326c75917e391357529d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1787,7 +1787,7 @@
     "accountsWithExactOldEmployeeLink": 45,
     "accountsUnlinked": 4,
     "newAccountsInserted": 49,
-    "realImport": "CORE157+CATALOGUE344+SUPPLIER222 actual limitedstage/readbackPASS; PRODUCT2956/SKU14999 preparedsource, not DBimport/PUBLISH",
+    "realImport": "CORE/PRODUCT2956/SKU14999 source staging scopes adopted; stock38303groups/38314contributors signed80933 committed plus independentFINAL384windows actualPASS; noMAIN/PUBLISH/businessacceptance",
     "productionSwitched": false,
     "freshBackup": {
       "job": "c02-current-backup-20261025-206",
@@ -4942,24 +4942,59 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T09:44:12.016964+00:00",
-    "sourceDelta": "F1 DOC192 only transfers-create-page.tsx87d4551f180892a5a75afd1f60ec27cbf141b1597dea2a9985ca1caf822502c7",
-    "fix": "Only undefined defaults; explicit null clear and selected staff survive late recommendations/remount; trusted identity exact match only",
-    "checks": "Original owner finite NewTransfer/real session+proposal DOM and scoped strict PASS adopted; not actual browser/HTTP/PG/save PASS",
-    "dependencies": "Normal root opt-in documentResponsibleReady plus actual granted staff candidates, trusted principal staffId and approvedv16prepare/SAVE/readback; current SYN901 no matching candidate and responsible prepare/save501, do not blindlyenable",
-    "currentCandidate": {
-      "round": 445,
-      "commit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
-      "build": "phase2-normal-207e1d5-24",
-      "url": "http://127.0.0.1:57913/#product-settings",
-      "resources": 140,
-      "syntheticOnly": true,
-      "wholePageAccepted": false,
-      "newBackendConnected": false
+    "atUtc": "2026-10-25T09:49:38.395414+00:00",
+    "stockFinal": {
+      "status": "PASS_ORIGINAL_STOCK_FINAL_READONLY_CLOSURE_NO_STAGE_NO_PUBLISH",
+      "job": "t45-r1-stock-final-readonly-20261025-13",
+      "unit": "naijue-erp-op-5cc58239-6075894dd8aa",
+      "exitCode": 0,
+      "elapsedSeconds": 1081.029575,
+      "groups": 38303,
+      "contributors": 38314,
+      "signedTotal": "80933",
+      "windows": 384,
+      "allMismatch": 0,
+      "linkedBaseline": 0,
+      "fileCloseReturned": true,
+      "dml": 0,
+      "ddl": 0,
+      "runtimeCatalogue": "020ce unchanged",
+      "old03": "FAILED retained; combined03commit+13FINAL source staging closure only",
+      "evidence": "K/reports/controller/rapid-launch-20261022/server-execution/STOCK13-FINAL-READONLY-ACTUAL-RESULT.json"
     },
-    "qa": "QF2 fixed445 original scoped UI recheck finishing; QF443 originalfinite9rootPASS reused; no repeatfullsite",
-    "backend": "Original J13 unit6075894dd8aa running onlyFINAL; no terminal actualresult yet; then12→11→14 by soleT45",
-    "next": "Save fixedoneleaf; originalQF only affecteddefault state delta; actualhost first-maintenance package D1 preparing while T45 runs"
+    "catalogueUi": {
+      "candidate": {
+        "round": 445,
+        "commit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
+        "build": "phase2-normal-207e1d5-24",
+        "url": "http://127.0.0.1:57913/#product-settings",
+        "resources": 140,
+        "syntheticOnly": true,
+        "wholePageAccepted": false,
+        "newBackendConnected": false
+      },
+      "QF2Result": "SOURCE445-UI-RECHECK-01/RESULT.json2291/9ddc41c66bbdede01b0a74ae783e166ac7909a1d04e4b2683214db90309e9a66",
+      "accepted": "CAT-UI-01 color/fit th+td100px;CAT-UI-02 route pc-mode/inside scroll/exit restore;SCHEME-UI-01 current scheme480px modal scope only",
+      "open": "CAT03 real maintenance; product-editor sharedmodal consumer unavailable; no wholepagePASS",
+      "images": "Three actual445 JPEGs saved; sameCSS1470x724, captureDPR1.22 vsgeometry2.44/Demo2 disclosed; 27evidence/selfhash QAverified not repeated"
+    },
+    "productionReady": {
+      "source": "34eff658e4caef590a77326c75917e391357529d",
+      "build": "replica-production-source447-01",
+      "archiveBytes": 1618573,
+      "archiveSha256": "9745180697f7f0f3bf9a698463f8e9ef20a62de3c07bbed7ba66e49adc45a161",
+      "manifestSha256": "a03d36369e5267c56a1b5445fc39a0b8c9121198183f9b473df03e73c9321e30",
+      "members": 202,
+      "status": "BUILD_PACK_EXTRACT_READBACK_PASS_NOT_DEPLOYED",
+      "unchangedBackendSqlLockMembers": 33,
+      "runtimeLockUnchanged": true,
+      "publicRoutes": "CORE3readonly unchanged",
+      "owner": "C fixed build+pack; T45 originalexecution only; do not replace14inflight438"
+    },
+    "QF": "DOC192 undefined/null default-race newfinite audit in progress; old185/191/443 reused",
+    "D1": "First actual private maintenance nativeQA host/capability gap package preparing; not full backend rewrite",
+    "next": "T45 original12→newmetadata/probe→11TCP→14private438; accurate447 frontend next; then original09/10 actualhistory stage; first real maintenance QA exactisolated only",
+    "scope": "37pages/67overlays+validadditions goalACTIVE; wholefullstatebusinessPASS0/37; MAIN/PUBLISH/historyeditable/realperf/formalrelease incomplete"
   },
   "latestReadySource": {
     "round": 445,
@@ -9516,5 +9551,60 @@
     "qa": "QF2 fixed445 original scoped UI recheck finishing; QF443 originalfinite9rootPASS reused; no repeatfullsite",
     "backend": "Original J13 unit6075894dd8aa running onlyFINAL; no terminal actualresult yet; then12→11→14 by soleT45",
     "next": "Save fixedoneleaf; originalQF only affecteddefault state delta; actualhost first-maintenance package D1 preparing while T45 runs"
+  },
+  "currentContinuation448": {
+    "atUtc": "2026-10-25T09:49:38.395414+00:00",
+    "stockFinal": {
+      "status": "PASS_ORIGINAL_STOCK_FINAL_READONLY_CLOSURE_NO_STAGE_NO_PUBLISH",
+      "job": "t45-r1-stock-final-readonly-20261025-13",
+      "unit": "naijue-erp-op-5cc58239-6075894dd8aa",
+      "exitCode": 0,
+      "elapsedSeconds": 1081.029575,
+      "groups": 38303,
+      "contributors": 38314,
+      "signedTotal": "80933",
+      "windows": 384,
+      "allMismatch": 0,
+      "linkedBaseline": 0,
+      "fileCloseReturned": true,
+      "dml": 0,
+      "ddl": 0,
+      "runtimeCatalogue": "020ce unchanged",
+      "old03": "FAILED retained; combined03commit+13FINAL source staging closure only",
+      "evidence": "K/reports/controller/rapid-launch-20261022/server-execution/STOCK13-FINAL-READONLY-ACTUAL-RESULT.json"
+    },
+    "catalogueUi": {
+      "candidate": {
+        "round": 445,
+        "commit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
+        "build": "phase2-normal-207e1d5-24",
+        "url": "http://127.0.0.1:57913/#product-settings",
+        "resources": 140,
+        "syntheticOnly": true,
+        "wholePageAccepted": false,
+        "newBackendConnected": false
+      },
+      "QF2Result": "SOURCE445-UI-RECHECK-01/RESULT.json2291/9ddc41c66bbdede01b0a74ae783e166ac7909a1d04e4b2683214db90309e9a66",
+      "accepted": "CAT-UI-01 color/fit th+td100px;CAT-UI-02 route pc-mode/inside scroll/exit restore;SCHEME-UI-01 current scheme480px modal scope only",
+      "open": "CAT03 real maintenance; product-editor sharedmodal consumer unavailable; no wholepagePASS",
+      "images": "Three actual445 JPEGs saved; sameCSS1470x724, captureDPR1.22 vsgeometry2.44/Demo2 disclosed; 27evidence/selfhash QAverified not repeated"
+    },
+    "productionReady": {
+      "source": "34eff658e4caef590a77326c75917e391357529d",
+      "build": "replica-production-source447-01",
+      "archiveBytes": 1618573,
+      "archiveSha256": "9745180697f7f0f3bf9a698463f8e9ef20a62de3c07bbed7ba66e49adc45a161",
+      "manifestSha256": "a03d36369e5267c56a1b5445fc39a0b8c9121198183f9b473df03e73c9321e30",
+      "members": 202,
+      "status": "BUILD_PACK_EXTRACT_READBACK_PASS_NOT_DEPLOYED",
+      "unchangedBackendSqlLockMembers": 33,
+      "runtimeLockUnchanged": true,
+      "publicRoutes": "CORE3readonly unchanged",
+      "owner": "C fixed build+pack; T45 originalexecution only; do not replace14inflight438"
+    },
+    "QF": "DOC192 undefined/null default-race newfinite audit in progress; old185/191/443 reused",
+    "D1": "First actual private maintenance nativeQA host/capability gap package preparing; not full backend rewrite",
+    "next": "T45 original12→newmetadata/probe→11TCP→14private438; accurate447 frontend next; then original09/10 actualhistory stage; first real maintenance QA exactisolated only",
+    "scope": "37pages/67overlays+validadditions goalACTIVE; wholefullstatebusinessPASS0/37; MAIN/PUBLISH/historyeditable/realperf/formalrelease incomplete"
   }
 }
