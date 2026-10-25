@@ -5518,5 +5518,18 @@
     "scope": "Approved2471-only source-key-bound business hall derived overlay and exact affected tests after registering test leaves; raw canonical blanks and creatorHall untouched. Prefer existing normalized hall consumer plus explicit MIGRATION_DERIVED proof; do not weaken generic RAW_CHANGED",
     "D1": "Original store/publication seam read-only review first; no concurrent writer; any demonstrated additional source leaf registered before editing",
     "T45": "Sole actual executor; fixed47 inputs immutable"
+  },
+  "productionStartup517": {
+    "owner": "C",
+    "scope": "Actual CORE05 bare shell and emitted component CSS not attached. Initial common stylesheet links in existing cascade slots, consume existing lazy component CSS at import, normal startup/error UI. No business capability changes",
+    "files": [
+      "apps/web/demo-replica/build-production-host.mjs",
+      "apps/web/demo-replica/frontend/frozen-style-order.ts",
+      "apps/web/demo-replica/frontend/runtime-styles.ts",
+      "apps/web/demo-replica/frontend/production-bootstrap.ts"
+    ],
+    "serverOwner": "T45",
+    "F3": "Original settings leaves; shared startup/build read-only",
+    "authority": "Current user taskbook public startup and settings failures; original full UI/business goal"
   }
 }

@@ -21,8 +21,11 @@ export async function startReplicaProductionHost() {
  const hide=()=>{startup.abort();owner?.dispose();owner=undefined;};
  const show=(event:PageTransitionEvent)=>{if(!disposed&&event.persisted&&!owner)owner=mount();};
  window.addEventListener('pagehide',hide);window.addEventListener('pageshow',show);
- try {await prepareReplicaCommonStyles(startup.signal);if(!startup.signal.aborted)owner=mount();}
+ try {await prepareReplicaCommonStyles(startup.signal);if(!startup.signal.aborted){owner=mount();document.documentElement.removeAttribute('data-replica-starting');document.getElementById('replica-startup')?.remove();document.getElementById('replica-startup-style')?.remove();}}
  catch(error){window.removeEventListener('pagehide',hide);window.removeEventListener('pageshow',show);style.remove();throw error;}
  return {dispose(){if(disposed)return;disposed=true;window.removeEventListener('pagehide',hide);window.removeEventListener('pageshow',show);hide();style.remove();}};
 }
-void startReplicaProductionHost().catch(()=>{const page=document.getElementById('page');if(page){page.replaceChildren();const message=document.createElement('p');message.setAttribute('role','alert');message.textContent='系统未能启动，请检查访问地址和页面资源后重试。';page.append(message);}});
+void startReplicaProductionHost().catch(()=>{
+ const status=document.getElementById('replica-startup')??document.getElementById('page');
+ if(status){status.replaceChildren();status.setAttribute('role','alert');const message=document.createElement('span');message.textContent='系统资源未能加载，请重新加载后重试。';const retry=document.createElement('a');retry.href=location.href;retry.textContent='重新加载';status.append(message,retry);}
+});

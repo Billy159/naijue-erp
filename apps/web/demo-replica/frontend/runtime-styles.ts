@@ -1,7 +1,6 @@
-import { frozenStyleOrder as order } from './frozen-style-order.ts';
+import { frozenStyleOrder as order, replicaCommonStyles as common } from './frozen-style-order.ts';
 // Frozen basic-settings.css also owns the shared login overlay and account chrome.
 // These must load before authentication, when no business route can mount yet.
-const common: readonly string[] = ["ui-tokens.css", "styles.css", "gold.css", "interaction-common.css", "basic-settings.css", "ui-review.css", "final-ui.css", "brand-components.css", "golden-consistency.css", "unified-single-select.css", "confirmation-dialogs.css"];
 const groups: Readonly<Record<string, readonly string[]>> = {
  inventory:['inventory-workbench.css','matrix-experiments.css','inventory-refinement.css','product-inventory-unified.css','inventory-ledger.css'],
  products:['inventory-workbench.css','inventory-refinement.css','product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
@@ -10,7 +9,10 @@ const groups: Readonly<Record<string, readonly string[]>> = {
  sales:['inventory-workbench.css','inventory-refinement.css','sales-current.css','entry-shared.css','matrix-experiments.css','sales-returns.css','sales-golden.css','sales-refinement.css','sales-detail-alignment.css','product-current.css'],
  transfer:['inventory-workbench.css','inventory-refinement.css','transfer-current.css','entry-shared.css','matrix-experiments.css','transfer-scan-drawer.css','product-current.css','product-inventory-unified.css'],
 };
-const slots = new Map(order.map(name => {const anchor=document.createComment('frozen-style:'+name);document.head.append(anchor);return [name,anchor] as const;}));
+const slots = new Map(order.map(name => {
+ const existing=[...document.head.childNodes].find(node=>node.nodeType===8&&node.textContent==='frozen-style:'+name);
+ const anchor=existing??document.createComment('frozen-style:'+name);if(!existing)document.head.append(anchor);return [name,anchor] as const;
+}));
 const loaded = new Map<string,{node:HTMLLinkElement;ready:Promise<void>}>();
 // Approved v16 adds a separate responsible employee to the original document header.
 // Keep the original narrow-screen layout; this selector applies only to the paired consumer.
@@ -34,6 +36,10 @@ export async function prepareReplicaCommonStyles(signal:AbortSignal):Promise<voi
 }
 function ensure(name:string):Promise<void>{
  const existing=loaded.get(name);if(existing)return existing.ready;
+ const initial=document.head.querySelector<HTMLLinkElement>('link[data-frozen-style="'+name+'"]');
+ if(initial?.sheet){const ready=Promise.resolve();loaded.set(name,{node:initial,ready});return ready;}
+ // A deferred module runs after blocking head styles settle. Re-request a failed initial link with live listeners.
+ initial?.remove();
  const node=document.createElement('link');node.rel='stylesheet';node.href=assetBase+'source-styles/'+name;node.dataset.frozenStyle=name;
  const ready=new Promise<void>((resolve,reject)=>{node.onload=()=>resolve();node.onerror=()=>{loaded.delete(name);node.remove();reject(new Error('Stylesheet unavailable: '+name));};});
  loaded.set(name,{node,ready});slots.get(name)!.after(node);return ready;
