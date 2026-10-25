@@ -1,0 +1,13 @@
+✔ compact headers emit allocation without body reads; one source range pass supplies both global streams via bounded typed cache (12.566166ms)
+✔ existing all11 reader computes exact sales+settlement+transfer doc9 roots equal original canonical builder; no new hash algorithm (15.031375ms)
+✔ compact wrong fingerprint or projected facts, duplicate identities and incomplete byte coverage refuse (10.826916ms)
+✔ child stream count/order/entity defects and closed-await refuse instead of supplying partial closure (8.54225ms)
+✔ original builder rejects orphan membership instead of guessing document counts or zero settlement links (5.195625ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 135.157834

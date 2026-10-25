@@ -1,3 +1,7 @@
+SOURCE546（2026-10-26）：采用原QB328 POST73实际ACL差异PASS033f9e34及socket/TCP双purpose新review，T45原74/75恢复继续；已核其原turn确实idle停在连接解释，C明确接续原任务、禁止重73，不把连接READY当部署完成。
+D3销售闭包组合helper c708c30c已实现，原5/5检查和QB329限定源码PASS9a2b9290直接采用、不重跑。单次source范围读原prepared，缓存≤64MiB typed27避免第二次921MB正文读取；原all11/doc9算法复用，真实FD/lease/总数/大流/DB仍未测。四份无业务数据源码与合成检查记录按原reports路径保存Git备份，原O固定交付仍是执行输入，不复制真实数据/私有清单。
+发现原续办run.mjs硬编码claimed22/remaining31，会拒绝真实53/0。已核登记owner就是D3（registeredFiles/20），原owner窄修并定向检查，保留CORE/原ID/hash/总53唯一性/事务，不重claim，不热改冻结519。其后原全11真实authority组合继续；新代码不阻同CORE10候选恢复。SOURCE544网络首次只读超时后，544＋545已非强推并核远端a77cb934。仍无新增整页全状态/真实业务/正式根发布PASS。
+
 SOURCE545（2026-10-26）：T45 actual73 已真实 COMMIT 精确 history_sales_header INSERT27，3.8255s/newcanonical59b9999e3df09934eed14cf6d82f6382e92faaf16604d266a5c64a3c9019bd68；仅27列ACL变化，0业务DML/0DDL/0role，原业务counts/batch/CORE及18服务保留，socket与TCP真实元数据已取得。原QB正在仅核实际差异并签双purpose；74/75恢复在途。旧APP58审核当前stale，尚未测authenticated拒读，不冒充候选已恢复。销售头实际stage/MAIN/PUBLISH仍未通过。
 GitHub SOURCE544首个API只读请求连接超时，未改变远端；最后已核远端8140fe95。当前增量先本地保全，新后继从远端只读核实继续非强推。原D3闭包组合代码在途，不重原数据捕获，最终目标不缩。
 
