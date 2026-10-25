@@ -1,0 +1,16 @@
+{
+  "sourceWriterCommit": "34eff658e4caef590a77326c75917e391357529d",
+  "status": "WIP_SOURCE_OWNER9_FINITE_PASS_INDEPENDENT_REVIEW_PENDING_NO_ACTUAL_IMPORT",
+  "files": [
+    {
+      "file": "retained-sales-settlement-consumer-20261025.mjs",
+      "bytes": 20002,
+      "sha256": "2213f351e195e2927b2b7625e43c26f87a3e07dde41de7703482c031e16d7c1e"
+    },
+    {
+      "file": "retained-sales-settlement-consumer-20261025.test.mjs",
+      "bytes": 11576,
+      "sha256": "786ae9399112b309a73e4c29bcef20df18e9f0840d1aae3da0682f46ddcf90a0"
+    }
+  ]
+}
