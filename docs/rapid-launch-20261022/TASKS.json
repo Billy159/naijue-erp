@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T04:24:21.278700+00:00",
-    "sourceRound": 401,
-    "sourceCheckpoint": "SOURCE401_CURRENT_FIXED400_HTTP_READY_QF2_SCROLL_ONLY_RECHECK_ACTIVE",
+    "atUtc": "2026-10-25T04:31:55.986109+00:00",
+    "sourceRound": 402,
+    "sourceCheckpoint": "SOURCE402_RESPONSE_CPU_READY_UI400_SCROLL_ACTUAL_CLOSED_QA_CONTEXT_REPAIR_IN_FLIGHT",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8570,7 +8570,7 @@
     },
     "currentPackets": {
       "F2": {
-        "current": "Drawer scroll source2 complete ownerchecksPASS; C fixed400build/QF2 shortviewport retest",
+        "current": "Drawer scroll source400 QF2 actualPASS closed; no repeated fix",
         "next": "Inventory streaming intermediate-memory, then v17 normal HTTP seam",
         "uiDelivery": "I01-FILTER-WIDTH-LABELS-USER-20261025-01 source complete; fixed build and QF2 pending"
       },
@@ -8579,7 +8579,7 @@
         "next": "original-workbook memory seam"
       },
       "D3": {
-        "current": "R1 source ready/tests13pass/localmodel same bytes; R2 exact responsevalidator/test registered next",
+        "current": "R1+R2 fourleaf source complete; originalQB combined review next",
         "next": "Combined affected originalQB once after R2 packet; realHTTP remains waiting inventory"
       },
       "C": {
@@ -8591,7 +8591,7 @@
         "next": "Original writer/prepare minimal SYN fixture prerequisite seam if needed"
       },
       "QF2": {
-        "current": "SOURCE4001470x300nonzero inventorydrawer base/spec scroll and activeDOM only",
+        "current": "SOURCE400 failedscroll actualPASS; browserreleased",
         "next": "New product DOM candidate technical stage after visual"
       }
     },
@@ -8657,6 +8657,12 @@
       "native": "1032586 alreadyIMPORTED preserve/no newstage",
       "core": "1034834 STAGED1/source115/record22/product0/SKU0 usable existing QA; originalCORE preserved",
       "v18ActualExecution": "NOT_YET"
+    },
+    "qa226": {
+      "status": "FAILED_READONLY_CONTEXT_SQL_NO_WRITES",
+      "metadataFromV15": true,
+      "canonical": "a97002057a1763b3bd650141461228773d54a81a833a1e7c8e5d96313f82b415",
+      "next": "227qualifiedaliasrepair/reproduction pending"
     }
   },
   "latestReadySource": {

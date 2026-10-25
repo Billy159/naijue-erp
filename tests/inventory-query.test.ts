@@ -326,3 +326,78 @@ test("inventory candidate projections: required product fields and native catego
   const categories = await service().readCandidates(inventoryActor, { ...candidateParameters(), kind: "category" }, signal());
   assert.equal(categories.data.items[0]!.parentId, null); assert.equal(categories.data.items[0]!.depth, 0);
 });
+
+test("inventory validation CPU397 R2: dynamic size records retain exact own keys and plain-object rejection", async () => {
+  const firstSize = inventoryId("size", 10), extraSize = inventoryId("size", 999);
+  for (const target of ["cells", "variantTotals", "productTotals"] as const) {
+    for (const mutation of ["null", "array", "nullPrototype", "customPrototype", "missing", "extra"] as const) {
+      const s = service({ ...syntheticInventoryReader(), async readInventory(read) {
+        const snapshot = structuredClone(syntheticInventorySnapshot(read));
+        const product = snapshot.data.products[0]!, variant = product.colorFits[0]!, row = variant.rows[0]!;
+        const original = target === "cells" ? row.cells : target === "variantTotals" ? variant.sizeTotals : product.sizeTotals;
+        let replacement: unknown = { ...original };
+        if (mutation === "null") replacement = null;
+        if (mutation === "array") replacement = Object.assign([], original);
+        if (mutation === "nullPrototype") replacement = Object.assign(Object.create(null), original);
+        if (mutation === "customPrototype") replacement = Object.assign(Object.create({ [firstSize]: original[firstSize] }), original);
+        if (mutation === "missing") delete (replacement as Record<string, unknown>)[firstSize];
+        if (mutation === "extra") (replacement as Record<string, unknown>)[extraSize] = original[firstSize];
+        if (target === "cells") Object.assign(row, { cells: replacement });
+        else if (target === "variantTotals") Object.assign(variant, { sizeTotals: replacement });
+        else Object.assign(product, { sizeTotals: replacement });
+        return snapshot;
+      } });
+      await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"), `${target}:${mutation}`);
+    }
+  }
+});
+
+test("inventory validation CPU397 R2: accepted own descriptors, key ordering and copied frozen output stay equivalent", async () => {
+  const firstSize = inventoryId("size", 10); let input: InventoryReadSnapshot<InventoryQueryPage> | undefined;
+  const s = service({ ...syntheticInventoryReader(), async readInventory(read) {
+    const snapshot = structuredClone(syntheticInventorySnapshot(read)); input = snapshot;
+    const product = snapshot.data.products[0]!, variant = product.colorFits[0]!, row = variant.rows[0]!;
+    for (const original of [row.cells, variant.sizeTotals, product.sizeTotals]) {
+      // The existing record helper accepts own non-enumerable required keys,
+      // ignores symbols/non-enumerable extras, and does not impose input key order.
+      Object.defineProperty(original, firstSize, { enumerable: false });
+      Object.defineProperty(original, "nonEnumerableExtra", { value: true });
+      Object.defineProperty(original, Symbol("ignoredByObjectKeys"), { value: true, enumerable: true });
+    }
+    const reordered = Object.fromEntries(Object.entries(row.cells).reverse());
+    Object.defineProperty(reordered, firstSize, { value: row.cells[firstSize], enumerable: false });
+    Object.assign(row, { cells: reordered });
+    return snapshot;
+  } });
+  const result = await s.readInventory(inventoryActor, inventoryParameters(), signal());
+  const product = result.data.products[0]!, variant = product.colorFits[0]!, row = variant.rows[0]!;
+  assert.deepEqual(Object.keys(row.cells), product.sizes.map(size => size.id));
+  assert.deepEqual(Object.keys(variant.sizeTotals), product.sizes.map(size => size.id));
+  assert.deepEqual(Object.keys(product.sizeTotals), product.sizes.map(size => size.id));
+  for (const object of [result, result.data, result.data.products, product, product.sizes, product.colorFits, variant,
+    variant.rows, row, row.warehouse, row.cells, row.total, ...Object.values(row.cells), variant.sizeTotals,
+    product.sizeTotals, ...Object.values(product.sizeTotals), product.total]) assert.equal(Object.isFrozen(object), true);
+  assert.notEqual(row.cells, input!.data.products[0]!.colorFits[0]!.rows[0]!.cells);
+  assert.equal(result.data.allMatchesTotal.knownQuantity, "-2");
+});
+
+test("inventory validation CPU397 R2: every aggregate level and incomplete totals still rejects independently", async () => {
+  for (const target of ["row", "variantSize", "variant", "productSize", "product"] as const) {
+    for (const mutation of ["quantity", "unknown"] as const) {
+      const s = service({ ...syntheticInventoryReader(), async readInventory(read) {
+        const snapshot = structuredClone(syntheticInventorySnapshot(read)), product = snapshot.data.products[0]!, variant = product.colorFits[0]!;
+        const original = target === "row" ? variant.rows[0]!.total : target === "variantSize" ? variant.sizeTotals[inventoryId("size", 10)]!
+          : target === "variant" ? variant.total : target === "productSize" ? product.sizeTotals[inventoryId("size", 10)]! : product.total;
+        // Replace just one field: source fixture total objects may otherwise alias.
+        const changed = { ...original, ...(mutation === "quantity" ? { knownQuantity: "999" } : { unknownCells: 1, completeness: "incomplete" }) };
+        if (target === "row") Object.assign(variant.rows[0]!, { total: changed });
+        else if (target === "variantSize") Object.assign(variant, { sizeTotals: { ...variant.sizeTotals, [inventoryId("size", 10)]: changed } });
+        else if (target === "variant") Object.assign(variant, { total: changed });
+        else if (target === "productSize") Object.assign(product, { sizeTotals: { ...product.sizeTotals, [inventoryId("size", 10)]: changed } });
+        else Object.assign(product, { total: changed });
+        return snapshot;
+      } });
+      await assert.rejects(s.readInventory(inventoryActor, inventoryParameters(), signal()), hasCode("INVALID_INVENTORY_RESPONSE"), `${target}:${mutation}`);
+    }
+  }
+});

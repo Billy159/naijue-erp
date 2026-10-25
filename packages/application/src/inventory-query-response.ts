@@ -5,7 +5,6 @@ import { equalTotal, exactInteger, idValue, numberValue, record, rejectInventory
 import type { EntityKind } from "../../domain/src/values.ts";
 import { INVENTORY_MATRIX_CHUNK_MAX_UNITS, INVENTORY_PRODUCT_MAX_SIZES, INVENTORY_PRODUCT_MAX_VARIANTS } from "./inventory-query-contracts.ts";
 
-const ZERO: InventoryStockTotal = Object.freeze({ knownQuantity: "0", unknownCells: 0, completeness: "complete" });
 function list(value: unknown, max: number): unknown[] { if (!Array.isArray(value) || value.length > max) reject(); return value; }
 function selection(kind: EntityKind, value: unknown): InventorySelection {
   const row = record(value, ["id", "label"], [], reject);
@@ -16,9 +15,19 @@ function selectionList(kind: EntityKind, value: unknown): readonly InventorySele
   if (new Set(result.map(item => item.id)).size !== result.length) reject();
   return Object.freeze(result);
 }
-function totalsBySize(value: unknown, sizes: readonly InventorySelection[]): Readonly<Record<string, InventoryStockTotal>> {
-  const row = record(value, sizes.map(size => size.id), [], reject);
-  return Object.freeze(Object.fromEntries(sizes.map(size => [size.id, stockTotal(row[size.id])])));
+function sizeRecord(value: unknown, sizeIds: readonly string[], sizeIdSet: ReadonlySet<string>): Record<string, unknown> {
+  if (!value || typeof value !== "object" || Array.isArray(value) || Object.getPrototypeOf(value) !== Object.prototype) reject();
+  const row = value as Record<string, unknown>;
+  if (!sizeIds.every(id => Object.hasOwn(row, id)) || Object.keys(row).some(id => !sizeIdSet.has(id))) reject();
+  return row;
+}
+function totalsBySize(value: unknown, sizeIds: readonly string[], sizeIdSet: ReadonlySet<string>): Readonly<Record<string, InventoryStockTotal>> {
+  const row = sizeRecord(value, sizeIds, sizeIdSet);
+  return Object.freeze(Object.fromEntries(sizeIds.map(id => [id, stockTotal(row[id])])));
+}
+function checkedTotal(total: InventoryStockTotal, sum: bigint): InventoryStockTotal {
+  equalTotal(total, Object.freeze({ knownQuantity: sum.toString(), unknownCells: 0, completeness: "complete" }));
+  return total;
 }
 function cell(value: unknown): InventoryStockCell {
   const state = record(value, ["state"], ["skuId", "quantity"], reject).state;
@@ -30,10 +39,6 @@ function cell(value: unknown): InventoryStockCell {
   if (state !== "not-applicable") reject();
   record(value, ["state"], [], reject);
   return Object.freeze({ state });
-}
-function cellTotal(value: InventoryStockCell): InventoryStockTotal {
-  if (value.state === "not-applicable") return ZERO;
-  return { knownQuantity: value.quantity, unknownCells: 0, completeness: "complete" };
 }
 interface MatrixBudget { units: number; readonly skuCoordinates: Map<string, string> }
 function spend(budget: MatrixBudget, units: number): void {
@@ -50,6 +55,8 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
   // is not a proven zero-stock product and cannot satisfy the web read contract.
   if (sizes.length === 0) reject();
   spend(budget, sizes.length);
+  const sizeIds = sizes.map(size => size.id), sizeIdSet = new Set(sizeIds);
+  const productSizeSums = sizeIds.map(() => 0n); let productSum = 0n;
   const variants = new Set<string>();
   const colorFits = list(row.colorFits, INVENTORY_PRODUCT_MAX_VARIANTS).map(item => {
     spend(budget, 1);
@@ -62,14 +69,16 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
     if (warehouses.length !== scope.warehouses.length) reject();
     // Same coordinate must be either a nonexistent SKU in every warehouse, or the identical actual SKU.
     const coordinates = new Map<string, string>();
+    const variantSizeSums = sizeIds.map(() => 0n); let variantSum = 0n;
     const rows = warehouses.map((item, index): InventoryQueryRow => {
       const row = record(item, ["warehouse", "cells", "total"], [], reject);
       const warehouse = selection("warehouse", row.warehouse); const authorized = scope.warehouses[index];
       if (!authorized || warehouse.id !== authorized.id || warehouse.label !== authorized.label) reject();
-      const rawCells = record(row.cells, sizes.map(size => size.id), [], reject);
+      const rawCells = sizeRecord(row.cells, sizeIds, sizeIdSet);
       spend(budget, 1 + sizes.length);
-      const cells: Record<string, InventoryStockCell> = {};
-      for (const size of sizes) {
+      const cells: Record<string, InventoryStockCell> = {}; let rowSum = 0n;
+      for (let sizeIndex = 0; sizeIndex < sizes.length; sizeIndex++) {
+        const size = sizes[sizeIndex]!;
         const value = cell(rawCells[size.id]); const identity = value.state === "not-applicable" ? "absent" : value.skuId;
         const coordinate = `${variant}:${size.id}`;
         if (coordinates.has(size.id) && coordinates.get(size.id) !== identity) reject();
@@ -78,20 +87,24 @@ function product(value: unknown, scope: InventoryReadScope, query: InventoryQuer
           const previous = budget.skuCoordinates.get(value.skuId);
           if (previous !== undefined && previous !== coordinate) reject();
           budget.skuCoordinates.set(value.skuId, coordinate);
+          const exact = BigInt(value.quantity); rowSum += exact; variantSizeSums[sizeIndex] = variantSizeSums[sizeIndex]! + exact;
         }
         cells[size.id] = value;
       }
-      const total = stockTotal(row.total); equalTotal(total, sumTotals(Object.values(cells).map(cellTotal)));
+      const total = checkedTotal(stockTotal(row.total), rowSum); variantSum += rowSum;
       return Object.freeze({ warehouse, cells: Object.freeze(cells), total });
     });
-    const sizeTotals = totalsBySize(group.sizeTotals, sizes);
-    for (const size of sizes) equalTotal(sizeTotals[size.id]!, sumTotals(rows.map(row => cellTotal(row.cells[size.id]!))));
-    const total = stockTotal(group.total); equalTotal(total, sumTotals(rows.map(row => row.total)));
+    const sizeTotals = totalsBySize(group.sizeTotals, sizeIds, sizeIdSet);
+    for (const [index, sizeId] of sizeIds.entries()) {
+      checkedTotal(sizeTotals[sizeId]!, variantSizeSums[index]!);
+      productSizeSums[index] = productSizeSums[index]! + variantSizeSums[index]!;
+    }
+    const total = checkedTotal(stockTotal(group.total), variantSum); productSum += variantSum;
     return Object.freeze({ color, fit, rows: Object.freeze(rows), sizeTotals, total }) satisfies InventoryQueryColorFit;
   });
-  const sizeTotals = totalsBySize(row.sizeTotals, sizes);
-  for (const size of sizes) equalTotal(sizeTotals[size.id]!, sumTotals(colorFits.map(group => group.sizeTotals[size.id]!)));
-  const total = stockTotal(row.total); equalTotal(total, sumTotals(colorFits.map(group => group.total)));
+  const sizeTotals = totalsBySize(row.sizeTotals, sizeIds, sizeIdSet);
+  for (const [index, sizeId] of sizeIds.entries()) checkedTotal(sizeTotals[sizeId]!, productSizeSums[index]!);
+  const total = checkedTotal(stockTotal(row.total), productSum);
   return Object.freeze({ id, code: textValue(row.code, reject), name: textValue(row.name, reject),
     categoryLabel: textValue(row.categoryLabel, reject, true), supplierLabel: textValue(row.supplierLabel, reject, true),
     seasonLabel: textValue(row.seasonLabel, reject, true), sizeGroup: selection("sizeGroup", row.sizeGroup), sizes,
