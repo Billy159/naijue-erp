@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE543",
+    "round": "SOURCE544",
     "goal": "HUMAN_AUTHORIZED_CHAT_EXECUTION_RESUMED_FULL_SCOPE_CARD_RESUME_UNVERIFIED",
-    "sourceHeadBeforeThisContinuityCommit": "3a8a10f0dccdce22e1fd4441de0258b39f57a8a9",
+    "sourceHeadBeforeThisContinuityCommit": "8140fe958ef71e768c905e12cad844bc26059744",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12311,7 +12311,27 @@
       "formalRootChanged": false,
       "rebuildRequired": false,
       "availability": "Record actual guard refusal interval if any; do not claim zero impact.",
-      "rollback": "APP58 route rollback only when catalog compatible; otherwise revoke just previously absent INSERT27 and verify old canonical/readReady. Preserve committed data."
+      "rollback": "After a mismatched verify the old issuer may be permanently revoked in process. REVOKE27 plus route58 alone is insufficient. Restore a fresh issuer using original controlled old config successor or only target58 restart and prove current readReady; preserve other services/committed data.",
+      "plannedJobs": {
+        "grant": "t45-r1-sales-header27-stage-acl-20261026-73",
+        "app": "t45-source519-core-post-r1-acl-private-app-20261026-74",
+        "route": "t45-core10-post-r1-acl-candidate-route-20261026-75"
+      }
+    },
+    "salesClosure544": {
+      "owner": "D3",
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "status": "IMPLEMENTING_ORIGINAL_SALES_CLOSURE_RANGE_COMPOSITION",
+      "current": "Sales header source/typed sorted range producer plus HEADERS sales/transfer composition; reuse original codec/doc9/all11 builder. No real largefile scan.",
+      "next": "Original QB delta-only source review, integrate T45 actual stage retained index, then original full closure execution.",
+      "stageOwner": "T45",
+      "indexVersion": "RETAINED_SALES_HEADER_CLOSURE_INDEX_V1",
+      "index": "Root partition pins once; per-row original prepared byte ranges, IDs, fingerprint, original source/typed codec hashes, document4. Commit journal separate.",
+      "decision": "Use one D3/T45 offset schema. Earlier suggestion of two projection JSONL files withdrawn; no competing copies.",
+      "cost": "Later closure may cumulatively read ~921MB prepared ranges; this is not zero-read, but does not reprepare original source/32 approvals/gzip.",
+      "warehouseClaims": "actual71 53 and unclaimed0 supersede old22+31 pending inference",
+      "remaining": "True all11 authority, original MAIN nonzero ledger items/count, global source/typed/doc roots and actual stage/MAIN/PUBLISH remain unproved."
     }
   }
 }

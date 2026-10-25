@@ -1,3 +1,6 @@
+SOURCE544（2026-10-26）：原 T45 已准备73权限、74同CORE10私有配置后继、75原候选三路径切换载体；尚未收到实际执行成功回执。回退新增准确限制：旧issuer遇catalog失配会在进程内revoked，仅REVOKE27＋route58不足以证明恢复，须原受控旧配置新后继或仅目标58重启生成新issuer，并实际读回；不动其他服务/已提交数据。
+原 D3 已实际接续下一独立包：销售头闭包范围生产者及销售/调拨HEADERS组合，实现中，原QB仅验新增。T45单次stage消费保留统一RETAINED_SALES_HEADER_CLOSURE_INDEX_V1；以原prepared字节范围、身份、fingerprint、原codec投影hash及document4为准，实际commitjournal独立。中途两projection JSONL建议已撤回，只有一套接缝。后续闭包可能累计读取约921MB prepared范围，准确记成本，不再重来源准备/32裁决/gzip。actual71仓claim53/unclaimed0已解除旧22+31缺口；真实all11授权、MAIN非零ledger事实、全局roots和实际发布仍未完成。不新增全站PASS，不重复已验范围。
+
 SOURCE543（2026-10-26）：已采用 QB328 对真实 R1 销货头精确27列 INSERT 的定向前审 PASS（df60e7d1…），尚非实际授权或导入通过。T45 actual72 逐身份只读确认两条已批准历史客户的 customer/source/header-reference/native-evidence 均缺失，耗时1.1696s，0写入/0大文件读取；沿原专用来源及原 party stage 入口补齐，不能以261总数推断或直接补引用。
 本批必须联动：27列 GRANT 会改变 R1 fullcatalog，使现 APP58 的 CURRENT_FORM_READ 旧审核失效。原 T45 先备妥精确审核部署路径及同 CORE10 后继配置；实施权限后，由原 QB 仅核 ACL 差异并重签 IMPORT_STAGE＋CURRENT_FORM_READ，T45 以同构建新私有配置/APP切原候选三路径。不开新flag、不重构建、不动正式根；若间隔拒读如实记录，候选读取恢复不等待921MB暂存完成。旧 APP58 回切须当前catalog兼容，否则只精确撤回本次新增27权限并核旧指纹/可读；不删除或重导已提交数据。全量销售暂存、MAIN/PUBLISH、历史编辑及全站业务仍未完成，整页全部状态＋真实业务0/37、弹层0/67维持。
 
