@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T04:17:36.037137+00:00",
-    "sourceRound": 397,
-    "sourceCheckpoint": "SOURCE397_QB291_V18_SOURCE_ACCEPTED_QA_PRECONDITIONS_PENDING_D3_ACTIVE",
+    "atUtc": "2026-10-25T04:20:03.009469+00:00",
+    "sourceRound": 398,
+    "sourceCheckpoint": "SOURCE398_SHARED_STYLES_ACTUAL_PASS_SCROLL_P2_DIRECTED_ORIGINAL_F2",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8579,7 +8579,7 @@
     },
     "currentPackets": {
       "F2": {
-        "current": "Product detail source/test ready; C integration, output next pending cross-owner grouping boundary",
+        "current": "Solmedium QF2-S394-SCROLL-01 per-tab base/spec scroll restoration same detail/test leaves",
         "next": "Inventory streaming intermediate-memory, then v17 normal HTTP seam",
         "uiDelivery": "I01-FILTER-WIDTH-LABELS-USER-20261025-01 source complete; fixed build and QF2 pending"
       },
@@ -8600,7 +8600,7 @@
         "next": "Original writer/prepare minimal SYN fixture prerequisite seam if needed"
       },
       "QF2": {
-        "current": "Solmedium fixed394 shared-sheet identity/cascade + productbase/spec affectedDOM",
+        "current": "SOURCE394 limited actual sharedstyle/DOM accepted; browser released; only scroll failure retest after fixed newcandidate",
         "next": "New product DOM candidate technical stage after visual"
       }
     },
@@ -8644,8 +8644,9 @@
     "sharedStyleReuse": {
       "owner": "C",
       "status": "SOURCE_AND_EXISTING_SYNTHETIC_TEST_PASS",
-      "actualBrowser": "NOT_MEASURED",
-      "scope": "SourceControl shared per-document Arco+local sheet original order; geometry/query untouched"
+      "actualBrowser": "QF2 source394 shared8sheetidentity/order/consumer actualPASS; heap/listeners/CPU notmeasured",
+      "scope": "SourceControl shared per-document Arco+local sheet original order; geometry/query untouched",
+      "productDOM": "ActiveDOM actualPASS; shortviewport per-tab scroll open QF2-S394-SCROLL-01"
     },
     "party224": {
       "status": "ACTUAL_FULL357_STAGE_AND_READBACK_QB290_PASS_ADOPTED",
