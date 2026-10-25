@@ -11,7 +11,7 @@ import { filterCss, singleCss } from '../inventory/source-control-css.ts';
 import { ALL_FILTER_VALUE } from '../inventory/filter-selection.ts';
 
 export const settingsSingleCss=singleCss+'\n.runtime-settings-directory{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 4px;font-size:12px}';
-const inventoryReferenceCss=filterCss+'\n'+singleCss+'\n.inventory-reference-select .arco-select-view .ui-single-tag{background:var(--ca-surface)!important;color:var(--ca-ink)!important}\n.inventory-reference-select .arco-select-view input{min-width:32px}';
+const inventoryReferenceCss=filterCss+'\n'+singleCss+'\n:host(.inventory-reference-select) .arco-select-view .ui-single-tag{box-sizing:border-box;display:inline-flex;align-items:center;max-width:100%;height:23px;padding:1px 7px;background:#fff!important;color:var(--ca-ink)!important}\n:host(.inventory-reference-select) .arco-select-view input{min-width:32px}\n:host(.inventory-reference-select) .arco-select-view .arco-icon-hover{color:var(--ca-ink-2)}';
 const ControlledSelect = Select as ComponentType<Omit<ComponentProps<typeof Select>, 'value'> & { value: string | undefined }>;
 type SmallSelectProps = { inventoryReference?: boolean; value: string; items: readonly { value: string; label: string; disabled?: boolean }[]; label: string; placeholder?: string; search?: boolean; clear?: boolean; disabled?: boolean; loading?: boolean; remote?: boolean; onChange: (value: string) => void; onOpen?: () => void; onClose?: () => void; onSearch?: (value: string) => void; footer?: ReactNode };
 export function SmallSelect(props:SmallSelectProps) {
