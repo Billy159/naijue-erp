@@ -1,3 +1,9 @@
+SOURCE481 — ACTUAL26 REMOVES SPECULATIVE COOKIE COLLISION BLOCK; SERIAL CHROME HANDOFF NEXT
+
+OriginalT45 readonly26 COMPLETEDexit0/0.718927s actualold/newruntime code+canonicalingress/14portconfig: oldderived __Host-naijue_<env>_<bindingSHA12> differs newfixed __Host-naijue_session,both exactownparse/set/clear,onlyCORE02newname published oncurrentcanonicalingress. SamePath=/ alone doesnotcauseoldsessionoverwrite; mandatoryfreshcontext-only blocker removed. This is exactcode/routeproof,notoldsessionvalidity/authenticationPASS orglobalInternet scan. No browserstate/cookies/token/env/key reads/DB/configwrites. Existingreceipt SESSION-NAME-POLICY26-ACTUAL-READONLY-RESULT.json boundinTASKS.
+
+Userapprovedsharedbrowser serial applies: originalQF completescurrentminimumDemo468pairedscreens thenhandsChromelease;QF2 waitslease,thenactualCORE02login/readonlyqueries. No concurrentChromeinput, no auth/cookie/Pathchange orsessiontransfer, no moreDemo-loginrequests. QFactualcorrectprofile狄兰 Demo#sales/new nowaccessible and paymentrow structureobserved;remainingpairedgeometry onlyaffectedscoped,notfulloldchecks. Newbackendcandidateauth ifneeded isseparatefromDemo. OriginalQBnew425runnerreviewactive/T45sameQA carrierprepare;actualrun notyet. Full37/67/allstatebusiness/history/performance/formalreleasegoal ACTIVE; GitHub4805572ddf remoteverified.
+
 SOURCE480 — ACTUAL LOGGED-IN DEMO LOCATED; SOURCE425 READ QA CALLER DELIVERED
 
 User-authorized taskbookChat andC freshnativeCUA both confirm Chrome“狄兰” current8877/#settings/staff complete员工与账号/演示管理员·管理员/99rows. Previousextension“您的Chrome数据”/2017876748loginform is anotherprofile; prior “Demo unavailable” conclusion corrected. No input/refresh/sessionstorage access. OriginalQF468purevisual continuation actualLuna/max nativeChromeexclusive nowactive;QF2noChrome. ExistingSITE register actualcontext corrected, no newwholepagePASS.
