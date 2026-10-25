@@ -1,3 +1,13 @@
+SOURCE424 HUMAN MAX10 INDEPENDENT CHATS / ACTUAL PARALLEL CONTINUATION
+
+Direct human verified 重构任务书01a16189 user01a171e6-d0e9-7d43-82f3-d4f87c76b81b: 项目最多10个独立Chat并发包含C/T45/开发/验收。Earlierclaim4slotsfull incorrectly applied collaboration childagent limit to independent chats, withdrawn. Actual toolcapacityerrors, ifany,must be reported notimagined; collaboration tools own4slot restriction remains. No mirrorteam/newchats, existingrolesonly. RemoteDB/deploywriter remainssoleT45serial,10chatsnot10databasewriters.
+
+Actual dispatch with explicitSol6.1-medium: F1 originalDOC185 normaldocument create/save/read/edit/status/unknown consumerclosure; F2 normalproductnew/edit6tabs V2/v17/authoritative reload, onlySTAGEDreadproof/hostactivation relatedwait; F3 existingordinaryStaff/Party/Payment normalwritableconsumer notduplicateworkspace, passwordtagonlybranchwait; F4 currentcatalogueHTTP/currentrole/unknownstablekey commonready-pages solewriter; D1 originalbaseProducthost optin/media separation originalguardpreserved, D2 originalproductstore STAGEDvisibilityproof/precisefix ownsleaf, D3 retained14279historyHeader completeorderedconsumer/readback exactoriginalsource no newcapture/no unauthorizedhistorybatch. Allsourceownersboundariesoriginal; commonready-pages F4exclusive, config/build/GitCexclusive, serverT45only.
+
+T45 stockjob t45-r1-v18-stock38303-stage-20261025-01 preparedNOTUPLOADED/NOTSUBMITTED. OriginalQB assignedonlynewcarrier/grant/transport/currentactualSKU/fresh-target/batch-recovery/readbackdelta finite review, oldsource395graph/fourQA/C232adopted. T45syntaxwaslocalNode25only, remoteactualNode24 stillverify_node at execution, notpretendactualinstallrun. C232actual14999/15121remainscomplete stageonly. Current10projectroles C/T45/F1/F2/F3/F4/D1/D2/D3/QB dispatched; QF/QF2idle unlessconcretefrontendcandidate readyandcapacityfree. No default interruptedQF410restart/no userChrome drafttouch.
+
+GitHubSOURCE423bed0d4887cc4504865947185349401c58f66b6e6 remoteverified. Whole37/67unchanged, currentUI57908syntheticonly/limitedTagPASS, realwholebusiness0/37/no formalnewrelease. Thismax10policy supersedes prior4slotindependentChatstatements below; historicalevidence preserved.
+
 SOURCE423 STAFF QB300 ADOPTED / NEXT PRODUCT CONSUMER DEPENDENCY DISPATCHED
 
 OriginalQB300 SOURCE420 STAFF limitednew3+original10 PASS adopted, noPG/realcredentialclaim. Result K/reports/qa-backend/rapid-launch-20261022/QB/slice300-staff-host-source420/RESULT.json2237/c04e4c4970285932c85886cf2c4e3dfe32e66edb032f3c03db727318a5ac74a4. Stable privateCredentialRequestTag remainsmissingforpassword/accountbranchonly. T45receivedoriginalreceipt.

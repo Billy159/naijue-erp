@@ -44,9 +44,16 @@
     "backendDevelopers": 3,
     "independentReviewers": 3,
     "heavyResourceWindows": "coordinated by C; source development continues concurrently",
-    "actualToolCapacity": "queue same-role tasks when platform capacity is lower; no model downgrade or shared-file double write",
+    "actualToolCapacity": "Independent project Chat limit10 per human01a171e6; collaboration childagent tool4 restriction is separate, not an independentChat gate; real toolerrors reportexactly",
     "frontendReviewers": 2,
-    "backendReviewers": 1
+    "backendReviewers": 1,
+    "maxActiveIndependentChats": 10,
+    "includes": [
+      "C",
+      "T45",
+      "development",
+      "acceptance"
+    ]
   },
   "roles": {
     "C": {
@@ -87,7 +94,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original183rolelabel delivered andcompiled380; no newduplicate task, fullstatesbusiness stillpendingactualintegration",
+      "currentWork": "DOC185 normal document full business/state consumer closure originalownedleaves",
       "currentPackage": "公共壳/会话/正常路由＋销货完整开单接线",
       "nextReadyPackage": "混合退换/保存查看编辑全状态，随后调拨全状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -145,7 +152,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "SOURCE3804observations closed actualnative/sourceproof,5leafzerochange/browserreturned; no speculative layout patch",
+      "currentWork": "Normal products new/edit6tabs V2/v17/readback consumer; only precise STAGED proof/host activation wait",
       "currentPackage": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
       "nextReadyPackage": "P01-P13商品六页签及全部编辑查看状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -205,7 +212,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Accepted phase1 source343. Technical implementation first exact package, unique allocated module leaves; no source copy repeat",
+      "currentWork": "Normal ordinary Staff/Parties/Payment existing workspace writable consumer closure; password tag only relatedwait",
       "currentPackage": "B01/B02厅仓整页正式读取/维护接线",
       "nextReadyPackage": "客供拆分/员工账号/收款资金，新增B07/B08按已批",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -261,7 +268,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original STAFF maintenance host and normal native readback; existing credentials provider seam, no invented stable secret",
+      "currentWork": "Original base PRODUCT host optin and original media-stage coupling separation; D2 guard proof dependency preserved",
       "currentPackage": "SKU14999-ACTUAL-PREP-v1",
       "nextReadyPackage": "Original PRODUCT maintenance host separated from image capability where existing contract permits",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
@@ -308,7 +315,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Originalstock v3 exact references/draft delivered to T45 via C; no server/source scan",
+      "currentWork": "Existing retained history14279 header fullorderedconsumer/readback original source no recapture",
       "currentPackage": "279+280 reader/host limitedsource218 adopted;283 HTTPpoststatF01 fixexact2 frozen",
       "nextReadyPackage": "Necessary exact owned history consumers afterC filehandoff",
       "currentDependencies": "Original v5 null-hall approval for mandatory two real historical sales; no season guard widening required",
@@ -356,7 +363,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "SOURCE420 STAFF limitedPASS delivered; next T45stocknewcarrier only when prepared",
+      "currentWork": "New T45 stock carrier/grant/transport/actualSKU/readbackdelta finite review",
       "currentPackage": "232newR1installedv14catalog/ACLreview only",
       "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Next actual source/native execution only after genuine approved inputs; no repeated metadata/source review",
@@ -9185,5 +9192,24 @@
     "F1wait": "DOC185source410delivered; actualhost/remainingQF410 notclosed",
     "actualSKU": "14999/15121 fullreadback0 source422",
     "remoteVerified": "6c67a3875617ac7b491d256c05bacff223b0d732"
+  },
+  "currentContinuation424": {
+    "authority": "human01a171e6-d0e9-7d43-82f3-d4f87c76b81b verified read_thread",
+    "dispatched": [
+      "C",
+      "T45",
+      "F1",
+      "F2",
+      "F3",
+      "F4",
+      "D1",
+      "D2",
+      "D3",
+      "QB"
+    ],
+    "stockJob": "t45-r1-v18-stock38303-stage-20261025-01 preparedonlyQBfiniteinprogress",
+    "QF": "interrupted410evidencepreserved notautoRestart",
+    "serverWriter": "T45only",
+    "sharedReadyPagesWriter": "F4only"
   }
 }
