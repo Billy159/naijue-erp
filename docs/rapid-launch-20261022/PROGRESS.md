@@ -1,3 +1,11 @@
+SOURCE487 — CORE04 CANDIDATE PREFIX ACTUALLY UPDATED; GUEST UI ACCEPTANCE CONTINUES
+
+原31失败保留；32已实际证实4a20/CORE02/root原字节恢复。原QB33仅F01复验闭合，新13613/56586162准确载体经最终c5bacafc review后，33一次新执行COMPLETED0/1.220187s。实际ENTRY旧02 4263/75b9一次→新04 4338/9c05a3一次→module52136/fde53e；本次确有重载过渡，不能倒推31确定根因。候选三路径现在CORE04，同inode配置f2a96b3d14ff0048f0a7037d48eb9558a4f3e5aa8120131ba1d786d66243aa83/13787为新基线；15服务/root39330/05cf5384/原API保持。公网默认TLS三GET均200且精确新资源/guestnull，未读取凭据、未操作浏览器。旧4a20与02仅回退历史，不再当当前基线。
+
+正常候选URL https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/#settings/stores 固定source8a197a0/core04。QF2原任务立即独立IAB guest登录样式纯外观，实际派工Luna/max；不刷新Chrome用户表单、不登录。真实厅仓/ADMIN员工账号/分类及颜色版型读另需用户真实认证、Solmedium接续，不称业务或正式根已上线。D2正常维护HTTP小入口QB316源范围PASS已采用；真实CORE QA1034834宿主/PM review/原账号登录材料仍原T45准备，不能R1代QA或假会话。源码显示normalfactory对catalogueMaintenance确需PRODUCT_MAINTENANCE，现有C169只有服务证据不能代正常宿主。
+
+复制基线35页65弹层成果保留；当前37页67弹层全部适用状态整页验收仍0，真实库存/单据/历史修订、完整PUBLISH与必要性能仍未完成。当前仅候选可达/guest静态通过，不混算正式业务。GitHubdf57da2dd519807e7495067bb336d7959d149e9d已精确回读；本段接续继续保存。
+
 SOURCE486 — REPLACEMENT31 FAILED AND ROLLED BACK; PRECISE DIAGNOSIS ACTIVE
 
 OriginalQB314/J31 exactdelta sourcePASS adopted, original5finitecases/unchangedguard+rollback evidence reused. Actual31FAILED/exit2/1.220345s aftersameinodeCAS4a20/current15/parent30/backup23. Newconfigf2a96b3d write+readback andnginx-t/reload0 butexactcandidateHTTP mismatch; originalconditionalrollback restored4a20/reload0. Failed responsepath/status/hash notpersisted, cannotcallreloadrace rootcause. OriginalT45 nowreadonly response/currentrollback verification;31neverreplayed. CORE04 private29/30PASS remains, notpublic/auth/businessPASS. QF2no04publicchecks/noChromeinput; futureguestlayout independentIAB, trueauth separatelyhuman/lease.

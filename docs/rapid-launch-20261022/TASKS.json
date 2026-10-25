@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T14:55:11.602711+00:00",
+  "updatedAt": "2026-10-25T15:09:34.025818+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 486,
+    "round": 487,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "73a62c1ee0a6e320632ca77290fddc8438a5d021",
+    "sourceHeadBeforeThisContinuityCommit": "df57da2dd519807e7495067bb336d7959d149e9d",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -5036,7 +5036,7 @@
         "scope": "Same three groups plus actualCORE color/fit reads; buildpackPASS, not deployed"
       }
     },
-    "lastActualServerApp": "SOURCE459/CORE02 fea0a222 private application and scoped public candidate; original formal root unchanged",
+    "lastActualServerApp": "SOURCE483/CORE04 app46666e0f actualrunning and candidate-prefix public; original formal root unchanged",
     "transferHeaders": "09actual14279/143chunks COMMIT+readbackPASS source staging only",
     "transferLines": {
       "status": "ACTUAL_COMPLETED_SOURCE_STAGING_ONLY_NOT_MAIN_PUBLISH",
@@ -5060,7 +5060,7 @@
       "MAIN": false,
       "PUBLISH": false
     },
-    "opsBlockingCondition": "CORE04 29/30privatePASS;31publicreplacementFAILED and original conditionalrollback. OriginalT45 readonly diagnosis actualresponse/currentrestoredCORE02, no blindretry. CORE04 notpublicready/QF2no browser; maintenanceHTTPsource scopecontinues.",
+    "opsBlockingCondition": "CORE04 scopedpublic33 actualPASS/defaultTLS3GET. QF2 guestloginstyle nowindependentIAB authorizedLuna/max; authenticatedrealreads awaitoriginalhumanlogin and nativeChromelease. No fullbusiness/history/PUBLISH/perf/formalrootPASS.",
     "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
     "QF2": "CORE02 exact HTTPS opened in nativeChrome狄兰; guestlogin, user candidate login pending. Demo8877 confirmed logged in; never ask Demo login again based on another profile. Chrome lease C/user; no credential filling.",
     "QB": "OriginalQB J28 decision PARTIAL adopted; actual0351 disabled identity/code/version,401,prepost increment PASS. No repeat ops/source/save. Optional published/staged witnesses and nonowner/fullhost/session/HTTPS/browser remain open.",
@@ -5074,10 +5074,10 @@
       "D1": "Salesperson requiredness exactminimal proposal delivered originalD1, userconfirmationpending; no SQL/DDL needed, no save rule implemented. Source425 actual28 partial obtained separately.",
       "D2": "COLOR/FIT NORMAL-HOST entry delivered runner7b4d4016/inputa5d684d9, originalC1691034834actor/0327roots/101102keys; onlynormalfactory/session GETreceipt/replay/409/401/prepost, actualnotrun. QBnewsource-onlyscopeactive.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "31FAILED/no replay, diagnose exactresponse+rollback readback then justified successor. 29/30notrepeat; D2normalhostHTTP nextserialsession inputs, no fakeauth/SQL-createdsession, existingauthorizedQA normal login allowed.",
+      "T45": "33actualsuccess andpublicdefaultTLS3GET adopted; no repeat29/30/33. CurrentNginxf2a96/current15; original31failedunconfirmed/32rollback preserved. D2normalhost next originalQAconfig/purpose/login prerequisites preparation.",
       "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
-      "QF2": "04same-task prepdone;31failed so no04publicverification. Await accurate successoractualpublic; guestUI independentIAB, realauth afterhumanlogin/lease.",
-      "QB": "OriginalQB J28 decision PARTIAL adopted; actual0351 disabled identity/code/version,401,prepost increment PASS. No repeat ops/source/save. Optional published/staged witnesses and nonowner/fullhost/session/HTTPS/browser remain open."
+      "QF2": "ActualCORE04 fixed483 nowgueststyle visual independentIAB Luna/max requested; noChromeinputs/reload/login. Next realreadonlydata Solmedium onlyafterauth/lease; old02guesthistoricalnot04.",
+      "QB": "J33F01 finalPASS adopted/no fullrerun; D2slice316source-onlyPASS adopted, actualhost/session/PM notready."
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
     "route22Review": {
@@ -5152,8 +5152,8 @@
       "meaning": "Complete frozen frontend source/resource copy delivered. Full UI allstates and realbusiness acceptance separately incomplete; do not call copied baseline zero because backend unfinished."
     },
     "latestGitHubVerified": {
-      "commit": "73a62c1ee0a6e320632ca77290fddc8438a5d021",
-      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source485-20261025-01/RESULT.json"
+      "commit": "df57da2dd519807e7495067bb336d7959d149e9d",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source486-20261025-02/RESULT.json"
     },
     "backup23Actual": {
       "status": "COMPLETED",
@@ -5489,9 +5489,11 @@
       "packSeconds": 2.003,
       "same33NonFrontendAsCORE02": true,
       "actualInstall": true,
-      "publicSwitch": false,
+      "publicSwitch": true,
       "actualPrivateStart": true,
-      "actualAppId": "46666e0fb847223aa88b3691345ea13816f39ffbfe6a3df71cd6810128249286"
+      "actualAppId": "46666e0fb847223aa88b3691345ea13816f39ffbfe6a3df71cd6810128249286",
+      "publicScope": "Only exact candidate prefix, original formal root and old API unchanged",
+      "authenticatedBusiness": false
     },
     "salespersonRequiredProposal": {
       "status": "WAIT_USER_WRITE_CONTRACT_CONFIRMATION",
@@ -5549,7 +5551,93 @@
       "inputSha256": "a5d684d958c3dd1c7e30d1e34ee386b11b11c44c5e4dc08118c122cc1c7e65f8",
       "actualExecuted": false,
       "QA": "erp_qa_rapid26_core_20261024_01/OID1034834/nonowner",
-      "remaining": "Originalnormalfactory/privateconfig/review and realregisteredQAsession. ExistingauthorizedQA normal login privatelyallowed; no SQLfabricatedsession/account/reset/Chromecredentialread."
+      "remaining": "Originalnormalfactory/privateconfig/review and realregisteredQAsession. ExistingauthorizedQA normal login privatelyallowed; no SQLfabricatedsession/account/reset/Chromecredentialread.",
+      "independentSourceReport": "QB/slice316-colour-fit-normal-host-entry/RESULT.json2658/103ec3065bc24bfcd59962b109647b4bc0e8bee039896c90b05a8e2871cf886f"
+    },
+    "core04Route33Actual": {
+      "jobId": "t45-source483-core04-candidate-prefix-route-20261025-33",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "unit": "naijue-erp-op-5cc58239-963a1b3fdaab",
+      "elapsedSeconds": 1.2201866609975696,
+      "finishedAtUTC": "2026-10-25T15:04:19.662483+00:00",
+      "original31RootCause": "UNCONFIRMED_FAILED_RESPONSE_NOT_CAPTURED",
+      "new33Observation": "Observed exact oldCORE02 response then exact newCORE04 response after one reload, no write/reload retry",
+      "rollback": {
+        "originalConfigPrivateServerPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source483-core04-candidate-prefix-route-20261025-33/inputs/rollback-nginx.conf",
+        "previousCore02ConfigSha256": "4a20c011acc292fb59bc96d482c2784c4d1c6c5caf33b3882419edd03346683e",
+        "currentCore04ConfigSha256": "f2a96b3d14ff0048f0a7037d48eb9558a4f3e5aa8120131ba1d786d66243aa83",
+        "sameInode": 11674449,
+        "preservedCandidateApp": "naijue-rewrite-source459-20261025-21-app",
+        "rule": "Only original same mount/container/inode and current-new content CAS; restore old bytes in place, nginx-t/reload/readback; do not overwrite other changes."
+      },
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/CORE04-ROUTE33-ACTUAL-RESULT.json"
+    },
+    "core04ExternalActual": {
+      "jobId": "t45-source483-core04-candidate-prefix-route-20261025-33",
+      "status": "PASS_DEFAULT_TLS_CORE04_ENTRY_MODULE_GUEST_ONLY",
+      "sourceCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
+      "buildId": "replica-production-source483-core-04",
+      "checks": [
+        {
+          "path": "/__naijue_candidate/replica-private-01/",
+          "checkedAtUTC": "2026-10-25T15:04:57.261155+00:00",
+          "curlExitCode": 0,
+          "stderrBytes": 0,
+          "defaultTlsVerification": true,
+          "credentialsSupplied": false,
+          "httpStatus": 200,
+          "bytes": 4338,
+          "sha256": "9c05a3f44340f084fcda56a5e4fc24185796d704a5d07b778f00bbd2edb7087d",
+          "sslVerifyResult": 0,
+          "contentType": "text/html; charset=utf-8",
+          "seconds": 1.010641,
+          "matchedFixedFile": true,
+          "status": "PASS"
+        },
+        {
+          "path": "/assets/replica-production-source483-core-04/application.js",
+          "checkedAtUTC": "2026-10-25T15:04:58.283786+00:00",
+          "curlExitCode": 0,
+          "stderrBytes": 0,
+          "defaultTlsVerification": true,
+          "credentialsSupplied": false,
+          "httpStatus": 200,
+          "bytes": 52136,
+          "sha256": "fde53efb3769776e44661a731906cb37d673b0e75f7be8c1d4d00b284de83521",
+          "sslVerifyResult": 0,
+          "contentType": "text/javascript; charset=utf-8",
+          "seconds": 0.128084,
+          "matchedFixedFile": true,
+          "status": "PASS"
+        },
+        {
+          "path": "/__naijue_candidate/replica-private-01/api/auth/session",
+          "checkedAtUTC": "2026-10-25T15:04:58.431442+00:00",
+          "curlExitCode": 0,
+          "stderrBytes": 0,
+          "defaultTlsVerification": true,
+          "credentialsSupplied": false,
+          "httpStatus": 200,
+          "bytes": 18,
+          "sha256": "fe3a267e607861b682fb8583913e5d70e6f8d5718eec0cf3f536dfa85e595787",
+          "sslVerifyResult": 0,
+          "contentType": "application/json; charset=utf-8",
+          "seconds": 0.215179,
+          "guestPrincipalNull": true,
+          "status": "PASS"
+        }
+      ],
+      "browserAccessed": false,
+      "authenticatedBusinessPassed": false,
+      "businessAcceptance": false,
+      "checkedAtUTC": "2026-10-25T15:04:58.658056+00:00"
+    },
+    "currentNginx": {
+      "sha256": "f2a96b3d14ff0048f0a7037d48eb9558a4f3e5aa8120131ba1d786d66243aa83",
+      "bytes": 13787,
+      "inode": 11674449,
+      "previous4a20HistoricalOnly": true
     }
   },
   "latestReadySource": {
