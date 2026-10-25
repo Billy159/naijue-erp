@@ -73,7 +73,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Adopt actual39/40/41+TLS CORE05 route; QF2 affected dynamic consumers active; originalR1 PM tenbit execution queued",
+      "currentWork": "499 sharedhost permission-invalid recovery implemented/tested; trueCORE05 limited UI adopted; originalT45 direct-human handoff blocker recorded",
       "currentPackage": "Existing normal candidate integration and original isolated business execution",
       "nextReadyPackage": "Adopt actual private/start/helper HTTP; QF2 only affected dynamic consumers; integrate existing-owner next leaves",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
@@ -271,7 +271,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Exact compiled helper host fix integrated494; real salesperson QA increment preparing originalnormalfactory",
+      "currentWork": "CORE catalogue exactbound visibility source/proof review delivered no sourcechange; actual counter and approved published-read facts pending; SAVE finite caller ready bindings pending",
       "currentPackage": "SKU14999-ACTUAL-PREP-v1",
       "nextReadyPackage": "Release precise minimal isolated normalSAVE/oldNULL original-key recovery execution to originalT45",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
@@ -5020,7 +5020,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 498,
+    "round": 499,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
     "sourceHeadBeforeThisContinuityCommit": "6d0ec125b338786e73acb6d1d8de3a5330df202d",
     "fixedCandidates": {
@@ -5826,6 +5826,37 @@
       "qualification": "Data completeness/actual valid colors unproven; no wholepage/businessPASS",
       "browser": "DevTools closed/natural viewport restored, noedit; originalQF2 LunaMax active corrected candidate scoped recheck",
       "f4": "Finite production-mode success/error/403 source diagnosis retained; 403 clear-body gap reproduced only synthetic, not current public cause; no sourcechanges"
+    },
+    "forbiddenScopeRecovery499": {
+      "status": "SOURCE_CHANGED_TARGETED_SYNTHETIC_PASS_EXISTING_BROWSER_STRICT_PASS_NOT_BUILT_NOT_DEPLOYED",
+      "files": [
+        "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx",
+        "apps/web/demo-replica/frontend/runtime/common/runtime-host.test.mjs"
+      ],
+      "behavior": "Disposed current reader scope while still signed in shows explicit permission/scope-invalid notice and user-triggered session verification; no automatic requests or write replay; normal navigation/disposal/logout cannot overwrite current page",
+      "checks": "Actual normal host plus real catalogue/session HTTP consumer finite synthetic403->explicitverify->authorizedsuccess; oldroutecleanup/login/zero commands. Existing tsconfig.runtime.json tsc exit0. React19 legacy ref/unmount warnings retained. Initial ad-hoc NodeNext probe failed on existing browser imports; correct existing Bundler project passed.",
+      "next": "OriginalQF limited technical independent review; integrate next necessary complete candidate, no perCSS build"
+    },
+    "core05TrueBrowserResult": {
+      "owner": "QF2",
+      "version": "16d744e/core05 after actual reload bound",
+      "colorsFits": "Both actual tabs/search/table/disabledcreate visible; blankReturn query each0/noerror. Limited UI consumer restored, not data or wholepage PASS",
+      "categories": "Heading/search/one-levellabel observed; no confirmed list or explicit empty state; no writes. Needs data/scope clarification",
+      "wrongOldObservation": "OLD483_DOCUMENT_NOT_RELOADED retained; cannot claim494 failure",
+      "browserLease": "Returned C, no draft/edit"
+    },
+    "serverContinuationCurrent": {
+      "status": "T45_IDLE_CONNECTED_REQUESTS_DIRECT_HUMAN_CONTINUE_ONLY_READ_COUNTS",
+      "lastActualJob": "41 remains latest executed; no metadata/readzero/42 executed",
+      "source": "T45 actual response rev161: no platform rejection; latest human direct request only connection check; requires direct sentence to resume bounded readonly count",
+      "userQuestion": "Asked once human to send direct T45 sentence; not a request to reapprove database business changes",
+      "pendingWork": "Exact READ-ZERO SQL/currentop-batch-digest already prepared;0DML/0GRANT, no credentials; original42 permission change remains unexecuted coordinated successor only"
+    },
+    "coreReadZeroClarification": {
+      "status": "SOURCE_SCOPE_EXCLUSION_IDENTIFIED_ACTUAL_CURRENT_COUNTER_AND_APPROVED_VISIBILITY_NOT_YET_PROVEN",
+      "sourceOwner": "D1 exact postgres-read-api.ts and original import-stage-bootstrap-postgres-protocol.test.ts reserved, no source modification yet",
+      "qualification": "CORE module original contract intentionally excludes staged/source-only dictionary rows; SOURCE292 is settings-audit adapter, NOT publication proof. Must not union STAGED binding or call imported182/6 automatically published. Current target/batch/state/counters and exact valid read authorization required.",
+      "next": "T45 actual boundedcounter; if published/authorized bound sources excluded then D1 exact proof-based union; otherwise preserve staged exclusion and complete approved publication dependency"
     }
   },
   "latestReadySource": {

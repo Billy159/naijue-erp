@@ -105,7 +105,7 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
   leaveRoot.render(<SaleDialog variant="transfer" className="tc-confirm tc-danger" title="有未保存的修改" close={dismissLeave} footer={<><button type="button" className="btn" onClick={dismissLeave}>继续编辑</button><button type="button" className="btn primary" onClick={()=>{const decision=pendingLeave;if(!decision||current!==decision.owner||scope!==decision.scope||!scope?.active){dismissLeave();return;}if(pages.hasUnresolvedWrite()||!current.canDiscard?.()||!current.discard?.()){dismissLeave();toast('当前操作尚未结束，输入已保留。');return;}dismissLeave();void navigate(decision.next,decision.replace);}}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SaleDialog>);
  };
  const clearPage = () => { sourceNavigation?.abort(); sourceNavigation = null; dismissLeave();serial++; current?.dispose(); current = null; scope?.dispose(); scope = null; page.replaceChildren(); };
- const status = (message: string, retry?: () => void) => { page.replaceChildren(); const box = document.createElement('div'); box.className = 'iw-state'; box.setAttribute('role', retry ? 'alert' : 'status'); box.textContent = message; if (retry) { const button = document.createElement('button'); button.className = 'btn'; button.textContent = '重试加载资料'; button.onclick = retry; box.append(' ', button); } page.append(box); };
+ const status = (message: string, retry?: () => void, retryLabel = '重试加载资料') => { page.replaceChildren(); const box = document.createElement('div'); box.className = 'iw-state'; box.setAttribute('role', retry ? 'alert' : 'status'); box.textContent = message; if (retry) { const button = document.createElement('button'); button.className = 'btn'; button.textContent = retryLabel; button.onclick = retry; box.append(' ', button); } page.append(box); };
  async function navigate(next: string, replace = false): Promise<boolean> {
   if (disposed || !session.auth.getSnapshot().principal) return false;
   if (next === route && current && scope?.active) return true;
@@ -117,6 +117,15 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
   status('正在加载页面…');
   try {
    scope = session.reads.createScope('replica-route:' + next + ':' + request); const active = scope;
+   active.signal.addEventListener('abort', () => {
+    // A permission failure clears the reader scope while retaining the signed-in identity.
+    // Ordinary navigation/identity replacement already advances serial before disposal.
+    queueMicrotask(() => {
+     if (disposed || request !== serial || scope !== active || !session.auth.getSnapshot().principal) return;
+     current?.dispose(); current = null;
+     status('当前页面的访问权限或资料范围已失效，请重新核验。', () => { void session.auth.resolveSession(); }, '重新核验访问权限');
+    });
+   }, { once: true });
    await options.prepareRoute?.(next, active.signal);
    if (disposed || request !== serial || !active.active) return false;
    const mounted = await pages.mount(page, next, active);
