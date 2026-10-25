@@ -5289,5 +5289,15 @@
     "path": "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx",
     "scope": "Only SourceControl stylesheet construction and lifecycle; F2 source packet completed/idle, no concurrent writer. Candidate selection/query/geometry logic unchanged. Share Arco and local constructable sheets in original order where supported, preserve existing style element path for current non-constructable DOM environment.",
     "next": "Affected actual visual consumers and shared-sheet browser count, not whole-site regression"
+  },
+  "inventoryAssemblyCpu397": {
+    "atUtc": "2026-10-25T04:16:24.699427+00:00",
+    "writer": "D3",
+    "files": [
+      "adapters/postgres/src/inventory-query-reader.ts",
+      "tests/inventory-query-postgres-protocol.test.ts"
+    ],
+    "scope": "Only exact matrix assembly same-loop BigInt aggregates; no SQL/permissions/DTO/group/pagination/limits change. Previous protocol file clean; unrelated product-query test WIP protected.",
+    "next": "Application response validator separate exact registration after first delivery, not concurrent shared edits"
   }
 }
