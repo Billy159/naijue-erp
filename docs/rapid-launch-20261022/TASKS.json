@@ -261,7 +261,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Originalproductv2actual217adopted; SKUv1consumerinrunning218; nextstockconsumerafterD3exactsourcehandoffifnotalreadydone",
+      "currentWork": "ACTIVE original STOCK38303-ACTUAL-PREP-v1 finite originalstore consumer/SQL preparation, ownreports only/noDB/no sourcechange",
       "currentPackage": "SKU14999-ACTUAL-PREP-v1",
       "nextReadyPackage": "Actual product/SKU execution support onlynew blockers; no duplicate sourceaudits",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
@@ -308,7 +308,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Originalstock38303 source/bindings next; reuseexistingprepared38303/38314 origins no166MBrecapture",
+      "currentWork": "ACTIVE original next representedwarehouse+samebatch/importedrecord dependencies and originalCUSTOMER/HALL/WAREHOUSE producer seam, no capture/DB",
       "currentPackage": "279+280 reader/host limitedsource218 adopted;283 HTTPpoststatF01 fixexact2 frozen",
       "nextReadyPackage": "Necessary exact owned history consumers afterC filehandoff",
       "currentDependencies": "Original v5 null-hall approval for mandatory two real historical sales; no season guard widening required",
@@ -1327,9 +1327,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T01:54:46.282434+00:00",
+  "updatedAt": "2026-10-25T01:58:04.528882+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "4119d9a10dbb4734f569151e3fea594004b2ac8c",
+  "lastVerifiedRemoteCommit": "57661c23e0e6cde37e0d0ff14ef253b34fcd22d5",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2678,6 +2678,18 @@
       "journal": "original218/results/sku-progress.jsonl privateboundedmetadata",
       "next": "Collect same218 no replay; actualfiniteQB onlyafterterminal; preserveunknownprefix",
       "published": false
+    },
+    "stock38303Next": {
+      "source": "EXISTING_COMPLETE_PREPARED_AND_ALL_ORIGINAL_GROUP_AUTHORIZATION_REUSED",
+      "actualStagePassed": false,
+      "representedWarehouses": 29,
+      "coreWarehouses": 22,
+      "currentMissingKeys": "UNKNOWN_NOT_ACTUAL_QUERIED",
+      "sourceOnlyLowerBoundOutsideCore": 7,
+      "D1": "ACTIVE_FINITE_CONSUMER_PREPARATION",
+      "D3": "ACTIVE_ORIGINAL_PARTY_DEPENDENCY_SOURCE_PREPARATION",
+      "next": "SKU218actual+actualrequiredwarehouse/samebatchrecords beforestockstage",
+      "baselineOrMainOrPublished": false
     }
   },
   "supplementalRoles": {
@@ -4856,9 +4868,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T01:54:46.282434+00:00",
-    "sourceRound": 385,
-    "sourceCheckpoint": "SOURCE384 exactremote; QB285 actualproducts2956PASS; originalSKU218RUNNING_UNKNOWN_COMPLETION; stocksourceD3next",
+    "atUtc": "2026-10-25T01:58:04.528882+00:00",
+    "sourceRound": 386,
+    "sourceCheckpoint": "SOURCE385 exactremote;218RUNNING;D1stockconsumer and D3remainingpartydependencies active",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
