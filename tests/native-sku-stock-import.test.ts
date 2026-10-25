@@ -64,23 +64,23 @@ function skuInput26(): NativeSkuImportInput26 {
   input.references.color.nativeSnapshot.deleted_at = null; input.references.fit.nativeSnapshot.deleted_at = null;
   return { ...input, schemaProfile: 'EXACT26', validatorVersion: NATIVE_SKU_IMPORT_VERSION_26 };
 }
-function sku26Protocol(options: { schema?: number; replay?: boolean; partial?: boolean; badCreate?: boolean; commitUnknown?: boolean } = {}) {
-  const input = skuInput26(), calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = []; let connects = 0;
+function sku26Protocol(options: { schema?: number; replay?: boolean; partial?: boolean; badCreate?: boolean; commitUnknown?: boolean; input?: NativeSkuImportInput26 } = {}) {
+  const input = options.input ?? skuInput26(), calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = []; let connects = 0;
   const client = { async query(sql: string, values: unknown[] = []) {
     assertSqlBinds(sql, values); calls.push({ sql, values }); const answer = (rows: Record<string, unknown>[] = []) => ({ rows, rowCount: rows.length });
     if (sql === 'COMMIT') { if (options.commitUnknown) throw Error('SYNTHETIC unknown COMMIT26'); return answer(); }
     if (/^(BEGIN|ROLLBACK)/.test(sql) || sql.includes('native-sku:cutoff')) return answer();
     if (sql.includes('native-sku:schema')) return answer([{ installed_versions: Array.from({ length: options.schema ?? 26 }, (_, i) => i + 1) }]);
     if (sql.includes('native-sku:batch')) return answer([{ id: id(1), mapping_version: 'V2_HISTORY_NULLABLE_1', status: 'STAGED', source_hash: J, source_name: input.fixedSourceNamespace, already_published: false }]);
-    if (sql.includes('native-sku:target')) return answer(options.replay || options.partial ? [{ id: id(50), native_equal: true }] : []);
+    if (sql.includes('native-sku:target')) return answer(options.replay || options.partial ? [{ id: input.nativeSkuId, native_equal: true }] : []);
     if (sql.includes('native-sku:product')) { assert.match(sql, /'season_ids',p.season_ids/); assert.match(sql, /'deleted_at',p.deleted_at/); assert.match(sql, /'default_barcode_scheme_id',p.default_barcode_scheme_id/); assert.deepEqual(JSON.parse(values[3] as string), input.references.product.nativeSnapshot); return answer([{ id: id(20), size_group_id: id(24), native_equal: true }]); }
     if (sql.includes('native-sku:catalogue:')) return answer([{ binding_equal: true, native_equal: true }]);
     if (sql.includes('native-sku:group-member')) return answer([{ size_group_id: id(24), size_id: id(23) }]);
     if (sql.includes('native-sku:record-replay')) return answer(options.replay || options.partial ? [{ id: input.importRecord.id, import_batch_id: id(1), source_entity_type: 'SKU', source_key: input.canonicalSource.sourceKey,
-      source_record_hash: input.canonicalSource.rowSha256, source_file_ref: input.canonicalSource.fileRef, target_type: 'SKU', target_id: id(50), status: 'IMPORTED', decision_reason: input.importRecord.decisionReason, reviewed_equal: true }] : []);
+      source_record_hash: input.canonicalSource.rowSha256, source_file_ref: input.canonicalSource.fileRef, target_type: 'SKU', target_id: input.nativeSkuId, status: 'IMPORTED', decision_reason: input.importRecord.decisionReason, reviewed_equal: true }] : []);
     if (sql.includes('native-sku:source-replay') || sql.includes('native-sku:alias-replay')) { const sourceId = values[sql.includes('source-replay') ? 0 : 2]; return answer(options.replay || options.partial && sourceId === id(110) ? [{ equal: true }] : []); }
     if (sql.includes('native-sku:create')) { const columns = sql.match(/\(([^)]+)\)\s*VALUES/)![1]!.split(','), native = Object.fromEntries(columns.map((c, i) => [c, values[i]]));
-      assert.equal(columns.length, 9); assert.equal(native.created_operation_id, null); return answer([{ id: id(50), native_snapshot: options.badCreate ? { ...native, created_operation_id: id(999) } : native }]); }
+      assert.equal(columns.length, 9); assert.equal(native.created_operation_id, null); return answer([{ id: native.id, native_snapshot: options.badCreate ? { ...native, created_operation_id: id(999) } : native }]); }
     if (sql.includes('native-sku:source-create')) { const source = JSON.parse(values[0] as string); assert.equal(source.field_provenance.native_sku_import.schema_profile, 'EXACT26'); assert.equal(source.field_provenance.native_sku_import.native_sku.created_operation_id, null); return answer([{ id: source.id }]); }
     if (sql.includes('native-sku:alias-create')) return answer([{ source_row_id: values[3] }]);
     if (sql.includes('native-sku:record-create')) return answer([{ id: input.importRecord.id }]);
@@ -397,4 +397,114 @@ test('leaf26 exact schema preserves signed contributors and raw barcode immutabl
 });
 test('leaf26 unknown COMMIT discards original client without rollback, retry or extra source writes',async()=>{
   for(const kind of ['barcode','stock'] as const){const f=leaf26Protocol(kind,{commitUnknown:true}),store=kind==='barcode'?new PostgresNativeBarcodeImportStore26(f.pool,f.runtime):new PostgresNativeStockContributorStore26(f.pool,f.runtime),prepared=kind==='barcode'?prepareNativeBarcode(f.input as NativeBarcodeInput):prepareNativeStockGroup(f.input as NativeStockGroupInput);await assert.rejects(store.stage(prepared as never),/COMMIT unknown/);assert.equal(f.connects(),1);assert.equal(f.calls.filter(c=>c.sql==='COMMIT').length,1);assert.equal(f.calls.some(c=>c.sql==='ROLLBACK'),false);assert.ok(f.releaseErrors[0]);}
+});
+
+
+// v18 protocol tests run original writer SQL with synthetic original DTOs, no PostgreSQL.
+function v18Remap<T>(input: T, replacements: Record<string, string>): T {
+  return JSON.parse(JSON.stringify(input), (_key, value) => typeof value === 'string' && Object.hasOwn(replacements, value) ? replacements[value] : value) as T;
+}
+function v18SkuRows() {
+  const first = skuInput26(), second = v18Remap(first, {
+    [id(10)]:id(1010),[id(11)]:id(1011),[id(50)]:id(1050),[id(30)]:id(1030),
+    [id(110)]:id(1110),[id(111)]:id(1111),'110':'1110','111':'1111',
+    [id(21)]:id(121),'C1':'C2','COLOR-1':'COLOR-2'
+  });
+  return [prepareNativeSkuImport26(first), prepareNativeSkuImport26(second)];
+}
+function v18StockGroups() {
+  const first = stockInput(), second = v18Remap(first, {
+    'STOCK:synthetic':'STOCK:synthetic:second','STOCK:old:0':'STOCK:second:0','STOCK:old:1':'STOCK:second:1',
+    'WH-1':'WH-2',[id(40)]:id(41),[id(200)]:id(1200),[id(201)]:id(1201),'200':'1200','201':'1201'
+  });
+  return [prepareNativeStockGroup(first),prepareNativeStockGroup(second)];
+}
+function v18BatchProtocol(kind: 'sku'|'stock', options: { replay?: boolean; failSecond?: boolean; denyPrecommit?: boolean; commitUnknown?: boolean; linked?: boolean; failRollback?: boolean } = {}) {
+  const skuRows=v18SkuRows(), stockGroups=v18StockGroups();
+  const delegates=kind==='sku'?skuRows.map(input=>sku26Protocol({input,replay:options.replay}).client)
+    :stockGroups.map(()=>leaf26Protocol('stock',{replay:options.replay}).client);
+  const calls:Array<{sql:string;values:unknown[]}>=[],releases:Array<unknown>=[];let current=0,proofs=0,connects=0;
+  const answer=(rows:Record<string,unknown>[]=[])=>( {rows,rowCount:rows.length} );
+  const client={async query(sql:string,values:unknown[]=[]){
+    assertSqlBinds(sql,values);calls.push({sql,values});
+    if(sql.includes('native-sku:target'))current=values[0]===skuRows[0]!.nativeSku.id?0:1;
+    if(sql.includes('native-stock:warehouse'))current=values[2]===stockGroups[0]!.warehouse.nativeId?0:1;
+    if(sql==='COMMIT'&&options.commitUnknown)throw Error('V18_UNKNOWN_COMMIT');
+    if(sql==='ROLLBACK'&&options.failRollback)throw Error('V18_ROLLBACK_FAILED');
+    if(options.failSecond&&current===1&&(sql.includes('native-sku:product')||sql.includes('native-stock:warehouse')))return answer();
+    if(sql.includes('native-stock:batch-null-baselines'))return answer((values[1] as string[]).map(source_row_id=>({source_row_id,baseline_ledger_id:options.linked?id(999):null})));
+    return delegates[current]!.query(sql,values);
+  },release(reason?:unknown){releases.push(reason);}};
+  const runtime:NativeRuntime26Capability={profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(c,purpose){
+    assert.equal(c,client);assert.equal(purpose,'IMPORT_STAGE');proofs++;
+    if(proofs===3&&options.denyPrecommit)throw Object.assign(Error('V18_PRECOMMIT_DENIED'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  }};
+  // Simulates the existing issuer's automatic connect verification; the real PG issuer is tested by C.
+  const pool={async connect(){connects++;await runtime.assertReady(client,'IMPORT_STAGE');return client;}};
+  return {calls,releases,proofs:()=>proofs,connects:()=>connects,skuRows,stockGroups,
+    run:()=>kind==='sku'?new PostgresNativeSkuImportStore26(pool,runtime).stageBatch(skuRows)
+      :new PostgresNativeStockContributorStore26(pool,runtime).stageBatch(stockGroups),pool,runtime};
+}
+for(const kind of ['sku','stock'] as const){
+  test(`v18 ${kind} complete batch uses original per-item SQL and one COMMIT with precommit same-lease proof`,async()=>{
+    for(const replay of [false,true]){
+      const f=v18BatchProtocol(kind,{replay}),result=await f.run();
+      assert.equal(result.items.length,2);assert.equal(result.inserted,replay?0:4);assert.equal(result.replayed,replay?4:0);
+      assert.equal(f.connects(),1);assert.equal(f.proofs(),3);assert.deepEqual(f.releases,[undefined]);
+      assert.equal(f.calls.filter(c=>c.sql==='COMMIT').length,1);assert.equal(f.calls.filter(c=>c.sql.startsWith('BEGIN')).length,1);
+      assert.equal(f.calls.filter(c=>c.sql.includes(`native-${kind}:schema`)).length,2);
+      assert.equal(f.calls.filter(c=>c.sql.includes(`native-${kind}:batch */`)).length,2);
+      assert.ok(!f.calls.some(c=>/INSERT INTO naijue_erp\.(inventory_ledger|inventory_balance|operation_receipt)/.test(c.sql)));
+      if(kind==='stock')assert.equal(f.calls.filter(c=>c.sql.includes('batch-null-baselines')).length,1);
+    }
+  });
+  test(`v18 ${kind} later valid item with actual relation refusal rolls back the whole uncommitted batch`,async()=>{
+    const f=v18BatchProtocol(kind,{failSecond:true});await assert.rejects(f.run(),{code:kind==='sku'?'NATIVE_SKU_PRODUCT_BINDING':'NATIVE_STOCK_WAREHOUSE_BINDING'});
+    assert.ok(f.calls.some(c=>c.sql.includes(kind==='sku'?'native-sku:record-create':'native-stock:contributor-create')),'first complete item really reached original writes');
+    assert.equal(f.calls.filter(c=>c.sql==='ROLLBACK').length,1);assert.ok(!f.calls.some(c=>c.sql==='COMMIT'));
+    assert.deepEqual(f.releases,[undefined]);assert.equal(f.proofs(),2);
+  });
+  test(`v18 ${kind} precommit refusal rolls back, COMMIT unknown discards without rollback or retry`,async()=>{
+    const denied=v18BatchProtocol(kind,{denyPrecommit:true});await assert.rejects(denied.run(),{code:'NATIVE_RUNTIME26_NOT_READY'});
+    assert.equal(denied.proofs(),3);assert.equal(denied.calls.at(-1)!.sql,'ROLLBACK');assert.ok(!denied.calls.some(c=>c.sql==='COMMIT'));
+    const unknown=v18BatchProtocol(kind,{commitUnknown:true});await assert.rejects(unknown.run(),/V18_UNKNOWN_COMMIT/);
+    assert.equal(unknown.calls.filter(c=>c.sql==='COMMIT').length,1);assert.ok(!unknown.calls.some(c=>c.sql==='ROLLBACK'));
+    assert.ok(unknown.releases[0] instanceof Error);assert.equal(unknown.connects(),1);
+    const rollback=v18BatchProtocol(kind,{failSecond:true,failRollback:true});await assert.rejects(rollback.run(),AggregateError);assert.ok(rollback.releases[0] instanceof Error);
+  });
+  test(`v18 ${kind} empty oversized duplicate mixed-selection and changed DTO batches stop before connecting`,async()=>{
+    const f=v18BatchProtocol(kind),rows=kind==='sku'?f.skuRows:f.stockGroups;
+    const run=(items:unknown)=>kind==='sku'?new PostgresNativeSkuImportStore26(f.pool,f.runtime).stageBatch(items as typeof f.skuRows)
+      :new PostgresNativeStockContributorStore26(f.pool,f.runtime).stageBatch(items as typeof f.stockGroups);
+    await assert.rejects(run([]),{code:`NATIVE_${kind.toUpperCase()}_BATCH_BOUND`});
+    await assert.rejects(run(Array.from({length:101},()=>rows[0])),{code:`NATIVE_${kind.toUpperCase()}_BATCH_BOUND`});
+    await assert.rejects(run([rows[0],rows[0]]),{code:`NATIVE_${kind.toUpperCase()}_BATCH_DUPLICATE`});
+    const mixed=rows.map((row,index)=>index===1?{...structuredClone(row),fixedSourceNamespace:row.fixedSourceNamespace+':changed'}:structuredClone(row));
+    // Re-prepare each legal item to isolate cross-item scope, rather than testing a stale fingerprint.
+    const inputs=kind==='sku'?[skuInput26(),v18Remap(skuInput26(),{[id(10)]:id(1010),[id(11)]:id(1011),[id(50)]:id(1050),[id(30)]:id(1030),[id(110)]:id(1110),[id(111)]:id(1111),'110':'1110','111':'1111',[id(21)]:id(121),'C1':'C2','COLOR-1':'COLOR-2'})]
+      :[stockInput(),v18Remap(stockInput(),{'STOCK:synthetic':'STOCK:synthetic:second','STOCK:old:0':'STOCK:second:0','STOCK:old:1':'STOCK:second:1','WH-1':'WH-2',[id(40)]:id(41),[id(200)]:id(1200),[id(201)]:id(1201),'200':'1200','201':'1201'})];
+    inputs[1]={...inputs[1]!,fixedSourceNamespace:inputs[1]!.fixedSourceNamespace+':other'};
+    await assert.rejects(run(inputs.map(input=>kind==='sku'?prepareNativeSkuImport26(input as NativeSkuImportInput26):prepareNativeStockGroup(input as NativeStockGroupInput))),{code:`NATIVE_${kind.toUpperCase()}_BATCH_SCOPE`});
+    await assert.rejects(run(mixed));assert.equal(f.connects(),0);
+  });
+}
+test('v18 stock exact bounded member readback refuses any linked baseline before COMMIT',async()=>{
+  const f=v18BatchProtocol('stock',{linked:true});await assert.rejects(f.run(),{code:'NATIVE_STOCK_BATCH_NULL_BASELINE'});
+  assert.equal(f.calls.at(-1)!.sql,'ROLLBACK');assert.ok(!f.calls.some(c=>c.sql==='COMMIT'));
+});
+
+test('v18 stock preserves the original legal4MiB input plus prepared serialization margin and bounds the whole batch',async()=>{
+  const f=v18BatchProtocol('stock'),input=stockInput();
+  const provenance=input.contributors[0]!.source.fieldProvenance;provenance.fixture_padding='';
+  const base=Buffer.byteLength(JSON.stringify(input),'utf8');provenance.fixture_padding='X'.repeat(4*1024*1024-base);
+  assert.equal(Buffer.byteLength(JSON.stringify(input),'utf8'),4*1024*1024);
+  const group=prepareNativeStockGroup(input),bytes=Buffer.byteLength(JSON.stringify(group),'utf8');
+  assert.ok(bytes>4*1024*1024&&bytes<=4*1024*1024+4096);
+  const actual=await new PostgresNativeStockContributorStore26(f.pool,f.runtime).stageBatch([group]);assert.equal(actual.inserted,2);
+  const denied=v18BatchProtocol('stock');
+  const {mappingVersion:_mapping,fingerprint:_fingerprint,signedQuantity:_quantity,...secondInput}=denied.stockGroups[1]!;
+  secondInput.contributors[0]!.source.fieldProvenance.fixture_padding='Y'.repeat(10000);
+  const second=prepareNativeStockGroup(secondInput);
+  await assert.rejects(new PostgresNativeStockContributorStore26(denied.pool,denied.runtime).stageBatch([group,second]),{code:'NATIVE_STOCK_BATCH_BOUND'});
+  assert.equal(denied.connects(),0);
 });

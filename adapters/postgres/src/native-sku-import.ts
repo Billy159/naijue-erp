@@ -38,6 +38,30 @@ export class PostgresNativeSkuImportStore implements NativeSkuImportStore {
       throw error;
     } finally { client.release(discard); }
   }
+  /** Approved v18: complete original items share one transaction, never partial commits. */
+  protected async stageBatchValidated(rows: readonly PreparedNativeSkuImport26[], runtime26: NativeRuntime26Capability):
+    Promise<{ inserted: number; replayed: number; items: Array<{ fingerprint: string; inserted: number; replayed: number }> }> {
+    const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
+    try {
+      await runtime26.assertReady(client, "IMPORT_STAGE");
+      await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
+      const items: Array<{ fingerprint: string; inserted: number; replayed: number }> = [];
+      let inserted = 0, replayed = 0;
+      for (const item of rows) {
+        const result = await this.write(client, item, runtime26);
+        items.push({ fingerprint: item.fingerprint, ...result }); inserted += result.inserted; replayed += result.replayed;
+      }
+      await runtime26.assertReady(client, "IMPORT_STAGE");
+      committing = true; await client.query("COMMIT"); return { inserted, replayed, items };
+    } catch (error) {
+      if (!began || committing) discard = error instanceof Error ? error : new Error("SKU batch outcome unknown; inspect all original keys before any retry");
+      if (began && !committing) try { await client.query("ROLLBACK"); } catch (rollback) {
+        discard = rollback instanceof Error ? rollback : new Error("SKU batch rollback failed");
+        throw new AggregateError([error, rollback], "SKU batch failed; discard connection and preserve the whole batch");
+      }
+      throw error;
+    } finally { client.release(discard); }
+  }
   private async catalogue(client: PgSalesClient, row: PreparedNativeSkuImport, entity: "COLOR" | "FIT" | "SIZE" | "SIZE_GROUP", ref: NativeSkuReference): Promise<void> {
     const table = { COLOR: "color", FIT: "fit", SIZE: "size", SIZE_GROUP: "size_group" }[entity];
     const targetColumn = { COLOR: "color_id", FIT: "fit_id", SIZE: "size_id", SIZE_GROUP: "size_group_id" }[entity];
@@ -173,4 +197,27 @@ export class PostgresNativeSkuImportStore26 extends PostgresNativeSkuImportStore
   override async stage(input: PreparedNativeSkuImport26): Promise<{ inserted: number; replayed: number }> {
     const row = structuredClone(input); validatePreparedNativeSkuImport26(row); return this.stageValidated(row, this.runtime26);
   }
+  async stageBatch(input: readonly PreparedNativeSkuImport26[]):
+    Promise<{ inserted: number; replayed: number; items: Array<{ fingerprint: string; inserted: number; replayed: number }> }> {
+    requireDomain(Array.isArray(input) && input.length > 0 && input.length <= 100,
+      "NATIVE_SKU_BATCH_BOUND", "One through100 complete original items required");
+    const rows = structuredClone(input); for (const item of rows) validatePreparedNativeSkuImport26(item);
+    const first = rows[0]!, selectionEntries = Object.entries(first.selection);
+    requireDomain(rows.every(item => item.batchId === first.batchId && item.fixedSourceNamespace === first.fixedSourceNamespace
+      && item.mappingVersion === first.mappingVersion && Object.keys(item.selection).length === selectionEntries.length
+      && selectionEntries.every(([key, value]) => Object.hasOwn(item.selection, key) && Reflect.get(item.selection, key) === value)),
+      "NATIVE_SKU_BATCH_SCOPE", "Same batch, namespace and whole original selection required");
+    const members = rows.flatMap(item => item.aliases);
+    const windowBytes = 4 * 1024 * 1024;
+    requireDomain(members.length <= 200 && rows.every(item => Buffer.byteLength(JSON.stringify(item), "utf8") <= windowBytes)
+      && Buffer.byteLength(JSON.stringify(rows), "utf8") <= windowBytes + rows.length + 1,
+      "NATIVE_SKU_BATCH_BOUND", "Original complete items and transport window bounds must be preserved");
+    requireDomain(new Set(rows.map(row => row.nativeSku.id)).size === rows.length
+      && new Set(rows.map(row => row.canonicalSource.sourceKey)).size === rows.length
+      && new Set(members.map(member => member.source.id)).size === members.length
+      && new Set(members.map(member => member.source.sourceKey)).size === members.length,
+      "NATIVE_SKU_BATCH_DUPLICATE", "Canonical items and original source members cannot repeat inside a batch");
+    return this.stageBatchValidated(rows, this.runtime26);
+  }
+
 }

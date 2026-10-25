@@ -30,6 +30,39 @@ export class PostgresNativeStockContributorStore implements NativeStockContribut
       throw error;
     } finally { client.release(discard); }
   }
+  /** Approved v18: complete original items share one transaction, never partial commits. */
+  protected async stageBatchValidated(groups: readonly PreparedNativeStockGroup[], runtime26: NativeRuntime26Capability):
+    Promise<{ inserted: number; replayed: number; items: Array<{ fingerprint: string; inserted: number; replayed: number }> }> {
+    const client = await this.pool.connect(); let began = false, committing = false, discard: Error | undefined;
+    try {
+      await runtime26.assertReady(client, "IMPORT_STAGE");
+      await client.query("BEGIN ISOLATION LEVEL READ COMMITTED"); began = true;
+      const items: Array<{ fingerprint: string; inserted: number; replayed: number }> = [];
+      let inserted = 0, replayed = 0;
+      for (const item of groups) {
+        const result = await this.write(client, item, runtime26);
+        items.push({ fingerprint: item.fingerprint, ...result }); inserted += result.inserted; replayed += result.replayed;
+      }
+      const sourceIds = groups.flatMap(group => group.contributors.map(row => row.source.id));
+      const expectedIds = new Set(sourceIds);
+      const contributions = await client.query(`/* native-stock:batch-null-baselines */ SELECT source_row_id,baseline_ledger_id
+        FROM naijue_erp.import_stock_contributor WHERE batch_id=$1::uuid AND source_row_id=ANY($2::uuid[]) FOR SHARE`,
+      [groups[0]!.batchId, sourceIds]);
+      requireDomain(contributions.rowCount === sourceIds.length && contributions.rows.length === sourceIds.length
+        && new Set(contributions.rows.map(row => row.source_row_id)).size === sourceIds.length
+        && contributions.rows.every(row => typeof row.source_row_id === "string" && expectedIds.has(row.source_row_id) && row.baseline_ledger_id === null),
+      "NATIVE_STOCK_BATCH_NULL_BASELINE", "Every exact staged contributor must retain its NULL baseline");
+      await runtime26.assertReady(client, "IMPORT_STAGE");
+      committing = true; await client.query("COMMIT"); return { inserted, replayed, items };
+    } catch (error) {
+      if (!began || committing) discard = error instanceof Error ? error : new Error("STOCK batch outcome unknown; inspect all original keys before any retry");
+      if (began && !committing) try { await client.query("ROLLBACK"); } catch (rollback) {
+        discard = rollback instanceof Error ? rollback : new Error("STOCK batch rollback failed");
+        throw new AggregateError([error, rollback], "STOCK batch failed; discard connection and preserve the whole batch");
+      }
+      throw error;
+    } finally { client.release(discard); }
+  }
   private async write(client: PgSalesClient, group: PreparedNativeStockGroup, runtime26?: NativeRuntime26Capability): Promise<{ inserted: number; replayed: number }> {
     await client.query("/* native-stock:cutoff */ SELECT naijue_erp.cutoff_import_lock()");
     const versions = (await client.query(`/* native-stock:schema */ SELECT
@@ -143,4 +176,27 @@ export class PostgresNativeStockContributorStore26 extends PostgresNativeStockCo
   override async stage(input: PreparedNativeStockGroup): Promise<{ inserted: number; replayed: number }> {
     const group = structuredClone(input); validatePreparedNativeStockGroup(group); return this.stageValidated(group, this.runtime26);
   }
+  async stageBatch(input: readonly PreparedNativeStockGroup[]):
+    Promise<{ inserted: number; replayed: number; items: Array<{ fingerprint: string; inserted: number; replayed: number }> }> {
+    requireDomain(Array.isArray(input) && input.length > 0 && input.length <= 100,
+      "NATIVE_STOCK_BATCH_BOUND", "One through100 complete original items required");
+    const groups = structuredClone(input); for (const item of groups) validatePreparedNativeStockGroup(item);
+    const first = groups[0]!, selectionEntries = Object.entries(first.selection);
+    requireDomain(groups.every(item => item.batchId === first.batchId && item.fixedSourceNamespace === first.fixedSourceNamespace
+      && item.mappingVersion === first.mappingVersion && Object.keys(item.selection).length === selectionEntries.length
+      && selectionEntries.every(([key, value]) => Object.hasOwn(item.selection, key) && Reflect.get(item.selection, key) === value)),
+      "NATIVE_STOCK_BATCH_SCOPE", "Same batch, namespace and whole original selection required");
+    const members = groups.flatMap(item => item.contributors);
+    const windowBytes = 4 * 1024 * 1024 + 4096;
+    requireDomain(members.length <= 200 && groups.every(item => Buffer.byteLength(JSON.stringify(item), "utf8") <= windowBytes)
+      && Buffer.byteLength(JSON.stringify(groups), "utf8") <= windowBytes + groups.length + 1,
+      "NATIVE_STOCK_BATCH_BOUND", "Original complete items and transport window bounds must be preserved");
+    requireDomain(new Set(groups.map(group => `${group.warehouse.nativeId}:${group.sku.nativeId}`)).size === groups.length
+      && new Set(groups.map(group => group.canonicalStock["来源编号"])).size === groups.length
+      && new Set(members.map(member => member.source.id)).size === members.length
+      && new Set(members.map(member => member.source.sourceKey)).size === members.length,
+      "NATIVE_STOCK_BATCH_DUPLICATE", "Canonical items and original source members cannot repeat inside a batch");
+    return this.stageBatchValidated(groups, this.runtime26);
+  }
+
 }

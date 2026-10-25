@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T04:04:06.649268+00:00",
-    "sourceRound": 394,
-    "sourceCheckpoint": "SOURCE394_SHARED_STYLE_SOURCE_TEST_PASS_PARTY224_REVIEW_PENDING",
+    "atUtc": "2026-10-25T04:07:18.808303+00:00",
+    "sourceRound": 395,
+    "sourceCheckpoint": "SOURCE395_ACTUAL_PARTY357_PASS_V18_SOURCE_READY_NOT_PG",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4945,15 +4945,15 @@
       "scope": "F2 width/exterior-captions source fix; affected visual recheck pending"
     },
     "nextPreview": {
-      "status": "FIXED392_STRICT_BUILD_HTTP_PASS_NOT_VISUAL_OR_BUSINESS",
-      "url": "http://127.0.0.1:57899/#inventory",
-      "sourceCommit": "1b577a9b29c9acafc797ec8f5bbc734ea0c9e6ae",
-      "runtimeVersion": "phase2-normal-1b577a9-10",
-      "artifact": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-1b577a9-phase2-10/build",
-      "resources": 135,
+      "status": "FIXED394_BUILD_HTTP_PASS_VISUAL_TECHNICAL_PENDING",
+      "url": "http://127.0.0.1:57900/#inventory",
+      "sourceCommit": "33f85aeea39a6cb53a4b17914dba466e1ac8be8e",
+      "build": "phase2-normal-33f85ae-11",
       "syntheticOnly": true,
-      "scope": "Same389UI+F2base/specactiveDOM+F1noDuplicateWorkbookArray",
-      "validation": "Owner affected checks passed; QF2 currently visual389 unchanged; new product/browser segment later no full regression"
+      "resources": 135,
+      "serverSession": 15184,
+      "scope": "389widthlabel+392productDOM/workbook+394sharedsheets",
+      "notPassed": "wholepage/realbusiness/heap/performance/formal"
     },
     "r1": "Real v16fromv15/130/5a; CORE157+catalogue344+supplier222 actuallycommitted/readbacklimitedPASS. Product2956/SKU14999 sourcecapture only, notDBstage",
     "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
@@ -8603,7 +8603,7 @@
         "next": "New product DOM candidate technical stage after visual"
       }
     },
-    "v18": "USER_CONFIRMED_CURRENT_HUMAN_REPLY_IMPLEMENTATION_READY_D1_ORIGINAL_OWNER",
+    "v18": "USER_APPROVED_SOURCE3_READY_FIXED395_QA_TEMPLATES_AND_V3_IN_PROGRESS",
     "singleFinalUI": "Current normal entry only proven; no claim all module overrides retired",
     "previousPreview": {
       "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
@@ -8647,12 +8647,24 @@
       "scope": "SourceControl shared per-document Arco+local sheet original order; geometry/query untouched"
     },
     "party224": {
-      "status": "CARRIER_PREPARED_PRIVATE5_DELIVERED_QB_ACTIVE_NOT_EXECUTED",
+      "status": "ACTUAL_COMPLETED0_FULL357_READBACK_QB_ACTUAL_PENDING",
       "sourceCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
       "rows": 357,
       "chunks": 4,
       "expectedCurrentSKU": 5586,
-      "reviewPin": "PENDING"
+      "reviewPin": "QB28912433/905e398d",
+      "inserted": 291,
+      "replayed": 66,
+      "currentCounts": {
+        "customers": 261,
+        "halls": 43,
+        "warehouses": 53,
+        "products": 2956,
+        "skus": 5586,
+        "sourceRows": 9532,
+        "records": 5639,
+        "nativePartyEvidence": 628
+      }
     }
   },
   "latestReadySource": {
