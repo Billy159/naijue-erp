@@ -1343,9 +1343,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T08:37:00.476966+00:00",
+  "updatedAt": "2026-10-25T08:38:36.753514+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "23f80bc3a3ad9fcaf1c7e5454bf7a52f36e14e10",
+  "lastVerifiedRemoteCommit": "aa912af3f5f11ec2fb3f0b3199559823b61b743e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -9344,5 +9344,20 @@
     "QF2": "explicit Luna/max missing F4 normalbrowserappearance6-page group; reuse existingproof; ownIAB",
     "runtime": "SOURCE438/57911 unchanged",
     "goal": "ACTIVE_INCOMPLETE_37_PAGES_67_OVERLAYS_PLUS_ADDITIONS"
+  },
+  "currentContinuation441": {
+    "stock": {
+      "jobId": "t45-r1-v18-stock38303-stage-20261025-03",
+      "status": "QUEUED",
+      "unit": "naijue-erp-op-5cc58239-97a9048dd8ec",
+      "autoRetry": false
+    },
+    "stockCompletion": "NOT_YET_PROVEN_ONLY_COLLECT_ORIGINAL03",
+    "private438": "J06 actualFAILED exit2 aftercopy before native run; minimal08 nativeonly byT45, originalQB specificreview pending",
+    "cause": "reuse installer dropped archive/manifest assignment consumed by original helper.labels",
+    "protected": "no repeated extract/copy/npm; noapp/DB/publicswitch; old06failure preserved",
+    "QB": "D3 headerconsumer source review + ready08 onlyinterface delta",
+    "QF2": "fixed438 pureF4appearance Luna/max active",
+    "goal": "ACTIVE_INCOMPLETE"
   }
 }
