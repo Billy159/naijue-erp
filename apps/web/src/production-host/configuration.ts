@@ -2,7 +2,7 @@ import { entityId } from '../../../../packages/domain/src/values.ts';
 /** Public presentation switches only. The server remains the authorization owner. */
 export interface ProductionHostConfiguration {
   readonly kind: 'naijue-erp-production-host';
-  readonly http: { readonly origin: string; readonly basePath: '/api' };
+  readonly http: { readonly origin: string; readonly basePath: '/api' | '/__naijue_candidate/replica-private-01/api' };
   readonly assets: { readonly basePath: string };
   readonly session: { readonly verifyOnMount: true };
   readonly routes: {
@@ -45,7 +45,8 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
   let origin: URL;
   try { origin = new URL(http.origin as string); } catch { return invalid(); }
   if (row.kind !== 'naijue-erp-production-host' || typeof http.origin !== 'string' || origin.protocol !== 'https:'
-    || origin.origin !== http.origin || origin.username || origin.password || http.basePath !== '/api' || session.verifyOnMount !== true
+    || origin.origin !== http.origin || origin.username || origin.password
+    || (http.basePath !== '/api' && http.basePath !== '/__naijue_candidate/replica-private-01/api') || session.verifyOnMount !== true
     || typeof assets.basePath !== 'string' || !/^\/assets\/(?:[A-Za-z0-9_-]+\/)*$/.test(assets.basePath)) return invalid();
   const booleanKeys = ['inventory', 'sales', 'transfers', 'inventoryLedger', 'salesManualCreate', 'transferManualCreate', 'salesExistingEdit', 'transferExistingEdit', 'products', 'productCategories', 'barcodeSchemes', 'productViewer', 'productFullPage', 'salesProductFullPage', 'transferProductFullPage', 'staffSettings', 'paymentSettings', 'accountSettings', 'productStockOverview', 'documentResponsibleReady'] as const;
   const routes = record(row.routes, ['inventory', 'sales', 'transfers'], [...booleanKeys.slice(3), 'parties', 'productSettings', 'storeSettings', 'transferInitialSizeGroupId', 'maintenance']);
@@ -99,7 +100,7 @@ export function parseProductionHostConfiguration(value: unknown): ProductionHost
       extras.storeSettings = Object.freeze({ ...settings, allowedTabs: Object.freeze([...tabs]) });
     }
   }
-  return Object.freeze({ kind: row.kind, http: Object.freeze({ origin: http.origin, basePath: '/api' as const }), assets: Object.freeze({ basePath: assets.basePath }),
+  return Object.freeze({ kind: row.kind, http: Object.freeze({ origin: http.origin, basePath: http.basePath }), assets: Object.freeze({ basePath: assets.basePath }),
     session: Object.freeze({ verifyOnMount: true as const }), routes: Object.freeze({ staffSettings: false, paymentSettings: false, ...switches, ...extras }) as unknown as ProductionHostConfiguration['routes'] });
 }
 export function parseProductionHostAssets(value: unknown): ProductionHostAssets {

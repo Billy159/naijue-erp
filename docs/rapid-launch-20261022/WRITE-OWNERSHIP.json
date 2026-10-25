@@ -5392,5 +5392,40 @@
     "boundary": "C Solmedium presentation-mode activation/disposal only; F4 actual LunaMax exact frozen final UI dependencies only. No shared root/config/backend concurrent writers.",
     "source": "F4 SOURCE438-FINAL-DEPENDENCY-ANALYSIS; current human whole Demo copy/model directive",
     "status": "DELIVERED_C_ENTRY_LIFETIME_CHECKED_READY_FIXED_BUILD_QF2"
+  },
+  "candidateApiPrefix459": {
+    "atUtc": "2026-10-25T10:57:52.947548+00:00",
+    "authority": "Current human fullgoal/private candidate testing and originalowner continuation; T45actualproxy19 capabilities confirmed read-only",
+    "scope": "One trusted static candidate API prefix, same canonical origin/real auth/CORE3readonly; production /api unchanged",
+    "prefix": "/__naijue_candidate/replica-private-01/api",
+    "files": [
+      {
+        "path": "apps/web/src/production-host/configuration.ts",
+        "owner": "F1",
+        "reason": "Originalregisteredowner; type/validate/return exactstaticprefix only"
+      },
+      {
+        "path": "apps/web/src/production-host/configuration.test.ts",
+        "owner": "F1",
+        "reason": "Onlyaffected path/config cases existingtest leaf"
+      },
+      {
+        "path": "scripts/release/build-production.mjs",
+        "owner": "C",
+        "reason": "Originalbuildowner; samepublicconfig allowlist only"
+      },
+      {
+        "path": "scripts/release/build-production.test.mjs",
+        "owner": "C",
+        "reason": "Existing build-tool test: exact candidate config survives production build; unrelated prefix rejected"
+      },
+      {
+        "path": "scripts/release/manifest.mjs",
+        "owner": "C",
+        "reason": "Existing release HTML publicconfiguration check must accept same exact candidateprefix; exposed by real build test"
+      }
+    ],
+    "sharedRootEntry": "C; backend/auth/server/defaultproductionconfig read-only; no runtimeOrigin/CSRF/cookie weakening",
+    "browser": "Independent QF context, same-domain Path=/ cookie not isolation; never userChrome"
   }
 }

@@ -10681,5 +10681,22 @@
       "evidence": "B/server-execution/SOURCE447-APP18-ACTUAL-RESULT.json",
       "engineSha256": "ba303ce6e5b4c31065acf8086006fee1249cc9a00b64d2399f13db38c200000b"
     }
+  },
+  "candidateApiPrefix459": {
+    "status": "SOURCE_READY_AFFECTED_BUILD_TOOL_CHECK_PASS_FIXED_BUILD_NEXT",
+    "owner": "C",
+    "F1Delivery": "chunk-193-candidate-api-prefix",
+    "prefix": "/__naijue_candidate/replica-private-01/api",
+    "default": "/api",
+    "buildIdNext": "replica-production-source459-01",
+    "actualBusiness": false
+  },
+  "transferHeader09Actual": {
+    "status": "COMPLETED",
+    "headers": 14279,
+    "chunks": 143,
+    "sourceRowsAfter": 71642,
+    "businessAcceptance": false,
+    "next": "OriginalQB new line10 carrier review then originalT45 finite finalization/transport/stage; no replay09"
   }
 }

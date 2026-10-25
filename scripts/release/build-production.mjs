@@ -109,7 +109,8 @@ async function lockedDependencies(sourceRoot) {
 }
 function checkPublicConfiguration(value) {
   requireRelease(value?.kind === 'naijue-erp-production-host' && value.http?.origin === 'https://1n5635n614.goho.co'
-    && value.http?.basePath === '/api' && value.session?.verifyOnMount === true, 'EXPLICIT_PRODUCTION_PUBLIC_CONFIGURATION_REQUIRED');
+    && ['/api', '/__naijue_candidate/replica-private-01/api'].includes(value.http?.basePath)
+    && value.session?.verifyOnMount === true, 'EXPLICIT_PRODUCTION_PUBLIC_CONFIGURATION_REQUIRED');
   const walk = object => {
     if (!object || typeof object !== 'object') return;
     for (const [key, item] of Object.entries(object)) {

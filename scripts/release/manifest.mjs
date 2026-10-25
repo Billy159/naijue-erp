@@ -448,7 +448,8 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
   let configuration;
   try { configuration = JSON.parse(configurationMatch?.[1]).configuration; } catch { throw new ReleaseError('PRODUCTION_CONFIGURATION_REQUIRED'); }
   requireRelease(configuration?.kind === 'naijue-erp-production-host' && configuration.http?.origin === 'https://1n5635n614.goho.co'
-    && configuration.http?.basePath === '/api' && configuration.session?.verifyOnMount === true
+    && ['/api', '/__naijue_candidate/replica-private-01/api'].includes(configuration.http?.basePath)
+    && configuration.session?.verifyOnMount === true
     && /^\/assets\/(?:[A-Za-z0-9_-]+\/)*$/.test(configuration.assets?.basePath ?? ''), 'PRODUCTION_CONFIGURATION_REQUIRED');
   const assetsOrigin = new URL(configuration.assets.basePath, configuration.http.origin).href;
   let frontendScriptSeen = false;

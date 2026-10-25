@@ -104,3 +104,17 @@ test('a real esbuild graph containing fixture input is rejected rather than rela
   const f = await fixture('fixture-graph', true, true);
   await assert.rejects(buildProduction(f.options), error => error.code === 'NON_PRODUCTION_BUILD_GRAPH');
 });
+
+test('dedicated candidate prefix survives a real production build and other prefixes remain rejected', async () => {
+  const f = await fixture('candidate-prefix', true);
+  const candidate = structuredClone(config);
+  candidate.http.basePath = '/__naijue_candidate/replica-private-01/api';
+  await writeFile(f.publicConfig, JSON.stringify(candidate));
+  await buildProduction(f.options);
+  const html = await readFile(path.join(f.options.buildRoot, 'web/index.html'), 'utf8');
+  assert(html.includes(JSON.stringify(candidate)));
+  const other = await fixture('other-prefix');
+  candidate.http.basePath = '/__naijue_candidate/other/api';
+  await writeFile(other.publicConfig, JSON.stringify(candidate));
+  await assert.rejects(buildProduction(other.options), error => error.code === 'EXPLICIT_PRODUCTION_PUBLIC_CONFIGURATION_REQUIRED');
+});
