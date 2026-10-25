@@ -1,3 +1,11 @@
+SOURCE480 — ACTUAL LOGGED-IN DEMO LOCATED; SOURCE425 READ QA CALLER DELIVERED
+
+User-authorized taskbookChat andC freshnativeCUA both confirm Chrome“狄兰” current8877/#settings/staff complete员工与账号/演示管理员·管理员/99rows. Previousextension“您的Chrome数据”/2017876748loginform is anotherprofile; prior “Demo unavailable” conclusion corrected. No input/refresh/sessionstorage access. OriginalQF468purevisual continuation actualLuna/max nativeChromeexclusive nowactive;QF2noChrome. ExistingSITE register actualcontext corrected, no newwholepagePASS.
+
+OriginalD1 productdetail425 inertcaller delivered12020/ff3c11aee2a981332f72aea70bf19df5df88a88e44160088c56e572ff01814cd,input2409/d2378e7f39eaf6a82ec28fc6397d00fec9a284fe5bf059f9bed9459fa2b2d9d0 inoriginalPRODUCT-HOST-CONSUMPTION-01. Uses original459graph productprovider/UOW/service/SQL/V2reader+Fastify.inject, originalC1890351/1032586 ownercontext;no commands/replays/newfixtures. Finite1/1/importPASS adopted. RealSQL/PG/nonowner/fullhost/auth/HTTPS/browser untested; originalQBnewcallerreviewactive,T45sameQA carrierbindprepare onlyuntilreview+actualgo. Existingwitnessonly, missingPUBLISHED/STAGED NOT_PRESENT_NOT_TESTED. No v17/C169/18protocol repeat.
+
+Sameunapprovedv5 exacthistoryhallNULL decision presentedonceconsolidated;onlythisbranchwaits. Full37/67/allstates/business/history/performance/formalreleasegoal ACTIVE. GitHub479a13209a remotelyverified; source-stage/copy/nativeQA/publiccandidate/read-only/write/business/release remainseparate.
+
 SOURCE479 — REUSE ACTUAL V17; ORIGINAL D1 READ-INCREMENT EXECUTION SEAM ACTIVE
 
 OriginalD2 QA-EXECUTION-DEPENDENCY-v1 adopted: C189/QB260 actualv17 CREATE/EDIT/selection/replay/rollback alreadyvalid onretained0351, source3bf526cd475c7ff96958818b87057a1ae76483a9; C169/QB248COLOR/FIT andC167/QB246staffread retained, no rerun. Newsource425detailchildvisibility filter only18protocolchecks; actualPG/currenthost gap remains. Existingcatalogue receipt/replay driver doesnotcoverproduct/organization/staff/payment writes anditsnullactor/compiledgraph bindings cannotbefakedready. OriginalD1nowactivelyprepares minimal readonlydetail425 caller throughoriginalfactory/currenthost/C1890351+registeredQA, no newplatform/productsave/fullv17test. Actualexecution remainsT45.
