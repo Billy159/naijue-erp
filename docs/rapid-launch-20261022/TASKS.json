@@ -4716,7 +4716,7 @@
   "currentContinuation": {
     "atUtc": "2026-10-24T22:48:39.815747+00:00",
     "sourceRound": 368,
-    "sourceCheckpoint": "SOURCE375 f9ba24d60592011d0fab03fbf4d9dc52a5700fcd remoteverified; SOURCE376 actual52+4GRANT/QB277 newtarget and productSKU capture complete limited scope; fixedfrontend372 installed only/served364 unchanged",
+    "sourceCheckpoint": "SOURCE376 2ffb1498be055557ccf5587496105f6207141673 remoteverified; SOURCE377 aligned frontend02 fixedbuild/pack/QFdelta/LINUXinstall actualPASS; R1current5a/130+QB277 retained, HTTPstill364 synthetic/newappnotstarted",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8199,7 +8199,7 @@
       "separateFromData": "Backend approved v16/v15 current R1 metadata/profile and needed module permissions must pair; CORE module proof is not all11/PUBLISH/realbusiness success. Do not release synthetic preview as formal."
     },
     "copiedProductionRelease": {
-      "status": "PASS_SOURCE_FIXED_BUILD_PACK_SEAM_ONLY_NOT_APP_HTTP_BUSINESS_DEPLOYMENT",
+      "status": "PASS_FIXED_BUILD_PACK_QF_ASSETBASE_DELTA_AND_LINUX_INSTALL_ONLY_NOT_APP_HTTP_BUSINESS_DEPLOYMENT",
       "owner": "C",
       "builder": "apps/web/demo-replica/build-production-host.mjs",
       "entry": "apps/web/demo-replica/frontend/production-bootstrap.ts",
@@ -8207,26 +8207,29 @@
       "resources": "shared ordered27 copied styles+4font files/license byte-identical frozenDemo; actual root React19.1.1/ReactDOM19.1.1/Arco2.66.16 singleton",
       "dependency": "exact jszip3.10.1 browser/build dev dependency; production dependency map and existing lock entries unchanged; first offline ENOTCACHED then bounded official registry success",
       "checks": "copied scoped strict0; existing release build+pack34/34; dependencycheckPASS; root typecheck preexisting fixture/responsible/command/workbook issues retained, not globallyPASS",
-      "next": "OriginalC new realR1approvedschema200 current; qualifyactualmetadata/minimalACL thenprivatecopied372app/HTTPS, noformalautoflip",
+      "next": "Prepare exactrealTCP target/currentmetadata for originalprivateapp transport ratherthanreusing socket5a/QA profile, currentbackup preservation originalmechanism; stageapp actualhealth/entry/assets→data/roles/business tests separate; noformalautoflip.",
       "fixed369Attempt": "Preserved fixed export/full build attempt1 failed NON_PRODUCTION_SOURCE: copied original account-password.css not yet registered by old release guard; not install/application/deployment success",
       "correction": "Only exact copied runtime.html/style/member/license and workbook exactentry/staticpositivecontribution allowed. JSZip lockedbrowserdist input-only <runtime> import-statement marker recognized; output external guard unchanged. Golden CSS uses same existing212byteSVG hash. Original22byte query selector adaptation now explicit copied developmentCSS; Vite/esbuild transform removed, identical effective selector, actual raw graph input bytes preserved. Existing35build/packtestsPASS with workbook negative/staticclosure cases.",
       "fixed370Attempt": "Preserved failed NON_PRODUCTION_SOURCE copied runtime.html; further diagnostic-only currentchecker exposed workbookchunk/source exactregistration, same212byteSVG originalCSS consumer, JSZip compiler-only runtime input marker, and build-time CSS22byte transform not matching sourcegraph. No fixedbuild PASS yet.",
       "fixed371Attempt": "Full exact371 compilation passed earlier source/member/graph/CSS conditions then failed UNSUPPORTED_OR_DUPLICATE_HTML_ATTRIBUTE: old HTML resource parser accepted only emptydiv shell, not copied data-ui-theme/menu/native dialogs. Preserved original attempt.",
       "htmlCorrection": "Support only actual copied static shell elements/displayattrs/details-open; hash-only navigation separated from resourceURLs; script/link externalresources still exactreleaseclosure, events/externalanchors/duplicateattrs rejected. Existing36build/packtestsPASS. Diagnostic newchecker on371 artifacts PASS is not immutable372 buildPASS.",
       "fixedSource": "1e340ee502efa3169989b571d255c31eda18310f",
-      "buildId": "replica-production-source372-01",
-      "buildReceipt": "B/replica-production-build-20261025-01/fixed-manifests372-attempt1/build-receipt.json",
+      "buildId": "replica-production-source372-02",
+      "buildReceipt": "B/replica-production-build-20261025-01/fixed-manifests372-aligned02/build-receipt.json",
       "actualBuild": "REAL_BUILD_AND_PACK_CONTRACT_VALIDATED;1386sourceinputs/194buildfiles/Node24.21.0",
-      "packReceipt": "B/replica-production-build-20261025-01/packed372-attempt1/pack-receipt.json",
+      "packReceipt": "B/replica-production-build-20261025-01/packed372-aligned02/pack-receipt.json",
       "actualPack": {
         "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
         "members": 191,
         "archiveExtractions": 1,
-        "bytes": 1312985,
-        "sha256": "488de45d1bb11e081ba92a1a9d021d4ad3aa19ef90f770fce3a619269a28e47f"
+        "bytes": 1313104,
+        "sha256": "6ed3cfa01d9584e11e6895b309fd5ce1cc94fba3653c9dcf8b1c4363ce239e4f",
+        "manifestSha256": "f811501667e0905d8d7765f4a3626a95b411989824825d72c3f113942164c049"
       },
-      "independentQF": "QF/production-seam-source370-372-actual-01/RESULT.json: PASS_SOURCE_AND_FIXED_BUILD_PACK_SEAM_ONLY; QF-PROD-HTML-01 closed SOURCE372; no duplicate test/build/pack/extraction/Chrome",
-      "configurationBoundary": "Only inventory/sales/transfers3publicflags currently; /assets/replica-source369/ is current exactassetprefix notsourceversionclaim"
+      "independentQF": "Original production-seam-source370-372-actual-01 technicalsourcePASS reused; production-seam-source372-aligned02-delta-01 PASS_ASSETBASE_VERSION_PAIR_ONLY independentlyactualnewHTML/config/host source route/newpack receipts, no tests/build/pack/extraction/Chrome/191URLs repeated",
+      "configurationBoundary": "Only3 publicmoduleflags inventory/sales/transfers; no realHTTP/appbusiness qualification. Do not use old01package/receipt for02.",
+      "assetBase": "/assets/replica-production-source372-02/",
+      "alignmentReason": "Original production-application-host.ts89-94 strips exactly buildId/. Old01 temporary369assetbase not compatible; no app/public ever served it, preserved WIP history. SameSOURCE372 code/manifest/lock, newimmutablebuild02, never relabelold01."
     },
     "qf2OutputFilterFinal": {
       "taskId": "QF2-I01-OUTPUT-FINITE-SOURCE364",
@@ -8238,16 +8241,18 @@
       "browserLease": "RETURNED_CLEAN_TWO_ORIGINAL_INVENTORY_TABS_NATURAL_VIEWPORT_FIVE_DRAFTS_UNTOUCHED",
       "notClaimed": "wholeI01/37pagePASS/realHTTP/PG/formalperformance/printinghardware"
     },
-    "nextAction": "OriginalC build concrete supplier222-only source/execution carrier using compiledD1 runner and QB277 current5a metadata, independent finite carrier review then actualsource stage. Preserve204FAILEDtransport and adopt actualCOMMIT; never GRANT/schema/catalogue replay. Original158physicalbackup deadline2026-10-25T00:02:34.387747Z nearing: maintain original backup requirements, refresh through same originalowner/mechanism asneeded, not falsefreshness. Product/SKU sourcecapturescomplete no reread. New372privateapp/HTTPS/data/historicaledit/perf/formal remainincomplete.",
+    "nextAction": "OriginalC continue concrete supplier222-only carrier/sourcegrant and QBfinite review from compiledD1 onegraph/new5a socketmetadata. For copied02actualprivateapp separately capture genuineTCP target metadata originalnetwork/role instead of assuming socketprofile; originalbackup158deadline00:02:34Znearing/refresh originalowner mechanism asrequired. Allrealstage/app/37pages/67overlays/history/perf/formal incomplete; no GRANT/schema/native344/capture replay.",
     "latestHumanV17Reply": "Repeated/latest explicit confirmation adopted without duplicate implementation; D2 actual189/QB260 limited PG service proof already adopted; normalHTTP/front-end/nonowner/formalperformance pending",
     "copied372LinuxInstall": {
       "previous": "c03-copied372-linux-install-only-20261025-198 failed SAME_PROVEN_OFFLINE_LOCK_REQUIRED before any docker installer run, payload/cachecopy preserved; generic ATTEMPTED_UNKNOWN refers call entry not npm sideeffect",
-      "current": "c03-copied372-lock-bound-install-20261025-199",
-      "status": "PASS_ISOLATED_COPIED372_LINUX_INSTALL_AND_NATIVE_LOAD_ONLY",
+      "current": "c03-copied372-aligned02-linux-install-20261025-205",
+      "status": "PASS_ACTUAL_ALIGNED02_LINUX_INSTALL_AND_NATIVE_LOAD_ONLY",
       "correction": "Same originalC229 install-only flow; exact newpackage/lock pair pinned;136production lockrecords anddependency map identical actual5669; jszip dev-only browserbuild addition; no packageversion/lock edits to evade install; no ignoreerror/npm-install/onlinefallback",
       "boundary": "Newindependentrelease/cachecopy/nonetwork/install-nativeonly; sourcecache and9protectedcontainers unchanged required;noapp/DB/config/production switch",
       "actual": {
-        "job": "c03-copied372-lock-bound-install-20261025-199",
+        "job": "c03-copied372-aligned02-linux-install-20261025-205",
+        "buildId": "replica-production-source372-02",
+        "sourceCommit": "1e340ee502efa3169989b571d255c31eda18310f",
         "installOutcome": "RETURNED_SUCCESS",
         "installedPackageRecords": 111,
         "platform": "linux/x64",
@@ -8255,15 +8260,16 @@
         "sharp": "0.35.5",
         "vips": "8.18.7",
         "nativeLoaded": true,
-        "elapsedSeconds": 31.196,
+        "elapsedSeconds": 29.313,
         "protectedContainersUnchanged": 9,
         "sourceCacheWritten": false,
         "appStarted": false,
+        "metadataWritten": false,
         "databaseCalls": 0,
         "productionEntryChanged": false
       },
-      "releaseDirectory": "/srv/naijue-erp/rapid-launch-20261022/releases/replica-production-source372-01-install-only-r2",
-      "next": "Newcandidate installation proved; application startup/data/formal switching stillseparate. Reuseinstalled372payload only at exact version, do notcalloldC229newfrontend proof"
+      "releaseDirectory": "/srv/naijue-erp/rapid-launch-20261022/releases/replica-production-source372-02-install-only",
+      "next": "New02 actualinstallation provesexact02package, not01receipt reused. Actualapp/HTTPS/data/formalswitch stillnotdone."
     },
     "realR1ApprovedSchemaCurrent": {
       "job": "c03-real-r1-approved-v16-v15-upgrade-20261025-200",
