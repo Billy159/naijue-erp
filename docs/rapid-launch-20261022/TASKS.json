@@ -9081,6 +9081,17 @@
     },
     "fast": "UNVERIFIED",
     "persistentUiDefaultSetter": "UNAVAILABLE_NO_APP_DB_WRITE"
+  },
+  "priorityHumanSource": "read_thread 01a16189 user01a171b9-ef4d-7520-959d-b3128fd926ea",
+  "releaseCriticalPath": {
+    "C_current": "realR1 v3 suffix9413/9517 exact accepted5586/5604; no stage yet",
+    "C_next": "stock38303/38314 then approved history headers/lines and controlled edits",
+    "D1_current": "Party commands plus same default list native readback; Payment delivered415 and Catalogue413 acceptedQB296",
+    "D2_next": "exact original query consumer seam if D1 identifies, existing real HTTP pair runner by C",
+    "F3_current": "single reference selected tag actualDOM targeted diagnosis, minor UI",
+    "QF": "410 interrupted preserved, no duplicate restart",
+    "QF2": "411 semantic limitedPASS;414 visual notconfirmed",
+    "QB": "295 actualQA finitePASS;296 catalogue sourcePASS"
   }
 },
   "currentContinuation404": "Frontend all-site user defect sweep current; preserve C228 catalogue8 committed prefix, PRODUCT23514 rollback no replay; history230 22 INSERT privileges absent, no grant; R1 SKU5586 prefix unchanged."
