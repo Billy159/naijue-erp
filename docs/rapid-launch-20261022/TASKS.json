@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T15:18:05.742807+00:00",
+  "updatedAt": "2026-10-25T15:32:35.155717+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -5020,21 +5020,17 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 488,
+    "round": 489,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "549a2a891e29ba0f14186d44ced75fe3365d8686",
+    "sourceHeadBeforeThisContinuityCommit": "caec548535ed2007eb383fa7bfa48a6b0a354eb9",
     "fixedCandidates": {
-      "first": {
-        "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
-        "build": "replica-production-source459-core-02",
-        "scope": "Real CORE readonly hall/warehouse ADMINstaff-account/category, installation pending",
-        "entry": "/__naijue_candidate/replica-private-01/#settings/stores"
+      "current": {
+        "source": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
+        "build": "replica-production-source483-core-04",
+        "entry": "https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/#settings/stores",
+        "status": "ACTUAL_PUBLIC_SCOPED_CANDIDATE_NOT_FORMAL_ROOT_NOT_AUTHENTICATED_BUSINESS_PASS"
       },
-      "next": {
-        "source": "48113c65a73ab8a390a052ef1a1a306ec2eeedc1",
-        "build": "replica-production-source461-core-03",
-        "scope": "Same three groups plus actualCORE color/fit reads; buildpackPASS, not deployed"
-      }
+      "superseded": "CORE02 historical rollback; CORE03 prepared only and never deployed; do not execute obsolete preparation"
     },
     "lastActualServerApp": "SOURCE483/CORE04 app46666e0f actualrunning and candidate-prefix public; original formal root unchanged",
     "transferHeaders": "09actual14279/143chunks COMMIT+readbackPASS source staging only",
@@ -5062,7 +5058,7 @@
     },
     "opsBlockingCondition": "CORE04 scopedpublic33 actualPASS/defaultTLS3GET. QF2 guestloginstyle nowindependentIAB authorizedLuna/max; authenticatedrealreads awaitoriginalhumanlogin and nativeChromelease. No fullbusiness/history/PUBLISH/perf/formalrootPASS.",
     "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
-    "QF2": "CORE02 exact HTTPS opened in nativeChrome狄兰; guestlogin, user candidate login pending. Demo8877 confirmed logged in; never ask Demo login again based on another profile. Chrome lease C/user; no credential filling.",
+    "QF2": "Original guest scope: native Chrome AX now succeeds; CORE04 login form observed without business navigation. Visual geometry remains unverified; account autofill preserved, no credentials read/filled. Original QF2 owns current short serial Chrome lease.",
     "QB": "OriginalQB J28 decision PARTIAL adopted; actual0351 disabled identity/code/version,401,prepost increment PASS. No repeat ops/source/save. Optional published/staged witnesses and nonowner/fullhost/session/HTTPS/browser remain open.",
     "rootStrict": "FAIL16 outside delta preview/tests preserved; no fullPASS",
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
@@ -5071,13 +5067,13 @@
       "F2": "465editor+468imagefailurefix integrated/scopedadopted; P01 originalwidthfinding withdrawn byQF2actualgeometry, do notkeepstaleP01waiting. Realread/write provider anddata readiness stillopen.",
       "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
       "F4": "Allowedtabssource delivered/inCORE04; no independent technicalpatch justified. Next actualCORE04 color/fit read+existingfullUI scope viaQF2, maintenanceseamD2 separate. Groups/seasonscompletegoalstillopen.",
-      "D1": "OriginalnormalhostQA composition preparingfromactual34/C181PM/currentFORMreview; exactQA1034834/nonowner/config/origin/graph/normal-login securematerialrefs. No oldmetadata/v17/28 repeats; salespersonnewSAVEcontract separatelywaitsuser.",
+      "D1": "Active original normal-host config and bounded isolated synthetic-account normal-login preparation; trigger requires monotonic account/auth versions, no whole-row rollback or fake SQL session. Concrete impact/cleanup proposal pending, no account mutation released.",
       "D2": "COLOR/FIT NORMAL-HOST entry delivered runner7b4d4016/inputa5d684d9, originalC1691034834actor/0327roots/101102keys; onlynormalfactory/session GETreceipt/replay/409/401/prepost, actualnotrun. QBnewsource-onlyscopeactive.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
       "T45": "33actualpublic/defaultTLSadopted. 34oneactualreadonlyCOREQA prerequisites done; PMreviewmatches/currentactorvalid/session0. AwaitD1exactnormalhostpurposeconfig/loginref, do notrepeat34 orborrowR1.",
       "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
-      "QF2": "GuestCORE04 purevisualLuna/max active; IABtabbindingfault recovery. Ifunavailable CgrantsnativeChrome shortreadonly newtab-onlylease, preservealloldtabs/loginform/drafts/no refresh/no credentials; no concurrentbrowseragent. Actualnewguest/UI notyetaccepted.",
-      "QB": "J33F01 finalPASS adopted/no fullrerun; D2slice316source-onlyPASS adopted, actualhost/session/PM notready."
+      "QF2": "Original guest scope: native Chrome AX now succeeds; CORE04 login form observed without business navigation. Visual geometry remains unverified; account autofill preserved, no credentials read/filled. Original QF2 owns current short serial Chrome lease.",
+      "QB": "Active original single-review CURRENT_FORM_READ+PRODUCT_MAINTENANCE combination increment only. C181/C191 existing accepted scopes and actual34 reused; no database execution or metadata rerun."
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
     "route22Review": {
@@ -5120,7 +5116,7 @@
       "syntheticOnly": true
     },
     "P01Geometry": "OriginalQF2 corrected previous mismatched CSS viewport: override1470 actually1205x593; actual1470x724 table/container1221 and client=scroll, ten cols visible. Originaldifference withdrawn, noCSSfix. Original445 report/observations/evidence amended, oldscreenshots preserved.",
-    "GitHub": "471ced60266e85589a35cbcd2e00d865beb1ce33362 remoteGETverified",
+    "GitHub": "caec548535ed2007eb383fa7bfa48a6b0a354eb9 remoteGETverified; current record checkpoint pending",
     "productImageFix": {
       "sourceStatus": "FIXED_SOURCE468_TARGETED_CHECKS_AND_LIMITED_BROWSER_RECHECK_PASS_ADOPTED",
       "revision": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/frontend/rapid-launch-20261022/F2/PRODUCT-PAGES-UI-CAPABILITY-465-20261025-01/REVISION-PARENT-READ-IMAGES-01.json",
@@ -5659,7 +5655,8 @@
       "inode": 11674449,
       "previous4a20HistoricalOnly": true
     },
-    "modelAuditBefore488": "All12 latest saved/actual match: C/F1-F4/D1-D3/QF/QB/T45 Solmedium; QF2 Lunamax. QF screenshot14:12 composer medium differs from actual14:06/14:09 max; display cause UNKNOWN; no Luna-medium execution today. FastUNVERIFIED."
+    "modelAuditBefore488": "All12 latest saved/actual match: C/F1-F4/D1-D3/QF/QB/T45 Solmedium; QF2 Lunamax. QF screenshot14:12 composer medium differs from actual14:06/14:09 max; display cause UNKNOWN; no Luna-medium execution today. FastUNVERIFIED.",
+    "demoCurrentObservation": "C actual native Chrome 狄兰 127.0.0.1:8877/#sales/new: 演示管理员·管理员, empty unsaved form. No navigation/input/refresh. Demo login effective; no new login request."
   },
   "latestReadySource": {
     "round": 445,

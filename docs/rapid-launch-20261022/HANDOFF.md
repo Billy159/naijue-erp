@@ -1,3 +1,11 @@
+SOURCE489 — CORRECT CHROME DEMO CONFIRMED; EXISTING QA HOST COMBINATION INCREMENT ACTIVE
+
+C actual native Chrome App AX reads 狄兰 8877/#sales/new, 演示管理员·管理员, empty unsaved form; no input/navigation/refresh. Demo login is effective. QF2 previous IAB/DOM content timeouts are not proof native App AX fails: original QF2 now observes CORE04 login form without business navigation, preserves browser autofill and original tabs, geometry still unverified. Original short Chrome lease is QF2 only; no new browser/team or repeated Demo login request.
+
+D1 current combination candidate uses original C181 PRODUCT_MAINTENANCE and C191 CURRENT_FORM_READ, same seven identity fields/current a970/patch26-v16 and actual34 routine match. Original idle QB now performs only purpose-combination increment; no old metadata/DB/store/v17/QA316 rerun. D1 separately prepares concrete normal-login input/cleanup for original isolated synthetic actor: monotonic account/auth versions must be preserved, no SQL-fabricated session or blind row rollback. No credential mutation executed/released. T45 remains sole actual operator after exact ready handoff.
+
+Current fixed candidate is source8a197a0 / replica-production-source483-core-04 at https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/#settings/stores . TASKS stale CORE02/CORE03 primary pointers corrected; those are rollback/preparation history. Actual33/public resources remain adopted; authenticated business and formal root release unverified. Copy baseline35/65 preserved; all-state full acceptance0/37 and0/67, real history editing/full publication/performance remain incomplete. GitHubcaec548 verified before this checkpoint. Goal ACTIVE.
+
 SOURCE488 — NORMAL-HOST QA34 ACTUAL PREREQUISITES RESOLVED TO EXACT D1 INPUTS
 
 原T45仅一次34实际只读COMPLETED0/1.019454s，CORE QA1034834非owner/currenta970/source_routines_matchtrue，原139…0300 ADMIN在职/loginEnabled/hallnull，当前有效session0；原0327根与101102COMMITTED存在。C181PM db72afe0与当前metadata匹配，可复用；另有CURRENT_FORM_READ原证明，不能拿C169旧review冒正常host。0登录/hostRunner/DML/DDL，原15服务保持，元数据不重跑。D1沿原宿主职责补准确QA配置/origin/source graph、原PM+FORM目的组合和原正常登录安全材料ref；无材料则精确给最小QA接续，不猜密码、假认证或借R1。34现存facts已交D1，C三记录唯一维护。
