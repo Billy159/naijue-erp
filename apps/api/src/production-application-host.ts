@@ -23,9 +23,14 @@ function safeRelative(value: string, directory = false): boolean {
   // of that exact root directory and its direct compiled CSS files.
   const compiledStyles = segments[0] === "source-styles" && (directory ? segments.length === 1
     : segments.length === 2 && path.extname(segments[1]!) === ".css");
+  // The trusted emitted graph also has this compiled helper chunk. Keep the
+  // exception to its exact two-segment esbuild hashed JS shape; source trees,
+  // other source-prefixed names and source maps remain forbidden.
+  const compiledSourceHelper = !directory && segments.length === 2 && segments[0] === "chunks"
+    && /^source-helpers-[A-Z0-9]{8}\.js$/.test(segments[1]!);
   return value.length > 0 && value.length < 2048 && !/[\\\x00-\x1f\x7f]/.test(value)
     && segments.every((segment, index) => segment.length > 0 && segment !== "." && segment !== ".."
-      && (!forbidden(segment) || index === 0 && compiledStyles));
+      && (!forbidden(segment) || index === 0 && compiledStyles || index === 1 && compiledSourceHelper));
 }
 /** Same bounded public-output boundary as the local HTTPS host. The reverse proxy
  * serves no source tree: only these captured emitted bytes can leave this host. */

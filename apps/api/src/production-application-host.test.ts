@@ -257,3 +257,30 @@ test("production CORE v14 host: original handler accepts committed subset config
     assert.equal(p.closed(), 0); assert.equal(p.api.app.server.listening, false);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
+
+test("production assets: captured hashed source-helpers chunk resolves without opening source siblings", async () => {
+  const root = await build(), p = apiDouble(), buildId = "SYNTHETIC_HANDLER_CHECK";
+  const chunk = "source-helpers-EEL3XLNG.js", emitted = "export const compiledHelper = 1;";
+  try {
+    await mkdir(path.join(root, "chunks")); await writeFile(path.join(root, "chunks", chunk), emitted);
+    await writeFile(path.join(root, "app.js"), `import "./chunks/${chunk}";`);
+    const blocked = ["source-helpers.js", "source-helpers-EEL3XLNG.ts", "source-helpers-EEL3XLNG.js.map", "source-helpers-eel3xlng.js", "source-helpers-EEL3XLNG.json", "source-private-EEL3XLNG.js", "source-other-EEL3XLNG.js"];
+    // Do not overwrite the real-case fixture on case-insensitive macOS filesystems.
+    for (const name of blocked) if (name !== chunk.toLowerCase()) await writeFile(path.join(root, "chunks", name), "DO_NOT_SERVE");
+    await writeFile(path.join(root, chunk), "DO_NOT_SERVE_ROOT");
+    await mkdir(path.join(root, "source")); await writeFile(path.join(root, "source", chunk), "DO_NOT_SERVE_SOURCE");
+    const handle = await createProductionRequestHandler({ api: p.api, configuration: config(root) });
+    const url = new URL(`./chunks/${chunk}`, `${PRODUCTION_PUBLIC_ORIGIN}/assets/${buildId}/app.js`);
+    const served = invoke(handle, url.pathname); assert.equal(served.status, 200); assert.equal(served.body, emitted);
+    assert.equal(served.headers["content-type"], "text/javascript; charset=utf-8");
+    assert.equal(served.headers["content-length"], Buffer.byteLength(emitted));
+    await writeFile(path.join(root, "chunks", chunk), "CHANGED_AFTER_CAPTURE");
+    assert.equal(invoke(handle, url.pathname).body, emitted);
+    assert.equal(invoke(handle, url.pathname, "HEAD").body, undefined);
+    assert.equal(invoke(handle, url.pathname, "HEAD").status, 200);
+    for (const name of blocked) assert.equal(invoke(handle, `/assets/${buildId}/chunks/${name}`).status, 404, name);
+    for (const name of [chunk, `source/${chunk}`, `chunks/../${chunk}`, `chunks/%2e%2e/${chunk}`, `OTHER_BUILD/chunks/${chunk}`])
+      assert.equal(invoke(handle, `/assets/${name}`).status, 404, name);
+    assert.deepEqual(p.routed, []);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});

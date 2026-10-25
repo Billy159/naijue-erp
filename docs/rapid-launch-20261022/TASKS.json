@@ -5020,7 +5020,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 493,
+    "round": 494,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
     "sourceHeadBeforeThisContinuityCommit": "6d0ec125b338786e73acb6d1d8de3a5330df202d",
     "fixedCandidates": {
@@ -5719,6 +5719,26 @@
       "browser": "QF2category/settings recovery + C nativeAX exact dynamicimport error",
       "owner": "T45",
       "next": "Existing fixedCORE04 pack/manifest/installedfile/static route/MIME one-resource diagnosis. F3 checks shared consumer, no speculativepage fallback."
+    },
+    "hostChunkFix": {
+      "task": "D1-COPIED-PUBLIC-CSS-HOST-COMPILED-HELPER-CHUNK-01",
+      "status": "OWNER_RELEASED_INTEGRATED_NOT_DEPLOYED",
+      "files": {
+        "apps/api/src/production-application-host.ts": "74b3c69f0cba50d558b7a5a6d52911b7712118e2e7cf917bbcf80bf9f140ad4d",
+        "apps/api/src/production-application-host.test.ts": "694eade00018be2d05fd845ac57f12fa8e48a1bdcc2bc2ae20a7cafa12aa63bf"
+      },
+      "actual38": "CORE04-FIXED-CHUNK38-ACTUAL-DIAGNOSIS.json",
+      "cause": "safeRelative source-prefix rejection of exact compiled helper chunk; package/installed/container match",
+      "validation": "Owner targeted3/3 strict0 and actual-handler5473-byte404-to200 adopted; public successor pending",
+      "next": "C fixed complete CORE05 build; original T45 private app and one-chunk/public affected consumer verification"
+    },
+    "salesperson493": {
+      "sourceCommit": "22c6401b25ab53bab8bae3d7b4fcdbac25f8ac07",
+      "syntheticCandidate": "http://127.0.0.1:57917/#sales/new",
+      "build": "phase2-normal-22c6401-28",
+      "backendReview": "QB/slice317-sales-salesperson-required/RESULT.json",
+      "status": "SOURCE_AND_BUILD_PASS_QF_ACTIVE_REAL_SAVE_NOT_TESTED",
+      "rule": "Required; eligible trusted current employee default; other active employee selectable; invalid default requires manual selection; original-key recovery preserved"
     }
   },
   "latestReadySource": {
