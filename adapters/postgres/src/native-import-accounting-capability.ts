@@ -482,19 +482,7 @@ function historyResponsibleProbe(base: string, oldCount: number): string {
     "('transfer_header_audit_values','0c92b020490243f55132a5acb15ecee8caca92fb88db5f75e877e2f2430ec8ad')"
   ]
 ] as const) probe = replaceOne(probe, before, after);
-  // Preserve the old v11/v14/v15 SQL text. Each v16 statement still builds
-  // the identical complete manifest; only its repeated source-body lookup
-  // projects the routine JSON once, instead of expanding it for every pin.
-  probe = replaceOne(probe, ") AS manifest\n)\nSELECT manifest->'identity'",
-    ") AS manifest\n), routine_pins AS MATERIALIZED (\n"
-    + " SELECT actual->>'name' AS name,actual->>'body_sha256' AS body_sha256\n"
-    + " FROM observed CROSS JOIN LATERAL pg_catalog.jsonb_array_elements(manifest->'routines') actual\n"
-    + ")\nSELECT manifest->'identity'");
-  return replaceOne(probe,
-    "SELECT 1 FROM pg_catalog.jsonb_array_elements(manifest->'routines') actual\n"
-    + "     WHERE actual->>'name'=required.name AND actual->>'body_sha256'=required.body_sha256",
-    "SELECT 1 FROM routine_pins actual\n"
-    + "     WHERE actual.name=required.name AND actual.body_sha256=required.body_sha256");
+  return probe;
 }
 export const NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE = historyResponsibleProbe(NATIVE_RUNTIME26_V14_METADATA_PROBE, 123);
 export const NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE = historyResponsibleProbe(NATIVE_RUNTIME26_V15_METADATA_PROBE, 124);

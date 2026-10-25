@@ -5238,20 +5238,34 @@
     }
   ],
   "phase2InventorySource380Closure": {
-    "atUtc": "2026-10-25T02:20:58.232657+00:00",
+    "atUtc": "2026-10-25T03:24:50.642190+00:00",
     "writer": "F2",
     "paths": [
       "apps/web/demo-replica/frontend/runtime/inventory/page.tsx",
       "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx",
       "apps/web/demo-replica/frontend/runtime/inventory/matrix.tsx",
       "apps/web/demo-replica/frontend/runtime/inventory/index.tsx",
-      "apps/web/demo-replica/frontend/runtime/inventory/source-control-css.ts"
+      "apps/web/demo-replica/frontend/runtime/inventory/source-control-css.ts",
+      "apps/web/demo-replica/frontend/runtime/products/preview.tsx"
     ],
-    "status": "PACKAGE_COMPLETE_ZERO_SOURCE_CHANGE",
-    "scope": "Same directly copied Demo inventory page: source380 remaining UI evidence classification and approved dirty hint/control behavior fix only. No old frontend/body, globalCSS/build/bridge/shared-contract/server modifications. Display current-checkbox values are not automatically defaults; do not change unless actual source mismatch proven.",
+    "status": "ACTIVE_F2_USER_SCREENSHOT_PRESENTATION_FIX",
+    "scope": "Latest user images: remove advanced supplier/fit/season outside labels, restore frozen Demo input/popup/preview widths. UI presentation only, no business/event/query or shared resource change.",
     "reports": "QF2/I01-FULL-PAGE-REMAINING-SOURCE380-01",
     "handoff": "OriginalF2 only, technical Solmedium; exact canonical source380 080cd22e9fa810b2904285bea74c5cba694fb67b candidate immutable; C retains shared/root/wiring/build.",
     "browserLease": "RETURNED_TO_C",
     "changedSourceFiles": []
+  },
+  "performanceContinuation389": {
+    "atUtc": "2026-10-25T03:47:35.588718+00:00",
+    "F2": [
+      "apps/web/demo-replica/frontend/runtime/products/detail.tsx"
+    ],
+    "F2_next_existing": [
+      "apps/web/src/inventory/output-adapter.ts"
+    ],
+    "F1": "Historical list consumer assessment; exact additional write leaves require C registration; existing original-workbook owner retained",
+    "D3": "Inventory server construction read-only assessment pending exact write boundary",
+    "C": "Shared resources/runtime styles/build/records unique writer",
+    "rule": "No overlapping writer; no Chrome; no post-render DOM replacement or accumulating conflict CSS"
   }
 }
