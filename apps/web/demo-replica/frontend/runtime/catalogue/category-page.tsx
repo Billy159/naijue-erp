@@ -21,7 +21,7 @@ function SourceTree({ css, children }: { css: string; children: ReactNode }) {
 }
 function SourceEmpty({ options }: { options: CataloguePageOptions }) {
   const host = useRef<HTMLDivElement>(null);
-  useLayoutEffect(() => options.mountEmpty(host.current!), [options]);
+  useLayoutEffect(() => { const release = options.mountEmpty(host.current!); return () => { queueMicrotask(release); }; }, [options]);
   return <div id="pc-category-empty" ref={host} className="iw-empty-host" data-state="idle" data-title="选择分类" data-description="从左侧选择分类查看资料，或新增一级分类。" />;
 }
 function Categories({ options }: { options: CataloguePageOptions }) {
@@ -41,7 +41,20 @@ function Categories({ options }: { options: CataloguePageOptions }) {
   const dirty = !!draft && (draft.original === null || draft.name !== draft.original.name);
   const canWrite = (action: 'CREATE' | 'EDIT' | 'DELETE' | 'REORDER' | 'UNDO_REORDER') => options.scope.active && fresh && !busy && capability?.allowedActions.includes(action) === true;
   const setRecord = useCallback((item: CatalogueSettingsCategory | undefined) => { setSelected(item?.id ?? null); setDraft(item ? { name: item.name, parentId: item.parentId, displayOrder: item.displayOrder, original: item } : null); }, []);
-  useEffect(() => { if (fresh && data && !draft) setRecord(data.items.find(item => item.id === selected) ?? index.children.get(null)?.[0]); }, [data, fresh, draft, selected, setRecord, index]);
+  useEffect(() => {
+    if (!fresh || !data || draft) return;
+    const command = state?.command;
+    if (command && ['submitting', 'checking', 'uncertain', 'committed'].includes(state.phase)) {
+      if ((command.action === 'CREATE' || command.action === 'EDIT') && 'parentId' in command.values) {
+        const original = command.action === 'EDIT' ? data.items.find(item => item.id === command.id) : undefined;
+        if (command.action === 'CREATE' || original) {
+          setSelected(original?.id ?? null); setDraft({ ...command.values, original: original ? { ...original, version: command.action === 'EDIT' ? command.expectedVersion : original.version } : null }); return;
+        }
+      }
+      if (command.action === 'DELETE') { setRecord(data.items.find(item => item.id === command.id)); setDeleting(true); return; }
+    }
+    setRecord(data.items.find(item => item.id === selected) ?? index.children.get(null)?.[0]);
+  }, [data, fresh, draft, selected, setRecord, index, state]);
   useEffect(() => { options.onCanLeaveChange(() => !dirty && !busy); return () => options.onCanLeaveChange(null); }, [options, dirty, busy]);
   const request = (action: () => void) => { if (busy) return; if (dirty) setDeferred(() => action); else action(); };
   const sameOrder = (saved: CategoryOrderResult) => !!data && saved.order.members.every(member => {

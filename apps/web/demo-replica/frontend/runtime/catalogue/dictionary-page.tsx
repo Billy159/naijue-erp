@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
 import type { QueryRead } from '../../../../src/loading/latest-query.ts';
 import type { CatalogueSettingsEntry, CatalogueSettingsPage } from '../../../../src/product-settings/colors/contracts.ts';
 import type { DictionaryPage, DictionarySeason, DictionarySizeGroup, ProductSettingTab } from '../../../../src/product-settings/size-groups/contracts.ts';
-import type { CatalogueMaintenanceResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
+import type { CatalogueMaintenanceCommand, CatalogueMaintenanceResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
 import type { CataloguePageOptions } from './entry.tsx';
 import { EntryEditor, Head, MaintenanceNotice, Pager, ReadNotice, SourceModal, maintenanceUnavailable, tabs, useRead } from './source-controls.tsx';
 
@@ -11,7 +11,10 @@ type Query = { search: string; page: number; pageSize: 20 | 50 | 100 };
 type Page = CatalogueSettingsPage<CatalogueSettingsEntry> | DictionaryPage<DictionarySeason> | DictionaryPage<DictionarySizeGroup>;
 const initial: Query = { search: '', page: 1, pageSize: 20 };
 function Settings({ options }: { options: CataloguePageOptions }) {
-  const [tab, setTab] = useState<ProductSettingTab>(options.initialSettingTab ?? 'colors'), [deferred, setDeferred] = useState<ProductSettingTab | null>(null);
+  const [tab, setTab] = useState<ProductSettingTab>(() => {
+    for (const [kind, target] of [['COLOR', 'colors'], ['FIT', 'fits']] as const) if (['submitting', 'checking', 'uncertain', 'committed'].includes(options.commandOwners?.[kind]?.getSnapshot().phase ?? '')) return target;
+    return options.initialSettingTab ?? 'colors';
+  }), [deferred, setDeferred] = useState<ProductSettingTab | null>(null);
   const guard = useRef<(() => boolean) | null>(null);
   const [locked, setLocked] = useState(false);
   const receiveGuard = useCallback((value: (() => boolean) | null, pending = false) => { guard.current = value; setLocked(pending); }, []);
@@ -26,13 +29,26 @@ function Settings({ options }: { options: CataloguePageOptions }) {
 function Dictionary({ options, tab, guard }: { options: CataloguePageOptions; tab: ProductSettingTab; guard: (value: (() => boolean) | null, locked?: boolean) => void }) {
   const execute = useMemo(() => (read: QueryRead<Query>): Promise<Page> => tab === 'colors' ? options.catalogue.readColors(read) : tab === 'fits' ? options.catalogue.readFits(read) : tab === 'groups' ? options.dictionaries.readSizeGroups(read) : options.dictionaries.readSeasons(read), [tab, options]);
   const { query, snapshot } = useRead(options, execute, initial);
-  const [search, setSearch] = useState(''), [editing, setEditing] = useState<{ entry: CatalogueSettingsEntry | null } | null>(null);
+  const [search, setSearch] = useState(''), [editing, setEditing] = useState<{ entry: CatalogueSettingsEntry | null; resumeCommand?: CatalogueMaintenanceCommand } | null>(null);
   const [notice, setNotice] = useState('');
   const changedOperations = useRef(new Set<string>());
   const parameters = snapshot.request?.parameters ?? initial, data = snapshot.success?.data;
   const fresh = snapshot.phase === 'success';
   const kind = tab === 'colors' ? 'COLOR' : tab === 'fits' ? 'FIT' : null;
   const capability = kind ? options.maintenance?.[kind] : undefined;
+  const owner = kind ? options.commandOwners?.[kind] : undefined;
+  const commandState = useSyncExternalStore(owner?.subscribe ?? (() => () => {}), owner?.getSnapshot ?? (() => null), owner?.getSnapshot ?? (() => null));
+  useEffect(() => {
+    const command = commandState?.command;
+    if (editing || !command || !['submitting', 'checking', 'uncertain', 'committed'].includes(commandState.phase)) return;
+    if (command.action === 'CREATE') { setEditing({ entry: null, resumeCommand: command }); return; }
+    if (command.action === 'EDIT' && 'code' in command.values) setEditing({ entry: { id: command.id, version: command.expectedVersion, ...command.values }, resumeCommand: command });
+    else if (command.action === 'DELETE') {
+      const target = data?.items.find(item => item.id === command.id);
+      setEditing({ entry: target && 'code' in target && typeof target.code === 'string' && 'version' in target && typeof target.version === 'number' && 'enabled' in target && typeof target.enabled === 'boolean'
+        ? { id: target.id, name: target.name, code: target.code, version: target.version, enabled: target.enabled } : null, resumeCommand: command });
+    }
+  }, [commandState, editing, data]);
   const label = tabs.find(([key]) => key === tab)![1];
   const read = (next: Query) => { void query.run(next); };
   async function saved(result: CatalogueMaintenanceResult, action: string, code: string) {
@@ -59,7 +75,7 @@ function Dictionary({ options, tab, guard }: { options: CataloguePageOptions; ta
     {fresh && data?.total === 0 && <div className="empty">没有匹配的数据</div>}
     {data && <Pager options={options} disabled={!fresh} page={data.page} pageSize={data.pageSize} total={data.total} change={(page, pageSize) => read({ search: parameters.search, page, pageSize })} />}
     <ReadNotice phase={snapshot.phase} error={snapshot.error} retry={() => read({ ...parameters })} cancel={() => query.cancel()} /><div role="status" className="hint spaced">{notice}</div>
-    {editing && capability && <EntryEditor options={options} capability={capability} entry={editing.entry} guard={guard} close={() => setEditing(null)} saved={saved} />}
+    {editing && capability && <EntryEditor options={options} capability={capability} entry={editing.entry} {...(editing.resumeCommand ? { resumeCommand: editing.resumeCommand } : {})} guard={guard} close={() => setEditing(null)} saved={saved} />}
   </div>;
 }
 export function mount(host: HTMLElement, options: CataloguePageOptions) { const root = createRoot(host); root.render(<Settings options={options} />); return () => root.unmount(); }

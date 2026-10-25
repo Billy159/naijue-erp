@@ -4,12 +4,15 @@ import type { CatalogueMaintenanceCapability } from '../../../../src/product-set
 import { createCatalogueSettingsHttpReader } from '../../../../src/product-settings/colors/http-reader.ts';
 import { createDictionaryHttpReader } from '../../../../src/product-settings/size-groups/http-reader.ts';
 import type { ProductSettingTab } from '../../../../src/product-settings/size-groups/contracts.ts';
+import type { CatalogueEditorController } from '../../../../src/product-settings/catalogue-maintenance-state.ts';
 
 export interface CatalogueRuntimeOptions {
   readonly scope: ReadScope;
   readonly http: HttpQueryOptions;
   readonly initialSettingTab?: ProductSettingTab;
   readonly maintenance?: Partial<Record<'CATEGORY' | 'COLOR' | 'FIT', CatalogueMaintenanceCapability>>;
+  /** Existing controllers owned by the current session, not by page mount. */
+  readonly commandOwners?: Partial<Record<'CATEGORY' | 'COLOR' | 'FIT', CatalogueEditorController>>;
   readonly onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void;
   readonly onCanLeaveChange: (guard: (() => boolean) | null) => void;
   /** Current product consumers invalidate their own affected directory reads. */

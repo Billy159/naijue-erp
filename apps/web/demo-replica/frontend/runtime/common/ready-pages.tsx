@@ -10,6 +10,8 @@ import {createInventoryProductActivation} from './inventory-product-activation.t
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { ProductionHostConfiguration } from '../../../../src/production-host/configuration.ts';
 import type { CatalogueRuntimeOptions } from '../catalogue/entry.tsx';
+import type { CatalogueCommandSession } from '../catalogue/session.ts';
+import type { CatalogueMaintenanceCommand } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
 import type { InventoryMountOptions } from '../inventory/index.tsx';
 import type { StoreMaintenanceWorkspace } from '../../../../src/settings/stores/maintenance-controller.ts';
 import type { PartyWorkspace } from '../../../../src/parties/controller.ts';
@@ -45,10 +47,14 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
   let sales: ReplicaSalesSession | null = null, salesView: SalesListViewState | null = null;
   let transfers:ReplicaTransferSession|null=null,transferView:TransferListViewState|null=null;
   const productRecovery = new Map<string | null, ProductMaintenanceCommand>();
+  let catalogue: CatalogueCommandSession | undefined;
+  // Invalidated identities retain their exact unresolved command for handoff;
+  // they never authorize a new identity or trigger an automatic replay.
+  const catalogueRecovery = new Map<string, { readonly identity: ReadScope['identity']; readonly kind: 'CATEGORY'|'COLOR'|'FIT'; readonly command: CatalogueMaintenanceCommand }>();
   let stores: StoreMaintenanceWorkspace | undefined, parties: PartyWorkspace | undefined;
   let staff: StaffSettingsWorkspace | undefined, accounts: AccountSettingsWorkspace | undefined, payments: PaymentSettingsWorkspace | undefined;
   const access = (kind: 'unauthenticated' | 'forbidden') => session.onAccessFailure({ kind });
-  const unresolved = () => !!(transfers?.scope.active&&(transfers.workspace.hasUnresolvedWrite||[...transfers.historyOwners.values()].some(entry=>entry.owner.unresolved))) || !!(sales?.scope.active && sales.editor.commands.hasUnresolvedWrite || sales?.scope.active&&[...sales.historyOwners.values()].some(entry=>entry.owner.unresolved)) || !!owner?.active && !!(stores?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite() || staff?.hasUnresolvedWrite() || accounts?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite());
+  const unresolved = () => !!catalogue?.hasUnresolvedWrite() || !!(transfers?.scope.active&&(transfers.workspace.hasUnresolvedWrite||[...transfers.historyOwners.values()].some(entry=>entry.owner.unresolved))) || !!(sales?.scope.active && sales.editor.commands.hasUnresolvedWrite || sales?.scope.active&&[...sales.historyOwners.values()].some(entry=>entry.owner.unresolved)) || !!owner?.active && !!(stores?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite() || staff?.hasUnresolvedWrite() || accounts?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite());
   const ownerScope = () => {
     if (!owner?.active) {
       owner = session.reads.createScope('replica-settings-session');
@@ -60,6 +66,18 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
   const enabled = (flag: boolean | undefined, admin = false) => () => {
     const auth = session.auth.getSnapshot();
     return flag === true && auth.phase === 'authenticated' && (auth.principal?.role === 'ADMIN' || !admin && auth.principal?.role === 'WAREHOUSE');
+  };
+  const catalogueCommands = async (page: ReadScope): Promise<CatalogueCommandSession | undefined> => {
+    const flags = options.routes.maintenance;
+    if (![flags?.categories, flags?.colors, flags?.fits].some(flag => enabled(flag)())) return undefined;
+    if (catalogue?.scope.active) return catalogue;
+    const module = await import('../catalogue/session.ts');
+    if (!page.active || session.auth.getSnapshot().principal?.accountId !== page.identity.accountId) return undefined;
+    const identity = Object.freeze({ ...page.identity });
+    catalogue = module.createCatalogueCommandSession(session, flags, options.newRequestKey, (kind, command) => {
+      catalogueRecovery.set(command.requestKey, { identity, kind, command: snapshotQueryParameters(command) });
+    });
+    return catalogue;
   };
   const audit = () => {
     const role = session.auth.getSnapshot().principal?.role;
@@ -137,7 +155,8 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       let guard: (() => boolean) | null = null, inlineGuard: (() => boolean) | null = null, destination: string | null = null, queued = false;
       const handoff = (next: string) => { guard = null; destination = next; if (!queued) { queued = true; queueMicrotask(() => { queued = false; if (scope.active && destination) navigate(destination); }); } };
       const detailReader = full.createProductFullPageHttpReader(http, ['stock'], config.productStockOverview ? { stockOverview: true } : {});
-      const dictionary = dictionaries.createDictionaryHttpReader(http), maintenance = options.catalogue.maintenance;
+      const dictionary = dictionaries.createDictionaryHttpReader(http), catalogueSession = await catalogueCommands(scope), maintenance = catalogueSession?.maintenance;
+      if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       const capability: ProductEditorCapability = {
         loadStyles: () => prepareRoute(route, scope.signal), reader: clients.createProductMaintenanceHttpReaderV2(http), client: clients.createProductMaintenanceHttpClientV2(http), newRequestKey: options.newRequestKey,
         allowedActions: ['CREATE','EDIT','DISABLE','RESTORE','DELETE'],
@@ -149,7 +168,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
         ...(maintenance?.COLOR || maintenance?.FIT ? { catalogueMaintenance: { ...(maintenance.COLOR ? { colors: maintenance.COLOR } : {}), ...(maintenance.FIT ? { fits: maintenance.FIT } : {}) } } : {}),
       };
       const dispose = module.mountProductEditor(host, { parent: scope, productId, capability, http,
-        catalogueOptions: { ...options.catalogue, scope, http, catalogue: catalogueReaders.createCatalogueSettingsHttpReader(http), dictionaries: dictionary, renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, onAccessFailure: access, onCanLeaveChange: value => { inlineGuard = value; } },
+        catalogueOptions: { onChanged: options.catalogue.onChanged, ...(catalogueSession ? { maintenance: catalogueSession.maintenance, commandOwners: catalogueSession.commandOwners } : {}), scope, http, catalogue: catalogueReaders.createCatalogueSettingsHttpReader(http), dictionaries: dictionary, renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, onAccessFailure: access, onCanLeaveChange: value => { inlineGuard = value; } },
         onAccessFailure: session.onAccessFailure, onCanLeaveChange: value => { guard = value; }, onClose: () => handoff('products'), onSaved: id => handoff('products/view/' + encodeURIComponent(id)),
       });
       return { dispose, canLeave: () => (guard?.() ?? true) && (inlineGuard?.() ?? true) };
@@ -170,9 +189,11 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     if ((route === 'product-categories' && config.productCategories) || (route === 'product-settings' && config.productSettings) || (route === 'barcode-schemes' && config.barcodeSchemes)) {
       const [module, helpers] = await Promise.all([import('../catalogue/entry.tsx'), import('./source-helpers.tsx')]);
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
+      const catalogueSession = route === 'barcode-schemes' ? undefined : await catalogueCommands(scope);
+      if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       let guard: (() => boolean) | null = null;
       const dispose = await module.mountCatalogue(host, route as 'product-categories' | 'product-settings' | 'barcode-schemes', {
-        ...options.catalogue, renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, scope, http, onAccessFailure: access, onCanLeaveChange: value => { guard = value; },
+        onChanged: options.catalogue.onChanged, ...(catalogueSession ? { maintenance: catalogueSession.maintenance, commandOwners: catalogueSession.commandOwners } : {}), renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, scope, http, onAccessFailure: access, onCanLeaveChange: value => { guard = value; },
         ...(config.productSettings ? { initialSettingTab: config.productSettings.initialTab } : {}),
       });
       return { dispose, canLeave: () => guard?.() ?? true };
@@ -224,5 +245,5 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       throw new Error('此页面尚未接入当前版本。');
     } catch (error) { release(); throw error; }
   }
-  return { mount, hasUnresolvedWrite: unresolved, dispose: () => { transfers?.dispose();transfers=null;sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
+  return { mount, hasUnresolvedWrite: unresolved, retainedCatalogueCommands: () => [...catalogueRecovery.values()], dispose: () => { catalogue?.dispose();catalogue=undefined;transfers?.dispose();transfers=null;sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
 }

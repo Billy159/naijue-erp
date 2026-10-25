@@ -4,7 +4,7 @@ import { Input, Modal } from '@arco-design/web-react';
 import { LatestQuery, type QueryRead } from '../../../../src/loading/latest-query.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { CatalogueEditorController, type CatalogueEditorDraft } from '../../../../src/product-settings/catalogue-maintenance-state.ts';
-import type { CatalogueMaintenanceResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
+import type { CatalogueMaintenanceCommand, CatalogueMaintenanceResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
 import type { CatalogueMaintenanceCapability } from '../../../../src/product-settings/colors/contracts.ts';
 import type { CataloguePageOptions } from './entry.tsx';
 import { Pagination } from '../inventory/pagination.tsx';
@@ -45,8 +45,9 @@ export function Pager({ options, page, pageSize, total, change, disabled = false
 }
 
 export function useCommand(options: CataloguePageOptions, capability: CatalogueMaintenanceCapability | undefined) {
-  const controller = useMemo(() => capability ? new CatalogueEditorController({ ...capability, scope: options.scope, onAccessFailure: error => { options.scope.dispose(); options.onAccessFailure(error.kind === 'unauthenticated' ? 'unauthenticated' : 'forbidden'); } }) : null, [options.scope, capability]);
-  useEffect(() => () => controller?.dispose(), [controller]);
+  const borrowed = capability ? options.commandOwners?.[capability.kind] : undefined;
+  const controller = useMemo(() => borrowed ?? (capability ? new CatalogueEditorController({ ...capability, scope: options.scope, onAccessFailure: error => { options.scope.dispose(); options.onAccessFailure(error.kind === 'unauthenticated' ? 'unauthenticated' : 'forbidden'); } }) : null), [options.scope, capability, borrowed]);
+  useEffect(() => () => { if (!borrowed) controller?.dispose(); }, [controller, borrowed]);
   const state = useSyncExternalStore(controller?.subscribe ?? (() => () => {}), controller?.getSnapshot ?? (() => null), controller?.getSnapshot ?? (() => null));
   return { controller, state };
 }
@@ -56,13 +57,15 @@ export function Recovery({ controller }: { controller: CatalogueEditorController
     {state.phase === 'uncertain' && <><button className="btn ghost" onClick={() => { if (controller.getSnapshot().phase === 'uncertain') void controller.recover(); }}>查回原请求结果</button><button className="btn ghost" onClick={() => { if (controller.getSnapshot().phase === 'uncertain') void controller.retryOriginal(); }}>按原请求重试</button></>}</div>;
 }
 
-export function EntryEditor({ options, capability, entry, close, saved, guard }: {
+export function EntryEditor({ options, capability, entry, resumeCommand, close, saved, guard }: {
   options: CataloguePageOptions; capability: CatalogueMaintenanceCapability;
   entry: { id: string; name: string; code: string; enabled: boolean; version: number } | null;
+  resumeCommand?: CatalogueMaintenanceCommand;
   close: () => void; saved: (result: CatalogueMaintenanceResult, action: string, code: string) => Promise<boolean>;
   guard: (value: (() => boolean) | null, locked?: boolean) => void;
 }) {
-  const [name, setName] = useState(entry?.name ?? ''), [code, setCode] = useState(entry?.code ?? ''), [confirm, setConfirm] = useState(false), [error, setError] = useState('');
+  const resumedValues = resumeCommand && 'values' in resumeCommand && 'code' in resumeCommand.values ? resumeCommand.values : null;
+  const [name, setName] = useState(resumedValues?.name ?? entry?.name ?? ''), [code, setCode] = useState(resumedValues?.code ?? entry?.code ?? ''), [confirm, setConfirm] = useState(resumeCommand?.action === 'DELETE'), [error, setError] = useState('');
   const { controller, state } = useCommand(options, capability);
   const dirty = name !== (entry?.name ?? '') || code !== (entry?.code ?? '');
   const busy = !!state && !['idle', 'rejected'].includes(state.phase);
@@ -72,7 +75,11 @@ export function EntryEditor({ options, capability, entry, close, saved, guard }:
   async function finish() {
     if (!state?.result || !state.command || finishing.current) return;
     finishing.current = true;
-    if (await saved(state.result, state.command.action, code.trim())) close();
+    const { result, command } = state;
+    if (await saved(result, command.action, code.trim())) {
+      if (controller?.getSnapshot().phase === 'committed') controller.resetAfterReload(result.targetId, result.version);
+      close();
+    }
     finishing.current = false;
   }
   useEffect(() => { if (state?.phase === 'committed') void finish(); }, [state]);
@@ -80,9 +87,11 @@ export function EntryEditor({ options, capability, entry, close, saved, guard }:
     if (!controller || busy) return;
     if (!deleting && (!name.trim() || !code.trim())) { setError('请填写必填资料'); return; }
     if (!deleting && !entry && capability.kind === 'FIT' && !/^[A-Z]$/.test(code.trim())) { setError('版型编码请填写一个大写英文字母'); return; }
+    const target = entry ?? (resumeCommand && 'id' in resumeCommand ? { id: resumeCommand.id, version: resumeCommand.expectedVersion } : null);
     const action = deleting ? 'DELETE' : entry ? 'EDIT' : 'CREATE';
     if (!capability.allowedActions.includes(action)) return;
-    const draft: CatalogueEditorDraft = deleting && entry ? { action: 'DELETE', id: entry.id, expectedVersion: entry.version }
+    if (deleting && !target) return;
+    const draft: CatalogueEditorDraft = deleting && target ? { action: 'DELETE', id: target.id, expectedVersion: target.version }
       : entry ? { action: 'EDIT', id: entry.id, expectedVersion: entry.version, values: { name: name.trim(), code: code.trim(), enabled: entry.enabled } }
       : { action: 'CREATE', values: { name: name.trim(), code: code.trim(), enabled: true } };
     setError(''); try { await controller.submit(draft); } catch (value) { setError(value instanceof Error ? value.message : '请求未发送'); }
@@ -90,7 +99,7 @@ export function EntryEditor({ options, capability, entry, close, saved, guard }:
   const cancel = () => { if (!busy) close(); };
   return <SourceModal title={confirm ? `确认删除${title}` : `${entry ? '编辑' : '新增'}${title}`} close={cancel} footer={<>
     {!confirm && entry && capability.allowedActions.includes('DELETE') && <button className="btn ghost pc-danger pc-delete-left" disabled={busy} onClick={() => setConfirm(true)}>删除</button>}
-    <button className="btn" disabled={busy} onClick={() => confirm ? setConfirm(false) : cancel()}>取消</button>
+    <button className="btn" disabled={busy} onClick={() => confirm && entry ? setConfirm(false) : cancel()}>取消</button>
     <button className={`btn ${confirm ? 'pc-danger-solid' : 'primary'}`} disabled={busy || !capability.allowedActions.includes(confirm ? 'DELETE' : entry ? 'EDIT' : 'CREATE')} onClick={() => void submit(confirm)}>{confirm ? '确认删除' : '确定'}</button>
   </>}>
     {confirm ? <p>删除该{title}后无法恢复，确定继续吗？</p> : <form id="pc-dict-form" onSubmit={event => { event.preventDefault(); void submit(); }}>
