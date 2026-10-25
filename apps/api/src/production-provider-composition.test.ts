@@ -1697,3 +1697,104 @@ test('unified original hosts preserve normal reader and original maintenance rec
     } finally { f.cleanup(); }
   }
 });
+
+
+test('complete host bridge: R2 commands and independent HISTORY policy share original pool with selected native organization maintenance', async () => {
+  const f = mixedProductionFixture(true), p = exact26Driver(f.observation, sql => sql === V16HistoryProbe ? [structuredClone(f.observation)] : undefined);
+  const selected = { ...r2Configuration(f.configuration, true, false), organizationMaintenance: true as const };
+  let grants = 0;
+  const policy = { async authorize(): Promise<never> { assert.equal(this, policy); grants++; throw new DomainError('FORBIDDEN', 'SYNTHETIC_INDEPENDENT_HISTORY_DENIAL'); } };
+  try {
+    const promise = createProductionRuntime26R2ApplicationApi(selected, p.factory, null, { authorization: policy });
+    policy.authorize = async () => { throw Error('Mutated policy must not be used'); };
+    const api = await promise;
+    try {
+      for (const kind of ['sales', 'transfers']) {
+        assert.ok(api.app.hasRoute({method:'POST',url:`/${kind}/commands`}));
+        assert.ok(api.app.hasRoute({method:'POST',url:`/imported-history/${kind}/revise`}));
+        assert.equal(api.app.hasRoute({method:'POST',url:`/${kind}/prepare-existing`}), kind === 'sales');
+      }
+      for (const kind of ['halls', 'warehouses']) for (const route of ['commands', 'query', 'detail/query'])
+        assert.ok(api.app.hasRoute({method:'POST',url:`/organization/${kind}/${route}`}));
+      const before=p.counts().connects;
+      const unauth=await api.app.inject({method:'POST',url:'/organization/halls/commands',payload:{}});
+      assert.equal(unauth.statusCode,401);assert.equal(p.counts().connects,before);
+      const denied=await api.app.inject({method:'POST',url:'/imported-history/sales/revise',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`},payload:{
+        kind:'sales',documentId:'00000000-0000-4000-8000-000000000181',expectedVersion:1,requestKey:'synthetic-complete-bridge-history-denial',reason:'Synthetic quantity correction',
+        lines:[{lineId:'00000000-0000-4000-8000-000000000182',quantity:'2'}],totals:null,settlements:[]}});
+      assert.equal(denied.statusCode,403,denied.body);assert.equal(grants,1);
+      assert.ok(!p.calls.some(c=>c.sql.includes('history-revise:')));
+      assert.equal(p.counts().allocations,1);assert.equal(api.app.server.listening,false);
+    } finally { await api.close(); }
+    assert.equal(p.counts().connects,p.counts().releases);assert.equal(p.counts().ends,1);
+  } finally {f.cleanup();}
+});
+
+test('complete host bridge: history remains a trusted independent parameter and exact reviewed purpose; new organization selector defaults off', async () => {
+  const f=mixedProductionFixture(false);let allocations=0;
+  const noDriver=()=>{allocations++;throw Error('Invalid policy must reject before pool');};
+  try {
+    const config=r2Configuration(f.configuration,false,false);
+    for(const value of [false,null,'true',{},undefined]) assert.throws(()=>parseProductionRuntime26R2Configuration({...config,organizationMaintenance:value}),TypeError);
+    for(const history of [{},{authorization:{}},{authorization:{authorize:true}},{authorization:{authorize(){ }},extra:true}])
+      await assert.rejects(createProductionRuntime26R2ApplicationApi(config,noDriver,null,history as never),TypeError);
+    assert.equal(allocations,0);
+    const p=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);
+    await assert.rejects(createProductionRuntime26R2ApplicationApi(config,p.factory,null,{authorization:{async authorize():Promise<never>{throw Error('No request');}}}),{code:'NATIVE_RUNTIME26_NOT_READY'});
+    assert.equal(p.counts().ends,1);assert.equal(p.counts().connects,p.counts().releases);
+    const q=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);
+    const api=await createProductionRuntime26R2ApplicationApi(config,q.factory);
+    try {assert.equal(api.app.hasRoute({method:'POST',url:'/organization/halls/commands'}),false);assert.equal(api.app.hasRoute({method:'POST',url:'/imported-history/sales/revise'}),false);}finally{await api.close();}
+  }finally{f.cleanup();}
+});
+
+test('complete host bridge: R3 retains original media and all selected maintenance plus HISTORY without duplicate product routes', async () => {
+  const f=mixedProductionFixture(true),p=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);
+  const config={...r2Configuration(f.configuration,false,true),organizationMaintenance:true as const,profile:'source-confirmed-native-exact26-r3-v1' as const,productMedia:{root:'/unopened-private-media',rootKey:'original-media'}};
+  try{
+    assert.deepEqual(parseProductionRuntime26R3Configuration(config),config);
+    const api=await createProductionRuntime26R3ApplicationApi(config,p.factory,null,{authorization:{async authorize():Promise<never>{throw Error('Not a request');}}});
+    try{
+      for(const url of ['/products/v2/commands','/staff/commands','/payment/accounts/commands','/customers/commands','/catalogue/colors/commands','/organization/warehouses/commands','/imported-history/transfers/revise','/sales/commands','/transfers/prepare-existing']) assert.ok(api.app.hasRoute({method:'POST',url}),url);
+      assert.equal(p.counts().allocations,1);assert.equal(api.app.server.listening,false);
+    }finally{await api.close();}
+    assert.equal(p.counts().connects,p.counts().releases);assert.equal(p.counts().ends,1);
+  }finally{f.cleanup();}
+});
+
+
+test('complete host bridge: CORE organization opt-in reads native maintained roots and receipts while unrelated CORE modules retain their scopes', async () => {
+  const f=categoryProductionFixture('26_v16_history_responsible_from_v14',true,true);
+  const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));review.purposes.push('CURRENT_CUSTOMER_READ_WRITE');
+  const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
+  f.configuration.runtime26Review={...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')};
+  const operation='00000000-0000-4000-8000-000000000191', target='00000000-0000-4000-8000-000000000192', key='synthetic-native-hall-receipt';
+  const result={operationId:operation,kind:'HALL',targetId:target,version:2};
+  const p=exact26Driver(f.observation,(sql)=>{
+    if(sql===V16HistoryProbe)return [structuredClone(f.observation)];
+    if(sql.includes('maintenance:identity'))return [{account_id:account,staff_id:'00000000-0000-4000-8000-000000000003',login_enabled:true,role:'ADMIN',employment_status:'在职',hall_id:hall}];
+    if(sql.includes('maintenance:administrator-lock'))return [];
+    if(sql.includes('maintenance:hall'))return [{id:hall,enabled:true}];
+    if(sql.includes('maintenance:receipt'))return [{id:operation,request_hash:'c'.repeat(64),action:'EDIT',target_type:'HALL',target_id:target,result_data:result,completed_at:'2026-10-25T00:00:00.000000Z'}];
+    if(sql.includes('WITH matched AS')){assert.ok(!sql.includes('ANY('));return [{total:'0',items:[]}];}
+    return undefined;
+  });
+  try{
+    const api=await createProductionRuntime26ApplicationApi({...f.configuration,organizationMaintenance:true,coreReadModules:['organization']},p.factory);
+    try{
+      const headers={origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`};
+      const receipt=await api.app.inject({method:'GET',url:`/organization/halls/receipts/${key}`,headers});
+      assert.equal(receipt.statusCode,200,receipt.body);assert.deepEqual(receipt.json().result,result);
+      for(const kind of ['halls','warehouses']){
+        const r=await api.app.inject({method:'POST',url:`/organization/${kind}/query`,headers,payload:{search:'',status:'all',hallId:null,page:1,pageSize:20}});
+        assert.equal(r.statusCode,200,r.body);assert.equal(r.json().total,0);
+      }
+      assert.ok(api.app.hasRoute({method:'POST',url:'/staff/query'}));assert.ok(api.app.hasRoute({method:'POST',url:'/accounts/query'}));
+      assert.equal(api.app.hasRoute({method:'POST',url:'/sales/commands'}),false);
+      assert.ok(!p.calls.some(c=>c.sql.includes('core-settings:committed-proof')));
+      assert.ok(!p.calls.some(c=>/^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)));
+      assert.equal(p.counts().allocations,1);
+    }finally{await api.close();}
+    assert.equal(p.counts().connects,p.counts().releases);
+  }finally{f.cleanup();}
+});

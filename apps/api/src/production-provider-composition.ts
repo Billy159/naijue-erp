@@ -104,6 +104,7 @@ export interface ProductionRuntime26Configuration extends Omit<ProductionRuntime
   /** Approved v14 only: real committed CORE identity, supplied by the deployment owner. */
   readonly coreInitializationRead?: CommittedCoreReadBinding;
   readonly coreReadModules?: readonly CoreReadModule[];
+  readonly organizationMaintenance?: true;
   readonly catalogueMaintenance?: true;
   readonly paymentMaintenance?: true;
   readonly partyMaintenance?: true;
@@ -112,7 +113,7 @@ export interface ProductionRuntime26Configuration extends Omit<ProductionRuntime
 }
 export function parseProductionRuntime26Configuration(input: unknown): ProductionRuntime26Configuration {
   const coreSelected = input !== null && typeof input === "object" && Object.hasOwn(input, "coreInitializationRead");
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", ...(coreSelected ? ["coreInitializationRead"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "productMaintenance") ? ["productMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "staffMaintenance") ? ["staffMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "partyMaintenance") ? ["partyMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "paymentMaintenance") ? ["paymentMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "catalogueMaintenance") ? ["catalogueMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "coreReadModules") ? ["coreReadModules"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", ...(coreSelected ? ["coreInitializationRead"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "organizationMaintenance") ? ["organizationMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "productMaintenance") ? ["productMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "staffMaintenance") ? ["staffMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "partyMaintenance") ? ["partyMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "paymentMaintenance") ? ["paymentMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "catalogueMaintenance") ? ["catalogueMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "coreReadModules") ? ["coreReadModules"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const review = bag(c.runtime26Review, ["reviewFile", "trustedReviewSha256"]);
   if (c.profile !== "source-confirmed-native-exact26-r1-v1" || c.documentCommands !== "DISABLED"
     || !text(review.reviewFile) || !path.isAbsolute(review.reviewFile) || path.resolve(review.reviewFile) !== review.reviewFile
@@ -127,6 +128,7 @@ export function parseProductionRuntime26Configuration(input: unknown): Productio
       throw new TypeError("Exact committed CORE receipt, batch and input digest required");
     coreInitializationRead = structuredClone(core) as unknown as CommittedCoreReadBinding;
   }
+  if (Object.hasOwn(c, "organizationMaintenance") && c.organizationMaintenance !== true) throw new TypeError("Explicit organization maintenance selection required");
   if (Object.hasOwn(c, "catalogueMaintenance") && c.catalogueMaintenance !== true) throw new TypeError("Explicit catalogue maintenance selection required");
   if (Object.hasOwn(c, "paymentMaintenance") && c.paymentMaintenance !== true) throw new TypeError("Explicit payment maintenance selection required");
   if (Object.hasOwn(c, "partyMaintenance") && c.partyMaintenance !== true) throw new TypeError("Explicit party maintenance selection required");
@@ -134,10 +136,11 @@ export function parseProductionRuntime26Configuration(input: unknown): Productio
   if (Object.hasOwn(c, "productMaintenance") && c.productMaintenance !== true) throw new TypeError("Explicit product maintenance selection required");
   const coreReadModules = Object.hasOwn(c, "coreReadModules") ? checkedCoreReadModules(c.coreReadModules) : undefined;
   if (coreReadModules !== undefined && !coreSelected) throw new TypeError("CORE modules require the committed CORE profile");
-  const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, productMaintenance: _product, staffMaintenance: _staff, ...base } = c;
+  const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, organizationMaintenance: _organization, catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, productMaintenance: _product, staffMaintenance: _staff, ...base } = c;
   const checked = parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
   return { ...checked, profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",
     runtime26Review: { reviewFile: review.reviewFile, trustedReviewSha256: review.trustedReviewSha256 },
+    ...(c.organizationMaintenance === true ? { organizationMaintenance: true as const } : {}),
     ...(c.catalogueMaintenance === true ? { catalogueMaintenance: true as const } : {}),
     ...(c.paymentMaintenance === true ? { paymentMaintenance: true as const } : {}),
     ...(c.partyMaintenance === true ? { partyMaintenance: true as const } : {}),
@@ -148,16 +151,17 @@ export function parseProductionRuntime26Configuration(input: unknown): Productio
 /** Host-only adaptation after explicit successor validation. The metadata review
  * never enters public build/health output or the legacy application factory. */
 export function productionRuntime26HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
-  const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, productMaintenance: _product, staffMaintenance: _staff, ...base } = parseProductionRuntime26Configuration(input);
+  const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, organizationMaintenance: _organization, catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, productMaintenance: _product, staffMaintenance: _staff, ...base } = parseProductionRuntime26Configuration(input);
   return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
 }
 type MaintenanceSelection = Pick<ProductionRuntime26Configuration,
-  "catalogueMaintenance" | "paymentMaintenance" | "partyMaintenance" | "staffMaintenance" | "productMaintenance">;
+  "organizationMaintenance" | "catalogueMaintenance" | "paymentMaintenance" | "partyMaintenance" | "staffMaintenance" | "productMaintenance">;
 /** Same private opt-ins across original hosts; no JSON credential or ambient write grant. */
 function maintenanceOptions(config: MaintenanceSelection, staffCredentialRequestTag: CredentialRequestTag | null) {
   if (staffCredentialRequestTag !== null && (typeof staffCredentialRequestTag !== "function" || config.staffMaintenance !== true))
     throw new TypeError("Stable staff credential capability requires explicit staff maintenance selection");
   return {
+    ...(config.organizationMaintenance === true ? { organizationMaintenance: true as const } : {}),
     ...(config.catalogueMaintenance === true ? { catalogueMaintenance: true as const } : {}),
     ...(config.paymentMaintenance === true ? { paymentMaintenance: true as const } : {}),
     ...(config.partyMaintenance === true ? { partyMaintenance: true as const } : {}),
@@ -196,7 +200,7 @@ export interface ProductionRuntime26R2Configuration extends Omit<ProductionRunti
 }
 export function parseProductionRuntime26R2Configuration(input: unknown): ProductionRuntime26R2Configuration {
   const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation",
-    ...(input !== null && typeof input === "object" ? ["catalogueMaintenance", "paymentMaintenance", "partyMaintenance", "staffMaintenance", "productMaintenance"].filter(key => Object.hasOwn(input, key)) : []),
+    ...(input !== null && typeof input === "object" ? ["organizationMaintenance", "catalogueMaintenance", "paymentMaintenance", "partyMaintenance", "staffMaintenance", "productMaintenance"].filter(key => Object.hasOwn(input, key)) : []),
     ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const preparation = bag(c.existingPreparation, ["sales", "transfers"]);
   if (c.profile !== "source-confirmed-native-exact26-r2-v1" || c.documentCommands !== "NATIVE_RUNTIME"
@@ -209,16 +213,16 @@ export function parseProductionRuntime26R2Configuration(input: unknown): Product
 }
 export function productionRuntime26R2HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
   const { runtime26Review: _review, existingPreparation: _preparation,
-    catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, staffMaintenance: _staff, productMaintenance: _product,
+    organizationMaintenance: _organization, catalogueMaintenance: _catalogue, paymentMaintenance: _payment, partyMaintenance: _party, staffMaintenance: _staff, productMaintenance: _product,
     ...base } = parseProductionRuntime26R2Configuration(input);
   return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
 }
 export async function createProductionRuntime26R2ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
+  staffCredentialRequestTag: CredentialRequestTag | null = null, history?: Runtime26HistoryRevisionConfiguration): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26R2Configuration(input);
   return createPostgresRuntime26DocumentApplicationApi(
     { ...productionApplicationOptions(productionRuntime26R2HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) },
-    config.runtime26Review, config.existingPreparation, driver);
+    config.runtime26Review, config.existingPreparation, driver, history);
 }
 
 /** R3 uses the original media implementation with an explicit private root.
@@ -228,7 +232,8 @@ export interface ProductionRuntime26R3Configuration extends Omit<ProductionRunti
   readonly productMedia: { readonly root: string; readonly rootKey: string };
 }
 export function parseProductionRuntime26R3Configuration(input: unknown): ProductionRuntime26R3Configuration {
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation", "productMedia", ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation", "productMedia",
+    ...(input !== null && typeof input === "object" ? ["organizationMaintenance", "catalogueMaintenance", "paymentMaintenance", "partyMaintenance", "staffMaintenance", "productMaintenance"].filter(key => Object.hasOwn(input, key)) : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const media = bag(c.productMedia, ["root", "rootKey"]);
   if (c.profile !== "source-confirmed-native-exact26-r3-v1" || !text(media.root) || !path.isAbsolute(media.root)
     || path.resolve(media.root) !== media.root || typeof media.rootKey !== "string" || !/^[A-Za-z0-9_-]{1,100}$/.test(media.rootKey))
@@ -241,8 +246,9 @@ export function productionRuntime26R3HostConfiguration(input: unknown): Producti
   const { productMedia: _media, ...base } = parseProductionRuntime26R3Configuration(input);
   return productionRuntime26R2HostConfiguration({ ...base, profile: "source-confirmed-native-exact26-r2-v1" });
 }
-export async function createProductionRuntime26R3ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+export async function createProductionRuntime26R3ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
+  staffCredentialRequestTag: CredentialRequestTag | null = null, history?: Runtime26HistoryRevisionConfiguration): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26R3Configuration(input);
-  return createPostgresRuntime26MediaApplicationApi(productionApplicationOptions(productionRuntime26R3HostConfiguration(config)),
-    config.runtime26Review, config.existingPreparation, { ...config.productMedia, publicRoots: [config.assets.root] }, driver);
+  return createPostgresRuntime26MediaApplicationApi({ ...productionApplicationOptions(productionRuntime26R3HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) },
+    config.runtime26Review, config.existingPreparation, { ...config.productMedia, publicRoots: [config.assets.root] }, driver, history);
 }

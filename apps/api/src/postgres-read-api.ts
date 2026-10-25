@@ -87,8 +87,8 @@ import { createPaymentMaintenanceHttpPlugin } from "./payment-maintenance-http.t
 import { PostgresStaffMaintenanceUnitOfWork } from "../../../adapters/postgres/src/staff-maintenance-store.ts";
 import { createStaffMaintenanceHttpPlugin } from "./staff-maintenance-http.ts";
 import type { CredentialRequestTag } from "../../../packages/application/src/maintenance-commit-ports.ts";
-import { PostgresOrganizationMaintenanceReadUnitOfWork, type OrganizationCoreReadCapability } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
-import { createOrganizationMaintenanceReadHttpPlugin } from "./organization-maintenance-http.ts";
+import { PostgresOrganizationMaintenanceUnitOfWork, PostgresOrganizationMaintenanceReadUnitOfWork, type OrganizationCoreReadCapability } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
+import { createOrganizationMaintenanceHttpPlugin, createOrganizationMaintenanceReadHttpPlugin } from "./organization-maintenance-http.ts";
 import { createNativeRuntime26Issuer } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PrivateProductMediaStage } from "../../../adapters/media/src/product-media-stage.ts";
 import { PrivateControlledProductMedia } from "../../../adapters/media/src/controlled-product-media.ts";
@@ -164,6 +164,7 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   readonly coreInitializationRead?: CommittedCoreReadBinding;
   readonly coreReadModules?: readonly CoreReadModule[];
   /** Host-only write opt-in; requires a separately reviewed PRODUCT_MAINTENANCE purpose. */
+  readonly organizationMaintenance?: true;
   readonly catalogueMaintenance?: true;
   readonly paymentMaintenance?: true;
   readonly partyMaintenance?: true;
@@ -183,6 +184,7 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   readonly importedHistoryRead?: { readonly authorization: ImportedHistoryReadAuthorization };
 }
 type ApplicationCapabilities = { readonly coreReadModules: readonly CoreReadModule[]; readonly coreInitializationRead: CommittedCoreReadBinding | null; readonly commands: PostgresDocumentCommandsCapability | null;
+  readonly organizationMaintenance: boolean;
   readonly catalogueMaintenance: boolean;
   readonly paymentMaintenance: boolean;
   readonly partyMaintenance: boolean;
@@ -221,6 +223,8 @@ function method<T extends (...args: never[]) => unknown>(value: unknown, name: s
   throw new TypeError("Complete application provider methods required");
 }
 function checkedApplicationCapabilities(options: PostgresApplicationApiOptions): ApplicationCapabilities {
+  const organizationMaintenance = "organizationMaintenance" in options;
+  if (organizationMaintenance && ownData(options, "organizationMaintenance") !== true) throw new TypeError("Explicit organization maintenance selection required");
   const catalogueMaintenance = "catalogueMaintenance" in options;
   if (catalogueMaintenance && ownData(options, "catalogueMaintenance") !== true) throw new TypeError("Explicit catalogue maintenance selection required");
   const paymentMaintenance = "paymentMaintenance" in options;
@@ -301,7 +305,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     const bag = exactBag(ownData(options, "importedHistoryRead"), ["authorization"]);
     importedHistory = Object.freeze({ authorize: method<ImportedHistoryReadAuthorization["authorize"]>(bag.authorization, "authorize") });
   }
-  return Object.freeze({ coreInitializationRead, coreReadModules, catalogueMaintenance, paymentMaintenance, partyMaintenance, productMaintenance, staffMaintenance, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
+  return Object.freeze({ coreInitializationRead, coreReadModules, organizationMaintenance, catalogueMaintenance, paymentMaintenance, partyMaintenance, productMaintenance, staffMaintenance, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
 }
 
 export interface SourceConfirmedApplicationReadAuthorization {
@@ -475,6 +479,11 @@ export interface Runtime26ExistingPreparation { readonly sales: boolean; readonl
 export interface Runtime26HistoryRevisionConfiguration {
   readonly authorization: HistoryRevisionDependencies["authorization"];
 }
+function checkedRuntime26HistoryAuthorization(history: Runtime26HistoryRevisionConfiguration): HistoryRevisionDependencies["authorization"] {
+  const selected = exactBag(history, ["authorization"]), authorization = exactBag(selected.authorization, ["authorize"]);
+  if (typeof authorization.authorize !== "function") throw new TypeError("Explicit independent HISTORY write policy required");
+  return Object.freeze({ authorize: (authorization.authorize as HistoryRevisionDependencies["authorization"]["authorize"]).bind(selected.authorization) });
+}
 /** Same application/pool/authentication, with the existing numeric HISTORY
  * revision routes. Actual HISTORY_REVISION metadata is required before ready. */
 export async function createPostgresRuntime26HistoryRevisionApplicationApi(options: PostgresApplicationApiOptions,
@@ -482,16 +491,13 @@ export async function createPostgresRuntime26HistoryRevisionApplicationApi(optio
   createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
   if (!options || typeof options !== "object" || "documentCommands" in options || "coreInitializationRead" in options || !("currentForms" in options))
     throw new TypeError("HISTORY revision requires the full read application and separate historical write policy");
-  const pin = exactBag(review, ["reviewFile", "trustedReviewSha256"]), selected = exactBag(history, ["authorization"]);
-  const authorization = exactBag(selected.authorization, ["authorize"]);
+  const pin = exactBag(review, ["reviewFile", "trustedReviewSha256"]);
   if (typeof pin.reviewFile !== "string" || !isAbsolute(pin.reviewFile) || resolve(pin.reviewFile) !== pin.reviewFile
-    || typeof pin.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(pin.trustedReviewSha256)
-    || typeof authorization.authorize !== "function") throw new TypeError("Explicit HISTORY write policy and exact runtime review required");
+    || typeof pin.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(pin.trustedReviewSha256))
+    throw new TypeError("Explicit HISTORY write policy and exact runtime review required");
+  const fixed = checkedRuntime26HistoryAuthorization(history);
   const capabilities = checkedApplicationCapabilities(options);
   if (!capabilities.nativeReadExtensions) throw new TypeError("HISTORY revision requires the original published-history read application");
-  const fixed: HistoryRevisionDependencies["authorization"] = Object.freeze({
-    authorize: (authorization.authorize as HistoryRevisionDependencies["authorization"]["authorize"]).bind(selected.authorization)
-  });
   return await composePostgresApi(options, createDriver, capabilities,
     Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 }), undefined, undefined, fixed) as PostgresApplicationApi;
 }
@@ -499,8 +505,8 @@ export async function createPostgresRuntime26HistoryRevisionApplicationApi(optio
  * mandatory; only the existing-prepare selectors are new, explicitly per kind. */
 export async function createPostgresRuntime26DocumentApplicationApi(options: PostgresApplicationApiOptions,
   review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, existingPreparation: Runtime26ExistingPreparation,
-  createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
-  return composeRuntime26DocumentApplicationApi(options, review, existingPreparation, createDriver);
+  createDriver?: PostgresPoolDriverFactory, history?: Runtime26HistoryRevisionConfiguration): Promise<PostgresApplicationApi> {
+  return composeRuntime26DocumentApplicationApi(options, review, existingPreparation, createDriver, undefined, history);
 }
 /** R3 mounts the existing product/media leaves with the same owned pool and issuer.
  * Private storage configuration is supplied by the production host, never HTTP. */
@@ -509,17 +515,17 @@ export interface Runtime26ProductMediaConfiguration {
 }
 export async function createPostgresRuntime26MediaApplicationApi(options: PostgresApplicationApiOptions,
   review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, existingPreparation: Runtime26ExistingPreparation,
-  media: Runtime26ProductMediaConfiguration, createDriver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
+  media: Runtime26ProductMediaConfiguration, createDriver?: PostgresPoolDriverFactory, history?: Runtime26HistoryRevisionConfiguration): Promise<PostgresApplicationApi> {
   if (options.productMedia !== null || !media || !isAbsolute(media.root) || resolve(media.root) !== media.root
     || !/^[A-Za-z0-9_-]{1,100}$/.test(media.rootKey) || !Array.isArray(media.publicRoots) || media.publicRoots.length === 0
     || media.publicRoots.some(root => typeof root !== "string" || !isAbsolute(root)))
     throw new TypeError("Explicit original private media root and public build roots required");
   return composeRuntime26DocumentApplicationApi(options, review, existingPreparation, createDriver,
-    Object.freeze({ root: media.root, rootKey: media.rootKey, publicRoots: Object.freeze([...media.publicRoots]) }));
+    Object.freeze({ root: media.root, rootKey: media.rootKey, publicRoots: Object.freeze([...media.publicRoots]) }), history);
 }
 async function composeRuntime26DocumentApplicationApi(options: PostgresApplicationApiOptions,
   review: { readonly reviewFile: string; readonly trustedReviewSha256: string }, existingPreparation: Runtime26ExistingPreparation,
-  createDriver?: PostgresPoolDriverFactory, media?: Runtime26ProductMediaConfiguration): Promise<PostgresApplicationApi> {
+  createDriver?: PostgresPoolDriverFactory, media?: Runtime26ProductMediaConfiguration, history?: Runtime26HistoryRevisionConfiguration): Promise<PostgresApplicationApi> {
   if (!options || typeof options !== "object" || !("documentCommands" in options) || !("currentForms" in options))
     throw new TypeError("Exact26 R2 requires explicit native document commands and current forms");
   const pin = exactBag(review, ["reviewFile", "trustedReviewSha256"]), preparation = exactBag(existingPreparation, ["sales", "transfers"]);
@@ -527,18 +533,19 @@ async function composeRuntime26DocumentApplicationApi(options: PostgresApplicati
     || typeof pin.trustedReviewSha256 !== "string" || !/^[0-9a-f]{64}$/.test(pin.trustedReviewSha256)
     || typeof preparation.sales !== "boolean" || typeof preparation.transfers !== "boolean")
     throw new TypeError("Closed exact26 review and independent boolean existing-preparation selectors required");
+  const historyAuthorization = history === undefined ? undefined : checkedRuntime26HistoryAuthorization(history);
   const capabilities = checkedApplicationCapabilities(options);
   if (!capabilities.nativeReadExtensions || capabilities.commands === null) throw new TypeError("Exact26 R2 requires native policies and complete original command proof providers");
   return await composePostgresApi(options, createDriver, capabilities,
     Object.freeze({ reviewFile: pin.reviewFile, trustedReviewSha256: pin.trustedReviewSha256 }),
-    Object.freeze({ sales: preparation.sales, transfers: preparation.transfers }), media) as PostgresApplicationApi;
+    Object.freeze({ sales: preparation.sales, transfers: preparation.transfers }), media, historyAuthorization) as PostgresApplicationApi;
 }
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
   runtime26HistoryAuthorization?: HistoryRevisionDependencies["authorization"]): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
-  if ((capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
+  if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
   try {
@@ -547,9 +554,9 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if (issuer !== null) {
       const admission = await pool.connect();
       try {
-        if (capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_MAINTENANCE");
+        if (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_MAINTENANCE");
         if (capabilities?.productMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_SEASONS_READ");
-        if (capabilities?.partyMaintenance) await issuer.runtime26.assertReady(admission, "CURRENT_CUSTOMER_READ_WRITE");
+        if (capabilities?.organizationMaintenance || capabilities?.partyMaintenance) await issuer.runtime26.assertReady(admission, "CURRENT_CUSTOMER_READ_WRITE");
         if (runtime26HistoryAuthorization !== undefined) await issuer.runtime26.assertReady(admission, "HISTORY_REVISION");
         for (const purpose of capabilities?.coreInitializationRead ? ["CURRENT_FORM_READ"] as const : ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
           await issuer.runtime26.assertReady(admission, purpose);
@@ -567,16 +574,27 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin });
     const authenticate = createSalesSessionAuthenticator(authentication);
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);
-    if (issuer && (capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || issuer.categoryOrderWrite)) {
+    if (issuer && (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || issuer.categoryOrderWrite)) {
       const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
       // Explicit full maintenance checks the reviewed purpose on the original
       // borrowed context, including immediately before its outer COMMIT.
-      const work = capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance ? { transaction: <T>(run: Parameters<typeof driver.transaction<T>>[0]) => driver.transaction(async context => {
-        await issuer.runtime26.assertReady(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
-        const result = await run(context);
-        await issuer.runtime26.assertReady(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
-        return result;
-      }) } : driver;
+      const work = driver;
+      if (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance) {
+        // Preserve the original registered driver identity for issuer-bound providers.
+        const transaction = driver.transaction.bind(driver);
+        driver.transaction = <T>(run: Parameters<typeof driver.transaction<T>>[0]) => transaction(async context => {
+          await issuer.runtime26.assertReady(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
+          const result = await run(context);
+          await issuer.runtime26.assertReady(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
+          return result;
+        });
+      }
+      if (capabilities?.organizationMaintenance) {
+        app.register(createOrganizationMaintenanceHttpPlugin({ authenticate, dependencies: {
+          unitOfWork: new PostgresOrganizationMaintenanceUnitOfWork(work, issuer.historicalCustomerExclusion), now: host.now, newId: () => randomUUID() } }));
+        if (capabilities.coreInitializationRead || extensions === null) app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate,
+          kinds: ["HALL", "WAREHOUSE"], unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(work) }));
+      }
       if (capabilities?.catalogueMaintenance || issuer.categoryOrderWrite) app.register(createCatalogueMaintenanceHttpPlugin({ authenticate, ...(capabilities?.catalogueMaintenance ? {} : { categoryOnly: true as const }),
         dependencies: { unitOfWork: new PostgresCatalogueMaintenanceUnitOfWork(work, issuer.categoryOrderWrite),
           now: host.now, newId: () => randomUUID() } }));
@@ -629,7 +647,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       app.register(createSettingsAuditHttpPlugin({ authenticate,
         reader: new PostgresSettingsAuditUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), null, core.auditCapability) }));
       if (capabilities.coreReadModules.includes("organization")) app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate,
-        kinds: ["HALL", "WAREHOUSE", ...(capabilities.staffMaintenance === null ? ["STAFF" as const] : []), "ACCOUNT"],
+        kinds: [...(capabilities.organizationMaintenance ? [] : ["HALL" as const, "WAREHOUSE" as const]), ...(capabilities.staffMaintenance === null ? ["STAFF" as const] : []), "ACCOUNT"],
         unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(new PostgresMaintenanceCommandUnitOfWork(pool), core.organizationCapability) }));
       if (capabilities.coreReadModules.includes("customers") && !capabilities.partyMaintenance) app.register(createPartyReadHttpPlugin({ authenticate: createPartySessionAuthenticator(authentication), kinds: ["CUSTOMER"],
         dependencies: { authorization: core.partyAuthorization, reader: new PostgresPartyReadReader(pool, null, core.partyCapability) } }));
