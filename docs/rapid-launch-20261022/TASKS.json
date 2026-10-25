@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 477,
+    "round": 479,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "096863b4921ce0453281586bf9da524b6238401d",
+    "sourceHeadBeforeThisContinuityCommit": "878bcd8d3109f6278693caba324bf186ca4a6505",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -5071,10 +5071,10 @@
       "F2": "465normalentry+468imagefix delivered/limited independentlychecked; real productread/write/historybusiness stillnotready, D2/T45 actualQA/mainpublication dependency. Next concreteconsumerdelivery/failure.",
       "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
       "F4": "Allowedtabsexact2 delivered, in461; nextactualCORE03 colors/fits UI+realread",
-      "D1": "COREpairing/v5factupdate delivered; actualcurrentreader candidate HTTP next",
-      "D2": "OriginalregisteredisolatedQA executorhandoff requested afterT45serialstage jobscompleted; obtain existingexactentry/source/env/actor/runtime prerequisites only, no repeat18 protocol ornewplatform.",
+      "D1": "OriginalPRODUCT-HOST-CONSUMPTION-01 technical continuation active: minimal readonlysource425 detail QA caller using originalC1890351/registeredQA/currentfactory/issuer, no productwrites orv17 rerun. OnlyoriginalD1files/controlledreport, T45executes actual.",
+      "D2": "OriginalQA dependency handoff completed/adopted. v17C189/QB260 actualCREATE/EDIT/selection/replay/rollback retained0351 reuse; source425new detailfilter stillneedsactualPG/currenthost. Existingcataloguereplay carrier not fullmaintenanceQA; no repeats.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "OriginalCORE02 operation+outerHTTPScomplete; originalnext461CORE03 nonconflicting preparation, do notoverwrite CORE02QA entry withoutC handoff.",
+      "T45": "CORE03 original24/25 disabled privateinstall/start drafts prepared withcurrent14/Nginx4a20; currentCORE02QAentry preserved. Also currentactualoldauthcookiecode naming check requested, no values/secrets.",
       "QF": "Idle at precise Demo connection/context gap; no duplicate old checks, no credential reads. Resume original pure appearance scope Luna/max when accessible logged-in context is available.",
       "QF2": "CORE02 technicalinput/HTTPS prepared; WAIT_CONFIRMED_ISOLATED_BROWSER_CONTEXT. CurrentIAB docs do notguarantee freshcookie/storage; no realoriginopened/login/queries. Do notborrowuserChrome. Originalreport/source459 retained.",
       "QB": "22 scopedsource/rollbackPASS adopted; next only changedfailedrange oractualnewbackendmodule"
@@ -5149,9 +5149,8 @@
       "meaning": "Complete frozen frontend source/resource copy delivered. Full UI allstates and realbusiness acceptance separately incomplete; do not call copied baseline zero because backend unfinished."
     },
     "latestGitHubVerified": {
-      "source": "8f360538f811775c9d1330ee7996d0c01e8ed8a5",
-      "status": "PASS_EXACT_ORIGINAL_OBJECTS_NONFORCED_NORMAL_BRANCH_FF_READBACK",
-      "commits": 2
+      "source": "878bcd8d3109f6278693caba324bf186ca4a6505",
+      "status": "PASS_EXACT_ORIGINAL_OBJECTS_NONFORCED_NORMAL_BRANCH_FF_READBACK"
     },
     "backup23Actual": {
       "status": "COMPLETED",
@@ -5370,7 +5369,14 @@
       "entry": "https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/#settings/stores",
       "guestPrincipal": null,
       "authenticatedReadsVerified": false
-    }
+    },
+    "productV17ActualAccepted": {
+      "source": "3bf526cd475c7ff96958818b87057a1ae76483a9",
+      "evidence": "C189/QB260",
+      "scope": "CREATE/EDIT/selection/replay/rollback actual accepted, retained0351",
+      "newGap": "source425 visibility filter real PG/currenthost not tested; do not rerun priorv17"
+    },
+    "browserIsolationCorrectionPending": "Creadonlyoldformal source server/security/config.ts:36 names __Host-naijue_<env>_<bindingSHA12>, newauthentication.ts:8 __Host-naijue_session; both exact-nameparse. SamePath alone doesnotprove overwrite. Actualolddeployedcode confirmation T45 pending; sharedbrowser serial permitted if genuine evidence removescollisiongap. No cookie values or authchange."
   },
   "latestReadySource": {
     "round": 445,
