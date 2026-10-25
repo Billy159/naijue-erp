@@ -9286,5 +9286,13 @@
     "QF2next": "new435 affected normalmount/recovery/readback/tabstate delta",
     "currentCandidate": "57910 SOURCE433 excludes435 productfix",
     "wholeScope": "37/67 plus approvedadditions incomplete; no new formalrelease"
+  },
+  "currentContinuation436": {
+    "F2inventory": "ledger oldempty then error presentation exact2 fixed, scopedPASS; realR1read pending",
+    "QF2-435-F01": "NEED_FIX old barcode draft after acceptedbaseline; originalF2active",
+    "QF433": "scopedsourceSYNoutputPASS browsernewdisabled only; savednative samplesmissing",
+    "production435": "exactrealbuild+packPASS,CORE3readonly only,knownproductP2notrelease",
+    "stock": "D1minimalACL readyQBreview;T45correctedsuccessor03prepare;noactualgrantyet",
+    "wholeScope": "37pages67overlays incomplete no new formalrelease"
   }
 }
