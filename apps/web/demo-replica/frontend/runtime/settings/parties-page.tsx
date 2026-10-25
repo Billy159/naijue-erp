@@ -8,18 +8,22 @@ import { Pager, SmallSelect } from './controls.tsx';
 import '../../basic-settings-v2.css';
 import './settings-runtime.css';
 
-interface PartyRuntimeProps {
+export interface PartyRuntimeProps {
   workspace: PartyWorkspace; readOnly?: true;
   audit?: SettingsAuditCapability & { onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void };
 }
+export function PartiesRuntime(props: PartyRuntimeProps & { initialTab?: PartyKind }) {
+  const [kind, setKind] = useState<PartyKind>(props.initialTab ?? 'CUSTOMER');
+  return <PartyRuntime {...props} kind={kind} tabs={<nav className="bs-tabs" role="tablist" aria-label="往来单位">{(['CUSTOMER','SUPPLIER'] as const).map(tab => <button type="button" role="tab" key={tab} aria-selected={kind===tab} onClick={()=>{ if(tab===kind)return; const active=props.workspace.get(kind); if (!active.canLeave()) { active.requestClose(); return; } setKind(tab); }}>{partyLabels[tab]}</button>)}</nav>}/>;
+}
 export function CustomerRuntime(props: PartyRuntimeProps) { return <PartyRuntime {...props} kind="CUSTOMER"/>; }
 export function SupplierRuntime(props: PartyRuntimeProps) { return <PartyRuntime {...props} kind="SUPPLIER"/>; }
-export function PartyRuntime(props: PartyRuntimeProps & { kind: PartyKind }) {
+export function PartyRuntime(props: PartyRuntimeProps & { kind: PartyKind; tabs?: React.ReactNode }) {
   if (!props.workspace.scope.active) return null;
   const controller = props.workspace.get(props.kind);
   return <PartyPage key={controller.instanceId} {...props} controller={controller}/>;
 }
-function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceController }) {
+function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceController; tabs?: React.ReactNode }) {
   const { controller } = props, label = partyLabels[controller.kind];
   const state = useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
   const query = useSyncExternalStore(controller.list.subscribe, controller.list.getSnapshot, controller.list.getSnapshot);
@@ -61,8 +65,8 @@ function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceCont
   const busy = query.phase === 'loading', blocked = props.readOnly === true || controller.hasUnresolvedWrite;
   const activate = (work: () => void) => { if (blocked) return; trigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; work(); };
   const readError = query.error instanceof PartyClientError ? query.error.kind === 'forbidden' ? '无权读取此资料。' : query.error.kind === 'unauthenticated' ? '登录已失效。' : '资料读取失败，请重试。' : '资料读取失败，请重试。';
-  return <div id="basic-settings-v2"><section className="bs-page iw-workbench iw-arco-controls runtime-settings"><header className="bs-head iw-head"><h1>{label}</h1><div className="bs-head-actions"><Button type="text" disabled={!props.audit} onClick={() => { trigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setAuditOpen(true); }}>操作记录</Button><Button type="primary" disabled={blocked} onClick={() => activate(() => { controller.openCreate(); })}>新增{label}</Button></div></header>
-    <div className="bs-toolbar"><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" size="default" aria-label="搜索名称或编码" placeholder="搜索名称或编码" value={state.filterDraft.search} onChange={search => controller.setFilterDraft({ ...state.filterDraft, search })} suffix={<IconSearch/>} allowClear/></div><div className="bs-filter"><SmallSelect label="状态" value={state.filterDraft.enabled} items={[{ value:'ENABLED',label:'正常' },{ value:'DISABLED',label:'已停用' },{ value:'ALL',label:'全部' }]} onChange={enabled => { if (enabled === 'ALL' || enabled === 'ENABLED' || enabled === 'DISABLED') controller.setFilterDraft({ ...state.filterDraft, enabled }); }}/></div></div>
+  return <div id="basic-settings-v2"><section className="bs-page iw-workbench iw-arco-controls runtime-settings"><header className="bs-head iw-head"><h1>{props.tabs ? '往来单位' : label}</h1><div className="bs-head-actions"><Button type="text" disabled={!props.audit} onClick={() => { trigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setAuditOpen(true); }}>操作记录</Button><Button type="primary" disabled={blocked} onClick={() => activate(() => { controller.openCreate(); })}>新增{label}</Button></div></header>
+    {props.tabs}<div className="bs-toolbar"><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" size="default" aria-label="搜索名称或编码" placeholder="搜索名称或编码" value={state.filterDraft.search} onChange={search => controller.setFilterDraft({ ...state.filterDraft, search })} suffix={<IconSearch/>} allowClear/></div><div className="bs-filter"><SmallSelect label="状态" value={state.filterDraft.enabled} items={[{ value:'ENABLED',label:'正常' },{ value:'DISABLED',label:'已停用' },{ value:'ALL',label:'全部' }]} onChange={enabled => { if (enabled === 'ALL' || enabled === 'ENABLED' || enabled === 'DISABLED') controller.setFilterDraft({ ...state.filterDraft, enabled }); }}/></div></div>
       <div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" onClick={() => { controller.tableScroll.top = 0; void controller.queryList({ ...state.filterDraft,page:1,pageSize:applied.pageSize }); }}>查询</Button><Button className="btn iw-reset" onClick={() => { controller.setFilterDraft({search:'',enabled:'ENABLED'});controller.tableScroll.top=0;void controller.queryList({search:'',enabled:'ENABLED',page:1,pageSize:applied.pageSize}); }}>重置</Button></div></div>
     {props.readOnly && <p className="runtime-settings-note" role="status">当前为只读权限，维护保存未开放。</p>}
     {query.phase === 'error' && <div className="runtime-settings-note" role="alert">{readError}{current && ' 仍显示上一次查询结果。'}<Button type="text" onClick={() => { void controller.queryList(query.request?.parameters ?? controller.executedQuery); }}>重试</Button></div>}

@@ -1,6 +1,6 @@
 import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react';
 import { IconSearch } from '@arco-design/web-react/icon';
-import { useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
+import { type ReactNode, useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
 import { LatestQuery, type QuerySnapshot } from '../../../../src/loading/latest-query.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { initialStaffSettingsQuery, type StaffSettingsPage, type StaffSettingsProps, type StaffSettingsQuery, type StaffSettingsRecord } from '../../../../src/staff-settings/contracts.ts';
@@ -10,8 +10,8 @@ import '../../basic-settings-v2.css';
 import './settings-runtime.css';
 const idle = Object.freeze({ phase:'idle' as const,request:null,success:null,error:null }), noSubscribe=()=>()=>{};
 type Reads={list:LatestQuery<StaffSettingsQuery,StaffSettingsPage>;detail:LatestQuery<{id:string},StaffSettingsRecord|null>};
-export function StaffRuntime(props:StaffSettingsProps){return <StaffPage key={`${props.scope.routeInstanceId}:${props.scope.identity.accountId}:${props.scope.identity.sessionRevision}:${props.scope.identity.permissionRevision}`} {...props}/>;}
-function StaffPage(props:StaffSettingsProps){
+export function StaffRuntime(props:StaffSettingsProps & { tabs?:ReactNode }){return <StaffPage key={`${props.scope.routeInstanceId}:${props.scope.identity.accountId}:${props.scope.identity.sessionRevision}:${props.scope.identity.permissionRevision}`} {...props}/>;}
+function StaffPage(props:StaffSettingsProps & { tabs?:ReactNode }){
  const workspace=props.workspace?.matches(props.scope)?props.workspace:undefined;
  const [view]=useState(()=>workspace?.getViewState()??createStaffSettingsViewState());
  const [binding,setBinding]=useState<{scope:StaffSettingsProps['scope'];reader:StaffSettingsProps['reader'];queries:Reads}|null>(null);
@@ -44,7 +44,7 @@ function StaffPage(props:StaffSettingsProps){
  if(!props.scope.active||list.phase==='disposed')return null;
  const current=redacted||denied?null:list.success,data=current?.data,applied=current?.parameters??view.executed,busy=list.phase==='loading',draft=view.draft,roles=props.roles.map(role=>({value:role.value,label:role.label}));
  const update=(patch:Partial<StaffSettingsQuery>)=>{view.draft={...view.draft,...patch};redraw();};
- return <div id="basic-settings-v2"><section className="bs-page iw-workbench iw-arco-controls runtime-settings"><header className="bs-head iw-head"><h1>员工与账号</h1><div className="bs-head-actions"><Button type="text" disabled={!props.audit} onClick={()=>{trigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setAuditOpen(true);}}>操作记录</Button><Button type="primary" disabled={!props.canPrepare} onClick={()=>activate(null)}>新增员工</Button></div></header>
+ return <div id="basic-settings-v2"><section className="bs-page iw-workbench iw-arco-controls runtime-settings"><header className="bs-head iw-head"><h1>员工与账号</h1><div className="bs-head-actions"><Button type="text" disabled={!props.audit} onClick={()=>{trigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setAuditOpen(true);}}>操作记录</Button><Button type="primary" disabled={!props.canPrepare} onClick={()=>activate(null)}>新增员工</Button></div></header>{props.tabs}
  <div className="bs-toolbar"><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label="搜索姓名或登录账号" placeholder="搜索姓名或登录账号" suffix={<IconSearch/>} value={draft.search} allowClear onChange={search=>update({search})}/></div>
  <div className="bs-filter"><SmallSelect label="全部角色" value={draft.role} items={[{value:'',label:'全部角色'},...roles]} disabled={!props.reader?.capabilities?.roleFilter} onChange={role=>update({role})}/></div>
  <div className="bs-filter"><ReferenceSelect scope={props.scope} reader={props.directory} kind="halls" label="全部营业厅" placeholder="全部营业厅" selected={view.hall} onChange={hall=>{view.hall=hall;update({hallId:hall?.id??null});}}/></div>

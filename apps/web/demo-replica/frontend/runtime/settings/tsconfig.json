@@ -1,5 +1,9 @@
 {
   "extends": "../../../tsconfig.runtime.json",
-  "include": ["./**/*.ts", "./**/*.tsx"],
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../inventory/assets.d.ts"
+  ],
   "exclude": []
 }

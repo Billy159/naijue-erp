@@ -1,3 +1,4 @@
+export { PersonnelRuntime } from './personnel-page.tsx';
 export { StaffRuntime } from './staff-page.tsx';
 export { AccountsRuntime } from './accounts-page.tsx';
 export { createStaffSettingsWorkspace } from '../../../../src/staff-settings/controller.ts';

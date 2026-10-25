@@ -191,8 +191,8 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
         const module = await import('../settings/parties-entry.ts');
         if (!scope.active) { release(); return { dispose: () => {}, canLeave: () => true }; }
         parties ??= module.createPartyWorkspace({ scope: ownerScope(), client: module.createPartyHttpClient(http), newRequestKey: options.newRequestKey, onAccessFailure: error => access(error.kind === 'unauthenticated' ? 'unauthenticated' : 'forbidden') });
-        const View = route === 'suppliers' ? module.SupplierRuntime : module.CustomerRuntime, workspace = parties;
-        paint(<View workspace={workspace} {...(config.parties.readOnly ? { readOnly: true as const } : {})} audit={{ ...audit(), onAccessFailure: access }} />);
+        const workspace = parties;
+        paint(<module.PartiesRuntime initialTab={route === 'suppliers' ? 'SUPPLIER' : 'CUSTOMER'} workspace={workspace} {...(config.parties.readOnly ? { readOnly: true as const } : {})} audit={{ ...audit(), onAccessFailure: access }} />);
         return { dispose: () => release(), canLeave: workspace.canLeave };
       }
       if ((route === 'settings/staff' && config.staffSettings) || (route === 'settings/accounts' && config.accountSettings)) {
@@ -201,17 +201,17 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
         const directoryModule = await import('../../../../src/settings/stores/maintenance-http-client.ts');
         if (!scope.active) { release(); return { dispose: () => {}, canLeave: () => true }; }
         const reader = module.createStaffSettingsHttpReader(http);
-        if (route === 'settings/staff') {
-          staff ??= module.createStaffSettingsWorkspace({ scope: ownerScope(), roles, reader, client: module.createStaffSettingsCommandClient(http), newRequestKey: options.newRequestKey, writesEnabled: enabled(flags?.staffSettings, true), onAccessFailure: access, hasOtherUnresolvedWrite: () => !!(accounts?.hasUnresolvedWrite() || stores?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite()) });
-          const workspace = staff;
-          paint(<module.StaffRuntime scope={scope} reader={reader} directory={directoryModule.createOrganizationSettingsDirectory({ scope, http })} roles={roles} canPrepare={enabled(flags?.staffSettings, true)()} workspace={workspace} audit={audit()} onAccessFailure={access} />);
-          return { dispose: () => release(), canLeave: workspace.canLeave };
-        }
+        staff ??= module.createStaffSettingsWorkspace({ scope: ownerScope(), roles, reader, client: module.createStaffSettingsCommandClient(http), newRequestKey: options.newRequestKey, writesEnabled: enabled(flags?.staffSettings, true), onAccessFailure: access, hasOtherUnresolvedWrite: () => !!(accounts?.hasUnresolvedWrite() || stores?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite()) });
         const accountReader = module.createAccountSettingsHttpReader(http);
         accounts ??= module.createAccountSettingsWorkspace({ scope: ownerScope(), reader: accountReader, staffReader: reader, client: module.createAccountSettingsCommandClient(http), newRequestKey: options.newRequestKey, writesEnabled: enabled(flags?.accountSettings, true), onAccessFailure: access, hasOtherUnresolvedWrite: () => !!(staff?.hasUnresolvedWrite() || stores?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite()) });
-        const workspace = accounts;
-        paint(<module.AccountsRuntime scope={scope} reader={accountReader} staffReader={reader} roles={roles} canPrepare={enabled(flags?.accountSettings, true)()} workspace={workspace} audit={audit()} onAccessFailure={access} />);
-        return { dispose: () => release(), canLeave: workspace.canLeave };
+        const staffWorkspace = staff, accountWorkspace = accounts;
+        const staffProps = { scope, reader, directory: directoryModule.createOrganizationSettingsDirectory({ scope, http }), roles, canPrepare: enabled(flags?.staffSettings, true)(), workspace: staffWorkspace, audit: audit(), onAccessFailure: access };
+        const accountProps = { scope, reader: accountReader, staffReader: reader, roles, canPrepare: enabled(flags?.accountSettings, true)(), workspace: accountWorkspace, audit: audit(), onAccessFailure: access };
+        // Grouped presentation does not grant a capability absent from the current configuration.
+        if (config.staffSettings && config.accountSettings) paint(<module.PersonnelRuntime staff={staffProps} accounts={accountProps} initialTab={route === 'settings/accounts' ? 'accounts' : 'staff'} />);
+        else if (config.staffSettings) paint(<module.StaffRuntime {...staffProps} />);
+        else paint(<module.AccountsRuntime {...accountProps} />);
+        return { dispose: () => release(), canLeave: () => staffWorkspace.canLeave() && accountWorkspace.canLeave() };
       }
       if ((route === 'settings/payments' || route === 'settings/fundAccounts') && config.paymentSettings) {
         const module = await import('../settings/payments-entry.ts');

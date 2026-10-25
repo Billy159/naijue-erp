@@ -1,25 +1,4 @@
-/* The frozen unified-single-select shadow styles, scoped to its React adapter. */
-.runtime-settings-select{font:13px Arial,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ca-ink);--arcoblue-6:var(--ca-primary-rgb);--primary-6:var(--ca-primary-rgb);--color-text-1:var(--ca-ink);--color-text-2:var(--ca-ink-2)}
-.runtime-settings-select .arco-select{display:block;width:100%;font-size:13px}
-.runtime-settings-select .arco-select .arco-select-view{box-sizing:border-box;height:32px;min-height:32px;max-height:32px;border:1px solid transparent;border-radius:var(--ca-radius-control);background:var(--ca-surface-muted);box-shadow:none}
-.runtime-settings-select .arco-select-size-default.arco-select-single .arco-select-view{padding-inline:3px}
-.runtime-settings-select .arco-select:hover .arco-select-view{border-color:var(--ca-control-hover-border);background:var(--ca-surface-muted)}
-.runtime-settings-select .arco-select.arco-select-focused .arco-select-view{border-color:var(--ca-control-focus-border);background:var(--ca-surface-muted);box-shadow:none}
-.runtime-settings-select .arco-select-view .arco-select-view-value{display:flex;align-items:center;min-width:0;overflow:hidden}
-.runtime-settings-select .ui-single-tag{box-sizing:border-box;display:inline-flex;align-items:center;max-width:100%;height:23px;padding:1px 7px;overflow:hidden;border-radius:3px;background:#fff;color:var(--ca-ink);text-overflow:ellipsis;white-space:nowrap;font:400 13px Arial,"PingFang SC",sans-serif}
-.runtime-settings-select .ui-flat-select .ui-single-tag{padding-left:7px;background:transparent}
-.runtime-settings-select .arco-select-view input{min-width:28px;font-size:13px;background:transparent}
-.runtime-settings-select .arco-select-view input::placeholder{color:var(--ca-ink-3)}
-.runtime-settings-select .arco-select .arco-icon-hover{color:var(--ca-ink-2)}
-.runtime-settings-select .arco-select-popup{box-sizing:border-box;padding:4px;border:1px solid var(--ca-popover-border);border-radius:var(--ca-radius-card);background:#fff;box-shadow:var(--ca-shadow-float)}
-.runtime-settings-select .arco-select-popup-inner{max-height:288px;overflow:auto}
-.runtime-settings-select .arco-select-option-wrapper{height:30px!important;min-height:30px!important;max-height:30px!important;padding:0 4px!important}
-.runtime-settings-select .arco-select-option{box-sizing:border-box;height:30px!important;min-height:30px!important;max-height:30px!important;padding:0 8px!important;line-height:30px!important;color:var(--ca-ink)!important;background:#fff;font-size:13px!important;font-weight:400!important}
-.runtime-settings-select .arco-select-option-selected{background:var(--ca-surface-subtle)!important;font-weight:400!important}
-.runtime-settings-select .arco-select-option-hover,.runtime-settings-select .arco-select-option:hover{background:var(--ca-popover-hover)!important}
-.runtime-settings-select .arco-select-option-disabled{color:var(--ca-disabled-ink)!important}
-.runtime-settings-select .arco-select-option-content{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.runtime-settings-select .arco-select-popup .arco-empty{font-size:13px}
+/* Control visuals live in the shared source shadow styles. */
 .runtime-settings-page-size{width:108px;min-width:108px;max-width:108px;flex:0 0 108px;height:32px}
 .runtime-settings-directory{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 4px;font-size:12px}
 .runtime-settings-note{margin:8px 0;color:var(--secondary);font-size:13px;line-height:1.5}

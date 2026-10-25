@@ -1,6 +1,6 @@
 import { Button, Empty, Input, Modal, Table, Tag } from '@arco-design/web-react';
 import { IconSearch } from '@arco-design/web-react/icon';
-import { useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
+import { type ReactNode, useEffect, useLayoutEffect, useReducer, useRef, useState, useSyncExternalStore } from 'react';
 import { LatestQuery, type QuerySnapshot } from '../../../../src/loading/latest-query.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { initialAccountSettingsQuery, type AccountIntent, type AccountSettingsProps, type AccountSettingsQuery, type AccountSettingsReader, type AccountSettingsRecord } from '../../../../src/account-settings/contracts.ts';
@@ -9,7 +9,7 @@ import type { SettingsAuditCapability } from '../../../../src/settings/audit/con
 import { Pager, readMessage, SmallSelect } from './controls.tsx';
 import '../../basic-settings-v2.css';
 import './settings-runtime.css';
-type Props=AccountSettingsProps&{audit?:SettingsAuditCapability};
+export type Props=AccountSettingsProps&{audit?:SettingsAuditCapability;tabs?:ReactNode};
 type Page=Awaited<ReturnType<AccountSettingsReader['readList']>>;
 type Reads={list:LatestQuery<AccountSettingsQuery,Page>;detail:LatestQuery<{id:string},AccountSettingsRecord|null>};
 const idle=Object.freeze({phase:'idle' as const,request:null,success:null,error:null}),noSubscribe=()=>()=>{};
@@ -44,7 +44,7 @@ function AccountPage(props:Props){
  if(!props.scope.active||list.phase==='disposed')return null;
  const current=redacted||denied?null:list.success,data=current?.data,applied=current?.parameters??view.executed,busy=list.phase==='loading';
  const update=(patch:Partial<AccountSettingsQuery>)=>{view.draft={...view.draft,...patch};redraw();};
- return <div id="basic-settings-v2"><section className="bs-page iw-workbench iw-arco-controls runtime-settings"><header className="bs-head iw-head"><h1>登录账号</h1><div className="bs-head-actions"><Button type="text" disabled={!props.audit} onClick={()=>{trigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setAuditOpen(true);}}>操作记录</Button><Button type="primary" disabled={!props.canPrepare||!props.staffReader} onClick={()=>activate(null)}>新增账号</Button></div></header>
+ return <div id="basic-settings-v2"><section className="bs-page iw-workbench iw-arco-controls runtime-settings"><header className="bs-head iw-head"><h1>{props.tabs?'员工与账号':'登录账号'}</h1><div className="bs-head-actions"><Button type="text" disabled={!props.audit} onClick={()=>{trigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setAuditOpen(true);}}>操作记录</Button><Button type="primary" disabled={!props.canPrepare||!props.staffReader} onClick={()=>activate(null)}>新增账号</Button></div></header>{props.tabs}
  <div className="bs-toolbar"><div className="bs-filter-fields"><div className="bs-filter search"><Input className="iw-arco-input iw-search-input" aria-label="搜索登录账号" placeholder="搜索登录账号" suffix={<IconSearch/>} value={view.draft.search} allowClear onChange={search=>update({search})}/></div><div className="bs-filter"><SmallSelect label="全部登录权限" value={view.draft.status} items={[{value:'all',label:'全部登录权限'},{value:'normal',label:'已开通'},{value:'disabled',label:'已关闭'}]} onChange={status=>{if(status==='normal'||status==='disabled'||status==='all')update({status});}}/></div></div><div className="bs-toolbar-actions iw-query-actions"><Button className="btn primary" type="primary" onClick={()=>{view.tableScroll.top=0;run({...view.draft,page:1,pageSize:applied.pageSize});}}>查询</Button><Button className="btn iw-reset" onClick={()=>{view.draft={...initialAccountSettingsQuery,pageSize:applied.pageSize};view.tableScroll.top=0;redraw();run(view.draft);}}>重置</Button></div></div>
  {!props.reader&&<p className="runtime-settings-note" role="status">登录账号读取尚未接入。</p>}{!workspace&&<p className="runtime-settings-note" role="status">账号维护保存尚未接入。</p>}{list.phase==='error'&&<div className="bs-error" role="alert">{readMessage(list.error)}<Button onClick={()=>run(list.request?.parameters??view.executed)}>重试</Button></div>}
  <div ref={table} className="bs-table-wrap iw-arco-table" onScroll={event=>{view.tableScroll.top=event.currentTarget.scrollTop;view.tableScroll.left=event.currentTarget.scrollLeft;}}><Table<AccountSettingsRecord> size="small" rowKey="id" pagination={false} loading={busy} data={[...(data?.items??[])]} noDataElement={<Empty description="暂无符合条件的数据"/>} columns={[

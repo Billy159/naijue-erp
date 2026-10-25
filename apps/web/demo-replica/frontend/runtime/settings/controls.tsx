@@ -5,21 +5,29 @@ import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import type { SettingsDirectoryKind, SettingsDirectoryPage, SettingsDirectoryParameters, SettingsDirectoryReader, SettingsReference } from '../../../../src/settings/stores/maintenance-contracts.ts';
 
+import { Pagination } from '../inventory/pagination.tsx';
+import { SourceControl } from '../inventory/candidates.tsx';
+import { singleCss } from '../inventory/source-control-css.ts';
+
+export const settingsSingleCss=singleCss+'\n.runtime-settings-directory{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 4px;font-size:12px}';
 const ControlledSelect = Select as ComponentType<Omit<ComponentProps<typeof Select>, 'value'> & { value: string | undefined }>;
-export function SmallSelect(props: { value: string; items: readonly { value: string; label: string; disabled?: boolean }[]; label: string; placeholder?: string; search?: boolean; clear?: boolean; disabled?: boolean; loading?: boolean; remote?: boolean; onChange: (value: string) => void; onOpen?: () => void; onClose?: () => void; onSearch?: (value: string) => void; footer?: ReactNode }) {
-  const host = useRef<HTMLDivElement>(null);
+type SmallSelectProps = { value: string; items: readonly { value: string; label: string; disabled?: boolean }[]; label: string; placeholder?: string; search?: boolean; clear?: boolean; disabled?: boolean; loading?: boolean; remote?: boolean; onChange: (value: string) => void; onOpen?: () => void; onClose?: () => void; onSearch?: (value: string) => void; footer?: ReactNode };
+export function SmallSelect(props:SmallSelectProps) {
+ return <SourceControl css={settingsSingleCss} attributes={{className:'ui-single-host bs-single runtime-settings-select'}}>{(portal,host)=><SmallSelectContent {...props} portal={portal} host={host}/>}</SourceControl>;
+}
+function SmallSelectContent(props:SmallSelectProps & {portal:HTMLElement;host:HTMLElement}) {
   const [open, setOpen] = useState(false), [mounted, setMounted] = useState(false), [, refreshPortal] = useReducer(value => value+1, 0);
   useEffect(() => { setMounted(true); }, []);
   useEffect(() => { if (props.disabled) setOpen(false); }, [props.disabled]);
   // Installed Arco's Portal loses its container ref during React19 StrictMode replay.
   useEffect(() => { if (!mounted || !open || props.disabled) return; let active = true; queueMicrotask(() => { if (active) refreshPortal(); }); return () => { active = false; }; }, [mounted, open, props.disabled]);
-  return <div ref={host} className="ui-single-host bs-single runtime-settings-select"><ControlledSelect className="ui-flat-select" value={props.value || undefined} options={[...props.items]} aria-label={props.label} placeholder={props.placeholder ?? props.label}
-    showSearch={props.search ?? false} filterOption={!props.remote} allowClear={props.clear ?? false} disabled={props.disabled ?? false} loading={props.loading ?? false} unmountOnExit
-    getPopupContainer={() => host.current ?? document.body}
-    triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: Math.min(Math.max(host.current?.getBoundingClientRect().width ?? 180, 300), Math.max(180, window.innerWidth - (host.current?.getBoundingClientRect().left ?? 0) - 12)) } }}
+  return <ControlledSelect className="ui-flat-select" value={props.value || undefined} options={[...props.items]} aria-label={props.label} placeholder={props.placeholder ?? props.label}
+    showSearch={props.search ?? false} filterOption={!props.remote} allowClear={props.clear ?? true} disabled={props.disabled ?? false} loading={props.loading ?? false} unmountOnExit
+    getPopupContainer={() => props.portal}
+    triggerProps={{ position: 'bl', autoAlignPopupWidth: false, popupStyle: { width: Math.min(Math.max(props.host.getBoundingClientRect().width ?? 180, 300), Math.max(180, window.innerWidth - (props.host.getBoundingClientRect().left ?? 0) - 12)) } }}
     renderFormat={() => <span className="ui-single-tag">{props.items.find(item => item.value === props.value)?.label ?? ''}</span>}
     popupVisible={mounted && open && !props.disabled} dropdownRender={menu => <>{menu}{props.footer}</>} onVisibleChange={visible => { setOpen(visible); if (visible) props.onOpen?.(); else props.onClose?.(); }} onSearch={value => props.onSearch?.(value)}
-    onChange={(value: unknown) => { props.onChange(typeof value === 'string' ? value : ''); setOpen(false); props.onClose?.(); }}/></div>;
+    onChange={(value: unknown) => { props.onChange(typeof value === 'string' ? value : (props.items.find(item=>item.value===''||item.value==='all'||item.value==='ALL')?.value ?? '')); setOpen(false); props.onClose?.(); }}/>;
 }
 
 const idle = Object.freeze({ phase: 'idle' as const, request: null, success: null, error: null });
@@ -59,17 +67,7 @@ export function ReferenceSelect(props: { scope: ReadScope; reader?: SettingsDire
       {page && page.total > page.pageSize && <div className="runtime-settings-directory"><Button size="mini" disabled={page.page <= 1} onMouseDown={e => e.preventDefault()} onClick={() => run(current.parameters.search, page.page - 1)}>上一页</Button><span>共 {page.total} 条</span><Button size="mini" disabled={page.page * page.pageSize >= page.total} onMouseDown={e => e.preventDefault()} onClick={() => run(current.parameters.search, page.page + 1)}>下一页</Button></div>}</>}/>;
 }
 
-/** React transcription of inventory-workbench.paginationMarkup, with server total. */
+/** The same source pagination used by inventory; settings retain their existing page-size contract. */
 export function Pager(props: { total: number; page: number; size: 20 | 50 | 100; disabled?: boolean; onPage: (page: number) => void; onSize: (size: 20 | 50 | 100) => void }) {
-  const pages = Math.max(1, Math.ceil(props.total / props.size)), [jump, setJump] = useState(String(props.page));
-  useEffect(() => setJump(String(props.page)), [props.page]);
-  const numbers = [...new Set([1, pages, props.page - 1, props.page, props.page + 1].filter(n => n >= 1 && n <= pages))].sort((a,b) => a-b);
-  const go = () => { const value = Number(jump); if (/^\d+$/.test(jump) && value >= 1 && value <= pages) props.onPage(value); };
-  return <div className="bs-pager"><div className="iw-pagination"><div className="runtime-settings-page-size"><SmallSelect label="每页数量" value={String(props.size)} items={[20,50,100].map(value => ({ value: String(value), label: `${value}条/页` }))} disabled={props.disabled ?? false} onChange={value => props.onSize(Number(value) as 20 | 50 | 100)}/></div>
-    <span>共 {props.total.toLocaleString('zh-CN')} 条{props.total ? `，当前第 ${(props.page-1)*props.size+1}–${Math.min(props.page*props.size, props.total)} 条` : ''}</span>
-    {pages > 1 && <div className="actions"><button type="button" className="btn iw-page-arrow" aria-label="上一页" disabled={props.disabled || props.page <= 1} onClick={() => props.onPage(props.page-1)}>‹</button>
-      {numbers.map((page,index) => <span key={page}>{page-(numbers[index-1] ?? 0)>1 && <span className="iw-page-ellipsis">…</span>}<button type="button" className="btn iw-page-number" aria-label={`第${page}页`} aria-current={page === props.page ? 'page' : undefined} disabled={props.disabled} onClick={() => props.onPage(page)}>{page}</button></span>)}
-      <button type="button" className="btn iw-page-arrow" aria-label="下一页" disabled={props.disabled || props.page >= pages} onClick={() => props.onPage(props.page+1)}>›</button>
-      <label className="iw-jump">跳至 <input type="text" inputMode="numeric" aria-label="目标页码" value={jump} disabled={props.disabled} onChange={e => setJump(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); go(); } }}/> 页</label><button type="button" className="btn iw-jump-go" disabled={props.disabled} onClick={go}>跳转</button></div>}
-  </div></div>;
+ return <div className="bs-pager"><Pagination total={props.total} page={props.page} size={props.size} busy={props.disabled ?? false} unit="条" pageSizes={[20,50,100]} selectLabel="每页数量" change={props.onPage} sizeChange={size=>{if(size===20||size===50||size===100)props.onSize(size);}}/></div>;
 }

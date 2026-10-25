@@ -2,11 +2,11 @@ import { frozenStyleOrder as order } from './frozen-style-order.ts';
 const common: readonly string[] = ["ui-tokens.css", "styles.css", "gold.css", "interaction-common.css", "ui-review.css", "final-ui.css", "brand-components.css", "golden-consistency.css", "unified-single-select.css", "confirmation-dialogs.css"];
 const groups: Readonly<Record<string, readonly string[]>> = {
  inventory:['inventory-workbench.css','matrix-experiments.css','inventory-refinement.css','product-inventory-unified.css','inventory-ledger.css'],
- products:['product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
- catalogue:['product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
- settings:['basic-settings.css'],
- sales:['sales-current.css','entry-shared.css','matrix-experiments.css','sales-returns.css','sales-golden.css','sales-refinement.css','sales-detail-alignment.css','product-current.css'],
- transfer:['transfer-current.css','entry-shared.css','matrix-experiments.css','transfer-scan-drawer.css','product-current.css','product-inventory-unified.css'],
+ products:['inventory-workbench.css','inventory-refinement.css','product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
+ catalogue:['inventory-workbench.css','inventory-refinement.css','product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
+ settings:['inventory-workbench.css','inventory-refinement.css','basic-settings.css'],
+ sales:['inventory-workbench.css','inventory-refinement.css','sales-current.css','entry-shared.css','matrix-experiments.css','sales-returns.css','sales-golden.css','sales-refinement.css','sales-detail-alignment.css','product-current.css'],
+ transfer:['inventory-workbench.css','inventory-refinement.css','transfer-current.css','entry-shared.css','matrix-experiments.css','transfer-scan-drawer.css','product-current.css','product-inventory-unified.css'],
 };
 const slots = new Map(order.map(name => {const anchor=document.createComment('frozen-style:'+name);document.head.append(anchor);return [name,anchor] as const;}));
 const loaded = new Map<string,{node:HTMLLinkElement;ready:Promise<void>}>();

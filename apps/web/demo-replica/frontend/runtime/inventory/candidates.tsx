@@ -14,7 +14,7 @@ import type { ProductReadOnlyReader } from '../../../../src/inventory/product-co
 import { ProductCandidatePreview } from '../products/preview.tsx';
 import { productCss, categoryCss, filterCss, emptyCss } from './source-control-css.ts';
 
-const ALL = '__inventory_all__';
+import { ALL_FILTER_VALUE as ALL,checkedFilterValues,resolveFilterSelection } from './filter-selection.ts';
 const labels: Record<CandidateKind,string> = { product:'商品',category:'商品分类',warehouse:'仓库',supplier:'供应商',fit:'版型',season:'季节' };
 const sourceArcoCss=arcoCss.replace(/\bbody\s*\{/g,':host {');
 const sourceSheets=new WeakMap<Document,Map<string,CSSStyleSheet>>();
@@ -68,14 +68,16 @@ function CandidateContent(p:CandidateSelectProps&{portal:HTMLElement;host:HTMLEl
  const signatureRef=useRef(signature);signatureRef.current=signature;
  const historyKey='inventory-search:'+p.scope.identity.accountId;const [history,setHistory]=useState<string[]>(()=>{try{const rows=JSON.parse(localStorage.getItem(historyKey)??'[]');return Array.isArray(rows)?rows.filter((x):x is string=>typeof x==='string').slice(0,15):[];}catch{return [];}});const paste=useRef<AbortController|null>(null);
  const saveHistory=(rows:string[])=>{setHistory(rows);try{localStorage.setItem(historyKey,JSON.stringify(rows));}catch{}};const notify=(message:string)=>(window as Window&{toast?:(text:string)=>void}).toast?.(message);
- const selectRef=useRef<{focus:()=>void}|null>(null);
+ const selectRef=useRef<{focus:()=>void}|null>(null),selectionRequest=useRef<AbortController|null>(null);
+ const [selecting,setSelecting]=useState(false);
+ useEffect(()=>()=>selectionRequest.current?.abort(),[p.value,signature]);
  useLayoutEffect(()=>{const measure=()=>{const next=measureCandidateGeometry(p.host);setGeometry(current=>current.left===next.left&&current.width===next.width&&current.viewport===next.viewport&&current.filterRight===next.filterRight?current:next);};const ro=new ResizeObserver(measure);ro.observe(p.host);window.addEventListener('resize',measure);measure();return()=>{ro.disconnect();window.removeEventListener('resize',measure);};},[p.host]);
  const run=(page:number)=>query.run({kind:p.kind,search:input.trim(),page,pageSize:20,selectedIds:(refs.current.value??[]).map(x=>x.id),categoryIds:[...p.categoryIds]});
  useEffect(()=>{if(!open||p.kind==='product'&&!input.trim())return;setItems([]);setLoaded(null);const timer=setTimeout(()=>{void run(1);},input.trim()?180:0);return()=>{clearTimeout(timer);query.cancel();};},[open,signature]);
- const mounted=useRef(false);useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;query.cancel();paste.current?.abort();queueMicrotask(()=>{if(!mounted.current)query.dispose();});};},[query]);
+ const mounted=useRef(false);useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;query.cancel();paste.current?.abort();selectionRequest.current?.abort();queueMicrotask(()=>{if(!mounted.current)query.dispose();});};},[query]);
  useEffect(()=>{if(state.phase==='success'&&state.success){const {parameters,data}=state.success;const own=JSON.stringify([parameters.search,parameters.categoryIds]);if(own!==signatureRef.current)return;setItems(previous=>parameters.page===1?data.items:[...new Map([...previous,...data.items].map(item=>[item.id,item])).values()]);setLoaded({signature:own,page:data.page,total:data.exactTotal});}if(state.phase==='error'&&state.error instanceof HttpQueryError&&(state.error.kind==='forbidden'||state.error.kind==='unauthenticated')){refs.current.onAccessFailure(state.error);p.scope.dispose();}},[state]);
  const allLabel=p.kind==='category'?'全部分类':'全部'+labels[p.kind];
- const selected=p.value??[],all=p.kind!=='product'&&p.value===null;
+ const selected=p.value??[];
  const names=useMemo(()=>new Map([[ALL,allLabel],...items.map(x=>[x.id,x.label] as const),...selected.map(x=>[x.id,x.label] as const)]),[items,p.value,p.kind]);
  const tagLimit=useMemo(()=>{const canvas=document.createElement('canvas').getContext('2d');if(!canvas)return 1;canvas.font='13px Arial';const values=selected.slice(0,3).map(x=>Math.min(canvas.measureText(x.label).width+37,geometry.width-50));for(let n=Math.min(3,selected.length);n>1;n--)if(values.slice(0,n).reduce((a,b)=>a+b,0)+(n-1)*4+(selected.length>n?92:42)<=geometry.width)return n;return 1;},[selectionSignature,geometry.width]);
  const busy=state.phase==='loading';
@@ -103,8 +105,20 @@ function CandidateContent(p:CandidateSelectProps&{portal:HTMLElement;host:HTMLEl
  const roots:Node[]=[];const byId=new Map(nodes.map(n=>[n.key,n]));
  if(p.kind==='category')for(const item of items){const node=byId.get(item.id)!;if(item.parentId){let parent=byId.get(item.parentId);if(!parent){parent={key:item.parentId,value:item.parentId,title:item.parentLabel??'',disabled:true,children:[]};byId.set(parent.key,parent);roots.push(parent);}parent.children??=[];parent.children.push(node);}else roots.push(node);}
  else roots.push(...nodes);
- return <TreeSelect ref={selectRef as never} className={all?'inv-all-selected':p.kind==='category'?'inventory-category-tree':''} aria-label={labels[p.kind]+'，多选'} style={{width:'100%'}} treeData={[{key:ALL,value:ALL,title:allLabel},...roots]} treeCheckable multiple treeCheckStrictly treeCheckedStrategy={TreeSelect.SHOW_ALL} showSearch={{retainInputValueWhileSelect:false}} filterTreeNode={()=>true} inputValue={input} onInputValueChange={setInput} value={all?[ALL]:selected.map(x=>x.id)} placeholder={'搜索'+labels[p.kind]} notFoundContent={<div className="inv-filter-empty">没有匹配的{labels[p.kind]}</div>}
-  maxTagCount={{count:all?1:tagLimit,render:n=>all?null:<span className="inv-filter-count">+{n} 更多</span>,showPopover:false}} renderFormat={(_,id)=>names.get(typeof id==='string'?id:id.value)??String(id)} getPopupContainer={()=>p.portal} triggerProps={{position:'bl',autoAlignPopupWidth:false,popupStyle:{width:Math.min(Math.max(geometry.width,300),innerWidth-p.host.getBoundingClientRect().left-12)}}}
-  onVisibleChange={visible=>{setOpen(visible);if(!visible)query.cancel();}} onChange={(next,extra)=>{const key=extra.trigger?._key;const raw=Array.isArray(next)?next:[];if(key===ALL||raw.includes(ALL)&&!all){p.onChange(extra.checked===false?[]:null);setInput('');return;}change(raw);}}
-  dropdownRender={menu=><div onScrollCapture={scroll}><div className="inv-filter-tools">{loaded?'匹配 '+loaded.total+' 项':'请选择'} · {all?'全部':`已选 ${selected.length} 项`}</div>{menu}{status}</div>}/>;
+ const completeCandidates=loaded?.signature===signature&&!input.trim()&&items.length===loaded.total;
+ const checked=checkedFilterValues(p.value,items,completeCandidates),allSelected=checked.includes(ALL);
+ const choose=async(next:unknown,extra:Parameters<typeof resolveFilterSelection>[3])=>{
+  selectionRequest.current?.abort();const own=new AbortController();selectionRequest.current=own;const signal=AbortSignal.any([own.signal,p.scope.signal]);setSelecting(true);
+  try{
+   const result=await resolveFilterSelection(p.value,items,next,extra,async()=>{
+    const result:Candidate[]=[];for(let page=1;;page++){if(signal.aborted)throw new DOMException('已取消','AbortError');const data=await p.reader.readCandidates({parameters:{kind:p.kind,search:'',page,pageSize:20,selectedIds:[],categoryIds:[...p.categoryIds]},signal,identity:p.scope.identity,routeInstanceId:p.scope.routeInstanceId,entityId:null});result.push(...data.items);if(page*20>=data.exactTotal)return result;}
+   },completeCandidates);
+   if(!signal.aborted&&selectionRequest.current===own){p.onChange(result);setInput('');}
+  }catch(e){if(signal.aborted)return;if(e instanceof HttpQueryError&&(e.kind==='forbidden'||e.kind==='unauthenticated')){p.onAccessFailure(e);p.scope.dispose();}else notify('读取完整候选失败，当前选择已保留，请重试。');}
+  finally{if(selectionRequest.current===own){selectionRequest.current=null;setSelecting(false);}}
+ };
+ return <TreeSelect ref={selectRef as never} loading={selecting} allowClear className={allSelected?'inv-all-selected':p.kind==='category'?'inventory-category-tree':''} aria-label={labels[p.kind]+'，多选'} style={{width:'100%'}} treeData={[{key:ALL,value:ALL,title:allLabel},...roots]} treeCheckable multiple treeCheckStrictly treeCheckedStrategy={TreeSelect.SHOW_ALL} showSearch={{retainInputValueWhileSelect:false}} filterTreeNode={()=>true} inputValue={input} onInputValueChange={setInput} value={checked} placeholder={'搜索'+labels[p.kind]} notFoundContent={<div className="inv-filter-empty">没有匹配的{labels[p.kind]}</div>}
+  maxTagCount={{count:allSelected?1:tagLimit,render:n=>allSelected?null:<span className="inv-filter-count">+{n} 更多</span>,showPopover:false}} renderFormat={(_,id)=>names.get(typeof id==='string'?id:id.value)??String(id)} getPopupContainer={()=>p.portal} triggerProps={{position:'bl',autoAlignPopupWidth:false,popupStyle:{width:Math.min(Math.max(geometry.width,300),innerWidth-p.host.getBoundingClientRect().left-12)}}}
+  onVisibleChange={visible=>{setOpen(visible);if(!visible)query.cancel();}} onChange={(next,extra)=>void choose(next,extra)}
+  dropdownRender={menu=><div onScrollCapture={scroll}><div className="inv-filter-tools">{loaded?'匹配 '+loaded.total+' 项':'请选择'} · {allSelected?'全部':`已选 ${selected.length} 项`}</div>{menu}{status}</div>}/>;
 }
