@@ -12145,11 +12145,23 @@
       "saveThreeCases": "NOT_RUN",
       "cleanup": "LOGOUT204_SESSIONNULL_NEWACCOUNT_DISABLED_V2_AUTHV2_ACTIVES0_3DRIVERS_CLOSED_CLEANUP_EMPTY",
       "R1Changed": false,
-      "next": "T45 narrow66 SELECT3 and current metadata; QB affected reviews; original67 independent synthetic QA IDs/8operationkeys and fresh sameRAM normal credentials, never restore/reset64",
+      "next": "QB325 POST66 only-delta current reviews; T45 independent0521 synthetic QA67 normal full lifecycle, no64/0511 replay",
       "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/NORMAL64-ACTUAL-RESULT.json",
       "failureStage": "POST /sales/prepare-create original native-sales-preparation reserve; before prepare.status200 assertion, never sales/commands SAVE",
       "original65": "COMPLETED0/.8188s: original actor draft/null/inactive/active receipts0 audits0 salesdocs0 numberalloc0;setup+DISABLE receipts4;accountdisabledv2/authv2/activeSessions0",
-      "review": "QB325 NEED_FIX only transfer_header SELECT(id,stock_basis,number), no new contract"
+      "review": "QB325 NEED_FIX only transfer_header SELECT(id,stock_basis,number), no new contract",
+      "transferRead66": {
+        "status": "COMPLETED0_COMMIT_RETURNED_SUCCESS",
+        "seconds": 2.0719,
+        "scope": "SELECT(id,stock_basis,number) transfer_header only",
+        "relationSelect": false,
+        "wholeTableWrite": false,
+        "canonical": "04126b9ff12096f102a672470995c67bc0115e413e5d5e1dd526dec34806f40a",
+        "R1Changed": false,
+        "businessDML": false,
+        "reviews": "QB325 affected POST66 review in progress for original67",
+        "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/TRANSFER-READ66-ACTUAL-RESULT.json"
+      }
     }
   }
 }
