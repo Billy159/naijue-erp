@@ -1,3 +1,13 @@
+SOURCE425 PRODUCT MAINTENANCE CHILD VISIBILITY SOURCE READY
+
+OriginalD2 PRODUCT-LOAD-VISIBILITY-v1 exact2leaves delivered/fixed: product-maintenance-store49139/8d7e54362360df69043ad14149bd50a5c329ad42b0245d8c95fb2730af282b21 and originalprotocoltest46978/ac3460e28c102c5556bad74f123d02e5fdd04083d065b58132d482614ef22c5c. Original18affectedprotocolPASS+strict0, noactualPGorHTTP. OriginalSKU/barcode imported publication proof/maintenance native birth validity/committed receipt and audit/xmin checks applied before LIMIT/locks; barcodeonlyvisibleSKU; rootbasicread/oldv17save/CAS/ids/media guardunchanged. OriginalC189/QB260actualv17evidence reused, no syntheticStagewitness claim. NewSQL actualexecution/nonowner/STAGED notyetproven. D1receivedexactpins fororiginalbaseProducthost; no globalwaitforD2report.
+
+Currentfrontlineactualfindings: F1 failedNativeTransfer initialize couldenteroldeditorfallback, plusfailedstatusfeedback; sameIDsalesfailedmodelwouldnoretry. OriginalF1fixinginownedleaves, no sharedready-pages writes. F2 receiptcommitted→onSaved lackedsameproduct/versionauthoritativeread, specsGroupMembers andbarcodepagination/scrolllost onunmount; originalF2fixingexistingconsumer. F3 Paymenttabcouldhide dirty/unknowneditor andPayment/Party commitclosedbeforetargetdetail; originalF3fixingguards/readback, Staffexistingreadbackreused. F4normalcataloguecurrentrole/client/stablesessionoriginalkeyinprogress. No fakeexistingAPIreimplementation.
+
+STAFF layers corrected by fixed420gitshow: productionJSON.staffMaintenance=true; factorythirdargCredentialRequestTag|null; internalPostgresApplicationApiOptions.staffMaintenance={credentialRequestTag}. C priorverbalblanketbooleanstatementwithdrawn, consumers useexactcurrenttypes. No schema/writecontractchangefromthisnamingclarification.
+
+T45stockpreparednewcarrier QB finite reviewinprogress, noactualstockwriteyet. Currentpublicformalunchanged; all37/67scope active; no newwholepagebusinesspass. GitHub4242d0c1bc3fb4439c208d63b22e3c443bf8ab2c92a verified;thispacketnextsync.
+
 SOURCE424 HUMAN MAX10 INDEPENDENT CHATS / ACTUAL PARALLEL CONTINUATION
 
 Direct human verified 重构任务书01a16189 user01a171e6-d0e9-7d43-82f3-d4f87c76b81b: 项目最多10个独立Chat并发包含C/T45/开发/验收。Earlierclaim4slotsfull incorrectly applied collaboration childagent limit to independent chats, withdrawn. Actual toolcapacityerrors, ifany,must be reported notimagined; collaboration tools own4slot restriction remains. No mirrorteam/newchats, existingrolesonly. RemoteDB/deploywriter remainssoleT45serial,10chatsnot10databasewriters.

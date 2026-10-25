@@ -9211,5 +9211,15 @@
     "QF": "interrupted410evidencepreserved notautoRestart",
     "serverWriter": "T45only",
     "sharedReadyPagesWriter": "F4only"
+  },
+  "currentContinuation425": {
+    "D2": "PRODUCT-LOAD-VISIBILITY-v1 source2 fixed18protocolPASS realSQLnottested",
+    "D1": "exactD2pinsreceived baseProducthostinprogress",
+    "F1": "failedinitoldeditorfallback/statusfailure/sameIDretryfixinginprogress",
+    "F2": "saveauthoritativeversionreadback+stabletabstatefixinginprogress",
+    "F3": "dirtyunknownPaymenttabguard+PaymentPartydetailreadbackfixinginprogress",
+    "F4": "normalcataloguemaintenance sessionownedoriginalkeyinprogress",
+    "stock": "T45newcarrier QB finite review noactualstockyet",
+    "staffOptionsLayers": "productionJSON true; factorythirdarg tag|null; internaloptions object"
   }
 }

@@ -1,3 +1,4 @@
+import { COMPLETE_SCOPE_DECISION } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
@@ -89,6 +90,61 @@ function rootValues(p: ProductStoredRecord): unknown[] {
   return [p.id, p.productCode, p.name, p.categoryId, p.supplierId, p.seasonId, p.sizeGroupId, p.year, p.systemItemCode, p.thickness,
     p.collarPantsType, p.defaultBarcodeSchemeId, p.enabled, p.version, p.deletedAt, ...CATALOGUE_PRICE_KEYS.map(k => p.prices[k])];
 }
+
+/** Same full publication certificate as maintained-catalogue26. Source presence,
+ * a STAGE receipt, and created_operation_id alone never grant child visibility.
+ * Predicates run before the original LIMIT/row locks, on the borrowed client. */
+const committedBefore = (alias: string): string => `(pg_current_xact_id_if_assigned() IS NULL OR age(${alias}.xmin)>age(pg_current_xact_id_if_assigned()::xid))`;
+const fullPublication = `b.mapping_version='V2_HISTORY_NULLABLE_1' AND b.status='IMPORTED'
+ AND b.history_validation_passed IS TRUE AND b.history_actual_counts=b.history_expected_counts
+ AND b.checkpoint->'counts'=b.checkpoint->'expected' AND b.checkpoint->'counts'->>'IMPORT_BATCH'='1'
+ AND b.completed_at IS NOT NULL AND m.validator_version='HISTORY_TYPED_CLOSURE_V1'
+ AND m.selection_sha256=b.source_hash AND m.authorized_payload_hash=b.history_payload_hash AND m.expected_counts=b.history_expected_counts
+ AND m.document_count=(SELECT count(*) FROM naijue_erp.import_history_document_manifest md WHERE md.batch_id=b.id)
+ AND ${committedBefore("b")} AND ${committedBefore("s")} AND ${committedBefore("m")}
+ AND EXISTS(SELECT 1 FROM naijue_erp.import_record f
+ JOIN naijue_erp.import_record_accounting_claim c ON c.import_batch_id=f.import_batch_id AND c.import_record_id=f.id AND c.target_type=f.target_type AND c.target_id=f.target_id
+ JOIN naijue_erp.operation_receipt r ON r.id=c.operation_id JOIN naijue_erp.audit_change a ON a.operation_id=r.id
+ WHERE f.import_batch_id=b.id AND f.target_type='IMPORT_BATCH' AND f.target_id=b.id AND f.status='IMPORTED'
+ AND f.source_entity_type='INVENTORY_SCOPE_APPROVAL' AND f.source_key='FINAL_COMPLETE_SCOPE'
+ AND f.source_record_hash=b.source_hash AND f.source_file_ref=b.source_manifest_ref AND f.decision_reason=$3::text
+ AND c.checkpoint_sequence=(b.checkpoint->>'sequence')::integer AND r.target_type='IMPORT' AND r.target_id=b.id
+ AND r.action='IMPORT_PUBLISH' AND r.status='COMMITTED' AND r.result_data->>'status'='IMPORTED' AND r.result_data->>'batchId'=b.id::text
+ AND r.result_data->>'sequence'=b.checkpoint->>'sequence' AND r.result_data->>'cursor'=b.checkpoint->>'cursor'
+ AND a.object_type='IMPORT' AND a.object_id=b.id AND a.action=r.action AND a.actor_account_id=r.actor_account_id
+ AND a.occurred_at=r.completed_at AND ${committedBefore("r")} AND ${committedBefore("a")} AND ${committedBefore("f")} AND ${committedBefore("c")})`;
+function publishedChild(binding: string): string {
+  return `EXISTS(SELECT 1 FROM naijue_erp.import_source_row s
+    JOIN naijue_erp.import_batch b ON b.id=s.batch_id
+    JOIN naijue_erp.import_history_closure_manifest m ON m.batch_id=b.id
+    WHERE ${binding} AND (${fullPublication}))`;
+}
+const visibleSku = `(${committedBefore("sku")} AND (
+  (sku.created_operation_id IS NULL AND ${publishedChild(`s.entity_type='SKU'
+    AND s.field_provenance->'native_sku_import'->>'native_sku_id'=sku.id::text
+    AND s.field_provenance->'native_sku_import'->'native_sku'->>'product_id'=sku.product_id::text
+    AND EXISTS(SELECT 1 FROM naijue_erp.import_sku_alias x JOIN naijue_erp.import_record f
+      ON f.import_batch_id=x.batch_id AND f.source_entity_type='SKU' AND f.source_key=x.canonical_source_key
+      AND f.target_type='SKU' AND f.target_id=x.canonical_sku_id AND f.status='IMPORTED'
+      WHERE x.batch_id=s.batch_id AND x.source_row_id=s.id AND x.canonical_sku_id=sku.id)`)})
+  OR (sku.created_operation_id IS NOT NULL AND naijue_erp.native_creation_operation_valid('SKU',sku.id,sku.created_operation_id)
+    AND EXISTS(SELECT 1 FROM naijue_erp.operation_receipt r JOIN naijue_erp.audit_change a ON a.operation_id=r.id
+      WHERE r.id=sku.created_operation_id AND ${committedBefore("r")} AND ${committedBefore("a")}))))`;
+const visibleBarcode = `(${committedBefore("bc")} AND (
+  ${publishedChild(`s.entity_type='BARCODE' AND s.field_provenance->>'native_sku_id'=bc.sku_id::text
+    AND s.field_provenance->>'native_barcode'=bc.barcode
+    AND s.field_provenance->'native_barcode_import'->'native_barcode'->>'id'=bc.id::text`)}
+  OR EXISTS(SELECT 1 FROM naijue_erp.audit_change a JOIN naijue_erp.operation_receipt r ON r.id=a.operation_id
+    WHERE a.object_type='PRODUCT' AND a.object_id=$1::uuid AND a.action IN ('CREATE','EDIT')
+      AND r.target_type=a.object_type AND r.target_id=a.object_id AND r.action=a.action AND r.status='COMMITTED'
+      AND r.actor_account_id=a.actor_account_id AND r.completed_at=a.occurred_at
+      AND r.result_data->>'operationId'=r.id::text AND r.result_data->>'kind'='PRODUCT'
+      AND r.result_data->>'targetId'=$1::text AND r.result_data->>'version'=a.new_version::text
+      AND ${committedBefore("r")} AND ${committedBefore("a")}
+      AND NOT coalesce(a.before_values->'barcodes','[]'::jsonb) @> jsonb_build_array(jsonb_build_object('id',bc.id::text))
+      AND EXISTS(SELECT 1 FROM jsonb_array_elements(a.after_values->'barcodes') item
+        WHERE item-'enabled'=to_jsonb(bc)-'enabled'))))`;
+
 export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceUnitOfWork {
   readonly seasonContract?: "product-season-array-v1";
   private readonly driver: PgProductMaintenanceDriver; private readonly deletion: ProductDeletionGuard | null;
@@ -288,10 +344,11 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     requireDomain(rows.length <= 1, "INVALID_DATABASE_VALUE", "Product identity is not unique"); if (!rows[0]) return undefined;
     const p = productRow(rows[0], this.seasonArray); requireDomain(p.id === id, "INVALID_DATABASE_VALUE", "Mismatched product");
     const s = (await this.query(`SELECT id, product_id, sku_code, color_id, fit_id, size_id, enabled, version, created_operation_id
-      FROM naijue_erp.sku WHERE product_id=$1::uuid ORDER BY id LIMIT $2 FOR UPDATE`, [id, PRODUCT_MAINTENANCE_MAX_SKUS + 1])).rows;
+      FROM naijue_erp.sku WHERE product_id=$1::uuid AND ${visibleSku} ORDER BY id LIMIT $2 FOR UPDATE`, [id, PRODUCT_MAINTENANCE_MAX_SKUS + 1, COMPLETE_SCOPE_DECISION])).rows;
     requireDomain(s.length <= PRODUCT_MAINTENANCE_MAX_SKUS, "PRODUCT_MAINTENANCE_TOO_LARGE", "SKU edit bound exceeded");
-    const b = (await this.query(`SELECT b.id,b.barcode,b.sku_id,b.barcode_kind,b.scheme_id,b.enabled FROM naijue_erp.sku_barcode b
-      JOIN naijue_erp.sku s ON s.id=b.sku_id WHERE s.product_id=$1::uuid ORDER BY b.id LIMIT $2 FOR UPDATE OF b`, [id, PRODUCT_MAINTENANCE_MAX_BARCODES + 1])).rows;
+    const b = (await this.query(`SELECT bc.id,bc.barcode,bc.sku_id,bc.barcode_kind,bc.scheme_id,bc.enabled FROM naijue_erp.sku_barcode bc
+      WHERE bc.sku_id=ANY($4::uuid[]) AND ${visibleBarcode} ORDER BY bc.id LIMIT $2 FOR UPDATE OF bc`,
+    [id, PRODUCT_MAINTENANCE_MAX_BARCODES + 1, COMPLETE_SCOPE_DECISION, s.map(row => uuid(row.id))])).rows;
     requireDomain(b.length <= PRODUCT_MAINTENANCE_MAX_BARCODES, "PRODUCT_MAINTENANCE_TOO_LARGE", "Barcode edit bound exceeded");
     const skus = s.map(skuRow), barcodes = b.map(barcodeRow), ids = new Set(skus.map(row => row.id));
     requireDomain(ids.size === skus.length && skus.every(row => row.productId === id) && barcodes.every(row => ids.has(row.skuId)), "INVALID_DATABASE_VALUE", "Invalid aggregate child identity");

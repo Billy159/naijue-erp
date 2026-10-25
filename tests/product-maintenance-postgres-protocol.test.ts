@@ -35,6 +35,36 @@ test("v17 selection leaf locks original group and enabled selected references an
   await assert.rejects(uow.transaction(async tx => { await tx.load(product); return tx.readSkuSelectionSizes!(product, group, { colorIds: [color], fitIds: [fit] }); }), { code: "PRODUCT_REFERENCE_UNAVAILABLE" });
   assert.ok(!calls.slice(n).some(c => c.sql.includes("product-selection:members")));
 });
+test("product visibility: original load gates published imports and committed births before bounds; barcodes bind only returned SKUs", async () => {
+  const calls: { sql: string; values: unknown[] }[] = [], product = id(19001), sku = id(19002);
+  const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: {
+    async assertAllowed() {}, async getReceipt() { return undefined; }, async complete() { throw Error("UNEXPECTED_WRITE"); }
+  }, client: { async query(sql, values = []) {
+    calls.push({ sql, values }); let rows: Record<string, unknown>[] = [];
+    if (sql.includes("FROM naijue_erp.product WHERE")) rows = [{ id: product, product_code: "VISIBLE", name: "RETAINED", category_id: id(1), supplier_id: null, season_id: null,
+      size_group_id: id(3), year: null, system_item_code: null, thickness: null, collar_pants_type: null, default_barcode_scheme_id: null, enabled: false, version: 9,
+      deleted_at: null, ...Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, null])) }];
+    else if (sql.includes("FROM naijue_erp.sku WHERE")) rows = [{ id: sku, product_id: product, sku_code: "KEEP-0001", color_id: id(6), fit_id: id(7), size_id: id(8), enabled: false, version: 3, created_operation_id: id(19003) }];
+    return { rows, rowCount: rows.length };
+  } } }); } };
+  const result = await new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }).transaction(tx => tx.load(product));
+  assert.equal(result!.product.version, 9); assert.equal(result!.skus[0]!.skuCode, "KEEP-0001"); assert.equal(result!.skus[0]!.enabled, false);
+  const children = calls.filter(c => c.sql.includes("FROM naijue_erp.sku WHERE") || c.sql.includes("FROM naijue_erp.sku_barcode bc"));
+  assert.equal(children.length, 2);
+  for (const { sql, values } of children) {
+    assert.equal(values[0], product); assert.equal(typeof values[2], "string");
+    assert.match(sql, /b.status='IMPORTED'/); assert.match(sql, /HISTORY_TYPED_CLOSURE_V1/); assert.match(sql, /IMPORT_PUBLISH/);
+    assert.match(sql, /f.decision_reason=\$3::text/); assert.match(sql, /pg_current_xact_id_if_assigned/);
+    assert.ok(sql.indexOf("b.status='IMPORTED'") < sql.lastIndexOf(" LIMIT $2"));
+    assert.doesNotMatch(sql, /BEGIN|COMMIT;|ROLLBACK|INSERT INTO|UPDATE naijue|DELETE FROM/);
+  }
+  assert.match(children[0]!.sql, /native_creation_operation_valid\('SKU',sku.id,sku.created_operation_id\)/);
+  assert.match(children[0]!.sql, /x.source_row_id=s.id AND x.canonical_sku_id=sku.id/);
+  assert.match(children[0]!.sql, /ORDER BY id LIMIT \$2 FOR UPDATE$/);
+  assert.deepEqual(children[1]!.values[3], [sku]); assert.match(children[1]!.sql, /bc.sku_id=ANY\(\$4::uuid\[\]\)/);
+  assert.match(children[1]!.sql, /a.before_values->'barcodes'/); assert.match(children[1]!.sql, /item-'enabled'=to_jsonb\(bc\)-'enabled'/);
+  assert.match(children[1]!.sql, /ORDER BY bc.id LIMIT \$2 FOR UPDATE OF bc$/);
+});
 function imageProtocol(options: { absent?: boolean; rows?: readonly Record<string, unknown>[]; fail?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = []; let authorized = false;
   const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE"); };
