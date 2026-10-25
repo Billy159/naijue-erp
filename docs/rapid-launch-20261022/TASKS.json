@@ -66,7 +66,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Adopt actual2172956/30commit exactreadback; originalSKU14999streamednext; source384checkpoint",
+      "currentWork": "OriginalSKU218RUNNING collectsamehandle/no replay, productactual217/QB285adopted;385checkpoint",
       "currentPackage": "Existing normal candidate integration and original isolated business execution",
       "nextReadyPackage": "ActualacceptedTCP metadata→copied37202 privateapp; PRODUCT2956 fixedgraph/carrier review→actualstage",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
@@ -261,7 +261,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Originalbatchwriter/test/v2consumer delivered18tests+strict/local67ms; source383fixed/actualstage supportnext",
+      "currentWork": "Originalproductv2actual217adopted; SKUv1consumerinrunning218; nextstockconsumerafterD3exactsourcehandoffifnotalreadydone",
       "currentPackage": "SKU14999-ACTUAL-PREP-v1",
       "nextReadyPackage": "Actual product/SKU execution support onlynew blockers; no duplicate sourceaudits",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
@@ -308,7 +308,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Originalapplicationbatchproofleaf delivered/focusedstrict+same100deep equality/local71ms; no DB/server",
+      "currentWork": "Originalstock38303 source/bindings next; reuseexistingprepared38303/38314 origins no166MBrecapture",
       "currentPackage": "279+280 reader/host limitedsource218 adopted;283 HTTPpoststatF01 fixexact2 frozen",
       "nextReadyPackage": "Necessary exact owned history consumers afterC filehandoff",
       "currentDependencies": "Original v5 null-hall approval for mandatory two real historical sales; no season guard widening required",
@@ -356,7 +356,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "QB285 actual217finiteonly acceptance;284graph/carrierPASS/source283reused",
+      "currentWork": "Actual285productPASS; revised286SKUcarrierPASS; waitoriginal218terminalactualscope",
       "currentPackage": "232newR1installedv14catalog/ACLreview only",
       "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Next actual source/native execution only after genuine approved inputs; no repeated metadata/source review",
@@ -1327,9 +1327,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T01:43:05.752882+00:00",
+  "updatedAt": "2026-10-25T01:54:46.282434+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "fdfaa6074f33a3c1410a3518ef486e77e9d1d736",
+  "lastVerifiedRemoteCommit": "4119d9a10dbb4734f569151e3fea594004b2ac8c",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2646,7 +2646,7 @@
     },
     "product217": {
       "actualJob": "c03-real-r1-native-product2956-batchproof-stage-20261025-217",
-      "status": "ACTUAL_30_COMMIT_AND_2956_EXACT_KEY_READBACK_PASS_PENDING_QB285",
+      "status": "ACTUAL_30_COMMIT_AND_2956_EXACT_KEY_READBACK_PASS_QB285_ACCEPTED",
       "elapsedSeconds": 114.82794374902733,
       "writerSourceCommit": "fdfaa6074f33a3c1410a3518ef486e77e9d1d736",
       "captureSourceCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
@@ -2661,7 +2661,23 @@
       "sourceAccepted": "QB283+QB284",
       "next": "QB285 actualfiniteadoption thenoriginalSKU14999streamedcarrier",
       "published": false,
-      "fullImport": false
+      "fullImport": false,
+      "actualAccepted": "QB285"
+    },
+    "sku218": {
+      "jobId": "c03-real-r1-native-sku14999-stage-20261025-218",
+      "status": "RUNNING_NOT_COMPLETE",
+      "sourceAccepted": "QB286_REVISED_AFTER_F01_F02",
+      "sourceCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+      "canonicalRowsExpected": 14999,
+      "sourceAliasesExpected": 15121,
+      "privateRawBytes": 138250702,
+      "privateTransportDelivered": true,
+      "actualStagePassed": false,
+      "actualCounts": "UNKNOWN_WHILE_RUNNING; lastconfirmedSKU0_asOf217notcurrent",
+      "journal": "original218/results/sku-progress.jsonl privateboundedmetadata",
+      "next": "Collect same218 no replay; actualfiniteQB onlyafterterminal; preserveunknownprefix",
+      "published": false
     }
   },
   "supplementalRoles": {
@@ -4827,7 +4843,7 @@
     },
     {
       "id": "NATIVE-PRODUCT-EVIDENCE-REPEATED-CHUNK-VALIDATION-01",
-      "status": "SOURCE383_FIXED_QB283_284_PASS_ACTUAL217_ALL2956_PASS_PENDING_QB285",
+      "status": "CLOSED_SOURCE383_QB283_284_AND_ACTUAL217_QB285_PASS",
       "owners": [
         "D3 application",
         "D1 adapter/test/v2consumer",
@@ -4840,9 +4856,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T01:43:05.752882+00:00",
-    "sourceRound": 384,
-    "sourceCheckpoint": "SOURCE383 exactremote; SOURCE384 actual217products2956commit+keyreadback; SKU14999next",
+    "atUtc": "2026-10-25T01:54:46.282434+00:00",
+    "sourceRound": 385,
+    "sourceCheckpoint": "SOURCE384 exactremote; QB285 actualproducts2956PASS; originalSKU218RUNNING_UNKNOWN_COMPLETION; stocksourceD3next",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4889,7 +4905,7 @@
     "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Human historicalblankhallv5 onlyrelatedfullhistory/publication branch; v11/v15/v16/v17 alreadyapproved. Actual source/schema/ACL/normalHTTP readiness separate.",
-    "github": "REMOTE_EXACT_VERIFIED_fdfaa6074f33a3c1410a3518ef486e77e9d1d736",
+    "github": "REMOTE_EXACT_VERIFIED_4119d9a10dbb4734f569151e3fea594004b2ac8c",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
