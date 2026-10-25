@@ -1351,9 +1351,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T10:10:58.816732+00:00",
-  "stage": "ACTIVE_ZERO_ROW15_ACTUAL_PASS_PRIVATE14_SUBMITTED",
-  "lastVerifiedRemoteCommit": "357b5194468dca7b32e6821709a77df9cdac939a",
+  "updatedAt": "2026-10-25T10:13:05.932535+00:00",
+  "stage": "ACTIVE_PRIVATE438_INSTALL_START_PASSED_BUSINESS_DATA_AND_PUBLISH_PENDING",
+  "lastVerifiedRemoteCommit": "4eebf6a10c9ff845f33242999adfd8e127417a21",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2057,7 +2057,7 @@
       "status": "ACTUAL_INSTALLED_8_PUBLIC_FILES_ONLY",
       "TCPOrIssuerOrStageAccepted": false
     },
-    "candidateStage": "ACTUAL_PRIVATE14_SUBMITTED_QUEUED_UNIT89bd4052be6a_NOT_STARTED_PROVEN",
+    "candidateStage": "SOURCE438_PRIVATE_APPLICATION_RUNNING_HEALTH_RESOURCES_PASS_NOT_DATA_READY",
     "latestPrivateStage": "C48_FAILED_OFFLINE_INSTALLER_DIAGNOSTIC_PENDING",
     "qaACLWitness": "C50_CAPTURED_EFFECTIVE_VALID_RAW_NULL_ONLY_NOT_H06",
     "privateStage": {
@@ -2767,6 +2767,30 @@
       "file": "adapters/postgres/src/native-import-accounting-capability.ts",
       "twoFreshProbesRetained": true,
       "noSchemaOrWriteContractChange": true
+    },
+    "privateApplication14": {
+      "job": "t45-source438-core-private-app-start-20261025-14",
+      "status": "PASS_CURRENT_SOURCE438_PRIVATE_APPLICATION_HEALTH_ENTRY_CSS_FONT_ONLY",
+      "exitCode": 0,
+      "elapsedSeconds": 10.24250538693741,
+      "unit": "naijue-erp-op-5cc58239-89bd4052be6a",
+      "source": "ec9341476f977a5a51e23bf651a213f6822ad98b",
+      "build": "replica-production-source438-01",
+      "appStarted": true,
+      "running": true,
+      "uid": "10001:10001",
+      "readOnlyRoot": true,
+      "publicPorts": {},
+      "health200": true,
+      "healthDatabaseChecked": false,
+      "fixedHttpResources": 4,
+      "installedClosureMatched": true,
+      "dataReady": false,
+      "businessAcceptance": false,
+      "productionEntryChanged": false,
+      "originalServicesPreserved": true,
+      "evidence": "B/server-jobs/t45-source438-core-private-app-start-20261025-14/release-submission/release-receipts/t45-source438-core-private-app-start-20261025-14/engine-result.json",
+      "engineSha256": "f794ea3e02be9d8e5750c13557bb26e18da2dfdb42077944ac77a03966b64ece"
     }
   },
   "supplementalRoles": {
@@ -4950,7 +4974,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T10:10:58.816732+00:00",
+    "atUtc": "2026-10-25T10:13:05.932535+00:00",
     "stockFinal": {
       "status": "PASS_ORIGINAL_STOCK_FINAL_READONLY_CLOSURE_NO_STAGE_NO_PUBLISH",
       "job": "t45-r1-stock-final-readonly-20261025-13",
@@ -5054,11 +5078,27 @@
     },
     "private14": {
       "job": "t45-source438-core-private-app-start-20261025-14",
-      "status": "ACTUAL_SUBMISSION_QUEUED_NOT_START_PASS",
+      "status": "PASS_CURRENT_SOURCE438_PRIVATE_APPLICATION_HEALTH_ENTRY_CSS_FONT_ONLY",
+      "exitCode": 0,
+      "elapsedSeconds": 10.24250538693741,
       "unit": "naijue-erp-op-5cc58239-89bd4052be6a",
       "source": "ec9341476f977a5a51e23bf651a213f6822ad98b",
-      "scope": "PRIVATE_CORE3_READONLY_NO_PUBLIC_SWITCH",
-      "owner": "T45 original"
+      "build": "replica-production-source438-01",
+      "appStarted": true,
+      "running": true,
+      "uid": "10001:10001",
+      "readOnlyRoot": true,
+      "publicPorts": {},
+      "health200": true,
+      "healthDatabaseChecked": false,
+      "fixedHttpResources": 4,
+      "installedClosureMatched": true,
+      "dataReady": false,
+      "businessAcceptance": false,
+      "productionEntryChanged": false,
+      "originalServicesPreserved": true,
+      "evidence": "B/server-jobs/t45-source438-core-private-app-start-20261025-14/release-submission/release-receipts/t45-source438-core-private-app-start-20261025-14/engine-result.json",
+      "engineSha256": "f794ea3e02be9d8e5750c13557bb26e18da2dfdb42077944ac77a03966b64ece"
     }
   },
   "latestReadySource": {
@@ -9886,6 +9926,134 @@
       "source": "ec9341476f977a5a51e23bf651a213f6822ad98b",
       "scope": "PRIVATE_CORE3_READONLY_NO_PUBLIC_SWITCH",
       "owner": "T45 original"
+    }
+  },
+  "currentContinuation454": {
+    "atUtc": "2026-10-25T10:13:05.932535+00:00",
+    "stockFinal": {
+      "status": "PASS_ORIGINAL_STOCK_FINAL_READONLY_CLOSURE_NO_STAGE_NO_PUBLISH",
+      "job": "t45-r1-stock-final-readonly-20261025-13",
+      "unit": "naijue-erp-op-5cc58239-6075894dd8aa",
+      "exitCode": 0,
+      "elapsedSeconds": 1081.029575,
+      "groups": 38303,
+      "contributors": 38314,
+      "signedTotal": "80933",
+      "windows": 384,
+      "allMismatch": 0,
+      "linkedBaseline": 0,
+      "fileCloseReturned": true,
+      "dml": 0,
+      "ddl": 0,
+      "runtimeCatalogue": "020ce unchanged",
+      "old03": "FAILED retained; combined03commit+13FINAL source staging closure only",
+      "evidence": "K/reports/controller/rapid-launch-20261022/server-execution/STOCK13-FINAL-READONLY-ACTUAL-RESULT.json"
+    },
+    "catalogueUi": {
+      "candidate": {
+        "round": 445,
+        "commit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
+        "build": "phase2-normal-207e1d5-24",
+        "url": "http://127.0.0.1:57913/#product-settings",
+        "resources": 140,
+        "syntheticOnly": true,
+        "wholePageAccepted": false,
+        "newBackendConnected": false
+      },
+      "QF2Result": "SOURCE445-UI-RECHECK-01/RESULT.json2291/9ddc41c66bbdede01b0a74ae783e166ac7909a1d04e4b2683214db90309e9a66",
+      "accepted": "CAT-UI-01 color/fit th+td100px;CAT-UI-02 route pc-mode/inside scroll/exit restore;SCHEME-UI-01 current scheme480px modal scope only",
+      "open": "CAT03 real maintenance; product-editor sharedmodal consumer unavailable; no wholepagePASS",
+      "images": "Three actual445 JPEGs saved; sameCSS1470x724, captureDPR1.22 vsgeometry2.44/Demo2 disclosed; 27evidence/selfhash QAverified not repeated"
+    },
+    "productionReady": {
+      "source": "34eff658e4caef590a77326c75917e391357529d",
+      "build": "replica-production-source447-01",
+      "archiveBytes": 1618573,
+      "archiveSha256": "9745180697f7f0f3bf9a698463f8e9ef20a62de3c07bbed7ba66e49adc45a161",
+      "manifestSha256": "a03d36369e5267c56a1b5445fc39a0b8c9121198183f9b473df03e73c9321e30",
+      "members": 202,
+      "status": "BUILD_PACK_EXTRACT_READBACK_PASS_NOT_DEPLOYED",
+      "unchangedBackendSqlLockMembers": 33,
+      "runtimeLockUnchanged": true,
+      "publicRoutes": "CORE3readonly unchanged",
+      "owner": "C fixed build+pack; T45 originalexecution only; do not replace14inflight438"
+    },
+    "QF": "DOC192 originalQF scoped oneleaf+3finitegapcase PASS adopted; originalowner checks/strict reused, normalbrowser andactualHTTP/PG unavailable",
+    "D1": {
+      "packet": "K/reports/backend/rapid-launch-20261022/D1/SOURCE438-FIRST-BUSINESS-QA-PREP-01",
+      "status": "SOURCE_PREPARATION_READY_ACTUAL_NOT_RUN",
+      "inputs": "Original C169 CORE color/fit and C189 native0351v3/three receipts; no rerun CREATE/negative runners",
+      "nextOwner": "T45 original QA host login/acting-role/session/current target review and precise fixture binding; exact packet delivered",
+      "v16": "Original QA DRAFT/version/MAIN/current actor not bound; actual NULL persistence not passed",
+      "boundary": "Actual maint/HTTP not yet; no real R1 QA writes"
+    },
+    "next": "T45 socket356 review→original zero-row/09/10; QB freshTCP16 review→original14private438; exact447 laterfrontend; original QA maintenance host/fixture binding from D1 package",
+    "scope": "37pages/67overlays+validadditions goalACTIVE; wholefullstatebusinessPASS0/37; MAIN/PUBLISH/historyeditable/realperf/formalrelease incomplete",
+    "historyAcl12": {
+      "job": "t45-r1-transfer-header-line-column-acl-20261025-12",
+      "status": "ACTUAL_COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 1.871472,
+      "unit": "naijue-erp-op-5cc58239-02eb0d37c7de",
+      "addedPrivilegeBits": 36,
+      "changedColumns": 35,
+      "newCanonical": "35635701133dde4c535aed6336fc8453546f61629a63914ba7613d1b6bad68ca",
+      "businessDml": false,
+      "newRoles": false,
+      "allOtherStatePreserved": true,
+      "review": "OriginalQB307 actual356 socket IMPORT_STAGE limitedPASS adopted; exact review and independent PASS delivered to T45; zero-row/09/10 pending actual execution",
+      "source": "B/server-execution/TRANSFER-ACL12-ACTUAL-RESULT.json"
+    },
+    "tcp16": {
+      "job": "t45-source438-current-tcp-metadata-20261025-16",
+      "status": "ACTUAL_COMPLETED_EXIT0",
+      "elapsedSeconds": 1.620472,
+      "canonical": "35635701133dde4c535aed6336fc8453546f61629a63914ba7613d1b6bad68ca",
+      "actualAddress": "172.18.0.3/32:5432",
+      "routines": 130,
+      "writes": 0,
+      "old11": "FAILED preserved jobID mismatch; no replay",
+      "review": "QB309 exact actualTCP356 CURRENT_FORM_READ limitedPASS adopted; RESULT2215/f9687028c8e323d9852664ce1e46b2f7a150ae6a2a9f03ac148103bb8d6ee537; review953/67c22b47e58eff9d358b59b6c7c4e90287cec82516775e5fc93e6c7c437c5ca6 deliveredT45→original14. Actual app/query not yet passed",
+      "evidence": "B/server-execution/TCP16-ACTUAL-CURRENT-METADATA-RESULT.json"
+    },
+    "zeroRow15": {
+      "job": "t45-r1-transfer-nonowner-zero-row-20261025-15",
+      "status": "ACTUAL_COMPLETED_EXIT0",
+      "unit": "naijue-erp-op-5cc58239-98cbd2011d9e",
+      "elapsedSeconds": 0.5186758951749653,
+      "queries": 5,
+      "businessRowsLocked": 0,
+      "businessDML": 0,
+      "businessDDL": 0,
+      "rollbackReturned": true,
+      "endReturned": true,
+      "receipt": "1250/8e06704958c0a0cef1ea33767e8a8e16d090e35596b81031f2c00c092d9ff0e6",
+      "evidence": "B/server-execution/TRANSFER15-NONOWNER-ZERO-ROW-ACTUAL-RESULT.json",
+      "headerLineStagePassed": false
+    },
+    "private14": {
+      "job": "t45-source438-core-private-app-start-20261025-14",
+      "status": "PASS_CURRENT_SOURCE438_PRIVATE_APPLICATION_HEALTH_ENTRY_CSS_FONT_ONLY",
+      "exitCode": 0,
+      "elapsedSeconds": 10.24250538693741,
+      "unit": "naijue-erp-op-5cc58239-89bd4052be6a",
+      "source": "ec9341476f977a5a51e23bf651a213f6822ad98b",
+      "build": "replica-production-source438-01",
+      "appStarted": true,
+      "running": true,
+      "uid": "10001:10001",
+      "readOnlyRoot": true,
+      "publicPorts": {},
+      "health200": true,
+      "healthDatabaseChecked": false,
+      "fixedHttpResources": 4,
+      "installedClosureMatched": true,
+      "dataReady": false,
+      "businessAcceptance": false,
+      "productionEntryChanged": false,
+      "originalServicesPreserved": true,
+      "evidence": "B/server-jobs/t45-source438-core-private-app-start-20261025-14/release-submission/release-receipts/t45-source438-core-private-app-start-20261025-14/engine-result.json",
+      "engineSha256": "f794ea3e02be9d8e5750c13557bb26e18da2dfdb42077944ac77a03966b64ece"
     }
   }
 }
