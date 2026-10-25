@@ -1,3 +1,15 @@
+CORE02 INSTALL20 ACTUAL ADDENDUM
+
+Original20 COMPLETED exit0/20.511709s, exactsource459/core02 d703/manifest571b and installedPayload be6c26e8142217b8c67748c63a5a271ce94b9d8e278e5b77917684dd9380adad.111dependencies exactcopied/33nonweb unchanged, original08nativeproof reused/no newnpmci,13servicespreserved/noDBwrites. Original21 app-start submittedonce, no newactualappId/start/HTTP yet. Backup23 actualfreshref retained. No formalroot switch.
+
+D3 original current447 dependency check adopted, no repeatedtechnicalQA: fullall11 publication/normalinventory/history/B07 require true complete published batch; no existing transfer-only read/publication bypass. MAIN fullbind can precede fullsalesstaging only if completeactualall11 metadata/authority/currentCOREproof genuinelyavailable; check doesnotprove those ready. Remaining sales28282parent/v5exact2471 pending andrealcompleteclosure/accounting prerequisites remain. Existing B07store/runtime/HTTP alreadyimplemented, do notdispatch duplicate implementation from older missing-host notes.
+
+SOURCE474 — NECESSARY BACKUP23 ACTUALLY PASSED; ORIGINAL CORE02 INSTALL SUBMITTED
+
+OriginalT45 backup23 COMPLETED exit0/781.269408s, fresh backup status PASS_FRESH_CURRENT_APP_DB_WAL_MEDIA_CONFIG_PRESERVED. Original physicalPG/WAL verification once,4821databasefiles/1WALrange/media663;13services/configuration preserved, no schemachange/productionrestart/businesswrites/restore rerun. Original private receipt4033/605683db1a6fa591bbd5d5119428731d3f482051403ff9d50b5e9bb3c292bcdd; original results path in TASKS. Pair preservation3978 is a distinct file without finishedAt, not interchangeable. T45 updated21/22 backupref to actual23; expired206 retained historical.
+
+20fixedCORE02 install submitted once, awaiting actual outcome;21app→22reviewednarrowroute next, no duplicate submit or fake installation/start/deploymentPASS. Source459/core02 d703 inputs unchanged; next461CORE03 unchanged. D3 independently checks original MAIN/PUBLISH/B07 readiness after actualtransfer completion, cannot bypass fullbatch published contract. GitHub4738d18a5c exact remote readback verified. Demo newpairedgeometry remains precise connection-context wait, other work proceeds. Whole37/67 goal ACTIVE, realhistoryeditable/fullbusiness/performance/formalrelease incomplete.
+
 SOURCE473 — CHROME LOGIN CONTEXT QUALIFIED / ORIGINAL WORK CONTINUES
 
 User explicitly clarified login was in Chrome. Original QF completed one bounded connection/page-existence check: same exposed Chrome profile/connection, only8877 tab stillloginUI; tool does not expose owningwindowId, so matching userloggedwindow remains UNKNOWN. No further reload/newtab/credentials/formvalues/cookies/token/storage reads, no draft changes and no repeat login request. Original468 sales partial UI remains adopted; new paired Demo same-state geometry waits only on accessible logged-in context. Updated existing SITE-REUSE-REGISTER evidence pointer to amended original RESULT bytes/hash; no repeat technical acceptance.
