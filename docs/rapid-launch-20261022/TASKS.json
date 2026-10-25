@@ -8986,6 +8986,62 @@
       "D1": "nullable responsible parsers and v18 preserved-prefix fixture fix",
       "D2": "actual maintenance HTTP/provider/capability pairing",
       "F4": "source delivered, integrated next fixed candidate"
+    },
+    "latestFixedCandidate": {
+      "source": "18bfabf0a800ad8bfe44a24ff232b989e6829e41",
+      "build": "phase2-normal-18bfabf-15",
+      "url": "http://127.0.0.1:57904/",
+      "syntheticOnly": true,
+      "strict": "PASS",
+      "buildResult": "PASS_130_RESOURCES",
+      "independentAcceptance": "405_SCOPE_REUSED_407_PERSONNEL_CATALOGUE_PENDING"
+    },
+    "githubVerifiedSource": "18bfabf0a800ad8bfe44a24ff232b989e6829e41",
+    "currentNext": {
+      "C": {
+        "current": "Fixed frontend integration and actual maintenance seams; preserve R1 and QA228 prefix",
+        "next": "F1 complete packet -> immutable candidate -> QF technical/UI impacted scopes; D2 private HTTP execution; D1 QA product resume"
+      },
+      "F1": {
+        "current": "Documents behavior and all consumers, pure source uncommitted WIP",
+        "next": "Fixed candidate QF browser; original missing capability providers"
+      },
+      "F2": {
+        "current": "405 source complete accepted scoped UI, idle pending actual product maintenance seam",
+        "next": "Normal product editor real provider consumption"
+      },
+      "F3": {
+        "current": "405 shared visual controls delivered; two-tab personnel rejected, root407 uses one existing staff table/form",
+        "next": "Exact current published module full workflow alignment if any remaining; actual maintenance capabilities"
+      },
+      "F4": {
+        "current": "406 catalogue source delivered; real provider missing",
+        "next": "Correct maintenance capability injection and real dictionaries"
+      },
+      "D1": {
+        "current": "Responsible nullable/full parser store closure + remove separate sales consumer",
+        "next": "228 season-proof SYN fixture correction preserving committed8"
+      },
+      "D2": {
+        "current": "Existing actual maintenance HTTP/provider capability pairing and retained169 proof",
+        "next": "C-executed isolated HTTP/nonowner affected cases then frontend wiring"
+      },
+      "D3": {
+        "current": "Original actual2956/5586/53 accepted, source retained real1history window ready",
+        "next": "SKU9413 suffix only after v18actual QA; actualstock/history continuing"
+      },
+      "QF": {
+        "current": "400 sales partial evidence retained; source407 does not yet contain F1 packet",
+        "next": "New F1 fixed candidate affected document checks"
+      },
+      "QF2": {
+        "current": "405 finite browser passed excluding rejected personnel tabs; idle",
+        "next": "407 one employee workflow and catalogue affected only"
+      },
+      "QB": {
+        "current": "291/292/293/290 accepted source and actual scope retained",
+        "next": "D1 exact delta, D2 HTTP carrier, v18 actual resume result affected only"
+      }
     }
   },
   "currentContinuation404": "Frontend all-site user defect sweep current; preserve C228 catalogue8 committed prefix, PRODUCT23514 rollback no replay; history230 22 INSERT privileges absent, no grant; R1 SKU5586 prefix unchanged."

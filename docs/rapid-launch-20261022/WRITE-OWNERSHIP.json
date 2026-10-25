@@ -5331,6 +5331,16 @@
     "F1AdditionalRegisteredLeaves": [
       "apps/web/src/current-form/sales-proposal.ts",
       "apps/web/src/current-form/transfer-proposal.ts"
-    ]
+    ],
+    "responsibleNullConsumerTransfer": {
+      "from": "D3 currently idle no WIP on the two leaves",
+      "to": "D1 sole writer this finite scope",
+      "files": [
+        "adapters/postgres/src/history-revision-store.ts",
+        "tests/history-revision-postgres-protocol.test.ts"
+      ],
+      "scope": "Only genuine nullable responsible clear path, nonnull staff lock remains; exact affected protocol test; no schema, source, quantity, audit, permissions or ledger changes",
+      "authority": "Existing approved v16 nullable responsible plus latest human global clear requirement; original task route retained"
+    }
   }
 }
