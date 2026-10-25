@@ -5282,5 +5282,12 @@
       "tests/native-sku-stock-import.test.ts"
     ],
     "boundary": "Approved doc v18, preserve single-row APIs, max100 complete items/max200 members, original byte validity and full per-item guards; only suffix9413/9517; no database operations by D1; C sole execution"
+  },
+  "sharedSourceControlStyles394": {
+    "atUtc": "2026-10-25T04:02:10.737966+00:00",
+    "writer": "C",
+    "path": "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx",
+    "scope": "Only SourceControl stylesheet construction and lifecycle; F2 source packet completed/idle, no concurrent writer. Candidate selection/query/geometry logic unchanged. Share Arco and local constructable sheets in original order where supported, preserve existing style element path for current non-constructable DOM environment.",
+    "next": "Affected actual visual consumers and shared-sheet browser count, not whole-site regression"
   }
 }

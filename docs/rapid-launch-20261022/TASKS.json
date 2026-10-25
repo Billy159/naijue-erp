@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T03:56:09.612682+00:00",
-    "sourceRound": 393,
-    "sourceCheckpoint": "SOURCE392_PRODUCT_DOM_WORKBOOK_SOURCE_READY_PARTY223_PERMISSIONS_PASS",
+    "atUtc": "2026-10-25T04:04:06.649268+00:00",
+    "sourceRound": 394,
+    "sourceCheckpoint": "SOURCE394_SHARED_STYLE_SOURCE_TEST_PASS_PARTY224_REVIEW_PENDING",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8639,7 +8639,21 @@
       "grantChanges": false,
       "stageExecuted": false
     },
-    "githubVerified": "1b577a9b29c9acafc797ec8f5bbc734ea0c9e6ae"
+    "githubVerified": "1b577a9b29c9acafc797ec8f5bbc734ea0c9e6ae",
+    "sharedStyleReuse": {
+      "owner": "C",
+      "status": "SOURCE_AND_EXISTING_SYNTHETIC_TEST_PASS",
+      "actualBrowser": "NOT_MEASURED",
+      "scope": "SourceControl shared per-document Arco+local sheet original order; geometry/query untouched"
+    },
+    "party224": {
+      "status": "CARRIER_PREPARED_PRIVATE5_DELIVERED_QB_ACTIVE_NOT_EXECUTED",
+      "sourceCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+      "rows": 357,
+      "chunks": 4,
+      "expectedCurrentSKU": 5586,
+      "reviewPin": "PENDING"
+    }
   },
   "latestReadySource": {
     "round": 356,
