@@ -5,7 +5,7 @@ import type { CatalogueSettingsEntry, CatalogueSettingsPage } from '../../../../
 import type { DictionaryPage, DictionarySeason, DictionarySizeGroup, ProductSettingTab } from '../../../../src/product-settings/size-groups/contracts.ts';
 import type { CatalogueMaintenanceResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
 import type { CataloguePageOptions } from './entry.tsx';
-import { EntryEditor, Head, Pager, ReadNotice, SourceModal, tabs, useRead } from './source-controls.tsx';
+import { EntryEditor, Head, MaintenanceNotice, Pager, ReadNotice, SourceModal, maintenanceUnavailable, tabs, useRead } from './source-controls.tsx';
 
 type Query = { search: string; page: number; pageSize: 20 | 50 | 100 };
 type Page = CatalogueSettingsPage<CatalogueSettingsEntry> | DictionaryPage<DictionarySeason> | DictionaryPage<DictionarySizeGroup>;
@@ -53,8 +53,9 @@ function Dictionary({ options, tab, guard }: { options: CataloguePageOptions; ta
     setNotice(action === 'DELETE' ? '已删除' : '已保存'); return true;
   }
   return <div className="pc-editor-body pc-settings-body">
-    <div className="pc-section-line"><input id="pc-dict-search" type="search" placeholder={`搜索${label}名称${kind ? '或编码' : ''}`} value={search} onChange={event => { const value = event.target.value; setSearch(value); read({ search: value, page: 1, pageSize: parameters.pageSize }); }} />{kind && capability?.allowedActions.includes('CREATE') && <button className="btn primary" disabled={!fresh} onClick={() => setEditing({ entry: null })}>新增{label}</button>}</div>
-    <table><thead><tr>{(tab === 'groups' ? ['尺码组', '包含尺码'] : tab === 'seasons' ? ['季节'] : ['名称', '编码', '操作']).map(text => <th key={text}>{text}</th>)}</tr></thead><tbody>{data?.items.map(item => <tr key={item.id}><td>{item.name}</td>{'sizes' in item ? <td>{item.sizes.map(size => size.name).join('、')}</td> : 'code' in item ? <><td>{item.code}</td><td>{capability && <button className="btn ghost" disabled={!fresh} onClick={() => setEditing({ entry: item })}>编辑</button>}</td></> : null}</tr>)}</tbody></table>
+    <div className="pc-section-line"><input id="pc-dict-search" type="search" placeholder={`搜索${label}名称${kind ? '或编码' : ''}`} value={search} onChange={event => { const value = event.target.value; setSearch(value); read({ search: value, page: 1, pageSize: parameters.pageSize }); }} />{kind && <button className="btn primary" title={!capability ? maintenanceUnavailable : !capability.allowedActions.includes('CREATE') ? '当前账号未获新增权限' : undefined} disabled={!fresh || !capability?.allowedActions.includes('CREATE')} onClick={() => { if (fresh && capability?.allowedActions.includes('CREATE')) setEditing({ entry: null }); }}>新增{label}</button>}</div>
+    {kind && <MaintenanceNotice capability={capability} />}
+    <table data-has-operations={kind ? '' : undefined}><thead><tr>{(tab === 'groups' ? ['尺码组', '包含尺码'] : tab === 'seasons' ? ['季节'] : ['名称', '编码', '操作']).map(text => <th key={text}>{text}</th>)}</tr></thead><tbody>{data?.items.map(item => <tr key={item.id}><td>{item.name}</td>{'sizes' in item ? <td>{item.sizes.map(size => size.name).join('、')}</td> : 'code' in item ? <><td>{item.code}</td><td><button className="btn ghost" title={!capability ? maintenanceUnavailable : undefined} disabled={!fresh || !capability?.allowedActions.some(action => action === 'EDIT' || action === 'DELETE')} onClick={() => { if (fresh && capability?.allowedActions.some(action => action === 'EDIT' || action === 'DELETE')) setEditing({ entry: item }); }}>编辑</button></td></> : null}</tr>)}</tbody></table>
     {fresh && data?.total === 0 && <div className="empty">没有匹配的数据</div>}
     {data && <Pager options={options} disabled={!fresh} page={data.page} pageSize={data.pageSize} total={data.total} change={(page, pageSize) => read({ search: parameters.search, page, pageSize })} />}
     <ReadNotice phase={snapshot.phase} error={snapshot.error} retry={() => read({ ...parameters })} cancel={() => query.cancel()} /><div role="status" className="hint spaced">{notice}</div>

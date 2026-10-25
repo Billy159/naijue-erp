@@ -66,6 +66,18 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     const allowedModules = role === 'ADMIN' || role === 'WAREHOUSE' ? settingsAuditModulesFor(role, { ...blankAuditDraft, page: 1, pageSize: 20 }) : [];
     return { reader: createSettingsAuditHttpReader(session.http), allowedModules, hasUnresolvedWrite: unresolved };
   };
+  const documentProductActivation=(host:HTMLElement,scope:ReadScope,viewport:string)=>{
+      const marker=viewport+':'+scope.routeInstanceId;
+      return createInventoryProductActivation({scope,host,anchorSelector:'button[data-document-product]',viewportSelector:viewport,load:async mode=>{
+        const [drawer,reader]=await Promise.all([loadInventoryProductDrawerModule(mode),import('../../../../src/transport/product-http-reader.ts'),import('../../runtime-styles.ts').then(styles=>styles.prepareInventoryProductDrawerStyles(scope.signal))]);
+        return {open:context=>drawer.openInventoryProductDrawer({...context,reader:reader.createProductHttpReader(session.http),onAccessFailure:session.onAccessFailure})};
+      },feedback:state=>{
+        const toast=host.ownerDocument.getElementById('toast');if(!toast)return;
+        if(state.phase==='ready'||state.phase==='disposed'){if(toast.dataset.inventoryProductOpen===marker){toast.replaceChildren();toast.style.display='none';delete toast.dataset.inventoryProductOpen;}return;}
+        toast.dataset.inventoryProductOpen=marker;toast.replaceChildren(state.phase==='loading'?'正在打开商品资料…':'商品资料未能打开，请重试。');toast.style.display='block';
+        if(state.phase==='error'&&state.retry){const retry=host.ownerDocument.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重试';retry.onclick=state.retry;toast.append(' ',retry);}
+      }});
+  };
   async function mount(host: HTMLElement, route: string, scope: ReadScope): Promise<MountedReplicaPage> {
     const principal = session.auth.getSnapshot().principal;
     if (!principal || principal.accountId !== scope.identity.accountId || !scope.active) throw new Error('当前登录身份尚未确认。');
@@ -76,7 +88,8 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       if(!sales?.scope.active)sales=factory.createReplicaSalesSession(session,{instanceId:'replica-sales-owner',newRequestKey:options.newRequestKey,responsibleReady:config.documentResponsibleReady===true});
       salesView??=module.newSalesListViewState();
       const resetSales=()=>{sales?.dispose();sales=null;};
-      return module.mountSales(host,route,{principal,session:sales,scope,view:salesView,references:references.createSalesFilterReferenceHttpReader(http),productReader:products.createProductHttpReader(http),http,historyRevision:options.historyRevision?.sales===true,newRequestKey:options.newRequestKey,manualCreate:config.salesManualCreate===true,existingEdit:config.salesExistingEdit===true,denied:session.onAccessFailure,navigate,onCommitted:resetSales,onDiscarded:resetSales});
+      const activation=config.salesProductFullPage?documentProductActivation(host,scope,'#sale-lines'):null;
+      try{const mounted=module.mountSales(host,route,{principal,session:sales,scope,view:salesView,references:references.createSalesFilterReferenceHttpReader(http),productReader:products.createProductHttpReader(http),http,historyRevision:options.historyRevision?.sales===true,newRequestKey:options.newRequestKey,manualCreate:config.salesManualCreate===true,existingEdit:config.salesExistingEdit===true,denied:session.onAccessFailure,navigate,onCommitted:resetSales,onDiscarded:resetSales,...(activation?{viewProduct:product=>{void activation.open(product);}}:{})});return {...mounted,dispose:()=>{activation?.dispose();mounted.dispose();}};}catch(error){activation?.dispose();throw error;}
     }
     if ((route==='transfer'||route.startsWith('transfer/'))&&config.transfers){
       const [module,factory,products]=await Promise.all([import('../documents/transfers-entry.tsx'),import('../documents/transfers-session.ts'),import('../../../../src/transport/product-http-reader.ts')]);
@@ -86,16 +99,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       transferView??=module.newTransferListViewState();
       // Frozen transfer-current.openProductDetail uses the same original three-tab
       // product Drawer. The parent edit DOM/session never leaves this route.
-      const marker='transfer-product:'+scope.routeInstanceId;
-      const activation=config.transferProductFullPage?createInventoryProductActivation({scope,host,anchorSelector:'button[data-document-product]',viewportSelector:'#tc-lines',load:async mode=>{
-        const [drawer,reader]=await Promise.all([loadInventoryProductDrawerModule(mode),import('../../../../src/transport/product-http-reader.ts'),import('../../runtime-styles.ts').then(styles=>styles.prepareInventoryProductDrawerStyles(scope.signal))]);
-        return {open:context=>drawer.openInventoryProductDrawer({...context,reader:reader.createProductHttpReader(http),onAccessFailure:session.onAccessFailure})};
-      },feedback:state=>{
-        const toast=host.ownerDocument.getElementById('toast');if(!toast)return;
-        if(state.phase==='ready'||state.phase==='disposed'){if(toast.dataset.inventoryProductOpen===marker){toast.replaceChildren();toast.style.display='none';delete toast.dataset.inventoryProductOpen;}return;}
-        toast.dataset.inventoryProductOpen=marker;toast.replaceChildren(state.phase==='loading'?'正在打开商品资料…':'商品资料未能打开，请重试。');toast.style.display='block';
-        if(state.phase==='error'&&state.retry){const retry=host.ownerDocument.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重试';retry.onclick=state.retry;toast.append(' ',retry);}
-      }}):null;
+      const activation=config.transferProductFullPage?documentProductActivation(host,scope,'#tc-lines'):null;
       try{const mounted=module.mountTransfers(host,route,{manualCreate:config.transferManualCreate===true,reset:()=>{transfers?.dispose();transfers=null;transferView!.reload=true;},productReader:products.createProductHttpReader(http),session:transfers,scope,view:transferView,existingEdit:config.transferExistingEdit===true,http,historyRevision:options.historyRevision?.transfers===true,newRequestKey:options.newRequestKey,denied:session.onAccessFailure,navigate,...(activation?{viewProduct:product=>{void activation.open(product);}}:{})});return {...mounted,dispose:()=>{activation?.dispose();mounted.dispose();}};}catch(error){activation?.dispose();throw error;}
     }
     if (route === 'inventory' && config.inventory) {
@@ -195,23 +199,18 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
         paint(<module.PartiesRuntime initialTab={route === 'suppliers' ? 'SUPPLIER' : 'CUSTOMER'} workspace={workspace} {...(config.parties.readOnly ? { readOnly: true as const } : {})} audit={{ ...audit(), onAccessFailure: access }} />);
         return { dispose: () => release(), canLeave: workspace.canLeave };
       }
-      if ((route === 'settings/staff' && config.staffSettings) || (route === 'settings/accounts' && config.accountSettings)) {
+      if ((route === 'settings/staff' || route === 'settings/accounts') && config.staffSettings) {
         if (principal.role !== 'ADMIN') throw new Error('当前账号无权打开此页面。');
         const module = await import('../settings/personnel-entry.ts');
         const directoryModule = await import('../../../../src/settings/stores/maintenance-http-client.ts');
         if (!scope.active) { release(); return { dispose: () => {}, canLeave: () => true }; }
         const reader = module.createStaffSettingsHttpReader(http);
         staff ??= module.createStaffSettingsWorkspace({ scope: ownerScope(), roles, reader, client: module.createStaffSettingsCommandClient(http), newRequestKey: options.newRequestKey, writesEnabled: enabled(flags?.staffSettings, true), onAccessFailure: access, hasOtherUnresolvedWrite: () => !!(accounts?.hasUnresolvedWrite() || stores?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite()) });
-        const accountReader = module.createAccountSettingsHttpReader(http);
-        accounts ??= module.createAccountSettingsWorkspace({ scope: ownerScope(), reader: accountReader, staffReader: reader, client: module.createAccountSettingsCommandClient(http), newRequestKey: options.newRequestKey, writesEnabled: enabled(flags?.accountSettings, true), onAccessFailure: access, hasOtherUnresolvedWrite: () => !!(staff?.hasUnresolvedWrite() || stores?.hasUnresolvedWrite() || payments?.hasUnresolvedWrite() || parties?.hasUnresolvedWrite()) });
-        const staffWorkspace = staff, accountWorkspace = accounts;
-        const staffProps = { scope, reader, directory: directoryModule.createOrganizationSettingsDirectory({ scope, http }), roles, canPrepare: enabled(flags?.staffSettings, true)(), workspace: staffWorkspace, audit: audit(), onAccessFailure: access };
-        const accountProps = { scope, reader: accountReader, staffReader: reader, roles, canPrepare: enabled(flags?.accountSettings, true)(), workspace: accountWorkspace, audit: audit(), onAccessFailure: access };
-        // Grouped presentation does not grant a capability absent from the current configuration.
-        if (config.staffSettings && config.accountSettings) paint(<module.PersonnelRuntime staff={staffProps} accounts={accountProps} initialTab={route === 'settings/accounts' ? 'accounts' : 'staff'} />);
-        else if (config.staffSettings) paint(<module.StaffRuntime {...staffProps} />);
-        else paint(<module.AccountsRuntime {...accountProps} />);
-        return { dispose: () => release(), canLeave: () => staffWorkspace.canLeave() && accountWorkspace.canLeave() };
+        // Staff already contains its paired account and owns the combined maintenance form.
+        // The old accounts deep link resolves here without creating a second daily workflow.
+        const workspace = staff;
+        paint(<module.StaffRuntime scope={scope} reader={reader} directory={directoryModule.createOrganizationSettingsDirectory({ scope, http })} roles={roles} canPrepare={enabled(flags?.staffSettings, true)()} workspace={workspace} audit={audit()} onAccessFailure={access} />);
+        return { dispose: () => release(), canLeave: workspace.canLeave };
       }
       if ((route === 'settings/payments' || route === 'settings/fundAccounts') && config.paymentSettings) {
         const module = await import('../settings/payments-entry.ts');

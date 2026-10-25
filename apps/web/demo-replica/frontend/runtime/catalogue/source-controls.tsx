@@ -7,10 +7,15 @@ import { CatalogueEditorController, type CatalogueEditorDraft } from '../../../.
 import type { CatalogueMaintenanceResult } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
 import type { CatalogueMaintenanceCapability } from '../../../../src/product-settings/colors/contracts.ts';
 import type { CataloguePageOptions } from './entry.tsx';
+import { Pagination } from '../inventory/pagination.tsx';
 
 export const tabs = [['colors', '颜色'], ['groups', '尺码组'], ['fits', '版型'], ['seasons', '季节']] as const;
 export function Head({ title, children }: { title: string; children?: ReactNode }) {
   return <div className="gold-head iw-head pc-page-head"><h1>{title}</h1><div className="actions iw-head-actions">{children}</div></div>;
+}
+export const maintenanceUnavailable = '当前入口的维护尚未接通，资料以只读方式显示。';
+export function MaintenanceNotice({ capability }: { capability: CatalogueMaintenanceCapability | undefined }) {
+  return capability ? null : <div className="hint spaced" role="status">{maintenanceUnavailable}</div>;
 }
 export function SourceModal({ title, children, footer, close }: { title: string; children: ReactNode; footer: ReactNode; close: () => void }) {
   return <Modal visible title={title} footer={<div className="pc-modal-foot">{footer}</div>} className="pc-arco-modal iw-arco-controls" maskClosable={false} unmountOnExit onCancel={close} onOk={close}><div className="pc-modal-body">{children}</div></Modal>;
@@ -33,16 +38,10 @@ export function ReadNotice({ phase, error, retry, cancel }: { phase: string; err
     : phase === 'error' || phase === 'stale' || phase === 'idle' ? <>{phase === 'idle' ? '尚未读取资料。' : phase === 'stale' && !error ? '本次读取已停止，仍显示上次成功读取的资料。' : message} <button className="btn ghost" onClick={retry}>重试加载资料</button></> : null}</div>;
 }
 export function Pager({ options, page, pageSize, total, change, disabled = false }: { options: CataloguePageOptions; page: number; pageSize: 20 | 50 | 100; total: number; change: (page: number, size: 20 | 50 | 100) => void; disabled?: boolean }) {
-  const host = useRef<HTMLDivElement>(null);
-  const html = options.renderPager({ page, size: pageSize, total, button: (text: string, action: string, extra = '', style = '') => `<button type="button" class="btn ${style}" data-catalogue="${action}" ${extra}>${text}</button>`, pageAction: 'page', prevAction: 'prev', nextAction: 'next', selectId: 'pc-dict-size', sizes: [20, 50, 100], unit: '条', selectAria: '商品设置每页条数', className: 'pc-pagination pc-settings-pagination', jumpAction: 'jump', jumpId: 'pc-setting-jump' });
-  return <div ref={host} inert={disabled} onClick={event => {
-    if (disabled || !options.scope.active) return;
-    const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-catalogue]');
-    if (!button || button.disabled) return;
-    const action = button.dataset.catalogue;
-    const target = action === 'prev' ? page - 1 : action === 'next' ? page + 1 : action === 'jump' ? Number(host.current?.querySelector<HTMLInputElement>('#pc-setting-jump')?.value) : Number(button.dataset.page);
-    if (Number.isSafeInteger(target) && target > 0 && target <= Math.max(1, Math.ceil(total / pageSize))) change(target, pageSize);
-  }} onChange={event => { if (disabled || !options.scope.active) return; const target = event.target as HTMLSelectElement; if (target.id !== 'pc-dict-size' || target.tagName !== 'SELECT') return; const value = Number(target.value); if ([20, 50, 100].includes(value)) change(1, value as 20 | 50 | 100); }} onKeyDown={event => { if (disabled || !options.scope.active) return; const target = event.target as HTMLInputElement; if (event.key !== 'Enter' || target.id !== 'pc-setting-jump') return; event.preventDefault(); const page = Number(target.value); if (Number.isSafeInteger(page) && page > 0 && page <= Math.max(1, Math.ceil(total / pageSize))) change(page, pageSize); }} dangerouslySetInnerHTML={{ __html: html }} />;
+  const busy = disabled || !options.scope.active;
+  return <Pagination page={page} size={pageSize} total={total} busy={busy} unit="条" pageSizes={[20, 50, 100]} className="pc-pagination pc-settings-pagination" selectLabel="商品设置每页条数"
+    change={next => { if (!busy && Number.isSafeInteger(next) && next > 0 && next <= Math.max(1, Math.ceil(total / pageSize))) change(next, pageSize); }}
+    sizeChange={size => { if (!busy && (size === 20 || size === 50 || size === 100)) change(1, size); }} />;
 }
 
 export function useCommand(options: CataloguePageOptions, capability: CatalogueMaintenanceCapability | undefined) {
@@ -95,8 +94,8 @@ export function EntryEditor({ options, capability, entry, close, saved, guard }:
     <button className={`btn ${confirm ? 'pc-danger-solid' : 'primary'}`} disabled={busy || !capability.allowedActions.includes(confirm ? 'DELETE' : entry ? 'EDIT' : 'CREATE')} onClick={() => void submit(confirm)}>{confirm ? '确认删除' : '确定'}</button>
   </>}>
     {confirm ? <p>删除该{title}后无法恢复，确定继续吗？</p> : <form id="pc-dict-form" onSubmit={event => { event.preventDefault(); void submit(); }}>
-      <div className="field"><span className="pc-field-caption">{title}名称</span><div id="pc-dict-name"><Input name="name" value={name} maxLength={40} disabled={busy} onChange={setName} /></div></div>
-      <div className="field"><span className="pc-field-caption">{title}代码</span><div id="pc-dict-code"><Input name="code" value={code} maxLength={12} disabled={busy} onChange={setCode} /></div></div>
+      <div className="field"><span className="pc-field-caption">{title}名称</span><div id="pc-dict-name"><Input name="name" value={name} maxLength={40} disabled={busy || !capability.allowedActions.includes(entry ? 'EDIT' : 'CREATE')} onChange={setName} /></div></div>
+      <div className="field"><span className="pc-field-caption">{title}代码</span><div id="pc-dict-code"><Input name="code" value={code} maxLength={12} disabled={busy || !capability.allowedActions.includes(entry ? 'EDIT' : 'CREATE')} onChange={setCode} /></div></div>
     </form>}
     <div className="inline-error" role="alert">{error}</div>{controller && <Recovery controller={controller} />}
     {state?.phase === 'committed' && <div className="inline-error">保存已提交，正在确认最新资料。<button className="btn ghost" onClick={() => void finish()}>重新读取资料</button></div>}

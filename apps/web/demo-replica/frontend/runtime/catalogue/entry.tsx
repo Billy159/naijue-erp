@@ -14,8 +14,9 @@ export interface CatalogueRuntimeOptions {
   readonly onCanLeaveChange: (guard: (() => boolean) | null) => void;
   /** Current product consumers invalidate their own affected directory reads. */
   readonly onChanged: (kind: 'CATEGORY' | 'COLOR' | 'FIT') => void;
-  /** The unchanged frozen inventory-workbench.js paginationMarkup. */
-  readonly renderPager: (options: Record<string, unknown>) => string;
+  /** Legacy host slot retained for C's other callers; catalogue now consumes the
+   * shared inventory/Pagination React component in its existing page root. */
+  readonly renderPager?: (options: Record<string, unknown>) => string;
   /** Unchanged product-arco.jsx arcoCss + local `css`, supplied by C's one runtime. */
   readonly categoryControlCss: string;
   /** Original INVENTORY_EMPTY mount and its paired beforeRender cleanup. */

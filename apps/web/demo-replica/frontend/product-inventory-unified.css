@@ -81,7 +81,7 @@ body.pc-mode .pc-products:has(#pc-filter .pc-more-filters) .pc-list-table .table
 .pc-settings-page .pc-settings-body .pc-section-line>.btn:not(.primary):hover{background:var(--ca-primary-hover-soft)}
 .pc-settings-page .pc-settings-body .pc-section-line h3{margin:0;font-size:14px;font-weight:600}
 .pc-settings-page .pc-settings-body table{border:1px solid var(--ca-line)}
-.pc-settings-page .pc-settings-body table th:last-child,.pc-settings-page .pc-settings-body table td:last-child{width:76px}
+.pc-settings-page .pc-settings-body table[data-has-operations] th:last-child,.pc-settings-page .pc-settings-body table[data-has-operations] td:last-child{width:76px}
 .pc-settings-page .pc-settings-body .hint.spaced{margin:8px 0;color:var(--ca-ink-3);font-size:12px;line-height:1.5}
 .pc-settings-page .pc-attribute-grid{gap:16px}
 .pc-settings-page .pc-attribute-grid section{min-width:0}
