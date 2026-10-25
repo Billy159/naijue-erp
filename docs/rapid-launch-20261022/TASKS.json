@@ -5020,7 +5020,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 494,
+    "round": 495,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
     "sourceHeadBeforeThisContinuityCommit": "6d0ec125b338786e73acb6d1d8de3a5330df202d",
     "fixedCandidates": {
@@ -5737,8 +5737,20 @@
       "syntheticCandidate": "http://127.0.0.1:57917/#sales/new",
       "build": "phase2-normal-22c6401-28",
       "backendReview": "QB/slice317-sales-salesperson-required/RESULT.json",
-      "status": "SOURCE_AND_BUILD_PASS_QF_ACTIVE_REAL_SAVE_NOT_TESTED",
-      "rule": "Required; eligible trusted current employee default; other active employee selectable; invalid default requires manual selection; original-key recovery preserved"
+      "status": "QF_QB_LIMITED_TECH_PASS_REAL_SAVE_INCREMENT_D1_PREPARING",
+      "rule": "Required; eligible trusted current employee default; other active employee selectable; invalid default requires manual selection; original-key recovery preserved",
+      "qfResultSha256": "de51f57277fe9e65d211092fdb4dac5bae1890a41395ca91d43b3c7e48919611"
+    },
+    "source494FixedBuild": {
+      "source": "16d744e3abd74e7e9370af797b6739643e5799ef",
+      "buildId": "replica-production-source494-core-05",
+      "archiveBytes": 1623253,
+      "archiveSha256": "0e2c2ad55e35f165cff243da957cc3490c965e2114ff3cd1912cddd4145d0026",
+      "manifestSha256": "bbc61ba9255f82a773bde30501a82de451f469df90ca5f23b6003bb2f93254b0",
+      "members": 202,
+      "status": "REAL_BUILD_PACK_PASS_ORIGINAL_T45_DEPLOYMENT_DISPATCHED",
+      "GitHub": "EXACT_REMOTE_16d744e_VERIFIED",
+      "config": "Only new asset prefix; existing readonly flags retained, no R1 PM write enablement"
     }
   },
   "latestReadySource": {
