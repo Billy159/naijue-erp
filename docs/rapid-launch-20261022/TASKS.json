@@ -145,7 +145,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Inventory View original3tabdrawer exact3 delivered; C fixed+build then originalQF actual, no duplicate producttab work",
+      "currentWork": "I01 reportedexpand/header-body-total originalbrowserdiag; C shared originalmatrixCSS restoredsourceonly",
       "currentPackage": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
       "nextReadyPackage": "P01-P13商品六页签及全部编辑查看状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -185,8 +185,7 @@
       "lastActualDispatch": {
         "model": "gpt-6.1-sol",
         "reasoningEffort": "medium",
-        "atUtc": "2026-10-24T17:49:29.187095+00:00",
-        "status": "CURRENT_PHASE_DISPATCH_TO_FOLLOW",
+        "atUtc": "2026-10-25T00:35:15.828031+00:00",
         "FastToolVerified": false
       },
       "phase2WritePrefixes": [
@@ -357,7 +356,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "QB279 actualsupplier222 limitedPASS; QB280 actualTCP/core-read metadata limitedreview",
+      "currentWork": "QB280 actualTCP/currentCORE-only metadata PASS; supplier279 actualPASS retained",
       "currentPackage": "232newR1installedv14catalog/ACLreview only",
       "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Next actual source/native execution only after genuine approved inputs; no repeated metadata/source review",
@@ -1322,7 +1321,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T00:32:03.610551+00:00",
+  "updatedAt": "2026-10-25T00:35:15.828031+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
   "lastVerifiedRemoteCommit": "6267e3190e5dc7125d978e6810b28082655e4e83",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -2602,7 +2601,7 @@
       "serverAddress": "172.18.0.3/32",
       "serverPort": 5432,
       "canonical": "5a6a5cda81a406cf4c62200e8b1696019fa8a93d1b84c08215eaabe5b3cb50ce",
-      "metadataReview": "QB280_IN_PROGRESS",
+      "metadataReview": "QB280_PASS_CURRENT_FORM_READ_ONLY_EXACT_TCP",
       "appStarted": false
     }
   },
@@ -4738,13 +4737,25 @@
       "owner": "F1",
       "status": "SOURCE334_FIXED_BROWSER_MINIMAL_RETEST_PENDING",
       "fixedSource": "0f1f88f10e953fba6d4cbf3acc74be1c3f084341"
+    },
+    {
+      "id": "I01-MATRIX-EXPAND-ALIGN-20261025-01",
+      "status": "SOURCE_SHARED_STYLE_DEPENDENCY_RESTORED_NOT_BROWSER_RETESTED",
+      "reportedCandidate": "SOURCE364/f475cea/57896",
+      "scope": [
+        "expand control frame/icon",
+        "size header/body column alignment",
+        "product totals alignment"
+      ],
+      "owner": "F2 mixedrender diagnostic; C sharedloader/build; QF2 affectedindependentretest",
+      "businessDataChanged": false
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T00:32:03.610551+00:00",
-    "sourceRound": 379,
-    "sourceCheckpoint": "SOURCE3786267e319 remoteverified; SOURCE379 actual222supplier+QB279 PASS/new206backup/currentTCP208 measured; product/SKU not imported; newcopiedapp notstarted",
+    "atUtc": "2026-10-25T00:35:15.828031+00:00",
+    "sourceRound": 380,
+    "sourceCheckpoint": "SOURCE379 actual222/QB279/currentTCP208; SOURCE380 inventory originalmatrixCSS dependency restoredsourceonly, newcandidate build/actualF2diagnosis next",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",

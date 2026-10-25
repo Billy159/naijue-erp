@@ -1,7 +1,7 @@
 import { frozenStyleOrder as order } from './frozen-style-order.ts';
 const common: readonly string[] = ["ui-tokens.css", "styles.css", "gold.css", "interaction-common.css", "ui-review.css", "final-ui.css", "brand-components.css", "golden-consistency.css", "unified-single-select.css", "confirmation-dialogs.css"];
 const groups: Readonly<Record<string, readonly string[]>> = {
- inventory:['inventory-workbench.css','inventory-refinement.css','product-inventory-unified.css','inventory-ledger.css'],
+ inventory:['inventory-workbench.css','matrix-experiments.css','inventory-refinement.css','product-inventory-unified.css','inventory-ledger.css'],
  products:['product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
  catalogue:['product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
  settings:['basic-settings.css'],
