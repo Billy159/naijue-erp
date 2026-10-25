@@ -1,4 +1,4 @@
-import { useEffect,useState } from 'react';
+import { useEffect,useLayoutEffect,useRef,useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import Drawer from '@arco-design/web-react/es/Drawer';
 import Tabs from '@arco-design/web-react/es/Tabs';
@@ -34,6 +34,22 @@ export function openInventoryProductDrawer(options:InventoryProductDrawerOptions
 
 function InventoryProductDrawer(p:InventoryProductDrawerOptions&{scope:ReadScope;closed:()=>void}){
  const [tab,setTab]=useState('base'),[visible,setVisible]=useState(true),[preview,setPreview]=useState(false),[heading,setHeading]=useState(p.product.label);
+ const workbench=useRef<HTMLDivElement>(null),positions=useRef(new Map<string,{top:number;left:number}>()),pendingPosition=useRef<{tab:string;top:number;left:number}|null>(null);
+ const changeTab=(next:string)=>{
+  if(next===tab||!visible||!p.scope.active)return;
+  const content=workbench.current?.querySelector<HTMLElement>('.arco-tabs-content');
+  // Capture before destroyOnHide changes the shared container's scroll height.
+  if(content)positions.current.set(tab,{top:content.scrollTop,left:content.scrollLeft});
+  pendingPosition.current={tab:next,...(positions.current.get(next)??{top:0,left:0})};
+  setTab(next);
+ };
+ useLayoutEffect(()=>{
+  const position=pendingPosition.current;
+  if(!position||position.tab!==tab||!visible||!p.scope.active)return;
+  const content=workbench.current?.querySelector<HTMLElement>('.arco-tabs-content');
+  if(!content)return;
+  pendingPosition.current=null;content.scrollLeft=position.left;content.scrollTop=position.top;
+ },[tab,visible,p.scope]);
  const parameters={productId:p.product.id};
  const base=useProductRead(p.scope,p.reader.readProductBasics,parameters,visible&&tab==='base',p.onAccessFailure);
  const specs=useProductRead(p.scope,p.reader.readProductSpecifications,parameters,visible&&(tab==='specs'||tab==='images'),p.onAccessFailure);
@@ -42,7 +58,7 @@ function InventoryProductDrawer(p:InventoryProductDrawerOptions&{scope:ReadScope
  const close=()=>{setVisible(false);p.scope.dispose();};
  const notice=(read:typeof base|typeof specs|typeof images)=><ReadNotice phase={read.snapshot.phase} retry={()=>void read.query.run(parameters)} cancel={()=>read.query.cancel()}/>;
  return <Drawer visible={visible} title={<div className="pc-product-drawer-title"><span>{heading}</span><small>只读</small></div>} className="pc-product-drawer iw-arco-controls" width="min(660px,100vw)" footer={null} placement="right" focusLock autoFocus maskClosable escToExit={!preview} unmountOnExit onCancel={close} afterClose={p.closed}>
-  <div className="pc-detail-workbench"><Tabs className="pc-product-drawer-tabs" type="line" size="small" activeTab={tab} onChange={setTab} destroyOnHide>
+  <div ref={workbench} className="pc-detail-workbench"><Tabs className="pc-product-drawer-tabs" type="line" size="small" activeTab={tab} onChange={changeTab} destroyOnHide>
    <Tabs.TabPane key="base" title="基础资料">{tab==='base'&&<section className="pc-detail-body">{notice(base)}{base.snapshot.success?.data&&<DrawerBasics data={base.snapshot.success.data}/>} {base.snapshot.phase==='success'&&!base.snapshot.success?.data&&<div className="empty">商品资料未取得</div>}</section>}</Tabs.TabPane>
    <Tabs.TabPane key="specs" title="规格">{tab==='specs'&&<section className="pc-detail-body">{notice(specs)}{specs.snapshot.success?.data&&<DrawerSpecs data={specs.snapshot.success.data}/>} {specs.snapshot.phase==='success'&&!specs.snapshot.success?.data&&<div className="empty">商品规格资料未取得</div>}</section>}</Tabs.TabPane>
    <Tabs.TabPane key="images" title="图片">{tab==='images'&&<section className="pc-detail-body">{notice(images)}{notice(specs)}{images.snapshot.success?.data&&specs.snapshot.success?.data&&<ProductPhotos inDrawer onPreviewVisibleChange={setPreview} images={images.snapshot.success.data.images} colors={specs.snapshot.success.data.colors} scope={p.scope} denied={p.onAccessFailure} readOriginal={async(imageId,signal)=>(await p.reader.readProductImage({parameters:{productId:p.product.id,imageId},signal,identity:p.scope.identity,routeInstanceId:p.scope.routeInstanceId,entityId:p.product.id})).url}/>} {images.snapshot.phase==='success'&&!images.snapshot.success?.data&&<div className="empty">图片资料未取得</div>}</section>}</Tabs.TabPane>

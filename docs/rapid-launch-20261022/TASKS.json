@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T04:21:19.860269+00:00",
-    "sourceRound": 399,
-    "sourceCheckpoint": "SOURCE399_D3_ASSEMBLY_CPU_SOURCE_READY_SCROLL_ACTUAL_DRAWER_BOUNDARY_CORRECTED",
+    "atUtc": "2026-10-25T04:23:03.472734+00:00",
+    "sourceRound": 400,
+    "sourceCheckpoint": "SOURCE400_DRAWER_SCROLL_SOURCE_READY_OWNER_CHECKS_PASS_ACTUAL_QF2_PENDING",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8579,7 +8579,7 @@
     },
     "currentPackets": {
       "F2": {
-        "current": "QF2-S394-SCROLL-01 exact inventory-drawer.tsx + inventory-drawer.test.mjs; not standalone detail",
+        "current": "Drawer scroll source2 complete ownerchecksPASS; C fixed400build/QF2 shortviewport retest",
         "next": "Inventory streaming intermediate-memory, then v17 normal HTTP seam",
         "uiDelivery": "I01-FILTER-WIDTH-LABELS-USER-20261025-01 source complete; fixed build and QF2 pending"
       },
