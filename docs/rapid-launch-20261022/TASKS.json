@@ -12105,17 +12105,19 @@
       "status": "COMMITTED_EXACT_APPROVED_MINIMAL_ACL_NOT_NORMAL_SAVE",
       "seconds": 1.7215,
       "newRights": 169,
-      "nonownerCanonical": "2f05c2b251efc5eedc0e121e71eee044e26ecf33b069cdd163e3d4b656bf9f19",
+      "nonownerCanonical": "b60b13e3f4ea715727054fecaa97e74eec6c4a0921728c10e3b66302f5f54965",
       "sourceRoutinesMatch": true,
       "businessDML": false,
       "R1Changed": false,
       "actualTcpLoginTested": false,
       "reviewOwner": "QB",
-      "fivePurposeStatus": "QB_FOUND_WAREHOUSE_SELECT_MISSING_NO_REVIEWS_SIGNED",
-      "ownerPM": "Actual62 read-only completed; superseding canonical after precise warehouse ACL fix required",
+      "fivePurposeStatus": "WAREHOUSE63_ACTUAL_COMMITTED_QB324_DELTA_REVIEW_PENDING",
+      "ownerPM": "Actual63 owner identity with same current canonical delivered",
       "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/ACL61-ACTUAL-RESULT.json",
-      "remainingGap": "Original SELECT34 omitted warehouse; UPDATE(id) lock privilege does not grant SELECT; normal native facts/detail authorized join need warehouse read",
-      "fixOwner": "T45 verify actual existing SELECT then narrow successor only; no replay61 or R1 change"
+      "remainingGap": "No known additional ACL gap; final current six reviews and actual normalSAVE still pending",
+      "fixOwner": "T45 verify actual existing SELECT then narrow successor only; no replay61 or R1 change",
+      "warehouse63": "COMPLETED0/1.9210s/COMMIT_RETURNED_SUCCESS/only warehouse relationACL changed/ownedSessions0",
+      "next": "QB324 affected delta then 5 nonowner+1 ownerPM current reviews; T45 sameRAM QA02"
     }
   }
 }
