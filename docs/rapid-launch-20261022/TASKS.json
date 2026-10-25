@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T04:23:03.472734+00:00",
-    "sourceRound": 400,
-    "sourceCheckpoint": "SOURCE400_DRAWER_SCROLL_SOURCE_READY_OWNER_CHECKS_PASS_ACTUAL_QF2_PENDING",
+    "atUtc": "2026-10-25T04:24:21.278700+00:00",
+    "sourceRound": 401,
+    "sourceCheckpoint": "SOURCE401_CURRENT_FIXED400_HTTP_READY_QF2_SCROLL_ONLY_RECHECK_ACTIVE",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4932,29 +4932,20 @@
     },
     "fast": "Requested OFF; tool has no switch/readback, not verified",
     "currentPreview": {
-      "url": "http://127.0.0.1:57898/#inventory",
-      "sourceCommit": "269b4d57eeaa985c92ab3ddc4561f43485b9fb12",
-      "runtimeVersion": "phase2-normal-269b4d5-09",
-      "fixedArtifact": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-269b4d5-phase2-09/build",
+      "url": "http://127.0.0.1:57901/#inventory",
+      "sourceCommit": "252ddc859fbb543fc6ddb7a1f5c2269085e37b0e",
+      "runtimeVersion": "phase2-normal-252ddc8-12",
       "resources": 135,
-      "serverSession": 3525,
+      "serverSession": 9534,
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-252ddc8-phase2-12/build",
       "syntheticOnly": true,
       "newBackendConnected": false,
       "wholePageAccepted": false,
-      "browser": "C independent IAB deliverable; no Chrome controls touched",
-      "scope": "F2 width/exterior-captions source fix; affected visual recheck pending",
-      "widthLabelsAcceptance": "QF2 I01-WIDTH-LABELS-SOURCE389-01 scopedvisualPASS; directDemo loginwall; current images not locally exported"
+      "scope": "394sharedstyles/productDOM+400drawerScroll repair",
+      "independent": "QF2 shortviewportscroll actualpending; unchanged389geometry/394sheet adopted"
     },
     "nextPreview": {
-      "status": "FIXED394_BUILD_HTTP_PASS_VISUAL_TECHNICAL_PENDING",
-      "url": "http://127.0.0.1:57900/#inventory",
-      "sourceCommit": "33f85aeea39a6cb53a4b17914dba466e1ac8be8e",
-      "build": "phase2-normal-33f85ae-11",
-      "syntheticOnly": true,
-      "resources": 135,
-      "serverSession": 15184,
-      "scope": "389widthlabel+392productDOM/workbook+394sharedsheets",
-      "notPassed": "wholepage/realbusiness/heap/performance/formal"
+      "status": "CURRENT400_FIXED_BUILD_HTTP_PASS_NO_NEW_BUILD_NEEDED_UNTIL_COMPLETE_SOURCE_PACKET"
     },
     "r1": "Real v16fromv15/130/5a; CORE157+catalogue344+supplier222 actuallycommitted/readbacklimitedPASS. Product2956/SKU14999 sourcecapture only, notDBstage",
     "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
@@ -8600,33 +8591,25 @@
         "next": "Original writer/prepare minimal SYN fixture prerequisite seam if needed"
       },
       "QF2": {
-        "current": "SOURCE394 limited actual sharedstyle/DOM accepted; browser released; only scroll failure retest after fixed newcandidate",
+        "current": "SOURCE4001470x300nonzero inventorydrawer base/spec scroll and activeDOM only",
         "next": "New product DOM candidate technical stage after visual"
       }
     },
     "v18": "SOURCE395_QB291_SOURCE_PROTOCOL_PASS_QA_V3_TEMPLATES_DELIVERED_NO_ACTUAL_SCHEMA26_BATCH_YET",
     "singleFinalUI": "Current normal entry only proven; no claim all module overrides retired",
     "previousPreview": {
-      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
-      "url": "http://127.0.0.1:57897/#inventory",
-      "sourceCommit": "080cd22e9fa810b2904285bea74c5cba694fb67b",
-      "runtimeVersion": "phase2-normal-080cd22-08",
-      "htmlBytes": 3154,
-      "htmlSha256": "7b9b90aa7a0ddb9c9ae76dc1190e6c3b1b79fddbebbf3465e253b95c59d45822",
-      "originalBridgeUnchanged": true,
-      "original325FrontendFilesUnchanged": true,
-      "wholePageAccepted": false,
-      "sourceRound": 380,
-      "serverSession": 47890,
-      "fixtureBytes": 25766,
-      "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
-      "httpReady": true,
-      "phase2Started": true,
+      "url": "http://127.0.0.1:57898/#inventory",
+      "sourceCommit": "269b4d57eeaa985c92ab3ddc4561f43485b9fb12",
+      "runtimeVersion": "phase2-normal-269b4d5-09",
+      "fixedArtifact": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-269b4d5-phase2-09/build",
+      "resources": 135,
+      "serverSession": 3525,
+      "syntheticOnly": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-080cd22-phase2-08/build",
-      "phase1Accepted": false,
-      "phase2Candidate": "OriginalQF2 SOURCE380 three affectedmatrixUIitems PASS actual; browserReturnedtrue; SYNnotwholebusiness/formal",
-      "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
+      "wholePageAccepted": false,
+      "browser": "C independent IAB deliverable; no Chrome controls touched",
+      "scope": "F2 width/exterior-captions source fix; affected visual recheck pending",
+      "widthLabelsAcceptance": "QF2 I01-WIDTH-LABELS-SOURCE389-01 scopedvisualPASS; directDemo loginwall; current images not locally exported"
     },
     "party223Actual": {
       "status": "COMPLETED0_READONLY_PERMISSIONS_AVAILABLE",
