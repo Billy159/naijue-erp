@@ -12068,7 +12068,7 @@
     },
     "joint28282Source527": {
       "owner": "D3",
-      "status": "REFERENCE_AND_PURE_STAGE_PROJECTION_SEAM_READY_QB_REVIEW_DISPATCHED",
+      "status": "QB323_PASS_PURE_RESTORE_PROJECTION_SEAM_NOT_DB_STAGE",
       "input": "O/D3/SALES-HEADERS28282-MAIN-CLOSURE-INPUT.DRAFT.json",
       "inputSha256": "272f5ae935a0eeb3d11968d1c0d67a4d99ecfa057eea46da096528c4274b3483",
       "helperSha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c",
@@ -12077,7 +12077,9 @@
       "actualDatabaseStage": false,
       "globallySortedClosure": false,
       "inventoryLedgerExpected": "UNKNOWN_NOT_STOCK_GROUP_COUNT",
-      "next": "Original QB new helper scoped review; T45 original QA60 then actual stage/full closure using original stores and authorities"
+      "next": "Original QB new helper scoped review; T45 original QA60 then actual stage/full closure using original stores and authorities",
+      "review": "Q/slice323-retained-sales-header-joint-seam/RESULT.json",
+      "reviewSha256": "a61cc70d3bbd21999634f10b10c8a663da11ae183b05d2794167355d934796d4"
     },
     "qa60Actual": {
       "owner": "T45",
@@ -12097,6 +12099,21 @@
       "oldRuntimeReviewsStale": true,
       "next": "T45 exact approved ACL61 then original QB current ownerPM/nonowner5purpose metadata reviews before normal SAVE",
       "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/ALIGNMENT60-ACTUAL-RESULT.json"
+    },
+    "qa61Actual": {
+      "owner": "T45",
+      "status": "COMMITTED_EXACT_APPROVED_MINIMAL_ACL_NOT_NORMAL_SAVE",
+      "seconds": 1.7215,
+      "newRights": 169,
+      "nonownerCanonical": "2f05c2b251efc5eedc0e121e71eee044e26ecf33b069cdd163e3d4b656bf9f19",
+      "sourceRoutinesMatch": true,
+      "businessDML": false,
+      "R1Changed": false,
+      "actualTcpLoginTested": false,
+      "reviewOwner": "QB",
+      "fivePurposeStatus": "CURRENT_METADATA_REVIEW_DISPATCHED",
+      "ownerPM": "T45 collecting original62 postACL metadata; old5717 stale",
+      "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/ACL61-ACTUAL-RESULT.json"
     }
   }
 }
