@@ -66,9 +66,9 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Original206 fresh backup running; concrete207 supplier stage carrier finiteQB review; copied37202 actualinstalled app transport qualification next",
+      "currentWork": "Adopted actualsupplier222/QB279, fresh206; currentTCP208 actual; original copied37202 privatehost qualification/nextproduct execution",
       "currentPackage": "Existing normal candidate integration and original isolated business execution",
-      "nextReadyPackage": "Supplier222 actual finite stage after206+QB; original copied37202 private genuineTCP app startup",
+      "nextReadyPackage": "ActualacceptedTCP metadata→copied37202 privateapp; PRODUCT2956 fixedgraph/carrier review→actualstage",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
       "fastToolVerified": false,
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正"
@@ -262,9 +262,9 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "SUPPLIER222 consumer delivered; PRODUCT2956 original-component consumer preparation actually dispatched Solmedium",
-      "currentPackage": "PRODUCT2956-ACTUAL-PREP-v1 original30chunks consumer",
-      "nextReadyPackage": "Original CORE-ready reads actual runner preparation; no second host or DB",
+      "currentWork": "PRODUCT2956 consumer delivered unchanged; SKU14999 original-component consumer actually dispatched Solmedium",
+      "currentPackage": "SKU14999-ACTUAL-PREP-v1",
+      "nextReadyPackage": "Actual product/SKU execution support onlynew blockers; no duplicate sourceaudits",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
       "fastToolVerified": false,
       "latestModelAuthority": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正",
@@ -357,7 +357,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "slice278 C207 supplier222 concrete source carrier review only;277 actual target metadata reused",
+      "currentWork": "QB279 actualsupplier222 limitedPASS; QB280 actualTCP/core-read metadata limitedreview",
       "currentPackage": "232newR1installedv14catalog/ACLreview only",
       "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Next actual source/native execution only after genuine approved inputs; no repeated metadata/source review",
@@ -1322,9 +1322,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T00:23:33.693948+00:00",
+  "updatedAt": "2026-10-25T00:32:03.610551+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "b1f60a10bd7f79e63b0ef87e2bf4b50487bbf742",
+  "lastVerifiedRemoteCommit": "6267e3190e5dc7125d978e6810b28082655e4e83",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1766,34 +1766,30 @@
     "accountsWithExactOldEmployeeLink": 45,
     "accountsUnlinked": 4,
     "newAccountsInserted": 49,
-    "realImport": "CORE157 and C196/C197 catalogue344 real limitedstage complete; supplier222/product2956/SKU14999 sourcecapturecomplete, DBnotstaged",
+    "realImport": "CORE157+CATALOGUE344+SUPPLIER222 actual limitedstage/readbackPASS; PRODUCT2956/SKU14999 preparedsource, not DBimport/PUBLISH",
     "productionSwitched": false,
     "freshBackup": {
-      "job": "c02-current-backup-20261024-158",
-      "status": "ACTUAL_PASS_FRESH_ORIGINAL_BACKUP_AND_SAFE_METADATA_READBACK_ONLY",
-      "elapsedSeconds": 588.9264660680201,
-      "finishedAtUtc": "2026-10-24T12:02:34.387747+00:00",
-      "deadlineUtc": "2026-10-25T00:02:34.387747+00:00",
+      "job": "c02-current-backup-20261025-206",
+      "status": "PASS_FRESH_ORIGINAL_BACKUP_AND_SAFE_METADATA_READBACK_ONLY",
+      "elapsedSeconds": 611.275,
+      "finishedAtUtc": "2026-10-25T00:22:11.380393+00:00",
+      "deadlineUtc": "2026-10-25T12:22:11.380393+00:00",
       "rawReceipt": {
-        "localPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261024-158/release-submission/release-receipts/c02-current-backup-20261024-158/current-preservation.json",
-        "serverPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c02-current-backup-20261024-158/results/current-preservation.json",
         "bytes": 3959,
-        "sha256": "e517b97eaf67c5e5f8885f4ca5dd9f6eed0362f1e9b7b5b54129491ab2789786"
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c02-current-backup-20261025-206/results/current-preservation.json",
+        "sha256": "ec50baa5500101ba4260ade96acdf3aa8e7b6b8203d5f6e61a1f3f5b8dc90569"
       },
       "safeReceipt": {
-        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261024-158/release-submission/release-receipts/c02-current-backup-20261024-158/backup158-safe-result.json",
-        "bytes": 19440,
-        "sha256": "3d06de4f6b8e73f6b06751cac3bd40e60381ab235dbac6081e19b886b56e285b"
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c02-current-backup-20261025-206/release-submission/release-receipts/c02-current-backup-20261025-206/backup158-safe-result.json",
+        "bytes": 19441,
+        "sha256": "79207f4f62eb9320c77f40e97a089128521a0f89d8bc46393ede39190fb5eb02"
       },
       "protectedContainers": 9,
       "originalBackupSourceUnchanged": true,
       "physicalVerifiedOnce": true,
-      "configSourceCount": 7,
-      "old112Deadline": "2026-10-24T11:35:38.679556Z unchanged expired",
-      "businessAcceptance": false,
       "restoreRehearsalRepeated": false,
-      "currentStatus": "EXPIRED_158_RETAINED_FRESH206_ACTUAL_RUNNING",
-      "replacementJob": "c02-current-backup-20261025-206"
+      "businessAcceptance": false,
+      "previousExpiredBackupJob": "c02-current-backup-20261024-158"
     },
     "accountCapture": "PASS_C02_JOB11",
     "bootMetadata": "JOBS12_13_READONLY_PASS; JOB14_BOOT_ACTOR_PROJECTION_QUEUED",
@@ -2592,10 +2588,22 @@
       "actualBrowser": "QF2_C326_STAFF_ALL_LABELS_PRODUCT_NESTED_CAP_NEXT_IN_PROGRESS"
     },
     "supplier207": {
-      "status": "CONCRETE_SOURCE_REVIEW_PENDING_BACKUP206_NOT_DISPATCHED",
-      "reviewOwner": "QB",
-      "scope": "SUPPLIER222_ONLY",
-      "stageExecuted": false
+      "status": "PASS_ACTUAL_REAL_R1_SUPPLIER222_STAGE_AND_EXACT_KEY_READBACK_NO_PUBLISH",
+      "actualJob": "c03-real-r1-native-supplier222-stage-20261025-207",
+      "independentReview": "QB279",
+      "inserted": 222,
+      "replayed": 0,
+      "keyReadbackMismatch": 0,
+      "stageExecuted": true,
+      "fullImport": false
+    },
+    "tcp208": {
+      "status": "PASS_ACTUAL_CURRENT130_GENUINE_R1_TCP_METADATA_ONLY",
+      "serverAddress": "172.18.0.3/32",
+      "serverPort": 5432,
+      "canonical": "5a6a5cda81a406cf4c62200e8b1696019fa8a93d1b84c08215eaabe5b3cb50ce",
+      "metadataReview": "QB280_IN_PROGRESS",
+      "appStarted": false
     }
   },
   "supplementalRoles": {
@@ -4734,9 +4742,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T00:23:33.693948+00:00",
-    "sourceRound": 378,
-    "sourceCheckpoint": "SOURCE377 b1f60a10bd7f79e63b0ef87e2bf4b50487bbf742 remoteverified; currentSOURCE378 concrete supplier207 source review/newbackup206 actualRUNNING, no DBstage/app/release claim",
+    "atUtc": "2026-10-25T00:32:03.610551+00:00",
+    "sourceRound": 379,
+    "sourceCheckpoint": "SOURCE3786267e319 remoteverified; SOURCE379 actual222supplier+QB279 PASS/new206backup/currentTCP208 measured; product/SKU not imported; newcopiedapp notstarted",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4779,11 +4787,11 @@
       "next": "No separatebuildforrolelabel; nextrelatedqualifiedpacket includes183. Formalproduction copied frontend build/HTTPS host still required",
       "owner": "C"
     },
-    "r1": "Approved v16/v15 actuallyCOMMITTED130; actual56minimumGRANT and QB277 canonical5a accepted. CORE+344catalogue actual; nextsuppliers/products/SKU notstaged",
-    "qa": "QB277 genuine socket5a exact metadata only adopted; QB278 concrete supplier207 source review in progress; QF/QF2 current364 finite evidence reused",
+    "r1": "Real v16fromv15/130/5a; CORE157+catalogue344+supplier222 actuallycommitted/readbacklimitedPASS. Product2956/SKU14999 sourcecapture only, notDBstage",
+    "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Human historicalblankhallv5 onlyrelatedfullhistory/publication branch; v11/v15/v16/v17 alreadyapproved. Actual source/schema/ACL/normalHTTP readiness separate.",
-    "github": "REMOTE_EXACT_VERIFIED_b1f60a10bd7f79e63b0ef87e2bf4b50487bbf742",
+    "github": "REMOTE_EXACT_VERIFIED_6267e3190e5dc7125d978e6810b28082655e4e83",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
