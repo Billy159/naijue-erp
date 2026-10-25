@@ -1,3 +1,11 @@
+SOURCE477 — CORE02 EXTERNAL HTTPS ACTUALLY ACCESSIBLE; ORIGINAL QF2 REAL READ ACCEPTANCE ACTIVE
+
+OriginalT45 external13:22:50UTC defaultTLS/ssl_verify0 entry4263/module52027/authsession18 allHTTP200 fixedbytes, guestprincipalnull. C13:28:33UTC unauthenticated3GET defaultTLS samefixedroot75b9eff0a51696115d18ba8dfad970d91cb39486728632b2ea94b243d66fc579/module2d8a56af0612d8c9473309531af0027f6d5f710f2e988179bf71bbb2fa1e14e9. Entry https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/#settings/stores . Owner external+ready-for-auth-read receipts andCpublicGET receipt inexistingserver-execution. This is reachablefixedcandidate, not authenticateddomainread orbusinessPASS; originalroot unchanged.
+
+OriginalQF2 sameCORE02 task Solmedium releasedfor actualreadonly browser/query validation ofhall/warehouse ADMINstaff-account/category only; mustverify genuineindependentcontext becausePath=/doesnotisolateoldChrome cookie. Do notborrow userChrome/QAactor orreadtokens/credentials. Newlogin ifneeded iscandidatebackend context, notDemo; preciselyreport. CORE03 nextoriginalT45 preparationcontinues withoutoverwriting currentCORE02 QAentry. Full37/67/allstates/historyediting/MAIN/PUBLISH/performance/formalrelease stillopen.
+
+GitHub475df980149 remotelyverified.476firstAPI before-refGETtimedout(network140.82.121.5:443), no objects/ref update attempted; local476retainedWIP. Next bounded sync usesverifiedremote475 andexactcurrenthistory, noforce orblind unknownmutation replay.
+
 SOURCE476 — CORE02 THREE CANDIDATE ROUTES ACTUALLY ACTIVE; EXTERNAL HTTPS STILL UNVERIFIED
 
 Original22 COMPLETED exit0/1.169707s. Exactthree scopedcandidate paths installed through reviewed sameinodeCAS/readback, nginx-t/reload0; innerentry4263/module52027 HTTP200matchfixedsource459/core02, originalauthsessionguest200/principalnull.14protected servicesunchanged; rootbefore/after39330/05cf5384dee58e5e39a70875f3a8b332398d46519e8c5c72a48038b19d24cef1 unchanged, oldAPIunchanged,0DBcalls. ExternalTLSVerifiedfalse/browserLoginVerifiedfalse/businessAcceptancefalse. OriginalT45 outerHTTPS verification next/inprogress, no duplicate22 or productionroot switch. Actual23backup/20install/21privateapp valid adopted.
