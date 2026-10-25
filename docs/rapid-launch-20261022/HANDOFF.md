@@ -1,3 +1,9 @@
+SOURCE488 — NORMAL-HOST QA34 ACTUAL PREREQUISITES RESOLVED TO EXACT D1 INPUTS
+
+原T45仅一次34实际只读COMPLETED0/1.019454s，CORE QA1034834非owner/currenta970/source_routines_matchtrue，原139…0300 ADMIN在职/loginEnabled/hallnull，当前有效session0；原0327根与101102COMMITTED存在。C181PM db72afe0与当前metadata匹配，可复用；另有CURRENT_FORM_READ原证明，不能拿C169旧review冒正常host。0登录/hostRunner/DML/DDL，原15服务保持，元数据不重跑。D1沿原宿主职责补准确QA配置/origin/source graph、原PM+FORM目的组合和原正常登录安全材料ref；无材料则精确给最小QA接续，不猜密码、假认证或借R1。34现存facts已交D1，C三记录唯一维护。
+
+CORE04当前33公网候选保持，QF2纯guest视觉显式Luna/max，IAB绑定故障恢复中；必要时已授权唯一短Chromelease新标签只读，不刷新原输入、不触旧表单/草稿、不读凭据。真实认证/域查询仍未验；新guest可达不冒真实业务/正式根发布。GitHub549a2a891e29ba0f14186d44ced75fe3365d8686已精确回读；全站37/67/全部状态/历史可编辑与真实数据性能目标ACTIVE。
+
 SOURCE487 — CORE04 CANDIDATE PREFIX ACTUALLY UPDATED; GUEST UI ACCEPTANCE CONTINUES
 
 原31失败保留；32已实际证实4a20/CORE02/root原字节恢复。原QB33仅F01复验闭合，新13613/56586162准确载体经最终c5bacafc review后，33一次新执行COMPLETED0/1.220187s。实际ENTRY旧02 4263/75b9一次→新04 4338/9c05a3一次→module52136/fde53e；本次确有重载过渡，不能倒推31确定根因。候选三路径现在CORE04，同inode配置f2a96b3d14ff0048f0a7037d48eb9558a4f3e5aa8120131ba1d786d66243aa83/13787为新基线；15服务/root39330/05cf5384/原API保持。公网默认TLS三GET均200且精确新资源/guestnull，未读取凭据、未操作浏览器。旧4a20与02仅回退历史，不再当当前基线。
