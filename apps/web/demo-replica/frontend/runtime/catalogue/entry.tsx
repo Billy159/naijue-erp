@@ -10,6 +10,8 @@ export interface CatalogueRuntimeOptions {
   readonly scope: ReadScope;
   readonly http: HttpQueryOptions;
   readonly initialSettingTab?: ProductSettingTab;
+  /** Internal subset of the existing public settings flags; omitted keeps all four. */
+  readonly allowedSettingTabs?: readonly ProductSettingTab[];
   readonly maintenance?: Partial<Record<'CATEGORY' | 'COLOR' | 'FIT', CatalogueMaintenanceCapability>>;
   /** Existing controllers owned by the current session, not by page mount. */
   readonly commandOwners?: Partial<Record<'CATEGORY' | 'COLOR' | 'FIT', CatalogueEditorController>>;
@@ -33,6 +35,12 @@ export type CataloguePageOptions = CatalogueRuntimeOptions & {
 /** C calls on the actual menu transition after retiring that route's frozen
  * renderer/listeners. No page code or data is loaded before this call. */
 export async function mountCatalogue(host: HTMLElement, route: 'product-categories' | 'product-settings' | 'barcode-schemes', options: CatalogueRuntimeOptions): Promise<() => void> {
+  if (route === 'product-settings') {
+    const allowed = options.allowedSettingTabs ?? ['colors', 'groups', 'fits', 'seasons'];
+    if (allowed.length === 0 || allowed.some(tab => !['colors', 'groups', 'fits', 'seasons'].includes(tab))
+      || options.initialSettingTab !== undefined && !allowed.includes(options.initialSettingTab)) throw new TypeError('Initial product setting tab must belong to the allowed settings.');
+    options = { ...options, allowedSettingTabs: [...allowed] };
+  }
   for (const kind of ['CATEGORY', 'COLOR', 'FIT'] as const) {
     const capability = options.maintenance?.[kind];
     if (capability && (capability.kind !== kind || capability.client.kind !== kind)) throw new TypeError('Catalogue maintenance kind does not match this route capability.');

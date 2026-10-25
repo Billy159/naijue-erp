@@ -313,7 +313,7 @@
     "replay": "原 jsonb_populate_record + IS NOT DISTINCT FROM 回读保留NULL精确性；同ID同事实幂等，无第二次写；同ID有不同厅/由既有UUID变NULL仍冲突并报告，禁止改写不可变旧头。"
   },
   "typedClosureAndNonzeroPublish": {
-    "sqlBodies": "0018 安装 DO 的exact17检查只在当年安装时执行，不是存活函数运行前缀；0019运行守卫逐字段调用 assert_history_typed_closure。已核源函数无需仅因本列nullable改函数体。0026 projection_columns仍列hall_id，projection通过 original->hall_id保留JSON null，NULL编码 n 已存在。拟新增函数0，预计仍121，最终以C实际完整目录验证为准。",
+    "sqlBodies": "0018 安装 DO 的exact17检查只在当年安装时执行，不是存活函数运行前缀；0019运行守卫逐字段调用 assert_history_typed_closure。已核源函数无需仅因本列nullable改函数体。0026 projection_columns仍列hall_id，projection通过 original->hall_id保留JSON null，NULL编码 n 已存在。NULL27拟新增函数0；当前exact26后继运行目录按C/T45已核实际130 routines及本轮原metadata host的130断言核对；原121为旧基线，不能用旧数重新冻结。NULL27拟新增函数仍为0，最终完整routine身份/SQL pins/ACL以迁移前后各自真实目录为准，不能只核数量或复用旧review。",
     "nativeBindingGuard": "0012 guard_header_native_reference_publication 已要求 source==空串 时 native_id必须NULL；非空必须实际引用。可复用此严格SQL函数；不能伪造未知HALL引用或跳过native引用校验。",
     "lifecycle": "应用 history-import-lifecycle.headerBindings 旧HALL关系为 optional=false；独立27分支只将 SALES_HEADER.所属厅 可空，源空↔typedNULL一致、已知仍真实binding。其他headerConditions/业务日期/状态/数量/金额/仓库/创建厅/时间规则不改。",
     "versionIdentity": "保持 HISTORY_MAPPING_VERSION=V2_HISTORY_NULLABLE_1，避免改名后guard IF短路；保持 HISTORY_TYPED_CLOSURE_V1 为原NULL可编码算法身份。新的27目标/nullable政策须由独立外层approval/runtime/source授权及fresh authorizedPayloadHash、typed/document/source manifests精确绑定，不冒用旧完整closure批准。",
@@ -338,15 +338,16 @@
     "reader": "27原actual client验证HISTORY_READ并在原RR只读事务内再验；published/closure/accounting/receipt/audit gates保留。SELECT h.hall_id原值；count/page/detail使用同一权限/筛选条件，不inner join厅表丢NULL头。",
     "authorization": "ADMIN/WAREHOUSE原ALL才可读NULL；SALESPERSON原当前可信厅 HALL_IDS，h.hall_id=ANY(uuid[])对NULL不成立，DTO validator也必须拒绝NULL混入HALL_IDS。按厅不足/未登录/角色异常原样拒绝；不借仓库厅、创建厅、人员厅扩大权限。ALL传具体hallId过滤仍排除NULL。查询hallId:null仍只是无厅过滤，不新增UNKNOWN筛选语义。",
     "pages": [
-      "历史销货只读列表/详情：未来对接时ALL范围保留未知厅记录，显示为空或未知；不把NULL展示为现厅；当前apps/web无 imported-history四接口消费者，因此本案不改前端",
+      "历史销货/调拨已有前端HISTORY消费者：runtime/documents/history-reader.ts、history-page.tsx、transfers-history-page.tsx及sales-entry.tsx，原detail/query经真实同源客户端消费；history-revision.ts还消费独立revise入口。当前sales详情validator仍要求hallId为UUID，NULL27批准后须由原前端owner同步窄分支响应校验与空值展示，不能再称无消费者或保证无需前端适配。ALL保留未知厅、HALL_IDS不见未知厅；前端实时新单必填不变。实际接口/页面接通和已发布数据可用性仍按目标证据，不因消费者源码存在记PASS。",
       "现有 /sales/history/query 是实时销货操作审计，不是这四个导入历史接口，无hall字段受影响",
       "实时销货/新单/维护表单必填、原sales_header decoder及CUTOFF_HISTORY旧列表保持；不自动合并两套列表或扩张页面范围",
       "历史调拨四接口中的两路语义不改；新增27组合仍需验证其严格发布/权限未受影响"
-    ]
+    ],
+    "approvedV16Boundary": "已批v16负责人合同是独立既有范围：nullable responsibleStaffId、原LIVE/HISTORY对应保存/修订及读回保留创建者审计，需原角色/事务/独立HISTORY_REVISION policy和实际元数据。它不代表销货所属厅hallId nullable已获批，也不因本确认单重新索要v16批准；SOURCE409/QB294有限源码证据不冒充实际NULL持久化或历史修订开放。"
   },
   "exact27SuccessorAndAllConsumers": {
     "migration": "仅在明确批准/owner登记/技术冻结后，由C协调新增0027文件；原0011..0026字节与证据保留。最窄DDL为原history_sales_header.hall_id DROP NOT NULL + schema_migration登记27，无数据UPDATE/DELETE/新表/新索引/新业务函数；迁移目标原exact1..26与旧列/约束须预检，不能用max(version)>=26代替。此处不提供可执行DDL。",
-    "issuer": "新独立EXACT27 capability/checked入口/issuer/review format+version+patch identity；fresh outside review精确绑定原target/OID/role/ACL/nullable列/catalog/完整dense1..27与全部实际routines。若最窄DDL成立，完整121原source函数pin可保留，但新catalog规范摘要一定重取；旧QA/旧26 review不能复用授权。原26cap永远不能证明27target。",
+    "issuer": "新独立EXACT27 capability/checked入口/issuer/review format+version+patch identity；fresh outside review精确绑定原target/OID/role/ACL/nullable列/catalog/完整dense1..27与全部实际routines。若最窄DDL成立，当前已核130及目标实际全部原source函数pin须逐项重新绑定，但新catalog规范摘要一定重取；旧QA/旧26 review不能复用授权。原26cap永远不能证明27target。",
     "closedLease": "保留原有限9purposes、WeakMap原pool/lease、同client metadata校验、拷贝/raw/foreign/released拒绝、文件pin提交前同步校验/单调撤销/撤销后仅ROLLBACK/原池dispose；无新purpose/SQL万能注册。C先排空停止26旧lease，新27用fresh owned pool，不hot retarget。",
     "featureViews": "retained-delete-v22/season-array-v1/exact2/media/swap为未变功能合同；新27issuer在实际验证后可派生原功能视图，避免扩大D2业务leaf。不能把runtime27能力当EXACT26交原守卫。库存等真runtime26硬门仍须独立27分支。",
     "nativeConsumers": "所有源码、来源provider和MAIN/PUBLISH消费者必须显式27actualclient准入或验证可复用功能视图；保留原19/26默认。新消费者不得由schemaVersion大于等于、强转/skip gate/callback原池绕过。下列路径是当前全量检索出的26消费者审计清单，不等于已登记可写文件。",
@@ -442,7 +443,7 @@
     {
       "step": 3,
       "owner": "C及登记owner",
-      "action": "源码先实现/冻结独立27全消费闭包，保留19/26；C协调一个新的最小实际数据库窗口，只测NULL27新增差异，不重复sealed18 run2或已有26同范围。实施迁移27后C采集新完整catalog/121或实际routines/nullable/FK/ACL和新独立review。源码/DDL安装不等于应用激活或SOURCE授权。"
+      "action": "源码先实现/冻结独立27全消费闭包，保留19/26；C协调一个新的最小实际数据库窗口，只测NULL27新增差异，不重复sealed18 run2或已有26同范围。实施迁移27后C采集新完整catalog/当前已核130及目标实际完整routines/nullable/FK/ACL和新独立review。源码/DDL安装不等于应用激活或SOURCE授权。"
     },
     {
       "step": 4,
@@ -931,5 +932,11 @@
       "sha256": "d2a1fc7b79505bfe1ef4f4f38372d9e2b1dd2dfd8418fe7cce2064ee674b3052"
     }
   ],
-  "archiveRequirements": "写后实际读回所有新K文件及更新的REPORT/LATEST/CENTRAL；源pins只证明读到的当前基线，不宣称D1有这些文件的写owner。"
+  "archiveRequirements": "写后实际读回所有新K文件及更新的REPORT/LATEST/CENTRAL；源pins只证明读到的当前基线，不宣称D1有这些文件的写owner。",
+  "currentFactCorrection": {
+    "scope": "Only consumer/routines/v16 boundary facts; not DDL/mapper/approval",
+    "onlyPendingBusinessDifference": "HISTORY sales source hall empty -> explicit typed/DB NULL under independent27; hall_id uuid NOT NULL -> uuid NULL only; known bindings remain strict; frontend LIVE required unchanged",
+    "sourcePinsMeaning": "sourcePinsForReviewOnly retains original historical snapshot, not current new schema/runtime review",
+    "sourceLabel": "SOURCE459 pairing continuation, current consumer leaves checked from R; no routines collection by D1"
+  }
 }

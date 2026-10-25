@@ -194,7 +194,8 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       let guard: (() => boolean) | null = null;
       const dispose = await module.mountCatalogue(host, route as 'product-categories' | 'product-settings' | 'barcode-schemes', {
         onChanged: options.catalogue.onChanged, ...(catalogueSession ? { maintenance: catalogueSession.maintenance, commandOwners: catalogueSession.commandOwners } : {}), renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, scope, http, onAccessFailure: access, onCanLeaveChange: value => { guard = value; },
-        ...(config.productSettings ? { initialSettingTab: config.productSettings.initialTab } : {}),
+        ...(config.productSettings ? { initialSettingTab: config.productSettings.initialTab,
+          allowedSettingTabs: (['colors', 'groups', 'fits', 'seasons'] as const).filter(tab => config.productSettings && config.productSettings[tab]) } : {}),
       });
       return { dispose, canLeave: () => guard?.() ?? true };
     }

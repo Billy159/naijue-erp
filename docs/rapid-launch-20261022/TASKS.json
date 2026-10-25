@@ -10710,5 +10710,24 @@
     "line10Actual": "PENDING",
     "D1Current": "Original CORE read modules to copied normal pages pairing; correct stale v5 facts only",
     "goal": "ACTIVE_37_67_ALL_STATES_REAL_BUSINESS_INCOMPLETE"
+  },
+  "currentContinuation461": {
+    "coreReadCandidate": {
+      "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
+      "build": "replica-production-source459-core-02",
+      "status": "BUILD_PACK_PASS_ACTUAL_INSTALL_PENDING",
+      "entry": "/__naijue_candidate/replica-private-01/#settings/stores",
+      "pages": [
+        "hall/warehouse",
+        "ADMINstaff/account",
+        "categories"
+      ]
+    },
+    "F4": "ALLOWED-SETTING-TABS-06 scopedstrict/finiteDOM/readyPagesHTTPseamPASS;new3leafwiring notin459core02",
+    "rootStrict": "FAILED_UNCHANGED_OUTSIDE_DELTA_FILES_NO_PASS_CLAIM",
+    "QF2": "Existing445 F3 previouslyunverified UIstates active Luna/max independentIAB",
+    "transferLine10": "Originalunit0b7bdaa5dc7a RUNNING no terminal",
+    "v5": "Originalproposal facts updated, nullablehall still unapproved, v16 not reasked",
+    "fullGoal": "ACTIVE37/67allstatesrealbusiness incomplete"
   }
 }

@@ -1,6 +1,12 @@
 # 历史销货所属厅可空确认单 v5
 
-状态：待用户明确确认，尚未实施源码或数据库变更。
+状态：仅 HISTORY 销货来源所属厅空白→typed/DB NULL 及其独立27消费差异待用户明确确认，尚未实施本差异的源码或数据库变更；不重问已批准v16等既有范围。
+
+本次仅修订现状事实，保留原字段申请与来源证据，不构成新批准或实施。
+
+当前exact26后继运行目录按C/T45已核实际130 routines及本轮原metadata host的130断言核对；原121为旧基线，不能用旧数重新冻结。NULL27拟新增函数仍为0，最终完整routine身份/SQL pins/ACL以迁移前后各自真实目录为准，不能只核数量或复用旧review。
+
+已批v16负责人合同是独立既有范围：nullable responsibleStaffId、原LIVE/HISTORY对应保存/修订及读回保留创建者审计，需原角色/事务/独立HISTORY_REVISION policy和实际元数据。它不代表销货所属厅hallId nullable已获批，也不因本确认单重新索要v16批准；SOURCE409/QB294有限源码证据不冒充实际NULL持久化或历史修订开放。
 
 ## 请确认的业务处理
 
@@ -72,7 +78,7 @@
 - dto：仅显式27 HISTORY sales list/detail同形JSON hallId:uuid|null。旧19/26 ImportedHistorySalesHeader及旧validator保持UUID；新增窄27响应类型/validator/service/reader及HTTP组合选择（技术冻结后命名），由可信固定composition选择，不能由请求参数放宽。其余字段/分页/错误/鉴权/Origin/no-store/取消契约保持。
 - reader：27原actual client验证HISTORY_READ并在原RR只读事务内再验；published/closure/accounting/receipt/audit gates保留。SELECT h.hall_id原值；count/page/detail使用同一权限/筛选条件，不inner join厅表丢NULL头。
 - authorization：ADMIN/WAREHOUSE原ALL才可读NULL；SALESPERSON原当前可信厅 HALL_IDS，h.hall_id=ANY(uuid[])对NULL不成立，DTO validator也必须拒绝NULL混入HALL_IDS。按厅不足/未登录/角色异常原样拒绝；不借仓库厅、创建厅、人员厅扩大权限。ALL传具体hallId过滤仍排除NULL。查询hallId:null仍只是无厅过滤，不新增UNKNOWN筛选语义。
-- 历史销货只读列表/详情：未来对接时ALL范围保留未知厅记录，显示为空或未知；不把NULL展示为现厅；当前apps/web无 imported-history四接口消费者，因此本案不改前端
+- 历史销货/调拨已有前端HISTORY消费者：runtime/documents/history-reader.ts、history-page.tsx、transfers-history-page.tsx及sales-entry.tsx，原detail/query经真实同源客户端消费；history-revision.ts还消费独立revise入口。当前sales详情validator仍要求hallId为UUID，NULL27批准后须由原前端owner同步窄分支响应校验与空值展示，不能再称无消费者或保证无需前端适配。ALL保留未知厅、HALL_IDS不见未知厅；前端实时新单必填不变。实际接口/页面接通和已发布数据可用性仍按目标证据，不因消费者源码存在记PASS。
 - 现有 /sales/history/query 是实时销货操作审计，不是这四个导入历史接口，无hall字段受影响
 - 实时销货/新单/维护表单必填、原sales_header decoder及CUTOFF_HISTORY旧列表保持；不自动合并两套列表或扩张页面范围
 - 历史调拨四接口中的两路语义不改；新增27组合仍需验证其严格发布/权限未受影响
@@ -91,7 +97,7 @@
 
 1. 将本完整字段确认及最终SHA交用户明确同意；只相关NULL27支路等待，H06保持held；其他已授权不冲突工作继续。
 2. 批准后先技术冻结/唯一owner登记；核目标exact26、新备份、实际列/FK/index/trigger/routines/role/ACL、原行数/非空厅原值、无在途写入或leased旧池。C38是19升26前备份，不能冒充pre27 exact26备份；C39本地回执 FAILED_FIRST_ERROR_NO_REPLAY，不称成功issuer或review。
-3. 源码先实现/冻结独立27全消费闭包，保留19/26；C协调一个新的最小实际数据库窗口，只测NULL27新增差异，不重复sealed18 run2或已有26同范围。实施迁移27后C采集新完整catalog/121或实际routines/nullable/FK/ACL和新独立review。源码/DDL安装不等于应用激活或SOURCE授权。
+3. 源码先实现/冻结独立27全消费闭包，保留19/26；C协调一个新的最小实际数据库窗口，只测NULL27新增差异，不重复sealed18 run2或已有26同范围。实施迁移27后C采集新完整catalog/当前已核130及目标实际完整routines/nullable/FK/ACL和新独立review。源码/DDL安装不等于应用激活或SOURCE授权。
 4. 获准后一次必要销货准备，复用调拨组件及旧sourceQA，构造新target/payload授权和完整manifest；完整同事务闭包/守恒/审计/重放全部必要新条件满足再提交非零MAIN/PUBLISH；首次失败停，不自动gzip/PG重放。
 5. 27入口启用前保持旧URL和维护边界；R1/R2切换各自需要目标角色/配置/新review/独立受影响验收，不能用QA或源代码结果冒称生产就绪。
 6. 回退前先查是否已存在NULL历史头及业务提交。尚无NULL且有新备份/目标证明时才可审慎逆转列非空并退独立入口；存在任何真实NULL后不能SET NOT NULL、删2471或填假厅。关闭27入口并保全数据，使用保留的26独立目标/在另实例恢复验证或前向修复；不以旧快照覆盖新业务。
@@ -106,7 +112,7 @@
 
 ## 完整技术附件与依据
 
-- [完整字段、消费者路径、协议差异及 90 项来源固定记录](./SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-APPENDIX.json)。附件逐字保留 D1 完整确认单，SHA256 `0ea79957ad5cd3ff160b54fc1d6879e8ae6faf279c038746cf49b2f4cf3421bf`。
+- [完整字段、消费者路径、协议差异及 90 项来源固定记录](./SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-APPENDIX.json)。附件保留 D1 原字段申请与历史source pins，并仅校正当前消费者、130 routines及已批v16边界；本次附件SHA256 `25b9f8217987c1ebf9a07be8e0a54d892893ff6ed87b5b874f7668a191405806`。
 - D1 的 reusableTransferComponent 内旧 manifest `a198db85…` 仅属当时保全记录；当前 C/QB125 已采用分离 v2 manifest `c8a9cb932904134051b3dd3d8573edc223003cdb73426b16ee752207d2299ac5`，同一 32,263,004 字节 Transfer artifact `c6f0d498…`。该技术索引澄清不改原件或业务数量。
 - 本单是字段与依赖合同确认申请。只有用户明确同意后才登记对应实施文件并执行；仅相关历史空厅分支等待，其余开发和验收继续。
 

@@ -11,17 +11,18 @@ type Query = { search: string; page: number; pageSize: 20 | 50 | 100 };
 type Page = CatalogueSettingsPage<CatalogueSettingsEntry> | DictionaryPage<DictionarySeason> | DictionaryPage<DictionarySizeGroup>;
 const initial: Query = { search: '', page: 1, pageSize: 20 };
 function Settings({ options }: { options: CataloguePageOptions }) {
+  const allowedTabs = tabs.filter(([key]) => options.allowedSettingTabs?.includes(key) ?? true);
   const [tab, setTab] = useState<ProductSettingTab>(() => {
-    for (const [kind, target] of [['COLOR', 'colors'], ['FIT', 'fits']] as const) if (['submitting', 'checking', 'uncertain', 'committed'].includes(options.commandOwners?.[kind]?.getSnapshot().phase ?? '')) return target;
-    return options.initialSettingTab ?? 'colors';
+    for (const [kind, target] of [['COLOR', 'colors'], ['FIT', 'fits']] as const) if (allowedTabs.some(([key]) => key === target) && ['submitting', 'checking', 'uncertain', 'committed'].includes(options.commandOwners?.[kind]?.getSnapshot().phase ?? '')) return target;
+    return options.initialSettingTab ?? allowedTabs[0]![0];
   }), [deferred, setDeferred] = useState<ProductSettingTab | null>(null);
   const guard = useRef<(() => boolean) | null>(null);
   const [locked, setLocked] = useState(false);
   const receiveGuard = useCallback((value: (() => boolean) | null, pending = false) => { guard.current = value; setLocked(pending); }, []);
   useEffect(() => { options.onCanLeaveChange(() => guard.current?.() ?? true); return () => options.onCanLeaveChange(null); }, [options]);
-  const choose = (next: ProductSettingTab) => { if (next === tab) return; if (guard.current && !guard.current()) setDeferred(next); else setTab(next); };
+  const choose = (next: ProductSettingTab) => { if (next === tab || !allowedTabs.some(([key]) => key === next)) return; if (guard.current && !guard.current()) setDeferred(next); else setTab(next); };
   return <div className="pc-workbench pc-settings-page"><Head title="商品设置" /><section className="pc-settings">
-    <div className="tabs" role="tablist">{tabs.map(([key, title]) => <button key={key} role="tab" aria-selected={key === tab} className={key === tab ? 'active' : ''} onClick={() => choose(key)}>{title}</button>)}</div>
+    <div className="tabs" role="tablist">{allowedTabs.map(([key, title]) => <button key={key} role="tab" aria-selected={key === tab} className={key === tab ? 'active' : ''} onClick={() => choose(key)}>{title}</button>)}</div>
     <Dictionary key={tab} options={options} tab={tab} guard={receiveGuard} />
     {deferred && <SourceModal title="有未保存的修改" close={() => setDeferred(null)} footer={<><button className="btn" onClick={() => setDeferred(null)}>继续编辑</button><button className="btn primary" disabled={locked} onClick={() => { setTab(deferred); setDeferred(null); }}>放弃修改并离开</button></>}><p>离开后，本次未保存的修改将丢失。</p></SourceModal>}
   </section></div>;
