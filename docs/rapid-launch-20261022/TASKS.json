@@ -5908,15 +5908,6 @@
       "confirmationFile": "BARCODE-SCHEME-INITIALIZATION-CONFIRMATION-v1.md",
       "proposalSha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00",
       "onlyDependentBranchWaits": true
-    },
-    {
-      "id": "HISTORICAL_SALES_HALL_NULL_2471",
-      "state": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
-      "onlyDependentBranchWaits": true,
-      "factsSha256": "3cbae7ce93b8454abf6840297a2122b4aa56e48162b31f8450ad9e0dc885f776",
-      "status": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
-      "confirmationFile": "SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-NULLABLE.md",
-      "confirmationSha256": "2b3fe399061713462f16270e88f9f925e48249810e84aa5af6bd261658127972"
     }
   ],
   "currentAcceptedReceiptBatch": [
@@ -11832,12 +11823,12 @@
       "reviewSha256": "3804d13916eec46e25e8407ddb62b28e58abaafb6f7646cc3ed4845d2b336125",
       "lifecycle": "OneboundedRAM-secretprocess setup+normalQA+logout+DISABLEnewaccount aftersource/reviewready",
       "actualT45": "Metadata46COMPLETE0/0.818965s,nonowner0privileges; noGRANT/noQAwrite",
-      "remaining": "QB513source review; mandatory/conditional actualSQLlockACL inclallocation/importbatch/source/audit; actualbaseSKUbranchfacts, currentreview thenoneRAMwindow",
+      "remaining": "Current base800/SKU801 bounded facts, final exact SQL-lock/read/EXECUTE privileges and current review, then one RAM-secret actual setup/login/SAVE/logout/disable window",
       "realSavePassed": false
     },
     "fullHistoryProduction513": {
       "owner": "D1",
-      "status": "SOURCE_READY_OWNER_FOUR_NEW_CHECKS_STRICT0_PENDING_ORIGINAL_QB_REALQA",
+      "status": "ORIGINAL_QB320_SCOPED_SOURCE_PASS_REAL_QA_NOT_TESTED",
       "sourcePins": [
         {
           "path": "apps/api/src/history-revision-authorization.ts",
@@ -11872,7 +11863,32 @@
       ],
       "capabilities": "IndependentexistingB07/v16samepoolprovider/explicitfullCLI/originalmaintainedcatalogueproofselection",
       "notProven": "RealPG/normalHTTP/metadataACL/wholebusiness/deployment",
-      "noScopeExpansion": "catalogueCapability unchanged noSTAGEDunion"
+      "noScopeExpansion": "catalogueCapability unchanged noSTAGEDunion",
+      "reviewSha256": "41dda9d0e489a5f9c547a557fee137a0f820acb3668481562d7fd136bb6839fc"
+    },
+    "historyHallDecision515": {
+      "status": "USER_CONFIRMED_MAPPING_SUPERSEDES_V5_NULL_PENDING",
+      "humanSourceThread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+      "humanMessages": [
+        "01a17454-0af2-7ba3-a6c8-532eb81ede76",
+        "01a1745a-ca04-7dc3-95ea-7dc6155df9b0"
+      ],
+      "scope": "2471 exact sales source rows;12 warehouse-to-business-hall mappings; original blank source and unknown creator hall retained",
+      "privateInputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/outputs/01a16189-history-hall",
+      "owners": "D3 source-key overlay;D1 original mandatory-hall seam;QB affected delta;T45 sole actual executor",
+      "next": "Preserve fixed in-flight47 known25811/parked2471. Consume confirmed mapping in next fixed original input; no nullable27, no reimport committed records",
+      "priorPendingPreserved": [
+        {
+          "id": "HISTORICAL_SALES_HALL_NULL_2471",
+          "state": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
+          "onlyDependentBranchWaits": true,
+          "factsSha256": "3cbae7ce93b8454abf6840297a2122b4aa56e48162b31f8450ad9e0dc885f776",
+          "status": "FULL_V5_SENT_WAIT_EXPLICIT_HUMAN_APPROVAL",
+          "confirmationFile": "SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-NULLABLE.md",
+          "confirmationSha256": "2b3fe399061713462f16270e88f9f925e48249810e84aa5af6bd261658127972"
+        }
+      ],
+      "actualImported": false
     }
   }
 }
