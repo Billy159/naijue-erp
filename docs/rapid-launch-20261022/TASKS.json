@@ -12065,6 +12065,19 @@
       "databaseWrites": false,
       "MAIN": false,
       "PUBLISH": false
+    },
+    "joint28282Source527": {
+      "owner": "D3",
+      "status": "REFERENCE_AND_PURE_STAGE_PROJECTION_SEAM_READY_QB_REVIEW_DISPATCHED",
+      "input": "O/D3/SALES-HEADERS28282-MAIN-CLOSURE-INPUT.DRAFT.json",
+      "inputSha256": "272f5ae935a0eeb3d11968d1c0d67a4d99ecfa057eea46da096528c4274b3483",
+      "helperSha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c",
+      "selfTests": "3/3 finite",
+      "sourceRows": 28282,
+      "actualDatabaseStage": false,
+      "globallySortedClosure": false,
+      "inventoryLedgerExpected": "UNKNOWN_NOT_STOCK_GROUP_COUNT",
+      "next": "Original QB new helper scoped review; T45 original QA60 then actual stage/full closure using original stores and authorities"
     }
   }
 }
