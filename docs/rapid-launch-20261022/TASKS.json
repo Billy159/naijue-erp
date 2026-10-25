@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T03:50:09.463659+00:00",
-    "sourceRound": 390,
-    "sourceCheckpoint": "SOURCE389_FIXED_UI_BUILD_HTTP_AND_REMOTE_PASS_V18_PENDING",
+    "atUtc": "2026-10-25T03:55:03.806016+00:00",
+    "sourceRound": 392,
+    "sourceCheckpoint": "SOURCE392_PRODUCT_DOM_WORKBOOK_SOURCE_READY_PARTY223_PERMISSIONS_PASS",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8580,12 +8580,12 @@
     },
     "currentPackets": {
       "F2": {
-        "current": "Product heavy tabs active-only mount with stable drafts/scroll; Solmedium",
+        "current": "Product detail source/test ready; C integration, output next pending cross-owner grouping boundary",
         "next": "Inventory streaming intermediate-memory, then v17 normal HTTP seam",
         "uiDelivery": "I01-FILTER-WIDTH-LABELS-USER-20261025-01 source complete; fixed build and QF2 pending"
       },
       "F1": {
-        "current": "Historical list summary/on-demand detail consumer",
+        "current": "chunk184 complete released; existing history list reused",
         "next": "original-workbook memory seam"
       },
       "D3": {
@@ -8595,6 +8595,14 @@
       "C": {
         "current": "fixed389 candidate integration; PARTY357 actual permissions/carrier",
         "next": "precise pending v18 confirmation; shared shadow stylesheet reuse"
+      },
+      "D1": {
+        "current": "Approved v18 batch methods implementation",
+        "next": "OriginalQB affected source then C isolated PG"
+      },
+      "QF2": {
+        "current": "SOURCE389 width/exterior-caption visual only; isolated IAB",
+        "next": "New product DOM candidate technical stage after visual"
       }
     },
     "v18": "USER_CONFIRMED_CURRENT_HUMAN_REPLY_IMPLEMENTATION_READY_D1_ORIGINAL_OWNER",
@@ -8620,6 +8628,18 @@
       "phase1Accepted": false,
       "phase2Candidate": "OriginalQF2 SOURCE380 three affectedmatrixUIitems PASS actual; browserReturnedtrue; SYNnotwholebusiness/formal",
       "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
+    },
+    "party223Actual": {
+      "status": "COMPLETED0_READONLY_PERMISSIONS_AVAILABLE",
+      "counts": {
+        "customers": 22,
+        "halls": 22,
+        "warehouses": 22,
+        "products": 2956,
+        "skus": 5586
+      },
+      "grantChanges": false,
+      "stageExecuted": false
     }
   },
   "latestReadySource": {

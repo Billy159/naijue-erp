@@ -27,5 +27,5 @@ export type { ReadyPageOptions, MountedReplicaPage } from './common/ready-pages.
 
 /** Original MATRIX_REPORT.create loads only on the output action. */
 export async function createReplicaWorkbook(rows: AsyncIterable<readonly string[]> | readonly (readonly string[])[], title: string, signal?: AbortSignal): Promise<Uint8Array<ArrayBuffer>> {
-  return new Uint8Array(await (await import('./common/original-workbook.ts')).createOriginalWorkbook(rows, title, signal));
+  return (await import('./common/original-workbook.ts')).createOriginalWorkbook(rows, title, signal);
 }

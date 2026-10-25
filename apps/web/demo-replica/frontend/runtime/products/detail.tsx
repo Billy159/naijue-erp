@@ -39,12 +39,13 @@ export function ProductDetail(p:ProductDetailOptions){
  const title=useRef<HTMLHeadingElement>(null);useLayoutEffect(()=>title.current?.focus({preventScroll:true}),[]);
  if(!p.scope.active)return null;
  return <div className="pc-detail-workbench"><div className="pc-detail-sticky"><div className="gold-head iw-head pc-page-head"><h1 ref={title} tabIndex={-1}>{heading}</h1></div><div className="tabs" role="tablist" aria-label="商品详情">{productTabs.map(([key,label])=><button type="button" role="tab" aria-selected={tab===key} className={tab===key?'active':''} key={key} onClick={()=>changeTab(key)}>{label}</button>)}</div></div><section className="pc-editor-body pc-detail-body">
- {visited.has('base')&&<div hidden={tab!=='base'}><ReadNotice phase={basic.snapshot.phase} retry={()=>void basic.query.run({productId:entityId('product',p.product.id)})} cancel={()=>basic.query.cancel()}/>{basic.snapshot.phase==='success'&&!basic.snapshot.success?.data?<div className="empty">商品不存在</div>:basic.snapshot.success?.data&&<BaseBody data={basic.snapshot.success.data}/>}</div>}
- {visited.has('specs')&&<div hidden={tab!=='specs'}><ReadNotice phase={specs.snapshot.phase} retry={()=>void specs.query.run({productId:entityId('product',p.product.id)})} cancel={()=>specs.query.cancel()}/>{specs.snapshot.success?.data?<SpecsBody data={specs.snapshot.success.data}/>:specs.snapshot.phase==='success'&&<div className="empty">商品规格资料未取得</div>}</div>}
- {visited.has('barcodes')&&<div hidden={tab!=='barcodes'}><Barcodes {...p} active={tab==='barcodes'}/></div>}
- {visited.has('prices')&&<div hidden={tab!=='prices'}><Prices {...p} active={tab==='prices'}/></div>}
- {visited.has('images')&&<div hidden={tab!=='images'}><ReadNotice phase={specs.snapshot.phase} retry={()=>void specs.query.run({productId:entityId('product',p.product.id)})} cancel={()=>specs.query.cancel()}/><Photos {...p} active={tab==='images'} specs={specs.snapshot.success?.data??null}/></div>}
- {visited.has('stock')&&<div hidden={tab!=='stock'}><Stock {...p} active={tab==='stock'}/></div>}
+ {tab==='base'&&<div><ReadNotice phase={basic.snapshot.phase} retry={()=>void basic.query.run({productId:entityId('product',p.product.id)})} cancel={()=>basic.query.cancel()}/>{basic.snapshot.phase==='success'&&!basic.snapshot.success?.data?<div className="empty">商品不存在</div>:basic.snapshot.success?.data&&<BaseBody data={basic.snapshot.success.data}/>}</div>}
+ {tab==='specs'&&<div><ReadNotice phase={specs.snapshot.phase} retry={()=>void specs.query.run({productId:entityId('product',p.product.id)})} cancel={()=>specs.query.cancel()}/>{specs.snapshot.success?.data?<SpecsBody data={specs.snapshot.success.data}/>:specs.snapshot.phase==='success'&&<div className="empty">商品规格资料未取得</div>}</div>}
+ {visited.has('barcodes')&&<Barcodes {...p} active={tab==='barcodes'}/>}
+ {visited.has('prices')&&<Prices {...p} active={tab==='prices'}/>}
+ {tab==='images'&&<ReadNotice phase={specs.snapshot.phase} retry={()=>void specs.query.run({productId:entityId('product',p.product.id)})} cancel={()=>specs.query.cancel()}/>}
+ {visited.has('images')&&<Photos {...p} active={tab==='images'} specs={specs.snapshot.success?.data??null}/>}
+ {visited.has('stock')&&<Stock {...p} active={tab==='stock'}/>}
  </section></div>;
 }
 export function Field(p:{name:string;value:React.ReactNode}){return <div className="field"><span className="pc-field-caption">{p.name.replace(/\s*\*$/,'')}{p.name.endsWith('*')&&<span className="ui-required"> *</span>}</span><span className="pc-read-value">{p.value??'—'}</span></div>;}
