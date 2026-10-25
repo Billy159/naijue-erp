@@ -1,3 +1,11 @@
+SOURCE438 FINITE NATIVE PREVIEW STATES / QF2 PRODUCT437 AND LEDGER436 PASS
+
+C preview-only root now lazily initializes exactlytwo native samples through original finite prepare/SAVE memory factory before first document adapter activation. DOC188 explicitintent/product70/71 reused, no originalCUTOFF_HISTORY relabel/no secondstore/no production import. Normal lists retain originalfilter/sort/pagination/totals/detail checks; current native oneRETURN+refund and one2lineTRANSFER, memory resets onreload. Finite rootnormal list/detail repeat2 each PASS; initialCprobe omitted originalcredentials same-origin, correctedprobePASS with no productionguardchange. This enablesQF missing native saved output browserstate only, not actualbusiness/save/audit/historywrite. Prepare-existing/history/CAS fixture limitations remainexplicit501, notsimulatedPASS.
+
+OriginalQF2 SOURCE437 sourceDOM targetedPASS closesQF2-435-F01 withinfixedscope; originalnegative sameprobe now nextcommand onlyauthoritybarcode/version9. SOURCE436 ledger oldzero→loading/error scopedPASS too, no realHTTP/PG/performanceclaim. Other435/v17/400/432evidence adoptednotrerun. Latest435productionpack not productwrite-release due437successor required; correctedfullproductionpackage followsfixed438. Current57910 source433 unchanged/userdraftpreserved, nextcandidate includes435/436/437+finite native samples.
+
+GitHub436d57f0519d12c276d83f174ca61c3dcae7c04e171 verified;437-438nextsync. Stock D1ACL sourceQB304PASS/new04carrier finite supplement active, actualgrant/03stage notyetreported. All37/67andapprovedadditions remainincomplete/no newformalrelease.
+
 SOURCE437 REJECTED PRODUCT BARCODE DRAFT FIXED / STOCK ACL QB304 PASS
 
 OriginalF2 QF2-435-F01 exact2 fixed: acceptedauthoritybaseline clears rejected barcodeDraft beforeclean; next explicitnewcommand contains onlyauthorityversion9 barcodes, unknown immutablecommand/key unchanged. ExactoriginalQF2negative red→green and existingaffectedgroup/strictPASS adopted; originalQF2 finite fixedretest next, other435PASS reused. Media branch not extrapolated.

@@ -7,7 +7,7 @@ export function createReplicaPreviewTransport(){
  let products:Promise<Awaited<ReturnType<typeof import('./runtime/products/synthetic-preview-transport.ts')['createSyntheticProductPreviewTransport']>>>|undefined;
  let settings:Promise<ReturnType<typeof import('./runtime/settings/synthetic-preview-transport.ts')['createSettingsPreviewTransport']>>|undefined;
  let documents:Promise<ReturnType<typeof import('./runtime/documents/synthetic-preview-transport.ts')['createSyntheticDocumentPreviewTransport']>>|undefined;
- const document=()=>documents??=import('./runtime/documents/synthetic-preview-transport.ts').then(m=>m.createSyntheticDocumentPreviewTransport({syntheticOnly:true,origin:base.http.origin,existingFetch:base.http.fetch}));
+ const document=()=>documents??=Promise.all([import('./runtime/documents/synthetic-preview-transport.ts'),import('./runtime-native-preview-seeds.ts')]).then(async([m,seeds])=>{await seeds.seedFiniteNativePreviewDocuments(base);return m.createSyntheticDocumentPreviewTransport({syntheticOnly:true,origin:base.http.origin,existingFetch:base.http.fetch});});
  const product=()=>products??=import('./runtime/products/synthetic-preview-transport.ts').then(m=>m.createSyntheticProductPreviewTransport({origin:base.http.origin,existingFetch:base.http.fetch,snapshotVersion:1,syntheticUnboundBarcodeFixture:true,syntheticFiniteInventoryOutput:true}));
  const setting=()=>settings??=import('./runtime/settings/synthetic-preview-transport.ts').then(m=>m.createSettingsPreviewTransport());
  const fetch=async(input:string,init:RequestInit):Promise<Response>=>{
