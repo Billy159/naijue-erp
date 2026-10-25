@@ -39,7 +39,7 @@ function draft(value: unknown): TransferDraft {
   const row = object(value, ["header", "lines"]);
   const header = object(row.header, ["id", "number", "businessDate", "fromWarehouseId", "toWarehouseId", "note", ...(row.header && typeof row.header === "object" && Object.hasOwn(row.header, "responsibleStaffId") ? ["responsibleStaffId"] : [])]);
   return { header: { id: id("transfer", header.id), number: string(header.number), businessDate: businessDate(string(header.businessDate)),
-    fromWarehouseId: id("warehouse", header.fromWarehouseId), toWarehouseId: id("warehouse", header.toWarehouseId), note: nullableString(header.note), ...(Object.hasOwn(header, "responsibleStaffId") ? { responsibleStaffId: id("staff", header.responsibleStaffId) } : {}) },
+    fromWarehouseId: id("warehouse", header.fromWarehouseId), toWarehouseId: id("warehouse", header.toWarehouseId), note: nullableString(header.note), ...(Object.hasOwn(header, "responsibleStaffId") ? { responsibleStaffId: header.responsibleStaffId === null ? null : id("staff", header.responsibleStaffId) } : {}) },
     lines: array(row.lines).map(line) };
 }
 export function parseTransferCommand(body: unknown, actor: TransferActor): TransferCommand {

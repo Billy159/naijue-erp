@@ -59,10 +59,11 @@ export function parseHistoryRevisionCommand(value: unknown): HistoryRevisionComm
   const head = r.totals === null ? null : totals(r.totals);
   let header: HistoryRevisionHeaderChange | undefined;
   if (Object.hasOwn(r, 'header')) {
-    const h = object(r.header, [], r.kind === 'sales' ? ['businessDate', 'responsibleStaffId'] : ['businessDate', 'fromWarehouseId', 'toWarehouseId', 'responsibleStaffId']);
+    const h = object(r.header, [], r.kind === 'sales' ? ['businessDate'] : ['businessDate', 'fromWarehouseId', 'toWarehouseId', 'responsibleStaffId']);
     must(Object.keys(h).length > 0, 'HISTORY_REVISION_EMPTY');
     if (Object.hasOwn(h, 'businessDate')) { try { businessDate(h.businessDate as string); } catch { must(false); } }
-    for (const key of ['fromWarehouseId', 'toWarehouseId', 'responsibleStaffId']) if (Object.hasOwn(h, key)) must(uuid(h[key]));
+    for (const key of ['fromWarehouseId', 'toWarehouseId']) if (Object.hasOwn(h, key)) must(uuid(h[key]));
+    if (Object.hasOwn(h, 'responsibleStaffId')) must(h.responsibleStaffId === null || uuid(h.responsibleStaffId));
     header = h as HistoryRevisionHeaderChange;
   }
   must(lines.length > 0 || head !== null || settlements.length > 0 || header !== undefined, 'HISTORY_REVISION_EMPTY');
@@ -98,7 +99,7 @@ export function planHistoryRevision(current: HistoryRevisionCurrent, input: Hist
     must(before.sourceStatus === 'DRAFT' && before.baselineEffect === 'EXCLUDED_NOT_EFFECTIVE');
     for (const key of ['businessDate', 'fromWarehouseId', 'toWarehouseId', 'responsibleStaffId'] as const) {
       if (Object.hasOwn(command.header, key)) {
-        const value = command.header[key]!; if (before[key] !== value) anyChanged = true;
+        const value = command.header[key]; if (before[key] !== value) anyChanged = true;
         Object.assign(after, { [key]: value });
       }
     }

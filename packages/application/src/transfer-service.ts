@@ -76,7 +76,7 @@ export function createTransferService(dependencies: TransferDependencies): { exe
         requireDomain(tx.resolveDocumentSkus,'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE','Original document specification resolver required');
         const ids=await tx.resolveDocumentSkus({scope:{kind:'TRANSFER',documentId:id,operationId:preparedOperationId,actor:submitted.actor,completedAt:preparedAt},selections,newId:kind=>newId(kind)});
         const draft=await prepareNativeTransferOnTransaction(dependencies,tx,submitted.actor,proposal,id,resolvedStored,ids);
-        command={actor:submitted.actor,action:'SAVE',requestKey:submitted.requestKey,expectedVersion:submitted.expectedVersion,draft:{...draft,header:{...draft.header,...(proposal.responsibleStaffId===undefined?{}:{responsibleStaffId:entityId('staff',proposal.responsibleStaffId)})}}};
+        command={actor:submitted.actor,action:'SAVE',requestKey:submitted.requestKey,expectedVersion:submitted.expectedVersion,draft:{...draft,header:{...draft.header,...(proposal.responsibleStaffId===undefined?{}:{responsibleStaffId:proposal.responsibleStaffId===null?null:entityId('staff',proposal.responsibleStaffId)})}}};
       }else command=submitted;
       const transferId = command.action === "SAVE" ? command.draft.header.id : command.transferId;
       const stored = proposalHandled ? resolvedStored : await tx.getTransfer(transferId);
@@ -104,7 +104,7 @@ export function createTransferService(dependencies: TransferDependencies): { exe
           actorAccountId: command.actor.accountId, number: command.draft.header.number });
         const currentIds = new Set(command.draft.lines.map(line => line.id));
         next = { header: { ...command.draft.header, responsibleStaffId: Object.hasOwn(command.draft.header, "responsibleStaffId")
-            ? entityId("staff", command.draft.header.responsibleStaffId as string) : previous?.header.responsibleStaffId ?? null, status: "DRAFT", version: previous ? nextVersion(previous.header.version) : version(1),
+            ? command.draft.header.responsibleStaffId === null ? null : entityId("staff", command.draft.header.responsibleStaffId as string) : previous?.header.responsibleStaffId ?? null, status: "DRAFT", version: previous ? nextVersion(previous.header.version) : version(1),
           createdByAccountId: previous?.header.createdByAccountId ?? command.actor.accountId,
           createdHallId: previous ? previous.header.createdHallId : command.actor.hallId,
           createdRole: previous?.header.createdRole ?? command.actor.role, createdAt: previous?.header.createdAt ?? timestamp,

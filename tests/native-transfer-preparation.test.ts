@@ -173,3 +173,14 @@ test("SYNTHETIC existing transfer enforces positive-only intent, strict proposal
   await assert.rejects(malicious.prepareExisting(actor, input), code("NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE"));
   assert.deepEqual(h.store.snapshot(), before); assert.deepEqual(input, beforeInput); assert.ok(!h.trace.some(v => v.startsWith("WRITE:")));
 });
+
+import {parseNativeTransferSaveProposal} from '../packages/application/src/native-transfer-preparation.ts';
+test('transfer preparation and current proposal preserve explicit NULL distinct from omission',async()=>{
+ const h=setup(),input=proposal(),prepared=await h.prepare.prepareCreate(actor,{...input,responsibleStaffId:null});
+ assert.equal(Object.hasOwn(prepared.header,'responsibleStaffId'),true);assert.equal(prepared.header.responsibleStaffId,null);
+ const body={...input,transferId:null,lines:input.lines.map(line=>({...line,existingLineId:null}))};
+ const omitted=parseNativeTransferSaveProposal(body);assert.equal(Object.hasOwn(omitted,'responsibleStaffId'),false);
+ assert.equal(parseNativeTransferSaveProposal({...body,responsibleStaffId:null}).responsibleStaffId,null);
+ assert.throws(()=>parseNativeTransferSaveProposal({...body,responsibleStaffId:''}));
+ assert.throws(()=>parseNativeTransferSaveProposal({...body,createdByAccountId:actor.accountId}));
+});

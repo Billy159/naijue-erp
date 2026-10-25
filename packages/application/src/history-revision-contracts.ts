@@ -13,8 +13,8 @@ export interface HistoryRevisionTotals { readonly grossAmount: string; readonly 
 export interface HistoryRevisionHeaderChange {
   readonly businessDate?: string;
   readonly fromWarehouseId?: string; readonly toWarehouseId?: string;
-  /** Selected business responsibility; never the creator or real audit actor. */
-  readonly responsibleStaffId?: string;
+  /** Transfer responsibility only; explicit NULL clears it, omission preserves it. Never creator/audit actor. */
+  readonly responsibleStaffId?: string | null;
 }
 export interface HistoryRevisionCommand {
   readonly kind: ImportedHistoryKind; readonly documentId: string; readonly expectedVersion: number;

@@ -163,3 +163,15 @@ test('TRANSFER_HALL_IDS revision: missing original source authority at current o
     assert.equal(p.calls.filter(c => c.sql.includes('history-revise:transfer-source-scope')).length, decisions.length);
   }
 });
+
+test('history transfer explicit NULL clear skips only staff lookup, preserves audited NULL and same transaction COMMIT',async()=>{
+ const p=protocol({kind:'transfers',sourceStatus:'DRAFT',headVersion:2,responsible:id(41)});
+ const q={...command('transfers'),expectedVersion:2,lines:[],header:{responsibleStaffId:null}};
+ const r=await p.run(q);assert.deepEqual(r.ledgerEntryIds,[]);
+ const inserted=p.calls.find(c=>c.sql.includes('history-revise:revision'))!;
+ const before=JSON.parse(inserted.values[10] as string),after=JSON.parse(inserted.values[11] as string);
+ assert.equal(before.responsibleStaffId,id(41));assert.equal(after.responsibleStaffId,null);assert.equal(inserted.values[6],actor.accountId);
+ assert.ok(!p.calls.some(c=>c.sql.includes('history-revise:responsible')));
+ assert.ok(!p.calls.some(c=>/UPDATE naijue_erp.history_(sales|transfer)_(header|line)|history-posting:ledger/.test(c.sql)));
+ assert.equal(p.connections(),1);assert.equal(p.calls.at(-1)!.sql,'COMMIT');assert.equal(p.releases.length,1);
+});

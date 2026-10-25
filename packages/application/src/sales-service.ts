@@ -91,7 +91,7 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
           requireDomain(tx.resolveDocumentSkus,'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Original document specification resolver required');
           const ids=await tx.resolveDocumentSkus({scope:{kind:'SALES',documentId:id,operationId:preparedOperationId,actor:submitted.actor,completedAt:preparedAt},selections,newId:kind=>newId(kind)});
           const draft=await prepareNativeSalesOnTransaction(dependencies,tx,submitted.actor,proposal,id,resolvedStored,ids);
-          command={actor:submitted.actor,action:'SAVE',requestKey:submitted.requestKey,expectedVersion:submitted.expectedVersion,draft:{...draft,header:{...draft.header,...(proposal.responsibleStaffId===undefined?{}:{responsibleStaffId:entityId('staff',proposal.responsibleStaffId)})}}};
+          command={actor:submitted.actor,action:'SAVE',requestKey:submitted.requestKey,expectedVersion:submitted.expectedVersion,draft};
         }else command=submitted;
         const salesId = command.action === "SAVE" ? command.draft.header.id : command.salesId;
         const stored = proposalHandled ? resolvedStored : await tx.getSales(salesId);
@@ -117,8 +117,7 @@ export function createSalesService(dependencies: SalesDependencies): { execute(c
           else if (tx.assertRuntimeDocumentNumber) await tx.assertRuntimeDocumentNumber({ kind: "SALES", documentId: salesId,
             actorAccountId: command.actor.accountId, number: command.draft.header.number });
           next = {
-            header: { ...command.draft.header, responsibleStaffId: Object.hasOwn(command.draft.header, "responsibleStaffId")
-            ? entityId("staff", command.draft.header.responsibleStaffId as string) : previous?.header.responsibleStaffId ?? null, status: "DRAFT", version: previous ? nextVersion(previous.header.version) : version(1),
+            header: { ...command.draft.header, responsibleStaffId: previous?.header.responsibleStaffId ?? null, status: "DRAFT", version: previous ? nextVersion(previous.header.version) : version(1),
               createdByAccountId: previous?.header.createdByAccountId ?? command.actor.accountId,
               createdHallId: previous ? previous.header.createdHallId : command.actor.hallId,
               createdAt: previous?.header.createdAt ?? timestamp, updatedAt: timestamp, approvedByAccountId: null, approvedAt: null },

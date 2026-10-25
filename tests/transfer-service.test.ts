@@ -168,12 +168,14 @@ test("v16 LIVE transfer responsible stays independent from creator and omission 
 
 import {parseTransferCommand as parseV16TransferCommand} from '../apps/api/src/transfer-input.ts';
 
-test('v16 LIVE input: responsibility is an optional staff selection, never creator or null clear intent',()=>{
+test('v16 LIVE input: responsibility is an optional staff selection, never creator; explicit null clears and omission preserves',()=>{
  const body={action:'SAVE',requestKey:'v16-wire',expectedVersion:null,draft:JSON.parse(JSON.stringify(draft(),(_k,v)=>typeof v==='bigint'?v.toString():v))};
  const old=parseV16TransferCommand(body,actor);assert.equal(old.action,'SAVE');if(old.action!=='SAVE'||!('draft'in old))throw Error('Expected original draft');assert.equal(Object.hasOwn(old.draft.header,'responsibleStaffId'),false);
  const employee=sid('staff',7001), withStaff=parseV16TransferCommand({...body,draft:{...body.draft,header:{...body.draft.header,responsibleStaffId:employee}}},actor);
  if(withStaff.action!=='SAVE'||!('draft'in withStaff))throw Error('Expected original draft');assert.equal(withStaff.draft.header.responsibleStaffId,employee);
- for(const bad of [null,'','NOT-A-STAFF-ID'])assert.throws(()=>parseV16TransferCommand({...body,draft:{...body.draft,header:{...body.draft.header,responsibleStaffId:bad}}},actor));
+ const clear=parseV16TransferCommand({...body,draft:{...body.draft,header:{...body.draft.header,responsibleStaffId:null}}},actor);
+ if(clear.action!=='SAVE'||!('draft'in clear))throw Error('Expected original draft');assert.equal(clear.draft.header.responsibleStaffId,null);
+ for(const bad of ['','NOT-A-STAFF-ID'])assert.throws(()=>parseV16TransferCommand({...body,draft:{...body.draft,header:{...body.draft.header,responsibleStaffId:bad}}},actor));
  assert.throws(()=>parseV16TransferCommand({...body,draft:{...body.draft,header:{...body.draft.header,createdByAccountId:employee}}},actor));
 });
 
@@ -187,4 +189,17 @@ test('v16 LIVE read projection: unknown responsible stays null while creator and
   assert.equal(page.items[0]!.responsibleStaffId,selected);assert.equal(page.items[0]!.responsibleName,selected===null?null:'RESPONSIBLE ONLY');assert.equal(page.items[0]!.createdByAccountId,actor.accountId);assert.equal(page.items[0]!.createdByName,'TRUE CREATOR');
   assert.ok(calls.some(sql=>sql.includes('LEFT JOIN naijue_erp.staff responsible ON responsible.id=h.responsible_staff_id')));assert.ok(calls.some(sql=>sql.includes('h.created_hall_id')));assert.equal(releases,1);
  }
+});
+
+test('transfer explicit NULL clear preserves creator stock and original-key/CAS audit boundaries',async()=>{
+ const f=fixture(),staff=sid('staff',7001);await f.service.execute(save({...draft(),header:{...draft().header,responsibleStaffId:staff}}));
+ const original=f.document().header,cleared={...draft(),header:{...draft().header,responsibleStaffId:null}};
+ const q=save(cleared,1,'transfer-clear'),r=await f.service.execute(q);assert.deepEqual(await f.service.execute(q),r);
+ assert.equal(f.document().header.responsibleStaffId,null);assert.equal(f.document().header.createdByAccountId,original.createdByAccountId);
+ assert.equal(f.document().header.createdHallId,original.createdHallId);assert.equal(f.document().header.createdRole,original.createdRole);
+ const audit=f.store.snapshot().audit.at(-1)!;assert.equal(audit.before!.header.responsibleStaffId,staff);assert.equal(audit.after.header.responsibleStaffId,null);
+ assert.equal(f.store.snapshot().ledger.length,0);assert.equal(f.balance(ids.fromWarehouse),0n);assert.equal(f.balance(ids.toWarehouse),0n);
+ await assert.rejects(f.service.execute(save({...cleared,header:{...cleared.header,responsibleStaffId:staff}},1,'transfer-clear')),{code:'IDEMPOTENCY_CONFLICT'});
+ await assert.rejects(f.service.execute(save(cleared,1,'stale-clear')),{code:'VERSION_CONFLICT'});
+ await f.service.execute(save(draft(),2,'after-clear-omit'));assert.equal(f.document().header.responsibleStaffId,null);
 });

@@ -204,18 +204,19 @@ test("SYNTHETIC existing prepare keeps independent signed RETURN/EXCHANGE intent
 
 import {fixture as v16SalesFixture, syntheticDraft as v16SalesDraft, actor as v16SalesActor, ids as v16SalesIds, sid as v16SalesId} from './support/synthetic-fixtures.ts';
 
-test("v16 LIVE sales responsible does not rewrite creation or financial facts and old payloads preserve responsibility",async()=>{
- const f=v16SalesFixture(), d=v16SalesDraft(), staff=v16SalesId('staff',7001);
- await f.service.execute({action:'SAVE',actor:v16SalesActor,requestKey:'v16-old',expectedVersion:null,draft:d});
+test("sales ignores independent responsible intent while preserving stored legacy facts and true creator",async()=>{
+ const f=v16SalesFixture(),d=v16SalesDraft(),legacy=v16SalesId('staff',7001),other=v16SalesId('staff',7002);
+ await f.service.execute({action:'SAVE',actor:v16SalesActor,requestKey:'sales-original',expectedVersion:null,draft:d});
  assert.equal(f.document().header.responsibleStaffId,null);
- const q={action:'SAVE' as const,actor:v16SalesActor,requestKey:'v16-responsible',expectedVersion:version(1),draft:{...d,header:{...d.header,responsibleStaffId:staff}}};
- const r=await f.service.execute(q); assert.deepEqual(await f.service.execute(q),r);
- assert.equal(f.document().header.createdByAccountId,v16SalesActor.accountId);
- assert.equal(f.document().header.responsibleStaffId,staff);assert.equal(f.store.snapshot().ledger.length,0);
- assert.equal(f.document().header.netDue,d.header.netDue);
- await f.service.execute({action:'SAVE',actor:v16SalesActor,requestKey:'v16-omit',expectedVersion:version(2),draft:d});
- assert.equal(f.document().header.responsibleStaffId,staff);
- const audit=f.store.snapshot().audit.at(-2)!;assert.equal(audit.before!.header.responsibleStaffId,null);assert.equal(audit.after.header.responsibleStaffId,staff);
+ // Synthetic setup represents a previously stored v16 value; no new sales command assigns it.
+ const old=f.document();await f.store.transaction(tx=>tx.putRuntimeSales({...old,header:{...old.header,responsibleStaffId:legacy}}));
+ const q={action:'SAVE' as const,actor:v16SalesActor,requestKey:'sales-legacy-payload',expectedVersion:version(1),draft:{...d,header:{...d.header,responsibleStaffId:other}}};
+ const r=await f.service.execute(q);assert.deepEqual(await f.service.execute(q),r);
+ assert.equal(f.document().header.responsibleStaffId,legacy);assert.equal(f.document().header.createdByAccountId,v16SalesActor.accountId);
+ assert.equal(f.document().header.salespersonId,d.header.salespersonId);assert.equal(f.document().header.netDue,d.header.netDue);assert.equal(f.store.snapshot().ledger.length,0);
+ await f.service.execute({action:'SAVE',actor:v16SalesActor,requestKey:'sales-omit',expectedVersion:version(2),draft:d});
+ assert.equal(f.document().header.responsibleStaffId,legacy);const audit=f.store.snapshot().audit.at(-2)!;
+ assert.equal(audit.before!.header.responsibleStaffId,undefined);assert.equal(audit.after.header.responsibleStaffId,undefined); // compact audit emits no unchanged legacy responsibility delta
  assert.equal(v16SalesIds.sales,f.document().header.id);
 });
 
@@ -227,4 +228,15 @@ test('v16 LIVE sales read: real creator label and nullable responsible label rem
  const page=await reader.readList({actor:v16SalesActor,scope:{kind:'all'},signal:new AbortController().signal,parameters:{filter:{startDate:null,endDate:null,statuses:[],businessTypes:[],hallIds:[],salespersonIds:[],customerIds:[],warehouseIds:[],number:null},page:1,pageSize:20}});
  assert.equal(page.items[0]!.createdByName,'TRUE STORED CREATOR');assert.equal(page.items[0]!.responsibleStaffId,null);assert.equal(page.items[0]!.responsibleName,null);
  assert.ok(calls.some(sql=>sql.includes('creator_account.id=h.created_by_account_id')&&sql.includes('creator.id=creator_account.staff_id')));assert.equal(releases,1);
+});
+
+import {parseNativeSalesSaveProposal} from '../packages/application/src/native-sales-preparation.ts';
+import {parseSalesCommand} from '../apps/api/src/input.ts';
+test('sales public proposals reject independent responsible input and keep salesperson/creator contracts',()=>{
+ const p=proposal(),body={...p,salesId:null,lines:p.lines.map(row=>({...row,existingLineId:null})),settlements:p.settlements.map(row=>({...row,existingSettlementId:null}))};
+ const parsed=parseNativeSalesSaveProposal(body);assert.equal(parsed.salespersonId,p.salespersonId);
+ assert.throws(()=>parseNativeSalesSaveProposal({...body,responsibleStaffId:sid('staff',7001)}));
+ assert.throws(()=>parseNativeSalesSaveProposal({...body,createdByAccountId:actor.accountId}));
+ const d=v16SalesDraft(),wire=JSON.parse(JSON.stringify(d,(_k,v)=>typeof v==='bigint'?v.toString():v));
+ assert.throws(()=>parseSalesCommand({action:'SAVE',requestKey:'sales-old-header',expectedVersion:null,draft:{...wire,header:{...wire.header,responsibleStaffId:sid('staff',7001)}}},actor));
 });

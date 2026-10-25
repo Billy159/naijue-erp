@@ -126,3 +126,15 @@ test('v16 history head: state kind invalid references and creator overrides refu
   assert.throws(() => plan(draft, { ...command('transfers'), lines: [], header: { businessDate: draft.businessDate! } }), { code: 'HISTORY_REVISION_EMPTY' });
   assert.deepEqual(plan().effects.map(x => x.quantityDelta), ['-1']);
 });
+
+test('transfer draft clear records explicit NULL while salesperson-only sales rejects independent responsibility',()=>{
+ const c={...current('transfers'),sourceStatus:'DRAFT' as const,baselineEffect:'EXCLUDED_NOT_EFFECTIVE' as const,responsibleStaffId:id(42)};
+ const q={...command('transfers'),lines:[],header:{responsibleStaffId:null}};
+ assert.equal(parseHistoryRevisionCommand(q).header!.responsibleStaffId,null);
+ const p=plan(c,q);assert.equal(p.before.responsibleStaffId,id(42));assert.equal(p.after.responsibleStaffId,null);
+ assert.deepEqual(p.effects,[]);assert.equal(p.moneyChanged,false);
+ assert.throws(()=>plan({...c,sourceStatus:'APPROVED',baselineEffect:'INCLUDED_APPROVED'},q));
+ assert.throws(()=>parseHistoryRevisionCommand({...q,header:{responsibleStaffId:''}}));
+ assert.throws(()=>parseHistoryRevisionCommand({...command(),lines:[],header:{responsibleStaffId:id(42)}}));
+ assert.throws(()=>parseHistoryRevisionCommand({...q,header:{createdByStaffId:id(42)}}));
+});

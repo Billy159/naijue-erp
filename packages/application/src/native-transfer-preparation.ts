@@ -1,4 +1,5 @@
 import { TRANSFER_PREPARE_MAX_LINES, TRANSFER_PREPARE_MAX_NOTE_LENGTH, TRANSFER_PREPARE_MAX_REQUEST_BYTES, transferJsonByteLength, transferPreparedDraftFitsSaveBudget } from "./transfer-payload-budget.ts";
+import type { EntityId } from "../../domain/src/values.ts";
 import type { SkuSnapshot } from "../../domain/src/documents.ts";
 import { requireDomain } from "../../domain/src/errors.ts";
 import { businessDate, entityId, quantity } from "../../domain/src/values.ts";
@@ -12,12 +13,12 @@ import type { StoredTransfer } from './transfer-ports.ts';
 function responsibleKeys(value: unknown): string[] {
   return value !== null && typeof value === 'object' && Object.hasOwn(value, 'responsibleStaffId') ? ['responsibleStaffId'] : [];
 }
-function responsibleIntent(row: Record<string, unknown>): { readonly responsibleStaffId?: string } {
-  return Object.hasOwn(row, 'responsibleStaffId') ? { responsibleStaffId: entityId('staff', row.responsibleStaffId as string) } : {};
+function responsibleIntent(row: { readonly responsibleStaffId?: unknown }): { readonly responsibleStaffId?: EntityId<"staff"> | null } {
+  return Object.hasOwn(row, 'responsibleStaffId') ? { responsibleStaffId: row.responsibleStaffId === null ? null : entityId('staff', row.responsibleStaffId as string) } : {};
 }
 /** Manual current SKU selection only. No caller-supplied labels, barcode or number. */
 export interface NativeTransferCreateProposal {
-  readonly responsibleStaffId?: string;
+  readonly responsibleStaffId?: string | null;
   readonly businessDate: string; readonly note: string | null;
   readonly fromWarehouseId: string; readonly toWarehouseId: string;
   readonly lines: readonly { readonly skuId: string; readonly quantity: string }[];
@@ -124,7 +125,7 @@ export function createNativeTransferPreparation(dependencies: TransferDependenci
       "TRANSFER_PAYLOAD_TOO_LARGE", "Transfer preparation exceeds its bounded request budget");
     const id = entityId("transfer", dependencies.newId("transfer"));
     const header = { id, number: sourceConfirmedCreateDocumentNumber("TRANSFER", id), businessDate: businessDate(proposal.businessDate),
-      fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note, ...(proposal.responsibleStaffId === undefined ? {} : { responsibleStaffId: entityId("staff", proposal.responsibleStaffId) }) };
+      fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note, ...responsibleIntent(proposal) };
     const lineIds = new Set<string>();
     const lines = proposal.lines.map((line, index) => {
       const lineId = entityId("transferLine", dependencies.newId("transferLine"));
@@ -231,7 +232,7 @@ export function createNativeTransferExistingPreparation(dependencies: TransferDe
         for (const row of previous.lines) used.add(row.id);
         const oldLines = new Map(previous.lines.map(row => [row.id as string, row])), pointers = new Set<string>(), fresh = new Set<string>();
         const header: TransferDraft["header"] = { id: transferId, number: previous.header.number, businessDate: businessDate(proposal.businessDate),
-          fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note, ...(proposal.responsibleStaffId === undefined ? {} : { responsibleStaffId: entityId("staff", proposal.responsibleStaffId) }) };
+          fromWarehouseId: entityId("warehouse", proposal.fromWarehouseId), toWarehouseId: entityId("warehouse", proposal.toWarehouseId), note: proposal.note, ...responsibleIntent(proposal) };
         const lines: TransferDraft["lines"] = proposal.lines.map((row, index) => {
           const old = row.existingLineId === null ? undefined : oldLines.get(row.existingLineId);
           requireDomain(row.existingLineId === null || old?.transferId === transferId && old.isCurrent && !pointers.has(row.existingLineId), "INVALID_HTTP_INPUT", "Line pointer must be unique, current and owned by the actual transfer");

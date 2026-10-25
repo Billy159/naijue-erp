@@ -197,7 +197,7 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
           && r.version===command.expectedVersion+1 && Array.isArray(r.ledgerEntryIds)); uuid(r.revisionId); r.ledgerEntryIds.forEach(uuid);
         result=structuredClone(r);
       } else {
-        if (command.header?.responsibleStaffId !== undefined) {
+        if (command.header?.responsibleStaffId != null) {
           const staff=await query('/* history-revise:responsible */ SELECT id FROM naijue_erp.staff WHERE id=$1::uuid FOR SHARE',[command.header.responsibleStaffId]);
           must(staff.rows.length===1,'HISTORY_REVISION_FOREIGN_ROW');
         }
