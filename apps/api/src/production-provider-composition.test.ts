@@ -1212,3 +1212,125 @@ test('production payment original provider saves two-hall account with prepared 
     assert.equal(p.counts().ends, 1);
   } finally { f.cleanup(); }
 });
+
+function partyProductionFixture(core: boolean, allowed = true) {
+  const f = categoryProductionFixture('26_v15_category_order_undo', false, core);
+  const review = JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile, 'utf8'));
+  review.purposes = review.purposes.filter((purpose: string) => purpose !== 'CURRENT_CUSTOMER_READ_WRITE');
+  if (allowed) review.purposes.push('CURRENT_CUSTOMER_READ_WRITE');
+  const body = JSON.stringify(review); writeFileSync(f.configuration.runtime26Review.reviewFile, body, { mode: 0o600 });
+  return { ...f, configuration: { ...f.configuration, ...(core ? { coreReadModules: ['customers'] } : {}), runtime26Review: { ...f.configuration.runtime26Review,
+    trustedReviewSha256: createHash('sha256').update(body).digest('hex') } } };
+}
+test('production party opt-in retains CORE-only default but explicitly mounts native customer supplier reads commands and receipts', async () => {
+  for (const core of [false, true]) {
+    const f = partyProductionFixture(core), p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    try {
+      for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, partyMaintenance: value }), TypeError);
+      assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), partyMaintenance: true }), TypeError);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, p.factory);
+      try {
+        const connects = p.counts().connects;
+        for (const family of ['customers', 'suppliers']) {
+          assert.ok(api.app.hasRoute({ method: 'GET', url: `/${family}` }));
+          assert.ok(api.app.hasRoute({ method: 'GET', url: `/${family}/:id` }));
+          assert.ok(api.app.hasRoute({ method: 'GET', url: `/${family}/candidates` }));
+          assert.ok(api.app.hasRoute({ method: 'GET', url: `/${family}/receipts/:requestKey` }));
+          const response = await api.app.inject({ method: 'POST', url: `/${family}/commands`, payload: {} });
+          assert.equal(response.statusCode, 401, response.body);
+        }
+        assert.equal(p.counts().connects, connects);
+        for (const url of ['/payment/accounts/commands', '/catalogue/colors/commands', '/staff/commands', '/sales/commands']) assert.equal(api.app.hasRoute({ method: 'POST', url }), false);
+      } finally { await api.close(); }
+      assert.equal(p.counts().ends, 1);
+    } finally { f.cleanup(); }
+  }
+  const f = partyProductionFixture(true, false), p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try {
+      assert.ok(api.app.hasRoute({ method: 'GET', url: '/customers' }));
+      assert.equal(api.app.hasRoute({ method: 'GET', url: '/suppliers' }), false);
+      assert.equal(api.app.hasRoute({ method: 'POST', url: '/customers/commands' }), false);
+    } finally { await api.close(); }
+    const denied = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, denied.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    assert.equal(denied.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+
+test('production party original approved allocator saves edits and rereads native parties through normal list with exact2 exclusion', async () => {
+  const f = partyProductionFixture(true), rows = { customer: new Map<string, Record<string, unknown>>(), supplier: new Map<string, Record<string, unknown>>() };
+  const receipts = new Map<string, Record<string, unknown>>(); let role = 'ADMIN';
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003',
+      login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role, employment_status: '在职', hall_id: hall, native_hall_id: hall, hall_enabled: true }];
+    if (sql.includes('FROM naijue_erp.operation_receipt')) return receipts.has(values[1] as string) ? [receipts.get(values[1] as string)!] : [];
+    if (sql.startsWith('SELECT last_value::text')) return [{ last_value: '1', is_called: false }];
+    if (sql.startsWith('SELECT code FROM')) return [{ code: sql.includes('.supplier') ? 'GYS000005' : 'KH000002' }];
+    if (sql.startsWith('SELECT setval')) return [{ allocated: values[0] }];
+    if (sql.startsWith('SELECT naijue_erp.is_exact_historical_customer_only')) return [{ historical_only: false }];
+    const table = sql.includes('naijue_erp.supplier') ? 'supplier' : 'customer';
+    if (sql.startsWith('SELECT count(*)::text AS total FROM naijue_erp.')) return [{ total: String(rows[table].size) }];
+    if (sql.startsWith('SELECT id, code, name, enabled, version')) {
+      if (sql.includes('WHERE id=') || sql.includes('WHERE id =')) return rows[table].has(values[0] as string) ? [rows[table].get(values[0] as string)!] : [];
+      return [...rows[table].values()];
+    }
+    if (/^INSERT INTO naijue_erp\.(customer|supplier) /.test(sql)) {
+      rows[table].set(values[0] as string, { id: values[0], code: values[1], name: values[2], enabled: values[3], version: values[4], created_at: values[5], updated_at: values[6] }); return [{}];
+    }
+    if (/^UPDATE naijue_erp\.(customer|supplier) SET/.test(sql)) {
+      const prior = rows[table].get(values[0] as string)!; rows[table].set(values[0] as string, { ...prior, name: values[2], enabled: values[3], version: values[4], updated_at: values[6] }); return [{}];
+    }
+    if (sql.startsWith('INSERT INTO naijue_erp.audit_change')) return [{}];
+    if (sql.startsWith('INSERT INTO naijue_erp.operation_receipt')) {
+      receipts.set(values[2] as string, { id: values[0], actor_account_id: values[1], request_key: values[2], request_hash: values[3], action: values[4], target_type: values[5], target_id: values[6], status: 'COMMITTED', result_data: JSON.parse(values[7] as string), completed_at: values[8] }); return [{}];
+    }
+    return undefined;
+  });
+  try {
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, partyMaintenance: true }, p.factory);
+    try {
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+      for (const [family, prefix, code] of [['customers', 'customer', 'KH000003'], ['suppliers', 'supplier', 'GYS000006']] as const) {
+        const payload = { action: 'CREATE', requestKey: `synthetic-host-${family}`, name: `SYNTHETIC_${family}` };
+        const response = await api.app.inject({ method: 'POST', url: `/${family}/commands`, headers, payload });
+        assert.equal(response.statusCode, 200, response.body); const result = response.json(); assert.equal(result.code, code);
+        const savedRow = rows[prefix].get(result.partyId)!;
+        const codeCalls = p.calls.filter(c => c.sql.startsWith('SELECT setval')).length;
+        const replay = await api.app.inject({ method: 'POST', url: `/${family}/commands`, headers, payload });
+        assert.equal(replay.statusCode, 200, replay.body); assert.deepEqual(replay.json(), result);
+        const recovered = await api.app.inject({ method: 'GET', url: `/${family}/receipts/${payload.requestKey}`, headers });
+        assert.equal(recovered.statusCode, 200, recovered.body); assert.deepEqual(recovered.json().result, result);
+        const conflict = await api.app.inject({ method: 'POST', url: `/${family}/commands`, headers, payload: { ...payload, name: 'CHANGED' } });
+        assert.equal(conflict.statusCode, 409, conflict.body); assert.equal(p.calls.filter(c => c.sql.startsWith('SELECT setval')).length, codeCalls);
+        const editedName = `EDITED_${family}`;
+        const edit = await api.app.inject({ method: 'POST', url: `/${family}/commands`, headers,
+          payload: { action: 'EDIT', requestKey: `synthetic-host-edit-${family}`, id: result.partyId, expectedVersion: 1, name: editedName, enabled: true } });
+        assert.equal(edit.statusCode, 200, edit.body); assert.equal(edit.json().code, code); assert.equal(edit.json().version, 2);
+        assert.equal(rows[prefix].get(result.partyId)!.created_at, savedRow.created_at);
+        const start = p.calls.length;
+        const list = await api.app.inject({ method: 'GET', url: `/${family}?search=&enabled=ALL&page=1&pageSize=20`, headers });
+        assert.equal(list.statusCode, 200, list.body); assert.equal(list.json().total, 1);
+        assert.equal(list.json().items[0].id, result.partyId); assert.equal(list.json().items[0].name, editedName); assert.equal(list.json().items[0].code, code);
+        const readCalls = p.calls.slice(start), authorization = readCalls.findIndex(c => c.sql.includes('application-read:identity'));
+        const count = readCalls.findIndex(c => c.sql.startsWith('SELECT count(*)')), page = readCalls.findIndex(c => c.sql.includes('ORDER BY name COLLATE'));
+        assert.ok(authorization >= 0 && count > authorization && page > count);
+        assert.equal(readCalls[count]!.lease, readCalls[page]!.lease); assert.ok(readCalls.some(c => c.sql === 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'));
+        assert.ok(!readCalls[count]!.sql.includes('id=ANY')); // Explicit maintenance uses original native scope, not CORE-only membership.
+        if (prefix === 'customer') for (const i of [count, page]) assert.match(readCalls[i]!.sql, /NOT naijue_erp.is_exact_historical_customer_only\(customer.id\)/);
+        const detail = await api.app.inject({ method: 'GET', url: `/${family}/${result.partyId}`, headers });
+        assert.equal(detail.statusCode, 200, detail.body); assert.equal(detail.json().name, editedName);
+        role = 'SALESPERSON';
+        const denied = await api.app.inject({ method: 'POST', url: `/${family}/commands`, headers, payload }); assert.equal(denied.statusCode, 403, denied.body);
+        const deniedList = await api.app.inject({ method: 'GET', url: `/${family}?search=&enabled=ALL&page=1&pageSize=20`, headers }); assert.equal(deniedList.statusCode, 403, deniedList.body); role = 'ADMIN';
+      }
+      assert.equal(p.calls.filter(c => c.sql.startsWith('SELECT setval')).length, 2);
+      assert.equal(p.calls.filter(c => c.sql.startsWith('INSERT INTO naijue_erp.audit_change')).length, 4);
+      assert.equal(p.calls.filter(c => c.sql.startsWith('INSERT INTO naijue_erp.operation_receipt')).length, 4);
+      assert.equal(p.counts().allocations, 1); assert.equal(api.app.server.listening, false);
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
