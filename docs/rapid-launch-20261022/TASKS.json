@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE550",
+    "round": "SOURCE551",
     "goal": "HUMAN_AUTHORIZED_CHAT_EXECUTION_RESUMED_FULL_SCOPE_CARD_RESUME_UNVERIFIED",
-    "sourceHeadBeforeThisContinuityCommit": "100766e",
+    "sourceHeadBeforeThisContinuityCommit": "fe855aff1bf5588971fe9ab253fdde124e9ec82a",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12417,7 +12417,13 @@
       "actions": "Stopped equivalent retries. Asked user once to send direct74/75 continuation in original T45 chat; no new authorization/password requested. No owner substitution, app state edits or server bypass.",
       "oldCandidateRestored": false,
       "original73Replay": false,
-      "otherWork": "D3 real small full-input/11recipe assembly active; original QB source results adopted."
+      "otherWork": "D3 real small full-input/11recipe assembly active; original QB source results adopted.",
+      "officialActivationAttempt": {
+        "navigated": true,
+        "turn": "01a174fc-3da7-7be0-a8be-9d5302ecfb64",
+        "status": "COMPLETED5.364S_NO_TOOLS_SSH_ONLY_RESPONSE",
+        "restored": false
+      }
     },
     "authorityWrapper548": {
       "owner": "D3",
@@ -12474,7 +12480,8 @@
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
       "observation": "Existing list/read/wait show original D1 notLoaded/completed; send_message returned thread not found both inferred and explicit local host. No new D1 work assumed queued/running.",
       "preserved": "Original B07-NORMAL-HISTORY-ACTUAL-v1 inputs/results intact. Actual target/schema/current purpose remains to bind before real historical revision QA.",
-      "duplicateTaskCreated": false
+      "duplicateTaskCreated": false,
+      "officialActivationAttempt": "navigate returned navigated true; explicit local-host send still thread not found. No new D1 work dispatched."
     },
     "frontendQueue549": {
       "F1": "Original DOC196 delivered/completed/notLoaded; adopted, real history/save waits actual backend/candidate.",
@@ -12482,6 +12489,59 @@
       "F3": "Original CORE10 prepare-only write boundary source result adopted, notLoaded; no new bug to invent.",
       "F4": "Original empty category state delivered/completed/notLoaded; adopted, actual maintained reads pending.",
       "noDuplicateDispatch": true
+    },
+    "retainedNativeClosure551": {
+      "owner": "D3",
+      "status": "SOURCE_READY_SELF7_CHECKS_PASS_QB_NEW_SCOPE_REVIEW_ACTIVE",
+      "source": "O/D3/retained-native-closure-streams-20261026.mjs",
+      "bytes": 9741,
+      "sha256": "0d600638dd370cf896298cea78c14f5b76426b9d2774a2ffb5e9e636a8aca714",
+      "result": "O/D3/RETAINED-NATIVE-CLOSURE-STREAMS-20261026.RESULT.json",
+      "resultSha256": "da2564fd2ee70671841adb048be8f45a6f3217de58d98abd7f3f7f5d62c38022",
+      "groups": [
+        "PRODUCTS",
+        "SKUS",
+        "STOCK_CONTRIBUTORS"
+      ],
+      "checks": "7 distinct finite cases; three original real smallreader outputs field-equal, original codec roots, count/identity/order/ranges/mutation/close/cancel/cache bounds.",
+      "failedFirstPreserved": "First6:2PASS4FAIL due wrongly requiring batch_id on native product/SKU; corrected original schema, reran affected4 plus new order1; stock/lateclose2 reused.",
+      "dataRead": "No real prepared payload/old snapshot/gzip; no DB.",
+      "captureAndClosureCostBytesIfNoExistingIndex": 647100720,
+      "singlePassBytes": 323550360,
+      "projectionCacheLimitBytes": 67108864,
+      "metadataLimitBytes": 67108864,
+      "realRSSMeasured": false,
+      "realFullIndexExists": false,
+      "expectedRecordSourceTypedCounts": {
+        "PRODUCTS": [
+          30,
+          2956,
+          2956
+        ],
+        "SKUS": [
+          14999,
+          15121,
+          30120
+        ],
+        "STOCK_CONTRIBUTORS": [
+          38303,
+          38314,
+          38314
+        ]
+      },
+      "next": "QB only new source composition; original T45 genuine capture/index/closure after continuation restored. No replay completed stage as free capture.",
+      "gitSourceCheckpoint": {
+        "paths": [
+          "reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+          "reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+          "reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test-first.log",
+          "reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test-affected.log",
+          "reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test-order.log"
+        ],
+        "originalOFixedInputRetained": true,
+        "realDataCopied": false,
+        "checksRerun": false
+      }
     }
   }
 }

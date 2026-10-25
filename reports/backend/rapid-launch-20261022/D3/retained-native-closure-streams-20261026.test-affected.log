@@ -1,0 +1,12 @@
+✔ PRODUCTS: retained one-read ordered source/typed exactly match existing genuine finite source reader (27.81525ms)
+✔ SKUS: retained one-read ordered source/typed exactly match existing genuine finite source reader (35.477584ms)
+✔ original closure builder per-group finite roots equal existing original source-reader rows (71.157958ms)
+✔ duplicate membership, range omission, changed prepared facts and forged per-row hash refuse without source substitute (17.321666ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 279.277375
