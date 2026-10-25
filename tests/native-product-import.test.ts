@@ -4,7 +4,7 @@ import { PostgresNativeProductImportStore, PostgresNativeProductImportStore26 } 
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { CATALOGUE_SOURCE_PRICE_FIELDS } from "../packages/application/src/catalogue-source-proof.ts";
 import { IMPORT_V2_TABLES } from "../packages/application/src/import-v2-contract.ts";
-import { nativeProductImportEvidence, nativeProductImportEvidence26, NATIVE_PRODUCT_IMPORT_VERSION_26, NATIVE_PRODUCT_NULLABLE_POLICY, prepareNativeProductImportChunk, prepareNativeProductImportChunk26, stageNativeProductImportChunk } from "../packages/application/src/native-product-import.ts";
+import { nativeProductImportEvidence, nativeProductImportEvidence26, nativeProductImportEvidences26, NATIVE_PRODUCT_IMPORT_VERSION_26, NATIVE_PRODUCT_NULLABLE_POLICY, prepareNativeProductImportChunk, prepareNativeProductImportChunk26, stageNativeProductImportChunk } from "../packages/application/src/native-product-import.ts";
 import type { NativeProductImportChunk, NativeProductImportChunk26, NativeProductImportValues, PreparedNativeProductImportChunk26 } from "../packages/application/src/native-product-import.ts";
 import { requestHash } from "../packages/application/src/request-hash.ts";
 
@@ -285,6 +285,33 @@ test("product26 runtime rejects absent forged revoked and wrong-profile inputs b
   assert.equal(late.calls.at(-1)!.sql, "ROLLBACK"); assert.equal(late.nativeWrites(), 0);
   const old = protocol(); await assert.rejects(old.store.stage(p)); assert.equal(old.connects(), 0);
   await assert.rejects(old.successor.stage(prepareNativeProductImportChunk(input()) as PreparedNativeProductImportChunk26)); assert.equal(old.connects(), 0);
+});
+test("product26 batch proof preserves ordered single-row evidence for unknown single and multi seasons", async () => {
+  for (const season of ["", "春", "春、夏"] as const) {
+    const raw = input26(season, 3), prepared = prepareNativeProductImportChunk26(raw), before = structuredClone(prepared);
+    const proofs = nativeProductImportEvidences26(prepared);
+    assert.deepEqual(proofs, prepared.rows.map((_, index) => nativeProductImportEvidence26(prepared, index)));
+    assert.deepEqual(prepared, before);
+    const h = protocol(raw); assert.deepEqual(await h.successor.stage(prepared), { inserted: 3, replayed: 0 });
+    for (let index = 0; index < prepared.rows.length; index++)
+      assert.deepEqual(h.sources().get(prepared.rows[index]!.source.id), proofs[index]!.source);
+    assert.deepEqual(await h.successor.stage(prepared), { inserted: 0, replayed: 3 });
+    assert.equal(h.nativeWrites(), 3); assert.equal(h.proofWrites(), 3);
+  }
+});
+test("product26 batch proof and writer reject changed prepared source or snapshot before connecting", async () => {
+  const raw = input26("春、夏", 2), prepared = prepareNativeProductImportChunk26(raw);
+  const changes = [
+    (p: PreparedNativeProductImportChunk26) => { p.rows[1]!.source.rowSha256 = "0".repeat(64); },
+    (p: PreparedNativeProductImportChunk26) => { (p.nativeProducts[1]! as unknown as RecordRow).season_ids = []; },
+    (p: PreparedNativeProductImportChunk26) => { (p.rows[1]!.source.normalizedFields as RecordRow)["商品名称"] = "SYNTHETIC_CHANGED"; }
+  ];
+  for (const change of changes) {
+    const changed = structuredClone(prepared); change(changed);
+    assert.throws(() => nativeProductImportEvidences26(changed));
+    const h = protocol(raw); await assert.rejects(h.successor.stage(changed)); assert.equal(h.connects(), 0);
+  }
+  for (const index of [-1, 0.5, prepared.rows.length]) assert.throws(() => nativeProductImportEvidence26(prepared, index));
 });
 test("product26 writes and reads back full unknown single multi snapshots and exact source once; replay is insert-free", async () => {
   for (const season of ["", "春", "春、夏"] as const) {

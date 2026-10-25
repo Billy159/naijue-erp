@@ -2,7 +2,7 @@ import { assertNativeImportAccountingGuards } from "./native-import-accounting-c
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
-import { nativeProductImportEvidence, nativeProductImportEvidence26, validatePreparedNativeProductImportChunk, validatePreparedNativeProductImportChunk26 } from "../../../packages/application/src/native-product-import.ts";
+import { nativeProductImportEvidence, nativeProductImportEvidences26, validatePreparedNativeProductImportChunk, validatePreparedNativeProductImportChunk26 } from "../../../packages/application/src/native-product-import.ts";
 import type { NativeProductImportStore, NativeProductReferences, PreparedNativeProductImportChunk, PreparedNativeProductImportChunk26 } from "../../../packages/application/src/native-product-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
@@ -78,6 +78,7 @@ async function verifyReferences(client: PgSalesClient, refs: NativeProductRefere
 async function writeNativeProducts(client: PgSalesClient, chunk: PreparedNativeProductImportChunk | PreparedNativeProductImportChunk26,
   runtime26?: NativeRuntime26Capability): Promise<{ inserted: number; replayed: number }> {
     const successor = runtime26 ? chunk as PreparedNativeProductImportChunk26 : undefined;
+    const evidences = successor ? nativeProductImportEvidences26(successor) : undefined;
     const columns = successor ? [...PRODUCT_COLUMNS, "season_ids", "deleted_at", "default_barcode_scheme_id"] : PRODUCT_COLUMNS;
     const snapshot = successor ? `to_jsonb(p) || jsonb_build_object(${CATALOGUE_PRICE_KEYS.map(key => `'${key}', p.${key}::text`).join(", ")})` : nativeJson;
     await client.query("/* native-product-import:lock */ SELECT naijue_erp.cutoff_import_lock()");
@@ -147,7 +148,7 @@ async function writeNativeProducts(client: PgSalesClient, chunk: PreparedNativeP
     }
     let inserted = 0, replayed = 0;
     for (const index of indexes) {
-      const row = chunk.rows[index]!, s = row.source, product = chunk.nativeProducts[index]!, evidence = successor ? nativeProductImportEvidence26(successor, index) : nativeProductImportEvidence(chunk, index);
+      const row = chunk.rows[index]!, s = row.source, product = chunk.nativeProducts[index]!, evidence = evidences ? evidences[index]! : nativeProductImportEvidence(chunk, index);
       const previous = (await client.query(`/* native-product-import:replay */ SELECT
         (to_jsonb(s) || jsonb_build_object('row_no', s.row_no::text))=$2::jsonb AS source_equal
         FROM naijue_erp.import_source_row s WHERE s.id=$1::uuid OR (s.batch_id=$3::uuid AND (

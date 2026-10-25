@@ -66,7 +66,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Originalproduct213actualinflight; freezeD1 precisehostCSSfix/source382/newfixedproductionbuild; oldprivate380app retained",
+      "currentWork": "Current382actualprivateapp+resourcePASS adopted; freeze383 batchproofdelta/newfixedgraph and next boundedproductstage",
       "currentPackage": "Existing normal candidate integration and original isolated business execution",
       "nextReadyPackage": "ActualacceptedTCP metadata→copied37202 privateapp; PRODUCT2956 fixedgraph/carrier review→actualstage",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
@@ -261,7 +261,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "COPIED-PUBLIC-CSS-HOST-01 exact2files delivered/13tests+strictPASS; product/SKUconsumer packets retained",
+      "currentWork": "Originalbatchwriter/test/v2consumer delivered18tests+strict/local67ms; source383fixed/actualstage supportnext",
       "currentPackage": "SKU14999-ACTUAL-PREP-v1",
       "nextReadyPackage": "Actual product/SKU execution support onlynew blockers; no duplicate sourceaudits",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
@@ -308,7 +308,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "SOURCE353 QB262 source limitedPASS; actual source-specific rolePG/HREV remains C execution",
+      "currentWork": "Originalapplicationbatchproofleaf delivered/focusedstrict+same100deep equality/local71ms; no DB/server",
       "currentPackage": "279+280 reader/host limitedsource218 adopted;283 HTTPpoststatF01 fixexact2 frozen",
       "nextReadyPackage": "Necessary exact owned history consumers afterC filehandoff",
       "currentDependencies": "Original v5 null-hall approval for mandatory two real historical sales; no season guard widening required",
@@ -356,7 +356,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "QB281 product213 finite sourcePASS; QB282 hostcompiledCSS finite guardreview inprogress",
+      "currentWork": "QB283 finitebatchproofjointsourcePASS; awaitsnewfixedgraph/carrieraffectedseam",
       "currentPackage": "232newR1installedv14catalog/ACLreview only",
       "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Next actual source/native execution only after genuine approved inputs; no repeated metadata/source review",
@@ -1327,9 +1327,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T01:08:57.399655+00:00",
+  "updatedAt": "2026-10-25T01:29:36.494566+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "059bf09326e0661212c439d45eda416fdd5076bd",
+  "lastVerifiedRemoteCommit": "5ea24f86b6f307db8e2562e49a4925ba3f49979f",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2611,10 +2611,37 @@
       "fullyRenderable": false
     },
     "product213": {
-      "status": "ACTUAL_ONCE_DISPATCH_IN_FLIGHT_NOT_PASS",
-      "independentSourceReview": "QB281_PASS",
-      "privateFiles": 31,
-      "actualProductRowsNotYetClaimed": true
+      "status": "FAILED_TIMEOUT140_NO_REPLAY;C214_ACTUAL_PERSISTED_PRODUCT_INCREMENT_ZERO",
+      "actualJob": "c03-real-r1-native-product2956-stage-20261025-213",
+      "readonlySuccessor": "c03-real-r1-post213-readonly-state-20261025-214",
+      "actualProducts": 0,
+      "actualSkus": 0,
+      "sourceRows": 681,
+      "suppliers": 222,
+      "schemaCanonical": "5a6a5cda81a406cf4c62200e8b1696019fa8a93d1b84c08215eaabe5b3cb50ce",
+      "next": "Batchproofjointsource283/newfixed383graph/newjob;nooldstage replay"
+    },
+    "copied382Production": {
+      "sourceCommit": "5ea24f86b6f307db8e2562e49a4925ba3f49979f",
+      "buildId": "replica-production-source382-01",
+      "build": "REAL_BUILD_AND_PACK_CONTRACT_VALIDATED",
+      "pack": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+      "installed": "C215_ACTUAL_LINUX111_NATIVE_PASS",
+      "appStarted": true,
+      "privateAppId": "2f66213f1b5106da05e4fd9fd027f93853b1b71392edf3f6bf45d3a4df981123",
+      "runtimeScope": "ACTUAL_CORE_ONLY_CURRENT_FORM_READ",
+      "health": "200_exact_source_build_databaseCheckedfalse",
+      "httpResources": "C216_4_HTTP200_EXACT_HTML_JS_PREVIOUS404_MATRIXCSS_FONT",
+      "businessPassed": false,
+      "formallyPublished": false
+    },
+    "productBatchPerformanceSource": {
+      "status": "OWNER_SOURCE_LOCAL100_AND_QB283_JOINT_SOURCE_PASS_NOT_PG",
+      "oldActualLocal2956Ms": 137069,
+      "newActualLocal100Ms": 67.173625,
+      "fullNew2956Measured": false,
+      "linuxOrPgPassed": false,
+      "persistentProofSemanticsChanged": false
     }
   },
   "supplementalRoles": {
@@ -4770,18 +4797,32 @@
     },
     {
       "id": "COPIED-PUBLIC-CSS-HOST-01",
-      "status": "SOURCE_FIXED_PENDING_QB282_AND_NEW_CANDIDATE_HTTP",
+      "status": "CLOSED_SOURCE382_QB282_AND_ACTUAL_C216_HTTP",
       "owner": "D1 source/C build+server/QB finite delta",
       "actualEvidence": "C212 compiledCSS404 whilefile5859/root+JS200",
       "sourceScope": "apps/api/src/production-application-host.ts and existing .test.ts",
-      "noDatabaseOrBusinessContractChange": true
+      "noDatabaseOrBusinessContractChange": true,
+      "runtimeJob": "c03-copied382-core-private-app-start-20261025-216",
+      "realBusinessPassed": false
+    },
+    {
+      "id": "NATIVE-PRODUCT-EVIDENCE-REPEATED-CHUNK-VALIDATION-01",
+      "status": "SOURCE_FIXED_LOCAL100_EQUIVALENCE_PASS_PENDING_QB283_NEW_ACTUAL_EXECUTION",
+      "owners": [
+        "D3 application",
+        "D1 adapter/test/v2consumer",
+        "C fixedgraph/server",
+        "QB finitejointdelta"
+      ],
+      "actualPriorProductStage": "213failed;214zero confirmed",
+      "scope": "Sameproof values andoriginalsinglevalidation; no SQL/DDL/permission/contractchange"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T01:08:57.399655+00:00",
-    "sourceRound": 382,
-    "sourceCheckpoint": "SOURCE381059bf093 exactremoteverified; SOURCE382 sourcefixactualCSS404 while380privateapp210already started/health200; originalproduct213actualinflight; notformal/fullbusiness",
+    "atUtc": "2026-10-25T01:29:36.494566+00:00",
+    "sourceRound": 383,
+    "sourceCheckpoint": "SOURCE3825ea24f86 remoteverified/current382actualinstall+privateappCSSfontPASS; SOURCE383 batchproofoptimizer source; C213failed/C214zero product no replay",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4828,7 +4869,7 @@
     "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Human historicalblankhallv5 onlyrelatedfullhistory/publication branch; v11/v15/v16/v17 alreadyapproved. Actual source/schema/ACL/normalHTTP readiness separate.",
-    "github": "REMOTE_EXACT_VERIFIED_059bf09326e0661212c439d45eda416fdd5076bd",
+    "github": "REMOTE_EXACT_VERIFIED_5ea24f86b6f307db8e2562e49a4925ba3f49979f",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,

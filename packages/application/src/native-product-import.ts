@@ -241,6 +241,16 @@ export function nativeProductReferenceDecision26(row: NativeProductImportRow26) 
 export function nativeProductImportEvidence26(chunk: PreparedNativeProductImportChunk26, index: number) {
   validatePreparedNativeProductImportChunk26(chunk);
   requireDomain(Number.isSafeInteger(index) && index >= 0 && index < chunk.rows.length, "NATIVE_PRODUCT_ROW_INDEX", "Existing product row required");
+  return nativeProductImportEvidence26FromValidatedChunk(chunk, index);
+}
+/** Synchronous whole-chunk evidence construction. The exact prepared chunk is
+ * validated once for this call; no mutable DTO/cache/skip-validation authority
+ * survives the call. Values and order match the checked single-row API. */
+export function nativeProductImportEvidences26(chunk: PreparedNativeProductImportChunk26): ReturnType<typeof nativeProductImportEvidence26>[] {
+  validatePreparedNativeProductImportChunk26(chunk);
+  return chunk.rows.map((_row, index) => nativeProductImportEvidence26FromValidatedChunk(chunk, index));
+}
+function nativeProductImportEvidence26FromValidatedChunk(chunk: PreparedNativeProductImportChunk26, index: number) {
   const original = nativeProductImportEvidence(chunk, index), row = chunk.rows[index]!;
   const fields = { ...original.fields, native_product_import: { ...original.fields.native_product_import,
     validator_version: NATIVE_PRODUCT_IMPORT_VERSION_26, schema_profile: "EXACT26", season_selection: row.seasonSelection,
