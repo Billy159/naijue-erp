@@ -12111,9 +12111,11 @@
       "R1Changed": false,
       "actualTcpLoginTested": false,
       "reviewOwner": "QB",
-      "fivePurposeStatus": "CURRENT_METADATA_REVIEW_DISPATCHED",
-      "ownerPM": "T45 collecting original62 postACL metadata; old5717 stale",
-      "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/ACL61-ACTUAL-RESULT.json"
+      "fivePurposeStatus": "QB_FOUND_WAREHOUSE_SELECT_MISSING_NO_REVIEWS_SIGNED",
+      "ownerPM": "Actual62 read-only completed; superseding canonical after precise warehouse ACL fix required",
+      "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/ACL61-ACTUAL-RESULT.json",
+      "remainingGap": "Original SELECT34 omitted warehouse; UPDATE(id) lock privilege does not grant SELECT; normal native facts/detail authorized join need warehouse read",
+      "fixOwner": "T45 verify actual existing SELECT then narrow successor only; no replay61 or R1 change"
     }
   }
 }
