@@ -4921,8 +4921,8 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T03:55:03.806016+00:00",
-    "sourceRound": 392,
+    "atUtc": "2026-10-25T03:56:09.612682+00:00",
+    "sourceRound": 393,
     "sourceCheckpoint": "SOURCE392_PRODUCT_DOM_WORKBOOK_SOURCE_READY_PARTY223_PERMISSIONS_PASS",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
@@ -4945,17 +4945,15 @@
       "scope": "F2 width/exterior-captions source fix; affected visual recheck pending"
     },
     "nextPreview": {
-      "status": "CURRENT380_HTTP_THREE_AFFECTED_UI_ITEMS_QF2_PASS",
-      "currentSource": "080cd22e9fa810b2904285bea74c5cba694fb67b",
-      "build": "phase2-normal-080cd22-08",
+      "status": "FIXED392_STRICT_BUILD_HTTP_PASS_NOT_VISUAL_OR_BUSINESS",
+      "url": "http://127.0.0.1:57899/#inventory",
+      "sourceCommit": "1b577a9b29c9acafc797ec8f5bbc734ea0c9e6ae",
+      "runtimeVersion": "phase2-normal-1b577a9-10",
+      "artifact": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-1b577a9-phase2-10/build",
       "resources": 135,
-      "strictExit": 0,
-      "strictSeconds": 4.736,
-      "buildExit": 0,
-      "buildSeconds": 2.539,
-      "serverSession": 47890,
-      "owner": "C",
-      "old57896": "ImmutableSOURCE364 userdrafts only, notcurrentacceptance"
+      "syntheticOnly": true,
+      "scope": "Same389UI+F2base/specactiveDOM+F1noDuplicateWorkbookArray",
+      "validation": "Owner affected checks passed; QF2 currently visual389 unchanged; new product/browser segment later no full regression"
     },
     "r1": "Real v16fromv15/130/5a; CORE157+catalogue344+supplier222 actuallycommitted/readbacklimitedPASS. Product2956/SKU14999 sourcecapture only, notDBstage",
     "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
@@ -8640,7 +8638,8 @@
       },
       "grantChanges": false,
       "stageExecuted": false
-    }
+    },
+    "githubVerified": "1b577a9b29c9acafc797ec8f5bbc734ea0c9e6ae"
   },
   "latestReadySource": {
     "round": 356,
