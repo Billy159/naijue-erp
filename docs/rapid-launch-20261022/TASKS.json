@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T15:41:39.980851+00:00",
+  "updatedAt": "2026-10-25T15:54:04.278011+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 490,
+    "round": 491,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "5627f9a4c9b07df5e3bc929767c99c6d1121ddd3",
+    "sourceHeadBeforeThisContinuityCommit": "2af64501dcb70ad58c3868e57421606e9bafc62a",
     "fixedCandidates": {
       "current": {
         "source": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
@@ -5063,16 +5063,16 @@
     "rootStrict": "FAIL16 outside delta preview/tests preserved; no fullPASS",
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
     "roleQueue": {
-      "F1": "DOC194 delivered/in483; twoDOM correctionsQF483partialverified. Onlyrequired-newSAVEcontractbranch waitsuser, no duplicatefix.",
+      "F1": "Active original frontend default-current-active-staff/once+touch state and newSAVE required wiring. Exact original documents files; sales-proposal.ts D1 unique writer; setter seam requested.",
       "F2": "465editor+468imagefailurefix integrated/scopedadopted; P01 originalwidthfinding withdrawn byQF2actualgeometry, do notkeepstaleP01waiting. Realread/write provider anddata readiness stillopen.",
       "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
       "F4": "Allowedtabssource delivered/inCORE04; no independent technicalpatch justified. Next actualCORE04 color/fit read+existingfullUI scope viaQF2, maintenanceseamD2 separate. Groups/seasonscompletegoalstillopen.",
-      "D1": "Next original task: readonly diagnose CORE04 guest login actual NEED_FIX using fixed483 build/entry/CSS graph; no shared source mutation or browser/service/DB. Prior normalhost configuration delivered and adopted.",
+      "D1": "Static CORE04 exact current chain matched, no speculativeCSS change. Current original approved salesperson newSAVE and default setter implementation; F1 consumes precise setter.",
       "D2": "COLOR/FIT NORMAL-HOST entry delivered runner7b4d4016/inputa5d684d9, originalC1691034834actor/0327roots/101102keys; onlynormalfactory/session GETreceipt/replay/409/401/prepost, actualnotrun. QBnewsource-onlyscopeactive.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "Original35 prepared, C exact combined review1071/3c4ef8b1 now bound to real QB PASS acd0228d; released once for original scoped QA preparation/normal authentication/receipt replay checks with cleanup. No actual result yet; no34repeat/publicchange.",
+      "T45": "C adopts D1 exact isolated0300 one-time valid credential initialization variant; original T45 revised new bounded job, no35replay/production/public changes.",
       "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
-      "QF2": "Actual guest visual NEED_FIX: new post33 Chrome tab2017877120 exact CORE04 URL,title奈爵服饰ERP; login bottom-left, sidebar visually visible, AX omits inert navigation. Geometry/pixel values unmeasured; no build marker visible, actual bundle binding technical diagnosis pending. No credential interaction/raw screenshot saved. Lease returned.",
+      "QF2": "Original one stable CORE04 guest layout recheck active after actual DOM reload recovery. No new source/build; old failure retained, cause UNKNOWN; no credential interaction.",
       "QB": "Original combination increment PASS EXACT_TARGET_METADATA_ONLY adopted; actual issuer/host/login/HTTP/SQL untested. Exact currentFORM+PM only, realImportfalse."
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -5436,7 +5436,7 @@
         "Real candidate login/domain queries",
         "Historical edit/full business/performance/formal release"
       ],
-      "businessGap": "Demo salesperson mandatory versus current formal nullable salespersonId; no contract change implemented."
+      "businessGap": "Historical old nullable contract; current user explicitly approved new LIVE SAVE required and eligible current employee default. Implementation active, not yet accepted."
     },
     "productDetail425Actual": {
       "taskId": "D1-PRODUCT-SOURCE425-ACTUAL-DETAIL-DELTA-01",
@@ -5492,10 +5492,14 @@
       "authenticatedBusiness": false
     },
     "salespersonRequiredProposal": {
-      "status": "WAIT_USER_WRITE_CONTRACT_CONFIRMATION",
+      "status": "USER_APPROVED_WITH_CURRENT_EMPLOYEE_DEFAULT_IMPLEMENTING",
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/SALES-SALESPERSON-REQUIRED-PROPOSAL-01.md",
-      "scope": "LIVE new SAVE and unreviewed edit new SAVE require selected real active staff; old NULL read/history retained; committed same-key recovery unaffected; no database NOT NULL or extra hall/role filter",
-      "implemented": false
+      "scope": "New LIVE create defaults trusted session staff only if present in actual active staff candidates; user clear/change not overwritten. New SAVE on LIVE create/unreviewed edit requires real active staff. Existing stored/history values and original-key recovery preserved.",
+      "implemented": false,
+      "userReplySource": "call_f829667a07164fc1afb3dc5e16c10dff answer in current controller chat",
+      "userRule": "营业员必填，默认当前登录员工，可以改选其他在职员工；默认人员不符合条件时再要求手工选择。",
+      "frontendOwner": "F1",
+      "backendOwner": "D1"
     },
     "core04Install29Actual": {
       "jobId": "t45-source483-private-install-reuse-20261025-29",
@@ -5664,7 +5668,27 @@
       "sha256": "3c4ef8b135ed64a865e60e2748ba8330e8ed858a23d49b4d269c62c5a3b51616",
       "independentResult": "reports/qa-backend/rapid-launch-20261022/QB/slice316-colour-fit-normal-host-entry/COMBINED-REVIEW-RESULT.json",
       "independentSha256": "acd0228db81f67d6266fb660e9b70981ad2f3e798cddefc65aa55daac5b68cc0",
-      "actualExecuted": false
+      "actualExecuted": true
+    },
+    "normalHost35Actual": {
+      "status": "BLOCKED_ORIGINAL_ENCODING_NOT_RESTORABLE_NO_ACCOUNT_WRITE",
+      "job": "t45-coreqa-normal-host-colour-fit-http-20261025-35",
+      "exitCode": 2,
+      "elapsedSeconds": 2.374964,
+      "factoryReady": true,
+      "accountWrites": 0,
+      "sessionWrites": 0,
+      "domainWrites": 0,
+      "ddl": 0,
+      "resourcesClosed": true,
+      "result": "server-execution/COREQA-NORMAL-HOST35-ACTUAL-RESULT.json",
+      "next": "C adopts D1 exact isolated0300 one-time valid credential initialization variant; original T45 revised new bounded job, no35replay/production/public changes."
+    },
+    "guestBrowserCurrent": {
+      "before": "Native Chrome exactCORE04 DOM complete/loginfalse/styleslinks0/appinertfalse; script CORE04. No form/draft existed. PriorQF2bottom-left login failure preserved. Cause UNKNOWN.",
+      "action": "C read-only DOM diagnostics via native DevTools, then one reload only after confirming no form/draft. No input/session/storage inspection, no login.",
+      "after": "SameCORE04 login fixed/grid/z10000 covers viewport, common sheets present/enabled; panel420x433.695 centered in docked915x724. DevTools closed, natural1470x724 restored; tool-only visual centered/sidebarcovered. No source change or rebuild.",
+      "independent": "OriginalQF2 one stable-state purevisual recheck active; earlier failure rootcause not closed."
     }
   },
   "latestReadySource": {
