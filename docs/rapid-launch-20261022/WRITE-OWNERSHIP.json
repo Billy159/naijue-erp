@@ -5456,5 +5456,25 @@
     ],
     "seam": "allowedSettingTabs internal optional; default four existing tabs; existing public booleans honored without new schema",
     "noBusinessChange": "No write enablement/SQL/public fields/globalstyles; incomplete groups/seasons still registered and not wholepagePASS"
+  },
+  "productUiCapability465": {
+    "authority": "Current fullsite copied UI independently of write readiness + QF2 actual445 new product missingentry",
+    "model": "gpt-6.1-sol/medium",
+    "files": [
+      {
+        "path": "apps/web/demo-replica/frontend/runtime/common/ready-pages.tsx",
+        "owner": "C"
+      },
+      {
+        "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+        "owner": "F2"
+      },
+      {
+        "path": "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+        "owner": "F2"
+      }
+    ],
+    "scope": "Open copied new/edit UI with precise allowedActions; no write capability means no save/media stage/retry mutation; loadingerror keeps complete UI and no fake authority",
+    "next": "F2 originalP01 width source/finalCSS cause and exactleaf handoff; fixed candidate+QF2 affectedverification"
   }
 }

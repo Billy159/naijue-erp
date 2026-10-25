@@ -142,7 +142,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       return { dispose: module.mountProductList(host, { scope, http, onAccessFailure: session.onAccessFailure, openEditor: id => navigate(id === null ? 'products/new' : 'products/edit/' + encodeURIComponent(id)) }), canLeave: () => true };
     }
-    if ((route === 'products/new' || route.startsWith('products/edit/')) && config.products && enabled(flags?.products)()) {
+    if ((route === 'products/new' || route.startsWith('products/edit/')) && config.products) {
       if (!prepareRoute) throw new Error('商品编辑样式加载尚未接入。');
       const [module, clients, products, dictionaries, full, catalogueReaders, helpers] = await Promise.all([
         import('../products/editor-entry.tsx'), import('../../../../src/products/product-maintenance-http-client.ts'),
@@ -159,7 +159,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
       const capability: ProductEditorCapability = {
         loadStyles: () => prepareRoute(route, scope.signal), reader: clients.createProductMaintenanceHttpReaderV2(http), client: clients.createProductMaintenanceHttpClientV2(http), newRequestKey: options.newRequestKey,
-        allowedActions: ['CREATE','EDIT','DISABLE','RESTORE','DELETE'],
+        allowedActions: enabled(flags?.products)() ? ['CREATE','EDIT','DISABLE','RESTORE','DELETE'] : [],
         onRecoveryRequired: (command, identity) => { if (!matches(identity)) return; const target = command.action === 'CREATE' ? null : command.id, previous = productRecovery.get(target); if (!previous || previous.requestKey === command.requestKey) productRecovery.set(target, snapshotQueryParameters(command)); },
         recovery: { read: (identity, target) => matches(identity) ? productRecovery.get(target) ?? null : null, resolved: (identity, key) => { if (matches(identity)) for (const [target, command] of productRecovery) if (command.requestKey === key) productRecovery.delete(target); } },
         productReader: products.createProductHttpReader(http), dictionaryReader: dictionary, ...(config.barcodeSchemes ? { barcodeSchemeReader: dictionary } : {}),
