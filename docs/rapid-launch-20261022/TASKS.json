@@ -66,7 +66,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "OriginalSKU218RUNNING collectsamehandle/no replay, productactual217/QB285adopted;385checkpoint",
+      "currentWork": "ActualSKU5586prefix accepted; originalkernelSQLsame-role old/new comparison next; Cjournalcadence and reviewedv2suffix notyetexecuted",
       "currentPackage": "Existing normal candidate integration and original isolated business execution",
       "nextReadyPackage": "ActualacceptedTCP metadata→copied37202 privateapp; PRODUCT2956 fixedgraph/carrier review→actualstage",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
@@ -145,7 +145,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Actualold364 rootcause delivered/browserreturned; noownedleafchange needed; originalmatrixCSS restoredbyC380",
+      "currentWork": "SOURCE3804observations closed actualnative/sourceproof,5leafzerochange/browserreturned; no speculative layout patch",
       "currentPackage": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
       "nextReadyPackage": "P01-P13商品六页签及全部编辑查看状态",
       "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
@@ -261,7 +261,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "ACTIVE original STOCK38303-ACTUAL-PREP-v1 finite originalstore consumer/SQL preparation, ownreports only/noDB/no sourcechange",
+      "currentWork": "Kerneloneleaf SQLcandidate74947 delivered; v2SKU5586 acceptedprefix resumer active inreports only",
       "currentPackage": "SKU14999-ACTUAL-PREP-v1",
       "nextReadyPackage": "Actual product/SKU execution support onlynew blockers; no duplicate sourceaudits",
       "currentDependencies": "C175 originalsource authorization preflight and actualMAIN/PUBLISH; no old7catalogue/oldv14 host block",
@@ -308,7 +308,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "ACTIVE original next representedwarehouse+samebatch/importedrecord dependencies and originalCUSTOMER/HALL/WAREHOUSE producer seam, no capture/DB",
+      "currentWork": "Stock38303source reused/party357captureentry+29keys delivered, C357captureactual0DB; no duplicate tasks",
       "currentPackage": "279+280 reader/host limitedsource218 adopted;283 HTTPpoststatF01 fixexact2 frozen",
       "nextReadyPackage": "Necessary exact owned history consumers afterC filehandoff",
       "currentDependencies": "Original v5 null-hall approval for mandatory two real historical sales; no season guard widening required",
@@ -356,7 +356,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "Actual285productPASS; revised286SKUcarrierPASS; waitoriginal218terminalactualscope",
+      "currentWork": "QB287stocksourcePASS/2885586prefixPASS; nextkernelSQLchangedsource/currentPG equality andv2concretegrant",
       "currentPackage": "232newR1installedv14catalog/ACLreview only",
       "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Next actual source/native execution only after genuine approved inputs; no repeated metadata/source review",
@@ -382,7 +382,7 @@
       "fastRequested": false,
       "scope": "商品列表与六页签、分类/字典/条码/图片、库存、基础设置、客户供应商、员工账号、收款配置及相关弹层",
       "reportRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2",
-      "currentWork": "SOURCE380 three affectedmatrixitems finalPASS adopted/browserreturned; no duplicate fullinventory/output",
+      "currentWork": "SOURCE3804observations reclassifiedclosed fromsame F2evidence, I01wholeUI stillmissing error/empty/loading/inflightstates",
       "authorizationSource": "2026-10-23 本主控人类消息：请沿当前奈爵ERP任务立即调整验收并行安排",
       "fastVerification": "Tool has no exposed switch; requested off, actual unverified",
       "currentPackage": "291final limited passed/cleanSTOP;295nativecancel-only assigned",
@@ -1327,9 +1327,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T01:58:04.528882+00:00",
+  "updatedAt": "2026-10-25T03:04:42.619170+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "57661c23e0e6cde37e0d0ff14ef253b34fcd22d5",
+  "lastVerifiedRemoteCommit": "860a76891faf3df11340f49800f000f4b077cb89",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2666,7 +2666,7 @@
     },
     "sku218": {
       "jobId": "c03-real-r1-native-sku14999-stage-20261025-218",
-      "status": "RUNNING_NOT_COMPLETE",
+      "status": "FAILED_TIMEOUT1600_PRESERVED_NO_REPLAY;220_PREFIX5586_ACCEPTED_QB288",
       "sourceAccepted": "QB286_REVISED_AFTER_F01_F02",
       "sourceCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
       "canonicalRowsExpected": 14999,
@@ -2674,9 +2674,15 @@
       "privateRawBytes": 138250702,
       "privateTransportDelivered": true,
       "actualStagePassed": false,
-      "actualCounts": "UNKNOWN_WHILE_RUNNING; lastconfirmedSKU0_asOf217notcurrent",
+      "actualCounts": {
+        "asOf": "C220",
+        "skus": 5586,
+        "aliases": 5604,
+        "records": 5608,
+        "sourceRows": 9241
+      },
       "journal": "original218/results/sku-progress.jsonl privateboundedmetadata",
-      "next": "Collect same218 no replay; actualfiniteQB onlyafterterminal; preserveunknownprefix",
+      "next": "Old/newmetadataSQL equality+genuineprofile; reviewedv2suffixonly afteraccepted5586 boundary; nooldreplay",
       "published": false
     },
     "stock38303Next": {
@@ -2684,12 +2690,59 @@
       "actualStagePassed": false,
       "representedWarehouses": 29,
       "coreWarehouses": 22,
-      "currentMissingKeys": "UNKNOWN_NOT_ACTUAL_QUERIED",
+      "currentMissingKeys": "ACTUAL_C220_PRESENCE_AND_CREATOR_BINDINGS_ONLY",
       "sourceOnlyLowerBoundOutsideCore": 7,
-      "D1": "ACTIVE_FINITE_CONSUMER_PREPARATION",
-      "D3": "ACTIVE_ORIGINAL_PARTY_DEPENDENCY_SOURCE_PREPARATION",
+      "D1": "SOURCE_READY_QB287_SOURCE_ONLY",
+      "D3": "DONE_EXISTING_STOCK_REUSE_AND_ORIGINAL_PARTY357_CAPTURE_ENTRY;C_CAPTURE357_DONE_NO_DB",
       "next": "SKU218actual+actualrequiredwarehouse/samebatchrecords beforestockstage",
-      "baselineOrMainOrPublished": false
+      "baselineOrMainOrPublished": false,
+      "actualRepresentedWarehouseMissing": 8,
+      "actualClosureMissing": {
+        "CUSTOMER": 4,
+        "HALL": 7,
+        "WAREHOUSE": 10
+      }
+    },
+    "sku220Recovery": {
+      "status": "ACTUAL_READONLY_PREFIX_ACCEPTED_QB288",
+      "canonicalRowsConfirmed": 5586,
+      "aliasesConfirmed": 5604,
+      "windowRowsReused": 5500,
+      "lastPartialRowsActualReadback": 86,
+      "mismatches": 0,
+      "unknownOrdinal": null,
+      "oldBackendCount": 0,
+      "remainingRows": 9413,
+      "remainingAliases": 9517,
+      "whole14999Passed": false
+    },
+    "skuStageProfile221": {
+      "status": "ACTUAL_READONLY_COMPONENT_TIMINGS_ONLY",
+      "metadataConnectMs": [
+        68.124256,
+        62.271727,
+        63.619667
+      ],
+      "explicitAssertMs": [
+        62.91219,
+        61.718327,
+        61.745317
+      ],
+      "metadataServerExecutionMs": 58.311,
+      "journalFsyncWarmMs": [
+        41.524293,
+        41.597314,
+        41.61955,
+        41.624873
+      ],
+      "fullBusinessOrPerformancePassed": false
+    },
+    "runtimeProbeSqlOpt": {
+      "status": "SOURCE_WIP_READY_PENDING_REAL_PG_EQUALITY_TIMING_QB",
+      "owner": "D1",
+      "file": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "twoFreshProbesRetained": true,
+      "noSchemaOrWriteContractChange": true
     }
   },
   "supplementalRoles": {
@@ -4868,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T01:58:04.528882+00:00",
-    "sourceRound": 386,
-    "sourceCheckpoint": "SOURCE385 exactremote;218RUNNING;D1stockconsumer and D3remainingpartydependencies active",
+    "atUtc": "2026-10-25T03:04:42.619170+00:00",
+    "sourceRound": 388,
+    "sourceCheckpoint": "218FAILED;220readonly5586prefixQB288PASS;221measurements;equivalentkernelSQLWIP+v2suffixpending",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4917,7 +4970,7 @@
     "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Human historicalblankhallv5 onlyrelatedfullhistory/publication branch; v11/v15/v16/v17 alreadyapproved. Actual source/schema/ACL/normalHTTP readiness separate.",
-    "github": "REMOTE_EXACT_VERIFIED_4119d9a10dbb4734f569151e3fea594004b2ac8c",
+    "github": "REMOTE_EXACT_VERIFIED_860a76891faf3df11340f49800f000f4b077cb89",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
