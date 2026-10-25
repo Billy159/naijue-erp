@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE547",
+    "round": "SOURCE548",
     "goal": "HUMAN_AUTHORIZED_CHAT_EXECUTION_RESUMED_FULL_SCOPE_CARD_RESUME_UNVERIFIED",
-    "sourceHeadBeforeThisContinuityCommit": "24b3586626c2e6a9c9b71c0d7cbd022fdb44e543",
+    "sourceHeadBeforeThisContinuityCommit": "924f1b0d2789b63d9b70520b153daf1279913e6c",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12354,7 +12354,7 @@
       "model": "gpt-6.1-sol",
       "thinking": "medium",
       "status": "SOURCE_IMPLEMENTED_SELF5_PASS_QB329_LIMITED_PASS_REAL_NOT_RUN",
-      "current": "Sales header source/typed sorted range producer plus HEADERS sales/transfer composition; reuse original codec/doc9/all11 builder. No real largefile scan.",
+      "current": "Real small recipe/pin candidate assembly active: original product30 chunks, SKU capture, stock groups, payment, sales partitions, C144 details/settlements and transfer closure located. Missing barcode six-scheme approval closure and actual sales sorted index recorded; no hashes substituted for roots.",
       "next": "D3 original all11 external authority/input seam; T45 restore74/75 and original2 customers/headerstage; original QB329 closure PASS adopted.",
       "stageOwner": "T45",
       "indexVersion": "RETAINED_SALES_HEADER_CLOSURE_INDEX_V1",
@@ -12399,6 +12399,37 @@
       "frozen519Changed": false,
       "sourceChanged": false,
       "testsRun": false
+    },
+    "t45Continuation548": {
+      "status": "IDLE_REPEATED_DELIVERED_TASK_NO_TOOL_EXECUTION_HUMAN_DIRECT_TURN_PENDING",
+      "owner": "T45",
+      "taskIds": [
+        "t45-source519-core-post-r1-acl-private-app-20261026-74",
+        "t45-core10-post-r1-acl-candidate-route-20261026-75"
+      ],
+      "verifiedTerminalTurns": [
+        "01a174e7-3010-7792-94b9-86b282beb7b4",
+        "01a174e9-2033-70a1-820b-b276991b2277",
+        "01a174eb-2f20-70f2-9174-e8a1be2667fc",
+        "01a174ed-aed6-75f3-846a-158e15ca25d7"
+      ],
+      "observation": "Messages delivered to correct T45; read_thread includes exact delegated74/75 input as functionCallOutput, but terminal response repeats SSH-only explanation and no tools. Taskbook source human-authority relay also same outcome. Cause unknown; not SSH/password/permission refusal proved.",
+      "actions": "Stopped equivalent retries. Asked user once to send direct74/75 continuation in original T45 chat; no new authorization/password requested. No owner substitution, app state edits or server bypass.",
+      "oldCandidateRestored": false,
+      "original73Replay": false,
+      "otherWork": "D3 real small full-input/11recipe assembly active; original QB source results adopted."
+    },
+    "authorityWrapper548": {
+      "owner": "D3",
+      "path": "O/D3/real-production-source-authority-20261026.mjs",
+      "status": "NOT_INTEGRATED_NEED_FIX_NOT_REAL_AUTHORITY_READY",
+      "QB330Result": "Q/slice330-production-authority-wrapper/RESULT.json",
+      "sha256": "5629e4e92c58faf1be74872d7f6518e4ac5c0e9494db13cd8a7eab2b72ae2670",
+      "findings": [
+        "Late-await resource registered after memoized close is not released.",
+        "Still delegates all14 authority callbacks and lacks actual host opener/real inputs/grant."
+      ],
+      "decision": "Do not integrate or invent another repair layer. Preserve failed O evidence, use original provider/host and assemble actual recipes/pins. Does not block74/75 or reviewed329 helper."
     }
   }
 }

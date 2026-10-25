@@ -1,3 +1,6 @@
+SOURCE548（2026-10-26）：原T45接续出现已复核执行异常。C读到准确74/75派工已送入同一正确thread的turn，但e7/e9/eb均秒级终态、0工具，仅回复SSH连接；原任务书Chat引用直接人类授权转发一次，ed同样0工具。不是74/75真实在跑，未证明SSH/密码/权限有故障。停止等价消息重试，已一次请用户方便时在原T45直接发送74→75接续，仅解除交互异常，不重复索要部署许可或密码；不换唯一serverowner、不改应用内部状态、不越位直连。旧候选恢复未确认，73不重放。原正式根未切新业务。
+D3真实small FULL INPUT/11recipe整理仍实际active，已找到product30原分块/SKU/stock/payment/销货两区/C144/调拨材料；六条码方案批准闭合及真实销货排序索引缺口保持。QB330对新增可选authority wrapper结论NEED_FIX_NOT_REAL_AUTHORITY_READY（5629e4e9）：close后late-open资源泄漏且14callbacks仍外部、未实接host；C采用不合正式source、不追加包装修复层，保留失败证据，继续原provider/真实recipe。已验329闭包不受影响。全站整页全状态＋真实业务仍0/37、弹层0/67，没有新增正式发布结论。SOURCE547远端已核924f1b0d。
+
 SOURCE547更正（2026-10-26）：撤回SOURCE546所称run续办硬编码确定缺陷。D3沿原readNativeCoreWarehouseCarryForward及actual71逐层核清：已建import_record仓库身份53/缺身份0，与CORE import_record_accounting_claim22、checkpoint/cursor22不同；MAIN receipts0/fullBind0，剩余31尚待原MAIN记账。原22/31逻辑当前兼容，未改run、未跑相关测试、未派该项QB；绝不能改remaining0漏记账。原actual71及旧误判记录保留，本段为当前准确解释。闭包c708/QB329限定PASS不受影响，D3继续真正全11authority接缝。
 T45再次出现短turn仅答SSH后idle，C已实时核终态并沿唯一74/75任务继续，现新turn01a174e9在途；不重放73/不重审核，不把密钥READY冒候选恢复。SOURCE546（含源码备份）已核GitHub远端24b35866；本更正随下一检查点保存。全量真实销售/历史编辑/正式根发布仍未完成。
 
