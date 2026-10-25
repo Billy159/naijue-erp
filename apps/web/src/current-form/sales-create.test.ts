@@ -11,7 +11,7 @@ import { draft as fixtureDraft, detail, result, receipt, uuid, deferred } from '
 import { SalesProposalSession } from './sales-proposal.ts';
 import { SalesNewDocumentSession, createSalesPreparationHttpClient, salesPreparationIntent, type SalesCreatePreparation } from './sales-create.ts';
 const original = fixtureDraft();
-const native: SalesDraftDto = { header: { ...original.header, businessType: 'SALE', grossAmount: '1000', netDue: '1000', orderDiscount: '0' },
+const native: SalesDraftDto = { header: { ...original.header, salespersonId: uuid(950), businessType: 'SALE', grossAmount: '1000', netDue: '1000', orderDiscount: '0' },
   lines: [{ ...original.lines[0]!, quantity: '1', referencePrice: '1005', dealPrice: '1000', lineAmount: '1000', allocatedDiscount: '0' }],
   settlements: [{ ...original.settlements[0]!, direction: 'RECEIVE', amount: '1000' }] };
 const product: CurrentFormProduct = { id: entityId('product', uuid(50)), code: 'TEST', name: 'TEST product', retailPrice: '10.05', minimumPriceAvailability: 'UNAVAILABLE' };
@@ -27,6 +27,7 @@ async function setup(preparation?: SalesCreatePreparation, uncertain = false, ex
     async readSalesReferences(query) {
       const h = native.header, s = native.settlements[0]!;
       if (query.kind === 'hall') return page([ref(h.hallId, { hallId: h.hallId, hallName: 'TEST hall' })]);
+      if (query.kind === 'salesperson') return page([ref(h.salespersonId!)]);
       if (query.kind === 'customer') return page([ref(h.customerId, { code: 'TEST-C' })]);
       if (query.kind === 'warehouse') return page([ref(h.warehouseId, { hallId: h.hallId, hallName: 'TEST hall' })]);
       if (query.kind === 'paymentMethod') return page([ref(s.paymentMethodId)]);
@@ -39,7 +40,7 @@ async function setup(preparation?: SalesCreatePreparation, uncertain = false, ex
   } });
   const session = new SalesNewDocumentSession({ scope, proposal, editor, preparation: preparation ?? { async prepareCreate(intent) { intents.push(intent); return native; } }, onAccessFailure });
   proposal.setHeader({ businessDate: native.header.businessDate, note: native.header.note! });
-  for (const [kind, id] of [['hall', native.header.hallId], ['customer', native.header.customerId], ['warehouse', native.header.warehouseId]] as const) { await proposal.openPicker(kind); await proposal.select(id); }
+  for (const [kind, id] of [['hall', native.header.hallId], ['salesperson', native.header.salespersonId!], ['customer', native.header.customerId], ['warehouse', native.header.warehouseId]] as const) { await proposal.openPicker(kind); await proposal.select(id); }
   await proposal.openPicker('product'); await proposal.select(product.id); await proposal.select(sku.id); proposal.closePicker(); proposal.updateLine(sku.id, { dealPrice: '10.00' });
   await proposal.openPicker('paymentMethod'); await proposal.select(native.settlements[0]!.paymentMethodId); await proposal.select(native.settlements[0]!.paymentAccountId);
   proposal.updateSettlement(proposal.getSnapshot().draft.settlements[0]!.key, { amount: '10' });

@@ -70,7 +70,11 @@ async function facts(tx: SalesTransaction | undefined, document: SalesDraft | Sa
 export function createNativeTransactionSalesBusinessRules(): SalesBusinessRules {
   return Object.freeze<SalesBusinessRules>({
     async assertDraftChange(previous, draft, tx) {
-      const current = await facts(tx, draft); await createCandidateSalesBusinessRules(resolver(draft, current)).assertDraftChange(previous, draft);
+      const current = await facts(tx, draft);
+      // New LIVE SAVE only. Keep legacy NULL reads/committed replay and the
+      // separate APPROVE/VOID/UNAPPROVE reference rules unchanged.
+      requireDomain(draft.header.salespersonId !== null, "SALES_REFERENCE_UNAVAILABLE", "Select an actual in-employment salesperson for a new sales SAVE");
+      await createCandidateSalesBusinessRules(resolver(draft, current)).assertDraftChange(previous, draft);
     },
     async assertReferencesAndEconomics(document, tx) {
       const current = await facts(tx, document); await createCandidateSalesBusinessRules(resolver(document, current)).assertReferencesAndEconomics(document);

@@ -31,6 +31,7 @@ function setup(overrides: Partial<SalesProposalReader> = {}, retailPrice: string
 }
 async function fill(session: SalesProposalSession) {
   session.setHeader({ businessDate: '2026-10-21' }); await session.openPicker('hall'); await session.select(hall.id);
+  await session.openPicker('salesperson'); await session.select(uuid(11));
   await session.openPicker('customer'); await session.select(uuid(11)); await session.openPicker('warehouse'); await session.select(uuid(10));
   await session.openPicker('product'); await session.select(product.id); await session.select(sku.id); session.closePicker();
 }
@@ -111,4 +112,26 @@ test('same SKU rows have independent keys, signs and prices; ambiguous SKU edits
  assert.ok(session.validate());assert.equal(session.getSnapshot().totals?.netDueMinor,'400');
  session.removeLine(first!.key);assert.equal(session.getSnapshot().draft.lines.length,1);assert.equal(session.getSnapshot().draft.lines[0]!.key,second!.key);assert.equal(session.getSnapshot().draft.lines[0]!.dealPrice,'8.00');
  assert.ok(session.validate());assert.equal(session.getSnapshot().totals?.netDueMinor,'2400');
+});
+
+test('trusted current employee default is fresh-only/CAS and cannot refill after touch, clear, saved NULL or disposal', async () => {
+  const h=setup(), employee=ref(15); const initial=h.session.getSnapshot().draft;
+  assert.equal(h.session.applyDefaultSalesperson(employee,uuid(16),initial),false);
+  h.session.setHeader({note:'keep user input'});
+  assert.equal(h.session.applyDefaultSalesperson(employee,uuid(15),initial),false);
+  assert.equal(h.session.applyDefaultSalesperson(employee,uuid(15),h.session.getSnapshot().draft),true);
+  assert.equal(h.session.getSnapshot().draft.note,'keep user input'); assert.equal(h.session.getSnapshot().draft.salesperson?.id,uuid(15));
+  h.session.clearSalesperson(); assert.equal(h.session.applyDefaultSalesperson(employee,uuid(15),h.session.getSnapshot().draft),false);
+  const touched=setup(); touched.session.clearSalesperson(); assert.equal(touched.session.applyDefaultSalesperson(employee,uuid(15),touched.session.getSnapshot().draft),false);
+  const picked=setup(); await picked.session.openPicker('hall'); await picked.session.select(hall.id); await picked.session.openPicker('salesperson'); picked.session.closePicker();
+  assert.equal(picked.session.applyDefaultSalesperson(employee,uuid(15),picked.session.getSnapshot().draft),false);
+  const old=setup(); const value=setup(); await fill(value.session); value.session.updateLine(sku.id,{dealPrice:'1.00'});
+  assert.equal(old.session.initializeFromSaved({...value.session.getSnapshot().draft,salesperson:null}),true);
+  assert.equal(old.session.applyDefaultSalesperson(employee,uuid(15),old.session.getSnapshot().draft),false);
+  const gone=setup();gone.context.clear();assert.equal(gone.session.applyDefaultSalesperson(employee,uuid(15),gone.session.getSnapshot().draft),false);
+});
+test('both new SAVE proposal paths require salesperson while leaving original empty input visible',async()=>{
+ const h=setup();await fill(h.session);h.session.updateLine(sku.id,{dealPrice:'1.00'});h.session.clearSalesperson();
+ assert.equal(h.session.validate(),null);assert.ok(h.session.getSnapshot().errors.includes('请选择在职营业员。'));
+ assert.equal(h.session.saveProposal(null),null);assert.ok(h.session.getSnapshot().errors.includes('请选择在职营业员。'));assert.equal(h.session.getSnapshot().draft.salesperson,null);
 });

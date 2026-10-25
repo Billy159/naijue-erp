@@ -8,14 +8,17 @@ import type { NativeCatalogueCompletenessVerifier, NativeSalesFactQuery } from "
 import { PostgresSalesUnitOfWork } from "../adapters/postgres/src/sales-unit-of-work.ts";
 import type { PgSalesClient, PgSalesResult } from "../adapters/postgres/src/sales-unit-of-work.ts";
 import { createSalesService } from "../packages/application/src/sales-service.ts";
-import type { SalesTransaction } from "../packages/application/src/ports.ts";
+import type { SalesDependencies, SalesTransaction } from "../packages/application/src/ports.ts";
 import type { SalesDraft } from "../packages/domain/src/documents.ts";
 import { minorAmount, quantity, version } from "../packages/domain/src/values.ts";
 import { actor, ids, sid, snapshot, syntheticDraft, syntheticSalesIdentity, SYNTHETIC_RULES } from "./support/synthetic-fixtures.ts";
 import { SyntheticStore } from "./support/synthetic-store.ts";
 const product = sid("product", 12), color = sid("color", 13), fit = sid("fit", 11), size = sid("size", 14), group = sid("sizeGroup", 30), method = sid("paymentMethod", 31);
-function nativeFacts(draft = syntheticDraft()): NativeSalesReferenceFacts {
-  return { salesId: draft.header.id, hall: { id: ids.hall, enabled: true }, warehouse: { id: ids.warehouse, hallId: ids.hall, enabled: true }, customer: { id: ids.customer, enabled: true }, salesperson: null,
+function liveDraft(): SalesDraft {
+  const draft = syntheticDraft(); return { ...draft, header: { ...draft.header, salespersonId: sid("staff", 103) } };
+}
+function nativeFacts(draft = liveDraft()): NativeSalesReferenceFacts {
+  return { salesId: draft.header.id, hall: { id: ids.hall, enabled: true }, warehouse: { id: ids.warehouse, hallId: ids.hall, enabled: true }, customer: { id: ids.customer, enabled: true }, salesperson: draft.header.salespersonId === null ? null : { id: draft.header.salespersonId, employmentStatus: "在职" },
     paymentAccounts: [{ id: ids.payment, enabled: true, methodId: method, methodEnabled: true }],
     skus: [...new Set(draft.lines.map(row => row.skuId))].map(id => ({ id, productId: product, enabled: true, snapshot: { productCode: snapshot.productCode, productName: snapshot.productName, colorName: snapshot.colorName, fitName: snapshot.fitName, sizeName: snapshot.sizeName } })),
     products: [{ id: product, enabled: true, referencePrice: minorAmount("125"), minimumPrice: null }], barcodes: [], retainedLines: [] };
@@ -28,19 +31,19 @@ const txFacts = (value: NativeSalesReferenceFacts): SalesTransaction => ({
 const rules = createNativeTransactionSalesBusinessRules();
 
 test("native sales rules: original transaction capability is mandatory, never use request/form fallback facts", async () => {
-  await assert.rejects(async () => rules.assertDraftChange(undefined, syntheticDraft()), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
+  await assert.rejects(async () => rules.assertDraftChange(undefined, liveDraft()), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
   const { getCurrentSalesReferenceFacts: _capability, ...withoutCapability } = txFacts(nativeFacts());
-  await assert.rejects(async () => rules.assertDraftChange(undefined, syntheticDraft(), withoutCapability), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
-  await rules.assertDraftChange(undefined, syntheticDraft(), txFacts(nativeFacts()));
+  await assert.rejects(async () => rules.assertDraftChange(undefined, liveDraft(), withoutCapability), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
+  await rules.assertDraftChange(undefined, liveDraft(), txFacts(nativeFacts()));
 });
 test("native sales rules: unknown minimum is not known absent; exact minimum remains authoritative", async () => {
-  const draft = syntheticDraft(); const facts = nativeFacts();
+  const draft = liveDraft(); const facts = nativeFacts();
   await assert.rejects(async () => rules.assertDraftChange(undefined, draft, txFacts({ ...facts, products: [{ ...facts.products[0]!, minimumPrice: undefined } as never] })), { code: "PRODUCT_PRICING_UNAVAILABLE" });
   await assert.rejects(async () => rules.assertDraftChange(undefined, draft, txFacts({ ...facts, products: [{ ...facts.products[0]!, minimumPrice: minorAmount("126") }] })), { code: "BELOW_MINIMUM_PRICE" });
   await rules.assertDraftChange(undefined, draft, txFacts(facts));
 });
 test("native sales rules: enabled same-hall refs and actual method are required; staff role/hall and account hall are not invented", async () => {
-  const draft = syntheticDraft(); const base = nativeFacts();
+  const draft = liveDraft(); const base = nativeFacts();
   for (const facts of [{ ...base, hall: { ...base.hall, enabled: false } }, { ...base, warehouse: { ...base.warehouse, hallId: sid("hall", 99) } },
     { ...base, customer: { ...base.customer, enabled: false } }, { ...base, paymentAccounts: [{ ...base.paymentAccounts[0]!, methodEnabled: false }] }])
     await assert.rejects(async () => rules.assertDraftChange(undefined, draft, txFacts(facts)), { code: "SALES_REFERENCE_UNAVAILABLE" });
@@ -49,7 +52,7 @@ test("native sales rules: enabled same-hall refs and actual method are required;
   await assert.rejects(async () => rules.assertDraftChange(undefined, staffed, txFacts({ ...base, salesperson: { id: staff, employmentStatus: "离职" } })), { code: "SALES_REFERENCE_UNAVAILABLE" });
 });
 test("native sales rules: new/replaced snapshots require current labels; unchanged stored observations survive rename/disabled old barcode", async () => {
-  const draft = syntheticDraft(); const changed = { ...draft, lines: [{ ...draft.lines[0]!, snapshot: { ...snapshot, productName: "FORGED" } }] };
+  const draft = liveDraft(); const changed = { ...draft, lines: [{ ...draft.lines[0]!, snapshot: { ...snapshot, productName: "FORGED" } }] };
   await assert.rejects(async () => rules.assertDraftChange(undefined, changed, txFacts(nativeFacts())), { code: "SALES_SNAPSHOT_MISMATCH" });
   const oldLine = { ...draft.lines[0]!, snapshot: { ...snapshot, productName: "SYNTHETIC OLD NAME", barcode: "0000123400" } };
   const kept = { ...draft, lines: [oldLine] }; const facts = { ...nativeFacts(), retainedLines: [{ id: oldLine.id, skuId: oldLine.skuId, snapshot: oldLine.snapshot }] };
@@ -57,7 +60,7 @@ test("native sales rules: new/replaced snapshots require current labels; unchang
   await assert.rejects(async () => rules.assertDraftChange(undefined, { ...kept, lines: [{ ...oldLine, id: sid("salesLine", 101) }] }, txFacts(facts)), { code: "SALES_SNAPSHOT_MISMATCH" });
 });
 test("native sales rules: raw observations must bind exact enabled SKU; null manual observation is not a fake MAIN barcode", async () => {
-  const draft = syntheticDraft(); const observed = { ...draft, lines: [{ ...draft.lines[0]!, snapshot: { ...snapshot, barcode: "0000123400" } }] };
+  const draft = liveDraft(); const observed = { ...draft, lines: [{ ...draft.lines[0]!, snapshot: { ...snapshot, barcode: "0000123400" } }] };
   await assert.rejects(async () => rules.assertDraftChange(undefined, observed, txFacts(nativeFacts())), { code: "BARCODE_UNAVAILABLE" });
   await rules.assertDraftChange(undefined, observed, txFacts({ ...nativeFacts(), barcodes: [{ raw: "0000123400", skuId: ids.sku, enabled: true }] }));
   for (const binding of [{ raw: "123400", skuId: ids.sku, enabled: true }, { raw: "0000123400", skuId: ids.sku2, enabled: true }, { raw: "0000123400", skuId: ids.sku, enabled: false }])
@@ -73,7 +76,7 @@ test("sales service: awaits both async original-tx rules gates before document/e
     rules: { async assertDraftChange(_old, _draft, tx) { assert.equal(tx, authTx); saveEntered(); await saveGate; },
       async assertReferencesAndEconomics(_document, tx) { assert.equal(tx, authTx); approveEntered(); if (rejectOnce) await approveGate; }, inventoryDelta: SYNTHETIC_RULES.inventoryDelta },
     now: () => "2026-10-20T12:00:00Z", newId: kind => sid(kind, sequence++) });
-  const saving = service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-async-save", expectedVersion: null, draft: syntheticDraft() });
+  const saving = service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-async-save", expectedVersion: null, draft: liveDraft() });
   await enteredSave; assert.equal(store.snapshot().headers.size, 0); assert.equal(store.snapshot().receipts.size, 0); releaseSave(); await saving;
   const command = { actor, action: "APPROVE" as const, requestKey: "SYNTHETIC-async-approve", expectedVersion: version(1), salesId: ids.sales };
   const approving = service.execute(command); await enteredApprove; assert.equal(store.snapshot().ledger.length, 0); rejectApprove(new Error("SYNTHETIC fact failure"));
@@ -83,7 +86,7 @@ test("sales service: awaits both async original-tx rules gates before document/e
 });
 
 function pgFixture(options: { count?: number; priceChange?: Record<string, unknown>; schema?: boolean; barcode?: string; verifier?: NativeCatalogueCompletenessVerifier } = {}) {
-  const count = options.count ?? 1; const draft = syntheticDraft();
+  const count = options.count ?? 1; const draft = liveDraft();
   const skuIds = Array.from({ length: count }, (_, index) => index === 0 ? ids.sku : sid("sku", 5000 + index));
   const sizeIds = Array.from({ length: count }, (_, index) => index === 0 ? size : sid("size", 6000 + index));
   const productRow = { id: product, product_code: snapshot.productCode, name: snapshot.productName, size_group_id: group, enabled: true,
@@ -98,6 +101,7 @@ function pgFixture(options: { count?: number; priceChange?: Record<string, unkno
     if (sql.includes("native-sales-facts:schema")) rows = [{ installed: options.schema !== false }];
     else if (sql.includes("native-sales-facts:hall")) rows = [{ id: ids.hall, enabled: true }];
     else if (sql.includes("native-sales-facts:warehouse")) rows = [{ id: ids.warehouse, hall_id: ids.hall, enabled: true }];
+    else if (sql.includes("native-sales-facts:staff")) rows = [{ id: draft.header.salespersonId, employment_status: "在职" }];
     else if (sql.includes("native-sales-facts:customer")) rows = [{ id: ids.customer, enabled: true }];
     else if (sql.includes("native-sales-facts:membership")) rows = (values[0] as string[]).map((group, index) => ({ size_group_id: group, size_id: (values[1] as string[])[index] }));
     else if (sql.includes("native-sales-facts:barcodes")) rows = options.barcode ? [{ barcode: options.barcode, sku_id: ids.sku, enabled: true }] : [];
@@ -125,7 +129,7 @@ test("native sales pg facts: original-query bounded target locks, actual member 
 });
 test("native sales pg facts: missing real verifier, schema10 and incomplete/invalid nine-price facts fail closed", async () => {
   let queried = false; const missing = new PostgresNativeSalesFacts(async () => { queried = true; return { rows: [], rowCount: 0 }; }, () => {}, () => []);
-  await assert.rejects(() => missing.load(syntheticDraft()), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); assert.equal(queried, false);
+  await assert.rejects(() => missing.load(liveDraft()), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); assert.equal(queried, false);
   const old = pgFixture({ schema: false }); await assert.rejects(() => old.reader.load(old.draft), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); assert.equal(old.calls.length, 1); assert.equal(old.completeCalls(), 0);
   for (const priceChange of [{ minimum_price: undefined }, { purchase_price: undefined }, { wholesale10_price: "-1.00" }, { retail_price: "1.234" }]) {
     const f = pgFixture({ priceChange }); await assert.rejects(() => f.reader.load(f.draft), { code: "retail_price" in priceChange ? "MONEY_PRECISION" : "INVALID_DATABASE_VALUE" });
@@ -140,7 +144,7 @@ test("native sales pg facts: original raw barcode targets preserve leading zero 
   assert.ok(f.calls.every(row => !/sales_line|transfer_line|MAIN|CONFIRMED_OLD|generate/.test(row.sql))); assert.ok(Object.isFrozen(result) && Object.isFrozen(result.products));
 });
 test("native sales pg facts: captured document cannot be redirected during async completeness and a closed scope cannot return facts", async () => {
-  let f: ReturnType<typeof pgFixture>; const input = syntheticDraft();
+  let f: ReturnType<typeof pgFixture>; const input = liveDraft();
   f = pgFixture({ verifier: { async assertComplete() { Object.assign(input.header, { id: sid("sales", 8001) }); } } });
   const original = input.header.id; const result = await f.reader.load(input); assert.equal(result.salesId, original);
   const closed = pgFixture({ verifier: { async assertComplete() { closed.close(); } } }); await assert.rejects(() => closed.reader.load(closed.draft), /false !== true/);
@@ -153,11 +157,11 @@ test("native sales UoW: missing verifier fails native capability on original bou
     if (sql.includes("sales-authorization:hall")) rows = [{ id: ids.hall, enabled: true }];
     return { rows, rowCount: rows.length }; }, release() { released++; } };
   const uow = new PostgresSalesUnitOfWork({ async connect() { connections++; return client; } });
-  await uow.transaction(async tx => { escaped = tx; await assert.rejects(() => tx.getCurrentSalesReferenceFacts!(syntheticDraft()), { code: "TRANSACTION_SCOPE" });
+  await uow.transaction(async tx => { escaped = tx; await assert.rejects(() => tx.getCurrentSalesReferenceFacts!(liveDraft()), { code: "TRANSACTION_SCOPE" });
     await tx.getReceipt(actor.accountId, "SYNTHETIC-bound"); await tx.getSales(ids.sales);
-    await assert.rejects(() => tx.getCurrentSalesReferenceFacts!(syntheticDraft()), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); });
+    await assert.rejects(() => tx.getCurrentSalesReferenceFacts!(liveDraft()), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); });
   assert.equal(connections, 1); assert.equal(released, 1); assert.equal(calls.filter(sql => /BEGIN/.test(sql)).length, 1); assert.equal(calls.filter(sql => sql === "COMMIT").length, 1);
-  await assert.rejects(() => escaped!.getCurrentSalesReferenceFacts!(syntheticDraft()), { code: "TRANSACTION_SCOPE" }); assert.ok(!calls.some(sql => sql.includes("native-sales-facts:")));
+  await assert.rejects(() => escaped!.getCurrentSalesReferenceFacts!(liveDraft()), { code: "TRANSACTION_SCOPE" }); assert.ok(!calls.some(sql => sql.includes("native-sales-facts:")));
 });
 
 test("native sales UoW/service: real seam uses one original scripted client through locks, explicit completeness, SAVE/audit/receipt and commit", async () => {
@@ -181,7 +185,7 @@ test("native sales UoW/service: real seam uses one original scripted client thro
   const service = createSalesService({ unitOfWork: uow, rules, authorization: { async assertAllowed(context, _action, doc, tx) {
     assert.equal(context.accountId, actor.accountId); assert.equal(doc.header.hallId, ids.hall); const identity = await tx!.getCurrentSalesIdentity(context.accountId); assert.equal(identity?.loginEnabled, true);
   } }, now: () => "2026-10-20T12:00:00Z", newId: kind => sid(kind, sequence++) });
-  const result = await service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-native-original-client", expectedVersion: null, draft: { ...syntheticDraft(), header: { ...syntheticDraft().header, number: "V2-XS-000000000001" } } });
+  const result = await service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-native-original-client", expectedVersion: null, draft: { ...liveDraft(), header: { ...liveDraft().header, number: "V2-XS-000000000001" } } });
   assert.equal(result.status, "DRAFT"); assert.equal(connections, 1); assert.equal(released, 1); assert.equal(completeCalls, 1);
   assert.equal(calls[0], "BEGIN ISOLATION LEVEL READ COMMITTED"); assert.equal(calls.at(-1), "COMMIT");
   assert.equal(calls.filter(sql => sql.includes("sales-authorization:identity")).length, 1);
@@ -202,7 +206,7 @@ test("native sales UoW/service: unproven complete prices reject before native wr
   }, release() { releases++; } };
   const uow = new PostgresSalesUnitOfWork({ async connect() { return client; } }, { catalogueCompleteness: { async assertComplete() { throw Object.assign(new Error("SYNTHETIC unpublished catalogue"), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" }); } } });
   const service = createSalesService({ unitOfWork: uow, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-20T12:00:00Z", newId: kind => sid(kind, sequence++) });
-  await assert.rejects(() => service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-unpublished-catalogue", expectedVersion: null, draft: syntheticDraft() }), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
+  await assert.rejects(() => service.execute({ actor, action: "SAVE", requestKey: "SYNTHETIC-unpublished-catalogue", expectedVersion: null, draft: liveDraft() }), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
   assert.equal(calls.at(-1), "ROLLBACK"); assert.ok(!calls.some(sql => /^INSERT|^UPDATE/.test(sql))); assert.equal(releases, 1);
 });
 
@@ -212,7 +216,7 @@ test("native method intent: runtime SAVE unchanged/amount and APPROVE reject acc
     async getCurrentSalesReferenceFacts(document) { const value = nativeFacts(document); return { ...value, paymentAccounts: value.paymentAccounts.map(account => ({ ...account, methodId: currentMethod })) }; }
   })); } };
   const service = createSalesService({ unitOfWork: uow, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-21T08:00:00Z", newId: kind => sid(kind, sequence++) });
-  const draft = syntheticDraft(); await service.execute({ action: "SAVE", actor, draft, expectedVersion: null, requestKey: "known-method" });
+  const draft = liveDraft(); await service.execute({ action: "SAVE", actor, draft, expectedVersion: null, requestKey: "known-method" });
   // A renamed method retains this same identity; no method labels participate in validation.
   await rules.assertDraftChange(undefined, draft, txFacts(nativeFacts()));
   currentMethod = sid("paymentMethod", 11001); const before = store.snapshot();
@@ -230,7 +234,7 @@ test("native method intent: first SAVE retains selected M1 intent and rejects ac
     async getCurrentSalesReferenceFacts(document) { const value = nativeFacts(document); return { ...value,
       paymentAccounts: value.paymentAccounts.map(account => ({ ...account, methodId: sid("paymentMethod", 12001) })) }; }
   })); } }, rules, authorization: { async assertAllowed() {} }, now: () => "2026-10-21T08:03:00Z", newId: kind => sid(kind, sequence++) });
-  await assert.rejects(() => service.execute({ action: "SAVE", actor, draft: syntheticDraft(), expectedVersion: null, requestKey: "new-selected-method-race" }), { code: "SETTLEMENT_METHOD_MISMATCH" });
+  await assert.rejects(() => service.execute({ action: "SAVE", actor, draft: liveDraft(), expectedVersion: null, requestKey: "new-selected-method-race" }), { code: "SETTLEMENT_METHOD_MISMATCH" });
   assert.deepEqual(store.snapshot(), before);
 });
 
@@ -263,4 +267,24 @@ test("exact2 sales UoW: renewed object proof failure releases borrowed client be
   } });
   await assert.rejects(uow.transaction(async () => { entered = true; }), error => error === failure);
   assert.equal(connects, 1); assert.equal(released, 1); assert.equal(queried, 0); assert.equal(entered, false);
+});
+
+test("approved LIVE SAVE requires actual in-job salesperson; legacy NULL approval and committed-key recovery stay separate", async () => {
+  const legacy = syntheticDraft(), current = nativeFacts(legacy);
+  await assert.rejects(async () => rules.assertDraftChange(undefined, legacy, txFacts(current)), { code: "SALES_REFERENCE_UNAVAILABLE" });
+  await assert.rejects(async () => rules.assertDraftChange({ ...legacy, header: { ...legacy.header, status: "DRAFT", responsibleStaffId: null, version: version(1), createdByAccountId: actor.accountId, createdHallId: actor.hallId, createdAt: "2026-10-21T00:00:00Z", updatedAt: "2026-10-21T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, legacy, txFacts(current)), { code: "SALES_REFERENCE_UNAVAILABLE" });
+  // Original APPROVE reference/economics policy remains nullable, no new action restriction.
+  await rules.assertReferencesAndEconomics({ ...legacy, header: { ...legacy.header, status: "DRAFT", responsibleStaffId: null, version: version(1), createdByAccountId: actor.accountId, createdHallId: actor.hallId, createdAt: "2026-10-21T00:00:00Z", updatedAt: "2026-10-21T00:00:00Z", approvedByAccountId: null, approvedAt: null } }, txFacts(current));
+  const store = new SyntheticStore(); let sequence = 15000, authorized = true;
+  const base: SalesDependencies = { unitOfWork: store, rules: SYNTHETIC_RULES, authorization: { async assertAllowed() { if (!authorized) throw Object.assign(new Error('revoked'), {code:'FORBIDDEN'}); } }, now: () => "2026-10-21T00:00:00Z", newId: kind => sid(kind, sequence++) };
+  const command = { action: "SAVE" as const, actor, requestKey: "legacy-null-committed", expectedVersion: null, draft: legacy };
+  const prior = await createSalesService(base).execute(command), before = store.snapshot();
+  const upgraded = createSalesService({ ...base, rules, unitOfWork: { transaction<T>(work: (tx: SalesTransaction) => Promise<T>) {
+    return store.transaction(tx => work({ ...tx, async getCurrentSalesReferenceFacts(document) { return nativeFacts(document); } }));
+  } } });
+  await assert.rejects(() => upgraded.execute({ ...command, requestKey: "new-null-create", draft: { ...legacy, header: { ...legacy.header, id: sid("sales", 16000) }, lines: legacy.lines.map(line => ({ ...line, salesId: sid("sales", 16000) })), settlements: legacy.settlements.map(row => ({ ...row, salesId: sid("sales", 16000) })) } }), { code: "SALES_REFERENCE_UNAVAILABLE" });
+  await assert.rejects(() => upgraded.execute({ ...command, requestKey: "new-null-edit", expectedVersion: version(1) }), { code: "SALES_REFERENCE_UNAVAILABLE" });
+  assert.deepEqual(store.snapshot(), before);
+  assert.deepEqual(await upgraded.execute(command), prior); assert.deepEqual(store.snapshot(), before);
+  authorized = false; await assert.rejects(() => upgraded.execute(command), {code:'FORBIDDEN'}); assert.deepEqual(store.snapshot(), before);
 });

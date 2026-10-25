@@ -99,6 +99,7 @@ export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { reado
 export class SalesProposalSession {
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
   #seeded = false;
+  #salespersonDefaultClosed = false;
   readonly #specSkus = new Map<string, readonly CurrentFormSku[]>();
   readonly #dictionaryGroups = new Map<string, DictionarySizeGroup>();
   #dictionaryComplete = false;
@@ -112,6 +113,20 @@ export class SalesProposalSession {
   matchesIdentity(scope: ReadScope): boolean {
     const owner = this.#scope.identity, target = scope.identity;
     return !this.#state.disposed && this.#scope.active && scope.active && owner.accountId === target.accountId && owner.sessionRevision === target.sessionRevision && owner.permissionRevision === target.permissionRevision;
+  }
+  /** A current-reference candidate matched to the trusted session employee by the
+   * caller. No name/role/hall inference; the server still rechecks employment. */
+  applyDefaultSalesperson(candidate: CurrentSalesReferenceItem, trustedStaffId: string, expectedDraft: SalesProposal): boolean {
+    if (this.#state.disposed || !this.#scope.active || this.#seeded || this.#salespersonDefaultClosed
+      || this.#state.draft !== expectedDraft || this.#state.draft.salesperson !== null) return false;
+    try {
+      if (entityId('staff', trustedStaffId) !== candidate.id || entityId('staff', candidate.id) !== candidate.id
+        || typeof candidate.name !== 'string' || !candidate.name.trim() || candidate.code !== null
+        || candidate.paymentMethodId !== null || candidate.paymentMethodName !== null
+        || (candidate.hallId === null ? candidate.hallName !== null : entityId('hall', candidate.hallId) !== candidate.hallId || typeof candidate.hallName !== 'string')) return false;
+    } catch { return false; }
+    this.#salespersonDefaultClosed = true;
+    return this.#edit({ ...this.#state.draft, salesperson: structuredClone(candidate) });
   }
   /** Cold session initialization from a validated native saved document plus
    * actual current SKU reads. Local presentation only; never a native draft,
@@ -358,6 +373,7 @@ export class SalesProposalSession {
     if (this.#state.disposed) return false;
     this.closePicker();
     const draft = this.#state.draft;
+    if (kind === 'salesperson') this.#salespersonDefaultClosed = true;
     if (kind === 'paymentMethod' || kind === 'paymentAccount') return this.#edit({ ...draft, settlements: draft.settlements.map(row => row.key === paymentKey ? { ...row, account: null, ...(kind === 'paymentMethod' ? { method: null } : {}) } : row) });
     if (kind === 'hall') return this.#edit({ ...draft, hall: null, salesperson: null, customer: null, warehouse: null, settlements: draft.settlements.map(row => ({ ...row, method: null, account: null })) });
     return this.#edit({ ...draft, [kind]: null });
@@ -393,6 +409,7 @@ export class SalesProposalSession {
   async openPicker(kind: Exclude<SalesProposalPicker, 'sku' | 'paymentAccount'>): Promise<void> {
     if (this.#state.disposed) return;
     if (this.#state.lineEdit) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return; }
+    if (kind === 'salesperson') this.#salespersonDefaultClosed = true;
     if (kind !== 'hall' && !this.#state.draft.hall) { this.#publish({ notice: '请先选择营业厅。' }); return; }
     this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false;
     await this.#read(kind, '', 1, null, null);
@@ -525,6 +542,7 @@ export class SalesProposalSession {
     if (p.kind === 'hall' && draft.hall && draft.hall.id !== id && (draft.customer || draft.salesperson || draft.warehouse || draft.lines.length || draft.settlements.length || Object.values(this.#state.entries).flat().some(entry => entry.product || entry.query.trim()))) {
       this.#publish({ notice: '切换营业厅会改变候选范围。请先确认重置草稿，再选择新厅。' }); return false;
     }
+    if (p.kind === 'salesperson') this.#salespersonDefaultClosed = true;
     this.closePicker(); return this.#edit({ ...draft, [p.kind]: item });
   }
   get hasSpecificationInputs(): boolean {
@@ -546,6 +564,7 @@ export class SalesProposalSession {
     const { draft, lineEdit, entries } = this.#state;
     if (this.#state.disposed || !this.#scope.active) return null;
     try {
+      if (!draft.salesperson) { this.#publish({ errors: ['请选择在职营业员。'], notice: '保存资料未通过校验，原输入已保留，未发送保存。' }); return null; }
       if (!draft.hall || !draft.customer || !draft.warehouse || draft.warehouse.hallId !== draft.hall.id && !(this.#savedWarehouse?.hallId === draft.hall.id && this.#savedWarehouse.warehouseId === draft.warehouse.id)) throw Error();
       const pricing = this.pricingLines; if (!pricing) throw Error();
       const yuan = (raw: string) => { const value = amount(raw); return `${value / 100n}.${(value % 100n).toString().padStart(2, '0')}`; };
@@ -585,6 +604,7 @@ export class SalesProposalSession {
     const draft = this.#state.draft, errors: string[] = [], gross: bigint[] = [];
     try { businessDate(draft.businessDate); } catch { errors.push('请输入有效单据日期。'); }
     if (!draft.hall || !draft.customer || !draft.warehouse) errors.push('请选择营业厅、客户和仓库。');
+    if (!draft.salesperson) errors.push('请选择在职营业员。');
     if (draft.warehouse && draft.warehouse.hallId !== draft.hall?.id && !(this.#savedWarehouse?.hallId === draft.hall?.id && this.#savedWarehouse?.warehouseId === draft.warehouse.id)) errors.push('仓库必须属于所选营业厅。');
     if (draft.note.length > 10000) errors.push('备注不能超过 10000 字符。');
     if (!draft.lines.length) errors.push('请至少添加一个实际规格。');
@@ -617,6 +637,7 @@ export class SalesProposalSession {
   }
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
+    this.#salespersonDefaultClosed = false;
     this.#savedLines.clear(); this.#specSkus.clear(); this.#dictionaryGroups.clear(); this.#dictionaryComplete = false; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, sizeGroups: { phase: 'unavailable', groups: [] }, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }

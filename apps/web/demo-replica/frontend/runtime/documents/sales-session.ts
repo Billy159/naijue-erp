@@ -25,7 +25,7 @@ export function createReplicaSalesSession(runtime: ReplicaSession, options: {
 }) {
   const historyOwners=new Map<string,{scope:import('../../../../src/loading/read-scope.ts').ReadScope;owner:HistoryRevisionOwner}>();
   const selection:{row:NormalSalesRow|null}={row:null};
-  const presentation:{businessChoice:'SALE'|'RETURN_EXCHANGE'|null}={businessChoice:null};
+  const presentation:{businessChoice:'SALE'|'RETURN_EXCHANGE'|null;salespersonDefault:{attempted:boolean;touched:boolean;notice:string|null}}={businessChoice:null,salespersonDefault:{attempted:false,touched:false,notice:null}};
   const principal = runtime.auth.getSnapshot().principal;
   if (!principal) throw new Error('An authenticated session is required to open sales.');
   const scope = runtime.reads.createScope(options.instanceId);

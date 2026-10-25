@@ -13,7 +13,7 @@ import { actor, ids, sid, snapshot } from "./support/synthetic-fixtures.ts";
 import { SyntheticStore } from "./support/synthetic-store.ts";
 const product = sid("product", 100), method = sid("paymentMethod", 101);
 const proposal = (): NativeSalesCreateProposal => ({ businessType: "SALE", businessDate: "2026-10-21", note: null,
-  hallId: ids.hall, warehouseId: ids.warehouse, customerId: ids.customer, salespersonId: null, orderDiscount: "0.00",
+  hallId: ids.hall, warehouseId: ids.warehouse, customerId: ids.customer, salespersonId: sid("staff", 102), orderDiscount: "0.00",
   lines: [{ skuId: ids.sku, quantity: "2", dealPrice: "1.25", pricingRule: "UNIT_PRICE", discountTenths: null, isGift: false, zeroConfirmed: false }],
   settlements: [{ paymentAccountId: ids.payment, paymentMethodId: method, direction: "RECEIVE", amount: "2.50" }] });
 function setup() {
@@ -27,7 +27,7 @@ function setup() {
       async getCurrentSalesReferenceFacts(draft) {
         lookups++; if (!complete) throw new DomainError("NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "SYNTHETIC missing proof");
         return { salesId: draft.header.id, hall: { id: ids.hall, enabled: true }, customer: { id: ids.customer, enabled: true },
-          warehouse: { id: ids.warehouse, hallId: ids.hall, enabled: true }, salesperson: null,
+          warehouse: { id: ids.warehouse, hallId: ids.hall, enabled: true }, salesperson: draft.header.salespersonId === null ? null : { id: draft.header.salespersonId, employmentStatus: "在职" },
           skus: [...new Set(draft.lines.map(row => row.skuId))].map(id => ({ id, productId: product, enabled: true, snapshot: { ...snapshot, productName: label } })),
           products: [{ id: product, enabled: true, referencePrice: minorAmount("125"), minimumPrice: minimum }],
           paymentAccounts: [{ id: ids.payment, methodId: method, enabled: true, methodEnabled: true }],
@@ -239,4 +239,15 @@ test('sales public proposals reject independent responsible input and keep sales
  assert.throws(()=>parseNativeSalesSaveProposal({...body,createdByAccountId:actor.accountId}));
  const d=v16SalesDraft(),wire=JSON.parse(JSON.stringify(d,(_k,v)=>typeof v==='bigint'?v.toString():v));
  assert.throws(()=>parseSalesCommand({action:'SAVE',requestKey:'sales-old-header',expectedVersion:null,draft:{...wire,header:{...wire.header,responsibleStaffId:sid('staff',7001)}}},actor));
+});
+
+test('approved new/live-existing prepare rejects NULL salesperson before any number reservation or business save', async () => {
+  const fresh = setup(), before = fresh.store.snapshot(); let reserved = 0;
+  const deps: SalesDependencies = { ...fresh.dependencies, unitOfWork: { transaction(work) { return fresh.dependencies.unitOfWork.transaction(tx => work({ ...tx, async reserveRuntimeDocumentNumber() { reserved++; throw Error('Must not reserve'); } })); } } };
+  await assert.rejects(() => createNativeSalesPreparation(deps).prepareCreate(actor, { ...proposal(), salespersonId: null }), {code:'SALES_REFERENCE_UNAVAILABLE'});
+  assert.equal(reserved,0); assert.deepEqual(fresh.store.snapshot(),before);
+  const existing = await existingSetup();
+  const state = existing.store.snapshot();
+  await assert.rejects(() => existing.existing.prepareExisting(actor, { ...existing.input(), salespersonId: null }), {code:'SALES_REFERENCE_UNAVAILABLE'});
+  assert.deepEqual(existing.store.snapshot(),state);
 });

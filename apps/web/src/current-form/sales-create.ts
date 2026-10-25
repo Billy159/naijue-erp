@@ -22,9 +22,9 @@ function tenths(raw: string): number {
   if (result > 100) throw new TypeError('Invalid explicit discount.'); return result;
 }
 export function salesPreparationIntent(proposal: SalesProposal): NativeSalesCreateProposal {
-  if (!proposal.hall || !proposal.customer || !proposal.warehouse) throw new TypeError('Required current references missing.');
+  if (!proposal.hall || !proposal.customer || !proposal.warehouse || !proposal.salesperson) throw new TypeError('Required current references missing.');
   return checkedIntent({ businessType: proposal.businessType, businessDate: proposal.businessDate, note: proposal.note === '' ? null : proposal.note,
-    hallId: proposal.hall.id, customerId: proposal.customer.id, salespersonId: proposal.salesperson?.id ?? null, warehouseId: proposal.warehouse.id,
+    hallId: proposal.hall.id, customerId: proposal.customer.id, salespersonId: proposal.salesperson.id, warehouseId: proposal.warehouse.id,
     orderDiscount: yuan(proposal.orderDiscount), lines: proposal.lines.map(row => { if (!row.sku) throw new TypeError('Local specifications use the original SAVE proposal, never read-only preparation.'); return ({ skuId: row.sku.id, quantity: row.quantity,
       dealPrice: row.pricingRule === 'DISCOUNT' ? null : row.isGift ? '0.00' : yuan(row.dealPrice), pricingRule: row.pricingRule,
       discountTenths: row.pricingRule === 'DISCOUNT' ? tenths(row.discount) : null, isGift: row.isGift, zeroConfirmed: row.zeroConfirmed }); }),

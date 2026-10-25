@@ -16,7 +16,7 @@ import { actor, ids, sid, snapshot } from "./support/synthetic-fixtures.ts";
 import { SyntheticStore } from "./support/synthetic-store.ts";
 const product = sid("product", 100), method = sid("paymentMethod", 101);
 const proposal = (): NativeSalesCreateProposal => ({ businessType: "SALE", businessDate: "2026-10-21", note: null,
-  hallId: ids.hall, warehouseId: ids.warehouse, customerId: ids.customer, salespersonId: null, orderDiscount: "0.00",
+  hallId: ids.hall, warehouseId: ids.warehouse, customerId: ids.customer, salespersonId: sid("staff", 102), orderDiscount: "0.00",
   lines: [{ skuId: ids.sku, quantity: "2", dealPrice: "1.25", pricingRule: "UNIT_PRICE", discountTenths: null, isGift: false, zeroConfirmed: false }],
   settlements: [{ paymentAccountId: ids.payment, paymentMethodId: method, direction: "RECEIVE", amount: "2.50" }] });
 function setup() {
@@ -30,7 +30,7 @@ function setup() {
       async getCurrentSalesReferenceFacts(draft) {
         lookups++; if (!complete) throw new DomainError("NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "SYNTHETIC missing proof");
         return { salesId: draft.header.id, hall: { id: ids.hall, enabled: true }, customer: { id: ids.customer, enabled: true },
-          warehouse: { id: ids.warehouse, hallId: ids.hall, enabled: true }, salesperson: null,
+          warehouse: { id: ids.warehouse, hallId: ids.hall, enabled: true }, salesperson: draft.header.salespersonId === null ? null : { id: draft.header.salespersonId, employmentStatus: "在职" },
           skus: [...new Set(draft.lines.map(row => row.skuId))].map(id => ({ id, productId: product, enabled: true, snapshot: { ...snapshot, productName: label } })),
           products: priceAvailable ? [{ id: product, enabled: true, referencePrice: minorAmount("125"), minimumPrice: minimum }] : [],
           paymentAccounts: [{ id: ids.payment, methodId: method, enabled: true, methodEnabled: true }],
