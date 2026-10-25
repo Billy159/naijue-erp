@@ -10683,7 +10683,7 @@
     }
   },
   "candidateApiPrefix459": {
-    "status": "SOURCE_READY_AFFECTED_BUILD_TOOL_CHECK_PASS_FIXED_BUILD_NEXT",
+    "status": "FIXED_BUILD_PACK_PASS_REMOTE_VERIFIED_ORIGINAL_T45_DEPLOY_NEXT",
     "owner": "C",
     "F1Delivery": "chunk-193-candidate-api-prefix",
     "prefix": "/__naijue_candidate/replica-private-01/api",
@@ -10698,5 +10698,17 @@
     "sourceRowsAfter": 71642,
     "businessAcceptance": false,
     "next": "OriginalQB new line10 carrier review then originalT45 finite finalization/transport/stage; no replay09"
+  },
+  "currentContinuation460": {
+    "source459": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
+    "build": "replica-production-source459-01",
+    "actualBuildPack": "PASS",
+    "githubSource459Verified": true,
+    "deploymentOwner": "T45 original",
+    "deployment459": "PENDING_ACTUAL",
+    "line10Review": "QB313 limitedPASS adopted",
+    "line10Actual": "PENDING",
+    "D1Current": "Original CORE read modules to copied normal pages pairing; correct stale v5 facts only",
+    "goal": "ACTIVE_37_67_ALL_STATES_REAL_BUSINESS_INCOMPLETE"
   }
 }

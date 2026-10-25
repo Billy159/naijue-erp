@@ -5427,5 +5427,14 @@
     ],
     "sharedRootEntry": "C; backend/auth/server/defaultproductionconfig read-only; no runtimeOrigin/CSRF/cookie weakening",
     "browser": "Independent QF context, same-domain Path=/ cookie not isolation; never userChrome"
+  },
+  "D1CorePagePairing460": {
+    "owner": "D1",
+    "model": "gpt-6.1-sol/medium",
+    "current": "Existing CORE read capability to copied normal page route pairing; original report + alreadyregistered D1 source only",
+    "document": "docs/rapid-launch-20261022/SCHEMA-SUPPLEMENT-v5-HISTORY-HALL-NULLABLE.md",
+    "documentScope": "Update obsolete current-consumer/runtime facts only, exact outstanding nullablehall proposal; no unapproved contract or SQL implementation",
+    "sharedConfig": "C only; publicroutes/build/private deployment T45 handoff, no competing writes",
+    "next": "One real ready associated settings module candidate, no fake flags or duplicate API"
   }
 }
