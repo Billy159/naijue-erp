@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T04:07:18.808303+00:00",
-    "sourceRound": 395,
-    "sourceCheckpoint": "SOURCE395_ACTUAL_PARTY357_PASS_V18_SOURCE_READY_NOT_PG",
+    "atUtc": "2026-10-25T04:15:53.698944+00:00",
+    "sourceRound": 396,
+    "sourceCheckpoint": "SOURCE396_PARTY_ACTUAL_QB290_PASS_UI389_SCOPED_QF2_PASS_QA_CONTEXT_ACTUAL",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4942,7 +4942,8 @@
       "newBackendConnected": false,
       "wholePageAccepted": false,
       "browser": "C independent IAB deliverable; no Chrome controls touched",
-      "scope": "F2 width/exterior-captions source fix; affected visual recheck pending"
+      "scope": "F2 width/exterior-captions source fix; affected visual recheck pending",
+      "widthLabelsAcceptance": "QF2 I01-WIDTH-LABELS-SOURCE389-01 scopedvisualPASS; directDemo loginwall; current images not locally exported"
     },
     "nextPreview": {
       "status": "FIXED394_BUILD_HTTP_PASS_VISUAL_TECHNICAL_PENDING",
@@ -8595,11 +8596,11 @@
         "next": "precise pending v18 confirmation; shared shadow stylesheet reuse"
       },
       "D1": {
-        "current": "Approved v18 batch methods implementation",
+        "current": "Source395 batch ready; coreQA prerequisite/template + v3 pending",
         "next": "OriginalQB affected source then C isolated PG"
       },
       "QF2": {
-        "current": "SOURCE389 width/exterior-caption visual only; isolated IAB",
+        "current": "Solmedium fixed394 shared-sheet identity/cascade + productbase/spec affectedDOM",
         "next": "New product DOM candidate technical stage after visual"
       }
     },
@@ -8639,7 +8640,7 @@
       "grantChanges": false,
       "stageExecuted": false
     },
-    "githubVerified": "1b577a9b29c9acafc797ec8f5bbc734ea0c9e6ae",
+    "githubVerified": "69a58f6f6227c31d676e80d66e2b44947341e604",
     "sharedStyleReuse": {
       "owner": "C",
       "status": "SOURCE_AND_EXISTING_SYNTHETIC_TEST_PASS",
@@ -8647,7 +8648,7 @@
       "scope": "SourceControl shared per-document Arco+local sheet original order; geometry/query untouched"
     },
     "party224": {
-      "status": "ACTUAL_COMPLETED0_FULL357_READBACK_QB_ACTUAL_PENDING",
+      "status": "ACTUAL_FULL357_STAGE_AND_READBACK_QB290_PASS_ADOPTED",
       "sourceCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
       "rows": 357,
       "chunks": 4,
@@ -8664,7 +8665,14 @@
         "sourceRows": 9532,
         "records": 5639,
         "nativePartyEvidence": 628
-      }
+      },
+      "actualAcceptance": "QB2904518/fdaeaed5367e33ffb015abe56770cdf0fea9e2d53a6b458e89a976c88b11cbf7"
+    },
+    "qa225": {
+      "status": "ACTUAL_READONLY_PASS",
+      "native": "1032586 alreadyIMPORTED preserve/no newstage",
+      "core": "1034834 STAGED1/source115/record22/product0/SKU0 usable existing QA; originalCORE preserved",
+      "v18ActualExecution": "NOT_YET"
     }
   },
   "latestReadySource": {
