@@ -5511,7 +5511,9 @@
     "writer": "D3",
     "files": [
       "packages/application/src/import-v3-history-header.ts",
-      "scripts/import-v3/prepare-native-header26-bindings.mjs"
+      "scripts/import-v3/prepare-native-header26-bindings.mjs",
+      "tests/history-header-mapping.test.ts",
+      "scripts/import-v3/prepare-native-header26-bindings.test.mjs"
     ],
     "scope": "Approved2471-only source-key-bound business hall derived overlay and exact affected tests after registering test leaves; raw canonical blanks and creatorHall untouched. Prefer existing normalized hall consumer plus explicit MIGRATION_DERIVED proof; do not weaken generic RAW_CHANGED",
     "D1": "Original store/publication seam read-only review first; no concurrent writer; any demonstrated additional source leaf registered before editing",
