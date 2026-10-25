@@ -5314,5 +5314,17 @@
       "apps/web/demo-replica/frontend/runtime/products/inventory-drawer.test.mjs"
     ],
     "scope": "Actual inventory drawer Arco tabs scroll container, not standalone six-tab detail. No detail.tsx/product-runtime.test.mjs edits for this finding; same-case directed repair only."
+  },
+  "userFrontendSweep20261025": {
+    "authority": "Current human 51 screenshots and whole-site root cause repair request",
+    "C": [
+      "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx",
+      "apps/web/demo-replica/frontend/runtime-styles.ts"
+    ],
+    "F1": "Original documents leaves; shared host handed C this turn",
+    "F2": "Original inventory/products incl shared inventory pagination; other consumers only after API handoff",
+    "F3": "Original settings leaves; no global CSS or common host writes",
+    "F4": "Queued original catalogue scope, no duplicate dispatch",
+    "singleWriter": true
   }
 }

@@ -12,8 +12,8 @@ const emptyPasswords = (): OwnPasswordFields => ({ currentPassword: '', newPassw
 const captions: Readonly<Record<string, string>> = {
  transfer:'库存管理 / 调拨单列表','transfer/new':'库存管理 / 新增调拨单',sales:'销售管理 / 销货单列表','sales/new':'销售管理 / 新增销货单',products:'商品管理 / 商品信息',
  inventory: '库存管理 / 库存状况表', 'product-categories': '商品管理 / 商品分类', 'product-settings': '商品管理 / 商品设置', 'barcode-schemes': '商品管理 / 条码方案',
- 'settings/stores': '基础设置 / 营业厅与仓库', 'settings/warehouses': '基础设置 / 营业厅与仓库', 'settings/parties': '基础设置 / 客户', customers: '基础设置 / 客户', suppliers: '基础设置 / 供应商',
- 'settings/staff': '基础设置 / 员工', 'settings/accounts': '基础设置 / 登录账号', 'settings/payments': '基础设置 / 收款配置', 'settings/fundAccounts': '基础设置 / 收款配置',
+ 'settings/stores': '基础设置 / 营业厅与仓库', 'settings/warehouses': '基础设置 / 营业厅与仓库', 'settings/parties': '基础设置 / 往来单位', customers: '基础设置 / 往来单位', suppliers: '基础设置 / 往来单位',
+ 'settings/staff': '基础设置 / 员工与账号', 'settings/accounts': '基础设置 / 员工与账号', 'settings/payments': '基础设置 / 收款配置', 'settings/fundAccounts': '基础设置 / 收款配置',
 };
 function SessionChrome({ session, accountHost, mayChangeIdentity, notice }: { session: ReplicaSession; accountHost: HTMLElement; mayChangeIdentity: () => boolean; notice: (message: string) => void }) {
  const state = useSyncExternalStore(session.auth.subscribe, session.auth.getSnapshot, session.auth.getSnapshot);
@@ -81,7 +81,7 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
   if (!canLeave()) { if(!pages.hasUnresolvedWrite()&&current?.canDiscard?.())askLeave(next,replace);else toast('请先保存或取消当前编辑，当前输入已保留。');return false; }
   clearPage(); route = next; const request = serial;
   breadcrumb.textContent = captions[next] ?? (next.startsWith('transfer/')?'库存管理 / 调拨单':next.startsWith('sales/')?'销售管理 / 销货单':next.startsWith('products/')?'商品管理 / 商品信息':'业务页面');
-  document.querySelectorAll<HTMLAnchorElement>('.sidebar a[data-route]').forEach(link => { const selected = link.dataset.route === next || next === 'settings/parties' && link.dataset.route === 'customers' || next.startsWith('transfer/') && next!=='transfer/new' && link.dataset.route==='transfer' || next.startsWith('sales/') && next!=='sales/new' && link.dataset.route==='sales' || next.startsWith('products/') && link.dataset.route==='products'; link.classList.toggle('selected', selected); if (selected) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
+  document.querySelectorAll<HTMLAnchorElement>('.sidebar a[data-route]').forEach(link => { const selected = link.dataset.route === next || (next === 'customers' || next === 'suppliers') && link.dataset.route === 'settings/parties' || next === 'settings/accounts' && link.dataset.route === 'settings/staff' || next.startsWith('transfer/') && next!=='transfer/new' && link.dataset.route==='transfer' || next.startsWith('sales/') && next!=='sales/new' && link.dataset.route==='sales' || next.startsWith('products/') && link.dataset.route==='products'; link.classList.toggle('selected', selected); if (selected) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
   if (replace) history.replaceState(null, '', '#' + next); else if (location.hash !== '#' + next) history.pushState(null, '', '#' + next);
   status('正在加载页面…');
   try {
@@ -96,11 +96,7 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
    status(error instanceof Error ? error.message : '页面读取失败。', () => { route = ''; if (scope?.active) void navigate(next, true); else void session.auth.resolveSession(); }); return false;
   }
  }
- // Approved separate customer/supplier and independent-account menu entries reuse the original anchors.
- const parties = document.querySelector<HTMLAnchorElement>('.sidebar a[data-route="settings/parties"]');
- if (parties) { parties.dataset.route = 'customers'; parties.href = '#customers'; parties.textContent = '客户'; const supplier = parties.cloneNode(true) as HTMLAnchorElement; supplier.dataset.route = 'suppliers'; supplier.href = '#suppliers'; supplier.textContent = '供应商'; parties.after(supplier); }
- const staff = document.querySelector<HTMLAnchorElement>('.sidebar a[data-route="settings/staff"]');
- if (staff && !document.querySelector('.sidebar a[data-route="settings/accounts"]')) { const account = staff.cloneNode(true) as HTMLAnchorElement; staff.textContent = '员工'; account.dataset.route = 'settings/accounts'; account.href = '#settings/accounts'; account.textContent = '登录账号'; staff.after(account); }
+ // The combined menu keeps customer/supplier and account data as separate consumers.
  const click = (event: MouseEvent) => { const target = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('.sidebar a[data-route]') : null; if (!target || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); void navigate(target.dataset.route!); };
  const hash = () => { const next = location.hash.slice(1) || 'inventory'; void navigate(next, true).then(ok => { if (!ok && current) history.replaceState(null, '', '#' + route); }); };
  const beforeUnload = (event: BeforeUnloadEvent) => { if (!canLeave()) { event.preventDefault(); event.returnValue = ''; } };

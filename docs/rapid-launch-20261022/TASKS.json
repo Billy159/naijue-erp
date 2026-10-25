@@ -8792,5 +8792,31 @@
   "runtimeApproved": {
     "node24_21": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node",
     "source": "Existing approved runtime"
-  }
+  },
+  "latestUserFrontendSweep": {
+    "atUtc": "2026-10-25T05:17:00.006320+00:00",
+    "authority": "Current human 51 screenshots and detailed frontend defects",
+    "sourceScreenshotCandidate": "SOURCE389 / 57898 synthetic; check latest400 separately",
+    "currentFixedCandidate": "252ddc859fbb543fc6ddb7a1f5c2269085e37b0e / phase2-normal-252ddc8-12 / http://127.0.0.1:57901/",
+    "goal": "Trace introduction and shared causes, fix all listed pages and same-pattern consumers; no old rewrite fallback",
+    "latestOverrides": [
+      "Transfer UI only responsible, editable default current trusted employee; creator immutable backend only",
+      "Sales UI no creator; salesperson is business owner; remove independent responsible consumer without deleting stored evidence",
+      "Parties combined entry, customer/supplier identities remain separate",
+      "Staff/account combined entry, existing permissions unchanged"
+    ],
+    "owners": {
+      "F1": "ACTIVE Sol medium documents full package current; next shared all-state interactions and real interface gaps",
+      "F2": "ACTIVE Sol medium inventory filters + product default routes; next six-tab edit and shared pagination consumers",
+      "F3": "ACTIVE Sol medium settings common cause + maintenance; next combined entry consumers",
+      "F4": "QUEUED catalogue CRUD/dictionary controls after capacity; original owner retained",
+      "C": "Common style lifetime/menu seams, immutable build/integration, frontend defect catalogue, current backend breakpoints retained"
+    },
+    "states": "OPEN until fixed candidate scoped verification; no broad prior PASS invalidation",
+    "fast": "UNVERIFIED_TOOL_NO_SWITCH",
+    "realWholePagesPassed": 0,
+    "pageDenominator": 37,
+    "overlayDenominator": 67
+  },
+  "currentContinuation404": "Frontend all-site user defect sweep current; preserve C228 catalogue8 committed prefix, PRODUCT23514 rollback no replay; history230 22 INSERT privileges absent, no grant; R1 SKU5586 prefix unchanged."
 }
