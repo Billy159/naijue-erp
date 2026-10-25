@@ -5020,7 +5020,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 499,
+    "round": 500,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
     "sourceHeadBeforeThisContinuityCommit": "6d0ec125b338786e73acb6d1d8de3a5330df202d",
     "fixedCandidates": {
@@ -5850,13 +5850,41 @@
       "lastActualJob": "41 remains latest executed; no metadata/readzero/42 executed",
       "source": "T45 actual response rev161: no platform rejection; latest human direct request only connection check; requires direct sentence to resume bounded readonly count",
       "userQuestion": "Asked once human to send direct T45 sentence; not a request to reapprove database business changes",
-      "pendingWork": "Exact READ-ZERO SQL/currentop-batch-digest already prepared;0DML/0GRANT, no credentials; original42 permission change remains unexecuted coordinated successor only"
+      "pendingWork": "Exact READ-ZERO SQL/currentop-batch-digest already prepared;0DML/0GRANT, no credentials; original42 permission change remains unexecuted coordinated successor only",
+      "lastResponse": "T45 rev161: no platform denial or connection fault; requests human direct sentence to resume limited readonly counts. No newjob submitted; original42 payload prepared but no execution."
     },
     "coreReadZeroClarification": {
       "status": "SOURCE_SCOPE_EXCLUSION_IDENTIFIED_ACTUAL_CURRENT_COUNTER_AND_APPROVED_VISIBILITY_NOT_YET_PROVEN",
       "sourceOwner": "D1 exact postgres-read-api.ts and original import-stage-bootstrap-postgres-protocol.test.ts reserved, no source modification yet",
       "qualification": "CORE module original contract intentionally excludes staged/source-only dictionary rows; SOURCE292 is settings-audit adapter, NOT publication proof. Must not union STAGED binding or call imported182/6 automatically published. Current target/batch/state/counters and exact valid read authorization required.",
-      "next": "T45 actual boundedcounter; if published/authorized bound sources excluded then D1 exact proof-based union; otherwise preserve staged exclusion and complete approved publication dependency"
+      "next": "T45 actual boundedcounter; if published/authorized bound sources excluded then D1 exact proof-based union; otherwise preserve staged exclusion and complete approved publication dependency",
+      "approvedEvidenceCorrection": "D1 original CORE-READY-READ-MODULES-v1 catalogue explicitly excludes imported/staged rows; original v14 startup22 not dictionary344; no later valid visibility proof located. Preserve exclusion, do not widen toSTAGED. If published+authorized genuinebinding absent fromscope then originalD1 exact2 fix; actualcounter still missing."
+    },
+    "source499FixedCandidates": {
+      "source": "eb9961c945229ab4547f65e60b4638b7a20a905f",
+      "GitHub": "EXACT_REMOTE_VERIFIED",
+      "synthetic": {
+        "build": "phase2-normal-eb9961c-29",
+        "url": "http://127.0.0.1:57918/",
+        "session": 97586,
+        "strictExit": 0,
+        "strictSeconds": 4.646,
+        "viteExit": 0,
+        "viteSeconds": 4.609,
+        "resources": 140,
+        "http": 200,
+        "bytes": 3154
+      },
+      "production": {
+        "build": "replica-production-source499-core-06",
+        "status": "BUILD_PACK_AND_ONE_EXTRACTION_READBACK_PASS_NOT_DEPLOYED",
+        "archiveBytes": 1620319,
+        "archiveSha256": "a0f29cd38e555e7fe3521517e70debc45827c3af93de31bc43ec3574d1302a8f",
+        "manifestSha256": "6724ebf9ac4a452f2923c8da086cb347e172941a9ec78ffcf7a2c2c1ac02e127",
+        "members": 202,
+        "routes": "Existing CORE05 readonly flags unchanged; new asset prefix only"
+      },
+      "review": "OriginalQF exact2 active technical scope only; no browser/currentCORE05 claims"
     }
   },
   "latestReadySource": {
