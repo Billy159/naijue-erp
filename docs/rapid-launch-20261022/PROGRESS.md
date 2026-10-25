@@ -1,3 +1,9 @@
+SOURCE435 PRODUCT NORMAL EDITOR CONSUMERS FIXED
+
+OriginalF2 PRODUCT-NORMAL-EDITOR-CONSUMER-20261025-01 exact7 product leaves fixed. Normal route generic parent scope now creates original target-bound child; restored original CREATE/EDIT input locked, same command/key retained. Committed save requires sameid/version>=receipt authorityread before navigation; failed/old reads retryonly. Known rejected EDIT freshbaseline before new edit; visited specs/media version refresh, firstvisited tabowner retention/barcodepagination+scroll, categoryclear. Original Node24scopedstrict/affectedDOM/diff PASS adopted, no new DTO/client/controller or businesscontract. Actual hostflags/provider/nativeSQL/HTTP/realwrite/media503 remain separate C/D2/T45 scope; no productionPASS. QF2 next finite independent newdelta, originalv17/C189/400 evidence reused.
+
+Current UI57910 binds SOURCE433 (F1 outputs+retry/F3close), notthis435 product fix; do notattributeoldpreviewto435. OriginalQF433 and QF2source432 conclusions bounded. Exact fixed production package preparation can consume435, no mutableWIP. GitHub434c9eafd10753edc3109cabe071a054b6d4834b19c verified. Whole37pages/67overlays plus additions incomplete; no new fullpagebusiness or formalrelease.
+
 SOURCE434 FIXED CANDIDATE433 / QF2 TARGETED CLOSE / PRECISE STOCK ACL CAUSE
 
 Unified fixed candidate http://127.0.0.1:57910/#inventory source42d0a2ddfa76f1ac69357a128f159406a2b27f03 buildphase2-normal-42d0a2d-21: strict0/4.621s,Vite0/2.420s,135resources; HTML and entryJS/CSS HTTP200 versionheader matched. Synthetic-only/connect-none/defaultreadonly flags, no production/backend claim. Includes F1 edit-retry430/native output433 and F3 pending-readback432; F2 in-progress consumer not included. OriginalQF newtechnical433scope dispatched; pure visual separate LunaMax when appropriate, notold410resume. GitHub433 exact remote verified.
