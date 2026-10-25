@@ -1,3 +1,13 @@
+SOURCE410 / NEW INTEGRATED CANDIDATE AND STAFF SINGLE-SELECT CORRECTION
+
+F1-DOC185 exact27 committed source4102728ebffd3c32deeb245b5ffd5cdf7c02c82b3df, GitHub exact remote verified. Candidate phase2-normal-2728ebf-16 at http://127.0.0.1:57905/; strict0/5.219s, singleVite0/2.410s129resources. OriginalQF checking impacted document controls/state appearances only; SYN1product/4groupmembers/0initialdocs limits remain explicit, real providers/PG/printing not claimed. OriginalQB independently checks source409 new backend differences only, old effective tests reused.
+
+Adopt QF2 SOURCE407-UI-CHECK-01 limited UI: staff and old accounts deep link same one20rowtable/total22; category/color/fit actions visible but unavailable capabilities stilldisabled; sizegroup membercolumn763.55px; dictionary sharedpagerfixedbottom0. No realmaintenance/wholepage/DB/performance/formalpass. Source405otheraccepted ranges reused.
+
+LATEST HUMAN screenshot aca472f2... on57904 staffhallfilter: dropdown should match inventory All warehouses but SINGLE choice. F3 current finite original controls.tsx ReferenceSelect/SmallSelect presentation package gpt-6-luna/max; preserve authorizedpagedsearch and required semantics; selectedtag/clear/search/anchoredmenu and explicitAll-null for optionalfilters, never multiselect/no fakeAll required. Onlythis changedUIbranch needs new scoped acceptance after C fixed candidate. Other frontend/backend continued; no fullsite restart.
+
+Whole phase2 real0/37, overlay67plusvalidadditions. Current latest sources are syntheticpreview/testonly; originalformalunchanged. Next F3 package->Cfixedbuild->QF2 exactsingle dropdown, QFsource410results->originalF1repair; C retained228prefix/v18seasoncontinuation stillpending actualexecution.
+
 SOURCE409 / DOCUMENT WRITE CONSUMERS FROZEN; UI PACKET NEXT
 
 D1 A exact 9 production +6 test source c1eb1e06d972e20fd35927acfc5d2a256d3a2e47, GitHub remote same verified. Sales independent responsible new writes removed across proposal/preparation/legacy HTTP; old columns/read identity/audit retained, no DDL. Transfer explicit null and omission distinguished throughout current/history parse/plan/store, nonnull staff locks retained. D1 strict and8affected cases PASS; old role-change replay FORBIDDEN also reproduced395, not new regression or permission relaxation. Actual persisted null/role HTTP pending originalQB and C isolated execution. F1 paired consumers now finishing same original packet; no duplicate dispatch.

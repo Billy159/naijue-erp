@@ -7,13 +7,15 @@ import type { SettingsDirectoryKind, SettingsDirectoryPage, SettingsDirectoryPar
 
 import { Pagination } from '../inventory/pagination.tsx';
 import { SourceControl } from '../inventory/candidates.tsx';
-import { singleCss } from '../inventory/source-control-css.ts';
+import { filterCss, singleCss } from '../inventory/source-control-css.ts';
+import { ALL_FILTER_VALUE } from '../inventory/filter-selection.ts';
 
 export const settingsSingleCss=singleCss+'\n.runtime-settings-directory{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 4px;font-size:12px}';
+const inventoryReferenceCss=filterCss+'\n'+singleCss+'\n.inventory-reference-select .arco-select-view .ui-single-tag{background:var(--ca-surface)!important;color:var(--ca-ink)!important}\n.inventory-reference-select .arco-select-view input{min-width:32px}';
 const ControlledSelect = Select as ComponentType<Omit<ComponentProps<typeof Select>, 'value'> & { value: string | undefined }>;
-type SmallSelectProps = { value: string; items: readonly { value: string; label: string; disabled?: boolean }[]; label: string; placeholder?: string; search?: boolean; clear?: boolean; disabled?: boolean; loading?: boolean; remote?: boolean; onChange: (value: string) => void; onOpen?: () => void; onClose?: () => void; onSearch?: (value: string) => void; footer?: ReactNode };
+type SmallSelectProps = { inventoryReference?: boolean; value: string; items: readonly { value: string; label: string; disabled?: boolean }[]; label: string; placeholder?: string; search?: boolean; clear?: boolean; disabled?: boolean; loading?: boolean; remote?: boolean; onChange: (value: string) => void; onOpen?: () => void; onClose?: () => void; onSearch?: (value: string) => void; footer?: ReactNode };
 export function SmallSelect(props:SmallSelectProps) {
- return <SourceControl css={settingsSingleCss} attributes={{className:'ui-single-host bs-single runtime-settings-select'}}>{(portal,host)=><SmallSelectContent {...props} portal={portal} host={host}/>}</SourceControl>;
+ return <SourceControl css={props.inventoryReference?inventoryReferenceCss:settingsSingleCss} attributes={{className:'ui-single-host bs-single runtime-settings-select'+(props.inventoryReference?' inventory-reference-select':'')}}>{(portal,host)=><SmallSelectContent {...props} portal={portal} host={host}/>}</SourceControl>;
 }
 function SmallSelectContent(props:SmallSelectProps & {portal:HTMLElement;host:HTMLElement}) {
   const [open, setOpen] = useState(false), [mounted, setMounted] = useState(false), [, refreshPortal] = useReducer(value => value+1, 0);
@@ -42,7 +44,7 @@ export function readMessage(error: unknown): string {
   return '资料读取失败，请重试。';
 }
 /** The original SmallSelect presentation; only its data source is server paged. */
-export function ReferenceSelect(props: { scope: ReadScope; reader?: SettingsDirectoryReader | undefined; kind: SettingsDirectoryKind; label: string; selected: SettingsReference | null; hallId?: string | null; required?: boolean; disabled?: boolean; placeholder?: string; onChange: (value: SettingsReference | null) => void }) {
+export function ReferenceSelect(props: { scope: ReadScope; reader?: SettingsDirectoryReader | undefined; kind: SettingsDirectoryKind; label: string; selected: SettingsReference | null; hallId?: string | null; required?: boolean; includeAll?: boolean; allLabel?: string; disabled?: boolean; placeholder?: string; onChange: (value: SettingsReference | null) => void }) {
   const [binding, setBinding] = useState<{ scope: ReadScope; reader: SettingsDirectoryReader; kind: SettingsDirectoryKind; hallId: string | null; query: LatestQuery<SettingsDirectoryParameters, SettingsDirectoryPage> } | null>(null);
   useEffect(() => {
     if (!props.reader) { setBinding(null); return; }
@@ -57,12 +59,15 @@ export function ReferenceSelect(props: { scope: ReadScope; reader?: SettingsDire
   const options = new Map<string, SettingsReference>();
   if (props.selected) options.set(props.selected.id, props.selected);
   for (const item of current?.data.items ?? []) options.set(item.id, item);
+
   const run = (search = '', page = 1) => { if (!props.disabled && query) void query.run({ search, page, pageSize: 20, hallId: props.hallId ?? null }); };
   const unavailable = !query || props.kind === 'warehouses' && !props.hallId;
   const page = current?.data;
-  return <SmallSelect value={props.selected?.id ?? ''} items={[...options.values()].map(item => ({ value: item.id, label: item.name ?? '名称未提供' }))} label={props.label} placeholder={props.placeholder ?? '请选择'} search clear={!props.required} remote disabled={props.disabled || unavailable} loading={state.phase === 'loading'}
+  const items=[...options.values()].map(item=>({value:item.id,label:item.name??'名称未提供'}));
+  if(props.includeAll&&!props.required)items.unshift({value:ALL_FILTER_VALUE,label:props.allLabel??props.placeholder??props.label});
+  return <SmallSelect inventoryReference value={props.selected?.id ?? (props.includeAll&&!props.required?ALL_FILTER_VALUE:'')} items={items} label={props.label} placeholder={props.placeholder ?? '请选择'} search clear={!props.required} remote disabled={props.disabled || unavailable} loading={state.phase === 'loading'}
     onOpen={() => { setOpened(true); run(); }} onClose={() => { setOpened(false); query?.cancel(); }} onSearch={search => { if (opened) run(search); }}
-    onChange={id => { if (!id) props.onChange(null); else if (current?.data.items.some(item => item.id === id)) props.onChange(options.get(id) ?? null); }}
+    onChange={id => { if (!id || id===ALL_FILTER_VALUE&&props.includeAll&&!props.required) props.onChange(null); else if (current?.data.items.some(item => item.id === id)) props.onChange(options.get(id) ?? null); }}
     footer={<>{state.phase === 'error' && <div className="runtime-settings-directory" role="alert">{readMessage(state.error)}<Button type="text" onMouseDown={e => e.preventDefault()} onClick={() => { if (state.request) void query?.run(state.request.parameters); }}>重试</Button></div>}
       {page && page.total > page.pageSize && <div className="runtime-settings-directory"><Button size="mini" disabled={page.page <= 1} onMouseDown={e => e.preventDefault()} onClick={() => run(current.parameters.search, page.page - 1)}>上一页</Button><span>共 {page.total} 条</span><Button size="mini" disabled={page.page * page.pageSize >= page.total} onMouseDown={e => e.preventDefault()} onClick={() => run(current.parameters.search, page.page + 1)}>下一页</Button></div>}</>}/>;
 }
