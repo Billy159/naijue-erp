@@ -1,7 +1,7 @@
 /** Pure header/native-reference join under the existing mapper identity rule.
  * Trusted source/ref/money artifacts must be authenticated by the caller. */
 import {createHash} from 'node:crypto';
-import {prepareV3HistoryHeader} from '../../packages/application/src/import-v3-history-header.ts';
+import {prepareV3HistoryHeader,deriveApprovedBusinessHallSource} from '../../packages/application/src/import-v3-history-header.ts';
 import {v2MoneyApprovalSet} from '../../packages/application/src/import-v2.ts';
 import {historySettlementRequestHash as checkedHash} from '../../packages/application/src/import-v3-history-settlement.ts';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
@@ -18,7 +18,10 @@ export function prepareSalesHeaderSourceIdentity26(binding,record){
  return {sourceKey:s.sourceKey,nativeId:stableImportId('history-sales-header',binding.fixedSourceNamespace,s.sourceKey),sourceRowId:s.id,sourceFileSha256:s.sourceFileSha256,rowSha256:s.rowSha256,version:1};
 }
 export function createNativeHeader26BindingPreparer(options){
- must(exact(options,['binding','parties','historicalCustomers','moneyApprovals','expected']),'HEADER26_BINDING_OPTIONS');checkedHash(options);const o=structuredClone(options),b=o.binding;
+ must(exact(options,['binding','parties','historicalCustomers','moneyApprovals','expected',...(Object.hasOwn(options??{},'businessHallOverlays')?['businessHallOverlays']:[])]),'HEADER26_BINDING_OPTIONS');checkedHash(options);const o=structuredClone(options),b=o.binding;
+ // This whitelist is loaded from the externally pinned private decision file,
+ // not derived from names, current warehouse ownership or a unique candidate.
+ if(o.businessHallOverlays!==undefined)must(o.businessHallOverlays instanceof Map&&o.businessHallOverlays.size>0&&o.businessHallOverlays.size<=2471&&[...o.businessHallOverlays].every(([key,row])=>key===row.sourceKey&&row.batchId===b.batchId&&row.fixedSourceNamespace===b.fixedSourceNamespace&&row.selectionSha256===b.selectionSha256),'HEADER26_BUSINESS_HALL_WHITELIST');
  must(exact(b,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&uuid(b.batchId)&&text(b.fixedSourceNamespace)&&text(b.cutoffAt)&&hash(b.selectionSha256),'HEADER26_BINDING_SCOPE');
  must(Array.isArray(o.parties)&&o.parties.length>0&&o.parties.length<=10000&&Array.isArray(o.historicalCustomers)&&o.historicalCustomers.length<=2&&Array.isArray(o.moneyApprovals),'HEADER26_BINDING_REFERENCES');
  must(exact(o.expected,['SALES_HEADER','TRANSFER_HEADER','historicalReferences'])&&Object.values(o.expected).every(n=>Number.isSafeInteger(n)&&n>=0)&&o.expected.SALES_HEADER+o.expected.TRANSFER_HEADER>0&&o.expected.SALES_HEADER+o.expected.TRANSFER_HEADER<=100000,'HEADER26_BINDING_EXPECTED');
@@ -28,10 +31,12 @@ export function createNativeHeader26BindingPreparer(options){
  for(const p of o.historicalCustomers){must(exact(p,['sourceKey','originalPartyIdentity','sourceDocumentNumber','nativeSnapshot'])&&uuid(p.originalPartyIdentity)&&p.sourceKey==='HIST-CUSTOMER:'+p.originalPartyIdentity&&text(p.sourceDocumentNumber)&&p.nativeSnapshot?.enabled===false&&p.nativeSnapshot.created_at===null&&p.nativeSnapshot.updated_at===null&&!historical.has(p.sourceKey),'HEADER26_BINDING_HISTORICAL');add('CUSTOMER',p.sourceKey,p.nativeSnapshot);historical.set(p.sourceKey,p);}
  const approvals=v2MoneyApprovalSet(o.moneyApprovals,o.moneyApprovals),seen=new Set(),sourceIds=new Set(),positions=new Set(),historyIds=new Set(),counts={SALES_HEADER:0,TRANSFER_HEADER:0},stream=createHash('sha256');let historicalReferences=0,closed=false,poisoned=false;
  const active=()=>must(!closed&&!poisoned,'HEADER26_BINDING_CLOSED');
- function close(){closed=true;for(const m of [index,historical,nativeIds,seen,sourceIds,positions,historyIds])m.clear();o.parties.length=0;o.historicalCustomers.length=0;o.moneyApprovals.length=0;approvals.clear();}
+ function close(){closed=true;for(const m of [index,historical,nativeIds,seen,sourceIds,positions,historyIds])m.clear();o.parties.length=0;o.historicalCustomers.length=0;o.moneyApprovals.length=0;approvals.clear();o.businessHallOverlays?.clear();}
  return {
   prepare(record){active();try{
-   must(exact(record,['source','selection','creatorHallOverlay','temporalEvidence']),'HEADER26_BINDING_RECORD');checkedHash(record);const r=structuredClone(record),s=r.source,n=s.normalizedFields,entity=s.entityType;
+   must(exact(record,['source','selection','creatorHallOverlay','temporalEvidence']),'HEADER26_BINDING_RECORD');checkedHash(record);const r=structuredClone(record),businessHallOverlay=o.businessHallOverlays?.get(r.source.sourceKey);
+   if(businessHallOverlay)r.source=deriveApprovedBusinessHallSource(r.source,r.selection,b.fixedSourceNamespace,businessHallOverlay);
+   const s=r.source,n=s.normalizedFields,entity=s.entityType;
    must(Object.hasOwn(counts,entity)&&s.batchId===b.batchId&&r.selection.entity===entity&&r.selection.selectionSha256===b.selectionSha256&&counts[entity]<o.expected[entity],'HEADER26_BINDING_SOURCE_SCOPE');
    const identity=JSON.stringify([entity,s.sourceKey]),position=JSON.stringify([s.sourceFileSha256,s.sheet,s.rowNo]);must(!seen.has(identity)&&!sourceIds.has(s.id)&&!positions.has(position),'HEADER26_BINDING_DUPLICATE');const bindings={},references=[];let matchedHistorical=null;
    function reference(field,target,optional=false){const key=n[field];if(optional&&key==='')return;must(text(key),'HEADER26_BINDING_REFERENCE_REQUIRED');const party=index.get(JSON.stringify([target,key]));must(party,'HEADER26_BINDING_REFERENCE_MISSING');
@@ -39,7 +44,7 @@ export function createNativeHeader26BindingPreparer(options){
     bindings[field]={sourceKey:key,nativeId:party.nativeSnapshot.id};references.push({field,entity:target,sourceKey:key,nativeId:party.nativeSnapshot.id,nativeSnapshotHash:requestHash(party.nativeSnapshot)});
    }
    if(entity==='SALES_HEADER'){reference('所属厅来源编号','HALL');reference('客户来源编号','CUSTOMER');reference('仓库来源编号','WAREHOUSE');reference('营业员来源编号','STAFF',true);}else{reference('调出仓来源编号','WAREHOUSE');reference('调入仓来源编号','WAREHOUSE');}reference('原创建厅编号','HALL',true);
-   const input={batchId:b.batchId,fixedSourceNamespace:b.fixedSourceNamespace,...r,bindings,moneyApprovals:structuredClone(approvals)},prepared=prepareV3HistoryHeader(input);
+   const input={batchId:b.batchId,fixedSourceNamespace:b.fixedSourceNamespace,...r,bindings,moneyApprovals:structuredClone(approvals),...(businessHallOverlay?{businessHallOverlay:structuredClone(businessHallOverlay)}:{})},prepared=prepareV3HistoryHeader(input);
    must(!historyIds.has(prepared.header.id),'HEADER26_BINDING_DUPLICATE_HISTORY_ID');seen.add(identity);sourceIds.add(s.id);positions.add(position);historyIds.add(prepared.header.id);counts[entity]++;if(matchedHistorical)historicalReferences++;stream.update(prepared.fingerprint+'\n');
    const decision={entity,sourceKey:s.sourceKey,sourceRowId:s.id,sourceContextHash:requestHash(r),normalizedRowHash:requestHash(n),historyId:prepared.header.id,historyIdRule:'EXISTING_MAPPER_STABLE_IMPORT_ID',bindings,references,historicalCustomerBinding:matchedHistorical,header:structuredClone(prepared.header),preparedFingerprint:prepared.fingerprint,fieldProvenanceHash:requestHash(prepared.fieldProvenance),temporalHash:requestHash(prepared.temporal)};
    return {input,prepared,decision};

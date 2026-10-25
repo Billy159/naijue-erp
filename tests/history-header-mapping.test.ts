@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mapHistoryTemporal } from '../packages/application/src/history-temporal-mapping.ts';
 import type { ExcelTemporalEvidence } from '../packages/application/src/history-temporal-mapping.ts';
-import { prepareV3HistoryHeader } from '../packages/application/src/import-v3-history-header.ts';
-import type { HistoryHeaderInput } from '../packages/application/src/import-v3-history-header.ts';
+import { prepareV3HistoryHeader,deriveApprovedBusinessHallSource } from '../packages/application/src/import-v3-history-header.ts';
+import type { HistoryHeaderInput,HistoryBusinessHallOverlay } from '../packages/application/src/import-v3-history-header.ts';
+import { prepareV3HistoryHeaderChunk,validatePreparedHistoryHeaderChunk } from '../packages/application/src/import-v3-history-header-staging.ts';
 import { v2MoneyApprovalSet } from '../packages/application/src/import-v2.ts';
 import { IMPORT_V2_TABLES } from '../packages/application/src/import-v2-contract.ts';
 const id=(n:number)=>`00000000-0000-0000-0000-${String(n).padStart(12,'0')}`;
@@ -21,6 +22,39 @@ function fixture(entity:'SALES_HEADER'|'TRANSFER_HEADER'='TRANSFER_HEADER'):Hist
   return {batchId:id(1),fixedSourceNamespace:'fixture',selection:{baseManifestSha256:hash,selectionSha256:hash,approvalSha256:hash,csvSha256:hash,source:'BASE_V2',entity,path:table.file as HistoryHeaderInput['selection']['path']},source:{id:id(2),batchId:id(1),entityType:entity,sourceKey:'legacy-doc',fileRef:'original.xlsx',sheet:'header',rowNo:'2',sourceFileSha256:hash,rowSha256:hash,rawFields:raw,normalizedFields:n,fieldProvenance:{schema_version:1,fields:{}}},bindings,creatorHallOverlay:{evidenceRef:'approved-creator-overlay.csv#row2',file:'original.xlsx',sheet:'header',row:'2',sourceId:'legacy-doc',documentNumber:'0000123',personField:entity==='SALES_HEADER'?'营业员来源编号':'原制单账号编号',personId:'',uploadedWarehouseDerivedHall:'uploaded-warehouse-derived-hall',candidateCreatorHall:'',provenance:'UNKNOWN',reason:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'}};
 }
 const replace=(input:HistoryHeaderInput,field:string,value:string)=>{input.source.rawFields[field]=value;input.source.normalizedFields[field]=value;};
+function businessHall(input:HistoryHeaderInput):HistoryBusinessHallOverlay {
+  const s=input.source;
+  return {version:'USER_CONFIRMED_HISTORY_BUSINESS_HALL_OVERLAY_1',batchId:input.batchId,fixedSourceNamespace:input.fixedSourceNamespace,
+    selectionSha256:input.selection.selectionSha256,sourceKey:s.sourceKey,warehouseSourceKey:s.normalizedFields['仓库来源编号'] as string,
+    targetHallSourceKey:'old-hall',targetHallNativeId:id(10),sourceFileRef:s.fileRef,sourceFileSha256:s.sourceFileSha256,sheet:s.sheet,rowNo:s.rowNo,
+    originalBusinessHall:'',provenance:'MIGRATION_DERIVED',reason:'USER_CONFIRMED_WAREHOUSE_TO_BUSINESS_HALL',
+    decisionSource:{threadId:'synthetic-human-thread',humanMessageId:'synthetic-decision',continueMessageId:'synthetic-continue',adoptionOwner:'C',scope:'ALL2471_WAREHOUSE_TO_BUSINESS_HALL_MAPPING_USER_CONFIRMED',originalBlankNotClaimedHistoricalFact:true},
+    evidenceRef:'USER_DECISION:synthetic-human-thread:synthetic-decision#'+s.sourceKey};
+}
+test('approved business hall overlay derives normalized hall only, preserves raw identity/unknown creator, and survives original chunk revalidation',()=>{
+  const input=fixture('SALES_HEADER');replace(input,'所属厅来源编号','');const original=structuredClone(input),overlay=businessHall(input);
+  input.source=deriveApprovedBusinessHallSource(input.source,input.selection,input.fixedSourceNamespace,overlay);input.businessHallOverlay=overlay;
+  const result=prepareV3HistoryHeader(input);assert.ok('hallId' in result.header);assert.equal(result.header.hallId,id(10));
+  assert.equal(result.source.rawFields['所属厅来源编号'],'');assert.equal(result.source.normalizedFields['所属厅来源编号'],'old-hall');
+  assert.equal(original.source.normalizedFields['所属厅来源编号'],'');assert.equal(result.source.id,original.source.id);assert.equal(result.source.rowSha256,original.source.rowSha256);
+  assert.equal(result.header.createdHallId,null);assert.equal(result.header.createdBySourceKey,null);assert.equal(result.header.createdInstant,null);
+  const fields=result.fieldProvenance.fields as Record<string,unknown>;assert.deepEqual(fields['所属厅来源编号'],{origin:'MIGRATION_DERIVED',reason:overlay.reason,raw:'',evidence_ref:overlay.evidenceRef,parsed:'old-hall'});
+  const chunk=prepareV3HistoryHeaderChunk([input]);validatePreparedHistoryHeaderChunk(chunk);assert.equal(chunk.rows[0]!.prepared.fingerprint,result.fingerprint);
+  assert.deepEqual(chunk.rows[0]!.input.businessHallOverlay,overlay);
+});
+test('approved business hall overlay refuses wrong source/warehouse/file position/UUID, known-hall overwrite and unrelated raw rewrites',()=>{
+  for(const change of [(o:HistoryBusinessHallOverlay)=>o.sourceKey='OTHER',(o:HistoryBusinessHallOverlay)=>o.warehouseSourceKey='OTHER',
+    (o:HistoryBusinessHallOverlay)=>o.rowNo='3',(o:HistoryBusinessHallOverlay)=>o.sourceFileSha256='b'.repeat(64),
+    (o:HistoryBusinessHallOverlay)=>o.selectionSha256='b'.repeat(64)]){
+    const input=fixture('SALES_HEADER');replace(input,'所属厅来源编号','');const o=businessHall(input);change(o);
+    assert.throws(()=>deriveApprovedBusinessHallSource(input.source,input.selection,input.fixedSourceNamespace,o),/BUSINESS_HALL_OVERLAY/);
+  }
+  const known=fixture('SALES_HEADER');assert.throws(()=>deriveApprovedBusinessHallSource(known.source,known.selection,known.fixedSourceNamespace,businessHall(known)),/BUSINESS_HALL_OVERLAY/);
+  const input=fixture('SALES_HEADER');replace(input,'所属厅来源编号','');const o=businessHall(input);input.source=deriveApprovedBusinessHallSource(input.source,input.selection,input.fixedSourceNamespace,o);input.businessHallOverlay=o;
+  const missing=structuredClone(input);delete missing.businessHallOverlay;assert.throws(()=>prepareV3HistoryHeader(missing),/RAW_CHANGED/);
+  const wrong=structuredClone(input);wrong.businessHallOverlay!.targetHallNativeId=id(999);assert.throws(()=>prepareV3HistoryHeader(wrong),/NATIVE_BINDING/);
+  input.source.normalizedFields['备注']='UNAPPROVED';assert.throws(()=>prepareV3HistoryHeader(input),/RAW_CHANGED/);
+});
 test('calendar dates validate leap days and never infer midnight for DATETIME',()=>{
   assert.equal(mapHistoryTemporal('2024-02-29','DATE').date,'2024-02-29');
   assert.equal(mapHistoryTemporal('2023-02-29','DATE').state,'POLICY_REQUIRED');
