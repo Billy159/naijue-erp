@@ -12037,9 +12037,11 @@
       "formalRootChanged": false,
       "databaseCalls": 0,
       "browserOwner": "QF2",
-      "browserStatus": "DISPATCHED_LUNA_MAX_AFFECTED_SHELL_SETTINGS_ONLY",
+      "browserStatus": "QF2_BLOCKED_LOCAL_BROWSER_DISABLED_IN_WORK_SETTINGS_NO_VISUAL_PASS",
       "actualReceipts": "K/reports/controller/rapid-launch-20261022/server-execution/{CORE10-APP58,CORE10-ROUTE59}-ACTUAL-RESULT.json",
-      "businessAcceptance": false
+      "businessAcceptance": false,
+      "publicTls": "T45 SIX_GET_200_SSL_VERIFY0",
+      "next": "Original QF2 resume same immutable candidate when local browser available; backend and source prep continue"
     },
     "confirmedHall2471SourceOnly": {
       "owner": "D3",
