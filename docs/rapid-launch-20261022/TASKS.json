@@ -66,7 +66,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": true,
       "fastRequested": false,
-      "currentWork": "Current382actualprivateapp+resourcePASS adopted; freeze383 batchproofdelta/newfixedgraph and next boundedproductstage",
+      "currentWork": "Adopt actual2172956/30commit exactreadback; originalSKU14999streamednext; source384checkpoint",
       "currentPackage": "Existing normal candidate integration and original isolated business execution",
       "nextReadyPackage": "ActualacceptedTCP metadata→copied37202 privateapp; PRODUCT2956 fixedgraph/carrier review→actualstage",
       "currentDependencies": "Real history source requires existing v5 null-hall decision; current172 known incompatible, no blind execution. Source342 local restart then QF only missing representative states.",
@@ -356,7 +356,7 @@
       "reasoningEffort": "medium",
       "sourceWriteEnabled": false,
       "fastRequested": false,
-      "currentWork": "QB283 finitebatchproofjointsourcePASS; awaitsnewfixedgraph/carrieraffectedseam",
+      "currentWork": "QB285 actual217finiteonly acceptance;284graph/carrierPASS/source283reused",
       "currentPackage": "232newR1installedv14catalog/ACLreview only",
       "nextReadyPackage": "NoIMPORT_STAGEuntilrealexecutionminimumrole/purposeclosed;onlynewdeltaafterfuturechanges",
       "currentDependencies": "Next actual source/native execution only after genuine approved inputs; no repeated metadata/source review",
@@ -1327,9 +1327,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T01:29:36.494566+00:00",
+  "updatedAt": "2026-10-25T01:43:05.752882+00:00",
   "stage": "ACTIVE_FULLSITE37_67_SOURCE302_FRAME_WIP_SOURCE301_HREV_HOST_SEAM_FOUR_SOL_HANDOFFS_CORE157_ACCEPTED",
-  "lastVerifiedRemoteCommit": "5ea24f86b6f307db8e2562e49a4925ba3f49979f",
+  "lastVerifiedRemoteCommit": "fdfaa6074f33a3c1410a3518ef486e77e9d1d736",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2636,12 +2636,32 @@
       "formallyPublished": false
     },
     "productBatchPerformanceSource": {
-      "status": "OWNER_SOURCE_LOCAL100_AND_QB283_JOINT_SOURCE_PASS_NOT_PG",
+      "status": "QB283_SOURCE_AND_QB284_GRAPH_CARRIER_PASS_ACTUAL217_PRODUCT_STAGE_PASS",
       "oldActualLocal2956Ms": 137069,
       "newActualLocal100Ms": 67.173625,
-      "fullNew2956Measured": false,
-      "linuxOrPgPassed": false,
-      "persistentProofSemanticsChanged": false
+      "fullNew2956Measured": true,
+      "linuxOrPgPassed": "ACTUAL_PRODUCT_STAGE_AND_EXACT_KEYS_ONLY_NOT_QUERY_PERFORMANCE",
+      "persistentProofSemanticsChanged": false,
+      "newActualLocal2956Ms": 3407
+    },
+    "product217": {
+      "actualJob": "c03-real-r1-native-product2956-batchproof-stage-20261025-217",
+      "status": "ACTUAL_30_COMMIT_AND_2956_EXACT_KEY_READBACK_PASS_PENDING_QB285",
+      "elapsedSeconds": 114.82794374902733,
+      "writerSourceCommit": "fdfaa6074f33a3c1410a3518ef486e77e9d1d736",
+      "captureSourceCommit": "f086e1fc2f0ddc819ebed2257b02773f4664665a",
+      "inserted": 2956,
+      "replayed": 0,
+      "actualProducts": 2956,
+      "actualSkus": 0,
+      "sourceRows": 3637,
+      "supplierReferenceCount": 1142,
+      "distinctSupplierIds": 143,
+      "mismatches": 0,
+      "sourceAccepted": "QB283+QB284",
+      "next": "QB285 actualfiniteadoption thenoriginalSKU14999streamedcarrier",
+      "published": false,
+      "fullImport": false
     }
   },
   "supplementalRoles": {
@@ -4807,22 +4827,22 @@
     },
     {
       "id": "NATIVE-PRODUCT-EVIDENCE-REPEATED-CHUNK-VALIDATION-01",
-      "status": "SOURCE_FIXED_LOCAL100_EQUIVALENCE_PASS_PENDING_QB283_NEW_ACTUAL_EXECUTION",
+      "status": "SOURCE383_FIXED_QB283_284_PASS_ACTUAL217_ALL2956_PASS_PENDING_QB285",
       "owners": [
         "D3 application",
         "D1 adapter/test/v2consumer",
         "C fixedgraph/server",
         "QB finitejointdelta"
       ],
-      "actualPriorProductStage": "213failed;214zero confirmed",
+      "actualPriorProductStage": "213failed/214zero/217new30commit2956exact",
       "scope": "Sameproof values andoriginalsinglevalidation; no SQL/DDL/permission/contractchange"
     }
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T01:29:36.494566+00:00",
-    "sourceRound": 383,
-    "sourceCheckpoint": "SOURCE3825ea24f86 remoteverified/current382actualinstall+privateappCSSfontPASS; SOURCE383 batchproofoptimizer source; C213failed/C214zero product no replay",
+    "atUtc": "2026-10-25T01:43:05.752882+00:00",
+    "sourceRound": 384,
+    "sourceCheckpoint": "SOURCE383 exactremote; SOURCE384 actual217products2956commit+keyreadback; SKU14999next",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4869,7 +4889,7 @@
     "qa": "QB279 actualsupplier222 limitedPASS adopted; QB280 actualTCP/currentformread metadata review in progress; QF current364 affectedPASS/QF2 finiteoutputPASS reused",
     "import": "C144 originalphysical source/typed capture ACTUAL exit0/245.27555s, Sales80918+Settlement25779/source106697/typed106697; four0600 artifacts fixedSHA andcachecleared; refonly/importReadyfalse/nativeBindingsVerifiedfalse/0PG MAIN PUBLISH all11, actualPayloadHashnull. No repeated source window.",
     "waiting": "Human historicalblankhallv5 onlyrelatedfullhistory/publication branch; v11/v15/v16/v17 alreadyapproved. Actual source/schema/ACL/normalHTTP readiness separate.",
-    "github": "REMOTE_EXACT_VERIFIED_5ea24f86b6f307db8e2562e49a4925ba3f49979f",
+    "github": "REMOTE_EXACT_VERIFIED_fdfaa6074f33a3c1410a3518ef486e77e9d1d736",
     "goalComplete": false,
     "demoCoverage": {
       "total": 104,
