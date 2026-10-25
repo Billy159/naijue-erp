@@ -30,3 +30,16 @@ test('candidate prefix retains canonical HTTPS, verify-on-mount and original rou
   assert.throws(()=>parseProductionHostConfiguration({...configuration(basePath),role:'ADMIN'}));
  }
 });
+
+
+test('history revision is an explicit per-document presentation switch, never implied by edit',()=>{
+ const base=configuration();
+ assert.equal(parseProductionHostConfiguration({...base,routes:{...base.routes,salesExistingEdit:true}}).routes.historyRevision,undefined);
+ const history={sales:true,transfers:false};
+ const parsed=parseProductionHostConfiguration({...base,routes:{...base.routes,historyRevision:history}});
+ assert.deepEqual(parsed.routes.historyRevision,history);assert.ok(Object.isFrozen(parsed.routes.historyRevision));
+ history.sales=false;assert.equal(parsed.routes.historyRevision?.sales,true);
+ for(const value of [null,true,'true',{sales:'true'},{other:true}]) assert.throws(()=>parseProductionHostConfiguration({...base,routes:{...base.routes,historyRevision:value}}));
+ assert.throws(()=>parseProductionHostConfiguration({...base,routes:{...base.routes,sales:false,historyRevision:{sales:true}}}));
+ assert.throws(()=>parseProductionHostConfiguration({...base,routes:{...base.routes,transfers:false,historyRevision:{transfers:true}}}));
+});
