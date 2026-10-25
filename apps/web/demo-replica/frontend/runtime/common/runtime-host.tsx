@@ -122,6 +122,7 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
     // Ordinary navigation/identity replacement already advances serial before disposal.
     queueMicrotask(() => {
      if (disposed || request !== serial || scope !== active || !session.auth.getSnapshot().principal) return;
+     dismissLeave();
      current?.dispose(); current = null;
      status('当前页面的访问权限或资料范围已失效，请重新核验。', () => { void session.auth.resolveSession(); }, '重新核验访问权限');
     });

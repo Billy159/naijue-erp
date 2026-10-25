@@ -11691,6 +11691,18 @@
       "QF2": "ProductnormalentryUI currentlyactive, no userChrome",
       "QB": "22newcarrier limitedreview currentlyactive"
     },
-    "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator"
+    "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
+    "source501LeaveDialogFix": {
+      "finding": "QF-SOURCE499-01",
+      "owner": "C",
+      "status": "SOURCE_FIXED_TARGETED_TEST_PASS_PENDING_ORIGINAL_QF_MINIMAL_RECHECK",
+      "sourceFiles": [
+        "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx",
+        "apps/web/demo-replica/frontend/runtime/common/runtime-host.test.mjs"
+      ],
+      "check": "runtime-host.test.mjs exit0; synthetic HTTP and isolated page-double only; React19 warnings retained",
+      "candidates": "Old499 excludes501 fix; public494CORE05 unchanged",
+      "next": "Fixed501 candidate and originalQF singlefinding review; preserve T45 pending direct-human handoff"
+    }
   }
 }
