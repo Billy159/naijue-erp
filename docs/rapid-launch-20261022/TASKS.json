@@ -12045,11 +12045,26 @@
     },
     "confirmedHall2471SourceOnly": {
       "owner": "D3",
-      "status": "DISPATCHED_ACTUAL_SOURCE_ONLY_AFTER_T45_EXPLICIT_HANDOVER",
+      "status": "PASS_ACTUAL_SOURCE_PREPARATION_NOT_DB_STAGE",
       "input": "O/D3/CONFIRMED-BUSINESS-HALL2471-SOURCE52-INPUT.DRAFT.json",
       "scope": "52 parked2471 and fixed approved overlay only; no known810MB reread; no DB/server/import/publish",
       "approval": "Already approved human mapping; v5 nullable proposal superseded; do not reask",
-      "next": "D3 bounded actual output then original T45 full publication closure"
+      "next": "D3 original full28282 header reference closure; T45 QA60 then actual stage/publication; no duplicate source preparation",
+      "rows": 2471,
+      "bytes": 111615389,
+      "sha256": "ba16a5c56060be3fe14de4a4efb622b627ca354248b7972f003f5dd941537aab",
+      "elapsedSeconds": 11.657,
+      "sourceEof": true,
+      "closed": true,
+      "cleanupErrors": [],
+      "rawHallEmptyPreserved": 2471,
+      "normalizedBusinessHallDerived": 2471,
+      "historicalCustomerReferences": 2,
+      "moneyApprovalCells": 32,
+      "actualResult": "O/D3/confirmed-business-hall-actual2/RESULT.json",
+      "databaseWrites": false,
+      "MAIN": false,
+      "PUBLISH": false
     }
   }
 }
