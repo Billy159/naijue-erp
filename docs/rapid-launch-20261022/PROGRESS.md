@@ -1,3 +1,11 @@
+SOURCE431 STOCK ACTUAL SUBMISSION / SOURCE429 QB303 PASS
+
+SoleT45 actual stock private upload PASS10702025/7b0184221eb905796203e122836dd756fc11850215c00102b4fe8936b6f302be UID1000/0600, job t45-r1-v18-stock38303-stage-20261025-01 submitted once QUEUED unit naijue-erp-op-5cc58239-1931511a164d; original ACTUAL-SUBMISSION-HANDLE.json retained. No stock completion/MAIN/PUBLISH claim. T45 collecting original key only, no automatic replay. Connection-question mistaken pause corrected using actual human continued delegation; authenticated READY confirmed no new password needed.
+
+QB303 SOURCE429 exact2 composition limited PASS adopted, 6targeted scripted tests; actual PG/HTTP/private role/publication remain pending. QB302 and QF427 scoped conclusions retained. F3 QF2-428-F01 targeted repair active with C two route exit seams; F2 product normal recovery active. F1 DOC186 fixed4300c1d5d7e1719bd0aca66e63071241681269bd787 and GitHub exact remote verified, next document real print/export adapter seam originalowner active. D3 original header consumer source ready, next original retained line consumer gap work, no source recapture.
+
+37pages/67overlays plus additions remain full target. No new wholepage business PASS or formal deployment this packet; candidate57909 SOURCE427 synthetic UI only.
+
 SOURCE430 F1 DOCUMENT EDIT RECOVERY FIXED
 
 OriginalF1 DOC186 exact2 document leaves frozen: failedTransfer initialization remains same readonly body plus fresh retry, no old edit fallback; sameID Sales retry uses fresh original open/prepare; status error current feedback retained. Original affected negative DOM checks and scoped strict PASS adopted, DOC185 valid evidence reused. Actual HTTP/PG, latest integrated browser and full save/approve/export/print remain unproved. Original responsible-staff capability/provider/output adapters still actual dependencies. No new wholepage migration/business PASS. QF next fixed packet only.
