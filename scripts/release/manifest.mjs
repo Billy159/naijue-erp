@@ -199,7 +199,7 @@ function htmlResources(html) {
     body: [], div: ['id','class','aria-label','role','aria-live'], aside:['class'], span:['id','class','aria-hidden'], nav:['aria-label'],
     a:['id','class','href','data-route'], details:['class','open'], summary:['class'], header:['class'], main:['id'], dialog:['id','aria-labelledby'], br:[],
     noscript: [], script: ['id', 'type', 'src'] };
-  const resources = []; let cursor = 0, configurations = 0;
+  const resources = []; let cursor = 0, configurations = 0, startupStyles = 0;
   while ((cursor = html.indexOf('<', cursor)) !== -1) {
     if (html.startsWith('<!--', cursor)) {
       const end = html.indexOf('-->', cursor + 4); requireRelease(end !== -1, 'UNSUPPORTED_HTML_SYNTAX'); cursor = end + 3; continue;
@@ -235,6 +235,7 @@ function htmlResources(html) {
       }
     }
     if(tag==='style'){
+      startupStyles++;requireRelease(startupStyles===1,'DUPLICATE_HTML_STARTUP_STYLE');
       const end=html.indexOf('</style>',cursor);
       const expected='html[data-replica-starting] .app{visibility:hidden}#replica-startup{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#4e5969;font:14px system-ui,sans-serif}#replica-startup a{color:#1677ff}';
       requireRelease(!selfClosing&&attributes.size===1&&attributes.get('id')==='replica-startup-style'&&end!==-1&&html.slice(cursor,end)===expected,'UNSUPPORTED_HTML_STARTUP_STYLE');

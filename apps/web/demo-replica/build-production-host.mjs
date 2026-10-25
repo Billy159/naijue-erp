@@ -17,7 +17,7 @@ export async function buildProductionHost({configuration,outdir,sourceCheckpoint
  if(!path.isAbsolute(outdir??'')||!/^[a-f0-9]{40}$/.test(sourceCheckpoint??''))throw new TypeError('Exact source and absolute fresh output are required.');
  await mkdir(outdir,{recursive:false});
  const observed=new Map(),namespaceSources=new Map();
- const runtimeCss=new Set(['basic-settings-v2.css','runtime/settings/settings-runtime.css','runtime/settings/payment-halls.css','runtime/common/account-password.css'].map(name=>path.join(frontend,name)));
+ const runtimeCss=new Set([...['basic-settings-v2.css','runtime/settings/settings-runtime.css','runtime/settings/payment-halls.css','runtime/common/account-password.css'].map(name=>path.join(frontend,name)),...['standard-controls.css','standard-overlay.css','document-output.css'].map(name=>path.join(root,'apps/web/src/components',name))]);
 
  const input=async filename=>{const bytes=await readFile(filename),previous=observed.get(filename),record={bytes:bytes.length,sha256:sha256(bytes)};if(previous&&previous.sha256!==record.sha256)throw new Error('Production input changed during build.');observed.set(filename,record);return bytes;};
  for(const filename of [fileURLToPath(import.meta.url),path.join(frontend,'frozen-style-order.ts'),path.join(frontend,'runtime.html'),path.join(root,'package.json'),path.join(root,'package-lock.json'),path.join(root,'tsconfig.json'),path.join(root,'apps/web/tsconfig.json')])await input(filename);
