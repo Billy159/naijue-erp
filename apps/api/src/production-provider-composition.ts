@@ -252,3 +252,12 @@ export async function createProductionRuntime26R3ApplicationApi(input: unknown, 
   return createPostgresRuntime26MediaApplicationApi({ ...productionApplicationOptions(productionRuntime26R3HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) },
     config.runtime26Review, config.existingPreparation, { ...config.productMedia, publicRoots: [config.assets.root] }, driver, history);
 }
+
+/** Complete explicitly selected production successor. Existing R1/R2/R3 calls
+ * keep their defaults. The original historical write provider is built only
+ * inside the owned application pool, never from JSON functions or LIVE policy. */
+export async function createProductionRuntime26FullApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
+  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
+  return createProductionRuntime26R3ApplicationApi(input, driver, staffCredentialRequestTag,
+    { profile: "SOURCE_CONFIRMED_HISTORY_REVISION_V16" });
+}

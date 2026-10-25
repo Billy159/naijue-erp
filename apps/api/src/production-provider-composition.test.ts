@@ -1798,3 +1798,67 @@ test('complete host bridge: CORE organization opt-in reads native maintained roo
     assert.equal(p.counts().connects,p.counts().releases);
   }finally{f.cleanup();}
 });
+
+
+import { createProductionRuntime26FullApplicationApi } from './production-provider-composition.ts';
+import { runProductionRuntime26FullMain } from './production-main.ts';
+test('full historical production launch: original same-pool source write policy is real, defaults stay closed and JSON functions are rejected', async () => {
+  const f=mixedProductionFixture(true);
+  const p=exact26Driver(f.observation,sql=>{
+    if(sql===V16HistoryProbe)return [structuredClone(f.observation)];
+    if(sql.includes('history-write-policy:identity'))return [{id:account,login_enabled:true,role:'ADMIN',employment_status:'在职',hall_id:hall,hall_enabled:true}];
+    if(sql.includes('history-write-policy:document'))return [];
+    return undefined;
+  });
+  const config={...r2Configuration(f.configuration,false,false),profile:'source-confirmed-native-exact26-r3-v1' as const,productMedia:{root:'/unopened-private-media',rootKey:'full-original-media'}};
+  try{
+    for(const key of ['history','historyRevision','authorization','historyAuthorization'])assert.throws(()=>parseProductionRuntime26R3Configuration({...config,[key]:{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'}}),TypeError);
+    await assert.rejects(runProductionRuntime26FullMain([]),TypeError);await assert.rejects(runProductionRuntime26FullMain(['relative.json']),TypeError);
+    const api=await createProductionRuntime26FullApplicationApi(config,p.factory);
+    try{
+      const response=await api.app.inject({method:'POST',url:'/imported-history/sales/revise',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`},payload:{kind:'sales',documentId:'00000000-0000-4000-8000-000000000181',expectedVersion:1,requestKey:'synthetic-full-policy-source-denial',reason:'Synthetic correction',lines:[{lineId:'00000000-0000-4000-8000-000000000182',quantity:'2'}],totals:null,settlements:[]}});
+      assert.equal(response.statusCode,403,response.body);
+      assert.ok(p.calls.some(c=>c.sql.includes('history-write-policy:identity')));assert.ok(p.calls.some(c=>c.sql.includes('history-write-policy:document')));assert.ok(!p.calls.some(c=>c.sql.includes('history-revise:')));
+      assert.equal(p.counts().allocations,1);assert.equal(api.app.server.listening,false);
+    }finally{await api.close();}
+    assert.equal(p.counts().connects,p.counts().releases);
+    const closed=mixedProductionFixture(false),q=exact26Driver(closed.observation,sql=>sql===V16HistoryProbe?[structuredClone(closed.observation)]:undefined);
+    try{await assert.rejects(createProductionRuntime26FullApplicationApi({...config,runtime26Review:closed.configuration.runtime26Review},q.factory),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(q.counts().ends,1);}finally{closed.cleanup();}
+  }finally{f.cleanup();}
+});
+
+
+import { syntheticDraft as fullSyntheticDraft, syntheticSku as fullSyntheticSku, sid as fullSid } from '../../../tests/support/synthetic-fixtures.ts';
+test('full native catalogue host producer: complete-draft SAVE consumes original maintained proof and fails closed without falling back to imported-only evidence',async()=>{
+ const f=mixedProductionFixture(false),sku=fullSyntheticSku();
+ const seed=fullSyntheticDraft(),draft={...seed,header:{...seed.header,hallId:hall,salespersonId:fullSid('staff',16)},settlements:[]};
+ const p=exact26Driver(f.observation,(sql,values)=>{
+  if(sql===V16HistoryProbe)return [structuredClone(f.observation)];
+  if(sql.includes('sales-authorization:identity'))return [{account_id:account,staff_id:fullSid('staff',16),login_enabled:true,role:'ADMIN',employment_status:'在职',hall_id:hall}];
+  if(sql.includes('sales-authorization:hall')||sql.includes('native-sales-facts:hall'))return [{id:hall,enabled:true}];
+  if(sql.includes('native-sales-facts:schema'))return [{installed:true}];
+  if(sql.includes('native-sales-facts:warehouse'))return [{id:draft.header.warehouseId,hall_id:hall,enabled:true}];
+  if(sql.includes('native-sales-facts:customer'))return [{id:draft.header.customerId,enabled:true}];
+  if(sql.includes('native-sales-facts:staff'))return [{id:draft.header.salespersonId,employment_status:'在职'}];
+  if(sql.includes('native-sales-facts:sku */'))return [{id:sku.id,product_id:sku.productId,color_id:sku.colorId,fit_id:sku.fitId,size_id:sku.sizeId,enabled:true}];
+  if(sql.includes('native-sales-facts:product */'))return [{id:sku.productId,product_code:'SYNTHETIC',name:'SYNTHETIC',size_group_id:fullSid('sizeGroup',50),enabled:true,...Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k=>[k,k==='retail_price'?'1.25':null]))}];
+  if(sql.includes('native-sales-facts:color */'))return [{id:sku.colorId,name:'SYNTHETIC',enabled:true}];
+  if(sql.includes('native-sales-facts:fit */'))return [{id:sku.fitId,name:'SYNTHETIC',enabled:true}];
+  if(sql.includes('native-sales-facts:size */'))return [{id:sku.sizeId,name:'SYNTHETIC'}];
+  if(sql.includes('native-sales-facts:membership'))return [{size_group_id:(values[0] as string[])[0],size_id:sku.sizeId}];
+  if(sql.includes('maintained-catalogue26:roots'))return [];
+  return undefined;
+ });
+ try{
+  const api=await createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration,false,false),p.factory);
+  try{
+   const payload=JSON.parse(JSON.stringify({action:'SAVE',requestKey:'synthetic-full-native-proof-reject',expectedVersion:null,draft},(_key,value)=>typeof value==='bigint'?value.toString():value));
+   const response=await api.app.inject({method:'POST',url:'/sales/commands',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`},payload});
+   assert.equal(response.statusCode,409,response.body);assert.equal(response.json().error.code,'NATIVE_CATALOGUE_FACTS_UNAVAILABLE');
+   assert.ok(p.calls.some(c=>c.sql.includes('maintained-catalogue26:roots')));
+   assert.ok(!p.calls.some(c=>c.sql.includes('native-catalogue-completeness:products')));
+   assert.ok(!p.calls.some(c=>/^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)));
+  }finally{await api.close();}
+  assert.equal(p.counts().connects,p.counts().releases);
+ }finally{f.cleanup();}
+});

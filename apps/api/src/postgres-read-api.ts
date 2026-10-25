@@ -68,6 +68,7 @@ import { createApprovedPartyCodeAllocator } from "../../../packages/application/
 import type { ImportedHistoryReadAuthorization } from "../../../packages/application/src/imported-history-query-ports.ts";
 import { PostgresImportedHistoryQueryReader } from "../../../adapters/postgres/src/imported-history-query-reader.ts";
 import { createImportedHistoryQueryHttpPlugin } from "./imported-history-query-http.ts";
+import { createSourceConfirmedHistoryRevisionAuthorization } from "./history-revision-authorization.ts";
 import { createHistoryRevisionHttpPlugin } from "./history-revision-http.ts";
 import type { HistoryRevisionDependencies } from "../../../packages/application/src/history-revision-contracts.ts";
 import { PostgresHistoryRevisionStore } from "../../../adapters/postgres/src/history-revision-store.ts";
@@ -476,10 +477,15 @@ export async function createPostgresRuntime26ApplicationApi(options: PostgresApp
 export interface Runtime26ExistingPreparation { readonly sales: boolean; readonly transfers: boolean }
 /** Trusted host policy, independently supplied for HISTORY writes. Read policies
  * and LIVE command providers cannot stand in for this authorization. */
-export interface Runtime26HistoryRevisionConfiguration {
-  readonly authorization: HistoryRevisionDependencies["authorization"];
-}
-function checkedRuntime26HistoryAuthorization(history: Runtime26HistoryRevisionConfiguration): HistoryRevisionDependencies["authorization"] {
+export type Runtime26HistoryRevisionConfiguration = { readonly authorization: HistoryRevisionDependencies["authorization"] }
+  | { readonly profile: "SOURCE_CONFIRMED_HISTORY_REVISION_V16" };
+type Runtime26HistoryAuthorization = HistoryRevisionDependencies["authorization"] | { readonly profile: "SOURCE_CONFIRMED_HISTORY_REVISION_V16" };
+function checkedRuntime26HistoryAuthorization(history: Runtime26HistoryRevisionConfiguration): Runtime26HistoryAuthorization {
+  if (history !== null && typeof history === "object" && Object.hasOwn(history, "profile")) {
+    const selected = exactBag(history, ["profile"]);
+    if (selected.profile !== "SOURCE_CONFIRMED_HISTORY_REVISION_V16") throw new TypeError("Explicit original historical write policy selection required");
+    return Object.freeze({ profile: "SOURCE_CONFIRMED_HISTORY_REVISION_V16" as const });
+  }
   const selected = exactBag(history, ["authorization"]), authorization = exactBag(selected.authorization, ["authorize"]);
   if (typeof authorization.authorize !== "function") throw new TypeError("Explicit independent HISTORY write policy required");
   return Object.freeze({ authorize: (authorization.authorize as HistoryRevisionDependencies["authorization"]["authorize"]).bind(selected.authorization) });
@@ -543,7 +549,7 @@ async function composeRuntime26DocumentApplicationApi(options: PostgresApplicati
 async function composePostgresApi(options: PostgresReadApiOptions, createDriver: PostgresPoolDriverFactory | undefined,
   capabilities: ApplicationCapabilities | null, runtime26Review?: { readonly reviewFile: string; readonly trustedReviewSha256: string },
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
-  runtime26HistoryAuthorization?: HistoryRevisionDependencies["authorization"]): Promise<PostgresReadApi | PostgresApplicationApi> {
+  runtime26HistoryAuthorization?: Runtime26HistoryAuthorization): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
   if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
@@ -736,7 +742,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if (runtime26HistoryAuthorization !== undefined) {
       if (issuer === null) throw new TypeError("HISTORY revision requires the original exact runtime issuer");
       app.register(createHistoryRevisionHttpPlugin({ authenticate, dependencies: {
-        authorization: runtime26HistoryAuthorization, now: host.now,
+        authorization: "profile" in runtime26HistoryAuthorization
+          ? createSourceConfirmedHistoryRevisionAuthorization(pool, issuer.runtime26) : runtime26HistoryAuthorization, now: host.now,
         store: PostgresHistoryRevisionStore.forRuntime26(pool, { runtime26: issuer.runtime26, newId: () => randomUUID() })
       } }));
     }
@@ -745,7 +752,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       if (issuer !== null && runtime26ExistingPreparation === undefined) throw new TypeError("Exact26 commands require the independent R2 selector");
       app.register(createAuthenticatedDocumentCommandsPlugin({ authentication,
         sales: { ...c.sales, now: host.now, unitOfWork: new PostgresSalesUnitOfWork(pool, { catalogueCompleteness: c.catalogueCompleteness,
-          ...(issuer === null ? {} : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion }) }) },
+          ...(issuer === null ? {} : { runtime26: issuer.runtime26, historicalCustomerExclusion: issuer.historicalCustomerExclusion,
+            catalogueReadProof: { profile: "MAINTAINED_CATALOGUE26_V1" as const } }) }) },
         transfers: { ...c.transfers, now: host.now, unitOfWork: new PostgresTransferUnitOfWork(pool, issuer === null ? undefined : { runtime26: issuer.runtime26 }) },
         nativeManualSalesPreparation: true, nativeManualTransferPreparation: true,
         ...(runtime26ExistingPreparation?.sales === true ? { nativeExistingSalesPreparation: true } : {}),
