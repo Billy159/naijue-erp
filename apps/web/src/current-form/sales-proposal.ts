@@ -354,7 +354,15 @@ export class SalesProposalSession {
     return this.#edit({ ...this.#state.draft, settlements: this.#state.draft.settlements.map(row => row.key === key ? { ...row, ...patch } : row) });
   }
   removeSettlement(key: string): boolean { return this.#edit({ ...this.#state.draft, settlements: this.#state.draft.settlements.filter(row => row.key !== key) }); }
-  clearSalesperson(): boolean { return this.#edit({ ...this.#state.draft, salesperson: null }); }
+  clearReference(kind: 'hall' | 'salesperson' | 'customer' | 'warehouse' | 'paymentMethod' | 'paymentAccount', paymentKey?: string): boolean {
+    if (this.#state.disposed) return false;
+    this.closePicker();
+    const draft = this.#state.draft;
+    if (kind === 'paymentMethod' || kind === 'paymentAccount') return this.#edit({ ...draft, settlements: draft.settlements.map(row => row.key === paymentKey ? { ...row, account: null, ...(kind === 'paymentMethod' ? { method: null } : {}) } : row) });
+    if (kind === 'hall') return this.#edit({ ...draft, hall: null, salesperson: null, customer: null, warehouse: null, settlements: draft.settlements.map(row => ({ ...row, method: null, account: null })) });
+    return this.#edit({ ...draft, [kind]: null });
+  }
+  clearSalesperson(): boolean { return this.clearReference('salesperson'); }
   get canScan(): boolean { return !this.#state.disposed && !!this.#reader.readBarcode && !!this.#state.draft.hall && !!this.#state.draft.warehouse; }
   createScanner(direction: 'IN' | 'OUT'): DocumentScanController {
     return new DocumentScanController({ scope: this.#scope, ...(this.#onAccessFailure ? { onAccessFailure: this.#onAccessFailure } : {}),
@@ -514,7 +522,7 @@ export class SalesProposalSession {
       if (draft.settlements.length >= 3) { this.#publish({ notice: '收退明细已达原生单据 3 行上限。' }); return false; }
       this.closePicker(); return this.#edit({ ...draft, settlements: [...draft.settlements, { key: `local-settlement-${++this.#nextSettlement}`, method: p.method!, account: item as CurrentSalesReferenceItem, direction: 'RECEIVE', amount: '' }] });
     }
-    if (p.kind === 'hall' && draft.hall?.id !== id && (draft.customer || draft.salesperson || draft.warehouse || draft.lines.length || draft.settlements.length || Object.values(this.#state.entries).flat().some(entry => entry.product || entry.query.trim()))) {
+    if (p.kind === 'hall' && draft.hall && draft.hall.id !== id && (draft.customer || draft.salesperson || draft.warehouse || draft.lines.length || draft.settlements.length || Object.values(this.#state.entries).flat().some(entry => entry.product || entry.query.trim()))) {
       this.#publish({ notice: '切换营业厅会改变候选范围。请先确认重置草稿，再选择新厅。' }); return false;
     }
     this.closePicker(); return this.#edit({ ...draft, [p.kind]: item });
@@ -563,7 +571,7 @@ export class SalesProposalSession {
       }
       const businessType = salesBusinessType(salesBusinessMode(draft.businessType), lines.map(row => row.quantity));
       if (!salesProposalMoney({ ...draft, businessType, lines: pricing })) throw Error();
-      const proposal = parseNativeSalesSaveProposal({ ...(draft.responsible ? { responsibleStaffId: draft.responsible.id } : {}), salesId, businessType, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note,
+      const proposal = parseNativeSalesSaveProposal({ salesId, businessType, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note,
         hallId: draft.hall.id, customerId: draft.customer.id, salespersonId: draft.salesperson?.id ?? null, warehouseId: draft.warehouse.id, orderDiscount: yuan(draft.orderDiscount), lines,
         settlements: draft.settlements.map(row => { if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id) throw Error(); return { existingSettlementId: originalSettlements.has(row.key) ? row.key : null,
           paymentAccountId: row.account.id, paymentMethodId: row.method.id, direction: row.direction, amount: yuan(row.amount) }; }) });

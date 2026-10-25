@@ -1,4 +1,3 @@
-import {createResponsibleCapability} from './responsible-capability.ts';
 import type { DocumentResponsibleStaffCapability } from '../../../../src/application/contracts.ts';
 import { createCurrentFormHttpReader } from '../../../../src/current-form/http-reader.ts';
 import { createSalesExistingPreparationHttpClient } from '../../../../src/current-form/existing-document-preparation.ts';
@@ -26,10 +25,10 @@ export function createReplicaSalesSession(runtime: ReplicaSession, options: {
 }) {
   const historyOwners=new Map<string,{scope:import('../../../../src/loading/read-scope.ts').ReadScope;owner:HistoryRevisionOwner}>();
   const selection:{row:NormalSalesRow|null}={row:null};
+  const presentation:{businessChoice:'SALE'|'RETURN_EXCHANGE'|null}={businessChoice:null};
   const principal = runtime.auth.getSnapshot().principal;
   if (!principal) throw new Error('An authenticated session is required to open sales.');
   const scope = runtime.reads.createScope(options.instanceId);
-  const responsibleStaff=options.responsibleStaff??(options.responsibleReady===true?createResponsibleCapability(runtime,scope):undefined);
   const reader = createSalesHttpReader(runtime.http);
   const current = createCurrentFormHttpReader(runtime.http);
   const normalReader=createNormalListReader(runtime.http);
@@ -43,13 +42,12 @@ export function createReplicaSalesSession(runtime: ReplicaSession, options: {
     onAccessFailure: runtime.onAccessFailure,
     existingPreparation: createSalesExistingPreparationHttpClient(runtime.http),
     existingReader: current,
-    ...(responsibleStaff ? {responsibleStaff} : {}),
   });
   const create = new SalesNewDocumentSession({ scope, proposal, editor,
     preparation: createSalesPreparationHttpClient(runtime.http),
     onAccessFailure: runtime.onAccessFailure,
   });
-  return Object.freeze({ scope, reader, current, list, proposal, editor, create, selection, historyOwners,
+  return Object.freeze({ scope, reader, current, list, proposal, editor, create, selection, historyOwners, presentation, currentEmployee:{id:principal.staffId,name:principal.staffName??null},
     async historyOwner(target:HistoryTarget){const key=documentRowKey({dataset:'HISTORY',...target});const existing=historyOwners.get(key);if(existing?.scope.active)return existing.owner;const {HistoryRevisionOwner}=await import('./history-revision.ts');if(!scope.active)throw new Error('登录身份已改变。');const child=runtime.reads.createScope('replica-history:'+key),owner=new HistoryRevisionOwner({scope:child,target,http:runtime.http,denied:runtime.onAccessFailure});historyOwners.set(key,{scope:child,owner});return owner;},
     dispose(): void { for(const entry of historyOwners.values()){entry.owner.dispose();entry.scope.dispose();}historyOwners.clear();selection.row=null;scope.dispose(); create.dispose(); proposal.dispose(); editor.dispose(); list.dispose(); },
   });

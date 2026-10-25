@@ -8794,255 +8794,263 @@
     "source": "Existing approved runtime"
   },
   "latestUserFrontendSweep": {
-    "atUtc": "2026-10-25T05:17:00.006320+00:00",
-    "authority": "Current human 51 screenshots and detailed frontend defects",
-    "sourceScreenshotCandidate": "SOURCE389 / 57898 synthetic; check latest400 separately",
-    "currentFixedCandidate": "252ddc859fbb543fc6ddb7a1f5c2269085e37b0e / phase2-normal-252ddc8-12 / http://127.0.0.1:57901/",
-    "goal": "Trace introduction and shared causes, fix all listed pages and same-pattern consumers; no old rewrite fallback",
-    "latestOverrides": [
-      "Transfer UI only responsible, editable default current trusted employee; creator immutable backend only",
-      "Sales UI no creator; salesperson is business owner; remove independent responsible consumer without deleting stored evidence",
-      "Parties combined entry, customer/supplier identities remain separate",
-      "Staff/account combined entry, existing permissions unchanged"
-    ],
-    "owners": {
-      "F1": "ACTIVE Sol medium documents full package current; next shared all-state interactions and real interface gaps",
-      "F2": "ACTIVE Sol medium inventory filters + product default routes; next six-tab edit and shared pagination consumers",
-      "F3": "ACTIVE Sol medium settings common cause + maintenance; next combined entry consumers",
-      "F4": "QUEUED catalogue CRUD/dictionary controls after capacity; original owner retained",
-      "C": "Common style lifetime/menu seams, immutable build/integration, frontend defect catalogue, current backend breakpoints retained"
+  "atUtc": "2026-10-25T05:17:00.006320+00:00",
+  "authority": "Current human 51 screenshots and detailed frontend defects",
+  "sourceScreenshotCandidate": "SOURCE389 / 57898 synthetic; check latest400 separately",
+  "currentFixedCandidate": "252ddc859fbb543fc6ddb7a1f5c2269085e37b0e / phase2-normal-252ddc8-12 / http://127.0.0.1:57901/",
+  "goal": "Trace introduction and shared causes, fix all listed pages and same-pattern consumers; no old rewrite fallback",
+  "latestOverrides": [
+    "Transfer UI only responsible, editable default current trusted employee; creator immutable backend only",
+    "Sales UI no creator; salesperson is business owner; remove independent responsible consumer without deleting stored evidence",
+    "Parties combined entry, customer/supplier identities remain separate",
+    "Staff/account combined entry, existing permissions unchanged"
+  ],
+  "owners": {
+    "F1": "ACTIVE Sol medium documents full package current; next shared all-state interactions and real interface gaps",
+    "F2": "ACTIVE Sol medium inventory filters + product default routes; next six-tab edit and shared pagination consumers",
+    "F3": "ACTIVE Sol medium settings common cause + maintenance; next combined entry consumers",
+    "F4": "QUEUED catalogue CRUD/dictionary controls after capacity; original owner retained",
+    "C": "Common style lifetime/menu seams, immutable build/integration, frontend defect catalogue, current backend breakpoints retained"
+  },
+  "states": "OPEN until fixed candidate scoped verification; no broad prior PASS invalidation",
+  "fast": "UNVERIFIED_TOOL_NO_SWITCH",
+  "realWholePagesPassed": 0,
+  "pageDenominator": 37,
+  "overlayDenominator": 67,
+  "issueGroups": {
+    "COMMON": {
+      "owner": "F1/C",
+      "items": [
+        "sidebar disclosure icons",
+        "shared clear controls",
+        "shared fixed footer pagination",
+        "shared leave dialog",
+        "style and portal lifecycle"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
     },
-    "states": "OPEN until fixed candidate scoped verification; no broad prior PASS invalidation",
-    "fast": "UNVERIFIED_TOOL_NO_SWITCH",
-    "realWholePagesPassed": 0,
-    "pageDenominator": 37,
-    "overlayDenominator": 67,
-    "issueGroups": {
-      "COMMON": {
-        "owner": "F1/C",
-        "items": [
-          "sidebar disclosure icons",
-          "shared clear controls",
-          "shared fixed footer pagination",
-          "shared leave dialog",
-          "style and portal lifecycle"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "INVENTORY": {
-        "owner": "F2/C",
-        "items": [
-          "approved centered query scope layout",
-          "five All filters and checked children",
-          "sticky action column border link and row hover"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "TRANSFER_LIST": {
-        "owner": "F1/D3/C",
-        "items": [
-          "empty synthetic versus unpublished real history",
-          "status and warehouse All",
-          "shared pager",
-          "query reset hint"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "TRANSFER_EDITOR": {
-        "owner": "F1/D1",
-        "items": [
-          "responsible only editable trusted current employee default",
-          "scanner opens initially",
-          "product focus and complete actual product facts",
-          "complete own size group",
-          "view and delete",
-          "audit export print history real capabilities",
-          "no old body branch"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "SALES_LIST": {
-        "owner": "F1/D3/C",
-        "items": [
-          "actual list data connection",
-          "six All filters",
-          "new button placement",
-          "fixed shared pager"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "SALES_EDITOR": {
-        "owner": "F1/D1",
-        "items": [
-          "no default business type",
-          "all applicable clear controls",
-          "shared dirty leave dialog",
-          "current staff recommendation",
-          "hall warehouse dependency",
-          "creator backend only",
-          "remove independent responsible consumer retain provenance",
-          "exact receipt refund under and over amounts",
-          "shared color fit size choice",
-          "view and gift",
-          "audit export print",
-          "return dialog"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "PRODUCT": {
-        "owner": "F2/D2/C",
-        "items": [
-          "original filter layout and semantics",
-          "fixed shared pager",
-          "normal new route writable business",
-          "normal edit six tabs"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "CATEGORY": {
-        "owner": "F4/D2/C",
-        "items": [
-          "name editing",
-          "delete",
-          "top level and child create"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "PRODUCT_SETTINGS": {
-        "owner": "F4/D2/C",
-        "items": [
-          "shared pager",
-          "color actions",
-          "actual six groups not synthetic claims",
-          "last column width must not treat sizes as actions"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "SETTINGS_COMMON": {
-        "owner": "F3/C",
-        "items": [
-          "reference final published source",
-          "search and popup coordinates",
-          "audit date controls",
-          "font density green status",
-          "shared pager"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "STORES": {
-        "owner": "F3/D2/C",
-        "items": [
-          "full hall warehouse visuals",
-          "fixed pager",
-          "green status"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "PARTIES": {
-        "owner": "F3/D2/C",
-        "items": [
-          "combined entry separate customer supplier identities and tabs",
-          "actual create operations",
-          "tag color and fonts"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "PERSONNEL": {
-        "owner": "F3/D2/C",
-        "items": [
-          "combined staff account entry and tabs",
-          "reference complete layout and operations"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      },
-      "PAYMENTS": {
-        "owner": "F3/D2/C",
-        "items": [
-          "create methods and accounts",
-          "actual editing",
-          "status and visual tags"
-        ],
-        "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
-        "samePatternRequired": true
-      }
+    "INVENTORY": {
+      "owner": "F2/C",
+      "items": [
+        "approved centered query scope layout",
+        "five All filters and checked children",
+        "sticky action column border link and row hover"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
     },
-    "personnelCorrection": "One staff table and existing unified staff maintenance; two-tab405 rejected, corrected C route awaiting scoped browser verification",
-    "fixed405Acceptance": "QF2 SOURCE405-UI-CHECK-01 finite browser passed; not whole page/business",
-    "activeAfter405": {
-      "F1": "documents remaining view/state consumers",
-      "D1": "nullable responsible parsers and v18 preserved-prefix fixture fix",
-      "D2": "actual maintenance HTTP/provider/capability pairing",
-      "F4": "source delivered, integrated next fixed candidate"
+    "TRANSFER_LIST": {
+      "owner": "F1/D3/C",
+      "items": [
+        "empty synthetic versus unpublished real history",
+        "status and warehouse All",
+        "shared pager",
+        "query reset hint"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
     },
-    "latestFixedCandidate": {
-      "source": "18bfabf0a800ad8bfe44a24ff232b989e6829e41",
-      "build": "phase2-normal-18bfabf-15",
-      "url": "http://127.0.0.1:57904/",
-      "syntheticOnly": true,
-      "strict": "PASS",
-      "buildResult": "PASS_130_RESOURCES",
-      "independentAcceptance": "405_SCOPE_REUSED_407_PERSONNEL_CATALOGUE_PENDING"
+    "TRANSFER_EDITOR": {
+      "owner": "F1/D1",
+      "items": [
+        "responsible only editable trusted current employee default",
+        "scanner opens initially",
+        "product focus and complete actual product facts",
+        "complete own size group",
+        "view and delete",
+        "audit export print history real capabilities",
+        "no old body branch"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
     },
-    "githubVerifiedSource": "18bfabf0a800ad8bfe44a24ff232b989e6829e41",
-    "currentNext": {
-      "C": {
-        "current": "Fixed frontend integration and actual maintenance seams; preserve R1 and QA228 prefix",
-        "next": "F1 complete packet -> immutable candidate -> QF technical/UI impacted scopes; D2 private HTTP execution; D1 QA product resume"
-      },
-      "F1": {
-        "current": "Documents behavior and all consumers, pure source uncommitted WIP",
-        "next": "Fixed candidate QF browser; original missing capability providers"
-      },
-      "F2": {
-        "current": "405 source complete accepted scoped UI, idle pending actual product maintenance seam",
-        "next": "Normal product editor real provider consumption"
-      },
-      "F3": {
-        "current": "405 shared visual controls delivered; two-tab personnel rejected, root407 uses one existing staff table/form",
-        "next": "Exact current published module full workflow alignment if any remaining; actual maintenance capabilities"
-      },
-      "F4": {
-        "current": "406 catalogue source delivered; real provider missing",
-        "next": "Correct maintenance capability injection and real dictionaries"
-      },
-      "D1": {
-        "current": "Responsible nullable/full parser store closure + remove separate sales consumer",
-        "next": "228 season-proof SYN fixture correction preserving committed8"
-      },
-      "D2": {
-        "current": "Existing actual maintenance HTTP/provider capability pairing and retained169 proof",
-        "next": "C-executed isolated HTTP/nonowner affected cases then frontend wiring"
-      },
-      "D3": {
-        "current": "Original actual2956/5586/53 accepted, source retained real1history window ready",
-        "next": "SKU9413 suffix only after v18actual QA; actualstock/history continuing"
-      },
-      "QF": {
-        "current": "400 sales partial evidence retained; source407 does not yet contain F1 packet",
-        "next": "New F1 fixed candidate affected document checks"
-      },
-      "QF2": {
-        "current": "405 finite browser passed excluding rejected personnel tabs; idle",
-        "next": "407 one employee workflow and catalogue affected only"
-      },
-      "QB": {
-        "current": "291/292/293/290 accepted source and actual scope retained",
-        "next": "D1 exact delta, D2 HTTP carrier, v18 actual resume result affected only"
-      }
+    "SALES_LIST": {
+      "owner": "F1/D3/C",
+      "items": [
+        "actual list data connection",
+        "six All filters",
+        "new button placement",
+        "fixed shared pager"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "SALES_EDITOR": {
+      "owner": "F1/D1",
+      "items": [
+        "no default business type",
+        "all applicable clear controls",
+        "shared dirty leave dialog",
+        "current staff recommendation",
+        "hall warehouse dependency",
+        "creator backend only",
+        "remove independent responsible consumer retain provenance",
+        "exact receipt refund under and over amounts",
+        "shared color fit size choice",
+        "view and gift",
+        "audit export print",
+        "return dialog"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "PRODUCT": {
+      "owner": "F2/D2/C",
+      "items": [
+        "original filter layout and semantics",
+        "fixed shared pager",
+        "normal new route writable business",
+        "normal edit six tabs"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "CATEGORY": {
+      "owner": "F4/D2/C",
+      "items": [
+        "name editing",
+        "delete",
+        "top level and child create"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "PRODUCT_SETTINGS": {
+      "owner": "F4/D2/C",
+      "items": [
+        "shared pager",
+        "color actions",
+        "actual six groups not synthetic claims",
+        "last column width must not treat sizes as actions"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "SETTINGS_COMMON": {
+      "owner": "F3/C",
+      "items": [
+        "reference final published source",
+        "search and popup coordinates",
+        "audit date controls",
+        "font density green status",
+        "shared pager"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "STORES": {
+      "owner": "F3/D2/C",
+      "items": [
+        "full hall warehouse visuals",
+        "fixed pager",
+        "green status"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "PARTIES": {
+      "owner": "F3/D2/C",
+      "items": [
+        "combined entry separate customer supplier identities and tabs",
+        "actual create operations",
+        "tag color and fonts"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "PERSONNEL": {
+      "owner": "F3/D2/C",
+      "items": [
+        "combined staff account entry and tabs",
+        "reference complete layout and operations"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
+    },
+    "PAYMENTS": {
+      "owner": "F3/D2/C",
+      "items": [
+        "create methods and accounts",
+        "actual editing",
+        "status and visual tags"
+      ],
+      "status": "OPEN_UNTIL_FIXED_VERSION_SCOPED_ACCEPTANCE",
+      "samePatternRequired": true
     }
   },
+  "personnelCorrection": "One staff table and existing unified staff maintenance; two-tab405 rejected, corrected C route awaiting scoped browser verification",
+  "fixed405Acceptance": "QF2 SOURCE405-UI-CHECK-01 finite browser passed; not whole page/business",
+  "activeAfter405": {
+    "F1": "documents remaining view/state consumers",
+    "D1": "nullable responsible parsers and v18 preserved-prefix fixture fix",
+    "D2": "actual maintenance HTTP/provider/capability pairing",
+    "F4": "source delivered, integrated next fixed candidate"
+  },
+  "latestFixedCandidate": {
+    "source": "18bfabf0a800ad8bfe44a24ff232b989e6829e41",
+    "build": "phase2-normal-18bfabf-15",
+    "url": "http://127.0.0.1:57904/",
+    "syntheticOnly": true,
+    "strict": "PASS",
+    "buildResult": "PASS_130_RESOURCES",
+    "independentAcceptance": "405_SCOPE_REUSED_407_PERSONNEL_CATALOGUE_PENDING"
+  },
+  "githubVerifiedSource": "18bfabf0a800ad8bfe44a24ff232b989e6829e41",
+  "currentNext": {
+    "C": {
+      "current": "Fixed frontend integration and actual maintenance seams; preserve R1 and QA228 prefix",
+      "next": "F1 complete packet -> immutable candidate -> QF technical/UI impacted scopes; D2 private HTTP execution; D1 QA product resume"
+    },
+    "F1": {
+      "current": "Documents behavior and all consumers, pure source uncommitted WIP",
+      "next": "Fixed candidate QF browser; original missing capability providers"
+    },
+    "F2": {
+      "current": "405 source complete accepted scoped UI, idle pending actual product maintenance seam",
+      "next": "Normal product editor real provider consumption"
+    },
+    "F3": {
+      "current": "405 shared visual controls delivered; two-tab personnel rejected, root407 uses one existing staff table/form",
+      "next": "Exact current published module full workflow alignment if any remaining; actual maintenance capabilities"
+    },
+    "F4": {
+      "current": "406 catalogue source delivered; real provider missing",
+      "next": "Correct maintenance capability injection and real dictionaries"
+    },
+    "D1": {
+      "current": "Responsible nullable/full parser store closure + remove separate sales consumer",
+      "next": "228 season-proof SYN fixture correction preserving committed8"
+    },
+    "D2": {
+      "current": "Existing actual maintenance HTTP/provider capability pairing and retained169 proof",
+      "next": "C-executed isolated HTTP/nonowner affected cases then frontend wiring"
+    },
+    "D3": {
+      "current": "Original actual2956/5586/53 accepted, source retained real1history window ready",
+      "next": "SKU9413 suffix only after v18actual QA; actualstock/history continuing"
+    },
+    "QF": {
+      "current": "400 sales partial evidence retained; source407 does not yet contain F1 packet",
+      "next": "New F1 fixed candidate affected document checks"
+    },
+    "QF2": {
+      "current": "405 finite browser passed excluding rejected personnel tabs; idle",
+      "next": "407 one employee workflow and catalogue affected only"
+    },
+    "QB": {
+      "current": "291/292/293/290 accepted source and actual scope retained",
+      "next": "D1 exact delta, D2 HTTP carrier, v18 actual resume result affected only"
+    }
+  },
+  "documentBackend409": {
+    "source": "c1eb1e06d972e20fd35927acfc5d2a256d3a2e47",
+    "remoteVerified": true,
+    "sourceAndTargetedChecks": "PASS",
+    "actualPersistedNullAndRoleHttp": "PENDING_C_QB",
+    "salesIndependentResponsibleNewWrites": "REMOVED_OLD_SOURCE_AND_AUDIT_RETAINED",
+    "transferNullVersusOmission": "PRESERVED"
+  }
+},
   "currentContinuation404": "Frontend all-site user defect sweep current; preserve C228 catalogue8 committed prefix, PRODUCT23514 rollback no replay; history230 22 INSERT privileges absent, no grant; R1 SKU5586 prefix unchanged."
 }

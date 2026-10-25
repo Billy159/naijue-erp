@@ -68,7 +68,7 @@ export class TransferExistingDocumentSession {
     const proposal = this.#state.proposal;
     if (this.#state.disposed || this.#state.phase !== 'ready' || this.#state.preparing || !proposal || !this.owner.editableExistingProposal) return false;
     if (!this.hasDirtyDraft && !this.owner.hasDirtyDraft) { this.#publish({ notice: '内容未改变，无需保存。' }); return false; }
-    if (proposal.hasSpecificationInputs && this.#original) {
+    if ((proposal.hasSpecificationInputs || proposal.getSnapshot().draft.responsible === null) && this.#original) {
       const intent = proposal.saveProposal(this.#original.document.header.id); if (!intent) return false;
       const originalIds = new Set(this.#original.document.lines.map(row => row.id as string));
       if (intent.lines.some(row => row.existingLineId !== null && !originalIds.has(row.existingLineId))) { this.#publish({ notice: '原行关系已变化，输入已保留；未发送保存。' }); return false; }

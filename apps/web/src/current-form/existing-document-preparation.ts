@@ -29,8 +29,7 @@ function existingSalesMoney(raw: unknown): string {
 }
 function checkedExistingSalesIntent(input: NativeSalesExistingProposal): NativeSalesExistingProposal {
   const value = structuredClone(input);
-  keys(value, ['salesId', 'expectedVersion', 'businessType', 'businessDate', 'note', 'hallId', 'customerId', 'salespersonId', 'warehouseId', 'orderDiscount', 'lines', 'settlements', ...(Object.hasOwn(value, 'responsibleStaffId') ? ['responsibleStaffId'] : [])]);
-  if (Object.hasOwn(value, 'responsibleStaffId')) entityId('staff', value.responsibleStaffId!);
+  keys(value, ['salesId', 'expectedVersion', 'businessType', 'businessDate', 'note', 'hallId', 'customerId', 'salespersonId', 'warehouseId', 'orderDiscount', 'lines', 'settlements']);
   entityId('sales', value.salesId);
   if (!Number.isSafeInteger(value.expectedVersion) || value.expectedVersion < 1 || value.expectedVersion > 2147483647 || !['SALE', 'RETURN', 'EXCHANGE'].includes(value.businessType)) throw new TypeError('Invalid existing sales target/version.');
   businessDate(value.businessDate); entityId('hall', value.hallId); entityId('customer', value.customerId); entityId('warehouse', value.warehouseId); if (value.salespersonId !== null) entityId('staff', value.salespersonId);
@@ -55,7 +54,7 @@ export function checkedExistingSalesPreparation(value: unknown, intent: NativeSa
   keys(value, ['expectedVersion', 'draft']); const response = value as { expectedVersion: number; draft: unknown };
   if (response.expectedVersion !== intent.expectedVersion) throw new TypeError('Existing sales preparation changed CAS.');
   const draft = validateSalesDraft(response.draft), h = draft.header;
-  if (h.responsibleStaffId !== intent.responsibleStaffId || h.id !== intent.salesId || h.businessType !== intent.businessType || h.businessDate !== intent.businessDate || h.note !== intent.note || h.hallId !== intent.hallId || h.customerId !== intent.customerId || h.salespersonId !== intent.salespersonId || h.warehouseId !== intent.warehouseId || h.orderDiscount !== existingSalesMoney(intent.orderDiscount) || draft.lines.length !== intent.lines.length || draft.settlements.length !== intent.settlements.length) throw new TypeError('Existing sales preparation header mismatches explicit intent.');
+  if (h.id !== intent.salesId || h.businessType !== intent.businessType || h.businessDate !== intent.businessDate || h.note !== intent.note || h.hallId !== intent.hallId || h.customerId !== intent.customerId || h.salespersonId !== intent.salespersonId || h.warehouseId !== intent.warehouseId || h.orderDiscount !== existingSalesMoney(intent.orderDiscount) || draft.lines.length !== intent.lines.length || draft.settlements.length !== intent.settlements.length) throw new TypeError('Existing sales preparation header mismatches explicit intent.');
   draft.lines.forEach((row, index) => {
     const original = intent.lines[index]!;
     const expectedPrice = original.isGift ? '0' : original.pricingRule === 'UNIT_PRICE' ? existingSalesMoney(original.dealPrice) : row.referencePrice === null ? null : discountUnitPrice(minorAmount(row.referencePrice), original.discountTenths!).toString();
@@ -78,7 +77,7 @@ function existingTransferKeys(value: unknown, expected: readonly string[]): void
 }
 function checkedExistingTransferIntent(input: NativeTransferExistingProposal): NativeTransferExistingProposal {
   const value = structuredClone(input); existingTransferKeys(value, ['transferId', 'expectedVersion', 'businessDate', 'note', 'fromWarehouseId', 'toWarehouseId', 'lines', ...(Object.hasOwn(value, 'responsibleStaffId') ? ['responsibleStaffId'] : [])]);
-  if (Object.hasOwn(value, 'responsibleStaffId')) entityId('staff', value.responsibleStaffId!);
+  if (Object.hasOwn(value, 'responsibleStaffId') && value.responsibleStaffId !== null) entityId('staff', value.responsibleStaffId!);
   entityId('transfer', value.transferId); entityId('warehouse', value.fromWarehouseId); entityId('warehouse', value.toWarehouseId); businessDate(value.businessDate);
   if (!Number.isSafeInteger(value.expectedVersion) || value.expectedVersion < 1 || value.expectedVersion > 2147483647 || value.fromWarehouseId === value.toWarehouseId || value.note !== null && (typeof value.note !== 'string' || value.note.length > TRANSFER_PREPARE_MAX_NOTE_LENGTH) || !Array.isArray(value.lines) || !value.lines.length || value.lines.length > TRANSFER_PREPARE_MAX_LINES) throw new TypeError('Invalid existing transfer target/version/budget.');
   const pointers = new Set<string>();

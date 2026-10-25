@@ -1,3 +1,11 @@
+SOURCE409 / DOCUMENT WRITE CONSUMERS FROZEN; UI PACKET NEXT
+
+D1 A exact 9 production +6 test source c1eb1e06d972e20fd35927acfc5d2a256d3a2e47, GitHub remote same verified. Sales independent responsible new writes removed across proposal/preparation/legacy HTTP; old columns/read identity/audit retained, no DDL. Transfer explicit null and omission distinguished throughout current/history parse/plan/store, nonnull staff locks retained. D1 strict and8affected cases PASS; old role-change replay FORBIDDEN also reproduced395, not new regression or permission relaxation. Actual persisted null/role HTTP pending originalQB and C isolated execution. F1 paired consumers now finishing same original packet; no duplicate dispatch.
+
+QF2 now checking only407 single employee workflow +catalogue column/pager actual browser; valid405 rest reused. D2 concrete current maintenance client/provider pairing delivered, actual host writers absent in CORE profile remain missing; no UI flag pretending real write. D1 B precise C228 season proof mapping mismatch identified: fixed required c05e...f779 versus wrongly supplied synthetic allocation digest; pending retained8dictionary-prefix recovery and product-only continuation, no replay228/no new identity.
+
+Whole phase2 real business0/37,67overlaytypes plus additions, original public URL unchanged. No current source409/407 formal release. Next F1 fixed integration +QF document checks; originalD1/C maintenance host pairing and v18 actual continue.
+
 CURRENT BREAKPOINT / SOURCE407 BUILD PASS, SOURCE406 FAILED STRICT PRESERVED
 
 Fixed source40718bfabf0a800ad8bfe44a24ff232b989e6829e41 candidate phase2-normal-18bfabf-15 at57904, strict0/4.571s and Vite0/2.417s,130resources. Source406 immutable build failed strict TS7006 only inferred product callback across old/new consumer snapshots; exact source407 explicit callback type fixes it. Failed406 preserved, no rebuild on mutable source. Source40557902/QF2 scoped effective observations remain accepted; new407 employee single-workflow/catalgoue change pending independent specific recheck. No new formal publish or actual business write claim.

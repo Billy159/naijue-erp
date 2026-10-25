@@ -40,7 +40,7 @@ export interface TransferPendingEntry {
 }
 const emptyPending = (): TransferPendingEntry => ({ query: '', product: null, color: null, fit: null, skus: [], page: 1, exactTotal: null, phase: 'idle', quantities: {}, sizeQuantities: {}, userEdited: false, unmapped: [] });
 export interface TransferProposal {
-  readonly responsible?: { readonly id: string; readonly name: string };
+  readonly responsible?: { readonly id: string; readonly name: string } | null;
   readonly businessDate: string; readonly note: string;
   readonly from: TransferWarehouseSelection | null; readonly to: TransferWarehouseSelection | null;
   readonly lines: readonly TransferProposalLine[];
@@ -126,6 +126,15 @@ export class TransferProposalSession {
   }
   setHeader(patch: Pick<Partial<TransferProposal>, 'businessDate' | 'note'>): boolean {
     return this.#edit({ ...this.#state.draft, ...patch });
+  }
+  clearWarehouse(direction: 'FROM' | 'TO'): boolean {
+    if (this.#state.disposed) return false;
+    this.closePicker();
+    return this.#edit({ ...this.#state.draft, [direction === 'FROM' ? 'from' : 'to']: null });
+  }
+  clearResponsibleStaff(): boolean {
+    if (this.#state.disposed) return false;
+    return this.#edit({ ...this.#state.draft, responsible: null });
   }
   selectResponsibleStaff(value: { readonly id: string; readonly name: string }): boolean {
     try { entityId('staff', value.id); if (typeof value.name !== 'string') return false; } catch { return false; }
@@ -443,9 +452,9 @@ export class TransferProposalSession {
         }
         if (!filled && !replacement) throw Error();
       }
-      const proposal = parseNativeTransferSaveProposal({ ...(draft.responsible ? { responsibleStaffId: draft.responsible.id } : {}), transferId, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note, fromWarehouseId: draft.from.id, toWarehouseId: draft.to.id, lines });
+      const proposal = parseNativeTransferSaveProposal({ ...(draft.responsible ? { responsibleStaffId: draft.responsible.id } : draft.responsible === null ? { responsibleStaffId: null } : {}), transferId, businessDate: draft.businessDate, note: draft.note === '' ? null : draft.note, fromWarehouseId: draft.from.id, toWarehouseId: draft.to.id, lines });
       this.#publish({ errors: [], notice: null }); return freeze(proposal);
-    } catch { this.#publish({ errors: ['请核对当前尺码组、行改选和数量；重复规格请在原行调整，原输入已保留。'], notice: '保存资料未通过校验，未发送业务命令。' }); return null; }
+    } catch { this.#publish({ errors: ['请核对当前尺码组、行改选和数量；重复规格请在原行调整，原输入已保留。'], notice: '保存资料未通过校验，请核对日期、仓库、负责人及原行数量；原输入已保留，未发送业务命令。' }); return null; }
   }
   /** Explicit local validation/handoff only. The caller receives proposals, not authority. */
   validate(): TransferProposal | null {

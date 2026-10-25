@@ -23,7 +23,7 @@ function tenths(raw: string): number {
 }
 export function salesPreparationIntent(proposal: SalesProposal): NativeSalesCreateProposal {
   if (!proposal.hall || !proposal.customer || !proposal.warehouse) throw new TypeError('Required current references missing.');
-  return checkedIntent({ ...(proposal.responsible ? { responsibleStaffId: proposal.responsible.id } : {}), businessType: proposal.businessType, businessDate: proposal.businessDate, note: proposal.note === '' ? null : proposal.note,
+  return checkedIntent({ businessType: proposal.businessType, businessDate: proposal.businessDate, note: proposal.note === '' ? null : proposal.note,
     hallId: proposal.hall.id, customerId: proposal.customer.id, salespersonId: proposal.salesperson?.id ?? null, warehouseId: proposal.warehouse.id,
     orderDiscount: yuan(proposal.orderDiscount), lines: proposal.lines.map(row => { if (!row.sku) throw new TypeError('Local specifications use the original SAVE proposal, never read-only preparation.'); return ({ skuId: row.sku.id, quantity: row.quantity,
       dealPrice: row.pricingRule === 'DISCOUNT' ? null : row.isGift ? '0.00' : yuan(row.dealPrice), pricingRule: row.pricingRule,
@@ -35,8 +35,7 @@ function keys(value: unknown, expected: readonly string[]): void {
 }
 function checkedIntent(input: NativeSalesCreateProposal): NativeSalesCreateProposal {
   const value = structuredClone(input);
-  keys(value, ['businessType', 'businessDate', 'note', 'hallId', 'customerId', 'salespersonId', 'warehouseId', 'orderDiscount', 'lines', 'settlements', ...(Object.hasOwn(value, 'responsibleStaffId') ? ['responsibleStaffId'] : [])]);
-  if (Object.hasOwn(value, 'responsibleStaffId')) entityId('staff', value.responsibleStaffId!);
+  keys(value, ['businessType', 'businessDate', 'note', 'hallId', 'customerId', 'salespersonId', 'warehouseId', 'orderDiscount', 'lines', 'settlements']);
   if (!['SALE', 'RETURN', 'EXCHANGE'].includes(value.businessType) || value.note !== null && (typeof value.note !== 'string' || value.note.length > SALES_PREPARE_MAX_NOTE_LENGTH)) throw new TypeError('Invalid SALE intent.');
   businessDate(value.businessDate); entityId('hall', value.hallId); entityId('customer', value.customerId); entityId('warehouse', value.warehouseId); if (value.salespersonId !== null) entityId('staff', value.salespersonId);
   if (value.businessType !== 'SALE' && moneyMinor(value.orderDiscount) !== '0' || yuan(value.orderDiscount) !== value.orderDiscount || !Array.isArray(value.lines) || !value.lines.length || value.lines.length > SALES_PREPARE_MAX_LINES || !Array.isArray(value.settlements) || value.settlements.length > 3) throw new TypeError('Invalid bounded sales intent.');
@@ -54,7 +53,7 @@ function checkedIntent(input: NativeSalesCreateProposal): NativeSalesCreatePropo
 }
 function checkedPreparation(value: unknown, intent: NativeSalesCreateProposal): SalesDraftDto {
   const draft = validateSalesDraft(value), h = draft.header;
-  if (h.responsibleStaffId !== intent.responsibleStaffId || h.businessType !== intent.businessType || h.businessDate !== intent.businessDate || h.note !== intent.note || h.hallId !== intent.hallId || h.customerId !== intent.customerId || h.salespersonId !== intent.salespersonId || h.warehouseId !== intent.warehouseId || h.orderDiscount !== moneyMinor(intent.orderDiscount)
+  if (h.businessType !== intent.businessType || h.businessDate !== intent.businessDate || h.note !== intent.note || h.hallId !== intent.hallId || h.customerId !== intent.customerId || h.salespersonId !== intent.salespersonId || h.warehouseId !== intent.warehouseId || h.orderDiscount !== moneyMinor(intent.orderDiscount)
     || draft.lines.length !== intent.lines.length || draft.settlements.length !== intent.settlements.length) throw new TypeError('Preparation header does not match intent.');
   draft.lines.forEach((row, index) => {
     const original = intent.lines[index]!;
