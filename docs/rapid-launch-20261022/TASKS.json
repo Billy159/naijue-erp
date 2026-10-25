@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T10:44:00.435391+00:00",
+  "updatedAt": "2026-10-25T14:23:37.230733+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "56283494b7ffb68a1c48d75377211ef1f6ac3af5",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 482,
+    "round": 483,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "6650c1c405952711b39cc80b91887e89a1298428",
+    "sourceHeadBeforeThisContinuityCommit": "048d8de3366606e33e55bc94a2bb05e08b700197",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -5060,21 +5060,21 @@
       "MAIN": false,
       "PUBLISH": false
     },
-    "opsBlockingCondition": "23/20/21/22 scopedactualPASS and externalHTTPS actual200/defaultTLS verified; QF2 real readonly acceptance active, login/independentcontext notyetproven. CORE03prepare only, preservefixedCORE02 path whileQA.",
-    "QF": "Demo context gap resolved by actual nativeChrome狄兰 logged-in staffpage. OriginalQF468salespairedvisual continuation Luna/max active, nativeChromeexclusive; oldextensionlogin context invalid forusercurrentDemo.",
-    "QF2": "465 normalnew/edit six tabs/draft/dirtyreturn partialUI adopted;468 imageparentfail PASS_LIMITED adopted; no fullpage/business/perf/releasePASS. Idleuntil actualready newconsumer.",
+    "opsBlockingCondition": "CORE02 authenticated readonly acceptance waits human candidate login, not Demo login. T45 source425 detail QA execution resumed. Two source UI fixes integrated pending fixed build; no formal root switch.",
+    "QF": "SOURCE468 same-nativeChrome Demo paired evidence adopted; F1 DOC194 sourcefix delivered, new fixed combined build then only affected two visual items plus shared login CSS consumers.",
+    "QF2": "CORE02 exact HTTPS opened in nativeChrome狄兰; guestlogin, user candidate login pending. Demo8877 confirmed logged in; never ask Demo login again based on another profile. Chrome lease C/user; no credential filling.",
     "QB": "QB314 original22 disabledroute limitedPASS adopted; actualparent/appId/protected14/reviewfinalization and10lockrelease remain",
     "rootStrict": "FAIL16 outside delta preview/tests preserved; no fullPASS",
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
     "roleQueue": {
-      "F1": "OriginalidleDOC193 checked;new468pairedUI narrowfix active Solmedium:emptySALEzero-settledsummary/4requiredmarkers, preserveexactmoney/state/no newcontract. OriginalF1leafonly,newfixedcandidateafterhandoff.",
+      "F1": "DOC194 delivered source d0b7970956f8715a8c703c6e153facaabd380edc577c91f505b5968e619e50e8; nine targeted states/strict0 reused; browser fixed version pending. Salesperson nullable business contract discrepancy remains open, no write tightening.",
       "F2": "465normalentry+468imagefix delivered/limited independentlychecked; real productread/write/historybusiness stillnotready, D2/T45 actualQA/mainpublication dependency. Next concreteconsumerdelivery/failure.",
       "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
       "F4": "Allowedtabsexact2 delivered, in461; nextactualCORE03 colors/fits UI+realread",
       "D1": "D1-PRODUCT-SOURCE425-ACTUAL-DETAIL-DELTA-01 implemented originalinert runner12020/ff3c11...;finite1/1/importPASS adopted, no appsourcechange. Actual PG notrun. OriginalQBnewrunnerreviewactive,T45originalQA bindingprepare.",
       "D2": "OriginalQA dependency handoff completed/adopted. v17C189/QB260 actualCREATE/EDIT/selection/replay/rollback retained0351 reuse; source425new detailfilter stillneedsactualPG/currenthost. Existingcataloguereplay carrier not fullmaintenanceQA; no repeats.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "QB315 actualgo given oncegenuineoriginalQA/currentreview/issuer/source459graph fixed;no productwrites/v17replay/fixture;prepareandexecute source425detaildelta. CORE02stable;CORE03privateprep separate.",
+      "T45": "Live app wait snapshot idle terminal previous turn; original425 QA task resumed with explicit Solmedium, dedupe queued/actual before execute. No old job replay or public CORE02 overwrite.",
       "QF": "Source468 same-nativewindowpairedUI actualcompleted/adopted;twoappearance findings originalF1fixactive, numericCSSgeometryunmeasured, no realbusiness;browserlease released.",
       "QF2": "C grantednativeChrome狄兰exclusive lease afterQFactualhandoff;openfixedCORE02realentry/loginorread-only3groups;no credentialautofill orDemo relogin.",
       "QB": "QB315 new425caller scopedsourcePASS adopted;actualSQL/ownerQA stillnotrun;not fullhost/session/nonownerACL."
@@ -5424,6 +5424,20 @@
       "keyMaterialRead": false,
       "configurationChanges": 0,
       "databaseCalls": 0
+    },
+    "source483Changes": {
+      "files": [
+        "apps/web/demo-replica/frontend/runtime-styles.ts",
+        "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx"
+      ],
+      "loginRootCause": "Original shared login overlay CSS was route-only settings dependency; unauthenticated route never mounts, leaving original login markup unstyled. Original basic-settings.css now common before ui-review final overrides, no auth/business changes.",
+      "salesFix": "Suppress empty zero settlement summary and restore four reference required markers (six total); DOC194 nine states PASS reused.",
+      "notTested": [
+        "New fixed candidate browser recheck",
+        "Real candidate login/domain queries",
+        "Historical edit/full business/performance/formal release"
+      ],
+      "businessGap": "Demo salesperson mandatory versus current formal nullable salespersonId; no contract change implemented."
     }
   },
   "latestReadySource": {
