@@ -5298,6 +5298,21 @@
       "tests/inventory-query-postgres-protocol.test.ts"
     ],
     "scope": "Only exact matrix assembly same-loop BigInt aggregates; no SQL/permissions/DTO/group/pagination/limits change. Previous protocol file clean; unrelated product-query test WIP protected.",
-    "next": "Application response validator separate exact registration after first delivery, not concurrent shared edits"
+    "next": "Application response validator separate exact registration after first delivery, not concurrent shared edits",
+    "nextRegisteredFiles": [
+      "packages/application/src/inventory-query-response.ts",
+      "tests/inventory-query.test.ts"
+    ],
+    "nextScope": "D3 R2 only existing response validation repeated size maps/includes and aggregate scan, preserve full original validation/freeze/copy and no shared-validation edits"
+  },
+  "source394ScrollRepair": {
+    "atUtc": "2026-10-25T04:20:23.493956+00:00",
+    "writer": "F2",
+    "finding": "QF2-S394-SCROLL-01",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/products/inventory-drawer.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/inventory-drawer.test.mjs"
+    ],
+    "scope": "Actual inventory drawer Arco tabs scroll container, not standalone six-tab detail. No detail.tsx/product-runtime.test.mjs edits for this finding; same-case directed repair only."
   }
 }

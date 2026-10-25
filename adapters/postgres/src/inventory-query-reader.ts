@@ -59,10 +59,6 @@ function bounded(rows: { readonly length: number }, maximum: number): void {
   requireDomain(rows.length <= maximum, "INVENTORY_READ_TOO_LARGE", "Inventory page exceeds a technical response bound");
 }
 function total(value: bigint): InventoryStockTotal { return { knownQuantity: value.toString(), completeness: "complete", unknownCells: 0 }; }
-function totalOf(values: readonly InventoryStockTotal[]): InventoryStockTotal { return total(values.reduce((sum, value) => sum + BigInt(value.knownQuantity), 0n)); }
-function quantities(sizes: readonly InventorySelection[], groups: readonly { readonly sizeTotals: Readonly<Record<string, InventoryStockTotal>> }[]): Readonly<Record<string, InventoryStockTotal>> {
-  return Object.fromEntries(sizes.map(size => [size.id, totalOf(groups.map(group => group.sizeTotals[size.id]!))]));
-}
 function checkedParameters(value: InventoryQuery): InventoryQuery {
   // Reuse the public parser's ID, uniqueness, pagination and selection bounds without accepting labels as facts.
   const input = record(value, ["filter", "page", "pageSize"]);
@@ -277,29 +273,35 @@ function pageProducts(productRows: readonly Row[], sizeRows: readonly Row[], sku
     bounded([...variants.keys()], INVENTORY_PRODUCT_MAX_VARIANTS);
     units += 1 + product.sizes.length + variants.size * (1 + scope.warehouses.length * (1 + product.sizes.length));
     bounded({ length: units }, INVENTORY_READ_MAX_MATRIX_UNITS);
+    const productSizeSums = product.sizes.map(() => 0n); let productSum = 0n;
     const colorFits: InventoryQueryColorFit[] = [...variants.values()].map(variant => {
+      const variantSizeSums = product.sizes.map(() => 0n); let variantSum = 0n;
       const rows = scope.warehouses.map(warehouse => {
         const cells: Record<string, InventoryStockCell> = {}; let sum = 0n;
-        for (const size of product.sizes) {
-          const skuId = variant.skus.get(size.id);
+        for (let sizeIndex = 0; sizeIndex < product.sizes.length; sizeIndex++) {
+          const size = product.sizes[sizeIndex]!; const skuId = variant.skus.get(size.id);
           if (skuId === undefined) cells[size.id] = { state: "not-applicable" };
           else {
             // Only catalogStatus + immutable publication + verified warehouse scope make this absence exact zero.
             const quantity = balances.get(`${warehouse.id}:${skuId}`) ?? "0";
-            cells[size.id] = { state: "known", skuId, quantity }; sum += BigInt(quantity);
+            cells[size.id] = { state: "known", skuId, quantity };
+            const exact = BigInt(quantity); sum += exact; variantSizeSums[sizeIndex] = variantSizeSums[sizeIndex]! + exact;
           }
         }
+        variantSum += sum;
         return { warehouse: { id: warehouse.id, label: warehouse.label }, cells, total: total(sum) };
       });
-      const sizeTotals = Object.fromEntries(product.sizes.map(size => [size.id, total(rows.reduce((sum, row) => {
-        const cell = row.cells[size.id]!; return sum + (cell.state === "known" ? BigInt(cell.quantity) : 0n);
-      }, 0n))]));
-      return { color: variant.color, fit: variant.fit, rows, sizeTotals, total: totalOf(rows.map(row => row.total)) };
+      const sizeTotals = Object.fromEntries(product.sizes.map((size, index) => {
+        const sum = variantSizeSums[index]!; productSizeSums[index] = productSizeSums[index]! + sum;
+        return [size.id, total(sum)];
+      }));
+      productSum += variantSum;
+      return { color: variant.color, fit: variant.fit, rows, sizeTotals, total: total(variantSum) };
     });
     return { id: product.id, code: label(product.row.product_code), name: label(product.row.name), categoryLabel: label(product.row.category_name),
       supplierLabel: product.row.supplier_name === null ? "" : label(product.row.supplier_name), seasonLabel: product.row.season_name === null ? "" : label(product.row.season_name),
       sizeGroup: { id: product.groupId, label: label(product.row.size_group_name) }, sizes: product.sizes, colorFits,
-      sizeTotals: quantities(product.sizes, colorFits), total: totalOf(colorFits.map(group => group.total)) };
+      sizeTotals: Object.fromEntries(product.sizes.map((size, index) => [size.id, total(productSizeSums[index]!)])), total: total(productSum) };
   });
 }
 

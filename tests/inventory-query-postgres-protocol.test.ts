@@ -689,3 +689,42 @@ test("inventory page balance batch: reuse exact page SKU identities and authoriz
   const status = pool.calls.find(call => call.sql.includes("inventory:catalog-status"))!;
   assert.match(status.sql, /matched_products/); assert.doesNotMatch(status.sql, /LIMIT|OFFSET/);
 });
+
+test("inventory assembly CPU397: exact mixed-sign row, variant, product and size totals stay independent", async () => {
+  const pool = new ScriptedPool(); pool.count = 2; pool.negative = "0";
+  pool.scope = { hallIds: inventoryScope.hallIds, warehouses: [inventoryScope.warehouses[0]!,
+    { id: inventoryId("warehouse", 4), hallId: inventoryScope.hallIds[0]!, label: "Second native warehouse" }] };
+  const maximum = 9223372036854775807n;
+  const values = [[[maximum, 2n], [-maximum, 3n]], [[7n, -4n], [8n, -6n]]];
+  const actualSku = (n: number, variant: number, size: number) => inventoryId("sku", 60000 + n * 8 + variant * 4 + size);
+  pool.transform = (stage, rows) => {
+    if (stage === "skus") return (pool.calls.at(-1)!.values[0] as string[]).flatMap(product => {
+      const n = Number(product.slice(-12)) - 1000;
+      return [0, 1].flatMap(v => sizes.slice(0, 3).map((size, s) => ({ id: actualSku(n, v, s), product_id: product,
+        color_id: colorId, fit_id: inventoryId("fit", 21 + v), size_id: size.id, color_name: "Native color", fit_name: `Native fit${v}` })));
+    });
+    if (stage === "balances") return [0, 1].flatMap(n => [0, 1].flatMap(v => [0, 1].flatMap(w => [0, 1].map(s => ({
+      warehouse_id: pool.scope.warehouses[w]!.id, sku_id: actualSku(n, v, s),
+      quantity: (values[v]![w]![s]! * (n === 0 ? 1n : -1n)).toString(), version: 1, last_operation_id: inventoryId("operation", 990 + n)
+    })))));
+    return rows;
+  };
+  const snapshot = await new PostgresInventoryQueryReader(pool).readInventory(read(pool));
+  assert.equal(snapshot.data.allMatchesTotal.knownQuantity, "0");
+  for (const [n, product] of snapshot.data.products.entries()) {
+    const sign = n === 0 ? 1n : -1n;
+    assert.deepEqual(Object.keys(product.sizeTotals), sizes.map(size => size.id));
+    assert.equal(product.total.knownQuantity, (10n * sign).toString());
+    assert.deepEqual(sizes.map(size => product.sizeTotals[size.id]!.knownQuantity), [15n * sign, -5n * sign, 0n, 0n].map(String));
+    for (const [v, variant] of product.colorFits.entries()) {
+      assert.equal(variant.total.knownQuantity, (5n * sign).toString());
+      assert.deepEqual(sizes.map(size => variant.sizeTotals[size.id]!.knownQuantity), (v === 0 ? [0n, 5n * sign, 0n, 0n] : [15n * sign, -10n * sign, 0n, 0n]).map(String));
+      for (const [w, row] of variant.rows.entries()) {
+        assert.equal(row.total.knownQuantity, ((values[v]![w]![0]! + values[v]![w]![1]!) * sign).toString());
+        assert.deepEqual(row.cells[sizes[2]!.id], { state: "known", skuId: actualSku(n, v, 2), quantity: "0" });
+        assert.deepEqual(row.cells[sizes[3]!.id], { state: "not-applicable" });
+      }
+    }
+  }
+  assert.equal(stages(pool).at(-1), "COMMIT"); assert.deepEqual(pool.releases, [undefined]);
+});

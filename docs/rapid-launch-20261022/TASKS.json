@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T04:20:03.009469+00:00",
-    "sourceRound": 398,
-    "sourceCheckpoint": "SOURCE398_SHARED_STYLES_ACTUAL_PASS_SCROLL_P2_DIRECTED_ORIGINAL_F2",
+    "atUtc": "2026-10-25T04:21:19.860269+00:00",
+    "sourceRound": 399,
+    "sourceCheckpoint": "SOURCE399_D3_ASSEMBLY_CPU_SOURCE_READY_SCROLL_ACTUAL_DRAWER_BOUNDARY_CORRECTED",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8579,7 +8579,7 @@
     },
     "currentPackets": {
       "F2": {
-        "current": "Solmedium QF2-S394-SCROLL-01 per-tab base/spec scroll restoration same detail/test leaves",
+        "current": "QF2-S394-SCROLL-01 exact inventory-drawer.tsx + inventory-drawer.test.mjs; not standalone detail",
         "next": "Inventory streaming intermediate-memory, then v17 normal HTTP seam",
         "uiDelivery": "I01-FILTER-WIDTH-LABELS-USER-20261025-01 source complete; fixed build and QF2 pending"
       },
@@ -8588,8 +8588,8 @@
         "next": "original-workbook memory seam"
       },
       "D3": {
-        "current": "Registered matrix assembly same-loop BigInt CPU implementation reader+protocoltest",
-        "next": "R2 response validator separate boundary; actualHTTP waits real inventory"
+        "current": "R1 source ready/tests13pass/localmodel same bytes; R2 exact responsevalidator/test registered next",
+        "next": "Combined affected originalQB once after R2 packet; realHTTP remains waiting inventory"
       },
       "C": {
         "current": "fixed389 candidate integration; PARTY357 actual permissions/carrier",
