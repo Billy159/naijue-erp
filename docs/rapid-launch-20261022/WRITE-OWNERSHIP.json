@@ -5379,5 +5379,18 @@
     ],
     "handoff": "F1 and F2 exact leaves delivered and released; C integrates fixed normal host. No concurrent source writers. F4 current six-page seam read only; root/shared files excluded.",
     "rule": "Explicit finite delegation overrides broad reserved replica directory for these leaves only; current technical models Solmedium."
+  },
+  "catalogueFinalDependencies444": {
+    "C": [
+      "apps/web/demo-replica/frontend/runtime/catalogue/entry.tsx"
+    ],
+    "F4": [
+      "apps/web/demo-replica/frontend/runtime/catalogue/source-controls.tsx",
+      "apps/web/demo-replica/frontend/runtime/catalogue/dictionary-page.tsx",
+      "apps/web/demo-replica/frontend/runtime/catalogue/scheme-page.tsx"
+    ],
+    "boundary": "C Solmedium presentation-mode activation/disposal only; F4 actual LunaMax exact frozen final UI dependencies only. No shared root/config/backend concurrent writers.",
+    "source": "F4 SOURCE438-FINAL-DEPENDENCY-ANALYSIS; current human whole Demo copy/model directive",
+    "status": "DELIVERED_C_ENTRY_LIFETIME_CHECKED_READY_FIXED_BUILD_QF2"
   }
 }

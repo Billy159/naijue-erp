@@ -14,11 +14,34 @@ export function Head({ title, children }: { title: string; children?: ReactNode 
   return <div className="gold-head iw-head pc-page-head"><h1>{title}</h1><div className="actions iw-head-actions">{children}</div></div>;
 }
 export const maintenanceUnavailable = '当前入口的维护尚未接通，资料以只读方式显示。';
-export function MaintenanceNotice({ capability }: { capability: CatalogueMaintenanceCapability | undefined }) {
-  return capability ? null : <div className="hint spaced" role="status">{maintenanceUnavailable}</div>;
+export function MaintenanceNotice({ capability, inline = false }: { capability: CatalogueMaintenanceCapability | undefined; inline?: boolean }) {
+  return capability ? null : inline
+    ? <span className="hint" role="status">{maintenanceUnavailable}</span>
+    : <div className="hint spaced" role="status">{maintenanceUnavailable}</div>;
 }
+const sourceModalCss = `
+.pc-arco-modal,.pc-arco-modal .arco-modal{width:min(480px,94vw)!important;border-radius:4px;padding:0;color:var(--ca-ink);font:13px var(--ca-font-sans)}
+.pc-arco-modal.pc-wide,.pc-arco-modal.pc-wide .arco-modal{width:min(780px,94vw)!important}
+.pc-arco-modal .arco-modal-header{height:auto;min-height:43px;padding:11px 14px;border-bottom:1px solid var(--ca-line)}
+.pc-arco-modal .arco-modal-title{font-size:16px;font-weight:600}
+.pc-arco-modal .arco-modal-content{padding:12px 14px;max-height:min(65vh,650px);overflow:auto;border-bottom:0}
+.pc-arco-modal .arco-modal-footer{padding:9px 14px;border-top:1px solid var(--ca-line)}
+.pc-arco-modal .pc-modal-foot{display:flex;align-items:center;justify-content:flex-end;gap:8px}
+.pc-arco-modal .pc-delete-left{margin-right:auto;color:var(--ca-critical)}
+.pc-arco-modal .pc-modal-body .field{display:flex;flex-direction:column;gap:4px;margin:0 0 9px;color:var(--ca-ink-2);font-size:12px}
+.pc-arco-modal .pc-modal-body input{box-sizing:border-box;height:32px;font-size:13px}
+.pc-arco-modal .pc-modal-body .pc-arco-host{margin:4px 0 12px}
+.pc-arco-modal .pc-spec-transfer{min-height:320px;height:auto;margin:0 0 8px}
+.pc-arco-modal .pc-spec-transfer .arco-transfer{width:100%;min-height:296px;font-size:13px}
+.pc-arco-modal .pc-spec-transfer .arco-transfer-view{min-width:0;flex:1;height:296px;border-color:var(--ca-line)}
+.pc-arco-modal .pc-spec-transfer .arco-transfer-view-content-item{min-height:31px}
+.pc-arco-modal .pc-spec-transfer .arco-transfer-view-header{background:var(--ca-table-head)}
+`;
 export function SourceModal({ title, children, footer, close }: { title: string; children: ReactNode; footer: ReactNode; close: () => void }) {
-  return <Modal visible title={title} footer={<div className="pc-modal-foot">{footer}</div>} className="pc-arco-modal iw-arco-controls" maskClosable={false} unmountOnExit onCancel={close} onOk={close}><div className="pc-modal-body">{children}</div></Modal>;
+  return <>
+    <style>{sourceModalCss}</style>
+    <Modal visible title={title} footer={<div className="pc-modal-foot">{footer}</div>} className="pc-arco-modal iw-arco-controls" maskClosable={false} unmountOnExit onCancel={close} onOk={close}><div className="pc-modal-body">{children}</div></Modal>
+  </>;
 }
 export function useRead<P, D>(options: Pick<CataloguePageOptions, 'scope' | 'onAccessFailure'>, execute: (read: QueryRead<P>) => Promise<D>, initial: P) {
   const query = useMemo(() => new LatestQuery({ scope: options.scope, execute }), [options.scope, execute]);
