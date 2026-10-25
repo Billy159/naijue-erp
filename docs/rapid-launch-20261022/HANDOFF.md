@@ -1,3 +1,9 @@
+SOURCE433 NATIVE DOCUMENT OUTPUT CONSUMERS FIXED
+
+OriginalF1 DOC187 exact2 leaves reuse lazy original DocumentOutputActions and salesDocumentOutput/transferDocumentOutput, consume full authorized successful native detail only. New/dirty/editing/preparing/unresolved or committed awaiting readback cannot output. Original precision/null/barcode identity/all saved lines/print matrix retained; no duplicate output API. Original finite native mount/Blob/iframe cleanup/quantity and money checks PASS/strict0 adopted. Real browser download/print, physical output, realHTTP/PG and historical revision output adapter remain untested/unimplemented. Original responsible candidate APIs/cap exist; replica root explicit optin still a separate actual host seam.
+
+C next one unified candidate from this fixed source including430document retry432settings close guards; no repeated perCSS builds. One attempted local candidate preparation432 stopped before build because system Python lacks tar extract filter parameter; no artifact/build PASS claimed, fresh preparation uses compatible existing runtime. Original previews/userdrafts preserved. Whole37/67 remains incomplete/no new formalrelease.
+
 SOURCE432 F3 COMMITTED READBACK EXIT GUARDS FIXED / STOCK PREWRITE FAILURE
 
 OriginalF3 QF2-428-F01 exact7 leaves + C common/ready-pages exact2 route canLeave changes fixed. Payment/Party committed not yet authoritative-read cannot ordinary cancel/X/Esc/tab/replace/route-discard; successful original target read releases. Party cleanup suspends read instead of dropping committed. Original2failureprobes+3affectedDOM PASS/strict0 adopted; QF2 next only failed/affected guard recheck. Existing8PASS/TagUI reused. No actualHTTP/PG/business release proof.
