@@ -1,3 +1,11 @@
+SOURCE437 REJECTED PRODUCT BARCODE DRAFT FIXED / STOCK ACL QB304 PASS
+
+OriginalF2 QF2-435-F01 exact2 fixed: acceptedauthoritybaseline clears rejected barcodeDraft beforeclean; next explicitnewcommand contains onlyauthorityversion9 barcodes, unknown immutablecommand/key unchanged. ExactoriginalQF2negative red→green and existingaffectedgroup/strictPASS adopted; originalQF2 finite fixedretest next, other435PASS reused. Media branch not extrapolated.
+
+QB304 originalD1 minimalACL source/plan limitedPASS adopted, noextra businessapproval/newcontract: 8missingSELECT+9INSERT+UPDATE(source_row_id) technical FORSHARE column only, originalimmutableguard retained. ActualSQLparse/ownerCOMMIT/newcatalog/probe/stage pendingT45; supplementalnewcarrier04 delta underoriginalQB review, notoldfullaudit. Original01failure/02diagnostic/upload retained, sourcekeysonly no replays.
+
+435 realpack preparation passed exactsource/lock/buildgraph/resource/archive, remainsWIP pendingproduct437 successor andrealhost activation; noformalrelease. CurrentUI57910 binds433, not435/437. SOURCE436d57f0519d12c276d83f174ca61c3dcae7c04e171 GitHubverified. Whole37/67+additions stillincomplete no newwholepagebusinessPASS.
+
 SOURCE436 INVENTORY LEDGER FAILURE PRESENTATION / PRODUCT435 FINDING / REAL PACK
 
 OriginalF2 inventory exact2 fixed: oldsuccess0 thenpending/error no longer says current-range empty; current-success truezero retained, old totals explicitly previous successful query. OriginalaffectedDOM/strict0/diff PASS adopted. Originalactual readers and full-filter NDJSON output alreadymounted; no duplicateAPI. Missing optionalledger source-navigation rootcallback and actualoutputSpool/admittedprovider remain precise C/T45 seams, notgrantedbyinventoryread. No actualR1 inventory/HTTP/realperfPASS.
