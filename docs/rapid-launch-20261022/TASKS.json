@@ -12145,8 +12145,11 @@
       "saveThreeCases": "NOT_RUN",
       "cleanup": "LOGOUT204_SESSIONNULL_NEWACCOUNT_DISABLED_V2_AUTHV2_ACTIVES0_3DRIVERS_CLOSED_CLEANUP_EMPTY",
       "R1Changed": false,
-      "next": "T45 original65 readonly residue+threecolumn rights, narrow successor ACL/current reviews then explicitly registered new QA-only sameRAM lifecycle; no64/setup replay or old secret retrieval",
-      "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/NORMAL64-ACTUAL-RESULT.json"
+      "next": "T45 narrow66 SELECT3 and current metadata; QB affected reviews; original67 independent synthetic QA IDs/8operationkeys and fresh sameRAM normal credentials, never restore/reset64",
+      "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/NORMAL64-ACTUAL-RESULT.json",
+      "failureStage": "POST /sales/prepare-create original native-sales-preparation reserve; before prepare.status200 assertion, never sales/commands SAVE",
+      "original65": "COMPLETED0/.8188s: original actor draft/null/inactive/active receipts0 audits0 salesdocs0 numberalloc0;setup+DISABLE receipts4;accountdisabledv2/authv2/activeSessions0",
+      "review": "QB325 NEED_FIX only transfer_header SELECT(id,stock_basis,number), no new contract"
     }
   }
 }
