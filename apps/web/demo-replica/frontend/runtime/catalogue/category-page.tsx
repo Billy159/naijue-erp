@@ -19,10 +19,10 @@ function SourceTree({ css, children }: { css: string; children: ReactNode }) {
   useLayoutEffect(() => { const shadow = host.current!.shadowRoot ?? host.current!.attachShadow({ mode: 'open' }); const style = document.createElement('style'); style.textContent = css; const root = document.createElement('div'); root.id = 'root'; shadow.replaceChildren(style, root); setTarget(root); }, [css]);
   return <div id="pc-arco-tree" className="pc-category-tree-host" ref={host}>{target && createPortal(children, target)}</div>;
 }
-function SourceEmpty({ options }: { options: CataloguePageOptions }) {
+function SourceEmpty({ options, empty }: { options: CataloguePageOptions; empty: boolean }) {
   const host = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => { const release = options.mountEmpty(host.current!); return () => { queueMicrotask(release); }; }, [options]);
-  return <div id="pc-category-empty" ref={host} className="iw-empty-host" data-state="idle" data-title="选择分类" data-description="从左侧选择分类查看资料，或新增一级分类。" />;
+  return <div id="pc-category-empty" ref={host} className="iw-empty-host" data-state={empty ? 'empty' : 'idle'} data-title={empty ? '暂无分类' : '选择分类'} data-description={empty ? '当前可读取范围内没有分类。' : '从左侧选择分类查看资料，或新增一级分类。'} />;
 }
 function Categories({ options }: { options: CataloguePageOptions }) {
   const execute = useMemo(() => (read: QueryRead<CatalogueSettingsTreeQuery>) => options.catalogue.readCategories(read), [options]);
@@ -37,6 +37,7 @@ function Categories({ options }: { options: CataloguePageOptions }) {
   const data = snapshot.success?.data;
   const index = useMemo(() => categoryTreeIndex(data?.items ?? []), [data]);
   const fresh = snapshot.phase === 'success';
+  const empty = fresh && data?.items.length === 0;
   const busy = !!state && !['idle', 'rejected'].includes(state.phase);
   const dirty = !!draft && (draft.original === null || draft.name !== draft.original.name);
   const canWrite = (action: 'CREATE' | 'EDIT' | 'DELETE' | 'REORDER' | 'UNDO_REORDER') => options.scope.active && fresh && !busy && capability?.allowedActions.includes(action) === true;
@@ -141,7 +142,7 @@ function Categories({ options }: { options: CataloguePageOptions }) {
   </SourceTree></aside><section className="pc-editor-body pc-category-detail">{draft ? <form id="pc-category-form" onSubmit={event => { event.preventDefault(); save(); }}><div className="pc-category-detail-head"><h2>{draft.original ? '分类资料' : '新增分类'}</h2><div><button type="button" className="btn ghost" disabled={busy} onClick={() => setRecord(selectedItem)}>取消</button><button className="btn primary" disabled={!canWrite(draft.original ? 'EDIT' : 'CREATE')}>保存</button></div></div>
     <div className="pc-category-facts"><div className="field"><span>分类路径</span><p className="pc-text-block">{draft.parentId === null ? '一级分类' : categoryPath(index, draft.original?.id ?? draft.parentId).map(item => item.name).join(' / ')}</p></div><div className="field"><span className="pc-field-caption">分类名称</span><input data-cat="name" value={draft.name} required maxLength={40} title={!capability ? maintenanceUnavailable : undefined} disabled={!canWrite(draft.original ? 'EDIT' : 'CREATE')} onChange={event => setDraft({ ...draft, name: event.target.value })} /></div><div className="field"><span>商品数量</span><p className="pc-text-block">{draft.original?.productCount === null ? '未知' : `${draft.original?.productCount ?? 0} 款`}</p></div><div className="field"><span>下级分类数量</span><p className="pc-text-block">{draft.original?.childCount ?? 0} 个</p></div></div>
     {draft.original && <div className="pc-delete-zone"><button type="button" className="btn ghost pc-danger" title={!capability ? maintenanceUnavailable : undefined} disabled={!canWrite('DELETE')} onClick={() => { if (canWrite('DELETE')) setDeleting(true); }}>删除分类</button></div>}
-  </form> : <><h2>分类资料</h2><SourceEmpty options={options} /></>}
+  </form> : <><h2>分类资料</h2><SourceEmpty key={empty ? 'empty' : 'selection'} options={options} empty={empty} /></>}
     <div id="pc-category-error" className="inline-error" role="alert">{notice}</div><MaintenanceNotice capability={capability} />{controller && <Recovery controller={controller} />}
     {state?.phase === 'rejected' && <button className="btn ghost" onClick={() => request(() => { setDraft(null); void query.run({}); })}>读取最新目录</button>}
     <ReadNotice phase={snapshot.phase} error={snapshot.error} retry={() => state?.phase === 'committed' ? void finish() : void query.run({})} cancel={() => query.cancel()} />
