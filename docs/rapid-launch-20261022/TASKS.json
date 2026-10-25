@@ -11686,10 +11686,10 @@
       "D1": "Original source513 and QA02/v16 alignment input delivered; actual64 lifecycle owned T45; no duplicate implementation",
       "D2": "Original legal publication path delivered; idle/no source bug; full MAIN route retained, no unapproved STAGED union",
       "D3": "Actual2471 prepared PASS; joint28282 reference+pure stage projection helper QB323 PASS; next actual full stage/closure via T45, no repeated source preparation",
-      "T45": "Originalsales stage-only route found from transfer09/10; actual currentR1 binding/batch/privileges/native refs readonly in preparation; no921MB source consumption or newimport yet",
+      "T45": "Actual71 currentR1 STAGED/no sales/warehouseclaims53 validated readonly; next exactheaderINSERT27+samebatch historical2 bindings before stage; existing imported entities not repeated",
       "QF": "Original519 scoped source/fixed artifact closure PASS adopted; actual business candidate validation pending T45 real chain",
       "QF2": "NativeChrome limited actual shell/staff/hallwarehouse observation complete; temporary tab closed/restored; no fullpage/business PASS, IAB still disabled",
-      "QB": "QB327 salesperson normal actualincrement PASS adopted; no repeat67/70; next currentR1 IMPORT_STAGE metadata only if new actual evidence requires"
+      "QB": "QA327 scoped actualPASS adopted; current R1 header27 INSERT scope narrow source/permission review active, not fullsuite"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
     "source501LeaveDialogFix": {
@@ -12232,6 +12232,38 @@
       },
       "receipt": "B/server-execution/NATIVE189-QA02-PREPARATION/EXISTING-DRAFT70-ACTUAL-RESULT.json",
       "next": "T45 fullsales stage/closure/MAIN/PUBLISH original queue; no repeating create67 or cases70"
+    },
+    "salesStage71Actual": {
+      "owner": "T45",
+      "status": "COMPLETED0_CURRENT_R1_STAGE_BINDING_READONLY",
+      "seconds": 2.0716,
+      "targetOID": "1027659",
+      "batchStatus": "STAGED",
+      "sequence": 1,
+      "cursor": 22,
+      "sourceSelectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+      "fullBinding": 0,
+      "MAINchunks": 0,
+      "PUBLISH": 0,
+      "salesHeaders": 0,
+      "salesLines": 0,
+      "salesSettlements": 0,
+      "transferHeaders": 14279,
+      "transferLines": 261641,
+      "warehouseClaims": 53,
+      "warehouseUnclaimed": 0,
+      "headerReferences": {
+        "HALL": 43,
+        "STAFF": 49,
+        "CUSTOMER": 261
+      },
+      "currentGap": "history_sales_header INSERT27 all missing; SELECT27 and original other stage rights valid",
+      "next": "QB exact27column INSERT scope; T45/D3 two historical customer exact bindings; no inferred missing references from counts",
+      "bigPreparedFilesRead": false,
+      "activeImportBackends": 0,
+      "clientEnded": true,
+      "R1Writes": false,
+      "receipt": "B/server-execution/SALES28282-STAGE-PREPARATION/ACTUAL71-CURRENT-R1-BINDING.json"
     }
   }
 }
