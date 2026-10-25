@@ -12,9 +12,11 @@ export interface PartyRuntimeProps {
   workspace: PartyWorkspace; readOnly?: true;
   audit?: SettingsAuditCapability & { onAccessFailure: (kind: 'unauthenticated' | 'forbidden') => void };
 }
+function hasPendingPartyEditorReadback(controller:PartyMaintenanceController):boolean {const state=controller.getSnapshot();return !!state.editor&&state.write.phase==='committed';}
+export function hasPendingPartyReadback(workspace:PartyWorkspace):boolean {return (['CUSTOMER','SUPPLIER'] as const).some(kind=>hasPendingPartyEditorReadback(workspace.get(kind)));}
 export function PartiesRuntime(props: PartyRuntimeProps & { initialTab?: PartyKind }) {
   const [kind, setKind] = useState<PartyKind>(props.initialTab ?? 'CUSTOMER');
-  return <PartyRuntime {...props} kind={kind} tabs={<nav className="bs-tabs" role="tablist" aria-label="往来单位">{(['CUSTOMER','SUPPLIER'] as const).map(tab => <button type="button" role="tab" key={tab} aria-selected={kind===tab} onClick={()=>{ if(tab===kind)return; const active=props.workspace.get(kind); if (!active.canLeave()) { active.requestClose(); return; } setKind(tab); }}>{partyLabels[tab]}</button>)}</nav>}/>;
+  return <PartyRuntime {...props} kind={kind} tabs={<nav className="bs-tabs" role="tablist" aria-label="往来单位">{(['CUSTOMER','SUPPLIER'] as const).map(tab => <button type="button" role="tab" key={tab} aria-selected={kind===tab} onClick={()=>{ if(tab===kind||hasPendingPartyReadback(props.workspace))return; const active=props.workspace.get(kind); if (!active.canLeave()) { active.requestClose(); return; } setKind(tab); }}>{partyLabels[tab]}</button>)}</nav>}/>;
 }
 export function CustomerRuntime(props: PartyRuntimeProps) { return <PartyRuntime {...props} kind="CUSTOMER"/>; }
 export function SupplierRuntime(props: PartyRuntimeProps) { return <PartyRuntime {...props} kind="SUPPLIER"/>; }
@@ -38,7 +40,7 @@ function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceCont
   useEffect(() => {
     attached.current = true; let current = true; const committedOnMount = controller.getSnapshot().write.phase === 'committed';
     queueMicrotask(() => { if (current && !committedOnMount && controller.scope.active) void controller.queryList(controller.executedQuery); });
-    return () => { current = false; attached.current = false; controller.suspend(); queueMicrotask(() => { if (!attached.current) controller.leaveRoute(); }); };
+    return () => { current = false; attached.current = false; controller.suspend(); queueMicrotask(() => { if (!attached.current&&!hasPendingPartyEditorReadback(controller)) controller.leaveRoute(); }); };
   }, [controller]);
   const editorOpen = !!state.editor;
   useEffect(() => {
@@ -68,7 +70,7 @@ function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceCont
   if (state.disposed || !controller.scope.active) return null;
   const current = redacted || denied ? null : query.success, data = current?.data;
   const applied = current?.parameters ?? query.request?.parameters ?? controller.executedQuery;
-  const busy = query.phase === 'loading', blocked = props.readOnly === true || controller.hasUnresolvedWrite;
+  const busy = query.phase === 'loading', blocked = props.readOnly === true || controller.hasUnresolvedWrite || !!committed&&!!state.editor;
   const activate = (work: () => void) => { if (blocked) return; trigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; work(); };
   const readError = query.error instanceof PartyClientError ? query.error.kind === 'forbidden' ? '无权读取此资料。' : query.error.kind === 'unauthenticated' ? '登录已失效。' : '资料读取失败，请重试。' : '资料读取失败，请重试。';
   return <div id="basic-settings-v2"><section className="bs-page iw-workbench iw-arco-controls runtime-settings"><header className="bs-head iw-head"><h1>{props.tabs ? '往来单位' : label}</h1><div className="bs-head-actions"><Button type="text" disabled={!props.audit} onClick={() => { trigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; setAuditOpen(true); }}>操作记录</Button><Button type="primary" disabled={blocked} onClick={() => activate(() => { controller.openCreate(); })}>新增{label}</Button></div></header>
@@ -82,7 +84,7 @@ function PartyPage(props: PartyRuntimeProps & { controller: PartyMaintenanceCont
     <Pager total={data?.total??0} page={applied.page} size={applied.pageSize} disabled={busy} onPage={page=>{void controller.queryList({...applied,page});}} onSize={pageSize=>{void controller.queryList({...applied,page:1,pageSize});}}/>
     {state.write.phase!=='committed' && state.editor && (!props.readOnly || controller.hasUnresolvedWrite) && (formModule ? <formModule.default controller={controller}/> : <Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${state.editor.action==='CREATE'?'新增':'编辑'}${label}`} maskClosable={false} autoFocus={false} onCancel={()=>{controller.requestClose();}} footer={<Button onClick={()=>{controller.requestClose();}}>取消</Button>}>
       <p role={formError?'alert':'status'}>{formError?'维护表单暂未加载，输入已保留。':'正在准备维护表单…'}{formError&&<Button type="text" onClick={()=>setFormAttempt(value=>value+1)}>重试加载表单</Button>}</p>{state.editor.closePrompt&&<section role="alert"><p>放弃本次填写？</p><Button onClick={()=>controller.keepEditing()}>继续填写</Button><Button onClick={()=>controller.discardEditor()}>放弃本次填写</Button></section>}</Modal>)}
-    {committed&&state.editor&&<Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${label}保存已确认`} maskClosable={false} onCancel={()=>controller.discardEditor()} footer={<Button onClick={()=>controller.discardEditor()}>关闭</Button>}><p role={readback==='error'?'alert':'status'}>{readback==='error'?'当前资料读回失败，请重试读取。':'正在重新读取当前资料…'}</p>{readback==='error'&&<Button onClick={()=>retryReadback(value=>value+1)}>重试读取</Button>}</Modal>}
+    {committed&&state.editor&&<Modal visible className="bs-modal iw-arco-modal iw-arco-controls" title={`${label}保存已确认`} maskClosable={false} closable={false} onCancel={()=>{}} footer={<Button disabled>关闭</Button>}><p role={readback==='error'?'alert':'status'}>{readback==='error'?'当前资料读回失败，请重试读取。':'正在重新读取当前资料…'}</p>{readback==='error'&&<Button onClick={()=>retryReadback(value=>value+1)}>重试读取</Button>}</Modal>}
     {auditOpen&&props.audit&&(auditModule?<auditModule.default scope={controller.scope} capability={props.audit} onAccessFailure={props.audit.onAccessFailure} close={()=>{setAuditOpen(false);restoreFocus();}}/>:<Modal visible title="基础设置操作记录" maskClosable={false} onCancel={()=>{setAuditOpen(false);restoreFocus();}} footer={<Button onClick={()=>{setAuditOpen(false);restoreFocus();}}>取消</Button>}><p role={auditError?'alert':'status'}>{auditError?'操作记录暂未加载。':'正在读取操作记录…'}{auditError&&<Button type="text" onClick={()=>setAuditAttempt(value=>value+1)}>重试加载</Button>}</p></Modal>)}
   </section></div>;
 }

@@ -1,3 +1,11 @@
+SOURCE432 F3 COMMITTED READBACK EXIT GUARDS FIXED / STOCK PREWRITE FAILURE
+
+OriginalF3 QF2-428-F01 exact7 leaves + C common/ready-pages exact2 route canLeave changes fixed. Payment/Party committed not yet authoritative-read cannot ordinary cancel/X/Esc/tab/replace/route-discard; successful original target read releases. Party cleanup suspends read instead of dropping committed. Original2failureprobes+3affectedDOM PASS/strict0 adopted; QF2 next only failed/affected guard recheck. Existing8PASS/TagUI reused. No actualHTTP/PG/business release proof.
+
+T45 originalstock unit1931511a164d terminalFAILED0.8197106s at2026-10-25T07:44:32.190019Z, NOT_ATTEMPTED/write0/DDL0. Metadata/identity matched; before-runtime STATE.sql CURRENT_REAL_CORE_AND_NATIVE_COUNTS SQLSTATE42501. Exact missing object/column unknown; T45 active minimal readonly per-column privilege/PGmessage diagnosis. Original upload retained, oldjob notreplayed; corrected bounded successor only after exact cause. C232 SKU14999/15121 stage remains valid.
+
+GitHub431176b1451f32fc684f4a95498f00150fe913affb9 exact verified. Full37pages/67overlays and approved additions not complete; no newformalrelease or wholepagebusinessPASS.
+
 SOURCE431 STOCK ACTUAL SUBMISSION / SOURCE429 QB303 PASS
 
 SoleT45 actual stock private upload PASS10702025/7b0184221eb905796203e122836dd756fc11850215c00102b4fe8936b6f302be UID1000/0600, job t45-r1-v18-stock38303-stage-20261025-01 submitted once QUEUED unit naijue-erp-op-5cc58239-1931511a164d; original ACTUAL-SUBMISSION-HANDLE.json retained. No stock completion/MAIN/PUBLISH claim. T45 collecting original key only, no automatic replay. Connection-question mistaken pause corrected using actual human continued delegation; authenticated READY confirmed no new password needed.

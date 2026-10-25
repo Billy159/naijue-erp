@@ -218,7 +218,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
         parties ??= module.createPartyWorkspace({ scope: ownerScope(), client: module.createPartyHttpClient(http), newRequestKey: options.newRequestKey, onAccessFailure: error => access(error.kind === 'unauthenticated' ? 'unauthenticated' : 'forbidden') });
         const workspace = parties;
         paint(<module.PartiesRuntime initialTab={route === 'suppliers' ? 'SUPPLIER' : 'CUSTOMER'} workspace={workspace} {...(config.parties.readOnly ? { readOnly: true as const } : {})} audit={{ ...audit(), onAccessFailure: access }} />);
-        return { dispose: () => release(), canLeave: workspace.canLeave };
+        return { dispose: () => release(), canLeave: () => workspace.canLeave() && !module.hasPendingPartyReadback(workspace) };
       }
       if ((route === 'settings/staff' || route === 'settings/accounts') && config.staffSettings) {
         if (principal.role !== 'ADMIN') throw new Error('当前账号无权打开此页面。');
@@ -240,7 +240,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
         payments ??= module.createPaymentSettingsWorkspace({ scope: ownerScope(), client: module.createPaymentSettingsCommandClient(http), newRequestKey: options.newRequestKey, writesEnabled: enabled(flags?.paymentSettings), onAccessFailure: access });
         const workspace = payments;
         paint(<module.PaymentsRuntime scope={scope} reader={module.createPaymentSettingsHttpReader(http)} directory={directoryModule.createOrganizationSettingsDirectory({ scope, http })} workspace={workspace} canPrepare={enabled(flags?.paymentSettings)()} initialTab={route === 'settings/fundAccounts' ? 'accounts' : 'methods'} audit={audit()} onAccessFailure={access} />);
-        return { dispose: () => release(), canLeave: workspace.canLeave };
+        return { dispose: () => release(), canLeave: () => workspace.canLeave() && !module.hasPendingPaymentReadback(workspace) };
       }
       throw new Error('此页面尚未接入当前版本。');
     } catch (error) { release(); throw error; }
