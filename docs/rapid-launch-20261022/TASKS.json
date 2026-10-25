@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T15:54:04.278011+00:00",
+  "updatedAt": "2026-10-25T16:04:39.541752+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 491,
+    "round": 492,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "2af64501dcb70ad58c3868e57421606e9bafc62a",
+    "sourceHeadBeforeThisContinuityCommit": "30229c9462298bedb3c20df2bbe26b599dae69b7",
     "fixedCandidates": {
       "current": {
         "source": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
@@ -5065,15 +5065,15 @@
     "roleQueue": {
       "F1": "Active original frontend default-current-active-staff/once+touch state and newSAVE required wiring. Exact original documents files; sales-proposal.ts D1 unique writer; setter seam requested.",
       "F2": "465editor+468imagefailurefix integrated/scopedadopted; P01 originalwidthfinding withdrawn byQF2actualgeometry, do notkeepstaleP01waiting. Realread/write provider anddata readiness stillopen.",
-      "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
+      "F3": "Original targeted diagnosis active for authenticated CORE04 settings/staff blank main area despite routes.staffSettings true; unique owner source, shared seam to C, no browser contention.",
       "F4": "Allowedtabssource delivered/inCORE04; no independent technicalpatch justified. Next actualCORE04 color/fit read+existingfullUI scope viaQF2, maintenanceseamD2 separate. Groups/seasonscompletegoalstillopen.",
       "D1": "Static CORE04 exact current chain matched, no speculativeCSS change. Current original approved salesperson newSAVE and default setter implementation; F1 consumes precise setter.",
-      "D2": "COLOR/FIT NORMAL-HOST entry delivered runner7b4d4016/inputa5d684d9, originalC1691034834actor/0327roots/101102keys; onlynormalfactory/session GETreceipt/replay/409/401/prepost, actualnotrun. QBnewsource-onlyscopeactive.",
+      "D2": "Current color/fit consumer/session/readback already wired; exact frontend read+maintenance flags and backendPM jointly needed. CORE04 R1 currentreview read-only, currentR1 PM/ACL proof not yet supplied. No duplicateAPI or fakeenable.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "C adopts D1 exact isolated0300 one-time valid credential initialization variant; original T45 revised new bounded job, no35replay/production/public changes.",
+      "T45": "Next original bounded preparation: locate existing current R1 same-role PM metadata/ACL proof and exact missing items, no new metadata/DDL/grants/app change. QA37 completed/adopted, not rerun.",
       "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
-      "QF2": "Original one stable CORE04 guest layout recheck active after actual DOM reload recovery. No new source/build; old failure retained, cause UNKNOWN; no credential interaction.",
-      "QB": "Original combination increment PASS EXACT_TARGET_METADATA_ONLY adopted; actual issuer/host/login/HTTP/SQL untested. Exact currentFORM+PM only, realImportfalse."
+      "QF2": "Hall/warehouse limited visible readonly passed; API/sourcebinding/onecoldtwoops timing/error recovery unverified. Staff route no table/query/error: MODULE_NOT_READY; F3 takes cause. Continue independent category/colors/fits readonly, no writes.",
+      "QB": "ACTUAL37 limited increment PASS adopted. Original ops/service/store proof reused; new CREATE/EDIT/DELETE outerHTTP/UI/R1 PM not automatically passed."
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
     "route22Review": {
@@ -5689,7 +5689,27 @@
       "action": "C read-only DOM diagnostics via native DevTools, then one reload only after confirming no form/draft. No input/session/storage inspection, no login.",
       "after": "SameCORE04 login fixed/grid/z10000 covers viewport, common sheets present/enabled; panel420x433.695 centered in docked915x724. DevTools closed, natural1470x724 restored; tool-only visual centered/sidebarcovered. No source change or rebuild.",
       "independent": "OriginalQF2 one stable-state purevisual recheck active; earlier failure rootcause not closed."
-    }
+    },
+    "normalHost37Actual": {
+      "job": "t45-coreqa-normal-host-colour-fit-http-init-20261025-37",
+      "status": "PASS_LIMITED_NORMAL_HOST_COLOR_FIT_EXISTING_RECEIPT_REPLAY",
+      "elapsedSeconds": 5.6821273600216955,
+      "source": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
+      "result": "server-execution/COREQA-NORMAL-HOST37-ACTUAL-RESULT.json",
+      "independent": "reports/qa-backend/rapid-launch-20261022/QB/slice316-colour-fit-normal-host-entry/ACTUAL37-RESULT.json",
+      "independentSha256": "8df91413da89770c5ed3cee3a71d2ad3312ba4be2937d2d57f43bfa66602b662",
+      "normalAuthentication": true,
+      "sameKeyReplay409401": true,
+      "domainRowsAndCountsUnchanged": true,
+      "accountVersionDelta": 1,
+      "authVersionDelta": 1,
+      "newRevokedSessions": 1,
+      "authDML": 4,
+      "allLeasesReleased": true,
+      "publicChanged": false,
+      "notTested": "New CREATE EDIT DELETE/outer TLS browser/full roles/production business"
+    },
+    "normalHost36Actual": "Failed before all account/session/domain writes due residual old restorable guard; original carrier check mistake explicitly preserved. New37 corrected only this guard after independent successful checks; no36replay."
   },
   "latestReadySource": {
     "round": 445,
