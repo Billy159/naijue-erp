@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T14:36:24.556898+00:00",
+  "updatedAt": "2026-10-25T14:45:12.092670+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 484,
+    "round": 485,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
+    "sourceHeadBeforeThisContinuityCommit": "d3b103527cd08ed3b50a5b84b59118abbf41c44c",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -5060,23 +5060,23 @@
       "MAIN": false,
       "PUBLISH": false
     },
-    "opsBlockingCondition": "CORE02 authenticated readonly acceptance waits human candidate login, not Demo login. T45 source425 detail QA execution resumed. Two source UI fixes integrated pending fixed build; no formal root switch.",
+    "opsBlockingCondition": "CORE04 private29/30PASS; sameURL candidate successor31 actualreplacement pending originalQB exactfunctiondelta. ExistingChromeinputs retained; newbackendauth waitsuser independently, v5/salespersonnewSAVE confirmations onlyrelatedbranches. CORE02 stillpublicuntilactual31.",
     "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
     "QF2": "CORE02 exact HTTPS opened in nativeChrome狄兰; guestlogin, user candidate login pending. Demo8877 confirmed logged in; never ask Demo login again based on another profile. Chrome lease C/user; no credential filling.",
     "QB": "OriginalQB J28 decision PARTIAL adopted; actual0351 disabled identity/code/version,401,prepost increment PASS. No repeat ops/source/save. Optional published/staged witnesses and nonowner/fullhost/session/HTTPS/browser remain open.",
     "rootStrict": "FAIL16 outside delta preview/tests preserved; no fullPASS",
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
     "roleQueue": {
-      "F1": "DOC194 delivered source d0b7970956f8715a8c703c6e153facaabd380edc577c91f505b5968e619e50e8; nine targeted states/strict0 reused; browser fixed version pending. Salesperson nullable business contract discrepancy remains open, no write tightening.",
-      "F2": "465normalentry+468imagefix delivered/limited independentlychecked; real productread/write/historybusiness stillnotready, D2/T45 actualQA/mainpublication dependency. Next concreteconsumerdelivery/failure.",
+      "F1": "DOC194 delivered/in483; twoDOM correctionsQF483partialverified. Onlyrequired-newSAVEcontractbranch waitsuser, no duplicatefix.",
+      "F2": "465editor+468imagefailurefix integrated/scopedadopted; P01 originalwidthfinding withdrawn byQF2actualgeometry, do notkeepstaleP01waiting. Realread/write provider anddata readiness stillopen.",
       "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
-      "F4": "Allowedtabsexact2 delivered, in461; nextactualCORE03 colors/fits UI+realread",
+      "F4": "Allowedtabssource delivered/inCORE04; no independent technicalpatch justified. Next actualCORE04 color/fit read+existingfullUI scope viaQF2, maintenanceseamD2 separate. Groups/seasonscompletegoalstillopen.",
       "D1": "Salesperson requiredness exactminimal proposal delivered originalD1, userconfirmationpending; no SQL/DDL needed, no save rule implemented. Source425 actual28 partial obtained separately.",
-      "D2": "OriginalQA dependency handoff completed/adopted. v17C189/QB260 actualCREATE/EDIT/selection/replay/rollback retained0351 reuse; source425new detailfilter stillneedsactualPG/currenthost. Existingcataloguereplay carrier not fullmaintenanceQA; no repeats.",
+      "D2": "Original maintenance actualhandoff next minimalCOLOR/FIT HTTP gap carrier active; reuseC169store and28detail, no newplatform or productiontestwrites.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "Actual28 bounded QA complete/partial missing optional existingwitnesses;27failure preserved/noreplay. Original CORE03 private stage duties now successor CORE04 fixed483 install/start, preserveunused461/24/25drafts and public CORE02, no public switch.",
+      "T45": "29/30 actualCOMPLETED adopted;31 exact existingcandidateblock replacement disabled prepared, originalQB onlydelta review active, then once execute/no root change/no browser refresh.",
       "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
-      "QF2": "C grantednativeChrome狄兰exclusive lease afterQFactualhandoff;openfixedCORE02realentry/loginorread-only3groups;no credentialautofill orDemo relogin.",
+      "QF2": "CORE04 same task preparation complete, wait31actualpublic+Chromelease; originalguest02 historical not04. No repeatDemo-login requests.",
       "QB": "OriginalQB J28 decision PARTIAL adopted; actual0351 disabled identity/code/version,401,prepost increment PASS. No repeat ops/source/save. Optional published/staged witnesses and nonowner/fullhost/session/HTTPS/browser remain open."
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -5489,14 +5489,34 @@
       "buildSeconds": 3.674,
       "packSeconds": 2.003,
       "same33NonFrontendAsCORE02": true,
-      "actualInstall": false,
-      "publicSwitch": false
+      "actualInstall": true,
+      "publicSwitch": false,
+      "actualPrivateStart": true,
+      "actualAppId": "46666e0fb847223aa88b3691345ea13816f39ffbfe6a3df71cd6810128249286"
     },
     "salespersonRequiredProposal": {
       "status": "WAIT_USER_WRITE_CONTRACT_CONFIRMATION",
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/SALES-SALESPERSON-REQUIRED-PROPOSAL-01.md",
       "scope": "LIVE new SAVE and unreviewed edit new SAVE require selected real active staff; old NULL read/history retained; committed same-key recovery unaffected; no database NOT NULL or extra hall/role filter",
       "implemented": false
+    },
+    "core04Install29Actual": {
+      "jobId": "t45-source483-private-install-reuse-20261025-29",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "unit": "naijue-erp-op-5cc58239-dbbf58d108bd",
+      "elapsedSeconds": 13.443965177983046,
+      "finishedAtUTC": "2026-10-25T14:38:00.655753+00:00",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/CORE04-INSTALL29-ACTUAL-RESULT.json"
+    },
+    "core04App30Actual": {
+      "jobId": "t45-source483-core-private-app-start-20261025-30",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "unit": "naijue-erp-op-5cc58239-6f436a0aa471",
+      "elapsedSeconds": 9.490873724920675,
+      "finishedAtUTC": "2026-10-25T14:38:50.443759+00:00",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/CORE04-APP30-ACTUAL-RESULT.json"
     }
   },
   "latestReadySource": {
