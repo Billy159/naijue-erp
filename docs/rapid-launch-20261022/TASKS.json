@@ -11695,14 +11695,26 @@
     "source501LeaveDialogFix": {
       "finding": "QF-SOURCE499-01",
       "owner": "C",
-      "status": "SOURCE_FIXED_TARGETED_TEST_PASS_PENDING_ORIGINAL_QF_MINIMAL_RECHECK",
+      "status": "ORIGINAL_QF_SCOPED_PASS_FINDING_CLOSED_FIXED_SYN_CANDIDATE_AVAILABLE",
       "sourceFiles": [
         "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx",
         "apps/web/demo-replica/frontend/runtime/common/runtime-host.test.mjs"
       ],
       "check": "runtime-host.test.mjs exit0; synthetic HTTP and isolated page-double only; React19 warnings retained",
       "candidates": "Old499 excludes501 fix; public494CORE05 unchanged",
-      "next": "Fixed501 candidate and originalQF singlefinding review; preserve T45 pending direct-human handoff"
+      "next": "Complete fixed501 production candidate; T45 actual operations await pending human direct readonly handoff",
+      "source": "6f1f2cd05ac5924465776f90d8515d3c57e6274b",
+      "remoteVerified": true,
+      "reviewResultSha256": "05243a31bd14b14dfaf68d8a2c645519d081582fbf5eb9471e1bf25ca47e464e",
+      "candidate": {
+        "url": "http://127.0.0.1:57919/",
+        "build": "phase2-normal-6f1f2cd-30",
+        "resources": 140,
+        "strictExit": 0,
+        "viteExit": 0,
+        "syntheticOnly": true,
+        "serverSession": 45380
+      }
     }
   }
 }
