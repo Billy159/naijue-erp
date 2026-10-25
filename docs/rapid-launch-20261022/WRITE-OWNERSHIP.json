@@ -5258,7 +5258,8 @@
   "performanceContinuation389": {
     "atUtc": "2026-10-25T03:47:35.588718+00:00",
     "F2": [
-      "apps/web/demo-replica/frontend/runtime/products/detail.tsx"
+      "apps/web/demo-replica/frontend/runtime/products/detail.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/product-runtime.test.mjs"
     ],
     "F2_next_existing": [
       "apps/web/src/inventory/output-adapter.ts"
@@ -5266,6 +5267,20 @@
     "F1": "Historical list consumer assessment; exact additional write leaves require C registration; existing original-workbook owner retained",
     "D3": "Inventory server construction read-only assessment pending exact write boundary",
     "C": "Shared resources/runtime styles/build/records unique writer",
-    "rule": "No overlapping writer; no Chrome; no post-render DOM replacement or accumulating conflict CSS"
+    "rule": "No overlapping writer; no Chrome; no post-render DOM replacement or accumulating conflict CSS",
+    "F2_actualGap": "Only base/specs visited+hidden heavy DOM; Prices/Photos/Stock/Barcodes already active-only and cancellation effective, preserve"
+  },
+  "v18ApprovedBatchImport": {
+    "userApproval": "Current human reply: 确认 v18 导入批事务补充",
+    "atUtc": "2026-10-25T03:51:00.983300+00:00",
+    "writer": "D1",
+    "productionFiles": [
+      "adapters/postgres/src/native-sku-import.ts",
+      "adapters/postgres/src/native-stock-contributor-import.ts"
+    ],
+    "existingTests": [
+      "tests/native-sku-stock-import.test.ts"
+    ],
+    "boundary": "Approved doc v18, preserve single-row APIs, max100 complete items/max200 members, original byte validity and full per-item guards; only suffix9413/9517; no database operations by D1; C sole execution"
   }
 }

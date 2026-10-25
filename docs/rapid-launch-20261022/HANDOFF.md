@@ -1,3 +1,5 @@
+V18 USER CONFIRMED: current human explicitly approved bounded import batches; original D1 production2leaves + existingtest registered. Accepted5586SKU prefix untouched; only9413/9517suffix, original atomic row members/guards/precommit metadata/unknown original-key recovery. C execution after necessary affected QA; no new field/normal business change. F2 necessary base/spec test leaf registered, other four product tabs already active-only preserve.
+
 SOURCE390 / FIXED389 CANDIDATE LIVE / GITHUB389 VERIFIED / V18 CONFIRMATION PENDING
 
 Immutable389 269b4d57eeaa985c92ab3ddc4561f43485b9fb12 built once: runtime TS exit0/5.063s, Vite exit0/2.623s,135resources. New http://127.0.0.1:57898/#inventory build phase2-normal-269b4d5-09 actual root/JS/CSS HTTP200; synthetic-only no backend. C independent in-app browser opened as deliverable without touching Chrome or six drafts. Old57897 retained. Geometry/captions QF2 visual verification pending, not whole-page PASS. GitHub exact389 nonforced commit/readback PASS. Kernel candidate withdrawn; no new SQL optimization claim.
