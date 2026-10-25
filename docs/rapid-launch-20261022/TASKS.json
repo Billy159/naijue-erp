@@ -11688,7 +11688,7 @@
       "D3": "Actual transfer/stock staging adopted; full sales/batch closure and original v5 pending decisions block MAIN/PUBLISH/history edit; no repeatbackend implementation",
       "T45": "Idle revision161 human direct readonly-continuation pending; no newremotejob after41. CORE07 ready; counts/currentmetadata/QA bindings first, uniqueowner only",
       "QF": "SOURCE501 singlefinding closed; reuse499main/493 scopes; no duplicate fullreview",
-      "QF2": "SOURCE504 original narrow source review passed; no new finding; actual fixedcandidate geometry/realcount unverified, no duplicate fullreview",
+      "QF2": "SOURCE504 codepass plus actualSYN31 nonemptyTree/selectedreadonlyfacts adopted; emptyactual/count/businesspending, no remainingnewsourcefinding",
       "QB": "316tenbit source/snapshot and317salesperson technical scopes adopted; actualcurrentR1/realSAVE absent, no repeatops validation"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -11747,7 +11747,16 @@
         "syntheticOnly": true,
         "serverSession": 56450
       },
-      "notTested": "Sameinstance refresh/cancel/StrictMode/browsergeometry/realR1count/actualbusiness/deployment"
+      "notTested": "Sameinstance refresh/cancel/StrictMode/browsergeometry/realR1count/actualbusiness/deployment",
+      "actualSyn31": {
+        "owner": "QF2",
+        "status": "SYNTHETIC_PREVIEW_NONEMPTY_TREE_VISIBLE",
+        "entry": "Normal visible menu product-categories at57920 fixed633b232/SYN31",
+        "evidence": "Two synthetic roots; selectaccessories gives level1/productCountUNKNOWN/childCount1; readonlyactionsdisabled",
+        "notTested": "Empty state actualbrowser/realR1count/completecategorylist/geometry/save/business",
+        "screenshot": "Displayed inQF2turn notsavedfile; no newexportmechanism",
+        "model": "gpt-6-luna/max requested; actualLuna context; effort/FastUNVERIFIED"
+      }
     }
   }
 }
