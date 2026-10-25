@@ -1096,3 +1096,119 @@ test('production catalogue original committed keys recover and replay without wr
     assert.equal(p.counts().ends, 1);
   } finally { f.cleanup(); }
 });
+
+test('production payment opt-in mounts only original payment reads commands and receipts; exact selector and reviewed purpose required', async () => {
+  for (const core of [false, true]) {
+    const f = categoryProductionFixture('26_v15_category_order_undo', true, core);
+    const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    try {
+      for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, paymentMaintenance: value }), TypeError);
+      assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), paymentMaintenance: true }), TypeError);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, paymentMaintenance: true }, p.factory);
+      try {
+        const before = p.counts().connects;
+        for (const family of ['methods', 'accounts']) {
+          for (const path of ['commands', 'query', 'detail/query']) {
+            const url = `/payment/${family}/${path}`;
+            assert.ok(api.app.hasRoute({ method: 'POST', url }));
+            const response = await api.app.inject({ method: 'POST', url, payload: {} });
+            assert.equal(response.statusCode, 401, response.body);
+          }
+          assert.ok(api.app.hasRoute({ method: 'GET', url: `/payment/${family}/receipts/:requestKey` }));
+        }
+        assert.equal(p.counts().connects, before);
+        assert.equal(api.app.hasRoute({ method: 'POST', url: '/catalogue/colors/commands' }), false);
+        for (const url of ['/sales/commands', '/products/v2/commands', '/customers/commands', '/staff/commands']) assert.equal(api.app.hasRoute({ method: 'POST', url }), false);
+      } finally { await api.close(); }
+      assert.equal(p.counts().ends, 1);
+    } finally { f.cleanup(); }
+  }
+  const closed = categoryProductionFixture('26_v15_category_order_undo', false, true);
+  const p = exact26Driver(closed.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(closed.observation)] : undefined);
+  try {
+    const api = await createProductionRuntime26ApplicationApi(closed.configuration, p.factory);
+    try { assert.equal(api.app.hasRoute({ method: 'POST', url: '/payment/accounts/commands' }), false); }
+    finally { await api.close(); }
+    const denied = exact26Driver(closed.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(closed.observation)] : undefined);
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...closed.configuration, paymentMaintenance: true }, denied.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    assert.equal(denied.counts().ends, 1);
+  } finally { closed.cleanup(); }
+});
+
+test('production payment original provider saves two-hall account with prepared audit then exact receipt and replay on its one pool', async () => {
+  const f = categoryProductionFixture('26_v15_category_order_undo', true, true);
+  const secondHall = '00000000-0000-4000-8000-000000000094';
+  const receipts = new Map<string, Record<string, unknown>>();
+  let role = 'ADMIN', metadataChanged = false, revokeAfterReceipt = false;
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [{ ...structuredClone(f.observation), ...(metadataChanged ? { catalog_sha256: 'b'.repeat(64) } : {}) }];
+    if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s') || sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003',
+      login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role, employment_status: '在职', hall_id: hall }];
+    if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
+    if (sql.includes('maintenance:receipt')) { if (revokeAfterReceipt) metadataChanged = true; return receipts.has(values[1] as string) ? [receipts.get(values[1] as string)!] : []; }
+    if (sql.startsWith('SELECT id,name,enabled,version')) return [];
+    if (sql.startsWith('SELECT id,enabled FROM naijue_erp.payment_method')) return [{ id: values[0], enabled: true }];
+    if (sql.startsWith('SELECT id,enabled FROM naijue_erp.hall')) return (values[0] as string[]).map(id => ({ id, enabled: true }));
+    if (sql.includes('maintenance:audit')) return [{}];
+    if (sql.startsWith('INSERT INTO naijue_erp.payment_account_hall')) return (values[1] as string[]).map(() => ({}));
+    if (sql.startsWith('INSERT INTO naijue_erp.payment_')) return [{}];
+    if (sql.includes('maintenance:complete')) {
+      const result = JSON.parse(values[7] as string) as Record<string, unknown>;
+      receipts.set(values[2] as string, { id: values[0], request_hash: values[3], action: values[4], target_type: values[5], target_id: values[6], result_data: result, completed_at: values[8] });
+      return [{ result_data: result }];
+    }
+    if (sql.startsWith('WITH matched AS')) return [{ total: '0', items: [] }];
+    return undefined;
+  });
+  try {
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, paymentMaintenance: true }, p.factory);
+    try {
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+      const methodCommand = { action: 'CREATE', requestKey: 'synthetic-host-payment-method', values: { name: 'SYNTHETIC_METHOD', enabled: true } };
+      const method = await api.app.inject({ method: 'POST', url: '/payment/methods/commands', headers, payload: methodCommand });
+      assert.equal(method.statusCode, 200, method.body);
+      const accountCommand = { action: 'CREATE', requestKey: 'synthetic-host-payment-account', values: { name: 'SYNTHETIC_ACCOUNT', enabled: true, paymentMethodId: method.json().targetId as string, hallIds: [secondHall, hall] } };
+      const saved = await api.app.inject({ method: 'POST', url: '/payment/accounts/commands', headers, payload: accountCommand });
+      assert.equal(saved.statusCode, 200, saved.body);
+      const writes = () => p.calls.filter(c => /^\s*(?:\/\*[\s\S]*?\*\/\s*)?(?:INSERT|UPDATE|DELETE)\b/.test(c.sql)).length;
+      const savedWrites = writes(), savedLease = p.calls.at(-1)!.lease, calls = p.calls.filter(c => c.lease === savedLease);
+      const audit = calls.findIndex(c => c.sql.includes('maintenance:audit'));
+      const root = calls.findIndex(c => c.sql.startsWith('INSERT INTO naijue_erp.payment_account('));
+      const links = calls.findIndex(c => c.sql.startsWith('INSERT INTO naijue_erp.payment_account_hall'));
+      const completion = calls.findIndex(c => c.sql.includes('maintenance:complete'));
+      assert.ok(audit >= 0 && root > audit && links > root && completion > links);
+      assert.deepEqual(calls[links]!.values, [saved.json().targetId, [hall, secondHall].sort()]);
+      assert.deepEqual(JSON.parse(calls[audit]!.values[8] as string).payment_halls.map((link: { hall_id: string }) => link.hall_id), [hall, secondHall].sort());
+      assert.ok(calls.slice(completion + 1).some(c => c.sql === NATIVE_RUNTIME26_V15_METADATA_PROBE));
+      assert.equal(calls.at(-1)!.sql, 'COMMIT');
+      for (const [family, command, result] of [['methods', methodCommand, method.json()], ['accounts', accountCommand, saved.json()]] as const) {
+        const replay = await api.app.inject({ method: 'POST', url: `/payment/${family}/commands`, headers, payload: command });
+        assert.equal(replay.statusCode, 200, replay.body); assert.deepEqual(replay.json(), result);
+        const recovered = await api.app.inject({ method: 'GET', url: `/payment/${family}/receipts/${command.requestKey}`, headers });
+        assert.equal(recovered.statusCode, 200, recovered.body); assert.deepEqual(recovered.json().result, result);
+        const conflict = await api.app.inject({ method: 'POST', url: `/payment/${family}/commands`, headers, payload: { ...command, values: { ...command.values, name: 'DIFFERENT' } } });
+        assert.equal(conflict.statusCode, 409, conflict.body);
+      }
+      assert.equal(writes(), savedWrites);
+      const query = { search: '%_中文', status: 'all', hallId: secondHall, paymentMethodId: method.json().targetId as string, page: 1, pageSize: 20 };
+      const page = await api.app.inject({ method: 'POST', url: '/payment/accounts/query', headers, payload: query });
+      assert.equal(page.statusCode, 200, page.body);
+      const querySql = p.calls.findLast(c => c.sql.startsWith('WITH matched AS'))!;
+      assert.match(querySql.sql, /payment_account_hall link WHERE link.payment_account_id=m.id AND link.hall_id=\$3::uuid/);
+      assert.match(querySql.sql, /m.payment_method_id=\$7::uuid/);
+      assert.equal(querySql.values[0], '%_中文'); assert.equal(querySql.values[2], secondHall); assert.equal(querySql.values[6], method.json().targetId);
+      role = 'SALESPERSON';
+      for (const [httpMethod, url, payload] of [['GET', '/payment/accounts/receipts/synthetic-host-payment-account', undefined], ['POST', '/payment/accounts/commands', accountCommand], ['POST', '/payment/accounts/query', query]] as const) {
+        const denied = await api.app.inject({ method: httpMethod, url, headers, ...(payload === undefined ? {} : { payload }) });
+        assert.equal(denied.statusCode, 403, denied.body);
+      }
+      assert.equal(writes(), savedWrites); role = 'ADMIN'; revokeAfterReceipt = true;
+      const revoked = await api.app.inject({ method: 'GET', url: '/payment/accounts/receipts/synthetic-host-payment-account', headers });
+      assert.equal(revoked.statusCode, 500, revoked.body);
+      const revokedLease = p.calls.at(-1)!.lease, revokedCalls = p.calls.filter(c => c.lease === revokedLease);
+      assert.equal(revokedCalls.at(-1)!.sql, 'ROLLBACK'); assert.ok(revokedCalls.every(c => c.sql !== 'COMMIT'));
+      assert.equal(p.counts().allocations, 1); assert.equal(api.app.server.listening, false);
+    } finally { await api.close(); }
+    assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});

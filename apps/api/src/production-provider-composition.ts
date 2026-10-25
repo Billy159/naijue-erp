@@ -104,10 +104,11 @@ export interface ProductionRuntime26Configuration extends Omit<ProductionRuntime
   readonly coreInitializationRead?: CommittedCoreReadBinding;
   readonly coreReadModules?: readonly CoreReadModule[];
   readonly catalogueMaintenance?: true;
+  readonly paymentMaintenance?: true;
 }
 export function parseProductionRuntime26Configuration(input: unknown): ProductionRuntime26Configuration {
   const coreSelected = input !== null && typeof input === "object" && Object.hasOwn(input, "coreInitializationRead");
-  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", ...(coreSelected ? ["coreInitializationRead"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "catalogueMaintenance") ? ["catalogueMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "coreReadModules") ? ["coreReadModules"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
+  const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", ...(coreSelected ? ["coreInitializationRead"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "paymentMaintenance") ? ["paymentMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "catalogueMaintenance") ? ["catalogueMaintenance"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "coreReadModules") ? ["coreReadModules"] : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const review = bag(c.runtime26Review, ["reviewFile", "trustedReviewSha256"]);
   if (c.profile !== "source-confirmed-native-exact26-r1-v1" || c.documentCommands !== "DISABLED"
     || !text(review.reviewFile) || !path.isAbsolute(review.reviewFile) || path.resolve(review.reviewFile) !== review.reviewFile
@@ -123,25 +124,28 @@ export function parseProductionRuntime26Configuration(input: unknown): Productio
     coreInitializationRead = structuredClone(core) as unknown as CommittedCoreReadBinding;
   }
   if (Object.hasOwn(c, "catalogueMaintenance") && c.catalogueMaintenance !== true) throw new TypeError("Explicit catalogue maintenance selection required");
+  if (Object.hasOwn(c, "paymentMaintenance") && c.paymentMaintenance !== true) throw new TypeError("Explicit payment maintenance selection required");
   const coreReadModules = Object.hasOwn(c, "coreReadModules") ? checkedCoreReadModules(c.coreReadModules) : undefined;
   if (coreReadModules !== undefined && !coreSelected) throw new TypeError("CORE modules require the committed CORE profile");
-  const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, catalogueMaintenance: _catalogue, ...base } = c;
+  const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, catalogueMaintenance: _catalogue, paymentMaintenance: _payment, ...base } = c;
   const checked = parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
   return { ...checked, profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",
     runtime26Review: { reviewFile: review.reviewFile, trustedReviewSha256: review.trustedReviewSha256 },
     ...(c.catalogueMaintenance === true ? { catalogueMaintenance: true as const } : {}),
+    ...(c.paymentMaintenance === true ? { paymentMaintenance: true as const } : {}),
     ...(coreInitializationRead === undefined ? {} : { coreInitializationRead }), ...(coreReadModules === undefined ? {} : { coreReadModules }) };
 }
 /** Host-only adaptation after explicit successor validation. The metadata review
  * never enters public build/health output or the legacy application factory. */
 export function productionRuntime26HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
-  const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, catalogueMaintenance: _catalogue, ...base } = parseProductionRuntime26Configuration(input);
+  const { runtime26Review: _review, coreInitializationRead: _core, coreReadModules: _modules, catalogueMaintenance: _catalogue, paymentMaintenance: _payment, ...base } = parseProductionRuntime26Configuration(input);
   return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
 }
 export async function createProductionRuntime26ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26Configuration(input);
   const options = { ...productionApplicationOptions(productionRuntime26HostConfiguration(config)),
-    ...(config.catalogueMaintenance === true ? { catalogueMaintenance: true as const } : {}) };
+    ...(config.catalogueMaintenance === true ? { catalogueMaintenance: true as const } : {}),
+    ...(config.paymentMaintenance === true ? { paymentMaintenance: true as const } : {}) };
   if (config.coreInitializationRead !== undefined) {
     const { nativeReadExtensions: _extensions, currentForms: _forms, ...coreOptions } = options;
     return createPostgresRuntime26ApplicationApi({ ...coreOptions, coreInitializationRead: config.coreInitializationRead, ...(config.coreReadModules === undefined ? {} : { coreReadModules: config.coreReadModules }) }, config.runtime26Review, driver);

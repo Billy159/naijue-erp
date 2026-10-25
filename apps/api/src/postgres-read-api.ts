@@ -78,6 +78,8 @@ import { PostgresProductWarehouseStockReader } from "../../../adapters/postgres/
 import { PostgresMaintenanceCommandUnitOfWork, maintenanceContextClient } from "../../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import { PostgresCatalogueMaintenanceUnitOfWork } from "../../../adapters/postgres/src/catalogue-maintenance-store.ts";
 import { createCatalogueMaintenanceHttpPlugin } from "./catalogue-maintenance-http.ts";
+import { PostgresPaymentMaintenanceUnitOfWork } from "../../../adapters/postgres/src/payment-maintenance-store.ts";
+import { createPaymentMaintenanceHttpPlugin } from "./payment-maintenance-http.ts";
 import { PostgresOrganizationMaintenanceReadUnitOfWork, type OrganizationCoreReadCapability } from "../../../adapters/postgres/src/organization-maintenance-store.ts";
 import { createOrganizationMaintenanceReadHttpPlugin } from "./organization-maintenance-http.ts";
 import { createNativeRuntime26Issuer } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
@@ -156,6 +158,7 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
   readonly coreReadModules?: readonly CoreReadModule[];
   /** Host-only write opt-in; requires a separately reviewed PRODUCT_MAINTENANCE purpose. */
   readonly catalogueMaintenance?: true;
+  readonly paymentMaintenance?: true;
   /** Closed trusted production selector. It installs independently defined read
    * policies below, never commands or a fallback from LIVE to HISTORY. */
   readonly nativeReadExtensions?: { readonly profile: "source-confirmed-r1-v1" };
@@ -170,6 +173,7 @@ export interface PostgresApplicationApiOptions extends PostgresReadApiOptions {
 }
 type ApplicationCapabilities = { readonly coreReadModules: readonly CoreReadModule[]; readonly coreInitializationRead: CommittedCoreReadBinding | null; readonly commands: PostgresDocumentCommandsCapability | null;
   readonly catalogueMaintenance: boolean;
+  readonly paymentMaintenance: boolean;
   readonly nativeReadExtensions: boolean;
   readonly settings: StoreSettingsReadAuthorization | null;
   readonly productManagement: ProductManagementQueryAuthorization | null;
@@ -205,6 +209,8 @@ function method<T extends (...args: never[]) => unknown>(value: unknown, name: s
 function checkedApplicationCapabilities(options: PostgresApplicationApiOptions): ApplicationCapabilities {
   const catalogueMaintenance = "catalogueMaintenance" in options;
   if (catalogueMaintenance && ownData(options, "catalogueMaintenance") !== true) throw new TypeError("Explicit catalogue maintenance selection required");
+  const paymentMaintenance = "paymentMaintenance" in options;
+  if (paymentMaintenance && ownData(options, "paymentMaintenance") !== true) throw new TypeError("Explicit payment maintenance selection required");
   let coreInitializationRead: CommittedCoreReadBinding | null = null;
   if ("coreInitializationRead" in options) {
     const core = exactBag(ownData(options, "coreInitializationRead"), ["profile", "batchId", "operationId", "coreSourceDigest"]);
@@ -271,7 +277,7 @@ function checkedApplicationCapabilities(options: PostgresApplicationApiOptions):
     const bag = exactBag(ownData(options, "importedHistoryRead"), ["authorization"]);
     importedHistory = Object.freeze({ authorize: method<ImportedHistoryReadAuthorization["authorize"]>(bag.authorization, "authorize") });
   }
-  return Object.freeze({ coreInitializationRead, coreReadModules, catalogueMaintenance, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
+  return Object.freeze({ coreInitializationRead, coreReadModules, catalogueMaintenance, paymentMaintenance, commands, nativeReadExtensions, settings, productManagement, catalogueSettings, dictionary, party, importedHistory });
 }
 
 export interface SourceConfirmedApplicationReadAuthorization {
@@ -508,7 +514,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   runtime26ExistingPreparation?: Runtime26ExistingPreparation, runtime26ProductMedia?: Runtime26ProductMediaConfiguration,
   runtime26HistoryAuthorization?: HistoryRevisionDependencies["authorization"]): Promise<PostgresReadApi | PostgresApplicationApi> {
   const host = checkedHost(options);
-  if (capabilities?.catalogueMaintenance && runtime26Review === undefined) throw new TypeError("Catalogue maintenance requires the original independently reviewed runtime");
+  if ((capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
   try {
@@ -517,7 +523,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     if (issuer !== null) {
       const admission = await pool.connect();
       try {
-        if (capabilities?.catalogueMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_MAINTENANCE");
+        if (capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_MAINTENANCE");
         if (runtime26HistoryAuthorization !== undefined) await issuer.runtime26.assertReady(admission, "HISTORY_REVISION");
         for (const purpose of capabilities?.coreInitializationRead ? ["CURRENT_FORM_READ"] as const : ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
           await issuer.runtime26.assertReady(admission, purpose);
@@ -535,19 +541,25 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin });
     const authenticate = createSalesSessionAuthenticator(authentication);
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);
-    if (issuer && (capabilities?.catalogueMaintenance || issuer.categoryOrderWrite)) {
+    if (issuer && (capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || issuer.categoryOrderWrite)) {
       const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
       // Explicit full maintenance checks the reviewed purpose on the original
       // borrowed context, including immediately before its outer COMMIT.
-      const work = capabilities?.catalogueMaintenance ? { transaction: <T>(run: Parameters<typeof driver.transaction<T>>[0]) => driver.transaction(async context => {
+      const work = capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance ? { transaction: <T>(run: Parameters<typeof driver.transaction<T>>[0]) => driver.transaction(async context => {
         await issuer.runtime26.assertReady(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
         const result = await run(context);
         await issuer.runtime26.assertReady(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
         return result;
       }) } : driver;
-      app.register(createCatalogueMaintenanceHttpPlugin({ authenticate, ...(capabilities?.catalogueMaintenance ? {} : { categoryOnly: true as const }),
+      if (capabilities?.catalogueMaintenance || issuer.categoryOrderWrite) app.register(createCatalogueMaintenanceHttpPlugin({ authenticate, ...(capabilities?.catalogueMaintenance ? {} : { categoryOnly: true as const }),
         dependencies: { unitOfWork: new PostgresCatalogueMaintenanceUnitOfWork(work, issuer.categoryOrderWrite),
           now: host.now, newId: () => randomUUID() } }));
+      if (capabilities?.paymentMaintenance) {
+        app.register(createPaymentMaintenanceHttpPlugin({ authenticate,
+          dependencies: { unitOfWork: new PostgresPaymentMaintenanceUnitOfWork(work), now: host.now, newId: () => randomUUID() } }));
+        if (capabilities.coreInitializationRead || extensions === null) app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate, kinds: ["PAYMENT_METHOD", "PAYMENT_ACCOUNT"],
+          unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(work) }));
+      }
     }
     if (capabilities?.coreInitializationRead) {
       if (!issuer) throw new TypeError("CORE settings require the original independently reviewed issuer");
