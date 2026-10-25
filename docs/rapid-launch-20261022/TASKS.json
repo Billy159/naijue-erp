@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": 463,
+    "round": "SOURCE543",
     "goal": "HUMAN_AUTHORIZED_CHAT_EXECUTION_RESUMED_FULL_SCOPE_CARD_RESUME_UNVERIFIED",
-    "sourceHeadBeforeThisContinuityCommit": "44372398d92560de0368fd731b09ffdf09fca82b",
+    "sourceHeadBeforeThisContinuityCommit": "3a8a10f0dccdce22e1fd4441de0258b39f57a8a9",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12258,12 +12258,60 @@
         "CUSTOMER": 261
       },
       "currentGap": "history_sales_header INSERT27 all missing; SELECT27 and original other stage rights valid",
-      "next": "QB exact27column INSERT scope; T45/D3 two historical customer exact bindings; no inferred missing references from counts",
+      "next": "Adopt QB328 exact INSERT27 pre-review; T45 stages missing exact2 historical customers via original entry and coordinates R1 ACL/review/private candidate successor.",
       "bigPreparedFilesRead": false,
       "activeImportBackends": 0,
       "clientEnded": true,
       "R1Writes": false,
       "receipt": "B/server-execution/SALES28282-STAGE-PREPARATION/ACTUAL71-CURRENT-R1-BINDING.json"
+    },
+    "salesStage72HistoricalCustomers": {
+      "owner": "T45",
+      "status": "COMPLETED0_EXACT2_READONLY_BOTH_MISSING",
+      "seconds": 1.1696,
+      "targetOID": "1027659",
+      "customerExists": [
+        false,
+        false
+      ],
+      "exactSource": [
+        false,
+        false
+      ],
+      "headerReference": [
+        false,
+        false
+      ],
+      "nativeEvidence": [
+        false,
+        false
+      ],
+      "R1Writes": false,
+      "bigPreparedFilesRead": false,
+      "receipt": "B/server-execution/SALES28282-STAGE-PREPARATION/ACTUAL72-HISTORICAL2-EXACT-BINDING.json",
+      "next": "Original openHistoricalCustomerSource/prepareNativePartyImportChunk/PostgresNativePartyImportStore.stage exact2; no direct reference patch or name guess."
+    },
+    "r1StageAndCandidateCoupling543": {
+      "owner": "T45",
+      "independentReviewer": "QB",
+      "status": "PREPARING_NOT_EXECUTED",
+      "preReview": "QB328 PASS_LIMITED_PRE_GRANT_SOURCE_SCOPE",
+      "reviewResult": "Q/slice328-r1-sales-header-stage-insert27/RESULT.json",
+      "reviewSha256": "df60e7d116d4c860d4586f44cd9192abb58b08d20dad275b69f1e1dc910f8020",
+      "scope": "Only history_sales_header exact27 physical column INSERT; no UPDATE/DELETE/ALL/role/DDL.",
+      "dependency": "R1 GRANT changes fullcatalog and invalidates APP58 current CURRENT_FORM_READ review.",
+      "sequence": [
+        "Prepare original QB result deployment paths and same CORE10 successor config/app carrier",
+        "T45 exact GRANT and capture actual catalog/identity",
+        "QB delta-only review plus IMPORT_STAGE and CURRENT_FORM_READ rebind",
+        "T45 same build new private config/app original candidate three-route CAS switch",
+        "Restore candidate read before full921MB staging; continue stage/full closure"
+      ],
+      "flagsExpanded": false,
+      "formalRootChanged": false,
+      "rebuildRequired": false,
+      "availability": "Record actual guard refusal interval if any; do not claim zero impact.",
+      "rollback": "APP58 route rollback only when catalog compatible; otherwise revoke just previously absent INSERT27 and verify old canonical/readReady. Preserve committed data."
     }
   }
 }
