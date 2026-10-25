@@ -1,4 +1,5 @@
 import fsPromises from "node:fs/promises";
+import { createNodeCredentialRequestTag } from "../../../packages/authentication/src/passwords.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { syncBuiltinESMExports } from "node:module";
 import sharp from "sharp";
@@ -1332,5 +1333,144 @@ test('production party original approved allocator saves edits and rereads nativ
       assert.equal(p.counts().allocations, 1); assert.equal(api.app.server.listening, false);
     } finally { await api.close(); }
     assert.equal(p.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+
+test('production staff explicit opt-in mounts single staff workflow and native readback without adding account writer or credential defaults', async () => {
+  for (const core of [false, true]) {
+    const f = categoryProductionFixture('26_v15_category_order_undo', true, core);
+    const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    try {
+      for (const value of [false, null, {}, 'true', undefined]) assert.throws(() => parseProductionRuntime26Configuration({ ...f.configuration, staffMaintenance: value }), TypeError);
+      assert.throws(() => parseProductionRuntimeConfiguration({ ...config(), staffMaintenance: true }), TypeError);
+      const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, ...(core ? { coreReadModules: ['organization'] } : {}), staffMaintenance: true }, p.factory);
+      try {
+        const before = p.counts().connects;
+        for (const url of ['/staff/commands', '/staff/query', '/staff/detail/query']) {
+          assert.ok(api.app.hasRoute({ method: 'POST', url }));
+          const denied = await api.app.inject({ method: 'POST', url, payload: {} }); assert.equal(denied.statusCode, 401, denied.body);
+        }
+        assert.ok(api.app.hasRoute({ method: 'GET', url: '/staff/receipts/:requestKey' }));
+        assert.equal(p.counts().connects, before);
+        for (const url of ['/accounts/commands', '/payment/accounts/commands', '/customers/commands', '/catalogue/colors/commands']) assert.equal(api.app.hasRoute({ method: 'POST', url }), false);
+      } finally { await api.close(); }
+    } finally { f.cleanup(); }
+  }
+  const f = categoryProductionFixture('26_v15_category_order_undo', false, true);
+  const p = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+  try {
+    const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
+    try { assert.equal(api.app.hasRoute({ method: 'POST', url: '/staff/commands' }), false); } finally { await api.close(); }
+    const denied = exact26Driver(f.observation, sql => sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? [structuredClone(f.observation)] : undefined);
+    await assert.rejects(createProductionRuntime26ApplicationApi({ ...f.configuration, staffMaintenance: true }, denied.factory), { code: 'NATIVE_RUNTIME26_NOT_READY' });
+    assert.equal(denied.counts().ends, 1);
+  } finally { f.cleanup(); }
+});
+
+function staffHostProtocol() {
+  const f = categoryProductionFixture('26_v15_category_order_undo', true, true);
+  const staff = new Map<string, Record<string, unknown>>(), accounts = new Map<string, Record<string, unknown>>(), receipts = new Map<string, Record<string, unknown>>();
+  let role = 'ADMIN', otherAdmin = true;
+  const p = exact26Driver(f.observation, (sql, values) => {
+    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s') || sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003', login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role, employment_status: '在职', hall_id: hall }];
+    if (sql.includes('maintenance:administrator-lock')) return [];
+    if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
+    if (sql.includes('maintenance:receipt')) return receipts.has(values[1] as string) ? [receipts.get(values[1] as string)!] : [];
+    if (sql.startsWith('SELECT id,staff_id,login_name')) return [...accounts.values()].filter(a => (values[0] as string[]).includes(a.staff_id as string));
+    if (sql.startsWith('SELECT id,name,role')) return [...staff.values()].filter(s => (values[0] as string[]).includes(s.id as string));
+    if (sql.startsWith('SELECT id,enabled FROM naijue_erp.hall')) return (values[0] as string[]).map(id => ({ id, enabled: true }));
+    if (sql.includes('staff-maintenance:other-admin')) return [{ available: otherAdmin }];
+    if (sql.includes('maintenance:audit')) return [{}];
+    if (sql.startsWith('INSERT INTO naijue_erp.staff') || sql.startsWith('UPDATE naijue_erp.staff SET')) {
+      staff.set(values[0] as string, { id: values[0], name: values[1], role: values[2], hall_id: values[3], contact: values[4], employment_status: values[5], version: values[6] }); return [{}];
+    }
+    if (sql.startsWith('INSERT INTO naijue_erp.user_account') || sql.startsWith('UPDATE naijue_erp.user_account SET')) {
+      accounts.set(values[0] as string, { id: values[0], staff_id: values[1], login_name: values[2], login_enabled: values[3], auth_version: values[4], version: values[5], created_at: values[6], updated_at: values[7] }); return [{}];
+    }
+    if (sql.startsWith('UPDATE naijue_erp.auth_session')) return [{}];
+    if (sql.includes('maintenance:complete')) {
+      const result = JSON.parse(values[7] as string);
+      receipts.set(values[2] as string, { id: values[0], request_hash: values[3], action: values[4], target_type: values[5], target_id: values[6], result_data: result, completed_at: values[8] }); return [{ result_data: result }];
+    }
+    if (sql.startsWith('WITH matched AS') && sql.includes('FROM naijue_erp.staff m')) {
+      const selected = [...staff.values()].filter(s => values[5] === null || s.id === values[5]);
+      return [{ total: String(selected.length), items: selected.map(s => {
+        const a = [...accounts.values()].find(a => a.staff_id === s.id);
+        return { kind: 'STAFF', id: s.id, version: s.version, createdAt: null, updatedAt: null, name: s.name, role: s.role, contact: s.contact, employmentStatus: s.employment_status, hall: null,
+          account: a ? { id: a.id, loginName: a.login_name, loginEnabled: a.login_enabled, authVersion: a.auth_version, version: a.version } : null };
+      }) }];
+    }
+    return undefined;
+  });
+  return { f, p, staff, accounts, receipts, setRole(value: string) { role = value; }, setOtherAdmin(value: boolean) { otherAdmin = value; } };
+}
+
+test('production staff no-credential ordinary create edit readback and employment remain available; password branch honestly rejects', async () => {
+  const x = staffHostProtocol(), { f, p } = x;
+  try {
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, coreReadModules: ['organization'], staffMaintenance: true }, p.factory);
+    try {
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` };
+      const values = { name: 'SYNTHETIC_STAFF_ONLY', role: 'WAREHOUSE', hallId: null, contact: null };
+      const command = { action: 'CREATE', requestKey: 'synthetic-staff-only', values, account: null };
+      const created = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: command }); assert.equal(created.statusCode, 200, created.body);
+      const result = created.json();
+      const replay = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: command }); assert.equal(replay.statusCode, 200, replay.body); assert.deepEqual(replay.json(), result);
+      const recovered = await api.app.inject({ method: 'GET', url: '/staff/receipts/synthetic-staff-only', headers }); assert.equal(recovered.statusCode, 200, recovered.body);
+      const conflict = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: { ...command, values: { ...values, name: 'CHANGED' } } }); assert.equal(conflict.statusCode, 409, conflict.body);
+      const edited = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: { action: 'EDIT', requestKey: 'synthetic-staff-edit', id: result.targetId, expectedVersion: 1, values: { ...values, name: 'EDITED_STAFF' }, account: null } }); assert.equal(edited.statusCode, 200, edited.body);
+      const page = await api.app.inject({ method: 'POST', url: '/staff/query', headers, payload: { search: '', status: 'all', hallId: null, page: 1, pageSize: 20 } });
+      assert.equal(page.statusCode, 200, page.body); assert.equal(page.json().total, 1); assert.equal(page.json().items[0].id, result.targetId); assert.equal(page.json().items[0].name, 'EDITED_STAFF'); assert.equal(page.json().items[0].account, null);
+      const read = p.calls.findLast(c => c.sql.startsWith('WITH matched AS'))!;
+      assert.match(read.sql, /LEFT JOIN naijue_erp.user_account a ON a.staff_id=m.id/); assert.ok(!read.sql.includes('m.id=ANY')); assert.ok(!read.sql.includes('password_hash'));
+      const detail = await api.app.inject({ method: 'POST', url: '/staff/detail/query', headers, payload: { id: result.targetId } }); assert.equal(detail.statusCode, 200, detail.body); assert.equal(detail.json().name, 'EDITED_STAFF');
+      for (const [action, version] of [['LEAVE', 2], ['REINSTATE', 3]] as const) {
+        const response = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: { action, requestKey: `synthetic-staff-${action}`, id: result.targetId, expectedVersion: version } }); assert.equal(response.statusCode, 200, response.body);
+      }
+      const connects = p.counts().connects;
+      const unavailable = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: { ...command, requestKey: 'synthetic-staff-needs-credentials', account: { id: null, expectedVersion: null, loginName: 'SYNTHETIC_LOGIN', loginEnabled: true, password: 'SYNTHETIC_Only_42!' } } });
+      assert.equal(unavailable.statusCode, 503, unavailable.body); assert.equal(unavailable.json().error.code, 'ACCOUNT_CREDENTIALS_NOT_READY');
+      // Only authentication borrowed a lease; credential rejection preceded a command transaction.
+      assert.equal(p.counts().connects, connects + 1); assert.equal(x.accounts.size, 0);
+      x.setRole('WAREHOUSE');
+      const denied = await api.app.inject({ method: 'POST', url: '/staff/query', headers, payload: { search: '', status: 'all', hallId: null, page: 1, pageSize: 20 } }); assert.equal(denied.statusCode, 403, denied.body);
+      assert.equal(p.counts().allocations, 1);
+    } finally { await api.close(); }
+  } finally { f.cleanup(); }
+});
+
+test('production staff original injected tag uses original scrypt and policy; linked account leave revokes sessions and reinstate stays closed', async () => {
+  const x = staffHostProtocol(), { f, p } = x;
+  // Synthetic-only stable tag capability. No credential file, environment key or real secret.
+  const tag = createNodeCredentialRequestTag(Buffer.alloc(32, 65));
+  try {
+    const api = await createProductionRuntime26ApplicationApi({ ...f.configuration, staffMaintenance: true }, p.factory, tag);
+    try {
+      const headers = { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` }, password = 'SYNTHETIC_Only_42!';
+      const payload = { action: 'CREATE', requestKey: 'synthetic-staff-linked', values: { name: 'SYNTHETIC_ADMIN', role: 'ADMIN', hallId: null, contact: null }, account: { id: null, expectedVersion: null, loginName: 'SYNTHETIC_LOGIN', loginEnabled: true, password } };
+      const created = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload }); assert.equal(created.statusCode, 200, created.body); const result = created.json();
+      const saved = p.calls.findLast(c => c.sql.startsWith('INSERT INTO naijue_erp.user_account'))!;
+      assert.match(saved.values[8] as string, /^naijue:scrypt:1:32768:8:1:[0-9a-f]{32}:[0-9a-f]{128}$/);
+      const lease = p.calls.at(-1)!.lease, calls = p.calls.filter(c => c.lease === lease);
+      const audit = calls.findIndex(c => c.sql.includes('maintenance:audit')), root = calls.findIndex(c => c.sql.startsWith('INSERT INTO naijue_erp.staff')), child = calls.findIndex(c => c.sql.startsWith('INSERT INTO naijue_erp.user_account'));
+      assert.ok(audit >= 0 && root > audit && child > root); assert.equal(calls.at(-1)!.sql, 'COMMIT');
+      assert.ok(!JSON.stringify(calls[audit]!.values).includes(password)); assert.ok(!created.body.includes(password));
+      const replay = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload }); assert.equal(replay.statusCode, 200, replay.body); assert.deepEqual(replay.json(), result);
+      assert.equal(p.calls.filter(c => c.sql.startsWith('INSERT INTO naijue_erp.user_account')).length, 1);
+      x.setOtherAdmin(false);
+      const leave = { action: 'LEAVE', requestKey: 'synthetic-staff-linked-leave', id: result.targetId, expectedVersion: 1 };
+      const blocked = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: leave }); assert.equal(blocked.statusCode, 409, blocked.body); assert.equal(blocked.json().error.code, 'LAST_AVAILABLE_ADMIN');
+      x.setOtherAdmin(true);
+      const left = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: leave }); assert.equal(left.statusCode, 200, left.body);
+      assert.ok(p.calls.some(c => c.sql.startsWith('UPDATE naijue_erp.auth_session')));
+      const restored = await api.app.inject({ method: 'POST', url: '/staff/commands', headers, payload: { action: 'REINSTATE', requestKey: 'synthetic-staff-linked-reinstate', id: result.targetId, expectedVersion: 2 } }); assert.equal(restored.statusCode, 200, restored.body);
+      const detail = await api.app.inject({ method: 'POST', url: '/staff/detail/query', headers, payload: { id: result.targetId } }); assert.equal(detail.statusCode, 200, detail.body);
+      assert.equal(detail.json().employmentStatus, '在职'); assert.equal(detail.json().account.loginEnabled, false); assert.equal(detail.json().account.id, saved.values[0]);
+      const list = await api.app.inject({ method: 'POST', url: '/staff/query', headers, payload: { search: '', status: 'all', hallId: null, page: 1, pageSize: 20 } });
+      assert.equal(list.statusCode, 200, list.body); assert.equal(list.json().total, 1);
+      assert.equal(list.json().items[0].account.id, saved.values[0]); assert.equal(list.json().items[0].account.loginEnabled, false);
+      assert.ok(!detail.body.includes(password)); assert.ok(!detail.body.includes('password_hash')); assert.equal(p.counts().allocations, 1);
+    } finally { await api.close(); }
   } finally { f.cleanup(); }
 });

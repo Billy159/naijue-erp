@@ -1,3 +1,9 @@
+SOURCE420 STAFF SOURCE READY / SOURCE418 LIMITED TAG UI ADOPTED
+
+D1 STAFF-HOST-CONSUMPTION-01 exact3 delivered: originalStaff host optin+native sameURL list/detail and existingStaff UOW/auth/linkedaccount; targetednew3+original10/strictPASS, realPG/HTTPnotdone. Originalprivate CredentialRequestTag|null factory seam; no known stable private tag provider yet, onlypassword/account-creation branch remains explicit503, employee ordinarymaintenance independent. No new secret/env key/publicconfig/secondaccountlist/schemaACL. Next originalQB finiteSTAFFdelta thenT45 actualpurpose/nonowner/UIpair. D1 writer released; PRODUCT next precise originalmedia-stage dependency must not bypass.
+
+QF2 SOURCE418-UI-CHECK-01 adopted PASS_LIMITED_UI_TAG_X_LONG_LABEL_CLEAR_REQUIRED_FORM_NOT_TESTED: ownIAB1470x724, selectedSYNhall037 whiteTag/longellipsis/internal×visible; click× restoresAll anddoesnotopenpopup. Requiredform inaccessible disabledcap, onlythat representative awaits actualmaintenance. No Chrome/userdraft/realwrite/performance/fullpageclaim. SOURCE411 semanticreadresults reused. Whole37/67real0, originalformalunchanged.
+
 SOURCE418 FIXED CANDIDATE / T45 C232 ACTUALLY SUBMITTED / PARTY QB299 PASS
 
 SOURCE418 0aade00028d947a1ab0d764165a37d95b630b909 GitHub exact original objects nonforcedFF/remoteGET confirmed. Includes SOURCE417 Party3 original D1 leaves; originalQB299 limited source+2host/3reader PASS accepted, no actualPG/HTTP businessclaim. OriginalQB297 Payment415 limited10PASS accepted, catalogueQB296 reused. D1 next STAFF host exact original credentials capability seam; no stable requestTag provider reference currentlyverified, only password/account branches wait. Other employee operations/native readback proceed.
