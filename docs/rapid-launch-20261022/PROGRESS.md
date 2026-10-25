@@ -1,3 +1,9 @@
+SOURCE476 — CORE02 THREE CANDIDATE ROUTES ACTUALLY ACTIVE; EXTERNAL HTTPS STILL UNVERIFIED
+
+Original22 COMPLETED exit0/1.169707s. Exactthree scopedcandidate paths installed through reviewed sameinodeCAS/readback, nginx-t/reload0; innerentry4263/module52027 HTTP200matchfixedsource459/core02, originalauthsessionguest200/principalnull.14protected servicesunchanged; rootbefore/after39330/05cf5384dee58e5e39a70875f3a8b332398d46519e8c5c72a48038b19d24cef1 unchanged, oldAPIunchanged,0DBcalls. ExternalTLSVerifiedfalse/browserLoginVerifiedfalse/businessAcceptancefalse. OriginalT45 outerHTTPS verification next/inprogress, no duplicate22 or productionroot switch. Actual23backup/20install/21privateapp valid adopted.
+
+OriginalQF2 CORE02 preparation completed and source/inputpins matched; actualnormalpage queries use originalPOST readonly hall/warehouse/staff/category endpoints, authsessionGET only. No synthetic/fullcommon rerun, no businesscommands. Browserrealread waitsC actualexternalHTTPS receipt; writecapabilities absent, othermodules/nextCORE03 not inthisbatch. Source475df980149 exactGitHub remoteFF/readback verified. Full37/67 allstates/history/business/performance/formalrelease goal ACTIVE, not reducedtoCOREreadonly.
+
 SOURCE475 — CORE02 PRIVATE APP21 ACTUALLY STARTED; ROUTE22 IN FLIGHT
 
 OriginalT45 21 COMPLETED exit0/11.143858s appfea0a222416bb7a451db0ad5acf7f352b138d7718132576711b5a90458353788, source459/core02.UID10001:10001/rootfsreadonly/ports{},health/root/module/CSS/font200 fixedbytes;13originalservicespreserved/no businessDML/DDL. databaseCheckedfalse/dataReadyfalse, no realbusinessPASS. Original22 finalizedactualapp/14protection/newbackup23/QB314review and submittedonce; outerHTTPS notverified yet. Source4742ce965f remote exactFF/readback verified.

@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 475,
+    "round": 476,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "2ce965f97548d738330282b1fa919f726d433fb2",
+    "sourceHeadBeforeThisContinuityCommit": "df980149fd18baec5a3af7d998be4a6d968e9028",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -5060,7 +5060,7 @@
       "MAIN": false,
       "PUBLISH": false
     },
-    "opsBlockingCondition": "21 actualCOMPLETED exit0/11.143858s privateapp fea0a222416bb7a451db0ad5acf7f352b138d7718132576711b5a90458353788;22 exact reviewed candidate route submitted once, outerHTTPS notyetverified; originalroot untouched.",
+    "opsBlockingCondition": "22actualCOMPLETED exit0 three exactcandidate routes configured/readback; innerHTTP fixedroot/module200,guestauth200principalnull,14protected/rootunchanged. ExternalTLS/HTTPS notyetverified; originalT45 current externalverification beforeQF2 browser.",
     "QF": "Original QF LOGIN-CONTEXT completed single bounded check after user clarified Chrome. Same unique exposed8877 tab stillloginUI; Chrome windowId not exposed, user-window match UNKNOWN. No repeat login request. Existing source468 partial UI adopted; new paired same-state geometry awaits accessible logged-in Demo context.",
     "QF2": "465 normalnew/edit six tabs/draft/dirtyreturn partialUI adopted;468 imageparentfail PASS_LIMITED adopted; no fullpage/business/perf/releasePASS. Idleuntil actualready newconsumer.",
     "QB": "QB314 original22 disabledroute limitedPASS adopted; actualparent/appId/protected14/reviewfinalization and10lockrelease remain",
@@ -5074,9 +5074,9 @@
       "D1": "COREpairing/v5factupdate delivered; actualcurrentreader candidate HTTP next",
       "D2": "Source425/QA proofs ready; actualregisteredQA maintenance window T45 pending",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "23backupPASS/20installPASS/21privateappPASS;22reviewed prefixroute actualinflight, externalHTTPS pending.",
+      "T45": "23/20/21/22actualPASS scopedoperations; externalHTTPS/TLS current originalverification. No publicbusiness/authPASS or formalroot switch.",
       "QF": "Idle at precise Demo connection/context gap; no duplicate old checks, no credential reads. Resume original pure appearance scope Luna/max when accessible logged-in context is available.",
-      "QF2": "CORE02 real readonly preparation handed original QF2 Solmedium; actualbrowser/GET waits22actualsuccess+outerHTTPS. No oldSYN/fullcommon recheck; pureappearance laterLunamax.",
+      "QF2": "CORE02 preparation completed/no browser yet. Source459 readonly query methodsPOST forhall/warehouse/staff/categories, GETauth/session; waits22externalHTTPS receipt, then one affectedrealread check Solmedium.",
       "QB": "22 scopedsource/rollbackPASS adopted; next only changedfailedrange oractualnewbackendmodule"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -5279,6 +5279,85 @@
         "privateValueDigestsPublished": false
       },
       "receiptDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source459-core-private-app-start-20261025-21/release-submission/release-receipts/t45-source459-core-private-app-start-20261025-21",
+      "replayed": false,
+      "businessAcceptance": false
+    },
+    "core02Route22Actual": {
+      "jobId": "t45-source459-core02-candidate-prefix-route-20261025-22",
+      "status": "COMPLETED",
+      "exitCode": 0,
+      "unit": "naijue-erp-op-5cc58239-5fc83e4ed2e0",
+      "elapsedSeconds": 1.1697072889655828,
+      "finishedAtUTC": "2026-10-25T13:16:19.677218+00:00",
+      "actual": {
+        "automaticRetry": false,
+        "backupAgeSeconds": 500.364885,
+        "browserLoginVerified": false,
+        "businessAcceptance": false,
+        "candidateApiGuest": {
+          "credentialsSupplied": false,
+          "path": "/__naijue_candidate/replica-private-01/api/auth/session",
+          "principal": null,
+          "status": 200
+        },
+        "candidateHttp": [
+          {
+            "bytes": 4263,
+            "matchedFixedFile": true,
+            "path": "/__naijue_candidate/replica-private-01/",
+            "status": 200
+          },
+          {
+            "bytes": 52027,
+            "matchedFixedFile": true,
+            "path": "/assets/replica-production-source459-core-02/application.js",
+            "status": 200
+          }
+        ],
+        "candidateRoutesAdded": 3,
+        "configAfterProposed": {
+          "bytes": 13787,
+          "sha256": "4a20c011acc292fb59bc96d482c2784c4d1c6c5caf33b3882419edd03346683e"
+        },
+        "configBefore": {
+          "bytes": 12159,
+          "device": 66304,
+          "gid": 0,
+          "inode": 11674449,
+          "mode": 292,
+          "mtimeNs": 1792128348327064088,
+          "sha256": "89de967017bc6e9f96b4c6c2cb2798226243d549bcd48eec99a9d0472e1f0ecc",
+          "uid": 0
+        },
+        "configurationWriteAttempted": true,
+        "configurationWrittenAndReadBack": true,
+        "databaseCalls": 0,
+        "effectiveCandidateHttpVerified": true,
+        "externalTlsVerified": false,
+        "finishedAtUTC": "2026-10-25T13:16:19.616810+00:00",
+        "jobId": "t45-source459-core02-candidate-prefix-route-20261025-22",
+        "nginxTestExitCode": 0,
+        "nginxTestStderrBytes": 132,
+        "oldApiChanged": false,
+        "originalFourteenPreserved": true,
+        "privateValuesPublished": false,
+        "productionRootChanged": false,
+        "rawConfigurationExported": false,
+        "reloadAttempted": true,
+        "reloadCommandExitCode": 0,
+        "rootAfter": {
+          "bytes": 39330,
+          "sha256": "05cf5384dee58e5e39a70875f3a8b332398d46519e8c5c72a48038b19d24cef1",
+          "status": 200
+        },
+        "rootBefore": {
+          "bytes": 39330,
+          "sha256": "05cf5384dee58e5e39a70875f3a8b332398d46519e8c5c72a48038b19d24cef1",
+          "status": 200
+        },
+        "status": "PASS_EXACT_CORE02_CANDIDATE_THREE_PATH_PROXY_NOT_BUSINESS_ACCEPTANCE"
+      },
+      "receiptDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source459-core02-candidate-prefix-route-20261025-22/release-submission/release-receipts/t45-source459-core02-candidate-prefix-route-20261025-22",
       "replayed": false,
       "businessAcceptance": false
     }
