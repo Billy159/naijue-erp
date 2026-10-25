@@ -5491,6 +5491,18 @@
       "apps/api/src/postgres-read-api.ts"
     ],
     "D1scope": "Unified existingR2+HISTORY bridge andexistingorganizationmaintenance plugin registration only; catalogueCapability/STAGEDscope staysreserved/nochangewithoutproof",
-    "F1scope": "Originalhistorytwoleaves/sales-entrypreparing only; noCconfig orD1sharedwrites"
+    "F1scope": "Originalhistorytwoleaves/sales-entrypreparing only; noCconfig orD1sharedwrites",
+    "D1nextSourceScope": {
+      "status": "510exact3committed339bc4f;newexclusivewindow",
+      "files": [
+        "apps/api/src/history-revision-authorization.ts",
+        "apps/api/src/history-revision-authorization.test.ts",
+        "apps/api/src/production-main.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/production-provider-composition.ts",
+        "apps/api/src/production-provider-composition.test.ts"
+      ],
+      "boundary": "Original B07/v16 samepool ADMIN/WAREHOUSE andexistingHALL policy, lockedstore remains; trustedexplicit fullCLI, nativeproof selector if originallyapproved; noDB/schema/STAGEDscopechange/noalwaysgrant"
+    }
   }
 }
