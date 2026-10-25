@@ -9267,5 +9267,18 @@
     "F1": "DOC187 exact2 existing authorized native output adapters connected, limitedchecksPASS; real browser pending; HISTORY revision outputs remain gap",
     "candidate": "next fixed unified source433 includes document430+432 settings guards",
     "scope": "37/67 incomplete no new wholepage businessPASS or formal release"
+  },
+  "currentContinuation434": {
+    "candidate": {
+      "source": "42d0a2ddfa76f1ac69357a128f159406a2b27f03",
+      "build": "phase2-normal-42d0a2d-21",
+      "url": "http://127.0.0.1:57910/#inventory",
+      "resources": 135,
+      "boundary": "SYNTHETIC_ONLY_READONLY_DEFAULT_FLAGS"
+    },
+    "QF2": "432 targeted sourceDOM PASS originalF01 closed within scope",
+    "stock": "precise8missingSELECT+9INSERT+1technical rowlock column proposed D1, QB pending, T45 successor prepare only",
+    "QF": "433 document technical actual browser scope active",
+    "wholeScope": "37pages67overlays plus additions incomplete; no new formal release"
   }
 }

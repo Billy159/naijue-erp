@@ -1,3 +1,11 @@
+SOURCE434 FIXED CANDIDATE433 / QF2 TARGETED CLOSE / PRECISE STOCK ACL CAUSE
+
+Unified fixed candidate http://127.0.0.1:57910/#inventory source42d0a2ddfa76f1ac69357a128f159406a2b27f03 buildphase2-normal-42d0a2d-21: strict0/4.621s,Vite0/2.420s,135resources; HTML and entryJS/CSS HTTP200 versionheader matched. Synthetic-only/connect-none/defaultreadonly flags, no production/backend claim. Includes F1 edit-retry430/native output433 and F3 pending-readback432; F2 in-progress consumer not included. OriginalQF newtechnical433scope dispatched; pure visual separate LunaMax when appropriate, notold410resume. GitHub433 exact remote verified.
+
+OriginalQF2 SOURCE432 targeted source+SYN DOM PASS adopted: originalcancel/close/tab/remount/source-extracted normalcanLeave guards and receipt-found recovery, samekey/execute count stable, successfultargetdetail releases; originalF01 closed onlythisscope. Actualbrowser/fullnormalnavigation/PG/HTTP remainsunproven. Other8PASS/Staff/tag retained no rerun.
+
+T45 readonly actualdiag02 found import_stock_contributor table42501, runtimebatch_id SELECTtrue other8SELECTfalse all9INSERT/UPDATEfalse. D1 verified originalwriter full9SELECT+9INSERT and FOR SHARE minimumonecolumnUPDATE; precise proposed source_row_id technical lock only, original immutableguard disallows actualmutation without baseline update privilege. Stage-only nobaseline_ledger_id UPDATE/noDELETE/ALL; precisepatch awaitingQB. Originalfailedstock01 noDML, sourceupload retained; T45 prepares correctedsuccessor only, notoldreplay. All37/67fullscope unchanged/no new wholepagebusiness or formalrelease.
+
 SOURCE433 NATIVE DOCUMENT OUTPUT CONSUMERS FIXED
 
 OriginalF1 DOC187 exact2 leaves reuse lazy original DocumentOutputActions and salesDocumentOutput/transferDocumentOutput, consume full authorized successful native detail only. New/dirty/editing/preparing/unresolved or committed awaiting readback cannot output. Original precision/null/barcode identity/all saved lines/print matrix retained; no duplicate output API. Original finite native mount/Blob/iframe cleanup/quantity and money checks PASS/strict0 adopted. Real browser download/print, physical output, realHTTP/PG and historical revision output adapter remain untested/unimplemented. Original responsible candidate APIs/cap exist; replica root explicit optin still a separate actual host seam.
