@@ -1343,8 +1343,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T09:49:38.395414+00:00",
-  "stage": "ACTIVE_STOCK_FINAL_ACTUAL_PASS_CATALOGUE_SCOPED_UI_ACCEPTED_SOURCE447_PACK_READY",
+  "updatedAt": "2026-10-25T09:53:04.342217+00:00",
+  "stage": "ACTIVE_ACTUAL_STOCK_FINAL_AND_HISTORY_ACL12_PASS_NEW356_REVIEW",
   "lastVerifiedRemoteCommit": "34eff658e4caef590a77326c75917e391357529d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1781,7 +1781,7 @@
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
-    "schema": "Real R1 approvedv16fromv15/130/sourceprobeTRUE/current5a6a5cda81a406cf4c62200e8b1696019fa8a93d1b84c08215eaabe5b3cb50ce",
+    "schema": "R1v16fromv15/130routines; currentactualcanonical35635701133dde4c535aed6336fc8453546f61629a63914ba7613d1b6bad68ca afteroriginal12 minimumACL; original020ce retainedhistory",
     "runtimeAcl": "C204 actual56additionalminimum bits COMMIT; QB277 accepted, fournormalheaderwritebits deliberatelymissing",
     "realAccountsCaptured": 49,
     "accountsWithExactOldEmployeeLink": 45,
@@ -4994,7 +4994,22 @@
     "QF": "DOC192 originalQF scoped oneleaf+3finitegapcase PASS adopted; originalowner checks/strict reused, normalbrowser andactualHTTP/PG unavailable",
     "D1": "First actual private maintenance nativeQA host/capability gap package preparing; not full backend rewrite",
     "next": "T45 original12→newmetadata/probe→11TCP→14private438; accurate447 frontend next; then original09/10 actualhistory stage; first real maintenance QA exactisolated only",
-    "scope": "37pages/67overlays+validadditions goalACTIVE; wholefullstatebusinessPASS0/37; MAIN/PUBLISH/historyeditable/realperf/formalrelease incomplete"
+    "scope": "37pages/67overlays+validadditions goalACTIVE; wholefullstatebusinessPASS0/37; MAIN/PUBLISH/historyeditable/realperf/formalrelease incomplete",
+    "historyAcl12": {
+      "job": "t45-r1-transfer-header-line-column-acl-20261025-12",
+      "status": "ACTUAL_COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 1.871472,
+      "unit": "naijue-erp-op-5cc58239-02eb0d37c7de",
+      "addedPrivilegeBits": 36,
+      "changedColumns": 35,
+      "newCanonical": "35635701133dde4c535aed6336fc8453546f61629a63914ba7613d1b6bad68ca",
+      "businessDml": false,
+      "newRoles": false,
+      "allOtherStatePreserved": true,
+      "review": "OriginalQB307 exact actualmetadata/purpose review inprogress; zeroRowProbe not yet run; original11 TCP freshcapture next",
+      "source": "B/server-execution/TRANSFER-ACL12-ACTUAL-RESULT.json"
+    }
   },
   "latestReadySource": {
     "round": 445,
@@ -9605,6 +9620,21 @@
     "QF": "DOC192 originalQF scoped oneleaf+3finitegapcase PASS adopted; originalowner checks/strict reused, normalbrowser andactualHTTP/PG unavailable",
     "D1": "First actual private maintenance nativeQA host/capability gap package preparing; not full backend rewrite",
     "next": "T45 original12→newmetadata/probe→11TCP→14private438; accurate447 frontend next; then original09/10 actualhistory stage; first real maintenance QA exactisolated only",
-    "scope": "37pages/67overlays+validadditions goalACTIVE; wholefullstatebusinessPASS0/37; MAIN/PUBLISH/historyeditable/realperf/formalrelease incomplete"
+    "scope": "37pages/67overlays+validadditions goalACTIVE; wholefullstatebusinessPASS0/37; MAIN/PUBLISH/historyeditable/realperf/formalrelease incomplete",
+    "historyAcl12": {
+      "job": "t45-r1-transfer-header-line-column-acl-20261025-12",
+      "status": "ACTUAL_COMPLETED",
+      "exitCode": 0,
+      "elapsedSeconds": 1.871472,
+      "unit": "naijue-erp-op-5cc58239-02eb0d37c7de",
+      "addedPrivilegeBits": 36,
+      "changedColumns": 35,
+      "newCanonical": "35635701133dde4c535aed6336fc8453546f61629a63914ba7613d1b6bad68ca",
+      "businessDml": false,
+      "newRoles": false,
+      "allOtherStatePreserved": true,
+      "review": "OriginalQB307 exact actualmetadata/purpose review inprogress; zeroRowProbe not yet run; original11 TCP freshcapture next",
+      "source": "B/server-execution/TRANSFER-ACL12-ACTUAL-RESULT.json"
+    }
   }
 }
