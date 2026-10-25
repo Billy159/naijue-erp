@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T03:47:35.588718+00:00",
-    "sourceRound": 389,
-    "sourceCheckpoint": "SOURCE389_UI_SOURCE_READY_KERNEL_OPT_WITHDRAWN_PERF_QUEUES_ACTIVE",
+    "atUtc": "2026-10-25T03:50:09.463659+00:00",
+    "sourceRound": 390,
+    "sourceCheckpoint": "SOURCE389_FIXED_UI_BUILD_HTTP_AND_REMOTE_PASS_V18_PENDING",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -4932,26 +4932,17 @@
     },
     "fast": "Requested OFF; tool has no switch/readback, not verified",
     "currentPreview": {
-      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
-      "url": "http://127.0.0.1:57897/#inventory",
-      "sourceCommit": "080cd22e9fa810b2904285bea74c5cba694fb67b",
-      "runtimeVersion": "phase2-normal-080cd22-08",
-      "htmlBytes": 3154,
-      "htmlSha256": "7b9b90aa7a0ddb9c9ae76dc1190e6c3b1b79fddbebbf3465e253b95c59d45822",
-      "originalBridgeUnchanged": true,
-      "original325FrontendFilesUnchanged": true,
-      "wholePageAccepted": false,
-      "sourceRound": 380,
-      "serverSession": 47890,
-      "fixtureBytes": 25766,
-      "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
-      "httpReady": true,
-      "phase2Started": true,
+      "url": "http://127.0.0.1:57898/#inventory",
+      "sourceCommit": "269b4d57eeaa985c92ab3ddc4561f43485b9fb12",
+      "runtimeVersion": "phase2-normal-269b4d5-09",
+      "fixedArtifact": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-269b4d5-phase2-09/build",
+      "resources": 135,
+      "serverSession": 3525,
+      "syntheticOnly": true,
       "newBackendConnected": false,
-      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-080cd22-phase2-08/build",
-      "phase1Accepted": false,
-      "phase2Candidate": "OriginalQF2 SOURCE380 three affectedmatrixUIitems PASS actual; browserReturnedtrue; SYNnotwholebusiness/formal",
-      "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
+      "wholePageAccepted": false,
+      "browser": "C independent IAB deliverable; no Chrome controls touched",
+      "scope": "F2 width/exterior-captions source fix; affected visual recheck pending"
     },
     "nextPreview": {
       "status": "CURRENT380_HTTP_THREE_AFFECTED_UI_ITEMS_QF2_PASS",
@@ -8606,8 +8597,30 @@
         "next": "precise pending v18 confirmation; shared shadow stylesheet reuse"
       }
     },
-    "v18": "PROPOSAL_ONLY_NOT_APPROVED_NOT_IMPLEMENTED",
-    "singleFinalUI": "Current normal entry only proven; no claim all module overrides retired"
+    "v18": "CONCRETE_DOC_AND_USER_CONFIRMATION_PENDING_NOT_IMPLEMENTED",
+    "singleFinalUI": "Current normal entry only proven; no claim all module overrides retired",
+    "previousPreview": {
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica",
+      "url": "http://127.0.0.1:57897/#inventory",
+      "sourceCommit": "080cd22e9fa810b2904285bea74c5cba694fb67b",
+      "runtimeVersion": "phase2-normal-080cd22-08",
+      "htmlBytes": 3154,
+      "htmlSha256": "7b9b90aa7a0ddb9c9ae76dc1190e6c3b1b79fddbebbf3465e253b95c59d45822",
+      "originalBridgeUnchanged": true,
+      "original325FrontendFilesUnchanged": true,
+      "wholePageAccepted": false,
+      "sourceRound": 380,
+      "serverSession": 47890,
+      "fixtureBytes": 25766,
+      "fixtureSha256": "e115b2306c3069fe9127f311a4b4c083286222f3ca1ea63f5eeca3387e2be941",
+      "httpReady": true,
+      "phase2Started": true,
+      "newBackendConnected": false,
+      "fixedArtifact": "K/reports/controller/rapid-launch-20261022/ui-preview-080cd22-phase2-08/build",
+      "phase1Accepted": false,
+      "phase2Candidate": "OriginalQF2 SOURCE380 three affectedmatrixUIitems PASS actual; browserReturnedtrue; SYNnotwholebusiness/formal",
+      "original343Baseline": "Preserved accepted immutable runtime343-fixed; not current HTTP; no phase1 results attributed to347"
+    }
   },
   "latestReadySource": {
     "round": 356,
