@@ -11989,7 +11989,19 @@
       "deployed": false,
       "browserPassed": false,
       "boundary": "CORE05 readonly business flags unchanged; UI delivery not real maintenance/history business PASS",
-      "deployStatus": "T45 exact full install54 submitting; then private app55 and candidate prefix56; CORE05 fallback; formal root unchanged"
+      "deployStatus": "New private app55 failed internal health; old CORE05 still serving, candidate prefix not switched",
+      "installed": true,
+      "installEvidence": "T45 install54 COMPLETED0/11.490132s, dependencies111/native proof reused; no app/DB changes",
+      "appStart55": {
+        "status": "FAILED",
+        "error": "CANDIDATE_INTERNAL_HEALTH_FAILED",
+        "phase": "START_APP",
+        "jobId": "t45-source519-core-private-app-start-20261026-55",
+        "unit": "naijue-erp-op-5cc58239-9e9eae7dd758",
+        "exitCode": 2,
+        "businessDML": false,
+        "next": "T45 original bounded sanitized app status/startup-error diagnosis, no replay55 or forced prefix switch"
+      }
     },
     "nightContinuation20261026": {
       "humanSource": "taskbook01a16189 turn01a1746f message01a1746f-54a0-7fd1-9b82-093b16c479db",
