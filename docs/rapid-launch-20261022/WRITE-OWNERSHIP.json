@@ -5236,5 +5236,20 @@
       ],
       "boundary": "Optional read-only lineCatalog keyed by original lineId; exact same-batch original identity/group snapshots, unknown distinct from contradiction; no schema/write/permission changes. C only API-contract/shared composer, F1 decoder after delivery."
     }
-  ]
+  ],
+  "phase2InventorySource380Closure": {
+    "atUtc": "2026-10-25T02:20:58.232657+00:00",
+    "writer": "F2",
+    "paths": [
+      "apps/web/demo-replica/frontend/runtime/inventory/page.tsx",
+      "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx",
+      "apps/web/demo-replica/frontend/runtime/inventory/matrix.tsx",
+      "apps/web/demo-replica/frontend/runtime/inventory/index.tsx",
+      "apps/web/demo-replica/frontend/runtime/inventory/source-control-css.ts"
+    ],
+    "status": "ACTIVE_F2_ONLY",
+    "scope": "Same directly copied Demo inventory page: source380 remaining UI evidence classification and approved dirty hint/control behavior fix only. No old frontend/body, globalCSS/build/bridge/shared-contract/server modifications. Display current-checkbox values are not automatically defaults; do not change unless actual source mismatch proven.",
+    "reports": "QF2/I01-FULL-PAGE-REMAINING-SOURCE380-01",
+    "handoff": "OriginalF2 only, technical Solmedium; exact canonical source380 080cd22e9fa810b2904285bea74c5cba694fb67b candidate immutable; C retains shared/root/wiring/build."
+  }
 }
