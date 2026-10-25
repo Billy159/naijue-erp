@@ -4921,9 +4921,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "atUtc": "2026-10-25T04:31:55.986109+00:00",
-    "sourceRound": 402,
-    "sourceCheckpoint": "SOURCE402_RESPONSE_CPU_READY_UI400_SCROLL_ACTUAL_CLOSED_QA_CONTEXT_REPAIR_IN_FLIGHT",
+    "atUtc": "2026-10-25T04:50:33.224512+00:00",
+    "sourceRound": 403,
+    "sourceCheckpoint": "SOURCE403_CORE_CONTEXT227_ACTUAL_PASS_QA228_CARRIER_REVIEW_CPU_QB292_ADOPTED",
     "allModels": {
       "pureUI": "gpt-6-luna/max",
       "technicalOrMixed": "gpt-6.1-sol/medium",
@@ -8570,7 +8570,7 @@
     },
     "currentPackets": {
       "F2": {
-        "current": "Drawer scroll source400 QF2 actualPASS closed; no repeated fix",
+        "current": "Source400 drawer scroll actualQF2PASS closed",
         "next": "Inventory streaming intermediate-memory, then v17 normal HTTP seam",
         "uiDelivery": "I01-FILTER-WIDTH-LABELS-USER-20261025-01 source complete; fixed build and QF2 pending"
       },
@@ -8579,7 +8579,7 @@
         "next": "original-workbook memory seam"
       },
       "D3": {
-        "current": "R1+R2 fourleaf source complete; originalQB combined review next",
+        "current": "CPU R1/R2 source QB292adopted; original historical transfer window consumer next",
         "next": "Combined affected originalQB once after R2 packet; realHTTP remains waiting inventory"
       },
       "C": {
@@ -8593,6 +8593,10 @@
       "QF2": {
         "current": "SOURCE400 failedscroll actualPASS; browserreleased",
         "next": "New product DOM candidate technical stage after visual"
+      },
+      "QB": {
+        "current": "v18 QA newgraph/SQL/coremetadata/exact228carrier source review",
+        "previous": "292 CPUsourcePASS/291v18sourcePASS/290PARTYactualPASS"
       }
     },
     "v18": "SOURCE395_QB291_SOURCE_PROTOCOL_PASS_QA_V3_TEMPLATES_DELIVERED_NO_ACTUAL_SCHEMA26_BATCH_YET",
@@ -8662,7 +8666,14 @@
       "status": "FAILED_READONLY_CONTEXT_SQL_NO_WRITES",
       "metadataFromV15": true,
       "canonical": "a97002057a1763b3bd650141461228773d54a81a833a1e7c8e5d96313f82b415",
-      "next": "227qualifiedaliasrepair/reproduction pending"
+      "next": "227ACTUAL_PASS: exact42883oldfailure+qualifiedrepair,privatecontextready"
+    },
+    "qa228": {
+      "status": "CARRIER_PREPARED_QB_SOURCE_REVIEW_ACTIVE_NOT_SUBMITTED",
+      "target": "coreQA1034834/v16fromv15/owner-sessiont15",
+      "compiledSource": "395/44inputs38prod6helpers",
+      "boundary": "NewSYNonly,13sources/2records expected; no R1/nativepublishedQA/newDBroleDDL",
+      "reviewPins": "PENDING"
     }
   },
   "latestReadySource": {
