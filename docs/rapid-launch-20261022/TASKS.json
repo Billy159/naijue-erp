@@ -11989,7 +11989,7 @@
       "deployed": false,
       "browserPassed": false,
       "boundary": "CORE05 readonly business flags unchanged; UI delivery not real maintenance/history business PASS",
-      "deployStatus": "New private app55 failed internal health; old CORE05 still serving, candidate prefix not switched",
+      "deployStatus": "App55 running and private HTTP resource probes pass; nested private runtime build.sourceCommit mistakenly old value, candidate not switched",
       "installed": true,
       "installEvidence": "T45 install54 COMPLETED0/11.490132s, dependencies111/native proof reused; no app/DB changes",
       "appStart55": {
@@ -12000,8 +12000,26 @@
         "unit": "naijue-erp-op-5cc58239-9e9eae7dd758",
         "exitCode": 2,
         "businessDML": false,
-        "next": "T45 original bounded sanitized app status/startup-error diagnosis, no replay55 or forced prefix switch"
-      }
+        "next": "T45 original bounded sanitized app status/startup-error diagnosis, no replay55 or forced prefix switch",
+        "diagnosis56": {
+          "status": "RUNNING",
+          "oomKilled": false,
+          "publicLogEvent": "PRODUCTION_EXACT26_HOST_STARTED",
+          "rawLogsExported": false
+        },
+        "actual57": {
+          "httpStatus": 200,
+          "healthStatus": "HOST_READY",
+          "buildId": "replica-production-source519-core-10",
+          "observedSourceCommit": "16d744e3abd74e7e9370af797b6739643e5799ef",
+          "expectedSourceCommit": "c61e747667276c5de0bd6fa5c53ceba31681d50f",
+          "sourceIdentityMatched": false,
+          "keyHttp": "6 probes PASS exact fixed bytes/MIME on HTML, application JS, initial CSS, font, shared helper identity/gzip request",
+          "appChanged": false,
+          "businessDML": false
+        }
+      },
+      "next": "T45 preserve original private config and correct only new-app build.sourceCommit, one controlled private restart or existing supported successor, exact identity/keyHTTP then candidate switch; no rebuild or DB"
     },
     "nightContinuation20261026": {
       "humanSource": "taskbook01a16189 turn01a1746f message01a1746f-54a0-7fd1-9b82-093b16c479db",
