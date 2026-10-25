@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T15:32:35.155717+00:00",
+  "updatedAt": "2026-10-25T15:41:39.980851+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 489,
+    "round": 490,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "caec548535ed2007eb383fa7bfa48a6b0a354eb9",
+    "sourceHeadBeforeThisContinuityCommit": "5627f9a4c9b07df5e3bc929767c99c6d1121ddd3",
     "fixedCandidates": {
       "current": {
         "source": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
@@ -5058,7 +5058,7 @@
     },
     "opsBlockingCondition": "CORE04 scopedpublic33 actualPASS/defaultTLS3GET. QF2 guestloginstyle nowindependentIAB authorizedLuna/max; authenticatedrealreads awaitoriginalhumanlogin and nativeChromelease. No fullbusiness/history/PUBLISH/perf/formalrootPASS.",
     "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
-    "QF2": "Original guest scope: native Chrome AX now succeeds; CORE04 login form observed without business navigation. Visual geometry remains unverified; account autofill preserved, no credentials read/filled. Original QF2 owns current short serial Chrome lease.",
+    "QF2": "Actual guest visual NEED_FIX: new post33 Chrome tab2017877120 exact CORE04 URL,title奈爵服饰ERP; login bottom-left, sidebar visually visible, AX omits inert navigation. Geometry/pixel values unmeasured; no build marker visible, actual bundle binding technical diagnosis pending. No credential interaction/raw screenshot saved. Lease returned.",
     "QB": "OriginalQB J28 decision PARTIAL adopted; actual0351 disabled identity/code/version,401,prepost increment PASS. No repeat ops/source/save. Optional published/staged witnesses and nonowner/fullhost/session/HTTPS/browser remain open.",
     "rootStrict": "FAIL16 outside delta preview/tests preserved; no fullPASS",
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
@@ -5067,13 +5067,13 @@
       "F2": "465editor+468imagefailurefix integrated/scopedadopted; P01 originalwidthfinding withdrawn byQF2actualgeometry, do notkeepstaleP01waiting. Realread/write provider anddata readiness stillopen.",
       "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
       "F4": "Allowedtabssource delivered/inCORE04; no independent technicalpatch justified. Next actualCORE04 color/fit read+existingfullUI scope viaQF2, maintenanceseamD2 separate. Groups/seasonscompletegoalstillopen.",
-      "D1": "Active original normal-host config and bounded isolated synthetic-account normal-login preparation; trigger requires monotonic account/auth versions, no whole-row rollback or fake SQL session. Concrete impact/cleanup proposal pending, no account mutation released.",
+      "D1": "Next original task: readonly diagnose CORE04 guest login actual NEED_FIX using fixed483 build/entry/CSS graph; no shared source mutation or browser/service/DB. Prior normalhost configuration delivered and adopted.",
       "D2": "COLOR/FIT NORMAL-HOST entry delivered runner7b4d4016/inputa5d684d9, originalC1691034834actor/0327roots/101102keys; onlynormalfactory/session GETreceipt/replay/409/401/prepost, actualnotrun. QBnewsource-onlyscopeactive.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "33actualpublic/defaultTLSadopted. 34oneactualreadonlyCOREQA prerequisites done; PMreviewmatches/currentactorvalid/session0. AwaitD1exactnormalhostpurposeconfig/loginref, do notrepeat34 orborrowR1.",
+      "T45": "Original35 prepared, C exact combined review1071/3c4ef8b1 now bound to real QB PASS acd0228d; released once for original scoped QA preparation/normal authentication/receipt replay checks with cleanup. No actual result yet; no34repeat/publicchange.",
       "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
-      "QF2": "Original guest scope: native Chrome AX now succeeds; CORE04 login form observed without business navigation. Visual geometry remains unverified; account autofill preserved, no credentials read/filled. Original QF2 owns current short serial Chrome lease.",
-      "QB": "Active original single-review CURRENT_FORM_READ+PRODUCT_MAINTENANCE combination increment only. C181/C191 existing accepted scopes and actual34 reused; no database execution or metadata rerun."
+      "QF2": "Actual guest visual NEED_FIX: new post33 Chrome tab2017877120 exact CORE04 URL,title奈爵服饰ERP; login bottom-left, sidebar visually visible, AX omits inert navigation. Geometry/pixel values unmeasured; no build marker visible, actual bundle binding technical diagnosis pending. No credential interaction/raw screenshot saved. Lease returned.",
+      "QB": "Original combination increment PASS EXACT_TARGET_METADATA_ONLY adopted; actual issuer/host/login/HTTP/SQL untested. Exact currentFORM+PM only, realImportfalse."
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
     "route22Review": {
@@ -5656,7 +5656,16 @@
       "previous4a20HistoricalOnly": true
     },
     "modelAuditBefore488": "All12 latest saved/actual match: C/F1-F4/D1-D3/QF/QB/T45 Solmedium; QF2 Lunamax. QF screenshot14:12 composer medium differs from actual14:06/14:09 max; display cause UNKNOWN; no Luna-medium execution today. FastUNVERIFIED.",
-    "demoCurrentObservation": "C actual native Chrome 狄兰 127.0.0.1:8877/#sales/new: 演示管理员·管理员, empty unsaved form. No navigation/input/refresh. Demo login effective; no new login request."
+    "demoCurrentObservation": "C actual native Chrome 狄兰 127.0.0.1:8877/#sales/new: 演示管理员·管理员, empty unsaved form. No navigation/input/refresh. Demo login effective; no new login request.",
+    "loginStyleActual": "SOURCE483 common stylesheet source fix did not establish browser PASS. Targeted public CSS GET200 text/css8445 includes fixed login-overlay; actual guest layout still fails. D1 traces exact build/host consumer; do not merely repeat old CSS-common change.",
+    "normalHost35Review": {
+      "local": "server-jobs/t45-coreqa-normal-host-colour-fit-http-20261025-35/bundle/C-RUNTIME-REVIEW.json",
+      "bytes": 1071,
+      "sha256": "3c4ef8b135ed64a865e60e2748ba8330e8ed858a23d49b4d269c62c5a3b51616",
+      "independentResult": "reports/qa-backend/rapid-launch-20261022/QB/slice316-colour-fit-normal-host-entry/COMBINED-REVIEW-RESULT.json",
+      "independentSha256": "acd0228db81f67d6266fb660e9b70981ad2f3e798cddefc65aa55daac5b68cc0",
+      "actualExecuted": false
+    }
   },
   "latestReadySource": {
     "round": 445,
