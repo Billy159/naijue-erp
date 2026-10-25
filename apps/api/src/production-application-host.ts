@@ -17,9 +17,15 @@ const forbidden = (name: string): boolean => name.startsWith(".")
 const mime: Readonly<Record<string, string>> = Object.freeze({ ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8",
   ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif", ".ico": "image/x-icon", ".woff": "font/woff", ".woff2": "font/woff2" });
-function safeRelative(value: string): boolean {
+function safeRelative(value: string, directory = false): boolean {
+  const segments = value.split("/");
+  // This emitted public directory is not a source tree. Permit only traversal
+  // of that exact root directory and its direct compiled CSS files.
+  const compiledStyles = segments[0] === "source-styles" && (directory ? segments.length === 1
+    : segments.length === 2 && path.extname(segments[1]!) === ".css");
   return value.length > 0 && value.length < 2048 && !/[\\\x00-\x1f\x7f]/.test(value)
-    && value.split("/").every(segment => segment.length > 0 && segment !== "." && segment !== ".." && !forbidden(segment));
+    && segments.every((segment, index) => segment.length > 0 && segment !== "." && segment !== ".."
+      && (!forbidden(segment) || index === 0 && compiledStyles));
 }
 /** Same bounded public-output boundary as the local HTTPS host. The reverse proxy
  * serves no source tree: only these captured emitted bytes can leave this host. */
@@ -39,7 +45,7 @@ async function captureBuild(root: string, entry: string): Promise<ReadonlyMap<st
       if (++entries > 8192) throw new TypeError("Build exceeds directory entry limit");
       const absolute = path.join(directory, item.name), relative = prefix + item.name, stat = await lstat(absolute);
       if (stat.isSymbolicLink()) throw new TypeError("Build output may not contain symbolic links");
-      if (!safeRelative(relative)) continue;
+      if (!safeRelative(relative, stat.isDirectory())) continue;
       if (stat.isDirectory()) { await walk(absolute, relative + "/", depth + 1); continue; }
       const type = mime[path.extname(relative).toLowerCase()];
       if (!stat.isFile() || !type) continue;

@@ -185,6 +185,63 @@ test("production assets: configured build prefix resolves generated public URLs 
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
+test("production assets: exact root source-styles compiled CSS resolves under the same-origin build prefix without exposing source siblings", async () => {
+  const root = await build(), p = apiDouble(), configuration = config(root), buildId = configuration.build.buildId;
+  try {
+    const publicConfiguration = parseProductionHostConfiguration({ kind: "naijue-erp-production-host",
+      http: { origin: PRODUCTION_PUBLIC_ORIGIN, basePath: "/api" }, assets: { basePath: `/assets/${buildId}/` },
+      session: { verifyOnMount: true }, routes: { inventory: true, sales: true, transfers: true } });
+    const scriptUrl = new URL(productionAssetUrl(publicConfiguration, "application.js"));
+    const cssUrl = new URL("./source-styles/matrix-experiments.css", scriptUrl);
+    const fontUrl = new URL("./compiled.woff2", scriptUrl);
+    const css = `@font-face{font-family:compiled;src:url("${fontUrl.pathname}")} .matrix{display:grid}`;
+    await mkdir(path.join(root, "source-styles"));
+    await writeFile(path.join(root, "source-styles/matrix-experiments.css"), css);
+    await writeFile(path.join(root, "compiled.woff2"), "SYNTHETIC_EMITTED_FONT");
+    const blockedFiles = ["runtime.js", "original.json", "matrix.css.map", "matrix.ts", "matrix.scss", "font.woff2",
+      "private.css", "secret.css", "source.css", "source-client.css", "incoming.css", "provenance.css", ".hidden.css"];
+    for (const name of blockedFiles) await writeFile(path.join(root, "source-styles", name), "DO_NOT_SERVE");
+    await mkdir(path.join(root, "source-styles/nested")); await writeFile(path.join(root, "source-styles/nested/hidden.css"), "DO_NOT_SERVE");
+    for (const directory of ["source", "source-styles-extra", "Source-Styles", "incoming", "provenance", "public/source-styles"]) {
+      await mkdir(path.join(root, directory), { recursive: true }); await writeFile(path.join(root, directory, "hidden.css"), "DO_NOT_SERVE");
+    }
+    const handle = await createProductionRequestHandler({ api: p.api, configuration });
+    assert.equal(cssUrl.origin, PRODUCTION_PUBLIC_ORIGIN);
+    assert.equal(cssUrl.pathname, `/assets/${buildId}/source-styles/matrix-experiments.css`);
+    const served = invoke(handle, cssUrl.pathname, "GET", cssUrl.host);
+    assert.equal(served.status, 200); assert.equal(served.body, css);
+    assert.equal(served.headers["content-type"], "text/css; charset=utf-8");
+    assert.equal(served.headers["content-length"], Buffer.byteLength(css));
+    assert.equal(served.headers["cache-control"], "no-store"); assert.equal(served.headers["x-content-type-options"], "nosniff");
+    const head = invoke(handle, cssUrl.pathname, "HEAD", cssUrl.host); assert.equal(head.status, 200); assert.equal(head.body, undefined);
+    await writeFile(path.join(root, "source-styles/matrix-experiments.css"), "CHANGED_AFTER_CAPTURE");
+    assert.equal(invoke(handle, cssUrl.pathname).body, css);
+    assert.equal(invoke(handle, "/assets/source-styles/matrix-experiments.css").body, css);
+    assert.equal(invoke(handle, fontUrl.pathname).headers["content-type"], "font/woff2");
+    assert.equal(invoke(handle, fontUrl.pathname).body, "SYNTHETIC_EMITTED_FONT");
+    for (const name of blockedFiles) assert.equal(invoke(handle, `/assets/${buildId}/source-styles/${name}`).status, 404, name);
+    for (const relative of ["source-styles", "source-styles/nested/hidden.css", "source-styles/../app.js", "source-styles//matrix-experiments.css",
+      "source-styles/%2e%2e/app.js", "source/hidden.css", "source-styles-extra/hidden.css", "Source-Styles/hidden.css",
+      "incoming/hidden.css", "provenance/hidden.css", "public/source-styles/hidden.css", "OTHER_BUILD/source-styles/matrix-experiments.css"])
+      assert.equal(invoke(handle, `/assets/${buildId}/${relative}`).status, 404, relative);
+    assert.deepEqual(p.routed, []); assert.equal(p.api.app.server.listening, false);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test("production compiled CSS exception retains symbolic-link and build-ancestor rejection", async () => {
+  const root = await build(), p = apiDouble();
+  try {
+    await mkdir(path.join(root, "source-styles"));
+    await symlink(path.join(root, "app.js"), path.join(root, "source-styles/linked.css"));
+    await assert.rejects(createProductionRequestHandler({ api: p.api, configuration: config(root) }), /symbolic links/);
+    await rm(path.join(root, "source-styles/linked.css"));
+    const nested = path.join(root, "source-styles/public-build"); await mkdir(nested);
+    await writeFile(path.join(nested, "index.html"), "SYNTHETIC_EMITTED_HTML");
+    await assert.rejects(createProductionRequestHandler({ api: p.api, configuration: config(nested) }), /Build ancestors/);
+    assert.equal(p.closed(), 0); assert.equal(p.api.app.server.listening, false);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
 test("production CORE v14 host: original handler accepts committed subset configuration while health/assets exclude CORE identity and metadata", async () => {
   const root = await build(), p = apiDouble();
   try {
