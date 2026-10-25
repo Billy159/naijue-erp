@@ -1353,9 +1353,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T14:23:37.230733+00:00",
+  "updatedAt": "2026-10-25T14:36:24.556898+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "56283494b7ffb68a1c48d75377211ef1f6ac3af5",
+  "lastVerifiedRemoteCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -5020,9 +5020,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 483,
+    "round": 484,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "sourceHeadBeforeThisContinuityCommit": "048d8de3366606e33e55bc94a2bb05e08b700197",
+    "sourceHeadBeforeThisContinuityCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -5036,7 +5036,7 @@
         "scope": "Same three groups plus actualCORE color/fit reads; buildpackPASS, not deployed"
       }
     },
-    "lastActualServerApp": "SOURCE447 private only, no formal root switch",
+    "lastActualServerApp": "SOURCE459/CORE02 fea0a222 private application and scoped public candidate; original formal root unchanged",
     "transferHeaders": "09actual14279/143chunks COMMIT+readbackPASS source staging only",
     "transferLines": {
       "status": "ACTUAL_COMPLETED_SOURCE_STAGING_ONLY_NOT_MAIN_PUBLISH",
@@ -5061,9 +5061,9 @@
       "PUBLISH": false
     },
     "opsBlockingCondition": "CORE02 authenticated readonly acceptance waits human candidate login, not Demo login. T45 source425 detail QA execution resumed. Two source UI fixes integrated pending fixed build; no formal root switch.",
-    "QF": "SOURCE468 same-nativeChrome Demo paired evidence adopted; F1 DOC194 sourcefix delivered, new fixed combined build then only affected two visual items plus shared login CSS consumers.",
+    "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
     "QF2": "CORE02 exact HTTPS opened in nativeChrome狄兰; guestlogin, user candidate login pending. Demo8877 confirmed logged in; never ask Demo login again based on another profile. Chrome lease C/user; no credential filling.",
-    "QB": "QB314 original22 disabledroute limitedPASS adopted; actualparent/appId/protected14/reviewfinalization and10lockrelease remain",
+    "QB": "OriginalQB315 sourcePASS reused; newactual28 limited0351/401/prepost proof delivered to originalQB for onlyactualbusiness scope; no repeatedops/v17.",
     "rootStrict": "FAIL16 outside delta preview/tests preserved; no fullPASS",
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
     "roleQueue": {
@@ -5071,11 +5071,11 @@
       "F2": "465normalentry+468imagefix delivered/limited independentlychecked; real productread/write/historybusiness stillnotready, D2/T45 actualQA/mainpublication dependency. Next concreteconsumerdelivery/failure.",
       "F3": "432/435/437 effective source reused; actual445 UI review adopted; maintenance needsD2/T45 actualQA",
       "F4": "Allowedtabsexact2 delivered, in461; nextactualCORE03 colors/fits UI+realread",
-      "D1": "D1-PRODUCT-SOURCE425-ACTUAL-DETAIL-DELTA-01 implemented originalinert runner12020/ff3c11...;finite1/1/importPASS adopted, no appsourcechange. Actual PG notrun. OriginalQBnewrunnerreviewactive,T45originalQA bindingprepare.",
+      "D1": "Salesperson requiredness exactminimal proposal delivered originalD1, userconfirmationpending; no SQL/DDL needed, no save rule implemented. Source425 actual28 partial obtained separately.",
       "D2": "OriginalQA dependency handoff completed/adopted. v17C189/QB260 actualCREATE/EDIT/selection/replay/rollback retained0351 reuse; source425new detailfilter stillneedsactualPG/currenthost. Existingcataloguereplay carrier not fullmaintenanceQA; no repeats.",
       "D3": "Original dependency check completed/adopted: no new D3 source gap;fullpublished all11 mandatory for inventory/history/B07. Fullbind may precede sales only with genuinecomplete metadata/authority; no fake subset publish. Salesheader/v5 pending, retained consumer alreadyready.",
-      "T45": "Live app wait snapshot idle terminal previous turn; original425 QA task resumed with explicit Solmedium, dedupe queued/actual before execute. No old job replay or public CORE02 overwrite.",
-      "QF": "Source468 same-nativewindowpairedUI actualcompleted/adopted;twoappearance findings originalF1fixactive, numericCSSgeometryunmeasured, no realbusiness;browserlease released.",
+      "T45": "Actual28 bounded QA complete/partial missing optional existingwitnesses;27failure preserved/noreplay. Original CORE03 private stage duties now successor CORE04 fixed483 install/start, preserveunused461/24/25drafts and public CORE02, no public switch.",
+      "QF": "SOURCE483 shared original styles minimal technical PASS adopted; actual IAB inventory→sales single common link/order/account chrome; blankSALE zero-settled absent/six markers present. Same-nativeChrome geometry and actual guest login still untested; wholepage0.",
       "QF2": "C grantednativeChrome狄兰exclusive lease afterQFactualhandoff;openfixedCORE02realentry/loginorread-only3groups;no credentialautofill orDemo relogin.",
       "QB": "QB315 new425caller scopedsourcePASS adopted;actualSQL/ownerQA stillnotrun;not fullhost/session/nonownerACL."
     },
@@ -5107,14 +5107,17 @@
     },
     "modelAudit": "All12 latest saved/actual match: C/F1-F4/D1-D3/QF/QB/T45 Solmedium; QF2 Lunamax. QF screenshot14:12 composer medium differs from actual14:06/14:09 max; display cause UNKNOWN; no Luna-medium execution today. FastUNVERIFIED.",
     "latestLocalSynthetic": {
-      "source": "376bf2fd3ae7cc8245a841c90d2954d62dbffbea",
-      "build": "phase2-normal-376bf2f-26",
-      "url": "http://127.0.0.1:57915/",
-      "resources": 140,
+      "source": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
+      "build": "phase2-normal-8a197a0-27",
+      "url": "http://127.0.0.1:57916/",
+      "buildDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8a197a0-phase2-27",
       "strictExit": 0,
+      "strictSeconds": 4.6,
       "buildExit": 0,
-      "http": "3 keyresources exactHTTP200/root3154/c6c2215524baa6829e72911034a249683e1bdb2481567c0a89ee80500c83c5e3",
-      "scope": "Original465normalnew/edit plus parent-prerequisite imagesfix; SYN/writeunavailable, realbusinessnotpassed"
+      "buildSeconds": 2.423,
+      "resources": 140,
+      "serverSession": 52337,
+      "syntheticOnly": true
     },
     "P01Geometry": "OriginalQF2 corrected previous mismatched CSS viewport: override1470 actually1205x593; actual1470x724 table/container1221 and client=scroll, ten cols visible. Originaldifference withdrawn, noCSSfix. Original445 report/observations/evidence amended, oldscreenshots preserved.",
     "GitHub": "471ced60266e85589a35cbcd2e00d865beb1ce33362 remoteGETverified",
@@ -5149,8 +5152,9 @@
       "meaning": "Complete frozen frontend source/resource copy delivered. Full UI allstates and realbusiness acceptance separately incomplete; do not call copied baseline zero because backend unfinished."
     },
     "latestGitHubVerified": {
-      "source": "6650c1c405952711b39cc80b91887e89a1298428",
-      "status": "PASS_EXACT_ORIGINAL_OBJECTS_NONFORCED_NORMAL_BRANCH_FF_READBACK"
+      "commit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/github-exact-object-rest-sync-source483-20261025-01/RESULT.json",
+      "method": "EXACT_OBJECT_NONFORCED_FF_AND_GET"
     },
     "backup23Actual": {
       "status": "COMPLETED",
@@ -5438,6 +5442,55 @@
         "Historical edit/full business/performance/formal release"
       ],
       "businessGap": "Demo salesperson mandatory versus current formal nullable salespersonId; no contract change implemented."
+    },
+    "productDetail425Actual": {
+      "taskId": "D1-PRODUCT-SOURCE425-ACTUAL-DETAIL-DELTA-01",
+      "jobId": "t45-product-source425-detail-qa-20261025-28",
+      "status": "COMPLETED",
+      "scopeResult": "PARTIAL_ACTUAL_DETAIL_WITNESSES_NOT_PRESENT",
+      "exitCode": 0,
+      "elapsedSeconds": 2.622607645113021,
+      "finishedAtUTC": "2026-10-25T14:30:19.750091+00:00",
+      "sourceBinding": {
+        "source": "SOURCE459",
+        "productStoreSha256": "8d7e54362360df69043ad14149bd50a5c329ad42b0245d8c95fb2730af282b21",
+        "runnerSha256": "ff3c11aee2a981332f72aea70bf19df5df88a88e44160088c56e572ff01814cd",
+        "inputSha256": "d2378e7f39eaf6a82ec28fc6397d00fec9a284fe5bf059f9bed9459fa2b2d9d0"
+      },
+      "checks": {
+        "original0351Detail": "PASS_ACTUAL_DETAIL",
+        "disabledSkuIdentityCodeVersionRetained": true,
+        "enabledSkuIdentityCodeVersionRetained": true,
+        "unauthenticated401": true,
+        "prePostFixtureAuditReceiptEqual": true,
+        "schemaAclUnchanged": true,
+        "published": "NOT_PRESENT_NOT_TESTED_NO_REGISTERED_EXISTING_WITNESS_SUPPLIED",
+        "staged": "NOT_PRESENT_NOT_TESTED_NO_REGISTERED_EXISTING_WITNESS_SUPPLIED",
+        "nonownerAcl": "NOT_TESTED_OWNER_CONTEXT_ONLY",
+        "fullNormalHost": "NOT_TESTED",
+        "authenticatedBrowser": "NOT_TESTED"
+      },
+      "remaining": "Only existing registered PUBLISHED/STAGED child provenance references can enable those optional checks; do not create fixtures or replay previous setup/commands. CORE02 public unchanged; CORE03 unsubmitted.",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/PRODUCT425-DETAIL28-ACTUAL-RESULT.json"
+    },
+    "nextProductionCandidate": {
+      "source": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
+      "build": "replica-production-source483-core-04",
+      "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/replica-production-source483-core-20261025-04",
+      "archiveSha256": "ae55d013fe5e5a1f85216c3160e17ed39f0aaa5d3e4e5ade36516c217745e6b4",
+      "manifestSha256": "729cd1bbc16bdbec6407dff0b02a1fb50a7a3988158ffb4eae0d6b7a05d88fcb",
+      "members": 202,
+      "buildSeconds": 3.674,
+      "packSeconds": 2.003,
+      "same33NonFrontendAsCORE02": true,
+      "actualInstall": false,
+      "publicSwitch": false
+    },
+    "salespersonRequiredProposal": {
+      "status": "WAIT_USER_WRITE_CONTRACT_CONFIRMATION",
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/SALES-SALESPERSON-REQUIRED-PROPOSAL-01.md",
+      "scope": "LIVE new SAVE and unreviewed edit new SAVE require selected real active staff; old NULL read/history retained; committed same-key recovery unaffected; no database NOT NULL or extra hall/role filter",
+      "implemented": false
     }
   },
   "latestReadySource": {
