@@ -10729,5 +10729,59 @@
     "transferLine10": "Originalunit0b7bdaa5dc7a RUNNING no terminal",
     "v5": "Originalproposal facts updated, nullablehall still unapproved, v16 not reasked",
     "fullGoal": "ACTIVE37/67allstatesrealbusiness incomplete"
+  },
+  "currentContinuation462": {
+    "source": "48113c65a73ab8a390a052ef1a1a306ec2eeedc1",
+    "build": "replica-production-source461-core-03",
+    "status": "FIXED_BUILD_PACK_PASS_NOT_DEPLOYED",
+    "archive": {
+      "bytes": 1621716,
+      "sha256": "a01785a4aa09eed673c3c2cccef45ae890058dabed909ce3a0b8e5124e5e50cf"
+    },
+    "releaseManifestSha256": "a11ee956b5ce7ae00701ee3f8d0b96cf3bf3c9f4d7076081422564f570b76c78",
+    "publicConfiguration": {
+      "kind": "naijue-erp-production-host",
+      "http": {
+        "origin": "https://1n5635n614.goho.co",
+        "basePath": "/__naijue_candidate/replica-private-01/api"
+      },
+      "assets": {
+        "basePath": "/assets/replica-production-source461-core-03/"
+      },
+      "session": {
+        "verifyOnMount": true
+      },
+      "routes": {
+        "inventory": false,
+        "sales": false,
+        "transfers": false,
+        "staffSettings": true,
+        "accountSettings": false,
+        "paymentSettings": false,
+        "products": false,
+        "productCategories": true,
+        "productSettings": {
+          "colors": true,
+          "fits": true,
+          "groups": false,
+          "seasons": false,
+          "initialTab": "colors"
+        },
+        "barcodeSchemes": false,
+        "parties": false,
+        "storeSettings": {
+          "allowedTabs": [
+            "stores",
+            "warehouses"
+          ],
+          "initialTab": "stores",
+          "allowHallDirectoryRead": true
+        }
+      }
+    },
+    "T45Current": "Original10 samekey RUNNING; fixedCORE02 actual20/21/route next subject realresourceconditions",
+    "QFCurrent": "New publicconfiguration/prefix/readyPages mapping technicalnarrowreview Sol6.1medium",
+    "QF2Current": "OriginalF3 unverifiedstates realSYN445appearance LunaMax",
+    "goal": "ACTIVE_FULL37_67"
   }
 }
