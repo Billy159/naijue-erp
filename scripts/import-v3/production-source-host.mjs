@@ -299,6 +299,18 @@ export function captureNativeSourceSession26(value,binding) {
   must(d?.enumerable&&Object.hasOwn(d,'value')&&typeof d.value==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   return Object.freeze({...s,closureScope:scope,openSources:Object.freeze(factories),bootstrap26:bootstrap===null?null:Object.freeze(bootstrap)});
 }
+/** Keep the original source generator return (verified prior publication) while
+ * retaining the same bounded step/core checks and iterator cleanup behavior. */
+export async function* forwardSourceSteps26({steps,active,maxSteps,core}){
+ let count=0;
+ const checked=async function*(){const iterator=steps()[Symbol.asyncIterator]();let done=false;
+  try{for(;;){const next=await iterator.next();active();if(next.done){done=true;return next.value;}const step=next.value;
+    if(core)must(step?.kind==='MAIN'&&step.payload?.action==='IMPORT_CORE_STAGE','IMPORT_SOURCE_HOST26_CORE_ONLY');
+    must(count++<maxSteps,'IMPORT_SOURCE_HOST_STEP_LIMIT');yield step;}}
+  finally{if(!done)await iterator.return?.();}
+ };
+ return yield* checked();
+}
 /** Explicit exact26 host. No provider/source defaults, migrations, real49
  * bootstrap substitutes, raw-pool exposure or executable source authority. */
 /** Pure metadata/target check only; execution still requires separately pinned
@@ -366,6 +378,6 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
         async assertAllowed(actor,command){active();await completed(session.assertAllowed,actor,command);active();},
         async authorizeNativeCommand(actor,command){active();await completed(session.authorizeNativeCommand,actor,command);if(command.action==='IMPORT_PUBLISH'){const expected=await closure.expected();must(requestHash(command.historyClosure)===requestHash(expected.plan),'IMPORT_SOURCE_HOST_PUBLISH_SOURCE_MISMATCH');}active();},
         async authorizeClosure(input){active();must(!core&&closure,'IMPORT_SOURCE_HOST26_CORE_ONLY');await closure.authorizeStage(input);active();}}},
-      source:{async *steps(){let count=0;for await(const step of session.steps()){active();if(core)must(step?.kind==='MAIN'&&step.payload?.action==='IMPORT_CORE_STAGE','IMPORT_SOURCE_HOST26_CORE_ONLY');must(count++<job.maxSteps,'IMPORT_SOURCE_HOST_STEP_LIMIT');yield step;}active();},close:closeSource},close};
+      source:{steps:()=>forwardSourceSteps26({steps:()=>session.steps(),active,maxSteps:job.maxSteps,core}),close:closeSource},close};
   }catch(error){try{await close();}catch(cleanup){throw new AggregateError([error,cleanup],'Import host26 construction and cleanup failed');}throw error;}
 }

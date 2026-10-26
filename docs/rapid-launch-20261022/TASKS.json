@@ -1355,7 +1355,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-26T07:38:21.033990+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "9283503cc61ad383ae58e46d023b9be87f512464",
+  "lastVerifiedRemoteCommit": "a2623a72736b8439bcdb61ce0d34eee61e86d124",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -13938,6 +13938,14 @@
       "checks": "10 newfinite pass+4T04 previous reused+strictstock type0; oldBARCODE steps scripted CORE fixture FAIL preserved pendingT19",
       "remaining": "T19 provider/run; actual complete authorized payload manifest/hash+roots/MAIN files and independent job/grant; actual source consumption, remaining staging, MAIN/CLOSURE/PUBLISH",
       "notRead": "No real prepared bodies/25MBindex/922MBheaders locally scanned or recopied"
-    }
+    },
+    "D3Source623": {
+      "status": "SOURCE_DELIVERED_PENDING_AFFECTED_REVIEW",
+      "checks": "20 distinct targeted PASS; oldBARCODE steps fixture actual adaptation PASS; real PG/process unknown recovery NOT_RUN",
+      "scope": "T19 real current chain prefix/original keys/full closure; published originalresult propagated host→run zeroexecute; QB370 transfer childclose fixed",
+      "remaining": "Exact current target-content proof for prior STAGE reuse; actual complete DATA manifest/fullhash+roots/MAIN/grant; source read/remaining staging/MAIN/PUBLISH"
+    },
+    "fullPayloadPreimage": "C adopted requestHash typedcanonical complete actual source/native/stock DATA manifest; no selfhash, no CORE/selection/INPUT substitution. D1 exact2 current assembly in progress.",
+    "B07": "Actual RO existingcopy OID16385 schema19/no nonownerLOGIN: dedicated ordinary QA role + approved exactv16 upgrade only this localcopy authorized; actual DRAFT3 cases pending"
   }
 }

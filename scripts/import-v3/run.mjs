@@ -241,8 +241,11 @@ export async function readCoreImportContinuation26(options) {
     const progress=await readNativeCoreWarehouseCarryForward(client,{batchId:b.batchId,coreReceiptId:b.coreReceiptId,coreSourceDigest:b.coreSourceDigest},runtime);
     const claimed=new Set();
     for(const item of progress.warehouses){const original=byRecord.get(item.nativeRecord.id);must(original&&requestHash(original)===requestHash(item)&&!claimed.has(item.nativeRecord.id),'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');claimed.add(item.nativeRecord.id);}
-    must(claimed.size===22,'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');
-    const remainingWarehouses=warehouses.filter(item=>!claimed.has(item.nativeRecord.id));must(remainingWarehouses.length===31,'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');
+    must(Array.isArray(progress.coreWarehouses)&&progress.coreWarehouses.length===22&&Array.isArray(progress.coreClaims)&&progress.coreClaims.length===22
+      &&progress.coreWarehouses.every(item=>byRecord.has(item.nativeRecord.id)&&claimed.has(item.nativeRecord.id))
+      &&progress.actorAccountId===b.actorAccountId&&progress.fixedSourceNamespace===b.fixedSourceNamespace&&progress.selectionSha256===b.selectionSha256
+      &&progress.checkpoint.counts.WAREHOUSE===claimed.size&&progress.claims.length===progress.checkpoint.cursor,'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');
+    const remainingWarehouses=warehouses.filter(item=>!claimed.has(item.nativeRecord.id));must(remainingWarehouses.length+claimed.size===53,'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');
     committing=true;await client.query('COMMIT');
     return {...structuredClone(progress),remainingWarehouses};
   }catch(error){
@@ -260,9 +263,10 @@ export async function runImportSteps({ source, execute, append, signal, maxSteps
   must(typeof source?.steps === 'function' && typeof source.close === 'function' && typeof execute === 'function'
     && typeof append === 'function' && signal && typeof signal.aborted === 'boolean'
     && Number.isSafeInteger(maxSteps) && maxSteps > 0 && maxSteps <= 1_000_000, 'IMPORT_EXECUTION_RUN_OPTIONS');
-  let completed = 0, failure;
+  let completed = 0, failure, sourceResult;
+  const tracked=async function*(){sourceResult=yield* source.steps();};
   try {
-    for await (const original of source.steps()) {
+    for await (const original of tracked()) {
       must(!signal.aborted, 'IMPORT_EXECUTION_ABORTED'); must(completed < maxSteps, 'IMPORT_EXECUTION_STEP_LIMIT');
       const raw = bag(original, ['kind', 'payload']), digest = historySettlementRequestHash(raw.payload);
       must(typeof raw.kind === 'string' && (raw.kind === 'MAIN' || raw.kind === 'CLOSURE' || Object.hasOwn(STAGES, raw.kind)), 'IMPORT_EXECUTION_UNKNOWN_STEP');
@@ -284,7 +288,14 @@ export async function runImportSteps({ source, execute, append, signal, maxSteps
       await append({ ordinal, kind: step.kind, digest, state: 'COMMITTED', receipt }); completed++;
     }
     must(!signal.aborted, 'IMPORT_EXECUTION_ABORTED');
-    return { status: 'REQUESTED_STEP_SEQUENCE_COMPLETE', completed, publicationReadback: 'NOT_PERFORMED_BY_RUNNER' };
+    const summary={status:'REQUESTED_STEP_SEQUENCE_COMPLETE',completed,publicationReadback:'NOT_PERFORMED_BY_RUNNER'};
+    if(completed===0&&sourceResult?.status==='IMPORTED'){
+      historySettlementRequestHash(sourceResult);const receipt=bag(sourceResult,['operationId','batchId','sequence','cursor','status','ledgerEntryIds']);
+      must(uuid(receipt.operationId)&&uuid(receipt.batchId)&&Number.isSafeInteger(receipt.sequence)&&receipt.sequence>0&&Number.isSafeInteger(receipt.cursor)&&receipt.cursor>0
+        &&Array.isArray(receipt.ledgerEntryIds)&&receipt.ledgerEntryIds.every(uuid),'IMPORT_EXECUTION_INVALID_STORE_RESULT');
+      return{...summary,recoveredPublication:structuredClone(receipt)};
+    }
+    return summary;
   } catch (error) { failure = error; throw error; }
   finally { try { await source.close(); } catch (close) { if (failure) throw new AggregateError([failure, close], 'Import and source close failed'); throw close; } }
 }

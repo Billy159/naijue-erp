@@ -6023,5 +6023,30 @@
     ],
     "noCrossWriter": "C records/shared ready-pages/build/Git; D3 allprovider/run/helper; D1 store; T45 actual server/DB only",
     "doNotTouch": "tests/product-query-postgres-protocol.test.ts unrelated WIP; frozenDemo/oldengineering/private originals"
+  },
+  "source623FullContinuationSeams": {
+    "owner": "D3",
+    "exactFiles": [
+      "scripts/import-v3/run.mjs",
+      "scripts/import-v3/run.test.mjs",
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs",
+      "scripts/import-v3/production-source-host.mjs",
+      "scripts/import-v3/production-source-host.test.mjs"
+    ],
+    "scope": "T19 original returned committed PUBLISH result retained through host/runner; no new keys/replay/status guessing. QB370 SOURCE622 transfer closure child close fix merged in same provider successor; source615 v20 full host compatibility retained. D1 prior host scope handed back fixed; no concurrent writer.",
+    "authorization": "C original full integration ownership transfer for this bounded delta; taskbook verified human source620 priorities",
+    "notAllowed": "No DB/ACL/schema change, no source authority bypass, no old source tests/full data replay"
+  },
+  "source623FullPayloadPreparation": {
+    "owner": "D1",
+    "exactFiles": [
+      "scripts/import-v3/prepare-native-bindings.mjs",
+      "scripts/import-v3/prepare-native-bindings.test.mjs"
+    ],
+    "scope": "Connection-free original FULL payload/command preparation only. Existing prepareNativeBindings/preflight source scan unchanged and not called. Reuse requestHash typed canonical on C adopted complete source/native/stock DATA manifest; not provider INPUT/COREdigest/selection/command self hash. Original11 sources/canonical allocations/proofs/stock sources covered. No runtime authority/grant or write/schema changes.",
+    "preimageDecision": "C adopts existing opaque authorizedPayloadHash as requestHash of complete actual DATA manifest (closed source/native/stock content refs+actual counts+namespace/cutoff/selection+CORE birth/current maintenance) excluding authorizedPayloadHash itself, execution/code/review/config refs, generated BIND/ACCOUNT/PUBLISH/closure plan. Hash is transitive actual complete frozen data identity; not arbitrary or one-subset hash. Exact actual artifact bytes/pins and complete membership required before real use.",
+    "authorization": "Verified latest human real business wiring priority; internal execution DATA assembly within approved v14, no new persistent business contract",
+    "actualExecutionOwner": "T45 only after original fixed source and actual registered private DATA"
   }
 }

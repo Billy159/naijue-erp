@@ -23,7 +23,7 @@ import {openAuthorizedSettlementReader} from '../import-v2/authorized-settlement
 import {openAuthorizedHistoryClosureReader26,HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
 import {readCoreImportContinuation26} from './run.mjs';
 import {validateExecutableSourceHostJob26} from './production-source-host.mjs';
-import {validateCutoffImportCommand} from '../../packages/application/src/inventory-cutoff-import.ts';
+import {validateCutoffImportCommand,stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
 import {captureHistoryTypedClosurePlan} from '../../packages/application/src/history-typed-publication.ts';
 import {openReviewedProductEvidenceSource} from './native-source-authorizers.mjs';
 import {createPostgresHistorySalesDetailBindingResolver26} from '../../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts';
@@ -58,6 +58,71 @@ async function pinnedSmall(path,pin){
  const before=await lstat(path);must(before.isFile()&&!before.isSymbolicLink()&&before.size<=4194304,'PRODUCTION_PROVIDER26_INPUT_FILE');
  const bytes=await readFile(path);must(bytes.length===before.size&&same(before,await lstat(path))&&createHash('sha256').update(bytes).digest('hex')===pin,'PRODUCTION_PROVIDER26_INPUT_CHANGED');
  return bytes;
+}
+/** Select only the uncommitted suffix of C's original complete command chain.
+ * progress is the original locked adapter readback, never a count-only shortcut.
+ * No receipt, checkpoint, request key or command body is created or rewritten. */
+export function selectProductionContinuation26({binding,commands,progress}){
+ capture({binding,commands,progress});const original=structuredClone(commands),p=structuredClone(progress);
+ must(Array.isArray(original)&&original.length>=3&&p.actorAccountId===binding.actorAccountId&&p.fixedSourceNamespace===binding.fixedSourceNamespace
+  &&p.selectionSha256===binding.selectionSha256&&Array.isArray(p.committedOperations)&&Array.isArray(p.claims)&&Array.isArray(p.records)
+  &&Array.isArray(p.coreClaims)&&p.coreClaims.length===22&&Array.isArray(p.coreWarehouses)&&p.coreWarehouses.length===22,'PRODUCTION_CONTINUATION26_PROOF_REQUIRED');
+ const first=original[0],last=original.at(-1);must(first.action==='IMPORT_BIND_FULL_SOURCE'&&last.action==='IMPORT_PUBLISH'&&original.slice(1,-1).every(c=>c.action==='IMPORT_CHUNK'),'PRODUCTION_CONTINUATION26_COMMAND_CHAIN');
+ const targets=['WAREHOUSE','SKU','INVENTORY_LEDGER','IMPORT_BATCH'],birth={sequence:1,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}};
+ let checkpoint=birth,prefix=0,bound=false;const used=new Set(p.coreClaims.map(c=>c.importRecordId)),recordMap=new Map(p.records.map(r=>[r.importRecordId,r]));
+ must(used.size===22&&recordMap.size===p.records.length&&p.records.length===p.claims.length&&p.coreClaims.every(c=>p.claims.some(x=>capture(x)===capture(c))),'PRODUCTION_CONTINUATION26_CLAIM_SCOPE');
+ for(const op of p.committedOperations){
+  must(capture(op.beforeCheckpoint)===capture(checkpoint)&&op.checkpoint.sequence===checkpoint.sequence+1,'PRODUCTION_CONTINUATION26_CHAIN_GAP');
+  const owned=p.claims.filter(c=>c.operationId===op.operationId);
+  if(op.action==='IMPORT_INITIALIZE_BARCODE_SCHEMES'){
+   must(!bound&&owned.length===0&&op.checkpoint.cursor===checkpoint.cursor&&capture(op.checkpoint.counts)===capture(checkpoint.counts)&&capture(op.checkpoint.expected)===capture(checkpoint.expected),'PRODUCTION_CONTINUATION26_INITIALIZATION_ORDER');checkpoint=op.checkpoint;continue;
+  }
+  const command=original[prefix];must(command&&op.action===command.action&&op.requestKey===command.requestKey&&op.requestHash===requestHash(command)
+   &&op.operationId===stableImportId('operation',binding.actorAccountId,command.requestKey)&&command.actorAccountId===binding.actorAccountId&&command.batchId===binding.batchId
+   &&command.expectedSequence===checkpoint.sequence&&command.expectedCursor===checkpoint.cursor,'PRODUCTION_CONTINUATION26_PREFIX_CONFLICT');
+  const nextCounts={...checkpoint.counts};let expected=checkpoint.expected;
+  if(command.action==='IMPORT_BIND_FULL_SOURCE'){
+   must(!bound&&owned.length===0&&capture(p.fullBinding)===capture(command.fullBinding),'PRODUCTION_CONTINUATION26_BINDING_CONFLICT');bound=true;expected=command.fullBinding.inventoryExpectedCounts;
+  }else if(command.action==='IMPORT_CHUNK'){
+   must(bound&&owned.length===command.items.length,'PRODUCTION_CONTINUATION26_CLAIM_SCOPE');
+   for(const item of command.items){const ledger=item.targetType==='INVENTORY_LEDGER',recordId=ledger?stableImportId('source',binding.fixedSourceNamespace,item.sourceEntityType,item.sourceKey):item.nativeRecord?.id,
+     targetId=ledger?stableImportId('baseline',binding.fixedSourceNamespace,item.sourceEntityType,item.sourceKey):item.targetId,claim=owned.find(c=>c.importRecordId===recordId),record=recordMap.get(recordId);
+    must(claim&&record&&!used.has(recordId)&&claim.targetType===item.targetType&&claim.targetId===targetId&&claim.checkpointSequence===op.checkpoint.sequence
+     &&record.targetType===item.targetType&&record.targetId===targetId&&record.sourceEntityType===item.sourceEntityType&&record.sourceKey===item.sourceKey
+     &&record.sourceRecordHash===item.sourceRecordHash&&record.sourceFileRef===item.sourceFileRef,'PRODUCTION_CONTINUATION26_ITEM_CONFLICT');used.add(recordId);nextCounts[item.targetType]++;
+   }
+  }else{
+   must(bound&&prefix===original.length-1&&owned.length===1&&owned[0].targetType==='IMPORT_BATCH'&&owned[0].targetId===binding.batchId
+    &&owned[0].checkpointSequence===op.checkpoint.sequence&&!used.has(owned[0].importRecordId),'PRODUCTION_CONTINUATION26_PUBLICATION_CONFLICT');
+   used.add(owned[0].importRecordId);nextCounts.IMPORT_BATCH++;
+  }
+  const after={sequence:checkpoint.sequence+1,cursor:checkpoint.cursor+owned.length,counts:nextCounts,expected};
+  must(capture(op.checkpoint)===capture(after)&&op.result.operationId===op.operationId&&op.result.batchId===binding.batchId&&op.result.sequence===after.sequence&&op.result.cursor===after.cursor,'PRODUCTION_CONTINUATION26_RESULT_CONFLICT');
+  checkpoint=after;prefix++;
+ }
+ must(capture(checkpoint)===capture(p.checkpoint)&&used.size===p.claims.length&&p.claims.length===checkpoint.cursor
+  &&targets.every(t=>p.claims.filter(c=>c.targetType===t).length===checkpoint.counts[t])&&bound===(p.fullBinding!==null),'PRODUCTION_CONTINUATION26_CURRENT_CHECKPOINT');
+ const imported=prefix===original.length;must((p.status==='IMPORTED')===imported,'PRODUCTION_CONTINUATION26_PUBLICATION_CONFLICT');
+ const remaining=original.slice(prefix);if(remaining.length)must(remaining[0].expectedSequence===checkpoint.sequence&&remaining[0].expectedCursor===checkpoint.cursor,'PRODUCTION_CONTINUATION26_CURRENT_CHECKPOINT');
+ return{remaining,prefix,imported,result:imported?structuredClone(p.committedOperations.at(-1).result):null};
+}
+/** Only already-claimed native memberships have a current original target/
+ * source/record proof here. Other STAGE rows are deliberately not guessed from
+ * a count or discarded from the full closure. Call after genuine authorization. */
+export function unclaimedNativeStage26({group,payload,progress}){
+ if(!['PARTIES','SKUS'].includes(group))return payload;
+ const records=progress.records??[],prove=(source,targetType,targetId,record)=>{
+  const found=records.find(r=>r.importRecordId===record?.id||r.sourceEntityType===targetType&&r.sourceKey===source.sourceKey);
+  if(!found)return false;
+  must(record&&found.importRecordId===record.id&&found.targetType===targetType&&found.targetId===targetId
+   &&found.sourceEntityType===source.entityType&&found.sourceKey===source.sourceKey&&found.sourceRecordHash===source.rowSha256&&found.sourceFileRef===source.fileRef,
+   'PRODUCTION_CONTINUATION26_STAGE_CONTENT_CONFLICT');
+  if(targetType==='WAREHOUSE')must(progress.warehouses.some(w=>w.targetId===targetId&&capture(w.nativeRecord)===capture(record)),'PRODUCTION_CONTINUATION26_STAGE_CONTENT_CONFLICT');
+  return true;
+ };
+ if(group==='SKUS')return records.some(r=>r.targetType==='SKU')&&prove(payload.canonicalSource,'SKU',payload.nativeSku.id,payload.importRecord)?null:payload;
+ const rows=payload.rows.filter(row=>row.entity!=='WAREHOUSE'||!prove(row.input.source,'WAREHOUSE',row.nativeId,row.input.warehouseRecord));
+ return rows.length===payload.rows.length?payload:rows.length?prepareNativePartyImportChunk(rows.map(row=>row.input)):null;
 }
 /** Inputs are DATA only. Authority is separately supplied reviewed executable
  * code, never derived from the input/CORE/source manifest's own checksum.
@@ -214,8 +279,9 @@ export function createProductionSourceProvider26(inputs,authority){
     return{verify:verifyFiles,async authorize(chunk){current();validatePreparedHistoryChunk(chunk);for(const row of chunk.rows){const n=ordinals.get(row.source.id);must(n!==undefined,'PRODUCTION_RETAINED_TRANSFER26_MEMBER');const original=await restore(n);must(capture(original.rows[0])===capture(row)&&capture(original.selection)===capture(chunk.selection),'PRODUCTION_RETAINED_TRANSFER26_ORIGINAL_CHANGED');}await verifyFiles();},
      async *chunks(){current();must(!iterated,'PRODUCTION_RETAINED_TRANSFER26_SINGLE_STAGE');iterated=true;for(let n=0;n<rows;n++){const chunk=await restore(n);current();yield chunk;current();}await verifyFiles();},
      async openClosure(scope,ctx){current();must(!closureStarted&&capture(scope)===capture(fixed.closureScope)&&ctx?.group==='TRANSFER_LINES'&&ctx.signal instanceof AbortSignal&&!ctx.signal.aborted,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');closureStarted=true;closureSignal=ctx.signal;
-      const stream=async function*(kind){await verifyFiles();let count=0;for await(const row of capturedTransferLineRows26(index,kind,ref=>files.json(kind==='sourceRows'?'source':'typed',ref),current)){current();must(row.projection.batch_id===binding.batchId,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');if(kind==='sourceRows')must(row.projection.entity_type==='TRANSFER_LINE'&&row.projection.field_provenance.history_staging.selection.selectionSha256===binding.selectionSha256,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');yield row;current();count++;}must(count===rows,'PRODUCTION_RETAINED_TRANSFER26_COUNTS');await verifyFiles();};
-      return{verify:verifyFiles,sourceRows:()=>stream('sourceRows'),typedRows:()=>stream('typedRows'),async *documents(){await verifyFiles();},close:async()=>{}};},close:closeSource};
+      let childClosed=false;const childCurrent=()=>{current();must(!childClosed,'PRODUCTION_RETAINED_TRANSFER26_CHILD_CLOSED');},childVerify=async()=>{childCurrent();await verifyFiles();childCurrent();};
+      const stream=async function*(kind){await childVerify();let count=0;for await(const row of capturedTransferLineRows26(index,kind,async ref=>{childCurrent();const row=await files.json(kind==='sourceRows'?'source':'typed',ref);childCurrent();return row;},childCurrent)){childCurrent();must(row.projection.batch_id===binding.batchId,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');if(kind==='sourceRows')must(row.projection.entity_type==='TRANSFER_LINE'&&row.projection.field_provenance.history_staging.selection.selectionSha256===binding.selectionSha256,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');yield row;childCurrent();count++;}must(count===rows,'PRODUCTION_RETAINED_TRANSFER26_COUNTS');await childVerify();};
+      return{verify:childVerify,sourceRows:()=>stream('sourceRows'),typedRows:()=>stream('typedRows'),async *documents(){await childVerify();},close:async()=>{childClosed=true;}};},close:closeSource};
    }catch(error){try{await closeSource();}catch(cleanup){throw new AggregateError([error,cleanup],'Retained transfer line open failed');}throw error;}
   }
   async function retainedHeadersReader(recipe){
@@ -417,7 +483,7 @@ export function createProductionSourceProvider26(inputs,authority){
     if(phase!=='ACCOUNT')must(++count===1,'PRODUCTION_PROVIDER26_MAIN_PHASE');else count++;
     await checked(a.authorizeNativeCommand,binding.actorAccountId,command);yield {kind:'MAIN',payload:command};
    }
-   must(count>0,'PRODUCTION_PROVIDER26_MAIN_COMMAND_REQUIRED');
+   must(count>0||progress.committedOperations?.some(op=>op.action===(phase==='BIND'?'IMPORT_BIND_FULL_SOURCE':phase==='ACCOUNT'?'IMPORT_CHUNK':'IMPORT_PUBLISH')),'PRODUCTION_PROVIDER26_MAIN_COMMAND_REQUIRED');
   }
   return {preflight,close,openSources,closureScope:structuredClone(fixed.closureScope),bootstrap26:null,
    nativeProductSourceReader:{async authorize(payload){await checked(a.authorizeProductSource,payload,structuredClone(binding));}},
@@ -430,9 +496,10 @@ export function createProductionSourceProvider26(inputs,authority){
     const runtime=database.ready();
     const progress=await readCoreImportContinuation26({pool:runtime.pool,runtime26:runtime.runtime26,binding,
      assertExecutionAllowed:actual=>a.assertExecutionAllowed(actual),warehouses:warehouseItems});active();
-    // The existing helper proves real22 claims and leaves only31 genuine new
-    // warehouse claims. C's reviewed command producer receives this readback.
+    // The original adapter proves immutable birth22 and the full current
+    // receipt/audit/claim chain. C's complete signed commands retain their IDs.
     yield* main('BIND',progress);
+    if(progress.status==='IMPORTED')return structuredClone(progress.committedOperations.at(-1).result);
     for(const group of sourceGroups){const [kind,iterator]=stages[group],reader=readers.get(group);
      for await(const original of reader[iterator]()){
       active();let payload=original;
@@ -440,7 +507,10 @@ export function createProductionSourceProvider26(inputs,authority){
        const rows=original.rows.filter(row=>!coreSourceIds.has(row.input.source.id));if(!rows.length)continue;
        payload=prepareNativePartyImportChunk(rows.map(row=>row.input));
       }
-      const step={kind,payload};await authorizeStep(step);active();yield step;
+      let step={kind,payload};await authorizeStep(step);active();
+      const pending=unclaimedNativeStage26({group,payload,progress});if(pending===null)continue;
+      if(pending!==payload){step={kind,payload:pending};await authorizeStep(step);active();}
+      yield step;
      }
     }
     yield* main('ACCOUNT',progress);
@@ -624,16 +694,15 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
    async coreProjection(core,actualBinding){await verify();must(capture(core)===capture(fixed.core)&&capture(actualBinding)===capture(binding),'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');await unchanged(fixed.core.coreProjection.path);
     return{...structuredClone(projection),async verify(){await verify();await unchanged(fixed.core.coreProjection.path);}};
    },
-   async *mainCommands(phase,{binding:actual,core,progress}){await verify();must(Object.hasOwn(byPhase,phase)&&capture(actual)===capture(binding)&&capture(core)===capture(fixed.core)
-     &&progress?.checkpoint?.sequence===bind.expectedSequence&&progress.checkpoint.cursor===bind.expectedCursor
-     &&progress.warehouses?.length===22&&progress.remainingWarehouses?.length===31,'PRODUCTION_AUTHORITY26_CURRENT_CHECKPOINT');
+   async *mainCommands(phase,{binding:actual,core,progress}){await verify();must(Object.hasOwn(byPhase,phase)&&capture(actual)===capture(binding)&&capture(core)===capture(fixed.core),'PRODUCTION_AUTHORITY26_CURRENT_CHECKPOINT');
+    const selected=selectProductionContinuation26({binding,commands:[...byPhase.BIND,...byPhase.ACCOUNT,...byPhase.PUBLISH],progress});
     const expected=new Map(warehouses.map(w=>[w.nativeRecord?.id,w]));
-    for(const item of [...progress.warehouses,...progress.remainingWarehouses])must(capture(expected.get(item.nativeRecord?.id))===capture(item),'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');
-    const remaining=new Map(progress.remainingWarehouses.map(item=>[item.nativeRecord.id,item]));
-    const accounted=byPhase.ACCOUNT.flatMap(command=>command.items.filter(item=>item.targetType==='WAREHOUSE'));
-    must(accounted.length===remaining.size&&accounted.every(item=>remaining.has(item.nativeRecord?.id)&&capture(item)===capture(remaining.get(item.nativeRecord.id))),
-     'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');
-    for(const command of byPhase[phase]){await mainAllowed(binding.actorAccountId,command);yield structuredClone(command);active();}
+    must(progress.warehouses.length+progress.remainingWarehouses.length===warehouses.length,'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');
+    const seen=new Set();for(const item of [...progress.warehouses,...progress.remainingWarehouses]){must(!seen.has(item.nativeRecord?.id)&&capture(expected.get(item.nativeRecord?.id))===capture(item),'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');seen.add(item.nativeRecord.id);}
+    const committed=new Set(progress.warehouses.map(item=>item.nativeRecord.id)),remaining=new Map(progress.remainingWarehouses.map(item=>[item.nativeRecord.id,item]));
+    const accounted=selected.remaining.filter(c=>c.action==='IMPORT_CHUNK').flatMap(command=>command.items.filter(item=>item.targetType==='WAREHOUSE'));
+    must(accounted.length===remaining.size&&accounted.every(item=>!committed.has(item.nativeRecord?.id)&&capture(item)===capture(remaining.get(item.nativeRecord.id))),'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');
+    for(const command of selected.remaining.filter(c=>byPhase[phase].some(original=>original.requestKey===c.requestKey))){await mainAllowed(binding.actorAccountId,command);yield structuredClone(command);active();}
    },
    async authorizeProductSource(payload){await verify();const options=fixed.producers.PRODUCTS.productEvidenceSource;must(options,'PRODUCTION_AUTHORITY26_PRODUCT_EVIDENCE_REQUIRED');
     productSource??=await owned(()=>openReviewedProductEvidenceSource(structuredClone(options)));await productSource.authorize(payload);active();

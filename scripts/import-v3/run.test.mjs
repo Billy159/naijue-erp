@@ -217,7 +217,8 @@ function coreExecutorFixture(settings={}){
   if(sql.includes('native-core:warehouse-record')){assert.equal(bootstrapCalls,1);return answer([{id:values[0]}]);}
   if(sql.includes('native-accounting:claim'))return answer([{import_batch_id:values[0],import_record_id:values[1],target_type:values[2],target_id:values[3],operation_id:values[4],checkpoint_sequence:values[5]}]);
   if(sql.includes('native-core:checkpoint')){batch.checkpoint=JSON.parse(values[1]);return {rows:[],rowCount:1};}
-  if(sql.includes('native-core:carry-forward')){const result=receipts.get(command.requestKey)?.result_data,rows=command.items.map(item=>({checkpoint:batch.checkpoint,import_batch_id:b.batchId,import_record_id:item.nativeRecord.id,target_type:'WAREHOUSE',target_id:item.targetId,operation_id:result.operationId,checkpoint_sequence:1,source_entity_type:'WAREHOUSE',source_key:item.sourceKey,source_record_hash:item.sourceRecordHash,source_file_ref:item.sourceFileRef,warehouse_record:item.nativeRecord}));if(settings.missingCarry)rows.pop();return answer(rows);}
+  if(sql.includes('native-core:carry-forward')||sql.includes('native-core:all-claims')){const result=receipts.get(command.requestKey)?.result_data,rows=command.items.map(item=>({checkpoint:batch.checkpoint,core_checkpoint:batch.checkpoint,status:'STAGED',source_name:b.fixedSourceNamespace,source_hash:b.selectionSha256,source_manifest_ref:'SYNTHETIC:core',history_payload_hash:null,core_actor:b.actorAccountId,record_ok:true,source_ok:true,import_batch_id:b.batchId,import_record_id:item.nativeRecord.id,target_type:'WAREHOUSE',target_id:item.targetId,operation_id:result.operationId,checkpoint_sequence:1,source_entity_type:'WAREHOUSE',source_key:item.sourceKey,source_record_hash:item.sourceRecordHash,source_file_ref:item.sourceFileRef,warehouse_record:item.nativeRecord}));if(settings.missingCarry)rows.pop();return answer(rows);}
+  if(sql.includes('native-core:committed-chain'))return answer();
   if(sql.includes('native-core:birth'))return answer([{id:values[0],after_values:{phase:'CORE_INITIALIZED_V1',coreSourceDigest:b.coreSourceDigest,coreCounts:coreInitialization.coreCounts}}]);
   if(sql.includes('native-core:bind-full')){batch.checkpoint=JSON.parse(values[1]);batch.history_expected_counts=JSON.parse(values[2]);batch.history_payload_hash=values[3];return {rows:[],rowCount:1};}
   if(sql.startsWith('INSERT INTO naijue_erp.audit_change'))return {rows:[],rowCount:1};
@@ -270,4 +271,9 @@ test('v19 scheme executor rejects wrong namespace/selection/CORE/process before 
  }
  const {f,c,options}=v19SchemeExecutorFixture();const {coreReceiptId:_receipt,...coreBinding}=options.binding;const execute=createPostgresImportExecutor26({...options,binding:{...coreBinding,phase:'CORE_INITIALIZATION_26_V1',authorizedPayloadHash:null},bootstrap26:f.options.bootstrap26});
  await assert.rejects(execute({kind:'MAIN',payload:c}),/SCHEME_BINDING/);assert.equal(f.calls.length,0);
+});
+
+test('T19 runner preserves ordinary empty summary and rejects a malformed claimed prior publication without invoking execute',async()=>{
+ for(const value of [undefined,{status:'IMPORTED',operationId:'invalid'}]){let executed=0,closed=0;const run=runImportSteps({source:{async *steps(){return value;},async close(){closed++;}},async execute(){executed++;},async append(){throw Error('NO_NEW_JOURNAL');},signal:new AbortController().signal,maxSteps:1});
+  if(value===undefined)assert.deepEqual(await run,{status:'REQUESTED_STEP_SEQUENCE_COMPLETE',completed:0,publicationReadback:'NOT_PERFORMED_BY_RUNNER'});else await assert.rejects(run);assert.equal(executed,0);assert.equal(closed,1);}
 });
