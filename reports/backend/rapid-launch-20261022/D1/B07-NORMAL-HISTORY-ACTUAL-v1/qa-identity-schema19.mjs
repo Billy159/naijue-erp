@@ -17,7 +17,7 @@ export const SQL=Object.freeze({
  (SELECT oid::text FROM pg_database WHERE datname=current_database()) AS oid,
  current_user::text AS role,session_user::text AS session_role,
  inet_server_addr()::text AS server_address,inet_server_port() AS server_port,
- current_setting('port')::int AS port,current_setting('unix_socket_directories') AS unix_socket_directories,
+ current_setting('port')::int AS port,
  pg_postmaster_start_time()::text AS postmaster_started_at`,
  versions:`/* b07-qa-identity:versions */ SELECT version FROM naijue_erp.schema_migration ORDER BY version`,
  guards:`/* b07-qa-identity:guards */ SELECT count(*)::int AS count FROM pg_trigger
@@ -60,9 +60,13 @@ function validate(input){
  return input;
 }
 async function target(client,input){
+ const {unix_socket_directories,...expected}=input.target;
+ // The setup role cannot examine the server's socket-directory GUC. Verify the
+ // actual connected pg Client transport, retaining SQL identity checks below.
+ must(client.connectionParameters?.host===unix_socket_directories&&client.connectionParameters?.port===expected.port,'B07_CONNECTED_TRANSPORT_CHANGED');
  const rows=(await client.query(SQL.target)).rows;must(rows.length===1,'B07_TARGET_CHANGED');
- const actual=rows[0];must(Object.keys(actual).length===Object.keys(input.target).length
-  &&Object.entries(input.target).every(([k,v])=>actual[k]===v),'B07_TARGET_CHANGED');
+ const actual=rows[0];must(Object.keys(actual).length===Object.keys(expected).length
+  &&Object.entries(expected).every(([k,v])=>actual[k]===v),'B07_TARGET_CHANGED');
 }
 const values=input=>[input.sourceActorAccountId,QA_IDENTITY.staffId,QA_IDENTITY.accountId,QA_IDENTITY.loginName];
 const readbackValues=input=>[...values(input),input.createdAt,QA_IDENTITY.name];
@@ -112,10 +116,12 @@ export async function withB07QaIdentityFixture({client,input:raw,recordPreparati
   const after=(await client.query(SQL.readback,readbackValues(input))).rows;
   must(after.length===1&&good(after[0]),'B07_FIXTURE_READBACK_FAILED');
   commitAttempted=true;await client.query('COMMIT');began=false;
- }catch{
+ }catch(error){
   if(began&&!commitAttempted)try{await client.query('ROLLBACK');}catch{}
   password=null;passwordHash=null;
-  throw Error(commitAttempted?'B07_FIXTURE_COMMIT_UNKNOWN_READBACK_ONLY':'B07_FIXTURE_PRECOMMIT_FAILED_NO_RETRY');
+  const failure=Error(commitAttempted?'B07_FIXTURE_COMMIT_UNKNOWN_READBACK_ONLY':'B07_FIXTURE_PRECOMMIT_FAILED_NO_RETRY');
+  if(typeof error?.code==='string'&&/^[0-9A-Z]{5}$/.test(error.code))failure.pgCode=error.code;
+  throw failure;
  }
  passwordHash=null;
  let active=true,loginUsed=false;

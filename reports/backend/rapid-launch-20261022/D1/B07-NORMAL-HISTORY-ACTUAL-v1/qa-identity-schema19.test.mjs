@@ -5,8 +5,8 @@ const input=()=>({contract:'B07_PREUPGRADE_QA_IDENTITY_1',target:{database:'naij
 const good=()=>({accounts:2,sessions:0,disabled_source:1,qa_staff:1,qa_account:1,qa_staff_present:1,qa_account_present:1});
 function fixture(options={}){
  const i=input(),calls=[],records=[],http=[];let callback=0,commit=false;
- const client={async query(sql,args){calls.push({sql,args});
-  if(sql===SQL.target)return {rows:[{...i.target,...options.target}]};
+ const client={connectionParameters:{host:i.target.unix_socket_directories,port:i.target.port,...options.transport},async query(sql,args){calls.push({sql,args});
+  if(sql===SQL.target){if(options.targetFailure)throw Object.assign(Error('SYNTHETIC_PRIVATE_PARAMETER_DETAIL'),{code:options.targetFailure});const {unix_socket_directories,...target}=i.target;return {rows:[{...target,...options.target}]};}
   if(sql===SQL.versions)return {rows:Array.from({length:options.versions??19},(_,n)=>({version:n+1}))};
   if(sql===SQL.guards)return {rows:[{count:options.guards??0}]};
   if(sql===SQL.before)return {rows:[{accounts:1,sessions:0,disabled_source:1,qa_staff:0,qa_account:0,...options.before}]};
@@ -38,6 +38,19 @@ test('schema19 independent fixture uses two inserts, original codec and normal l
  assert.equal(f.records.length,1);assert.equal(f.records[0].sourceIdentityChanged,false);
  assert.ok(!JSON.stringify([result,f.records]).includes(args[3]));
  assert.ok(!f.calls.some(x=>/UPDATE|DELETE|ALTER|DISABLE TRIGGER|session_replication_role/.test(x.sql)));
+});
+test('setup target never examines protected socket GUC; connected socket/port mismatches refuse before SQL target',async()=>{
+ assert.ok(!SQL.target.includes("current_setting('unix_socket_directories')"));
+ const ok=fixture();await ok.run();assert.ok(ok.calls.some(x=>x.sql===SQL.target));
+ for(const transport of [{host:'/private/tmp/foreign-synthetic'},{port:1}]){
+  const f=fixture({transport});await assert.rejects(f.run(),/^Error: B07_FIXTURE_PRECOMMIT_FAILED_NO_RETRY$/);
+  assert.ok(!f.calls.some(x=>x.sql===SQL.target||x.sql.includes('INSERT INTO')));assert.equal(f.calls.at(-1).sql,'ROLLBACK');
+ }
+});
+test('setup PG failure retains only valid SQLSTATE while omitting private driver detail',async()=>{
+ const f=fixture({targetFailure:'42501'});
+ await assert.rejects(f.run(),e=>{assert.equal(e.message,'B07_FIXTURE_PRECOMMIT_FAILED_NO_RETRY');assert.equal(e.pgCode,'42501');assert.ok(!JSON.stringify(e).includes('PRIVATE'));return true;});
+ const bad=fixture({targetFailure:'PRIVATE_DRIVER_MESSAGE'});await assert.rejects(bad.run(),e=>{assert.equal(e.pgCode,undefined);return true;});
 });
 test('wrong target, schema26, present guards, stale seed refuse before inserts',async()=>{
  for(const o of [{target:{oid:'999'}},{target:{database:'other'}},{versions:26},{guards:1},{before:{accounts:2}},{before:{disabled_source:0}}]){

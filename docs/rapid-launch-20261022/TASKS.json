@@ -14197,6 +14197,35 @@
       "checks": "5 new finite pass; public full11 real profiles not run",
       "entry": "prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal})",
       "next": "QB new source-only/merge seam only; T45 bounded real preparation; actual DATA/EXPECTED/MAIN before independent execution grant"
+    },
+    "source645B07Fix": {
+      "status": "FIXED_SOURCE_AWAIT_FAILURE_ONLY_QB",
+      "files": {
+        "qa-identity-schema19.mjs": {
+          "bytes": 11803,
+          "sha256": "b0b226ec2ffa976adc8d2102f351a6166faf80e34a838784c544bdd0b0ea5942"
+        },
+        "qa-identity-schema19.test.mjs": {
+          "bytes": 7579,
+          "sha256": "f306982504d8d2544623f67988f22831230b5a90feb6c01e647933f7086b299d"
+        },
+        "qa-identity-parent.mjs": {
+          "bytes": 15040,
+          "sha256": "55019216edd91ec921f2c1a3f38e6bd405e16a8d218acbff7ee90666b4a0ec2f"
+        },
+        "QA-IDENTITY-PARENT-REGISTRATION.template.json": {
+          "bytes": 5293,
+          "sha256": "1b369e02e14760fff38ad291ea9c799fc5c23933217f6c4ca86744ceb1fbc3e8"
+        },
+        "QA-IDENTITY-TARGET-FAILURE-DELTA-v2.md": {
+          "bytes": 4144,
+          "sha256": "24d03303ba007254782fbe60edfb67d7691986218cbb8d37f020a1620cf375ae"
+        }
+      },
+      "privateRuntimeTemplate": "1582/85400a4b9ec5e603189a8e06e0bfea916dbd2e01f0e8bdfd01f7def2d70f4653; not Git",
+      "delta": "Transport from connected client parameters; keep real SQL target identity; strict SQLSTATE only; successor02 wx root",
+      "actual": "NOT_RUN; original01 preserved; current19 stopped no restore required",
+      "next": "QB actual failed preflight scope then T45 accurate successor02 lifecycle"
     }
   }
 }
