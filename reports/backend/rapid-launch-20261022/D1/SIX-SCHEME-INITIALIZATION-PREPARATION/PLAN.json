@@ -1,0 +1,66 @@
+{
+  "jobId": "six-scheme-initialization-next-disabled-preparation-20261026",
+  "executionEnabled": false,
+  "status": "LOCAL_PREPARATION_ONLY_NEXT_WINDOW_NOT_CURRENT103_105_106_107_108",
+  "authority": "C source606LocalPreparationSplit; approved standalone v19 path clarified by C in same continuation; no new business contract",
+  "writeRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/SIX-SCHEME-INITIALIZATION-PREPARATION",
+  "entry": "run-six-schemes.mjs executeOriginalSingleMain",
+  "inputTemplate": "INPUT.disabled.json",
+  "aclBaselineTemplate": "ACL-BASELINE.disabled.json",
+  "aclCompiler": "acl-delta.mjs compileMinimumAclDelta",
+  "originalEntryPoints": [
+    "scripts/import-v3/run.mjs runImportSteps maxSteps1 kindMAIN",
+    "packages/application/src/inventory-cutoff-import.ts createCutoffImportService + validateBarcodeSchemeInitializationCommand",
+    "adapters/postgres/src/inventory-cutoff-import-store.ts PostgresCutoffImportStore exact2 borrowed callback",
+    "scripts/import-v3/native-source-authorizers.mjs openApprovedBarcodeSchemes26/openApprovedBarcodeSchemeInitialization26",
+    "adapters/postgres/src/native-barcode-import.ts initializeNativeBarcodeSchemesOnClient26",
+    "Original createSourcePreflightRuntimeGate26 activated/closed by T45 with actual raw pool factory and exact fresh runtime26Review"
+  ],
+  "bindingDecision": "No fabricated FULL_SOURCE_CONTINUATION authorizedPayloadHash; initializer has its own original same-batch/core/source actor and exact3 approval authority. No dependency on incomplete full11 recipes or15018 capture. Only this one existing service/run path is supplied.",
+  "knownSchemaObservation": {
+    "actualJob": "t45-r1-v19-v20-controlled-schema-successor-20261026-103",
+    "database": "erp_rewrite_20261022_r1",
+    "databaseOid": "1027659",
+    "routineCount": 131,
+    "patchLevel": "26_v20_history_insert_identity_from_v19",
+    "oldAclCanonical": "b5d8f2e8e278435d8a0e80ec2d7e7d08b607118859e02fc44a9f8bcedd57d8e5",
+    "schemeAclChanged": false,
+    "schemeInitializationExecuted": false,
+    "warning": "Old ACL observation only; not accepted as after-grant current canonical/review. No103/105/106/107/108 carrier edited."
+  },
+  "dynamicFieldsPending": [
+    "Actual reviewed compatible frozen sourceSnapshot root/ref/review (must contain approved104 lock delta; CORE16 old tableSHARE code is insufficient for init)",
+    "Fresh actual original target process/address/port/OID/role/session and batch/cutoff/sequence/cursor/CORE birth facts",
+    "Original requestKey allocated/confirmed once by C/T45; if previously attempted recover original body/key instead",
+    "Fresh before-window raw ACL/effective seven-column INSERT/idUPDATE/helperEXECUTE observation",
+    "Actual post-grant131 canonical, IMPORT_STAGE socket+trueTCP independent review files/sha, compatible APP current review",
+    "T45 private full request body/key/requestHash retention path and original journal append/flush handle"
+  ],
+  "stepsForT45": [
+    "Keep105/106 application recovery and23793 sales headers independent; do not wait on this next preparation.",
+    "Schedule separate approved samebatch initialization window; stop old APP and await original app.close/pool.dispose, pause other raw write jobs. No arbitrary owner/SQL concurrent scheme writer is authorized.",
+    "Use existing readonly runtime/owner observation to capture current identity/CORE/batch/checkpoint/six-empty/absence of BARCODE and original-key receipt; preserve original raw ACL evidence. Fill templates with actual values, not copied stale defaults.",
+    "Compile exact missing-only ACL delta and inverse with acl-delta.mjs. Owner applies only missing seven column INSERT, id UPDATE for rowFORSHARE and newhelperEXECUTE; never MAINTAIN/table UPDATE/DELETE/TRUNCATE/PUBLIC or tableSHARE.",
+    "Fresh canonical socket and genuine TCP role metadata observations + original QB independent review; oldb5d8/old review does not authorize changed ACL. Use compatible app/source artifact and existing runtime gate; baseline review realImportExecutionAuthorized remains false.",
+    "T45 activates original runtime gate using the exact input runtime26Review and its existing credential source; no credentials enter this directory. Reopened APP uses fresh review and full awaited startup check before any route opens.",
+    "Call executeOriginalSingleMain once with already activated original gate, actual now(), abort signal, durable retainRequest and original append callback. Wrapper uses one original MAIN action/service/store transaction; source.close stays local, gate.close remains T45 owner finally.",
+    "After result use original readonly readback for exact six sevenfields/paired actor-key-hash audit/receipt/checkpoint seq+1, cursor/counts/expected and stock unchanged. No full import/MAIN/PUBLISH claim.",
+    "Only an explicit separately recorded same-body same-key replay verifies idempotency; do not automatically resend after unknown COMMIT or invent a new key. Recover same-key receipt/hash/full six first.",
+    "If ACL rollback needed, apply only the generated inverse for newly granted fields/function; verify original effective permissions and actual canonical. Do not assume the old canonical or review file is restored automatically; publish fresh review for any changed baseline before APP resumes."
+  ],
+  "dependenciesNotIntroduced": [
+    "No15018 raw source reread/hash/capture",
+    "No full11 producer activation",
+    "No new pool/BEGIN/receipt/HTTP/interface/definer/schema function",
+    "No dependency for105/106 or sales header23793 recovery",
+    "No repeat old11/8/native/source/QB343/349 checks"
+  ],
+  "untested": [
+    "Actual ACL GRANT/revoke/rowlock permissions",
+    "Actual first initialization/whole6 readback/replay or PostgreSQL concurrency",
+    "Actual new metadata review/APP switch",
+    "Full real data import/MAIN/BARCODE/PUBLISH",
+    "Original typedclosure18 later whole-table SHARE boundary remains separate"
+  ],
+  "executionOwner": "T45 only; D1 prepares local disabled files only"
+}

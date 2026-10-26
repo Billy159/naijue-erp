@@ -1,0 +1,121 @@
+{
+  "version": "D1_SIX_SCHEME_INITIALIZATION_LOCAL_DISABLED_PREPARATION_1",
+  "status": "PREPARED_DISABLED_NOT_ACTUAL_EXECUTION",
+  "authority": "C source606LocalPreparationSplit, human QB turn01a176a0 acceleration and existing C continuous execution/report authorization; C approved single existing standalone v19 run/service/store path in this continuation",
+  "writeScope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/SIX-SCHEME-INITIALIZATION-PREPARATION",
+  "files": [
+    {
+      "path": "ACL-BASELINE.disabled.json",
+      "bytes": 570,
+      "sha256": "cc264f50eed2fbe520e33fa2096ef1a6afb14f8a4fbd8d28fcfa425aa076a610"
+    },
+    {
+      "path": "INPUT.disabled.json",
+      "bytes": 1219,
+      "sha256": "27b202e366982d2443fb4c63cb3871a13687dfdf053a35a368e92e90f0312588"
+    },
+    {
+      "path": "MINIMUM-ACL.DRAFT.sql",
+      "bytes": 851,
+      "sha256": "12389eca7178c0649e98c1f7e0279f9617c574fe7dd37fdfda4074f508c7da72"
+    },
+    {
+      "path": "PLAN.json",
+      "bytes": 6180,
+      "sha256": "bf5a8c4faec5581f722fb69aa46dfa9f374288fd57be3d8f74fb060894d30a58"
+    },
+    {
+      "path": "POSTCHECK-READONLY.sql",
+      "bytes": 1779,
+      "sha256": "3e97e2956423ad80a248c2e5a6f5730713b673f66ba901c70d9b96b04c538a6d"
+    },
+    {
+      "path": "PRECHECK-READONLY.sql",
+      "bytes": 2977,
+      "sha256": "e179d5f3724fde3078920b2c068b51c6a52836be14e156d1541f6471b879e62e"
+    },
+    {
+      "path": "ROLLBACK-ACL.DRAFT.sql",
+      "bytes": 861,
+      "sha256": "22ec2ab513636c77792826f0ebbb6d64d4f66976edf2fce875dc9ca1b56bb831"
+    },
+    {
+      "path": "RUN-INSTRUCTIONS.md",
+      "bytes": 4592,
+      "sha256": "9d5f4ce9c0b0852e6b6e7960423433ab10e51922b995f04c2e85b08517c0d950"
+    },
+    {
+      "path": "SOURCE-PINS.FROM-ACCEPTED-REPORTS.json",
+      "bytes": 1669,
+      "sha256": "bad0d6b4a15b44efcaf66437f9ae7da93ea5eb671e9a15282107a879fed8a93e"
+    },
+    {
+      "path": "acl-delta.mjs",
+      "bytes": 1913,
+      "sha256": "5ae1503675442888d7145a9f2329b5f33ff9c6626196bce08cdff21f6ca8e563"
+    },
+    {
+      "path": "approved/APPROVAL-PINS.json",
+      "bytes": 599,
+      "sha256": "2c20e65b6b0ca39d5fa820bc47b460ec521504a77e1f20a54bad06bd6cca73a2"
+    },
+    {
+      "path": "approved/BARCODE-SCHEME-INITIALIZATION-APPROVAL-v1.json",
+      "bytes": 6391,
+      "sha256": "f9da50c270c14321b17af06255a5f0649daf8b55a725b6a29fe483f342517533"
+    },
+    {
+      "path": "approved/BARCODE-SCHEME-INITIALIZATION-PROPOSAL-v1.json",
+      "bytes": 5463,
+      "sha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00"
+    },
+    {
+      "path": "approved/WRITE-CONTRACT-SUPPLEMENT-v19-HUMAN-REPLY.json",
+      "bytes": 828,
+      "sha256": "9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc"
+    },
+    {
+      "path": "preparation-checks.log",
+      "bytes": 461,
+      "sha256": "8571bb946fe88c2777456382ae7f7edab524dbed1a1300afe591d4999141fbb6"
+    },
+    {
+      "path": "preparation.test.mjs",
+      "bytes": 4987,
+      "sha256": "7f18a27dedfc94f1672480c64df19ef9e1f4745ba16a3a5421bdafb276fb2edf"
+    },
+    {
+      "path": "run-six-schemes.mjs",
+      "bytes": 7892,
+      "sha256": "67e0f0962855aed0b85e4a7448c6eb38e2de85a5052a5b0ee3ef71226b661a6d"
+    }
+  ],
+  "checks": {
+    "newNecessaryLocalTests": 3,
+    "pass": 3,
+    "fail": 0,
+    "skip": 0,
+    "scope": "Disabled refusal before gate/module access, inert direct CLI, original command validator exact6/3pins with dynamic fields required, missing-only fixed-role ACL/inverse preserving old rights",
+    "noDatabaseOrServer": true,
+    "oldSuitesNotRepeated": true
+  },
+  "knownActualSchema": "103 committed v19/v20 131, canonicalb5d8f2e8e278435d8a0e80ec2d7e7d08b607118859e02fc44a9f8bcedd57d8e5 with no scheme ACL; this is not post-grant current review",
+  "dynamicInputsPending": [
+    "Compatible frozen source artifact root/ref/review",
+    "Fresh target process/OID/role/session and cutoff/batch/checkpoint facts",
+    "Original request key/body confirmation",
+    "Before/after effective+raw ACL and actual new canonical/socket+TCP independent review",
+    "T45 original activated runtime gate, credential source and durable private request/journal handles"
+  ],
+  "dependencies": "Original QB343/349 and v19 exact6/3approval/COREbirth/actor/key/hash/CAS/zeroeffects/replay constraints retained. All SQL writes run only through original service/store. No fake fullsource authorizedPayloadHash or new interface/transaction/pool.",
+  "ACL": "Draft only seven-column INSERT, id UPDATE for rowFORSHARE, exact helper EXECUTE as missing; inverse only newly granted items. No MAINTAIN/wholeUPDATE/owner widening. ACL change requires stopping old APP/pool before mutation and fresh actual directory/review/new startup before exposure.",
+  "notExecuted": [
+    "DB/SSH/server/GRANT/build/Git",
+    "Any six-row initialization or actual readback/replay",
+    "Actual ACL rollback/rowlock permission/concurrency",
+    "Full11 source activation or large raw rehash",
+    "MAIN/PUBLISH/real complete import"
+  ],
+  "unmodified": "R source and existing frozen103/105/106/107/108 files untouched; preparation does not block105/106 or23793 headers",
+  "nextOwner": "T45 only executes a separately activated original controlled window after dynamic evidence is real and reviews current; C receives this receipt, no duplicate old validation requested"
+}

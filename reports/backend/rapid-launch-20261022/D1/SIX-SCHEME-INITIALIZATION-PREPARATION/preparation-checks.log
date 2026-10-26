@@ -1,0 +1,11 @@
+✔ prepared disabled carrier refuses before original gate access and direct CLI remains an inert notice (26.270583ms)
+✔ prepared command uses original exact6/3pin validator and leaves all dynamic facts required (43.418042ms)
+✔ ACL draft grants and rolls back only missing fixed-role column/function privileges, never old rights (0.285958ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 112.889167

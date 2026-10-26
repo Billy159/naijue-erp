@@ -1,0 +1,48 @@
+{
+  "notice": "Copied existing accepted small report pins only; no source tree rehash or build. Actual frozen artifact/sourceRef remains T45/C dynamic input.",
+  "files": [
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "bytes": 28775,
+      "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+    },
+    {
+      "path": "packages/application/src/native-barcode-import.ts",
+      "bytes": 16051,
+      "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "bytes": 71310,
+      "sha256": "855069e8bbb857bf99452bcb33b57616f0522b856ebd93f3dd2d6a0d3fc9c6ad"
+    },
+    {
+      "path": "adapters/postgres/src/native-barcode-import.ts",
+      "bytes": 13292,
+      "sha256": "ccb8e66279029919033f00e2e8cef47ce03ad7ad4111c60ebf21704c70c7d921"
+    },
+    {
+      "path": "scripts/import-v3/native-source-authorizers.mjs",
+      "bytes": 50719,
+      "sha256": "48ec80b6e6d375a5446b3d9e8f2c3cef4c8d3fad02ca1422c70572be2b461b3b"
+    },
+    {
+      "path": "scripts/import-v3/run.mjs",
+      "bytes": 29088,
+      "sha256": "7836e0b7a949d532b53de5c4063adecf211ba65aa88f8b24d317efe7e7084754"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 78034,
+      "sha256": "247cea8edd239f0ef8eaf453546d7757b638d47b992240f2fe5145687bd9757d"
+    }
+  ],
+  "reviews": [
+    "QB343",
+    "QB348",
+    "QB349",
+    "QB345"
+  ],
+  "oldSchemaOnlyCanonical": "b5d8f2e8e278435d8a0e80ec2d7e7d08b607118859e02fc44a9f8bcedd57d8e5",
+  "oldCanonicalIsPostAclReview": false
+}

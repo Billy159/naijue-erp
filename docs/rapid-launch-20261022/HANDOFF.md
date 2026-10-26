@@ -1,3 +1,5 @@
+SOURCE610：110真实只读后继PASS已采用，4关键GET当前单CC/nosniff/DENY正确、精确CORE17新HTML/module；仍cfg4302/原inode/正式root不变，0config/reload/DB。QB356REV2直接采用，不再诊断107首次重复头根因（UNKNOWN/历史FAIL保留）。106已唯一QUEUED unit7a4c26509ef8/autoRetryfalse，接actual105/355/current20/4302，HEADER无G门槛，期间route固定。原QF Solmedium已派新CORE17公网版本与一个CORE只读页面首读+两重复窄增量，不重复老UI/改密。D1原六init17file disabled准备交付3checks并固定安全源码副本，后原QB新prepared源审/真实ACL独立窗口，不挡106。全站完整业务/历史/正式发布未完成。
+
 SOURCE609：D3原QB332 helper扩BARCODE三叶实际交付并保全到R安全源码副本（helperc366469b/test72ad1b79/resultb4a749fa）；5新增有限检查通过、原三组7证据复用，不重真实54MB/11MB/原捕获。保持同五方法/原capture索引内存适配、完整source与typed身份/hash/六方案typed恰一次/close取消；原QB只新delta，非真实stage/fullroots通过。实际107CC/nosniff重复原因尚未证，T45原110仅currentwire只读后继在途，不改配置/不重reload107，不将短窗假设写根因。CORE17 APP运行，formalroot不变，106须沿真实前置接续；全站最终未完成。
 
 SOURCE608：107实际首错EXACT_SINGLE_CACHE_CONTROL_POLICY，05:23:43.545617Z。nginxt0/reload0/新config4302d793已写保留，候选实际已返CORE17精确HTML7897/8d70015d/200，但CC为两个no-store、nosniff两条，DENY一条；不是完整routePASS。正式root39330/05cf保持、0PG，旧停91路由不假reload，原107失败不重放。T45正在按失败URL实际proxy/upstream定位后继；C同时要求准确检查106真实DB前置，缓存不应无依据阻塞23793，若原PLAN确需接线则只新delta原QB。D1/D3并行准备继续，无新增整页/真实业务通过。

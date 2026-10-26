@@ -1,0 +1,97 @@
+{
+  "version": "BARCODE_SCHEME_INITIALIZATION_PROPOSAL_V1",
+  "status": "PROPOSED_WAITING_EXPLICIT_HUMAN_CONFIRMATION_NOT_EXECUTABLE",
+  "atUtc": "2026-10-22T20:55:59.412106+00:00",
+  "existingSchema": "No new table/field/index/enum. Six rows of existing approved barcode_scheme seven fields only.",
+  "sourceFacts": {
+    "workbookSha256": "650d0ca80f1ab1174362ab0f16de4a57d797c1a43f8fcf4d73181006eae4b411",
+    "workbookProjectionSha256": "4c7d7d82292f00a0e75719b02df21fe9179b6916a95141a0d8b47a8dec7f599a",
+    "sealedSixSchemeNamesSha256": "10ec387ec9e43ee930db33d9b74a863e9cf0c6c863e61a1964c2507323eb16e8",
+    "finalHistoricalSupplementSha256": "ce7b452cbc7d8e7521b341208db78526eca627a3f0d5ffd2383a70155836937d",
+    "frozen2026CodeSha256": "311a9e4eef6945a063d022c077aa5c57a11aacfb45fa2ede7f7c6c85594f2dfd"
+  },
+  "rows": [
+    {
+      "sourceSchemeKey": "2020",
+      "native": {
+        "id": "82656465-2758-4be8-a965-412a971e9c4b",
+        "name": "2020年新方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。2020颜色1位、尺码2位的最后补充优先于原表旧备注。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 14,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2018",
+      "native": {
+        "id": "c0b009e7-6f61-447a-b87e-ceea62711ec9",
+        "name": "18年货品",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 9,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2021",
+      "native": {
+        "id": "bc7ff32c-1025-4c30-8950-0b33a492c538",
+        "name": "2021年条码方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 13,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2021fit",
+      "native": {
+        "id": "48c4fe44-7521-44c1-a0e3-c547a1691028",
+        "name": "2021年版型条码方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 14,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2023",
+      "native": {
+        "id": "9c584ada-9d42-4159-9e51-208577657021",
+        "name": "2023年条码方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 14,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "HISTORICAL"
+      }
+    },
+    {
+      "sourceSchemeKey": "2026",
+      "native": {
+        "id": "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef",
+        "name": "2026年条码方案",
+        "barcode_type": "Code128",
+        "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+        "code_length": 15,
+        "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+        "status": "CURRENT"
+      }
+    }
+  ],
+  "humanDecisionNeeded": "Source provides no CURRENT/HISTORICAL classification. Proposed2026 CURRENT and five others HISTORICAL; alternative all six CURRENT. Confirm the whole listed initialization contract and exact classification.",
+  "technicalValues": "UUIDs are proposed new-system identifiers allocated once here, never represented as legacy IDs. Code128 normalizes original Code128条码/frozen Code128. rule_version is a new technical descriptor version, not a fabricated original business version.",
+  "writeContract": [
+    "Run only after first empty bootstrap admission and before BARCODE stage, in same source-bound controlled import transaction/actor/receipt/audit closure. No pre-seeding before existing empty admission.",
+    "Exact name/source-key/UUID/full-seven-field snapshot frozen after approval. First create only or byte-equivalent exact replay; any drift/missing or extra row rejects.",
+    "Do not broaden empty admission, seed generic test rows, change raw code/SKU/source identity/approved21 demotions, enable a barcode regeneration engine, or infer per-barcode validity from scheme length/status.",
+    "No source/MAIN/PUBLISH permission is conferred by approval of six descriptive rows. Later actual execution retains all existing gates."
+  ],
+  "realImportExecutionAuthorized": false,
+  "executed": false
+}

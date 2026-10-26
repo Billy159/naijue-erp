@@ -1,0 +1,24 @@
+{
+  "version": "SIX_SCHEME_ACL_BASELINE_V1",
+  "database": "erp_rewrite_20261022_r1",
+  "databaseOid": "1027659",
+  "role": "erp_rewrite_runtime_20261022",
+  "observedAtUtc": null,
+  "columnInsert": {
+    "id": null,
+    "name": null,
+    "barcode_type": null,
+    "rule_description": null,
+    "code_length": null,
+    "rule_version": null,
+    "status": null
+  },
+  "idUpdate": null,
+  "helperExecute": null,
+  "tableMaintain": null,
+  "tableUpdate": null,
+  "tableDelete": null,
+  "tableTruncate": null,
+  "rawAclEvidenceFile": null,
+  "rawAclEvidenceSha256": null
+}

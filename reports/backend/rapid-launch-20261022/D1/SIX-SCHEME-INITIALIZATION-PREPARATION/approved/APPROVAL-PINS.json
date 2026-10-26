@@ -1,0 +1,17 @@
+{
+  "proposal": {
+    "relativePath": "approved/BARCODE-SCHEME-INITIALIZATION-PROPOSAL-v1.json",
+    "bytes": 5463,
+    "sha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00"
+  },
+  "approval": {
+    "relativePath": "approved/BARCODE-SCHEME-INITIALIZATION-APPROVAL-v1.json",
+    "bytes": 6391,
+    "sha256": "f9da50c270c14321b17af06255a5f0649daf8b55a725b6a29fe483f342517533"
+  },
+  "reply": {
+    "relativePath": "approved/WRITE-CONTRACT-SUPPLEMENT-v19-HUMAN-REPLY.json",
+    "bytes": 828,
+    "sha256": "9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc"
+  }
+}
