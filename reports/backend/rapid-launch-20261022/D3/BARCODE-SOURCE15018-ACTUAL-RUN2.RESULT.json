@@ -1,0 +1,111 @@
+{
+  "status": "ACTUAL_BARCODE_SOURCE15018_PREPARED_FROM_ORIGINAL_SUFFIX_COMPLETE_REFERENCE_ONLY_NO_DB",
+  "manifest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/MANIFEST.json",
+    "bytes": 6780,
+    "sha256": "534c30ce910d6ee1220873c7d390f365783e83c1ec3400e692b9c42057fe3acc"
+  },
+  "sourcePass": {
+    "run1Stopped": {
+      "bytes": 100139008,
+      "rowsExamined": 137198,
+      "prepared": 0,
+      "frozenIdentities": 15018
+    },
+    "run2": {
+      "startOffset": 99881006,
+      "prefixRowsReused": 137197,
+      "suffixBytesRead": 262425584,
+      "fullRowsAccounted": 486987,
+      "rawBarcodeRows": 17976,
+      "excludedProductRows": 2958,
+      "prepared": 15018,
+      "seconds": 8.925437
+    },
+    "pointDiagnosticBytes": 524288,
+    "totalLogicalSnapshotReadBytesAcrossBothAttemptsAndProbe": 363088880,
+    "originalSnapshotBytes": 362306590,
+    "knownReadAheadOverlap": 258002,
+    "wholeSnapshotRehash": false,
+    "fromZeroRescan": false
+  },
+  "summary": {
+    "rows": 15018,
+    "main": 14979,
+    "compatible": 39,
+    "approvedMainDemotions": 21,
+    "nativeIDsReusedFromFrozenInput": true,
+    "newSchemeIDs": 0,
+    "rawCodesRewritten": 0,
+    "sourceOnly": true,
+    "executionAuthorized": false
+  },
+  "schemeCounts": {
+    "2023年条码方案": 8555,
+    "2021年条码方案": 3965,
+    "18年货品": 1091,
+    "2020年新方案": 1325,
+    "2021年版型条码方案": 6,
+    "2026年条码方案": 76
+  },
+  "artifacts": {
+    "identities": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run1/barcode-identities15018-PENDING.jsonl",
+      "bytes": 2740622,
+      "sha256": "90b4a57930477004d641ca4f8877c83a98f5c85d8bc555aa750522d23eaa35a6"
+    },
+    "prepared": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-prepared-PENDING.jsonl",
+      "bytes": 54431676,
+      "sha256": "898ec035cb9f3f725e8c7e01cd56e29a0b49c6a468a5bed911b5a20f53fdd083"
+    },
+    "index": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-source-projection-index-PENDING.jsonl",
+      "bytes": 11932189,
+      "sha256": "46066e321d6a52c20524ec3589ee2d8b2c9baffdc94beed8a2b9041ab2849fbd"
+    },
+    "permutations": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-global-order-and-schemes-PENDING.json",
+      "bytes": 161297,
+      "sha256": "79c3c09c3560a1c7c583b91a900fa053dc02a65440f66b15d3210d163b9cf2b2"
+    }
+  },
+  "identityFreeze": "Exact run1 artifact90b4a579... reused; nativebarcodeIDs firstallocated once inrun1,0reallocated run2; sixschemeIDs0new",
+  "codeAndInputs": {
+    "runner": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/capture-approved-barcode-source-20261026.resume-run2.mjs",
+      "bytes": 15480,
+      "sha256": "8fcccf699b2a5c1800bd392a9106799c730629a2dc8982c678018ff49f7003f2"
+    },
+    "fixedInput": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/BARCODE-SOURCE-SUFFIX-RUN2-INPUT.json",
+      "bytes": 3282,
+      "sha256": "0a525bad1367d7e3fd50389da54de854445184db9e40581cc53798c7cf0e9fbc"
+    },
+    "log": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/capture-approved-barcode-source-20261026.actual-run2.log",
+      "bytes": 2088,
+      "sha256": "b9e9a6c872089dc27c02927c6cf2f12490034781c3b8199d795a7bd7c4abef44"
+    },
+    "run1Checkpoint": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/BARCODE-SOURCE-PASS-RUN1-CHECKPOINT.json",
+      "bytes": 2642,
+      "sha256": "5474794d5e3b41698e38dff5c36402c464c240768abdba891c73c4d0ebdaf12f"
+    }
+  },
+  "closureArtifactsMeaning": "Prepared fulloriginal input/nativebarcode+source evidence54MB; source15018/typed15018 originalrowSHA compactindex+globalpermutations captured duringsamepass, approved6scheme snapshots included. Fullall11 rowfold/docroots not computed. FutureBARCODES retainedreader can consume prepared ranges without old362MB source reread; actualreader wiring/truegrant separate.",
+  "QB337": {
+    "decision": "PASS_MISSING_RAW_MIGRATION_SCOPE_SOURCE_ONLY",
+    "resultSha256": "56da3edb1edceca2db916fc3b41dfaad337d3bb78b306cb6486cbee9bc5b1325"
+  },
+  "notClaimed": [
+    "Independent review of actualnew15018 capture not yetreceived",
+    "NativeactualSKU/6scheme target binding, actualinit or actualBARCODEstage",
+    "Full11authorizedpayload/roots/MAIN/PUBLISH/businessacceptance"
+  ],
+  "DB": 0,
+  "actualInitialized": false,
+  "actualStaged": false,
+  "newSchemeIDs": 0,
+  "next": "C adopts exactnew source artifacts + independentnewsource review once; originalD2/D1 postCOREwritecontract still separate. No re-read/hash entire54MB inhandoff, only smallmanifest/currentstat."
+}

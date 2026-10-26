@@ -11643,7 +11643,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE574",
+    "round": "SOURCE575",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11678,17 +11678,18 @@
     "rootStrict": "FAIL16 outside delta preview/tests preserved; no fullPASS",
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
     "roleQueue": {
-      "F1": "Original DOC196 source delivered and adopted; actual full document/history save/readback waits T45 current QA and real published backend; latest turn completed, notLoaded is not active work",
-      "F2": "Original product image error-state fix delivered/adopted; source idle; actual real inventory/product data and current candidate checks await full publication",
-      "F3": "Actual CORE10 hall/staff entry discrepancy diagnosed as intended local form preparation vs closed write; source0change; real maintenance QA remains pending",
-      "F4": "Original category empty504 delivered/adopted; idle, actual data scope awaits legal full MAIN publication; do not fabricate another source task",
-      "D1": "Original source513 and QA02/v16 alignment input delivered; actual64 lifecycle owned T45; no duplicate implementation",
-      "D2": "Original legal publication path delivered; idle/no source bug; full MAIN route retained, no unapproved STAGED union",
-      "D3": "Actual2471 prepared PASS; joint28282 reference+pure stage projection helper QB323 PASS; next actual full stage/closure via T45, no repeated source preparation",
-      "T45": "Actual71 currentR1 STAGED/no sales/warehouseclaims53 validated readonly; next exactheaderINSERT27+samebatch historical2 bindings before stage; existing imported entities not repeated",
-      "QF": "Original519 scoped source/fixed artifact closure PASS adopted; actual business candidate validation pending T45 real chain",
-      "QF2": "NativeChrome limited actual shell/staff/hallwarehouse observation complete; temporary tab closed/restored; no fullpage/business PASS, IAB still disabled",
-      "QB": "QA327 scoped actualPASS adopted; current R1 header27 INSERT scope narrow source/permission review active, not fullsuite"
+      "F1": "DOC198 delivered/current CORE14 QF browser partial adopted; no duplicate new UI scope; history consumers await real full provider",
+      "F2": "New2026 default+compatible raw source fixed7f6d990/QF2F01 sourcePASS; next necessary integrated build/provider QA; newgeneration only v19 wait",
+      "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
+      "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
+      "D1": "B07v3 exact originalcopy target/preflight ready, T45 actual execution next safe slot; full host513 ready; v19 original init closed-set delta waiting",
+      "D2": "Original compatible SAVE ready/check adopted; explicitv19 newgeneration/init pending; no other actual ready source issue",
+      "D3": "Real15018 barcodecapture complete/sameidentity/manifest; QB338 metadata review, originalheaders/full11 actual T45 next; initSQL v19 pending",
+      "T45": "CORE14 actual91/92/public8 PASS; exact2historicalcustomers94 COMMIT/afterRR equality; current28282header stage existingprepared next, no replay",
+      "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
+      "QF2": "F2 newdefault saveF01 fixedsource7f6d990 scopedsourcePASS; runtime/provider/save pending next fixedcandidate",
+      "QB": "Original336337sourcePASS adopted; new actual15018capture metadata-only review next, no fullsource/PG rerun",
+      "Compression": "Temporary solehost2leaves SOURCE575 immutable-version JS/CSS cache G actualimplementation; next necessary combined build only"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
     "source501LeaveDialogFix": {
@@ -12132,7 +12133,7 @@
       "reviewResultSha256": "b69e31701e44d30597b2405438396d75f3c9f973a3bdc467f85050473f57b078",
       "actualQA64": "FAILED_PREPARE_RESERVATION_42501_TRANSFER_HEADER_READ"
     },
-    "queueAsOfSource": 533,
+    "queueAsOfSource": "SOURCE575",
     "qa64Actual": {
       "owner": "T45",
       "status": "FAILED_42501_PREPARE_NUMBER_RESERVE_NOT_SAVE_PASS",
@@ -12910,7 +12911,29 @@
         "QB336": "PASS_LIMITED_SOURCE_9cf646000534574104cd2d91bd9983ecdb583d415b1ca56f7d23d8695cfc957e",
         "captureRun1": "Stopped at first rawBARCODE missing migration-only field;100139008 bytes/137198 lines read, first-refused99881006,15018 identity frozen; no stage. Source decoder narrow missing-only compatibility then QB scoped before resume remaining262425584 bytes, no newIDs/fromzero replay.",
         "QB337": "PASS_LIMITED_SOURCE_56da3edb1edceca2db916fc3b41dfaad337d3bb78b306cb6486cbee9bc5b1325",
-        "decoderFixPin": "ffab3d053a99e73ff53ecb5145f25c9522224de1c22adc3b35697532a56178f3"
+        "decoderFixPin": "ffab3d053a99e73ff53ecb5145f25c9522224de1c22adc3b35697532a56178f3",
+        "captureRun2": {
+          "state": "ACTUAL_SOURCE_PREPARED_NOT_STAGED",
+          "seconds": 8.925437,
+          "suffixReadBytes": 262425584,
+          "totalSourceLogicalReadBothAttemptsPlusProbe": 363088880,
+          "rawLines": 486987,
+          "rawBarcode": 17976,
+          "excludedProduct": 2958,
+          "selected": 15018,
+          "main": 14979,
+          "compatible": 39,
+          "newNativeIds": 0,
+          "original21ProofsRetained": true,
+          "manifestSha256": "534c30ce910d6ee1220873c7d390f365783e83c1ec3400e692b9c42057fe3acc",
+          "preparedBytes": 54431676,
+          "preparedSha256": "898ec035cb9f3f725e8c7e01cd56e29a0b49c6a468a5bed911b5a20f53fdd083",
+          "safeResult": "reports/backend/rapid-launch-20261022/D3/BARCODE-SOURCE15018-ACTUAL-RUN2.RESULT.json",
+          "resultSha256": "906b44c0c354183a8998a9a5b2e968a816a862d9bdafcf0a01be8e92244ccd1a",
+          "next": "QB only metadata/runner/source binding then original full11provider; no more raw source scan",
+          "realSchemeInit": false,
+          "barcodeStaged": false
+        }
       },
       "newWriteContractV19": {
         "state": "AWAITING_EXPLICIT_USER_CONFIRMATION_ONLY_NEW_WRITE_BRANCH",
@@ -12995,6 +13018,17 @@
       "F": "After actual new app same-operation bounded timings; no guessed pool/SQL fix",
       "G": "Immutable JS/CSS caching next necessary host package only with unique writer; output real-scale bounded test only if actual blocker, no new platform/firstbatch pressure test gate",
       "H": "One fixed full business compatible version to original formal root after existing criteria;37/67 all states retained; not completed"
+    },
+    "immutableStatic575": {
+      "owner": "Original compression lane",
+      "state": "EXACT2_WRITER_ASSIGNED_IMPLEMENTATION_IN_PROGRESS",
+      "files": [
+        "apps/api/src/production-application-host.ts",
+        "apps/api/src/production-application-host.test.ts"
+      ],
+      "scope": "Only configured immutable version-prefix successfulJS/CSS public1yearimmutable; other aliases/HTML/API/session/auth/health/errors unchangedno-store",
+      "authority": "Human originaltaskbookA-H G implementation supplement",
+      "next": "Combined next necessary fixedF2+host candidate, no one-change deploy"
     }
   }
 }

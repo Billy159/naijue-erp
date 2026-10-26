@@ -5568,5 +5568,17 @@
     ],
     "scope": "Existing exact SKU compatible code EDIT UI, preserve raw no trim, explicit draft versus saved; no backend/DTO/shared writer change",
     "authority": "Human main call_be36b94f79b64f1280fc743ca246172f; C directed exact leaf"
+  },
+  "source575ImmutableStaticHandoff": {
+    "owner": "01a175eb-052d-71e2-9bb5-c4c5a6fe285b",
+    "originalOwner": "D1",
+    "temporaryFiles": [
+      "apps/api/src/production-application-host.ts",
+      "apps/api/src/production-application-host.test.ts"
+    ],
+    "state": "EXCLUSIVE_TEMPORARY_WRITER_ASSIGNED",
+    "scope": "User taskbook A-H G: exact immutable configured version-prefix public JS/CSS long cache; HTML/API/auth/health/unversioned aliases/errors no-store. Existing compression and captured graph unchanged. Next necessary integrated package only, no separate release.",
+    "model": "gpt-6.1-sol/medium",
+    "authority": "Human A-H implementation authorization forwarded originaltaskbook01a16189; prior compression lane returned writes. C owns build/records T45 sole deploy."
   }
 }
