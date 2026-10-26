@@ -1,5 +1,5 @@
 {
-  "status": "PENDING_USER_CONFIRMATION",
+  "status": "APPROVED_BY_USER",
   "scope": "nativeRecord.reviewedAt exact UTC three or six fractional digits; preserve original text and immutable evidence",
   "productionFiles": [
     "packages/application/src/native-import-record-accounting.ts"
@@ -7,5 +7,10 @@
   "owner": "D1",
   "sourceEvidence": "T45 actual133 53WH all MILLI_Z; source creator ISO milliseconds; SQL exact JSON and CORE22 item hash unchanged",
   "noSchemaChange": true,
-  "implemented": false
+  "implemented": false,
+  "approval": {
+    "source": "direct human async reply",
+    "questionCall": "call_981ade8244d94ca8862d41be9eedc7a6",
+    "answer": "确认 v20 时间文本兼容"
+  }
 }

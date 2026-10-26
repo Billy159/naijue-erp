@@ -464,7 +464,11 @@
         {
           "path": "tests/native-import-record-accounting-postgres-protocol.test.ts",
           "group": "EXACT26_MAIN_CLOSURE_SUCCESSOR",
-          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS"
+          "fieldGate": "EXISTING_APPROVED_SCHEMA_ONLY_NO_NEW_FIELDS",
+          "approvedSupplementV20": {
+            "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v20-NATIVE-REVIEW-TIME-TEXT.json",
+            "scope": "Exact native UTC3/UTC6 text compatibility and affected checks only"
+          }
         },
         {
           "path": "tests/history-typed-publication.test.ts",
@@ -766,7 +770,11 @@
           "group": "HUMAN_APPROVED_V14_CORE_ONE_TIME_BIND_20261024",
           "fieldGate": "EXACT_V14_APPROVED_CONTRACT_ONLY",
           "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v14-CORE-INITIALIZATION.json",
-          "scope": "Existing samebatch finiteCORE/onceBIND types/accounting or oneincrementalSQLpatch;oldmigrationsimmutable,0newtablecolumn"
+          "scope": "Existing samebatch finiteCORE/onceBIND types/accounting or oneincrementalSQLpatch;oldmigrationsimmutable,0newtablecolumn",
+          "approvedSupplementV20": {
+            "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v20-NATIVE-REVIEW-TIME-TEXT.json",
+            "scope": "Exact native UTC3/UTC6 text compatibility and affected checks only"
+          }
         },
         {
           "path": "adapters/postgres/patches/0026-v14-core-initialization.sql",
@@ -918,6 +926,18 @@
           "fieldGate": "EXISTING_FACTS_READ_ONLY_NO_NEW_SCHEMA_OR_WRITE",
           "scope": "Explicit committed CORE IDs/proof before authorization/count/page; no STAGED disclosure; original nonCORE unchanged",
           "previousOwner": "D2"
+        },
+        {
+          "path": "tests/native-import-record-accounting.test.ts",
+          "group": "HUMAN_APPROVED_V20_NATIVE_REVIEW_TEXT",
+          "fieldGate": "EXACT_V20_ONLY",
+          "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v20-NATIVE-REVIEW-TIME-TEXT.json"
+        },
+        {
+          "path": "scripts/import-v3/prepare-native-bindings.test.mjs",
+          "group": "HUMAN_APPROVED_V20_NATIVE_REVIEW_TEXT",
+          "fieldGate": "EXACT_V20_ONLY",
+          "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v20-NATIVE-REVIEW-TIME-TEXT.json"
         }
       ]
     },
@@ -6148,5 +6168,20 @@
     "scope": "Actual130 OPEN_GROUP_SALES_DETAILS HISTORY_SETTLEMENT_INPUT: exact original2555B C144 manifest elapsedSeconds finite nonnegative telemetry separated from unchanged strict business capture; immutable original byteSHA/scope/descriptors/selection/32money/fingerprints/data roots retained; no broad float allowance",
     "noOverlap": "D1 new narrow SQL/nativecap/test and C build/root records untouched",
     "next": "Finite real-manifest-shaped RED GREEN, exact handback; scoped QB; T45 once actual corrected source-only successor"
+  },
+  "source672NativeReviewTimeV20": {
+    "owner": "D1",
+    "status": "WRITE_ENABLED_EXACT_USER_APPROVED_V20",
+    "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v20-NATIVE-REVIEW-TIME-TEXT.json",
+    "productionFiles": [
+      "packages/application/src/native-import-record-accounting.ts"
+    ],
+    "affectedChecks": [
+      "tests/native-import-record-accounting.test.ts",
+      "scripts/import-v3/prepare-native-bindings.test.mjs",
+      "tests/native-import-record-accounting-postgres-protocol.test.ts"
+    ],
+    "scope": "Only isCanonicalNativeRecordReviewTime UTC3 or UTC6 original text; no source/time/schema/SQL/permission mutation",
+    "otherFilesRemainReadOnly": true
   }
 }

@@ -14556,6 +14556,12 @@
       "summary": "SOURCE671：D1原06仅locator两安全叶固定（parent24149/487d2f24，reg6344/63ced6de），privatecfg1586/a2144996仍K-only。反向精确还原667、syntax过，无业务/6keys/11SQL/v21改变不重套。QB405 gate窄ready-padding源PASS已采用，候选8296/38e825d8反向精确还原05原7b263604，旧原文件保；worker30b7bbae同字段源PASS复用。QB只准备06 ROOT/config精确重绑，T45原同单元OS仅新locator/ref，90086040/300与准备15:45Z/start≤15:30不变。06未授权实际，须完整新包/C采用；严禁late05purpose/重05。MAIN v20仍待人类、共享guard未改，670本地824f8fb待与本段一起推GitHub；原远端669/28e032a已核，整体ACTIVE。",
       "B07": "06 only locator fixed; parser fix source accepted; accurate 06 package pending",
       "MAIN": "v20 pending; implementation unauthorized"
+    },
+    "latestSource672": {
+      "summary": "SOURCE672：用户直接async call_981ade8244d94ca8862d41be9eedc7a6已答确认v20时间文本兼容，C准确批准单及原WRITE登记D1一生产叶/3受影响测试；仅nativeRecord.reviewedAt严格UTC3或原UTC6且保原文/原时间/JSON/CORE/SKU指纹，0表列/SQL/权限变化。已批准不冒实现，D1实际窄修接续，原guard尚未改。原06 locator固定SOURCE671=8223c40cda99e19825af7384eb55400169a6da61远端已核，原T45准备06prepared888fae69/consumerf65d02ca/OSad1df918，QB06worker e6975d30待准确独占config，包齐C再准15:45/start≤15:30/90086040；06仍未启动，不重05。整体ACTIVE，完整MAIN/历史保存/全站正式发布均未完成。",
+      "v20": "APPROVED_DIRECT_HUMAN_REPLY_IMPLEMENTATION_PENDING",
+      "B07": "06 exact package/config preparation; no execution yet",
+      "source671RemoteVerified": "8223c40cda99e19825af7384eb55400169a6da61"
     }
   }
 }

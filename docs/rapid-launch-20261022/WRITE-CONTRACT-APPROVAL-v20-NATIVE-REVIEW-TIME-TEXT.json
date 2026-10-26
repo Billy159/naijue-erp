@@ -1,0 +1,17 @@
+{
+  "status": "APPROVED_BY_USER",
+  "source": {
+    "source": "direct human async reply",
+    "questionCall": "call_981ade8244d94ca8862d41be9eedc7a6",
+    "answer": "确认 v20 时间文本兼容"
+  },
+  "scope": "nativeRecord.reviewedAt exact UTC three or six fractional digits; preserve original text and immutable evidence",
+  "implementationOwner": "D1",
+  "productionFiles": [
+    "packages/application/src/native-import-record-accounting.ts"
+  ],
+  "implemented": false,
+  "schemaChanges": false,
+  "sourceDataChanges": false,
+  "originalRequestKeysAndProofsPreserved": true
+}
