@@ -1,3 +1,5 @@
+SOURCE613：QB359新增BARCODE真实reader源审PASS af2b56a8采用，真实15018消费仍未做。D1有限CORE115/49safeproof/53item disabled导出8叶交还并核pin19219de7，4本地检查通过/真实PG未执行，固定交原QB新增范围；缺31仓/断链会明示不造。T45实际111只读成功1.320s，scheme0/来源0/旧init回执空/最小7列INSERT+idUPDATE/helperEXEC均false，0GRANT/停APP/init；下一受控ACL原owner准备。新raw-shell QF当前stores和inventory均styled未复现/原因UNKNOWN；F1公共源码有限核无可证故障，不猜修，用户Console输入和Demo草稿保留，lease回用户/C。SOURCE612 GitHub已核222b5e3。整体全量业务/历史/发布未完成。
+
 SOURCE612：D3真实BARCODE读取器4叶已交还并核原pins固定，原provider内strict closureHelper/有限索引与permutation/heldFD逐range原SHA/源身份/authorize/rows与closure共享FD/取消关闭；新5有限临时文件检查通过，仅原owner自检，待QB新范围，不重QB357原helper/其他10组。安全两small接线副本纳入Git，真实54MB等未读取，fullauthority/fullhash/CORE115/53仍缺。SOURCE611 GitHub已核a605375；新页面无样式问题F1与QF在途，未修复不关闭。
 
 SOURCE611补充：原QB358六方案17附件disabled准备源审PASS6306dfe2已采用；实际ACL/首次init/readback/replay仍未做，原T45准备有限事实窗口。新用户经原D1反馈candidate库存无样式/raw shell，直属CSS200不能证明浏览器应用；已交原F1查准确加载/生命周期原因、原QF独占保全新现场，已完成stores限定回执不重验也不扩大。D1收尾原CORE115/49safeproof/53item有限导出附件；D3原provider四叶在途，不stage其WIP。

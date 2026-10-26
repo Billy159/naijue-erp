@@ -1,0 +1,116 @@
+{
+  "status": "DISABLED_FINITE_READ_PROJECTION_PREPARED_NOT_EXECUTED",
+  "executionEnabled": false,
+  "owner": "D1; actual existing readonly window is T45 only",
+  "attachments": [
+    {
+      "path": "export-projection.mjs",
+      "bytes": 12289,
+      "sha256": "c72c7e0bc2867dac9f6c43a3d6fd082b323f60e044305592b98cea1c19c6b725"
+    },
+    {
+      "path": "projection-sql.mjs",
+      "bytes": 12479,
+      "sha256": "38e153ff7b97ce61278c374869c3b79fad5bf8cdc665303bba3e173aed4a53ea"
+    },
+    {
+      "path": "SELECTS.json",
+      "bytes": 43252,
+      "sha256": "c391ab1c924ad57fe98854293f409b4563e4b3b4d9f344c9ef5c4f647ec0b2ba"
+    },
+    {
+      "path": "INPUT.disabled.json",
+      "bytes": 895,
+      "sha256": "eff4d29402f44f551673ccae0b9e862664fd559de592aef11987bedfc95403a4"
+    },
+    {
+      "path": "projection.test.mjs",
+      "bytes": 5583,
+      "sha256": "53c4369c092c01f73cd4b9d9b86f574aafee47a9340872cb609c57a89f855670"
+    },
+    {
+      "path": "checks.log",
+      "bytes": 510,
+      "sha256": "addcf9d4b9d7bd8bcb26f1852c4131ae31392c4b8e3ecd5384733beffa6e8177"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7216,
+      "sha256": "8bef38d02ef95a808eabbfe69f5bcbc9963685a52bdfa8be377275bae1efec06"
+    }
+  ],
+  "localChecks": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "Synthetic fixtures; original native projection helper; disabled client non-access; intact proof; unexpected credential refusal; missing31 and broken maintenance",
+    "postgresExecuted": false
+  },
+  "interface": {
+    "export": "exportProjection26({input,client,runtime26})",
+    "client": "original issued client already in REPEATABLE READ READ ONLY; no connect/begin/commit/release",
+    "sourceHelpers": [
+      "packages/application/src/native-import-schema-contract.ts:checkedNativeRuntime26Capability",
+      "packages/application/src/history-typed-closure.ts:historyClosureProjectionRow26"
+    ],
+    "dataOnly": [
+      "coreMembers",
+      "staffProofs",
+      "coreMaintenanceBinding",
+      "warehouses"
+    ],
+    "noFakeAuthority": true
+  },
+  "bounds": {
+    "coreBirthMembers": 115,
+    "composition": {
+      "HALL": 22,
+      "WAREHOUSE": 22,
+      "STAFF": 49,
+      "CUSTOMER": 22
+    },
+    "originalProofs": 49,
+    "originalClaims": 22,
+    "warehouseRows": 54,
+    "requiredWarehouseItems": 53,
+    "perMemberMaintenanceLinks": 256,
+    "outputBytes": 4194304
+  },
+  "dynamicPending": [
+    "original server sourceRoot/sourceRef",
+    "same original capability runtime review refs",
+    "actual complete checkpoint including current sequence",
+    "actual cutoffAt",
+    "target current DB/OID/role/session/socket-or-TCP/postmaster exact identity",
+    "original carrier safe output destination and lifecycle; this attachment does not create one"
+  ],
+  "preserved": [
+    "original proof entire object or explicit missing, no redacted success",
+    "bootstrap proof original CORE digest retained",
+    "original49 birth native account snapshots only; no login or credential columns",
+    "server-only source snapshot comparison",
+    "original maintained versions and receipt/audit chain",
+    "original warehouse record id/reviewedAt/decisionReason; no generated31",
+    "historical customer unknown times remain NULL",
+    "STAGED hidden and publicationAuthorized=false"
+  ],
+  "notExecuted": [
+    "DB/SQL/EXPLAIN/real permissions",
+    "actual115/49/53 export or completeness",
+    "FULL_SOURCE_BINDING original locked verification",
+    "original readCoreImportContinuation26 locked reader",
+    "any GRANT/init/MAIN/PUBLISH/import replay",
+    "server/SSH/build/Git/R/current103-110 changes"
+  ],
+  "stillRequired": [
+    "actual full authorizedPayloadHash and original independent verify function; not created here",
+    "original full-binding transaction and locked carry-forward verification",
+    "actual missing evidence if fewer than53 same-batch warehouse items"
+  ],
+  "reuse": [
+    "sealed18 run2 PG10/10 no skip stopped",
+    "106 actual new23793+old4489=28282 stage result",
+    "QB358 six-scheme preparation source result; unchanged"
+  ],
+  "fast": "UNVERIFIED"
+}

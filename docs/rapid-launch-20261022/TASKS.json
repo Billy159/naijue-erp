@@ -11674,7 +11674,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE612",
+    "round": "SOURCE613",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "a88e2eecdb7fbbf2bdb3b92185145cec332fb082",
     "fixedCandidates": {
@@ -13665,14 +13665,14 @@
       "nextOwner": "T45"
     },
     "source611NewCandidateStyleFailure": {
-      "status": "REPORTED_NOT_YET_REPRODUCED",
+      "status": "NOT_REPRODUCED_CURRENT_DOCUMENT_STYLED_CAUSE_UNKNOWN",
       "scope": "current private candidate inventory raw unstyled shell",
       "implementationOwner": "F1",
       "browserEvidenceOwner": "QF",
-      "browserLease": "QF_EXCLUSIVE",
+      "browserLease": "RETURNED_USER_C",
       "source": "Human screenshot in original D1 relayed to C",
       "httpEvidence": "12 direct CORE17 CSS 200/text-css and application.js 200/js do not establish application in browser",
-      "next": "Preserve current browser state and inspect version/lifecycle/console; no duplicate stores acceptance; D1 continues projection preparation"
+      "next": "Preserve current user Console input; no extra UI actions without actual new failure"
     },
     "source612BarcodeRealReader": {
       "status": "DELIVERED_FIXED_SOURCE_PENDING_QB",
@@ -13682,6 +13682,30 @@
       "actualInitialization": false,
       "nextOwner": "QB then T45",
       "full11Ready": false
+    },
+    "source613Qb359": {
+      "status": "PASS_NEW_READER_SOURCE_ONLY",
+      "report": "reports/qa-backend/rapid-launch-20261022/QB/slice359-source612-real-barcode-provider-reader/QB359-RESULT.json",
+      "sha256": "af2b56a813ae6dcd63ae0d76c11f0a4b5f84c5928d6de98262b0a3d161757af7",
+      "actualConsumption": false
+    },
+    "source613ProjectionPreparation": {
+      "status": "FIXED_DISABLED_PREPARATION_PENDING_QB",
+      "owner": "D1",
+      "source": "reports/backend/rapid-launch-20261022/D1/FULL-SOURCE-PROJECTION-PREPARATION/RESULT.json",
+      "sha256": "19219de7afb70fba31b6a2a018dca9d81bc5e90affedc293f134ac877550d64f",
+      "localChecks": 4,
+      "actualPG": false,
+      "next": "QB scoped review then T45 finite actual readonly export"
+    },
+    "source613Actual111": {
+      "status": "COMPLETED_READONLY_ONLY",
+      "elapsedSeconds": 1.319925480056554,
+      "receiptSha256": "90043a7ef462a8dca17f523553487713296855f5177c1ecdbc4e1899766f5fd3",
+      "schemes": 0,
+      "requiredPrivilegesGranted": false,
+      "actualInitialization": false,
+      "next": "T45 controlled missing-only ACL and fresh metadata review"
     }
   }
 }

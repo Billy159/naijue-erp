@@ -1,0 +1,12 @@
+✔ disabled input rejects before client access or source loading (0.561875ms)
+✔ synthetic115/49/53 preserves exact originals and maintained version, authority remains pending (8.571125ms)
+✔ unexpected proof secret refuses whole proof without redacted success (4.572416ms)
+✔ missing31 warehouse evidence and broken version chain remain explicit missing, without generated IDs (3.591542ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 101.442292
