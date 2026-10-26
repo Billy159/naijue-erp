@@ -1,3 +1,5 @@
+SOURCE634：原QB378REV2固定632 T21 Full发布5叶源码PASS采用，报告4158/a2602b08，stoppedweb-safeStop唯一F01独立复验关闭，不重旧范围；真实Full/业务/恢复/部署未验。SOURCE633映射已远端0500777核，原QB仅新增范围在途。T45原传输timeout后确证无人写、原52756480压缩prefix SHA与原gzip严格一致，保旧失败、仅剩54230324分4有界suffix续传，不重压808MB/不重传prefix，完整hash后才124。B07原copy唯一应用account禁用/session0阻塞正常HTTP，D1只读核既有正常QA账号生命周期准备入口，T45不盲改disabled/不造session，独立准备继续。全站37/67真实业务/历史/正式切换仍未完成。
+
 SOURCE633：D3精确物理映射13变更叶交还，11code原pins逐项核+安全接线副本固定，原header helper依赖保留；原logical manifest/review/data内容不变，各reader第二参数resolveFile仍核原身份/hash/EOF/profile。新增9与原5受影响自检PASS，CATALOGUE既有EXACT26 factory接线已纠正，待原QB仅新源审；不代表真实装配/PG。原26传输900s已实际超时，仅part52756480/final receipt无，T45改为先证无人写/prefix原SHA再有限suffix续传，不重压/重传prefix，124未提。B07只有1disabled账号且0session实证，正常HTTP三案身份未就绪，不冒可用。632远端1263be5已核。
 
 SOURCE632：D1原T21停写缺口后继交还，仅rollback-candidate.py6194/c46d73b4改变，Full stop-entry允许准确同ID/fingerprint已停止web并继续停准确APP；foreign/missing/changed与旧selector/restore严格保持，deploy/helper/boot未变。采用owner四组纯fake受影响PASS及compile，交原QB只复失败，不冒真实运维。QB380 B07实际377新canonical/精确ACL独立PASS采用，仅已关闭窗口，不当未来livepurpose/正常HTTP保存。SOURCE631远端ad6cb86已核，全量资料传输/reader映射/真实业务与正式上线未完成。

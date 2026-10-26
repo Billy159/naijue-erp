@@ -14034,7 +14034,7 @@
     },
     "source629T21": {
       "owner": "D1",
-      "status": "FIXED_SOURCE632_WAIT_QB_AFFECTED_ONLY",
+      "status": "QB378_REV2_FIXED632_SOURCE_PASS_ADOPTED_ACTUAL_DEPLOYMENT_NOT_RUN",
       "modifiedFiles": [
         "scripts/release/deploy-candidate.py",
         "scripts/release/boot-entry.py",
@@ -14048,7 +14048,7 @@
       ],
       "actualDeployment": "NOT_RUN",
       "requiredActualInputs": "Full PUBLISH, current 7purpose metadata/ACL review, current R1 backup/restore and same-build business acceptance",
-      "next": "Original QB recheck stopped matching web/app stop scope only"
+      "next": "Actual Full data/purpose/PUBLISH/backup and fixed build prerequisite completion; no repeated source QA"
     },
     "B07Role377": "REV2_SOURCE_PASS_ADOPTED_ACTUAL_PENDING_T45",
     "source631B07": {
@@ -14065,6 +14065,12 @@
       "transfer": "TIMED_OUT_900S part52756480; exact prefix validation then bounded suffix resume; final hash required before124",
       "B07": "Only1 existing account disabled/session0; ordinary PG role is not application login; normal HTTP3 cases waiting identity",
       "fullBusiness": "NOT_COMPLETE"
+    },
+    "source634Next": {
+      "T45": "Exact remaining suffix transfer; original124 after completed compressed pin",
+      "D3": "Fixed633 mapping handed back, wait actual physical refs/source assembly, no duplicate code work",
+      "D1": "Existing normal QA identity setup procedure read-only before T15 proposal",
+      "QB": "Fixed633 new scope only"
     }
   }
 }
