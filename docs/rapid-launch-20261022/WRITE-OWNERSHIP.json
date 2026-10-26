@@ -5654,5 +5654,16 @@
     "scope": "Productionhost internal selector DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1; full originalmetadata verification actually awaited before businessopen; ordinaryconnect/assertReady light fixed runtimeidentity+existing lease/review checks. Default import issuer remains full verification. No actor/permission cache, original auth/session/currentrolehall/write-lock/preCOMMIT authorization retained.",
     "baselineInvalidation": "No newDDLepoch/schema/platform. ExistingT45 serialized baselinechange must stop oldAPP/disposepool beforeDBchange, newAPP fullyvalidates beforeopen. No live oldbaseline reuse or arbitraryprivateDDL hotinvalidity claim.",
     "preserved": "Frozenv20 source591 and D3 exact4 separate; newF changes not covered by QB345/343 evidence; separateoriginalQB affectedreview required"
+  },
+  "source596ApprovedSchemeWriterLock": {
+    "owner": "D1",
+    "files": [
+      "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "tests/barcode-scheme-initialization-store-protocol.test.ts"
+    ],
+    "scope": "Only redundant tableSHARE removal after original globalcutoff transactionlock+batch/keylock retained; sourceapprovedschemeINSERT sole D3 borrowed callback under sameglobalcutoff, all approvedbatch/keys serialized. Retain exact6/source/actor/receipt/audit/rollback and SELECTFORSHARE rowlock. NoSQL/profile/field/index/MAINTAIN/wholeUPDATE/definer change.",
+    "operatingBoundary": "OriginalT45 soleowner no concurrentowner/rawSQL scheme writer; no claim of lockagainst arbitrary unauthorizedSQL. No new writer path authorized.",
+    "verification": "New affected managedconcurrency/key/rollback protocol evidence originalQB limiteddelta; actualruntime sevenINSERT/idcolumnUPDATE/helperEXECUTE+rowlock still T45 untested",
+    "dependency": "Remaining23793salesheaderstage independent of sixschemeinit; originalv20/currentmetadataAPP prerequisites remain; MAIN/BARCODE/PUBLISH still actualscheme dependence"
   }
 }
