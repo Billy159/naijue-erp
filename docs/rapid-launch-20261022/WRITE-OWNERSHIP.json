@@ -6065,5 +6065,12 @@
     "scope": "S/SOL61-TASKS.json T21 local exact26-full successor only. Original schema19/exact26-r1 closed old branches preserved. Existing full API selector/R3 implementation already exists, reuse unchanged unless concrete missing delta. Current code needs accurate purpose/schema/media/config bindings not hardcoded old121/QB. No actual install/deploy/boot/DB or metadata grant invented.",
     "actualOwner": "C Git/build/integration; T45 server/DB/deploy/boot; D1 offline original7 leaves only",
     "authorization": "Latest verified taskbook real business first; S T21 allows bounded D1 offline handoff; original deployment approval preserved"
+  },
+  "source627FullPhysicalDataMapping": {
+    "owner": "D3",
+    "existingOwnership": "source623FullContinuationSeams",
+    "scope": "Original T19 provider/reader exact logical-ref to physical-path mapping, preserve original manifest/review/source content and pins; complete all11 descriptor to T45 before code completion. No broad prefix replacement, no source recapture or large body scan. Additional existing reader files returned exact list before overlapping writes.",
+    "actualOwner": "T45 source metadata/necessary controlled transfer and real execution; C grant/build/Git",
+    "next": "SOURCE624 prepare complete genuine DATA/EXPECTED/MAIN then actual independent grant; current source pass not execution-ready"
   }
 }
