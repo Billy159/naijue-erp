@@ -14551,6 +14551,11 @@
       "source669RemoteVerified": "28e032adb001cf862803cb85d02971c0f8bd4d40",
       "B07": "05 terminal no HTTP; exact ready padding fix and 06 locator preparation",
       "MAIN": "v20 pending user confirmation; no guard mutation"
+    },
+    "latestSource671": {
+      "summary": "SOURCE671：D1原06仅locator两安全叶固定（parent24149/487d2f24，reg6344/63ced6de），privatecfg1586/a2144996仍K-only。反向精确还原667、syntax过，无业务/6keys/11SQL/v21改变不重套。QB405 gate窄ready-padding源PASS已采用，候选8296/38e825d8反向精确还原05原7b263604，旧原文件保；worker30b7bbae同字段源PASS复用。QB只准备06 ROOT/config精确重绑，T45原同单元OS仅新locator/ref，90086040/300与准备15:45Z/start≤15:30不变。06未授权实际，须完整新包/C采用；严禁late05purpose/重05。MAIN v20仍待人类、共享guard未改，670本地824f8fb待与本段一起推GitHub；原远端669/28e032a已核，整体ACTIVE。",
+      "B07": "06 only locator fixed; parser fix source accepted; accurate 06 package pending",
+      "MAIN": "v20 pending; implementation unauthorized"
     }
   }
 }
