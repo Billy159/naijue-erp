@@ -1,3 +1,6 @@
+SOURCE558（2026-10-26）：修后固定source bc9b0637 / replica-production-source557-core-12已实际build exit0、原pack及一次解包读回PASS199members；archive1683665B/0bb986b5、manifest305a9fd0。产物图首屏静态JS1679239→266258B、文件27→15，原账号菜单不再在pre-auth静态图；原Arco CSS570426B作为同版本head stylesheet、先于冻结覆盖层。此为产物事实，不冒浏览器/正式性能通过；commonCSS仍完整、auth/后端/业务flag不变。原QF已独立接新三文件和受影响资产短核，T45已收到准确包准备原授权候选切换，尚未部署、正式根未变。
+实际2客户81已采QB333源码窄审PASS，真实stage未提交；原备份82在实际backup进程前因旧wrapper literal被守卫拒绝，已修正并独立83在途，原backup脚本不变。等83实际结果后补一次新81有限窗/原key去重，绝不把准备当导入。当前全37/67整页全部状态＋真实业务仍未新增PASS；库存/销货/调拨正常业务入口还受真实全11发布/用途接线限制，不以本启动包冒业务接通。
+
 SOURCE557（2026-10-26）：首次固定556/CORE11构建在原发布校验被拒：新Arco link标记属性不在既有HTML允许清单。构建失败如实保留，未上线；已改用原rel/href属性及精确CSS路径选择，不改校验器、不放宽断言、不删除样式。重新固定后只构建修订包，原F1已通过的按需生命周期证据继续复用。
 
 SOURCE556（2026-10-26）：F1 DOC198已实际交付runtime-host d39de5aa，原账号组件值静态import已移除，仅真实principal后加载原同module，加载失败可重试、身份退出丢迟到结果、原改密Modal首次打开挂载；不声称物理拆passwordchunk。采用原定向host/controlled lifecycle检查PASS，C合并runtime类型检查exit0、builder语法及diff检查exit0。F1临时写权已返C，C前置Arco外链改动组成一个关联包，接下来固定同flags/API的CORE11构建并交原QF必要受影响短验。当前仍源码阶段、未测真实浏览器耗时/首击/正式性能，不宣称登录根因已修或全站业务通过；原T45备份/2客户stage独立继续。
