@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE581",
+    "round": "SOURCE582",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12843,9 +12843,9 @@
       },
       "actualGeneration": {
         "owner": "D2/D1 as exactregistered",
-        "state": "D2_EXACT7_SOURCE_READY_6_TARGETED_CHECKS_PASS_STRICT0_INDEPENDENT_REVIEW_PENDING",
-        "finding": "Final frozen Demo systemItemCode is manual barcodeItemCode field; required, no empty allocator, no separate identity/new columns. Auto generation only actual newly added full-group SKU combinations, including added colors; original values/old MAINs/disabled retained. Nonempty code unsuitable for generation may save ordinary product with explicit missing-code feedback, no false success.",
-        "next": "Freeze exact7 originalQB source review then nextcompletebundle; T45 actualQA only after legitimate scheme init/publication/nativeSKU admission",
+        "state": "QB340_NEED_FIX_NULL_SIZE_CODE_ROLLS_BACK_VALID_PRODUCT_SAVE",
+        "finding": "Real size.code schema nullable; sameclient new reader incorrectly stringValue allcode NULL -> INVALID_DATABASE_VALUE. Fix preserveNULL and skip incomplete MAIN only; no fakecode/history change.",
+        "next": "OriginalD2 only NULLsize protocol/service regression then fixednewsource QB affected recheck",
         "noNewIntentSwitch": true,
         "sourcePins": "reports/backend/rapid-launch-20261022/D2/BARCODE-2026-BOUNDARY-v1/V19-IMPLEMENTATION-SOURCE-PINS.json",
         "behavior": "Original V2 wholegroup×colors×fits, genuinelynewenabledSKU only, exact2026CURRENTsameclient code lockreads; no originalMAIN includingdisabled replacement, no oldSKU fill, mandatorymanualitemcode/noallocator/intent. OriginalUOW receipt earlyreplay preserved. Invalid nonempty code retains ordinary product/SKU with no fake MAIN.",
@@ -12962,6 +12962,17 @@
           "writeContractReplySha256": "9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc"
         },
         "seam": "D1 original minimal3 approval pins final; D3 agreed initializer/schema; extra sixpin candidate retired to sidecar evidence only, no barcodecapture completion dependency for init."
+      },
+      "savedFeedback582": {
+        "owner": "F2",
+        "state": "EXACT2_SOURCE_TARGETED_PASS_INDEPENDENT_REVIEW_PENDING",
+        "pins": {
+          "apps/web/demo-replica/frontend/runtime/products/editor.tsx": "3143850684b589e02169dc1652d5db91a3acb80ed75f42652808a8d117b42d3c",
+          "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs": "028075fe61a754eed05f1591a57fe0f70b15eba9f45834d0f34b74152927edc0"
+        },
+        "resultSha256": "973f6e11428c178db352d01efa1ba0de8d1b3527c287c97fc64afa07c7582674",
+        "scope": "Only confirmed COMMITTED+matching authoritative detail version and knownpriorSKU set newenabledSKUdiff with no anyMAIN; explicit savednotice/missingN/provable reason and continue onSaved, no retrywrite/newkey. Unknown or advanced version not classified.",
+        "notTested": "No browser/build/HTTP/PG/realsave"
       }
     },
     "server566": {

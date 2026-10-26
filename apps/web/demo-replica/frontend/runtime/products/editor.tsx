@@ -19,6 +19,7 @@ export function ProductEditor(p:SourceProductEditorOptions){
  const restoredDraft=originalCommand&&'values'in originalCommand&&'seasonIds'in originalCommand.values?{values:originalCommand.values as ProductWriteValuesV2,skus:originalCommand.skus,barcodes:originalCommand.barcodes,selection:'skuSelection'in originalCommand&&originalCommand.skuSelection?{colors:[...originalCommand.skuSelection.colorIds],fits:[...originalCommand.skuSelection.fitIds]}:actualSpecSelection(originalCommand.skus)}:null;
  const [controller]=useState(()=>new ProductEditorController({scope,client:cap.client,newRequestKey:cap.newRequestKey,onRecoveryRequired:cap.onRecoveryRequired,onAccessFailure:e=>p.onAccessFailure(new HttpQueryError(e.kind==='forbidden'?'forbidden':'unauthenticated',e.code)),...(originalCommand?{originalCommand}:{})}));
  const write=useSyncExternalStore(controller.subscribe,controller.getSnapshot,controller.getSnapshot),alive=useRef(false),finished=useRef(false),finishing=useRef(false),resolvedKey=useRef<string|null>(null),childGuard=useRef<(()=>boolean)|null>(null);
+ const [barcodeFeedback,setBarcodeFeedback]=useState<{targetId:string;missing:readonly string[];reason:string}|null>(null);
  const [confirmation,setConfirmation]=useState<'idle'|'reading'|'error'>('idle'),[baselineKey,setBaselineKey]=useState<string|null>(null),[baselineStatus,setBaselineStatus]=useState<'idle'|'reading'|'error'>('idle');
  const rejectedKey=useRef<string|null>(null),baselineReading=useRef(false);
  useEffect(()=>{alive.current=true;return()=>{alive.current=false;queueMicrotask(()=>{if(!alive.current)controller.dispose();});};},[controller]);
@@ -65,7 +66,14 @@ export function ProductEditor(p:SourceProductEditorOptions){
    if(outcome.status!=='success'||outcome.data.productId!==result.targetId||outcome.data.version<result.version||!('seasonIds'in outcome.data.values)){
     setConfirmation('error');setError('商品已保存，但最新资料尚未确认。请重新读取商品，不要重复保存。');return;
    }
-   finished.current=true;p.onSaved(result.targetId);
+   finished.current=true;
+   const command=write.command,prior=base?.skus??('skus'in command?command.skus:[]);
+   if('values'in command&&outcome.data.version===result.version&&(command.action==='CREATE'||base!==null||prior.some(sku=>sku.id!==null))){
+    const retained=new Set(prior.flatMap(sku=>sku.id?[sku.id]:[])),fresh=outcome.data.skus.filter(sku=>sku.id&&!retained.has(sku.id)&&sku.enabled);
+    const missing=fresh.filter(sku=>!outcome.data.barcodes.some(barcode=>barcode.kind==='MAIN'&&barcode.colorId===sku.colorId&&barcode.fitId===sku.fitId&&barcode.sizeId===sku.sizeId));
+    if(missing.length){const actual=outcome.data.values;setBarcodeFeedback({targetId:result.targetId,missing:missing.map(sku=>sku.skuCode),reason:actual.defaultBarcodeSchemeId!==currentSchemeId?'当前主条码方案不是2026方案，本次新规格未自动生成2026主条码。':!/^\d{7}$/.test(actual.systemItemCode??'')?'手工系统货号不符合2026主条码生成规则；原货号保持不变。':'请核对颜色、版型和尺码的原编码；当前商品详情未提供具体未生成原因。'});return;}
+   }
+   p.onSaved(result.targetId);
   }finally{finishing.current=false;if(alive.current&&scope.active)setConfirmation(current=>current==='reading'?'idle':current);}
  };
  useEffect(()=>{
@@ -90,6 +98,7 @@ export function ProductEditor(p:SourceProductEditorOptions){
  {!p.productId&&!originalCommand&&<>{defaultScheme.snapshot.phase==='loading'?<p role="status">正在读取新建商品的2026条码方案…</p>:defaultScheme.snapshot.phase==='success'?(defaultScheme.snapshot.success?.data?.id!==currentSchemeId||defaultScheme.snapshot.success.data.status!=='CURRENT')&&<p role="alert">未取得已确认的当前2026条码方案，未自动设置默认方案。</p>:<p role="alert">2026条码方案读取未完成，未自动设置默认方案。<button type="button" className="btn ghost" disabled={writeBusy} onClick={()=>{if(!writeBusy)void defaultScheme.query.run({schemeId:currentSchemeId});}}>重试读取2026方案</button></p>}</>}
  <div id="pc-editor-error" className="inline-error" role="alert">{error||write.error?.message}</div>{write.phase==='submitting'&&<p role="status">正在保存…</p>}{(write.phase==='uncertain'||write.phase==='checking')&&<p role="alert">保存结果尚未确认，请先查回原请求。<button type="button" className="btn" disabled={write.phase==='checking'} onClick={()=>void controller.recover()}>查回结果</button>{write.phase==='uncertain'&&write.recovery==='absent'&&<button type="button" className="btn" disabled={!write.command||!cap.allowedActions.includes(write.command.action)} onClick={()=>{if(write.command&&cap.allowedActions.includes(write.command.action))void controller.retryOriginal();}}>按原请求重试</button>}</p>}
  {write.phase==='committed'&&write.command?.action!=='DELETE'&&<p role={confirmation==='error'?'alert':'status'}>{confirmation==='error'?'保存已提交，最新资料读取未完成。':finished.current?'保存已确认。':'保存已提交，正在确认最新商品资料…'}{confirmation==='error'&&<button type="button" className="btn" onClick={()=>void confirmSaved()}>重新读取商品</button>}</p>}
+ {barcodeFeedback&&<div role="alert" className="inline-error"><p>商品资料和规格已保存；本次新增规格中有 {barcodeFeedback.missing.length} 项在已确认的商品详情中没有主条码。</p><p>{barcodeFeedback.reason}</p><p>未生成主码的规格：{barcodeFeedback.missing.join('、')}</p><p>原主码、兼容码和停用状态保持不变，请勿重复保存。</p><button type="button" className="btn" onClick={()=>p.onSaved(barcodeFeedback.targetId)}>查看已保存商品</button></div>}
  {needsBaseline&&<p role={baselineStatus==='error'?'alert':'status'}>{baselineStatus==='error'?'保存未提交，最新商品资料读取失败。':'保存未提交，正在重新读取商品资料。'}{baselineStatus==='error'&&<button type="button" className="btn" onClick={()=>void reloadRejectedBaseline()}>重新读取基准</button>}</p>}
  {p.productId&&!base&&write.phase==='idle'&&<ReadNotice phase={detail.snapshot.phase} retry={()=>void detail.query.run({productId:p.productId!})} cancel={()=>detail.query.cancel()}/>}
  {ready&&specsActive&&<ReadNotice phase={specs.snapshot.phase} retry={()=>void specs.query.run({productId:p.productId!})} cancel={()=>specs.query.cancel()}/>}

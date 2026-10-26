@@ -1,0 +1,39 @@
+{
+  "ID": "SOURCE580-BARCODE-SAVE-FEEDBACK-20261026-01",
+  "范围": {
+    "status": "SOURCE_READY_TARGETED_PASS_ACTUAL_QA_PENDING",
+    "base": "f193099 SOURCE580 exact corrected v19",
+    "gap": "Original confirmSaved immediately navigated after authoritative reread without warning about new enabled SKU lacking MAIN.",
+    "implemented": "After committed receipt and same-id authoritative detail, only exact receipt-version data with known prior SKU set is used to attribute new enabled IDs. Match MAIN by exact native color/fit/size tuple, including disabled MAIN as retained. Missing MAIN pauses original navigation with saved-data notice/count/actual skuCodes and explicit continue-to-saved-product action; no second save.",
+    "reasons": "Readback non2026 scheme or non7digit manual value can be stated accurately without changing value. Exact2026+manual7 missing MAIN: current DTO lacks original dictionary codes/failure reason; explicitly say concrete cause is not provided and ask to check color/fit/size original codes, never invent individual code diagnosis.",
+    "preserved": "Existing MAIN/compat/disabled remain unmodified, original key/receipt recovery unchanged, unknown/read-failed outcome never marked generation failure. Old later-version readback cannot attribute concurrent additions to this save. Restored EDIT with no prior SKU IDs cannot reliably form delta and is not classified. No write validation/input/allocator/DTO changes."
+  },
+  "文件": [
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "sha256": "3143850684b589e02169dc1652d5db91a3acb80ed75f42652808a8d117b42d3c"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+      "sha256": "028075fe61a754eed05f1591a57fe0f70b15eba9f45834d0f34b74152927edc0"
+    }
+  ],
+  "检查": {
+    "runtime": "Node24.21 only new SOURCE580-BARCODE-FEEDBACK block from original test, PASS exit0: seven scenarios manual-non7, exact2026 unknown-code-reason, non2026 scheme, new disabled MAIN, all MAIN, disabled newSKU, later version. Unknown and receipt-only have no missing warning; restored original command never reexecutes/keychanges; warning defers navigation until explicit saved-product view. Old disabled MAIN raw remains unchanged.",
+    "typescript": "products scoped --noEmit PASS exit0",
+    "diffCheck": "exact2 PASS",
+    "reuse": "default race/raw/whole UI/v17 existing results reused, no full suite.",
+    "warnings": "Original Arco React19 element.ref warning, exit0."
+  },
+  "未测": [
+    "No browser/build/liveHTTP/PG/actual generation/real durable-save verification. T45 actual QA and MAIN/PUBLISH still required.",
+    "Actual missing dictionary code is not available in existing frontend DTO; no fabricated reason or new DTO added.",
+    "Sol6.1/medium requested, Fast UNVERIFIED."
+  ],
+  "阻塞": {
+    "source": "NONE exact2 released",
+    "preciseReasonBoundary": "Without dictionary generation-reference codes/read reason in current public data, frontend can report confirmed missing MAIN and known manual/scheme conditions but not name which reference code is invalid. No new contract requested or invented.",
+    "recoveryBoundary": "Restored EDIT skus[] without captured baseline and reread newer than receipt do not support precise per-command new-ID attribution. Keep unknown, not false failure."
+  },
+  "next": "C freeze exact2 with SOURCE580, QF2 only affected save-feedback path. No edits to editor-barcodes/shared/root/backend, no actual database/test seeding, no commit."
+}
