@@ -14495,6 +14495,16 @@
     "latestSource662": {
       "summary": "SOURCE662：原QB400调拨ordinal源码PASS、QB401新132 carrier限定PASS及661metadata准确绑定已采用，C已让原T45按14:10Z/max900/start≤13:55准确132唯一实际source-only，只collect不重run，0PG/MAIN/grant/APP。D1完整private04接续包交付，安全3叶已固定（parent24149/792f1378、test11048/a36a7cdd、reg6344/96dd6157），privatecfg1586/8aa39a30和scope8018/1175d30c仍K-only。04仅在全保全现存v21后原19新隔离fixture：seed/原11SQL/原role→窄v21patch一次COMMIT→ordinary有限ROLLBACK及真实新metadata/fullcatalog→新process绑定review/gate→原3正常案；unknown不重，原6keys/RAMsecret/cleanup保留。新增4项离线检查通过，不是实际三案PASS；QB只新父接线在途，T45准备含新步骤的准确外层budget。661远端2d242587已核，全站真实业务/历史/正式发布仍ACTIVE未完成。",
       "source661RemoteVerified": "2d24258730dfcacdc21feb2a0bdb461b247f5421"
+    },
+    "latestSource663": {
+      "summary": "SOURCE663：132实际FAILED2/149.728436492s（13:44:35.804834Z→13:47:05.545683Z），phase ORIGINAL_BINDINGS_AND_STREAMS/code INVALID_NATIVE_RECORD_ACCOUNTING_ITEM；已越过C144/TRANSFER_LINES opening，仍未形成全DATA/EXPECTED/MAIN。0PG/MAIN/grant/APP，原109keys/registration保留，不重132。C精准派原D1仅624原prepare-native-bindings/validator接缝离线定位实际参数/类型守卫，D3只交原派生输入shape，不镜像排障/宽guard/输出正文。B07 private04源码QB402 PASS采用，SOURCE662安全3叶准确，新parent普通role/catalog/ready顺序关闭边界通过；T45外层900/父860/cleanup40及14:25Z/start≤14:10的04载体新差异QB在途，无新actualpurpose/gate/正常3案通过。当前v21已停、原03/pre-v21/19全证据保留。662 GitHub远端51e4f35已核。全站37页/67弹层与真实业务历史编辑/正式发布ACTIVE未完成，本段无新增UI/业务/发布PASS。",
+      "source662RemoteVerified": "51e4f35a0df7648b5ac3cf4c2bd7d48ca3378b69",
+      "inFlight": {
+        "D1": "132 exact native accounting item shape diagnosis; 04 frozen no further edit",
+        "D3": "original derived-input seam handoff only",
+        "QB": "04 OS exact delta review;402 source pass adopted",
+        "T45": "04 current protected fixture carrier preparation;132 terminal no replay"
+      }
     }
   }
 }
