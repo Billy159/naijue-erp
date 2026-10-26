@@ -14178,7 +14178,7 @@
       "next": "Minimal identity preflight wiring; no expanded role privilege or bypass; fixed successor only"
     },
     "source644Preparation": {
-      "status": "SOURCE_FIXED_NEW_SCOPE_QB_PENDING_ACTUAL_PREPARATION_NOT_RUN",
+      "status": "QB386_NEW_SOURCE_PASS_ADOPTED_ACTUAL_PREPARATION_PENDING",
       "owner": "D3 handback; T45 actual",
       "code": {
         "scripts/import-v3/production-source-provider26.mjs": {
@@ -14196,10 +14196,10 @@
       },
       "checks": "5 new finite pass; public full11 real profiles not run",
       "entry": "prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal})",
-      "next": "QB new source-only/merge seam only; T45 bounded real preparation; actual DATA/EXPECTED/MAIN before independent execution grant"
+      "next": "D3 exact artifactRows/chunk count metadata; C first request keys; T45 one actual source-only window"
     },
     "source645B07Fix": {
-      "status": "FIXED_SOURCE_AWAIT_FAILURE_ONLY_QB",
+      "status": "QB387_FAILURE_SCOPE_SOURCE_PASS_ADOPTED_ACTUAL02_PENDING",
       "files": {
         "qa-identity-schema19.mjs": {
           "bytes": 11803,
@@ -14225,7 +14225,25 @@
       "privateRuntimeTemplate": "1582/85400a4b9ec5e603189a8e06e0bfea916dbd2e01f0e8bdfd01f7def2d70f4653; not Git",
       "delta": "Transport from connected client parameters; keep real SQL target identity; strict SQLSTATE only; successor02 wx root",
       "actual": "NOT_RUN; original01 preserved; current19 stopped no restore required",
-      "next": "QB actual failed preflight scope then T45 accurate successor02 lifecycle"
+      "next": "T45 accurate02 successor startup current stopped19 only; fresh metadata/current gate; no original01 replay or restore19"
+    },
+    "source646IndependentResults": {
+      "QB386": {
+        "bytes": 4972,
+        "sha256": "67ee3a620b7a8b4a877eec7f5c60ec7fe62eca9b7d5763479eb8df8f92eb610e",
+        "scope": "644 source-only3code2metadata; no real preparation"
+      },
+      "QB387": {
+        "bytes": 4780,
+        "sha256": "43f47f27712c6ce57b332a0914b53e255fd3e13c2d018f843d95a34c76e55e5e",
+        "scope": "645 failed target preflight only; no actual02"
+      },
+      "nextOwners": {
+        "D3": "exact existing artifactRows/sourceManifest/chunk count",
+        "C": "freeze first request keys once inputs known",
+        "T45": "actual source-only preparation and independent B0702 current19 lifecycle",
+        "QB": "actual current metadata/purpose only when live"
+      }
     }
   }
 }

@@ -1,3 +1,5 @@
+SOURCE646：原QB386固定644 source-only新范围源码PASS、QB387固定645 B07真实失败预检差异源码PASS均采用，原374/382/383/385等旧范围不重。原D3补实际准备scope的既有artifactRows/sourceManifest/真实chunk计数依据，C据此一次冻结首次keys，T45原一次source-only窗，未冒真实DATA/hash/MAIN成功。B07原19当前停、QA0/session0已真实RO确认，旧01回滚未记录不倒写；T45按645+387准确02后继只启动现存19，不重restore/01，新的真实metadata→当前review/gate。全站真实接线/历史保存/必要正式性能/正式发布仍未完成；645远端6f56621已核。
+
 SOURCE645：D1原B07真实受限GUC失败接线最小后继已固定5安全叶，实际pg Client连接参数host/port核登记，SQL保db/OID/role/address/port/postmaster真实身份，不增加role权限，不读unix_socket_directories。异常仅保严格5位SQLSTATE，不输出原参数；新输出02wx保01原失败，原DRAFT6key/7pins/11SQL/ACL不变。owner仅失败影响4fixture+1parent有限PASS，真实PG/HTTP未跑；原QB只该差异复验，然后原T45启动当前已停19copy，不再restore19或重01。私有runtime模板1582/85400a4b仅K，未入Git。644远端fac8978已核，原全来源源码新增独立验收在途。
 
 SOURCE644：原D3 source-only准备3CODE精确交还固定，原11流bounded merge→原D1 DATA/EXPECTED/MAIN writer成功及失败释放新增2项、与此前3项共5有限PASS复用。实际公开入口读取全11真实profiles尚未执行，明确未测；原执行授权门不弱化，无fakehash/grant。INPUT182293/1dfa63b4、DELIVERY49534/d38caacd固定安全副本，真实125路径直接消费、不重SQL；24裁决随同版CODE小依赖传输且按原29signed+批准24zero生成53。交原QB仅新增source-only及公共merge实际影响，然后T45一次真实准备，成功后C再据真实文件发独立执行授权。643远端ba28a28已核，B07受限GUC预检原D1定向修复在途。
