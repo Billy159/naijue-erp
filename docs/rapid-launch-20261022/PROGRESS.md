@@ -1,3 +1,5 @@
+SOURCE563（2026-10-26）：T45 actual87只读COMPLETED0/0.5688s，PG原日志明确81的42501对象为history_closure_row_hash函数EXECUTE；customer7/7读写及source/ref/evidence必要列权限均有，generated FK/creation_xid/imported_at不应补GRANT。原cutoff_lock可执行。不是猜测表权限，也未先GRANT再盲试；T45正在一次核齐原hash纯encoder/triggerinvoker依赖，canonical59/APP74/19服务保留。CORE14原有效包及审查已到T45，函数窄diff齐则同新双purpose审核和应用合批；若不齐先现canonical部署启动压缩，不让整个前端无期限等导入。真实2客户/header/all11/历史编辑/37与67业务及正式根发布仍未完成。GitHub562已核4169f7aa。
+
 SOURCE562（2026-10-26）：修后固定SOURCE561/CORE14已真实build0、pack/一次读回PASS199members，1684793B/805e84be，manifestda8cc80c；QB334源限定PASS a601ce34且精确两叶与导出一致，OWS F01关闭，原前端QF557有效结论复用。C已将完整新host包和QF/QB报告路径字节交原T45，等待原运维安全窗口合批实际部署；没有CORE14公网压缩或浏览器性能通过，旧CORE13失败包禁部署保留。专线仅在新APP后读公网encoding/decoded/HEAD，源码完成不能冒上线。
 真实两历史客户actual81 FAILED2/3.978774s/42501，COMMIT0，3ROLLBACK、4acquire=4release/live0/endtrue；原键RR重读两客户/source/ref/evidence仍全不存在，19服务与候选路由保留。不是未知COMMIT，不重81、不记导入。83真实备份有效。T45只读定位准确对象/列及原事务必要权限，避免每列反复改canonical；真需ACL必须窄审并同时更新原双purpose审核/新APP路由，不先改权限重现登录失败。库存/销货/调拨仍需真实数据全11 MAIN/PUBLISH及用途接线，37/67全状态业务和历史编辑/正式根发布未完成。
 
