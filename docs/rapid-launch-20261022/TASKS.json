@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE554",
+    "round": "SOURCE555",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "af8488b031a04da48368c54a06bf43343ba04703",
+    "sourceHeadBeforeThisContinuityCommit": "5459d1ed1a0608eab6117a3b3c7f60d56e3ce11b",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12646,6 +12646,36 @@
       "rootCause": "UNKNOWN_NO_POST75_LOGIN_EVIDENCE",
       "next": "T45 original2 historicalcustomer stage then28282 header staging; only new original post75 evidence or registered isolatedQA permits further login diagnosis",
       "noBlindTimeoutPoolChange": true
+    },
+    "startup555": {
+      "newEvidence": "Post75 login200/422ms and session200/208ms; protected query200/279-531ms. Current CUA readonly Chrome #sales authenticated shell and not-integrated body observed; no interactions or credentials.",
+      "unwiredPages": [
+        "inventory",
+        "sales",
+        "transfers",
+        "products",
+        "parties",
+        "paymentSettings",
+        "barcodeSchemes"
+      ],
+      "whyUnwired": "Current CORE10 flags remain false; source-only helpers and STAGED rows do not prove full11 MAIN/PUBLISH or approved read-purpose readiness. No false flags enable.",
+      "F1Current": "DOC198 original account menu deferred until authenticated, original modal first mount, explicit load/failure/retry; implementation/tests in progress",
+      "CCurrent": "Original Arco676k CSS moved from JS text to same-version early head stylesheet before frozen overrides; WIP syntax/diffcheck passed, no build/browser/performance yet",
+      "actualBaselineStaticJsBytes": 1679239,
+      "baselineStaticChunks": 26,
+      "newSourceIsLoginRootCause": false,
+      "next": "Freeze combined F1+C package then original fixed build/QA/minimal affected browser and T45 deploy"
+    },
+    "historical2Stage555": {
+      "owner": "T45",
+      "job": 81,
+      "state": "PREPARED_NOT_SUBMITTED",
+      "preparedBytes": 24306,
+      "actualDatabaseWrites": false,
+      "QB": "Original carrier narrow review in progress; no duplicate",
+      "blocker": "Backup23 finished2026-10-25T13:07:58Z now exceeds original12h validity; planned window expired. Need newest valid backup or original authorized backup successor and newly bound finite window.",
+      "next": "T45 verify newer backup; if none execute original backup successor, then original key dedup and approved81 stage. Private0700 subdir/0600 file, do not change old parent permissions.",
+      "scope": "Exact approved2 native historical customer identities then28282 headers; no reimport628 parties/transfer, no MAIN shortcut"
     }
   }
 }

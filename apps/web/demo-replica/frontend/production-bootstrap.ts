@@ -1,4 +1,3 @@
-import sharedArcoCss from '@arco-design/web-react/dist/css/arco.css?inline';
 import { createReplicaSession, mountNormalReplica, createReplicaWorkbook } from './runtime/entry.tsx';
 import { configureReplicaStyleAssetBase, prepareReplicaCommonStyles, prepareReplicaStyles } from './runtime-styles.ts';
 import { parseProductionHostAssets, parseProductionHostConfiguration } from '../../src/production-host/configuration.ts';
@@ -13,7 +12,10 @@ export async function startReplicaProductionHost() {
  const configuration=parseProductionHostConfiguration(value.configuration);parseProductionHostAssets(value.assets);
  if(location.protocol!=='https:'||location.origin!==configuration.http.origin)throw new TypeError('Production requires its configured same-origin HTTPS.');
  configureReplicaStyleAssetBase(configuration.assets.basePath);
- const style=document.createElement('style');style.dataset.sharedArco='2.66.16';style.textContent=sharedArcoCss;document.head.prepend(style);
+ // The deferred module runs after the shared head stylesheet has settled.
+ // Keep Arco before the copied overrides without carrying its CSS as JavaScript.
+ const sharedArco=document.head.querySelector<HTMLLinkElement>('link[data-shared-arco="2.66.16"]');
+ if(!sharedArco?.sheet)throw new Error('Shared interface stylesheet unavailable.');
  const startup=new AbortController();let owner:ReturnType<typeof mountNormalReplica>|undefined,disposed=false;
  const required=(selector:string)=>{const node=document.querySelector<HTMLElement>(selector);if(!node)throw new Error('Missing copied host '+selector);return node;};
  const ledger=document.getElementById('gold-drawer');if(!(ledger instanceof HTMLDialogElement))throw new Error('Missing native ledger host.');
@@ -22,8 +24,8 @@ export async function startReplicaProductionHost() {
  const show=(event:PageTransitionEvent)=>{if(!disposed&&event.persisted&&!owner)owner=mount();};
  window.addEventListener('pagehide',hide);window.addEventListener('pageshow',show);
  try {await prepareReplicaCommonStyles(startup.signal);if(!startup.signal.aborted){owner=mount();document.documentElement.removeAttribute('data-replica-starting');document.getElementById('replica-startup')?.remove();document.getElementById('replica-startup-style')?.remove();}}
- catch(error){window.removeEventListener('pagehide',hide);window.removeEventListener('pageshow',show);style.remove();throw error;}
- return {dispose(){if(disposed)return;disposed=true;window.removeEventListener('pagehide',hide);window.removeEventListener('pageshow',show);hide();style.remove();}};
+ catch(error){window.removeEventListener('pagehide',hide);window.removeEventListener('pageshow',show);throw error;}
+ return {dispose(){if(disposed)return;disposed=true;window.removeEventListener('pagehide',hide);window.removeEventListener('pageshow',show);hide();}};
 }
 void startReplicaProductionHost().catch(()=>{
  const status=document.getElementById('replica-startup')??document.getElementById('page');

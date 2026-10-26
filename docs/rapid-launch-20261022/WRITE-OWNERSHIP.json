@@ -5532,5 +5532,18 @@
     "serverOwner": "T45",
     "F3": "Original settings leaves; shared startup/build read-only",
     "authority": "Current user taskbook public startup and settings failures; original full UI/business goal"
+  },
+  "source555StartupHandoff": {
+    "source": "C exact handoff message to original F1, user ongoing performance authorization",
+    "F1_soleWriter": [
+      "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx"
+    ],
+    "C_soleWriter": [
+      "apps/web/demo-replica/frontend/production-bootstrap.ts",
+      "apps/web/demo-replica/build-production-host.mjs"
+    ],
+    "boundary": "F1 defers original account menu chain until authenticated; C extracts original shared Arco CSS into same-version head stylesheet before frozen overrides. No auth protocol/timeout/real POST/flags changed. Existing owners and reports otherwise unchanged.",
+    "model": "gpt-6.1-sol/medium",
+    "state": "WIP_NOT_DEPLOYED"
   }
 }
