@@ -14244,6 +14244,22 @@
         "T45": "actual source-only preparation and independent B0702 current19 lifecycle",
         "QB": "actual current metadata/purpose only when live"
       }
+    },
+    "source647FirstPreparationKeys": {
+      "status": "FIRST109_KEYS_FROZEN_PREPARATION_ONLY_NO_EXECUTION_GRANT",
+      "registrationId": "c-full-source-preparation-20261026-01",
+      "deadlineUtc": "2026-10-26T12:35:00Z",
+      "maxSeconds": 900,
+      "remainingItems": 53333,
+      "chunkRows": 500,
+      "accountKeys": 107,
+      "bindKeys": 1,
+      "publishKeys": 1,
+      "keyFile": "K/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/FIRST-FULL-PREPARATION-REQUEST-KEYS-20261026-01.json",
+      "bytes": 5950,
+      "sha256": "10159f131fb703ce48a69187be059bb2e7b7c4d16db0f7f5c973053ed2e8fb1c",
+      "artifactRows": "D3 DELIVERY83151/ec12fe5ab2c77c3e89d03959ca003e53e3c080e18b93e6298fe906ddb959f176 source635ExecutionSeamMetadata",
+      "next": "T45 final same-version physical input/scope bytes SHA; deadline only refresh if not started; no replacement keys after unknown submit"
     }
   }
 }

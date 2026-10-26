@@ -632,5 +632,388 @@
     ],
     "retryBoundary": "First preparation only. Existing writer registration refuses EEXIST; do not auto-mint replacement keys. Original D1 resume with frozen originalCommands/Expected remains available in original helper but new entry does not expose retry refs yet.",
     "next": "C freeze exact successor source and metadata -> QB affected new source-only seam -> T45 one actual source-only preparation window -> C review genuine resulting DATA/EXPECTED/MAIN -> independent real execution grant"
+  },
+  "source635ExecutionSeamMetadata": {
+    "status": "ACCEPTED_SMALL_METADATA_COUNTS_READY_FOR_C_FIRST_KEY_FREEZE_NOT_EXECUTION_AUTHORITY",
+    "artifactRows": {
+      "PARTIES": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/replica-production-source519-core-20261026-10/source519/docs/rapid-launch-20261022/api-contracts/HISTORICAL-CUSTOMER-EXACT2-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-binding-partial-review-pin-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-historical-customer-exact2-review-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/actual118-source-projection-20261026/source-projection-data.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/dictionaries/historical-customers.json": 2,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/party-reference-candidates.json": 628,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/review-candidate-manifest.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-historical-customer-candidate-20261022-D3-run1/historical-customer-exact2-PENDING.json": 2
+      },
+      "CATALOGUE": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-catalogue-technical-review-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-dictionary-decision-candidate-20261022-D3-run1/catalogue-occurrences-and-decisions.json": 344
+      },
+      "PRODUCTS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-binding-partial-review-pin-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-product26-full-reference-review-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/provenance/approved-v2-size-overrides-18.json": 18,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/party-reference-candidates.json": 628,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/product-source-candidates.json": 2956,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/review-candidate-manifest.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-dictionary-decision-candidate-20261022-D3-run1/catalogue-occurrences-and-decisions.json": 344,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product-reference-and-seasons-candidate-20261022-D3-run2/product-season-source-conversion2956-PENDING.json": 2956,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product-season-proof-candidate-20261022-D3-run1/derived-season-proof2956-PENDING.json": 2956,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product26-full-reference-candidate-20261022-D3-run1/product-reference-decisions2956-v2-PENDING.json": 2956,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-01.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-02.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-03.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-04.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-05.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-06.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-07.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-08.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-09.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-10.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-11.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-12.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-13.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-14.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-15.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-16.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-17.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-18.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-19.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-20.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-21.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-22.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-23.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-24.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-25.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-26.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-27.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-28.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-29.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-30.json": 56
+      },
+      "SKUS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-sku14999-source352-capture-20261025-C-run1/sku14999-prepared.jsonl": 15121
+      },
+      "BARCODES": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/MANIFEST.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-global-order-and-schemes-PENDING.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-prepared-PENDING.jsonl": 15018,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-source-projection-index-PENDING.jsonl": 0
+      },
+      "STOCK_CONTRIBUTORS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-stock26-reference-candidate-20261023-D3-run1/stock26-groups38303-PENDING.jsonl": 38314
+      },
+      "PAYMENT": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment-source-candidate1/RESULT.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice96-payment1086-source-reference/RESULT.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-payment-reference-review-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-payment-reference-candidate-20261023-D3-run1/payment1086-PENDING.json": 1086
+      },
+      "HEADERS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-documents4-14279-PENDING.jsonl": 14279,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-projection-index-PENDING.jsonl": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-source12-14279-PENDING.jsonl": 14279,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-typed22-14279-PENDING.jsonl": 14279,
+        "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/KNOWN25811.jsonl": 25811,
+        "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/MAPPED2471.jsonl": 2471,
+        "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/approved-money-tail-overlay.csv": 32,
+        "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/inputs/sales-header-closure-index.json": 0
+      },
+      "SALES_DETAILS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/provenance/approved-money-tail-overlay.csv": 32,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/MANIFEST.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SALES_LINE-source12.jsonl": 80918,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SALES_LINE-typed21.jsonl": 80918
+      },
+      "SETTLEMENTS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/provenance/approved-money-tail-overlay.csv": 32,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/MANIFEST.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SETTLEMENT-source12.jsonl": 25779,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SETTLEMENT-typed12.jsonl": 25779
+      },
+      "TRANSFER_LINES": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-projection-index-PENDING.bin": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-source12-261641-PENDING.jsonl": 261641,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-typed13-261641-PENDING.jsonl": 261641
+      }
+    },
+    "artifactRowsEvidencePaths": {
+      "PARTIES": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/PARTIES.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/review-candidate-manifest.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-historical-customer-exact2-review-v1.json"
+      ],
+      "CATALOGUE": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/CATALOGUE.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-catalogue-technical-review-v1.json"
+      ],
+      "PRODUCTS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/PRODUCTS.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/PRODUCT2956-CAPTURE.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-season-proof-slice1/RESULT.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product26-full-reference-slice1/DERIVATION-RESULT.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-product26-full-reference-review-v1.json"
+      ],
+      "SKUS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/SKUS.json"
+      ],
+      "BARCODES": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/MANIFEST.json"
+      ],
+      "STOCK_CONTRIBUTORS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/STOCK_CONTRIBUTORS.json"
+      ],
+      "PAYMENT": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/PAYMENT.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-payment-reference-review-v1.json"
+      ],
+      "HEADERS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/HEADERS.json"
+      ],
+      "SALES_DETAILS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/SALES_DETAILS.json"
+      ],
+      "SETTLEMENTS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/SETTLEMENTS.json"
+      ],
+      "TRANSFER_LINES": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/TRANSFER_LINES.json"
+      ]
+    },
+    "nativeObservedMembers": [
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-01.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-02.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-03.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-04.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-05.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-06.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-07.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-08.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-09.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-10.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-11.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-12.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-13.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-14.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-15.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-16.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-17.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-18.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-19.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-20.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-21.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-22.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-23.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-24.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-25.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-26.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-27.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-28.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-29.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-30.json",
+        "rows": 56,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "SKUS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-sku14999-source352-capture-20261025-C-run1/sku14999-prepared.jsonl",
+        "rows": 15121,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "STOCK_CONTRIBUTORS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-stock26-reference-candidate-20261023-D3-run1/stock26-groups38303-PENDING.jsonl",
+        "rows": 38314,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      }
+    ],
+    "coverageMeaning": "Rows are accepted artifact membership counts, not invented expected roots or actual target row counts. NonCODE METADATA/CORE_DATA use0 artifact member coverage; same artifact may occur across group recipes without changing its logical identity. Native prepared perfile source-member counts are independently observed and compared by the entry. Actual original11 builder independently verifies complete source/typed/document closure.",
+    "sourceManifestRef": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v3-barcode-amendment/effective-import-selection.json",
+    "sourceManifestRefEvidence": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v3-barcode-amendment/effective-import-selection.json",
+      "bytes": 6762,
+      "sha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba"
+    },
+    "sourceManifestRefStatus": "EXISTING_IMMUTABLE_SELECTION_REFERENCE_RECOMMENDED_FOR_C_FIRST_FREEZE; original helper accepts original sourceManifestRef string in new PUBLISH; not a generated hash or already-frozen MAIN claim",
+    "firstKeys": {
+      "existingFrozenMainKeysFound": false,
+      "checkedScope": [
+        "Current finalized INPUT has executionAuthorization null and no MAIN files/requestKeys.",
+        "Existing DELIVERY,11 recipe descriptors and FULL-SOURCE-PROJECTION-PREPARATION/existing metadata have no full requestKeys.",
+        "Existing authority filenames inspected; native account CORE execution grant is CORE-only, not full MAIN.",
+        "Actual125 original state previously verified fullBinding:null,claims22,seq2; does not by itself prove no draft elsewhere."
+      ],
+      "keysCreatedByD3": false,
+      "recommendedChunkRows": 500,
+      "originalBuilder": "R/scripts/import-v3/prepare-native-bindings.mjs:306-316",
+      "newWarehouseRecords": 31,
+      "skuRecords": 14999,
+      "baselineLedgerRecords": 38303,
+      "remainingItems": 53333,
+      "accountKeysRequired": 107,
+      "lastAccountItems": 333,
+      "bindKeysRequired": 1,
+      "publishKeysRequired": 1,
+      "totalKeysAndCommands": 109,
+      "expectedBindSequence": 2,
+      "expectedBindCursor": 22,
+      "expectedFirstAccountSequence": 3,
+      "expectedPublishSequence": 110,
+      "expectedPublishCursor": 53355,
+      "meaning": "Counts from existing accepted reader specs and actual125 pre-MAIN state. C must freeze first109 exact key strings before preparation. Entry independently re-counts actual source facts and original helper rejects key-count mismatch; no auto-mint/retry replacement."
+    },
+    "missingSourceCountMetadata": [],
+    "CODEChanged": false,
+    "actualLargeBodiesRead": false,
+    "actualPGOrServerAction": false,
+    "consumer": "Copy source635ExecutionSeamMetadata.artifactRows and sourceManifestRef into scope. C supplies separately frozen requestKeys bind/account107/publish. Rest of scope follows source635ActualSourcePreparation.scopeSchema."
   }
 }
