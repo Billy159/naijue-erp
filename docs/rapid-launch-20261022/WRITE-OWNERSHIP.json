@@ -6115,6 +6115,14 @@
     ],
     "scope": "Original B07 same isolated copy only pre-upgrade legitimate QA fixture with new independent staff/account; original disabled/source actor untouched; schema19/target/role/session/socket/trigger checks; real scrypt/normal login session/logout; secret process-memory only; unknown commit no resubmit. Callback module source-ready not actual full carrier. D1 minimal same-parent continuation needed, T45 actual lifecycle only.",
     "review": "Original QB newly scoped fixture; original eleven SQL and exact ACL source review reused",
-    "sourceCopies": "R reports safe source only, no generated secret/real source payload"
+    "sourceCopies": "R reports safe source only, no generated secret/real source payload",
+    "parentExactFiles": [
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/QA-IDENTITY-PARENT-REGISTRATION.template.json",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/QA-IDENTITY-PURPOSE-GATE.template.json",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/QA-IDENTITY-PARENT-SCOPE-v1.md"
+    ],
+    "parentScope": "Single original B07 QA parent process holds generated login secret through original pinned upgrade/role child processes, safe current metadata and bounded300s approved-purpose gate, existing normal history factory/login/session/original3case runner/logout. T45 only actual registered copy restore/OS lifecycle. No persistent secret/disabled actor change/new bootstrap business contract."
   }
 }

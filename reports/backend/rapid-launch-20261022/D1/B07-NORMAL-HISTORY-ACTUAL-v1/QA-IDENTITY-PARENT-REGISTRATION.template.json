@@ -1,0 +1,92 @@
+{
+  "contract": "B07_QA_SAME_PARENT_1",
+  "node": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node",
+  "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-01",
+  "purposeGateFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-01/CURRENT-PURPOSE-GATE.json",
+  "purposeWaitMs": 300000,
+  "fixtureInput": {
+    "contract": "B07_PREUPGRADE_QA_IDENTITY_1",
+    "target": {
+      "database": "naijue_erp_test_19e00102",
+      "oid": "16385",
+      "role": "naijue_erp_test",
+      "session_role": "publication19_bootstrap",
+      "server_address": null,
+      "server_port": null,
+      "port": 55676,
+      "unix_socket_directories": "/private/tmp/nj-b07-read214-20261024-01",
+      "postmaster_started_at": null
+    },
+    "sourceActorAccountId": null,
+    "createdAt": null,
+    "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+    "copyRegistrationReference": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-FIXTURE-PARENT-INTERFACE-HANDOFF-20261026.json",
+    "preservedSnapshotReference": null
+  },
+  "upgrade": {
+    "script": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-EXISTING-COPY-V16-UPGRADE-SUCCESSOR-20261026/upgrade-v16-only.mjs",
+      "bytes": 8610,
+      "sha256": "bdc80798752cb3c9be6d533fc7f590e6938d5b838f0ae20c8c2d37e10af6bde5"
+    },
+    "outputLiteral": "B=P+'/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-EXISTING-COPY-V16-UPGRADE-SUCCESSOR-20261026'",
+    "files": [
+      {
+        "name": "V16-UPGRADE-REGISTRATION.json",
+        "ref": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-EXISTING-COPY-V16-UPGRADE-SUCCESSOR-20261026/V16-UPGRADE-REGISTRATION.json",
+          "bytes": 2396,
+          "sha256": "7875e12ebd045a54aa9b5e66d42e76e366382f19b4d2367b8c10dfaa7eef8cfb"
+        }
+      }
+    ],
+    "resultFile": "V16-UPGRADE-RESULT.json",
+    "expectedStatus": "PASS_EXACT_V16_SCHEMA_ONLY_NORMAL_ROLE_SESSION_AND_REVIEW_STILL_REQUIRED",
+    "timeoutMs": 180000
+  },
+  "role": {
+    "script": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026/ordinary-role-only.mjs",
+      "bytes": 11744,
+      "sha256": "01a2b14ab308c97d860134c7581257a6b6c22e91e862c342c157a5ee4f10eafe"
+    },
+    "outputLiteral": "B=P+'/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026'",
+    "files": [
+      {
+        "name": "ORDINARY-ROLE-REGISTRATION.json",
+        "ref": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026/ORDINARY-ROLE-REGISTRATION.json",
+          "bytes": 8208,
+          "sha256": "0da7bdb661a6f9193990a65e55e9a9960a193a7c5bdc2bf911394c60c7b1a92e"
+        }
+      },
+      {
+        "name": "EXACT-ORDINARY-ROLE.sql",
+        "ref": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026/EXACT-ORDINARY-ROLE.sql",
+          "bytes": 7971,
+          "sha256": "cb6e8876f6c832efba88b40931085e3c9049e4a4d8bf353541c37c564ae5dc96"
+        }
+      },
+      {
+        "name": "METADATA-V16-FROM-V14.sql",
+        "ref": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026/METADATA-V16-FROM-V14.sql",
+          "bytes": 21621,
+          "sha256": "66addf1e6c1f9d548f9b60e0c12d3dde2eb2f5a0f6408dee586436b87a2458a7"
+        }
+      },
+      {
+        "name": "CATALOGUE-V16-FROM-V14.sql",
+        "ref": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026/CATALOGUE-V16-FROM-V14.sql",
+          "bytes": 7145,
+          "sha256": "1013d1d52df60725adf226ccba259838c245a34ae5b8f4474d6e735197adbf48"
+        }
+      }
+    ],
+    "resultFile": "ROLE-ACL-RESULT.json",
+    "expectedStatus": "PASS_ISOLATED_ORDINARY_ROLE_ACL_ONLY_FRESH_PURPOSE_REVIEW_AND_NORMAL_AUTH_PENDING",
+    "timeoutMs": 180000
+  }
+}

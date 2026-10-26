@@ -14095,7 +14095,7 @@
       "sourceIdentity": "Original disabled account/source actor unchanged; independent QA actor only in isolated fixture"
     },
     "source638Inventory": {
-      "status": "EXACT4_SOURCE_READY_OWNER_TARGETED_PASS_WAIT_QF2",
+      "status": "QF2_SCOPED_SOURCE_PASS_ADOPTED_REAL_PERFORMANCE_NOT_RUN",
       "files": {
         "apps/web/src/inventory/display-projection.ts": "1e15310a4dd28ca248f1e16dd3fbf5bf6ab0be9b1416564ce7e2540e4efc89ae",
         "apps/web/src/inventory/display-projection.test.ts": "67524ea1b410f66e4fc0a2845e9f780f41841ca74b22c308c9a9d8024780bfb3",
@@ -14110,6 +14110,18 @@
       "currentContinuation": "T45 original exact R1 function full RR/SHARE read needed; summary not substitute",
       "stockWarehouse24": "Original inventory source represents29 of53; unrepresented24 not inferred zero; locate prior exact scope or single user decision before affected full PUBLISH",
       "B07": "QB382 callback sourcePASS, D1 actual parent carrier in progress"
+    },
+    "source639B07Parent": {
+      "status": "EXACT5_SOURCE_DELIVERED_OWNER_CHECKS_PASS_WAIT_NEW_QB",
+      "normalHTTP": "NOT_RUN",
+      "actualOwner": "T45 same registered copy original preservation/restore19/start/stop only",
+      "secret": "Parent memory only, no disk/log/child arg; exact bounded purpose gate required"
+    },
+    "stockWarehouse24Decision": {
+      "status": "WAITING_DIRECT_USER_BUSINESS_FACT_DECISION",
+      "confirmation": "K/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/UNREPRESENTED-24-WAREHOUSES-CONFIRMATION.md",
+      "noZeroInferred": true,
+      "blockedScope": "Only dependent full stock publication; other source preparation/QA/UI continue"
     }
   }
 }
