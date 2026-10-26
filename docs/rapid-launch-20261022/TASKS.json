@@ -14034,7 +14034,7 @@
     },
     "source629T21": {
       "owner": "D1",
-      "status": "SOURCE_DELIVERED_OWNER_CHECKS_PASS_WAIT_QB_NEW_RANGE",
+      "status": "NEED_FIX_FULL_STOP_ENTRY_WEB_ALREADY_STOPPED",
       "modifiedFiles": [
         "scripts/release/deploy-candidate.py",
         "scripts/release/boot-entry.py",
@@ -14047,7 +14047,9 @@
         "apps/api/src/production-provider-composition.ts"
       ],
       "actualDeployment": "NOT_RUN",
-      "requiredActualInputs": "Full PUBLISH, current 7purpose metadata/ACL review, current R1 backup/restore and same-build business acceptance"
-    }
+      "requiredActualInputs": "Full PUBLISH, current 7purpose metadata/ACL review, current R1 backup/restore and same-build business acceptance",
+      "next": "D1 scoped fix then same QB affected-only recheck; SOURCE629 not deployable"
+    },
+    "B07Role377": "REV2_SOURCE_PASS_ADOPTED_ACTUAL_PENDING_T45"
   }
 }

@@ -1,3 +1,5 @@
+SOURCE630：QB对固定SOURCE629发现Full stop-entry前置要求web仍Running，web已停而APP仍运行时提前拒绝、未关writer。原D1已定向接修：仅Full stop-entry接受同ID/fingerprint已停web并继续停准确APP，foreign/missing/changed仍拒，旧入口恢复及旧selector不放宽；原5叶必要写权返D1，C不并写，只复失败及版本pin影响。629已远端a45dc4a，失败WIP保留不得部署。QB377REV2 B07 ordinaryrole新增源码PASS采用、两采集缺口关闭，原T45已授权按原隔离copy实际一次并收真实catalog/列矩阵，actual尚待。全11 descriptor原T45缺项约26 DATA/METADATA必要传输准备，6CODE待D3映射成品，不重复已有54。目标未完成。
+
 SOURCE629：D1原T21离线Full发布包交还，实际仅改原release5，已有API Full/R3两叶未改。采用owner六组必要离线检查与末两组影响复验PASS；准确7purposes/current metadata/media与可选spool/samebuild/PUBLISH/当前R1恢复、停写排空后零写旧入口恢复边界已接源码。尚无实际Full PUBLISH、用途授权、当前恢复、构建或部署通过；固定交原QB仅新差异。真实54文件定位/全11descriptor原T45继续实际缺项准备，D3映射代码在途，B07普通role尚未执行。SOURCE628远端5434dfe已核。
 
 SOURCE628：D3原控制目录INPUT/DELIVERY完整11组fileLocations descriptor先行交还，已核精确pin并保存源码库安全接线副本，非可执行完整输入。已交T45按原54位置/null项与DATA/CODE去重定位/必要受控传输；保原logical清单/审查与内容哈希，不盲替prefix。D3获原reader额外7叶最小resolveFile接缝、已有测试定向核，仍WIP不可执行；D1原T21离线六组检查通过待完整交还/QB新审，未部署。54存在性不冒fullhash/MAIN/PUBLISH或真实业务PASS。SOURCE627远端4f89297已核。
