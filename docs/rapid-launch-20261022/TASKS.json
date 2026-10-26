@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE569",
+    "round": "SOURCE570",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12857,7 +12857,8 @@
         ],
         "next": "F2 same exact3 fix save/default race; new fixed commit QF2 affected-only review; no build or real-save PASS",
         "independentReview": "QF2 P2 default loading/save/late success can diverge shown values and frozen CREATE command; source-traced not runtime reproduced",
-        "state": "NEED_FIX_DIRECTED_ORIGINAL_F2"
+        "state": "NEED_FIX_DIRECTED_ORIGINAL_F2",
+        "repair": "F2 reports targeted race fix PASS, exact new pins pending freeze then QF2 F01 only"
       },
       "sourcePreparation568": {
         "owner": "D3",
@@ -12869,7 +12870,8 @@
         "newContract": "Exact post-CORE init action/evidence still technical clarification D2/D3/D1, not user-ready",
         "authorizedSourceRead": "One bounded existing362306590B snapshot stream solely missing BARCODE locators/raw identity registry; private output, existing eight kinds and old registry untouched, no DB/stage/full rehash",
         "review": "Original QB newsource only after freeze; previous21 barcode proof checks reused",
-        "initActionCorrection": "No legal existing action: STAGE requires before/old_version NULL, CHUNK VALIDATING +1..500 claims; do not disguise zero-claim STAGED scheme init. D3/D1 exact dedicated IMPORT_BARCODE_SCHEMES_INIT delta being consolidated, no SQL yet."
+        "initActionCorrection": "No legal existing action: STAGE requires before/old_version NULL, CHUNK VALIDATING +1..500 claims; do not disguise zero-claim STAGED scheme init. D3/D1 exact dedicated IMPORT_BARCODE_SCHEMES_INIT delta being consolidated, no SQL yet.",
+        "QB336": "PASS_LIMITED_SOURCE_9cf646000534574104cd2d91bd9983ecdb583d415b1ca56f7d23d8695cfc957e"
       }
     },
     "server566": {
@@ -12877,13 +12879,21 @@
       "job90": "ACTUAL_COMPLETED_EXIT0_18.102_SECONDS_CORE14_INSTALLED",
       "dependencies": "111 reused; npm ci not rerun",
       "QB335": "PASS_LIMITED_SOURCE_564821996347bc6c564e798a3c09ffed0bd1659e2629b0541cc77113be6999aa",
-      "current": "Original QB current socket/TCP reviews then T45 91/92 CORE14 fresh APP/route",
+      "current": "CORE14 candidate running; original T45 next exact2 customers/header/full11; QF browser startup increment",
       "actual93": "COMPLETED_COMMIT_2026-10-26T02:33:52.710321Z",
       "formalRootChanged": false,
       "services": 19,
       "businessPublish": "NOT_DONE",
       "newCanonical": "e02a19ba8079d673e5f4765d0071b49177ce808a692d34648da7a726e33bb9fa",
-      "QBPost93": "PASS_ACTUAL_ONLY2_ACL_CURRENT_DUAL_PURPOSE_0173757f37d2368d11817d53400ca5d751501d646d86c4640260065afa8212fa"
+      "QBPost93": "PASS_ACTUAL_ONLY2_ACL_CURRENT_DUAL_PURPOSE_0173757f37d2368d11817d53400ca5d751501d646d86c4640260065afa8212fa",
+      "actual91": "PASS_CORE14_PRIVATE_CONFIG_APP_HEALTH_ONLY",
+      "appId": "3fc51810832da554815711eeb5ec01d0273dcef43706d721f6869f39f2d8b134",
+      "actual92": "PASS_EXACT_CORE14_CANDIDATE_THREE_PATH_REPLACEMENT_NOT_BUSINESS_ACCEPTANCE",
+      "routeFinishedAtUtc": "2026-10-26T02:43:20.112332+00:00",
+      "rebindWindowSeconds": 567.402011,
+      "publicCompression": "PASS_8_CASES_2_STATIC_MEMBERS_DECODED_SHA_HEAD_VARY_LENGTH",
+      "publicResult": "B/server-execution/CORE14-DEPLOYMENT/PUBLIC-RESOURCE-RESULT.json",
+      "browserPerformance": "NOT_YET_MEASURED"
     },
     "historyV3Ready569": {
       "owner": "D1/T45",
