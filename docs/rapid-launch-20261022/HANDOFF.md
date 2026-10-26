@@ -1,3 +1,6 @@
+SOURCE565（2026-10-26）：原D1在精确新QA60/70/B07输入接续时，本轮send实际成功（hostId local、Solmedium），新turn01a17604-89bf-77c0-b167-a3252f9e36d1已inProgress；先前notfound不再作此轮当前阻塞。尚未观察工具/结果，不能记历史写入通过。受托范围只把原B07历史未审核销货/调拨受控修订对齐现QA v16-from-v14、原actor/purpose/版本/差额/同键恢复，交T45唯一实际执行，不重正常SAVE70、不改压缩已冻结两host叶，不新建团队。
+原T45依赖只读核齐，仅history_closure_row_hash及递归编码2个现有纯函数缺EXECUTE，其他相关函数/表列权限已具备，未ACL变化。CORE14首次89传输超时后按原键只读核清：目录有、job/request/result全无，尚未提交执行；保留89现场，原owner小分片准备独立后继，不重提89或误认为部署运行。当前CORE10/APP74仍保持，真实业务/历史编辑/正式根发布未完成。
+
 SOURCE564（2026-10-26）：原D3沿已持有小回执/人类裁决及原任务书最新4轮定向核对，未定位到六条码方案状态及完整初始化后续批准；21主码转旧码/季节、2471厅映射各有明确批准，但不能外推六方案。C沿原确认单和826e63b3 proposal一次异步提交“2026当前其余历史”或“六个全部当前”及完整六行42字段受控初始化，不重问原码/已批21，不增schema，不按年份猜status。仅相应初始化/条码源分支等待，CORE14部署、2历史客户/销售头stage独立继续；不重来源大读/QA/源码/DB。当前T45原实际工具仍在接续88依赖定位/89新包准备，不重派在途或旧失败81。
 
 SOURCE563（2026-10-26）：T45 actual87只读COMPLETED0/0.5688s，PG原日志明确81的42501对象为history_closure_row_hash函数EXECUTE；customer7/7读写及source/ref/evidence必要列权限均有，generated FK/creation_xid/imported_at不应补GRANT。原cutoff_lock可执行。不是猜测表权限，也未先GRANT再盲试；T45正在一次核齐原hash纯encoder/triggerinvoker依赖，canonical59/APP74/19服务保留。CORE14原有效包及审查已到T45，函数窄diff齐则同新双purpose审核和应用合批；若不齐先现canonical部署启动压缩，不让整个前端无期限等导入。真实2客户/header/all11/历史编辑/37与67业务及正式根发布仍未完成。GitHub562已核4169f7aa。

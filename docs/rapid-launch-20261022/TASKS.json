@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE564",
+    "round": "SOURCE565",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "4608ae690d0653802961f2d5b4047dfc10b04d90",
+    "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12697,7 +12697,8 @@
         "noGrantToGeneratedFields": true,
         "currentCanonicalUnchanged": "59b9999e3df09934eed14cf6d82f6382e92faaf16604d266a5c64a3c9019bd68",
         "runtimeApp": "APP74 remains; no ACL changes"
-      }
+      },
+      "functionDependencyFinding": "Actual readonly closure found only2 existing pure functions EXECUTE missing:history_closure_row_hash and recursive encoder;remaining functions/table columns present. NoACL changed."
     },
     "startup556": {
       "F1DOC198": "SOURCE_READY_ACCOUNT_CHROME_LAZY_CHECKED_NOT_RUNTIME_PERFORMANCE_ACCEPTED",
@@ -12783,7 +12784,7 @@
       "manifestSha256": "da8cc80c7ae4f19e71edd758f4da9b5ae7dce9f2674569078a3bc1b3876a3ce8",
       "QF": "557 frontend scoped PASS bbc807c9 reused, no frontend change beyond fixed asset base",
       "QB334": "5990B/a601ce34027f7a8f05cd4987aea802819fcd041004650897aff683f866e813cb source-only PASS; OWS F01 closed; exact two source leaves match",
-      "deployment": "Original T45 has exact accepted pack and review paths;84-86 prepared/unsubmitted awaiting original ops window; no actual CORE14 deployment yet",
+      "deployment": "89 initial private transfer timed out; original key lookup proves directory exists but no job/request/result, no execution submitted. Preserve89, original T45 smaller-chunk distinct successor preparation. Current public remainsCORE10.",
       "publicEncoding": "NOT_MEASURED_FOR_NEW_HOST",
       "wholeBusiness": "NOT_ACCEPTED"
     },
@@ -12798,6 +12799,17 @@
       "dependentOnly": "Six-scheme initialization/barcode source branch waits; current deployment/exact2customer/sales stage continue",
       "sourceWrites": false,
       "DBExecuted": false
+    },
+    "D1HistoricalResume565": {
+      "thread": "01a16161-e65d-7742-8471-4b3c786ed314",
+      "dispatch": "Tool accepted actualgpt-6.1-sol/medium with hostId local",
+      "turn": "01a17604-89bf-77c0-b167-a3252f9e36d1",
+      "state": "IN_PROGRESS_TOOLS_NOT_YET_OBSERVED",
+      "priorFailure": "Previous send-not-found no longer current for this new accepted dispatch; not a prior completed B07 test",
+      "current": "Existing B07 runner/QA currentv16-from-v14 scoped real historical revision executable preparation; source owner only, no server/DB direct",
+      "input": "Actual60 QA schema+actual70/QB327 normalSAVE valid evidence reused; do not replay old19->26 setup or normalSAVE cases",
+      "next": "D1 exact ready input/purpose/actor/delta/unknown-key recovery to C/T45; actualQA only registered isolated target",
+      "originalHostCompressionLeaves": "Do not touch frozen SOURCE561 two host leaves"
     }
   }
 }
