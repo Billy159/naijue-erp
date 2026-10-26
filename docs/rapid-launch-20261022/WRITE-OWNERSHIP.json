@@ -6326,5 +6326,13 @@
       "tests/history-typed-closure-expected.test.ts"
     ],
     "scope": "Reuse only the original digest just produced for the same canonical row in the same builder iteration for its internal document fold. Preserve independent global/document scope/order/count/chain/root algorithms and all validators; no exported prehash, cross-row/request cache, SQL or source-data change. Actual139 CPU evidence supports targeted optimization; source equivalence checks only, bounded actual comparison follows source delivery."
+  },
+  "source704HistorySuccessorHeadCas": {
+    "owner": "D1",
+    "files": [
+      "adapters/postgres/src/history-revision-store.ts",
+      "tests/history-revision-postgres-protocol.test.ts"
+    ],
+    "scope": "Fix existing effective-head successor write dispatch: fromVersion1 original INSERT; successor explicit UPDATE with exact header/version/previousRevisionId CAS, original totals and rowCount1 requirement. Existing INSERT BEFORE guard correctly rejects successor UPSERT before conflict dispatch. Preserve SQL guards, write contract, permissions, transactions, original keys and immutable source. No SQL/DDL/schema change; source-only until independent review and same-key controlled actual continuation."
   }
 }
