@@ -24,9 +24,10 @@ const key = (entity, sourceKey) => JSON.stringify([entity, sourceKey]);
 const same = (a, b) => ['dev', 'ino', 'size', 'mode', 'mtimeMs', 'ctimeMs'].every(k => a[k] === b[k]);
 const exactData = (value, keys) => value && Object.getPrototypeOf(value) === Object.prototype && Reflect.ownKeys(value).length === keys.length
   && keys.every(k => { const d = Object.getOwnPropertyDescriptor(value, k); return d?.enumerable && Object.hasOwn(d, 'value'); });
-async function load(path, pin, limit) {
+async function load(path, pin, limit,io={}) {
+  const physical=io.resolveFile?await io.resolveFile({path,sha256:pin}):{path};path=physical.path;
   must(hash(pin), 'NATIVE_SOURCE_OUTSIDE_PIN_REQUIRED');
-  const before = await lstat(path); must(before.isFile() && !before.isSymbolicLink() && before.size <= limit, 'NATIVE_SOURCE_FILE');
+  const before = await lstat(path); must(before.isFile() && !before.isSymbolicLink() && before.size <= limit&&(physical.bytes===undefined||before.size===physical.bytes), 'NATIVE_SOURCE_FILE');
   const bytes = await readFile(path), after = await lstat(path);
   must(bytes.length === before.size && same(before, after) && digest(bytes) === pin, 'NATIVE_SOURCE_FILE_CHANGED');
   return { value: JSON.parse(new TextDecoder('utf8', { fatal: true }).decode(bytes)), path, stat: after };
@@ -34,15 +35,15 @@ async function load(path, pin, limit) {
 /** Genuine exact-source consumer of the already reviewed PRODUCT component.
  * It does not reopen workbooks/materialized snapshots or approve native refs.
  * The outer explicit product26 authorizer separately binds all target decisions. */
-export async function openReviewedProductEvidenceSource(options) {
+export async function openReviewedProductEvidenceSource(options,io={}) {
   must(exactData(options,['directory','trustedManifestSha256','reviewRecordFile','trustedReviewRecordSha256','binding']), 'PRODUCT_SOURCE_OPTIONS');
   const o=Object.fromEntries(Object.keys(options).map(k=>[k,Object.getOwnPropertyDescriptor(options,k).value]));
   historySettlementRequestHash(o.binding);const binding=structuredClone(o.binding);
   must(exactData(binding,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&uuid(binding.batchId)&&typeof binding.fixedSourceNamespace==='string'
     &&binding.fixedSourceNamespace.length>0&&typeof binding.cutoffAt==='string'&&hash(binding.selectionSha256)&&typeof o.directory==='string'&&isAbsolute(o.directory)
     &&typeof o.reviewRecordFile==='string'&&isAbsolute(o.reviewRecordFile),'PRODUCT_SOURCE_BINDING');
-  const manifest=await load(join(o.directory,'review-candidate-manifest.json'),o.trustedManifestSha256,4194304),m=manifest.value;
-  const review=await load(o.reviewRecordFile,o.trustedReviewRecordSha256,4194304),a=review.value;
+  const manifest=await load(join(o.directory,'review-candidate-manifest.json'),o.trustedManifestSha256,4194304,io),m=manifest.value;
+  const review=await load(o.reviewRecordFile,o.trustedReviewRecordSha256,4194304,io),a=review.value;
   must(m.version===NATIVE_BINDING_PACKAGE_VERSION&&['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'].every(k=>m[k]===binding[k])
     &&Array.isArray(m.files)&&Number.isSafeInteger(m.products)&&m.products>0&&m.products<=50000,'PRODUCT_SOURCE_BINDING');
   must(a.version==='C_NATIVE_BINDING_PARTIAL_REVIEW_PIN_V1'&&a.decision==='ACCEPT_EXACT_QB_REVIEWED_PARTIAL_ARTIFACT_SCOPE'
@@ -52,7 +53,7 @@ export async function openReviewedProductEvidenceSource(options) {
   const selected=m.files.filter(f=>f.name==='product-source-candidates.json'),accepted=a.components.filter(c=>c.component==='product-source-candidates.json');
   must(selected.length===1&&accepted.length===1&&selected[0].sha256===accepted[0].sha256&&Number.isSafeInteger(selected[0].bytes)
     &&selected[0].bytes>0&&selected[0].bytes<=33554432,'PRODUCT_SOURCE_COMPONENT_REVIEW_REQUIRED');
-  const opened=await load(join(o.directory,'product-source-candidates.json'),selected[0].sha256,33554432),rows=opened.value;
+  const opened=await load(join(o.directory,'product-source-candidates.json'),selected[0].sha256,33554432,io),rows=opened.value;
   must(opened.stat.size===selected[0].bytes&&Array.isArray(rows)&&rows.length===m.products,'PRODUCT_SOURCE_COMPONENT_COVERAGE');
   const sources=new Map(),ids=new Set();
   for(const s of rows){historySettlementRequestHash(s);must(exactData(s,['id','batchId','entityType','sourceKey','fileRef','sheet','rowNo','sourceFileSha256','rowSha256','rawFields','normalizedFields','fieldProvenance'])
@@ -295,17 +296,17 @@ export async function openBoundHeaderReader(options, registry) {
 /** Actual new dictionary mapping bytes are reviewed independently from the old
  * barcode-exclusion approval. C supplies both external pins after QB's source/rule
  * review. No absent code/order/enablement is filled by this source factory. */
-export async function openReviewedCatalogueSource(options) { return openReviewedCatalogueCore(options); }
+export async function openReviewedCatalogueSource(options,io={}) { return openReviewedCatalogueCore(options,false,io); }
 /** Explicit successor consumer: original dictionary decisions stay unchanged;
  * approved technical NULL metadata and full projection26 are bound separately. */
-export async function openReviewedCatalogueSource26(options) {
+export async function openReviewedCatalogueSource26(options,io={}) {
   must(exactData(options, ['mappingFile','trustedMappingSha256','reviewApprovalFile','trustedReviewApprovalSha256','binding']), 'NATIVE_SOURCE_CATALOGUE26_OPTIONS');
   historySettlementRequestHash(options.binding);
-  return openReviewedCatalogueCore({ ...options, binding: structuredClone(options.binding) }, true);
+  return openReviewedCatalogueCore({ ...options, binding: structuredClone(options.binding) }, true,io);
 }
-async function openReviewedCatalogueCore({ mappingFile, trustedMappingSha256, reviewApprovalFile, trustedReviewApprovalSha256, binding }, successor = false) {
+async function openReviewedCatalogueCore({ mappingFile, trustedMappingSha256, reviewApprovalFile, trustedReviewApprovalSha256, binding }, successor = false,io={}) {
   must(typeof mappingFile === 'string' && isAbsolute(mappingFile) && typeof reviewApprovalFile === 'string' && isAbsolute(reviewApprovalFile), 'NATIVE_SOURCE_CATALOGUE_PATHS');
-  const mapping = await load(mappingFile, trustedMappingSha256, 16777216), review = await load(reviewApprovalFile, trustedReviewApprovalSha256, 4194304);
+  const mapping = await load(mappingFile, trustedMappingSha256, 16777216,io), review = await load(reviewApprovalFile, trustedReviewApprovalSha256, 4194304,io);
   const m = mapping.value, a = review.value;
   must(m.version === 'NATIVE_CATALOGUE_OCCURRENCE_CANDIDATE_V1' && Array.isArray(m.groups) && m.groups.length > 0 && m.groups.length <= 10000,
     'NATIVE_SOURCE_CATALOGUE_MAPPING');
@@ -343,7 +344,7 @@ async function openReviewedCatalogueCore({ mappingFile, trustedMappingSha256, re
   const fingerprints = new Set(prepared.map(c => c.fingerprint)), flat = prepared.flatMap(c => c.rows);
   const assertOpen = () => must(!closed, 'NATIVE_SOURCE_CATALOGUE_CLOSED');
   async function verify() {
-    assertOpen(); await load(mappingFile, trustedMappingSha256, 16777216); await load(reviewApprovalFile, trustedReviewApprovalSha256, 4194304); assertOpen();
+    assertOpen(); await load(mappingFile, trustedMappingSha256, 16777216,io); await load(reviewApprovalFile, trustedReviewApprovalSha256, 4194304,io); assertOpen();
   }
   const tables = { CATEGORY: 'product_category', COLOR: 'color', FIT: 'fit', SIZE: 'size', SIZE_GROUP: 'size_group', SEASON: 'season', SIZE_GROUP_MEMBER: 'size_group_member' };
   const order = (a, b) => Buffer.compare(Buffer.from(a.relation + '\0' + a.key), Buffer.from(b.relation + '\0' + b.key));

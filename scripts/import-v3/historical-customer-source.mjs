@@ -20,33 +20,34 @@ const rawKeys = ['sourceKey', 'originalCode', 'originalName', 'enabled', 'histor
 const encoding = 'SHA256_JSON_STRINGIFY_ORIGINAL_ARRAY_ITEM_UTF8_V1';
 const sourcePath = 'dictionaries/historical-customers.json';
 
-async function load(path, pin, limit) {
+async function load(path, pin, limit, io={}) {
+  const logicalPath=path,physical=io.resolveFile?await io.resolveFile({path,sha256:pin}):{path};path=physical.path;
   must(typeof path === 'string' && isAbsolute(path) && hash(pin), 'HISTORICAL_CUSTOMER_OUTSIDE_PIN');
   const before = await lstat(path);
-  must(before.isFile() && !before.isSymbolicLink() && before.size > 0 && before.size <= limit, 'HISTORICAL_CUSTOMER_FILE');
+  must(before.isFile() && !before.isSymbolicLink() && (physical.bytes===undefined||before.size===physical.bytes) && before.size > 0 && before.size <= limit, 'HISTORICAL_CUSTOMER_FILE');
   const fd = await open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
   try {
     must(same(before, await fd.stat()), 'HISTORICAL_CUSTOMER_FILE_CHANGED');
     const bytes = await fd.readFile();
     must(bytes.length === before.size && same(before, await fd.stat()) && same(before, await lstat(path)) && digest(bytes) === pin, 'HISTORICAL_CUSTOMER_FILE_CHANGED');
-    return { path, pin, limit, stat: before, value: JSON.parse(new TextDecoder('utf8', { fatal: true }).decode(bytes)) };
+    return { path:logicalPath, pin, limit, stat: before, value: JSON.parse(new TextDecoder('utf8', { fatal: true }).decode(bytes)) };
   } finally { await fd.close(); }
 }
 
-export async function openHistoricalCustomerSource(options) {
+export async function openHistoricalCustomerSource(options,io={}) {
   must(exact(options, ['sourceFile', 'candidateFile', 'reviewFile', 'contractFile', 'trustedReviewSha256', 'binding']), 'HISTORICAL_CUSTOMER_CONFIG');
   const o = { ...options }; evidenceHash(o.binding); const b = structuredClone(o.binding);
   must(exact(b, ['batchId', 'fixedSourceNamespace', 'selectionSha256']) && uuid(b.batchId) && text(b.fixedSourceNamespace) && hash(b.selectionSha256), 'HISTORICAL_CUSTOMER_BINDING');
-  const review = await load(o.reviewFile, o.trustedReviewSha256, 262144), a = review.value;
+  const review = await load(o.reviewFile, o.trustedReviewSha256, 262144,io), a = review.value;
   const bound = value => ['batchId', 'fixedSourceNamespace', 'selectionSha256'].every(k => value?.[k] === b[k]);
   must(a.version === 'C_HISTORICAL_CUSTOMER_EXACT2_REVIEW_V1' && a.decision === 'ACCEPT_QB50_EXACT2_SOURCE_NATIVE_MAPPING_ONLY'
     && a.realExecutionAuthorizedByThisPinAlone === false && a.review?.result === 'PASS' && hash(a.review.sha256) && bound(a.binding)
     && exact(a.candidate, ['path', 'sha256', 'bytes']) && a.candidate.path === o.candidateFile && hash(a.candidate.sha256)
     && Number.isSafeInteger(a.candidate.bytes) && a.candidate.bytes > 0 && a.candidate.bytes <= 262144
     && hash(a.sourceFileSha256) && hash(a.contractSha256) && Array.isArray(a.identities) && a.identities.length === 2, 'HISTORICAL_CUSTOMER_REVIEW');
-  const candidate = await load(o.candidateFile, a.candidate.sha256, 262144);
-  const source = await load(o.sourceFile, a.sourceFileSha256, 65536);
-  const contract = await load(o.contractFile, a.contractSha256, 262144);
+  const candidate = await load(o.candidateFile, a.candidate.sha256, 262144,io);
+  const source = await load(o.sourceFile, a.sourceFileSha256, 65536,io);
+  const contract = await load(o.contractFile, a.contractSha256, 262144,io);
   const c = candidate.value;
   must(candidate.stat.size === a.candidate.bytes && c.version === 'NATIVE_HISTORICAL_CUSTOMER_EXACT2_CANDIDATE_V1'
     && bound(c) && c.contractSha256 === a.contractSha256 && c.sourceFileSha256 === a.sourceFileSha256 && c.sourceFile === o.sourceFile
@@ -94,7 +95,7 @@ export async function openHistoricalCustomerSource(options) {
   let closed = false; const active = () => must(!closed, 'HISTORICAL_CUSTOMER_CLOSED');
   const files = [review, candidate, source, contract];
   async function verify() {
-    active(); for (const file of files) { const current = await load(file.path, file.pin, file.limit); must(same(file.stat, current.stat), 'HISTORICAL_CUSTOMER_FILE_CHANGED'); } active();
+    active(); for (const file of files) { const current = await load(file.path, file.pin, file.limit,io); must(same(file.stat, current.stat), 'HISTORICAL_CUSTOMER_FILE_CHANGED'); } active();
   }
   await verify();
   return {

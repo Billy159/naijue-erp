@@ -19,7 +19,7 @@ const digest=b=>createHash('sha256').update(b).digest('hex'),same=(a,b)=>['dev',
 const order=(a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key));
 async function regular(path){must(typeof path==='string'&&isAbsolute(path),'PARTY_SOURCE26_PATH');let p=resolve(path),first=true;for(;;){const s=await lstat(p);must(!s.isSymbolicLink()&&(first?s.isFile():s.isDirectory()),'PARTY_SOURCE26_REGULAR');first=false;const parent=dirname(p);if(parent===p)return;p=parent;}}
 
-export async function openReviewedPartySource26(options){
+export async function openReviewedPartySource26(options,io={}){
  must(exact(options,['binding','authorizedPayloadHash','source','historical','chunkRows']),'PARTY_SOURCE26_OPTIONS');
  checkedHash(options.binding);const o={...options,binding:structuredClone(options.binding)};
  must(exact(o.binding,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&uuid(o.binding.batchId)&&typeof o.binding.fixedSourceNamespace==='string'&&o.binding.fixedSourceNamespace.length>0&&typeof o.binding.cutoffAt==='string'&&hash(o.binding.selectionSha256)
@@ -31,7 +31,7 @@ export async function openReviewedPartySource26(options){
  const maintained=new Map();
  const counts={HALL:0,WAREHOUSE:0,STAFF:0,CUSTOMER:0,SUPPLIER:0};
  const active=()=>must(!closed,'PARTY_SOURCE26_CLOSED');
- async function load(path,pin,limit){must(hash(pin),'PARTY_SOURCE26_OUTSIDE_PIN');await regular(path);const stat=await lstat(path);must(stat.size>0&&stat.size<=limit,'PARTY_SOURCE26_FILE_LIMIT');const fd=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW),file={path,stat,fd};files.push(file);const bytes=await fd.readFile();must(bytes.length===stat.size&&digest(bytes)===pin&&same(stat,await fd.stat())&&same(stat,await lstat(path)),'PARTY_SOURCE26_FILE_CHANGED');return {value:JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes)),bytes:bytes.length};}
+ async function load(path,pin,limit){const physical=io.resolveFile?await io.resolveFile({path,sha256:pin}):{path};path=physical.path;must(hash(pin),'PARTY_SOURCE26_OUTSIDE_PIN');await regular(path);const stat=await lstat(path);must((physical.bytes===undefined||stat.size===physical.bytes)&&stat.size>0&&stat.size<=limit,'PARTY_SOURCE26_FILE_LIMIT');const fd=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW),file={path,stat,fd};files.push(file);const bytes=await fd.readFile();must(bytes.length===stat.size&&digest(bytes)===pin&&same(stat,await fd.stat())&&same(stat,await lstat(path)),'PARTY_SOURCE26_FILE_CHANGED');return {value:JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes)),bytes:bytes.length};}
  async function verify(){active();for(const f of files){await regular(f.path);must(same(f.stat,await f.fd.stat())&&same(f.stat,await lstat(f.path)),'PARTY_SOURCE26_FILE_CHANGED');}if(historicalReader)await historicalReader.verify();if(bootstrapVerify)must(await bootstrapVerify()===undefined,'PARTY_SOURCE26_BOOTSTRAP_AUTHORITY');if(continuationVerify)must(await continuationVerify()===undefined,'PARTY_SOURCE26_CORE_CONTINUATION_AUTHORITY');active();}
  async function close(){closed=true;chunks.length=0;for(const m of [fingerprints,inputs,nativeIds,sourceIds,positions,codes,recordIds])m.clear();const errors=[];try{if(historicalReader)await historicalReader.close();}catch(e){errors.push(e);}for(const f of files)try{await f.fd.close();}catch(e){errors.push(e);}files.length=0;if(errors.length)throw new AggregateError(errors,'Party source26 close failed');}
  function add(input){
@@ -57,7 +57,7 @@ export async function openReviewedPartySource26(options){
   for(const original of ordinary){checkedHash(original);must(original.selection?.source==='BASE_V2'&&!Object.hasOwn(original,'schemaProfile'),'PARTY_SOURCE26_ORIGINAL_PROFILE');must(!Object.hasOwn(original.source?.fieldProvenance?.fields??{},'bootstrap_accounts'),'PARTY_SOURCE26_BOOTSTRAP_NOT_COVERED');prepareNativePartyImportChunk([original]);
    const input=structuredClone(original);input.schemaProfile='EXACT26';if(input.source.entityType==='WAREHOUSE')input.nativeSnapshot.created_operation_id=null;add(input);}
   let historicalCount=0;
-  if(historicalOptions){const {batchId,fixedSourceNamespace,selectionSha256}=o.binding;historicalReader=await openHistoricalCustomerSource({...historicalOptions,binding:{batchId,fixedSourceNamespace,selectionSha256}});
+  if(historicalOptions){const {batchId,fixedSourceNamespace,selectionSha256}=o.binding;historicalReader=await openHistoricalCustomerSource({...historicalOptions,binding:{batchId,fixedSourceNamespace,selectionSha256}},io);
    for await(const row of historicalReader.rows()){await historicalReader.authorizeRow(row);add({batchId,fixedSourceNamespace,schemaProfile:'EXACT26',selection:row.selection,source:row.source,nativeSnapshot:row.nativeSnapshot,bindings:{},enumMappings:{enabled:{raw:false,native:false,evidenceRef:historicalOptions.trustedReviewSha256}}});historicalCount++;}
    must(historicalCount===2,'PARTY_SOURCE26_HISTORICAL_COVERAGE');}
   // All relationships resolve inside the full accepted party set. Keep the

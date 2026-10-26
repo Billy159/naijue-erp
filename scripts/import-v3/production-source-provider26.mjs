@@ -18,8 +18,7 @@ import {openReviewedSkuSource26} from './native-sku-source26.mjs';
 import {openReviewedStockSource26} from './native-stock-source26.mjs';
 import {openReviewedPaymentSource26} from './native-payment-source26.mjs';
 import {openReviewedTransferLineSource26,capturedTransferLineRows26,transferLineSourceEvidence26} from './native-transfer-line-source26.mjs';
-import {openAuthorizedSalesDetailReader} from '../import-v2/authorized-sales-detail-reader.mjs';
-import {openAuthorizedSettlementReader} from '../import-v2/authorized-settlement-reader.mjs';
+import {openCapturedSalesSettlementSource} from '../import-v2/authorized-sales-detail-reader.mjs';
 import {openAuthorizedHistoryClosureReader26,HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
 import {readCoreImportContinuation26} from './run.mjs';
 import {validateExecutableSourceHostJob26} from './production-source-host.mjs';
@@ -53,10 +52,23 @@ const stages=Object.freeze({PARTIES:['PARTY','chunks'],CATALOGUE:['CATALOGUE','c
  BARCODES:['BARCODE','rows'],STOCK_CONTRIBUTORS:['STOCK_CONTRIBUTOR','groups'],PAYMENT:['PAYMENT','chunks'],HEADERS:['HEADER','chunks'],
  SALES_DETAILS:['SALES_DETAIL','chunks'],SETTLEMENTS:['SETTLEMENT','chunks'],TRANSFER_LINES:['TRANSFER_LINES','chunks']});
 const same=(a,b)=>['dev','ino','mode','size','mtimeMs','ctimeMs'].every(k=>a[k]===b[k]);
-async function pinnedSmall(path,pin){
+/** A signed finite logical-file map changes IO location only. Identity is the
+ * exact original logical path AND original bytes/SHA, not basename/prefix. */
+export function sourceFileResolver26(recipe){
+ if(!Object.hasOwn(recipe,'fileLocations'))return undefined;
+ capture(recipe.fileLocations);const entries=structuredClone(recipe.fileLocations),byPath=new Map();
+ must(Array.isArray(entries),'PRODUCTION_FILE_LOCATION26_SHAPE');
+ for(const entry of entries){const l=entry.logical,p=entry.physical;must(typeof l?.path==='string'&&isAbsolute(l.path)&&Number.isSafeInteger(l.bytes)&&l.bytes>0&&hash(l.sha256)&&!byPath.has(l.path),'PRODUCTION_FILE_LOCATION26_LOGICAL');
+  must(p===null||p&&typeof p.path==='string'&&isAbsolute(p.path)&&p.bytes===l.bytes&&p.sha256===l.sha256,'PRODUCTION_FILE_LOCATION26_IDENTITY');byPath.set(l.path,entry);}
+ return async ref=>{must(typeof ref?.path==='string'&&hash(ref.sha256),'PRODUCTION_FILE_LOCATION26_REQUEST');const e=byPath.get(ref.path);
+  must(e&&e.logical.sha256===ref.sha256&&(ref.bytes===undefined||ref.bytes===e.logical.bytes),'PRODUCTION_FILE_LOCATION26_NOT_LISTED');
+  must(e.physical!==null,'PRODUCTION_FILE_LOCATION26_UNAVAILABLE');return structuredClone(e.physical);};
+}
+async function pinnedSmall(path,pin,resolveFile){
  must(typeof path==='string'&&isAbsolute(path)&&hash(pin),'PRODUCTION_PROVIDER26_OUTSIDE_PIN');
- const before=await lstat(path);must(before.isFile()&&!before.isSymbolicLink()&&before.size<=4194304,'PRODUCTION_PROVIDER26_INPUT_FILE');
- const bytes=await readFile(path);must(bytes.length===before.size&&same(before,await lstat(path))&&createHash('sha256').update(bytes).digest('hex')===pin,'PRODUCTION_PROVIDER26_INPUT_CHANGED');
+ const physical=resolveFile?await resolveFile({path,sha256:pin}):{path};
+ const before=await lstat(physical.path);must(before.isFile()&&!before.isSymbolicLink()&&before.size<=4194304&&(physical.bytes===undefined||before.size===physical.bytes),'PRODUCTION_PROVIDER26_INPUT_FILE');
+ const bytes=await readFile(physical.path);must(bytes.length===before.size&&same(before,await lstat(physical.path))&&createHash('sha256').update(bytes).digest('hex')===pin,'PRODUCTION_PROVIDER26_INPUT_CHANGED');
  return bytes;
 }
 /** Select only the uncommitted suffix of C's original complete command chain.
@@ -176,7 +188,7 @@ export function createProductionSourceProvider26(inputs,authority){
    async function regular(path){let p=resolve(path),leaf=true;for(;;){current();const st=await lstat(p);current();
     must(!st.isSymbolicLink()&&(leaf?st.isFile():st.isDirectory()),'PRODUCTION_BARCODE26_FILE_PATH');leaf=false;
     const parent=dirname(p);if(parent===p)return;p=parent;}}
-   async function hold(ref,maximum){descriptor(ref,maximum);await regular(ref.path);current();const before=await lstat(ref.path);current();
+   async function hold(ref,maximum){descriptor(ref,maximum);const locate=sourceFileResolver26(recipe);if(locate)ref=await locate(ref);current();await regular(ref.path);current();const before=await lstat(ref.path);current();
     must(before.size===ref.bytes,'PRODUCTION_BARCODE26_FILE_SIZE');
     const fd=await open(ref.path,constants.O_RDONLY|constants.O_NOFOLLOW);
     if(ended||closed||signal.aborted){await fd.close();current();}
@@ -213,8 +225,8 @@ export function createProductionSourceProvider26(inputs,authority){
    try{
     descriptor(recipe.closureHelper,4194304);
     must(recipe.closureHelper.bytes===14592&&recipe.closureHelper.sha256===RETAINED_NATIVE_HELPER_SHA256,'PRODUCTION_BARCODE26_HELPER_PIN');
-    const helperBytes=await pinnedSmall(recipe.closureHelper.path,recipe.closureHelper.sha256);current();must(helperBytes.length===recipe.closureHelper.bytes,'PRODUCTION_BARCODE26_HELPER_PIN');
-    const helper=await import(pathToFileURL(recipe.closureHelper.path).href);current();const makeClosure=own(helper,'createRetainedNativeClosureSession26');
+    const helperBytes=await pinnedSmall(recipe.closureHelper.path,recipe.closureHelper.sha256,sourceFileResolver26(recipe));current();must(helperBytes.length===recipe.closureHelper.bytes,'PRODUCTION_BARCODE26_HELPER_PIN');
+    const helper=await import(pathToFileURL((await sourceFileResolver26(recipe)?.(recipe.closureHelper)??recipe.closureHelper).path).href);current();const makeClosure=own(helper,'createRetainedNativeClosureSession26');
     must(typeof makeClosure==='function','PRODUCTION_BARCODE26_HELPER_PIN');
     manifest=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await metadata(recipe.descriptor,4194304)));current();
     must(manifest.version==='ORIGINAL_BARCODE15018_APPROVED_SOURCE_CAPTURE_26_V1'&&Number.isSafeInteger(manifest.selectedRows)&&manifest.selectedRows>0&&manifest.selectedRows<=15018
@@ -239,12 +251,12 @@ export function createProductionSourceProvider26(inputs,authority){
       closureStarted=true;closureSignal=ctx.signal;await verifySource();current();must(!closureSignal.aborted,'PRODUCTION_BARCODE26_CLOSED');return closureReader;},close:closeSource};
    }catch(error){try{await closeSource();}catch(cleanup){throw new AggregateError([error,cleanup],'Retained barcode source open and cleanup failed');}throw error;}
   }
-  async function retainedProjectionFiles(refs,current){
+  async function retainedProjectionFiles(refs,current,resolveFile){
    const held=new Map();let ended=false,closingFiles;
    const closeFiles=async()=>{if(closingFiles)return closingFiles;ended=true;closingFiles=(async()=>{const r=await Promise.allSettled([...held.values()].map(f=>f.fd.close()));held.clear();const errors=r.filter(x=>x.status==='rejected');if(errors.length)throw new AggregateError(errors.map(x=>x.reason),'Retained projection close failed');})();return closingFiles;};
    disposers.push(closeFiles);
    const check=()=>{current();must(!ended,'PRODUCTION_RETAINED_PROJECTION26_CLOSED');};
-   try{for(const [key,ref]of Object.entries(refs)){check();must(typeof ref.path==='string'&&isAbsolute(ref.path)&&Number.isSafeInteger(ref.bytes)&&ref.bytes>=0&&ref.bytes<=1024*1024*1024&&hash(ref.sha256),'PRODUCTION_RETAINED_PROJECTION26_REF');
+   try{for(const [key,logical]of Object.entries(refs)){check();const ref=resolveFile?await resolveFile(logical):logical;check();must(typeof ref.path==='string'&&isAbsolute(ref.path)&&Number.isSafeInteger(ref.bytes)&&ref.bytes>=0&&ref.bytes<=1024*1024*1024&&hash(ref.sha256),'PRODUCTION_RETAINED_PROJECTION26_REF');
      const stat=await lstat(ref.path);check();must(stat.isFile()&&!stat.isSymbolicLink()&&(stat.mode&0o077)===0&&stat.size===ref.bytes,'PRODUCTION_RETAINED_PROJECTION26_PRIVATE');
      const fd=await open(ref.path,constants.O_RDONLY|constants.O_NOFOLLOW);if(ended||closed||signal.aborted){await fd.close();check();}held.set(key,{ref,stat,fd});check();must(same(stat,await fd.stat()),'PRODUCTION_RETAINED_PROJECTION26_CHANGED');}
     const verifyFiles=async()=>{check();await verify();for(const f of held.values()){must(same(f.stat,await f.fd.stat())&&same(f.stat,await lstat(f.ref.path)),'PRODUCTION_RETAINED_PROJECTION26_CHANGED');check();}};
@@ -260,7 +272,7 @@ export function createProductionSourceProvider26(inputs,authority){
    const current=()=>{active();must(!ended&&!closureSignal?.aborted,'PRODUCTION_RETAINED_TRANSFER26_CLOSED');};
    const closeSource=async()=>{if(closingSource)return closingSource;ended=true;closingSource=(async()=>{ordinals.clear();index=null;await files?.close();})();return closingSource;};disposers.push(closeSource);
    try{must(spec&&spec.rows>0&&spec.rows<=261641&&spec.rows===fixed.closureScope.expectedSourceEntityCounts.TRANSFER_LINE&&spec.rows===fixed.closureScope.expectedCounts.history_transfer_line,'PRODUCTION_RETAINED_TRANSFER26_COUNTS');
-    files=await retainedProjectionFiles({index:spec.index,source:spec.source,typed:spec.typed},current);current();index=await files.metadata('index',80*1024*1024);current();
+    files=await retainedProjectionFiles({index:spec.index,source:spec.source,typed:spec.typed},current,sourceFileResolver26(recipe));current();index=await files.metadata('index',80*1024*1024);current();
     must(index.length>=64&&index.subarray(0,9).toString('ascii')==='TL26JOIN1'&&index.readUInt32LE(12)===1,'PRODUCTION_RETAINED_TRANSFER26_INDEX');
     const rows=index.readUInt32LE(16),headers=index.readUInt32LE(20),recordBytes=index.readUInt32LE(24),records=index.readUInt32LE(28),sourceOrderBytes=index.readUInt32LE(32),typedOrderBytes=index.readUInt32LE(36),directoryBytes=index.readUInt32LE(40);
     must(rows===spec.rows&&headers>0&&headers<=14279&&recordBytes===256&&records===rows*256&&sourceOrderBytes===rows*4&&typedOrderBytes===rows*4&&directoryBytes===headers*36&&index.readUInt32LE(44)===64&&index.length===64+records+sourceOrderBytes+typedOrderBytes+directoryBytes,'PRODUCTION_RETAINED_TRANSFER26_INDEX');
@@ -289,15 +301,16 @@ export function createProductionSourceProvider26(inputs,authority){
    const current=()=>{active();must(!ended&&!closureSignal?.aborted,'PRODUCTION_RETAINED_HEADERS26_CLOSED');};
    const closeSource=async()=>{if(closingSource)return closingSource;ended=true;closingSource=(async()=>{const results=await Promise.allSettled([...owned].reverse().map(x=>x.close()));const errors=results.filter(x=>x.status==='rejected');if(errors.length)throw new AggregateError(errors.map(x=>x.reason),'Retained headers cleanup failed');})();return closingSource;};
    disposers.push(closeSource);
-   async function helper(ref,name){current();const bytes=await pinnedSmall(ref?.path,ref?.sha256);current();must(bytes.length===ref.bytes&&ref.sha256===RETAINED_HEADER_HELPERS[name],'PRODUCTION_RETAINED_HEADERS26_HELPER_PIN');return import(pathToFileURL(ref.path).href);}
+   async function helper(ref,name){current();const bytes=await pinnedSmall(ref?.path,ref?.sha256,sourceFileResolver26(recipe));current();must(bytes.length===ref.bytes&&ref.sha256===RETAINED_HEADER_HELPERS[name],'PRODUCTION_RETAINED_HEADERS26_HELPER_PIN');return import(pathToFileURL((await sourceFileResolver26(recipe)?.(ref)??ref).path).href);}
    try{
     must(spec?.sales&&spec.transfer&&spec.sales.rows===fixed.closureScope.expectedCounts.history_sales_header&&spec.transfer.rows===fixed.closureScope.expectedCounts.history_transfer_header,'PRODUCTION_RETAINED_HEADERS26_COUNTS');
     must(resolve(dirname(spec.helpers.closure.path),'prepare-retained-sales-header-window-20261026.mjs')===spec.helpers.salesWindow.path,'PRODUCTION_RETAINED_HEADERS26_HELPER_DEPENDENCY');
+    const locate=sourceFileResolver26(recipe);if(locate){const closureCode=await locate(spec.helpers.closure),windowCode=await locate(spec.helpers.salesWindow);current();must(resolve(dirname(closureCode.path),'prepare-retained-sales-header-window-20261026.mjs')===windowCode.path,'PRODUCTION_RETAINED_HEADERS26_HELPER_DEPENDENCY');}
     // Pin both relative closure dependencies before importing the existing pure
     // composition. Nothing is fetched or copied from the retained body files.
     const salesWindow=await helper(spec.helpers.salesWindow,'prepare-retained-sales-header-window-20261026.mjs'),headerClosure=await helper(spec.helpers.closure,'sales-header-closure-session-20261026.mjs'),transferWindow=await helper(spec.helpers.transferWindow,'prepare-retained-transfer-header-window-20261025-v2.mjs');current();
     const files=await retainedProjectionFiles({salesIndex:spec.sales.index,KNOWN25811:spec.sales.partitions.KNOWN25811,MAPPED2471:spec.sales.partitions.MAPPED2471,
-     transferIndex:spec.transfer.index,transferSource:spec.transfer.source,transferTyped:spec.transfer.typed,transferDocument:spec.transfer.document},current);owned.push(files);current();
+     transferIndex:spec.transfer.index,transferSource:spec.transfer.source,transferTyped:spec.transfer.typed,transferDocument:spec.transfer.document},current,sourceFileResolver26(recipe));owned.push(files);current();
     const index=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await files.metadata('salesIndex',64*1024*1024)));current();
     const short=Object.fromEntries(['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'].map(k=>[k,binding[k]]));
     must(index.rows===spec.sales.rows&&capture(index.binding)===capture(short)&&capture(index.partitions)===capture(spec.sales.partitions),'PRODUCTION_RETAINED_HEADERS26_INDEX_BINDING');
@@ -323,7 +336,7 @@ export function createProductionSourceProvider26(inputs,authority){
      async *documents(){await verifyFiles();for(const e of typedOrder){const d=await files.json('transferDocument',e.document);current();must(d.headerId===e.headerId&&d.headerSourceRowId===e.headerSourceRowId&&d.sourceKey===e.sourceKey&&d.kind==='TRANSFER','PRODUCTION_RETAINED_HEADERS26_DOCUMENT');yield d;current();}},
      async close(){cache.clear();sourceOrder.length=0;typedOrder.length=0;cacheBytes=0;}};owned.push(transferClosure);
     composed=headerClosure.composeHeaderClosureSessions({sales,transfer:transferClosure,current});owned.push(composed);await verifyFiles();let moneyApprovals;
-    const money=async()=>{if(moneyApprovals)return moneyApprovals;const bytes=await pinnedSmall(spec.sales.money.path,spec.sales.money.sha256);current();must(bytes.length===spec.sales.money.bytes&&bytes.length<=1048576,'PRODUCTION_RETAINED_HEADERS26_MONEY');
+    const money=async()=>{if(moneyApprovals)return moneyApprovals;const bytes=await pinnedSmall(spec.sales.money.path,spec.sales.money.sha256,sourceFileResolver26(recipe));current();must(bytes.length===spec.sales.money.bytes&&bytes.length<=1048576,'PRODUCTION_RETAINED_HEADERS26_MONEY');
      const columns=['file','sheet','row','sourceId','entity','documentSourceId','field','rawValue','excessFromNearestCent','candidateExactCentValue','sourceFileSha256','decision','provenance','toleranceCurrencyUnits','corroboratingDocumentSourceId'],approvals=[];let header;
      async function* text(){yield new TextDecoder('utf8',{fatal:true}).decode(bytes);}for await(const cells of parseV2Csv(text())){current();if(!header){must(capture(cells)===capture(columns),'PRODUCTION_RETAINED_HEADERS26_MONEY_COLUMNS');header=cells;continue;}must(cells.length===header.length,'PRODUCTION_RETAINED_HEADERS26_MONEY_WIDTH');const row=Object.fromEntries(header.map((k,n)=>[k,cells[n]]));approvals.push({fileSha256:row.sourceFileSha256,sheet:row.sheet,row:row.row,sourceId:row.sourceId,field:row.field,rawValue:row.rawValue,exactCentValue:row.candidateExactCentValue});}
      moneyApprovals=v2MoneyApprovalSet(approvals,approvals);must(moneyApprovals.size===32,'PRODUCTION_RETAINED_HEADERS26_MONEY_COUNT');return moneyApprovals;};
@@ -378,10 +391,10 @@ export function createProductionSourceProvider26(inputs,authority){
     closureReader=helper.createRetainedNativeClosureSession26({original,index,readRecord:range,verify:verifyFiles,close:async()=>{},current});
    })();return build;}
    try{
-    const helperBytes=await pinnedSmall(recipe.closureHelper?.path,recipe.closureHelper?.sha256);current();
+    const helperBytes=await pinnedSmall(recipe.closureHelper?.path,recipe.closureHelper?.sha256,sourceFileResolver26(recipe));current();
     must(recipe.closureHelper.bytes===helperBytes.length&&recipe.closureHelper.sha256===RETAINED_NATIVE_HELPER_SHA256,'PRODUCTION_RETAINED_NATIVE26_HELPER_PIN');
-    helper=await import(pathToFileURL(recipe.closureHelper.path).href);current();
-    for(let n=0;n<spec.files.length;n++){const ref=spec.files[n];must(typeof ref.path==='string'&&isAbsolute(ref.path)&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=256*1024*1024&&hash(ref.sha256),'PRODUCTION_RETAINED_NATIVE26_FILE_REF');
+    helper=await import(pathToFileURL((await sourceFileResolver26(recipe)?.(recipe.closureHelper)??recipe.closureHelper).path).href);current();
+    for(let n=0;n<spec.files.length;n++){let ref=spec.files[n];const locate=sourceFileResolver26(recipe);if(locate)ref=await locate(ref);current();must(typeof ref.path==='string'&&isAbsolute(ref.path)&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=256*1024*1024&&hash(ref.sha256),'PRODUCTION_RETAINED_NATIVE26_FILE_REF');
      const stat=await lstat(ref.path);current();must(stat.isFile()&&!stat.isSymbolicLink()&&(stat.mode&0o077)===0&&stat.size===ref.bytes,'PRODUCTION_RETAINED_NATIVE26_PRIVATE_FILE');
      const fd=await open(ref.path,constants.O_RDONLY|constants.O_NOFOLLOW);if(ended||closed||signal.aborted){await fd.close();current();}held.set(String(n),{ref,stat,fd});current();must(same(stat,await fd.stat()),'PRODUCTION_RETAINED_NATIVE26_CHANGED');}
     await verifyFiles();
@@ -395,7 +408,7 @@ export function createProductionSourceProvider26(inputs,authority){
    const opts=await a.capturedOptions(group,structuredClone(recipe),context);active();
    must(opts?.capturedSource&&typeof opts.resolveNativeBinding==='function'&&opts.batchId===binding.batchId&&opts.fixedSourceNamespace===binding.fixedSourceNamespace,
     'PRODUCTION_PROVIDER26_CAPTURED_NATIVE_AUTHORITY_REQUIRED',group);
-   const raw=await (group==='SALES_DETAILS'?openAuthorizedSalesDetailReader:openAuthorizedSettlementReader)(opts);
+   const raw=await openCapturedSalesSettlementSource(opts,group==='SALES_DETAILS'?'SALES_LINE':'SETTLEMENT',{resolveFile:sourceFileResolver26(recipe)});
    if(closed||signal.aborted){await raw.close();active();}
    const prepare=group==='SALES_DETAILS'?prepareHistorySalesDetailChunk:prepareHistorySettlementChunk;
    return {verify,authorize:raw.authorize.bind(raw),close:raw.close.bind(raw),
@@ -424,7 +437,7 @@ export function createProductionSourceProvider26(inputs,authority){
     for(const group of sourceGroups)await checked(a.assertGroupAllowed,group,structuredClone(fixed.producers[group]),structuredClone(binding));
     if(!Array.isArray(warehouseItems)){
      must(warehouseItems&&Number.isSafeInteger(warehouseItems.bytes)&&warehouseItems.bytes>0&&warehouseItems.bytes<=4194304,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');
-     const bytes=await pinnedSmall(warehouseItems.path,warehouseItems.sha256);active();must(bytes.length===warehouseItems.bytes,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');
+     const bytes=await pinnedSmall(warehouseItems.path,warehouseItems.sha256,sourceFileResolver26(fixed.producers.PARTIES));active();must(bytes.length===warehouseItems.bytes,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');
      const data=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));
      must(data.dataComplete===true&&Array.isArray(data.missing)&&data.missing.length===0&&data.publicationAuthorized===false
       &&data.identity?.batchId===binding.batchId&&data.identity.coreReceiptId===binding.coreReceiptId&&data.identity.coreSourceDigest===binding.coreSourceDigest
@@ -432,7 +445,7 @@ export function createProductionSourceProvider26(inputs,authority){
     }
     for(const group of sourceGroups){
      const recipe=fixed.producers[group];let raw;
-     if(recipe.mode==='REVIEWED')raw=await recipeOpeners[group](structuredClone(recipe.options));
+     if(recipe.mode==='REVIEWED')raw=await recipeOpeners[group](structuredClone(recipe.options),{resolveFile:sourceFileResolver26(recipe)});
      else if(recipe.mode==='CAPTURED_C144')raw=await capturedReader(group,recipe);
      else if(group==='BARCODES'&&Object.hasOwn(recipe,'closureHelper'))raw=await retainedBarcodeReader(recipe);
      else if(group==='TRANSFER_LINES'&&Object.hasOwn(recipe,'retainedTransferLines'))raw=await retainedTransferLinesReader(recipe);
@@ -486,7 +499,7 @@ export function createProductionSourceProvider26(inputs,authority){
    must(count>0||progress.committedOperations?.some(op=>op.action===(phase==='BIND'?'IMPORT_BIND_FULL_SOURCE':phase==='ACCOUNT'?'IMPORT_CHUNK':'IMPORT_PUBLISH')),'PRODUCTION_PROVIDER26_MAIN_COMMAND_REQUIRED');
   }
   return {preflight,close,openSources,closureScope:structuredClone(fixed.closureScope),bootstrap26:null,
-   nativeProductSourceReader:{async authorize(payload){await checked(a.authorizeProductSource,payload,structuredClone(binding));}},
+   nativeProductSourceReader:{resolveFile:sourceFileResolver26(fixed.producers.PRODUCTS),async authorize(payload){await checked(a.authorizeProductSource,payload,structuredClone(binding));}},
    now:a.now,
    async assertExecutionAllowed(actual){must(requestHash(actual)===requestHash(binding),'PRODUCTION_PROVIDER26_BINDING_CHANGED');await verify();await checked(a.assertExecutionAllowed,structuredClone(actual));},
    async authorizeNativeCommand(actor,command){await checked(a.authorizeNativeCommand,actor,command);},
@@ -548,10 +561,10 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
  const inputDigest=capture(fixed),dataDigest=capture(Object.fromEntries(['version','binding','core','closureScope','warehouses','producers'].map(k=>[k,fixed[k]])));
  const active=()=>must(!closed&&!signal.aborted&&(!job||Date.now()<Date.parse(job.deadlineUtc)),'PRODUCTION_AUTHORITY26_CLOSED');
  const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
- async function metadata(ref,maximum=4194304,reviver){active();must(exact(ref,['path','bytes','sha256'])&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=maximum,'PRODUCTION_AUTHORITY26_METADATA_REF');
-  const before=await lstat(ref.path);active();const bytes=await pinnedSmall(ref.path,ref.sha256);active();const stat=await lstat(ref.path);active();must(bytes.length===ref.bytes&&same(before,stat),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');
-  files.set(ref.path,{ref:structuredClone(ref),stat});return JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes),reviver);}
- async function unchanged(path){active();const f=files.get(path);must(f&&same(f.stat,await lstat(path)),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');active();}
+ async function metadata(ref,maximum=4194304,reviver,resolveFile){active();must(exact(ref,['path','bytes','sha256'])&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=maximum,'PRODUCTION_AUTHORITY26_METADATA_REF');
+  const physical=resolveFile?await resolveFile(ref):ref;active();const before=await lstat(physical.path);active();const bytes=await pinnedSmall(ref.path,ref.sha256,resolveFile);active();const stat=await lstat(physical.path);active();must(bytes.length===ref.bytes&&same(before,stat),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');
+  files.set(ref.path,{ref:structuredClone(ref),stat,physicalPath:physical.path});return JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes),reviver);}
+ async function unchanged(path){active();const f=files.get(path);must(f&&same(f.stat,await lstat(f.physicalPath??path)),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');active();}
  async function verify(){active();for(const path of [inputFile,authorization.path,grant.job.path])await unchanged(path);active();}
  async function close(){if(closing)return closing;closed=true;closing=(async()=>{const failures=[];
   await Promise.allSettled([...pending]);for(const resource of [...resources].reverse())try{await resource.close();}catch(error){failures.push(error);}
@@ -561,8 +574,8 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
   const resource={...raw,close(){if(!closingResource)closingResource=Promise.resolve().then(()=>raw.close());return closingResource;}};
   if(closed||signal.aborted){await resource.close();active();}resources.add(resource);return resource;})();pending.add(operation);
   try{return await operation;}finally{pending.delete(operation);}}
- async function code(ref,name){const bytes=await pinnedSmall(ref?.path,ref?.sha256);active();must(bytes.length===ref.bytes,'PRODUCTION_AUTHORITY26_MODULE_PIN');
-  const module=await import(pathToFileURL(ref.path).href);active();const fn=own(module,name);must(typeof fn==='function','PRODUCTION_AUTHORITY26_MODULE_REQUIRED');return fn;}
+ async function code(ref,name,resolveFile){const physical=resolveFile?await resolveFile(ref):ref;active();const bytes=await pinnedSmall(ref?.path,ref?.sha256,resolveFile);active();must(bytes.length===ref.bytes,'PRODUCTION_AUTHORITY26_MODULE_PIN');
+  const module=await import(pathToFileURL(physical.path).href);active();const fn=own(module,name);must(typeof fn==='function','PRODUCTION_AUTHORITY26_MODULE_REQUIRED');return fn;}
  const revive=(_key,value)=>value&&typeof value==='object'&&Object.keys(value).length===1&&Object.hasOwn(value,'__bigint')
   ? (must(typeof value.__bigint==='string'&&/^(?:0|-?[1-9]\d*)$/.test(value.__bigint),'PRODUCTION_AUTHORITY26_COMMAND_INTEGER'),BigInt(value.__bigint)):value;
  try{
@@ -603,7 +616,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
   }
   must(publish.expectedSequence===sequence&&publish.expectedCursor===cursor&&capture(totals)===capture(full.inventoryExpectedCounts),'PRODUCTION_AUTHORITY26_COMMAND_CHAIN');
   must(fixed.warehouses&&fixed.core.coreProjection,'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');
-  const projectionData=await metadata(fixed.core.coreProjection);let projection=projectionData,warehouses=fixed.warehouses;
+  const projectionData=await metadata(fixed.core.coreProjection,4194304,undefined,sourceFileResolver26(fixed.producers.PARTIES));let projection=projectionData,warehouses=fixed.warehouses;
   if(projectionData.dataComplete===true){
    must(projectionData.publicationAuthorized===false&&Array.isArray(projectionData.missing)&&projectionData.missing.length===0
     &&exact(projectionData.identity,['batchId','actorAccountId','fixedSourceNamespace','selectionSha256','coreReceiptId','coreSourceDigest'])
@@ -653,21 +666,22 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
     // Only explicit original reader options can select these existing genuine
     // factories. A retained path alone never becomes a producer or raw fallback.
     must(Object.hasOwn(recipeOpeners,group)&&recipe.options,'PRODUCTION_AUTHORITY26_RETAINED_READER_INPUT_REQUIRED');
-    return owned(()=>recipeOpeners[group](structuredClone(recipe.options)));
+    return owned(()=>recipeOpeners[group](structuredClone(recipe.options),{resolveFile:sourceFileResolver26(recipe)}));
    },
    async capturedOptions(group,recipe,context){await groupAllowed(group,recipe,context.binding);
     must(['SALES_DETAILS','SETTLEMENTS'].includes(group)&&recipe.supportModules&&typeof recipe.sourceRoot==='string'&&isAbsolute(recipe.sourceRoot)&&context.database?.ready,'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');
-    const makeTransport=await code(recipe.supportModules.transport,'openRetainedSalesSettlementFiles');
-    const makeOptions=await code(recipe.supportModules.options,'prepareRetainedSalesOptions');
-    const transport=await owned(()=>makeTransport({source:recipe.source,typed:recipe.typed},signal));let indexed;
+    const makeTransport=await code(recipe.supportModules.transport,'openRetainedSalesSettlementFiles',sourceFileResolver26(recipe));
+    const makeOptions=await code(recipe.supportModules.options,'prepareRetainedSalesOptions',sourceFileResolver26(recipe));
+    const resolveFile=sourceFileResolver26(recipe),physicalSource=resolveFile?await resolveFile(recipe.source):recipe.source,physicalTyped=resolveFile?await resolveFile(recipe.typed):recipe.typed;
+    const transport=await owned(()=>makeTransport({source:{...recipe.source,...physicalSource},typed:{...recipe.typed,...physicalTyped}},signal));let indexed;
     const ensureIndex=()=>indexed??=(async()=>{active();await transport.buildTypedIndex();active();})();
     const expected={entity:recipe.entity,binding:structuredClone(binding),manifestRef:recipe.manifestRef,moneyRef:recipe.moneyRef,trustedApprovalSha256:recipe.trustedApprovalSha256};
     const capturedAuthority={async verify(actual){await verify();must(actual.batchId===binding.batchId&&actual.fixedSourceNamespace===binding.fixedSourceNamespace
       &&actual.selection?.entity===recipe.entity&&actual.selection.selectionSha256===binding.selectionSha256&&capture(actual.manifest)===capture(recipe.manifestRef)
       &&capture(actual.source)===capture(recipe.source)&&capture(actual.typed)===capture(recipe.typed),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await transport.verify();},close:()=>transport.close()};
     const options=await makeOptions({sourceRoot:recipe.sourceRoot,...expected,signal,capturedAuthority,
-     authority:{async verifyInputs(actual){await verify();must(capture(actual)===capture(expected),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');}}});active();
-    options.capturedSource.read={async *sourceRows(descriptor){await ensureIndex();yield*transport.sourceRows(descriptor);},async typedRow(descriptor,key){await ensureIndex();return transport.typedRow(descriptor,key);}};
+     authority:{async verifyInputs(actual){await verify();must(capture(actual)===capture(expected),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');}}},{resolveFile});active();
+    options.capturedSource.read={async *sourceRows(descriptor){must(capture(descriptor)===capture(recipe.source),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await ensureIndex();yield*transport.sourceRows({...recipe.source,...physicalSource});},async typedRow(descriptor,key){must(capture(descriptor)===capture(recipe.typed),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await ensureIndex();return transport.typedRow({...recipe.typed,...physicalTyped},key);}};
     let resolver;options.resolveNativeBinding=async query=>{await verify();const runtime=context.database.ready();
      resolver??=(group==='SALES_DETAILS'?createPostgresHistorySalesDetailBindingResolver26:createPostgresHistorySettlementBindingResolver26)(runtime.pool,sourceScope,runtime.runtime26);
      const result=await resolver(query);active();return result;};
@@ -676,10 +690,11 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
    async openRetainedClosure(group,recipe,scope,context){await groupAllowed(group,recipe,binding);must(capture(scope)===capture(fixed.closureScope)&&context?.group===group
      &&context.signal instanceof AbortSignal&&!context.signal.aborted,'PRODUCTION_AUTHORITY26_CLOSURE_SCOPE');const state=captured.get(group);
     must(state&&recipe.supportModules?.closure,'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');
-    const makeClosure=await code(recipe.supportModules.closure,'createCapturedSalesChildClosureSession');
+    const locate=sourceFileResolver26(recipe);if(locate){const dependency=recipe.supportModules.closureWindow;must(dependency,'PRODUCTION_AUTHORITY26_CLOSURE_DEPENDENCY');const closureFile=await locate(recipe.supportModules.closure),windowFile=await locate(dependency);active();must(resolve(dirname(closureFile.path),'prepare-retained-sales-header-window-20261026.mjs')===windowFile.path,'PRODUCTION_AUTHORITY26_CLOSURE_DEPENDENCY');await code(dependency,'salesHeaderProjection26',locate);}
+    const makeClosure=await code(recipe.supportModules.closure,'createCapturedSalesChildClosureSession',locate);
     const current=()=>{active();must(!context.signal.aborted,'PRODUCTION_AUTHORITY26_CLOSED');};const streams=new Set();
     const closeStreams=async()=>{await Promise.all([...streams].map(async stream=>{const ended=stream.closed?Promise.resolve():new Promise(resolve=>stream.once('close',resolve));stream.destroy();await ended;}));streams.clear();};
-    const rows=async function*(ref,relation){current();const before=await lstat(ref.path);current();must(before.isFile()&&!before.isSymbolicLink()&&before.size===ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');
+    const rows=async function*(logical,relation){current();const locate=sourceFileResolver26(recipe),ref=locate?{...logical,...await locate(logical)}:logical;current();const before=await lstat(ref.path);current();must(before.isFile()&&!before.isSymbolicLink()&&before.size===ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');
      const digest=createHash('sha256');let pendingBytes=Buffer.alloc(0),bytes=0,count=0,previous;
      const stream=createReadStream(ref.path);streams.add(stream);try{for await(const chunk of stream){current();bytes+=chunk.length;must(bytes<=ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');digest.update(chunk);pendingBytes=Buffer.concat([pendingBytes,chunk]);let end;
       while((end=pendingBytes.indexOf(10))>=0){must(end>0&&end+1<=4194304,'PRODUCTION_AUTHORITY26_CAPTURED_LINE');const raw=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(pendingBytes.subarray(0,end)));pendingBytes=pendingBytes.subarray(end+1);
@@ -705,7 +720,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
     for(const command of selected.remaining.filter(c=>byPhase[phase].some(original=>original.requestKey===c.requestKey))){await mainAllowed(binding.actorAccountId,command);yield structuredClone(command);active();}
    },
    async authorizeProductSource(payload){await verify();const options=fixed.producers.PRODUCTS.productEvidenceSource;must(options,'PRODUCTION_AUTHORITY26_PRODUCT_EVIDENCE_REQUIRED');
-    productSource??=await owned(()=>openReviewedProductEvidenceSource(structuredClone(options)));await productSource.authorize(payload);active();
+    productSource??=await owned(()=>openReviewedProductEvidenceSource(structuredClone(options),{resolveFile:sourceFileResolver26(fixed.producers.PRODUCTS)}));await productSource.authorize(payload);active();
    },close,now(){active();return new Date().toISOString();}
   };
   await verify();return authority;

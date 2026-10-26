@@ -113,9 +113,10 @@ export async function openNativeProductAuthorizer({sourceReader,referenceDecisio
 
 const exactData26=(value,keys)=>value&&Object.getPrototypeOf(value)===Object.prototype&&Reflect.ownKeys(value).length===keys.length&&keys.every(key=>{
   const d=Object.getOwnPropertyDescriptor(value,key);return d?.enumerable&&Object.hasOwn(d,'value');});
-async function pinned26(path,pin,max,retain=false){
+async function pinned26(path,pin,max,retain=false,io={}){
+  const physical=io.resolveFile?await io.resolveFile({path,sha256:pin}):{path};path=physical.path;
   if(typeof path!=='string'||!path||!hash(pin))fail('NATIVE_PRODUCT26_OUTSIDE_PIN_REQUIRED');
-  const file=resolve(path),before=await lstat(file);if(!before.isFile()||before.isSymbolicLink()||before.size>max)fail('NATIVE_PRODUCT26_FILE');
+  const file=resolve(path),before=await lstat(file);if(!before.isFile()||before.isSymbolicLink()||before.size>max||(physical.bytes!==undefined&&before.size!==physical.bytes))fail('NATIVE_PRODUCT26_FILE');
   const handle=await open(file,constants.O_RDONLY|constants.O_NOFOLLOW);
   try{const opened=await handle.stat();if(opened.dev!==before.dev||opened.ino!==before.ino)fail('NATIVE_PRODUCT26_FILE_CHANGED');
     const digest=createHash('sha256'),parts=[];let bytes=0;
@@ -137,7 +138,8 @@ function exactOverrideRules26(rules,required){
 }
 /** Explicit successor source/reference authority only. Never issues an execution,
  * target, SQL or runtime capability. V1's profile and 4MiB limit stay unchanged. */
-export async function openNativeProductAuthorizer26(options){
+export async function openNativeProductAuthorizer26(options,io={}){
+  const readPinned=(path,pin,max,retain=false)=>pinned26(path,pin,max,retain,io);
   const keys=['sourceReader','referenceDecisionFile','trustedReferenceDecisionSha256','mappingFiles','reviewFile','trustedReviewSha256'];
   if(!exactData26(options,keys))fail('NATIVE_PRODUCT26_OPTIONS');
   const o=Object.fromEntries(keys.map(k=>[k,Object.getOwnPropertyDescriptor(options,k).value]));
@@ -149,7 +151,7 @@ export async function openNativeProductAuthorizer26(options){
   const authorize=Object.getOwnPropertyDescriptor(o.sourceReader??{},'authorize');
   if(!authorize||!Object.hasOwn(authorize,'value')||typeof authorize.value!=='function')fail('NATIVE_PRODUCT26_EXACT_SOURCE_AUTHORIZER_REQUIRED');
   const authorizeSource=authorize.value.bind(o.sourceReader);
-  const review=(await pinned26(o.reviewFile,o.trustedReviewSha256,1024*1024,true)).value;
+  const review=(await readPinned(o.reviewFile,o.trustedReviewSha256,1024*1024,true)).value;
   if(!exactData26(review,['version','decision','binding','manifest','scope','independentReview','realImportExecutionAuthorized'])
     ||review.version!=='C_NATIVE_PRODUCT_REFERENCE26_REVIEW_V1'||review.decision!=='ACCEPT_EXACT_MANIFEST_REFERENCE_BINDINGS'
     ||review.scope!=='FULL_REFERENCE_DECISIONS_ONLY'||review.realImportExecutionAuthorized!==false
@@ -157,7 +159,7 @@ export async function openNativeProductAuthorizer26(options){
     ||!exactData26(review.manifest,['sha256','bytes','products','validatorVersion','schemaProfile'])
     ||review.manifest.sha256!==o.trustedReferenceDecisionSha256||review.manifest.validatorVersion!==NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26||review.manifest.schemaProfile!=='EXACT26'
     ||!exactData26(review.independentReview,['path','sha256','result'])||typeof review.independentReview.path!=='string'||!review.independentReview.path||!hash(review.independentReview.sha256)||review.independentReview.result!=='PASS')fail('NATIVE_PRODUCT26_FULL_REFERENCE_REVIEW_REQUIRED');
-  const loaded=await pinned26(o.referenceDecisionFile,o.trustedReferenceDecisionSha256,8*1024*1024,true),m=loaded.value;
+  const loaded=await readPinned(o.referenceDecisionFile,o.trustedReferenceDecisionSha256,8*1024*1024,true),m=loaded.value;
   if(!exactData26(m,['schemaVersion','validatorVersion','schemaProfile','batchId','fixedSourceNamespace','selection','mappingFiles','decisions'])
     ||m.schemaVersion!==2||m.validatorVersion!==NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26||m.schemaProfile!=='EXACT26'||!uuid(m.batchId)
     ||typeof m.fixedSourceNamespace!=='string'||!m.fixedSourceNamespace||m.selection?.entity!=='PRODUCT'||!hash(m.selection.selectionSha256)
@@ -182,8 +184,8 @@ export async function openNativeProductAuthorizer26(options){
     decisions.set(d.sourceKey,d);sourceIds.add(d.sourceRowId);targets.add(d.product.nativeId);
   }
   let closed=false;const active=()=>{if(closed)fail('NATIVE_PRODUCT26_CLOSED');};
-  async function verify(){active();await pinned26(o.reviewFile,o.trustedReviewSha256,1024*1024);await pinned26(o.referenceDecisionFile,o.trustedReferenceDecisionSha256,8*1024*1024);
-    let total=0;for(const[name,file]of files){const item=await pinned26(file.path,file.sha256,32*1024*1024,name==='derived_season_proofs'||name==='size_overrides');total+=item.bytes;if(total>64*1024*1024)fail('NATIVE_PRODUCT26_MAPPING_LIMIT');
+  async function verify(){active();await readPinned(o.reviewFile,o.trustedReviewSha256,1024*1024);await readPinned(o.referenceDecisionFile,o.trustedReferenceDecisionSha256,8*1024*1024);
+    let total=0;for(const[name,file]of files){const item=await readPinned(file.path,file.sha256,32*1024*1024,name==='derived_season_proofs'||name==='size_overrides');total+=item.bytes;if(total>64*1024*1024)fail('NATIVE_PRODUCT26_MAPPING_LIMIT');
       if(name==='size_overrides')exactOverrideRules26(item.value,overrides);
       if(name==='derived_season_proofs'){const s=item.value;if(s.version!=='NATIVE_PRODUCT_SEASON_SELECTION_DERIVED_CANDIDATE_V1'||s.batchId!==m.batchId||s.fixedSourceNamespace!==m.fixedSourceNamespace||s.selectionSha256!==m.selection.selectionSha256
         ||s.sourceMappingSha256!==files.get('season_source').sha256||s.dictionaryMappingSha256!==files.get('catalogue').sha256||!Array.isArray(s.rows))fail('NATIVE_PRODUCT26_SEASON_BINDING');

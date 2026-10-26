@@ -297,6 +297,7 @@ export function captureNativeSourceSession26(value,binding) {
   must(bootstrap===null?s.bootstrap26===null:Object.values(bootstrap).every(fn=>typeof fn==='function'),'IMPORT_SOURCE_HOST_BOOTSTRAP_REQUIRED');
   const reader=s.nativeProductSourceReader,d=Object.getOwnPropertyDescriptor(reader??{},'authorize');
   must(d?.enumerable&&Object.hasOwn(d,'value')&&typeof d.value==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
+  const physical=Object.getOwnPropertyDescriptor(reader??{},'resolveFile');must(!physical||physical.enumerable&&Object.hasOwn(physical,'value')&&(physical.value===undefined||typeof physical.value==='function'),'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   return Object.freeze({...s,closureScope:scope,openSources:Object.freeze(factories),bootstrap26:bootstrap===null?null:Object.freeze(bootstrap)});
 }
 /** Keep the original source generator return (verified prior publication) while
@@ -368,7 +369,7 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
     await completed(session.preflight,structuredClone(job.binding));await completed(session.assertExecutionAllowed,structuredClone(job.binding));active();
     if(!core){product=await openNativeProductAuthorizer26({sourceReader:session.nativeProductSourceReader,referenceDecisionFile:job.sources.referenceDecisionFile,
       trustedReferenceDecisionSha256:job.sources.trustedReferenceDecisionSha256,mappingFiles:job.sources.mappingFiles,
-      reviewFile:job.sources.reviewFile,trustedReviewSha256:job.sources.trustedReviewSha256});
+      reviewFile:job.sources.reviewFile,trustedReviewSha256:job.sources.trustedReviewSha256},{resolveFile:Object.getOwnPropertyDescriptor(session.nativeProductSourceReader,'resolveFile')?.value});
     closure=await openAuthorizedHistoryClosureReader26({scope:session.closureScope,openSources:session.openSources,
       trustedSelectionSha256:job.binding.selectionSha256,trustedAuthorizedPayloadHash:job.binding.authorizedPayloadHash});}
     active();const runtime=await gate.activate();active();

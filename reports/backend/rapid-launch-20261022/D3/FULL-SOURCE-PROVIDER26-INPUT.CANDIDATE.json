@@ -509,8 +509,8 @@
             "native-closure-helper"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -1474,8 +1474,8 @@
             "native-closure-helper"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -1529,8 +1529,8 @@
             "native-closure-helper"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -1631,8 +1631,8 @@
             "native-closure-helper"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -1833,8 +1833,8 @@
             "header-helper-salesWindow"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -1848,8 +1848,8 @@
             "header-helper-transferWindow"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -1863,8 +1863,8 @@
             "header-helper-closure"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -2109,22 +2109,42 @@
         },
         "options": {
           "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
-          "bytes": 6641,
-          "sha256": "6e7eb58634cba23d6a0b93116fc013ca2392c636d550670daa9f9692bc67fb8f"
+          "bytes": 6716,
+          "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480"
         },
         "closure": {
           "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sales-header-closure-session-20261026.mjs",
           "bytes": 11485,
           "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772"
+        },
+        "closureWindow": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-header-window-20261026.mjs",
+          "bytes": 5566,
+          "sha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c"
         }
       },
       "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
       "fileLocations": [
         {
           "logical": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-header-window-20261026.mjs",
+            "bytes": 5566,
+            "sha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c"
+          },
+          "physical": null,
+          "kind": "CODE",
+          "roles": [
+            "C144-code-closureWindow-relative-import"
+          ],
+          "requiredForRead": true,
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Original closure module relative import must reside in the same physical directory and retain original code SHA"
+        },
+        {
+          "logical": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
-            "bytes": 6641,
-            "sha256": "6e7eb58634cba23d6a0b93116fc013ca2392c636d550670daa9f9692bc67fb8f"
+            "bytes": 6716,
+            "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480"
           },
           "physical": null,
           "kind": "CODE",
@@ -2132,8 +2152,8 @@
             "C144-code-options"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -2147,8 +2167,8 @@
             "C144-code-transport"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -2162,8 +2182,8 @@
             "C144-code-closure"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -2278,22 +2298,42 @@
         },
         "options": {
           "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
-          "bytes": 6641,
-          "sha256": "6e7eb58634cba23d6a0b93116fc013ca2392c636d550670daa9f9692bc67fb8f"
+          "bytes": 6716,
+          "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480"
         },
         "closure": {
           "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sales-header-closure-session-20261026.mjs",
           "bytes": 11485,
           "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772"
+        },
+        "closureWindow": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-header-window-20261026.mjs",
+          "bytes": 5566,
+          "sha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c"
         }
       },
       "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
       "fileLocations": [
         {
           "logical": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-header-window-20261026.mjs",
+            "bytes": 5566,
+            "sha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c"
+          },
+          "physical": null,
+          "kind": "CODE",
+          "roles": [
+            "C144-code-closureWindow-relative-import"
+          ],
+          "requiredForRead": true,
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Original closure module relative import must reside in the same physical directory and retain original code SHA"
+        },
+        {
+          "logical": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
-            "bytes": 6641,
-            "sha256": "6e7eb58634cba23d6a0b93116fc013ca2392c636d550670daa9f9692bc67fb8f"
+            "bytes": 6716,
+            "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480"
           },
           "physical": null,
           "kind": "CODE",
@@ -2301,8 +2341,8 @@
             "C144-code-options"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -2316,8 +2356,8 @@
             "C144-code-transport"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -2331,8 +2371,8 @@
             "C144-code-closure"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
           "logical": {
@@ -2506,7 +2546,7 @@
   },
   "authorityModule": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "sha256": "ae815e6851f087785354d979e4c82ea4a22d386534f076e507aa8d524c7d75da"
+    "sha256": "af7c037f32c4ca12b0c7b1af55058a9824e45b0cfd87009a12ac6b9417e2c2f1"
   },
   "executionAuthorization": {
     "path": null,

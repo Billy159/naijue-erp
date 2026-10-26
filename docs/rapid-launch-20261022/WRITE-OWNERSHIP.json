@@ -6079,8 +6079,9 @@
       "scripts/import-v3/native-source-authorizers.mjs",
       "scripts/import-v2/authorized-native-product-reader.mjs",
       "scripts/import-v2/authorized-sales-detail-reader.mjs",
-      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/prepare-retained-sales-options-20261026.mjs"
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs"
     ],
-    "additionalScope": "Original reader optional controlled resolveFile seam maps exact original logical path plus bytes/SHA to physical file; original options/manifests/reviews/provenance remain immutable; original validation and held FD continue. Existing provider/host tests only affected cases. Verified seven R source leaves have no WIP on handoff; no D1 release overlap."
+    "additionalScope": "Original reader optional controlled resolveFile seam maps exact original logical path plus bytes/SHA to physical file; original options/manifests/reviews/provenance remain immutable; original validation and held FD continue. Existing provider/host tests only affected cases. Verified seven R source leaves have no WIP on handoff; no D1 release overlap.",
+    "delivery": "SOURCE633 handback; actual helper in O/D3 (corrected prior registration path typo); fixed safe source copies in R reports include original header helper dependency"
   }
 }

@@ -17,7 +17,7 @@ const hash=v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v),digest=b=>createHash
 const same=(a,b)=>['dev','ino','mode','size','mtimeMs','ctimeMs'].every(k=>a[k]===b[k]);
 async function regular(path){must(typeof path==='string'&&isAbsolute(path),'PAYMENT_SOURCE26_PATH');let p=resolve(path),first=true;for(;;){const s=await lstat(p);must(!s.isSymbolicLink()&&(first?s.isFile():s.isDirectory()),'PAYMENT_SOURCE26_REGULAR');first=false;const parent=dirname(p);if(parent===p)return;p=parent;}}
 const order=(a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key));
-export async function openReviewedPaymentSource26(options){
+export async function openReviewedPaymentSource26(options,io={}){
  must(exact(options,['reviewFile','trustedReviewSha256','binding','authorizedPayloadHash']),'PAYMENT_SOURCE26_OPTIONS');
  const o={...options};must(hash(o.trustedReviewSha256),'PAYMENT_SOURCE26_OUTSIDE_PIN');historySettlementRequestHash(o.binding);
  const binding=structuredClone(o.binding);must(exact(binding,['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'])&&hash(binding.selectionSha256)
@@ -26,7 +26,7 @@ export async function openReviewedPaymentSource26(options){
  const files=[];let closed=false;const chunks=[],fingerprints=new Set();
  const active=()=>must(!closed,'PAYMENT_SOURCE26_CLOSED');
  async function close(){closed=true;chunks.length=0;fingerprints.clear();for(const f of files)try{await f.fd.close();}catch{}files.length=0;}
- async function load(path,pin,expected,max){must(hash(pin),'PAYMENT_SOURCE26_OUTSIDE_PIN');await regular(path);const s=await lstat(path);must(s.size>0&&s.size<=max&&(expected===null||s.size===expected),'PAYMENT_SOURCE26_FILE_BOUND');const fd=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW),f={path,stat:s,fd};files.push(f);
+ async function load(path,pin,expected,max){const physical=io.resolveFile?await io.resolveFile({path,sha256:pin}):{path};path=physical.path;must(hash(pin),'PAYMENT_SOURCE26_OUTSIDE_PIN');await regular(path);const s=await lstat(path);must((physical.bytes===undefined||s.size===physical.bytes)&&s.size>0&&s.size<=max&&(expected===null||s.size===expected),'PAYMENT_SOURCE26_FILE_BOUND');const fd=await open(path,constants.O_RDONLY|constants.O_NOFOLLOW),f={path,stat:s,fd};files.push(f);
   const bytes=await fd.readFile();must(bytes.length===s.size&&digest(bytes)===pin&&same(s,await fd.stat())&&same(s,await lstat(path)),'PAYMENT_SOURCE26_FILE_CHANGED');return {value:JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes)),bytes:bytes.length};}
  async function verify(){active();for(const f of files){await regular(f.path);must(same(f.stat,await f.fd.stat())&&same(f.stat,await lstat(f.path)),'PAYMENT_SOURCE26_FILE_CHANGED');}active();}
  const bound=v=>exact(v,Object.keys(binding))&&Object.keys(binding).every(k=>v[k]===binding[k]);

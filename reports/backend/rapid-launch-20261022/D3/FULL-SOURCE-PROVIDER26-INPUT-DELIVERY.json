@@ -1,22 +1,22 @@
 {
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
-  "recordedAtUtc": "2026-10-26T08:29:54.327292+00:00",
+  "recordedAtUtc": "2026-10-26T09:42:14.985166+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "POST_SOURCE622_T19_EXACT_COMMITTED_SUFFIX_AND_QB_CHILD_CLOSE_SOURCE_ONLY",
+  "status": "SOURCE627_EXACT_PHYSICAL_MAPPING_SOURCE_READY_DATA_LOCATION_COMPLETION_PENDING",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "bytes": 88382,
-    "sha256": "ae815e6851f087785354d979e4c82ea4a22d386534f076e507aa8d524c7d75da"
+    "bytes": 92349,
+    "sha256": "af7c037f32c4ca12b0c7b1af55058a9824e45b0cfd87009a12ac6b9417e2c2f1"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 83413,
-    "sha256": "5f8b3834ec3b635d864a192f6dd6333f48d520985f6169bb688383dc62a9eb4f"
+    "bytes": 115652,
+    "sha256": "36848bfe1ff54ced7dcffce76c233bf0d1d01ce7dc4cdb3dcd0e602288c9f54b"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
-    "bytes": 147560,
-    "sha256": "1ee717d6d039c20c45d605e56a533b5489d54bd84da54861da14dc1d6a005214"
+    "bytes": 149756,
+    "sha256": "9e7e8d606ec62c944baf930b79e5ad1863556b5f1601ec992b2c313c0598bb55"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -127,15 +127,15 @@
   "remaining": [
     {
       "owner": "C/QB",
-      "facts": "Freeze this exact source623 T19+QB child-close increment and review only affected functions against D1 fixed620/QB368 current-chain interface; reuse source622/T04/source619 scope results."
+      "facts": "Freeze source627 exact original code+INPUT/DELIVERY pins and review only new physical IO seam/descriptor/CATALOGUE actual26 consumer."
     },
     {
-      "owner": "C/T45 original registered actual carrier",
-      "facts": "Actual full payload content definition/adopted hash, eleven roots, nonzero ledger command files, grant/job/private server refs and registered synthetic T19 QA remain pending. No fabricated pin or actual execution by D3."
+      "owner": "C/T45",
+      "facts": "Complete physical DATA/METADATA/CODE refs; exact original body pins unchanged. Active original26 DATA transfer remains originalkey; no retransmission requested by this update."
     },
     {
-      "owner": "C/T45 original staged source/target owner",
-      "facts": "All unclaimed already-STAGED write skipping requires exact original key+target+content proof; see remainingStageProofGap. Full readers/closure are complete, current implementation does not assert those writes skipped."
+      "owner": "C original source624 / T45",
+      "facts": "Real all11 DATA/EXPECTED/MAIN, fullhash/grant/job and actual source/PG validation still pending; no arbitrary pins produced by D3."
     }
   ],
   "executionReady": false,
@@ -158,7 +158,7 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
   ],
-  "next": "D3 releases exact8 files now. C freeze then QB affected T19+child lifecycle once; T45 owns any registered synthetic QA and actual source/MAIN/closure execution. No source622/T04 repeat.",
+  "next": "D3 releases original13 changed leaves now; C fixed source627 increment then original QB only new mapping checks. T45 continue existing transfer and source624 preparation with unchanged DATA identities.",
   "source620": {
     "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
     "implemented": [
@@ -315,7 +315,7 @@
     }
   },
   "physicalDataMapping627": {
-    "status": "DESCRIPTOR_FIRST_ORIGINAL_PINS_ONLY_READER_IMPLEMENTATION_IN_PROGRESS_NOT_EXECUTABLE",
+    "status": "SOURCE_READY_EXPLICIT_ORIGINAL_IDENTITY_PHYSICAL_IO_MAP_NOT_FULL_EXECUTION_READY",
     "recordedAtUtc": "2026-10-26T09:19:01.083815+00:00",
     "descriptorField": "INPUT.producers.<group>.fileLocations[] = logical original path/bytes/SHA + physical exact location or null + kind + required role + existing server evidence. No path prefix replacement or original DATA/review mutation.",
     "all11": {
@@ -396,6 +396,123 @@
       "Transfer documentClosures9 c18e... does not have a proven server copy, and current TL packed closure reader does not consume that separate file; whole original all11 builder computes doc9 from original header4+line rows. Do not transfer it just to invent a requirement."
     ],
     "codeStatus": "Original provider/host plus registered original7 readers/helper need exact physical IO mapping. Descriptor released now so T45 can prepare needed transfers. No source execution authority or fullpayload created.",
-    "authorityRootRef": "CORE actual118 original safe215KB DATA descriptor is included as PARTIES CORE_DATA; current checkpoint still actual121 seq2, birth DATA immutable."
+    "authorityRootRef": "CORE actual118 original safe215KB DATA descriptor is included as PARTIES CORE_DATA; current checkpoint still actual121 seq2, birth DATA immutable.",
+    "finalDescriptorStats": {
+      "groups": 11,
+      "uniqueRequiredFiles": 79,
+      "uniqueCodeFiles": 6,
+      "uniqueMissingNonCodeFiles": 26,
+      "uniqueKnownMoney96LocationsPendingStat": 2
+    },
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 92349,
+        "sha256": "af7c037f32c4ca12b0c7b1af55058a9824e45b0cfd87009a12ac6b9417e2c2f1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 115652,
+        "sha256": "36848bfe1ff54ced7dcffce76c233bf0d1d01ce7dc4cdb3dcd0e602288c9f54b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
+        "bytes": 38934,
+        "sha256": "8780c82def3daa2c955fe605c053a824618c8b792687be61b4241008903e6306"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs",
+        "bytes": 40352,
+        "sha256": "b564426533a37dc96d7b8b33d7c3a9e6dcb8085c654c7305b670d2859c39076d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-party-source26.mjs",
+        "bytes": 23690,
+        "sha256": "df9044648d60c9d6cd8c909d04a28df8e01a1f8c1821373c17fa9f61df9d521a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-payment-source26.mjs",
+        "bytes": 10819,
+        "sha256": "491deae8ce6660038d45ea8c4bc745c91fd7daf4614f3e319d0cec7ba546a077"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/historical-customer-source.mjs",
+        "bytes": 11040,
+        "sha256": "fc7297be39fe007df60393ae1063bebe2ebf361ecb19f92facb857d7666f679c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-source-authorizers.mjs",
+        "bytes": 50941,
+        "sha256": "56b712ccdf523047e629444a20f0581e90b7dcc6b246c7937198ffff78adcaa7"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-native-product-reader.mjs",
+        "bytes": 22468,
+        "sha256": "f731c2f70fcc1499c3fd9413e63f6710a3fc80e70fd52a2ef382e01161e2be2f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 28560,
+        "sha256": "b3fa6f88ef673675bcfb6db5f6e1cf7ba8afbc0bae38a633ebaf2209e8b88597"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
+        "bytes": 6716,
+        "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480"
+      }
+    ],
+    "fixedRunFilesUnchangedFrom623": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.mjs",
+        "bytes": 30303,
+        "sha256": "52c70e6fc50489a38ad0b3311efd55b5e5225debf563fd72afd632d29f89580e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.test.mjs",
+        "bytes": 39158,
+        "sha256": "81431f276ca6187cb3c2570872242e1759c99c629ec12d6f12973678c3e5226c"
+      }
+    ],
+    "implemented": [
+      "Each reader takes its existing original logical options unchanged plus an internal resolveFile IO capability. Only exact original logical path/bytes/SHA may select one explicit physical path with identical bytes/SHA. Null/absent/wrong identity rejects; no basename/prefix/filename inference or fallback for a declared map.",
+      "BARCODE and original native3/header/TL held-file readers map only physical IO while retaining original captured manifests/index/prepared projections and same original validators, range hashes, EOF/count/order and FD/cancel/close rules.",
+      "PARTIES including historical exact2, PAYMENT nested review/manifest/decisions/QB, original PRODUCT evidence and full26 reference authorizer, and CATALOGUE load/verify all retain original logical identity comparisons and original review contents/pins.",
+      "C144 original helper/common SALES_LINE+SETTLEMENT captured consumer preserve logical manifest/source/typed context; original transport reads exact mapped physical refs, original32 money parsing and lazy post-activation native resolver unchanged. No settlement legacy module changed.",
+      "Original host passes only an own function resolver from its trusted source session into the existing full26 product authorizer. Accessor rejected without invocation. No schema, business DTO, real DB capability or grant wrapper added.",
+      "Concrete CATALOGUE factory now invokes the already existing openReviewedCatalogueSource26; old provider factory emitted legacy profile rejected by capturedStep26. Original catalogue decisions/options/pins/old API preserved.",
+      "C144 closureWindow relative dependency is explicitly pinned and mapped; logical and physical closure/window code files must preserve the original same-directory import relationship. CODE helper pin updated for the new IO seam only; original DATA/metadata pin content unchanged."
+    ],
+    "checks": {
+      "newProviderPhysicalMappingTests": 8,
+      "newHostCapabilityCheck": 1,
+      "newPass": 9,
+      "newFail": 0,
+      "affectedExistingPass": 5,
+      "affectedExistingFail": 0,
+      "syntaxChecks": 9,
+      "trailingWhitespaceFiles": 0,
+      "covered": [
+        "PAYMENT/PARTIES original nested logical paths physically absent but original real loaders succeed via exact explicit map.",
+        "Historical exact2 original candidate.sourceFile/review.candidate.path comparisons remain unchanged after actual fixture directory relocation.",
+        "Original PRODUCT evidence and full reference maps read/authorize original unchanged source/decisions after relocation.",
+        "Concrete BARCODE manifests nested capture files and native/SKU/HEADERS/TL actual held ranges work with original logical paths absent.",
+        "Original C144 manifest nested source/typed map, original money32 and full child source/typed closure remain genuine; database.ready remains0 until native authorization.",
+        "CATALOGUE concrete factory consumes existing EXACT26 original loader and full category projection after logical paths are moved.",
+        "Missing declared path, explicit null physical ref, wrong logical SHA/bytes and physical bytes changed at identical size all refuse; no implicit original/prefix fallback.",
+        "Host resolver accessor cannot execute during session descriptor capture."
+      ],
+      "notRun": "No actual server/PG/source consume/large original body scan/copy/rehash/import/full roots/MAIN/QA processes/build/Git. Source622/T04/T19 old suites reused; original needed5 finite checks only."
+    },
+    "runtimeCodeRequirements": [
+      "C/T45 fills physical CODE locations after this exact code bundle is fixed, with the final CODE pins in INPUT. CODE is separate from original DATA semantic identity.",
+      "C144 recipe.sourceRoot must name the actual registered same-version code root for its existing imports; do not infer a filesystem prefix.",
+      "Original job product referenceDecisionFile/reviewFile/mappingFiles remain the logical paths in PRODUCTS.hostReferenceOptions; the trusted source resolver supplies their physical IO locations.",
+      "CORE DATA projection logical descriptor remains original actual118 immutable safe DATA; currentcheckpoint comes from original actual121/readback, never by editing birth DATA."
+    ],
+    "remaining": [
+      "C/T45 adopt completed physical refs with actual transfer/size/original SHA proof and finish money96 fresh stat, without treating metadata mapping as current STAGE equality or skip authorization.",
+      "C/QB fixed increment review once; C original source624 assemble real complete DATA/EXPECTED/MAIN then approve actual full hash/job/grant with original keys.",
+      "T45 actual all11 source consumption/roots, synthetic T19 process/unknown-commit QA and real MAIN/closure/publication remain NOT_RUN."
+    ]
   }
 }

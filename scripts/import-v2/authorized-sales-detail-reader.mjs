@@ -124,7 +124,7 @@ const capturedOwn=(value,keys)=>{
  if(!value||Object.getPrototypeOf(value)!==Object.prototype||Reflect.ownKeys(value).length!==keys.length)fail('CAPTURED_HISTORY_SHAPE');
  const result={};for(const key of keys){const d=Object.getOwnPropertyDescriptor(value,key);if(!d?.enumerable||!Object.hasOwn(d,'value'))fail('CAPTURED_HISTORY_SHAPE');result[key]=d.value;}return result;
 };
-export async function openCapturedSalesSettlementSource(options,entity){
+export async function openCapturedSalesSettlementSource(options,entity,io={}){
  if(!['SALES_LINE','SETTLEMENT'].includes(entity))fail('CAPTURED_HISTORY_ENTITY');
  const option=key=>{const d=Object.getOwnPropertyDescriptor(options??{},key);if(!d?.enumerable||!Object.hasOwn(d,'value'))fail('CAPTURED_HISTORY_OPTIONS');return d.value;};
  const captured=capturedOwn(option('capturedSource'),['manifestFile','trustedManifestSha256','selection','moneyApprovals','read','verify','close']);
@@ -145,9 +145,10 @@ export async function openCapturedSalesSettlementSource(options,entity){
   if(historySettlementRequestHash(checked)!==historySettlementRequestHash(moneyApprovals))fail('CAPTURED_HISTORY_SELECTION_MONEY');
   const manifestFile=captured.manifestFile,manifestSha256=captured.trustedManifestSha256;
   if(typeof manifestFile!=='string'||!isAbsolute(manifestFile)||!hash(manifestSha256))fail('CAPTURED_HISTORY_MANIFEST_PIN');
-  const before=await lstat(manifestFile);active();
-  if(!before.isFile()||before.isSymbolicLink()||before.size>4*1024*1024)fail('CAPTURED_HISTORY_MANIFEST_PIN');
-  const bytes=await readFile(manifestFile),after=await lstat(manifestFile);active();
+  const physical=io.resolveFile?await io.resolveFile({path:manifestFile,sha256:manifestSha256}):{path:manifestFile};active();
+  const before=await lstat(physical.path);active();
+  if(!before.isFile()||before.isSymbolicLink()||before.size>4*1024*1024||(physical.bytes!==undefined&&before.size!==physical.bytes))fail('CAPTURED_HISTORY_MANIFEST_PIN');
+  const bytes=await readFile(physical.path),after=await lstat(physical.path);active();
   if(bytes.length!==before.size||['dev','ino','size','mtimeMs','ctimeMs'].some(k=>before[k]!==after[k])||sha(bytes)!==manifestSha256)fail('CAPTURED_HISTORY_MANIFEST_PIN');
   const manifest=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));historySettlementRequestHash(manifest);
   if(manifest.status!=='ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY'||manifest.referenceOnly!==true||manifest.nativeBindingsVerified!==false||manifest.PG!==false||manifest.MAIN!==false||manifest.PUBLISH!==false||manifest.all11!==false||manifest.actualPayloadHash!==null||!Array.isArray(manifest.artifacts))fail('CAPTURED_HISTORY_MANIFEST_SCOPE');

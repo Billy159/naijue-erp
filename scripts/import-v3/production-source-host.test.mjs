@@ -270,3 +270,7 @@ test('T19 host forwards verified prior publication return through runner with ze
  let cleaned=0;const limited=forwardSourceSteps26({async *steps(){try{yield{kind:'MAIN',payload:{action:'IMPORT_CORE_STAGE'}};yield{kind:'MAIN',payload:{action:'IMPORT_CORE_STAGE'}};}finally{cleaned++;}},active(){},maxSteps:1,core:true});await limited.next();await assert.rejects(limited.next(),/STEP_LIMIT/);assert.equal(cleaned,1);
  const core=forwardSourceSteps26({async *steps(){yield{kind:'SKU',payload:{}};},active(){},maxSteps:1,core:true});await assert.rejects(core.next(),/CORE_ONLY/);
 });
+test('source627 host carries only an own data-function physical resolver; an accessor cannot run during session capture',()=>{
+ const s=session26Fixture(),resolver=async ref=>ref;s.nativeProductSourceReader.resolveFile=resolver;const captured=captureNativeSourceSession26(s,job26().binding);assert.equal(Object.getOwnPropertyDescriptor(captured.nativeProductSourceReader,'resolveFile').value,resolver);
+ let gets=0;const bad=session26Fixture();Object.defineProperty(bad.nativeProductSourceReader,'resolveFile',{enumerable:true,get(){gets++;return resolver;}});assert.throws(()=>captureNativeSourceSession26(bad,job26().binding),/SESSION_REQUIRED/);assert.equal(gets,0);
+});

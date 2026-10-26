@@ -462,3 +462,184 @@ test('T19 native stage skipping requires exact current source/record/target cont
  for(const field of ['targetId','sourceRecordHash','sourceFileRef']){const bad=structuredClone(progress);bad.records[0][field]='WRONG';assert.throws(()=>unclaimedNativeStage26({group:'SKUS',payload:p,progress:bad}),/STAGE_CONTENT_CONFLICT/);}
  const original={unclaimedHistory:true};for(const group of ['HEADERS','TRANSFER_LINES','STOCK_CONTRIBUTORS'])assert.equal(unclaimedNativeStage26({group,payload:original,progress}),original);
 });
+
+async function mappedPaymentFixture26(t){
+const {mkdtemp,realpath,writeFile,readFile,rm,symlink}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');const hash=b=>createHash('sha256').update(b).digest('hex'),sha=hash,payload=digest('b'),pin=H;const {prepareNativePartyImportChunk}=await import('../../packages/application/src/native-party-import.ts');const {prepareNativePaymentImportChunk}=await import('../../packages/application/src/native-payment-import.ts');const {paymentChunk,paymentId,PAYMENT_HASH,PAYMENT_NAMESPACE}=await import('../../tests/support/native-payment-fixtures.ts');
+async function fixture(t){
+ const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-native-payment-source26-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const binding={batchId:paymentId(1),fixedSourceNamespace:PAYMENT_NAMESPACE,cutoffAt:'2026-10-04T12:00:00+08:00',selectionSha256:PAYMENT_HASH};
+ const prepared=[prepareNativePaymentImportChunk(paymentChunk('PAYMENT_METHOD',10)),prepareNativePaymentImportChunk(paymentChunk('PAYMENT_ACCOUNT',20)),prepareNativePaymentImportChunk(paymentChunk('PAYMENT_ACCOUNT_HALL',40))];
+ const candidate={version:'NATIVE_PAYMENT_SOURCE_REFERENCE_CANDIDATE_V1',...binding,prepared,sourceLocators:prepared.flatMap(c=>c.rows.map(r=>({entity:r.entity,sourceKey:r.source.sourceKey,originalSourceId:r.entity==='PAYMENT_ACCOUNT_HALL'?'':r.source.sourceKey,sourceLocator:{file:r.source.fileRef,sheet:r.source.sheet,row:Number(r.source.rowNo),sourceSha256:r.source.sourceFileSha256},rawLineSha256:r.source.rowSha256}))),importAuthorized:false,nativeReferenceApproved:false};
+ const files={candidate:join(dir,'candidate.json'),manifest:join(dir,'manifest.json'),qb:join(dir,'QB.json'),review:join(dir,'C.json')};const qb=Buffer.from(JSON.stringify({result:'PASS',scope:'SYNTHETIC_REFERENCE_PROTOCOL_ONLY'}));await writeFile(files.qb,qb);
+ const counts={PAYMENT_METHOD:1,PAYMENT_ACCOUNT:1,PAYMENT_ACCOUNT_HALL:1},review={version:'C_NATIVE_PAYMENT_REFERENCE_REVIEW_V1',decision:'ACCEPT_EXACT_PREPARED_PAYMENT_REFERENCE_BINDINGS',binding,manifest:{},decisions:{},scope:'PAYMENT_REFERENCE_DECISIONS_ONLY',independentReview:{path:files.qb,sha256:hash(qb),result:'PASS'},realImportExecutionAuthorized:false};
+ async function save(){const data=Buffer.from(JSON.stringify(candidate));await writeFile(files.candidate,data);const artifact={path:files.candidate,bytes:data.length,sha256:hash(data)},manifest=Buffer.from(JSON.stringify({...binding,status:'SYNTHETIC_CANDIDATE_NOT_NATIVE_GRANT',counts,rows:3,chunks:candidate.prepared.length,artifact,nativeReferenceApproved:false,importAuthorized:false}));await writeFile(files.manifest,manifest);review.manifest={path:files.manifest,bytes:manifest.length,sha256:hash(manifest),rows:3,counts};review.decisions={...artifact,rows:3};const rb=Buffer.from(JSON.stringify(review));await writeFile(files.review,rb);return {reviewFile:files.review,trustedReviewSha256:hash(rb),binding,authorizedPayloadHash:payload};}
+ return {candidate,review,files,save,options:await save()};
+}
+return fixture(t);
+}
+
+async function mappedPartyFixture26(t){
+const {mkdtemp,realpath,writeFile,readFile,rm,symlink}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');const hash=b=>createHash('sha256').update(b).digest('hex'),sha=hash,payload=digest('b'),pin=H;const {prepareNativePartyImportChunk}=await import('../../packages/application/src/native-party-import.ts');
+async function fixture(t){
+ const directory=await mkdtemp(join(await realpath(tmpdir()),'synthetic-party-source26-'));t.after(()=>rm(directory,{recursive:true,force:true}));
+ const binding={batchId:id(1),fixedSourceNamespace:'synthetic.party26',cutoffAt:'2026-10-04T12:00:00+08:00',selectionSha256:H};
+ const entities=['CUSTOMER','SUPPLIER','HALL','WAREHOUSE','STAFF'],nativeIds=Object.fromEntries(entities.map((e,i)=>[e,id(100+i)])),sourceKeys=Object.fromEntries(entities.map(e=>[e,'SYNTHETIC-'+e]));
+ const rows=entities.map((entity,i)=>{
+  const table=IMPORT_V2_TABLES.find(t=>t.entity===entity),fields=Object.fromEntries(table.columns.map(c=>[c.name,'']));fields.来源编号=sourceKeys[entity];let nativeSnapshot,bindings={},enumMappings;
+  if(['CUSTOMER','SUPPLIER'].includes(entity)){Object.assign(fields,{原编码:' 0001 ',名称:'SYNTHETIC '+entity,状态:'原停用'});nativeSnapshot={id:nativeIds[entity],code:fields.原编码,name:fields.名称,enabled:false,version:1,created_at:null,updated_at:null};enumMappings={状态:{raw:fields.状态,native:false,evidenceRef:'SYNTHETIC-state'}};}
+  else if(entity==='HALL'){Object.assign(fields,{厅名称:'SYNTHETIC HALL',默认客户来源编号:sourceKeys.CUSTOMER,默认销货仓来源编号:sourceKeys.WAREHOUSE,状态:'原正常'});nativeSnapshot={id:nativeIds.HALL,name:fields.厅名称,default_customer_id:nativeIds.CUSTOMER,default_sales_warehouse_id:nativeIds.WAREHOUSE,enabled:true,version:1};bindings={默认客户来源编号:{sourceKey:sourceKeys.CUSTOMER,nativeId:nativeIds.CUSTOMER},默认销货仓来源编号:{sourceKey:sourceKeys.WAREHOUSE,nativeId:nativeIds.WAREHOUSE}};enumMappings={状态:{raw:fields.状态,native:true,evidenceRef:'SYNTHETIC-state'}};}
+  else if(entity==='WAREHOUSE'){Object.assign(fields,{仓库名称:'SYNTHETIC WAREHOUSE',所属厅来源编号:sourceKeys.HALL,状态:'原正常',切换范围:'本次完整核准'});nativeSnapshot={id:nativeIds.WAREHOUSE,name:fields.仓库名称,hall_id:nativeIds.HALL,enabled:true,version:1};bindings={所属厅来源编号:{sourceKey:sourceKeys.HALL,nativeId:nativeIds.HALL}};enumMappings={状态:{raw:fields.状态,native:true,evidenceRef:'SYNTHETIC-state'}};}
+  else{Object.assign(fields,{姓名:'SYNTHETIC STAFF',角色:'原营业员',任职状态:'原离职',联系方式:'001234',所属厅来源编号:sourceKeys.HALL});nativeSnapshot={id:nativeIds.STAFF,name:fields.姓名,hall_id:nativeIds.HALL,role:'SALESPERSON',contact:fields.联系方式,employment_status:'LEFT',version:1};bindings={所属厅来源编号:{sourceKey:sourceKeys.HALL,nativeId:nativeIds.HALL}};enumMappings={角色:{raw:fields.角色,native:'SALESPERSON',evidenceRef:'SYNTHETIC-role'},任职状态:{raw:fields.任职状态,native:'LEFT',evidenceRef:'SYNTHETIC-employment'}};}
+  return {batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selection:{entity,source:'BASE_V2',path:table.file,baseManifestSha256:H,selectionSha256:H,approvalSha256:H,csvSha256:H},source:{id:id(1000+i),batchId:binding.batchId,entityType:entity,sourceKey:sourceKeys[entity],fileRef:'SYNTHETIC.xlsx',sheet:entity,rowNo:'2',sourceFileSha256:H,rowSha256:H,rawFields:{...fields},normalizedFields:fields,fieldProvenance:{schema_version:1,fields:{}}},nativeSnapshot,bindings,enumMappings,...(entity==='WAREHOUSE'?{warehouseRecord:{id:id(2000),reviewedAt:'2026-10-21T13:00:00.000Z',decisionReason:'SYNTHETIC_WH'}}:{})};
+ });
+ const manifestPath=join(directory,'review-candidate-manifest.json'),reviewFile=join(directory,'C-review.json'),componentPath=join(directory,'party-reference-candidates.json');
+ const manifest={version:'NATIVE_BINDING_REVIEW_CANDIDATE_V1',...binding,parties:rows.length,files:[]},review={version:'C_NATIVE_BINDING_PARTIAL_REVIEW_PIN_V1',decision:'ACCEPT_EXACT_QB_REVIEWED_PARTIAL_ARTIFACT_SCOPE',binding,manifestSha256:null,manifestBytes:0,closedToUnreviewedComponents:true,realNativeCommandsOrImportAuthorizedByThisPinAlone:false,components:[]};
+ async function save(){const cb=Buffer.from(JSON.stringify(rows));await writeFile(componentPath,cb);manifest.parties=rows.length;manifest.files=[{name:'party-reference-candidates.json',sha256:sha(cb),bytes:cb.length},{name:'native-identity-registry.json',sha256:H,bytes:103890023}];const mb=Buffer.from(JSON.stringify(manifest));await writeFile(manifestPath,mb);review.manifestSha256=sha(mb);review.manifestBytes=mb.length;review.components=[{component:'party-reference-candidates.json',sha256:sha(cb),scope:'SYNTHETIC ordinary mapping only'}];const rb=Buffer.from(JSON.stringify(review));await writeFile(reviewFile,rb);return {binding,authorizedPayloadHash:payload,source:{directory,trustedManifestSha256:sha(mb),reviewRecordFile:reviewFile,trustedReviewRecordSha256:sha(rb)},historical:null,chunkRows:1};}
+ return {directory,rows,manifest,review,componentPath,manifestPath,reviewFile,save,options:await save()};
+}
+return fixture(t);
+}
+
+async function mappedHistoricalFixture26(t){
+const {mkdtemp,realpath,writeFile,readFile,rm,symlink}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');const hash=b=>createHash('sha256').update(b).digest('hex'),sha=hash,payload=digest('b'),pin=H;const {prepareNativePartyImportChunk}=await import('../../packages/application/src/native-party-import.ts');const {stableImportId}=await import('../../packages/application/src/inventory-cutoff-import.ts');
+async function fixture(t) {
+  const dir = await mkdtemp(join(await realpath(tmpdir()), 'synthetic-historical-customer-'));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const binding = { batchId: id(1), fixedSourceNamespace: 'synthetic:exact2:no-native-grant', selectionSha256: pin };
+  const paths = { sourceFile: join(dir, 'source.json'), candidateFile: join(dir, 'candidate.json'), reviewFile: join(dir, 'review.json'), contractFile: join(dir, 'contract.json') };
+  const raw = [2, 3].map(n => ({ sourceKey: `HIST-CUSTOMER:${id(n)}`, originalCode: `SYN-${n}`, originalName: `Synthetic historical ${n}`, enabled: false,
+    historicalOnly: true, visibleInCurrentCustomerList: false, originalPartyIdentity: id(n), sourceDocumentNumber: `SYN-INVOICE-${n}` }));
+  const contract = { taskId: 'B06-HISTORICAL-CUSTOMER-EXACT2-EXISTING-FIELDS-PROPOSAL', controllerAdoption: {
+    status: 'EXISTING_FIELDS_IMPLEMENTATION_CONTRACT_ACCEPTED_PENDING_EXACT_SOURCE_PIN_AND_SCOPED_QA', executionGrant: false } };
+  const contractBytes = Buffer.from(JSON.stringify(contract)); await writeFile(paths.contractFile, contractBytes, { mode: 0o600 });
+  const sourceBytes = Buffer.from(JSON.stringify(raw)), sourcePin = hash(sourceBytes);
+  const rows = raw.map((r, i) => ({ source: {
+    id: stableImportId('source-row', binding.fixedSourceNamespace, 'CUSTOMER', r.sourceKey), batchId: binding.batchId, entityType: 'CUSTOMER', sourceKey: r.sourceKey,
+    fileRef: 'dictionaries/historical-customers.json', sheet: 'JSON_ARRAY_ITEMS', rowNo: String(i + 1), sourceFileSha256: sourcePin, rowSha256: hash(JSON.stringify(r)),
+    rawFields: r, normalizedFields: r, fieldProvenance: { schema_version: 1, fields: Object.fromEntries(Object.entries(r).map(([k, v]) => [k,
+      { origin: 'ORIGINAL', reason: 'EXACT_ORIGINAL_JSON_ARRAY_ITEM_VALUE', raw: v }])), source_row_encoding: 'SHA256_JSON_STRINGIFY_ORIGINAL_ARRAY_ITEM_UTF8_V1' } },
+    selection: { entity: 'CUSTOMER', source: 'HISTORICAL_CUSTOMER_SUPPLEMENT_V1', path: 'dictionaries/historical-customers.json', baseManifestSha256: pin, selectionSha256: binding.selectionSha256, sourceFileSha256: sourcePin },
+    nativeId: id(100 + i), nativeSnapshot: { id: id(100 + i), code: r.originalCode, name: r.originalName, enabled: false, version: 1, created_at: null, updated_at: null },
+    historyHeaderBinding: { sourceKey: r.sourceKey, originalPartyIdentity: r.originalPartyIdentity, sourceDocumentNumber: r.sourceDocumentNumber, nativeCustomerId: id(100 + i) }, currentListExcluded: true }));
+  const candidate = { version: 'NATIVE_HISTORICAL_CUSTOMER_EXACT2_CANDIDATE_V1', ...binding, contractSha256: hash(contractBytes), sourceFileSha256: sourcePin,
+    sourceFile: paths.sourceFile, rows, currentOrdinaryCustomersRetained: 261, newNativeUUIDsAllocatedOnce: 2, ordinaryCSVRewritten: false, noNewSchema: true, sql: false };
+  const identities = rows.map(r => ({ sourceKey: r.source.sourceKey, sourceRowId: r.source.id, sourceRowSha256: r.source.rowSha256, rowNo: r.source.rowNo, nativeCustomerId: r.nativeId, historicalOnly: true, currentListExcluded: true }));
+  const review = { version: 'C_HISTORICAL_CUSTOMER_EXACT2_REVIEW_V1', decision: 'ACCEPT_QB50_EXACT2_SOURCE_NATIVE_MAPPING_ONLY', binding, sourceFileSha256: sourcePin,
+    contractSha256: hash(contractBytes), identities, review: { result: 'PASS', sha256: pin }, realExecutionAuthorizedByThisPinAlone: false, candidate: {} };
+  async function save() {
+    const sb = Buffer.from(JSON.stringify(raw)); await writeFile(paths.sourceFile, sb, { mode: 0o600 });
+    candidate.sourceFileSha256 = review.sourceFileSha256 = hash(sb);
+    for (let i = 0; i < rows.length; i++) { rows[i].source.sourceFileSha256 = rows[i].selection.sourceFileSha256 = hash(sb);
+      rows[i].source.rowSha256 = identities[i].sourceRowSha256 = hash(JSON.stringify(raw[i])); }
+    const cb = Buffer.from(JSON.stringify(candidate)); await writeFile(paths.candidateFile, cb, { mode: 0o600 });
+    review.candidate = { path: paths.candidateFile, sha256: hash(cb), bytes: cb.length };
+    const rb = Buffer.from(JSON.stringify(review)); await writeFile(paths.reviewFile, rb, { mode: 0o600 });
+    return { ...paths, binding, trustedReviewSha256: hash(rb) };
+  }
+  return { raw, rows, candidate, review, paths, binding, save, options: await save() };
+}
+
+return fixture(t);
+}
+
+async function relocateFiniteTree26(t,directory){
+ const {readdir,readFile,rename,rm,stat}=await import('node:fs/promises'),{join,relative}=await import('node:path'),{createHash}=await import('node:crypto'),{sourceFileResolver26}=await import('./production-source-provider26.mjs');
+ const physicalRoot=directory+'-physical-relocation',fileLocations=[];
+ async function walk(dir){for(const name of await readdir(dir)){const path=join(dir,name),st=await stat(path);if(st.isDirectory())await walk(path);else{const bytes=await readFile(path),sha256=createHash('sha256').update(bytes).digest('hex');fileLocations.push({logical:{path,bytes:bytes.length,sha256},physical:{path:join(physicalRoot,relative(directory,path)),bytes:bytes.length,sha256}});}}}
+ await walk(directory);await rename(directory,physicalRoot);t.after(()=>rm(physicalRoot,{recursive:true,force:true}));return{fileLocations,resolveFile:sourceFileResolver26({fileLocations}),physicalRoot};
+}
+test('source627 physical mapping: PAYMENT and PARTIES keep original nested review paths while only exact relocated file identities are readable',async t=>{
+ const {dirname}=await import('node:path'),{openReviewedPaymentSource26}=await import('./native-payment-source26.mjs'),{openReviewedPartySource26}=await import('./native-party-source26.mjs');
+ for(const [make,open,root]of[[mappedPaymentFixture26,openReviewedPaymentSource26,f=>dirname(f.files.review)],[mappedPartyFixture26,openReviewedPartySource26,f=>f.options.source.directory]]){
+  const f=await make(t),original=structuredClone(f.options),move=await relocateFiniteTree26(t,root(f));await assert.rejects(open(original));const reader=await open(original,{resolveFile:move.resolveFile});t.after(()=>reader.close());
+  await reader.verify();const chunks=await Array.fromAsync(reader.chunks());assert.ok(chunks.length>0);for(const chunk of chunks)await reader.authorize(chunk);assert.deepEqual(f.options,original);
+  const {sourceFileResolver26}=await import('./production-source-provider26.mjs'),missing=move.fileLocations.filter(x=>x.logical.path!==original.reviewFile&&x.logical.path!==original.source?.reviewRecordFile);await assert.rejects(open(original,{resolveFile:sourceFileResolver26({fileLocations:missing})}),/NOT_LISTED/);
+  await reader.close();
+ }
+});
+test('source627 physical mapping: historical exact2 preserves original source/candidate logical equality after relocation and refuses missing/wrong identities',async t=>{
+ const f=await mappedHistoricalFixture26(t),{dirname}=await import('node:path'),{openHistoricalCustomerSource}=await import('./historical-customer-source.mjs'),{sourceFileResolver26}=await import('./production-source-provider26.mjs'),original=structuredClone(f.options),move=await relocateFiniteTree26(t,dirname(original.reviewFile));
+ await assert.rejects(openHistoricalCustomerSource(original));const reader=await openHistoricalCustomerSource(original,{resolveFile:move.resolveFile});t.after(()=>reader.close());const rows=await Array.fromAsync(reader.rows());assert.equal(rows.length,2);for(const row of rows)await reader.authorizeRow(row);await reader.verify();assert.deepEqual(original,f.options);
+ const bad=structuredClone(move.fileLocations);bad[0].physical.sha256=digest('f');assert.throws(()=>sourceFileResolver26({fileLocations:bad}),/IDENTITY/);
+ const missing=move.fileLocations.filter(x=>x.logical.path!==original.sourceFile);await assert.rejects(openHistoricalCustomerSource(original,{resolveFile:sourceFileResolver26({fileLocations:missing})}),/NOT_LISTED/);
+});
+test('source627 physical mapping: original PRODUCT evidence and full reference authorizer validate unchanged logical manifests at exact physical files',async t=>{
+ const {fixture:make}=await import(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/product.mjs'),f=await make(t),{openReviewedProductEvidenceSource}=await import('./native-source-authorizers.mjs'),{openNativeProductAuthorizer26}=await import('../import-v2/authorized-native-product-reader.mjs'),{prepareProductEvidenceChunk}=await import('../../packages/application/src/product-evidence-staging.ts');
+ const move=await relocateFiniteTree26(t,f.options.source.directory),sourceOptions={...f.options.source,binding:f.options.binding};await assert.rejects(openReviewedProductEvidenceSource(sourceOptions));const source=await openReviewedProductEvidenceSource(sourceOptions,{resolveFile:move.resolveFile});t.after(()=>source.close());
+ const authorizer=await openNativeProductAuthorizer26({sourceReader:source,...f.options.reference},{resolveFile:move.resolveFile});t.after(()=>authorizer.close());await authorizer.authorize(f.prepared);await source.verify();assert.equal(authorizer.report.decisions,1);
+ const projected=prepareProductEvidenceChunk({batchId:f.prepared.batchId,fixedSourceNamespace:f.prepared.fixedSourceNamespace,selection:f.prepared.selection,rows:f.prepared.rows.map(({source,product,blankPricePolicy})=>({source,product,blankPricePolicy}))});await source.authorize(projected);
+});
+test('source627 physical mapping: concrete provider BARCODE opens original manifest nested artifacts through exact map with original locations absent',async t=>{
+ const {dirname}=await import('node:path'),f=await retainedBarcodeFiles(t),root=dirname(f.inputs.producers.BARCODES.descriptor.path),move=await relocateFiniteTree26(t,root);f.inputs.producers.BARCODES.fileLocations=move.fileLocations;
+ const s=await f.open();t.after(()=>s.close());await s.preflight();for(const payload of f.prepared)await s.authorizeStep({kind:'BARCODE',payload});const c=await s.openSources.BARCODES(f.inputs.closureScope,{group:'BARCODES',signal:f.controller.signal});assert.equal((await Array.fromAsync(c.sourceRows())).length,3);assert.equal((await Array.fromAsync(c.typedRows())).length,9);
+});
+
+test('source627 physical mapping: unchanged original C144 nested manifest paths resolve to relocated source/typed files, with exact native gate and full child closure',async t=>{
+ const {syntheticSalesDetailChunk}=await import('../../tests/support/synthetic-sales-detail-fixtures.ts'),{stableImportId}=await import('../../packages/application/src/inventory-cutoff-import.ts');
+ const {prepareHistorySalesDetailChunk,HISTORY_SALES_DETAIL_VERSION}=await import('../../packages/application/src/import-v3-history-sales-detail.ts');
+ const {historyClosureProjectionRow26:project}=await import('../../packages/application/src/history-typed-closure.ts'),{v2MoneyApprovalSet}=await import('../../packages/application/src/import-v2.ts');
+ const {join}=await import('node:path');let expectedPrepared;
+ const f=await productionAuthorityFiles(t,{async prepareInputs(inputs,{binding,directory,save,writeFile,sha,readFile}){
+  const {mkdir}=await import('node:fs/promises');await mkdir(directory+'/capture');const originalSave=save;save=(name,value)=>originalSave('capture/'+name,value);
+  const input=syntheticSalesDetailChunk(),source=input.rows[0].source;input.batchId=source.batchId=binding.batchId;input.fixedSourceNamespace=binding.fixedSourceNamespace;source.id=stableImportId('source-row',input.fixedSourceNamespace,'SALES_LINE',source.sourceKey);source.rawFields.原成交单价='0.03000000000000001';
+  const approvals=[...input.moneyApprovals.values()];approvals[0]={fileSha256:source.sourceFileSha256,sheet:source.sheet,row:source.rowNo,sourceId:source.sourceKey,field:'原成交单价',rawValue:source.rawFields.原成交单价,exactCentValue:source.normalizedFields.原成交单价};input.moneyApprovals=v2MoneyApprovalSet(approvals,approvals);
+  async function rawFile(name,bytes){const path=join(directory,'capture',name);await writeFile(path,bytes,{mode:0o600});return{path,bytes:Buffer.byteLength(bytes),sha256:sha(bytes)};}
+  const columns=['file','sheet','row','sourceId','entity','documentSourceId','field','rawValue','excessFromNearestCent','candidateExactCentValue','sourceFileSha256','decision','provenance','toleranceCurrencyUnits','corroboratingDocumentSourceId'];
+  const csv=[columns.join(','),...approvals.map(a=>{const row={file:'SYNTHETIC.xlsx',sheet:a.sheet,row:a.row,sourceId:a.sourceId,entity:'SALES_LINE',documentSourceId:'SYNTHETIC-SALES-1',field:a.field,rawValue:a.rawValue,candidateExactCentValue:a.exactCentValue,sourceFileSha256:a.fileSha256};return columns.map(k=>row[k]??'').join(',');})].join('\n')+'\n';
+  const moneyRef=await rawFile('APPROVED-SYNTHETIC-MONEY.csv',Buffer.from(csv));input.selection.moneyApprovalSha256=moneyRef.sha256;
+  source.fieldProvenance={schema_version:1,fields:Object.fromEntries(Object.entries(source.rawFields).map(([k,v])=>[k,{origin:'ORIGINAL',reason:'EXACT_ORIGINAL_SNAPSHOT_CELL',raw:v}]))};source.fieldProvenance.fields.SKU来源编号={origin:'MIGRATION_DERIVED',reason:'VERIFIED_OLD_TO_CANONICAL_ALIAS',raw:source.rawFields.SKU来源编号,evidence_ref:'mappings/old-to-canonical-sku-15121.csv'};source.fieldProvenance.fields.__source_row_hash={origin:'ORIGINAL',reason:'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1',raw:source.rowSha256};
+  expectedPrepared=prepareHistorySalesDetailChunk(input);const row=expectedPrepared.rows[0],sourceRow=project('import_source_row',{id:source.id,batch_id:source.batchId,entity_type:source.entityType,source_key:source.sourceKey,file_ref:source.fileRef,sheet:source.sheet,row_no:source.rowNo,source_file_sha256:source.sourceFileSha256,row_sha256:source.rowSha256,raw_fields:source.rawFields,normalized_fields:source.normalizedFields,field_provenance:{...row.fieldProvenance,history_sales_detail_staging:{validator_version:HISTORY_SALES_DETAIL_VERSION,fingerprint:row.fingerprint,selection:input.selection,header:row.header,sku:row.sku}}});
+  const sourceRef={...await rawFile('C144-source.jsonl',Buffer.from(JSON.stringify(sourceRow)+'\n')),rows:1,mode:'0600',entity:'SALES_LINE',actualColumns:12};
+  const typedRef={...await rawFile('C144-typed.jsonl',Buffer.from(JSON.stringify(project('history_sales_line',row.line))+'\n')),rows:1,mode:'0600',entity:'SALES_LINE',actualColumns:21};
+  const manifest={status:'ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY',referenceOnly:true,nativeBindingsVerified:false,PG:false,MAIN:false,PUBLISH:false,all11:false,actualPayloadHash:null,sourceRows:1,typedRows:1,artifacts:[sourceRef,typedRef]};
+  const helperRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3';
+  async function helper(name){const path=join(helperRoot,name),bytes=await readFile(path);return{path,bytes:bytes.length,sha256:sha(bytes)};}
+  inputs.producers.SALES_DETAILS={mode:'CAPTURED_C144',descriptor:{synthetic:'C144'},sourceRoot:'/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022',entity:'SALES_LINE',chunkRows:1,manifestRef:await save('C144-MANIFEST.json',manifest),source:sourceRef,typed:typedRef,moneyRef,trustedApprovalSha256:input.selection.approvalSha256,supportModules:{transport:await helper('retained-sales-settlement-consumer-20261025.mjs'),options:await helper('prepare-retained-sales-options-20261026.mjs'),closure:await helper('sales-header-closure-session-20261026.mjs')}};
+  const recipe=inputs.producers.SALES_DETAILS;recipe.supportModules.closureWindow=await helper('prepare-retained-sales-header-window-20261026.mjs');const moved=await relocateFiniteTree26(t,directory+'/capture');recipe.fileLocations=moved.fileLocations;for(const ref of Object.values(recipe.supportModules))recipe.fileLocations.push({logical:ref,physical:ref});
+
+ }});
+ const a=await f.open();t.after(()=>a.close());let ready=0;const options=await a.capturedOptions('SALES_DETAILS',f.inputs.producers.SALES_DETAILS,{binding:f.binding,signal:f.controller.signal,database:{ready(){ready++;throw Error('SYNTHETIC_ORIGINAL_DATABASE_NOT_ACTIVATED');}}});assert.equal(ready,0);
+ const {openCapturedSalesSettlementSource}=await import('../import-v2/authorized-sales-detail-reader.mjs'),{sourceFileResolver26}=await import('./production-source-provider26.mjs');const reader=await openCapturedSalesSettlementSource(options,'SALES_LINE',{resolveFile:sourceFileResolver26(f.inputs.producers.SALES_DETAILS)});t.after(()=>reader.close());const rows=await Array.fromAsync(reader.rows());assert.equal(rows.length,1);assert.equal(ready,0);
+ await assert.rejects(reader.authorize(expectedPrepared),/SYNTHETIC_ORIGINAL_DATABASE_NOT_ACTIVATED/);assert.equal(ready,1);
+ const child=await a.openRetainedClosure('SALES_DETAILS',f.inputs.producers.SALES_DETAILS,f.inputs.closureScope,{group:'SALES_DETAILS',signal:new AbortController().signal});
+ assert.equal((await Array.fromAsync(child.sourceRows())).length,1);const typed=await Array.fromAsync(child.typedRows());assert.equal(typed.length,1);assert.equal(typed[0].projection.quantity,'-2');assert.deepEqual(await Array.fromAsync(child.documents()),[]);
+ await child.close();await reader.close();await a.close();await a.close();
+});
+test('source627 physical mapping: original native, HEADERS and packed TRANSFER file readers consume relocated bytes without altering index or DTO identities',async t=>{
+ const {dirname}=await import('node:path');
+ for(const group of ['SKUS','HEADERS','TRANSFER_LINES']){
+  const f=group==='SKUS'?await retainedNativeFiles(t,group):group==='HEADERS'?await retainedHeaderFiles(t):await retainedTransferFiles(t),recipe=f.inputs.producers[group],directory=dirname(group==='SKUS'?f.file.path:group==='HEADERS'?recipe.retainedHeaders.sales.index.path:recipe.retainedTransferLines.index.path);
+  const moved=await relocateFiniteTree26(t,directory);recipe.fileLocations=moved.fileLocations;
+  if(group==='HEADERS')for(const ref of Object.values(recipe.retainedHeaders.helpers))recipe.fileLocations.push({logical:ref,physical:ref});
+  const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());await s.preflight();
+  const c=await s.openSources[group](f.inputs.closureScope,{group,signal:f.controller.signal}),source=await Array.fromAsync(c.sourceRows()),typed=await Array.fromAsync(c.typedRows());assert.ok(source.length>0);assert.ok(typed.length>0);assert.equal(f.trace.ready,0);await c.close();await s.close();
+ }
+});
+test('source627 physical mapping: explicit null location, omitted logical path, wrong requested SHA/size and changed same-size physical bytes never fall back',async t=>{
+ const {sourceFileResolver26}=await import('./production-source-provider26.mjs'),f=await mappedPaymentFixture26(t),{dirname}=await import('node:path'),{writeFile,readFile}=await import('node:fs/promises'),{openReviewedPaymentSource26}=await import('./native-payment-source26.mjs'),move=await relocateFiniteTree26(t,dirname(f.files.review)),entry=move.fileLocations.find(e=>e.logical.path===f.files.review);
+ await assert.rejects(move.resolveFile({...entry.logical,sha256:digest('f')}),/NOT_LISTED/);await assert.rejects(move.resolveFile({...entry.logical,bytes:entry.logical.bytes+1}),/NOT_LISTED/);await assert.rejects(move.resolveFile({...entry.logical,path:'/Users/SYNTHETIC_UNLISTED.json'}),/NOT_LISTED/);
+ const unavailable=structuredClone(move.fileLocations);unavailable.find(e=>e.logical.path===f.files.review).physical=null;await assert.rejects(openReviewedPaymentSource26(f.options,{resolveFile:sourceFileResolver26({fileLocations:unavailable})}),/UNAVAILABLE/);
+ const bytes=await readFile(entry.physical.path);bytes[bytes.indexOf(34)+1]^=1;await writeFile(entry.physical.path,bytes);await assert.rejects(openReviewedPaymentSource26(f.options,{resolveFile:move.resolveFile}),/CHANGED/);
+});
+
+async function mappedCatalogueFixture26(t){
+const {mkdtemp,realpath,writeFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');const pin=H,hash=b=>createHash('sha256').update(b).digest('hex');
+async function catalogue26Fixture(t){
+ const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-catalogue26-source-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+ const binding={batchId:id(1),fixedSourceNamespace:'synthetic:catalogue26',selectionSha256:pin,authorizedPayloadHash:'b'.repeat(64)};
+ const root={entity:'CATEGORY',sourceKey:'synthetic-root',nativeId:id(20),values:{name:'SYNTHETIC ROOT',display_order:0},references:{},originalEvidence:{synthetic:true}};
+ const leaf={entity:'CATEGORY',sourceKey:'synthetic-child',nativeId:id(21),values:{name:'SYNTHETIC CHILD',display_order:1},references:{parent_id:{entity:'CATEGORY',sourceKey:root.sourceKey,nativeId:root.nativeId,nativeSnapshot:{id:root.nativeId,parent_id:null,name:root.values.name,display_order:0,version:1}}},originalEvidence:{synthetic:true}};
+ const color={entity:'COLOR',sourceKey:'synthetic-color',nativeId:id(22),values:{code:'007',name:'SYNTHETIC COLOR',enabled:false},references:{},originalEvidence:{synthetic:true}};
+ const value={version:'NATIVE_CATALOGUE_OCCURRENCE_CANDIDATE_V1',...binding,baseManifestSha256:pin,groups:[[root],[leaf],[color]]};
+ const mappingFile=join(dir,'mapping.json'),reviewApprovalFile=join(dir,'outside-review.json');
+ async function save(){const bytes=Buffer.from(JSON.stringify(value));await writeFile(mappingFile,bytes);const review=Buffer.from(JSON.stringify({version:'NATIVE_CATALOGUE_TECHNICAL_REVIEW_V1',...binding,mappingSha256:hash(bytes)}));await writeFile(reviewApprovalFile,review);return {mappingFile,trustedMappingSha256:hash(bytes),reviewApprovalFile,trustedReviewApprovalSha256:hash(review),binding};}
+ return {value,leaf,binding,mappingFile,options:await save(),save};
+}
+return catalogue26Fixture(t);
+}
+
+test('source627 physical mapping: concrete CATALOGUE factory uses existing EXACT26 consumer with unchanged relocated original decisions',async t=>{
+ const data=await mappedCatalogueFixture26(t),{dirname}=await import('node:path'),move=await relocateFiniteTree26(t,dirname(data.mappingFile)),f=fixture();Object.assign(f.binding,data.binding);Object.assign(f.inputs.closureScope,{batchId:f.binding.batchId,fixedSourceNamespace:f.binding.fixedSourceNamespace,selectionSha256:f.binding.selectionSha256});f.inputs.closureScope.expectedCounts.import_source_row=3;Object.assign(f.inputs.closureScope.expectedSourceEntityCounts,{CATEGORY:2,COLOR:1});
+ f.inputs.producers.CATALOGUE={mode:'REVIEWED',options:data.options,fileLocations:move.fileLocations};const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());await s.preflight();
+ const c=await s.openSources.CATALOGUE(f.inputs.closureScope,{group:'CATALOGUE',signal:f.controller.signal});const sources=await Array.fromAsync(c.sourceRows()),typed=await Array.fromAsync(c.typedRows());assert.equal(sources.length,3);assert.ok(typed.some(row=>row.relation==='product_category'&&Object.hasOwn(row.projection,'deleted_at')));assert.equal(f.trace.ready,0);await c.close();
+});
