@@ -7,6 +7,7 @@ import {isDeepStrictEqual} from 'node:util';
 import {spawn} from 'node:child_process';
 import {setTimeout as delay} from 'node:timers/promises';
 import {withB07QaIdentityFixture,QA_IDENTITY,SQL as fixtureSql} from './qa-identity-schema19.mjs';
+import {runApprovedNormalHistory,validateApprovedInput} from './approved-normal-history-v16.mjs';
 import {runDraftNormalHistory,runDraftNormalHistoryCommittedContinuation,runDraftNormalHistoryRemainingMoneyContinuation,runDraftNormalHistoryRegisteredMoneyRetry,REGISTERED_MONEY_RETRY_PINS} from './draft-normal-history-v16.mjs';
 import {withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,credentialPermissionProofFromOriginal,credentialPermissionProofFromCommittedLifecycle,credentialPermissionProofFromRegisteredMoneyAttempt,QA_AUTH2_CHAIN_PINS,QA_AUTH3_MONEY_ATTEMPT_PINS} from './qa-identity-credential-renewal.mjs';
 const must=(ok,code)=>{if(!ok)throw Error(code);};
@@ -327,6 +328,140 @@ async function runCredentialContinuationParent(plan,remainingOnly,retryOnly=fals
  }catch(e){result.status='STOP_CREDENTIAL_CONTINUATION_OR_OUTCOME_UNCERTAIN_NO_RETRY';result.errorCode=typeof e.message==='string'&&/^B07_[A-Z0-9_]+$/.test(e.message)?e.message:'B07_RENEWAL_PARENT_FAILED_DETAIL_OMITTED';if(e.b07RenewalFailure)result.renewalFailure=e.b07RenewalFailure;}
  finally{result.clientsClosed=!connectCleanupUnknown&&recoveryClientsClosed;for(const close of [()=>resources.api?.close(),()=>resources.readPool?.dispose(),()=>setup&&!setupEnded?setup.end():undefined])try{await close();}catch{result.clientsClosed=false;result.status='STOP_SAME_PARENT_CLEANUP_UNKNOWN';}if(!result.clientsClosed)result.status='STOP_SAME_PARENT_CLEANUP_UNKNOWN';await record(plan.outputDirectory,'PARENT-RESULT.json',result);}
  must(result.status==='QA_CREDENTIAL_RENEWAL_AND_NORMAL_SESSION_SCOPE_COMPLETED'&&result.clientsClosed,'B07_RENEWAL_PARENT_STOPPED_SEE_PRIVATE_RESULT');return result;
+}
+// source714: one NEW closed SYN target. Original07 validation/seed/renewal stay unchanged.
+export const APPROVED_SYN_DATABASE='naijue_erp_test_b07_syn_approved_20261027_01';
+export const APPROVED_SYN_OUTPUT=P+'/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01';
+export const APPROVED_SYN_QA=Object.freeze({staffId:'b0714000-0000-4000-8000-000000000001',accountId:'b0714000-0000-4000-8000-000000000002',
+ loginName:'B07_SYN_APPROVED_V1_QA',name:'B07 SYN 已审核隔离验证 非来源人员',role:'WAREHOUSE',hallId:null});
+const SYN_SOURCE_ACTOR='00000000-0000-0000-0000-000000000802';
+export function validateApprovedSynParentPlan(plan){
+ must(plan?.contract==='B07_SYN_APPROVED_SESSION_PARENT_V1'&&plan.sourceKind==='SYNTHETIC_ONLY'&&plan.realSourceImportVerified===false,'B07_SYN_EXPLICIT_REGISTRATION_REQUIRED');
+ must(plan.outputDirectory===APPROVED_SYN_OUTPUT&&plan.purposeGateFile===join(APPROVED_SYN_OUTPUT,'CURRENT-PURPOSE-GATE.json'),'B07_SYN_FIXED_OUTPUT_REQUIRED');
+ must(plan.sourceRoot===P+'/work/erp-local-source-20261022','B07_SYN_FIXED_SOURCE_REQUIRED');
+ must(Number.isInteger(plan.purposeWaitMs)&&plan.purposeWaitMs>=0&&plan.purposeWaitMs<=300000,'B07_SYN_BOUNDED_PURPOSE_REQUIRED');
+ const t=plan.target;
+ must(t?.database===APPROVED_SYN_DATABASE&&/^[1-9][0-9]*$/.test(t.oid)&&t.role==='naijue_erp_test'&&typeof t.session_role==='string'&&t.session_role.length>0
+  &&t.server_address===null&&t.server_port===null&&Number.isInteger(t.port)&&t.port>0&&t.port<=65535
+  &&typeof t.postmaster_started_at==='string'&&t.postmaster_started_at.length>0
+  &&typeof t.unix_socket_directories==='string'&&t.unix_socket_directories.startsWith('/private/tmp/nj-b07-syn-approved-'),'B07_SYN_EXACT_TARGET_REQUIRED');
+ must(typeof plan.ordinaryRole==='string'&&/^t45_b07_syn_approved_[a-z0-9_]+$/.test(plan.ordinaryRole)&&plan.ordinaryRole!==t.role,'B07_SYN_REGISTERED_ORDINARY_ROLE_REQUIRED');
+ must(typeof plan.createdAt==='string'&&new Date(plan.createdAt).toISOString()===plan.createdAt,'B07_SYN_FIXED_CREATED_AT_REQUIRED');
+ must(typeof plan.registrationReference==='string'&&plan.registrationReference.length>0,'B07_SYN_CONTROLLER_REGISTRATION_REQUIRED');
+ return plan;
+}
+async function loadApprovedSynPublication(plan){
+ const publication=JSON.parse((await pinned(plan.publication)).toString('utf8'));
+ must(publication.profile==='B07_SYN_APPROVED_V1'&&publication.sourceKind==='SYNTHETIC_ONLY'&&publication.realSourceImportVerified===false
+  &&publication.publicationResult?.status==='IMPORTED','B07_SYN_ORIGINAL_PUBLICATION_REQUIRED');
+ must(stable(publication.target)===stable({database:plan.target.database,oid:plan.target.oid,role:plan.target.role}),'B07_SYN_PUBLICATION_TARGET_CHANGED');
+ must(publication.references?.batchId==='00000000-0000-0000-0000-000000000001'
+  &&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(publication.references.publishedOperationId)
+  &&publication.references.cases?.length===2&&publication.references.cases[0].kind==='sales'&&publication.references.cases[1].kind==='transfers'
+  &&publication.references.cases.every(r=>r.capturedSourceStatus==='APPROVED'&&r.capturedVersion===1),'B07_SYN_EXACT_PUBLISHED_REFERENCES_REQUIRED');
+ return publication;
+}
+/** New source714 QA fixture, using the original fixed parameterized INSERT and
+ * readback SQL. It does NOT call, alter or bypass the old07 primitive validator.
+ * Setup client is supplied and owned by T45; outer SYN parent closes it.
+ * Secret and cookie never leave this single-use closure or reach the upgrade hook. */
+export async function withB07ApprovedSynIdentity({plan:raw,client,recordPreparation,afterSeed}){
+ const plan=validateApprovedSynParentPlan(raw),publication=await loadApprovedSynPublication(plan);
+ must(typeof client?.query==='function'&&typeof recordPreparation==='function'&&typeof afterSeed==='function','B07_SYN_FIXED_CARRIER_REQUIRED');
+ const {createNodeScryptPasswords}=await import(pathToFileURL(resolve(plan.sourceRoot,'packages/authentication/src/passwords.ts')).href);
+ let password=randomBytes(32).toString('base64url'),passwordHash=null,began=false,commitAttempted=false;
+ const values=[SYN_SOURCE_ACTOR,APPROVED_SYN_QA.staffId,APPROVED_SYN_QA.accountId,APPROVED_SYN_QA.loginName];
+ try{
+  passwordHash=await createNodeScryptPasswords().hash(password);
+  await client.query('BEGIN');began=true;await client.query("SET LOCAL lock_timeout='4s'");await client.query("SET LOCAL statement_timeout='12s'");
+  const {unix_socket_directories,...expected}=plan.target;
+  must(client.connectionParameters?.host===unix_socket_directories&&client.connectionParameters?.port===plan.target.port,'B07_SYN_CONNECTED_TRANSPORT_CHANGED');
+  const target=(await client.query(fixtureSql.target)).rows;must(target.length===1&&stable(target[0])===stable(expected),'B07_SYN_CONNECTED_TARGET_CHANGED');
+  await client.query('LOCK TABLE naijue_erp.schema_migration IN SHARE MODE');
+  must(stable((await client.query(fixtureSql.versions)).rows.map(r=>r.version))===stable(Array.from({length:19},(_,i)=>i+1)),'B07_SYN_PREUPGRADE_SCHEMA19_REQUIRED');
+  await client.query('LOCK TABLE naijue_erp.staff,naijue_erp.user_account,naijue_erp.auth_session IN SHARE ROW EXCLUSIVE MODE');
+  const guards=(await client.query(fixtureSql.guards)).rows;must(guards.length===1&&guards[0].count===0,'B07_SYN_PREUPGRADE_NO_GUARD_BYPASS');
+  const before=(await client.query(fixtureSql.before,values)).rows;
+  must(before.length===1&&stable(before[0])===stable({accounts:1,sessions:0,disabled_source:1,qa_staff:0,qa_account:0}),'B07_SYN_FRESH_QA_ONLY_NO_REPLAY');
+  const published=(await client.query(`/* b07-syn:original-publication */ SELECT b.id FROM naijue_erp.import_batch b
+   JOIN naijue_erp.operation_receipt r ON r.target_id=b.id AND r.target_type='IMPORT' AND r.action='IMPORT_PUBLISH' AND r.status='COMMITTED'
+   JOIN naijue_erp.audit_change a ON a.operation_id=r.id AND a.object_id=b.id AND a.action='IMPORT_PUBLISH'
+    AND a.actor_account_id=r.actor_account_id AND a.occurred_at=r.completed_at
+   WHERE b.id=$1::uuid AND r.id=$2::uuid AND b.status='IMPORTED' AND b.history_validation_passed IS TRUE`,
+   [publication.references.batchId,publication.references.publishedOperationId])).rows;
+  must(published.length===1&&published[0].id===publication.references.batchId,'B07_SYN_ACTUAL_PUBLICATION_MISSING');
+  await recordPreparation({contract:plan.contract,target:plan.target,registrationReference:plan.registrationReference,qaIdentity:APPROVED_SYN_QA,
+   sourceKind:'SYNTHETIC_ONLY',sourceActorAccountId:SYN_SOURCE_ACTOR,sourceIdentityChanged:false,newStaff:1,newAccounts:1,newSessions:0,createdAt:plan.createdAt});
+  must((await client.query(fixtureSql.staff,[APPROVED_SYN_QA.staffId,APPROVED_SYN_QA.name])).rowCount===1,'B07_SYN_QA_STAFF_INSERT_FAILED');
+  must((await client.query(fixtureSql.account,[APPROVED_SYN_QA.accountId,APPROVED_SYN_QA.staffId,APPROVED_SYN_QA.loginName,passwordHash,plan.createdAt])).rowCount===1,'B07_SYN_QA_ACCOUNT_INSERT_FAILED');
+  const readback=(await client.query(fixtureSql.readback,[...values,plan.createdAt,APPROVED_SYN_QA.name])).rows;
+  must(readback.length===1&&stable(readback[0])===stable({accounts:2,sessions:0,qa_staff_present:1,qa_account_present:1,disabled_source:1,qa_staff:1,qa_account:1}),'B07_SYN_QA_EXACT_READBACK_FAILED');
+  commitAttempted=true;await client.query('COMMIT');began=false;
+ }catch(e){if(began&&!commitAttempted)try{await client.query('ROLLBACK');}catch{}password=null;passwordHash=null;
+  const error=Error(commitAttempted?'B07_SYN_SEED_COMMIT_UNKNOWN_READBACK_ONLY':'B07_SYN_SEED_FAILED_NO_RETRY');
+  error.seedFailure={commitAttempted,automaticRetry:false,errorCode:typeof e.code==='string'&&/^[A-Z0-9]{5}$/.test(e.code)?e.code:null};throw error;}
+ passwordHash=null;let active=true,loginUsed=false,logoutConfirmed=false;
+ try{
+  await afterSeed({qaIdentity:APPROVED_SYN_QA,publication,withNormalSession:async(api,work)=>{
+   must(active&&!loginUsed&&typeof work==='function','B07_SYN_ONE_NORMAL_SESSION_ONLY');loginUsed=true;
+   must(api?.app?.server?.listening===false&&typeof api.trustedOrigin==='string','B07_SYN_PRIVATE_NORMAL_FACTORY_REQUIRED');let cookie=null;
+   try{
+    const login=await api.app.inject({method:'POST',url:'/auth/login',headers:{origin:api.trustedOrigin,'content-type':'application/json'},payload:{loginName:APPROVED_SYN_QA.loginName,password}});
+    must(login.statusCode===200,'B07_SYN_NORMAL_LOGIN_FAILED');const value=login.headers['set-cookie'],cookies=typeof value==='string'?[value]:value;
+    must(Array.isArray(cookies)&&cookies.length>0,'B07_SYN_SESSION_COOKIE_MISSING');cookie=cookies.map(s=>s.split(';')[0]).join('; ');
+    const session=await api.app.inject({method:'GET',url:'/auth/session',headers:{origin:api.trustedOrigin,cookie}});must(session.statusCode===200,'B07_SYN_NORMAL_SESSION_FAILED');const p=session.json().principal;
+    must(p?.accountId===APPROVED_SYN_QA.accountId&&p.staffId===APPROVED_SYN_QA.staffId&&p.role==='WAREHOUSE'&&p.hallId===null&&p.authVersion===1,'B07_SYN_NORMAL_PRINCIPAL_CHANGED');
+    await work({actor:{accountId:APPROVED_SYN_QA.accountId,hallId:null},privateCookie:cookie});
+   }finally{if(cookie){const out=await api.app.inject({method:'POST',url:'/auth/logout',headers:{origin:api.trustedOrigin,cookie,'content-type':'application/json'},payload:{}});logoutConfirmed=out.statusCode===204;must(logoutConfirmed,'B07_SYN_LOGOUT_UNCONFIRMED');}cookie=null;}
+  }});
+  must(loginUsed&&logoutConfirmed,'B07_SYN_NORMAL_SESSION_INCOMPLETE');
+  return {status:'SYN_QA_ONE_NORMAL_SESSION_COMPLETED',sourceKind:'SYNTHETIC_ONLY',sourceIdentityChanged:false,qaIdentity:APPROVED_SYN_QA,logoutConfirmed,automaticRetry:false};
+ }finally{active=false;password=null;passwordHash=null;}
+}
+/** T45 calls this after prepareB07ApprovedPublication on the NEW schema19 DB.
+ * afterSeedUpgrade runs ONLY T45's existing reviewed upgrade/metadata preparation,
+ * then writes CURRENT-PURPOSE-GATE.json. It receives no password/session/SQL port.
+ * No upgrade, role creation, grant or schema mutation is implemented here. */
+export async function runB07ApprovedSynSessionParent({plan:raw,setupClient,afterSeedUpgrade}){
+ const plan=validateApprovedSynParentPlan(raw);must(typeof setupClient?.end==='function'&&typeof afterSeedUpgrade==='function','B07_SYN_T45_UPGRADE_CARRIER_REQUIRED');
+ const resources={},result={status:'STARTED',sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,qaFixtureActual:false,httpActual:false,automaticRetry:false,clientsClosed:true,postgresStopOwnedByT45:true};
+ let setupEnded=false,observations=0,outputReady=false;
+ try{
+  await loadApprovedSynPublication(plan);await mkdir(plan.outputDirectory,{mode:0o700,recursive:true});outputReady=true;
+  const identity=await withB07ApprovedSynIdentity({plan,client:setupClient,recordPreparation:value=>record(plan.outputDirectory,'SYN-QA-INSERT-INTENT.json',value),afterSeed:async({withNormalSession,publication})=>{
+   result.qaFixtureActual=true;await setupClient.end();setupEnded=true;
+   await afterSeedUpgrade({target:structuredClone(plan.target),qaIdentity:APPROVED_SYN_QA,publicationReferences:structuredClone(publication.references)});
+   const gate=await waitForPurposeGate(plan.purposeGateFile,plan.purposeWaitMs);must(gate?.format==='B07_SYN_APPROVED_NORMAL_PURPOSE_GATE_V1','B07_SYN_CURRENT_PURPOSE_REQUIRED');
+   const template=JSON.parse((await pinned(gate.runtimeConfiguration)).toString('utf8')),config=prepareOrdinaryConfiguration(template,plan.target);
+   const review=JSON.parse((await pinned(gate.review)).toString('utf8')),input=validateApprovedInput(JSON.parse((await pinned(gate.approvedInput)).toString('utf8')));
+   must(config.runtime26Review.reviewFile===gate.review.path&&config.runtime26Review.trustedReviewSha256===gate.review.sha256,'B07_SYN_EXACT_CURRENT_REVIEW_REQUIRED');
+   const pg=config.postgres.target,t=plan.target;
+   must(pg.user===plan.ordinaryRole&&review.catalog?.patchLevel===EFFECTIVE_VALUE_PROFILE&&review.target.database===t.database
+    &&review.target.databaseOid===t.oid&&review.target.sessionUser===pg.user&&review.target.actingRole===pg.user
+    &&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_SYN_CURRENT_NONOWNER_PURPOSE_REQUIRED');
+   must(stable(input.references)===stable(publication.references)&&stable(input.actor)===stable({accountId:APPROVED_SYN_QA.accountId,hallId:null})
+    &&stable(input.target)===stable({database:t.database,oid:t.oid,role:pg.user})&&input.sourceRoot===plan.sourceRoot&&input.origin===config.publicOrigin,'B07_SYN_EXACT_RUNNER_INPUT_REQUIRED');
+   const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=ordinaryDriver(Pool);
+   const {createProductionRuntime26HistoryRevisionApplicationApi}=await at('apps/api/src/production-provider-composition.ts');
+   const {BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts');
+   const {createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
+   resources.api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'},driver);
+   resources.readPool=new BoundedPostgresPool(config.postgres,driver);
+   const issuer=await createNativeRuntime26Issuer(resources.readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
+   await withNormalSession(resources.api,async({privateCookie})=>{
+    try{const actual=await runApprovedNormalHistory({api:resources.api,pool:issuer.pool,runtime26:issuer.runtime26,input,privateCookie,now:()=>new Date().toISOString(),
+     recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),
+     recordObservation:value=>record(plan.outputDirectory,'HTTP-'+String(++observations).padStart(3,'0')+'.json',value),
+     readBackgroundFailureCount:()=>resources.api.postgresBackgroundFailureCount+resources.readPool.backgroundFailureCount});
+     await record(plan.outputDirectory,'APPROVED-ACTUAL-RESULT.json',actual);result.httpActual=true;
+    }catch(e){if(e.approvedHistoryResult)await record(plan.outputDirectory,'APPROVED-ACTUAL-RESULT.json',e.approvedHistoryResult);throw Error('B07_SYN_HISTORY_FAILED_OR_OUTCOME_UNCERTAIN');}
+   });
+  }});
+  result.identity=identity;result.status='PASS_SYN_APPROVED_ONE_SESSION_LIMITED_SCOPE';
+ }catch(e){result.status='STOP_SYN_APPROVED_NO_AUTOMATIC_REPLAY';result.errorCode=typeof e.message==='string'&&/^B07_SYN_[A-Z0-9_]+$/.test(e.message)?e.message:'B07_SYN_PARENT_FAILED_DETAIL_OMITTED';if(e.seedFailure)result.seedFailure=e.seedFailure;}
+ finally{for(const close of [()=>resources.api?.close(),()=>resources.readPool?.dispose(),()=>!setupEnded?setupClient.end():undefined])try{await close();}catch{result.clientsClosed=false;result.status='STOP_SYN_APPROVED_CLEANUP_UNKNOWN';}
+  if(outputReady)await record(plan.outputDirectory,'PARENT-RESULT.json',result);}
+ must(result.status==='PASS_SYN_APPROVED_ONE_SESSION_LIMITED_SCOPE'&&result.clientsClosed,'B07_SYN_PARENT_STOPPED_SEE_PRIVATE_RESULT');return result;
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{must(process.argv.length===4&&process.argv[2]==='--registration','B07_PARENT_REGISTRATION_ARGUMENT_REQUIRED');

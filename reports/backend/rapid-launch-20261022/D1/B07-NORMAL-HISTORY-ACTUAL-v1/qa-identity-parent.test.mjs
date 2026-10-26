@@ -132,3 +132,74 @@ test('registered retry parent requires unique child03 and preserves original req
  const copy=originalRequestRecordBytes(pin,{command:value.command,phase:value.phase});assert.ok(copy.equals(bytes));assert.notStrictEqual(copy,bytes);
  assert.throws(()=>originalRequestRecordBytes(pin,{...value,phase:'OTHER'}));assert.throws(()=>originalRequestRecordBytes({...pin,sha256:'0'.repeat(64)},value));
 });
+
+// New source714 tests are explicitly protocol fakes, not PostgreSQL evidence.
+import {rm} from 'node:fs/promises';
+import {pathToFileURL} from 'node:url';
+import {APPROVED_SYN_DATABASE,APPROVED_SYN_OUTPUT,APPROVED_SYN_QA,validateApprovedSynParentPlan,withB07ApprovedSynIdentity,runB07ApprovedSynSessionParent} from './qa-identity-parent.mjs';
+async function synFixture(t,options={}){
+ const root=await mkdtemp(join(tmpdir(),'b07-syn-session-source714-'));t.after(()=>rm(root,{recursive:true,force:true}));
+ const plan={contract:'B07_SYN_APPROVED_SESSION_PARENT_V1',sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,
+  outputDirectory:APPROVED_SYN_OUTPUT,purposeGateFile:join(APPROVED_SYN_OUTPUT,'CURRENT-PURPOSE-GATE.json'),sourceRoot:P+'/work/erp-local-source-20261022',purposeWaitMs:0,
+  ordinaryRole:'t45_b07_syn_approved_protocol_fake',createdAt:'2026-10-27T00:00:00.000Z',registrationReference:'SOURCE714_PROTOCOL_FAKE_ONLY',
+  target:{database:APPROVED_SYN_DATABASE,oid:'711001',role:'naijue_erp_test',session_role:'publication19_bootstrap',server_address:null,server_port:null,port:55679,postmaster_started_at:'2026-10-27 00:00:00+00',unix_socket_directories:'/private/tmp/nj-b07-syn-approved-protocol-fake'}};
+ const pub={profile:'B07_SYN_APPROVED_V1',sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,target:{database:plan.target.database,oid:plan.target.oid,role:plan.target.role},publicationResult:{status:'IMPORTED'},
+  references:{batchId:'00000000-0000-0000-0000-000000000001',publishedOperationId:'00000000-0714-4000-8000-000000000001',cases:[{kind:'sales',capturedSourceStatus:'APPROVED',capturedVersion:1},{kind:'transfers',capturedSourceStatus:'APPROVED',capturedVersion:1}]}};
+ const bytes=Buffer.from(JSON.stringify(pub)),path=join(root,'PUBLICATION.json');await writeFile(path,bytes,{mode:0o600});plan.publication={path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};
+ const calls=[],records=[],facts={accountHash:null,staffInserts:0,accountInserts:0,logins:0,logouts:0,password:null};
+ const client={connectionParameters:{host:plan.target.unix_socket_directories,port:plan.target.port},async query(sql,args){calls.push(sql);let rows=[],rowCount=0;
+  if(sql===fixtureSql.target){const {unix_socket_directories,...actual}=plan.target;rows=[actual];}
+  else if(sql===fixtureSql.versions)rows=Array.from({length:19},(_,i)=>({version:i+1}));
+  else if(sql===fixtureSql.guards)rows=[{count:options.guards??0}];
+  else if(sql===fixtureSql.before)rows=[{accounts:1,sessions:0,disabled_source:1,qa_staff:0,qa_account:0}];
+  else if(sql.includes('/* b07-syn:original-publication */'))rows=[{id:pub.references.batchId}];
+  else if(sql===fixtureSql.staff){facts.staffInserts++;rowCount=1;assert.deepEqual(args,[APPROVED_SYN_QA.staffId,APPROVED_SYN_QA.name]);}
+  else if(sql===fixtureSql.account){facts.accountInserts++;facts.accountHash=args[3];rowCount=1;assert.equal(args[0],APPROVED_SYN_QA.accountId);assert.equal(args[2],APPROVED_SYN_QA.loginName);}
+  else if(sql===fixtureSql.readback)rows=[{accounts:2,sessions:0,qa_staff_present:1,qa_account_present:1,disabled_source:1,qa_staff:1,qa_account:1}];
+  else if(sql==='COMMIT'&&options.unknownCommit){const error=Error('PROTOCOL_FAKE_ACK_LOST');error.code='08006';throw error;}
+  return {rows,rowCount:rowCount||rows.length};},async end(){}};
+ const api={trustedOrigin:'https://syn-only.invalid',app:{server:{listening:false},async inject(req){
+  if(req.url==='/auth/login'){facts.logins++;facts.password=req.payload.password;assert.equal(req.payload.loginName,APPROVED_SYN_QA.loginName);
+   const {createNodeScryptPasswords}=await import(pathToFileURL(join(plan.sourceRoot,'packages/authentication/src/passwords.ts')).href);assert.equal(await createNodeScryptPasswords().verify(facts.password,facts.accountHash),true);
+   return {statusCode:200,headers:{'set-cookie':'synSession=PROTOCOL_FAKE_PRIVATE; HttpOnly; Secure'}};}
+  if(req.url==='/auth/logout'){facts.logouts++;return {statusCode:204};}
+  assert.equal(req.url,'/auth/session');return {statusCode:200,json:()=>({principal:{...APPROVED_SYN_QA,staffId:APPROVED_SYN_QA.staffId,authVersion:1}})};
+ }}};
+ return {plan,client,api,calls,records,facts,recordPreparation:async v=>records.push(v)};
+}
+test('SYN source714 plan is closed to one new DB/output and rejects old07/real scope before client calls',async t=>{
+ const f=await synFixture(t);assert.equal(validateApprovedSynParentPlan(f.plan).target.database,APPROVED_SYN_DATABASE);
+ for(const mutate of [p=>p.target.database='naijue_erp_test_19e00102',p=>p.outputDirectory=join(APPROVED_SYN_OUTPUT,'other'),p=>p.sourceKind='REAL',p=>p.realSourceImportVerified=true,p=>p.ordinaryRole='postgres',p=>p.target.unix_socket_directories='/tmp/old07']){
+  const plan=structuredClone(f.plan);mutate(plan);await assert.rejects(runB07ApprovedSynSessionParent({plan,setupClient:f.client,afterSeedUpgrade:async()=>{throw Error('MUST_NOT_RUN');}}),/^Error: B07_SYN_/);
+ }
+ assert.equal(f.calls.length,0);
+});
+test('SYN source714 one fixture INSERT pair plus one normal login/logout, no secret/hash/cookie in recorder',async t=>{
+ const f=await synFixture(t);let escaped;
+ const out=await withB07ApprovedSynIdentity({...f,afterSeed:async({withNormalSession,qaIdentity,publication})=>{
+  assert.equal(qaIdentity,APPROVED_SYN_QA);assert.equal(publication.sourceKind,'SYNTHETIC_ONLY');escaped=withNormalSession;
+  await withNormalSession(f.api,async({actor,privateCookie})=>{assert.equal(actor.accountId,APPROVED_SYN_QA.accountId);assert.match(privateCookie,/^synSession=/);});
+  await assert.rejects(withNormalSession(f.api,async()=>{}),/^Error: B07_SYN_ONE_NORMAL_SESSION_ONLY$/);
+ }});
+ assert.equal(out.logoutConfirmed,true);assert.equal(f.facts.staffInserts,1);assert.equal(f.facts.accountInserts,1);assert.equal(f.facts.logins,1);assert.equal(f.facts.logouts,1);
+ assert.equal(f.calls.filter(s=>s==='COMMIT').length,1);assert.equal(f.calls.some(s=>/\b(UPDATE|ALTER|GRANT|TRUNCATE|DELETE)\b/.test(s)),false);
+ const serialized=JSON.stringify(f.records);for(const secret of [f.facts.password,f.facts.accountHash,'PROTOCOL_FAKE_PRIVATE'])assert.equal(serialized.includes(secret),false);
+ await assert.rejects(escaped(f.api,async()=>{}),/^Error: B07_SYN_ONE_NORMAL_SESSION_ONLY$/);
+});
+test('SYN source714 actual-work failure still logs out and does not seed/login again',async t=>{
+ const f=await synFixture(t);
+ await assert.rejects(withB07ApprovedSynIdentity({...f,afterSeed:async({withNormalSession})=>withNormalSession(f.api,async()=>{throw Error('PROTOCOL_FAKE_WORK_FAILED');})}),/PROTOCOL_FAKE_WORK_FAILED/);
+ assert.equal(f.facts.logouts,1);assert.equal(f.facts.accountInserts,1);assert.equal(f.facts.logins,1);
+});
+test('SYN source714 unknown seed COMMIT preserves outcome without rollback/reinsert/login/upgrade',async t=>{
+ const f=await synFixture(t,{unknownCommit:true});let upgrades=0,error;
+ try{await withB07ApprovedSynIdentity({...f,afterSeed:async()=>{upgrades++;}});}catch(e){error=e;}
+ assert.equal(error.message,'B07_SYN_SEED_COMMIT_UNKNOWN_READBACK_ONLY');assert.equal(error.seedFailure.commitAttempted,true);
+ assert.equal(f.calls.filter(s=>s==='COMMIT').length,1);assert.equal(f.calls.filter(s=>s==='ROLLBACK').length,0);
+ assert.equal(f.facts.accountInserts,1);assert.equal(f.facts.logins,0);assert.equal(upgrades,0);
+});
+test('SYN source714 existing guards reject preupgrade seed, with rollback and zero writes',async t=>{
+ const f=await synFixture(t,{guards:1});
+ await assert.rejects(withB07ApprovedSynIdentity({...f,afterSeed:async()=>{throw Error('MUST_NOT_RUN');}}),/^Error: B07_SYN_SEED_FAILED_NO_RETRY$/);
+ assert.equal(f.facts.staffInserts,0);assert.equal(f.facts.accountInserts,0);assert.equal(f.calls.filter(s=>s==='ROLLBACK').length,1);
+});

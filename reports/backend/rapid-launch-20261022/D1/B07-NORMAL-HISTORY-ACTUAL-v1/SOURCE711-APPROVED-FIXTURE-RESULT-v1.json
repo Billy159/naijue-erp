@@ -1,0 +1,98 @@
+{
+  "registration": "source711ApprovedIsolatedFixture",
+  "status": "SOURCE_IMPLEMENTED_OFFLINE_CHECKS_PASS_ACTUAL_NOT_RUN",
+  "sourceKind": "SYNTHETIC_ONLY",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/sealed-history17-fixture.ts",
+      "bytes": 22572,
+      "sha256": "ca061d6de691fac927c09aaaed57a66ea063a3b8d7045cc96093aa0fb987312d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/sealed-history17-approved-fixture.test.ts",
+      "bytes": 5900,
+      "sha256": "5f684c599243e9f6e38f8568125a343e1ae20aec2b11a09a59ef9c9fd7cf208a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/b07-approved-publication-fixture.ts",
+      "bytes": 31082,
+      "sha256": "661b2abd9ad196c909e2d453308abc2bf2f6c61812406ac6cab130a54e709e84"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.mjs",
+      "bytes": 22489,
+      "sha256": "8f764505d9213f3e4b847bb1d9efd76d8d6c0ec096b40787c05cb12c009bbbc5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.test.mjs",
+      "bytes": 7859,
+      "sha256": "6bdcaf791ec6f915fedf2164a85f2cc110458a9ce21de67e1703299265b44b4c"
+    }
+  ],
+  "checks": {
+    "newFixtureTests": {
+      "passed": 3,
+      "skipped": 0
+    },
+    "newRunnerTests": {
+      "passed": 5,
+      "skipped": 0
+    },
+    "targetedStrictTypescriptExitCode": 0,
+    "normalRunnerSyntaxExitCode": 0
+  },
+  "actualPostgres": false,
+  "actualPublish": false,
+  "actualNormalSession": false,
+  "realSourceApprovedSampleVerified": false,
+  "realFullImportCompleted": false,
+  "productionReleased": false,
+  "sourceWritesOutsideRegisteredFive": false,
+  "old07Replayed": false,
+  "old07CredentialRenewed": false,
+  "notReady": [
+    "C/T45 new isolated exact target registration and DB-only execution",
+    "Original schema19 nonzero publication then existing reviewed schema26 upgrade/runtime issuer/admission",
+    "One RAM normal QA session carrier: original parent+schema19 primitive hardcode old07; requested C narrow parent/test seam decision, no unregistered source changes"
+  ],
+  "fixture": {
+    "profile": "B07_SYN_APPROVED_V1",
+    "namespace": "synthetic.b07.approved.v1",
+    "bundleVersion": "synthetic-b07-approved-v1",
+    "saleApprovedQuantity": "32",
+    "saleNetAndReceive": "32.00",
+    "transferApprovedQuantity": "3",
+    "warehouses": [
+      {
+        "sourceKey": "WH-1",
+        "target": "-7",
+        "approvedNet": "-35",
+        "derivedOpening": "28"
+      },
+      {
+        "sourceKey": "WH-2",
+        "target": "0",
+        "approvedNet": "3",
+        "derivedOpening": "-3"
+      }
+    ],
+    "openingBasis": "DERIVED_FROM_TARGET_INVENTORY",
+    "originalMissingPeopleAndTimeRemainNull": true,
+    "excludedProductBarcodes": 2958
+  },
+  "interfaces": {
+    "prepare": "prepareB07ApprovedPublication(t, setupPool, {database,oid,role}) -> fixture/references/stagedVisibility/publicationResult/requiredNextStep",
+    "actualRunner": "runApprovedNormalHistory({api,pool,runtime26,input,privateCookie,recordRequest,recordObservation,readBackgroundFailureCount,now})",
+    "inputContract": "B07_SYN_APPROVED_NORMAL_HISTORY_V1",
+    "targetDatabasePattern": "naijue_erp_test_b07_syn_approved_[a-z0-9_]+",
+    "normalCases": [
+      "sales APPPROVED -delta",
+      "transfers APPROVED FROM -delta / TO +delta",
+      "four read-only HISTORY POSTs",
+      "original-key replay / changed-payload conflict / stale-version CAS"
+    ],
+    "companion": "same-issued pool real authorization/store newId port, actual second ledger PK23505 after first ledger+balance DML; direct service proof only"
+  },
+  "modelRuntimeSwitchVerified": false,
+  "fast": "UNVERIFIED"
+}

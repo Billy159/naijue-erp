@@ -1,0 +1,130 @@
+{
+  "registration": "source714ApprovedSynSessionParent",
+  "adopts": "source711ApprovedIsolatedFixture",
+  "status": "SOURCE_READY_OFFLINE_AFFECTED_CHECKS_PASS_ACTUAL_NOT_RUN",
+  "sourceKind": "SYNTHETIC_ONLY",
+  "realSourceImportVerified": false,
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/sealed-history17-fixture.ts",
+      "bytes": 22572,
+      "sha256": "ca061d6de691fac927c09aaaed57a66ea063a3b8d7045cc96093aa0fb987312d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/sealed-history17-approved-fixture.test.ts",
+      "bytes": 5900,
+      "sha256": "5f684c599243e9f6e38f8568125a343e1ae20aec2b11a09a59ef9c9fd7cf208a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/b07-approved-publication-fixture.ts",
+      "bytes": 31082,
+      "sha256": "661b2abd9ad196c909e2d453308abc2bf2f6c61812406ac6cab130a54e709e84"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.mjs",
+      "bytes": 22489,
+      "sha256": "8f764505d9213f3e4b847bb1d9efd76d8d6c0ec096b40787c05cb12c009bbbc5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.test.mjs",
+      "bytes": 7859,
+      "sha256": "6bdcaf791ec6f915fedf2164a85f2cc110458a9ce21de67e1703299265b44b4c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 54224,
+      "sha256": "35d59b70decae1006c31eca9634f8bfef9885c0b23602f8b4d1d361921939ea0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 22309,
+      "sha256": "f06de79f3916c85cbd54925f6d2ce7570ed51f05e04496e0c10dfa4c4026b29d"
+    }
+  ],
+  "checks": {
+    "source711NewFixtureTests": {
+      "passed": 3,
+      "skipped": 0
+    },
+    "source711NewRunnerTests": {
+      "passed": 5,
+      "skipped": 0
+    },
+    "source714NewParentProtocolTests": {
+      "passed": 5,
+      "skipped": 0
+    },
+    "source714AffectedOriginalParentTests": {
+      "passed": 3,
+      "skipped": 0
+    },
+    "source714ParentSyntaxExitCode": 0,
+    "source711TargetedStrictTypecheckExitCode": 0
+  },
+  "closedTarget": {
+    "database": "naijue_erp_test_b07_syn_approved_20261027_01",
+    "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01",
+    "socketPrefix": "/private/tmp/nj-b07-syn-approved-",
+    "setupActingRole": "naijue_erp_test",
+    "actualOidPortPostmasterSessionRole": "T45_EXACT_REGISTRATION_PENDING",
+    "ordinaryRolePrefix": "t45_b07_syn_approved_"
+  },
+  "qaIdentity": {
+    "staffId": "b0714000-0000-4000-8000-000000000001",
+    "accountId": "b0714000-0000-4000-8000-000000000002",
+    "loginName": "B07_SYN_APPROVED_V1_QA",
+    "role": "WAREHOUSE",
+    "hallId": null
+  },
+  "interfaces": {
+    "parent": "runB07ApprovedSynSessionParent({plan,setupClient,afterSeedUpgrade})",
+    "planContract": "B07_SYN_APPROVED_SESSION_PARENT_V1",
+    "gateFormat": "B07_SYN_APPROVED_NORMAL_PURPOSE_GATE_V1",
+    "gateFields": [
+      "runtimeConfiguration",
+      "review",
+      "approvedInput"
+    ],
+    "gateLeafRefShape": [
+      "path",
+      "bytes",
+      "sha256"
+    ],
+    "publicationRef": "pinned metadata from prepareB07ApprovedPublication including profile/sourceKind/target/references/publicationResult/realSourceImportVerified",
+    "afterSeedUpgradeArguments": [
+      "target",
+      "qaIdentity",
+      "publicationReferences"
+    ],
+    "afterSeedUpgradeResponsibility": "T45 existing reviewed upgrade and ordinary ACL/current-purpose preparation, no password/cookie/SQL port received",
+    "runtimeVerification": "Original normal production factory and genuine runtime26 issuer; new QA normal login/session, runApprovedNormalHistory, normal logout, API/read pool/setup close",
+    "normalSessionCount": 1,
+    "qaInsertionStaffCount": 1,
+    "qaInsertionAccountCount": 1,
+    "credentialRenewal": false
+  },
+  "actualPostgres": false,
+  "actualPublish": false,
+  "actualSession": false,
+  "actualCarrierPrepared": false,
+  "old07Replayed": false,
+  "old07Changed": false,
+  "originalQaPrimitiveChanged": false,
+  "credentialRenewalModuleChanged": false,
+  "newDdlOrGrantImplemented": false,
+  "notReady": [
+    "C/QB affected source independent acceptance; C reports QB delivery channel issue, not waived",
+    "T45 exact new database/socket/OID/port/postmaster/setup/ordinary-role registration",
+    "T45 actual schema19 source publication and pinned metadata",
+    "T45 existing reviewed schema26 upgrade/ACL/catalog/review/current purpose registration",
+    "Actual normal session and APPROVED/PK rollback results; PG stop remains T45"
+  ],
+  "notTested": [
+    "Real-source APPROVED sample/full import",
+    "Originally NULL-date APPROVED money",
+    "Actual UNKNOWN COMMIT",
+    "Full roles/browser/HTTPS/formal business"
+  ],
+  "runtimeModelSwitchVerified": false,
+  "fast": "UNVERIFIED"
+}
