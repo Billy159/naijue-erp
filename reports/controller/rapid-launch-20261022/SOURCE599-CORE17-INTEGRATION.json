@@ -1,0 +1,29 @@
+{
+  "taskId": "C-SOURCE599-CORE17-INTEGRATION",
+  "sourceCommit": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
+  "buildId": "replica-production-source598-core-17",
+  "buildStatus": "REAL_BUILD_AND_PACK_CONTRACT_VALIDATED",
+  "pack": {
+    "format": "naijue-release-pack-receipt-v1",
+    "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+    "buildId": "replica-production-source598-core-17",
+    "sourceCommit": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
+    "archive": {
+      "file": "release.tar.gz",
+      "bytes": 1687916,
+      "sha256": "bde51556b5df6de9f2c7ce5357e1691c8864a3bcce3a123c29a8bbe02893804a"
+    },
+    "manifestSha256": "0d9d510937cd508ccf047cfe8839554f24eec84b457ca8bd692dde350647deb8",
+    "members": 199,
+    "archiveExtractions": 1,
+    "businessOrProductionValidation": false,
+    "deploymentExecuted": false
+  },
+  "acceptance": {
+    "humanF": "QB348 e65f25840d966c7cd9cdfb4efaeccd2b1b141a8d43db306cce9d854362174cd6",
+    "lockDelta": "QB349 3ed3cbf5a0fe66faaac9e6c681ba6da2ffc41bd335822f06eb728997be29afa0",
+    "prior": "QB343/345/346/339 andF2originalQF2 scopedsource reused"
+  },
+  "boundary": "Config CORE read flags unchanged onlyassetversion. No APP/PG/runtime/business/realperformance/formalroot claim. Lockclaim approvedwriters+C/T45soleowner only; no arbitrarySQL protection.",
+  "next": "T45 exact131schema/currentACLfreshreviews+oneAPP lifecycleCORE17, independent23793HEADERresume; laterinitminimalrowACL andfirstwrite/replay"
+}

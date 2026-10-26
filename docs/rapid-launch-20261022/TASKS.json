@@ -11660,7 +11660,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE598",
+    "round": "SOURCE599",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11671,10 +11671,10 @@
         "entry": "/__naijue_candidate/replica-private-01/#settings/stores"
       },
       "next": {
-        "source": "1e818d8eb3445f3ff9d7896a41389ba01abe9083",
-        "build": "replica-production-source592-core-16",
-        "status": "BUILD_PACK_PASS_SCOPED_SOURCES_ACCEPTED_NOT_INSTALLED",
-        "report": "reports/controller/rapid-launch-20261022/SOURCE594-CORE16-INTEGRATION.json"
+        "source": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
+        "build": "replica-production-source598-core-17",
+        "status": "BUILD_PACK_PASS_NEW_F_AND_LOCK_SOURCE_ACCEPTED_NOT_INSTALLED",
+        "report": "reports/controller/rapid-launch-20261022/SOURCE599-CORE17-INTEGRATION.json"
       },
       "current": {
         "source": "1f09fd74d9e4c9dfeb98118a1d33a989801148b9",
@@ -11709,10 +11709,10 @@
       "F2": "SOURCE584S582-F01 originalQF2 source closed; actualprovider/save next necessaryCORE15/fullhost",
       "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
-      "D1": "HumanFexact4source delivered; nextactual104lock42501 exactminimumsemantics/ACLsource resolution",
+      "D1": "F andlocksource delivered scopedQB348/349PASS, actualruntime/currentrole/init nextT45; no newsourcefiller",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
       "D3": "humanFexact4 source delivered8checks/strictPASS; originalQB scopedreview then realnonemptyfullprovider later",
-      "T45": "102CORE16installed;103twoexactpatches no unneededschemeACL+fresh131review/APP;106only23793remaining independentofinit",
+      "T45": "CORE17delivered correctnewF/lock package; original103131/freshreview/lifecycleAPP and106HEADER independent23793 next",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
       "QB": "347installparams/348FsourcePASS; next104lockexact2delta then originalactual131metadata/role reviews",
@@ -13327,6 +13327,35 @@
       "next": "OriginalQBonlyexact2delta; nextnecessaryCORE17 combine accepted595F+lockfix; T45headerindependent103/106 proceeds",
       "notDone": "ActualminimalrowlockACL/init/concurrency/typedclosuretableSHARE remainunmeasured, no104PASSor businessclaim",
       "GitHub597": "4de3b9397c32a44b9a497b1c3d2b2acc07084bb6 push pending currenthandle43640"
+    },
+    "source599": {
+      "taskId": "C-SOURCE599-CORE17-INTEGRATION",
+      "sourceCommit": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
+      "buildId": "replica-production-source598-core-17",
+      "buildStatus": "REAL_BUILD_AND_PACK_CONTRACT_VALIDATED",
+      "pack": {
+        "format": "naijue-release-pack-receipt-v1",
+        "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+        "buildId": "replica-production-source598-core-17",
+        "sourceCommit": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
+        "archive": {
+          "file": "release.tar.gz",
+          "bytes": 1687916,
+          "sha256": "bde51556b5df6de9f2c7ce5357e1691c8864a3bcce3a123c29a8bbe02893804a"
+        },
+        "manifestSha256": "0d9d510937cd508ccf047cfe8839554f24eec84b457ca8bd692dde350647deb8",
+        "members": 199,
+        "archiveExtractions": 1,
+        "businessOrProductionValidation": false,
+        "deploymentExecuted": false
+      },
+      "acceptance": {
+        "humanF": "QB348 e65f25840d966c7cd9cdfb4efaeccd2b1b141a8d43db306cce9d854362174cd6",
+        "lockDelta": "QB349 3ed3cbf5a0fe66faaac9e6c681ba6da2ffc41bd335822f06eb728997be29afa0",
+        "prior": "QB343/345/346/339 andF2originalQF2 scopedsource reused"
+      },
+      "boundary": "Config CORE read flags unchanged onlyassetversion. No APP/PG/runtime/business/realperformance/formalroot claim. Lockclaim approvedwriters+C/T45soleowner only; no arbitrarySQL protection.",
+      "next": "T45 exact131schema/currentACLfreshreviews+oneAPP lifecycleCORE17, independent23793HEADERresume; laterinitminimalrowACL andfirstwrite/replay"
     }
   }
 }
