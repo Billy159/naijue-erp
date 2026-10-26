@@ -2,21 +2,21 @@
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
   "recordedAtUtc": "2026-10-26T11:11:07.604150+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "SOURCE682_LINEAR_PREPARER_SUCCESSOR_METADATA_READY_AWAIT_C_QB_NOT_RUN",
+  "status": "SOURCE688_BOUNDED_PROGRESS_IMPLEMENTED_FINITE_CHECKS_ONLY_AWAIT_C_QB_SHORT_DIAGNOSTIC",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "bytes": 114692,
-    "sha256": "f9d2d8b3398ea4332e87e7aa4679736b6b5cefc9fd47062c117540e0b520c0a2"
+    "bytes": 117898,
+    "sha256": "601b34980b16f50f64086f02573dc13c645b5da07e3a73a10e78cede93e255c5"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 145231,
-    "sha256": "12f177b641873f736acd24bf7091535b99f85268c5ba7d4418a6269c1d64e26c"
+    "bytes": 151868,
+    "sha256": "a51ebaccb8126ee7b1dd81f2e70382e4ab7ea686d34d145abfe241a38dab507f"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
     "bytes": 182293,
-    "sha256": "2bcc8a32496063213dd58ecd49b22383834f0d97ed3510fd07628e8a3ec74810"
+    "sha256": "15f349116ef63948e342277fcc87dfcc74f383275a81cb3681850417fe4b1ae3"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -158,7 +158,7 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
   ],
-  "next": "Await C adoption of SOURCE682 scoped QB; T45 prepares exact new carrier from preserved134 source with only preparer overlay, 900s unchanged, no old134 rerun.",
+  "next": "C freeze source688 provider/test -> scoped QB -> T45 new120s diagnostic carrier with150s hard cap, no new900s full retry or extension.",
   "source620": {
     "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
     "implemented": [
@@ -1415,5 +1415,125 @@
     ],
     "D3ProductionChanges": false,
     "largeBodiesRead": false
+  },
+  "source688PreparationProgress": {
+    "status": "IMPLEMENTED_BOUNDED_SAFE_PROGRESS_NOT_ACTUAL_DIAGNOSIS_OR_FULL_PREPARATION_PASS",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 117898,
+        "sha256": "601b34980b16f50f64086f02573dc13c645b5da07e3a73a10e78cede93e255c5"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 151868,
+        "sha256": "a51ebaccb8126ee7b1dd81f2e70382e4ab7ea686d34d145abfe241a38dab507f"
+      }
+    ],
+    "actual136": "FAILED2/901.208269405s/ORIGINAL_BINDINGS_AND_STREAMS/PRODUCTION_PROVIDER26_CLOSED; stdout225/stderr0; no finer trace, no DB/MAIN/grant/APP. Coarse phase follows all11 open/verify/document allocation before original preparer consumer; exact stalled substage remains unknown.",
+    "implementation": [
+      "Private source-only wraps existing11 factories and source/typed/document iterables with transparent async-generator counters; rows are yielded by original reference/order, no clone/hash/cache/extra body pass. Execution provider path unchanged.",
+      "Same original D1 input streams are transparently counted separately from per-group prefetch. Original helper/closure builder/algorithm/hash validation are untouched.",
+      "Native prepared observer records already verified per-record facts counts without original body retention. Counts do not themselves grant source completeness.",
+      "Public outercatch after original cleanup attaches latest snapshot as readonly enumerable sourcePreparationProgress to same extensible original error. Original code/phase/error object preserved; frozen/primitive errors remain original and may have no snapshot.",
+      "No periodic stdout or new platform/files; carrier can emit one validated final safe snapshot from originalcatch."
+    ],
+    "property": "error.sourcePreparationProgress",
+    "snapshotSchema": {
+      "version": "SOURCE_PREPARATION_PROGRESS26_V1",
+      "stage": "one of stageEnums",
+      "elapsedMs": "nonnegative safe integer",
+      "nativeFacts": {
+        "PRODUCTS": {
+          "records": "nonnegative safe integer",
+          "sourceRows": "nonnegative safe integer"
+        },
+        "SKUS": {
+          "records": "nonnegative safe integer",
+          "sourceRows": "nonnegative safe integer"
+        },
+        "STOCK_CONTRIBUTORS": {
+          "records": "nonnegative safe integer",
+          "sourceRows": "nonnegative safe integer"
+        }
+      },
+      "merged": {
+        "sourceRows": "counter",
+        "typedRows": "counter"
+      },
+      "groups": "exact original11 ordered [{group,sourceRows:counter,typedRows:counter,documents:counter}]"
+    },
+    "counterSchema": {
+      "count": "nonnegative safe integer",
+      "started": "boolean",
+      "done": "boolean",
+      "lastProgressElapsedMs": "nonnegative safe integer"
+    },
+    "stageEnums": [
+      "PREPARER_NOT_ENTERED",
+      "PREPARER_BEFORE_FIRST_SOURCE",
+      "PREPARER_SOURCE_STREAM",
+      "PREPARER_SOURCE_DONE",
+      "PREPARER_TYPED_STREAM",
+      "PREPARER_TYPED_DONE",
+      "PREPARER_RETURNED"
+    ],
+    "semantics": [
+      "All integer fields carrier validates Number.isSafeInteger(v)&&v>=0&&v<=Number.MAX_SAFE_INTEGER; original source readers retain their stricter finite row bounds.",
+      "Group counts observe values yielded into shared merge; merge may prefetch one row per group. Merged counters observe rows handed to D1. Neither count means independently validated/published.",
+      "done=true only natural EOF after underlying loop, never early return/cancel/error. started distinguishes never opened vs empty fully consumed stream.",
+      "elapsedMs monotonic time since this public entry begins through catch/cleanup; lastProgressElapsedMs is most recent yield/start/EOF observation, not exact CPU attribution or I/O wait.",
+      "PREPARER_BEFORE_FIRST_SOURCE means callback entered with no source iteration yet. Group document counts describe allocations collected before callback. SOURCE/TYPED DONE and RETURNED distinguish post-source/pre-typed/post-typed/original helper returned gaps."
+    ],
+    "carrierContract": "Keep old safe errorCode/sourcePreparationPhase result. Read only error.sourcePreparationProgress; validate exact version/stage/enumerated group order/exact keys and scalar types above; include whitelisted reconstructed snapshot or null if absent/invalid. No message/stack/cause/error object or values/IDs/paths. Use original bounded catch once, no reader in catch.",
+    "checks": {
+      "newDistinctTests": 4,
+      "pass": 4,
+      "fail": 0,
+      "commands": [
+        "node --test --test-reporter=spec '--test-name-pattern=source688' scripts/import-v3/production-source-provider26.test.mjs (first3 tests before fourth added)",
+        "node --test --test-reporter=spec '--test-name-pattern=source688 traced shared merge' scripts/import-v3/production-source-provider26.test.mjs (new fourth only)"
+      ],
+      "covered": [
+        "Original11 finite source files + original D1 preparation output entire original capture hash equal with/without tracing; counts/EOF/done and close behavior correct.",
+        "Same exact yielded object identity, original thrown Error identity; source abort/consumer earlyreturn trigger original finally once and leave done=false.",
+        "Actual public source-only finite native failure retains original code/phase and latest nativeFacts snapshot after cleanup, readonly property and serialized snapshot<8192B; pre-aborted signal preserves original rejection.",
+        "Shared merge consumer failure closes all11 original sessions reverse order; source iterators finally once; pergroup prefetched counts distinguished from merged count1."
+      ],
+      "syntaxCheck": "node --check provider PASS",
+      "reused": "All original source scopes/builders/suites reused, not rerun."
+    },
+    "preserveRuntime": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.mjs",
+        "bytes": 40456,
+        "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      }
+    ],
+    "nextDiagnostic": {
+      "maxSeconds": 120,
+      "hardUpperSeconds": 150,
+      "runAuthorizedByThisDocument": false,
+      "target": "Only exact fresh C/QB reviewed carrier from preserved136 tree with newprovider overlay, safe final progress. Same original109keys/registration/DATA/125/24; no third same900 full retry.",
+      "signalCatch": "Original120s AbortController signal makes existing provider active throw; outercatch attaches live snapshot after same original cleanup. No extension or new retry.",
+      "T45": "Actual new source paths,deadline,sourceInput pin/authorityModuleSHA and carrier result whitelist are T45 sole owner after C authorization."
+    },
+    "notRun": [
+      "Actual trace-enabled120s diagnostic",
+      "Full real DATA/EXPECTED/MAIN generation",
+      "SQL/PG/MAIN/PUBLISH/grant or APP"
+    ],
+    "largeBodiesRead": false,
+    "D1HelperOrSharedClosureModified": false
   }
 }

@@ -632,12 +632,41 @@ export function confirmedZeroWarehouseScope26({binding,warehouses,representedTot
  must(totals.size===29&&zero.size===24&&[...totals.keys(),...zero.keys()].every(k=>keys.has(k)),'SOURCE_PREPARATION26_EXACT_ZERO_DECISION');return rows;
 }
 
+/** Bounded source-only diagnostics. Counters observe existing yields without
+ * retaining, cloning, hashing or exposing a row. No execution capability. */
+export function createSourcePreparationProgress26(){
+ const started=performance.now(),elapsed=()=>Math.max(0,Math.floor(performance.now()-started));
+ const counter=()=>({count:0,started:false,done:false,lastProgressElapsedMs:0});
+ const groups=Object.fromEntries(sourceGroups.map(group=>[group,{sourceRows:counter(),typedRows:counter(),documents:counter()}]));
+ const merged={sourceRows:counter(),typedRows:counter()},nativeFacts=Object.fromEntries(['PRODUCTS','SKUS','STOCK_CONTRIBUTORS'].map(group=>[group,{records:0,sourceRows:0}]));
+ let stage='PREPARER_NOT_ENTERED';
+ async function* rows(input,state,kind){
+  state.started=true;state.lastProgressElapsedMs=elapsed();
+  if(kind)stage=kind==='sourceRows'?'PREPARER_SOURCE_STREAM':'PREPARER_TYPED_STREAM';
+  for await(const row of input){state.count++;state.lastProgressElapsedMs=elapsed();yield row;}
+  state.done=true;state.lastProgressElapsedMs=elapsed();
+  if(kind)stage=kind==='sourceRows'?'PREPARER_SOURCE_DONE':'PREPARER_TYPED_DONE';
+ }
+ return Object.freeze({
+  nativeFact(group,sourceRows){const state=nativeFacts[group];state.records++;state.sourceRows+=sourceRows;},
+  factories(original){return Object.fromEntries(sourceGroups.map(group=>[group,async(...args)=>{
+   const raw=await original[group](...args);if(raw===null||typeof raw!=='object')return raw;const descriptors=Object.getOwnPropertyDescriptors(raw);
+   // Leave malformed protocol bags to the original shared reader unchanged.
+   if(Object.getPrototypeOf(raw)!==Object.prototype||Reflect.ownKeys(raw).length!==5||!['verify','sourceRows','typedRows','documents','close'].every(key=>descriptors[key]?.enumerable&&Object.hasOwn(descriptors[key],'value')&&typeof descriptors[key].value==='function'))return raw;
+   const wrapped={...raw};for(const kind of ['sourceRows','typedRows','documents']){const fn=descriptors[kind].value;wrapped[kind]=()=>rows(fn(),groups[group][kind]);}return wrapped;
+  }]));},
+  streams(original){stage='PREPARER_BEFORE_FIRST_SOURCE';return{...original,sourceRows:rows(original.sourceRows,merged.sourceRows,'sourceRows'),typedRows:rows(original.typedRows,merged.typedRows,'typedRows')};},
+  returned(){stage='PREPARER_RETURNED';},
+  snapshot(){return{version:'SOURCE_PREPARATION_PROGRESS26_V1',stage,elapsedMs:elapsed(),nativeFacts:Object.fromEntries(Object.entries(nativeFacts).map(([group,value])=>[group,{...value}])),merged:Object.fromEntries(Object.entries(merged).map(([kind,value])=>[kind,{...value}])),groups:sourceGroups.map(group=>({group,...Object.fromEntries(Object.entries(groups[group]).map(([kind,value])=>[kind,{...value}]))}))};}
+ });
+}
+
 /** Explicit original-source preparation. This entry has no database/runtime,
  * execution authority, stage/execute methods or substitute payload hash. The
  * original frozen D1 helpers derive the DATA hash and command files only after
  * genuine original files, membership facts and all11 streams have closed. */
 export async function prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal}){
- let preparationPhase='SCOPE';
+ let preparationPhase='SCOPE';const progress=createSourcePreparationProgress26();
  try{
  must(signal instanceof AbortSignal&&!signal.aborted,'SOURCE_PREPARATION26_ABORTED');
  const scopeBytes=await pinnedSmall(preparationFile,trustedPreparationSha256),scope=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(scopeBytes));capture(scope);
@@ -655,7 +684,7 @@ export async function prepareProductionSourceOnly26({preparationFile,trustedPrep
   resources.push(resource);if(closed||signal.aborted){await resource.close();active();}return resource;};
  const code=async(ref,name,resolveFile)=>{active();const physical=resolveFile?await resolveFile(ref):ref,bytes=await pinnedSmall(ref.path,ref.sha256,resolveFile);active();must(bytes.length===ref.bytes,'SOURCE_PREPARATION26_MODULE_PIN');const module=await import(pathToFileURL(physical.path).href);active();const fn=own(module,name);must(typeof fn==='function','SOURCE_PREPARATION26_MODULE_PIN');return fn;};
  let input,core,coreData,short;const skuMemberships=[],baselineItems=[],contributors=[],effectiveGroups=[],coverage=new Map(),warehouseTotals=new Map(),warehouseUnits=new Map(),skuIdentities=new Map(),warehouseIdentities=new Map();let stockSelection;
- const observePrepared=(group,p,logical,entry)=>{active();coverage.set(logical.path,(coverage.get(logical.path)??0)+entry.sources.length);
+ const observePrepared=(group,p,logical,entry)=>{active();progress.nativeFact(group,entry.sources.length);coverage.set(logical.path,(coverage.get(logical.path)??0)+entry.sources.length);
   if(group==='SKUS'){const s=p.canonicalSource;must(!skuIdentities.has(s.sourceKey),'SOURCE_PREPARATION26_DUPLICATE_SKU');skuIdentities.set(s.sourceKey,p.nativeSku.id);skuMemberships.push({targetType:'SKU',targetId:p.nativeSku.id,sourceEntityType:s.entityType,sourceKey:s.sourceKey,sourceRecordHash:s.rowSha256,sourceFileRef:s.fileRef,nativeRecord:structuredClone(p.importRecord)});}
   if(group==='STOCK_CONTRIBUTORS'){
    must(warehouseIdentities.get(p.warehouse.sourceKey)===p.warehouse.nativeId&&skuIdentities.get(p.sku.canonicalSourceKey)===p.sku.nativeId,'SOURCE_PREPARATION26_STOCK_NATIVE_IDENTITY');
@@ -713,9 +742,9 @@ export async function prepareProductionSourceOnly26({preparationFile,trustedPrep
     warehouseUnits:[...warehouseUnits].map(([key,total])=>{const [warehouseSourceKey,sourceUnit]=JSON.parse(key);return{warehouseSourceKey,sourceUnit,signedQuantity:total.toString()};})}};
   const closureScope=await session.bindRealData(data);await verify();
   const {consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs');
-  preparationPhase='ALL11_CLOSURE';const prepared=await consumeAuthorizedHistoryClosureStreams26({scope:closureScope,openSources:session.openSources,trustedSelectionSha256:short.selectionSha256,trustedAuthorizedPayloadHash:closureScope.authorizedPayloadHash},
-   streams=>{preparationPhase='ORIGINAL_BINDINGS_AND_STREAMS';return prepareFullSourceBindings26({data,sourceRows:streams.sourceRows,typedRows:streams.typedRows,documents:streams.documents,warehouses:coreData.warehouses,skuMemberships,baselineItems,
-    verifiedCurrent:current,actorAccountId:input.binding.actorAccountId,sourceManifestRef:scope.sourceManifestRef,requestKeys:scope.requestKeys,chunkRows:scope.chunkRows});});
+  preparationPhase='ALL11_CLOSURE';const prepared=await consumeAuthorizedHistoryClosureStreams26({scope:closureScope,openSources:progress.factories(session.openSources),trustedSelectionSha256:short.selectionSha256,trustedAuthorizedPayloadHash:closureScope.authorizedPayloadHash},
+   async originalStreams=>{preparationPhase='ORIGINAL_BINDINGS_AND_STREAMS';const streams=progress.streams(originalStreams);const result=await prepareFullSourceBindings26({data,sourceRows:streams.sourceRows,typedRows:streams.typedRows,documents:streams.documents,warehouses:coreData.warehouses,skuMemberships,baselineItems,
+    verifiedCurrent:current,actorAccountId:input.binding.actorAccountId,sourceManifestRef:scope.sourceManifestRef,requestKeys:scope.requestKeys,chunkRows:scope.chunkRows});progress.returned();return result;});
   await verify();preparationPhase='PRIVATE_WRITER';const written=await writeFullSourceBindings26({outputParent:scope.outputParent,registrationId:scope.registrationId,prepared});await verify();
   return{status:'ORIGINAL_FULL_SOURCE_BINDINGS_PREPARED_NOT_EXECUTION_AUTHORIZED',...written,sourceGroups:11,nativeSkus:skuMemberships.length,baselineItems:baselineItems.length,unrepresentedWarehouses:unrepresented,
    executionAuthorizationIssued:false,executionReady:false,DBConnected:false,MAINOrPublishExecuted:false};
@@ -724,6 +753,7 @@ export async function prepareProductionSourceOnly26({preparationFile,trustedPrep
   // Only a fixed code-path enum leaves this entry. Preserve the original error
   // object/code; never attach paths, row values, messages or source bodies.
   if(error&&typeof error==='object'&&Object.isExtensible(error)&&!Object.hasOwn(error,'sourcePreparationPhase'))Object.defineProperty(error,'sourcePreparationPhase',{value:preparationPhase,enumerable:true});
+  if(error&&typeof error==='object'&&Object.isExtensible(error)&&!Object.hasOwn(error,'sourcePreparationProgress'))Object.defineProperty(error,'sourcePreparationProgress',{value:progress.snapshot(),enumerable:true});
   throw error;
  }
 }

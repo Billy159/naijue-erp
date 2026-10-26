@@ -799,3 +799,38 @@ test('source664 retained transfer reader binds original packed document ordinal 
  const f=await retainedTransferFiles(t,{reversePairs:true,mutateIndex:b=>{const start=64+b.readUInt32LE(28)+b.readUInt32LE(32)+b.readUInt32LE(36),at=start+b.readUInt32LE(64)*36;b[at+15]^=1;}});await f.s.preflight();
  await assert.rejects(f.s.authorizeStep({kind:'TRANSFER_LINES',payload:f.chunks[1]}),e=>e.code==='PRODUCTION_RETAINED_TRANSFER26_HEADER_IDENTITY');const c=await f.s.openSources.TRANSFER_LINES(f.inputs.closureScope,{group:'TRANSFER_LINES',signal:f.controller.signal});await assert.rejects(Array.fromAsync(c.typedRows()),e=>e.code==='PRODUCTION_RETAINED_TRANSFER26_HEADER_IDENTITY');await c.close();assert.equal(f.trace.ready,0);await f.s.close();
 });
+
+test('source688 progress preserves complete original all11 preparation results and distinguishes group yields from merged consumption',async t=>{
+ const {createSourcePreparationProgress26}=await import('./production-source-provider26.mjs'),{consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs'),{prepareFullSourceBindings26}=await import('./prepare-native-bindings.mjs'),{historySettlementRequestHash}=await import('../../packages/application/src/import-v3-history-settlement.ts');
+ const s=await sourcePreparationStreamFixture26(t),baseline=await consumeAuthorizedHistoryClosureStreams26(s.options,streams=>prepareFullSourceBindings26({...s.f,...streams,data:s.f.data})),progress=createSourcePreparationProgress26();
+ const prepared=await consumeAuthorizedHistoryClosureStreams26({...s.options,openSources:progress.factories(s.options.openSources)},async raw=>{const streams=progress.streams(raw);assert.equal(progress.snapshot().stage,'PREPARER_BEFORE_FIRST_SOURCE');const result=await prepareFullSourceBindings26({...s.f,...streams,data:s.f.data});progress.returned();return result;});
+ assert.equal(historySettlementRequestHash(prepared),historySettlementRequestHash(baseline));const snapshot=progress.snapshot();assert.equal(snapshot.stage,'PREPARER_RETURNED');assert.equal(snapshot.groups.length,11);
+ assert.equal(snapshot.merged.sourceRows.count,s.f.sourceRows.length);assert.equal(snapshot.merged.typedRows.count,s.f.typedRows.length);assert.equal(snapshot.groups.reduce((n,g)=>n+g.sourceRows.count,0),snapshot.merged.sourceRows.count);
+ assert.ok(snapshot.groups.every(g=>g.sourceRows.done&&g.typedRows.done&&g.documents.done));assert.ok(snapshot.merged.sourceRows.done&&snapshot.merged.typedRows.done);assert.equal(s.trace.closes.length,22);
+ assert.ok(Number.isSafeInteger(snapshot.elapsedMs)&&snapshot.elapsedMs>=0);assert.equal(JSON.stringify(snapshot).includes('SYN-'),false);
+});
+test('source688 progress forwards the same row and original errors, preserves early return and abort cleanup without marking incomplete streams done',async()=>{
+ const {createSourcePreparationProgress26}=await import('./production-source-provider26.mjs'),row={syntheticSecret:'NEVER_IN_DIAGNOSTICS'},failure=Object.assign(Error('SYNTHETIC_ORIGINAL_FAILURE'),{code:'SYNTHETIC_ORIGINAL_FAILURE'});
+ for(const mode of ['return','throw','abort']){const progress=createSourcePreparationProgress26(),controller=new AbortController();let finallyCount=0,closeCount=0;
+  const factory=async()=>({async verify(){},async *sourceRows(){try{yield row;if(mode==='throw')throw failure;if(controller.signal.aborted)throw failure;yield row;}finally{finallyCount++;}},async *typedRows(){},async *documents(){},async close(){closeCount++;}}),original=Object.fromEntries(sourceGroups.map(g=>[g,factory]));
+  const raw=await progress.factories(original).PARTIES(),iterator=raw.sourceRows();assert.equal((await iterator.next()).value,row);
+  if(mode==='return')await iterator.return();else{if(mode==='abort')controller.abort();await assert.rejects(iterator.next(),e=>e===failure);}await raw.close();
+  const snapshot=progress.snapshot(),state=snapshot.groups[0].sourceRows;assert.equal(state.count,1);assert.equal(state.done,false);assert.equal(finallyCount,1);assert.equal(closeCount,1);assert.equal(JSON.stringify(snapshot).includes('NEVER_IN_DIAGNOSTICS'),false);
+ }
+ const progress=createSourcePreparationProgress26(),streams=progress.streams({sourceRows:[row,row],typedRows:[],documents:[]});for await(const value of streams.sourceRows){assert.equal(value,row);break;}
+ assert.equal(progress.snapshot().merged.sourceRows.count,1);assert.equal(progress.snapshot().merged.sourceRows.done,false);assert.equal(progress.snapshot().stage,'PREPARER_SOURCE_STREAM');
+});
+test('source688 public source-only failure attaches a bounded latest snapshot after cleanup with original code and phase preserved',async t=>{
+ const {prepareProductionSourceOnly26}=await import('./production-source-provider26.mjs'),f=await sourceOnlyPreparationFiles26(t);f.inputs.producers.STOCK_CONTRIBUTORS.retainedNative.records=2;f.scope.input=await f.save('PROGRESS-INPUT.json',f.inputs);const ref=await f.save('PROGRESS-SCOPE.json',f.scope);
+ await assert.rejects(prepareProductionSourceOnly26({preparationFile:ref.path,trustedPreparationSha256:ref.sha256,signal:f.controller.signal}),e=>{
+  assert.equal(e.code,'PRODUCTION_RETAINED_NATIVE26_COUNT');assert.equal(e.sourcePreparationPhase,'NATIVE_FACTS_STOCK_CONTRIBUTORS');const s=e.sourcePreparationProgress;assert.equal(s.version,'SOURCE_PREPARATION_PROGRESS26_V1');assert.equal(s.stage,'PREPARER_NOT_ENTERED');assert.equal(s.nativeFacts.SKUS.records,1);assert.equal(s.nativeFacts.STOCK_CONTRIBUTORS.sourceRows,2);assert.equal(s.groups.length,11);assert.equal(s.merged.sourceRows.started,false);
+  assert.ok(Object.values(s.nativeFacts).every(n=>Number.isSafeInteger(n.records)&&Number.isSafeInteger(n.sourceRows)));assert.ok(JSON.stringify(s).length<8192);assert.equal(Object.getOwnPropertyDescriptor(e,'sourcePreparationProgress').writable,false);return true;
+ });
+ const controller=new AbortController();controller.abort();await assert.rejects(prepareProductionSourceOnly26({preparationFile:ref.path,trustedPreparationSha256:ref.sha256,signal:controller.signal}),e=>{assert.equal(e.code,'SOURCE_PREPARATION26_ABORTED');assert.equal(e.sourcePreparationProgress.stage,'PREPARER_NOT_ENTERED');return true;});
+});
+
+test('source688 traced shared merge closes all original11 sessions on consumer failure and reports prefetch separately',async t=>{
+ const {createSourcePreparationProgress26}=await import('./production-source-provider26.mjs'),{consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs'),s=await sourcePreparationStreamFixture26(t),progress=createSourcePreparationProgress26(),failure=Error('FINITE_ORIGINAL_CONSUMER_STOP');
+ await assert.rejects(consumeAuthorizedHistoryClosureStreams26({...s.options,openSources:progress.factories(s.options.openSources)},async raw=>{const streams=progress.streams(raw);for await(const _ of streams.sourceRows)throw failure;}),e=>e===failure);
+ assert.deepEqual(s.trace.closes,[...sourceGroups].reverse());const snapshot=progress.snapshot();assert.equal(snapshot.merged.sourceRows.count,1);assert.equal(snapshot.merged.sourceRows.done,false);assert.equal(snapshot.merged.typedRows.started,false);assert.ok(snapshot.groups.reduce((n,g)=>n+g.sourceRows.count,0)>=snapshot.merged.sourceRows.count);assert.equal(s.trace.streamFinally.filter(k=>k.endsWith('/sourceRows')).length,11);
+});
