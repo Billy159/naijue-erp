@@ -14086,6 +14086,13 @@
       "inventoryProjection": "F2 exact4 technical Solmedium current; no backend wire overlap; not real performance pass",
       "fullSourcePreparation": "D3 source-only existing provider next",
       "history": "D1 precise QA fixture preparation; original source account unchanged"
+    },
+    "source637B07": {
+      "status": "QA_FIXTURE_CALLBACK_SOURCE_DELIVERED_WAIT_NEW_QB_AND_PARENT_WIRING",
+      "normalHTTP": "NOT_RUN",
+      "D1": "same parent process seed/approved upgrades/role/currentpurpose/normal login/3draft/logout",
+      "T45": "actual registered copy restore and lifecycle after exact fixed reviewed carrier",
+      "sourceIdentity": "Original disabled account/source actor unchanged; independent QA actor only in isolated fixture"
     }
   }
 }

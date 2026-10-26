@@ -6104,5 +6104,16 @@
     ],
     "scope": "Verified latest human inventory optimization direction in taskbook 01a1777e-b3e6-7ce1-841f-27df2e9abe1b: original current wire/display semantics unchanged, remove eager all-hidden-FIT per-cell sources duplication; reuse current windowmodel and derive visible/display or click targets lazily from full stable page model. Technical Solmedium. No protocol/backend/schema changes or new cache layer; no D3 import leaves overlap.",
     "source": "Taskbook actual human message verified via read_thread this turn; full real wiring remains first"
+  },
+  "source637B07QaFixture": {
+    "owner": "D1",
+    "exactFiles": [
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-schema19.mjs",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-schema19.test.mjs",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/QA-IDENTITY-EXECUTION-SCOPE-v1.md"
+    ],
+    "scope": "Original B07 same isolated copy only pre-upgrade legitimate QA fixture with new independent staff/account; original disabled/source actor untouched; schema19/target/role/session/socket/trigger checks; real scrypt/normal login session/logout; secret process-memory only; unknown commit no resubmit. Callback module source-ready not actual full carrier. D1 minimal same-parent continuation needed, T45 actual lifecycle only.",
+    "review": "Original QB newly scoped fixture; original eleven SQL and exact ACL source review reused",
+    "sourceCopies": "R reports safe source only, no generated secret/real source payload"
   }
 }
