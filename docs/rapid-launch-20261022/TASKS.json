@@ -14622,6 +14622,19 @@
       "source673RemoteVerified": "93d5856096cc1f413c95e3859065df6ab7cba7af",
       "fullSource": "134 exact new carrier targeted review; independent of B07",
       "B07": "07 locator fixed and parser source passed; final refs pending"
+    },
+    "delegatedDecisionAuthority676": {
+      "sourceThread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+      "directUserMessage": "01a178df-a4f0-71a0-9a17-3879d2fcce0e",
+      "verifiedBy": "C read_thread current userMessage",
+      "quote": "我准备睡觉了 如果后续再出现类似需要决策的你先帮我决策吧",
+      "scope": "similar technical decisions within current ERP goal; no invented business facts, protections and owner boundaries preserved"
+    },
+    "latestSource676": {
+      "summary": "SOURCE676：C已直接核任务书用户消息01a178df-a4f0-71a0-9a17-3879d2fcce0e“准备睡觉，后续类似需要决策先帮决策”，作为本夜同类技术取舍/合法格式/最小实现/分工与既有受控部署接续授权，不猜库存金额人员归属等新业务事实，原保护/备份/原键/唯一T45保持；普通进度不打扰，重大失败/真实上线/用户独有事实才提示。原134已T45唯一提交QUEUED/unitb386c684eb2a、0PG/MAIN/grant/APP，C只收原key不重run。原T15差异已D1交：现无持久datasetversion，必要最小3域版本表/写事务尾完整闭包待准确实施文件/role/catalog细节，不能用randomUUID冒版本；先不实施DDL、不挡当前完整来源接通。原T16 D3已核无在途/已交，C登记原D1store与D3planner各唯一叶，仅Map代重复find保持顺序/重复ID拒/事务值；D3真正导入新根因仍优先。F2后继compact读取合同D3已交e64597f5，原Dense生产路径未擅换，版本依赖明确D1/C。675远端b9d4f25已核，整体ACTIVE，实际fullDATA/历史业务/正式发布未完成。",
+      "source675RemoteVerified": "b9d4f2583cf1bf95a131e7ac8e816e605b575bb3",
+      "fullSource": "134 submitted QUEUED unitb386c684eb2a; collect only",
+      "T16": "original owners exact files registered; no schema/contract change"
     }
   }
 }

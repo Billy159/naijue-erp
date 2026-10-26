@@ -6183,5 +6183,20 @@
     ],
     "scope": "Only isCanonicalNativeRecordReviewTime UTC3 or UTC6 original text; no source/time/schema/SQL/permission mutation",
     "otherFilesRemainReadOnly": true
+  },
+  "source676T16LocalMaps": {
+    "status": "OPEN_EXACT_EXISTING_TASK_NO_SCHEMA_OR_CONTRACT_CHANGE",
+    "authority": "user full existing goal performance; verified direct queue instruction01a178cf and delegated decisions01a178df in original taskbook chat",
+    "D1": [
+      "adapters/postgres/src/history-revision-store.ts",
+      "tests/history-revision-postgres-protocol.test.ts",
+      "tests/history-revision-posting-postgres-protocol.test.ts"
+    ],
+    "D3": [
+      "packages/application/src/history-revision-service.ts",
+      "tests/history-revision.test.ts"
+    ],
+    "scope": "only local id-to-index or id-to-line maps replacing repeated finds; preserve duplicate rejection, arrays/order, exact values/effects/CAS/idempotency/audit/SQL; no 07 source/client mutation",
+    "priority": "real source-only root diagnosis first; no duplicate work"
   }
 }
