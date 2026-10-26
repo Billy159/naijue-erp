@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE576",
+    "round": "SOURCE577",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11677,14 +11677,14 @@
       "F2": "New2026 default+compatible raw source fixed7f6d990/QF2F01 sourcePASS; next necessary integrated build/provider QA; newgeneration only v19 wait",
       "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
-      "D1": "B07v3 exact originalcopy target/preflight ready, T45 actual execution next safe slot; full host513 ready; v19 original init closed-set delta waiting",
-      "D2": "Original compatible SAVE ready/check adopted; explicitv19 newgeneration/init pending; no other actual ready source issue",
-      "D3": "Real15018 barcodecapture complete/sameidentity/manifest; QB338 metadata review, originalheaders/full11 actual T45 next; initSQL v19 pending",
-      "T45": "CORE14 actual91/92/public8 PASS; exact2historicalcustomers94 COMMIT/afterRR equality; current28282header stage existingprepared next, no replay",
+      "D1": "Approved corrected v19 exact5+4test implementation active: original init action/store/CLI/profile and narrow patch, B07 v3 retained",
+      "D2": "Approved corrected v19 original SAVE auto generation for new full-group combinations active; manual systemItemCode required/noallocator/nointent switch; original compatible evidence reused",
+      "D3": "Actual15018source metadata QB338 PASS; original approved exact6 source/borrowedclient init active; no DB yet",
+      "T45": "Real94exact2 customer COMMIT/readback complete; transmitting existing28282header prepared~922MB via originalkey SSH compressed transport, not submitted DB until transfer and carrier review",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "F2 newdefault saveF01 fixedsource7f6d990 scopedsourcePASS; runtime/provider/save pending next fixedcandidate",
-      "QB": "Original336337sourcePASS adopted; new actual15018capture metadata-only review next, no fullsource/PG rerun",
-      "Compression": "Temporary solehost2leaves SOURCE575 immutable-version JS/CSS cache G actualimplementation; next necessary combined build only"
+      "QB": "New G cache+proxy limited source review active; old338sourcecapturereview adopted, v19 implementation future scoped QA not pre-signed",
+      "Compression": "G exact2 cache source/3affectedchecks delivered, writer returned; C proxytemplate source fixed, actualpubliccache pending nextnecessary build"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
     "source501LeaveDialogFix": {
@@ -12128,7 +12128,7 @@
       "reviewResultSha256": "b69e31701e44d30597b2405438396d75f3c9f973a3bdc467f85050473f57b078",
       "actualQA64": "FAILED_PREPARE_RESERVATION_42501_TRANSFER_HEADER_READ"
     },
-    "queueAsOfSource": "SOURCE575",
+    "queueAsOfSource": "SOURCE577",
     "qa64Actual": {
       "owner": "T45",
       "status": "FAILED_42501_PREPARE_NUMBER_RESERVE_NOT_SAVE_PASS",
@@ -12842,10 +12842,11 @@
         "boundary": "CREATE only, verified CURRENT; existing/restored/manual selection/clear preserved; no fabricated scheme"
       },
       "actualGeneration": {
-        "owner": "D2/D1",
-        "state": "NOT_IMPLEMENTED_WRITE_CONTRACT_DELTA_PREPARING",
-        "finding": "Frozen 2026 algorithm verified; current formal backend lacks allocator and persistent uniqueness. No guessed length-based algorithm",
-        "next": "One exact consolidated contract difference including numbering field mapping, allocator/uniqueness and generation transaction, alongside D3 successor init"
+        "owner": "D2/D1 as exactregistered",
+        "state": "APPROVED_CORRECTED_V19_IMPLEMENTATION_IN_PROGRESS",
+        "finding": "Final frozen Demo systemItemCode is manual barcodeItemCode field; required, no empty allocator, no separate identity/new columns. Auto generation only actual newly added full-group SKU combinations, including added colors; original values/old MAINs/disabled retained. Nonempty code unsuitable for generation may save ordinary product with explicit missing-code feedback, no false success.",
+        "next": "D2 original SAME V2/UOW/DTO+newSKUdiff implementation, scoped QB then T45 affected QA",
+        "noNewIntentSwitch": true
       },
       "compatibleOldCodeSave": {
         "owner": "F2/D2",
@@ -12935,7 +12936,7 @@
         "state": "APPROVED_WITH_CORRECTION_IMPLEMENTATION_ASSIGNED",
         "file": "WRITE-CONTRACT-SUPPLEMENT-v19-BARCODE-GENERATION-INIT.md",
         "sha256": "60bba6582432777f061248000b4a3b945709d41e9842ff5e79d0a7592f580ea3",
-        "scope": "Original V2 optional generation intent, existing systemItemCode seven-digit new CREATE allocation/newSKU MAIN only; exact postCORE dedicated import action/two constraints/three functions+verifier; no tables/columns/index/sequence/new audit marker",
+        "scope": "Corrected direct human v19: manual systemItemCode mandatory; v17 complete group × selected colors × fits; original SAVE auto MAINs for genuinely new combinations. No allocator/intent switch/new field. Exact postCORE dedicated IMPORT_INITIALIZE_BARCODE_SCHEMES, twoaction constraints/three validators+one exact6 verifier; original actor/key/receipt/seq+1 and no ledger effects.",
         "businessDirectionAlreadyApproved": true,
         "independentContinues": [
           "Old compatible save/default UI race review",
