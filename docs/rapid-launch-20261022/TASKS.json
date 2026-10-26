@@ -13981,7 +13981,7 @@
     "currentQueue": {
       "C": "Adopt actual124 and release pass; genuine DATA/roots/commands then independent grant and samebuild integration",
       "D1": "B07 exact isolated QA fixture preparation; existing Full release source passed",
-      "D3": "Actual124 mapping and original source-only DATA/EXPECTED/MAIN preparation consumer",
+      "D3": "Full source-only DATA/EXPECTED/MAIN preparation; actual125 + exact24 zero human approval now available",
       "T45": "124 actual complete; source-only prepare when exact entry ready, B07 fixture actual after D1/QB",
       "QB": "Fixed633 mapping new source scope",
       "QF": "T10/T27 fixed SOURCE620 limited protocol PASS; waits new real samebuild candidate for requested browser delta only",
@@ -14118,16 +14118,39 @@
       "secret": "Parent memory only, no disk/log/child arg; exact bounded purpose gate required"
     },
     "stockWarehouse24Decision": {
-      "status": "WAITING_DIRECT_USER_BUSINESS_FACT_DECISION",
-      "confirmation": "K/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/UNREPRESENTED-24-WAREHOUSES-CONFIRMATION.md",
-      "noZeroInferred": true,
-      "blockedScope": "Only dependent full stock publication; other source preparation/QA/UI continue"
+      "status": "EXPLICIT_DIRECT_USER_APPROVED_EXACT24_ZERO_IN_THIS_BATCH",
+      "source": "controller reply call_e5fb927164064fb6bd4c577683c331e9",
+      "answer": "确认这24仓本批基线库存为零",
+      "decisionRef": "K/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/EXACT24-ZERO-BASELINE-USER-DECISION.json",
+      "bytes": 5299,
+      "sha256": "35a5fe3d08a0f23d5dc98e2b422702a1f991ea508a88cab6c675e969c2d55c88",
+      "scope": "Exact24 current baseline only; preserve29 and historical/source/SKU; no synthetic0source rows",
+      "next": "D3 genuine53 warehouse conservation + full DATA preparation no repeat confirmation"
     },
     "source640ActualNext": {
       "B07": "Original T45 exact19snapshot preserved restore/start; fixed parent newQA normal login/3DRAFT after current metadata gate; no real outcome yet",
       "current125": "Original verified store leaf read under real R1 runtime131; complete private readback not summary",
       "stock24": "Direct user question pending; no zero assumed; only dependent full stock publication waits",
       "fullPreparation": "D3 code source-only consumer of complete11 readers and fixed624 functions in progress"
+    },
+    "source641Actual125": {
+      "status": "COMPLETED_ZERO_DML",
+      "elapsedSeconds": 2.222654832,
+      "finishedAtUTC": "2026-10-26T11:41:25.011928Z",
+      "checkpointSequence": 2,
+      "cursor": 22,
+      "claims": 22,
+      "records": 22,
+      "coreClaims": 22,
+      "coreWarehouses": 22,
+      "committedOperations": 1,
+      "fullBinding": false,
+      "batchStatus": "STAGED",
+      "completeReadback": "PRIVATE_ONLY_F/actual125-core-continuation-20261026/core-continuation.json",
+      "bytes": 41835,
+      "sha256": "96b426c34ebb41fa7d7962af866d7d05469792fe7b43bd30f0f9cdd43b42b1a1",
+      "pool": "2acquire2release/live0/end",
+      "next": "OriginalD3 source-only consumer; not MAIN/PUBLISH success"
     }
   }
 }
