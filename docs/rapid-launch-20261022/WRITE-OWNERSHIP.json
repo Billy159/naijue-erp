@@ -6271,6 +6271,7 @@
       "adapters/postgres/src/read-dataset-version.ts",
       "tests/read-dataset-version-postgres-protocol.test.ts"
     ],
-    "scope": "Specific JS dollar-anchor trailing LF/CRLF defect only; absolute end match plus affected protocol cases. QB411 does not cover this newly found branch."
+    "scope": "Specific JS dollar-anchor trailing LF/CRLF defect only; absolute end match plus affected protocol cases. QB411 does not cover this newly found branch.",
+    "correction684": "Original no-m regex did reject these tails under actual Node24. Authorized change is equivalent explicit-end clarification and new regression coverage, not proven prior acceptance."
   }
 }

@@ -14656,7 +14656,7 @@
       "B07": "07 review/gate actual successful; detail HTTP200 then assertion; D1 diagnose; T45 original-key readonly recovery next",
       "fullSource": "134 same-key collect only bounded original execution"
     },
-    "latestSource": 683,
+    "latestSource": 684,
     "source680Continuation": {
       "actual134": "FAILED exit2 after901.237644947s; ORIGINAL_BINDINGS_AND_STREAMS / PRODUCTION_PROVIDER26_CLOSED; D3 original source diagnosis; no extension/replay",
       "actual07": "POST07 original-key readonly recovery: one COMMITTED HISTORY_REVISE HISTORY_SALES receipt and one revision, result_version2. Full test incomplete at detail count assertion. Preserve original key/state; no fresh save.",
@@ -14684,6 +14684,10 @@
       "T15TailFix": "Concrete JS dollar-anchor trailing LF defect fixed exact2; new LF/CRLF read+flush test PASS, strict0; QB new boundary recheck pending",
       "D3Delivery": "b8acdfd3 fixed safe mirror; new source-only successor only helperoverlay, original134 preserved/109keys/900s unchanged",
       "B07": "Committed same-target continuation source exact2 authorized; no actual reset or fixture; T45 login paths unavailable without original password/admin, D1 limited QA-only seam proposal pending"
+    },
+    "source684Correction": {
+      "T15": "Prior source683 claim of reproduced trailing-LF acceptance is withdrawn: fixed original680 no-m regex and real helper reject LF/CRLF/CR/U2028 under Node24. C independently reproduced regex false. D1 acknowledged inference error. Explicit-end change is equivalent clarification plus added regression tests, not a demonstrated vulnerability fix. QB411 original seven-pass evidence remains valid; REV2 source683 PASS adopted.",
+      "136": "Accurate new source-only carrier ready; QB413 source PASS reused, original134-to136 finite carrier difference review pending; no actual submit yet."
     }
   }
 }
