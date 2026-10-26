@@ -1,16 +1,81 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile,mkdtemp,writeFile} from 'node:fs/promises';
+import {readFile,mkdtemp,writeFile,mkdir} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
-import {relocateOriginalChild,runOriginalChild,waitForPurposeGate,pinned,prepareOrdinaryConfiguration,ordinaryDriver,runB07QaIdentityParent} from './qa-identity-parent.mjs';
+import {relocateOriginalChild,runOriginalChild,waitForPurposeGate,pinned,prepareOrdinaryConfiguration,ordinaryDriver,runB07QaIdentityParent,loadEffectiveValueInputs,applyEffectiveValueSuccessor,assertOnlyEffectiveValueBodyChanged,EFFECTIVE_VALUE_PROFILE} from './qa-identity-parent.mjs';
+import {SQL as fixtureSql} from './qa-identity-schema19.mjs';
 const P='/Users/billy/Desktop/Workspace/project-007-业务管理系统';
 const B=P+'/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution';
 test('unfilled live registration template refuses before client import or private output creation',async()=>{
  const template=JSON.parse(await readFile(new URL('./QA-IDENTITY-PARENT-REGISTRATION.template.json',import.meta.url),'utf8'));
  await assert.rejects(runB07QaIdentityParent(template),/^Error: B07_LIVE_FIXTURE_REGISTRATION_REQUIRED$/);
+});
+test('04 missing v21 ref or changed approved pin refuses before connection',async()=>{
+ const template=JSON.parse(await readFile(new URL('./QA-IDENTITY-PARENT-REGISTRATION.template.json',import.meta.url),'utf8'));
+ template.fixtureInput.target.postmaster_started_at='2026-10-26 00:00:00+00';template.fixtureInput.sourceActorAccountId='b0700000-0000-4000-8000-000000000099';template.fixtureInput.createdAt='2026-10-26T00:01:00.000Z';template.fixtureInput.preservedSnapshotReference='SYNTHETIC_ONLY';
+ delete template.effectiveValue.metadata;
+ await assert.rejects(runB07QaIdentityParent(template),/^Error: B07_EFFECTIVE_VALUE_INPUTS_REQUIRED$/);
+ const refs=JSON.parse(await readFile(new URL('./QA-IDENTITY-PARENT-REGISTRATION.template.json',import.meta.url),'utf8')).effectiveValue;
+ refs.patch.sha256='f'.repeat(64);await assert.rejects(loadEffectiveValueInputs(refs),/^Error: B07_EFFECTIVE_VALUE_EXACT_PIN_REQUIRED$/);
+});
+async function successorFixture(options={}){
+ const template=JSON.parse(await readFile(new URL('./QA-IDENTITY-PARENT-REGISTRATION.template.json',import.meta.url),'utf8'));
+ const plan={...template,outputDirectory:await mkdtemp(join(tmpdir(),'b07-v21-parent-offline-only-'))};
+ await mkdir(join(plan.outputDirectory,'role'));
+ const input=plan.fixtureInput;input.target.postmaster_started_at='2026-10-26 00:00:00+00';
+ const oldSource=await readFile(P+'/work/erp-local-source-20261022/adapters/postgres/patches/0026-history-revision-current-base.sql','utf8');
+ const patchSource=await readFile(plan.effectiveValue.patch.path,'utf8');
+ const body=s=>s.match(/CREATE OR REPLACE FUNCTION naijue_erp\.history_effective_writes_closed\(\)[\s\S]*?AS \$\$(.*?)\$\$;/s)[1];
+ const routine=(source,definition)=>({name:'history_effective_writes_closed',identity_arguments:'',owner:'naijue_erp_test',acl:'SYNTHETIC_UNCHANGED',source,body_sha256:createHash('sha256').update(source).digest('hex'),body_md5:createHash('md5').update(source).digest('hex'),definition_sha256:definition.repeat(64)});
+ const before={identity:{notice:'SYNTHETIC_METADATA_ONLY'},relations:[{name:'SYNTHETIC_UNCHANGED'}],routines:[routine(body(oldSource),'a'),...Array.from({length:128},(_,i)=>({name:'synthetic_'+i}))]};
+ const after=structuredClone(before);after.routines[0]=routine(body(patchSource),'b');
+ const beforeBytes=JSON.stringify(before),oldMetadata={catalog_sha256:'a'.repeat(64),source_routines_match:true};
+ await writeFile(join(plan.outputDirectory,'role','ACTUAL-ORDINARY-V16-FULL-CATALOG.json'),beforeBytes,{mode:0o600});
+ await writeFile(join(plan.outputDirectory,'role','ACTUAL-ORDINARY-V16-METADATA.json'),JSON.stringify(oldMetadata),{mode:0o600});
+ const sql=await loadEffectiveValueInputs(plan.effectiveValue),catalogSql=await readFile(plan.role.files.find(x=>x.name==='CATALOGUE-V16-FROM-V14.sql').ref.path,'utf8');
+ const metadata={identity:{database:input.target.database,database_oid:input.target.oid,current_user:'t45_b07_hrev_runtime_20261026',session_user:'t45_b07_hrev_runtime_20261026',postmaster_start:input.target.postmaster_started_at,server_addr:null,server_port:null,replication_role:'origin'},migration_versions:Array.from({length:26},(_,i)=>i+1),catalog_sha256:'b'.repeat(64),source_routines_match:!options.badMetadata};
+ const calls=[],clients=[];
+ class Client{
+  constructor(config){this.user=config.user;this.role=config.user;this.connectionParameters={host:config.host,port:config.port};this.ended=false;clients.push(this);}
+  async connect(){}
+  async query(query){calls.push(query);
+   if(query==='SET ROLE naijue_erp_test')this.role='naijue_erp_test';
+   if(query===fixtureSql.target){const {unix_socket_directories,...target}=input.target;return {rows:[{...target,role:this.role,session_role:this.user}]};}
+   if(query===sql.patch){if(options.unknownCommit)throw Object.assign(Error('PRIVATE_DATABASE_DETAIL'),{code:'08006'});return [{command:'BEGIN'},{command:'COMMIT'}];}
+   if(query===sql.finiteCheck)return [{command:'DO'},{command:'ROLLBACK'}];
+   if(query===sql.metadata)return {rows:[{row_to_json:metadata}]};
+   if(query===catalogSql)return {rows:[{manifest:after,canonical_sha256:metadata.catalog_sha256}]};
+   return {rows:[],command:query};
+  }
+  async end(){this.ended=true;if(options.closeFail&&this.user===input.target.session_role)throw Error('PRIVATE_CLOSE_DETAIL');}
+ }
+ return {plan,input,Client,calls,clients,sql,before,after,beforeBytes};
+}
+test('04 exact successor commits once then finite rollback and new metadata; old receipt files retained',async()=>{
+ const f=await successorFixture(),out=await applyEffectiveValueSuccessor(f);
+ assert.equal(out.profile,EFFECTIVE_VALUE_PROFILE);assert.equal(out.commitReturned,true);assert.equal(out.finiteRollbackReturned,true);assert.equal(out.clientsClosed,true);assert.ok(f.clients.every(c=>c.ended));
+ assert.ok(f.calls.indexOf(f.sql.patch)<f.calls.indexOf(f.sql.finiteCheck)&&f.calls.indexOf(f.sql.finiteCheck)<f.calls.indexOf(f.sql.metadata));
+ assert.equal(f.calls.filter(q=>q===f.sql.patch).length,1);assert.ok(out.metadataRef.path.includes('history-effective-value/ACTUAL-V21-METADATA.json'));
+ assert.equal(await readFile(join(f.plan.outputDirectory,'role','ACTUAL-ORDINARY-V16-FULL-CATALOG.json'),'utf8'),f.beforeBytes);
+ const changed=structuredClone(f.after);changed.relations[0].name='UNRELATED_CHANGE';assert.throws(()=>assertOnlyEffectiveValueBodyChanged(f.before,changed),/^Error: B07_UNRELATED_CATALOG_CHANGE_REFUSED$/);
+});
+test('04 unknown install, failed metadata or nested cleanup cannot yield ready metadata',async()=>{
+ for(const options of [{unknownCommit:true},{badMetadata:true},{closeFail:true}]){
+  const f=await successorFixture(options);
+  await assert.rejects(applyEffectiveValueSuccessor(f),error=>{
+   assert.equal(error.message,'B07_V21_SUCCESSOR_NOT_READY');const r=error.successorResult;
+   assert.equal(r.status.startsWith('STOP_'),true);assert.ok(!JSON.stringify(r).includes('PRIVATE_'));
+   if(options.unknownCommit){assert.equal(r.commitReturned,false);assert.equal(r.databaseErrorCode,'08006');assert.equal(f.calls.includes(f.sql.finiteCheck),false);}
+   if(options.badMetadata){assert.equal(r.commitReturned,true);assert.equal(r.metadataFailureRollbackReturned,true);assert.equal(r.metadataRef,undefined);}
+   if(options.closeFail)assert.equal(r.clientsClosed,false);
+   return true;
+  });
+  assert.ok(f.clients.every(c=>c.ended));assert.equal(f.calls.filter(q=>q===f.sql.patch).length,1);
+  await assert.rejects(readFile(join(f.plan.outputDirectory,'CURRENT-METADATA-READY.json')),{code:'ENOENT'});
+ }
 });
 test('original two child sources change only exact unique B literal and still parse without executing',async()=>{
  for(const [dir,name] of [['B07-EXISTING-COPY-V16-UPGRADE-SUCCESSOR-20261026','upgrade-v16-only.mjs'],['B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026','ordinary-role-only.mjs']]){

@@ -1,8 +1,8 @@
 {
   "contract": "B07_QA_SAME_PARENT_1",
   "node": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node",
-  "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-03",
-  "purposeGateFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-03/CURRENT-PURPOSE-GATE.json",
+  "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-04",
+  "purposeGateFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-04/CURRENT-PURPOSE-GATE.json",
   "purposeWaitMs": 300000,
   "fixtureInput": {
     "contract": "B07_PREUPGRADE_QA_IDENTITY_1",
@@ -88,5 +88,22 @@
     "resultFile": "ROLE-ACL-RESULT.json",
     "expectedStatus": "PASS_ISOLATED_ORDINARY_ROLE_ACL_ONLY_FRESH_PURPOSE_REVIEW_AND_NORMAL_AUTH_PENDING",
     "timeoutMs": 180000
+  },
+  "effectiveValue": {
+    "patch": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-history-effective-value-disambiguation.sql",
+      "bytes": 6623,
+      "sha256": "c8fb573e62af9055cd4532266890b64e680e0db4556edeb3e33c1bf6c5c33d57"
+    },
+    "metadata": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/HISTORY-EFFECTIVE-VALUE-METADATA.sql",
+      "bytes": 21680,
+      "sha256": "d41119c66a2267d44a631d386990c2065fcec386dfc34799ddac6b1064e15153"
+    },
+    "finiteCheck": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/HISTORY-EFFECTIVE-VALUE-FINITE-PG-CHECK.sql",
+      "bytes": 2593,
+      "sha256": "9cb96045ba4eafe41183243d967a8355adaca19037e27385d0bde2762a0ac497"
+    }
   }
 }

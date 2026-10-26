@@ -5,12 +5,18 @@ import {pathToFileURL,fileURLToPath} from 'node:url';
 import {createHash,randomBytes} from 'node:crypto';
 import {spawn} from 'node:child_process';
 import {setTimeout as delay} from 'node:timers/promises';
-import {withB07QaIdentityFixture,QA_IDENTITY} from './qa-identity-schema19.mjs';
+import {withB07QaIdentityFixture,QA_IDENTITY,SQL as fixtureSql} from './qa-identity-schema19.mjs';
 import {runDraftNormalHistory} from './draft-normal-history-v16.mjs';
 const must=(ok,code)=>{if(!ok)throw Error(code);};
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const P='/Users/billy/Desktop/Workspace/project-007-业务管理系统';
-export const OUTPUT=P+'/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-03';
+export const OUTPUT=P+'/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-04';
+export const EFFECTIVE_VALUE_PROFILE='26_v21_history_effective_value_from_v16_v14';
+const OLD_EFFECTIVE_BODY='c06027597f11a9cf7f2ae06bf5e47e5c21349b54851fb21df6895ef22a2855b7';
+const NEW_EFFECTIVE_BODY='4fbbebd6b335359b80c7df38efc99a30cb666902158c3e1f911e3c869ebac363';
+const EFFECTIVE_INPUTS={patch:{bytes:6623,sha256:'c8fb573e62af9055cd4532266890b64e680e0db4556edeb3e33c1bf6c5c33d57'},
+ metadata:{bytes:21680,sha256:'d41119c66a2267d44a631d386990c2065fcec386dfc34799ddac6b1064e15153'},
+ finiteCheck:{bytes:2593,sha256:'9cb96045ba4eafe41183243d967a8355adaca19037e27385d0bde2762a0ac497'}};
 const CHILDREN={
  upgrade:{bytes:8610,sha256:'bdc80798752cb3c9be6d533fc7f590e6938d5b838f0ae20c8c2d37e10af6bde5',literal:"B=P+'/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-EXISTING-COPY-V16-UPGRADE-SUCCESSOR-20261026'"},
  role:{bytes:11744,sha256:'01a2b14ab308c97d860134c7581257a6b6c22e91e862c342c157a5ee4f10eafe',literal:"B=P+'/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026'"}
@@ -43,6 +49,83 @@ export function relocateOriginalChild(source,oldLiteral,newDirectory){
  return source.replace(oldLiteral,'B='+JSON.stringify(newDirectory));
 }
 async function record(directory,name,value){await writeFile(join(directory,name),JSON.stringify(value,null,2)+'\n',{flag:'wx',mode:0o600});}
+const stable=value=>JSON.stringify(value,(_k,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);
+export async function loadEffectiveValueInputs(refs){
+ must(refs&&Object.keys(refs).sort().join(',')==='finiteCheck,metadata,patch','B07_EFFECTIVE_VALUE_INPUTS_REQUIRED');
+ const sql={};for(const [name,expected] of Object.entries(EFFECTIVE_INPUTS)){
+  must(refs[name]?.bytes===expected.bytes&&refs[name]?.sha256===expected.sha256,'B07_EFFECTIVE_VALUE_EXACT_PIN_REQUIRED');
+  sql[name]=(await pinned(refs[name])).toString('utf8');
+ }return sql;
+}
+export function assertOnlyEffectiveValueBodyChanged(before,after){
+ const normalize=(manifest,body)=>{
+  const copy=structuredClone(manifest);delete copy.identity;
+  must(Array.isArray(copy.routines)&&copy.routines.length===129,'B07_EFFECTIVE_VALUE_EXACT_129_REQUIRED');
+  const rows=copy.routines.filter(x=>x.name==='history_effective_writes_closed'&&x.identity_arguments==='');
+  must(rows.length===1&&rows[0].body_sha256===body&&typeof rows[0].source==='string'&&hash(rows[0].source)===body
+   &&rows[0].body_md5===createHash('md5').update(rows[0].source).digest('hex')&&/^[a-f0-9]{64}$/.test(rows[0].definition_sha256),'B07_EFFECTIVE_VALUE_EXACT_BODY_REQUIRED');
+  for(const key of ['source','body_md5','body_sha256','definition_sha256'])delete rows[0][key];return copy;
+ };
+ must(stable(normalize(before,OLD_EFFECTIVE_BODY))===stable(normalize(after,NEW_EFFECTIVE_BODY)),'B07_UNRELATED_CATALOG_CHANGE_REFUSED');
+}
+const lastCommand=answer=>(Array.isArray(answer)?answer:[answer]).at(-1)?.command;
+async function fileRef(path){const bytes=await readFile(path);return {path,bytes:bytes.length,sha256:hash(bytes)};}
+/** The only new actual step: exact fixed SQL leaf, finite substatements and
+ * ordinary-role metadata. No application password is supplied to this scope. */
+export async function applyEffectiveValueSuccessor({plan,input,Client}){
+ const sql=await loadEffectiveValueInputs(plan.effectiveValue);
+ const catalogRef=plan.role.files.find(x=>x.name==='CATALOGUE-V16-FROM-V14.sql')?.ref;
+ must(catalogRef?.bytes===7145&&catalogRef.sha256===ORIGINAL_INPUTS.role['CATALOGUE-V16-FROM-V14.sql'],'B07_ORIGINAL_CATALOG_PIN_REQUIRED');
+ const catalogSql=(await pinned(catalogRef)).toString('utf8');
+ const roleRef=plan.role.files.find(x=>x.name==='ORDINARY-ROLE-REGISTRATION.json')?.ref;
+ must(roleRef?.sha256===ORIGINAL_INPUTS.role['ORDINARY-ROLE-REGISTRATION.json'],'B07_ORIGINAL_ROLE_PIN_REQUIRED');
+ const runtimeRole=JSON.parse((await pinned(roleRef)).toString('utf8')).runtimeRole;
+ const before=JSON.parse(await readFile(join(plan.outputDirectory,'role','ACTUAL-ORDINARY-V16-FULL-CATALOG.json'),'utf8'));
+ const beforeMetadata=JSON.parse(await readFile(join(plan.outputDirectory,'role','ACTUAL-ORDINARY-V16-METADATA.json'),'utf8'));
+ const directory=join(plan.outputDirectory,'history-effective-value');await mkdir(directory,{mode:0o700});
+ const out={status:'STARTED',stage:'CONNECT_SETUP',installAttempted:false,commitReturned:false,finiteRollbackReturned:false,metadataReadReturned:false,clientsClosed:false};
+ const clients=[];let ordinary,reading=false,readCommitAttempted=false;
+ const connect=async user=>{const client=new Client({host:input.target.unix_socket_directories,port:input.target.port,database:input.target.database,user,
+  password:()=>{throw Error('B07_NO_CREDENTIAL_FALLBACK');},ssl:false,application_name:'t45_b07_effective_value_successor',connectionTimeoutMillis:3000,query_timeout:30000,statement_timeout:25000,lock_timeout:4000});clients.push(client);await client.connect();return client;};
+ const identity=async(client,role,sessionRole)=>{
+  const {unix_socket_directories,...expected}=input.target;
+  must(client.connectionParameters?.host===unix_socket_directories&&client.connectionParameters?.port===expected.port,'B07_CONNECTED_TRANSPORT_CHANGED');
+  const rows=(await client.query(fixtureSql.target)).rows;
+  must(rows.length===1&&stable(rows[0])===stable({...expected,role,session_role:sessionRole}),'B07_EFFECTIVE_VALUE_TARGET_CHANGED');
+ };
+ try{
+  const owner=await connect(input.target.session_role);await owner.query('SET ROLE naijue_erp_test');await owner.query('SET default_transaction_read_only=off');
+  await identity(owner,'naijue_erp_test',input.target.session_role);
+  out.stage='INSTALL';await record(directory,'INSTALL-INTENT.json',{patch:plan.effectiveValue.patch,target:input.target,profile:EFFECTIVE_VALUE_PROFILE,automaticReplay:false});
+  out.installAttempted=true;const installed=await owner.query(sql.patch);must(lastCommand(installed)==='COMMIT','B07_EFFECTIVE_VALUE_COMMIT_UNCONFIRMED');out.commitReturned=true;
+  await record(directory,'INSTALL-COMMIT.json',{commitReturned:true,patch:plan.effectiveValue.patch,profile:EFFECTIVE_VALUE_PROFILE});
+  out.stage='CONNECT_ORDINARY';ordinary=await connect(runtimeRole);await identity(ordinary,runtimeRole,runtimeRole);out.ordinaryRole=runtimeRole;
+  out.stage='FINITE_CHECK';await record(directory,'FINITE-CHECK-INTENT.json',{sql:plan.effectiveValue.finiteCheck,ordinaryRole:runtimeRole,noBusinessDml:true});
+  const checked=await ordinary.query(sql.finiteCheck);must(lastCommand(checked)==='ROLLBACK','B07_EFFECTIVE_VALUE_FINITE_ROLLBACK_UNCONFIRMED');
+  out.finiteRollbackReturned=true;await record(directory,'FINITE-CHECK-RESULT.json',{status:'PASS_EXACT_THREE_SRF_SUBSTATEMENTS_NOT_BUSINESS_ACCEPTANCE',rollbackReturned:true});
+  out.stage='NEW_METADATA';await ordinary.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');reading=true;
+  const m=(await ordinary.query(sql.metadata)).rows,c=(await ordinary.query(catalogSql)).rows;
+  must(m.length===1&&c.length===1,'B07_EFFECTIVE_VALUE_METADATA_REQUIRED');const metadata=m[0].row_to_json,catalog=c[0].manifest;
+  must(metadata?.source_routines_match===true&&stable(metadata.migration_versions)===stable(Array.from({length:26},(_,i)=>i+1))
+   &&metadata.catalog_sha256===c[0].canonical_sha256&&/^[a-f0-9]{64}$/.test(metadata.catalog_sha256)
+   &&metadata.catalog_sha256!==beforeMetadata.catalog_sha256,'B07_EFFECTIVE_VALUE_NEW_CATALOG_REQUIRED');
+  const i=metadata.identity,t=input.target;
+  must(i?.database===t.database&&i.database_oid===t.oid&&i.current_user===runtimeRole&&i.session_user===runtimeRole
+   &&i.postmaster_start===t.postmaster_started_at&&i.server_addr===null&&i.server_port===null&&i.replication_role==='origin','B07_EFFECTIVE_VALUE_METADATA_IDENTITY_CHANGED');
+  assertOnlyEffectiveValueBodyChanged(before,catalog);
+  readCommitAttempted=true;await ordinary.query('COMMIT');reading=false;out.metadataReadReturned=true;
+  await record(directory,'ACTUAL-V21-METADATA.json',metadata);await record(directory,'ACTUAL-V21-FULL-CATALOG.json',catalog);
+  out.metadataRef=await fileRef(join(directory,'ACTUAL-V21-METADATA.json'));out.catalogRef=await fileRef(join(directory,'ACTUAL-V21-FULL-CATALOG.json'));
+  out.catalogSha256=metadata.catalog_sha256;out.profile=EFFECTIVE_VALUE_PROFILE;out.status='PASS_V21_INSTALL_FINITE_AND_CURRENT_METADATA';
+ }catch(e){out.status='STOP_V21_INSTALL_OR_OUTCOME_UNCERTAIN_NO_REPLAY';if(typeof e.code==='string'&&/^[0-9A-Z]{5}$/.test(e.code))out.databaseErrorCode=e.code;
+  if(reading&&!readCommitAttempted)try{await ordinary.query('ROLLBACK');out.metadataFailureRollbackReturned=true;}catch{out.metadataFailureRollbackReturned=false;}
+ }finally{
+  out.clientsClosed=true;for(const client of clients)try{await client.end();}catch{out.clientsClosed=false;out.status='STOP_V21_CLIENT_CLEANUP_UNKNOWN';}
+  await record(directory,'SUCCESSOR-RESULT.json',out);
+ }
+ if(out.status!=='PASS_V21_INSTALL_FINITE_AND_CURRENT_METADATA'||!out.clientsClosed){const error=Error('B07_V21_SUCCESSOR_NOT_READY');error.successorResult=out;throw error;}
+ return out;
+}
 export async function runOriginalChild({node,source,timeoutMs}){
  must(resolve(node)===node&&Number.isInteger(timeoutMs)&&timeoutMs>=1000&&timeoutMs<=260000,'B07_BOUNDED_CHILD_REQUIRED');
  // No password/cookie/config/body in argv, environment or stdin. Source contains
@@ -90,6 +173,7 @@ export async function runB07QaIdentityParent(plan){
  must(plan.upgrade.timeoutMs+plan.role.timeoutMs+plan.purposeWaitMs<=800000,'B07_TOTAL_PRIVATE_WINDOW_REQUIRED');
  must(plan.upgrade.expectedStatus==='PASS_EXACT_V16_SCHEMA_ONLY_NORMAL_ROLE_SESSION_AND_REVIEW_STILL_REQUIRED'
   &&plan.role.expectedStatus==='PASS_ISOLATED_ORDINARY_ROLE_ACL_ONLY_FRESH_PURPOSE_REVIEW_AND_NORMAL_AUTH_PENDING','B07_ORIGINAL_CHILD_STATUSES_REQUIRED');
+ await loadEffectiveValueInputs(plan.effectiveValue);
  // All leaf pins and both exact output replacements are checked before connect.
  for(const kind of ['upgrade','role']){const c=plan[kind],expected=CHILDREN[kind];must(c.script.bytes===expected.bytes&&c.script.sha256===expected.sha256&&c.outputLiteral===expected.literal,'B07_ORIGINAL_CHILD_SOURCE_REQUIRED');relocateOriginalChild((await pinned(c.script)).toString('utf8'),c.outputLiteral,join(plan.outputDirectory,kind));must(c.files.length===Object.keys(ORIGINAL_INPUTS[kind]).length&&new Set(c.files.map(f=>f.name)).size===c.files.length,'B07_ORIGINAL_INPUT_SET_REQUIRED');for(const f of c.files){must(ORIGINAL_INPUTS[kind][f.name]===f.ref.sha256,'B07_ORIGINAL_INPUT_PIN_REQUIRED');await pinned(f.ref);}}
  const d=resolve(input.sourceRoot,'../local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1');
@@ -109,15 +193,17 @@ export async function runB07QaIdentityParent(plan){
     await setup.end();setupEnded=true;
     await originalChild(plan,'upgrade',join(plan.outputDirectory,'upgrade'));
     await originalChild(plan,'role',join(plan.outputDirectory,'role'));
-    await record(plan.outputDirectory,'CURRENT-METADATA-READY.json',{status:'WAITING_ORIGINAL_INDEPENDENT_PURPOSE',metadataPath:join(plan.outputDirectory,'role','ACTUAL-ORDINARY-V16-METADATA.json'),catalogPath:join(plan.outputDirectory,'role','ACTUAL-ORDINARY-V16-FULL-CATALOG.json'),qaIdentity:QA_IDENTITY});
+    let successor;try{successor=await applyEffectiveValueSuccessor({plan,input,Client});result.historyEffectiveValue=successor;}catch(e){result.historyEffectiveValue=e.successorResult??{status:'FAILED_BEFORE_INSTALL',clientsClosed:true};throw e;}
+    await record(plan.outputDirectory,'CURRENT-METADATA-READY.json',{status:'WAITING_ORIGINAL_INDEPENDENT_PURPOSE',profile:EFFECTIVE_VALUE_PROFILE,metadataPath:successor.metadataRef.path,catalogPath:successor.catalogRef.path,metadataRef:successor.metadataRef,catalogRef:successor.catalogRef,catalogSha256:successor.catalogSha256,qaIdentity:QA_IDENTITY});
     const gate=await waitForPurposeGate(plan.purposeGateFile,plan.purposeWaitMs);
     must(gate?.format==='B07_CURRENT_NORMAL_HISTORY_PURPOSE_GATE_1','B07_CURRENT_PURPOSE_GATE_REQUIRED');
     const template=JSON.parse((await pinned(gate.runtimeConfiguration)).toString('utf8'));
     const config=prepareOrdinaryConfiguration(template,input.target);
     const draft=JSON.parse((await pinned(gate.draftInput)).toString('utf8'));
     const review=JSON.parse((await pinned(gate.review,65536)).toString('utf8'));
+    must(review.catalog?.patchLevel===EFFECTIVE_VALUE_PROFILE&&review.catalog?.sha256===successor.catalogSha256,'B07_NEW_V21_REVIEW_REQUIRED');
     must(config.runtime26Review.reviewFile===gate.review.path&&config.runtime26Review.trustedReviewSha256===gate.review.sha256,'B07_EXACT_PURPOSE_PIN_REQUIRED');
-    const pg=config.postgres.target,t=input.target;
+    const pg=config.postgres.target,t=input.target;must(pg.user===successor.ordinaryRole,'B07_EXACT_SUCCESSOR_ORDINARY_ROLE_REQUIRED');
     must(pg.database===t.database&&pg.host===t.unix_socket_directories&&pg.port===t.port&&pg.ssl===false&&pg.user===review.target.actingRole
      &&review.target.database===t.database&&review.target.databaseOid===t.oid&&review.target.sessionUser===pg.user
      &&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_CURRENT_NONOWNER_REVIEW_REQUIRED');
@@ -144,7 +230,7 @@ export async function runB07QaIdentityParent(plan){
   result.status=safe.status;
  }catch(e){result.status='STOP_SAME_PARENT_OR_OUTCOME_UNCERTAIN_NO_REPLAY';result.errorCode=typeof e.message==='string'&&/^B07_[A-Z0-9_]+$/.test(e.message)?e.message:'B07_PARENT_FAILED_DETAIL_OMITTED';if(typeof e.pgCode==='string'&&/^[0-9A-Z]{5}$/.test(e.pgCode))result.databaseErrorCode=e.pgCode;}
  finally{
-  result.clientsClosed=true;
+  result.clientsClosed=result.historyEffectiveValue?.clientsClosed!==false;
   for(const close of [()=>api?.close(),()=>readPool?.dispose(),()=>!setupEnded?setup.end():undefined])try{await close();}catch{result.clientsClosed=false;result.status='STOP_SAME_PARENT_CLEANUP_UNKNOWN';}
   await record(plan.outputDirectory,'PARENT-RESULT.json',result);
  }
