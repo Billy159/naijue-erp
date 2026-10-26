@@ -11674,7 +11674,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE611",
+    "round": "SOURCE612",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "a88e2eecdb7fbbf2bdb3b92185145cec332fb082",
     "fixedCandidates": {
@@ -13673,6 +13673,15 @@
       "source": "Human screenshot in original D1 relayed to C",
       "httpEvidence": "12 direct CORE17 CSS 200/text-css and application.js 200/js do not establish application in browser",
       "next": "Preserve current browser state and inspect version/lifecycle/console; no duplicate stores acceptance; D1 continues projection preparation"
+    },
+    "source612BarcodeRealReader": {
+      "status": "DELIVERED_FIXED_SOURCE_PENDING_QB",
+      "checks": "5 new finite file-reader tests PASS per original owner; not real payload consumption",
+      "scope": "original provider plus its test and two input references",
+      "actualCaptureRead": false,
+      "actualInitialization": false,
+      "nextOwner": "QB then T45",
+      "full11Ready": false
     }
   }
 }
