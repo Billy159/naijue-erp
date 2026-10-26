@@ -14031,6 +14031,23 @@
       "status": "DESCRIPTOR_DELIVERED_MAPPING_CODE_WIP_NOT_EXECUTABLE",
       "actualOwner": "T45 null locations and required controlled transfer",
       "next": "D3 mapping delivery then source624 genuine DATA/EXPECTED/MAIN assembly; independent grant only after complete inputs"
+    },
+    "source629T21": {
+      "owner": "D1",
+      "status": "SOURCE_DELIVERED_OWNER_CHECKS_PASS_WAIT_QB_NEW_RANGE",
+      "modifiedFiles": [
+        "scripts/release/deploy-candidate.py",
+        "scripts/release/boot-entry.py",
+        "scripts/release/rollback-candidate.py",
+        "scripts/release/DEPLOYMENT.md",
+        "scripts/release/BOOT-ENTRY.md"
+      ],
+      "unchangedExistingAPI": [
+        "apps/api/src/production-main.ts",
+        "apps/api/src/production-provider-composition.ts"
+      ],
+      "actualDeployment": "NOT_RUN",
+      "requiredActualInputs": "Full PUBLISH, current 7purpose metadata/ACL review, current R1 backup/restore and same-build business acceptance"
     }
   }
 }

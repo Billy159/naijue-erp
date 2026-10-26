@@ -1,3 +1,5 @@
+SOURCE629：D1原T21离线Full发布包交还，实际仅改原release5，已有API Full/R3两叶未改。采用owner六组必要离线检查与末两组影响复验PASS；准确7purposes/current metadata/media与可选spool/samebuild/PUBLISH/当前R1恢复、停写排空后零写旧入口恢复边界已接源码。尚无实际Full PUBLISH、用途授权、当前恢复、构建或部署通过；固定交原QB仅新差异。真实54文件定位/全11descriptor原T45继续实际缺项准备，D3映射代码在途，B07普通role尚未执行。SOURCE628远端5434dfe已核。
+
 SOURCE628：D3原控制目录INPUT/DELIVERY完整11组fileLocations descriptor先行交还，已核精确pin并保存源码库安全接线副本，非可执行完整输入。已交T45按原54位置/null项与DATA/CODE去重定位/必要受控传输；保原logical清单/审查与内容哈希，不盲替prefix。D3获原reader额外7叶最小resolveFile接缝、已有测试定向核，仍WIP不可执行；D1原T21离线六组检查通过待完整交还/QB新审，未部署。54存在性不冒fullhash/MAIN/PUBLISH或真实业务PASS。SOURCE627远端4f89297已核。
 
 SOURCE627：原123已实际完成纠正7路径只读定位，合122共54现存准确大小文件；并非fresh内容哈希、当前STAGE相等或全11齐备证明。D3原T19接全11必要descriptor与reader精确物理路径适配，先交T45实际缺口后继续代码，不改原清单/审查/源数据；D1原T21七叶在途，T45原隔离copy普通role/ACL与真实历史三案准备接续，均显式Solmedium。已核任务书用户T15新方向采用：每页摘要保留，整批核验移必要导入发布修订节点，同筛选翻页复用合计、业务变化失效，一次真实小定位；具体新增持久结构/写合同仍按原规则先完整呈示确认，不因技术表名称默认获批。全站37/67第二阶段真实业务、历史编辑及正式切换仍未完成。SOURCE626远端959fd94已核。

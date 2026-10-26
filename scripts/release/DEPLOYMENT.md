@@ -1,5 +1,7 @@
 # Controlled candidate deployment
 
+> SOURCE624 Full 后继新增显式分支；源码准备不代表已构建、PUBLISH、部署、恢复或业务验收。原 schema19/R1 规则只用于各自选择器，不能拿旧 C38/121/空库回执启用 Full。准确差异见末尾“exact26-full”。
+
 `deploy-candidate.py` and `rollback-candidate.py` run **only through C's existing bounded T45 dispatcher on `naijue-server`**. Their imports are inert. Default invocation validates input files and prints `PLAN_ONLY_NOT_EXECUTED`; host mutations require `--execute`. C remains the only server operator. These scripts do not create technical/business acceptance, and a successful activation still requires the existing public HTTPS identity/accepted-scope readback before C records a release.
 
 The fixed scope is the existing Oray HTTPS origin `https://1n5635n614.goho.co` and loopback `127.0.0.1:18080`. The old app and PG containers are never stopped/recreated, and their source/config/media/volumes are never modified. The only old-container action is a stop/start of the **exact old Web container ID** after a fresh before-CAS check. There are no SQL, migrations, imports, backup restores, image builds/pulls, Docker prune, new networks, firewall changes or domain/mapping changes.
@@ -157,3 +159,45 @@ Mount only the explicit metadata files readonly at /run/naijue-rewrite/runtime26
 The stage receipt, actual accepted candidate and activation bind runtime26BindingSha256 over these public references plus the existing private runtime file identity. They cannot change selector, metadata bytes, version or private config between staging and activation. All existing backup, original-container CAS, exact candidate, QF/QB, actual dataReady, write-boundary and rollback gates remain. Ship rollback-candidate.py from the same fixed source because it imports this module.
 
 Boot persistence is separate: boot-entry.py still limits schema19. This source successor does not establish exact26 boot or public business readiness. No permanent config/package, actual stage, entry switch or import is represented as complete by this addition.
+
+
+## exact26-full
+
+本分支只由原 C/T45 登记窗口执行；不改变当前 CORE17、原独立任务或正式根。应用已存在 `--exact26-full`，复用 `source-confirmed-native-exact26-r3-v1` 的闭合配置及原 `SOURCE_CONFIRMED_HISTORY_REVISION_V16`，无新应用 DTO。未选维护能力不擅加 true，`existingPreparation.sales/transfers` 明确逐项布尔；Full 本身包含原 native 单据、HISTORY 及媒体能力，不能用只读 review 假装启用。
+
+部署 PLAN 选 `runtimeSelector: "exact26-full"`、`schemaVersions: [1..26]`，不得同时带旧 `runtime26`。增加闭合 `runtime26Full`：
+
+```json
+{
+  "references": {
+    "metadata": {"path": "/srv/naijue-erp/rapid-launch-20261022/full/metadata.json", "sha256": "REQUIRED"},
+    "review": {"path": "/srv/naijue-erp/rapid-launch-20261022/full/runtime-review.json", "sha256": "REQUIRED"},
+    "independentReview": {"path": "/srv/naijue-erp/rapid-launch-20261022/full/QB-review.json", "sha256": "REQUIRED"},
+    "buildReceipt": {"path": "/srv/naijue-erp/rapid-launch-20261022/full/build-receipt.json", "sha256": "REQUIRED"},
+    "sourceManifest": {"path": "/srv/naijue-erp/rapid-launch-20261022/full/source-manifest.json", "sha256": "REQUIRED"},
+    "buildManifest": {"path": "/srv/naijue-erp/rapid-launch-20261022/full/build-manifest.json", "sha256": "REQUIRED"},
+    "publication": {"path": "/srv/naijue-erp/rapid-launch-20261022/full/publication-readback.json", "sha256": "REQUIRED"},
+    "backupCoverage": {"path": "/srv/naijue-erp/rapid-launch-20261022/full/backup-delta.json", "sha256": "REQUIRED"}
+  },
+  "media": {
+    "hostRoot": "/srv/naijue-erp/rapid-launch-20261022/media/full",
+    "containerRoot": "/run/naijue-rewrite/media/products",
+    "rootKey": "REQUIRED",
+    "writable": true
+  }
+}
+```
+
+示例 SHA 故意无效，不是实际回执。`newDatabaseReceipt` 精确等于 `references.metadata`，不再引用旧 schema19 空库记录。metadata 是原 v20 issuer probe 的原四键 `{identity,migration_versions,catalog_sha256,source_routines_match}` 实际结果；保持 PostgreSQL 原 canonical 摘要，不 hash 漂亮打印 JSON 来替代。新独立 review 仍为原 `C_NATIVE_RUNTIME26_REVIEW_V1`，严格目标/OID/current+session role/socket或TCP/postmaster、1..26、`26_v20_history_insert_identity_from_v19`、当前函数及 ACL canonical 全绑定。不能沿用旧 QB/旧121或130记录。用途准确为原五读用途加 `PRODUCT_MAINTENANCE`、`HISTORY_REVISION`；未授实际用途就拒绝。
+
+新 review / QB 文件分别 readonly 挂到原 `/run/naijue-rewrite/runtime26/C-RUNTIME-REVIEW.json` 和 `INDEPENDENT-REVIEW.json`，private config 内引用相应 review SHA。源码、静态资源、runtime config 及元数据只读挂载；R3 媒体目录独立可写、归 app UID、不在 release/public web 中，精确等于 private config 的 `productMedia:{root,rootKey}`。若明确选择现有库存输出，`runtime26Full.inventorySpool` 另给 `{hostRoot,containerRoot:"/private/inventory-exports"}`；hostRoot 须与媒体隔离并归 app UID，config 仍用原批准 `directory/maxBytes=536870912/maxConcurrent=1/maxDurationMs=120000`。不选择则两处均省略，不默开路由或给 `/app` 写权限。
+
+原 source/build/pack/依赖/同版后端图验证复用，Full 图额外含原 history-revision store。publication 只接真实原表投影 `{batch,receipt}`：batch 含 `id,status,checkpoint,history_validation_passed,history_payload_hash`；receipt 含原 `id/action/target_type/target_id/status/result_data`。必须实际 IMPORTED、非零 ledger 完整 counts=expected，原 IMPORT_PUBLISH COMMITTED/result 与该 batch/seq/cursor 一致。暂存、单独来源检查或 health 不代替此证明。原 candidateAcceptance 仍需同版 QF/QB 和 dataReady；部署器不创造业务通过。
+
+`backupCoverage` 是 T45 本次实际保护/隔离恢复的增量读回，给 `database/target/buildId/sourceCommit/schemaVersions/catalogSha256/backupReceiptSha256/runtimeIdentity/media/r1Protected`，目标等当前 review，runtimeIdentity 等 private config stat，media 等本 PLAN。`isolatedRestore.currentAppLoginRepresentativeRead` 必须实际 PASS。可复用已有备份方法及旧 DB/媒体有效恢复，只补当前 R1/schema/新配置/媒体和新 APP 登录代表读，不能把旧83仅覆盖旧库的事实改称当前 Full 已恢复。
+
+Full writeBoundary 仍用原 format，但实际同目标读回须含 `target/outcome:"KNOWN"/newBusinessWrites` 整数及显式 `firstBusinessWriteAtUtc`，并保留 build/source、CLOSED 或 CONTROLLED_PRIVATE、checkedBy/checkedAt。候选内真实保存/编辑/审核也算新业务。导入及会话与真实业务动作分开；LIVE、HISTORY、维护中的真实新增/编辑/审核都算，不能只查 LIVE 或把全部回执混成一个数量。分类不清或提交未知保留 UNKNOWN。已知有新账可以切换到兼容 Full，失败保留新账；结果未知则停止，不开新键重放。
+
+恢复旧入口另需 `writeFence` 的真实引用，不能只用五分钟内的零写 JSON：原 T45 先关闭所有写入口、停对应 app/worker、排空原事务，再同一一致快照记录零新业务写。fence 明确 `database/target/buildId/sourceCommit/allWriteEntrypointsClosed/inFlightTransactions:0/closedAtUtc/drainedAtUtc/snapshotAtUtc`、`snapshot:{newBusinessWrites:0,firstBusinessWriteAtUtc:null,outcome:"KNOWN"}`、`writers:[{id,startedAt,finishedAt}]` 以及 `oldEntry:{compatible:true,appId,dbId,appImageId,catalogSha256}`。全部目标和旧入口 IDs/image/catalog 精确绑定；工具实际 inspect 每个 writer 仍 stopped/Pid0/restart=no/相同起止时间，并包含 stage app。snapshot 必须晚于 drain；新写、未知、复起、缺旧兼容证据一律拒恢复旧入口。没有该真实 fence 时 Full 失败不自动假恢复旧站。`stop-entry` 同时停本次准确 app 和 public entry，保 DB/媒体/回执，事务结论另按原键读回；不做旧 DB 覆盖或 schema inverse。已有写只能用当前 schema/data 兼容 APP，或保持维护后修当前版本。
+
+实际回执分 install/start、data-ready+业务、fence/arm、root HTTPS 四组。当前仅离线源码和有限纯计划检查；实际 Full/PUBLISH/新权限/备份恢复/部署/公网及重启均 NOT_RUN，不能凭新增选择器安装或重启服务。

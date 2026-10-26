@@ -1,5 +1,7 @@
 # Fixed rewrite boot entry
 
+> SOURCE624 新增显式 Full 后继；原 schema19/R1 helper pin 和规则保留。Full 的新同版 helper、停写回退和实际未测范围见末尾“Full boot / recovery”。源码或 arm 成功均不代表真实重启通过。
+
 `boot-entry.py` is a separate C-owned preparation tool. It is **not integrated** into the reviewed `deploy-candidate.py` / `rollback-candidate.py` pair. Imports and normal invocations are inert; the default prints `PLAN_ONLY_NOT_EXECUTED`. No server installation, reboot, Docker restart, production switch or persistent availability has been tested by this source delivery.
 
 The deployment helper remains pinned by exact bytes before Python import. An omitted or explicit `schema19` selector keeps the original helper SHA256 `a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a`. Only the hash-bound base deployment plan with `runtimeSelector:"exact26-r1"` selects C90 helper SHA256 `543b1a594c1661e9eb3ffe7d03bbc98d0184a6d9a9cb5694f0c0e63d962ffa38`, conditional on C adopting its independent source review. Unknown selectors, helper versions and implicit schema26 plans are refused. This successor does not change the deployment/rollback implementations or execute their stage/activate functions.
@@ -146,3 +148,16 @@ Original unit bytes, snapshots, all new data and every receipt remain retained. 
 Partial fence/arm failures require this fresh observation. Safe stop or zero-write policy restoration is supported where its exact saved inputs exist. There is deliberately no generic “resume”, overwrite, auto-repair or blind retry switch. If a partial installation lacks required original snapshot bytes or has a foreign unit/drop-in, C must prepare a new narrow reconciliation with explicit current evidence. Do not rerun `fence`/`arm` over the partial directory.
 
 This first takeover v1 does not replace an existing `naijue-rewrite-entry.service` or implement subsequent-release ownership migration. A later owner change needs its own reviewed exact transition.
+
+
+## Full boot / recovery
+
+`runtimeSelector:"exact26-full"` 的部署 PLAN 使用 DEPLOYMENT.md 的独立8引用及 R3 media/可选库存 spool；旧 schema19/R1 的闭合输入、固定 helper pin、行为保留，不用放宽旧 allowlist 来接 Full。原 production-main/composition 已有 Full/R3 入口，本轮未重复改它们。
+
+Full boot 和 rollback 都绑定本次同一 deploy helper 的实际 SHA；rollback 在执行 sibling helper 字节前核 Full pin，boot 仍先核计划和 helper 字节才 compile 已核字节。禁止把旧 C38 helper 或仅改 PLAN 中 SHA 当新 Full 源审。C 固定同版7叶后交原 QB 新范围，T45 携原精确 helper/source pins 执行；不另建引擎。原 fence/activate/arm 顺序不变，arm 只 enable、不 start/reboot。永久引用须在 ROOT 下且不在本次可清理 job/boot-owner 目录；Full metadata/publication/当前 R1 备份增量都保持原 bytes+outside pins。
+
+boot-start 复用原已核 Full schema/profile/target/purposes、发布/同版图及备份读回，不重新导入或恢复数据库。DB 进程/ACL/catalog 变更时原 runtime review 必须沿 T45 原生命周期更新，旧 pin 不会被自动改为当前事实；证明不符即停止，不能为自启而删 postmaster/identity 检查。只 arm 一律 `ARMED_NOT_REBOOT_TESTED`，实际重启验证未做，不冒称持久可用。
+
+Full `stop-entry` 同时停止准确本次 app 与 public entry，保留两库/媒体/回执；不声称未知事务已回滚。`restore-legacy` 只有 DEPLOYMENT.md 所列真实 writeFence（全部入口关闭、drain后同快照零写、旧兼容、writer 仍实测 stopped）才能继续；boot PLAN 的 writeBoundary/writeFence 引用交原 helper 检查。已有任一真实新写或结果未知时不得恢复旧业务入口/旧 DB/schema；只允许保新账的兼容 APP 或维护修复。恢复旧启动策略不等于旧入口已启动，仍保留原报告区分。
+
+本次必要纯检查仅 Full plan shape/参数挂载、错 metadata/profile/purpose 拒绝、同版 helper、PUBLISH/备份差异和真实停写边界的合成反例。没有 Docker/systemd/PG/HTTP/build/部署/boot 或实际恢复执行；其他已验范围不重跑。

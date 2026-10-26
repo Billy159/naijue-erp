@@ -6,16 +6,28 @@ The shared implementation is imported from the same versioned deploy script; no 
 """
 import argparse
 import fcntl
-import importlib.util
+import hashlib
 import json
 from pathlib import Path
+import types
 
-SPEC = importlib.util.spec_from_file_location('naijue_candidate_deployment', Path(__file__).with_name('deploy-candidate.py'))
-C = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(C)
+DEPLOYMENT_FULL_SHA256 = 'a7655f237631015c07c72cfdfce2d597d45da341cb156c588e74c9f28872ead3'
+C = None
 
 
-def rollback(p, mode):
+def deployment_implementation(selector):
+    path = Path(__file__).with_name('deploy-candidate.py')
+    source = path.read_bytes()
+    if selector == 'exact26-full' and hashlib.sha256(source).hexdigest() != DEPLOYMENT_FULL_SHA256:
+        raise ValueError('FULL_REVIEWED_DEPLOYMENT_HELPER_REQUIRED')
+    module = types.ModuleType('naijue_candidate_deployment')
+    module.__file__ = str(path)
+    exec(compile(source, str(path), 'exec'), module.__dict__)
+    return module
+
+
+def rollback(p, mode, implementation=None):
+    C = implementation or deployment_implementation(p.get('runtimeSelector', 'schema19'))
     job = C.exact_host(p)
     with open('/run/naijue-erp-hdd-test.lock', 'a+') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -34,7 +46,7 @@ def rollback(p, mode):
             C.need(C.own_container_fingerprint(info) == public['specSha256'] and info['State']['Running'], 'ACTIVE_CANDIDATE_ENTRY_CHANGED')
             # Only restore-old-entry needs a still-closed write boundary. stop-entry is allowed after writes and retains both DBs.
             if mode == 'restore-old-entry':
-                C.write_boundary(p)
+                C.write_boundary(p, restore_old=True, docker=docker)
             journal.event('STOP_EXACT_NEW_WEB_INTENT', containerId=public['id'])
             docker.run(['stop', '--time', '20', public['id']], 40)
             C.need(not docker.inspect(public['id'])['State']['Running'], 'NEW_ENTRY_STOP_UNCONFIRMED')
@@ -42,6 +54,8 @@ def rollback(p, mode):
                 restored = C.restore_old_entry(p, docker, journal)
                 status = 'OLD_ENTRY_RESTORED_PRE_BUSINESS_WRITES_NO_DATABASE_RESTORE'
             else:
+                if C.exact26_full(p):
+                    C.stop_full_app(p, docker, journal)
                 C.check_old(p, docker, web_running=False)
                 restored = None
                 status = 'NEW_ENTRY_STOPPED_NO_HTTP_MAINTENANCE_RESPONSE'
@@ -63,19 +77,26 @@ def rollback(p, mode):
 
 
 def main():
+    global C
     parser = argparse.ArgumentParser()
     parser.add_argument('--plan', required=True)
     parser.add_argument('--mode', choices=['restore-old-entry', 'stop-entry'], required=True)
     parser.add_argument('--execute', action='store_true')
     args = parser.parse_args()
+    raw = Path(args.plan).read_bytes()
+    if len(raw) > 2 * 1024 * 1024:
+        raise ValueError('BOUNDED_DEPLOYMENT_PLAN_REQUIRED')
+    selector = json.loads(raw).get('runtimeSelector', 'schema19')
+    C = deployment_implementation(selector)
     p = C.read_plan(args.plan)
+    C.need(p.get('runtimeSelector', 'schema19') == selector, 'RUNTIME_SELECTOR_CHANGED')
     if not args.execute:
         C.reference(p.get('activationReceipt'))
         print(json.dumps({'status': 'PLAN_ONLY_NOT_EXECUTED', 'mode': args.mode, 'buildId': p['buildId'],
                           'database': C.DATABASE, 'databaseRestoreAllowed': False,
                           'oldEntryRequiresZeroNewBusinessWritesAndClosedAdmission': True, 'deploymentExecuted': False}))
     else:
-        value = rollback(p, args.mode)
+        value = rollback(p, args.mode, C)
         print(json.dumps({key: value.get(key) for key in ['status', 'mode', 'buildId', 'sourceCommit', 'finishedAtUtc']}))
 
 
@@ -83,5 +104,5 @@ if __name__ == '__main__':
     try:
         main()
     except Exception as error:
-        print(str(error) if isinstance(error, C.Refused) else 'ENTRY_ROLLBACK_FAILED_NO_REPLAY', file=__import__('sys').stderr)
+        print(str(error) if C is not None and isinstance(error, C.Refused) else 'ENTRY_ROLLBACK_FAILED_NO_REPLAY', file=__import__('sys').stderr)
         raise SystemExit(2)

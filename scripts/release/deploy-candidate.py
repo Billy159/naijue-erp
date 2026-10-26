@@ -39,6 +39,9 @@ RUNTIME26_TARGET = {'database': DATABASE, 'databaseOid': '1027659', 'actingRole'
 RUNTIME26_CATALOG = {'format': 'EXACT26_RUNTIME_CATALOG_EXPORT_V1', 'sha256': 'f62de0a301d485da548324a89e97bd902f184ca45e0778901ab8d4be8dab15c7',
                      'patchLevel': '26_v7_media_color_swap'}
 RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CURRENT_FORM_READ', 'HISTORY_READ', 'INVENTORY_ADMISSION']
+FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
+FULL_PROFILE = 'source-confirmed-native-exact26-r3-v1'
+FULL_PATCH = '26_v20_history_insert_identity_from_v19'
 
 
 class Refused(Exception):
@@ -292,12 +295,158 @@ def exact26_r1(p):
     return True
 
 
+def exact26_full(p):
+    if p.get('runtimeSelector') != 'exact26-full':
+        return False
+    need('runtime26' not in p, 'FULL_MUST_NOT_REUSE_R1_REFERENCES')
+    full = p.get('runtime26Full')
+    need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool'}, 'CLOSED_FULL_REFERENCES_REQUIRED')
+    refs = full['references']
+    need(isinstance(refs, dict) and set(refs) == FULL_REFERENCES, 'CLOSED_FULL_REFERENCES_REQUIRED')
+    for ref in refs.values():
+        need(isinstance(ref, dict) and set(ref) == {'path', 'sha256'} and HASH.fullmatch(ref.get('sha256', '')), 'PINNED_FULL_REFERENCE_REQUIRED')
+        path = Path(ref.get('path', ''))
+        need(path.is_absolute() and str(path) == os.path.normpath(str(path)) and path != ROOT and path.is_relative_to(ROOT), 'PERMANENT_FULL_REFERENCE_REQUIRED')
+    need(len({r['path'] for r in refs.values()}) == len(refs), 'DISTINCT_FULL_REFERENCES_REQUIRED')
+    media = full['media']
+    need(isinstance(media, dict) and set(media) == {'hostRoot', 'containerRoot', 'rootKey', 'writable'} and media['writable'] is True, 'FULL_R3_PRIVATE_WRITABLE_MEDIA_REQUIRED')
+    for key in ('hostRoot', 'containerRoot'):
+        path = Path(media.get(key, ''))
+        need(path.is_absolute() and str(path) == os.path.normpath(str(path)) and not re.search(r'[\s,:\\\x00-\x1f]', str(path)), 'EXACT_FULL_MEDIA_PATH_REQUIRED')
+    need(Path(media['hostRoot']) != ROOT and Path(media['hostRoot']).is_relative_to(ROOT) and not Path(media['hostRoot']).is_relative_to(ROOT / 'releases') and
+         media['containerRoot'].startswith('/run/naijue-rewrite/media/') and re.fullmatch(r'[A-Za-z0-9_-]{1,100}', media.get('rootKey', '')), 'PRIVATE_FULL_MEDIA_ROOT_REQUIRED')
+    need(p.get('newDatabaseReceipt') == refs['metadata'], 'FULL_CURRENT_METADATA_NOT_OLD_SCHEMA19_REQUIRED')
+    if 'inventorySpool' in full:
+        spool = full['inventorySpool']
+        need(isinstance(spool, dict) and set(spool) == {'hostRoot', 'containerRoot'} and spool['containerRoot'] == '/private/inventory-exports', 'FULL_PRIVATE_SPOOL_REQUIRED')
+        path = Path(spool.get('hostRoot', ''))
+        need(path.is_absolute() and str(path) == os.path.normpath(str(path)) and path != ROOT and path.is_relative_to(ROOT) and
+             not path.is_relative_to(ROOT / 'releases') and not re.search(r'[\s,:\\\x00-\x1f]', str(path)) and
+             not path.is_relative_to(Path(media['hostRoot'])) and not Path(media['hostRoot']).is_relative_to(path), 'SEPARATE_FULL_PRIVATE_SPOOL_REQUIRED')
+    return True
+
+
+def exact26_selected(p):
+    if exact26_full(p):
+        return True
+    need('runtime26Full' not in p, 'FULL_REFERENCES_REQUIRE_EXPLICIT_SELECTOR')
+    return exact26_r1(p)
+
+
+def runtime_references(p):
+    return p['runtime26Full']['references'] if exact26_full(p) else p['runtime26']
+
+
 def runtime_binding(p):
     # Public reference/stat binding only; never hash the private runtime bytes.
-    return digest(encoded({'selector': 'exact26-r1', 'references': p['runtime26'], 'runtimeFile': p['runtimeConfiguration']})) if exact26_r1(p) else None
+    if not exact26_selected(p):
+        return None
+    value = {'selector': p['runtimeSelector'], 'references': runtime_references(p), 'runtimeFile': p['runtimeConfiguration']}
+    if exact26_full(p):
+        value['media'] = p['runtime26Full']['media']
+        value['inventorySpool'] = p['runtime26Full'].get('inventorySpool')
+    return digest(encoded(value))
+
+
+def validate_runtime_build(p, manifest, refs):
+    source, build, receipt = reference(refs['sourceManifest'], 16 * 1024 * 1024), reference(refs['buildManifest'], 16 * 1024 * 1024), reference(refs['buildReceipt'])
+    need(refs['sourceManifest']['sha256'] == manifest.get('sourceManifestSha256') and refs['buildManifest']['sha256'] == manifest.get('buildManifestSha256') and
+         source.get('format') == 'naijue-release-source-v1' and build.get('format') == 'naijue-release-build-v1' and
+         receipt.get('format') == 'naijue-production-build-receipt-v1' and receipt.get('status') == 'REAL_BUILD_AND_PACK_CONTRACT_VALIDATED' and
+         all(row.get('sourceCommit') == p['sourceCommit'] and row.get('buildId') == p['buildId'] for row in (source, build, receipt)) and
+         receipt.get('sourceManifestSha256') == refs['sourceManifest']['sha256'] and receipt.get('buildManifestSha256') == refs['buildManifest']['sha256'] and
+         receipt.get('node') == '24.21.0', 'EXACT26_SAME_FIXED_BUILD_REQUIRED')
+    graph = manifest.get('graphs', {}).get('backend', {})
+    component = build.get('components', {}).get('backend', {})
+    inputs = graph.get('inputs', [])
+    required = {'apps/api/src/production-main.ts', 'apps/api/src/production-provider-composition.ts', 'apps/api/src/production-application-host.ts',
+                'apps/api/src/postgres-read-api.ts', 'adapters/postgres/src/bounded-pool.ts', 'adapters/postgres/src/native-import-accounting-capability.ts'}
+    if exact26_full(p):
+        required.add('adapters/postgres/src/history-revision-store.ts')
+    source_inputs = {row['path']: row for row in source.get('files', [])}
+    need(manifest.get('entrypoints', {}).get('backend') == 'backend/production-main.js' and
+         graph.get('entrySource') == component.get('entrySource') == 'apps/api/src/production-main.ts' and
+         graph.get('entryOutput') == component.get('entryOutput') == 'backend/production-main.js' and
+         inputs and inputs == component.get('inputs') and required <= {row['path'] for row in inputs} and
+         all(row == source_inputs.get(row['path']) for row in inputs), 'EXACT26_NATIVE_BACKEND_GRAPH_REQUIRED')
+    build_outputs = {row.get('member'): row for row in build.get('files', []) if row.get('role') == 'backend'}
+    need(graph.get('outputs') and all(name in build_outputs and any(row['path'] == name and row['sha256'] == build_outputs[name]['sha256'] and
+         row['bytes'] == build_outputs[name]['bytes'] for row in manifest['members']) for name in graph['outputs']), 'EXACT26_NATIVE_OUTPUT_BINDING_REQUIRED')
+
+
+def validate_full_metadata(p, runtime, review, metadata, independent):
+    """Fresh original issuer observation/review, without old C38/catalog constants."""
+    refs = runtime_references(p)
+    required = {'schemaVersion', 'profile', 'documentCommands', 'publicOrigin', 'http', 'assets', 'build', 'postgres', 'authentication', 'runtime26Review', 'existingPreparation', 'productMedia'}
+    optional = {'organizationMaintenance', 'catalogueMaintenance', 'paymentMaintenance', 'partyMaintenance', 'staffMaintenance', 'productMaintenance', 'inventoryOutputSpool'}
+    need(isinstance(runtime, dict) and required <= set(runtime) and set(runtime) <= required | optional and runtime['schemaVersion'] == 1 and
+         runtime['profile'] == FULL_PROFILE and runtime['documentCommands'] == 'NATIVE_RUNTIME' and runtime['publicOrigin'] == ORIGIN and
+         runtime['http'] == {'host': '0.0.0.0', 'port': 3000, 'acceptedHosts': [HOST]} and runtime['assets'] == {'root': '/app/web', 'entry': 'index.html'} and
+         runtime['build'] == {'buildId': p['buildId'], 'sourceCommit': p['sourceCommit']} and runtime['runtime26Review'] ==
+         {'reviewFile': RUNTIME26_REVIEW, 'trustedReviewSha256': refs['review']['sha256']}, 'CLOSED_FULL_R3_RUNTIME_REQUIRED')
+    preparation = runtime['existingPreparation']
+    need(isinstance(preparation, dict) and set(preparation) == {'sales', 'transfers'} and all(type(v) is bool for v in preparation.values()) and
+         all(runtime[k] is True for k in optional - {'inventoryOutputSpool'} if k in runtime), 'EXPLICIT_FULL_CAPABILITIES_REQUIRED')
+    need(runtime['productMedia'] == {'root': p['runtime26Full']['media']['containerRoot'], 'rootKey': p['runtime26Full']['media']['rootKey']}, 'FULL_MEDIA_BINDING_CHANGED')
+    need(('inventoryOutputSpool' in runtime) == ('inventorySpool' in p['runtime26Full']), 'FULL_SPOOL_SELECTION_CHANGED')
+    if 'inventoryOutputSpool' in runtime:
+        need(runtime['inventoryOutputSpool'] == {'directory': '/private/inventory-exports', 'maxBytes': 536870912, 'maxConcurrent': 1, 'maxDurationMs': 120000}, 'EXACT_FULL_OUTPUT_SPOOL_REQUIRED')
+    purposes = set(RUNTIME26_PURPOSES + ['PRODUCT_MAINTENANCE', 'HISTORY_REVISION'])
+    need(isinstance(review, dict) and set(review) == {'version', 'decision', 'target', 'catalog', 'purposes', 'scope', 'independentReview', 'realImportExecutionAuthorized'} and
+         review['version'] == 'C_NATIVE_RUNTIME26_REVIEW_V1' and review['decision'] == 'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA' and
+         review['scope'] == 'EXACT_TARGET_METADATA_ONLY' and review['realImportExecutionAuthorized'] is False and
+         isinstance(review['purposes'], list) and len(review['purposes']) == len(purposes) and set(review['purposes']) == purposes and
+         review['catalog'].get('format') == 'EXACT26_RUNTIME_CATALOG_EXPORT_V1' and review['catalog'].get('patchLevel') == FULL_PATCH and
+         HASH.fullmatch(review['catalog'].get('sha256', '')), 'FRESH_FULL_PURPOSE_PROFILE_REVIEW_REQUIRED')
+    need(independent.get('result') == 'PASS' and review['independentReview'] == {'path': RUNTIME26_INDEPENDENT, 'sha256': refs['independentReview']['sha256'], 'result': 'PASS'}, 'FULL_INDEPENDENT_REVIEW_REQUIRED')
+    need(isinstance(metadata, dict) and set(metadata) == {'identity', 'migration_versions', 'catalog_sha256', 'source_routines_match'} and
+         metadata['migration_versions'] == list(range(1, 27)) and metadata['source_routines_match'] is True and metadata['catalog_sha256'] == review['catalog']['sha256'], 'FULL_CURRENT_SCHEMA_SOURCE_ACL_PROOF_REQUIRED')
+    identity, target = metadata['identity'], review['target']
+    need(isinstance(target, dict) and set(target) == {'database', 'databaseOid', 'actingRole', 'sessionUser', 'serverAddress', 'serverPort', 'postmasterStart'} and
+         target.get('database') == DATABASE and target.get('actingRole') == ROLE and target.get('sessionUser') == ROLE and
+         isinstance(target.get('databaseOid'), str) and re.fullmatch(r'[1-9][0-9]*', target['databaseOid']) and
+         isinstance(target.get('postmasterStart'), str) and target['postmasterStart'] and
+         (target['serverAddress'] is None or isinstance(target['serverAddress'], str) and target['serverAddress']) and
+         (target['serverPort'] is None or type(target['serverPort']) is int and 1 <= target['serverPort'] <= 65535) and
+         all(identity.get(a) == target.get(b) for a, b in [('database', 'database'), ('database_oid', 'databaseOid'), ('current_user', 'actingRole'), ('session_user', 'sessionUser'),
+             ('server_addr', 'serverAddress'), ('server_port', 'serverPort'), ('postmaster_start', 'postmasterStart')]) and identity.get('replication_role') == 'origin', 'FULL_CURRENT_TARGET_CHANGED')
+
+
+def validate_runtime26_full(p, manifest, runtime):
+    refs = runtime_references(p)
+    review = reference(refs['review'], 65536)
+    validate_full_metadata(p, runtime, review, reference(refs['metadata']), reference(refs['independentReview'], 8 * 1024 * 1024))
+    validate_runtime_build(p, manifest, refs)
+    source = reference(refs['sourceManifest'], 16 * 1024 * 1024)
+    migrations = {r['path']: r['sha256'] for r in source.get('files', []) if re.fullmatch(r'adapters/postgres/migrations/[0-9]{4}_.+\.sql', r['path'])}
+    need(len([r for r in manifest['members'] if r.get('role') == 'migration']) == 26 and all(
+         migrations.get('adapters/postgres/' + r['path']) == r['sha256'] for r in manifest['members'] if r.get('role') == 'migration'), 'FULL_SAME_MIGRATION_SOURCES_REQUIRED')
+    publication = reference(refs['publication'])
+    batch, record = publication.get('batch', {}), publication.get('receipt', {})
+    cp, result = batch.get('checkpoint', {}), record.get('result_data', {})
+    need(batch.get('status') == 'IMPORTED' and batch.get('history_validation_passed') is True and HASH.fullmatch(batch.get('history_payload_hash', '')) and
+         cp.get('counts') == cp.get('expected') and cp.get('counts', {}).get('IMPORT_BATCH') == 1 and cp.get('counts', {}).get('INVENTORY_LEDGER', 0) > 0 and
+         record.get('action') == 'IMPORT_PUBLISH' and record.get('target_type') == 'IMPORT' and record.get('target_id') == batch.get('id') and record.get('status') == 'COMMITTED' and
+         result.get('batchId') == batch.get('id') and result.get('operationId') == record.get('id') and result.get('status') == 'IMPORTED' and
+         result.get('sequence') == cp.get('sequence') and result.get('cursor') == cp.get('cursor'), 'ACTUAL_FULL_PUBLISH_READBACK_REQUIRED')
+    coverage = reference(refs['backupCoverage'])
+    need(coverage.get('database') == DATABASE and coverage.get('buildId') == p['buildId'] and coverage.get('sourceCommit') == p['sourceCommit'] and
+         coverage.get('schemaVersions') == list(range(1, 27)) and coverage.get('catalogSha256') == review['catalog']['sha256'] and coverage.get('target') == review['target'] and
+         coverage.get('backupReceiptSha256') == p['backupReceipt']['sha256'] and coverage.get('runtimeIdentity') == p['runtimeConfiguration']['identity'] and
+         coverage.get('media') == p['runtime26Full']['media'] and coverage.get('r1Protected') is True and
+         coverage.get('isolatedRestore', {}).get('currentAppLoginRepresentativeRead') == 'PASS', 'CURRENT_FULL_R1_CONFIG_MEDIA_RESTORE_COVERAGE_REQUIRED')
+    media = canonical(p['runtime26Full']['media']['hostRoot'], kind='directory', root=ROOT)
+    need(media.stat().st_uid == int(p['limits']['app']['user'].split(':')[0]), 'FULL_PRIVATE_MEDIA_APP_OWNER_REQUIRED')
+    if 'inventorySpool' in p['runtime26Full']:
+        spool = canonical(p['runtime26Full']['inventorySpool']['hostRoot'], kind='directory', root=ROOT)
+        need(spool.stat().st_uid == media.stat().st_uid, 'FULL_PRIVATE_SPOOL_APP_OWNER_REQUIRED')
+    for key in ('review', 'independentReview'):
+        need(canonical(refs[key]['path'], root=ROOT).stat().st_mode & 0o004, 'NONROOT_METADATA_READ_REQUIRED')
 
 
 def validate_runtime26(p, manifest, db, runtime):
+    if exact26_full(p):
+        return validate_runtime26_full(p, manifest, runtime)
     refs = p['runtime26']
     upgrade = reference(refs['upgradeReceipt'])
     before, after = upgrade.get('before', {}), upgrade.get('after', {})
@@ -320,27 +469,7 @@ def validate_runtime26(p, manifest, db, runtime):
     migrations = [row for row in manifest['members'] if row.get('role') == 'migration']
     need(len(migrations) == 26 and {int(PurePosixPath(row['path']).name.split('_', 1)[0]): row['sha256'] for row in migrations} == expected,
          'EXACT26_RELEASE_MIGRATION_HASH_MISMATCH')
-    source, build, receipt = reference(refs['sourceManifest'], 16 * 1024 * 1024), reference(refs['buildManifest'], 16 * 1024 * 1024), reference(refs['buildReceipt'])
-    need(refs['sourceManifest']['sha256'] == manifest.get('sourceManifestSha256') and refs['buildManifest']['sha256'] == manifest.get('buildManifestSha256') and
-         source.get('format') == 'naijue-release-source-v1' and build.get('format') == 'naijue-release-build-v1' and
-         receipt.get('format') == 'naijue-production-build-receipt-v1' and receipt.get('status') == 'REAL_BUILD_AND_PACK_CONTRACT_VALIDATED' and
-         all(row.get('sourceCommit') == p['sourceCommit'] and row.get('buildId') == p['buildId'] for row in (source, build, receipt)) and
-         receipt.get('sourceManifestSha256') == refs['sourceManifest']['sha256'] and receipt.get('buildManifestSha256') == refs['buildManifest']['sha256'] and
-         receipt.get('node') == '24.21.0', 'EXACT26_SAME_FIXED_BUILD_REQUIRED')
-    graph = manifest.get('graphs', {}).get('backend', {})
-    component = build.get('components', {}).get('backend', {})
-    inputs = graph.get('inputs', [])
-    required = {'apps/api/src/production-main.ts', 'apps/api/src/production-provider-composition.ts', 'apps/api/src/production-application-host.ts',
-                'apps/api/src/postgres-read-api.ts', 'adapters/postgres/src/bounded-pool.ts', 'adapters/postgres/src/native-import-accounting-capability.ts'}
-    source_inputs = {row['path']: row for row in source.get('files', [])}
-    need(manifest.get('entrypoints', {}).get('backend') == 'backend/production-main.js' and
-         graph.get('entrySource') == component.get('entrySource') == 'apps/api/src/production-main.ts' and
-         graph.get('entryOutput') == component.get('entryOutput') == 'backend/production-main.js' and
-         inputs and inputs == component.get('inputs') and required <= {row['path'] for row in inputs} and
-         all(row == source_inputs.get(row['path']) for row in inputs), 'EXACT26_NATIVE_BACKEND_GRAPH_REQUIRED')
-    build_outputs = {row.get('member'): row for row in build.get('files', []) if row.get('role') == 'backend'}
-    need(graph.get('outputs') and all(name in build_outputs and any(row['path'] == name and row['sha256'] == build_outputs[name]['sha256'] and
-         row['bytes'] == build_outputs[name]['bytes'] for row in manifest['members']) for name in graph['outputs']), 'EXACT26_NATIVE_OUTPUT_BINDING_REQUIRED')
+    validate_runtime_build(p, manifest, refs)
     need(isinstance(runtime, dict) and set(runtime) == {'schemaVersion', 'profile', 'documentCommands', 'publicOrigin', 'http', 'assets', 'build', 'postgres', 'authentication', 'runtime26Review'} and
          runtime.get('schemaVersion') == 1 and runtime.get('profile') == RUNTIME26_PROFILE and runtime.get('documentCommands') == 'DISABLED' and
          runtime.get('runtime26Review') == {'reviewFile': RUNTIME26_REVIEW, 'trustedReviewSha256': refs['review']['sha256']} and
@@ -367,7 +496,7 @@ def read_plan(filename):
     need(isinstance(p, dict) and required <= set(p) and p['format'] == 'naijue-candidate-deployment-v1', 'EXPLICIT_DEPLOYMENT_PLAN_REQUIRED')
     need(re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,70}', p['operationId']) and re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_-]{0,79}', p['buildId']) and
          re.fullmatch(r'[a-f0-9]{40}', p['sourceCommit']) and p['publicOrigin'] == ORIGIN, 'EXACT_BUILD_AND_OPERATION_IDENTITY_REQUIRED')
-    need(p['schemaVersions'] == list(range(1, 27) if exact26_r1(p) else range(1, 20)), 'EXACT_SELECTED_SCHEMA_REQUIRED')
+    need(p['schemaVersions'] == list(range(1, 27) if exact26_selected(p) else range(1, 20)), 'EXACT_SELECTED_SCHEMA_REQUIRED')
     need(isinstance(p['backupMaxAgeSeconds'], int) and 1 <= p['backupMaxAgeSeconds'] <= 86400, 'EXPLICIT_BACKUP_MAX_AGE_REQUIRED')
     release = Path(p['releaseDirectory'])
     need(release.parent == ROOT / 'releases' and release.name == p['buildId'], 'EXACT_NEW_RELEASE_DIRECTORY_REQUIRED')
@@ -423,18 +552,19 @@ def validate_references(p):
         b = backup.get('services', {}).get(name, {})
         need(b.get('imageId') == before.get('imageId') and b.get('startedAt') == before.get('startedAt'), 'BACKUP_OLD_RUNTIME_CAS_MISMATCH')
     db = reference(p['newDatabaseReceipt'])
-    need(db.get('status') == 'PASS_NEW_DATABASE_SCHEMA19_ONLY_NOT_IMPORT_NOT_AUTH' and db.get('actual', {}).get('database') == DATABASE and
-         db['actual'].get('versions') == (list(range(1, 20)) if exact26_r1(p) else p['schemaVersions']) and db['actual'].get('tables') == 50, 'EXACT_NEW_DATABASE_SCHEMA_RECEIPT_REQUIRED')
+    if not exact26_full(p):
+        need(db.get('status') == 'PASS_NEW_DATABASE_SCHEMA19_ONLY_NOT_IMPORT_NOT_AUTH' and db.get('actual', {}).get('database') == DATABASE and
+             db['actual'].get('versions') == (list(range(1, 20)) if exact26_selected(p) else p['schemaVersions']) and db['actual'].get('tables') == 50, 'EXACT_NEW_DATABASE_SCHEMA_RECEIPT_REQUIRED')
     migrations = {int(PurePosixPath(row['path']).name.split('_', 1)[0]): row['sha256'] for row in manifest['members'] if row.get('role') == 'migration'}
-    if not exact26_r1(p):
+    if not exact26_selected(p):
         need(migrations == {row['version']: row['sha256'] for row in db.get('appliedMigrations', [])} and set(migrations) == set(range(1, 20)), 'RELEASE_SCHEMA_MIGRATION_HASH_MISMATCH')
     need(file_identity(p['runtimeConfiguration']['path']) == p['runtimeConfiguration']['identity'], 'PRIVATE_RUNTIME_FILE_IDENTITY_CHANGED')
     runtime = json_file(p['runtimeConfiguration']['path'], private=True)
     need(runtime.get('build') == {'buildId': p['buildId'], 'sourceCommit': p['sourceCommit']} and runtime.get('publicOrigin') == ORIGIN and
-         runtime.get('documentCommands') == 'DISABLED' and runtime.get('http') == {'host': '0.0.0.0', 'port': 3000, 'acceptedHosts': [HOST]} and
+         runtime.get('documentCommands') == ('NATIVE_RUNTIME' if exact26_full(p) else 'DISABLED') and runtime.get('http') == {'host': '0.0.0.0', 'port': 3000, 'acceptedHosts': [HOST]} and
          runtime.get('assets') == {'root': '/app/web', 'entry': 'index.html'} and
-         runtime.get('profile') == (RUNTIME26_PROFILE if exact26_r1(p) else 'source-confirmed-native-v1'), 'R1_RUNTIME_CONFIGURATION_MISMATCH')
-    if exact26_r1(p):
+         runtime.get('profile') == (FULL_PROFILE if exact26_full(p) else RUNTIME26_PROFILE if exact26_selected(p) else 'source-confirmed-native-v1'), 'R1_RUNTIME_CONFIGURATION_MISMATCH')
+    if exact26_selected(p):
         validate_runtime26(p, manifest, db, runtime)
     target = runtime.get('postgres', {}).get('target', {})
     need(target.get('database') == DATABASE and target.get('user') == ROLE and target.get('host') == 'naijue-prod-db-1' and target.get('port') == 5432,
@@ -532,17 +662,32 @@ def mount(source, target, readonly=True):
     return ['--mount', 'type=bind,src=' + str(source) + ',dst=' + target + (',readonly' if readonly else '')]
 
 
+def runtime_mount_arguments(p):
+    args = []
+    if exact26_selected(p):
+        refs = runtime_references(p)
+        args += [*mount(refs['review']['path'], RUNTIME26_REVIEW), *mount(refs['independentReview']['path'], RUNTIME26_INDEPENDENT)]
+    if exact26_full(p):
+        media = p['runtime26Full']['media']
+        args += mount(media['hostRoot'], media['containerRoot'], False)
+        if 'inventorySpool' in p['runtime26Full']:
+            spool = p['runtime26Full']['inventorySpool']
+            args += mount(spool['hostRoot'], spool['containerRoot'], False)
+    return args
+
+
+def runtime_entry_arguments(p):
+    return (['--exact26-full'] if exact26_full(p) else ['--exact26-r1'] if exact26_selected(p) else []) + ['/run/naijue-rewrite/runtime.json']
+
+
 def create_app(p, docker):
     args = ['create', '--name', p['names']['app'], '--pull=never', '--network', p['networks']['front']['id'], '--network-alias', p['names']['app'], '--read-only', '--cap-drop=ALL',
             '--security-opt=no-new-privileges', '--restart=no', '--user', p['limits']['app']['user'], '--workdir', '/app',
             '--tmpfs', '/tmp:rw,noexec,nosuid,size=16m', *limits_args(p, 'app'), *labels(p, 'app'),
             *mount(Path(p['releaseDirectory']) / 'payload', '/app'), *mount(p['runtimeConfiguration']['path'], '/run/naijue-rewrite/runtime.json')]
-    if exact26_r1(p):
-        args += [*mount(p['runtime26']['review']['path'], RUNTIME26_REVIEW), *mount(p['runtime26']['independentReview']['path'], RUNTIME26_INDEPENDENT)]
+    args += runtime_mount_arguments(p)
     args += ['--entrypoint', 'node', p['images']['node']['id'], '/app/backend/production-main.js']
-    if exact26_r1(p):
-        args += ['--exact26-r1']
-    args += ['/run/naijue-rewrite/runtime.json']
+    args += runtime_entry_arguments(p)
     cid = docker.run(args).decode().strip()
     need(HASH.fullmatch(cid), 'CREATED_CANDIDATE_ID_REQUIRED')
     docker.run(['network', 'connect', p['networks']['data']['id'], cid])
@@ -621,7 +766,59 @@ def install_linux_dependencies(p, docker, release, manifest):
     return payload_identity(payload, manifest, True)
 
 
-def write_boundary(p):
+def full_write_boundary(p, restore_old=False, docker=None):
+    value = reference(p.get('writeBoundary'))
+    review = reference(runtime_references(p)['review'], 65536)
+    need(value.get('format') == 'naijue-rewrite-write-boundary-v1' and value.get('database') == DATABASE and
+         value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and
+         value.get('writeAdmission') in ('CLOSED', 'CONTROLLED_PRIVATE') and type(value.get('newBusinessWrites')) is int and
+         value['newBusinessWrites'] >= 0 and value.get('outcome') == 'KNOWN' and value.get('checkedBy') and value.get('target') == review['target'] and
+         'firstBusinessWriteAtUtc' in value and (value['firstBusinessWriteAtUtc'] is None if value['newBusinessWrites'] == 0 else
+         isinstance(value['firstBusinessWriteAtUtc'], str) and bool(value['firstBusinessWriteAtUtc'])), 'FULL_UNKNOWN_WRITE_BOUNDARY_REFUSED')
+    fresh_time(value.get('checkedAtUtc'), 300)
+    if not restore_old:
+        return value
+    # A recent JSON alone cannot prove zero writes. Every writer must still be
+    # physically stopped after the registered drain/snapshot and compatible-old proof.
+    fence = reference(p.get('writeFence'))
+    need(value['newBusinessWrites'] == 0 and fence.get('database') == DATABASE and fence.get('target') == review['target'] and fence.get('buildId') == p['buildId'] and
+         fence.get('sourceCommit') == p['sourceCommit'] and fence.get('allWriteEntrypointsClosed') is True and
+         type(fence.get('inFlightTransactions')) is int and fence['inFlightTransactions'] == 0 and
+         type(fence.get('snapshot', {}).get('newBusinessWrites')) is int and fence['snapshot']['newBusinessWrites'] == 0 and
+         'firstBusinessWriteAtUtc' in fence['snapshot'] and fence['snapshot']['firstBusinessWriteAtUtc'] is None and
+         fence['snapshot'].get('outcome') == 'KNOWN', 'NEW_WRITES_OR_UNKNOWN_REFUSE_OLD_ENTRY')
+    try:
+        times = [dt.datetime.fromisoformat(fence[k].replace('Z', '+00:00')) for k in ('closedAtUtc', 'drainedAtUtc', 'snapshotAtUtc')]
+    except (KeyError, ValueError, TypeError):
+        raise Refused('FULL_CLOSED_DRAINED_SNAPSHOT_REQUIRED') from None
+    need(all(t.tzinfo is not None for t in times) and times[0] <= times[1] <= times[2], 'FULL_CLOSED_DRAINED_SNAPSHOT_REQUIRED')
+    fresh_time(fence['snapshotAtUtc'], 300)
+    old = fence.get('oldEntry', {})
+    services = p['beforeCAS']['services']
+    need(old.get('compatible') is True and old.get('appId') == services[OLD_NAMES[0]]['id'] and old.get('dbId') == services[OLD_NAMES[2]]['id'] and
+         old.get('appImageId') == services[OLD_NAMES[0]]['imageId'] and old.get('catalogSha256') == review['catalog']['sha256'], 'FULL_OLD_ENTRY_COMPATIBILITY_UNPROVEN')
+    writers = fence.get('writers')
+    stage = reference(p.get('stageReceipt'))
+    need(isinstance(writers, list) and writers and len({w.get('id') for w in writers}) == len(writers) and
+         stage['containers']['app']['id'] in {w.get('id') for w in writers}, 'FULL_ALL_WRITERS_FENCE_REQUIRED')
+    docker = docker or Docker()
+    for writer in writers:
+        need(HASH.fullmatch(writer.get('id', '')), 'FULL_EXACT_WRITER_REQUIRED')
+        info = docker.inspect(writer['id'])
+        need(info['State']['Running'] is False and info['State'].get('Pid') == 0 and
+             info['State'].get('StartedAt') == writer.get('startedAt') and info['State'].get('FinishedAt') == writer.get('finishedAt') and
+             info['HostConfig']['RestartPolicy']['Name'] == 'no', 'FULL_WRITER_RESTARTED_OR_UNKNOWN')
+        try:
+            finished = dt.datetime.fromisoformat(writer['finishedAt'].replace('Z', '+00:00'))
+        except (KeyError, TypeError, ValueError):
+            raise Refused('FULL_WRITER_STOP_TIME_REQUIRED') from None
+        need(finished.tzinfo is not None and finished <= times[1], 'FULL_SNAPSHOT_BEFORE_WRITER_DRAIN')
+    return value
+
+
+def write_boundary(p, restore_old=False, docker=None):
+    if exact26_full(p):
+        return full_write_boundary(p, restore_old, docker)
     value = reference(p.get('writeBoundary'))
     need(value.get('format') == 'naijue-rewrite-write-boundary-v1' and value.get('database') == DATABASE and
          value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and value.get('writeAdmission') == 'CLOSED' and
@@ -637,7 +834,7 @@ def acceptance(p):
          value.get('buildId') == p['buildId'] and value.get('sourceCommit') == p['sourceCommit'] and
          value.get('archiveSha256') == p['archive']['sha256'] and value.get('schemaVersions') == p['schemaVersions'] and
          value.get('dataReady') is True, 'EXACT_REAL_CANDIDATE_ACCEPTANCE_REQUIRED')
-    if exact26_r1(p):
+    if exact26_selected(p):
         need(value.get('runtime26BindingSha256') == runtime_binding(p), 'EXACT26_CANDIDATE_ACCEPTANCE_BINDING_REQUIRED')
     fresh_time(value.get('checkedAtUtc'), 86400)
     for owner in ('QF', 'QB'):
@@ -729,14 +926,14 @@ def stage(p, docker, journal, manifest, entries):
              'releaseDirectory': str(release), 'installedPayloadSha256': installed, 'containers': containers,
              'health': {'app': app_health, 'proxy': web_health}, 'schemaVersions': p['schemaVersions'], 'database': DATABASE,
              'databaseQueriedByDeploymentTool': False, 'productionEntryChanged': False, 'businessAcceptance': False, 'finishedAtUtc': now()}
-    if exact26_r1(p):
+    if exact26_selected(p):
         value['runtime26BindingSha256'] = runtime_binding(p)
     new_json(release / 'stage-receipt.json', value)
     return value
 
 
 def restore_old_entry(p, docker, journal, public_id=None):
-    write_boundary(p)
+    write_boundary(p, restore_old=True, docker=docker)
     need(file_identity(p['runtimeConfiguration']['path']) == p['runtimeConfiguration']['identity'], 'RUNTIME_CHANGED_REFUSE_OLD_ENTRY')
     check_old(p, docker, web_running=False)
     if public_id:
@@ -754,6 +951,20 @@ def restore_old_entry(p, docker, journal, public_id=None):
             return snapshot(info)
         time.sleep(1)
     raise Refused('OLD_ENTRY_HEALTH_UNCONFIRMED')
+
+
+def stop_full_app(p, docker, journal):
+    need(exact26_full(p), 'EXPLICIT_FULL_STOP_REQUIRED')
+    stage = reference(p.get('stageReceipt'))
+    expected = stage['containers']['app']
+    info = docker.inspect(expected['id'])
+    assert_own(info, p, 'app')
+    need(own_container_fingerprint(info) == expected['specSha256'], 'FULL_APP_CHANGED_REFUSE_GUESS')
+    if info['State']['Running']:
+        journal.event('STOP_EXACT_FULL_APP_PRESERVE_DATA_INTENT', containerId=info['Id'])
+        docker.run(['stop', '--time', '20', info['Id']], 40)
+    need(docker.inspect(info['Id'])['State']['Running'] is False, 'FULL_APP_STOP_UNCONFIRMED')
+    return {'appId': info['Id'], 'stopped': True, 'dataPreserved': True, 'transactionOutcome': 'REQUIRES_ORIGINAL_KEY_READBACK'}
 
 
 def activate(p, docker, journal, manifest):
@@ -797,7 +1008,7 @@ def activate(p, docker, journal, manifest):
                   'backupReceiptSha256': p['backupReceipt']['sha256'], 'database': DATABASE, 'oldAppAndDatabaseUnchanged': True,
                   'databaseRestorePerformed': False, 'publicHttpsReadbackPerformed': False, 'bootPersistenceVerified': False,
                   'businessAcceptanceCreatedByDeployment': False, 'finishedAtUtc': now()}
-        if exact26_r1(p):
+        if exact26_selected(p):
             result['runtime26BindingSha256'] = runtime_binding(p)
         new_json(Path(p['releaseDirectory']) / 'activation-receipt.json', result)
         return result
