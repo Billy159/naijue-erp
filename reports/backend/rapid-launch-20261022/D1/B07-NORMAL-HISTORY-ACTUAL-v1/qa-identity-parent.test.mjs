@@ -122,3 +122,13 @@ test('remaining-money parent requires explicit child02 contract and never falls 
  await assert.rejects(runB07QaIdentityCommittedContinuationParent(plan),/^Error: B07_RENEWAL_PARENT_REGISTRATION_REQUIRED$/);
  await assert.rejects(runB07QaIdentityRemainingMoneyParent(plan),/^Error: B07_RENEWAL_EXACT_PERMISSION_PROOF_REQUIRED$/);
 });
+
+test('registered retry parent requires unique child03 and preserves original request record bytes',async()=>{
+ const {runB07QaIdentityRegisteredMoneyRetryParent,runB07QaIdentityRemainingMoneyParent,REGISTERED_MONEY_RETRY_OUTPUT,REMAINING_MONEY_OUTPUT,originalRequestRecordBytes}=await import('./qa-identity-parent.mjs');
+ await assert.rejects(runB07QaIdentityRegisteredMoneyRetryParent({contract:'B07_QA_REGISTERED_MONEY_RETRY_PARENT_1',outputDirectory:REMAINING_MONEY_OUTPUT,purposeGateFile:join(REMAINING_MONEY_OUTPUT,'CURRENT-PURPOSE-GATE.json')}),/^Error: B07_RENEWAL_PARENT_REGISTRATION_REQUIRED$/);
+ const plan={contract:'B07_QA_REGISTERED_MONEY_RETRY_PARENT_1',outputDirectory:REGISTERED_MONEY_RETRY_OUTPUT,purposeGateFile:join(REGISTERED_MONEY_RETRY_OUTPUT,'CURRENT-PURPOSE-GATE.json'),purposeWaitMs:300000};
+ await assert.rejects(runB07QaIdentityRemainingMoneyParent(plan),/^Error: B07_RENEWAL_PARENT_REGISTRATION_REQUIRED$/);await assert.rejects(runB07QaIdentityRegisteredMoneyRetryParent(plan),/^Error: B07_RENEWAL_EXACT_PERMISSION_PROOF_REQUIRED$/);
+ const value={phase:'DRAFT_SALES_MONEY_ONLY_NO_STOCK',command:{requestKey:'SYNTHETIC_ORIGINAL',expectedVersion:2}},bytes=Buffer.from(JSON.stringify(value,null,3)+'\n'),pin={requestBytes:bytes,sha256:createHash('sha256').update(bytes).digest('hex')};
+ const copy=originalRequestRecordBytes(pin,{command:value.command,phase:value.phase});assert.ok(copy.equals(bytes));assert.notStrictEqual(copy,bytes);
+ assert.throws(()=>originalRequestRecordBytes(pin,{...value,phase:'OTHER'}));assert.throws(()=>originalRequestRecordBytes({...pin,sha256:'0'.repeat(64)},value));
+});

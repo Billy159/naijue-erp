@@ -3,11 +3,12 @@ import {readFile,lstat,mkdir,writeFile} from 'node:fs/promises';
 import {resolve,join} from 'node:path';
 import {pathToFileURL,fileURLToPath} from 'node:url';
 import {createHash,randomBytes} from 'node:crypto';
+import {isDeepStrictEqual} from 'node:util';
 import {spawn} from 'node:child_process';
 import {setTimeout as delay} from 'node:timers/promises';
 import {withB07QaIdentityFixture,QA_IDENTITY,SQL as fixtureSql} from './qa-identity-schema19.mjs';
-import {runDraftNormalHistory,runDraftNormalHistoryCommittedContinuation,runDraftNormalHistoryRemainingMoneyContinuation} from './draft-normal-history-v16.mjs';
-import {withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,credentialPermissionProofFromOriginal,credentialPermissionProofFromCommittedLifecycle,QA_AUTH2_CHAIN_PINS} from './qa-identity-credential-renewal.mjs';
+import {runDraftNormalHistory,runDraftNormalHistoryCommittedContinuation,runDraftNormalHistoryRemainingMoneyContinuation,runDraftNormalHistoryRegisteredMoneyRetry,REGISTERED_MONEY_RETRY_PINS} from './draft-normal-history-v16.mjs';
+import {withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,credentialPermissionProofFromOriginal,credentialPermissionProofFromCommittedLifecycle,credentialPermissionProofFromRegisteredMoneyAttempt,QA_AUTH2_CHAIN_PINS,QA_AUTH3_MONEY_ATTEMPT_PINS} from './qa-identity-credential-renewal.mjs';
 const must=(ok,code)=>{if(!ok)throw Error(code);};
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const P='/Users/billy/Desktop/Workspace/project-007-业务管理系统';
@@ -162,7 +163,11 @@ async function originalChild(plan,kind,directory){
  must(result.status===child.expectedStatus&&result.clientsEnded!==false&&result.clientEnded!==false,'B07_ORIGINAL_CHILD_RESULT_REQUIRED');
  return result;
 }
-async function runOrdinaryHistoryScope({plan,input,successor,withNormalSession,result,resources,runHistory=runDraftNormalHistory,committedContinuation,remainingMoneyContinuation}){
+export function originalRequestRecordBytes(pin,value){
+ must(pin?.requestBytes instanceof Uint8Array&&hash(pin.requestBytes)===pin.sha256,'B07_RETRY_ORIGINAL_BYTES_CHANGED');
+ must(isDeepStrictEqual(value,JSON.parse(Buffer.from(pin.requestBytes).toString('utf8'))),'B07_RETRY_MUST_COPY_ORIGINAL_REQUEST');return Buffer.from(pin.requestBytes);
+}
+async function runOrdinaryHistoryScope({plan,input,successor,withNormalSession,result,resources,runHistory=runDraftNormalHistory,committedContinuation,remainingMoneyContinuation,registeredMoneyRetry,originalRetryRequest}){
  const at=p=>import(pathToFileURL(resolve(input.sourceRoot,p)).href);
     const gate=await waitForPurposeGate(plan.purposeGateFile,plan.purposeWaitMs);
     must(gate?.format==='B07_CURRENT_NORMAL_HISTORY_PURPOSE_GATE_1','B07_CURRENT_PURPOSE_GATE_REQUIRED');
@@ -191,8 +196,8 @@ async function runOrdinaryHistoryScope({plan,input,successor,withNormalSession,r
     const issuer=await createNativeRuntime26Issuer(readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
     await withNormalSession(api,async({privateCookie})=>{
      try{
-      const actual=await runHistory({api,pool:issuer.pool,runtime26:issuer.runtime26,input:draft,privateCookie,...(committedContinuation?{committedContinuation}:{}),...(remainingMoneyContinuation?{remainingMoneyContinuation}:{}),
-       recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),recordObservation:value=>record(plan.outputDirectory,'HTTP-'+value.phase+'-'+value.comparisonStage+'.json',value),readBackgroundFailureCount:()=>api.postgresBackgroundFailureCount+readPool.backgroundFailureCount});
+      const actual=await runHistory({api,pool:issuer.pool,runtime26:issuer.runtime26,input:draft,privateCookie,...(committedContinuation?{committedContinuation}:{}),...(remainingMoneyContinuation?{remainingMoneyContinuation}:{}),...(registeredMoneyRetry?{registeredMoneyRetry}:{}),
+       recordRequest:async value=>{if(originalRetryRequest){await writeFile(join(plan.outputDirectory,'REQUEST-'+value.phase+'.json'),originalRequestRecordBytes(originalRetryRequest,value),{flag:'wx',mode:0o600});}else await record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value);},recordObservation:value=>record(plan.outputDirectory,'HTTP-'+value.phase+'-'+value.comparisonStage+'.json',value),readBackgroundFailureCount:()=>api.postgresBackgroundFailureCount+readPool.backgroundFailureCount});
       await record(plan.outputDirectory,'DRAFT-ACTUAL-RESULT.json',actual);result.httpActual=true;
      }catch(e){if(e.b07Result)await record(plan.outputDirectory,'DRAFT-ACTUAL-RESULT.json',e.b07Result);throw Error('B07_DRAFT_FAILED_OR_OUTCOME_UNCERTAIN');}
     });
@@ -245,6 +250,7 @@ export async function runB07QaIdentityParent(plan){
 }
 export const COMMITTED_CONTINUATION_OUTPUT=join(OUTPUT,'credential-continuation-01');
 export const REMAINING_MONEY_OUTPUT=join(OUTPUT,'credential-continuation-02');
+export const REGISTERED_MONEY_RETRY_OUTPUT=join(OUTPUT,'credential-continuation-03');
 export async function withB07QaManagedNormalSession({api,password,authVersion,work}){
  must(api?.app?.server?.listening===false&&typeof api.trustedOrigin==='string'&&typeof password==='string'&&password.length>0&&Number.isInteger(authVersion)&&authVersion>1&&typeof work==='function','B07_RENEWAL_NORMAL_SESSION_INPUT_REQUIRED');
  let cookie=null;
@@ -259,8 +265,9 @@ export async function withB07QaManagedNormalSession({api,password,authVersion,wo
 }
 export async function runB07QaIdentityCommittedContinuationParent(plan){return runCredentialContinuationParent(plan,false);}
 export async function runB07QaIdentityRemainingMoneyParent(plan){return runCredentialContinuationParent(plan,true);}
-async function runCredentialContinuationParent(plan,remainingOnly){
- const directory=remainingOnly?REMAINING_MONEY_OUTPUT:COMMITTED_CONTINUATION_OUTPUT,contract=remainingOnly?'B07_QA_REMAINING_MONEY_PARENT_1':'B07_QA_COMMITTED_CONTINUATION_PARENT_1';
+export async function runB07QaIdentityRegisteredMoneyRetryParent(plan){return runCredentialContinuationParent(plan,true,true);}
+async function runCredentialContinuationParent(plan,remainingOnly,retryOnly=false){
+ const directory=retryOnly?REGISTERED_MONEY_RETRY_OUTPUT:remainingOnly?REMAINING_MONEY_OUTPUT:COMMITTED_CONTINUATION_OUTPUT,contract=retryOnly?'B07_QA_REGISTERED_MONEY_RETRY_PARENT_1':remainingOnly?'B07_QA_REMAINING_MONEY_PARENT_1':'B07_QA_COMMITTED_CONTINUATION_PARENT_1';
  must(plan?.contract===contract&&plan.outputDirectory===directory&&plan.purposeGateFile===join(directory,'CURRENT-PURPOSE-GATE.json'),'B07_RENEWAL_PARENT_REGISTRATION_REQUIRED');
  must(Number.isInteger(plan.purposeWaitMs)&&plan.purposeWaitMs>0&&plan.purposeWaitMs<=300000,'B07_RENEWAL_BOUNDED_PURPOSE_REQUIRED');
  must(plan.permissionProof?.bytes===7000&&plan.permissionProof.sha256==='5422ea93dcf609be06c2664607c48bf0a86a282ab37b65028c1abce940d81f6f','B07_RENEWAL_EXACT_PERMISSION_PROOF_REQUIRED');
@@ -269,7 +276,12 @@ async function runCredentialContinuationParent(plan,remainingOnly){
  let chain=null,chainBytes=null;
  if(remainingOnly){chain={};chainBytes={};must(plan.priorCommittedLifecycle&&Object.keys(plan.priorCommittedLifecycle).length===4,'B07_RENEWAL_AUTH2_CHAIN_REQUIRED');
   for(const [name,expected]of Object.entries(QA_AUTH2_CHAIN_PINS)){const ref=plan.priorCommittedLifecycle[name];must(ref?.bytes===expected.bytes&&ref.sha256===expected.sha256,'B07_RENEWAL_AUTH2_CHAIN_PIN_REQUIRED');chainBytes[name]=await pinned(ref,65536);chain[name]=JSON.parse(chainBytes[name].toString('utf8'));}}
- const proof=remainingOnly?credentialPermissionProofFromCommittedLifecycle(originalProof,base,chain):credentialPermissionProofFromOriginal(originalProof,base);
+ let attempt=null,noCommit=null,noCommitBytes=null;
+ if(retryOnly){attempt={};must(plan.priorMoneyAttemptLifecycle&&Object.keys(plan.priorMoneyAttemptLifecycle).length===4,'B07_RENEWAL_AUTH3_CHAIN_REQUIRED');
+  for(const [name,expected]of Object.entries(QA_AUTH3_MONEY_ATTEMPT_PINS)){const ref=plan.priorMoneyAttemptLifecycle[name];must(ref?.bytes===expected.bytes&&ref.sha256===expected.sha256,'B07_RENEWAL_AUTH3_CHAIN_PIN_REQUIRED');attempt[name]=JSON.parse((await pinned(ref,65536)).toString('utf8'));}
+  const ref=plan.moneyNoCommitProof,expected=REGISTERED_MONEY_RETRY_PINS.noCommitProof;must(ref?.bytes===expected.bytes&&ref.sha256===expected.sha256,'B07_RENEWAL_NO_COMMIT_PROOF_PIN_REQUIRED');noCommitBytes=await pinned(ref,65536);noCommit=JSON.parse(noCommitBytes.toString('utf8'));
+ }
+ const proof=retryOnly?credentialPermissionProofFromRegisteredMoneyAttempt(originalProof,base,chain,attempt,noCommit):remainingOnly?credentialPermissionProofFromCommittedLifecycle(originalProof,base,chain):credentialPermissionProofFromOriginal(originalProof,base);
  const input={...base,permissionProof:proof};
  must(input.sourceRoot===P+'/work/erp-local-source-20261022'&&plan.node===P+'/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node','B07_FIXED_SOURCE_AND_NODE_REQUIRED');
  must(typeof plan.ordinaryRole==='string'&&plan.ordinaryRole!==input.target.role&&plan.catalogSha256===proof.catalogSha256,'B07_RENEWAL_CURRENT_CATALOG_REQUIRED');
@@ -278,7 +290,7 @@ async function runCredentialContinuationParent(plan,remainingOnly){
  must(request.actor?.accountId===QA_IDENTITY.accountId&&request.actor.hallId===null&&request.phase==='DRAFT_SALES_QUANTITY_NO_STOCK'&&request.command?.expectedVersion===1&&request.target?.role===plan.ordinaryRole&&request.target.database===input.target.database&&request.target.oid===input.target.oid,'B07_RENEWAL_ORIGINAL_COMMITTED_REQUEST_REQUIRED');
  const {requestHash}=await import(pathToFileURL(resolve(input.sourceRoot,'packages/application/src/request-hash.ts')).href);
  input.originalSales={requestKey:request.command.requestKey,documentId:request.command.documentId,requestHash:requestHash({actorAccountId:QA_IDENTITY.accountId,command:request.command})};
- let remainingMoneyContinuation=null;
+ let remainingMoneyContinuation=null,registeredMoneyRetry=null,originalRetryRequest=null;
  if(remainingOnly){
   must(plan.transferRequest?.path===join(COMMITTED_CONTINUATION_OUTPUT,'REQUEST-DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION.json'),'B07_RENEWAL_ORIGINAL_TRANSFER_REQUEST_REQUIRED');
   const transferBytes=await pinned(plan.transferRequest,65536),transfer=JSON.parse(transferBytes.toString('utf8'));
@@ -286,7 +298,13 @@ async function runCredentialContinuationParent(plan,remainingOnly){
    &&transfer.phase==='DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION'&&transfer.command?.kind==='transfers'&&transfer.command.expectedVersion===1,'B07_RENEWAL_ORIGINAL_TRANSFER_CHANGED');
   input.originalTransfer={requestKey:transfer.command.requestKey,documentId:transfer.command.documentId,requestHash:requestHash({actorAccountId:QA_IDENTITY.accountId,command:transfer.command})};
   remainingMoneyContinuation={sales:{requestBytes,sha256:plan.originalRequest.sha256},transfers:{requestBytes:transferBytes,sha256:plan.transferRequest.sha256},completedCases:{requestBytes:chainBytes.draftResult,sha256:QA_AUTH2_CHAIN_PINS.draftResult.sha256}};
-  if(plan.moneyRequest){must(plan.moneyRequest.path===join(REMAINING_MONEY_OUTPUT,'REQUEST-DRAFT_SALES_MONEY_ONLY_NO_STOCK.json'),'B07_RENEWAL_ORIGINAL_MONEY_REQUEST_REQUIRED');remainingMoneyContinuation.money={requestBytes:await pinned(plan.moneyRequest,65536),sha256:plan.moneyRequest.sha256};}
+  if(retryOnly){const ref=plan.moneyRequest,expected=REGISTERED_MONEY_RETRY_PINS.moneyRequest;
+   must(ref?.path===join(REMAINING_MONEY_OUTPUT,'REQUEST-DRAFT_SALES_MONEY_ONLY_NO_STOCK.json')&&ref.bytes===expected.bytes&&ref.sha256===expected.sha256,'B07_RENEWAL_RETRY_ORIGINAL_MONEY_PIN_REQUIRED');
+   originalRetryRequest={requestBytes:await pinned(ref,65536),sha256:ref.sha256};const money=JSON.parse(originalRetryRequest.requestBytes.toString('utf8'));
+   must(money.contract===request.contract&&isDeepStrictEqual(money.actor,request.actor)&&isDeepStrictEqual(money.target,request.target)&&money.phase==='DRAFT_SALES_MONEY_ONLY_NO_STOCK'&&money.command?.kind==='sales'&&money.command.documentId===request.command.documentId&&money.command.expectedVersion===2,'B07_RENEWAL_RETRY_ORIGINAL_MONEY_CHANGED');
+   input.originalMoney={requestKey:money.command.requestKey,documentId:money.command.documentId,requestHash:requestHash({actorAccountId:QA_IDENTITY.accountId,command:money.command}),requestBytesSha256:ref.sha256};
+   registeredMoneyRetry={money:originalRetryRequest,outcome:{requestBytes:noCommitBytes,sha256:plan.moneyNoCommitProof.sha256}};
+  }else if(plan.moneyRequest){must(plan.moneyRequest.path===join(REMAINING_MONEY_OUTPUT,'REQUEST-DRAFT_SALES_MONEY_ONLY_NO_STOCK.json'),'B07_RENEWAL_ORIGINAL_MONEY_REQUEST_REQUIRED');remainingMoneyContinuation.money={requestBytes:await pinned(plan.moneyRequest,65536),sha256:plan.moneyRequest.sha256};}
  }
  validateCredentialRenewalInput(input);
  await pinned(plan.currentMetadata);await pinned(plan.currentCatalog);
@@ -295,7 +313,7 @@ async function runCredentialContinuationParent(plan,remainingOnly){
  const connect=async(readOnly=false)=>{const client=new Client({host:input.target.unix_socket_directories,port:input.target.port,database:input.target.database,user:input.target.session_role,password:()=>{throw Error('B07_NO_CREDENTIAL_FALLBACK');},ssl:false,application_name:'t45_b07_registered_qa_credential_lifecycle',connectionTimeoutMillis:3000,query_timeout:30000,statement_timeout:25000,lock_timeout:4000});
   try{await client.connect();await client.query('SET ROLE naijue_erp_test');await client.query(readOnly?'SET default_transaction_read_only=on':'SET default_transaction_read_only=off');return client;}catch(e){try{await client.end();}catch{connectCleanupUnknown=true;}throw e;}};
  await mkdir(plan.outputDirectory,{mode:0o700});
- let setup,setupEnded=false;const resources={},result={status:'STARTED',credentialRenewalActual:false,httpActual:false,automaticRetry:false,...(remainingOnly?{executionScope:'REMAINING_MONEY_ONLY_SAME_TARGET'}:{})};
+ let setup,setupEnded=false;const resources={},result={status:'STARTED',credentialRenewalActual:false,httpActual:false,automaticRetry:false,...(remainingOnly?{executionScope:retryOnly?'REGISTERED_ORIGINAL_MONEY_RETRY':'REMAINING_MONEY_ONLY_SAME_TARGET'}:{})};
  try{
   setup=await connect();
   const safe=await withB07QaIdentityCredentialRenewal({client:setup,input,recordPreparation:value=>record(plan.outputDirectory,'CREDENTIAL-RENEWAL-INTENT.json',value),runNormalSession:withB07QaManagedNormalSession,
@@ -303,7 +321,7 @@ async function runCredentialContinuationParent(plan,remainingOnly){
    afterRenewal:async({withNormalSession,authVersion})=>{
     result.credentialRenewalActual=true;result.authVersion=authVersion;await setup.end();setupEnded=true;
     await record(plan.outputDirectory,'CURRENT-METADATA-READY.json',{status:'WAITING_ORIGINAL_INDEPENDENT_PURPOSE',profile:EFFECTIVE_VALUE_PROFILE,metadataPath:plan.currentMetadata.path,catalogPath:plan.currentCatalog.path,metadataRef:plan.currentMetadata,catalogRef:plan.currentCatalog,catalogSha256:plan.catalogSha256,qaIdentity:QA_IDENTITY});
-    await runOrdinaryHistoryScope({plan,input,successor:{ordinaryRole:plan.ordinaryRole,catalogSha256:plan.catalogSha256},withNormalSession,result,resources,...(remainingOnly?{runHistory:runDraftNormalHistoryRemainingMoneyContinuation,remainingMoneyContinuation}:{runHistory:runDraftNormalHistoryCommittedContinuation,committedContinuation:{requestBytes,sha256:plan.originalRequest.sha256}})});
+    await runOrdinaryHistoryScope({plan,input,successor:{ordinaryRole:plan.ordinaryRole,catalogSha256:plan.catalogSha256},withNormalSession,result,resources,...(retryOnly?{runHistory:runDraftNormalHistoryRegisteredMoneyRetry,remainingMoneyContinuation,registeredMoneyRetry,originalRetryRequest}:remainingOnly?{runHistory:runDraftNormalHistoryRemainingMoneyContinuation,remainingMoneyContinuation}:{runHistory:runDraftNormalHistoryCommittedContinuation,committedContinuation:{requestBytes,sha256:plan.originalRequest.sha256}})});
    }});
   result.status=safe.status;result.commitRecovered=safe.commitRecovered;
  }catch(e){result.status='STOP_CREDENTIAL_CONTINUATION_OR_OUTCOME_UNCERTAIN_NO_RETRY';result.errorCode=typeof e.message==='string'&&/^B07_[A-Z0-9_]+$/.test(e.message)?e.message:'B07_RENEWAL_PARENT_FAILED_DETAIL_OMITTED';if(e.b07RenewalFailure)result.renewalFailure=e.b07RenewalFailure;}
@@ -313,6 +331,6 @@ async function runCredentialContinuationParent(plan,remainingOnly){
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{must(process.argv.length===4&&process.argv[2]==='--registration','B07_PARENT_REGISTRATION_ARGUMENT_REQUIRED');
   const s=await lstat(process.argv[3]);must(s.isFile()&&!s.isSymbolicLink()&&s.size<=65536&&(s.mode&0o077)===0,'B07_PRIVATE_PARENT_REGISTRATION_REQUIRED');
-  const plan=JSON.parse(await readFile(process.argv[3],'utf8'));const result=await (plan.contract==='B07_QA_REMAINING_MONEY_PARENT_1'?runB07QaIdentityRemainingMoneyParent(plan):plan.contract==='B07_QA_COMMITTED_CONTINUATION_PARENT_1'?runB07QaIdentityCommittedContinuationParent(plan):runB07QaIdentityParent(plan));console.log(JSON.stringify(result));
+  const plan=JSON.parse(await readFile(process.argv[3],'utf8'));const result=await (plan.contract==='B07_QA_REGISTERED_MONEY_RETRY_PARENT_1'?runB07QaIdentityRegisteredMoneyRetryParent(plan):plan.contract==='B07_QA_REMAINING_MONEY_PARENT_1'?runB07QaIdentityRemainingMoneyParent(plan):plan.contract==='B07_QA_COMMITTED_CONTINUATION_PARENT_1'?runB07QaIdentityCommittedContinuationParent(plan):runB07QaIdentityParent(plan));console.log(JSON.stringify(result));
  }catch{console.error('B07_PARENT_STOPPED_NO_AUTOMATIC_REPLAY');process.exitCode=2;}
 }

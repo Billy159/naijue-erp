@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,RENEWAL_SQL,credentialPermissionProofFromOriginal,credentialPermissionProofFromCommittedLifecycle} from './qa-identity-credential-renewal.mjs';
+import {withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,RENEWAL_SQL,credentialPermissionProofFromOriginal,credentialPermissionProofFromCommittedLifecycle,credentialPermissionProofFromRegisteredMoneyAttempt} from './qa-identity-credential-renewal.mjs';
 import {withB07QaManagedNormalSession} from './qa-identity-parent.mjs';
 import {QA_IDENTITY} from './qa-identity-schema19.mjs';
 const hashes={guard_maintenance_account_event:'965d9d3433b929ccd151b9a147eeef713770d7b7311e49c80cfaa3d17b118549',validate_maintenance_root_commit:'8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512',validate_available_administrator_commit:'3a9a1bea930614761185af90b8591a539b855647974b68b004869c80f5e5ba18'};
@@ -18,6 +18,7 @@ function fixture(options={}){
   calls.push({sql,args,recovery});
   if(sql===RENEWAL_SQL.target){const {unix_socket_directories,...identity}=target;return {rows:[identity]};}
   if(sql===RENEWAL_SQL.admission)return {rows:[{versions:Array.from({length:26},(_,i)=>i+1),functions,triggers,management_role_safe:true,can_read_identity:true,can_update_credential:!options.permissionLost,can_revoke_sessions:true}]};
+  if(sql===RENEWAL_SQL.moneyAbsent)return {rows:[{count:options.moneyPresent?1:0}]};
   if(sql===RENEWAL_SQL.transferHistory)return {rows:[{count:options.transferHistoryChanged?0:1,sha256:'d'.repeat(64)}]};
   if(sql===RENEWAL_SQL.history)return {rows:[{count:options.historyChanged?0:1,sha256:'c'.repeat(64)}]};
   if(sql===RENEWAL_SQL.lock)return {rows:[{id:QA_IDENTITY.accountId}]};
@@ -106,4 +107,25 @@ test('auth2 chain refuses unknown commit, mismatched target, open workers and mi
 test('auth2 lineage still requires actual account auth2 and both committed document v2 states in original transaction',async()=>{
  const stale=auth2Fixture();stale.state.account.version=1;stale.state.account.auth_version=1;await assert.rejects(stale.run());assert.equal(stale.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,0);
  const missingTransfer=auth2Fixture({transferHistoryChanged:true});await assert.rejects(missingTransfer.run());assert.equal(missingTransfer.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,0);assert.equal(missingTransfer.http.length,0);
+});
+
+function auth3Fixture(options={}){
+ const f=auth2Fixture(options),previousTarget=structuredClone(f.target),parentResult={status:'STOP_CREDENTIAL_CONTINUATION_OR_OUTCOME_UNCERTAIN_NO_RETRY',credentialRenewalActual:true,authVersion:3,automaticRetry:false,clientsClosed:true,executionScope:'REMAINING_MONEY_ONLY_SAME_TARGET',renewalFailure:{phase:'NORMAL_CONTINUATION',commitAttempted:true,pgCode:null}};
+ const attempt={parentResult,lifecycle:{...structuredClone(f.chain.lifecycle),operation:'B07_EXISTING07_REMAINING_MONEY_CONTINUATION',parentResult:structuredClone(parentResult),actualRegistrationIdentity:{postmaster:previousTarget.postmaster_started_at}},
+ intent:{...structuredClone(f.chain.intent),expectedVersion:2,expectedAuthVersion:2,target:previousTarget},
+ draftResult:{status:'FAILED_OR_OUTCOME_UNCERTAIN_NO_AUTO_RETRY',actualHrev:false,executionScope:'REMAINING_MONEY_ONLY_SAME_TARGET',priorScopeNotReplayed:true,automaticRetry:false,fixtureCreated:false,sourceChanged:false,cases:[],adoptedCompletedCases:{sourceSha256:'0c01a8ed081b9debec8bd439416a0f5968178061b45faf31e3c4332e66fa1940',salesVersion:2,transferVersion:2,status:'PRIOR_COMPLETE_SCOPES_BOUND_NO_REPLAY'},firstFailure:{phase:'DRAFT_SALES_MONEY_ONLY_NO_STOCK',requestKey:'D1_B07_V16_DRAFT_MONEY_ONLY_01',comparisonStage:'FIRST_RESPONSE'},lastHttpObservation:{requestKey:'D1_B07_V16_DRAFT_MONEY_ONLY_01',statusCode:500,jsonParseable:true,errorCode:'INTERNAL_ERROR'}}};
+ const noCommit={status:'PASS_CHILD02_MONEY_ORIGINAL_KEY_RECEIPT_READONLY',businessDML:0,HTTPAttempted:false,setupRetried:false,transactionReadOnly:true,diagnosticRollbackReturned:true,clientsEnded:true,identity:{database:f.target.database,oid:f.target.oid,role:'SYN_ORDINARY',session_user:'SYN_ORDINARY',address:null,port:null,readonly:'on',isolation:'repeatable read',nonowner:true,superuser:false,bypass:false},receipts:{receipts:2,committed:2},originalReceipt:[],revisions:{all_revisions:2,qa_key_revisions:2},safeQa:[{version:3,auth_version:3,login_enabled:true}],currentVersions:{sales_version:2,transfer_version:2}};
+ f.target.postmaster_started_at='2026-10-27 00:03:00+00';Object.assign(f.input,{expectedVersion:3,expectedAuthVersion:3,originalMoney:{requestKey:'D1_B07_V16_DRAFT_MONEY_ONLY_01',documentId:sourceActor,requestHash:'f'.repeat(64),requestBytesSha256:'c33b1b48334eceb6439ebe4d2d9e554cdbeeae3abb8513c8ac96967ede59db28'}});
+ f.input.permissionProof=credentialPermissionProofFromRegisteredMoneyAttempt(f.original,f.input,f.chain,attempt,noCommit);f.state.account.version=3;f.state.account.auth_version=3;return {...f,attempt,noCommit};
+}
+test('registered failed money lineage permits only current auth3 to4 and freshly absent money key',async()=>{
+ const f=auth3Fixture(),result=await f.run();assert.equal(result.authVersion,4);assert.equal(result.version,4);assert.equal(f.state.account.auth_version,4);assert.equal(f.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,1);assert.ok(f.calls.filter(c=>c.sql===RENEWAL_SQL.moneyAbsent).length>=2);
+ const unknown=auth3Fixture({unknownCommit:true});assert.equal((await unknown.run()).commitRecovered,true);assert.equal(unknown.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,1);
+});
+test('registered money auth3 branch refuses wrong attempt, missing no-commit facts, already used key or stale auth',async()=>{
+ const f=auth3Fixture();for(const change of [x=>{x.parentResult.authVersion=2;},x=>{x.intent.expectedVersion=3;},x=>{x.lifecycle.gateWorkerClosed=false;},x=>{x.draftResult.firstFailure.comparisonStage='BUILD_COMMAND';}]){const attempt=structuredClone(f.attempt);change(attempt);assert.throws(()=>credentialPermissionProofFromRegisteredMoneyAttempt(f.original,f.input,f.chain,attempt,f.noCommit));}
+ const bad=structuredClone(f.noCommit);bad.originalReceipt=[{}];assert.throws(()=>credentialPermissionProofFromRegisteredMoneyAttempt(f.original,f.input,f.chain,f.attempt,bad));
+ const used=auth3Fixture({moneyPresent:true});await assert.rejects(used.run());assert.equal(used.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,0);assert.equal(used.http.length,0);
+ const stale=auth3Fixture();stale.state.account.auth_version=2;await assert.rejects(stale.run());assert.equal(stale.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,0);
+ assert.throws(()=>validateCredentialRenewalInput({...f.input,expectedVersion:4,expectedAuthVersion:4}));
 });

@@ -3,6 +3,7 @@ import {randomBytes} from 'node:crypto';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {QA_IDENTITY,SQL as fixtureSql} from './qa-identity-schema19.mjs';
+import {validateMoneyNoCommitProof,REGISTERED_MONEY_RETRY_PINS} from './draft-normal-history-v16.mjs';
 const must=(ok,code)=>{if(!ok)throw Error(code);};
 const stable=x=>JSON.stringify(x,(_k,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.keys(v).sort().map(k=>[k,v[k]])):v);
 const same=(a,b)=>stable(a)===stable(b);
@@ -43,6 +44,7 @@ export const RENEWAL_SQL=Object.freeze({
  AND v.transfer_id=r.target_id AND v.document_kind='TRANSFER' AND v.from_version=1 AND v.to_version=2 AND v.request_key=r.request_key AND v.actor_account_id=r.actor_account_id
  AND a.object_id=r.target_id AND a.object_type='HISTORY_TRANSFER' AND a.action='HISTORY_REVISE' AND a.actor_account_id=r.actor_account_id AND a.old_version=1 AND a.new_version=2
  AND e.version=2 AND h.source_status='DRAFT'`,
+ moneyAbsent:`/* b07-qa-renewal:money-absent */ SELECT count(*)::int AS count FROM naijue_erp.operation_receipt WHERE actor_account_id=$1::uuid AND request_key=$2`,
  lock:`/* b07-qa-renewal:lock */ SELECT a.id FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id WHERE a.id=$1::uuid AND s.id=$2::uuid FOR UPDATE OF a,s`,
  state:`/* b07-qa-renewal:state */ SELECT to_jsonb(a)-'password_hash' AS account,to_jsonb(s) AS staff,a.password_hash=$4 AS credential_matches,
  (SELECT count(*)::int FROM naijue_erp.auth_session WHERE account_id=$1::uuid AND revoked_at IS NULL) AS live_sessions,
@@ -105,6 +107,34 @@ export function credentialPermissionProofFromCommittedLifecycle(original,input,c
   &&draft.cases?.length===1&&draft.cases[0].name==='DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION'&&draft.cases[0].status==='PASS_NORMAL_HISTORY_HTTP_CURRENT_FACTS_SOURCE_STOCK_AUDIT_RECEIPT_REPLAY_CAS'&&draft.cases[0].version===2&&draft.cases[0].stockUnchanged===true,'B07_RENEWAL_PRIOR_COMPLETED_SCOPES_REQUIRED');
  return {...proof,format:'B07_QA_CREDENTIAL_RENEWAL_AUTH2_LIFECYCLE_PROOF_1',versionEvidence:{accountVersion:2,authVersion:2,chainPins:QA_AUTH2_CHAIN_PINS}};
 }
+export const QA_AUTH3_MONEY_ATTEMPT_PINS=Object.freeze({
+ parentResult:{bytes:450,sha256:'cdbc823f7b122a07cf85240a7f6ecba08f07293adebd27be251f79be32a46379'},
+ lifecycle:{bytes:1875,sha256:'e1ff2e183abf09a1e7c51972f5550721fce93fe82e3afcfe63e7bd6b37947a0b'},
+ intent:{bytes:966,sha256:'ba67de15a67f26295f0fd29e349309eb0ea5427a07dd0ba3c36d1046d93c1795'},
+ draftResult:{bytes:1238,sha256:'c3e4b7cbaf00ea896f7c7f9baa0171398fb60abc839e4e05edfde3520f3ce187'},
+});
+/** One registered failed-money attempt only, not an extensible rotation/retry loop. */
+export function credentialPermissionProofFromRegisteredMoneyAttempt(original,input,completedChain,attempt,noCommit){
+ must(input.expectedVersion===3&&input.expectedAuthVersion===3,'B07_RENEWAL_AUTH3_EXPECTED_REQUIRED');
+ const proof=credentialPermissionProofFromCommittedLifecycle(original,{...input,expectedVersion:2,expectedAuthVersion:2},completedChain);
+ const {parentResult:parent,lifecycle:os,intent,draftResult:draft}=attempt??{};
+ must(parent?.status==='STOP_CREDENTIAL_CONTINUATION_OR_OUTCOME_UNCERTAIN_NO_RETRY'&&parent.credentialRenewalActual===true&&parent.authVersion===3&&parent.automaticRetry===false&&parent.clientsClosed===true
+  &&parent.executionScope==='REMAINING_MONEY_ONLY_SAME_TARGET'&&parent.renewalFailure?.phase==='NORMAL_CONTINUATION'&&parent.renewalFailure.commitAttempted===true&&parent.renewalFailure.pgCode===null,'B07_RENEWAL_PRIOR_AUTH3_COMMIT_REQUIRED');
+ must(os?.operation==='B07_EXISTING07_REMAINING_MONEY_CONTINUATION'&&os.status==='STOP_ORIGINAL_CONTINUATION_OUTCOME_NO_REPLAY'&&same(os.parentResult,parent)&&os.startExitCode===0&&os.parentExitCode===2
+  &&os.reviewWorkerPrepositioned===true&&os.reviewWorkerClosed===true&&os.reviewWorkerExitCode===0&&os.gateWorkerClosed===true&&os.gateWorkerExitCode===0&&os.stopExitCode===0&&os.onlyOwnPrivatePidStopped===true
+  &&['seedAttempted','restoreAttempted','upgradeAttempted','roleOrGrantChanged','sourceActorChanged','serverOrR1Touched','automaticRetry'].every(k=>os[k]===false)&&os.existingDataDirectory===input.existingDataDirectory,'B07_RENEWAL_PRIOR_AUTH3_LIFECYCLE_REQUIRED');
+ must(intent?.contract==='B07_SAME_QA_CREDENTIAL_RENEWAL_1'&&intent.qaAccountId===QA_IDENTITY.accountId&&intent.expectedVersion===2&&intent.expectedAuthVersion===2&&intent.sourceIdentityChanged===false
+  &&intent.catalogSha256===input.catalogSha256&&intent.originalReadOnlyProofPostmaster===original.identity.postmaster,'B07_RENEWAL_PRIOR_AUTH3_INTENT_REQUIRED');
+ const {postmaster_started_at:previousPostmaster,...previousTarget}=intent.target??{}, {postmaster_started_at:currentPostmaster,...currentTarget}=input.target;
+ must(same(previousTarget,currentTarget)&&typeof previousPostmaster==='string'&&os.actualRegistrationIdentity?.postmaster===previousPostmaster&&typeof currentPostmaster==='string','B07_RENEWAL_PRIOR_AUTH3_TARGET_CHANGED');
+ must(draft?.status==='FAILED_OR_OUTCOME_UNCERTAIN_NO_AUTO_RETRY'&&draft.actualHrev===false&&draft.executionScope==='REMAINING_MONEY_ONLY_SAME_TARGET'&&draft.priorScopeNotReplayed===true
+  &&draft.automaticRetry===false&&draft.fixtureCreated===false&&draft.sourceChanged===false&&draft.cases?.length===0
+  &&draft.adoptedCompletedCases?.sourceSha256===QA_AUTH2_CHAIN_PINS.draftResult.sha256&&draft.adoptedCompletedCases.salesVersion===2&&draft.adoptedCompletedCases.transferVersion===2&&draft.adoptedCompletedCases.status==='PRIOR_COMPLETE_SCOPES_BOUND_NO_REPLAY'
+  &&draft.firstFailure?.phase==='DRAFT_SALES_MONEY_ONLY_NO_STOCK'&&draft.firstFailure.requestKey==='D1_B07_V16_DRAFT_MONEY_ONLY_01'&&draft.firstFailure.comparisonStage==='FIRST_RESPONSE'
+  &&draft.lastHttpObservation?.requestKey==='D1_B07_V16_DRAFT_MONEY_ONLY_01'&&draft.lastHttpObservation.statusCode===500&&draft.lastHttpObservation.jsonParseable===true&&draft.lastHttpObservation.errorCode==='INTERNAL_ERROR','B07_RENEWAL_PRIOR_MONEY_ATTEMPT_REQUIRED');
+ validateMoneyNoCommitProof(noCommit,{target:{database:input.target.database,oid:input.target.oid,role:input.ordinaryRole}});
+ return {...proof,format:'B07_QA_CREDENTIAL_AUTH3_REGISTERED_MONEY_RETRY_PROOF_1',versionEvidence:{accountVersion:3,authVersion:3,completedPins:QA_AUTH2_CHAIN_PINS,attemptPins:QA_AUTH3_MONEY_ATTEMPT_PINS,noCommitPin:REGISTERED_MONEY_RETRY_PINS.noCommitProof}};
+}
 export function validateCredentialRenewalInput(input){
  must(input?.contract==='B07_SAME_QA_CREDENTIAL_RENEWAL_1','B07_RENEWAL_INPUT_REQUIRED');const t=input.target,p=input.permissionProof;
  must(t?.database==='naijue_erp_test_19e00102'&&/^[1-9][0-9]*$/.test(t.oid)&&t.role==='naijue_erp_test'&&typeof t.session_role==='string'
@@ -114,11 +144,13 @@ export function validateCredentialRenewalInput(input){
   &&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(input.sourceActorAccountId)&&![QA_IDENTITY.accountId,QA_IDENTITY.staffId].includes(input.sourceActorAccountId),'B07_RENEWAL_SOURCE_IDENTITY_REQUIRED');
  must(Number.isInteger(input.expectedVersion)&&input.expectedVersion>0&&input.expectedVersion<2147483647&&Number.isInteger(input.expectedAuthVersion)&&input.expectedAuthVersion>0&&input.expectedAuthVersion<2147483647,'B07_RENEWAL_EXPECTED_VERSIONS_REQUIRED');
  must(input.originalSales?.requestKey==='D1_B07_V16_DRAFT_SALES_QUANTITY_01'&&typeof input.originalSales.documentId==='string'&&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(input.originalSales.documentId)&&sha(input.originalSales.requestHash),'B07_RENEWAL_ORIGINAL_HISTORY_BINDING_REQUIRED');
- if(input.expectedVersion===2)must(input.originalTransfer?.requestKey==='D1_B07_V16_DRAFT_TRANSFER_QUANTITY_01'&&typeof input.originalTransfer.documentId==='string'&&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(input.originalTransfer.documentId)&&sha(input.originalTransfer.requestHash),'B07_RENEWAL_ORIGINAL_TRANSFER_BINDING_REQUIRED');
+ if(input.expectedVersion>=2)must(input.originalTransfer?.requestKey==='D1_B07_V16_DRAFT_TRANSFER_QUANTITY_01'&&typeof input.originalTransfer.documentId==='string'&&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(input.originalTransfer.documentId)&&sha(input.originalTransfer.requestHash),'B07_RENEWAL_ORIGINAL_TRANSFER_BINDING_REQUIRED');
+ if(input.expectedVersion===3)must(input.originalMoney?.requestKey==='D1_B07_V16_DRAFT_MONEY_ONLY_01'&&input.originalMoney.documentId===input.originalSales.documentId&&sha(input.originalMoney.requestHash)&&input.originalMoney.requestBytesSha256===REGISTERED_MONEY_RETRY_PINS.moneyRequest.sha256,'B07_RENEWAL_ORIGINAL_MONEY_RETRY_REQUIRED');
  must(typeof input.changedAt==='string'&&new Date(input.changedAt).toISOString()===input.changedAt,'B07_RENEWAL_TIME_REQUIRED');
  for(const key of ['copyRegistrationReference','preservedSnapshotReference','approvedManagementReference','intentReference'])must(typeof input[key]==='string'&&input[key].length>0,'B07_RENEWAL_REGISTRATION_REQUIRED');
  must((p?.format==='B07_QA_CREDENTIAL_RENEWAL_READONLY_PROOF_1'&&input.expectedVersion===1&&input.expectedAuthVersion===1
-  ||p?.format==='B07_QA_CREDENTIAL_RENEWAL_AUTH2_LIFECYCLE_PROOF_1'&&input.expectedVersion===2&&input.expectedAuthVersion===2&&p.versionEvidence?.accountVersion===2&&p.versionEvidence.authVersion===2&&same(p.versionEvidence.chainPins,QA_AUTH2_CHAIN_PINS))&&same(p.target,t)&&p.profile==='26_v21_history_effective_value_from_v16_v14'&&sha(p.catalogSha256)
+  ||p?.format==='B07_QA_CREDENTIAL_RENEWAL_AUTH2_LIFECYCLE_PROOF_1'&&input.expectedVersion===2&&input.expectedAuthVersion===2&&p.versionEvidence?.accountVersion===2&&p.versionEvidence.authVersion===2&&same(p.versionEvidence.chainPins,QA_AUTH2_CHAIN_PINS)
+  ||p?.format==='B07_QA_CREDENTIAL_AUTH3_REGISTERED_MONEY_RETRY_PROOF_1'&&input.expectedVersion===3&&input.expectedAuthVersion===3&&p.versionEvidence?.accountVersion===3&&p.versionEvidence.authVersion===3&&same(p.versionEvidence.completedPins,QA_AUTH2_CHAIN_PINS)&&same(p.versionEvidence.attemptPins,QA_AUTH3_MONEY_ATTEMPT_PINS)&&same(p.versionEvidence.noCommitPin,REGISTERED_MONEY_RETRY_PINS.noCommitProof))&&same(p.target,t)&&p.profile==='26_v21_history_effective_value_from_v16_v14'&&sha(p.catalogSha256)
   &&p.can_read_identity===true&&p.can_update_credential===true&&p.can_revoke_sessions===true&&Array.isArray(p.functions)&&p.functions.length===3
   &&same(p.functions.map(f=>f.name).sort(),Object.keys(functions).sort())&&p.functions.every(f=>functions[f.name]?.includes(f.sha256))
   &&Array.isArray(p.triggers)&&p.triggers.length>=3&&p.triggers.every(t=>['O','A'].includes(t.enabled)&&t.internal===false&&typeof t.oid==='string'), 'B07_RENEWAL_APPROVED_PROOF_REQUIRED');
@@ -132,7 +164,7 @@ async function admission(client,input){await target(client,input);const r=await 
  must(r.rows.length===1&&same(r.rows[0].versions,Array.from({length:26},(_,i)=>i+1))
   &&r.rows[0].management_role_safe===true&&same(r.rows[0].functions,p.functions)&&same(r.rows[0].triggers,p.triggers)&&r.rows[0].can_read_identity===true&&r.rows[0].can_update_credential===true&&r.rows[0].can_revoke_sessions===true,'B07_RENEWAL_CURRENT_ADMISSION_CHANGED');}
 const safeAccount=a=>{const {version,auth_version,updated_at,...identity}=a;return identity;};
-async function history(client,input){const out={};for(const [family,h,sql]of [['sales',input.originalSales,RENEWAL_SQL.history],...(input.originalTransfer?[['transfers',input.originalTransfer,RENEWAL_SQL.transferHistory]]:[])]){const r=await client.query(sql,[QA_IDENTITY.accountId,h.requestKey,h.documentId,h.requestHash]);must(r.rows.length===1&&r.rows[0].count===1&&sha(r.rows[0].sha256),'B07_RENEWAL_COMMITTED_V2_CHANGED');out[family]=r.rows[0];}return out;}
+async function history(client,input){const out={};if(input.originalMoney){const absent=await client.query(RENEWAL_SQL.moneyAbsent,[QA_IDENTITY.accountId,input.originalMoney.requestKey]);must(absent.rows.length===1&&absent.rows[0].count===0,'B07_RENEWAL_MONEY_ALREADY_PRESENT_NO_RETRY');out.moneyAbsent=true;}for(const [family,h,sql]of [['sales',input.originalSales,RENEWAL_SQL.history],...(input.originalTransfer?[['transfers',input.originalTransfer,RENEWAL_SQL.transferHistory]]:[])]){const r=await client.query(sql,[QA_IDENTITY.accountId,h.requestKey,h.documentId,h.requestHash]);must(r.rows.length===1&&r.rows[0].count===1&&sha(r.rows[0].sha256),'B07_RENEWAL_COMMITTED_V2_CHANGED');out[family]=r.rows[0];}return out;}
 async function state(client,input,passwordHash){const r=await client.query(RENEWAL_SQL.state,[QA_IDENTITY.accountId,QA_IDENTITY.staffId,input.sourceActorAccountId,passwordHash,input.expectedVersion+1]);must(r.rows.length===1,'B07_RENEWAL_IDENTITY_MISSING');return r.rows[0];}
 function identity(s){const a=s.account,p=s.staff;must(a?.id===QA_IDENTITY.accountId&&a.staff_id===QA_IDENTITY.staffId&&a.login_name===QA_IDENTITY.loginName&&a.login_enabled===true
  &&p?.id===QA_IDENTITY.staffId&&p.name===QA_IDENTITY.name&&p.hall_id===null&&p.role==='WAREHOUSE'&&p.employment_status==='在职'&&p.contact===null&&p.version===1

@@ -111,15 +111,36 @@ export async function runDraftNormalHistoryCommittedContinuation(options){
  const committedContinuation={sha256:options.committedContinuation.sha256};
  return runDraftNormalHistoryCore({...options,committedContinuation},original);
 }
-export async function runDraftNormalHistoryRemainingMoneyContinuation(options){
- const input=validateDraftInput(structuredClone(options.input)),pins=options.remainingMoneyContinuation;
+export const REGISTERED_MONEY_RETRY_PINS=Object.freeze({
+ moneyRequest:{bytes:957,sha256:'c33b1b48334eceb6439ebe4d2d9e554cdbeeae3abb8513c8ac96967ede59db28'},
+ noCommitProof:{bytes:1193,sha256:'c6642963ba44c22ed9cede312e86dbe1c6e73d8fadb72a12746bae82355ed866'},
+});
+export function validateMoneyNoCommitProof(proof,input){
+ assert.equal(proof.status,'PASS_CHILD02_MONEY_ORIGINAL_KEY_RECEIPT_READONLY');assert.equal(proof.businessDML,0);assert.equal(proof.HTTPAttempted,false);assert.equal(proof.setupRetried,false);assert.equal(proof.transactionReadOnly,true);assert.equal(proof.diagnosticRollbackReturned,true);assert.equal(proof.clientsEnded,true);
+ const identity=proof.identity;assert.equal(identity.database,input.target.database);assert.equal(identity.oid,input.target.oid);assert.equal(identity.role,input.target.role);assert.equal(identity.session_user,input.target.role);
+ assert.equal(identity.address,null);assert.equal(identity.port,null);assert.equal(identity.readonly,'on');assert.equal(identity.isolation,'repeatable read');assert.equal(identity.nonowner,true);assert.equal(identity.superuser,false);assert.equal(identity.bypass,false);
+ same(proof.receipts,{receipts:2,committed:2});same(proof.originalReceipt,[]);same(proof.revisions,{all_revisions:2,qa_key_revisions:2});same(proof.safeQa,[{version:3,auth_version:3,login_enabled:true}]);same(proof.currentVersions,{sales_version:2,transfer_version:2});return proof;
+}
+export async function runDraftNormalHistoryRegisteredMoneyRetry(options){
+ const input=validateDraftInput(structuredClone(options.input)),retry=options.registeredMoneyRetry;
+ assert.ok(retry&&Object.getPrototypeOf(retry)===Object.prototype);assert.deepEqual(Object.keys(retry).sort(),['money','outcome']);
+ const outcome=pinnedDraftJson(retry.outcome);validateMoneyNoCommitProof(outcome,input);
+ // Parent fixes these pins to REGISTERED_MONEY_RETRY_PINS. The isolated protocol
+ // primitive also validates the supplied registered bytes, identity and no-commit facts.
+ assert.ok(!options.remainingMoneyContinuation?.money,'Original money request has only one registered source');
+ return prepareRemainingMoneyContinuation(options,{money:retry.money,outcomeSha256:retry.outcome.sha256});
+}
+export async function runDraftNormalHistoryRemainingMoneyContinuation(options){return prepareRemainingMoneyContinuation(options,null);}
+async function prepareRemainingMoneyContinuation(options,registeredRetry){
+
+ const input=validateDraftInput(structuredClone(options.input)),pins=registeredRetry?{...options.remainingMoneyContinuation,money:registeredRetry.money}:options.remainingMoneyContinuation;
  assert.ok(pins&&Object.getPrototypeOf(pins)===Object.prototype);assert.deepEqual(Object.keys(pins).sort(),(pins.money?['completedCases','money','sales','transfers']:['completedCases','sales','transfers']).sort());
  const sales=validateCommittedDraftRequest(input,pins.sales),transfers=validateCommittedDraftRequest(input,pins.transfers,'transfers'),completed=pinnedDraftJson(pins.completedCases);
  assert.equal(completed.status,'FAILED_OR_OUTCOME_UNCERTAIN_NO_AUTO_RETRY');assert.equal(completed.firstFailure?.phase,'DRAFT_SALES_MONEY_ONLY_NO_STOCK');assert.equal(completed.firstFailure?.comparisonStage,'BUILD_COMMAND');
  assert.equal(completed.recoveredFirstCase?.status,'PASS_ORIGINAL_COMMITTED_KEY_DETAIL_REPLAY_CONFLICT_CAS_NO_NEW_WRITE');assert.equal(completed.recoveredFirstCase.version,2);assert.equal(completed.recoveredFirstCase.originalRequestSha256,pins.sales.sha256);
  assert.equal(completed.cases?.length,1);assert.equal(completed.cases[0].name,'DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION');assert.equal(completed.cases[0].status,'PASS_NORMAL_HISTORY_HTTP_CURRENT_FACTS_SOURCE_STOCK_AUDIT_RECEIPT_REPLAY_CAS');assert.equal(completed.cases[0].version,2);assert.equal(completed.cases[0].stockUnchanged,true);
  let money=null;if(pins.money){money=recordedRequest(input,pins.money);assert.equal(money.phase,'DRAFT_SALES_MONEY_ONLY_NO_STOCK');assert.equal(money.command.kind,'sales');assert.equal(money.command.documentId,input.references.cases[0].documentId);assert.equal(money.command.requestKey,input.keys.money);assert.equal(money.command.expectedVersion,2);}
- return runDraftNormalHistoryCore(options,null,{sales,transfers,completed,money,completedSha256:pins.completedCases.sha256});
+ return runDraftNormalHistoryCore(options,null,{sales,transfers,completed,money,completedSha256:pins.completedCases.sha256,registeredRetry});
 }
 async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCookie,recordRequest,recordObservation,readBackgroundFailureCount,committedContinuation},recoveredRequest,remainingMoney=null){
  const input=validateDraftInput(structuredClone(raw));assert.equal(api.trustedOrigin,input.origin);assert.equal(api.app.server.listening,false);
@@ -174,16 +195,17 @@ async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCo
    if(remainingMoney){moneyAlreadyCommitted=keys.some(r=>r.request_key===input.keys.money);
     same(keys.map(r=>r.request_key).sort(),[input.keys.sales,input.keys.transfers,...(moneyAlreadyCommitted?[input.keys.money]:[])].sort(),'Only completed quantity keys and an explicitly recovered money key may exist');
     assert.ok(!moneyAlreadyCommitted||remainingMoney.money,'B07_MONEY_ORIGINAL_KEY_PRESENT_READONLY_RECOVERY_REQUIRED');
-    assert.ok(moneyAlreadyCommitted||!remainingMoney.money,'B07_RECORDED_MONEY_OUTCOME_REVIEW_REQUIRED');
+    if(remainingMoney.registeredRetry)assert.equal(moneyAlreadyCommitted,false,'Known no-commit proof is no longer current; recover the original key without a new save');
+    else assert.ok(moneyAlreadyCommitted||!remainingMoney.money,'B07_RECORDED_MONEY_OUTCOME_REVIEW_REQUIRED');
    }else if(recoveredRequest){assert.equal(keys.length,1,'Only the original committed sales key may exist');assert.equal(keys[0].request_key,input.keys.sales);}
    else assert.equal(keys.length,0,'B07 original keys already present: recover recorded original commands; do not rerun this carrier');
   });
-  async function executeCase(name,reference,buildCommand,casKey){
+  async function executeCase(name,reference,buildCommand,casKey,originalRequest=null){
    phase=name;key=null;comparisonStage='BEFORE_SNAPSHOT';const before=await snapshot(reference);comparisonStage='BUILD_COMMAND';const command=parseHistoryRevisionCommand(buildCommand(before.current));key=command.requestKey;
    comparisonStage='PUBLICATION_BINDING';
    assert.equal(before.current.importBatchId,input.references.batchId);assert.equal(before.current.publishedOperationId,input.references.publishedOperationId);
    await recordRequest({contract:input.contract,target:input.target,actor:input.actor,phase:name,command:structuredClone(command)}); // C persists privately before first write.
-   comparisonStage='FIRST_RESPONSE';const response=await http(reference.kind,command);let receipt;
+   comparisonStage='FIRST_RESPONSE';const response=await http(reference.kind,originalRequest?.command??command);let receipt;
    if(response.statusCode===503&&response.json()?.error?.code==='HISTORY_REVISION_COMMIT_OUTCOME_UNKNOWN'){
     // No resend here. Read exact committed outcome and return original-key recovery material to T45.
     const original=await reading(async c=>(await c.query(`SELECT status,request_hash,result_data FROM naijue_erp.operation_receipt WHERE actor_account_id=$1::uuid AND request_key=$2 AND target_id=$3::uuid`,[input.actor.accountId,command.requestKey,command.documentId])).rows);
@@ -213,7 +235,7 @@ async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCo
    assert.equal(newRevision.length,1);assert.equal(newRevision[0].id,receipt.revisionId);assert.equal(newRevision[0].reason,command.reason);assert.equal(newRevision[0].actor_account_id,input.actor.accountId);
    assert.equal(newAudit.length,1);assert.equal(newAudit[0].operation_id,receipt.operationId);assert.equal(newAudit[0].actor_account_id,input.actor.accountId);
    assert.equal(newReceipt.length,1);assert.equal(newReceipt[0].id,receipt.operationId);assert.equal(newReceipt[0].request_key,command.requestKey);assert.equal(newReceipt[0].request_hash,requestHash({actorAccountId:input.actor.accountId,command}));
-   await verifyCaseTail(name,reference,command,receipt,before.current,after,casKey);
+   await verifyCaseTail(name,reference,command,receipt,before.current,after,casKey,originalRequest?.command??command);
    result.cases.push({name,status:'PASS_NORMAL_HISTORY_HTTP_CURRENT_FACTS_SOURCE_STOCK_AUDIT_RECEIPT_REPLAY_CAS',operationId:receipt.operationId,revisionId:receipt.revisionId,version:receipt.version,stockUnchanged:true});result.actualHrev=true;
   }
   async function verifyCaseTail(name,reference,command,receipt,beforeCurrent,after,casKey,replayCommand=command){
@@ -262,7 +284,11 @@ async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCo
     await verifyCaseTail('DRAFT_SALES_MONEY_ONLY_NO_STOCK',sales,proof.command,proof.receipt,proof.before,salesSnapshot,input.keys.moneyCas,remainingMoney.money.command);
     result.recoveredMoneyCase={status:'PASS_ORIGINAL_COMMITTED_MONEY_NO_NEW_WRITE',version:3,operationId:proof.receipt.operationId,revisionId:proof.receipt.revisionId};result.moneyRecoveryOnly=true;result.actualHrev=true;
    }else{
-    await executeCase('DRAFT_SALES_MONEY_ONLY_NO_STOCK',sales,before=>{assert.equal(before.version,2);return draftMoneyCommand(before,input.keys.money);},input.keys.moneyCas);result.moneyRecoveryOnly=false;
+    if(remainingMoney.registeredRetry){
+     const original=remainingMoney.money;result.registeredOriginalMoneyRetry={originalRequestOnly:true,noCommitProofSha256:remainingMoney.registeredRetry.outcomeSha256};
+     await executeCase('DRAFT_SALES_MONEY_ONLY_NO_STOCK',sales,before=>{assert.equal(before.version,2);same(parseHistoryRevisionCommand(original.command),original.command);same(original.command,draftMoneyCommand(before,input.keys.money));return original.command;},input.keys.moneyCas,original);
+    }else await executeCase('DRAFT_SALES_MONEY_ONLY_NO_STOCK',sales,before=>{assert.equal(before.version,2);return draftMoneyCommand(before,input.keys.money);},input.keys.moneyCas);
+    result.moneyRecoveryOnly=false;
    }
    assert.equal(await readBackgroundFailureCount(),0);result.status='PASS_ACTUAL_LIMITED_DRAFT_HISTORY_ONLY';return result;
   }

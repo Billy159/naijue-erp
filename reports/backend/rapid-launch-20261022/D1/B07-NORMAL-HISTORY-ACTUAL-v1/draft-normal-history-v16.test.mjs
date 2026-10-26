@@ -207,3 +207,24 @@ test('remaining money entry never resaves an existing key and only recovers its 
  f.options.remainingMoneyContinuation.money=f.pin(originalMoney);const result=await runDraftNormalHistoryRemainingMoneyContinuation(f.options);assert.equal(result.moneyRecoveryOnly,true);assert.equal(result.recoveredMoneyCase.version,3);assert.equal(f.records.length,0);
  assert.deepEqual([f.tables.history_revision.length,f.tables.operation_receipt.length],beforeCounts);assert.deepEqual(f.reviseCalls[0],originalMoney.command);
 });
+function noCommitOutcome(input){return {status:'PASS_CHILD02_MONEY_ORIGINAL_KEY_RECEIPT_READONLY',businessDML:0,HTTPAttempted:false,setupRetried:false,transactionReadOnly:true,diagnosticRollbackReturned:true,clientsEnded:true,
+ identity:{database:input.target.database,oid:input.target.oid,role:input.target.role,session_user:input.target.role,address:null,port:null,readonly:'on',isolation:'repeatable read',nonowner:true,superuser:false,bypass:false},receipts:{receipts:2,committed:2},originalReceipt:[],revisions:{all_revisions:2,qa_key_revisions:2},safeQa:[{version:3,auth_version:3,login_enabled:true}],currentVersions:{sales_version:2,transfer_version:2}};}
+async function registeredRetryFixture(){const f=await remainingMoneyFixture(),command=draftMoneyCommand(f.current.sales,f.input.keys.money);
+ const original={contract:f.input.contract,target:f.input.target,actor:f.input.actor,phase:'DRAFT_SALES_MONEY_ONLY_NO_STOCK',command:Object.fromEntries(Object.entries(command).reverse())};
+ const outcome=noCommitOutcome(f.input);f.options.registeredMoneyRetry={money:f.pin(original),outcome:f.pin(outcome)};return {...f,original,outcome};}
+test('registered money retry sends original command and records original value without any quantity request',async()=>{
+ const {runDraftNormalHistoryRegisteredMoneyRetry}=await import('./draft-normal-history-v16.mjs'),f=await registeredRetryFixture();
+ const result=await runDraftNormalHistoryRegisteredMoneyRetry(f.options);assert.equal(result.status,'PASS_ACTUAL_LIMITED_DRAFT_HISTORY_ONLY');assert.equal(result.registeredOriginalMoneyRetry.originalRequestOnly,true);
+ assert.deepEqual(f.records,[f.original]);assert.equal(JSON.stringify(f.reviseCalls[0]),JSON.stringify(f.original.command));assert.equal(f.current.sales.version,3);assert.equal(f.current.transfers.version,2);
+ assert.ok(f.reviseCalls.every(c=>![f.input.keys.sales,f.input.keys.salesCas,f.input.keys.transfers,f.input.keys.transfersCas].includes(c.requestKey)));
+});
+test('registered money retry refuses stale no-commit facts, changed command and any already committed money key',async()=>{
+ const {runDraftNormalHistoryRegisteredMoneyRetry}=await import('./draft-normal-history-v16.mjs');
+ for(const change of [p=>{p.originalReceipt=[{}];},p=>{p.safeQa[0].auth_version=4;},p=>{p.currentVersions.sales_version=3;},p=>{p.identity.superuser=true;}]){const f=await registeredRetryFixture();change(f.outcome);f.options.registeredMoneyRetry.outcome=f.pin(f.outcome);await assert.rejects(runDraftNormalHistoryRegisteredMoneyRetry(f.options));assert.equal(f.records.length,0);assert.equal(f.reviseCalls.length,0);}
+ const altered=await registeredRetryFixture();altered.original.command.reason+=' changed';altered.options.registeredMoneyRetry.money=altered.pin(altered.original);await assert.rejects(runDraftNormalHistoryRegisteredMoneyRetry(altered.options));assert.equal(altered.records.length,0);assert.equal(altered.reviseCalls.length,0);
+ const done=await registeredRetryFixture();await runDraftNormalHistoryRegisteredMoneyRetry(done.options);done.records.length=0;done.reviseCalls.length=0;await assert.rejects(runDraftNormalHistoryRegisteredMoneyRetry(done.options));assert.equal(done.records.length,0);assert.equal(done.reviseCalls.length,0);
+});
+test('original remaining-only mode still refuses a recorded-but-uncommitted money request without registered retry proof',async()=>{
+ const {runDraftNormalHistoryRemainingMoneyContinuation}=await import('./draft-normal-history-v16.mjs'),f=await registeredRetryFixture();
+ f.options.remainingMoneyContinuation.money=f.options.registeredMoneyRetry.money;await assert.rejects(runDraftNormalHistoryRemainingMoneyContinuation(f.options));assert.equal(f.records.length,0);assert.equal(f.reviseCalls.length,0);
+});
