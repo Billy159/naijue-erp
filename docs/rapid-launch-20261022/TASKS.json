@@ -5902,11 +5902,6 @@
       "id": "STAFF_CLOSED_NO_ACCOUNT",
       "question": "Does closed-login filter include employees without accounts?",
       "onlyDependentBranchWaits": true
-    },
-    {
-      "id": "BARCODE_GENERATION_INIT_V19",
-      "confirmationFile": "WRITE-CONTRACT-SUPPLEMENT-v19-BARCODE-GENERATION-INIT.md",
-      "onlyDependentBranchWaits": true
     }
   ],
   "currentAcceptedReceiptBatch": [
@@ -11643,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE575",
+    "round": "SOURCE576",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12933,10 +12928,11 @@
           "next": "QB only metadata/runner/source binding then original full11provider; no more raw source scan",
           "realSchemeInit": false,
           "barcodeStaged": false
-        }
+        },
+        "QB338": "SOURCE_READY_REF_NOT_STAGED_d35efad27b0ec7fcdea695c91f84b068b17d6c9ea5b13d46c9515a6027d36818"
       },
       "newWriteContractV19": {
-        "state": "AWAITING_EXPLICIT_USER_CONFIRMATION_ONLY_NEW_WRITE_BRANCH",
+        "state": "APPROVED_WITH_CORRECTION_IMPLEMENTATION_ASSIGNED",
         "file": "WRITE-CONTRACT-SUPPLEMENT-v19-BARCODE-GENERATION-INIT.md",
         "sha256": "60bba6582432777f061248000b4a3b945709d41e9842ff5e79d0a7592f580ea3",
         "scope": "Original V2 optional generation intent, existing systemItemCode seven-digit new CREATE allocation/newSKU MAIN only; exact postCORE dedicated import action/two constraints/three functions+verifier; no tables/columns/index/sequence/new audit marker",
@@ -12948,7 +12944,14 @@
           "QF CORE14 browser",
           "D1 B07 historical QA"
         ],
-        "questionSubmitted": true
+        "questionSubmitted": true,
+        "humanReply": "WRITE-CONTRACT-SUPPLEMENT-v19-HUMAN-REPLY.json",
+        "manualSystemItemCodeRequired": true,
+        "emptyAllocator": false,
+        "wholeGroup": true,
+        "addedColorCreatesMissingFullGroupSkusAndMains": true,
+        "newFieldsTablesIndexes": false,
+        "next": "D2 originalSAVE generator;D3 exact6 data/borrowedclient;D1 exact2constraints3functions+helper and original command/store/CLI/profile; original QB affected source review then T45 bounded actualQA"
       }
     },
     "server566": {
@@ -13021,14 +13024,17 @@
     },
     "immutableStatic575": {
       "owner": "Original compression lane",
-      "state": "EXACT2_WRITER_ASSIGNED_IMPLEMENTATION_IN_PROGRESS",
+      "state": "EXACT2_OWNER_DELIVERED_CHECKS_PASS_PROXY_SOURCE_SEAM_UPDATED_NOT_BUILT",
       "files": [
         "apps/api/src/production-application-host.ts",
         "apps/api/src/production-application-host.test.ts"
       ],
       "scope": "Only configured immutable version-prefix successfulJS/CSS public1yearimmutable; other aliases/HTML/API/session/auth/health/errors unchangedno-store",
       "authority": "Human originaltaskbookA-H G implementation supplement",
-      "next": "Combined next necessary fixedF2+host candidate, no one-change deploy"
+      "next": "One necessary combined F2/cache candidate build, original scoped review and T45 actual prefix integration",
+      "hostSha256": "80989a8c2227e7b1eb6a6e62409762d8c2fdedb2c0aa4a74b1cb5e16a853a4f3",
+      "testSha256": "2f533ffdb1891a4c3f545f6f2daf575163b99402aefca7da2328411121cf9776",
+      "CProxySource": "scripts/release/deploy-candidate.py upstream200 policy map else no-store; source generation check only, actual nginx not tested"
     }
   }
 }

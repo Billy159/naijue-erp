@@ -5576,9 +5576,44 @@
       "apps/api/src/production-application-host.ts",
       "apps/api/src/production-application-host.test.ts"
     ],
-    "state": "EXCLUSIVE_TEMPORARY_WRITER_ASSIGNED",
+    "state": "DELIVERED_EXACT2_WRITER_RETURNED_TO_C_ORIGINAL_D1",
     "scope": "User taskbook A-H G: exact immutable configured version-prefix public JS/CSS long cache; HTML/API/auth/health/unversioned aliases/errors no-store. Existing compression and captured graph unchanged. Next necessary integrated package only, no separate release.",
     "model": "gpt-6.1-sol/medium",
     "authority": "Human A-H implementation authorization forwarded originaltaskbook01a16189; prior compression lane returned writes. C owns build/records T45 sole deploy."
+  },
+  "source576BarcodeV19CorrectedImplementation": {
+    "authority": "Direct human main reply call_fcbc01113b4d42bea015ddd58a1d5513; corrected v19 no empty allocator; full group and added color",
+    "state": "APPROVED_WITH_CORRECTION_IMPLEMENTATION_ASSIGNED",
+    "model": "gpt-6.1-sol/medium",
+    "D2": [
+      "packages/application/src/product-maintenance-ports.ts",
+      "packages/application/src/product-maintenance-service.ts",
+      "adapters/postgres/src/product-maintenance-store.ts",
+      "tests/product-maintenance.test.ts",
+      "tests/product-maintenance-postgres-protocol.test.ts",
+      "apps/api/src/product-maintenance-http.test.ts if affected",
+      "docs/product-maintenance.md"
+    ],
+    "D3": [
+      "packages/application/src/native-barcode-import.ts",
+      "adapters/postgres/src/native-barcode-import.ts",
+      "scripts/import-v3/native-source-authorizers.mjs",
+      "tests/native-barcode-import.test.ts",
+      "scripts/import-v3/native-source-authorizers.test.mjs"
+    ],
+    "D1": [
+      "packages/application/src/inventory-cutoff-import.ts",
+      "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "scripts/import-v3/run.mjs",
+      "adapters/postgres/src/native-import-accounting-capability.ts",
+      "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "tests/barcode-scheme-initialization-command.test.ts",
+      "tests/barcode-scheme-initialization-store-protocol.test.ts",
+      "tests/native-runtime26-capability.test.ts",
+      "scripts/import-v3/run.test.mjs"
+    ],
+    "sharedSeam": "D1 command/store/action types and captured trusted callback wiring solewriter; D3 borrowed original client exact6 initializer no own BEGIN/pool/receipt. D2 only original product maintenance leaves; no shared host/new persistent field.",
+    "T45": "Only actual DB/CLI/server/install/review rebinding; no patch execution before source QA/current metadata/app successor prepared",
+    "C": "Docs/build/Git/three central records and release template; no concurrent rolefile edits"
   }
 }

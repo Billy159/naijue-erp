@@ -144,8 +144,10 @@ export async function createProductionRequestHandler(options: ProductionApplicat
       response.end(); return;
     }
     const bytes = encoding === "identity" ? asset.bytes : asset[encoding]!;
+    const immutable = /\.(?:js|css)$/i.test(name) && pathname === `/assets/${buildPrefix}${name}`;
     response.writeHead(200, { "content-type": asset.type, "content-length": bytes.byteLength, "vary": "Accept-Encoding",
-      ...(encoding === "identity" ? {} : { "content-encoding": encoding }), "cache-control": "no-store", "x-content-type-options": "nosniff" });
+      ...(encoding === "identity" ? {} : { "content-encoding": encoding }),
+      "cache-control": immutable ? "public,max-age=31536000,immutable" : "no-store", "x-content-type-options": "nosniff" });
     response.end(request.method === "HEAD" ? undefined : bytes);
   };
 }

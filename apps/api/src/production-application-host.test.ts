@@ -22,10 +22,10 @@ function config(root: string): ProductionRuntimeConfiguration {
       max: 1, maxPendingAcquisitions: 1, connectionTimeoutMillis: 1000, acquisitionTimeoutMillis: 1000, queryTimeoutMillis: 1100, statementTimeoutMillis: 900,
       lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000 } };
 }
-function apiDouble() {
+function apiDouble(responseHeaders: Record<string, string> = {}) {
   const routed: string[] = []; let closed = 0;
   const api = { trustedOrigin: PRODUCTION_PUBLIC_ORIGIN, app: { server: { listening: false }, routing(request: IncomingMessage, response: ServerResponse) {
-    routed.push(request.url!); response.writeHead(404); response.end("API404");
+    routed.push(request.url!); response.writeHead(404, responseHeaders); response.end("API404");
   } }, async close() { closed++; }, postgresBackgroundFailureCount: 0 } as unknown as PostgresApplicationApi;
   return { api, routed, closed: () => closed };
 }
@@ -213,7 +213,7 @@ test("production assets: exact root source-styles compiled CSS resolves under th
     assert.equal(served.status, 200); assert.equal(served.body, css);
     assert.equal(served.headers["content-type"], "text/css; charset=utf-8");
     assert.equal(served.headers["content-length"], Buffer.byteLength(css));
-    assert.equal(served.headers["cache-control"], "no-store"); assert.equal(served.headers["x-content-type-options"], "nosniff");
+    assert.equal(served.headers["cache-control"], "public,max-age=31536000,immutable"); assert.equal(served.headers["x-content-type-options"], "nosniff");
     const head = invoke(handle, cssUrl.pathname, "HEAD", cssUrl.host); assert.equal(head.status, 200); assert.equal(head.body, undefined);
     await writeFile(path.join(root, "source-styles/matrix-experiments.css"), "CHANGED_AFTER_CAPTURE");
     assert.equal(invoke(handle, cssUrl.pathname).body, css);
@@ -299,7 +299,7 @@ test("captured JS/CSS negotiate startup gzip/br with exact decoded bytes, length
       for (const encoding of ["gzip", "br"]) {
         const headers = { "accept-encoding": encoding }, get = invoke(handle, url, "GET", undefined, headers);
         assert.equal(get.status, 200); assert.equal(get.headers["content-encoding"], encoding);
-        assert.equal(get.headers.vary, "Accept-Encoding"); assert.equal(get.headers["cache-control"], "no-store");
+        assert.equal(get.headers.vary, "Accept-Encoding"); assert.equal(get.headers["cache-control"], "public,max-age=31536000,immutable");
         assert.ok(Buffer.isBuffer(get.bytes)); const bytes = get.bytes as Buffer;
         assert.equal(get.headers["content-length"], bytes.length); assert.ok(bytes.length < Buffer.byteLength(original!));
         assert.equal((encoding === "gzip" ? gunzipSync(bytes) : brotliDecompressSync(bytes)).toString(), original);
@@ -326,5 +326,60 @@ test("captured JS/CSS negotiate startup gzip/br with exact decoded bytes, length
     const api = invoke(handle, "/api/example", "POST", undefined, { "accept-encoding": "gzip,br" });
     assert.equal(api.body, "API404"); assert.equal(api.headers["content-encoding"], undefined);
     assert.equal(invoke(handle, "/healthz", "GET", undefined, { "accept-encoding": "gzip" }).headers["content-encoding"], undefined);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+
+test("immutable caching applies only to successful canonical current-version JS/CSS and preserves no-store elsewhere", async () => {
+  const root = await build(), p = apiDouble({ "cache-control": "no-store" }), buildId = config(root).build.buildId;
+  const js = "window.cached = true;\n".repeat(1000), css = ".cached { color: red; }\n".repeat(1000);
+  let closing = false;
+  try {
+    await writeFile(path.join(root, "app.js"), js); await writeFile(path.join(root, "app.css"), css);
+    for (const name of ["configuration.json", "media.png", "compiled.woff2"]) await writeFile(path.join(root, name), "CAPTURED_PUBLIC_ONLY");
+    await mkdir(path.join(root, "OTHER_BUILD")); await writeFile(path.join(root, "OTHER_BUILD/app.js"), js);
+    const handle = await createProductionRequestHandler({ api: p.api, configuration: config(root) }, () => closing);
+    for (const [name, original] of [["app.js", js], ["app.css", css]]) {
+      for (const encoding of ["identity", "gzip", "br"]) {
+        const headers = { "accept-encoding": encoding };
+        for (const suffix of ["", "?v=1"]) {
+          const url = `/assets/${buildId}/${name}${suffix}`, get = invoke(handle, url, "GET", undefined, headers);
+          assert.equal(get.status, 200); assert.equal(get.headers["cache-control"], "public,max-age=31536000,immutable");
+          assert.equal(get.headers.vary, "Accept-Encoding"); assert.equal(get.headers["content-encoding"], encoding === "identity" ? undefined : encoding);
+          const bytes = get.bytes as Buffer;
+          assert.equal(get.headers["content-length"], bytes.length);
+          assert.equal((encoding === "gzip" ? gunzipSync(bytes) : encoding === "br" ? brotliDecompressSync(bytes) : bytes).toString(), original);
+          const head = invoke(handle, url, "HEAD", undefined, headers);
+          assert.equal(head.status, 200); assert.deepEqual(head.headers, get.headers); assert.equal(head.bytes, undefined);
+        }
+        for (const alias of [`/assets/${name}`, `/assets/${buildId}/${name!.replace(".", "%2e")}`,
+          `/assets/${buildId}%2f${name}`, `/assets/%53${buildId.slice(1)}/${name}`]) {
+          const get = invoke(handle, alias, "GET", undefined, headers), head = invoke(handle, alias, "HEAD", undefined, headers);
+          assert.equal(get.status, 200, alias); assert.equal(get.headers["cache-control"], "no-store", alias);
+          assert.equal(head.status, 200); assert.equal(head.headers["cache-control"], "no-store"); assert.equal(head.bytes, undefined);
+        }
+      }
+    }
+    for (const url of ["/", "/assets/index.html", `/assets/${buildId}/index.html`, "/healthz", "/assets/OTHER_BUILD/app.js",
+      ...["configuration.json", "media.png", "compiled.woff2"].map(name => `/assets/${buildId}/${name}`)]) {
+      for (const method of ["GET", "HEAD"]) {
+        const result = invoke(handle, url, method);
+        assert.equal(result.status, 200, url); assert.equal(result.headers["cache-control"], "no-store", url);
+      }
+    }
+    for (const url of ["/api", "/api/auth/login", "/api/auth/session"]) {
+      const result = invoke(handle, url);
+      assert.equal(result.headers["cache-control"], "no-store"); assert.equal(result.body, "API404");
+    }
+    for (const [url, method, headers, status] of [[`/assets/${buildId}/missing.js`, "GET", {}, 404],
+      [`/assets/${buildId}/app.js`, "POST", {}, 405], [`/assets/${buildId}/app.js`, "GET", { "accept-encoding": "*;q=0" }, 406]] as const) {
+      const result = invoke(handle, url, method, undefined, headers);
+      assert.equal(result.status, status); assert.equal(result.headers["cache-control"], "no-store");
+    }
+    const badHost = invoke(handle, `/assets/${buildId}/app.js`, "GET", "untrusted.invalid");
+    assert.equal(badHost.status, 400); assert.equal(badHost.headers["cache-control"], "no-store");
+    closing = true;
+    const closed = invoke(handle, `/assets/${buildId}/app.js`);
+    assert.equal(closed.status, 503); assert.equal(closed.headers["cache-control"], "no-store");
   } finally { await rm(root, { recursive: true, force: true }); }
 });

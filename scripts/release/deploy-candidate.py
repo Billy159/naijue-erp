@@ -240,11 +240,18 @@ http {
   client_body_temp_path /tmp/client_body;
   proxy_temp_path /tmp/proxy;
   client_max_body_size 64k;
+  # The captured application owns successful immutable-asset policy. Retain
+  # no-store for proxy errors or any upstream response without a policy.
+  map "$upstream_status:$upstream_http_cache_control" $naijue_response_cache_control {
+    ~^200:.+ $upstream_http_cache_control;
+    default "no-store";
+  }
   server {
     listen 8080;
     server_name ''' + HOST + ''';
     if ($http_host != "''' + HOST + '''") { return 421; }
-    add_header Cache-Control "no-store" always;
+    proxy_hide_header Cache-Control;
+    add_header Cache-Control $naijue_response_cache_control always;
     add_header X-Content-Type-Options nosniff always;
     add_header X-Frame-Options DENY always;
     location / {

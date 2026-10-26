@@ -1,47 +1,43 @@
-# 2026 条码与六方案初始化——一次确认的最小技术增量
+# 条码保存与六方案初始化：SOURCE575 纠正版技术确认单
 
-已确认的业务方向保持：2026 为当前方案，另外五套保留历史；新建商品默认 2026；新生成条码使用真实 2026 规则；已有商品、SKU、原码和停用状态不批量修改或重编；历史／兼容码补录不替主码。此次只确认以下具体实现差异，不重复确认上述方向。
+**APPROVED_WITH_CORRECTION：依据主控直接人类回复 `call_fcbc01113b4d42bea015ddd58a1d5513`，系统货号手工必填、无空分配；整组规格、新增颜色补完整规格及条码；其余批准内容继续。旧分配器、额外内部身份及强制改旧手工值的建议撤回，未实施。**
 
-## 1. 新码仍通过原商品保存接口生成
+## 已明确执行的业务规则，不再重复询问
 
-沿用 `POST /api/products/v2/commands`，在原 CREATE／EDIT 请求中增加可选的 `barcodeGeneration:{ruleVersion:"2026_V1"}`。该项进入原请求内容哈希；不带该项的旧请求维持原合同和哈希，不另开生成接口。返回仍是原 operationId／targetId／version，保存后由原详情读回条码和系统货号。
+系统货号由人手工填写，空白阻止保存，不使用技术ID、款号代填。按 v17：所选颜色 × 所选版型 × 实际尺码组全部成员，只补缺少的真实SKU组合。例如已有黑色、增加白色，保存补齐白色 × 所选版型 × 全组尺码；不设计逐个M/L再XL开规格的流程。
 
-复用现有 `systemItemCode`（数据库 `product.system_item_code`）。它目前是可手填的文本“系统货号”，不是已经具备七位分配规则的字段；本次明确增加新用途：**仅新建商品请求生成且系统货号为空时，后端自动分配七位数字**，从 `0000001` 起选择未占用值。新建时已手填合法七位值则保留并核对占用；不改既有商品的手工值，不补位、截断或重新编号。新建生成分支未选主方案时默认已初始化的 2026 UUID；已有商品的方案选择不自动覆盖。
+新增加组合保存时，按2026真实规则自动补其缺少的新主码；原SKU、主码、兼容码、停用项不批改、不重编、不恢复。2026当前、其余五方案历史，新建默认2026及兼容旧码准确SKU补录保持。
 
-实际拼码直接使用冻结 Demo 已核算法：`5 + 版型码1位 + 系统货号7位 + 颜色码3位 + 尺码码3位`，总长15。版型取真实SKU的 Y/A/B/C/D/E 码，颜色和尺码取真实字典的三位数字，不按显示名称或推测补码。
+## 最终 Demo 证据与字段结论
 
-CREATE 可为本次新 SKU 生成；EDIT 可为**任何已有商品本次真正新增的 SKU**生成，不要求商品带新的出生标记。原 SKU 集合与保存后集合的差集决定“本次新增”，不为以前 SKU 的空主码批量回填，也不替换或重新启用原主码、停用绑定。
+冻结 `frontend/index.html:17` 的加载顺序为 product-catalog → barcode-2026 → product-master → product-current。最终 `product-current.js:95` 的“系统货号 *”输入直接写 `barcodeItemCode`；`product-master.js:56/63` 将该值作为系统货号并在保存前检查非空；`product-current.js:205/212` 方案说明把 goods 段直接标为“系统货号7位”。
 
-具体例外：旧商品已有系统货号 `0000123`、选用2026且新增真实SKU，可只为这个新SKU生成；旧值是 `ERP-X9` 或为空，则保持旧值，普通新增SKU保存仍走原路径，显式请求2026生成时明确拒绝，不悄悄改成七位。原商品选历史方案时同样不擅改为2026。
+因此，最终 Demo 没有已核实的另一套独立内部七位编号。正式工程现有 `systemItemCode`／`product.system_item_code` 对应该手填字段即可；**不新增条码货号字段、不新增分配器、表、列、序列、索引。** 早期 `allocateItemCode` 回退不能作为当前空表单自动分配依据：最终必填验证已在保存前阻止空值。
 
-## 2. 分配、保存与回执共用原事务
+真实2026算法仍为 `5 + 真实SKU版型码1位 + 手填系统货号7位 + 颜色码3位 + 尺码码3位`。代码必须来自实际字典，不能截断、补位、猜码。
 
-先核当前账号、权限和原请求键。再在原商品事务内获取统一的系统货号分配锁，检查实际已占货号和相关原码，读取并锁定真实方案及规格码；所有正常商品保存中对七位系统货号的新增／变更参与同一占用检查，原导入写入由唯一执行者按原规则串行。已有手工重复值不回改；新分配不能占用它们。
+Demo 对非空但不是七位数字的手工值，与空值处理不同：`product-catalog.js:43` 中条码健康检查不通过时仍保存资料，并给“条码资料尚未完整，补齐后再次保存”的说明。不得用此前 `ERP-X9` 例子将原本可保存的手工资料一概拒绝，也不得自动替换其值。无法生成的新码保持缺失，明确反馈原因，不伪造生成成功。
 
-原审计预备、商品版本检查、SKU新增、MAIN条码保存、回执和提交仍在同一 UOW。沿用数据库原条码全局唯一（包含停用码）、每SKU最多一个启用MAIN、原码身份不可变等约束。任一条码冲突整次回滚；不换码或新请求键自动重试。查询、取消不分配；同键重放返回原结果；提交结果未知时先查回原键。
+## 剩余最小技术增量：原保存内补新组合的码
 
-这里不新增系统货号全局唯一索引或七位 CHECK，以免破坏旧手工重复／非七位值。系统货号分配的并发保护是上述原正常写入合同；不把原条码 UNIQUE 冒称为系统货号的全库唯一约束。**无新增表、字段、序列或索引。**
+复用原 `POST /api/products/v2/commands`、CREATE／EDIT、手填 systemItemCode、v17 skuSelection 全组补齐及原 barcodes。保存自动处理本次新增真实SKU组合，不增第二套生成API，不新增“仅新商品出生可生成”的门槛，也不再把手工生成意图开关当活跃方案。
 
-D1 已核实：现有 rootDelta／system_item_code、SKU新增差集、完整条码行和原审计守卫可直接承载，**无新生成审计标记，也无生成审计结构的守卫修改**。
+后端以 previous／next SKU真实ID差集确定新增组合，读取同事务的实际方案及fit/color/size编码，仅补新增组合尚无主码的部分；不对旧SKU批量填空码。保留全局原码唯一（含停用绑定）、每SKU最多一个启用MAIN和原身份约束。原productFacts／rootDelta／完整SKU及条码行、原审计和UOW已能承载，D1已确认零新增生成审计标记、零生成审计结构守卫改动。
 
-## 3. 六方案改在已提交 CORE 后，同原批次独立初始化
+新增主码和原SKU保存仍在原权限／原键／版本检查、审计预备→rootCAS→SKU／条码→回执→COMMIT事务内。有效码冲突整次回滚，不换码或新键自动重试；取消／读取不写，同键重放返回原结果，未知提交先查原键。原STAGED／PUBLISH及真实SKU生成准入不变。
 
-原 CORE 已提交，不能重放旧回执补入方案。新增唯一受控导入动作 `IMPORT_INITIALIZE_BARCODE_SCHEMES`，仍是原 IMPORT 目标，在同原批次、BARCODE 写入前执行。它核对原不可变 CORE 回执／审计及首次准入证明、当前来源绑定、目标和实际授权账号。
+保存结果和详情继续使用原合同，不新增提示字段：F2按原详情的真实SKU与barcodes核实本次新规格有无MAIN；非空手工货号或字典码不符合实际2026规则时保存资料、明确提示条码未生成的原因，原值不变，不伪造成功。不以此再增加审批障碍。
 
-首次仅允许方案表全空且没有初始化事实，原子写入已批准的六个 UUID、七字段完整快照：2026 CURRENT，其余五套 HISTORICAL。只允许原账号、原键、同哈希、配对已提交审计／回执与全部六行完全一致的重放；异键、缺行、多行、部分存在或任何漂移均拒绝，不补缺、不更新、不接受预置数据冒充本次初始化。
+## 六方案初始化：沿已核实的唯一动作
 
-复用原 IMPORT 六字段结果 `{operationId,batchId,sequence,cursor,status,ledgerEntryIds:[]}`。只令 sequence 加1；cursor、counts、expected 不变，没有记账claim、库存流水或余额变化，不获得 MAIN／PUBLISH 权限，也不改原商品／SKU／条码。
+原CORE已提交，新增唯一 `IMPORT_INITIALIZE_BARCODE_SCHEMES`，仍是原IMPORT目标，在同batch、BARCODE写入前，核原不可变CORE回执／审计／出生准入、当前binding、实际授权账号和目标。
 
-数据库增量准确限定为：
+首次方案表全空才原子写入已批准exact6 UUID／七字段快照：2026CURRENT、其余5HISTORICAL。原actor＋原key＋同hash＋配对COMMITTED audit/receipt＋整个exact6一致才可重放；异key、partial、missing、extra、drift拒绝，不补缺或更新。
 
-- `receipt_action_by_kind`、`audit_action_by_kind` 两个约束加入上述唯一动作值。
-- `validate_import_batch_commit`、`validate_import_accounting_checkpoint_commit`、`validate_import_operation` 三函数加入该动作的窄分支，并增加一个核验 exact6／原CORE出生证明／当前绑定／零claim零ledger 的专用校验。
-- 不改 `guard_import_batch`、原claim守卫、`assert_core_initialization_v14` 的 creation／final 模式；不伪装 `IMPORT_CHUNK`，不新增表列。
+原IMPORT结果六字段 `{operationId,batchId,sequence,cursor,status,ledgerEntryIds:[]}` 保持；seq只加1，cursor/counts/expected不变，零claim／ledger／余额效应，不授MAIN/PUBLISH。
 
-## 4. 原负责人和独立可继续范围
+D1精确数据库增量：`receipt_action_by_kind`、`audit_action_by_kind`两CHECK加入唯一动作；`validate_import_batch_commit`、`validate_import_accounting_checkpoint_commit`、`validate_import_operation`三函数加窄分支＋一个exact6／COREbirth／currentbinding／zero claim-ledger校验。`guard_import_batch`、原claim守卫及`assert_core_initialization_v14` creation/final模式不变；不伪装空CHUNK，无新表列。
 
-D2 修改原商品 ports／validation／service／PostgreSQL store、必要的原HTTP错误映射和原对应测试／说明；F2负责原商品表单默认值、生成意图和兼容码界面；D3负责原六方案数据／初始化叶；D1负责原 IMPORT 闭集、上述精确后继补丁和配套元数据能力；C整合，T45唯一执行真实环境及登记隔离QA。
+D2原商品叶负责生成实现；F2原表单负责必填、完整组合及读回反馈；D3六方案叶独占；D1原IMPORT闭集／精确补丁／元数据能力；C统一合同与整合，T45唯一实际执行。既有兼容码保存和已过定向检查独立继续，不重跑。当前新生成／初始化写分支尚未实施，实际源码和数据库均未修改。
 
-旧兼容码的原V2保存能力已经存在，仍按准确颜色＋版型＋尺码绑定真实SKU、`CONFIRMED_OLD` 保存，不增加 skuId，不替主码。其已通过的定向检查直接采用，不等待新生成分支，也不重复整套验收。D3只读来源捕获修正另属既有来源范围，不混入本次DDL批准。
-
-本单是可审的技术合同；新增生成及方案动作尚未实施或执行，不能记为四项全部完成。
+本单已按人类纠正获批；尚未实施，待C登记准确原owner文件即推进。最终Demo字段证据不要求新增内部七位身份或表列。
