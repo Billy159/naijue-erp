@@ -1,3 +1,7 @@
+SOURCE609：D3原QB332 helper扩BARCODE三叶实际交付并保全到R安全源码副本（helperc366469b/test72ad1b79/resultb4a749fa）；5新增有限检查通过、原三组7证据复用，不重真实54MB/11MB/原捕获。保持同五方法/原capture索引内存适配、完整source与typed身份/hash/六方案typed恰一次/close取消；原QB只新delta，非真实stage/fullroots通过。实际107CC/nosniff重复原因尚未证，T45原110仅currentwire只读后继在途，不改配置/不重reload107，不将短窗假设写根因。CORE17 APP运行，formalroot不变，106须沿真实前置接续；全站最终未完成。
+
+SOURCE608：107实际首错EXACT_SINGLE_CACHE_CONTROL_POLICY，05:23:43.545617Z。nginxt0/reload0/新config4302d793已写保留，候选实际已返CORE17精确HTML7897/8d70015d/200，但CC为两个no-store、nosniff两条，DENY一条；不是完整routePASS。正式root39330/05cf保持、0PG，旧停91路由不假reload，原107失败不重放。T45正在按失败URL实际proxy/upstream定位后继；C同时要求准确检查106真实DB前置，缓存不应无依据阻塞23793，若原PLAN确需接线则只新delta原QB。D1/D3并行准备继续，无新增整页/真实业务通过。
+
 SOURCE607：105实际CORE17启动PASS，05:19:56.987303Z，APPa96923b0/source5989bceddf/buildcore17/新131b5d8f2准确，healthz200明确databaseCheckedfalse；old91保持停、other19保全，无正式根切换。下一原107REV2恢复candidate→10623793。D3原full11两JSON已交small接线4checks，不读取大body；真实缺CORE115成员/49safeproof/53item等准确保留，C已登记原QB332 helper3叶下一BARCODE具体消费缺口，不造新authority。D1原v19disabled材料并行，不假fullhash、不挡HEADER；业务/历史/性能及全站最终完成仍未通过。
 
 SOURCE606：QB355实际103新131元数据独立PASS已采用，canonicalb5d8f2/socket IMPORT_STAGE01616785/TCP CURRENT_FORM_READaf4d6649，完整catalog重算/四body+helper+两CHECK准确差异，其余ACL保持。已立即交T45 105首全验启动→107REV2→10623793，不等主控重验/长报告。按QB人类提速反馈，C核D1/D3真实idle后登记并实际Solmedium分派：D1下一v19六scheme本地disabled载体/最小ACL，D3原full11两个small输入交付；都不碰当前四冻结载体/服务器/大body，不成为当前恢复或HEADER前置。仍T45唯一serverDBwriter，当前新APP及业务未实测，正式根未切，目标ACTIVE。

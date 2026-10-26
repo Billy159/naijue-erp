@@ -55,3 +55,79 @@ test('different physical prepared-record order sorts original source/native IDs,
  const expected=[a,b].map(p=>projectRetainedNativeClosureRecord26(original,'PRODUCTS',p));
  assert.deepEqual(await collect(x.s.sourceRows()),ordered(expected.flatMap(p=>p.sources)));assert.deepEqual(await collect(x.s.typedRows()),ordered(expected.flatMap(p=>p.typed)));assert.equal(x.reads(),2);
 });
+
+// BARCODE finite protocol fixtures use the current accepted original preparer;
+// no production payload, approved-decision file or native ID source is opened.
+const barcodeRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022';
+const barcodeOriginal={...original,...await import(pathToFileURL(barcodeRoot+'/packages/application/src/native-barcode-import.ts'))};
+const barcodeColumns=(await import(pathToFileURL(barcodeRoot+'/packages/application/src/import-v2-contract.ts'))).IMPORT_V2_TABLES.find(t=>t.entity==='BARCODE').columns;
+const barcodeId=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
+function barcodeFixture(n,{demotion=false,old=false,schemeIndex=0}={}){
+ const pin='a'.repeat(64),scheme=barcodeOriginal.nativeBarcodeSchemeInitializationRows26()[schemeIndex].native;
+ const fields=Object.fromEntries(barcodeColumns.map(c=>[c.name,'']));
+ Object.assign(fields,{'来源编号':'SYNTHETIC:'+n,'条码':'0000SYNTHETIC'+n,'条码性质':demotion||old?'已确认旧码':'主码','原始条码性质快照':old?'已确认旧码':'主码','绑定范围':'SKU','SKU来源编号':'SYNTHETIC_CANONICAL:'+n,'合并前SKU来源编号':'SYNTHETIC_OLD:'+n,'状态':'正常','原条码方案':scheme.name});
+ const raw={...fields,'SKU来源编号':fields['合并前SKU来源编号'],'条码性质':fields['原始条码性质快照']};delete raw['绑定范围'];
+ const input={batchId:barcodeId(1),fixedSourceNamespace:'synthetic:barcode-retained',selection:{source:'V3_BARCODE_REPLACEMENT',entity:'BARCODE',path:'business/03历史条码.csv',baseManifestSha256:pin,selectionSha256:pin,approvalSha256:pin,csvSha256:pin,excludedSourceIdsSetSha256:pin},
+  source:{id:barcodeId(900-n),batchId:barcodeId(1),entityType:'BARCODE',sourceKey:fields['来源编号'],fileRef:'SYNTHETIC.xlsx',sheet:'SYNTHETIC',rowNo:String(n+1),sourceFileSha256:pin,rowSha256:pin,rawFields:raw,normalizedFields:fields,fieldProvenance:{schema_version:1,fields:Object.fromEntries(Object.entries(raw).map(([key,value])=>[key,{origin:'ORIGINAL',reason:'SYNTHETIC_ONLY',raw:value}]))}},nativeBarcodeId:barcodeId(100+n),sku:{nativeId:barcodeId(500+n),canonicalSourceKey:fields['SKU来源编号'],oldSourceSkuKey:fields['合并前SKU来源编号']},scheme:{id:scheme.id,snapshot:scheme}};
+ if(demotion)input.mainDemotion={version:barcodeOriginal.NATIVE_BARCODE_MAIN_DEMOTION_VERSION,mappingSha256:pin,approvalSha256:pin,entrySha256:pin,sourceKey:input.source.sourceKey,originalSourceRowSha256:pin,oldSourceSkuKey:input.sku.oldSourceSkuKey,canonicalSourceSkuKey:input.sku.canonicalSourceKey,barcode:fields['条码'],keptMainSourceKey:'SYNTHETIC_KEPT',keptMainBarcode:'SYNTHETIC_KEPT_CODE'};
+ return barcodeOriginal.prepareNativeBarcode(input);
+}
+test('BARCODES projection preserves original leading-zero code, MAIN identity and exact approved-demotion provenance',()=>{
+ for(const prepared of [barcodeFixture(1),barcodeFixture(2,{demotion:true}),barcodeFixture(3,{old:true})]){
+  const before=structuredClone(prepared),p=projectRetainedNativeClosureRecord26(barcodeOriginal,'BARCODES',prepared);
+  assert.deepEqual(p.sources,[original.historyClosureProjectionRow26('import_source_row',barcodeOriginal.nativeBarcodeSourceEvidence(prepared))]);
+  assert.deepEqual(p.typed,[original.historyClosureProjectionRow26('sku_barcode',prepared.nativeBarcode)]);assert.deepEqual(prepared,before);
+  assert.equal(p.typed[0].projection.barcode,prepared.source.rawFields['条码']);assert.equal(p.typed[0].projection.id,prepared.nativeBarcodeId);assert.equal(p.typed[0].projection.sku_id,prepared.sku.nativeId);
+  assert.equal(Object.hasOwn(p.sources[0].projection.raw_fields,'绑定范围'),false);
+  if(prepared.mainDemotion)assert.deepEqual(p.sources[0].projection.field_provenance.native_barcode_import.main_demotion,prepared.mainDemotion);
+  const changed=structuredClone(prepared);changed.nativeBarcode.barcode_kind=prepared.nativeBarcode.barcode_kind==='MAIN'?'CONFIRMED_OLD':'MAIN';assert.throws(()=>projectRetainedNativeClosureRecord26(barcodeOriginal,'BARCODES',changed),/Prepared barcode changed/);
+ }
+});
+function barcodeSessionFixture(records=[barcodeFixture(1),barcodeFixture(2,{demotion:true}),barcodeFixture(3,{old:true})],options={}){
+ const binding={batchId:records[0].batchId,fixedSourceNamespace:records[0].fixedSourceNamespace,cutoffAt:'2026-10-04T12:00:00+08:00',selectionSha256:records[0].selection.selectionSha256};
+ const encoded=records.map(p=>Buffer.from(JSON.stringify(p)+'\n'));let offset=0;
+ const entries=records.map((p,n)=>{const projected=projectRetainedNativeClosureRecord26(barcodeOriginal,'BARCODES',p),e={ordinal:n,sourceKey:p.source.sourceKey,sourceRowId:p.source.id,nativeBarcodeId:p.nativeBarcodeId,
+  prepared:{offset,bytes:encoded[n].length,sha256:sha(encoded[n]),fingerprint:p.fingerprint},original:{offset:n*10,bytes:1,sha256:p.source.rowSha256},
+  source:{relation:projected.sources[0].relation,key:projected.sources[0].key,sha256:original.historyClosureRowHash(projected.sources[0])},typed:{relation:projected.typed[0].relation,key:projected.typed[0].key,sha256:original.historyClosureRowHash(projected.typed[0])}};offset+=encoded[n].length;return e;});
+ const cmp=(a,b)=>Buffer.compare(Buffer.from(a),Buffer.from(b)),order=field=>entries.toSorted((a,b)=>cmp(a[field].key,b[field].key)).map(e=>e.ordinal);
+ const index={version:'ORIGINAL_BARCODE15018_APPROVED_SOURCE_CAPTURE_26_V1',binding,selectedRows:records.length,summary:{rows:records.length},source:{bytes:records.length*10},artifacts:{prepared:{path:'/SYNTHETIC/retained-prepared.jsonl',bytes:offset,sha256:sha(Buffer.concat(encoded))}},inputPins:{proposal:{sha256:'a'.repeat(64)},approval:{sha256:'b'.repeat(64)}},records:entries,
+  permutations:{version:'BARCODE15018_RETAINED_GLOBAL_ORDER_26_V1',source:order('source'),typed:order('typed'),schemes:{version:'APPROVED_EXACT6_BARCODE_INITIALIZATION_INPUT_26_V1',binding:structuredClone(binding),rows:barcodeOriginal.nativeBarcodeSchemeInitializationRows26(),proposalSha256:'a'.repeat(64),approvalSha256:'b'.repeat(64),humanQuestionCallId:'SYNTHETIC_ONLY'}}};
+ let reads=0,closed=0;const used=new Set();
+ const callbacks={original:barcodeOriginal,readRecord:async ref=>{reads++;assert.equal(ref.file,'prepared');const n=entries.findIndex(e=>e.prepared.offset===ref.offset);assert.ok(n>=0);assert.equal(ref.bytes,encoded[n].length);assert.equal(ref.sha256,sha(encoded[n]));assert.equal(used.has(n),false);used.add(n);await options.beforeReturn?.();const p=structuredClone(records[n]);options.mutate?.(p);return p;},verify:async()=>{},close:async()=>{closed++;},current:()=>{}};
+ const open=(changed=index)=>createRetainedNativeClosureSession26({...callbacks,...options,index:changed});
+ return{index,open,records,reads:()=>reads,closed:()=>closed};
+}
+test('BARCODES captured index consumes original permutations/ranges once, merges exact6 schemes once and equals original finite closure roots',async t=>{
+ const f=barcodeSessionFixture(),before=structuredClone(f.index),s=f.open();t.after(()=>s.close());
+ await assert.rejects(collect(s.typedRows()),/SOURCE_FIRST/);assert.deepEqual(await collect(s.documents()),[]);assert.equal(f.reads(),0);
+ const sources=await collect(s.sourceRows()),types=await collect(s.typedRows());assert.equal(f.reads(),3);assert.deepEqual(f.index,before);
+ const expectedSources=ordered(f.records.map(p=>original.historyClosureProjectionRow26('import_source_row',barcodeOriginal.nativeBarcodeSourceEvidence(p))));
+ const expectedTyped=ordered([...f.records.map(p=>original.historyClosureProjectionRow26('sku_barcode',p.nativeBarcode)),...barcodeOriginal.nativeBarcodeSchemeInitializationRows26().map(r=>original.historyClosureProjectionRow26('barcode_scheme',r.native))]);
+ assert.deepEqual(sources,expectedSources);assert.deepEqual(types,expectedTyped);assert.equal(types.filter(r=>r.relation==='barcode_scheme').length,6);assert.equal(new Set(types.map(r=>r.relation+'\0'+r.key)).size,9);
+ assert.equal(types.filter(r=>r.relation==='barcode_scheme'&&r.projection.status==='CURRENT').length,1);assert.equal(types.filter(r=>r.relation==='sku_barcode'&&r.projection.barcode_kind==='MAIN').length,1);
+ const countKeys=(await load('packages/application/src/history-storage-contract.ts')).HISTORY_COUNT_KEYS;
+ const scope={batchId:f.index.binding.batchId,fixedSourceNamespace:f.index.binding.fixedSourceNamespace,selectionSha256:f.index.binding.selectionSha256,authorizedPayloadHash:'c'.repeat(64),expectedCounts:Object.fromEntries(countKeys.map(k=>[k,k==='import_source_row'||k==='barcodes'?3:0])),expectedSourceEntityCounts:Object.fromEntries(codec.HISTORY_CLOSURE_SOURCE_ENTITIES.map(k=>[k,k==='BARCODE'?3:0])),documents:[]};
+ assert.deepEqual(await codec.buildHistoryTypedClosureExpected26({...scope,sourceRows:sources,typedRows:types}),await codec.buildHistoryTypedClosureExpected26({...scope,sourceRows:expectedSources,typedRows:expectedTyped}));
+ await assert.rejects(collect(s.sourceRows()),/SINGLE_SOURCE_PASS/);await assert.rejects(collect(s.typedRows()),/SINGLE_TYPED_PASS/);await s.close();await s.close();assert.equal(f.closed(),1);
+});
+test('BARCODES original metadata rejects missing/count/duplicate/range/order/scheme drift instead of repairing or reindexing',()=>{
+ const f=barcodeSessionFixture();
+ for(const change of [
+  x=>x.records.pop(),x=>{x.records[1].ordinal=0;},x=>{x.records[1].sourceKey=x.records[0].sourceKey;},x=>{x.records[1].nativeBarcodeId=x.records[0].nativeBarcodeId;},
+  x=>{x.records[1].prepared.offset++;},x=>{x.records[1].original.offset=0;},x=>{x.permutations.source[0]=x.permutations.source[1];},x=>{x.permutations.typed.pop();},
+  x=>x.permutations.source.reverse(),x=>x.permutations.typed.reverse(),x=>{x.permutations.schemes.rows[0].native.code_length=99;},x=>{x.permutations.schemes.binding.batchId=barcodeId(9);},
+  x=>{x.permutations.schemes.approvalSha256='f'.repeat(64);},x=>{x.records[0].source.relation='sku_barcode';}
+ ]){const changed=structuredClone(f.index);change(changed);assert.throws(()=>f.open(changed));}
+ assert.equal(f.reads(),0);
+});
+test('BARCODES read verifies original identities, prepared facts and both captured canonical row hashes',async t=>{
+ for(const mutate of [p=>{p.source.id=barcodeId(99);},p=>{p.nativeBarcodeId=barcodeId(99);},p=>{p.source.rowSha256='f'.repeat(64);},p=>{p.nativeBarcode.barcode='SUBSTITUTED';},p=>{p.scheme.snapshot.name='SUBSTITUTED';}]){
+  const f=barcodeSessionFixture(undefined,{mutate}),s=f.open();t.after(()=>s.close());await assert.rejects(collect(s.sourceRows()));assert.equal(f.reads(),1);
+ }
+ for(const field of ['source','typed']){const f=barcodeSessionFixture(),index=structuredClone(f.index);for(const e of index.records)e[field].sha256='f'.repeat(64);const s=f.open(index);t.after(()=>s.close());await assert.rejects(collect(s.sourceRows()));assert.equal(f.reads(),1);}
+});
+test('BARCODES late-read close, cancellation and cache bounds cannot yield or retain escaped rows',async t=>{
+ let s;const f=barcodeSessionFixture(undefined,{beforeReturn:async()=>s.close()});s=f.open();await assert.rejects(collect(s.sourceRows()),/CLOSED/);assert.equal(f.reads(),1);assert.equal(f.closed(),1);await s.close();assert.equal(f.closed(),1);
+ let aborted=false;const cancelled=barcodeSessionFixture(undefined,{current:()=>{if(aborted)throw Error('SYNTHETIC_BARCODE_CANCELLED');},beforeReturn:async()=>{aborted=true;}}),cancel=cancelled.open();t.after(()=>cancel.close());await assert.rejects(collect(cancel.sourceRows()),/SYNTHETIC_BARCODE_CANCELLED/);
+ const bounded=barcodeSessionFixture(undefined,{maxCacheBytes:1}),small=bounded.open();t.after(()=>small.close());await assert.rejects(collect(small.sourceRows()),/CACHE_BOUND/);assert.equal(bounded.reads(),0);
+});

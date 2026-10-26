@@ -1,0 +1,222 @@
+{
+  "atUtc": "2026-10-25T21:34:29.761282+00:00",
+  "taskID": "D3_RETAINED_NATIVE_PRODUCTS_SKUS_STOCK_CLOSURE_STREAMS_20261026",
+  "status": "BARCODE_ORIGINAL_CAPTURE_CONSUMER_ADDED_NEW_FINITE5_PASS_ORIGINAL3GROUP_FINITE7_REUSED_NOT_REAL_DATA_EXECUTED",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+      "bytes": 14879,
+      "sha256": "c366469ba18d1b0be26b3478b8cd54ede013268d88feb644b36802c9b6e38ca6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+      "bytes": 21763,
+      "sha256": "72ad1b79d213511cd76d3c39c8150553a28703b8ade6712240f2af20505f238a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-fixtures-20261026/product.mjs",
+      "bytes": 8046,
+      "sha256": "d28a36a710533e1d7a25e8f38aa8ea9c30b08c9fbfb36f10605693b4c438ff1d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-fixtures-20261026/sku.mjs",
+      "bytes": 14888,
+      "sha256": "1de22f4c3a67bc51f4966e59c8dd33ca2e8f7c4616080f8c5079a668334a2276"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-fixtures-20261026/stock.mjs",
+      "bytes": 13793,
+      "sha256": "efd2dc83899f2d0661d2640bf41a79d5136853c996a0dfacb35ed5633a75bd86"
+    }
+  ],
+  "scope": "Only originalD3 O; no production source/DB/SQL/authority wrapper modified. Existing originalcodec/validators/projections consumed, not reimplementation of rowhash or all11 folding.",
+  "existingReaderFinding": {
+    "PRODUCTS": "Original openReviewedProductSource26 reconstructs from11MB source+5.6MB reference and retains chunks, no existing option accepts original30 prepared chunk files directly. Its openClosure projections reused exactly via nativeProductImportEvidences26 (validates whole chunk once).",
+    "SKUS": "Original openReviewedSkuSource26 reopens canonical source/index/base/product/catalogue and rebuilds14999 rows; no retained138MB prepared JSONL option. Original SKU alias evidence/native sku/import_sku_alias projections reused; existing1MB exact ordered rowhash metadata has ordinal hashes only, no byteoffsets or source/typed permutations (950B metadata prefix inspected only).",
+    "STOCK_CONTRIBUTORS": "Original openReviewedStockSource26 consumes original offsets/canonical CSV/lineage then rechecks166MB groups; sourceIndex/typedIndex held in old session memory, not saved in current smallmanifest. New seam consumes retained groups with original validator/evidence and same original9-field typed projection."
+  },
+  "api": {
+    "projectRetainedNativeClosureRecord26": "(original,group,prepared) => {sources,typed}. original bundle contains consumed source historyClosureProjectionRow26/historyClosureRowHash/historySettlementRequestHash; nativeProductImportEvidences26; validatePreparedNativeSkuImport26/nativeSkuAliasEvidence26; validatePreparedNativeStockGroup/nativeStockSourceEvidence. Exact original IDs/raw/normalized/provenance/native tuple/NULL/negative quantities preserved. Native product/sku do NOT have batch_id; source/alias/contributor batchscope checked according original schema.",
+    "captureRetainedNativeClosureRecord26": "(original,{group,binding,ref:{file,offset,bytes,sha256},prepared}) => compact {ref,fingerprint,preparedHash,sources:[relation/key/originalrowSHA],typed:[...]}. During only authorized existing prepared-file pass; JSONL ref includesLF, productfile wholeJSON. No body copy/rebinding/allocation. Originalvalidators validate derived facts; no sourceproducer or newnative reprepare.",
+    "createRetainedNativeClosureSession26": "({original,index,readRecord,verify,close,current,maxCacheBytes<=64MiB}) => originalexact5 {verify,sourceRows,typedRows,documents,close}. index={version:RETAINED_NATIVE_CLOSURE_INDEX_26_V1,group,binding,files:{file:{path,bytes,sha256}},expected:{records,sourceRows,typedRows},records:[capture...]}. Carrier verifies index externalpin and exactactualcount/sourcefile membership; readRecord actual heldFD verifies originalrangeSHA and returns prepared JSON. verify/current/close are existing actual sourcelease callbacks, not minted authority.",
+    "orderingAndPass": "Index source/typed unique relation+NUL+key, original byteorder; contiguousoffsets/EOF all declaredfiles. Source traversal reads a prepared record only at first encountered member, verifies exact originalpreparedhash/fingerprint+both canonicalprojectionsets, buffers remaining sibling source rows and typed rows. Each preparedrecord once in closure; source siblings drain as UUID order reaches them, then typed yields globalrelation/key order from buffers with no second bodyread. Native documents stream explicitempty; originalall11 computes roots itself.",
+    "memory": "Index JSON serialized<=64MiB, record/group actualconstant cardinality caps, eachread<=4MiB; retained pending-source+typed JSON Buffers total<=64MiB per group session, drained/cleared. Original canonical rowhash checks JSONroundtrip so no silentnumber/NULL conversion. This is explicit buffer/metadata bound, NOT measured actual real peakRSS. Transient originalvalidation/projection allocations and all11 total processRSS not measured.",
+    "lifecycle": "Originalfive-method closure data session only. One source pass, typed only after complete source, typed singlepass. Originalverify at phase boundaries, current everyyield and afterawait. Close idempotent clears metadata/buffers and callsoriginalclose once; lateawaitread checksclosed before any insertion/yield, opens/registers no resources. Finite7 includesclose/abort after awaitedread and cacheoverflow refusal.",
+    "integration": "Original source authority openRetained(PRODUCTS/SKUS/STOCK_CONTRIBUTORS).openClosure returns this session, binding actual externally pinnedindex/readRecord/currentreallease. Original provider/host/step/native grants remain unchanged; module has no source authority callbacks or standardhostfactory."
+  },
+  "realCountsRequiredByCarrier": {
+    "PRODUCTS": {
+      "records": 30,
+      "sourceRows": 2956,
+      "typedRows": 2956
+    },
+    "SKUS": {
+      "records": 14999,
+      "sourceRows": 15121,
+      "typedRows": 30120
+    },
+    "STOCK_CONTRIBUTORS": {
+      "records": 38303,
+      "sourceRows": 38314,
+      "typedRows": 38314
+    }
+  },
+  "finiteChecks": {
+    "totalDistinctTests": 7,
+    "pass": 7,
+    "fail": 0,
+    "firstRun": {
+      "tests": 6,
+      "pass": 2,
+      "fail": 4,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test-first.log",
+        "bytes": 9042,
+        "sha256": "677c7fcb7a47456a2bd8cf3e4a965548c6fd310d587e54b3dd7247ed2e113690"
+      },
+      "finding": "Initial scope guard incorrectly required batch_id on native product/sku projections; corrected to actual original schema, not fake field addition."
+    },
+    "affectedOnly": {
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test-affected.log",
+        "bytes": 593,
+        "sha256": "47d403e970d836a531e5766953ece523ebdb6b1b43f8229a79c8a99172af4257"
+      }
+    },
+    "additionalOrderingOnly": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test-order.log",
+        "bytes": 233,
+        "sha256": "d6be841bd658ebfe7185ca1c57b322f2942b2fe37ec9dcff588f824b717c6872"
+      }
+    },
+    "scope": "Original existing finite product/SKU/stock fixture builders reused without registering oldtests. Independently opened originalgenuine small readers and compared source/typed fullcanonical rows; originalclosure builder pergroup finite roots match. DuplicateIDs/gap/changedprepared/forgedrowSHA reject; physicalorderdifferent source/nativeorder sorts with2reads/2records; negative -5/+2 andbaselineNULL; close/abort/cachescope. Other original329/330/331 or large-data tests not run.",
+    "notEquivalent": "Not actual full11/real2956/14999/38303 compactcapture, fullroots, memory timing or business acceptance."
+  },
+  "futurePhysicalReadBudget": {
+    "PRODUCTS": 18813991,
+    "SKUS": 138250702,
+    "STOCK_CONTRIBUTORS": 166485667,
+    "totalBytesPerCompletePass": 323550360,
+    "capturePassesIfNoIndexExists": 1,
+    "closureBodyPassesAfterIndex": 1,
+    "typedExtraBodyPasses": 0,
+    "totalPreparedBodyBytesIfSeparateCaptureAndClosure": 647100720,
+    "captureCouldShareOriginalAlreadyAuthorizedPass": "Only if that actual pass remains pending; completed stages are not rerun merely for capture. Existing completed product/SKU/stock stages have no newcompactindex delivered; cannot claim free/indexalreadycaptured. Futureindex pass requires original C/T45 boundedsourcewindow.",
+    "newCopiesOfSourceOrTypedBody": 0,
+    "originalSourceSnapshotOrGzipPasses": 0,
+    "thisTurnRealPreparedPayloadBytes": 0
+  },
+  "remaining": {
+    "D3Technical": "Pureprojection/capture/sortedread algorithm now implemented. Actual pinned indexartifact for eachgroup still must be produced from retained originalfiles by existingcontrolled carrier; no actualfile reads here. No new genericauthority/runtime layer.",
+    "CAndT45": "C adopt fixedhelper + real source recipes; originalT45 supplies genuinefinitewindow/heldFD source/index grants and executes neededcapture/closure under original interfaces. Actualinputfullpayload/group11adoptedpins/COREmaintenance/53originalrecorddata/MAINledger+conservation remain as explicitoriginalrecipe gaps.",
+    "CATALOGUEHashFillLocation": "QB331 reminder: after realfullpayload adoption, fill topbinding.authorizedPayloadHash + closureScope + PARTIES/PAYMENT options.authorizedPayloadHash AND CATALOGUE.options.binding.authorizedPayloadHash (native-source-authorizers.openClosure reads nested bindinghash). Candidate remainsNULL/nonexecutable; no fake placeholder."
+  },
+  "next": "C+originalQB one associated new package only, no old component or real large hashes repeated. OriginalT45 recovery/headerstage not blocked; real indexcapture only original finitewindow, no D3 DB/heavyread.",
+  "barcodeExtension20261026": {
+    "atUtc": "2026-10-26T05:29:27.773235+00:00",
+    "authorization": "C SOURCE606 D3 nextExactFiles + barcodeIndexSeamApproved, original helper/test/result three leaves only.",
+    "previousAcceptedFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 9741,
+        "sha256": "0d600638dd370cf896298cea78c14f5b76426b9d2774a2ffb5e9e636a8aca714"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+        "bytes": 10017,
+        "sha256": "df49634136e2ce9dfd7a3e8ff56c5472e84cbb6a6f596791c6c2c1d34b62f0f7"
+      }
+    ],
+    "newApiNames": [],
+    "api": "Same createRetainedNativeClosureSession26({original,index,readRecord,verify,close,current,maxCacheBytes}) and original verify/sourceRows/typedRows/documents/close methods.",
+    "originalBundleAdditions": [
+      "validatePreparedNativeBarcode",
+      "nativeBarcodeSourceEvidence",
+      "validateNativeBarcodeSchemeInitializationRows26"
+    ],
+    "indexInput": "In memory only: index={...original ORIGINAL_BARCODE15018_APPROVED_SOURCE_CAPTURE_26_V1 manifest,records:[original JSONL INDEX entries],permutations: original BARCODE15018_RETAINED_GLOBAL_ORDER_26_V1 JSON}. No disk manifest/index/recipe changes, no fabricated preparedHash. Original three-group index shape remains unchanged.",
+    "normalization": "Original captured ordinal/sourceKey/sourceRowId/nativeBarcodeId/prepared offset+bytes+SHA+fingerprint/original offset+bytes+rawSHA/source and typed canonical descriptors are retained and validated. readRecord receives original {file:prepared,offset,bytes,sha256}; carrier must map that fileID to the manifest original prepared descriptor and verify heldFD range SHA before returning prepared JSON.",
+    "sourceAndTypedValidation": "Each record uses original validatePreparedNativeBarcode, exact source/native identities, original row SHA and fingerprint, original nativeBarcodeSourceEvidence and sku_barcode projection, and both original canonical row descriptor hashes. No allocation, rawcode rewrite, SKU remap or MAIN demotion recomputation.",
+    "ordering": "Original ordinal count/permutations must be complete and unique. Original source/typed permutations are used exactly, with strict global original relation+NUL+key monotonic checks; incorrect order is rejected, never sorted into a passing BARCODE order. Prepared ranges cover the same original file contiguously through EOF. Original raw selected occurrence offsets remain increasing and bounded by the existing snapshot length.",
+    "schemes": "permutations.schemes original initializationData binding/proposalSHA/approvalSHA must match capture metadata; original literal six-row validator binds original UUIDs/all42 fields/current-history semantics. Six original barcode_scheme codec rows are merged in canonical typed order once before sku_barcode. They are source descriptions only, not proof of actual scheme initialization. Every prepared scheme snapshot must equal one of these six canonical projections.",
+    "counts": {
+      "realRecords": 15018,
+      "realSourceRows": 15018,
+      "realSkuBarcodeTypedRows": 15018,
+      "schemeTypedRows": 6,
+      "realTotalTypedRows": 15024,
+      "documents": 0,
+      "finiteFixtures": "Fewer records allowed within existing pure-helper cardinality caps; real carrier must enforce original manifest/capture pin and actual15018. No synthetic count adopted as real."
+    },
+    "cacheAndLifecycle": "Same <=64MiB JSON buffer cache and existing active checks after awaited range read. The six scheme rows enter typed cache exactly once at source start. Original current/verify/close callbacks remain caller owned; no lease, pool or authority created. Close clears barcode order/scheme metadata along with original buffers; late awaited read cannot register/yield after close.",
+    "newFiniteTests": {
+      "distinct": 5,
+      "pass": 5,
+      "failRemaining": 0,
+      "commands": [
+        "node --test --test-reporter=spec --test-name-pattern='BARCODES projection' retained-native-closure-streams-20261026.test.mjs (1 PASS)",
+        "node --test --test-reporter=spec --test-name-pattern='BARCODES captured|BARCODES original|BARCODES read|BARCODES late' retained-native-closure-streams-20261026.test.mjs (initial2 PASS/2 fixture failures)",
+        "node --test --test-reporter=spec --test-name-pattern='BARCODES captured|BARCODES original' retained-native-closure-streams-20261026.test.mjs (affected2 PASS)"
+      ],
+      "coverage": [
+        "Finite MAIN/approved-demotion/compatible-old original raw/native/source provenance equality with leading-zero code and no fabricated raw binding scope.",
+        "Original physical prepared range order differs from sourceUUID/nativeUUID order; each record read once and exact source/typed projections and original finite closure roots match.",
+        "Six scheme rows once/current1, complete counts/permutations/identity uniqueness/range coverage and metadata scheme drift reject.",
+        "Changed prepared source/native identity/raw rowSHA/scheme or either captured projection SHA rejects.",
+        "Late read after close, cancellation and cache bound refuse without escaped output; owner close remains idempotent."
+      ],
+      "fixtureRepairs": "Initial finite closure fixture supplied unsupported cutoffAt to original own-data closure builder; removed it. Initial in-memory synthetic scheme binding aliased outer binding unlike separately decoded original JSON files; fixture now clones binding. Only two affected tests rerun; no old7 rerun."
+    },
+    "oldThreeGroupChecks": {
+      "distinct": 7,
+      "status": "REUSED_QB332_SOURCE_ACCEPTED_NOT_RERUN",
+      "sourceReview": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice332-retained-native-closure-streams/RESULT.json"
+    },
+    "actualSourceReferences": {
+      "manifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/MANIFEST.json",
+        "bytes": 6780,
+        "sha256": "534c30ce910d6ee1220873c7d390f365783e83c1ec3400e692b9c42057fe3acc"
+      },
+      "QB338": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice338-barcode-source15018-actual-run2/RESULT.json",
+        "bytes": 10406,
+        "sha256": "d35efad27b0ec7fcdea695c91f84b068b17d6c9ea5b13d46c9515a6027d36818"
+      },
+      "prepared": {
+        "bytes": 54431676,
+        "sha256": "898ec035cb9f3f725e8c7e01cd56e29a0b49c6a468a5bed911b5a20f53fdd083"
+      },
+      "index": {
+        "bytes": 11932189,
+        "sha256": "46066e321d6a52c20524ec3589ee2d8b2c9baffdc94beed8a2b9041ab2849fbd"
+      },
+      "permutations": {
+        "bytes": 161297,
+        "sha256": "79c3c09c3560a1c7c583b91a900fa053dc02a65440f66b15d3210d163b9cf2b2"
+      }
+    },
+    "actualRun": {
+      "originalBusinessPayloadBytesRead": 0,
+      "preparedOrIndexBodyRead": false,
+      "largePayloadHashRecomputed": false,
+      "sourceRecapture": false,
+      "nativeIdAllocation": 0,
+      "schemeAllocation": 0,
+      "DB": 0,
+      "SSH": 0,
+      "Git": 0,
+      "build": 0,
+      "RSourceChanged": false,
+      "currentFourCarriersChanged": false
+    },
+    "next": "C/QB review this newly associated BARCODE helper scope only. Original carrier supplies pinned original manifest+INDEX+permutation metadata and borrowed range reader, real initialization/SKU binding and existing authority; actual source pass/global all11 roots/MAIN/PUBLISH still unexecuted. CORE115/53item collection remains original T45 separate work."
+  }
+}
