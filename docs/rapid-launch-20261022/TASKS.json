@@ -14656,7 +14656,7 @@
       "B07": "07 review/gate actual successful; detail HTTP200 then assertion; D1 diagnose; T45 original-key readonly recovery next",
       "fullSource": "134 same-key collect only bounded original execution"
     },
-    "latestSource": "SOURCE705",
+    "latestSource": "SOURCE706",
     "source680Continuation": {
       "actual134": "FAILED exit2 after901.237644947s; ORIGINAL_BINDINGS_AND_STREAMS / PRODUCTION_PROVIDER26_CLOSED; D3 original source diagnosis; no extension/replay",
       "actual07": "POST07 original-key readonly recovery: one COMMITTED HISTORY_REVISE HISTORY_SALES receipt and one revision, result_version2. Full test incomplete at detail count assertion. Preserve original key/state; no fresh save.",
@@ -14802,6 +14802,21 @@
       "QB": "store independent source increment pending",
       "T45": "UI candidate and fixed1000 bounded source carrier preparation; no money retry before source review",
       "money": "Not committed, prior two v2 preserved; real money verification incomplete"
+    },
+    "currentContinuation706": {
+      "candidate": {
+        "source": "8c7ed0c78018f9d479b191e3c01d36b2ab10c456",
+        "build": "phase2-normal-8c7ed0c-32",
+        "url": "http://127.0.0.1:57921/#inventory",
+        "resources": 152,
+        "boundary": "SYNTHETIC NOT PRODUCTION, connect-src none, noPG/formalURLchange"
+      },
+      "QF": "Single affected F1 runtime review; exclusive browser; prior source evidence reused",
+      "QF2": "Affected F2 runtime preparation only until browser handoff; same candidate no duplicate review",
+      "QB427": "SOURCE705 store exact2 source PASS, real money not yet passed",
+      "D1": "original-request/auth3 child03 exact6 source in flight",
+      "T45": "fixed1000 sharedclosure comparison carrier preparation, actual pending",
+      "wholeSite": "37pages/67overlays denominator unchanged; no all-state full business/formal release completion"
     }
   }
 }
