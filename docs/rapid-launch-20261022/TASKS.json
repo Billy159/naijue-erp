@@ -1355,7 +1355,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-26",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "a33ebb9b49e15fe7d3b5d4f3becacb9773408876",
+  "lastVerifiedRemoteCommit": "765316787a960542578672eaffc4a3e264e464e3",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -1791,7 +1791,7 @@
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
-    "schema": "R1v16fromv15/130routines; currentactualcanonical35635701133dde4c535aed6336fc8453546f61629a63914ba7613d1b6bad68ca afteroriginal12 minimumACL; original020ce retainedhistory",
+    "schema": "R1 v16-from-v15/130routines; current actual e02a19ba8079d673e5f4765d0071b49177ce808a692d34648da7a726e33bb9fa post93 exact2 EXECUTE/current dualreview. v19 successor131 SOURCE_ONLY_NOT_APPLIED",
     "runtimeAcl": "C204 actual56additionalminimum bits COMMIT; QB277 accepted, fournormalheaderwritebits deliberatelymissing",
     "realAccountsCaptured": 49,
     "accountsWithExactOldEmployeeLink": 45,
@@ -2837,7 +2837,25 @@
       "formalSwitch": false,
       "evidence": "B/server-execution/SOURCE447-APP18-ACTUAL-RESULT.json",
       "engineSha256": "ba303ce6e5b4c31065acf8086006fee1249cc9a00b64d2399f13db38c200000b"
-    }
+    },
+    "currentAsOf": "SOURCE587",
+    "currentCandidate": {
+      "source": "1f09fd74d9e4c9dfeb98118a1d33a989801148b9",
+      "build": "replica-production-source561-core-14",
+      "url": "https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/",
+      "deployment": "ACTUAL91_APP92_CANDIDATE_PREFIX_ONLY",
+      "scope": "CORE readonly hallwarehouse, combinedstaffaccount, category,color,fit; inventory/sales/transfer/products/payments/parties and fullbusiness not enabled",
+      "formalRootChanged": false,
+      "browserAcceptance": "QF CORE14 shell/account/password partial only; not strongcold/fullpage/business"
+    },
+    "nextCandidate": {
+      "source": "a33ebb9b49e15fe7d3b5d4f3becacb9773408876",
+      "build": "replica-production-source585-core-15",
+      "scope": "Same approved CORE flags; new v19 issuer/generator/F2 feedback/cache bundled",
+      "deployment": "BUILD_PACK_PASS_NOT_INSTALLED",
+      "report": "reports/controller/rapid-launch-20261022/SOURCE586-CORE15-INTEGRATION.json"
+    },
+    "currentBackup": "Original83 actual02:01:19.626805Z,12h window; T45 verifies real age at execution, older206 record historical not current"
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -5973,7 +5991,8 @@
     "phase1AcceptedSource": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
     "currentPhase": "PHASE2_EXISTING_ORIGINAL_COPY_BUSINESS_ADAPTATION",
     "phase1": "COMPLETE_LIMITED_REPRESENTATIVE_ACCEPTANCE_SOURCE343",
-    "phase2": "IN_PROGRESS_ON_SAME_COPY"
+    "phase2": "IN_PROGRESS_ON_SAME_COPY",
+    "latestExecution": "SOURCE587: whole37/67/allstates/realbusiness/history/performance/formalroot unchanged; latest direct v16 sales salesperson/transfer responsible and v19 manual required/group generation corrections override older wording"
   },
   "historyHeaderProposal": {
     "id": "v16_HISTORY_HEAD_AND_RESPONSIBLE",
@@ -11638,7 +11657,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE586",
+    "round": "SOURCE587",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11649,11 +11668,22 @@
         "entry": "/__naijue_candidate/replica-private-01/#settings/stores"
       },
       "next": {
-        "source": "48113c65a73ab8a390a052ef1a1a306ec2eeedc1",
-        "build": "replica-production-source461-core-03",
-        "scope": "Same three groups plus actualCORE color/fit reads; buildpackPASS, not deployed"
+        "source": "a33ebb9b49e15fe7d3b5d4f3becacb9773408876",
+        "build": "replica-production-source585-core-15",
+        "scope": "Same approved CORE flags; new v19 issuer/generator/F2 feedback/cache bundled",
+        "deployment": "BUILD_PACK_PASS_NOT_INSTALLED",
+        "report": "reports/controller/rapid-launch-20261022/SOURCE586-CORE15-INTEGRATION.json"
       },
       "current": {
+        "source": "1f09fd74d9e4c9dfeb98118a1d33a989801148b9",
+        "build": "replica-production-source561-core-14",
+        "url": "https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/",
+        "deployment": "ACTUAL91_APP92_CANDIDATE_PREFIX_ONLY",
+        "scope": "CORE readonly hallwarehouse, combinedstaffaccount, category,color,fit; inventory/sales/transfer/products/payments/parties and fullbusiness not enabled",
+        "formalRootChanged": false,
+        "browserAcceptance": "QF CORE14 shell/account/password partial only; not strongcold/fullpage/business"
+      },
+      "previousCurrentSource519": {
         "source": "c61e747667276c5de0bd6fa5c53ceba31681d50f",
         "build": "replica-production-source519-core-10",
         "url": "https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/",
@@ -13134,6 +13164,16 @@
         "formalroot switch"
       ],
       "next": "T45 after original salesheader actual safe seam adopts exactpackage with required real v19 metadata/reviews/APP binding"
+    },
+    "source587": {
+      "previousGoalTurn": "PROGRESS: corrected code frozen, independent findings closed, exact remote verified; current turn new actual CORE15buildpack and original97/98 targeted continuation",
+      "actual97": "COMPLETED0/0.569s 2026-10-26T03:43:22.542Z: ERR_MODULE_NOT_FOUND pg; original96 no journal/result, R1 SALES_HEADER/source0, active96connections0, readonlyRR/endtrue; therefore96notstaged",
+      "actual98": "Unique queued unit naijue-erp-op-5cc58239-dd863fb32f1f, CLI87705exit0, autoRetryfalse; originalT45 live turn observing, actual stage pending",
+      "QB344": "LimiteddependencywiringPASS3d47fff67458806c450b702c3dee00ae1d84c24889deed020cbf0c62df479696",
+      "QF2S582F01": "Closed exact584, result11007fb6d97ada38c2b52eef3b8d451afd32de8853776275a703a22fa7daca66",
+      "QB343": "Init sourcePASS9e0156580a9c89162d163c00491c1e0c09c5fc2aa667b6c6d684e3a8bb3a56d5",
+      "fullGoal": "ACTIVE37pages67overlays+approvedadditions/allstates/realbusiness/history/performance/formalroot; no shrink",
+      "copyPhase": "Retain original35pages65overlays copy evidence; approved additions separate Phase2; no new allstate/fullbusiness accepted pages"
     }
   }
 }

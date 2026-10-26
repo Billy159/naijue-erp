@@ -1,3 +1,5 @@
+SOURCE587（2026-10-26）：将既有current候选摘要从旧CORE10纠正为实际91/92运行CORE14，下一包为已构建CORE15；旧值保历史，不把新源当上线。QF2S582-F01修后限定源PASS11007fb6采用，QB343新init源PASS采用；真实SQL/生成保存未测。97实际只读证明96因缺pg且未stage，无journal/两销售头计数0/无活连接；98修原依赖link经QB344PASS后唯一QUEUED unitdd863fb32f1f，T45原live turn观察，不重传重hash大文件、不重旧作业。原35页65弹层副本证据保留，37页67弹层全部状态真实业务最终验收无新整页计数，正式根未切换。GitHub586已核7653167。
+
 SOURCE586（2026-10-26）：新必要统一CORE15实际构建和打包通过，固定SOURCE585 a33ebb9，包1687124B/f05fc5a3，199members一次解包回读匹配；只换assets版本保持原CORE14只读范围，未假开完整业务。已含v19初始化源码QB343PASS9e015658、NULL生成修后QB340PASS、F2partial恢复QF2关闭11007fb6及G339缓存源改，交T45原销售头安全接缝后采用。实际96 FAILED2/15.008s且无JSON结果，原97只读核查已报告pg依赖加载失败、无journal和销售头0、无在途维护连接；新后继只补原依赖目录接线，复用96原0400输入不再复制/重传。原95/96失败保留，实际stage/新SQL/真实保存/MAIN/PUBLISH和正式根仍未完成。F1/F4/F3实际状态已核交付idle，无新就绪缺陷不重复派工。
 
 SOURCE585（2026-10-26）：实际95 FAILED2/0.921s，首个ORIGINAL94_RESULT_PIN，stageOutcome NOT_ATTEMPTED，未启动Node/未暂存。已定位collect94美化JSON与服务器原sortJSON字节指纹混用的载体引用错误，原T45修准确原94rootpin并新96有界后继，QB仅受影响引用复验，不重95/94/source52或922MB传输。e02、20服务和route保留。SOURCE584远端e9db17a已核；F2修复原QF2限定复验及六scheme初始化原QB源审实际在途。真实保存、新初始化、MAIN/PUBLISH和正式根切换尚未完成。
