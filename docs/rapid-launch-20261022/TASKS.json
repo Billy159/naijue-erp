@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE580",
+    "round": "SOURCE581",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11674,16 +11674,16 @@
     "approvedScope": "Current creator audit hidden/transfer responsible editable; sales salesperson no independent responsible UI. v16 approved unaffected. v5historicalsaleshall NULL unapproved onlydependentbranch waits.",
     "roleQueue": {
       "F1": "DOC198 delivered/current CORE14 QF browser partial adopted; no duplicate new UI scope; history consumers await real full provider",
-      "F2": "New2026 default+compatible raw source fixed7f6d990/QF2F01 sourcePASS; next necessary integrated build/provider QA; newgeneration only v19 wait",
+      "F2": "Original editor after realconfirmed detail newSKU missingMAIN feedback implementation active, no newDTO/key/false failure; default/race evidence reused",
       "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
       "D1": "Approved corrected v19 exact5+4test implementation active: original init action/store/CLI/profile and narrow patch, B07 v3 retained",
       "D2": "Correctedv19 exact7 source delivered6targetedPASS/strict0, independentQB source next; actualQA legitimateinit/publish pending",
       "D3": "Actual15018source metadata QB338 PASS; original approved exact6 source/borrowedclient init active; no DB yet",
-      "T45": "Real94exact2 customer COMMIT/readback complete; transmitting existing28282header prepared~922MB via originalkey SSH compressed transport, not submitted DB until transfer and carrier review",
+      "T45": "Previous long turn ended replying old74/75 despite headertransfer current. Actualidle confirmed; resumed explicitly580/581 with originalhandle check, no automatictransferreplay. HeaderDBstage not yet proven.",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "F2 newdefault saveF01 fixedsource7f6d990 scopedsourcePASS; runtime/provider/save pending next fixedcandidate",
-      "QB": "New G cache+proxy limited source review active; old338sourcecapturereview adopted, v19 implementation future scoped QA not pre-signed",
+      "QB": "Correctedv19 D2 exact7 source fixedf193099 scoped independent review active; G339 adopted, init source not yet delivered",
       "Compression": "G exact2 cache source/3affectedchecks delivered, writer returned; C proxytemplate source fixed, actualpubliccache pending nextnecessary build"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -13046,6 +13046,14 @@
       "testSha256": "2f533ffdb1891a4c3f545f6f2daf575163b99402aefca7da2328411121cf9776",
       "CProxySource": "scripts/release/deploy-candidate.py upstream200 policy map else no-store; source generation check only, actual nginx not tested",
       "QB339": "PASS_SCOPED_SOURCE_2c638a331e56b10407ca9bba3bff1f0dd47db81ac8b5f5d62d8eabb50278fec7"
+    },
+    "t45Resume581": {
+      "previousTurn": "01a17590-9977-7103-a4e9-501965ff27d6",
+      "previousAuthoritativeStatus": "COMPLETED_IDLE",
+      "reason": "Old74/75 final answer stopped original full queue; actualheader transfer terminal not proved",
+      "actualResumeRequested": true,
+      "model": "gpt-6.1-sol/medium",
+      "next": "Recover current originalSSHtransfer handle/progress/partialidentity, then original28282headerstage/full11; do not repeat74/75/90-94/source52/preparedchunks"
     }
   }
 }

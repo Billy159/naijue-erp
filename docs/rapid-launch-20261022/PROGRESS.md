@@ -1,3 +1,5 @@
+SOURCE581（2026-10-26）：实际核T45上轮已completed/idle，终态仅回旧74/75成功而原28282headerscurrent未收尾；C已沿原Chat显式Solmedium接续，先核真实传输session/远端完成或partial状态，活handle接续/已完成采用，不因观察超时重发，不再collect旧74/75。headerDBstage尚无完成证明，保留原94两客户/CORE14已过。D1/D3专用init源码和QB新生成源审均有实际工具在途，不重派。F2准确缺口为已确认保存及权威详情后缺新MAIN无提示，已交原editor叶补本次已知newSKU差集反馈，未知/基准不足不误判、不自动重提/新DTO；旧source有效检查不重。等待真实依赖与在途工作，不填槽造任务。
+
 SOURCE580（2026-10-26）：D2修订v19生成实现原7叶已交并固定pins，原V2保存/完整组×颜色×版型补缺、仅本次newenabledSKU无任何显式MAIN时按实际2026scheme/编码生成，手工货号必填无allocator/intent/新字段。sameclient四资料锁读，旧MAIN含disabled/兼容/旧SKU不动，非空码条件不足资料保存不伪造MAIN；原key早回放不读码/分ID，原UOW冲突/回执失败全回滚。新增6/6定向及strict0采用，原兼容/v17等不重；交原QB限定源审后合必要统一包，真实PG/角色/normalUI尚未测，当前STAGED不得绕准入。D1/D3专用init源码在途，未因本实现改当前DB/APP，目标全站与历史编辑未完成。GitHub579已核57027b2。
 
 SOURCE579（2026-10-26）：并行接口对齐即时纠正：C先采六pin候选时D1原闭集已给更小三pin，现最终统一仅proposal/原分类批准/直接v19回复三个hash作为command.approvalPins；额外文档/15018manifest/QB338为sidecar，不给六scheme初始化增加来源捕获依赖。上一六pin采纳历史保留且显式撤回，WRITE/TASKS当前一致；D1与D3均收到唯一schema，继续实施不再命名盘点。业务规则/真实六row/COREbirth/事务/原key及审计均不变，无新用户审批。
