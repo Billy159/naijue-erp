@@ -14079,6 +14079,13 @@
       "map": "K/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/ACTUAL124-FILE-LOCATION-MAP.json",
       "dbOperations": 0,
       "next": "D3 actual source-only complete DATA/EXPECTED/MAIN preparation adapter then T45 bounded actual preparation; C true independent grant only after real inputs"
+    },
+    "source636": {
+      "mapping633": "QB381_NEW_SOURCE_PASS_ADOPTED",
+      "actualDataLocations": "ALL26_PHYSICAL_REFS_FIXED_NONCODE_MISSING0_CODE6_NOT_INSTALLED",
+      "inventoryProjection": "F2 exact4 technical Solmedium current; no backend wire overlap; not real performance pass",
+      "fullSourcePreparation": "D3 source-only existing provider next",
+      "history": "D1 precise QA fixture preparation; original source account unchanged"
     }
   }
 }

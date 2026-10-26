@@ -116,14 +116,27 @@
             "bytes": 3776,
             "sha256": "b0a809480b31cf8d7b2bacafab214eb5681a6a980a525b57e207f7e36425ebdf"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0000.bin",
+            "bytes": 3776,
+            "sha256": "b0a809480b31cf8d7b2bacafab214eb5681a6a980a525b57e207f7e36425ebdf"
+          },
           "kind": "METADATA",
           "roles": [
             "historical-exact2-contract"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -131,14 +144,27 @@
             "bytes": 2941,
             "sha256": "45fffe88e687b76d7772c99b88f6492e1c5bf5dcf454ce37650ed456ce2ba298"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0001.bin",
+            "bytes": 2941,
+            "sha256": "45fffe88e687b76d7772c99b88f6492e1c5bf5dcf454ce37650ed456ce2ba298"
+          },
           "kind": "METADATA",
           "roles": [
             "ordinary-review"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -146,14 +172,27 @@
             "bytes": 2479,
             "sha256": "e471ccdef09f385688d8f5709e072a033d471f0c6fdba8b7bb1b49ad55a9408a"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0002.bin",
+            "bytes": 2479,
+            "sha256": "e471ccdef09f385688d8f5709e072a033d471f0c6fdba8b7bb1b49ad55a9408a"
+          },
           "kind": "METADATA",
           "roles": [
             "historical-exact2-review"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -186,14 +225,27 @@
             "bytes": 774,
             "sha256": "79305bfcb0545e5bc26601f839508be2b64a6637cd6fb1ef1819c6989fc38e65"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0003.bin",
+            "bytes": 774,
+            "sha256": "79305bfcb0545e5bc26601f839508be2b64a6637cd6fb1ef1819c6989fc38e65"
+          },
           "kind": "DATA",
           "roles": [
             "historical-exact2-source"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -201,14 +253,27 @@
             "bytes": 1494435,
             "sha256": "0b7037ea3dd4b2a1316ef059f7ed5b292256450cd7b82b49e8096554ffeed225"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0004.bin",
+            "bytes": 1494435,
+            "sha256": "0b7037ea3dd4b2a1316ef059f7ed5b292256450cd7b82b49e8096554ffeed225"
+          },
           "kind": "DATA",
           "roles": [
             "ordinary628"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -216,14 +281,27 @@
             "bytes": 2186,
             "sha256": "ffb59e254a921c13dc63eac817d988883739fe1fd5e229561d67ca38a45d1408"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0005.bin",
+            "bytes": 2186,
+            "sha256": "ffb59e254a921c13dc63eac817d988883739fe1fd5e229561d67ca38a45d1408"
+          },
           "kind": "METADATA",
           "roles": [
             "ordinary-manifest"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -231,14 +309,27 @@
             "bytes": 9622,
             "sha256": "7710b449e914eac02adfb7436c3749986ae3dd0d4a30a81140b98b57d8ea87e7"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0006.bin",
+            "bytes": 9622,
+            "sha256": "7710b449e914eac02adfb7436c3749986ae3dd0d4a30a81140b98b57d8ea87e7"
+          },
           "kind": "DATA",
           "roles": [
             "historical-exact2-candidate"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         }
       ]
     },
@@ -518,14 +609,27 @@
             "bytes": 2941,
             "sha256": "45fffe88e687b76d7772c99b88f6492e1c5bf5dcf454ce37650ed456ce2ba298"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0001.bin",
+            "bytes": 2941,
+            "sha256": "45fffe88e687b76d7772c99b88f6492e1c5bf5dcf454ce37650ed456ce2ba298"
+          },
           "kind": "METADATA",
           "roles": [
             "original-product-evidence-ordinary-review"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -533,14 +637,27 @@
             "bytes": 1019,
             "sha256": "a21105ca99f0efff1acf10fda01f1bf62117e2ffd3214d4d43e02f9efc24025b"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0007.bin",
+            "bytes": 1019,
+            "sha256": "a21105ca99f0efff1acf10fda01f1bf62117e2ffd3214d4d43e02f9efc24025b"
+          },
           "kind": "METADATA",
           "roles": [
             "full-product-reference-review"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -548,14 +665,27 @@
             "bytes": 12093,
             "sha256": "2989b31a8968e2588f8a8e2c434f740aec886e1e9152b3894e34106f1522db59"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0008.bin",
+            "bytes": 12093,
+            "sha256": "2989b31a8968e2588f8a8e2c434f740aec886e1e9152b3894e34106f1522db59"
+          },
           "kind": "DATA",
           "roles": [
             "full-product-mapping-size_overrides"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -563,14 +693,27 @@
             "bytes": 1494435,
             "sha256": "0b7037ea3dd4b2a1316ef059f7ed5b292256450cd7b82b49e8096554ffeed225"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0004.bin",
+            "bytes": 1494435,
+            "sha256": "0b7037ea3dd4b2a1316ef059f7ed5b292256450cd7b82b49e8096554ffeed225"
+          },
           "kind": "DATA",
           "roles": [
             "full-product-mapping-parties"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -578,14 +721,27 @@
             "bytes": 11776327,
             "sha256": "27236f405d328ba6f20ff60c8dc9f0323b5916b490b190c14b0c8e84aaae935e"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0009.bin",
+            "bytes": 11776327,
+            "sha256": "27236f405d328ba6f20ff60c8dc9f0323b5916b490b190c14b0c8e84aaae935e"
+          },
           "kind": "DATA",
           "roles": [
             "original-product-source-evidence"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -593,14 +749,27 @@
             "bytes": 2186,
             "sha256": "ffb59e254a921c13dc63eac817d988883739fe1fd5e229561d67ca38a45d1408"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0005.bin",
+            "bytes": 2186,
+            "sha256": "ffb59e254a921c13dc63eac817d988883739fe1fd5e229561d67ca38a45d1408"
+          },
           "kind": "METADATA",
           "roles": [
             "original-product-evidence-ordinary-manifest"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -633,14 +802,27 @@
             "bytes": 2322054,
             "sha256": "c05e8f46bd20d050877ae431103b52d199c953919b7e8186f822f11081f9f779"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0010.bin",
+            "bytes": 2322054,
+            "sha256": "c05e8f46bd20d050877ae431103b52d199c953919b7e8186f822f11081f9f779"
+          },
           "kind": "DATA",
           "roles": [
             "full-product-mapping-season_source"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -648,14 +830,27 @@
             "bytes": 2437344,
             "sha256": "883177d8ee8782cb312c06dc6bade6e54b2ce221faa020b3341d168f9fa7ba65"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0011.bin",
+            "bytes": 2437344,
+            "sha256": "883177d8ee8782cb312c06dc6bade6e54b2ce221faa020b3341d168f9fa7ba65"
+          },
           "kind": "DATA",
           "roles": [
             "full-product-mapping-derived_season_proofs"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -663,14 +858,27 @@
             "bytes": 5640429,
             "sha256": "59db45280b3e2072a638fb3017ddca09a1c8fc518f52fae2371240cb66aa5b4b"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0012.bin",
+            "bytes": 5640429,
+            "sha256": "59db45280b3e2072a638fb3017ddca09a1c8fc518f52fae2371240cb66aa5b4b"
+          },
           "kind": "DATA",
           "roles": [
             "full-product-reference-decisions2956"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -1538,14 +1746,27 @@
             "bytes": 6780,
             "sha256": "534c30ce910d6ee1220873c7d390f365783e83c1ec3400e692b9c42057fe3acc"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0013.bin",
+            "bytes": 6780,
+            "sha256": "534c30ce910d6ee1220873c7d390f365783e83c1ec3400e692b9c42057fe3acc"
+          },
           "kind": "METADATA",
           "roles": [
             "barcode-original-manifest"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -1553,14 +1774,27 @@
             "bytes": 161297,
             "sha256": "79c3c09c3560a1c7c583b91a900fa053dc02a65440f66b15d3210d163b9cf2b2"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0014.bin",
+            "bytes": 161297,
+            "sha256": "79c3c09c3560a1c7c583b91a900fa053dc02a65440f66b15d3210d163b9cf2b2"
+          },
           "kind": "METADATA",
           "roles": [
             "barcode-permutations"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -1568,14 +1802,27 @@
             "bytes": 54431676,
             "sha256": "898ec035cb9f3f725e8c7e01cd56e29a0b49c6a468a5bed911b5a20f53fdd083"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0015.bin",
+            "bytes": 54431676,
+            "sha256": "898ec035cb9f3f725e8c7e01cd56e29a0b49c6a468a5bed911b5a20f53fdd083"
+          },
           "kind": "DATA",
           "roles": [
             "barcode-prepared"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -1583,14 +1830,27 @@
             "bytes": 11932189,
             "sha256": "46066e321d6a52c20524ec3589ee2d8b2c9baffdc94beed8a2b9041ab2849fbd"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0016.bin",
+            "bytes": 11932189,
+            "sha256": "46066e321d6a52c20524ec3589ee2d8b2c9baffdc94beed8a2b9041ab2849fbd"
+          },
           "kind": "METADATA",
           "roles": [
             "barcode-index"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         }
       ]
     },
@@ -1686,14 +1946,27 @@
             "bytes": 1145,
             "sha256": "dc94d44e09390ef7827310b86b9bdee0b5fab8fa95f9b50540150c978a81479b"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0017.bin",
+            "bytes": 1145,
+            "sha256": "dc94d44e09390ef7827310b86b9bdee0b5fab8fa95f9b50540150c978a81479b"
+          },
           "kind": "METADATA",
           "roles": [
             "payment-manifest"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -1701,14 +1974,27 @@
             "bytes": 3274,
             "sha256": "ed5f208fb9648fdf25aaf4f8475de262977e83fa162482eb9ba9d665c9bc33c4"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0018.bin",
+            "bytes": 3274,
+            "sha256": "ed5f208fb9648fdf25aaf4f8475de262977e83fa162482eb9ba9d665c9bc33c4"
+          },
           "kind": "METADATA",
           "roles": [
             "payment-independentReview"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -1716,14 +2002,27 @@
             "bytes": 1605,
             "sha256": "ef981a5fdfcb217926eb04452d2ad2c3d0b275794af11841e2cf6637020395a9"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0019.bin",
+            "bytes": 1605,
+            "sha256": "ef981a5fdfcb217926eb04452d2ad2c3d0b275794af11841e2cf6637020395a9"
+          },
           "kind": "METADATA",
           "roles": [
             "payment-reference-review"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -1731,14 +2030,27 @@
             "bytes": 6735139,
             "sha256": "126dbc64e7fc461926d6caa5e69bde0580ab6e20151daaebbfc98b140d7896e8"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0020.bin",
+            "bytes": 6735139,
+            "sha256": "126dbc64e7fc461926d6caa5e69bde0580ab6e20151daaebbfc98b140d7896e8"
+          },
           "kind": "DATA",
           "roles": [
             "payment-decisions"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         }
       ]
     },
@@ -2032,8 +2344,18 @@
             "original32-money-shared"
           ],
           "requiredForRead": true,
-          "status": "ORIGINAL96_PINNED_LOCATION_FRESH_LSTAT_PENDING",
-          "pinEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/bundle/PLAN.json"
+          "status": "ACTUAL124_MONEY96_LSTAT_ORIGINAL_PIN_BODY_NOT_REHASHED",
+          "pinEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/bundle/PLAN.json",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "contentRehashed": false,
+            "mode": 256,
+            "inode": 17850019,
+            "regular": true,
+            "sizeMatchesOriginal": true
+          }
         },
         {
           "logical": {
@@ -2201,8 +2523,18 @@
             "C144-moneyRef"
           ],
           "requiredForRead": true,
-          "status": "ORIGINAL96_PINNED_LOCATION_FRESH_LSTAT_PENDING",
-          "pinEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/bundle/PLAN.json"
+          "status": "ACTUAL124_MONEY96_LSTAT_ORIGINAL_PIN_BODY_NOT_REHASHED",
+          "pinEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/bundle/PLAN.json",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "contentRehashed": false,
+            "mode": 256,
+            "inode": 17850019,
+            "regular": true,
+            "sizeMatchesOriginal": true
+          }
         },
         {
           "logical": {
@@ -2210,14 +2542,27 @@
             "bytes": 2555,
             "sha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0021.bin",
+            "bytes": 2555,
+            "sha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed"
+          },
           "kind": "METADATA",
           "roles": [
             "C144-manifestRef"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -2225,14 +2570,27 @@
             "bytes": 494092156,
             "sha256": "fc93c67fff5da7475c4cd5ab53522621e63093023b1e0518c4a97963605a36e4"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0022.bin",
+            "bytes": 494092156,
+            "sha256": "fc93c67fff5da7475c4cd5ab53522621e63093023b1e0518c4a97963605a36e4"
+          },
           "kind": "DATA",
           "roles": [
             "C144-source"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -2240,14 +2598,27 @@
             "bytes": 61226343,
             "sha256": "7a0a5b32247325e781d975b0907134a23477c3e70fc191af05b1b4daa73dfcfa"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0023.bin",
+            "bytes": 61226343,
+            "sha256": "7a0a5b32247325e781d975b0907134a23477c3e70fc191af05b1b4daa73dfcfa"
+          },
           "kind": "DATA",
           "roles": [
             "C144-typed"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         }
       ]
     },
@@ -2390,8 +2761,18 @@
             "C144-moneyRef"
           ],
           "requiredForRead": true,
-          "status": "ORIGINAL96_PINNED_LOCATION_FRESH_LSTAT_PENDING",
-          "pinEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/bundle/PLAN.json"
+          "status": "ACTUAL124_MONEY96_LSTAT_ORIGINAL_PIN_BODY_NOT_REHASHED",
+          "pinEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/bundle/PLAN.json",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "contentRehashed": false,
+            "mode": 256,
+            "inode": 17850019,
+            "regular": true,
+            "sizeMatchesOriginal": true
+          }
         },
         {
           "logical": {
@@ -2399,14 +2780,27 @@
             "bytes": 2555,
             "sha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0021.bin",
+            "bytes": 2555,
+            "sha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed"
+          },
           "kind": "METADATA",
           "roles": [
             "C144-manifestRef"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -2414,14 +2808,27 @@
             "bytes": 141685172,
             "sha256": "8839426a8fc8395f24888edf9e7f6bdc3bc36bdff220142e3737502725f59b59"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0024.bin",
+            "bytes": 141685172,
+            "sha256": "8839426a8fc8395f24888edf9e7f6bdc3bc36bdff220142e3737502725f59b59"
+          },
           "kind": "DATA",
           "roles": [
             "C144-source"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         },
         {
           "logical": {
@@ -2429,14 +2836,27 @@
             "bytes": 14662507,
             "sha256": "1e3d94615487f00da2b47bf7d04de626680ed6bca97154d039dabf42afc79c99"
           },
-          "physical": null,
+          "physical": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-inputs-retention-20261026-124/inputs/data-0025.bin",
+            "bytes": 14662507,
+            "sha256": "1e3d94615487f00da2b47bf7d04de626680ed6bca97154d039dabf42afc79c99"
+          },
           "kind": "DATA",
           "roles": [
             "C144-typed"
           ],
           "requiredForRead": true,
-          "status": "EXACT_ORIGINAL_FILE_TRANSFER_OR_LOCATION_PROOF_REQUIRED",
-          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed"
+          "status": "ACTUAL124_RETAINED_ORIGINAL_BYTES_SHA_MATCH",
+          "pinEvidence": "Existing accepted recipe/source manifest; original body not reread or rehashed",
+          "serverEvidence": {
+            "metadataJob": "t45-full-source-inputs-retention-20261026-124",
+            "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+            "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+            "receiptLocalExportSha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8",
+            "originalBodyCopiedAndHashVerifiedByT45": true,
+            "DBConnected": false,
+            "sourceReaderRun": false
+          }
         }
       ]
     },

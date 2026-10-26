@@ -1,3 +1,5 @@
+SOURCE636：QB381固定633精确13叶物理映射新增源PASS采用；D3原INPUT仅DATA物理位置按actual124全26receipt补齐，30跨组引用+money3新lstat，非CODE缺项0，6CODE未安装仍null；原逻辑/内容pin不改，不重已验映射套件。原DATA182293/28766ae5与DELIVERY42180/3272be51固定安全副本，source-only完整准备接缝在原D3独占provider叶继续。用户库存优化新裁决已直接核实真人任务书01a1777e-b3e6-7ce1-841f-27df2e9abe1b，F2原idle接独立projection/matrix4叶仅去除隐藏FIT eager sources重复，原DTO/windowing/外观/身份合计不改，真实性能未测。不等待该优化才导入/发布。B07 fixture由原D1准备、T45独占实际执行，正常历史HTTP未通过。
+
 SOURCE635：原124真实COMPLETED0/15.306656619s，26精确DATA/METADATA原SHA及gzip全pin通过、money原96lstat匹配；实际映射ACTUAL124-FILE-LOCATION-MAP已到，不再称资料传输阻塞。D3原T19立即消费真实位置，原provider仅新增source-only准备接缝复用原reader及SOURCE624完整DATA/EXPECTED/MAIN纯函数，不伪grant/noop、不改原执行授权门；T45实际准备后C独立grant再MAIN/PUBLISH。D1接B07原copy正常QA fixture精确程序，原账号不动/不关闭guard，当前仍源码准备非历史保存通过。全站真实业务/正式发布未完成。634远端ec781e5已核。
 
 SOURCE634：原QB378REV2固定632 T21 Full发布5叶源码PASS采用，报告4158/a2602b08，stoppedweb-safeStop唯一F01独立复验关闭，不重旧范围；真实Full/业务/恢复/部署未验。SOURCE633映射已远端0500777核，原QB仅新增范围在途。T45原传输timeout后确证无人写、原52756480压缩prefix SHA与原gzip严格一致，保旧失败、仅剩54230324分4有界suffix续传，不重压808MB/不重传prefix，完整hash后才124。B07原copy唯一应用account禁用/session0阻塞正常HTTP，D1只读核既有正常QA账号生命周期准备入口，T45不盲改disabled/不造session，独立准备继续。全站37/67真实业务/历史/正式切换仍未完成。

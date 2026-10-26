@@ -1,8 +1,8 @@
 {
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
-  "recordedAtUtc": "2026-10-26T09:42:14.985166+00:00",
+  "recordedAtUtc": "2026-10-26T11:11:07.604150+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "SOURCE627_EXACT_PHYSICAL_MAPPING_SOURCE_READY_DATA_LOCATION_COMPLETION_PENDING",
+  "status": "ACTUAL124_DATA_LOCATIONS_BOUND_CODE_INSTALL_AND_FULL_EXECUTION_PENDING",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
     "bytes": 92349,
@@ -15,8 +15,8 @@
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
-    "bytes": 149756,
-    "sha256": "9e7e8d606ec62c944baf930b79e5ad1863556b5f1601ec992b2c313c0598bb55"
+    "bytes": 182293,
+    "sha256": "28766ae52b713cefbe19b03da9b17c07357a2dbb10728ed2d21e3dacc8330a1e"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -126,16 +126,16 @@
   },
   "remaining": [
     {
-      "owner": "C/QB",
-      "facts": "Freeze source627 exact original code+INPUT/DELIVERY pins and review only new physical IO seam/descriptor/CATALOGUE actual26 consumer."
+      "owner": "C",
+      "facts": "Adopt these actual124 physical locations and updated INPUT pin; no new reader/code/tests delta."
     },
     {
-      "owner": "C/T45",
-      "facts": "Complete physical DATA/METADATA/CODE refs; exact original body pins unchanged. Active original26 DATA transfer remains originalkey; no retransmission requested by this update."
+      "owner": "C/QB/T45",
+      "facts": "Current mapping source review and exact6 CODE physical install/pins pending; nonCODE source locations now complete, original identity/content unchanged."
     },
     {
       "owner": "C original source624 / T45",
-      "facts": "Real all11 DATA/EXPECTED/MAIN, fullhash/grant/job and actual source/PG validation still pending; no arbitrary pins produced by D3."
+      "facts": "Real DATA/EXPECTED/MAIN, fullhash/grant/job and actual source/PG validation still pending."
     }
   ],
   "executionReady": false,
@@ -158,7 +158,7 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
   ],
-  "next": "D3 releases original13 changed leaves now; C fixed source627 increment then original QB only new mapping checks. T45 continue existing transfer and source624 preparation with unchanged DATA identities.",
+  "next": "C freeze actual124 metadata update; T45 bind accepted exact6 CODE then original source624 real assembly. Do not retransmit/reverify original26 DATA or54 old files.",
   "source620": {
     "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
     "implemented": [
@@ -315,75 +315,64 @@
     }
   },
   "physicalDataMapping627": {
-    "status": "SOURCE_READY_EXPLICIT_ORIGINAL_IDENTITY_PHYSICAL_IO_MAP_NOT_FULL_EXECUTION_READY",
+    "status": "ACTUAL124_NONCODE_SOURCE_LOCATIONS_COMPLETE_ORIGINAL_PINS_UNCHANGED_CODE_PENDING",
     "recordedAtUtc": "2026-10-26T09:19:01.083815+00:00",
     "descriptorField": "INPUT.producers.<group>.fileLocations[] = logical original path/bytes/SHA + physical exact location or null + kind + required role + existing server evidence. No path prefix replacement or original DATA/review mutation.",
     "all11": {
       "PARTIES": {
         "requiredRefs": 8,
-        "existingLstat": 1,
-        "moneyOriginal96": 0,
-        "stillMissing": 7
+        "nonCodeLocationsBound": 8,
+        "codeLocationsPending": 0
       },
       "CATALOGUE": {
         "requiredRefs": 2,
-        "existingLstat": 2,
-        "moneyOriginal96": 0,
-        "stillMissing": 0
+        "nonCodeLocationsBound": 2,
+        "codeLocationsPending": 0
       },
       "PRODUCTS": {
         "requiredRefs": 41,
-        "existingLstat": 31,
-        "moneyOriginal96": 0,
-        "stillMissing": 10
+        "nonCodeLocationsBound": 40,
+        "codeLocationsPending": 1
       },
       "SKUS": {
         "requiredRefs": 2,
-        "existingLstat": 1,
-        "moneyOriginal96": 0,
-        "stillMissing": 1
+        "nonCodeLocationsBound": 1,
+        "codeLocationsPending": 1
       },
       "BARCODES": {
         "requiredRefs": 5,
-        "existingLstat": 0,
-        "moneyOriginal96": 0,
-        "stillMissing": 5
+        "nonCodeLocationsBound": 4,
+        "codeLocationsPending": 1
       },
       "STOCK_CONTRIBUTORS": {
         "requiredRefs": 2,
-        "existingLstat": 1,
-        "moneyOriginal96": 0,
-        "stillMissing": 1
+        "nonCodeLocationsBound": 1,
+        "codeLocationsPending": 1
       },
       "PAYMENT": {
         "requiredRefs": 4,
-        "existingLstat": 0,
-        "moneyOriginal96": 0,
-        "stillMissing": 4
+        "nonCodeLocationsBound": 4,
+        "codeLocationsPending": 0
       },
       "HEADERS": {
         "requiredRefs": 11,
-        "existingLstat": 7,
-        "moneyOriginal96": 1,
-        "stillMissing": 3
+        "nonCodeLocationsBound": 8,
+        "codeLocationsPending": 3
       },
       "SALES_DETAILS": {
-        "requiredRefs": 7,
-        "existingLstat": 0,
-        "moneyOriginal96": 1,
-        "stillMissing": 6
+        "requiredRefs": 8,
+        "nonCodeLocationsBound": 4,
+        "codeLocationsPending": 4
       },
       "SETTLEMENTS": {
-        "requiredRefs": 7,
-        "existingLstat": 0,
-        "moneyOriginal96": 1,
-        "stillMissing": 6
+        "requiredRefs": 8,
+        "nonCodeLocationsBound": 4,
+        "codeLocationsPending": 4
       },
       "TRANSFER_LINES": {
         "requiredRefs": 3,
-        "existingLstat": 3,
-        "moneyOriginal96": 0,
-        "stillMissing": 0
+        "nonCodeLocationsBound": 3,
+        "codeLocationsPending": 0
       }
     },
     "existingActualMap": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/FINAL-EXISTING-SERVER-LOCATION-MAP.json",
@@ -401,8 +390,8 @@
       "groups": 11,
       "uniqueRequiredFiles": 79,
       "uniqueCodeFiles": 6,
-      "uniqueMissingNonCodeFiles": 26,
-      "uniqueKnownMoney96LocationsPendingStat": 2
+      "uniqueMissingNonCodeFiles": 0,
+      "uniqueKnownMoney96LocationsPendingStat": 0
     },
     "modifiedCode": [
       {
@@ -510,9 +499,53 @@
       "CORE DATA projection logical descriptor remains original actual118 immutable safe DATA; currentcheckpoint comes from original actual121/readback, never by editing birth DATA."
     ],
     "remaining": [
-      "C/T45 adopt completed physical refs with actual transfer/size/original SHA proof and finish money96 fresh stat, without treating metadata mapping as current STAGE equality or skip authorization.",
-      "C/QB fixed increment review once; C original source624 assemble real complete DATA/EXPECTED/MAIN then approve actual full hash/job/grant with original keys.",
-      "T45 actual all11 source consumption/roots, synthetic T19 process/unknown-commit QA and real MAIN/closure/publication remain NOT_RUN."
-    ]
+      "C fix this metadata-only INPUT/DELIVERY update; original mapping code remains unchanged frozen source633/SOURCE627 increment.",
+      "T45 install exact6 CODE files and record physical locations only after current code QB acceptance; do not substitute old options-helper pin.",
+      "C original source624 prepare real complete DATA/EXPECTED/MAIN and actual full hash/job/grant; T45 actual reader/PG verification still NOT_RUN."
+    ],
+    "actual124": {
+      "status": "26_UNIQUE_NONCODE_LOGICAL_IDENTITIES_MATCH_ACTUAL_ROOT_RECEIPT_AND_OLD_MONEY96_FRESH_STAT",
+      "map": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/ACTUAL124-FILE-LOCATION-MAP.json",
+        "bytes": 29796,
+        "sha256": "5207ba8da94838e1867ca8b82d62ffca7afe58a30446de012e47deb3eac7142e"
+      },
+      "terminal": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/job.json",
+        "bytes": 508,
+        "sha256": "adb47ebe4b6b946dab222ba50b60adec53ad80e1c71da3844d0a7a0eb756d6b8"
+      },
+      "engine": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+        "bytes": 15673,
+        "sha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8"
+      },
+      "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+      "uniqueNewOriginalFiles": 26,
+      "physicalFieldsFilled": 30,
+      "perGroupPhysicalFieldsFilled": {
+        "PARTIES": 7,
+        "CATALOGUE": 0,
+        "PRODUCTS": 9,
+        "SKUS": 0,
+        "BARCODES": 4,
+        "STOCK_CONTRIBUTORS": 0,
+        "PAYMENT": 4,
+        "HEADERS": 0,
+        "SALES_DETAILS": 3,
+        "SETTLEMENTS": 3,
+        "TRANSFER_LINES": 0
+      },
+      "moneyFieldsUpdated": 3,
+      "uniqueMoneyLogicalDescriptors": 2,
+      "logicalDescriptorsUnchanged": true,
+      "allOtherRecipeFieldsUnchanged": true,
+      "sourceCodeFilesChanged": 0,
+      "CODELocationsInstalled": false,
+      "sourceReaderExecuted": false,
+      "fullPayloadHashGenerated": false,
+      "DBOrMAINOrPublish": false,
+      "validation": "Small metadata crosschecked bijective original logical path/bytes/SHA with engine exported receipt and terminal COMPLETED0; all original logical fields/roles/options and all CODE mappings unchanged. No local source-body read/rehash or reader/test execution."
+    }
   }
 }

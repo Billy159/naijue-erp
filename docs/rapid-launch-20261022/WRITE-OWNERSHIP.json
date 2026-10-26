@@ -6093,5 +6093,16 @@
     "scope": "Consume actual124 precise26 locations, existing54 map, original same-version CODE; add/reuse source-only preparation of all11 genuine streams/native facts into fixed SOURCE624 prepareFullPayloadData26/prepareFullSourceBindings26/writeFullSourceBindings26; no fake execution authority/noop, SQL/execute/grant bypass or duplicated business logic. Original execution authority remains mandatory. Existing D1 prepare2 leaves remain fixed read-only.",
     "actualOwner": "T45 actual file window/current continuation; C only subsequent independent grant/Git/build",
     "readiness": "Source-only DATA roots/commands preparation cannot wait for PUBLISH execution authorization it must produce inputs for"
+  },
+  "source636InventoryProjection": {
+    "owner": "F2",
+    "exactFiles": [
+      "apps/web/src/inventory/display-projection.ts",
+      "apps/web/src/inventory/display-projection.test.ts",
+      "apps/web/src/inventory/tests/run-display-projection-dom-tests.mjs",
+      "apps/web/demo-replica/frontend/runtime/inventory/matrix.tsx"
+    ],
+    "scope": "Verified latest human inventory optimization direction in taskbook 01a1777e-b3e6-7ce1-841f-27df2e9abe1b: original current wire/display semantics unchanged, remove eager all-hidden-FIT per-cell sources duplication; reuse current windowmodel and derive visible/display or click targets lazily from full stable page model. Technical Solmedium. No protocol/backend/schema changes or new cache layer; no D3 import leaves overlap.",
+    "source": "Taskbook actual human message verified via read_thread this turn; full real wiring remains first"
   }
 }
