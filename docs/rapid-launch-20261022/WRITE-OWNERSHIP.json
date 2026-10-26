@@ -6083,5 +6083,15 @@
     ],
     "additionalScope": "Original reader optional controlled resolveFile seam maps exact original logical path plus bytes/SHA to physical file; original options/manifests/reviews/provenance remain immutable; original validation and held FD continue. Existing provider/host tests only affected cases. Verified seven R source leaves have no WIP on handoff; no D1 release overlap.",
     "delivery": "SOURCE633 handback; actual helper in O/D3 (corrected prior registration path typo); fixed safe source copies in R reports include original header helper dependency"
+  },
+  "source635ActualSourcePreparation": {
+    "owner": "D3",
+    "exactFiles": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs"
+    ],
+    "scope": "Consume actual124 precise26 locations, existing54 map, original same-version CODE; add/reuse source-only preparation of all11 genuine streams/native facts into fixed SOURCE624 prepareFullPayloadData26/prepareFullSourceBindings26/writeFullSourceBindings26; no fake execution authority/noop, SQL/execute/grant bypass or duplicated business logic. Original execution authority remains mandatory. Existing D1 prepare2 leaves remain fixed read-only.",
+    "actualOwner": "T45 actual file window/current continuation; C only subsequent independent grant/Git/build",
+    "readiness": "Source-only DATA roots/commands preparation cannot wait for PUBLISH execution authorization it must produce inputs for"
   }
 }
