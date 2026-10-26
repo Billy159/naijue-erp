@@ -1,3 +1,5 @@
+SOURCE579（2026-10-26）：并行接口对齐即时纠正：C先采六pin候选时D1原闭集已给更小三pin，现最终统一仅proposal/原分类批准/直接v19回复三个hash作为command.approvalPins；额外文档/15018manifest/QB338为sidecar，不给六scheme初始化增加来源捕获依赖。上一六pin采纳历史保留且显式撤回，WRITE/TASKS当前一致；D1与D3均收到唯一schema，继续实施不再命名盘点。业务规则/真实六row/COREbirth/事务/原key及审计均不变，无新用户审批。
+
 SOURCE578（2026-10-26）：QB339新增不可变静态缓存+代理source限定PASS2c638a33，原3affected/strict/C生成检查复用，实际nginx/publicCC尚未测，合下必要包。D1已交borrowedclient initializeSchemes26/clientquery接口，D3按唯一签名接；C采用原实际proposal/approval/纠正版v19/直接回复/来源manifest/QB338六hash技术字段schema，精确值登记WRITE，无新业务字段或第二接口、不再等待技术命名。v19正文与人类回执pins固定不随进度改，原三记录维护后续状态。新生成/初始化源码在原owner实施中，未交付未实际执行；原headers传输继续、原有备份及20服务保留。
 
 SOURCE577（2026-10-26）：修订v19当前摘要和roleQueue全部同步真实新状态：D1/D2/D3已实际接获原owner实现派工及exact文件登记，不再以旧allocator/optionalintent/全包待确认作为活跃方案。最终Demo手填系统号与barcodeItemCode字段对应，空值保存拒绝；非空但码条件不全资料可按原Demo保存并提示，不能新设全历史七位限制或伪生成。原V2/整组规格/颜色×版型×尺码差集、原审计/主码保护不另造。T45当前原SSH密钥通道传已有销售头两输入约922MB，尚未提交headerDB作业，服务器可用约56GB；不把传输当暂存/全11发布完成。G源码已交限定QB新源审，实际代理/缓存待下必要合包，不抢T45现传输。全站页面及真实业务/历史编辑最终目标ACTIVE，不新增完成计数。
