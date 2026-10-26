@@ -109,12 +109,23 @@ class ClosureFold {
   must(typeof scope === "string" && scope.length > 0 && Buffer.byteLength(scope, "utf8") <= 65536 && validString(scope));
   this.state = createHash("sha256").update(encodeHistoryClosureValue(["HISTORY_CLOSURE_STREAM_V1", scope])).digest();
  }
- add(original: HistoryClosureRow): string {
+ private beginRow(original: HistoryClosureRow): { row: HistoryClosureRow; order: Buffer } {
   const row = captureRow(original), order = Buffer.from(row.relation + "\0" + row.key, "utf8");
   requireDomain(this.previous === undefined || Buffer.compare(this.previous, order) < 0, "INVALID_HISTORY_CLOSURE_ORDER", "Strict byte-ordered unique relation/primary-key rows required");
-  must(++this.count <= MAX_STREAM_ROWS); const hash = historyClosureRowHash(row);
+  must(++this.count <= MAX_STREAM_ROWS); return { row, order };
+ }
+ private advance(order: Buffer, hash: string): void {
   this.state = createHash("sha256").update(Buffer.concat([Buffer.from([1]), this.state, Buffer.from(hash, "hex")])).digest(); this.previous = order;
-  return hash;
+ }
+ add(original: HistoryClosureRow): string {
+  const { row, order } = this.beginRow(original), hash = historyClosureRowHash(row);
+  this.advance(order, hash); return hash;
+ }
+ /** Module-internal only: the builder passes the global fold's just-created
+  * digest for the SAME canonical row, synchronously and without mutation.
+  * No public API accepts a caller-provided digest or skips row coverage. */
+ addSameCanonicalRow(original: HistoryClosureRow, hash: string): void {
+  const { order } = this.beginRow(original); this.advance(order, hash);
  }
  finish(): { rows: number; sha256: string } { return { rows: this.count, sha256: createHash("sha256").update(encodeHistoryClosureValue(["HISTORY_CLOSURE_STREAM_FINAL_V1", this.scope, this.count, this.state.toString("hex")])).digest("hex") }; }
 }
@@ -223,7 +234,7 @@ async function buildHistoryTypedClosureExpectedUsing(original: unknown,
  for await (const originalRow of o.sourceRows as Iterable<HistoryClosureRow> | AsyncIterable<HistoryClosureRow>) {
   const row = canonical(originalRow), p = row.projection as Record<string, unknown>;
   expectedMust(row.relation === "import_source_row" && p.batch_id === batchId && typeof p.entity_type === "string" && HISTORY_CLOSURE_SOURCE_ENTITIES.includes(p.entity_type as HistoryClosureSourceEntity));
-  const entity = p.entity_type as HistoryClosureSourceEntity; source.add(row); sourceEntityCounts[entity]++; actualCounts.import_source_row++;
+  const entity = p.entity_type as HistoryClosureSourceEntity, rowHash = source.add(row); sourceEntityCounts[entity]++; actualCounts.import_source_row++;
   expectedMust(sourceEntityCounts[entity] <= expectedSourceEntityCounts[entity] && actualCounts.import_source_row <= expectedCounts.import_source_row);
   if (entity === "BARCODE") actualCounts.barcodes++;
   if (!["SALES_HEADER", "SALES_LINE", "SETTLEMENT", "TRANSFER_HEADER", "TRANSFER_LINE"].includes(entity)) continue;
@@ -235,21 +246,21 @@ async function buildHistoryTypedClosureExpectedUsing(original: unknown,
   const id = stageUuid(p.id); expectedMust(!originalMembership.has(id));
   identityBytes += Buffer.byteLength(id, "utf8") + 160; expectedMust(originalMembership.size < 1000000 && identityBytes <= 256 * 1024 * 1024);
   originalMembership.set(id, { entity, state: state! });
-  const hash = state!.source.add(row);
-  if (header) { expectedMust(state!.allocation.headerSourceRowId === id && state!.sourceHeaderSha === undefined); state!.sourceHeaderSha = hash; }
+  state!.source.addSameCanonicalRow(row, rowHash);
+  if (header) { expectedMust(state!.allocation.headerSourceRowId === id && state!.sourceHeaderSha === undefined); state!.sourceHeaderSha = rowHash; }
   else if (entity === "SETTLEMENT") state!.sourceSettlements++; else state!.sourceLines++;
  }
  expectedMust(HISTORY_CLOSURE_SOURCE_ENTITIES.every(k => sourceEntityCounts[k] === expectedSourceEntityCounts[k]));
  for await (const originalRow of o.typedRows as Iterable<HistoryClosureRow> | AsyncIterable<HistoryClosureRow>) {
   const row = canonical(originalRow), p = row.projection as Record<string, unknown>; expectedMust(row.relation !== "import_source_row" && (!Object.hasOwn(p, "batch_id") || p.batch_id === batchId));
-  typed.add(row);
+  const rowHash = typed.add(row);
   if (HISTORY_COUNT_KEYS.includes(row.relation as typeof HISTORY_COUNT_KEYS[number])) actualCounts[row.relation as typeof HISTORY_COUNT_KEYS[number]]++;
   if (!["history_sales_header", "history_sales_line", "history_sales_settlement", "history_transfer_header", "history_transfer_line"].includes(row.relation)) continue;
   const member = originalMembership.get(stageUuid(p.source_row_id)), header = row.relation.endsWith("_header"), kind = row.relation.startsWith("history_transfer") ? "TRANSFER" : "SALES";
   const sourceEntity = row.relation === "history_sales_settlement" ? "SETTLEMENT" : row.relation.replace("history_", "").toUpperCase();
   expectedMust(member !== undefined && member.entity === sourceEntity && !typedMembership.has(p.source_row_id as string)); typedMembership.add(p.source_row_id as string);
   const state = byId.get(kind + "/" + (header ? stageUuid(p.id) : stageUuid(p.header_id))); expectedMust(state !== undefined && state === member!.state);
-  state!.typed.add(row);
+  state!.typed.addSameCanonicalRow(row, rowHash);
   if (header) { expectedMust(state!.allocation.headerSourceRowId === p.source_row_id); state!.typedHeaders++; }
   else if (row.relation === "history_sales_settlement") state!.typedSettlements++; else state!.typedLines++;
  }
