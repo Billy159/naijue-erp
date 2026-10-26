@@ -1,3 +1,5 @@
+SOURCE564（2026-10-26）：原D3沿已持有小回执/人类裁决及原任务书最新4轮定向核对，未定位到六条码方案状态及完整初始化后续批准；21主码转旧码/季节、2471厅映射各有明确批准，但不能外推六方案。C沿原确认单和826e63b3 proposal一次异步提交“2026当前其余历史”或“六个全部当前”及完整六行42字段受控初始化，不重问原码/已批21，不增schema，不按年份猜status。仅相应初始化/条码源分支等待，CORE14部署、2历史客户/销售头stage独立继续；不重来源大读/QA/源码/DB。当前T45原实际工具仍在接续88依赖定位/89新包准备，不重派在途或旧失败81。
+
 SOURCE563（2026-10-26）：T45 actual87只读COMPLETED0/0.5688s，PG原日志明确81的42501对象为history_closure_row_hash函数EXECUTE；customer7/7读写及source/ref/evidence必要列权限均有，generated FK/creation_xid/imported_at不应补GRANT。原cutoff_lock可执行。不是猜测表权限，也未先GRANT再盲试；T45正在一次核齐原hash纯encoder/triggerinvoker依赖，canonical59/APP74/19服务保留。CORE14原有效包及审查已到T45，函数窄diff齐则同新双purpose审核和应用合批；若不齐先现canonical部署启动压缩，不让整个前端无期限等导入。真实2客户/header/all11/历史编辑/37与67业务及正式根发布仍未完成。GitHub562已核4169f7aa。
 
 SOURCE562（2026-10-26）：修后固定SOURCE561/CORE14已真实build0、pack/一次读回PASS199members，1684793B/805e84be，manifestda8cc80c；QB334源限定PASS a601ce34且精确两叶与导出一致，OWS F01关闭，原前端QF557有效结论复用。C已将完整新host包和QF/QB报告路径字节交原T45，等待原运维安全窗口合批实际部署；没有CORE14公网压缩或浏览器性能通过，旧CORE13失败包禁部署保留。专线仅在新APP后读公网encoding/decoded/HEAD，源码完成不能冒上线。

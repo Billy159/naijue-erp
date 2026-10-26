@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE563",
+    "round": "SOURCE564",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "4169f7aac7d50ab2729d1d660599a4a12571a249",
+    "sourceHeadBeforeThisContinuityCommit": "4608ae690d0653802961f2d5b4047dfc10b04d90",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12786,6 +12786,18 @@
       "deployment": "Original T45 has exact accepted pack and review paths;84-86 prepared/unsubmitted awaiting original ops window; no actual CORE14 deployment yet",
       "publicEncoding": "NOT_MEASURED_FOR_NEW_HOST",
       "wholeBusiness": "NOT_ACCEPTED"
+    },
+    "barcodeDecision564": {
+      "checkedBy": "Original D3 real small human receipts and latest4 human taskbook turns, not source data replay",
+      "result": "No located later explicit six-scheme status/full initialization approval in inspected evidence; not global negative proof from pending flag alone",
+      "prior21Approval": "Only exact21 demotions15groups and season multiselect; cannot extend to scheme status",
+      "originalConfirmation": "BARCODE-SCHEME-INITIALIZATION-CONFIRMATION-v1.md",
+      "proposal": "BARCODE-SCHEME-INITIALIZATION-PROPOSAL-v1.json",
+      "proposalSha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00",
+      "currentAction": "One root async question submitted to human:2026 current/five historical vs all six current, with complete original6row42field controlled initialization contract; no schema change",
+      "dependentOnly": "Six-scheme initialization/barcode source branch waits; current deployment/exact2customer/sales stage continue",
+      "sourceWrites": false,
+      "DBExecuted": false
     }
   }
 }
