@@ -6273,5 +6273,15 @@
     ],
     "scope": "Specific JS dollar-anchor trailing LF/CRLF defect only; absolute end match plus affected protocol cases. QB411 does not cover this newly found branch.",
     "correction684": "Original no-m regex did reject these tails under actual Node24. Authorized change is equivalent explicit-end clarification and new regression coverage, not proven prior acceptance."
+  },
+  "source686QaCredentialLifecycle": {
+    "owner": "D1",
+    "files": [
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-credential-renewal.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-credential-renewal.test.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
+    ],
+    "scope": "Source-only extension of original isolated fixture lifecycle for same existing QA identity and committed07. Existing guard and actual setup UPDATE/session privileges must be proved by T45 before execution. No grant/guard/schema/sourceactor changes, no formal reset/admin impersonation, no seed or fixture rebuild. Reuse original parent memory secret/session/factory/cleanup; unknown commit read-only recovery, no second update."
   }
 }
