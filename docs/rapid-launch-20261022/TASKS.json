@@ -14505,6 +14505,14 @@
         "QB": "04 OS exact delta review;402 source pass adopted",
         "T45": "04 current protected fixture carrier preparation;132 terminal no replay"
       }
+    },
+    "latestSource664": {
+      "summary": "SOURCE664：QB403REV3 e607a70c关闭04 OS唯一F01，最终wrapper10130/c80f6334实际POST03路径小块断言通过；旧10131/4c568ac0和初始失败不冒PASS。C已采用最终pin+OSreg2235/3d2a1f3e、sourceReview2476/b79bf81f、prepared6616/274580aa，授权T45按原14:25Z/start≤14:10/900-860-40唯一实际04；新liveprocess用途审/gate仍必需，源码及OS通过不代替正常3案。现存03v21及原19/原6keys全保，先wholecopy后独立fixture，不对当前v21重seed。132精确源码接缝已限逐item native accounting guard：53warehouse优先→SKU→baseline，尚未drain来源stream；无小数/3位时间对6位canonical不一致是有限可复现线索，未证实际root。T45下一最小只读53仓、必要时首LF SKU<=4MiB，仅类型/keysetbool/时间格式类，无源值/ID/body/PG/MAIN/APP，不重132、不改共享validator。663远端83db0e3已核，完整来源/真实历史保存/全站正式发布仍未完成。",
+      "source663RemoteVerified": "83db0e322607db79bd5e6711ec24fe3c192eaf80",
+      "waitConditions": [
+        "04 fresh metadata -> QB current purpose -> original gate -> 3 real normal cases",
+        "132 bounded actual native item shape proof before any code change"
+      ]
     }
   }
 }
