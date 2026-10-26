@@ -13722,7 +13722,7 @@
     },
     "source614ServerNext": {
       "owner": "T45",
-      "status": "DISABLED_PREPARATION_ORIGINAL_QB_REVIEW_PENDING",
+      "status": "QB361_PREPARATION_PASS_T45_CONTROLLED_EXECUTION_DISPATCHED",
       "jobs": [
         "112 controlled missing-only ACL",
         "114 exact current installed source598 restart fresh metadata",
@@ -13730,7 +13730,9 @@
       ],
       "actualACL": false,
       "current105": "RUNNING_LAST_T45_RECEIPT",
-      "currentRoute": "4302 unchanged"
+      "currentRoute": "4302 unchanged",
+      "reviewRoot": "reports/qa-backend/rapid-launch-20261022/QB/slice361-minimum-acl-and-recovery-carriers",
+      "reviewResultSha256": "134a14d2d9c62be215a26064caa8ef5c64d28f8a8d21f59386bbc1dd22de3a5d"
     }
   }
 }

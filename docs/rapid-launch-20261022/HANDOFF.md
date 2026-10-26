@@ -1,3 +1,5 @@
+SOURCE615接续：QB361三恢复载体仅新增prepared源审PASS134a14d2已采用，原T45立即原112实际权限窗口→fresh双用途metadata原QB→114新APP→115三upstream，0重复准备验收。06:18:20Z原控制通道证明112/114/115未提交且无在途writer；此时当前服务精确状态须原root guard实测，普通SSH权限不足不扩权。实际ACL/metadata/APP/route尚待结果，旧355不得当afterACL。
+
 SOURCE615：D1原host v20兼容2叶交还固定host38021/51eebde7与test38193/262829d0，仅FULL continuation准确新增既有issuer已批26_v20_history_insert_identity_from_v19，CORE/无phase/其他profile/target身份及原issuer canonical用途权限保持。新3限定检查修前RED/修后GREEN采用，交原QB只新增scope；非实际PG/fullsource已就绪。原112/114/115恢复链与projectionrev2新审继续，不扩大检查/不新建授权平台。源码部分/真实业务/正式发布分层保持。
 
 SOURCE614：原QB新导出源审发现实际SQL减键/JSON箭头优先级错误，原D1仅补左操作数括号并同源生成SELECTS，新1定向检查通过/旧4复用；rev2 RESULT4831/8d141932已固定，旧SOURCE613失败保留，未用旧版启用/未PG执行。D1下一独立host exact2已登记，修FULL仅v14/v16白名单漏当前已批准v20准确兼容，不降130/删守卫。T45 112最小ACL→114新元数据同598APP恢复→115仅三upstream名的完整disabled恢复链交原QB合批新增差异，105尚running/4302未变/0GRANT。SOURCE613远端e9bcc3f已核。
