@@ -6140,10 +6140,10 @@
   },
   "source656C144ManifestTelemetry": {
     "owner": "D3",
-    "status": "CURRENT",
+    "status": "HANDED_BACK_FOR_FIXED_SOURCE_AND_QA",
     "exactFiles": [
       "scripts/import-v2/authorized-sales-detail-reader.mjs",
-      "scripts/import-v2/authorized-sales-detail-reader.test.mjs"
+      "scripts/import-v3/production-source-provider26.test.mjs"
     ],
     "scope": "Actual130 OPEN_GROUP_SALES_DETAILS HISTORY_SETTLEMENT_INPUT: exact original2555B C144 manifest elapsedSeconds finite nonnegative telemetry separated from unchanged strict business capture; immutable original byteSHA/scope/descriptors/selection/32money/fingerprints/data roots retained; no broad float allowance",
     "noOverlap": "D1 new narrow SQL/nativecap/test and C build/root records untouched",

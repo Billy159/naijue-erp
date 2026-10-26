@@ -14433,6 +14433,22 @@
       },
       "F1": "Latest actual thread completed/notLoaded; source handed back, true QA/build/browser outstanding; no duplicate dispatch",
       "F4": "Latest thread completed/notLoaded, original package retained; no duplicate dispatch"
+    },
+    "source657C144Fix": {
+      "status": "FIXED_SOURCE_NEW_METADATA_SCOPE_QB_PENDING",
+      "files": {
+        "scripts/import-v2/authorized-sales-detail-reader.mjs": {
+          "bytes": 29081,
+          "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+        },
+        "scripts/import-v3/production-source-provider26.test.mjs": {
+          "bytes": 142683,
+          "sha256": "98b65cb02f091d34a6e3e8380ddedb555f5bfba35e007bda47a598f838e2ca02"
+        }
+      },
+      "delta": "Only optional top elapsedSeconds finite nonnegative telemetry isolated from original strict business evidence shape; original pinned manifest and businesshash unchanged",
+      "checks": "Exact decimal elapsed RED then2new focused GREEN incl privacy scope/hash/authorization and negative cases; no actual large reader rerun",
+      "next": "QB failed metadata seam only then T45 exact same-version reader overlay bounded full preparation successor; first109keys preserved"
     }
   }
 }

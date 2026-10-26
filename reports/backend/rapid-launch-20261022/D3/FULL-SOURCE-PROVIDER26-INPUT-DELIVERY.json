@@ -10,8 +10,8 @@
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 138591,
-    "sha256": "9aa6078da2c1b1ef4221e2b786142014312cbe8dc44ec564b2bc723cac2e24f4"
+    "bytes": 142683,
+    "sha256": "98b65cb02f091d34a6e3e8380ddedb555f5bfba35e007bda47a598f838e2ca02"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
@@ -1079,5 +1079,58 @@
     "actualLargeBodiesRead": false,
     "actualPGOrServerAction": false,
     "changedD1OrSharedClosureReader": false
+  },
+  "source661C144ManifestElapsedSeconds": {
+    "status": "DETERMINISTIC_ROOT_CAUSE_FIXED_FINITE_RED_GREEN_NOT_ACTUAL_PREPARATION_PASS",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 142683,
+        "sha256": "98b65cb02f091d34a6e3e8380ddedb555f5bfba35e007bda47a598f838e2ca02"
+      }
+    ],
+    "testPathNote": "Existing owned provider26.test.mjs holds the new original C144 opener finite test; authorized-sales-detail-reader.test.mjs untouched. C may register this exact already-owned path.",
+    "rootCause": {
+      "actual130": "HISTORY_SETTLEMENT_INPUT / OPEN_GROUP_SALES_DETAILS / FAILED2 / 144.011796684s / no output or PG/MAIN/grant/APP",
+      "originalSmallManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/MANIFEST.json",
+        "bytes": 2555,
+        "sha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed",
+        "readOnceThisDiagnosis": true,
+        "bodyValuesPrinted": false,
+        "actualFinding": "Top-level elapsedSeconds is fractional; all other JSON numeric fields are integers."
+      },
+      "exactCodeSeam": "openCapturedSalesSettlementSource: byte-pin verified manifest JSON then historySettlementRequestHash(manifest); guard rejects fractional elapsedSeconds with Safe evidence integers only/HISTORY_SETTLEMENT_INPUT. Whole-manifest capture return was discarded, never adopted as identity/business root."
+    },
+    "fix": "When optional exact top-level elapsedSeconds is present, validate it separately as number/finite/nonnegative; remaining original evidence still uses exact original historySettlementRequestHash. Original manifest bytes unmodified and same SHA guard before parse; original scope/descriptors/selection/32-money/fingerprint validators and data/business hash inputs unchanged. No generic float allowance.",
+    "checks": {
+      "red": "Original decimal elapsed1.25 finite C144 opener fails at original reader line153 with HISTORY_SETTLEMENT_INPUT; 1 test failed before fix, actual log observed.",
+      "green": "2 scoped tests PASS / 0 FAIL after minimal fix, no old suites repeated.",
+      "command": "node --test --test-reporter=spec '--test-name-pattern=source661 C144' scripts/import-v3/production-source-provider26.test.mjs",
+      "covered": [
+        "Fractional finite positive top-level timing accepted with same byte pin; original full capture alone still rejects it as the reproduced mechanism.",
+        "No source/typed bodies read at opening in finite fixture; original external proof invoked and close once.",
+        "Missing native resolver still rejects authorize().",
+        "Negative/null/string/nonfinite serialized timing rejected.",
+        "Fractional sourceRows, descriptor rows, unrelated evidence remain rejected by original strict capture.",
+        "Wrong original manifest byte pin still rejected and resource closed."
+      ]
+    },
+    "inputImpact": "INPUT.CANDIDATE unchanged182293/c85416848fd292e4aac11f17c82567804af8989b2d5575622cf88ad10c7c33b1; provider remains114035/b816b2f5d4102569f0538782992de97c0bad01e7b1c7b528b99982ea9fbd14e9. C freeze/build carrier must include changed imported reader module exact pin in actual source tree. No logical/physical DATA mappings or6 support CODE pins changed.",
+    "next": "C freeze exact changed reader+provider test+delivery -> QB only elapsed metadata seam -> T45 new source-only successor with original109keys/registration and safe phase carrier; do not rerun126/130.",
+    "notRun": [
+      "Real full source-only successor after fix",
+      "Full DATA/EXPECTED/MAIN creation or authorization",
+      "PG/STAGE/MAIN/publish"
+    ],
+    "largeSourceBodiesRead": false,
+    "D1BuilderChanged": false,
+    "sharedCaptureFunctionChanged": false,
+    "originalC144ManifestChanged": false
   }
 }

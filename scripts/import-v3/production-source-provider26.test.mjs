@@ -763,3 +763,25 @@ test('source646 preparation phase identifies native fact and DATA derivation fai
  await assert.rejects(prepareProductionSourceOnly26({preparationFile:ref.path,trustedPreparationSha256:ref.sha256,signal:g.controller.signal}),e=>{assert.equal(e.code,'INVALID_HISTORY_CLOSURE_STAGE');assert.equal(e.sourcePreparationPhase,'DATA_DERIVATION');return true;});
  for(const fixture of [f,g])assert.ok(!(await fixture.readdir(fixture.directory)).includes(fixture.scope.registrationId));
 });
+
+async function capturedManifestTimingFixture26(t){
+ const {syntheticSalesDetailChunk}=await import('../../tests/support/synthetic-sales-detail-fixtures.ts'),{mkdtemp,realpath,writeFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');
+ const input=syntheticSalesDetailChunk(),directory=await mkdtemp(join(await realpath(tmpdir()),'synthetic-c144-manifest-timing-'));t.after(()=>rm(directory,{recursive:true,force:true}));
+ const descriptor=(name,actualColumns)=>({path:join(directory,name),bytes:100,rows:1,sha256:H,mode:'0600',entity:'SALES_LINE',actualColumns});
+ const manifest={status:'ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY',elapsedSeconds:1.25,referenceOnly:true,nativeBindingsVerified:false,PG:false,MAIN:false,PUBLISH:false,all11:false,actualPayloadHash:null,sourceRows:1,typedRows:1,artifacts:[descriptor('source.jsonl',12),descriptor('typed.jsonl',21)]},state={verified:0,closed:0,bodyReads:0};
+ const options={batchId:input.batchId,fixedSourceNamespace:input.fixedSourceNamespace,trustedApprovalSha256:input.selection.approvalSha256,approvedMoneyOverlaySha256:input.selection.moneyApprovalSha256,capturedSource:{manifestFile:join(directory,'MANIFEST.json'),trustedManifestSha256:null,selection:input.selection,moneyApprovals:input.moneyApprovals,
+  read:{async *sourceRows(){state.bodyReads++;throw Error('FINITE_BODY_READ_FORBIDDEN');},async typedRow(){state.bodyReads++;throw Error('FINITE_BODY_READ_FORBIDDEN');}},async verify(){state.verified++;},async close(){state.closed++;}}};
+ const save=async()=>{const bytes=Buffer.from(JSON.stringify(manifest));await writeFile(options.capturedSource.manifestFile,bytes,{mode:0o600});options.capturedSource.trustedManifestSha256=createHash('sha256').update(bytes).digest('hex');};await save();return{manifest,state,options,save};
+}
+test('source661 C144 opener accepts independently byte-pinned fractional elapsed telemetry without changing source identity or native authorization',async t=>{
+ const {openCapturedSalesSettlementSource}=await import('../import-v2/authorized-sales-detail-reader.mjs'),{historySettlementRequestHash}=await import('../../packages/application/src/import-v3-history-settlement.ts'),f=await capturedManifestTimingFixture26(t);
+ assert.throws(()=>historySettlementRequestHash(f.manifest),e=>e.code==='HISTORY_SETTLEMENT_INPUT'); // exact original failure mechanism
+ const pin=f.options.capturedSource.trustedManifestSha256,r=await openCapturedSalesSettlementSource(f.options,'SALES_LINE');assert.equal(f.options.capturedSource.trustedManifestSha256,pin);assert.equal(f.manifest.elapsedSeconds,1.25);assert.equal(f.state.bodyReads,0);assert.ok(f.state.verified>0);
+ await assert.rejects(r.authorize({}),/NATIVE_RESOLVER_REQUIRED/);await r.close();assert.equal(f.state.closed,1);
+});
+test('source661 C144 timing exception rejects invalid telemetry and preserves original integer evidence and byte-pin guards',async t=>{
+ const {openCapturedSalesSettlementSource}=await import('../import-v2/authorized-sales-detail-reader.mjs');
+ for(const elapsed of [-0.1,null,'1.25',Infinity,NaN]){const f=await capturedManifestTimingFixture26(t);f.manifest.elapsedSeconds=elapsed;await f.save();await assert.rejects(openCapturedSalesSettlementSource(f.options,'SALES_LINE'),/MANIFEST_TIMING/);assert.equal(f.state.bodyReads,0);assert.equal(f.state.closed,1);}
+ for(const change of [m=>{m.sourceRows=1.25;},m=>{m.artifacts[0].rows=1.25;},m=>{m.unrelatedEvidence=1.25;}]){const f=await capturedManifestTimingFixture26(t);change(f.manifest);await f.save();await assert.rejects(openCapturedSalesSettlementSource(f.options,'SALES_LINE'),e=>e.code==='HISTORY_SETTLEMENT_INPUT');assert.equal(f.state.bodyReads,0);assert.equal(f.state.closed,1);}
+ const f=await capturedManifestTimingFixture26(t);f.options.capturedSource.trustedManifestSha256=digest('f');await assert.rejects(openCapturedSalesSettlementSource(f.options,'SALES_LINE'),/MANIFEST_PIN/);assert.equal(f.state.bodyReads,0);assert.equal(f.state.closed,1);
+});

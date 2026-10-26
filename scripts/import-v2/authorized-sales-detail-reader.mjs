@@ -150,7 +150,15 @@ export async function openCapturedSalesSettlementSource(options,entity,io={}){
   if(!before.isFile()||before.isSymbolicLink()||before.size>4*1024*1024||(physical.bytes!==undefined&&before.size!==physical.bytes))fail('CAPTURED_HISTORY_MANIFEST_PIN');
   const bytes=await readFile(physical.path),after=await lstat(physical.path);active();
   if(bytes.length!==before.size||['dev','ino','size','mtimeMs','ctimeMs'].some(k=>before[k]!==after[k])||sha(bytes)!==manifestSha256)fail('CAPTURED_HISTORY_MANIFEST_PIN');
-  const manifest=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));historySettlementRequestHash(manifest);
+  const manifest=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));
+  // C144's byte-pinned carrier manifest includes fractional wall-clock timing.
+  // This discarded hash call is an evidence-shape guard, not a business root:
+  // keep telemetry separate while all other evidence retains integer semantics.
+  if(Object.hasOwn(manifest,'elapsedSeconds')){
+   const {elapsedSeconds,...evidence}=manifest;
+   if(typeof elapsedSeconds!=='number'||!Number.isFinite(elapsedSeconds)||elapsedSeconds<0)fail('CAPTURED_HISTORY_MANIFEST_TIMING');
+   historySettlementRequestHash(evidence);
+  }else historySettlementRequestHash(manifest);
   if(manifest.status!=='ACTUAL_SOURCE_TYPED_PROJECTIONS_COMPLETED_REFERENCE_ONLY'||manifest.referenceOnly!==true||manifest.nativeBindingsVerified!==false||manifest.PG!==false||manifest.MAIN!==false||manifest.PUBLISH!==false||manifest.all11!==false||manifest.actualPayloadHash!==null||!Array.isArray(manifest.artifacts))fail('CAPTURED_HISTORY_MANIFEST_SCOPE');
   const descriptors=manifest.artifacts;
   for(const d of descriptors)if(typeof d.path!=='string'||!isAbsolute(d.path)||!hash(d.sha256)||!Number.isSafeInteger(d.bytes)||d.bytes<=0||!Number.isSafeInteger(d.rows)||d.rows<=0||d.rows>1_000_000||d.mode!=='0600'||!['SALES_LINE','SETTLEMENT'].includes(d.entity)||![12,d.entity==='SALES_LINE'?21:11].includes(d.actualColumns))fail('CAPTURED_HISTORY_DESCRIPTOR');
