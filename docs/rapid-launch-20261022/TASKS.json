@@ -11660,7 +11660,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE593",
+    "round": "SOURCE594",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11671,11 +11671,10 @@
         "entry": "/__naijue_candidate/replica-private-01/#settings/stores"
       },
       "next": {
-        "source": "a33ebb9b49e15fe7d3b5d4f3becacb9773408876",
-        "build": "replica-production-source585-core-15",
-        "scope": "Same approved CORE flags; new v19 issuer/generator/F2 feedback/cache bundled",
-        "deployment": "BUILD_PACK_PASS_NOT_INSTALLED",
-        "report": "reports/controller/rapid-launch-20261022/SOURCE586-CORE15-INTEGRATION.json"
+        "source": "1e818d8eb3445f3ff9d7896a41389ba01abe9083",
+        "build": "replica-production-source592-core-16",
+        "status": "BUILD_PACK_PASS_SCOPED_SOURCES_ACCEPTED_NOT_INSTALLED",
+        "report": "reports/controller/rapid-launch-20261022/SOURCE594-CORE16-INTEGRATION.json"
       },
       "current": {
         "source": "1f09fd74d9e4c9dfeb98118a1d33a989801148b9",
@@ -11713,10 +11712,10 @@
       "D1": "Currentv20guard exact4registered; next humanF metadataProbe hotpath simplification sameissuer/pool/host",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
       "D3": "humanFexact4 source delivered8checks/strictPASS; originalQB scopedreview then realnonemptyfullprovider later",
-      "T45": "98 actually4489headerCOMMIT+RR/replayed0; next88stopped57014 beforecommitreturned, readonly99originalkey/errorphase recovery active; no repeat committed. CORE15awaitsafe seam",
+      "T45": "CORE16delivered exactpack; prepare originalv19v20/ACL/131reviewAPP then original4489offsetremaining23793, no oldstage replay",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
-      "QB": "QB341carrier/QB34296parameter/QB343init sourcePASS; actual permission/PG unknown not passed",
+      "QB": "QB345guard/QB346list scopedsourcePASS adopted; nextT45actualnewcanonical/role/affectedQA only",
       "Compression": "G exact2 cache source/3affectedchecks delivered, writer returned; C proxytemplate source fixed, actualpubliccache pending nextnecessary build"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -13254,6 +13253,37 @@
       "next": "Build fixed592 CORE16 for v20actual import recovery; F publicpool source independently proceeds, not silently absorbed into acceptedv20",
       "D3": "SOURCE592 listnewscope originalQBqueued sourceonly; no realnonempty performancePASS",
       "GitHub591": "6f9f1fd433cef0bb1f2114b656fba9b12a3cd271 verified"
+    },
+    "source594": {
+      "taskId": "C-SOURCE594-CORE16-INTEGRATION",
+      "sourceCommit": "1e818d8eb3445f3ff9d7896a41389ba01abe9083",
+      "buildId": "replica-production-source592-core-16",
+      "buildStatus": "REAL_BUILD_AND_PACK_CONTRACT_VALIDATED",
+      "pack": {
+        "format": "naijue-release-pack-receipt-v1",
+        "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+        "buildId": "replica-production-source592-core-16",
+        "sourceCommit": "1e818d8eb3445f3ff9d7896a41389ba01abe9083",
+        "archive": {
+          "file": "release.tar.gz",
+          "bytes": 1684569,
+          "sha256": "a7355465f68581320465fc00252427b67c21864de843522f46fc1050478413bc"
+        },
+        "manifestSha256": "27e6dc6ff1d80d412b8db1b65ee95d768fab1452c0dd547c2ed3f466ade82ccf",
+        "members": 199,
+        "archiveExtractions": 1,
+        "businessOrProductionValidation": false,
+        "deploymentExecuted": false
+      },
+      "acceptance": {
+        "v20": "QB345e23eca92 scopedsourcePASS",
+        "listPushdown": "QB346342cdab5 scopedsourcePASS",
+        "v19": "QB343 scopedsourcePASS",
+        "F2Feedback": "OriginalQF2 S582-F01closed source",
+        "publicCache": "QB339 scopedsourcePASS"
+      },
+      "boundary": "No install/newPGpatch/currentfreshreview/newSAVE/full11MAIN/PUBLISH/formalroot yet. HumanF publicmetadata hotpath WIP notincluded. ConfigsameCORE14readflags onlynewassetprefix.",
+      "next": "OriginalT45 controlledv19v20/ACL/currentcanonicalreviews+CORE16APP necessarypackage; continue only23793remaining from original4489offset; actualbusiness/performance later legalfullprovider"
     }
   }
 }

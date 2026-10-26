@@ -1,3 +1,5 @@
+SOURCE594（2026-10-26）：CORE16实际build0/pack0，固定SOURCE5921e818d8、包1684569/a7355465、199members一次解包读回通过，已交原T45。含新guard/profile v20QB345源PASS及两列表pushdown QB346源PASS342cdab5，原v19/NULL生成/F2feedback/G缓存有效证据复用；D1人类F公共metadata热路径WIP未混入。只新assets前缀，原CORE可读范围保持，不能源码包当新SQL/真实保存/已上线。T45无需等公共F全部完成，原v19→v20准确patch及最小实需ACL/current131双用途review/CORE16APP必要包后，按4489原offset仅续23793未提交；原真实非空列表性能、MAIN/PUBLISH、历史编辑和正式根仍未完成。
+
 SOURCE593（2026-10-26）：QB345v20精确4叶源审通过e23eca92，原body/131parent继承/实际101planner证据均采用，真实patch及导入计时未测。原D1人类F新exact4接缝登记：生产宿主业务开放前实际等待完整metadata验真，日常固定轻量连接身份+lease/review，原session/currentrolehall/锁后和COMMIT授权仍逐次；既有T45串行baseline切换须先停旧APP/dispose池，再变库以新APP全验放行，不加表/epoch/平台或无限旧review。默认导入issuer原行为保留；新F单独源码不混v20PASS。C先构建固定592必要CORE16解当前guard阻塞，D3新列表源审并行，不等待全站/公共性能全部做完。
 
 SOURCE592（2026-10-26）：人类F两列表包原D3 exact4交还固定，transferreader原样共享helper实际生效，salesreader+两protocol测试改变。日期状态单号/各自维度提前进入LIVE/HISTORY候选；历史按effective字段，不误用原始头。商品preview本来pageonly保留；全授权完整性未擅缩为筛选集，totals检查后同RRpage复用避免重复证明，全筛选count/精确qtymoney及3角色/NULL0/page2行为8项定向和strict通过；未真实PGplan/耗时，不称全部查询有界或性能PASS。原QB先v20再只该新增reader范围，不重复后台旧套。v20必要兼容构建随后合当前准确源，真实数据全接仍按原T45串行执行。GitHub591已核6f9f1fd。

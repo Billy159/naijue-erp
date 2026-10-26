@@ -1,0 +1,31 @@
+{
+  "taskId": "C-SOURCE594-CORE16-INTEGRATION",
+  "sourceCommit": "1e818d8eb3445f3ff9d7896a41389ba01abe9083",
+  "buildId": "replica-production-source592-core-16",
+  "buildStatus": "REAL_BUILD_AND_PACK_CONTRACT_VALIDATED",
+  "pack": {
+    "format": "naijue-release-pack-receipt-v1",
+    "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+    "buildId": "replica-production-source592-core-16",
+    "sourceCommit": "1e818d8eb3445f3ff9d7896a41389ba01abe9083",
+    "archive": {
+      "file": "release.tar.gz",
+      "bytes": 1684569,
+      "sha256": "a7355465f68581320465fc00252427b67c21864de843522f46fc1050478413bc"
+    },
+    "manifestSha256": "27e6dc6ff1d80d412b8db1b65ee95d768fab1452c0dd547c2ed3f466ade82ccf",
+    "members": 199,
+    "archiveExtractions": 1,
+    "businessOrProductionValidation": false,
+    "deploymentExecuted": false
+  },
+  "acceptance": {
+    "v20": "QB345e23eca92 scopedsourcePASS",
+    "listPushdown": "QB346342cdab5 scopedsourcePASS",
+    "v19": "QB343 scopedsourcePASS",
+    "F2Feedback": "OriginalQF2 S582-F01closed source",
+    "publicCache": "QB339 scopedsourcePASS"
+  },
+  "boundary": "No install/newPGpatch/currentfreshreview/newSAVE/full11MAIN/PUBLISH/formalroot yet. HumanF publicmetadata hotpath WIP notincluded. ConfigsameCORE14readflags onlynewassetprefix.",
+  "next": "OriginalT45 controlledv19v20/ACL/currentcanonicalreviews+CORE16APP necessarypackage; continue only23793remaining from original4489offset; actualbusiness/performance later legalfullprovider"
+}
