@@ -14649,6 +14649,12 @@
       "B07": "07 final package adopted one actual allowed",
       "fullSource": "134 confirmed live process; collect only",
       "github": "677 initial GET transient failure; exact checkpoint push pending"
+    },
+    "latestSource679": {
+      "summary": "SOURCE679：07实际15:54:08.527→15:54:11.558Z/3.0306s，原exec49894exit2，独立QAworker0/gate0已成功；live07review4048/810c1793与原3refgate1081/b552d494实际wx/readback，v21安装/finiteRR/currentmetadata通过。首REQUEST已产生、normal详情HTTP200/jsontrue/errornull后DETAIL_RESPONSE断言ERR_ASSERTION，cases[]/actualHrevfalse；parent.httpActualfalse只是完成标志，不得据此写没有HTTP。所有clients/ownworkers/ownPGstop0 true，源副本/原REQUEST/keys保。C已派原D1仅首详情断言字段/类型安全最小诊断，原T45准备新07原key readonly恢复，0HTTP重放/新fixture。13415:51:16原systemctl实live534.991s，仍只collect原unit至终态，不延900/重启动。T16模块源410PASS采用；F2compact exact3与D1helper exact2已在途，0生产compact/缓存启用。GitHub678远端48a7ea7f已精确readback（676677678三提交），旧GET失败现场保。整体ACTIVE，真实MAIN/历史保存及全站正式发布未完成。",
+      "source678RemoteVerified": "48a7ea7f15ebaf16ed90e8ba709f111f4e2d3fc9",
+      "B07": "07 review/gate actual successful; detail HTTP200 then assertion; D1 diagnose; T45 original-key readonly recovery next",
+      "fullSource": "134 same-key collect only bounded original execution"
     }
   }
 }
