@@ -1,0 +1,1197 @@
+{
+  "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
+  "recordedAtUtc": "2026-10-26T11:11:07.604150+00:00",
+  "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
+  "status": "ACTUAL124_DATA_LOCATIONS_BOUND_CODE_INSTALL_AND_FULL_EXECUTION_PENDING",
+  "source": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+    "bytes": 114692,
+    "sha256": "f9d2d8b3398ea4332e87e7aa4679736b6b5cefc9fd47062c117540e0b520c0a2"
+  },
+  "tests": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+    "bytes": 145231,
+    "sha256": "12f177b641873f736acd24bf7091535b99f85268c5ba7d4418a6269c1d64e26c"
+  },
+  "candidate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+    "bytes": 182293,
+    "sha256": "2bcc8a32496063213dd58ecd49b22383834f0d97ed3510fd07628e8a3ec74810"
+  },
+  "previousCandidate": {
+    "bytes": 15071,
+    "sha256": "3aa28edcd59a6cb414fc2d41fce86b61e4c55565ea43f17267734ecee15ac419"
+  },
+  "previousDelivery": {
+    "bytes": 31020,
+    "sha256": "14aee861dd241a1d3355cdc998e947198b9965d0ce84afe22df07e104d321300"
+  },
+  "reused": {
+    "source612": "222b5e374ed209ee240204d2302ba4081dad1b32; QB3595983/af2b56a813ae6dcd63ae0d76c11f0a4b5f84c5928d6de98262b0a3d161757af7; BARCODE real retained branch unchanged.",
+    "QB357Helper": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+      "bytes": 14879,
+      "sha256": "c366469ba18d1b0be26b3478b8cd54ede013268d88feb644b36802c9b6e38ca6"
+    },
+    "other10OriginalSuites": "Not repeated. No source/task migration; D1 runtime host remains read-only and separate."
+  },
+  "implemented": [
+    "Original provider now exports real openProductionSourceAuthority26 under original module loader; candidate.authorityModule points to the same fixed provider code, with no additional authority file or external14callbacks wrapper.",
+    "Independent C execution authorization pin is captured from NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256; input checksum authenticates data only. Authorization binds exact job bytes, original host validation/registration/deadline/target/actor/full binding and all11 closed approved group recipes via canonical sourceInputDigest.",
+    "All fourteen original functions have concrete bodies. verifyInputs/assertGroupAllowed/assertExecutionAllowed check live metadata identity/expiry/scope; MAIN assertAllowed/authorizeNativeCommand use original validators and exact independently fixed command-file membership, stable key+actor+whole command digest. mainCommands returns only those original commands against original locked checkpoint22/31 warehouse readback.",
+    "Original BIND/ACCOUNT/PUBLISH pure validators, original closure-plan capture, seq/cursor command chain,31 new warehouse claims against original remaining31, complete inventory counts and a genuinely nonzero ledger count are enforced. Actual source roots/full payload are never inferred from recipe or DATA118 hash.",
+    "coreProjection consumes the separately pinned private actual118 DATA wrapper, preserves115members/49safe proofs/maintenance, supplies original5-field party projection plus real file/grant verify, and never rewrites/redacts the source file. Candidate warehouses uses the same private ref; provider resolves only53 array in memory after group authorization, then original readCoreImportContinuation26 still locks and verifies actual22claims/current checkpoint.",
+    "openRetained composes existing genuine original source factories only when explicit original options are present, not from a path alone. Original PRODUCT evidence authorizer is actually opened against fixed original source/component review; native membership remains original per-reader authorize in provider, alongside independent grant scope checks.",
+    "C144 capturedOptions composes existing prepareRetainedSalesOptions and openRetainedSalesSettlementFiles; original32 money parser and original source/typed captured readers are retained. Native sales-detail/settlement Postgres resolvers are created lazily only after original context.database.ready(), borrowing its issuer pool/runtime, with no new pool/SQL.",
+    "C144 openRetainedClosure uses original createCapturedSalesChildClosureSession, canonical streamed source/typed files with declared byte/hash/EOF/order checks and original child AbortSignal. This is the C144 path; BARCODE continues returned-source.openClosure and QB357, not this hook.",
+    "Resources opened asynchronously are registered through one original owner cleanup path; close waits pending opens, closes late returned resources, memoizes child close, clears metadata maps and destroys/awaits active C144 streams. All grant/data verification remains before pool activation; no false PASS/no-op for missing source or execution facts."
+  ],
+  "actual118": {
+    "reference": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/actual118-source-projection-20261026/source-projection-data.json",
+      "bytes": 215586,
+      "sha256": "c2029d831bc6a68813933877eaf4c4f123bcc279f3018ec0c5c0d4db8dbb84ba"
+    },
+    "bytesReadByD3": 215586,
+    "contentReads": 1,
+    "hashVerifiedDuringThatRead": true,
+    "proofsPrintedOrCopiedIntoPublicInput": false,
+    "sourceFileChanged": false,
+    "privacy": "Parent0700/file0600 preserved. Only path/bytes/SHA refs, field names and counts appear in delivery; no115/49/53 record bodies in Git/public candidate.",
+    "confirmedCounts": {
+      "coreMembers": 115,
+      "safeStaffProofs": 49,
+      "maintenanceMembers": 115,
+      "warehouses": 53,
+      "originalClaims": 22,
+      "missing": 0
+    },
+    "meaning": "DATA_ONLY. This SHA is not full authorizedPayloadHash or an execution grant. Fresh runtime/current checkpoint and actual SQL maintenance proof remain original gates."
+  },
+  "minimalPrivateExecutionMetadata": {
+    "inputField": "executionAuthorization:{path,bytes,sha256}; all current values null because C/T45 has not issued a grant.",
+    "independentEnvironmentPin": "NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256 must be supplied by original C/T45 registered carrier, match the authorization file SHA and not be derived from INPUT itself.",
+    "authorizationJsonExactKeys": {
+      "version": "C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1",
+      "decision": "AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION",
+      "issuingAuthority": "C",
+      "realImportExecutionAuthorized": "true only in an actually issued C grant; none created here",
+      "job": "{path,bytes,sha256} of original actual validateExecutableSourceHostJob26 job",
+      "sourceInputDigest": "historySettlementRequestHash({version,binding,core,closureScope,warehouses,producers}); deliberately excludes authorityModule and executionAuthorization refs to avoid a self-hash cycle; DATA digest is not permission without independent C grant/pin.",
+      "groups": "Exactly original11 sourceGroups, unique, no wildcard",
+      "mainCommands": "{BIND:{path,bytes,sha256},ACCOUNT:[{path,bytes,sha256},...],PUBLISH:{path,bytes,sha256}} of original exact command JSON files"
+    },
+    "job": "Original NATIVE_IMPORT_SOURCE_HOST26_V1 executable job including registrationId/deadlineUtc/maxSteps/binding/database/sources/providers/runtime26Review; exact job SHA bound in C grant. If NAIJUE_IMPORT_JOB_FILE is set it must equal this registered job path. Existing host/issuer still checks current runtime independently.",
+    "commandTransport": "Existing private JSON tagged bigint form {__bigint:\"decimal\"} is restored only for command values, then original validateCutoffImportCommand/validateCoreImportCommand apply. No allocation, dynamic new request keys or command edits on retry.",
+    "coreData": "core.coreProjection and warehouses may share the original actual118 DATA descriptor. In-memory projection adds the separately C-authorized binding full payload value only after it truly exists; no DATA hash is used as payload or root.",
+    "capturedRecipeFields": "Existing SALES_DETAILS/SETTLEMENTS recipes now carry sourceRoot (explicit code source root), supportModules:{transport,options,closure} using existing {path,bytes,sha256}; original manifestRef/source/typed/moneyRef/approvalSHA retained. These are private CLI code/read refs, not business/DB fields.",
+    "productEvidenceSource": "Original openReviewedProductEvidenceSource options {directory,trustedManifestSha256,reviewRecordFile,trustedReviewRecordSha256,binding}, filled from existing approved native binding source metadata; no new map or data capture."
+  },
+  "supportModules": {
+    "transport": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-sales-settlement-consumer-20261025.mjs",
+      "bytes": 20002,
+      "sha256": "2213f351e195e2927b2b7625e43c26f87a3e07dde41de7703482c031e16d7c1e"
+    },
+    "options": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
+      "bytes": 6641,
+      "sha256": "6e7eb58634cba23d6a0b93116fc013ca2392c636d550670daa9f9692bc67fb8f"
+    },
+    "closure": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sales-header-closure-session-20261026.mjs",
+      "bytes": 11485,
+      "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772"
+    }
+  },
+  "newChecks": {
+    "distinctTests": 6,
+    "pass": 6,
+    "fail": 0,
+    "commands": [
+      "node --test --test-reporter=spec --test-name-pattern='provider26 production authority' scripts/import-v3/production-source-provider26.test.mjs (initial4 PASS)",
+      "new original C144 temp-file/options/32money/closure test1 PASS; affected sourceRoot ref change rechecked1 PASS",
+      "new genuine original PRODUCT reader/evidence authorizer composition test1 PASS",
+      "MAIN/private-core identity strengthened: only affected initial positive test rechecked1 PASS"
+    ],
+    "coverage": [
+      "Independent C pin mandatory; input self checksum/wrong pin/missing C grant/missing full fact/scope reject.",
+      "Exact MAIN key/actor/whole payload, seq/cursor/current checkpoint/count/nonzero ledger and source closure plan reject alteration.",
+      "Safe private CORE wrapper115/49/53 is actually consumed in finite fixtures; missing members and credential-bearing synthetic field refuse.",
+      "Expiry/replaced authorization file/changed recipe/cancel/close refuse.",
+      "Genuine original PRODUCT reader/evidence factory reads actual finite temp files and validates payload; path-only HEADERS refuses rather than acting as a producer.",
+      "C144 original transport/options/helper parse actual finite temp CSV/source/typed files and32 approvals; source/typed closure streams pass. Binding resolver does not call database.ready during preflight or source iteration, calls it only on native authorization and refuses unactivated mock runtime."
+    ],
+    "notTests": "No actual PG/real15018/real11MB/54MB/922MB/CSV/source bodies, original provider suite/QB359/QB357/other10 old component suites not repeated. No build/Git/SSH/issuer change."
+  },
+  "remaining": [
+    {
+      "owner": "C",
+      "facts": "Adopt these actual124 physical locations and updated INPUT pin; no new reader/code/tests delta."
+    },
+    {
+      "owner": "C/QB/T45",
+      "facts": "Current mapping source review and exact6 CODE physical install/pins pending; nonCODE source locations now complete, original identity/content unchanged."
+    },
+    {
+      "owner": "C original source624 / T45",
+      "facts": "Real DATA/EXPECTED/MAIN, fullhash/grant/job and actual source/PG validation still pending."
+    }
+  ],
+  "executionReady": false,
+  "realExecutionGrantIssued": false,
+  "actualPGOrServerActions": 0,
+  "actualSourceLargeBodyBytesRead": 0,
+  "safeCore215KBExceptionOnly": true,
+  "writeScope": [
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-stock-contributor-import.ts",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.test.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.test.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
+  ],
+  "next": "C freeze actual124 metadata update; T45 bind accepted exact6 CODE then original source624 real assembly. Do not retransmit/reverify original26 DATA or54 old files.",
+  "source620": {
+    "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
+    "implemented": [
+      "Real original PRODUCTS/SKUS/STOCK retained prepared file readers; bounded future authorized prepared pass creates in-memory original validator/evidence/codec index, original fullfile SHA and complete row counts before source members can stage; no raw recapture or index file written.",
+      "TRANSFER_LINES original TL26JOIN1 packed index/range SHA and original capturedTransferLineRows26 global ordering; genuine original mapper reconstructs exact original DTO and fingerprints for authorize/chunks.",
+      "HEADERS uses original106 complete28282 index and original sales helper plus transfer original source12/typed22/doc4 range index; full global source/typed composition and original doc4 allocations; genuine original header chunks, original32 money Map restored only when stage iterator is requested.",
+      "T04 pure nativeStockPublicationContributor26 shared by reviewed and retained source projection. Immutable STAGE/source rows stay NULL/unlinked; publication deterministic original baseline ID.",
+      "T04 actual source group canonicalKey/nonzero signed quantity/warehouse/SKU must match independently signed MAIN items; all declared ledger items must be seen before ACCOUNT.",
+      "BARCODE source helper pin deliberately advanced to changed T04-derived helper; new finite preflight/member/closure sixscheme compatibility PASS."
+    ],
+    "newChecks": {
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "priorT04ChecksReused": 4,
+      "targetedStrictTypeCheckExit": 0,
+      "actualPG": "NOT_RUN",
+      "sourceBodyLargeReads": 0
+    },
+    "knownIntegrationPending": "Historical SOURCE622 failure resolved by source623T19 fixture adaptation and targeted PASS; original actual/source622 QA meanings unchanged.",
+    "futureReadBudget": "No real prepared bodies or25MB/922MB header bodies were read locally. Runtime native3 planned prepared pass builds bounded memory metadata then closure range pass; original already STAGED scopes must use T19 proven write skipping, keeping full readers. C/T45 controls any real source window and grants.",
+    "actual106Index": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/inputs/sales-header-closure-index.json",
+      "bytes": 25646990,
+      "sha256": "6cf6ca18737dd76957823d6ce7b829b927f0ebd964a096ebe73682dda3ea8060",
+      "entries": 28282,
+      "complete": true
+    },
+    "actual106Receipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/ACTUAL-STAGE-SUMMARY.json",
+      "bytes": 3392,
+      "sha256": "2a6c01c236f8cceeab058404115e2a5d9fcba8b3ff79c1e3bf1b47465c4db570"
+    },
+    "current121Receipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-six-scheme-init-warehouse-count-20261026-121/ACTUAL-INITIALIZATION-SUMMARY.json",
+      "bytes": 2917,
+      "sha256": "a311db766f4e6e4397ff753bd2456f224c4a84937912c7a3764a3319a2f22083"
+    },
+    "helper": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+      "bytes": 14592,
+      "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+    },
+    "modifiedFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-stock-contributor-import.ts",
+        "bytes": 10901,
+        "sha256": "87f43586fd737755e6bebcb046116ce8de0d447525e5bfebb2abe1fae6463448"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.mjs",
+        "bytes": 20345,
+        "sha256": "65f317c9706a5013d2b938b271ee4cd00f3e9c04489f891ca55d9c1cf692cb8c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.test.mjs",
+        "bytes": 19508,
+        "sha256": "43ea316d6754a2afa53295ab797fdb2abc593bb4c98e94356aa489d194960b96"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 14592,
+        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+        "bytes": 24207,
+        "sha256": "5d229a060d1005b8a07b708e50ebb8415e39b6662d5656fce6b32ba883691ce5"
+      }
+    ],
+    "pathSemantics": "Sales complete index and partitions explicitly retain original server paths, including original partition metadata; no25MB copy or implicit rewrite. Other retained file paths/code refs remain original local DATA recipes; C/T45 must explicitly adopt actual corresponding server path pins before execution. Never infer alternate files."
+  },
+  "source623T19": {
+    "authorization": "WRITE-OWNERSHIP source620 T19 exact4 + source623FullContinuationSeams original host exact2, plus original INPUT/DELIVERY exclusive D3. Original source622/T04 helper files unchanged.",
+    "previousFrozenSource": "a2623a72736b8439bcdb61ce0d34eee61e86d124 SOURCE622",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 88382,
+        "sha256": "ae815e6851f087785354d979e4c82ea4a22d386534f076e507aa8d524c7d75da"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 83413,
+        "sha256": "5f8b3834ec3b635d864a192f6dd6333f48d520985f6169bb688383dc62a9eb4f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.mjs",
+        "bytes": 30303,
+        "sha256": "52c70e6fc50489a38ad0b3311efd55b5e5225debf563fd72afd632d29f89580e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.test.mjs",
+        "bytes": 39158,
+        "sha256": "81431f276ca6187cb3c2570872242e1759c99c629ec12d6f12973678c3e5226c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
+        "bytes": 38582,
+        "sha256": "3ed9255f34775da1ec9db842de057857638d7c3b3bc3ec0d0ec5e9d92ace3c09"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs",
+        "bytes": 39678,
+        "sha256": "718454f1840b77d9e446edfd4d6dfeb6f8227350e3b3f51371dd59ff3055b8f9"
+      }
+    ],
+    "implemented": [
+      "readCoreImportContinuation26 retains exact22 immutable birth proof; consumes D1 verified current full receipt/audit/claims/source-record chain and exact53-minus-actually-claimed warehouse set, including seq2 six-scheme initialization.",
+      "selectProductionContinuation26 matches the original complete independently authorized BIND/ACCOUNT/PUBLISH command list to every committed operation key, original requestHash, stable operation ID, before/after checkpoint and exact claimed original item source/record/target identity; emits only original uncommitted suffix unchanged. Any missing/conflicting/extra/future receipt or identity stops.",
+      "No new BIND/requestKey/body/expectedSequence is generated on restart. Initial scheme-only sequence advance is separately carried before the signed BIND point; initialization after BIND is refused.",
+      "Only current claimed SKU/warehouse memberships with genuine source authorization and exact current source/record/target content can skip their STAGE write. CORE115 already-proven source rows still skipped as before. Other unproven STAGE items are retained, not guessed empty, and every original full closure reader/scope remains unchanged.",
+      "Already IMPORTED with exact committed original PUBLISH hash/plan returns original result from provider; original host forwardSourceSteps26 and runner propagate it as recoveredPublication with zero execute/journal calls, preserving ordinary REQUESTED_STEP_SEQUENCE_COMPLETE/publicationReadback summary fields. No PUBLISH replay.",
+      "QB SOURCE622 transfer child lifecycle fix: own childClosed/current/verify and all awaits/yields observe child revocation; close never releases parent held FDs. Closing child prevents verify/sourceRows/typedRows/documents; parent still authorizes exact original source."
+    ],
+    "checks": {
+      "distinctAffectedChecks": 20,
+      "pass": 20,
+      "fail": 0,
+      "newT19Checks": 5,
+      "newQBChildCheck": 1,
+      "reusedAffectedChecks": 14,
+      "commands": [
+        "provider targeted T19|source622 QB|provider26 continuation|original BARCODE positive|production authority:12 checks; one expected-error-code assertion updated to new exact checkpoint error and that single check rerun PASS.",
+        "run targeted T19|v14 continuation|bounded sequence|failed/unknown|journal failures|source-close:7 PASS.",
+        "host T19 generator-return/zeroexecute/cleanup/core/step-limit:1 PASS."
+      ],
+      "scope": "Finite real temporary file membership and scripted protocol only. No actual PG/new-process QA/unknown COMMIT fault injection on realR1/server/build/Git. Original source62210 + T04four remain accepted; not repeated."
+    },
+    "resolvedPriorFailure": "SOURCE622 old BARCODE steps mock lacked new D1 current-chain/birth/all-claims metadata. Adapted that original finite response once; same original positive test now PASS, not lowered adapter invariants.",
+    "actualQANotRun": [
+      "Registered synthetic QA: commit one MAIN chunk, stop process, new process resumes only remainder.",
+      "One registered synthetic COMMIT outcome unknown recovery by original exact key.",
+      "Actual all11 source read/roots, MAIN stock conservation and ACCOUNT→CLOSURE/PUBLISH validation."
+    ],
+    "remainingStageProofGap": {
+      "fact": "D1 continuation records prove MAIN-claimed native memberships only. They do not prove unclaimed PRODUCTS/HEADER/TRANSFER_LINE/SALES_LINE/SETTLEMENT/PAYMENT/BARCODE/STOCK STAGE target images. Current code keeps genuine original stage readers and exact immutable replay path for those, without claiming these writes were skipped. No count-only/empty reader shortcut.",
+      "existingTargetReadbackSeams": [
+        "adapters/postgres/src/native-product-import.ts product/source immutable replay equality FOR SHARE around lines145-156",
+        "adapters/postgres/src/import-v3-history-header-staging-store.ts stageValidated/write original same-target/header/source checks",
+        "adapters/postgres/src/import-v3-history-staging-store.ts stageValidated/write original same-target source/typed checks",
+        "adapters/postgres/src/native-stock-contributor-import.ts write source/contributor equality and linked baseline exact quantity/group verification around lines125-148"
+      ],
+      "owner": "C/T45 decide minimal separately authorized target-content readback adoption/factoring with original owners before claiming all completed STAGE scopes skip. D3 did not add SQL/DB capability or infer that proof."
+    },
+    "whitespaceOnlyFollowup": {
+      "change": "Removed one trailing ASCII space after appendInitialization26 on test line198; no code behavior change.",
+      "testsRerun": false,
+      "test": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 83413,
+        "sha256": "5f8b3834ec3b635d864a192f6dd6333f48d520985f6169bb688383dc62a9eb4f"
+      }
+    }
+  },
+  "physicalDataMapping627": {
+    "status": "ACTUAL124_NONCODE_SOURCE_LOCATIONS_COMPLETE_ORIGINAL_PINS_UNCHANGED_CODE_PENDING",
+    "recordedAtUtc": "2026-10-26T09:19:01.083815+00:00",
+    "descriptorField": "INPUT.producers.<group>.fileLocations[] = logical original path/bytes/SHA + physical exact location or null + kind + required role + existing server evidence. No path prefix replacement or original DATA/review mutation.",
+    "all11": {
+      "PARTIES": {
+        "requiredRefs": 8,
+        "nonCodeLocationsBound": 8,
+        "codeLocationsPending": 0
+      },
+      "CATALOGUE": {
+        "requiredRefs": 2,
+        "nonCodeLocationsBound": 2,
+        "codeLocationsPending": 0
+      },
+      "PRODUCTS": {
+        "requiredRefs": 41,
+        "nonCodeLocationsBound": 40,
+        "codeLocationsPending": 1
+      },
+      "SKUS": {
+        "requiredRefs": 2,
+        "nonCodeLocationsBound": 1,
+        "codeLocationsPending": 1
+      },
+      "BARCODES": {
+        "requiredRefs": 5,
+        "nonCodeLocationsBound": 4,
+        "codeLocationsPending": 1
+      },
+      "STOCK_CONTRIBUTORS": {
+        "requiredRefs": 2,
+        "nonCodeLocationsBound": 1,
+        "codeLocationsPending": 1
+      },
+      "PAYMENT": {
+        "requiredRefs": 4,
+        "nonCodeLocationsBound": 4,
+        "codeLocationsPending": 0
+      },
+      "HEADERS": {
+        "requiredRefs": 11,
+        "nonCodeLocationsBound": 8,
+        "codeLocationsPending": 3
+      },
+      "SALES_DETAILS": {
+        "requiredRefs": 8,
+        "nonCodeLocationsBound": 4,
+        "codeLocationsPending": 4
+      },
+      "SETTLEMENTS": {
+        "requiredRefs": 8,
+        "nonCodeLocationsBound": 4,
+        "codeLocationsPending": 4
+      },
+      "TRANSFER_LINES": {
+        "requiredRefs": 3,
+        "nonCodeLocationsBound": 3,
+        "codeLocationsPending": 0
+      }
+    },
+    "existingActualMap": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/FINAL-EXISTING-SERVER-LOCATION-MAP.json",
+    "money96": "Original pin/path only; fresh lstat pending, not actual existence proof.",
+    "sourceBodyReads": 0,
+    "rehashedOriginalLargeBodies": 0,
+    "excludedUnneeded": [
+      "Barcode original362MB source snapshot, CSV/aliases and original identity capture: reader does not open them.",
+      "Parties103MB identity registry and unrelated reference-inputs: ordinary reader only consumes manifest+selectedparty628+review+exact2 files.",
+      "Transfer documentClosures9 c18e... does not have a proven server copy, and current TL packed closure reader does not consume that separate file; whole original all11 builder computes doc9 from original header4+line rows. Do not transfer it just to invent a requirement."
+    ],
+    "codeStatus": "Original provider/host plus registered original7 readers/helper need exact physical IO mapping. Descriptor released now so T45 can prepare needed transfers. No source execution authority or fullpayload created.",
+    "authorityRootRef": "CORE actual118 original safe215KB DATA descriptor is included as PARTIES CORE_DATA; current checkpoint still actual121 seq2, birth DATA immutable.",
+    "finalDescriptorStats": {
+      "groups": 11,
+      "uniqueRequiredFiles": 79,
+      "uniqueCodeFiles": 6,
+      "uniqueMissingNonCodeFiles": 0,
+      "uniqueKnownMoney96LocationsPendingStat": 0
+    },
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 92349,
+        "sha256": "af7c037f32c4ca12b0c7b1af55058a9824e45b0cfd87009a12ac6b9417e2c2f1"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 115652,
+        "sha256": "36848bfe1ff54ced7dcffce76c233bf0d1d01ce7dc4cdb3dcd0e602288c9f54b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
+        "bytes": 38934,
+        "sha256": "8780c82def3daa2c955fe605c053a824618c8b792687be61b4241008903e6306"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs",
+        "bytes": 40352,
+        "sha256": "b564426533a37dc96d7b8b33d7c3a9e6dcb8085c654c7305b670d2859c39076d"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-party-source26.mjs",
+        "bytes": 23690,
+        "sha256": "df9044648d60c9d6cd8c909d04a28df8e01a1f8c1821373c17fa9f61df9d521a"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-payment-source26.mjs",
+        "bytes": 10819,
+        "sha256": "491deae8ce6660038d45ea8c4bc745c91fd7daf4614f3e319d0cec7ba546a077"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/historical-customer-source.mjs",
+        "bytes": 11040,
+        "sha256": "fc7297be39fe007df60393ae1063bebe2ebf361ecb19f92facb857d7666f679c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-source-authorizers.mjs",
+        "bytes": 50941,
+        "sha256": "56b712ccdf523047e629444a20f0581e90b7dcc6b246c7937198ffff78adcaa7"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-native-product-reader.mjs",
+        "bytes": 22468,
+        "sha256": "f731c2f70fcc1499c3fd9413e63f6710a3fc80e70fd52a2ef382e01161e2be2f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 28560,
+        "sha256": "b3fa6f88ef673675bcfb6db5f6e1cf7ba8afbc0bae38a633ebaf2209e8b88597"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
+        "bytes": 6716,
+        "sha256": "b73b34b9df14e7694acfc68f7329216b7db4136f0e8d223e1cba0df957939480"
+      }
+    ],
+    "fixedRunFilesUnchangedFrom623": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.mjs",
+        "bytes": 30303,
+        "sha256": "52c70e6fc50489a38ad0b3311efd55b5e5225debf563fd72afd632d29f89580e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.test.mjs",
+        "bytes": 39158,
+        "sha256": "81431f276ca6187cb3c2570872242e1759c99c629ec12d6f12973678c3e5226c"
+      }
+    ],
+    "implemented": [
+      "Each reader takes its existing original logical options unchanged plus an internal resolveFile IO capability. Only exact original logical path/bytes/SHA may select one explicit physical path with identical bytes/SHA. Null/absent/wrong identity rejects; no basename/prefix/filename inference or fallback for a declared map.",
+      "BARCODE and original native3/header/TL held-file readers map only physical IO while retaining original captured manifests/index/prepared projections and same original validators, range hashes, EOF/count/order and FD/cancel/close rules.",
+      "PARTIES including historical exact2, PAYMENT nested review/manifest/decisions/QB, original PRODUCT evidence and full26 reference authorizer, and CATALOGUE load/verify all retain original logical identity comparisons and original review contents/pins.",
+      "C144 original helper/common SALES_LINE+SETTLEMENT captured consumer preserve logical manifest/source/typed context; original transport reads exact mapped physical refs, original32 money parsing and lazy post-activation native resolver unchanged. No settlement legacy module changed.",
+      "Original host passes only an own function resolver from its trusted source session into the existing full26 product authorizer. Accessor rejected without invocation. No schema, business DTO, real DB capability or grant wrapper added.",
+      "Concrete CATALOGUE factory now invokes the already existing openReviewedCatalogueSource26; old provider factory emitted legacy profile rejected by capturedStep26. Original catalogue decisions/options/pins/old API preserved.",
+      "C144 closureWindow relative dependency is explicitly pinned and mapped; logical and physical closure/window code files must preserve the original same-directory import relationship. CODE helper pin updated for the new IO seam only; original DATA/metadata pin content unchanged."
+    ],
+    "checks": {
+      "newProviderPhysicalMappingTests": 8,
+      "newHostCapabilityCheck": 1,
+      "newPass": 9,
+      "newFail": 0,
+      "affectedExistingPass": 5,
+      "affectedExistingFail": 0,
+      "syntaxChecks": 9,
+      "trailingWhitespaceFiles": 0,
+      "covered": [
+        "PAYMENT/PARTIES original nested logical paths physically absent but original real loaders succeed via exact explicit map.",
+        "Historical exact2 original candidate.sourceFile/review.candidate.path comparisons remain unchanged after actual fixture directory relocation.",
+        "Original PRODUCT evidence and full reference maps read/authorize original unchanged source/decisions after relocation.",
+        "Concrete BARCODE manifests nested capture files and native/SKU/HEADERS/TL actual held ranges work with original logical paths absent.",
+        "Original C144 manifest nested source/typed map, original money32 and full child source/typed closure remain genuine; database.ready remains0 until native authorization.",
+        "CATALOGUE concrete factory consumes existing EXACT26 original loader and full category projection after logical paths are moved.",
+        "Missing declared path, explicit null physical ref, wrong logical SHA/bytes and physical bytes changed at identical size all refuse; no implicit original/prefix fallback.",
+        "Host resolver accessor cannot execute during session descriptor capture."
+      ],
+      "notRun": "No actual server/PG/source consume/large original body scan/copy/rehash/import/full roots/MAIN/QA processes/build/Git. Source622/T04/T19 old suites reused; original needed5 finite checks only."
+    },
+    "runtimeCodeRequirements": [
+      "C/T45 fills physical CODE locations after this exact code bundle is fixed, with the final CODE pins in INPUT. CODE is separate from original DATA semantic identity.",
+      "C144 recipe.sourceRoot must name the actual registered same-version code root for its existing imports; do not infer a filesystem prefix.",
+      "Original job product referenceDecisionFile/reviewFile/mappingFiles remain the logical paths in PRODUCTS.hostReferenceOptions; the trusted source resolver supplies their physical IO locations.",
+      "CORE DATA projection logical descriptor remains original actual118 immutable safe DATA; currentcheckpoint comes from original actual121/readback, never by editing birth DATA."
+    ],
+    "remaining": [
+      "C fix this metadata-only INPUT/DELIVERY update; original mapping code remains unchanged frozen source633/SOURCE627 increment.",
+      "T45 install exact6 CODE files and record physical locations only after current code QB acceptance; do not substitute old options-helper pin.",
+      "C original source624 prepare real complete DATA/EXPECTED/MAIN and actual full hash/job/grant; T45 actual reader/PG verification still NOT_RUN."
+    ],
+    "actual124": {
+      "status": "26_UNIQUE_NONCODE_LOGICAL_IDENTITIES_MATCH_ACTUAL_ROOT_RECEIPT_AND_OLD_MONEY96_FRESH_STAT",
+      "map": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/ACTUAL124-FILE-LOCATION-MAP.json",
+        "bytes": 29796,
+        "sha256": "5207ba8da94838e1867ca8b82d62ffca7afe58a30446de012e47deb3eac7142e"
+      },
+      "terminal": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/job.json",
+        "bytes": 508,
+        "sha256": "adb47ebe4b6b946dab222ba50b60adec53ad80e1c71da3844d0a7a0eb756d6b8"
+      },
+      "engine": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-inputs-retention-20261026-124/release-submission/release-receipts/t45-full-source-inputs-retention-20261026-124/engine-result.json",
+        "bytes": 15673,
+        "sha256": "f3b2ad15fec7dc263167201aabea89c52819fb21c19edb7a254012d22ac384a8"
+      },
+      "checkedAtUtc": "2026-10-26T11:06:45.492867+00:00",
+      "uniqueNewOriginalFiles": 26,
+      "physicalFieldsFilled": 30,
+      "perGroupPhysicalFieldsFilled": {
+        "PARTIES": 7,
+        "CATALOGUE": 0,
+        "PRODUCTS": 9,
+        "SKUS": 0,
+        "BARCODES": 4,
+        "STOCK_CONTRIBUTORS": 0,
+        "PAYMENT": 4,
+        "HEADERS": 0,
+        "SALES_DETAILS": 3,
+        "SETTLEMENTS": 3,
+        "TRANSFER_LINES": 0
+      },
+      "moneyFieldsUpdated": 3,
+      "uniqueMoneyLogicalDescriptors": 2,
+      "logicalDescriptorsUnchanged": true,
+      "allOtherRecipeFieldsUnchanged": true,
+      "sourceCodeFilesChanged": 0,
+      "CODELocationsInstalled": false,
+      "sourceReaderExecuted": false,
+      "fullPayloadHashGenerated": false,
+      "DBOrMAINOrPublish": false,
+      "validation": "Small metadata crosschecked bijective original logical path/bytes/SHA with engine exported receipt and terminal COMPLETED0; all original logical fields/roles/options and all CODE mappings unchanged. No local source-body read/rehash or reader/test execution."
+    }
+  },
+  "source635ActualSourcePreparation": {
+    "status": "SOURCE_ONLY_ENTRY_AND_FINITE_SHARED_COMPOSITION_CHECKED_NOT_ACTUAL_PREPARED",
+    "entry": "prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal})",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 113005,
+        "sha256": "16170b0b49e9f7d2d815c085acb906a55565691eaf587d1d6329be46dce54286"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 135477,
+        "sha256": "32da6073f253551d28ef562b411ce552a6b9f8e952ed0910f350c2f257ace473"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-history-closure-reader.mjs",
+        "bytes": 13906,
+        "sha256": "d834d84026a2f800f690ec85956011fb60b6129b742439d5705e308ef3280bad"
+      }
+    ],
+    "preservedReadOnly": [
+      "scripts/import-v3/prepare-native-bindings.mjs",
+      "scripts/import-v3/prepare-native-bindings.test.mjs"
+    ],
+    "implemented": [
+      "Private source-only common opener shares genuine retained/reviewed/captured readers; no execution authority object, database, Pool, runtime issuer or dummy hash.",
+      "Original native prepared pass derives SKU memberships, effective stock, signed warehouse/unit totals and original contributor facts.",
+      "Exact24 human decision fills only exact absent approved identities; original represented signed totals remain; decision bytes/hash enter STOCK DATA artifact.",
+      "Original pure prepareFullPayloadData26 derives genuine hash before opening original remaining groups; original all11 global merge/lifecycle feeds original prepareFullSourceBindings26 and private writer.",
+      "No execution grants issued; original production constructor and MAIN gates preserved."
+    ],
+    "checks": {
+      "newSource635Tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "previousThreeReused": true,
+      "newCompleteCompositionTests": 2,
+      "newCommand": "node --test --test-reporter=spec '--test-name-pattern=source635 complete preparation composition' scripts/import-v3/production-source-provider26.test.mjs",
+      "newObserved": "2 PASS / 0 FAIL; 11 pinned finite DATA fixture files read; genuine original D1 DATA hash/EXPECTED/35 commands generated; negative baseline -3 preserved; private output byte/hash/mode verified; repeat registration refused; all11 sessions close exactly once in reverse order on success and consumer failure; active source iterators close on failure."
+    },
+    "testedBoundary": "Original production-entry native preparation/early refusal + exact24 helper are checked by prior3. Success from original11 file streams through shared merge to original D1 writer is checked by new2. A single successful call of the public production entry across all11 actual production reader profiles is NOT run locally; T45 actual source-only preparation is still required.",
+    "actual125": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-core-continuation-preparation-readonly-20261026-125/inputs/core-continuation.json",
+      "bytes": 41835,
+      "sha256": "96b426c34ebb41fa7d7962af866d7d05469792fe7b43bd30f0f9cdd43b42b1a1",
+      "basis": "T45 original privateResult actual path confirmed; no re-SQL or copy needed"
+    },
+    "exact24Decision": {
+      "local": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/EXACT24-ZERO-BASELINE-USER-DECISION.json",
+        "bytes": 5299,
+        "sha256": "35a5fe3d08a0f23d5dc98e2b422702a1f991ea508a88cab6c675e969c2d55c88"
+      },
+      "serverPhysicalPath": null,
+      "meaning": "Direct human confirmation already granted. Copy this same small metadata in next CODE preparation bundle; not present in actual124."
+    },
+    "scopeSchema": {
+      "version": "PRODUCTION_SOURCE_ONLY_PREPARATION26_V1",
+      "registrationId": "frozen unique original preparation registration <=100 safe characters",
+      "deadlineUtc": "actual finite window UTC ISO",
+      "input": "exact {path,bytes,sha256} of finalized operator INPUT",
+      "verifiedCurrent": "exact actual125 ref above",
+      "warehouseStockScope": "exact server ref of same confirmed exact24 decision JSON; legacy explicit53 array also accepted",
+      "artifactRows": "{GROUP:{originalLogicalPath:accepted original source member count}}; all nonCODE DATA refs require observed native count or explicitly frozen accepted count; metadata may0. Native observed count mismatch rejects. Raw artifact SHA is byte-coverage identity, not EXPECTED root.",
+      "sourceManifestRef": "frozen original source manifest reference",
+      "requestKeys": "{bind,account:[...],publish}; freeze first original keys from C, exact account count as original D1 chunking; no key generator or original retry-command substitution",
+      "chunkRows": "positive <=500, original D1 validator authoritative",
+      "baselineBusinessDate": "exact input.binding.cutoffAt.slice(0,10)",
+      "outputParent": "existing real private directory outside R; original writer new registration wx0600/0700"
+    },
+    "invocation": "const {prepareProductionSourceOnly26}=await import(PROVIDER_PHYSICAL_FILE_URL);const result=await prepareProductionSourceOnly26({preparationFile:SCOPE_PHYSICAL_PATH,trustedPreparationSha256:SCOPE_SHA256,signal:abortController.signal}); // T45 operator supplies actual deadline abort and exact carrier pins; output only returned descriptors/counts, never row bodies",
+    "operatorPrerequisites": [
+      "Use finalized INPUT exact bytes/pin; preserve all logical identities and actual124 exact physical mapping. Do not infer prefixes.",
+      "Install original6 CODE dependencies with exact approved pins; bind explicit same-version sourceRoot for C144 and closure/window same-directory dependency. CODE physicalnull still means unavailable.",
+      "Copy confirmed24 small decision and bind physical path; actual125 root file already exists. Freeze all artifactRows and requestKeys before first preparation.",
+      "Successful output private DATA/EXPECTED/BIND/ACCOUNT*/PUBLISH/MANIFEST is a review candidate. C separately reviews and issues real grant; preparation creates no grant."
+    ],
+    "notRun": [
+      "Actual full source data preparation",
+      "PG/SQL/stage/MAIN/publish/new-process real QA",
+      "Single successful production entry invocation over all11 actual reader profiles"
+    ],
+    "retryBoundary": "First preparation only. Existing writer registration refuses EEXIST; do not auto-mint replacement keys. Original D1 resume with frozen originalCommands/Expected remains available in original helper but new entry does not expose retry refs yet.",
+    "next": "C freeze exact successor source and metadata -> QB affected new source-only seam -> T45 one actual source-only preparation window -> C review genuine resulting DATA/EXPECTED/MAIN -> independent real execution grant"
+  },
+  "source635ExecutionSeamMetadata": {
+    "status": "ACCEPTED_SMALL_METADATA_COUNTS_READY_FOR_C_FIRST_KEY_FREEZE_NOT_EXECUTION_AUTHORITY",
+    "artifactRows": {
+      "PARTIES": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/replica-production-source519-core-20261026-10/source519/docs/rapid-launch-20261022/api-contracts/HISTORICAL-CUSTOMER-EXACT2-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-binding-partial-review-pin-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-historical-customer-exact2-review-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/actual118-source-projection-20261026/source-projection-data.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/dictionaries/historical-customers.json": 2,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/party-reference-candidates.json": 628,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/review-candidate-manifest.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-historical-customer-candidate-20261022-D3-run1/historical-customer-exact2-PENDING.json": 2
+      },
+      "CATALOGUE": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-catalogue-technical-review-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-dictionary-decision-candidate-20261022-D3-run1/catalogue-occurrences-and-decisions.json": 344
+      },
+      "PRODUCTS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-binding-partial-review-pin-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-product26-full-reference-review-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/provenance/approved-v2-size-overrides-18.json": 18,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/party-reference-candidates.json": 628,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/product-source-candidates.json": 2956,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/review-candidate-manifest.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-dictionary-decision-candidate-20261022-D3-run1/catalogue-occurrences-and-decisions.json": 344,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product-reference-and-seasons-candidate-20261022-D3-run2/product-season-source-conversion2956-PENDING.json": 2956,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product-season-proof-candidate-20261022-D3-run1/derived-season-proof2956-PENDING.json": 2956,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product26-full-reference-candidate-20261022-D3-run1/product-reference-decisions2956-v2-PENDING.json": 2956,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-01.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-02.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-03.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-04.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-05.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-06.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-07.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-08.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-09.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-10.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-11.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-12.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-13.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-14.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-15.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-16.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-17.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-18.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-19.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-20.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-21.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-22.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-23.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-24.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-25.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-26.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-27.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-28.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-29.json": 100,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-30.json": 56
+      },
+      "SKUS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-sku14999-source352-capture-20261025-C-run1/sku14999-prepared.jsonl": 15121
+      },
+      "BARCODES": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/MANIFEST.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-global-order-and-schemes-PENDING.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-prepared-PENDING.jsonl": 15018,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/barcode15018-source-projection-index-PENDING.jsonl": 0
+      },
+      "STOCK_CONTRIBUTORS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-stock26-reference-candidate-20261023-D3-run1/stock26-groups38303-PENDING.jsonl": 38314
+      },
+      "PAYMENT": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/payment-source-candidate1/RESULT.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice96-payment1086-source-reference/RESULT.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-payment-reference-review-v1.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-payment-reference-candidate-20261023-D3-run1/payment1086-PENDING.json": 1086
+      },
+      "HEADERS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-documents4-14279-PENDING.jsonl": 14279,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-projection-index-PENDING.jsonl": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-source12-14279-PENDING.jsonl": 14279,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-typed22-14279-PENDING.jsonl": 14279,
+        "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/KNOWN25811.jsonl": 25811,
+        "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/MAPPED2471.jsonl": 2471,
+        "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/approved-money-tail-overlay.csv": 32,
+        "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/inputs/sales-header-closure-index.json": 0
+      },
+      "SALES_DETAILS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/provenance/approved-money-tail-overlay.csv": 32,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/MANIFEST.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SALES_LINE-source12.jsonl": 80918,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SALES_LINE-typed21.jsonl": 80918
+      },
+      "SETTLEMENTS": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v2/provenance/approved-money-tail-overlay.csv": 32,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/MANIFEST.json": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SETTLEMENT-source12.jsonl": 25779,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/SETTLEMENT-typed12.jsonl": 25779
+      },
+      "TRANSFER_LINES": {
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-projection-index-PENDING.bin": 0,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-source12-261641-PENDING.jsonl": 261641,
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-typed13-261641-PENDING.jsonl": 261641
+      }
+    },
+    "artifactRowsEvidencePaths": {
+      "PARTIES": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/PARTIES.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1/review-candidate-manifest.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-historical-customer-exact2-review-v1.json"
+      ],
+      "CATALOGUE": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/CATALOGUE.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-catalogue-technical-review-v1.json"
+      ],
+      "PRODUCTS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/PRODUCTS.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/PRODUCT2956-CAPTURE.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product-season-proof-slice1/RESULT.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/product26-full-reference-slice1/DERIVATION-RESULT.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-product26-full-reference-review-v1.json"
+      ],
+      "SKUS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/SKUS.json"
+      ],
+      "BARCODES": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-barcode15018-source-capture-20261026-D3-run2/MANIFEST.json"
+      ],
+      "STOCK_CONTRIBUTORS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/STOCK_CONTRIBUTORS.json"
+      ],
+      "PAYMENT": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/PAYMENT.json",
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-payment-reference-review-v1.json"
+      ],
+      "HEADERS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/HEADERS.json"
+      ],
+      "SALES_DETAILS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/SALES_DETAILS.json"
+      ],
+      "SETTLEMENTS": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/SETTLEMENTS.json"
+      ],
+      "TRANSFER_LINES": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/TRANSFER_LINES.json"
+      ]
+    },
+    "nativeObservedMembers": [
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-01.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-02.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-03.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-04.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-05.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-06.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-07.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-08.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-09.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-10.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-11.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-12.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-13.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-14.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-15.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-16.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-17.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-18.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-19.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-20.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-21.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-22.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-23.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-24.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-25.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-26.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-27.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-28.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-29.json",
+        "rows": 100,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "PRODUCTS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-30.json",
+        "rows": 56,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "SKUS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-sku14999-source352-capture-20261025-C-run1/sku14999-prepared.jsonl",
+        "rows": 15121,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      },
+      {
+        "group": "STOCK_CONTRIBUTORS",
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-stock26-reference-candidate-20261023-D3-run1/stock26-groups38303-PENDING.jsonl",
+        "rows": 38314,
+        "actualEntryWillIndependentlyCountAndCompare": true
+      }
+    ],
+    "coverageMeaning": "Rows are accepted artifact membership counts, not invented expected roots or actual target row counts. NonCODE METADATA/CORE_DATA use0 artifact member coverage; same artifact may occur across group recipes without changing its logical identity. Native prepared perfile source-member counts are independently observed and compared by the entry. Actual original11 builder independently verifies complete source/typed/document closure.",
+    "sourceManifestRef": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v3-barcode-amendment/effective-import-selection.json",
+    "sourceManifestRefEvidence": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v3-barcode-amendment/effective-import-selection.json",
+      "bytes": 6762,
+      "sha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba"
+    },
+    "sourceManifestRefStatus": "EXISTING_IMMUTABLE_SELECTION_REFERENCE_RECOMMENDED_FOR_C_FIRST_FREEZE; original helper accepts original sourceManifestRef string in new PUBLISH; not a generated hash or already-frozen MAIN claim",
+    "firstKeys": {
+      "existingFrozenMainKeysFound": false,
+      "checkedScope": [
+        "Current finalized INPUT has executionAuthorization null and no MAIN files/requestKeys.",
+        "Existing DELIVERY,11 recipe descriptors and FULL-SOURCE-PROJECTION-PREPARATION/existing metadata have no full requestKeys.",
+        "Existing authority filenames inspected; native account CORE execution grant is CORE-only, not full MAIN.",
+        "Actual125 original state previously verified fullBinding:null,claims22,seq2; does not by itself prove no draft elsewhere."
+      ],
+      "keysCreatedByD3": false,
+      "recommendedChunkRows": 500,
+      "originalBuilder": "R/scripts/import-v3/prepare-native-bindings.mjs:306-316",
+      "newWarehouseRecords": 31,
+      "skuRecords": 14999,
+      "baselineLedgerRecords": 38303,
+      "remainingItems": 53333,
+      "accountKeysRequired": 107,
+      "lastAccountItems": 333,
+      "bindKeysRequired": 1,
+      "publishKeysRequired": 1,
+      "totalKeysAndCommands": 109,
+      "expectedBindSequence": 2,
+      "expectedBindCursor": 22,
+      "expectedFirstAccountSequence": 3,
+      "expectedPublishSequence": 110,
+      "expectedPublishCursor": 53355,
+      "meaning": "Counts from existing accepted reader specs and actual125 pre-MAIN state. C must freeze first109 exact key strings before preparation. Entry independently re-counts actual source facts and original helper rejects key-count mismatch; no auto-mint/retry replacement."
+    },
+    "missingSourceCountMetadata": [],
+    "CODEChanged": false,
+    "actualLargeBodiesRead": false,
+    "actualPGOrServerAction": false,
+    "consumer": "Copy source635ExecutionSeamMetadata.artifactRows and sourceManifestRef into scope. C supplies separately frozen requestKeys bind/account107/publish. Rest of scope follows source635ActualSourcePreparation.scopeSchema."
+  },
+  "source646PreparationErrorPhase": {
+    "status": "SAFE_SOURCE_ONLY_ERROR_PHASE_ADDED_ROOT_CAUSE_NOT_YET_LOCATED",
+    "basis": {
+      "actual126": "FAILED2/145.204871142s/HISTORY_SETTLEMENT_INPUT/outputs-private empty/registration absent; no grant, PG, MAIN, or APP",
+      "actual129": "Four small original metadata capture stages PASS; all115 maintenance projection schemas PASS0fail; no source reader or SQL"
+    },
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 114035,
+        "sha256": "b816b2f5d4102569f0538782992de97c0bad01e7b1c7b528b99982ea9fbd14e9"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 138591,
+        "sha256": "9aa6078da2c1b1ef4221e2b786142014312cbe8dc44ec564b2bc723cac2e24f4"
+      }
+    ],
+    "behavior": "Only private sourcePreparation path records fixed code-path enum and public preparation catch attaches readonly enumerable sourcePreparationPhase to the SAME extensible Error object before rethrow. Original .code/.message/validator/input/hash/authority and execution provider path are unchanged. No callbacks or stage capabilities added to operator scope.",
+    "stageMeaning": "Active coarse phase when original operation failed; not an exact inner stack/line or proof of bad business row. Existing cleanup error behavior is preserved. No raw message/stack/path/value exported.",
+    "phases": [
+      "SCOPE",
+      "INPUT",
+      "CORE_DATA",
+      "VERIFIED_CURRENT",
+      "WAREHOUSE_SCOPE_INPUT",
+      "SOURCE_SESSION",
+      "OPEN_GROUP_<one of original fixed11 groups>",
+      "NATIVE_FACTS_PRODUCTS",
+      "NATIVE_FACTS_SKUS",
+      "NATIVE_FACTS_STOCK_CONTRIBUTORS",
+      "WAREHOUSE_SCOPE",
+      "ARTIFACT_COVERAGE",
+      "DATA_ASSEMBLY",
+      "DATA_DERIVATION",
+      "ALL11_CLOSURE",
+      "ORIGINAL_BINDINGS_AND_STREAMS",
+      "PRIVATE_WRITER"
+    ],
+    "checks": {
+      "new": 2,
+      "pass": 2,
+      "fail": 0,
+      "command": "node --test --test-reporter=spec '--test-name-pattern=source646 preparation phase' scripts/import-v3/production-source-provider26.test.mjs",
+      "covered": [
+        "Original wrong input pin retains PRODUCTION_PROVIDER26_INPUT_CHANGED + SCOPE.",
+        "Missing complete current retains original required code + VERIFIED_CURRENT.",
+        "Finite wrong retained-native record count retains original COUNT + NATIVE_FACTS_STOCK_CONTRIBUTORS.",
+        "Original D1 incomplete finite maintenance fixture retains INVALID_HISTORY_CLOSURE_STAGE + DATA_DERIVATION; no generated output.",
+        "Phase property nonwritable; original5 and source644/QB386 reused without rerun."
+      ],
+      "syntaxCheck": "PASS"
+    },
+    "carrierDelta": "Catch only export errorCode:error?.code??safe fallback and sourcePreparationPhase:error?.sourcePreparationPhase??null. Do not export error.message/stack/cause/body or call any reader from catch. Original failure no-replay behavior stays.",
+    "next": "C freeze -> QB only phase delta -> T45 one bounded genuine successor with same preserved first registration/109 keys, exact successor source pin and actual deadline; never rerun job126. If fail use new original code + phase to target root fix; no grant or hash substitution.",
+    "notRun": [
+      "Actual successor with phase",
+      "Full actual DATA/EXPECTED/MAIN output",
+      "Actual root-cause reproduction or fix"
+    ],
+    "actualLargeBodiesRead": false,
+    "actualPGOrServerAction": false,
+    "changedD1OrSharedClosureReader": false
+  },
+  "source661C144ManifestElapsedSeconds": {
+    "status": "DETERMINISTIC_ROOT_CAUSE_FIXED_FINITE_RED_GREEN_NOT_ACTUAL_PREPARATION_PASS",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 142683,
+        "sha256": "98b65cb02f091d34a6e3e8380ddedb555f5bfba35e007bda47a598f838e2ca02"
+      }
+    ],
+    "testPathNote": "Existing owned provider26.test.mjs holds the new original C144 opener finite test; authorized-sales-detail-reader.test.mjs untouched. C may register this exact already-owned path.",
+    "rootCause": {
+      "actual130": "HISTORY_SETTLEMENT_INPUT / OPEN_GROUP_SALES_DETAILS / FAILED2 / 144.011796684s / no output or PG/MAIN/grant/APP",
+      "originalSmallManifest": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/sales-settlement-source-closure-20261023-C-run1/MANIFEST.json",
+        "bytes": 2555,
+        "sha256": "107ba2909e041d7f1e974138b8894e2765f77585a95f6b92cdba66acbbf160ed",
+        "readOnceThisDiagnosis": true,
+        "bodyValuesPrinted": false,
+        "actualFinding": "Top-level elapsedSeconds is fractional; all other JSON numeric fields are integers."
+      },
+      "exactCodeSeam": "openCapturedSalesSettlementSource: byte-pin verified manifest JSON then historySettlementRequestHash(manifest); guard rejects fractional elapsedSeconds with Safe evidence integers only/HISTORY_SETTLEMENT_INPUT. Whole-manifest capture return was discarded, never adopted as identity/business root."
+    },
+    "fix": "When optional exact top-level elapsedSeconds is present, validate it separately as number/finite/nonnegative; remaining original evidence still uses exact original historySettlementRequestHash. Original manifest bytes unmodified and same SHA guard before parse; original scope/descriptors/selection/32-money/fingerprint validators and data/business hash inputs unchanged. No generic float allowance.",
+    "checks": {
+      "red": "Original decimal elapsed1.25 finite C144 opener fails at original reader line153 with HISTORY_SETTLEMENT_INPUT; 1 test failed before fix, actual log observed.",
+      "green": "2 scoped tests PASS / 0 FAIL after minimal fix, no old suites repeated.",
+      "command": "node --test --test-reporter=spec '--test-name-pattern=source661 C144' scripts/import-v3/production-source-provider26.test.mjs",
+      "covered": [
+        "Fractional finite positive top-level timing accepted with same byte pin; original full capture alone still rejects it as the reproduced mechanism.",
+        "No source/typed bodies read at opening in finite fixture; original external proof invoked and close once.",
+        "Missing native resolver still rejects authorize().",
+        "Negative/null/string/nonfinite serialized timing rejected.",
+        "Fractional sourceRows, descriptor rows, unrelated evidence remain rejected by original strict capture.",
+        "Wrong original manifest byte pin still rejected and resource closed."
+      ]
+    },
+    "inputImpact": "INPUT.CANDIDATE unchanged182293/c85416848fd292e4aac11f17c82567804af8989b2d5575622cf88ad10c7c33b1; provider remains114035/b816b2f5d4102569f0538782992de97c0bad01e7b1c7b528b99982ea9fbd14e9. C freeze/build carrier must include changed imported reader module exact pin in actual source tree. No logical/physical DATA mappings or6 support CODE pins changed.",
+    "next": "C freeze exact changed reader+provider test+delivery -> QB only elapsed metadata seam -> T45 new source-only successor with original109keys/registration and safe phase carrier; do not rerun126/130.",
+    "notRun": [
+      "Real full source-only successor after fix",
+      "Full DATA/EXPECTED/MAIN creation or authorization",
+      "PG/STAGE/MAIN/publish"
+    ],
+    "largeSourceBodiesRead": false,
+    "D1BuilderChanged": false,
+    "sharedCaptureFunctionChanged": false,
+    "originalC144ManifestChanged": false
+  },
+  "source664TransferDocumentOrdinal": {
+    "status": "ORIGINAL_PACKED_HEADER_ORDINAL_MISINTERPRETATION_FIXED_FINITE_RED_GREEN_NOT_ACTUAL_PASS",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 114692,
+        "sha256": "f9d2d8b3398ea4332e87e7aa4679736b6b5cefc9fd47062c117540e0b520c0a2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 145231,
+        "sha256": "12f177b641873f736acd24bf7091535b99f85268c5ba7d4418a6269c1d64e26c"
+      }
+    ],
+    "actual131": "FAILED2/145.718830792s/OPEN_GROUP_TRANSFER_LINES/PRODUCTION_RETAINED_TRANSFER26_DUPLICATE; C144 opening passed; no PG/MAIN/grant/APP or successful full output",
+    "rootCause": {
+      "reader": "retainedTransferLinesReader combined duplicate guard incorrectly required first record uint32 at64+n*256 === physical n.",
+      "originalWriter": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-core.mjs",
+        "bytes": 11225,
+        "sha256": "1c655536bf1d4580071670bd984f7c952cfd1e8399525b4b8a9f1051bd215360"
+      },
+      "writerMeaning": "PackedLineIndex.add writes document/header ordinal from byKey, repeated for all lines in that document and independent of physical record position. Existing native-transfer-line-source26 captured adapter uses same meaning.",
+      "boundedOriginalIndexEvidence": {
+        "logicalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-projection-index-PENDING.bin",
+        "acceptedFullBytes": 69587332,
+        "acceptedFullSha256": "e11d6293558a83f9deae7c8b414be3d40663cdc92ef9b1ce686bb0bed21e28c6",
+        "bytesRead": 320,
+        "fullBodyRehashed": false,
+        "sizeMatches": true,
+        "magic": "TL26JOIN1",
+        "rows": 261641,
+        "headers": 14279,
+        "firstHeaderOrdinal": 4895,
+        "firstPhysicalRecordOrdinal": 0,
+        "sourceTypedBodiesRead": false
+      }
+    },
+    "fix": [
+      "Keep exact sourceId and typedId unique sets; require stored headerOrdinal < actual header count rather than equality with physical n.",
+      "Bind typed row.header_id to original packed directory UUID at that headerOrdinal, both original restore/authorize and closure-only typed streaming.",
+      "No input/index/source IDs/rows/order/hash changed or regenerated; no dedup/filter/merge; original range SHA/coverage/EOF/negative quantities/lifetime/authorization preserved."
+    ],
+    "checks": {
+      "red": "Finite original PackedLineIndex writer with reversed physical/header order reproduces exact original PRODUCTION_RETAINED_TRANSFER26_DUPLICATE.",
+      "greenNew": "Final3 tests PASS0FAIL; source664 retained transfer pattern. Original writer generates genuine format for same-header multi-line and reversed physical/header order, both read all rows/authorize/close/global closure; duplicate source/typed identity and ordinal==headers rejected; directory/header UUID mismatch rejected in authorize and closure streaming.",
+      "affectedExisting": "2 existing source620 retained TRANSFER_LINES checks PASS0FAIL after fixture switched from hand-packed index to original writer; range coverage/duplicate rejection and signed units/global source/typed order. Re-run justified by changed same finite fixture; unrelated suites reused.",
+      "commands": [
+        "node --test --test-reporter=spec '--test-name-pattern=source664 retained transfer' scripts/import-v3/production-source-provider26.test.mjs",
+        "node --test --test-reporter=spec '--test-name-pattern=source620 retained TRANSFER_LINES' scripts/import-v3/production-source-provider26.test.mjs"
+      ],
+      "testDebugCorrection": "First new fixture draft used missing prepared.header; corrected to original prepared.line.header_id/source.normalizedFields before recording exact duplicate RED. One negative fixture initially selected untampered row, corrected to targeted physical/header row; final original guard rejection proven."
+    },
+    "bundleImpact": "Provider+test new pins; INPUT only authorityModule SHA changed. Keep source657 imported C144 reader4640e4bb unchanged in successor bundle; shared closure/D1/6support/data mappings unchanged. Same firstregistration/109keys; no replay of131.",
+    "notRun": [
+      "Real source-only successor after ordinal fix",
+      "Full DATA/EXPECTED/MAIN prepared output",
+      "PG/STAGE/MAIN/publish"
+    ],
+    "next": "C freeze -> QB only packed ordinal delta -> T45 exact new source-only bounded successor with preserved first keys/registration and safe phase carrier."
+  }
+}
