@@ -3,6 +3,7 @@ import{fixture as productFixture}from'./retained-native-closure-fixtures-2026102
 import{RETAINED_NATIVE_CLOSURE_INDEX_VERSION,captureRetainedNativeClosureRecord26,createRetainedNativeClosureSession26,projectRetainedNativeClosureRecord26}from'./retained-native-closure-streams-20261026.mjs';
 const root='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/replica-production-source519-core-20261026-10/source519';const load=p=>import(pathToFileURL(root+'/'+p));
 const codec=await load('packages/application/src/history-typed-closure.ts'),original={...codec,...await load('packages/application/src/import-v3-history-settlement.ts'),...await load('packages/application/src/native-product-import.ts'),...await load('packages/application/src/native-sku-import.ts'),...await load('packages/application/src/native-stock-contributor-import.ts'),...await import(pathToFileURL('/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-stock-contributor-import.ts'))};
+original.nativeSkuAliasEvidences26=(await import(pathToFileURL('/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-sku-import.ts'))).nativeSkuAliasEvidences26;
 const factories={PRODUCTS:productFixture,SKUS:skuFixture,STOCK_CONTRIBUTORS:stockFixture};
 const openers={PRODUCTS:(await load('scripts/import-v3/native-product-source26.mjs')).openReviewedProductSource26,SKUS:(await load('scripts/import-v3/native-sku-source26.mjs')).openReviewedSkuSource26,STOCK_CONTRIBUTORS:(await import(pathToFileURL('/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.mjs'))).openReviewedStockSource26};
 const collect=it=>Array.fromAsync(it),sha=b=>createHash('sha256').update(b).digest('hex'),ordered=rows=>[...rows].sort((a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key)));
@@ -154,4 +155,12 @@ test('source708 barcode consumed rows reuse only verified descriptor digests whi
 test('source708 reused digest still independently hashes decoded cache rows and refuses a roundtrip mismatch',async t=>{
  const f=await skuFixture(t),projected=new WeakSet(),guarded={...original,historyClosureProjectionRow26(...args){const row=original.historyClosureProjectionRow26(...args);projected.add(row);return row;},historyClosureRowHash(row){return projected.has(row)?original.historyClosureRowHash(row):'f'.repeat(64);}},x=session('SKUS',f.options.binding,[f.prepared],{original:guarded});t.after(()=>x.s.close());
  await assert.rejects(collect(x.s.sourceRows()),/CACHE_ROUNDTRIP/);assert.equal(x.reads(),1);await x.s.close();assert.equal(x.closed(),1);
+});
+
+test('source712 retained SKU projection invokes one checked batch and no per-alias or duplicate first validator',async t=>{
+ const f=await skuFixture(t);let batches=0;const counted={...original,validatePreparedNativeSkuImport26(){throw Error('DUPLICATE_WHOLE_GROUP_VALIDATION');},nativeSkuAliasEvidence26(){throw Error('PER_ALIAS_REVALIDATION');},nativeSkuAliasEvidences26(row){batches++;return original.nativeSkuAliasEvidences26(row);}};
+ const actual=projectRetainedNativeClosureRecord26(counted,'SKUS',f.prepared);assert.equal(batches,1);assert.equal(actual.sources.length,2);assert.equal(actual.typed.length,3);
+ assert.deepEqual(actual.sources, f.prepared.aliases.map(a=>original.historyClosureProjectionRow26('import_source_row',original.nativeSkuAliasEvidence26(f.prepared,a))));
+ const legacy={...original};delete legacy.nativeSkuAliasEvidences26;assert.throws(()=>projectRetainedNativeClosureRecord26(legacy,'SKUS',f.prepared),/SKU_BATCH_CAPABILITY/);
+ const wrongCount={...original,nativeSkuAliasEvidences26(){return [];}};assert.throws(()=>projectRetainedNativeClosureRecord26(wrongCount,'SKUS',f.prepared),/SKU_BATCH_COUNT/);
 });

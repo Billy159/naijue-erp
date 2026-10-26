@@ -2,21 +2,21 @@
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
   "recordedAtUtc": "2026-10-26T11:11:07.604150+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "SOURCE708_SAME_RECORD_DIGEST_REUSE_FINITE_CHECKED_NOT_ACTUAL_PERFORMANCE_PASS",
+  "status": "SOURCE712_SKU_BATCH_EVIDENCE_READY_FINITE_CHECKED_NOT_ACTUAL_PERFORMANCE_PASS",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "bytes": 118641,
-    "sha256": "c31a070e80202c7586b99c938e7f24a9c720ea97be3543620a247bf8c64d5854"
+    "bytes": 118693,
+    "sha256": "9c7a055a269fd9257131cbec436a5a6c4177395cd9b6540dc9734b73f68bed4e"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
     "bytes": 155828,
-    "sha256": "1fc70ba45c27081eb4d3661f354e3096f2c28d2a7cafa5feeda5ef5578d44ab5"
+    "sha256": "48eb632a29f8f27f1411fb5094c8fb3b5e39d38c9ed0b5707d612da794291e9e"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
-    "bytes": 182337,
-    "sha256": "7201c668b64ccbee52203c3bec726084bdee54c8f043511490942f6cf2ef05b1"
+    "bytes": 182361,
+    "sha256": "36abaa6eccd3fb2cb871cedb090bbd2afe3c3d9852c8454aad55f6eefa0c8527"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -158,7 +158,7 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
   ],
-  "next": "C freeze exact helper/provider/tests and descriptors -> scoped QB -> T45 exact new source/helper bundle; actual performance comparison only separately authorized fixed1000, no full retry.",
+  "next": "C freeze all exact source712 leaves -> scoped QB -> T45 same-version runtimeSKU/helper/provider new short comparison; no fullrun or timing claim from source checks.",
   "source620": {
     "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
     "implemented": [
@@ -1706,5 +1706,128 @@
     ],
     "largeActualBodiesRead": false,
     "sharedClosureOrHashAlgorithmChanged": false
+  },
+  "source712NativeSkuEvidenceBatch": {
+    "status": "IMPLEMENTED_EXACT_VALIDATED_SKU_BATCH_FINITE_EQUIVALENCE_NO_REAL_RUN",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-sku-import.ts",
+        "bytes": 17796,
+        "sha256": "3720bbf699e2702aa7026fac4333db74db1492aa72b25176fcaed43b3807695b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-sku-stock-import.test.ts",
+        "bytes": 51406,
+        "sha256": "11dfffeb69228199a03b5f4bce77f77307570208c1e1384c3cb9ea9e051ec84f"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 15247,
+        "sha256": "ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+        "bytes": 27745,
+        "sha256": "b4e9e8a8ad7981b5752c4e45dafc28ef213a51dfb72ef833c52ed37811d6c128"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 118693,
+        "sha256": "9c7a055a269fd9257131cbec436a5a6c4177395cd9b6540dc9734b73f68bed4e"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 155828,
+        "sha256": "48eb632a29f8f27f1411fb5094c8fb3b5e39d38c9ed0b5707d612da794291e9e"
+      }
+    ],
+    "originalHotspot": "144 old139 existingprofile safe summary23317/d5e11e1a35e75b2b2ed3d305369bd2bd072024d34fdfe8b30c586e7cacacde40: native append/capture/project/requestHash hot chain. Old helper SKUS validated whole row once then singlealias API validated whole row again peralias; actual14999canonical/15121aliases imply30120 validations per capture versus14999 with batch. This is known call repetition, not proof of exact per-SKU CPU fraction or predicted speedup.",
+    "applicationAPI": {
+      "name": "nativeSkuAliasEvidences26(row: PreparedNativeSkuImport26): JsonObject[]",
+      "behavior": "Synchronous original full validatePreparedNativeSkuImport26 exactly once then map only row.aliases in original order via module-private evidence constructor. Singlealias nativeSkuAliasEvidence26 retains full validation and original returned evidence behavior.",
+      "noGrant": "No unchecked export, caller-supplied alias list, prehash/boolean bypass, validation cache, cross-record capability or SQL path; original validator and requestHash bytes unchanged."
+    },
+    "readerComposition": "Helper SKUS branch explicitly requires batch function, calls once, validates array/count equals original aliases, then native SKU and each original evidence/typed alias in original order. It does not separately invoke validator/singlealias again. Provider imports and passes the new checked batch function explicitly in original exports bag; missing runtime namedexport/capability rejects instead of fallback. All other groups unchanged.",
+    "newRuntimeRequired": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-sku-import.ts",
+        "bytes": 17796,
+        "sha256": "3720bbf699e2702aa7026fac4333db74db1492aa72b25176fcaed43b3807695b"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 15247,
+        "sha256": "ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 118693,
+        "sha256": "9c7a055a269fd9257131cbec436a5a6c4177395cd9b6540dc9734b73f68bed4e"
+      }
+    ],
+    "codePinImpact": {
+      "helperPrevious": {
+        "bytes": 15036,
+        "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
+      },
+      "helperCurrent": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 15247,
+        "sha256": "ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24"
+      },
+      "helperGroups": [
+        "PRODUCTS",
+        "SKUS",
+        "BARCODES",
+        "STOCK_CONTRIBUTORS"
+      ],
+      "physicalCodeLocations": null,
+      "provider": "ExacthelperSHA and BARCODEbytes synchronized; imported native-sku-import.ts runtime MUST be source712 same-version, not only local helper replacement.",
+      "otherFiveSupportChanged": false,
+      "shared703ClosureChanged": false
+    },
+    "checks": {
+      "application": "3PASS0FAIL: new2 batch tests +existing SKU26 explicit-preparation affected test. Before API implementation new2 rejected missing capability. 64alias finite group batch everyitem/order deepEquals original checked singlealias outputs; input unchanged; native/reference/aliascount/fingerprint/profile mutations reject; no unchecked export.",
+      "helper": "17PASS0FAIL: whole directly affected helper tests original rows/roots/barcode/range/typed/source/cache/close/cancel plus new call-count test. New test proves1 checked batch with duplicate-firstvalidate/singlealias functions configured to throw; outputs original2aliases/3typed; missing batch or wrong length rejects.",
+      "provider": "6PASS0FAIL affected finite4factory/helper-pin/currentprepared-mutation guard; predecessor helper15036/8cb03a49 refused by all4 branches.",
+      "typeCheck": "Targeted strict tsc --noEmit on native-sku-import.ts +native-sku-stock-import.test.ts PASS.",
+      "notPerformance": "No actual source scan/profile/throughput measurement; no percentage speedup claim."
+    },
+    "sourceDataInvariant": {
+      "nonCodeMembersUnchangedComparedToAccepted132": 79,
+      "bindingAndExecutionAuthorizationUnchanged": true,
+      "originalManifestPreparedHashesAndEvidenceMappingsChanged": false,
+      "originalDataBodiesReadLocally": false,
+      "historicalRecipesModified": false
+    },
+    "preserveRuntime": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.mjs",
+        "bytes": 40456,
+        "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-typed-closure.ts",
+        "bytes": 37525,
+        "sha256": "f5e0af8570e9e10b230a7cf0febeddb18ee1de0f86e6ecb0a18a609ccd01e0f5"
+      }
+    ],
+    "handoff": "C fixed source/QB first. T45 new source tree overlays exact native-sku-import.ts runtime +provider, installs helper at explicit new support physical path and binds four CODE refs to same verified newhelper; preserve other5support/703closure/682preparer/673guard/C144reader/actual124DATA/125/24/109keys/registration. No oldruntime fallback or oldhelper pairing. Fixed1000 probe remains diagnostic-only. No actual execution authorized by this metadata.",
+    "notRun": [
+      "Actual source712 fixed1000/source-only preparation",
+      "Actual full DATA/EXPECTED/MAIN or performance proof",
+      "SQL/PG/MAIN/PUBLISH/grant/APP"
+    ],
+    "privateDataChanged": false
   }
 }

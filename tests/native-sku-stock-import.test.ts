@@ -508,3 +508,30 @@ test('v18 stock preserves the original legal4MiB input plus prepared serializati
   await assert.rejects(new PostgresNativeStockContributorStore26(denied.pool,denied.runtime).stageBatch([group,second]),{code:'NATIVE_STOCK_BATCH_BOUND'});
   assert.equal(denied.connects(),0);
 });
+
+test('source712 SKU26 batch evidence equals checked single-alias evidence in original order for a bounded large alias group',async()=>{
+ const {nativeSkuAliasEvidences26}=await import('../packages/application/src/native-sku-import.ts');assert.equal(typeof nativeSkuAliasEvidences26,'function');
+ const input=skuInput26(),count=64,representative=input.canonicalSource;
+ representative.rawFields.合并来源SKU数=representative.normalizedFields.合并来源SKU数=String(count);
+ (representative.fieldProvenance.fields as JsonObject).合并来源SKU数={origin:'ORIGINAL',reason:'Synthetic literal',raw:String(count)};
+ const first=input.aliases[0]!,other=input.aliases[1]!;
+ (input as {aliases:typeof input.aliases}).aliases=Array.from({length:count},(_,n)=>{
+  if(n===0)return{source:representative,mapping:{...first.mapping,canonicalMemberCount:String(count)}};
+  const raw={...other.source.rawFields,来源编号:id(1000+n),SKU编码:id(1000+n),合并来源SKU数:String(count)},s=source('SKU',2000+n,id(1000+n),raw);
+  return{source:s,mapping:{...other.mapping,oldSourceSkuId:s.sourceKey,canonicalMemberCount:String(count),oldSkuCode:raw.SKU编码,sourceRow:s.rowNo}};
+ });
+ const prepared=prepareNativeSkuImport26(input),before=structuredClone(prepared),expected=prepared.aliases.map(a=>nativeSkuAliasEvidence26(prepared,a)),actual=nativeSkuAliasEvidences26(prepared);
+ assert.deepEqual(actual,expected);assert.deepEqual(prepared,before);assert.deepEqual(actual.map(r=>r.id),prepared.aliases.map(a=>a.source.id));
+});
+test('source712 SKU26 batch evidence preserves complete prepared and alias/reference/profile validation with no unchecked public path',async()=>{
+ const module=await import('../packages/application/src/native-sku-import.ts'),{nativeSkuAliasEvidences26}=module;assert.equal(typeof nativeSkuAliasEvidences26,'function');
+ const prepared=prepareNativeSkuImport26(skuInput26());
+ for(const mutate of [
+  (p:typeof prepared)=>{(p.nativeSku as unknown as JsonObject).created_operation_id=id(999);},
+  (p:typeof prepared)=>{p.references.product.nativeSnapshot.season_ids=[];},
+  (p:typeof prepared)=>{(p.aliases[1]!.mapping as {canonicalMemberCount:string}).canonicalMemberCount='1';},
+  (p:typeof prepared)=>{(p as {fingerprint:string}).fingerprint='f'.repeat(64);},
+  (p:typeof prepared)=>{(p as {schemaProfile:string}).schemaProfile='EXACT25';}
+ ]){const changed=structuredClone(prepared);mutate(changed);assert.throws(()=>nativeSkuAliasEvidences26(changed));}
+ assert.ok(!Object.keys(module).some(k=>/unchecked|fromValidated/i.test(k)));
+});

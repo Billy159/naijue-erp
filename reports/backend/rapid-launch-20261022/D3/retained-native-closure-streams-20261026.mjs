@@ -15,8 +15,9 @@ export function projectRetainedNativeClosureRecord26(original,group,prepared){
   const evidence=original.nativeProductImportEvidences26(prepared);
   for(let i=0;i<evidence.length;i++){sources.push(project('import_source_row',evidence[i].source));typed.push(project('product',prepared.nativeProducts[i]));}
  }else if(group==='SKUS'){
-  original.validatePreparedNativeSkuImport26(prepared);typed.push(project('sku',prepared.nativeSku));
-  for(const alias of prepared.aliases){const s=alias.source;sources.push(project('import_source_row',original.nativeSkuAliasEvidence26(prepared,alias)));
+  need(typeof original.nativeSkuAliasEvidences26==='function','RETAINED_NATIVE_SKU_BATCH_CAPABILITY');
+  const evidence=original.nativeSkuAliasEvidences26(prepared);need(Array.isArray(evidence)&&evidence.length===prepared.aliases.length,'RETAINED_NATIVE_SKU_BATCH_COUNT');typed.push(project('sku',prepared.nativeSku));
+  for(let i=0;i<prepared.aliases.length;i++){const alias=prepared.aliases[i],s=alias.source;sources.push(project('import_source_row',evidence[i]));
    typed.push(project('import_sku_alias',{batch_id:prepared.batchId,old_source_sku_id:s.sourceKey,canonical_sku_id:prepared.nativeSku.id,source_row_id:s.id,canonical_source_key:prepared.canonicalSource.sourceKey,mapping_basis:alias.mapping.mappingBasis}));}
  }else if(group==='BARCODES'){
   original.validatePreparedNativeBarcode(prepared);

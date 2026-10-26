@@ -119,7 +119,7 @@ async function retainedBarcodeFiles(t,options={}){
  const artifacts={prepared:await save('prepared.jsonl',Buffer.concat(encoded)),index:await save('index.jsonl',entries.map(e=>JSON.stringify(e)+'\n').join('')),permutations:await save('permutations.json',JSON.stringify(permutation))};
  const manifest={version:'ORIGINAL_BARCODE15018_APPROVED_SOURCE_CAPTURE_26_V1',binding:sourceBinding,selectedRows:3,summary:{rows:3},source:{path:'/SYNTHETIC_RAW_MUST_NEVER_OPEN',bytes:30},inputPins:{proposal:{sha256:digest('a')},approval:{sha256:digest('b')}},artifacts};options.mutateManifest?.(manifest);
  const helperPath='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs';
- const helper=await save('approved-helper.mjs',await readFile(helperPath));assert.equal(helper.sha256,'8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79');
+ const helper=await save('approved-helper.mjs',await readFile(helperPath));assert.equal(helper.sha256,'ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24');
  f.inputs.producers.BARCODES={mode:'RETAINED',descriptor:await save('capture.json',JSON.stringify(manifest)),closureHelper:helper};
  f.inputs.closureScope.expectedCounts.import_source_row=3;f.inputs.closureScope.expectedCounts.barcodes=3;f.inputs.closureScope.expectedSourceEntityCounts.BARCODE=3;
  // Only the original continuation protocol is scripted; real BARCODE source
@@ -852,7 +852,7 @@ test('source693 finite all11 diagnostic preserves original prechecks and stops s
 });
 
 test('source708 original four concrete factories require the exact new helper pin and reject the old helper descriptor',async t=>{
- const old='6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22';
- for(const group of ['PRODUCTS','SKUS','STOCK_CONTRIBUTORS']){const f=await retainedNativeFiles(t,group);await f.s.preflight();await f.s.close();f.inputs.producers[group].closureHelper.sha256=old;f.inputs.producers[group].closureHelper.bytes=14592;const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);await assert.rejects(s.preflight(),/CHANGED|HELPER_PIN/);await s.close();}
- const f=await retainedBarcodeFiles(t);f.inputs.producers.BARCODES.closureHelper.sha256=old;f.inputs.producers.BARCODES.closureHelper.bytes=14592;const s=await f.open();await assert.rejects(s.preflight(),e=>e.code==='PRODUCTION_BARCODE26_HELPER_PIN');await s.close();
+ const old='8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79';
+ for(const group of ['PRODUCTS','SKUS','STOCK_CONTRIBUTORS']){const f=await retainedNativeFiles(t,group);await f.s.preflight();await f.s.close();f.inputs.producers[group].closureHelper.sha256=old;f.inputs.producers[group].closureHelper.bytes=15036;const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);await assert.rejects(s.preflight(),/CHANGED|HELPER_PIN/);await s.close();}
+ const f=await retainedBarcodeFiles(t);f.inputs.producers.BARCODES.closureHelper.sha256=old;f.inputs.producers.BARCODES.closureHelper.bytes=15036;const s=await f.open();await assert.rejects(s.preflight(),e=>e.code==='PRODUCTION_BARCODE26_HELPER_PIN');await s.close();
 });

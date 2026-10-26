@@ -6369,5 +6369,19 @@
       "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.test.mjs"
     ],
     "scope": "Explicit new B07_SYN_APPROVED_V1 source profile from generation start, existing default fixture unchanged. Reuse existing source/import/11-group closure/publication flow, schema26 and normal factory/authorization/store. New approved SALE+TRANSFER synthetic quantities and documented derived opening only in new isolated target; never alter old07 or real source status/identity. One normal session realPG delta/conservation/replay/CAS plus existing store newId direct-service PK rollback companion; no production API fault injection, no renewal framework or DDL. Source/finite checks only; actual DB exclusively T45 after exact target preparation. Synthetic result never counts actual-source/full import/formal release."
+  },
+  "source712NativeSkuEvidenceBatch": {
+    "owner": "D3",
+    "files": [
+      "packages/application/src/native-sku-import.ts",
+      "tests/native-sku-stock-import.test.ts",
+      "K/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+      "K/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs",
+      "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+      "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json"
+    ],
+    "scope": "Batch same prepared SKU alias evidence after one original complete validator pass, same synchronous call. Existing single-alias public API behavior unchanged; private validated-alias constructor only. No external unchecked/prehash capability or cross-record/request cache; original public hash/validation algorithms and exact evidence/projection bytes unchanged. Provider explicit batch capability and helper/runtime pins form same source closure, old runtime rejects. Other five support bodies and source DATA untouched; D2 original work terminal and D1 fixture independent. Source/finite checks before independent review and sole T45 actual."
   }
 }

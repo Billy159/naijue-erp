@@ -188,7 +188,17 @@ export function nativeSkuAliasEvidence(row: PreparedNativeSkuImport, alias: Nati
           { sourceKey: ref.sourceKey, nativeId: ref.nativeId, nativeSnapshot: ref.nativeSnapshot }])) } } };
 }
 export function nativeSkuAliasEvidence26(row: PreparedNativeSkuImport26, alias: NativeSkuAliasInput): JsonObject {
-  validatePreparedNativeSkuImport26(row); const original = nativeSkuAliasEvidence(row, alias), provenance = original.field_provenance as JsonObject;
+  validatePreparedNativeSkuImport26(row); return nativeSkuAliasEvidence26FromValidatedRow(row, alias);
+}
+/** Synchronous whole-group evidence. Validate this exact complete prepared row
+ * once, then use only its own original aliases in their original order. No
+ * unchecked capability, mutable validation cache or caller-supplied alias set. */
+export function nativeSkuAliasEvidences26(row: PreparedNativeSkuImport26): JsonObject[] {
+  validatePreparedNativeSkuImport26(row);
+  return row.aliases.map(alias => nativeSkuAliasEvidence26FromValidatedRow(row, alias));
+}
+function nativeSkuAliasEvidence26FromValidatedRow(row: PreparedNativeSkuImport26, alias: NativeSkuAliasInput): JsonObject {
+  const original = nativeSkuAliasEvidence(row, alias), provenance = original.field_provenance as JsonObject;
   return { ...original, field_provenance: { ...provenance, native_sku_import: { ...(provenance.native_sku_import as JsonObject),
     schema_profile: "EXACT26", migration_defaults: { version: "NATIVE_SKU_APPROVED_MIGRATION_DEFAULTS_26_V1", created_operation_id: null } } } };
 }
