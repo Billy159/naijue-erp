@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE561",
+    "round": "SOURCE562",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "5cfceb3e5f10491b60e531653745da563d4d8f72",
+    "sourceHeadBeforeThisContinuityCommit": "1f09fd74d9e4c9dfeb98118a1d33a989801148b9",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12669,14 +12669,26 @@
     "historical2Stage555": {
       "owner": "T45",
       "job": 81,
-      "state": "ORIGINAL81_SUBMIT_ONCE_QUEUED_HANDLE_PENDING_NOT_DB_SUCCESS",
+      "state": "ACTUAL81_FAILED_42501_ROLLBACK_CONFIRMED",
       "preparedBytes": 24306,
       "actualDatabaseWrites": false,
       "QB": "QB333 scoped source PASS9b46ef7d; no realstage claim",
-      "blocker": "Original backup prerequisite resolved;81 new15min deadline02:19:02Z, remote job/request/result missing at02:04:04Z, original run submitted once, handle being collected.",
-      "next": "T45 verify newer backup; if none execute original backup successor, then original key dedup and approved81 stage. Private0700 subdir/0600 file, do not change old parent permissions.",
+      "blocker": "Permission denied exact object/columns not yet identified; T45 bounded read diagnosis. Any required narrowACL must coordinate new currentFormRead/importStage review and fresh app/route, do not invalidate login first.",
+      "next": "Original T45 identify full necessary special-party transaction permissions once; original QB narrow diff if needed; do not replay81 or grantALL. Header stage/all11 remain pending.",
       "scope": "Exact approved2 native historical customer identities then28282 headers; no reimport628 parties/transfer, no MAIN shortcut",
-      "backupLatest": "Actual83 COMPLETED0/696.006s, finished2026-10-26T02:01:19.626805Z;19services/route preserved;4033B02aa73d07e03624d1a8d6d54641bbb21c1a8b1371dbd897c4913c2b3302d48ad"
+      "backupLatest": "Actual83 COMPLETED0/696.006s, finished2026-10-26T02:01:19.626805Z;19services/route preserved;4033B02aa73d07e03624d1a8d6d54641bbb21c1a8b1371dbd897c4913c2b3302d48ad",
+      "actual81": {
+        "exit": 2,
+        "seconds": 3.978774,
+        "SQLSTATE": "42501",
+        "commit": 0,
+        "rollback": 3,
+        "acquire": 4,
+        "release": 4,
+        "live": 0,
+        "driverEnded": true,
+        "afterOriginalKey": "Both native/source/reference/evidence remain absent; batch STAGED sequence1 cursor22;19services/route unchanged"
+      }
     },
     "startup556": {
       "F1DOC198": "SOURCE_READY_ACCOUNT_CHROME_LAZY_CHECKED_NOT_RUNTIME_PERFORMANCE_ACCEPTED",
@@ -12749,6 +12761,22 @@
       "publicEncoding": "NOT_YET_DEPLOYED_OR_TESTED",
       "failedFixedBuild": "SOURCE560 CORE13 build/pack exit0 but cannot deploy due encoding OWS defect",
       "fix": "Trim coding token after split;3 legal OWS examples appended to original compression test; affected1 PASS, old14 and12HTTP reused"
+    },
+    "fixedNext562": {
+      "source": "1f09fd74d9e4c9dfeb98118a1d33a989801148b9",
+      "build": "replica-production-source561-core-14",
+      "directory": "K/B/replica-production-source561-core-20261026-14",
+      "buildExit": 0,
+      "pack": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+      "members": 199,
+      "archiveBytes": 1684793,
+      "archiveSha256": "805e84be7727a5ca0f7c2248135b6979031c046ead107c71ac66d5b6f16978bb",
+      "manifestSha256": "da8cc80c7ae4f19e71edd758f4da9b5ae7dce9f2674569078a3bc1b3876a3ce8",
+      "QF": "557 frontend scoped PASS bbc807c9 reused, no frontend change beyond fixed asset base",
+      "QB334": "5990B/a601ce34027f7a8f05cd4987aea802819fcd041004650897aff683f866e813cb source-only PASS; OWS F01 closed; exact two source leaves match",
+      "deployment": "Original T45 has exact accepted pack and review paths;84-86 prepared/unsubmitted awaiting original ops window; no actual CORE14 deployment yet",
+      "publicEncoding": "NOT_MEASURED_FOR_NEW_HOST",
+      "wholeBusiness": "NOT_ACCEPTED"
     }
   }
 }
