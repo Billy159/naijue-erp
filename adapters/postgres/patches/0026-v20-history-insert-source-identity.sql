@@ -1,0 +1,223 @@
+-- Original98 guard statement timeout fix, after exact v19. Source only; actual install/plan/recovery by T45.
+-- Preserve every guard, canonical duplicate identity and SQLSTATE; expose existing source index prefix only.
+-- No table, column, index, ACL, timeout, source-data or receipt changes.
+BEGIN;
+DO $predecessor$
+DECLARE n bigint; required record;
+BEGIN
+ IF (SELECT array_agg(version ORDER BY version) FROM naijue_erp.schema_migration) IS DISTINCT FROM ARRAY[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26] THEN
+  RAISE EXCEPTION 'Exact schema26 v19 predecessor required' USING ERRCODE='23514'; END IF;
+ SELECT count(*) INTO n FROM pg_proc WHERE pronamespace='naijue_erp'::regnamespace AND prokind IN('f','p');
+ IF n<>131 THEN RAISE EXCEPTION 'Exact131 routine v19 predecessor required; do not apply before v19 or replay' USING ERRCODE='23514'; END IF;
+ FOR required IN SELECT * FROM (VALUES
+ ('assert_barcode_scheme_initialization_v19','8d4f7d457403d6c4737e5a9b38d6d4f48c0ef3c5e94dd2e8ff408d3b57a198ca'),
+ ('assert_core_initialization_v14','5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d'),
+ ('assert_history_typed_closure','8556e917e6a251dd1eb97974fbb6f793d3e46a1ef10f6ef7fd77fb7ad539d00f'),
+ ('assert_native_bootstrap_accounts','171c59ba962a287dd02bb9eac993512e114783a470063108a07ba5e206cbabca'),
+ ('assert_native_product_season_source','3a753b412fa4a648e26c4a2e398a4b52cc694c04dc1352a98513cb2220d4d661'),
+ ('assert_retained_sku_reference','4c956a82b9531b1f385f9aecd9c6d20fa84ce6d434bb0a41d2a0c96ebb7fae5d'),
+ ('assign_runtime_document_number','bca336abcd0ef4a57c22d2ee19564e7ea744257303fb8eec06c822efd551500e'),
+ ('check_hall_default_customer_enabled','6a89df4342530f3a3bdd185abbdd372b3372799b341a17ae9ad65be86ded91ee'),
+ ('cutoff_import_lock','82a621b9cea39c9cc273d5cb790b364fad004875760644633280d2e24e64ccc7'),
+ ('exact_historical_customer_source_matches','ac26aa52f4131d996d6abe0db810a0e0817a12ffa043cdfb2250c951bfd0f011'),
+ ('freeze_cutoff_sales_detail','dcfa1a3abb87368cf2f18663880f9a2ea9377a3599e985e13c7241220fd85a12'),
+ ('freeze_imported_identity','0a17cf0a670ca8c9d34f2de1ec34de9b5197410fc01f82af4273a26e877a44e5'),
+ ('guard_balance_identity','02f2db383ff8c5826c7148f73bb780319c977bffa5798bc233159d83d89e58fc'),
+ ('guard_contributor_link','2937ecd3e974e2ad78e0bfce4790b96d97953d4bf113406a838063b366895983'),
+ ('guard_cutoff_ledger','71ecb569279de61709578ffe2f29d85140993ed155fce07e7beb797307c491b5'),
+ ('guard_exact_historical_customer_current_usage','78e895d72d6f806089d2bc7cb877293e1263d26ba8265dd7f3b5e2203e956245'),
+ ('guard_header_native_reference','1584d2600c763f0d38cd3dd4fa7dd14ea90465ef9376d7165a58d71bce0dec3c'),
+ ('guard_header_native_reference_publication','3419f73d296fcb84f77eff79edaa5034cb90f33a6363d0687d316ee697f785c0'),
+ ('guard_history_closure_stage','d05947c6d7ef430d043c10038cce1d72f7e44e4efb2a2112c499ea8d107d47e0'),
+ ('guard_history_insert','bbd40680f3196904c9c9e986c6f8cef0bee77c4cbb19663b8333e8b6150e1f2f'),
+ ('guard_history_numeric_ledger','b32ccd2af06876d91fe4b33a4e2309a3f79af7d012ddf301ce84b773118e5794'),
+ ('guard_history_publication','6ad32797b7fe81e6427b3abec90aca378778be9af30b014b55966fbed0bff77e'),
+ ('guard_history_typed_publication','fc386026e40ca43d36bdb5e7422001878a7f91c95c2e36bce28272b4d792e506'),
+ ('guard_import_accounting_claim','298996ca170c969aa06df8dfa44219b86a9db0ae4dc1c07f726167a518f62acf'),
+ ('guard_import_accounting_publication','b41ad04a99fb7af999c22b13cdc7ad9b747e4df67e3f11bd44e7632d15a747a6'),
+ ('guard_import_batch','f0e35d2d5978c92d26c1eab6525a87d2ae3450a525daa14131b479b03856d29a'),
+ ('guard_import_record','8a79dbc011cdaf0582e2bd1eefc7ea94fce15d24f6aa1ac0fa25c43afb4e7e16'),
+ ('guard_maintenance_account_event','965d9d3433b929ccd151b9a147eeef713770d7b7311e49c80cfaa3d17b118549'),
+ ('guard_maintenance_audit_actor','ac0ce9c91f34b9d8d34eb5e7d26f595319bfa6ad3dfe3ae33a4f2f5edf1eb217'),
+ ('guard_maintenance_before_root','574add1ad436482c7593725ac4b1b58cabe6b982b538cf0e1f22c1783723712f'),
+ ('guard_maintenance_child_write','a19def51718e008e541482dd1e6f2d2ab9257842ce7e66ad6e62aedcfa216d8a'),
+ ('guard_native_catalogue_binding','7418579c0d1c3a1951696a12ad165a421d26b87f0e449d9d7d250497dc2ddc21'),
+ ('guard_native_catalogue_publication','d2eaa009760d63f245d562570ca4c8fce038633da5233a8c7ab7142190a30ceb'),
+ ('guard_native_creation_identity','4827b76ff4df9beae18411033d2e6e13a04eea2d648aa58bb67d179145d107dc'),
+ ('guard_native_party_import_intent','262e74a37ba12883a4978c4d99b6ecca000d245186b585a9e5b35ad31ccf8d7f'),
+ ('guard_native_payment_binding','774cc9b1604a8d0948f73c7298fa67a10233962af218b89fe0b9675107148d35'),
+ ('guard_native_payment_publication','993b114dfbec87428a42a9f6aa7d0a6ecbeef67fd85bc00754fa4eb80c7e6797'),
+ ('guard_product_image_color','a49cc6bc4c49931eb50c81dd95e08a760b2ea6de73e19a0496611fe63fe22b18'),
+ ('guard_product_season_selection','bd97ac1bc0a8c9a3221c12b794f5976bf0e092a2907aa2dd9e6378b718d29560'),
+ ('guard_referenced_season_identity','8eb0b3435f063f4a653c31f632fe6751fecc3864a375a72753bcf4090bb18f2c'),
+ ('guard_retained_catalogue_delete','dec785b8b1f818b2daa3af4d3872139710cae32178516839e669f59aa6609758'),
+ ('guard_retained_catalogue_reference','91cc169d60ca6db2700ed97e49632504cfba9d957ea467a4777137f946c6923c'),
+ ('guard_runtime_document_number','52d92723d9ecb5f16eb57c5ae50e0f8cf322b4b5f3848ab88712f41aeb0887bd'),
+ ('guard_successor_publication26','a055abd422ff4d81d0cf87e11cf659dcc221eda1a18b774cd62034c2c3f74c14'),
+ ('guard_successor_source26','cdf91a3949d6aefbb16c67f7d82dcf99b60730f9a6884468c064102c9887b710'),
+ ('history_closure_count_map','ef82c0a7124d288103df38503a849b96aa936289b2ee29166b4f0a6529f476d6'),
+ ('history_closure_digest','749101b8670e32814b875adaaf753da6c50ddcd0860d5ca3ebb000f996f1b63b'),
+ ('history_closure_document_rows','f8401b06df7815f63f9a83e781961f55725f82246c87d86b7a99a9c19c482ce1'),
+ ('history_closure_encode','b4ad51b2b17c9248c80de0ead3ae5f50bf5fe887e36597b081ce250a94623a5c'),
+ ('history_closure_finish','94b84af2d05d8a9f34c0135a8c0d70f5b633a9b43e6ec6d2bca8de554e8abac8'),
+ ('history_closure_fold','31ed823c127e85537196de072b76077749d939f3241fa53b9f1c76f8fdba9062'),
+ ('history_closure_projection','0af6d70c56a463c351be1dd732d345bbb533ae98b0b07e36f6ef08a4efd72011'),
+ ('history_closure_projection_columns','a8a3d4d43341d86dfad188d191c3076203e06ea8f1a6919c4d0efddee76286a6'),
+ ('history_closure_projection_key','6e2584dac9f079fe2061570c15b13549a3abac512a2a809835046e6fe2c50222'),
+ ('history_closure_row_hash','c7ef0fdc273f23ab5ec1ae6c870746146dab90a6ecef8ecf319de0704df697bb'),
+ ('history_closure_rows','098ba7215c7c893903e2b72762e2036e94bc23b763f3842e378b3d55b3d3f639'),
+ ('history_closure_seed','532918606a4dd24ebae46a55dfe7d2f0803602798c63742bcd975b7e1179f2c7'),
+ ('history_effective_writes_closed','c06027597f11a9cf7f2ae06bf5e47e5c21349b54851fb21df6895ef22a2855b7'),
+ ('history_numeric_current_facts','dadecb6cce657834ce3719eb339f56f95dbbf27d6e0a92216940ed91697cadc8'),
+ ('history_numeric_money','8c588f3b6145cb1609898dd46e3abfb7b1bd37b3b9318f1863dcfac530ee200b'),
+ ('history_revision_not_enabled','1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c'),
+ ('import_source_key_lock','07404b25633a5c48ae1a530a48cdebed11107e187d660c99a7e781bb4957fa24'),
+ ('inventory_key_admission','a9d7a2519941605e997e5ab59cff7cf847192ed910ef4107ba09aadc64e0fc7a'),
+ ('inventory_key_lock','c6f444fbbfc527fec7f4031fd0ea7f07eb0a98202b11340e8f7da398fa117079'),
+ ('inventory_runtime_key_admitted','945a2cc1e250ed1cedd3ca2083b80120174d06d015455bd4288d186e0c27f377'),
+ ('is_exact_historical_customer_only','1f35799a742f402d86cde6a979511dc83ae74d62cd5c106ffcef162a68510403'),
+ ('is_native_party_import_insert','a3c8dfac77e8a4f060932aded92f53da97b68bdcf48d2ede19781c3e54c86412'),
+ ('keep_barcode_binding_identity','14f6d02bca58955681e8d03236fb236cbfe3d041d35ecdb326cd3fa7e38d2733'),
+ ('keep_party_native_identity','44c3a7110bf40ef38e73972b493f36279b28124097b31a9a6f25e5adc13ad4b9'),
+ ('keep_sales_line_owner','95f3dc678bbdc8ac47a2f1c76fe13f872bed088e7484aebc46a523fc13cfd241'),
+ ('keep_transfer_header_provenance','68d1af54e61704be47e9fe4097592e812d3f7a910dc2d7190351c2b427267bf6'),
+ ('keep_transfer_line_owner','763d52e081f96f872adb50658403f5f2f7f83f7c914d002b0e771ebe9c055335'),
+ ('maintenance_account_credential_action','f17617bc8f02fd0731d0a97eaca90553441235e032de1dbf9086e84c987fbe7a'),
+ ('maintenance_action_allowed','50b2fa0fbf733d7c98b40aa612107a20262cb063852cb3f2cabbefc750742c4a'),
+ ('maintenance_administrator_mutex','d6809b2abf7b3f211cd7422b517e867d0c1378f9e7fe9b98eacde2521c6d1ea8'),
+ ('maintenance_audit_is_current','4537d6df2b73e17e386b100845049da08d3fab3584c87ef8d7095660198bf699'),
+ ('maintenance_check_account_credential','577bf0a5de72c8dc6d080c1b4f18a669398d5738c16b75d11ecc1c89d0156ab7'),
+ ('maintenance_check_category_order','77c86d2788e88f2922a66c662a91b95c0f76d6ea00587148c36421feabde281e'),
+ ('maintenance_check_product_children','c7edab87301fc05b7f33db2eb9df30b2da0d28ed9154dfa8d11cbba9fdbe6dad'),
+ ('maintenance_check_staff_accounts','ea4e151ccb89d97ed40edc6e3164594bccda0fc28f2879f614f230830fdc0c22'),
+ ('maintenance_complete_row_matches','34c25d78bc34ed57b1acbbdbfbca9b0adfd78dc8dcb6cc8c42cf5673f5da5d21'),
+ ('maintenance_evidence_matches','cb201d859235d7af9ef52616c64b705e5586b11894d57fbc50b2b0a7615abaf3'),
+ ('maintenance_exact_rows_match','8b21824423a27f20074768c09998fba819887c949b4f20b57e35db0815133161'),
+ ('maintenance_payment_halls','d96c975c57af714d458275a383e0e2bdaeef9214d4bc64420207f36bcea55869'),
+ ('maintenance_product_child_row','69145227348d366932814f079f0b63d1bb6109cc36d8bb8c9f8ae53fafd1b9fa'),
+ ('maintenance_root_table','7ed286cf1e5bb8629b02e7cab4412dc0df502d560661be9823d234c466565fe3'),
+ ('maintenance_staff_accounts','a191dc7b42cec0f41f42c6d371a2e959c90019983f4f79cef86db99d2e8fa989'),
+ ('native_creation_operation_valid','118bbe55c39e00948ab087f808812522b565344b924e64916f6cfa91645a3f7a'),
+ ('party_key_values','d23eb5601f984007df5d52661a101a422852e20c0bcd75f1cadd5a5bbbaef649'),
+ ('published_inventory_key','fa8234711ad74b3afd250b2143840baa863f05f1e23c92b85574b48b4208adc6'),
+ ('reject_immutable_change','3daef49e525ad973be82350a1551e979198d21ff58f3f1bb92a4f7292e4d038c'),
+ ('reject_unimplemented_cutoff_write','2e108a1bd9e9304f63cde9eb8b726c448ebcb2d2b371f8b3a8a41aebb6d21e0a'),
+ ('safe_maintenance_evidence','4a0d9d21eadf3e839d1d0c23f7efe8a0ef14123dd521a553eefcc7362ab3f927'),
+ ('transfer_header_audit_values','0c92b020490243f55132a5acb15ecee8caca92fb88db5f75e877e2f2430ec8ad'),
+ ('transfer_line_audit_values','ce924832c6a9b4a762ff80e031279273f521e4e17139c7d89a4930004313f49e'),
+ ('valid_history_counts','6c143e2bf81bcd53e2c9074aa2ab4e1781c746bc7a99bb0064f378f77de80280'),
+ ('valid_product_season_ids','b6b3932264857c59998025cece6241a4e819b80f9bc72e6bf0ed4e907890cc65'),
+ ('validate_available_administrator_commit','3a9a1bea930614761185af90b8591a539b855647974b68b004869c80f5e5ba18'),
+ ('validate_baseline_source_commit','ec5e9a331d0f8148ec21e28d5e8a4ddb82ac66d923ea2490abee3f3000ed75c9'),
+ ('validate_document_specification_commit','b02bff6115bcf2c87758f8313a57a1a693733ba3ea192fcb1657bd176c587c06'),
+ ('validate_exact_historical_customer_intent','b9968150e138d455658dd7d437c8026b7bfdce466146b961d64fd2934f099c98'),
+ ('validate_exact_native_reversal','3ef72272c6cb9b7ccbfffc393a31fdd85babdb3efb333baae839482d571f362e'),
+ ('validate_history_closure_commit','e61d2c5dd34792f5ca277cada1dc12a6904b1be95031c0a6c4810080b24dd03b'),
+ ('validate_history_numeric_balance_commit','fab0bf7a3f1681d6034b09dbb5c7ad8efa606c6fa82f24fc101bc5b70636a837'),
+ ('validate_history_numeric_receipt_commit','e69f92651dc7a8313e354d47bd4f1ffc1c97fb30aa5c56dcfc49f69511a1d7d6'),
+ ('validate_history_numeric_revision_commit','6cc941ed8ea63927fea7f372da6477c5def8e809a8dde1c348d07331ff9be0b6'),
+ ('validate_history_product_proofs','dab49bb495de85d5e66350affd348f85e0595411ea7ab7378104a3963db2a38e'),
+ ('validate_import_accounting_baseline_commit','678cc0b409e43e420365733b21ce8e8ce0aa88b8d3b9b48f9a842edd41120c51'),
+ ('validate_import_accounting_checkpoint_commit','06ac9742cb16adb281f7610d299ef9dedb61c125038f12be55275760d4a4c0c9'),
+ ('validate_import_accounting_claim_commit','ad8e19c3f36b85ebbda107a2ca8e3c00ad10ca3005a232bd033bbab7613be756'),
+ ('validate_import_accounting_final_record_commit','f1fca00daa56873221062706d2009293b6180156e69bfe6f5fc1ca64087ea312'),
+ ('validate_import_batch_commit','7ce01945fcd6fd68817724cc27d8f135da82ef2f4e3929a8ad5e4cf232310b3b'),
+ ('validate_import_operation','73d13792e2a9dde79b239cb2c059a89c5552823503a002ce1b7bdad75aa1b3ff'),
+ ('validate_import_publish','873d1943b1ada13eeef43f6d28cb792755de48c461b1ebee7810e5278cd5d6e3'),
+ ('validate_import_source_commit','524ec70d51970cfc79f4ec5e9a93f21bf20733781a2202121a4e91d1d6b66f3a'),
+ ('validate_ledger_receipt_source','26f2f325172ef2878d4dffb4f1740d680e63458abd4b25e7a693e352664d15da'),
+ ('validate_maintenance_receipt_commit','77679e1e21858ae64ac1225660cf7a692f63b097d538254829def8164ea33ac5'),
+ ('validate_maintenance_root_commit','002818dfd8d764e99221bb0548da1141054871ae674aba6bb9f6ce59c9d92d1c'),
+ ('validate_native_creation_commit','a505ceb68946cc14a69b181cd43d6cebbedca9e9ea453c9920c243892f537cd7'),
+ ('validate_native_party_import_commit','5383c9941e06c7748af6603eee56559b102b09305c11771a813c6cf859ad37e3'),
+ ('validate_party_native_commit','dba217f39c61d3f4741a72a565851a41caaa18e44fb57aa2f8e3473d20810762'),
+ ('validate_party_receipt_commit','fafc3389b3458b6d8ec4cad15f6f926dcc20bb059a819c496ed4db260d06b426'),
+ ('validate_sales_commit','f00b31849f4f72d62103fc08cb4e157b4401717a1f2c7c05fc699663715f07a2'),
+ ('validate_sales_effect','e6b2bbec00a6389ed92f9026af20f06c52168d37fe5a59d3ccfc0c29fb7cb1db'),
+ ('validate_sales_settlement','c0ab9b6a91951a809e5fbfb6c34ed52fb164b76119d58d469d411c0b58e734a3'),
+ ('validate_sparse_balance_commit','937b31d7ab0f1e5d8fb7febc26c051690b2df9dc79d451088eff73d75046399d'),
+ ('validate_transfer_balance_commit','9bfaa1cdf1dea76ada35bae56dd40cb3e27c6acd28a93905ee2f06d17a8b2abb'),
+ ('validate_transfer_commit','e6ceac3fddef4e61f649b8ef2d71db56042dc14c7622ca0a5c321de2ab7b3f38'),
+ ('validate_transfer_effect','d901f8e428c9ef2440d9fb48aca3f638eef141bd62f116e88698c6f726ad0c73'),
+ ('validate_transfer_header_commit','6d50fa80e2b445bc45645ff0f5592f2ed4e00836077224c1fe3510b4e563fa0c'),
+ ('validate_transfer_line_commit','1443f443a884f0073209294476daf9a7ff0f45d6d32832e5d14557d513cfc4fb')
+ ) x(name,body_sha256) LOOP
+  IF (SELECT count(*) FROM pg_proc p WHERE p.pronamespace='naijue_erp'::regnamespace AND p.proname=required.name AND p.prokind='f'
+   AND encode(sha256(convert_to(p.prosrc,'UTF8')),'hex')=required.body_sha256)<>1 THEN
+   RAISE EXCEPTION 'Exact v19 predecessor routine differs: %',required.name USING ERRCODE='23514'; END IF;
+ END LOOP;
+END $predecessor$;
+
+CREATE OR REPLACE FUNCTION naijue_erp.guard_history_insert() RETURNS trigger LANGUAGE plpgsql SET search_path = pg_catalog, naijue_erp AS $$
+DECLARE b naijue_erp.import_batch%ROWTYPE; source naijue_erp.import_source_row%ROWTYPE; duplicate_found boolean;
+BEGIN
+  PERFORM naijue_erp.cutoff_import_lock();
+  SELECT * INTO STRICT b FROM naijue_erp.import_batch WHERE id = NEW.batch_id FOR UPDATE;
+  IF b.mapping_version <> 'V2_HISTORY_NULLABLE_1' OR b.status NOT IN ('STAGED', 'VALIDATING') THEN
+    RAISE EXCEPTION 'historical staging scope is closed' USING ERRCODE = '23514'; END IF;
+  IF TG_TABLE_NAME = 'import_source_row' THEN
+    -- Reject known original PRODUCT scope even when caller relabels its entity/normalized scope.
+    IF NEW.raw_fields->>'绑定范围' = 'PRODUCT' OR NEW.normalized_fields->>'绑定范围' = 'PRODUCT' THEN
+      RAISE EXCEPTION 'excluded original PRODUCT barcode is not a database source row' USING ERRCODE = '23514'; END IF;
+    -- Excluded PRODUCT-bound barcodes remain file-level evidence outside this database.
+    IF NEW.entity_type = 'BARCODE' AND ((NEW.field_provenance->>'native_sku_id') IS NULL
+      OR NEW.field_provenance ? 'native_product_id'
+      OR (NEW.normalized_fields->>'绑定范围') IS DISTINCT FROM 'SKU'
+      OR (NEW.field_provenance->>'native_barcode') IS DISTINCT FROM (NEW.normalized_fields->>'条码')) THEN
+      RAISE EXCEPTION 'only effective SKU barcode source rows may be staged' USING ERRCODE = '23514'; END IF;
+    IF EXISTS (SELECT 1 FROM jsonb_each(NEW.field_provenance->'fields') f
+      WHERE (jsonb_typeof(f.value) = 'object' AND f.value->>'origin' IN ('ORIGINAL','MIGRATION_DERIVED','UNKNOWN')
+        AND jsonb_typeof(f.value->'reason') = 'string' AND f.value ? 'raw'
+        AND (f.value->>'origin' <> 'MIGRATION_DERIVED' OR length(f.value->>'evidence_ref') > 0)) IS DISTINCT FROM TRUE) THEN
+      RAISE EXCEPTION 'invalid versioned field provenance' USING ERRCODE = '23514'; END IF;
+    RETURN NEW;
+  END IF;
+  SELECT * INTO STRICT source FROM naijue_erp.import_source_row WHERE id = NEW.source_row_id AND batch_id = NEW.batch_id;
+  IF source.entity_type <> TG_ARGV[0] THEN RAISE EXCEPTION 'historical source entity differs' USING ERRCODE = '23514'; END IF;
+  IF TG_TABLE_NAME LIKE 'history_%' THEN
+    EXECUTE format('SELECT EXISTS (SELECT 1 FROM naijue_erp.import_source_row s JOIN naijue_erp.%I p ON p.source_row_id = s.id WHERE p.batch_id = $1 AND s.batch_id = $1 AND s.entity_type = $3 AND s.source_key = $2)', TG_TABLE_NAME)
+      INTO duplicate_found USING NEW.batch_id, source.source_key, TG_ARGV[0];
+    IF duplicate_found THEN RAISE EXCEPTION 'duplicate canonical historical source identity' USING ERRCODE = '23505'; END IF;
+  END IF;
+  IF TG_TABLE_NAME IN ('history_sales_header', 'history_transfer_header') THEN
+    IF NEW.version <> 1 THEN RAISE EXCEPTION 'initial historical version must be one' USING ERRCODE = '23514'; END IF;
+    IF NEW.created_hall_provenance = 'MIGRATION_DERIVED' AND
+      (length(source.field_provenance->'fields'->'created_hall_id'->>'evidence_ref') > 0) IS DISTINCT FROM TRUE THEN
+      RAISE EXCEPTION 'derived creator hall needs evidence' USING ERRCODE = '23514'; END IF;
+  END IF;
+  IF TG_TABLE_NAME = 'import_sku_alias' THEN
+    IF source.source_key IS DISTINCT FROM NEW.old_source_sku_id THEN
+      RAISE EXCEPTION 'alias must retain its original source identity' USING ERRCODE = '23514'; END IF;
+  END IF;
+  IF TG_TABLE_NAME = 'import_stock_contributor' THEN
+    -- Exact original lineage CSV row lives in immutable evidence, not only aggregate totals.
+    IF (source.field_provenance->'stock_contribution'->>'validator_version' = 'STOCK_CONTRIBUTOR_LINEAGE_V1'
+      AND source.field_provenance->'stock_contribution'->>'oldStockSourceId' = source.source_key
+      AND source.raw_fields->>'来源编号' = source.source_key
+      AND source.field_provenance->'stock_contribution'->>'canonicalStockRowSourceId' = NEW.canonical_stock_source_key
+      AND source.field_provenance->'stock_contribution'->>'oldSkuSourceId' = NEW.old_source_sku_id
+      AND source.field_provenance->'stock_contribution'->>'signedQuantity' = NEW.signed_quantity::text
+      AND source.field_provenance->'stock_contribution'->>'sourceUnit' = NEW.source_unit
+      AND source.field_provenance->'stock_contribution'->>'sourceFile' = source.file_ref
+      AND source.field_provenance->'stock_contribution'->>'sourceSheet' = source.sheet
+      AND source.field_provenance->'stock_contribution'->>'sourceRow' = source.row_no::text
+      AND source.field_provenance->'stock_contribution'->>'sourceSha256' = source.source_file_sha256
+      AND source.raw_fields->>'SKU来源编号' = NEW.old_source_sku_id
+      AND source.raw_fields->>'仓库来源编号' = source.field_provenance->'stock_contribution'->>'warehouseSourceId'
+      AND source.raw_fields->>'核准库存数量' ~ '^(0|-?[1-9][0-9]*)$') IS DISTINCT FROM TRUE THEN
+      RAISE EXCEPTION 'contributor differs from its original occurrence lineage' USING ERRCODE = '23514'; END IF;
+    IF (source.raw_fields->>'核准库存数量')::numeric <> NEW.signed_quantity THEN
+      RAISE EXCEPTION 'contributor quantity differs from original signed quantity' USING ERRCODE = '23514'; END IF;
+    IF NOT EXISTS (SELECT 1 FROM naijue_erp.import_sku_alias a WHERE a.batch_id = NEW.batch_id
+      AND a.old_source_sku_id = NEW.old_source_sku_id AND a.canonical_source_key = source.field_provenance->'stock_contribution'->>'canonicalSkuSourceId') THEN
+      RAISE EXCEPTION 'contributor canonical source differs from alias' USING ERRCODE = '23514'; END IF;
+  END IF;
+  IF TG_TABLE_NAME = 'import_stock_contributor' THEN
+    IF NOT EXISTS (SELECT 1 FROM naijue_erp.import_sku_alias WHERE batch_id = NEW.batch_id
+      AND old_source_sku_id = NEW.old_source_sku_id AND canonical_sku_id = NEW.canonical_sku_id) THEN
+      RAISE EXCEPTION 'contributor alias target differs' USING ERRCODE = '23514'; END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+COMMIT;

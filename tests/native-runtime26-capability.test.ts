@@ -10,7 +10,7 @@ import { mkdtempSync, readFileSync, writeFileSync, rmSync, chmodSync, symlinkSyn
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_RUNTIME26_V19_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
+import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_RUNTIME26_V19_METADATA_PROBE, NATIVE_RUNTIME26_V20_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import type { MaintenancePgContext } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import type { MaintenanceCompletion } from "../packages/application/src/maintenance-commit-ports.ts";
@@ -507,4 +507,19 @@ test("v19 scheme issuer requires fresh exact metadata; keeps HISTORY and categor
       await assert.rejects(createNativeRuntime26Issuer(bad,f.options(review)),{code:"NATIVE_RUNTIME26_NOT_READY"});
     }
   }finally{f.cleanup();}
+});
+
+test("v20 guard issuer selects exact post-v19 metadata, preserving original purpose and maintenance inheritance",async()=>{
+ const f=fixture();try{
+  const review={...f.review,catalog:{...f.review.catalog,patchLevel:"26_v20_history_insert_identity_from_v19"},purposes:["IMPORT_STAGE","HISTORY_REVISION","PRODUCT_MAINTENANCE"]};
+  const calls:string[]=[];const pool={async connect(){return {async query(sql:string){calls.push(sql);assert.equal(sql,NATIVE_RUNTIME26_V20_METADATA_PROBE);return {rows:[observation()],rowCount:1};},release(){}};}};
+  const issuer=await createNativeRuntime26Issuer(pool,f.options(review));assert.ok(issuer.categoryOrderWrite);
+  const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,"IMPORT_STAGE");await issuer.runtime26.assertReady(client,"HISTORY_REVISION");client.release();assert.equal(calls.length,4);
+  for(const row of [{...observation(),source_routines_match:false},{...observation(),catalog_sha256:"f".repeat(64)}]){
+   const bad={async connect(){return {async query(sql:string){assert.equal(sql,NATIVE_RUNTIME26_V20_METADATA_PROBE);return {rows:[row],rowCount:1};},release(){}};}};
+   await assert.rejects(createNativeRuntime26Issuer(bad,f.options(review)),{code:"NATIVE_RUNTIME26_NOT_READY"});
+  }
+  assert.equal(NATIVE_RUNTIME26_V20_METADATA_PROBE.split("98fcf82074f4aaf0712b2af3aca5a12a7e4975933712caffd577e652eca7e12f").length,2);
+  assert.ok(NATIVE_RUNTIME26_V19_METADATA_PROBE.includes("bbd40680f3196904c9c9e986c6f8cef0bee77c4cbb19663b8333e8b6150e1f2f"));
+ }finally{f.cleanup();}
 });

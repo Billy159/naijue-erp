@@ -498,6 +498,11 @@ export const NATIVE_RUNTIME26_V19_METADATA_PROBE = [
   ["SELECT 1 FROM (VALUES", "SELECT 1 FROM (VALUES\n    ('assert_barcode_scheme_initialization_v19','8d4f7d457403d6c4737e5a9b38d6d4f48c0ef3c5e94dd2e8ff408d3b57a198ca'),"],
 ].reduce((probe, [before, after]) => replaceOne(probe, before!, after!), NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE);
 
+/** Exact v20 retains v19 schema, actions and routines; only the original duplicate-query body changes. */
+export const NATIVE_RUNTIME26_V20_METADATA_PROBE = replaceOne(NATIVE_RUNTIME26_V19_METADATA_PROBE,
+  "('guard_history_insert','bbd40680f3196904c9c9e986c6f8cef0bee77c4cbb19663b8333e8b6150e1f2f')",
+  "('guard_history_insert','98fcf82074f4aaf0712b2af3aca5a12a7e4975933712caffd577e652eca7e12f')");
+
 type Runtime26Purpose = Parameters<NativeRuntime26Capability["assertReady"]>[1];
 const runtime26Purposes: readonly Runtime26Purpose[] = Object.freeze(["IMPORT_STAGE", "IMPORT_PRODUCT_SEASONS", "IMPORT_PUBLISH", "PRODUCT_SEASONS_READ",
   "PRODUCT_MAINTENANCE", "INVENTORY_ADMISSION", "HISTORY_READ", "CURRENT_FORM_READ", "CURRENT_CUSTOMER_READ_WRITE", "HISTORY_REVISION"]);
@@ -606,11 +611,12 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15"] as readonly unknown[]).includes(catalog.patchLevel))
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15", "26_v20_history_insert_identity_from_v19"] as readonly unknown[]).includes(catalog.patchLevel))
     throw runtime26Error("Exact independently reviewed v11, v14 or v15 catalog required");
-  const barcodeSchemeInitialization = catalog.patchLevel === "26_v19_barcode_scheme_initialization_from_v16_v15";
+  const historyInsertIdentity = catalog.patchLevel === "26_v20_history_insert_identity_from_v19";
+  const barcodeSchemeInitialization = historyInsertIdentity || catalog.patchLevel === "26_v19_barcode_scheme_initialization_from_v16_v15";
   const historyResponsible = barcodeSchemeInitialization || catalog.patchLevel === "26_v16_history_responsible_from_v14" || catalog.patchLevel === "26_v16_history_responsible_from_v15";
-  const metadataProbe = barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
+  const metadataProbe = historyInsertIdentity ? NATIVE_RUNTIME26_V20_METADATA_PROBE : barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
     : catalog.patchLevel === "26_v16_history_responsible_from_v15" ? NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v15_category_order_undo" ? NATIVE_RUNTIME26_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;

@@ -1,0 +1,113 @@
+{
+  "version": "D1_HISTORY_INSERT_SOURCE_IDENTITY_V20_RESULT_1",
+  "status": "SOURCE_AND_NEW_READONLY_PLANNER_EVIDENCE_READY_FOR_QB_NO_ACTUAL_PATCH_OR_TIMED_RECOVERY",
+  "authority": "C SOURCE589 5dee67f exact4 registration",
+  "files": [
+    {
+      "path": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+      "bytes": 20772,
+      "sha256": "bebad118d5519b9e899215230e16fce92cbee9148ebbf35ba03af513c1f4f475"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 76157,
+      "sha256": "064e463aeb5865ba961273c0beeb557bf074f584c751a45d93f783e199403b5c"
+    },
+    {
+      "path": "tests/history-insert-source-identity.test.ts",
+      "bytes": 4793,
+      "sha256": "8a2501440ba91364c521567bcad89cf5391e743dfc4fb18f83d0448f5a1d175d"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 50387,
+      "sha256": "c2cda7d3271afdc14eb0418a436e39f86e07ec90e7a723c60f18cb5e5f6e3ddc"
+    }
+  ],
+  "original": {
+    "guardBodySha256": "bbd40680f3196904c9c9e986c6f8cef0bee77c4cbb19663b8333e8b6150e1f2f",
+    "failure": "Actual98 chunk52 57014 STATEMENT_TIMEOUT context guard_history_insert line28; actual99 all original88ABSENT,4489 source+headers retained, originalactive0",
+    "diagnosisReport": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/HISTORY-INSERT-DUPLICATE-DIAGNOSIS-01.json"
+  },
+  "change": {
+    "guardBodySha256": "98fcf82074f4aaf0712b2af3aca5a12a7e4975933712caffd577e652eca7e12f",
+    "exactOnly": "Add source.batch_id=$1 and source.entity_type=$3 to canonical duplicate source-key lookup; pass actual TG_ARGV[0]; same p.batch, join/source_key equality, locks, remaining guard body and SQLSTATE",
+    "semanticFacts": "Retained composite FK entails equal batch; initial guard and immutable rows entail existing projection actual kind. Multiple occurrences with same canonical source key still rejected, no NEW.source_row_id shortcut. All five history tables have source_row_id UNIQUE.",
+    "indexReuse": "Existing import_source_identity(batch_id,entity_type,source_key) and each projection source_row_id unique index",
+    "schemaChanges": false,
+    "newIndexes": false,
+    "ACLChanges": false,
+    "timeoutChanges": false
+  },
+  "profile": {
+    "name": "26_v20_history_insert_identity_from_v19",
+    "parent": "Exact v19 131routines; patch pins all131 parent bodies",
+    "successorRoutineCount": 131,
+    "onlyReplacedRoutine": "guard_history_insert",
+    "oldV19SqlUnchanged": {
+      "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "bytes": 46909,
+      "sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef"
+    },
+    "issuer": "New probe replaces one guard hash in original v19 probe; v19 probe retained. Same purposes, original history revision and category inheritance, no metadata cache changes mixed into this patch."
+  },
+  "checks": {
+    "sourceSemanticAndIssuerTests": {
+      "pass": 3,
+      "fail": 0,
+      "skip": 0,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/v20-targeted-checks.log",
+        "bytes": 484,
+        "sha256": "881bdbd980b0cb85bfe0d0762968d6ea2342cd35ac3c834fbe74077c0b74ee0e"
+      }
+    },
+    "targetedStrictTypecheck": {
+      "exitCode": 0,
+      "scope": "Changed issuer + new predicate-equivalence test + native runtime test under original strict flags and transitive imports",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/v20-targeted-types.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "fullProject": "Prior whole-project non-owned diagnostics remain NOT_PASS; not rerun or hidden",
+    "database": "Not executed by D1; no synthetic test represented as PostgreSQL guard execution"
+  },
+  "actualReadOnlyCandidatePlan": {
+    "comparison": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-sales98-v20-candidate-plan-readonly-20261026-101/PLAN-COMPARISON.json",
+      "bytes": 1361,
+      "sha256": "c3ec31c2dff094aef42503efb4644c81aa0e20049d0b5568b22286653f1bee5f"
+    },
+    "summary": {
+      "status": "PASS_READONLY_CANDIDATE_PLAN_COMPARISON_ONLY_NOT_ACTUAL_SPEED",
+      "checkedAtUtc": "2026-10-26T04:00:58.420073+00:00",
+      "jobId": "t45-sales98-v20-candidate-plan-readonly-20261026-101",
+      "unit": "naijue-erp-op-5cc58239-e3b6c32dccaf",
+      "originalBatchAndKeyParametersReused": true,
+      "newTypeParameter": "SALES_HEADER",
+      "beforeJob": "t45-sales98-guard-plan-metadata-readonly-20261026-100",
+      "oldPlanEstimatedTotalCost": 26226.88,
+      "newPlanEstimatedTotalCost": 14.64,
+      "before": "history_sales_header SeqScan estimated4489 -> import_source_row_pkey/filter sourcekey",
+      "after": "import_source_identity fullbatch/entity/sourcekey prefix -> history_sales_header_source_row_id_key",
+      "explainAnalyze": false,
+      "actualElapsedQueryPerformanceMeasured": false,
+      "businessDML": 0,
+      "businessDDL": 0,
+      "writerInvoked": false,
+      "readonlyEnded": true,
+      "connectionEnded": true,
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-sales98-v20-candidate-plan-readonly-20261026-101/release-submission/release-receipts/t45-sales98-v20-candidate-plan-readonly-20261026-101/engine-result.json",
+        "bytes": 3557,
+        "sha256": "0d67034b86bf59e03105cbcfc025f30504ea4f138ce8f76db46a99eb091fd236"
+      }
+    },
+    "meaning": "Original samebatch/key plus actual SALES_HEADER parameter, complete three-prefix source index then projection source-row unique index, no4489headerSeqScan",
+    "limits": "EXPLAIN without ANALYZE/query execution; estimated cost not measured speed or latency. Do not rerun101/100/99."
+  },
+  "next": "Original QB reviews only exact4 guard/profile affected scope. T45 controlled original130->v19 131->v20 131 patch and fresh canonical/socket+TCP reviews+compatibleAPP one necessary package, then original4489/88absent cursor/key recovery; no repeat committed headers or key replacement.",
+  "separateNextF": "Not implemented here; D3 owns four sales/transfer reader/protocol leaves temporarily. D1 next must first report exact issuer/composition sources and existing revocation/switch signals."
+}
