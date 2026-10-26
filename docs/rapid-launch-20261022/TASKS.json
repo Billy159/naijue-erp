@@ -14369,7 +14369,7 @@
       "serverJobs": "126 terminalFAILED,127 terminalPASS,128 terminalFAILED,129 terminalPASS; no new operation implicitly queued"
     },
     "source654Phase": {
-      "status": "FIXED_NEW_ERROR_PHASE_SCOPE_QB_PENDING_NOT_ROOT_CAUSE_FIX",
+      "status": "QB393_NEW_SOURCE_PASS_ADOPTED",
       "files": {
         "scripts/import-v3/production-source-provider26.mjs": {
           "bytes": 114035,
@@ -14383,6 +14383,36 @@
       "delta": "sourcePreparationPhase enum readonly added to same error; original code/validation/hash/MAIN gate unchanged",
       "checks": "2 new finite PASS; original5/386 reused",
       "next": "QB only phase delta then T45 safe carrier phase field and one bounded corrected successor; preserve first109keys, no126 replay"
+    },
+    "source655": {
+      "QB393": "3467/1bb3c68074360e832b4afd27915281f633fe83d4931adea3a1ce2042549116ce",
+      "QB394": "3550/ffa0ebd04266257c56648fbb82cf12305f803f68e0740b7350004c0b1b2ff8da",
+      "source130": {
+        "status": "ACTUAL_SUBMITTED_QUEUED_COLLECT_ORIGINAL_ONLY",
+        "key": "t45-full-source-private-phase-successor-20261026-130",
+        "unit": "naijue-erp-op-5cc58239-a17e0c20a0e1",
+        "maxSeconds": 900,
+        "deadlineUtc": "2026-10-26T13:25:00Z",
+        "dbOrMain": false
+      },
+      "B07RootEvidence": "Actual existing PG log column=value/function history_effective_writes_closed line22/tag history-revise:put-line; exact SQLSTATE not logged",
+      "D1SqlOwner": "WRITE.source655B07ValueDisambiguation exact newSQL/nativecap/test; sealed oldDDL preserved; no semantic/privilege/bodymatch bypass",
+      "observerWIP": {
+        "draft-normal-history-v16.mjs": {
+          "bytes": 21358,
+          "sha256": "d31e952cf1ea84fde2905a96a19f7a86574d86a4824794b4339c014738115be4"
+        },
+        "draft-normal-history-v16.test.mjs": {
+          "bytes": 7799,
+          "sha256": "23d766bbcd2951f71b7ead6ebe49440c590e13cd05c7cdd6dd273ee6a703e0f6"
+        },
+        "qa-identity-parent.mjs": {
+          "bytes": 15154,
+          "sha256": "0007a1d19a0747424b57b8d739914c7ca5ec491955a4562450d117fad1c27c58"
+        }
+      },
+      "observerChecks": "owner2 new fakePASS/parse unchanged; not independent new source PASS; no actual rerun just for observation",
+      "next": "D1 narrow SQL disambiguation + exact issuer successor; one related fixed package independent QA, T45 actual only"
     }
   }
 }

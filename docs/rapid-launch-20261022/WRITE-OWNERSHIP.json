@@ -6124,5 +6124,18 @@
       "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/QA-IDENTITY-PARENT-SCOPE-v1.md"
     ],
     "parentScope": "Single original B07 QA parent process holds generated login secret through original pinned upgrade/role child processes, safe current metadata and bounded300s approved-purpose gate, existing normal history factory/login/session/original3case runner/logout. T45 only actual registered copy restore/OS lifecycle. No persistent secret/disabled actor change/new bootstrap business contract."
+  },
+  "source655B07ValueDisambiguation": {
+    "owner": "D1",
+    "status": "CURRENT",
+    "exactFiles": [
+      "adapters/postgres/patches/0026-history-effective-value-disambiguation.sql",
+      "adapters/postgres/src/native-import-accounting-capability.ts",
+      "adapters/postgres/src/native-import-accounting-capability.test.ts"
+    ],
+    "scope": "Original approved history_effective_writes_closed three SRF projection branches value naming ambiguity only; preserve frozen original current-base patch; new narrow successor and exact issuer source/body/profile expectations; no fields/constraints/business semantics/permission widening or bodymatch bypass",
+    "evidence": "Actual03 fixed history-revise:put-line tag, column value, function history_effective_writes_closed line22; originalkey readback0 receipts/revisions",
+    "otherFiles": "D1 may list exact additional affected issuer seam paths before writing; no D3 provider/closure/root config overlap",
+    "actualOwner": "T45 only actual SQL/catalog/readback and registered isolated QA; C Git/build/records"
   }
 }

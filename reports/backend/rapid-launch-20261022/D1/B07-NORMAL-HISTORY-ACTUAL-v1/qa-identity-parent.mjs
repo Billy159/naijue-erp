@@ -136,7 +136,7 @@ export async function runB07QaIdentityParent(plan){
     await withNormalSession(api,async({privateCookie})=>{
      try{
       const actual=await runDraftNormalHistory({api,pool:issuer.pool,runtime26:issuer.runtime26,input:draft,privateCookie,
-       recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),readBackgroundFailureCount:()=>api.postgresBackgroundFailureCount+readPool.backgroundFailureCount});
+       recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),recordObservation:value=>record(plan.outputDirectory,'HTTP-'+value.phase+'-'+value.comparisonStage+'.json',value),readBackgroundFailureCount:()=>api.postgresBackgroundFailureCount+readPool.backgroundFailureCount});
       await record(plan.outputDirectory,'DRAFT-ACTUAL-RESULT.json',actual);result.httpActual=true;
      }catch(e){if(e.b07Result)await record(plan.outputDirectory,'DRAFT-ACTUAL-RESULT.json',e.b07Result);throw Error('B07_DRAFT_FAILED_OR_OUTCOME_UNCERTAIN');}
     });
