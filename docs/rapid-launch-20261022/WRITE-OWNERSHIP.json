@@ -6318,5 +6318,13 @@
       "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
     ],
     "scope": "Only existing isolated QA parent/renewal explicit remaining-money-only child02 branch. Original immutable permission proof plus exact actual child01 committed renewal/lifecycle/intent/draft outcome refs establish auth2 lineage; current account2/auth2 and same permissions/guards checked transactionally before2-to3 renewal. Original v1/child01 behavior unchanged. Never fabricate updated proof/grants/identity, never repeat prior cases; source only, actual new purpose/authorization separate."
+  },
+  "source702ClosureFoldDigestReuse": {
+    "owner": "D3",
+    "files": [
+      "packages/application/src/history-typed-closure.ts",
+      "tests/history-typed-closure-expected.test.ts"
+    ],
+    "scope": "Reuse only the original digest just produced for the same canonical row in the same builder iteration for its internal document fold. Preserve independent global/document scope/order/count/chain/root algorithms and all validators; no exported prehash, cross-row/request cache, SQL or source-data change. Actual139 CPU evidence supports targeted optimization; source equivalence checks only, bounded actual comparison follows source delivery."
   }
 }
