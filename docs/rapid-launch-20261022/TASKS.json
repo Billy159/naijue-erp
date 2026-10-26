@@ -13987,6 +13987,22 @@
       "QF": "T10/T27 fixed SOURCE620 limited protocol PASS; waits new real samebuild candidate for requested browser delta only",
       "QF2": "T11 failure-only successor PASS/T12 sourcePASS; waits real samebuild candidate, no old suite replay",
       "F1F2F3F4": "Completed source packages handed back; no invented filler; next real samebuild failed UI/consumer fixes only"
+    },
+    "source626Continuation": {
+      "userWindowHandoff": {
+        "source": "current controller direct user reply call_970992d916d1405a8d9192a4f34810ff",
+        "answer": "窗口已交回，可继续验收",
+        "QFNotified": true,
+        "preserveDrafts": true,
+        "noDuplicateSource620Review": true,
+        "browserCandidateStill": "SOURCE598/CORE17",
+        "newCandidateReview": "WAITING_FIXED_CANDIDATE_IF_NO_REMAINING_APPLICABLE_RANGE"
+      },
+      "QB374": "ADOPTED_LIMITED_SOURCE_PASS_NOT_ACTUAL_DATA",
+      "QB375_QB376": "ADOPTED_LIMITED_METADATA_CARRIER_SOURCE_PASS",
+      "actual122": "47 exact-size regular files;11 ENOENT;no content/hash/PG;old evidence retained",
+      "next123": "T45 once corrected7 paths only",
+      "overall": "IN_PROGRESS_NOT_COMPLETE"
     }
   }
 }
