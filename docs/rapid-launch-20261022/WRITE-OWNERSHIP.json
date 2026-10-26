@@ -5720,5 +5720,18 @@
     "scope": "After current projection SQL failure fix handoff, accept exact already-approved v20 history_insert_identity_from_v19 FULL_SOURCE runtime review using existing issuer/profile canonical validation; preserve all catalogue/identity/purpose/grant guards, no fallback to old130/no arbitrarypatch allowlist",
     "verification": "Only new v20 valid/identity mismatch or unapproved profile rejects; existing oldhost evidence reuse",
     "server": "T45 only; no build/DB/SSH/Git by D1"
+  },
+  "source618ProductionAuthoritySeam": {
+    "owner": "D3",
+    "exactFiles": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs",
+      "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+      "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json"
+    ],
+    "scope": "Implement missing original openProductionSourceAuthority26 in existing provider, reuse original validators/job bounds and real retained/captured reader modules; independently pinned C execution evidence and actual MAIN commands required, not input self-hash/noop authority; private CLI read metadata only, never new business DTO/DB/write contract",
+    "preserve": "SOURCE612 QB359 barcode reader; originalall11 guard, each source validator, current source protocol, held FD/cancel; SOURCE615 host ownedD1 fixed; original T45 sole real data/server/operator",
+    "missingFacts": "C grant/fullhash/closure roots and D1 actualprojection/maincommand facts remain pending, exact descriptors may be required but no invented values; absent facts reject before activation",
+    "verification": "New bounded temp fixtures for actual file authorization/mismatch/expiry/command membership/retained consumption/close; no real largebody/SQL/SSH/build/Git by D3"
   }
 }

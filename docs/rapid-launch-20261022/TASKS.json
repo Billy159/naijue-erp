@@ -11674,7 +11674,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE617",
+    "round": "SOURCE618",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "a88e2eecdb7fbbf2bdb3b92185145cec332fb082",
     "fixedCandidates": {
@@ -13756,6 +13756,42 @@
         "captured retained sources and C144 source+typed resolvers"
       ],
       "hostV20SourceGap": "fixed SOURCE615 QB362; not actualfullhost"
+    },
+    "source618ProductionAuthority": {
+      "status": "D3_EXACT4_IMPLEMENTATION_IN_PROGRESS",
+      "owner": "D3",
+      "boundary": "original provider export/real retained and C144 sources/original validators; independent actual C execution evidence and exact MAIN commands; no new platform or noop callbacks",
+      "actualFullFacts": "D1 actual115/49safeproof/115maintenance/53warehouse/22claims READY; C grant/fullhash/MAIN and original locked verification remain pending",
+      "server113": "NEVER_SUBMITTED original control verified, partial transfer preserved; revised118 completed, no113replay"
+    },
+    "source618ActualProjection": {
+      "job": "t45-r1-safe-source-projection-readonly-20261026-118",
+      "status": "COMPLETED_READONLY_DATA_ONLY_ALL_BOUNDED_ITEMS_PRESENT",
+      "elapsedSeconds": 2.672631,
+      "finishedAtUtc": "2026-10-26T06:47:25.374+00:00",
+      "counts": {
+        "coreMembers": 115,
+        "staffProofs": 49,
+        "maintenance": 115,
+        "warehouseItems": 53,
+        "originalWarehouseClaims": 22
+      },
+      "missingCodes": {},
+      "artifactBytes": 215586,
+      "artifactSha256": "c2029d831bc6a68813933877eaf4c4f123bcc279f3018ec0c5c0d4db8dbb84ba",
+      "artifactLocation": "private original118 inputs; authorized single safe transfer to F/actual118-source-projection-20261026/source-projection-data.json",
+      "businessDML": false,
+      "fullAuthority": false,
+      "sourceBinding": "SOURCE614 exporter / SOURCE598 original helper / actual a912 runtime",
+      "pool": "2 acquired / 2 released / live0 / ended",
+      "next": "Original D3 consume private fixed projection in existing provider; C fullhash/grant/MAIN still pending"
+    },
+    "source618Queue": {
+      "T45": "safe transfer single215KB actual118 then original six-scheme initialization / B07 isolated history actual package",
+      "D3": "real original provider authority and retained/captured data wiring exact4 active",
+      "D1": "source614 SQL revision and source615 v20 host independent PASS preserved; no duplicate development",
+      "QB": "new implementation/source or actual metadata only when delivered",
+      "browser": "returned C/user; no fresh failure, no extra UI action"
     }
   }
 }
