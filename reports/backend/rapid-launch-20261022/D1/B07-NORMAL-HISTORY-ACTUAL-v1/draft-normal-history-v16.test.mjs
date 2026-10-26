@@ -69,3 +69,88 @@ test('detail completeness rejects invalid count text and incomplete or inconsist
  for(const total of [0,1,null,undefined,'','00','01','-1','+1','1.0','1e0',' 1','1 ','1\n','1\r\n'])assert.throws(()=>assertCompleteHistoryPage({total,items:[{}]}));
  for(const page of [{total:'1',items:[]},{total:'0',items:[{}]},{total:'2',items:[{}]},{total:'9007199254740993',items:[]}])assert.throws(()=>assertCompleteHistoryPage(page));
 });
+
+// Pure scripted continuation protocol, never a PostgreSQL/HTTP acceptance claim.
+async function committedFixture(){
+ const {createHash}=await import('node:crypto');
+ const sourceRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022';
+ const {planHistoryRevision}=await import(sourceRoot+'/packages/application/src/history-revision-service.ts');
+ const {requestHash}=await import(sourceRoot+'/packages/application/src/request-hash.ts');
+ const input={contract:'B07_DRAFT_NORMAL_HISTORY_V16_1',patchLevel:'26_v16_history_responsible_from_v14',sourceRoot,origin:'https://synthetic-only.invalid',targetProfile:'ORIGINAL_PRESERVED_B07_COPY',copyRegistrationReference:'SYNTHETIC_ONLY',target:{database:'naijue_erp_test_19e00102',oid:'16385',role:'SYNTHETIC_NONOWNER'},actor:{accountId:id(30),hallId:null},references:{batchId:id(40),publishedOperationId:id(41),cases:[ref('sales',1),ref('transfers',10)]},maxRows:100,keys:{sales:'SYN_SALES',salesCas:'SYN_SALES_CAS',transfers:'SYN_TRANSFER',transfersCas:'SYN_TRANSFER_CAS',money:'SYN_MONEY',moneyCas:'SYN_MONEY_CAS'}};
+ const originalCurrent=r=>({...before(r),previousRevisionId:null,responsibleStaffId:null,importBatchId:input.references.batchId,publishedOperationId:input.references.publishedOperationId,documentManifestHash:'a'.repeat(64),businessDate:'2020-01-02',warehouseId:r.kind==='sales'?id(50):null,fromWarehouseId:r.kind==='transfers'?id(50):null,toWarehouseId:r.kind==='transfers'?id(51):null,
+  lines:[{lineId:r.lineId,skuId:id(60),quantity:r.capturedQuantity,...(r.kind==='sales'?{dealPrice:'0.99',lineAmount:'0.99',allocatedDiscount:null}:{})}],totals:r.kind==='sales'?{grossAmount:'0.99',orderDiscount:'0.00',netDue:'0.99'}:null,settlements:r.kind==='sales'?[{settlementId:id(70),direction:'RECEIVE',amount:'0.99'}]:[]});
+ const current={sales:originalCurrent(input.references.cases[0]),transfers:originalCurrent(input.references.cases[1])};
+ const tables={history_revision:[],audit_change:[],operation_receipt:[],history_sales_effective:[],history_transfer_effective:[],history_sales_line_effective:[],history_transfer_line_effective:[],history_sales_settlement_effective:[]};
+ let sequence=100;
+ function commit(command){
+  const operationId=id(sequence++),revisionId=id(sequence++),plan=planHistoryRevision(current[command.kind],command,revisionId);
+  const receipt={operationId,dataset:'HISTORY',kind:command.kind,documentId:command.documentId,revisionId,version:plan.toVersion,ledgerEntryIds:[]};
+  tables.history_revision.push({id:revisionId,document_kind:command.kind==='sales'?'SALES':'TRANSFER',sales_id:command.kind==='sales'?command.documentId:null,transfer_id:command.kind==='transfers'?command.documentId:null,from_version:plan.fromVersion,to_version:plan.toVersion,actor_account_id:input.actor.accountId,request_key:command.requestKey,reason:command.reason,before_facts:plan.before,after_facts:plan.after,operation_id:operationId});
+  tables.audit_change.push({id:operationId,operation_id:operationId,actor_account_id:input.actor.accountId,object_type:command.kind==='sales'?'HISTORY_SALES':'HISTORY_TRANSFER',object_id:command.documentId,action:'HISTORY_REVISE',old_version:plan.fromVersion,new_version:plan.toVersion,before_values:plan.before,after_values:plan.after});
+  tables.operation_receipt.push({id:operationId,actor_account_id:input.actor.accountId,request_key:command.requestKey,request_hash:requestHash({actorAccountId:input.actor.accountId,command}),status:'COMMITTED',action:'HISTORY_REVISE',target_type:command.kind==='sales'?'HISTORY_SALES':'HISTORY_TRANSFER',target_id:command.documentId,result_data:receipt});
+  const family=command.kind==='sales'?'sales':'transfer';tables[`history_${family}_effective`]=[{header_id:command.documentId,version:plan.toVersion,revision_id:revisionId}];
+  for(const patch of command.lines){const key=`history_${family}_line_effective`,row={line_id:patch.lineId,revision_id:revisionId,...patch};tables[key]=[...tables[key].filter(r=>r.line_id!==patch.lineId),row];}
+  current[command.kind]=plan.after;return receipt;
+ }
+ const command=draftQuantityCommand(current.sales,input.references.cases[0],input.keys.sales),originalReceipt=commit(command);
+ const originalRequest={contract:input.contract,target:input.target,actor:input.actor,phase:'DRAFT_SALES_QUANTITY_NO_STOCK',command};
+ const requestBytes=Buffer.from(JSON.stringify(originalRequest,null,2)+'\n'),sha256=createHash('sha256').update(requestBytes).digest('hex');
+ const reviseCalls=[],records=[],observations=[];
+ const client={async query(sql,args=[]){
+  if(sql.includes('current_user<>(SELECT'))return {rows:[{...input.target,nonowner:true,superuser:false,bypass_rls:false}]};
+  if(sql.includes('SELECT h.id,h.batch_id'))return {rows:[{id:args[0],batch_id:args[1],source_status:'DRAFT',batch_status:'IMPORTED'}]};
+  if(sql.startsWith('SELECT request_key'))return {rows:tables.operation_receipt.filter(r=>r.actor_account_id===args[0]&&args[1].includes(r.request_key)).map(r=>({request_key:r.request_key}))};
+  if(sql.includes('history_numeric_current_facts'))return {rows:[{value:structuredClone(current[args[0]==='SALES'?'sales':'transfers'])}]};
+  const table=/SELECT to_jsonb\(t\)::text AS value FROM naijue_erp\.([a-z_]+)/.exec(sql)?.[1];
+  if(table)return {rows:(tables[table]??[]).map(row=>({value:JSON.stringify(row)}))};
+  return {rows:[]};
+ },release(){}};
+ const response=(statusCode,value)=>({statusCode,json:()=>structuredClone(value)});
+ const api={trustedOrigin:input.origin,app:{server:{listening:false},async inject(request){
+  if(request.url==='/auth/session')return response(200,{principal:input.actor});
+  const kind=request.url.includes('/sales/')?'sales':'transfers';
+  if(request.url.endsWith('/detail/query')){const c=current[kind];return response(200,{dataset:'HISTORY',document:{documentId:c.documentId,version:c.version,sourceStatus:c.sourceStatus},lines:{total:String(c.lines.length),items:c.lines.map(l=>({id:l.lineId,...l}))},settlements:{total:String(c.settlements.length),items:c.settlements}});}
+  const command=structuredClone(request.payload);reviseCalls.push(command);
+  const old=tables.operation_receipt.find(r=>r.request_key===command.requestKey);
+  if(old)return old.request_hash===requestHash({actorAccountId:input.actor.accountId,command})?response(200,old.result_data):response(409,{error:{code:'IDEMPOTENCY_CONFLICT'}});
+  if(current[kind].version!==command.expectedVersion)return response(409,{error:{code:'VERSION_CONFLICT'}});
+  return response(200,commit(command));
+ }}};
+ return {input,current,tables,reviseCalls,records,observations,originalRequest,originalReceipt,requestBytes,sha256,
+  options:{api,pool:{async connect(){return client;}},runtime26:{async assertReady(){}},input,privateCookie:'SYNTHETIC_PRIVATE_COOKIE',recordRequest:async request=>records.push(structuredClone(request)),recordObservation:async observation=>observations.push(observation),readBackgroundFailureCount:()=>0,committedContinuation:{requestBytes,sha256}}};
+}
+test('committed continuation validates original bytes and refuses changed target/actor/key/version without calls',async()=>{
+ const {validateCommittedDraftRequest,runDraftNormalHistoryCommittedContinuation}=await import('./draft-normal-history-v16.mjs');
+ const {createHash}=await import('node:crypto');const f=await committedFixture();
+ assert.deepEqual(validateCommittedDraftRequest(f.input,f.options.committedContinuation),f.originalRequest);
+ for(const change of [r=>{r.target.role='OTHER';},r=>{r.actor.accountId=id(999);},r=>{r.command.requestKey='NEW_KEY';},r=>{r.command.expectedVersion=2;},r=>{r.command.lines[0].quantity='8';}]){
+  const r=structuredClone(f.originalRequest);change(r);const requestBytes=Buffer.from(JSON.stringify(r));
+  assert.throws(()=>validateCommittedDraftRequest(f.input,{requestBytes,sha256:createHash('sha256').update(requestBytes).digest('hex')}));
+ }
+ const broken={...f.options,committedContinuation:{requestBytes:Buffer.concat([f.requestBytes,Buffer.from(' ')]),sha256:f.sha256}};
+ await assert.rejects(runDraftNormalHistoryCommittedContinuation(broken));assert.equal(f.reviseCalls.length,0);assert.equal(f.records.length,0);
+});
+test('committed continuation reuses exact first key and tail, writes only transfer v1 and money v2',async()=>{
+ const {runDraftNormalHistoryCommittedContinuation}=await import('./draft-normal-history-v16.mjs');const f=await committedFixture(),original=Buffer.from(f.requestBytes);
+ const result=await runDraftNormalHistoryCommittedContinuation(f.options);
+ assert.equal(result.status,'PASS_ACTUAL_LIMITED_DRAFT_HISTORY_ONLY');assert.equal(result.recoveredFirstCase.version,2);assert.equal(result.recoveredFirstCase.originalRequestSha256,f.sha256);
+ assert.deepEqual(f.reviseCalls[0],f.originalRequest.command);assert.equal(JSON.stringify(f.reviseCalls[0]),JSON.stringify(f.originalRequest.command));assert.deepEqual(f.requestBytes,original);
+ assert.deepEqual(f.records.map(r=>[r.command.requestKey,r.command.expectedVersion]),[[f.input.keys.transfers,1],[f.input.keys.money,2]]);
+ assert.equal(f.tables.history_revision.length,3);assert.equal(f.tables.operation_receipt.length,3);assert.equal(f.current.sales.version,3);assert.equal(f.current.transfers.version,2);
+ assert.deepEqual(result.cases.map(c=>c.name),['DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION','DRAFT_SALES_MONEY_ONLY_NO_STOCK']);
+ assert.ok(!JSON.stringify(result).includes('SYNTHETIC_PRIVATE_COOKIE'));
+});
+test('committed continuation refuses inconsistent committed proof or another original key before replay',async()=>{
+ const {runDraftNormalHistoryCommittedContinuation}=await import('./draft-normal-history-v16.mjs');
+ for(const change of [f=>{f.tables.operation_receipt[0].request_hash='f'.repeat(64);},f=>{f.tables.history_revision[0].after_facts.version=3;},f=>{f.tables.audit_change[0].old_version=0;},f=>{f.tables.operation_receipt.push({...structuredClone(f.tables.operation_receipt[0]),request_key:f.input.keys.money});}]){
+  const f=await committedFixture();change(f);await assert.rejects(runDraftNormalHistoryCommittedContinuation(f.options));assert.equal(f.reviseCalls.length,0);assert.equal(f.records.length,0);
+ }
+});
+test('committed continuation stops if original-key replay produces any extra effect',async()=>{
+ const {runDraftNormalHistoryCommittedContinuation}=await import('./draft-normal-history-v16.mjs');const f=await committedFixture();
+ const inject=f.options.api.app.inject;let altered=false;
+ f.options.api.app.inject=async request=>{const response=await inject(request);
+  if(!altered&&request.url.endsWith('/sales/revise')){altered=true;f.tables.audit_change.push({...structuredClone(f.tables.audit_change[0]),id:id(999)});}return response;};
+ await assert.rejects(runDraftNormalHistoryCommittedContinuation(f.options),error=>{assert.equal(error.b07Result.firstFailure.comparisonStage,'REPLAY_SNAPSHOT');return true;});
+ assert.equal(f.reviseCalls.length,1);assert.equal(f.records.length,0);assert.equal(f.current.sales.version,2);assert.equal(f.current.transfers.version,1);
+});
