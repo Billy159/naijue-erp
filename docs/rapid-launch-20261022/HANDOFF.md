@@ -1,3 +1,5 @@
+SOURCE604：QB354 REV2最终107增量PASS已采用，准确carrier16246/f5e79a63、review835b162b、result1d774304；两hide上游头及真实无空格immutable字面精确delta，G02源码关闭，旧354启用依据被替代且保留。351/352/353不重验；已交原T45直接实际103→fresh131原QB→105/107/106。实际数据库/新APP/route与续导尚无新终态，不冒上线，目标ACTIVE。
+
 SOURCE603即时补正：原QB354随后对SOURCE598真实上游头发现G02：上游nosniff加proxy固定add会重复，实际singleheader检查将失败。107保持disabled、旧QB354保留但不作启用依据；原T45只在3候选loc hide上游两securityheader后add原准确2头，原QB仅此revision精确pin复核，不重103/105/106或旧压缩。另immutable字面无空格已按真实host纠正。以下603初始通过是保留的当时结论，不覆盖本补正。
 
 SOURCE603（2026-10-26）：QB354原107最后delta限定源PASS23869549，G01/R01关闭且初始发现保留；固定carrier73b10623。关键响应现在要求singleCC/HTMLguest与errornostore/JSimmutable/nosniffDENY、正式rootbodyheaders守恒；仅3秒允许准确old14或受限定暂态502/503/504，最终仍须精确CORE17 200+SHA+headers。失败不假恢复已停91，不做SQLinverse。C采用，351/352/353/354四载体源审已齐交原T45直接实际103→fresh131原QB→105/107/106，不再主控重验/等新方案。108已实际安装；新APP/SQL/route/续导仍待真实回执，整页与真实业务未增加通过，正式根未切，目标ACTIVE。
