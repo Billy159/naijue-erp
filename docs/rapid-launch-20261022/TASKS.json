@@ -14276,7 +14276,7 @@
       "next": "D1 original runner first assertion evidence and minimal successor; T45 source-only126 continues independently"
     },
     "source649Actual126": {
-      "status": "SUBMITTED_QUEUED_ORIGINAL_UNIT_COLLECT_ONLY",
+      "status": "ACTUAL_FAILED2_HISTORY_SETTLEMENT_INPUT_NO_AUTO_RETRY",
       "operationKey": "t45-full-source-private-preparation-20261026-126",
       "unit": "naijue-erp-op-5cc58239-7f98d67f9dea",
       "autoRetry": false,
@@ -14291,7 +14291,20 @@
       },
       "package": "115 fixed source +1 explicit type-module metadata +6 original helpers; do not claim116 all Git original",
       "dbOrMainOrPublish": false,
-      "next": "Collect same operation outcome; real prepared files before any independent execution grant"
+      "next": "D3 exact failing caller/schema/type source diagnosis; T45 private residue preservation only; corrected bounded successor not replay126",
+      "elapsedSeconds": 145.204871142,
+      "startedAtUTC": "2026-10-26T12:30:55.883827Z",
+      "finishedAtUTC": "2026-10-26T12:33:21.112683Z",
+      "errorCode": "HISTORY_SETTLEMENT_INPUT"
+    },
+    "source650B07Readback": {
+      "status": "ACTUAL_READBACK_6_KEYS_RECEIPTS0_REVISIONS0_FIRST_QUANTITY_TYPE_MISMATCH_CONFIRMED",
+      "source": "K/reports/controller/rapid-launch-20261022/server-execution/B07-POST02-FIRST-FAILURE-READONLY-20261026-01/ACCOUNT-PRESENCE-RESULT.json",
+      "helperQuantityType": "string",
+      "capturedQuantityType": "number",
+      "allOtherFirstCasePreconditions": "MATCHED",
+      "rollbackAndClientEndAndPidStop": true,
+      "next": "D1 minimal quantity representation fix; preserve02 current26/QA identity; new isolated fixture successor only after accurate fixed source/registration; no direct owner password update"
     }
   }
 }
