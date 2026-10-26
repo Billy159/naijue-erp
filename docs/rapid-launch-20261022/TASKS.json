@@ -14521,6 +14521,13 @@
         "B07": "05 coordination correction before any new actual fixture; 04 stopped and no HTTP",
         "sourcePreparation": "T45 133 smallest actual shape probe prepared not submitted"
       }
+    },
+    "latestSource666": {
+      "summary": "SOURCE666：133实际COMPLETED0/.520955873s/14:26:17.145Z，小readonly原validator证53WH全部FAIL INVALID_NATIVE_RECORD_ACCOUNTING_ITEM，top7exact/native3exact/plain-dense/UUID/sourceType全true，reviewedAt均string/ISOvalid/MILLI_Z且canonical6false。0PASS故SKU未读，未改时间/源/hash/guard/109keys；result93193/3970ffae留K原133receipts不入Git。D1原owner正核creatorplan准确时间文字和624适配边界，WH/SKU同因一次修，不把三位表示补成新事实；D3仅交原绑定合同不镜像改源。QB/T45只准备必要05有限自动交接，先就位后开窗，原标准/原review与3refgate不变，05未实际启动、04过窗终态不签late currentpurpose。当前无新整页/业务/正式发布PASS，完整目标ACTIVE。",
+      "D1": "actual 53 WH millisecond/canonical6 source-plan seam repair",
+      "QB": "bounded same-standard prepositioned current-purpose worker",
+      "T45": "05 exact paths and gate handoff preparation; no 05 execution",
+      "source665RemoteVerified": "382c23a44cc43a2357151d1b08f9d699cf266f4c"
     }
   }
 }
