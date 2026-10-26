@@ -2858,7 +2858,14 @@
     "currentBackup": "Original83 actual02:01:19.626805Z,12h window; T45 verifies real age at execution, older206 record historical not current",
     "realSalesHeadersStaged": 4489,
     "realSalesHeadersTotalPrepared": 28282,
-    "salesStageCurrent": "PARTIAL98_4489_COMMITTED_READBACK_88_ORIGINALKEY_RECOVERY_PENDING_NOT_FULL_PUBLISH"
+    "salesStageCurrent": "PARTIAL98_4489_COMMITTED_READBACK_88_ORIGINALKEY_RECOVERY_PENDING_NOT_FULL_PUBLISH",
+    "currentSchema605": {
+      "canonical": "b5d8f2e8e278435d8a0e80ec2d7e7d08b607118859e02fc44a9f8bcedd57d8e5",
+      "profile": "26_v20_history_insert_identity_from_v19",
+      "routines": 131,
+      "schemeAclChanged": false,
+      "actual103": true
+    }
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -11660,9 +11667,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE604",
+    "round": "SOURCE605",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "8d766b8bc17b384e1e3813707523b1166cda36c3",
+    "sourceHeadBeforeThisContinuityCommit": "43ad8a21c7b847115327c2d00b47f7aa21967b3b",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -11673,17 +11680,18 @@
       "next": {
         "source": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
         "build": "replica-production-source598-core-17",
-        "status": "ACTUAL108_INSTALL_PASS_APP_PG_ROUTE_PENDING",
+        "status": "ACTUAL108_INSTALLED_ACTUAL103_SCHEMA131_PASS_QB_METADATA_APP_PENDING",
         "report": "reports/controller/rapid-launch-20261022/SOURCE599-CORE17-INTEGRATION.json"
       },
       "current": {
         "source": "1f09fd74d9e4c9dfeb98118a1d33a989801148b9",
         "build": "replica-production-source561-core-14",
         "url": "https://1n5635n614.goho.co/__naijue_candidate/replica-private-01/",
-        "deployment": "ACTUAL91_APP92_CANDIDATE_PREFIX_ONLY",
+        "deployment": "ACTUAL103_CONTROLLED_TRANSITION_OLD91_GRACEFULLY_STOPPED_ROUTE341_PRESERVED",
         "scope": "CORE readonly hallwarehouse, combinedstaffaccount, category,color,fit; inventory/sales/transfer/products/payments/parties and fullbusiness not enabled",
         "formalRootChanged": false,
-        "browserAcceptance": "QF CORE14 shell/account/password partial only; not strongcold/fullpage/business"
+        "browserAcceptance": "QF CORE14 shell/account/password partial only; not strongcold/fullpage/business",
+        "temporarilyUnavailable": true
       },
       "previousCurrentSource519": {
         "source": "c61e747667276c5de0bd6fa5c53ceba31681d50f",
@@ -11712,10 +11720,10 @@
       "D1": "F andlocksource delivered scopedQB348/349PASS, actualruntime/currentrole/init nextT45; no newsourcefiller",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
       "D3": "List pushdown QB346 sourcePASS; ready source returned; actual remaining23793 HEADER and full provider depend T45, no duplicate source work",
-      "T45": "108 installed; all4sourcePASS and107REV2 adopted, proceed original103 realDDL/drain -> fresh131 QB ->105/107/106 originalkeys",
+      "T45": "Actual103 v19/v20schema PASS newb5d8f2/131,old91gracefulclosed/pooldrained/other19 preserved; freshactualQB metadata then105/107/106",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
-      "QB": "351/352/353+354REV2 final prepared source all adopted; next actual131 metadata socket/TCP purposes, do not repeat source",
+      "QB": "Next actual103 genuine socketTCP/currentrole131 newcanonicalb5d8f2 purpose reviews, no source suite replay",
       "Compression": "G exact2 cache source/3affectedchecks delivered, writer returned; C proxytemplate source fixed, actualpubliccache pending nextnecessary build"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -13462,6 +13470,21 @@
       "owner": "T45",
       "next": "Actual103 -> fresh131 QBmetadata ->105/107/106; no C technical re-review",
       "notTested": "actualPGpatch/APPstart/nginxt/reload/internalG/publicTLS/browser/new23793"
+    },
+    "source605": {
+      "jobId": "t45-r1-v19-v20-controlled-schema-successor-20261026-103",
+      "status": "ACTUAL_SCHEMA_PASS_FRESH131_REVIEW_PENDING_APP_NOT_STARTED",
+      "finishedAtUtc": "2026-10-26T05:10:10.890984+00:00",
+      "newCanonical": "b5d8f2e8e278435d8a0e80ec2d7e7d08b607118859e02fc44a9f8bcedd57d8e5",
+      "oldAppStopOutcome": "GRACEFUL_EXIT0_CONFIRMED",
+      "oldAppPoolBackendsReleased": true,
+      "originalOtherNineteenAndRoutePreserved": true,
+      "schemeAclChanged": false,
+      "receiptBytes": 3258,
+      "collectedReceiptSha256": "426537aea2baac76ad28b8f83fa0bdc72698907833da945a4dda6d17c00af508",
+      "next": "OriginalQB actual131 socketTCP metadata ->105 CORE17 firstfull startup ->107 route/10623793 remaining",
+      "candidateDuringTransition": "OldCORE14 APP91 stopped; route341 stillold, candidate temporarily unavailable; do not describe CORE14 as live or CORE17 as started",
+      "formalRootChanged": false
     }
   }
 }

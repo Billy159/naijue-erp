@@ -1,3 +1,5 @@
+SOURCE605：103实际schema PASS，finish2026-10-26T05:10:10.890984Z，新canonical b5d8f2e8/131。原APP91已gracefulExit0、poolbackends释放；other19及route341保持，0schemeACL变化，4489及空scheme保留。候选正在受控切换，旧14应用已停不能再称live，CORE17仅已安装尚未启动；正式根不动。下一原QB实际socket/TCP新基线用途review→105首全验/107路由恢复/106仅续23793；源码验收不重，MAIN/PUBLISH与业务/历史最终目标未完成。
+
 SOURCE604：QB354 REV2最终107增量PASS已采用，准确carrier16246/f5e79a63、review835b162b、result1d774304；两hide上游头及真实无空格immutable字面精确delta，G02源码关闭，旧354启用依据被替代且保留。351/352/353不重验；已交原T45直接实际103→fresh131原QB→105/107/106。实际数据库/新APP/route与续导尚无新终态，不冒上线，目标ACTIVE。
 
 SOURCE603即时补正：原QB354随后对SOURCE598真实上游头发现G02：上游nosniff加proxy固定add会重复，实际singleheader检查将失败。107保持disabled、旧QB354保留但不作启用依据；原T45只在3候选loc hide上游两securityheader后add原准确2头，原QB仅此revision精确pin复核，不重103/105/106或旧压缩。另immutable字面无空格已按真实host纠正。以下603初始通过是保留的当时结论，不覆盖本补正。
