@@ -10,7 +10,7 @@ import {runDraftNormalHistory} from './draft-normal-history-v16.mjs';
 const must=(ok,code)=>{if(!ok)throw Error(code);};
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const P='/Users/billy/Desktop/Workspace/project-007-业务管理系统';
-export const OUTPUT=P+'/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-04';
+export const OUTPUT=P+'/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-05';
 export const EFFECTIVE_VALUE_PROFILE='26_v21_history_effective_value_from_v16_v14';
 const OLD_EFFECTIVE_BODY='c06027597f11a9cf7f2ae06bf5e47e5c21349b54851fb21df6895ef22a2855b7';
 const NEW_EFFECTIVE_BODY='4fbbebd6b335359b80c7df38efc99a30cb666902158c3e1f911e3c869ebac363';

@@ -1,0 +1,11 @@
+{
+  "status": "PENDING_USER_CONFIRMATION",
+  "scope": "nativeRecord.reviewedAt exact UTC three or six fractional digits; preserve original text and immutable evidence",
+  "productionFiles": [
+    "packages/application/src/native-import-record-accounting.ts"
+  ],
+  "owner": "D1",
+  "sourceEvidence": "T45 actual133 53WH all MILLI_Z; source creator ISO milliseconds; SQL exact JSON and CORE22 item hash unchanged",
+  "noSchemaChange": true,
+  "implemented": false
+}
