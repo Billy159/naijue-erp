@@ -14449,6 +14449,28 @@
       "delta": "Only optional top elapsedSeconds finite nonnegative telemetry isolated from original strict business evidence shape; original pinned manifest and businesshash unchanged",
       "checks": "Exact decimal elapsed RED then2new focused GREEN incl privacy scope/hash/authorization and negative cases; no actual large reader rerun",
       "next": "QB failed metadata seam only then T45 exact same-version reader overlay bounded full preparation successor; first109keys preserved"
+    },
+    "source658ValueFix": {
+      "status": "FIXED_NARROW_GUARD_ISSUER_SOURCE_QB_PENDING_ACTUAL_NOT_RUN",
+      "files": {
+        "adapters/postgres/patches/0026-history-effective-value-disambiguation.sql": {
+          "bytes": 6623,
+          "sha256": "c8fb573e62af9055cd4532266890b64e680e0db4556edeb3e33c1bf6c5c33d57"
+        },
+        "adapters/postgres/src/native-import-accounting-capability.ts": {
+          "bytes": 78829,
+          "sha256": "f5effdc774355c0e34f44f80c933cec349a86f6bd204ec3ddee04c45d73101ab"
+        },
+        "adapters/postgres/src/native-import-accounting-capability.test.ts": {
+          "bytes": 6294,
+          "sha256": "35601d14e91274291763ce4b7f65837183113935ef18c39331b5e2102b906295"
+        }
+      },
+      "profile": "26_v21_history_effective_value_from_v16_v14",
+      "expectedNewBody": "4fbbebd6b335359b80c7df38efc99a30cb666902158c3e1f911e3c869ebac363",
+      "change": "Only3 SRF output names made explicit, reverse replacement restores original function byte-for-byte; original frozen patch and all old profiles unchanged",
+      "checks": "3 focused source tests and selected2 TS typecheck PASS; no actual SQL",
+      "next": "D1 exact normalfactory newprofile consuming seam/actual install steps; QB only narrow root cause and exact issuer; T45 actual newcanonical then real3cases"
     }
   }
 }
