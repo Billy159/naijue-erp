@@ -743,3 +743,23 @@ test('source635 complete preparation composition closes all original11 sessions 
  await assert.rejects(consumeAuthorizedHistoryClosureStreams26(s.options,async streams=>{for await(const row of streams.sourceRows){assert.equal(row.relation,'import_source_row');throw Error('SYNTHETIC_PREPARATION_STOP');}}),/SYNTHETIC_PREPARATION_STOP/);
  assert.deepEqual(s.trace.closes,[...sourceGroups].reverse());assert.equal(s.trace.streamFinally.filter(k=>k.endsWith('/sourceRows')).length,11);assert.equal(s.trace.verified.length,11);
 });
+
+test('source646 preparation phase preserves original rejection codes at scope and current-state boundaries',async t=>{
+ const {prepareProductionSourceOnly26}=await import('./production-source-provider26.mjs'),f=await sourceOnlyPreparationFiles26(t,{mutateCurrent:c=>{delete c.records;}});
+ await assert.rejects(prepareProductionSourceOnly26({preparationFile:f.ref.path,trustedPreparationSha256:digest('f'),signal:f.controller.signal}),e=>{assert.equal(e.code,'PRODUCTION_PROVIDER26_INPUT_CHANGED');assert.equal(e.sourcePreparationPhase,'SCOPE');return true;});
+ await assert.rejects(prepareProductionSourceOnly26({preparationFile:f.ref.path,trustedPreparationSha256:f.ref.sha256,signal:f.controller.signal}),e=>{assert.equal(e.code,'SOURCE_PREPARATION26_VERIFIED_CURRENT_REQUIRED');assert.equal(e.sourcePreparationPhase,'VERIFIED_CURRENT');assert.equal(Object.getOwnPropertyDescriptor(e,'sourcePreparationPhase').writable,false);return true;});
+ assert.ok(!(await f.readdir(f.directory)).includes(f.scope.registrationId));
+});
+test('source646 preparation phase identifies native fact and DATA derivation failures without bypassing original validators or writing output',async t=>{
+ const {prepareProductionSourceOnly26}=await import('./production-source-provider26.mjs'),f=await sourceOnlyPreparationFiles26(t),{readFile}=await import('node:fs/promises');
+ f.inputs.producers.STOCK_CONTRIBUTORS.retainedNative.records=2;f.scope.input=await f.save('FINITE-BAD-NATIVE-COUNT.json',f.inputs);let ref=await f.save('FINITE-NATIVE-FAILURE-SCOPE.json',f.scope);
+ await assert.rejects(prepareProductionSourceOnly26({preparationFile:ref.path,trustedPreparationSha256:ref.sha256,signal:f.controller.signal}),e=>{assert.equal(e.code,'PRODUCTION_RETAINED_NATIVE26_COUNT');assert.equal(e.sourcePreparationPhase,'NATIVE_FACTS_STOCK_CONTRIBUTORS');return true;});
+ const g=await sourceOnlyPreparationFiles26(t),core=JSON.parse(await readFile(g.coreRef.path,'utf8')),stock=JSON.parse(await readFile(g.inputs.producers.STOCK_CONTRIBUTORS.retainedNative.files[0].path,'utf8'));
+ g.scope.warehouseStockScope=await g.save('FINITE-COMPLETE-WAREHOUSE-SCOPE.json',core.warehouses.map((w,i)=>({sourceKey:w.sourceKey,nativeId:w.targetId,signedQuantity:i===0?stock.signedQuantity:'0'})));
+ for(const group of sourceGroups)g.inputs.producers[group].fileLocations??=[{logical:g.coreRef,physical:g.coreRef,kind:'METADATA',roles:['finite-empty-group']}];
+ g.scope.input=await g.save('FINITE-DATA-SCHEMA-INPUT.json',g.inputs);ref=await g.save('FINITE-DATA-SCHEMA-SCOPE.json',g.scope);
+ // This original pre-existing fixture deliberately has incomplete maintenance
+ // snapshots; the genuine D1 projection must still reject them before any hash.
+ await assert.rejects(prepareProductionSourceOnly26({preparationFile:ref.path,trustedPreparationSha256:ref.sha256,signal:g.controller.signal}),e=>{assert.equal(e.code,'INVALID_HISTORY_CLOSURE_STAGE');assert.equal(e.sourcePreparationPhase,'DATA_DERIVATION');return true;});
+ for(const fixture of [f,g])assert.ok(!(await fixture.readdir(fixture.directory)).includes(fixture.scope.registrationId));
+});

@@ -5,18 +5,18 @@
   "status": "ACTUAL124_DATA_LOCATIONS_BOUND_CODE_INSTALL_AND_FULL_EXECUTION_PENDING",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "bytes": 113005,
-    "sha256": "16170b0b49e9f7d2d815c085acb906a55565691eaf587d1d6329be46dce54286"
+    "bytes": 114035,
+    "sha256": "b816b2f5d4102569f0538782992de97c0bad01e7b1c7b528b99982ea9fbd14e9"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 135477,
-    "sha256": "32da6073f253551d28ef562b411ce552a6b9f8e952ed0910f350c2f257ace473"
+    "bytes": 138591,
+    "sha256": "9aa6078da2c1b1ef4221e2b786142014312cbe8dc44ec564b2bc723cac2e24f4"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
     "bytes": 182293,
-    "sha256": "1dfa63b43db3437323fcd72122bc4dc208d76d803115fe0605d83d7ff19d2c81"
+    "sha256": "c85416848fd292e4aac11f17c82567804af8989b2d5575622cf88ad10c7c33b1"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -1015,5 +1015,69 @@
     "actualLargeBodiesRead": false,
     "actualPGOrServerAction": false,
     "consumer": "Copy source635ExecutionSeamMetadata.artifactRows and sourceManifestRef into scope. C supplies separately frozen requestKeys bind/account107/publish. Rest of scope follows source635ActualSourcePreparation.scopeSchema."
+  },
+  "source646PreparationErrorPhase": {
+    "status": "SAFE_SOURCE_ONLY_ERROR_PHASE_ADDED_ROOT_CAUSE_NOT_YET_LOCATED",
+    "basis": {
+      "actual126": "FAILED2/145.204871142s/HISTORY_SETTLEMENT_INPUT/outputs-private empty/registration absent; no grant, PG, MAIN, or APP",
+      "actual129": "Four small original metadata capture stages PASS; all115 maintenance projection schemas PASS0fail; no source reader or SQL"
+    },
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 114035,
+        "sha256": "b816b2f5d4102569f0538782992de97c0bad01e7b1c7b528b99982ea9fbd14e9"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 138591,
+        "sha256": "9aa6078da2c1b1ef4221e2b786142014312cbe8dc44ec564b2bc723cac2e24f4"
+      }
+    ],
+    "behavior": "Only private sourcePreparation path records fixed code-path enum and public preparation catch attaches readonly enumerable sourcePreparationPhase to the SAME extensible Error object before rethrow. Original .code/.message/validator/input/hash/authority and execution provider path are unchanged. No callbacks or stage capabilities added to operator scope.",
+    "stageMeaning": "Active coarse phase when original operation failed; not an exact inner stack/line or proof of bad business row. Existing cleanup error behavior is preserved. No raw message/stack/path/value exported.",
+    "phases": [
+      "SCOPE",
+      "INPUT",
+      "CORE_DATA",
+      "VERIFIED_CURRENT",
+      "WAREHOUSE_SCOPE_INPUT",
+      "SOURCE_SESSION",
+      "OPEN_GROUP_<one of original fixed11 groups>",
+      "NATIVE_FACTS_PRODUCTS",
+      "NATIVE_FACTS_SKUS",
+      "NATIVE_FACTS_STOCK_CONTRIBUTORS",
+      "WAREHOUSE_SCOPE",
+      "ARTIFACT_COVERAGE",
+      "DATA_ASSEMBLY",
+      "DATA_DERIVATION",
+      "ALL11_CLOSURE",
+      "ORIGINAL_BINDINGS_AND_STREAMS",
+      "PRIVATE_WRITER"
+    ],
+    "checks": {
+      "new": 2,
+      "pass": 2,
+      "fail": 0,
+      "command": "node --test --test-reporter=spec '--test-name-pattern=source646 preparation phase' scripts/import-v3/production-source-provider26.test.mjs",
+      "covered": [
+        "Original wrong input pin retains PRODUCTION_PROVIDER26_INPUT_CHANGED + SCOPE.",
+        "Missing complete current retains original required code + VERIFIED_CURRENT.",
+        "Finite wrong retained-native record count retains original COUNT + NATIVE_FACTS_STOCK_CONTRIBUTORS.",
+        "Original D1 incomplete finite maintenance fixture retains INVALID_HISTORY_CLOSURE_STAGE + DATA_DERIVATION; no generated output.",
+        "Phase property nonwritable; original5 and source644/QB386 reused without rerun."
+      ],
+      "syntaxCheck": "PASS"
+    },
+    "carrierDelta": "Catch only export errorCode:error?.code??safe fallback and sourcePreparationPhase:error?.sourcePreparationPhase??null. Do not export error.message/stack/cause/body or call any reader from catch. Original failure no-replay behavior stays.",
+    "next": "C freeze -> QB only phase delta -> T45 one bounded genuine successor with same preserved first registration/109 keys, exact successor source pin and actual deadline; never rerun job126. If fail use new original code + phase to target root fix; no grant or hash substitution.",
+    "notRun": [
+      "Actual successor with phase",
+      "Full actual DATA/EXPECTED/MAIN output",
+      "Actual root-cause reproduction or fix"
+    ],
+    "actualLargeBodiesRead": false,
+    "actualPGOrServerAction": false,
+    "changedD1OrSharedClosureReader": false
   }
 }

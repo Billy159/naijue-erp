@@ -433,6 +433,7 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
    const result=await readers.get(group).openClosure(scope,ctx);active();return result;
   }]));
   async function openGroup(group){
+   if(sourcePreparation)sourcePreparation.phase('OPEN_GROUP_'+group);
    must(!readers.has(group),'PRODUCTION_PROVIDER26_SOURCE_REUSED');
      const recipe=fixed.producers[group];let raw;
      if(recipe.mode==='REVIEWED')raw=await recipeOpeners[group](structuredClone(recipe.options),{resolveFile:sourceFileResolver26(recipe)});
@@ -505,8 +506,8 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
    must(count>0||progress.committedOperations?.some(op=>op.action===(phase==='BIND'?'IMPORT_BIND_FULL_SOURCE':phase==='ACCOUNT'?'IMPORT_CHUNK':'IMPORT_PUBLISH')),'PRODUCTION_PROVIDER26_MAIN_COMMAND_REQUIRED');
   }
   if(sourcePreparation)return{preflight,close,openSources,
-   async collectNativeFacts(){must(preflightDone,'PRODUCTION_PROVIDER26_PREFLIGHT_REQUIRED');for(const group of ['PRODUCTS','SKUS','STOCK_CONTRIBUTORS']){const reader=readers.get(group);must(typeof reader?.prepareFacts==='function','SOURCE_PREPARATION26_NATIVE_CAPTURE_REQUIRED');await reader.prepareFacts();active();}},
-   async bindRealData(data){must(preflightDone&&readers.size===3,'SOURCE_PREPARATION26_DATA_BIND_ORDER');const prepared=prepareFullPayloadData26(data);await sourcePreparation.verifyDerivedData(prepared,data);active();
+   async collectNativeFacts(){must(preflightDone,'PRODUCTION_PROVIDER26_PREFLIGHT_REQUIRED');for(const group of ['PRODUCTS','SKUS','STOCK_CONTRIBUTORS']){sourcePreparation.phase('NATIVE_FACTS_'+group);const reader=readers.get(group);must(typeof reader?.prepareFacts==='function','SOURCE_PREPARATION26_NATIVE_CAPTURE_REQUIRED');await reader.prepareFacts();active();}},
+   async bindRealData(data){sourcePreparation.phase('DATA_DERIVATION');must(preflightDone&&readers.size===3,'SOURCE_PREPARATION26_DATA_BIND_ORDER');const prepared=prepareFullPayloadData26(data);await sourcePreparation.verifyDerivedData(prepared,data);active();
     binding.authorizedPayloadHash=fixed.binding.authorizedPayloadHash=fixed.closureScope.authorizedPayloadHash=prepared.authorizedPayloadHash;context.binding=structuredClone(binding);
     for(const group of ['PARTIES','PAYMENT'])fixed.producers[group].options.authorizedPayloadHash=prepared.authorizedPayloadHash;fixed.producers.CATALOGUE.options.binding.authorizedPayloadHash=prepared.authorizedPayloadHash;
     sourcePreparation.setDerivedInput(fixed,binding);for(const group of sourceGroups)if(!readers.has(group))await openGroup(group);active();return structuredClone(fixed.closureScope);
@@ -631,6 +632,8 @@ export function confirmedZeroWarehouseScope26({binding,warehouses,representedTot
  * original frozen D1 helpers derive the DATA hash and command files only after
  * genuine original files, membership facts and all11 streams have closed. */
 export async function prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal}){
+ let preparationPhase='SCOPE';
+ try{
  must(signal instanceof AbortSignal&&!signal.aborted,'SOURCE_PREPARATION26_ABORTED');
  const scopeBytes=await pinnedSmall(preparationFile,trustedPreparationSha256),scope=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(scopeBytes));capture(scope);
  const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
@@ -660,11 +663,11 @@ export async function prepareProductionSourceOnly26({preparationFile,trustedPrep
   }
  };
  try{
-  pinned.set(preparationFile,{physical:{path:preparationFile},stat:await lstat(preparationFile)});active();input=await holdSmall(scope.input);
+  pinned.set(preparationFile,{physical:{path:preparationFile},stat:await lstat(preparationFile)});active();preparationPhase='INPUT';input=await holdSmall(scope.input);
   must(input.version==='PRODUCTION_SOURCE_PROVIDER26_INPUT_V1'&&input.binding?.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&input.producers&&Object.keys(input.producers).length===11,'SOURCE_PREPARATION26_INPUT');
   must(scope.baselineBusinessDate===input.binding.cutoffAt.slice(0,10),'SOURCE_PREPARATION26_BASELINE_DATE');
   short=Object.fromEntries(['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'].map(k=>[k,input.binding[k]]));
-  coreData=await holdSmall(input.core.coreProjection,sourceFileResolver26(input.producers.PARTIES));
+  preparationPhase='CORE_DATA';coreData=await holdSmall(input.core.coreProjection,sourceFileResolver26(input.producers.PARTIES));
   must(coreData.dataComplete===true&&coreData.publicationAuthorized===false&&Array.isArray(coreData.missing)&&coreData.missing.length===0&&coreData.identity?.batchId===short.batchId
    &&coreData.identity.coreReceiptId===input.core.receiptId&&coreData.identity.coreSourceDigest===input.core.coreSourceDigest&&Array.isArray(coreData.warehouses)&&coreData.warehouses.length===53,'SOURCE_PREPARATION26_CORE_DATA');
   must(['batchId','actorAccountId','fixedSourceNamespace','selectionSha256','coreReceiptId','coreSourceDigest'].every(k=>coreData.identity[k]===(k==='coreReceiptId'?input.core.receiptId:k==='coreSourceDigest'?input.core.coreSourceDigest:input.binding[k])),'SOURCE_PREPARATION26_CORE_DATA');
@@ -672,24 +675,24 @@ export async function prepareProductionSourceOnly26({preparationFile,trustedPrep
   core={coreReceiptId:input.core.receiptId,coreSourceDigest:input.core.coreSourceDigest,coreMembers:coreData.coreMembers,staffProofs:coreData.staffProofs,coreMaintenanceBinding:coreData.coreMaintenanceBinding};
   // Verify current original readback BEFORE any large source pass. A receipt
   // summary or a reconstructed birth22 object is not a current-chain proof.
-  const current=await holdSmall(scope.verifiedCurrent);must(current.actorAccountId===input.binding.actorAccountId&&current.fixedSourceNamespace===short.fixedSourceNamespace&&current.selectionSha256===short.selectionSha256
+  preparationPhase='VERIFIED_CURRENT';const current=await holdSmall(scope.verifiedCurrent);must(current.actorAccountId===input.binding.actorAccountId&&current.fixedSourceNamespace===short.fixedSourceNamespace&&current.selectionSha256===short.selectionSha256
    &&Array.isArray(current.coreClaims)&&current.coreClaims.length===22&&Array.isArray(current.coreWarehouses)&&current.coreWarehouses.length===22&&Array.isArray(current.records)&&Array.isArray(current.committedOperations)&&current.claims?.length===current.checkpoint?.cursor,'SOURCE_PREPARATION26_VERIFIED_CURRENT_REQUIRED');
   let warehouseScope,zeroDecision;
-  if(scope.warehouseStockScope!==null){const saved=await holdSmall(scope.warehouseStockScope);if(Array.isArray(saved)){must(saved.length===53,'SOURCE_PREPARATION26_WAREHOUSE_SCOPE');warehouseScope=saved;}else{zeroDecision=saved;must(saved?.version==='C_EXACT24_WAREHOUSE_BASELINE_ZERO_USER_DECISION_V1'&&saved.status==='EXPLICIT_USER_CONFIRMED'&&capture(saved.binding)===capture(short),'SOURCE_PREPARATION26_EXACT_ZERO_DECISION');}}
-  const preparation={warehouses:coreData.warehouses,verify,close:closeResources,observePrepared,
+  preparationPhase='WAREHOUSE_SCOPE_INPUT';if(scope.warehouseStockScope!==null){const saved=await holdSmall(scope.warehouseStockScope);if(Array.isArray(saved)){must(saved.length===53,'SOURCE_PREPARATION26_WAREHOUSE_SCOPE');warehouseScope=saved;}else{zeroDecision=saved;must(saved?.version==='C_EXACT24_WAREHOUSE_BASELINE_ZERO_USER_DECISION_V1'&&saved.status==='EXPLICIT_USER_CONFIRMED'&&capture(saved.binding)===capture(short),'SOURCE_PREPARATION26_EXACT_ZERO_DECISION');}}
+  const preparation={warehouses:coreData.warehouses,verify,close:closeResources,observePrepared,phase(value){preparationPhase=value;},
    async coreProjection(payloadHash){await verify();must(hash(payloadHash),'SOURCE_PREPARATION26_REAL_DATA_HASH_REQUIRED');return{authorizedPayloadHash:payloadHash,coreMembers:structuredClone(core.coreMembers),staffProofs:structuredClone(core.staffProofs),coreMaintenanceBinding:structuredClone(core.coreMaintenanceBinding),verify};},
    async verifyDerivedData(prepared,data){await verify();must(prepared.authorizedPayloadHash===prepareFullPayloadData26(data).authorizedPayloadHash&&capture(data.core)===capture(core)
     &&data.stock.contributors.length===contributors.length&&data.stock.effectiveGroups.length===effectiveGroups.length,'SOURCE_PREPARATION26_REAL_DATA_HASH_REQUIRED');},
    setDerivedInput(fixed,binding){this.capturedIO=originalCapturedSourceIO26({binding,fixed,signal,verify,active,code,owned,captured});},capturedIO:null};
-  const provider=createOriginalProductionSources26(input,{sourcePreparation:preparation});session=await provider.openSourceSession({binding:structuredClone(input.binding),sources:{},signal});
+  preparationPhase='SOURCE_SESSION';const provider=createOriginalProductionSources26(input,{sourcePreparation:preparation});session=await provider.openSourceSession({binding:structuredClone(input.binding),sources:{},signal});
   await session.preflight();await session.collectNativeFacts();await verify();
-  const unrepresented=coreData.warehouses.filter(w=>!warehouseTotals.has(w.sourceKey)).map(w=>({sourceKey:w.sourceKey,nativeId:w.targetId}));
+  preparationPhase='WAREHOUSE_SCOPE';const unrepresented=coreData.warehouses.filter(w=>!warehouseTotals.has(w.sourceKey)).map(w=>({sourceKey:w.sourceKey,nativeId:w.targetId}));
   if(zeroDecision)warehouseScope=confirmedZeroWarehouseScope26({binding:short,warehouses:coreData.warehouses,representedTotals:[...warehouseTotals].map(([sourceKey,total])=>({sourceKey,signedQuantity:total.toString()})),decision:zeroDecision});
   if(!warehouseScope){return{status:'NEEDS_EXPLICIT_COMPLETE_WAREHOUSE_STOCK_SCOPE',registrationId:scope.registrationId,originalSourceFilesVerified:true,nativeSkus:skuMemberships.length,effectiveGroups:effectiveGroups.length,contributors:contributors.length,
     unrepresentedWarehouses:unrepresented,notInferredZero:true,authorizedPayloadHashGenerated:false,executionAuthorizationIssued:false,executionReady:false};}
   for(const row of warehouseScope){const w=coreData.warehouses.find(w=>w.sourceKey===row.sourceKey&&w.targetId===row.nativeId);must(w&&typeof row.signedQuantity==='string','SOURCE_PREPARATION26_WAREHOUSE_SCOPE');
    if(warehouseTotals.has(row.sourceKey))must(BigInt(row.signedQuantity)===warehouseTotals.get(row.sourceKey),'SOURCE_PREPARATION26_WAREHOUSE_SCOPE');}
-  const groups=sourceGroups.map(group=>({group,artifacts:input.producers[group].fileLocations.filter(e=>e.kind!=='CODE').map(e=>{
+  preparationPhase='ARTIFACT_COVERAGE';const groups=sourceGroups.map(group=>({group,artifacts:input.producers[group].fileLocations.filter(e=>e.kind!=='CODE').map(e=>{
    const observed=coverage.get(e.logical.path),declared=scope.artifactRows?.[group]?.[e.logical.path];
    const rows=observed??declared??(['METADATA','CORE_DATA'].includes(e.kind)?0:undefined);
    must(Number.isSafeInteger(rows)&&rows>=0&&(e.kind!=='DATA'||rows>0)&&(observed===undefined||declared===undefined||observed===declared),'SOURCE_PREPARATION26_ARTIFACT_COVERAGE_REQUIRED');
@@ -699,19 +702,25 @@ export async function prepareProductionSourceOnly26({preparationFile,trustedPrep
    return{logicalRole:e.roles.join('+'),bytes:e.logical.bytes,sha256:e.logical.sha256,rows,memberCoverage:{rows,sha256:e.logical.sha256}};
   })}));
   if(zeroDecision){const ref=scope.warehouseStockScope;groups.find(g=>g.group==='STOCK_CONTRIBUTORS').artifacts.push({logicalRole:'exact24-user-approved-zero-baseline',bytes:ref.bytes,sha256:ref.sha256,rows:24,memberCoverage:{rows:24,sha256:ref.sha256}});}
-  const data={binding:short,core,groups,expectedCounts:input.closureScope.expectedCounts,expectedSourceEntityCounts:input.closureScope.expectedSourceEntityCounts,
+  preparationPhase='DATA_ASSEMBLY';const data={binding:short,core,groups,expectedCounts:input.closureScope.expectedCounts,expectedSourceEntityCounts:input.closureScope.expectedSourceEntityCounts,
    inventoryExpectedCounts:{WAREHOUSE:53,SKU:skuMemberships.length,INVENTORY_LEDGER:baselineItems.length,IMPORT_BATCH:1},
    stock:{effectiveStockCsvSha256:stockSelection.csvSha256,contributorLineageCsvSha256:stockSelection.lineageCsvSha256,contributors,effectiveGroups,warehouses:warehouseScope,
     warehouseUnits:[...warehouseUnits].map(([key,total])=>{const [warehouseSourceKey,sourceUnit]=JSON.parse(key);return{warehouseSourceKey,sourceUnit,signedQuantity:total.toString()};})}};
   const closureScope=await session.bindRealData(data);await verify();
   const {consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs');
-  const prepared=await consumeAuthorizedHistoryClosureStreams26({scope:closureScope,openSources:session.openSources,trustedSelectionSha256:short.selectionSha256,trustedAuthorizedPayloadHash:closureScope.authorizedPayloadHash},
-   streams=>prepareFullSourceBindings26({data,sourceRows:streams.sourceRows,typedRows:streams.typedRows,documents:streams.documents,warehouses:coreData.warehouses,skuMemberships,baselineItems,
-    verifiedCurrent:current,actorAccountId:input.binding.actorAccountId,sourceManifestRef:scope.sourceManifestRef,requestKeys:scope.requestKeys,chunkRows:scope.chunkRows}));
-  await verify();const written=await writeFullSourceBindings26({outputParent:scope.outputParent,registrationId:scope.registrationId,prepared});await verify();
+  preparationPhase='ALL11_CLOSURE';const prepared=await consumeAuthorizedHistoryClosureStreams26({scope:closureScope,openSources:session.openSources,trustedSelectionSha256:short.selectionSha256,trustedAuthorizedPayloadHash:closureScope.authorizedPayloadHash},
+   streams=>{preparationPhase='ORIGINAL_BINDINGS_AND_STREAMS';return prepareFullSourceBindings26({data,sourceRows:streams.sourceRows,typedRows:streams.typedRows,documents:streams.documents,warehouses:coreData.warehouses,skuMemberships,baselineItems,
+    verifiedCurrent:current,actorAccountId:input.binding.actorAccountId,sourceManifestRef:scope.sourceManifestRef,requestKeys:scope.requestKeys,chunkRows:scope.chunkRows});});
+  await verify();preparationPhase='PRIVATE_WRITER';const written=await writeFullSourceBindings26({outputParent:scope.outputParent,registrationId:scope.registrationId,prepared});await verify();
   return{status:'ORIGINAL_FULL_SOURCE_BINDINGS_PREPARED_NOT_EXECUTION_AUTHORIZED',...written,sourceGroups:11,nativeSkus:skuMemberships.length,baselineItems:baselineItems.length,unrepresentedWarehouses:unrepresented,
    executionAuthorizationIssued:false,executionReady:false,DBConnected:false,MAINOrPublishExecuted:false};
  }finally{try{await session?.close();}finally{await closeResources();closed=true;}}
+ }catch(error){
+  // Only a fixed code-path enum leaves this entry. Preserve the original error
+  // object/code; never attach paths, row values, messages or source bodies.
+  if(error&&typeof error==='object'&&Object.isExtensible(error)&&!Object.hasOwn(error,'sourcePreparationPhase'))Object.defineProperty(error,'sourcePreparationPhase',{value:preparationPhase,enumerable:true});
+  throw error;
+ }
 }
 
 /** Concrete original authority entry. The input pin authenticates DATA only;

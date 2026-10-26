@@ -14367,6 +14367,22 @@
       },
       "source128": "FAILED before JSONprobe due missing original runtime deadline initialization; preserved and not rerun",
       "serverJobs": "126 terminalFAILED,127 terminalPASS,128 terminalFAILED,129 terminalPASS; no new operation implicitly queued"
+    },
+    "source654Phase": {
+      "status": "FIXED_NEW_ERROR_PHASE_SCOPE_QB_PENDING_NOT_ROOT_CAUSE_FIX",
+      "files": {
+        "scripts/import-v3/production-source-provider26.mjs": {
+          "bytes": 114035,
+          "sha256": "b816b2f5d4102569f0538782992de97c0bad01e7b1c7b528b99982ea9fbd14e9"
+        },
+        "scripts/import-v3/production-source-provider26.test.mjs": {
+          "bytes": 138591,
+          "sha256": "9aa6078da2c1b1ef4221e2b786142014312cbe8dc44ec564b2bc723cac2e24f4"
+        }
+      },
+      "delta": "sourcePreparationPhase enum readonly added to same error; original code/validation/hash/MAIN gate unchanged",
+      "checks": "2 new finite PASS; original5/386 reused",
+      "next": "QB only phase delta then T45 safe carrier phase field and one bounded corrected successor; preserve first109keys, no126 replay"
     }
   }
 }
