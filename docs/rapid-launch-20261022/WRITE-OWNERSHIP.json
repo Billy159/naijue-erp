@@ -6358,5 +6358,16 @@
       "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json"
     ],
     "scope": "Reuse local original digest only after same-record descriptors match original closure index; retain independent JSON roundtrip parsed-row hash comparison, prepared/range/index/EOF/typed drains/limits. Barcode six schemes keep original path. Only one of six support helper bodies changes; accurate helper SHA/bytes refs propagate provider and existing input/delivery, other five bodies and source DATA authority remain unchanged. No exported trusted-prehash/cache/SQL/new raw profile. Source-only equivalence until fixed and independently checked."
+  },
+  "source711ApprovedIsolatedFixture": {
+    "owner": "D1",
+    "files": [
+      "tests/integration/sealed-history17-fixture.ts",
+      "tests/sealed-history17-approved-fixture.test.ts",
+      "tests/integration/b07-approved-publication-fixture.ts",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.test.mjs"
+    ],
+    "scope": "Explicit new B07_SYN_APPROVED_V1 source profile from generation start, existing default fixture unchanged. Reuse existing source/import/11-group closure/publication flow, schema26 and normal factory/authorization/store. New approved SALE+TRANSFER synthetic quantities and documented derived opening only in new isolated target; never alter old07 or real source status/identity. One normal session realPG delta/conservation/replay/CAS plus existing store newId direct-service PK rollback companion; no production API fault injection, no renewal framework or DDL. Source/finite checks only; actual DB exclusively T45 after exact target preparation. Synthetic result never counts actual-source/full import/formal release."
   }
 }
