@@ -1,0 +1,14 @@
+✔ v19 HTTP original V2 keeps required manual code400 and missing actual barcode reader503 without alternate DTO or writes (88.777209ms)
+✔ v19 barcode reference leaf reads actual scheme/color/fit/size codes on original locked context and refuses missing refs without writes (1.48625ms)
+✔ v19 SAVE auto-generates exact 2026 MAINs for complete-group new color x fits and preserves old disabled SKU/main/compatible facts (4.306583ms)
+✔ v19 CREATE uses manual system code without allocation; invalid nonblank item/dictionary code saves real SKUs without fake MAIN and blank EDIT rejects (3.911333ms)
+✔ v19 new SKU with an explicit disabled MAIN is never replaced or re-enabled by automatic generation (0.608167ms)
+✔ v19 generated MAINs use original collision and completion rollback and missing reference provider refuses rather than fake generation (2.660208ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 251.679042

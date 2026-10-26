@@ -1,3 +1,5 @@
+SOURCE580（2026-10-26）：D2修订v19生成实现原7叶已交并固定pins，原V2保存/完整组×颜色×版型补缺、仅本次newenabledSKU无任何显式MAIN时按实际2026scheme/编码生成，手工货号必填无allocator/intent/新字段。sameclient四资料锁读，旧MAIN含disabled/兼容/旧SKU不动，非空码条件不足资料保存不伪造MAIN；原key早回放不读码/分ID，原UOW冲突/回执失败全回滚。新增6/6定向及strict0采用，原兼容/v17等不重；交原QB限定源审后合必要统一包，真实PG/角色/normalUI尚未测，当前STAGED不得绕准入。D1/D3专用init源码在途，未因本实现改当前DB/APP，目标全站与历史编辑未完成。GitHub579已核57027b2。
+
 SOURCE579（2026-10-26）：并行接口对齐即时纠正：C先采六pin候选时D1原闭集已给更小三pin，现最终统一仅proposal/原分类批准/直接v19回复三个hash作为command.approvalPins；额外文档/15018manifest/QB338为sidecar，不给六scheme初始化增加来源捕获依赖。上一六pin采纳历史保留且显式撤回，WRITE/TASKS当前一致；D1与D3均收到唯一schema，继续实施不再命名盘点。业务规则/真实六row/COREbirth/事务/原key及审计均不变，无新用户审批。
 
 SOURCE578（2026-10-26）：QB339新增不可变静态缓存+代理source限定PASS2c638a33，原3affected/strict/C生成检查复用，实际nginx/publicCC尚未测，合下必要包。D1已交borrowedclient initializeSchemes26/clientquery接口，D3按唯一签名接；C采用原实际proposal/approval/纠正版v19/直接回复/来源manifest/QB338六hash技术字段schema，精确值登记WRITE，无新业务字段或第二接口、不再等待技术命名。v19正文与人类回执pins固定不随进度改，原三记录维护后续状态。新生成/初始化源码在原owner实施中，未交付未实际执行；原headers传输继续、原有备份及20服务保留。

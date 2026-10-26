@@ -65,6 +65,30 @@ test("product visibility: original load gates published imports and committed bi
   assert.match(children[1]!.sql, /a.before_values->'barcodes'/); assert.match(children[1]!.sql, /item-'enabled'=to_jsonb\(bc\)-'enabled'/);
   assert.match(children[1]!.sql, /ORDER BY bc.id LIMIT \$2 FOR UPDATE OF bc$/);
 });
+test("v19 barcode reference leaf reads actual scheme/color/fit/size codes on original locked context and refuses missing refs without writes", async () => {
+  const calls: { sql: string; values: unknown[] }[] = [], product = id(19100), scheme = "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef";
+  let missing = false;
+  const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: {
+    async assertAllowed() {}, async getReceipt() { return undefined; }, async complete() { throw Error("UNEXPECTED_WRITE"); }
+  }, client: { async query(sql, values = []) {
+    calls.push({ sql, values }); let rows: Record<string, unknown>[] = [];
+    if (sql.includes("product-barcode:scheme")) rows = [{ id: scheme, status: "CURRENT", code_length: 15 }];
+    if (sql.includes("product-barcode:codes") && !missing) rows = (values[0] as string[]).map(id => ({ id, code: sql.includes("naijue_erp.fit") ? "B" : sql.includes("naijue_erp.color") ? "001" : "202" }));
+    return { rows, rowCount: rows.length };
+  } } }); } };
+  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null });
+  const sku = { id: id(19101), productId: product, skuCode: "REAL", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true, version: 1, createdOperationId: id(19102) };
+  await uow.transaction(async tx => {
+    await assert.rejects(tx.readBarcodeGenerationReferences!(product, scheme, [sku]), { code: "TRANSACTION_SCOPE" }); assert.equal(calls.length, 0);
+    await tx.load(product); const refs = await tx.readBarcodeGenerationReferences!(product, scheme, [sku]);
+    assert.deepEqual(refs.scheme, { id: scheme, status: "CURRENT", codeLength: 15 }); assert.equal(refs.colors[0]!.code, "001"); assert.equal(refs.fits[0]!.code, "B"); assert.equal(refs.sizes[0]!.code, "202");
+  });
+  const codeReads = calls.filter(c => c.sql.includes("product-barcode:")); assert.equal(codeReads.length, 4);
+  assert.ok(codeReads.every(c => c.sql.endsWith("FOR SHARE"))); assert.deepEqual(codeReads[0]!.values, [scheme]);
+  assert.deepEqual(codeReads.slice(1).map(c => c.values), [[[id(6)]], [[id(7)]], [[id(8)]]]);
+  assert.ok(calls.every(c => !/^(BEGIN|COMMIT|ROLLBACK|INSERT|UPDATE|DELETE)/.test(c.sql)));
+  missing = true; await assert.rejects(uow.transaction(async tx => { await tx.load(product); return tx.readBarcodeGenerationReferences!(product, scheme, [sku]); }), { code: "PRODUCT_REFERENCE_UNAVAILABLE" });
+});
 function imageProtocol(options: { absent?: boolean; rows?: readonly Record<string, unknown>[]; fail?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = []; let authorized = false;
   const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE"); };

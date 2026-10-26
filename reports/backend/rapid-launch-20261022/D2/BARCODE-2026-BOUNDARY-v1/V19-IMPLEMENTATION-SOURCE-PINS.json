@@ -1,0 +1,33 @@
+{
+  "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/erp-local-source-20261022",
+  "files": {
+    "packages/application/src/product-maintenance-ports.ts": {
+      "bytes": 13922,
+      "sha256": "ad23ddc4abf9c5493e6856f73e4d127de7deaf2805fd46eec4fdc69717610247"
+    },
+    "packages/application/src/product-maintenance-service.ts": {
+      "bytes": 42434,
+      "sha256": "73e55d928ce1f6abf1fec8c96516b10bd10391e4fc1208fc18f2afffb5359e31"
+    },
+    "adapters/postgres/src/product-maintenance-store.ts": {
+      "bytes": 50810,
+      "sha256": "6ca7139187c74d29d36826fdb8c659b55d233bfd3c635bce7c74294c5ccc0713"
+    },
+    "tests/product-maintenance.test.ts": {
+      "bytes": 58585,
+      "sha256": "349b3cd2750be48f902b16b1baae2c8f32c42b4d16a0ff568b1a23c517d9b427"
+    },
+    "tests/product-maintenance-postgres-protocol.test.ts": {
+      "bytes": 49404,
+      "sha256": "f42b530c286e798026145d034f4f821e89e07da07c38a5a86fe76df29e05b859"
+    },
+    "apps/api/src/product-maintenance-http.test.ts": {
+      "bytes": 16678,
+      "sha256": "c47dcde218815dcc90393a1cd7e3f91103a2b04af3c3fdc98fcb02c5758d106a"
+    },
+    "docs/product-maintenance.md": {
+      "bytes": 10251,
+      "sha256": "40fe9ea4d53866421da5ee1ca05506e4d9d70379b098e3270292002f2dc4a332"
+    }
+  }
+}

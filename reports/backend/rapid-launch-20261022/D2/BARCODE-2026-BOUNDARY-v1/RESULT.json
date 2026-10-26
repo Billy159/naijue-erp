@@ -1,0 +1,96 @@
+{
+  "taskId": "D2-BARCODE-2026-BOUNDARY-v1",
+  "status": "CORRECTED_V19_PRODUCT_GENERATION_SOURCE_READY_FOCUSED6_PASS_STRICT0_ACTUAL_PENDING",
+  "fourItems": {
+    "classification": "D3 sole owner six scheme init, approved2026CURRENT and other5HISTORICAL; no D2 scheme writes",
+    "newProductDefault": "F2 new-only form default existing2026 UUID0e70e45e-1a51-4d44-afe8-0002cf3fb7ef from actual approved dictionary; backend currently accepts defaultBarcodeSchemeId but no authoritative missing-value default. Never change existing product selection.",
+    "generation": "SOURCE575: automatic originalsave generation for actualnew combinations from fullsizegroup×selectedcolors×fits; no itemcodeallocation/newidentity; manual systemItemCode emptyblocks save, valid2026parts generate onlynewmissingmain, oldbindings unchanged.",
+    "compatibleSave": "Already implemented exact existing POST/api/products/v2/commands EDIT with barcodes:[id:null,barcode:original raw,colorId,fitId,sizeId,kind:CONFIRMED_OLD,schemeId:actual historical UUID or null,enabled:explicit]. Original sameaggregate SKU coordinate exactlookup, no phantom SKU, no main replacement, retained disabled raw codes reserve identity. Current service global DB raw UNIQUE/one enabledMAIN/immutablebinding and prepare->productCAS->childINSERT->receipt apply."
+  },
+  "newFocusedCheck": {
+    "file": "tests/product-maintenance.test.ts",
+    "name": "compatible old code: exact retained SKU append preserves main and disabled bindings; original key replay and failed receipt are atomic",
+    "pass": 1,
+    "strictTypesExit": 0,
+    "scope": "Synthetic service only: old raw leadingzero/trailingspace kept exact, CONFIRMED_OLD binds actual retainedSKU, originalMAIN/skus untouched, disabled binding retained, exactkey replay no newwrites, wrongsize rejects and failedreceipt rolls back. Not PG/HTTP/session proof.",
+    "initialLocalCorrection": "Initial test called nonexisting fixture helper faultReceipt; corrected to original fault(true) then focused1/1 and strict0, no production fix."
+  },
+  "exactNewTechnicalDifferencesForC": {
+    "current": "CONFIRMATION.md SOURCE575_REVISION",
+    "withdrawn": [
+      "Any missing-systemItemCode allocation",
+      "Separatebarcode internalidentity asserted without finalDemo evidence",
+      "ERP-X9 blanket save rejection",
+      "New CREATE audit marker",
+      "Old v19 optionalgenerationintent as active implementation instruction"
+    ]
+  },
+  "notImplemented": "No production newgeneration/default allocator or technical contract changes released; do not label fouritems complete. New request/field/constraint semantics C must consolidate once; only this new branch waits.",
+  "next": "C limitedsource/QB review precise7leafpins then integrate originalpackage; F2 consume actualnewMAIN via originaldetail. T45 actual registeredQA only when schemeinitialization+nativeSKUpublicationconditions met. D2 no remaining codework in approved generation scope unless newfinding.",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "technicalIncrementSource566": {
+    "status": "SUPERSEDED_DO_NOT_EXECUTE",
+    "reason": "Latest human source575: manual mandatory systemItemCode, no blank allocation, preserve complete v17 sizegroup Cartesian generation and auto code for new combinations. Prior v19 unapproved; all allocator/optionalmanualgeneration recommendations withdrawn.",
+    "current": "CONFIRMATION.md source575 revision and source575Evidence below"
+  },
+  "v19ControllerHandoff": {
+    "authority": "C direct human reply call_fcbc01113b4d42bea015ddd58a1d5513",
+    "decision": "APPROVED_WITH_CORRECTION",
+    "correction": "Manualmandatory systemItemCode/noemptyallocation; actual fullsizegroup Cartesian combinations; addedcolor completeSKU andnewbarcode; otherapprovedv19 retained",
+    "newInternalIdentityRequired": false,
+    "sourceFinding": "FinalDemo manualinput writesbarcodeItemCode itself; this actualfield is goodssegment, no separateinternal7identity. No newfield or assumption allmanualvalues are seven digits.",
+    "registration": "C register originalowner exactleaves then proceed. No genericapproval wait."
+  },
+  "source575Evidence": {
+    "loadingOrder": "Frozen frontend/index.html17 product-catalog.js -> barcode-2026.js -> product-master.js -> product-current.js. Need final wrappers not isolatedearlyallocator.",
+    "form": "product-current.js95 input(data-edit=barcodeItemCode),label系统货号 *, required maxlength30. product-master.js56 systemItemCode accessor usesbarcodeItemCode/goodsCode/defaultBarcode fallback;63 validates nonempty prior save.",
+    "algorithm": "barcode-2026.js13/36-52 goodssegment is same p.barcodeItemCode;7digit health; actualFIT1/COLOR3/SIZE3 unchanged; product-current.js205/212 labels goodssegment系统货号7位. No distinct persistedinternal7field found.",
+    "saving": "product-current.js171 calls originalC.save autoBarcode:true; product-master.js76-79 wraps with earliermandatoryvalidation; product-catalog.js43 if barcodeHealth.ok generates else saves unchanged manualfield with barcodeNotice missingmetadata. EarlierallocateItemCode fallback exists but emptymanualrequiredvalidation prevents ordinaryblankform reaching it; do not adoptthatlegacyfallback.",
+    "correction": "Prior D2 claim Demo manuallydisplayedsystemItemCode distinct frombarcodeItemCode was insufficient and wrong at finalform. Source575 revised after exactfinalbinding readback; no addedinternalidentity proposed.",
+    "behavior": "Empty/whitespace systemItemCode rejects save. Nonemptynon7manual remains unchanged, ordinarysave legal; when scheme2026codeparts incomplete keep missingnewmain and report precisebarcodereadiness, do not invent rawcode or blanketrejectoriginalmanualidentity. C confirms only new technical response/readback notice representation if current DTO cannot communicatepartialgeneration, not manualmandatory/fullgroup businessdirection."
+  },
+  "implementationSource576": {
+    "authority": "C WRITE source576BarcodeV19CorrectedImplementation + human correctedreply call_fcbc01113b4d42bea015ddd58a1d5513",
+    "changedFiles": [
+      "packages/application/src/product-maintenance-ports.ts",
+      "packages/application/src/product-maintenance-service.ts",
+      "adapters/postgres/src/product-maintenance-store.ts",
+      "tests/product-maintenance.test.ts",
+      "tests/product-maintenance-postgres-protocol.test.ts",
+      "apps/api/src/product-maintenance-http.test.ts",
+      "docs/product-maintenance.md"
+    ],
+    "behavior": "Original V2 SAVE auto generates MAIN only for new enabled SKU IDs with no supplied MAIN (including disabled), exact2026nativeUUID/CURRENT/codeLength15 and actual sameclient FOR SHARE codes. Manual systemItemCode required, never allocated/normalized/replaced. Nonempty non7 item or invalidactualcode saves originalSKUs without fabricatedMAIN; existingdetail exposes exactgap. v17fullgroup/color/fit selection preserved. Old importedproduct eligible for genuinelyaddedSKU; no birthmarker/intent/DTO/schema.",
+    "transaction": "Originalkey receipt earlyreturn before reference reads/newIDs; original evidenceprepare/rootCAS/newSKU/newMAIN/receipt same UOW, global raw uniqueness catches actualcrossproduct conflicts, BARCODE_CONFLICT rollback. PreviousMAIN/compat/raw/disabled not implicitly modified.",
+    "checks": {
+      "newFocused": 6,
+      "fail": 0,
+      "strictTypesExit": 0,
+      "logs": [
+        "V19-new-checks.tap",
+        "V19-types-after-shared-update.log"
+      ],
+      "coverage": [
+        "Complete group3sizes x2colors x2fits, olddisabledspec/main/compatible retained,11newMAIN and originalold2codes",
+        "Manual valid7CREATE generates, ERP-X9 saves exact withoutmain, invaliddictionarycode saves withoutfake, blankEDIT rejects",
+        "Explicit newdisabledMAIN neverreplaced or reenabled",
+        "Retaineddisabledrawcollision and completionfault rollback; missingprovider503",
+        "Sameclient scheme+color+fit+size FOR SHARE exactarraybindings; missingreferencefailswithoutwrites",
+        "OriginalV2HTTP blank400/missingactualreader503 no newendpoint/DTO"
+      ],
+      "priorChecksReused": "Compatibilityfocused and oldv17/37/169/detail28 adopted without repeats",
+      "initialTypes": "First types hit parallelD1 newIMPORTaction PUBLISHnarrowing at inventory-cutoff-import-store.ts, no D2 fixes there. After originalsharedsource update strict rerun exits0."
+    },
+    "notTested": [
+      "ActualPostgreSQL 2026 MAINnewcode/uniqueness/deferredauditguards/currentrole/SQLACL",
+      "ActualnormalhostfullSAVE/authoritativepage readback",
+      "CurrentR1 MAIN/PUBLISH or businessrelease"
+    ],
+    "actualQASeam": "C/QB limitedsource review then T45 soleactual registeredQA. Need originalexact2026scheme rows valid via approvedinit, fullpublished/nativeSKUcreation admission, actualrefs/codes and productauthority. CurrentSTAGED R1 or QA may not authorize newSKU. Do not rawseed scheme or bypass guards; use actualcurrent preconditions and originalbatch/actor. Once ready only newcorrectedgeneration cases, not oldC189 suite.",
+    "handoff": "Originalports adds optionaltransactionreadBarcodeGenerationReferences; PostgresProductMaintenanceUnitOfWork implements it on borrowedcontext, hostconstruction unchanged. Olderproviders refuse eligiblegeneration via originalPRODUCT_SPEC_GENERATION_NOT_READY503; no newcapability flag. F2 sameV2 DTO; authoritativebarcode rows now include generatedMAIN and refs explain missingcodes.",
+    "ownerBoundaries": "No D1/D3/sharedimport/root/readerprotocol modifications. Original incompatiblemanualfield remains exact. No allocator, optionalintent, newfields/table/migration/index/auditmarker.",
+    "requestedModel": "gpt-6.1-sol/medium",
+    "fast": "UNVERIFIED"
+  }
+}

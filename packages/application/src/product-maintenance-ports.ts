@@ -113,6 +113,13 @@ export interface ProductMaintenanceEvidence {
     readonly afterValues: ProductAuditObject; readonly completedAt: string;
   }): Promise<{ readonly operationId: string; readonly kind: string; readonly targetId: string; readonly version: number }>;
 }
+/** Actual codes from the original locked transaction; code text is never normalized. */
+export interface ProductBarcodeGenerationReferences {
+  readonly scheme: { readonly id: string; readonly status: string; readonly codeLength: number | null };
+  readonly colors: readonly { readonly id: string; readonly code: string }[];
+  readonly fits: readonly { readonly id: string; readonly code: string }[];
+  readonly sizes: readonly { readonly id: string; readonly code: string }[];
+}
 export interface ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence;
   assertImageWriteReady?(): Promise<void>;
@@ -127,6 +134,7 @@ export interface ProductMaintenanceTransaction {
   readReferences(product: ProductStoredRecord): Promise<ProductDetailReferences>;
   readCandidates(query: ProductMaintenanceCandidateQuery): Promise<ProductMaintenanceCandidatePage>;
   /** v17: lock selected enabled color/fit references and every real member of this exact group in the original product transaction. */
+  readBarcodeGenerationReferences?(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]): Promise<ProductBarcodeGenerationReferences>;
   readSkuSelectionSizes?(productId: string, sizeGroupId: string, selection: ProductSkuSelection): Promise<readonly string[]>;
   /** Same-transaction reference locks, size-group membership and enabled/new-selection rules. */
   validateReferences(previous: ProductAggregate | undefined, next: ProductAggregate): Promise<void>;

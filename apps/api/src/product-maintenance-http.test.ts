@@ -56,6 +56,23 @@ test("v17 HTTP original V2 accepts selection without client SKU codes; unsupport
   current = false; assert.equal((await app.inject({ method: "POST", url: "/products/v2/commands", payload: body })).statusCode, 401);
   assert.equal(mutations, 0); assert.equal(app.server.listening, false);
 });
+test("v19 HTTP original V2 keeps required manual code400 and missing actual barcode reader503 without alternate DTO or writes", async t => {
+  let mutations = 0;
+  const unexpected = async (): Promise<never> => { mutations++; throw Error("UNEXPECTED_WRITE"); };
+  const app = Fastify({ logger: false }); t.after(() => app.close());
+  app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => actor, dependencies: {
+    now: () => "2026-10-26T00:00:00Z", newId: kind => sid(kind, 19100), unitOfWork: { seasonContract: "product-season-array-v1", async transaction(work) {
+      return work({ evidence: { async assertAllowed() {}, async getReceipt() { return undefined; }, complete: unexpected },
+        async load() { return undefined; }, readReferences: unexpected, readCandidates: unexpected, validateReferences: unexpected, assertCanDelete: unexpected, putProduct: unexpected, putSku: unexpected, putBarcode: unexpected });
+    } }
+  } }));
+  const { seasonId, ...old } = values;
+  const body = { ...command, values: { ...old, systemItemCode: "0000123", defaultBarcodeSchemeId: "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef", seasonIds: [seasonId] }, barcodes: [] };
+  const unavailable = await app.inject({ method: "POST", url: "/products/v2/commands", payload: body });
+  assert.equal(unavailable.statusCode, 503, unavailable.body); assert.equal(unavailable.json().error.code, "PRODUCT_SPEC_GENERATION_NOT_READY");
+  const blank = await app.inject({ method: "POST", url: "/products/v2/commands", payload: { ...body, values: { ...body.values, systemItemCode: null } } });
+  assert.equal(blank.statusCode, 400, blank.body); assert.equal(blank.json().error.code, "PRODUCT_REQUIRED_FIELDS"); assert.equal(mutations, 0);
+});
 test("W17 media extended V2 is closed before mutation without actual stage/driver capability and malformed changes stay 400", async t => {
   let touched = 0; const unexpected = async (): Promise<never> => { touched++; throw Error("UNEXPECTED_MUTATION"); };
   const tx = { evidence: { async assertAllowed() {}, async getReceipt() { return undefined; }, complete: unexpected }, load: unexpected, readReferences: unexpected,

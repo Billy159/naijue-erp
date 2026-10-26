@@ -1,0 +1,22 @@
+{
+  "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/\u5948\u7235\u670d\u9970-8877-Demo/frontend/index.html": {
+    "bytes": 9466,
+    "sha256": "abd6e2efe92e5f94d262ab591aba9cb7a6291099bd2bd5df80dcbb6760b08ded"
+  },
+  "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/\u5948\u7235\u670d\u9970-8877-Demo/frontend/product-current.js": {
+    "bytes": 73585,
+    "sha256": "d5a3ae29d781aa725859196dac6ef4e64f0e3cea08b3cca5c199579c9527b0be"
+  },
+  "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/\u5948\u7235\u670d\u9970-8877-Demo/frontend/product-master.js": {
+    "bytes": 15789,
+    "sha256": "dc43a278d339c9c3d50ab3567376f1b0d79b387bd83ac48304e76d8d5ca61aaa"
+  },
+  "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/\u5948\u7235\u670d\u9970-8877-Demo/frontend/product-catalog.js": {
+    "bytes": 26059,
+    "sha256": "004b695c7b51ee0cec539d99cd9c6016a4a7300c2cd18cb52adb9fd17d2e0a1c"
+  },
+  "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/\u5948\u7235\u670d\u9970-8877-Demo/frontend/barcode-2026.js": {
+    "bytes": 11302,
+    "sha256": "311a9e4eef6945a063d022c077aa5c57a11aacfb45fa2ede7f7c6c85594f2dfd"
+  }
+}

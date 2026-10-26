@@ -354,6 +354,21 @@ class ProductTransaction implements ProductMaintenanceTransaction {
     requireDomain(ids.size === skus.length && skus.every(row => row.productId === id) && barcodes.every(row => ids.has(row.skuId)), "INVALID_DATABASE_VALUE", "Invalid aggregate child identity");
     return { product: p, skus, barcodes };
   }
+  async readBarcodeGenerationReferences(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]) {
+    requireDomain(productId === this.loadedId && skus.length > 0 && skus.length <= PRODUCT_MAINTENANCE_MAX_SKUS
+      && skus.every(s => s.productId === productId), "TRANSACTION_SCOPE", "Barcode codes require the original product context");
+    const rows = (await this.query("/* product-barcode:scheme */ SELECT id,status,code_length FROM naijue_erp.barcode_scheme WHERE id=$1::uuid FOR SHARE", [schemeId])).rows;
+    requireDomain(rows.length === 1 && rows[0]!.id === schemeId, "PRODUCT_REFERENCE_UNAVAILABLE", "Actual barcode scheme unavailable");
+    const codes = async (table: "color" | "fit" | "size", ids: readonly string[]) => {
+      const selected = [...new Set(ids)].sort();
+      const rows = (await this.query(`/* product-barcode:codes */ SELECT id,code FROM naijue_erp.${table} WHERE id=ANY($1::uuid[]) ORDER BY id FOR SHARE`, [selected])).rows;
+      requireDomain(rows.length === selected.length && new Set(rows.map(r => uuid(r.id))).size === selected.length && rows.every(r => selected.includes(uuid(r.id))),
+        "PRODUCT_REFERENCE_UNAVAILABLE", "Complete original SKU encoding references required");
+      return rows.map(row => ({ id: uuid(row.id), code: stringValue(row.code) }));
+    };
+    return { scheme: { id: uuid(rows[0]!.id), status: stringValue(rows[0]!.status), codeLength: rows[0]!.code_length === null ? null : integerValue(rows[0]!.code_length) },
+      colors: await codes("color", skus.map(s => s.colorId)), fits: await codes("fit", skus.map(s => s.fitId)), sizes: await codes("size", skus.map(s => s.sizeId)) };
+  }
   async readSkuSelectionSizes(productId: string, sizeGroupId: string, selection: ProductSkuSelection): Promise<readonly string[]> {
     requireDomain(productId === this.loadedId, "TRANSACTION_SCOPE", "Selection must use the original locked product");
     const group = (await this.query("/* product-selection:group */ SELECT id FROM naijue_erp.size_group WHERE id=$1::uuid FOR SHARE", [sizeGroupId])).rows;

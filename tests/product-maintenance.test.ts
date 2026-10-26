@@ -2,7 +2,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { appendProductSkusInTransaction, createProductMaintenanceService } from "../packages/application/src/product-maintenance-service.ts";
-import type { ProductAggregate, ProductAuditObject, ProductBarcodeInput, ProductMaintenanceDependencies, ProductMaintenanceEvidence, ProductMaintenanceTransaction, ProductSkuInput, ProductWriteValues } from "../packages/application/src/product-maintenance-ports.ts";
+import type { ProductAggregate, ProductAuditObject, ProductBarcodeInput, ProductMaintenanceDependencies, ProductMaintenanceEvidence, ProductMaintenanceTransaction, ProductSkuRecord, ProductSkuInput, ProductWriteValues } from "../packages/application/src/product-maintenance-ports.ts";
 import { CATALOGUE_PRICE_KEYS } from "../packages/application/src/catalogue-price-input.ts";
 import { requireDomain } from "../packages/domain/src/errors.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
@@ -51,8 +51,8 @@ function values(): ProductWriteValues {
 function sku(colorId = gid(806)): ProductSkuInput { return { id: null, expectedVersion: null, skuCode: `SKU-${colorId}`, colorId, fitId: gid(807), sizeId: gid(808), enabled: true }; }
 function barcode(item: ProductSkuInput, raw = "000012345 "): ProductBarcodeInput { return { id: null, barcode: raw, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId, kind: "MAIN", schemeId: gid(805), enabled: true }; }
 function command(key = "create") { const s = sku(); return { action: "CREATE" as const, requestKey: key, values: values(), skus: [s], barcodes: [barcode(s)] }; }
-function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false, groupSizes?: readonly string[]) {
-  let selectionReads = 0;
+function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false, groupSizes?: readonly string[], barcodeMode?: "ready" | "invalid") {
+  let selectionReads = 0, barcodeReads = 0;
   let sequence = 900, product: ProductAggregate | undefined, allow = true, failComplete = false, references = true, deletable = true;
   const receipts = new Map<string, NonNullable<Awaited<ReturnType<ProductMaintenanceEvidence["getReceipt"]>>>>();
   const audit: { before: ProductAuditObject | null; after: ProductAuditObject }[] = []; let writes = 0;
@@ -72,6 +72,12 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
         }
       };
       const tx: ProductMaintenanceTransaction = { evidence,
+        ...(barcodeMode === undefined ? {} : { async readBarcodeGenerationReferences(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]) {
+          barcodeReads++; assert.equal(productId, skus[0]!.productId);
+          const refs = (key: "colorId" | "fitId" | "sizeId", code: (id: string, i: number) => string) => [...new Set(skus.map(s => s[key]))].sort().map((id, i) => ({ id, code: code(id, i) }));
+          return { scheme: { id: schemeId, status: "CURRENT", codeLength: 15 }, colors: refs("colorId", (_id, i) => barcodeMode === "invalid" ? "X1" : String(101 + i)),
+            fits: refs("fitId", (_id, i) => "AB"[i]!), sizes: refs("sizeId", (_id, i) => String(202 + i)) };
+        } }),
         ...(groupSizes === undefined ? {} : { async readSkuSelectionSizes(_productId: string, groupId: string) { selectionReads++; assert.equal(groupId, gid(804)); return groupSizes!; } }),
         async load(id) { return product?.product.id === id ? structuredClone(product) : undefined; },
         async readReferences(p) { return { ...(Object.hasOwn(p, "seasonIds") ? { seasons: (p.seasonIds ?? []).map(id => ({ id, name: `SYNTHETIC ${id}` })) } : {}), categoryPath: [{ id: p.categoryId, name: "SYNTHETIC CATEGORY" }], sizeGroup: { id: p.sizeGroupId, name: "SYNTHETIC GROUP" },
@@ -87,7 +93,7 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
       try { return await work(tx); } catch (error) { product = before; receipts.clear(); for (const [k, v] of receiptBefore) receipts.set(k, v); audit.length = auditLength; writes = writeCount; throw error; }
     }
   } };
-  return { dependencies, service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes, selectionReads: () => selectionReads,
+  return { dependencies, service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes, selectionReads: () => selectionReads, barcodeReads: () => barcodeReads,
     activate: () => Object.defineProperty(dependencies.unitOfWork, "seasonContract", { value: "product-season-array-v1" }), seed: (value: ProductAggregate) => { product = structuredClone(value); }, revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
 }
 test("prepared product: root and SKU/barcode writes require prepared exact evidence; missing/failing capability writes nothing", async () => {
@@ -117,6 +123,26 @@ test("product write: root edit/sparse audit and default-scheme changes never rew
   await assert.rejects(f.service.execute(actor, { action: "EDIT", requestKey: "no-change", id: saved.targetId, expectedVersion: 2,
     values: nextValues, skus: [], barcodes: [] }), { code: "NO_PRODUCT_CHANGE" });
 });
+test("compatible old code: exact retained SKU append preserves main and disabled bindings; original key replay and failed receipt are atomic", async () => {
+  const f = fixture(), created = await f.service.execute(actor, command()), baseline = f.state()!;
+  const spec = baseline.skus[0]!;
+  const old: ProductBarcodeInput = { id: null, barcode: "0000-compatible raw ", colorId: spec.colorId, fitId: spec.fitId, sizeId: spec.sizeId,
+    kind: "CONFIRMED_OLD", schemeId: null, enabled: false };
+  const edit = { action: "EDIT" as const, requestKey: "append-compatible-old", id: created.targetId, expectedVersion: 1, values: values(), skus: [], barcodes: [old] };
+  const result = await f.service.execute(actor, edit), next = f.state()!;
+  assert.equal(next.barcodes.length, baseline.barcodes.length + 1); assert.deepEqual(next.barcodes[0], baseline.barcodes[0]);
+  const added = next.barcodes.find(b => b.barcode === old.barcode)!;
+  assert.equal(added.skuId, spec.id); assert.equal(added.kind, "CONFIRMED_OLD"); assert.equal(added.enabled, false); assert.equal(added.schemeId, null);
+  assert.deepEqual(next.skus, baseline.skus); assert.equal(next.product.version, 2);
+  const n = f.writes(); assert.deepEqual(await f.service.execute(actor, edit), result); assert.equal(f.writes(), n);
+  await assert.rejects(f.service.execute(actor, { ...edit, requestKey: "wrong-compatible-coordinate", expectedVersion: 2,
+    barcodes: [{ ...old, barcode: "another-old", sizeId: gid(9999) }] }), { code: "PRODUCT_SPEC_NOT_FOUND" });
+  assert.deepEqual(f.state(), next);
+  f.fault(true);
+  await assert.rejects(f.service.execute(actor, { ...edit, requestKey: "compatible-failed-completion", expectedVersion: 2,
+    barcodes: [{ ...old, barcode: "failed-old" }] }), /SYNTHETIC RECEIPT FAULT/);
+  assert.deepEqual(f.state(), next); assert.equal(f.receipts.has("compatible-failed-completion"), false);
+});
 test("product write: invalid explicit price/identity inputs fail before persistence", async () => {
   for (const c of [
     { ...command(), actor }, { ...command(), values: { ...values(), prices: { retail_price: "0.00" } } },
@@ -145,6 +171,57 @@ test("product write: reference/receipt faults roll back root plus all children; 
 function commandV2(key = "v2", seasons: readonly string[] | null = [gid(850), gid(803)]) {
   const { seasonId: _scalar, ...data } = values(); return { ...command(key), values: { ...data, seasonIds: seasons } };
 }
+const scheme2026 = "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef";
+test("v19 SAVE auto-generates exact 2026 MAINs for complete-group new color x fits and preserves old disabled SKU/main/compatible facts", async () => {
+  const sizes = [gid(808), gid(809), gid(810)], f = fixture("ready", true, sizes, "ready");
+  const originalCommand = commandV2("v19-existing"), created = await f.service.executeV2(actor, originalCommand), old = f.state()!;
+  const retained = { ...old, skus: old.skus.map(s => ({ ...s, enabled: false })), barcodes: old.barcodes.map(b => ({ ...b, enabled: false })) };
+  retained.barcodes.push({ ...retained.barcodes[0]!, id: gid(19001), barcode: "000 historical ", kind: "CONFIRMED_OLD", schemeId: null }); f.seed(retained);
+  const edit = { action: "EDIT" as const, requestKey: "v19-add-white", id: created.targetId, expectedVersion: 1,
+    values: { ...originalCommand.values, defaultBarcodeSchemeId: scheme2026 }, skus: [], barcodes: [],
+    skuSelection: { colorIds: [gid(806), gid(812)], fitIds: [gid(807), gid(813)] } };
+  const saved = await f.service.executeV2(actor, edit), next = f.state()!;
+  assert.equal(next.skus.length, 12); assert.equal(next.barcodes.length, 13); // 11 new SKUs + 2 retained codes.
+  for (const sku of retained.skus) assert.deepEqual(next.skus.find(s => s.id === sku.id), sku);
+  for (const code of retained.barcodes) assert.deepEqual(next.barcodes.find(b => b.id === code.id), code);
+  assert.equal(next.barcodes.filter(b => b.skuId === retained.skus[0]!.id).length, 2);
+  const actual = next.barcodes.filter(b => !retained.barcodes.some(old => old.id === b.id));
+  assert.equal(actual.length, 11); assert.ok(actual.every(b => /^5[AB]000012310[12]20[234]$/.test(b.barcode) && b.kind === "MAIN" && b.schemeId === scheme2026 && b.enabled));
+  for (const sku of next.skus.filter(s => s.id !== retained.skus[0]!.id)) assert.equal(actual.filter(b => b.skuId === sku.id).length, 1);
+  const writes = f.writes(), reads = f.barcodeReads();
+  assert.deepEqual(await f.service.executeV2(actor, edit), saved); assert.equal(f.writes(), writes); assert.equal(f.barcodeReads(), reads);
+  assert.equal(f.audit[1]!.after.system_item_code, undefined); assert.equal((f.audit[1]!.after.barcodes as unknown[]).length, 11);
+});
+test("v19 CREATE uses manual system code without allocation; invalid nonblank item/dictionary code saves real SKUs without fake MAIN and blank EDIT rejects", async () => {
+  for (const [manual, mode, count] of [["0000123", "ready", 2], ["ERP-X9", "ready", 0], ["0000123", "invalid", 0]] as const) {
+    const f = fixture("ready", true, [gid(808), gid(809)], mode), c = { ...commandV2(`v19-${manual}-${mode}`),
+      values: { ...commandV2().values, systemItemCode: manual, defaultBarcodeSchemeId: scheme2026 }, skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
+    assert.equal(f.state(), undefined); assert.equal(f.barcodeReads(), 0);
+    const created = await f.service.executeV2(actor, c), state = f.state()!;
+    assert.equal(state.product.systemItemCode, manual); assert.equal(state.skus.length, 2); assert.equal(state.barcodes.length, count);
+    await assert.rejects(f.service.executeV2(actor, { action: "EDIT", requestKey: "v19-blank", id: created.targetId, expectedVersion: 1,
+      values: { ...c.values, systemItemCode: null }, skus: [], barcodes: [] }), { code: "PRODUCT_REQUIRED_FIELDS" }); assert.deepEqual(f.state(), state);
+  }
+});
+test("v19 new SKU with an explicit disabled MAIN is never replaced or re-enabled by automatic generation", async () => {
+  const f = fixture("ready", true, undefined, "ready"), c = commandV2("v19-explicit-disabled-main");
+  const saved = await f.service.executeV2(actor, { ...c, values: { ...c.values, defaultBarcodeSchemeId: scheme2026 },
+    barcodes: c.barcodes.map(b => ({ ...b, enabled: false })) });
+  const state = f.state()!; assert.equal(state.barcodes.length, 1); assert.equal(state.barcodes[0]!.barcode, c.barcodes[0]!.barcode);
+  assert.equal(state.barcodes[0]!.enabled, false); assert.equal(state.barcodes[0]!.schemeId, c.barcodes[0]!.schemeId); assert.equal(f.barcodeReads(), 0);
+  assert.equal(saved.version, 1);
+});
+test("v19 generated MAINs use original collision and completion rollback and missing reference provider refuses rather than fake generation", async () => {
+  const create = { ...commandV2("v19-fault"), values: { ...commandV2().values, defaultBarcodeSchemeId: scheme2026 }, barcodes: [] };
+  const absent = fixture("ready", true);
+  await assert.rejects(absent.service.executeV2(actor, create), { code: "PRODUCT_SPEC_GENERATION_NOT_READY" }); assert.equal(absent.state(), undefined);
+  const f = fixture("ready", true, undefined, "ready"); f.fault(true);
+  await assert.rejects(f.service.executeV2(actor, create), /SYNTHETIC RECEIPT FAULT/); assert.equal(f.state(), undefined); assert.equal(f.receipts.size, 0);
+  f.fault(false); const initial = await f.service.executeV2(actor, commandV2("v19-seed")), state = f.state()!;
+  const collision = { ...state, barcodes: [...state.barcodes, { ...state.barcodes[0]!, id: gid(19002), barcode: "5A0000123101202", kind: "CONFIRMED_OLD" as const, enabled: false }] }; f.seed(collision);
+  await assert.rejects(f.service.executeV2(actor, { action: "EDIT", requestKey: "v19-collision", id: initial.targetId, expectedVersion: 1,
+    values: create.values, skus: [{ ...sku(gid(812)), sizeId: gid(808) }], barcodes: [] }), { code: "BARCODE_CONFLICT" }); assert.deepEqual(f.state(), collision);
+});
 test("v17 selection creates only saved full-group tuples with new-system codes and canonical original-key replay", async () => {
   const f = fixture("ready", true, [gid(808), gid(809), gid(810)]);
   const c = { ...commandV2("v17-create"), skus: [], barcodes: [], skuSelection: { colorIds: [gid(812), gid(806)], fitIds: [gid(813), gid(807)] } };

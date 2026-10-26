@@ -91,7 +91,7 @@ SKU codes. IDs must be unique; sets are canonically sorted for the original key.
 The server locks the actual group and enabled selected color/fit references,
 reads all real group sizes, and creates only missing color × fit × size tuples.
 New SKU IDs use the original server allocator and codes `NJNEW-<UUID32>`; no
-barcode or inventory record is generated. Existing IDs, codes and disabled state
+inventory record is generated; corrected v19 below adds 2026 MAINs for eligible new V2 SKUs. Existing IDs, codes and disabled state
 remain unchanged; shrinking/empty selections never delete or disable old SKUs.
 An EDIT with this intent cannot change the persisted product size group.
 Explicit new SKU inputs cannot overlap generated targets. More than 5000 final
@@ -114,3 +114,12 @@ root CAS, actual child changes, sparse snake_case audit and receipt share one
 transaction. Request replay preserves the same actor/key/hash and result; revoked
 permissions are rechecked. A failure after COMMIT attempt is recovered via the
 original key, without a new key or misleading rollback.
+
+
+## v19 corrected: automatic 2026 MAIN on newly saved specifications
+
+The existing V2 SAVE retains the required manually entered `systemItemCode`; it never allocates, pads, truncates or replaces it. The exact approved native2026 scheme is `0e70e45e-1a51-4d44-afe8-0002cf3fb7ef`. For this scheme, original V2 CREATE/EDIT adds MAIN only to genuinely new, enabled SKU IDs from the original previous/next difference (including the existing v17 full-size-group Cartesian selection). All previous SKU/main/compatible/disabled bindings remain as submitted under the original immutable identity rules; no old missing-main backfill or disabled-main recovery is performed.
+
+Actual same-client FOR SHARE reads obtain scheme/color/fit/size codes. Codes are `5` + actual fit `Y/A/B/C/D/E` + manual7digits + actual color3digits + actual size3digits. A nonblank incompatible manual or dictionary code keeps real saved SKUs without a fabricated MAIN; the original detail's SKU/barcode IDs and versions expose this gap to the existing page notice. No new result/DTO, generator flag, marker, table, column or allocator is introduced. A new SKU already supplied with a MAIN (even disabled) is not assigned a second one. Other schemes and V1 retain their original behavior.
+
+The original auth/key lookup precedes all generation: original-key replay does not read codes or allocate IDs. The same prepared audit contains the changed SKU and complete barcode rows, followed by original rootCAS/SKU/barcode writes and receipt/commit. Retained raw-code collisions fail BARCODE_CONFLICT and roll back, with global database raw uniqueness as the final authority. No separate transaction or automatic replacement-key retry. Providers lacking the actual code reader return the existing PRODUCT_SPEC_GENERATION_NOT_READY503 when eligible new2026 generation is needed. Original publication/nativeSKU creation guards remain mandatory; local protocol checks are not actual PG/HTTP production acceptance.

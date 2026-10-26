@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE579",
+    "round": "SOURCE580",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11678,7 +11678,7 @@
       "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
       "D1": "Approved corrected v19 exact5+4test implementation active: original init action/store/CLI/profile and narrow patch, B07 v3 retained",
-      "D2": "Approved corrected v19 original SAVE auto generation for new full-group combinations active; manual systemItemCode required/noallocator/nointent switch; original compatible evidence reused",
+      "D2": "Correctedv19 exact7 source delivered6targetedPASS/strict0, independentQB source next; actualQA legitimateinit/publish pending",
       "D3": "Actual15018source metadata QB338 PASS; original approved exact6 source/borrowedclient init active; no DB yet",
       "T45": "Real94exact2 customer COMMIT/readback complete; transmitting existing28282header prepared~922MB via originalkey SSH compressed transport, not submitted DB until transfer and carrier review",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
@@ -12843,10 +12843,13 @@
       },
       "actualGeneration": {
         "owner": "D2/D1 as exactregistered",
-        "state": "APPROVED_CORRECTED_V19_IMPLEMENTATION_IN_PROGRESS",
+        "state": "D2_EXACT7_SOURCE_READY_6_TARGETED_CHECKS_PASS_STRICT0_INDEPENDENT_REVIEW_PENDING",
         "finding": "Final frozen Demo systemItemCode is manual barcodeItemCode field; required, no empty allocator, no separate identity/new columns. Auto generation only actual newly added full-group SKU combinations, including added colors; original values/old MAINs/disabled retained. Nonempty code unsuitable for generation may save ordinary product with explicit missing-code feedback, no false success.",
-        "next": "D2 original SAME V2/UOW/DTO+newSKUdiff implementation, scoped QB then T45 affected QA",
-        "noNewIntentSwitch": true
+        "next": "Freeze exact7 originalQB source review then nextcompletebundle; T45 actualQA only after legitimate scheme init/publication/nativeSKU admission",
+        "noNewIntentSwitch": true,
+        "sourcePins": "reports/backend/rapid-launch-20261022/D2/BARCODE-2026-BOUNDARY-v1/V19-IMPLEMENTATION-SOURCE-PINS.json",
+        "behavior": "Original V2 wholegroup×colors×fits, genuinelynewenabledSKU only, exact2026CURRENTsameclient code lockreads; no originalMAIN includingdisabled replacement, no oldSKU fill, mandatorymanualitemcode/noallocator/intent. OriginalUOW receipt earlyreplay preserved. Invalid nonempty code retains ordinary product/SKU with no fake MAIN.",
+        "checks": "6/6 targeted owner checks and strict0 adopted; no realPG/role/fullhostUI/save/performance PASS"
       },
       "compatibleOldCodeSave": {
         "owner": "F2/D2",
