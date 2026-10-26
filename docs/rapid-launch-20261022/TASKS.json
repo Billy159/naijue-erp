@@ -14435,7 +14435,7 @@
       "F4": "Latest thread completed/notLoaded, original package retained; no duplicate dispatch"
     },
     "source657C144Fix": {
-      "status": "FIXED_SOURCE_NEW_METADATA_SCOPE_QB_PENDING",
+      "status": "QB396_NEW_SOURCE_PASS_ADOPTED_ACTUAL131_PENDING",
       "files": {
         "scripts/import-v2/authorized-sales-detail-reader.mjs": {
           "bytes": 29081,
@@ -14471,6 +14471,15 @@
       "change": "Only3 SRF output names made explicit, reverse replacement restores original function byte-for-byte; original frozen patch and all old profiles unchanged",
       "checks": "3 focused source tests and selected2 TS typecheck PASS; no actual SQL",
       "next": "D1 exact normalfactory newprofile consuming seam/actual install steps; QB only narrow root cause and exact issuer; T45 actual newcanonical then real3cases"
+    },
+    "source659": {
+      "QB396": "2951/448456723630273808585cbe9d92beeaeaf86be5a107547071c3d5287c254d1a",
+      "QB397": "2910/37a05b9921dc863c4f11b0666f423d4fe4ea61e027ff35d7b44824e96140bde8",
+      "actual131": "Unique actual submission acknowledged original exec10832; collect only; no actual success yet",
+      "source131Scope": "22329/466b0c73ab1ff51896c5d2d2b510e0e4e6c6aeedd68cf155114a566fcdd0a6c3 deadline13:50/max900/start<=13:35",
+      "B07ActualNext": "T45 same stopped03 wholecopy preservation then approved v21 onefunctionDDL/current ordinary metadata/fullcatalog/3finiteSELECT+negativeDO ROLLBACK/close/ownPIDstop; no tableDML/login/HTTP; source658 QB pending",
+      "B07NormalFactory": "Existing config.runtime26Review flows into original native issuer selecting catalog.patchLevel newv21; no extra formal factory seam; new private parent must apply v21 and export actual new metadata before gate",
+      "rootAuthority": "No new business contract/field/permission semantics; source guard disambiguation only; old sealedSQL/profile/sourceactors unchanged"
     }
   }
 }
