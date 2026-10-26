@@ -62,33 +62,47 @@ export function draftQuantityCommand(before,reference,key){
   reason:before.kind==='sales'?'隔离QA：受控更正原未审核历史销货行数量，保留原来源、金额与身份，验证零库存影响。':'隔离QA：受控更正原未审核历史调拨行数量，保留原来源与端仓，验证零库存影响及守恒。',
   lines:[{lineId:line.lineId,quantity:reference.proposedQuantity}],totals:null,settlements:[]};
 }
+const MAX_HISTORY_CENTS=10n**18n-1n;
+function historyCents(value,nonnegative=false){
+ assert.ok(typeof value==='string'&&/^-?(?:0|[1-9]\d{0,15})\.\d{2}(?![\s\S])/.test(value)&&value!=='-0.00','Exact canonical historical money required');
+ const cents=BigInt(value.replace('.',''));assert.ok(!nonnegative||cents>=0n);return cents;
+}
+const moneyText=cents=>(cents/100n).toString()+'.'+(cents%100n).toString().padStart(2,'0');
 export function draftMoneyCommand(before,key){
  assert.equal(before.kind,'sales');assert.equal(before.sourceStatus,'DRAFT');assert.equal(before.baselineEffect,'EXCLUDED_NOT_EFFECTIVE');
- const line=before.lines[0];assert.ok(line&&/^\d+\.\d{2}$/.test(line.dealPrice));
- const cents=BigInt(line.dealPrice.replace('.',''))+1n,dealPrice=(cents/100n).toString()+'.'+(cents%100n).toString().padStart(2,'0');
- const signed=before.settlements.reduce((n,s)=>n+(s.direction==='RECEIVE'?1n:-1n)*BigInt(s.amount.replace('.','')),0n);
- assert.equal(signed,BigInt(before.totals.netDue.replace('.','')),'Original settlement balance required; do not alter source or fill missing money');
+ const line=before.lines[0];assert.ok(line&&uuid(line.lineId));
+ const price=historyCents(line.dealPrice,true)+1n;assert.ok(price<=MAX_HISTORY_CENTS,'Price increment exceeds exact money boundary');
+ const signed=before.settlements.reduce((sum,row)=>{assert.ok(uuid(row.settlementId)&&['RECEIVE','REFUND'].includes(row.direction));return sum+(row.direction==='RECEIVE'?1n:-1n)*historyCents(row.amount,true);},0n);
+ const delta=historyCents(before.totals.netDue)-signed,settlements=[];
+ if(delta!==0n){
+  for(const row of before.settlements){const amount=historyCents(row.amount,true)+(row.direction==='RECEIVE'?1n:-1n)*delta;
+   if(amount>=0n&&amount<=MAX_HISTORY_CENTS){settlements.push({settlementId:row.settlementId,amount:moneyText(amount)});break;}}
+  assert.equal(settlements.length,1,'No legal existing settlement amount can balance this explicit correction');
+ }
  return {kind:'sales',documentId:before.documentId,expectedVersion:before.version,requestKey:key,
-  reason:'隔离QA：仅更正原未审核历史销货行成交价0.01，数量与结算不变，验证金额单改不影响库存。',lines:[{lineId:line.lineId,dealPrice}],totals:null,settlements:[]};
+  reason:settlements.length?'隔离QA：明确修订原成交价0.01及同单既有结算金额，使修改后结算与原应收守恒；不改来源身份、结算账号方向、数量及库存。':'隔离QA：仅更正原未审核历史销货行成交价0.01，数量与结算不变，验证金额单改不影响库存。',
+  lines:[{lineId:line.lineId,dealPrice:moneyText(price)}],totals:null,settlements};
 }
-export function validateCommittedDraftRequest(input,continuation){
+function pinnedDraftJson(continuation){
  assert.ok(continuation&&Object.getPrototypeOf(continuation)===Object.prototype);
- assert.deepEqual(Object.keys(continuation).sort(),['requestBytes','sha256']);
- assert.ok(continuation.requestBytes instanceof Uint8Array);
- const bytes=Buffer.from(continuation.requestBytes);
- assert.ok(bytes.length>0&&bytes.length<=65536);
+ assert.deepEqual(Object.keys(continuation).sort(),['requestBytes','sha256']);assert.ok(continuation.requestBytes instanceof Uint8Array);
+ const bytes=Buffer.from(continuation.requestBytes);assert.ok(bytes.length>0&&bytes.length<=65536);
  assert.equal(typeof continuation.sha256,'string');assert.match(continuation.sha256,/^[a-f0-9]{64}(?![\s\S])/);
- assert.equal(createHash('sha256').update(bytes).digest('hex'),continuation.sha256,'Original request bytes differ from registered SHA');
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),continuation.sha256,'Original private bytes differ from registered SHA');
  const text=bytes.toString('utf8');assert.ok(Buffer.from(text,'utf8').equals(bytes));
- let request;try{request=JSON.parse(text);}catch{throw Error('B07_ORIGINAL_REQUEST_JSON_INVALID');}
+ try{return JSON.parse(text);}catch{throw Error('B07_ORIGINAL_PRIVATE_JSON_INVALID');}
+}
+function recordedRequest(input,pin){const request=pinnedDraftJson(pin);
  assert.deepEqual(Object.keys(request).sort(),['actor','command','contract','phase','target']);
- assert.equal(request.contract,input.contract);same(request.target,input.target);same(request.actor,input.actor);
- assert.equal(request.phase,'DRAFT_SALES_QUANTITY_NO_STOCK');
- const command=request.command,reference=input.references.cases[0];
- assert.equal(command.kind,'sales');assert.equal(command.documentId,reference.documentId);assert.equal(command.expectedVersion,1);
- assert.equal(command.requestKey,input.keys.sales);same(command.lines,[{lineId:reference.lineId,quantity:reference.proposedQuantity}]);
- assert.equal(command.totals,null);same(command.settlements,[]);
- return request;
+ assert.equal(request.contract,input.contract);same(request.target,input.target);same(request.actor,input.actor);return request;
+}
+export function validateCommittedDraftRequest(input,continuation,kind='sales'){
+ assert.ok(['sales','transfers'].includes(kind));const request=recordedRequest(input,continuation);
+ assert.equal(request.phase,kind==='sales'?'DRAFT_SALES_QUANTITY_NO_STOCK':'DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION');
+ const command=request.command,reference=input.references.cases[kind==='sales'?0:1];
+ assert.equal(command.kind,kind);assert.equal(command.documentId,reference.documentId);assert.equal(command.expectedVersion,1);
+ assert.equal(command.requestKey,input.keys[kind]);same(command.lines,[{lineId:reference.lineId,quantity:reference.proposedQuantity}]);
+ assert.equal(command.totals,null);same(command.settlements,[]);return request;
 }
 export async function runDraftNormalHistory(options){return runDraftNormalHistoryCore(options,null);}
 export async function runDraftNormalHistoryCommittedContinuation(options){
@@ -97,7 +111,17 @@ export async function runDraftNormalHistoryCommittedContinuation(options){
  const committedContinuation={sha256:options.committedContinuation.sha256};
  return runDraftNormalHistoryCore({...options,committedContinuation},original);
 }
-async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCookie,recordRequest,recordObservation,readBackgroundFailureCount,committedContinuation},recoveredRequest){
+export async function runDraftNormalHistoryRemainingMoneyContinuation(options){
+ const input=validateDraftInput(structuredClone(options.input)),pins=options.remainingMoneyContinuation;
+ assert.ok(pins&&Object.getPrototypeOf(pins)===Object.prototype);assert.deepEqual(Object.keys(pins).sort(),(pins.money?['completedCases','money','sales','transfers']:['completedCases','sales','transfers']).sort());
+ const sales=validateCommittedDraftRequest(input,pins.sales),transfers=validateCommittedDraftRequest(input,pins.transfers,'transfers'),completed=pinnedDraftJson(pins.completedCases);
+ assert.equal(completed.status,'FAILED_OR_OUTCOME_UNCERTAIN_NO_AUTO_RETRY');assert.equal(completed.firstFailure?.phase,'DRAFT_SALES_MONEY_ONLY_NO_STOCK');assert.equal(completed.firstFailure?.comparisonStage,'BUILD_COMMAND');
+ assert.equal(completed.recoveredFirstCase?.status,'PASS_ORIGINAL_COMMITTED_KEY_DETAIL_REPLAY_CONFLICT_CAS_NO_NEW_WRITE');assert.equal(completed.recoveredFirstCase.version,2);assert.equal(completed.recoveredFirstCase.originalRequestSha256,pins.sales.sha256);
+ assert.equal(completed.cases?.length,1);assert.equal(completed.cases[0].name,'DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION');assert.equal(completed.cases[0].status,'PASS_NORMAL_HISTORY_HTTP_CURRENT_FACTS_SOURCE_STOCK_AUDIT_RECEIPT_REPLAY_CAS');assert.equal(completed.cases[0].version,2);assert.equal(completed.cases[0].stockUnchanged,true);
+ let money=null;if(pins.money){money=recordedRequest(input,pins.money);assert.equal(money.phase,'DRAFT_SALES_MONEY_ONLY_NO_STOCK');assert.equal(money.command.kind,'sales');assert.equal(money.command.documentId,input.references.cases[0].documentId);assert.equal(money.command.requestKey,input.keys.money);assert.equal(money.command.expectedVersion,2);}
+ return runDraftNormalHistoryCore(options,null,{sales,transfers,completed,money,completedSha256:pins.completedCases.sha256});
+}
+async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCookie,recordRequest,recordObservation,readBackgroundFailureCount,committedContinuation},recoveredRequest,remainingMoney=null){
  const input=validateDraftInput(structuredClone(raw));assert.equal(api.trustedOrigin,input.origin);assert.equal(api.app.server.listening,false);
  assert.equal(typeof privateCookie,'string');assert.ok(privateCookie&&!/[\r\n]/.test(privateCookie));assert.equal(typeof recordRequest,'function');assert.equal(typeof recordObservation,'function');assert.equal(typeof readBackgroundFailureCount,'function');
  const at=p=>import(pathToFileURL(resolve(input.sourceRoot,p)).href);
@@ -139,7 +163,7 @@ async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCo
  const session=await api.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json().principal;
  assert.equal(principal.accountId,input.actor.accountId);assert.equal(principal.hallId,input.actor.hallId);
  const result={status:'STARTED',actualHrev:false,cases:[],notTested:['APPROVED sales quantity delta','APPROVED transfer opposite-endpoint stock delta and real second-endpoint rollback','Originally NULL-date approved money case','Actual UNKNOWN COMMIT not induced','Full roles/browser/HTTPS/formal business acceptance'],automaticRetry:false,fixtureCreated:false,sourceChanged:false};
- let phase='EXACT_TARGET_REGISTERED_HISTORY_PRESENCE',key=null,comparisonStage='PRECHECK';
+ let phase='EXACT_TARGET_REGISTERED_HISTORY_PRESENCE',key=null,comparisonStage='PRECHECK',moneyAlreadyCommitted=false;
  try{
   await reading(async c=>{
    for(const r of input.references.cases){
@@ -147,11 +171,15 @@ async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCo
     assert.equal(rows.length,1,'B07_REGISTERED_PUBLISHED_DRAFTS_MISSING_IN_TARGET');assert.equal(rows[0].source_status,'DRAFT');assert.equal(rows[0].batch_status,'IMPORTED');
    }
    const keys=(await c.query('SELECT request_key FROM naijue_erp.operation_receipt WHERE actor_account_id=$1::uuid AND request_key=ANY($2::text[])',[input.actor.accountId,Object.values(input.keys)])).rows;
-   if(recoveredRequest){assert.equal(keys.length,1,'Only the original committed sales key may exist');assert.equal(keys[0].request_key,input.keys.sales);}
+   if(remainingMoney){moneyAlreadyCommitted=keys.some(r=>r.request_key===input.keys.money);
+    same(keys.map(r=>r.request_key).sort(),[input.keys.sales,input.keys.transfers,...(moneyAlreadyCommitted?[input.keys.money]:[])].sort(),'Only completed quantity keys and an explicitly recovered money key may exist');
+    assert.ok(!moneyAlreadyCommitted||remainingMoney.money,'B07_MONEY_ORIGINAL_KEY_PRESENT_READONLY_RECOVERY_REQUIRED');
+    assert.ok(moneyAlreadyCommitted||!remainingMoney.money,'B07_RECORDED_MONEY_OUTCOME_REVIEW_REQUIRED');
+   }else if(recoveredRequest){assert.equal(keys.length,1,'Only the original committed sales key may exist');assert.equal(keys[0].request_key,input.keys.sales);}
    else assert.equal(keys.length,0,'B07 original keys already present: recover recorded original commands; do not rerun this carrier');
   });
   async function executeCase(name,reference,buildCommand,casKey){
-   phase=name;comparisonStage='BEFORE_SNAPSHOT';const before=await snapshot(reference);comparisonStage='BUILD_COMMAND';const command=parseHistoryRevisionCommand(buildCommand(before.current));key=command.requestKey;
+   phase=name;key=null;comparisonStage='BEFORE_SNAPSHOT';const before=await snapshot(reference);comparisonStage='BUILD_COMMAND';const command=parseHistoryRevisionCommand(buildCommand(before.current));key=command.requestKey;
    comparisonStage='PUBLICATION_BINDING';
    assert.equal(before.current.importBatchId,input.references.batchId);assert.equal(before.current.publishedOperationId,input.references.publishedOperationId);
    await recordRequest({contract:input.contract,target:input.target,actor:input.actor,phase:name,command:structuredClone(command)}); // C persists privately before first write.
@@ -191,37 +219,60 @@ async function runDraftNormalHistoryCore({api,pool,runtime26,input:raw,privateCo
   async function verifyCaseTail(name,reference,command,receipt,beforeCurrent,after,casKey,replayCommand=command){
    comparisonStage='DETAIL_RESPONSE';const detail=await readDetail(reference.kind,command.documentId);comparisonStage='DETAIL_VALUES';assert.equal(detail.document.version,receipt.version);assert.equal(detail.document.sourceStatus,beforeCurrent.sourceStatus);
    for(const patch of command.lines){const row=detail.lines.items.find(l=>l.id===patch.lineId);assert.ok(row);for(const [field,value] of Object.entries(patch))if(field!=='lineId')assert.equal(row[field],value);}
+   if(command.settlements.length){same(detail.settlements.items.map(row=>row.id),beforeCurrent.settlements.map(row=>row.settlementId),'Historical settlement order changed');
+    for(const patch of command.settlements){const row=detail.settlements.items.find(row=>row.id===patch.settlementId),old=beforeCurrent.settlements.find(row=>row.settlementId===patch.settlementId);assert.ok(row&&old);assert.equal(row.amount,patch.amount);assert.equal(row.direction,old.direction);}}
    phase=name+'_ORIGINAL_KEY';comparisonStage='REPLAY_RESPONSE';const replay=await http(reference.kind,replayCommand);assert.equal(replay.statusCode,200);same(replay.json(),receipt);comparisonStage='REPLAY_SNAPSHOT';same(await snapshot(reference),after,'Original-key replay caused second write');
    comparisonStage='CONFLICT_RESPONSE';const changed=await http(reference.kind,{...command,reason:command.reason+'（幂等冲突校验）'});assert.equal(changed.statusCode,409);assert.equal(changed.json().error.code,'IDEMPOTENCY_CONFLICT');comparisonStage='CONFLICT_SNAPSHOT';same(await snapshot(reference),after);
    comparisonStage='CAS_RESPONSE';const stale=await http(reference.kind,{...command,requestKey:casKey});assert.equal(stale.statusCode,409);assert.equal(stale.json().error.code,'VERSION_CONFLICT');comparisonStage='CAS_SNAPSHOT';same(await snapshot(reference),after);
   }
-  const [sales,transfer]=input.references.cases;
-  if(recoveredRequest){
-   phase='RECOVER_COMMITTED_SALES_QUANTITY';key=input.keys.sales;comparisonStage='ORIGINAL_REQUEST_BINDING';
-   const command=parseHistoryRevisionCommand(recoveredRequest.command);same(command,recoveredRequest.command);
-   const after=await snapshot(sales),receiptRows=after.receipts.map(JSON.parse).filter(r=>r.actor_account_id===input.actor.accountId&&r.request_key===key);
-   assert.equal(receiptRows.length,1);const stored=receiptRows[0],receipt=stored.result_data;
-   assert.equal(stored.status,'COMMITTED');assert.equal(stored.action,'HISTORY_REVISE');assert.equal(stored.target_type,'HISTORY_SALES');assert.equal(stored.target_id,sales.documentId);
+  function bindCommitted(reference,recorded,after,requireCurrent=true){
+   const command=parseHistoryRevisionCommand(recorded.command);same(command,recorded.command);
+   assert.equal(command.kind,reference.kind);assert.equal(command.documentId,reference.documentId);
+   const receiptRows=after.receipts.map(JSON.parse).filter(r=>r.actor_account_id===input.actor.accountId&&r.request_key===command.requestKey);
+   assert.equal(receiptRows.length,1);const stored=receiptRows[0],receipt=stored.result_data,targetType=reference.kind==='sales'?'HISTORY_SALES':'HISTORY_TRANSFER';
+   assert.equal(stored.status,'COMMITTED');assert.equal(stored.action,'HISTORY_REVISE');assert.equal(stored.target_type,targetType);assert.equal(stored.target_id,reference.documentId);
    assert.equal(stored.request_hash,requestHash({actorAccountId:input.actor.accountId,command}));
    assert.ok(uuid(receipt.operationId)&&uuid(receipt.revisionId));assert.equal(stored.id,receipt.operationId);
-   assert.equal(receipt.dataset,'HISTORY');assert.equal(receipt.kind,'sales');assert.equal(receipt.documentId,sales.documentId);assert.equal(receipt.version,2);assert.deepEqual(receipt.ledgerEntryIds,[]);
-   const revisions=after.revisions.map(JSON.parse).filter(r=>r.operation_id===receipt.operationId||r.id===receipt.revisionId);
-   const audits=after.audits.map(JSON.parse).filter(r=>r.operation_id===receipt.operationId);
+   assert.equal(receipt.dataset,'HISTORY');assert.equal(receipt.kind,reference.kind);assert.equal(receipt.documentId,reference.documentId);assert.equal(receipt.version,command.expectedVersion+1);assert.deepEqual(receipt.ledgerEntryIds,[]);
+   const revisions=after.revisions.map(JSON.parse).filter(r=>r.operation_id===receipt.operationId||r.id===receipt.revisionId),audits=after.audits.map(JSON.parse).filter(r=>r.operation_id===receipt.operationId);
    assert.equal(revisions.length,1);assert.equal(audits.length,1);const revision=revisions[0],audit=audits[0],before=revision.before_facts;
-   assert.equal(revision.id,receipt.revisionId);assert.equal(revision.operation_id,receipt.operationId);assert.equal(revision.document_kind,'SALES');assert.equal(revision.sales_id,sales.documentId);assert.equal(revision.transfer_id,null);
-   assert.equal(revision.actor_account_id,input.actor.accountId);assert.equal(revision.request_key,key);assert.equal(revision.reason,command.reason);assert.equal(revision.from_version,1);assert.equal(revision.to_version,2);
+   assert.equal(revision.id,receipt.revisionId);assert.equal(revision.operation_id,receipt.operationId);assert.equal(revision.document_kind,reference.kind==='sales'?'SALES':'TRANSFER');
+   assert.equal(revision.sales_id,reference.kind==='sales'?reference.documentId:null);assert.equal(revision.transfer_id,reference.kind==='transfers'?reference.documentId:null);
+   assert.equal(revision.actor_account_id,input.actor.accountId);assert.equal(revision.request_key,command.requestKey);assert.equal(revision.reason,command.reason);assert.equal(revision.from_version,command.expectedVersion);assert.equal(revision.to_version,receipt.version);
    assert.equal(before.importBatchId,input.references.batchId);assert.equal(before.publishedOperationId,input.references.publishedOperationId);
-   same(command,draftQuantityCommand(before,sales,key));
-   const expected=planHistoryRevision(before,command,receipt.revisionId);assert.deepEqual(expected.effects,[]);
-   same(revision.after_facts,expected.after);same(after.current,expected.after);
-   assert.equal(audit.id,receipt.operationId);assert.equal(audit.actor_account_id,input.actor.accountId);assert.equal(audit.object_type,'HISTORY_SALES');assert.equal(audit.object_id,sales.documentId);assert.equal(audit.action,'HISTORY_REVISE');assert.equal(audit.old_version,1);assert.equal(audit.new_version,2);
-   same(audit.before_values,expected.before);same(audit.after_values,expected.after);
+   if(command.expectedVersion===1)same(command,draftQuantityCommand(before,reference,command.requestKey));
+   else {assert.equal(command.expectedVersion,2);assert.equal(command.requestKey,input.keys.money);same(command,draftMoneyCommand(before,input.keys.money));}
+   const expected=planHistoryRevision(before,command,receipt.revisionId);assert.deepEqual(expected.effects,[]);same(revision.after_facts,expected.after);
+   if(requireCurrent)same(after.current,expected.after);
+   assert.equal(audit.id,receipt.operationId);assert.equal(audit.actor_account_id,input.actor.accountId);assert.equal(audit.object_type,targetType);assert.equal(audit.object_id,reference.documentId);assert.equal(audit.action,'HISTORY_REVISE');assert.equal(audit.old_version,command.expectedVersion);assert.equal(audit.new_version,receipt.version);
+   same(audit.before_values,expected.before);same(audit.after_values,expected.after);return {command,receipt,before,afterFacts:expected.after};
+  }
+  const [sales,transfer]=input.references.cases;
+  if(remainingMoney){
+   result.executionScope='REMAINING_MONEY_ONLY_SAME_TARGET';result.priorScopeNotReplayed=true;
+   phase='BIND_BOTH_COMMITTED_QUANTITY_CASES';key=null;comparisonStage='ORIGINAL_REQUEST_BINDING';
+   const salesSnapshot=await snapshot(sales),transferSnapshot=await snapshot(transfer);
+   const salesProof=bindCommitted(sales,remainingMoney.sales,salesSnapshot,!moneyAlreadyCommitted),transferProof=bindCommitted(transfer,remainingMoney.transfers,transferSnapshot);
+   assert.equal(salesProof.receipt.version,2);assert.equal(transferProof.receipt.version,2);
+   for(const [proof,prior] of [[salesProof,remainingMoney.completed.recoveredFirstCase],[transferProof,remainingMoney.completed.cases[0]]]){assert.equal(prior.operationId,proof.receipt.operationId);assert.equal(prior.revisionId,proof.receipt.revisionId);assert.equal(prior.version,2);}
+   result.adoptedCompletedCases={sourceSha256:remainingMoney.completedSha256,salesVersion:2,transferVersion:2,status:'PRIOR_COMPLETE_SCOPES_BOUND_NO_REPLAY'};
+   if(moneyAlreadyCommitted){
+    phase='RECOVER_COMMITTED_MONEY_ONLY';key=input.keys.money;comparisonStage='ORIGINAL_REQUEST_BINDING';
+    const proof=bindCommitted(sales,remainingMoney.money,salesSnapshot);same(proof.before,salesProof.afterFacts,'Money recovery must descend from the original sales quantity v2');
+    await verifyCaseTail('DRAFT_SALES_MONEY_ONLY_NO_STOCK',sales,proof.command,proof.receipt,proof.before,salesSnapshot,input.keys.moneyCas,remainingMoney.money.command);
+    result.recoveredMoneyCase={status:'PASS_ORIGINAL_COMMITTED_MONEY_NO_NEW_WRITE',version:3,operationId:proof.receipt.operationId,revisionId:proof.receipt.revisionId};result.moneyRecoveryOnly=true;result.actualHrev=true;
+   }else{
+    await executeCase('DRAFT_SALES_MONEY_ONLY_NO_STOCK',sales,before=>{assert.equal(before.version,2);return draftMoneyCommand(before,input.keys.money);},input.keys.moneyCas);result.moneyRecoveryOnly=false;
+   }
+   assert.equal(await readBackgroundFailureCount(),0);result.status='PASS_ACTUAL_LIMITED_DRAFT_HISTORY_ONLY';return result;
+  }
+  if(recoveredRequest){
+   phase='RECOVER_COMMITTED_SALES_QUANTITY';key=input.keys.sales;comparisonStage='ORIGINAL_REQUEST_BINDING';
+   const after=await snapshot(sales),{command,receipt,before}=bindCommitted(sales,recoveredRequest,after);assert.equal(receipt.version,2);
    const transferCurrent=(await snapshot(transfer)).current;assert.equal(transferCurrent.version,1);assert.equal(transferCurrent.kind,'transfers');assert.equal(transferCurrent.documentId,transfer.documentId);assert.equal(transferCurrent.importBatchId,input.references.batchId);assert.equal(transferCurrent.publishedOperationId,input.references.publishedOperationId);
    await verifyCaseTail('DRAFT_SALES_QUANTITY_NO_STOCK',sales,command,receipt,before,after,input.keys.salesCas,recoveredRequest.command);
    result.recoveredFirstCase={status:'PASS_ORIGINAL_COMMITTED_KEY_DETAIL_REPLAY_CONFLICT_CAS_NO_NEW_WRITE',operationId:receipt.operationId,revisionId:receipt.revisionId,version:2,
-    originalRequestSha256:committedContinuation.sha256,
-    priorChecks:'Original07 stopped at DETAIL_RESPONSE after current/source/stock/audit checks; no reconstructed prewrite snapshot claimed'};
-   result.actualHrev=true;
+    originalRequestSha256:committedContinuation.sha256,priorChecks:'Original07 stopped at DETAIL_RESPONSE after current/source/stock/audit checks; no reconstructed prewrite snapshot claimed'};result.actualHrev=true;
   }else {await executeCase('DRAFT_SALES_QUANTITY_NO_STOCK',sales,before=>draftQuantityCommand(before,sales,input.keys.sales),input.keys.salesCas);}
   await executeCase('DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION',transfer,before=>draftQuantityCommand(before,transfer,input.keys.transfers),input.keys.transfersCas);
   await executeCase('DRAFT_SALES_MONEY_ONLY_NO_STOCK',sales,before=>draftMoneyCommand(before,input.keys.money),input.keys.moneyCas);

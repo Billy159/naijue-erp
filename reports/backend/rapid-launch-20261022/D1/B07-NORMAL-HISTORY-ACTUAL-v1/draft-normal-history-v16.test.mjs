@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {resolveDraftReferences,validateDraftInput,draftQuantityCommand,draftMoneyCommand,historyResponseObservation,runDraftNormalHistory,assertCompleteHistoryPage} from './draft-normal-history-v16.mjs';
 const id=n=>`00000000-0562-4000-8000-${String(n).padStart(12,'0')}`;
 const ref=(kind,n)=>({kind,documentId:id(n),lineId:id(n+1),capturedVersion:1,capturedSourceStatus:'DRAFT',capturedQuantity:kind==='sales'?'2':'-3',proposedQuantity:kind==='sales'?'3':'-2'});
-const before=(r)=>({kind:r.kind,documentId:r.documentId,version:1,sourceStatus:'DRAFT',baselineEffect:'EXCLUDED_NOT_EFFECTIVE',lines:[{lineId:r.lineId,quantity:r.capturedQuantity,dealPrice:'0.99',allocatedDiscount:null}],totals:{netDue:'0.99'},settlements:[{direction:'RECEIVE',amount:'0.99'}]});
+const before=(r)=>({kind:r.kind,documentId:r.documentId,version:1,sourceStatus:'DRAFT',baselineEffect:'EXCLUDED_NOT_EFFECTIVE',lines:[{lineId:r.lineId,quantity:r.capturedQuantity,dealPrice:'0.99',allocatedDiscount:null}],totals:{netDue:'0.99'},settlements:[{settlementId:id(70),direction:'RECEIVE',amount:'0.99'}]});
 test('HTTP observation exposes only valid status, JSON boolean and explicit error-code whitelist',()=>{
  const hidden='SYNTHETIC_PRIVATE_BODY_HEADER_COOKIE_MESSAGE';
  const response={statusCode:500,body:hidden,headers:{cookie:hidden},json:()=>({error:{code:'INTERNAL_ERROR',message:hidden},extra:hidden})};
@@ -71,14 +71,14 @@ test('detail completeness rejects invalid count text and incomplete or inconsist
 });
 
 // Pure scripted continuation protocol, never a PostgreSQL/HTTP acceptance claim.
-async function committedFixture(){
+async function committedFixture({unbalanced=false,price='0.99'}={}){
  const {createHash}=await import('node:crypto');
  const sourceRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022';
  const {planHistoryRevision}=await import(sourceRoot+'/packages/application/src/history-revision-service.ts');
  const {requestHash}=await import(sourceRoot+'/packages/application/src/request-hash.ts');
  const input={contract:'B07_DRAFT_NORMAL_HISTORY_V16_1',patchLevel:'26_v16_history_responsible_from_v14',sourceRoot,origin:'https://synthetic-only.invalid',targetProfile:'ORIGINAL_PRESERVED_B07_COPY',copyRegistrationReference:'SYNTHETIC_ONLY',target:{database:'naijue_erp_test_19e00102',oid:'16385',role:'SYNTHETIC_NONOWNER'},actor:{accountId:id(30),hallId:null},references:{batchId:id(40),publishedOperationId:id(41),cases:[ref('sales',1),ref('transfers',10)]},maxRows:100,keys:{sales:'SYN_SALES',salesCas:'SYN_SALES_CAS',transfers:'SYN_TRANSFER',transfersCas:'SYN_TRANSFER_CAS',money:'SYN_MONEY',moneyCas:'SYN_MONEY_CAS'}};
  const originalCurrent=r=>({...before(r),previousRevisionId:null,responsibleStaffId:null,importBatchId:input.references.batchId,publishedOperationId:input.references.publishedOperationId,documentManifestHash:'a'.repeat(64),businessDate:'2020-01-02',warehouseId:r.kind==='sales'?id(50):null,fromWarehouseId:r.kind==='transfers'?id(50):null,toWarehouseId:r.kind==='transfers'?id(51):null,
-  lines:[{lineId:r.lineId,skuId:id(60),quantity:r.capturedQuantity,...(r.kind==='sales'?{dealPrice:'0.99',lineAmount:'0.99',allocatedDiscount:null}:{})}],totals:r.kind==='sales'?{grossAmount:'0.99',orderDiscount:'0.00',netDue:'0.99'}:null,settlements:r.kind==='sales'?[{settlementId:id(70),direction:'RECEIVE',amount:'0.99'}]:[]});
+  lines:[{lineId:r.lineId,skuId:id(60),quantity:r.capturedQuantity,...(r.kind==='sales'?{dealPrice:price,lineAmount:'0.99',allocatedDiscount:null}:{})}],totals:r.kind==='sales'?{grossAmount:'0.99',orderDiscount:'0.00',netDue:'0.99'}:null,settlements:r.kind==='sales'?[{settlementId:id(70),direction:'RECEIVE',amount:unbalanced?'0.01':'0.99'}]:[]});
  const current={sales:originalCurrent(input.references.cases[0]),transfers:originalCurrent(input.references.cases[1])};
  const tables={history_revision:[],audit_change:[],operation_receipt:[],history_sales_effective:[],history_transfer_effective:[],history_sales_line_effective:[],history_transfer_line_effective:[],history_sales_settlement_effective:[]};
  let sequence=100;
@@ -90,6 +90,7 @@ async function committedFixture(){
   tables.operation_receipt.push({id:operationId,actor_account_id:input.actor.accountId,request_key:command.requestKey,request_hash:requestHash({actorAccountId:input.actor.accountId,command}),status:'COMMITTED',action:'HISTORY_REVISE',target_type:command.kind==='sales'?'HISTORY_SALES':'HISTORY_TRANSFER',target_id:command.documentId,result_data:receipt});
   const family=command.kind==='sales'?'sales':'transfer';tables[`history_${family}_effective`]=[{header_id:command.documentId,version:plan.toVersion,revision_id:revisionId}];
   for(const patch of command.lines){const key=`history_${family}_line_effective`,row={line_id:patch.lineId,revision_id:revisionId,...patch};tables[key]=[...tables[key].filter(r=>r.line_id!==patch.lineId),row];}
+  for(const patch of command.settlements){tables.history_sales_settlement_effective=[...tables.history_sales_settlement_effective.filter(r=>r.settlement_id!==patch.settlementId),{settlement_id:patch.settlementId,revision_id:revisionId,amount:patch.amount}];}
   current[command.kind]=plan.after;return receipt;
  }
  const command=draftQuantityCommand(current.sales,input.references.cases[0],input.keys.sales),originalReceipt=commit(command);
@@ -109,14 +110,14 @@ async function committedFixture(){
  const api={trustedOrigin:input.origin,app:{server:{listening:false},async inject(request){
   if(request.url==='/auth/session')return response(200,{principal:input.actor});
   const kind=request.url.includes('/sales/')?'sales':'transfers';
-  if(request.url.endsWith('/detail/query')){const c=current[kind];return response(200,{dataset:'HISTORY',document:{documentId:c.documentId,version:c.version,sourceStatus:c.sourceStatus},lines:{total:String(c.lines.length),items:c.lines.map(l=>({id:l.lineId,...l}))},settlements:{total:String(c.settlements.length),items:c.settlements}});}
+  if(request.url.endsWith('/detail/query')){const c=current[kind];return response(200,{dataset:'HISTORY',document:{documentId:c.documentId,version:c.version,sourceStatus:c.sourceStatus},lines:{total:String(c.lines.length),items:c.lines.map(l=>({id:l.lineId,...l}))},settlements:{total:String(c.settlements.length),items:c.settlements.map(row=>({id:row.settlementId,...row}))}});}
   const command=structuredClone(request.payload);reviseCalls.push(command);
   const old=tables.operation_receipt.find(r=>r.request_key===command.requestKey);
   if(old)return old.request_hash===requestHash({actorAccountId:input.actor.accountId,command})?response(200,old.result_data):response(409,{error:{code:'IDEMPOTENCY_CONFLICT'}});
   if(current[kind].version!==command.expectedVersion)return response(409,{error:{code:'VERSION_CONFLICT'}});
   return response(200,commit(command));
  }}};
- return {input,current,tables,reviseCalls,records,observations,originalRequest,originalReceipt,requestBytes,sha256,
+ return {input,current,tables,reviseCalls,records,observations,originalRequest,originalReceipt,requestBytes,sha256,commit,planHistoryRevision,
   options:{api,pool:{async connect(){return client;}},runtime26:{async assertReady(){}},input,privateCookie:'SYNTHETIC_PRIVATE_COOKIE',recordRequest:async request=>records.push(structuredClone(request)),recordObservation:async observation=>observations.push(observation),readBackgroundFailureCount:()=>0,committedContinuation:{requestBytes,sha256}}};
 }
 test('committed continuation validates original bytes and refuses changed target/actor/key/version without calls',async()=>{
@@ -153,4 +154,56 @@ test('committed continuation stops if original-key replay produces any extra eff
   if(!altered&&request.url.endsWith('/sales/revise')){altered=true;f.tables.audit_change.push({...structuredClone(f.tables.audit_change[0]),id:id(999)});}return response;};
  await assert.rejects(runDraftNormalHistoryCommittedContinuation(f.options),error=>{assert.equal(error.b07Result.firstFailure.comparisonStage,'REPLAY_SNAPSHOT');return true;});
  assert.equal(f.reviseCalls.length,1);assert.equal(f.records.length,0);assert.equal(f.current.sales.version,2);assert.equal(f.current.transfers.version,1);
+});
+
+async function remainingMoneyFixture(options={}){
+ const {createHash}=await import('node:crypto'),f=await committedFixture({unbalanced:true,...options});
+ const pin=value=>{const requestBytes=Buffer.from(JSON.stringify(value,null,2)+'\n');return {requestBytes,sha256:createHash('sha256').update(requestBytes).digest('hex')};};
+ const transferCommand=draftQuantityCommand(f.current.transfers,f.input.references.cases[1],f.input.keys.transfers),transferReceipt=f.commit(transferCommand);
+ const transferRequest={contract:f.input.contract,target:f.input.target,actor:f.input.actor,phase:'DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION',command:transferCommand};
+ const completed={status:'FAILED_OR_OUTCOME_UNCERTAIN_NO_AUTO_RETRY',firstFailure:{phase:'DRAFT_SALES_MONEY_ONLY_NO_STOCK',comparisonStage:'BUILD_COMMAND',requestKey:f.input.keys.transfers,code:'ERR_ASSERTION'},
+ recoveredFirstCase:{status:'PASS_ORIGINAL_COMMITTED_KEY_DETAIL_REPLAY_CONFLICT_CAS_NO_NEW_WRITE',version:2,operationId:f.originalReceipt.operationId,revisionId:f.originalReceipt.revisionId,originalRequestSha256:f.sha256},
+ cases:[{name:'DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION',status:'PASS_NORMAL_HISTORY_HTTP_CURRENT_FACTS_SOURCE_STOCK_AUDIT_RECEIPT_REPLAY_CAS',version:2,operationId:transferReceipt.operationId,revisionId:transferReceipt.revisionId,stockUnchanged:true}]};
+ f.options.remainingMoneyContinuation={sales:{requestBytes:f.requestBytes,sha256:f.sha256},transfers:pin(transferRequest),completedCases:pin(completed)};return {...f,pin,completed,transferRequest};
+}
+test('explicit money correction balances existing amount while original price-only request is rejected by real planner',async()=>{
+ const f=await committedFixture({unbalanced:true}),before=structuredClone(f.current.sales),command=draftMoneyCommand(before,f.input.keys.money);
+ assert.deepEqual(command.settlements,[{settlementId:before.settlements[0].settlementId,amount:'0.99'}]);assert.equal(command.lines[0].dealPrice,'1.00');
+ assert.throws(()=>f.planHistoryRevision(before,{...command,settlements:[]},id(900)),{code:'SETTLEMENT_MISMATCH'});
+ assert.throws(()=>f.planHistoryRevision(before,{...command,settlements:[{...command.settlements[0],settlementId:id(999)}]},id(902)),{code:'HISTORY_REVISION_FOREIGN_ROW'});
+ assert.throws(()=>f.planHistoryRevision(before,{...command,settlements:[{...command.settlements[0],direction:'REFUND'}]},id(903)),{code:'HISTORY_REVISION_INVALID'});
+ assert.deepEqual(Object.keys(command.settlements[0]).sort(),['amount','settlementId']);
+ const plan=f.planHistoryRevision(before,command,id(901));assert.equal(plan.moneyChanged,true);assert.deepEqual(plan.effects,[]);assert.deepEqual(before,f.current.sales);
+ assert.deepEqual(plan.after.lines.map(row=>row.quantity),before.lines.map(row=>row.quantity));assert.deepEqual(plan.after.totals,before.totals);assert.equal(plan.after.settlements[0].direction,before.settlements[0].direction);
+});
+test('explicit money solver respects refund signs, first feasible existing row, zero and exact price bounds',async()=>{
+ const f=await committedFixture({unbalanced:true}),b=structuredClone(f.current.sales);
+ b.totals.netDue='-0.99';b.settlements[0].direction='REFUND';assert.equal(draftMoneyCommand(b,'SYN').settlements[0].amount,'0.99');
+ b.totals.netDue='0.99';b.settlements.push({settlementId:id(71),direction:'RECEIVE',amount:'0.01'});
+ assert.deepEqual(draftMoneyCommand(b,'SYN').settlements,[{settlementId:id(71),amount:'1.00'}]);
+ b.totals.netDue='0.00';b.settlements=[{settlementId:id(70),direction:'RECEIVE',amount:'0.01'}];assert.equal(draftMoneyCommand(b,'SYN').settlements[0].amount,'0.00');
+ b.totals.netDue='-0.99';assert.throws(()=>draftMoneyCommand(b,'SYN'));
+ b.lines[0].dealPrice='9999999999999999.99';assert.throws(()=>draftMoneyCommand(b,'SYN'));
+ for(const value of [null,'-0.00','1.001','01.00']){b.lines[0].dealPrice=value;assert.throws(()=>draftMoneyCommand(b,'SYN'));}
+});
+test('remaining money entry binds both completed v2 cases without replay and saves only original money key',async()=>{
+ const {runDraftNormalHistoryRemainingMoneyContinuation}=await import('./draft-normal-history-v16.mjs'),f=await remainingMoneyFixture();
+ const result=await runDraftNormalHistoryRemainingMoneyContinuation(f.options);
+ assert.equal(result.status,'PASS_ACTUAL_LIMITED_DRAFT_HISTORY_ONLY');assert.equal(result.priorScopeNotReplayed,true);assert.equal(result.adoptedCompletedCases.salesVersion,2);assert.equal(result.adoptedCompletedCases.transferVersion,2);
+ assert.deepEqual(f.records.map(r=>[r.command.requestKey,r.command.expectedVersion]),[[f.input.keys.money,2]]);assert.equal(f.current.sales.version,3);assert.equal(f.current.transfers.version,2);
+ assert.ok(f.reviseCalls.every(c=>![f.input.keys.sales,f.input.keys.salesCas,f.input.keys.transfers,f.input.keys.transfersCas].includes(c.requestKey)));
+ assert.equal(f.tables.history_sales_settlement_effective.length,1);assert.equal(f.tables.history_sales_settlement_effective[0].amount,'0.99');assert.equal(result.cases.length,1);
+});
+test('remaining money entry refuses incorrect second proof and reports build failure without stale prior key',async()=>{
+ const {runDraftNormalHistoryRemainingMoneyContinuation}=await import('./draft-normal-history-v16.mjs');
+ const wrong=await remainingMoneyFixture();wrong.tables.history_revision[1].actor_account_id=id(999);await assert.rejects(runDraftNormalHistoryRemainingMoneyContinuation(wrong.options));assert.equal(wrong.reviseCalls.length,0);assert.equal(wrong.records.length,0);
+ const missing=await remainingMoneyFixture();missing.completed.cases[0].stockUnchanged=false;missing.options.remainingMoneyContinuation.completedCases=missing.pin(missing.completed);await assert.rejects(runDraftNormalHistoryRemainingMoneyContinuation(missing.options));assert.equal(missing.reviseCalls.length,0);
+ const overflow=await remainingMoneyFixture({price:'9999999999999999.99'});await assert.rejects(runDraftNormalHistoryRemainingMoneyContinuation(overflow.options),error=>{assert.equal(error.b07Result.firstFailure.comparisonStage,'BUILD_COMMAND');assert.equal(error.b07Result.firstFailure.requestKey,null);return true;});assert.equal(overflow.records.length,0);assert.equal(overflow.reviseCalls.length,0);
+});
+test('remaining money entry never resaves an existing key and only recovers its exact original request',async()=>{
+ const {runDraftNormalHistoryRemainingMoneyContinuation}=await import('./draft-normal-history-v16.mjs'),f=await remainingMoneyFixture();
+ await runDraftNormalHistoryRemainingMoneyContinuation(f.options);const originalMoney=structuredClone(f.records[0]),beforeCounts=[f.tables.history_revision.length,f.tables.operation_receipt.length];f.records.length=0;f.reviseCalls.length=0;
+ await assert.rejects(runDraftNormalHistoryRemainingMoneyContinuation(f.options));assert.equal(f.records.length,0);assert.equal(f.reviseCalls.length,0);
+ f.options.remainingMoneyContinuation.money=f.pin(originalMoney);const result=await runDraftNormalHistoryRemainingMoneyContinuation(f.options);assert.equal(result.moneyRecoveryOnly,true);assert.equal(result.recoveredMoneyCase.version,3);assert.equal(f.records.length,0);
+ assert.deepEqual([f.tables.history_revision.length,f.tables.operation_receipt.length],beforeCounts);assert.deepEqual(f.reviseCalls[0],originalMoney.command);
 });

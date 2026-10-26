@@ -6308,5 +6308,15 @@
       "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.test.mjs"
     ],
     "scope": "Original runner/test only. Explicit isolated QA amount request may change original same-document line.dealPrice and existing settlement.amount together under already approved B07 contract; no new settlement/account/direction/source identity changes. BigInt signed balancing, exact bounds, original unbalanced price-only rejection retained. Remaining-money-only continuation binds existing salesv2/transferv2; never redo passed cases or reuse key across targets. Source only now, no credentials/DB/HTTP."
+  },
+  "source698QaAuth2MoneyOnly": {
+    "owner": "D1",
+    "files": [
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-credential-renewal.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-credential-renewal.test.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
+    ],
+    "scope": "Only existing isolated QA parent/renewal explicit remaining-money-only child02 branch. Original immutable permission proof plus exact actual child01 committed renewal/lifecycle/intent/draft outcome refs establish auth2 lineage; current account2/auth2 and same permissions/guards checked transactionally before2-to3 renewal. Original v1/child01 behavior unchanged. Never fabricate updated proof/grants/identity, never repeat prior cases; source only, actual new purpose/authorization separate."
   }
 }
