@@ -13,7 +13,7 @@ function revision(result: Awaited<ReturnType<DatasetVersionClient['query']>>, da
   requireDomain(result.rowCount === 1 && result.rows.length === 1, 'INVALID_DATASET_VERSION', 'Exactly one persisted dataset version is required');
   const row = result.rows[0]!;
   const value = row.revision;
-  requireDomain(row.dataset === dataset && typeof value === 'string' && /^(0|[1-9][0-9]{0,18})$/.test(value)
+  requireDomain(row.dataset === dataset && typeof value === 'string' && /^(0|[1-9][0-9]{0,18})(?![\s\S])/.test(value)
     && BigInt(value) <= 9223372036854775807n && (!writing || value !== '0'),
   'INVALID_DATASET_VERSION', 'An exact nonnegative PostgreSQL bigint revision string is required');
   return value;

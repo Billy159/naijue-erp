@@ -6256,5 +6256,21 @@
       "scripts/import-v3/prepare-native-bindings.test.mjs"
     ],
     "scope": "Only replace confirmed repeated baseline group scans and ACCOUNT allItems double requestHash scans with local unique identity maps and once-computed original digests. Preserve original validation, exact values/order/digests/keys/11 streams. No timeout extension or actual source rerun authorized here."
+  },
+  "source683B07Continuation": {
+    "owner": "D1",
+    "files": [
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.test.mjs"
+    ],
+    "scope": "Explicit original-runner committed continuation export with shared tail; exact original REQUEST bytes/hash and committed v2 binding; no fresh first SAVE or fixture/reseed. Only remaining original transfer/money cases, original keys. Source only; real login/current-purpose/T45 execution separately required."
+  },
+  "source683T15TailFix": {
+    "owner": "D1",
+    "files": [
+      "adapters/postgres/src/read-dataset-version.ts",
+      "tests/read-dataset-version-postgres-protocol.test.ts"
+    ],
+    "scope": "Specific JS dollar-anchor trailing LF/CRLF defect only; absolute end match plus affected protocol cases. QB411 does not cover this newly found branch."
   }
 }

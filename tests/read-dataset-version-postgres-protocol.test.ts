@@ -67,3 +67,12 @@ test('flush rejects missing or invalid UPDATE RETURNING rows and remains closed'
     await assert.rejects(changes.flush(), { code: 'DATASET_VERSION_CHANGES_CLOSED' }); assert.equal(calls, 1);
   }
 });
+
+test('dataset version rejects real terminal LF and CRLF for both read and flush', async () => {
+  for (const value of ['0\n', '1\n', '1\r\n', '9223372036854775807\n']) {
+    const client = { async query() { return { rowCount: 1, rows: [{ dataset: 'SALES', revision: value }] }; } };
+    await assert.rejects(readDatasetVersion(client, 'SALES'), { code: 'INVALID_DATASET_VERSION' });
+    const changes = createDatasetVersionChanges(client); changes.mark('SALES');
+    await assert.rejects(changes.flush(), { code: 'INVALID_DATASET_VERSION' });
+  }
+});

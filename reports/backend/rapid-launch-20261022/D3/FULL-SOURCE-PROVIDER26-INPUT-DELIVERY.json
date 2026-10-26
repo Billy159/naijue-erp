@@ -2,7 +2,7 @@
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
   "recordedAtUtc": "2026-10-26T11:11:07.604150+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "SOURCE673_RUNTIME_GUARD_ADOPTED_EXACT_SUCCESSOR_INPUTS_READY_NOT_ACTUAL_PREPARED",
+  "status": "SOURCE682_LINEAR_PREPARER_SUCCESSOR_METADATA_READY_AWAIT_C_QB_NOT_RUN",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
     "bytes": 114692,
@@ -158,7 +158,7 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
   ],
-  "next": "T45 exact new source-only successor from preserved132 source/inputs with original guard673 overlay; no re-run old job132, no new keys or source remapping.",
+  "next": "Await C adoption of SOURCE682 scoped QB; T45 prepares exact new carrier from preserved134 source with only preparer overlay, 900s unchanged, no old134 rerun.",
   "source620": {
     "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
     "implemented": [
@@ -1314,5 +1314,106 @@
       "Any DB/MAIN/publish"
     ],
     "ownership": "T45 sole real source/server executor; D3 only original provider/consumer descriptor handoff. Inventory compact-wire work awaits separately bounded C scope after this handoff; no concurrent reader leaf writes."
+  },
+  "source682LinearPreparationSuccessor": {
+    "status": "EXACT_SUCCESSOR_REFERENCE_PREPARED_QB_IN_PROGRESS_NO_RUN_AUTHORIZATION_BY_THIS_METADATA",
+    "fixedSource": "SOURCE682; C-provided source pin authoritative; no D3 git action",
+    "runtimeOverlay": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.mjs",
+        "bytes": 40456,
+        "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd"
+      }
+    ],
+    "testPin": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.test.mjs",
+      "bytes": 20374,
+      "sha256": "731111d430b22c83e2514ca632ed22e58e2211a348eeeedb2b0e85596968ebe8"
+    },
+    "preserveCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 114692,
+        "sha256": "f9d2d8b3398ea4332e87e7aa4679736b6b5cefc9fd47062c117540e0b520c0a2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      }
+    ],
+    "preservedActual134Plan": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-reviewtime-successor-20261026-134/bundle/PLAN.json",
+      "bytes": 7379,
+      "sha256": "d6b39b0fd29bba8d6f8c76747ba77a5d9b4ddcbc218e61100a487f97bc6a0d6e"
+    },
+    "preservedActual134Scope": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-reviewtime-successor-20261026-134/bundle/source-scope.json",
+      "bytes": 22327,
+      "sha256": "65c52a41f75b55287e672dcfc199a13afe9274e4ea8429ae00587a4cfcfe6bc5"
+    },
+    "preservedActual134OperatorInput": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-reviewtime-successor-20261026-134/bundle/source-input.json",
+      "bytes": 187555,
+      "sha256": "f0b395fa5c69ff541625d90fb0c657345e4ed644e5efb3f3302b206e27d6de2a"
+    },
+    "serverSourceBase": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-reviewtime-successor-20261026-134/inputs/source",
+    "delta": "Copy preserved134 source to new root/job; overlay ONLY scripts/import-v3/prepare-native-bindings.mjs exact40456/26204d29. Original baseline group Map and native item identity/requestHash digest Map replace repeated searches; original hash algorithms, validation, order, streams, roots and command keys preserved.",
+    "scopePreserve": {
+      "registrationId": "c-full-source-preparation-20261026-01",
+      "requestKeysReference": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-reviewtime-successor-20261026-134/bundle/source-scope.json",
+        "jsonPointer": "/requestKeys",
+        "bind": 1,
+        "account": 107,
+        "publish": 1
+      },
+      "chunkRows": 500,
+      "artifactRowsReference": {
+        "file": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-reviewtime-successor-20261026-134/bundle/source-scope.json",
+        "jsonPointer": "/artifactRows"
+      },
+      "sourceManifestRef": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v3-barcode-amendment/effective-import-selection.json",
+      "verifiedCurrent": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-core-continuation-preparation-readonly-20261026-125/inputs/core-continuation.json",
+        "bytes": 41835,
+        "sha256": "96b426c34ebb41fa7d7962af866d7d05469792fe7b43bd30f0f9cdd43b42b1a1"
+      },
+      "warehouseStockScope": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/bundle/warehouse-scope.json",
+        "bytes": 5299,
+        "sha256": "35a5fe3d08a0f23d5dc98e2b422702a1f991ea508a88cab6c675e969c2d55c88"
+      },
+      "baselineBusinessDate": "2026-10-04"
+    },
+    "operatorAdaptation": [
+      "T45 binds actual new job/sourceRoot/operatorINPUT path and new deadline/outputParent, copies same old logical DATA identities and actual124/125/24 original physical refs. No data remap or whole-closure recopy/hash scan.",
+      "Provider authorityModule exact f9d2d8b stays, imported C144 reader4640e4bb and runtime guard673 a34acfb8 preserved. Only helper overlay changes. New process imports new source tree; no inplace old134 mutation.",
+      "Keep first109 keys and registration, confirm necessary writer residue if needed without rerunning source before wx; never change registration to bypass existing files.",
+      "Retain original safe phase/errorCode carrier and maxSeconds900. Fresh absolute deadline must permit the same bound; do not extend budget or silently retry."
+    ],
+    "executionBoundary": {
+      "maxSeconds": 900,
+      "databaseConnected": false,
+      "MAINOrPublishExecuted": false,
+      "grantIssued": false,
+      "applicationChanged": false,
+      "runNow": false,
+      "releaseGate": "Original scoped QB PASS plus C exact new-carrier authorization, T45 sole actual executor"
+    },
+    "actual134Evidence": "FAILED2/901.237644947s/ORIGINAL_BINDINGS_AND_STREAMS/PRODUCTION_PROVIDER26_CLOSED. Source carrier setTimeout abort900; no complete DATA/EXPECTED/MAIN success. Exact inner consumed stage unknown; new optimization is not actual success.",
+    "checksReused": "D1 exact2 source hash verified; finite same-result/digest and original build/resume+new refusal tests reported4PASS. D3 does not repeat tests or actualsource read. Synthetic speedup is not actual production performance proof.",
+    "notRun": [
+      "New actual source-only successor",
+      "Full private DATA/EXPECTED/MAIN output",
+      "Any PG/stage/MAIN/grant/APP change"
+    ],
+    "D3ProductionChanges": false,
+    "largeBodiesRead": false
   }
 }
