@@ -6283,5 +6283,13 @@
       "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
     ],
     "scope": "Source-only extension of original isolated fixture lifecycle for same existing QA identity and committed07. Existing guard and actual setup UPDATE/session privileges must be proved by T45 before execution. No grant/guard/schema/sourceactor changes, no formal reset/admin impersonation, no seed or fixture rebuild. Reuse original parent memory secret/session/factory/cleanup; unknown commit read-only recovery, no second update."
+  },
+  "source688PreparationProgress": {
+    "D3": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs"
+    ],
+    "T45": "Original new diagnostic carrier/result whitelist only; no shared helper or data mutation",
+    "scope": "Minimal fixed-size enum/count/done/elapsed progress on existing source-only generators and merged streams, transparent original yield/order/close/errors. No business values/paths/IDs/extra reads/hashes/cache/platform. Existing error code/object preserved, bounded result snapshot. Finite synthetic tests before a separate C-authorized bounded actual diagnostic, no full replay or timeout extension."
   }
 }
