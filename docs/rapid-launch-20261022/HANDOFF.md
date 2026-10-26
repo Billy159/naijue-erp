@@ -1,3 +1,7 @@
+SOURCE603即时补正：原QB354随后对SOURCE598真实上游头发现G02：上游nosniff加proxy固定add会重复，实际singleheader检查将失败。107保持disabled、旧QB354保留但不作启用依据；原T45只在3候选loc hide上游两securityheader后add原准确2头，原QB仅此revision精确pin复核，不重103/105/106或旧压缩。另immutable字面无空格已按真实host纠正。以下603初始通过是保留的当时结论，不覆盖本补正。
+
+SOURCE603（2026-10-26）：QB354原107最后delta限定源PASS23869549，G01/R01关闭且初始发现保留；固定carrier73b10623。关键响应现在要求singleCC/HTMLguest与errornostore/JSimmutable/nosniffDENY、正式rootbodyheaders守恒；仅3秒允许准确old14或受限定暂态502/503/504，最终仍须精确CORE17 200+SHA+headers。失败不假恢复已停91，不做SQLinverse。C采用，351/352/353/354四载体源审已齐交原T45直接实际103→fresh131原QB→105/107/106，不再主控重验/等新方案。108已实际安装；新APP/SQL/route/续导仍待真实回执，整页与真实业务未增加通过，正式根未切，目标ACTIVE。
+
 SOURCE602（2026-10-26）：原QB351/352/353分别通过103准确v19→v20/old91gracefulclose+drain、105CORE17首全验启动、106保4489/indexoffset仅续23793三个prepared源范围，C采用并交原T45继续，不重技术验收。实际131/socketTCP双用途review仍需真实执行后原QB，不预签。107新route仅两准确缺口交原T45：补新缓存/原安全响应头关键实测、纠正旧14/91引用并有界处理旧上游已停502，最终仍要求新版本精确200；失败只复此范围，不让前三载体重复审。当前108已安装/旧APP尚未停，正式根和整页真实业务状态未变，目标ACTIVE。
 
 SOURCE601（2026-10-26）：108实际CORE17独立安装COMPLETED0/11.538s，finish04:42:32.160038Z、payload2382b412；111依赖与32nonweb/native证明按原算法复用，0npmci/0新native运行，原20服务前后一致。C直接采用原owner运维回执，不另排重复安装验收；未启动新APP/未改PG/未切route或正式根。103/105/107/106新差异载体由T45准备并沿原QB一次影响审，真实131元数据双用途及APP首全验后续；剩23793仍无scheme初始化依赖，4489不重导。当前用户可见仍CORE14正常只读范围，完整业务和37/67全状态验收未增加，目标ACTIVE。
