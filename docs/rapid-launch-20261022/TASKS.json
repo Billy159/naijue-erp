@@ -14568,6 +14568,54 @@
       "source672RemoteVerified": "1dc6c6bc0d318ad0019032d5e6bb13e1fa23a601",
       "v20": "SOURCE_READY_QA_PENDING",
       "B07": "06 accurate package adopted; T45 actual authorized; collect only"
+    },
+    "latestSource674": {
+      "summary": "SOURCE674：QB407限定源PASS bbe0ff5d已采用（v20固定673/93d5856，一生产叶strictUTC3或6/原文保，原SQL/hash/CORE不改），原D3已真正消费并交105065/b9127c2a最新DELIVERY，source673ActualPreparationSuccessor精确继承132 actual input/scope/actual124125/DATA/109首keys；T45已明确只copy132新root+guard a34acfb8 overlay生成新source-only，不等B07/人类/重132133。原06实际15:25:00.574→15:30:02.253Z/301.671s终态无HTTP/无review/gate，clients/ownworkers/ownPG均闭；准确ValueError根因Python3.9对PG短offset+08解析，QB408 pureutc局部临时串适配+现存6时间field全部parse PASS，原文本身份hash不动；T45消费端56e69877同窄修PASS，旧06不覆不late。07仅locator/config准备，供16:00Z/start≤15:45/90086040/300，包齐C另准不重06。用户在任务书直接01a178cf要求推进未消费队列已C核：D1释放v20后接T15实际版本/summary/所有writer尾失效精确差异（结构/写合同变化集中确认，不先造缓存平台），T16核已做next；D3下一compact wire只冻结真实read合同，不并写导入reader；F2待此合同接adapter/虚拟cell，解除owner D3/C；F1/F3/F4/D2原交付已完等具体接线/候选，不造巡检填槽。673远端93d5856已核，整体ACTIVE，完整MAIN/历史可写/全站正式发布未完成。",
+      "source673RemoteVerified": "93d5856096cc1f413c95e3859065df6ab7cba7af"
+    },
+    "liveQueues674": {
+      "D3": {
+        "status": "ACTIVE_HANDOFF_DONE",
+        "current": "source673ActualPreparationSuccessor delivery to T45",
+        "next": "compact inventory wire read contract only",
+        "dependency": "T45 exact new carrier and actual source-only result",
+        "unblockOwner": "T45/C"
+      },
+      "T45": {
+        "status": "ACTIVE",
+        "current": "new source-only copy132 + approved guard overlay; B07 pure-time-parser successor preparation",
+        "next": "actual source-only -> exact outputs -> independent execution authorization/stage/MAIN/PUBLISH",
+        "dependency": "exact new carrier pins; C bounded window adoption",
+        "unblockOwner": "T45/C"
+      },
+      "D1": {
+        "status": "ACTIVE",
+        "current": "T15 version/summary/writer-tail exact implementation delta; small B07 locator first",
+        "next": "T16 map check and approved narrow implementation",
+        "dependency": "scope or new structure/write-contract approval only if actually needed",
+        "unblockOwner": "D1/C/user if new contract"
+      },
+      "F2": {
+        "status": "WAITING_EXACT_READ_CONTRACT",
+        "current": "source638 projection done and accepted scoped evidence reused",
+        "next": "compact-wire adapter/virtual cell seam",
+        "dependency": "D3 exact read DTO and owner boundary",
+        "unblockOwner": "D3/C"
+      },
+      "QB": {
+        "status": "ACTIVE_SCOPED",
+        "current": "source v20 PASS adopted; pure B07 parser fix PASS adopted",
+        "next": "new exact carrier/current runtime targeted acceptance",
+        "dependency": "immutable exact new carrier and actual outputs",
+        "unblockOwner": "T45/C"
+      },
+      "F1_F3_F4_D2": {
+        "status": "COMPLETED_HANDOFF_WAITING_REAL_READY_INPUT",
+        "current": "preserve prior delivered/accepted source",
+        "next": "specific real-wired candidate/module acceptance or exact new fix",
+        "dependency": "accurate integration/input; no repeated old UI audits",
+        "unblockOwner": "C/T45"
+      }
     }
   }
 }

@@ -2,7 +2,7 @@
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
   "recordedAtUtc": "2026-10-26T11:11:07.604150+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "ACTUAL124_DATA_LOCATIONS_BOUND_CODE_INSTALL_AND_FULL_EXECUTION_PENDING",
+  "status": "SOURCE673_RUNTIME_GUARD_ADOPTED_EXACT_SUCCESSOR_INPUTS_READY_NOT_ACTUAL_PREPARED",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
     "bytes": 114692,
@@ -158,7 +158,7 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
   ],
-  "next": "C freeze actual124 metadata update; T45 bind accepted exact6 CODE then original source624 real assembly. Do not retransmit/reverify original26 DATA or54 old files.",
+  "next": "T45 exact new source-only successor from preserved132 source/inputs with original guard673 overlay; no re-run old job132, no new keys or source remapping.",
   "source620": {
     "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
     "implemented": [
@@ -1193,5 +1193,126 @@
       "PG/STAGE/MAIN/publish"
     ],
     "next": "C freeze -> QB only packed ordinal delta -> T45 exact new source-only bounded successor with preserved first keys/registration and safe phase carrier."
+  },
+  "source673ActualPreparationSuccessor": {
+    "status": "READY_FOR_T45_EXACT_SOURCE_ONLY_SUCCESSOR_WITH_C_APPROVED_GUARD_OVERLAY",
+    "humanApproval": "C direct human call_981ade; v20 UTC milliseconds/original microseconds narrow compatibility approved; no pending user question",
+    "fixedSource": {
+      "id": "SOURCE673",
+      "commit": "93d5856096cc1f413c95e3859065df6ab7cba7af",
+      "independentSourceReview": "QB407 PASS2857/bbe0ff5d5ded17d34b8e55ecb070d53a53248f60837eb0688265a97bc98536e4; adopted by C"
+    },
+    "runtimeOverlay": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      }
+    ],
+    "preserveCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 114692,
+        "sha256": "f9d2d8b3398ea4332e87e7aa4679736b6b5cefc9fd47062c117540e0b520c0a2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.mjs",
+        "bytes": 40235,
+        "sha256": "b63e7a2356f201dee08bdecb63634971e5a64e7a46f329db622f1a0178fc0c6e"
+      }
+    ],
+    "inputCandidate": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+      "bytes": 182293,
+      "sha256": "2bcc8a32496063213dd58ecd49b22383834f0d97ed3510fd07628e8a3ec74810"
+    },
+    "inputCandidateMeaning": "Logical original descriptor unchanged; binding/closureScope/native3 specs exactly equal actual132 operator INPUT. Operator physical CODE/sourceRoot/path rebinding remains T45 actual new carrier responsibility, without changing logical DATA identities.",
+    "preservedActual132OperatorInput": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-transfer-ordinal-successor-20261026-132/bundle/source-input.json",
+      "bytes": 187567,
+      "sha256": "4a6cb53ceaf92f488654f661d7905dc1069865e0a98d1c07431902f8b71ad8cf"
+    },
+    "preservedActual132Scope": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-transfer-ordinal-successor-20261026-132/bundle/source-scope.json",
+      "bytes": 22339,
+      "sha256": "58f95edf89d2b1eea83fe952eceef916bde1c24addd5a08c105c98f8ea3294af"
+    },
+    "preservedActual132Plan": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-transfer-ordinal-successor-20261026-132/bundle/PLAN.json",
+      "bytes": 7386,
+      "sha256": "9ac455c9bce1a94226c312d9e4434d6f1da06b3a55494a9fad4bc94a75f7282b"
+    },
+    "serverBaseSource": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-transfer-ordinal-successor-20261026-132/inputs/source",
+    "serverBaseOperatorInput": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-transfer-ordinal-successor-20261026-132/bundle/source-input.json",
+      "bytes": 187567,
+      "sha256": "4a6cb53ceaf92f488654f661d7905dc1069865e0a98d1c07431902f8b71ad8cf"
+    },
+    "actual124DataPhysicalMappings": "Keep all original DATA locations/pins from actual132 INPUT, including124 retained26 and122/123 exact corrections; no recopy/re-hash old closure.",
+    "verifiedCurrent": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-core-continuation-preparation-readonly-20261026-125/inputs/core-continuation.json",
+      "bytes": 41835,
+      "sha256": "96b426c34ebb41fa7d7962af866d7d05469792fe7b43bd30f0f9cdd43b42b1a1"
+    },
+    "warehouseStockScope": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-full-source-private-preparation-20261026-126/bundle/warehouse-scope.json",
+      "bytes": 5299,
+      "sha256": "35a5fe3d08a0f23d5dc98e2b422702a1f991ea508a88cab6c675e969c2d55c88"
+    },
+    "frozenFirstRequestKeys": {
+      "reference": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-full-source-transfer-ordinal-successor-20261026-132/bundle/source-scope.json",
+      "jsonPointer": "/requestKeys",
+      "bind": 1,
+      "account": 107,
+      "publish": 1,
+      "total": 109,
+      "replacementAllowed": false
+    },
+    "preservePreparationScope": {
+      "version": "PRODUCTION_SOURCE_ONLY_PREPARATION26_V1",
+      "registrationId": "c-full-source-preparation-20261026-01",
+      "sourceManifestRef": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/materialized-input-20261022/canonical-normalized-private-20261021-v3-barcode-amendment/effective-import-selection.json",
+      "chunkRows": 500,
+      "baselineBusinessDate": "2026-10-04"
+    },
+    "sourceFacts": {
+      "warehouses": 53,
+      "originalClaimedCoreWarehouses": 22,
+      "remainingWarehouseItems": 31,
+      "skuMemberships": 14999,
+      "effectiveStockBaselineItems": 38303,
+      "stockContributors": 38314,
+      "sourceGroups": 11,
+      "remainingMainItems": 53333
+    },
+    "newCarrierInstructions": [
+      "Copy preserved132 source tree into new job source path; overlay exact SOURCE673 packages/application/src/native-import-record-accounting.ts20974/a34acfb8. Never edit preserved old132 source tree.",
+      "Keep provider f9d2d8b and imported C144 reader4640e4bb and original624 preparer b63e7a23 plus same6 support modules; new process imports actual exact new source tree so old JS/TS module cache is not reused.",
+      "Derive successor scope from original132 scope byte-preserved requestKeys,registration,artifactRows,selection/binding,core125,24zero decision. Bind ONLY actual new deadline and explicit operator INPUT physical ref/outputParent; T45 establishes real paths, no invented prefixes.",
+      "Operator INPUT retains all logical DATA paths/bytesSHA and actual physical DATA locations. Explicit C144 sourceRoot/module path may rebind to actual same-version new source tree; original producer/closure semantics stay.",
+      "Use original public prepareProductionSourceOnly26 and safe code+phase carrier. This is new exact code successor, never restart old126/130/131/132 job.",
+      "Original109keys and first registration remain; previous outputs were not successful. Before wx writer if required T45 confirms actual residue for last132; do not overwrite/mint alternate registration to evade EEXIST.",
+      "No SQL,PG,stage,MAIN,publish,grant,APP or route changes. Success yields genuine private DATA/EXPECTED/MAIN candidate only, then C separate review/grant."
+    ],
+    "newRuntimeBehavior": "Original native membership timestamp predicate accepts original canonical UTC3 or UTC6 text. Text/sourceRecord/creatorJSON/core22 hash/SKUprepared fingerprints remain unchanged; no normalization/padding/date reconstruction; no UTC0 or arbitrary fractions.",
+    "checksReused": [
+      "Actual133 actual53warehouse exact shapes and MILLI_Z failure evidence retained; not real retest.",
+      "D1 new targeted4 PASS and QB407 new source PASS adopted; D3 does not rerun same validator checks or original11 test suites.",
+      "Metadata-only equality check confirms local logical INPUT binding/closureScope/native3 specs match actual132 operator INPUT. Exact current runtime/provider/reader/preparer pins verified."
+    ],
+    "actualExecutionByD3": false,
+    "actualDataPreparationPassed": false,
+    "realGrantIssued": false,
+    "notRun": [
+      "New real source-only successor after673",
+      "Full private DATA/EXPECTED/MAIN output validation",
+      "Any DB/MAIN/publish"
+    ],
+    "ownership": "T45 sole real source/server executor; D3 only original provider/consumer descriptor handoff. Inventory compact-wire work awaits separately bounded C scope after this handoff; no concurrent reader leaf writes."
   }
 }
