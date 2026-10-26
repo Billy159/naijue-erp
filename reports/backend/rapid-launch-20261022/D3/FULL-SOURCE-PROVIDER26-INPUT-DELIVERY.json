@@ -2,21 +2,21 @@
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
   "recordedAtUtc": "2026-10-26T11:11:07.604150+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "SOURCE688_BOUNDED_PROGRESS_IMPLEMENTED_FINITE_CHECKS_ONLY_AWAIT_C_QB_SHORT_DIAGNOSTIC",
+  "status": "SOURCE693_FIXED1000_SOURCE_PROBE_READY_FINITE_ONLY_NOT_RUN",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "bytes": 117898,
-    "sha256": "601b34980b16f50f64086f02573dc13c645b5da07e3a73a10e78cede93e255c5"
+    "bytes": 118641,
+    "sha256": "e7960bf4c1bcd436998dc2c70f9b9a3763a76fd87dae46227fe5593ea51fb248"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 151868,
-    "sha256": "a51ebaccb8126ee7b1dd81f2e70382e4ab7ea686d34d145abfe241a38dab507f"
+    "bytes": 154924,
+    "sha256": "4ac4ace67f6696ae01228daca8ae0962159fc3424e3e6aa2f4e2829d74bef41e"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
     "bytes": 182293,
-    "sha256": "15f349116ef63948e342277fcc87dfcc74f383275a81cb3681850417fe4b1ae3"
+    "sha256": "158c8a5b8feb0fd7f42331c49e223cc814f21716d56971f6c438fb61a99348e4"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -158,7 +158,7 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
   ],
-  "next": "C freeze source688 provider/test -> scoped QB -> T45 new120s diagnostic carrier with150s hard cap, no new900s full retry or extension.",
+  "next": "C freeze scoped source QA -> T45 prepare exact diagnostic-only210s soft/hard240 carrier -> C separately authorizes; no900 full retry.",
   "source620": {
     "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
     "implemented": [
@@ -1535,5 +1535,78 @@
     ],
     "largeBodiesRead": false,
     "D1HelperOrSharedClosureModified": false
+  },
+  "source693TargetedSourceProbe": {
+    "status": "IMPLEMENTED_FINITE_CHECKED_NOT_REAL_RUN",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 118641,
+        "sha256": "e7960bf4c1bcd436998dc2c70f9b9a3763a76fd87dae46227fe5593ea51fb248"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 154924,
+        "sha256": "4ac4ace67f6696ae01228daca8ae0962159fc3424e3e6aa2f4e2829d74bef41e"
+      }
+    ],
+    "entry": "prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal,diagnosticMode:'STOP_AFTER_1000_MERGED_SOURCE_ROWS'})",
+    "normalEntry": "Omit diagnosticMode or pass null; original complete preparation behavior unchanged. Any other value rejects SOURCE_PREPARATION26_DIAGNOSTIC_MODE before source load.",
+    "parameterBoundary": "diagnosticMode is a fixed literal in C-reviewed carrier call, never a source INPUT/scope/DATA/hash/grant field. Operator scope JSON exact schema unchanged. No probe field added to error/result schema.",
+    "preserved": [
+      "Original complete native3 prepared validation/byteSHA/EOF/facts collection",
+      "Real DATA derivation, remaining11 open/document allocations, original preparer item/current/baseline validation",
+      "Original request hashes/ordering/source identity and109keys/firstregistration",
+      "Original all11 stream merge/lifecycle/current guards and per-group vs merged progress"
+    ],
+    "stopSemantics": "At each merged source yield, count increments immediately before yielding the same original row to D1. When D1 resumes after consuming row1000, wrapper throws DIAGNOSTIC_LIMIT_REACHED BEFORE requesting another merged iterator item. Shared merge may already have one prefetched head per group; per-group counts can exceed merged count. No request for merged row1001. for-await IteratorClose then original shared sessions close. If source EOF occurs with fewer than1000, done=true but the same diagnostic code throws before typed iteration. If original preparer unexpectedly returns without stop, diagnostic guard throws before return/writer. No complete expected/commands/files or source approval produced.",
+    "failureResult": "Original sourcePreparationPhase stays ORIGINAL_BINDINGS_AND_STREAMS for intentional stop; original error.code DIAGNOSTIC_LIMIT_REACHED; original sourcePreparationProgress7stage shape unchanged. At1000 stop stage PREPARER_SOURCE_STREAM,merged.sourceRows.count1000,donefalse; EOF<1000 stage PREPARER_SOURCE_DONE,done true. typed.started false. Prior validator/signal error keeps its original code/phase and safe snapshot rather than being replaced by limit code.",
+    "T45Carrier": "Only add fixed diagnosticMode literal above to original public call; retain existing safe errorCode/sourcePreparationPhase/progress whitelist exactly. Diagnostic limit is intentional STOP_DIAGNOSTIC, not full preparation success or executionReady. No added probe JSON fields, rawmessage, stack, IDs or content.",
+    "budget": {
+      "softSeconds": 210,
+      "carrierProcessCeilingSeconds": 225,
+      "hardSeconds": 240,
+      "meaning": "New fixed1000-row diagnostic target based on prior145–150s native/open front pass; not extension/replay of old900 task. Abort/error prior to first source records actual progress and stops without increasing budget. Actual C authorization separate."
+    },
+    "actual137": "120.954262872s; NATIVE_FACTS_STOCK_CONTRIBUTORS/PREPARER_NOT_ENTERED; nativeProducts30/2956,SKU14999/15121,stock27319/27330; merged/group unstarted. This measures native front pass only and is not136900 callback attribution.",
+    "artifactReuse": "Current native3 facts/index exist only in process RAM and are cleared on close. Original recipes have prepared files/helper, no adopted current-generation fact artifact;136outputs empty. Barcode/TL indexes do not replace native3. No skip/readiness substitution or cache introduced.",
+    "checks": {
+      "newDistinctTests": 2,
+      "newPASS": 2,
+      "newFAIL": 0,
+      "normalAffectedCheck": "Original finite traced/untraced all11+D1 entire result hash equivalence test PASS1; rechecked because same wrapper now takes optional diagnostic parameter.",
+      "command": "node --test --test-reporter=spec '--test-name-pattern=source693|source688 progress preserves complete' scripts/import-v3/production-source-provider26.test.mjs",
+      "covered": [
+        "2000-row finite source fetched exactly1000, delivered same objects1000; underlying finally once; no typed start.",
+        "Finite original11+D1 source EOF<1000 stops diagnostic before typed/full commands/output; all11 sessions reverse-close.",
+        "Public entry with incomplete verifiedCurrent still rejects original validation before source; invalid diagnostic literal rejects; no registration output.",
+        "Normal mode source result/roots/commands exact unchanged in finite original prepared comparison."
+      ]
+    },
+    "runtimePreserve": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.mjs",
+        "bytes": 40456,
+        "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      }
+    ],
+    "notRun": [
+      "Actual210s/fixed1000 probe",
+      "Full actual DATA/EXPECTED/MAIN",
+      "Any PG/MAIN/PUBLISH/grant/APP"
+    ],
+    "D1HelperOrSharedBuilderChanged": false,
+    "sourceBodyReadLocally": false,
+    "runAuthorizedByThisDocument": false
   }
 }

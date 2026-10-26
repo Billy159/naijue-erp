@@ -640,12 +640,17 @@ export function createSourcePreparationProgress26(){
  const groups=Object.fromEntries(sourceGroups.map(group=>[group,{sourceRows:counter(),typedRows:counter(),documents:counter()}]));
  const merged={sourceRows:counter(),typedRows:counter()},nativeFacts=Object.fromEntries(['PRODUCTS','SKUS','STOCK_CONTRIBUTORS'].map(group=>[group,{records:0,sourceRows:0}]));
  let stage='PREPARER_NOT_ENTERED';
- async function* rows(input,state,kind){
+ async function* rows(input,state,kind,diagnosticMode=null){
   state.started=true;state.lastProgressElapsedMs=elapsed();
   if(kind)stage=kind==='sourceRows'?'PREPARER_SOURCE_STREAM':'PREPARER_TYPED_STREAM';
-  for await(const row of input){state.count++;state.lastProgressElapsedMs=elapsed();yield row;}
+  for await(const row of input){state.count++;state.lastProgressElapsedMs=elapsed();yield row;
+   // Stop after the consumed yield, BEFORE requesting source row1001. The
+   // enclosing for-await performs the original IteratorClose on this throw.
+   if(kind==='sourceRows'&&diagnosticMode!==null&&state.count===1000)must(false,'DIAGNOSTIC_LIMIT_REACHED');
+  }
   state.done=true;state.lastProgressElapsedMs=elapsed();
   if(kind)stage=kind==='sourceRows'?'PREPARER_SOURCE_DONE':'PREPARER_TYPED_DONE';
+  if(kind==='sourceRows'&&diagnosticMode!==null)must(false,'DIAGNOSTIC_LIMIT_REACHED');
  }
  return Object.freeze({
   nativeFact(group,sourceRows){const state=nativeFacts[group];state.records++;state.sourceRows+=sourceRows;},
@@ -655,7 +660,7 @@ export function createSourcePreparationProgress26(){
    if(Object.getPrototypeOf(raw)!==Object.prototype||Reflect.ownKeys(raw).length!==5||!['verify','sourceRows','typedRows','documents','close'].every(key=>descriptors[key]?.enumerable&&Object.hasOwn(descriptors[key],'value')&&typeof descriptors[key].value==='function'))return raw;
    const wrapped={...raw};for(const kind of ['sourceRows','typedRows','documents']){const fn=descriptors[kind].value;wrapped[kind]=()=>rows(fn(),groups[group][kind]);}return wrapped;
   }]));},
-  streams(original){stage='PREPARER_BEFORE_FIRST_SOURCE';return{...original,sourceRows:rows(original.sourceRows,merged.sourceRows,'sourceRows'),typedRows:rows(original.typedRows,merged.typedRows,'typedRows')};},
+  streams(original,diagnosticMode=null){must(diagnosticMode===null||diagnosticMode==='STOP_AFTER_1000_MERGED_SOURCE_ROWS','SOURCE_PREPARATION26_DIAGNOSTIC_MODE');stage='PREPARER_BEFORE_FIRST_SOURCE';return{...original,sourceRows:rows(original.sourceRows,merged.sourceRows,'sourceRows',diagnosticMode),typedRows:rows(original.typedRows,merged.typedRows,'typedRows')};},
   returned(){stage='PREPARER_RETURNED';},
   snapshot(){return{version:'SOURCE_PREPARATION_PROGRESS26_V1',stage,elapsedMs:elapsed(),nativeFacts:Object.fromEntries(Object.entries(nativeFacts).map(([group,value])=>[group,{...value}])),merged:Object.fromEntries(Object.entries(merged).map(([kind,value])=>[kind,{...value}])),groups:sourceGroups.map(group=>({group,...Object.fromEntries(Object.entries(groups[group]).map(([kind,value])=>[kind,{...value}]))}))};}
  });
@@ -665,10 +670,11 @@ export function createSourcePreparationProgress26(){
  * execution authority, stage/execute methods or substitute payload hash. The
  * original frozen D1 helpers derive the DATA hash and command files only after
  * genuine original files, membership facts and all11 streams have closed. */
-export async function prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal}){
+export async function prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal,diagnosticMode=null}){
  let preparationPhase='SCOPE';const progress=createSourcePreparationProgress26();
  try{
  must(signal instanceof AbortSignal&&!signal.aborted,'SOURCE_PREPARATION26_ABORTED');
+ must(diagnosticMode===null||diagnosticMode==='STOP_AFTER_1000_MERGED_SOURCE_ROWS','SOURCE_PREPARATION26_DIAGNOSTIC_MODE');
  const scopeBytes=await pinnedSmall(preparationFile,trustedPreparationSha256),scope=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(scopeBytes));capture(scope);
  const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
  const keys=['version','registrationId','deadlineUtc','input','verifiedCurrent','warehouseStockScope','artifactRows','sourceManifestRef','requestKeys','chunkRows','baselineBusinessDate','outputParent'];
@@ -743,8 +749,8 @@ export async function prepareProductionSourceOnly26({preparationFile,trustedPrep
   const closureScope=await session.bindRealData(data);await verify();
   const {consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs');
   preparationPhase='ALL11_CLOSURE';const prepared=await consumeAuthorizedHistoryClosureStreams26({scope:closureScope,openSources:progress.factories(session.openSources),trustedSelectionSha256:short.selectionSha256,trustedAuthorizedPayloadHash:closureScope.authorizedPayloadHash},
-   async originalStreams=>{preparationPhase='ORIGINAL_BINDINGS_AND_STREAMS';const streams=progress.streams(originalStreams);const result=await prepareFullSourceBindings26({data,sourceRows:streams.sourceRows,typedRows:streams.typedRows,documents:streams.documents,warehouses:coreData.warehouses,skuMemberships,baselineItems,
-    verifiedCurrent:current,actorAccountId:input.binding.actorAccountId,sourceManifestRef:scope.sourceManifestRef,requestKeys:scope.requestKeys,chunkRows:scope.chunkRows});progress.returned();return result;});
+   async originalStreams=>{preparationPhase='ORIGINAL_BINDINGS_AND_STREAMS';const streams=progress.streams(originalStreams,diagnosticMode);const result=await prepareFullSourceBindings26({data,sourceRows:streams.sourceRows,typedRows:streams.typedRows,documents:streams.documents,warehouses:coreData.warehouses,skuMemberships,baselineItems,
+    verifiedCurrent:current,actorAccountId:input.binding.actorAccountId,sourceManifestRef:scope.sourceManifestRef,requestKeys:scope.requestKeys,chunkRows:scope.chunkRows});must(diagnosticMode===null,'DIAGNOSTIC_LIMIT_REACHED');progress.returned();return result;});
   await verify();preparationPhase='PRIVATE_WRITER';const written=await writeFullSourceBindings26({outputParent:scope.outputParent,registrationId:scope.registrationId,prepared});await verify();
   return{status:'ORIGINAL_FULL_SOURCE_BINDINGS_PREPARED_NOT_EXECUTION_AUTHORIZED',...written,sourceGroups:11,nativeSkus:skuMemberships.length,baselineItems:baselineItems.length,unrepresentedWarehouses:unrepresented,
    executionAuthorizationIssued:false,executionReady:false,DBConnected:false,MAINOrPublishExecuted:false};

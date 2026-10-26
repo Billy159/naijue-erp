@@ -834,3 +834,19 @@ test('source688 traced shared merge closes all original11 sessions on consumer f
  await assert.rejects(consumeAuthorizedHistoryClosureStreams26({...s.options,openSources:progress.factories(s.options.openSources)},async raw=>{const streams=progress.streams(raw);for await(const _ of streams.sourceRows)throw failure;}),e=>e===failure);
  assert.deepEqual(s.trace.closes,[...sourceGroups].reverse());const snapshot=progress.snapshot();assert.equal(snapshot.merged.sourceRows.count,1);assert.equal(snapshot.merged.sourceRows.done,false);assert.equal(snapshot.merged.typedRows.started,false);assert.ok(snapshot.groups.reduce((n,g)=>n+g.sourceRows.count,0)>=snapshot.merged.sourceRows.count);assert.equal(s.trace.streamFinally.filter(k=>k.endsWith('/sourceRows')).length,11);
 });
+
+test('source693 diagnostic mode stops before requesting row1001, closes source and never starts typed consumption',async()=>{
+ const {createSourcePreparationProgress26}=await import('./production-source-provider26.mjs'),progress=createSourcePreparationProgress26();let fetched=0,closed=0,typed=0;const row={synthetic:'same original row object'};
+ async function* sourceRows(){try{for(let n=0;n<2000;n++){fetched++;yield row;}}finally{closed++;}}
+ async function* typedRows(){typed++;yield row;}
+ const streams=progress.streams({sourceRows:sourceRows(),typedRows:typedRows(),documents:[]},'STOP_AFTER_1000_MERGED_SOURCE_ROWS');let consumed=0;
+ await assert.rejects(async()=>{for await(const actual of streams.sourceRows){assert.equal(actual,row);consumed++;}},e=>e.code==='DIAGNOSTIC_LIMIT_REACHED');
+ assert.equal(consumed,1000);assert.equal(fetched,1000);assert.equal(closed,1);assert.equal(typed,0);assert.equal(progress.snapshot().merged.sourceRows.count,1000);assert.equal(progress.snapshot().merged.sourceRows.done,false);assert.equal(progress.snapshot().merged.typedRows.started,false);
+});
+test('source693 finite all11 diagnostic preserves original prechecks and stops short-source EOF before typed closure or preparation output',async t=>{
+ const {createSourcePreparationProgress26,prepareProductionSourceOnly26}=await import('./production-source-provider26.mjs'),{consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs'),{prepareFullSourceBindings26}=await import('./prepare-native-bindings.mjs'),s=await sourcePreparationStreamFixture26(t),progress=createSourcePreparationProgress26();let produced=false;
+ await assert.rejects(consumeAuthorizedHistoryClosureStreams26({...s.options,openSources:progress.factories(s.options.openSources)},async raw=>{const streams=progress.streams(raw,'STOP_AFTER_1000_MERGED_SOURCE_ROWS');await prepareFullSourceBindings26({...s.f,...streams,data:s.f.data});produced=true;}),e=>e.code==='DIAGNOSTIC_LIMIT_REACHED');
+ assert.equal(produced,false);assert.equal(progress.snapshot().merged.sourceRows.count,s.f.sourceRows.length);assert.equal(progress.snapshot().merged.sourceRows.done,true);assert.equal(progress.snapshot().merged.typedRows.started,false);assert.deepEqual(s.trace.closes,[...sourceGroups].reverse());
+ const f=await sourceOnlyPreparationFiles26(t,{mutateCurrent:c=>{delete c.records;}});await assert.rejects(prepareProductionSourceOnly26({preparationFile:f.ref.path,trustedPreparationSha256:f.ref.sha256,signal:f.controller.signal,diagnosticMode:'STOP_AFTER_1000_MERGED_SOURCE_ROWS'}),e=>{assert.equal(e.code,'SOURCE_PREPARATION26_VERIFIED_CURRENT_REQUIRED');assert.equal(e.sourcePreparationPhase,'VERIFIED_CURRENT');return true;});
+ await assert.rejects(prepareProductionSourceOnly26({preparationFile:f.ref.path,trustedPreparationSha256:f.ref.sha256,signal:f.controller.signal,diagnosticMode:'SKIP_VALIDATION'}),e=>e.code==='SOURCE_PREPARATION26_DIAGNOSTIC_MODE');assert.ok(!(await f.readdir(f.directory)).includes(f.scope.registrationId));
+});
