@@ -6,7 +6,8 @@ import {createHash,randomBytes} from 'node:crypto';
 import {spawn} from 'node:child_process';
 import {setTimeout as delay} from 'node:timers/promises';
 import {withB07QaIdentityFixture,QA_IDENTITY,SQL as fixtureSql} from './qa-identity-schema19.mjs';
-import {runDraftNormalHistory} from './draft-normal-history-v16.mjs';
+import {runDraftNormalHistory,runDraftNormalHistoryCommittedContinuation} from './draft-normal-history-v16.mjs';
+import {withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,credentialPermissionProofFromOriginal} from './qa-identity-credential-renewal.mjs';
 const must=(ok,code)=>{if(!ok)throw Error(code);};
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const P='/Users/billy/Desktop/Workspace/project-007-业务管理系统';
@@ -161,6 +162,41 @@ async function originalChild(plan,kind,directory){
  must(result.status===child.expectedStatus&&result.clientsEnded!==false&&result.clientEnded!==false,'B07_ORIGINAL_CHILD_RESULT_REQUIRED');
  return result;
 }
+async function runOrdinaryHistoryScope({plan,input,successor,withNormalSession,result,resources,runHistory=runDraftNormalHistory,committedContinuation}){
+ const at=p=>import(pathToFileURL(resolve(input.sourceRoot,p)).href);
+    const gate=await waitForPurposeGate(plan.purposeGateFile,plan.purposeWaitMs);
+    must(gate?.format==='B07_CURRENT_NORMAL_HISTORY_PURPOSE_GATE_1','B07_CURRENT_PURPOSE_GATE_REQUIRED');
+    const template=JSON.parse((await pinned(gate.runtimeConfiguration)).toString('utf8'));
+    const config=prepareOrdinaryConfiguration(template,input.target);
+    const draft=JSON.parse((await pinned(gate.draftInput)).toString('utf8'));
+    const review=JSON.parse((await pinned(gate.review,65536)).toString('utf8'));
+    must(review.catalog?.patchLevel===EFFECTIVE_VALUE_PROFILE&&review.catalog?.sha256===successor.catalogSha256,'B07_NEW_V21_REVIEW_REQUIRED');
+    must(config.runtime26Review.reviewFile===gate.review.path&&config.runtime26Review.trustedReviewSha256===gate.review.sha256,'B07_EXACT_PURPOSE_PIN_REQUIRED');
+    const pg=config.postgres.target,t=input.target;must(pg.user===successor.ordinaryRole,'B07_EXACT_SUCCESSOR_ORDINARY_ROLE_REQUIRED');
+    must(pg.database===t.database&&pg.host===t.unix_socket_directories&&pg.port===t.port&&pg.ssl===false&&pg.user===review.target.actingRole
+     &&review.target.database===t.database&&review.target.databaseOid===t.oid&&review.target.sessionUser===pg.user
+     &&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_CURRENT_NONOWNER_REVIEW_REQUIRED');
+    must(draft.actor.accountId===QA_IDENTITY.accountId&&draft.actor.hallId===null&&draft.target.database===t.database&&draft.target.oid===t.oid&&draft.target.role===pg.user
+     &&draft.sourceRoot===input.sourceRoot&&draft.origin===config.publicOrigin,'B07_EXPLICIT_QA_SUCCESSOR_INPUT_REQUIRED');
+    const {Pool}=await at('node_modules/pg/esm/index.mjs');
+    // Exact ordinary-role sessions only; preserve the postmaster default and
+    // shared HBA. Normal auth/HREV BEGIN must not inherit diagnostic READ ONLY.
+    const driver=ordinaryDriver(Pool);
+    const {createProductionRuntime26HistoryRevisionApplicationApi}=await at('apps/api/src/production-provider-composition.ts');
+    const {BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts');
+    const {createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
+    const api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'},driver);
+    resources.api=api;
+    const readPool=new BoundedPostgresPool(config.postgres,driver);resources.readPool=readPool;
+    const issuer=await createNativeRuntime26Issuer(readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
+    await withNormalSession(api,async({privateCookie})=>{
+     try{
+      const actual=await runHistory({api,pool:issuer.pool,runtime26:issuer.runtime26,input:draft,privateCookie,...(committedContinuation?{committedContinuation}:{}),
+       recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),recordObservation:value=>record(plan.outputDirectory,'HTTP-'+value.phase+'-'+value.comparisonStage+'.json',value),readBackgroundFailureCount:()=>api.postgresBackgroundFailureCount+readPool.backgroundFailureCount});
+      await record(plan.outputDirectory,'DRAFT-ACTUAL-RESULT.json',actual);result.httpActual=true;
+     }catch(e){if(e.b07Result)await record(plan.outputDirectory,'DRAFT-ACTUAL-RESULT.json',e.b07Result);throw Error('B07_DRAFT_FAILED_OR_OUTCOME_UNCERTAIN');}
+    });
+}
 export async function runB07QaIdentityParent(plan){
  must(plan?.contract==='B07_QA_SAME_PARENT_1'&&plan.outputDirectory===OUTPUT&&plan.purposeGateFile===join(OUTPUT,'CURRENT-PURPOSE-GATE.json'),'B07_PARENT_REGISTRATION_REQUIRED');
  const input=plan.fixtureInput;must(input?.target?.role==='naijue_erp_test','B07_SETUP_ROLE_REQUIRED');
@@ -184,7 +220,7 @@ export async function runB07QaIdentityParent(plan){
  const {Client}=await at('node_modules/pg/esm/index.mjs');
  const setup=new Client({host:input.target.unix_socket_directories,port:input.target.port,database:input.target.database,user:input.target.session_role,
   password:()=>{throw Error('B07_NO_CREDENTIAL_FALLBACK');},ssl:false,application_name:'t45_b07_same_parent_qa_fixture',connectionTimeoutMillis:3000,query_timeout:30000,statement_timeout:25000,lock_timeout:4000});
- let setupEnded=false,api,readPool;const result={status:'STARTED',fixtureActual:false,httpActual:false,automaticRetry:false};
+ let setupEnded=false;const resources={};const result={status:'STARTED',fixtureActual:false,httpActual:false,automaticRetry:false};
  try{
   await setup.connect();await setup.query('SET ROLE naijue_erp_test');await setup.query('SET default_transaction_read_only=off');
   const safe=await withB07QaIdentityFixture({client:setup,input,recordPreparation:value=>record(plan.outputDirectory,'FIXTURE-INSERT-INTENT.json',value),
@@ -195,51 +231,70 @@ export async function runB07QaIdentityParent(plan){
     await originalChild(plan,'role',join(plan.outputDirectory,'role'));
     let successor;try{successor=await applyEffectiveValueSuccessor({plan,input,Client});result.historyEffectiveValue=successor;}catch(e){result.historyEffectiveValue=e.successorResult??{status:'FAILED_BEFORE_INSTALL',clientsClosed:true};throw e;}
     await record(plan.outputDirectory,'CURRENT-METADATA-READY.json',{status:'WAITING_ORIGINAL_INDEPENDENT_PURPOSE',profile:EFFECTIVE_VALUE_PROFILE,metadataPath:successor.metadataRef.path,catalogPath:successor.catalogRef.path,metadataRef:successor.metadataRef,catalogRef:successor.catalogRef,catalogSha256:successor.catalogSha256,qaIdentity:QA_IDENTITY});
-    const gate=await waitForPurposeGate(plan.purposeGateFile,plan.purposeWaitMs);
-    must(gate?.format==='B07_CURRENT_NORMAL_HISTORY_PURPOSE_GATE_1','B07_CURRENT_PURPOSE_GATE_REQUIRED');
-    const template=JSON.parse((await pinned(gate.runtimeConfiguration)).toString('utf8'));
-    const config=prepareOrdinaryConfiguration(template,input.target);
-    const draft=JSON.parse((await pinned(gate.draftInput)).toString('utf8'));
-    const review=JSON.parse((await pinned(gate.review,65536)).toString('utf8'));
-    must(review.catalog?.patchLevel===EFFECTIVE_VALUE_PROFILE&&review.catalog?.sha256===successor.catalogSha256,'B07_NEW_V21_REVIEW_REQUIRED');
-    must(config.runtime26Review.reviewFile===gate.review.path&&config.runtime26Review.trustedReviewSha256===gate.review.sha256,'B07_EXACT_PURPOSE_PIN_REQUIRED');
-    const pg=config.postgres.target,t=input.target;must(pg.user===successor.ordinaryRole,'B07_EXACT_SUCCESSOR_ORDINARY_ROLE_REQUIRED');
-    must(pg.database===t.database&&pg.host===t.unix_socket_directories&&pg.port===t.port&&pg.ssl===false&&pg.user===review.target.actingRole
-     &&review.target.database===t.database&&review.target.databaseOid===t.oid&&review.target.sessionUser===pg.user
-     &&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_CURRENT_NONOWNER_REVIEW_REQUIRED');
-    must(draft.actor.accountId===QA_IDENTITY.accountId&&draft.actor.hallId===null&&draft.target.database===t.database&&draft.target.oid===t.oid&&draft.target.role===pg.user
-     &&draft.sourceRoot===input.sourceRoot&&draft.origin===config.publicOrigin,'B07_EXPLICIT_QA_SUCCESSOR_INPUT_REQUIRED');
-    const {Pool}=await at('node_modules/pg/esm/index.mjs');
-    // Exact ordinary-role sessions only; preserve the postmaster default and
-    // shared HBA. Normal auth/HREV BEGIN must not inherit diagnostic READ ONLY.
-    const driver=ordinaryDriver(Pool);
-    const {createProductionRuntime26HistoryRevisionApplicationApi}=await at('apps/api/src/production-provider-composition.ts');
-    const {BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts');
-    const {createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
-    api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'},driver);
-    readPool=new BoundedPostgresPool(config.postgres,driver);
-    const issuer=await createNativeRuntime26Issuer(readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
-    await withNormalSession(api,async({privateCookie})=>{
-     try{
-      const actual=await runDraftNormalHistory({api,pool:issuer.pool,runtime26:issuer.runtime26,input:draft,privateCookie,
-       recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),recordObservation:value=>record(plan.outputDirectory,'HTTP-'+value.phase+'-'+value.comparisonStage+'.json',value),readBackgroundFailureCount:()=>api.postgresBackgroundFailureCount+readPool.backgroundFailureCount});
-      await record(plan.outputDirectory,'DRAFT-ACTUAL-RESULT.json',actual);result.httpActual=true;
-     }catch(e){if(e.b07Result)await record(plan.outputDirectory,'DRAFT-ACTUAL-RESULT.json',e.b07Result);throw Error('B07_DRAFT_FAILED_OR_OUTCOME_UNCERTAIN');}
-    });
+    await runOrdinaryHistoryScope({plan,input,successor,withNormalSession,result,resources});
    }});
   result.status=safe.status;
  }catch(e){result.status='STOP_SAME_PARENT_OR_OUTCOME_UNCERTAIN_NO_REPLAY';result.errorCode=typeof e.message==='string'&&/^B07_[A-Z0-9_]+$/.test(e.message)?e.message:'B07_PARENT_FAILED_DETAIL_OMITTED';if(typeof e.pgCode==='string'&&/^[0-9A-Z]{5}$/.test(e.pgCode))result.databaseErrorCode=e.pgCode;}
  finally{
   result.clientsClosed=result.historyEffectiveValue?.clientsClosed!==false;
-  for(const close of [()=>api?.close(),()=>readPool?.dispose(),()=>!setupEnded?setup.end():undefined])try{await close();}catch{result.clientsClosed=false;result.status='STOP_SAME_PARENT_CLEANUP_UNKNOWN';}
+  for(const close of [()=>resources.api?.close(),()=>resources.readPool?.dispose(),()=>!setupEnded?setup.end():undefined])try{await close();}catch{result.clientsClosed=false;result.status='STOP_SAME_PARENT_CLEANUP_UNKNOWN';}
   await record(plan.outputDirectory,'PARENT-RESULT.json',result);
  }
  must(result.status==='QA_FIXTURE_AND_NORMAL_SESSION_SCOPE_COMPLETED'&&result.clientsClosed,'B07_PARENT_STOPPED_SEE_PRIVATE_RESULT');
  return result;
 }
+export const COMMITTED_CONTINUATION_OUTPUT=join(OUTPUT,'credential-continuation-01');
+export async function withB07QaManagedNormalSession({api,password,authVersion,work}){
+ must(api?.app?.server?.listening===false&&typeof api.trustedOrigin==='string'&&typeof password==='string'&&password.length>0&&Number.isInteger(authVersion)&&authVersion>1&&typeof work==='function','B07_RENEWAL_NORMAL_SESSION_INPUT_REQUIRED');
+ let cookie=null;
+ try{
+  const response=await api.app.inject({method:'POST',url:'/auth/login',headers:{origin:api.trustedOrigin,'content-type':'application/json'},payload:{loginName:QA_IDENTITY.loginName,password}});
+  must(response.statusCode===200,'B07_RENEWAL_NORMAL_LOGIN_FAILED');
+  const raw=response.headers['set-cookie'],cookies=typeof raw==='string'?[raw]:raw;must(Array.isArray(cookies)&&cookies.length>0,'B07_RENEWAL_COOKIE_MISSING');cookie=cookies.map(c=>c.split(';')[0]).join('; ');
+  const session=await api.app.inject({method:'GET',url:'/auth/session',headers:{origin:api.trustedOrigin,cookie}});must(session.statusCode===200,'B07_RENEWAL_NORMAL_SESSION_FAILED');const a=session.json().principal;
+  must(a?.accountId===QA_IDENTITY.accountId&&a.staffId===QA_IDENTITY.staffId&&a.role==='WAREHOUSE'&&a.hallId===null&&a.authVersion===authVersion,'B07_RENEWAL_PRINCIPAL_CHANGED');
+  return await work({actor:{accountId:QA_IDENTITY.accountId,hallId:null},privateCookie:cookie});
+ }finally{if(cookie){const out=await api.app.inject({method:'POST',url:'/auth/logout',headers:{origin:api.trustedOrigin,cookie,'content-type':'application/json'},payload:{}});must(out.statusCode===204,'B07_RENEWAL_LOGOUT_UNKNOWN');}cookie=null;password=null;}
+}
+export async function runB07QaIdentityCommittedContinuationParent(plan){
+ must(plan?.contract==='B07_QA_COMMITTED_CONTINUATION_PARENT_1'&&plan.outputDirectory===COMMITTED_CONTINUATION_OUTPUT&&plan.purposeGateFile===join(COMMITTED_CONTINUATION_OUTPUT,'CURRENT-PURPOSE-GATE.json'),'B07_RENEWAL_PARENT_REGISTRATION_REQUIRED');
+ must(Number.isInteger(plan.purposeWaitMs)&&plan.purposeWaitMs>0&&plan.purposeWaitMs<=300000,'B07_RENEWAL_BOUNDED_PURPOSE_REQUIRED');
+ must(plan.permissionProof?.bytes===7000&&plan.permissionProof.sha256==='5422ea93dcf609be06c2664607c48bf0a86a282ab37b65028c1abce940d81f6f','B07_RENEWAL_EXACT_PERMISSION_PROOF_REQUIRED');
+ const originalProof=JSON.parse((await pinned(plan.permissionProof,65536)).toString('utf8'));
+ const base={...plan.renewalInput,ordinaryRole:plan.ordinaryRole,catalogSha256:plan.catalogSha256};
+ const proof=credentialPermissionProofFromOriginal(originalProof,base);
+ const input={...base,permissionProof:proof};
+ must(input.sourceRoot===P+'/work/erp-local-source-20261022'&&plan.node===P+'/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node','B07_FIXED_SOURCE_AND_NODE_REQUIRED');
+ must(typeof plan.ordinaryRole==='string'&&plan.ordinaryRole!==input.target.role&&plan.catalogSha256===proof.catalogSha256,'B07_RENEWAL_CURRENT_CATALOG_REQUIRED');
+ must(plan.originalRequest?.path===join(OUTPUT,'REQUEST-DRAFT_SALES_QUANTITY_NO_STOCK.json'),'B07_RENEWAL_ORIGINAL_REQUEST_REQUIRED');
+ const requestBytes=await pinned(plan.originalRequest,65536),request=JSON.parse(requestBytes.toString('utf8'));
+ must(request.actor?.accountId===QA_IDENTITY.accountId&&request.actor.hallId===null&&request.phase==='DRAFT_SALES_QUANTITY_NO_STOCK'&&request.command?.expectedVersion===1&&request.target?.role===plan.ordinaryRole&&request.target.database===input.target.database&&request.target.oid===input.target.oid,'B07_RENEWAL_ORIGINAL_COMMITTED_REQUEST_REQUIRED');
+ const {requestHash}=await import(pathToFileURL(resolve(input.sourceRoot,'packages/application/src/request-hash.ts')).href);
+ input.originalSales={requestKey:request.command.requestKey,documentId:request.command.documentId,requestHash:requestHash({actorAccountId:QA_IDENTITY.accountId,command:request.command})};validateCredentialRenewalInput(input);
+ await pinned(plan.currentMetadata);await pinned(plan.currentCatalog);
+ const at=p=>import(pathToFileURL(resolve(input.sourceRoot,p)).href),{Client}=await at('node_modules/pg/esm/index.mjs');
+ let connectCleanupUnknown=false,recoveryClientsClosed=true;
+ const connect=async(readOnly=false)=>{const client=new Client({host:input.target.unix_socket_directories,port:input.target.port,database:input.target.database,user:input.target.session_role,password:()=>{throw Error('B07_NO_CREDENTIAL_FALLBACK');},ssl:false,application_name:'t45_b07_registered_qa_credential_lifecycle',connectionTimeoutMillis:3000,query_timeout:30000,statement_timeout:25000,lock_timeout:4000});
+  try{await client.connect();await client.query('SET ROLE naijue_erp_test');await client.query(readOnly?'SET default_transaction_read_only=on':'SET default_transaction_read_only=off');return client;}catch(e){try{await client.end();}catch{connectCleanupUnknown=true;}throw e;}};
+ await mkdir(plan.outputDirectory,{mode:0o700});
+ let setup,setupEnded=false;const resources={},result={status:'STARTED',credentialRenewalActual:false,httpActual:false,automaticRetry:false};
+ try{
+  setup=await connect();
+  const safe=await withB07QaIdentityCredentialRenewal({client:setup,input,recordPreparation:value=>record(plan.outputDirectory,'CREDENTIAL-RENEWAL-INTENT.json',value),runNormalSession:withB07QaManagedNormalSession,
+   withRecoveryClient:async work=>{const recovery=await connect(true);try{return await work(recovery);}finally{try{await recovery.end();}catch{recoveryClientsClosed=false;throw Error('B07_RENEWAL_RECOVERY_CLOSE_UNKNOWN');}}},
+   afterRenewal:async({withNormalSession,authVersion})=>{
+    result.credentialRenewalActual=true;result.authVersion=authVersion;await setup.end();setupEnded=true;
+    await record(plan.outputDirectory,'CURRENT-METADATA-READY.json',{status:'WAITING_ORIGINAL_INDEPENDENT_PURPOSE',profile:EFFECTIVE_VALUE_PROFILE,metadataPath:plan.currentMetadata.path,catalogPath:plan.currentCatalog.path,metadataRef:plan.currentMetadata,catalogRef:plan.currentCatalog,catalogSha256:plan.catalogSha256,qaIdentity:QA_IDENTITY});
+    await runOrdinaryHistoryScope({plan,input,successor:{ordinaryRole:plan.ordinaryRole,catalogSha256:plan.catalogSha256},withNormalSession,result,resources,runHistory:runDraftNormalHistoryCommittedContinuation,committedContinuation:{requestBytes,sha256:plan.originalRequest.sha256}});
+   }});
+  result.status=safe.status;result.commitRecovered=safe.commitRecovered;
+ }catch(e){result.status='STOP_CREDENTIAL_CONTINUATION_OR_OUTCOME_UNCERTAIN_NO_RETRY';result.errorCode=typeof e.message==='string'&&/^B07_[A-Z0-9_]+$/.test(e.message)?e.message:'B07_RENEWAL_PARENT_FAILED_DETAIL_OMITTED';if(e.b07RenewalFailure)result.renewalFailure=e.b07RenewalFailure;}
+ finally{result.clientsClosed=!connectCleanupUnknown&&recoveryClientsClosed;for(const close of [()=>resources.api?.close(),()=>resources.readPool?.dispose(),()=>setup&&!setupEnded?setup.end():undefined])try{await close();}catch{result.clientsClosed=false;result.status='STOP_SAME_PARENT_CLEANUP_UNKNOWN';}if(!result.clientsClosed)result.status='STOP_SAME_PARENT_CLEANUP_UNKNOWN';await record(plan.outputDirectory,'PARENT-RESULT.json',result);}
+ must(result.status==='QA_CREDENTIAL_RENEWAL_AND_NORMAL_SESSION_SCOPE_COMPLETED'&&result.clientsClosed,'B07_RENEWAL_PARENT_STOPPED_SEE_PRIVATE_RESULT');return result;
+}
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{must(process.argv.length===4&&process.argv[2]==='--registration','B07_PARENT_REGISTRATION_ARGUMENT_REQUIRED');
   const s=await lstat(process.argv[3]);must(s.isFile()&&!s.isSymbolicLink()&&s.size<=65536&&(s.mode&0o077)===0,'B07_PRIVATE_PARENT_REGISTRATION_REQUIRED');
-  const result=await runB07QaIdentityParent(JSON.parse(await readFile(process.argv[3],'utf8')));console.log(JSON.stringify(result));
+  const plan=JSON.parse(await readFile(process.argv[3],'utf8'));const result=await (plan.contract==='B07_QA_COMMITTED_CONTINUATION_PARENT_1'?runB07QaIdentityCommittedContinuationParent(plan):runB07QaIdentityParent(plan));console.log(JSON.stringify(result));
  }catch{console.error('B07_PARENT_STOPPED_NO_AUTOMATIC_REPLAY');process.exitCode=2;}
 }

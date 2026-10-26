@@ -108,3 +108,9 @@ test('PG trust config uses distinct RAM-only shape values and ordinary sessions 
  const pool=ordinaryDriver(FakePool)({...a.postgres.target,options:'untrusted-ignored'});
  assert.equal(pool.config.options,'-c default_transaction_read_only=off');assert.equal(pool.config.user,'synthetic_nonowner');assert.equal(pool.config.host,target.unix_socket_directories);
 });
+
+test('credential continuation parent refuses absent permission proof and arbitrary output before connection',async()=>{
+ const {runB07QaIdentityCommittedContinuationParent,COMMITTED_CONTINUATION_OUTPUT}=await import('./qa-identity-parent.mjs');
+ await assert.rejects(runB07QaIdentityCommittedContinuationParent({contract:'B07_QA_COMMITTED_CONTINUATION_PARENT_1',outputDirectory:'/tmp/OTHER',purposeGateFile:'/tmp/OTHER/CURRENT-PURPOSE-GATE.json'}),/^Error: B07_RENEWAL_PARENT_REGISTRATION_REQUIRED$/);
+ await assert.rejects(runB07QaIdentityCommittedContinuationParent({contract:'B07_QA_COMMITTED_CONTINUATION_PARENT_1',outputDirectory:COMMITTED_CONTINUATION_OUTPUT,purposeGateFile:join(COMMITTED_CONTINUATION_OUTPUT,'CURRENT-PURPOSE-GATE.json'),purposeWaitMs:300000}),/^Error: B07_RENEWAL_EXACT_PERMISSION_PROOF_REQUIRED$/);
+});
