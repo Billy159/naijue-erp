@@ -14656,7 +14656,7 @@
       "B07": "07 review/gate actual successful; detail HTTP200 then assertion; D1 diagnose; T45 original-key readonly recovery next",
       "fullSource": "134 same-key collect only bounded original execution"
     },
-    "latestSource": 695,
+    "latestSource": 696,
     "source680Continuation": {
       "actual134": "FAILED exit2 after901.237644947s; ORIGINAL_BINDINGS_AND_STREAMS / PRODUCTION_PROVIDER26_CLOSED; D3 original source diagnosis; no extension/replay",
       "actual07": "POST07 original-key readonly recovery: one COMMITTED HISTORY_REVISE HISTORY_SALES receipt and one revision, result_version2. Full test incomplete at detail count assertion. Preserve original key/state; no fresh save.",
@@ -14749,6 +14749,12 @@
       "D1": "Only money build assertion diagnosis; preserve both committed original keys/versions and passed evidence; no credential reset, fixture, or case replay. Later money-only continuation needs currentauth2/newpurpose and exact originalkey recovery.",
       "QB420": "ADOPTED fixed1000 diagnostic source694 PASS; actual new bounded carrier preparing",
       "remote694": "VERIFIEDb4ae4a684845b2feefa2964fce7cdebb762b48bc"
+    },
+    "source696Continuation": {
+      "actual138": "Intentional diagnostic stop/process2 reached1000 mergedsource in168.635466957s;17:15:29.334-17:18:18.022Z; no fullprepared PASS. Native3 complete;42561documents done146161ms; source starts151362ms, merged1000at167370ms;typed0;1010group prefetched not1000consumed;0PG/MAIN/grant/APP.",
+      "D3": "Narrow actual mergedsource hot-path diagnosis from measured timings; no linear total extrapolation/fullrun/guessed SQL/cache",
+      "moneyContract": "Existing B07 allows original line price+existing same-document settlement.amount in one explicit isolated QA command, source/account/direction preserved; original unbalanced before audited. No new write contract.",
+      "D1": "Exact2 original runner/test moneybuilder and remaining-only dualcommitted binding source-only authorized; no redo sales/transfer or new credentials/HTTP. Original price-only imbalance rejection retained."
     }
   }
 }

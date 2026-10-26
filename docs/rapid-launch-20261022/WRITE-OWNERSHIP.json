@@ -6300,5 +6300,13 @@
     ],
     "T45": "Original diagnostic carrier explicit fixed probe argument and safe error/result whitelist only",
     "scope": "Explicit diagnostic-only STOP_AFTER_1000_MERGED_SOURCE_ROWS, preserve complete required native validations and original D1 consumer, stop before row1001/typed/commands/writer with dedicated limit code and original cleanup. Normal preparation unchanged; no caching or skipped facts. Source-only now; later exact210s soft240hard targeted actual separately adopted, not full900 completion retry."
+  },
+  "source696MoneyOnlyContinuation": {
+    "owner": "D1",
+    "files": [
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.test.mjs"
+    ],
+    "scope": "Original runner/test only. Explicit isolated QA amount request may change original same-document line.dealPrice and existing settlement.amount together under already approved B07 contract; no new settlement/account/direction/source identity changes. BigInt signed balancing, exact bounds, original unbalanced price-only rejection retained. Remaining-money-only continuation binds existing salesv2/transferv2; never redo passed cases or reuse key across targets. Source only now, no credentials/DB/HTTP."
   }
 }
