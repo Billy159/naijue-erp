@@ -6383,5 +6383,13 @@
       "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json"
     ],
     "scope": "Batch same prepared SKU alias evidence after one original complete validator pass, same synchronous call. Existing single-alias public API behavior unchanged; private validated-alias constructor only. No external unchecked/prehash capability or cross-record/request cache; original public hash/validation algorithms and exact evidence/projection bytes unchanged. Provider explicit batch capability and helper/runtime pins form same source closure, old runtime rejects. Other five support bodies and source DATA untouched; D2 original work terminal and D1 fixture independent. Source/finite checks before independent review and sole T45 actual."
+  },
+  "source714ApprovedSynSessionParent": {
+    "owner": "D1",
+    "files": [
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
+    ],
+    "scope": "Closed explicit SYN_APPROVED new-target parent entry only for registered new fixture target/output, original07 and credential-renewal untouched. Reuse original controlled fixture QA insertion/RAM-secret normal login/logout/factory/issuer/cleanup. Require actual exact target/OID/schema19 publication→reviewed26 migration/catalog/capability/admission before normal approved runner; never use19 as26 or bypass hardcoded old07 admission. No generic target/platform/credentials reuse, no production permissions/DDL changes or direct DB action. SoleT45 actual after independent review."
   }
 }
