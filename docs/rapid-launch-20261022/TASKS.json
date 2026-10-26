@@ -14274,6 +14274,24 @@
       "clientsClosed": true,
       "onlyOwnPidStopped": true,
       "next": "D1 original runner first assertion evidence and minimal successor; T45 source-only126 continues independently"
+    },
+    "source649Actual126": {
+      "status": "SUBMITTED_QUEUED_ORIGINAL_UNIT_COLLECT_ONLY",
+      "operationKey": "t45-full-source-private-preparation-20261026-126",
+      "unit": "naijue-erp-op-5cc58239-7f98d67f9dea",
+      "autoRetry": false,
+      "scope": {
+        "bytes": 22325,
+        "sha256": "8f5b64504168d1af9910059b2ea174edd0d62a1c5f113359a37e682221f5a719"
+      },
+      "QB389": {
+        "status": "SOURCE_ONLY_NEW_CARRIER_MAPPING_PASS_ADOPTED",
+        "bytes": 4321,
+        "sha256": "4abc8bd62a837cc30730bde0b61b04155b8ca9358a7aed12b264b3060b72bdb9"
+      },
+      "package": "115 fixed source +1 explicit type-module metadata +6 original helpers; do not claim116 all Git original",
+      "dbOrMainOrPublish": false,
+      "next": "Collect same operation outcome; real prepared files before any independent execution grant"
     }
   }
 }
