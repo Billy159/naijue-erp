@@ -5698,5 +5698,17 @@
     "T45": "Sole realserver/DB/config/lifecyclewriter; current4 frozen carriers stayowned and originalcritical sequence unchanged",
     "QB": "Actual131 evidence priority; sourceprepared children onlynewdelta when ready, no repeat oldsourcechecks",
     "sharedRecords": "C soleTASKS/PROGRESS/HANDOFF/ownership/Git"
+  },
+  "source611BarcodeRealReader": {
+    "owner": "D3",
+    "exactFiles": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs",
+      "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+      "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json"
+    ],
+    "scope": "Concrete BARCODE retained file reader internal to existing provider26; original manifest/index/permutation pinned metadata and held preparedFD/rangeSHA; original QB357 five-method closure helper only via pinned original {path,bytes,sha256} smallmodule ref. No newauthority wrapper, no synthetic/raw fallback, existing assertGroupAllowed/authorizeStep/assertExecutionAllowed still required. No business/DB/write contract field, closureHelper is privateCLI read metadata only. Preserve other10 sources/QB357 frozenhelper/normalapp/currentcarriers.",
+    "verification": "New smallsynthetic temporaryfiles/range/close/order/identity only, no actual11MB/54MB reads/PG/SSH/build/Git byD3; original approved source suites reused",
+    "remaining": "ActualC authority/fullhash/CORE115proof/53warehouseitems/T45 target remain pending, reader source not fullprovider completion"
   }
 }

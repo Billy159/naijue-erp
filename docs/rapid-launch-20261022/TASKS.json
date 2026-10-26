@@ -2865,6 +2865,13 @@
       "routines": 131,
       "schemeAclChanged": false,
       "actual103": true
+    },
+    "salesHeaders611": {
+      "count": 28282,
+      "sourceRows": 28282,
+      "state": "STAGED_NOT_MAIN_NOT_PUBLISHED",
+      "lastActualJob": "106",
+      "noReplay": true
     }
   },
   "supplementalRoles": {
@@ -11667,9 +11674,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE610",
+    "round": "SOURCE611",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "f2c60411938570e6f3b99fef44474ae907a8e5af",
+    "sourceHeadBeforeThisContinuityCommit": "a88e2eecdb7fbbf2bdb3b92185145cec332fb082",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -11717,13 +11724,13 @@
       "F2": "SOURCE584S582-F01 originalQF2 source closed; actualprovider/save next necessaryCORE15/fullhost",
       "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
-      "D1": "17file nextv19 disabledinit localbundle delivered3checks, fixedsafe copy; originalQB source review next, no realACL/init",
+      "D1": "Sixinit17file ready; next finite safe CORE115/49proof/53warehouseitems disabled readexport actualsource work",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
-      "D3": "BARCODE helper3 source delivered/fixedcopy; originalQB newdelta next; next actualauthority.openRetained/openClosure wiring plus realCORE115/53items dependencies, not recapture",
-      "T45": "106actualQUEUED unit7a4c26509ef8, frozenroute4302/new20/current131; no repeat107/110; aftersafehandoff locateoriginalCORE115/53smallprojection",
-      "QF": "CORE17 publicTLS/actualbrowser newF firstCOREreadonly page+two repeats limitedincrement dispatched, no writes/fullUIrerun",
+      "D3": "Registered source611 realBARCODE heldFD range reader internalprovider4files implementing; existingauthority/fullhash/COREproof/53items pending separately",
+      "T45": "106actualcomplete28282 sourceheads/0replay accepted; next D1sixinit disabled prep/QB358 and finiteCORE115/53safeexport, no repeated106or25MBindex",
+      "QF": "CORE17 storesCORE22/current20 limitedbrowserobservations complete/two repeats, no performanceSLA or fullpage, leaseC",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
-      "QB": "Current107 actualduplicateheader narrowdiagnosis; newD3BARCODE helper only newdelta queue afterroute, old3groups notrerun",
+      "QB": "357BARCODE sourcePASS adopted;358D1sixinit disabledcarrier newscope active; originalruntime evidence reused",
       "Compression": "G exact2 cache source/3affectedchecks delivered, writer returned; C proxytemplate source fixed, actualpubliccache pending nextnecessary build"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -13603,6 +13610,69 @@
         "scope": "ExactCORE17 publicTLS/browser version plus one hallswarehouse readonly initial+two repeats only; preserveoldUIevidence/drafts/serialbrowser",
         "notScope": "No oldpassword/menu/CSS/full37/67/fullbusiness/save/history or currentDBwrites"
       }
+    },
+    "source611": {
+      "actual106": {
+        "status": "COMPLETE_SOURCE_STAGING_NOT_MAIN_OR_PUBLICATION",
+        "elapsedSeconds": 518.9840925,
+        "finishedAtUtc": "2026-10-26T05:43:57.627677+00:00",
+        "previousConfirmedRows": 4489,
+        "newCommitAndKeyedReadbackConfirmedRows": 23793,
+        "totalHeadersAndSources": 28282,
+        "replayed": 0,
+        "batch": "STAGED",
+        "sequence": 1,
+        "cursor": 22,
+        "fullPayloadBound": false,
+        "trace": {
+          "acquired": 846,
+          "released": 846,
+          "live": 0,
+          "commits": 843,
+          "rollbacks": 2,
+          "queries": 207504,
+          "sqlStates": []
+        },
+        "poolJournalRetainedClosed": true,
+        "original20AndRoutePreserved": true,
+        "collectedReceiptSha256": "d83538b467f4f9bec6b35681b81498d469cfb9a21d030a6746a7a2d48b84db6f",
+        "privateIndex": {
+          "entries": 28282,
+          "bytes": 25646990,
+          "sha256": "6cf6ca18737dd76957823d6ce7b829b927f0ebd964a096ebe73682dda3ea8060",
+          "noCopyOrRehash": true
+        }
+      },
+      "QFCore17": {
+        "reportRoot": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01",
+        "resultSha256": "59398cbc2fe365631b821e6a655a2bf807ec2c8ef0cdf50375e3084df80f1e93",
+        "status": "LIMITED_REAL_BROWSER_CORE_READONLY_OBSERVATION_PASS_NOT_FULLPAGE_OR_PERFORMANCE",
+        "scope": "Afterexplicituserleasehandoff safe reload oldCORE14document; exactnewCORE17stores halls tab emptysearch normalstatus total22/current20 visible;two queryrepeat noerror",
+        "versionMisalignment": "Oldopened14document lazyimport failed before reload; newViewSource17 and normalreload17 restored; not a cache/network/PG rootcause finding",
+        "timings": "CUAwall/AXobservations include toolgaps; no requesttrace/render/server/SQL/SLA claim",
+        "notTested": "Warehouse tab/page2/remaining2rows/permissions/writes/fullprovider/otherfalsemodules",
+        "lease": "ReturnedC; candidate stores no draft/modal; userDemo product/new preserved"
+      },
+      "acceptedQB357": "New BARCODE helper source PASS dbd60cf2, realcapture/stage/root stillpending",
+      "next": "T45 originalsixinit localprepQB358 and D1 finiteCORE115/49safeproof/53items readexport; D3 realBARCODE reader4fileWIP independent currentAPP"
+    },
+    "source611Qb358": {
+      "status": "PASS_PREPARATION_ONLY",
+      "report": "reports/qa-backend/rapid-launch-20261022/QB/slice358-six-scheme-disabled-preparation/QB358-RESULT.json",
+      "bytes": 7953,
+      "sha256": "6306dfe2eeb0b045d03489d47511a14703199e5f2749b790c7dc8d64241d941a",
+      "actualAclInitialization": "NOT_EXECUTED",
+      "nextOwner": "T45"
+    },
+    "source611NewCandidateStyleFailure": {
+      "status": "REPORTED_NOT_YET_REPRODUCED",
+      "scope": "current private candidate inventory raw unstyled shell",
+      "implementationOwner": "F1",
+      "browserEvidenceOwner": "QF",
+      "browserLease": "QF_EXCLUSIVE",
+      "source": "Human screenshot in original D1 relayed to C",
+      "httpEvidence": "12 direct CORE17 CSS 200/text-css and application.js 200/js do not establish application in browser",
+      "next": "Preserve current browser state and inspect version/lifecycle/console; no duplicate stores acceptance; D1 continues projection preparation"
     }
   }
 }
