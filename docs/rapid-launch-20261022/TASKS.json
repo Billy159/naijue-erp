@@ -14034,7 +14034,7 @@
     },
     "source629T21": {
       "owner": "D1",
-      "status": "NEED_FIX_FULL_STOP_ENTRY_WEB_ALREADY_STOPPED",
+      "status": "FIXED_SOURCE632_WAIT_QB_AFFECTED_ONLY",
       "modifiedFiles": [
         "scripts/release/deploy-candidate.py",
         "scripts/release/boot-entry.py",
@@ -14048,7 +14048,7 @@
       ],
       "actualDeployment": "NOT_RUN",
       "requiredActualInputs": "Full PUBLISH, current 7purpose metadata/ACL review, current R1 backup/restore and same-build business acceptance",
-      "next": "D1 scoped fix then same QB affected-only recheck; SOURCE629 not deployable"
+      "next": "Original QB recheck stopped matching web/app stop scope only"
     },
     "B07Role377": "REV2_SOURCE_PASS_ADOPTED_ACTUAL_PENDING_T45",
     "source631B07": {
@@ -14058,6 +14058,7 @@
       "windowClosed": true,
       "normalActor": "Original publish actor loginEnabled=false; T45 inspect existing real eligible QA identity/safe reference only",
       "next": "QB actual newcanonical review; freshlive binding and normal session then original3draft HTTP cases"
-    }
+    },
+    "B07Role380": "ACTUAL_CLOSED_WINDOW_CANONICAL_ACL_INDEPENDENT_PASS_NOT_LIVE_PURPOSE_OR_HTTP"
   }
 }

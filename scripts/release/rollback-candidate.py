@@ -43,12 +43,15 @@ def rollback(p, mode, implementation=None):
             public = activation['publicContainer']
             info = docker.inspect(public['id'])
             C.assert_own(info, p, 'web', True)
-            C.need(C.own_container_fingerprint(info) == public['specSha256'] and info['State']['Running'], 'ACTIVE_CANDIDATE_ENTRY_CHANGED')
+            stopped_full_entry = C.exact26_full(p) and mode == 'stop-entry' and info['State']['Running'] is False
+            C.need(C.own_container_fingerprint(info) == public['specSha256'] and
+                   (info['State']['Running'] is True or stopped_full_entry), 'ACTIVE_CANDIDATE_ENTRY_CHANGED')
             # Only restore-old-entry needs a still-closed write boundary. stop-entry is allowed after writes and retains both DBs.
             if mode == 'restore-old-entry':
                 C.write_boundary(p, restore_old=True, docker=docker)
-            journal.event('STOP_EXACT_NEW_WEB_INTENT', containerId=public['id'])
-            docker.run(['stop', '--time', '20', public['id']], 40)
+            if not stopped_full_entry:
+                journal.event('STOP_EXACT_NEW_WEB_INTENT', containerId=public['id'])
+                docker.run(['stop', '--time', '20', public['id']], 40)
             C.need(not docker.inspect(public['id'])['State']['Running'], 'NEW_ENTRY_STOP_UNCONFIRMED')
             if mode == 'restore-old-entry':
                 restored = C.restore_old_entry(p, docker, journal)
