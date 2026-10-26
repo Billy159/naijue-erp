@@ -14305,6 +14305,21 @@
       "allOtherFirstCasePreconditions": "MATCHED",
       "rollbackAndClientEndAndPidStop": true,
       "next": "D1 minimal quantity representation fix; preserve02 current26/QA identity; new isolated fixture successor only after accurate fixed source/registration; no direct owner password update"
+    },
+    "source651B07QuantityFix": {
+      "status": "FIXED_SOURCE_NEW_REPRESENTATION_SCOPE_QB_PENDING",
+      "files": {
+        "draft-normal-history-v16.mjs": {
+          "bytes": 19096,
+          "sha256": "3150649425acc632277126c30454043efe8e1d01fb751e3cef1465b826f323ba"
+        },
+        "draft-normal-history-v16.test.mjs": {
+          "bytes": 4404,
+          "sha256": "ae6ef0cd95d8554712648a3433cd0198e9714c7c8f21565a13136e70c2c221cb"
+        }
+      },
+      "checks": "RED number-vs-biginttext reproduced; GREEN new and affected prior2 pass; no SQL/HTTP",
+      "next": "QB quantity representation only; accurate03 fixture preserving02; no owner password bypass"
     }
   }
 }
