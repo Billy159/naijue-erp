@@ -11643,7 +11643,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE572",
+    "round": "SOURCE573",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12667,13 +12667,13 @@
     },
     "historical2Stage555": {
       "owner": "T45",
-      "job": 81,
-      "state": "ACTUAL81_FAILED_42501_ROLLBACK_CONFIRMED",
+      "job": 94,
+      "state": "ACTUAL94_COMMITTED_TWO_EXACT_CUSTOMERS_READBACK_MATCH",
       "preparedBytes": 24306,
-      "actualDatabaseWrites": false,
+      "actualDatabaseWrites": true,
       "QB": "QB333 scoped source PASS9b46ef7d; no realstage claim",
       "blocker": "Actual87 original PG log02:04:48.797915240Z proves permission denied for function history_closure_row_hash (42501); original customer/source/ref/evidence necessary column privileges already present. No ACL changed; exact pure-function/transitive invoker dependency mapping in progress.",
-      "next": "Original T45 identify full necessary special-party transaction permissions once; original QB narrow diff if needed; do not replay81 or grantALL. Header stage/all11 remain pending.",
+      "next": "Original T4528282 headers consume existing two prepared partitions ->full11 closure MAIN/PUBLISH; no reimport old2/transfer",
       "scope": "Exact approved2 native historical customer identities then28282 headers; no reimport628 parties/transfer, no MAIN shortcut",
       "backupLatest": "Actual83 COMPLETED0/696.006s, finished2026-10-26T02:01:19.626805Z;19services/route preserved;4033B02aa73d07e03624d1a8d6d54641bbb21c1a8b1371dbd897c4913c2b3302d48ad",
       "actual81": {
@@ -12697,7 +12697,25 @@
         "currentCanonicalUnchanged": "59b9999e3df09934eed14cf6d82f6382e92faaf16604d266a5c64a3c9019bd68",
         "runtimeApp": "APP74 remains; no ACL changes"
       },
-      "functionDependencyFinding": "Actual readonly closure found only2 existing pure functions EXECUTE missing:history_closure_row_hash and recursive encoder;remaining functions/table columns present. NoACL changed."
+      "functionDependencyFinding": "Actual readonly closure found only2 existing pure functions EXECUTE missing:history_closure_row_hash and recursive encoder;remaining functions/table columns present. NoACL changed.",
+      "actual94": {
+        "exit": 0,
+        "seconds": 6.232995,
+        "finishedAtUTC": "2026-10-26T02:50:08.313569Z",
+        "commitReturned": 1,
+        "inserted": 2,
+        "replayed": 0,
+        "afterReadback": "Exact native/source/reference/evidence complete equality; original IDs retained",
+        "batch": "STAGED seq1 cursor22 fullPayloadfalse",
+        "main": 0,
+        "publish": 0,
+        "acquire": 4,
+        "release": 4,
+        "live": 0,
+        "ended": true,
+        "protectedContainers": 20
+      },
+      "prior81": "FAILED42501 COMMIT0 rollback confirmed; not replayed/overwritten"
     },
     "startup556": {
       "F1DOC198": "SOURCE_READY_ACCOUNT_CHROME_LAZY_CHECKED_NOT_RUNTIME_PERFORMANCE_ACCEPTED",
@@ -12903,7 +12921,8 @@
           "T45 exact2/header/full11 existing approved import",
           "QF CORE14 browser",
           "D1 B07 historical QA"
-        ]
+        ],
+        "questionSubmitted": true
       }
     },
     "server566": {
@@ -12925,7 +12944,24 @@
       "rebindWindowSeconds": 567.402011,
       "publicCompression": "PASS_8_CASES_2_STATIC_MEMBERS_DECODED_SHA_HEAD_VARY_LENGTH",
       "publicResult": "B/server-execution/CORE14-DEPLOYMENT/PUBLIC-RESOURCE-RESULT.json",
-      "browserPerformance": "NOT_YET_MEASURED"
+      "browserPerformance": "NOT_YET_MEASURED",
+      "QFBrowserPartial": {
+        "source": "OriginalQF source569BrowserSupplement in phase2-source468-sales-visual-actual-01/RESULT.json",
+        "sha256": "48b77366007762fb27370ac28d50bb9e6fceb3e0b6296ef69a4ebaf5289c1d04",
+        "status": "PARTIAL_ACTUAL_STARTUP_ACCOUNT_OBSERVATIONS",
+        "sourceVersion": "1f09fd74d9e4c9dfeb98118a1d33a989801148b9 CORE14 actual ViewSource confirmed",
+        "observed": "Styled shell/account; menu first636ms/password first741ms; menu repeats469/446ms; Escape/cancel focus restored",
+        "timingBoundary": "CUA wall includes tool overhead, not render/SLA. Reload first read1.056s account absent,11.508s subsequent complete; exactcompletion and forcedcold not measured",
+        "notTested": [
+          "Strong cold-cache",
+          "Precise startup completion",
+          "Failure retry",
+          "Anonymous login",
+          "Real business"
+        ],
+        "screenshotBlank": "Not reproduced at stable current observation; prior screenshot alone does not establish root cause",
+        "browserLease": "Returned to C with no modal/draft, candidate#inventory and Demo tab preserved"
+      }
     },
     "historyV3Ready569": {
       "owner": "D1/T45",
