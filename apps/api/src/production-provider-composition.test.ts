@@ -21,7 +21,7 @@ import { createHash, pbkdf2Sync } from "node:crypto";
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname as pathDirectory, join } from "node:path";
-import { NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
+import { NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_RUNTIME26_IDENTITY_PROBE, NATIVE_RUNTIME26_V20_METADATA_PROBE } from "../../../adapters/postgres/src/native-import-accounting-capability.ts";
 import { historyDetailQuery, historyListQuery } from "../../../tests/support/imported-history-query-fixtures.ts";
 import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
 import { createPostgresApplicationApi, createPostgresRuntime26DocumentApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
@@ -289,6 +289,7 @@ function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observati
       const supplied = extra?.(sql, values);
       if (supplied !== undefined) rows = supplied;
       else if (sql === NATIVE_RUNTIME26_METADATA_PROBE) rows = [structuredClone(observation)];
+      else if (sql === NATIVE_RUNTIME26_IDENTITY_PROBE) rows = [{ identity: structuredClone(observation.identity) }];
       else if (/^(BEGIN|COMMIT|ROLLBACK)/.test(sql)) {}
       else if (sql.includes("FROM naijue_erp.auth_session")) rows = [{ token_hash: sessionTokenHash(token), account_id: account, auth_version: 1, created_at: now, expires_at: expires, revoked_at: null }];
       else if (sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s")) rows = [{ account_id: account, staff_id: "00000000-0000-4000-8000-000000000003", login_name: "SYNTHETIC_RUNTIME26",
@@ -365,9 +366,10 @@ test("production exact26: one owned original pool supplies actual issuer leases 
       assert.equal(p.counts().allocations, 1); assert.equal(p.counts().releases, p.counts().connects);
       const leased = new Map<number, typeof p.calls>();
       for (const call of p.calls) { const group = leased.get(call.lease) ?? []; group.push(call); leased.set(call.lease, group); }
-      for (const calls of leased.values()) assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_METADATA_PROBE);
+      for (const calls of leased.values()) assert.ok([NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(calls[0]!.sql));
+      assert.equal(p.calls.filter(call=>call.sql===NATIVE_RUNTIME26_METADATA_PROBE).length,1);
       const formLease = [...leased.values()].find(calls => calls.some(call => call.sql.includes("current-form:count")))!;
-      assert.ok(formLease); assert.equal(formLease.filter(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE).length, 3);
+      assert.ok(formLease); assert.equal(formLease.filter(call => call.sql === NATIVE_RUNTIME26_IDENTITY_PROBE).length, 3);
       assert.equal(formLease.at(-1)!.sql, "COMMIT"); assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql)));
     } finally { await api.close(); }
     assert.equal(p.counts().ends, 1);
@@ -380,20 +382,20 @@ test("production exact26: target mismatch or missing readonly-view purpose dispo
       if (failure === "catalog") f.observation.catalog_sha256 = "b".repeat(64);
       await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration, p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
       assert.equal(p.counts().allocations, 1); assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, failure === "catalog" ? 1 : 2); assert.equal(p.counts().releases, p.counts().connects);
-      assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+      assert.ok(p.calls.every(call => [NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
     } finally { f.cleanup(); }
   }
 });
-test("production exact26: live metadata drift denies authenticated reads through the managed pool and shutdown still owns the original pool", async () => {
+test("production exact26: live identity drift denies authenticated reads through the managed pool and shutdown still owns the original pool", async () => {
   const f = exact26Fixture(), p = exact26Driver(f.observation);
   try {
     const api = await createProductionRuntime26ApplicationApi(f.configuration, p.factory);
     try {
-      f.observation.catalog_sha256 = "b".repeat(64);
+      f.observation.identity.current_user = "SYNTHETIC_OTHER_ROLE";
       const response = await api.app.inject({ method: "POST", url: "/current-form/products/query", headers: { origin: PRODUCTION_PUBLIC_ORIGIN, cookie: `__Host-naijue_session=${p.token}` },
         payload: { context: { kind: "SALES", hallId: hall }, search: "", page: 1, pageSize: 20 } });
       assert.ok(response.statusCode >= 400); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().connects, 3);
-      assert.equal(p.counts().releases, 3); assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+      assert.equal(p.counts().releases, 3); assert.ok(p.calls.every(call => [NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
     } finally { await api.close(); }
     assert.equal(p.counts().ends, 1);
   } finally { f.cleanup(); }
@@ -413,8 +415,8 @@ test("production exact26: HISTORY four POST routes use their separate policy and
       const snapshots = p.calls.filter(call => call.sql.includes("imported-history:schema")); assert.equal(snapshots.length, 4);
       for (const snapshot of snapshots) {
         const calls = p.calls.filter(call => call.lease === snapshot.lease);
-        assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_METADATA_PROBE);
-        assert.ok(calls.filter(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE).length >= 2);
+        assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_IDENTITY_PROBE);
+        assert.ok(calls.filter(call => call.sql === NATIVE_RUNTIME26_IDENTITY_PROBE).length >= 2);
         assert.equal(calls.at(-1)!.sql, "COMMIT");
       }
       const published = p.calls.filter(call => /imported-history:(list-count|list-page|detail)/.test(call.sql)); assert.equal(published.length, 6);
@@ -463,7 +465,7 @@ test("production R2 exact26: fresh one-pool composition mounts commands and CREA
           assert.equal(api.app.hasRoute({ method: "POST", url: `/${kind}/prepare-existing` }), enabled);
           const response = await api.app.inject({ method: "POST", url: `/${kind}/prepare-existing`, payload: {} }); assert.equal(response.statusCode, enabled ? 401 : 404);
         }
-        assert.equal(p.counts().connects, 2); assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+        assert.equal(p.counts().connects, 2); assert.ok(p.calls.every(call => [NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
       } finally { await api.close(); }
       assert.equal(p.counts().ends, 1);
     } finally { f.cleanup(); }
@@ -489,8 +491,8 @@ test("production R2 exact26: command, receipt and existing preparation UOWs all 
       }
       const commandLeases = new Set(p.calls.filter(call => call.sql.startsWith("SELECT pg_advisory_xact_lock")).map(call => call.lease)); assert.equal(commandLeases.size, 6);
       for (const lease of commandLeases) {
-        const calls = p.calls.filter(call => call.lease === lease), probes = calls.filter(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE);
-        assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_METADATA_PROBE); assert.ok(probes.length >= 3);
+        const calls = p.calls.filter(call => call.lease === lease), probes = calls.filter(call => call.sql === NATIVE_RUNTIME26_IDENTITY_PROBE);
+        assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_IDENTITY_PROBE); assert.ok(probes.length >= 3);
         assert.equal(probes.length, calls.at(-1)!.sql === "COMMIT" ? 4 : 3);
       }
       assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql))); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().connects, p.counts().releases);
@@ -503,7 +505,7 @@ test("production R2 exact26: missing command purpose aborts startup and closes o
   try {
     await assert.rejects(createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration), p.factory), { code: "NATIVE_RUNTIME26_NOT_READY" });
     assert.equal(p.counts().allocations, 1); assert.equal(p.counts().ends, 1); assert.equal(p.counts().connects, p.counts().releases);
-    assert.ok(p.calls.every(call => call.sql === NATIVE_RUNTIME26_METADATA_PROBE));
+    assert.ok(p.calls.every(call => [NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE].includes(call.sql)));
   } finally { f.cleanup(); }
 });
 
@@ -1047,14 +1049,15 @@ test('production catalogue selector is exact and a read-only review cannot grant
 
 test('production catalogue original committed keys recover and replay without writes; changed keys and current role remain enforced', async () => {
   const f = categoryProductionFixture('26_v15_category_order_undo', true, true);
-  let role = 'ADMIN', revokeAfterReceipt = false, changedMetadata = false;
+  let role = 'ADMIN', revokeAfterReceipt = false, identityChanged = false;
   const records = new Map<string, Record<string, unknown>>();
   const p = exact26Driver(f.observation, (sql, values) => {
-    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [{ ...structuredClone(f.observation), ...(changedMetadata ? { catalog_sha256: 'b'.repeat(64) } : {}) }];
+    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql === NATIVE_RUNTIME26_IDENTITY_PROBE) return [{ identity: { ...structuredClone(f.observation.identity), ...(identityChanged ? { current_user: 'SYNTHETIC_CHANGED_ROLE' } : {}) } }];
     if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s') || sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003',
       login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role, employment_status: '在职', hall_id: hall }];
     if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
-    if (sql.includes('maintenance:receipt')) { if (revokeAfterReceipt) changedMetadata = true; return records.has(values[1] as string) ? [records.get(values[1] as string)!] : []; }
+    if (sql.includes('maintenance:receipt')) { if (revokeAfterReceipt) identityChanged = true; return records.has(values[1] as string) ? [records.get(values[1] as string)!] : []; }
     return undefined;
   });
   try {
@@ -1075,7 +1078,7 @@ test('production catalogue original committed keys recover and replay without wr
         const lease = p.calls.at(-1)!.lease, calls = p.calls.filter(c => c.lease === lease);
         const begin = calls.findIndex(c => c.sql.startsWith('BEGIN'));
         const receipt = calls.findIndex(c => c.sql.includes('maintenance:receipt'));
-        const probes = calls.map((c, i) => c.sql === NATIVE_RUNTIME26_V15_METADATA_PROBE ? i : -1).filter(i => i >= 0);
+        const probes = calls.map((c, i) => c.sql === NATIVE_RUNTIME26_IDENTITY_PROBE ? i : -1).filter(i => i >= 0);
         assert.ok(probes.some(i => i > begin && i < receipt)); assert.ok(probes.some(i => i > receipt));
         assert.equal(calls.at(-1)!.sql, 'COMMIT');
         const conflict = await api.app.inject({ method: 'POST', url: `/catalogue/${family}/commands`, headers,
@@ -1141,13 +1144,14 @@ test('production payment original provider saves two-hall account with prepared 
   const f = categoryProductionFixture('26_v15_category_order_undo', true, true);
   const secondHall = '00000000-0000-4000-8000-000000000094';
   const receipts = new Map<string, Record<string, unknown>>();
-  let role = 'ADMIN', metadataChanged = false, revokeAfterReceipt = false;
+  let role = 'ADMIN', identityChanged = false, revokeAfterReceipt = false;
   const p = exact26Driver(f.observation, (sql, values) => {
-    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [{ ...structuredClone(f.observation), ...(metadataChanged ? { catalog_sha256: 'b'.repeat(64) } : {}) }];
+    if (sql === NATIVE_RUNTIME26_V15_METADATA_PROBE) return [structuredClone(f.observation)];
+    if (sql === NATIVE_RUNTIME26_IDENTITY_PROBE) return [{ identity: { ...structuredClone(f.observation.identity), ...(identityChanged ? { current_user: 'SYNTHETIC_CHANGED_ROLE' } : {}) } }];
     if (sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s') || sql.includes('maintenance:identity')) return [{ account_id: account, staff_id: '00000000-0000-4000-8000-000000000003',
       login_name: 'SYNTHETIC_ONLY', password_hash: 'SYNTHETIC_UNUSED', login_enabled: true, auth_version: 1, role, employment_status: '在职', hall_id: hall }];
     if (sql.includes('maintenance:hall')) return [{ id: hall, enabled: true }];
-    if (sql.includes('maintenance:receipt')) { if (revokeAfterReceipt) metadataChanged = true; return receipts.has(values[1] as string) ? [receipts.get(values[1] as string)!] : []; }
+    if (sql.includes('maintenance:receipt')) { if (revokeAfterReceipt) identityChanged = true; return receipts.has(values[1] as string) ? [receipts.get(values[1] as string)!] : []; }
     if (sql.startsWith('SELECT id,name,enabled,version')) return [];
     if (sql.startsWith('SELECT id,enabled FROM naijue_erp.payment_method')) return [{ id: values[0], enabled: true }];
     if (sql.startsWith('SELECT id,enabled FROM naijue_erp.hall')) return (values[0] as string[]).map(id => ({ id, enabled: true }));
@@ -1181,7 +1185,7 @@ test('production payment original provider saves two-hall account with prepared 
       assert.ok(audit >= 0 && root > audit && links > root && completion > links);
       assert.deepEqual(calls[links]!.values, [saved.json().targetId, [hall, secondHall].sort()]);
       assert.deepEqual(JSON.parse(calls[audit]!.values[8] as string).payment_halls.map((link: { hall_id: string }) => link.hall_id), [hall, secondHall].sort());
-      assert.ok(calls.slice(completion + 1).some(c => c.sql === NATIVE_RUNTIME26_V15_METADATA_PROBE));
+      assert.ok(calls.slice(completion + 1).some(c => c.sql === NATIVE_RUNTIME26_IDENTITY_PROBE));
       assert.equal(calls.at(-1)!.sql, 'COMMIT');
       for (const [family, command, result] of [['methods', methodCommand, method.json()], ['accounts', accountCommand, saved.json()]] as const) {
         const replay = await api.app.inject({ method: 'POST', url: `/payment/${family}/commands`, headers, payload: command });
@@ -1861,4 +1865,67 @@ test('full native catalogue host producer: complete-draft SAVE consumes original
   }finally{await api.close();}
   assert.equal(p.counts().connects,p.counts().releases);
  }finally{f.cleanup();}
+});
+
+test("human F production startup and real login/session/list/detail/page consumers share one awaited baseline",async()=>{
+ const f=categoryProductionFixture("26_v20_history_insert_identity_from_v19",false),password="SYNTHETIC_F_ONLY_123456",salt="e".repeat(48);
+ const passwordHash=wrapTrustedLegacyCredential({salt,hash:pbkdf2Sync(password,salt,210000,32,"sha256").toString("hex")});
+ const sessions=new Map<string,Record<string,unknown>>();let role="ADMIN",loginEnabled=true,employment="在职",authVersion=1,hallEnabled=true,changeHallAfterAuth=false;
+ const otherHall="00000000-0000-4000-8000-000000000099";
+ const p=exact26Driver(f.observation,(sql,values)=>{
+  if(sql===NATIVE_RUNTIME26_V20_METADATA_PROBE)return [structuredClone(f.observation)];
+  if(sql.startsWith("INSERT INTO naijue_erp.auth_session")){const [token_hash,account_id,auth_version,created_at,expires_at,revoked_at]=values;sessions.set(token_hash as string,{token_hash,account_id,auth_version,created_at,expires_at,revoked_at});return [{saved:true}];}
+  if(sql.includes("FROM naijue_erp.auth_session"))return sessions.has(values[0] as string)?[sessions.get(values[0] as string)!]:[];
+  if(sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s")){
+   const currentHall=changeHallAfterAuth&&sql.includes("read-authorization:identity")?otherHall:hall;
+   return [{account_id:account,staff_id:"00000000-0000-4000-8000-000000000003",login_name:"SYNTHETIC_F_LOGIN",password_hash:passwordHash,
+    login_enabled:loginEnabled,auth_version:authVersion,role,employment_status:employment,hall_id:currentHall,native_hall_id:currentHall,hall_enabled:hallEnabled}];
+  }
+  if(sql==="SELECT enabled FROM naijue_erp.hall WHERE id = $1 FOR SHARE")return [{enabled:hallEnabled}];
+  if(sql.includes("normal-document-list:totals"))return [{exact_total:"0",quantity:"0",incoming_quantity:"0",outgoing_quantity:"0",gross_amount:"0.00",order_discount:"0.00",net_due:"0.00",history_valid:true,history_published:false}];
+  if(sql.includes("normal-document-list:page"))return [];
+  return undefined;
+ });
+ try{
+  const api=await createProductionRuntime26ApplicationApi(f.configuration,p.factory);
+  try{
+   const full=()=>p.calls.filter(q=>q.sql===NATIVE_RUNTIME26_V20_METADATA_PROBE).length;
+   assert.equal(full(),1);assert.equal(api.app.server.listening,false);assert.ok(p.calls.some(q=>q.sql===NATIVE_RUNTIME26_IDENTITY_PROBE));
+   const login=await api.app.inject({method:"POST",url:"/auth/login",headers:{origin:PRODUCTION_PUBLIC_ORIGIN},payload:{loginName:"SYNTHETIC_F_LOGIN",password}});
+   assert.equal(login.statusCode,200,login.body);assert.equal(sessions.size,1);
+   const cookie=String(login.headers["set-cookie"]).split(";")[0]!,headers={origin:PRODUCTION_PUBLIC_ORIGIN,cookie};
+   assert.equal((await api.app.inject({method:"GET",url:"/auth/session",headers})).statusCode,200);
+   const salesFilter={startDate:null,endDate:null,statuses:[],businessTypes:[],hallIds:[],salespersonIds:[],customerIds:[],warehouseIds:[],number:null};
+   const transferFilter={startDate:null,endDate:null,statuses:[],fromWarehouseIds:[],toWarehouseIds:[],number:null};
+   for(const [kind,filter] of [["sales",salesFilter],["transfers",transferFilter]] as const){
+    for(const page of [1,2]){const response=await api.app.inject({method:"POST",url:`/${kind}/query`,headers,payload:{filter,page,pageSize:20}});assert.equal(response.statusCode,200,response.body);assert.equal(response.json().items.length,0);}
+    const detail=await api.app.inject({method:"POST",url:`/${kind}/detail/query`,headers,payload:kind==="sales"?{salesId:account}:{transferId:account}});
+    assert.equal(detail.statusCode,404,detail.body);
+   }
+   assert.equal(full(),1);assert.equal(p.calls.filter(q=>q.sql.includes("normal-document-list:totals")).length,4);
+   assert.ok(p.calls.some(q=>q.sql.includes("FOR UPDATE OF a, s")));assert.ok(p.calls.some(q=>q.sql.includes("FROM naijue_erp.auth_session")&&q.sql.includes("FOR UPDATE")));
+   const before=p.calls.filter(q=>q.sql.includes("normal-document-list:totals")).length;changeHallAfterAuth=true;
+   for(const [kind,filter]of [["sales",salesFilter],["transfers",transferFilter]]as const){const response=await api.app.inject({method:"POST",url:`/${kind}/query`,headers,payload:{filter,page:1,pageSize:20}});assert.equal(response.statusCode,403,response.body);}
+   assert.equal(p.calls.filter(q=>q.sql.includes("normal-document-list:totals")).length,before);changeHallAfterAuth=false;
+   role="WAREHOUSE";const changed=await api.app.inject({method:"GET",url:"/auth/session",headers});assert.equal(changed.statusCode,200);assert.ok(changed.body.includes("WAREHOUSE"));
+   for(const change of [()=>{loginEnabled=false;},()=>{employment="离职";},()=>{hallEnabled=false;},()=>{authVersion=2;}]){
+    loginEnabled=true;employment="在职";hallEnabled=true;authVersion=1;change();const denied=await api.app.inject({method:"GET",url:"/auth/session",headers});assert.equal(denied.statusCode,200,denied.body);assert.equal(denied.json().principal,null);
+    const business=await api.app.inject({method:"POST",url:"/sales/query",headers,payload:{filter:salesFilter,page:1,pageSize:20}});assert.equal(business.statusCode,401,business.body);
+   }
+   assert.equal(full(),1);assert.equal(p.counts().allocations,1);assert.equal(p.counts().connects,p.counts().releases);
+  }finally{await api.close();}assert.equal(p.counts().ends,1);
+ }finally{f.cleanup();}
+});
+test("human F production full baseline failure prevents application return; changed current process denies auth before business SQL",async()=>{
+ for(const failure of ["startup","identity","review"]){
+  const f=categoryProductionFixture("26_v20_history_insert_identity_from_v19",false),p=exact26Driver(f.observation,sql=>sql===NATIVE_RUNTIME26_V20_METADATA_PROBE?[structuredClone(f.observation)]:undefined);
+  try{
+   if(failure==="startup"){f.observation.source_routines_match=false;await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration,p.factory),{code:"NATIVE_RUNTIME26_NOT_READY"});assert.equal(p.counts().ends,1);assert.equal(p.calls.length,1);continue;}
+   const api=await createProductionRuntime26ApplicationApi(f.configuration,p.factory);try{
+    if(failure==="identity")f.observation.identity.postmaster_start="SYNTHETIC_OTHER_PROCESS";else writeFileSync(f.configuration.runtime26Review.reviewFile,"{}");
+    const response=await api.app.inject({method:"GET",url:"/auth/session",headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`}});assert.ok(response.statusCode>=400);
+    assert.equal(p.calls.filter(q=>q.sql.includes("FROM naijue_erp.auth_session")).length,0);assert.equal(p.calls.filter(q=>q.sql===NATIVE_RUNTIME26_V20_METADATA_PROBE).length,1);
+   }finally{await api.close();}
+  }finally{f.cleanup();}
+ }
 });

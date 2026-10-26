@@ -503,6 +503,16 @@ export const NATIVE_RUNTIME26_V20_METADATA_PROBE = replaceOne(NATIVE_RUNTIME26_V
   "('guard_history_insert','bbd40680f3196904c9c9e986c6f8cef0bee77c4cbb19663b8333e8b6150e1f2f')",
   "('guard_history_insert','98fcf82074f4aaf0712b2af3aca5a12a7e4975933712caffd577e652eca7e12f')");
 
+/** Daily managed-application lease identity only. The complete catalog was awaited at startup.
+ * A baseline switch stops/disposes that application before DDL/ACL changes, then creates a new issuer.
+ * This signal does not claim to detect uncoordinated schema changes while an old application runs. */
+export const NATIVE_RUNTIME26_IDENTITY_PROBE = `/* native-runtime26:identity-v1 */ SELECT jsonb_build_object(
+ 'database',current_database(),'database_oid',d.oid::text,'database_owner',pg_get_userbyid(d.datdba),
+ 'current_user',current_user,'session_user',session_user,'server_version_num',current_setting('server_version_num'),
+ 'server_addr',inet_server_addr()::text,'server_port',inet_server_port(),'postmaster_start',pg_postmaster_start_time()::text,
+ 'replication_role',current_setting('session_replication_role')) AS identity
+ FROM pg_catalog.pg_database d WHERE d.datname=current_database()`;
+
 type Runtime26Purpose = Parameters<NativeRuntime26Capability["assertReady"]>[1];
 const runtime26Purposes: readonly Runtime26Purpose[] = Object.freeze(["IMPORT_STAGE", "IMPORT_PRODUCT_SEASONS", "IMPORT_PUBLISH", "PRODUCT_SEASONS_READ",
   "PRODUCT_MAINTENANCE", "INVENTORY_ADMISSION", "HISTORY_READ", "CURRENT_FORM_READ", "CURRENT_CUSTOMER_READ_WRITE", "HISTORY_REVISION"]);
@@ -593,8 +603,13 @@ export interface NativeRuntime26Issuer {
 }
 export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, options: {
   readonly reviewFile: string; readonly trustedReviewSha256: string;
+  readonly verificationProfile?: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1";
 }): Promise<NativeRuntime26Issuer> {
-  const settings = exactData(options, ["reviewFile", "trustedReviewSha256"]);
+  const settings = exactData(options, ["reviewFile", "trustedReviewSha256", ...(Object.hasOwn(options ?? {}, "verificationProfile") ? ["verificationProfile"] : [])]);
+  if (Object.hasOwn(settings,"verificationProfile") && settings.verificationProfile !== "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1")
+    throw runtime26Error("Explicit managed deployment baseline verification profile required");
+  const managedBaseline = settings.verificationProfile === "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1";
+  let baselineVerified = false;
   if (!metadataText(settings.reviewFile) || !sha(settings.trustedReviewSha256) || originalPool === null || typeof originalPool !== "object"
     || issuedPools.has(originalPool)) throw runtime26Error("One explicitly owned pool and independently pinned review required");
   const connect = dataMethod(originalPool, "connect");
@@ -650,15 +665,18 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     lease.checking = true;
     try {
       filesReady();
-      const observed = await lease.query(metadataProbe);
-      if (!lease.active || observed.rows.length !== 1 || observed.rowCount !== 1) fail("One actual metadata row on the original lease required");
-      const row = exactData(observed.rows[0], ["identity", "migration_versions", "catalog_sha256", "source_routines_match"]);
+      const full = !managedBaseline || !baselineVerified;
+      const observed = await lease.query(full ? metadataProbe : NATIVE_RUNTIME26_IDENTITY_PROBE);
+      if (!lease.active || observed.rows.length !== 1 || observed.rowCount !== 1) fail("One actual verification row on the original lease required");
+      const row = exactData(observed.rows[0], full ? ["identity", "migration_versions", "catalog_sha256", "source_routines_match"] : ["identity"]);
       const identity = exactData(row.identity, ["database", "database_oid", "database_owner", "current_user", "session_user", "server_version_num", "server_addr", "server_port", "postmaster_start", "replication_role"]);
-      if (row.catalog_sha256 !== catalog.sha256 || row.source_routines_match !== true || !exactVersions26(row.migration_versions)
-        || identity.database !== target.database || identity.database_oid !== target.databaseOid || identity.current_user !== target.actingRole
+      if (full && (row.catalog_sha256 !== catalog.sha256 || row.source_routines_match !== true || !exactVersions26(row.migration_versions)))
+        fail("Actual exact schema, source bodies or catalog differs from independent review");
+      if (identity.database !== target.database || identity.database_oid !== target.databaseOid || identity.current_user !== target.actingRole
         || identity.session_user !== target.sessionUser || identity.server_addr !== target.serverAddress || identity.server_port !== target.serverPort
-        || identity.postmaster_start !== target.postmasterStart || identity.replication_role !== "origin") fail("Actual runtime target, exact schema, source bodies or catalog differs from independent review");
+        || identity.postmaster_start !== target.postmasterStart || identity.replication_role !== "origin") fail("Actual runtime target, process or role differs from independent review");
       filesReady();
+      if (full && managedBaseline) baselineVerified = true;
     } catch (error) {
       lease.failed = error instanceof Error ? error : runtime26Error("Runtime metadata verification failed");
       if (!transientMetadataFailure(error)) revoked = true;
@@ -726,6 +744,8 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     } }) : undefined;
   issuedPools.add(originalPool);
   try {
+    // Complete schema/routine/ACL verification is awaited before the issuer is exposed.
+    // Daily consumers cannot become the lazy first verifier or reopen a changed baseline.
     const first = await pool.connect(); first.release();
     return Object.freeze({ pool, runtime26, catalogueRetainedDelete, productSeasonArray, historicalCustomerExclusion, productMediaWrite, imageColorSwap,
       ...(categoryOrderWrite === undefined ? {} : { categoryOrderWrite }) });

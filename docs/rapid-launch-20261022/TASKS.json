@@ -1355,7 +1355,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-26",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "6f9f1fd433cef0bb1f2114b656fba9b12a3cd271",
+  "lastVerifiedRemoteCommit": "2be245366829b21d1fb56d316b3eb915c06eff8f",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -11660,7 +11660,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE594",
+    "round": "SOURCE595",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11709,13 +11709,13 @@
       "F2": "SOURCE584S582-F01 originalQF2 source closed; actualprovider/save next necessaryCORE15/fullhost",
       "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
-      "D1": "Currentv20guard exact4registered; next humanF metadataProbe hotpath simplification sameissuer/pool/host",
+      "D1": "HumanFexact4source delivered; nextactual104lock42501 exactminimumsemantics/ACLsource resolution",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
       "D3": "humanFexact4 source delivered8checks/strictPASS; originalQB scopedreview then realnonemptyfullprovider later",
       "T45": "CORE16delivered exactpack; prepare originalv19v20/ACL/131reviewAPP then original4489offsetremaining23793, no oldstage replay",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
-      "QB": "QB345guard/QB346list scopedsourcePASS adopted; nextT45actualnewcanonical/role/affectedQA only",
+      "QB": "QB347CORE16installparamsPASS; newFsourceonlyreview+104narrowlockboundary next",
       "Compression": "G exact2 cache source/3affectedchecks delivered, writer returned; C proxytemplate source fixed, actualpubliccache pending nextnecessary build"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -13284,6 +13284,16 @@
       },
       "boundary": "No install/newPGpatch/currentfreshreview/newSAVE/full11MAIN/PUBLISH/formalroot yet. HumanF publicmetadata hotpath WIP notincluded. ConfigsameCORE14readflags onlynewassetprefix.",
       "next": "OriginalT45 controlledv19v20/ACL/currentcanonicalreviews+CORE16APP necessarypackage; continue only23793remaining from original4489offset; actualbusiness/performance later legalfullprovider"
+    },
+    "source595": {
+      "humanF": "D1exact4delivered9affectedchecks/targetedstrict0; startup fullawait beforeissuerreturn, productiononlyselector, dailyidentity/purpose/lease/reviewfiles; originalbusinessauth current andwritechecks retained",
+      "report": "reports/backend/rapid-launch-20261022/D1/HUMAN-F-MANAGED-BASELINE-RESULT.json",
+      "reportSha256": "b4b165f458fde6bc0cbdbe9c4b745665fa75345402c755fc267c64d727ba3bc4",
+      "actual104": "COMPLETED0/.518s genuineR1/runtime PG170011 LOCK TABLE barcode_scheme SHARE42501; rollback/endtrue/0DMLDDLACL. ExistingonlySELECT, proposedidcolumnUPDATE notbasis for tablelocksuccess",
+      "D1Next": "OriginalD1/QB resolve minimal equivalentemptytablelock/permission basedallapprovedwriters; no blindwholeUPDATE/MAINTAIN, no deleteguard, exactbusinesscontractdelta onlyifgenuinelynew",
+      "T45": "102installation sourceQB347PASS9931ca99, independentpreparecontinues;103schema disabledpendinglockandcompatibleAPP. CORE16doesnotcontainnewF",
+      "goal": "ACTIVE37/67allstates/realhistory/performance/formalroot; no newwholepage/businessreleasecounts",
+      "GitHub594": "2be245366829b21d1fb56d316b3eb915c06eff8f verified"
     }
   }
 }

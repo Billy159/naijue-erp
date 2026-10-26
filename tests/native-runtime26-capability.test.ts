@@ -10,7 +10,7 @@ import { mkdtempSync, readFileSync, writeFileSync, rmSync, chmodSync, symlinkSyn
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_RUNTIME26_V19_METADATA_PROBE, NATIVE_RUNTIME26_V20_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
+import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_RUNTIME26_V19_METADATA_PROBE, NATIVE_RUNTIME26_V20_METADATA_PROBE, NATIVE_RUNTIME26_IDENTITY_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import type { MaintenancePgContext } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import type { MaintenanceCompletion } from "../packages/application/src/maintenance-commit-ports.ts";
@@ -521,5 +521,55 @@ test("v20 guard issuer selects exact post-v19 metadata, preserving original purp
   }
   assert.equal(NATIVE_RUNTIME26_V20_METADATA_PROBE.split("98fcf82074f4aaf0712b2af3aca5a12a7e4975933712caffd577e652eca7e12f").length,2);
   assert.ok(NATIVE_RUNTIME26_V19_METADATA_PROBE.includes("bbd40680f3196904c9c9e986c6f8cef0bee77c4cbb19663b8333e8b6150e1f2f"));
+ }finally{f.cleanup();}
+});
+
+/** Human F managed deployment baseline: no actor/permission result is cached. */
+function managedScripted(row=observation()){
+ const calls:string[]=[],releases:unknown[]=[];let identityFailure:unknown;
+ const pool={async connect(){return {async query(sql:string){calls.push(sql);
+  if(sql===NATIVE_RUNTIME26_METADATA_PROBE)return {rows:[structuredClone(row)],rowCount:1};
+  if(sql===NATIVE_RUNTIME26_IDENTITY_PROBE){if(identityFailure)throw identityFailure;return {rows:[{identity:structuredClone(row.identity)}],rowCount:1};}
+  return {rows:[],rowCount:0};},release(error?:unknown){releases.push(error);}};}};
+ return {pool,row,calls,releases,failure(value?:unknown){identityFailure=value;}};
+}
+test("human F startup awaits complete baseline; later leases and repeated purposes only query lightweight identity",async()=>{
+ const f=fixture();let open:()=>void=()=>{};const gate=new Promise<void>(resolve=>{open=resolve;});let returned=false;
+ const p=managedScripted();let baselineStarted=false;
+ const pool={async connect(){const raw=await p.pool.connect();return {async query(sql:string){if(sql===NATIVE_RUNTIME26_METADATA_PROBE){baselineStarted=true;await gate;}return raw.query(sql);},release:raw.release};}};
+ try{
+  const creating=createNativeRuntime26Issuer(pool,{...f.options(),verificationProfile:"DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"}).then(i=>{returned=true;return i;});
+  await new Promise<void>(resolve=>setImmediate(resolve));assert.equal(baselineStarted,true);assert.equal(returned,false);open();const issuer=await creating;
+  assert.equal(p.calls.filter(q=>q===NATIVE_RUNTIME26_METADATA_PROBE).length,1);
+  for(let n=0;n<2;n++){const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,"IMPORT_STAGE");await issuer.runtime26.assertReady(client,"PRODUCT_MAINTENANCE");client.release();}
+  assert.equal(p.calls.filter(q=>q===NATIVE_RUNTIME26_METADATA_PROBE).length,1);assert.equal(p.calls.filter(q=>q===NATIVE_RUNTIME26_IDENTITY_PROBE).length,6);
+  assert.ok(!NATIVE_RUNTIME26_IDENTITY_PROBE.includes("pg_proc")&&!NATIVE_RUNTIME26_IDENTITY_PROBE.includes("pg_constraint")&&!NATIVE_RUNTIME26_IDENTITY_PROBE.includes("manifest"));
+  const invalid=scripted();await assert.rejects(createNativeRuntime26Issuer(invalid.pool,{...f.options(),verificationProfile:"CACHE_FOREVER"} as never));assert.equal(invalid.connects(),0);
+ }finally{open();f.cleanup();}
+});
+test("human F baseline and fresh identity failures deny startup or revoke COMMIT without another full catalog",async()=>{
+ const f=fixture();try{
+  const bad=managedScripted({...observation(),source_routines_match:false});await assert.rejects(createNativeRuntime26Issuer(bad.pool,{...f.options(),verificationProfile:"DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"}),{code:"NATIVE_RUNTIME26_NOT_READY"});
+  for(const mutate of [(r:any)=>{r.identity.database="OTHER";},(r:any)=>{r.identity.database_oid="999";},(r:any)=>{r.identity.current_user="OTHER";},(r:any)=>{r.identity.session_user="OTHER";},(r:any)=>{r.identity.postmaster_start="OTHER";},(r:any)=>{r.identity.replication_role="replica";}]){
+   const p=managedScripted(),issuer=await createNativeRuntime26Issuer(p.pool,{...f.options(),verificationProfile:"DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"}),client=await issuer.pool.connect();
+   await client.query("BEGIN");mutate(p.row);await assert.rejects(issuer.runtime26.assertReady(client,"IMPORT_STAGE"),{code:"NATIVE_RUNTIME26_NOT_READY"});
+   const n=p.calls.length;await assert.rejects(client.query("COMMIT"),{code:"NATIVE_RUNTIME26_NOT_READY"});assert.equal(p.calls.length,n);await client.query("ROLLBACK");client.release();
+   await assert.rejects(issuer.pool.connect(),{code:"NATIVE_RUNTIME26_NOT_READY"});assert.equal(p.calls.filter(q=>q===NATIVE_RUNTIME26_METADATA_PROBE).length,1);
+  }
+ }finally{f.cleanup();}
+});
+test("human F original purpose and file revocation still bind managed leases and COMMIT",async()=>{
+ for(const change of ["purpose","review","receipt"]){const f=fixture();try{
+  const p=managedScripted(),issuer=await createNativeRuntime26Issuer(p.pool,{...f.options(),verificationProfile:"DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"}),client=await issuer.pool.connect();await client.query("BEGIN");
+  if(change==="review")writeFileSync(f.reviewFile,"{}");if(change==="receipt")writeFileSync(f.independent,"changed");
+  const n=p.calls.length;await assert.rejects(issuer.runtime26.assertReady(client,change==="purpose"?"HISTORY_READ":"IMPORT_STAGE"),{code:"NATIVE_RUNTIME26_NOT_READY"});assert.equal(p.calls.length,n);
+  await assert.rejects(client.query("COMMIT"),{code:"NATIVE_RUNTIME26_NOT_READY"});await client.query("ROLLBACK");client.release();assert.ok(p.releases.at(-1) instanceof Error);
+ }finally{f.cleanup();}}
+});
+test("human F transient identity transport failure discards only that lease; fresh lease rechecks current identity",async()=>{
+ const f=fixture();try{
+  const p=managedScripted(),issuer=await createNativeRuntime26Issuer(p.pool,{...f.options(),verificationProfile:"DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"});
+  p.failure(Object.assign(Error("SYNTHETIC_TRANSPORT"),{code:"ECONNRESET"}));await assert.rejects(issuer.pool.connect(),/SYNTHETIC_TRANSPORT/);assert.ok(p.releases.at(-1) instanceof Error);
+  p.failure();const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,"IMPORT_STAGE");client.release();assert.equal(p.calls.filter(q=>q===NATIVE_RUNTIME26_METADATA_PROBE).length,1);
  }finally{f.cleanup();}
 });

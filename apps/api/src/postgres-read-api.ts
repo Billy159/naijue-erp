@@ -555,7 +555,9 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
   try {
-    const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, runtime26Review);
+    const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
+      ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"
+    });
     const pool = issuer === null ? ownedPool : issuer.pool;
     if (issuer !== null) {
       const admission = await pool.connect();

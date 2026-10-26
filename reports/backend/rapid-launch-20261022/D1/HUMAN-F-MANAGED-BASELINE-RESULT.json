@@ -1,0 +1,85 @@
+{
+  "version": "D1_HUMAN_F_MANAGED_BASELINE_REQUEST_IDENTITY_1",
+  "status": "SOURCE_TARGETED_PASS_PENDING_INDEPENDENT_REVIEW_AND_ACTUAL_PACKAGE",
+  "authority": "C SOURCE593 exact4, original human F sales and transfers both included",
+  "files": [
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 78034,
+      "sha256": "247cea8edd239f0ef8eaf453546d7757b638d47b992240f2fe5145687bd9757d"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "bytes": 79370,
+      "sha256": "4be669d6f5891be8c852fa5c7a7f1c805a6c7e5e03caf2f48e42658efab131f7"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 55897,
+      "sha256": "765e394504cc0ab5b9d0e7e1288afaa5813b966dabb4a0ad63a2cb5dff7f8a5a"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "bytes": 181768,
+      "sha256": "fe294383f1009e2b925bec82cc020415e9b50866e78deb917346058c5ceee484"
+    }
+  ],
+  "implementation": {
+    "internalSelector": "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1",
+    "selectedAt": "Original composePostgresApi createNativeRuntime26Issuer call only; no new public JSON/config/review/business fields",
+    "startup": "createNativeRuntime26Issuer awaits first original pool lease and full original exact metadata probe before returning; composePostgresApi awaits issuer before capabilities and before creating Fastify app. No first-business-request lazy full check.",
+    "fullProbe": "Complete schema/routine/ACL/canonical proof unchanged for original selected patch profile. v19/v20 probes and SQL bodies unchanged.",
+    "daily": "Every managed lease acquisition and assertReady performs fixed small current database/OID/role/sessionUser/address-port/postmaster/replication-role identity query, plus original active/nonfailed/idle lease, purpose and two pinned review-file checks. No full catalog reconstruction during those requests.",
+    "unselected": "Original direct issuer/import caller without optional internal selector retains original full probe on every check. One directly affected existing test reused to verify it.",
+    "state": "One startup-completed boolean within original issuer lifetime; original weak lease registry only, no TTL/actor/permission cache, no growing cache or new table."
+  },
+  "preservedAuthorization": {
+    "business": "Authentication PostgresAuthenticationStore current locked account/staff/hall, session reread after lock, auth_version; native source-confirmed reads and history-write current identity remain actual queries. No positive actor/role/hall result memoization.",
+    "write": "Original sales/transfer UOW/locks/post-lock authorization, maintenance prepared audit and immediate pre-COMMIT assertReady/file proofs remain in place. No changes to those owned sources.",
+    "commit": "Original filesReady check before COMMIT/END and poisoned lease rollback/discard handling unchanged; identity mismatch revokes issuer, transport failure only discards affected lease.",
+    "publication": "No STAGED visibility, HISTORY closure, MAIN or PUBLISH permission change"
+  },
+  "checks": {
+    "new": 6,
+    "directlyAffectedExisting": 3,
+    "totalPass": 9,
+    "fail": 0,
+    "skip": 0,
+    "log": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/human-F-targeted-checks.log",
+      "bytes": 1252,
+      "sha256": "162266ad8bd65af0b35d955f1d7feb9db57c0b846ea7274e9894913afa0e1840"
+    },
+    "covered": "Deferred full-startup resolution; baseline mismatch rejection; repeated same-lease purposes and subsequent leases only light identity; live identity/purpose/review invalidation and preCOMMIT refusal; transient lease failure; normal production login/session + sales and transfer lists/pages/detail consumers on same original pool; current identity/hall change between auth/read; disabled/left/hall/auth-version session invalidation; two original receipt/write services preserve original keys/current role and before/after operation lightweight identity checks.",
+    "mode": "Synthetic drivers through actual production factory and consumers, no PostgreSQL/browser/business validation",
+    "types": {
+      "exitCode": 0,
+      "scope": "Exact4 roots under original strict flags and transitive imports",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/human-F-targeted-types.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "fullProject": "Prior unrelated whole-project type diagnostics remain NOT_PASS; no broad repeat or exclusion changes",
+    "existingCompositionAssertions": "Directly affected per-request full-probe expectations changed to startup full plus daily identity; receipt drift tests now inject actual identity drift, not claim unsignaled hot DDL detection."
+  },
+  "requiredDeploymentSwitch": {
+    "owner": "Original C/T45",
+    "steps": [
+      "Stop old managed application and await original app.close/pool.dispose before schema/ACL/baseline mutation",
+      "Install approved actual schema/ACL changes and produce fresh independent target/catalog review in existing process",
+      "Start new application/new owned pool/new issuer, await complete original metadata verification before business route opens",
+      "If startup mismatch, keep business closed; do not reuse old issuer/pool or claim cached baseline still authorizes new database"
+    ],
+    "signalLimit": "No reliable existing DDL epoch exists. This approved serial switch is required. No claim to detect arbitrary uncoordinated DDL with unchanged review files during an old running app."
+  },
+  "notExecuted": [
+    "Actual database/schema/ACL changes",
+    "Server/SSH/GRANT/build/Git/deployment",
+    "Actual API timing/login/browser/role matrix",
+    "Original98 remaining header recovery",
+    "Whole real data import/MAIN/PUBLISH"
+  ],
+  "ownership": "D3 four sales/transfer reader/protocol files read only; no edits by D1. No host compression leaves, SQL patch, frontend/shared business DTO or B07 changes. New F source must receive independent affected-scope review and a later compatible package; old v20 QB345 is not F acceptance."
+}
