@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE558",
+    "round": "SOURCE559",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "bc9b063791010b332b225d3685eaacd8cfb259d3",
+    "sourceHeadBeforeThisContinuityCommit": "4edbbe42c89fd217ebda7741918bd30964986240",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12718,12 +12718,19 @@
       "externalArcoCssBytes": 570426,
       "arcoBeforeFrozen": true,
       "preAuthAccountMenuInputs": 0,
-      "QF": "Original QF dispatched affected fixed-source/build only, not whole519 regression",
+      "QF": "PASS_SCOPED_FIXED_SOURCE_BUILD_PACK_BROWSER_PENDING bbc807c965f6fb80edfe898b49071dd4e1fb51ed6dc3635345780bf0a41b6358; original T45 has exact accepted pack for candidate deployment",
       "T45": "Existing unique owner received exact pack for prepared phased candidate deployment after QF; do not stop83/81",
       "actualDeployment": false,
       "browserPerformance": "NOT_MEASURED",
       "realBusiness": "NOT_ACCEPTED",
       "flags": "Same CORE10 capabilities, no false business enabling"
+    },
+    "compression559": {
+      "thread": "01a175eb-052d-71e2-9bb5-c4c5a6fe285b",
+      "reason": "New dedicated compression line explicitly requested by human in original taskbook; reuse it, no duplicate created by C",
+      "owner": "Temporary original D1 two host leaves only; other owners unchanged",
+      "status": "IMPLEMENTATION_ACTIVE_NOT_DEPLOYED",
+      "next": "Source+targeted checks to C, fixed same-version integration and T45 actual public encoding readback; do not stop CORE12 staged deployment"
     }
   }
 }
