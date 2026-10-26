@@ -40,7 +40,7 @@ import {validatePreparedNativeStockGroup,nativeStockSourceEvidence,nativeStockPu
 import {historyClosureProjectionRow26,historyClosureRowHash} from '../../packages/application/src/history-typed-closure.ts';
 
 const RETAINED_HEADER_HELPERS={'sales-header-closure-session-20261026.mjs': 'c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772', 'prepare-retained-sales-header-window-20261026.mjs': '89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c', 'prepare-retained-transfer-header-window-20261025-v2.mjs': 'aaea814af3db254c4801a7e07cadef7ddefd056d2b2f56f0a11c09c38ae70eac'};
-const RETAINED_NATIVE_HELPER_SHA256='6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22';
+const RETAINED_NATIVE_HELPER_SHA256='8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79';
 export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';
 export const sourceGroups=Object.freeze([...HISTORY_CLOSURE_SOURCE_GROUPS]);
 const must=(ok,code,group)=>{if(!ok)throw Object.assign(Error(code),{code,...(group?{group}:{})});};
@@ -226,7 +226,7 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
    }
    try{
     descriptor(recipe.closureHelper,4194304);
-    must(recipe.closureHelper.bytes===14592&&recipe.closureHelper.sha256===RETAINED_NATIVE_HELPER_SHA256,'PRODUCTION_BARCODE26_HELPER_PIN');
+    must(recipe.closureHelper.bytes===15036&&recipe.closureHelper.sha256===RETAINED_NATIVE_HELPER_SHA256,'PRODUCTION_BARCODE26_HELPER_PIN');
     const helperBytes=await pinnedSmall(recipe.closureHelper.path,recipe.closureHelper.sha256,sourceFileResolver26(recipe));current();must(helperBytes.length===recipe.closureHelper.bytes,'PRODUCTION_BARCODE26_HELPER_PIN');
     const helper=await import(pathToFileURL((await sourceFileResolver26(recipe)?.(recipe.closureHelper)??recipe.closureHelper).path).href);current();const makeClosure=own(helper,'createRetainedNativeClosureSession26');
     must(typeof makeClosure==='function','PRODUCTION_BARCODE26_HELPER_PIN');

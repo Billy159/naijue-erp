@@ -139,3 +139,19 @@ test('T04 retained publication roots equal correct post-MAIN projection; null or
  const countKeys=(await load('packages/application/src/history-storage-contract.ts')).HISTORY_COUNT_KEYS,scope={batchId:group.batchId,fixedSourceNamespace:group.fixedSourceNamespace,selectionSha256:group.selection.selectionSha256,authorizedPayloadHash:'b'.repeat(64),expectedCounts:Object.fromEntries(countKeys.map(k=>[k,['import_source_row','import_stock_contributor'].includes(k)?2:0])),expectedSourceEntityCounts:Object.fromEntries(codec.HISTORY_CLOSURE_SOURCE_ENTITIES.map(k=>[k,k==='INVENTORY_BASELINE'?2:0])),documents:[]};
  const root=await codec.buildHistoryTypedClosureExpected26({...scope,sourceRows:sources,typedRows:typed}),expected=await codec.buildHistoryTypedClosureExpected26({...scope,sourceRows:sources,typedRows:correct}),old=await codec.buildHistoryTypedClosureExpected26({...scope,sourceRows:sources,typedRows:nullRows}),wrong=await codec.buildHistoryTypedClosureExpected26({...scope,sourceRows:sources,typedRows:wrongRows});assert.deepEqual(root,expected);assert.equal(root.plan.sourceManifestSha256,old.plan.sourceManifestSha256);assert.notEqual(root.plan.typedManifestSha256,old.plan.typedManifestSha256);assert.notEqual(root.plan.typedManifestSha256,wrong.plan.typedManifestSha256);
 });
+
+test('source708 same-record verified digest removes only the third original-row hash for all native groups',async t=>{
+ for(const group of Object.keys(factories)){const f=await factories[group](t),p=group==='STOCK_CONTRIBUTORS'?f.groups[0]:f.prepared;let hashes=0;
+  const counted={...original,historyClosureRowHash(row){hashes++;return original.historyClosureRowHash(row);}},x=session(group,f.options.binding,[p],{original:counted});t.after(()=>x.s.close());
+  const sources=await collect(x.s.sourceRows()),types=await collect(x.s.typedRows());assert.equal(hashes,2*(sources.length+types.length));assert.equal(x.reads(),1);
+  const expected=projectRetainedNativeClosureRecord26(original,group,p);assert.deepEqual(sources,ordered(expected.sources));assert.deepEqual(types,ordered(expected.typed));
+ }
+});
+test('source708 barcode consumed rows reuse only verified descriptor digests while all six schemes retain independent roundtrip hashes',async t=>{
+ let rowHashes=0,schemeHashes=0;const counted={...barcodeOriginal,historyClosureRowHash(row){if(row.relation==='barcode_scheme')schemeHashes++;else rowHashes++;return barcodeOriginal.historyClosureRowHash(row);}},f=barcodeSessionFixture(undefined,{original:counted}),s=f.open();t.after(()=>s.close());
+ const sources=await collect(s.sourceRows()),types=await collect(s.typedRows());assert.equal(rowHashes,2*(sources.length+types.filter(r=>r.relation!=='barcode_scheme').length));assert.equal(schemeHashes,12);assert.equal(f.reads(),3);
+});
+test('source708 reused digest still independently hashes decoded cache rows and refuses a roundtrip mismatch',async t=>{
+ const f=await skuFixture(t),projected=new WeakSet(),guarded={...original,historyClosureProjectionRow26(...args){const row=original.historyClosureProjectionRow26(...args);projected.add(row);return row;},historyClosureRowHash(row){return projected.has(row)?original.historyClosureRowHash(row):'f'.repeat(64);}},x=session('SKUS',f.options.binding,[f.prepared],{original:guarded});t.after(()=>x.s.close());
+ await assert.rejects(collect(x.s.sourceRows()),/CACHE_ROUNDTRIP/);assert.equal(x.reads(),1);await x.s.close();assert.equal(x.closed(),1);
+});

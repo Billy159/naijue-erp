@@ -2,21 +2,21 @@
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
   "recordedAtUtc": "2026-10-26T11:11:07.604150+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "SOURCE693_FIXED1000_SOURCE_PROBE_READY_FINITE_ONLY_NOT_RUN",
+  "status": "SOURCE708_SAME_RECORD_DIGEST_REUSE_FINITE_CHECKED_NOT_ACTUAL_PERFORMANCE_PASS",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
     "bytes": 118641,
-    "sha256": "e7960bf4c1bcd436998dc2c70f9b9a3763a76fd87dae46227fe5593ea51fb248"
+    "sha256": "c31a070e80202c7586b99c938e7f24a9c720ea97be3543620a247bf8c64d5854"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 154924,
-    "sha256": "4ac4ace67f6696ae01228daca8ae0962159fc3424e3e6aa2f4e2829d74bef41e"
+    "bytes": 155828,
+    "sha256": "1fc70ba45c27081eb4d3661f354e3096f2c28d2a7cafa5feeda5ef5578d44ab5"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
-    "bytes": 182293,
-    "sha256": "158c8a5b8feb0fd7f42331c49e223cc814f21716d56971f6c438fb61a99348e4"
+    "bytes": 182337,
+    "sha256": "7201c668b64ccbee52203c3bec726084bdee54c8f043511490942f6cf2ef05b1"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -158,7 +158,7 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-host.test.mjs"
   ],
-  "next": "C freeze scoped source QA -> T45 prepare exact diagnostic-only210s soft/hard240 carrier -> C separately authorizes; no900 full retry.",
+  "next": "C freeze exact helper/provider/tests and descriptors -> scoped QB -> T45 exact new source/helper bundle; actual performance comparison only separately authorized fixed1000, no full retry.",
   "source620": {
     "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
     "implemented": [
@@ -1608,5 +1608,103 @@
     "D1HelperOrSharedBuilderChanged": false,
     "sourceBodyReadLocally": false,
     "runAuthorizedByThisDocument": false
+  },
+  "source708NativeSameRowDigestReuse": {
+    "status": "IMPLEMENTED_SOURCE_FINITE_EQUIVALENCE_NO_ACTUAL_SPEEDUP_CLAIM",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 15036,
+        "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+        "bytes": 26368,
+        "sha256": "fb646859ffb96ba4f9ad47bb780bed8fef2b2f77a3db5ddb046bfc275cd9b9e2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 118641,
+        "sha256": "c31a070e80202c7586b99c938e7f24a9c720ea97be3543620a247bf8c64d5854"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 155828,
+        "sha256": "1fc70ba45c27081eb4d3661f354e3096f2c28d2a7cafa5feeda5ef5578d44ab5"
+      }
+    ],
+    "implementation": "Within consume, compute source/typed descriptor arrays once with original canonical row hash, match both arrays against original index, then pass same-row verified digest by matching array index to module-private save. save still stringify/JSON.parse and hash decoded value independently; only the third unchanged original-row hash is removed. No exposed prehash API, cross-row/request cache or source authorization change.",
+    "barcodeSchemes": "All6 scheme rows stay original save fallback: decoded original hash versus original row hash, two calls. They do not reuse consume descriptor hashes.",
+    "preserved": [
+      "Original prepared/range SHA and validators/reprepare",
+      "Descriptor relation/key/hash equality against original immutable index",
+      "Independent decoded cache roundtrip hash and cache byte limits",
+      "Single record read, original source/native row order, full source count/EOF and typed drain",
+      "Late close/cancel/current checks and original identities/leading-zero barcodes/approved demotions",
+      "Global/doc/root algorithms and all11 original composition"
+    ],
+    "codePinImpact": {
+      "newHelper": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 15036,
+        "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
+      },
+      "previousHelper": {
+        "bytes": 14592,
+        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+      },
+      "producerRefsUpdated": [
+        "PRODUCTS",
+        "SKUS",
+        "BARCODES",
+        "STOCK_CONTRIBUTORS"
+      ],
+      "inputCodeEntries": 4,
+      "newPhysicalLocations": null,
+      "meaning": "Each producer closureHelper and exact CODE fileLocations.logical updated; physical null until actual T45 installs same new bytes at explicit new location. Original logical DATA refs/options/grants/selection/actual124 mappings unchanged. Provider exacthelperSHA and BARCODE exactbyte check updated.",
+      "otherFiveSupportBodiesChanged": false,
+      "historicalRecipesChanged": false
+    },
+    "checks": {
+      "red": "Before helper edit, two hash-count tests fail actual6 vs expected4 for2native projected rows and actual18 vs expected12 for6barcode projections; exact duplicate thirdhash established.",
+      "helper": "16PASS0FAIL: original13 directly affected helper tests +new3. AllPRODUCT/SKU/STOCK rows/roots equal original finite readers; BARCODE original capture/6schemes/roots/leading0/demotion; forged descriptors/prepared/ranges/order/scheme/cancel/lateclose/cache-bound refuse. Newspy proves every consumed rowhash3→2, schemes remain12calls. Decoded roundtrip hash mismatch still refuses.",
+      "provider": "6PASS0FAIL scoped: real finiteBARCODE +3native groups +prepared-file change guard +new4factory oldhelper-descriptor rejection. No unrelated suites.",
+      "commands": [
+        "node --test --test-reporter=spec O/retained-native-closure-streams-20261026.test.mjs",
+        "node --test --test-reporter=spec '--test-name-pattern=source708 original four|source620 retained real|provider26 real BARCODE: temp-file rows' R/scripts/import-v3/production-source-provider26.test.mjs"
+      ],
+      "performance": "Hash invocation reduction measured only in finite fixtures; no actual speedup/all-source extrapolation asserted."
+    },
+    "actualEvidenceReused": "139sample encoding/hash hot region plus precise same-record call graph;140fixed1000 source703single run159.652s versus138168.635s not a controlled attribution or full completion. No new profile/body reads during this implementation.",
+    "runtimePreserve": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/prepare-native-bindings.mjs",
+        "bytes": 40456,
+        "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-import-record-accounting.ts",
+        "bytes": 20974,
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "bytes": 29081,
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/history-typed-closure.ts",
+        "bytes": 37525,
+        "sha256": "f5e0af8570e9e10b230a7cf0febeddb18ee1de0f86e6ecb0a18a609ccd01e0f5"
+      }
+    ],
+    "handoff": "T45 actual new source must overlay provider and install new same-record helper exact bytes/SHA in original support-root layout, rebinding CODE physical locations explicitly; do not keep oldhelper14592 with newprovider or declare CODE installed from local edit. Preserve other5support/703closure/preparer/guard/reader/109keys/registration/DATA/125/24. C fixes source/QB first; no new actual run authorized by this file.",
+    "notRun": [
+      "Real source-only/fixed1000 after708",
+      "Real performance comparison",
+      "Full DATA/EXPECTED/MAIN output or PG/MAIN/PUBLISH/grant/APP"
+    ],
+    "largeActualBodiesRead": false,
+    "sharedClosureOrHashAlgorithmChanged": false
   }
 }

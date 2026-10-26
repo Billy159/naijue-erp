@@ -110,9 +110,9 @@ export function createRetainedNativeClosureSession26({original,index,readRecord,
  let ended=false,closing,sourceStarted=false,sourceComplete=false,typedStarted=false,cacheBytes=0,readCount=0;const read=new Set(),pendingSource=new Map(),typedCache=new Map();
  const active=()=>{need(!ended,'RETAINED_NATIVE_CLOSED');current();};
  async function check(phase){active();need(await verify(phase)===undefined,'RETAINED_NATIVE_VERIFY_RESULT');active();}
- function save(cache,row){const id=key(row),bytes=Buffer.from(JSON.stringify(row));
+ function save(cache,row,verifiedDigest){const id=key(row),bytes=Buffer.from(JSON.stringify(row));
   // JSON is transport only; original canonical hash proves exact round-trip.
-  need(original.historyClosureRowHash(JSON.parse(bytes))===original.historyClosureRowHash(row),'RETAINED_NATIVE_CACHE_ROUNDTRIP');
+  need(original.historyClosureRowHash(JSON.parse(bytes))===(verifiedDigest??original.historyClosureRowHash(row)),'RETAINED_NATIVE_CACHE_ROUNDTRIP');
   need(!cache.has(id)&&cacheBytes+bytes.length<=maxCacheBytes,'RETAINED_NATIVE_CACHE_BOUND');cache.set(id,bytes);cacheBytes+=bytes.length;}
  function take(cache,id){const bytes=cache.get(id);need(bytes,'RETAINED_NATIVE_CACHE_MEMBERSHIP');cache.delete(id);cacheBytes-=bytes.length;return JSON.parse(bytes);}
  async function consume(n){need(!read.has(n),'RETAINED_NATIVE_RECORD_REREAD');active();const e=fixed.records[n],p=await readRecord(structuredClone(e.ref));active();
@@ -124,8 +124,12 @@ export function createRetainedNativeClosureSession26({original,index,readRecord,
    need(scheme&&original.historySettlementRequestHash(scheme.projection)===original.historySettlementRequestHash(p.scheme.snapshot),'RETAINED_BARCODE_SCHEME_CHANGED');
   }
   const rows=scoped(original,fixed.group,p,fixed.binding),describe=r=>({relation:r.relation,key:r.key,sha256:original.historyClosureRowHash(r)});
-  assert.deepEqual(rows.sources.map(describe),e.sources);assert.deepEqual(rows.typed.map(describe),e.typed);
-  for(const r of rows.sources)save(pendingSource,r);for(const r of rows.typed)save(typedCache,r);read.add(n);readCount++;
+  const sourceDescriptors=rows.sources.map(describe),typedDescriptors=rows.typed.map(describe);
+  assert.deepEqual(sourceDescriptors,e.sources);assert.deepEqual(typedDescriptors,e.typed);
+  // These digests were just computed for these exact unchanged rows and
+  // independently matched against the original index. The decoded cache value
+  // still receives its own canonical hash; nothing is trusted across records.
+  for(let i=0;i<rows.sources.length;i++)save(pendingSource,rows.sources[i],sourceDescriptors[i].sha256);for(let i=0;i<rows.typed.length;i++)save(typedCache,rows.typed[i],typedDescriptors[i].sha256);read.add(n);readCount++;
  }
  return{verify:check,async *sourceRows(){await check('BEFORE_SOURCE');need(!sourceStarted,'RETAINED_NATIVE_SINGLE_SOURCE_PASS');sourceStarted=true;
    if(capturedBarcode)for(const row of fixed.barcodeSchemes)save(typedCache,row);

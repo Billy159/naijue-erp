@@ -427,8 +427,8 @@
       },
       "closureHelper": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-        "bytes": 14592,
-        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+        "bytes": 15036,
+        "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
       },
       "retainedNative": {
         "files": [
@@ -591,8 +591,8 @@
         {
           "logical": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-            "bytes": 14592,
-            "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+            "bytes": 15036,
+            "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
           },
           "physical": null,
           "kind": "CODE",
@@ -600,7 +600,7 @@
             "native-closure-helper"
           ],
           "requiredForRead": true,
-          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "status": "SOURCE708_NEW_CODE_EXACT_PIN_PENDING_T45_INSTALL",
           "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
@@ -1654,8 +1654,8 @@
       },
       "closureHelper": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-        "bytes": 14592,
-        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+        "bytes": 15036,
+        "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
       },
       "retainedNative": {
         "files": [
@@ -1673,8 +1673,8 @@
         {
           "logical": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-            "bytes": 14592,
-            "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+            "bytes": 15036,
+            "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
           },
           "physical": null,
           "kind": "CODE",
@@ -1682,7 +1682,7 @@
             "native-closure-helper"
           ],
           "requiredForRead": true,
-          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "status": "SOURCE708_NEW_CODE_EXACT_PIN_PENDING_T45_INSTALL",
           "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
@@ -1721,15 +1721,15 @@
       },
       "closureHelper": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-        "bytes": 14592,
-        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+        "bytes": 15036,
+        "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
       },
       "fileLocations": [
         {
           "logical": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-            "bytes": 14592,
-            "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+            "bytes": 15036,
+            "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
           },
           "physical": null,
           "kind": "CODE",
@@ -1737,7 +1737,7 @@
             "native-closure-helper"
           ],
           "requiredForRead": true,
-          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "status": "SOURCE708_NEW_CODE_EXACT_PIN_PENDING_T45_INSTALL",
           "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
@@ -1863,8 +1863,8 @@
       },
       "closureHelper": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-        "bytes": 14592,
-        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+        "bytes": 15036,
+        "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
       },
       "retainedNative": {
         "files": [
@@ -1882,8 +1882,8 @@
         {
           "logical": {
             "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-            "bytes": 14592,
-            "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+            "bytes": 15036,
+            "sha256": "8cb03a4924b44ac047918e857915e5c4074b6ab1e5b6ed69cb74829d0b23fa79"
           },
           "physical": null,
           "kind": "CODE",
@@ -1891,7 +1891,7 @@
             "native-closure-helper"
           ],
           "requiredForRead": true,
-          "status": "SOURCE627_FIXED_CODE_LOCATION_PENDING",
+          "status": "SOURCE708_NEW_CODE_EXACT_PIN_PENDING_T45_INSTALL",
           "pinEvidence": "Source627 original-owner executable code pin; DATA and original authority metadata unchanged"
         },
         {
@@ -2966,7 +2966,7 @@
   },
   "authorityModule": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "sha256": "e7960bf4c1bcd436998dc2c70f9b9a3763a76fd87dae46227fe5593ea51fb248"
+    "sha256": "c31a070e80202c7586b99c938e7f24a9c720ea97be3543620a247bf8c64d5854"
   },
   "executionAuthorization": {
     "path": null,
