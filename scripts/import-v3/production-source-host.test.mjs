@@ -234,6 +234,25 @@ test('v16 source host runtime metadata permits from-v14 only for full continuati
  assert.throws(()=>validateSourceHostRuntimeReview26({...m,target:{...m.target,database:'different-target'}},b),/RUNTIME_TARGET/);
  assert.throws(()=>validateSourceHostRuntimeReview26({...m,realImportExecutionAuthorized:true},b),/RUNTIME_REVIEW/);
 });
+function v20FullRuntimeFixture(){
+ const base=coreJob26().binding,b={...base,phase:'FULL_SOURCE_CONTINUATION_26_V1',authorizedPayloadHash:sha('b'),coreReceiptId:id(999)};
+ const m={version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target:{database:b.target.database,databaseOid:'1027659',actingRole:b.target.role,sessionUser:b.target.role,serverAddress:b.target.serverAddress,serverPort:b.target.serverPort,postmasterStart:b.target.postmasterStartedAt},catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V1',sha256:'b5d8f2e8e278435d8a0e80ec2d7e7d08b607118859e02fc44a9f8bcedd57d8e5',patchLevel:'26_v20_history_insert_identity_from_v19'},purposes:['IMPORT_STAGE'],scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{path:'/synthetic/v20-independent-review',sha256:sha('2'),result:'PASS'},realImportExecutionAuthorized:false};
+ return {base,b,m};
+}
+test('v20 full host accepts the existing issuer approved profile as metadata only',()=>{
+ const {b,m}=v20FullRuntimeFixture();assert.equal(validateSourceHostRuntimeReview26(m,b),undefined);
+});
+test('v20 full host retains exact target and continuation phase checks',()=>{
+ const {base,b,m}=v20FullRuntimeFixture();
+ for(const change of [{database:'different-target'},{actingRole:'different-role'},{postmasterStart:'different-process'},{serverAddress:'192.0.2.99'},{serverPort:15432}])assert.throws(()=>validateSourceHostRuntimeReview26({...m,target:{...m.target,...change}},b),/RUNTIME_TARGET/);
+ for(const other of [base,job26().binding])assert.throws(()=>validateSourceHostRuntimeReview26(m,other),/RUNTIME_REVIEW/);
+});
+test('v20 full host rejects unapproved profiles invalid catalog digest and execution overclaim',()=>{
+ const {b,m}=v20FullRuntimeFixture();
+ for(const patchLevel of ['26_v20_future','26_v19_barcode_scheme_initialization_from_v16_v15','26_v16_history_responsible_from_v15','26_v11_document_specification_save'])assert.throws(()=>validateSourceHostRuntimeReview26({...m,catalog:{...m.catalog,patchLevel}},b),/RUNTIME_REVIEW/);
+ assert.throws(()=>validateSourceHostRuntimeReview26({...m,catalog:{...m.catalog,sha256:'invalid'}},b),/RUNTIME_REVIEW/);
+ assert.throws(()=>validateSourceHostRuntimeReview26({...m,realImportExecutionAuthorized:true},b),/RUNTIME_REVIEW/);
+});
 test('v14 source host real constructor keeps target closed through CORE source preflight and closes once on denial',async t=>{
  for(const mode of ['early','boolean']){
   const directory=await mkdtemp(join(await realpath(tmpdir()),'synthetic-v14-core-host-'));t.after(()=>rm(directory,{recursive:true,force:true}));const j=coreJob26(),save=async(name,value)=>{const path=join(directory,name),bytes=Buffer.from(typeof value==='string'?value:JSON.stringify(value));await writeFile(path,bytes);return {path,sha256:createHash('sha256').update(bytes).digest('hex')};};

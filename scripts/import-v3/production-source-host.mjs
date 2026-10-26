@@ -306,7 +306,7 @@ export function captureNativeSourceSession26(value,binding) {
 export function validateSourceHostRuntimeReview26(metadata,binding) {
   bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   const approvedPatch=metadata.catalog?.patchLevel===(binding.phase?'26_v14_core_initialization':'26_v11_document_specification_save')
-    ||binding.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&metadata.catalog?.patchLevel==='26_v16_history_responsible_from_v14';
+    ||binding.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&['26_v16_history_responsible_from_v14','26_v20_history_insert_identity_from_v19'].includes(metadata.catalog?.patchLevel);
   must(metadata.version==='C_NATIVE_RUNTIME26_REVIEW_V1'&&metadata.decision==='ACCEPT_EXACT_RUNTIME26_TARGET_METADATA'
     &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&metadata.catalog?.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V1'&&hash(metadata.catalog?.sha256)&&approvedPatch,'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   const target=bag(metadata.target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW'),b=binding.target;

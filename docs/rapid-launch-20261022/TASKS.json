@@ -11674,7 +11674,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE614",
+    "round": "SOURCE615",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "a88e2eecdb7fbbf2bdb3b92185145cec332fb082",
     "fixedCandidates": {
@@ -13711,12 +13711,14 @@
     },
     "source614FullHostV20": {
       "owner": "D1",
-      "status": "IN_PROGRESS_EXACT_TWO_SOURCE_FILES",
+      "status": "DELIVERED_FIXED_PENDING_QB",
       "files": [
         "scripts/import-v3/production-source-host.mjs",
         "scripts/import-v3/production-source-host.test.mjs"
       ],
-      "scope": "Existing FULL runtime validation accepts approved current v20 profile without weakening exact metadata/identity/purpose/ACL"
+      "scope": "Existing FULL runtime validation accepts approved current v20 profile without weakening exact metadata/identity/purpose/ACL",
+      "checks": "3 new targeted tests RED before exact profile compatibility / GREEN after per original owner; no old suite/PG/build",
+      "actualPG": false
     },
     "source614ServerNext": {
       "owner": "T45",

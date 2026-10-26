@@ -1,3 +1,5 @@
+SOURCE615：D1原host v20兼容2叶交还固定host38021/51eebde7与test38193/262829d0，仅FULL continuation准确新增既有issuer已批26_v20_history_insert_identity_from_v19，CORE/无phase/其他profile/target身份及原issuer canonical用途权限保持。新3限定检查修前RED/修后GREEN采用，交原QB只新增scope；非实际PG/fullsource已就绪。原112/114/115恢复链与projectionrev2新审继续，不扩大检查/不新建授权平台。源码部分/真实业务/正式发布分层保持。
+
 SOURCE614：原QB新导出源审发现实际SQL减键/JSON箭头优先级错误，原D1仅补左操作数括号并同源生成SELECTS，新1定向检查通过/旧4复用；rev2 RESULT4831/8d141932已固定，旧SOURCE613失败保留，未用旧版启用/未PG执行。D1下一独立host exact2已登记，修FULL仅v14/v16白名单漏当前已批准v20准确兼容，不降130/删守卫。T45 112最小ACL→114新元数据同598APP恢复→115仅三upstream名的完整disabled恢复链交原QB合批新增差异，105尚running/4302未变/0GRANT。SOURCE613远端e9bcc3f已核。
 
 SOURCE613：QB359新增BARCODE真实reader源审PASS af2b56a8采用，真实15018消费仍未做。D1有限CORE115/49safeproof/53item disabled导出8叶交还并核pin19219de7，4本地检查通过/真实PG未执行，固定交原QB新增范围；缺31仓/断链会明示不造。T45实际111只读成功1.320s，scheme0/来源0/旧init回执空/最小7列INSERT+idUPDATE/helperEXEC均false，0GRANT/停APP/init；下一受控ACL原owner准备。新raw-shell QF当前stores和inventory均styled未复现/原因UNKNOWN；F1公共源码有限核无可证故障，不猜修，用户Console输入和Demo草稿保留，lease回用户/C。SOURCE612 GitHub已核222b5e3。整体全量业务/历史/发布未完成。
