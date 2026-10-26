@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,RENEWAL_SQL,credentialPermissionProofFromOriginal} from './qa-identity-credential-renewal.mjs';
+import {withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,RENEWAL_SQL,credentialPermissionProofFromOriginal,credentialPermissionProofFromCommittedLifecycle} from './qa-identity-credential-renewal.mjs';
 import {withB07QaManagedNormalSession} from './qa-identity-parent.mjs';
 import {QA_IDENTITY} from './qa-identity-schema19.mjs';
 const hashes={guard_maintenance_account_event:'965d9d3433b929ccd151b9a147eeef713770d7b7311e49c80cfaa3d17b118549',validate_maintenance_root_commit:'8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512',validate_available_administrator_commit:'3a9a1bea930614761185af90b8591a539b855647974b68b004869c80f5e5ba18'};
@@ -18,10 +18,11 @@ function fixture(options={}){
   calls.push({sql,args,recovery});
   if(sql===RENEWAL_SQL.target){const {unix_socket_directories,...identity}=target;return {rows:[identity]};}
   if(sql===RENEWAL_SQL.admission)return {rows:[{versions:Array.from({length:26},(_,i)=>i+1),functions,triggers,management_role_safe:true,can_read_identity:true,can_update_credential:!options.permissionLost,can_revoke_sessions:true}]};
+  if(sql===RENEWAL_SQL.transferHistory)return {rows:[{count:options.transferHistoryChanged?0:1,sha256:'d'.repeat(64)}]};
   if(sql===RENEWAL_SQL.history)return {rows:[{count:options.historyChanged?0:1,sha256:'c'.repeat(64)}]};
   if(sql===RENEWAL_SQL.lock)return {rows:[{id:QA_IDENTITY.accountId}]};
   if(sql===RENEWAL_SQL.state)return {rows:[{...structuredClone(row),credential_matches:args[3]===storedHash}]};
-  if(sql===RENEWAL_SQL.update){assert.equal(recovery,false);if(options.updateError)throw Object.assign(Error('SYNTHETIC_PRIVATE_DRIVER_DETAIL'),{code:'23514'});if(options.casFailure)return {rowCount:0,rows:[]};storedHash=args[5];row.account.version++;row.account.auth_version++;row.account.updated_at=args[6];renewed=true;return {rowCount:1,rows:[{id:QA_IDENTITY.accountId,version:2,auth_version:2}]};}
+  if(sql===RENEWAL_SQL.update){assert.equal(recovery,false);if(options.updateError)throw Object.assign(Error('SYNTHETIC_PRIVATE_DRIVER_DETAIL'),{code:'23514'});if(options.casFailure)return {rowCount:0,rows:[]};storedHash=args[5];row.account.version++;row.account.auth_version++;row.account.updated_at=args[6];renewed=true;return {rowCount:1,rows:[{id:QA_IDENTITY.accountId,version:row.account.version,auth_version:row.account.auth_version}]};}
   if(sql===RENEWAL_SQL.sessions){row.live_sessions=0;return {rowCount:1,rows:[]};}
   if(sql==='ROLLBACK'&&!recovery){row=structuredClone(original);return {rows:[]};}
   if(sql==='COMMIT'&&!recovery&&options.unknownCommit)throw Error('SYNTHETIC_PRIVATE_DRIVER_DETAIL');
@@ -30,12 +31,12 @@ function fixture(options={}){
  const client={connectionParameters:{host:target.unix_socket_directories,port:target.port},query:(sql,args)=>query(sql,args)};
  const api={trustedOrigin:'https://synthetic-only.invalid',app:{server:{listening:false},async inject(request){http.push(request.url);
   if(request.url==='/auth/login'){assert.equal(request.payload.loginName,QA_IDENTITY.loginName);assert.equal(typeof request.payload.password,'string');return {statusCode:200,headers:{'set-cookie':'SYNTHETIC_TOKEN; Path=/'}};}
-  if(request.url==='/auth/session')return {statusCode:200,json:()=>({principal:{accountId:QA_IDENTITY.accountId,staffId:QA_IDENTITY.staffId,role:options.badPrincipal?'ADMIN':'WAREHOUSE',hallId:null,authVersion:2}})};
+  if(request.url==='/auth/session')return {statusCode:200,json:()=>({principal:{accountId:QA_IDENTITY.accountId,staffId:QA_IDENTITY.staffId,role:options.badPrincipal?'ADMIN':'WAREHOUSE',hallId:null,authVersion:input.expectedAuthVersion+1}})};
   if(request.url==='/auth/logout')return {statusCode:204};throw Error('SYNTHETIC_UNEXPECTED_ROUTE');
  }}};
  const run=()=>withB07QaIdentityCredentialRenewal({client,input,recordPreparation:async value=>{records.push(value);},runNormalSession:withB07QaManagedNormalSession,
   withRecoveryClient:async work=>{assert.equal(options.unknownCommit,true);if(options.unknownUnconfirmed)throw Error('SYNTHETIC_UNCONFIRMED');try{return await work({...client,query:(sql,args)=>query(sql,args,true)});}finally{ended=true;}},
-  afterRenewal:async({withNormalSession,authVersion})=>{assert.equal(authVersion,2);assert.equal(renewed,true);savedSession=withNormalSession;await withNormalSession(api,async()=>{workCount++;if(options.workFailure)throw Error('SYNTHETIC_PRIVATE_WORK_DETAIL');});}});
+  afterRenewal:async({withNormalSession,authVersion})=>{assert.equal(authVersion,input.expectedAuthVersion+1);assert.equal(renewed,true);savedSession=withNormalSession;await withNormalSession(api,async()=>{workCount++;if(options.workFailure)throw Error('SYNTHETIC_PRIVATE_WORK_DETAIL');});}});
  return {input,proof,target,functions,triggers,client,api,calls,records,http,run,get state(){return row;},get workCount(){return workCount;},get recoveredEnded(){return ended;},lateSession:()=>savedSession(api,async()=>{})};
 }
 test('renewal updates only fixed QA credential and sessions, then normal new-version login/logout',async()=>{
@@ -60,13 +61,17 @@ test('renewal registration and exact existing guard attachments refuse before co
  const f=fixture();for(const change of [x=>{x.permissionProof=null;},x=>{x.permissionProof.functions[0].sha256='f'.repeat(64);},x=>{x.permissionProof.triggers[0].enabled='D';},x=>{x.target.role='OTHER';}]){const i=structuredClone(f.input);change(i);assert.throws(()=>validateCredentialRenewalInput(i));}assert.equal(f.calls.length,0);
 });
 
-test('original read-only proof maps existing permissions and guards without claiming renewal',()=>{
- const f=fixture(),t=f.target;
+function originalProofFixture(f){const t=f.target;
  const proof={status:'PASS_SAME07_CREDENTIAL_CATALOG_READONLY_NOT_RENEWAL_AUTHORIZATION',businessDML:0,credentialRead:false,credentialChanged:false,HTTPAttempted:false,rollbackReturned:true,clientsEnded:true,
  identity:{db:t.database,oid:t.oid,acting_role:t.role,session_role:t.session_role,no_tcp:true,postmaster:t.postmaster_started_at,readonly:'on',isolation:'repeatable read',row_security:'on'},
  roles:[{role:t.role,superuser:false,bypass_rls:false},{role:'SYN_ORDINARY',superuser:false,bypass_rls:false}],
  privileges:[...['password_hash','auth_version','version','updated_at'].flatMap(column_name=>[{role_name:t.role,table_name:'user_account',column_name,can_select:true,can_update:true},{role_name:'SYN_ORDINARY',table_name:'user_account',column_name,can_select:true,can_update:false}]),{role_name:t.role,table_name:'auth_session',column_name:'revoked_at',can_select:true,can_update:true}],
  qa:[{fixed_account:true,fixed_staff:true,fixed_login:true,login_enabled:true,version:1,auth_version:1,warehouse_role:true,employed:true,null_hall:true,source_actor_disabled:true}],bindings:{import_records:0,accounting_claims:0,native_parties:0,header_staff_bindings:0,qa_maintenance_audits:0},salesReceipt:[{status:'COMMITTED',original_hash_matches:true,original_target_matches:true,result_version:'2'}],guards:f.functions.map(x=>({name:x.name,bodySha256:x.sha256,matchesOriginal07:true,checks:{narrow:true}})),triggers:f.triggers};
+ return proof;
+}
+test('original read-only proof maps existing permissions and guards without claiming renewal',()=>{
+ const f=fixture(),t=f.target;
+ const proof=originalProofFixture(f);
  const input={...f.input,ordinaryRole:'SYN_ORDINARY',catalogSha256:'a'.repeat(64)},mapped=credentialPermissionProofFromOriginal(proof,input);
  assert.deepEqual(mapped.functions,f.functions);assert.deepEqual(mapped.triggers,f.triggers);assert.equal(mapped.originalProofPostmaster,t.postmaster_started_at);
  assert.doesNotThrow(()=>validateCredentialRenewalInput({...f.input,permissionProof:mapped}));
@@ -76,4 +81,29 @@ test('original read-only proof maps existing permissions and guards without clai
 test('renewal guard failure keeps only phase and SQLSTATE and rolls back the original transaction',async()=>{
  const f=fixture({updateError:true});await assert.rejects(f.run(),error=>{assert.equal(error.message,'B07_RENEWAL_PRECOMMIT_FAILED_NO_RETRY');assert.deepEqual(error.b07RenewalFailure,{phase:'CREDENTIAL_CAS',commitAttempted:false,pgCode:'23514'});assert.ok(!JSON.stringify(error).includes('PRIVATE'));return true;});
  assert.equal(f.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,1);assert.equal(f.calls.at(-1).sql,'ROLLBACK');assert.equal(f.http.length,0);
+});
+
+function auth2Fixture(options={}){
+ const f=fixture(options),original=originalProofFixture(f),oldTarget=structuredClone(f.target);
+ const parentResult={status:'STOP_CREDENTIAL_CONTINUATION_OR_OUTCOME_UNCERTAIN_NO_RETRY',credentialRenewalActual:true,authVersion:2,automaticRetry:false,clientsClosed:true,renewalFailure:{phase:'NORMAL_CONTINUATION',commitAttempted:true,pgCode:null}};
+ const chain={parentResult,lifecycle:{operation:'B07_EXISTING07_COMMITTED_CREDENTIAL_CONTINUATION',status:'STOP_ORIGINAL_CONTINUATION_OUTCOME_NO_REPLAY',parentResult:structuredClone(parentResult),startExitCode:0,parentExitCode:2,reviewWorkerPrepositioned:true,reviewWorkerClosed:true,reviewWorkerExitCode:0,gateWorkerClosed:true,gateWorkerExitCode:0,stopExitCode:0,onlyOwnPrivatePidStopped:true,seedAttempted:false,restoreAttempted:false,upgradeAttempted:false,roleOrGrantChanged:false,sourceActorChanged:false,serverOrR1Touched:false,automaticRetry:false,existingDataDirectory:'/private/tmp/SYNTHETIC_B07_DATA',actualRegistrationIdentity:{postmaster:oldTarget.postmaster_started_at}},
+ intent:{contract:'B07_SAME_QA_CREDENTIAL_RENEWAL_1',qaAccountId:QA_IDENTITY.accountId,expectedVersion:1,expectedAuthVersion:1,sourceIdentityChanged:false,catalogSha256:'a'.repeat(64),originalReadOnlyProofPostmaster:original.identity.postmaster,intentReference:'SYN_OLD_INTENT',target:oldTarget},
+ draftResult:{status:'FAILED_OR_OUTCOME_UNCERTAIN_NO_AUTO_RETRY',automaticRetry:false,fixtureCreated:false,sourceChanged:false,actualHrev:true,firstFailure:{phase:'DRAFT_SALES_MONEY_ONLY_NO_STOCK',comparisonStage:'BUILD_COMMAND',code:'ERR_ASSERTION'},recoveredFirstCase:{status:'PASS_ORIGINAL_COMMITTED_KEY_DETAIL_REPLAY_CONFLICT_CAS_NO_NEW_WRITE',version:2},cases:[{name:'DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION',status:'PASS_NORMAL_HISTORY_HTTP_CURRENT_FACTS_SOURCE_STOCK_AUDIT_RECEIPT_REPLAY_CAS',version:2,stockUnchanged:true}]}};
+ Object.assign(f.input,{ordinaryRole:'SYN_ORDINARY',catalogSha256:'a'.repeat(64),expectedVersion:2,expectedAuthVersion:2,existingDataDirectory:chain.lifecycle.existingDataDirectory,originalTransfer:{requestKey:'D1_B07_V16_DRAFT_TRANSFER_QUANTITY_01',documentId:sourceActor,requestHash:'e'.repeat(64)}});
+ f.target.postmaster_started_at='2026-10-27 00:02:00+00';f.input.permissionProof=credentialPermissionProofFromCommittedLifecycle(original,f.input,chain);f.state.account.version=2;f.state.account.auth_version=2;
+ return {...f,original,chain};
+}
+test('auth2 renewal derives only from immutable original proof plus known committed clean child01 chain',async()=>{
+ const f=auth2Fixture(),original=structuredClone(f.original);assert.throws(()=>credentialPermissionProofFromOriginal(f.original,f.input));
+ const result=await f.run();assert.equal(result.version,3);assert.equal(result.authVersion,3);assert.deepEqual(f.original,original);assert.equal(f.state.account.version,3);assert.equal(f.state.account.auth_version,3);
+ assert.ok(f.calls.some(c=>c.sql===RENEWAL_SQL.transferHistory));assert.deepEqual(f.http,['/auth/login','/auth/session','/auth/logout']);
+});
+test('auth2 chain refuses unknown commit, mismatched target, open workers and missing completed transfer',()=>{
+ const f=auth2Fixture();
+ for(const change of [x=>{x.parentResult.credentialRenewalActual=false;},x=>{x.parentResult.renewalFailure.phase='COMMIT';},x=>{x.lifecycle.gateWorkerClosed=false;},x=>{x.lifecycle.roleOrGrantChanged=true;},x=>{x.intent.target.role='OTHER';},x=>{x.intent.expectedVersion=2;},x=>{x.draftResult.cases[0].version=1;}]){const chain=structuredClone(f.chain);change(chain);assert.throws(()=>credentialPermissionProofFromCommittedLifecycle(f.original,f.input,chain));}
+ const forged={...f.input,permissionProof:fixture().proof};assert.throws(()=>validateCredentialRenewalInput(forged));assert.equal(f.calls.length,0);
+});
+test('auth2 lineage still requires actual account auth2 and both committed document v2 states in original transaction',async()=>{
+ const stale=auth2Fixture();stale.state.account.version=1;stale.state.account.auth_version=1;await assert.rejects(stale.run());assert.equal(stale.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,0);
+ const missingTransfer=auth2Fixture({transferHistoryChanged:true});await assert.rejects(missingTransfer.run());assert.equal(missingTransfer.calls.filter(c=>c.sql===RENEWAL_SQL.update).length,0);assert.equal(missingTransfer.http.length,0);
 });

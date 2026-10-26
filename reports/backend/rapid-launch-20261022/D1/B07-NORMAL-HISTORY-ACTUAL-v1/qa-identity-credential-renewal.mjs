@@ -33,6 +33,16 @@ export const RENEWAL_SQL=Object.freeze({
  AND v.sales_id=r.target_id AND v.document_kind='SALES' AND v.from_version=1 AND v.to_version=2 AND v.request_key=r.request_key AND v.actor_account_id=r.actor_account_id
  AND a.object_id=r.target_id AND a.object_type='HISTORY_SALES' AND a.action='HISTORY_REVISE' AND a.actor_account_id=r.actor_account_id AND a.old_version=1 AND a.new_version=2
  AND e.version=2 AND h.source_status='DRAFT'`,
+ transferHistory:`/* b07-qa-renewal:transfer-history */ SELECT count(*)::int AS count,
+ min(encode(sha256(convert_to(jsonb_build_object('receipt',to_jsonb(r),'revision',to_jsonb(v),'audit',to_jsonb(a),'effective',to_jsonb(e),'source',to_jsonb(h))::text,'UTF8')),'hex')) AS sha256
+ FROM naijue_erp.operation_receipt r JOIN naijue_erp.history_revision v ON v.id=(r.result_data->>'revisionId')::uuid AND v.operation_id=r.id
+ JOIN naijue_erp.audit_change a ON a.operation_id=r.id JOIN naijue_erp.history_transfer_effective e ON e.header_id=r.target_id AND e.revision_id=v.id
+ JOIN naijue_erp.history_transfer_header h ON h.id=r.target_id
+ WHERE r.actor_account_id=$1::uuid AND r.request_key=$2 AND r.target_id=$3::uuid AND r.request_hash=$4 AND r.status='COMMITTED'
+ AND r.action='HISTORY_REVISE' AND r.target_type='HISTORY_TRANSFER' AND r.result_data->>'version'='2' AND r.result_data->'ledgerEntryIds'='[]'::jsonb
+ AND v.transfer_id=r.target_id AND v.document_kind='TRANSFER' AND v.from_version=1 AND v.to_version=2 AND v.request_key=r.request_key AND v.actor_account_id=r.actor_account_id
+ AND a.object_id=r.target_id AND a.object_type='HISTORY_TRANSFER' AND a.action='HISTORY_REVISE' AND a.actor_account_id=r.actor_account_id AND a.old_version=1 AND a.new_version=2
+ AND e.version=2 AND h.source_status='DRAFT'`,
  lock:`/* b07-qa-renewal:lock */ SELECT a.id FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id WHERE a.id=$1::uuid AND s.id=$2::uuid FOR UPDATE OF a,s`,
  state:`/* b07-qa-renewal:state */ SELECT to_jsonb(a)-'password_hash' AS account,to_jsonb(s) AS staff,a.password_hash=$4 AS credential_matches,
  (SELECT count(*)::int FROM naijue_erp.auth_session WHERE account_id=$1::uuid AND revoked_at IS NULL) AS live_sessions,
@@ -67,6 +77,34 @@ export function credentialPermissionProofFromOriginal(proof,input){
   functions:proof.guards.map(g=>({name:g.name,sha256:g.bodySha256})).sort((a,b)=>a.name<b.name?-1:1),triggers:proof.triggers,
   can_read_identity:true,can_update_credential:true,can_revoke_sessions:true,originalProofPostmaster:i.postmaster};
 }
+export const QA_AUTH2_CHAIN_PINS=Object.freeze({
+ parentResult:{bytes:394,sha256:'029653fbbfe09a490bd0014bf54f5084937828576803583c1ea393ffa940dfde'},
+ lifecycle:{bytes:1822,sha256:'4359cb7efa997b58e8b14a1e179fb532324778652ee74f08ff558a3c03044841'},
+ intent:{bytes:966,sha256:'10e32422bed42846fe6505fa05f7b22d508427a6a5148f97bf218024f45cdadf'},
+ draftResult:{bytes:1793,sha256:'0c01a8ed081b9debec8bd439416a0f5968178061b45faf31e3c4332e66fa1940'},
+});
+/** Immutable v1 permission facts plus the independently preserved actual child01 lifecycle.
+ * This does not edit the original read-only proof or infer current versions from configuration. */
+export function credentialPermissionProofFromCommittedLifecycle(original,input,chain){
+ must(input.expectedVersion===2&&input.expectedAuthVersion===2,'B07_RENEWAL_AUTH2_EXPECTED_REQUIRED');
+ const proof=credentialPermissionProofFromOriginal(original,{...input,expectedVersion:1,expectedAuthVersion:1});
+ const {parentResult:parent,lifecycle:os,intent,draftResult:draft}=chain??{};
+ must(parent?.status==='STOP_CREDENTIAL_CONTINUATION_OR_OUTCOME_UNCERTAIN_NO_RETRY'&&parent.credentialRenewalActual===true&&parent.authVersion===2&&parent.automaticRetry===false&&parent.clientsClosed===true
+  &&parent.renewalFailure?.phase==='NORMAL_CONTINUATION'&&parent.renewalFailure.commitAttempted===true&&parent.renewalFailure.pgCode===null,'B07_RENEWAL_PRIOR_KNOWN_COMMIT_REQUIRED');
+ must(os?.operation==='B07_EXISTING07_COMMITTED_CREDENTIAL_CONTINUATION'&&os.status==='STOP_ORIGINAL_CONTINUATION_OUTCOME_NO_REPLAY'&&same(os.parentResult,parent)&&os.startExitCode===0&&os.parentExitCode===2
+  &&os.reviewWorkerPrepositioned===true&&os.reviewWorkerClosed===true&&os.reviewWorkerExitCode===0&&os.gateWorkerClosed===true&&os.gateWorkerExitCode===0&&os.stopExitCode===0&&os.onlyOwnPrivatePidStopped===true
+  &&['seedAttempted','restoreAttempted','upgradeAttempted','roleOrGrantChanged','sourceActorChanged','serverOrR1Touched','automaticRetry'].every(k=>os[k]===false),'B07_RENEWAL_PRIOR_CLEAN_LIFECYCLE_REQUIRED');
+ must(typeof input.existingDataDirectory==='string'&&resolve(input.existingDataDirectory)===input.existingDataDirectory&&os.existingDataDirectory===input.existingDataDirectory,'B07_RENEWAL_SAME_PRESERVED_DATA_REQUIRED');
+ must(intent?.contract==='B07_SAME_QA_CREDENTIAL_RENEWAL_1'&&intent.qaAccountId===QA_IDENTITY.accountId&&intent.expectedVersion===1&&intent.expectedAuthVersion===1&&intent.sourceIdentityChanged===false
+  &&intent.catalogSha256===input.catalogSha256&&intent.originalReadOnlyProofPostmaster===original.identity.postmaster&&typeof intent.intentReference==='string'&&intent.intentReference.length>0,'B07_RENEWAL_PRIOR_INTENT_REQUIRED');
+ const {postmaster_started_at:previousPostmaster,...previousTarget}=intent.target??{}, {postmaster_started_at:currentPostmaster,...currentTarget}=input.target;
+ must(same(previousTarget,currentTarget)&&typeof previousPostmaster==='string'&&os.actualRegistrationIdentity?.postmaster===previousPostmaster&&typeof currentPostmaster==='string','B07_RENEWAL_PRIOR_TARGET_CHANGED');
+ must(draft?.status==='FAILED_OR_OUTCOME_UNCERTAIN_NO_AUTO_RETRY'&&draft.automaticRetry===false&&draft.fixtureCreated===false&&draft.sourceChanged===false&&draft.actualHrev===true
+  &&draft.firstFailure?.phase==='DRAFT_SALES_MONEY_ONLY_NO_STOCK'&&draft.firstFailure.comparisonStage==='BUILD_COMMAND'&&draft.firstFailure.code==='ERR_ASSERTION'
+  &&draft.recoveredFirstCase?.status==='PASS_ORIGINAL_COMMITTED_KEY_DETAIL_REPLAY_CONFLICT_CAS_NO_NEW_WRITE'&&draft.recoveredFirstCase.version===2
+  &&draft.cases?.length===1&&draft.cases[0].name==='DRAFT_TRANSFER_QUANTITY_NO_STOCK_CONSERVATION'&&draft.cases[0].status==='PASS_NORMAL_HISTORY_HTTP_CURRENT_FACTS_SOURCE_STOCK_AUDIT_RECEIPT_REPLAY_CAS'&&draft.cases[0].version===2&&draft.cases[0].stockUnchanged===true,'B07_RENEWAL_PRIOR_COMPLETED_SCOPES_REQUIRED');
+ return {...proof,format:'B07_QA_CREDENTIAL_RENEWAL_AUTH2_LIFECYCLE_PROOF_1',versionEvidence:{accountVersion:2,authVersion:2,chainPins:QA_AUTH2_CHAIN_PINS}};
+}
 export function validateCredentialRenewalInput(input){
  must(input?.contract==='B07_SAME_QA_CREDENTIAL_RENEWAL_1','B07_RENEWAL_INPUT_REQUIRED');const t=input.target,p=input.permissionProof;
  must(t?.database==='naijue_erp_test_19e00102'&&/^[1-9][0-9]*$/.test(t.oid)&&t.role==='naijue_erp_test'&&typeof t.session_role==='string'
@@ -76,9 +114,11 @@ export function validateCredentialRenewalInput(input){
   &&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(input.sourceActorAccountId)&&![QA_IDENTITY.accountId,QA_IDENTITY.staffId].includes(input.sourceActorAccountId),'B07_RENEWAL_SOURCE_IDENTITY_REQUIRED');
  must(Number.isInteger(input.expectedVersion)&&input.expectedVersion>0&&input.expectedVersion<2147483647&&Number.isInteger(input.expectedAuthVersion)&&input.expectedAuthVersion>0&&input.expectedAuthVersion<2147483647,'B07_RENEWAL_EXPECTED_VERSIONS_REQUIRED');
  must(input.originalSales?.requestKey==='D1_B07_V16_DRAFT_SALES_QUANTITY_01'&&typeof input.originalSales.documentId==='string'&&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(input.originalSales.documentId)&&sha(input.originalSales.requestHash),'B07_RENEWAL_ORIGINAL_HISTORY_BINDING_REQUIRED');
+ if(input.expectedVersion===2)must(input.originalTransfer?.requestKey==='D1_B07_V16_DRAFT_TRANSFER_QUANTITY_01'&&typeof input.originalTransfer.documentId==='string'&&/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}$/.test(input.originalTransfer.documentId)&&sha(input.originalTransfer.requestHash),'B07_RENEWAL_ORIGINAL_TRANSFER_BINDING_REQUIRED');
  must(typeof input.changedAt==='string'&&new Date(input.changedAt).toISOString()===input.changedAt,'B07_RENEWAL_TIME_REQUIRED');
  for(const key of ['copyRegistrationReference','preservedSnapshotReference','approvedManagementReference','intentReference'])must(typeof input[key]==='string'&&input[key].length>0,'B07_RENEWAL_REGISTRATION_REQUIRED');
- must(p?.format==='B07_QA_CREDENTIAL_RENEWAL_READONLY_PROOF_1'&&same(p.target,t)&&p.profile==='26_v21_history_effective_value_from_v16_v14'&&sha(p.catalogSha256)
+ must((p?.format==='B07_QA_CREDENTIAL_RENEWAL_READONLY_PROOF_1'&&input.expectedVersion===1&&input.expectedAuthVersion===1
+  ||p?.format==='B07_QA_CREDENTIAL_RENEWAL_AUTH2_LIFECYCLE_PROOF_1'&&input.expectedVersion===2&&input.expectedAuthVersion===2&&p.versionEvidence?.accountVersion===2&&p.versionEvidence.authVersion===2&&same(p.versionEvidence.chainPins,QA_AUTH2_CHAIN_PINS))&&same(p.target,t)&&p.profile==='26_v21_history_effective_value_from_v16_v14'&&sha(p.catalogSha256)
   &&p.can_read_identity===true&&p.can_update_credential===true&&p.can_revoke_sessions===true&&Array.isArray(p.functions)&&p.functions.length===3
   &&same(p.functions.map(f=>f.name).sort(),Object.keys(functions).sort())&&p.functions.every(f=>functions[f.name]?.includes(f.sha256))
   &&Array.isArray(p.triggers)&&p.triggers.length>=3&&p.triggers.every(t=>['O','A'].includes(t.enabled)&&t.internal===false&&typeof t.oid==='string'), 'B07_RENEWAL_APPROVED_PROOF_REQUIRED');
@@ -92,7 +132,7 @@ async function admission(client,input){await target(client,input);const r=await 
  must(r.rows.length===1&&same(r.rows[0].versions,Array.from({length:26},(_,i)=>i+1))
   &&r.rows[0].management_role_safe===true&&same(r.rows[0].functions,p.functions)&&same(r.rows[0].triggers,p.triggers)&&r.rows[0].can_read_identity===true&&r.rows[0].can_update_credential===true&&r.rows[0].can_revoke_sessions===true,'B07_RENEWAL_CURRENT_ADMISSION_CHANGED');}
 const safeAccount=a=>{const {version,auth_version,updated_at,...identity}=a;return identity;};
-async function history(client,input){const h=input.originalSales,r=await client.query(RENEWAL_SQL.history,[QA_IDENTITY.accountId,h.requestKey,h.documentId,h.requestHash]);must(r.rows.length===1&&r.rows[0].count===1&&sha(r.rows[0].sha256),'B07_RENEWAL_COMMITTED_V2_CHANGED');return r.rows[0];}
+async function history(client,input){const out={};for(const [family,h,sql]of [['sales',input.originalSales,RENEWAL_SQL.history],...(input.originalTransfer?[['transfers',input.originalTransfer,RENEWAL_SQL.transferHistory]]:[])]){const r=await client.query(sql,[QA_IDENTITY.accountId,h.requestKey,h.documentId,h.requestHash]);must(r.rows.length===1&&r.rows[0].count===1&&sha(r.rows[0].sha256),'B07_RENEWAL_COMMITTED_V2_CHANGED');out[family]=r.rows[0];}return out;}
 async function state(client,input,passwordHash){const r=await client.query(RENEWAL_SQL.state,[QA_IDENTITY.accountId,QA_IDENTITY.staffId,input.sourceActorAccountId,passwordHash,input.expectedVersion+1]);must(r.rows.length===1,'B07_RENEWAL_IDENTITY_MISSING');return r.rows[0];}
 function identity(s){const a=s.account,p=s.staff;must(a?.id===QA_IDENTITY.accountId&&a.staff_id===QA_IDENTITY.staffId&&a.login_name===QA_IDENTITY.loginName&&a.login_enabled===true
  &&p?.id===QA_IDENTITY.staffId&&p.name===QA_IDENTITY.name&&p.hall_id===null&&p.role==='WAREHOUSE'&&p.employment_status==='在职'&&p.contact===null&&p.version===1

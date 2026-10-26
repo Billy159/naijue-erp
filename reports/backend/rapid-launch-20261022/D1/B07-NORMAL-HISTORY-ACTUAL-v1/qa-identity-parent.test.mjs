@@ -114,3 +114,11 @@ test('credential continuation parent refuses absent permission proof and arbitra
  await assert.rejects(runB07QaIdentityCommittedContinuationParent({contract:'B07_QA_COMMITTED_CONTINUATION_PARENT_1',outputDirectory:'/tmp/OTHER',purposeGateFile:'/tmp/OTHER/CURRENT-PURPOSE-GATE.json'}),/^Error: B07_RENEWAL_PARENT_REGISTRATION_REQUIRED$/);
  await assert.rejects(runB07QaIdentityCommittedContinuationParent({contract:'B07_QA_COMMITTED_CONTINUATION_PARENT_1',outputDirectory:COMMITTED_CONTINUATION_OUTPUT,purposeGateFile:join(COMMITTED_CONTINUATION_OUTPUT,'CURRENT-PURPOSE-GATE.json'),purposeWaitMs:300000}),/^Error: B07_RENEWAL_EXACT_PERMISSION_PROOF_REQUIRED$/);
 });
+
+test('remaining-money parent requires explicit child02 contract and never falls back to child01',async()=>{
+ const {runB07QaIdentityRemainingMoneyParent,runB07QaIdentityCommittedContinuationParent,REMAINING_MONEY_OUTPUT,COMMITTED_CONTINUATION_OUTPUT}=await import('./qa-identity-parent.mjs');
+ await assert.rejects(runB07QaIdentityRemainingMoneyParent({contract:'B07_QA_REMAINING_MONEY_PARENT_1',outputDirectory:COMMITTED_CONTINUATION_OUTPUT,purposeGateFile:join(COMMITTED_CONTINUATION_OUTPUT,'CURRENT-PURPOSE-GATE.json')}),/^Error: B07_RENEWAL_PARENT_REGISTRATION_REQUIRED$/);
+ const plan={contract:'B07_QA_REMAINING_MONEY_PARENT_1',outputDirectory:REMAINING_MONEY_OUTPUT,purposeGateFile:join(REMAINING_MONEY_OUTPUT,'CURRENT-PURPOSE-GATE.json'),purposeWaitMs:300000};
+ await assert.rejects(runB07QaIdentityCommittedContinuationParent(plan),/^Error: B07_RENEWAL_PARENT_REGISTRATION_REQUIRED$/);
+ await assert.rejects(runB07QaIdentityRemainingMoneyParent(plan),/^Error: B07_RENEWAL_EXACT_PERMISSION_PROOF_REQUIRED$/);
+});
