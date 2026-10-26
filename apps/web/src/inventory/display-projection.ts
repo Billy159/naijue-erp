@@ -1,5 +1,5 @@
 import type { InventoryColorFit, InventoryProduct, InventoryRow, InventorySize, Selection, StockCell, StockTotal } from './contracts.ts';
-import { totalOf } from './model.ts';
+import { assertQuantity, totalOf } from './model.ts';
 
 /** A display source is a real, complete warehouse/SKU fact, never a writable group identity. */
 export interface InventoryDisplaySource {
@@ -51,23 +51,40 @@ export function projectInventoryColors(product: InventoryProduct): readonly Inve
       const parts = warehouses.get(row.warehouse.id);
       if (parts) parts.push({ group, row }); else warehouses.set(row.warehouse.id, [{ group, row }]);
     }
-    const rows: InventoryDisplayRow[] = [...warehouses.values()].map(parts => {
-      const cells: Record<string, InventoryDisplayCell> = {};
-      for (const size of product.sizes) {
-        const sources = parts.map(({ group, row }): InventoryDisplaySource => ({ productId: product.id, color: group.color, fit: group.fit, warehouse: row.warehouse, size, cell: row.cells[size.id]! }));
-        const total = totalOf(sources.map(source => source.cell));
-        // totalOf rejects unknown/missing states before inspecting source identities.
-        for (const source of sources) if (source.cell.state === 'known' && !source.cell.skuId?.trim()) throw new TypeError('库存来源 SKU 身份缺失。');
-        cells[size.id] = sources.some(source => source.cell.state === 'known')
-          ? { state: 'known', quantity: total.knownQuantity, sources }
-          : { state: 'not-applicable', sources };
+    const sizes = new Map(product.sizes.map(size => [size.id, size]));
+    const sum = (totals: readonly StockTotal[]): StockTotal => {
+      let quantity = 0n;
+      for (const total of totals) {
+        if (total.completeness !== 'complete' || total.unknownCells !== 0) throw new TypeError('库存数据未完整核实，不能按零发布。');
+        assertQuantity(total.knownQuantity); quantity += BigInt(total.knownQuantity);
       }
-      return { warehouse: parts[0]!.row.warehouse, cells, total: totalOf(parts.flatMap(({ row }) => product.sizes.map(size => row.cells[size.id]!))), sources: parts };
-    });
-    return {
-      color: groups[0]!.color, fit: null, rows, sources: groups,
-      sizeTotals: Object.fromEntries(product.sizes.map(size => [size.id, totalOf(groups.flatMap(group => group.rows.map(row => row.cells[size.id]!)))])),
-      total: totalOf(groups.flatMap(group => group.rows.flatMap(row => product.sizes.map(size => row.cells[size.id]!)))),
+      return { knownQuantity: String(quantity), completeness: 'complete', unknownCells: 0 };
     };
+    // The canonical page has already validated its totals. Keep row references,
+    // not a second warehouse×size matrix or retained per-cell source arrays.
+    const rows: InventoryDisplayRow[] = [...warehouses.values()].map(parts => {
+      const readCell = (id: string): InventoryDisplayCell | undefined => {
+        const size = sizes.get(id); if (!size) return undefined;
+        const cells = parts.map(({ row }) => row.cells[id]!);
+        const total = totalOf(cells);
+        for (const cell of cells) if (cell.state === 'known' && !cell.skuId?.trim()) throw new TypeError('库存来源 SKU 身份缺失。');
+        const sources = () => parts.map(({ group, row }): InventoryDisplaySource => ({ productId: product.id, color: group.color, fit: group.fit, warehouse: row.warehouse, size, cell: row.cells[id]! }));
+        return cells.some(cell => cell.state === 'known')
+          ? { state: 'known', quantity: total.knownQuantity, get sources() { return sources(); } }
+          : { state: 'not-applicable', get sources() { return sources(); } };
+      };
+      const cells = new Proxy({} as Record<string, InventoryDisplayCell>, {
+        get: (_target, id) => typeof id === 'string' ? readCell(id) : undefined,
+        ownKeys: () => [...sizes.keys()],
+        getOwnPropertyDescriptor: (_target, id) => typeof id === 'string' && sizes.has(id) ? { configurable: true, enumerable: true, get: () => readCell(id) } : undefined,
+      });
+      return { warehouse: parts[0]!.row.warehouse, cells, get total() { return sum(parts.map(({ row }) => row.total)); }, sources: parts };
+    });
+    const sizeTotals = new Proxy({} as Record<string, StockTotal>, {
+      get: (_target, id) => typeof id === 'string' && sizes.has(id) ? sum(groups.map(group => group.sizeTotals[id]!)) : undefined,
+      ownKeys: () => [...sizes.keys()],
+      getOwnPropertyDescriptor: (_target, id) => typeof id === 'string' && sizes.has(id) ? { configurable: true, enumerable: true, get: () => sum(groups.map(group => group.sizeTotals[id]!)) } : undefined,
+    });
+    return { color: groups[0]!.color, fit: null, rows, sources: groups, sizeTotals, get total() { return sum(groups.map(group => group.total)); } };
   });
 }

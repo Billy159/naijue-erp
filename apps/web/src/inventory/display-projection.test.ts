@@ -4,6 +4,7 @@ import { makeSyntheticInventoryProduct } from '../../preview/synthetic-reader.ts
 import { emptyInventoryFilter, type InventoryProduct, type StockCell } from './contracts.ts';
 import { knownDisplaySources, projectInventoryColors } from './display-projection.ts';
 import { totalOf } from './model.ts';
+import { inventoryWorkbookRows, createInventoryPrintHtml } from './output-adapter.ts';
 
 const product = () => makeSyntheticInventoryProduct(1, emptyInventoryFilter());
 
@@ -70,7 +71,10 @@ test('projection keeps exact large signed sums, zero and non-applicable source s
   aCells['test-size-2'] = { state: 'known', skuId: 'ONLY-A', quantity: '0' };
   yCells['test-size-3'] = { state: 'known', skuId: 'NEGATIVE-Y', quantity: '-5' };
   aCells['test-size-3'] = { state: 'known', skuId: 'NEGATIVE-A', quantity: '2' };
-  const row = projectInventoryColors(input)[0]!.rows[0]!;
+  // Keep the canonical fixture internally consistent: projection reuses its validated totals.
+  const groups = input.colorFits.map(group => ({ ...group, rows: group.rows.map(row => ({ ...row, total: totalOf(Object.values(row.cells)) })), sizeTotals: Object.fromEntries(input.sizes.map(size => [size.id, totalOf(group.rows.map(row => row.cells[size.id]!))])), total: totalOf(group.rows.flatMap(row => Object.values(row.cells))) }));
+  const canonical = { ...input, colorFits: groups, sizeTotals: Object.fromEntries(input.sizes.map(size => [size.id, totalOf(groups.flatMap(group => group.rows.map(row => row.cells[size.id]!)))])), total: totalOf(groups.flatMap(group => group.rows.flatMap(row => Object.values(row.cells)))) };
+  const row = projectInventoryColors(canonical)[0]!.rows[0]!;
   assert.deepEqual(row.cells['test-size-0']!.state === 'known' && row.cells['test-size-0']!.quantity, '9007199254740991');
   assert.deepEqual(row.cells['test-size-1']!.state === 'known' && row.cells['test-size-1']!.quantity, '0');
   assert.deepEqual(row.cells['test-size-2']!.state === 'known' && row.cells['test-size-2']!.quantity, '0');
@@ -97,6 +101,56 @@ test('missing, unknown, malformed integer and missing SKU sources never become a
   for (const invalid of [undefined, { state: 'unknown' }, { state: 'known', skuId: 'BAD', quantity: 'NaN' }, { state: 'known', skuId: '', quantity: '0' }]) {
     const input = structuredClone(product());
     (input.colorFits[0]!.rows[0]!.cells as Record<string, unknown>)['test-size-0'] = invalid;
-    assert.throws(() => projectInventoryColors(input as InventoryProduct), /未完整核实|整数文本|SKU 身份缺失/);
+    assert.throws(() => projectInventoryColors(input as InventoryProduct)[0]!.rows[0]!.cells['test-size-0'], /未完整核实|整数文本|SKU 身份缺失/);
   }
+});
+
+
+test('representative page projection resolves only accessed cells and does not retain a dense cell/source copy', () => {
+  for (const count of [100, 200, 500]) {
+    let reads = 0;
+    const inputs = Array.from({ length: count }, (_, index) => {
+      const input = product(), sizes = Array.from({ length: 16 }, (_, number) => ({ id: 'size' + number, label: 'S' + number }));
+      const groups = input.colorFits.map((group, groupIndex) => {
+        const rows = Array.from({ length: 10 }, (_, warehouseIndex) => {
+          const cells = Object.fromEntries(sizes.map((size, number) => [size.id, { state: 'known' as const, skuId: `sku${index}-${groupIndex}-${number}`, quantity: number === 0 ? '-2' : String(number % 3) }]));
+          return { warehouse: { id: 'w' + warehouseIndex, label: '仓' + warehouseIndex }, cells: new Proxy(cells, { get(target, key) { if (typeof key === 'string' && key.startsWith('size')) reads++; return Reflect.get(target, key); } }), total: totalOf(Object.values(cells)) };
+        });
+        return { ...group, rows, sizeTotals: Object.fromEntries(sizes.map(size => [size.id, totalOf(rows.map(row => row.cells[size.id]!))])), total: totalOf(rows.flatMap(row => Object.values(row.cells))) };
+      });
+      return { ...input, id: `projection-${index}`, sizes, colorFits: groups, sizeTotals: Object.fromEntries(sizes.map(size => [size.id, totalOf(groups.flatMap(group => group.rows.map(row => row.cells[size.id]!)))])), total: totalOf(groups.flatMap(group => group.rows.flatMap(row => Object.values(row.cells)))) };
+    });
+    reads = 0;
+    const start = performance.now(), projected = inputs.map(projectInventoryColors), elapsed = performance.now() - start;
+    assert.equal(reads, 0, 'construction does not inspect any warehouse×size cell');
+    const group = projected[0]![0]!, row = group.rows[0]!;
+    assert.equal(group.total.knownQuantity, totalOf(inputs[0]!.colorFits.slice(0, 2).flatMap(g => g.rows.flatMap(r => Object.values(r.cells)))).knownQuantity);
+    reads = 0;
+    void row.total; void group.sizeTotals[inputs[0]!.sizes[0]!.id];
+    assert.equal(reads, 0, 'validated canonical totals need no second cell scan');
+    const cell = row.cells[inputs[0]!.sizes[0]!.id]!;
+    assert.equal(reads, 2, 'only selected color/FIT warehouse and size are inspected');
+    assert.equal(typeof Object.getOwnPropertyDescriptor(cell, 'sources')!.get, 'function', 'source objects are deferred until explicit source access');
+    const sources = knownDisplaySources(cell);
+    assert.equal(sources.length, 2); assert.equal(reads, 4);
+    assert.equal(sources[0]!.cell, inputs[0]!.colorFits[0]!.rows[0]!.cells[inputs[0]!.sizes[0]!.id]);
+    assert.notEqual(row.cells[inputs[0]!.sizes[0]!.id], cell, 'reading cells never grows a retained dense cache');
+    console.log(JSON.stringify({ fixtureOnly: true, products: count, projectionConstructionMs: Number(elapsed.toFixed(3)), constructionCanonicalCellReads: 0, firstDisplayCellReads: 2, clickedSourceCount: sources.length }));
+  }
+});
+
+
+test('full-model workbook/print consumers traverse lazy colors without losing identities, zero, negatives or groups', () => {
+  const first = product(), second = { ...makeSyntheticInventoryProduct(1, { ...emptyInventoryFilter(), fits: [first.colorFits[0]!.fit] }), id: 'second-product', code: 'SECOND', sizeGroup: { id: 'other-group', label: '另一组' } };
+  const filter = emptyInventoryFilter(), data = { readReference: 'FIXTURE-OUTPUT', exactTotalProducts: 2, products: [first, second], warehouseLabels: first.colorFits[0]!.rows.map(row => row.warehouse.label), allMatchesTotal: { knownQuantity: (BigInt(first.total.knownQuantity) + BigInt(second.total.knownQuantity)).toString(), completeness: 'complete' as const, unknownCells: 0 } };
+  const settings = { category: true, supplier: false, fit: false, sizeGroup: true, season: false, subtotal: true, total: true, sizeDescription: true };
+  const rows = inventoryWorkbookRows(data, filter, settings), html = createInventoryPrintHtml(data, filter, settings);
+  assert.equal(rows.filter(row => row[0] === first.code).length, 4);
+  assert.equal(rows.filter(row => row[0] === second.code).length, 4);
+  assert.ok(rows.some(row => row.includes('另一组')));
+  assert.ok(rows.some(row => row.includes('0')));
+  assert.ok(rows.some(row => row.includes('-2')));
+  assert.ok(rows.some(row => row.includes('—')));
+  assert.match(html, /SECOND/); assert.match(html, /另一组/); assert.match(html, /颜色小计/); assert.match(html, /商品合计/);
+  assert.ok(html.includes(first.total.knownQuantity));
 });

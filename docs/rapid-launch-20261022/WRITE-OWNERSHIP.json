@@ -6088,9 +6088,10 @@
     "owner": "D3",
     "exactFiles": [
       "scripts/import-v3/production-source-provider26.mjs",
-      "scripts/import-v3/production-source-provider26.test.mjs"
+      "scripts/import-v3/production-source-provider26.test.mjs",
+      "scripts/import-v2/authorized-history-closure-reader.mjs"
     ],
-    "scope": "Consume actual124 precise26 locations, existing54 map, original same-version CODE; add/reuse source-only preparation of all11 genuine streams/native facts into fixed SOURCE624 prepareFullPayloadData26/prepareFullSourceBindings26/writeFullSourceBindings26; no fake execution authority/noop, SQL/execute/grant bypass or duplicated business logic. Original execution authority remains mandatory. Existing D1 prepare2 leaves remain fixed read-only.",
+    "scope": "Consume actual124 precise26 locations, existing54 map, original same-version CODE; add/reuse source-only preparation of all11 genuine streams/native facts into fixed SOURCE624 prepareFullPayloadData26/prepareFullSourceBindings26/writeFullSourceBindings26; no fake execution authority/noop, SQL/execute/grant bypass or duplicated business logic. Original execution authority remains mandatory. Existing D1 prepare2 leaves remain fixed read-only. Same original closure reader source-only consumer hook reuses actual11 opener/merge/order/count/budget/close and invokes fixed D1 prepare at existing buildExpected seam; original expected/authorizeStage/execution grant unchanged; no fake originalCommands.",
     "actualOwner": "T45 actual file window/current continuation; C only subsequent independent grant/Git/build",
     "readiness": "Source-only DATA roots/commands preparation cannot wait for PUBLISH execution authorization it must produce inputs for"
   },
