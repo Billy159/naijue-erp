@@ -1355,7 +1355,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-26",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "222a7cc4eb4422374ebe8c08cd357f59c63c68ad",
+  "lastVerifiedRemoteCommit": "5dee67f191347a5596c6efef0baa9fcddd43ffad",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -11660,7 +11660,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE589",
+    "round": "SOURCE590",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -13215,6 +13215,23 @@
       "D1next": "Human explicitF startup-only fullmetadata validation + timelylight request identitypurposeauth, sales/transfer/list/detail/page plus login/session consumers; no newplatform/schema",
       "D3current": "Originalidle verified; exclusive reader/test4 transferred fromD1 forF equivalentfilter pushdown/currentpage previews with accurate fulltotal/sum",
       "requiredEvidence": "ExistingQA permission/revocation reuse onlyaffectedboundary; realnonempty sales/transfer first/page latency and exactresults later originalQA/fullprovider, no syntheticPASS"
+    },
+    "source590": {
+      "actual101": {
+        "status": "COMPLETED_READONLY_EXPLAIN_ONLY",
+        "seconds": 0.519,
+        "finishedUtc": "2026-10-26T04:00:58.420073Z",
+        "oldEstimatedCost": 26226.88,
+        "newEstimatedCost": 14.64,
+        "newPlan": "sourceidentity completebatch/entity/keyIndexScan1->head source_row_id uniqueIndexScan1; nooldheadseqscan4489",
+        "notMeasured": "No ANALYZE/query execution/writer or actual latency improvement",
+        "receiptSha256": "0d67034b86bf59e03105cbcfc025f30504ea4f138ce8f76db46a99eb091fd236"
+      },
+      "D1": "Actualactive v20exact4implementation; nexthumanF capability/pool",
+      "D3": "Actualactive samecommon list source earlyfilters; preview already pageonly preserve, avoid duplicate validityproof within sameRR",
+      "T45": "Completed101idleawaitnewexactsource/QB/compatiblebuild, original4489commitand88absent preserved",
+      "next": "freeze newD1source -> originalQB affectedguard/profile -> necessarycompatiblebuild andT45 realpatch/currentreviews+APP -> resume only23793missing; D3parallel independent source",
+      "GitHub589": "5dee67f191347a5596c6efef0baa9fcddd43ffad verified"
     }
   }
 }
