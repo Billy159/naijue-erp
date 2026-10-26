@@ -11643,7 +11643,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE573",
+    "round": "SOURCE574",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12880,9 +12880,9 @@
         ],
         "next": "F2 same exact3 fix save/default race; new fixed commit QF2 affected-only review; no build or real-save PASS",
         "independentReview": "QF2 P2 default loading/save/late success can diverge shown values and frozen CREATE command; source-traced not runtime reproduced",
-        "state": "NEED_FIX_DIRECTED_ORIGINAL_F2",
+        "state": "PASS_SCOPED_SOURCE_RECHECK_F01_CLOSED_RUNTIME_PROVIDER_PENDING",
         "repair": {
-          "state": "EXACT2_SOURCE_TARGETED_PASS_INDEPENDENT_RETEST_PENDING",
+          "state": "QF2_SCOPED_SOURCE_RECHECK_PASS",
           "pins": {
             "editor.tsx": "2951c32ae36fc96011c9e0d5716426328877c30cae8620d7b11dad1c3de8839e",
             "editor-runtime.test.mjs": "7bf0e5313974f8eed543fd9fcff7ec7ad175813a6404e018a4b9473f63f39c31"
@@ -12890,7 +12890,10 @@
           "result": "reports/frontend/rapid-launch-20261022/F2/BARCODE-2026-FRONTEND-566-20261026-01/REVISION-SOURCE567-DEFAULT-SAVE-ORDER-01.json",
           "sha256": "075530faddac3d3b854d3565fd19b5c3dd6662d60a8f5da4b8581ad70f821b1b",
           "checks": "Original legal CREATE controller/parser used; pending no key/noexecute, failure unlock/retry, submitted/uncertain same scheme and originalcommand/key, no backend or real save",
-          "next": "Fixednewcommit QF2 F01 only; unchanged raw/selection evidence reused"
+          "next": "Next necessary integrated candidate includes fixed source; actual initialized scheme/provider and real compatible save QA remain",
+          "fixedCommit": "7f6d9904910eed760bba7d2de9380817567c84e3",
+          "review": "K/reports/qa-frontend/rapid-launch-20261022/QF2/SOURCE567-BARCODE-WIRING-01/REVISION-SOURCE571-F01-RECHECK-01.json",
+          "boundary": "QF2 source guard confirms late/rejected protection; no separate runtime-injected late/rejected case or browser/HTTP/PG pass"
         }
       },
       "sourcePreparation568": {
