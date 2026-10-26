@@ -123,9 +123,9 @@ export function nativeStockContributorsManifestHash(rows: readonly NativeStockCo
 export function nativeStockEffectiveGroupsManifestHash(rows: readonly NativeStockEffectiveGroupObservation[]): string {
   return requestHash({ version: "NATIVE_STOCK_EFFECTIVE_GROUP_MANIFEST_V1", rows: [...rows].sort((a, b) => a.canonicalStockSourceKey < b.canonicalStockSourceKey ? -1 : a.canonicalStockSourceKey > b.canonicalStockSourceKey ? 1 : 0) });
 }
-/** Six fractional digits retain PostgreSQL microsecond precision, including meaningful zeroes. */
+/** Original UTC creator text: milliseconds or microseconds, retaining every digit and zero. */
 export function isCanonicalNativeRecordReviewTime(value: unknown): value is string {
-  if (typeof value !== "string" || !/^(?!0000)\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{6}Z$/.test(value)) return false;
+  if (typeof value !== "string" || !/^(?!0000)\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.(?:\d{3}|\d{6})Z$/.test(value)) return false;
   const milliseconds = `${value.slice(0, 23)}Z`;
   const parsed = Date.parse(milliseconds);
   return Number.isFinite(parsed) && new Date(parsed).toISOString() === milliseconds;

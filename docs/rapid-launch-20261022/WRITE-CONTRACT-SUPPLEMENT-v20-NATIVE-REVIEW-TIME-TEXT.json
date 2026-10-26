@@ -7,10 +7,17 @@
   "owner": "D1",
   "sourceEvidence": "T45 actual133 53WH all MILLI_Z; source creator ISO milliseconds; SQL exact JSON and CORE22 item hash unchanged",
   "noSchemaChange": true,
-  "implemented": false,
+  "implemented": true,
   "approval": {
     "source": "direct human async reply",
     "questionCall": "call_981ade8244d94ca8862d41be9eedc7a6",
     "answer": "确认 v20 时间文本兼容"
+  },
+  "implementationStage": "SOURCE_READY_QA_PENDING_NOT_REAL_IMPORT_OR_PUBLISH",
+  "sourcePins": {
+    "packages/application/src/native-import-record-accounting.ts": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c",
+    "tests/native-import-record-accounting.test.ts": "af63ce0b5d5c3d1146ab6fce5b23efa1206565faeea9e3a3b03796ebac65ccb0",
+    "tests/native-import-record-accounting-postgres-protocol.test.ts": "f4c750a5b414406063c1e5c3dcdb9959547e712bbaa52aa6fdd2ef9107ffd634",
+    "scripts/import-v3/prepare-native-bindings.test.mjs": "82d042312916bd4d9e6ecaefeeda9652748185fcbcbfb5677f8edb7184cc82aa"
   }
 }

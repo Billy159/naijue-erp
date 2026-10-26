@@ -76,6 +76,20 @@ test("new native memberships consume exact existing creator records; only return
   assert.equal(accountant.checkpoint().cursor, 2);
   assert.equal(client.calls.filter(call => /INSERT INTO/.test(call.sql)).length, 2); client.done();
 });
+test("v20 original creator milliseconds reach unchanged timestamp and exact JSON SQL proofs for WH and SKU", async () => {
+  const time = new Date("2026-10-21T00:00:00.123Z").toISOString();
+  const items = accountingMemberships.map(item => ({ ...item, nativeRecord: { ...item.nativeRecord, reviewedAt: time } }));
+  const original = structuredClone(items), input = context(accountingChunk(items));
+  const client = new Client([...setup(input), ...items.flatMap(item => [proof(item), claimStep()])]);
+  const accountant = await createNativeImportRecordAccountant(client, input);
+  for (const item of items) await accountant.claimMembership(item);
+  assert.deepEqual(items, original); assert.equal(accountant.checkpoint().cursor, 2);
+  const proofs = client.calls.filter(call => /native-accounting:membership:/.test(call.sql));
+  assert.equal(proofs.length, 2);
+  for (const call of proofs) { assert.equal(call.values[8], time); assert.equal(JSON.parse(String(call.values[11])).reviewedAt, time); assert.match(call.sql, /r\.reviewed_at=\$9::timestamptz/); }
+  assert.match(proofs.find(call => call.sql.includes("membership:WAREHOUSE"))!.sql, /e\.warehouse_record=\$12::jsonb/);
+  client.done();
+});
 test("all native/source/inventory locks precede any accounting insert, in deterministic global order", async () => {
   const input = context(accountingChunk([...accountingMemberships, accountingBaseline])); const client = new Client(setup(input));
   await createNativeImportRecordAccountant(client, input); client.done();

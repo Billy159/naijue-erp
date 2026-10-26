@@ -21,12 +21,30 @@ test("native record accounting preserves original15 constant and explicitly acce
   for (const bad of [null, [], versions.slice(0, 14), [...versions, 16, 17, 18, 19, 20], [...versions, 15], versions.map(String), versions.filter(v => v !== 7)])
     assert.throws(() => assertNativeRecordAccountingSchema(bad), { code: "NATIVE_RECORD_ACCOUNTING_SCHEMA_NOT_READY" });
 });
-test("review text is exact creator-plan UTC microsecond representation, never timestamp readback reconstruction", () => {
+test("v20 review text is exact creator-plan UTC millisecond or microsecond text, never timestamp reconstruction", () => {
   assert.equal(isCanonicalNativeRecordReviewTime(accountingTime), true);
   assert.equal(isCanonicalNativeRecordReviewTime("2024-02-29T23:59:59.999999Z"), true);
+  for (const value of ["2024-02-29T23:59:59.999Z", "2026-10-21T00:00:00.000Z", "2026-10-21T00:00:00.123Z"])
+    assert.equal(isCanonicalNativeRecordReviewTime(value), true);
   for (const value of ["2023-02-29T00:00:00.000000Z", "2026-02-30T00:00:00.000000Z", "2026-10-21T24:00:00.000000Z",
-    "2026-10-21T00:00:00Z", "2026-10-21T00:00:00.123Z", "2026-10-21T08:00:00.123456+08:00", "0000-01-01T00:00:00.000000Z"])
+    "2026-10-21T00:00:00Z", "2026-10-21T00:00:00.1Z", "2026-10-21T00:00:00.12Z", "2026-10-21T00:00:00.1234Z",
+    "2026-10-21T00:00:00.12345Z", "2026-10-21T00:00:00.1234567Z", "2026-10-21T08:00:00.123456+08:00",
+    "2026-10-21T00:00:00.123+00:00", "0000-01-01T00:00:00.000000Z", "2023-02-29T00:00:00.000Z",
+    "2026-10-21T24:00:00.000Z", "2026-10-21T23:59:60.000Z", " 2026-10-21T00:00:00.123Z", "2026-10-21T00:00:00.123z"])
     assert.equal(isCanonicalNativeRecordReviewTime(value), false, value);
+  for (const value of [null, undefined, 0, false, new Date("2026-10-21T00:00:00.123Z")]) assert.equal(isCanonicalNativeRecordReviewTime(value), false);
+});
+test("v20 producer ISO and microseconds remain raw in WH/SKU validation and MAIN hashes", () => {
+  const milliseconds = new Date("2026-10-21T00:00:00.123Z").toISOString();
+  for (const time of [milliseconds, accountingTime]) {
+    const command = accountingChunk(accountingMemberships.map(item => ({ ...item, nativeRecord: { ...item.nativeRecord, reviewedAt: time } })));
+    const before = structuredClone(command), digest = requestHash(command);
+    assert.doesNotThrow(() => validateNativeImportAccountingCommand(command));
+    assert.deepEqual(command, before); assert.equal(nativeImportAccountingRequestHash(command), digest);
+  }
+  const original = accountingChunk(accountingMemberships.map(item => ({ ...item, nativeRecord: { ...item.nativeRecord, reviewedAt: milliseconds } })));
+  const otherTextSameInstant = accountingChunk(accountingMemberships.map(item => ({ ...item, nativeRecord: { ...item.nativeRecord, reviewedAt: "2026-10-21T00:00:00.123000Z" } })));
+  assert.notEqual(nativeImportAccountingRequestHash(original), nativeImportAccountingRequestHash(otherTextSameInstant));
 });
 test("version and every nativeRecord field are inside the original MAIN typed request hash", () => {
   const command = accountingChunk(); const digest = nativeImportAccountingRequestHash(command); assert.equal(digest, requestHash(command));

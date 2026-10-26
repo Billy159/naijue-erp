@@ -106,6 +106,17 @@ test('full preparation builds real expected roots first then original BIND nonze
  wrongProof.data.core.staffProofs[0].bootstrapAccounts=structuredClone(f.data.core.staffProofs[0].bootstrapAccounts);
  await assert.rejects(prepareFullSourceBindings26(wrongProof),/FULL_PREP_ORIGINAL_PROOF_CHANGED/);
 });
+test('v20 full preparation preserves original millisecond WH CORE and SKU record text without padding',async()=>{
+ const f=fullFixture(),time=new Date('2026-10-04T04:00:00.123Z').toISOString();
+ for(const item of [...f.warehouses,...f.skuMemberships])item.nativeRecord.reviewedAt=time;
+ const original=structuredClone({warehouses:f.warehouses,skus:f.skuMemberships,core:f.verifiedCurrent.coreWarehouses,keys:f.requestKeys});
+ const p=await prepareFullSourceBindings26(f);
+ assert.deepEqual({warehouses:f.warehouses,skus:f.skuMemberships,core:f.verifiedCurrent.coreWarehouses,keys:f.requestKeys},original);
+ const members=p.commands.ACCOUNT.flatMap(c=>c.items).filter(item=>item.targetType!=='INVENTORY_LEDGER');
+ assert.equal(members.length,32);assert.ok(members.every(item=>item.nativeRecord.reviewedAt===time));
+ assert.ok(f.verifiedCurrent.coreWarehouses.every(core=>f.warehouses.some(item=>requestHash(item)===requestHash(core))));
+ assert.equal(p.commands.ACCOUNT.at(-1).items[0].quantity,-3n);assert.equal(p.executionAuthorizationIssued,false);assert.equal(p.executionReady,false);
+});
 test('full preparation resumes only frozen original command prefix with no source reread or changed committed body',async()=>{
  const f=fullFixture(),p=await prepareFullSourceBindings26(f),current=structuredClone(f.verifiedCurrent);
  let cp={...current.checkpoint,expected:f.data.inventoryExpectedCounts};
