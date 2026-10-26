@@ -11660,7 +11660,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE592",
+    "round": "SOURCE593",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -13247,6 +13247,13 @@
       "checks": "8affectedchecks/scopedstrictPASS; originalpagepreviewalreadyboundedpreserved; authorizedvalidityretainedtotals/RRpageavoidsduplicateproof",
       "notDone": "QBnewreaderreview/actualnonemptyplan+latency; notperformancePASS",
       "next": "OriginalQB afterv20onlynewreaderimpact; Cnecessaryv20compatiblepackagefixedcandidate; realT45 fullprovider later actualinitial/pagebothlists"
+    },
+    "source593": {
+      "QB345": "PASS_SCOPED_SOURCE_e23eca92bd95a825a44c5f9f81e975d996f57c3a3d274e925c651d1a993c1de9",
+      "D1F": "Original4 requestedsource leaves registered; actualstartup fullmetadata beforeopen, productiononly lightweightrequestidentity, livepermissions retained, serializedT45baseline switch; no newtable/epoch/platform",
+      "next": "Build fixed592 CORE16 for v20actual import recovery; F publicpool source independently proceeds, not silently absorbed into acceptedv20",
+      "D3": "SOURCE592 listnewscope originalQBqueued sourceonly; no realnonempty performancePASS",
+      "GitHub591": "6f9f1fd433cef0bb1f2114b656fba9b12a3cd271 verified"
     }
   }
 }
