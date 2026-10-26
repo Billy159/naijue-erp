@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
-import type { CutoffImportBatch, CutoffImportCommand, CutoffImportItem, CutoffImportResult, CutoffImportStore, ImportCheckpoint, ImportCounts, ImportTarget, CoreImportCommand, CoreStageCommand, CoreImportCheckpoint } from "../../../packages/application/src/inventory-cutoff-import.ts";
-import { COMPLETE_SCOPE_DECISION, stableImportId, validateCutoffImportCommand, validateImportCounts, isCoreImportCommand } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import type { CutoffImportBatch, CutoffImportCommand, CutoffImportItem, CutoffImportResult, CutoffImportStore, ImportCheckpoint, ImportCounts, ImportTarget, CoreImportCommand, CoreStageCommand, CoreImportCheckpoint, BarcodeSchemeInitializationCommand } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import { COMPLETE_SCOPE_DECISION, stableImportId, validateCutoffImportCommand, validateImportCounts, isCoreImportCommand, validateBarcodeSchemeInitializationCommand } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { HISTORY_MAPPING_VERSION } from "../../../packages/application/src/history-storage-contract.ts";
 import { historyImportStageMetadata } from "../../../packages/application/src/history-import-lifecycle.ts";
@@ -207,6 +207,13 @@ export interface ImportStageBootstrap26 {
   stageNewBatch26(client: Pick<PgSalesClient, "query">, input: { readonly command: Extract<CutoffImportCommand, { action: "IMPORT_STAGE" }> | CoreStageCommand; readonly now: string; readonly operationId: string },
     runtime26: NativeRuntime26Capability): Promise<void>;
 }
+/** D3 source-owned exact data only, borrowed from the original transaction. No pool or receipt ownership. */
+export interface BarcodeSchemeInitialization26 {
+  assertAllowed(actorAccountId: BarcodeSchemeInitializationCommand["actorAccountId"], command: BarcodeSchemeInitializationCommand): Promise<void>;
+  initializeSchemes26(client: Pick<PgSalesClient, "query">, input: {
+    readonly command: BarcodeSchemeInitializationCommand; readonly now: string; readonly operationId: string;
+  }, runtime26: NativeRuntime26Capability): Promise<void>;
+}
 /** Pure protocol adapter: constructing it does not connect, migrate, seed, or start a server. */
 export class PostgresCutoffImportStore implements CutoffImportStore {
   private readonly pool: PgSalesPool;
@@ -215,11 +222,13 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
   private readonly runtime26: NativeRuntime26Capability | undefined;
   private readonly coreAuthorization: { assertAllowed(actorAccountId: CoreImportCommand["actorAccountId"], command: CoreImportCommand): Promise<void> } | undefined;
   private readonly stageBootstrap26: ImportStageBootstrap26 | undefined;
+  private readonly barcodeSchemeInitialization26: BarcodeSchemeInitialization26 | undefined;
   constructor(pool: PgSalesPool, options: {
     readonly nativeAccountingAuthorization?: Parameters<typeof authorizeNativeImportAccountingCommand>[1];
     readonly stageBootstrap?: ImportStageBootstrap;
     readonly runtime26?: NativeRuntime26Capability;
     readonly stageBootstrap26?: ImportStageBootstrap26;
+    readonly barcodeSchemeInitialization26?: BarcodeSchemeInitialization26;
     coreAuthorization?: { assertAllowed(actorAccountId: CoreImportCommand["actorAccountId"], command: CoreImportCommand): Promise<void> };
   } = {}) {
     this.pool = pool;
@@ -227,6 +236,19 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     requireDomain(coreAuthorization === undefined || typeof coreAuthorization.assertAllowed === "function", "NATIVE_IMPORT_AUTHORIZATION_REQUIRED", "Exact CORE source authorizer required");
     this.coreAuthorization = coreAuthorization === undefined ? undefined : Object.freeze({ assertAllowed: coreAuthorization.assertAllowed.bind(coreAuthorization) });
     this.runtime26 = checkedNativeRuntime26Capability(options.runtime26);
+    const schemeInitialization = options.barcodeSchemeInitialization26;
+    if (schemeInitialization !== undefined) {
+      requireDomain(this.runtime26 && Object.getPrototypeOf(schemeInitialization) === Object.prototype && Reflect.ownKeys(schemeInitialization).length === 2,
+        "BARCODE_SCHEME_INITIALIZATION_REQUIRED", "Two explicit trusted scheme source methods and exact26 runtime required");
+      for (const key of ["assertAllowed", "initializeSchemes26"] as const) {
+        const field = Object.getOwnPropertyDescriptor(schemeInitialization, key);
+        requireDomain(field?.enumerable && Object.hasOwn(field, "value") && typeof field.value === "function",
+          "BARCODE_SCHEME_INITIALIZATION_REQUIRED", "Captured own-data scheme source methods required");
+      }
+      this.barcodeSchemeInitialization26 = Object.freeze({ assertAllowed: schemeInitialization.assertAllowed.bind(schemeInitialization),
+        initializeSchemes26: schemeInitialization.initializeSchemes26.bind(schemeInitialization) });
+    }
+
     const successor = options.stageBootstrap26;
     if (successor !== undefined) {
       const d = Object.getOwnPropertyDescriptor(successor, "stageNewBatch26");
@@ -246,6 +268,7 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     this.stageBootstrap = bootstrap === undefined ? undefined : Object.freeze({ stageNewBatch: bootstrap.stageNewBatch.bind(bootstrap) });
   }
   async execute(command: CutoffImportCommand, now: string): Promise<CutoffImportResult> {
+    if (command.action === "IMPORT_INITIALIZE_BARCODE_SCHEMES") validateBarcodeSchemeInitializationCommand(command);
     const nativeRequested = !isCoreImportCommand(command) && hasNativeImportAccountingMetadata(command);
     if (nativeRequested) {
       // Validate before clone: accessors/symbols/array named properties may not disappear before MAIN hashing.
@@ -255,7 +278,7 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     }
     const snapshot = structuredClone(command); validateCutoffImportCommand(snapshot);
     if (this.runtime26) {
-      requireDomain(isCoreImportCommand(snapshot) ? !!this.runtime26 && !!this.coreAuthorization && (snapshot.action !== "IMPORT_CORE_STAGE" || !!this.stageBootstrap26) : snapshot.action === "IMPORT_STAGE" ? snapshot.mappingVersion === HISTORY_MAPPING_VERSION && snapshot.historyMetadata !== undefined && this.stageBootstrap26
+      requireDomain(snapshot.action === "IMPORT_INITIALIZE_BARCODE_SCHEMES" ? !!this.barcodeSchemeInitialization26 : isCoreImportCommand(snapshot) ? !!this.runtime26 && !!this.coreAuthorization && (snapshot.action !== "IMPORT_CORE_STAGE" || !!this.stageBootstrap26) : snapshot.action === "IMPORT_STAGE" ? snapshot.mappingVersion === HISTORY_MAPPING_VERSION && snapshot.historyMetadata !== undefined && this.stageBootstrap26
         : nativeRequested, "IMPORT_BOOTSTRAP_REQUIRED", "Exact26 requires genuine first-stage source bootstrap or native accounting MAIN command");
       if (snapshot.action === "IMPORT_PUBLISH") requireDomain(Object.hasOwn(snapshot, "historyClosure"), "HISTORY_PUBLICATION_PLAN_MISMATCH", "Exact26 publication requires complete independently authorized typed closure");
     }
@@ -281,6 +304,8 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     const digest = requestHash(command);
     const operationId = entityId("operation", stableImportId("operation", command.actorAccountId, command.requestKey));
     await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:receipt:${JSON.stringify([command.actorAccountId, command.requestKey])}`]);
+    if (command.action === "IMPORT_INITIALIZE_BARCODE_SCHEMES")
+      return this.executeBarcodeSchemeInitializationInTransaction(client, command, now, operationId, digest);
     const previous = (await client.query(`SELECT request_hash, target_type, target_id, action, result_data FROM naijue_erp.operation_receipt
       WHERE actor_account_id = $1 AND request_key = $2`, [command.actorAccountId, command.requestKey])).rows[0];
     if (previous) {
@@ -474,6 +499,106 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
           if (failure !== undefined) throw failure;
           requireDomain(requestHash(frozen.command) === digest, "IMPORT_BOOTSTRAP_COMMAND_MUTATION", "Bootstrap cannot change original stage command");
         } finally { active = false; if (pending.size) await Promise.allSettled([...pending]); }
+  }
+  private async executeBarcodeSchemeInitializationInTransaction(client: PgSalesClient, command: BarcodeSchemeInitializationCommand,
+    now: string, operationId: string, digest: string): Promise<CutoffImportResult> {
+    const provider = this.barcodeSchemeInitialization26, runtime = this.runtime26;
+    requireDomain(provider && runtime, "BARCODE_SCHEME_INITIALIZATION_REQUIRED", "Original exact26 transaction and source initializer required");
+    const allowed: unknown = await provider.assertAllowed(command.actorAccountId, structuredClone(command));
+    requireDomain(allowed === undefined, "NATIVE_IMPORT_AUTHORIZATION_REQUIRED", "Independent scheme source authority must explicitly complete");
+    await client.query("SELECT naijue_erp.cutoff_import_lock()");
+    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:import-batch:${command.batchId}`]);
+    // SHARE prevents concurrent table INSERT/UPDATE/DELETE, including an empty-table phantom.
+    // The original cutoff lock serializes authorized initializers before this read/insert lock.
+    await client.query("LOCK TABLE naijue_erp.barcode_scheme IN SHARE MODE");
+    const i = command.schemeInitialization;
+    const actors = (await client.query(`/* barcode-init:actor */ SELECT u.id FROM naijue_erp.user_account u
+      JOIN naijue_erp.staff s ON s.id=u.staff_id LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id
+      WHERE u.id=$1::uuid AND u.login_enabled AND s.employment_status='在职' AND s.role='ADMIN'
+        AND (s.hall_id IS NULL OR h.enabled) FOR SHARE OF u,s`, [command.actorAccountId])).rows;
+    requireDomain(actors.length === 1, "IMPORT_ACTOR_NOT_ALLOWED", "Current active source-authorized ADMIN required even on replay");
+    const actual = (await client.query(`/* barcode-init:target */ SELECT current_database()::text AS database,current_user::text AS role,
+      inet_server_addr()::text AS "serverAddress",inet_server_port() AS "serverPort",pg_postmaster_start_time()::text AS "postmasterStartedAt"`)).rows;
+    requireDomain(actual.length === 1 && requestHash(actual[0]) === requestHash(i.target), "IMPORT_TARGET_CONFLICT", "Original exact process and acting role required");
+    const batches = (await client.query(`/* barcode-init:batch */ SELECT *, ${stamp("cutoff_at")} AS cutoff_at FROM naijue_erp.import_batch WHERE id=$1::uuid FOR UPDATE`, [command.batchId])).rows;
+    const b = batches[0];
+    requireDomain(batches.length === 1 && b?.mapping_version === HISTORY_MAPPING_VERSION && b.source_name === i.fixedSourceNamespace
+      && b.source_hash === i.selectionSha256 && Date.parse(stringValue(b.cutoff_at)) === Date.parse(i.cutoffAt)
+      && (b.status === "STAGED" || b.status === "VALIDATING") && b.completed_at === null && b.history_validation_passed === false,
+      "IMPORT_MANIFEST_CONFLICT", "Exact original open unpublished source batch required");
+    const publications = (await client.query(`/* barcode-init:publication */ SELECT id FROM naijue_erp.import_batch WHERE status='IMPORTED' LIMIT 1`)).rows;
+    requireDomain(publications.length === 0, "IMPORT_ALREADY_PUBLISHED", "Scheme initialization precedes business publication");
+    const previous = (await client.query(`/* barcode-init:receipt */ SELECT id,request_hash,target_type,target_id,action,status,result_data
+      FROM naijue_erp.operation_receipt WHERE actor_account_id=$1::uuid AND request_key=$2 FOR SHARE`, [command.actorAccountId,command.requestKey])).rows[0];
+    if (previous) {
+      requireDomain(previous.id === operationId && previous.request_hash === digest && previous.target_type === "IMPORT"
+        && previous.target_id === command.batchId && previous.action === command.action && previous.status === "COMMITTED",
+        "IDEMPOTENCY_CONFLICT", "Original actor/key is immutable and belongs to exact scheme initialization");
+      const proof = (await client.query(`/* barcode-init:replay-proof */ SELECT a.before_values,a.after_values FROM naijue_erp.audit_change a
+        WHERE a.operation_id=$1::uuid AND a.object_type='IMPORT' AND a.object_id=$2::uuid AND a.action=$3`, [operationId,command.batchId,command.action])).rows;
+      requireDomain(proof.length === 1 && requestHash(jsonObject(proof[0]!.after_values).schemeInitialization) === requestHash(i),
+        "IDEMPOTENCY_CONFLICT", "Original committed exact scheme payload must match paired audit");
+      await client.query("SELECT naijue_erp.assert_barcode_scheme_initialization_v19($1::uuid,$2::uuid)", [command.batchId,operationId]);
+      return decodeResult(previous.result_data);
+    }
+    const cp = jsonObject(b.checkpoint);
+    requireDomain(Object.keys(cp).sort().join(",") === "counts,cursor,expected,sequence" && cp.sequence === command.expectedSequence && cp.cursor === command.expectedCursor,
+      "IMPORT_CHECKPOINT_CONFLICT", "Exact original checkpoint required; do not change key after a conflict");
+    const existing = (await client.query(`/* barcode-init:existing */ SELECT id FROM naijue_erp.operation_receipt
+      WHERE target_type='IMPORT' AND target_id=$1::uuid AND action=$2 LIMIT 1`, [command.batchId,command.action])).rows;
+    const effects = (await client.query(`/* barcode-init:effects */ SELECT
+      EXISTS(SELECT 1 FROM naijue_erp.import_source_row WHERE batch_id=$1::uuid AND entity_type='BARCODE') AS barcode_source,
+      EXISTS(SELECT 1 FROM naijue_erp.sku_barcode) AS barcode_rows,
+      EXISTS(SELECT 1 FROM naijue_erp.barcode_scheme) AS scheme_rows`, [command.batchId])).rows[0];
+    requireDomain(existing.length === 0 && effects?.barcode_source === false && effects.barcode_rows === false && effects.scheme_rows === false,
+      "BARCODE_SCHEME_INITIALIZATION_CONFLICT", "First whole-table empty initialization before any barcode effect only");
+    // The callback only inserts the exact six scheme rows. All commands stay on the original borrowed lease.
+    let active = true, pending: Promise<unknown> | undefined;
+    const borrowed = Object.freeze({ query: async (sql: string, values?: unknown[]): Promise<PgSalesResult> => {
+      requireDomain(active && pending === undefined && typeof sql === "string" && !/;/.test(sql)
+        && (/^\s*(?:\/\*[^]*?\*\/\s*)?SELECT\b/i.test(sql) || /^\s*(?:\/\*[^]*?\*\/\s*)?INSERT INTO naijue_erp\.barcode_scheme\s*\(id,name,barcode_type,rule_description,code_length,rule_version,status\)\s*VALUES\s*\(\$1::uuid,\$2,\$3,\$4,\$5,\$6,\$7\)\s*RETURNING id\s*$/i.test(sql)),
+        "BARCODE_SCHEME_CALLBACK_SCOPE", "Only one borrowed-client scheme insert/read at a time");
+      // SELECT is further bounded to scheme rows; no functions or unrelated relations are callback authority.
+      if (/^\s*(?:\/\*[^]*?\*\/\s*)?SELECT\b/i.test(sql)) requireDomain(
+        /^\s*(?:\/\*[^]*?\*\/\s*)?SELECT id,name,barcode_type,rule_description,code_length,rule_version,status FROM naijue_erp\.barcode_scheme ORDER BY id FOR SHARE\s*$/i.test(sql),
+        "BARCODE_SCHEME_CALLBACK_SCOPE", "Only complete original seven-field scheme readback permitted");
+      const result = client.query(sql, values); pending = result;
+      try { return await result; } finally { pending = undefined; }
+    } });
+    try {
+      const callbackRuntime: NativeRuntime26Capability = Object.freeze({ profile: "EXACT26", contract: "NATIVE_RUNTIME26_V1",
+        async assertReady(value: unknown, purpose: Parameters<NativeRuntime26Capability["assertReady"]>[1]): Promise<void> {
+          requireDomain(active && pending === undefined && value === borrowed && purpose === "IMPORT_STAGE", "BARCODE_SCHEME_CALLBACK_SCOPE", "Original idle borrowed scheme client and purpose only");
+          const verification = runtime.assertReady(client,purpose); pending = verification;
+          try { await verification; } finally { pending = undefined; }
+        } });
+      const returned: unknown = await provider.initializeSchemes26(borrowed, { command: structuredClone(command),now,operationId }, callbackRuntime);
+      requireDomain(returned === undefined && pending === undefined, "BARCODE_SCHEME_CALLBACK_SCOPE", "Initializer must await every borrowed query and return void");
+    } finally { active = false; if (pending) await Promise.allSettled([pending]); }
+    const schemes = (await client.query(`/* barcode-init:readback */ SELECT id,name,barcode_type,rule_description,code_length,rule_version,status
+      FROM naijue_erp.barcode_scheme ORDER BY id FOR SHARE`)).rows;
+    const expected = [...i.schemes].map(s => s.native).sort((a,c) => compare(a.id,c.id));
+    requireDomain(requestHash(schemes) === requestHash(expected), "BARCODE_SCHEME_INITIALIZATION_CONFLICT", "Entire scheme table must equal approved six rows");
+    const checkpoint = { ...cp, sequence: command.expectedSequence + 1 };
+    const before = { checkpoint: cp, schemes: [] };
+    const after = { checkpoint, schemeInitialization: i, commandHash: digest };
+    const updated = await client.query(`/* barcode-init:checkpoint */ UPDATE naijue_erp.import_batch SET checkpoint=$2::jsonb
+      WHERE id=$1::uuid AND checkpoint=$3::jsonb AND status=$4`, [command.batchId,auditJson(checkpoint),auditJson(cp),b.status]);
+    requireDomain(updated.rowCount === 1, "IMPORT_CHECKPOINT_CONFLICT", "One unchanged-count checkpoint CAS required");
+    const result: CutoffImportResult = { operationId: entityId("operation",operationId),batchId: command.batchId,sequence: command.expectedSequence+1,
+      cursor: command.expectedCursor,status: b.status,ledgerEntryIds: [] };
+    const audit = await client.query(`INSERT INTO naijue_erp.audit_change
+      (id,operation_id,actor_account_id,object_type,object_id,action,old_version,new_version,before_values,after_values,occurred_at)
+      VALUES ($1::uuid,$2::uuid,$3::uuid,'IMPORT',$4::uuid,$5,$6,$7,$8::jsonb,$9::jsonb,$10::timestamptz)`,
+    [stableImportId("audit",operationId),operationId,command.actorAccountId,command.batchId,command.action,command.expectedSequence+1,command.expectedSequence+2,auditJson(before),auditJson(after),now]);
+    requireDomain(audit.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT", "One original paired scheme audit required");
+    const receipt = await client.query(`INSERT INTO naijue_erp.operation_receipt
+      (id,actor_account_id,request_key,request_hash,action,target_type,target_id,status,result_data,created_at,completed_at)
+      VALUES ($1::uuid,$2::uuid,$3,$4,$5,'IMPORT',$6::uuid,'COMMITTED',$7::jsonb,$8::timestamptz,$8::timestamptz)`,
+    [operationId,command.actorAccountId,command.requestKey,digest,command.action,command.batchId,auditJson(result),now]);
+    requireDomain(receipt.rowCount === 1, "NATIVE_IMPORT_EVIDENCE_INSERT", "One original six-field scheme receipt required");
+    await client.query("SELECT naijue_erp.assert_barcode_scheme_initialization_v19($1::uuid,$2::uuid)", [command.batchId,operationId]);
+    return result;
   }
   private async executeCoreInTransaction(client: PgSalesClient, command: CoreImportCommand, now: string, operationId: string,
     digest: string, found: Record<string, unknown> | undefined): Promise<CutoffImportResult> {

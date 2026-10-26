@@ -1,3 +1,5 @@
+SOURCE583（2026-10-26）：D2真实NULL尺码编码修复已交原QB340限定复验通过，原失败保留，修后精确七叶pins固定；真实PG权限/保存仍未测。D1专用六方案初始化九叶和D3五叶已交还并核交付pins，原11+8项新增定向通过、受影响strict通过；全工程既有诊断未冒PASS。合并固定源交原QB仅新增action/SQL及borrowedclient接缝，实际数据库补丁与兼容APP由T45在原95销售头暂存后安全接缝实施，当前e02/20服务/CORE14不并行变更。原922MB传输exit0，远端两文件及0600已核，不重传；95新有限载体由原QB审，未提交DBstage。F2 SOURCE582保存后缺码反馈已实际交QF2 medium，不重旧571。未新增整页或正式业务完成计数。
+
 SOURCE582（2026-10-26）：QB340新生成独立审发现实际nullable size.code被统一stringValue处理，NULL导致整SAVE INVALID_DATABASE_VALUE回滚，有限原UOW/mockclient复现，当前580源不PASS。已交原D2只保留真实NULL/对不完备code跳生成、不造码、资料SKU照常保存，补service/protocol该影响项，旧6/幂等范围复用。F2保存后反馈exact2已交：仅明确提交且权威同版本/已知oldSKU集合的新enabledSKU缺任何MAIN时提示资料规格已保存+缺N/可证原因、按钮继续，unknown/恢复基准不足/laterVersion不伪判；新段定向及scopedTS通过，原default/race/raw不重。固定交QF2仅新增反馈范围源审，真实保存与运行仍未测。D1init9有限新checks已PASS，strict/CLI曾被D3在途语法暂阻，原owner自行交接后只补两项，C不改他人WIP。
 
 SOURCE581（2026-10-26）：实际核T45上轮已completed/idle，终态仅回旧74/75成功而原28282headerscurrent未收尾；C已沿原Chat显式Solmedium接续，先核真实传输session/远端完成或partial状态，活handle接续/已完成采用，不因观察超时重发，不再collect旧74/75。headerDBstage尚无完成证明，保留原94两客户/CORE14已过。D1/D3专用init源码和QB新生成源审均有实际工具在途，不重派。F2准确缺口为已确认保存及权威详情后缺新MAIN无提示，已交原editor叶补本次已知newSKU差集反馈，未知/基准不足不误判、不自动重提/新DTO；旧source有效检查不重。等待真实依赖与在途工作，不填槽造任务。

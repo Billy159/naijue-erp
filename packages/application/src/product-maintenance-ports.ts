@@ -118,7 +118,7 @@ export interface ProductBarcodeGenerationReferences {
   readonly scheme: { readonly id: string; readonly status: string; readonly codeLength: number | null };
   readonly colors: readonly { readonly id: string; readonly code: string }[];
   readonly fits: readonly { readonly id: string; readonly code: string }[];
-  readonly sizes: readonly { readonly id: string; readonly code: string }[];
+  readonly sizes: readonly { readonly id: string; readonly code: string | null }[];
 }
 export interface ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence;

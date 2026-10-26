@@ -2,24 +2,24 @@
   "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/erp-local-source-20261022",
   "files": {
     "packages/application/src/product-maintenance-ports.ts": {
-      "bytes": 13922,
-      "sha256": "ad23ddc4abf9c5493e6856f73e4d127de7deaf2805fd46eec4fdc69717610247"
+      "bytes": 13929,
+      "sha256": "ef3def88e42cb1ef198a4f0831fea4a59bc0de9f4bd77a54fe481e054cfe3138"
     },
     "packages/application/src/product-maintenance-service.ts": {
-      "bytes": 42434,
-      "sha256": "73e55d928ce1f6abf1fec8c96516b10bd10391e4fc1208fc18f2afffb5359e31"
+      "bytes": 42515,
+      "sha256": "fad6af12af0fcb7abc62f2ed3939ad68a4dd3b6e3b409223336d719f14950de0"
     },
     "adapters/postgres/src/product-maintenance-store.ts": {
-      "bytes": 50810,
-      "sha256": "6ca7139187c74d29d36826fdb8c659b55d233bfd3c635bce7c74294c5ccc0713"
+      "bytes": 50980,
+      "sha256": "48467c0f104aed127bd0b46f00eaaf19a00a19d743b4c87511e37e34b49ecdd1"
     },
     "tests/product-maintenance.test.ts": {
-      "bytes": 58585,
-      "sha256": "349b3cd2750be48f902b16b1baae2c8f32c42b4d16a0ff568b1a23c517d9b427"
+      "bytes": 59691,
+      "sha256": "2ff3b5ddd31eb577824b352da6fec98189c742f3ccc18a9b2427c20c0806e19e"
     },
     "tests/product-maintenance-postgres-protocol.test.ts": {
-      "bytes": 49404,
-      "sha256": "f42b530c286e798026145d034f4f821e89e07da07c38a5a86fe76df29e05b859"
+      "bytes": 50920,
+      "sha256": "ced552da5a2e05053e760d348dabc3b8ca9e1a945e55289173412630f75f5520"
     },
     "apps/api/src/product-maintenance-http.test.ts": {
       "bytes": 16678,
@@ -29,5 +29,6 @@
       "bytes": 10251,
       "sha256": "40fe9ea4d53866421da5ee1ca05506e4d9d70379b098e3270292002f2dc4a332"
     }
-  }
+  },
+  "revision": "QB340_NULL_SIZE_FIX"
 }

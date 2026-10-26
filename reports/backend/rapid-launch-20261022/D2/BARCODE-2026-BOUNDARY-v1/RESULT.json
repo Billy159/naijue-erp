@@ -1,6 +1,6 @@
 {
   "taskId": "D2-BARCODE-2026-BOUNDARY-v1",
-  "status": "CORRECTED_V19_PRODUCT_GENERATION_SOURCE_READY_FOCUSED6_PASS_STRICT0_ACTUAL_PENDING",
+  "status": "QB340_PASS_LIMITED_SOURCE_F01_CLOSED_ACTUAL_PENDING",
   "fourItems": {
     "classification": "D3 sole owner six scheme init, approved2026CURRENT and other5HISTORICAL; no D2 scheme writes",
     "newProductDefault": "F2 new-only form default existing2026 UUID0e70e45e-1a51-4d44-afe8-0002cf3fb7ef from actual approved dictionary; backend currently accepts defaultBarcodeSchemeId but no authoritative missing-value default. Never change existing product selection.",
@@ -26,7 +26,7 @@
     ]
   },
   "notImplemented": "No production newgeneration/default allocator or technical contract changes released; do not label fouritems complete. New request/field/constraint semantics C must consolidate once; only this new branch waits.",
-  "next": "C limitedsource/QB review precise7leafpins then integrate originalpackage; F2 consume actualnewMAIN via originaldetail. T45 actual registeredQA only when schemeinitialization+nativeSKUpublicationconditions met. D2 no remaining codework in approved generation scope unless newfinding.",
+  "next": "C freezes exactseven correctedpins and integrates originalpackage/F2; T45 executes only newgenerationcases when scheme/publication/currentrole permissions actuallyready. Do not reopen same source review withoutnewchange.",
   "requestedModel": "gpt-6.1-sol/medium",
   "fast": "UNVERIFIED",
   "technicalIncrementSource566": {
@@ -92,5 +92,42 @@
     "ownerBoundaries": "No D1/D3/sharedimport/root/readerprotocol modifications. Original incompatiblemanualfield remains exact. No allocator, optionalintent, newfields/table/migration/index/auditmarker.",
     "requestedModel": "gpt-6.1-sol/medium",
     "fast": "UNVERIFIED"
+  },
+  "qb340Correction": {
+    "finding": "Actual schema0001 size.code nullable; originalnewleaf stringValue wrongly aborted SAVE. QB diagnosis adopted.",
+    "fix": "ports sizes.code:string|null only; originalsameclient SQL unchanged, decoder nullableString onlysize; color/fit remain strictstring. Service skips NULL sizecode for that newSKU, no substitute0/empty/default. OtheractualcodednewSKU generatesnormally.",
+    "files": [
+      "packages/application/src/product-maintenance-ports.ts",
+      "packages/application/src/product-maintenance-service.ts",
+      "adapters/postgres/src/product-maintenance-store.ts",
+      "tests/product-maintenance.test.ts",
+      "tests/product-maintenance-postgres-protocol.test.ts"
+    ],
+    "checks": {
+      "newAffected": 2,
+      "fail": 0,
+      "strictTypesExit": 0,
+      "typeLogBytes": 0,
+      "logs": [
+        "V19-NULL-size-checks.tap",
+        "V19-NULL-size-types.log"
+      ],
+      "cases": [
+        "OriginalPostgresUOW mockclient returns actualNULL sizecode intact with actualcolor/fitstrings, no writes",
+        "OriginalSAVE keeps2actualnewSKUs, writesonly1validcodedMAIN andcompleteSKU/barcode audit;NULLsizeSKU retainsnomains"
+      ],
+      "old6": "Reused, not rerun. No DB/server/realHTTP execution."
+    },
+    "next": "QB slice340 verify this exactNULL finding only; C adopts fixed5leafpins then originalintegration. ActualQA stillT45 registered scope."
+  },
+  "qb340Adoption": {
+    "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice340-v19-new-sku-barcode-generation/RESULT.json",
+    "bytes": 8085,
+    "sha256": "00696e1eb5a2d17865b912a336f97764f6d05236c388d6bd36d5407e6fd72e1b",
+    "decision": "PASS_LIMITED_SOURCE_CORRECTED_V19_F01_CLOSED",
+    "revision": "QB340_NULL_SIZE_FIX",
+    "sourcePins": "V19-IMPLEMENTATION-SOURCE-PINS.json",
+    "initialFailurePreserved": "QB/slice340-v19-new-sku-barcode-generation/INITIAL-RESULT.json 6732/7dc02f6123d41514147476f42d17dfe93dff65b67a958dc0043e292dc2054d9d",
+    "qualification": "Independent source review only. Exactnullable sizecodereturn and newSKU skipping adopted; old6/compat/v17/37/169/detail/wholebuild not repeated. ActualPG/newqueryACL/rowlock/guards/fullSAVE and F2missingcodeexplanation still pending originalC/T45 route."
   }
 }

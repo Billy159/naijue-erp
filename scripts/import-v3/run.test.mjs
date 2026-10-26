@@ -246,3 +246,28 @@ test('v14 executor continuation reads22 original claims with real sequence and e
  const missing=coreExecutorFixture({missingCarry:true});await createPostgresImportExecutor26(missing.options)({kind:'MAIN',payload:missing.command});await assert.rejects(readCoreImportContinuation26({...options,pool:missing.options.pool,runtime26:missing.options.runtime26}),/All22/);
  const calls=f.calls.length;await assert.rejects(readCoreImportContinuation26({...options,async assertExecutionAllowed(){throw Error('REVOKED_SOURCE');}}),/REVOKED_SOURCE/);assert.equal(f.calls.length,calls);
 });
+
+function v19SchemeExecutorFixture(){
+ const f=coreExecutorFixture(),b={...f.b,phase:'FULL_SOURCE_CONTINUATION_26_V1',coreReceiptId:id(19001),authorizedPayloadHash:sha('b')};
+ const c={action:'IMPORT_INITIALIZE_BARCODE_SCHEMES',actorAccountId:b.actorAccountId,batchId:b.batchId,requestKey:'SYNTHETIC_SCHEME19',expectedSequence:2,expectedCursor:22,
+  schemeInitialization:{version:'BARCODE_SCHEME_INITIALIZATION_V19',coreReceiptId:b.coreReceiptId,coreSourceDigest:b.coreSourceDigest,fixedSourceNamespace:b.fixedSourceNamespace,selectionSha256:b.selectionSha256,cutoffAt:b.cutoffAt,target:structuredClone(b.target),
+  approvalPins:{proposalSha256:sha('c'),approvalSha256:sha('d'),writeContractReplySha256:sha('e')},
+  schemes:['2018','2020','2021','2021fit','2023','2026'].map((k,i)=>({sourceSchemeKey:k,native:{id:id(19100+i),name:k,barcode_type:'Code128',rule_description:'SYNTHETIC',code_length:15,rule_version:'SYNTHETIC',status:k==='2026'?'CURRENT':'HISTORICAL'}}))}};
+ const source={async assertAllowed(){},async initializeSchemes26(){throw Error('MUST_NOT_WRITE');}};
+ return {f,b,c,options:{...f.options,binding:b,bootstrap26:null,barcodeSchemeInitialization26:source,authorization:{...f.options.authorization,async assertExecutionAllowed(){throw Error('SYNTHETIC_EXECUTION_REVOKED');}}}};
+}
+test('v19 scheme executor captures explicit independent MAIN action with original exact binding and trusted callback',async()=>{
+ const {f,c,options}=v19SchemeExecutorFixture(),execute=createPostgresImportExecutor26(options);
+ await assert.rejects(execute({kind:'MAIN',payload:c}),/SYNTHETIC_EXECUTION_REVOKED/);
+ assert.equal(f.calls.length,0);
+ const bad={...options,barcodeSchemeInitialization26:{initializeSchemes26(){},assertAllowed:true}};
+ assert.throws(()=>createPostgresImportExecutor26(bad),/Captured own-data/);
+});
+test('v19 scheme executor rejects wrong namespace/selection/CORE/process before authorization or pool acquisition',async()=>{
+ for(const mutate of [i=>{i.fixedSourceNamespace='other';},i=>{i.selectionSha256=sha('f');},i=>{i.coreReceiptId=id(19999);},i=>{i.target.database='OTHER';},i=>{i.coreSourceDigest=sha('f');}]){
+  const {f,c,options}=v19SchemeExecutorFixture();mutate(c.schemeInitialization);const execute=createPostgresImportExecutor26(options);
+  await assert.rejects(execute({kind:'MAIN',payload:c}),/SCHEME_BINDING/);assert.equal(f.calls.length,0);
+ }
+ const {f,c,options}=v19SchemeExecutorFixture();const {coreReceiptId:_receipt,...coreBinding}=options.binding;const execute=createPostgresImportExecutor26({...options,binding:{...coreBinding,phase:'CORE_INITIALIZATION_26_V1',authorizedPayloadHash:null},bootstrap26:f.options.bootstrap26});
+ await assert.rejects(execute({kind:'MAIN',payload:c}),/SCHEME_BINDING/);assert.equal(f.calls.length,0);
+});

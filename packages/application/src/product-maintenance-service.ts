@@ -21,9 +21,9 @@ async function generateNewSkuMainBarcodes(tx: ProductMaintenanceTransaction, pro
   const refs = await tx.readBarcodeGenerationReferences(product.id, BARCODE_2026_SCHEME_ID, targets);
   requireDomain(refs.scheme.id === BARCODE_2026_SCHEME_ID && refs.scheme.status === "CURRENT" && refs.scheme.codeLength === 15,
     "PRODUCT_REFERENCE_UNAVAILABLE", "Exact current 2026 scheme required");
-  const index = (rows: readonly { readonly id: string; readonly code: string }[], ids: readonly string[]) => {
+  const index = (rows: readonly { readonly id: string; readonly code: string | null }[], ids: readonly string[]) => {
     const expected = new Set(ids), found = new Map(rows.map(row => [row.id, row.code]));
-    requireDomain(rows.length === found.size && found.size === expected.size && rows.every(row => expected.has(row.id) && typeof row.code === "string"),
+    requireDomain(rows.length === found.size && found.size === expected.size && rows.every(row => expected.has(row.id) && (row.code === null || typeof row.code === "string")),
       "INVALID_DATABASE_VALUE", "Complete actual barcode reference codes required"); return found;
   };
   const colors = index(refs.colors, targets.map(s => s.colorId)), fits = index(refs.fits, targets.map(s => s.fitId)), sizes = index(refs.sizes, targets.map(s => s.sizeId));
@@ -31,7 +31,7 @@ async function generateNewSkuMainBarcodes(tx: ProductMaintenanceTransaction, pro
   for (const sku of targets) {
     const color = colors.get(sku.colorId)!, fit = fits.get(sku.fitId)!, size = sizes.get(sku.sizeId)!;
     // Incomplete nonblank manual codes keep the saved SKU without a fabricated MAIN.
-    if (!/^[YABCDE]$/.test(fit) || !/^\d{3}$/.test(color) || !/^\d{3}$/.test(size)) continue;
+    if (fit === null || color === null || size === null || !/^[YABCDE]$/.test(fit) || !/^\d{3}$/.test(color) || !/^\d{3}$/.test(size)) continue;
     const raw = `5${fit}${product.systemItemCode}${color}${size}`;
     requireDomain(!used.has(raw), "BARCODE_CONFLICT", "Generated barcode collides with a retained raw identity");
     used.add(raw); pending.push({ sku, raw });

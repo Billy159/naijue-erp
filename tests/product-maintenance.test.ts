@@ -51,7 +51,7 @@ function values(): ProductWriteValues {
 function sku(colorId = gid(806)): ProductSkuInput { return { id: null, expectedVersion: null, skuCode: `SKU-${colorId}`, colorId, fitId: gid(807), sizeId: gid(808), enabled: true }; }
 function barcode(item: ProductSkuInput, raw = "000012345 "): ProductBarcodeInput { return { id: null, barcode: raw, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId, kind: "MAIN", schemeId: gid(805), enabled: true }; }
 function command(key = "create") { const s = sku(); return { action: "CREATE" as const, requestKey: key, values: values(), skus: [s], barcodes: [barcode(s)] }; }
-function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false, groupSizes?: readonly string[], barcodeMode?: "ready" | "invalid") {
+function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false, groupSizes?: readonly string[], barcodeMode?: "ready" | "invalid" | "nullsize") {
   let selectionReads = 0, barcodeReads = 0;
   let sequence = 900, product: ProductAggregate | undefined, allow = true, failComplete = false, references = true, deletable = true;
   const receipts = new Map<string, NonNullable<Awaited<ReturnType<ProductMaintenanceEvidence["getReceipt"]>>>>();
@@ -74,9 +74,9 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
       const tx: ProductMaintenanceTransaction = { evidence,
         ...(barcodeMode === undefined ? {} : { async readBarcodeGenerationReferences(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]) {
           barcodeReads++; assert.equal(productId, skus[0]!.productId);
-          const refs = (key: "colorId" | "fitId" | "sizeId", code: (id: string, i: number) => string) => [...new Set(skus.map(s => s[key]))].sort().map((id, i) => ({ id, code: code(id, i) }));
-          return { scheme: { id: schemeId, status: "CURRENT", codeLength: 15 }, colors: refs("colorId", (_id, i) => barcodeMode === "invalid" ? "X1" : String(101 + i)),
-            fits: refs("fitId", (_id, i) => "AB"[i]!), sizes: refs("sizeId", (_id, i) => String(202 + i)) };
+          const refs = (key: "colorId" | "fitId" | "sizeId", code: (id: string, i: number) => string | null) => [...new Set(skus.map(s => s[key]))].sort().map((id, i) => ({ id, code: code(id, i) }));
+          return { scheme: { id: schemeId, status: "CURRENT", codeLength: 15 }, colors: refs("colorId", (_id, i) => barcodeMode === "invalid" ? "X1" : String(101 + i)).map(r => ({ ...r, code: r.code! })),
+            fits: refs("fitId", (_id, i) => "AB"[i]!).map(r => ({ ...r, code: r.code! })), sizes: refs("sizeId", (_id, i) => barcodeMode === "nullsize" && i === 0 ? null : String(202 + i)) };
         } }),
         ...(groupSizes === undefined ? {} : { async readSkuSelectionSizes(_productId: string, groupId: string) { selectionReads++; assert.equal(groupId, gid(804)); return groupSizes!; } }),
         async load(id) { return product?.product.id === id ? structuredClone(product) : undefined; },
@@ -210,6 +210,16 @@ test("v19 new SKU with an explicit disabled MAIN is never replaced or re-enabled
   const state = f.state()!; assert.equal(state.barcodes.length, 1); assert.equal(state.barcodes[0]!.barcode, c.barcodes[0]!.barcode);
   assert.equal(state.barcodes[0]!.enabled, false); assert.equal(state.barcodes[0]!.schemeId, c.barcodes[0]!.schemeId); assert.equal(f.barcodeReads(), 0);
   assert.equal(saved.version, 1);
+});
+test("v19 NULL size code retains both real new SKUs and generates only the actually coded size MAIN", async () => {
+  const f = fixture("ready", true, [gid(808), gid(809)], "nullsize"), c = { ...commandV2("v19-null-size"),
+    values: { ...commandV2().values, defaultBarcodeSchemeId: scheme2026 }, skus: [], barcodes: [], skuSelection: { colorIds: [gid(806)], fitIds: [gid(807)] } };
+  const saved = await f.service.executeV2(actor, c), state = f.state()!;
+  assert.equal(saved.version, 1); assert.equal(state.skus.length, 2); assert.equal(state.barcodes.length, 1);
+  assert.equal(state.barcodes[0]!.barcode, "5A0000123101203");
+  assert.equal(state.barcodes[0]!.skuId, state.skus.find(s => s.sizeId === gid(809))!.id);
+  assert.equal(state.barcodes.some(b => b.skuId === state.skus.find(s => s.sizeId === gid(808))!.id), false);
+  assert.equal((f.audit[0]!.after.skus as unknown[]).length, 2); assert.equal((f.audit[0]!.after.barcodes as unknown[]).length, 1);
 });
 test("v19 generated MAINs use original collision and completion rollback and missing reference provider refuses rather than fake generation", async () => {
   const create = { ...commandV2("v19-fault"), values: { ...commandV2().values, defaultBarcodeSchemeId: scheme2026 }, barcodes: [] };

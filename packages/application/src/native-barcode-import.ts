@@ -124,3 +124,108 @@ export async function stageNativeBarcode(input: NativeBarcodeInput, options: {
   await options.authorize(structuredClone(row));
   return { mode: "STAGE", ...await options.store.stage(row), published: false, importReady: false };
 }
+
+/** Exact original six descriptive rows approved by the human. This initialization
+ * scope is separate from product defaults/generation and grants no SQL authority. */
+export interface NativeBarcodeSchemeInitializationRow26 {
+  readonly sourceSchemeKey: string;
+  readonly native: { readonly id: string; readonly name: string; readonly barcode_type: string; readonly rule_description: string;
+    readonly code_length: number; readonly rule_version: string; readonly status: "CURRENT" | "HISTORICAL" };
+}
+const APPROVED_BARCODE_SCHEME_ROWS_26: readonly NativeBarcodeSchemeInitializationRow26[] = Object.freeze((
+[
+  {
+    "sourceSchemeKey": "2020",
+    "native": {
+      "id": "82656465-2758-4be8-a965-412a971e9c4b",
+      "name": "2020年新方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。2020颜色1位、尺码2位的最后补充优先于原表旧备注。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 14,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2018",
+    "native": {
+      "id": "c0b009e7-6f61-447a-b87e-ceea62711ec9",
+      "name": "18年货品",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 9,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2021",
+    "native": {
+      "id": "bc7ff32c-1025-4c30-8950-0b33a492c538",
+      "name": "2021年条码方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 13,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2021fit",
+    "native": {
+      "id": "48c4fe44-7521-44c1-a0e3-c547a1691028",
+      "name": "2021年版型条码方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 14,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2023",
+    "native": {
+      "id": "9c584ada-9d42-4159-9e51-208577657021",
+      "name": "2023年条码方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 14,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "HISTORICAL"
+    }
+  },
+  {
+    "sourceSchemeKey": "2026",
+    "native": {
+      "id": "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef",
+      "name": "2026年条码方案",
+      "barcode_type": "Code128",
+      "rule_description": "原方案描述快照；保留每条原条码和已确认SKU绑定，不依据本说明重新生成、补位、截断或改码。声明总长仅保留方案说明，不代替每条历史原码。",
+      "code_length": 15,
+      "rule_version": "NATIVE_SOURCE_RETAINED_V1",
+      "status": "CURRENT"
+    }
+  }
+] as NativeBarcodeSchemeInitializationRow26[]).map(row => Object.freeze({ sourceSchemeKey: row.sourceSchemeKey, native: Object.freeze(row.native) })));
+/** Fresh data only: callers cannot mutate the frozen approved baseline. */
+export function nativeBarcodeSchemeInitializationRows26(): readonly NativeBarcodeSchemeInitializationRow26[] {
+  return structuredClone(APPROVED_BARCODE_SCHEME_ROWS_26);
+}
+/** Every original UUID and all42 fields match exactly. Order may differ only to
+ * permit deterministic locking; extra/missing/duplicate rows never become replay. */
+export function validateNativeBarcodeSchemeInitializationRows26(value: unknown): asserts value is readonly NativeBarcodeSchemeInitializationRow26[] {
+  requireDomain(Array.isArray(value) && value.length === 6 && Reflect.ownKeys(value).length === 7
+    && Array.from({ length: 6 }, (_, index) => Object.hasOwn(value, index)).every(Boolean), "NATIVE_BARCODE_INITIALIZATION_ROWS", "Exactly six approved original schemes required");
+  const rows = value as unknown[]; const seen = new Set<string>();
+  for (const value of rows) {
+    requireDomain(value !== null && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype,
+      "NATIVE_BARCODE_INITIALIZATION_ROWS", "Original scheme row data required");
+    const row = value as NativeBarcodeSchemeInitializationRow26;
+    requireDomain(typeof row.sourceSchemeKey === "string" && !seen.has(row.sourceSchemeKey),
+      "NATIVE_BARCODE_INITIALIZATION_ROWS", "Unique original scheme source key required");
+    const approved = APPROVED_BARCODE_SCHEME_ROWS_26.find(item => item.sourceSchemeKey === row.sourceSchemeKey);
+    requireDomain(approved !== undefined && requestHash(row) === requestHash(approved),
+      "NATIVE_BARCODE_INITIALIZATION_ROWS", "Original scheme identity and all seven approved fields must match exactly");
+    seen.add(row.sourceSchemeKey);
+  }
+}

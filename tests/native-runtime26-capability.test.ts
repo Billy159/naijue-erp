@@ -10,7 +10,7 @@ import { mkdtempSync, readFileSync, writeFileSync, rmSync, chmodSync, symlinkSyn
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
+import { createNativeRuntime26Issuer, NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, NATIVE_RUNTIME26_V15_METADATA_PROBE, NATIVE_RUNTIME26_V19_METADATA_PROBE, NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from "../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import type { MaintenancePgContext } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import type { MaintenanceCompletion } from "../packages/application/src/maintenance-commit-ports.ts";
@@ -191,7 +191,7 @@ test("v14 runtime selector uses its exact123-function probe, retains metadata-on
   const calls:string[]=[];const pool={async connect(){return{async query(sql:string){calls.push(sql);assert.equal(sql,NATIVE_RUNTIME26_V14_METADATA_PROBE);return{rows:[observation()],rowCount:1};},release(){}};}};
   const options=f.options({...f.review,catalog:{...f.review.catalog,patchLevel:'26_v14_core_initialization'}});
   const issuer=await createNativeRuntime26Issuer(pool,options),client=await issuer.pool.connect();
-  await issuer.runtime26.assertReady(client,'IMPORT_STAGE');assert.equal(calls.length,3);
+  await issuer.runtime26.assertReady(client,'IMPORT_STAGE');assert.equal(calls.length,4);
   await assert.rejects(issuer.runtime26.assertReady(client,'IMPORT_PUBLISH'),{code:'NATIVE_RUNTIME26_NOT_READY'});client.release();
   const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,patchLevel:'26_v14_core_initialization'},realImportExecutionAuthorized:true})));assert.equal(p.connects(),0);
  }finally{f.cleanup();}
@@ -478,4 +478,33 @@ test("v16 HISTORY issuer requires exact current successor and preserves base COR
  for(const patch of ['26_v11_document_specification_save','26_v14_core_initialization','26_v15_category_order_undo']){
   const f=fixture();try{let connects=0;await assert.rejects(createNativeRuntime26Issuer({async connect(){connects++;throw Error('old profile must fail before PG');}},f.options({...f.review,catalog:{...f.review.catalog,patchLevel:patch},purposes:['HISTORY_REVISION']})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(connects,0);}finally{f.cleanup();}
  }
+});
+
+test("v19 scheme metadata profile pins exactly three replacements plus one helper and retains old probes", async () => {
+  const patch=readFileSync(new URL("../adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",import.meta.url),"utf8");
+  const routines=[...patch.matchAll(/CREATE(?: OR REPLACE)? FUNCTION naijue_erp\.(\w+)\([^;]*?\bAS \$\$([^]*?)\$\$;/g)];
+  assert.equal(routines.length,4);
+  for(const m of routines) assert.ok(NATIVE_RUNTIME26_V19_METADATA_PROBE.includes(`('${m[1]}','${hash(m[2]!)}')`),m[1]);
+  assert.ok(NATIVE_RUNTIME26_V19_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=131"));
+  assert.ok(NATIVE_RUNTIME26_V15_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=124"));
+  assert.ok(!NATIVE_RUNTIME26_V15_METADATA_PROBE.includes("assert_barcode_scheme_initialization_v19"));
+  assert.equal((patch.match(/CREATE OR REPLACE FUNCTION/g)||[]).length,3);
+  assert.equal(/ALTER TABLE[^;]*(?:ADD COLUMN|CREATE TABLE)/.test(patch),false);
+  assert.ok(patch.includes("REVOKE ALL ON FUNCTION naijue_erp.assert_barcode_scheme_initialization_v19(uuid,uuid) FROM PUBLIC"));
+  assert.ok(patch.includes("r.actor_account_id=cr.actor_account_id"));
+  assert.ok(patch.includes("a.after_values->>'commandHash'=r.request_hash"));
+});
+test("v19 scheme issuer requires fresh exact metadata; keeps HISTORY and category maintenance parent capabilities", async()=>{
+  const f=fixture();try {
+    const review={...f.review,catalog:{...f.review.catalog,patchLevel:"26_v19_barcode_scheme_initialization_from_v16_v15"},purposes:["IMPORT_STAGE","HISTORY_REVISION","PRODUCT_MAINTENANCE"]};
+    const calls:string[]=[];
+    const pool={async connect(){return {async query(sql:string){calls.push(sql);assert.equal(sql,NATIVE_RUNTIME26_V19_METADATA_PROBE);return {rows:[observation()],rowCount:1};},release(){}};}};
+    const issuer=await createNativeRuntime26Issuer(pool,f.options(review));assert.ok(issuer.categoryOrderWrite);
+    const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,"IMPORT_STAGE");await issuer.runtime26.assertReady(client,"HISTORY_REVISION");client.release();
+    assert.equal(calls.length,4);
+    for(const row of [{...observation(),source_routines_match:false},{...observation(),catalog_sha256:"f".repeat(64)}]){
+      const bad={async connect(){return {async query(){return {rows:[row],rowCount:1};},release(){}};}};
+      await assert.rejects(createNativeRuntime26Issuer(bad,f.options(review)),{code:"NATIVE_RUNTIME26_NOT_READY"});
+    }
+  }finally{f.cleanup();}
 });

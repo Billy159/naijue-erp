@@ -489,6 +489,15 @@ export const NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE = historyResponsiblePr
 
 /** Metadata approval only. Whole-source, batch, actor, receipt, conservation and
  * publication authorizers remain separate mandatory ports at their callers. */
+/** Approved v19 exact successor only; all prior probes remain byte-for-byte derivations. */
+export const NATIVE_RUNTIME26_V19_METADATA_PROBE = [
+  ["jsonb_array_length(manifest->'routines')=130", "jsonb_array_length(manifest->'routines')=131"],
+  ["('validate_import_batch_commit','dc2e8d344085056b53469be394eb9ced344db510bf6f6dc5576f4b0a9ea20140')", "('validate_import_batch_commit','7ce01945fcd6fd68817724cc27d8f135da82ef2f4e3929a8ad5e4cf232310b3b')"],
+  ["('validate_import_accounting_checkpoint_commit','edef6846035f1780c632183b32f81b63919cae4703a78c4bc21c44c507441f47')", "('validate_import_accounting_checkpoint_commit','06ac9742cb16adb281f7610d299ef9dedb61c125038f12be55275760d4a4c0c9')"],
+  ["('validate_import_operation','6ffc2561abe1bd4ff7465c82143c155bcaa0ad311b90f6679bef10ceae30c62f')", "('validate_import_operation','73d13792e2a9dde79b239cb2c059a89c5552823503a002ce1b7bdad75aa1b3ff')"],
+  ["SELECT 1 FROM (VALUES", "SELECT 1 FROM (VALUES\n    ('assert_barcode_scheme_initialization_v19','8d4f7d457403d6c4737e5a9b38d6d4f48c0ef3c5e94dd2e8ff408d3b57a198ca'),"],
+].reduce((probe, [before, after]) => replaceOne(probe, before!, after!), NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE);
+
 type Runtime26Purpose = Parameters<NativeRuntime26Capability["assertReady"]>[1];
 const runtime26Purposes: readonly Runtime26Purpose[] = Object.freeze(["IMPORT_STAGE", "IMPORT_PRODUCT_SEASONS", "IMPORT_PUBLISH", "PRODUCT_SEASONS_READ",
   "PRODUCT_MAINTENANCE", "INVENTORY_ADMISSION", "HISTORY_READ", "CURRENT_FORM_READ", "CURRENT_CUSTOMER_READ_WRITE", "HISTORY_REVISION"]);
@@ -597,10 +606,11 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15"] as readonly unknown[]).includes(catalog.patchLevel))
+  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15"] as readonly unknown[]).includes(catalog.patchLevel))
     throw runtime26Error("Exact independently reviewed v11, v14 or v15 catalog required");
-  const historyResponsible = catalog.patchLevel === "26_v16_history_responsible_from_v14" || catalog.patchLevel === "26_v16_history_responsible_from_v15";
-  const metadataProbe = catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
+  const barcodeSchemeInitialization = catalog.patchLevel === "26_v19_barcode_scheme_initialization_from_v16_v15";
+  const historyResponsible = barcodeSchemeInitialization || catalog.patchLevel === "26_v16_history_responsible_from_v14" || catalog.patchLevel === "26_v16_history_responsible_from_v15";
+  const metadataProbe = barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
     : catalog.patchLevel === "26_v16_history_responsible_from_v15" ? NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v15_category_order_undo" ? NATIVE_RUNTIME26_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;
@@ -703,7 +713,7 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
   } });
   const imageColorSwap = Object.freeze({ profile: "product-image-color-swap-v4" as const,
     assertVerified: productMediaWrite.assertVerified, assertReady: productMediaWrite.assertPrepared });
-  const categoryOrderWrite: CategoryOrderWriteCapability | undefined = (catalog.patchLevel === "26_v15_category_order_undo" || catalog.patchLevel === "26_v16_history_responsible_from_v15") && allowed.has("PRODUCT_MAINTENANCE")
+  const categoryOrderWrite: CategoryOrderWriteCapability | undefined = (barcodeSchemeInitialization || catalog.patchLevel === "26_v15_category_order_undo" || catalog.patchLevel === "26_v16_history_responsible_from_v15") && allowed.has("PRODUCT_MAINTENANCE")
     ? Object.freeze({ profile: "CATEGORY_ORDER_UNDO_V15", async assertReady(context: Parameters<CategoryOrderWriteCapability["assertReady"]>[0]): Promise<void> {
       await verify(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE");
       bindMaintenanceCategoryOrderGuard(context, pool, () => verify(maintenanceContextClient(context, pool), "PRODUCT_MAINTENANCE"));

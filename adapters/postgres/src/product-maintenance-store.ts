@@ -364,10 +364,12 @@ class ProductTransaction implements ProductMaintenanceTransaction {
       const rows = (await this.query(`/* product-barcode:codes */ SELECT id,code FROM naijue_erp.${table} WHERE id=ANY($1::uuid[]) ORDER BY id FOR SHARE`, [selected])).rows;
       requireDomain(rows.length === selected.length && new Set(rows.map(r => uuid(r.id))).size === selected.length && rows.every(r => selected.includes(uuid(r.id))),
         "PRODUCT_REFERENCE_UNAVAILABLE", "Complete original SKU encoding references required");
-      return rows.map(row => ({ id: uuid(row.id), code: stringValue(row.code) }));
+      return rows.map(row => ({ id: uuid(row.id), code: row.code }));
     };
     return { scheme: { id: uuid(rows[0]!.id), status: stringValue(rows[0]!.status), codeLength: rows[0]!.code_length === null ? null : integerValue(rows[0]!.code_length) },
-      colors: await codes("color", skus.map(s => s.colorId)), fits: await codes("fit", skus.map(s => s.fitId)), sizes: await codes("size", skus.map(s => s.sizeId)) };
+      colors: (await codes("color", skus.map(s => s.colorId))).map(row => ({ ...row, code: stringValue(row.code) })),
+      fits: (await codes("fit", skus.map(s => s.fitId))).map(row => ({ ...row, code: stringValue(row.code) })),
+      sizes: (await codes("size", skus.map(s => s.sizeId))).map(row => ({ ...row, code: nullableString(row.code) })) };
   }
   async readSkuSelectionSizes(productId: string, sizeGroupId: string, selection: ProductSkuSelection): Promise<readonly string[]> {
     requireDomain(productId === this.loadedId, "TRANSACTION_SCOPE", "Selection must use the original locked product");

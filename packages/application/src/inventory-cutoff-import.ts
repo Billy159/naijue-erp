@@ -89,7 +89,21 @@ export type BindFullSourceCommand = ImportEnvelope & {
   readonly action: "IMPORT_BIND_FULL_SOURCE"; readonly expectedSequence: number; readonly expectedCursor: number; readonly fullBinding: CoreFullSourceBinding;
 };
 export type CoreImportCommand = CoreStageCommand | BindFullSourceCommand;
-export type CutoffImportCommand = CompleteCutoffImportCommand | CoreImportCommand;
+export interface BarcodeSchemeSnapshot {
+  readonly id: string; readonly name: string; readonly barcode_type: string; readonly rule_description: string;
+  readonly code_length: number | null; readonly rule_version: string; readonly status: "CURRENT" | "HISTORICAL";
+}
+export type BarcodeSchemeInitializationCommand = ImportEnvelope & {
+  readonly action: "IMPORT_INITIALIZE_BARCODE_SCHEMES"; readonly expectedSequence: number; readonly expectedCursor: number;
+  readonly schemeInitialization: {
+    readonly version: "BARCODE_SCHEME_INITIALIZATION_V19"; readonly coreReceiptId: string; readonly coreSourceDigest: string;
+    readonly fixedSourceNamespace: string; readonly selectionSha256: string; readonly cutoffAt: string;
+    readonly target: CoreInitializationMetadata["target"];
+    readonly approvalPins: { readonly proposalSha256: string; readonly approvalSha256: string; readonly writeContractReplySha256: string };
+    readonly schemes: readonly { readonly sourceSchemeKey: string; readonly native: BarcodeSchemeSnapshot }[];
+  };
+};
+export type CutoffImportCommand = CompleteCutoffImportCommand | CoreImportCommand | BarcodeSchemeInitializationCommand;
 export function isCoreImportCommand(command: CutoffImportCommand): command is CoreImportCommand {
   return command.action === "IMPORT_CORE_STAGE" || command.action === "IMPORT_BIND_FULL_SOURCE";
 }
@@ -127,6 +141,7 @@ export function stableImportId(purpose: string, ...identity: readonly string[]):
 }
 export function validateCutoffImportCommand(command: CutoffImportCommand): void {
   requireDomain(typeof command === "object" && command !== null && !Array.isArray(command), "INVALID_IMPORT_COMMAND", "Expected an explicit import command");
+  if (command.action === "IMPORT_INITIALIZE_BARCODE_SCHEMES") { validateBarcodeSchemeInitializationCommand(command); return; }
   entityId("operation", command.batchId); entityId("account", command.actorAccountId);
   const forbidden = ["validationPassed", "historyValidationPassed", "history_validation_passed", "historyActualCounts", "history_actual_counts"];
   requireDomain(forbidden.every(k => !Object.hasOwn(command, k)), "CALLER_HISTORY_VALIDATION_FORBIDDEN", "History validation is a same-transaction SQL result, never a caller flag");
@@ -174,6 +189,7 @@ export function validateCutoffImportCommand(command: CutoffImportCommand): void 
 export function createCutoffImportService(dependencies: CutoffImportDependencies): { execute(command: CutoffImportCommand): Promise<CutoffImportResult> } {
   return { async execute(command) {
     if (!isCoreImportCommand(command) && hasNativeImportAccountingMetadata(command)) validateNativeImportAccountingCommand(command);
+    if (command.action === "IMPORT_INITIALIZE_BARCODE_SCHEMES") validateBarcodeSchemeInitializationCommand(command);
     const snapshot = structuredClone(command); validateCutoffImportCommand(snapshot);
     await dependencies.authorization.assertAllowed(snapshot.actorAccountId, snapshot);
     const now = dependencies.now();
@@ -273,4 +289,50 @@ export function validateCoreImportCommand(command: CoreImportCommand): void {
     }
     coreCheck(version === member.version);
   }
+}
+
+/** Approved v19 independent component action; never an empty accounting CHUNK. */
+export function validateBarcodeSchemeInitializationCommand(command: BarcodeSchemeInitializationCommand): void {
+  const check = (value: unknown): void => requireDomain(value, "INVALID_BARCODE_SCHEME_INITIALIZATION", "Exact six approved source-bound schemes and original CORE authority required");
+  const seen = new Set<object>();
+  function data(value: unknown): void {
+    if (value === null || typeof value !== "object") { check(value === null || ["string", "number", "boolean"].includes(typeof value)); return; }
+    check(!seen.has(value) && Object.getPrototypeOf(value) === (Array.isArray(value) ? Array.prototype : Object.prototype)); seen.add(value);
+    if (Array.isArray(value)) check(Reflect.ownKeys(value).length === value.length + 1 && value.every((_, i) => Object.hasOwn(value, i)));
+    for (const key of Reflect.ownKeys(value)) {
+      if (Array.isArray(value) && key === "length") continue;
+      const field = Object.getOwnPropertyDescriptor(value, key)!;
+      check(typeof key === "string" && field.enumerable && Object.hasOwn(field, "value")); data(field.value);
+    }
+    seen.delete(value);
+  }
+  data(command); requestHash(command);
+  check(coreKeys(command, ["action", "actorAccountId", "requestKey", "batchId", "expectedSequence", "expectedCursor", "schemeInitialization"])
+    && command.action === "IMPORT_INITIALIZE_BARCODE_SCHEMES" && nonempty(command.requestKey));
+  entityId("account", command.actorAccountId); entityId("operation", command.batchId); counter(command.expectedSequence); counter(command.expectedCursor);
+  check(command.expectedSequence > 0);
+  const i = command.schemeInitialization;
+  check(coreKeys(i, ["version", "coreReceiptId", "coreSourceDigest", "fixedSourceNamespace", "selectionSha256", "cutoffAt", "target", "approvalPins", "schemes"])
+    && i.version === "BARCODE_SCHEME_INITIALIZATION_V19" && hash(i.coreSourceDigest) && hash(i.selectionSha256)
+    && typeof i.fixedSourceNamespace === "string" && /^[a-z][a-z0-9_.:-]*$/.test(i.fixedSourceNamespace)
+    && typeof i.cutoffAt === "string" && Number.isFinite(Date.parse(i.cutoffAt)) && /(?:Z|[+-]\d\d:\d\d)$/.test(i.cutoffAt));
+  entityId("operation", i.coreReceiptId);
+  check(coreKeys(i.target, ["database", "role", "serverAddress", "serverPort", "postmasterStartedAt"])
+    && nonempty(i.target.database) && nonempty(i.target.role) && nonempty(i.target.postmasterStartedAt)
+    && (i.target.serverAddress === null ? i.target.serverPort === null : nonempty(i.target.serverAddress)
+      && Number.isInteger(i.target.serverPort) && i.target.serverPort! > 0 && i.target.serverPort! <= 65535));
+  check(coreKeys(i.approvalPins, ["proposalSha256", "approvalSha256", "writeContractReplySha256"]) && Object.values(i.approvalPins).every(hash));
+  check(Array.isArray(i.schemes) && i.schemes.length === 6);
+  const keys = new Set<string>(), ids = new Set<string>();
+  for (const item of i.schemes) {
+    check(coreKeys(item, ["sourceSchemeKey", "native"]) && nonempty(item.sourceSchemeKey));
+    const n = item.native;
+    check(coreKeys(n, ["id", "name", "barcode_type", "rule_description", "code_length", "rule_version", "status"])
+      && [n.name, n.barcode_type, n.rule_description, n.rule_version].every(nonempty)
+      && (n.code_length === null || Number.isSafeInteger(n.code_length) && n.code_length > 0)
+      && (n.status === "CURRENT" || n.status === "HISTORICAL")); entityId("operation", n.id);
+    check(!keys.has(item.sourceSchemeKey) && !ids.has(n.id)); keys.add(item.sourceSchemeKey); ids.add(n.id);
+  }
+  check([...keys].sort().join(",") === "2018,2020,2021,2021fit,2023,2026"
+    && i.schemes.every(s => s.native.status === (s.sourceSchemeKey === "2026" ? "CURRENT" : "HISTORICAL")));
 }

@@ -1,0 +1,105 @@
+{
+  "version": "D3_APPROVED_SIX_SCHEME_INITIALIZER_SOURCE_DELIVERY_20261026_V1",
+  "recordedAt": "2026-10-26T03:30:11.773689+00:00",
+  "status": "SOURCE_IMPLEMENTED_NEW_AFFECTED_PROTOCOL_CHECKS_PASS_NOT_DATABASE_EXECUTED",
+  "scope": "C source576 registered D3 leaves only; D1 owns original transaction, guards and SQL helper; T45 owns real database.",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-barcode-import.ts",
+      "bytes": 16051,
+      "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-barcode-import.ts",
+      "bytes": 13292,
+      "sha256": "ccb8e66279029919033f00e2e8cef47ce03ad7ad4111c60ebf21704c70c7d921"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-source-authorizers.mjs",
+      "bytes": 50719,
+      "sha256": "48ec80b6e6d375a5446b3d9e8f2c3cef4c8d3fad02ca1422c70572be2b461b3b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-barcode-import.test.ts",
+      "bytes": 5815,
+      "sha256": "4301e4f363d404b65c65d7389751dcba5c12c4dacf5a627f0d15433cb4b97ba7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-source-authorizers.test.mjs",
+      "bytes": 42996,
+      "sha256": "53cdd29d12a99192a4a18900a8ac19c37c926af7f52ef8c89dbbe5b82f5ea6b5"
+    }
+  ],
+  "protocolTest": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/six-scheme-initializer26-protocol.test.mjs",
+    "bytes": 4531,
+    "sha256": "702d6f99385db67507bfc3eb3bf3f4651417e864833018bece250e199a518641"
+  },
+  "action": "IMPORT_INITIALIZE_BARCODE_SCHEMES",
+  "approvalPins": [
+    "proposalSha256",
+    "approvalSha256",
+    "writeContractReplySha256"
+  ],
+  "humanApproval": {
+    "status": "APPROVED_WITH_CORRECTION",
+    "callId": "call_fcbc01113b4d42bea015ddd58a1d5513",
+    "writeContractReplySha256": "9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc"
+  },
+  "exports": {
+    "application": [
+      "nativeBarcodeSchemeInitializationRows26",
+      "validateNativeBarcodeSchemeInitializationRows26"
+    ],
+    "postgres": [
+      "NATIVE_BARCODE_SCHEME_INITIALIZATION26_SQL",
+      "initializeNativeBarcodeSchemesOnClient26"
+    ],
+    "source": [
+      "openApprovedBarcodeSchemeInitialization26"
+    ]
+  },
+  "integration": {
+    "trustedOption": "barcodeSchemeInitialization26",
+    "exact2Projection": "{assertAllowed: source.assertAllowed, initializeSchemes26: source.initializeSchemes26}",
+    "lifecycle": "Original source owner retains source.close() in finally; do not pass the three-key source object as the D1 exact2 option.",
+    "callback": "Original borrowed same-client, input {command,now,operationId}, scoped runtime third argument; Promise<void>.",
+    "sql": "Only fixed seven-field complete-table SELECT and fixed seven-parameter INSERT; no pool/transaction/audit/receipt owned by callback.",
+    "replay": "D1 receipt replay reauthorizes current source and skips initializer."
+  },
+  "checks": [
+    {
+      "name": "new immutable approved42 pure test",
+      "passed": 1,
+      "failed": 0,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/six-scheme-pure26-new.log"
+    },
+    {
+      "name": "new borrowed callback protocol tests",
+      "passed": 3,
+      "failed": 0,
+      "evidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/six-scheme-borrowed26-new.log"
+    },
+    {
+      "name": "new source initializer command/pins/revocation/mutation tests",
+      "passed": 3,
+      "failed": 0,
+      "evidence": "Current tool run native-source-authorizers.test.mjs --test-name-pattern=v19 six source initializer before integration test appended."
+    },
+    {
+      "name": "new actual D3 source + D3 callback + D1 store seam test",
+      "passed": 1,
+      "failed": 0,
+      "evidence": "Current tool run native-source-authorizers.test.mjs --test-name-pattern=v19 six source initializer integrates; scripted client, first-write then receipt replay, exact2 projection verified."
+    }
+  ],
+  "checksPassed": 8,
+  "strict": "D1 reports affected targeted strict PASS; D3 did not rerun project strict. D1 reported17 unrelated existing frontend/old fixture errors to C.",
+  "actualDatabaseInitialized": false,
+  "actualDatabaseQueriesExecuted": 0,
+  "actualBarcodeRowsStaged": 0,
+  "source15018Recaptured": false,
+  "source15018": "Existing QB338 accepted source-ready reference only; neither capture nor QB338 is an initialization dependency.",
+  "mainPublishExecuted": false,
+  "remaining": "C/QB review newly changed scope and D1 integrated source adoption; real initialization only under original C/T45 controlled execution."
+}

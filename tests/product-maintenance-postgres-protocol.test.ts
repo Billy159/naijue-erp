@@ -89,6 +89,24 @@ test("v19 barcode reference leaf reads actual scheme/color/fit/size codes on ori
   assert.ok(calls.every(c => !/^(BEGIN|COMMIT|ROLLBACK|INSERT|UPDATE|DELETE)/.test(c.sql)));
   missing = true; await assert.rejects(uow.transaction(async tx => { await tx.load(product); return tx.readBarcodeGenerationReferences!(product, scheme, [sku]); }), { code: "PRODUCT_REFERENCE_UNAVAILABLE" });
 });
+test("v19 NULL native size code stays NULL through original leaf while color and fit codes remain actual text", async () => {
+  const product = id(19110), scheme = "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef";
+  const calls: string[] = [];
+  const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: {
+    async assertAllowed() {}, async getReceipt() { return undefined; }, async complete() { throw Error("UNEXPECTED_WRITE"); }
+  }, client: { async query(sql, values = []) {
+    calls.push(sql); let rows: Record<string, unknown>[] = [];
+    if (sql.includes("product-barcode:scheme")) rows = [{ id: scheme, status: "CURRENT", code_length: 15 }];
+    if (sql.includes("product-barcode:codes")) rows = (values[0] as string[]).map(id => ({ id, code: sql.includes("naijue_erp.size") ? null : sql.includes("naijue_erp.fit") ? "A" : "001" }));
+    return { rows, rowCount: rows.length };
+  } } }); } };
+  await new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }).transaction(async tx => {
+    await tx.load(product);
+    const refs = await tx.readBarcodeGenerationReferences!(product, scheme, [{ id: id(19111), productId: product, skuCode: "NULL-SIZE", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true, version: 1, createdOperationId: id(19112) }]);
+    assert.equal(refs.sizes[0]!.code, null); assert.equal(refs.colors[0]!.code, "001"); assert.equal(refs.fits[0]!.code, "A");
+  });
+  assert.ok(calls.every(sql => !/^(INSERT|UPDATE|DELETE)/.test(sql)));
+});
 function imageProtocol(options: { absent?: boolean; rows?: readonly Record<string, unknown>[]; fail?: boolean } = {}) {
   const calls: { sql: string; values: unknown[] }[] = []; let authorized = false;
   const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE"); };

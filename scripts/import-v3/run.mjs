@@ -146,10 +146,11 @@ const STAGES_26 = Object.freeze({ PARTY: PostgresNativePartyImportStore, CATALOG
   TRANSFER_LINES: PostgresV3HistoryStagingStore26 });
 function capturedStep26(original, b) {
   const raw=bag(original,['kind','payload']);
-  if(raw.kind==='MAIN'&&['IMPORT_CORE_STAGE','IMPORT_BIND_FULL_SOURCE'].includes(raw.payload?.action)){
+  if(raw.kind==='MAIN'&&['IMPORT_CORE_STAGE','IMPORT_BIND_FULL_SOURCE','IMPORT_INITIALIZE_BARCODE_SCHEMES'].includes(raw.payload?.action)){
     const digest=historySettlementRequestHash(raw.payload),copy=structuredClone(raw.payload);validateCutoffImportCommand(copy);
     must(copy.batchId===b.batchId&&copy.actorAccountId===b.actorAccountId,'IMPORT_EXECUTION_MAIN_IDENTITY');
     if(copy.action==='IMPORT_CORE_STAGE')must(b.phase==='CORE_INITIALIZATION_26_V1'&&copy.sourceName===b.fixedSourceNamespace&&copy.sourceHash===b.selectionSha256&&copy.cutoffAt===b.cutoffAt&&copy.coreInitialization.coreSourceDigest===b.coreSourceDigest&&requestHash(copy.coreInitialization.target)===requestHash(b.target),'IMPORT_EXECUTION26_CORE_BINDING');
+    else if(copy.action==='IMPORT_INITIALIZE_BARCODE_SCHEMES'){ const i=copy.schemeInitialization; must(b.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&i.coreSourceDigest===b.coreSourceDigest&&i.coreReceiptId===b.coreReceiptId&&i.fixedSourceNamespace===b.fixedSourceNamespace&&i.selectionSha256===b.selectionSha256&&i.cutoffAt===b.cutoffAt&&requestHash(i.target)===requestHash(b.target),'IMPORT_EXECUTION26_SCHEME_BINDING'); }
     else must(b.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&copy.fullBinding.authorizedPayloadHash===b.authorizedPayloadHash&&copy.fullBinding.coreSourceDigest===b.coreSourceDigest&&copy.fullBinding.coreReceiptId===b.coreReceiptId,'IMPORT_EXECUTION26_FULL_BINDING');
     return {kind:'MAIN',payload:copy,digest};
   }
@@ -165,7 +166,7 @@ function capturedStep26(original, b) {
  * source host must supply the actual D1 issued pool+capability and genuine full
  * source/49 bootstrap authorization. This module issues none of those grants. */
 export function createPostgresImportExecutor26(options) {
-  const o = bag(options, ['pool','binding','authorization','now','runtime26','bootstrap26']);
+  const o = bag(options, ['pool','binding','authorization','now','runtime26','bootstrap26',...(Object.hasOwn(options??{},'barcodeSchemeInitialization26')?['barcodeSchemeInitialization26']:[])]);
   must(typeof o.pool?.connect === 'function' && typeof o.now === 'function', 'IMPORT_EXECUTION_PROVIDER_REQUIRED');
   const runtime26 = checkedNativeRuntime26Capability(o.runtime26);
   must(runtime26 !== undefined, 'IMPORT_EXECUTION26_RUNTIME_REQUIRED');
@@ -200,6 +201,7 @@ export function createPostgresImportExecutor26(options) {
     ? completed(bootstrap.authorizeStageSourceActor, actor,command) : completed(a.assertAllowed, actor,command) },
     store: new PostgresCutoffImportStore(o.pool, { runtime26, nativeAccountingAuthorization: { assertAllowed: (...args) => completed(a.authorizeNativeCommand, ...args) },
       coreAuthorization:{assertAllowed:(...args)=>completed(a.authorizeNativeCommand,...args)},
+      ...(Object.hasOwn(o,'barcodeSchemeInitialization26')?{barcodeSchemeInitialization26:o.barcodeSchemeInitialization26}:{}),
       ...(bootstrap?{stageBootstrap26: { stageNewBatch26: (...args) => completed(bootstrap.stageNewBatch26, ...args) }}:{}) }) });
   return async original => {
     const step = capturedStep26(original,b);

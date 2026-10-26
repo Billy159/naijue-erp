@@ -1,0 +1,10 @@
+✔ v19 NULL native size code stays NULL through original leaf while color and fit codes remain actual text (0.942875ms)
+✔ v19 NULL size code retains both real new SKUs and generates only the actually coded size MAIN (2.789875ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 96.869708

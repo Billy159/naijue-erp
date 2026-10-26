@@ -9,11 +9,11 @@ import { validatePreparedNativePartyImportChunk, prepareNativePartyImportChunk, 
 import { openAuthorizedV3Reader } from '../import-v2/authorized-reader.mjs';
 import { openAuthorizedV3HeaderReader } from '../import-v2/authorized-header-reader.mjs';
 import { NATIVE_BINDING_PACKAGE_VERSION } from './prepare-native-bindings.mjs';
-import { stableImportId } from '../../packages/application/src/inventory-cutoff-import.ts';
+import { stableImportId, validateBarcodeSchemeInitializationCommand } from '../../packages/application/src/inventory-cutoff-import.ts';
 import { prepareNativeCatalogueImportChunk, validatePreparedNativeCatalogueImportChunk, nativeCatalogueSourceEvidence, prepareNativeCatalogueImportChunk26, validatePreparedNativeCatalogueImportChunk26, NATIVE_CATALOGUE_IMPORT_VERSION_26 } from '../../packages/application/src/native-catalogue-import.ts';
 import { nativeCatalogueBindingEvidence } from '../../adapters/postgres/src/native-catalogue-import.ts';
 import { historyClosureProjectionRow, historyClosureProjectionRow26 } from '../../packages/application/src/history-typed-closure.ts';
-import { validatePreparedNativeBarcode, NATIVE_BARCODE_MAIN_DEMOTION_VERSION } from '../../packages/application/src/native-barcode-import.ts';
+import { validatePreparedNativeBarcode, validateNativeBarcodeSchemeInitializationRows26, NATIVE_BARCODE_MAIN_DEMOTION_VERSION } from '../../packages/application/src/native-barcode-import.ts';
 import { historyHeaderNativeReferenceEvidence } from '../../adapters/postgres/src/import-v3-history-header-native-reference-store.ts';
 import { validatePreparedProductEvidenceChunk } from '../../packages/application/src/product-evidence-staging.ts';
 const must = (ok, code) => { if (!ok) throw Object.assign(Error(code), { code }); };
@@ -462,4 +462,28 @@ export async function openApprovedBarcodeSchemes26({proposalFile,trustedProposal
     verifyPreparedScheme(row){active();validatePreparedNativeBarcode(row);must(row.batchId===fixedBinding.batchId&&row.fixedSourceNamespace===fixedBinding.fixedSourceNamespace
       &&row.selection.selectionSha256===fixedBinding.selectionSha256&&requestHash(row.scheme)===requestHash(resolveScheme(row.source.normalizedFields['原条码方案'])),'NATIVE_BARCODE_PREPARED_SCHEME_CHANGED');},
     async close(){closed=true;byName.clear();ids.clear();keys.clear();rows.length=0;}};
+}
+
+/** Implements D1's one trusted two-method scheme-initialization callback.
+ * The original controlled caller supplies its already fixed command and real
+ * same-client implementation. These source checks never issue runtime/SQL grants. */
+export async function openApprovedBarcodeSchemeInitialization26({source,writeContractReplyFile,trustedWriteContractReplySha256,command,initializeSchemes26}) {
+  must(typeof source?.verify==='function'&&typeof source.initializationData==='function'&&typeof initializeSchemes26==='function'
+    &&typeof writeContractReplyFile==='string'&&isAbsolute(writeContractReplyFile),'NATIVE_BARCODE_INIT_SOURCE_OPTIONS');
+  validateBarcodeSchemeInitializationCommand(command);const fixed=structuredClone(command),commandHash=requestHash(fixed),data=source.initializationData(),binding=data.binding;
+  must(fixed.batchId===binding.batchId&&fixed.schemeInitialization.fixedSourceNamespace===binding.fixedSourceNamespace
+    &&fixed.schemeInitialization.selectionSha256===binding.selectionSha256&&fixed.schemeInitialization.cutoffAt===binding.cutoffAt
+    &&requestHash([...fixed.schemeInitialization.schemes].sort((a,b)=>a.sourceSchemeKey.localeCompare(b.sourceSchemeKey)))===requestHash([...data.rows].sort((a,b)=>a.sourceSchemeKey.localeCompare(b.sourceSchemeKey))),'NATIVE_BARCODE_INIT_SOURCE_BINDING');
+  validateNativeBarcodeSchemeInitializationRows26(fixed.schemeInitialization.schemes);
+  const pins=fixed.schemeInitialization.approvalPins;must(exactData(pins,['proposalSha256','approvalSha256','writeContractReplySha256'])
+    &&pins.proposalSha256===data.proposalSha256&&pins.approvalSha256===data.approvalSha256&&pins.writeContractReplySha256===trustedWriteContractReplySha256,'NATIVE_BARCODE_INIT_SOURCE_PINS');
+  let closed=false;const active=()=>must(!closed,'NATIVE_BARCODE_INIT_SOURCE_CLOSED');
+  async function verify(){active();await source.verify();const reply=(await load(writeContractReplyFile,trustedWriteContractReplySha256,65536)).value;
+    must(reply.callId==='call_fcbc01113b4d42bea015ddd58a1d5513'&&reply.status==='APPROVED_WITH_CORRECTION'
+      &&typeof reply.retained==='string'&&reply.retained.includes('exact six-scheme controlled initialization')&&reply.newSchemaBeyondV19Allowed===false,'NATIVE_BARCODE_INIT_WRITE_APPROVAL');active();}
+  async function assertAllowed(actor,actual){await verify();must(actor===fixed.actorAccountId&&actual.actorAccountId===actor&&requestHash(actual)===commandHash,'NATIVE_BARCODE_INIT_COMMAND_CHANGED');}
+  await verify();
+  return{assertAllowed,async initializeSchemes26(client,input,runtime26){const before=historySettlementRequestHash(input);await assertAllowed(input.command.actorAccountId,input.command);
+    must(await initializeSchemes26(client,input,runtime26)===undefined,'NATIVE_BARCODE_INIT_CALLBACK_RESULT');
+    must(historySettlementRequestHash(input)===before,'NATIVE_BARCODE_INIT_CALLBACK_MUTATED');await verify();},async close(){closed=true;}};
 }

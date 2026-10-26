@@ -1,0 +1,126 @@
+{
+  "version": "D1_BARCODE_SCHEME_POST_CORE_V19_RESULT_1",
+  "status": "SOURCE_TARGETED_PASS_PENDING_QB_AND_T45_ACTUAL",
+  "authority": "C source576BarcodeV19CorrectedImplementation; human call_fcbc01113b4d42bea015ddd58a1d5513; C final three approval pins correction",
+  "action": "IMPORT_INITIALIZE_BARCODE_SCHEMES",
+  "files": [
+    {
+      "path": "packages/application/src/inventory-cutoff-import.ts",
+      "bytes": 28775,
+      "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da"
+    },
+    {
+      "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "bytes": 71052,
+      "sha256": "21dba2964d31084714c3347573b7a2e7a1cb1366c068fc3d5a8009e73a11f089"
+    },
+    {
+      "path": "scripts/import-v3/run.mjs",
+      "bytes": 29088,
+      "sha256": "7836e0b7a949d532b53de5c4063adecf211ba65aa88f8b24d317efe7e7084754"
+    },
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 75527,
+      "sha256": "273680df2ff259555d38dc997ba5cb2c64315a56532835801bb3c9c8e03035bf"
+    },
+    {
+      "path": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "bytes": 46909,
+      "sha256": "180646dcdc7caee57869fcdb5429bb296c91929c91eaecb5f7f653c7f4ba81ef"
+    },
+    {
+      "path": "tests/barcode-scheme-initialization-command.test.ts",
+      "bytes": 3588,
+      "sha256": "933ec3699597c13916aa80472f542a9d9b6a094b0903e6fe11e7d0c1420ff505"
+    },
+    {
+      "path": "tests/barcode-scheme-initialization-store-protocol.test.ts",
+      "bytes": 9263,
+      "sha256": "3775f44b5c1f432e34a7e31acf79af9ccce66522b1831a33f6b73bc61aaa6a78"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 48791,
+      "sha256": "b8723760e67f73e8660f3a0923381e7ff83da7457f68c340a46fee3c764890c4"
+    },
+    {
+      "path": "scripts/import-v3/run.test.mjs",
+      "bytes": 38126,
+      "sha256": "290723d295068eaa2efdf775af87a47cfd222b4bf85fb315f10c9a990d6e96b0"
+    }
+  ],
+  "checks": {
+    "newScopedTests": {
+      "pass": 11,
+      "fail": 0,
+      "skip": 0,
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/v19-targeted-checks.log",
+        "bytes": 1416,
+        "sha256": "2c121c8e96285ef1587b68feb0ff0c9983c95b18ba5834f15d352cd3448ba7f3"
+      }
+    },
+    "targetedStrictTypecheck": {
+      "exitCode": 0,
+      "scope": "Original strict compiler flags, exact changed TS production roots plus new command/store tests and native-runtime26 test; transitive imports checked",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/v19-targeted-types.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "wholeProjectTypecheck": {
+      "exitCode": 2,
+      "status": "NOT_PASS_OUTSIDE_OWNED_FILES_DIAGNOSTICS",
+      "affected": "frontend CommonJS module flags, preview transfer fixtures, older sales responsibleStaffId fixtures, native SKU optional replay fixtures, nullable product query fixture",
+      "action": "Did not alter unowned sources, tsconfig or test exclusions; no claim of whole-project type PASS"
+    }
+  },
+  "sql": {
+    "parent": "Exact26 v16-from-v15 130 routines, all original body hashes required",
+    "successor": "131 routines; only3 replaced validator bodies +1 new helper",
+    "routineBodySha256": {
+      "assert_barcode_scheme_initialization_v19": "8d4f7d457403d6c4737e5a9b38d6d4f48c0ef3c5e94dd2e8ff408d3b57a198ca",
+      "validate_import_batch_commit": "7ce01945fcd6fd68817724cc27d8f135da82ef2f4e3929a8ad5e4cf232310b3b",
+      "validate_import_accounting_checkpoint_commit": "06ac9742cb16adb281f7610d299ef9dedb61c125038f12be55275760d4a4c0c9",
+      "validate_import_operation": "73d13792e2a9dde79b239cb2c059a89c5552823503a002ce1b7bdad75aa1b3ff"
+    },
+    "twoActionChecks": [
+      "receipt_action_by_kind",
+      "audit_action_by_kind"
+    ],
+    "result": "Original six fields only, ledgerEntryIds empty",
+    "unchanged": "guard_import_batch, assert_core_initialization_v14, two claim guards, typed closure, result CHECK, tables/columns/indexes/triggers",
+    "installExecuted": false,
+    "requiredActualFollowup": "Original QB source review, then T45 exact parent/backup/controlled patch/helper minimal EXECUTE and column INSERT/LOCK permissions, current role canonical socket/TCP independent reviews, compatible app as one package; no premature DB mutation"
+  },
+  "integration": {
+    "commandApprovalPins": [
+      "proposalSha256",
+      "approvalSha256",
+      "writeContractReplySha256"
+    ],
+    "rowShape": "Original exact six {sourceSchemeKey,native:sevenfields}; D3 validates exact approved UUID/42field data; SQL independently retains exact approved snapshots and three real approval hashes",
+    "storeOption": "barcodeSchemeInitialization26: {assertAllowed, initializeSchemes26} own data methods only",
+    "sourceHostProjection": "D3 source factory close remains original source lifecycle; explicitly project only two methods into executor26 option",
+    "borrowedCallback": "BarcodeSchemeInitialization26 exported by inventory-cutoff-import-store.ts; callback receives query-only original transaction client, {command,now,operationId}, scoped runtime; no pool/BEGIN/receipt authority",
+    "replay": "Source authority, current active actor/target/source/binding/whole exact6 and paired original actor/key/hash receipt/audit verified even replay; no direct generic receipt shortcut",
+    "effects": "First entire table empty before any BARCODE; exactly one new sequence, cursor/counts/expected unchanged, no claims/MAIN/ledger/balance; different key/no receipt/partial/extra/drift rejected",
+    "commitUnknown": "Original store error/discard behavior retained, no automatic resend/new key; caller explicitly recovers original receipt"
+  },
+  "notExecuted": [
+    "PostgreSQL patch or new database tests",
+    "GRANT/server/SSH",
+    "Real six-scheme initialization",
+    "Real business import or PUBLISH",
+    "Build/Git/deployment",
+    "B07 history copy QA"
+  ],
+  "untouchedByD1": [
+    "D3 two native-barcode data/adapter leaves and native source authorizer",
+    "frontend/shared business DTOs",
+    "host two compression leaves",
+    "B07 v3 materials"
+  ]
+}

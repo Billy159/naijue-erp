@@ -262,3 +262,76 @@ test('catalogue26 source refuses missing review, descriptor getters, replacing o
  await writeFile(f.mappingFile,'{}');await assert.rejects(source.verify(),/FILE_CHANGED/);await source.close();await assert.rejects(source.verify(),/CLOSED/);
  f.leaf.references.parent_id.nativeSnapshot.deleted_at='SYNTHETIC';await assert.rejects(openReviewedCatalogueSource26(await f.save()),/ORIGINAL_REFERENCE/);
 });
+
+// Finite protocol fixtures only: these temporary approvals grant no real SQL execution.
+async function schemeInitializationFixture26(t, implementation = async () => {}) {
+  const {nativeBarcodeSchemeInitializationRows26} = await import('../../packages/application/src/native-barcode-import.ts');
+  const {openApprovedBarcodeSchemes26,openApprovedBarcodeSchemeInitialization26} = await import('./native-source-authorizers.mjs');
+  const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-six-scheme-init-'));t.after(()=>rm(dir,{recursive:true,force:true}));
+  const binding={batchId:id(2),fixedSourceNamespace:'synthetic:six-scheme-initialization',selectionSha256:pin,cutoffAt:'2026-10-04T12:00:00+08:00'};
+  async function save(name,value){const bytes=Buffer.from(JSON.stringify(value)),file=join(dir,name);await writeFile(file,bytes);return{file,sha256:hash(bytes)};}
+  const rows=nativeBarcodeSchemeInitializationRows26(),writeContract={scope:'SYNTHETIC_PROTOCOL_ONLY'};
+  const p=await save('proposal.json',{version:'BARCODE_SCHEME_INITIALIZATION_PROPOSAL_V1',rows,writeContract});
+  const a=await save('approval.json',{version:'BARCODE_SCHEME_INITIALIZATION_APPROVAL_V1',decision:'APPROVED_2026_CURRENT_OTHER5_HISTORICAL_WITH_SEPARATE_GENERATION_AND_COMPATIBLE_CODE_REQUIREMENTS',source:{kind:'DIRECT_HUMAN_REPLY_IN_CONTROLLER_CHAT',questionCallId:'SYNTHETIC_PROTOCOL_ONLY'},proposalSha256:p.sha256,approvedInitializationRows:rows,approvedInitializationWriteContract:writeContract});
+  const r=await save('reply.json',{callId:'call_fcbc01113b4d42bea015ddd58a1d5513',status:'APPROVED_WITH_CORRECTION',retained:'exact six-scheme controlled initialization',newSchemaBeyondV19Allowed:false});
+  const source=await openApprovedBarcodeSchemes26({proposalFile:p.file,trustedProposalSha256:p.sha256,approvalFile:a.file,trustedApprovalSha256:a.sha256,binding});t.after(()=>source.close());
+  const command={action:'IMPORT_INITIALIZE_BARCODE_SCHEMES',actorAccountId:id(1),requestKey:'SYNTHETIC-init-authorizer',batchId:binding.batchId,expectedSequence:1,expectedCursor:22,schemeInitialization:{version:'BARCODE_SCHEME_INITIALIZATION_V19',coreReceiptId:id(3),coreSourceDigest:pin,...binding,target:{database:'demo_8877_synthetic_scheme_init',role:'synthetic',serverAddress:null,serverPort:null,postmasterStartedAt:'synthetic'},approvalPins:{proposalSha256:p.sha256,approvalSha256:a.sha256,writeContractReplySha256:r.sha256},schemes:rows}};
+  delete command.schemeInitialization.batchId;
+  const options={source,writeContractReplyFile:r.file,trustedWriteContractReplySha256:r.sha256,command,initializeSchemes26:implementation};
+  return{source,command,options,replyFile:r.file,open:openApprovedBarcodeSchemeInitialization26};
+}
+test('v19 six source initializer binds exact3 pins and forwards original borrowed callback once with no execution grant',async t=>{
+  const calls=[],f=await schemeInitializationFixture26(t,async(...args)=>{calls.push(args);}),reader=await f.open(f.options);t.after(()=>reader.close());
+  const command=structuredClone(f.command),client={synthetic:true},runtime={synthetic:true},input={command,now:'2026-10-26T00:00:00.000Z',operationId:id(4)};
+  f.options.command.requestKey='EXTERNAL-MUTATION';await reader.assertAllowed(command.actorAccountId,command);
+  await reader.initializeSchemes26(client,input,runtime);assert.equal(calls.length,1);assert.equal(calls[0][0],client);assert.equal(calls[0][1],input);assert.equal(calls[0][2],runtime);
+  assert.equal(f.source.report.executionAuthorized,false);assert.deepEqual(Object.keys(command.schemeInitialization.approvalPins).sort(),['approvalSha256','proposalSha256','writeContractReplySha256']);
+  await reader.close();await assert.rejects(reader.assertAllowed(command.actorAccountId,command),/CLOSED/);
+});
+test('v19 six source initializer rejects changed command, actor, approved field and any substituted pin before callback',async t=>{
+  let calls=0;const f=await schemeInitializationFixture26(t,async()=>{calls++;}),reader=await f.open(f.options);t.after(()=>reader.close());
+  await assert.rejects(reader.assertAllowed(id(99),f.command),/COMMAND_CHANGED/);
+  const changed=structuredClone(f.command);changed.expectedCursor++;await assert.rejects(reader.assertAllowed(changed.actorAccountId,changed),/COMMAND_CHANGED/);
+  for(const key of Object.keys(f.command.schemeInitialization.approvalPins)){const command=structuredClone(f.command);command.schemeInitialization.approvalPins[key]='b'.repeat(64);await assert.rejects(f.open({...f.options,command}),/SOURCE_PINS/);}
+  const command=structuredClone(f.command);command.schemeInitialization.schemes[0].native.name='SUBSTITUTED';await assert.rejects(f.open({...f.options,command}),/SOURCE_BINDING/);
+  await writeFile(f.replyFile,'{}');await assert.rejects(reader.assertAllowed(f.command.actorAccountId,f.command),/FILE_CHANGED/);assert.equal(calls,0);
+});
+test('v19 six source initializer refuses truthy callback grants, callback mutation and post-await approval change',async t=>{
+  for(const kind of ['truthy','mutation','approval']){
+    let f;f=await schemeInitializationFixture26(t,async(_client,input)=>{if(kind==='truthy')return true;if(kind==='mutation')input.command.requestKey='MUTATED';if(kind==='approval')await writeFile(f.replyFile,'{}');});
+    const reader=await f.open(f.options);t.after(()=>reader.close());
+    await assert.rejects(reader.initializeSchemes26({synthetic:true},{command:structuredClone(f.command),now:'2026-10-26T00:00:00.000Z',operationId:id(4)},{synthetic:true}),kind==='truthy'?/CALLBACK_RESULT/:kind==='mutation'?/CALLBACK_MUTATED/:/FILE_CHANGED/);
+  }
+});
+test('v19 six source initializer integrates exact2 owner projection with D1 same lease first-write and receipt replay',async t=>{
+  const {PostgresCutoffImportStore}=await import('../../adapters/postgres/src/inventory-cutoff-import-store.ts');
+  const {initializeNativeBarcodeSchemesOnClient26,NATIVE_BARCODE_SCHEME_INITIALIZATION26_SQL:sql26}=await import('../../adapters/postgres/src/native-barcode-import.ts');
+  let initialized=0;
+  const f=await schemeInitializationFixture26(t,async(...args)=>{initialized++;await initializeNativeBarcodeSchemesOnClient26(...args);});
+  const source=await f.open(f.options);t.after(()=>source.close());
+  const command=structuredClone(f.command),now='2026-10-26T00:00:00.000Z',calls=[],schemes=[],leases=[];
+  let receipt,audit,checkpoint={sequence:1,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}};
+  const originalCheckpoint=structuredClone(checkpoint);
+  const client={async query(sql,values=[]){calls.push(sql);let rows=[];
+    if(sql.includes('barcode-init:actor'))rows=[{id:command.actorAccountId}];
+    else if(sql.includes('barcode-init:target'))rows=[command.schemeInitialization.target];
+    else if(sql.includes('barcode-init:batch'))rows=[{id:command.batchId,mapping_version:'V2_HISTORY_NULLABLE_1',source_name:command.schemeInitialization.fixedSourceNamespace,source_hash:command.schemeInitialization.selectionSha256,cutoff_at:command.schemeInitialization.cutoffAt,status:'STAGED',completed_at:null,history_validation_passed:false,checkpoint}];
+    else if(sql.includes('barcode-init:receipt'))rows=receipt?[receipt]:[];
+    else if(sql.includes('barcode-init:effects'))rows=[{barcode_source:false,barcode_rows:false,scheme_rows:schemes.length>0}];
+    else if(sql===sql26.read||sql.includes('barcode-init:readback'))rows=[...schemes].sort((a,b)=>Buffer.compare(Buffer.from(a.id),Buffer.from(b.id)));
+    else if(sql===sql26.insert){const[id,name,barcode_type,rule_description,code_length,rule_version,status]=values;schemes.push({id,name,barcode_type,rule_description,code_length,rule_version,status});rows=[{id}];}
+    else if(sql.includes('barcode-init:checkpoint')){assert.deepEqual(checkpoint,JSON.parse(values[2]));checkpoint=JSON.parse(values[1]);}
+    else if(sql.startsWith('INSERT INTO naijue_erp.audit_change'))audit={before_values:JSON.parse(values[7]),after_values:JSON.parse(values[8])};
+    else if(sql.startsWith('INSERT INTO naijue_erp.operation_receipt'))receipt={id:values[0],request_hash:values[3],action:values[4],target_type:'IMPORT',target_id:values[5],status:'COMMITTED',result_data:JSON.parse(values[6])};
+    else if(sql.includes('barcode-init:replay-proof'))rows=audit?[audit]:[];
+    else if(sql.includes('assert_barcode_scheme_initialization_v19'))assert.equal(requestHash([...schemes].sort((a,b)=>a.id.localeCompare(b.id))),requestHash(command.schemeInitialization.schemes.map(s=>s.native).sort((a,b)=>a.id.localeCompare(b.id))));
+    return{rows,rowCount:1};},release(){leases.push('release');}};
+  const pool={async connect(){leases.push('connect');return client;}},runtime={profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(actual,purpose){assert.equal(actual,client);assert.equal(purpose,'IMPORT_STAGE');}};
+  // Source owner retains close for finally; D1 accepts exactly the original two methods.
+  assert.throws(()=>new PostgresCutoffImportStore(pool,{runtime26:runtime,barcodeSchemeInitialization26:source}));
+  const provider={assertAllowed:source.assertAllowed,initializeSchemes26:source.initializeSchemes26};
+  const store=new PostgresCutoffImportStore(pool,{runtime26:runtime,barcodeSchemeInitialization26:provider});
+  const result=await store.execute(command,now);assert.equal(initialized,1);assert.equal(schemes.length,6);assert.equal(result.sequence,2);assert.equal(result.cursor,22);assert.deepEqual(result.ledgerEntryIds,[]);
+  assert.deepEqual(checkpoint,{...originalCheckpoint,sequence:2});assert.equal(audit.after_values.commandHash,requestHash(command));
+  const inserts=calls.filter(s=>s===sql26.insert).length;assert.deepEqual(await store.execute(command,now),result);assert.equal(initialized,1);assert.equal(calls.filter(s=>s===sql26.insert).length,inserts);assert.deepEqual(leases,['connect','release','connect','release']);
+});

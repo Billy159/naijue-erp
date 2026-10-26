@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { IMPORT_V2_TABLES } from '../packages/application/src/import-v2-contract.ts';
-import { prepareNativeBarcode,stageNativeBarcode,nativeBarcodeSourceEvidence,NATIVE_BARCODE_MAIN_DEMOTION_VERSION } from '../packages/application/src/native-barcode-import.ts';
+import { prepareNativeBarcode,stageNativeBarcode,nativeBarcodeSourceEvidence,NATIVE_BARCODE_MAIN_DEMOTION_VERSION, nativeBarcodeSchemeInitializationRows26, validateNativeBarcodeSchemeInitializationRows26 } from '../packages/application/src/native-barcode-import.ts';
 import type { NativeBarcodeInput } from '../packages/application/src/native-barcode-import.ts';
 const id=(n:number)=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,pin='a'.repeat(64);
 function input():NativeBarcodeInput{
@@ -25,4 +25,13 @@ test('v3 SKU selection accepts missing original migration scope without manufact
  const p=prepareNativeBarcode(x);assert.deepEqual(p.source,before);assert.equal(Object.hasOwn(p.source.rawFields,'绑定范围'),false);assert.equal(p.nativeBarcode.sku_id,x.sku.nativeId);
  for(const value of ['PRODUCT','',null]){const y=input();(y.source.rawFields as any)['绑定范围']=value;assert.throws(()=>prepareNativeBarcode(y),/Original SKU binding/);}
  const y=input();delete (y.source.rawFields as any)['绑定范围'];(y.source.normalizedFields as any)['绑定范围']='PRODUCT';assert.throws(()=>prepareNativeBarcode(y),/Original SKU binding/);
+});
+
+test('v19 exact six initializer freezes original42 fields, identities and one current scheme without mutable baseline',()=>{
+ const rows=nativeBarcodeSchemeInitializationRows26();validateNativeBarcodeSchemeInitializationRows26(rows);validateNativeBarcodeSchemeInitializationRows26([...rows].reverse());
+ assert.equal(rows.length,6);assert.equal(rows.filter(r=>r.native.status==='CURRENT').length,1);assert.equal(rows.find(r=>r.sourceSchemeKey==='2026')!.native.id,'0e70e45e-1a51-4d44-afe8-0002cf3fb7ef');
+ for(let i=0;i<rows.length;i++)for(const field of Object.keys(rows[i]!.native)){const changed=structuredClone(rows) as any;changed[i].native[field]=field==='code_length'?99:'SUBSTITUTED';assert.throws(()=>validateNativeBarcodeSchemeInitializationRows26(changed));}
+ for(const changed of [rows.slice(1),[...rows,rows[0]],[rows[0],rows[0],...rows.slice(2)]])assert.throws(()=>validateNativeBarcodeSchemeInitializationRows26(changed));
+ const extra=structuredClone(rows) as any;extra.extra=true;assert.throws(()=>validateNativeBarcodeSchemeInitializationRows26(extra));
+ const copy=nativeBarcodeSchemeInitializationRows26() as any;copy[0].native.name='CHANGED';assert.notEqual(nativeBarcodeSchemeInitializationRows26()[0]!.native.name,'CHANGED');
 });

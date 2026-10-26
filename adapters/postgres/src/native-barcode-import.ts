@@ -1,6 +1,8 @@
+import { requestHash as schemeInitializationHash } from "../../../packages/application/src/request-hash.ts";
+import { stableImportId as schemeInitializationOperationId, validateBarcodeSchemeInitializationCommand as validateSchemeInitializationCommand } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { assertNativeImportAccountingGuards } from "./native-import-accounting-capability.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
-import { nativeBarcodeSourceEvidence, validatePreparedNativeBarcode } from "../../../packages/application/src/native-barcode-import.ts";
+import { nativeBarcodeSourceEvidence, validatePreparedNativeBarcode, validateNativeBarcodeSchemeInitializationRows26 } from "../../../packages/application/src/native-barcode-import.ts";
 import type { NativeBarcodeImportStore, PreparedNativeBarcode } from "../../../packages/application/src/native-barcode-import.ts";
 import { assertReviewedNativeImportSchema, checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
@@ -111,4 +113,50 @@ export class PostgresNativeBarcodeImportStore26 extends PostgresNativeBarcodeImp
   override async stage(input: PreparedNativeBarcode): Promise<{ inserted: number; replayed: number }> {
     const row = structuredClone(input); validatePreparedNativeBarcode(row); return this.stageValidated(row, this.runtime26);
   }
+}
+
+/** Fixed statements consumed by D1's trusted same-client initializer callback.
+ * D1 owns transaction/locks/birth admission/authority/replay/audit/checkpoint. */
+export const NATIVE_BARCODE_SCHEME_INITIALIZATION26_SQL = Object.freeze({
+  read: "SELECT id,name,barcode_type,rule_description,code_length,rule_version,status FROM naijue_erp.barcode_scheme ORDER BY id FOR SHARE",
+  insert: "INSERT INTO naijue_erp.barcode_scheme(id,name,barcode_type,rule_description,code_length,rule_version,status) VALUES($1::uuid,$2,$3,$4,$5,$6,$7) RETURNING id"
+});
+
+/** First-write callback only, matching BarcodeSchemeInitialization26 exactly.
+ * Same-key replay is verified by the original D1 store and does not call this.
+ * D1 supplies the scoped runtime mapping this borrowed query object to the
+ * original actual lease; no new client or runtime is issued by this callback. */
+export async function initializeNativeBarcodeSchemesOnClient26(
+  client: Pick<PgSalesClient, "query">, input: {
+    readonly command: import("../../../packages/application/src/inventory-cutoff-import.ts").BarcodeSchemeInitializationCommand;
+    readonly now: string; readonly operationId: string;
+  }, runtime26: NativeRuntime26Capability
+): Promise<void> {
+  const runtime = checkedNativeRuntime26Capability(runtime26);
+  requireDomain(runtime !== undefined && typeof client?.query === "function",
+    "NATIVE_BARCODE_INITIALIZATION_CONTEXT", "Actual D1-issued runtime and original borrowed client required");
+  const original = schemeInitializationHash(input), snapshot = structuredClone(input), command = snapshot.command;
+  validateSchemeInitializationCommand(command);
+  validateNativeBarcodeSchemeInitializationRows26(command.schemeInitialization.schemes);
+  requireDomain(snapshot.operationId === schemeInitializationOperationId("operation", command.actorAccountId, command.requestKey)
+    && typeof snapshot.now === "string" && snapshot.now.endsWith("Z") && Number.isFinite(Date.parse(snapshot.now)),
+    "NATIVE_BARCODE_INITIALIZATION_CONTEXT", "Original request-key operation and canonical transaction time required");
+  const unchanged = (): void => requireDomain(schemeInitializationHash(input) === original,
+    "NATIVE_BARCODE_INITIALIZATION_CHANGED", "Initialization command cannot change across the borrowed callback");
+  await runtime!.assertReady(client, "IMPORT_STAGE"); unchanged();
+  const existing = await client.query(NATIVE_BARCODE_SCHEME_INITIALIZATION26_SQL.read); unchanged();
+  requireDomain(existing.rows.length === 0, "NATIVE_BARCODE_INITIALIZATION_NOT_EMPTY",
+    "Only the original first-write callback may create six rows; preseeded or partial rows cannot be adopted");
+  const rows = [...command.schemeInitialization.schemes].sort((a, b) => Buffer.compare(Buffer.from(a.sourceSchemeKey), Buffer.from(b.sourceSchemeKey)));
+  for (const row of rows) {
+    const n = row.native, saved = await client.query(NATIVE_BARCODE_SCHEME_INITIALIZATION26_SQL.insert,
+      [n.id, n.name, n.barcode_type, n.rule_description, n.code_length, n.rule_version, n.status]); unchanged();
+    requireDomain(saved.rowCount === 1 && saved.rows.length === 1 && saved.rows[0]!.id === n.id,
+      "NATIVE_BARCODE_INITIALIZATION_INSERT", "Each original approved scheme must be inserted exactly once");
+  }
+  const actual = await client.query(NATIVE_BARCODE_SCHEME_INITIALIZATION26_SQL.read); unchanged();
+  const expected = rows.map(row => row.native).sort((a, b) => Buffer.compare(Buffer.from(a.id), Buffer.from(b.id)));
+  requireDomain(actual.rows.length === 6 && schemeInitializationHash(actual.rows) === schemeInitializationHash(expected),
+    "NATIVE_BARCODE_INITIALIZATION_READBACK", "Whole table must contain exactly the six approved seven-field snapshots");
+  await runtime!.assertReady(client, "IMPORT_STAGE"); unchanged();
 }
