@@ -1,0 +1,72 @@
+{
+  "version": "D1_SCHEME_INITIALIZATION_104_APPROVED_WRITER_SERIALIZATION_DELTA_1",
+  "status": "SOURCE_TARGETED_PASS_PENDING_QB_DELTA_AND_T45_ACTUAL",
+  "authority": "C SOURCE596 exact2 original store and protocol test; original sole-server-owner/no arbitrary rawSQL writer boundary",
+  "files": [
+    {
+      "path": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "bytes": 71310,
+      "sha256": "855069e8bbb857bf99452bcb33b57616f0522b856ebd93f3dd2d6a0d3fc9c6ad"
+    },
+    {
+      "path": "tests/barcode-scheme-initialization-store-protocol.test.ts",
+      "bytes": 17113,
+      "sha256": "b3af0bd85ad84128f3b02afe6dafa2710d0bd53c492de35d8ad086373223c915"
+    }
+  ],
+  "change": "Remove only redundant LOCK TABLE barcode_scheme IN SHARE MODE and its inaccurate permission assumption; retain original global cutoff transaction lock, original batch/key advisory locks, batch row FORUPDATE, all existing scheme row FORSHARE, same-client callback, actor/source approval, fulltable exact6, audit/receipt/CAS/unknown COMMIT behavior. No SQL/profile/helper/ACL change.",
+  "proof": {
+    "writer": "Only approved actual scheme INSERT is D3 initializeNativeBarcodeSchemesOnClient26, called through D1 exact source-authorized query-only borrowed callback. No new pool/BEGIN/receipt authority.",
+    "global": "Original cutoff_import_lock uses one fixed transaction advisory key shared across all approved batches/actions, acquired before scheme empty observation and held until original COMMIT/ROLLBACK.",
+    "otherPaths": "Catalogue table map only category/color/fit; native bootstrap only checks empty domain; product maintenance and barcode staging read scheme, do not mutate it. Barcode and header staging use same cutoff.",
+    "concurrency": "A holds cutoff while empty-check/inserting six. B different key cannot observe empty until A commits or rolls back. After commit B does not initialize again; same actor/key verifies original receipt/exact six and skips callback. After rollback B sees actual empty and may perform original authorized initialization.",
+    "helper": "Original assert_barcode_scheme_initialization_v19 still takes cutoff and validates actual immutable birth/current actor/target/source/binding/six/audit/hash/zero effects. No helper/body/profile changes."
+  },
+  "strictBoundary": {
+    "approvedOnly": "Proof covers all currently approved scheme writer paths plus C/T45 sole-owner serial execution. It is not a database-wide phantom lock against arbitrary owner/raw SQL concurrent INSERT/UPDATE/DELETE.",
+    "requiredExistingOperationRule": "No owner or arbitrary raw SQL concurrent scheme writer is authorized during initialization; new future scheme maintenance must explicitly join the original serialization or obtain its own reviewed design.",
+    "permissions": "No MAINTAIN/table UPDATE/DELETE/TRUNCATE, no definer escalation. Original seven-column INSERT/id-column UPDATE/exact helperEXECUTE remain proposals for T45 actual least-privilege role validation. idUPDATE permits rowFORSHARE and does not permit old tableSHARE.",
+    "unmeasured": "Actual role ACL, actual firstwrite/readback/replay and real PG concurrent schedule remain untested; actual104 was denied42501, not lock PASS."
+  },
+  "checks": {
+    "newSchedulingTests": {
+      "pass": 3,
+      "fail": 0,
+      "skip": 0,
+      "scope": "Two actual store.execute calls under a scripted transaction-advisory-lock scheduler: different-key wait then no duplicate; same-key receipt replay; first rollback then second success. No PostgreSQL or speed proof.",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/scheme-104-targeted-checks.log",
+        "bytes": 479,
+        "sha256": "f246ef2bd6a062af21aa85b34008aa4c822c6becc8f103bb97a54dbdda21e12a"
+      }
+    },
+    "targetedStrict": {
+      "exitCode": 0,
+      "scope": "Exact store and protocol test under original strict flags plus transitive imports",
+      "log": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/scheme-104-targeted-types.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "notRepeated": [
+      "Original v19 11 checks/QB343",
+      "F9/QB348",
+      "v20/QB345 and actual99-104"
+    ],
+    "HumanFExact4": "All four pins in HUMAN-F-MANAGED-BASELINE-RESULT.json independently rechecked unchanged by this delta"
+  },
+  "independentHeaderRecovery": "No six-scheme action/tableLOCK/new initialization helperEXECUTE needed for remaining23793 sales HEADER stage. Require actual v19->v20 131, fresh canonical/IMPORT_STAGE socket+TCP reviews, compatible original CORE16. Do not skip parent or use olde02/130; leave scheme new ACL/initializer disabled while restoring headers.",
+  "notCovered": "Original typedclosure18 later fulltableSHARE and actual final/PUBLISH remain separate untested boundaries. No MAIN/BARCODE/PUBLISH release inferred.",
+  "officialSources": [
+    "https://www.postgresql.org/docs/17/sql-lock.html",
+    "https://www.postgresql.org/docs/17/ddl-priv.html"
+  ],
+  "notExecuted": [
+    "DB/SSH/GRANT/ACL/schema operations",
+    "Actual scheme initialization or concurrentPG test",
+    "Build/Git/deploy",
+    "Header writer replay"
+  ],
+  "next": "Original QB only exact2 104delta; C/T45 may separately continue v20 header recovery. Only when actual original actor/rowlock seven INSERT/idUPDATE/helperEXECUTE and current review/compatible app/source authority are complete may execute approved six initialization."
+}

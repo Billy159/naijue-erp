@@ -508,9 +508,12 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     requireDomain(allowed === undefined, "NATIVE_IMPORT_AUTHORIZATION_REQUIRED", "Independent scheme source authority must explicitly complete");
     await client.query("SELECT naijue_erp.cutoff_import_lock()");
     await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))", [`naijue:import-batch:${command.batchId}`]);
-    // SHARE prevents concurrent table INSERT/UPDATE/DELETE, including an empty-table phantom.
-    // The original cutoff lock serializes authorized initializers before this read/insert lock.
-    await client.query("LOCK TABLE naijue_erp.barcode_scheme IN SHARE MODE");
+    // All approved scheme INSERTs enter only this borrowed-client callback under the
+    // original global cutoff transaction lock. Different keys/batches cannot observe
+    // an empty scheme table concurrently; COMMIT/ROLLBACK releases that serialization.
+    // C/T45 retain the sole-owner rule: no arbitrary owner/raw-SQL scheme writer is
+    // authorized alongside initialization. This is not a predicate lock for such writers.
+    // Keep the existing seven-field row FOR SHARE checks, without broader table-lock ACLs.
     const i = command.schemeInitialization;
     const actors = (await client.query(`/* barcode-init:actor */ SELECT u.id FROM naijue_erp.user_account u
       JOIN naijue_erp.staff s ON s.id=u.staff_id LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id

@@ -52,7 +52,7 @@ test("v19 same-client creation commits exact6, paired audit/receipt and sequence
  assert.equal(s.initialized,1);assert.equal(s.schemes.length,6);assert.deepEqual(s.checkpoint,{...s.audit.before_values.checkpoint,sequence:2});
  assert.equal(s.audit.after_values.commandHash,requestHash(f.c));assert.deepEqual(f.events.slice(-5),["CHECKPOINT","AUDIT","RECEIPT","VERIFY","COMMIT"]);
  const before=f.events.length;assert.deepEqual(await f.store.execute(f.c,now),r);assert.equal(f.state().initialized,1);assert.equal(f.state().authorization,2);
- assert.ok(f.events.slice(before).includes("VERIFY"));assert.ok(!f.events.slice(before).includes("SCHEME"));assert.ok(f.calls.some(q=>q==="LOCK TABLE naijue_erp.barcode_scheme IN SHARE MODE"));
+ assert.ok(f.events.slice(before).includes("VERIFY"));assert.ok(!f.events.slice(before).includes("SCHEME"));assert.ok(f.calls.includes("SELECT naijue_erp.cutoff_import_lock()"));assert.equal(f.calls.some(q=>q.startsWith("LOCK TABLE")),false);
  await assert.rejects(s.escaped.query("SELECT id,name,barcode_type,rule_description,code_length,rule_version,status FROM naijue_erp.barcode_scheme ORDER BY id FOR SHARE"),{code:"BARCODE_SCHEME_CALLBACK_SCOPE"});
 });
 test("v19 replay always authorizes current actor/source and validates whole-table drift, missing and extra",async()=>{
@@ -69,4 +69,73 @@ test("v19 unknown COMMIT retains original committed key and requires explicit re
  const f=fixture();f.unknown(true);await assert.rejects(f.store.execute(f.c,now),/SYNTHETIC_UNKNOWN_COMMIT/);assert.ok(f.releases.at(-1) instanceof Error);
  assert.equal(f.state().initialized,1);assert.equal(f.state().receipt.request_hash,requestHash(f.c));assert.equal(f.calls.filter(q=>q==="ROLLBACK").length,0);
  f.unknown(false);await f.store.execute(f.c,now);assert.equal(f.state().initialized,1);assert.equal(f.state().schemes.length,6);
+});
+
+/** Transaction scheduling fake: proves the approved writer protocol, not PostgreSQL concurrency. */
+function concurrentSchemeWriters(){
+ const c=command(),events:string[]=[],calls:{client:number;sql:string}[]=[],callbacks:string[]=[];
+ type State={receipt:any;audit:any;schemes:any[];checkpoint:any};
+ let committed:State={receipt:undefined,audit:undefined,schemes:[],checkpoint:{sequence:1,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}}};
+ const locks=new Map<string,{owner:number;waiters:{client:number;resolve:()=>void}[]}>();let allocations=0;
+ let firstEntered:()=>void=()=>{},resumeFirst:()=>void=()=>{},failFirst=false,firstKey:string|undefined;
+ const entered=new Promise<void>(resolve=>{firstEntered=resolve;}),gate=new Promise<void>(resolve=>{resumeFirst=resolve;});
+ const pool={async connect(){const client=++allocations,held=new Set<string>();let local:State|undefined;
+  async function lock(key:string){
+   if(held.has(key))return;const current=locks.get(key);
+   if(current){events.push(`${client}:wait:${key}`);await new Promise<void>(resolve=>current.waiters.push({client,resolve}));}
+   else locks.set(key,{owner:client,waiters:[]});held.add(key);events.push(`${client}:held:${key}`);
+  }
+  function releaseLocks(){for(const key of held){const owned=locks.get(key);assert.equal(owned?.owner,client);const next=owned!.waiters.shift();if(next){owned!.owner=next.client;next.resolve();}else locks.delete(key);}held.clear();}
+  const raw={async query(sql:string,values:unknown[]=[]):Promise<any>{calls.push({client,sql});let rows:any[]=[],rowCount=1;
+   if(sql.startsWith("BEGIN"))events.push(`${client}:begin`);
+   else if(sql==="SELECT naijue_erp.cutoff_import_lock()"){await lock("GLOBAL_CUTOFF");local=structuredClone(committed);}
+   else if(sql.startsWith("SELECT pg_advisory_xact_lock"))await lock(String(values[0]));
+   else if(sql==="COMMIT"){assert.ok(local);committed=structuredClone(local);events.push(`${client}:commit`);releaseLocks();}
+   else if(sql==="ROLLBACK"){events.push(`${client}:rollback`);releaseLocks();}
+   else if(sql.startsWith("LOCK TABLE"))throw Error("Table SHARE is not an approved initializer privilege");
+   else {assert.ok(local,"Global transaction lock precedes every scheme observation");
+    if(sql.includes("barcode-init:actor"))rows=[{id:c.actorAccountId}];
+    else if(sql.includes("barcode-init:target"))rows=[c.schemeInitialization.target];
+    else if(sql.includes("barcode-init:batch"))rows=[{id:c.batchId,mapping_version:"V2_HISTORY_NULLABLE_1",source_name:c.schemeInitialization.fixedSourceNamespace,source_hash:c.schemeInitialization.selectionSha256,cutoff_at:now,status:"STAGED",completed_at:null,history_validation_passed:false,checkpoint:local.checkpoint}];
+    else if(sql.includes("barcode-init:receipt"))rows=local.receipt?.request_key===values[1]?[local.receipt]:[];
+    else if(sql.includes("barcode-init:existing"))rows=local.receipt?[{id:local.receipt.id}]:[];
+    else if(sql.includes("barcode-init:effects")){events.push(`${client}:observe-empty`);rows=[{barcode_source:false,barcode_rows:false,scheme_rows:local.schemes.length>0}];}
+    else if(sql.includes("barcode-init:readback"))rows=[...local.schemes].sort((a,b)=>a.id.localeCompare(b.id));
+    else if(sql.includes("barcode-init:checkpoint")){assert.deepEqual(local.checkpoint,JSON.parse(values[2] as string));local.checkpoint=JSON.parse(values[1] as string);}
+    else if(sql.startsWith("INSERT INTO naijue_erp.barcode_scheme")){const [id,name,barcode_type,rule_description,code_length,rule_version,status]=values;local.schemes.push({id,name,barcode_type,rule_description,code_length,rule_version,status});rows=[{id}];}
+    else if(sql.startsWith("INSERT INTO naijue_erp.audit_change"))local.audit={before_values:JSON.parse(values[7] as string),after_values:JSON.parse(values[8] as string)};
+    else if(sql.startsWith("INSERT INTO naijue_erp.operation_receipt"))local.receipt={id:values[0],request_key:values[2],request_hash:values[3],action:values[4],target_type:"IMPORT",target_id:values[5],status:"COMMITTED",result_data:JSON.parse(values[6] as string)};
+    else if(sql.includes("barcode-init:replay-proof"))rows=local.audit?[local.audit]:[];
+    else if(sql.includes("assert_barcode_scheme_initialization_v19")){assert.equal(local.schemes.length,6);assert.ok(local.receipt&&local.audit);}
+   }
+   return {rows,rowCount};
+  },release(){assert.equal(held.size,0);}};return raw;
+ }};
+ const runtime={profile:"EXACT26" as const,contract:"NATIVE_RUNTIME26_V1" as const,async assertReady(){}};
+ const provider={async assertAllowed(){},async initializeSchemes26(client:any,input:any,proof:any){
+  await proof.assertReady(client,"IMPORT_STAGE");callbacks.push(input.command.requestKey);events.push(`callback:${input.command.requestKey}`);
+  for(const {native:n}of input.command.schemeInitialization.schemes){await client.query("INSERT INTO naijue_erp.barcode_scheme(id,name,barcode_type,rule_description,code_length,rule_version,status) VALUES ($1::uuid,$2,$3,$4,$5,$6,$7) RETURNING id",[n.id,n.name,n.barcode_type,n.rule_description,n.code_length,n.rule_version,n.status]);
+   if(firstKey===undefined){firstKey=input.command.requestKey;firstEntered();await gate;if(failFirst)throw Error("SYNTHETIC_FIRST_ROLLBACK");}
+  }
+ }};
+ const store=new PostgresCutoffImportStore(pool,{runtime26:runtime,barcodeSchemeInitialization26:provider});
+ return {c,store,events,calls,callbacks,entered,resume:()=>resumeFirst(),fail:()=>{failFirst=true;},state:()=>committed};
+}
+test("scheme 104 different-key concurrent initialization cannot observe empty behind the original global transaction lock",async()=>{
+ const f=concurrentSchemeWriters(),a=f.store.execute(f.c,now);await f.entered;
+ const b=f.store.execute({...f.c,requestKey:"SYNTHETIC_OTHER_KEY"},now).then(value=>({value}),error=>({error}));
+ await new Promise<void>(resolve=>setImmediate(resolve));assert.ok(f.events.includes("2:wait:GLOBAL_CUTOFF"));assert.ok(!f.events.includes("2:observe-empty"));assert.deepEqual(f.callbacks,[f.c.requestKey]);
+ f.resume();await a;const result=await b;assert.ok("error"in result);assert.equal(f.state().schemes.length,6);assert.deepEqual(f.callbacks,[f.c.requestKey]);
+ assert.ok(f.events.indexOf("1:commit")<f.events.indexOf("2:held:GLOBAL_CUTOFF"));assert.equal(f.calls.some(q=>q.sql.startsWith("LOCK TABLE")),false);
+});
+test("scheme 104 same-key concurrent waiter replays original exact receipt without invoking a second writer",async()=>{
+ const f=concurrentSchemeWriters(),a=f.store.execute(f.c,now);await f.entered;const b=f.store.execute(f.c,now);
+ await new Promise<void>(resolve=>setImmediate(resolve));assert.ok(f.events.some(e=>e.startsWith("2:wait:naijue:receipt:")));assert.ok(!f.events.includes("2:observe-empty"));
+ f.resume();const [first,second]=await Promise.all([a,b]);assert.deepEqual(second,first);assert.equal(f.callbacks.length,1);assert.equal(f.state().schemes.length,6);
+});
+test("scheme 104 rollback releases global lock and the next approved key observes actual empty state",async()=>{
+ const f=concurrentSchemeWriters();f.fail();const a=f.store.execute(f.c,now).then(value=>({value}),error=>({error}));await f.entered;
+ const b=f.store.execute({...f.c,requestKey:"SYNTHETIC_AFTER_ROLLBACK"},now);await new Promise<void>(resolve=>setImmediate(resolve));assert.ok(f.events.includes("2:wait:GLOBAL_CUTOFF"));assert.ok(!f.events.includes("2:observe-empty"));
+ f.resume();assert.ok("error"in await a);const result=await b;assert.equal(result.sequence,2);assert.equal(f.state().schemes.length,6);assert.equal(f.state().receipt.request_key,"SYNTHETIC_AFTER_ROLLBACK");
+ assert.ok(f.events.indexOf("1:rollback")<f.events.indexOf("2:observe-empty"));assert.deepEqual(f.callbacks,[f.c.requestKey,"SYNTHETIC_AFTER_ROLLBACK"]);
 });
