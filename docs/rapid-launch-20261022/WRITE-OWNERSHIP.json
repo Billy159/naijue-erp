@@ -6137,5 +6137,16 @@
     "evidence": "Actual03 fixed history-revise:put-line tag, column value, function history_effective_writes_closed line22; originalkey readback0 receipts/revisions",
     "otherFiles": "D1 may list exact additional affected issuer seam paths before writing; no D3 provider/closure/root config overlap",
     "actualOwner": "T45 only actual SQL/catalog/readback and registered isolated QA; C Git/build/records"
+  },
+  "source656C144ManifestTelemetry": {
+    "owner": "D3",
+    "status": "CURRENT",
+    "exactFiles": [
+      "scripts/import-v2/authorized-sales-detail-reader.mjs",
+      "scripts/import-v2/authorized-sales-detail-reader.test.mjs"
+    ],
+    "scope": "Actual130 OPEN_GROUP_SALES_DETAILS HISTORY_SETTLEMENT_INPUT: exact original2555B C144 manifest elapsedSeconds finite nonnegative telemetry separated from unchanged strict business capture; immutable original byteSHA/scope/descriptors/selection/32money/fingerprints/data roots retained; no broad float allowance",
+    "noOverlap": "D1 new narrow SQL/nativecap/test and C build/root records untouched",
+    "next": "Finite real-manifest-shaped RED GREEN, exact handback; scoped QB; T45 once actual corrected source-only successor"
   }
 }

@@ -14413,6 +14413,26 @@
       },
       "observerChecks": "owner2 new fakePASS/parse unchanged; not independent new source PASS; no actual rerun just for observation",
       "next": "D1 narrow SQL disambiguation + exact issuer successor; one related fixed package independent QA, T45 actual only"
+    },
+    "source656RootCauses": {
+      "source130": {
+        "status": "ACTUAL_FAILED2_OPEN_GROUP_SALES_DETAILS",
+        "startedAtUTC": "2026-10-26T13:02:13.548973Z",
+        "finishedAtUTC": "2026-10-26T13:04:37.603068Z",
+        "elapsedSeconds": 144.011796684,
+        "errorCode": "HISTORY_SETTLEMENT_INPUT",
+        "phase": "OPEN_GROUP_SALES_DETAILS",
+        "rootCause": "Pinned original2555B C144 manifest elapsedSeconds telemetry decimal passed into strict integer business capture; whole-manifest capture return unused as identity",
+        "owner": "D3 exact reader/test WRITE.source656C144ManifestTelemetry",
+        "next": "Minimal telemetry guard only, original manifest/data hashes unchanged, bounded fixed successor after scoped QA"
+      },
+      "B07": {
+        "rootEvidence": "Actual existing log value ambiguity/history_effective_writes_closed line22/put-line",
+        "owner": "D1 WRITE.source655B07ValueDisambiguation narrow SQL and accurate issuer expected bodies",
+        "observer": "QB395 new safe observation sourcePASS adopted; 4197/8372deec769b801ddcd2cba128542f893f040f34d29258a7a6c48f1497522a8b; not new actual request"
+      },
+      "F1": "Latest actual thread completed/notLoaded; source handed back, true QA/build/browser outstanding; no duplicate dispatch",
+      "F4": "Latest thread completed/notLoaded, original package retained; no duplicate dispatch"
     }
   }
 }
