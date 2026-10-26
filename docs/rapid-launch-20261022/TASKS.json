@@ -14487,6 +14487,10 @@
       "D1": "private parent04 v21 bridge in flight; no duplicate dispatch",
       "B07": "QB399 actual narrow SQL PASS; normal 3 cases not passed",
       "githubPreviousVerified": "5fdfd68e52cb23f67bee75adb7c43830749a7806"
+    },
+    "latestSource661": {
+      "summary": "SOURCE661：660两CODE fixed c286015/远端同值已核；C保存D3描述时误放reports/D3新增镜像，原reports/backend/rapid-launch-20261022/D3仍旧pin，QB已指出。此次只将2描述准确同步原既有路径，删除本次误建重复镜像，不改CODE或重技术检查。132 carrier明确采用K真实2bcc8a32/b345d3d9 pins；新窗口14:10Z/max900/start≤13:55，等QB原ordinal及新carrier范围通过后一次source-only。原109keys/125/24仓裁决/80DATA保持；0PG/MAIN/grant/APP，旧131不重。B07 QB399实际窄函数PASS，D1 parent04在途。",
+      "source660RemoteVerified": "c28601595e13d59f6c8498ed54bd72efc99abb72"
     }
   }
 }

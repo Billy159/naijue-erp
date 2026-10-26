@@ -5,18 +5,18 @@
   "status": "ACTUAL124_DATA_LOCATIONS_BOUND_CODE_INSTALL_AND_FULL_EXECUTION_PENDING",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "bytes": 114035,
-    "sha256": "b816b2f5d4102569f0538782992de97c0bad01e7b1c7b528b99982ea9fbd14e9"
+    "bytes": 114692,
+    "sha256": "f9d2d8b3398ea4332e87e7aa4679736b6b5cefc9fd47062c117540e0b520c0a2"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 142683,
-    "sha256": "98b65cb02f091d34a6e3e8380ddedb555f5bfba35e007bda47a598f838e2ca02"
+    "bytes": 145231,
+    "sha256": "12f177b641873f736acd24bf7091535b99f85268c5ba7d4418a6269c1d64e26c"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
     "bytes": 182293,
-    "sha256": "c85416848fd292e4aac11f17c82567804af8989b2d5575622cf88ad10c7c33b1"
+    "sha256": "2bcc8a32496063213dd58ecd49b22383834f0d97ed3510fd07628e8a3ec74810"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -1132,5 +1132,66 @@
     "D1BuilderChanged": false,
     "sharedCaptureFunctionChanged": false,
     "originalC144ManifestChanged": false
+  },
+  "source664TransferDocumentOrdinal": {
+    "status": "ORIGINAL_PACKED_HEADER_ORDINAL_MISINTERPRETATION_FIXED_FINITE_RED_GREEN_NOT_ACTUAL_PASS",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 114692,
+        "sha256": "f9d2d8b3398ea4332e87e7aa4679736b6b5cefc9fd47062c117540e0b520c0a2"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 145231,
+        "sha256": "12f177b641873f736acd24bf7091535b99f85268c5ba7d4418a6269c1d64e26c"
+      }
+    ],
+    "actual131": "FAILED2/145.718830792s/OPEN_GROUP_TRANSFER_LINES/PRODUCTION_RETAINED_TRANSFER26_DUPLICATE; C144 opening passed; no PG/MAIN/grant/APP or successful full output",
+    "rootCause": {
+      "reader": "retainedTransferLinesReader combined duplicate guard incorrectly required first record uint32 at64+n*256 === physical n.",
+      "originalWriter": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/transfer-final-document-join1/join-core.mjs",
+        "bytes": 11225,
+        "sha256": "1c655536bf1d4580071670bd984f7c952cfd1e8399525b4b8a9f1051bd215360"
+      },
+      "writerMeaning": "PackedLineIndex.add writes document/header ordinal from byKey, repeated for all lines in that document and independent of physical record position. Existing native-transfer-line-source26 captured adapter uses same meaning.",
+      "boundedOriginalIndexEvidence": {
+        "logicalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-projection-index-PENDING.bin",
+        "acceptedFullBytes": 69587332,
+        "acceptedFullSha256": "e11d6293558a83f9deae7c8b414be3d40663cdc92ef9b1ce686bb0bed21e28c6",
+        "bytesRead": 320,
+        "fullBodyRehashed": false,
+        "sizeMatches": true,
+        "magic": "TL26JOIN1",
+        "rows": 261641,
+        "headers": 14279,
+        "firstHeaderOrdinal": 4895,
+        "firstPhysicalRecordOrdinal": 0,
+        "sourceTypedBodiesRead": false
+      }
+    },
+    "fix": [
+      "Keep exact sourceId and typedId unique sets; require stored headerOrdinal < actual header count rather than equality with physical n.",
+      "Bind typed row.header_id to original packed directory UUID at that headerOrdinal, both original restore/authorize and closure-only typed streaming.",
+      "No input/index/source IDs/rows/order/hash changed or regenerated; no dedup/filter/merge; original range SHA/coverage/EOF/negative quantities/lifetime/authorization preserved."
+    ],
+    "checks": {
+      "red": "Finite original PackedLineIndex writer with reversed physical/header order reproduces exact original PRODUCTION_RETAINED_TRANSFER26_DUPLICATE.",
+      "greenNew": "Final3 tests PASS0FAIL; source664 retained transfer pattern. Original writer generates genuine format for same-header multi-line and reversed physical/header order, both read all rows/authorize/close/global closure; duplicate source/typed identity and ordinal==headers rejected; directory/header UUID mismatch rejected in authorize and closure streaming.",
+      "affectedExisting": "2 existing source620 retained TRANSFER_LINES checks PASS0FAIL after fixture switched from hand-packed index to original writer; range coverage/duplicate rejection and signed units/global source/typed order. Re-run justified by changed same finite fixture; unrelated suites reused.",
+      "commands": [
+        "node --test --test-reporter=spec '--test-name-pattern=source664 retained transfer' scripts/import-v3/production-source-provider26.test.mjs",
+        "node --test --test-reporter=spec '--test-name-pattern=source620 retained TRANSFER_LINES' scripts/import-v3/production-source-provider26.test.mjs"
+      ],
+      "testDebugCorrection": "First new fixture draft used missing prepared.header; corrected to original prepared.line.header_id/source.normalizedFields before recording exact duplicate RED. One negative fixture initially selected untampered row, corrected to targeted physical/header row; final original guard rejection proven."
+    },
+    "bundleImpact": "Provider+test new pins; INPUT only authorityModule SHA changed. Keep source657 imported C144 reader4640e4bb unchanged in successor bundle; shared closure/D1/6support/data mappings unchanged. Same firstregistration/109keys; no replay of131.",
+    "notRun": [
+      "Real source-only successor after ordinal fix",
+      "Full DATA/EXPECTED/MAIN prepared output",
+      "PG/STAGE/MAIN/publish"
+    ],
+    "next": "C freeze -> QB only packed ordinal delta -> T45 exact new source-only bounded successor with preserved first keys/registration and safe phase carrier."
   }
 }
