@@ -1,8 +1,8 @@
 {
   "contract": "B07_QA_SAME_PARENT_1",
   "node": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-runtime-20261022/node-v24.21.0-darwin-arm64/bin/node",
-  "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-02",
-  "purposeGateFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-02/CURRENT-PURPOSE-GATE.json",
+  "outputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-03",
+  "purposeGateFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-03/CURRENT-PURPOSE-GATE.json",
   "purposeWaitMs": 300000,
   "fixtureInput": {
     "contract": "B07_PREUPGRADE_QA_IDENTITY_1",

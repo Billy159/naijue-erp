@@ -14307,7 +14307,7 @@
       "next": "D1 minimal quantity representation fix; preserve02 current26/QA identity; new isolated fixture successor only after accurate fixed source/registration; no direct owner password update"
     },
     "source651B07QuantityFix": {
-      "status": "FIXED_SOURCE_NEW_REPRESENTATION_SCOPE_QB_PENDING",
+      "status": "QB390_FAILURE_SOURCE_PASS_ADOPTED",
       "files": {
         "draft-normal-history-v16.mjs": {
           "bytes": 19096,
@@ -14320,6 +14320,25 @@
       },
       "checks": "RED number-vs-biginttext reproduced; GREEN new and affected prior2 pass; no SQL/HTTP",
       "next": "QB quantity representation only; accurate03 fixture preserving02; no owner password bypass"
+    },
+    "source652B0703": {
+      "status": "QB391_LOCATOR_SCOPE_PASS_ADOPTED_T45_ACTUAL_REGISTRATION_NEXT",
+      "sourceFiles": {
+        "qa-identity-parent.mjs": {
+          "bytes": 15040,
+          "sha256": "95dde9d4ee8b5e4b7398254a08041cae77be3d54a758ba44a28c09c388f4ed26"
+        },
+        "QA-IDENTITY-PARENT-REGISTRATION.template.json": {
+          "bytes": 5293,
+          "sha256": "e55950f12fa7c9e6e39e5b9730d4640e592263e098b31f8f819194cf786bb1b9"
+        }
+      },
+      "privateRuntime": "1582/200bdfc9bec1b5452e75460baa3d6d2805d8fb8fd8856d6539720e98c97f41a6",
+      "scope": "7395/9fd73ef50cb6aceac18bbb3418e8e265467d8cf89adfd0ca3afe80763e915547",
+      "authority": "C explicit corrected successor conditional on proven0 original requests/revisions, preserve02whole26 then original19 independent fixture same QAidentity and6keys new RAMsecret; no owner password bypass",
+      "QB390": "3799/9d93a5fa9506212e560279b0eaf32f8c0f1bd3fcd9ae0e4e74c670680cf6f644",
+      "QB391": "3585/a30b43644352420c9259a022ce6bea3145ccb6078a236bb8e13c948e8660be52",
+      "next": "T45 accurate720s OS lifecycle03, actual new metadata review/gate only then normal3 cases"
     }
   }
 }

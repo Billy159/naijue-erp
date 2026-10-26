@@ -10,7 +10,7 @@ import {runDraftNormalHistory} from './draft-normal-history-v16.mjs';
 const must=(ok,code)=>{if(!ok)throw Error(code);};
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const P='/Users/billy/Desktop/Workspace/project-007-业务管理系统';
-export const OUTPUT=P+'/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-02';
+export const OUTPUT=P+'/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-normal-identity-draft-20261026-03';
 const CHILDREN={
  upgrade:{bytes:8610,sha256:'bdc80798752cb3c9be6d533fc7f590e6938d5b838f0ae20c8c2d37e10af6bde5',literal:"B=P+'/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-EXISTING-COPY-V16-UPGRADE-SUCCESSOR-20261026'"},
  role:{bytes:11744,sha256:'01a2b14ab308c97d860134c7581257a6b6c22e91e862c342c157a5ee4f10eafe',literal:"B=P+'/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-ORDINARY-RUNTIME-ACL-PREPARATION-20261026'"}
