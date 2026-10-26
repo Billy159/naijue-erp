@@ -1,3 +1,5 @@
+SOURCE607：105实际CORE17启动PASS，05:19:56.987303Z，APPa96923b0/source5989bceddf/buildcore17/新131b5d8f2准确，healthz200明确databaseCheckedfalse；old91保持停、other19保全，无正式根切换。下一原107REV2恢复candidate→10623793。D3原full11两JSON已交small接线4checks，不读取大body；真实缺CORE115成员/49safeproof/53item等准确保留，C已登记原QB332 helper3叶下一BARCODE具体消费缺口，不造新authority。D1原v19disabled材料并行，不假fullhash、不挡HEADER；业务/历史/性能及全站最终完成仍未通过。
+
 SOURCE606：QB355实际103新131元数据独立PASS已采用，canonicalb5d8f2/socket IMPORT_STAGE01616785/TCP CURRENT_FORM_READaf4d6649，完整catalog重算/四body+helper+两CHECK准确差异，其余ACL保持。已立即交T45 105首全验启动→107REV2→10623793，不等主控重验/长报告。按QB人类提速反馈，C核D1/D3真实idle后登记并实际Solmedium分派：D1下一v19六scheme本地disabled载体/最小ACL，D3原full11两个small输入交付；都不碰当前四冻结载体/服务器/大body，不成为当前恢复或HEADER前置。仍T45唯一serverDBwriter，当前新APP及业务未实测，正式根未切，目标ACTIVE。
 
 SOURCE605：103实际schema PASS，finish2026-10-26T05:10:10.890984Z，新canonical b5d8f2e8/131。原APP91已gracefulExit0、poolbackends释放；other19及route341保持，0schemeACL变化，4489及空scheme保留。候选正在受控切换，旧14应用已停不能再称live，CORE17仅已安装尚未启动；正式根不动。下一原QB实际socket/TCP新基线用途review→105首全验/107路由恢复/106仅续23793；源码验收不重，MAIN/PUBLISH与业务/历史最终目标未完成。

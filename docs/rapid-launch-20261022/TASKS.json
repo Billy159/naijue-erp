@@ -11667,9 +11667,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE606",
+    "round": "SOURCE607",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "9e8a8bbd033cf07d6e291221bf129a14adb63e51",
+    "sourceHeadBeforeThisContinuityCommit": "e672ce3a32b3493321fefca4859a442f47cd15a3",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -11680,7 +11680,7 @@
       "next": {
         "source": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
         "build": "replica-production-source598-core-17",
-        "status": "ACTUAL108_INSTALLED_ACTUAL103_AND_QB355131_PASS_APP105_READY",
+        "status": "ACTUAL105_CORE17_STARTED_HEALTH_PASS_107_ROUTE_PENDING",
         "report": "reports/controller/rapid-launch-20261022/SOURCE599-CORE17-INTEGRATION.json"
       },
       "current": {
@@ -11717,10 +11717,10 @@
       "F2": "SOURCE584S582-F01 originalQF2 source closed; actualprovider/save next necessaryCORE15/fullhost",
       "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
-      "D1": "Actual dispatched originalv19 next-local sixscheme disabledcarrier/PLAN/minimalACL in registered K preparationroot; no server/current4carrier writes",
+      "D1": "Existingv19 next localdisabled init carrier implementing originalsingleMAIN runImportSteps/borrowedclient, no fakefullhash and no current4carrier edits",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
-      "D3": "Actual dispatched originalfull11 exact2 smallcandidate/delivery closure; reusecaptured15018/no largebodies or sourceprep",
-      "T45": "Actual103+QB355 current131 closed;105CORE17startup then107REV2/10623793 nowready, no report/source re-review wait",
+      "D3": "Two full11 inputJSON delivered4smallchecks; registered originalQB332 helper3leaf next BARCODE accurate capturedrange/source/typed branch, no rawrescan or newwrapper",
+      "T45": "105 actualCORE17startupbaseline+healthPASS, old91stopped/other19preserved; immediate107REV2 restorecandidate then106remaining23793",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
       "QB": "QB355 actual131socket/TCPmetadata PASS adopted, immediately handed toT45; next exactnew prepared deltas/actualbusiness asready",
@@ -13498,6 +13498,30 @@
       "humanAccelerationSource": "QB thread01a161d2-73f1-7381-ab03-65a1c3b52aa2 turn01a176a0 user asks T45 speed/split",
       "actualModel": "gpt-6.1-sol/medium explicit each dispatch",
       "fastVerified": false
+    },
+    "source607": {
+      "jobId": "t45-source598-core17-private-app-20261026-105",
+      "status": "ACTUAL_APP_STARTUP_BASELINE_HEALTH_PASS_NOT_BUSINESS_OR_ROUTE",
+      "finishedAtUtc": "2026-10-26T05:19:56.987303+00:00",
+      "appId": "a96923b047033f8648b0080fd082c150db79abedf04536345fe4dda1b7ae6910",
+      "sourceCommit": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
+      "buildId": "replica-production-source598-core-17",
+      "schemaCanonical": "b5d8f2e8e278435d8a0e80ec2d7e7d08b607118859e02fc44a9f8bcedd57d8e5",
+      "health": {
+        "path": "/healthz",
+        "status": 200,
+        "databaseChecked": false
+      },
+      "oldApp91KeptStopped": true,
+      "originalOtherNineteenPreserved": true,
+      "collectedReceiptSha256": "62f29cfb737011ba2c51241609ec57ac44a38d0313f163d3c198d2e1a1fb30e7",
+      "next": "Actual107REV2 candidate route then106remaining23793; formalrootunchanged",
+      "parallelD3": {
+        "status": "Existing full11 twoJSON connected smallsourceevidence/checks4; BARCODE concrete consumer next",
+        "candidateSha256": "bc361f42ad424bd035f5475e23001030be2449a0c2a16d84cd63b7d6f4311b76",
+        "deliverySha256": "6620170818e1ae82d21ff3244c360a65e3c1397cf6ea43d782516d36ce48e356",
+        "missing": "TrueCORE115members/49safeproof/53warehouseitems/authority/fullroots/fullhash/nonzeroledger/finaltargetcheckpoint, not fabricated from count"
+      }
     }
   }
 }
