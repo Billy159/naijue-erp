@@ -1,0 +1,33 @@
+{
+  "taskId": "C-SOURCE586-CORE15-INTEGRATION",
+  "sourceCommit": "a33ebb9b49e15fe7d3b5d4f3becacb9773408876",
+  "buildId": "replica-production-source585-core-15",
+  "buildStatus": "REAL_BUILD_AND_PACK_CONTRACT_VALIDATED",
+  "pack": {
+    "format": "naijue-release-pack-receipt-v1",
+    "status": "PACKED_AND_EXTRACTED_READBACK_MATCH",
+    "buildId": "replica-production-source585-core-15",
+    "sourceCommit": "a33ebb9b49e15fe7d3b5d4f3becacb9773408876",
+    "archive": {
+      "file": "release.tar.gz",
+      "bytes": 1687124,
+      "sha256": "f05fc5a391d6563ab41277e239f8fa3a138f45fcf355aa8a29f685c8a1eec97e"
+    },
+    "manifestSha256": "ab42ee43b357ef9d8adca7b50472d1c3a0420107fa58ba647401e46607c39fe7",
+    "members": 199,
+    "archiveExtractions": 1,
+    "businessOrProductionValidation": false,
+    "deploymentExecuted": false
+  },
+  "sourceReview": "QB343 sixscheme source PASS9e015658; QB340 NULLfix source PASS00696e1e; QF2S582-F01closed11007fb6; G339sourcePASS2c638a33",
+  "publicConfiguration": "Only asset prefix CORE14->CORE15; existing readonly scope unchanged; no false full-business flags",
+  "notExecuted": [
+    "Server install",
+    "v19 actualSQL",
+    "actual newgeneration SAVE",
+    "browser newpackage",
+    "full11 MAIN/PUBLISH",
+    "formalroot switch"
+  ],
+  "next": "T45 after original salesheader actual safe seam adopts exactpackage with required real v19 metadata/reviews/APP binding"
+}
