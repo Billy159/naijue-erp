@@ -15,8 +15,8 @@
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
-    "bytes": 37413,
-    "sha256": "782c7226251240048da65f8063d729efbc0a39627ef70d40e5b3a38dc793181e"
+    "bytes": 147560,
+    "sha256": "1ee717d6d039c20c45d605e56a533b5489d54bd84da54861da14dc1d6a005214"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -313,5 +313,89 @@
         "sha256": "5f8b3834ec3b635d864a192f6dd6333f48d520985f6169bb688383dc62a9eb4f"
       }
     }
+  },
+  "physicalDataMapping627": {
+    "status": "DESCRIPTOR_FIRST_ORIGINAL_PINS_ONLY_READER_IMPLEMENTATION_IN_PROGRESS_NOT_EXECUTABLE",
+    "recordedAtUtc": "2026-10-26T09:19:01.083815+00:00",
+    "descriptorField": "INPUT.producers.<group>.fileLocations[] = logical original path/bytes/SHA + physical exact location or null + kind + required role + existing server evidence. No path prefix replacement or original DATA/review mutation.",
+    "all11": {
+      "PARTIES": {
+        "requiredRefs": 8,
+        "existingLstat": 1,
+        "moneyOriginal96": 0,
+        "stillMissing": 7
+      },
+      "CATALOGUE": {
+        "requiredRefs": 2,
+        "existingLstat": 2,
+        "moneyOriginal96": 0,
+        "stillMissing": 0
+      },
+      "PRODUCTS": {
+        "requiredRefs": 41,
+        "existingLstat": 31,
+        "moneyOriginal96": 0,
+        "stillMissing": 10
+      },
+      "SKUS": {
+        "requiredRefs": 2,
+        "existingLstat": 1,
+        "moneyOriginal96": 0,
+        "stillMissing": 1
+      },
+      "BARCODES": {
+        "requiredRefs": 5,
+        "existingLstat": 0,
+        "moneyOriginal96": 0,
+        "stillMissing": 5
+      },
+      "STOCK_CONTRIBUTORS": {
+        "requiredRefs": 2,
+        "existingLstat": 1,
+        "moneyOriginal96": 0,
+        "stillMissing": 1
+      },
+      "PAYMENT": {
+        "requiredRefs": 4,
+        "existingLstat": 0,
+        "moneyOriginal96": 0,
+        "stillMissing": 4
+      },
+      "HEADERS": {
+        "requiredRefs": 11,
+        "existingLstat": 7,
+        "moneyOriginal96": 1,
+        "stillMissing": 3
+      },
+      "SALES_DETAILS": {
+        "requiredRefs": 7,
+        "existingLstat": 0,
+        "moneyOriginal96": 1,
+        "stillMissing": 6
+      },
+      "SETTLEMENTS": {
+        "requiredRefs": 7,
+        "existingLstat": 0,
+        "moneyOriginal96": 1,
+        "stillMissing": 6
+      },
+      "TRANSFER_LINES": {
+        "requiredRefs": 3,
+        "existingLstat": 3,
+        "moneyOriginal96": 0,
+        "stillMissing": 0
+      }
+    },
+    "existingActualMap": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/FINAL-EXISTING-SERVER-LOCATION-MAP.json",
+    "money96": "Original pin/path only; fresh lstat pending, not actual existence proof.",
+    "sourceBodyReads": 0,
+    "rehashedOriginalLargeBodies": 0,
+    "excludedUnneeded": [
+      "Barcode original362MB source snapshot, CSV/aliases and original identity capture: reader does not open them.",
+      "Parties103MB identity registry and unrelated reference-inputs: ordinary reader only consumes manifest+selectedparty628+review+exact2 files.",
+      "Transfer documentClosures9 c18e... does not have a proven server copy, and current TL packed closure reader does not consume that separate file; whole original all11 builder computes doc9 from original header4+line rows. Do not transfer it just to invent a requirement."
+    ],
+    "codeStatus": "Original provider/host plus registered original7 readers/helper need exact physical IO mapping. Descriptor released now so T45 can prepare needed transfers. No source execution authority or fullpayload created.",
+    "authorityRootRef": "CORE actual118 original safe215KB DATA descriptor is included as PARTIES CORE_DATA; current checkpoint still actual121 seq2, birth DATA immutable."
   }
 }

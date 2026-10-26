@@ -14023,6 +14023,14 @@
         "status": "DIRECTION_ADOPTED; exact persistent schema/write-tail delta must be presented before implementation; no new generation table implicitly approved",
         "priority": "Full real page wiring remains first; no cache activation before writer invalidation guarantees; no broad regression"
       }
+    },
+    "source628Descriptor": {
+      "input": "reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+      "bytes": 147560,
+      "sha256": "1ee717d6d039c20c45d605e56a533b5489d54bd84da54861da14dc1d6a005214",
+      "status": "DESCRIPTOR_DELIVERED_MAPPING_CODE_WIP_NOT_EXECUTABLE",
+      "actualOwner": "T45 null locations and required controlled transfer",
+      "next": "D3 mapping delivery then source624 genuine DATA/EXPECTED/MAIN assembly; independent grant only after complete inputs"
     }
   }
 }

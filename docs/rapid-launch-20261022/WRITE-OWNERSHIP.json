@@ -6071,6 +6071,16 @@
     "existingOwnership": "source623FullContinuationSeams",
     "scope": "Original T19 provider/reader exact logical-ref to physical-path mapping, preserve original manifest/review/source content and pins; complete all11 descriptor to T45 before code completion. No broad prefix replacement, no source recapture or large body scan. Additional existing reader files returned exact list before overlapping writes.",
     "actualOwner": "T45 source metadata/necessary controlled transfer and real execution; C grant/build/Git",
-    "next": "SOURCE624 prepare complete genuine DATA/EXPECTED/MAIN then actual independent grant; current source pass not execution-ready"
+    "next": "SOURCE624 prepare complete genuine DATA/EXPECTED/MAIN then actual independent grant; current source pass not execution-ready",
+    "additionalExactFiles": [
+      "scripts/import-v3/native-party-source26.mjs",
+      "scripts/import-v3/native-payment-source26.mjs",
+      "scripts/import-v3/historical-customer-source.mjs",
+      "scripts/import-v3/native-source-authorizers.mjs",
+      "scripts/import-v2/authorized-native-product-reader.mjs",
+      "scripts/import-v2/authorized-sales-detail-reader.mjs",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/prepare-retained-sales-options-20261026.mjs"
+    ],
+    "additionalScope": "Original reader optional controlled resolveFile seam maps exact original logical path plus bytes/SHA to physical file; original options/manifests/reviews/provenance remain immutable; original validation and held FD continue. Existing provider/host tests only affected cases. Verified seven R source leaves have no WIP on handoff; no D1 release overlap."
   }
 }
