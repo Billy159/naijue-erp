@@ -14153,14 +14153,29 @@
       "next": "OriginalD3 source-only consumer; not MAIN/PUBLISH success"
     },
     "source642B07": {
-      "status": "QB385_OS_WRAPPER_NEED_FIX_F01_F02_ACTUAL_NOT_STARTED",
+      "status": "QB385_REV2_SOURCE_PASS_ADOPTED_ACTUAL_WINDOW_FAILED_BEFORE_SEED",
       "owner": "T45",
       "scope": "Only OS path substitution and stop-timeout lifecycle receipt; reuse QB382/383",
       "report": "K/reports/qa-backend/rapid-launch-20261022/QB/slice385-B07-OS-parent-wrapper/QB385-INITIAL-RESULT.json",
       "bytes": 4358,
       "sha256": "b572b02e0fba255d8b369b59a57bc361d00c234e2936758916a45beecd421495",
       "staticRuntimeInput": "D1 private configuration1582/f4ef1460 and original DRAFT1883/6907b766 delivered; current review/gate only in actual live window",
-      "next": "Original T45 fixes exact2, QB failure-only verification, same-copy bounded actual run"
+      "next": "D1 original fixture limited GUC preflight fix; T45 preserves stopped19 and old26; no failed operation replay"
+    },
+    "source643B07Actual": {
+      "startedAtUTC": "2026-10-26T11:56:10.092712Z",
+      "finishedAtUTC": "2026-10-26T11:56:10.783277Z",
+      "elapsedSeconds": 0.69058425,
+      "result": "FAILED_BEFORE_FIXTURE_INSERT_INTENT",
+      "rootCause": "PostgreSQL denied unix_socket_directories read after SET ROLE naijue_erp_test",
+      "sqlstate": "NOT_CAPTURED_DO_NOT_INFER",
+      "fixtureActual": false,
+      "httpActual": false,
+      "clientsClosed": true,
+      "privatePidStopped": true,
+      "preserved": "Old26 whole directory sibling data-before-qa-identity-20261026-01; original19 restored and stopped",
+      "owner": "D1 preflight source; T45 sole actual execution",
+      "next": "Minimal identity preflight wiring; no expanded role privilege or bypass; fixed successor only"
     }
   }
 }
