@@ -138,3 +138,33 @@ test('transfer draft clear records explicit NULL while salesperson-only sales re
  assert.throws(()=>parseHistoryRevisionCommand({...command(),lines:[],header:{responsibleStaffId:id(42)}}));
  assert.throws(()=>parseHistoryRevisionCommand({...q,header:{createdByStaffId:id(42)}}));
 });
+
+
+test('T16 indexed planner keeps baseline array order and patch effect order across many lines and reversed settlement patches', () => {
+  const c = current(), count = 1000;
+  (c as { lines: HistoryRevisionCurrent['lines'] }).lines = Array.from({ length: count }, (_, n) => ({ ...c.lines[0]!, lineId: id(1000 + n), skuId: id(3000 + n), quantity: n % 2 ? '-2' : '2' }));
+  (c as { settlements: HistoryRevisionCurrent['settlements'] }).settlements = [
+    { settlementId: id(9000), direction: 'RECEIVE', amount: '30.00' },
+    { settlementId: id(9001), direction: 'REFUND', amount: '10.00' }
+  ];
+  const original = structuredClone(c), patches = [999, 0, 500].map(n => ({ lineId: id(1000 + n), quantity: n === 999 ? '-3' : '4' }));
+  const p = plan(c, { ...command(), lines: patches, settlements: [
+    { settlementId: id(9001), amount: '11.00' }, { settlementId: id(9000), amount: '31.00' }
+  ] });
+  assert.deepEqual(c, original); assert.deepEqual(p.before.lines, original.lines);
+  assert.deepEqual(p.after.lines.map(l => l.lineId), original.lines.map(l => l.lineId));
+  assert.deepEqual(p.effects.map(e => [e.lineId, e.quantityDelta]), [[id(1999), '1'], [id(1000), '-2'], [id(1500), '-2']]);
+  assert.deepEqual(p.after.settlements, [
+    { settlementId: id(9000), direction: 'RECEIVE', amount: '31.00' },
+    { settlementId: id(9001), direction: 'REFUND', amount: '11.00' }
+  ]);
+  assert.equal(p.after.totals!.netDue, '20.00'); assert.equal(p.moneyChanged, true);
+  assert.equal(p.toVersion, 2); assert.equal(p.after.previousRevisionId, id(99));
+});
+test('T16 indexed planner retains duplicate baseline identity and foreign settlement rejection', () => {
+  const duplicateLines = current(); (duplicateLines as { lines: HistoryRevisionCurrent['lines'] }).lines = [duplicateLines.lines[0]!, { ...duplicateLines.lines[0]!, quantity: '9' }];
+  assert.throws(() => plan(duplicateLines), { code: 'HISTORY_REVISION_INVALID' });
+  const duplicateSettlements = current(); (duplicateSettlements as { settlements: HistoryRevisionCurrent['settlements'] }).settlements = [duplicateSettlements.settlements[0]!, { ...duplicateSettlements.settlements[0]!, amount: '1.00' }];
+  assert.throws(() => plan(duplicateSettlements), { code: 'HISTORY_REVISION_INVALID' });
+  assert.throws(() => plan(current(), { ...command(), settlements: [{ settlementId: id(9999), amount: '20.00' }] }), { code: 'HISTORY_REVISION_FOREIGN_ROW' });
+});

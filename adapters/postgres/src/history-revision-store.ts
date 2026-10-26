@@ -209,11 +209,13 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
         }
         const operationId=uuid(this.newId('operation')),revisionId=uuid(this.newId('revision'));
         must(operationId!==revisionId);const plan=planHistoryRevision(before,command,revisionId);
+        const beforeLines=new Map(before.lines.map(line=>[line.lineId,line]));
+        const afterLines=new Map(plan.after.lines.map(line=>[line.lineId,line]));
         const effects=plan.effects.map(effect=>({...effect,ledgerEntryId:uuid(this.newId('ledger'))}));
         const evidence={schemaVersion:1,importBatchId:before.importBatchId,publishedOperationId:before.publishedOperationId,
           documentManifestHash:before.documentManifestHash,previousRevisionId:before.previousRevisionId,oldEffectiveVersion:plan.fromVersion,
           newEffectiveVersion:plan.toVersion,sourceStatus:before.sourceStatus,
-          effects:effects.map(e=>{const old=before.lines.find(l=>l.lineId===e.lineId)!,next=plan.after.lines.find(l=>l.lineId===e.lineId)!;
+          effects:effects.map(e=>{const old=beforeLines.get(e.lineId)!,next=afterLines.get(e.lineId)!;
             const sign=e.endpoint==='TO'?1n:-1n,applies=before.sourceStatus==='APPROVED';
             return {...e,oldEffect:(applies?sign*BigInt(old.quantity):0n).toString(),newEffect:(applies?sign*BigInt(next.quantity):0n).toString(),delta:e.quantityDelta};}),
           ledgerEntryIds:effects.map(e=>e.ledgerEntryId)};
@@ -232,7 +234,7 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
           WHERE history_${family}_effective.version=$4`,[command.documentId,plan.toVersion,revisionId,plan.fromVersion,...(plan.after.totals?[plan.after.totals.grossAmount,plan.after.totals.orderDiscount,plan.after.totals.netDue]:[])]);
         must(head.rowCount===1,'VERSION_CONFLICT');
         for(const patch of command.lines) {
-          const l=plan.after.lines.find(l=>l.lineId===patch.lineId)!;
+          const l=afterLines.get(patch.lineId)!;
           const write=await query(`/* history-revise:put-line */ INSERT INTO naijue_erp.history_${family}_line_effective
             (line_id,revision_id,quantity${command.kind==='sales'?',deal_price,line_amount,allocated_discount':''})
             VALUES($1::uuid,$2::uuid,$3::bigint${command.kind==='sales'?',$4::numeric,$5::numeric,$6::numeric':''})

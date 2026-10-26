@@ -88,12 +88,12 @@ export function planHistoryRevision(current: HistoryRevisionCurrent, input: Hist
   if (before.kind === 'sales') { must(uuid(before.warehouseId) && before.fromWarehouseId === null && before.toWarehouseId === null && before.totals !== null); totals(before.totals); }
   else must(before.warehouseId === null && uuid(before.fromWarehouseId) && uuid(before.toWarehouseId)
     && before.fromWarehouseId !== before.toWarehouseId && before.totals === null && before.settlements.length === 0);
-  const lineIds = new Set<string>(), settlementIds = new Set<string>();
-  for (const l of before.lines) {
-    must(uuid(l.lineId) && uuid(l.skuId) && !lineIds.has(l.lineId) && isHistoryQuantity(l.quantity)); lineIds.add(l.lineId);
+  const lineIndexes = new Map<string, number>(), settlementIndexes = new Map<string, number>();
+  for (const [index, l] of before.lines.entries()) {
+    must(uuid(l.lineId) && uuid(l.skuId) && !lineIndexes.has(l.lineId) && isHistoryQuantity(l.quantity)); lineIndexes.set(l.lineId, index);
     if (before.kind === 'sales') { money(l.dealPrice, true); money(l.lineAmount); must(l.allocatedDiscount === null || isExactHistoryMoney(l.allocatedDiscount)); }
   }
-  for (const s of before.settlements) { must(uuid(s.settlementId) && !settlementIds.has(s.settlementId) && ['RECEIVE', 'REFUND'].includes(s.direction)); money(s.amount, true); settlementIds.add(s.settlementId); }
+  for (const [index, s] of before.settlements.entries()) { must(uuid(s.settlementId) && !settlementIndexes.has(s.settlementId) && ['RECEIVE', 'REFUND'].includes(s.direction)); money(s.amount, true); settlementIndexes.set(s.settlementId, index); }
   const effects: HistoryRevisionEffect[] = []; let anyChanged = false, moneyChanged = false;
   if (command.header !== undefined) {
     must(before.sourceStatus === 'DRAFT' && before.baselineEffect === 'EXCLUDED_NOT_EFFECTIVE');
@@ -110,8 +110,8 @@ export function planHistoryRevision(current: HistoryRevisionCurrent, input: Hist
     effects.push({ lineId, warehouseId, skuId, endpoint, quantityDelta: delta.toString() });
   };
   for (const patch of command.lines) {
-    const index = before.lines.findIndex(l => l.lineId === patch.lineId); must(index >= 0, 'HISTORY_REVISION_FOREIGN_ROW');
-    const old = before.lines[index]!, next = { ...old, ...patch }; (after.lines as typeof next[])[index] = next;
+    const index = lineIndexes.get(patch.lineId); must(index !== undefined, 'HISTORY_REVISION_FOREIGN_ROW');
+    const old = before.lines[index!]!, next = { ...old, ...patch }; (after.lines as typeof next[])[index!] = next;
     for (const key of ['quantity', 'dealPrice', 'lineAmount', 'allocatedDiscount'] as const) if (Object.hasOwn(patch, key) && changed(old[key], next[key])) {
       anyChanged = true; if (key !== 'quantity') moneyChanged = true;
     }
@@ -126,9 +126,9 @@ export function planHistoryRevision(current: HistoryRevisionCurrent, input: Hist
     (after as { totals: HistoryRevisionTotals }).totals = command.totals;
   }
   for (const patch of command.settlements) {
-    const index = before.settlements.findIndex(s => s.settlementId === patch.settlementId); must(index >= 0, 'HISTORY_REVISION_FOREIGN_ROW');
-    const old = before.settlements[index]!; if (changed(old.amount, patch.amount)) { anyChanged = true; moneyChanged = true; }
-    (after.settlements as { settlementId: string; direction: 'RECEIVE' | 'REFUND'; amount: string }[])[index] = { ...old, amount: patch.amount };
+    const index = settlementIndexes.get(patch.settlementId); must(index !== undefined, 'HISTORY_REVISION_FOREIGN_ROW');
+    const old = before.settlements[index!]!; if (changed(old.amount, patch.amount)) { anyChanged = true; moneyChanged = true; }
+    (after.settlements as { settlementId: string; direction: 'RECEIVE' | 'REFUND'; amount: string }[])[index!] = { ...old, amount: patch.amount };
   }
   must(anyChanged, 'HISTORY_REVISION_EMPTY');
   must(effects.length === 0 || before.businessDate !== null, 'HISTORY_REVISION_BUSINESS_DATE_UNKNOWN');
