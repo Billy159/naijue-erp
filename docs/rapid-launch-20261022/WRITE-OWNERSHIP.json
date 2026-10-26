@@ -6291,5 +6291,14 @@
     ],
     "T45": "Original new diagnostic carrier/result whitelist only; no shared helper or data mutation",
     "scope": "Minimal fixed-size enum/count/done/elapsed progress on existing source-only generators and merged streams, transparent original yield/order/close/errors. No business values/paths/IDs/extra reads/hashes/cache/platform. Existing error code/object preserved, bounded result snapshot. Finite synthetic tests before a separate C-authorized bounded actual diagnostic, no full replay or timeout extension."
+  },
+  "source693TargetedSourceProbe": {
+    "owner": "D3",
+    "files": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs"
+    ],
+    "T45": "Original diagnostic carrier explicit fixed probe argument and safe error/result whitelist only",
+    "scope": "Explicit diagnostic-only STOP_AFTER_1000_MERGED_SOURCE_ROWS, preserve complete required native validations and original D1 consumer, stop before row1001/typed/commands/writer with dedicated limit code and original cleanup. Normal preparation unchanged; no caching or skipped facts. Source-only now; later exact210s soft240hard targeted actual separately adopted, not full900 completion retry."
   }
 }
