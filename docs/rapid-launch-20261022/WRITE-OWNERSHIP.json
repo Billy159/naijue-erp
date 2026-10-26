@@ -6334,5 +6334,17 @@
       "tests/history-revision-postgres-protocol.test.ts"
     ],
     "scope": "Fix existing effective-head successor write dispatch: fromVersion1 original INSERT; successor explicit UPDATE with exact header/version/previousRevisionId CAS, original totals and rowCount1 requirement. Existing INSERT BEFORE guard correctly rejects successor UPSERT before conflict dispatch. Preserve SQL guards, write contract, permissions, transactions, original keys and immutable source. No SQL/DDL/schema change; source-only until independent review and same-key controlled actual continuation."
+  },
+  "source705MoneyOriginalRequestRetry": {
+    "owner": "D1",
+    "files": [
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.test.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-credential-renewal.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-credential-renewal.test.mjs"
+    ],
+    "scope": "Only fixed child03 original money REQUEST retry after adopted exact child02 no-commit RR c6642963, immutable prior auth1 proof and actual child01/02 auth3 lineage. Current transaction QA3/auth3, two heads v2 and money receipt absent before existing QA-only3-to4 renewal. Copy exact original money request bytes/key, no rebuild or prior cases replay. Existing old modes retain rejection; receipt present no new save. No generic retry/rotation framework, SQL/DDL/grant or business contract change."
   }
 }

@@ -227,11 +227,18 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
           plan.fromVersion,plan.toVersion,actor.accountId,command.requestKey,command.reason,now,JSON.stringify(before),JSON.stringify(plan.after),JSON.stringify(evidence),operationId]);
         must(written.rowCount===1);
         const family=tables[command.kind];
-        const head=await query(`/* history-revise:put-head */ INSERT INTO naijue_erp.history_${family}_effective
-          (header_id,version,revision_id${command.kind==='sales'?',gross_amount,order_discount,net_due':''})
-          VALUES($1::uuid,$2,$3::uuid${command.kind==='sales'?',$5::numeric,$6::numeric,$7::numeric':''})
-          ON CONFLICT(header_id) DO UPDATE SET version=EXCLUDED.version,revision_id=EXCLUDED.revision_id${command.kind==='sales'?',gross_amount=EXCLUDED.gross_amount,order_discount=EXCLUDED.order_discount,net_due=EXCLUDED.net_due':''}
-          WHERE history_${family}_effective.version=$4`,[command.documentId,plan.toVersion,revisionId,plan.fromVersion,...(plan.after.totals?[plan.after.totals.grossAmount,plan.after.totals.orderDiscount,plan.after.totals.netDue]:[])]);
+        const headAmounts=plan.after.totals?[plan.after.totals.grossAmount,plan.after.totals.orderDiscount,plan.after.totals.netDue]:[];
+        // BEFORE INSERT validates first-head provenance before conflict handling.
+        // Later revisions must reach the existing guard's UPDATE CAS branch directly.
+        const head=plan.fromVersion===1
+          ? await query(`/* history-revise:put-head */ INSERT INTO naijue_erp.history_${family}_effective
+            (header_id,version,revision_id${command.kind==='sales'?',gross_amount,order_discount,net_due':''})
+            VALUES($1::uuid,$2::integer,$3::uuid${command.kind==='sales'?',$4::numeric,$5::numeric,$6::numeric':''})`,
+          [command.documentId,plan.toVersion,revisionId,...headAmounts])
+          : await query(`/* history-revise:put-head */ UPDATE naijue_erp.history_${family}_effective
+            SET version=$4::integer,revision_id=$5::uuid${command.kind==='sales'?',gross_amount=$6::numeric,order_discount=$7::numeric,net_due=$8::numeric':''}
+            WHERE header_id=$1::uuid AND version=$2::integer AND revision_id=$3::uuid`,
+          [command.documentId,plan.fromVersion,before.previousRevisionId,plan.toVersion,revisionId,...headAmounts]);
         must(head.rowCount===1,'VERSION_CONFLICT');
         for(const patch of command.lines) {
           const l=afterLines.get(patch.lineId)!;

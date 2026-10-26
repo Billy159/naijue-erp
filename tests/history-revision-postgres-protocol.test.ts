@@ -13,7 +13,7 @@ const actor={accountId:entityId('account',id(1)),hallId:entityId('hall',id(2))};
 const now='2026-10-23T12:00:00.000000Z';
 const command=(kind:'sales'|'transfers'='sales'):HistoryRevisionCommand=>({kind,documentId:id(10),expectedVersion:1,
   requestKey:'history-numeric-original-key',reason:'SYNTHETIC numeric correction',lines:[{lineId:id(11),quantity:'3'}],totals:null,settlements:[]});
-interface Options { kind?:'sales'|'transfers'; sourceStatus?:string; revoked?:boolean; foreignHall?:boolean; published?:boolean;
+interface Options { headWriteCount?:number; kind?:'sales'|'transfers'; sourceStatus?:string; revoked?:boolean; foreignHall?:boolean; published?:boolean;
   date?:string|null; receipt?:{command:HistoryRevisionCommand;result:HistoryRevisionReceipt}; failure?:string; headVersion?:number; responsible?:string|null; missingResponsible?:boolean; effectiveDate?:string|null; missingStaff?:boolean; proposedEnabled?:boolean; proposedStock?:boolean; transferScopeResults?:readonly (boolean|null|undefined)[]; effectiveFrom?:string; effectiveTo?:string }
 function protocol(options:Options={}) {
   const kind=options.kind??'sales', calls:{sql:string;values:unknown[]}[]=[],releases:unknown[]=[],proofClients:unknown[]=[];
@@ -40,6 +40,11 @@ function protocol(options:Options={}) {
     else if(sql.includes('history-revise:head'))rows=options.headVersion?[{header_id:id(10),version:options.headVersion,revision_id:id(90),gross_amount:'2.50',order_discount:'0.00',net_due:'2.50'}]:[];
     else if(sql.includes('history-revise:lines'))rows=[{id:id(11),sku_id:id(12),quantity:'2',deal_price:'1.25',line_amount:'2.50',allocated_discount:null,effective_valid:true}];
     else if(sql.includes('history-revise:settlements'))rows=[{id:id(13),direction:'RECEIVE',amount:'2.50',effective_valid:true}];
+    else if(sql.includes('history-revise:put-head')){
+      // Existing installed BEFORE INSERT guard runs before an ON CONFLICT UPDATE.
+      if(options.headVersion&&sql.includes('INSERT INTO'))throw Object.assign(Error('SYNTHETIC first-head insert rejected for successor revision'),{code:'40001'});
+      rowCount=options.headWriteCount??1;
+    }
     else if(sql.startsWith('SELECT naijue_erp.inventory_key_lock')){}
     else if(sql.includes('FOR UPDATE OF b'))rows=(values[0] as string[]).map((w,i)=>({warehouse_id:w,sku_id:(values[1] as string[])[i],quantity:i===0?'10':'7',version:4,last_operation_id:null,updated_at:now}));
     else if(sql.includes('history-revise:revision')||sql.includes('history-revise:put-')||sql.includes('history-revise:audit')||sql.includes('history-revise:complete')||sql.includes('history-posting:ledger')||sql.startsWith('UPDATE naijue_erp.inventory_balance')){}
@@ -174,4 +179,26 @@ test('history transfer explicit NULL clear skips only staff lookup, preserves au
  assert.ok(!p.calls.some(c=>c.sql.includes('history-revise:responsible')));
  assert.ok(!p.calls.some(c=>/UPDATE naijue_erp.history_(sales|transfer)_(header|line)|history-posting:ledger/.test(c.sql)));
  assert.equal(p.connections(),1);assert.equal(p.calls.at(-1)!.sql,'COMMIT');assert.equal(p.releases.length,1);
+});
+
+test('successor heads use original guard UPDATE path with identity/version/previous-revision CAS for both kinds',async()=>{
+ for(const kind of ['sales','transfers'] as const){
+  const p=protocol({kind,sourceStatus:'DRAFT',headVersion:2}),q={...command(kind),expectedVersion:2,...(kind==='sales'?{lines:[{lineId:id(11),dealPrice:'1.26'}],settlements:[{settlementId:id(13),amount:'2.50'}]}:{})};
+  const result=await p.run(q),head=p.calls.find(c=>c.sql.includes('history-revise:put-head'))!;
+  assert.equal(result.version,3);assert.match(head.sql,/UPDATE naijue_erp.history_(sales|transfer)_effective/);assert.ok(!head.sql.includes('INSERT INTO'));assert.ok(!head.sql.includes('ON CONFLICT'));
+  assert.match(head.sql,/header_id=\$1::uuid AND version=\$2::integer AND revision_id=\$3::uuid/);
+  assert.deepEqual(head.values.slice(0,5),[id(10),2,id(90),3,id(101)]);
+  assert.deepEqual(head.values.slice(5),kind==='sales'?['2.50','0.00','2.50']:[]);assert.equal(p.calls.at(-1)!.sql,'COMMIT');
+ }
+});
+test('first effective head remains INSERT and zero successor CAS rolls back before projection/audit/receipt completion',async()=>{
+ const first=protocol({sourceStatus:'DRAFT'});await first.run();const insert=first.calls.find(c=>c.sql.includes('history-revise:put-head'))!;
+ assert.match(insert.sql,/INSERT INTO/);assert.ok(!insert.sql.includes('ON CONFLICT'));assert.deepEqual(insert.values.slice(0,3),[id(10),2,id(101)]);
+ for(const kind of ['sales','transfers'] as const){const p=protocol({kind,sourceStatus:'DRAFT',headVersion:2,headWriteCount:0});await assert.rejects(p.run({...command(kind),expectedVersion:2}),{code:'VERSION_CONFLICT'});
+ assert.equal(p.calls.at(-1)!.sql,'ROLLBACK');assert.equal(p.calls.filter(c=>c.sql.includes('history-revise:put-line')||c.sql.includes('history-revise:audit')||c.sql.includes('history-revise:complete')).length,0);}
+});
+test('successor current head does not turn original-key receipt replay into another head write',async()=>{
+ const q=command(),receipt:HistoryRevisionReceipt={operationId:id(60),dataset:'HISTORY',kind:'sales',documentId:id(10),revisionId:id(61),version:2,ledgerEntryIds:[]};
+ const p=protocol({sourceStatus:'DRAFT',headVersion:2,receipt:{command:q,result:receipt}});assert.deepEqual(await p.run(q),receipt);
+ assert.equal(writes(p).length,0);assert.equal(p.calls.filter(c=>c.sql.includes('history-revise:put-head')).length,0);assert.equal(p.calls.at(-1)!.sql,'COMMIT');
 });
