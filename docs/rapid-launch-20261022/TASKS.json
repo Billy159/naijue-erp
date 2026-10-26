@@ -14339,6 +14339,34 @@
       "QB390": "3799/9d93a5fa9506212e560279b0eaf32f8c0f1bd3fcd9ae0e4e74c670680cf6f644",
       "QB391": "3585/a30b43644352420c9259a022ce6bea3145ccb6078a236bb8e13c948e8660be52",
       "next": "T45 accurate720s OS lifecycle03, actual new metadata review/gate only then normal3 cases"
+    },
+    "source653Actual": {
+      "B0703": {
+        "status": "ACTUAL_REQUEST_ATTEMPT_FAILED_ORIGINAL_KEY_READBACK_NO_COMMIT",
+        "parentSeconds": 166.119264041,
+        "requestKey": "D1_B07_V16_DRAFT_SALES_QUANTITY_01",
+        "actualHrev": false,
+        "currentPurpose": "QB392 live6 PASS adopted; actual normal save not pass",
+        "readbackAtUTC": "2026-10-26T12:47:55.927Z",
+        "receipts6keys": 0,
+        "committed6keys": 0,
+        "historyRevisions": 0,
+        "firstEffectiveVersion": 1,
+        "firstEffectiveQuantity": "2",
+        "cleanup": "RR SELECT ROLLBACK acknowledged/client ended/ownPID stopped",
+        "next": "D1 originalrunner minimal safe status/comparison-phase observation and pure original schema check; preserve03whole26/original request and6keys; no new HTTP/seed/restore yet"
+      },
+      "source129": {
+        "status": "ACTUAL_SMALL_METADATA_PASS",
+        "elapsedSeconds": 0.568242495,
+        "fourCaptures": "SCOPE INPUT CORE_MEMBERS_STAFF_MAINTENANCE ACTUAL125 allPASS",
+        "maintenanceRows": 115,
+        "maintenanceFailures": 0,
+        "forbiddenActual": [],
+        "next": "D3 minimal phase marker preserving original error code and validation; no blind126 replay"
+      },
+      "source128": "FAILED before JSONprobe due missing original runtime deadline initialization; preserved and not rerun",
+      "serverJobs": "126 terminalFAILED,127 terminalPASS,128 terminalFAILED,129 terminalPASS; no new operation implicitly queued"
     }
   }
 }
