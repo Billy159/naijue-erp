@@ -938,6 +938,18 @@
           "group": "HUMAN_APPROVED_V20_NATIVE_REVIEW_TEXT",
           "fieldGate": "EXACT_V20_ONLY",
           "authority": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-CONTRACT-APPROVAL-v20-NATIVE-REVIEW-TIME-TEXT.json"
+        },
+        {
+          "path": "adapters/postgres/src/read-dataset-version.ts",
+          "group": "T15_EXACT_INTERNAL_HELPER_NO_RUNTIME_ACTIVATION",
+          "fieldGate": "C_DELEGATED_TECHNICAL_SOURCE_ONLY_EXISTING_RULES",
+          "authority": "source676 verified direct human decision delegation01a178df"
+        },
+        {
+          "path": "tests/read-dataset-version-postgres-protocol.test.ts",
+          "group": "T15_EXACT_INTERNAL_HELPER_NO_RUNTIME_ACTIVATION",
+          "fieldGate": "C_DELEGATED_TECHNICAL_SOURCE_ONLY_EXISTING_RULES",
+          "authority": "source676 verified direct human decision delegation01a178df"
         }
       ]
     },
@@ -2578,6 +2590,24 @@
           "group": "F04_COMPLETE_FROZEN_DEMO_PRODUCT_PAGE_UI",
           "fieldGate": "NO_BACKEND_SCHEMA_OR_WRITE_CONTRACT_CHANGE",
           "source": "Frozen Demo b8bcfe3 frontend/product-rework.css"
+        },
+        {
+          "path": "apps/web/src/inventory/compact-page.ts",
+          "group": "T14_COMPACT_DECODER_LAZY_MODEL_ONLY_NO_TRANSPORT_SWITCH",
+          "fieldGate": "C_DELEGATED_TECHNICAL_SOURCE_ONLY_EXISTING_RULES",
+          "authority": "source676 verified direct human decision delegation01a178df"
+        },
+        {
+          "path": "apps/web/src/inventory/compact-model.ts",
+          "group": "T14_COMPACT_DECODER_LAZY_MODEL_ONLY_NO_TRANSPORT_SWITCH",
+          "fieldGate": "C_DELEGATED_TECHNICAL_SOURCE_ONLY_EXISTING_RULES",
+          "authority": "source676 verified direct human decision delegation01a178df"
+        },
+        {
+          "path": "apps/web/src/inventory/compact-page.test.ts",
+          "group": "T14_COMPACT_DECODER_LAZY_MODEL_ONLY_NO_TRANSPORT_SWITCH",
+          "fieldGate": "C_DELEGATED_TECHNICAL_SOURCE_ONLY_EXISTING_RULES",
+          "authority": "source676 verified direct human decision delegation01a178df"
         }
       ]
     },
@@ -6198,5 +6228,17 @@
     ],
     "scope": "only local id-to-index or id-to-line maps replacing repeated finds; preserve duplicate rejection, arrays/order, exact values/effects/CAS/idempotency/audit/SQL; no 07 source/client mutation",
     "priority": "real source-only root diagnosis first; no duplicate work"
+  },
+  "source678ReadyScopes": {
+    "D1": [
+      "adapters/postgres/src/read-dataset-version.ts",
+      "tests/read-dataset-version-postgres-protocol.test.ts"
+    ],
+    "F2": [
+      "apps/web/src/inventory/compact-page.ts",
+      "apps/web/src/inventory/compact-model.ts",
+      "apps/web/src/inventory/compact-page.test.ts"
+    ],
+    "limits": "No schema/writer/issuer/route/root/production transport activation. Strict same-client version helper and pure synthetic compact decoder. Coverage basis is explanatory proof note, not wire field. No fabricated readVersion/cache."
   }
 }

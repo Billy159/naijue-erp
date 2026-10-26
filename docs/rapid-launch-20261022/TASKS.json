@@ -14641,6 +14641,14 @@
       "T16": "source-ready 3 exact leaves; scoped QB pending; actual business not passed",
       "fullSource": "134 confirmed executing; original key collect only",
       "F2": "compact decoder scope preparation, no production transport switch"
+    },
+    "latestSource678": {
+      "summary": "SOURCE678：原T16模块源QB410 PASS9cccecec采用，不冒实际性能/正常3案。C已准原T45准确07完整包（QB408FINAL4342/1ec31875）16:20Z/start≤16:05/90086040/300唯一实际，134独立原unitactive/PID1550398/elapsed534.991s已原systemctl实证非Chat推断，只collect不重。C登记D1 T15两新helper/protocol叶，不连接/建表/改writer/开启缓存；按原同client严格bigint、固定域序去重flush、失败不吞不重发，真实DDL/catalog后继另实际准入，不挡134首批。F2 exact3纯compact decoder/lazymodel/test已登记，coverage.basis裁为说明非wire字段，原五coverage枚举保持；版本未就绪不造UUID/null成功、不切生产dense，不占后端writer。D3更新原合同消歧即可，真实source新根因优先。677本地9968f18已允许源码WIP，GitHub首GET瞬态失败未改远端，C按原exactobject脚本保断点修后再推，未把此称远端已核。整体ACTIVE，全站真实接线/历史可写/正式发布未完成。",
+      "T15": "D1 exact helper2 registered; no schema/runtime activation",
+      "F2": "compact decoder/model3 registered; no production transport switch",
+      "B07": "07 final package adopted one actual allowed",
+      "fullSource": "134 confirmed live process; collect only",
+      "github": "677 initial GET transient failure; exact checkpoint push pending"
     }
   }
 }
