@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {pathToFileURL} from 'node:url';
 import {assembleProjection,exportProjection26} from './export-projection.mjs';
-import {columns,proofShape,memberSql,maintenanceSql} from './projection-sql.mjs';
+import {columns,proofShape,memberSql,maintenanceSql,shapeSql} from './projection-sql.mjs';
 const root='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022';
 const {historyClosureProjectionRow26:project}=await import(pathToFileURL(root+'/packages/application/src/history-typed-closure.ts').href);
 const id=n=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
@@ -41,4 +41,12 @@ test('unexpected proof secret refuses whole proof without redacted success',()=>
 test('missing31 warehouse evidence and broken version chain remain explicit missing, without generated IDs',()=>{
  const f=fixture();f.warehouses=f.warehouses.slice(0,22);f.members[0].chain.matches_current=false;const out=assembleProjection(f,project);
  assert.equal(out.dataComplete,false);assert.equal(out.warehouses.length,22);assert.equal(out.coreMaintenanceBinding.members.length,114);assert(out.missing.some(x=>x.code==='FULL_WAREHOUSE_53_ITEMS_MISSING_OR_OVERFLOW'));assert.equal(out.publicationAuthorized,false);
+});
+test('JSON extraction is grouped before every generated key subtraction',()=>{
+ assert(memberSql.includes("=(a.after_values->'authority')-ARRAY["));
+ assert(memberSql.includes("(s.field_provenance->'fields'->'bootstrap_accounts')-ARRAY["));
+ assert.equal(memberSql.includes("->'authority'-ARRAY["),false);
+ assert.equal(memberSql.includes("->'bootstrap_accounts'-ARRAY["),false);
+ const sql=shapeSql("document->'nested'",{allowed:'string'});
+ assert(sql.includes("(document->'nested')-ARRAY["));
 });

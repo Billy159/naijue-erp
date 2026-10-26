@@ -5710,5 +5710,15 @@
     "scope": "Concrete BARCODE retained file reader internal to existing provider26; original manifest/index/permutation pinned metadata and held preparedFD/rangeSHA; original QB357 five-method closure helper only via pinned original {path,bytes,sha256} smallmodule ref. No newauthority wrapper, no synthetic/raw fallback, existing assertGroupAllowed/authorizeStep/assertExecutionAllowed still required. No business/DB/write contract field, closureHelper is privateCLI read metadata only. Preserve other10 sources/QB357 frozenhelper/normalapp/currentcarriers.",
     "verification": "New smallsynthetic temporaryfiles/range/close/order/identity only, no actual11MB/54MB reads/PG/SSH/build/Git byD3; original approved source suites reused",
     "remaining": "ActualC authority/fullhash/CORE115proof/53warehouseitems/T45 target remain pending, reader source not fullprovider completion"
+  },
+  "source614FullHostV20Compatibility": {
+    "owner": "D1",
+    "exactFiles": [
+      "scripts/import-v3/production-source-host.mjs",
+      "scripts/import-v3/production-source-host.test.mjs"
+    ],
+    "scope": "After current projection SQL failure fix handoff, accept exact already-approved v20 history_insert_identity_from_v19 FULL_SOURCE runtime review using existing issuer/profile canonical validation; preserve all catalogue/identity/purpose/grant guards, no fallback to old130/no arbitrarypatch allowlist",
+    "verification": "Only new v20 valid/identity mismatch or unapproved profile rejects; existing oldhost evidence reuse",
+    "server": "T45 only; no build/DB/SSH/Git by D1"
   }
 }

@@ -48,3 +48,7 @@ const projection = await exportProjection26({input, client, runtime26});
 ## 已做的本地有限检查
 
 `node --experimental-strip-types --test projection.test.mjs`：4 PASS / 0 skip，仅合成115/49/53与毒化/缺项数据，调用原 native projection helper；不连 PostgreSQL。原 sealed18 run2、106单头续导、QB358、旧源审和旧测试全部复用。SQL 实际规划/权限/执行、真实 proof/成员/53项齐全尚未验证，交原 T45 下一必要只读合窗。不得把本地检查记录成真实数据库 PASS。
+
+## QB precedence 定修
+
+QB 对 source613 的新发现已接受：authority 的 JSON 提取结果、shapeSql/exactScalar 的减键左操作数均显式括号分组，避免 PostgreSQL 减号优先于 JSON 提取运算符。SELECTS.json 同源重生成。仅新增 `--test-name-pattern='JSON extraction'` 检查1项 PASS/0skip（precedence-check.log）；原4项有限合成检查复用，不重跑。尚未实际 PostgreSQL 解析/执行，原 QB 的其余新增源审仍待结论，默认禁用保持。

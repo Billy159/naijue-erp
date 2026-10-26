@@ -10,13 +10,13 @@
     },
     {
       "path": "projection-sql.mjs",
-      "bytes": 12479,
-      "sha256": "38e153ff7b97ce61278c374869c3b79fad5bf8cdc665303bba3e173aed4a53ea"
+      "bytes": 12485,
+      "sha256": "c88947dab31b9319ac576c963b965523aa3260422cb69f369c1c41366131f6a4"
     },
     {
       "path": "SELECTS.json",
-      "bytes": 43252,
-      "sha256": "c391ab1c924ad57fe98854293f409b4563e4b3b4d9f344c9ef5c4f647ec0b2ba"
+      "bytes": 43316,
+      "sha256": "ab80e18e5446ef4457adc124f4d659715803b075651689c3e58832978f0bd10c"
     },
     {
       "path": "INPUT.disabled.json",
@@ -25,8 +25,8 @@
     },
     {
       "path": "projection.test.mjs",
-      "bytes": 5583,
-      "sha256": "53c4369c092c01f73cd4b9d9b86f574aafee47a9340872cb609c57a89f855670"
+      "bytes": 6092,
+      "sha256": "28d1c99edfcd2372a5ebd9b2cbbc8a3b81b643073755de7564fa03448db1362e"
     },
     {
       "path": "checks.log",
@@ -35,16 +35,24 @@
     },
     {
       "path": "README.md",
-      "bytes": 7216,
-      "sha256": "8bef38d02ef95a808eabbfe69f5bcbc9963685a52bdfa8be377275bae1efec06"
+      "bytes": 7722,
+      "sha256": "49021d4c4d06bebf4c0a2657166bf92e23386955fb397cf1360e1008a4acfe10"
+    },
+    {
+      "path": "precedence-check.log",
+      "bytes": 194,
+      "sha256": "3c5fee912c162d2a4e47ff6fa88803c417a1274a685abe503201ad6a41a1e00d"
     }
   ],
   "localChecks": {
-    "passed": 4,
+    "passed": 5,
     "failed": 0,
     "skipped": 0,
     "scope": "Synthetic fixtures; original native projection helper; disabled client non-access; intact proof; unexpected credential refusal; missing31 and broken maintenance",
-    "postgresExecuted": false
+    "postgresExecuted": false,
+    "reusedPassed": 4,
+    "newPassed": 1,
+    "newCheck": "JSON extraction grouped before generated key subtraction; no actual PG parse/execute"
   },
   "interface": {
     "export": "exportProjection26({input,client,runtime26})",
@@ -112,5 +120,9 @@
     "106 actual new23793+old4489=28282 stage result",
     "QB358 six-scheme preparation source result; unchanged"
   ],
-  "fast": "UNVERIFIED"
+  "fast": "UNVERIFIED",
+  "revision": "QB_SOURCE613_PRECEDENCE_DELTA_1",
+  "supersedesResultSha256": "19219de7afb70fba31b6a2a018dca9d81bc5e90affedc293f134ac877550d64f",
+  "revisionScope": "Group JSON extraction operands before key subtraction in authority and shape/exactScalar generators; regenerate SELECTS; only1 new static generated-SQL check",
+  "independentReview": "QB original new-scope review pending; not PASS"
 }

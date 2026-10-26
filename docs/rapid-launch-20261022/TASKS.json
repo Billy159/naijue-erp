@@ -11674,7 +11674,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE613",
+    "round": "SOURCE614",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "a88e2eecdb7fbbf2bdb3b92185145cec332fb082",
     "fixedCandidates": {
@@ -13690,13 +13690,15 @@
       "actualConsumption": false
     },
     "source613ProjectionPreparation": {
-      "status": "FIXED_DISABLED_PREPARATION_PENDING_QB",
+      "status": "REVISION2_FIXED_PENDING_QB_ORIGINAL_SQL_PRECEDENCE_FAILURE_PRESERVED",
       "owner": "D1",
       "source": "reports/backend/rapid-launch-20261022/D1/FULL-SOURCE-PROJECTION-PREPARATION/RESULT.json",
-      "sha256": "19219de7afb70fba31b6a2a018dca9d81bc5e90affedc293f134ac877550d64f",
+      "sha256": "8d141932c1dc89d02aa15890c3f96d304e91fa096ab9ebda4b6178eb091c03a0",
       "localChecks": 4,
       "actualPG": false,
-      "next": "QB scoped review then T45 finite actual readonly export"
+      "next": "QB scoped review then T45 finite actual readonly export",
+      "revision": "2",
+      "newCheck": "one targeted SQL-expression precedence check; prior four reused"
     },
     "source613Actual111": {
       "status": "COMPLETED_READONLY_ONLY",
@@ -13706,6 +13708,27 @@
       "requiredPrivilegesGranted": false,
       "actualInitialization": false,
       "next": "T45 controlled missing-only ACL and fresh metadata review"
+    },
+    "source614FullHostV20": {
+      "owner": "D1",
+      "status": "IN_PROGRESS_EXACT_TWO_SOURCE_FILES",
+      "files": [
+        "scripts/import-v3/production-source-host.mjs",
+        "scripts/import-v3/production-source-host.test.mjs"
+      ],
+      "scope": "Existing FULL runtime validation accepts approved current v20 profile without weakening exact metadata/identity/purpose/ACL"
+    },
+    "source614ServerNext": {
+      "owner": "T45",
+      "status": "DISABLED_PREPARATION_ORIGINAL_QB_REVIEW_PENDING",
+      "jobs": [
+        "112 controlled missing-only ACL",
+        "114 exact current installed source598 restart fresh metadata",
+        "115 only candidate upstream three names"
+      ],
+      "actualACL": false,
+      "current105": "RUNNING_LAST_T45_RECEIPT",
+      "currentRoute": "4302 unchanged"
     }
   }
 }

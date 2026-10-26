@@ -19,9 +19,9 @@ export const proofShape={origin:'string',reason:'string',evidence_ref:'string',r
 export function shapeSql(expr,shape,level=0){
  if(typeof shape==='string')return `jsonb_typeof(${expr})=ANY(${arr(shape.split('|'))})`;
  if(Array.isArray(shape)){const alias=`z${level}`;return `(CASE WHEN jsonb_typeof(${expr})='array' THEN jsonb_array_length(${expr})=1 AND NOT EXISTS(SELECT 1 FROM jsonb_array_elements(${expr}) ${alias}(v) WHERE (${shapeSql(`${alias}.v`,shape[0],level+1)}) IS NOT TRUE) ELSE false END)`;}
- return `(CASE WHEN jsonb_typeof(${expr})='object' THEN ${expr} ?& ${arr(Object.keys(shape))} AND ${expr}-${arr(Object.keys(shape))}='{}'::jsonb AND ${Object.entries(shape).map(([k,v])=>shapeSql(`(${expr}->'${k}')`,v,level+1)).join(' AND ')} ELSE false END)`;
+ return `(CASE WHEN jsonb_typeof(${expr})='object' THEN ${expr} ?& ${arr(Object.keys(shape))} AND (${expr})-${arr(Object.keys(shape))}='{}'::jsonb AND ${Object.entries(shape).map(([k,v])=>shapeSql(`(${expr}->'${k}')`,v,level+1)).join(' AND ')} ELSE false END)`;
 }
-const exactScalar=(expr,keys,partial=false)=>`(CASE WHEN jsonb_typeof(${expr})='object' THEN ${partial?'true':`${expr} ?& ${arr(keys)}`} AND ${expr}-${arr(keys)}='{}'::jsonb AND NOT EXISTS(SELECT 1 FROM jsonb_each(${expr}) k WHERE jsonb_typeof(k.value) NOT IN ('string','number','boolean','null')) ELSE false END)`;
+const exactScalar=(expr,keys,partial=false)=>`(CASE WHEN jsonb_typeof(${expr})='object' THEN ${partial?'true':`${expr} ?& ${arr(keys)}`} AND (${expr})-${arr(keys)}='{}'::jsonb AND NOT EXISTS(SELECT 1 FROM jsonb_each(${expr}) k WHERE jsonb_typeof(k.value) NOT IN ('string','number','boolean','null')) ELSE false END)`;
 export const identitySql=`/* projection:identity */ SELECT jsonb_build_object('database',current_database(),'databaseOid',d.oid::text,'role',current_user,'sessionUser',session_user,'serverAddress',inet_server_addr()::text,'serverPort',inet_server_port(),'postmasterStartedAt',pg_postmaster_start_time()::text,'readOnly',current_setting('transaction_read_only'),'isolation',current_setting('transaction_isolation'),'replicationRole',current_setting('session_replication_role')) AS identity FROM pg_catalog.pg_database d WHERE d.datname=current_database()`;
 export const birthSql=`/* projection:birth */ SELECT b.id::text AS batch_id,b.source_name,b.source_hash,b.cutoff_at::text,b.mapping_version,b.status,b.checkpoint,
  r.id::text AS core_receipt_id,r.request_hash AS command_hash,r.actor_account_id::text,r.completed_at::text,
@@ -59,7 +59,7 @@ export const memberSql=`/* projection:member-by-original-PK */ WITH current_nati
  AND ${p}->'raw'->'binding'->>'selection_sha256'=a.after_values->'authority'->>'selectionSha256'
  AND ${p}->'raw'->'binding'->>'actor_account_id'=r.actor_account_id::text
  AND ${p}->>'evidence_ref'=a.after_values->'authority'->>'bootstrap_execution_review_sha256'
- AND ${p}->'raw'->'authority'=a.after_values->'authority'-${arr(['target','actorAccountId','batchId','namespace','selectionSha256','cutoffAt','bootstrapAt','commandHash','operationId'])}
+ AND ${p}->'raw'->'authority'=(a.after_values->'authority')-${arr(['target','actorAccountId','batchId','namespace','selectionSha256','cutoffAt','bootstrapAt','commandHash','operationId'])}
  AND ${p}->'raw'->'expected_counts'='{"accounts":49,"direct_original_employee_links":45,"approved_current_person_links":4}'::jsonb
  AND ${p}->'raw'->'staff'=jsonb_build_object('source_row_id',s.id,'source_key',s.source_key,'source_row_sha256',s.row_sha256,'native_staff_id',e.native_id)
  AND EXISTS(SELECT 1 FROM jsonb_array_elements(a.after_values->'coreSourceMembers'->'accounts') ac(v)
