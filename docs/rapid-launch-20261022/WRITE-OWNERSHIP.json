@@ -5733,5 +5733,295 @@
     "preserve": "SOURCE612 QB359 barcode reader; originalall11 guard, each source validator, current source protocol, held FD/cancel; SOURCE615 host ownedD1 fixed; original T45 sole real data/server/operator",
     "missingFacts": "C grant/fullhash/closure roots and D1 actualprojection/maincommand facts remain pending, exact descriptors may be required but no invented values; absent facts reject before activation",
     "verification": "New bounded temp fixtures for actual file authorization/mismatch/expiry/command membership/retained consumption/close; no real largebody/SQL/SSH/build/Git by D3"
+  },
+  "source620AuthorizedPriorityPackages": {
+    "recordedAt": "2026-10-26T07:38:21.033990+00:00",
+    "authorization": {
+      "thread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+      "userMessage": "01a17711-6152-7712-920c-4e2a3f3ffff5",
+      "verified": "Direct userMessage read by C",
+      "decision": "真实业务页面此页面尚未接入当前版本第一优先；T01/T07/T08/T09/T20新增修复上线后；第一组优先，第二组随功能，第三组小检查失败才修，第四组默认上线后，纯整理可不单做"
+    },
+    "tasks": {
+      "T02": {
+        "leadOwner": "D1",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/api/src/sales-http.ts",
+            "owner": "D1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-create.test.ts",
+            "owner": "F1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal.test.ts",
+            "owner": "F1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/current-form/sales-proposal.ts",
+            "owner": "F1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/commands/http-client.ts",
+            "owner": "F1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/src/sales/commands/validation.ts",
+            "owner": "F1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-sales-preparation.ts",
+            "owner": "D1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/document-specification-save.test.ts",
+            "owner": "D1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-sales-preparation.test.ts",
+            "owner": "D1",
+            "mode": "existing_delta",
+            "currentExists": true
+          }
+        ],
+        "status": "AUTHORIZED_ORIGINAL_OWNER_ONLY",
+        "next": "D1 backend after T19; F1 front after T10"
+      },
+      "T04": {
+        "leadOwner": "D3",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-stock-contributor-import.ts",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.mjs",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.test.mjs",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          }
+        ],
+        "status": "AUTHORIZED_ORIGINAL_OWNER_ONLY",
+        "next": "original owner implement then fixed new candidate affected independent review"
+      },
+      "T10": {
+        "leadOwner": "F1",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/documents/list-query-state.test.mjs",
+            "owner": "F1",
+            "mode": "planned_new_or_bound_job",
+            "currentExists": false
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/documents/sales-list.tsx",
+            "owner": "F1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/documents/transfers-list.tsx",
+            "owner": "F1",
+            "mode": "existing_delta",
+            "currentExists": true
+          }
+        ],
+        "status": "AUTHORIZED_ORIGINAL_OWNER_ONLY",
+        "next": "original owner implement then fixed new candidate affected independent review"
+      },
+      "T11": {
+        "leadOwner": "F2",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+            "owner": "F2",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+            "owner": "F2",
+            "mode": "existing_delta",
+            "currentExists": true
+          }
+        ],
+        "status": "AUTHORIZED_ORIGINAL_OWNER_ONLY",
+        "next": "original owner implement then fixed new candidate affected independent review"
+      },
+      "T12": {
+        "leadOwner": "F2",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/products/detail.tsx",
+            "owner": "F2",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/products/editor-stock.tsx",
+            "owner": "F2",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/products/read.tsx",
+            "owner": "F2",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/products/stock-activation.test.mjs",
+            "owner": "F2",
+            "mode": "planned_new_or_bound_job",
+            "currentExists": false
+          }
+        ],
+        "status": "AUTHORIZED_ORIGINAL_OWNER_ONLY",
+        "next": "original owner implement then fixed new candidate affected independent review"
+      },
+      "T19": {
+        "leadOwner": "D1",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/native-import-record-accounting.ts",
+            "owner": "D1",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/HANDOFF.md",
+            "owner": "C",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/PROGRESS.md",
+            "owner": "C",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/TASKS.json",
+            "owner": "C",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+            "owner": "C",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.mjs",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/run.test.mjs",
+            "owner": "D3",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-import-record-accounting-postgres-protocol.test.ts",
+            "owner": "D1",
+            "mode": "existing_delta",
+            "currentExists": true
+          }
+        ],
+        "status": "AUTHORIZED_ORIGINAL_OWNER_ONLY",
+        "next": "D1 store/protocol now; D3 run/provider samewriter after retained/T04"
+      },
+      "T27": {
+        "leadOwner": "C",
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/common/ready-pages.tsx",
+            "owner": "C",
+            "mode": "existing_delta",
+            "currentExists": true
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/apps/web/demo-replica/frontend/runtime/common/runtime-host.test.mjs",
+            "owner": "C",
+            "mode": "existing_delta",
+            "currentExists": true
+          }
+        ],
+        "status": "AUTHORIZED_ORIGINAL_OWNER_ONLY",
+        "next": "original owner implement then fixed new candidate affected independent review"
+      }
+    },
+    "D3Continuation": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs",
+      "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+      "K/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json"
+    ],
+    "noCrossWriter": "C records/shared ready-pages/build/Git; D3 allprovider/run/helper; D1 store; T45 actual server/DB only",
+    "doNotTouch": "tests/product-query-postgres-protocol.test.ts unrelated WIP; frozenDemo/oldengineering/private originals"
   }
 }

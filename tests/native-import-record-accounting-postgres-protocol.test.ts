@@ -1,7 +1,8 @@
 /** SQL protocol fakes ONLY. Not SQL parsing, PostgreSQL guards, transactions, concurrency or durability evidence. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createNativeImportRecordAccountant } from "../adapters/postgres/src/native-import-record-accounting.ts";
+import { createNativeImportRecordAccountant, readNativeCoreWarehouseCarryForward } from "../adapters/postgres/src/native-import-record-accounting.ts";
+import { requestHash } from "../packages/application/src/request-hash.ts";
 import type { NativeRecordAccountingTransaction } from "../adapters/postgres/src/native-import-record-accounting.ts";
 import type { PgSalesClient, PgSalesResult } from "../adapters/postgres/src/sales-unit-of-work.ts";
 import { nativeImportAccountingRequestHash } from "../packages/application/src/native-import-record-accounting.ts";
@@ -191,4 +192,65 @@ test("accounting26 rejected runtime stops before SQL; legacy no-capability still
   }
   const old=new Client([{match:/native-accounting:schema/,result:row({versions:Array.from({length:26},(_,i)=>i+1)})}]);
   await assert.rejects(createNativeImportRecordAccountant(old,context()));assert.equal(old.calls.length,1);old.done();
+});
+
+function carryFixture(actions: readonly ("init"|"bind"|"warehouse"|"sku"|"complete"|"publish")[]){
+  const batch=accountingIds.batch,actor=accountingIds.actor,core=stableImportId("operation",actor,"synthetic-core"),digest="d".repeat(64),payload="e".repeat(64);
+  const birth={sequence:1,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}};
+  let checkpoint:Record<string,unknown>=structuredClone(birth),status="STAGED";
+  const claims:Record<string,unknown>[]=[],operations:Record<string,unknown>[]=[];
+  const warehouse=(n:number,operation=core,sequence=1)=>({import_batch_id:batch,import_record_id:stableImportId("record",`carry-wh-${n}`),target_type:"WAREHOUSE",target_id:stableImportId("warehouse",`carry-${n}`),operation_id:operation,checkpoint_sequence:sequence,
+    source_entity_type:"WAREHOUSE",source_key:`SYNTHETIC-WH-${n}`,source_record_hash:"a".repeat(64),source_file_ref:"synthetic:carry-warehouses",warehouse_record:{id:stableImportId("record",`carry-wh-${n}`),reviewedAt:accountingTime,decisionReason:"synthetic original warehouse"},record_ok:true,source_ok:true});
+  for(let n=0;n<22;n++)claims.push(warehouse(n));
+  for(const [index,kind]of actions.entries()){
+    const before=structuredClone(checkpoint),seq=Number(before.sequence)+1,key=`synthetic-carry-${index}-${kind}`,op=stableImportId("operation",actor,key);
+    const counts={...(before.counts as Record<string,number>)},expected=kind==="bind"?{WAREHOUSE:53,SKU:1,INVENTORY_LEDGER:0,IMPORT_BATCH:1}:structuredClone(before.expected);
+    const action=kind==="init"?"IMPORT_INITIALIZE_BARCODE_SCHEMES":kind==="bind"?"IMPORT_BIND_FULL_SOURCE":kind==="publish"?"IMPORT_PUBLISH":"IMPORT_CHUNK";
+    if(kind==="warehouse"||kind==="complete")for(let n=Number(counts.WAREHOUSE);n<(kind==="complete"?53:Number(counts.WAREHOUSE)+1);n++){
+      // The finite complete fixture owns all remaining warehouse records in one command.
+      claims.push(warehouse(n,op,seq));if(kind==="warehouse")break;
+    }
+    if(kind==="warehouse")counts.WAREHOUSE=Number(counts.WAREHOUSE)+1;
+    if(kind==="complete")counts.WAREHOUSE=53;
+    if(kind==="sku"||kind==="complete"){
+      claims.push({import_batch_id:batch,import_record_id:accountingIds.skuRecord,target_type:"SKU",target_id:accountingIds.sku,operation_id:op,checkpoint_sequence:seq,source_entity_type:"SKU",source_key:"synthetic-canonical-sku",source_record_hash:"b".repeat(64),source_file_ref:"synthetic:canonical",record_ok:true,source_ok:true});counts.SKU=1;
+    }
+    if(kind==="publish"){
+      claims.push({import_batch_id:batch,import_record_id:stableImportId("record","synthetic-final"),target_type:"IMPORT_BATCH",target_id:batch,operation_id:op,checkpoint_sequence:seq,source_entity_type:"INVENTORY_SCOPE_APPROVAL",source_key:"FINAL_COMPLETE_SCOPE",source_record_hash:"a".repeat(64),source_file_ref:"synthetic:full-manifest",record_ok:true,source_ok:true});counts.IMPORT_BATCH=1;status="IMPORTED";
+    }
+    checkpoint={sequence:seq,cursor:Object.values(counts).reduce((a,b)=>a+b,0),counts,expected};
+    const commandHash=requestHash({synthetic:true,key,action}),fullBinding={authorizedPayloadHash:payload,coreReceiptId:core,coreSourceDigest:digest,inventoryExpectedCounts:expected};
+    const before_values=kind==="bind"?{checkpoint:before,fullBinding:null,fullFrozen:false,coreReceiptId:core,coreSourceDigest:digest}:kind==="init"?{checkpoint:before,schemes:[]}:before;
+    const after_values=kind==="bind"?{schemaVersion:1,phase:"FULL_SOURCE_BOUND_V1",checkpoint,coreReceiptId:core,coreSourceDigest:digest,fullBinding,fullFrozen:true}:kind==="init"?{checkpoint,commandHash,schemeInitialization:{synthetic:true}}:checkpoint;
+    operations.push({id:op,request_key:key,request_hash:commandHash,action,actor_account_id:actor,old_version:Number(before.sequence)+1,new_version:seq+1,before_values,after_values,
+      result_data:{operationId:op,batchId:batch,sequence:seq,cursor:checkpoint.cursor,status,ledgerEntryIds:[]},link_ok:true});
+  }
+  const rows=claims.slice(0,22).map(c=>({...c,checkpoint,core_checkpoint:birth,core_actor:actor,status,source_name:"synthetic.native-accounting",source_hash:"a".repeat(64),source_manifest_ref:"synthetic:full-manifest",history_payload_hash:actions.includes("bind")?payload:null}));
+  return {rows,claims,operations,checkpoint,core,batch,digest};
+}
+async function readCarry(f:ReturnType<typeof carryFixture>){
+  const client=new Client([{match:/native-core:carry-forward/,result:{rows:f.rows,rowCount:f.rows.length},inspect:(_v,sql)=>assert.match(sql,/FOR SHARE OF b,r,a,c,rec,e,s/)},
+    {match:/native-core:committed-chain/,result:{rows:f.operations,rowCount:f.operations.length},inspect:(_v,sql)=>assert.match(sql,/FOR SHARE OF r,a/)},
+    {match:/native-core:all-claims/,result:{rows:f.claims,rowCount:f.claims.length},inspect:(v,sql)=>{assert.equal(v[1],Number(f.checkpoint.cursor)+1);assert.match(sql,/FOR SHARE OF c,rec/);}}]);
+  const runtime={profile:"EXACT26" as const,contract:"NATIVE_RUNTIME26_V1" as const,async assertReady(c:object,purpose:string){assert.equal(c,client);assert.equal(purpose,"IMPORT_STAGE");}};
+  const result=await readNativeCoreWarehouseCarryForward(client,{batchId:f.batch,coreReceiptId:f.core,coreSourceDigest:f.digest},runtime);client.done();return result;
+}
+for(const [name,actions,warehouseCount,skuCount]of [
+  ["initial22",[],22,0],["init sequence2 cursor22",["init"],22,0],["bind only",["init","bind"],22,0],
+  ["one warehouse committed",["init","bind","warehouse"],23,0],["one SKU committed",["init","bind","sku"],22,1],
+  ["MAIN complete awaiting closure",["init","bind","complete"],53,1],
+  ["unknown PUBLISH already committed original receipt",["init","bind","complete","publish"],53,1]
+] as const)test(`carry-forward continuation ${name} reads the exact committed chain without writes`,async()=>{
+  const f=carryFixture(actions),r=await readCarry(f);assert.deepEqual(r.checkpoint,f.checkpoint);assert.equal(r.coreClaims.length,22);assert.equal(r.coreWarehouses.length,22);
+  assert.equal(r.warehouses.length,warehouseCount);assert.equal(r.claims.filter(c=>c.targetType==="SKU").length,skuCount);assert.equal(r.committedOperations.length,actions.length);
+  assert.equal(r.status,actions.some(a=>a==="publish")?"IMPORTED":"STAGED");
+});
+test("carry-forward continuation rejects missing chain conflicting source duplicate claim and changed full hash",async()=>{
+  for(const mutate of [(f:ReturnType<typeof carryFixture>)=>{f.operations.splice(1,1);},(f:ReturnType<typeof carryFixture>)=>{f.claims.at(-1)!.source_ok=false;},
+    (f:ReturnType<typeof carryFixture>)=>{f.claims[f.claims.length-1]=structuredClone(f.claims[0]!);},
+    (f:ReturnType<typeof carryFixture>)=>{(f.operations[1]!.after_values as {fullBinding:{authorizedPayloadHash:string}}).fullBinding.authorizedPayloadHash="f".repeat(64);},
+    (f:ReturnType<typeof carryFixture>)=>{f.operations.at(-1)!.request_key="different-original-key";},
+    (f:ReturnType<typeof carryFixture>)=>{f.rows.forEach(r=>{r.status="VALIDATING";});}]){
+    const f=carryFixture(["init","bind","warehouse"]);mutate(f);await assert.rejects(readCarry(f),{code:"NATIVE_RECORD_ACCOUNTING_CONFLICT"});
+  }
 });

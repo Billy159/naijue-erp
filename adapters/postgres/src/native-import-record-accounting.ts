@@ -3,7 +3,7 @@ import { checkedNativeRuntime26Capability } from "../../../packages/application/
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { COMPLETE_SCOPE_DECISION, stableImportId, validateCoreImportCommand } from "../../../packages/application/src/inventory-cutoff-import.ts";
-import type { CutoffImportBatch, ImportCheckpoint } from "../../../packages/application/src/inventory-cutoff-import.ts";
+import type { CutoffImportBatch, ImportCheckpoint, ImportTarget, CoreWarehouseItem } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { HISTORY_MAPPING_VERSION, isHistoryQuantity } from "../../../packages/application/src/history-storage-contract.ts";
 import type { ImportSourceEvidence, JsonObject, StockContributionLineage } from "../../../packages/application/src/history-storage-contract.ts";
 import { prepareNativeStockGroup } from "../../../packages/application/src/native-stock-contributor-import.ts";
@@ -454,16 +454,25 @@ export async function claimNativeCoreWarehouseRecords(client: PgSalesClient,
   return checkpointFromNativeCoreClaims(command, operationId, claims);
 }
 
-/** Read the22 birth claims before building the later MAIN. This never claims or skips a record. */
+export interface NativeCoreContinuationReadback {
+  readonly checkpoint: unknown; readonly claims: readonly NativeImportRecordClaim[]; readonly warehouses: readonly CoreWarehouseItem[];
+  readonly coreClaims: readonly NativeImportRecordClaim[]; readonly coreWarehouses: readonly CoreWarehouseItem[];
+  readonly fullBinding: Readonly<Record<string,unknown>> | null; readonly status: string; readonly actorAccountId: string;
+  readonly fixedSourceNamespace: string; readonly selectionSha256: string;
+  readonly committedOperations: readonly { readonly operationId: string; readonly requestKey: string; readonly requestHash: string;
+    readonly action: string; readonly beforeCheckpoint: unknown; readonly checkpoint: unknown; readonly result: Readonly<Record<string,unknown>> }[];
+  readonly records: readonly { readonly importRecordId: string; readonly targetType: ImportTarget; readonly targetId: string;
+    readonly sourceEntityType: string; readonly sourceKey: string; readonly sourceRecordHash: string; readonly sourceFileRef: string }[];
+}
+/** Immutable CORE birth is separate from current progress. No claim/write/retry is performed here. */
 export async function readNativeCoreWarehouseCarryForward(client: PgSalesClient,
-  binding: { readonly batchId: string; readonly coreReceiptId: string; readonly coreSourceDigest: string }, runtime26: NativeRuntime26Capability): Promise<{
-    readonly checkpoint: unknown; readonly claims: readonly NativeImportRecordClaim[];
-    readonly warehouses: readonly import("../../../packages/application/src/inventory-cutoff-import.ts").CoreWarehouseItem[];
-  }> {
+  binding: { readonly batchId: string; readonly coreReceiptId: string; readonly coreSourceDigest: string }, runtime26: NativeRuntime26Capability): Promise<NativeCoreContinuationReadback> {
   entityId("operation", binding.batchId); entityId("operation", binding.coreReceiptId);
   check(/^[a-f0-9]{64}$/.test(binding.coreSourceDigest), "Original CORE input digest required");
   await checkedNativeRuntime26Capability(runtime26)!.assertReady(client, "IMPORT_STAGE");
-  const rows = (await client.query(`/* native-core:carry-forward */ SELECT b.checkpoint,c.import_batch_id,c.import_record_id,c.target_type,c.target_id,c.operation_id,c.checkpoint_sequence,
+  const rows = (await client.query(`/* native-core:carry-forward */ SELECT b.checkpoint,b.status,b.source_name,b.source_hash,b.source_manifest_ref,b.history_payload_hash,
+    r.actor_account_id::text AS core_actor,a.after_values->'checkpoint' AS core_checkpoint,
+    c.import_batch_id,c.import_record_id,c.target_type,c.target_id,c.operation_id,c.checkpoint_sequence,
     rec.source_entity_type,rec.source_key,rec.source_record_hash,rec.source_file_ref,e.warehouse_record
     FROM naijue_erp.import_batch b JOIN naijue_erp.operation_receipt r ON r.target_id=b.id AND r.target_type='IMPORT' AND r.action='IMPORT_CORE_STAGE'
     JOIN naijue_erp.audit_change a ON a.operation_id=r.id JOIN naijue_erp.import_record_accounting_claim c ON c.operation_id=r.id AND c.import_batch_id=b.id
@@ -481,14 +490,130 @@ export async function readNativeCoreWarehouseCarryForward(client: PgSalesClient,
     ORDER BY c.target_id FOR SHARE OF b,r,a,c,rec,e,s`, [binding.batchId, binding.coreReceiptId, binding.coreSourceDigest])).rows;
   check(rows.length === 22 && new Set(rows.map(row => row.import_record_id)).size === 22 && new Set(rows.map(row => row.target_id)).size === 22,
     "All22 original exact CORE claims must be read back; a missing/conflicting birth record cannot be silently ignored");
-  const checkpoint = jsonObject(rows[0]!.checkpoint), progress = jsonObject(checkpoint.counts);
-  check(progress.WAREHOUSE === rows.length && progress.SKU === 0 && progress.INVENTORY_LEDGER === 0 && progress.IMPORT_BATCH === 0
-    && checkpoint.cursor === 22 && typeof checkpoint.sequence === "number" && checkpoint.sequence >= 1,
-    "Carry-forward is before new MAIN effects and preserves actual original progress");
-  const claims = rows.map(row => ({ batchId: stringValue(row.import_batch_id), importRecordId: stringValue(row.import_record_id), targetType: "WAREHOUSE" as const,
+  const first=rows[0]!, targets=["WAREHOUSE","SKU","INVENTORY_LEDGER","IMPORT_BATCH"] as const;
+  const cp=(value: unknown): Record<string,unknown> => {
+    const p=jsonObject(value),counts=jsonObject(p.counts),expected=jsonObject(p.expected);
+    check(Object.keys(p).sort().join() === "counts,cursor,expected,sequence" && Object.keys(counts).sort().join() === [...targets].sort().join()
+      && [p.sequence,p.cursor,...Object.values(counts)].every(n=>typeof n==="number"&&Number.isSafeInteger(n)&&n>=0&&n<2147483646)
+      && Object.values(counts).reduce<number>((sum,n)=>sum+Number(n),0)===p.cursor,"Exact bounded checkpoint and cursor=sum(counts) required");
+    check(Object.keys(expected).length===0 || Object.keys(expected).sort().join()===[...targets].sort().join()
+      && targets.every(t=>typeof expected[t]==="number"&&Number.isSafeInteger(expected[t])&&Number(expected[t])>=Number(counts[t])&&Number(expected[t])<2147483646)
+      && expected.IMPORT_BATCH===1,"Frozen expected counts must bound actual claims");
+    return p;
+  };
+  const checkpoint=cp(first.checkpoint),birth=cp(first.core_checkpoint);
+  check(requestHash(birth)===requestHash({sequence:1,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}}),
+    "Original22 CORE birth checkpoint must remain immutable");
+  check(["STAGED","VALIDATING","IMPORTED"].includes(stringValue(first.status)) && Number(checkpoint.sequence)>=1,"Current resumable batch status required");
+  const coreClaims = rows.map(row => ({ batchId: stringValue(row.import_batch_id), importRecordId: stringValue(row.import_record_id), targetType: "WAREHOUSE" as const,
     targetId: stringValue(row.target_id), operationId: stringValue(row.operation_id), checkpointSequence: 1 }));
-  const warehouses = rows.map(row => ({ sourceEntityType: "WAREHOUSE", sourceKey: stringValue(row.source_key), sourceRecordHash: stringValue(row.source_record_hash),
+  const coreWarehouses = rows.map(row => ({ sourceEntityType: "WAREHOUSE", sourceKey: stringValue(row.source_key), sourceRecordHash: stringValue(row.source_record_hash),
     sourceFileRef: stringValue(row.source_file_ref), targetType: "WAREHOUSE" as const, targetId: entityId("warehouse", stringValue(row.target_id)),
     nativeRecord: structuredClone(row.warehouse_record) as import("../../../packages/application/src/inventory-cutoff-import.ts").CoreWarehouseItem["nativeRecord"] }));
-  return { checkpoint: structuredClone(checkpoint), claims, warehouses };
+  const operations=(await client.query(`/* native-core:committed-chain */ SELECT r.id,r.request_key,r.request_hash,r.action,r.actor_account_id::text,
+    r.result_data,a.before_values,a.after_values,a.old_version,a.new_version,
+    (a.object_type='IMPORT' AND a.object_id=r.target_id AND a.action=r.action AND a.actor_account_id=r.actor_account_id
+      AND a.occurred_at=r.completed_at) AS link_ok
+    FROM naijue_erp.operation_receipt r JOIN naijue_erp.audit_change a ON a.operation_id=r.id
+    WHERE r.target_type='IMPORT' AND r.target_id=$1::uuid AND r.status='COMMITTED' AND r.id<>$2::uuid
+    ORDER BY a.new_version,r.id FOR SHARE OF r,a`,[binding.batchId,binding.coreReceiptId])).rows;
+  const claimed=(await client.query(`/* native-core:all-claims */ SELECT c.import_batch_id,c.import_record_id,c.target_type,c.target_id,c.operation_id,c.checkpoint_sequence,
+    rec.source_entity_type,rec.source_key,rec.source_record_hash,rec.source_file_ref,
+    (rec.status='IMPORTED' AND rec.target_type=c.target_type AND rec.target_id=c.target_id) AS record_ok,
+    (SELECT e.warehouse_record FROM naijue_erp.native_party_import_evidence e WHERE e.batch_id=c.import_batch_id
+      AND e.entity_type='WAREHOUSE' AND e.native_id=c.target_id) AS warehouse_record,
+    CASE c.target_type WHEN 'WAREHOUSE' THEN EXISTS(SELECT 1 FROM naijue_erp.native_party_import_evidence e
+      JOIN naijue_erp.import_source_row s ON s.batch_id=e.batch_id AND s.id=e.source_row_id
+      WHERE e.batch_id=c.import_batch_id AND e.entity_type='WAREHOUSE' AND e.native_id=c.target_id AND e.source_key=rec.source_key
+      AND rec.source_entity_type='WAREHOUSE' AND rec.source_record_hash=s.row_sha256 AND rec.source_file_ref=s.file_ref
+      AND e.warehouse_record->>'id'=rec.id::text AND e.warehouse_record->>'decisionReason'=rec.decision_reason
+      AND (e.warehouse_record->>'reviewedAt')::timestamptz=rec.reviewed_at
+      AND to_jsonb(s)=to_jsonb(jsonb_populate_record(NULL::naijue_erp.import_source_row,e.source_snapshot)))
+    WHEN 'SKU' THEN EXISTS(SELECT 1 FROM naijue_erp.import_source_row s JOIN naijue_erp.import_sku_alias al ON al.batch_id=s.batch_id AND al.source_row_id=s.id
+      WHERE s.batch_id=c.import_batch_id AND s.entity_type=rec.source_entity_type AND s.source_key=rec.source_key
+      AND s.row_sha256=rec.source_record_hash AND s.file_ref=rec.source_file_ref
+      AND al.old_source_sku_id=s.source_key AND al.canonical_source_key=rec.source_key AND al.canonical_sku_id=c.target_id
+      AND s.field_provenance->'native_sku_import'->>'validator_version'='NATIVE_SKU_IMPORT_V1'
+      AND s.field_provenance->'native_sku_import'->>'native_sku_id'=c.target_id::text
+      AND s.field_provenance->'native_sku_import'->'selection'->>'selectionSha256'=$3
+      AND s.field_provenance->'native_sku_import'->'mapping'->>'isRepresentative'='true')
+    WHEN 'INVENTORY_LEDGER' THEN EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger l WHERE l.id=c.target_id
+      AND l.source_import_batch_id=c.import_batch_id AND l.operation_id=c.operation_id AND l.event_kind='CUTOFF_BASELINE'
+      AND rec.source_entity_type='INVENTORY_BASELINE' AND rec.reviewed_at=l.posted_at)
+    WHEN 'IMPORT_BATCH' THEN rec.source_entity_type='INVENTORY_SCOPE_APPROVAL' AND rec.source_key='FINAL_COMPLETE_SCOPE'
+      AND rec.target_id=c.import_batch_id AND rec.source_record_hash=$3 AND rec.decision_reason=$4 AND rec.source_file_ref=$5
+    ELSE false END AS source_ok
+    FROM naijue_erp.import_record_accounting_claim c JOIN naijue_erp.import_record rec ON rec.id=c.import_record_id AND rec.import_batch_id=c.import_batch_id
+    WHERE c.import_batch_id=$1::uuid ORDER BY c.checkpoint_sequence,c.import_record_id LIMIT $2 FOR SHARE OF c,rec`,
+    [binding.batchId,Number(checkpoint.cursor)+1,stringValue(first.source_hash),COMPLETE_SCOPE_DECISION,stringValue(first.source_manifest_ref)])).rows;
+  check(claimed.length===checkpoint.cursor,"Current cursor must equal the entire exact claim set, not just birth22");
+  const claims:NativeImportRecordClaim[]=[],records:NativeCoreContinuationReadback["records"][number][]=[],warehouses:CoreWarehouseItem[]=[];
+  const recordIds=new Set<string>(),targetIds=new Set<string>();
+  for(const row of claimed){
+    const type=stringValue(row.target_type) as ImportTarget,record=stringValue(row.import_record_id),target=stringValue(row.target_id);
+    check(targets.includes(type)&&row.record_ok===true&&row.source_ok===true&&!recordIds.has(record)&&!targetIds.has(`${type}:${target}`),"Claim source/record/target identity must be exact and unique");
+    entityId("operation",record);entityId("operation",target);recordIds.add(record);targetIds.add(`${type}:${target}`);
+    check(typeof row.checkpoint_sequence==="number"&&Number.isSafeInteger(row.checkpoint_sequence)&&row.checkpoint_sequence>=1,"Claim sequence must be an integer");
+    check(row.import_batch_id===binding.batchId&&/^[a-f0-9]{64}$/.test(stringValue(row.source_record_hash))
+      && stringValue(row.source_key).trim().length>0&&stringValue(row.source_file_ref).trim().length>0,"Claim must retain exact source identity in this batch");
+    if(type==="INVENTORY_LEDGER")check(record===stableImportId("source",stringValue(first.source_name),stringValue(row.source_entity_type),stringValue(row.source_key))
+      &&target===stableImportId("baseline",stringValue(first.source_name),stringValue(row.source_entity_type),stringValue(row.source_key)),"Baseline record/ledger IDs must retain original source identity");
+    claims.push({batchId:stringValue(row.import_batch_id),importRecordId:record,targetType:type,targetId:target,operationId:stringValue(row.operation_id),checkpointSequence:Number(row.checkpoint_sequence)});
+    records.push({importRecordId:record,targetType:type,targetId:target,sourceEntityType:stringValue(row.source_entity_type),sourceKey:stringValue(row.source_key),sourceRecordHash:stringValue(row.source_record_hash),sourceFileRef:stringValue(row.source_file_ref)});
+    if(type==="WAREHOUSE"){
+      const native=jsonObject(row.warehouse_record);
+      check(Object.keys(native).sort().join()==="decisionReason,id,reviewedAt"&&native.id===record&&typeof native.reviewedAt==="string"&&Number.isFinite(Date.parse(native.reviewedAt))
+        &&typeof native.decisionReason==="string"&&native.decisionReason.length>0,"Original warehouse record ID/time/reason required without reconstruction");
+      warehouses.push({sourceEntityType:"WAREHOUSE",sourceKey:stringValue(row.source_key),sourceRecordHash:stringValue(row.source_record_hash),sourceFileRef:stringValue(row.source_file_ref),targetType:"WAREHOUSE",targetId:entityId("warehouse",target),nativeRecord:structuredClone(native) as unknown as CoreWarehouseItem["nativeRecord"]});
+    }
+  }
+  check(coreClaims.every(c=>claims.filter(x=>requestHash(x)===requestHash(c)).length===1)
+    && coreWarehouses.every(w=>warehouses.some(x=>requestHash(x)===requestHash(w))),"All original22 birth claims and exact warehouse items must survive unchanged");
+  let previous=birth,fullBinding:Record<string,unknown>|null=null,published=false;const committedOperations:NativeCoreContinuationReadback["committedOperations"][number][]=[];
+  const usedOperations=new Set<string>([binding.coreReceiptId]),usedClaims=new Set(coreClaims.map(c=>c.importRecordId));
+  for(const row of operations){
+    const action=stringValue(row.action),operation=stringValue(row.id),key=stringValue(row.request_key),result=jsonObject(row.result_data);
+    const beforeRoot=jsonObject(row.before_values),afterRoot=jsonObject(row.after_values);
+    const wrapped=action==="IMPORT_BIND_FULL_SOURCE"||action==="IMPORT_INITIALIZE_BARCODE_SCHEMES";
+    const before=cp(wrapped?beforeRoot.checkpoint:beforeRoot),after=cp(wrapped?afterRoot.checkpoint:afterRoot);
+    check(!published&&row.link_ok===true&&row.actor_account_id===first.core_actor&&/^[a-f0-9]{64}$/.test(stringValue(row.request_hash))
+      && operation===stableImportId("operation",stringValue(first.core_actor),key)&&!usedOperations.has(operation)
+      && requestHash(before)===requestHash(previous)&&after.sequence===Number(before.sequence)+1
+      && row.old_version===Number(before.sequence)+1&&row.new_version===Number(after.sequence)+1
+      && result.operationId===operation&&result.batchId===binding.batchId&&result.sequence===after.sequence&&result.cursor===after.cursor
+      && Array.isArray(result.ledgerEntryIds),"Committed receipt/audit must form one exact actor/key/hash/checkpoint chain");
+    usedOperations.add(operation);const countsBefore=jsonObject(before.counts),countsAfter=jsonObject(after.counts);
+    const owned=claims.filter(c=>c.operationId===operation),delta=targets.reduce((n,t)=>n+Number(countsAfter[t])-Number(countsBefore[t]),0);
+    if(action==="IMPORT_BIND_FULL_SOURCE"){
+      check(fullBinding===null&&owned.length===0&&delta===0&&after.cursor===before.cursor&&requestHash(before.counts)===requestHash(after.counts)
+        && Object.keys(jsonObject(before.expected)).length===0&&beforeRoot.fullBinding===null&&beforeRoot.fullFrozen===false
+        && afterRoot.phase==="FULL_SOURCE_BOUND_V1"&&afterRoot.fullFrozen===true&&afterRoot.coreReceiptId===binding.coreReceiptId&&afterRoot.coreSourceDigest===binding.coreSourceDigest,
+        "One genuine full binding must preserve current claims");
+      check(result.status==="STAGED"&&jsonObject(beforeRoot.checkpoint).sequence===previous.sequence&&beforeRoot.coreReceiptId===binding.coreReceiptId
+        &&beforeRoot.coreSourceDigest===binding.coreSourceDigest,"Full binding must retain its original CORE identity and staged result");
+      fullBinding=jsonObject(afterRoot.fullBinding);
+      check(fullBinding.coreReceiptId===binding.coreReceiptId&&fullBinding.coreSourceDigest===binding.coreSourceDigest
+        && fullBinding.authorizedPayloadHash===first.history_payload_hash&&/^[a-f0-9]{64}$/.test(stringValue(fullBinding.authorizedPayloadHash))
+        && requestHash(fullBinding.inventoryExpectedCounts)===requestHash(after.expected),"Frozen full hash and expected scope must match actual batch");
+    }else if(action==="IMPORT_INITIALIZE_BARCODE_SCHEMES"){
+      check(owned.length===0&&after.cursor===before.cursor&&requestHash(after.counts)===requestHash(before.counts)&&requestHash(after.expected)===requestHash(before.expected)
+        && afterRoot.commandHash===row.request_hash&&result.status==="STAGED","Scheme initialization advances only sequence, never MAIN claims");
+    }else{
+      check(fullBinding!==null&&(action==="IMPORT_CHUNK"||action==="IMPORT_PUBLISH")&&requestHash(after.expected)===requestHash(before.expected)
+        && owned.length===delta&&owned.length>0&&Number(after.cursor)===Number(before.cursor)+owned.length
+        && targets.every(t=>Number(countsAfter[t])-Number(countsBefore[t])===owned.filter(c=>c.targetType===t).length),"MAIN counts and cursor must equal only its exact owned claims");
+      for(const c of owned){check(c.checkpointSequence===after.sequence&&!usedClaims.has(c.importRecordId),"Claim cannot belong to another sequence or be counted twice");usedClaims.add(c.importRecordId);}
+      if(action==="IMPORT_PUBLISH"){
+        check(owned.length===1&&owned[0]!.targetType==="IMPORT_BATCH"&&countsBefore.IMPORT_BATCH===0&&countsAfter.IMPORT_BATCH===1
+          && requestHash(after.counts)===requestHash(after.expected)&&result.status==="IMPORTED","Publication must be the one exact final complete-scope claim");published=true;
+      }else check(owned.every(c=>c.targetType!=="IMPORT_BATCH")&&(result.status==="STAGED"||result.status==="VALIDATING"),"Only PUBLISH may claim final approval");
+    }
+    check(requestHash(result.ledgerEntryIds)===requestHash(owned.filter(c=>c.targetType==="INVENTORY_LEDGER").map(c=>c.targetId).sort()),"Receipt ledger IDs must equal its exact claimed baselines");
+    previous=after;committedOperations.push({operationId:operation,requestKey:key,requestHash:stringValue(row.request_hash),action,beforeCheckpoint:structuredClone(before),checkpoint:structuredClone(after),result:structuredClone(result)});
+  }
+  check(requestHash(previous)===requestHash(checkpoint)&&usedClaims.size===claims.length
+    && (fullBinding!==null||first.history_payload_hash===null)&&published===(first.status==="IMPORTED")
+    &&first.status===(committedOperations.at(-1)?.result.status??"STAGED"),"Current batch must equal the proven chain; missing/future/conflicting links are forbidden");
+  return {checkpoint:structuredClone(checkpoint),claims,warehouses,coreClaims,coreWarehouses,fullBinding,status:stringValue(first.status),actorAccountId:stringValue(first.core_actor),
+    fixedSourceNamespace:stringValue(first.source_name),selectionSha256:stringValue(first.source_hash),committedOperations,records};
 }

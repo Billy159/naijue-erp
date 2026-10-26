@@ -55,5 +55,35 @@ try {
  await act(async()=>session2.onAccessFailure({kind:'forbidden'}));await settle();
  assert.equal(document.querySelector('[data-document-leave]').childElementCount,0,'invalidated page closes independent leave confirmation');
  assert.ok(page.querySelector('[role=alert] button'),'permission verification cannot be blocked by stale leave modal');
+ // T27: retain list state across editor resets, but never across read identity invalidation.
+ const viewsOutput=path.join(temp,'document-views.mjs');
+ await build({...buildOptions,stdin:{...buildOptions.stdin,contents:buildOptions.stdin.contents+"export {createReadyPageMounts} from './ready-pages.tsx';export {ReadContext} from '../../../../src/loading/read-scope.ts';"},outfile:viewsOutput,plugins:[...buildOptions.plugins,{name:'document-view-consumers',setup(b){
+  b.onLoad({filter:/documents\/(sales|transfers)-entry\.tsx$/},a=>({loader:'tsx',contents:a.path.endsWith('sales-entry.tsx')?
+   'export const newSalesListViewState=()=>({draft:{},applied:{},scrollTop:0});export function mountSales(host,route,options){host.documentView=options.view;host.resetEditor=options.onCommitted;return {dispose(){},canLeave:()=>true};}':
+   'export const newTransferListViewState=()=>({draft:{},applied:{},scrollTop:0,reload:false});export function mountTransfers(host,route,options){host.documentView=options.view;host.resetEditor=options.reset;return {dispose(){},canLeave:()=>true};}'}));
+  b.onLoad({filter:/documents\/(sales|transfers)-session\.ts$/},a=>({loader:'ts',contents:a.path.endsWith('sales-session.ts')?
+   'export function createReplicaSalesSession(session){const scope=session.reads.createScope("test-sales-editor");return {scope,dispose:()=>scope.dispose()};}':
+   'export function createReplicaTransferSession(session){const scope=session.reads.createScope("test-transfer-editor");return {scope,dispose:()=>scope.dispose()};}export const transferCanLeave=()=>true;'}));
+ }}]});
+ const views=await import(pathToFileURL(viewsOutput).href);
+ for(const route of ['sales','transfer']){
+  let identity={accountId:id(900),sessionRevision:'s1',permissionRevision:'p1'};
+  const reads=new views.ReadContext(identity),documentHost=document.createElement('div');
+  const capturedScopes=[],createScope=reads.createScope.bind(reads);reads.createScope=(...args)=>{const scope=createScope(...args);capturedScopes.push(scope);return scope;};
+  const documentSession={reads,http:{origin:'https://catalogue.test',basePath:'/api',fetch:async()=>{throw Error('View ownership test must not read HTTP');}},auth:{getSnapshot:()=>({phase:'authenticated',principal:{accountId:identity.accountId,role:'ADMIN'}})},onAccessFailure(){}};
+  const pages=views.createReadyPageMounts({session:documentSession,routes:{sales:true,transfers:true},newRequestKey:()=>id(800),inventory:{},catalogue:{}},()=>{});
+  const mount=async()=>{const scope=reads.createScope('test-page');const mounted=await pages.mount(documentHost,route,scope);return {view:documentHost.documentView,leave(){mounted.dispose();scope.dispose();}};};
+  let active=await mount(),previous=active.view;
+  previous.draft={query:'private-customer-A'};previous.applied={page:3};previous.scrollTop=220;
+  documentHost.resetEditor();active.leave();active=await mount();
+  assert.equal(active.view,previous,route+' ordinary editor reset preserves list owner');assert.equal(active.view.scrollTop,220);
+  for(const change of ['account','session','permission','forbidden']){
+   active.leave();
+   if(change==='forbidden'){reads.clear();reads.replaceIdentity(identity);}else{identity={...identity,...(change==='account'?{accountId:id(902)}:change==='session'?{sessionRevision:'s2'}:{permissionRevision:'p2'})};reads.replaceIdentity(identity);}
+   active=await mount();assert.notEqual(active.view,previous,route+' '+change+' must discard old list state');assert.equal(active.view.draft.query,undefined);assert.equal(active.view.scrollTop,0);previous=active.view;
+  }
+  active.leave();pages.dispose();assert.equal(capturedScopes.every(scope=>!scope.active),true,'dispose releases all list and editor scopes');reads.clear();
+ }
+ console.log('PASS T27 sales/transfer list state retained on editor reset and discarded on account/session/permission/forbidden changes; all owned scopes disposed. Isolated consumers with real ReadContext.');
  console.log('PASS normal host403 explicit recovery/no retry, navigation/identity cleanup/no write replay; host-owned dirty-leave dialog closes on access loss. Synthetic HTTP and isolated page double only.');
 }finally{await act(async()=>runtime?.dispose());dom.window.close();await rm(temp,{recursive:true,force:true});}

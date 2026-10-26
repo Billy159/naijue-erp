@@ -45,7 +45,9 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
   const { session } = options;
   let owner: ReadScope | null = null;
   let sales: ReplicaSalesSession | null = null, salesView: SalesListViewState | null = null;
+  let salesViewScope: ReadScope | null = null;
   let transfers:ReplicaTransferSession|null=null,transferView:TransferListViewState|null=null;
+  let transferViewScope: ReadScope | null = null;
   const productRecovery = new Map<string | null, ProductMaintenanceCommand>();
   let catalogue: CatalogueCommandSession | undefined;
   // Invalidated identities retain their exact unresolved command for handoff;
@@ -104,21 +106,35 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       const [module,factory,references,products] = await Promise.all([import('../documents/sales-entry.tsx'),import('../documents/sales-session.ts'),import('../../../../src/sales/http-reader.ts'),import('../../../../src/transport/product-http-reader.ts')]);
       if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
       if(!sales?.scope.active)sales=factory.createReplicaSalesSession(session,{instanceId:'replica-sales-owner',newRequestKey:options.newRequestKey,responsibleReady:config.documentResponsibleReady===true});
-      salesView??=module.newSalesListViewState();
+      if (!salesViewScope?.active) {
+        salesViewScope = session.reads.createScope('replica-sales-list-view');
+        salesView = module.newSalesListViewState();
+        const viewOwner = salesViewScope;
+        viewOwner.signal.addEventListener('abort', () => {
+          if (salesViewScope === viewOwner) { salesView = null; salesViewScope = null; }
+        }, { once: true });
+      }
       const resetSales=()=>{sales?.dispose();sales=null;};
       const activation=config.salesProductFullPage?documentProductActivation(host,scope,'#sale-lines'):null;
-      try{const mounted=module.mountSales(host,route,{principal,session:sales,scope,view:salesView,references:references.createSalesFilterReferenceHttpReader(http),productReader:products.createProductHttpReader(http),http,historyRevision:options.historyRevision?.sales===true,newRequestKey:options.newRequestKey,manualCreate:config.salesManualCreate===true,existingEdit:config.salesExistingEdit===true,denied:session.onAccessFailure,navigate,onCommitted:resetSales,onDiscarded:resetSales,...(activation?{viewProduct:(product:{id:string;label:string})=>{void activation.open(product);}}:{})});return {...mounted,dispose:()=>{activation?.dispose();mounted.dispose();}};}catch(error){activation?.dispose();throw error;}
+      try{const mounted=module.mountSales(host,route,{principal,session:sales,scope,view:salesView!,references:references.createSalesFilterReferenceHttpReader(http),productReader:products.createProductHttpReader(http),http,historyRevision:options.historyRevision?.sales===true,newRequestKey:options.newRequestKey,manualCreate:config.salesManualCreate===true,existingEdit:config.salesExistingEdit===true,denied:session.onAccessFailure,navigate,onCommitted:resetSales,onDiscarded:resetSales,...(activation?{viewProduct:(product:{id:string;label:string})=>{void activation.open(product);}}:{})});return {...mounted,dispose:()=>{activation?.dispose();mounted.dispose();}};}catch(error){activation?.dispose();throw error;}
     }
     if ((route==='transfer'||route.startsWith('transfer/'))&&config.transfers){
       const [module,factory,products]=await Promise.all([import('../documents/transfers-entry.tsx'),import('../documents/transfers-session.ts'),import('../../../../src/transport/product-http-reader.ts')]);
       if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
       if(route==='transfer/new'&&transfers?.scope.active&&transfers.workspace.getSnapshot().editor&&factory.transferCanLeave(transfers)){transfers.dispose();transfers=null;}
       if(!transfers?.scope.active)transfers=factory.createReplicaTransferSession(session,{instanceId:'replica-transfer-owner',newRequestKey:options.newRequestKey,responsibleReady:config.documentResponsibleReady===true});
-      transferView??=module.newTransferListViewState();
+      if (!transferViewScope?.active) {
+        transferViewScope = session.reads.createScope('replica-transfer-list-view');
+        transferView = module.newTransferListViewState();
+        const viewOwner = transferViewScope;
+        viewOwner.signal.addEventListener('abort', () => {
+          if (transferViewScope === viewOwner) { transferView = null; transferViewScope = null; }
+        }, { once: true });
+      }
       // Frozen transfer-current.openProductDetail uses the same original three-tab
       // product Drawer. The parent edit DOM/session never leaves this route.
       const activation=config.transferProductFullPage?documentProductActivation(host,scope,'#tc-lines'):null;
-      try{const mounted=module.mountTransfers(host,route,{manualCreate:config.transferManualCreate===true,reset:()=>{transfers?.dispose();transfers=null;transferView!.reload=true;},productReader:products.createProductHttpReader(http),session:transfers,scope,view:transferView,existingEdit:config.transferExistingEdit===true,http,historyRevision:options.historyRevision?.transfers===true,newRequestKey:options.newRequestKey,denied:session.onAccessFailure,navigate,...(activation?{viewProduct:(product:{id:string;label:string})=>{void activation.open(product);}}:{})});return {...mounted,dispose:()=>{activation?.dispose();mounted.dispose();}};}catch(error){activation?.dispose();throw error;}
+      try{const mounted=module.mountTransfers(host,route,{manualCreate:config.transferManualCreate===true,reset:()=>{transfers?.dispose();transfers=null;transferView!.reload=true;},productReader:products.createProductHttpReader(http),session:transfers,scope,view:transferView!,existingEdit:config.transferExistingEdit===true,http,historyRevision:options.historyRevision?.transfers===true,newRequestKey:options.newRequestKey,denied:session.onAccessFailure,navigate,...(activation?{viewProduct:(product:{id:string;label:string})=>{void activation.open(product);}}:{})});return {...mounted,dispose:()=>{activation?.dispose();mounted.dispose();}};}catch(error){activation?.dispose();throw error;}
     }
     if (route === 'inventory' && config.inventory) {
       const module = await import('../inventory/index.tsx');
@@ -246,5 +262,5 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       throw new Error('此页面尚未接入当前版本。');
     } catch (error) { release(); throw error; }
   }
-  return { mount, hasUnresolvedWrite: unresolved, retainedCatalogueCommands: () => [...catalogueRecovery.values()], dispose: () => { catalogue?.dispose();catalogue=undefined;transfers?.dispose();transfers=null;sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
+  return { mount, hasUnresolvedWrite: unresolved, retainedCatalogueCommands: () => [...catalogueRecovery.values()], dispose: () => { salesViewScope?.dispose();salesViewScope=null;salesView=null;transferViewScope?.dispose();transferViewScope=null;transferView=null;catalogue?.dispose();catalogue=undefined;transfers?.dispose();transfers=null;sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
 }
