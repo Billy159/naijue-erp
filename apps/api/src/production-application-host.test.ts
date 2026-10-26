@@ -312,10 +312,11 @@ test("captured JS/CSS negotiate startup gzip/br with exact decoded bytes, length
         assert.equal(identity.headers["content-length"], Buffer.byteLength(original!));
       }
       for (const [accept, expected] of [["gzip;q=1,br;q=0.5", "gzip"], ["GZIP, BR", "br"], ["*", "br"],
-        ["br;q=0, *;q=0.5", "gzip"], ["gzip;q=0.5, br;q=0.8", "br"], ["gzip;q=1, identity;q=0", "gzip"]]) {
+        ["br;q=0, *;q=0.5", "gzip"], ["gzip;q=0.5, br;q=0.8", "br"], ["gzip;q=1, identity;q=0", "gzip"],
+        ["gzip ;q=1,identity;q=0", "gzip"], ["br ;q=0,*;q=1,identity;q=0", "gzip"]]) {
         assert.equal(invoke(handle, url, "GET", undefined, { "accept-encoding": accept! }).headers["content-encoding"], expected);
       }
-      for (const accept of ["*;q=0", "gzip;q=0,br;q=0,identity;q=0", "deflate,identity;q=0"]) {
+      for (const accept of ["*;q=0", "* ;q=0", "gzip;q=0,br;q=0,identity;q=0", "deflate,identity;q=0"]) {
         for (const method of ["GET", "HEAD"]) {
           const rejected = invoke(handle, url, method, undefined, { "accept-encoding": accept });
           assert.equal(rejected.status, 406); assert.equal(rejected.bytes, undefined); assert.equal(rejected.headers["content-length"], 0);

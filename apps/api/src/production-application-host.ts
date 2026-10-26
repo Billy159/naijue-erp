@@ -79,7 +79,8 @@ function selectEncoding(header: string | undefined, asset: CapturedAsset): "gzip
   if (!header?.trim()) return "identity";
   const qualities = new Map<string, number>();
   for (const item of header.split(",")) {
-    const [name, ...parameters] = item.trim().toLowerCase().split(";");
+    const [rawName, ...parameters] = item.trim().toLowerCase().split(";");
+    const name = rawName?.trim();
     if (!name) continue;
     let quality = 1;
     for (const parameter of parameters) {

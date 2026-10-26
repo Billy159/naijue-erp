@@ -1,3 +1,7 @@
+SOURCE561（2026-10-26）：QB334确定复现压缩coding与分号间合法OWS未trim，source560/CORE13虽buildpack通过但禁止部署、失败固定包保留。原专线已最小trim并补3例，原新增compression1项定向PASS，旧14及12HTTP不重复；现两叶再交还，原QB仅复验该缺陷及pin。C固定后继CORE14，不就地改旧包。557前端QF有效结论复用。
+T45 actual83成套备份已真实COMPLETED0/696.006s、02:01:19.626805Z完成，19服务/route保留，原12h缺口解除。81已绑新备份和02:19:02Z新15min窗，02:04:04Z原job/request/result均不存在后只提交一次，唯一QUEUED handle正在收取；未有DB提交结果，不冒导入成功。后续28282仅组装原公开API导出桥，未读921MB/未执行headerstage。当前全37/67业务、历史编辑、全11发布与正式根切换仍未完成。
+GitHub560远端已实际GET核5cfceb3e；因前次558远端更新成功但读回失败，本地tracking落后导致后续CAS失败，已依据真实after-ref-update响应只修本地tracking，未强推或重放远端更新。
+
 SOURCE560（2026-10-26）：用户专用压缩线已实际交还原D1两host叶，启动capture异步gzip/br quality4、只保留更小buffer；无请求期压缩，原白名单/64MiB正文/no-store/API/auth/health/flags未改。采用owner原host15/15、strict两根0及本机真实HTTP12次GET/HEAD/编码解压一致PASS；本机Arco CSS570426→gzip64058/br67527B，非公网效果/正式性能。原QB只核新增2叶、不重PG；C立即固定CORE13统一已有启动前端及新后端，原QF557前端结论复用。旧CORE12仅前端变化不会让旧host获得压缩，已交T45保全尚未提交部署准备，待这个必要合批包；83/81真实在途不强停。压缩源码尚未构建/部署公网，不能称阻塞已解除。
 
 SOURCE559（2026-10-26）：原QF采用固定557/CORE12源码、产物、pack限定PASS bbc807c9，未发现新缺口，浏览器/正式性能仍未测；已将有效结论直接交T45，不重复技术验收。T45在83备份/81原小批安全独占交接处准备纯启动候选分批切换，不等全11。GitHub558更新后只读回读一度网络失败；随后独立GET确认远端4edbbe42，无重推/强推。
