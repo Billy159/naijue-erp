@@ -1,3 +1,5 @@
+SOURCE588（2026-10-26）：98真实FAILED2/136.880s，但4489/28282销售头已COMMIT并逐批RR准确、重放0；同batch头/source均4489，COREseq1cursor22/fullfalse保持，acquire159=release159/live0/endtrue/bg0。第52批88条57014/commitReturnedfalse后停止，未重发；partialIndex4577含未确认88且completefalse，不能当全暂存。原T45只读99核此88原键和同次SQL错误阶段，保留4489不重导，结果未清前不接新SQL。统一CORE15buildpack已交；当前CORE14/正式根保持，真实保存/历史编辑/全11及MAIN/PUBLISH仍未完成。GitHub587已核33016b2，本轮为真实推进而非无变化盘点。
+
 SOURCE587（2026-10-26）：将既有current候选摘要从旧CORE10纠正为实际91/92运行CORE14，下一包为已构建CORE15；旧值保历史，不把新源当上线。QF2S582-F01修后限定源PASS11007fb6采用，QB343新init源PASS采用；真实SQL/生成保存未测。97实际只读证明96因缺pg且未stage，无journal/两销售头计数0/无活连接；98修原依赖link经QB344PASS后唯一QUEUED unitdd863fb32f1f，T45原live turn观察，不重传重hash大文件、不重旧作业。原35页65弹层副本证据保留，37页67弹层全部状态真实业务最终验收无新整页计数，正式根未切换。GitHub586已核7653167。
 
 SOURCE586（2026-10-26）：新必要统一CORE15实际构建和打包通过，固定SOURCE585 a33ebb9，包1687124B/f05fc5a3，199members一次解包回读匹配；只换assets版本保持原CORE14只读范围，未假开完整业务。已含v19初始化源码QB343PASS9e015658、NULL生成修后QB340PASS、F2partial恢复QF2关闭11007fb6及G339缓存源改，交T45原销售头安全接缝后采用。实际96 FAILED2/15.008s且无JSON结果，原97只读核查已报告pg依赖加载失败、无journal和销售头0、无在途维护连接；新后继只补原依赖目录接线，复用96原0400输入不再复制/重传。原95/96失败保留，实际stage/新SQL/真实保存/MAIN/PUBLISH和正式根仍未完成。F1/F4/F3实际状态已核交付idle，无新就绪缺陷不重复派工。

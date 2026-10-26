@@ -1355,7 +1355,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-26",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "765316787a960542578672eaffc4a3e264e464e3",
+  "lastVerifiedRemoteCommit": "33016b2f0edec384fc3c3e2dbcba41e8303959d2",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -2855,7 +2855,10 @@
       "deployment": "BUILD_PACK_PASS_NOT_INSTALLED",
       "report": "reports/controller/rapid-launch-20261022/SOURCE586-CORE15-INTEGRATION.json"
     },
-    "currentBackup": "Original83 actual02:01:19.626805Z,12h window; T45 verifies real age at execution, older206 record historical not current"
+    "currentBackup": "Original83 actual02:01:19.626805Z,12h window; T45 verifies real age at execution, older206 record historical not current",
+    "realSalesHeadersStaged": 4489,
+    "realSalesHeadersTotalPrepared": 28282,
+    "salesStageCurrent": "PARTIAL98_4489_COMMITTED_READBACK_88_ORIGINALKEY_RECOVERY_PENDING_NOT_FULL_PUBLISH"
   },
   "supplementalRoles": {
     "DEMO_COMPARE": {
@@ -11657,7 +11660,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE587",
+    "round": "SOURCE588",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11710,7 +11713,7 @@
       "D1": "v19 exact9 delivered QB343 sourcePASS; actualpatch and B07v3 originalT45 safe seam",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
       "D3": "exact5 initializer source QB343 scopedPASS;15018prepared source QB338 reused; full11 actual next",
-      "T45": "96failed dependencyloader, original97readonly recovering exactkeys; no resubmit/copy; CORE15buildpack ready at nextsafe seam",
+      "T45": "98 actually4489headerCOMMIT+RR/replayed0; next88stopped57014 beforecommitreturned, readonly99originalkey/errorphase recovery active; no repeat committed. CORE15awaitsafe seam",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
       "QB": "QB341carrier/QB34296parameter/QB343init sourcePASS; actual permission/PG unknown not passed",
@@ -13174,6 +13177,36 @@
       "QB343": "Init sourcePASS9e0156580a9c89162d163c00491c1e0c09c5fc2aa667b6c6d684e3a8bb3a56d5",
       "fullGoal": "ACTIVE37pages67overlays+approvedadditions/allstates/realbusiness/history/performance/formalroot; no shrink",
       "copyPhase": "Retain original35pages65overlays copy evidence; approved additions separate Phase2; no new allstate/fullbusiness accepted pages"
+    },
+    "source588": {
+      "actual98": {
+        "status": "FAILED_WITH_PRESERVED_PARTIAL_COMMITS",
+        "seconds": 136.88,
+        "committedAndReadback": 4489,
+        "totalHeaders": 28282,
+        "replayed": 0,
+        "stoppedChunk": 52,
+        "unconfirmedChunkRows": 88,
+        "firstIndex": 4489,
+        "lastIndex": 4576,
+        "sqlState": "57014",
+        "commitReturned": false,
+        "afterNativeHeads": 4489,
+        "afterSourceRows": 4489,
+        "acquire": 159,
+        "release": 159,
+        "live": 0,
+        "ended": true,
+        "background": 0,
+        "partialIndexEntries": 4577,
+        "partialIndexComplete": false,
+        "MAIN": false,
+        "PUBLISH": false
+      },
+      "next": "OriginalT45 readonly99 checks exactly88 originalkeys and same-operationSQLphase/errors; no98 replay, no4489 reimport or v19patch while recovering",
+      "currentSourceBuild": "CORE15 source585 buildpackPASS; notinstalled; CORE14stillactual",
+      "goalTurn": "PROGRESS actualCORE15 buildpack and4489 realcommits+readback; no new allstateUI/businessPASS",
+      "GitHub587": "33016b2f0edec384fc3c3e2dbcba41e8303959d2 verified"
     }
   }
 }
