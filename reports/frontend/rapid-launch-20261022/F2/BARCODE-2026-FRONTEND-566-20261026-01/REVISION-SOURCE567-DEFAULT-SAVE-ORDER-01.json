@@ -1,0 +1,40 @@
+{
+  "taskId": "BARCODE-2026-FRONTEND-566-20261026-01",
+  "revision": "SOURCE567-DEFAULT-SAVE-ORDER-01",
+  "status": "SOURCE_READY_TARGETED_PASS_QF567_RETEST_PENDING",
+  "cause": "Initial default lookup did not disable CREATE save; late success effect lacked a synchronous controller-command boundary, allowing display to change after command freeze.",
+  "fix": [
+    "Untouched new CREATE default read idle/loading blocks Save and submit handler; no key/execute while waiting. User selection/clear remains higher priority.",
+    "Default read error releases waiting and retains explicit error/retry; no permanent default wait.",
+    "Default success effect checks actual synchronous controller.getSnapshot().command before values/labels changes; any already submitted original command prevents automatic default mutation, including submitting/uncertain/rejected. No command/key replacement.",
+    "Default retry disabled and guarded during writeBusy. No shared/controller/DTO/client/media/scheme initialization/generator changes."
+  ],
+  "files": [
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "sha256": "2951c32ae36fc96011c9e0d5716426328877c30cae8620d7b11dad1c3de8839e"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+      "sha256": "7bf0e5313974f8eed543fd9fcff7ec7ad175813a6404e018a4b9473f63f39c31"
+    }
+  ],
+  "unchangedBarcodeLeaf": {
+    "path": "apps/web/demo-replica/frontend/runtime/products/editor-barcodes.tsx",
+    "sha256": "a2042ca54f3c4c8459e3757c755bf885a1fc536a894ff1a84b4d8c9bd567dcba"
+  },
+  "checks": {
+    "targeted": "Node24.21 only new BARCODE-567-SAVE-ORDER original DOM/real-controller group PASS exit0: pending save disabled/click creates no key or execute; default read failure releases save and retry allowed; retry success selects CURRENT. Via actual native inputs and original Arco category/year/supplier/group/Transfer color/fit controls fill legal CREATE, then save exactly once with confirmed current scheme; submitting and subsequent network-uncertain state retain same displayed scheme/command object/request key, no second key. No fake SAVE or parser bypass.",
+    "typescript": "products scoped --noEmit PASS exit0",
+    "diffCheck": "exact2 PASS",
+    "reuse": "Prior SOURCE566 raw/real SKU/recovery/manual select/clear/abort evidence reused, no full suite.",
+    "limit": "C clarified QF567 was source-traced only with no runnable repro; no external script awaited or claimed. New original-harness sequence proves preventing pending save, and legal CREATE submitting/uncertain consistency. Late automatic effect additionally checks synchronous controller command before setValues.",
+    "warnings": "Existing Arco React19 element.ref warnings, exit0."
+  },
+  "notTested": [
+    "No browser/build/HTTP/PG/real save or generator proof.",
+    "Requested gpt-6.1-sol/medium; Fast UNVERIFIED."
+  ],
+  "blocker": "F2 source none; exact2 released to C.",
+  "next": "C freeze exact2, original barcode leaf unchanged, QF only SOURCE567 default/command ordering. Do not reopen accepted raw/recovery or backend suites."
+}

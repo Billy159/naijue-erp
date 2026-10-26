@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE570",
+    "round": "SOURCE571",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12858,7 +12858,17 @@
         "next": "F2 same exact3 fix save/default race; new fixed commit QF2 affected-only review; no build or real-save PASS",
         "independentReview": "QF2 P2 default loading/save/late success can diverge shown values and frozen CREATE command; source-traced not runtime reproduced",
         "state": "NEED_FIX_DIRECTED_ORIGINAL_F2",
-        "repair": "F2 reports targeted race fix PASS, exact new pins pending freeze then QF2 F01 only"
+        "repair": {
+          "state": "EXACT2_SOURCE_TARGETED_PASS_INDEPENDENT_RETEST_PENDING",
+          "pins": {
+            "editor.tsx": "2951c32ae36fc96011c9e0d5716426328877c30cae8620d7b11dad1c3de8839e",
+            "editor-runtime.test.mjs": "7bf0e5313974f8eed543fd9fcff7ec7ad175813a6404e018a4b9473f63f39c31"
+          },
+          "result": "reports/frontend/rapid-launch-20261022/F2/BARCODE-2026-FRONTEND-566-20261026-01/REVISION-SOURCE567-DEFAULT-SAVE-ORDER-01.json",
+          "sha256": "075530faddac3d3b854d3565fd19b5c3dd6662d60a8f5da4b8581ad70f821b1b",
+          "checks": "Original legal CREATE controller/parser used; pending no key/noexecute, failure unlock/retry, submitted/uncertain same scheme and originalcommand/key, no backend or real save",
+          "next": "Fixednewcommit QF2 F01 only; unchanged raw/selection evidence reused"
+        }
       },
       "sourcePreparation568": {
         "owner": "D3",
@@ -12871,7 +12881,8 @@
         "authorizedSourceRead": "One bounded existing362306590B snapshot stream solely missing BARCODE locators/raw identity registry; private output, existing eight kinds and old registry untouched, no DB/stage/full rehash",
         "review": "Original QB newsource only after freeze; previous21 barcode proof checks reused",
         "initActionCorrection": "No legal existing action: STAGE requires before/old_version NULL, CHUNK VALIDATING +1..500 claims; do not disguise zero-claim STAGED scheme init. D3/D1 exact dedicated IMPORT_BARCODE_SCHEMES_INIT delta being consolidated, no SQL yet.",
-        "QB336": "PASS_LIMITED_SOURCE_9cf646000534574104cd2d91bd9983ecdb583d415b1ca56f7d23d8695cfc957e"
+        "QB336": "PASS_LIMITED_SOURCE_9cf646000534574104cd2d91bd9983ecdb583d415b1ca56f7d23d8695cfc957e",
+        "captureRun1": "Stopped at first rawBARCODE missing migration-only field;100139008 bytes/137198 lines read, first-refused99881006,15018 identity frozen; no stage. Source decoder narrow missing-only compatibility then QB scoped before resume remaining262425584 bytes, no newIDs/fromzero replay."
       }
     },
     "server566": {
