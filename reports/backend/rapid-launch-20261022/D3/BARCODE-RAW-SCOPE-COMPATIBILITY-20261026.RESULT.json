@@ -1,0 +1,29 @@
+{
+  "status": "NARROW_ORIGINAL_RAW_SCOPE_COMPATIBILITY_FIXED_NEW1_FINITE_PASS_REAL_RECAPTURE_NOT_RUN",
+  "source": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-barcode-import.ts",
+    "bytes": 10385,
+    "sha256": "ffab3d053a99e73ff53ecb5145f25c9522224de1c22adc3b35697532a56178f3"
+  },
+  "test": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/native-barcode-import.test.ts",
+    "bytes": 4471,
+    "sha256": "1125e3682540a7d295698ba7db63953977cfb3439fb38b7b9de1ca8bbd746c38"
+  },
+  "check": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/barcode-raw-scope-missing-20261026.test.log",
+    "bytes": 253,
+    "sha256": "fdefc0d9508426642006bcf7f4e48df1face25479e896b970c3f127a40531777"
+  },
+  "scope": "Only missingrawmigrationfield case + explicitPRODUCT/null/blank rejection. Original21demotion tests not rerun, no sourcecells manufactured.",
+  "actualFailureCheckpoint": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/BARCODE-SOURCE-PASS-RUN1-CHECKPOINT.json",
+    "bytes": 2642,
+    "sha256": "5474794d5e3b41698e38dff5c36402c464c240768abdba891c73c4d0ebdaf12f"
+  },
+  "postCoreActionDeltaV2": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/BARCODE-SCHEME-POST-CORE-INITIALIZATION-DELTA-v2.CANDIDATE.json",
+    "bytes": 16525,
+    "sha256": "3b6fdb991fe1ce0e2664a894a2f7e5f242b802b09a63e0c4edca3766866196ed"
+  }
+}

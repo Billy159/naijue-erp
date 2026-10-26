@@ -18,3 +18,11 @@ test('exact demotion descriptor preserves original MAIN/raw SKU and existing can
 test('unbound old MAIN demotion or edited raw/canonical/retained-main evidence remains refused',()=>{
  for(const mutate of [(x:any)=>{delete x.mainDemotion;},(x:any)=>{x.mainDemotion.canonicalSourceSkuKey='OTHER_GROUP';},(x:any)=>{x.mainDemotion.originalSourceRowSha256='b'.repeat(64);},(x:any)=>{x.mainDemotion.keptMainSourceKey=x.source.sourceKey;},(x:any)=>{x.source.rawFields['条码']='CHANGED';},(x:any)=>{x.mainDemotion.approved=true;}]){const x=input();mutate(x);assert.throws(()=>prepareNativeBarcode(x));}
 });
+
+// Binding scope is a v3 normalized migration field, absent from original cells.
+test('v3 SKU selection accepts missing original migration scope without manufacturing raw cells; explicit non-SKU still refuses',()=>{
+ const x=input();delete (x.source.rawFields as any)['绑定范围'];delete (x.source.fieldProvenance.fields as any)['绑定范围'];const before=structuredClone(x.source);
+ const p=prepareNativeBarcode(x);assert.deepEqual(p.source,before);assert.equal(Object.hasOwn(p.source.rawFields,'绑定范围'),false);assert.equal(p.nativeBarcode.sku_id,x.sku.nativeId);
+ for(const value of ['PRODUCT','',null]){const y=input();(y.source.rawFields as any)['绑定范围']=value;assert.throws(()=>prepareNativeBarcode(y),/Original SKU binding/);}
+ const y=input();delete (y.source.rawFields as any)['绑定范围'];(y.source.normalizedFields as any)['绑定范围']='PRODUCT';assert.throws(()=>prepareNativeBarcode(y),/Original SKU binding/);
+});

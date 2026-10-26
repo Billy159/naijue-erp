@@ -5902,6 +5902,11 @@
       "id": "STAFF_CLOSED_NO_ACCOUNT",
       "question": "Does closed-login filter include employees without accounts?",
       "onlyDependentBranchWaits": true
+    },
+    {
+      "id": "BARCODE_GENERATION_INIT_V19",
+      "confirmationFile": "WRITE-CONTRACT-SUPPLEMENT-v19-BARCODE-GENERATION-INIT.md",
+      "onlyDependentBranchWaits": true
     }
   ],
   "currentAcceptedReceiptBatch": [
@@ -11638,7 +11643,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE571",
+    "round": "SOURCE572",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12882,7 +12887,23 @@
         "review": "Original QB newsource only after freeze; previous21 barcode proof checks reused",
         "initActionCorrection": "No legal existing action: STAGE requires before/old_version NULL, CHUNK VALIDATING +1..500 claims; do not disguise zero-claim STAGED scheme init. D3/D1 exact dedicated IMPORT_BARCODE_SCHEMES_INIT delta being consolidated, no SQL yet.",
         "QB336": "PASS_LIMITED_SOURCE_9cf646000534574104cd2d91bd9983ecdb583d415b1ca56f7d23d8695cfc957e",
-        "captureRun1": "Stopped at first rawBARCODE missing migration-only field;100139008 bytes/137198 lines read, first-refused99881006,15018 identity frozen; no stage. Source decoder narrow missing-only compatibility then QB scoped before resume remaining262425584 bytes, no newIDs/fromzero replay."
+        "captureRun1": "Stopped at first rawBARCODE missing migration-only field;100139008 bytes/137198 lines read, first-refused99881006,15018 identity frozen; no stage. Source decoder narrow missing-only compatibility then QB scoped before resume remaining262425584 bytes, no newIDs/fromzero replay.",
+        "QB337": "PASS_LIMITED_SOURCE_56da3edb1edceca2db916fc3b41dfaad337d3bb78b306cb6486cbee9bc5b1325",
+        "decoderFixPin": "ffab3d053a99e73ff53ecb5145f25c9522224de1c22adc3b35697532a56178f3"
+      },
+      "newWriteContractV19": {
+        "state": "AWAITING_EXPLICIT_USER_CONFIRMATION_ONLY_NEW_WRITE_BRANCH",
+        "file": "WRITE-CONTRACT-SUPPLEMENT-v19-BARCODE-GENERATION-INIT.md",
+        "sha256": "60bba6582432777f061248000b4a3b945709d41e9842ff5e79d0a7592f580ea3",
+        "scope": "Original V2 optional generation intent, existing systemItemCode seven-digit new CREATE allocation/newSKU MAIN only; exact postCORE dedicated import action/two constraints/three functions+verifier; no tables/columns/index/sequence/new audit marker",
+        "businessDirectionAlreadyApproved": true,
+        "independentContinues": [
+          "Old compatible save/default UI race review",
+          "D3 source capture",
+          "T45 exact2/header/full11 existing approved import",
+          "QF CORE14 browser",
+          "D1 B07 historical QA"
+        ]
       }
     },
     "server566": {

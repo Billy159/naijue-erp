@@ -61,7 +61,7 @@ export function prepareNativeBarcode(input: NativeBarcodeInput): PreparedNativeB
     && (!c.required || n[c.name] !== "")), "NATIVE_BARCODE_COLUMNS", "Exact complete v3 effective barcode row required");
   requireDomain(n["来源编号"] === s.sourceKey && raw["来源编号"] === s.sourceKey
     && n["条码"] === raw["条码"] && text(n["条码"])
-    && n["绑定范围"] === "SKU" && raw["绑定范围"] === "SKU"
+    && n["绑定范围"] === "SKU" && (!Object.hasOwn(raw, "绑定范围") || raw["绑定范围"] === "SKU")
     && n["SKU来源编号"] === row.sku.canonicalSourceKey && n["合并前SKU来源编号"] === row.sku.oldSourceSkuKey
     && raw["SKU来源编号"] === row.sku.oldSourceSkuKey
     && n["原始条码性质快照"] === raw["条码性质"]
