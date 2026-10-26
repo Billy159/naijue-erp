@@ -13779,12 +13779,22 @@
       "missingCodes": {},
       "artifactBytes": 215586,
       "artifactSha256": "c2029d831bc6a68813933877eaf4c4f123bcc279f3018ec0c5c0d4db8dbb84ba",
-      "artifactLocation": "private original118 inputs; authorized single safe transfer to F/actual118-source-projection-20261026/source-projection-data.json",
+      "artifactLocation": "F/actual118-source-projection-20261026/source-projection-data.json",
       "businessDML": false,
       "fullAuthority": false,
       "sourceBinding": "SOURCE614 exporter / SOURCE598 original helper / actual a912 runtime",
       "pool": "2 acquired / 2 released / live0 / ended",
-      "next": "Original D3 consume private fixed projection in existing provider; C fullhash/grant/MAIN still pending"
+      "next": "Original D3 consume private fixed projection in existing provider; C fullhash/grant/MAIN still pending",
+      "privateTransfer": {
+        "job": "original private relay120",
+        "status": "COMPLETED_READONLY_TRANSFER",
+        "elapsedSeconds": 0.167782,
+        "bytesAndSha256Matched": true,
+        "directoryMode": "0700",
+        "fileMode": "0600",
+        "providedTo": "D3 existing provider exact4 technical wiring",
+        "rawDataInGit": false
+      }
     },
     "source618Queue": {
       "T45": "safe transfer single215KB actual118 then original six-scheme initialization / B07 isolated history actual package",
