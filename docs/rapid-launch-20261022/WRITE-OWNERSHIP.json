@@ -6240,5 +6240,21 @@
       "apps/web/src/inventory/compact-page.test.ts"
     ],
     "limits": "No schema/writer/issuer/route/root/production transport activation. Strict same-client version helper and pure synthetic compact decoder. Coverage basis is explanatory proof note, not wire field. No fabricated readVersion/cache."
+  },
+  "source680HistoryTestAdapter": {
+    "owner": "D1",
+    "files": [
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.mjs",
+      "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/draft-normal-history-v16.test.mjs"
+    ],
+    "scope": "Only exact count DTO string versus array length comparison, preserve canonical integer validation and BigInt exact equality for lines and settlements. Original07 evidence immutable; no fresh fixture, reseed, HTTP replay or permission/password changes authorized by this source change."
+  },
+  "source680FullPreparationLinearization": {
+    "owner": "D1",
+    "files": [
+      "scripts/import-v3/prepare-native-bindings.mjs",
+      "scripts/import-v3/prepare-native-bindings.test.mjs"
+    ],
+    "scope": "Only replace confirmed repeated baseline group scans and ACCOUNT allItems double requestHash scans with local unique identity maps and once-computed original digests. Preserve original validation, exact values/order/digests/keys/11 streams. No timeout extension or actual source rerun authorized here."
   }
 }
