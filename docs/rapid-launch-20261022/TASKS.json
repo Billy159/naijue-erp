@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE555",
+    "round": "SOURCE556",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "5459d1ed1a0608eab6117a3b3c7f60d56e3ce11b",
+    "sourceHeadBeforeThisContinuityCommit": "27044ccf268c702c4193f9b711498c185671fccc",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12676,6 +12676,21 @@
       "blocker": "Backup23 finished2026-10-25T13:07:58Z now exceeds original12h validity; planned window expired. Need newest valid backup or original authorized backup successor and newly bound finite window.",
       "next": "T45 verify newer backup; if none execute original backup successor, then original key dedup and approved81 stage. Private0700 subdir/0600 file, do not change old parent permissions.",
       "scope": "Exact approved2 native historical customer identities then28282 headers; no reimport628 parties/transfer, no MAIN shortcut"
+    },
+    "startup556": {
+      "F1DOC198": "SOURCE_READY_ACCOUNT_CHROME_LAZY_CHECKED_NOT_RUNTIME_PERFORMANCE_ACCEPTED",
+      "result": "K/reports/frontend/rapid-launch-20261022/F1/chunk-198-lazy-account-chrome/RESULT.json",
+      "sha256": "365bf451fbd01ff1d44141fa0695ac99fe57c13778116528c186bc0419c41e3d",
+      "runtimeHostSha256": "d39de5aa8cc2e2b60303c9c7ff7be063e9e8397659eb33da40e7c9d9c3937461",
+      "originalChecks": "Existing targeted host and new controlled lazy/identity/failure retry PASS; strict0",
+      "CChecks": "Combined runtime tsconfig noEmit exit0; builder node--check and git diff--check exit0",
+      "next": "Single fixed combined build CORE11, same API/flags/purpose, original QF affected integration checks then original T45 phased candidate deployment",
+      "notProven": [
+        "Actual cold browser performance",
+        "Menu/password first click actual browser",
+        "Current user login root cause",
+        "Any new whole-page or real business PASS"
+      ]
     }
   }
 }

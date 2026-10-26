@@ -1,3 +1,5 @@
+SOURCE556（2026-10-26）：F1 DOC198已实际交付runtime-host d39de5aa，原账号组件值静态import已移除，仅真实principal后加载原同module，加载失败可重试、身份退出丢迟到结果、原改密Modal首次打开挂载；不声称物理拆passwordchunk。采用原定向host/controlled lifecycle检查PASS，C合并runtime类型检查exit0、builder语法及diff检查exit0。F1临时写权已返C，C前置Arco外链改动组成一个关联包，接下来固定同flags/API的CORE11构建并交原QF必要受影响短验。当前仍源码阶段、未测真实浏览器耗时/首击/正式性能，不宣称登录根因已修或全站业务通过；原T45备份/2客户stage独立继续。
+
 SOURCE555（2026-10-26）：actual79/80已见post75 login200/422ms、session200/208ms及受保护query200/279–531ms；C只读Chrome现#sales显示账号公共壳和“此页面尚未接入当前版本”，没输入/刷新。库存/调拨/销货等CORE10 flags仍false是真实业务接线/全11发布缺口，不能用匿名200当解决，也不直接开flag。真实销售暂存、全11 MAIN/PUBLISH、对应read用途由原D3/T45/QB继续；历史编辑与正式根发布仍缺。
 启动实图确认application+26静态chunk/1679239B，676126B仅Arco CSS JS文本；这是已证按需缺口而非全部登录根因。C已实际修改原bootstrap/build把Arco拆同版本前置stylesheet、保持冻结覆盖顺序；原F1 DOC198独占临时交还runtime-host按身份加载原账号菜单和首次挂改密，其他公共文件仍C唯一。当前源码WIP，尚未构建/浏览器/性能或发布，不改auth strict/超时/业务flag，不删遮罩假修好。
 T45两历史客户源校验及24306B暂存输入已准备，81窄审由原QB在途；尚未提交/无DB写。当前原backup23已超既定12h且81旧窗口到期，已沿原授权令T45先核新备份，无则原流程必要后继，然后重新绑定一次有限窗/原key去重提交。私有0700control内新子目录，不改旧父权限。全37/67整页全部状态＋真实业务仍未新增PASS；源码进展与实际业务/上线分开。

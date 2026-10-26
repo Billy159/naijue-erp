@@ -5544,6 +5544,6 @@
     ],
     "boundary": "F1 defers original account menu chain until authenticated; C extracts original shared Arco CSS into same-version head stylesheet before frozen overrides. No auth protocol/timeout/real POST/flags changed. Existing owners and reports otherwise unchanged.",
     "model": "gpt-6.1-sol/medium",
-    "state": "WIP_NOT_DEPLOYED"
+    "state": "F1_DOC198_DELIVERED_RUNTIME_HOST_WRITE_RETURNED_TO_C"
   }
 }

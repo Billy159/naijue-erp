@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createPortal } from 'react-dom';
 import {SaleDialog} from '../documents/native-dialog.tsx';
 import { LoginView } from './login-view.tsx';
-import { AccountMenuView, ChangeOwnPasswordDialogView, type OwnPasswordFields, type OwnPasswordErrors } from './account-menu.tsx';
+import type { OwnPasswordFields, OwnPasswordErrors } from './account-menu.tsx';
 import { createReadyPageMounts, type ReadyPageOptions, type MountedReplicaPage } from './ready-pages.tsx';
 import type { ReadScope } from '../../../../src/loading/read-scope.ts';
 import type { ReplicaSession } from './session.ts';
@@ -22,7 +22,19 @@ function SessionChrome({ session, accountHost, mayChangeIdentity, notice }: { se
  const [passwordVisible, setPasswordVisible] = useState(false), [passwordOpen, setPasswordOpen] = useState(false);
  const [fields, setFields] = useState<OwnPasswordFields>(emptyPasswords), [errors, setErrors] = useState<OwnPasswordErrors>({});
  const principal = state.principal, passwordBusy = state.phase === 'changing-password';
- useEffect(() => { if (!principal) { setPasswordOpen(false); setFields(emptyPasswords()); setErrors({}); } }, [principal]);
+ const [accountAttempt,setAccountAttempt]=useState(0),[accountLoad,setAccountLoad]=useState<{principal:NonNullable<typeof principal>;views:typeof import('./account-menu.tsx')|null;failed:boolean}|null>(null);
+ useEffect(()=>{
+  setPasswordOpen(false);setFields(emptyPasswords());setErrors({});
+ },[principal]);
+ useEffect(()=>{
+  if(!principal){setAccountLoad(null);return;}
+  let active=true;setAccountLoad({principal,views:null,failed:false});
+  void import('./account-menu.tsx').then(views=>{if(active&&session.auth.getSnapshot().principal===principal)setAccountLoad({principal,views,failed:false});},()=>{if(active&&session.auth.getSnapshot().principal===principal)setAccountLoad({principal,views:null,failed:true});});
+  return()=>{active=false;};
+ },[principal,accountAttempt,session]);
+ const accountViews=accountLoad?.principal===principal?accountLoad.views:null;
+ const accountCurrent=()=>session.auth.getSnapshot().principal===principal;
+ const logout=()=>{if(!accountCurrent())return;if(mayChangeIdentity())void session.auth.logout();else notice('请先保存或取消当前业务编辑。');};
  const closePassword = () => { if (passwordBusy) return; setPasswordOpen(false); setFields(emptyPasswords()); setErrors({}); queueMicrotask(() => accountHost.querySelector<HTMLButtonElement>('button')?.focus()); };
  const submitPassword = async () => {
   if (session.auth.busy) return;
@@ -37,13 +49,15 @@ function SessionChrome({ session, accountHost, mayChangeIdentity, notice }: { se
   setErrors({});
   const ok = await session.auth.changeOwnPassword({ currentPassword: fields.currentPassword, newPassword: fields.newPassword });
   setFields(emptyPasswords());
+  if(!accountCurrent())return;
   if (ok) setPasswordOpen(false);
   else setErrors({ form: session.auth.getSnapshot().notice === 'uncertain' ? '修改结果未确认，请恢复连接后使用新密码验证登录；请勿立即重复提交。' : session.auth.getSnapshot().error?.message ?? '修改未完成，请稍后重试' });
  };
- if (principal) return <>
-  {createPortal(<AccountMenuView employee={{ id: principal.accountId, name: principal.staffName ?? principal.loginName, role: principal.role }} onChangePassword={() => { setFields(emptyPasswords()); setErrors({}); setPasswordOpen(true); }} onLogout={() => { if (mayChangeIdentity()) void session.auth.logout(); else notice('请先保存或取消当前业务编辑。'); }} />, accountHost)}
+ if(principal&&!accountViews)return createPortal(<div role={accountLoad?.failed?'alert':'status'}>{accountLoad?.failed?<><span>账号菜单加载失败。</span><button className="btn" onClick={()=>setAccountAttempt(value=>value+1)}>重试账号菜单</button><button className="btn" onClick={logout}>退出登录</button></>:<span>正在加载账号菜单…</span>}</div>,accountHost);
+ if (principal&&accountViews) {const {AccountMenuView,ChangeOwnPasswordDialogView}=accountViews;return <>
+  {createPortal(<AccountMenuView employee={{ id: principal.accountId, name: principal.staffName ?? principal.loginName, role: principal.role }} onChangePassword={() => { if(!accountCurrent())return;setFields(emptyPasswords()); setErrors({}); setPasswordOpen(true); }} onLogout={logout} />, accountHost)}
   {passwordOpen && <ChangeOwnPasswordDialogView visible submitting={passwordBusy} fields={fields} errors={errors} onCancel={closePassword} onSubmit={() => void submitPassword()} onFieldChange={(key, value) => { setFields(old => ({ ...old, [key]: value })); setErrors({}); }} onAfterOpen={() => document.querySelector<HTMLInputElement>('.account-password-modal input[data-account-password="currentPassword"]')?.focus()} />}
- </>;
+ </>;}
  if (state.phase === 'unresolved' || state.phase === 'resolving' || state.phase === 'logging-out') return <section className="login-overlay iw-arco-controls"><div className="login-panel" role="status">正在核对登录状态…</div></section>;
  let remembered = ''; try { remembered = localStorage.getItem('erp-remember-name') ?? ''; } catch { /* Display preference only. */ }
  const message = state.notice === 'password-changed' ? '密码已修改，请使用新密码重新登录' : state.notice === 'uncertain' ? '操作结果未确认，请核验登录状态。' : state.error?.message ?? (state.notice === 'expired' ? '登录已失效，请重新登录' : '');
