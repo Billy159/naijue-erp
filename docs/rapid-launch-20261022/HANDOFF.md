@@ -1,3 +1,5 @@
+SOURCE616：原QB360rev2导出源PASS63f6e074和QB362准确v20host源PASSb3036978均采用，旧613SQL失败保留，仅新增影响项，实际PG导出/fullhost尚待。112真实COMPLETED0/5.631370s（原T45回报14:21:49CST），old105graceful exit0/backends0后仅7INSERT/idUPDATE/helperEXEC提交，canonical a9128360/131，其余19服务和4302route保全、0业务DML/init/MAIN/PUBLISH。当前私有APP停，缺失大metadata原键只读回收在途，不重112，原QB新双用途review后才114/115；旧355不可复用。SOURCE615及QB361调度接续远端已核8f6ea0c。
+
 SOURCE615接续：QB361三恢复载体仅新增prepared源审PASS134a14d2已采用，原T45立即原112实际权限窗口→fresh双用途metadata原QB→114新APP→115三upstream，0重复准备验收。06:18:20Z原控制通道证明112/114/115未提交且无在途writer；此时当前服务精确状态须原root guard实测，普通SSH权限不足不扩权。实际ACL/metadata/APP/route尚待结果，旧355不得当afterACL。
 
 SOURCE615：D1原host v20兼容2叶交还固定host38021/51eebde7与test38193/262829d0，仅FULL continuation准确新增既有issuer已批26_v20_history_insert_identity_from_v19，CORE/无phase/其他profile/target身份及原issuer canonical用途权限保持。新3限定检查修前RED/修后GREEN采用，交原QB只新增scope；非实际PG/fullsource已就绪。原112/114/115恢复链与projectionrev2新审继续，不扩大检查/不新建授权平台。源码部分/真实业务/正式发布分层保持。

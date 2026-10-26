@@ -11674,7 +11674,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE615",
+    "round": "SOURCE616",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "a88e2eecdb7fbbf2bdb3b92185145cec332fb082",
     "fixedCandidates": {
@@ -13690,7 +13690,7 @@
       "actualConsumption": false
     },
     "source613ProjectionPreparation": {
-      "status": "REVISION2_FIXED_PENDING_QB_ORIGINAL_SQL_PRECEDENCE_FAILURE_PRESERVED",
+      "status": "QB360_REV2_SOURCE_PASS_ACTUAL_EXPORT_PENDING",
       "owner": "D1",
       "source": "reports/backend/rapid-launch-20261022/D1/FULL-SOURCE-PROJECTION-PREPARATION/RESULT.json",
       "sha256": "8d141932c1dc89d02aa15890c3f96d304e91fa096ab9ebda4b6178eb091c03a0",
@@ -13698,7 +13698,8 @@
       "actualPG": false,
       "next": "QB scoped review then T45 finite actual readonly export",
       "revision": "2",
-      "newCheck": "one targeted SQL-expression precedence check; prior four reused"
+      "newCheck": "one targeted SQL-expression precedence check; prior four reused",
+      "reviewSha256": "63f6e07427f0ca72742f252e2945a925267b473fa51639d6b51447d621521ba2"
     },
     "source613Actual111": {
       "status": "COMPLETED_READONLY_ONLY",
@@ -13711,28 +13712,33 @@
     },
     "source614FullHostV20": {
       "owner": "D1",
-      "status": "DELIVERED_FIXED_PENDING_QB",
+      "status": "QB362_SOURCE_PASS_ACTUAL_HOST_PENDING",
       "files": [
         "scripts/import-v3/production-source-host.mjs",
         "scripts/import-v3/production-source-host.test.mjs"
       ],
       "scope": "Existing FULL runtime validation accepts approved current v20 profile without weakening exact metadata/identity/purpose/ACL",
       "checks": "3 new targeted tests RED before exact profile compatibility / GREEN after per original owner; no old suite/PG/build",
-      "actualPG": false
+      "actualPG": false,
+      "reviewSha256": "b3036978e1d42e76d05cd762d5d43e96f0730272a13e548cd01bbe03270d4e80"
     },
     "source614ServerNext": {
       "owner": "T45",
-      "status": "QB361_PREPARATION_PASS_T45_CONTROLLED_EXECUTION_DISPATCHED",
+      "status": "ACTUAL112_COMMITTED_APP105_STOPPED_NEW_METADATA_COLLECTION_THEN_QB_REQUIRED",
       "jobs": [
         "112 controlled missing-only ACL",
         "114 exact current installed source598 restart fresh metadata",
         "115 only candidate upstream three names"
       ],
-      "actualACL": false,
-      "current105": "RUNNING_LAST_T45_RECEIPT",
+      "actualACL": true,
+      "current105": "STOPPED_GRACEFUL_EXIT0_BACKENDS0",
       "currentRoute": "4302 unchanged",
       "reviewRoot": "reports/qa-backend/rapid-launch-20261022/QB/slice361-minimum-acl-and-recovery-carriers",
-      "reviewResultSha256": "134a14d2d9c62be215a26064caa8ef5c64d28f8a8d21f59386bbc1dd22de3a5d"
+      "reviewResultSha256": "134a14d2d9c62be215a26064caa8ef5c64d28f8a8d21f59386bbc1dd22de3a5d",
+      "actual112Seconds": 5.63137,
+      "newCanonical": "a9128360bad77c83afa4f6da8eafab2117a2a5d96d3a8bf23243e20617133cf5",
+      "next": "Collect missing exports by original key readonly; original QB fresh socket/TCP review; then 114 restart and 115 route; no repeat112",
+      "actualBusinessDML": false
     }
   }
 }
