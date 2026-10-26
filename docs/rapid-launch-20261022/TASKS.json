@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE566",
+    "round": "SOURCE567",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12818,7 +12818,7 @@
       },
       "newProductDefault": {
         "owner": "F2",
-        "state": "SOURCE_CHECKED_NOT_BUILT",
+        "state": "F2_EXACT3_SOURCE_TARGETED_PASS_NOT_BUILT",
         "schemeId": "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef",
         "boundary": "CREATE only, verified CURRENT; existing/restored/manual selection/clear preserved; no fabricated scheme"
       },
@@ -12830,25 +12830,45 @@
       },
       "compatibleOldCodeSave": {
         "owner": "F2/D2",
-        "state": "EXISTING_V2_CONTRACT_REUSED_UI_FIX_IN_PROGRESS",
+        "state": "F2_EXACT3_SOURCE_TARGETED_PASS_REAL_SAVE_PENDING",
         "binding": "Exact product/color/fit/real size to existing real SKU; old main/ID unchanged",
         "finding": "Frontend trim would change original raw; fix exact barcode leaf to preserve original text including leading zero and trailing space",
         "check": "D2 focused source test1/1 and strict0, not PostgreSQL/real HTTP acceptance"
       },
       "oldProductsSkusBarcodes": "NO_BULK_MODIFY_NO_RENUMBER_NO_MAIN_REPLACEMENT",
       "model": "gpt-6.1-sol/medium",
-      "fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH"
+      "fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+      "frontendDelivery": {
+        "report": "reports/frontend/rapid-launch-20261022/F2/BARCODE-2026-FRONTEND-566-20261026-01/RESULT.json",
+        "sha256": "373b10accf864226b96ee1ce11948055bff2b182b65e83043d21b576815e646f",
+        "frozenFiles": [
+          {
+            "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+            "sha256": "6ed55da826695b648b789f4d370225ec497f5b777c0f40582396776ee2eaddb9"
+          },
+          {
+            "path": "apps/web/demo-replica/frontend/runtime/products/editor-barcodes.tsx",
+            "sha256": "a2042ca54f3c4c8459e3757c755bf885a1fc536a894ff1a84b4d8c9bd567dcba"
+          },
+          {
+            "path": "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+            "sha256": "c0cb60b1f5344ba56d1633aa0dd4f4294b5a6160e9f8e173434c6d9d30e6bb9b"
+          }
+        ],
+        "next": "Original QF2 source/contract affected review; actual provider and real save pending T45 readiness; no fake flags"
+      }
     },
     "server566": {
       "owner": "T45",
       "job90": "ACTUAL_COMPLETED_EXIT0_18.102_SECONDS_CORE14_INSTALLED",
       "dependencies": "111 reused; npm ci not rerun",
       "QB335": "PASS_LIMITED_SOURCE_564821996347bc6c564e798a3c09ffed0bd1659e2629b0541cc77113be6999aa",
-      "current": "93 exact2 function ACL then actual metadata and QB current dual reviews,91/92 fresh candidate APP/route",
-      "actual93": "NOT_YET_REPORTED",
+      "current": "Original QB current socket/TCP reviews then T45 91/92 CORE14 fresh APP/route",
+      "actual93": "COMPLETED_COMMIT_2026-10-26T02:33:52.710321Z",
       "formalRootChanged": false,
       "services": 19,
-      "businessPublish": "NOT_DONE"
+      "businessPublish": "NOT_DONE",
+      "newCanonical": "e02a19ba8079d673e5f4765d0071b49177ce808a692d34648da7a726e33bb9fa"
     }
   }
 }

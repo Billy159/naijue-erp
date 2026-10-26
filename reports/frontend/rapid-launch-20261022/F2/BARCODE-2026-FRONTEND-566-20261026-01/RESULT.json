@@ -1,0 +1,48 @@
+{
+  "ID": "BARCODE-2026-FRONTEND-566-20261026-01",
+  "范围": {
+    "status": "SOURCE_READY_TARGETED_PASS_ACTUAL_PROVIDER_QA_PENDING",
+    "authority": "BARCODE-SCHEME-INITIALIZATION-APPROVAL-v1.json direct human confirmation and C SOURCE566 exact leaf registration; D2 original V2 EDIT contract handed off.",
+    "newDefault": "New unretained CREATE reads original dictionary scheme detail by exact0e70e45e-1a51-4d44-afe8-0002cf3fb7ef; sets only if same id and CURRENT. Uses real returned name. Existing EDIT/retained CREATE untouched; manual selection or clear takes precedence over late default. Failed/null/historical/unconfigured reads show explicit no-default state, read failure has retry. No fabricated scheme.",
+    "oldCode": "Keep supplement entry; disable without existing SKU id or actual EDIT grant. Original tuple retained with id:null/kind CONFIRMED_OLD/schemeId:null/enabled:true. Preserve entered raw including leading zeros/trailing spaces; duplicate check compares raw rather than trimmed value. Modal states pending draft until product save confirmation. Original full barcodes including MAIN retained, original V2 EDIT submit and receipt/readback unchanged.",
+    "fourStates": {
+      "classification": "D3 owned; not executed or verified by F2",
+      "newDefault": "Frontend source implemented/targeted synthetic checks PASS; actual initialized provider QA pending",
+      "actualGeneration": "D2/C mapping/algorithm contract pending; no frontend generator or guessed barcode",
+      "compatibleCodeSave": "Existing V2 contract consumer wired and targeted synthetic command checks PASS; actual HTTP/PG/UI roundtrip still pending"
+    }
+  },
+  "文件": [
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "sha256": "6ed55da826695b648b789f4d370225ec497f5b777c0f40582396776ee2eaddb9"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-barcodes.tsx",
+      "sha256": "a2042ca54f3c4c8459e3757c755bf885a1fc536a894ff1a84b4d8c9bd567dcba"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+      "sha256": "c0cb60b1f5344ba56d1633aa0dd4f4294b5a6160e9f8e173434c6d9d30e6bb9b"
+    }
+  ],
+  "检查": {
+    "node": "24.21.0",
+    "targeted": "Only new BARCODE-2026-DEFAULT block and affected known-rejection barcode EDIT group from original editor test. PASS exit0. Exact UUID CURRENT default; failure/HISTORICAL/null no-default; user manual historical selection precedes late default; user clear persists; existing unknown and retained CREATE remain untouched; cancel signal/late ignored. Supplement disabled without action/existing sku id; raw0001234567890123 + trailing space preserved in draft and original EDIT command; exact tuple and MAIN unchanged; known reject refresh drops old draft.",
+    "typescript": "products scoped --noEmit PASS exit0",
+    "diffCheck": "exact3 PASS",
+    "warnings": "Existing React19 Arco element.ref warnings; exit0.",
+    "reuse": "Other UI465/436/437/443/v17 checks reused; full suites not rerun."
+  },
+  "未测": [
+    "No browser/build/server/DB/liveHTTP or actual new product/compatible-code durable save. No actual scheme initialization, barcode generation or performance proof.",
+    "Requested Sol6.1/medium; Fast UNVERIFIED."
+  ],
+  "阻塞": {
+    "source": "NONE exact3 released",
+    "provider": "C/T45 must expose real scheme reader containing approved same UUID CURRENT; existing root already injects dictionary only when barcodeSchemes enabled. Maintenance allowedActions remains actual host gate; not switched by F2.",
+    "generation": "No generator/allocator currently implemented per D2. C owns consolidated mapping approval.",
+    "compatibility": "D2 confirms existing original V2 EDIT maps exact tuple to real SKU; no skuId DTO addition needed. Actual production save readiness/QA remains D2/T45."
+  },
+  "next": "C freeze exact3 and original QF2 affected new default/select/cancel/compatible raw draft+real capability flow short QA. Reuse accepted checks. No shared root/build/record/backend/schema/DTO/old src consumer writes, no commit."
+}
