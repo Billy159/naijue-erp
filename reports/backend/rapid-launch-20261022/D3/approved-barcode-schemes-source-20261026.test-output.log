@@ -1,0 +1,11 @@
+✔ approved six exact snapshots map by original full name, keep historical lengths descriptive and preserve native/raw identity (8.549084ms)
+✔ re-pinned unapproved rows/status/missing or extra rows cannot masquerade as the approved original42-field set (4.498291ms)
+✔ wrong frozen ID/alias, missing original21 demotion proof and duplicate enabled main refuse instead of rewriting source (2.125042ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.416583

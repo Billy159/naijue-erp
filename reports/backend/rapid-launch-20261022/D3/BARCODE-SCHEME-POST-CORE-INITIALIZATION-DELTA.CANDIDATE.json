@@ -1,0 +1,108 @@
+{
+  "version": "BARCODE_SCHEME_POST_CORE_INITIALIZATION_WRITE_DELTA_26_CANDIDATE_V1",
+  "status": "C_EXACT_CONTRACT_DELTA_FOR_D2_CONSOLIDATED_CONFIRMATION_NOT_APPROVED_NOT_IMPLEMENTED",
+  "approvedClassificationAlreadyClosed": {
+    "approval": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/BARCODE-SCHEME-INITIALIZATION-APPROVAL-v1.json",
+      "bytes": 6391,
+      "sha256": "f9da50c270c14321b17af06255a5f0649daf8b55a725b6a29fe483f342517533"
+    },
+    "questionCallId": "call_be36b94f79b64f1280fc743ca246172f",
+    "classification": "2026 CURRENT, other5 HISTORICAL; exact42fields approved, not pendinguseranswer anymore",
+    "proposal": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/BARCODE-SCHEME-INITIALIZATION-PROPOSAL-v1.json",
+      "bytes": 5463,
+      "sha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00"
+    }
+  },
+  "actualExistingCodeFacts": [
+    {
+      "file": "scripts/import-v3/native-bootstrap.mjs",
+      "function": "openNativeImportBootstrap26 -> bootstrap26.stageNewBatch26",
+      "fact": "Original only first-batch+emptyDomain read after admittednewbatch, then49 account/party callback; no barcode_scheme INSERT in this callback. ExistingCORE157 alreadycommitted. Originalkey receipt replay returns storedresult before callback, cannot append sixrows by replay; currentemptyDomain must fail on existingnative/source rows."
+    },
+    {
+      "file": "adapters/postgres/src/native-barcode-import.ts",
+      "function": "PostgresNativeBarcodeImportStore26.stage -> originalwrite",
+      "fact": "Only exact samebatch importedSKUalias+scheme snapshot SELECT then raw sku_barcode/source create; never initializes scheme. Existing stage must keep exactsnapshot predicate."
+    },
+    {
+      "file": "adapters/postgres/migrations/0009_catalogue_prices_barcodes.sql",
+      "function": "barcode_scheme existing table",
+      "fact": "Seven fields only, no new table/field/index/enum proposed. Scheme has no native version column, so cannot use generic maintenance CREATE requiring version/deleted_at."
+    },
+    {
+      "file": "adapters/postgres/migrations/0007_sparse_inventory_cutoff.sql / 0021_native_maintenance_receipts.sql",
+      "function": "receipt_target_kind/action_by_kind/result_by_kind, audit_import_checkpoint_version",
+      "fact": "BARCODE_SCHEME is not maintenance receipt union. Do not insert a newaction/targetkind or fake existingCOREaudit silently. Existing IMPORTreceipt exact result fields and batch checkpoint/auditversion chain must be preserved if selected."
+    }
+  ],
+  "currentBatch": {
+    "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+    "namespace": "naijue:tplus:primary-ledger",
+    "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+    "actorAccountId": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+    "coreReceiptId": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
+    "coreSourceDigest": "2589b25c06bb1312b9d1f40627fb7432f44b4293b5d1ae7186223948b144cc28",
+    "birthEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v14-real49-core-initialization-20261024-157/release-submission/release-receipts/c03-r1-v14-real49-core-initialization-20261024-157/core-actual.json",
+    "birthReceiptProves": "Original C-controlled firstempty admission and actual committed CORE only; no sixscheme creation claimed. Current tablecontents/currentidentity/currentcheckpoint must be proved fresh by T45.",
+    "lastKnownCheckpoint": "Actual71 seq1/cursor22; accounting22 vs native53, not latest after later jobs. No current state guessed."
+  },
+  "proposedExactDelta": {
+    "summary": "Permit a new controlled same-batch six-scheme initialization transaction after the already committed originalfirstempty CORE, before BARCODE stage, referencing originalbirth receipt instead of re-running or relaxing emptyDomain. This changes original same-first-transaction wording; user/C consolidated confirmation required before SQL.",
+    "proposedFilesAndOwners": [
+      {
+        "owner": "D3 registered source/native barcode leaf; D1 original runtime/receipt protocol owner coordination through C",
+        "files": [
+          "packages/application/src/native-barcode-import.ts",
+          "adapters/postgres/src/native-barcode-import.ts"
+        ],
+        "proposedFunctions": [
+          "prepareBarcodeSchemeInitialization26 (candidate data validation, not implemented)",
+          "PostgresNativeBarcodeImportStore26.initializeSchemes26 (candidate controlledtransaction, not implemented)"
+        ],
+        "change": "Exact six row input + approval/proposal pins/currentbatch/target/COREbirth proof + immutable requestkey; atomic exactempty-create or exactsamekey replay. Original .stage row writer unchanged and still requires actual schemes."
+      },
+      {
+        "owner": "C/D1 original closed IMPORT command/receipt and capability owner",
+        "files": [
+          "packages/application/src/inventory-cutoff-import.ts",
+          "scripts/import-v3/run.mjs",
+          "adapters/postgres/src/inventory-cutoff-import-store.ts",
+          "adapters/postgres/src/native-import-accounting-capability.ts"
+        ],
+        "change": "Must choose/confirm one explicit scheme-init component command branch within existing IMPORTreceipt/action/result restrictions. Do not overload COREbootstrap or use arbitrary newaction/target. Candidate route is explicitly tagged IMPORT_CHUNK scheme-init variant with no inventoryitems, preservingexisting IMPORT resultshape; this is proposedwritecontract only, not accepted genericMAIN accounting. Owner must confirm exact integration before implementation."
+      }
+    ],
+    "sourceAndAdmission": [
+      "Originalbatch/ns/selection/target/actor exact; activeauthorizedactor checked actual currentstate, not inferred from birth actorID. Runtime IMPORT_STAGE + independent exactcommand/source grant remain mandatory.",
+      "OriginalCOREreceipt/audit must match committed IMPORT_CORE_STAGE, batch/digest/source selection and recordedoriginalbirth admission. Originalimmutable receipt/audit/source data are never rewritten.",
+      "Current batch STAGED/VALIDATING, no PUBLISH or prior livebusinessrelease, originalfullmetadata/checkpoint remains coherent. CurrentC/T45 readback required; no sourceplan/HTTP200 substitute.",
+      "Do not call original emptyDomain on current nonempty R1 and overridefalse; prove historicalfirstempty birth through originalcontrolledreceipt instead. If this proof cannot be authenticated, initializationstaysblocked."
+    ],
+    "atomicWriteAndReplay": [
+      "Acquire original cutoff_import_lock plus samebatch row/receipt locks, use one actualsameclient/runtime transaction; lock/read entire barcode_scheme set, not only matching names/UUIDs.",
+      "First create permitted only entire scheme tableempty AND originalsamekey receiptabsent AND no existingBARCODEsource/sku_barcode business effect for thisbatch. Insert exact six7-field snapshots in deterministic approvedsourcekey order and readbackall6 exact; no source-ID reallocation.",
+      "Replay permitted only original actor+same immutable requestKey has matching exact commandhash, COMMITTEDreceipt/pairedaudit and the entire table exactly sixoriginal snapshots. Tablepartial/missing/extra/value drift or rowswithout matchingreceipt rejects; do not auto-adopt a preseeded exact6 set.",
+      "DifferentrequestKey never licenses duplicate initialization. No ON CONFLICT DO NOTHING/update/fillmissing/bynameadoption.",
+      "Any mismatch aborts wholetransaction. Originalkeys preserved after unknownCOMMIT; read actual samekeyreceipt+sixexact rows to decide result, no automaticnewkey/replay."
+    ],
+    "auditReceiptCheckpoint": [
+      "Use original stableImportId(operation,actor,requestKey), original exact commandhash includes approved42fields, bothapprovalpins, originalCOREreceipt/digest/batch/ns/selection/target and expectedcheckpoint. NewrequestKey fixed by C, never reuse c128_real_core_20261024_01.",
+      "Create one new pairedaudit+receipt for the scheme-init action branch; before/after scope records exactempty->six and originalpins. Do not overwrite priorCOREaudit/receipt or claim a seven-fieldscheme version that does not exist.",
+      "If reusing originalIMPORTreceipt/audit constraints, newcheckpoint.sequence increments exactlyone and audit nativeversion chain advances once; cursor/counts/expected remain unchanged. No warehouse/SKU/ledger claim or inventory_balance/ledger effect. Fresh originalreadCoreImportContinuation26 must preserve22birthclaims/remaining31 and read actual new sequence, never reset to1.",
+      "Exact existingIMPORT resultshape must remain {operationId,batchId,sequence,cursor,status,ledgerEntryIds:[]}. If originalowner finds current schema cannot represent this branch without a constraint/action change, return preciseadditionaldelta before code/SQL; do not invent acceptedreceipt."
+    ],
+    "permissionsAndPreservation": [
+      "Only needed existing seven barcode_scheme INSERT fields plus original receipt/audit/batch CAS rights under reviewedactualruntime; no broadtableUPDATE/DELETE, no newbusinessschema. Currentcanonicalmetadata/issuer review lifecycle remains T45/C responsibility, not permissionbypass.",
+      "No updates to existing product/SKU/rawbarcode/mainkind/defaultscheme/source identity/creationtime. D2/F2 separate defaults/generation/compatiblecode save direction remains separate implementation/verification.",
+      "All MAIN/source/closure/PUBLISH gates and actual whole15018/6scope remain intact. Sixdescriptionapprovalalone grants no realwrite/sourceexecution."
+    ],
+    "minimumChecksAfterDeltaApproval": [
+      "Finite synthetic exact6 firstcreate and identicalsamekey replay; rejectsinglefielddrift/extra/missing/no-birth/wrongbatch/actor/selection/target/changedkey/hash/anyexistingbarcodeeffect.",
+      "Rollback/unknownCOMMIT retainsoriginalkey; pairedaudit/receipt/checkpointCAS/no inventoryclaim effects.",
+      "ActualT45 currentstagebeforeBARCODE, sixrows fullreadback+originalreceipt/audit+nochanges tocore/accounts/session/source/counters; not productionbusinessacceptance."
+    ]
+  },
+  "routing": "D3 sends C this exactdelta to forward originalD2 for merging the actual2026 generation confirmation; C singleconsolidated confirmation. No SQL written or executed while delta pending."
+}

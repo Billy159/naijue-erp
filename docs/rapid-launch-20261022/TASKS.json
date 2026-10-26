@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE567",
+    "round": "SOURCE568",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12856,6 +12856,17 @@
           }
         ],
         "next": "Original QF2 source/contract affected review; actual provider and real save pending T45 readiness; no fake flags"
+      },
+      "sourcePreparation568": {
+        "owner": "D3",
+        "state": "SOURCE_HELPER_3_OF_3_PASS_REAL_BARCODE_CAPTURE_IN_PROGRESS",
+        "authorizerSha256": "5dcb75258c3ec4170801f076416a2387a739e70331b7deebafe88d5fdcc174d6",
+        "sourceResultSha256": "8ff065f30de07c999ef4fb3fa9add36fa0b6cdd1f96d1d16743454ddfd6d592e",
+        "classificationPending": false,
+        "realInitialization": false,
+        "newContract": "Exact post-CORE init action/evidence still technical clarification D2/D3/D1, not user-ready",
+        "authorizedSourceRead": "One bounded existing362306590B snapshot stream solely missing BARCODE locators/raw identity registry; private output, existing eight kinds and old registry untouched, no DB/stage/full rehash",
+        "review": "Original QB newsource only after freeze; previous21 barcode proof checks reused"
       }
     },
     "server566": {
@@ -12868,7 +12879,8 @@
       "formalRootChanged": false,
       "services": 19,
       "businessPublish": "NOT_DONE",
-      "newCanonical": "e02a19ba8079d673e5f4765d0071b49177ce808a692d34648da7a726e33bb9fa"
+      "newCanonical": "e02a19ba8079d673e5f4765d0071b49177ce808a692d34648da7a726e33bb9fa",
+      "QBPost93": "PASS_ACTUAL_ONLY2_ACL_CURRENT_DUAL_PURPOSE_0173757f37d2368d11817d53400ca5d751501d646d86c4640260065afa8212fa"
     }
   }
 }

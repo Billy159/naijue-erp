@@ -433,3 +433,33 @@ export async function openApprovedBarcodeMainDemotions({mappingFile,trustedMappi
       &&requestHash(row.mainDemotion)===requestHash(expected(row.source,row.sku)),'NATIVE_BARCODE_DEMOTION_PROOF_CHANGED');await verify();},
     async close(){closed=true;rows.clear();groups.clear();}};
 }
+
+/** The approved six original scheme descriptions only. This source binds the
+ * exact human receipt and proposal bytes; it grants no SQL/MAIN/source execution
+ * permission and does not seed a target or change the original empty admission. */
+export async function openApprovedBarcodeSchemes26({proposalFile,trustedProposalSha256,approvalFile,trustedApprovalSha256,binding}) {
+  must([proposalFile,approvalFile].every(p=>typeof p==='string'&&isAbsolute(p))&&uuid(binding?.batchId)&&hash(binding.selectionSha256)
+    &&typeof binding.fixedSourceNamespace==='string','NATIVE_BARCODE_SCHEMES_OPTIONS');
+  const proposal=await load(proposalFile,trustedProposalSha256,65536),approval=await load(approvalFile,trustedApprovalSha256,65536),p=proposal.value,a=approval.value;
+  must(p.version==='BARCODE_SCHEME_INITIALIZATION_PROPOSAL_V1'&&a.version==='BARCODE_SCHEME_INITIALIZATION_APPROVAL_V1'
+    &&a.decision==='APPROVED_2026_CURRENT_OTHER5_HISTORICAL_WITH_SEPARATE_GENERATION_AND_COMPATIBLE_CODE_REQUIREMENTS'
+    &&a.source?.kind==='DIRECT_HUMAN_REPLY_IN_CONTROLLER_CHAT'&&typeof a.source.questionCallId==='string'
+    &&a.proposalSha256===trustedProposalSha256&&requestHash(a.approvedInitializationRows)===requestHash(p.rows)
+    &&requestHash(a.approvedInitializationWriteContract)===requestHash(p.writeContract),'NATIVE_BARCODE_SCHEMES_APPROVAL');
+  const expected=new Set(['2018','2020','2021','2021fit','2023','2026']),byName=new Map(),ids=new Set(),keys=new Set();
+  must(Array.isArray(p.rows)&&p.rows.length===6,'NATIVE_BARCODE_SCHEMES_COMPLETE');
+  for(const row of p.rows){const s=row.native;must(exactData(row,['sourceSchemeKey','native'])&&expected.has(row.sourceSchemeKey)&&!keys.has(row.sourceSchemeKey)
+      &&exactData(s,['id','name','barcode_type','rule_description','code_length','rule_version','status'])&&uuid(s.id)&&typeof s.name==='string'&&s.name.length>0
+      &&!ids.has(s.id)&&!byName.has(s.name)&&s.barcode_type==='Code128'&&Number.isSafeInteger(s.code_length)&&s.code_length>0
+      &&typeof s.rule_description==='string'&&s.rule_description.length>0&&s.rule_version==='NATIVE_SOURCE_RETAINED_V1'
+      &&s.status===(row.sourceSchemeKey==='2026'?'CURRENT':'HISTORICAL'),'NATIVE_BARCODE_SCHEMES_ROW');keys.add(row.sourceSchemeKey);ids.add(s.id);byName.set(s.name,structuredClone(s));}
+  const fixedBinding=structuredClone(binding),rows=structuredClone(p.rows);let closed=false;
+  const active=()=>must(!closed,'NATIVE_BARCODE_SCHEMES_CLOSED');
+  async function verify(){active();await load(proposalFile,trustedProposalSha256,65536);await load(approvalFile,trustedApprovalSha256,65536);active();}
+  const resolveScheme=name=>{active();must(typeof name==='string'&&byName.has(name),'NATIVE_BARCODE_SCHEME_EXACT_NAME');const snapshot=structuredClone(byName.get(name));return{id:snapshot.id,snapshot};};
+  return{report:Object.freeze({kind:'APPROVED_EXACT6_BARCODE_SCHEME_DESCRIPTIONS_26_V1',schemes:6,current:1,historical:5,questionCallId:a.source.questionCallId,sourceReady:true,actualInitialized:false,executionAuthorized:false}),verify,resolveScheme,
+    initializationData(){active();return{version:'APPROVED_EXACT6_BARCODE_INITIALIZATION_INPUT_26_V1',binding:structuredClone(fixedBinding),rows:structuredClone(rows),proposalSha256:trustedProposalSha256,approvalSha256:trustedApprovalSha256,humanQuestionCallId:a.source.questionCallId};},
+    verifyPreparedScheme(row){active();validatePreparedNativeBarcode(row);must(row.batchId===fixedBinding.batchId&&row.fixedSourceNamespace===fixedBinding.fixedSourceNamespace
+      &&row.selection.selectionSha256===fixedBinding.selectionSha256&&requestHash(row.scheme)===requestHash(resolveScheme(row.source.normalizedFields['原条码方案'])),'NATIVE_BARCODE_PREPARED_SCHEME_CHANGED');},
+    async close(){closed=true;byName.clear();ids.clear();keys.clear();rows.length=0;}};
+}
