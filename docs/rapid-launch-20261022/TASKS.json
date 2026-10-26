@@ -11660,9 +11660,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE599",
+    "round": "SOURCE600",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
+    "sourceHeadBeforeThisContinuityCommit": "c6dcb2ab5256bdff1b0e634cdf20193d09af8da0",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -11711,11 +11711,11 @@
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
       "D1": "F andlocksource delivered scopedQB348/349PASS, actualruntime/currentrole/init nextT45; no newsourcefiller",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
-      "D3": "humanFexact4 source delivered8checks/strictPASS; originalQB scopedreview then realnonemptyfullprovider later",
-      "T45": "CORE17delivered correctnewF/lock package; original103131/freshreview/lifecycleAPP and106HEADER independent23793 next",
+      "D3": "List pushdown QB346 sourcePASS; ready source returned; actual remaining23793 HEADER and full provider depend T45, no duplicate source work",
+      "T45": "108 CORE17 install parameters QB350 PASS adopted; actual108 installation then original103 controlled v19/v20/fresh131 review,105 APP17 and106 remaining23793 HEADER, no scheme-init dependency",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
-      "QB": "347installparams/348FsourcePASS; next104lockexact2delta then originalactual131metadata/role reviews",
+      "QB": "QB350108 source parameters PASS; next original103/105/107/106 new carrier delta and actual131 socket/TCP metadata; no repeat accepted source",
       "Compression": "G exact2 cache source/3affectedchecks delivered, writer returned; C proxytemplate source fixed, actualpubliccache pending nextnecessary build"
     },
     "completion": "No new fullpage/allstatebusiness/formalrelease; historical37/67 register unchanged, no shrinkingdenominator",
@@ -13356,6 +13356,20 @@
       },
       "boundary": "Config CORE read flags unchanged onlyassetversion. No APP/PG/runtime/business/realperformance/formalroot claim. Lockclaim approvedwriters+C/T45soleowner only; no arbitrarySQL protection.",
       "next": "T45 exact131schema/currentACLfreshreviews+oneAPP lifecycleCORE17, independent23793HEADERresume; laterinitminimalrowACL andfirstwrite/replay"
+    },
+    "source600": {
+      "status": "ACTIVE_ACTUAL108_PENDING",
+      "acceptedReview": "QB350",
+      "reviewResult": "reports/qa-backend/rapid-launch-20261022/QB/slice350-source598-core17-install-parameters/QB350-RESULT.json",
+      "reviewResultSha256": "f94997ba063118899a92c86ebee3edcc306effba96c0ca752a4a7bfb0574ddc4",
+      "sourceReviewSha256": "2cbd597e74c7b02ff36a3e1d47fabb7c89c7214cd57b391868f631af96259da1",
+      "scope": "Only original102 ->108 install target/artifacts/backendpins/reviews/path delta; actual installation/native/APP/PG not passed by this review",
+      "actualOwner": "T45",
+      "fixedSource": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
+      "build": "replica-production-source598-core-17",
+      "next": "Actual108 -> controlled103131 + actualQBmetadata ->105APP17 and106remaining23793; original104failure preserved, schemeinit independent",
+      "model": "gpt-6.1-sol/medium explicitly dispatched",
+      "fastVerified": false
     }
   }
 }
