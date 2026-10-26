@@ -51,7 +51,7 @@ test('generated source/party bindings satisfy actual native party validator; war
 });
 
 // SYNTHETIC DATA refs and canonical rows only. No actual source/authority/DB facts.
-function fullFixture(){
+function fullFixture(extraSkus=0){
  const b={batchId:id(1),fixedSourceNamespace:'synthetic.full',cutoffAt:'2026-10-04T04:00:00Z',selectionSha256:pin},actor=id(2),coreReceipt=id(3);
  const coreMembers=[],staffProofs=[],maintained=[],warehouses=[],sourceRows=[],typedRows=[],sourceCounts=Object.fromEntries(HISTORY_CLOSURE_SOURCE_ENTITIES.map(k=>[k,0]));let n=10;
  const source=(entity,sourceId,key)=>{sourceCounts[entity]++;sourceRows.push(historyClosureProjectionRow26('import_source_row',{id:sourceId,batch_id:b.batchId,entity_type:entity,source_key:key,file_ref:'synthetic.xlsx',sheet:'SYNTHETIC',row_no:'1',source_file_sha256:pin,row_sha256:pin,raw_fields:{},normalized_fields:{},field_provenance:{}}));};
@@ -67,6 +67,9 @@ function fullFixture(){
  const sku=id(3000),skuSource=id(3001),skuRecord=id(3002),skuKey='SYN-SKU';source('SKU',skuSource,skuKey);
  typedRows.push(historyClosureProjectionRow26('sku',{id:sku,product_id:id(3003),color_id:id(3004),fit_id:id(3005),size_id:id(3006),sku_code:'SYN-CODE',enabled:true,version:1,created_operation_id:null}));
  const skuMemberships=[{targetType:'SKU',targetId:sku,sourceEntityType:'SKU',sourceKey:skuKey,sourceRecordHash:pin,sourceFileRef:'synthetic.xlsx',nativeRecord:{id:skuRecord,reviewedAt:'2026-10-04T04:00:00.000000Z',decisionReason:'SYNTHETIC_ORIGINAL_SKU'}}];
+ for(let i=0;i<extraSkus;i++){const extraId=id(100000+i),key=`SYN-SKU-EXTRA-${i}`;source('SKU',id(200000+i),key);
+  typedRows.push(historyClosureProjectionRow26('sku',{...typedRows.at(-1).projection,id:extraId,sku_code:key}));
+  skuMemberships.push({...structuredClone(skuMemberships[0]),targetId:extraId,sourceKey:key,nativeRecord:{...skuMemberships[0].nativeRecord,id:id(300000+i)}});}
  const w=warehouses[0],stockKey='SYN-STOCK',ledger=stableImportId('baseline',b.fixedSourceNamespace,'INVENTORY_BASELINE',stockKey);
  const contributors=['-5','2'].map((signedQuantity,i)=>({sourceRowId:id(4000+i),sourceKey:`SYN-STOCK-${i}`,sourceFileSha256:pin,rowSha256:pin,fileRef:'synthetic-stock.xlsx',sheet:'SYN',rowNo:String(i+1),warehouseSourceKey:w.sourceKey,canonicalSkuSourceKey:skuKey,oldSkuSourceId:`SYN-OLD-SKU-${i}`,canonicalStockSourceKey:stockKey,warehouseId:w.targetId,skuId:sku,signedQuantity,sourceUnit:'件'}));
  for(const c of contributors){source('INVENTORY_BASELINE',c.sourceRowId,c.sourceKey);typedRows.push(historyClosureProjectionRow26('import_stock_contributor',{batch_id:b.batchId,source_row_id:c.sourceRowId,warehouse_id:c.warehouseId,canonical_sku_id:c.skuId,old_source_sku_id:c.oldSkuSourceId,canonical_stock_source_key:stockKey,source_unit:c.sourceUnit,signed_quantity:c.signedQuantity,baseline_ledger_id:ledger}));}
@@ -74,12 +77,12 @@ function fullFixture(){
  const expectedCounts={...Object.fromEntries(HISTORY_COUNT_KEYS.map(k=>[k,0])),import_source_row:sourceRows.length,import_stock_contributor:2};
  const data={binding:b,core:{coreReceiptId:coreReceipt,coreSourceDigest:'b'.repeat(64),coreMembers,staffProofs,coreMaintenanceBinding:{version:'CORE_MAINTENANCE_BINDING_V1',members:maintained}},
   groups:HISTORY_CLOSURE_SOURCE_GROUPS.map(group=>({group,artifacts:['original','normalized','prepared-native','mapping-decisions'].map(logicalRole=>({logicalRole,bytes:100,sha256:pin,rows:1,memberCoverage:{rows:1,sha256:pin},path:`/synthetic/hostA/${group}/${logicalRole}`}))})),
-  expectedCounts,expectedSourceEntityCounts:sourceCounts,inventoryExpectedCounts:{WAREHOUSE:53,SKU:1,INVENTORY_LEDGER:1,IMPORT_BATCH:1},stock};
+  expectedCounts,expectedSourceEntityCounts:sourceCounts,inventoryExpectedCounts:{WAREHOUSE:53,SKU:1+extraSkus,INVENTORY_LEDGER:1,IMPORT_BATCH:1},stock};
  const coreClaims=warehouses.slice(0,22).map(r=>({batchId:b.batchId,importRecordId:r.nativeRecord.id,targetType:'WAREHOUSE',targetId:r.targetId,operationId:coreReceipt,checkpointSequence:1}));
  const current={actorAccountId:actor,fixedSourceNamespace:b.fixedSourceNamespace,selectionSha256:b.selectionSha256,status:'STAGED',fullBinding:null,coreClaims,coreWarehouses:warehouses.slice(0,22),claims:structuredClone(coreClaims),
   committedOperations:[],checkpoint:{sequence:2,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}}};
  const sort=(a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key));sourceRows.sort(sort);typedRows.sort(sort);
- return {data,sourceRows,typedRows,documents:[],warehouses,skuMemberships,baselineItems:[{targetType:'INVENTORY_LEDGER',sourceEntityType:'INVENTORY_BASELINE',sourceKey:stockKey,sourceRecordHash:pin,sourceFileRef:'synthetic-stock.xlsx',warehouseId:w.targetId,skuId:sku,quantity:-3n,businessDate:'2026-10-04'}],verifiedCurrent:current,actorAccountId:actor,sourceManifestRef:'synthetic:full-scope',requestKeys:{bind:'SYN-BIND',account:Array.from({length:33},(_,i)=>`SYN-ACCOUNT-${i}`),publish:'SYN-PUBLISH'},chunkRows:1};
+ return {data,sourceRows,typedRows,documents:[],warehouses,skuMemberships,baselineItems:[{targetType:'INVENTORY_LEDGER',sourceEntityType:'INVENTORY_BASELINE',sourceKey:stockKey,sourceRecordHash:pin,sourceFileRef:'synthetic-stock.xlsx',warehouseId:w.targetId,skuId:sku,quantity:-3n,businessDate:'2026-10-04'}],verifiedCurrent:current,actorAccountId:actor,sourceManifestRef:'synthetic:full-scope',requestKeys:{bind:'SYN-BIND',account:Array.from({length:33+extraSkus},(_,i)=>`SYN-ACCOUNT-${i}`),publish:'SYN-PUBLISH'},chunkRows:1};
 }
 test('full preparation DATA hash binds all11 content coverage CORE and stock while physical paths do not change it',()=>{
  const f=fullFixture(),original=structuredClone(f.data),p=prepareFullPayloadData26(f.data);assert.deepEqual(f.data,original);assert.notEqual(p.authorizedPayloadHash,pin);assert.notEqual(p.authorizedPayloadHash,f.data.core.coreSourceDigest);
@@ -138,4 +141,22 @@ test('full preparation private writer freezes actual bytes and never issues exec
  for(const ref of out.files){const bytes=await readFile(ref.path);assert.equal(bytes.length,ref.bytes);assert.equal((await stat(ref.path)).mode&0o777,0o600);}
  assert.equal(out.executionAuthorizationIssued,false);assert.equal(out.executionReady,false);
  await assert.rejects(writeFullSourceBindings26({outputParent:parent,registrationId:'fixed-once',prepared:p}),{code:'EEXIST'});
+});
+
+test('linear preparation preserves complete synthetic commands and closure roots at bounded scale',async t=>{
+ const start=performance.now(),p=await prepareFullSourceBindings26(fullFixture(512));
+ t.diagnostic(JSON.stringify({syntheticSkuCount:513,elapsedMs:performance.now()-start,digest:requestHash({commands:p.commands,expected:p.expected})}));
+ assert.equal(p.commands.ACCOUNT.length,545);assert.equal(requestHash({commands:p.commands,expected:p.expected}),'0f2e628f79b538ebfa87f3123df242eb03b99c894f5be4c62fdf26c1b392c79e');
+});
+
+test('linear lookups preserve duplicate and altered baseline or command membership refusals',async()=>{
+ const duplicate=fullFixture(1);duplicate.skuMemberships[1].sourceKey=duplicate.skuMemberships[0].sourceKey;
+ await assert.rejects(prepareFullSourceBindings26(duplicate),/FULL_PREP_DUPLICATE_ITEM/);
+ for(const change of [f=>{f.baselineItems[0].quantity=-4n;},f=>{f.baselineItems[0].sourceKey='UNKNOWN';},f=>{f.baselineItems[0].warehouseId=f.warehouses[1].targetId;}]){
+  const f=fullFixture();change(f);await assert.rejects(prepareFullSourceBindings26(f),/FULL_PREP_BASELINE_CHANGED/);}
+ const f=fullFixture(),prepared=await prepareFullSourceBindings26(f);
+ const altered=structuredClone(prepared.commands);altered.ACCOUNT.at(-1).items[0].quantity=-4n;
+ await assert.rejects(prepareFullSourceBindings26({...f,originalCommands:altered,originalExpected:prepared.expected}),/FULL_PREP_COMMAND_ITEM_CHANGED/);
+ const duplicateGroup=fullFixture();duplicateGroup.data.stock.effectiveGroups.push(structuredClone(duplicateGroup.data.stock.effectiveGroups[0]));
+ await assert.rejects(prepareFullSourceBindings26(duplicateGroup),/FULL_PAYLOAD_EFFECTIVE_GROUP/);
 });

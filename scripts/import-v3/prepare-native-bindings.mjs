@@ -267,12 +267,13 @@ export async function prepareFullSourceBindings26({data,sourceRows,typedRows,doc
  must(Array.isArray(warehouses)&&warehouses.length===53&&Array.isArray(skuMemberships)&&skuMemberships.length===m.inventoryExpectedCounts.SKU
   &&Array.isArray(baselineItems)&&baselineItems.length===m.inventoryExpectedCounts.INVENTORY_LEDGER,'FULL_PREP_ALL_MAIN_ITEMS_REQUIRED');
  const allItems=[...warehouses,...skuMemberships,...baselineItems],itemKeys=new Set(),recordIds=new Set();
+ const effectiveGroupsByKey=new Map(data.stock.effectiveGroups.map(group=>[group.canonicalStockSourceKey,group]));
  for(const item of allItems){
   const c={action:'IMPORT_CHUNK',actorAccountId,batchId:b.batchId,requestKey:'preparation-item-validation',expectedSequence:0,expectedCursor:0,accountingVersion:NATIVE_IMPORT_RECORD_ACCOUNTING_VERSION,items:[item]};
   validateNativeImportAccountingCommand(c);
   const key=JSON.stringify([item.sourceEntityType,item.sourceKey]);must(!itemKeys.has(key),'FULL_PREP_DUPLICATE_ITEM');itemKeys.add(key);
   if(item.targetType!=='INVENTORY_LEDGER'){must(!recordIds.has(item.nativeRecord.id),'FULL_PREP_DUPLICATE_ITEM');recordIds.add(item.nativeRecord.id);}
-  else must(data.stock.effectiveGroups.some(g=>g.canonicalStockSourceKey===item.sourceKey&&g.warehouseId===item.warehouseId&&g.skuId===item.skuId&&BigInt(g.signedQuantity)===item.quantity),'FULL_PREP_BASELINE_CHANGED');
+  else {const group=effectiveGroupsByKey.get(item.sourceKey);must(group&&group.warehouseId===item.warehouseId&&group.skuId===item.skuId&&BigInt(group.signedQuantity)===item.quantity,'FULL_PREP_BASELINE_CHANGED');}
  }
  must(warehouses.every(w=>w.targetType==='WAREHOUSE')&&skuMemberships.every(w=>w.targetType==='SKU')&&baselineItems.every(w=>w.targetType==='INVENTORY_LEDGER')
   &&new Set(warehouses.map(w=>w.targetId)).size===53&&new Set(skuMemberships.map(w=>w.targetId)).size===skuMemberships.length
@@ -318,13 +319,14 @@ export async function prepareFullSourceBindings26({data,sourceRows,typedRows,doc
    approval:{completeScope:true,absentMeansZero:true,allFilesVerified:true,finalDeltaVerified:true,noUnresolvedExceptions:true,sourceHash:b.selectionSha256,sourceManifestRef},stockConservation:prepared.stockConservation,historyClosure:expected.plan};
   commands={BIND,ACCOUNT,PUBLISH};
  }
+ const itemDigests=new Map(allItems.map(item=>[JSON.stringify([item.sourceEntityType,item.sourceKey]),requestHash(item)]));
  const ordered=[commands.BIND,...commands.ACCOUNT,commands.PUBLISH],keys=new Set(),represented=new Set(),coreRecords=new Set(current.coreClaims.map(c=>c.importRecordId));
  let seq=commands.BIND.expectedSequence,cursor=22;
  for(const command of ordered){
   validateCutoffImportCommand(command);if(command.action!=='IMPORT_BIND_FULL_SOURCE')validateNativeImportAccountingCommand(command);
   must(command.actorAccountId===actorAccountId&&command.batchId===b.batchId&&typeof command.requestKey==='string'&&command.requestKey.length>0&&!keys.has(command.requestKey)
    &&command.expectedSequence===seq&&command.expectedCursor===cursor,'FULL_PREP_COMMAND_CHAIN');keys.add(command.requestKey);seq++;
-  if(command.action==='IMPORT_CHUNK')for(const item of command.items){const key=JSON.stringify([item.sourceEntityType,item.sourceKey]);must(!represented.has(key)&&allItems.some(r=>requestHash(r)===requestHash(item))
+  if(command.action==='IMPORT_CHUNK')for(const item of command.items){const key=JSON.stringify([item.sourceEntityType,item.sourceKey]);must(!represented.has(key)&&itemDigests.get(key)===requestHash(item)
     &&(item.targetType==='INVENTORY_LEDGER'||!coreRecords.has(item.nativeRecord.id)),'FULL_PREP_COMMAND_ITEM_CHANGED');represented.add(key);cursor++;}
  }
  must(commands.BIND.action==='IMPORT_BIND_FULL_SOURCE'&&commands.ACCOUNT.every(c=>c.action==='IMPORT_CHUNK')&&commands.PUBLISH.action==='IMPORT_PUBLISH'
