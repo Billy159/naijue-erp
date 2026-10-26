@@ -75,6 +75,14 @@ export async function openAuthorizedHistoryClosureReader(options){return openHis
 /** Explicit full26 projection composition. No schema union, source/default grant,
  * SQL or change to the original11-group ordering and lifecycle contract. */
 export async function openAuthorizedHistoryClosureReader26(options){return openHistoryClosureReader(options,historyClosureProjectionRow26,buildHistoryTypedClosureExpected26);}
+/** Source-only preparation consumes the SAME original11 factories, ordering,
+ * bounded merge and owned lifecycle. It cannot authorizeStage or execute SQL.
+ * The consumer is the original pure preparation function, not a grant callback. */
+export async function consumeAuthorizedHistoryClosureStreams26(options,consume){
+ if(typeof consume!=='function')fail('PREPARATION_CONSUMER_REQUIRED');
+ const reader=await openHistoryClosureReader(options,historyClosureProjectionRow26,consume);
+ try{return await reader.expected();}finally{await reader.close();}
+}
 async function openHistoryClosureReader(options,project,buildExpected){
  const config=own(options,['scope','openSources','trustedSelectionSha256','trustedAuthorizedPayloadHash'],'OPTIONS');
  if(!hash(config.trustedSelectionSha256)||!hash(config.trustedAuthorizedPayloadHash))fail('INDEPENDENT_SCOPE_PIN');

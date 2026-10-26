@@ -14176,6 +14176,27 @@
       "preserved": "Old26 whole directory sibling data-before-qa-identity-20261026-01; original19 restored and stopped",
       "owner": "D1 preflight source; T45 sole actual execution",
       "next": "Minimal identity preflight wiring; no expanded role privilege or bypass; fixed successor only"
+    },
+    "source644Preparation": {
+      "status": "SOURCE_FIXED_NEW_SCOPE_QB_PENDING_ACTUAL_PREPARATION_NOT_RUN",
+      "owner": "D3 handback; T45 actual",
+      "code": {
+        "scripts/import-v3/production-source-provider26.mjs": {
+          "bytes": 113005,
+          "sha256": "16170b0b49e9f7d2d815c085acb906a55565691eaf587d1d6329be46dce54286"
+        },
+        "scripts/import-v3/production-source-provider26.test.mjs": {
+          "bytes": 135477,
+          "sha256": "32da6073f253551d28ef562b411ce552a6b9f8e952ed0910f350c2f257ace473"
+        },
+        "scripts/import-v2/authorized-history-closure-reader.mjs": {
+          "bytes": 13906,
+          "sha256": "d834d84026a2f800f690ec85956011fb60b6129b742439d5705e308ef3280bad"
+        }
+      },
+      "checks": "5 new finite pass; public full11 real profiles not run",
+      "entry": "prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal})",
+      "next": "QB new source-only/merge seam only; T45 bounded real preparation; actual DATA/EXPECTED/MAIN before independent execution grant"
     }
   }
 }

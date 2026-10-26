@@ -643,3 +643,103 @@ test('source627 physical mapping: concrete CATALOGUE factory uses existing EXACT
  f.inputs.producers.CATALOGUE={mode:'REVIEWED',options:data.options,fileLocations:move.fileLocations};const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());await s.preflight();
  const c=await s.openSources.CATALOGUE(f.inputs.closureScope,{group:'CATALOGUE',signal:f.controller.signal});const sources=await Array.fromAsync(c.sourceRows()),typed=await Array.fromAsync(c.typedRows());assert.equal(sources.length,3);assert.ok(typed.some(row=>row.relation==='product_category'&&Object.hasOwn(row.projection,'deleted_at')));assert.equal(f.trace.ready,0);await c.close();
 });
+async function sourceOnlyPreparationFiles26(t,options={}){
+ const {fixture:productFixture}=await import(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/product.mjs'),{fixture:skuFixture}=await import(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/sku.mjs'),{fixture:stockFixture}=await import(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/stock.mjs');
+ const product=await productFixture(t),sku=await skuFixture(t),stock=await stockFixture(t),f=await productionAuthorityFiles(t),{prepareNativeProductImportChunk26}=await import('../../packages/application/src/native-product-import.ts'),{prepareNativeSkuImport26}=await import('../../packages/application/src/native-sku-import.ts'),{prepareNativeStockGroup}=await import('../../packages/application/src/native-stock-contributor-import.ts'),{readFile,writeFile,readdir}=await import('node:fs/promises'),{dirname,join}=await import('node:path'),{createHash}=await import('node:crypto');
+ const directory=dirname(f.inputRef.path),sha=b=>createHash('sha256').update(b).digest('hex');
+ const nativeProduct=prepareNativeProductImportChunk26({...product.input,fixedSourceNamespace:f.binding.fixedSourceNamespace}),{mappingVersion:_m,fingerprint:_f,nativeSku:_n,...skuInput}=sku.prepared,nativeSku=prepareNativeSkuImport26({...skuInput,fixedSourceNamespace:f.binding.fixedSourceNamespace});
+ const group=structuredClone(stock.groupInput),warehouse=(await readFile(f.coreRef.path,'utf8'));const coreData=JSON.parse(warehouse),w=coreData.warehouses[0];
+ group.fixedSourceNamespace=f.binding.fixedSourceNamespace;group.warehouse={sourceKey:w.sourceKey,nativeId:w.targetId};group.canonicalStock['仓库来源编号']=w.sourceKey;group.sku={canonicalSourceKey:nativeSku.canonicalSource.sourceKey,nativeId:nativeSku.nativeSku.id};group.canonicalStock['SKU来源编号']=group.sku.canonicalSourceKey;
+ for(const c of group.contributors){c.lineage.warehouseSourceId=w.sourceKey;c.lineage.canonicalSkuSourceId=group.sku.canonicalSourceKey;for(const fields of [c.source.rawFields,c.source.normalizedFields])fields['仓库来源编号']=w.sourceKey;c.source.fieldProvenance.fields['仓库来源编号'].raw=w.sourceKey;}
+ const nativeStock=prepareNativeStockGroup(group),helperPath=retainedFixtureRoot+'/retained-native-closure-streams-20261026.mjs',hb=await readFile(helperPath),helper={path:helperPath,bytes:hb.length,sha256:sha(hb)},values={PRODUCTS:nativeProduct,SKUS:nativeSku,STOCK_CONTRIBUTORS:nativeStock};
+ f.inputs.binding.authorizedPayloadHash=f.inputs.closureScope.authorizedPayloadHash=null;f.inputs.executionAuthorization={path:null,bytes:null,sha256:null};Object.assign(f.inputs.closureScope.expectedSourceEntityCounts,{PRODUCT:1,SKU:2,INVENTORY_BASELINE:2});Object.assign(f.inputs.closureScope.expectedCounts,{import_source_row:5,import_sku_alias:2,import_stock_contributor:2});
+ for(const [group,p]of Object.entries(values)){const bytes=Buffer.from(JSON.stringify(p)+(group==='PRODUCTS'?'':'\n')),path=join(directory,group+'.prepared');await writeFile(path,bytes,{mode:0o600});const ref={path,bytes:bytes.length,sha256:sha(bytes)},sourceRows=group==='PRODUCTS'?1:2,typedRows=group==='SKUS'?3:sourceRows;
+  f.inputs.producers[group]={mode:'RETAINED',closureHelper:helper,retainedNative:{records:1,sourceRows,typedRows,files:[ref]},fileLocations:[{logical:ref,physical:ref,kind:'DATA',roles:['original-prepared-0']},{logical:helper,physical:helper,kind:'CODE',roles:['helper']}]};}
+ f.inputs.producers.PARTIES.fileLocations=[{logical:f.coreRef,physical:f.coreRef,kind:'CORE_DATA',roles:['core']}];const input=await f.save('SOURCE-ONLY-INPUT.json',f.inputs),current=structuredClone(f.progress);options.mutateCurrent?.(current);const verifiedCurrent=await f.save('VERIFIED-CURRENT.json',current);
+ const scope={version:'PRODUCTION_SOURCE_ONLY_PREPARATION26_V1',registrationId:'synthetic_source_only',deadlineUtc:new Date(Date.now()+60000).toISOString(),input,verifiedCurrent,warehouseStockScope:null,artifactRows:{},sourceManifestRef:'SYNTHETIC_ORIGINAL_SOURCE',requestKeys:{bind:'SYNTHETIC_BIND',account:['SYNTHETIC_ACCOUNT'],publish:'SYNTHETIC_PUBLISH'},chunkRows:500,baselineBusinessDate:'2026-10-04',outputParent:directory};options.mutateScope?.(scope);const ref=await f.save('READ-ONLY-PREPARATION.json',scope);
+ return{...f,scope,ref,directory,readdir,inputs:f.inputs};
+}
+test('source635 explicit source-only entry validates original native files without fullhash/grant and refuses unknown warehouse quantities instead of zero-fill or commands',async t=>{
+ const f=await sourceOnlyPreparationFiles26(t),{prepareProductionSourceOnly26}=await import('./production-source-provider26.mjs');const result=await prepareProductionSourceOnly26({preparationFile:f.ref.path,trustedPreparationSha256:f.ref.sha256,signal:f.controller.signal});
+ assert.equal(result.status,'NEEDS_EXPLICIT_COMPLETE_WAREHOUSE_STOCK_SCOPE');assert.equal(result.nativeSkus,1);assert.equal(result.effectiveGroups,1);assert.equal(result.contributors,2);assert.equal(result.unrepresentedWarehouses.length,52);assert.equal(result.notInferredZero,true);assert.equal(result.authorizedPayloadHashGenerated,false);assert.equal(result.executionAuthorizationIssued,false);assert.equal(result.executionReady,false);
+ assert.ok(!(await f.readdir(f.directory)).includes(f.scope.registrationId));assert.throws(()=>createProductionSourceProvider26(f.inputs,f.authority),/FULL_BINDING_REQUIRED/);
+});
+test('source635 source-only entry requires a current complete original continuation object before native-body read and rejects unpinned/expired preparation',async t=>{
+ const {prepareProductionSourceOnly26}=await import('./production-source-provider26.mjs'),f=await sourceOnlyPreparationFiles26(t,{mutateCurrent:c=>{delete c.records;}});await assert.rejects(prepareProductionSourceOnly26({preparationFile:f.ref.path,trustedPreparationSha256:f.ref.sha256,signal:f.controller.signal}),/VERIFIED_CURRENT_REQUIRED/);
+ const expired=await sourceOnlyPreparationFiles26(t,{mutateScope:s=>{s.deadlineUtc='2000-01-01T00:00:00Z';}});await assert.rejects(prepareProductionSourceOnly26({preparationFile:expired.ref.path,trustedPreparationSha256:expired.ref.sha256,signal:expired.controller.signal}),/ABORTED/);
+ await assert.rejects(prepareProductionSourceOnly26({preparationFile:expired.ref.path,trustedPreparationSha256:digest('f'),signal:expired.controller.signal}),/INPUT_CHANGED/);
+});
+test('source635 confirmed exact24 user decision closes only the approved absent warehouse identities and keeps original29 signed totals',async()=>{
+ const {confirmedZeroWarehouseScope26}=await import('./production-source-provider26.mjs'),binding={batchId:id(1),fixedSourceNamespace:'synthetic:zero-scope',selectionSha256:H,cutoffAt:'2026-10-04T12:00:00+08:00'},warehouses=Array.from({length:53},(_,n)=>({sourceKey:'W'+n,targetId:id(7000+n)})),representedTotals=warehouses.slice(0,29).map((w,n)=>({sourceKey:w.sourceKey,signedQuantity:n===0?'-5':String(n+1)}));
+ const decision={version:'C_EXACT24_WAREHOUSE_BASELINE_ZERO_USER_DECISION_V1',status:'EXPLICIT_USER_CONFIRMED',scope:'ONLY_THESE_EXACT24_WAREHOUSES_IN_THIS_BATCH_BASELINE',source:{type:'DIRECT_HUMAN_REPLY_IN_CONTROLLER_CHAT',questionCallId:'SYNTHETIC_USER_REPLY'},binding,warehouses:warehouses.slice(29).map(w=>({sourceKey:w.sourceKey,nativeId:w.targetId,signedQuantity:'0'}))};
+ const rows=confirmedZeroWarehouseScope26({binding,warehouses,representedTotals,decision});assert.equal(rows.length,53);assert.deepEqual(rows.slice(0,29).map(r=>({sourceKey:r.sourceKey,signedQuantity:r.signedQuantity})),representedTotals);assert.ok(rows.slice(29).every(r=>r.signedQuantity==='0'));
+ for(const change of [d=>{d.binding.selectionSha256=digest('f');},d=>{d.warehouses[0].nativeId=id(999);},d=>{d.warehouses[0].signedQuantity='1';},d=>{d.warehouses[0]=d.warehouses[1];}]){const bad=structuredClone(decision);change(bad);assert.throws(()=>confirmedZeroWarehouseScope26({binding,warehouses,representedTotals,decision:bad}),/ZERO_DECISION/);}
+ assert.throws(()=>confirmedZeroWarehouseScope26({binding,warehouses,representedTotals:representedTotals.slice(1),decision}),/ZERO_DECISION/);
+});
+
+// Finite DATA-only fixture copied from the frozen original preparation tests.
+// No production approval, runtime, SQL, or invented execution authority.
+async function sourcePreparationCompleteFixture26(){
+ const {historyClosureProjectionRow26}=await import('../../packages/application/src/history-typed-closure.ts');
+ const {stableImportId}=await import('../../packages/application/src/inventory-cutoff-import.ts');
+ const HISTORY_CLOSURE_SOURCE_GROUPS=sourceGroups,pin=H;
+ const b={batchId:id(1),fixedSourceNamespace:'synthetic.full',cutoffAt:'2026-10-04T04:00:00Z',selectionSha256:pin},actor=id(2),coreReceipt=id(3);
+ const coreMembers=[],staffProofs=[],maintained=[],warehouses=[],sourceRows=[],typedRows=[],sourceCounts=Object.fromEntries(HISTORY_CLOSURE_SOURCE_ENTITIES.map(k=>[k,0]));let n=10;
+ const source=(entity,sourceId,key)=>{sourceCounts[entity]++;sourceRows.push(historyClosureProjectionRow26('import_source_row',{id:sourceId,batch_id:b.batchId,entity_type:entity,source_key:key,file_ref:'synthetic.xlsx',sheet:'SYNTHETIC',row_no:'1',source_file_sha256:pin,row_sha256:pin,raw_fields:{},normalized_fields:{},field_provenance:{}}));};
+ for(const [entity,count]of [['HALL',22],['WAREHOUSE',53],['STAFF',49],['CUSTOMER',22]])for(let i=0;i<count;i++,n++){
+  const m={sourceRowId:id(n),entity,sourceKey:`SYN-${entity}-${i}`,nativeId:id(1000+n)};source(entity,m.sourceRowId,m.sourceKey);
+  const snapshot=entity==='HALL'?{id:m.nativeId,name:'SYN',default_customer_id:null,default_sales_warehouse_id:null,enabled:true,version:1}:entity==='WAREHOUSE'?{id:m.nativeId,hall_id:id(1010),name:'SYN',enabled:true,version:1,created_operation_id:null}:entity==='STAFF'?{id:m.nativeId,name:'SYN',hall_id:null,role:'ADMIN',contact:null,employment_status:'在职',version:1}:{id:m.nativeId,code:m.sourceKey,name:'SYN',enabled:true,version:1,created_at:null,updated_at:null};
+  typedRows.push(historyClosureProjectionRow26(entity.toLowerCase(),snapshot));
+  if(entity!=='WAREHOUSE'||i<22){coreMembers.push(m);maintained.push({...m,version:1,nativeSnapshot:snapshot,operations:[]});}
+  if(entity==='STAFF'){const proof={origin:'MIGRATION_DERIVED',reason:'SYNTHETIC_DATA_ONLY_NOT_REAL_BOOTSTRAP',evidence_ref:pin,raw:{synthetic:true}};
+   staffProofs.push({sourceRowId:m.sourceRowId,bootstrapAccounts:proof});sourceRows.at(-1).projection.field_provenance={fields:{bootstrap_accounts:proof}};}
+  if(entity==='WAREHOUSE')warehouses.push({targetType:'WAREHOUSE',targetId:m.nativeId,sourceEntityType:'WAREHOUSE',sourceKey:m.sourceKey,sourceRecordHash:pin,sourceFileRef:'synthetic.xlsx',nativeRecord:{id:id(2000+n),reviewedAt:'2026-10-04T04:00:00.000000Z',decisionReason:'SYNTHETIC_ORIGINAL_RECORD'}});
+ }
+ const sku=id(3000),skuSource=id(3001),skuRecord=id(3002),skuKey='SYN-SKU';source('SKU',skuSource,skuKey);
+ typedRows.push(historyClosureProjectionRow26('sku',{id:sku,product_id:id(3003),color_id:id(3004),fit_id:id(3005),size_id:id(3006),sku_code:'SYN-CODE',enabled:true,version:1,created_operation_id:null}));
+ const skuMemberships=[{targetType:'SKU',targetId:sku,sourceEntityType:'SKU',sourceKey:skuKey,sourceRecordHash:pin,sourceFileRef:'synthetic.xlsx',nativeRecord:{id:skuRecord,reviewedAt:'2026-10-04T04:00:00.000000Z',decisionReason:'SYNTHETIC_ORIGINAL_SKU'}}];
+ const w=warehouses[0],stockKey='SYN-STOCK',ledger=stableImportId('baseline',b.fixedSourceNamespace,'INVENTORY_BASELINE',stockKey);
+ const contributors=['-5','2'].map((signedQuantity,i)=>({sourceRowId:id(4000+i),sourceKey:`SYN-STOCK-${i}`,sourceFileSha256:pin,rowSha256:pin,fileRef:'synthetic-stock.xlsx',sheet:'SYN',rowNo:String(i+1),warehouseSourceKey:w.sourceKey,canonicalSkuSourceKey:skuKey,oldSkuSourceId:`SYN-OLD-SKU-${i}`,canonicalStockSourceKey:stockKey,warehouseId:w.targetId,skuId:sku,signedQuantity,sourceUnit:'件'}));
+ for(const c of contributors){source('INVENTORY_BASELINE',c.sourceRowId,c.sourceKey);typedRows.push(historyClosureProjectionRow26('import_stock_contributor',{batch_id:b.batchId,source_row_id:c.sourceRowId,warehouse_id:c.warehouseId,canonical_sku_id:c.skuId,old_source_sku_id:c.oldSkuSourceId,canonical_stock_source_key:stockKey,source_unit:c.sourceUnit,signed_quantity:c.signedQuantity,baseline_ledger_id:ledger}));}
+ const stock={effectiveStockCsvSha256:pin,contributorLineageCsvSha256:pin,contributors,effectiveGroups:[{canonicalStockSourceKey:stockKey,warehouseSourceKey:w.sourceKey,canonicalSkuSourceKey:skuKey,warehouseId:w.targetId,skuId:sku,signedQuantity:'-3',sourceUnit:'件',contributorCount:2,effectiveRowHash:pin}],warehouses:warehouses.map((r,i)=>({sourceKey:r.sourceKey,nativeId:r.targetId,signedQuantity:i===0?'-3':'0'})),warehouseUnits:[{warehouseSourceKey:w.sourceKey,sourceUnit:'件',signedQuantity:'-3'}]};
+ const expectedCounts={...Object.fromEntries(HISTORY_COUNT_KEYS.map(k=>[k,0])),import_source_row:sourceRows.length,import_stock_contributor:2};
+ const data={binding:b,core:{coreReceiptId:coreReceipt,coreSourceDigest:'b'.repeat(64),coreMembers,staffProofs,coreMaintenanceBinding:{version:'CORE_MAINTENANCE_BINDING_V1',members:maintained}},
+  groups:HISTORY_CLOSURE_SOURCE_GROUPS.map(group=>({group,artifacts:['original','normalized','prepared-native','mapping-decisions'].map(logicalRole=>({logicalRole,bytes:100,sha256:pin,rows:1,memberCoverage:{rows:1,sha256:pin},path:`/synthetic/hostA/${group}/${logicalRole}`}))})),
+  expectedCounts,expectedSourceEntityCounts:sourceCounts,inventoryExpectedCounts:{WAREHOUSE:53,SKU:1,INVENTORY_LEDGER:1,IMPORT_BATCH:1},stock};
+ const coreClaims=warehouses.slice(0,22).map(r=>({batchId:b.batchId,importRecordId:r.nativeRecord.id,targetType:'WAREHOUSE',targetId:r.targetId,operationId:coreReceipt,checkpointSequence:1}));
+ const current={actorAccountId:actor,fixedSourceNamespace:b.fixedSourceNamespace,selectionSha256:b.selectionSha256,status:'STAGED',fullBinding:null,coreClaims,coreWarehouses:warehouses.slice(0,22),claims:structuredClone(coreClaims),
+  committedOperations:[],checkpoint:{sequence:2,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}}};
+ const sort=(a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key));sourceRows.sort(sort);typedRows.sort(sort);
+ return {data,sourceRows,typedRows,documents:[],warehouses,skuMemberships,baselineItems:[{targetType:'INVENTORY_LEDGER',sourceEntityType:'INVENTORY_BASELINE',sourceKey:stockKey,sourceRecordHash:pin,sourceFileRef:'synthetic-stock.xlsx',warehouseId:w.targetId,skuId:sku,quantity:-3n,businessDate:'2026-10-04'}],verifiedCurrent:current,actorAccountId:actor,sourceManifestRef:'synthetic:full-scope',requestKeys:{bind:'SYN-BIND',account:Array.from({length:33},(_,i)=>`SYN-ACCOUNT-${i}`),publish:'SYN-PUBLISH'},chunkRows:1};
+}
+
+async function sourcePreparationStreamFixture26(t){
+ const f=await sourcePreparationCompleteFixture26(),{prepareFullPayloadData26}=await import('./prepare-native-bindings.mjs');
+ const {HISTORY_CLOSURE_SOURCE_GROUP_ENTITIES:entities,HISTORY_CLOSURE_SOURCE_GROUP_RELATIONS:relations}=await import('../import-v2/authorized-history-closure-reader.mjs');
+ const {mkdtemp,realpath,writeFile,readFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');
+ const directory=await mkdtemp(join(await realpath(tmpdir()),'synthetic-preparation-complete-'));t.after(()=>rm(directory,{recursive:true,force:true}));
+ const digest=b=>createHash('sha256').update(b).digest('hex'),files=new Map(),trace={opens:[],closes:[],verified:[],streamFinally:[]};
+ for(const group of sourceGroups){const value={sourceRows:f.sourceRows.filter(r=>entities[group].includes(r.projection.entity_type)),typedRows:f.typedRows.filter(r=>relations[group].includes(r.relation)),documents:[]},bytes=Buffer.from(JSON.stringify(value)),path=join(directory,group+'.json');await writeFile(path,bytes,{mode:0o600});files.set(group,{path,sha256:digest(bytes)});}
+ const openSources=Object.fromEntries(sourceGroups.map(group=>[group,async()=>{
+  const ref=files.get(group),bytes=await readFile(ref.path);assert.equal(digest(bytes),ref.sha256);const value=JSON.parse(bytes);let closed=false;trace.opens.push(group);
+  const rows=async function*(kind){assert.equal(closed,false);try{yield* value[kind];}finally{trace.streamFinally.push(group+'/'+kind);}};
+  return{async verify(phase){assert.equal(closed,false);assert.equal(digest(await readFile(ref.path)),ref.sha256);trace.verified.push(group+'/'+phase);},sourceRows:()=>rows('sourceRows'),typedRows:()=>rows('typedRows'),documents:()=>rows('documents'),async close(){assert.equal(closed,false);closed=true;trace.closes.push(group);}};
+ }]));
+ const data=prepareFullPayloadData26(f.data),scope={...f.data.binding,authorizedPayloadHash:data.authorizedPayloadHash,expectedCounts:f.data.expectedCounts,expectedSourceEntityCounts:f.data.expectedSourceEntityCounts};delete scope.cutoffAt;
+ return{f,directory,trace,options:{scope,openSources,trustedSelectionSha256:scope.selectionSha256,trustedAuthorizedPayloadHash:scope.authorizedPayloadHash}};
+}
+test('source635 complete preparation composition reads finite original11 files through shared merge and writes genuine DATA EXPECTED MAIN with all owned streams closed',async t=>{
+ const {consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs'),{prepareFullSourceBindings26,writeFullSourceBindings26}=await import('./prepare-native-bindings.mjs'),{readFile,stat}=await import('node:fs/promises'),{createHash}=await import('node:crypto');
+ const s=await sourcePreparationStreamFixture26(t),prepared=await consumeAuthorizedHistoryClosureStreams26(s.options,streams=>prepareFullSourceBindings26({...s.f,...streams,data:s.f.data}));
+ assert.equal(prepared.authorizedPayloadHash,s.options.scope.authorizedPayloadHash);assert.equal(prepared.commands.BIND.expectedSequence,2);assert.equal(prepared.commands.ACCOUNT.length,33);assert.equal(prepared.commands.ACCOUNT.at(-1).items[0].quantity,-3n);assert.equal(prepared.commands.PUBLISH.expectedCursor,55);
+ assert.deepEqual(s.trace.opens,sourceGroups);assert.deepEqual(s.trace.closes,[...sourceGroups].reverse());assert.equal(s.trace.verified.length,22);assert.equal(s.trace.streamFinally.length,33);
+ const written=await writeFullSourceBindings26({outputParent:s.directory,registrationId:'finite-original-composition',prepared});
+ for(const ref of written.files){const bytes=await readFile(ref.path);assert.equal(bytes.length,ref.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),ref.sha256);assert.equal((await stat(ref.path)).mode&0o777,0o600);}
+ assert.equal(written.executionReady,false);assert.equal(written.executionAuthorizationIssued,false);assert.ok(written.files.length>35);
+ await assert.rejects(writeFullSourceBindings26({outputParent:s.directory,registrationId:'finite-original-composition',prepared}),{code:'EEXIST'});
+});
+test('source635 complete preparation composition closes all original11 sessions and active iterators after a consumer failure',async t=>{
+ const {consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs'),s=await sourcePreparationStreamFixture26(t);
+ await assert.rejects(consumeAuthorizedHistoryClosureStreams26(s.options,async streams=>{for await(const row of streams.sourceRows){assert.equal(row.relation,'import_source_row');throw Error('SYNTHETIC_PREPARATION_STOP');}}),/SYNTHETIC_PREPARATION_STOP/);
+ assert.deepEqual(s.trace.closes,[...sourceGroups].reverse());assert.equal(s.trace.streamFinally.filter(k=>k.endsWith('/sourceRows')).length,11);assert.equal(s.trace.verified.length,11);
+});

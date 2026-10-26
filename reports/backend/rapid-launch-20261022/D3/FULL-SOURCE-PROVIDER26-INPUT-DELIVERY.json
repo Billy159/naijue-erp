@@ -5,18 +5,18 @@
   "status": "ACTUAL124_DATA_LOCATIONS_BOUND_CODE_INSTALL_AND_FULL_EXECUTION_PENDING",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "bytes": 92349,
-    "sha256": "af7c037f32c4ca12b0c7b1af55058a9824e45b0cfd87009a12ac6b9417e2c2f1"
+    "bytes": 113005,
+    "sha256": "16170b0b49e9f7d2d815c085acb906a55565691eaf587d1d6329be46dce54286"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 115652,
-    "sha256": "36848bfe1ff54ced7dcffce76c233bf0d1d01ce7dc4cdb3dcd0e602288c9f54b"
+    "bytes": 135477,
+    "sha256": "32da6073f253551d28ef562b411ce552a6b9f8e952ed0910f350c2f257ace473"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
     "bytes": 182293,
-    "sha256": "28766ae52b713cefbe19b03da9b17c07357a2dbb10728ed2d21e3dacc8330a1e"
+    "sha256": "1dfa63b43db3437323fcd72122bc4dc208d76d803115fe0605d83d7ff19d2c81"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -547,5 +547,90 @@
       "DBOrMAINOrPublish": false,
       "validation": "Small metadata crosschecked bijective original logical path/bytes/SHA with engine exported receipt and terminal COMPLETED0; all original logical fields/roles/options and all CODE mappings unchanged. No local source-body read/rehash or reader/test execution."
     }
+  },
+  "source635ActualSourcePreparation": {
+    "status": "SOURCE_ONLY_ENTRY_AND_FINITE_SHARED_COMPOSITION_CHECKED_NOT_ACTUAL_PREPARED",
+    "entry": "prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal})",
+    "modifiedCode": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+        "bytes": 113005,
+        "sha256": "16170b0b49e9f7d2d815c085acb906a55565691eaf587d1d6329be46dce54286"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
+        "bytes": 135477,
+        "sha256": "32da6073f253551d28ef562b411ce552a6b9f8e952ed0910f350c2f257ace473"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v2/authorized-history-closure-reader.mjs",
+        "bytes": 13906,
+        "sha256": "d834d84026a2f800f690ec85956011fb60b6129b742439d5705e308ef3280bad"
+      }
+    ],
+    "preservedReadOnly": [
+      "scripts/import-v3/prepare-native-bindings.mjs",
+      "scripts/import-v3/prepare-native-bindings.test.mjs"
+    ],
+    "implemented": [
+      "Private source-only common opener shares genuine retained/reviewed/captured readers; no execution authority object, database, Pool, runtime issuer or dummy hash.",
+      "Original native prepared pass derives SKU memberships, effective stock, signed warehouse/unit totals and original contributor facts.",
+      "Exact24 human decision fills only exact absent approved identities; original represented signed totals remain; decision bytes/hash enter STOCK DATA artifact.",
+      "Original pure prepareFullPayloadData26 derives genuine hash before opening original remaining groups; original all11 global merge/lifecycle feeds original prepareFullSourceBindings26 and private writer.",
+      "No execution grants issued; original production constructor and MAIN gates preserved."
+    ],
+    "checks": {
+      "newSource635Tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "previousThreeReused": true,
+      "newCompleteCompositionTests": 2,
+      "newCommand": "node --test --test-reporter=spec '--test-name-pattern=source635 complete preparation composition' scripts/import-v3/production-source-provider26.test.mjs",
+      "newObserved": "2 PASS / 0 FAIL; 11 pinned finite DATA fixture files read; genuine original D1 DATA hash/EXPECTED/35 commands generated; negative baseline -3 preserved; private output byte/hash/mode verified; repeat registration refused; all11 sessions close exactly once in reverse order on success and consumer failure; active source iterators close on failure."
+    },
+    "testedBoundary": "Original production-entry native preparation/early refusal + exact24 helper are checked by prior3. Success from original11 file streams through shared merge to original D1 writer is checked by new2. A single successful call of the public production entry across all11 actual production reader profiles is NOT run locally; T45 actual source-only preparation is still required.",
+    "actual125": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-core-continuation-preparation-readonly-20261026-125/inputs/core-continuation.json",
+      "bytes": 41835,
+      "sha256": "96b426c34ebb41fa7d7962af866d7d05469792fe7b43bd30f0f9cdd43b42b1a1",
+      "basis": "T45 original privateResult actual path confirmed; no re-SQL or copy needed"
+    },
+    "exact24Decision": {
+      "local": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/FULL-SOURCE-EXISTING-METADATA-20261026/EXACT24-ZERO-BASELINE-USER-DECISION.json",
+        "bytes": 5299,
+        "sha256": "35a5fe3d08a0f23d5dc98e2b422702a1f991ea508a88cab6c675e969c2d55c88"
+      },
+      "serverPhysicalPath": null,
+      "meaning": "Direct human confirmation already granted. Copy this same small metadata in next CODE preparation bundle; not present in actual124."
+    },
+    "scopeSchema": {
+      "version": "PRODUCTION_SOURCE_ONLY_PREPARATION26_V1",
+      "registrationId": "frozen unique original preparation registration <=100 safe characters",
+      "deadlineUtc": "actual finite window UTC ISO",
+      "input": "exact {path,bytes,sha256} of finalized operator INPUT",
+      "verifiedCurrent": "exact actual125 ref above",
+      "warehouseStockScope": "exact server ref of same confirmed exact24 decision JSON; legacy explicit53 array also accepted",
+      "artifactRows": "{GROUP:{originalLogicalPath:accepted original source member count}}; all nonCODE DATA refs require observed native count or explicitly frozen accepted count; metadata may0. Native observed count mismatch rejects. Raw artifact SHA is byte-coverage identity, not EXPECTED root.",
+      "sourceManifestRef": "frozen original source manifest reference",
+      "requestKeys": "{bind,account:[...],publish}; freeze first original keys from C, exact account count as original D1 chunking; no key generator or original retry-command substitution",
+      "chunkRows": "positive <=500, original D1 validator authoritative",
+      "baselineBusinessDate": "exact input.binding.cutoffAt.slice(0,10)",
+      "outputParent": "existing real private directory outside R; original writer new registration wx0600/0700"
+    },
+    "invocation": "const {prepareProductionSourceOnly26}=await import(PROVIDER_PHYSICAL_FILE_URL);const result=await prepareProductionSourceOnly26({preparationFile:SCOPE_PHYSICAL_PATH,trustedPreparationSha256:SCOPE_SHA256,signal:abortController.signal}); // T45 operator supplies actual deadline abort and exact carrier pins; output only returned descriptors/counts, never row bodies",
+    "operatorPrerequisites": [
+      "Use finalized INPUT exact bytes/pin; preserve all logical identities and actual124 exact physical mapping. Do not infer prefixes.",
+      "Install original6 CODE dependencies with exact approved pins; bind explicit same-version sourceRoot for C144 and closure/window same-directory dependency. CODE physicalnull still means unavailable.",
+      "Copy confirmed24 small decision and bind physical path; actual125 root file already exists. Freeze all artifactRows and requestKeys before first preparation.",
+      "Successful output private DATA/EXPECTED/BIND/ACCOUNT*/PUBLISH/MANIFEST is a review candidate. C separately reviews and issues real grant; preparation creates no grant."
+    ],
+    "notRun": [
+      "Actual full source data preparation",
+      "PG/SQL/stage/MAIN/publish/new-process real QA",
+      "Single successful production entry invocation over all11 actual reader profiles"
+    ],
+    "retryBoundary": "First preparation only. Existing writer registration refuses EEXIST; do not auto-mint replacement keys. Original D1 resume with frozen originalCommands/Expected remains available in original helper but new entry does not expose retry refs yet.",
+    "next": "C freeze exact successor source and metadata -> QB affected new source-only seam -> T45 one actual source-only preparation window -> C review genuine resulting DATA/EXPECTED/MAIN -> independent real execution grant"
   }
 }

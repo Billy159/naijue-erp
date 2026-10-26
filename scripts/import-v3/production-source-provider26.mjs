@@ -21,6 +21,7 @@ import {openReviewedTransferLineSource26,capturedTransferLineRows26,transferLine
 import {openCapturedSalesSettlementSource} from '../import-v2/authorized-sales-detail-reader.mjs';
 import {openAuthorizedHistoryClosureReader26,HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
 import {readCoreImportContinuation26} from './run.mjs';
+import {prepareFullPayloadData26,prepareFullSourceBindings26,writeFullSourceBindings26} from './prepare-native-bindings.mjs';
 import {validateExecutableSourceHostJob26} from './production-source-host.mjs';
 import {validateCutoffImportCommand,stableImportId} from '../../packages/application/src/inventory-cutoff-import.ts';
 import {captureHistoryTypedClosurePlan} from '../../packages/application/src/history-typed-publication.ts';
@@ -140,12 +141,13 @@ export function unclaimedNativeStage26({group,payload,progress}){
  * code, never derived from the input/CORE/source manifest's own checksum.
  * RETAINED recipes consume already captured prepared/closure rows under that
  * authority; REVIEWED recipes invoke the actual original readers below. */
-export function createProductionSourceProvider26(inputs,authority){
+export function createProductionSourceProvider26(inputs,authority){return createOriginalProductionSources26(inputs,{authority});}
+function createOriginalProductionSources26(inputs,{authority,sourcePreparation}){
  capture(inputs);const fixed=structuredClone(inputs),inputDigest=capture(fixed);
- const a=methods(authority,['verifyInputs','assertGroupAllowed','assertExecutionAllowed','authorizeStep','assertAllowed','authorizeNativeCommand',
+ const a=sourcePreparation?null:methods(authority,['verifyInputs','assertGroupAllowed','assertExecutionAllowed','authorizeStep','assertAllowed','authorizeNativeCommand',
   'openRetained','capturedOptions','openRetainedClosure','coreProjection','mainCommands','authorizeProductSource','close','now']);
  must(fixed.version==='PRODUCTION_SOURCE_PROVIDER26_INPUT_V1'&&fixed.binding?.phase==='FULL_SOURCE_CONTINUATION_26_V1'
-  &&hash(fixed.binding.authorizedPayloadHash)&&hash(fixed.binding.coreSourceDigest)&&fixed.binding.authorizedPayloadHash!==fixed.binding.coreSourceDigest,
+  &&(sourcePreparation?fixed.binding.authorizedPayloadHash===null||hash(fixed.binding.authorizedPayloadHash):hash(fixed.binding.authorizedPayloadHash))&&hash(fixed.binding.coreSourceDigest)&&fixed.binding.authorizedPayloadHash!==fixed.binding.coreSourceDigest,
   'PRODUCTION_PROVIDER26_FULL_BINDING_REQUIRED');
  must(fixed.core?.receiptId===fixed.binding.coreReceiptId&&fixed.core?.coreSourceDigest===fixed.binding.coreSourceDigest,
   'PRODUCTION_PROVIDER26_CORE_RECEIPT_REQUIRED');
@@ -153,18 +155,18 @@ export function createProductionSourceProvider26(inputs,authority){
   if(r.mode==='REVIEWED')must(Object.hasOwn(recipeOpeners,group),'PRODUCTION_PROVIDER26_RETAINED_GROUP_REQUIRED',group);
   if(r.mode==='CAPTURED_C144')must(['SALES_DETAILS','SETTLEMENTS'].includes(group),'PRODUCTION_PROVIDER26_CAPTURED_GROUP',group);}
  must(Reflect.ownKeys(fixed.producers).length===sourceGroups.length,'PRODUCTION_PROVIDER26_GROUP_REQUIRED');
- let opened=false,warehouseItems=fixed.warehouses;
+ let opened=false,warehouseItems=sourcePreparation?structuredClone(sourcePreparation.warehouses):fixed.warehouses;
  return Object.freeze({providerVersion,sourceGroups,async openSourceSession({binding,sources,database,signal}){
   must(!opened,'PRODUCTION_PROVIDER26_SESSION_ALREADY_OPEN');opened=true;
   must(signal instanceof AbortSignal&&!signal.aborted&&requestHash(binding)===requestHash(fixed.binding),'PRODUCTION_PROVIDER26_BINDING_CHANGED');
-  must(typeof database?.ready==='function','PRODUCTION_PROVIDER26_ORIGINAL_DATABASE_REQUIRED');
+  must(sourcePreparation?database===undefined:typeof database?.ready==='function','PRODUCTION_PROVIDER26_ORIGINAL_DATABASE_REQUIRED');binding=structuredClone(binding);
   let closed=false,closing,closure,preflightDone=false,stepsStarted=false;const readers=new Map(),disposers=[],issued=new Set(),coreSourceIds=new Set();
   const active=()=>must(!closed&&!signal.aborted,'PRODUCTION_PROVIDER26_CLOSED');
   const checked=async(fn,...args)=>{active();must(await fn(...args)===undefined,'PRODUCTION_PROVIDER26_AUTHORITY_RESULT');active();};
   async function close(){if(closing)return closing;closed=true;closing=(async()=>{const errors=[];
    for(const dispose of [...disposers].reverse())try{await dispose();}catch(error){errors.push(error);}
-   try{await a.close();}catch(error){errors.push(error);}readers.clear();issued.clear();if(errors.length)throw new AggregateError(errors,'Production provider26 cleanup failed');})();return closing;}
-  async function verify(){active();await checked(a.verifyInputs,{inputDigest,binding:structuredClone(binding),core:structuredClone(fixed.core)});}
+   try{if(a)await a.close();else await sourcePreparation.close();}catch(error){errors.push(error);}readers.clear();issued.clear();if(errors.length)throw new AggregateError(errors,'Production provider26 cleanup failed');})();return closing;}
+  async function verify(){active();if(a)await checked(a.verifyInputs,{inputDigest,binding:structuredClone(binding),core:structuredClone(fixed.core)});else{await sourcePreparation.verify();active();}}
   const context={binding:structuredClone(binding),sources:structuredClone(sources),signal,database};
   async function retainedBarcodeReader(recipe){
    // A real file reader under the original group/step authority. It does not
@@ -377,6 +379,7 @@ export function createProductionSourceProvider26(inputs,authority){
      const digest=createHash('sha256');let position=0,pending=Buffer.alloc(0),offset=0;
      const append=(bytes)=>{current();const prepared=decode(bytes),ref={file,offset,bytes:bytes.length,sha256:sha(bytes)};
       const entry=helper.captureRetainedNativeClosureRecord26(original,{group,binding,ref,prepared});
+      if(sourcePreparation)must(sourcePreparation.observePrepared(group,prepared,spec.files[Number(file)],entry)===undefined,'SOURCE_PREPARATION26_OBSERVER_RESULT');
       must(!members.has(entry.preparedHash),'PRODUCTION_RETAINED_NATIVE26_DUPLICATE');members.set(entry.preparedHash,entry);records.push(entry);offset+=bytes.length;
       sourceRows+=entry.sources.length;typedRows+=entry.typed.length;must(records.length<=spec.records&&sourceRows<=spec.sourceRows&&typedRows<=spec.typedRows,'PRODUCTION_RETAINED_NATIVE26_COUNT');};
      if(group==='PRODUCTS'){must(f.ref.bytes<=4194304,'PRODUCTION_RETAINED_NATIVE26_RECORD_BOUND');const bytes=Buffer.allocUnsafe(f.ref.bytes);while(position<bytes.length){const got=await f.fd.read(bytes,position,bytes.length-position,position);current();must(got.bytesRead>0,'PRODUCTION_RETAINED_NATIVE26_EOF');position+=got.bytesRead;}digest.update(bytes);append(bytes);}
@@ -398,21 +401,21 @@ export function createProductionSourceProvider26(inputs,authority){
      const stat=await lstat(ref.path);current();must(stat.isFile()&&!stat.isSymbolicLink()&&(stat.mode&0o077)===0&&stat.size===ref.bytes,'PRODUCTION_RETAINED_NATIVE26_PRIVATE_FILE');
      const fd=await open(ref.path,constants.O_RDONLY|constants.O_NOFOLLOW);if(ended||closed||signal.aborted){await fd.close();current();}held.set(String(n),{ref,stat,fd});current();must(same(stat,await fd.stat()),'PRODUCTION_RETAINED_NATIVE26_CHANGED');}
     await verifyFiles();
-    return {verify:verifyFiles,async authorize(prepared){await ensureIndex();current();const entry=members.get(capture(prepared));must(entry&&entry.fingerprint===prepared.fingerprint,'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');
+    return {verify:verifyFiles,...(sourcePreparation?{async prepareFacts(){await ensureIndex();await verifyFiles();}}:{}),async authorize(prepared){await ensureIndex();current();const entry=members.get(capture(prepared));must(entry&&entry.fingerprint===prepared.fingerprint,'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');
       const actual=helper.captureRetainedNativeClosureRecord26(original,{group,binding,ref:entry.ref,prepared});must(capture(actual)===capture(entry),'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');await verifyFiles();},
      async *[stages[group][1]](){current();must(!iterated,'PRODUCTION_RETAINED_NATIVE26_SINGLE_STAGE');iterated=true;await ensureIndex();for(const entry of entries){const prepared=await range(entry.ref);current();yield prepared;current();}await verifyFiles();},
      async openClosure(scope,ctx){current();must(!closureSignal&&capture(scope)===capture(fixed.closureScope)&&ctx?.group===group&&ctx.signal instanceof AbortSignal&&!ctx.signal.aborted,'PRODUCTION_RETAINED_NATIVE26_SCOPE');closureSignal=ctx.signal;await ensureIndex();return closureReader;},close:closeSource};
    }catch(error){try{await closeSource();}catch(cleanup){throw new AggregateError([error,cleanup],'Retained native open failed');}throw error;}
   }
   async function capturedReader(group,recipe){
-   const opts=await a.capturedOptions(group,structuredClone(recipe),context);active();
-   must(opts?.capturedSource&&typeof opts.resolveNativeBinding==='function'&&opts.batchId===binding.batchId&&opts.fixedSourceNamespace===binding.fixedSourceNamespace,
+   const opts=await (a??sourcePreparation.capturedIO).capturedOptions(group,structuredClone(recipe),context);active();
+   must(opts?.capturedSource&&(sourcePreparation||typeof opts.resolveNativeBinding==='function')&&opts.batchId===binding.batchId&&opts.fixedSourceNamespace===binding.fixedSourceNamespace,
     'PRODUCTION_PROVIDER26_CAPTURED_NATIVE_AUTHORITY_REQUIRED',group);
    const raw=await openCapturedSalesSettlementSource(opts,group==='SALES_DETAILS'?'SALES_LINE':'SETTLEMENT',{resolveFile:sourceFileResolver26(recipe)});
    if(closed||signal.aborted){await raw.close();active();}
    const prepare=group==='SALES_DETAILS'?prepareHistorySalesDetailChunk:prepareHistorySettlementChunk;
    return {verify,authorize:raw.authorize.bind(raw),close:raw.close.bind(raw),
-    async *chunks(){let batch=[],selection,moneyApprovals;const size=recipe.chunkRows;
+    async *chunks(){must(!sourcePreparation,'SOURCE_PREPARATION26_STAGE_ITERATION_FORBIDDEN');let batch=[],selection,moneyApprovals;const size=recipe.chunkRows;
      must(Number.isSafeInteger(size)&&size>0&&size<=100,'PRODUCTION_PROVIDER26_CAPTURED_CHUNK_BOUND');
      const flush=()=>prepare({batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selection,moneyApprovals,rows:batch});
      for await(const row of raw.rows()){
@@ -423,18 +426,43 @@ export function createProductionSourceProvider26(inputs,authority){
       batch.push({source:row.source,...native});if(batch.length===size){const prepared=flush();await raw.authorize(prepared);active();yield prepared;batch=[];}
      }
      if(batch.length){const prepared=flush();await raw.authorize(prepared);active();yield prepared;}
-    },async openClosure(scope,ctx){return a.openRetainedClosure(group,structuredClone(recipe),scope,ctx);}};
+    },async openClosure(scope,ctx){return (a??sourcePreparation.capturedIO).openRetainedClosure(group,structuredClone(recipe),scope,ctx);}};
   }
   const openSources=Object.fromEntries(sourceGroups.map(group=>[group,async(scope,ctx)=>{
    active();must(preflightDone&&requestHash(scope)===requestHash(fixed.closureScope)&&ctx?.group===group,'PRODUCTION_PROVIDER26_CLOSURE_SCOPE');
    const result=await readers.get(group).openClosure(scope,ctx);active();return result;
   }]));
+  async function openGroup(group){
+   must(!readers.has(group),'PRODUCTION_PROVIDER26_SOURCE_REUSED');
+     const recipe=fixed.producers[group];let raw;
+     if(recipe.mode==='REVIEWED')raw=await recipeOpeners[group](structuredClone(recipe.options),{resolveFile:sourceFileResolver26(recipe)});
+     else if(recipe.mode==='CAPTURED_C144')raw=await capturedReader(group,recipe);
+     else if(group==='BARCODES'&&Object.hasOwn(recipe,'closureHelper'))raw=await retainedBarcodeReader(recipe);
+     else if(group==='TRANSFER_LINES'&&Object.hasOwn(recipe,'retainedTransferLines'))raw=await retainedTransferLinesReader(recipe);
+     else if(group==='HEADERS'&&Object.hasOwn(recipe,'retainedHeaders'))raw=await retainedHeadersReader(recipe);
+     else if(Object.hasOwn(recipe,'retainedNative'))raw=await retainedNativeReader(group,recipe);
+     else {must(a,'SOURCE_PREPARATION26_REAL_RETAINED_READER_REQUIRED');raw=await a.openRetained(group,structuredClone(recipe),context);}
+     const closeMethod=Object.getOwnPropertyDescriptor(raw??{},'close');if(!(group==='BARCODES'&&Object.hasOwn(recipe,'closureHelper'))&&!Object.hasOwn(recipe,'retainedNative')&&!Object.hasOwn(recipe,'retainedHeaders')&&!Object.hasOwn(recipe,'retainedTransferLines')&&closeMethod?.enumerable&&Object.hasOwn(closeMethod,'value')&&typeof closeMethod.value==='function')disposers.push(closeMethod.value.bind(raw));
+     active();must(raw&&!issued.has(raw),'PRODUCTION_PROVIDER26_SOURCE_REUSED');issued.add(raw);
+     const [kind,iterator]=stages[group];void kind;
+     const reader=methods(raw,['verify','authorize','openClosure','close',iterator]);
+     if(group==='PARTIES'){
+      const projection=a?await a.coreProjection(structuredClone(fixed.core),structuredClone(binding)):await sourcePreparation.coreProjection(binding.authorizedPayloadHash);active();
+      must(projection?.authorizedPayloadHash===binding.authorizedPayloadHash,'PRODUCTION_PROVIDER26_CORE_PROJECTION');
+      const bind=methods(raw,['bindCoreContinuation','authorizePartyChunk']);await checked(bind.bindCoreContinuation,projection);
+      must(Array.isArray(projection.coreMembers)&&projection.coreMembers.length===115,'PRODUCTION_PROVIDER26_CORE_PROJECTION');
+      for(const member of projection.coreMembers){must(typeof member.sourceRowId==='string'&&!coreSourceIds.has(member.sourceRowId),'PRODUCTION_PROVIDER26_CORE_PROJECTION');coreSourceIds.add(member.sourceRowId);}
+      reader.authorize=bind.authorizePartyChunk;
+     }
+     if(sourcePreparation&&Object.hasOwn(raw,'prepareFacts'))reader.prepareFacts=own(raw,'prepareFacts').bind(raw);
+     readers.set(group,reader);await checked(reader.verify);
+  }
   async function preflight(){
    active();must(!preflightDone,'PRODUCTION_PROVIDER26_PREFLIGHT_ALREADY_COMPLETE');
    try{await verify();
     // All group grants, including six real schemes and historical hall decisions,
     // must resolve BEFORE any source constructor or database activation.
-    for(const group of sourceGroups)await checked(a.assertGroupAllowed,group,structuredClone(fixed.producers[group]),structuredClone(binding));
+    if(a)for(const group of sourceGroups)await checked(a.assertGroupAllowed,group,structuredClone(fixed.producers[group]),structuredClone(binding));
     if(!Array.isArray(warehouseItems)){
      must(warehouseItems&&Number.isSafeInteger(warehouseItems.bytes)&&warehouseItems.bytes>0&&warehouseItems.bytes<=4194304,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');
      const bytes=await pinnedSmall(warehouseItems.path,warehouseItems.sha256,sourceFileResolver26(fixed.producers.PARTIES));active();must(bytes.length===warehouseItems.bytes,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');
@@ -443,32 +471,10 @@ export function createProductionSourceProvider26(inputs,authority){
       &&data.identity?.batchId===binding.batchId&&data.identity.coreReceiptId===binding.coreReceiptId&&data.identity.coreSourceDigest===binding.coreSourceDigest
       &&Array.isArray(data.warehouses)&&data.warehouses.length===53,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');warehouseItems=data.warehouses;
     }
-    for(const group of sourceGroups){
-     const recipe=fixed.producers[group];let raw;
-     if(recipe.mode==='REVIEWED')raw=await recipeOpeners[group](structuredClone(recipe.options),{resolveFile:sourceFileResolver26(recipe)});
-     else if(recipe.mode==='CAPTURED_C144')raw=await capturedReader(group,recipe);
-     else if(group==='BARCODES'&&Object.hasOwn(recipe,'closureHelper'))raw=await retainedBarcodeReader(recipe);
-     else if(group==='TRANSFER_LINES'&&Object.hasOwn(recipe,'retainedTransferLines'))raw=await retainedTransferLinesReader(recipe);
-     else if(group==='HEADERS'&&Object.hasOwn(recipe,'retainedHeaders'))raw=await retainedHeadersReader(recipe);
-     else if(Object.hasOwn(recipe,'retainedNative'))raw=await retainedNativeReader(group,recipe);
-     else raw=await a.openRetained(group,structuredClone(recipe),context);
-     const closeMethod=Object.getOwnPropertyDescriptor(raw??{},'close');if(!(group==='BARCODES'&&Object.hasOwn(recipe,'closureHelper'))&&!Object.hasOwn(recipe,'retainedNative')&&!Object.hasOwn(recipe,'retainedHeaders')&&!Object.hasOwn(recipe,'retainedTransferLines')&&closeMethod?.enumerable&&Object.hasOwn(closeMethod,'value')&&typeof closeMethod.value==='function')disposers.push(closeMethod.value.bind(raw));
-     active();must(raw&&!issued.has(raw),'PRODUCTION_PROVIDER26_SOURCE_REUSED');issued.add(raw);
-     const [kind,iterator]=stages[group];void kind;
-     const reader=methods(raw,['verify','authorize','openClosure','close',iterator]);
-     if(group==='PARTIES'){
-      const projection=await a.coreProjection(structuredClone(fixed.core),structuredClone(binding));active();
-      must(projection?.authorizedPayloadHash===binding.authorizedPayloadHash,'PRODUCTION_PROVIDER26_CORE_PROJECTION');
-      const bind=methods(raw,['bindCoreContinuation','authorizePartyChunk']);await checked(bind.bindCoreContinuation,projection);
-      must(Array.isArray(projection.coreMembers)&&projection.coreMembers.length===115,'PRODUCTION_PROVIDER26_CORE_PROJECTION');
-      for(const member of projection.coreMembers){must(typeof member.sourceRowId==='string'&&!coreSourceIds.has(member.sourceRowId),'PRODUCTION_PROVIDER26_CORE_PROJECTION');coreSourceIds.add(member.sourceRowId);}
-      reader.authorize=bind.authorizePartyChunk;
-     }
-     readers.set(group,reader);await checked(reader.verify);
-    }
+    for(const group of sourcePreparation?['PRODUCTS','SKUS','STOCK_CONTRIBUTORS']:sourceGroups)await openGroup(group);
     const scope=fixed.closureScope;must(scope?.batchId===binding.batchId&&scope.fixedSourceNamespace===binding.fixedSourceNamespace
      &&scope.selectionSha256===binding.selectionSha256&&scope.authorizedPayloadHash===binding.authorizedPayloadHash,'PRODUCTION_PROVIDER26_CLOSURE_SCOPE');
-    preflightDone=true;closure=await openAuthorizedHistoryClosureReader26({scope,openSources,trustedSelectionSha256:binding.selectionSha256,trustedAuthorizedPayloadHash:binding.authorizedPayloadHash});
+    preflightDone=true;if(sourcePreparation){await verify();return;}closure=await openAuthorizedHistoryClosureReader26({scope,openSources,trustedSelectionSha256:binding.selectionSha256,trustedAuthorizedPayloadHash:binding.authorizedPayloadHash});
     disposers.push(()=>closure.close());await verify();
    }catch(error){try{await close();}catch(cleanup){throw new AggregateError([error,cleanup],'Production provider26 preflight and cleanup failed');}throw error;}
   }
@@ -498,6 +504,13 @@ export function createProductionSourceProvider26(inputs,authority){
    }
    must(count>0||progress.committedOperations?.some(op=>op.action===(phase==='BIND'?'IMPORT_BIND_FULL_SOURCE':phase==='ACCOUNT'?'IMPORT_CHUNK':'IMPORT_PUBLISH')),'PRODUCTION_PROVIDER26_MAIN_COMMAND_REQUIRED');
   }
+  if(sourcePreparation)return{preflight,close,openSources,
+   async collectNativeFacts(){must(preflightDone,'PRODUCTION_PROVIDER26_PREFLIGHT_REQUIRED');for(const group of ['PRODUCTS','SKUS','STOCK_CONTRIBUTORS']){const reader=readers.get(group);must(typeof reader?.prepareFacts==='function','SOURCE_PREPARATION26_NATIVE_CAPTURE_REQUIRED');await reader.prepareFacts();active();}},
+   async bindRealData(data){must(preflightDone&&readers.size===3,'SOURCE_PREPARATION26_DATA_BIND_ORDER');const prepared=prepareFullPayloadData26(data);await sourcePreparation.verifyDerivedData(prepared,data);active();
+    binding.authorizedPayloadHash=fixed.binding.authorizedPayloadHash=fixed.closureScope.authorizedPayloadHash=prepared.authorizedPayloadHash;context.binding=structuredClone(binding);
+    for(const group of ['PARTIES','PAYMENT'])fixed.producers[group].options.authorizedPayloadHash=prepared.authorizedPayloadHash;fixed.producers.CATALOGUE.options.binding.authorizedPayloadHash=prepared.authorizedPayloadHash;
+    sourcePreparation.setDerivedInput(fixed,binding);for(const group of sourceGroups)if(!readers.has(group))await openGroup(group);active();return structuredClone(fixed.closureScope);
+   }};
   return {preflight,close,openSources,closureScope:structuredClone(fixed.closureScope),bootstrap26:null,
    nativeProductSourceReader:{resolveFile:sourceFileResolver26(fixed.producers.PRODUCTS),async authorize(payload){await checked(a.authorizeProductSource,payload,structuredClone(binding));}},
    now:a.now,
@@ -546,6 +559,160 @@ export async function openSourceSession(context){
  catch(error){try{await authority.close();}catch(cleanup){throw new AggregateError([error,cleanup],'Production authority26 construction failed');}throw error;}
 }
 
+
+/** Original retained C144 IO composition, shared by execution and explicit
+ * source-only preparation. The caller supplies a real pinned-input verifier;
+ * this object issues no execution/native/DB permission. */
+function originalCapturedSourceIO26({binding,fixed,signal,verify,active,code,owned,captured}){
+ const sourceScope=Object.fromEntries(['batchId','fixedSourceNamespace','selectionSha256'].map(k=>[k,binding[k]]));
+ const verifyRecipe=async(group,recipe,actualBinding)=>{await verify();must(sourceGroups.includes(group)&&capture(actualBinding)===capture(binding)&&capture(recipe)===capture(fixed.producers[group]),'PRODUCTION_AUTHORITY26_GROUP_SCOPE');};
+ return{
+   async capturedOptions(group,recipe,context){await verifyRecipe(group,recipe,context.binding);
+    must(['SALES_DETAILS','SETTLEMENTS'].includes(group)&&recipe.supportModules&&typeof recipe.sourceRoot==='string'&&isAbsolute(recipe.sourceRoot),'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');
+    const makeTransport=await code(recipe.supportModules.transport,'openRetainedSalesSettlementFiles',sourceFileResolver26(recipe));
+    const makeOptions=await code(recipe.supportModules.options,'prepareRetainedSalesOptions',sourceFileResolver26(recipe));
+    const resolveFile=sourceFileResolver26(recipe),physicalSource=resolveFile?await resolveFile(recipe.source):recipe.source,physicalTyped=resolveFile?await resolveFile(recipe.typed):recipe.typed;
+    const transport=await owned(()=>makeTransport({source:{...recipe.source,...physicalSource},typed:{...recipe.typed,...physicalTyped}},signal));let indexed;
+    const ensureIndex=()=>indexed??=(async()=>{active();await transport.buildTypedIndex();active();})();
+    const expected={entity:recipe.entity,binding:structuredClone(binding),manifestRef:recipe.manifestRef,moneyRef:recipe.moneyRef,trustedApprovalSha256:recipe.trustedApprovalSha256};
+    const capturedAuthority={async verify(actual){await verify();must(actual.batchId===binding.batchId&&actual.fixedSourceNamespace===binding.fixedSourceNamespace
+      &&actual.selection?.entity===recipe.entity&&actual.selection.selectionSha256===binding.selectionSha256&&capture(actual.manifest)===capture(recipe.manifestRef)
+      &&capture(actual.source)===capture(recipe.source)&&capture(actual.typed)===capture(recipe.typed),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await transport.verify();},close:()=>transport.close()};
+    const options=await makeOptions({sourceRoot:recipe.sourceRoot,...expected,signal,capturedAuthority,
+     authority:{async verifyInputs(actual){await verify();must(capture(actual)===capture(expected),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');}}},{resolveFile});active();
+    options.capturedSource.read={async *sourceRows(descriptor){must(capture(descriptor)===capture(recipe.source),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await ensureIndex();yield*transport.sourceRows({...recipe.source,...physicalSource});},async typedRow(descriptor,key){must(capture(descriptor)===capture(recipe.typed),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await ensureIndex();return transport.typedRow({...recipe.typed,...physicalTyped},key);}};
+    let resolver;if(context.database?.ready)options.resolveNativeBinding=async query=>{await verify();const runtime=context.database.ready();
+     resolver??=(group==='SALES_DETAILS'?createPostgresHistorySalesDetailBindingResolver26:createPostgresHistorySettlementBindingResolver26)(runtime.pool,sourceScope,runtime.runtime26);
+     const result=await resolver(query);active();return result;};
+    captured.set(group,{transport,recipe,options});return options;
+   },
+   async openRetainedClosure(group,recipe,scope,context){await verifyRecipe(group,recipe,binding);must(capture(scope)===capture(fixed.closureScope)&&context?.group===group
+     &&context.signal instanceof AbortSignal&&!context.signal.aborted,'PRODUCTION_AUTHORITY26_CLOSURE_SCOPE');const state=captured.get(group);
+    must(state&&recipe.supportModules?.closure,'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');
+    const locate=sourceFileResolver26(recipe);if(locate){const dependency=recipe.supportModules.closureWindow;must(dependency,'PRODUCTION_AUTHORITY26_CLOSURE_DEPENDENCY');const closureFile=await locate(recipe.supportModules.closure),windowFile=await locate(dependency);active();must(resolve(dirname(closureFile.path),'prepare-retained-sales-header-window-20261026.mjs')===windowFile.path,'PRODUCTION_AUTHORITY26_CLOSURE_DEPENDENCY');await code(dependency,'salesHeaderProjection26',locate);}
+    const makeClosure=await code(recipe.supportModules.closure,'createCapturedSalesChildClosureSession',locate);
+    const current=()=>{active();must(!context.signal.aborted,'PRODUCTION_AUTHORITY26_CLOSED');};const streams=new Set();
+    const closeStreams=async()=>{await Promise.all([...streams].map(async stream=>{const ended=stream.closed?Promise.resolve():new Promise(resolve=>stream.once('close',resolve));stream.destroy();await ended;}));streams.clear();};
+    const rows=async function*(logical,relation){current();const locate=sourceFileResolver26(recipe),ref=locate?{...logical,...await locate(logical)}:logical;current();const before=await lstat(ref.path);current();must(before.isFile()&&!before.isSymbolicLink()&&before.size===ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');
+     const digest=createHash('sha256');let pendingBytes=Buffer.alloc(0),bytes=0,count=0,previous;
+     const stream=createReadStream(ref.path);streams.add(stream);try{for await(const chunk of stream){current();bytes+=chunk.length;must(bytes<=ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');digest.update(chunk);pendingBytes=Buffer.concat([pendingBytes,chunk]);let end;
+      while((end=pendingBytes.indexOf(10))>=0){must(end>0&&end+1<=4194304,'PRODUCTION_AUTHORITY26_CAPTURED_LINE');const raw=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(pendingBytes.subarray(0,end)));pendingBytes=pendingBytes.subarray(end+1);
+       const row=historyClosureProjectionRow26(relation,raw.projection);must(capture(raw)===capture(row)&&(previous===undefined||Buffer.compare(Buffer.from(previous),Buffer.from(row.key))<0)&&++count<=ref.rows,'PRODUCTION_AUTHORITY26_CAPTURED_ROW');previous=row.key;yield row;current();}
+      must(pendingBytes.length<4194304,'PRODUCTION_AUTHORITY26_CAPTURED_LINE');}
+      must(bytes===ref.bytes&&count===ref.rows&&pendingBytes.length===0&&digest.digest('hex')===ref.sha256&&same(before,await lstat(ref.path)),'PRODUCTION_AUTHORITY26_CAPTURED_EOF');current();
+     }finally{const ended=stream.closed?Promise.resolve():new Promise(resolve=>stream.once('close',resolve));stream.destroy();await ended;streams.delete(stream);}};
+    return owned(()=>makeClosure({entity:recipe.entity,binding:sourceScope,expectedRows:recipe.source.rows,sourceRows:()=>rows(recipe.source,'import_source_row'),
+     typedRows:()=>rows(recipe.typed,recipe.entity==='SALES_LINE'?'history_sales_line':'history_sales_settlement'),sourceCodec:{historyClosureProjectionRow26},
+     verify:async()=>{await verify();await state.transport.verify();},close:closeStreams,current}));
+   },
+
+ };
+}
+
+/** Only the exact controller-recorded human decision may close the absent
+ * warehouse quantities for this batch. Original represented signed totals are
+ * retained; no zero SKU, contributor or source row is generated. */
+export function confirmedZeroWarehouseScope26({binding,warehouses,representedTotals,decision}){
+ capture({binding,warehouses,representedTotals,decision});
+ must(decision?.version==='C_EXACT24_WAREHOUSE_BASELINE_ZERO_USER_DECISION_V1'&&decision.status==='EXPLICIT_USER_CONFIRMED'
+  &&decision.scope==='ONLY_THESE_EXACT24_WAREHOUSES_IN_THIS_BATCH_BASELINE'&&decision.source?.type==='DIRECT_HUMAN_REPLY_IN_CONTROLLER_CHAT'
+  &&typeof decision.source.questionCallId==='string'&&decision.source.questionCallId.length>0&&capture(decision.binding)===capture(binding)
+  &&Array.isArray(decision.warehouses)&&decision.warehouses.length===24&&Array.isArray(warehouses)&&warehouses.length===53&&Array.isArray(representedTotals),'SOURCE_PREPARATION26_EXACT_ZERO_DECISION');
+ const totals=new Map();for(const row of representedTotals){must(typeof row.sourceKey==='string'&&!totals.has(row.sourceKey)&&typeof row.signedQuantity==='string'&&/^-?(?:0|[1-9]\d*)$/.test(row.signedQuantity),'SOURCE_PREPARATION26_WAREHOUSE_SCOPE');totals.set(row.sourceKey,row.signedQuantity);}
+ const zero=new Map(),ids=new Set();for(const row of decision.warehouses){must(row.signedQuantity==='0'&&typeof row.sourceKey==='string'&&typeof row.nativeId==='string'&&!zero.has(row.sourceKey)&&!ids.has(row.nativeId)&&!totals.has(row.sourceKey),'SOURCE_PREPARATION26_EXACT_ZERO_DECISION');zero.set(row.sourceKey,row);ids.add(row.nativeId);}
+ const keys=new Set(),nativeIds=new Set();const rows=warehouses.map(w=>{must(!keys.has(w.sourceKey)&&!nativeIds.has(w.targetId),'SOURCE_PREPARATION26_WAREHOUSE_SCOPE');keys.add(w.sourceKey);nativeIds.add(w.targetId);
+  if(totals.has(w.sourceKey))return{sourceKey:w.sourceKey,nativeId:w.targetId,signedQuantity:totals.get(w.sourceKey)};
+  const approved=zero.get(w.sourceKey);must(approved&&approved.nativeId===w.targetId,'SOURCE_PREPARATION26_EXACT_ZERO_DECISION');return{sourceKey:w.sourceKey,nativeId:w.targetId,signedQuantity:approved.signedQuantity};});
+ must(totals.size===29&&zero.size===24&&[...totals.keys(),...zero.keys()].every(k=>keys.has(k)),'SOURCE_PREPARATION26_EXACT_ZERO_DECISION');return rows;
+}
+
+/** Explicit original-source preparation. This entry has no database/runtime,
+ * execution authority, stage/execute methods or substitute payload hash. The
+ * original frozen D1 helpers derive the DATA hash and command files only after
+ * genuine original files, membership facts and all11 streams have closed. */
+export async function prepareProductionSourceOnly26({preparationFile,trustedPreparationSha256,signal}){
+ must(signal instanceof AbortSignal&&!signal.aborted,'SOURCE_PREPARATION26_ABORTED');
+ const scopeBytes=await pinnedSmall(preparationFile,trustedPreparationSha256),scope=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(scopeBytes));capture(scope);
+ const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
+ const keys=['version','registrationId','deadlineUtc','input','verifiedCurrent','warehouseStockScope','artifactRows','sourceManifestRef','requestKeys','chunkRows','baselineBusinessDate','outputParent'];
+ must(exact(scope,keys)&&scope.version==='PRODUCTION_SOURCE_ONLY_PREPARATION26_V1'&&typeof scope.registrationId==='string'&&/^[A-Za-z0-9_-]{1,100}$/.test(scope.registrationId)
+  &&typeof scope.deadlineUtc==='string'&&Number.isFinite(Date.parse(scope.deadlineUtc))&&isAbsolute(scope.outputParent)&&typeof scope.sourceManifestRef==='string'&&scope.sourceManifestRef.length>0,'SOURCE_PREPARATION26_SCOPE');
+ let closed=false,session;const resources=[],pinned=new Map(),captured=new Map();
+ const active=()=>must(!closed&&!signal.aborted&&Date.now()<Date.parse(scope.deadlineUtc),'SOURCE_PREPARATION26_ABORTED');
+ const holdSmall=async(ref,resolveFile)=>{active();must(exact(ref,['path','bytes','sha256'])&&ref.bytes>0&&ref.bytes<=4194304,'SOURCE_PREPARATION26_METADATA_REF');
+  const physical=resolveFile?await resolveFile(ref):ref,bytes=await pinnedSmall(ref.path,ref.sha256,resolveFile);active();must(bytes.length===ref.bytes,'SOURCE_PREPARATION26_METADATA_REF');const stat=await lstat(physical.path);active();pinned.set(ref.path,{physical,stat});return JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));};
+ const verify=async()=>{active();for(const f of pinned.values()){must(same(f.stat,await lstat(f.physical.path)),'SOURCE_PREPARATION26_INPUT_CHANGED');active();}};
+ const closeResources=async()=>{const results=await Promise.allSettled([...resources].reverse().map(r=>r.close()));resources.length=0;const errors=results.filter(r=>r.status==='rejected');if(errors.length)throw new AggregateError(errors.map(r=>r.reason),'Source preparation IO close failed');};
+ const owned=async openSource=>{active();const raw=await openSource();must(typeof raw?.close==='function','SOURCE_PREPARATION26_RESOURCE');let closing;const resource={...raw,close(){return closing??=Promise.resolve().then(()=>raw.close());}};
+  resources.push(resource);if(closed||signal.aborted){await resource.close();active();}return resource;};
+ const code=async(ref,name,resolveFile)=>{active();const physical=resolveFile?await resolveFile(ref):ref,bytes=await pinnedSmall(ref.path,ref.sha256,resolveFile);active();must(bytes.length===ref.bytes,'SOURCE_PREPARATION26_MODULE_PIN');const module=await import(pathToFileURL(physical.path).href);active();const fn=own(module,name);must(typeof fn==='function','SOURCE_PREPARATION26_MODULE_PIN');return fn;};
+ let input,core,coreData,short;const skuMemberships=[],baselineItems=[],contributors=[],effectiveGroups=[],coverage=new Map(),warehouseTotals=new Map(),warehouseUnits=new Map(),skuIdentities=new Map(),warehouseIdentities=new Map();let stockSelection;
+ const observePrepared=(group,p,logical,entry)=>{active();coverage.set(logical.path,(coverage.get(logical.path)??0)+entry.sources.length);
+  if(group==='SKUS'){const s=p.canonicalSource;must(!skuIdentities.has(s.sourceKey),'SOURCE_PREPARATION26_DUPLICATE_SKU');skuIdentities.set(s.sourceKey,p.nativeSku.id);skuMemberships.push({targetType:'SKU',targetId:p.nativeSku.id,sourceEntityType:s.entityType,sourceKey:s.sourceKey,sourceRecordHash:s.rowSha256,sourceFileRef:s.fileRef,nativeRecord:structuredClone(p.importRecord)});}
+  if(group==='STOCK_CONTRIBUTORS'){
+   must(warehouseIdentities.get(p.warehouse.sourceKey)===p.warehouse.nativeId&&skuIdentities.get(p.sku.canonicalSourceKey)===p.sku.nativeId,'SOURCE_PREPARATION26_STOCK_NATIVE_IDENTITY');
+   if(stockSelection)must(capture(stockSelection)===capture(p.selection),'SOURCE_PREPARATION26_STOCK_SELECTION');else stockSelection=structuredClone(p.selection);
+   const key=p.canonicalStock['来源编号'],sourceUnit=p.contributors[0].lineage.sourceUnit;
+   effectiveGroups.push({canonicalStockSourceKey:key,warehouseSourceKey:p.warehouse.sourceKey,canonicalSkuSourceKey:p.sku.canonicalSourceKey,warehouseId:p.warehouse.nativeId,skuId:p.sku.nativeId,signedQuantity:p.signedQuantity,sourceUnit,contributorCount:p.contributors.length,effectiveRowHash:requestHash(p.canonicalStock)});
+   baselineItems.push({targetType:'INVENTORY_LEDGER',warehouseId:p.warehouse.nativeId,skuId:p.sku.nativeId,quantity:BigInt(p.signedQuantity),businessDate:scope.baselineBusinessDate,sourceEntityType:'INVENTORY_BASELINE',sourceKey:key,sourceRecordHash:requestHash(p.canonicalStock),sourceFileRef:p.selection.path});
+   warehouseTotals.set(p.warehouse.sourceKey,(warehouseTotals.get(p.warehouse.sourceKey)??0n)+BigInt(p.signedQuantity));
+   for(const c of p.contributors){const s=c.source,l=c.lineage;contributors.push({sourceRowId:s.id,sourceKey:s.sourceKey,sourceFileSha256:s.sourceFileSha256,rowSha256:s.rowSha256,fileRef:s.fileRef,sheet:s.sheet,rowNo:s.rowNo,warehouseSourceKey:p.warehouse.sourceKey,canonicalSkuSourceKey:p.sku.canonicalSourceKey,oldSkuSourceId:l.oldSkuSourceId,canonicalStockSourceKey:key,warehouseId:p.warehouse.nativeId,skuId:p.sku.nativeId,signedQuantity:l.signedQuantity,sourceUnit:l.sourceUnit});const unitKey=JSON.stringify([p.warehouse.sourceKey,l.sourceUnit]);warehouseUnits.set(unitKey,(warehouseUnits.get(unitKey)??0n)+BigInt(l.signedQuantity));}
+  }
+ };
+ try{
+  pinned.set(preparationFile,{physical:{path:preparationFile},stat:await lstat(preparationFile)});active();input=await holdSmall(scope.input);
+  must(input.version==='PRODUCTION_SOURCE_PROVIDER26_INPUT_V1'&&input.binding?.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&input.producers&&Object.keys(input.producers).length===11,'SOURCE_PREPARATION26_INPUT');
+  must(scope.baselineBusinessDate===input.binding.cutoffAt.slice(0,10),'SOURCE_PREPARATION26_BASELINE_DATE');
+  short=Object.fromEntries(['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'].map(k=>[k,input.binding[k]]));
+  coreData=await holdSmall(input.core.coreProjection,sourceFileResolver26(input.producers.PARTIES));
+  must(coreData.dataComplete===true&&coreData.publicationAuthorized===false&&Array.isArray(coreData.missing)&&coreData.missing.length===0&&coreData.identity?.batchId===short.batchId
+   &&coreData.identity.coreReceiptId===input.core.receiptId&&coreData.identity.coreSourceDigest===input.core.coreSourceDigest&&Array.isArray(coreData.warehouses)&&coreData.warehouses.length===53,'SOURCE_PREPARATION26_CORE_DATA');
+  must(['batchId','actorAccountId','fixedSourceNamespace','selectionSha256','coreReceiptId','coreSourceDigest'].every(k=>coreData.identity[k]===(k==='coreReceiptId'?input.core.receiptId:k==='coreSourceDigest'?input.core.coreSourceDigest:input.binding[k])),'SOURCE_PREPARATION26_CORE_DATA');
+  for(const w of coreData.warehouses){must(!warehouseIdentities.has(w.sourceKey),'SOURCE_PREPARATION26_CORE_DATA');warehouseIdentities.set(w.sourceKey,w.targetId);}
+  core={coreReceiptId:input.core.receiptId,coreSourceDigest:input.core.coreSourceDigest,coreMembers:coreData.coreMembers,staffProofs:coreData.staffProofs,coreMaintenanceBinding:coreData.coreMaintenanceBinding};
+  // Verify current original readback BEFORE any large source pass. A receipt
+  // summary or a reconstructed birth22 object is not a current-chain proof.
+  const current=await holdSmall(scope.verifiedCurrent);must(current.actorAccountId===input.binding.actorAccountId&&current.fixedSourceNamespace===short.fixedSourceNamespace&&current.selectionSha256===short.selectionSha256
+   &&Array.isArray(current.coreClaims)&&current.coreClaims.length===22&&Array.isArray(current.coreWarehouses)&&current.coreWarehouses.length===22&&Array.isArray(current.records)&&Array.isArray(current.committedOperations)&&current.claims?.length===current.checkpoint?.cursor,'SOURCE_PREPARATION26_VERIFIED_CURRENT_REQUIRED');
+  let warehouseScope,zeroDecision;
+  if(scope.warehouseStockScope!==null){const saved=await holdSmall(scope.warehouseStockScope);if(Array.isArray(saved)){must(saved.length===53,'SOURCE_PREPARATION26_WAREHOUSE_SCOPE');warehouseScope=saved;}else{zeroDecision=saved;must(saved?.version==='C_EXACT24_WAREHOUSE_BASELINE_ZERO_USER_DECISION_V1'&&saved.status==='EXPLICIT_USER_CONFIRMED'&&capture(saved.binding)===capture(short),'SOURCE_PREPARATION26_EXACT_ZERO_DECISION');}}
+  const preparation={warehouses:coreData.warehouses,verify,close:closeResources,observePrepared,
+   async coreProjection(payloadHash){await verify();must(hash(payloadHash),'SOURCE_PREPARATION26_REAL_DATA_HASH_REQUIRED');return{authorizedPayloadHash:payloadHash,coreMembers:structuredClone(core.coreMembers),staffProofs:structuredClone(core.staffProofs),coreMaintenanceBinding:structuredClone(core.coreMaintenanceBinding),verify};},
+   async verifyDerivedData(prepared,data){await verify();must(prepared.authorizedPayloadHash===prepareFullPayloadData26(data).authorizedPayloadHash&&capture(data.core)===capture(core)
+    &&data.stock.contributors.length===contributors.length&&data.stock.effectiveGroups.length===effectiveGroups.length,'SOURCE_PREPARATION26_REAL_DATA_HASH_REQUIRED');},
+   setDerivedInput(fixed,binding){this.capturedIO=originalCapturedSourceIO26({binding,fixed,signal,verify,active,code,owned,captured});},capturedIO:null};
+  const provider=createOriginalProductionSources26(input,{sourcePreparation:preparation});session=await provider.openSourceSession({binding:structuredClone(input.binding),sources:{},signal});
+  await session.preflight();await session.collectNativeFacts();await verify();
+  const unrepresented=coreData.warehouses.filter(w=>!warehouseTotals.has(w.sourceKey)).map(w=>({sourceKey:w.sourceKey,nativeId:w.targetId}));
+  if(zeroDecision)warehouseScope=confirmedZeroWarehouseScope26({binding:short,warehouses:coreData.warehouses,representedTotals:[...warehouseTotals].map(([sourceKey,total])=>({sourceKey,signedQuantity:total.toString()})),decision:zeroDecision});
+  if(!warehouseScope){return{status:'NEEDS_EXPLICIT_COMPLETE_WAREHOUSE_STOCK_SCOPE',registrationId:scope.registrationId,originalSourceFilesVerified:true,nativeSkus:skuMemberships.length,effectiveGroups:effectiveGroups.length,contributors:contributors.length,
+    unrepresentedWarehouses:unrepresented,notInferredZero:true,authorizedPayloadHashGenerated:false,executionAuthorizationIssued:false,executionReady:false};}
+  for(const row of warehouseScope){const w=coreData.warehouses.find(w=>w.sourceKey===row.sourceKey&&w.targetId===row.nativeId);must(w&&typeof row.signedQuantity==='string','SOURCE_PREPARATION26_WAREHOUSE_SCOPE');
+   if(warehouseTotals.has(row.sourceKey))must(BigInt(row.signedQuantity)===warehouseTotals.get(row.sourceKey),'SOURCE_PREPARATION26_WAREHOUSE_SCOPE');}
+  const groups=sourceGroups.map(group=>({group,artifacts:input.producers[group].fileLocations.filter(e=>e.kind!=='CODE').map(e=>{
+   const observed=coverage.get(e.logical.path),declared=scope.artifactRows?.[group]?.[e.logical.path];
+   const rows=observed??declared??(['METADATA','CORE_DATA'].includes(e.kind)?0:undefined);
+   must(Number.isSafeInteger(rows)&&rows>=0&&(e.kind!=='DATA'||rows>0)&&(observed===undefined||declared===undefined||observed===declared),'SOURCE_PREPARATION26_ARTIFACT_COVERAGE_REQUIRED');
+   // Coverage is the ORIGINAL exact artifact bytes, not a substitute root or
+   // self-selected payload hash. Declared member rows bind the accepted file;
+   // the original all11 builder independently closes actual stream counts.
+   return{logicalRole:e.roles.join('+'),bytes:e.logical.bytes,sha256:e.logical.sha256,rows,memberCoverage:{rows,sha256:e.logical.sha256}};
+  })}));
+  if(zeroDecision){const ref=scope.warehouseStockScope;groups.find(g=>g.group==='STOCK_CONTRIBUTORS').artifacts.push({logicalRole:'exact24-user-approved-zero-baseline',bytes:ref.bytes,sha256:ref.sha256,rows:24,memberCoverage:{rows:24,sha256:ref.sha256}});}
+  const data={binding:short,core,groups,expectedCounts:input.closureScope.expectedCounts,expectedSourceEntityCounts:input.closureScope.expectedSourceEntityCounts,
+   inventoryExpectedCounts:{WAREHOUSE:53,SKU:skuMemberships.length,INVENTORY_LEDGER:baselineItems.length,IMPORT_BATCH:1},
+   stock:{effectiveStockCsvSha256:stockSelection.csvSha256,contributorLineageCsvSha256:stockSelection.lineageCsvSha256,contributors,effectiveGroups,warehouses:warehouseScope,
+    warehouseUnits:[...warehouseUnits].map(([key,total])=>{const [warehouseSourceKey,sourceUnit]=JSON.parse(key);return{warehouseSourceKey,sourceUnit,signedQuantity:total.toString()};})}};
+  const closureScope=await session.bindRealData(data);await verify();
+  const {consumeAuthorizedHistoryClosureStreams26}=await import('../import-v2/authorized-history-closure-reader.mjs');
+  const prepared=await consumeAuthorizedHistoryClosureStreams26({scope:closureScope,openSources:session.openSources,trustedSelectionSha256:short.selectionSha256,trustedAuthorizedPayloadHash:closureScope.authorizedPayloadHash},
+   streams=>prepareFullSourceBindings26({data,sourceRows:streams.sourceRows,typedRows:streams.typedRows,documents:streams.documents,warehouses:coreData.warehouses,skuMemberships,baselineItems,
+    verifiedCurrent:current,actorAccountId:input.binding.actorAccountId,sourceManifestRef:scope.sourceManifestRef,requestKeys:scope.requestKeys,chunkRows:scope.chunkRows}));
+  await verify();const written=await writeFullSourceBindings26({outputParent:scope.outputParent,registrationId:scope.registrationId,prepared});await verify();
+  return{status:'ORIGINAL_FULL_SOURCE_BINDINGS_PREPARED_NOT_EXECUTION_AUTHORIZED',...written,sourceGroups:11,nativeSkus:skuMemberships.length,baselineItems:baselineItems.length,unrepresentedWarehouses:unrepresented,
+   executionAuthorizationIssued:false,executionReady:false,DBConnected:false,MAINOrPublishExecuted:false};
+ }finally{try{await session?.close();}finally{await closeResources();closed=true;}}
+}
 
 /** Concrete original authority entry. The input pin authenticates DATA only;
  * C's separately supplied execution-authorization pin is mandatory. No Pool,
@@ -642,7 +809,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
   async function mainAllowed(actor,command){await verify();
    if(command.action==='IMPORT_CHUNK'&&fixed.closureScope.expectedSourceEntityCounts.INVENTORY_BASELINE>0)must(stockGroups.size===baselineItems.size,'PRODUCTION_AUTHORITY26_STOCK_MAIN_INCOMPLETE');capture(command);validateCutoffImportCommand(command);const expected=commands.get(command.requestKey);
    must(actor===binding.actorAccountId&&command.actorAccountId===actor&&expected&&capture(command)===expected.digest,'PRODUCTION_AUTHORITY26_MAIN_NOT_AUTHORIZED');await unchanged(expected.file);}
-  const sourceScope=Object.fromEntries(['batchId','fixedSourceNamespace','selectionSha256'].map(k=>[k,binding[k]]));
+  const originalCaptured=originalCapturedSourceIO26({binding,fixed,signal,verify,active,code,owned,captured});
   let productSource;
   const authority={
    async verifyInputs(actual){await verify();must(actual.inputDigest===inputDigest&&capture(actual.binding)===capture(binding)&&capture(actual.core)===capture(fixed.core),'PRODUCTION_AUTHORITY26_INPUT_CHANGED');},
@@ -668,44 +835,8 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
     must(Object.hasOwn(recipeOpeners,group)&&recipe.options,'PRODUCTION_AUTHORITY26_RETAINED_READER_INPUT_REQUIRED');
     return owned(()=>recipeOpeners[group](structuredClone(recipe.options),{resolveFile:sourceFileResolver26(recipe)}));
    },
-   async capturedOptions(group,recipe,context){await groupAllowed(group,recipe,context.binding);
-    must(['SALES_DETAILS','SETTLEMENTS'].includes(group)&&recipe.supportModules&&typeof recipe.sourceRoot==='string'&&isAbsolute(recipe.sourceRoot)&&context.database?.ready,'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');
-    const makeTransport=await code(recipe.supportModules.transport,'openRetainedSalesSettlementFiles',sourceFileResolver26(recipe));
-    const makeOptions=await code(recipe.supportModules.options,'prepareRetainedSalesOptions',sourceFileResolver26(recipe));
-    const resolveFile=sourceFileResolver26(recipe),physicalSource=resolveFile?await resolveFile(recipe.source):recipe.source,physicalTyped=resolveFile?await resolveFile(recipe.typed):recipe.typed;
-    const transport=await owned(()=>makeTransport({source:{...recipe.source,...physicalSource},typed:{...recipe.typed,...physicalTyped}},signal));let indexed;
-    const ensureIndex=()=>indexed??=(async()=>{active();await transport.buildTypedIndex();active();})();
-    const expected={entity:recipe.entity,binding:structuredClone(binding),manifestRef:recipe.manifestRef,moneyRef:recipe.moneyRef,trustedApprovalSha256:recipe.trustedApprovalSha256};
-    const capturedAuthority={async verify(actual){await verify();must(actual.batchId===binding.batchId&&actual.fixedSourceNamespace===binding.fixedSourceNamespace
-      &&actual.selection?.entity===recipe.entity&&actual.selection.selectionSha256===binding.selectionSha256&&capture(actual.manifest)===capture(recipe.manifestRef)
-      &&capture(actual.source)===capture(recipe.source)&&capture(actual.typed)===capture(recipe.typed),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await transport.verify();},close:()=>transport.close()};
-    const options=await makeOptions({sourceRoot:recipe.sourceRoot,...expected,signal,capturedAuthority,
-     authority:{async verifyInputs(actual){await verify();must(capture(actual)===capture(expected),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');}}},{resolveFile});active();
-    options.capturedSource.read={async *sourceRows(descriptor){must(capture(descriptor)===capture(recipe.source),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await ensureIndex();yield*transport.sourceRows({...recipe.source,...physicalSource});},async typedRow(descriptor,key){must(capture(descriptor)===capture(recipe.typed),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await ensureIndex();return transport.typedRow({...recipe.typed,...physicalTyped},key);}};
-    let resolver;options.resolveNativeBinding=async query=>{await verify();const runtime=context.database.ready();
-     resolver??=(group==='SALES_DETAILS'?createPostgresHistorySalesDetailBindingResolver26:createPostgresHistorySettlementBindingResolver26)(runtime.pool,sourceScope,runtime.runtime26);
-     const result=await resolver(query);active();return result;};
-    captured.set(group,{transport,recipe,options});return options;
-   },
-   async openRetainedClosure(group,recipe,scope,context){await groupAllowed(group,recipe,binding);must(capture(scope)===capture(fixed.closureScope)&&context?.group===group
-     &&context.signal instanceof AbortSignal&&!context.signal.aborted,'PRODUCTION_AUTHORITY26_CLOSURE_SCOPE');const state=captured.get(group);
-    must(state&&recipe.supportModules?.closure,'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');
-    const locate=sourceFileResolver26(recipe);if(locate){const dependency=recipe.supportModules.closureWindow;must(dependency,'PRODUCTION_AUTHORITY26_CLOSURE_DEPENDENCY');const closureFile=await locate(recipe.supportModules.closure),windowFile=await locate(dependency);active();must(resolve(dirname(closureFile.path),'prepare-retained-sales-header-window-20261026.mjs')===windowFile.path,'PRODUCTION_AUTHORITY26_CLOSURE_DEPENDENCY');await code(dependency,'salesHeaderProjection26',locate);}
-    const makeClosure=await code(recipe.supportModules.closure,'createCapturedSalesChildClosureSession',locate);
-    const current=()=>{active();must(!context.signal.aborted,'PRODUCTION_AUTHORITY26_CLOSED');};const streams=new Set();
-    const closeStreams=async()=>{await Promise.all([...streams].map(async stream=>{const ended=stream.closed?Promise.resolve():new Promise(resolve=>stream.once('close',resolve));stream.destroy();await ended;}));streams.clear();};
-    const rows=async function*(logical,relation){current();const locate=sourceFileResolver26(recipe),ref=locate?{...logical,...await locate(logical)}:logical;current();const before=await lstat(ref.path);current();must(before.isFile()&&!before.isSymbolicLink()&&before.size===ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');
-     const digest=createHash('sha256');let pendingBytes=Buffer.alloc(0),bytes=0,count=0,previous;
-     const stream=createReadStream(ref.path);streams.add(stream);try{for await(const chunk of stream){current();bytes+=chunk.length;must(bytes<=ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');digest.update(chunk);pendingBytes=Buffer.concat([pendingBytes,chunk]);let end;
-      while((end=pendingBytes.indexOf(10))>=0){must(end>0&&end+1<=4194304,'PRODUCTION_AUTHORITY26_CAPTURED_LINE');const raw=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(pendingBytes.subarray(0,end)));pendingBytes=pendingBytes.subarray(end+1);
-       const row=historyClosureProjectionRow26(relation,raw.projection);must(capture(raw)===capture(row)&&(previous===undefined||Buffer.compare(Buffer.from(previous),Buffer.from(row.key))<0)&&++count<=ref.rows,'PRODUCTION_AUTHORITY26_CAPTURED_ROW');previous=row.key;yield row;current();}
-      must(pendingBytes.length<4194304,'PRODUCTION_AUTHORITY26_CAPTURED_LINE');}
-      must(bytes===ref.bytes&&count===ref.rows&&pendingBytes.length===0&&digest.digest('hex')===ref.sha256&&same(before,await lstat(ref.path)),'PRODUCTION_AUTHORITY26_CAPTURED_EOF');current();
-     }finally{const ended=stream.closed?Promise.resolve():new Promise(resolve=>stream.once('close',resolve));stream.destroy();await ended;streams.delete(stream);}};
-    return owned(()=>makeClosure({entity:recipe.entity,binding:sourceScope,expectedRows:recipe.source.rows,sourceRows:()=>rows(recipe.source,'import_source_row'),
-     typedRows:()=>rows(recipe.typed,recipe.entity==='SALES_LINE'?'history_sales_line':'history_sales_settlement'),sourceCodec:{historyClosureProjectionRow26},
-     verify:async()=>{await verify();await state.transport.verify();},close:closeStreams,current}));
-   },
+   async capturedOptions(group,recipe,context){await groupAllowed(group,recipe,context.binding);must(context.database?.ready,'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');return originalCaptured.capturedOptions(group,recipe,context);},
+   async openRetainedClosure(group,recipe,scope,context){await groupAllowed(group,recipe,binding);return originalCaptured.openRetainedClosure(group,recipe,scope,context);},
    async coreProjection(core,actualBinding){await verify();must(capture(core)===capture(fixed.core)&&capture(actualBinding)===capture(binding),'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');await unchanged(fixed.core.coreProjection.path);
     return{...structuredClone(projection),async verify(){await verify();await unchanged(fixed.core.coreProjection.path);}};
    },
