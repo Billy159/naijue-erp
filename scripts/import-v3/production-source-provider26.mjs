@@ -17,7 +17,7 @@ import {openReviewedProductSource26} from './native-product-source26.mjs';
 import {openReviewedSkuSource26} from './native-sku-source26.mjs';
 import {openReviewedStockSource26} from './native-stock-source26.mjs';
 import {openReviewedPaymentSource26} from './native-payment-source26.mjs';
-import {openReviewedTransferLineSource26} from './native-transfer-line-source26.mjs';
+import {openReviewedTransferLineSource26,capturedTransferLineRows26,transferLineSourceEvidence26} from './native-transfer-line-source26.mjs';
 import {openAuthorizedSalesDetailReader} from '../import-v2/authorized-sales-detail-reader.mjs';
 import {openAuthorizedSettlementReader} from '../import-v2/authorized-settlement-reader.mjs';
 import {openAuthorizedHistoryClosureReader26,HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
@@ -29,8 +29,18 @@ import {openReviewedProductEvidenceSource} from './native-source-authorizers.mjs
 import {createPostgresHistorySalesDetailBindingResolver26} from '../../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts';
 import {createPostgresHistorySettlementBindingResolver26} from '../../adapters/postgres/src/import-v3-history-settlement-staging-store.ts';
 import {validatePreparedNativeBarcode,nativeBarcodeSourceEvidence,validateNativeBarcodeSchemeInitializationRows26} from '../../packages/application/src/native-barcode-import.ts';
+import {prepareV3HistoryChunk,validatePreparedHistoryChunk} from '../../packages/application/src/import-v3-history-staging.ts';
+import {prepareV3HistoryHeaderChunk,validatePreparedHistoryHeaderChunk} from '../../packages/application/src/import-v3-history-header-staging.ts';
+import {transferHeaderProjection26} from './native-transfer-header-source26.mjs';
+import {parseV2Csv,v2MoneyApprovalSet} from '../../packages/application/src/import-v2.ts';
+import {encodeHistoryClosureValue} from '../../packages/application/src/history-typed-closure.ts';
+import {nativeProductImportEvidences26} from '../../packages/application/src/native-product-import.ts';
+import {validatePreparedNativeSkuImport26,nativeSkuAliasEvidence26} from '../../packages/application/src/native-sku-import.ts';
+import {validatePreparedNativeStockGroup,nativeStockSourceEvidence,nativeStockPublicationContributor26} from '../../packages/application/src/native-stock-contributor-import.ts';
 import {historyClosureProjectionRow26,historyClosureRowHash} from '../../packages/application/src/history-typed-closure.ts';
 
+const RETAINED_HEADER_HELPERS={'sales-header-closure-session-20261026.mjs': 'c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772', 'prepare-retained-sales-header-window-20261026.mjs': '89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c', 'prepare-retained-transfer-header-window-20261025-v2.mjs': 'aaea814af3db254c4801a7e07cadef7ddefd056d2b2f56f0a11c09c38ae70eac'};
+const RETAINED_NATIVE_HELPER_SHA256='6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22';
 export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';
 export const sourceGroups=Object.freeze([...HISTORY_CLOSURE_SOURCE_GROUPS]);
 const must=(ok,code,group)=>{if(!ok)throw Object.assign(Error(code),{code,...(group?{group}:{})});};
@@ -137,7 +147,7 @@ export function createProductionSourceProvider26(inputs,authority){
    }
    try{
     descriptor(recipe.closureHelper,4194304);
-    must(recipe.closureHelper.bytes===14879&&recipe.closureHelper.sha256==='c366469ba18d1b0be26b3478b8cd54ede013268d88feb644b36802c9b6e38ca6','PRODUCTION_BARCODE26_HELPER_PIN');
+    must(recipe.closureHelper.bytes===14592&&recipe.closureHelper.sha256===RETAINED_NATIVE_HELPER_SHA256,'PRODUCTION_BARCODE26_HELPER_PIN');
     const helperBytes=await pinnedSmall(recipe.closureHelper.path,recipe.closureHelper.sha256);current();must(helperBytes.length===recipe.closureHelper.bytes,'PRODUCTION_BARCODE26_HELPER_PIN');
     const helper=await import(pathToFileURL(recipe.closureHelper.path).href);current();const makeClosure=own(helper,'createRetainedNativeClosureSession26');
     must(typeof makeClosure==='function','PRODUCTION_BARCODE26_HELPER_PIN');
@@ -163,6 +173,157 @@ export function createProductionSourceProvider26(inputs,authority){
      async openClosure(scope,ctx){current();must(!closureStarted&&capture(scope)===capture(fixed.closureScope)&&ctx?.group==='BARCODES'&&ctx.signal instanceof AbortSignal&&!ctx.signal.aborted,'PRODUCTION_BARCODE26_CLOSURE_SCOPE');
       closureStarted=true;closureSignal=ctx.signal;await verifySource();current();must(!closureSignal.aborted,'PRODUCTION_BARCODE26_CLOSED');return closureReader;},close:closeSource};
    }catch(error){try{await closeSource();}catch(cleanup){throw new AggregateError([error,cleanup],'Retained barcode source open and cleanup failed');}throw error;}
+  }
+  async function retainedProjectionFiles(refs,current){
+   const held=new Map();let ended=false,closingFiles;
+   const closeFiles=async()=>{if(closingFiles)return closingFiles;ended=true;closingFiles=(async()=>{const r=await Promise.allSettled([...held.values()].map(f=>f.fd.close()));held.clear();const errors=r.filter(x=>x.status==='rejected');if(errors.length)throw new AggregateError(errors.map(x=>x.reason),'Retained projection close failed');})();return closingFiles;};
+   disposers.push(closeFiles);
+   const check=()=>{current();must(!ended,'PRODUCTION_RETAINED_PROJECTION26_CLOSED');};
+   try{for(const [key,ref]of Object.entries(refs)){check();must(typeof ref.path==='string'&&isAbsolute(ref.path)&&Number.isSafeInteger(ref.bytes)&&ref.bytes>=0&&ref.bytes<=1024*1024*1024&&hash(ref.sha256),'PRODUCTION_RETAINED_PROJECTION26_REF');
+     const stat=await lstat(ref.path);check();must(stat.isFile()&&!stat.isSymbolicLink()&&(stat.mode&0o077)===0&&stat.size===ref.bytes,'PRODUCTION_RETAINED_PROJECTION26_PRIVATE');
+     const fd=await open(ref.path,constants.O_RDONLY|constants.O_NOFOLLOW);if(ended||closed||signal.aborted){await fd.close();check();}held.set(key,{ref,stat,fd});check();must(same(stat,await fd.stat()),'PRODUCTION_RETAINED_PROJECTION26_CHANGED');}
+    const verifyFiles=async()=>{check();await verify();for(const f of held.values()){must(same(f.stat,await f.fd.stat())&&same(f.stat,await lstat(f.ref.path)),'PRODUCTION_RETAINED_PROJECTION26_CHANGED');check();}};
+    const bytes=async(key,ref,max=4194304)=>{check();const f=held.get(key);must(f&&Number.isSafeInteger(ref.offset)&&ref.offset>=0&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=max&&ref.offset+ref.bytes<=f.ref.bytes,'PRODUCTION_RETAINED_PROJECTION26_RANGE');
+     const b=Buffer.allocUnsafe(ref.bytes);let n=0;while(n<b.length){const got=await f.fd.read(b,n,b.length-n,ref.offset+n);check();must(got.bytesRead>0,'PRODUCTION_RETAINED_PROJECTION26_EOF');n+=got.bytesRead;}
+     if(ref.sha256!==undefined)must(createHash('sha256').update(b).digest('hex')===ref.sha256,'PRODUCTION_RETAINED_PROJECTION26_SHA');return b;};
+    return{verify:verifyFiles,bytes,async json(key,ref){return JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await bytes(key,ref)));},
+     async metadata(key,max=80*1024*1024){const f=held.get(key);must(f,'PRODUCTION_RETAINED_PROJECTION26_REF');return bytes(key,{offset:0,...f.ref},max);},close:closeFiles};
+   }catch(e){await closeFiles();throw e;}
+  }
+  async function retainedTransferLinesReader(recipe){
+   const spec=recipe.retainedTransferLines;let ended=false,closingSource,files,index,closureSignal,iterated=false,closureStarted=false;const ordinals=new Map();
+   const current=()=>{active();must(!ended&&!closureSignal?.aborted,'PRODUCTION_RETAINED_TRANSFER26_CLOSED');};
+   const closeSource=async()=>{if(closingSource)return closingSource;ended=true;closingSource=(async()=>{ordinals.clear();index=null;await files?.close();})();return closingSource;};disposers.push(closeSource);
+   try{must(spec&&spec.rows>0&&spec.rows<=261641&&spec.rows===fixed.closureScope.expectedSourceEntityCounts.TRANSFER_LINE&&spec.rows===fixed.closureScope.expectedCounts.history_transfer_line,'PRODUCTION_RETAINED_TRANSFER26_COUNTS');
+    files=await retainedProjectionFiles({index:spec.index,source:spec.source,typed:spec.typed},current);current();index=await files.metadata('index',80*1024*1024);current();
+    must(index.length>=64&&index.subarray(0,9).toString('ascii')==='TL26JOIN1'&&index.readUInt32LE(12)===1,'PRODUCTION_RETAINED_TRANSFER26_INDEX');
+    const rows=index.readUInt32LE(16),headers=index.readUInt32LE(20),recordBytes=index.readUInt32LE(24),records=index.readUInt32LE(28),sourceOrderBytes=index.readUInt32LE(32),typedOrderBytes=index.readUInt32LE(36),directoryBytes=index.readUInt32LE(40);
+    must(rows===spec.rows&&headers>0&&headers<=14279&&recordBytes===256&&records===rows*256&&sourceOrderBytes===rows*4&&typedOrderBytes===rows*4&&directoryBytes===headers*36&&index.readUInt32LE(44)===64&&index.length===64+records+sourceOrderBytes+typedOrderBytes+directoryBytes,'PRODUCTION_RETAINED_TRANSFER26_INDEX');
+    const key=(n,source)=>{const at=64+n*256,len=index[at+(source?60:61)];must(len>0&&len<=64,'PRODUCTION_RETAINED_TRANSFER26_KEY');return new TextDecoder('utf8',{fatal:true}).decode(index.subarray(at+(source?64:128),at+(source?64:128)+len));};
+    const refs=(n,source)=>{const at=64+n*256,offset=Number(index.readBigUInt64LE(at+(source?4:16))),bytes=index.readUInt32LE(at+(source?12:24));must(Number.isSafeInteger(offset)&&Number.isSafeInteger(bytes)&&bytes>0&&bytes<=4194304&&offset+bytes<=spec[source?'source':'typed'].bytes,'PRODUCTION_RETAINED_TRANSFER26_RANGE');return{offset,bytes,sha256:index.subarray(at+(source?192:224),at+(source?224:256)).toString('hex')};};
+    const typedIds=new Set(),coverage={source:[],typed:[]};for(let n=0;n<rows;n++){current();const sourceId=key(n,true),typedId=key(n,false);must(!ordinals.has(sourceId)&&!typedIds.has(typedId)&&index.readUInt32LE(64+n*256)===n,'PRODUCTION_RETAINED_TRANSFER26_DUPLICATE');ordinals.set(sourceId,n);typedIds.add(typedId);coverage.source.push(refs(n,true));coverage.typed.push(refs(n,false));}
+    for(const role of ['source','typed']){let end=0;for(const ref of coverage[role].sort((a,b)=>a.offset-b.offset)){must(ref.offset===end,'PRODUCTION_RETAINED_TRANSFER26_RANGE_GAP');end+=ref.bytes;}must(end===spec[role].bytes,'PRODUCTION_RETAINED_TRANSFER26_EOF');}typedIds.clear();coverage.source.length=0;coverage.typed.length=0;
+    const rawRow=async(n,source)=>{current();const role=source?'source':'typed',raw=await files.json(role,refs(n,source)),relation=source?'import_source_row':'history_transfer_line';current();const row=historyClosureProjectionRow26(relation,raw.projection);must(raw.relation===relation&&raw.key===row.key&&row.key===key(n,source)&&row.projection.batch_id===binding.batchId,'PRODUCTION_RETAINED_TRANSFER26_MEMBER');return row;};
+    const restore=async n=>{const sr=await rawRow(n,true),tr=await rawRow(n,false),s=sr.projection,t=tr.projection,fp=s.field_provenance.history_staging,provenance={...s.field_provenance};delete provenance.history_staging;
+     must(s.entity_type==='TRANSFER_LINE'&&fp?.selection?.selectionSha256===binding.selectionSha256&&fp.validator_version==='V3_TRANSFER_LINE_STAGE_1'&&t.source_row_id===s.id,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');
+     const source={id:s.id,batchId:s.batch_id,entityType:s.entity_type,sourceKey:s.source_key,fileRef:s.file_ref,sheet:s.sheet,rowNo:s.row_no,sourceFileSha256:s.source_file_sha256,rowSha256:s.row_sha256,rawFields:s.raw_fields,normalizedFields:s.normalized_fields,fieldProvenance:provenance};
+     const chunk=prepareV3HistoryChunk({batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selection:fp.selection,rows:[{source,header:{sourceKey:s.normalized_fields['单据来源编号'],nativeId:t.header_id},sku:{sourceKey:s.normalized_fields['SKU来源编号'],nativeId:t.sku_id}}]}),row=chunk.rows[0];
+     must(row.fingerprint===fp.fingerprint&&historyClosureRowHash(historyClosureProjectionRow26('import_source_row',transferLineSourceEvidence26(row,chunk.selection)))===historyClosureRowHash(sr)
+      &&historyClosureRowHash(historyClosureProjectionRow26('history_transfer_line',row.line))===historyClosureRowHash(tr),'PRODUCTION_RETAINED_TRANSFER26_ORIGINAL_CHANGED');return chunk;};
+    const verifyFiles=async()=>{current();await files.verify();current();};await verifyFiles();
+    return{verify:verifyFiles,async authorize(chunk){current();validatePreparedHistoryChunk(chunk);for(const row of chunk.rows){const n=ordinals.get(row.source.id);must(n!==undefined,'PRODUCTION_RETAINED_TRANSFER26_MEMBER');const original=await restore(n);must(capture(original.rows[0])===capture(row)&&capture(original.selection)===capture(chunk.selection),'PRODUCTION_RETAINED_TRANSFER26_ORIGINAL_CHANGED');}await verifyFiles();},
+     async *chunks(){current();must(!iterated,'PRODUCTION_RETAINED_TRANSFER26_SINGLE_STAGE');iterated=true;for(let n=0;n<rows;n++){const chunk=await restore(n);current();yield chunk;current();}await verifyFiles();},
+     async openClosure(scope,ctx){current();must(!closureStarted&&capture(scope)===capture(fixed.closureScope)&&ctx?.group==='TRANSFER_LINES'&&ctx.signal instanceof AbortSignal&&!ctx.signal.aborted,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');closureStarted=true;closureSignal=ctx.signal;
+      const stream=async function*(kind){await verifyFiles();let count=0;for await(const row of capturedTransferLineRows26(index,kind,ref=>files.json(kind==='sourceRows'?'source':'typed',ref),current)){current();must(row.projection.batch_id===binding.batchId,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');if(kind==='sourceRows')must(row.projection.entity_type==='TRANSFER_LINE'&&row.projection.field_provenance.history_staging.selection.selectionSha256===binding.selectionSha256,'PRODUCTION_RETAINED_TRANSFER26_SCOPE');yield row;current();count++;}must(count===rows,'PRODUCTION_RETAINED_TRANSFER26_COUNTS');await verifyFiles();};
+      return{verify:verifyFiles,sourceRows:()=>stream('sourceRows'),typedRows:()=>stream('typedRows'),async *documents(){await verifyFiles();},close:async()=>{}};},close:closeSource};
+   }catch(error){try{await closeSource();}catch(cleanup){throw new AggregateError([error,cleanup],'Retained transfer line open failed');}throw error;}
+  }
+  async function retainedHeadersReader(recipe){
+   const spec=recipe.retainedHeaders;let ended=false,closingSource,closureSignal,composed,iterated=false;const owned=[];
+   const current=()=>{active();must(!ended&&!closureSignal?.aborted,'PRODUCTION_RETAINED_HEADERS26_CLOSED');};
+   const closeSource=async()=>{if(closingSource)return closingSource;ended=true;closingSource=(async()=>{const results=await Promise.allSettled([...owned].reverse().map(x=>x.close()));const errors=results.filter(x=>x.status==='rejected');if(errors.length)throw new AggregateError(errors.map(x=>x.reason),'Retained headers cleanup failed');})();return closingSource;};
+   disposers.push(closeSource);
+   async function helper(ref,name){current();const bytes=await pinnedSmall(ref?.path,ref?.sha256);current();must(bytes.length===ref.bytes&&ref.sha256===RETAINED_HEADER_HELPERS[name],'PRODUCTION_RETAINED_HEADERS26_HELPER_PIN');return import(pathToFileURL(ref.path).href);}
+   try{
+    must(spec?.sales&&spec.transfer&&spec.sales.rows===fixed.closureScope.expectedCounts.history_sales_header&&spec.transfer.rows===fixed.closureScope.expectedCounts.history_transfer_header,'PRODUCTION_RETAINED_HEADERS26_COUNTS');
+    must(resolve(dirname(spec.helpers.closure.path),'prepare-retained-sales-header-window-20261026.mjs')===spec.helpers.salesWindow.path,'PRODUCTION_RETAINED_HEADERS26_HELPER_DEPENDENCY');
+    // Pin both relative closure dependencies before importing the existing pure
+    // composition. Nothing is fetched or copied from the retained body files.
+    const salesWindow=await helper(spec.helpers.salesWindow,'prepare-retained-sales-header-window-20261026.mjs'),headerClosure=await helper(spec.helpers.closure,'sales-header-closure-session-20261026.mjs'),transferWindow=await helper(spec.helpers.transferWindow,'prepare-retained-transfer-header-window-20261025-v2.mjs');current();
+    const files=await retainedProjectionFiles({salesIndex:spec.sales.index,KNOWN25811:spec.sales.partitions.KNOWN25811,MAPPED2471:spec.sales.partitions.MAPPED2471,
+     transferIndex:spec.transfer.index,transferSource:spec.transfer.source,transferTyped:spec.transfer.typed,transferDocument:spec.transfer.document},current);owned.push(files);current();
+    const index=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await files.metadata('salesIndex',64*1024*1024)));current();
+    const short=Object.fromEntries(['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'].map(k=>[k,binding[k]]));
+    must(index.rows===spec.sales.rows&&capture(index.binding)===capture(short)&&capture(index.partitions)===capture(spec.sales.partitions),'PRODUCTION_RETAINED_HEADERS26_INDEX_BINDING');
+    const raw=await files.metadata('transferIndex',16*1024*1024);current();must(raw.at(-1)===10,'PRODUCTION_RETAINED_HEADERS26_INDEX_LF');
+    const entries=new TextDecoder('utf8',{fatal:true}).decode(raw).slice(0,-1).split('\n').map(line=>JSON.parse(line));
+    must(entries.length===spec.transfer.rows&&entries.length>0&&entries.length<=14279,'PRODUCTION_RETAINED_HEADERS26_TRANSFER_COUNT');
+    for(const field of ['headerId','headerSourceRowId','sourceKey'])must(new Set(entries.map(e=>e[field])).size===entries.length,'PRODUCTION_RETAINED_HEADERS26_DUPLICATE');
+    entries.sort((a,b)=>a.source.offset-b.source.offset);
+    for(const role of ['source','typed','document']){let offset=0;for(const e of entries){const ref=e[role];must(ref&&ref.offset===offset&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=4194304&&hash(ref.sha256),'PRODUCTION_RETAINED_HEADERS26_TRANSFER_RANGES');offset+=ref.bytes;}must(offset===spec.transfer[role].bytes,'PRODUCTION_RETAINED_HEADERS26_TRANSFER_EOF');}
+    const salesMembers=new Map(index.entries.map(e=>[e.sourceRowId,e])),transferMembers=new Map(entries.map(e=>[e.headerSourceRowId,e]));
+    const sourceCodec={historyClosureProjectionRow26,historyClosureRowHash,encodeHistoryClosureValue};
+    const prepared=async e=>{current();return files.json(e.partition,{offset:e.offset,bytes:e.bytes});};
+    const checkSales=(p,e)=>{const out=salesWindow.salesHeaderProjection26(historyClosureProjectionRow26,p);must(e&&p.fingerprint===e.fingerprint&&capture(out.document)===capture(e.document)&&historyClosureRowHash(out.sourceRow)===e.source.sha256&&historyClosureRowHash(out.typedRow)===e.typed.sha256,'PRODUCTION_RETAINED_HEADERS26_SALES_MEMBER');return out;};
+    const transfer=async e=>{current();const values={};for(const role of ['source','typed','document'])values[role]=await files.json('transfer'+role[0].toUpperCase()+role.slice(1),e[role]);current();
+     must(values.source.key===e.headerSourceRowId&&values.typed.key===e.headerId&&values.document.headerId===e.headerId&&values.document.headerSourceRowId===e.headerSourceRowId&&values.document.sourceKey===e.sourceKey,'PRODUCTION_RETAINED_HEADERS26_TRANSFER_MEMBER');
+     return transferWindow.prepareRetainedTransferHeaderProjectionWindow({prepareV3HistoryHeaderChunk,validatePreparedHistoryHeaderChunk,transferHeaderProjection26},{version:'EXISTING_TRANSFER_HEADER_RETAINED_SINGLE_WINDOW_V1',binding:short,sourceProjection:values.source,typedProjection:values.typed,documentAllocation:values.document});};
+    const verifyFiles=async()=>{current();await files.verify();current();};
+    const sales=headerClosure.createSalesHeaderClosureSession({index,sourceCodec,readPrepared:(partition,range)=>files.json(partition,range),verify:verifyFiles,close:async()=>{},current});owned.push(sales);
+    let sourceComplete=false,sourceStarted=false;const cache=new Map(),sourceOrder=[...entries].sort((a,b)=>Buffer.compare(Buffer.from(a.headerSourceRowId),Buffer.from(b.headerSourceRowId))),typedOrder=[...entries].sort((a,b)=>Buffer.compare(Buffer.from(a.headerId),Buffer.from(b.headerId)));let cacheBytes=0;
+    const transferClosure={verify:verifyFiles,async *sourceRows(){current();must(!sourceStarted,'PRODUCTION_RETAINED_HEADERS26_SINGLE_SOURCE');sourceStarted=true;await verifyFiles();
+      for(const e of sourceOrder){const restored=await transfer(e),out=restored.retainedProjection;current();cacheBytes+=encodeHistoryClosureValue(out.typedRow).length;must(cacheBytes<=64*1024*1024,'PRODUCTION_RETAINED_HEADERS26_CACHE_BOUND');cache.set(e.headerId,out.typedRow);yield out.sourceRow;current();}await verifyFiles();sourceComplete=true;},
+     async *typedRows(){current();must(sourceComplete&&cache.size===entries.length,'PRODUCTION_RETAINED_HEADERS26_SOURCE_FIRST');for(const e of typedOrder){current();yield cache.get(e.headerId);current();}await verifyFiles();},
+     async *documents(){await verifyFiles();for(const e of typedOrder){const d=await files.json('transferDocument',e.document);current();must(d.headerId===e.headerId&&d.headerSourceRowId===e.headerSourceRowId&&d.sourceKey===e.sourceKey&&d.kind==='TRANSFER','PRODUCTION_RETAINED_HEADERS26_DOCUMENT');yield d;current();}},
+     async close(){cache.clear();sourceOrder.length=0;typedOrder.length=0;cacheBytes=0;}};owned.push(transferClosure);
+    composed=headerClosure.composeHeaderClosureSessions({sales,transfer:transferClosure,current});owned.push(composed);await verifyFiles();let moneyApprovals;
+    const money=async()=>{if(moneyApprovals)return moneyApprovals;const bytes=await pinnedSmall(spec.sales.money.path,spec.sales.money.sha256);current();must(bytes.length===spec.sales.money.bytes&&bytes.length<=1048576,'PRODUCTION_RETAINED_HEADERS26_MONEY');
+     const columns=['file','sheet','row','sourceId','entity','documentSourceId','field','rawValue','excessFromNearestCent','candidateExactCentValue','sourceFileSha256','decision','provenance','toleranceCurrencyUnits','corroboratingDocumentSourceId'],approvals=[];let header;
+     async function* text(){yield new TextDecoder('utf8',{fatal:true}).decode(bytes);}for await(const cells of parseV2Csv(text())){current();if(!header){must(capture(cells)===capture(columns),'PRODUCTION_RETAINED_HEADERS26_MONEY_COLUMNS');header=cells;continue;}must(cells.length===header.length,'PRODUCTION_RETAINED_HEADERS26_MONEY_WIDTH');const row=Object.fromEntries(header.map((k,n)=>[k,cells[n]]));approvals.push({fileSha256:row.sourceFileSha256,sheet:row.sheet,row:row.row,sourceId:row.sourceId,field:row.field,rawValue:row.rawValue,exactCentValue:row.candidateExactCentValue});}
+     moneyApprovals=v2MoneyApprovalSet(approvals,approvals);must(moneyApprovals.size===32,'PRODUCTION_RETAINED_HEADERS26_MONEY_COUNT');return moneyApprovals;};
+    return{verify:verifyFiles,async authorize(chunk){current();validatePreparedHistoryHeaderChunk(chunk);for(const row of chunk.rows){const p=row.prepared;if(p.entity==='SALES_HEADER')checkSales(p,salesMembers.get(p.source.id));else{const entry=transferMembers.get(p.source.id);must(entry,'PRODUCTION_RETAINED_HEADERS26_TRANSFER_MEMBER');const out=transferHeaderProjection26(p),restored=await transfer(entry);must(capture(out)===capture(restored.retainedProjection),'PRODUCTION_RETAINED_HEADERS26_TRANSFER_MEMBER');}}await verifyFiles();},
+     async *chunks(){current();must(!iterated,'PRODUCTION_RETAINED_HEADERS26_SINGLE_STAGE');iterated=true;const approvals=await money();for(const e of index.entries){const value=await prepared(e),out=salesWindow.prepareRetainedSalesHeaderWindow({prepareV3HistoryHeaderChunk,validatePreparedHistoryHeaderChunk,historyClosureProjectionRow26},{binding:short,items:[{partition:e.partition,value}],moneyApprovals:approvals});checkSales(out.chunk.rows[0].prepared,e);yield out.chunk;current();}
+      for(const e of entries){const out=await transfer(e);current();yield out.chunk;current();}await verifyFiles();},
+     async openClosure(scope,ctx){current();must(!closureSignal&&capture(scope)===capture(fixed.closureScope)&&ctx?.group==='HEADERS'&&ctx.signal instanceof AbortSignal&&!ctx.signal.aborted,'PRODUCTION_RETAINED_HEADERS26_SCOPE');closureSignal=ctx.signal;await verifyFiles();return composed;},close:closeSource};
+   }catch(error){try{await closeSource();}catch(cleanup){throw new AggregateError([error,cleanup],'Retained headers open failed');}throw error;}
+  }
+  async function retainedNativeReader(group,recipe){
+   // Only the original prepared files are consumed. The bounded in-memory
+   // projection index is derived during this authorized pass, never from raw
+   // workbooks, CSV re-mapping, new IDs or a substitute source authority.
+   const spec=recipe.retainedNative,original={historyClosureProjectionRow26,historyClosureRowHash,historySettlementRequestHash:capture,
+    nativeProductImportEvidences26,validatePreparedNativeSkuImport26,nativeSkuAliasEvidence26,
+    validatePreparedNativeStockGroup,nativeStockSourceEvidence,nativeStockPublicationContributor26};
+   const caps={PRODUCTS:30,SKUS:14999,STOCK_CONTRIBUTORS:38303};
+   must(caps[group]&&spec&&spec.records>0&&Number.isSafeInteger(spec.records)&&spec.records<=caps[group]
+    &&spec.sourceRows===fixed.closureScope.expectedSourceEntityCounts[group==='PRODUCTS'?'PRODUCT':group==='SKUS'?'SKU':'INVENTORY_BASELINE']
+    &&spec.typedRows===(group==='PRODUCTS'?spec.sourceRows:group==='SKUS'?spec.records+spec.sourceRows:fixed.closureScope.expectedCounts.import_stock_contributor)
+    &&Array.isArray(spec.files)&&spec.files.length>0&&spec.files.length<=(group==='PRODUCTS'?30:1),'PRODUCTION_RETAINED_NATIVE26_SPEC');
+   let ended=false,closingSource,build,closureReader,closureSignal,iterated=false;const held=new Map(),entries=[],members=new Map();
+   const current=()=>{active();must(!ended&&!closureSignal?.aborted,'PRODUCTION_RETAINED_NATIVE26_CLOSED');};
+   const closeSource=async()=>{if(closingSource)return closingSource;ended=true;closingSource=(async()=>{const errors=[];
+    if(closureReader)try{await closureReader.close();}catch(e){errors.push(e);}for(const f of held.values())try{await f.fd.close();}catch(e){errors.push(e);}
+    held.clear();entries.length=0;members.clear();if(errors.length)throw new AggregateError(errors,'Retained native cleanup failed');})();return closingSource;};
+   disposers.push(closeSource);
+   async function verifyFiles(){current();await verify();for(const f of held.values()){must(same(f.stat,await f.fd.stat())&&same(f.stat,await lstat(f.ref.path)),'PRODUCTION_RETAINED_NATIVE26_CHANGED');current();}}
+   const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+   const decode=bytes=>JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));
+   async function range(ref){current();const f=held.get(ref.file);must(f&&Number.isSafeInteger(ref.offset)&&ref.offset>=0&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=4194304&&ref.offset+ref.bytes<=f.ref.bytes,'PRODUCTION_RETAINED_NATIVE26_RANGE');
+    const bytes=Buffer.allocUnsafe(ref.bytes);let n=0;while(n<bytes.length){const got=await f.fd.read(bytes,n,bytes.length-n,ref.offset+n);current();must(got.bytesRead>0,'PRODUCTION_RETAINED_NATIVE26_EOF');n+=got.bytesRead;}
+    must(sha(bytes)===ref.sha256,'PRODUCTION_RETAINED_NATIVE26_RANGE_SHA');return decode(bytes);}
+   let helper;
+   async function ensureIndex(){current();if(build)return build;build=(async()=>{
+    const records=[];let sourceRows=0,typedRows=0;
+    for(const [file,f]of held){
+     const digest=createHash('sha256');let position=0,pending=Buffer.alloc(0),offset=0;
+     const append=(bytes)=>{current();const prepared=decode(bytes),ref={file,offset,bytes:bytes.length,sha256:sha(bytes)};
+      const entry=helper.captureRetainedNativeClosureRecord26(original,{group,binding,ref,prepared});
+      must(!members.has(entry.preparedHash),'PRODUCTION_RETAINED_NATIVE26_DUPLICATE');members.set(entry.preparedHash,entry);records.push(entry);offset+=bytes.length;
+      sourceRows+=entry.sources.length;typedRows+=entry.typed.length;must(records.length<=spec.records&&sourceRows<=spec.sourceRows&&typedRows<=spec.typedRows,'PRODUCTION_RETAINED_NATIVE26_COUNT');};
+     if(group==='PRODUCTS'){must(f.ref.bytes<=4194304,'PRODUCTION_RETAINED_NATIVE26_RECORD_BOUND');const bytes=Buffer.allocUnsafe(f.ref.bytes);while(position<bytes.length){const got=await f.fd.read(bytes,position,bytes.length-position,position);current();must(got.bytesRead>0,'PRODUCTION_RETAINED_NATIVE26_EOF');position+=got.bytesRead;}digest.update(bytes);append(bytes);}
+     else{while(position<f.ref.bytes){const bytes=Buffer.allocUnsafe(Math.min(262144,f.ref.bytes-position)),got=await f.fd.read(bytes,0,bytes.length,position);current();must(got.bytesRead>0,'PRODUCTION_RETAINED_NATIVE26_EOF');position+=got.bytesRead;const read=bytes.subarray(0,got.bytesRead);digest.update(read);pending=Buffer.concat([pending,read]);let end;
+       while((end=pending.indexOf(10))>=0){must(end>0&&end+1<=4194304,'PRODUCTION_RETAINED_NATIVE26_RECORD_BOUND');append(pending.subarray(0,end+1));pending=pending.subarray(end+1);}must(pending.length<=4194304,'PRODUCTION_RETAINED_NATIVE26_RECORD_BOUND');}
+      must(pending.length===0,'PRODUCTION_RETAINED_NATIVE26_FINAL_LF');}
+     must(position===f.ref.bytes&&offset===f.ref.bytes&&digest.digest('hex')===f.ref.sha256,'PRODUCTION_RETAINED_NATIVE26_FILE_SHA');current();
+    }
+    must(records.length===spec.records&&sourceRows===spec.sourceRows&&typedRows===spec.typedRows,'PRODUCTION_RETAINED_NATIVE26_COUNT');await verifyFiles();entries.push(...records);
+    const index={version:'RETAINED_NATIVE_CLOSURE_INDEX_26_V1',group,binding:Object.fromEntries(['batchId','fixedSourceNamespace','cutoffAt','selectionSha256'].map(k=>[k,binding[k]])),
+     files:Object.fromEntries([...held].map(([key,f])=>[key,f.ref])),expected:{records:spec.records,sourceRows,typedRows},records};
+    closureReader=helper.createRetainedNativeClosureSession26({original,index,readRecord:range,verify:verifyFiles,close:async()=>{},current});
+   })();return build;}
+   try{
+    const helperBytes=await pinnedSmall(recipe.closureHelper?.path,recipe.closureHelper?.sha256);current();
+    must(recipe.closureHelper.bytes===helperBytes.length&&recipe.closureHelper.sha256===RETAINED_NATIVE_HELPER_SHA256,'PRODUCTION_RETAINED_NATIVE26_HELPER_PIN');
+    helper=await import(pathToFileURL(recipe.closureHelper.path).href);current();
+    for(let n=0;n<spec.files.length;n++){const ref=spec.files[n];must(typeof ref.path==='string'&&isAbsolute(ref.path)&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=256*1024*1024&&hash(ref.sha256),'PRODUCTION_RETAINED_NATIVE26_FILE_REF');
+     const stat=await lstat(ref.path);current();must(stat.isFile()&&!stat.isSymbolicLink()&&(stat.mode&0o077)===0&&stat.size===ref.bytes,'PRODUCTION_RETAINED_NATIVE26_PRIVATE_FILE');
+     const fd=await open(ref.path,constants.O_RDONLY|constants.O_NOFOLLOW);if(ended||closed||signal.aborted){await fd.close();current();}held.set(String(n),{ref,stat,fd});current();must(same(stat,await fd.stat()),'PRODUCTION_RETAINED_NATIVE26_CHANGED');}
+    await verifyFiles();
+    return {verify:verifyFiles,async authorize(prepared){await ensureIndex();current();const entry=members.get(capture(prepared));must(entry&&entry.fingerprint===prepared.fingerprint,'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');
+      const actual=helper.captureRetainedNativeClosureRecord26(original,{group,binding,ref:entry.ref,prepared});must(capture(actual)===capture(entry),'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');await verifyFiles();},
+     async *[stages[group][1]](){current();must(!iterated,'PRODUCTION_RETAINED_NATIVE26_SINGLE_STAGE');iterated=true;await ensureIndex();for(const entry of entries){const prepared=await range(entry.ref);current();yield prepared;current();}await verifyFiles();},
+     async openClosure(scope,ctx){current();must(!closureSignal&&capture(scope)===capture(fixed.closureScope)&&ctx?.group===group&&ctx.signal instanceof AbortSignal&&!ctx.signal.aborted,'PRODUCTION_RETAINED_NATIVE26_SCOPE');closureSignal=ctx.signal;await ensureIndex();return closureReader;},close:closeSource};
+   }catch(error){try{await closeSource();}catch(cleanup){throw new AggregateError([error,cleanup],'Retained native open failed');}throw error;}
   }
   async function capturedReader(group,recipe){
    const opts=await a.capturedOptions(group,structuredClone(recipe),context);active();
@@ -208,8 +369,11 @@ export function createProductionSourceProvider26(inputs,authority){
      if(recipe.mode==='REVIEWED')raw=await recipeOpeners[group](structuredClone(recipe.options));
      else if(recipe.mode==='CAPTURED_C144')raw=await capturedReader(group,recipe);
      else if(group==='BARCODES'&&Object.hasOwn(recipe,'closureHelper'))raw=await retainedBarcodeReader(recipe);
+     else if(group==='TRANSFER_LINES'&&Object.hasOwn(recipe,'retainedTransferLines'))raw=await retainedTransferLinesReader(recipe);
+     else if(group==='HEADERS'&&Object.hasOwn(recipe,'retainedHeaders'))raw=await retainedHeadersReader(recipe);
+     else if(Object.hasOwn(recipe,'retainedNative'))raw=await retainedNativeReader(group,recipe);
      else raw=await a.openRetained(group,structuredClone(recipe),context);
-     const closeMethod=Object.getOwnPropertyDescriptor(raw??{},'close');if(!(group==='BARCODES'&&Object.hasOwn(recipe,'closureHelper'))&&closeMethod?.enumerable&&Object.hasOwn(closeMethod,'value')&&typeof closeMethod.value==='function')disposers.push(closeMethod.value.bind(raw));
+     const closeMethod=Object.getOwnPropertyDescriptor(raw??{},'close');if(!(group==='BARCODES'&&Object.hasOwn(recipe,'closureHelper'))&&!Object.hasOwn(recipe,'retainedNative')&&!Object.hasOwn(recipe,'retainedHeaders')&&!Object.hasOwn(recipe,'retainedTransferLines')&&closeMethod?.enumerable&&Object.hasOwn(closeMethod,'value')&&typeof closeMethod.value==='function')disposers.push(closeMethod.value.bind(raw));
      active();must(raw&&!issued.has(raw),'PRODUCTION_PROVIDER26_SOURCE_REUSED');issued.add(raw);
      const [kind,iterator]=stages[group];void kind;
      const reader=methods(raw,['verify','authorize','openClosure','close',iterator]);
@@ -391,7 +555,9 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
    const safe=value=>{if(value&&typeof value==='object')for(const [key,child]of Object.entries(value)){must(!/password|credential|token|secret|salt/i.test(key),'PRODUCTION_AUTHORITY26_UNSAFE_CORE_PROOF');safe(child);}};safe(proof.bootstrapAccounts);}
   async function groupAllowed(group,recipe,actualBinding){await verify();must(grant.groups.includes(group)&&capture(actualBinding)===capture(binding)
    &&capture(recipe)===capture(fixed.producers[group]),'PRODUCTION_AUTHORITY26_GROUP_SCOPE');}
-  async function mainAllowed(actor,command){await verify();capture(command);validateCutoffImportCommand(command);const expected=commands.get(command.requestKey);
+  const baselineItems=new Map(byPhase.ACCOUNT.flatMap(c=>c.items).filter(i=>i.targetType==='INVENTORY_LEDGER').map(i=>[i.sourceKey,i])),stockGroups=new Map();
+  async function mainAllowed(actor,command){await verify();
+   if(command.action==='IMPORT_CHUNK'&&fixed.closureScope.expectedSourceEntityCounts.INVENTORY_BASELINE>0)must(stockGroups.size===baselineItems.size,'PRODUCTION_AUTHORITY26_STOCK_MAIN_INCOMPLETE');capture(command);validateCutoffImportCommand(command);const expected=commands.get(command.requestKey);
    must(actor===binding.actorAccountId&&command.actorAccountId===actor&&expected&&capture(command)===expected.digest,'PRODUCTION_AUTHORITY26_MAIN_NOT_AUTHORIZED');await unchanged(expected.file);}
   const sourceScope=Object.fromEntries(['batchId','fixedSourceNamespace','selectionSha256'].map(k=>[k,binding[k]]));
   let productSource;
@@ -403,6 +569,12 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
     if(step.kind==='MAIN')return mainAllowed(binding.actorAccountId,step.payload);
     if(step.kind==='CLOSURE'){must(capture(captureHistoryTypedClosurePlan(step.payload.plan))===capture(plan),'PRODUCTION_AUTHORITY26_CLOSURE_NOT_AUTHORIZED');return;}
     const group=sourceGroups.find(g=>stages[g][0]===step.kind);must(group&&grant.groups.includes(group),'PRODUCTION_AUTHORITY26_STEP_SCOPE');
+    if(group==='STOCK_CONTRIBUTORS'){
+     const prepared=step.payload;validatePreparedNativeStockGroup(prepared);const key=prepared.canonicalStock['来源编号'],item=baselineItems.get(key);
+     must(item&&item.sourceEntityType==='INVENTORY_BASELINE'&&item.warehouseId===prepared.warehouse.nativeId&&item.skuId===prepared.sku.nativeId
+      &&item.quantity===BigInt(prepared.signedQuantity),'PRODUCTION_AUTHORITY26_STOCK_MAIN_MISMATCH');
+     const prior=stockGroups.get(key);must(prior===undefined||prior===capture(prepared),'PRODUCTION_AUTHORITY26_STOCK_MAIN_MISMATCH');stockGroups.set(key,capture(prepared));
+    }
     const p=step.payload.input??step.payload;must(p.batchId===binding.batchId&&p.fixedSourceNamespace===binding.fixedSourceNamespace
      &&p.selection?.selectionSha256===binding.selectionSha256,'PRODUCTION_AUTHORITY26_STEP_SCOPE');
    },

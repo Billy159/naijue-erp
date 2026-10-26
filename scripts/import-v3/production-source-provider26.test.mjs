@@ -119,7 +119,7 @@ async function retainedBarcodeFiles(t,options={}){
  const artifacts={prepared:await save('prepared.jsonl',Buffer.concat(encoded)),index:await save('index.jsonl',entries.map(e=>JSON.stringify(e)+'\n').join('')),permutations:await save('permutations.json',JSON.stringify(permutation))};
  const manifest={version:'ORIGINAL_BARCODE15018_APPROVED_SOURCE_CAPTURE_26_V1',binding:sourceBinding,selectedRows:3,summary:{rows:3},source:{path:'/SYNTHETIC_RAW_MUST_NEVER_OPEN',bytes:30},inputPins:{proposal:{sha256:digest('a')},approval:{sha256:digest('b')}},artifacts};options.mutateManifest?.(manifest);
  const helperPath='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs';
- const helper=await save('approved-helper.mjs',await readFile(helperPath));assert.equal(helper.sha256,'c366469ba18d1b0be26b3478b8cd54ede013268d88feb644b36802c9b6e38ca6');
+ const helper=await save('approved-helper.mjs',await readFile(helperPath));assert.equal(helper.sha256,'6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22');
  f.inputs.producers.BARCODES={mode:'RETAINED',descriptor:await save('capture.json',JSON.stringify(manifest)),closureHelper:helper};
  f.inputs.closureScope.expectedCounts.import_source_row=3;f.inputs.closureScope.expectedCounts.barcodes=3;f.inputs.closureScope.expectedSourceEntityCounts.BARCODE=3;
  // Only the original continuation protocol is scripted; real BARCODE source
@@ -277,4 +277,136 @@ test('provider26 production authority: explicit original genuine product reader 
  await a.authorizeProductSource(evidence);const forged=structuredClone(evidence);forged.rows[0].source.sourceKey='SUBSTITUTED';await assert.rejects(a.authorizeProductSource(forged));
  await assert.rejects(a.openRetained('HEADERS',f.inputs.producers.HEADERS,{binding:f.binding,signal:f.controller.signal}),{code:'PRODUCTION_AUTHORITY26_RETAINED_READER_INPUT_REQUIRED'});
  await reader.close();await a.close();await a.close();await assert.rejects(reader.verify());
+});
+
+const retainedFixtureRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3';
+async function retainedNativeFiles(t,group){
+ const {pathToFileURL}=await import('node:url'),{mkdtemp,realpath,readFile,writeFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');
+ const module={PRODUCTS:'product',SKUS:'sku',STOCK_CONTRIBUTORS:'stock'}[group],data=await(await import(pathToFileURL(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/'+module+'.mjs'))).fixture(t);
+ const prepared=group==='STOCK_CONTRIBUTORS'?data.groups[0]:data.prepared,f=fixture();Object.assign(f.binding,data.options.binding);Object.assign(f.inputs.closureScope,Object.fromEntries(['batchId','fixedSourceNamespace','selectionSha256'].map(k=>[k,f.binding[k]])));
+ const directory=await mkdtemp(join(await realpath(tmpdir()),'synthetic-real-retained-native-'));t.after(()=>rm(directory,{recursive:true,force:true}));
+ const sha=b=>createHash('sha256').update(b).digest('hex'),save=async(name,bytes)=>{const path=join(directory,name);await writeFile(path,bytes,{mode:0o600});return{path,bytes:bytes.length,sha256:sha(bytes)};};
+ const original={...await import('../../packages/application/src/native-product-import.ts'),...await import('../../packages/application/src/native-sku-import.ts'),...await import('../../packages/application/src/native-stock-contributor-import.ts'),...await import('../../packages/application/src/history-typed-closure.ts')};
+ const helper=await import(pathToFileURL(retainedFixtureRoot+'/retained-native-closure-streams-20261026.mjs')),expected=helper.projectRetainedNativeClosureRecord26(original,group,prepared);
+ const body=Buffer.from(JSON.stringify(prepared)+(group==='PRODUCTS'?'':'\n'));
+ const file=await save('prepared'+(group==='PRODUCTS'?'.json':'.jsonl'),body),closureHelper=await save('helper.mjs',await readFile(retainedFixtureRoot+'/retained-native-closure-streams-20261026.mjs'));
+ f.inputs.producers[group]={mode:'RETAINED',retainedNative:{files:[file],records:1,sourceRows:expected.sources.length,typedRows:expected.typed.length},closureHelper};
+ f.inputs.closureScope.expectedSourceEntityCounts[group==='PRODUCTS'?'PRODUCT':group==='SKUS'?'SKU':'INVENTORY_BASELINE']=expected.sources.length;
+ f.inputs.closureScope.expectedCounts.import_source_row=expected.sources.length;
+ if(group==='SKUS')f.inputs.closureScope.expectedCounts.import_sku_alias=expected.sources.length;
+ if(group==='STOCK_CONTRIBUTORS')f.inputs.closureScope.expectedCounts.import_stock_contributor=expected.typed.length;
+ const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());
+ return{...f,s,prepared,expected,writeFile,file,sha,body};
+}
+for(const group of ['PRODUCTS','SKUS','STOCK_CONTRIBUTORS'])test('source620 retained real '+group+': original file membership, sorted full closure and mutation refusal without database',async t=>{
+ const f=await retainedNativeFiles(t,group);await f.s.preflight();assert.equal(f.trace.ready,0);assert.ok(!f.trace.opens.includes(group));
+ await f.s.authorizeStep({kind:{PRODUCTS:'PRODUCT',SKUS:'SKU',STOCK_CONTRIBUTORS:'STOCK_CONTRIBUTOR'}[group],payload:f.prepared});
+ const changed=structuredClone(f.prepared);changed.fingerprint=digest('f');await assert.rejects(f.s.authorizeStep({kind:{PRODUCTS:'PRODUCT',SKUS:'SKU',STOCK_CONTRIBUTORS:'STOCK_CONTRIBUTOR'}[group],payload:changed}),/MEMBERSHIP/);
+ const closure=await f.s.openSources[group](f.inputs.closureScope,{group,signal:f.controller.signal}),ordered=rows=>rows.toSorted((a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key)));
+ assert.deepEqual(await Array.fromAsync(closure.sourceRows()),ordered(f.expected.sources));assert.deepEqual(await Array.fromAsync(closure.typedRows()),ordered(f.expected.typed));assert.deepEqual(await Array.fromAsync(closure.documents()),[]);
+ await closure.close();await f.s.close();assert.equal(f.trace.ready,0);assert.equal(f.trace.authorityCloses,1);
+});
+test('source620 retained real prepared file changed after preflight refuses before closure yields',async t=>{
+ const f=await retainedNativeFiles(t,'SKUS');await f.s.preflight();const changed=Buffer.from(f.body);changed[changed.indexOf(34)+1]^=1;await f.writeFile(f.file.path,changed);
+ await assert.rejects(f.s.openSources.SKUS(f.inputs.closureScope,{group:'SKUS',signal:f.controller.signal}));assert.equal(f.trace.ready,0);
+});
+test('T04 canonical stock MAIN proof: exact signed group required before ACCOUNT; wrong warehouse, SKU, quantity and missing group refuse',async t=>{
+ const {pathToFileURL}=await import('node:url'),data=await(await import(pathToFileURL(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/stock.mjs'))).fixture(t),group=data.groups[0];
+ const f=await productionAuthorityFiles(t,{binding:data.options.binding,mutateCommands:({account,bind,publish})=>{
+  for(const counts of [bind.fullBinding.historyExpectedCounts,publish.historyClosure.expectedCounts]){counts.import_source_row=group.contributors.length;counts.import_stock_contributor=group.contributors.length;}publish.historyClosure.sourceEntityCounts.INVENTORY_BASELINE=group.contributors.length;
+  Object.assign(account.items.at(-1),{warehouseId:group.warehouse.nativeId,skuId:group.sku.nativeId,quantity:BigInt(group.signedQuantity),sourceKey:group.canonicalStock['来源编号']});
+ },mutateInputs:inputs=>{inputs.closureScope.expectedSourceEntityCounts.INVENTORY_BASELINE=group.contributors.length;inputs.closureScope.expectedCounts.import_source_row=group.contributors.length;inputs.closureScope.expectedCounts.import_stock_contributor=group.contributors.length;}});
+ const a=await f.open();t.after(()=>a.close());await assert.rejects(a.authorizeNativeCommand(f.binding.actorAccountId,f.account),/STOCK_MAIN_INCOMPLETE/);
+ const {prepareNativeStockGroup}=await import('../../packages/application/src/native-stock-contributor-import.ts');
+ for(const field of ['warehouse','sku']){const changed=structuredClone(data.groupInput);changed[field].nativeId=id(9999);await assert.rejects(a.authorizeStep({kind:'STOCK_CONTRIBUTOR',payload:prepareNativeStockGroup(changed)},f.binding),/STOCK_MAIN_MISMATCH/);}
+ const changed=structuredClone(data.groupInput);changed.canonicalStock['来源编号']='OTHER';for(const c of changed.contributors)c.lineage.canonicalStockRowSourceId='OTHER';await assert.rejects(a.authorizeStep({kind:'STOCK_CONTRIBUTOR',payload:prepareNativeStockGroup(changed)},f.binding),/STOCK_MAIN_MISMATCH/);
+ await a.authorizeStep({kind:'STOCK_CONTRIBUTOR',payload:group},f.binding);await a.authorizeNativeCommand(f.binding.actorAccountId,f.account);
+ const wrong=await productionAuthorityFiles(t,{binding:data.options.binding,mutateCommands:({account})=>{Object.assign(account.items.at(-1),{warehouseId:group.warehouse.nativeId,skuId:group.sku.nativeId,quantity:1n,sourceKey:group.canonicalStock['来源编号']});}}),b=await wrong.open();t.after(()=>b.close());await assert.rejects(b.authorizeStep({kind:'STOCK_CONTRIBUTOR',payload:group},wrong.binding),/STOCK_MAIN_MISMATCH/);
+});
+
+const H=digest('a');
+const {IMPORT_V2_TABLES}=await import('../../packages/application/src/import-v2-contract.ts');
+const {v2MoneyApprovalSet}=await import('../../packages/application/src/import-v2.ts');
+const {createNativeHeader26BindingPreparer}=await import('./prepare-native-header26-bindings.mjs');
+function retainedHeaderFixture(){
+ const binding={batchId:id(1),fixedSourceNamespace:'synthetic-known',cutoffAt:'2026-10-04T12:00:00+08:00',selectionSha256:H};
+ const parties=[{entity:'HALL',sourceKey:'H1',nativeSnapshot:{id:id(10),name:'Synthetic Hall',version:1,default_customer_id:null,default_sales_warehouse_id:null,enabled:true}},
+ {entity:'WAREHOUSE',sourceKey:'W1',nativeSnapshot:{id:id(20),name:'Synthetic Warehouse',version:1,hall_id:id(10),enabled:true,created_operation_id:null}},
+ {entity:'CUSTOMER',sourceKey:'C1',nativeSnapshot:{id:id(30),name:'Synthetic Customer',version:1,code:'0001',enabled:true,created_at:null,updated_at:null}}];
+ const historicalCustomers=[{sourceKey:'HIST-CUSTOMER:'+id(60),originalPartyIdentity:id(60),sourceDocumentNumber:'INV-2',nativeSnapshot:{id:id(50),name:'Synthetic Historic',version:1,code:'0002',enabled:false,created_at:null,updated_at:null}}];
+ const moneyApprovals=Array.from({length:32},(_,i)=>({fileSha256:H,sheet:'HEADER',row:String(i+20),sourceId:'MONEY'+i,field:'优惠前金额',rawValue:'1.00000000000001',exactCentValue:'1.00'}));
+ function record(i,hall,customer='C1'){
+  const n=Object.fromEntries(IMPORT_V2_TABLES.find(t=>t.entity==='SALES_HEADER').columns.map(c=>[c.name,'']));
+  Object.assign(n,{来源编号:'DOC-'+i,原单号:'INV-'+i,业务日期:'2024-02-29',原审核状态:'未审核',创建厅归属来源:'UNKNOWN',创建厅归属原因:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED',单据类型:'销售',所属厅来源编号:hall,客户来源编号:customer,仓库来源编号:'W1',优惠前金额:'10.00',整单优惠:'1',应结金额:'8.50'});
+  const raw={...n,原创建厅编号:'UPLOADED_HALL'};delete raw.创建厅归属来源;delete raw.创建厅归属原因;
+  return{source:{id:id(100+i),batchId:binding.batchId,entityType:'SALES_HEADER',sourceKey:n.来源编号,fileRef:'SYNTHETIC.xlsx',sheet:'HEADER',rowNo:String(i+2),sourceFileSha256:H,rowSha256:H,rawFields:raw,normalizedFields:n,fieldProvenance:{schema_version:1,fields:{}}},selection:{entity:'SALES_HEADER',source:'BASE_V2',path:'business/13历史销货单头.csv',baseManifestSha256:H,selectionSha256:H,approvalSha256:H,csvSha256:H},creatorHallOverlay:{evidenceRef:'synthetic.csv#'+i,file:'SYNTHETIC.xlsx',sheet:'HEADER',row:String(i+2),sourceId:n.来源编号,documentNumber:n.原单号,personField:'营业员来源编号',personId:'',uploadedWarehouseDerivedHall:'UPLOADED_HALL',candidateCreatorHall:'',provenance:'UNKNOWN',reason:n.创建厅归属原因},temporalEvidence:{}};
+ }
+ return{context:{binding,parties,historicalCustomers,moneyApprovals},record};
+}
+
+function retainedHeaderOverlay(f,r){const s=r.source;return{version:'USER_CONFIRMED_HISTORY_BUSINESS_HALL_OVERLAY_1',batchId:s.batchId,fixedSourceNamespace:f.context.binding.fixedSourceNamespace,selectionSha256:H,sourceKey:s.sourceKey,warehouseSourceKey:'W1',targetHallSourceKey:'H1',targetHallNativeId:id(10),sourceFileRef:s.fileRef,sourceFileSha256:s.sourceFileSha256,sheet:s.sheet,rowNo:s.rowNo,originalBusinessHall:'',provenance:'MIGRATION_DERIVED',reason:'USER_CONFIRMED_WAREHOUSE_TO_BUSINESS_HALL',decisionSource:{threadId:'synthetic-human',humanMessageId:'synthetic-decision',continueMessageId:'synthetic-continue',adoptionOwner:'C',scope:'ALL2471_WAREHOUSE_TO_BUSINESS_HALL_MAPPING_USER_CONFIRMED',originalBlankNotClaimedHistoricalFact:true},evidenceRef:'USER_DECISION:synthetic-human:synthetic-decision#'+s.sourceKey};}
+
+function retainedHeaderInputs(){const f=retainedHeaderFixture(),a=f.record(1,'H1'),b=f.record(2,''),o=retainedHeaderOverlay(f,b),pa=createNativeHeader26BindingPreparer({...f.context,expected:{SALES_HEADER:1,TRANSFER_HEADER:0,historicalReferences:0}}),known=pa.prepare(a);pa.finish();const pb=createNativeHeader26BindingPreparer({...f.context,businessHallOverlays:new Map([[b.source.sourceKey,o]]),expected:{SALES_HEADER:1,TRANSFER_HEADER:0,historicalReferences:0}}),mapped=pb.prepare(b);pb.finish();const{moneyApprovals,...saved}=mapped.input;void moneyApprovals;
+ return{binding:f.context.binding,moneyApprovals:v2MoneyApprovalSet(f.context.moneyApprovals,f.context.moneyApprovals),items:[{partition:'KNOWN25811',value:{record:a,prepared:known.prepared,decision:known.decision}},{partition:'MAPPED2471',value:{originalRecord:b,input:saved,prepared:mapped.prepared,decision:mapped.decision}}]};}
+
+async function retainedHeaderFiles(t,options={}){
+ const {pathToFileURL}=await import('node:url'),{mkdtemp,realpath,writeFile,readFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');
+ const {prepareV3HistoryHeaderChunk}=await import('../../packages/application/src/import-v3-history-header-staging.ts'),{transferHeaderProjection26}=await import('./native-transfer-header-source26.mjs');
+ const codec=await import('../../packages/application/src/history-typed-closure.ts'),helper=await import(pathToFileURL(retainedFixtureRoot+'/sales-header-closure-session-20261026.mjs')),input=retainedHeaderInputs();
+ const directory=await mkdtemp(join(await realpath(tmpdir()),'synthetic-real-retained-header-'));t.after(()=>rm(directory,{recursive:true,force:true}));
+ const sha=b=>createHash('sha256').update(b).digest('hex'),save=async(name,b)=>{const path=join(directory,name),bytes=Buffer.isBuffer(b)?b:Buffer.from(b);await writeFile(path,bytes,{mode:0o600});return{path,bytes:bytes.length,sha256:sha(bytes)};};
+ const partitions={},entries=[],salesExpected=[];
+ for(const item of input.items){const bytes=Buffer.from(JSON.stringify(item.value)+'\n');partitions[item.partition]={...await save(item.partition+'.jsonl',bytes),rows:1};const p=item.value.prepared;
+  const projection=(await import(pathToFileURL(retainedFixtureRoot+'/prepare-retained-sales-header-window-20261026.mjs'))).salesHeaderProjection26(codec.historyClosureProjectionRow26,p);salesExpected.push(projection);
+  entries.push(helper.captureSalesHeaderClosureEntry(codec,{partition:item.partition,offset:0,bytes:bytes.length,projection,fingerprint:p.fingerprint}));}
+ const salesIndex={version:'RETAINED_SALES_HEADER_CLOSURE_INDEX_V1',binding:input.binding,partitions,rows:2,entries};options.mutateIndex?.(salesIndex);
+ const table=IMPORT_V2_TABLES.find(t=>t.entity==='TRANSFER_HEADER'),n=Object.fromEntries(table.columns.map(c=>[c.name,'']));Object.assign(n,{来源编号:'SYN-TRANSFER',原单号:'0000123',业务日期:'2024-02-29',原审核状态:'已审核',调出仓来源编号:'W1',调入仓来源编号:'W2',创建厅归属来源:'UNKNOWN',创建厅归属原因:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'});
+ const raw={...n,原创建厅编号:'UPLOADED'};delete raw.创建厅归属来源;delete raw.创建厅归属原因;
+ const fields=Object.fromEntries(Object.entries(raw).map(([key,value])=>[key,{origin:'ORIGINAL',reason:'EXACT_ORIGINAL_SNAPSHOT_CELL',raw:value}]));fields.__source_row_hash={origin:'ORIGINAL',reason:'SHA256_JSONL_UTF8_EXCLUDING_LF_RETAINING_CR_V1',raw:H};
+ const source={id:id(700),batchId:input.binding.batchId,entityType:'TRANSFER_HEADER',sourceKey:n.来源编号,fileRef:'SYNTHETIC.xlsx',sheet:'HEADER',rowNo:'30',sourceFileSha256:H,rowSha256:H,rawFields:raw,normalizedFields:n,fieldProvenance:{schema_version:1,fields,history_cell_encoding_evidence:{temporalEvidence:{}}}};
+ const transferInput={...input.binding,source,selection:{entity:'TRANSFER_HEADER',source:'BASE_V2',path:table.file,baseManifestSha256:H,selectionSha256:H,approvalSha256:H,csvSha256:H},creatorHallOverlay:{evidenceRef:'SYNTHETIC#30',file:source.fileRef,sheet:source.sheet,row:source.rowNo,sourceId:source.sourceKey,documentNumber:n.原单号,personField:'原制单账号编号',personId:'',uploadedWarehouseDerivedHall:'UPLOADED',candidateCreatorHall:'',provenance:'UNKNOWN',reason:n.创建厅归属原因},temporalEvidence:{},bindings:{调出仓来源编号:{sourceKey:'W1',nativeId:id(20)},调入仓来源编号:{sourceKey:'W2',nativeId:id(21)}}};delete transferInput.cutoffAt;delete transferInput.selectionSha256;
+ const transferChunk=prepareV3HistoryHeaderChunk([transferInput]),projection=transferHeaderProjection26(transferChunk.rows[0].prepared),transfer={rows:1};let entry={headerId:projection.document.headerId,headerSourceRowId:source.id,sourceKey:source.sourceKey};
+ for(const [role,value]of Object.entries({source:projection.sourceRow,typed:projection.typedRow,document:projection.document})){const b=Buffer.from(JSON.stringify(value)+'\n');transfer[role]=await save(role+'.jsonl',b);entry[role]={offset:0,bytes:b.length,sha256:sha(b)};}
+ transfer.index=await save('transfer-index.jsonl',JSON.stringify(entry)+'\n');
+ const helpers=Object.fromEntries(await Promise.all([['closure','sales-header-closure-session-20261026.mjs'],['salesWindow','prepare-retained-sales-header-window-20261026.mjs'],['transferWindow','prepare-retained-transfer-header-window-20261025-v2.mjs']].map(async([role,name])=>{const path=retainedFixtureRoot+'/'+name,b=await readFile(path);return[role,{path,bytes:b.length,sha256:sha(b)}];})));
+ const f=fixture();Object.assign(f.binding,input.binding);Object.assign(f.inputs.closureScope,Object.fromEntries(['batchId','fixedSourceNamespace','selectionSha256'].map(k=>[k,f.binding[k]])));
+ Object.assign(f.inputs.closureScope.expectedCounts,{import_source_row:3,history_sales_header:2,history_transfer_header:1});Object.assign(f.inputs.closureScope.expectedSourceEntityCounts,{SALES_HEADER:2,TRANSFER_HEADER:1});
+ f.inputs.producers.HEADERS={mode:'RETAINED',retainedHeaders:{sales:{rows:2,index:await save('sales-index.json',JSON.stringify(salesIndex)),partitions,money:{path:'/SYNTHETIC_NOT_NEEDED_FOR_CLOSURE',bytes:1,sha256:H}},transfer,helpers}};
+ const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());return{...f,s,expected:[...salesExpected,projection],writeFile};
+}
+test('source620 retained HEADERS: complete original sales index and transfer ranges compose globally ordered real file streams and allocations without DB',async t=>{
+ const f=await retainedHeaderFiles(t);await f.s.preflight();assert.equal(f.trace.ready,0);assert.ok(!f.trace.opens.includes('HEADERS'));
+ const c=await f.s.openSources.HEADERS(f.inputs.closureScope,{group:'HEADERS',signal:f.controller.signal}),ordered=rows=>rows.toSorted((a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key)));
+ assert.deepEqual(await Array.fromAsync(c.sourceRows()),ordered(f.expected.map(p=>p.sourceRow)));assert.deepEqual(await Array.fromAsync(c.typedRows()),ordered(f.expected.map(p=>p.typedRow)));assert.deepEqual((await Array.fromAsync(c.documents())).sort((a,b)=>a.headerId.localeCompare(b.headerId)),f.expected.map(p=>p.document).sort((a,b)=>a.headerId.localeCompare(b.headerId)));await f.s.close();assert.equal(f.trace.ready,0);
+});
+test('source620 retained HEADERS: partial sales index refuses and changed captured canonical row cannot yield',async t=>{
+ const f=await retainedHeaderFiles(t,{mutateIndex:index=>{index.entries.pop();}});await assert.rejects(f.s.preflight());assert.equal(f.trace.ready,0);
+ const g=await retainedHeaderFiles(t);await g.s.preflight();await g.writeFile(g.inputs.producers.HEADERS.retainedHeaders.sales.partitions.KNOWN25811.path,'CHANGED');const c=await g.s.openSources.HEADERS(g.inputs.closureScope,{group:'HEADERS',signal:g.controller.signal}).catch(()=>null);if(c)await assert.rejects(Array.fromAsync(c.sourceRows()));assert.equal(g.trace.ready,0);
+});
+async function retainedTransferFiles(t,options={}){
+ const {mkdtemp,realpath,writeFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');
+ const {prepareV3HistoryChunk}=await import('../../packages/application/src/import-v3-history-staging.ts'),{transferLineSourceEvidence26}=await import('./native-transfer-line-source26.mjs'),{historyClosureProjectionRow26:project}=await import('../../packages/application/src/history-typed-closure.ts');
+ const f=fixture(),directory=await mkdtemp(join(await realpath(tmpdir()),'synthetic-real-retained-transfer-'));t.after(()=>rm(directory,{recursive:true,force:true}));const sha=b=>createHash('sha256').update(b).digest('hex'),save=async(name,b)=>{const path=join(directory,name);await writeFile(path,b,{mode:0o600});return{path,bytes:b.length,sha256:sha(b)};};
+ const selection={entity:'TRANSFER_LINE',source:'BASE_V2',path:'business/17历史调拨明细.csv',baseManifestSha256:H,selectionSha256:H,approvalSha256:H,csvSha256:H};
+ const chunks=[1,2].map(i=>{const n=Object.fromEntries(IMPORT_V2_TABLES.find(t=>t.entity==='TRANSFER_LINE').columns.map(c=>[c.name,'']));Object.assign(n,{来源编号:'LINE'+i,单据来源编号:'TRANSFER'+i,SKU来源编号:'SKU1',原行号:'1',原数量:i===1?'-2':'3'});
+  const source={id:id(900-i),batchId:f.binding.batchId,entityType:'TRANSFER_LINE',sourceKey:n.来源编号,fileRef:'SYNTHETIC.xlsx',sheet:'LINE',rowNo:String(i),sourceFileSha256:H,rowSha256:H,rawFields:{...n},normalizedFields:n,fieldProvenance:{schema_version:1,fields:Object.fromEntries(Object.entries(n).map(([k,v])=>[k,{origin:'ORIGINAL',reason:'SYNTHETIC',raw:v}]))}};
+  return prepareV3HistoryChunk({batchId:f.binding.batchId,fixedSourceNamespace:f.binding.fixedSourceNamespace,selection,rows:[{source,header:{sourceKey:n.单据来源编号,nativeId:id(600+i)},sku:{sourceKey:'SKU1',nativeId:id(500)}}]});});
+ const pairs=chunks.map(c=>({source:project('import_source_row',transferLineSourceEvidence26(c.rows[0],selection)),typed:project('history_transfer_line',c.rows[0].line)})),n=pairs.length,index=Buffer.alloc(64+n*256+n*4*2+n*36),buffers={source:[],typed:[]};
+ index.write('TL26JOIN1');for(const[at,v]of[[12,1],[16,n],[20,n],[24,256],[28,n*256],[32,n*4],[36,n*4],[40,n*36],[44,64]])index.writeUInt32LE(v,at);
+ for(let i=0;i<n;i++){const at=64+i*256;index.writeUInt32LE(i,at);for(const[role,keyAt,lengthAt,offsetAt,bytesAt,shaAt]of[['source',64,60,4,12,192],['typed',128,61,16,24,224]]){const b=Buffer.from(JSON.stringify(pairs[i][role])+'\n'),key=Buffer.from(pairs[i][role].key),offset=buffers[role].reduce((sum,x)=>sum+x.length,0);index.writeBigUInt64LE(BigInt(offset),at+offsetAt);index.writeUInt32LE(b.length,at+bytesAt);index[at+lengthAt]=key.length;key.copy(index,at+keyAt);Buffer.from(sha(b),'hex').copy(index,at+shaAt);buffers[role].push(b);}}
+ options.mutateIndex?.(index);const spec={rows:n,index:await save('index.bin',index),source:await save('source.jsonl',Buffer.concat(buffers.source)),typed:await save('typed.jsonl',Buffer.concat(buffers.typed))};
+ f.inputs.producers.TRANSFER_LINES={mode:'RETAINED',retainedTransferLines:spec};Object.assign(f.inputs.closureScope.expectedCounts,{import_source_row:n,history_transfer_line:n});f.inputs.closureScope.expectedSourceEntityCounts.TRANSFER_LINE=n;
+ const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());return{...f,s,chunks,pairs,writeFile};
+}
+test('source620 retained TRANSFER_LINES: packed original file ranges authorize exact DTOs, preserve negative units, and yield global source12/typed13 order',async t=>{
+ const f=await retainedTransferFiles(t);await f.s.preflight();for(const chunk of f.chunks)await f.s.authorizeStep({kind:'TRANSFER_LINES',payload:chunk});const changed=structuredClone(f.chunks[0]);changed.rows[0].line.sku_id=id(999);await assert.rejects(f.s.authorizeStep({kind:'TRANSFER_LINES',payload:changed}));
+ const c=await f.s.openSources.TRANSFER_LINES(f.inputs.closureScope,{group:'TRANSFER_LINES',signal:f.controller.signal}),ordered=rows=>rows.toSorted((a,b)=>Buffer.compare(Buffer.from(a.key),Buffer.from(b.key)));
+ assert.deepEqual(await Array.fromAsync(c.sourceRows()),ordered(f.pairs.map(p=>p.source)));assert.deepEqual(await Array.fromAsync(c.typedRows()),ordered(f.pairs.map(p=>p.typed)));assert.deepEqual(await Array.fromAsync(c.documents()),[]);assert.equal(f.trace.ready,0);
+});
+test('source620 retained TRANSFER_LINES: duplicate packed membership and incomplete file coverage refuse during preflight',async t=>{
+ for(const mutateIndex of [b=>{b.copy(b,64+256+64,64+64,64+100);},b=>{b.writeBigUInt64LE(1n,64+4);}]){const f=await retainedTransferFiles(t,{mutateIndex});await assert.rejects(f.s.preflight());assert.equal(f.trace.ready,0);}
+});
+test('source620 retained helper version: unchanged real BARCODE membership and six schemes remain compatible with T04 projection module',async t=>{
+ const f=await retainedBarcodeFiles(t),s=await f.open();t.after(()=>s.close());await s.preflight();for(const payload of f.prepared)await s.authorizeStep({kind:'BARCODE',payload});
+ const c=await s.openSources.BARCODES(f.inputs.closureScope,{group:'BARCODES',signal:new AbortController().signal});assert.equal((await Array.fromAsync(c.sourceRows())).length,3);const typed=await Array.fromAsync(c.typedRows());assert.equal(typed.length,9);assert.equal(typed.filter(r=>r.relation==='barcode_scheme').length,6);assert.equal(f.trace.ready,0);
 });

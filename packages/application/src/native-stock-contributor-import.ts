@@ -4,6 +4,7 @@ import { HISTORY_MAPPING_VERSION, isHistoryQuantity, matchesStockContributorEvid
 import type { ImportSourceEvidence, JsonObject, StockContributionLineage } from "./history-storage-contract.ts";
 import { IMPORT_V2_TABLES } from "./import-v2-contract.ts";
 import { requestHash } from "./request-hash.ts";
+import { stableImportId } from "./inventory-cutoff-import.ts";
 
 /** Immutable original signed contributions. Does not create a baseline ledger entry. */
 export const NATIVE_STOCK_CONTRIBUTOR_VERSION = "NATIVE_STOCK_CONTRIBUTOR_V1";
@@ -106,6 +107,18 @@ export function nativeStockSourceEvidence(group: PreparedNativeStockGroup, row: 
       native_stock_import: { validator_version: NATIVE_STOCK_CONTRIBUTOR_VERSION, selection: { ...group.selection },
         group_fingerprint: group.fingerprint, canonical_stock_row: group.canonicalStock,
         warehouse_native_id: group.warehouse.nativeId, sku_native_id: group.sku.nativeId } } };
+}
+/** Expected publication image after MAIN links this canonical nonzero group.
+ * STAGE/source evidence remain immutable and unlinked. The ledger identity uses
+ * the original MAIN namespace/entity/canonical source key, never a DB readback. */
+export function nativeStockPublicationContributor26(group: PreparedNativeStockGroup, row: NativeStockContributorInput): JsonObject {
+  const key = group.canonicalStock["来源编号"];
+  requireDomain(typeof key === "string" && key.length > 0 && group.contributors.some(c => c.source.id === row.source.id
+    && requestHash(c) === requestHash(row)), "NATIVE_STOCK_PUBLICATION_MEMBER", "Original complete-group contributor required");
+  return { batch_id: group.batchId, source_row_id: row.source.id, warehouse_id: group.warehouse.nativeId,
+    canonical_sku_id: group.sku.nativeId, old_source_sku_id: row.lineage.oldSkuSourceId,
+    canonical_stock_source_key: key, source_unit: row.lineage.sourceUnit, signed_quantity: row.lineage.signedQuantity,
+    baseline_ledger_id: stableImportId("baseline", group.fixedSourceNamespace, "INVENTORY_BASELINE", key) };
 }
 export async function stageNativeStockContributors(input: NativeStockGroupInput, options: {
   readonly mode?: "DRY_RUN" | "STAGE"; readonly store?: NativeStockContributorStore;

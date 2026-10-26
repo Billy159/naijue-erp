@@ -23,7 +23,7 @@
     "receiptId": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
     "coreSourceDigest": "2589b25c06bb1312b9d1f40627fb7432f44b4293b5d1ae7186223948b144cc28",
     "birthReceiptEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v14-real49-core-initialization-20261024-157/release-submission/release-receipts/c03-r1-v14-real49-core-initialization-20261024-157/core-actual.json",
-    "currentCheckpointEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/actual118-source-projection-20261026/source-projection-data.json",
+    "currentCheckpointEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-six-scheme-init-warehouse-count-20261026-121/ACTUAL-INITIALIZATION-SUMMARY.json",
     "coreProjection": {
       "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/actual118-source-projection-20261026/source-projection-data.json",
       "bytes": 215586,
@@ -149,6 +149,168 @@
           "cutoffAt": "2026-10-04T12:00:00+08:00",
           "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba"
         }
+      },
+      "closureHelper": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 14592,
+        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+      },
+      "retainedNative": {
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-01.json",
+            "bytes": 630498,
+            "sha256": "e671e1b803786c73bf72958c3fa4b9a4b72d3f52dc179e72d8cd6da770702a2c"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-02.json",
+            "bytes": 646772,
+            "sha256": "a5cd7ae38057f698428587d763de3d015eae553c82206473a4bea21dccf2ced5"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-03.json",
+            "bytes": 634361,
+            "sha256": "0e742134e474c57fec0b14c8e4cf628f871ac02d1d08e67bd4d90bb2a067cbd4"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-04.json",
+            "bytes": 639329,
+            "sha256": "3635772f64f08ac70877f92a9ce410a6cb2f6c3d50571a659a438b65403b3947"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-05.json",
+            "bytes": 637922,
+            "sha256": "65096895ceb3f4c4fd5f82872ec9d94e9db6bdf365d75b7b717068569cf15bc8"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-06.json",
+            "bytes": 649407,
+            "sha256": "18f5d88b62a0e4e3b15a612cce8ee8bae06aeb287b6da971121f2fc5c9f1899e"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-07.json",
+            "bytes": 648640,
+            "sha256": "6272665f11fd8c0722ec6e7efafa83a955e5c5c07bdc4cce2cf0a9524cb7efab"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-08.json",
+            "bytes": 643746,
+            "sha256": "1dfc322d834ee162078086c663d295f63bbe89bfd630949f41d31fdb67347591"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-09.json",
+            "bytes": 657213,
+            "sha256": "cfd1c7d8bf9ed16382ab4b1d70214a86aa89bc7126e504512708d652bf9520f9"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-10.json",
+            "bytes": 650120,
+            "sha256": "dcb54869339c9c277b3197852ed2545ea39a9582028c12027b3417c3ab9719da"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-11.json",
+            "bytes": 643318,
+            "sha256": "75cfc0ddc76831979f27c24544045d9a22402d7186b3fb73082496bda491b452"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-12.json",
+            "bytes": 655044,
+            "sha256": "0f341781cbc74e4961de3a5058faec6cba38727adf6ab8a7ae50ad01fbbecf29"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-13.json",
+            "bytes": 649435,
+            "sha256": "b755fb33e041cf460c4b677577a60e7f1ca0ff9e03a034e6ef9929e309aecb48"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-14.json",
+            "bytes": 637637,
+            "sha256": "a2e9b84547ada692330cf2c1d60330ffa8d4060775f75c2a9cf2056ba4b784da"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-15.json",
+            "bytes": 650932,
+            "sha256": "6ae106e487784f0e156684e669b4602c4b5555ac42da7caf530b9f863e91aa89"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-16.json",
+            "bytes": 655387,
+            "sha256": "be42f0f3a47a921b9f212e6c59f27a465cd19b33c3c7ce54cc0a22c2787c2b4b"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-17.json",
+            "bytes": 639826,
+            "sha256": "042bbc5b184680e88610f3f5ad1be239f095f2c01109aeaf9385c4f224d83567"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-18.json",
+            "bytes": 630839,
+            "sha256": "4cf26ffca39e3fd1957d15dc4486cdbbab693d09331fa7e028f9094f12b6efd1"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-19.json",
+            "bytes": 616043,
+            "sha256": "8502f8166bf76647fd92ce1fedc6d334351676d0ccc7729ed558a7102c022daf"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-20.json",
+            "bytes": 615258,
+            "sha256": "ec8a17063daec0f4ee75ac216f64535809a1213e6563563e28408c942caf37ee"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-21.json",
+            "bytes": 622516,
+            "sha256": "97532d1ba6c29c2c04722a8d081b42385fa75ad098f6bafd5ed156106050ff67"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-22.json",
+            "bytes": 645873,
+            "sha256": "039619883f2ea8c54b2209e32417839dd3454ea66c3205070c2ca5b6a5783bd6"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-23.json",
+            "bytes": 610396,
+            "sha256": "c6ca0207d07da106b7f236e2df41e33c8a0ba1ade4e87af9978962459ab00262"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-24.json",
+            "bytes": 619098,
+            "sha256": "d5f79742bfd0b4a40aaa8ca0aea47e8e5804cfabe2b72f5f784c8d44e8dd97bb"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-25.json",
+            "bytes": 618983,
+            "sha256": "f82b281cc1047a09c7246cf40747ce201998429678e6c83db4c20d5a43f8dba2"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-26.json",
+            "bytes": 623995,
+            "sha256": "c606216d511be6593ca36c8185c6887835399ff6cd111e661611eaacdbee83f6"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-27.json",
+            "bytes": 626684,
+            "sha256": "579e636d2b556710cb8d1d1fad35c4b2cef984acf40edb7e753c6dd21c235cd9"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-28.json",
+            "bytes": 625506,
+            "sha256": "d5067ea3282c2d727ed6653371c662ced78f89d0b980a192aa3597679d25a549"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-29.json",
+            "bytes": 638304,
+            "sha256": "def2250d4628fe9065e291d3b087d57dc1e31ba4768dccc647a4e57c12671ebd"
+          },
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-product2956-source352-capture-20261025-C-run1/product-30.json",
+            "bytes": 350909,
+            "sha256": "dbfe5f7da6f13c1e093cdaa0eb74d7de06585d1b00f8ff1892075c726e7053fb"
+          }
+        ],
+        "records": 30,
+        "sourceRows": 2956,
+        "typedRows": 2956
       }
     },
     "SKUS": {
@@ -157,6 +319,23 @@
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/SKUS.json",
         "bytes": 5775,
         "sha256": "ec57f3a81f3e37a0887f52011fdd8173e9129f4b08e92321d73b037afcf520b9"
+      },
+      "closureHelper": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 14592,
+        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+      },
+      "retainedNative": {
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-sku14999-source352-capture-20261025-C-run1/sku14999-prepared.jsonl",
+            "bytes": 138250702,
+            "sha256": "221c737fb93eef87502c182e35ba3afea0226862fe66c7410fb9301969c7a686"
+          }
+        ],
+        "records": 14999,
+        "sourceRows": 15121,
+        "typedRows": 30120
       }
     },
     "BARCODES": {
@@ -168,8 +347,8 @@
       },
       "closureHelper": {
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
-        "bytes": 14879,
-        "sha256": "c366469ba18d1b0be26b3478b8cd54ede013268d88feb644b36802c9b6e38ca6"
+        "bytes": 14592,
+        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
       }
     },
     "STOCK_CONTRIBUTORS": {
@@ -178,6 +357,23 @@
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/STOCK_CONTRIBUTORS.json",
         "bytes": 4189,
         "sha256": "9ee71f742f29cf7815cddae88cb35c83a5b0f715595d39bc79ccd74147d719ab"
+      },
+      "closureHelper": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 14592,
+        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+      },
+      "retainedNative": {
+        "files": [
+          {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-stock26-reference-candidate-20261023-D3-run1/stock26-groups38303-PENDING.jsonl",
+            "bytes": 166485667,
+            "sha256": "3e8e7c58ea8f80c702eb9defe51454f4d9c0000e781fb87f0486cda6c1a7253d"
+          }
+        ],
+        "records": 38303,
+        "sourceRows": 38314,
+        "typedRows": 38314
       }
     },
     "PAYMENT": {
@@ -205,6 +401,77 @@
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/HEADERS.json",
         "bytes": 6890,
         "sha256": "f09b7c1bc740b40c408bac20b2102b2eac217b8acc05877542492ad78a6670da"
+      },
+      "retainedHeaders": {
+        "sales": {
+          "rows": 28282,
+          "index": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/inputs/sales-header-closure-index.json",
+            "bytes": 25646990,
+            "sha256": "6cf6ca18737dd76957823d6ce7b829b927f0ebd964a096ebe73682dda3ea8060"
+          },
+          "partitions": {
+            "KNOWN25811": {
+              "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/KNOWN25811.jsonl",
+              "rows": 25811,
+              "bytes": 810211896,
+              "sha256": "44f4dc48be0f2312fd8e1602c883d49be995dec552406189ed1859de01bdf28b",
+              "stagingPath": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/private-input-staging/t45-r1-sales28282-header-stage-20261026-95/known25811-prepared-PENDING.jsonl"
+            },
+            "MAPPED2471": {
+              "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/MAPPED2471.jsonl",
+              "rows": 2471,
+              "bytes": 111615389,
+              "sha256": "ba16a5c56060be3fe14de4a4efb622b627ca354248b7972f003f5dd941537aab",
+              "stagingPath": "/home/naijue/erp-release-20261006-01-control/grant-5cc58239751e4e2a/private-input-staging/t45-r1-sales28282-header-stage-20261026-95/confirmed-business-hall2471-prepared-PENDING.jsonl"
+            }
+          },
+          "money": {
+            "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-header-stage-successor-20261026-96/inputs/approved-money-tail-overlay.csv",
+            "bytes": 16249,
+            "sha256": "8ff89ad098f3037a068b855e1f8b1a1fdd593c7a846d4cb24fb1c3a6a5d9c5d9"
+          }
+        },
+        "transfer": {
+          "rows": 14279,
+          "source": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-source12-14279-PENDING.jsonl",
+            "bytes": 122751664,
+            "sha256": "4a38e98a6423711383f4c2d76f0e41fdb88d3b1dae5329f9209aab0ec23a6460"
+          },
+          "typed": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-typed22-14279-PENDING.jsonl",
+            "bytes": 12215288,
+            "sha256": "b73e8c2f3b967db29dcf65e5b3c557edfc8f22acc2e80f87c8c879302c42a011"
+          },
+          "document": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-documents4-14279-PENDING.jsonl",
+            "bytes": 3312728,
+            "sha256": "80258205c3739c2fc6109ed3e1dbb79593db680f7197552049bb45145bc117ea"
+          },
+          "index": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-header-full-projection-20261023-D3-run1/transfer-header-projection-index-PENDING.jsonl",
+            "bytes": 9350584,
+            "sha256": "854e9a58b7764840af5eff55b0d6e7e1af0758722543176ab3c35731271dc315"
+          }
+        },
+        "helpers": {
+          "closure": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sales-header-closure-session-20261026.mjs",
+            "bytes": 11485,
+            "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772"
+          },
+          "salesWindow": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-header-window-20261026.mjs",
+            "bytes": 5566,
+            "sha256": "89c6149ed32c02fd3e41e41f372e864d16fcd5b4864f6be4a16ff57d02bdcd1c"
+          },
+          "transferWindow": {
+            "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-transfer-header-window-20261025-v2.mjs",
+            "bytes": 3481,
+            "sha256": "aaea814af3db254c4801a7e07cadef7ddefd056d2b2f56f0a11c09c38ae70eac"
+          }
+        }
       }
     },
     "SALES_DETAILS": {
@@ -329,12 +596,30 @@
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/TRANSFER_LINES.json",
         "bytes": 4402,
         "sha256": "ea12c90f84ab6105fd6c9a8de3998d523731ef0e81d97d33d8e502a10c78b190"
+      },
+      "retainedTransferLines": {
+        "rows": 261641,
+        "source": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-source12-261641-PENDING.jsonl",
+          "bytes": 903047440,
+          "sha256": "a09f08cdb2a6c31ab40efc619f19a41e3ac1e2b1d8afba1a455ef776190bb820"
+        },
+        "typed": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-typed13-261641-PENDING.jsonl",
+          "bytes": 151167550,
+          "sha256": "7a39bbc0eea1439c9dd1827b698ff09a80ce119c692d4638407359f94f690713"
+        },
+        "index": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/transfer-doc-closure-20261023-D3-run1/transfer-line-projection-index-PENDING.bin",
+          "bytes": 69587332,
+          "sha256": "e11d6293558a83f9deae7c8b414be3d40663cdc92ef9b1ce686bb0bed21e28c6"
+        }
       }
     }
   },
   "authorityModule": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "sha256": "4f86cb89cd246627437dc2b04ea50403307b827a2a1e8011bc61d6a515660695"
+    "sha256": "9a932b1941bc43a12dc69f2ca760b6ee47816060b4c51a2ba6dc4f72a4e17f5a"
   },
   "executionAuthorization": {
     "path": null,

@@ -1,22 +1,22 @@
 {
   "version": "D3_FULL_SOURCE_PROVIDER26_AUTHORITY_SEAM_DELIVERY_20261026_V1",
-  "recordedAtUtc": "2026-10-26T07:14:36.843632+00:00",
+  "recordedAtUtc": "2026-10-26T08:10:53.330568+00:00",
   "authorization": "C source618ProductionAuthoritySeam exact4; actual118 exact215586B data read once separately authorized by C/T45.",
-  "status": "STANDARD_PRODUCTION_AUTHORITY_ENTRY_AND_REAL_VALIDATORS_CONNECTED_NEW_FINITE6_PASS_DATA118_REFERENCED_REAL_EXECUTION_GRANT_AND_FULL_FACTS_PENDING",
+  "status": "SOURCE620_RETAINED_READERS_AND_T04_SOURCE_ONLY_T19_NEXT_NOT_EXECUTION_READY",
   "source": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
-    "bytes": 49898,
-    "sha256": "4f86cb89cd246627437dc2b04ea50403307b827a2a1e8011bc61d6a515660695"
+    "bytes": 80131,
+    "sha256": "9a932b1941bc43a12dc69f2ca760b6ee47816060b4c51a2ba6dc4f72a4e17f5a"
   },
   "tests": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
-    "bytes": 48356,
-    "sha256": "31a42594e84bcb56fc018ec86a95dc4ad6972d8a47687c72d67ae06398843ddb"
+    "bytes": 72922,
+    "sha256": "53619359ed46737a7efc7ba754229733105a8f275a79334406cfc10b7adf20d0"
   },
   "candidate": {
     "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
-    "bytes": 19236,
-    "sha256": "c91b8cf3f99171b07147aadf9120f7893ff4b92c1e04aed7af2892e45710a565"
+    "bytes": 37413,
+    "sha256": "0ab0be3310df01c0ef62c8d0a3300730144b2f1f5203762f6e3b1d31481ea8b2"
   },
   "previousCandidate": {
     "bytes": 15071,
@@ -126,20 +126,16 @@
   },
   "remaining": [
     {
-      "owner": "C/T45 original registered execution carrier",
-      "facts": "Actual executionAuthorization file+independent env pin+exact current job target/actor/deadline/maxSteps. Candidate keeps null; no grant minted by D3."
+      "owner": "D3 next authorized T19 run/provider package",
+      "facts": "Adopt original verified current chain/current seq2 from D1. Skip only exact proven committed MAIN prefix and actual already staged writes; preserve keys/bodies/full closure. Old fixed22/31 checks remain until T19 implementation; no actual run authorized by this package."
     },
     {
-      "owner": "Original all11 source/closure execution owner",
-      "facts": "Real adopted full authorizedPayloadHash, eleven genuine sourceClosurePins, source/typed/42561-document closure roots and exact nonzero-ledger MAIN command files/original keys/current seq+cursor. All remain pending and cannot be replaced by data/source/input hashes."
+      "owner": "C/T45 registered actual carrier",
+      "facts": "Adopt real full payload content/hash definition, full11 roots, ledgerexpected and exact MAIN/grant/job/private source path metadata. Not replaced by core/selection/inputSHA. No grant issued by D3."
     },
     {
-      "owner": "C source integration/original producer owners",
-      "facts": "Non-BARCODE RETAINED PRODUCT/SKU/STOCK/TRANSFER_LINES current recipes still need explicit existing genuine reader options or their actually adopted retained index/reader data. No options are inferred from path. HEADERS needs full actual sales+transfer retained composition; this authority refuses that missing source and does not reconstruct the922MB original header stream or invent an empty reader."
-    },
-    {
-      "owner": "T45 original runtime/source executor",
-      "facts": "C144 actual source/typed/money consumption, post-activation exact native bindings, actual scheme initialization/SKU binding and BARCODE stage/whole all11 closure/MAIN/PUBLISH remain unexecuted. No source iterator or pure grant check is production acceptance."
+      "owner": "T45 original runtime executor",
+      "facts": "Actual full-source reader/MAIN conservation/ACCOUNT→CLOSURE positive/wrongID and PUBLISH validation remain NOT_RUN."
     }
   ],
   "executionReady": false,
@@ -151,7 +147,84 @@
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.test.mjs",
     "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
-    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json"
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-stock-contributor-import.ts",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.test.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+    "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs"
   ],
-  "next": "C freeze/review only new authority/private-ref scope and issue real execution metadata only when actual full facts exist; reuse source612/QB359 and existing data118. Original T45 retains all actual DB/server execution and current-key recovery."
+  "next": "C freeze/review source620 reader/T04 increment; D3 proceeds original T19 run/provider files next, no stale fixed22 fixture recheck until adapted. Original T45 owns every realDB/server action.",
+  "source620": {
+    "authorization": "WRITE-OWNERSHIP.json#source620AuthorizedPriorityPackages D3Continuation plus T04 exact9; no additional files written",
+    "implemented": [
+      "Real original PRODUCTS/SKUS/STOCK retained prepared file readers; bounded future authorized prepared pass creates in-memory original validator/evidence/codec index, original fullfile SHA and complete row counts before source members can stage; no raw recapture or index file written.",
+      "TRANSFER_LINES original TL26JOIN1 packed index/range SHA and original capturedTransferLineRows26 global ordering; genuine original mapper reconstructs exact original DTO and fingerprints for authorize/chunks.",
+      "HEADERS uses original106 complete28282 index and original sales helper plus transfer original source12/typed22/doc4 range index; full global source/typed composition and original doc4 allocations; genuine original header chunks, original32 money Map restored only when stage iterator is requested.",
+      "T04 pure nativeStockPublicationContributor26 shared by reviewed and retained source projection. Immutable STAGE/source rows stay NULL/unlinked; publication deterministic original baseline ID.",
+      "T04 actual source group canonicalKey/nonzero signed quantity/warehouse/SKU must match independently signed MAIN items; all declared ledger items must be seen before ACCOUNT.",
+      "BARCODE source helper pin deliberately advanced to changed T04-derived helper; new finite preflight/member/closure sixscheme compatibility PASS."
+    ],
+    "newChecks": {
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "priorT04ChecksReused": 4,
+      "targetedStrictTypeCheckExit": 0,
+      "actualPG": "NOT_RUN",
+      "sourceBodyLargeReads": 0
+    },
+    "knownIntegrationPending": "An extra old BARCODE positive test that invokes session.steps fails in old scripted CORE response because D1 source620 changed readNativeCoreWarehouseCarryForward to require birth/current/committed-chain fields. It is not counted PASS. Original fixture/helper is to be adapted once in next authorized T19 run/provider package, not weakening original new adapter. Other old suites not rerun.",
+    "futureReadBudget": "No real prepared bodies or25MB/922MB header bodies were read locally. Runtime native3 planned prepared pass builds bounded memory metadata then closure range pass; original already STAGED scopes must use T19 proven write skipping, keeping full readers. C/T45 controls any real source window and grants.",
+    "actual106Index": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/inputs/sales-header-closure-index.json",
+      "bytes": 25646990,
+      "sha256": "6cf6ca18737dd76957823d6ce7b829b927f0ebd964a096ebe73682dda3ea8060",
+      "entries": 28282,
+      "complete": true
+    },
+    "actual106Receipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-sales28282-remaining23793-stage-20261026-106/ACTUAL-STAGE-SUMMARY.json",
+      "bytes": 3392,
+      "sha256": "2a6c01c236f8cceeab058404115e2a5d9fcba8b3ff79c1e3bf1b47465c4db570"
+    },
+    "current121Receipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-six-scheme-init-warehouse-count-20261026-121/ACTUAL-INITIALIZATION-SUMMARY.json",
+      "bytes": 2917,
+      "sha256": "a311db766f4e6e4397ff753bd2456f224c4a84937912c7a3764a3319a2f22083"
+    },
+    "helper": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+      "bytes": 14592,
+      "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+    },
+    "modifiedFiles": [
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/packages/application/src/native-stock-contributor-import.ts",
+        "bytes": 10901,
+        "sha256": "87f43586fd737755e6bebcb046116ce8de0d447525e5bfebb2abe1fae6463448"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.mjs",
+        "bytes": 20345,
+        "sha256": "65f317c9706a5013d2b938b271ee4cd00f3e9c04489f891ca55d9c1cf692cb8c"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/native-stock-source26.test.mjs",
+        "bytes": 19508,
+        "sha256": "43ea316d6754a2afa53295ab797fdb2abc593bb4c98e94356aa489d194960b96"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+        "bytes": 14592,
+        "sha256": "6f87f87f5acbeee6930924cc13073b54194d7301d113421ec381009334f65b22"
+      },
+      {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+        "bytes": 24207,
+        "sha256": "5d229a060d1005b8a07b708e50ebb8415e39b6662d5656fce6b32ba883691ce5"
+      }
+    ],
+    "pathSemantics": "Sales complete index and partitions explicitly retain original server paths, including original partition metadata; no25MB copy or implicit rewrite. Other retained file paths/code refs remain original local DATA recipes; C/T45 must explicitly adopt actual corresponding server path pins before execution. Never infer alternate files."
+  }
 }

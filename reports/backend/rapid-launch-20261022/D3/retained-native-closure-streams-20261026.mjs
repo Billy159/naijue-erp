@@ -26,8 +26,7 @@ export function projectRetainedNativeClosureRecord26(original,group,prepared){
   original.validatePreparedNativeStockGroup(prepared);
   // Same nine fields as native-stock-source26.mjs private typed(group,row).
   for(const c of prepared.contributors){sources.push(project('import_source_row',original.nativeStockSourceEvidence(prepared,c)));
-   typed.push(project('import_stock_contributor',{batch_id:prepared.batchId,source_row_id:c.source.id,warehouse_id:prepared.warehouse.nativeId,canonical_sku_id:prepared.sku.nativeId,
-    old_source_sku_id:c.lineage.oldSkuSourceId,canonical_stock_source_key:prepared.canonicalStock.来源编号,source_unit:c.lineage.sourceUnit,signed_quantity:c.lineage.signedQuantity,baseline_ledger_id:null}));}
+   typed.push(project('import_stock_contributor',original.nativeStockPublicationContributor26(prepared,c)));}
  }
  return{sources,typed};
 }
