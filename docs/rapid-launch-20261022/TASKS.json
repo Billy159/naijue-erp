@@ -11638,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE577",
+    "round": "SOURCE578",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12952,7 +12952,16 @@
         "wholeGroup": true,
         "addedColorCreatesMissingFullGroupSkusAndMains": true,
         "newFieldsTablesIndexes": false,
-        "next": "D2 originalSAVE generator;D3 exact6 data/borrowedclient;D1 exact2constraints3functions+helper and original command/store/CLI/profile; original QB affected source review then T45 bounded actualQA"
+        "next": "D2 originalSAVE generator;D3 exact6 data/borrowedclient;D1 exact2constraints3functions+helper and original command/store/CLI/profile; original QB affected source review then T45 bounded actualQA",
+        "initApprovalPins": {
+          "proposalSha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00",
+          "approvalSha256": "f9da50c270c14321b17af06255a5f0649daf8b55a725b6a29fe483f342517533",
+          "writeContractSha256": "32c494a5c2f04c9c1ad009d27e78ebd4b83a06603d6337e3d8c3d2586ad309ed",
+          "writeContractReplySha256": "9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc",
+          "barcodeSourceManifestSha256": "534c30ce910d6ee1220873c7d390f365783e83c1ec3400e692b9c42057fe3acc",
+          "barcodeSourceReviewSha256": "d35efad27b0ec7fcdea695c91f84b068b17d6c9ea5b13d46c9515a6027d36818"
+        },
+        "seam": "D1 exact BarcodeSchemeInitialization26.assertAllowed/initializeSchemes26 borrowed original queryclient; D3 exact6 initializer/rowvalidator. One agreed sixpin technical schema, no further business question."
       }
     },
     "server566": {
@@ -13035,7 +13044,8 @@
       "next": "One necessary combined F2/cache candidate build, original scoped review and T45 actual prefix integration",
       "hostSha256": "80989a8c2227e7b1eb6a6e62409762d8c2fdedb2c0aa4a74b1cb5e16a853a4f3",
       "testSha256": "2f533ffdb1891a4c3f545f6f2daf575163b99402aefca7da2328411121cf9776",
-      "CProxySource": "scripts/release/deploy-candidate.py upstream200 policy map else no-store; source generation check only, actual nginx not tested"
+      "CProxySource": "scripts/release/deploy-candidate.py upstream200 policy map else no-store; source generation check only, actual nginx not tested",
+      "QB339": "PASS_SCOPED_SOURCE_2c638a331e56b10407ca9bba3bff1f0dd47db81ac8b5f5d62d8eabb50278fec7"
     }
   }
 }
