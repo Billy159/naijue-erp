@@ -3,6 +3,8 @@ import type { IncomingMessage, Server, ServerResponse } from "node:http";
 import type { Duplex } from "node:stream";
 import { lstat, readdir, readFile, realpath } from "node:fs/promises";
 import path from "node:path";
+import { promisify } from "node:util";
+import { gzip, brotliCompress, constants } from "node:zlib";
 import type { PostgresApplicationApi } from "./postgres-read-api.ts";
 import { parseProductionRuntimeConfiguration } from "./production-provider-composition.ts";
 import { productionRuntime26HostConfiguration } from "./production-provider-composition.ts";
@@ -34,7 +36,10 @@ function safeRelative(value: string, directory = false): boolean {
 }
 /** Same bounded public-output boundary as the local HTTPS host. The reverse proxy
  * serves no source tree: only these captured emitted bytes can leave this host. */
-async function captureBuild(root: string, entry: string): Promise<ReadonlyMap<string, { readonly bytes: Buffer; readonly type: string }>> {
+interface CapturedAsset { readonly bytes: Buffer; readonly type: string; readonly gzip?: Buffer; readonly br?: Buffer }
+const gzipAsset = promisify(gzip), brotliAsset = promisify(brotliCompress);
+// Encode captured public JS/CSS once at startup, never on the request path.
+async function captureBuild(root: string, entry: string): Promise<ReadonlyMap<string, CapturedAsset>> {
   if (!path.isAbsolute(root) || path.resolve(root) !== root || !safeRelative(entry) || /synthetic|fixture|harness/i.test(entry)
     || path.extname(entry) !== ".html" || await realpath(root) !== root)
     throw new TypeError("Explicit canonical build directory and public HTML entry required");
@@ -43,7 +48,7 @@ async function captureBuild(root: string, entry: string): Promise<ReadonlyMap<st
       throw new TypeError("Build ancestors cannot be links or source/provenance locations");
     if (parent === path.dirname(parent)) break;
   }
-  const result = new Map<string, { readonly bytes: Buffer; readonly type: string }>(); let total = 0, files = 0, entries = 0;
+  const result = new Map<string, CapturedAsset>(); let total = 0, files = 0, entries = 0;
   async function walk(directory: string, prefix: string, depth: number): Promise<void> {
     if (depth > 16) throw new TypeError("Build exceeds directory depth limit");
     for (const item of await readdir(directory, { withFileTypes: true })) {
@@ -58,12 +63,41 @@ async function captureBuild(root: string, entry: string): Promise<ReadonlyMap<st
       if (await realpath(absolute) !== absolute) throw new TypeError("Build files must be canonical");
       const bytes = await readFile(absolute); total += bytes.byteLength;
       if (bytes.byteLength !== stat.size || total > 64 * 1024 * 1024) throw new TypeError("Build changed during capture");
-      result.set(relative, Object.freeze({ bytes, type }));
+      if (/\.(?:js|css)$/i.test(relative)) {
+        const gz = await gzipAsset(bytes);
+        const br = await brotliAsset(bytes, { params: { [constants.BROTLI_PARAM_QUALITY]: 4 } });
+        result.set(relative, Object.freeze({ bytes, type,
+          ...(gz.length < bytes.length ? { gzip: gz } : {}), ...(br.length < bytes.length ? { br } : {}) }));
+      } else result.set(relative, Object.freeze({ bytes, type }));
     }
   }
   await walk(root, "", 0);
   if (!result.has(entry)) throw new TypeError("The configured actual build HTML entry is unavailable");
   return result;
+}
+function selectEncoding(header: string | undefined, asset: CapturedAsset): "gzip" | "br" | "identity" | undefined {
+  if (!header?.trim()) return "identity";
+  const qualities = new Map<string, number>();
+  for (const item of header.split(",")) {
+    const [name, ...parameters] = item.trim().toLowerCase().split(";");
+    if (!name) continue;
+    let quality = 1;
+    for (const parameter of parameters) {
+      const [key, value] = parameter.trim().split("=");
+      if (key === "q") quality = value && /^(?:0(?:\.\d{0,3})?|1(?:\.0{0,3})?)$/.test(value) ? Number(value) : 0;
+    }
+    qualities.set(name, quality);
+  }
+  const wildcard = qualities.get("*");
+  // Identity is acceptable by default; explicit preferences can outrank it.
+  const identity = qualities.get("identity") ?? (wildcard === 0 ? 0 : 1);
+  let selected: "gzip" | "br" | "identity" | undefined = identity > 0 ? "identity" : undefined;
+  let best = qualities.get("identity") ?? 0;
+  for (const encoding of ["br", "gzip"] as const) {
+    const quality = qualities.get(encoding) ?? wildcard ?? 0;
+    if (asset[encoding] && quality > 0 && quality > best) { selected = encoding; best = quality; }
+  }
+  return selected;
 }
 function failure(response: ServerResponse, status: number): void {
   response.writeHead(status, { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-content-type-options": "nosniff" });
@@ -103,8 +137,15 @@ export async function createProductionRequestHandler(options: ProductionApplicat
     if (pathname.startsWith("/assets/") && name.startsWith(buildPrefix)) name = name.slice(buildPrefix.length);
     if (!safeRelative(name)) return failure(response, 404);
     const asset = assets.get(name); if (!asset) return failure(response, 404);
-    response.writeHead(200, { "content-type": asset.type, "content-length": asset.bytes.byteLength, "cache-control": "no-store", "x-content-type-options": "nosniff" });
-    response.end(request.method === "HEAD" ? undefined : asset.bytes);
+    const encoding = selectEncoding(request.headers["accept-encoding"], asset);
+    if (!encoding) {
+      response.writeHead(406, { "vary": "Accept-Encoding", "content-length": 0, "cache-control": "no-store", "x-content-type-options": "nosniff" });
+      response.end(); return;
+    }
+    const bytes = encoding === "identity" ? asset.bytes : asset[encoding]!;
+    response.writeHead(200, { "content-type": asset.type, "content-length": bytes.byteLength, "vary": "Accept-Encoding",
+      ...(encoding === "identity" ? {} : { "content-encoding": encoding }), "cache-control": "no-store", "x-content-type-options": "nosniff" });
+    response.end(request.method === "HEAD" ? undefined : bytes);
   };
 }
 async function closeListener(server: Server | undefined, sockets: ReadonlySet<Duplex>): Promise<void> {

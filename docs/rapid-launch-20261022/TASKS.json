@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE559",
+    "round": "SOURCE560",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "4edbbe42c89fd217ebda7741918bd30964986240",
+    "sourceHeadBeforeThisContinuityCommit": "5495910795669f045ecbb9f461e99d962da9a760",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12729,8 +12729,24 @@
       "thread": "01a175eb-052d-71e2-9bb5-c4c5a6fe285b",
       "reason": "New dedicated compression line explicitly requested by human in original taskbook; reuse it, no duplicate created by C",
       "owner": "Temporary original D1 two host leaves only; other owners unchanged",
-      "status": "IMPLEMENTATION_ACTIVE_NOT_DEPLOYED",
-      "next": "Source+targeted checks to C, fixed same-version integration and T45 actual public encoding readback; do not stop CORE12 staged deployment"
+      "status": "SOURCE_IMPLEMENTED_OWNER_CHECKS_PASS_QB_NEW2_LEAF_REVIEW_ACTIVE",
+      "next": "C fixed CORE13 builds frontend unchanged+new backend host, QB narrow source adoption, original T45 new APP candidate, dedicated line only then actual public encoding readback",
+      "checks": "Original host15/15, strict two roots0, diffcheck0; real localhost raw HTTP12 JS/CSS×identity/gzip/br×GET/HEAD with API double no DB allPASS",
+      "localOnlyMeasurements": {
+        "core12ApplicationBytes": [
+          51121,
+          16009,
+          16431
+        ],
+        "core12ArcoCssBytes": [
+          570426,
+          64058,
+          67527
+        ],
+        "captureAndCompressionMs": 138.64
+      },
+      "implementation": "Only startup capture asynchronously computes gzip and br quality4, retains only smaller buffers; no per-request compression, original whitelist/64MiB identity/no-store/API/auth/health untouched",
+      "publicEncoding": "NOT_YET_DEPLOYED_OR_TESTED"
     }
   }
 }

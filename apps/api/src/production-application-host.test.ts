@@ -3,6 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
+import { gunzipSync, brotliDecompressSync } from "node:zlib";
 import path from "node:path";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { PostgresApplicationApi } from "./postgres-read-api.ts";
@@ -34,7 +35,7 @@ function invoke(handle: (r: IncomingMessage, s: ServerResponse) => void, url: st
   let status = 0, body: string | Buffer | undefined, responseHeaders: Record<string, unknown> = {};
   const request = { url, method, headers: { host, ...headers } } as IncomingMessage;
   const response = { writeHead(code: number, values?: Record<string, unknown>) { status = code; responseHeaders = values ?? {}; }, end(bytes?: string | Buffer) { body = bytes; } } as unknown as ServerResponse;
-  handle(request, response); return { status, body: body?.toString(), headers: responseHeaders };
+  handle(request, response); return { status, body: body?.toString(), bytes: body, headers: responseHeaders };
 }
 async function build() {
   const root = await realpath(await mkdtemp(path.join(os.tmpdir(), "erp-production-host-")));
@@ -282,5 +283,47 @@ test("production assets: captured hashed source-helpers chunk resolves without o
     for (const name of [chunk, `source/${chunk}`, `chunks/../${chunk}`, `chunks/%2e%2e/${chunk}`, `OTHER_BUILD/chunks/${chunk}`])
       assert.equal(invoke(handle, `/assets/${name}`).status, 404, name);
     assert.deepEqual(p.routed, []);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+
+test("captured JS/CSS negotiate startup gzip/br with exact decoded bytes, lengths and bodyless HEAD", async () => {
+  const root = await build(), p = apiDouble();
+  const js = "window.example = 'static compression';\n".repeat(2000), css = ".example { color: red; }\n".repeat(2000);
+  try {
+    await writeFile(path.join(root, "app.js"), js); await writeFile(path.join(root, "app.css"), css);
+    const handle = await createProductionRequestHandler({ api: p.api, configuration: config(root) });
+    await writeFile(path.join(root, "app.js"), "CHANGED_AFTER_CAPTURE");
+    for (const [name, original] of [["app.js", js], ["app.css", css]]) {
+      const url = `/assets/${config(root).build.buildId}/${name}`;
+      for (const encoding of ["gzip", "br"]) {
+        const headers = { "accept-encoding": encoding }, get = invoke(handle, url, "GET", undefined, headers);
+        assert.equal(get.status, 200); assert.equal(get.headers["content-encoding"], encoding);
+        assert.equal(get.headers.vary, "Accept-Encoding"); assert.equal(get.headers["cache-control"], "no-store");
+        assert.ok(Buffer.isBuffer(get.bytes)); const bytes = get.bytes as Buffer;
+        assert.equal(get.headers["content-length"], bytes.length); assert.ok(bytes.length < Buffer.byteLength(original!));
+        assert.equal((encoding === "gzip" ? gunzipSync(bytes) : brotliDecompressSync(bytes)).toString(), original);
+        const head = invoke(handle, url, "HEAD", undefined, headers);
+        assert.deepEqual(head.headers, get.headers); assert.equal(head.bytes, undefined);
+      }
+      for (const accept of [undefined, "", "identity", "gzip;q=0, br;q=0", "deflate", "gzip;q=0.2, identity;q=1"]) {
+        const identity = invoke(handle, url, "GET", undefined, accept === undefined ? {} : { "accept-encoding": accept });
+        assert.equal(identity.body, original); assert.equal(identity.headers["content-encoding"], undefined);
+        assert.equal(identity.headers["content-length"], Buffer.byteLength(original!));
+      }
+      for (const [accept, expected] of [["gzip;q=1,br;q=0.5", "gzip"], ["GZIP, BR", "br"], ["*", "br"],
+        ["br;q=0, *;q=0.5", "gzip"], ["gzip;q=0.5, br;q=0.8", "br"], ["gzip;q=1, identity;q=0", "gzip"]]) {
+        assert.equal(invoke(handle, url, "GET", undefined, { "accept-encoding": accept! }).headers["content-encoding"], expected);
+      }
+      for (const accept of ["*;q=0", "gzip;q=0,br;q=0,identity;q=0", "deflate,identity;q=0"]) {
+        for (const method of ["GET", "HEAD"]) {
+          const rejected = invoke(handle, url, method, undefined, { "accept-encoding": accept });
+          assert.equal(rejected.status, 406); assert.equal(rejected.bytes, undefined); assert.equal(rejected.headers["content-length"], 0);
+        }
+      }
+    }
+    const api = invoke(handle, "/api/example", "POST", undefined, { "accept-encoding": "gzip,br" });
+    assert.equal(api.body, "API404"); assert.equal(api.headers["content-encoding"], undefined);
+    assert.equal(invoke(handle, "/healthz", "GET", undefined, { "accept-encoding": "gzip" }).headers["content-encoding"], undefined);
   } finally { await rm(root, { recursive: true, force: true }); }
 });

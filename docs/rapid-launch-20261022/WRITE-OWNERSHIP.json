@@ -5556,7 +5556,7 @@
       "apps/api/src/production-application-host.ts",
       "apps/api/src/production-application-host.test.ts"
     ],
-    "state": "C_ASSIGNED_TEMPORARY_WRITER_NO_EXISTING_WIP_OR_ACTIVE_D1_WRITER",
+    "state": "DELIVERED_TWO_HOST_LEAVES_WRITER_RETURNED_TO_C_ORIGINAL_D1_ROUTE",
     "scope": "Static JS/CSS encoding negotiation only; existing API/auth/permissions/flags untouched; C owns build/package and all continuity records, T45 sole server/deploy. No mirror team.",
     "correction": "Earlier dispatch mistakenly said original owner C; immediately corrected to D1, historical assignment preserved."
   }
