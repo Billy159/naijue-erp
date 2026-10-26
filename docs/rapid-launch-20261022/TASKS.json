@@ -14224,8 +14224,8 @@
       },
       "privateRuntimeTemplate": "1582/85400a4b9ec5e603189a8e06e0bfea916dbd2e01f0e8bdfd01f7def2d70f4653; not Git",
       "delta": "Transport from connected client parameters; keep real SQL target identity; strict SQLSTATE only; successor02 wx root",
-      "actual": "NOT_RUN; original01 preserved; current19 stopped no restore required",
-      "next": "T45 accurate02 successor startup current stopped19 only; fresh metadata/current gate; no original01 replay or restore19"
+      "actual": "02_FIXTURE_COMMITTED_FIRST_DRAFT_PRECHECK_FAILED_NO_HREV_PASS",
+      "next": "D1 first actual draft assertion only; preserve current26/QA and original6keys; no setup/restore/replay"
     },
     "source646IndependentResults": {
       "QB386": {
@@ -14248,7 +14248,7 @@
     "source647FirstPreparationKeys": {
       "status": "FIRST109_KEYS_FROZEN_PREPARATION_ONLY_NO_EXECUTION_GRANT",
       "registrationId": "c-full-source-preparation-20261026-01",
-      "deadlineUtc": "2026-10-26T12:35:00Z",
+      "deadlineUtc": "2026-10-26T12:50:00Z",
       "maxSeconds": 900,
       "remainingItems": 53333,
       "chunkRows": 500,
@@ -14260,6 +14260,20 @@
       "sha256": "10159f131fb703ce48a69187be059bb2e7b7c4d16db0f7f5c973053ed2e8fb1c",
       "artifactRows": "D3 DELIVERY83151/ec12fe5ab2c77c3e89d03959ca003e53e3c080e18b93e6298fe906ddb959f176 source635ExecutionSeamMetadata",
       "next": "T45 final same-version physical input/scope bytes SHA; deadline only refresh if not started; no replacement keys after unknown submit"
+    },
+    "source648B07Actual02": {
+      "status": "FIXTURE_COMMITTED_CONTINUATION_FAILED_PRESERVE_COPY_AND_ORIGINAL_KEYS",
+      "QB388": "Current live six-purpose independent PASS adopted; 2748/3a5ef2d1cdfb27caf7d8914deab64ed18f38f81c7fc0f2043ff46f0dde948962",
+      "currentReview": "1219/6b4163b1b232428b3a4146e8e1a361df37c0ddf1318334cbe3d151f8aea37898",
+      "gate": "1081/7be775028bce8f0ac26036e1ccac62d0a141f2bc332b0a18dbe05428741c5000",
+      "actualSeconds": 239.076612125,
+      "fixtureActual": true,
+      "httpActual": false,
+      "actualHrev": false,
+      "firstFailure": "DRAFT_SALES_QUANTITY_NO_STOCK ERR_ASSERTION; requestKey null/cases empty/no request receipt; do not infer submitted outcome from absence alone",
+      "clientsClosed": true,
+      "onlyOwnPidStopped": true,
+      "next": "D1 original runner first assertion evidence and minimal successor; T45 source-only126 continues independently"
     }
   }
 }
