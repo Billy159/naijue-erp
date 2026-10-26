@@ -11644,9 +11644,9 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE556",
+    "round": "SOURCE557",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
-    "sourceHeadBeforeThisContinuityCommit": "27044ccf268c702c4193f9b711498c185671fccc",
+    "sourceHeadBeforeThisContinuityCommit": "00e0bfcc166d8851c2d63d448fffcb67120dbe44",
     "fixedCandidates": {
       "first": {
         "source": "e0fa036d8b837da544743c7668dcf8317f7e2af4",
@@ -12691,6 +12691,14 @@
         "Current user login root cause",
         "Any new whole-page or real business PASS"
       ]
+    },
+    "startupBuild557": {
+      "firstFixedSource": "00e0bfcc166d8851c2d63d448fffcb67120dbe44",
+      "build": "replica-production-source556-core-11",
+      "result": "FAILED_UNSUPPORTED_OR_DUPLICATE_HTML_ATTRIBUTE",
+      "cause": "New stylesheet marker attribute not supported by existing release HTML allowlist",
+      "fix": "Use existing rel/href only and select exact Arco stylesheet suffix. No validator/assertion relaxed. Preserve failed fixed-build as evidence.",
+      "next": "New fixed source build, original QF affected checks; no runtime/performance/deploy claimed"
     }
   }
 }

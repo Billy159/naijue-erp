@@ -14,7 +14,7 @@ export async function startReplicaProductionHost() {
  configureReplicaStyleAssetBase(configuration.assets.basePath);
  // The deferred module runs after the shared head stylesheet has settled.
  // Keep Arco before the copied overrides without carrying its CSS as JavaScript.
- const sharedArco=document.head.querySelector<HTMLLinkElement>('link[data-shared-arco="2.66.16"]');
+ const sharedArco=document.head.querySelector<HTMLLinkElement>('link[rel="stylesheet"][href$="/source-styles/arco.css"]');
  if(!sharedArco?.sheet)throw new Error('Shared interface stylesheet unavailable.');
  const startup=new AbortController();let owner:ReturnType<typeof mountNormalReplica>|undefined,disposed=false;
  const required=(selector:string)=>{const node=document.querySelector<HTMLElement>(selector);if(!node)throw new Error('Missing copied host '+selector);return node;};

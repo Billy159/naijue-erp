@@ -1,3 +1,5 @@
+SOURCE557（2026-10-26）：首次固定556/CORE11构建在原发布校验被拒：新Arco link标记属性不在既有HTML允许清单。构建失败如实保留，未上线；已改用原rel/href属性及精确CSS路径选择，不改校验器、不放宽断言、不删除样式。重新固定后只构建修订包，原F1已通过的按需生命周期证据继续复用。
+
 SOURCE556（2026-10-26）：F1 DOC198已实际交付runtime-host d39de5aa，原账号组件值静态import已移除，仅真实principal后加载原同module，加载失败可重试、身份退出丢迟到结果、原改密Modal首次打开挂载；不声称物理拆passwordchunk。采用原定向host/controlled lifecycle检查PASS，C合并runtime类型检查exit0、builder语法及diff检查exit0。F1临时写权已返C，C前置Arco外链改动组成一个关联包，接下来固定同flags/API的CORE11构建并交原QF必要受影响短验。当前仍源码阶段、未测真实浏览器耗时/首击/正式性能，不宣称登录根因已修或全站业务通过；原T45备份/2客户stage独立继续。
 
 SOURCE555（2026-10-26）：actual79/80已见post75 login200/422ms、session200/208ms及受保护query200/279–531ms；C只读Chrome现#sales显示账号公共壳和“此页面尚未接入当前版本”，没输入/刷新。库存/调拨/销货等CORE10 flags仍false是真实业务接线/全11发布缺口，不能用匿名200当解决，也不直接开flag。真实销售暂存、全11 MAIN/PUBLISH、对应read用途由原D3/T45/QB继续；历史编辑与正式根发布仍缺。
