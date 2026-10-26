@@ -6048,5 +6048,22 @@
     "preimageDecision": "C adopts existing opaque authorizedPayloadHash as requestHash of complete actual DATA manifest (closed source/native/stock content refs+actual counts+namespace/cutoff/selection+CORE birth/current maintenance) excluding authorizedPayloadHash itself, execution/code/review/config refs, generated BIND/ACCOUNT/PUBLISH/closure plan. Hash is transitive actual complete frozen data identity; not arbitrary or one-subset hash. Exact actual artifact bytes/pins and complete membership required before real use.",
     "authorization": "Verified latest human real business wiring priority; internal execution DATA assembly within approved v14, no new persistent business contract",
     "actualExecutionOwner": "T45 only after original fixed source and actual registered private DATA"
+  },
+  "source624FullReleasePreparationHandoff": {
+    "owner": "D1",
+    "priorOwner": "C for release scripts; handed off now no concurrent C writes",
+    "activation": "After current prepare-native-bindings exact2 handback; independent files next package",
+    "exactFiles": [
+      "apps/api/src/production-main.ts",
+      "apps/api/src/production-provider-composition.ts",
+      "scripts/release/deploy-candidate.py",
+      "scripts/release/boot-entry.py",
+      "scripts/release/rollback-candidate.py",
+      "scripts/release/DEPLOYMENT.md",
+      "scripts/release/BOOT-ENTRY.md"
+    ],
+    "scope": "S/SOL61-TASKS.json T21 local exact26-full successor only. Original schema19/exact26-r1 closed old branches preserved. Existing full API selector/R3 implementation already exists, reuse unchanged unless concrete missing delta. Current code needs accurate purpose/schema/media/config bindings not hardcoded old121/QB. No actual install/deploy/boot/DB or metadata grant invented.",
+    "actualOwner": "C Git/build/integration; T45 server/DB/deploy/boot; D1 offline original7 leaves only",
+    "authorization": "Latest verified taskbook real business first; S T21 allows bounded D1 offline handoff; original deployment approval preserved"
   }
 }
