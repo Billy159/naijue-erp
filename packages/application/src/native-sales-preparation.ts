@@ -226,7 +226,7 @@ export function parseNativeSalesSaveProposal(input:unknown):NativeSalesSavePropo
     requireDomain(typeof l.quantity==='string'&&quantity(l.quantity)!==0n&&(p.businessType!=='SALE'||quantity(l.quantity)>0n),'INVALID_SALES_QUANTITY','Actual signed quantity required');
     requireDomain(typeof l.isGift==='boolean'&&typeof l.zeroConfirmed==='boolean','UNKNOWN_PRICING_FACTS','Actual pricing intent required');
     requireDomain(l.pricingRule==='UNIT_PRICE'?l.discountTenths===null&&(l.isGift||typeof l.dealPrice==='string'):
-      l.pricingRule==='DISCOUNT'&&l.dealPrice===null&&typeof l.discountTenths==='number'&&Number.isInteger(l.discountTenths)&&l.discountTenths>=0&&l.discountTenths<=100,'INVALID_LINE_DISCOUNT','Unambiguous pricing intent required');
+      l.pricingRule==='DISCOUNT'&&(l.dealPrice===null||typeof l.dealPrice==='string')&&typeof l.discountTenths==='number'&&Number.isInteger(l.discountTenths)&&l.discountTenths>=0&&l.discountTenths<=100,'INVALID_LINE_DISCOUNT','Unambiguous pricing intent required');
     if(l.dealPrice!==null)money(l.dealPrice);
     return {...parseDocumentSkuSelection({[which]:l[which]}),existingLineId:l.existingLineId===null?null:entityId('salesLine',l.existingLineId as string),
       quantity:l.quantity,dealPrice:l.dealPrice as string|null,pricingRule:l.pricingRule as 'UNIT_PRICE'|'DISCOUNT',discountTenths:l.discountTenths as number|null,isGift:l.isGift,zeroConfirmed:l.zeroConfirmed};
@@ -249,6 +249,10 @@ export function parseNativeSalesSaveProposal(input:unknown):NativeSalesSavePropo
 export async function prepareNativeSalesOnTransaction(dependencies:SalesDependencies,tx:SalesTransaction,actor:ActorContext,
   proposal:NativeSalesSaveProposal,documentId:string,stored:StoredSales|undefined,skuIds:readonly string[]):Promise<SalesDraft>{
   const previous=stored?.document,zero=minorAmount('0');
+  // This path runs only after original-key receipt lookup. Legacy null commands
+  // remain parseable/replayable, but cannot silently choose a new monetary intent.
+  requireDomain(proposal.lines.every(row=>row.isGift||row.pricingRule!=='DISCOUNT'||row.dealPrice!==null),
+    'SALES_PRICE_QUOTE_REQUIRED','Confirm the displayed discounted price before a new SAVE');
   requireDomain(!previous||previous.header.status==='DRAFT','INVALID_STATE','Only actual drafts can be edited');
   requireDomain(skuIds.length===proposal.lines.length,'INVALID_LINES','Resolved selections must retain current rows');
   const header={id:entityId('sales',documentId),number:previous?.header.number??sourceConfirmedCreateDocumentNumber('SALE',entityId('sales',documentId)),
@@ -283,7 +287,11 @@ export async function prepareNativeSalesOnTransaction(dependencies:SalesDependen
     requireDomain(product&&product.referencePrice!==undefined,'PRODUCT_PRICING_UNAVAILABLE','Complete current pricing required');
     const referencePrice=fresh.has(l.id)?product.referencePrice:l.referencePrice;let dealPrice=l.dealPrice;
     if(l.isGift){requireDomain(dealPrice===0n,'INVALID_GIFT_PRICE','Gift price must be zero');dealPrice=zero;}
-    else if(l.pricingRule==='DISCOUNT'){requireDomain(referencePrice!==null,'PRODUCT_PRICING_UNAVAILABLE','Discount needs actual reference');dealPrice=discountUnitPrice(referencePrice,l.discountTenths!);}
+    else if(l.pricingRule==='DISCOUNT'){
+      requireDomain(referencePrice!==null,'PRODUCT_PRICING_UNAVAILABLE','Discount needs actual reference');
+      const actual=discountUnitPrice(referencePrice,l.discountTenths!);
+      requireDomain(dealPrice===actual,'SALES_DISPLAYED_PRICE_CHANGED','Locked reference no longer gives the displayed discounted price');dealPrice=actual;
+    }
     return {...l,referencePrice,dealPrice,lineAmount:multiplyMoney(dealPrice,l.quantity)};
   });
   const allocations=header.businessType==='SALE'?allocateSalesDiscount(priced.map(l=>l.lineAmount),header.orderDiscount):priced.map(()=>zero);

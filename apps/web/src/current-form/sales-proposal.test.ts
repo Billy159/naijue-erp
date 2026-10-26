@@ -135,3 +135,48 @@ test('both new SAVE proposal paths require salesperson while leaving original em
  assert.equal(h.session.validate(),null);assert.ok(h.session.getSnapshot().errors.includes('请选择在职营业员。'));
  assert.equal(h.session.saveProposal(null),null);assert.ok(h.session.getSnapshot().errors.includes('请选择在职营业员。'));assert.equal(h.session.getSnapshot().draft.salesperson,null);
 });
+
+test('atomic SAVE quotes exact displayed discounted prices for missing specifications in new and saved drafts', async () => {
+ const {salesProposalMoney}=await import('./sales-proposal.ts');
+ const sized={...product,sizeGroupId:sku.sizeGroupId,retailPrice:'100.00'},missing=uuid(71);
+ const overrides:Partial<SalesProposalReader>={
+  async readProducts(){return page([sized]);},
+  async readSizeGroups(){return {page:1,pageSize:100,total:1,items:[{id:sku.sizeGroupId,name:'TEST sizes',sizes:[{id:sku.sizeId,name:sku.sizeName,displayOrder:0},{id:missing,name:'170/M',displayOrder:1}]}]};},
+ };
+ for(const existing of [false,true]){
+  let h=setup(overrides);await fill(h.session);h.session.updateLine(sku.id,{dealPrice:'12.34'});
+  const originalKey=uuid(77);
+  if(existing){
+   const seed=h.session.validate()!;h.context.clear();h=setup(overrides);
+   assert.equal(h.session.initializeFromSaved({...seed,lines:seed.lines.map(row=>({...row,key:originalKey}))}),true);
+  }else h.session.removeLine(sku.id);
+  const session=h.session;
+  const entryKey=session.getSnapshot().entries.OUT.at(-1)!.key;
+  await session.openEntryPicker('OUT','product',entryKey);assert.equal(await session.select(product.id),true);
+  for(const [kind,id] of [['color',sku.colorId],['fit',sku.fitId],['size',missing]] as const){await session.openEntryPicker('OUT','sku',entryKey);assert.equal(session.selectSpec(kind,id),true,kind+': '+JSON.stringify(session.getSnapshot().picker)+' '+session.getSnapshot().notice);}
+  session.updateEntry('OUT',{pricingRule:'DISCOUNT',discount:'8',quantity:'2',dealPrice:'raw-unrelated'},entryKey);
+  const before=session.getSnapshot(),display=salesProposalMoney({...before.draft,lines:session.pricingLines!});
+  const proposal=session.saveProposal(existing?uuid(78):null,existing?new Set([originalKey]):new Set());assert.ok(proposal);
+  const line=proposal.lines.at(-1)!;assert.ok('spec' in line);assert.equal(line.dealPrice,'80.00');assert.equal(line.discountTenths,80);
+  assert.equal(display?.grossMinor,existing?'17234':'16000');assert.equal(session.getSnapshot().entries,before.entries,'serialization preserves raw specification input');
+  if(existing)assert.equal(proposal.lines[0]!.existingLineId,originalKey);
+  else{
+   const {SalesCommandWorkspace}=await import('../sales/commands/controller.ts');
+   const {createSalesCommandHttpClient}=await import('../sales/commands/http-client.ts');let calls=0;
+   const client=createSalesCommandHttpClient({origin:'https://synthetic.test',basePath:'/api',fetch:async(_url,init)=>{calls++;const body=JSON.parse(init.body as string);assert.equal(body.proposal.lines[0].dealPrice,'80.00');return Response.json({error:{code:'SALES_DISPLAYED_PRICE_CHANGED',message:'quoted80 differs from locked96'}},{status:409});}});
+   const owner=new SalesCommandWorkspace({scope:h.scope,client,reader:{async readDetail(){throw Error('No read after rejection');}},newRequestKey:()=> 'TEST.spec-quote',onAccessFailure(){throw Error('No access failure');}});
+   assert.equal(await owner.submitProposal(proposal),false);assert.equal(owner.getSnapshot().write.phase,'rejected');assert.equal(calls,1);
+   assert.equal(session.getSnapshot().entries,before.entries,'known price rejection preserves original screen input');assert.equal(owner.getSnapshot().write.command?.requestKey,'TEST.spec-quote');
+  }
+  h.context.clear();
+ }
+});
+test('SAVE discount quote uses integer pennies for large amounts, signed returns and confirmed zero without changing gift semantics',async()=>{
+ const h=setup({},'90071992547409.93');await fill(h.session);h.session.updateLine(sku.id,{pricingRule:'DISCOUNT',discount:'8'});
+ assert.equal(h.session.saveProposal(null)?.lines[0]!.dealPrice,'72057594037927.94');
+ h.session.setBusinessType('RETURN');h.session.updateLine(sku.id,{quantity:'-2'});assert.equal(h.session.saveProposal(null)?.lines[0]!.dealPrice,'72057594037927.94');
+ h.session.updateLine(sku.id,{discount:'0'});assert.equal(h.session.saveProposal(null),null);
+ h.session.updateLine(sku.id,{zeroConfirmed:true});assert.equal(h.session.saveProposal(null)?.lines[0]!.dealPrice,'0.00');
+ h.session.updateLine(sku.id,{isGift:true,zeroConfirmed:false});assert.equal(h.session.saveProposal(null)?.lines[0]!.dealPrice,null);
+ h.context.clear();
+});

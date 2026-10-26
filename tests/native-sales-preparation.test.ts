@@ -232,6 +232,15 @@ test('v16 LIVE sales read: real creator label and nullable responsible label rem
 
 import {parseNativeSalesSaveProposal} from '../packages/application/src/native-sales-preparation.ts';
 import {parseSalesCommand} from '../apps/api/src/input.ts';
+test('T02 atomic SAVE parser preserves legacy null and exact discount quote without new fields',()=>{
+ const p=proposal(),base={...p,salesId:null,lines:p.lines.map(row=>({...row,existingLineId:null,pricingRule:'DISCOUNT',discountTenths:80,dealPrice:null})),settlements:[]};
+ const legacy=parseNativeSalesSaveProposal(base);assert.equal(legacy.lines[0]!.dealPrice,null);
+ const quoted={...base,lines:[{...base.lines[0]!,dealPrice:'1.00'}]},parsed=parseNativeSalesSaveProposal(quoted);
+ assert.equal(parsed.lines[0]!.dealPrice,'1.00');assert.deepEqual(Object.keys(parsed.lines[0]!).sort(),Object.keys(quoted.lines[0]!).sort());
+ assert.equal(parseNativeSalesSaveProposal({...base,lines:[{...base.lines[0]!,dealPrice:'1'}]}).lines[0]!.dealPrice,'1'); // Existing exact money syntax remains unchanged.
+ for(const dealPrice of ['1.001',1,false])assert.throws(()=>parseNativeSalesSaveProposal({...base,lines:[{...base.lines[0]!,dealPrice}]}));
+ assert.throws(()=>parseNativeSalesSaveProposal({...base,lines:[{...base.lines[0]!,expectedReferencePrice:'1.25'}]}));
+});
 test('sales public proposals reject independent responsible input and keep salesperson/creator contracts',()=>{
  const p=proposal(),body={...p,salesId:null,lines:p.lines.map(row=>({...row,existingLineId:null})),settlements:p.settlements.map(row=>({...row,existingSettlementId:null}))};
  const parsed=parseNativeSalesSaveProposal(body);assert.equal(parsed.salespersonId,p.salespersonId);

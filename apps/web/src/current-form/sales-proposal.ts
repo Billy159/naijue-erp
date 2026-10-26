@@ -576,7 +576,7 @@ export class SalesProposalSession {
       const price = (row: SalesProposalPricingLine) => {
         const value = row.isGift ? 0n : row.pricingRule === 'UNIT_PRICE' ? amount(row.dealPrice) : row.product.retailPrice === null ? null : discountUnitPrice(minorAmount(amount(row.product.retailPrice).toString()), tenths(row.discount));
         if (value === null || value === 0n && !row.isGift && !row.zeroConfirmed) throw Error();
-        return { quantity: row.quantity, dealPrice: row.pricingRule === 'DISCOUNT' ? null : row.isGift ? '0.00' : yuan(row.dealPrice), pricingRule: row.pricingRule,
+        return { quantity: row.quantity, dealPrice: row.isGift ? row.pricingRule === 'DISCOUNT' ? null : '0.00' : `${value / 100n}.${(value % 100n).toString().padStart(2, '0')}`, pricingRule: row.pricingRule,
           discountTenths: row.pricingRule === 'DISCOUNT' ? tenths(row.discount) : null, isGift: row.isGift, zeroConfirmed: row.zeroConfirmed };
       };
       const lines: NativeSalesSaveProposal['lines'][number][] = draft.lines.map(row => {

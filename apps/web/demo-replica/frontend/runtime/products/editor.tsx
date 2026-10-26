@@ -25,7 +25,7 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
  const write=useSyncExternalStore(controller.subscribe,controller.getSnapshot,controller.getSnapshot),alive=useRef(false),finished=useRef(false),finishing=useRef(false),resolvedKey=useRef<string|null>(null),childGuard=useRef<(()=>boolean)|null>(null);
  const [barcodeFeedback,setBarcodeFeedback]=useState<{targetId:string;missing:readonly string[];reason:string}|null>(null);
  const [confirmation,setConfirmation]=useState<'idle'|'reading'|'error'>('idle'),[pendingBaseline,setPendingBaseline]=useState<ProductMaintenanceDetailV2|null>(null),[baselineStatus,setBaselineStatus]=useState<'idle'|'reading'|'error'>('idle');
- const rejectedKey=useRef<string|null>(null),baselineReading=useRef(false);
+ const rejectedKey=useRef<string|null>(null),baselineReading=useRef<string|null>(null);
  useEffect(()=>{alive.current=true;return()=>{alive.current=false;queueMicrotask(()=>{if(!alive.current)controller.dispose();});};},[controller]);
  const detail=useProductRead(scope,read=>cap.reader.readDetail(read),{productId:p.productId??''},!!p.productId&&!p.initialBaseline&&write.phase==='idle',p.onAccessFailure);
  const [base,setBase]=useState<ProductMaintenanceDetailV2|null>(null),[values,setValues]=useState(()=>restoredDraft?.values??newValues()),[selection,setSelection]=useState(()=>restoredDraft?{colors:[...restoredDraft.selection.colors],fits:[...restoredDraft.selection.fits]}:{colors:[] as string[],fits:[] as string[]}),[labels,setLabels]=useState<ReadonlyMap<string,string>>(new Map()),[tab,setTab]=useState<string>(p.initialTab??'base'),[modal,setModal]=useState<'colors'|'fits'|'delete'|'discard'|'reload'|null>(null),[error,setError]=useState(''),[scheme,setScheme]=useState<string|null>(null),[dirty,setDirty]=useState(!!restoredDraft),[barcodeDraft,setBarcodeDraft]=useState<ProductBarcodeInput[]>([]);
@@ -54,11 +54,11 @@ function ProductEditorSession(p:SourceProductEditorOptions&{initialBaseline:Prod
  useEffect(()=>{const d=detail.snapshot.success?.data;if(d&&write.phase==='idle')applyBaseline(d);},[detail.snapshot.success]);
  useEffect(()=>{if(p.initialBaseline)applyBaseline(p.initialBaseline);},[]);
  const reloadRejectedBaseline=async()=>{
-  const command=write.command;if(write.phase!=='rejected'||!command||!p.productId||baselineReading.current||!scope.active)return;
-  baselineReading.current=true;setPendingBaseline(null);setBaselineStatus('reading');
+  const command=write.command;if(write.phase!=='rejected'||!command||!p.productId||baselineReading.current===command.requestKey||!scope.active)return;
+  baselineReading.current=command.requestKey;setPendingBaseline(null);setBaselineStatus('reading');
   try{const outcome=await detail.query.run({productId:p.productId});if(!alive.current||!scope.active||controller.getSnapshot().command?.requestKey!==command.requestKey)return;
    if(outcome.status==='success'&&outcome.data.productId===p.productId&&'seasonIds'in outcome.data.values){setPendingBaseline(outcome.data as ProductMaintenanceDetailV2);setBaselineStatus('idle');}else setBaselineStatus('error');
-  }finally{baselineReading.current=false;}
+  }finally{if(baselineReading.current===command.requestKey)baselineReading.current=null;}
  };
  useEffect(()=>{if(write.phase==='rejected'&&p.productId&&write.command&&rejectedKey.current!==write.command.requestKey){rejectedKey.current=write.command.requestKey;if(write.command.action==='DELETE')setModal(null);void reloadRejectedBaseline();}},[write]);
  useEffect(()=>{p.onCanLeaveChange(()=>!dirty&&!writeBusy&&(!childGuard.current||childGuard.current()));return()=>p.onCanLeaveChange(null);},[dirty,writeBusy,p.onCanLeaveChange]);

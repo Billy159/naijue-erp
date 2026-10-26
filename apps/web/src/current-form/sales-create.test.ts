@@ -141,3 +141,19 @@ test('EXCHANGE same SKU opposing different-price rows preserve order and indepen
  assert.equal(await h.session.save(),true);assert.ok(captured);const command=h.commands[0]!;if(command.action!=='SAVE')throw Error();assert.ok('draft' in command);
  assert.equal(command.draft.lines.length,2);assert.notEqual(command.draft.lines[0]!.id,command.draft.lines[1]!.id);assert.deepEqual(command.draft.lines.map(row=>row.lineNo),[1,2]);assert.equal(command.draft.header.netDue,'400');
 });
+
+test('discount SAVE quotes round-trip exactly; legacy null and original keys remain unchanged and pricing errors are known rejections',async()=>{
+ const {createSalesCommandHttpClient}=await import('../sales/commands/http-client.ts');
+ const {validateSalesCommand}=await import('../sales/commands/validation.ts');
+ const proposal={salesId:null,businessType:'SALE' as const,businessDate:native.header.businessDate,note:null,hallId:native.header.hallId,customerId:native.header.customerId,salespersonId:native.header.salespersonId,warehouseId:native.header.warehouseId,orderDiscount:'0.00',lines:[{existingLineId:null,skuId:sku.id,quantity:'1',dealPrice:'8.04',pricingRule:'DISCOUNT' as const,discountTenths:80,isGift:false,zeroConfirmed:false}],settlements:[]};
+ for(const quote of ['8.04',null]){
+  const command:SalesCommandDto={action:'SAVE',requestKey:'TEST.original-discount-key',expectedVersion:null,proposal:{...proposal,lines:proposal.lines.map(row=>({...row,dealPrice:quote}))}};
+  assert.deepEqual(validateSalesCommand(command),command,'validation must never rewrite legacy body or quoted amount');
+  for(const code of ['SALES_DISPLAYED_PRICE_CHANGED','SALES_PRICE_QUOTE_REQUIRED']){
+   let sent=0;
+   const client=createSalesCommandHttpClient({origin:'https://synthetic.test',basePath:'/api',fetch:async(_url,init)=>{sent++;assert.deepEqual(JSON.parse(init.body as string),command);return Response.json({error:{code,message:'explicit price rejection'}},{status:409});}});
+   await assert.rejects(()=>client.execute(command,new AbortController().signal),error=>error instanceof SalesCommandError&&error.code===code&&error.outcome==='rejected');assert.equal(sent,1);
+   assert.equal(command.requestKey,'TEST.original-discount-key');assert.equal(command.proposal.lines[0]!.dealPrice,quote);
+  }
+ }
+});

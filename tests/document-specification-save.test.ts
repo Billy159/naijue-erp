@@ -15,6 +15,9 @@ import { fixture, actor as transferActor, ids as transferIds } from './support/s
 import { actor, ids, sid, snapshot } from './support/synthetic-fixtures.ts';
 import { SyntheticStore } from './support/synthetic-store.ts';
 import { minorAmount } from '../packages/domain/src/values.ts';
+import Fastify from 'fastify';
+import {createSalesHttpPlugin} from '../apps/api/src/sales-http.ts';
+import {requestHash} from '../packages/application/src/request-hash.ts';
 const spec={productId:sid('product',100),colorId:sid('color',101),fitId:sid('fit',102),sizeId:sid('size',103)};
 const transferProposal=()=>({transferId:null,businessDate:'2026-10-23',note:null,fromWarehouseId:transferIds.fromWarehouse,toWarehouseId:transferIds.toWarehouse,
   lines:[{existingLineId:null,spec,quantity:'2'}]});
@@ -86,4 +89,65 @@ test('v11 manual barcode distinguishes actual absence from missing SKU, duplicat
     if(sql.includes(':targets'))return {rows:failure==='missing'?[]:[target],rowCount:failure==='missing'?0:1};
     if(failure==='read')throw Error('SYNTHETIC query failure');return {rows:[{sku_id:ids.sku,barcode:'000123'},{sku_id:ids.sku,barcode:'000456'}],rowCount:2};
   },[ids.sku]));}
+});
+
+function t02PricingFixture(){
+ const store=new SyntheticStore();let sequence=12000,reference=minorAmount('10000'),resolutions=0;
+ const dependencies:SalesDependencies={now:()=> '2026-10-26T00:00:00Z',newId:kind=>sid(kind,sequence++),rules:createNativeManualSalesBusinessRules(),authorization:{async assertAllowed(){}},
+  unitOfWork:{transaction(work){return store.transaction(tx=>work({...tx,
+   async resolveDocumentSkus(input){resolutions++;return input.selections.map(s=>s.spec?.sizeId===sid('size',104)?ids.sku2:ids.sku);},
+   async getCurrentSalesSnapshots(skus){return new Map(skus.map(sku=>[sku,{...snapshot,barcode:null}]));},
+   async getCurrentSalesReferenceFacts(d){return {salesId:d.header.id,hall:{id:ids.hall,enabled:true},customer:{id:ids.customer,enabled:true},warehouse:{id:ids.warehouse,hallId:ids.hall,enabled:true},salesperson:{id:sid('staff',11999),employmentStatus:'在职'},
+    skus:[...new Set(d.lines.map(l=>l.skuId))].map(id=>({id,productId:spec.productId,enabled:true,snapshot:{...snapshot,barcode:null}})),products:[{id:spec.productId,enabled:true,referencePrice:reference,minimumPrice:null}],
+    paymentAccounts:[],barcodes:[],retainedLines:[...store.snapshot().lines.values()]};}
+  }));}}};
+ return {store,dependencies,service:createSalesService(dependencies),reference:(value:string)=>{reference=minorAmount(value);},resolutions:()=>resolutions};
+}
+function t02Body(quote:string|null='80.00'){
+ return {action:'SAVE',requestKey:'t02-original',expectedVersion:null,proposal:{...salesProposal(),salespersonId:sid('staff',11999),businessType:'SALE' as 'SALE'|'RETURN'|'EXCHANGE',lines:[{existingLineId:null as string|null,spec,quantity:'1',dealPrice:quote,pricingRule:'DISCOUNT',discountTenths:80,isGift:false,zeroConfirmed:false}]}};
+}
+test('T02 atomic quoted discount rejects changed reference and legacy missing quote with no committed state',async()=>{
+ for(const [quote,reference,code]of [['80.00','12000','SALES_DISPLAYED_PRICE_CHANGED'],[null,'10000','SALES_PRICE_QUOTE_REQUIRED']] as const){
+  const h=t02PricingFixture(),before=h.store.snapshot();h.reference(reference);
+  await assert.rejects(h.service.execute(parseSalesCommand(t02Body(quote),actor)),{code});assert.equal(h.resolutions(),1);assert.deepEqual(h.store.snapshot(),before);
+ }
+});
+test('T02 atomic quote uses exact cents retains old reference and accepts equal rounded amount',async()=>{
+ const h=t02PricingFixture(),body=t02Body(),saved=await h.service.execute(parseSalesCommand(body,actor));
+ let state=h.store.snapshot();assert.equal(state.headers.get(saved.salesId)!.netDue,8000n);assert.equal(state.lines.values().next().value!.referencePrice,10000n);
+ h.reference('12000');const line=[...state.lines.values()][0]!;
+ const edit={...body,requestKey:'t02-retained',expectedVersion:1,proposal:{...body.proposal,salesId:saved.salesId,lines:[{...body.proposal.lines[0]!,existingLineId:line.id}]}};
+ await h.service.execute(parseSalesCommand(edit,actor));state=h.store.snapshot();assert.equal(state.lines.get(line.id)!.referencePrice,10000n);assert.equal(state.headers.get(saved.salesId)!.netDue,8000n);
+ const rounded=t02PricingFixture(),roundedBody=t02Body('1.00');roundedBody.proposal.lines[0]!.discountTenths=1;rounded.reference('10001');await rounded.service.execute(parseSalesCommand(roundedBody,actor));assert.equal([...rounded.store.snapshot().lines.values()][0]!.dealPrice,100n);
+});
+test('T02 atomic UNIT_PRICE signed return gift and confirmed zero keep their existing exact semantics',async()=>{
+ for(const mode of ['unit','return','gift','zero'] as const){
+  const h=t02PricingFixture(),body=t02Body();
+  if(mode==='unit'){Object.assign(body.proposal.lines[0]!,{pricingRule:'UNIT_PRICE',discountTenths:null,dealPrice:'7.25'});h.reference('12000');}
+  if(mode==='return'){body.proposal.businessType='RETURN';body.proposal.lines[0]!.quantity='-1';}
+  if(mode==='gift'){body.proposal.lines[0]!.isGift=true;body.proposal.lines[0]!.dealPrice=null;}
+  if(mode==='zero'){body.proposal.lines[0]!.discountTenths=0;body.proposal.lines[0]!.dealPrice='0.00';body.proposal.lines[0]!.zeroConfirmed=true;}
+  const result=await h.service.execute(parseSalesCommand(body,actor));assert.equal(h.store.snapshot().headers.get(result.salesId)!.netDue,mode==='unit'?725n:mode==='return'?-8000n:0n);
+ }
+});
+test('T02 new missing spec on an existing draft rejects changed quote and preserves the existing document',async()=>{
+ const h=t02PricingFixture(),body=t02Body(),saved=await h.service.execute(parseSalesCommand(body,actor));
+ const before=h.store.snapshot(),old=[...before.lines.values()][0]!;h.reference('12000');
+ const changed={...body,requestKey:'t02-new-spec-existing',expectedVersion:1,proposal:{...body.proposal,salesId:saved.salesId,
+  lines:[{...body.proposal.lines[0]!,existingLineId:old.id},{...body.proposal.lines[0]!,spec:{...spec,sizeId:sid('size',104)}}]}};
+ await assert.rejects(h.service.execute(parseSalesCommand(changed,actor)),{code:'SALES_DISPLAYED_PRICE_CHANGED'});assert.deepEqual(h.store.snapshot(),before);
+});
+test('T02 committed legacy null replays original hash before any resolution or repricing',async()=>{
+ const h=t02PricingFixture(),seed={...t02Body(),requestKey:'t02-seed'},saved=await h.service.execute(parseSalesCommand(seed,actor));
+ const legacy=parseSalesCommand({...t02Body(null),requestKey:'t02-legacy-null'},actor);
+ // Explicit synthetic historical receipt fixture: original null body hash remains unchanged.
+ await h.store.transaction(async tx=>{const receipt=await tx.getReceipt(actor.accountId,seed.requestKey);assert(receipt);await tx.insertReceipt({...receipt,requestKey:legacy.requestKey,requestHash:requestHash({...legacy,actor:{accountId:actor.accountId}})});});
+ const before=h.store.snapshot(),reads=h.resolutions();h.reference('12000');assert.deepEqual(await h.service.execute(legacy),saved);assert.equal(h.resolutions(),reads);assert.deepEqual(h.store.snapshot(),before);
+});
+test('T02 HTTP emits authoritative409 for missing or changed quote without committing a proposal',async t=>{
+ const h=t02PricingFixture(),app=Fastify();t.after(()=>app.close());await app.register(createSalesHttpPlugin({dependencies:h.dependencies,authenticate:async()=>actor}));
+ for(const [quote,reference,code]of [[null,'10000','SALES_PRICE_QUOTE_REQUIRED'],['80.00','12000','SALES_DISPLAYED_PRICE_CHANGED']] as const){
+  h.reference(reference);const before=h.store.snapshot(),r=await app.inject({method:'POST',url:'/sales/commands',payload:t02Body(quote)});
+  assert.equal(r.statusCode,409);assert.equal(r.json().error.code,code);assert.deepEqual(h.store.snapshot(),before);
+ }
 });
