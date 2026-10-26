@@ -343,3 +343,48 @@ test('normal sales union: missing original HISTORY purpose rejects on the same l
   await assert.rejects(normalSalesReader(client, () => { throw Error('HISTORY_PURPOSE_DENIED'); }).readList(read(parameters())), /HISTORY_PURPOSE_DENIED/);
   assert.ok(!client.calls.some(c => /read-authorization:identity|normal-document-list:/.test(c.sql))); client.done();
 });
+
+test('normal sales pushdown: both branches filter before projection, all-match totals survive page2, and history proof stays unfiltered once per RR', async () => {
+  for (const role of ['ADMIN', 'WAREHOUSE', 'SALESPERSON'] as const) {
+    const input = parameters(); Object.assign(input, { page: 2 });
+    Object.assign(input.filter, { startDate: '2026-10-01', endDate: '2026-10-20', statuses: ['DRAFT', 'APPROVED'], businessTypes: ['RETURN', 'EXCHANGE'],
+      hallIds: [ids.hall], salespersonIds: [sid('staff', 44)], customerIds: [ids.customer], warehouseIds: [ids.warehouse], number: "%_\\'literal" });
+    const historical = { ...summary(), dataset: 'HISTORY', batch_id: sid('operation', 400), responsible_staff_id: null, responsible_name: null, created_by_name: null,
+      business_type: 'EXCHANGE', status: 'DRAFT', quantity: '-2', incoming_quantity: '5', outgoing_quantity: '3', gross_amount: '0.01', net_due: '0.01',
+      created_local_at: null, updated_local_at: null, product_count: null, product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false };
+    let bound: unknown[] = [];
+    const client = new ProtocolClient([begin(), normalIdentity(role), { sql: /normal-document-list:totals/, rows: [normalSalesSummary({ exact_total: '21', quantity: '9007199254740991', incoming_quantity: '5', outgoing_quantity: '9007199254740996' })], inspect(values, sql) {
+      bound = values;
+      const live = sql.slice(sql.indexOf('live_candidates AS'), sql.indexOf('history_base AS'));
+      const history = sql.slice(sql.indexOf('history_base AS'), sql.indexOf('history_candidates AS'));
+      const proof = sql.slice(sql.indexOf('history_validity AS'), sql.indexOf('all_lines AS'));
+      const param = (value: unknown) => `$${values.findIndex(v => JSON.stringify(v) === JSON.stringify(value)) + 1}`;
+      for (const [value, op] of [[input.filter.startDate, '>='], [input.filter.endDate, '<=']] as const) {
+        assert.ok(live.includes(`h.business_date${op}${param(value)}::date`));
+        assert.ok(history.includes(`(CASE WHEN e.header_id IS NULL THEN h.business_date ELSE (er.after_facts->>'businessDate')::date END)${op}${param(value)}::date`));
+      }
+      for (const [field, selected, cast] of [['status', input.filter.statuses, 'text'], ['business_type', input.filter.businessTypes, 'text'], ['hall_id', input.filter.hallIds, 'uuid'],
+        ['salesperson_id', input.filter.salespersonIds, 'uuid'], ['customer_id', input.filter.customerIds, 'uuid'], ['warehouse_id', input.filter.warehouseIds, 'uuid']] as const) {
+        assert.ok(live.includes(`h.${field}=ANY(${param(selected)}::${cast}[])`));
+        assert.ok(history.includes(`h.${field === 'status' ? 'source_status' : field}=ANY(${param(selected)}::${cast}[])`));
+      }
+      for (const branch of [live, history]) assert.ok(branch.includes(`strpos(lower(h.number),lower(${param(input.filter.number)}::text))>0`));
+      assert.doesNotMatch(proof, /ANY\(|strpos\(|business_date[<>]=/);
+      assert.match(proof, /IS NOT TRUE\) AS lines_valid/); assert.match(sql, /FROM history_validity\) AS history_valid/);
+      scoped(values, live); assert.equal(history.includes('AND (h.hall_id='), role === 'SALESPERSON');
+      assert.match(sql, /all_lines AS \(SELECT[^]*FROM matched p/); assert.match(sql, /FROM matched h LEFT JOIN metrics q/);
+      assert.doesNotMatch(sql, /LIMIT|OFFSET|product_summaries|JOIN naijue_erp\.sku/);
+      assert.match(sql, /sum\(h.net_due::numeric\)/); assert.match(sql, /WHEN NOT is_gift AND quantity<0 THEN -quantity/);
+    } }, { sql: /normal-document-list:page/, rows: [historical], inspect(values, sql) {
+      assert.deepEqual(values.slice(0, -2), bound); assert.deepEqual(values.slice(-2), [20, '20']);
+      assert.doesNotMatch(sql, /history_validity AS|AS lines_valid/);
+      assert.match(sql, /page_lines AS MATERIALIZED \(SELECT[^]*FROM page_headers p JOIN naijue_erp.sales_line/);
+      assert.match(sql, /FROM page_headers p JOIN naijue_erp.history_sales_line/);
+      assert.match(sql, /FILTER\(WHERE preview_row<=3\)/);
+    } }, commit()]);
+    const result = await normalSalesReader(client).readList(read(input)); assert.ok('totals' in result);
+    assert.equal(result.exactTotal, 21n); assert.equal(result.items.length, 1); assert.equal(result.items[0]!.quantity, -2n);
+    assert.equal(result.items[0]!.productSummary.productCount, null); assert.equal(result.totals.quantity, 9007199254740991n);
+    assert.equal(result.totals.grossAmount, 9007199254740994n); assert.equal(result.items[0]!.grossAmount, 1n); client.done();
+  }
+});

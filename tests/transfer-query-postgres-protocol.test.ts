@@ -265,3 +265,45 @@ test('normal transfer union: contradictory published branch never becomes a smal
   await assert.rejects(normalTransferReader(client).readList(read(parameters())), { code: 'INVALID_DATABASE_VALUE' });
   assert.ok(!client.calls.some(c => c.sql.includes('normal-document-list:page'))); client.done();
 });
+
+test('normal transfer pushdown: effective date/endpoints filter before projection, creator-or-endpoint authority and all-match totals survive page2', async () => {
+  for (const role of ['ADMIN', 'WAREHOUSE', 'SALESPERSON'] as const) {
+    const input = parameters(); Object.assign(input, { page: 2 });
+    Object.assign(input.filter, { startDate: '2026-10-01', endDate: '2026-10-20', statuses: ['DRAFT', 'APPROVED'], fromWarehouseIds: [ids.fromWarehouse], toWarehouseIds: [ids.toWarehouse], number: "%_\\'literal" });
+    const historical = { ...header(), dataset: 'HISTORY', batch_id: sid('operation', 402), responsible_staff_id: null, responsible_name: null,
+      created_by_account_id: null, created_by_name: null, created_at: null, updated_at: null, created_local_at: null, updated_local_at: null,
+      quantity: '0', incoming_quantity: '0', outgoing_quantity: '0', product_count: null, product_items: [{ productId: null, productCodeSnapshot: null, productNameSnapshot: null }], product_has_more: false };
+    const identity = normalTransferIdentity(); identity.rows![0]!.role = role;
+    let bound: unknown[] = [];
+    const client = new ProtocolClient([begin(), identity, { sql: /normal-document-list:totals/, rows: [{ exact_total: '21', history_valid: true, history_published: true, quantity: '9007199254741000', incoming_quantity: '0', outgoing_quantity: '9007199254741000' }], inspect(values, sql) {
+      bound = values;
+      const live = sql.slice(sql.indexOf('live_candidates AS'), sql.indexOf('history_base AS'));
+      const history = sql.slice(sql.indexOf('history_base AS'), sql.indexOf('history_candidates AS'));
+      const proof = sql.slice(sql.indexOf('history_validity AS'), sql.indexOf('all_lines AS'));
+      const param = (value: unknown) => `$${values.findIndex(v => JSON.stringify(v) === JSON.stringify(value)) + 1}`;
+      for (const [value, op] of [[input.filter.startDate, '>='], [input.filter.endDate, '<=']] as const) {
+        assert.ok(live.includes(`h.business_date${op}${param(value)}::date`));
+        assert.ok(history.includes(`(CASE WHEN e.header_id IS NULL THEN h.business_date ELSE (er.after_facts->>'businessDate')::date END)${op}${param(value)}::date`));
+      }
+      assert.ok(live.includes(`h.status=ANY(${param(input.filter.statuses)}::text[])`)); assert.ok(history.includes(`h.source_status=ANY(${param(input.filter.statuses)}::text[])`));
+      for (const [field, key, selected] of [['from_warehouse_id', 'fromWarehouseId', input.filter.fromWarehouseIds], ['to_warehouse_id', 'toWarehouseId', input.filter.toWarehouseIds]] as const) {
+        assert.ok(live.includes(`h.${field}=ANY(${param(selected)}::uuid[])`));
+        assert.ok(history.includes(`(CASE WHEN e.header_id IS NULL THEN h.${field} ELSE (er.after_facts->>'${key}')::uuid END)=ANY(${param(selected)}::uuid[])`));
+      }
+      for (const branch of [live, history]) assert.ok(branch.includes(`strpos(lower(h.number),lower(${param(input.filter.number)}::text))>0`));
+      scoped(values, live); assert.equal(history.includes("created_role_source='SALESPERSON'"), role === 'SALESPERSON');
+      if (role === 'SALESPERSON') { assert.match(history, /scope_fw\.hall_id=/); assert.match(history, /scope_tw\.hall_id=/); assert.match(history, /created_hall_provenance='ORIGINAL'/); }
+      assert.doesNotMatch(history, /creator\.hall_id|creator\.role/);
+      assert.doesNotMatch(proof, /ANY\(|strpos\(|business_date[<>]=/); assert.match(proof, /IS NOT TRUE\) AS lines_valid/);
+      assert.match(sql, /all_lines AS \(SELECT[^]*FROM matched p/); assert.match(sql, /FROM matched h LEFT JOIN metrics q/);
+      assert.doesNotMatch(sql, /LIMIT|OFFSET|product_summaries|JOIN naijue_erp\.sku/);
+    } }, { sql: /normal-document-list:page/, rows: [historical], inspect(values, sql) {
+      assert.deepEqual(values.slice(0, -2), bound); assert.deepEqual(values.slice(-2), [20, '20']); assert.doesNotMatch(sql, /history_validity AS|AS lines_valid/);
+      assert.match(sql, /page_lines AS MATERIALIZED \(SELECT[^]*FROM page_headers p JOIN naijue_erp.transfer_line/);
+      assert.match(sql, /FROM page_headers p JOIN naijue_erp.history_transfer_line/);
+    } }, commit()]);
+    const result = await normalTransferReader(client).readList({ ...read(input), actor: { ...actor, role } }); assert.ok('totals' in result);
+    assert.equal(result.exactTotal, 21n); assert.equal(result.items.length, 1); assert.equal(result.items[0]!.totalQuantity, 0n);
+    assert.equal(result.items[0]!.productSummary.productCount, null); assert.equal(result.totals.totalQuantity, 9007199254741000n); client.done();
+  }
+});

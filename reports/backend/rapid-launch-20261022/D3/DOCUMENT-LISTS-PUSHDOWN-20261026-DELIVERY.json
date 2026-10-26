@@ -1,0 +1,73 @@
+{
+  "version": "D3_DOCUMENT_LISTS_PUSHDOWN_20261026_V1",
+  "recordedAt": "2026-10-26T04:05:36.360821+00:00",
+  "authorization": "C SOURCE589 5dee67f, original human taskbook both sales and transfer lists; exclusive four leaves transferred from D1 to D3.",
+  "status": "SOURCE_AND_TARGETED_PROTOCOL_TYPES_PASS_ACTUAL_DATABASE_PERFORMANCE_NOT_MEASURED",
+  "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+  "files": [
+    {
+      "path": "adapters/postgres/src/sales-query-reader.ts",
+      "absolutePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/sales-query-reader.ts",
+      "bytes": 47002,
+      "sha256": "8b6b7337faaa63e96fa74dd26ca404fd011a929c6ba4911dc68644adf5d08ebe",
+      "changed": true
+    },
+    {
+      "path": "adapters/postgres/src/transfer-query-reader.ts",
+      "absolutePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/src/transfer-query-reader.ts",
+      "bytes": 28359,
+      "sha256": "74c35ff34a428c060e43e2fea1733da3a3a3624b9db287e5bdbb27fbb6a5329e",
+      "changed": false
+    },
+    {
+      "path": "tests/sales-query-postgres-protocol.test.ts",
+      "absolutePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/sales-query-postgres-protocol.test.ts",
+      "bytes": 42936,
+      "sha256": "8c7cf396e3b53d8e7d81f2c8056d19c8cdc6cd80e3f075ba0577e9a0c04b731f",
+      "changed": true
+    },
+    {
+      "path": "tests/transfer-query-postgres-protocol.test.ts",
+      "absolutePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/transfer-query-postgres-protocol.test.ts",
+      "bytes": 36023,
+      "sha256": "e2d8418cdb743cd64aface2b0f69ab34454a03116bd19374f18842e4b86e7702",
+      "changed": true
+    }
+  ],
+  "changes": [
+    "Both normal sales/transfer branches use existing normalDocumentListOn in sales-query-reader.ts; transfer reader already invokes it and needs no duplicate implementation.",
+    "Bound date/status/number and selected dimensions enter LIVE and published HISTORY header predicates before candidate materialization and historical label joins.",
+    "Historical status maps to source_status; date and transfer endpoints use original importedHistoryReadSql effective CASE expressions, never unconditionally raw historical date/endpoints.",
+    "All-authorized published historical header+line validity is preserved independently of ordinary business filters, so corruption outside requested filters still rejects.",
+    "Validity SQL is emitted only in totals query; the subsequent page uses the original same-client REPEATABLE READ snapshot. No publication/revision/actor/process check is removed or widened.",
+    "Exact total and nullable quantity/money aggregates still use all matched headers and lines, not page headers. Product/SKU preview still uses page_headers only.",
+    "Source publication, stable dataset/batch/document identity, original creator/endpoints permission, signed quantity/gift/null/zero and exact money decoding remain unchanged."
+  ],
+  "sameSnapshotEvidence": {
+    "salesReader": "Original snapshot BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY -> work calls normalDocumentListOn -> COMMIT with existing abort/error rollback.",
+    "transferReader": "Same original snapshot and helper path; no new pool/lease/transaction.",
+    "revisionReview": "Read history-revision-store.ts original header/effective locks, put-head+put-line+audit/receipt in original transaction; did not use this as a reason to delete the all-authorized read integrity check.",
+    "publicationReview": "importedHistoryReadSql original b.status=IMPORTED/history_validation_passed/manifest/accounting claim/committed IMPORT_PUBLISH receipt+audit predicate retained."
+  },
+  "checks": [
+    {
+      "command": "node --test --test-reporter=spec --test-name-pattern='normal (sales|transfer)' tests/sales-query-postgres-protocol.test.ts tests/transfer-query-postgres-protocol.test.ts",
+      "passed": 8,
+      "failed": 0,
+      "scope": "Six directly affected existing normal-list protocol tests and two new pushdown tests (each new test covers ADMIN, WAREHOUSE, SALESPERSON). Scripted driver only, no PostgreSQL parser or execution.",
+      "newCases": "Bound matching filters inside both branches; effective date/endpoints; independent unfiltered historical integrity; original role scope; page2 with full exactTotal21 and quantity/money beyond current one-row page; null product identity and zero preserved; no repeated page validity fragment, no all-match product scan."
+    },
+    {
+      "command": "node node_modules/typescript/bin/tsc --noEmit --target ES2023 --module NodeNext --moduleResolution NodeNext --strict --noUncheckedIndexedAccess --exactOptionalPropertyTypes --noFallthroughCasesInSwitch --noImplicitOverride --verbatimModuleSyntax --rewriteRelativeImportExtensions --skipLibCheck --types node --lib ES2023,DOM adapters/postgres/src/sales-query-reader.ts adapters/postgres/src/transfer-query-reader.ts tests/sales-query-postgres-protocol.test.ts tests/transfer-query-postgres-protocol.test.ts",
+      "exitCode": 0,
+      "scope": "Exact four owned leaves and their imported dependency closure; not a whole-project type pass."
+    }
+  ],
+  "limitations": [
+    "Actual PostgreSQL parse/EXPLAIN/first-load/page timings are not measured by D3. No numerical performance PASS or speedup claim.",
+    "Preserving the all-authorized integrity scope means totals retains a global authorized-history validity path in addition to filtered candidates; it cannot be assumed all work becomes page bounded. T45 must assess real nonempty query plans, including this retained scan.",
+    "No index/schema/pool/timeout/capability/issuer/startup metadata edits, no DB/SSH/build/MAIN/PUBLISH or source recapture.",
+    "Current staged historical sales headers remain STAGED until original authorized publication; this source change does not expose them."
+  ],
+  "next": "C freeze this exact source and route original QB scoped review; original T45 then legitimate published nonempty sales+transfer initial list/page timing and stage evidence. D1 separate shared capability/metadata scope unchanged."
+}

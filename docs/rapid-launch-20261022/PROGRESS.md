@@ -1,3 +1,5 @@
+SOURCE592（2026-10-26）：人类F两列表包原D3 exact4交还固定，transferreader原样共享helper实际生效，salesreader+两protocol测试改变。日期状态单号/各自维度提前进入LIVE/HISTORY候选；历史按effective字段，不误用原始头。商品preview本来pageonly保留；全授权完整性未擅缩为筛选集，totals检查后同RRpage复用避免重复证明，全筛选count/精确qtymoney及3角色/NULL0/page2行为8项定向和strict通过；未真实PGplan/耗时，不称全部查询有界或性能PASS。原QB先v20再只该新增reader范围，不重复后台旧套。v20必要兼容构建随后合当前准确源，真实数据全接仍按原T45串行执行。GitHub591已核6f9f1fd。
+
 SOURCE591（2026-10-26）：D1 v20 exact4正式交还并核pins固定；新3定向/targetedstrict通过，实际101planner改善采用不复跑。新SQL仅替换guard重复来源查询补原batch/entity索引谓词、原body其余精确保留，不加表列/index/ACL/timeout/业务合同；v19已验原SQL46909/180646dc保持，profile继承v19仅guardhash变仍131。交原QB新guard/profile独立影响项，后C必要兼容build与T45原130→v19→v20/真实metadata双review/APP同包再从4489断点续23793，不假CORE15已含v20或源审即actual提速。D3人类F两reader源工作实际并行，D1next先交metadata热路径准确接缝。GitHub590已核3371e92，目标未完成。
 
 SOURCE590（2026-10-26）：101真实只读EXPLAIN完成0/.519s；等价补source批次类型完整谓词后已有identity三前缀索引→头source_row唯一索引，估算各1row，无旧headSeqScan4489，cost26226.88→14.64仅planner不是提速实测。该新证据直接交原D1，exact4 v20实施真实active；D3两列表F源码真实active，已查preview本来pageonly保留，早筛选并避免同RR重复完整性验证。T45完成101idle，等新源/原QB/必要兼容build后实际patch+当前review/APP及仅剩23793导入，不重4489/99/100/101。CORE15旧构建保留不假含v20，当前CORE14/正式根保持。GitHub5895dee67f已核，目标ACTIVE。

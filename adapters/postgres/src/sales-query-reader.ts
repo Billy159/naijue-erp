@@ -349,24 +349,45 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
   const historyColumns = kind === 'sales'
     ? 'hb.id,hb.number,hb.business_type,hb.business_date,hb.hall_id,hb.customer_id,hb.salesperson_id,hb.warehouse_id,hb.source_status AS status,hb.version,hb.gross_amount,hb.order_discount,hb.net_due,hb.updated_instant AS updated_at,hb.responsible_staff_id,hb.responsible_name,creator.name AS created_by_name,' + names + ',hb.created_local_at,hb.updated_local_at'
     : 'hb.id,hb.number,hb.business_date,hb.from_warehouse_id,hb.to_warehouse_id,hb.source_status AS status,hb.version,NULL::uuid AS created_by_account_id,hb.created_instant AS created_at,hb.updated_instant AS updated_at,hb.responsible_staff_id,hb.responsible_name,' + names + ',creator.name AS created_by_name,approver.name AS approved_by_name,hb.created_local_at,hb.updated_local_at';
-  const candidates = `live_candidates AS MATERIALIZED (SELECT 'LIVE'::text AS dataset,NULL::uuid AS batch_id,${native.columns},NULL::text AS created_local_at,NULL::text AS updated_local_at FROM ${native.from} WHERE ${liveScope}),
-    history_base AS MATERIALIZED (SELECT ${history.headerColumns},
-      NOT EXISTS(SELECT 1 FROM ${history.lineTable} l ${history.lineEffectiveJoins}
-        WHERE l.batch_id=h.batch_id AND l.header_id=h.id AND (${history.lineValidityPredicate}) IS NOT TRUE) AS lines_valid
-      FROM ${history.headerFrom} WHERE ${history.publishedPredicate} AND (${historyScope})),
-    history_candidates AS MATERIALIZED (SELECT 'HISTORY'::text AS dataset,hb.batch_id,${historyColumns},hb.effective_valid,hb.lines_valid
-      FROM history_base hb ${joins} LEFT JOIN naijue_erp.staff creator ON creator.id=hb.created_by_staff_id
-      LEFT JOIN naijue_erp.staff approver ON approver.id=hb.approved_by_staff_id),
-    candidates AS (SELECT dataset,batch_id,${columns} FROM live_candidates UNION ALL SELECT dataset,batch_id,${columns} FROM history_candidates)`;
-  const filter = read.parameters.filter, predicates: string[] = [];
-  if (filter.startDate !== null) predicates.push(`h.business_date>=${bind(filter.startDate)}::text`);
-  if (filter.endDate !== null) predicates.push(`h.business_date<=${bind(filter.endDate)}::text`);
+  // Bind each filter once and apply the same predicate inside both branches,
+  // before their materialization and historical display/reference projections.
+  // Historical dates/endpoints must use the effective revision, not raw h facts.
+  const filter = read.parameters.filter, liveFilters: string[] = [], historyFilters: string[] = [];
+  for (const [date, operator] of [[filter.startDate, '>='], [filter.endDate, '<=']] as const) if (date !== null) {
+    const parameter = bind(date);
+    liveFilters.push(`h.business_date${operator}${parameter}::date`);
+    historyFilters.push(`${history.businessDateExpression}${operator}${parameter}::date`);
+  }
   const dimensions: readonly (readonly [readonly unknown[], string, string])[] = kind === 'sales'
     ? (() => { const f = (read.parameters as SalesListQuery).filter; return [[f.statuses,'status','text'],[f.businessTypes,'business_type','text'],[f.hallIds,'hall_id','uuid'],[f.salespersonIds,'salesperson_id','uuid'],[f.customerIds,'customer_id','uuid'],[f.warehouseIds,'warehouse_id','uuid']] as const; })()
     : (() => { const f = (read.parameters as TransferListQuery).filter; return [[f.statuses,'status','text'],[f.fromWarehouseIds,'from_warehouse_id','uuid'],[f.toWarehouseIds,'to_warehouse_id','uuid']] as const; })();
-  for (const [ids, column, cast] of dimensions) if (ids.length) predicates.push(`h.${column}=ANY(${bind([...ids])}::${cast}[])`);
-  if (filter.number !== null) predicates.push(`strpos(lower(h.number),lower(${bind(filter.number)}::text))>0`);
-  const common = `${candidates},matched AS MATERIALIZED (SELECT * FROM candidates h WHERE ${predicates.join(' AND ') || 'TRUE'})`;
+  for (const [ids, column, cast] of dimensions) if (ids.length) {
+    const parameter = `${bind([...ids])}::${cast}[]`;
+    const historicalColumn = column === 'status' ? 'h.source_status'
+      : column === 'from_warehouse_id' ? history.fromWarehouseIdExpression
+      : column === 'to_warehouse_id' ? history.toWarehouseIdExpression : `h.${column}`;
+    liveFilters.push(`h.${column}=ANY(${parameter})`);
+    historyFilters.push(`${historicalColumn}=ANY(${parameter})`);
+  }
+  if (filter.number !== null) {
+    const predicate = `strpos(lower(h.number),lower(${bind(filter.number)}::text))>0`;
+    liveFilters.push(predicate); historyFilters.push(predicate);
+  }
+  const candidates = `live_candidates AS MATERIALIZED (SELECT 'LIVE'::text AS dataset,NULL::uuid AS batch_id,${native.columns},NULL::text AS created_local_at,NULL::text AS updated_local_at FROM ${native.from} WHERE (${liveScope}) AND (${liveFilters.join(' AND ') || 'TRUE'})),
+    history_base AS MATERIALIZED (SELECT ${history.headerColumns}
+      FROM ${history.headerFrom} WHERE ${history.publishedPredicate} AND (${historyScope}) AND (${historyFilters.join(' AND ') || 'TRUE'})),
+    history_candidates AS MATERIALIZED (SELECT 'HISTORY'::text AS dataset,hb.batch_id,${historyColumns}
+      FROM history_base hb ${joins} LEFT JOIN naijue_erp.staff creator ON creator.id=hb.created_by_staff_id
+      LEFT JOIN naijue_erp.staff approver ON approver.id=hb.approved_by_staff_id),
+    candidates AS (SELECT dataset,batch_id,${columns} FROM live_candidates UNION ALL SELECT dataset,batch_id,${columns} FROM history_candidates)`;
+  const common = `${candidates},matched AS MATERIALIZED (SELECT * FROM candidates)`;
+  // Preserve the original all-authorized-history corruption check, even for
+  // documents outside the requested filters. Run it once in the totals query;
+  // the page uses the same RR snapshot after that check has passed.
+  const historyValidity = `history_validity AS (SELECT ${history.headerValidityPredicate} AS effective_valid,
+      NOT EXISTS(SELECT 1 FROM ${history.lineTable} l ${history.lineEffectiveJoins}
+        WHERE l.batch_id=h.batch_id AND l.header_id=h.id AND (${history.lineValidityPredicate}) IS NOT TRUE) AS lines_valid
+      FROM ${history.headerFrom} WHERE ${history.publishedPredicate} AND (${historyScope}))`;
   const liveLine = kind === 'sales' ? 'sales_line' : 'transfer_line', nativeId = kind === 'sales' ? 'sales_id' : 'transfer_id';
   const lines = (headers: string, product: boolean) => `SELECT p.dataset,p.batch_id,p.id AS document_id,l.id AS line_id,l.line_no,l.quantity::numeric AS quantity,${kind === 'sales' ? 'l.is_gift' : 'false'} AS is_gift${product ? ',s.product_id,l.product_code_snapshot,l.product_name_snapshot' : ''}
       FROM ${headers} p JOIN naijue_erp.${liveLine} l ON p.dataset='LIVE' AND l.${nativeId}=p.id AND l.is_current${product ? ' LEFT JOIN naijue_erp.sku s ON s.id=l.sku_id' : ''}
@@ -381,9 +402,9 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
   const metricValue = (column: string) => `CASE WHEN q.document_id IS NULL THEN 0 ELSE q.${column} END`;
   const quantityTotals = ['quantity','incoming_quantity','outgoing_quantity'].map(c => `CASE WHEN count(*) FILTER(WHERE ${metricValue(c)} IS NULL)>0 THEN NULL ELSE coalesce(sum(${metricValue(c)}),0) END::text AS ${c}`).join(',');
   const moneyTotals = kind === 'sales' ? ',' + ['gross_amount','order_discount','net_due'].map(c => `CASE WHEN count(*) FILTER(WHERE h.${c} IS NULL)>0 THEN NULL ELSE coalesce(sum(h.${c}::numeric),0) END::text AS ${c}`).join(',') : '';
-  const summary = rowOf(await query(`/* normal-document-list:totals */ WITH ${common},all_lines AS (${lines('matched', false)}),metrics AS (${metrics('all_lines')})
+  const summary = rowOf(await query(`/* normal-document-list:totals */ WITH ${common},${historyValidity},all_lines AS (${lines('matched', false)}),metrics AS (${metrics('all_lines')})
     SELECT count(*)::text AS exact_total,${quantityTotals}${moneyTotals},
-      (SELECT coalesce(bool_and(effective_valid IS TRUE AND lines_valid IS TRUE),true) FROM history_candidates) AS history_valid,
+      (SELECT coalesce(bool_and(effective_valid IS TRUE AND lines_valid IS TRUE),true) FROM history_validity) AS history_valid,
       EXISTS(SELECT 1 FROM ${history.publicationFrom} WHERE ${history.publishedPredicate}) AS history_published
     FROM matched h LEFT JOIN metrics q ON ${metricJoin}`, [...values]));
   requireDomain(summary.history_valid === true && typeof summary.history_published === 'boolean', 'INVALID_DATABASE_VALUE', 'Published historical header/line facts contradict their effective revision');
