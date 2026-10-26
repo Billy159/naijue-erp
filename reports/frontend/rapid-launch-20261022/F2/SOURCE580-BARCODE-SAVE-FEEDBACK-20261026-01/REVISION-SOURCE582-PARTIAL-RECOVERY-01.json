@@ -1,0 +1,34 @@
+{
+  "taskId": "SOURCE580-BARCODE-SAVE-FEEDBACK-20261026-01",
+  "revision": "SOURCE582-PARTIAL-RECOVERY-01",
+  "base": "SOURCE583 72ab2e6",
+  "status": "SOURCE_FIXED_TARGETED_PASS_QF_FAILED_ITEM_RETEST_PENDING",
+  "cause": "Nonempty command.skus is legal partial input, not evidence of a complete prior SKU baseline. The old condition treated any retained id as complete and misclassified old B absent from partial A command.",
+  "fix": "EDIT prior ids only from actual pre-save base.skus; restored command.skus never grants completeness. CREATE remains attributable as before. Missing EDIT baseline retains unknown attribution and proceeds through original confirmed saved-product navigation. No DTO/controller/key/backend/shared changes.",
+  "files": [
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "sha256": "114fa4f64075933d1aa6cccd439bbcd0b98a852a6c7bb390e891f87accb26168"
+    },
+    {
+      "path": "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs",
+      "sha256": "1abff29b5dfab9b0407cd591760a545342ec8669a8779cfd6677c9ade59ec9bd"
+    }
+  ],
+  "checks": {
+    "partialRegression": "Original test new targeted A/B partial restored EDIT sequence fails before fix and PASS exit0 after. Command contains only A; same-version readback contains old A/B with B enabled and missing MAIN; no newly-added/missing warning, onSaved reachable, execute0/original key unchanged.",
+    "knownBaseline": "Only manual-non7 scenario executed from existing seven-scenario group after fixture update to actual baseline-read -> original save uncertain -> receipt -> detail. PASS exit0; genuine new ID missing MAIN still warned and explicit onSaved continuation works. The old generic group stdout lists all possible cases, but only one case was selected and executed.",
+    "typescript": "products scoped --noEmit PASS exit0",
+    "diffCheck": "exact2 PASS",
+    "fixtureCorrection": "Existing seven case assertions retained; their fixture now obtains real baseline rather than treating restored command as complete. Other six were not rerun per directed scope.",
+    "reuse": "Other default/race/raw/backend checks not rerun.",
+    "warnings": "Existing Arco React19 warnings, exit0."
+  },
+  "notTested": [
+    "No browser/build/HTTP/PG/real save or generation proof; QF only failed impact retest pending.",
+    "Six other feedback scenarios not rerun; prior evidence bounded by corrected baseline fixture.",
+    "Requested Sol6.1/medium, Fast UNVERIFIED."
+  ],
+  "blocker": "NONE F2 source exact2 released; C freezes, original QF failed item only.",
+  "next": "Reuse original SOURCE580 report lineage; no new issue/team/API/write capability."
+}

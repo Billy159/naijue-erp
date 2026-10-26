@@ -1,3 +1,5 @@
+SOURCE584（2026-10-26）：原QF2发现S582-F01恢复EDIT partial SKU不等完整基线，已由原F2 exact2修复，仅真实保存前base支持新增归因；合法A/B旧SKU、恢复命令仅A反例修前失败修后通过，另真baseline缺码1项短验保正常提示，其他6项不重；scopedTS通过。固定后只原QF2失败影响项复验，真实保存未测。QB341原95销售头载体限定源码通过456a5dec，T45已唯一提交95/handle34201；实际暂存尚待终态，不重发、不动当前e02及20服务。SOURCE583 GitHub远端已核72ab2e6，D1/D3初始化包独立源审在途，未先执行SQL。全站整页/真实业务/正式发布分层计数不变。
+
 SOURCE583（2026-10-26）：D2真实NULL尺码编码修复已交原QB340限定复验通过，原失败保留，修后精确七叶pins固定；真实PG权限/保存仍未测。D1专用六方案初始化九叶和D3五叶已交还并核交付pins，原11+8项新增定向通过、受影响strict通过；全工程既有诊断未冒PASS。合并固定源交原QB仅新增action/SQL及borrowedclient接缝，实际数据库补丁与兼容APP由T45在原95销售头暂存后安全接缝实施，当前e02/20服务/CORE14不并行变更。原922MB传输exit0，远端两文件及0600已核，不重传；95新有限载体由原QB审，未提交DBstage。F2 SOURCE582保存后缺码反馈已实际交QF2 medium，不重旧571。未新增整页或正式业务完成计数。
 
 SOURCE582（2026-10-26）：QB340新生成独立审发现实际nullable size.code被统一stringValue处理，NULL导致整SAVE INVALID_DATABASE_VALUE回滚，有限原UOW/mockclient复现，当前580源不PASS。已交原D2只保留真实NULL/对不完备code跳生成、不造码、资料SKU照常保存，补service/protocol该影响项，旧6/幂等范围复用。F2保存后反馈exact2已交：仅明确提交且权威同版本/已知oldSKU集合的新enabledSKU缺任何MAIN时提示资料规格已保存+缺N/可证原因、按钮继续，unknown/恢复基准不足/laterVersion不伪判；新段定向及scopedTS通过，原default/race/raw不重。固定交QF2仅新增反馈范围源审，真实保存与运行仍未测。D1init9有限新checks已PASS，strict/CLI曾被D3在途语法暂阻，原owner自行交接后只补两项，C不改他人WIP。

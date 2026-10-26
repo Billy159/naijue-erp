@@ -67,8 +67,8 @@ export function ProductEditor(p:SourceProductEditorOptions){
     setConfirmation('error');setError('商品已保存，但最新资料尚未确认。请重新读取商品，不要重复保存。');return;
    }
    finished.current=true;
-   const command=write.command,prior=base?.skus??('skus'in command?command.skus:[]);
-   if('values'in command&&outcome.data.version===result.version&&(command.action==='CREATE'||base!==null||prior.some(sku=>sku.id!==null))){
+   const command=write.command,prior=base?.skus??[];
+   if('values'in command&&outcome.data.version===result.version&&(command.action==='CREATE'||base!==null)){
     const retained=new Set(prior.flatMap(sku=>sku.id?[sku.id]:[])),fresh=outcome.data.skus.filter(sku=>sku.id&&!retained.has(sku.id)&&sku.enabled);
     const missing=fresh.filter(sku=>!outcome.data.barcodes.some(barcode=>barcode.kind==='MAIN'&&barcode.colorId===sku.colorId&&barcode.fitId===sku.fitId&&barcode.sizeId===sku.sizeId));
     if(missing.length){const actual=outcome.data.values;setBarcodeFeedback({targetId:result.targetId,missing:missing.map(sku=>sku.skuCode),reason:actual.defaultBarcodeSchemeId!==currentSchemeId?'当前主条码方案不是2026方案，本次新规格未自动生成2026主条码。':!/^\d{7}$/.test(actual.systemItemCode??'')?'手工系统货号不符合2026主条码生成规则；原货号保持不变。':'请核对颜色、版型和尺码的原编码；当前商品详情未提供具体未生成原因。'});return;}
