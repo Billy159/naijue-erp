@@ -3,6 +3,7 @@
 import {readFile,lstat,open} from 'node:fs/promises';
 import {constants} from 'node:fs';
 import {isAbsolute,resolve,dirname} from 'node:path';
+import {createReadStream} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
 import {requestHash} from '../../packages/application/src/request-hash.ts';
@@ -21,6 +22,12 @@ import {openAuthorizedSalesDetailReader} from '../import-v2/authorized-sales-det
 import {openAuthorizedSettlementReader} from '../import-v2/authorized-settlement-reader.mjs';
 import {openAuthorizedHistoryClosureReader26,HISTORY_CLOSURE_SOURCE_GROUPS} from '../import-v2/authorized-history-closure-reader.mjs';
 import {readCoreImportContinuation26} from './run.mjs';
+import {validateExecutableSourceHostJob26} from './production-source-host.mjs';
+import {validateCutoffImportCommand} from '../../packages/application/src/inventory-cutoff-import.ts';
+import {captureHistoryTypedClosurePlan} from '../../packages/application/src/history-typed-publication.ts';
+import {openReviewedProductEvidenceSource} from './native-source-authorizers.mjs';
+import {createPostgresHistorySalesDetailBindingResolver26} from '../../adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts';
+import {createPostgresHistorySettlementBindingResolver26} from '../../adapters/postgres/src/import-v3-history-settlement-staging-store.ts';
 import {validatePreparedNativeBarcode,nativeBarcodeSourceEvidence,validateNativeBarcodeSchemeInitializationRows26} from '../../packages/application/src/native-barcode-import.ts';
 import {historyClosureProjectionRow26,historyClosureRowHash} from '../../packages/application/src/history-typed-closure.ts';
 
@@ -59,7 +66,7 @@ export function createProductionSourceProvider26(inputs,authority){
   if(r.mode==='REVIEWED')must(Object.hasOwn(recipeOpeners,group),'PRODUCTION_PROVIDER26_RETAINED_GROUP_REQUIRED',group);
   if(r.mode==='CAPTURED_C144')must(['SALES_DETAILS','SETTLEMENTS'].includes(group),'PRODUCTION_PROVIDER26_CAPTURED_GROUP',group);}
  must(Reflect.ownKeys(fixed.producers).length===sourceGroups.length,'PRODUCTION_PROVIDER26_GROUP_REQUIRED');
- let opened=false;
+ let opened=false,warehouseItems=fixed.warehouses;
  return Object.freeze({providerVersion,sourceGroups,async openSourceSession({binding,sources,database,signal}){
   must(!opened,'PRODUCTION_PROVIDER26_SESSION_ALREADY_OPEN');opened=true;
   must(signal instanceof AbortSignal&&!signal.aborted&&requestHash(binding)===requestHash(fixed.binding),'PRODUCTION_PROVIDER26_BINDING_CHANGED');
@@ -71,7 +78,7 @@ export function createProductionSourceProvider26(inputs,authority){
    for(const dispose of [...disposers].reverse())try{await dispose();}catch(error){errors.push(error);}
    try{await a.close();}catch(error){errors.push(error);}readers.clear();issued.clear();if(errors.length)throw new AggregateError(errors,'Production provider26 cleanup failed');})();return closing;}
   async function verify(){active();await checked(a.verifyInputs,{inputDigest,binding:structuredClone(binding),core:structuredClone(fixed.core)});}
-  const context={binding:structuredClone(binding),sources:structuredClone(sources),signal};
+  const context={binding:structuredClone(binding),sources:structuredClone(sources),signal,database};
   async function retainedBarcodeReader(recipe){
    // A real file reader under the original group/step authority. It does not
    // issue a grant, allocate an identity, or open the raw source snapshot.
@@ -188,6 +195,14 @@ export function createProductionSourceProvider26(inputs,authority){
     // All group grants, including six real schemes and historical hall decisions,
     // must resolve BEFORE any source constructor or database activation.
     for(const group of sourceGroups)await checked(a.assertGroupAllowed,group,structuredClone(fixed.producers[group]),structuredClone(binding));
+    if(!Array.isArray(warehouseItems)){
+     must(warehouseItems&&Number.isSafeInteger(warehouseItems.bytes)&&warehouseItems.bytes>0&&warehouseItems.bytes<=4194304,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');
+     const bytes=await pinnedSmall(warehouseItems.path,warehouseItems.sha256);active();must(bytes.length===warehouseItems.bytes,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');
+     const data=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes));
+     must(data.dataComplete===true&&Array.isArray(data.missing)&&data.missing.length===0&&data.publicationAuthorized===false
+      &&data.identity?.batchId===binding.batchId&&data.identity.coreReceiptId===binding.coreReceiptId&&data.identity.coreSourceDigest===binding.coreSourceDigest
+      &&Array.isArray(data.warehouses)&&data.warehouses.length===53,'PRODUCTION_PROVIDER26_CORE_DATA_REQUIRED');warehouseItems=data.warehouses;
+    }
     for(const group of sourceGroups){
      const recipe=fixed.producers[group];let raw;
      if(recipe.mode==='REVIEWED')raw=await recipeOpeners[group](structuredClone(recipe.options));
@@ -250,7 +265,7 @@ export function createProductionSourceProvider26(inputs,authority){
     active();must(preflightDone&&!stepsStarted,'PRODUCTION_PROVIDER26_PREFLIGHT_REQUIRED');stepsStarted=true;
     const runtime=database.ready();
     const progress=await readCoreImportContinuation26({pool:runtime.pool,runtime26:runtime.runtime26,binding,
-     assertExecutionAllowed:actual=>a.assertExecutionAllowed(actual),warehouses:fixed.warehouses});active();
+     assertExecutionAllowed:actual=>a.assertExecutionAllowed(actual),warehouses:warehouseItems});active();
     // The existing helper proves real22 claims and leaves only31 genuine new
     // warehouse claims. C's reviewed command producer receives this readback.
     yield* main('BIND',progress);
@@ -282,4 +297,176 @@ export async function openSourceSession(context){
  const authority=await open({binding:structuredClone(context.binding),inputFile:file,trustedInputSha256:pin,signal:context.signal});
  try{return await createProductionSourceProvider26(inputs,authority).openSourceSession(context);}
  catch(error){try{await authority.close();}catch(cleanup){throw new AggregateError([error,cleanup],'Production authority26 construction failed');}throw error;}
+}
+
+
+/** Concrete original authority entry. The input pin authenticates DATA only;
+ * C's separately supplied execution-authorization pin is mandatory. No Pool,
+ * runtime issuer, schema probe, signature substitute or caller callback grants. */
+export async function openProductionSourceAuthority26({binding,inputFile,trustedInputSha256,signal}) {
+ must(signal instanceof AbortSignal&&!signal.aborted,'PRODUCTION_AUTHORITY26_CLOSED');
+ const inputStat=await lstat(inputFile),inputBytes=await pinnedSmall(inputFile,trustedInputSha256),fixed=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(inputBytes));
+ capture(fixed);must(capture(fixed.binding)===capture(binding)&&binding.phase==='FULL_SOURCE_CONTINUATION_26_V1'
+  &&hash(binding.authorizedPayloadHash)&&binding.authorizedPayloadHash!==binding.coreSourceDigest,'PRODUCTION_AUTHORITY26_FULL_BINDING_REQUIRED');
+ const externalPin=process.env.NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256,authorization=fixed.executionAuthorization;
+ must(hash(externalPin)&&authorization?.sha256===externalPin,'PRODUCTION_AUTHORITY26_C_EXECUTION_PIN_REQUIRED');
+ let closed=false,closing,job,grant;const files=new Map(),resources=new Set(),pending=new Set(),commands=new Map(),captured=new Map();
+ const inputDigest=capture(fixed),dataDigest=capture(Object.fromEntries(['version','binding','core','closureScope','warehouses','producers'].map(k=>[k,fixed[k]])));
+ const active=()=>must(!closed&&!signal.aborted&&(!job||Date.now()<Date.parse(job.deadlineUtc)),'PRODUCTION_AUTHORITY26_CLOSED');
+ const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
+ async function metadata(ref,maximum=4194304,reviver){active();must(exact(ref,['path','bytes','sha256'])&&Number.isSafeInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=maximum,'PRODUCTION_AUTHORITY26_METADATA_REF');
+  const before=await lstat(ref.path);active();const bytes=await pinnedSmall(ref.path,ref.sha256);active();const stat=await lstat(ref.path);active();must(bytes.length===ref.bytes&&same(before,stat),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');
+  files.set(ref.path,{ref:structuredClone(ref),stat});return JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes),reviver);}
+ async function unchanged(path){active();const f=files.get(path);must(f&&same(f.stat,await lstat(path)),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');active();}
+ async function verify(){active();for(const path of [inputFile,authorization.path,grant.job.path])await unchanged(path);active();}
+ async function close(){if(closing)return closing;closed=true;closing=(async()=>{const failures=[];
+  await Promise.allSettled([...pending]);for(const resource of [...resources].reverse())try{await resource.close();}catch(error){failures.push(error);}
+  resources.clear();captured.clear();commands.clear();files.clear();if(failures.length)throw new AggregateError(failures,'Production authority26 cleanup failed');})();return closing;}
+ async function owned(openSource){active();let operation;operation=(async()=>{const raw=await openSource();
+  must(typeof raw?.close==='function','PRODUCTION_AUTHORITY26_SOURCE_REQUIRED');let closingResource;
+  const resource={...raw,close(){if(!closingResource)closingResource=Promise.resolve().then(()=>raw.close());return closingResource;}};
+  if(closed||signal.aborted){await resource.close();active();}resources.add(resource);return resource;})();pending.add(operation);
+  try{return await operation;}finally{pending.delete(operation);}}
+ async function code(ref,name){const bytes=await pinnedSmall(ref?.path,ref?.sha256);active();must(bytes.length===ref.bytes,'PRODUCTION_AUTHORITY26_MODULE_PIN');
+  const module=await import(pathToFileURL(ref.path).href);active();const fn=own(module,name);must(typeof fn==='function','PRODUCTION_AUTHORITY26_MODULE_REQUIRED');return fn;}
+ const revive=(_key,value)=>value&&typeof value==='object'&&Object.keys(value).length===1&&Object.hasOwn(value,'__bigint')
+  ? (must(typeof value.__bigint==='string'&&/^(?:0|-?[1-9]\d*)$/.test(value.__bigint),'PRODUCTION_AUTHORITY26_COMMAND_INTEGER'),BigInt(value.__bigint)):value;
+ try{
+  files.set(inputFile,{ref:{path:inputFile,bytes:inputBytes.length,sha256:trustedInputSha256},stat:inputStat});must(same(inputStat,await lstat(inputFile)),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');active();
+  grant=await metadata(authorization);
+  must(exact(grant,['version','decision','issuingAuthority','realImportExecutionAuthorized','job','sourceInputDigest','groups','mainCommands'])
+   &&grant.version==='C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1'&&grant.decision==='AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION'
+   &&grant.issuingAuthority==='C'&&grant.realImportExecutionAuthorized===true&&grant.sourceInputDigest===dataDigest
+   &&Array.isArray(grant.groups)&&grant.groups.length===sourceGroups.length&&new Set(grant.groups).size===sourceGroups.length
+   &&sourceGroups.every(g=>grant.groups.includes(g)),'PRODUCTION_AUTHORITY26_C_EXECUTION_SCOPE');
+  const rawJob=await metadata(grant.job);job=validateExecutableSourceHostJob26(rawJob);
+  must(capture(job.binding)===capture(binding)&&job.registrationId.length>0&&fixed.authorityModule?.sha256===job.providers.sha256
+   &&(!process.env.NAIJUE_IMPORT_JOB_FILE||process.env.NAIJUE_IMPORT_JOB_FILE===grant.job.path),'PRODUCTION_AUTHORITY26_REGISTERED_JOB');
+  must(exact(grant.mainCommands,['BIND','ACCOUNT','PUBLISH'])&&Array.isArray(grant.mainCommands.ACCOUNT)&&grant.mainCommands.ACCOUNT.length>0
+   &&grant.mainCommands.ACCOUNT.length+2<=job.maxSteps,'PRODUCTION_AUTHORITY26_MAIN_INPUTS_REQUIRED');
+  const byPhase={};for(const [phase,refs]of [['BIND',[grant.mainCommands.BIND]],['ACCOUNT',grant.mainCommands.ACCOUNT],['PUBLISH',[grant.mainCommands.PUBLISH]]]){
+   byPhase[phase]=[];for(const ref of refs){const command=await metadata(ref,4194304,revive);capture(command);validateCutoffImportCommand(command);
+    must(command.action===(phase==='BIND'?'IMPORT_BIND_FULL_SOURCE':phase==='ACCOUNT'?'IMPORT_CHUNK':'IMPORT_PUBLISH')
+     &&command.actorAccountId===binding.actorAccountId&&command.batchId===binding.batchId&&!commands.has(command.requestKey),'PRODUCTION_AUTHORITY26_MAIN_SCOPE');
+    commands.set(command.requestKey,{command,digest:capture(command),file:ref.path});byPhase[phase].push(command);
+   }
+  }
+  const bind=byPhase.BIND[0],full=bind.fullBinding,publish=byPhase.PUBLISH[0];
+  must(full.authorizedPayloadHash===binding.authorizedPayloadHash&&full.coreReceiptId===binding.coreReceiptId&&full.coreSourceDigest===binding.coreSourceDigest
+   &&capture(full.historyExpectedCounts)===capture(fixed.closureScope.expectedCounts)&&full.inventoryExpectedCounts.WAREHOUSE===53
+   &&full.inventoryExpectedCounts.IMPORT_BATCH===1&&full.inventoryExpectedCounts.INVENTORY_LEDGER>0
+   &&new Set(full.sourceClosurePins.map(p=>p.group)).size===sourceGroups.length&&sourceGroups.every(g=>full.sourceClosurePins.some(p=>p.group===g)),
+   'PRODUCTION_AUTHORITY26_FULL_SOURCE_FACTS_REQUIRED');
+  const plan=captureHistoryTypedClosurePlan(publish.historyClosure);
+  must(plan.authorizedPayloadHash===binding.authorizedPayloadHash&&plan.selectionSha256===binding.selectionSha256
+   &&capture(plan.expectedCounts)===capture(fixed.closureScope.expectedCounts)&&capture(plan.sourceEntityCounts)===capture(fixed.closureScope.expectedSourceEntityCounts)
+   &&publish.approval.sourceHash===binding.selectionSha256,'PRODUCTION_AUTHORITY26_PUBLICATION_FACTS_REQUIRED');
+  let sequence=bind.expectedSequence+1,cursor=bind.expectedCursor;const totals={WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:1},identities=new Set(),targets=new Set();
+  for(const command of byPhase.ACCOUNT){must(command.expectedSequence===sequence&&command.expectedCursor===cursor,'PRODUCTION_AUTHORITY26_COMMAND_CHAIN');
+   for(const item of command.items){const source=JSON.stringify([item.sourceEntityType,item.sourceKey]),target=item.targetType==='INVENTORY_LEDGER'?JSON.stringify([item.targetType,item.warehouseId,item.skuId]):JSON.stringify([item.targetType,item.targetId]);
+    must(!identities.has(source)&&!targets.has(target),'PRODUCTION_AUTHORITY26_DUPLICATE_MAIN');identities.add(source);targets.add(target);totals[item.targetType]++;}
+   sequence++;cursor+=command.items.length;
+  }
+  must(publish.expectedSequence===sequence&&publish.expectedCursor===cursor&&capture(totals)===capture(full.inventoryExpectedCounts),'PRODUCTION_AUTHORITY26_COMMAND_CHAIN');
+  must(fixed.warehouses&&fixed.core.coreProjection,'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');
+  const projectionData=await metadata(fixed.core.coreProjection);let projection=projectionData,warehouses=fixed.warehouses;
+  if(projectionData.dataComplete===true){
+   must(projectionData.publicationAuthorized===false&&Array.isArray(projectionData.missing)&&projectionData.missing.length===0
+    &&exact(projectionData.identity,['batchId','actorAccountId','fixedSourceNamespace','selectionSha256','coreReceiptId','coreSourceDigest'])
+    &&Object.entries(projectionData.identity).every(([key,value])=>binding[key]===value)&&projectionData.cutoffAt===binding.cutoffAt
+    &&projectionData.target?.database===binding.target.database&&projectionData.target.role===binding.target.role
+    &&Array.isArray(projectionData.originalCoreClaimRecordIds)&&new Set(projectionData.originalCoreClaimRecordIds).size===22,'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');
+   projection={authorizedPayloadHash:binding.authorizedPayloadHash,coreMembers:projectionData.coreMembers,staffProofs:projectionData.staffProofs,coreMaintenanceBinding:projectionData.coreMaintenanceBinding};
+   if(!Array.isArray(warehouses)){must(capture(warehouses)===capture(fixed.core.coreProjection),'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');warehouses=projectionData.warehouses;}
+  }
+  must(Array.isArray(warehouses)&&warehouses.length===53,'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');
+  must(exact(projection,['authorizedPayloadHash','coreMembers','staffProofs','coreMaintenanceBinding'])&&projection.authorizedPayloadHash===binding.authorizedPayloadHash
+   &&Array.isArray(projection.coreMembers)&&projection.coreMembers.length===115&&Array.isArray(projection.staffProofs)&&projection.staffProofs.length===49
+   &&capture(projection.coreMaintenanceBinding)===capture(full.coreMaintenanceBinding),'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');
+  const members=new Map(full.coreMaintenanceBinding.members.map(m=>[m.sourceRowId,m]));
+  must(new Set(projection.coreMembers.map(m=>m.sourceRowId)).size===115&&projection.coreMembers.every(m=>exact(m,['sourceRowId','entity','sourceKey','nativeId'])
+   &&capture(m)===capture(Object.fromEntries(['sourceRowId','entity','sourceKey','nativeId'].map(k=>[k,members.get(m.sourceRowId)?.[k]])))), 'PRODUCTION_AUTHORITY26_CORE_MEMBER');
+  const proofs=new Set();for(const proof of projection.staffProofs){must(exact(proof,['sourceRowId','bootstrapAccounts'])&&!proofs.has(proof.sourceRowId)
+    &&members.get(proof.sourceRowId)?.entity==='STAFF','PRODUCTION_AUTHORITY26_CORE_PROOF');proofs.add(proof.sourceRowId);
+   const safe=value=>{if(value&&typeof value==='object')for(const [key,child]of Object.entries(value)){must(!/password|credential|token|secret|salt/i.test(key),'PRODUCTION_AUTHORITY26_UNSAFE_CORE_PROOF');safe(child);}};safe(proof.bootstrapAccounts);}
+  async function groupAllowed(group,recipe,actualBinding){await verify();must(grant.groups.includes(group)&&capture(actualBinding)===capture(binding)
+   &&capture(recipe)===capture(fixed.producers[group]),'PRODUCTION_AUTHORITY26_GROUP_SCOPE');}
+  async function mainAllowed(actor,command){await verify();capture(command);validateCutoffImportCommand(command);const expected=commands.get(command.requestKey);
+   must(actor===binding.actorAccountId&&command.actorAccountId===actor&&expected&&capture(command)===expected.digest,'PRODUCTION_AUTHORITY26_MAIN_NOT_AUTHORIZED');await unchanged(expected.file);}
+  const sourceScope=Object.fromEntries(['batchId','fixedSourceNamespace','selectionSha256'].map(k=>[k,binding[k]]));
+  let productSource;
+  const authority={
+   async verifyInputs(actual){await verify();must(actual.inputDigest===inputDigest&&capture(actual.binding)===capture(binding)&&capture(actual.core)===capture(fixed.core),'PRODUCTION_AUTHORITY26_INPUT_CHANGED');},
+   assertGroupAllowed:groupAllowed,
+   async assertExecutionAllowed(actual){await verify();must(capture(actual)===capture(binding),'PRODUCTION_AUTHORITY26_BINDING_CHANGED');},
+   async authorizeStep(step,actualBinding){await verify();must(capture(actualBinding)===capture(binding)&&step&&Object.keys(step).sort().join(',')==='kind,payload','PRODUCTION_AUTHORITY26_STEP_SCOPE');capture(step);
+    if(step.kind==='MAIN')return mainAllowed(binding.actorAccountId,step.payload);
+    if(step.kind==='CLOSURE'){must(capture(captureHistoryTypedClosurePlan(step.payload.plan))===capture(plan),'PRODUCTION_AUTHORITY26_CLOSURE_NOT_AUTHORIZED');return;}
+    const group=sourceGroups.find(g=>stages[g][0]===step.kind);must(group&&grant.groups.includes(group),'PRODUCTION_AUTHORITY26_STEP_SCOPE');
+    const p=step.payload.input??step.payload;must(p.batchId===binding.batchId&&p.fixedSourceNamespace===binding.fixedSourceNamespace
+     &&p.selection?.selectionSha256===binding.selectionSha256,'PRODUCTION_AUTHORITY26_STEP_SCOPE');
+   },
+   assertAllowed:mainAllowed,authorizeNativeCommand:mainAllowed,
+   async openRetained(group,recipe,context){await groupAllowed(group,recipe,context.binding);
+    // Only explicit original reader options can select these existing genuine
+    // factories. A retained path alone never becomes a producer or raw fallback.
+    must(Object.hasOwn(recipeOpeners,group)&&recipe.options,'PRODUCTION_AUTHORITY26_RETAINED_READER_INPUT_REQUIRED');
+    return owned(()=>recipeOpeners[group](structuredClone(recipe.options)));
+   },
+   async capturedOptions(group,recipe,context){await groupAllowed(group,recipe,context.binding);
+    must(['SALES_DETAILS','SETTLEMENTS'].includes(group)&&recipe.supportModules&&typeof recipe.sourceRoot==='string'&&isAbsolute(recipe.sourceRoot)&&context.database?.ready,'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');
+    const makeTransport=await code(recipe.supportModules.transport,'openRetainedSalesSettlementFiles');
+    const makeOptions=await code(recipe.supportModules.options,'prepareRetainedSalesOptions');
+    const transport=await owned(()=>makeTransport({source:recipe.source,typed:recipe.typed},signal));let indexed;
+    const ensureIndex=()=>indexed??=(async()=>{active();await transport.buildTypedIndex();active();})();
+    const expected={entity:recipe.entity,binding:structuredClone(binding),manifestRef:recipe.manifestRef,moneyRef:recipe.moneyRef,trustedApprovalSha256:recipe.trustedApprovalSha256};
+    const capturedAuthority={async verify(actual){await verify();must(actual.batchId===binding.batchId&&actual.fixedSourceNamespace===binding.fixedSourceNamespace
+      &&actual.selection?.entity===recipe.entity&&actual.selection.selectionSha256===binding.selectionSha256&&capture(actual.manifest)===capture(recipe.manifestRef)
+      &&capture(actual.source)===capture(recipe.source)&&capture(actual.typed)===capture(recipe.typed),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');await transport.verify();},close:()=>transport.close()};
+    const options=await makeOptions({sourceRoot:recipe.sourceRoot,...expected,signal,capturedAuthority,
+     authority:{async verifyInputs(actual){await verify();must(capture(actual)===capture(expected),'PRODUCTION_AUTHORITY26_CAPTURED_SCOPE');}}});active();
+    options.capturedSource.read={async *sourceRows(descriptor){await ensureIndex();yield*transport.sourceRows(descriptor);},async typedRow(descriptor,key){await ensureIndex();return transport.typedRow(descriptor,key);}};
+    let resolver;options.resolveNativeBinding=async query=>{await verify();const runtime=context.database.ready();
+     resolver??=(group==='SALES_DETAILS'?createPostgresHistorySalesDetailBindingResolver26:createPostgresHistorySettlementBindingResolver26)(runtime.pool,sourceScope,runtime.runtime26);
+     const result=await resolver(query);active();return result;};
+    captured.set(group,{transport,recipe,options});return options;
+   },
+   async openRetainedClosure(group,recipe,scope,context){await groupAllowed(group,recipe,binding);must(capture(scope)===capture(fixed.closureScope)&&context?.group===group
+     &&context.signal instanceof AbortSignal&&!context.signal.aborted,'PRODUCTION_AUTHORITY26_CLOSURE_SCOPE');const state=captured.get(group);
+    must(state&&recipe.supportModules?.closure,'PRODUCTION_AUTHORITY26_CAPTURED_INPUT_REQUIRED');
+    const makeClosure=await code(recipe.supportModules.closure,'createCapturedSalesChildClosureSession');
+    const current=()=>{active();must(!context.signal.aborted,'PRODUCTION_AUTHORITY26_CLOSED');};const streams=new Set();
+    const closeStreams=async()=>{await Promise.all([...streams].map(async stream=>{const ended=stream.closed?Promise.resolve():new Promise(resolve=>stream.once('close',resolve));stream.destroy();await ended;}));streams.clear();};
+    const rows=async function*(ref,relation){current();const before=await lstat(ref.path);current();must(before.isFile()&&!before.isSymbolicLink()&&before.size===ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');
+     const digest=createHash('sha256');let pendingBytes=Buffer.alloc(0),bytes=0,count=0,previous;
+     const stream=createReadStream(ref.path);streams.add(stream);try{for await(const chunk of stream){current();bytes+=chunk.length;must(bytes<=ref.bytes,'PRODUCTION_AUTHORITY26_CAPTURED_FILE');digest.update(chunk);pendingBytes=Buffer.concat([pendingBytes,chunk]);let end;
+      while((end=pendingBytes.indexOf(10))>=0){must(end>0&&end+1<=4194304,'PRODUCTION_AUTHORITY26_CAPTURED_LINE');const raw=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(pendingBytes.subarray(0,end)));pendingBytes=pendingBytes.subarray(end+1);
+       const row=historyClosureProjectionRow26(relation,raw.projection);must(capture(raw)===capture(row)&&(previous===undefined||Buffer.compare(Buffer.from(previous),Buffer.from(row.key))<0)&&++count<=ref.rows,'PRODUCTION_AUTHORITY26_CAPTURED_ROW');previous=row.key;yield row;current();}
+      must(pendingBytes.length<4194304,'PRODUCTION_AUTHORITY26_CAPTURED_LINE');}
+      must(bytes===ref.bytes&&count===ref.rows&&pendingBytes.length===0&&digest.digest('hex')===ref.sha256&&same(before,await lstat(ref.path)),'PRODUCTION_AUTHORITY26_CAPTURED_EOF');current();
+     }finally{const ended=stream.closed?Promise.resolve():new Promise(resolve=>stream.once('close',resolve));stream.destroy();await ended;streams.delete(stream);}};
+    return owned(()=>makeClosure({entity:recipe.entity,binding:sourceScope,expectedRows:recipe.source.rows,sourceRows:()=>rows(recipe.source,'import_source_row'),
+     typedRows:()=>rows(recipe.typed,recipe.entity==='SALES_LINE'?'history_sales_line':'history_sales_settlement'),sourceCodec:{historyClosureProjectionRow26},
+     verify:async()=>{await verify();await state.transport.verify();},close:closeStreams,current}));
+   },
+   async coreProjection(core,actualBinding){await verify();must(capture(core)===capture(fixed.core)&&capture(actualBinding)===capture(binding),'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');await unchanged(fixed.core.coreProjection.path);
+    return{...structuredClone(projection),async verify(){await verify();await unchanged(fixed.core.coreProjection.path);}};
+   },
+   async *mainCommands(phase,{binding:actual,core,progress}){await verify();must(Object.hasOwn(byPhase,phase)&&capture(actual)===capture(binding)&&capture(core)===capture(fixed.core)
+     &&progress?.checkpoint?.sequence===bind.expectedSequence&&progress.checkpoint.cursor===bind.expectedCursor
+     &&progress.warehouses?.length===22&&progress.remainingWarehouses?.length===31,'PRODUCTION_AUTHORITY26_CURRENT_CHECKPOINT');
+    const expected=new Map(warehouses.map(w=>[w.nativeRecord?.id,w]));
+    for(const item of [...progress.warehouses,...progress.remainingWarehouses])must(capture(expected.get(item.nativeRecord?.id))===capture(item),'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');
+    const remaining=new Map(progress.remainingWarehouses.map(item=>[item.nativeRecord.id,item]));
+    const accounted=byPhase.ACCOUNT.flatMap(command=>command.items.filter(item=>item.targetType==='WAREHOUSE'));
+    must(accounted.length===remaining.size&&accounted.every(item=>remaining.has(item.nativeRecord?.id)&&capture(item)===capture(remaining.get(item.nativeRecord.id))),
+     'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');
+    for(const command of byPhase[phase]){await mainAllowed(binding.actorAccountId,command);yield structuredClone(command);active();}
+   },
+   async authorizeProductSource(payload){await verify();const options=fixed.producers.PRODUCTS.productEvidenceSource;must(options,'PRODUCTION_AUTHORITY26_PRODUCT_EVIDENCE_REQUIRED');
+    productSource??=await owned(()=>openReviewedProductEvidenceSource(structuredClone(options)));await productSource.authorize(payload);active();
+   },close,now(){active();return new Date().toISOString();}
+  };
+  await verify();return authority;
+ }catch(error){try{await close();}catch(cleanup){throw new AggregateError([error,cleanup],'Production authority26 construction and cleanup failed');}throw error;}
 }

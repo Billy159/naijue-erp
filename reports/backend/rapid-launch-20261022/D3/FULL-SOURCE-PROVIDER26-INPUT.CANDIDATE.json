@@ -23,8 +23,12 @@
     "receiptId": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
     "coreSourceDigest": "2589b25c06bb1312b9d1f40627fb7432f44b4293b5d1ae7186223948b144cc28",
     "birthReceiptEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/c03-r1-v14-real49-core-initialization-20261024-157/release-submission/release-receipts/c03-r1-v14-real49-core-initialization-20261024-157/core-actual.json",
-    "currentCheckpointEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/SALES28282-STAGE-PREPARATION/ACTUAL71-CURRENT-R1-BINDING.json",
-    "coreProjection": null
+    "currentCheckpointEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/actual118-source-projection-20261026/source-projection-data.json",
+    "coreProjection": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/actual118-source-projection-20261026/source-projection-data.json",
+      "bytes": 215586,
+      "sha256": "c2029d831bc6a68813933877eaf4c4f123bcc279f3018ec0c5c0d4db8dbb84ba"
+    }
   },
   "closureScope": {
     "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
@@ -69,7 +73,11 @@
       "TRANSFER_LINE": 261641
     }
   },
-  "warehouses": null,
+  "warehouses": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/actual118-source-projection-20261026/source-projection-data.json",
+    "bytes": 215586,
+    "sha256": "c2029d831bc6a68813933877eaf4c4f123bcc279f3018ec0c5c0d4db8dbb84ba"
+  },
   "producers": {
     "PARTIES": {
       "mode": "REVIEWED",
@@ -129,6 +137,18 @@
         "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-RECIPES-20261026/PRODUCTS.json",
         "bytes": 17847,
         "sha256": "def7e4d34a48561761d80f00991a549debe0fb9f3de188c4ee3795de5d2317a4"
+      },
+      "productEvidenceSource": {
+        "directory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/native-binding-review-candidate-20261022-D3-run1",
+        "trustedManifestSha256": "ffb59e254a921c13dc63eac817d988883739fe1fd5e229561d67ca38a45d1408",
+        "reviewRecordFile": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-authority/rapid-launch-20261022/native-binding-partial-review-pin-v1.json",
+        "trustedReviewRecordSha256": "45fffe88e687b76d7772c99b88f6492e1c5bf5dcf454ce37650ed456ce2ba298",
+        "binding": {
+          "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+          "fixedSourceNamespace": "naijue:tplus:primary-ledger",
+          "cutoffAt": "2026-10-04T12:00:00+08:00",
+          "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba"
+        }
       }
     },
     "SKUS": {
@@ -225,7 +245,25 @@
         "sha256": "8ff89ad098f3037a068b855e1f8b1a1fdd593c7a846d4cb24fb1c3a6a5d9c5d9",
         "identity": null
       },
-      "trustedApprovalSha256": "a944c297eddd76db12024be26200c1b8f97bd39729828b2783b857ee1767d81f"
+      "trustedApprovalSha256": "a944c297eddd76db12024be26200c1b8f97bd39729828b2783b857ee1767d81f",
+      "supportModules": {
+        "transport": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-sales-settlement-consumer-20261025.mjs",
+          "bytes": 20002,
+          "sha256": "2213f351e195e2927b2b7625e43c26f87a3e07dde41de7703482c031e16d7c1e"
+        },
+        "options": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
+          "bytes": 6641,
+          "sha256": "6e7eb58634cba23d6a0b93116fc013ca2392c636d550670daa9f9692bc67fb8f"
+        },
+        "closure": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sales-header-closure-session-20261026.mjs",
+          "bytes": 11485,
+          "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772"
+        }
+      },
+      "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022"
     },
     "SETTLEMENTS": {
       "mode": "CAPTURED_C144",
@@ -265,7 +303,25 @@
         "sha256": "8ff89ad098f3037a068b855e1f8b1a1fdd593c7a846d4cb24fb1c3a6a5d9c5d9",
         "identity": null
       },
-      "trustedApprovalSha256": "a944c297eddd76db12024be26200c1b8f97bd39729828b2783b857ee1767d81f"
+      "trustedApprovalSha256": "a944c297eddd76db12024be26200c1b8f97bd39729828b2783b857ee1767d81f",
+      "supportModules": {
+        "transport": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/retained-sales-settlement-consumer-20261025.mjs",
+          "bytes": 20002,
+          "sha256": "2213f351e195e2927b2b7625e43c26f87a3e07dde41de7703482c031e16d7c1e"
+        },
+        "options": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/prepare-retained-sales-options-20261026.mjs",
+          "bytes": 6641,
+          "sha256": "6e7eb58634cba23d6a0b93116fc013ca2392c636d550670daa9f9692bc67fb8f"
+        },
+        "closure": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/sales-header-closure-session-20261026.mjs",
+          "bytes": 11485,
+          "sha256": "c708c30c8329a6e9c68d473d5154b4ea981d23f71a6580c814ce1dec109e1772"
+        }
+      },
+      "sourceRoot": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022"
     },
     "TRANSFER_LINES": {
       "mode": "RETAINED",
@@ -277,7 +333,12 @@
     }
   },
   "authorityModule": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/scripts/import-v3/production-source-provider26.mjs",
+    "sha256": "4f86cb89cd246627437dc2b04ea50403307b827a2a1e8011bc61d6a515660695"
+  },
+  "executionAuthorization": {
     "path": null,
+    "bytes": null,
     "sha256": null
   }
 }
