@@ -15,6 +15,10 @@ const safeHttpCodes=new Set(['UNAUTHENTICATED','FORBIDDEN','INVALID_AUTH_INPUT',
  'HISTORY_REVISION_BUSINESS_DATE_UNKNOWN','HISTORY_REVISION_NOT_FOUND','HISTORY_REVISION_ABORTED','HISTORY_REVISION_BASELINE_UNPROVEN',
  'HISTORY_REVISION_SCHEMA_NOT_READY','HISTORY_REVISION_STORE_NOT_READY','HISTORY_REVISION_COMMIT_OUTCOME_UNKNOWN','INTERNAL_ERROR',
  'IMPORTED_HISTORY_INVALID_QUERY','IMPORTED_HISTORY_READ_ABORTED','IMPORTED_HISTORY_UNAVAILABLE']);
+export function assertCompleteHistoryPage(page){
+ assert.ok(typeof page.total==='string'&&/^(?:0|[1-9]\d*)(?![\s\S])/.test(page.total),'History page total must be canonical nonnegative integer text');
+ assert.equal(BigInt(page.items.length),BigInt(page.total),'Full selected document rows must fit original detail page');
+}
 export function historyResponseObservation(response){
  let jsonParseable=false,errorCode=null;
  try{const value=response.json();jsonParseable=true;const code=value?.error?.code;if(safeHttpCodes.has(code))errorCode=code;}catch{}
@@ -103,7 +107,7 @@ export async function runDraftNormalHistory({api,pool,runtime26,input:raw,privat
   const r=await api.app.inject({method:'POST',url:`/imported-history/${kind}/detail/query`,headers,payload:{documentId,linePage:1,linePageSize:200,settlementPage:1,settlementPageSize:200}});
   await observe(r,key);
   assert.equal(r.statusCode,200,'Normal HISTORY detail read must succeed');const d=r.json();assert.equal(d.dataset,'HISTORY');assert.ok(d.document);assert.equal(d.document.documentId,documentId);
-  assert.equal(d.lines.items.length,d.lines.total,'Full selected document lines must fit original detail page');assert.equal(d.settlements.items.length,d.settlements.total);return d;
+  assertCompleteHistoryPage(d.lines);assertCompleteHistoryPage(d.settlements);return d;
  }
  const session=await api.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json().principal;
  assert.equal(principal.accountId,input.actor.accountId);assert.equal(principal.hallId,input.actor.hallId);

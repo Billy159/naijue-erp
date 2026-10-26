@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {resolveDraftReferences,validateDraftInput,draftQuantityCommand,draftMoneyCommand,historyResponseObservation,runDraftNormalHistory} from './draft-normal-history-v16.mjs';
+import {resolveDraftReferences,validateDraftInput,draftQuantityCommand,draftMoneyCommand,historyResponseObservation,runDraftNormalHistory,assertCompleteHistoryPage} from './draft-normal-history-v16.mjs';
 const id=n=>`00000000-0562-4000-8000-${String(n).padStart(12,'0')}`;
 const ref=(kind,n)=>({kind,documentId:id(n),lineId:id(n+1),capturedVersion:1,capturedSourceStatus:'DRAFT',capturedQuantity:kind==='sales'?'2':'-3',proposedQuantity:kind==='sales'?'3':'-2'});
 const before=(r)=>({kind:r.kind,documentId:r.documentId,version:1,sourceStatus:'DRAFT',baselineEffect:'EXCLUDED_NOT_EFFECTIVE',lines:[{lineId:r.lineId,quantity:r.capturedQuantity,dealPrice:'0.99',allocatedDiscount:null}],totals:{netDue:'0.99'},settlements:[{direction:'RECEIVE',amount:'0.99'}]});
@@ -60,4 +60,12 @@ test('B07 v16 reference input cannot silently transplant live IDs, substitute ta
  const plan={status:'ACTUAL_CAPTURE_REFERENCES_BOUND_DRAFT_ONLY_NOT_EXECUTABLE',batch:{id:pointer('batch'),publishReceiptId:pointer('published')},cases:input.references.cases.map((r,i)=>({kind:r.kind,documentId:pointer('doc'+i),capturedOriginalVersion:pointer('version'+i),capturedOriginalStatus:pointer('status'+i),lineChange:{lineId:pointer('line'+i),capturedQuantity:pointer('qty'+i),proposedQuantity:r.proposedQuantity}}))};
  const values={batch:id(40),published:id(41)};for(const [i,r] of input.references.cases.entries())Object.assign(values,{['doc'+i]:r.documentId,['version'+i]:1,['status'+i]:'DRAFT',['line'+i]:r.lineId,['qty'+i]:r.capturedQuantity});
  assert.deepEqual(resolveDraftReferences(plan,{private:values}),input.references);delete values.line0;assert.throws(()=>resolveDraftReferences(plan,{private:values}));
+});
+
+test('detail completeness compares canonical total text exactly for lines and settlements',()=>{
+ for(const page of [{total:'0',items:[]},{total:'1',items:[{}]},{total:'2',items:[{},{}]}]){const original=structuredClone(page);assert.doesNotThrow(()=>assertCompleteHistoryPage(page));assert.deepEqual(page,original);}
+});
+test('detail completeness rejects invalid count text and incomplete or inconsistent pages',()=>{
+ for(const total of [0,1,null,undefined,'','00','01','-1','+1','1.0','1e0',' 1','1 ','1\n','1\r\n'])assert.throws(()=>assertCompleteHistoryPage({total,items:[{}]}));
+ for(const page of [{total:'1',items:[]},{total:'0',items:[{}]},{total:'2',items:[{}]},{total:'9007199254740993',items:[]}])assert.throws(()=>assertCompleteHistoryPage(page));
 });

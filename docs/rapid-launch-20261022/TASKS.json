@@ -1355,7 +1355,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-26T07:38:21.033990+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "48927bbbb7f62b8325ad4c58d0324f99dbe427a8",
+  "lastVerifiedRemoteCommit": "e6d98ec169fb4d9b02179d8b5c712d3503b67b78",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -14656,7 +14656,7 @@
       "B07": "07 review/gate actual successful; detail HTTP200 then assertion; D1 diagnose; T45 original-key readonly recovery next",
       "fullSource": "134 same-key collect only bounded original execution"
     },
-    "latestSource": 680,
+    "latestSource": 681,
     "source680Continuation": {
       "actual134": "FAILED exit2 after901.237644947s; ORIGINAL_BINDINGS_AND_STREAMS / PRODUCTION_PROVIDER26_CLOSED; D3 original source diagnosis; no extension/replay",
       "actual07": "POST07 original-key readonly recovery: one COMMITTED HISTORY_REVISE HISTORY_SALES receipt and one revision, result_version2. Full test incomplete at detail count assertion. Preserve original key/state; no fresh save.",
@@ -14665,6 +14665,12 @@
       "T15": "Helper exact2 handed back7PASS/strict0; source review pending; no DDL/writer/cache activation",
       "T45": "135 metadata-only package prepared not submitted; C reads exact package before deciding execution; no134rerun",
       "overall": "ACTIVE_NOT_COMPLETE"
+    },
+    "source681Continuation": {
+      "remote680": "VERIFIED e6d98ec169fb4d9b02179d8b5c712d3503b67b78",
+      "D1DetailFix": "Fixed exact2 safe mirrors; canonical nonnegative text total vs BigInt array length; 2 targeted tests PASS; source independent review pending",
+      "fullPreparation": "D1 exact2 linearization in progress; 900 abort observed direct channel, precise runtime subphase remains unknown",
+      "historyContinuation": "Preserve committed07; permit exact original request/key idempotency and stale/conflict checks without new effects; T45 preparing existing QA-only login path, no reset or fresh fixture execution authorized yet"
     }
   }
 }
