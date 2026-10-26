@@ -14656,7 +14656,7 @@
       "B07": "07 review/gate actual successful; detail HTTP200 then assertion; D1 diagnose; T45 original-key readonly recovery next",
       "fullSource": "134 same-key collect only bounded original execution"
     },
-    "latestSource": 696,
+    "latestSource": 697,
     "source680Continuation": {
       "actual134": "FAILED exit2 after901.237644947s; ORIGINAL_BINDINGS_AND_STREAMS / PRODUCTION_PROVIDER26_CLOSED; D3 original source diagnosis; no extension/replay",
       "actual07": "POST07 original-key readonly recovery: one COMMITTED HISTORY_REVISE HISTORY_SALES receipt and one revision, result_version2. Full test incomplete at detail count assertion. Preserve original key/state; no fresh save.",
@@ -14755,6 +14755,11 @@
       "D3": "Narrow actual mergedsource hot-path diagnosis from measured timings; no linear total extrapolation/fullrun/guessed SQL/cache",
       "moneyContract": "Existing B07 allows original line price+existing same-document settlement.amount in one explicit isolated QA command, source/account/direction preserved; original unbalanced before audited. No new write contract.",
       "D1": "Exact2 original runner/test moneybuilder and remaining-only dualcommitted binding source-only authorized; no redo sales/transfer or new credentials/HTTP. Original price-only imbalance rejection retained."
+    },
+    "source697Continuation": {
+      "sourceHotPath": "Original D3 source-only identified duplicate exact same-row fold digest and native roundtrip digest work, comparator head key reuse candidates; not actual CPU ranking/root cause. No shared helper edits yet.",
+      "measurementDecision": "Use existing Node --cpu-prof on one new fixed1000 bounded diagnostic with private stack/line/time output; no heap/variables/business content, no new provider timer framework. T45 accurate carrier preparation pending, no run.",
+      "money": "Original approved same-document existing settlement patch feasible with exact BigInt bounds; D1 runner2 implementation in flight. Current auth2 and original proofauth1 require exact lineage adapter; requested original parent/renewal scope before edits."
     }
   }
 }
