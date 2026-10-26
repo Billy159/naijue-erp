@@ -5621,5 +5621,25 @@
       "writeContractReplySha256": "9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc"
     },
     "approvalPinsCorrection": "C initial sixpin proposal immediately superseded by D1 original closedset minimal3; sourcecapture/QB338/docs sidecar evidence only, not extra init dependencies."
+  },
+  "source589HistoryInsertAndListPerformance": {
+    "authority": "Main goal performance + trusted direct human taskbook latest F supplement via01a16189; originalC ownershipcoordination",
+    "D1current": [
+      "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+      "adapters/postgres/src/native-import-accounting-capability.ts",
+      "tests/history-insert-source-identity.test.ts",
+      "tests/native-runtime26-capability.test.ts"
+    ],
+    "D1currentScope": "Only semantics-equivalent existingguard duplicatequery full sourceindex prefix; originalv19 frozen unchanged. Chaincurrent130->v19 131->v20onlyguard131. No table/index/ACL/timeout change. No new writebusinesscontract.",
+    "D1next": "Human F: full metadata/function/ACL verification at deployment/start or explicitbaseline change; ordinary request lightweight timelyidentity/purpose/currentbusinessauth, preserve originalwrite lock/revocation; reuse currentT45 serialized baseline switch, no indefiniteoldreview/cache or newplatform",
+    "D3transferFromD1": [
+      "adapters/postgres/src/sales-query-reader.ts",
+      "adapters/postgres/src/transfer-query-reader.ts",
+      "tests/sales-query-postgres-protocol.test.ts",
+      "tests/transfer-query-postgres-protocol.test.ts"
+    ],
+    "D3scope": "HumanF sales+transfer shared normalDocumentListOn early equivalent businessfilter pushdown and page_headers-only previews; accurate authorized total/sum completefilteredrange, samehistoryvalidity semantics. No capability/host/SQLpatch/sharedwriter edits. Return exactadditionalleaf request before edits outside four.",
+    "T45": "Only realDB/EXPLAIN/install/review/APP and continuation after4489; 99confirmed88absent; no98replay",
+    "baseline": "gitstatus reader/test4 clean; D3previousinit deliveredidle; D1currentguardpatch doesnotwrite reader4; oldownership entry superseded only these exactfour forcurrentF package"
   }
 }

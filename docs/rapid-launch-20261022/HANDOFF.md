@@ -1,3 +1,5 @@
+SOURCE589（2026-10-26）：99只读88全ABSENT、100准确EXPLAIN及原日志已定位guard重复查询：旧plan头表扫描4489再逐sourcePK过滤，现有(batch,entity,key)索引未得完整前缀。原D1exact4新增v20查询等价后继登记，补s.batch/type谓词由原FK/不可变typeguard蕴含，不删防重/不改表索引超时或业务合同；v19冻结不重写，依次原130→v19 131→v20同131，QB及T45实际验证后接4489断点。并采任务书人类明确F补充：D1 next把完整catalog核验集中部署启动/明确baseline切换，日常轻量且及时撤权；D3原idle核实后exclusive接reader/test4销货调拨早筛选/当页preview，准确全筛选total/sum和权限保留。主控协调文件交还，无第二团队，实际实测及当前非空业务证明不拿源审替代。
+
 SOURCE588（2026-10-26）：98真实FAILED2/136.880s，但4489/28282销售头已COMMIT并逐批RR准确、重放0；同batch头/source均4489，COREseq1cursor22/fullfalse保持，acquire159=release159/live0/endtrue/bg0。第52批88条57014/commitReturnedfalse后停止，未重发；partialIndex4577含未确认88且completefalse，不能当全暂存。原T45只读99核此88原键和同次SQL错误阶段，保留4489不重导，结果未清前不接新SQL。统一CORE15buildpack已交；当前CORE14/正式根保持，真实保存/历史编辑/全11及MAIN/PUBLISH仍未完成。GitHub587已核33016b2，本轮为真实推进而非无变化盘点。
 
 SOURCE587（2026-10-26）：将既有current候选摘要从旧CORE10纠正为实际91/92运行CORE14，下一包为已构建CORE15；旧值保历史，不把新源当上线。QF2S582-F01修后限定源PASS11007fb6采用，QB343新init源PASS采用；真实SQL/生成保存未测。97实际只读证明96因缺pg且未stage，无journal/两销售头计数0/无活连接；98修原依赖link经QB344PASS后唯一QUEUED unitdd863fb32f1f，T45原live turn观察，不重传重hash大文件、不重旧作业。原35页65弹层副本证据保留，37页67弹层全部状态真实业务最终验收无新整页计数，正式根未切换。GitHub586已核7653167。

@@ -1355,7 +1355,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-26",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "33016b2f0edec384fc3c3e2dbcba41e8303959d2",
+  "lastVerifiedRemoteCommit": "222a7cc4eb4422374ebe8c08cd357f59c63c68ad",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -11660,7 +11660,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE588",
+    "round": "SOURCE589",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -11710,9 +11710,9 @@
       "F2": "SOURCE584S582-F01 originalQF2 source closed; actualprovider/save next necessaryCORE15/fullhost",
       "F3": "Original settings sources delivered; actual maintenance and real full provider QA pending, no fabricated new UI fixes",
       "F4": "Category empty504 delivered/adopted; no new ready bug, real catalogue read follows legal fullpublish",
-      "D1": "v19 exact9 delivered QB343 sourcePASS; actualpatch and B07v3 originalT45 safe seam",
+      "D1": "Currentv20guard exact4registered; next humanF metadataProbe hotpath simplification sameissuer/pool/host",
       "D2": "NULLsize corrected exact7 QB340 scopedPASS; realPG/currentrole generation pending originalT45",
-      "D3": "exact5 initializer source QB343 scopedPASS;15018prepared source QB338 reused; full11 actual next",
+      "D3": "HumanF sales/transfer normal-list reader/test exact4 transfer; source pushdown/pagepreview implementation next; oldinit source343 frozen",
       "T45": "98 actually4489headerCOMMIT+RR/replayed0; next88stopped57014 beforecommitreturned, readonly99originalkey/errorphase recovery active; no repeat committed. CORE15awaitsafe seam",
       "QF": "ActualCORE14 browser styledshell/account/password partial; precisecold/retry nottested; browserlease returned",
       "QF2": "SOURCE584S582-F01 closed source only; normal runtime actual pending",
@@ -13207,6 +13207,14 @@
       "currentSourceBuild": "CORE15 source585 buildpackPASS; notinstalled; CORE14stillactual",
       "goalTurn": "PROGRESS actualCORE15 buildpack and4489 realcommits+readback; no new allstateUI/businessPASS",
       "GitHub587": "33016b2f0edec384fc3c3e2dbcba41e8303959d2 verified"
+    },
+    "source589": {
+      "actual99": "COMPLETED0/.919s88allABSENT,actual4489preserved,active98backend0,RR/endtrue",
+      "actual100": "COMPLETED0/.568s EXPLAINonly: headsseqscan4489->sourcePK nestedlookups cost26226.88; existingidentity(batch,entity,key); actual99logs57014 guardline28",
+      "D1current": "Exact4registered v20guard query narrow predicates impliedbyexisting immutableFK/typechecks; v19unchanged parent131; source implementationauthorized no newbusinesscontract",
+      "D1next": "Human explicitF startup-only fullmetadata validation + timelylight request identitypurposeauth, sales/transfer/list/detail/page plus login/session consumers; no newplatform/schema",
+      "D3current": "Originalidle verified; exclusive reader/test4 transferred fromD1 forF equivalentfilter pushdown/currentpage previews with accurate fulltotal/sum",
+      "requiredEvidence": "ExistingQA permission/revocation reuse onlyaffectedboundary; realnonempty sales/transfer first/page latency and exactresults later originalQA/fullprovider, no syntheticPASS"
     }
   }
 }
