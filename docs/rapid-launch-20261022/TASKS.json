@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-25T16:04:39.541752+00:00",
+  "updatedAt": "2026-10-26",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "8a197a0eba0a64503097ee79cd4f8762fb889be8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -5901,12 +5901,6 @@
     {
       "id": "STAFF_CLOSED_NO_ACCOUNT",
       "question": "Does closed-login filter include employees without accounts?",
-      "onlyDependentBranchWaits": true
-    },
-    {
-      "id": "BARCODE_SCHEME_INITIALIZATION_V1",
-      "confirmationFile": "BARCODE-SCHEME-INITIALIZATION-CONFIRMATION-v1.md",
-      "proposalSha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00",
       "onlyDependentBranchWaits": true
     }
   ],
@@ -11644,7 +11638,7 @@
     }
   },
   "currentContinuation463": {
-    "round": "SOURCE565",
+    "round": "SOURCE566",
     "goal": "ACTIVE_ORIGINAL_SCOPE_T45_EXECUTION_RESTORED_ACTUAL74_75_COMPLETE_BUSINESS_PENDING",
     "sourceHeadBeforeThisContinuityCommit": "1f3cd6a1906cdba96eede40070d025f15cc0e7e6",
     "fixedCandidates": {
@@ -12809,7 +12803,52 @@
       "current": "Existing B07 runner/QA currentv16-from-v14 scoped real historical revision executable preparation; source owner only, no server/DB direct",
       "input": "Actual60 QA schema+actual70/QB327 normalSAVE valid evidence reused; do not replay old19->26 setup or normalSAVE cases",
       "next": "D1 exact ready input/purpose/actor/delta/unknown-key recovery to C/T45; actualQA only registered isolated target",
-      "originalHostCompressionLeaves": "Do not touch frozen SOURCE561 two host leaves"
+      "originalHostCompressionLeaves": "Do not touch frozen SOURCE561 two host leaves",
+      "currentTargetCorrection": "v2 historical DRAFT witness belongs preserved B07 schema19 copy/OID16385, not current nativeQA1032586; LIVE70 is not history evidence. Prepare current v16 normal HTTP/preflight and minimal original-copy upgrade/binding via T45; no fabricated history or old -7 assertions against nativeQA."
+    },
+    "barcodeApproval566": {
+      "authority": "Human main Chat call_be36b94f79b64f1280fc743ca246172f",
+      "receipt": "BARCODE-SCHEME-INITIALIZATION-APPROVAL-v1.json",
+      "classification": {
+        "owner": "D3/T45",
+        "current": "2026",
+        "historical": "other exact five source schemes",
+        "state": "APPROVED_NOT_INITIALIZED",
+        "next": "Existing CORE already committed; prepare narrow same-batch successor transaction contract, no CORE replay or empty-domain bypass"
+      },
+      "newProductDefault": {
+        "owner": "F2",
+        "state": "SOURCE_CHECKED_NOT_BUILT",
+        "schemeId": "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef",
+        "boundary": "CREATE only, verified CURRENT; existing/restored/manual selection/clear preserved; no fabricated scheme"
+      },
+      "actualGeneration": {
+        "owner": "D2/D1",
+        "state": "NOT_IMPLEMENTED_WRITE_CONTRACT_DELTA_PREPARING",
+        "finding": "Frozen 2026 algorithm verified; current formal backend lacks allocator and persistent uniqueness. No guessed length-based algorithm",
+        "next": "One exact consolidated contract difference including numbering field mapping, allocator/uniqueness and generation transaction, alongside D3 successor init"
+      },
+      "compatibleOldCodeSave": {
+        "owner": "F2/D2",
+        "state": "EXISTING_V2_CONTRACT_REUSED_UI_FIX_IN_PROGRESS",
+        "binding": "Exact product/color/fit/real size to existing real SKU; old main/ID unchanged",
+        "finding": "Frontend trim would change original raw; fix exact barcode leaf to preserve original text including leading zero and trailing space",
+        "check": "D2 focused source test1/1 and strict0, not PostgreSQL/real HTTP acceptance"
+      },
+      "oldProductsSkusBarcodes": "NO_BULK_MODIFY_NO_RENUMBER_NO_MAIN_REPLACEMENT",
+      "model": "gpt-6.1-sol/medium",
+      "fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH"
+    },
+    "server566": {
+      "owner": "T45",
+      "job90": "ACTUAL_COMPLETED_EXIT0_18.102_SECONDS_CORE14_INSTALLED",
+      "dependencies": "111 reused; npm ci not rerun",
+      "QB335": "PASS_LIMITED_SOURCE_564821996347bc6c564e798a3c09ffed0bd1659e2629b0541cc77113be6999aa",
+      "current": "93 exact2 function ACL then actual metadata and QB current dual reviews,91/92 fresh candidate APP/route",
+      "actual93": "NOT_YET_REPORTED",
+      "formalRootChanged": false,
+      "services": 19,
+      "businessPublish": "NOT_DONE"
     }
   }
 }

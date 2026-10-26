@@ -5559,5 +5559,14 @@
     "state": "DELIVERED_TWO_HOST_LEAVES_WRITER_RETURNED_TO_C_ORIGINAL_D1_ROUTE",
     "scope": "Static JS/CSS encoding negotiation only; existing API/auth/permissions/flags untouched; C owns build/package and all continuity records, T45 sole server/deploy. No mirror team.",
     "correction": "Earlier dispatch mistakenly said original owner C; immediately corrected to D1, historical assignment preserved."
+  },
+  "source566BarcodeEditorHandoff": {
+    "owner": "F2",
+    "model": "gpt-6.1-sol/medium",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/products/editor-barcodes.tsx"
+    ],
+    "scope": "Existing exact SKU compatible code EDIT UI, preserve raw no trim, explicit draft versus saved; no backend/DTO/shared writer change",
+    "authority": "Human main call_be36b94f79b64f1280fc743ca246172f; C directed exact leaf"
   }
 }
