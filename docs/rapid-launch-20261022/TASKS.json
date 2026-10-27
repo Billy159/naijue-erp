@@ -1353,9 +1353,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T11:55:05.488072+00:00",
+  "updatedAt": "2026-10-27T12:05:41.465327+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "2d8aad5e1d3814676f91a3a79b210a62b3654b7b",
+  "lastVerifiedRemoteCommit": "beef9526e4ad9e1aee56c9b24e1f95ab5b6c697e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 771,
+    "round": 772,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation771",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation772",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -5085,7 +5085,7 @@
     },
     "backendActual": {
       "B07": "Synthetic actual03 PASS: original-key direct-service rollback23505, firstLedger/balance1, secondattempt1, rolledBacktrue/0commits. Prior normal sales/transfer HTTP PASS adopted not repeated. No credentials/login/CAS; ownPG and clients closed. Real source/browser/allroles/formal not tested.",
-      "R1": "169 actual FAILED2 at11:48:04.436143Z/13.207490740s, firstMAIN23514 outcome unverified; host/evidence/issuer returned, closed. Originalkey RRRO+existing log projection170 active; no replay/guard relaxation/ACL rollback.",
+      "R1": "169 firstMAIN23514 failed terminal;170 originalkey RRRO no receipt/STAGED2cursor22;171 fixed25 RRRO first nonzero history_sales_header28282 and seven other nonzero tables. D1 original proof association active; no replay or data/guard modification.",
       "nativeProduct": "Actual COMPLETED0/2.323047074s, genuinepool and issuer/two identities/currentcanonical passed; original preflight BLOCKED_EXACT_PREFLIGHT with4actual data gaps: no current2026scheme, numeric3 enabledcolors unavailable, approvedfit unavailable, completecodedsizegroup unavailable.15queries/1rollback/0commit/DML/DDL/2acquired2released/live0. No4SAVE. Original D2 exact approvedsource and lawful initialization sequence preparation; publishednative189 cannot receive STAGED-onlyinitializer/rekey/fakecodes."
     },
     "roleQueue": {
@@ -14617,6 +14617,27 @@
       "next": "Original T45170 exact originalkey RRRO recovery and samewindow existing-log safe constraint/routine projection; D1 original finite branch diagnosis after evidence",
       "preserved": "No169/164/168/148 replay, no continuation109, no contract relaxation or automaticACL revoke; APP unchanged",
       "githubVerified": "SOURCE770 2d8aad5e1d3814676f91a3a79b210a62b3654b7b"
+    },
+    "currentContinuation772": {
+      "status": "171_ACTUAL_FIXED25_COUNTS_D1_ORIGINAL_PROVENANCE_BRANCH_DIAGNOSIS_ACTIVE",
+      "job171": "COMPLETED0/1.521552684s/2026-10-27T11:58:26.701181Z RRRO ROLLBACK closed",
+      "firstNonzero": {
+        "ordinal": 1,
+        "table": "history_sales_header",
+        "count": 28282
+      },
+      "otherNonzero": {
+        "history_transfer_header": 14279,
+        "history_transfer_line": 261641,
+        "product": 2956,
+        "sku": 14999,
+        "barcode_scheme": 6,
+        "import_sku_alias": 15121,
+        "import_stock_contributor": 38314
+      },
+      "other17": "0 including inventory_ledger/balance/closure manifests/payments/history_revision; count facts only, not source/validity proof",
+      "next": "D1 exact original committed receipts/approved source association, determine first-init branch mismatch; minimal missing server fields only via T45. No data deletion/reimport/guard relaxation/replay.",
+      "frontendActualStatus": "F1 normal34 fixture delivery accepted; F2 waits valid sameQA dictionaries/codes/session; F3 maintenance writes waits actual capability; F4 source-delivered category empty state, no duplicate task; no new wholepage/realbusiness/release PASS."
     }
   },
   "historicalContinuation500Before716": {

@@ -1,0 +1,145 @@
+{
+  "status": "COMPLETED_ORIGINAL169_FIRST_MAIN_KEY_READONLY_RECOVERY_AND_EXISTING_CHECK_LOG_PROJECTION",
+  "jobId": "t45-r1-first-bind-23514-recovery-readonly-20261027-170",
+  "receipts": {
+    "job.json": {
+      "jobId": "t45-r1-first-bind-23514-recovery-readonly-20261027-170",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "COMPLETED",
+      "unit": "naijue-erp-op-5cc58239-e51b46827921",
+      "atUTC": "2026-10-27T11:52:48.613485+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 0,
+      "elapsedSeconds": 0.568587226094678,
+      "exports": [
+        "check-log-projection.json",
+        "engine-result.json",
+        "original-key-result.json"
+      ],
+      "finishedAtUTC": "2026-10-27T11:52:49.209823+00:00"
+    },
+    "original-key-result.json": {
+      "jobId": "t45-r1-first-bind-23514-recovery-readonly-20261027-170",
+      "status": "PASS_ORIGINAL_FIRST_MAIN_KEY_RRRO_READBACK",
+      "businessDML": 0,
+      "commandsIssued": 0,
+      "grantIssued": false,
+      "credentialsExported": false,
+      "originalRequestKey": "97d9c78b-d846-47af-a3d9-38d9f1ee83c8",
+      "failedOperationJob": "t45-r1-post-acl-adopted148-continuation-20261027-169",
+      "identity": {
+        "database": "erp_rewrite_20261022_r1",
+        "oid": "1027659",
+        "role": "erp_rewrite_runtime_20261022",
+        "session_user": "erp_rewrite_runtime_20261022",
+        "server_address": null,
+        "server_port": null,
+        "postmaster_start": "2026-10-04 08:16:07.895273+00",
+        "readonly": "on"
+      },
+      "originalKeyReceipts": [],
+      "batch": [
+        {
+          "status": "STAGED",
+          "sequence": "2",
+          "cursor": "22",
+          "counts": {
+            "SKU": 0,
+            "WAREHOUSE": 22,
+            "IMPORT_BATCH": 0,
+            "INVENTORY_LEDGER": 0
+          },
+          "history_payload_hash": null
+        }
+      ],
+      "receiptObservation": "NO_ORIGINAL_KEY_RECEIPT_VISIBLE_IN_THIS_RR_SNAPSHOT",
+      "rollbackReturned": true,
+      "clientsClosed": true,
+      "finishedAtUtc": "2026-10-27T11:52:49.092Z"
+    },
+    "check-log-projection.json": {
+      "automaticReplay": false,
+      "boundedLogBytes": 597,
+      "boundedLogLines": 4,
+      "databaseConnected": false,
+      "errorCandidates": [
+        {
+          "attribution": "TIME_AND_CONTAINER_CANDIDATE_ONLY_TARGET_BINDING_UNPROVEN",
+          "backendPid": 1536609,
+          "databaseMatchedInLogPrefix": false,
+          "reasonCategory": "UNCLASSIFIED_ERROR_TEXT_NOT_EXPORTED",
+          "roleMatchedInLogPrefix": false,
+          "routines": [
+            {
+              "line": 135,
+              "location": "RAISE",
+              "routine": "assert_core_initialization_v14"
+            },
+            {
+              "line": 16,
+              "location": "PERFORM",
+              "routine": "validate_import_accounting_checkpoint_commit"
+            }
+          ],
+          "severity": "ERROR",
+          "sqlstateExplicitInLog": null,
+          "timestamp": "2026-10-27T11:48:04.164246523Z"
+        }
+      ],
+      "exactOriginalDbContainerMatched": true,
+      "failed169RuntimeSqlstate": "23514",
+      "finishedAtUtc": "2026-10-27T11:52:49.169646+00:00",
+      "jobId": "t45-r1-first-bind-23514-recovery-readonly-20261027-170",
+      "limits": "Safe identifier-only projection of existing log window. No SQL statement/parameters/raw error text/DETAIL/stack/business body exported; missing target prefix remains unproven, SQLSTATE unknown unless explicit in log. No replay, logging change, DB connection or permission repair.",
+      "originalChanged": false,
+      "originalExecutionJob": "t45-r1-post-acl-adopted148-continuation-20261027-169",
+      "providerExecuted": false,
+      "rawLogsExported": false,
+      "status": "COMPLETED_BOUNDED_EXISTING_CHECK_LOG_PROJECTION",
+      "windowUtc": [
+        "2026-10-27T11:47:51Z",
+        "2026-10-27T11:48:06Z"
+      ]
+    },
+    "engine-result.json": {
+      "applicationChanged": false,
+      "businessDML": 0,
+      "checkedAtUtc": "2026-10-27T11:52:49.176275+00:00",
+      "commandsIssued": 0,
+      "existingCheckLogProjectionExitCode": 0,
+      "grantIssued": false,
+      "jobId": "t45-r1-first-bind-23514-recovery-readonly-20261027-170",
+      "nodeExitCode": 0,
+      "runtimeStatus": "PASS_ORIGINAL_FIRST_MAIN_KEY_RRRO_READBACK",
+      "status": "PASS_ORIGINAL_FIRST_MAIN_KEY_READONLY_NO_REPLAY"
+    }
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-bind-23514-recovery-readonly-20261027-170/release-submission/release-receipts/t45-r1-first-bind-23514-recovery-readonly-20261027-170/job.json",
+      "bytes": 581,
+      "sha256": "22cddbbcd655f29e2f7dc98bf644ad84708e0f8c98063b3253b7a1410bd3bcc4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-bind-23514-recovery-readonly-20261027-170/release-submission/release-receipts/t45-r1-first-bind-23514-recovery-readonly-20261027-170/original-key-result.json",
+      "bytes": 1157,
+      "sha256": "56d3634f29dd6c4d075da1d626037b6e3cb5f63ff6120cf593c96d4aebec0258"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-bind-23514-recovery-readonly-20261027-170/release-submission/release-receipts/t45-r1-first-bind-23514-recovery-readonly-20261027-170/check-log-projection.json",
+      "bytes": 1633,
+      "sha256": "00795a36fe044275694fee97ceac8a232eeb2f9a5f170a469210fe5c0128a420"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-bind-23514-recovery-readonly-20261027-170/release-submission/release-receipts/t45-r1-first-bind-23514-recovery-readonly-20261027-170/engine-result.json",
+      "bytes": 416,
+      "sha256": "79c329e918d0166a2f2f79187872eea69ddd6d6c374858a4ff619360a0b2820a"
+    }
+  ],
+  "businessDML": 0,
+  "noReplayOrConstraintPermissionChanges": true,
+  "interpretation": "Snapshot and safe original-time log facts only; no assertion of global0DML or root cause beyond supported constraint/routine metadata."
+}

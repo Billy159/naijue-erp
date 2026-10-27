@@ -1,0 +1,239 @@
+{
+  "status": "COMPLETED_EXACT25_CORE_GUARD_AGGREGATE_COUNTS_READONLY_NOT_CAUSAL_OR_BUSINESS_PASS",
+  "jobId": "t45-r1-core-v14-fixed25-counts-readonly-20261027-171",
+  "terminal": {
+    "jobId": "t45-r1-core-v14-fixed25-counts-readonly-20261027-171",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-e588f81b41cd",
+    "atUTC": "2026-10-27T11:58:25.213828+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 1.5215526840183884,
+    "exports": [
+      "fixed25-counts-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T11:58:26.752084+00:00"
+  },
+  "actualCountsOnly": {
+    "automaticReplay": false,
+    "businessDML": 0,
+    "businessFunctionsExecuted": false,
+    "counts": [
+      {
+        "ordinal": 1,
+        "relation": "history_sales_header",
+        "rows": "28282"
+      },
+      {
+        "ordinal": 2,
+        "relation": "history_sales_line",
+        "rows": "0"
+      },
+      {
+        "ordinal": 3,
+        "relation": "history_sales_settlement",
+        "rows": "0"
+      },
+      {
+        "ordinal": 4,
+        "relation": "history_transfer_header",
+        "rows": "14279"
+      },
+      {
+        "ordinal": 5,
+        "relation": "history_transfer_line",
+        "rows": "261641"
+      },
+      {
+        "ordinal": 6,
+        "relation": "sales_header",
+        "rows": "0"
+      },
+      {
+        "ordinal": 7,
+        "relation": "sales_line",
+        "rows": "0"
+      },
+      {
+        "ordinal": 8,
+        "relation": "sales_settlement",
+        "rows": "0"
+      },
+      {
+        "ordinal": 9,
+        "relation": "transfer_header",
+        "rows": "0"
+      },
+      {
+        "ordinal": 10,
+        "relation": "transfer_line",
+        "rows": "0"
+      },
+      {
+        "ordinal": 11,
+        "relation": "product",
+        "rows": "2956"
+      },
+      {
+        "ordinal": 12,
+        "relation": "sku",
+        "rows": "14999"
+      },
+      {
+        "ordinal": 13,
+        "relation": "sku_barcode",
+        "rows": "0"
+      },
+      {
+        "ordinal": 14,
+        "relation": "barcode_scheme",
+        "rows": "6"
+      },
+      {
+        "ordinal": 15,
+        "relation": "product_image",
+        "rows": "0"
+      },
+      {
+        "ordinal": 16,
+        "relation": "import_sku_alias",
+        "rows": "15121"
+      },
+      {
+        "ordinal": 17,
+        "relation": "import_stock_contributor",
+        "rows": "38314"
+      },
+      {
+        "ordinal": 18,
+        "relation": "inventory_ledger",
+        "rows": "0"
+      },
+      {
+        "ordinal": 19,
+        "relation": "inventory_balance",
+        "rows": "0"
+      },
+      {
+        "ordinal": 20,
+        "relation": "import_history_closure_manifest",
+        "rows": "0"
+      },
+      {
+        "ordinal": 21,
+        "relation": "import_history_document_manifest",
+        "rows": "0"
+      },
+      {
+        "ordinal": 22,
+        "relation": "payment_method",
+        "rows": "0"
+      },
+      {
+        "ordinal": 23,
+        "relation": "payment_account",
+        "rows": "0"
+      },
+      {
+        "ordinal": 24,
+        "relation": "payment_account_hall",
+        "rows": "0"
+      },
+      {
+        "ordinal": 25,
+        "relation": "history_revision",
+        "rows": "0"
+      }
+    ],
+    "finishedAtUtc": "2026-10-27T11:58:26.701181+00:00",
+    "firstNonzero": {
+      "ordinal": 1,
+      "relation": "history_sales_header",
+      "rows": "28282"
+    },
+    "identity": {
+      "current_user": "erp_rewrite_owner_20261022",
+      "database": "erp_rewrite_20261022_r1",
+      "oid": "1027659",
+      "postmaster": "2026-10-04 08:16:07.895273+00",
+      "readonly": "on",
+      "server_addr": null,
+      "server_port": null,
+      "session_user": "t15_prod_bootstrap"
+    },
+    "jobId": "t45-r1-core-v14-fixed25-counts-readonly-20261027-171",
+    "nonzeroRelations": [
+      {
+        "ordinal": 1,
+        "relation": "history_sales_header",
+        "rows": "28282"
+      },
+      {
+        "ordinal": 4,
+        "relation": "history_transfer_header",
+        "rows": "14279"
+      },
+      {
+        "ordinal": 5,
+        "relation": "history_transfer_line",
+        "rows": "261641"
+      },
+      {
+        "ordinal": 11,
+        "relation": "product",
+        "rows": "2956"
+      },
+      {
+        "ordinal": 12,
+        "relation": "sku",
+        "rows": "14999"
+      },
+      {
+        "ordinal": 14,
+        "relation": "barcode_scheme",
+        "rows": "6"
+      },
+      {
+        "ordinal": 16,
+        "relation": "import_sku_alias",
+        "rows": "15121"
+      },
+      {
+        "ordinal": 17,
+        "relation": "import_stock_contributor",
+        "rows": "38314"
+      }
+    ],
+    "permissionsChanged": false,
+    "readonlyRollbackAndOwnerProcessReturned": true,
+    "roleScope": "Existing owner operational aggregate read, not a grant to ordinary runtime and not native guard invocation",
+    "sqlProcesses": [
+      {
+        "elapsedSeconds": 1.406237,
+        "exitCode": 0,
+        "phase": "core-fixed25-171",
+        "processExited": true,
+        "stderrBytes": 0,
+        "stdoutBytes": 1865
+      }
+    ],
+    "status": "COMPLETED_EXACT25_CORE_GUARD_AGGREGATE_COUNTS_READONLY_NOT_CAUSAL_OR_BUSINESS_PASS"
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-core-v14-fixed25-counts-readonly-20261027-171/release-submission/release-receipts/t45-r1-core-v14-fixed25-counts-readonly-20261027-171/fixed25-counts-result.json",
+      "bytes": 4206,
+      "sha256": "7935d3c9f79b8857300e8ba0ef7e39b11cbccc18beab854935b3f44e03387cdb"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-core-v14-fixed25-counts-readonly-20261027-171/release-submission/release-receipts/t45-r1-core-v14-fixed25-counts-readonly-20261027-171/job.json",
+      "bytes": 523,
+      "sha256": "612d853d2d4da30c608ac8c73539f19360502a7abd8a258fee8225afef00df86"
+    }
+  ],
+  "limits": "Exact25 aggregate snapshot only; no row bodies/keys or initialization lineage checked. Nonzero is not assumed legitimate or damaged. No native assert function/BIND/replay/guard/permission/data changes. Existing-owner operational read is not ordinary runtime read-capability proof."
+}

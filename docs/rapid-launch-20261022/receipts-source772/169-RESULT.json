@@ -1,0 +1,105 @@
+{
+  "status": "FAILED_FIRST_ORIGINAL_MAIN_23514_OUTCOME_UNVERIFIED_AT_FAILURE_NOT_ZERO_MAIN",
+  "jobId": "t45-r1-post-acl-adopted148-continuation-20261027-169",
+  "receipts": {
+    "job.json": {
+      "jobId": "t45-r1-post-acl-adopted148-continuation-20261027-169",
+      "taskId": "T45",
+      "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+      "status": "FAILED",
+      "unit": "naijue-erp-op-5cc58239-1fa028688f2a",
+      "atUTC": "2026-10-27T11:47:51.197532+00:00",
+      "grantId": "5cc58239751e4e2a",
+      "privateLogsExported": false,
+      "businessAcceptanceClaimed": false,
+      "exitCode": 2,
+      "elapsedSeconds": 13.207490740111098,
+      "exports": [
+        "consumer-engine-result.json",
+        "consumer-runtime-result.json"
+      ],
+      "finishedAtUTC": "2026-10-27T11:48:04.436143+00:00"
+    },
+    "consumer-runtime-result.json": {
+      "jobId": "t45-r1-post-acl-adopted148-continuation-20261027-169",
+      "status": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+      "automaticReplay": false,
+      "sourceReadyOnly": false,
+      "MAINOrPublishExecuted": false,
+      "phase": "ORIGINAL_NATIVE_SOURCE_STEP_SEQUENCE",
+      "originalHostReturned": true,
+      "adoptedFullEvidenceCheckedByOriginalBranch": true,
+      "actualRuntimeIssuerReturned": true,
+      "lastJournalEvent": {
+        "ordinal": 1,
+        "kind": "MAIN",
+        "digest": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+        "state": "FAILED_OUTCOME_UNVERIFIED",
+        "code": "IMPORT_EXECUTION_FAILED"
+      },
+      "errorCode": "23514",
+      "originalHostClosed": true,
+      "finishedAtUtc": "2026-10-27T11:48:04.284Z"
+    },
+    "consumer-engine-result.json": {
+      "actualMode": "FULL_NATIVE_CONTINUATION",
+      "actualPhase": "ORIGINAL_NATIVE_SOURCE_STEP_SEQUENCE",
+      "applicationChanged": false,
+      "automaticReplay": false,
+      "checkedAtUtc": "2026-10-27T11:48:04.407739+00:00",
+      "errorCode": "ORIGINAL_CONSUMER_STOP_SEE_ORIGINAL_RESULT",
+      "externalGrant": {
+        "bytes": 37000,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/C-EXECUTION-GRANT.json",
+        "sha256": "60ce6455f63c786f0900685fd3a2ca380824408c14c6dee2156e1bfdd7ffac65"
+      },
+      "finalInput": {
+        "bytes": 188592,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/inputs/source-input.json",
+        "sha256": "66edf7ba40a6e085bd0d079adb17c282a2fc35de92df7a35d84be8e83d507337"
+      },
+      "initialState": "Original153 prefix0/109 remaining, original source/data preserved",
+      "jobId": "t45-r1-post-acl-adopted148-continuation-20261027-169",
+      "newSecretChannelCreated": "[REDACTED]",
+      "node": {
+        "bytes": 126595440,
+        "mode": 493,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/c03-maintenance-matrix-20261022-26/tools/node",
+        "sha256": "7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c",
+        "uid": 0,
+        "version": "v24.21.0"
+      },
+      "nodeExitCode": 2,
+      "processOutcome": "RETURNED",
+      "runtimeStatus": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+      "status": "STOP_SOURCE_CONSUMER_OR_UNKNOWN_NO_REPLAY",
+      "stderrBytes": 0,
+      "stdoutBytes": 135
+    }
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/release-submission/release-receipts/t45-r1-post-acl-adopted148-continuation-20261027-169/job.json",
+      "bytes": 557,
+      "sha256": "f7a8f1b7aa17a5a0933f525b00d7b00bd08a4def39897234379b2ad9e8d8bef8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/release-submission/release-receipts/t45-r1-post-acl-adopted148-continuation-20261027-169/consumer-runtime-result.json",
+      "bytes": 736,
+      "sha256": "365dc9d50b3c0dd5c934dbefa2a3e9cf4ee03e1fe66b184c64bf63acf29ecb25"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/release-submission/release-receipts/t45-r1-post-acl-adopted148-continuation-20261027-169/consumer-engine-result.json",
+      "bytes": 1583,
+      "sha256": "051d170f99a0b5499468f8ac5512ebc57a9cae9ef1a2539917803bc7faed4257"
+    }
+  ],
+  "followupOnlyOriginalKeyRecovery": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-bind-23514-recovery-readonly-20261027-170/RESULT.json",
+    "bytes": 6658,
+    "sha256": "f98ce974d06ed70f6c46c24d4e27931cc560bf64e7d51ca51d053683cdc173fb"
+  },
+  "noReplay": true,
+  "notBusinessOrPublicationPASS": true,
+  "interpretation": "First MAIN attempted; falseMAINflag means no COMMITTED event recorded, not0writes. Exact outcome readback separate170;168twoACL left intact."
+}
