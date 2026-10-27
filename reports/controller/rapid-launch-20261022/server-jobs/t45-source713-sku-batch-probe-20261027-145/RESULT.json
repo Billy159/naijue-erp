@@ -1,0 +1,101 @@
+{
+  "status": "TERMINAL_EXPECTED_FIXED1000_STOP_NOT_FULL_PREPARATION_PASS",
+  "jobId": "t45-source713-sku-batch-probe-20261027-145",
+  "jobReceipt": {
+    "jobId": "t45-source713-sku-batch-probe-20261027-145",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-077f7d6cf118",
+    "atUTC": "2026-10-27T00:15:26.814319+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 134.7650989741087,
+    "exports": [
+      "engine-result.json",
+      "preparation-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T00:17:41.615780+00:00"
+  },
+  "errorCode": "DIAGNOSTIC_LIMIT_REACHED",
+  "sourceCommit": "3c166340a1f0ee538baa54dce72f87cfbb5a5333",
+  "runtimeInstalledTriple": [
+    "native-sku-import.ts3720bbf6",
+    "provider9c7a055a",
+    "helperada8e60d"
+  ],
+  "stage": "PREPARER_SOURCE_STREAM",
+  "elapsedMs": 133501,
+  "nativeFacts": {
+    "PRODUCTS": {
+      "records": 30,
+      "sourceRows": 2956
+    },
+    "SKUS": {
+      "records": 14999,
+      "sourceRows": 15121
+    },
+    "STOCK_CONTRIBUTORS": {
+      "records": 38303,
+      "sourceRows": 38314
+    }
+  },
+  "merged": {
+    "sourceRows": {
+      "count": 1000,
+      "started": true,
+      "done": false,
+      "lastProgressElapsedMs": 133495
+    },
+    "typedRows": {
+      "count": 0,
+      "started": false,
+      "done": false,
+      "lastProgressElapsedMs": 0
+    }
+  },
+  "groupCounts": [
+    1,
+    1,
+    5,
+    32,
+    31,
+    80,
+    2,
+    88,
+    166,
+    52,
+    552
+  ],
+  "headersDocuments": {
+    "count": 42561,
+    "started": true,
+    "done": true,
+    "lastProgressElapsedMs": 122308
+  },
+  "allDocumentsLastProgressMs": 122309,
+  "comparison141": {
+    "baselineSeconds": 158.68880032910965,
+    "thisSeconds": 134.7650989741087,
+    "observedReductionSeconds": 23.923701355000958,
+    "observedReductionPercent": 15.075859988471048,
+    "singleRunNotControlledCausalAttribution": true,
+    "fullRunExtrapolation": false
+  },
+  "prior141Residue": {
+    "parentExists": true,
+    "directEntries": 0,
+    "registrationExists": false
+  },
+  "post145ProtectedStateReadback": "NOT_IN_THIS_RECEIPT_EXPECTED_STOP_PREVENTED_TRAILING_PROTECT",
+  "typedNotStarted": true,
+  "fullPreparationReady": false,
+  "databaseConnected": false,
+  "businessDML": 0,
+  "MAINOrPublishExecuted": false,
+  "applicationChanged": false,
+  "newProfile": false,
+  "noReplay": true
+}

@@ -1,0 +1,89 @@
+{
+  "reviewId": "QB436-PREPARED",
+  "decision": "PASS_PREPARED_NEW_SYN_CARRIER_SOURCE_AND_FRESH_SIX_PURPOSE_WORKER_NOT_EXECUTED",
+  "adopts": "QB435 SOURCE715 sevenleaf source-only PASS",
+  "scope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01",
+  "carrierPins": {
+    "run-syn-parent.PREPARED.mjs": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/run-syn-parent.PREPARED.mjs",
+      "bytes": 14726,
+      "sha256": "5dce5a6b10c154285c81ba2854a6e0b45dc8ffe64bdd7509986dddb715154200"
+    },
+    "EXACT-SYN-ORDINARY-ROLE.PREPARED.sql": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/EXACT-SYN-ORDINARY-ROLE.PREPARED.sql",
+      "bytes": 8896,
+      "sha256": "72f0a21cb6ce86ecd5c3d4f943186cbe329cab29e2bec29bcffe6228d22e0444"
+    },
+    "SOURCE-REFERENCES.PREPARED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/SOURCE-REFERENCES.PREPARED.json",
+      "bytes": 8303,
+      "sha256": "24f4b552b826ac9d85c1d54717ca2da4106e949144f984670173da74664add7d"
+    },
+    "consume-current-purpose.PREPARED.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/consume-current-purpose.PREPARED.py",
+      "bytes": 7221,
+      "sha256": "58f326eb06b6eb99d57fd27c8eaf0948150eead4ec44717bf94cf9ef9656994c"
+    },
+    "run-syn-window.PREPARED.py": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/run-syn-window.PREPARED.py",
+      "bytes": 6315,
+      "sha256": "79f3fd40326fcc4dd65ebcfa6d493c69b498260961c9312ccc262ee00033a74a"
+    },
+    "REGISTRATION.PREPARED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/REGISTRATION.PREPARED.json",
+      "bytes": 8604,
+      "sha256": "cc5f20fcfb1828b592b721558158efb8bbc2389607b15aa97c7ae8bf1815f8f6"
+    },
+    "PREPARATION-RESULT.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/PREPARATION-RESULT.json",
+      "bytes": 2524,
+      "sha256": "4621684cc5d2f685f336e15fbb1a12fc7b1a423771dd3f9c37ef35a56c8226e0"
+    },
+    "CATALOG-SIZE-FIX-RESULT.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/CATALOG-SIZE-FIX-RESULT.json",
+      "bytes": 977,
+      "sha256": "8e0a8561cc025a8fbdd6d6eabf210c50091dd16cf51ee2274dfe57082ce61810"
+    },
+    "HANDOFF-ACTIVATION.PREPARED.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/HANDOFF-ACTIVATION.PREPARED.json",
+      "bytes": 559,
+      "sha256": "0015a05d5e97106bb9f3d45502ae9944aac48b4c4c5e98c2fb8027b6376f6202"
+    }
+  },
+  "worker": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice436-syn-approved-purpose/review-syn-approved-purpose.py",
+    "bytes": 12615,
+    "sha256": "94e35b54c1ef292018cffbb59e12569653f9a5453c54587335217a0c60d3cd00"
+  },
+  "config": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice436-syn-approved-purpose/QB436-REVIEW-CONFIGURATION.json",
+    "bytes": 4196,
+    "sha256": "0d8b163d691db8ef07abd5954e8b847ee59ac446d062b9a444e1a65e480db685"
+  },
+  "reviewReportPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice436-syn-approved-purpose/QB436-LIVE-RESULT.json",
+  "reviewIdForLive": "QB436-LIVE",
+  "failureReportPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice436-syn-approved-purpose/QB436-LIVE-FAILURE.json",
+  "checks": [
+    "New dedicated Unix-only PG17 cluster/database/socket55714/newordinaryrole and fresh parentroot; original07 never accessed. Exact19 migrations/publication and approvedsource profile then original11step26 upgrade/v21; before/after existingcolumns rowfingerprints held. Setup/ordinary/client closures and ownPID/ownPGstop bounded, independentchild cleanup retained.",
+    "NewordinaryACL equals accepted original ACL after exactrole/database rename plus only ledger15 INSERT, balance6 INSERT and balance4 UPDATE columns. No ledgerUPDATE/DELETE, PUBLIC/tableALL grant. NewsetupownerNOINHERIT explicitly expected; no owner inheritance bypass.",
+    "Consumer64KiB completecatalog blocker originally observed and reported. Fixed7221/58f326eb only ready.catalogRef bounded2MiB; actualoldcatalog1386727/129routines independently accepted at exactnewcall, default64KiB stillrejects and wrongSHA rejects. Newfullrefs8303/24f4b552 pin agrees. No suite rerun or gate issued.",
+    "Worker/config underQB only; finite300sec/absoluteCwindow<=900/preposition before newROOT/DATA/socket. Exactcurrent livePID/postmaster/target/ordinaryrole/publication/parent andoriginalreadyrefs required; no latepurpose after parent/pipeline/OStermination. Latest preparedregistration exact except C-finalized windowDeadlineUtc.",
+    "Expectedfullcatalog derived from accepted QB399 complete v21 artifact: exactnewordinaryrole ACL names, registeredsetupNOINHERIT and21columnACL only; internal RI autogenerated trigger OID suffix normalized and trigger multiset retained. All other roles/memberships/ownership/ACL/columns/constraints/indexes/129functionbody+definition+config/943triggers exact. Newcanonical SHA recomputed from original current catalog.",
+    "Offline normalization probes accept only freshinternalRI OIDs and registeredrole/ACL changes; alteredrolesuperuser/routinesecuritydefiner/columnPUBLICgrant/triggerdisabled allreject. PG+08 localtimestamp parser verified. Worker syntax compiled/importedfunctions only; main/wait/live/review not executed.",
+    "Worker emits exact original sixpurpose runtime review only after independently persistedQB livePASS/reportpin/readback; no gate/DB/credentials/SQLport/bizbody reads. T45 originalconsumer alone binds review/config/approvedinput and emits gate."
+  ],
+  "remaining": [
+    "C/T45 final adopted EXECUTION-AUTHORITY + REGISTRATION windowDeadlineUtc and HANDOFF-ACTIVATION exact worker/config/report locators, source pins and timeout; no other registration changes without new review.",
+    "No actualOid/postmaster/publication/catalog/currentpurpose exists yet. Liveworker must be prepositioned by T45 before creation. Runtime purpose cannot be preissued.",
+    "Actual normal APPROVED/PK rollback outcomes, boundedcleanup and final adopted conclusions remain to collect; real-source/formal/browser untouched."
+  ],
+  "actualDatabaseCreated": false,
+  "actualPgStarted": false,
+  "actualReviewIssued": false,
+  "actualGateIssued": false,
+  "actualSession": false,
+  "sourceChangedByQB": false,
+  "executionAuthorityIssuedByQB": false,
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}
