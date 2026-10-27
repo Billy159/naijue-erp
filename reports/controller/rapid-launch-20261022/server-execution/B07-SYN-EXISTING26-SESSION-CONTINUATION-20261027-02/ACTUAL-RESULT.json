@@ -1,0 +1,68 @@
+{
+  "status": "TERMINAL_STOP_CURRENT_PURPOSE_GATE_NOT_ISSUED_NO_REPLAY",
+  "checkedAtUtc": "2026-10-27T05:16:09.715818+00:00",
+  "sourceCommit": "6a49b94e1d9d42ef32aa788fbfecb57d5501f953",
+  "scope": "ONE_EXISTING_SYN26_CURRENT_PROOF_AUTH1_CONTINUATION_SESSION",
+  "execSession": 26335,
+  "elapsedSeconds": 300.63771179199995,
+  "failedPhase": "CURRENT_PURPOSE_GATE",
+  "errorCode": "B07_CURRENT_PURPOSE_GATE_NOT_READY",
+  "independentReviewFailure": {
+    "status": "NO_REVIEW_ISSUED_BY_FAILED_ATTEMPT",
+    "reason": "ValueError",
+    "automaticRetry": false,
+    "businessAcceptance": false
+  },
+  "currentReadOnlyProofReady": true,
+  "qaCredentialActual": false,
+  "normalHttpActual": false,
+  "credentialIntentAndGateAbsent": [
+    "SYN26-CREDENTIAL-INTENT.json",
+    "APPROVED-ACTUAL-RESULT.json",
+    "CURRENT-PURPOSE-GATE.json"
+  ],
+  "clientsClosed": true,
+  "reviewWorkerClosed": true,
+  "gateWorkerClosed": true,
+  "ownPgStopped": true,
+  "postmasterPidFileAbsent": true,
+  "seedExecuted": false,
+  "upgradeExecuted": false,
+  "roleOrGrantChanged": false,
+  "publicationExecuted": false,
+  "realSourceImportVerified": false,
+  "automaticReplay": false,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-02/OS-LIFECYCLE.json",
+      "bytes": 554,
+      "sha256": "9515fdc4168a8cdca4b2f831bbcee060e3dfc76d6538f643cca1aadbb52ef448"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-02/NODE-PIPELINE-RESULT.json",
+      "bytes": 588,
+      "sha256": "51d75ed322732d2b25f7b50ec8a5f2216879a9c29354b13f28d6013940db92c8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-02/PARENT-RESULT.json",
+      "bytes": 847,
+      "sha256": "9acd41fe38438b618c27948873ca765700a093801fae4041e0c1f9ab1e449f55"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-02/CURRENT-PERMISSION-PROOF.json",
+      "bytes": 2411,
+      "sha256": "cb779450f6abd8900471c077d3539e13e648360edf735a84d52b0ced843e40a7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-02/CURRENT-BOUNDED-FACTS.json",
+      "bytes": 2801,
+      "sha256": "8f0ab096ee611378482c9e4354c3975a68ac808825058cc80b470c9f2b286b09"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice455-source741-normal02-purpose/QB455-LIVE-FAILURE.json",
+      "bytes": 137,
+      "sha256": "27ece82712c7704ecdcd7a44fc0fa25d11e6a7b0c148cf31eae9b57e45ad6163"
+    }
+  ],
+  "remaining": "QB455 ValueError exact source-bounded diagnosis by original QB; no retry/PG/CAS authorized by this result"
+}

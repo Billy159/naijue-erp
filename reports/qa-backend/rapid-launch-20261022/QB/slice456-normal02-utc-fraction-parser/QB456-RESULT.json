@@ -1,0 +1,73 @@
+{
+  "reviewId": "QB456",
+  "task": "QB455 actual ValueError exact diagnosis and pure UTC parser successor repair",
+  "decision": "PASS_REPRODUCED_PARSER_FIX_ONLY_NOT_CURRENT_PURPOSE_OR_BUSINESS",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "originalFailureRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice455-source741-normal02-purpose/QB455-LIVE-FAILURE.json",
+    "bytes": 137,
+    "sha256": "27ece82712c7704ecdcd7a44fc0fa25d11e6a7b0c148cf31eae9b57e45ad6163"
+  },
+  "actualInputRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-02/ACTUAL-CURRENT-METADATA.json",
+    "bytes": 795,
+    "sha256": "dd02fe18c9dcb87d460b42a17fa77d02cac988c2028d5db2a7e04ebbbfa61739"
+  },
+  "cause": {
+    "verified": true,
+    "python": "3.9.6",
+    "field": "ACTUAL-CURRENT-METADATA.identity.postmaster_start",
+    "exactSafeTimestamp": "2026-10-27 05:10:44.14361+00",
+    "earliestActualPostmasterParserCallInRun": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice455-source741-normal02-purpose/review-normal02-current-purpose.py:147",
+    "checkLabel": "FIXED_SEED_AND_CURRENT_CHANGED_AT_REQUIRED",
+    "mechanism": "utc normalizes PG +00 offset to +00:00 but leaves5fraction digits. Python3.9.6 datetime.fromisoformat rejects5digits with ValueError. Padding the same fraction14361 to143610 preserves exact instant and parses. This is parser compatibility failure before the timestamp comparison verdict, not a measured target/catalog/permission drift.",
+    "laterSameParserCall": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice455-source741-normal02-purpose/review-normal02-current-purpose.py:78"
+  },
+  "eliminatedByTargetedPureReads": [
+    "Five bounded currentinput JSON files parse successfully.",
+    "Actual fullcatalog normalize passes exact internalRI prefix rule.",
+    "Current deadline/originalseed/changedAt timestamps parse underold helper.",
+    "Current PID integer fields parse."
+  ],
+  "repair": "Only utc pure helper pads1..6fractiondigits to6 in localcomparison representation after original offset/Z normalization, and translates malformed TypeError/ValueError to static UTC_TIMESTAMP_FORMAT_REQUIRED. No source input, metadata target value or canonical catalog byte normalization changed.",
+  "workerCandidateRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice456-normal02-utc-fraction-parser/review-normal02-current-purpose.py",
+    "bytes": 18358,
+    "sha256": "a70a3a9cd517242298fada5a80cfbd94736523cf5c8487292d6fe8df042cf79e"
+  },
+  "configurationCandidateRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice456-normal02-utc-fraction-parser/QB456-REVIEW-CONFIGURATION.json",
+    "bytes": 5351,
+    "sha256": "8a52e195f6b2b01abb48b44017ada18bc5f6f8a6c3580c3baccdf0653ef4bb45"
+  },
+  "regressionHarnessRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice456-normal02-utc-fraction-parser/verify-utc-parser.py",
+    "bytes": 3070,
+    "sha256": "12b1491ab2ca454ed6117544e4507fbea841628105ac685ae3703b83964d3fb0"
+  },
+  "regressionResultRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice456-normal02-utc-fraction-parser/PARSER-REGRESSION-RESULT.json",
+    "bytes": 1218,
+    "sha256": "1eb50d6ba8e69a9fa5b47ea4654a61ab57b03020808b76799acb304db2e92ceb"
+  },
+  "checks": [
+    "Exact captured5fraction timestamp reproduces original ValueError and repairedhelper returns explicitUTCdatetime143610microsecond instant.",
+    "12fraction variants with shortPGoffset andISOZ passed;4oldaccepted formats identical;3malformed values reject static reason.",
+    "All worker AST except utc and explicitQB455toQB456 identity unchanged; original preposition/rootabsent/ownPGstopped/authority/immutablebaseline/deadline/catalog/proof rules retained.",
+    "Old QB455 failure pin remains137/27ece82712c7704ecdcd7a44fc0fa25d11e6a7b0c148cf31eae9b57e45ad6163; no LIVE result/review overwritten or issued."
+  ],
+  "remaining": [
+    "Candidate retains currentnormal02 B/root purely to make exactnarrowdiff reviewable; existingroot or terminalwindow correctly prevents re-preposition. Do not launch this candidate against in-flight/closed attempt automatically.",
+    "C/T45 choose accurate continuation lifecycle/carrier binding for repairedworker, preserving oldfailure. QB can perform only necessary new binding increment once provided.",
+    "Actual sixpurpose/currentmetadata review, auth1to2/CAS/normal approvedhistory business and cleanup not passed by this parser regression."
+  ],
+  "sourceChangedByQB": false,
+  "workerCandidateChangedByQB": true,
+  "actualWorkerRun": false,
+  "actualPurposeIssued": false,
+  "databaseOrRemoteAction": false,
+  "credentialOrCASOrHTTP": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}

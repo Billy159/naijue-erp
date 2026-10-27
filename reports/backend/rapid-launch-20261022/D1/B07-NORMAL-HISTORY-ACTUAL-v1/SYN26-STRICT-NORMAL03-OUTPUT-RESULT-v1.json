@@ -1,0 +1,48 @@
+{
+  "status": "SOURCE_STRICT_NORMAL03_OUTPUT_READY_NO_ACTUAL",
+  "files": [
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 82891,
+      "sha256": "556accb2c3ff57224c1c612f9fcc37e567b77d15cb24dfc8dbe032ea3f18baff",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 42182,
+      "sha256": "cab59fba166306bf44ac5ce43867c09bc7f7516e4a49b325968d5ac6479be2fe",
+      "mirrorsEqual": true
+    }
+  ],
+  "terminalBeforeMutation": {
+    "session": 26335,
+    "atUtc": "2026-10-27T05:15:44.619224Z",
+    "exitCode": 2,
+    "receiptBytes": 3450,
+    "receiptSha256": "b9f6228a2f0bf12976a3e60a64d3d54a5d09cf8dd3fce4e3ddea35b91fa9f402",
+    "clientsWorkersOwnPgClosed": true,
+    "failure": "CURRENT_PURPOSE_GATE/B07_CURRENT_PURPOSE_GATE_NOT_READY; QB455 timestamp parser ValueError, not D1 UTC/business failure"
+  },
+  "change": "Only SYN26_CONTINUATION_OUTPUT constant normal02→credential-continuation-03, plus corresponding fixed-root rejection test. Pending patch prepared outside source while old26335 active; applied only after verified terminal/cleanup.",
+  "entireParentExceptOneConstantByteUnchanged": true,
+  "preserved": [
+    "original01/02 receipts and evidence",
+    "UTC driver/factory/issuer/target guard",
+    "QA1to2/CAS/proof/normal business/recovery/cleanup flow",
+    "old07/seed/pub/upgrades/ACL/v21"
+  ],
+  "checks": {
+    "targetedFixed03Test": {
+      "passed": 1,
+      "skipped": 0,
+      "scope": "exact03 output; old01/02/04/arbitrary directory or old01 gate rejected before query/client/secret"
+    },
+    "node24SyntaxExitCode": 0
+  },
+  "newOutputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-03",
+  "actualPostgresByD1": false,
+  "actualCredentialOrCas": false,
+  "next": "C fix exact two pins and combine normal03 carrier + QB456 pure timestamp parser binding in one necessary affected review. Reuse actualUTC construction PASS; do not run an independent construction or repeat seed/upgrades/pub."
+}

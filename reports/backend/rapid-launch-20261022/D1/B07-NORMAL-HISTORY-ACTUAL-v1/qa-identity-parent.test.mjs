@@ -330,11 +330,11 @@ test('SYN UTC seam preserves original old07 driver and its diagnostic readonly o
  assert.equal(oldConfig.options,'-c default_transaction_read_only=off');assert.equal(newConfig.options,'-c default_transaction_read_only=off -c timezone=UTC');assert.equal(Object.hasOwn(input,'options'),false);
 });
 
-// Strict new02 successor output only; original01 terminal files are never reused.
-test('SYN new02 output is fixed and old01 or arbitrary roots reject before any client/credential work',async()=>{
- assert.equal(SYN26_CONTINUATION_OUTPUT,join(APPROVED_SYN_OUTPUT,'credential-continuation-02'));
+// Strict new03 successor output only; original01/02 terminal files are never reused.
+test('SYN new03 output is fixed and old01/02 or arbitrary roots reject before any client/credential work',async()=>{
+ assert.equal(SYN26_CONTINUATION_OUTPUT,join(APPROVED_SYN_OUTPUT,'credential-continuation-03'));
  let touched=0;const setupClient={async end(){touched++;},async query(){touched++;throw Error('MUST_NOT_QUERY');}};
- for(const directory of [join(APPROVED_SYN_OUTPUT,'credential-continuation-01'),join(APPROVED_SYN_OUTPUT,'credential-continuation-03'),join(APPROVED_SYN_OUTPUT,'arbitrary')]){
+ for(const directory of [join(APPROVED_SYN_OUTPUT,'credential-continuation-01'),join(APPROVED_SYN_OUTPUT,'credential-continuation-02'),join(APPROVED_SYN_OUTPUT,'credential-continuation-04'),join(APPROVED_SYN_OUTPUT,'arbitrary')]){
   await assert.rejects(runB07ExistingSyn26SessionContinuationParent({plan:{contract:'B07_SYN26_QA_AUTH1_CONTINUATION_PARENT_V1',outputDirectory:directory,purposeGateFile:join(directory,'CURRENT-PURPOSE-GATE.json')},setupClient,withRecoveryClient:async()=>{touched++;}}),/^Error: B07_SYN26_PARENT_REGISTRATION_REQUIRED$/);
  }
  const directory=SYN26_CONTINUATION_OUTPUT;
