@@ -1,0 +1,83 @@
+{
+  "jobId": "t45-r1-193-reaped-unit-successor-20261028-195",
+  "status": "TERMINAL_FAILED_ACTUAL_NATIVE_BARCODE_SQLSTATE42501_ORIGINAL_KEY_RECOVERY_REQUIRED",
+  "jobReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-193-reaped-unit-successor-20261028-195/release-submission/release-receipts/t45-r1-193-reaped-unit-successor-20261028-195/job.json",
+    "bytes": 676,
+    "sha256": "d07a8c367844a1ffab0cb53a8feb29f60aca7a8d0f129d3acddeea4c8ab23697"
+  },
+  "runtimeReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-193-reaped-unit-successor-20261028-195/release-submission/release-receipts/t45-r1-193-reaped-unit-successor-20261028-195/consumer-runtime-result.json",
+    "bytes": 757,
+    "sha256": "728b231b395ce6c5250d2cfbe1d1da657a09b8a55578af4033023934361d6b67"
+  },
+  "engineReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-193-reaped-unit-successor-20261028-195/release-submission/release-receipts/t45-r1-193-reaped-unit-successor-20261028-195/consumer-engine-result.json",
+    "bytes": 6589,
+    "sha256": "a7e318c12668af3f51fd140c6438ba697e7bd04d9885266779cff277071f1611"
+  },
+  "finishedAtUtc": "2026-10-27T18:54:29.489732+00:00",
+  "finishedAtChina": "2026-10-28 02:54:29 +08:00",
+  "elapsedSeconds": 375.2649161501322,
+  "unit": "naijue-erp-op-5cc58239-e63f5a1c1971",
+  "actualSource": {
+    "providerBytes": 141902,
+    "providerSha256": "eb41ccd6f7cd303fc20b1580d5a0273b4186490449ef6202f71a227c2e92ccc6",
+    "readerSha256": "e9613bdfdfc7cf183db4a784dae11bb4234d56c2e63c90cc65b9f74c6e0eed4d",
+    "prefixAdapterSha256": "a6d74aa6b695bc9d902634ad9a64a867d50e9f2e9f02d7ee1a359ee82c1b555b",
+    "sourcePackageSha256": "8e655414d838e9049211201a64acff45547fc2b8c3adae563ea489debad86ff4",
+    "originalSignedHostJob": "t45-r1-committed-prefix-original108-continuation-20261028-193",
+    "reviews": [
+      "QB483",
+      "QB484"
+    ]
+  },
+  "physicalClosure": {
+    "old188FilesVerified": 101,
+    "original193ExistingFilesVerified": 84,
+    "newMissingFiles": 7,
+    "originalBaselinesAndCurrentRefsVerified": true
+  },
+  "preflight": {
+    "actualR1CatalogSha256": "6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd",
+    "sameOriginalBindCommitted": true,
+    "status": "STAGED",
+    "sequence": "3",
+    "cursor": "22",
+    "accountOrPublishAtPreflight": false,
+    "rollbackReturned": true,
+    "clientsClosed": true
+  },
+  "execution": {
+    "originalHostReturned": true,
+    "originalFullEvidenceChecked": true,
+    "actualRuntimeIssuerReturned": true,
+    "committedSourceSteps": 18,
+    "mainOrPublishExecutedByHarness": false,
+    "lastJournalEvent": {
+      "ordinal": 19,
+      "kind": "BARCODE",
+      "digest": "df8ddd952e811e4aec196cd506fe2da9cf27603f85af21448288e9d2ae37db5c",
+      "state": "FAILED_OUTCOME_UNVERIFIED",
+      "code": "IMPORT_EXECUTION_FAILED"
+    },
+    "sqlstate": "42501",
+    "originalHostClosed": true,
+    "stderrBytes": 0
+  },
+  "notYetKnown": [
+    "Durable result of originalBARCODE ordinal19 digestdf8d... failedoutcomeunverified; do not replay",
+    "Exact18source step kinds/inserted vs replayed durable receipts until journal aggregation",
+    "Actual currentproof details not independently exported; retain public fullchain/source branch evidence, do not fabricate separate proof receipt",
+    "Exact denied PostgreSQL object for42501, no detailedmessage exported",
+    "Postfailure current batch and ACCOUNT/PUBLISH absence require originalkey readonly readback"
+  ],
+  "noActions": {
+    "schemaOrAclChanged": false,
+    "APPOrPublicSwitch": false,
+    "newBusinessKeys": false,
+    "replayed195": false
+  },
+  "next": "Original-key readonly recovery and finite existing195journal aggregation before any source or permission repair. Preserve all existing signatures/steps/inputs.",
+  "actualModelAndFast": "UNVERIFIED"
+}
