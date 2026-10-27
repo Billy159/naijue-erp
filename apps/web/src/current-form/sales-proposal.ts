@@ -87,6 +87,8 @@ export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { reado
     const gross = amounts.reduce((sum, value) => sum + value, 0n), net = gross - discount;
     let settled: bigint | null;
     try { settled = draft.settlements.reduce((sum, row) => {
+      // A wholly unused UI row is not a payment or an assumed zero.
+      if (!row.method && !row.account && row.amount.trim() === '' && row.direction === 'RECEIVE') return sum;
       if (!row.method || !row.account || row.account.paymentMethodId !== row.method.id || row.direction !== 'RECEIVE' && row.direction !== 'REFUND') throw Error();
       return sum + (row.direction === 'RECEIVE' ? 1n : -1n) * amount(row.amount);
     }, 0n); } catch { settled = null; }
@@ -366,8 +368,10 @@ export class SalesProposalSession {
   }
   addSettlement(): boolean {
     const draft = this.#state.draft;
-    if (this.#state.disposed || !draft.hall || draft.settlements.length >= 3) return false;
-    if (draft.settlements.some(row => !row.method || !row.account || row.account.paymentMethodId !== row.method.id || !/^\d+(?:\.\d{1,2})?$/.test(row.amount))) return false;
+    if (this.#state.disposed) return false;
+    if (!draft.hall || draft.settlements.length >= 3) { this.#publish({ notice: !draft.hall ? '请先选择营业厅，再添加收退款。' : '最多添加3笔收退款，原输入已保留。' }); return false; }
+    try { for (const row of draft.settlements) amount(row.amount); }
+    catch { this.#publish({ notice: '请先为已有收退款行填写有效金额，再添加下一笔；原输入已保留。' }); return false; }
     return this.#edit({ ...draft, settlements: [...draft.settlements, { key: `local-settlement-${++this.#nextSettlement}`, method: null, account: null, direction: 'RECEIVE', amount: '' }] });
   }
   async openPaymentPicker(key: string | null, kind: 'paymentMethod' | 'paymentAccount'): Promise<void> {

@@ -208,3 +208,27 @@ test('actual proposal form keeps both filled exchange sections visible and rende
   h.session.updateLine(key,{pricingRule:'DISCOUNT',discount:'5',isGift:true});dom=render();const row=dom.window.document.querySelector(`[data-entry-row="${key}"]`)!;assert.equal(row.querySelector('input[aria-label="本行成交单价"]')?.getAttribute('value'),'0.00');assert.equal(row.querySelector('input[aria-label="本行折扣"]')?.getAttribute('value'),'0');assert.equal(row.querySelector('.sale-gift')?.textContent,'赠品');dom.window.close();h.context.clear();
  }finally{await rm(temp,{recursive:true,force:true});}
 });
+
+test('payment display ignores only unused blank rows, preserves exact paid/refund sums and keeps partial/invalid input unknown',async()=>{
+ const {salesProposalMoney}=await import('./sales-proposal.ts');const h=setup();await fill(h.session);h.session.updateLine(sku.id,{quantity:'1',dealPrice:'100'});
+ await h.session.openPicker('paymentMethod');await h.session.select(uuid(12));await h.session.select(uuid(13));const first=h.session.getSnapshot().draft.settlements[0]!.key;h.session.updateSettlement(first,{amount:'100'});
+ const money=()=>salesProposalMoney(h.session.getSnapshot().draft)!;
+ assert.equal(money().balanced,true);assert.equal(h.session.addSettlement(),true);const blank=h.session.getSnapshot().draft.settlements.at(-1)!;
+ assert.equal(money().settledMinor,'10000');assert.equal(money().balanced,true);assert.equal(h.session.saveProposal(null),null,'blank UI row does not weaken SAVE requirements');
+ h.session.updateSettlement(blank.key,{amount:'oops'});assert.equal(money().settledMinor,null);assert.equal(h.session.getSnapshot().draft.settlements.at(-1)!.amount,'oops');
+ h.session.updateSettlement(blank.key,{amount:'0'});assert.equal(money().settledMinor,null,'an explicit unbound zero is not an unused row');
+ h.session.updateSignedSettlement(blank.key,'-');assert.equal(money().settledMinor,null,'incomplete negative input is not silently zero');h.session.removeSettlement(blank.key);
+ h.session.clearReference('paymentAccount',first);assert.equal(money().settledMinor,null);assert.equal(h.session.getSnapshot().draft.settlements[0]!.amount,'100');
+ await h.session.openPicker('paymentMethod');await h.session.select(uuid(12));await h.session.select(uuid(13));h.session.removeSettlement(first);
+ const retained=h.session.getSnapshot().draft.settlements[0]!.key;h.session.setBusinessType('RETURN');h.session.updateLine(sku.id,{quantity:'-1',dealPrice:'90071992547409.93'});h.session.updateSignedSettlement(retained,'-90071992547409.93');
+ assert.equal(money().settledMinor,'-9007199254740993');assert.equal(money().differenceMinor,'0');assert.equal(h.session.addSettlement(),true);assert.equal(money().balanced,true);h.context.clear();
+});
+test('payment draft add follows Demo amount-only rule, rejects invalid amount with feedback and never bypasses formal references',async()=>{
+ const h=setup();await fill(h.session);h.session.updateLine(sku.id,{dealPrice:'10'});
+ assert.equal(h.session.updateSignedSettlement(null,'10'),true);const first=h.session.getSnapshot().draft.settlements[0]!;
+ assert.equal(first.method,null);assert.equal(h.session.addSettlement(),true,'valid amount can add even before account selection');
+ const second=h.session.getSnapshot().draft.settlements[1]!;assert.equal(h.session.addSettlement(),false);assert.match(h.session.getSnapshot().notice??'',/有效金额/);assert.equal(h.session.getSnapshot().draft.settlements.length,2);
+ h.session.updateSettlement(second.key,{amount:'1.001'});assert.equal(h.session.addSettlement(),false);assert.equal(h.session.getSnapshot().draft.settlements[1]!.amount,'1.001');
+ h.session.updateSettlement(second.key,{amount:'0'});assert.equal(h.session.addSettlement(),true);assert.equal(h.session.getSnapshot().draft.settlements.length,3);assert.equal(h.session.saveProposal(null),null);assert.equal(h.session.validate(),null);
+ assert.equal(h.session.addSettlement(),false);assert.match(h.session.getSnapshot().notice??'',/最多.*3/);h.context.clear();
+});
