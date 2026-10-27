@@ -121,7 +121,7 @@ async function openHistoryClosureReader(options,project,buildExpected){
    const item=await state.iterator.next();assertOpen();state.head=undefined;
    if(item.done){state.done=true;return;}
    const head=rowCapture(item.value,state.group,kind,scope.batchId,project),key=order(head.row);
-   if(state.previous&&Buffer.compare(state.previous,key)>=0)fail('PROVIDER_ORDER');state.previous=key;state.head=head;
+   if(state.previous&&Buffer.compare(state.previous,key)>=0)fail('PROVIDER_ORDER');state.previous=key;head.order=key;state.head=head;
    buffered+=head.bytes;if(buffered>MAX_BUFFERED_BYTES)fail('BUFFER_LIMIT');
   };
   try{
@@ -130,8 +130,8 @@ async function openHistoryClosureReader(options,project,buildExpected){
    }
    for(;;){
     let picked;
-    for(const state of states)if(state.head&&(!picked||Buffer.compare(order(state.head.row),order(picked.head.row))<0))picked=state;
-    if(!picked)break;const key=order(picked.head.row);
+    for(const state of states)if(state.head&&(!picked||Buffer.compare(state.head.order,picked.head.order)<0))picked=state;
+    if(!picked)break;const key=picked.head.order;
     if(previous&&Buffer.compare(previous,key)>=0)fail('GLOBAL_ROW_ORDER');previous=key;
     yield picked.head.row;await next(picked);
    }

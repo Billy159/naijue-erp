@@ -62,10 +62,16 @@ const validString = (value: string): boolean => {
  * a<count>:<frames>,o<count>:<key frame,value frame> with UTF8 byte-ordered keys.
  * NULL/absence/empty/string-number distinctions survive PostgreSQL jsonb normalization. */
 export function encodeHistoryClosureValue(value: unknown): Buffer {
- const chunks: string[] = [], active = new Set<object>(); let bytes = 0;
+ const chunks: string[] = []; walkHistoryClosureValue(value, chunks);
+ return Buffer.from(chunks.join(""), "utf8");
+}
+/** Private common traversal: validation callers discard no encoded Buffer, but
+ * still inspect every descriptor and account every frame at this boundary. */
+function walkHistoryClosureValue(value: unknown, chunks?: string[]): void {
+ const active = new Set<object>(); let bytes = 0;
  // Each fragment is valid Unicode or an ASCII frame. Keep exact UTF8 byte
  // accounting at every emit; materialize the complete bytes only once.
- const emit = (part: string) => { bytes += Buffer.byteLength(part, "utf8"); must(bytes <= MAX_ROW_BYTES); chunks.push(part); };
+ const emit = (part: string) => { bytes += Buffer.byteLength(part, "utf8"); must(bytes <= MAX_ROW_BYTES); chunks?.push(part); };
  const visit = (v: unknown, depth: number): void => {
   must(depth <= 64);
   if (v === null) { emit("n"); return; }
@@ -87,7 +93,7 @@ export function encodeHistoryClosureValue(value: unknown): Buffer {
   }
   active.delete(o);
  };
- visit(value, 0); return Buffer.from(chunks.join(""), "utf8");
+ visit(value, 0);
 }
 function captureRow(value: HistoryClosureRow): HistoryClosureRow {
  must(value !== null && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype);
@@ -865,7 +871,7 @@ function projectHistoryClosureRow(relation: string, original: unknown, specs: re
   if (["row_no","quantity","signed_quantity"].includes(col)) must(typeof v === "string" && /^(?:0|-?[1-9][0-9]*)$/.test(v));
  }
  if (relation === "customer" || relation === "supplier") must(value.created_at === null && value.updated_at === null);
- encodeHistoryClosureValue(value);
+ walkHistoryClosureValue(value);
  const key = spec!.keys.length === 1 ? value[spec!.keys[0]!] as string : encodeHistoryClosureValue(spec!.keys.map(k => value[k])).toString("hex");
  return captureRow({ relation, key, projection: value });
 }

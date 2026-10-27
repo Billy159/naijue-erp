@@ -2,7 +2,7 @@
 import test from "node:test";
 import { requestHash } from "../packages/application/src/request-hash.ts";
 import assert from "node:assert/strict";
-import { buildHistoryTypedClosureExpected, historyClosureProjectionSpec, historyClosureProjectionRow, hashHistoryClosureRows, historyClosureRowHash, encodeHistoryClosureValue, HISTORY_CLOSURE_SOURCE_ENTITIES } from "../packages/application/src/history-typed-closure.ts";
+import { buildHistoryTypedClosureExpected, historyClosureProjectionSpec, historyClosureProjectionRow, historyClosureProjectionRow26, hashHistoryClosureRows, historyClosureRowHash, encodeHistoryClosureValue, HISTORY_CLOSURE_SOURCE_ENTITIES } from "../packages/application/src/history-typed-closure.ts";
 import { closureId as id } from "./support/history-closure-fixtures.ts";
 import type { HistoryClosureRow } from "../packages/application/src/history-typed-closure.ts";
 
@@ -150,4 +150,45 @@ test('source722 codec retains rejection and own-data guards before getters and o
   assert.equal(laterInspections, 0); // Reject immediately at the overflowing frame.
  }
  assert.equal(reads, 0);
+});
+
+test('source729 projection validation-only walk matches original codec guards and preserves projected values', () => {
+ const original = fixture().sourceRows[0]!.projection as Record<string, unknown>;
+ const valid: unknown[] = [null, '', '中文𠮷😀', { '\u{10000}': 'astral', '\ue000': 'bmp', values: [true, false, -1, null, ''] }, 'x'.repeat(source722Limit - 4096)];
+ for (const raw of valid) {
+  const value = { ...original, raw_fields: raw }, before = structuredClone(value);
+  source722OriginalEncoder(value);
+  const projected = historyClosureProjectionRow26('import_source_row', value);
+  assert.deepEqual(projected, { relation: 'import_source_row', key: original.id, projection: value });
+  assert.deepEqual(value, before);
+  assert.deepEqual(encodeHistoryClosureValue(projected.projection), source722OriginalEncoder(value));
+ }
+ let reads = 0;
+ const getter = Object.defineProperty({}, 'x', { enumerable: true, get() { reads++; return 'x'; } });
+ const arrayGetter: unknown[] = []; Object.defineProperty(arrayGetter, '0', { enumerable: true, get() { reads++; return 'x'; } });
+ const cycle: Record<string, unknown> = {}; cycle.self = cycle;
+ let depth: unknown = null; for (let n = 0; n < 65; n++) depth = [depth];
+ const invalid: unknown[] = [getter, arrayGetter, new Array(1), Object.assign(['x'], { extra: 'x' }), cycle, depth,
+  { [Symbol('x')]: 'x' }, Object.defineProperty({}, 'x', { value: 'x' }), new Date(), Object.create(null),
+  -0, 0.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, undefined, 1n, '\ud800', '\udfff', 'NUL\0', { '\ud800': 'key' }, 'x'.repeat(source722Limit)];
+ for (const raw of invalid) {
+  const value = { ...original, raw_fields: raw };
+  assert.throws(() => source722OriginalEncoder(value), { code: 'INVALID_HISTORY_CLOSURE_ENCODING' });
+  assert.throws(() => historyClosureProjectionRow26('import_source_row', value), { code: 'INVALID_HISTORY_CLOSURE_ENCODING' });
+ }
+ // Both the private validation walk and materializing original stop at the
+ // overflowing frame, before traversing any later sibling.
+ for (const project of [false, true]) {
+  let laterInspections = 0;
+  const later = new Proxy({}, { ownKeys() { laterInspections++; return []; } });
+  const value = { ...original, raw_fields: ['x'.repeat(source722Limit), later] };
+  assert.throws(() => project ? historyClosureProjectionRow26('import_source_row', value) : source722OriginalEncoder(value), { code: 'INVALID_HISTORY_CLOSURE_ENCODING' });
+  assert.equal(laterInspections, 0);
+ }
+ assert.equal(reads, 0);
+ // Nested validation runs again on a changed input; there is no cross-call proof.
+ const mutable = { ...original, raw_fields: { value: 'valid' } };
+ historyClosureProjectionRow26('import_source_row', mutable);
+ mutable.raw_fields.value = '\ud800';
+ assert.throws(() => historyClosureProjectionRow26('import_source_row', mutable), { code: 'INVALID_HISTORY_CLOSURE_ENCODING' });
 });

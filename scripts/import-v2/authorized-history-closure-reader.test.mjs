@@ -1,8 +1,8 @@
 /** Trusted composition protocol fakes only. Never proof of production source authority/OOXML or PG. */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {openAuthorizedHistoryClosureReader,openAuthorizedHistoryClosureReader26,HISTORY_CLOSURE_SOURCE_GROUPS,HISTORY_CLOSURE_SOURCE_GROUP_ENTITIES,HISTORY_CLOSURE_SOURCE_GROUP_RELATIONS} from './authorized-history-closure-reader.mjs';
-import {historyClosureProjectionSpec,historyClosureProjectionSpec26,historyClosureProjectionRow,historyClosureProjectionRow26,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
+import {openAuthorizedHistoryClosureReader,openAuthorizedHistoryClosureReader26,consumeAuthorizedHistoryClosureStreams26,HISTORY_CLOSURE_SOURCE_GROUPS,HISTORY_CLOSURE_SOURCE_GROUP_ENTITIES,HISTORY_CLOSURE_SOURCE_GROUP_RELATIONS} from './authorized-history-closure-reader.mjs';
+import {historyClosureProjectionSpec,historyClosureProjectionSpec26,historyClosureProjectionRow,historyClosureProjectionRow26,encodeHistoryClosureValue,HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
 import {PostgresHistoryTypedClosureStore} from '../../adapters/postgres/src/history-typed-closure.ts';
 
 const id=n=>`00000000-0000-0000-0000-${String(n).padStart(12,'0')}`,selection='a'.repeat(64),payload='b'.repeat(64);
@@ -225,4 +225,23 @@ test('closureReader26 binds complete metadata and multi-season array without str
 test('closureReader26 preserves finite factories, no boolean verification, operation cleanup and close revocation',async()=>{
  const missing=fullProduct26Fixture();delete missing.options.openSources.SKUS;await assert.rejects(openAuthorizedHistoryClosureReader26(missing.options),/ALL_SOURCE_FACTORIES_REQUIRED/);assert.deepEqual(missing.events,[]);
  const flags=fullProduct26Fixture({session:async(g,s)=>{if(g==='PRODUCTS')s.verify=async()=>true;}}),r=await openAuthorizedHistoryClosureReader26(flags.options);await assert.rejects(r.expected(),/VERIFY_MUST_NOT_RETURN_A_PASSED_FLAG/);assert.equal(closed(flags),11);await r.close();await assert.rejects(r.expected(),/CLOSED/);
+});
+
+test('source729 merge computes each private head order once while preserving source/typed bytes and complete cleanup',async()=>{
+ const f=fullProduct26Fixture(),sort=(a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key));
+ const expectedSource=Object.values(f.sources).flat().toSorted(sort),expectedTyped=Object.values(f.typed).flat().toSorted(sort);
+ const expectedBytes=[expectedSource,expectedTyped].map(rows=>rows.map(r=>encodeHistoryClosureValue(r)));
+ const originalFrom=Buffer.from;let orderCalls=0,result;
+ Buffer.from=function(value,...args){if(typeof value==='string'&&value.includes('\0'))orderCalls++;return Reflect.apply(originalFrom,Buffer,[value,...args]);};
+ try{
+  result=await consumeAuthorizedHistoryClosureStreams26(f.options,async({sourceRows,typedRows,documents})=>{
+   const sources=[],typed=[];for await(const row of sourceRows)sources.push(row);for await(const row of typedRows)typed.push(row);
+   return {sources,typed,documents};
+  });
+ }finally{Buffer.from=originalFrom;}
+ assert.equal(orderCalls,expectedSource.length+expectedTyped.length);
+ assert.deepEqual(result.sources,expectedSource);assert.deepEqual(result.typed,expectedTyped);assert.deepEqual(result.documents,f.documents);
+ assert.deepEqual([result.sources,result.typed].map(rows=>rows.map(r=>encodeHistoryClosureValue(r))),expectedBytes);
+ assert.equal(closed(f),11);
+ for(const group of HISTORY_CLOSURE_SOURCE_GROUPS)for(const suffix of ['source:complete','typed:complete','verify:AFTER_READ','close:done'])assert.ok(f.events.includes(group+':'+suffix));
 });
