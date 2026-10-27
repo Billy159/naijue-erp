@@ -241,7 +241,7 @@ async function productionAuthorityFiles(t,options={}){
   const initializationRecord=await save('INITIALIZATION22.json',{command:initialization,requestHash:requestHash(initialization),operationId:stableImportId('operation',f.binding.actorAccountId,initialization.requestKey),runtime26Review:{synthetic:true}}),prefix=await save('PREFIX22.json',{version:'CORE_STAGED_PREFIX_BIND_V22',initializationRecord});
   f.inputs.stagedPrefixBinding26=grant.stagedPrefixBinding26=prefix;
   const modules=adoptedFiles.modules;modules.splice(modules.findIndex(m=>m.current.path.endsWith('/run.mjs')),1);
-  for(const [role,name]of [['CONSUMER_RUN','./run.mjs'],['CONSUMER_PREFIX_STORE','../../adapters/postgres/src/inventory-cutoff-import-store.ts'],['CONSUMER_PREFIX_ISSUER','../../adapters/postgres/src/native-import-accounting-capability.ts'],['ADDED_PREFIX_ADAPTER','../../adapters/postgres/src/native-core-staged-prefix-bind.ts']]){
+  for(const [role,name]of [['CONSUMER_RUN','./run.mjs'],['CONSUMER_PREFIX_STORE','../../adapters/postgres/src/inventory-cutoff-import-store.ts'],['CONSUMER_PREFIX_ISSUER','../../adapters/postgres/src/native-import-accounting-capability.ts'],['CONSUMER_PREFIX_ACCOUNTING_READER','../../adapters/postgres/src/native-import-record-accounting.ts'],['ADDED_PREFIX_ADAPTER','../../adapters/postgres/src/native-core-staged-prefix-bind.ts']]){
    const path=fileURLToPath(new URL(name,import.meta.url)),bytes=await readFile(path);let baseline=null;
    if(role!=='ADDED_PREFIX_ADAPTER'){baseline=await save('BASELINE-'+role,{});await writeFile(baseline.path,bytes);Object.assign(baseline,{bytes:bytes.length,sha256:sha(bytes)});}
    modules.push({role,baseline,current:{path,bytes:bytes.length,sha256:sha(bytes)}});
@@ -1108,4 +1108,21 @@ test('191 proved prefix does not open four stage iterators and stock still fully
  for(const group of ['PARTIES','CATALOGUE','BARCODES','PAYMENT','HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS','SALES_DETAILS','SETTLEMENTS'])
   assert.deepEqual(await Array.fromAsync(pendingProductionStageRows26({group,proved:false,readRows,authorize(){throw Error('PREMATURE_AUTHORIZATION');}})),groups);
  await assert.rejects(Array.fromAsync(pendingProductionStageRows26({group:'BARCODES',proved:true,readRows,async authorize(){}})),/CONTINUATION/);
+});
+
+test('191 accounting reader is a required exact-path delta with independently verified baseline/current pins',async t=>{
+ const f=await productionAuthorityFiles(t,{adopted:true,prefix22:true}),a=await f.open();await a.close();
+ for(const mode of ['unchanged','wrongPath','duplicate','missing','baselineHash','baselineBytes','currentHash','currentBytes']){
+  const x=await productionAuthorityFiles(t,{adopted:true,prefix22:true,mutatePrefixModules(modules){
+   const m=modules.find(m=>m.role==='CONSUMER_PREFIX_ACCOUNTING_READER');
+   if(mode==='unchanged')m.role='UNCHANGED';
+   if(mode==='wrongPath')m.current=modules.find(m=>m.role==='CONSUMER_HOST').baseline;
+   if(mode==='duplicate')modules.push(structuredClone(m));
+   if(mode==='missing')modules.splice(modules.indexOf(m),1);
+   if(mode==='baselineHash')m.baseline.sha256=digest('e');if(mode==='baselineBytes')m.baseline.bytes++;
+   if(mode==='currentHash')m.current.sha256=digest('e');if(mode==='currentBytes')m.current.bytes++;
+  }});
+  await assert.rejects(x.open());assert.equal(x.trace.ready,0);
+ }
+ const old=await productionAuthorityFiles(t,{adopted:true}),legacy=await old.open();await legacy.close();
 });

@@ -854,15 +854,17 @@ async function loadAdoptedPreparation26({fixed,binding,grant,byPhase,metadata,un
  const prefix22=Object.hasOwn(fixed,'stagedPrefixBinding26');
  const consumerPaths={CONSUMER_PROVIDER:'./production-source-provider26.mjs',CONSUMER_HOST:'./production-source-host.mjs',
   ...(prefix22?{CONSUMER_RUN:'./run.mjs',CONSUMER_PREFIX_STORE:'../../adapters/postgres/src/inventory-cutoff-import-store.ts',
-   CONSUMER_PREFIX_ISSUER:'../../adapters/postgres/src/native-import-accounting-capability.ts',ADDED_PREFIX_ADAPTER:'../../adapters/postgres/src/native-core-staged-prefix-bind.ts'}:{})};
+   CONSUMER_PREFIX_ISSUER:'../../adapters/postgres/src/native-import-accounting-capability.ts',
+   CONSUMER_PREFIX_ACCOUNTING_READER:'../../adapters/postgres/src/native-import-record-accounting.ts',ADDED_PREFIX_ADAPTER:'../../adapters/postgres/src/native-core-staged-prefix-bind.ts'}:{})};
  const paths=new Set(),roles=new Set();
  for(const m of review.modules){
   need(exact(m,['role','baseline','current'])&&(m.role==='UNCHANGED'||Object.hasOwn(consumerPaths,m.role))&&!paths.has(m.current.path));
+  if(prefix22&&m.current.path===fileURLToPath(new URL(consumerPaths.CONSUMER_PREFIX_ACCOUNTING_READER,import.meta.url)))need(m.role==='CONSUMER_PREFIX_ACCOUNTING_READER');
   paths.add(m.current.path);if(m.role==='ADDED_PREFIX_ADAPTER')need(m.baseline===null);for(const ref of (m.role==='ADDED_PREFIX_ADAPTER'?[m.current]:[m.baseline,m.current])){need(exact(ref,['path','bytes','sha256']));const before=await lstat(ref.path),bytes=await pinnedSmall(ref.path,ref.sha256);need(bytes.length===ref.bytes);const st=await lstat(ref.path);need(same(before,st));files.set(ref.path,{ref:structuredClone(ref),stat:st,physicalPath:ref.path});}
   if(m.role==='UNCHANGED')need(m.baseline.bytes===m.current.bytes&&m.baseline.sha256===m.current.sha256);
   else {need(!roles.has(m.role));roles.add(m.role);need(m.current.path===fileURLToPath(new URL(consumerPaths[m.role],import.meta.url)));}
  }
- need(roles.size===(prefix22?6:2));
+ need(roles.size===(prefix22?7:2));
  for(const name of ['../../packages/application/src/history-typed-closure.ts','../../packages/application/src/request-hash.ts','../../packages/application/src/native-import-record-accounting.ts','../import-v2/authorized-history-closure-reader.mjs','./prepare-native-bindings.mjs','./run.mjs']){
   const path=fileURLToPath(new URL(name,import.meta.url));need(review.modules.some(m=>m.role===(prefix22&&name==='./run.mjs'?'CONSUMER_RUN':'UNCHANGED')&&m.current.path===path));
  }
