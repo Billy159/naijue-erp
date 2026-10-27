@@ -5059,10 +5059,10 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 747,
+    "round": 748,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation747",
-    "fixedSource": "SOURCE74643228f8d24da5d0064b28d14d463065e94ffd55d exactGitHub verified; SOURCE747 strict04 ready",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation748",
+    "fixedSource": "SOURCE747d36a6c173680f2752479ca6f72d86dd3e5e96f62 exactGitHubverified; source748 records actual outcomes",
     "fixedCandidates": {
       "synthetic": {
         "source": "2357cf508ee6e8188bcc1dddfa4735f735d70d36",
@@ -5084,20 +5084,20 @@
       }
     },
     "backendActual": {
-      "B07": "Minimal isolated role repair committed: exact five column SELECT grants across four dictionaries; other columns/relation ACL unchanged. Ordinary-role readonly inventory_key_admission admitted true. New catalog d92797336281ddc4d831842ee4d8cd4468272aa5974a4ae04e5b91b053fa2632. No CAS/login/business DML. Original first42501 not uniquely reproduced. D1 original two-leaf strict04/auth2-to3 continuation underway; old03 never replay.",
-      "R1": "148 completeSOURCE_ONLY prepare exit0/4367.170767s ended04:29:23Z; 11groups/14999nativeSKU/38303baseline+24unrepresented approved warehouses,111artifacts=DATA+EXPECTED+BIND+107ACCOUNT+PUBLISH.0DB/DML/grant/MAIN/PUBLISH/APP. OriginalR1 still125STAGEDseq2cursor22 MAIN0PUBLISH0/fullBindingfalse until actualnext. Privateoutputs retained/original109keys.148notreplay.",
-      "nativeProduct": "Actual151 source740 mismatch accurately traced offline to two existing approved patches: category-order-undo then v19-barcode-scheme-initialization;131required,123matches,2missing6changed. D1 checking full existing preconditions; no actual upgrade/preflight/product save yet."
+      "B07": "Actual two normal HTTP sales/transfer cases PASS_NORMAL_HTTP_SYN_APPROVED_DELTA_READBACK_AUDIT_REPLAY_CAS, version2, op/revision/ledger committed. Credential2to3 committed. Whole scope NEED_FIX: only direct service rollback companion ERR_ASSERTION, D1 source identifies wrapped issuer leased object identity violation; underlying23505 not measured. No normal cases or auth replay. Original D1 four test/harness logical leaves registered for exact lease-preserving fix and marker observation; original rollbackkey readback next.",
+      "R1": "Actual RRRO originalR1/OID1027659/runtime: STAGEDseq2cursor22/WAREHOUSE22/expected empty/historypayloadnull; original109receipt prefix0, all109uncommitted suffix. Node24.21.0/pg8.23.1 actualidentity; no command issued, closed.",
+      "nativeProduct": "Actual COMPLETED0/2.723471319s at06:11:34.805054Z. Existing category thenv19 original full SQL preconditions passed, both COMMIT_RETURNED;129to130to131, source740routines matchtrue, canonical2d1d7a99747c13c86bf7a7eaa0f318d4e16d6fc75ed7a6324dc4f78b950fc741. No initialization/seed/businessDML/PUBLISH. New two-purpose review and frozen740 RO preflight next. Never replay patches."
     },
     "roleQueue": {
       "F1": "SOURCE733 coherent testdocuments6leaves delivered/strictfinitePASS; T45normal34actualread/builddone. No new UIrepairqueue, comparefindings useronly.",
       "F2": "Existing product/stock consumers ready; synthetic detail/maintenance facts incoherent/missing, no fake state platform; await actual product capability from D2/T45.",
       "F3": "Completed settings source packages; await actual samebuild maintenance permissions/provider to validate requested writes.",
       "F4": "Completed category empty-state source patch, original effective evidence reused; await actual dictionary/barcode/season/group capabilities.",
-      "D1": "Fixed04 exactauth2-to3 two-leaf ready;13 scoped checks PASS; original two category/v19 patch preconditions delivered. ActualQA normal not rerun.",
+      "D1": "Only failed rollback companion four harness logical leaves lease-preserving fix; no normalPASS/auth3 replay.",
       "D2": "151 fullcatalog exact131-required diff delivered; original seven production leaves and452REV3 evidence unchanged; wait original patch execution/current proof.",
-      "D3": "Complete baseline dependency/review draft delivered; source744 four leaves frozen; T45 actual closure prep next.",
-      "T45": "ACL five column actual read repair complete; original04 carrier/source wait; v21 job152 complete evidence/runtime/execution carrier assembly; native151 old two approved patch admission waits D1.",
-      "QB": "QB458 fixed SOURCE744 four-leaf source PASS adopted; no repeated technical review. Actual complete consumer-review closure/source output validation still required.",
+      "D3": "Only host/test logical-physical metadata read wiring gap repair; provider two leaves744 frozen. Job26 field mapping draft ready.",
+      "T45": "154 actual patches committed, no replay; collect exactcatalog/review then frozen740 preflight. R1 153prefix/runtime actualready; prepare v21 accurate job/review. Failed rollbackkey RO next afterD1 exactqueries.",
+      "QB": "459 source/currentpurpose normal04 adopted; new native154 currentcatalog two product-purpose review next, original452source reused.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
@@ -14384,6 +14384,12 @@
       "normal04": "D1 exact closed auth2/version2 to3/version3 parent/test ready; actualprior timestamp05:29:18.656Z/prior03+ACLrepairpins/fresh catalogd927 bound. Original QB one affected increment then T45 exact04; no replay auth1/03.",
       "v21": "152 evidence bound ready except current executable SourceHostJob26/runtimeReview/deadline; original R1 checkpoint+109receipt bounded RO and runtime identity prepare; no MAIN/PUBLISH yet.",
       "nativeProduct": "Existing approved category thenv19 patch exactpins/preconditions delivered to soleT45; actual installation pending."
+    },
+    "currentContinuation748": {
+      "normal04": "Actual two normal HTTP sales/transfer cases PASS_NORMAL_HTTP_SYN_APPROVED_DELTA_READBACK_AUDIT_REPLAY_CAS, version2, op/revision/ledger committed. Credential2to3 committed. Whole scope NEED_FIX: only direct service rollback companion ERR_ASSERTION, D1 source identifies wrapped issuer leased object identity violation; underlying23505 not measured. No normal cases or auth replay. Original D1 four test/harness logical leaves registered for exact lease-preserving fix and marker observation; original rollbackkey readback next.",
+      "native154": "Actual COMPLETED0/2.723471319s at06:11:34.805054Z. Existing category thenv19 original full SQL preconditions passed, both COMMIT_RETURNED;129to130to131, source740routines matchtrue, canonical2d1d7a99747c13c86bf7a7eaa0f318d4e16d6fc75ed7a6324dc4f78b950fc741. No initialization/seed/businessDML/PUBLISH. New two-purpose review and frozen740 RO preflight next. Never replay patches.",
+      "R1prefix153": "Actual RRRO originalR1/OID1027659/runtime: STAGEDseq2cursor22/WAREHOUSE22/expected empty/historypayloadnull; original109receipt prefix0, all109uncommitted suffix. Node24.21.0/pg8.23.1 actualidentity; no command issued, closed.",
+      "v21": "QB458 source PASS retained, full120module identity/152 evidence ready; D3 deterministic logical/physical decision-review path gap proven. Only originalhost/test registered minimal precise resolver wiring, provider two leaves frozen; no actualMAIN/PUBLISH before fixed delta/QB/evidence job currentruntimeReview."
     }
   },
   "historicalContinuation500Before716": {

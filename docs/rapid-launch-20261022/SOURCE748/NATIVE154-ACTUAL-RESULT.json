@@ -1,0 +1,150 @@
+{
+  "status": "PASS_NATIVE189_CATEGORY_THEN_V19_PATCH_INSTALL_ONLY_NOT_INITIALIZATION_OR_BUSINESS",
+  "jobTerminal": {
+    "jobId": "t45-native189-category-v19-install-20261027-154",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-193a419a061c",
+    "atUTC": "2026-10-27T06:11:31.749526+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 2.723471319070086,
+    "exports": [
+      "after-category-catalog.json",
+      "after-category-metadata.json",
+      "after-v19-catalog.json",
+      "after-v19-metadata.json",
+      "before-catalog.json",
+      "before-metadata.json",
+      "category-commit.json",
+      "category-intent.json",
+      "patch-install-result.json",
+      "v19-commit.json",
+      "v19-intent.json"
+    ],
+    "finishedAtUTC": "2026-10-27T06:11:34.805054+00:00"
+  },
+  "categoryCommitReturned": true,
+  "v19CommitReturned": true,
+  "actualMetadata": {
+    "catalog_sha256": "2d1d7a99747c13c86bf7a7eaa0f318d4e16d6fc75ed7a6324dc4f78b950fc741",
+    "identity": {
+      "current_user": "erp_qa_v14_core_runtime_20261024_01",
+      "database": "erp_qa_rapid26_native_20261023_01",
+      "database_oid": "1032586",
+      "database_owner": "erp_qa_owner_20261022_01",
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "replication_role": "origin",
+      "server_addr": null,
+      "server_port": null,
+      "server_version_num": "170011",
+      "session_user": "t15_prod_bootstrap"
+    },
+    "migration_versions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26
+    ],
+    "source_routines_match": true
+  },
+  "actualRoutineCounts": [
+    129,
+    130,
+    131
+  ],
+  "protectedContainersAndRouteChecks": "Both passed inside pinned adopted carrier before and after",
+  "psqlProcessesExited": true,
+  "SQLStates": [
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "initializationExecuted": false,
+  "businessDML": false,
+  "runtimeReviewSigned": false,
+  "issuerCreated": false,
+  "automaticReplay": false,
+  "rootCatalogRefs": {
+    "beforeCatalog": {
+      "bytes": 1235022,
+      "file": "before-catalog.json",
+      "sha256": "6f20165eb099a75bc36e5259031d2c2187ca2eeb50ceb3a83ed1e5791f0e3abd"
+    },
+    "after-categoryCatalog": {
+      "bytes": 1250586,
+      "file": "after-category-catalog.json",
+      "sha256": "5bcf1777724f7ed639c3e995e9919d345c20006ed3abe2985c4822ef600d20ba"
+    },
+    "after-v19Catalog": {
+      "bytes": 1272436,
+      "file": "after-v19-catalog.json",
+      "sha256": "eebbb4a5c7fc0f73b9464336cf16b52b609d1edc0b628f294a3d9c5549a6b352"
+    }
+  },
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-category-v19-install-20261027-154/release-submission/release-receipts/t45-native189-category-v19-install-20261027-154/job.json",
+      "bytes": 805,
+      "sha256": "dbd1de850b7068118484696f61cd20b6052e7bdae4898204528266dd7d8ccbe6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-category-v19-install-20261027-154/release-submission/release-receipts/t45-native189-category-v19-install-20261027-154/patch-install-result.json",
+      "bytes": 2654,
+      "sha256": "c6029cabd929be04acbbe08608029147cdb7142b2876eef29e0c4299627ab623"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-category-v19-install-20261027-154/release-submission/release-receipts/t45-native189-category-v19-install-20261027-154/before-metadata.json",
+      "bytes": 786,
+      "sha256": "bf144d283062b5bdcee7a7ae6f0eb789e53804e7f0add0ed01127acf82de717c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-category-v19-install-20261027-154/release-submission/release-receipts/t45-native189-category-v19-install-20261027-154/after-category-metadata.json",
+      "bytes": 786,
+      "sha256": "84a4a246983c791a70883fdb496ff435313d7b47314bda7b544c30c51938f406"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-category-v19-install-20261027-154/release-submission/release-receipts/t45-native189-category-v19-install-20261027-154/after-v19-metadata.json",
+      "bytes": 785,
+      "sha256": "c026ddebf64aea04712d436381244c5ba1fd275e7abb49d03315401ce9caf084"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-category-v19-install-20261027-154/release-submission/release-receipts/t45-native189-category-v19-install-20261027-154/category-commit.json",
+      "bytes": 80,
+      "sha256": "fe9b4b9d538d3dca4ef4e110afc2dfcf636d9037131b893eb82d92690bea623c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-category-v19-install-20261027-154/release-submission/release-receipts/t45-native189-category-v19-install-20261027-154/v19-commit.json",
+      "bytes": 75,
+      "sha256": "f520ed92e12390799e3928f387582b83c5b020b993e3c2ff0c00a20ce5ad49f0"
+    }
+  ],
+  "remaining": "New independent exact native189 metadata review for PRODUCT_MAINTENANCE/PRODUCT_SEASONS_READ and original same-pool issuer before RO preflight. No initialization/seed/fourSAVE authorized by this result."
+}
