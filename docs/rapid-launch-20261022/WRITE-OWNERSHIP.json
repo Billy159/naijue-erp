@@ -6570,5 +6570,20 @@
     "QB": "Independent changed source/profile scope only; source/actual distinction; no duplicate old passes",
     "controllerRecordsOwner": "C",
     "status": "USER_APPROVED_SOURCE_IMPLEMENTATION_OPEN_RUNTIME_NOT_YET_AUTHORIZED"
+  },
+  "source796ContinuationProofSeam": {
+    "status": "AUTHORIZED_ORIGINAL_UNIQUE_WRITERS",
+    "D1": [
+      "adapters/postgres/src/native-import-record-accounting.ts",
+      "adapters/postgres/src/native-core-staged-prefix-bind.ts"
+    ],
+    "D1Tests": "Only directly affected original tests; exact additions reported before delivery",
+    "D3": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs"
+    ],
+    "interface": "progress.stagedPrefixProof22, sameclient validated originalBIND proof/current roots; STAGED beforeACCOUNT/PUBLISH only; existing run clone forwards no edit",
+    "excluded": "No SQL/store write/issuer/grant/keys/step-limit/run changes; real mismatch rejected; stockGroups authorization retained.",
+    "review": "OriginalQB delta only after fixed owner delivery; no new server execution grant"
   }
 }
