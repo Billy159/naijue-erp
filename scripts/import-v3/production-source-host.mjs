@@ -326,10 +326,16 @@ export async function* forwardSourceSteps26({steps,active,maxSteps,core}){
  * bootstrap substitutes, raw-pool exposure or executable source authority. */
 /** Pure metadata/target check only; execution still requires separately pinned
  * real source/session authority and the original independently issued client. */
-export function validateSourceHostRuntimeReview26(metadata,binding) {
+export function validateSourceHostRuntimeReview26(metadata,binding,stagedPrefixBinding26) {
   bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
+  const prefix22=metadata.catalog?.patchLevel==='26_v22_staged_prefix_bind_from_v20';
+  if(prefix22){
+    must(binding.phase==='FULL_SOURCE_CONTINUATION_26_V1','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
+    const prefix=bag(stagedPrefixBinding26,['capture'],'IMPORT_SOURCE_HOST22_PREFIX_REQUIRED');
+    must(typeof prefix.capture==='function','IMPORT_SOURCE_HOST22_PREFIX_REQUIRED');
+  }
   const approvedPatch=metadata.catalog?.patchLevel===(binding.phase?'26_v14_core_initialization':'26_v11_document_specification_save')
-    ||binding.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&['26_v16_history_responsible_from_v14','26_v20_history_insert_identity_from_v19'].includes(metadata.catalog?.patchLevel);
+    ||binding.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&(prefix22||['26_v16_history_responsible_from_v14','26_v20_history_insert_identity_from_v19'].includes(metadata.catalog?.patchLevel));
   must(metadata.version==='C_NATIVE_RUNTIME26_REVIEW_V1'&&metadata.decision==='ACCEPT_EXACT_RUNTIME26_TARGET_METADATA'
     &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&metadata.catalog?.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V1'&&hash(metadata.catalog?.sha256)&&approvedPatch,'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   const target=bag(metadata.target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW'),b=binding.target;
@@ -343,7 +349,11 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
   const core=job.binding.phase==='CORE_INITIALIZATION_26_V1';
   if(core)await pinned(job.sources.reviewFile,job.sources.trustedReviewSha256,4194304);
   const metadata=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await pinned(job.runtime26Review.reviewFile,job.runtime26Review.trustedReviewSha256,65536)));
-  validateSourceHostRuntimeReview26(metadata,job.binding);
+  // The v22 runtime profile also requires the source-owned capture port. Its
+  // pinned provider loads the exact external grant/148/INIT references before
+  // returning that session; validate it below before native reads or activation.
+  const prefix22=metadata.catalog?.patchLevel==='26_v22_staged_prefix_bind_from_v20';
+  if(!prefix22)validateSourceHostRuntimeReview26(metadata,job.binding);
   const independent=bag(metadata.independentReview,['path','sha256','result'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   must(independent.result==='PASS','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');await pinned(independent.path,independent.sha256,8388608);
   await pinned(job.providers.path,job.providers.sha256,4194304);const module=captureNativeSourceProvider26(await import(pathToFileURL(job.providers.path).href),job.binding.phase);
@@ -365,6 +375,7 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
     const raw=await module.openSourceSession({binding:structuredClone(job.binding),sources:structuredClone(job.sources),database:gate.capability,signal:combined});
     const closeDescriptor=Object.getOwnPropertyDescriptor(raw??{},'close');if(closeDescriptor?.enumerable&&Object.hasOwn(closeDescriptor,'value')&&typeof closeDescriptor.value==='function')sessionClose=closeDescriptor.value;
     session=captureNativeSourceSession26(raw,job.binding);
+    if(prefix22)validateSourceHostRuntimeReview26(metadata,job.binding,session.stagedPrefixBinding26);
     if(!core){
       // Keep logical job identities for the later native authorizer. Only this
       // initial read resolves them through the captured exact original map.

@@ -1355,7 +1355,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-27T12:43:07.966229+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "4e2b44e5d4f705a989b5ef6433d80724b68b6b8c",
+  "lastVerifiedRemoteCommit": "6d62d630a2336e9fca3d5565dfd0a3a263c569b1",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 776,
+    "round": 777,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation776",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation777",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -14706,6 +14706,24 @@
       "scope": "Only one coreassert body successor/131routines/ACL unchanged, eight native/source groups plus originalSKUrecord11metadata proof, original109keys preserved",
       "next": "QB original combined source/profile delta; T45 target must fixed for actualPG. Isolation harness missing, no PG/DDL/BIND/realbusiness/PUBLISH PASS.",
       "executionBoundary": "No oldjob replay/clear/reimport or schemaACLchange; normal targetR1 actualimport distinct from negative QA testing"
+    },
+    "currentContinuation777": {
+      "status": "V22_HOST_PROFILE01_FIXED_QB_DELTA_QA_TARGET_PREPARATION",
+      "finding": "V22-HOST-PROFILE-01 oldhost omittednew v22 profile, would rejectbeforeBIND; exact v22 captured authority admission now fixed",
+      "hostPins": {
+        "scripts/import-v3/production-source-host.mjs": [
+          42203,
+          "9399bf46e465c14ddc7c9306b20e70a416e17142d45a44b757fefc6620b8b6f8"
+        ],
+        "scripts/import-v3/production-source-host.test.mjs": [
+          51016,
+          "446a69ee195945f0b98a11be789aefbff833cf1f9ba54f56d485f5fab5a89d41"
+        ]
+      },
+      "checks": "5affected host checksPASS; no rerunother9source leaves or existingchecks; QB ongoing onlyaffected patch/version lock",
+      "QA": "175 exactsnapshot clone RUNNING unit61ab390836a4; no replay/strongstop. Sameclusternewdbname conflicts original source/CORE/148/INIT logical target; C instead requests reuse samearchive into independent privatePG17 same logicalR1dbname/ordinaryrole, true QA OID/socket/postmaster/systemidentifier explicitly registered, no productiontuple impersonation/source remap. Feasibility/actualrestore pending.",
+      "D1": "Control-only qa-prefix-bind.mjs/test preparation active; frozenproductionbody8a8374fb unchanged; installer actualQA identity adapted onlyafterT45 tuple",
+      "notPassed": "No realPGv22 patch/BIND/negativecases/fullsourcecontinuation/PUBLISH/formal. Overall37/67 goalACTIVE incomplete."
     }
   },
   "historicalContinuation500Before716": {
