@@ -1,0 +1,219 @@
+{
+  "taskId": "D2-V19-NATIVE151-SOURCE740-ROUTINE-DIFF",
+  "status": "ACTUAL_CATALOG_OFFLINE_DIFF_COMPLETE_NO_EXECUTION",
+  "catalog": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-native189-source740-catalog-readonly-20261027-151/release-submission/release-receipts/t45-native189-source740-catalog-readonly-20261027-151/source740-catalog.json",
+    "bytes": 1398545,
+    "sha256": "d41c03fd056bb6a3965195a3dabd4a9e72bad8d4f3528bcb7d75de607003d5e1",
+    "serialization": "T45 control export; not server-private raw1188543/7df1e95f"
+  },
+  "target": {
+    "current_user": "erp_qa_v14_core_runtime_20261024_01",
+    "database": "erp_qa_rapid26_native_20261023_01",
+    "database_oid": "1032586",
+    "database_owner": "erp_qa_owner_20261022_01",
+    "postmaster_start": "2026-10-04 08:16:07.895273+00",
+    "replication_role": "origin",
+    "server_addr": null,
+    "server_port": null,
+    "server_version_num": "170011",
+    "session_user": "t15_prod_bootstrap"
+  },
+  "metadataProbe": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/NATIVE189-V19-READONLY-PREFLIGHT-PREPARATION-20261027-01/SOURCE740-V19-METADATA.sql",
+  "migrationVersions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26
+  ],
+  "requiredRows": 131,
+  "actualRoutines": 129,
+  "matchedRequiredBodies": 123,
+  "missingCount": 2,
+  "differentBodyCount": 6,
+  "comparison": "Each131 required name/body checked against ALL actual same-name signatures; actual signatures and args retained in diffs. No name-dict overwrite. Earlier127 regex omitted4 digit names; not adopted.",
+  "differences": [
+    {
+      "name": "assert_barcode_scheme_initialization_v19",
+      "state": "MISSING",
+      "expectedBodySha256": "8d4f7d457403d6c4737e5a9b38d6d4f48c0ef3c5e94dd2e8ff408d3b57a198ca",
+      "actual": [],
+      "exactExistingPatch": [
+        "0026-v19-barcode-scheme-initialization.sql"
+      ],
+      "sourceOwner": "D1"
+    },
+    {
+      "name": "maintenance_check_category_order",
+      "state": "MISSING",
+      "expectedBodySha256": "77c86d2788e88f2922a66c662a91b95c0f76d6ea00587148c36421feabde281e",
+      "actual": [],
+      "exactExistingPatch": [
+        "0026-category-reorder-undo.sql"
+      ],
+      "sourceOwner": "D1"
+    },
+    {
+      "name": "maintenance_action_allowed",
+      "state": "BODY_DIFFERS",
+      "expectedBodySha256": "50b2fa0fbf733d7c98b40aa612107a20262cb063852cb3f2cabbefc750742c4a",
+      "actual": [
+        {
+          "signature": "naijue_erp.maintenance_action_allowed(text,text)",
+          "identityArguments": "kind text, action text",
+          "bodySha256": "186f88822ba597874734cb3349d0b9d95f63e5f8d8a34d3d05014e3420033c17"
+        }
+      ],
+      "exactExistingPatch": [
+        "0026-category-reorder-undo.sql"
+      ],
+      "sourceOwner": "D1"
+    },
+    {
+      "name": "validate_import_accounting_checkpoint_commit",
+      "state": "BODY_DIFFERS",
+      "expectedBodySha256": "06ac9742cb16adb281f7610d299ef9dedb61c125038f12be55275760d4a4c0c9",
+      "actual": [
+        {
+          "signature": "naijue_erp.validate_import_accounting_checkpoint_commit()",
+          "identityArguments": "",
+          "bodySha256": "edef6846035f1780c632183b32f81b63919cae4703a78c4bc21c44c507441f47"
+        }
+      ],
+      "exactExistingPatch": [
+        "0026-v19-barcode-scheme-initialization.sql"
+      ],
+      "sourceOwner": "D1"
+    },
+    {
+      "name": "validate_import_batch_commit",
+      "state": "BODY_DIFFERS",
+      "expectedBodySha256": "7ce01945fcd6fd68817724cc27d8f135da82ef2f4e3929a8ad5e4cf232310b3b",
+      "actual": [
+        {
+          "signature": "naijue_erp.validate_import_batch_commit()",
+          "identityArguments": "",
+          "bodySha256": "dc2e8d344085056b53469be394eb9ced344db510bf6f6dc5576f4b0a9ea20140"
+        }
+      ],
+      "exactExistingPatch": [
+        "0026-v19-barcode-scheme-initialization.sql"
+      ],
+      "sourceOwner": "D1"
+    },
+    {
+      "name": "validate_import_operation",
+      "state": "BODY_DIFFERS",
+      "expectedBodySha256": "73d13792e2a9dde79b239cb2c059a89c5552823503a002ce1b7bdad75aa1b3ff",
+      "actual": [
+        {
+          "signature": "naijue_erp.validate_import_operation()",
+          "identityArguments": "",
+          "bodySha256": "6ffc2561abe1bd4ff7465c82143c155bcaa0ad311b90f6679bef10ceae30c62f"
+        }
+      ],
+      "exactExistingPatch": [
+        "0026-v19-barcode-scheme-initialization.sql"
+      ],
+      "sourceOwner": "D1"
+    },
+    {
+      "name": "validate_maintenance_receipt_commit",
+      "state": "BODY_DIFFERS",
+      "expectedBodySha256": "77679e1e21858ae64ac1225660cf7a692f63b097d538254829def8164ea33ac5",
+      "actual": [
+        {
+          "signature": "naijue_erp.validate_maintenance_receipt_commit()",
+          "identityArguments": "",
+          "bodySha256": "7a42aeef2738c9009bc9eaa4ecbf41feefb43b759fbed2514a005166d20ac384"
+        }
+      ],
+      "exactExistingPatch": [
+        "0026-category-reorder-undo.sql"
+      ],
+      "sourceOwner": "D1"
+    },
+    {
+      "name": "validate_maintenance_root_commit",
+      "state": "BODY_DIFFERS",
+      "expectedBodySha256": "002818dfd8d764e99221bb0548da1141054871ae674aba6bb9f6ce59c9d92d1c",
+      "actual": [
+        {
+          "signature": "naijue_erp.validate_maintenance_root_commit()",
+          "identityArguments": "",
+          "bodySha256": "8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512"
+        }
+      ],
+      "exactExistingPatch": [
+        "0026-category-reorder-undo.sql"
+      ],
+      "sourceOwner": "D1"
+    }
+  ],
+  "documentSpecificationTrigger": [
+    {
+      "deferrable": true,
+      "definition": "CREATE CONSTRAINT TRIGGER document_specification_commit AFTER INSERT ON naijue_erp.audit_change DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION naijue_erp.validate_document_specification_commit()",
+      "enabled": "O",
+      "initially_deferred": true,
+      "internal": false,
+      "name": "document_specification_commit",
+      "routine": "naijue_erp.validate_document_specification_commit()",
+      "table": "audit_change",
+      "type": 5
+    }
+  ],
+  "existingPatchOfflineFacts": {
+    "categoryPatch129Predecessor": {
+      "requiredSignatureBodies": 129,
+      "mismatches": [],
+      "notFullExecutionAdmission": "Only routine predecessor body checks compared, not every column/FK/ACL/current-target condition."
+    },
+    "v19ParentAfterCategorySourceOverlay": {
+      "requiredBodies": 130,
+      "mismatches": [],
+      "hypotheticalOnly": true
+    },
+    "afterBothSourceBodyOverlays": {
+      "expectedNames": 131,
+      "remainingBodyDifferences": [],
+      "hypotheticalOnly": true
+    },
+    "v19AlsoChanges": "Two original action-by-kind CHECK constraints to allow exactly IMPORT_INITIALIZE_BARCODE_SCHEMES; creates helper and modifies3 import validators, PUBLIC execute revoked for helper. Not a bare function replacement or permission repair."
+  },
+  "authority": {
+    "v15": "source740/docs/rapid-launch-20261022/WRITE-OWNERSHIP.json v15 paths D1; WRITE-CONTRACT-APPROVAL-v15-CATEGORY-ORDER-UNDO.json",
+    "v19": "source740/docs/rapid-launch-20261022/WRITE-OWNERSHIP.json source576BarcodeV19CorrectedImplementation D1 patch; direct human corrected approval call_fcbc01113b4d42bea015ddd58a1d5513",
+    "roles": "D1 owns originalpatch source/predecessor preparation; C owns integration/decision; T45 sole actual server/DB executor; QB necessary affected source/currentreview route. D2 only productmaintenance sevenleaves, unchanged."
+  },
+  "reason": "Exact existing post26 v15-category and v19-import-initialization successors are absent from native target; migration1..26 does not include post26 patch bodies. Other123 required bodies and document trigger match. This is not evidence of missingproductUI code, barcode data state, schemausage or sufficientwriteACL.",
+  "next": "C route original D1 exact existing two-patch predecessor/currenttarget preparation and T45 controlled application if admitted; no D2 DB/GRANT/seed/upgrade. Fresh actualmetadata/catalog/purpose afterward before genuine preflight. No auto replay/publish/data initialization; existing published/nonempty nativeQA cannot blindly run empty-scheme initializer. FourSAVE staysdisabled.",
+  "actualDbQueriesByD2": 0,
+  "sourceChanges": 0,
+  "preflightInvoked": false,
+  "actualFourSaves": 0,
+  "qb452Rev3": "Adopted unchanged; no re-review",
+  "fast": "UNVERIFIED"
+}

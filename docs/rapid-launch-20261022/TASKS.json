@@ -5059,10 +5059,10 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 745,
+    "round": 746,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation745",
-    "fixedSource": "SOURCE74484ee0961072e5831481f0e23568ca737dd6186e2 exact GitHub verified",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation746",
+    "fixedSource": "SOURCE745e0cc34ef11d615e5bc65293f3db5b3e86a903aea exactGitHub verified",
     "fixedCandidates": {
       "synthetic": {
         "source": "2357cf508ee6e8188bcc1dddfa4735f735d70d36",
@@ -5084,19 +5084,19 @@
       }
     },
     "backendActual": {
-      "B07": "terminal exit2; credential auth1 to2 COMMITTED; first sales pre-save snapshot SQLSTATE42501 before command/requestKey; no case save formed; all owned resources closed. Never replay auth1 or original03. Supplemental readonly diagnosis PASS: auth/version2 confirmed; 26 table and identity SELECTs pass, two functions EXECUTE true. Specific original42501 not reproduced; invoker row locks require column UPDATE metadata next.",
+      "B07": "Minimal isolated role repair committed: exact five column SELECT grants across four dictionaries; other columns/relation ACL unchanged. Ordinary-role readonly inventory_key_admission admitted true. New catalog d92797336281ddc4d831842ee4d8cd4468272aa5974a4ae04e5b91b053fa2632. No CAS/login/business DML. Original first42501 not uniquely reproduced. D1 original two-leaf strict04/auth2-to3 continuation underway; old03 never replay.",
       "R1": "148 completeSOURCE_ONLY prepare exit0/4367.170767s ended04:29:23Z; 11groups/14999nativeSKU/38303baseline+24unrepresented approved warehouses,111artifacts=DATA+EXPECTED+BIND+107ACCOUNT+PUBLISH.0DB/DML/grant/MAIN/PUBLISH/APP. OriginalR1 still125STAGEDseq2cursor22 MAIN0PUBLISH0/fullBindingfalse until actualnext. Privateoutputs retained/original109keys.148notreplay.",
-      "nativeProduct": "Actual nonowner readonly connected OID1032586, migration1..26; old189 embedded pins source_routines_match=false is not current740 drift conclusion. Accurate source740/two purpose proof still pending."
+      "nativeProduct": "Actual151 source740 mismatch accurately traced offline to two existing approved patches: category-order-undo then v19-barcode-scheme-initialization;131required,123matches,2missing6changed. D1 checking full existing preconditions; no actual upgrade/preflight/product save yet."
     },
     "roleQueue": {
       "F1": "SOURCE733 coherent testdocuments6leaves delivered/strictfinitePASS; T45normal34actualread/builddone. No new UIrepairqueue, comparefindings useronly.",
       "F2": "Existing product/stock consumers ready; synthetic detail/maintenance facts incoherent/missing, no fake state platform; await actual product capability from D2/T45.",
       "F3": "Completed settings source packages; await actual samebuild maintenance permissions/provider to validate requested writes.",
       "F4": "Completed category empty-state source patch, original effective evidence reused; await actual dictionary/barcode/season/group capabilities.",
-      "D1": "Normal03 pre-save snapshot failure accurately traced by source order; no new source fix or auth rotation authorized; exact readonly object diagnosis next.",
-      "D2": "Finalproduct package452REV3sourcePASS;0actualPG/fullSAVE. Frozen740 graph/ROadapter prepared, T45genuine native189 metadata/issuer andcontrolledserverrelocation next now148released; no ownerfallback/seed/GRANT/pub.",
-      "D3": "Preparing exact SOURCE730 transitive derivation module closure and SOURCE744 two-consumer successor review draft in original reports; four source leaves frozen.",
-      "T45": "Native189 accurate740/two-purpose proof and v21 exact evidence relocation preparation; normal03 supplemental 11-lock-relation column UPDATE metadata only, no CAS/GRANT/business writes.",
+      "D1": "Original strict04 exactauth2-to3 parent/test implementation; separate readonly original category/v19 patch precondition review. No actual DB.",
+      "D2": "151 fullcatalog exact131-required diff delivered; original seven production leaves and452REV3 evidence unchanged; wait original patch execution/current proof.",
+      "D3": "Complete baseline dependency/review draft delivered; source744 four leaves frozen; T45 actual closure prep next.",
+      "T45": "ACL five column actual read repair complete; original04 carrier/source wait; v21 job152 complete evidence/runtime/execution carrier assembly; native151 old two approved patch admission waits D1.",
       "QB": "QB458 fixed SOURCE744 four-leaf source PASS adopted; no repeated technical review. Actual complete consumer-review closure/source output validation still required.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
@@ -14361,6 +14361,24 @@
       "v21": "QB458 source PASS adopted, complete transitive module review and exact physical relocation/output validation needed before actual grant; no repeated preparation.",
       "normal": "Snapshot read-only actual finished05:38:08.758943Z/0.41776975s, cleaned; auth2/version2 confirmed. Plain SELECT success does not prove row-lock permissions. D1 identified eleven locked relations; T45 only minimal metadata supplement preparation. No generic UPDATE grant or new auth rotation.",
       "scope": "37 pages/67 overlays/all applicable states/real business/history/performance/formal release remains active incomplete. UI normal34 synthetic unchanged; formal root unchanged."
+    },
+    "currentContinuation746": {
+      "v21": "QB458 four-leaf source PASS adopted. D3 complete baseline closure ready: 88 code modules; 120 review entries including old physical aliases and package lock. Original T45 job152 maps84 new paths and36 retained paths; exact output/runtime/grant and committed-prefix checks in progress; no MAIN/PUBLISH yet.",
+      "evidenceRefs": [
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/SOURCE744-ADOPTED148-DEPENDENCY-CLOSURE.json",
+          "bytes": 422400,
+          "sha256": "572d2f5734f169b572e3bad7b937637b18baaae7c6c02ddc3a1582220ab373eb"
+        },
+        {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/SOURCE744-ADOPTED148-REVIEW.DRAFT.json",
+          "bytes": 74308,
+          "sha256": "e7ad6ef6405a23aa9f0fabcaf65b8b1655f8fc434da74a9fc7fb4e217e95e49c"
+        }
+      ],
+      "normal": "Minimal isolated role repair committed: exact five column SELECT grants across four dictionaries; other columns/relation ACL unchanged. Ordinary-role readonly inventory_key_admission admitted true. New catalog d92797336281ddc4d831842ee4d8cd4468272aa5974a4ae04e5b91b053fa2632. No CAS/login/business DML. Original first42501 not uniquely reproduced. D1 original two-leaf strict04/auth2-to3 continuation underway; old03 never replay.",
+      "nativeProduct": "Actual151 source740 mismatch accurately traced offline to two existing approved patches: category-order-undo then v19-barcode-scheme-initialization;131required,123matches,2missing6changed. D1 checking full existing preconditions; no actual upgrade/preflight/product save yet.",
+      "scope": "Full37pages67overlays/allstates/real business/history editable/performance/formal release incomplete. Normal34 remains synthetic; formal unchanged."
     }
   },
   "historicalContinuation500Before716": {
