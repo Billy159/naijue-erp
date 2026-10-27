@@ -1,0 +1,179 @@
+{
+  "jobId": "t45-r1-v22-one-body-install-current-catalog-20261027-181",
+  "job": {
+    "jobId": "t45-r1-v22-one-body-install-current-catalog-20261027-181",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-c00091817204",
+    "atUTC": "2026-10-27T13:52:05.102442+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 1.3198486901819706,
+    "exports": [
+      "current-r1-v20-catalog.json",
+      "current-r1-v20-metadata.json",
+      "current-r1-v20-result.json",
+      "install-current-result.json",
+      "parent-r1-v20-catalog.json",
+      "parent-r1-v20-metadata.json",
+      "parent-r1-v20-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T13:52:06.687231+00:00"
+  },
+  "actual": {
+    "APPChanged": false,
+    "BINDExecuted": false,
+    "MAINExecuted": false,
+    "PUBLISHExecuted": false,
+    "businessDML": 0,
+    "catalogDelta": {
+      "bodyBytes": 49980,
+      "bodySha256": "8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5",
+      "changedRoutines": [
+        "naijue_erp.assert_core_initialization_v14(uuid,uuid,boolean)"
+      ],
+      "changedSections": [
+        "routines"
+      ],
+      "otherCatalogSectionsExactEqual": true
+    },
+    "commitReturned": true,
+    "current": {
+      "businessDML": 0,
+      "canonicalSha256": "6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd",
+      "catalog": {
+        "bytes": 1266665,
+        "file": "current-r1-v20-catalog.json",
+        "sha256": "a221438160ef429593f470712270782f7933a4fb0ca5a26d1a208189cff57297"
+      },
+      "clientsClosed": true,
+      "grantIssued": false,
+      "identity": {
+        "current_user": "erp_rewrite_runtime_20261022",
+        "database": "erp_rewrite_20261022_r1",
+        "database_oid": "1027659",
+        "database_owner": "erp_rewrite_owner_20261022",
+        "postmaster_start": "2026-10-04 08:16:07.895273+00",
+        "replication_role": "origin",
+        "server_addr": null,
+        "server_port": null,
+        "server_version_num": "170011",
+        "session_user": "erp_rewrite_runtime_20261022"
+      },
+      "jobId": "t45-r1-v22-one-body-install-current-catalog-20261027-181",
+      "metadata": {
+        "bytes": 567,
+        "file": "current-r1-v20-metadata.json",
+        "sha256": "5a303d2d693dc4b228beeb2c8ccce3379a13fc51a834cc8f478fc6a26cf14f64"
+      },
+      "rollbackReturned": true,
+      "sourceRoutinesMatch": true,
+      "status": "COMPLETED_ORIGINAL_R1_V22_PHASE_CATALOG_READONLY"
+    },
+    "existingRollbackArchive": {
+      "bytes": 196161886,
+      "fullBackupRepeated": false,
+      "metadataPreserved": true,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-r1-snapshot-isolated-clone-20261027-175/inputs/r1-v20-consistent-snapshot.dump",
+      "previouslyVerifiedSha256": "ac2dcd5afcd368617aa16a3177211e8de9a72ab4eb55bf80b863b145d1ec04dc"
+    },
+    "finishedAtUtc": "2026-10-27T13:52:06.381822+00:00",
+    "installerAttempted": true,
+    "installerProcess": {
+      "exitCode": 0,
+      "processExited": true,
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "jobId": "t45-r1-v22-one-body-install-current-catalog-20261027-181",
+    "limits": "No BIND/MAIN/PUBLISH/APP or business DML. Installer SQL parsed/COMMIT and actual one-body metadata delta only; deferred business conditions/import outcomes not exercised. Current runtime review and fresh consumer grant still required.",
+    "parent": {
+      "businessDML": 0,
+      "canonicalSha256": "64c4f6ad85a8683df3e1ce5bc341618f612b90d03232a2d4eefed84f2c1462f8",
+      "catalog": {
+        "bytes": 1236081,
+        "file": "parent-r1-v20-catalog.json",
+        "sha256": "0d5fff1df628595c7d787be836edf4b6271eccad781d394ddd125feefd37b0f4"
+      },
+      "clientsClosed": true,
+      "grantIssued": false,
+      "identity": {
+        "current_user": "erp_rewrite_runtime_20261022",
+        "database": "erp_rewrite_20261022_r1",
+        "database_oid": "1027659",
+        "database_owner": "erp_rewrite_owner_20261022",
+        "postmaster_start": "2026-10-04 08:16:07.895273+00",
+        "replication_role": "origin",
+        "server_addr": null,
+        "server_port": null,
+        "server_version_num": "170011",
+        "session_user": "erp_rewrite_runtime_20261022"
+      },
+      "jobId": "t45-r1-v22-one-body-install-current-catalog-20261027-181",
+      "metadata": {
+        "bytes": 567,
+        "file": "parent-r1-v20-metadata.json",
+        "sha256": "9ab40ed7f2c54dea7d4872efe2252a01ccea1aaeab298069c9b503e7e6748850"
+      },
+      "rollbackReturned": true,
+      "sourceRoutinesMatch": true,
+      "status": "COMPLETED_ORIGINAL_R1_V22_PHASE_CATALOG_READONLY"
+    },
+    "preimage": {
+      "bodySha256": "5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d",
+      "database": "erp_rewrite_20261022_r1",
+      "oid": "1027659",
+      "postmaster": "2026-10-04 08:16:07.895273+00",
+      "sessionUser": "t15_prod_bootstrap",
+      "systemIdentifier": "7691989034661916697"
+    },
+    "rolesOrACLChanged": false,
+    "status": "PASS_ORIGINAL_R1_V22_ONE_BODY_COMMIT_AND_CURRENT_CATALOG_ONLY"
+  },
+  "exports": {
+    "install-current-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/install-current-result.json",
+      "bytes": 4248,
+      "sha256": "61af89cb37ecd4c02f137c5d6f04145fe66e7ee017e562609f591d56f4e4e4f4"
+    },
+    "parent-r1-v20-catalog.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/parent-r1-v20-catalog.json",
+      "bytes": 1448692,
+      "sha256": "1e37d7a6c851a34ea171cce86936716609aad12f59608805969aedfc0de6b218"
+    },
+    "current-r1-v20-metadata.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/current-r1-v20-metadata.json",
+      "bytes": 780,
+      "sha256": "5ea32feb0dbce08b62b3454b22e903ca66eb12bf99cb53ab503295e966d1132a"
+    },
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/job.json",
+      "bytes": 735,
+      "sha256": "27319029c38620fbab034f7375fcd2e9f22b56bec12b347343e86b7c1fb65369"
+    },
+    "parent-r1-v20-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/parent-r1-v20-result.json",
+      "bytes": 1110,
+      "sha256": "17ad57807e5323a983a551ba4848f06332cc1c27e6b34f5eca63709a16b215a7"
+    },
+    "current-r1-v20-catalog.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/current-r1-v20-catalog.json",
+      "bytes": 1479276,
+      "sha256": "e98cea537c1d0aa209a9d282780df7fbaa8bf85d0a976c77fe7a39c9e4405ebf"
+    },
+    "parent-r1-v20-metadata.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/parent-r1-v20-metadata.json",
+      "bytes": 780,
+      "sha256": "affa248c4fc9aa49fbb8b7fa6b5b320a7aea822ad650817b9977b80f9b2ffb71"
+    },
+    "current-r1-v20-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v22-one-body-install-current-catalog-20261027-181/release-submission/release-receipts/t45-r1-v22-one-body-install-current-catalog-20261027-181/current-r1-v20-result.json",
+      "bytes": 1112,
+      "sha256": "21d735a9c5a2ba92c336e6c2f7f30fb95f99db8931fb43b6b7f4a1c1ffd575cc"
+    }
+  },
+  "limits": "Only approved originalR1 single-function DDL and before/after ordinary catalog metadata; not BIND/import/APP/publication/business acceptance."
+}

@@ -1,3 +1,5 @@
+SOURCE781：181原R1单函数真实COMMIT/ordinary目录完成，1.320秒；QB476独立增量PASS，实际新R1 canonical6d3e6d1a/body49980/8a8374fb，其余130routine及全部结构/ACL/943triggers/身份原样。0BIND/业务DML/MAIN/PUBLISH/APP，metadata-only review不冒执行grant。QB475只新只读adapter操作源码PASS，实际八表内容/耗时未测；旧472–474不重验。原T45正固定同一新source包/Linux准确refs/window草案，C随后补精确sourcegrant/consumerreview与QA只读authority，原109keys/148/121保持。原R1完整绑定及后续真实导入/发布仍待，37页67弹层全站目标ACTIVE未完成。SOURCE780远端c43f26bf已核。
+
 SOURCE780：180真实QA单函数安装COMMIT/ordinary目录读回成功，0.969秒；QB474独立仅单body/currentmetadata增量PASS，正文49980/8a8374fb同冻结原源，其余130routine/ACL/角色/结构/943triggers不变，QA新canonical b2e735f9仅metadata证明不冒R1。QA BIND及不可达负例身份不兼容明确未测，不改INIT/SQL/issuer来凑过。C已授权原T45按批准v22原installer在准确R1一次单函数安装后ordinary新目录，实际待回执，0BIND/MAIN/PUBLISH/APP；175备份/旧失败保留。D1原两control补只读八表/原SKUrecord内容核验，不造坏fixture。原R1新source闭包/当前review/grant到齐后才原key真实绑定。37/67真实业务/历史/性能/正式发布仍未完成。上一源码779远端7683a617已精确核验。
 
 SOURCE779补充：179真实QA父态catalog b0f0ee52/131routines匹配，普通role RRRO回滚关闭，尚非review签发。QB/D1新定位原INIT凭证target.postmaster与QA新启动身份必冲突；C取消任何QA函数变体或改原凭证，0试错/假正负例。QA仅同body安装解析/目录与ACL，BIND正例及不可达成员负例明确未测。原R1同启动身份后续按已批v22原key真实导入一次，准确source/currentreview/grant到齐前不执行；不冒生产回归或QA全通过。

@@ -1,0 +1,47 @@
+{
+  "reviewId": "QB475",
+  "decision": "PASS_SOURCE_ONLY_READONLY_PREFIX_ADAPTER_CONTROL_DELTA",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.mjs",
+      "bytes": 27151,
+      "sha256": "05d4734c067660345262e5b8aa8a760c584ddc21d5911e3f41e569caa1fd54e4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.test.mjs",
+      "bytes": 12764,
+      "sha256": "1d269f21af66d19b29a1c981b256e29c40d6fcb44cc3918be4b1c3d0ee070562"
+    }
+  ],
+  "baseline": "Exact originalcontrol21270/44f2a98d and test9235/58b7e15a preserved in R/docs/rapid-launch-20261022/receipts-source779; QB473/474/472 reused",
+  "Standards": {
+    "blockingFindings": [],
+    "scope": "Newop bounded finite control implementation only"
+  },
+  "Spec": {
+    "blockingFindings": [],
+    "scope": "C chosenA: actualsame productionadapter readonlycontent/coverage observation, not samebodyBIND/trigger positive or negative test"
+  },
+  "reviewed": {
+    "entry": "New READONLY_PREFIX_ADAPTER accepted only by exactregistered plan+authority+same scenario fixture. RUN_FIRST_BIND explicitly rejects QA_BIND_NOT_TESTED_BINDING_IDENTITY_INCOMPATIBLE before source/QA activation.",
+    "source": "Originalsourcejob/binding preserved; provider/session/preflight and authorization only with sourceOnlyDatabaseGate22.ready alwaysthrow. No originalSQLpool/session.steps/fullhost/run. Private pinnedsourceauthority supplies originalexpected/capture; no callerPASS/fakeexpected in real path.",
+    "runtime": "Pinned actualQA V22currentreview+originalhostgenuinegate/issuer ordinaryrole; actualQA identity and transaction_read_only=on checked after BEGIN RRRO. No owner execution.",
+    "verification": "Real path imports verifyCoreStagedPrefix22 from exactpinnedadapter, invokes original fullpermember projection/root comparison on same genuinelease inside one RRRO snapshot. No dependency-injected fakeverify used by realCLI. Test injection is explicitlymock only.",
+    "coverage": "After each expected unique orderedmember has matched fullactualprojection,7group fullactual counts must equal proof rows in samesnapshot; global actualsets not filtered to currentbatch, so foreign/extras counted. Combined cardinality+permember uniqueness/equality proves noextras, not count-only contentclaim. SCHEMESsource0 andSKUrecords included.",
+    "readonly": "New helper fixed SELECTs only, no FORlocks/businessfunctions/DML/BIND/COMMIT/deferredguards. ExplicitROLLBACK once thenrelease. Errors rollback/discard; lostrollback never claims success. Outer finally closes source/gate and writes wx result; cleanup errors override successstatus.",
+    "limits": "Output explicitly scopeREADONLY_PREFIX_ADAPTER, bindExecuted/businessDml/commitAttempted/deferredGuardsExecuted/productionBodyPositiveTested/negativeFixturesCreated false. Does not validate17tablebusinessguard or fix knownQApostmasterincompatibility."
+  },
+  "checks": "Ownernew2mockPASS/syntax0 adopted; old14/26/sourceQA suites not rerun. Staticnew2leaf diff reviewed. ActualsourceIO/PGfullcontent/timing not executed byQB.",
+  "pendingExecutionInputs": "ExactimmutableLinuxsourceRoot+5modules/freshsourcegrant+hostjob+providerINPUTenv/QA474review pathbinding/fixture/Cauthority/deadlinebudget remain C/T45actualcarrier work, no execution inferred from prepared source.",
+  "notValidated": [
+    "ActualREADONLY_PREFIX_ADAPTER result/fullcontent/timing",
+    "BINDpositive/deferredguard behavior",
+    "Member/17table negativecases",
+    "OriginalR1fullhost/import109/PUBLISH"
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "qbNo": [
+    "PG/SSH/DDL/DML/sourceedits/newchat/subagent/fullsuite"
+  ]
+}
