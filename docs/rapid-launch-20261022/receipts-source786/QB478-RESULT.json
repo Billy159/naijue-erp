@@ -1,0 +1,51 @@
+{
+  "reviewId": "QB478",
+  "decision": "PASS_NARROW_STATIC_DIAGNOSTIC_OUTPUT_DELTA_ONLY",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.mjs",
+      "bytes": 29173,
+      "sha256": "dbb2f336c37a1a5e8134dad2afcfe4afab7e6b2f88256e34ea9eeef06a320537"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.test.mjs",
+      "bytes": 14728,
+      "sha256": "00aae03b8584a86f534afbf35bd6c781a7c92f0c4ef49ab7f39f3e31a06bf0ed"
+    }
+  ],
+  "baseline": "QB475exactcontrol27151/05d4734c andtest12764/1d269f21 preservedSOURCE781. QB472/473/474/475/476/477 accepted scopes reused.",
+  "Standards": {
+    "blockingFindings": []
+  },
+  "Spec": {
+    "blockingFindings": []
+  },
+  "verified": {
+    "all20WhiteListTextsMatchFrozenProductionAdapterVerbatim": true,
+    "finiteReasons": [
+      "INPUT_BINDING",
+      "STREAM_VALIDATION",
+      "ROW_COUNT",
+      "MISSING_DUPLICATE",
+      "COMPLETE_PROJECTION",
+      "SCHEME_RECEIPT",
+      "UNKNOWN"
+    ],
+    "exactOwnDataDescriptorsRequired": "nameDomainError/codeCORE_STAGED_PREFIX_MISMATCH/messageexactstaticstring; actualDomainError constructor creates ownfields",
+    "unknownBehavior": "Unknowntext/dynamicsuffix/othername/code/accessor values mapUNKNOWN. No stack/cause/field/key/id/value/hash/text output or businessrowquery.",
+    "outputShape": "Only prefixDiagnostic:{reason:<finitecategory>} added in outer failure catch. Original status/errorcode retained; result remains failure notPASS.",
+    "inverseComparison": "Removingonlynewmap/helper/comments and addedcatchprojection exactlyrestores oldcontroltext byteforbyte. AllSQL/expected/sourceauthority/issuer/lease/transaction/deadline/closure/normalresult unchanged.",
+    "tests": "Owner2newfiniteprojectiontestsPASS/syntax0 adopted; oldcontrol/source/fullprefix not rerun. No need extra mock test mirrorsimplementation."
+  },
+  "executionHandoff": "Use exactnewcontrolpins in C-authorized unique185readonlyprefixsuccessor; update any plan/fixture/authority matchingcontrolrefs. Do not rerun184terminal/186snapshot or twofullprefix passes. No execution granted bythisreport.",
+  "unknowns": "PriorerrorcategoryUNKNOWN remains unknown until freshactualevidence; do not infer table/rootcause/zerowrites from186 originalkeyreceipt absence/STAGED2cursor22 snapshot. No actualcontent/timeout/timing/BIND/109/PUBLISH acceptance.",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "noActions": [
+    "server/PG",
+    "originaldatareads",
+    "sourceedits",
+    "fullprefixrun",
+    "newchat/subagent"
+  ]
+}

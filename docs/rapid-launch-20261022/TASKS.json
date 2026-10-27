@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T14:38:12.301491+00:00",
+  "updatedAt": "2026-10-27T14:42:31.133962+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "28b07dc5a2fe8b00a370f0952b0cb090fe3f73e4",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -14862,6 +14862,15 @@
       "response": "No184replay/suffix/newkey/186repeat. OriginalD1 onlytwo QAcontrolfiles staticDomainErrormessage strictwhitelist→reasoncategory plus basename:line if safe, unknowndynamicredacted. No productionadapter/SQL/expected/issuer/lease/querywrapper/rowvalues changes. Minimal1-2 outputincrementchecks then originalQB onlyoutputdelta.",
       "QA185": "Originalsignedplan/authority remains, executionnotstarted; deferold475controlpins to avoidfullprefix retrywith no diagnostic. Cupdate exactnewtwo controlpins after review, one genuineordinaryQA RRRO fullcontents+coverage+reason observation, noBIND/DML/COMMIT/negativefixture. 184hostclosed/resourcesreturned.",
       "remaining": "Actualmismatchcauseunknown; nextobservation determines targetedfix. OriginalSQL/148/INIT/109 identities protected, cannot relabelPASS or modify source tofitactual. Full37/67/history/performance/formal remainACTIVE incomplete."
+    },
+    "currentContinuation786": {
+      "status": "QB478_SAFE_DIAGNOSTIC_ACCEPTED_185_FIRST_SINGLE_SUBMITTED",
+      "control": "29173/dbb2f336c37a1a5e8134dad2afcfe4afab7e6b2f88256e34ea9eeef06a320537;test14728/00aae03b8584a86f534afbf35bd6c781a7c92f0c4ef49ab7f39f3e31a06bf0ed",
+      "QB478": "2860/8e5ac84b37cdc538da9aab2caea5652d57d414cf5407dd6f37ceeff96aed5406 outputdeltaPASS only. Exact20staticstrings/6reason orUNKNOWN, no rawvalues/message/hash/stack/cause. SQL/expected/issuer/lease/transaction unchanged; old475 reused.",
+      "actual185": "T45 reports firstsingle submitted. Unit/terminal notyetreported. Old182controls preserved, new185controlpaths. Original3signedJSON unchanged; same980cSQL onlymaterialized as file/notexecuted.",
+      "boundary": "Only genuineordinaryQA RRRO contents/coverage+safe reason thenROLLBACK, noR1DB/BIND/DML/COMMIT/fakeexpected/negativefixture. Existingcredential onlyserverRAM childPGPASSWORD; max1800/deadline16:30Z/actualstatement120000 etc.",
+      "next": "Collectsame185 outcome; originalD1 targetedreason fix; originalQB affecteddelta only. No184/186replay.",
+      "goal": "Full37/67/realhistory/performance/formal ACTIVE incomplete."
     }
   },
   "historicalContinuation500Before716": {
