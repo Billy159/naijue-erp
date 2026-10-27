@@ -1,0 +1,75 @@
+{
+  "reviewId": "QB433",
+  "task": "SOURCE713/source712NativeSkuEvidenceBatch",
+  "decision": "PASS_FIXED_SOURCE_EIGHT_FILE_INCREMENT_ONLY_NOT_RUNTIME_OR_PERFORMANCE",
+  "fixedCommit": "3c166340a1f0ee538baa54dce72f87cfbb5a5333",
+  "currentDocsHeadAtStart": "55d1a623680ff799f82a163d231c9be20be3efe9",
+  "sourcePins": [
+    {
+      "path": "packages/application/src/native-sku-import.ts",
+      "bytes": 17796,
+      "sha256": "3720bbf699e2702aa7026fac4333db74db1492aa72b25176fcaed43b3807695b"
+    },
+    {
+      "path": "tests/native-sku-stock-import.test.ts",
+      "bytes": 51406,
+      "sha256": "11dfffeb69228199a03b5f4bce77f77307570208c1e1384c3cb9ea9e051ec84f"
+    },
+    {
+      "path": "reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.mjs",
+      "bytes": 15247,
+      "sha256": "ada8e60d789c4ded205f901a12326658057a784e97ea5ffd62801e0d6f96ba24"
+    },
+    {
+      "path": "reports/backend/rapid-launch-20261022/D3/retained-native-closure-streams-20261026.test.mjs",
+      "bytes": 27745,
+      "sha256": "b4e9e8a8ad7981b5752c4e45dafc28ef213a51dfb72ef833c52ed37811d6c128"
+    },
+    {
+      "path": "scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 118693,
+      "sha256": "9c7a055a269fd9257131cbec436a5a6c4177395cd9b6540dc9734b73f68bed4e"
+    },
+    {
+      "path": "scripts/import-v3/production-source-provider26.test.mjs",
+      "bytes": 155828,
+      "sha256": "48eb632a29f8f27f1411fb5094c8fb3b5e39d38c9ed0b5707d612da794291e9e"
+    },
+    {
+      "path": "reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT.CANDIDATE.json",
+      "bytes": 182361,
+      "sha256": "36abaa6eccd3fb2cb871cedb090bbd2afe3c3d9852c8454aad55f6eefa0c8527"
+    },
+    {
+      "path": "reports/backend/rapid-launch-20261022/D3/FULL-SOURCE-PROVIDER26-INPUT-DELIVERY.json",
+      "bytes": 142116,
+      "sha256": "d3d1181c63b1e75594e953b7ced514dafb7604aee4a2d65af82012ad3b3ebeb1"
+    }
+  ],
+  "deliverySection": "source712NativeSkuEvidenceBatch",
+  "checks": [
+    "LatestDELIVERY and INPUT byteidentical to fixedSOURCE713, not guessed from laterdocumentationHEAD; six code/test leaves match sectionpins and frozenGit, plus two metadata leaves =exact8.",
+    "New checkedbatch calls unchanged full validatePreparedNativeSkuImport26 once then maps only row.aliases synchronously/in originalorder. No callerprovidedaliaslist/cache/prehash/uncheckedexport; originalsinglealias26 still fullvalidates then sameprivate evidenceconstructor. Validator/prepare/hash/evidence meaning unchanged.",
+    "HelperSKUS requires exactnewfunction, callsbatchonce and rejects missingcapability or nonarray/wrongcount. OriginalnativeSKU/alias/source/typed order andmapping preserved; no duplicate firstvalidator/peraliasvalidator/fallback. Othergroups and roundtrip/index/EOF/cache/close/error guards unchanged.",
+    "Provider namedimports andexplicitexportsbag contain newcheckedbatch, sameversion native-sku runtime required. HelperSHA+BARCODEbytes15247/ada8 synchronized, all4factoryoldpinrefusals retained.",
+    "INPUTinverseonlyauthoritySHA and4producerhelper/CODEdescriptor changes restorespredecessor;79nonCODE members andbinding/executionauthorization/data/proof unchanged. Physicalhelperlocations null, no installedruntime claim. LatestDELIVERY newRuntimeRequired exactapplication+provider+helper closure documented.",
+    "Owner3applicationPASS (new2+affectedSKU26),17helperPASS,6providerPASS and targetedstrict2leaf checks adopted.64aliasevidence equals originalcheckedsinglealias/order/input unchanged, prepared/native/reference/count/fingerprint/profile tampering rejected; helperonebatch/missing/wrongcount checks retained. No oldfullsuite rerun."
+  ],
+  "requiredRuntimeClosure": [
+    "Exactnative-sku-import.ts17796/3720bbf6",
+    "Exactprovider118693/9c7a055a",
+    "Exacthelper15247/ada8e60d andfourCODEphysicalrefs bound after installation"
+  ],
+  "remaining": [
+    "T45 exactnewsource-tree installation ofall3productionleaves andfourhelperCODElocations; originalfiveother support/shared703closure/682preparer/673guard/C144reader/124DATA/125/24/109keys/registration preserved.",
+    "No actualfixed1000/fullsourceDATA/EXPECTED/MAIN/PUBLISH/performance/throughput orpercentageimprovement verified. Sourcecallcount reduction is not measured realCPUfraction."
+  ],
+  "sourceChangedByQB": false,
+  "databaseOrRemoteAction": false,
+  "actualPerformanceMeasured": false,
+  "actualFullSourceRun": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false,
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

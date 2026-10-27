@@ -1,0 +1,59 @@
+{
+  "reviewId": "QB434",
+  "decision": "PASS_SOURCE_ONLY_JOB145_TRIPLE_OVERLAY_INCREMENT_NOT_ACTUAL_EXECUTION",
+  "jobId": "t45-source713-sku-batch-probe-20261027-145",
+  "fixedSourceCommit": "3c166340a1f0ee538baa54dce72f87cfbb5a5333",
+  "reusedReviews": [
+    "QB433",
+    "QB432"
+  ],
+  "bundlePins": [
+    {
+      "file": "PLAN.json",
+      "bytes": 8616,
+      "sha256": "69db658fc93ace16d692c30dabc6216bca8ba8be49397a11f096bb21f3b5fba6"
+    },
+    {
+      "file": "sku-batch-overlay.json",
+      "bytes": 154604,
+      "sha256": "a475950d7154ae6e286552c44b6b1a09b54d961b843b7e21fe22199aa8d37668"
+    },
+    {
+      "file": "source-input.json",
+      "bytes": 187693,
+      "sha256": "5a6bc0d304249cd43869ff2604db8aec76b9d1a7af1f4231f9c469349d3f0897"
+    },
+    {
+      "file": "source-preparation-carrier.py",
+      "bytes": 6414,
+      "sha256": "c9fd286f4d60065ae35537b0edd5a152c3f5c3d94359ca6b8e7992644e7e68f5"
+    },
+    {
+      "file": "source-preparation.mjs",
+      "bytes": 4728,
+      "sha256": "2abc2d9c773f5863bd77216b3c38ee449b190dcd72a99e1a252a70814d1fe889"
+    },
+    {
+      "file": "source-scope.json",
+      "bytes": 22313,
+      "sha256": "22affee3db373d4afdcd34e200ca829df21b8dad0b367f7e069d7234837466ba"
+    }
+  ],
+  "checks": [
+    "Overlay exactthree destinations and UTF8 payloads byteidentical fixedGit SOURCE713 application17796/3720bbf6,provider118693/9c7a055a,helper15247/ada8e60d. Each installed0400 and exactreadback before public provider import/call. No helper-only deployment.",
+    "Four original producer CODE logical/physical/helper descriptors exact15247/ada8e60d and new145 physicalpath; no oldhelperpin consumption. Inverseauthority/fourproducer descriptors and two sourceRoot changes restores141 input exactly; other support/binding/auth/DATA/proofs preserved.",
+    "Scope inversenewinputpin/outputparent/deadline restores141 exactly. Original registration/artifactRows/sourceManifest/requestKeys109/baseline/chunk preserved. Sourcebase141/shared703/C144 reader inherited and twentycontainers/routeCAS unchanged.",
+    "Latestwindow deadline2026-10-27T01:00:00Z with now+240<=deadline (start<=00:56Z); PLAN and scope pins crosschecked. maxSeconds210 AbortController, subprocess225, hardLimit240 preserved; mjs byteidentical141 except jobroot. Python syntax compiled only, no carrier execution.",
+    "Existing fixed1000 diagnostic STOP/status/exit2 behavior and progress whitelist retained; DIAGNOSTIC_LIMIT_REACHED cannot pass full preparation. No PG/MAIN/publish/grant/APP action added."
+  ],
+  "runtimeInstallationVerified": false,
+  "databaseOrRemoteAction": false,
+  "actualExecutionAuthorizedByThisReview": false,
+  "actualPerformanceMeasured": false,
+  "sourceChangedByQB": false,
+  "limits": [
+    "This approves source carrier binding only; T45 owns actual preflight/window dispatch and result collection. No actual installation or timing has been verified by QB."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

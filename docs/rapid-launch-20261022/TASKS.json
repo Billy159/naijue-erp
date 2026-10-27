@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T08:10:00+08:00",
+  "updatedAt": "2026-10-27T08:17:00+08:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "c58b216050338fb415cff75b795fac29a9c058ce",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -4640,18 +4640,11 @@
   ],
   "newPendingReviews": [
     {
-      "task": "SOURCE713",
+      "task": "NEW_SYN_ACTUAL_CARRIER",
       "owner": "QB",
-      "scope": "new8 SKU checked batch evidence source",
-      "source": "3c166340a1f0ee538baa54dce72f87cfbb5a5333",
-      "state": "CURRENT_IN_PROGRESS"
-    },
-    {
-      "task": "SOURCE715",
-      "owner": "QB",
-      "scope": "new7 SYN initial APPROVED fixture/publication/session module",
+      "state": "IN_PROGRESS_AFTER_QB435",
       "source": "bcc3b24308522736f077852db5705d2415d74e0f",
-      "state": "QUEUED_UNIQUE_NEXT_AFTER_713_AND_145"
+      "scope": "new target carrier necessary source and fresh6purpose worker/config only"
     }
   ],
   "openFindingsCurrent": [
@@ -5064,7 +5057,7 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 718,
+    "round": 719,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
     "authoritativeDetail": "currentExecutionPriority620.currentContinuation715 and subsequent numbered continuation; prior round500 is historicalContinuation500Before716, not current queue",
     "fixedSource": "bcc3b24308522736f077852db5705d2415d74e0f SOURCE715, exact GitHub remote verified",
@@ -5095,8 +5088,8 @@
       "D1": "SOURCE7157files source released; waits original QB incremental source acceptance and T45 new registered SYN target; no old07 credential change.",
       "D2": "Original source handed back, QB340 NULL-size source PASS preserved; actual PostgreSQL maintenance/full-save consumers remain dependent on original capability/data execution.",
       "D3": "SOURCE7138files SKU batch optimization fixed/offline26PASS; independent source review pending; no measured actual speed claim.",
-      "T45": "Original145 fresh window exact-field preparation only, old19:45 expired; new SYN carrier preserved pending QB. No actual before new accurate C adoption/source review.",
-      "QB": "Original QB manually resumed by user, SOURCE7138files current active; C send succeeded unique NEXT145carrier source increment→SOURCE7157files→newSYNcarrier/fresh6purpose. No duplicate SOURCE713.",
+      "T45": "145 single actual submitted and original-key running, unit naijue-erp-op-5cc58239-077f7d6cf118. Collect same handle only; no newSYNDB before new carrier review/currentpurpose.",
+      "QB": "QB433713source/QB434145carrier/QB435715source PASS adopted; active next newSYN carrier necessary range/fresh6purpose worker. No realPG/performance PASS.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
@@ -13187,8 +13180,8 @@
       "D1": "SOURCE7157files source released; waits original QB incremental source acceptance and T45 new registered SYN target; no old07 credential change.",
       "D2": "Original source handed back, QB340 NULL-size source PASS preserved; actual PostgreSQL maintenance/full-save consumers remain dependent on original capability/data execution.",
       "D3": "SOURCE7138files SKU batch optimization fixed/offline26PASS; independent source review pending; no measured actual speed claim.",
-      "T45": "Original145 fresh window exact-field preparation only, old19:45 expired; new SYN carrier preserved pending QB. No actual before new accurate C adoption/source review.",
-      "QB": "Original QB manually resumed by user, SOURCE7138files current active; C send succeeded unique NEXT145carrier source increment→SOURCE7157files→newSYNcarrier/fresh6purpose. No duplicate SOURCE713.",
+      "T45": "145 single actual submitted and original-key running, unit naijue-erp-op-5cc58239-077f7d6cf118. Collect same handle only; no newSYNDB before new carrier review/currentpurpose.",
+      "QB": "QB433713source/QB434145carrier/QB435715source PASS adopted; active next newSYN carrier necessary range/fresh6purpose worker. No realPG/performance PASS.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
@@ -13860,7 +13853,7 @@
       "B07": "07 review/gate actual successful; detail HTTP200 then assertion; D1 diagnose; T45 original-key readonly recovery next",
       "fullSource": "134 same-key collect only bounded original execution"
     },
-    "latestSource": "SOURCE718",
+    "latestSource": "SOURCE719",
     "source680Continuation": {
       "actual134": "FAILED exit2 after901.237644947s; ORIGINAL_BINDINGS_AND_STREAMS / PRODUCTION_PROVIDER26_CLOSED; D3 original source diagnosis; no extension/replay",
       "actual07": "POST07 original-key readonly recovery: one COMMITTED HISTORY_REVISE HISTORY_SALES receipt and one revision, result_version2. Full test incomplete at detail count assertion. Preserve original key/state; no fresh save.",
@@ -14125,6 +14118,27 @@
       "T45": "Expired145 window must change accurately, prepare only original changedleaf; no replay, oldcarrier and sourcepins remain, actual not authorized yet.",
       "GitHub": "SOURCE71755d1a623680ff799f82a163d231c9be20be3efe9 exact remote verified",
       "goal": "ACTIVE full37/67/allstate/realbusiness/history/performance/formal release unchanged"
+    },
+    "currentContinuation719": {
+      "accepted": [
+        "QB433 fixed3c166340 SOURCE713exact8 source only",
+        "QB434145newwindow tripleoverlay source only",
+        "QB435fixedbcc3b243 SOURCE715exact7 SYN source only"
+      ],
+      "actual145": {
+        "jobId": "t45-source713-sku-batch-probe-20261027-145",
+        "unit": "naijue-erp-op-5cc58239-077f7d6cf118",
+        "state": "SUBMITTED_ONCE_ORIGINAL_KEY_RUNNING_TERMINAL_PENDING",
+        "deadlineUtc": "2026-10-27T01:00:00Z",
+        "latestStartUtc": "2026-10-27T00:56:00Z",
+        "limits": "210Abort/225child/240hard fixed1000 nonprofile;0PG/MAIN/APP",
+        "pySha256": "c9fd286f4d60065ae35537b0edd5a152c3f5c3d94359ca6b8e7992644e7e68f5",
+        "planSha256": "69db658fc93ace16d692c30dabc6216bca8ba8be49397a11f096bb21f3b5fba6",
+        "scopeSha256": "22affee3db373d4afdcd34e200ca829df21b8dad0b367f7e069d7234837466ba"
+      },
+      "SYN": "Original QB newcarrier affected scope and fresh6purpose worker/config next; source ready not actual DB approval",
+      "GitHub": "SOURCE718295340799ac842d06b0d12fc2efa67fcaa31c316 exact remote verified",
+      "goal": "ACTIVE37/67 true business/history/performance/fullsource/formal release incomplete"
     }
   },
   "historicalContinuation500Before716": {

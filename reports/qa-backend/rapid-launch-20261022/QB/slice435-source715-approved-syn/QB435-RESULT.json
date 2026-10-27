@@ -1,0 +1,71 @@
+{
+  "reviewId": "QB435",
+  "task": "SOURCE715 source711/source714 seven production-test leaves",
+  "decision": "PASS_FIXED_SOURCE_SYN_APPROVED_LIMITED_SCOPE_NOT_ACTUAL_PG",
+  "fixedCommit": "bcc3b24308522736f077852db5705d2415d74e0f",
+  "ownerResult": {
+    "bytes": 5723,
+    "sha256": "edab689a998618391e7f256f5860e68b9fa909f1b8252a4cc44dbfcad83e801d"
+  },
+  "sourcePins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/sealed-history17-fixture.ts",
+      "bytes": 22572,
+      "sha256": "ca061d6de691fac927c09aaaed57a66ea063a3b8d7045cc96093aa0fb987312d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/sealed-history17-approved-fixture.test.ts",
+      "bytes": 5900,
+      "sha256": "5f684c599243e9f6e38f8568125a343e1ae20aec2b11a09a59ef9c9fd7cf208a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/b07-approved-publication-fixture.ts",
+      "bytes": 31082,
+      "sha256": "661b2abd9ad196c909e2d453308abc2bf2f6c61812406ac6cab130a54e709e84"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.mjs",
+      "bytes": 22489,
+      "sha256": "8f764505d9213f3e4b847bb1d9efd76d8d6c0ec096b40787c05cb12c009bbbc5"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.test.mjs",
+      "bytes": 7859,
+      "sha256": "6bdcaf791ec6f915fedf2164a85f2cc110458a9ce21de67e1703299265b44b4c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 54224,
+      "sha256": "35d59b70decae1006c31eca9634f8bfef9885c0b23602f8b4d1d361921939ea0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 22309,
+      "sha256": "f06de79f3916c85cbd54925f6d2ce7570ed51f05e04496e0c10dfa4c4026b29d"
+    }
+  ],
+  "checks": [
+    "All seven leaves fixedGit bytes/hash equal owner result; snapshots preserved only within QB. Original parent unchanged after removing additive SYN import/block; old07 seed/renewal/validation remain exact.",
+    "New explicit SYN profile built before XLSX/raw-source/normalized sealing; approvedSALE32.00/16x2.00/settlement32.00 and transfer+3, nonapprovedreturn unchanged. Unknown historical people/timestamps remain NULL via original authorized reader. Derived opening perwarehouse28/-3 plus approvednets gives target-7/0, cutoff posted once; no second opening post or real-source claim. Default oldsealed17 stays DRAFT.",
+    "Publication glue requires fresh new SYN database and genuine schema19 guards; reuses original native/authorized readers, typedclosure19 and source-rechecking synthetic factories. Importstage/chunk/publish exact command authorization, stagedlist/detail invisibility, committed import/audit receipt, original APPROVED header/date/line references captured. SYN selected slice explicitly separate from fullsource.",
+    "New parent closed exactnewDB/output/socket/role target; publication pinned + actualimport/audit join; schema19 guards/empty QA prereq then exact one parameterized staff/account pair, source disabled account retained. Seed unknownCOMMIT stops without rollback/reinsert/login. Password stays RAM; once normalfactory login/session/logout, hook receives no credentials/cookie or SQL client.",
+    "After T45 existing19->26 upgrade, purposegate/config/review/input pinned and exact same database/OID/postmaster/ordinaryrole/profile/references/actor checked. Existing genuine runtime26 issuer and production normal factory consumed. Setup closes before upgrade; independent api/readpool/setup close attempts, cleanupunknown forcesSTOP. No new DDL/grant/PG start/stop implemented in these leaves.",
+    "Runner snapshots append-only sources/identities/admission and full bounded stock/revisions/audit/receipts/effective projections; real planner sales-1 /transfer-1,+1 effects, exactledger identities/version/time/op/revision and balancequantity/version plus unrelatedkeys conservation. Normal detail/list readback, samekey replay, idempotencyconflict and staleCAS compared to unchanged snapshots.",
+    "Second transfer endpoint PK rollback uses same ordinary pool and real PostgresHistoryRevisionStore/service/authorization: inject existing ledgerID at secondendpoint, require real23505 after firstledger+firstbalance succeed, zeroCOMMIT and ROLLBACK, exact before/after proof. It is a source-defined directservice case, not yet actualPG evidence.",
+    "Adopt owner16 affected offline checks (fixture3,runner5,newparent5,oldparent3), parent syntax and targetedstrict checks; no old fullsuite replay. Reviewed first500/503 requestpersist-beforeHTTP and zeroautoresend, once-session/secret-exclusion/guard/unknownseed coverage."
+  ],
+  "actualPostgres": false,
+  "actualPublish": false,
+  "actualSession": false,
+  "actualRollback": false,
+  "realSourceImportVerified": false,
+  "sourceChangedByQB": false,
+  "databaseOrRemoteAction": false,
+  "actualExecutionAuthorizedByThisReview": false,
+  "remaining": [
+    "T45 new exact target registration and actual schema19 source publication; existing26_v21 upgrade/minimalordinaryACL/catalog/currentpurpose review and finite actualrun/cleanup.",
+    "Real-source APPROVED sample/full import, NULL-date approved money, actual UNKNOWNCOMMIT, browser/HTTPS/formal business remain untested."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}
