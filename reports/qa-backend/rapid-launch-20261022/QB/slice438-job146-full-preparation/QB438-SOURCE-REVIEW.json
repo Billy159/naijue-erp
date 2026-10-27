@@ -1,0 +1,64 @@
+{
+  "reviewId": "QB438",
+  "decision": "PASS_SOURCE_ONLY_JOB146_FULL_PREPARATION_CARRIER_INCREMENT_NOT_ACTUAL",
+  "reuses": [
+    "QB433 SOURCE713 eightleaf",
+    "QB434 job145 tripleoverlay",
+    "original136 fullsource finite budget"
+  ],
+  "jobId": "t45-source713-full-preparation-20261027-146",
+  "sourceCommit": "3c166340a1f0ee538baa54dce72f87cfbb5a5333",
+  "bundlePins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source713-full-preparation-20261027-146/bundle/PLAN.json",
+      "bytes": 8323,
+      "sha256": "1a9e5611cdd3a6adef059d64ccfee8c3b66ad94d2868b03f3699e5d868fc63c9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source713-full-preparation-20261027-146/bundle/sku-batch-overlay.json",
+      "bytes": 154604,
+      "sha256": "a475950d7154ae6e286552c44b6b1a09b54d961b843b7e21fe22199aa8d37668"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source713-full-preparation-20261027-146/bundle/source-input.json",
+      "bytes": 187711,
+      "sha256": "19f813eccaac9b8c634d1bedb9a0d572e694a4b06dfd4f08a1d6dae3e09df4ab"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source713-full-preparation-20261027-146/bundle/source-preparation-carrier.py",
+      "bytes": 6365,
+      "sha256": "4c8747275d8f1008bebcf349df85b47f750fabdbaeee24cb824830e721586f54"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source713-full-preparation-20261027-146/bundle/source-preparation.mjs",
+      "bytes": 4697,
+      "sha256": "37f80d2a49c7be2f6ca84994506adb467985eaaf1f6f67daa7e9236bf506ed2e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source713-full-preparation-20261027-146/bundle/source-scope.json",
+      "bytes": 22315,
+      "sha256": "1cc0e9f3d6cf3fec93899c20679d3e2af6c27f7794b7971fae65203584fb5087"
+    }
+  ],
+  "checks": [
+    "Exact SOURCE713 threecomponent overlay bytes unchanged from145. Fresh146 copy from original145 sourcebase, application/provider/helper exactinstall0400+readback before originalpublicprovider call; fourCODEhelper15247/ada8 physicalrefs146.",
+    "Inverse only fourCODEphysicalpath/status +sales/settlement sourceRoot restores145input exactly; all logicalpins/79nonCODE/DATA/binding/auth/proofs retained. Scope inverseonlyinputref/outputroot/deadline restores145 exact artifactRows/sourceManifest/109keys/registration/date/chunk.",
+    "Original source-only call diagnosticMode null restores full source+typed preparation, no1000 stop. MJS differs from145 only jobroot/diagnosticMode argument; finephase/progress whitelist and STOP/noautoretry/errorredaction/wx receipts unchanged. No new profiling.",
+    "soft900 AbortController /child930/helper970 /PLANhard980 match original136 fullsource budgets, not newextension. deadline01:20Z and now+980<=deadline imply lateststart01:03:40Z. Dispatcher actual adoption remains C/T45 responsibility.",
+    "Original145 prior outputsparent mustexistandempty and originalregistrationabsent; fresh146 inputs/outputparent creation nooverwrite. Original145/136 evidence not rewritten.20container identities/images/running and routeCAS retained.",
+    "Full preparation success still requires originalstatus ORIGINAL_FULL_SOURCE_BINDINGS_PREPARED_NOT_EXECUTION_AUTHORIZED, process0 and executionReady/DBConnected/MAIN false. NoPG/MAIN/PUBLISH/applicationwrites/grant added. Failure remainsSTOP and originalphase/progress retained; this sourcePASS is not actualfullpreparePASS."
+  ],
+  "pythonSyntax": "PASS_COMPILE_ONLY_NO_EXECUTION",
+  "actualSourcePreparationRun": false,
+  "actualPerformanceMeasured": false,
+  "databaseOrRemoteAction": false,
+  "businessAcceptance": false,
+  "executionAuthorizedByReview": false,
+  "sourceChangedByQB": false,
+  "remaining": [
+    "C/T45 exactnewcarrier dispatch/window adoption and single original145 residuecheck; no replays if existingkey/output or unknown.",
+    "Collect complete originalfullprepare result/phase/progress within existingbudget; source-only success does not authorize PG/MAIN/publish."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

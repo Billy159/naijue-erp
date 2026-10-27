@@ -1,0 +1,35 @@
+{
+  "status": "PASS_TWO_DEFECT_TARGETED_OFFLINE_COUNTEREXAMPLES_NO_DB",
+  "checks": [
+    "immutable original8604/cc5f pin passes; current8622/88a0 differs only deadline; exact comparison accepts",
+    "00:24:38 to01:00Z >900 remaining accepted while worker limit300 and owner900 retained",
+    "port/role/ownerbudget/workerbudget/parentbudget drift all reject",
+    "at absolute cutoff rejects; with299remaining worker allowance299, no wait beyond cutoff",
+    "old OS-LIFECYCLE exact actual entry rejects BEFORE PREPOSITIONED_WAITING; no live files issued"
+  ],
+  "worker": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice437-syn-preposition-correction/review-syn-approved-purpose.py",
+    "bytes": 13375,
+    "sha256": "e4ec8d4395cead166c3fa7e780fc662a5ba45b69582e753a7fa4b94608823d64"
+  },
+  "config": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice437-syn-preposition-correction/QB437-REVIEW-CONFIGURATION.json",
+    "bytes": 4224,
+    "sha256": "b55bc51c0e0a2c1788108e2177d18f80bcc665fd68b80d0c708d0a56df2ce8af"
+  },
+  "originalFailure": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice436-syn-approved-purpose/QB436-LIVE-FAILURE.json",
+    "bytes": 145,
+    "sha256": "a978ca8ec574747c9e9dd9377a494208896082b182070a52e266da35dc36c9ee"
+  },
+  "originalLifecycle": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-APPROVED-ACTUAL-PREPARATION-20261027-01/OS-LIFECYCLE.json",
+    "bytes": 307,
+    "sha256": "eac2f05c28634655b900432d169c07d8290d830c3293d0cff293fee96f5a8bec"
+  },
+  "oldArtifactsPreserved": true,
+  "actualPG": false,
+  "actualPurposeIssued": false,
+  "actualGateIssued": false,
+  "successorActivation": "C/T45 new exact carrier binding required; this repair remains bound to terminal01 and cannot activate it"
+}

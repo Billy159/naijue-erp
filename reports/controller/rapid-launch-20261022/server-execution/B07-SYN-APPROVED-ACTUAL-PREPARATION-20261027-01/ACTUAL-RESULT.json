@@ -1,0 +1,49 @@
+{
+  "status": "TERMINAL_PREPOSITIONED_REVIEW_REFUSED_BEFORE_INITDB_NO_REPLAY",
+  "lifecycle": {
+    "status": "STOP_NEW_SYN_APPROVED_NO_REPLAY",
+    "old07Touched": false,
+    "automaticReplay": false,
+    "pgStarted": false,
+    "errorType": "AssertionError",
+    "reviewWorkerClosed": true,
+    "reviewWorkerExitCode": -15,
+    "finishedAtUtc": "2026-10-27T00:24:38.041613+00:00",
+    "elapsedSeconds": 0.117648792
+  },
+  "workerFailure": {
+    "status": "NO_REVIEW_ISSUED_BY_FAILED_ATTEMPT",
+    "reason": "EXACT_PIN_REQUIRED",
+    "automaticRetry": false,
+    "businessAcceptance": false
+  },
+  "actualStages": {
+    "workerPrepositioned": false,
+    "initdbAttempted": false,
+    "databaseCreated": false,
+    "pgStarted": false,
+    "schema19Publication": false,
+    "schema26Upgrade": false,
+    "normalSession": false,
+    "credentialGenerated": false,
+    "old07Touched": false
+  },
+  "residueReadback": {
+    "newDataAbsent": true,
+    "newSocketAbsent": true,
+    "newOutputAbsent": true
+  },
+  "blockingSeams": [
+    {
+      "where": "QB436 run(): prepared=pinned(cfg.preparedRegistrationRef)",
+      "fact": "config reference names live REGISTRATION.PREPARED path with old8604/cc5f; actual file8622/88a0 window-only update; exactpin fails before allowed deadline-difference comparison",
+      "necessaryFix": "QB bind original preserved snapshot or equivalent exact immutable baseline while separately checking actual current registration only deadline differs; do not drop pin guard"
+    },
+    {
+      "where": "QB436 run(): 0<deadline-now<=900 versus OS remaining>=900",
+      "fact": "Worker refuses a start earlier than latest-start while wrapper requires full900s remaining; shared exact boundary has no safe execution interval",
+      "necessaryFix": "Original QB align current window predicate with C absolute deadline and bounded900 owner/300worker lifetime; no blind increase or bypass"
+    }
+  ],
+  "next": "Original QB/C precise successor carrier/window adoption; preserve OSattempt/lifecycle and failure, no replay or fixture changes"
+}
