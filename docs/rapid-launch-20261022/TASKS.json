@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 758,
+    "round": 759,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation758",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation759",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -5085,7 +5085,7 @@
     },
     "backendActual": {
       "B07": "Synthetic actual03 PASS: original-key direct-service rollback23505, firstLedger/balance1, secondattempt1, rolledBacktrue/0commits. Prior normal sales/transfer HTTP PASS adopted not repeated. No credentials/login/CAS; ownPG and clients closed. Real source/browser/allroles/formal not tested.",
-      "R1": "152 FAILED2 at ORIGINAL_HOST_EVIDENCE_AND_RUNTIME_PREFLIGHT; same-instant PG/ISO cutoff textual mismatch proven; MAIN/PUBLISH false, original109 keys unchanged. OriginalD3 two-leaf strict equivalent-second fix delivered, scoped5PASS; QB affected review pending. No replay152/148.",
+      "R1": "158 first revised actual FAILED2/3.426807164s at preflight INPUT_CHANGED; prior cutoff guard passed. MAIN/PUBLISH false; old152/158 terminal retained, no replay; D3 read-only precise input capture diagnosis active.",
       "nativeProduct": "Actual COMPLETED0/2.323047074s, genuinepool and issuer/two identities/currentcanonical passed; original preflight BLOCKED_EXACT_PREFLIGHT with4actual data gaps: no current2026scheme, numeric3 enabledcolors unavailable, approvedfit unavailable, completecodedsizegroup unavailable.15queries/1rollback/0commit/DML/DDL/2acquired2released/live0. No4SAVE. Original D2 exact approvedsource and lawful initialization sequence preparation; publishednative189 cannot receive STAGED-onlyinitializer/rekey/fakecodes."
     },
     "roleQueue": {
@@ -14513,6 +14513,12 @@
       "next": "Actual158 preflight/full adopted148 checks/109 original-key continuation then publish result; do not infer success from grant",
       "businessAcceptance": false,
       "applicationSwitch": false
+    },
+    "currentContinuation759": {
+      "summary": "SOURCE759：修订158首次实际提交后FAILED2/3.427秒，08:18:34Z终态，预检新错误PRODUCTION_PROVIDER26_INPUT_CHANGED，已越过原CORE_DATA_REQUIRED，但MAIN/PUBLISH/stepjournal仍未执行。实际finalInput188613/ce1939fa，原grant76445b63采用；原T45回执保全，D3只读准确predicate与capture输入接线定位在途，禁止原样重158/152或重148、禁止改数据/hash绕过。既有回滚03实际PASS及两正常PASS保留。全站真实接线/性能/发布目标仍ACTIVE未完成。",
+      "owner": "D3 exact source diagnosis; T45 sole server owner evidence retained",
+      "next": "Evidence-based minimal wiring repair if proven; originalQB affected increment; bounded revised execution only",
+      "noDataOrHashBypass": true
     }
   },
   "historicalContinuation500Before716": {
