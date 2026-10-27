@@ -16196,6 +16196,31 @@
       "server": "OriginalT45 asked same201 watcherhandle/receipt live refresh if not already in-flight; no PG/privatejournal probe/restart/extra job. terminal success before downstream.",
       "github": "SOURCE8344a0f6f2a39842ca7084aa215fa45b83e6bfd9502 exactremoteverified; thisrecord pending sync",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation837": {
+      "status": "201_TERMINAL_FAILED_202_EXACT_PAYMENT_ABSENCE_CONFIRMED_NO_REPLAY",
+      "server201": {
+        "job": "t45-r1-post200-original108-continuation-20261028-201",
+        "resultSHA256": "dab7c073ee67c759ee6b937d40995bd8cffa9ec55654710cd65b155b65b652e5",
+        "result": "FAILED2/5546.591s/15036events/firstPAYMENT15037/42501/hostClosed/noMAIN-PUBLISH-APP",
+        "replayAllowed": false
+      },
+      "server202": {
+        "job": "t45-r1-201-payment-original-readonly-20261028-202",
+        "result": "COMPLETED0/0.919s/14SELECT/RRRO/rollback+closed actually read",
+        "durability": "First12PAYMENT_METHOD exactnative/source/binding12keys each absent in currentRR snapshot",
+        "prior": "BARCODE15018 insert events; PARTY515/CATALOGUE344 replay events; STAGED3/cursor22/BINDonly",
+        "rootCause": "UNKNOWN_DENIED_SQL_OBJECT_CONTEXT. Fivezero-rowprobes pass/allrequiredcolumnmetadata available. D1withdrawswhole-rowhypothesis; no speculativegrant.",
+        "next": "OriginalT45 limited retained error evidence availability, D1originalfunction/triggertrace; exactnewcarrier Cbound only, no writerreplay/PGfullscan"
+      },
+      "frontend": {
+        "source": "b2e6ffc6c36c90097a782abf03f49e452b71ffc7",
+        "F2": "matrix shortgroup surplus only sizes/fixed714budget; ownergeometrymock+scopedtscPASS; QF2SOURCE_DELTA_PASS received",
+        "F1_C": "sales-list server sum separate fromfooter; originaltransfer-current.css dependency restored in sales; sameexistingPagination footerflex",
+        "checks": "Integratedruntime tsc0; QFdocstyle pending; normal40 lacks836; noactualnewbrowserPASS"
+      },
+      "github": "SOURCE8344a0f6f2a39842ca7084aa215fa45b83e6bfd9502 remoteexactverified;835836thisrecord pending sync",
+      "goal": "ACTIVE incomplete37pages67overlays/allstates/realhistory/performance/formal"
     }
   },
   "historicalContinuation500Before716": {
