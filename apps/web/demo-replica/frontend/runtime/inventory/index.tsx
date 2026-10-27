@@ -5,6 +5,7 @@ import { createInventoryOutputReader } from '../../../../src/inventory/output-ad
 import { createInventoryLedgerHttpReader } from '../../../../src/inventory/ledger-http-reader.ts';
 import type { HttpQueryOptions } from '../../../../src/transport/http-query.ts';
 import { InventoryPage, type InventoryPageProps } from './page.tsx';
+export type { InventoryProductContext, InventoryQuerySnapshot } from './page.tsx';
 export type InventoryMountOptions=Omit<InventoryPageProps,'reader'|'outputReader'|'ledgerReader'|'productReader'>&{http:HttpQueryOptions};
 /** F1/C normal #inventory entry calls this once per existing route ReadScope.
  * It mounts only the original inventory body inside the original #page. */

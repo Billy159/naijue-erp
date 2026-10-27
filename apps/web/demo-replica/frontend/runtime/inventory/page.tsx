@@ -4,7 +4,8 @@ import type { InventoryCellTarget, InventoryFilter, InventoryParameters, Invento
 import type { InventoryLedgerReader, InventoryLedgerEntry } from '../../../../src/inventory/ledger-contracts.ts';
 import { createInventoryQuery, formatQuantity } from '../../../../src/inventory/model.ts';
 import type { ProductReadOnlyReader } from '../../../../src/inventory/product-contracts.ts';
-import type { ReadScope } from '../../../../src/loading/read-scope.ts';
+import type { ReadIdentity, ReadScope } from '../../../../src/loading/read-scope.ts';
+import { snapshotQueryParameters } from '../../../../src/loading/query-parameters.ts';
 import { HttpQueryError } from '../../../../src/transport/http-query.ts';
 import { CandidateSelect, SourceEmpty } from './candidates.tsx';
 import { InventoryMatrix, defaults, type DisplaySettings } from './matrix.tsx';
@@ -12,7 +13,15 @@ import { InventoryLedger } from './ledger.tsx';
 import { InventoryOutput } from './output.tsx';
 import { SourceDialog } from './dialog.tsx';
 import { Pagination } from './pagination.tsx';
+/** Session-local executed conditions only; contains no inventory result or credentials. */
+export interface InventoryQuerySnapshot {readonly identity:ReadIdentity;readonly parameters:InventoryParameters}
+export interface InventoryProductContext {readonly identity:ReadIdentity;readonly product:Selection;readonly previousQuery:InventoryQuerySnapshot|null}
+const sameIdentity=(a:ReadIdentity,b:ReadIdentity)=>a.accountId===b.accountId&&a.sessionRevision===b.sessionRevision&&a.permissionRevision===b.permissionRevision;
 export interface InventoryPageProps {
+ /** Keep this entry object stable for one route. A different object is a new product entry. */
+ productContext?:InventoryProductContext;
+ /** Successful executed range, or null when returning to the original idle state. */
+ onQueryApplied?:(snapshot:InventoryQuerySnapshot|null)=>void;
  scope:ReadScope;reader:InventoryReader;productReader:ProductReadOnlyReader;outputReader:InventoryOutputReader;ledgerReader:InventoryLedgerReader;ledgerDialog:HTMLDialogElement;
  onAccessFailure:(error:HttpQueryError)=>void;onViewProduct:(product:Selection)=>void;onOpenSource?:(entry:InventoryLedgerEntry)=>boolean|Promise<boolean>;
  createWorkbook:(rows:AsyncIterable<readonly string[]>,title:string,signal:AbortSignal)=>Promise<Uint8Array<ArrayBuffer>>;
@@ -22,18 +31,24 @@ const blank=():Draft=>({products:null,categories:null,warehouses:null,suppliers:
 const names:Record<keyof InventoryFilter,string>={products:'商品',categories:'商品分类',warehouses:'仓库',suppliers:'供应商',fits:'版型',seasons:'季节'};
 const fields=[['products','product','商品','inventory-arco-select','iw-product-field'],['categories','category','商品分类','inventory-arco-category','iw-field'],['warehouses','warehouse','仓库','inventory-arco-warehouses','iw-field iw-warehouse-field']] as const;
 const extras=[['suppliers','supplier','供应商'],['fits','fit','版型'],['seasons','season','季节']] as const;
+const asDraft=(filter:InventoryFilter):Draft=>Object.fromEntries(Object.entries(filter).map(([key,value])=>[key,value.length?value:null])) as Draft;
 const asFilter=(draft:Draft):InventoryFilter=>Object.fromEntries(Object.entries(draft).map(([key,value])=>[key,value??[]])) as unknown as InventoryFilter;
 const label=(filter:InventoryFilter,key:keyof InventoryFilter,warehouses:readonly string[])=>key==='warehouses'?warehouses.join('、')||'无可用仓库':filter[key].map(x=>x.label).join('、')||'全部'+names[key];
 /** Accepted inventory-workbench body, with local React events and existing read models. */
 export function InventoryPage(p:InventoryPageProps){
- const [query]=useState(()=>createInventoryQuery(p.scope,p.reader));const state=useSyncExternalStore(query.subscribe,query.getSnapshot,query.getSnapshot);
+ const [query,setQuery]=useState(()=>createInventoryQuery(p.scope,p.reader));const state=useSyncExternalStore(query.subscribe,query.getSnapshot,query.getSnapshot);
  const [draft,setDraft]=useState<Draft>(blank),[more,setMore]=useState(false),[settings,setSettings]=useState<DisplaySettings>(defaults),[localError,setLocalError]=useState(''),[pageSize,setPageSize]=useState<100|200|500>(100);
  const [foldProducts,setFoldProducts]=useState<ReadonlySet<string>>(new Set()),[foldColors,setFoldColors]=useState<ReadonlySet<string>>(new Set());
  const [popover,setPopover]=useState<{kind:'settings'|'scope';anchor:HTMLElement}|null>(null),[choice,setChoice]=useState<readonly InventoryCellTarget[]|null>(null),[ledger,setLedger]=useState<InventoryCellTarget|null>(null),[output,setOutput]=useState<'export'|'print'|null>(null);
  const viewport=useRef<HTMLDivElement>(null),lastSuccess=useRef('');const success=state.success,data=success?.data,busy=state.phase==='loading';
  const dirty=!!success&&JSON.stringify(asFilter(draft))!==JSON.stringify(success.parameters.filter)||Object.entries(draft).some(([key,value])=>key!=='products'&&value?.length===0);
+ const [originalQuery,setOriginalQuery]=useState<{parameters:InventoryParameters|null}|null>(null);const handledContext=useRef<InventoryProductContext|null>(null),reportedSuccess=useRef<typeof success>(null);
  const mounted=useRef(false);useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;query.cancel();queueMicrotask(()=>{if(!mounted.current)query.dispose();});};},[query]);
  useEffect(()=>{if(state.phase==='error'&&state.error instanceof HttpQueryError&&(state.error.kind==='forbidden'||state.error.kind==='unauthenticated')){p.onAccessFailure(state.error);p.scope.dispose();}},[state]);
+ // Defer entry until after StrictMode's cleanup/setup replay, so only the live mount reads.
+ useEffect(()=>{const entry=p.productContext;let live=true;queueMicrotask(()=>{if(!live||!entry||handledContext.current===entry||!p.scope.active)return;handledContext.current=entry;if(!sameIdentity(entry.identity,p.scope.identity))return;const previous=entry.previousQuery&&sameIdentity(entry.previousQuery.identity,p.scope.identity)?snapshotQueryParameters(entry.previousQuery.parameters):null;setOriginalQuery({parameters:previous});const parameters:InventoryParameters={filter:{...asFilter(blank()),products:[{...entry.product}]},page:1,pageSize:previous?.pageSize??100};setDraft({...blank(),products:parameters.filter.products});setPageSize(parameters.pageSize);setLocalError('');void query.run(parameters);});return()=>{live=false;};},[p.productContext,query,p.scope]);
+ useEffect(()=>{if(!success||reportedSuccess.current===success||!p.scope.active)return;reportedSuccess.current=success;p.onQueryApplied?.(Object.freeze({identity:p.scope.identity,parameters:success.parameters}));},[success,p.onQueryApplied,p.scope]);
+ const returnToOriginal=()=>{if(!originalQuery||!p.scope.active)return;const parameters=originalQuery.parameters;setOriginalQuery(null);setLocalError('');setPopover(null);if(parameters){setDraft(asDraft(parameters.filter));setPageSize(parameters.pageSize);void query.run(parameters);}else{query.dispose();setQuery(createInventoryQuery(p.scope,p.reader));setDraft(blank());setPageSize(100);p.onQueryApplied?.(null);}};
  useLayoutEffect(()=>{if(!success)return;const signature=JSON.stringify(success.parameters);if(signature!==lastSuccess.current){lastSuccess.current=signature;viewport.current?.scrollTo({top:0,left:0});setFoldProducts(new Set());setFoldColors(new Set());}},[success]);
  const run=(parameters?:InventoryParameters)=>{setPopover(null);if(!parameters){const empty=(Object.keys(draft) as (keyof Draft)[]).find(key=>key!=='products'&&draft[key]?.length===0);if(empty){setLocalError('请至少选择一个'+names[empty]);return;}parameters={filter:asFilter(draft),page:1,pageSize};}setLocalError('');void query.run(parameters);};
  const toggle=(set:React.Dispatch<React.SetStateAction<ReadonlySet<string>>>,id:string)=>set(old=>{const next=new Set(old);next.has(id)?next.delete(id):next.add(id);return next;});
@@ -41,7 +56,7 @@ export function InventoryPage(p:InventoryPageProps){
  const showCell=(targets:readonly InventoryCellTarget[])=>{if(targets.length===1)setLedger(targets[0]!);else if(targets.length>1)setChoice(targets);};
  const quantity=ledger&&data?.products.find(x=>x.id===ledger.productId)?.colorFits.find(x=>x.color.id===ledger.color.id&&x.fit.id===ledger.fit.id)?.rows.find(x=>x.warehouse.id===ledger.warehouse.id)?.cells[ledger.size.id];
  if(state.phase==='disposed'||!p.scope.active)return null;
- return <><div className="iw-workbench"><div className="gold-head iw-head"><h1>库存状况表</h1><div className="actions iw-head-actions"><button className="btn iw-head-action" disabled={!data||busy} onClick={()=>setOutput('export')}>导出</button><button className="btn iw-head-action" disabled={!success||busy} onClick={()=>success&&run(success.parameters)}>刷新</button><button className="btn iw-head-action" disabled={!data||busy} onClick={()=>setOutput('print')}>打印</button></div></div>
+ return <><div className="iw-workbench"><div className="gold-head iw-head"><h1>库存状况表</h1><div className="actions iw-head-actions">{originalQuery&&<button className="btn iw-head-action" onClick={returnToOriginal}>返回原查询</button>}<button className="btn iw-head-action" disabled={!data||busy} onClick={()=>setOutput('export')}>导出</button><button className="btn iw-head-action" disabled={!success||busy} onClick={()=>success&&run(success.parameters)}>刷新</button><button className="btn iw-head-action" disabled={!data||busy} onClick={()=>setOutput('print')}>打印</button></div></div>
  <section className="iw-query"><div className="iw-query-row">{fields.map(([key,kind,caption,id,className])=>field(key,kind,caption,id,className))}<div className="iw-query-actions"><button className="btn iw-filter-toggle" aria-expanded={more} aria-controls="iw-extra" onClick={()=>setMore(x=>!x)}><span className="iw-filter-icon" aria-hidden>☷</span>{more?'收起筛选':'高级筛选'}<span aria-hidden>{more?'▴':'▾'}</span></button><button className="btn primary iw-query-button" disabled={busy} onClick={()=>run()}>查询</button><button className="btn iw-reset" onClick={()=>{setDraft(blank());setLocalError('');}}>重置</button></div></div>{more&&<div className="iw-extra" id="iw-extra">{extras.map(([key,kind,caption])=>field(key,kind,caption,'inventory-arco-'+key,'iw-extra-field'))}</div>}<div id="iw-draft-note" className={'iw-query-note'+(dirty?' iw-pending':'')}>{dirty?'条件已修改，点击“查询”更新结果。':''}</div></section>
  <div className="iw-result-tools"><div className="iw-stats"><span className="iw-stats-label">{busy?'正在查询':data?'查询结果':'等待查询'}</span><span>{busy?'正在更新库存结果…':data?<>{data.exactTotalProducts.toLocaleString('zh-CN')} 款商品 · {data.warehouseLabels.length} 个仓库 · 库存 <strong>{formatQuantity(data.allMatchesTotal.knownQuantity)}</strong></>:'选择筛选条件后点击查询'}</span>{data&&!busy&&<button className="btn iw-scope-link" title="查看本次查询使用的条件" onClick={e=>setPopover({kind:'scope',anchor:e.currentTarget})}>查看范围</button>}</div><div className="actions">{data&&!busy&&<button className="btn iw-plain-action" onClick={()=>setFoldProducts(old=>old.size===data.products.length?new Set():new Set(data.products.map(x=>x.id)))}>{foldProducts.size===data.products.length?'展开':'折叠'}</button>}<button className="btn iw-plain-action" onClick={e=>setPopover({kind:'settings',anchor:e.currentTarget})}>显示设置</button></div></div>
  {(localError||state.phase==='error')&&<div className="iw-state iw-error" role="alert">{localError||'库存读取失败，请重试。'}{state.phase==='error'&&<button className="btn" onClick={()=>state.request&&run(state.request.parameters)}>重试</button>}{data?'　仍显示上一次查询结果。':''}</div>}

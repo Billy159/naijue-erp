@@ -12,7 +12,7 @@ import type { ProductionHostConfiguration } from '../../../../src/production-hos
 import type { CatalogueRuntimeOptions } from '../catalogue/entry.tsx';
 import type { CatalogueCommandSession } from '../catalogue/session.ts';
 import type { CatalogueMaintenanceCommand } from '../../../../src/product-settings/catalogue-maintenance-http-client.ts';
-import type { InventoryMountOptions } from '../inventory/index.tsx';
+import type { InventoryMountOptions, InventoryProductContext, InventoryQuerySnapshot } from '../inventory/index.tsx';
 import type { StoreMaintenanceWorkspace } from '../../../../src/settings/stores/maintenance-controller.ts';
 import type { PartyWorkspace } from '../../../../src/parties/controller.ts';
 import type { StaffSettingsWorkspace } from '../../../../src/staff-settings/controller.ts';
@@ -48,6 +48,29 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
   let salesViewScope: ReadScope | null = null;
   let transfers:ReplicaTransferSession|null=null,transferView:TransferListViewState|null=null;
   let transferViewScope: ReadScope | null = null;
+  let inventoryContextScope: ReadScope | null = null;
+  let inventoryQuery: InventoryQuerySnapshot | null = null;
+  let inventoryProductContext: InventoryProductContext | null = null;
+  const inventoryContextOwner = () => {
+    if (!inventoryContextScope?.active) {
+      inventoryQuery = null; inventoryProductContext = null;
+      inventoryContextScope = session.reads.createScope('replica-inventory-query-context');
+      const contextOwner = inventoryContextScope;
+      contextOwner.signal.addEventListener('abort', () => {
+        if (inventoryContextScope === contextOwner) {
+          inventoryQuery = null; inventoryProductContext = null; inventoryContextScope = null;
+        }
+      }, { once: true });
+    }
+    return inventoryContextScope;
+  };
+  const openProductInventory = (scope: ReadScope, product: InventoryProductContext['product']) => {
+    if (!scope.active) return false;
+    const contextOwner = inventoryContextOwner();
+    inventoryProductContext = snapshotQueryParameters({ identity: contextOwner.identity, product, previousQuery: inventoryQuery });
+    navigate('inventory');
+    return true;
+  };
   const productRecovery = new Map<string | null, ProductMaintenanceCommand>();
   let catalogue: CatalogueCommandSession | undefined;
   // Invalidated identities retain their exact unresolved command for handoff;
@@ -139,6 +162,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     if (route === 'inventory' && config.inventory) {
       const module = await import('../inventory/index.tsx');
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
+      const contextOwner = inventoryContextOwner(), productContext = inventoryProductContext;
       const marker='inventory-product:'+scope.routeInstanceId;
       const activation=createInventoryProductActivation({scope,host,load:async mode=>{
         const [drawer,reader]=await Promise.all([loadInventoryProductDrawerModule(mode),import('../../../../src/transport/product-http-reader.ts'),import('../../runtime-styles.ts').then(styles=>styles.prepareInventoryProductDrawerStyles(scope.signal))]);
@@ -150,7 +174,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
         if(state.phase==='error'&&state.retry){const retry=host.ownerDocument.createElement('button');retry.type='button';retry.className='btn';retry.textContent='重试';retry.onclick=state.retry;toast.append(' ',retry);}
       }});
       let release:()=>void;
-      try{release=module.mountInventoryPage(host,{...options.inventory,scope,http,onAccessFailure:session.onAccessFailure,onViewProduct:product=>{void activation.open(product);}});}catch(error){activation.dispose();throw error;}
+      try{release=module.mountInventoryPage(host,{...options.inventory,scope,http,...(productContext?{productContext}:{}),onQueryApplied:snapshot=>{if(scope.active&&contextOwner.active)inventoryQuery=snapshotQueryParameters(snapshot);},onAccessFailure:session.onAccessFailure,onViewProduct:product=>{void activation.open(product);}});inventoryProductContext=null;}catch(error){activation.dispose();throw error;}
       return {dispose:()=>{activation.dispose();release();},canLeave:()=>true};
     }
     if (route === 'products' && config.products) {
@@ -185,7 +209,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       };
       const dispose = module.mountProductEditor(host, { parent: scope, productId, capability, http,
         catalogueOptions: { onChanged: options.catalogue.onChanged, ...(catalogueSession ? { maintenance: catalogueSession.maintenance, commandOwners: catalogueSession.commandOwners } : {}), scope, http, catalogue: catalogueReaders.createCatalogueSettingsHttpReader(http), dictionaries: dictionary, renderPager: helpers.renderOriginalPager, categoryControlCss: helpers.originalCategoryControlCss, mountEmpty: helpers.mountOriginalEmpty, onAccessFailure: access, onCanLeaveChange: value => { inlineGuard = value; } },
-        onAccessFailure: session.onAccessFailure, onCanLeaveChange: value => { guard = value; }, onClose: () => handoff('products'), onSaved: id => handoff('products/view/' + encodeURIComponent(id)),
+        onAccessFailure: session.onAccessFailure, onCanLeaveChange: value => { guard = value; }, onOpenInventory: async product => openProductInventory(scope, product), onClose: () => handoff('products'), onSaved: id => handoff('products/view/' + encodeURIComponent(id)),
       });
       return { dispose, canLeave: () => (guard?.() ?? true) && (inlineGuard?.() ?? true) };
     }
@@ -200,7 +224,7 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
         composed = { ...reader, barcodes: { ...reader.barcodes, schemeReader: { readBarcodeScheme: createDictionaryHttpReader(http).readBarcodeScheme } } };
       }
       if (!scope.active) return { dispose: () => {}, canLeave: () => true };
-      return { dispose: await module.mountProductDetail(host, { scope, http, product: { id, label: id }, reader: composed, onAccessFailure: session.onAccessFailure, onOpenInventory: () => navigate('inventory'), close: () => navigate('products') }), canLeave: () => true };
+      return { dispose: await module.mountProductDetail(host, { scope, http, product: { id, label: id }, reader: composed, onAccessFailure: session.onAccessFailure, onOpenInventory: product => openProductInventory(scope, product), close: () => navigate('products') }), canLeave: () => true };
     }
     if ((route === 'product-categories' && config.productCategories) || (route === 'product-settings' && config.productSettings) || (route === 'barcode-schemes' && config.barcodeSchemes)) {
       const [module, helpers] = await Promise.all([import('../catalogue/entry.tsx'), import('./source-helpers.tsx')]);
@@ -262,5 +286,5 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
       throw new Error('此页面尚未接入当前版本。');
     } catch (error) { release(); throw error; }
   }
-  return { mount, hasUnresolvedWrite: unresolved, retainedCatalogueCommands: () => [...catalogueRecovery.values()], dispose: () => { salesViewScope?.dispose();salesViewScope=null;salesView=null;transferViewScope?.dispose();transferViewScope=null;transferView=null;catalogue?.dispose();catalogue=undefined;transfers?.dispose();transfers=null;sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
+  return { mount, hasUnresolvedWrite: unresolved, retainedCatalogueCommands: () => [...catalogueRecovery.values()], dispose: () => { inventoryContextScope?.dispose();salesViewScope?.dispose();salesViewScope=null;salesView=null;transferViewScope?.dispose();transferViewScope=null;transferView=null;catalogue?.dispose();catalogue=undefined;transfers?.dispose();transfers=null;sales?.dispose(); sales = null; owner?.dispose(); owner = null; } };
 }
