@@ -6705,5 +6705,24 @@
       "apps/web/src/current-form/sales-proposal.test.ts"
     ],
     "boundary": "Trace current draft display/add guards vs frozenDemo and approved exact money/save contract; fix same-root UI-only differences if no contract change. Blank unused draft rows must not erase valid known payment display; invalid nonempty money remains explicit unknown/error. Preserve original write validation/real account refs/idempotency/transaction. Do not infer zero or silently remove incomplete saved rows. Extra leaves/contracts require C review before mutation."
+  },
+  "inventorySticky835": {
+    "owner": "F2",
+    "model": "gpt-6.1-sol/medium",
+    "issue": "N34-I01-STICKY-01",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/inventory/matrix.tsx",
+      "apps/web/demo-replica/frontend/runtime/inventory/inventory-runtime.test.mjs"
+    ],
+    "boundary": "Trace measured probe/colgroup/sticky offsets and original final effective Demo styles. Fix matrix geometry while retaining windowing, canonical data/sums/identity. No global CSS changes; send exact style seam requirement to C if needed before mutation. Additional test/source leaf registered before write. No build/DB/Git/Demo writes."
+  },
+  "salesListStructure835": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/medium",
+    "issue": "N34-S01-01",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/documents/sales-list.tsx"
+    ],
+    "boundary": "Original fullDemo sales-list structure/action placement and semantics on normal entry, preserve current authorized reader/paging/total/sum and callbacks. Do not remove approved summary; classify separately. Shared CSS/pager unique owner C; report seam before changes, no other leaves without registration. Mixed markup/events technical work Sol-medium."
   }
 }
