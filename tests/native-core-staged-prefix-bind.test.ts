@@ -3,7 +3,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { verifyCoreStagedPrefix22, captureCoreStagedPrefixBinding22, CORE_PREFIX_GROUPS22 } from "../adapters/postgres/src/native-core-staged-prefix-bind.ts";
+import { verifyCoreStagedPrefix22, verifyCommittedCoreStagedPrefix22, captureCoreStagedPrefixBinding22, CORE_PREFIX_GROUPS22 } from "../adapters/postgres/src/native-core-staged-prefix-bind.ts";
 import type { CoreStagedPrefixExpected22 } from "../adapters/postgres/src/native-core-staged-prefix-bind.ts";
 import { NATIVE_RUNTIME26_V20_METADATA_PROBE, NATIVE_RUNTIME26_V22_METADATA_PROBE } from "../adapters/postgres/src/native-import-accounting-capability.ts";
 import { historyClosureProjectionRow26, historyClosureProjectionSpec26 } from "../packages/application/src/history-typed-closure.ts";
@@ -50,6 +50,58 @@ test("v22 compares complete eight-table and original SKU-record projections usin
  const f=fixture(),proof=await f.verify();assert.equal(proof.groups.length,6);assert.equal(proof.skuRecords.rows,1);assert.equal(proof.groups[5]!.typed.rows,6);assert.equal(proof.groups[5]!.source.rows,0);
  assert.ok(f.calls.every(s=>s.startsWith("/* core-prefix22:")));assert.ok(f.calls.every(s=>!/(?:INSERT|UPDATE|DELETE|COMMIT|BEGIN|ROLLBACK|FOR SHARE|FOR UPDATE)/.test(s)));
  assert.deepEqual(proof.binding,f.expected.binding);assert.ok(!("capture" in proof));
+});
+
+function currentClient(f: ReturnType<typeof fixture>) {
+ const calls:string[]= []; let pending:HistoryClosureRow[]|null=null;
+ const entities:Record<string,string[]>={HEADERS:["SALES_HEADER","TRANSFER_HEADER"],TRANSFER_LINES:["TRANSFER_LINE"],PRODUCTS:["PRODUCT"],SKUS:["SKU"],STOCK_CONTRIBUTORS:["INVENTORY_BASELINE"],SCHEMES:["BARCODE"]};
+ const relations:Record<string,string[]>={HEADERS:["history_sales_header","history_transfer_header"],TRANSFER_LINES:["history_transfer_line"],PRODUCTS:["product"],SKUS:["import_sku_alias","sku"],STOCK_CONTRIBUTORS:["import_stock_contributor"],SCHEMES:["barcode_scheme"],SKU_RECORDS:["import_record"]};
+ const client={async query(sql:string,values:unknown[]=[]):Promise<any>{
+  calls.push(sql);const declared=/core-prefix22:current:([A-Z_]+):(source|typed)/.exec(sql);
+  if(declared){
+   assert.equal(pending,null);const group=declared[1]!,source=declared[2]==="source";
+   assert.ok(sql.includes("NO SCROLL CURSOR FOR SELECT"));assert.ok(!/batch_id\s*=|import_batch_id\s*=/.test(sql));
+   assert.deepEqual(values,source?[entities[group]]:[]);
+   pending=[...f.actual.values()].filter(row=>source?row.relation==="import_source_row"&&entities[group]!.includes((row.projection as any).entity_type):relations[group]!.includes(row.relation))
+    .sort((a,b)=>Buffer.compare(Buffer.from(a.relation+"\0"+a.key),Buffer.from(b.relation+"\0"+b.key)));
+   return{rows:[],rowCount:0};
+  }
+  if(sql==="FETCH FORWARD 128 FROM core_prefix22_current"){
+   assert.ok(pending);const rows=pending.splice(0,128).map(row=>structuredClone(row));return{rows,rowCount:rows.length};
+  }
+  assert.equal(sql,"CLOSE core_prefix22_current");assert.deepEqual(pending,[]);pending=null;return{rows:[],rowCount:0};
+ },release(){throw Error("Original transaction owns lease");}};
+ return{client,calls};
+}
+test("committed prefix reads complete current seven sets with original codec and bounded same-client cursor",async()=>{
+ const f=fixture();const original=f.sourceLists[0]![0]!;
+ for(let i=0;i<130;i++){
+  const row={...structuredClone(original),key:id(1000+i)};(row.projection as any).id=row.key;
+  f.sourceLists[0]!.push(row);f.actual.set(row.relation+":"+row.key,row);
+ }
+ const proof=await f.verify(),c=currentClient(f);
+ const read=await verifyCommittedCoreStagedPrefix22(c.client,proof,{...proof.binding,cutoffAt:"2026-10-01T00:00:00.123456+00:00"});
+ assert.deepEqual(read,proof);assert.notEqual(read,proof);
+ assert.equal(c.calls.filter(sql=>sql.startsWith("/* core-prefix22:current:")).length,13);
+ assert.equal(c.calls.filter(sql=>sql==="FETCH FORWARD 128 FROM core_prefix22_current").length,14);
+ assert.ok(c.calls.every(sql=>!/(?:INSERT|UPDATE|DELETE|COMMIT|BEGIN|ROLLBACK|GRANT)/.test(sql)));
+});
+test("committed prefix rejects extra missing and changed members without deriving expected roots from actual rows",async t=>{
+ for(const kind of ["extra","missing","field","sku-record","stock-link"]){await t.test(kind,async()=>{
+  const f=fixture(),proof=await f.verify();
+  const row=[...f.actual.values()].find(r=>r.relation===(kind==="sku-record"?"import_record":kind==="stock-link"?"import_stock_contributor":"product"))!;
+  if(kind==="missing")f.actual.delete(row.relation+":"+row.key);
+  else if(kind==="extra"){const extra={...structuredClone(row),key:id(999)};(extra.projection as any).id=extra.key;f.actual.set(extra.relation+":"+extra.key,extra);}
+  else (row.projection as any)[kind==="sku-record"?"decision_reason":kind==="stock-link"?"baseline_ledger_id":"name"]="CHANGED";
+  await assert.rejects(verifyCommittedCoreStagedPrefix22(currentClient(f).client,proof,proof.binding),{code:"CORE_STAGED_PREFIX_MISMATCH"});
+ });}
+});
+test("committed prefix rejects binding and malformed audit proof before reading current data",async()=>{
+ const f=fixture(),proof=await f.verify();
+ for(const mutate of [(p:any)=>{p.binding.commandHash="0".repeat(64);},(p:any)=>{p.groups[0].source.rows=0;},(p:any)=>{p.groups.reverse();},(p:any)=>{p.preparation.extra=true;}]){
+  const changed=structuredClone(proof);mutate(changed);const c=currentClient(f);
+  await assert.rejects(verifyCommittedCoreStagedPrefix22(c.client,changed,proof.binding),{code:"CORE_STAGED_PREFIX_MISMATCH"});assert.equal(c.calls.length,0);
+ }
 });
 test("v22 rejects real member full-field drift in every admitted table, including SKU record review identity",async t=>{
  for(const relation of ["history_sales_header","history_transfer_header","history_transfer_line","product","sku","barcode_scheme","import_sku_alias","import_stock_contributor","import_record"]){await t.test(relation,async()=>{const f=fixture(),r=[...f.actual.values()].find(x=>x.relation===relation)!;const p=r.projection as Record<string,unknown>;if(relation==="import_record")p.decision_reason="OTHER";else if(relation==="import_stock_contributor")p.signed_quantity="-7";else if(relation==="import_sku_alias")p.mapping_basis="OTHER";else if(relation==="barcode_scheme")p.name="OTHER";else p.version=99;await assert.rejects(f.verify());});}

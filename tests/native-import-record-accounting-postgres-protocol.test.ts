@@ -256,8 +256,18 @@ for(const [name,actions,warehouseCount,skuCount]of [
   ["unknown PUBLISH already committed original receipt",["init","bind","complete","publish"],53,1]
 ] as const)test(`carry-forward continuation ${name} reads the exact committed chain without writes`,async()=>{
   const f=carryFixture(actions),r=await readCarry(f);assert.deepEqual(r.checkpoint,f.checkpoint);assert.equal(r.coreClaims.length,22);assert.equal(r.coreWarehouses.length,22);
+  assert.equal(r.stagedPrefixProof22,null);
   assert.equal(r.warehouses.length,warehouseCount);assert.equal(r.claims.filter(c=>c.targetType==="SKU").length,skuCount);assert.equal(r.committedOperations.length,actions.length);
   assert.equal(r.status,actions.some(a=>a==="publish")?"IMPORTED":"STAGED");
+});
+test("carry-forward refuses malformed committed prefix before ACCOUNT but does not compare historical roots after ACCOUNT",async()=>{
+  const f=carryFixture(["init","bind"]);
+  f.rows.forEach(row=>{(row as Record<string,unknown>).cutoff_at=accountingTime;});
+  (f.operations[1]!.after_values as Record<string,unknown>).stagedPrefixProof={version:"CORE_STAGED_PREFIX_BIND_V22"};
+  await assert.rejects(readCarry(f),{code:"CORE_STAGED_PREFIX_MISMATCH"});
+  const accounted=carryFixture(["init","bind","warehouse"]);
+  (accounted.operations[1]!.after_values as Record<string,unknown>).stagedPrefixProof={version:"CORE_STAGED_PREFIX_BIND_V22"};
+  assert.equal((await readCarry(accounted)).stagedPrefixProof22,null);
 });
 test("carry-forward continuation rejects missing chain conflicting source duplicate claim and changed full hash",async()=>{
   for(const mutate of [(f:ReturnType<typeof carryFixture>)=>{f.operations.splice(1,1);},(f:ReturnType<typeof carryFixture>)=>{f.claims.at(-1)!.source_ok=false;},

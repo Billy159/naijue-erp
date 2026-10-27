@@ -16,6 +16,8 @@ import type { NativeAccountingBaselineItem, NativeAccountingMembershipItem, Nati
   NativeImportRecordClaim, NativeStockContributorObservation, NativeStockEffectiveGroupObservation } from "../../../packages/application/src/native-import-record-accounting.ts";
 import { jsonObject, stringValue } from "./codec.ts";
 import type { PgSalesClient, PgSalesResult } from "./sales-unit-of-work.ts";
+import { verifyCommittedCoreStagedPrefix22 } from "./native-core-staged-prefix-bind.ts";
+import type { CoreStagedPrefixProof22 } from "./native-core-staged-prefix-bind.ts";
 
 export interface NativeRecordAccountingTransaction {
   /** MAIN original command; its hash includes accountingVersion and every nativeRecord. */
@@ -455,6 +457,7 @@ export async function claimNativeCoreWarehouseRecords(client: PgSalesClient,
 }
 
 export interface NativeCoreContinuationReadback {
+  readonly stagedPrefixProof22: CoreStagedPrefixProof22 | null;
   readonly checkpoint: unknown; readonly claims: readonly NativeImportRecordClaim[]; readonly warehouses: readonly CoreWarehouseItem[];
   readonly coreClaims: readonly NativeImportRecordClaim[]; readonly coreWarehouses: readonly CoreWarehouseItem[];
   readonly fullBinding: Readonly<Record<string,unknown>> | null; readonly status: string; readonly actorAccountId: string;
@@ -471,6 +474,7 @@ export async function readNativeCoreWarehouseCarryForward(client: PgSalesClient,
   check(/^[a-f0-9]{64}$/.test(binding.coreSourceDigest), "Original CORE input digest required");
   await checkedNativeRuntime26Capability(runtime26)!.assertReady(client, "IMPORT_STAGE");
   const rows = (await client.query(`/* native-core:carry-forward */ SELECT b.checkpoint,b.status,b.source_name,b.source_hash,b.source_manifest_ref,b.history_payload_hash,
+    to_char(b.cutoff_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS cutoff_at,
     r.actor_account_id::text AS core_actor,a.after_values->'checkpoint' AS core_checkpoint,
     c.import_batch_id,c.import_record_id,c.target_type,c.target_id,c.operation_id,c.checkpoint_sequence,
     rec.source_entity_type,rec.source_key,rec.source_record_hash,rec.source_file_ref,e.warehouse_record
@@ -614,6 +618,20 @@ export async function readNativeCoreWarehouseCarryForward(client: PgSalesClient,
   check(requestHash(previous)===requestHash(checkpoint)&&usedClaims.size===claims.length
     && (fullBinding!==null||first.history_payload_hash===null)&&published===(first.status==="IMPORTED")
     &&first.status===(committedOperations.at(-1)?.result.status??"STAGED"),"Current batch must equal the proven chain; missing/future/conflicting links are forbidden");
-  return {checkpoint:structuredClone(checkpoint),claims,warehouses,coreClaims,coreWarehouses,fullBinding,status:stringValue(first.status),actorAccountId:stringValue(first.core_actor),
+  let stagedPrefixProof22: CoreStagedPrefixProof22 | null = null;
+  const bind = operations.find(row=>row.action==="IMPORT_BIND_FULL_SOURCE");
+  const originalPrefix = bind ? jsonObject(bind.after_values).stagedPrefixProof : undefined;
+  if (first.status==="STAGED" && !operations.some(row=>row.action==="IMPORT_CHUNK"||row.action==="IMPORT_PUBLISH") && originalPrefix!==undefined) {
+    stagedPrefixProof22 = await verifyCommittedCoreStagedPrefix22(client, originalPrefix, {
+      batchId:binding.batchId,actorAccountId:stringValue(first.core_actor),fixedSourceNamespace:stringValue(first.source_name),
+      selectionSha256:stringValue(first.source_hash),cutoffAt:stringValue(first.cutoff_at),commandHash:stringValue(bind!.request_hash)
+    });
+    const init=operations.find(row=>row.id===stagedPrefixProof22!.schemeInitialization.operationId);
+    check(init?.action==="IMPORT_INITIALIZE_BARCODE_SCHEMES" && init.request_key===stagedPrefixProof22.schemeInitialization.requestKey
+      &&init.request_hash===stagedPrefixProof22.schemeInitialization.requestHash
+      &&requestHash(jsonObject(jsonObject(init.after_values).schemeInitialization).approvalPins)===requestHash(stagedPrefixProof22.schemeInitialization.approvalPins),
+      "Committed prefix must retain the original paired scheme initialization");
+  }
+  return {stagedPrefixProof22,checkpoint:structuredClone(checkpoint),claims,warehouses,coreClaims,coreWarehouses,fullBinding,status:stringValue(first.status),actorAccountId:stringValue(first.core_actor),
     fixedSourceNamespace:stringValue(first.source_name),selectionSha256:stringValue(first.source_hash),committedOperations,records};
 }

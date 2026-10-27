@@ -135,6 +135,17 @@ export function selectProductionContinuation26({binding,commands,progress}){
 /** Only already-claimed native memberships have a current original target/
  * source/record proof here. Other STAGE rows are deliberately not guessed from
  * a count or discarded from the full closure. Call after genuine authorization. */
+/** Only a source-bound, current committed-prefix proof selects this path.
+ * Stock still runs its original authorization to populate ACCOUNT source facts. */
+export async function* pendingProductionStageRows26({group,readRows,proved,authorize}){
+ if(proved){
+  must(['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS'].includes(group),'PRODUCTION_PREFIX22_CONTINUATION');
+  if(group!=='STOCK_CONTRIBUTORS')return;
+  for await(const payload of readRows())must(await authorize(payload)===undefined,'PRODUCTION_PROVIDER26_AUTHORITY_RESULT');
+  return;
+ }
+ yield* readRows();
+}
 export function unclaimedNativeStage26({group,payload,progress}){
  if(!['PARTIES','SKUS'].includes(group))return payload;
  const records=progress.records??[],prove=(source,targetType,targetId,record)=>{
@@ -174,7 +185,7 @@ export function createProductionSourceProvider26(inputs,authority){return create
 function createOriginalProductionSources26(inputs,{authority,sourcePreparation}){
  capture(inputs);const fixed=structuredClone(inputs),inputDigest=capture(fixed);
  const a=sourcePreparation?null:methods(authority,['verifyInputs','assertGroupAllowed','assertExecutionAllowed','authorizeStep','assertAllowed','authorizeNativeCommand',
-  'openRetained','capturedOptions','openRetainedClosure','coreProjection','mainCommands','authorizeProductSource','close','now',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedClosure']:[]),...(Object.hasOwn(fixed,'stagedPrefixBinding26')?['captureStagedPrefixBinding26']:[])]);
+  'openRetained','capturedOptions','openRetainedClosure','coreProjection','mainCommands','authorizeProductSource','close','now',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedClosure']:[]),...(Object.hasOwn(fixed,'stagedPrefixBinding26')?['captureStagedPrefixBinding26','assertStagedPrefixContinuation26']:[])]);
  must(fixed.version==='PRODUCTION_SOURCE_PROVIDER26_INPUT_V1'&&fixed.binding?.phase==='FULL_SOURCE_CONTINUATION_26_V1'
   &&(sourcePreparation?fixed.binding.authorizedPayloadHash===null||hash(fixed.binding.authorizedPayloadHash):hash(fixed.binding.authorizedPayloadHash))&&hash(fixed.binding.coreSourceDigest)&&fixed.binding.authorizedPayloadHash!==fixed.binding.coreSourceDigest,
   'PRODUCTION_PROVIDER26_FULL_BINDING_REQUIRED');
@@ -589,8 +600,10 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
     // receipt/audit/claim chain. C's complete signed commands retain their IDs.
     yield* main('BIND',progress);
     if(progress.status==='IMPORTED')return structuredClone(progress.committedOperations.at(-1).result);
+    const stagedPrefixGroups=progress.stagedPrefixProof22==null?new Set():new Set(['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS']);
+    if(stagedPrefixGroups.size)await checked(a.assertStagedPrefixContinuation26,structuredClone(progress));
     for(const group of sourceGroups){const [kind,iterator]=stages[group],reader=readers.get(group);
-     for await(const original of reader[iterator]()){
+     for await(const original of pendingProductionStageRows26({group,readRows:()=>reader[iterator](),proved:stagedPrefixGroups.has(group),authorize:payload=>authorizeStep({kind,payload})})){
       active();let payload=original;
       if(group==='PARTIES'){
        const rows=original.rows.filter(row=>!coreSourceIds.has(row.input.source.id));if(!rows.length)continue;
@@ -1034,6 +1047,16 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
       requestHash:requestHash(initializationCommand),approvalPins:structuredClone(initializationCommand.schemeInitialization.approvalPins)}};
    }}:{}),
 
+   ...(prefix22?{async assertStagedPrefixContinuation26(progress){
+    await verify();await adopted.verify();await unchanged(grant.stagedPrefixBinding26.path);await unchanged(prefix22.initializationRecord.path);
+    const selected=selectProductionContinuation26({binding,commands:[...byPhase.BIND,...byPhase.ACCOUNT,...byPhase.PUBLISH],progress});
+    const p=progress.stagedPrefixProof22,command=byPhase.BIND[0],i=initializationCommand;
+    must(selected.prefix===1&&!selected.imported&&progress.status==='STAGED'&&p?.version==='CORE_STAGED_PREFIX_BIND_V22'
+     &&capture(p.binding)===capture({...Object.fromEntries(['batchId','actorAccountId','fixedSourceNamespace','cutoffAt','selectionSha256'].map(k=>[k,binding[k]])),commandHash:requestHash(command)})
+     &&capture(p.preparation)===capture(adopted.preparation)
+     &&capture(p.schemeInitialization)===capture({operationId:stableImportId('operation',binding.actorAccountId,i.requestKey),requestKey:i.requestKey,requestHash:requestHash(i),approvalPins:i.schemeInitialization.approvalPins}),
+     'PRODUCTION_PREFIX22_CONTINUATION');
+   }}:{}),
    async verifyInputs(actual){await verify();must(actual.inputDigest===inputDigest&&capture(actual.binding)===capture(binding)&&capture(actual.core)===capture(fixed.core),'PRODUCTION_AUTHORITY26_INPUT_CHANGED');},
    assertGroupAllowed:groupAllowed,
    async assertExecutionAllowed(actual){await verify();must(capture(actual)===capture(binding),'PRODUCTION_AUTHORITY26_BINDING_CHANGED');},

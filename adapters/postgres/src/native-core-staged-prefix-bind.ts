@@ -185,3 +185,73 @@ export async function verifyCoreStagedPrefix22(client: PgSalesClient, command: B
  "Original committed source-approved six-scheme initialization required");
  return { version: CORE_STAGED_PREFIX_VERSION22, binding, preparation, schemeInitialization: initialization, skuRecords, groups };
 }
+
+/** Re-read the complete native sets against the original committed BIND audit.
+ * Caller owns the same repeatable-read transaction and verified receipt chain.
+ * This never reads source files, creates a lease, or changes transaction state. */
+export async function verifyCommittedCoreStagedPrefix22(client: PgSalesClient, value: unknown,
+ binding: CoreStagedPrefixExpected22["binding"]): Promise<CoreStagedPrefixProof22> {
+ const proof = structuredClone(value);
+ own(proof, ["version", "binding", "preparation", "schemeInitialization", "skuRecords", "groups"]);
+ own(proof.binding, ["batchId", "actorAccountId", "fixedSourceNamespace", "cutoffAt", "selectionSha256", "commandHash"]);
+ must(proof.version === CORE_STAGED_PREFIX_VERSION22 && typeof proof.binding.cutoffAt === "string"
+  && Number.isFinite(Date.parse(proof.binding.cutoffAt)) && Date.parse(proof.binding.cutoffAt) === Date.parse(binding.cutoffAt)
+  && requestHash({ ...proof.binding, cutoffAt: binding.cutoffAt }) === requestHash(binding), "Original committed BIND prefix identity required");
+ own(proof.preparation, ["inputDigest", "manifestSha256"]);
+ must(hash(proof.preparation.inputDigest) && hash(proof.preparation.manifestSha256), "Original prefix preparation required");
+ own(proof.schemeInitialization, ["operationId", "requestKey", "requestHash", "approvalPins"]);
+ const init = proof.schemeInitialization;
+ own(init.approvalPins, ["proposalSha256", "approvalSha256", "writeContractReplySha256"]);
+ must(typeof init.operationId === "string" && /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(init.operationId)
+  && typeof init.requestKey === "string" && init.requestKey.length > 0 && hash(init.requestHash)
+  && Object.values(init.approvalPins).every(hash), "Original scheme initialization pins required");
+ const names = [...CORE_PREFIX_GROUPS22, "SCHEMES"] as const;
+ must(Array.isArray(proof.groups) && proof.groups.length === names.length, "Complete committed prefix groups required");
+ const groups = proof.groups as unknown[];
+ function stats(value: unknown, empty = false): void {
+  own(value, ["rows", "sha256"]);
+  must(Number.isSafeInteger(value.rows) && Number(value.rows) >= (empty ? 0 : 1) && Number(value.rows) <= 10000000
+   && (!empty || value.rows === 0) && hash(value.sha256), "Exact bounded committed prefix root required");
+ }
+ for (let i = 0; i < names.length; i++) {
+  const group: unknown = groups[i]; own(group, ["name", "source", "typed"]);
+  must(group.name === names[i], "Original ordered prefix groups required");
+  stats(group.source, group.name === "SCHEMES"); stats(group.typed);
+ }
+ stats(proof.skuRecords);
+ const captured = proof as unknown as CoreStagedPrefixProof22;
+ async function current(group: CorePrefixGroup22 | "SCHEMES" | "SKU_RECORDS", segment: "source" | "typed") {
+  const relations = segment === "source" ? ["import_source_row"] : group === "SCHEMES" ? ["barcode_scheme"]
+   : group === "SKU_RECORDS" ? ["import_record"] : typedRelations[group];
+  const entities = group === "SCHEMES" ? ["BARCODE"] : group === "SKU_RECORDS" ? [] : sourceEntities[group];
+  const parts = relations.map(relation => {
+   const key = relation === "import_sku_alias" ? "encode(naijue_erp.history_closure_encode(jsonb_build_array(t.batch_id,t.old_source_sku_id)),'hex')"
+    : relation === "import_stock_contributor" ? "encode(naijue_erp.history_closure_encode(jsonb_build_array(t.batch_id,t.source_row_id)),'hex')" : "t.id::text";
+   const where = segment === "source" ? " WHERE t.entity_type=ANY($1::text[])" : relation === "import_record" ? " WHERE t.target_type='SKU'" : "";
+   return `SELECT '${relation}'::text relation,${key} key,${projectionSql(relation)} projection FROM naijue_erp.${relation} t${where}`;
+  });
+  async function* rows(): AsyncGenerator<HistoryClosureRow> {
+   // Fixed transaction-local cursor; each set is closed before the next begins.
+   // No batch filter: foreign or extra members must change the complete root.
+   await client.query(`/* core-prefix22:current:${group}:${segment} */ DECLARE core_prefix22_current NO SCROLL CURSOR FOR SELECT * FROM (${parts.join(" UNION ALL ")}) prefix_rows ORDER BY convert_to(relation,'UTF8'),convert_to(key,'UTF8')`, segment === "source" ? [entities] : []);
+   while (true) {
+    const page = (await client.query("FETCH FORWARD 128 FROM core_prefix22_current")).rows;
+    must(page.length <= 128, "Bounded current prefix page required");
+    for (const actual of page) {
+     must(typeof actual.relation === "string" && relations.includes(actual.relation) && typeof actual.key === "string", "Exact actual prefix relation/key required");
+     const row = project(actual.relation as string, actual.projection);
+     must(row.key === actual.key, "Current original canonical key required"); yield row;
+    }
+    if (page.length < 128) break;
+   }
+   await client.query("CLOSE core_prefix22_current");
+  }
+  return hashHistoryClosureRows(corePrefixScope22(group, segment), rows());
+ }
+ for (const group of captured.groups) {
+  must(requestHash(await current(group.name, "source")) === requestHash(group.source)
+   && requestHash(await current(group.name, "typed")) === requestHash(group.typed), "Current complete prefix differs from original committed BIND");
+ }
+ must(requestHash(await current("SKU_RECORDS", "typed")) === requestHash(captured.skuRecords), "Current original SKU records differ from committed BIND");
+ return structuredClone(captured);
+}

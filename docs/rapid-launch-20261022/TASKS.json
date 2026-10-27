@@ -15205,6 +15205,46 @@
       "parallel": "D1/D3 current proof seam and actualimport continuation continue; no new server grant or frontend pass.",
       "model": "Technical gpt-6.1-sol/medium; comparison/pure UI gpt-6.1-terra/medium per verified newer human taskbook decision.",
       "goal": "ACTIVE incomplete all37/67/allstates realbusiness/history/performance/formal"
+    },
+    "currentContinuation798": {
+      "status": "SIX_FIXED_SOURCE_LEAVES_DELIVERED_QB_DELTA_REVIEW_IN_PROGRESS",
+      "pins": [
+        {
+          "path": "adapters/postgres/src/native-import-record-accounting.ts",
+          "bytes": 65341,
+          "sha256": "e9613bdfdfc7cf183db4a784dae11bb4234d56c2e63c90cc65b9f74c6e0eed4d"
+        },
+        {
+          "path": "adapters/postgres/src/native-core-staged-prefix-bind.ts",
+          "bytes": 28994,
+          "sha256": "a6d74aa6b695bc9d902634ad9a64a867d50e9f2e9f02d7ee1a359ee82c1b555b"
+        },
+        {
+          "path": "tests/native-core-staged-prefix-bind.test.ts",
+          "bytes": 16288,
+          "sha256": "46b2b880ac1d3b07c45a7ab9c2622527df9f07d4b6337704a760cd8f6b0a1871"
+        },
+        {
+          "path": "tests/native-import-record-accounting-postgres-protocol.test.ts",
+          "bytes": 27208,
+          "sha256": "4ba744175444a0dd83950d5e8c93dcedb7c252308cd6fa05cd8397947db84177"
+        },
+        {
+          "path": "scripts/import-v3/production-source-provider26.mjs",
+          "bytes": 141627,
+          "sha256": "b604994c6cc222cc772dd3b81efaadcb98bb7f8acd69c1eb2e0341d575c683d2"
+        },
+        {
+          "path": "scripts/import-v3/production-source-provider26.test.mjs",
+          "bytes": 187650,
+          "sha256": "6200257abfba20c3546c7b58e508cb90d8301ee6f37747c2e474ad7a60b21ba4"
+        }
+      ],
+      "ownerChecks": "D1 strict and9 new targeted PASS; D3 5 targeted PASS (2new+3affected). Existing57/472/480/482 not rerun. Mock/protocol/source only, not actualPG/performance/business PASS.",
+      "cost": "751190 projection rows/13 sequential cursors/estimated5879 FETCH128 for native proof; STOCK source authorization still read; duration not measured.",
+      "QB": "Original QB accepted fixed6 leaves gpt-6.1-sol/medium, review active; no independent verdict yet.",
+      "next": "Adopt QB effective conclusion; originalT45 fixed new dependency closure and exact authority after review; no oldjob/BIND replay/newkeys/4096 increase.",
+      "goal": "37/67/allstates/realhistory/performance/formal ACTIVE incomplete; no new UI/release PASS"
     }
   },
   "historicalContinuation500Before716": {

@@ -359,7 +359,7 @@ async function retainedNativeFiles(t,group,{prefix22=false}={}){
   const {nativeBarcodeSchemeInitializationRows26}=await import('../../packages/application/src/native-barcode-import.ts');
   f.inputs.adoptedPreparation={path:'/synthetic/adopted.json',bytes:1,sha256:digest('a')};f.inputs.stagedPrefixBinding26={path:'/synthetic/prefix.json',bytes:1,sha256:digest('b')};
   f.authority.adoptedClosure=async()=>({async expected(){throw Error('NO_CLOSURE_RECOMPUTATION');},async authorizeStage(){},async authorizePublish(){}});
-  f.authority.captureStagedPrefixBinding26=async()=>({binding:{commandHash:digest('c')},preparation:{inputDigest:digest('a'),manifestSha256:digest('b')},schemeRows:nativeBarcodeSchemeInitializationRows26(),schemeInitialization:{requestKey:'original-init'}});
+  f.authority.assertStagedPrefixContinuation26=async()=>{throw Error('NO_CURRENT_PREFIX_PROOF');};f.authority.captureStagedPrefixBinding26=async()=>({binding:{commandHash:digest('c')},preparation:{inputDigest:digest('a'),manifestSha256:digest('b')},schemeRows:nativeBarcodeSchemeInitializationRows26(),schemeInitialization:{requestKey:'original-init'}});
   const old=f.authority.openRetained;f.authority.openRetained=async(...args)=>{const reader=await old(...args);if(args[0]==='BARCODES')reader.prefixSchemes26=async()=>nativeBarcodeSchemeInitializationRows26();if(args[0]==='SKUS')reader.skuRecords22=async function*(){};return reader;};
  }
  const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());
@@ -1028,7 +1028,7 @@ test('v22 provider passes only original five complete source/native streams and 
  const schemes=nativeBarcodeSchemeInitializationRows26(),prefixGroups=['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS'],opened=[],seen=[];
  f.inputs.adoptedPreparation={path:'/synthetic/adopted.json',bytes:1,sha256:digest('a')};f.inputs.stagedPrefixBinding26={path:'/synthetic/prefix.json',bytes:1,sha256:digest('b')};
  f.authority.adoptedClosure=async()=>({async expected(){throw Error('NO_CLOSURE_RECOMPUTATION');},async authorizeStage(){},async authorizePublish(){}});
- f.authority.captureStagedPrefixBinding26=async command=>{assert.equal(command.requestKey,'synthetic-original');return {binding:{commandHash:digest('c')},preparation:{inputDigest:digest('a'),manifestSha256:digest('b')},schemeRows:schemes,schemeInitialization:{requestKey:'original-init'}};};
+ f.authority.assertStagedPrefixContinuation26=async()=>{throw Error('NO_CURRENT_PREFIX_PROOF');};f.authority.captureStagedPrefixBinding26=async command=>{assert.equal(command.requestKey,'synthetic-original');return {binding:{commandHash:digest('c')},preparation:{inputDigest:digest('a'),manifestSha256:digest('b')},schemeRows:schemes,schemeInitialization:{requestKey:'original-init'}};};
  const original=f.authority.openRetained;f.authority.openRetained=async(...args)=>{const reader=await original(...args),name=args[0];
   if(name==='BARCODES')reader.prefixSchemes26=async()=>structuredClone(schemes);
   if(name==='SKUS')reader.skuRecords22=async function*(){seen.push('SKU_RECORDS');yield {relation:'import_record',key:'original',projection:{reviewed_at:'2026-10-24T00:00:00.123456Z'}};};
@@ -1083,4 +1083,29 @@ test('v22 prefix STOCK uses the exact STAGE nine-field image while retained publ
   assert.throws(()=>stagedPrefixStockRow22({...row,key:'not-original'}),/STOCK_PROJECTION/);
   assert.throws(()=>stagedPrefixStockRow22({...row,extra:true}),/STOCK_PROJECTION/);
  }
+});
+
+test('191 source continuation requires the exact committed original BIND chain and source-bound prefix evidence',async t=>{
+ const f=await productionAuthorityFiles(t,{adopted:true,prefix22:true,initialSequence:2}),a=await f.open();t.after(()=>a.close());
+ const progress=structuredClone(f.progress),identity=await a.captureStagedPrefixBinding26(f.bind);
+ const proof={version:'CORE_STAGED_PREFIX_BIND_V22',binding:identity.binding,preparation:identity.preparation,schemeInitialization:identity.schemeInitialization};
+ progress.stagedPrefixProof22=proof;await assert.rejects(a.assertStagedPrefixContinuation26(progress));
+ await commitContinuationCommand26(progress,f.binding,f.bind);await a.assertStagedPrefixContinuation26(progress);
+ for(const field of ['binding','preparation','schemeInitialization']){const bad=structuredClone(progress);bad.stagedPrefixProof22[field]={};await assert.rejects(a.assertStagedPrefixContinuation26(bad),/CONTINUATION/);}
+ const wrong=structuredClone(progress);wrong.committedOperations.at(-1).requestHash=digest('e');await assert.rejects(a.assertStagedPrefixContinuation26(wrong));
+ await commitContinuationCommand26(progress,f.binding,f.accounts[0]);await assert.rejects(a.assertStagedPrefixContinuation26(progress),/CONTINUATION/);
+});
+
+test('191 proved prefix does not open four stage iterators and stock still fully authorizes without emitting repeated writes',async()=>{
+ const {pendingProductionStageRows26}=await import('./production-source-provider26.mjs');
+ for(const group of ['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS']){
+  const rows=await Array.fromAsync(pendingProductionStageRows26({group,proved:true,readRows(){throw Error('REPEATED_PREFIX_TRAVERSAL');},authorize(){throw Error('UNEXPECTED_AUTHORIZATION');}}));assert.deepEqual(rows,[]);
+ }
+ const groups=[{key:'negative',signedQuantity:'-3'},{key:'zero',signedQuantity:'0'}],seen=[];
+ const readRows=async function*(){yield*groups;};
+ assert.deepEqual(await Array.fromAsync(pendingProductionStageRows26({group:'STOCK_CONTRIBUTORS',proved:true,readRows,async authorize(row){seen.push(row);}})),[]);assert.deepEqual(seen,groups);
+ await assert.rejects(Array.fromAsync(pendingProductionStageRows26({group:'STOCK_CONTRIBUTORS',proved:true,readRows,async authorize(){throw Error('ORIGINAL_SOURCE_DENIED');}})),/ORIGINAL_SOURCE_DENIED/);
+ for(const group of ['PARTIES','CATALOGUE','BARCODES','PAYMENT','HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS','SALES_DETAILS','SETTLEMENTS'])
+  assert.deepEqual(await Array.fromAsync(pendingProductionStageRows26({group,proved:false,readRows,authorize(){throw Error('PREMATURE_AUTHORIZATION');}})),groups);
+ await assert.rejects(Array.fromAsync(pendingProductionStageRows26({group:'BARCODES',proved:true,readRows,async authorize(){}})),/CONTINUATION/);
 });
