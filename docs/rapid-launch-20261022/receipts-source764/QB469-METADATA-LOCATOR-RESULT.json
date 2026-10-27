@@ -1,0 +1,124 @@
+{
+  "reviewId": "QB469",
+  "task": "164 twoGit730independentmetadata baseline locators andprovenance clarification only",
+  "decision": "PASS_LOCAL_PREPARED_METADATA_PROVENANCE_AND_TWO_LOCATORS_ONLY_NOT_RUNTIME_OR_MAIN",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "preparedReadyRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/PREPARED-READY.json",
+    "bytes": 1375,
+    "sha256": "7fb1ff45baaeebafb438edd92f2055d62db4cc2acf6be1ce4633b02633e0cb9b"
+  },
+  "stableDeltaProofRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/evidence/REVIEW-PROVENANCE-DELTA.PREPARED.json",
+    "bytes": 8148,
+    "sha256": "879213c70d6a8818ebb430ac8c78e4b5504989e08529f65d3be8fed568bb0eb5"
+  },
+  "sourcePayloadRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/SOURCE163-INDEPENDENT-GIT730-METADATA.PAYLOAD.json",
+    "bytes": 124600,
+    "sha256": "7517a20b436ae3cc0420b3cb98c74a4822592020ca6f9d4d8be1ab639aac242d"
+  },
+  "materializedMetadata": [
+    {
+      "reviewIndex": 118,
+      "reviewRow": {
+        "role": "UNCHANGED",
+        "baseline": {
+          "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/provenance/git730-metadata/package.json",
+          "bytes": 6121,
+          "sha256": "ddd3baaa2bd447914bbd9172b32f00408074af284860554aed99824a4d06f2f3"
+        },
+        "current": {
+          "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/source/package.json",
+          "bytes": 6121,
+          "sha256": "ddd3baaa2bd447914bbd9172b32f00408074af284860554aed99824a4d06f2f3"
+        }
+      },
+      "localIndependentBaselineRef": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/provenance/git730-metadata/package.json",
+        "bytes": 6121,
+        "sha256": "ddd3baaa2bd447914bbd9172b32f00408074af284860554aed99824a4d06f2f3"
+      },
+      "localCurrentRef": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/source/package.json",
+        "bytes": 6121,
+        "sha256": "ddd3baaa2bd447914bbd9172b32f00408074af284860554aed99824a4d06f2f3"
+      },
+      "separateRegular0400NoLinks": true,
+      "differentInode": true
+    },
+    {
+      "reviewIndex": 119,
+      "reviewRow": {
+        "role": "UNCHANGED",
+        "baseline": {
+          "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/provenance/git730-metadata/package-lock.json",
+          "bytes": 105770,
+          "sha256": "72dc3028e4519890d7970c1569f1587249d039e1181b40b99fd937b37d889770"
+        },
+        "current": {
+          "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/source/package-lock.json",
+          "bytes": 105770,
+          "sha256": "72dc3028e4519890d7970c1569f1587249d039e1181b40b99fd937b37d889770"
+        }
+      },
+      "localIndependentBaselineRef": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/provenance/git730-metadata/package-lock.json",
+        "bytes": 105770,
+        "sha256": "72dc3028e4519890d7970c1569f1587249d039e1181b40b99fd937b37d889770"
+      },
+      "localCurrentRef": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/source/package-lock.json",
+        "bytes": 105770,
+        "sha256": "72dc3028e4519890d7970c1569f1587249d039e1181b40b99fd937b37d889770"
+      },
+      "separateRegular0400NoLinks": true,
+      "differentInode": true
+    }
+  ],
+  "preparedReviewSnapshotRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/evidence/CONSUMER-REVIEW.SOURCE749.PREPARED.json",
+    "bytes": 84991,
+    "sha256": "e5c79f872f9a9d6c89ea651b38a2e6a64116639103911e6efd14f0781040af94"
+  },
+  "reviewModulesAuditFingerprint": {
+    "algorithm": "SHA256 ofPythonJSONsortkeysUTF8compact modulearray; auditfingerprint only notrequestHash/fileSHA",
+    "sha256": "87b2f3b518b9feebb5eb9ee5a0ad87de6537abeb089a70337d662e0c231dd71b",
+    "modules": 120,
+    "finalModulesMustRemainEqual": true
+  },
+  "acceptedIssuerMaterializationRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-adopted148-revised-baseline-20261027-164/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts",
+    "bytes": 78034,
+    "sha256": "247cea8edd239f0ef8eaf453546d7757b638d47b992240f2fe5145687bd9757d"
+  },
+  "checks": [
+    "Payloadtwofullcontent independentlyverifiedagainstexactGit730commit3d99a4ab/tree6f6504ff ininitialsame-taskpass; local164independentbaselinebytesandcurrentexactlyequalpayload6121/ddd3+105770/72dc. No npm/lockgeneration ordependencyrevision.",
+    "Independentbaseline0400regular/nonsymlink/stablenlink1 files, separatelocations+differentinodesfromcurrent. Baselinepath/bytes/SHA matchactualreviewidx118119andstabledeltaproofafterrows; currentrefsidenticalbefore/after. No current-as-oldbaseline norreference toabsentoldlock.",
+    "Currentfullpackage+lockunchanged, bothpackageESMtype:moduleandno main/imports/exports delegationdifference. Actual163old18/1239onlymodulemarker andoldlockMISSING_OR_DISAPPEARED explicitlypreserved. Git-derivedcomparisonmetadataisnotclaimedactual148files orinstalleddependencyattestation.",
+    "Revieworiginalstrictschema/120modules/UNCHANGEDmetadataeachsidebyteSHAequalityretained. No globalCODEskip/guardweakening/recipechange. OnlytwoGitbaseline locators andexplicitprovenancedescription newlyadopted.",
+    "QB468singleissuerandfouroccurrencecorrection reused; idx22currentexactnew164private78034/247c, idx93currentbaselinebothstilloriginal148path. No B07/shared/old148/current158rollback. QB467provider755/QB461host749accepted, no line/test/PGreaudit.",
+    "Provisionalaggregate metadataProvenanceReviewPendingtrue, Cgranttemplate realImportExecutionAuthorizedfalse, preparedexecutiondisabled/serverSubmissionfalse preserved. SourceInputDigesta29c frozen; no claimactualMAIN/PUBLISH."
+  ],
+  "provenanceMeaning": "baselineCommit identifiesGit source-derivation reference. Metadataidx118119 compareindependentGit730package/lock againstcurrentidenticalGit730metadata. Separatelycapturedactual148minimalpackage/absentlock remaintrue; issuer usesexplicitQB468selectedactual148leaf. PackageisnotpureGit730/only2consumerchanges.",
+  "allowedFinalPinDerivation": [
+    "AppendthisexactQB469reportref toindependentaggregate andsetnewmetadatascopeadopted there; provisionalpendingfieldinimmutablepreparedproof ishistorical, notafinalPASSreceipt.",
+    "Recomputeaggregate→consumerreviewindependentref→adoptedreviewref→executioninput/package/downstreamrefs asnecessary, keepingALL120modules/stableDeltaProof8148/879213c7/twoMetadatafilebytes+paths unchanged. Thisavoids report-reviewhashcycle.",
+    "FullpreparedreviewfileSHAquotedhere isobservedpre-finalsnapshot only, notrequiredfinalreviewSHA. No need repeattechnicalreview forsolederivedpinupdates; anymodule/path/contentdelta isnewaffectedrange.",
+    "T45ownsendaccuratefinal7pins/root/10:45Z4096toCfornewexactexternaladoption; old09Zfailedwindow notextended/replayed."
+  ],
+  "remaining": [
+    "Linuxupload/materialization/readback andactualgenuineissuer/guard/MAIN/PUBLISH unmeasuredbythislocalpreparedreview.",
+    "GitlockdoesnotverifyinstalledNode/pg/dependencytree; existingregisteredruntimeidentities remainseparate.",
+    "Originalv21Cexternalsourcegrant/currentruntimeQB464/original148111artifacts/109keys/79nonCODE/sourcefacts/transactionchecks remainrequired."
+  ],
+  "sourceOrCarrierModifiedByQB": false,
+  "databaseOrRemoteAction": false,
+  "dependencyInstallBuildOrLockChange": false,
+  "actualLinuxMaterializationVerified": false,
+  "actualRuntimeAdmission": false,
+  "actualMainOrPublish": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}

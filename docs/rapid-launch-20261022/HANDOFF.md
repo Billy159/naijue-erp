@@ -1,3 +1,5 @@
+SOURCE764：QB469本地prepared两独立Git730metadata定位增量PASS，精确7pins/稳定proof固定；467/461/468有效结论直接采用不重审。C核sixdata+109原命令不变后实际签164准确grant36998/defa71cf及ADOPTION4313/90893d6a，新10:45Z4096 FULL_NATIVE_CONTINUATION。原T45开始首次bounded上传/提交；实际Linux运行/issuer/MAIN/PUBLISH尚未验证，不冒授权为成功。旧148/158/shared/B07保护，真实来源不入Git。UI仍normal34合成，全37页67弹层与真实业务/性能/正式发布目标ACTIVE未完成。
+
 SOURCE763：采用163最小来源澄清：current完整Git730 package/lock内容及依赖版本保持，仅idx118/119 baseline locator在新私有目录独立物化准确Git730元数据，显式Git推导比较，不冒actual148原件；旧18byte/缺lock事实保全。与QB468已审actualissuer78034/247c四引用修正合并，provider755/host749不改、111产物/109原业务键及guards不变。T45准备唯一新固定载体，QB仅两metadata locator及来源澄清增量并行，不重467/468/全依赖。原09Z失败窗关闭，新准确技术窗10:45Z/4096已登记；实际新包未提交、未导入/发布。
 
 SOURCE762：163最后14小项一次核完：13匹配或准确复用，旧148 baseline lock原位不存在；旧package仅18byte模块声明，与预填Git7306121byte不符。有限CODE/metadata清单现全受检/复用，3类真实差异明确，业务正文/CORE/DATA/EXPECTED/PG未读；不能称整包通过或旧目录损坏。D3核源码比较基线与source-only实际capture责任边界，禁止造旧锁/改pin冒UNCHANGED/关闭完整性检查。新158package与lock准确pin通过，不改依赖或安装。原09Z执行窗已过且152/158均终态0MAIN/PUBLISH；新具体载体就绪后再准确登记窗口，不追溯重试。37页67弹层真实接线、性能及发布仍未完成。
