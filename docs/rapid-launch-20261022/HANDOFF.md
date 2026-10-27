@@ -1,3 +1,7 @@
+SOURCE779补充：179真实QA父态catalog b0f0ee52/131routines匹配，普通role RRRO回滚关闭，尚非review签发。QB/D1新定位原INIT凭证target.postmaster与QA新启动身份必冲突；C取消任何QA函数变体或改原凭证，0试错/假正负例。QA仅同body安装解析/目录与ACL，BIND正例及不可达成员负例明确未测。原R1同启动身份后续按已批v22原key真实导入一次，准确source/currentreview/grant到齐前不执行；不冒生产回归或QA全通过。
+
+SOURCE779：178实际COMPLETED0/120.655秒，独立私有PG17同逻辑库名恢复通过，QA system7701337335828107278/OID16391/SQLpostmaster13:22:19.696753+00准确登记，原R1实例不同。原普通role已真实LOGIN/RRRO回滚关闭，131routines与normalized effectiveACL一致；13rawACL默认/显式差异不改权强凑哈希。175/177失败保全，178仅续既有实例，不重dump/restore工程。D1四control叶已固定、14unique本地检查PASS，原QB只窄审四叶，原T45并行取真实QA父态目录；原QB472生产源结论采用不重审。0v22实际SQL/BIND/真实业务/发布通过，原R1未改；完整37页67弹层及历史编辑/性能/正式上线目标仍ACTIVE。
+
 SOURCE778：C采用原QB472本次源码/协议/静态SQL PASS（13,216/2f7f1988），精确SOURCE77711叶，旧776单独不PASS；0新runtime/PG/发布结论。175实际一致dump与restoreexit0但schema指纹守卫FAILED，cloneOID1405172/普通login未达，旧终态保留；176实际只读1968条目仅13rawACL表示差异，effective仍待比对，不乱GRANT。T45复用原archive准备独立私有PG17同逻辑R1库名/role/真实新QA实例tuple；完整sourcehost仍有原postmaster绑定，故C明确D1两control脚本只原source只读expected+独立真实QA issuer/store/同bodySQL，source与runtime身份分开记录、R1gates禁用，不伪目标/改109或INIT，不冒QA跑过完整host。真实PG入口与目标准备并行，未授权未固定patch/BIND。全站37/67真实业务/历史/性能/正式发布未完成。
 
 SOURCE777：V22-HOST-PROFILE-01明确宿主漏新profile已由原D3只host/test修复（42203/9399bf46，51016/446a69ee），5项受影响检查PASS；原QB只补该两叶，其他9源已审范围保留，不借旧04a0冒新源。175一致快照clone真实RUNNING/unit61ab390836a4，原key收据不重放。QA直接换库名会冲突原CORE/148/INIT精确logicaltarget，C选择复用同archive到独立私有PG17且同逻辑R1库名/普通role、QA实际OID/socket/postmaster独立登记，不改原source/109/审计或伪原R1tuple；T45核可行/恢复，D1只control测试入口/installer实际前态，业务body不变。尚无v22真实PG/绑定/发布通过，全站目标ACTIVE。

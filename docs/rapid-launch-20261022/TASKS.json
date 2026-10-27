@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T13:21:52.928967+00:00",
+  "updatedAt": "2026-10-27T13:41:24.745814+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "28b07dc5a2fe8b00a370f0952b0cb090fe3f73e4",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -14733,6 +14733,45 @@
       "QA177": "T45 preparing samearchive independentprivatePG17/noports/none-network/same logicalR1dbname+ordinaryrole, actualQA tuple true. Preparation only, no patch/BIND authorizedyet.",
       "controlOnlyQAScope": "D1two K scripts: originalsourceprovider/session readonly expected/authorize with R1 gates/connections/writes disabled; actualQA independentgenuineissuer/pool tosame productionstore/adapter/samebodySQL. OriginalsourceBinding/148/INIT/109 not remapped, qaRuntimeIdentity truthfulseparate. Completeproductionhost/run intentionallynotusedinQA becausepostmasterexactbinding; realR1 host remains later actualstep. No falseexpected/ownerasruntime/fake productiontuple.",
       "remaining": "Need actualQA parent/effectiveACL metadata, exactinstaller+QAcontrolentry review, realPGsuccess/necessaryfailures/rollback/performance; then accurateR1 patchedcatalog+ordinaryreview/newgrant/original109 actualcontinuation. No realBIND/PUBLISH/formalPASS."
+    },
+    "currentContinuation779": {
+      "status": "QA178_ACTUAL_TARGET_READY_CONTROL4_FIXED_QB_DELTA_IN_PROGRESS",
+      "receipts": [
+        {
+          "job": 176,
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-clone-catalog-diff-resource-readonly-20261027-176/RESULT.json",
+          "bytes": 10389,
+          "sha256": "1411e7af194418cdb8f506c3f5b16e6a750c6759c301dfe0412040ac2412cf62"
+        },
+        {
+          "job": 177,
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-private-pg17-instance-restore-20261027-177/RESULT.json",
+          "bytes": 2235,
+          "sha256": "803b617903e3ae73128a61837d9e219a003ad63bc99e7c9495e52efe077f0c71"
+        },
+        {
+          "job": 178,
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-existing-private-pg-restore-successor-20261027-178/RESULT.json",
+          "bytes": 11954,
+          "sha256": "e91c563eab11d0975af738b28b9a5d39f5385df36863715d5e0b46373c0bfbb7"
+        }
+      ],
+      "qaIdentity": {
+        "systemIdentifier": "7701337335828107278",
+        "databaseOid": "16391",
+        "database": "erp_rewrite_20261022_r1",
+        "role": "erp_rewrite_runtime_20261022",
+        "postmasterSqlText": "2026-10-27 13:22:19.696753+00",
+        "socket": "/srv/naijue-erp/qa-v22-20261027-01/s"
+      },
+      "actual178": "COMPLETED0/120.655136147s/2026-10-27T13:26:32.591565Z; separate private PG17 restored same175 archive, ordinary real LOGIN RRRO ROLLBACK and effectiveACL/source routine consistency accepted. Target-only, no v22SQL/BIND.",
+      "preserved": "175 FAILED schema raw representation;176 only13rawACL default/explicit differences;177 carrier missingdeadline FAILED before restore,178 resumed exact same independentinstance; no replay/newdump/productionchange.",
+      "D1": "Four control artifacts fixed/copied in receipts-source779; owner14unique mock/consistency PASS syntax0, noPG; originalproduction11leaves frozen/QB472 reused.",
+      "next": "QB fourcontrol/QA parent/installer finite review then T45 same-body QA installation/catalog; D1 original R1 successor package preparation in parallel. Preserve all no-execution limits until exact authority.",
+      "notPassed": "v22 actual patch/BIND/PGbusiness/performance/R1 continuation/PUBLISH/formal. Full37pages67overlays goalACTIVE incomplete.",
+      "actual179": "COMPLETED0/0.818909670s/2026-10-27T13:38:23.252311Z; actual QA parent catalog canonical b0f0ee525a0fcdb21f6266718394a4118c22dfcf1731903178685ad0ee5a5a8e/131 routines match; ordinary RRRO ROLLBACK clients closed; not signed review.",
+      "newBindingIdentityFinding": "Original body requires original committed INIT target.postmaster == actual current PG postmaster. QA restore old INIT/new startup cannot pass same-body firstBIND. Confirmed independently D1/QB statically, no blind QA attempts.",
+      "controllerDecision": "Do not alter production body or original INIT, no QA-only guard relaxation/false passing negative cases. QA limited to same-body installation/parsing/catalog/ACL. Positive BIND and unreachable member negatives explicitly NOT_TESTED_BINDING_IDENTITY_INCOMPATIBLE. Original R1 same startup can execute authorized real import once original key after exact source/review/grant, actual import not production regression."
     }
   },
   "historicalContinuation500Before716": {
