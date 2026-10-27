@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 768,
+    "round": 769,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation768",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation769",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -5085,7 +5085,7 @@
     },
     "backendActual": {
       "B07": "Synthetic actual03 PASS: original-key direct-service rollback23505, firstLedger/balance1, secondattempt1, rolledBacktrue/0commits. Prior normal sales/transfer HTTP PASS adopted not repeated. No credentials/login/CAS; ownPG and clients closed. Real source/browser/allroles/formal not tested.",
-      "R1": "164 source evidence and actual runtime issuer PASSED; ordinal1 MAIN/BIND attempted42501 FAILED_OUTCOME_UNVERIFIED. No committed-event cannot prove no write. Original-key RRRO receipt/checkpoint recovery pending, no replay or newkey.",
+      "R1": "168 two exact columnUPDATE grants COMMITTED and independently readback only2ACL bits; ordinaryV20 newcatalog64c4. No BIND/businessDML, originalreceipt[] checkpoint STAGED2/22 retained. Newcurrentreview and revised source continuation preparation active.",
       "nativeProduct": "Actual COMPLETED0/2.323047074s, genuinepool and issuer/two identities/currentcanonical passed; original preflight BLOCKED_EXACT_PREFLIGHT with4actual data gaps: no current2026scheme, numeric3 enabledcolors unavailable, approvedfit unavailable, completecodedsizegroup unavailable.15queries/1rollback/0commit/DML/DDL/2acquired2released/live0. No4SAVE. Original D2 exact approvedsource and lawful initialization sequence preparation; publishednative189 cannot receive STAGED-onlyinitializer/rekey/fakecodes."
     },
     "roleQueue": {
@@ -14584,6 +14584,14 @@
       "next": "Collect actualrepair/currentcatalog then QB ACLdelta currentreview -> revised originalkey fullcontinuation",
       "notCompleted": "ActualACL repair/BIND commit/fullPUBLISH/UI realwrite/formalrelease",
       "noDuplicateDispatch": true
+    },
+    "currentContinuation769": {
+      "summary": "SOURCE769：原168实际两列GRANT COMMIT_RETURNED，11:32:26Z/1.522秒，精确only2bits新增UPDATE，其他列ACL/table/schema/role/membership/RLS/原键receipt[]与STAGED2cursor22保持，0BIND/业务DML/APP切换。普通runtime新V20catalog64c4f6ad85a8683df3e1ce5bc341618f612b90d03232a2d4eefed84f2c1462f8，source_routines_matchtrue，较157仅columns209/211两ACL a→aw。QB原三IMPORT用途当前review重绑在途，旧a912失效；T45并行准备原完整来源后继唯一包，164已验源与provenance复用、六data/111产物/109业务keys保持。旧10:45窗口已过，新后继准确登记13:30Z4096，具体7pins和新review到齐后C外部授权；未恢复BIND/导入/发布，整体目标ACTIVE未完成。",
+      "current": "QB twoACL currentreview; T45 unique revised fullcontinuation carrier",
+      "next": "Accuratecurrentreview+7pins -> C externalgrant -> originalkey recovery-aware actual continuation",
+      "deadlineUtc": "2026-10-27T13:30:00Z",
+      "maxSteps": 4096,
+      "formalRelease": false
     }
   },
   "historicalContinuation500Before716": {

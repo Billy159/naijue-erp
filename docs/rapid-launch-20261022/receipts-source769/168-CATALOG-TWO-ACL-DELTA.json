@@ -1,0 +1,27 @@
+{
+  "scope": "Existing157 vs actual168 catalog JSON object comparison only, no routine reexecution or code review",
+  "diffCount": 2,
+  "onlyTwoColumnAclValuesChanged": true,
+  "differences": [
+    {
+      "path": "$.columns[209].acl",
+      "before": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+      "after": "{erp_rewrite_runtime_20261022=aw/erp_rewrite_owner_20261022}"
+    },
+    {
+      "path": "$.columns[211].acl",
+      "before": "{erp_rewrite_runtime_20261022=a/erp_rewrite_owner_20261022}",
+      "after": "{erp_rewrite_runtime_20261022=aw/erp_rewrite_owner_20261022}"
+    }
+  ],
+  "oldCatalog": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-catalog.json",
+    "bytes": 1448690,
+    "sha256": "5e3a327c3879f133251115f1629af7055fbb98f05b6d43edb18e5c2c3d5503c6"
+  },
+  "newCatalogControlExport": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-two-column-acl-controlled-repair-20261027-168/release-submission/release-receipts/t45-r1-two-column-acl-controlled-repair-20261027-168/r1-v20-catalog.json",
+    "bytes": 1448692,
+    "sha256": "1e37d7a6c851a34ea171cce86936716609aad12f59608805969aedfc0de6b218"
+  }
+}
