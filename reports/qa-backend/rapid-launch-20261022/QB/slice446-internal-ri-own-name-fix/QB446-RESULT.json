@@ -1,0 +1,39 @@
+{
+  "reviewId": "QB446",
+  "decision": "PASS_FINITE_MINIMAL_NORMALIZE_CANDIDATE_ONLY_NOT_REGISTERED_WORKER_OR_LIVE",
+  "adoptsDiagnosis": "QB445 exact180 actualembeddedRI generated-name difference",
+  "candidate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice446-internal-ri-own-name-fix/normalize-internal-ri-candidate.py",
+    "bytes": 897,
+    "sha256": "965465f01c15eb842b8744e409882a983e7a0157abf9b35943feb725ce50e879"
+  },
+  "finiteCheck": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice446-internal-ri-own-name-fix/check-normalize-finite.py",
+    "bytes": 3618,
+    "sha256": "d64f3bb86345c3b2fd4079a6a90801a131b215333a6d66b51fb46c9885cdacf0"
+  },
+  "frozenWorkerUnchanged": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice443-existing19-normal-purpose/review-existing19-normal-purpose.py",
+    "bytes": 14427,
+    "sha256": "a93ce0810066257997fa77eb3994a5a3bf9fd5b8f940a4aebc0d4318a05d6429"
+  },
+  "checks": [
+    "OriginalQB443 comparison failure reproduced from exactpinned actualcatalog. Same immutable expectedcatalog transform reused in isolatedmemory, changing only pure normalizationfunction; actualcatalog/rootcanonical untouched.",
+    "Internal RI fullnumericname only. Require definition starts exact CREATE CONSTRAINT TRIGGER quoted originalownname plusspace; replace only that prefix quotedname with same existing LOCAL_OID name. No globalregex/bodyreplacement/definitionomission/ACLexception or rowdedup.",
+    "Original180 embeddedname differences resolve full structuredcatalog equality. Original943triggercounts/756internalRI/129routines/allothercatalogfields compared; actualcanonical1df15aab unchanged.",
+    "Finite negative probes retain refusal: triggerenabledD, RI definitionbody mutation, PUBLICcolumnACL, routinebodyhash mutation, nonRI name ordefinition edits. Mismatched embeddedownname raisesexplicitrefusal. Sameidentifier later in body remains byteunchanged and causescomparisonfailure.",
+    "Alloriginal443/445 worker/config/report/FAILURE andactualcatalog evidence left unchanged; candidate puremodule and finitechecker are undernewQB folder only. No newB/config assumed."
+  ],
+  "nextMinimumIntegration": [
+    "WhenC/T45 provide exactexisting26 continuationB/config, integrate only thispure normalize branch into separately versioned newworker; keep old443 frozen.",
+    "Register freshactualcurrentidentity and originalsixpurpose/canonical contract after originalwindow cleanup. Never re-seed/re-upgrade/useowner to bypassguard; no historicalLIVEpurpose backfill."
+  ],
+  "actualWorkerRegistered": false,
+  "actualWorkerStarted": false,
+  "liveReviewIssued": false,
+  "gateIssued": false,
+  "databaseOrServiceAction": false,
+  "frozenSourceChanged": false,
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

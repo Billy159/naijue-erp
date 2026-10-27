@@ -6449,5 +6449,17 @@
     ],
     "basis": "Originalsource635 readerownerD3; no otherinflight writer",
     "scope": "Store order Buffer already produced in next() on current privatehead, use samehead.order for 11-way compare until thathead replaced. No content/hash/source/cache lifetime beyond currenthead. Preserve identical keybytes/order and duplicate/order guards, rowcapture/clone/16MiB accounting, errors/IteratorClose/exhaustion. Finite old merge byte/order and sameheadkeycomputecount evidence, no new source reads/profile/PG."
+  },
+  "source732ExistingSyn26SessionContinuation": {
+    "owner": "D1",
+    "files": [
+      "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
+    ],
+    "controlOriginalFiles": [
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
+    ],
+    "scope": "Closed sameexisting SYN26 target/QA auth1version1 to2version2 one-session continuation only; original19firstseed/publication/upgrade not rerun, old07/auth4 untouched. Reuse original parameterized renewalSQL/oneCAS/sessionrevocation/RAMsecret/COMMITunknown sameRAM readonly recovery and normalfactory/issuer/logout/cleanup. Require T45 actual current26 guards/permissions/nonSUPERnonBYPASS/RLS/origin/currentidentity/nohistoryreceipt proof before update; noDDL/GRANT/triggers/newaudit or arbitrarytarget/credentialplatform. Preserve old functions/paths; finite failed/unknown/close checks. Runtime currentpurpose/RI correction ready before secret generation, no actual fromsourcePASS."
   }
 }

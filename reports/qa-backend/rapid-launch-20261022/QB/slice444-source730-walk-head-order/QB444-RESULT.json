@@ -1,0 +1,46 @@
+{
+  "reviewId": "QB444",
+  "decision": "PASS_SOURCE730_FIXED_FOUR_LEAF_INCREMENT_ONLY_NOT_ACTUAL_SPEED",
+  "fixedCommit": "3d99a4ab783c9ee566c20d1c23b85fee19b6b4c2",
+  "sourcePins": [
+    {
+      "path": "packages/application/src/history-typed-closure.ts",
+      "bytes": 37914,
+      "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3"
+    },
+    {
+      "path": "tests/history-typed-closure-expected.test.ts",
+      "bytes": 19300,
+      "sha256": "76af19e5a0700b2d035830662c60bef44b7ae86e6c8648b5bd9f78c40a4652da"
+    },
+    {
+      "path": "scripts/import-v2/authorized-history-closure-reader.mjs",
+      "bytes": 13906,
+      "sha256": "8c197db5cc4ce50b7cd6d032cef30c2b47cb2f23033f014af1e7110c163235d6"
+    },
+    {
+      "path": "scripts/import-v2/authorized-history-closure-reader.test.mjs",
+      "bytes": 26767,
+      "sha256": "d3cce175f93f47e0087b02dffd7225de4d487837e861867074636cd33ad58f30"
+    }
+  ],
+  "checks": [
+    "Four exactfixedGit leaves match releasedlength/SHA. Source723 accepted codec reused; newprivatewalk visitbody byteidentical predecessor except finalmaterialization moved to encoder. No newexport/booleanproof/cache/prehash capability.",
+    "Encoder passes localchunks to sameprivatewalk and joins/UTF8Buffer onlyafter completewalk, preserving originalframing/order/root/hash bytes. Projection discardschunks only: freshactiveSet/depth/own-descriptor/prototype/cycle/scalar/Unicode/NUL/sparse/framebyteLength/immediate4MiB checks execute in samevisit order; postprojectionkey capture and26checks unchanged.",
+    "Validationcalls retain bothboundary invocation and allnested descriptorreads; no crosscallproof. Changedinput invalidUnicode on laterprojection rejects, getters neverinvoked and oversize frame rejects before laterProxy inspection.",
+    "Reader inverseonly head.orderassignment andthreecomparison/access sites restores priorreader byteforbyte. OrderBuffer computed after original rowCapture/project/clone once percurrenthead, aliases privatepreviouskey and never exposed in yieldedrow. Currenthead lifetime only; row.key/relation immutablecapturedstrings.",
+    "Perprovider strictorder/globalduplicate-order comparisons unchanged, yieldingbeforeadvancingnext unchanged; original16MiBbufferaccounting/bytes/rowcaptureclone/11factory verification/iteratorreturn/aggregateerror/closers unchanged. No schema/provider/DB authority added.",
+    "Adopt owner18 finitechecks+targetstrict. Validation-vs-originalcodecoracle/rejection/inputimmutability/lateinvalid test covers walk; source+typed exactorder/encodedbytes/document/completeverify+close and orderencoding exactlyrows covers reader. Originalfullbuilder golden9439c2ee retained. No oldsuite/fullsource/PG run."
+  ],
+  "actualFullSourceRun": false,
+  "actualPerformanceMeasured": false,
+  "databaseOrRemoteAction": false,
+  "sourceChangedByQB": false,
+  "businessAcceptance": false,
+  "remaining": [
+    "T45 exactsameversion codec+reader installation/consumption closure in any nextcarrier; sourcePASS does not establish actual fullprepare or speed.",
+    "Existing actual147 failure/source118810/typed0 remains unchanged and cannot be called fullsource/performancePASS."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

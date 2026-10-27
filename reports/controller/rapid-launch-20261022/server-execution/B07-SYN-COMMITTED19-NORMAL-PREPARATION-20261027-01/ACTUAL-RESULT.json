@@ -1,0 +1,56 @@
+{
+  "status": "TERMINAL_STOP_CURRENT_PURPOSE_REJECTED_NO_REPLAY",
+  "atUtc": "2026-10-27T03:01:18.111662+00:00",
+  "qaFirstSeedCommitted": true,
+  "upgradeCommitReceipts": 11,
+  "ordinaryRoleCommitReturned": true,
+  "effectiveV21CommitReturned": true,
+  "schema": "1..26 current metadata",
+  "purposeIssued": false,
+  "normalHttpActual": false,
+  "workerFailure": "UNREGISTERED_CATALOG_OR_ACL_DRIFT",
+  "offlineDifference": "180 internal RI generated-name suffixes within trigger definitions; all nontrigger sections equal; no change applied",
+  "clientsClosed": true,
+  "reviewWorkerClosed": true,
+  "gateWorkerClosed": true,
+  "ownPgStopped": true,
+  "pidFileAbsent": true,
+  "elapsedSeconds": 300.944295542,
+  "automaticReplay": false,
+  "noReplay": [
+    "QA seed",
+    "11 upgrade steps",
+    "ordinary role/ACL",
+    "v21 patch",
+    "original PUBLISH"
+  ],
+  "realSourceImportVerified": false,
+  "formalBusinessAcceptance": false,
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-NORMAL-PREPARATION-20261027-01/OS-LIFECYCLE.json",
+      "bytes": 552,
+      "sha256": "77a045ad85ba171a9437828caaea78c0acab68e0861e38f72dabf4e57bef1985"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-NORMAL-PREPARATION-20261027-01/NODE-PIPELINE-RESULT.json",
+      "bytes": 230,
+      "sha256": "d08343abd58ad7ba27e03a6a9bb61ba7cf57ae262be3c599c3db3dfe1f7ae30d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/PARENT-RESULT.json",
+      "bytes": 318,
+      "sha256": "0e8701c2c1005bac12c821ff78ddddca478edba648ea8d6ad2d0ef61ecaa7cb7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice443-existing19-normal-purpose/QB443-LIVE-FAILURE.json",
+      "bytes": 160,
+      "sha256": "3ed4d159368150aeda5bd8e9d29ea893a08fbd304efb7afeadc18882f08e026f"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-NORMAL-PREPARATION-20261027-01/OFFLINE-CATALOG-DIFFERENCE.json",
+      "bytes": 1596,
+      "sha256": "65ed139db7b97c5cc3cc66254fc5e5d05213728a8927f0dd5a5c53ff31db839e"
+    }
+  ]
+}

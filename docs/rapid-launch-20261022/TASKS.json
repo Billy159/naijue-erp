@@ -4637,20 +4637,22 @@
   ],
   "newPendingReviews": [
     {
-      "task": "EXISTING19_NORMAL_PARENT",
+      "task": "JOB148_730_BUDGET_CARRIER",
       "owner": "QB",
-      "state": "WAIT_T45_PREPARED_DELTA"
+      "state": "IN_PROGRESS",
+      "scope": "Twooverlayconsumer/newbounded3hresources only,444source reused"
     },
     {
-      "task": "SOURCE729_4LEAF_PERFORMANCE",
+      "task": "SYN26_ONE_SESSION_CONTINUATION",
       "owner": "QB",
-      "state": "WAIT_D3_FIXED_SOURCE"
+      "state": "WAIT_D1_FIXED2LEAVES",
+      "scope": "Closednewtarget auth1to2/currentguardsproof, old07unchanged"
     },
     {
-      "task": "QA_REFERENCE_DATA",
-      "owner": "QF_QF2",
-      "state": "WAIT_F1_DATA_T45_FIXED_CANDIDATE",
-      "scope": "Only userauthorizedtestdata; otherUIresults useronly"
+      "task": "QA_REFERENCE_DOCUMENT_SCENARIOS",
+      "owner": "F1_T45",
+      "state": "F1_SAME_FIXTURE_TASK_ACTIVE",
+      "scope": "Userauthorized coherentdocumentstate/page2 fixtures only; otherUIresults useronly"
     }
   ],
   "openFindingsCurrent": [
@@ -5063,17 +5065,19 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 729,
+    "round": 732,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation729",
-    "fixedSource": "SOURCE72789b32938c3e9d919c904f684db300b002bef0b87 exactGitHub remote; SOURCE726ff42ead ROhelper; SOURCE723124c4ad codec",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation732",
+    "fixedSource": "SOURCE73155cd8581da35b490f51f45f7b6d381125b786b2e exactGitHub remote verified; SOURCE7303d99a4ab performance",
     "fixedCandidates": {
       "synthetic": {
-        "source": "8c7ed0c78018f9d479b191e3c01d36b2ab10c456",
-        "build": "phase2-normal-8c7ed0c-32",
-        "entry": "http://127.0.0.1:57921/#inventory",
-        "resources": 152,
-        "boundary": "SYNTHETIC_NOT_PRODUCTION_NO_PG"
+        "source": "55cd8581da35b490f51f45f7b6d381125b786b2e",
+        "build": "phase2-normal-55cd858-33",
+        "entry": "http://127.0.0.1:57922/#inventory",
+        "resources": 151,
+        "profile": "demo-reference-v1",
+        "boundary": "SYNTHETIC_NOT_PRODUCTION_NO_PG",
+        "knownGap": "Defaultsales/transferlists initiallyempty; userexplicitneeds coherent preseeded comparable documents/states/page2, F1 samefixturetask active nextcandidate; do not silently restoreoldSYN or alter immutable33."
       },
       "privateRealApiCandidate": {
         "source": "9bceddf65bb6c0d241a57b5f78e8d946596ae042",
@@ -5083,19 +5087,19 @@
       }
     },
     "backendActual": {
-      "B07": "Actual committed19metadata ROPASS0.413s/ROLLBACK/poolClosed/ownPGstopped, metadata3022/9b502b57 original89d8e3cb op; nofixture/pub/QAseed/26/purpose/HTTP. T45prepares existing19normalparent.",
+      "B07": "Committed19 metadataROPASS retained. FirstQAseed+11upgrades+ordinaryACL/v21 nowCOMMITTED in normalattempt, terminal300.944s with allclients/workers/ownPGclosed; no normalHTTP/currentpurpose. QB445 confirmed180RI ownname embeddeddefinition normalization mismatch only; QB446 exactprefixcandidate finitePASS not yet live. D1closed sameSYN26 auth1→2 continuation2leaves active; noseed/upgrade/pub replay.",
       "R1": "125 STAGEDseq2cursor22 MAIN0PUBLISH0/fullBindingfalse.147 FAILED901.255s/source118810notdone/typed0/no fullDATA or commands. D3registered7294leaves in progress."
     },
     "roleQueue": {
-      "F1": "Active userauthorized coherentDemo-reference QAdata; source72812testdata files solewriter; no productionUI/permissions changes, T45buildlater.",
+      "F1": "Active sameQAdata scope: usernew defaultdocuments/page2/states gap, preseed onlynew coherent graph;9datafiles/finitechecks then T45newcandidate.",
       "F2": "Existing product/stock consumers ready; synthetic detail/maintenance facts incoherent/missing, no fake state platform; await actual product capability from D2/T45.",
       "F3": "Completed settings source packages; await actual samebuild maintenance permissions/provider to validate requested writes.",
       "F4": "Completed category empty-state source patch, original effective evidence reused; await actual dictionary/barcode/season/group capabilities.",
-      "D1": "726/QB441PASS; actualT45metadataROPASS adopted, wait concrete normalparent runtime needs.",
+      "D1": "Registered732 parent/test sameSYN26one-sessionauth1to2, originalSQLguards/CAS/RAMnormalissuer; sourceinprogress, actualcurrentguards/permissions proof required; noDBsourcechanges.",
       "D2": "Original source handed back, QB340 NULL-size source PASS preserved; actual PostgreSQL maintenance/full-save consumers remain dependent on original capability/data execution.",
-      "D3": "Active source7294leaves validation-only no discardedBuffer + currentmergeheadorder, allguards/root preserved; one batchQA then actual.",
-      "T45": "147terminal no replay; committed19actualROPASScleanstop; preparing same19normalparent without init/schema/fixture/pub.",
-      "QB": "439440441 adopted;442initialF01NEEDFIX preserved REV2PASS adopted; wait newparentcarrier and729fixedsource.",
+      "D3": "SOURCE730fourleaf QB444PASS adopted; group-only withoutfinalconsumer rejected; shortest singlelongboundedfullprepare chosen, no genericresume/newtrustprotocol.",
+      "T45": "normal33built57922; normal26attemptterminal noHTTP/cleanstop, no seedreplay;148same730twooverlaycarrier prepared soft10710child10740helper10770dispatch10800/noROOTlimitmods,awaitQB.",
+      "QB": "444730sourcePASS;445catalogdiagnosis+446exactprefixcandidate adopted asofflineonly;148carrierincrement inprogress, D1source732nextwhenfixed.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
@@ -14232,6 +14236,15 @@
       "next": "Existing19normalparent exactcarrier pending; D3fourleafoptimization; F1Demo-reference coherentQA profile",
       "humanFixtureAuthorization": "taskbook01a17b30-d02c-7ee0-b5c2-39ceca0031c8 +01a17b32-3930-7b00-af35-7e8f296b5378, dataonly",
       "notComplete": "37pages67overlays/allstates/realbusiness/history/performance/formalrelease incomplete"
+    },
+    "currentContinuation732": {
+      "status": "ACTIVE",
+      "ui": "normal33SOURCE73157922/151resources actualbuild strict/Vite/3HTTP passed; no整页/allstates/businessPASS",
+      "qaData": "Demo coherent dictionaries/specs/scenario graph delivered; latestuserdocumentsgap nextF1samejob, nottrueDBempty",
+      "history": "normal300.944s terminal: QA+26COMMITTED,0purposeHTTP,180RI definitionnames mismatch proven; D1closedcredentialcontinuationactive, noinit/seed/upgrade replay",
+      "performance": "SOURCE730fourleaf444PASS;148newsourceonlycarrier increment review, accurate10710/10740/10770/10800 and07:30Zdeadline,notactualyet",
+      "budgetAuthorization": "User taskbook explicitlyadopted reasonable budget/progress split;900 oldcarrier notbusinessinvariant. Preservedispatcher10800max,3hresourcecapnotcompletionpromise, no midprefixresumeclaim",
+      "completion": "37pages67overlays/allstates realdata/business/history/performance/formalURL incomplete; no newformalrelease"
     }
   },
   "historicalContinuation500Before716": {
