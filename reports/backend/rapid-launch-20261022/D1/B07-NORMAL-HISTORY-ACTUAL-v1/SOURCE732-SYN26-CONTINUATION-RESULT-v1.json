@@ -1,0 +1,101 @@
+{
+  "registration": "source732ExistingSyn26SessionContinuation",
+  "status": "SOURCE_READY_TARGETED_PROTOCOL_TESTS_PASS_ACTUAL_NOT_RUN",
+  "files": [
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 75954,
+      "sha256": "7c895f29234d743fd344f4d6c4f8028f183d00019b9ce0519bf6a478ec194bda",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 34556,
+      "sha256": "cc9013ad2eba91f016701800ff7a39d95f3f1b9c7d3d1d5b4ce74052079e993c",
+      "mirrorsEqual": true
+    }
+  ],
+  "priorFunctionsAndPathsByteUnchanged": true,
+  "oldParentBaselineSha256": "35d59b70decae1006c31eca9634f8bfef9885c0b23602f8b4d1d361921939ea0",
+  "checks": {
+    "newTargetedTests": {
+      "passed": 7,
+      "skipped": 0,
+      "scope": [
+        "closed newSYN auth1 only / reject old07 and other proof",
+        "one CAS and one normal login/logout / no credentials in records",
+        "current guard privilege version original-key CAS conflicts stop",
+        "unknownCOMMIT same RAM readonly recovery, one UPDATE",
+        "unconfirmedCOMMIT stops, no retry/login",
+        "work failure logout / closure expiration / committed2 retained",
+        "invalid prior evidence closes supplied setup before purpose/secret/write"
+      ]
+    },
+    "node24SyntaxExitCode": 0
+  },
+  "actualDatabaseByD1": false,
+  "actualCredentialRenewalByD1": false,
+  "actualNormalSessionByD1": false,
+  "old07Changed": false,
+  "oldCredentialRenewalModuleChanged": false,
+  "actualSeedUpgradeAclV21Replay": false,
+  "newDdlGrantTriggersAudit": false,
+  "interfaces": {
+    "parent": "runB07ExistingSyn26SessionContinuationParent({plan,setupClient,withRecoveryClient})",
+    "parentContract": "B07_SYN26_QA_AUTH1_CONTINUATION_PARENT_V1",
+    "fixedOutput": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-01",
+    "gateFile": "CURRENT-PURPOSE-GATE.json",
+    "gateFormat": "B07_SYN_APPROVED_NORMAL_PURPOSE_GATE_V1",
+    "gateRefs": [
+      "runtimeConfiguration",
+      "review",
+      "approvedInput"
+    ],
+    "planAdditionalRefs": [
+      "priorTerminalResult",
+      "priorLifecycle",
+      "publication",
+      "permissionProof"
+    ],
+    "planScalarFields": [
+      "sourceRoot",
+      "sourceKind=SYNTHETIC_ONLY",
+      "realSourceImportVerified=false",
+      "target full fresh actual tuple",
+      "ordinaryRole",
+      "createdAt=original seed timestamp",
+      "changedAt=new canonical time",
+      "registrationReference",
+      "purposeWaitMs0..300000"
+    ],
+    "permissionProofFormat": "B07_SYN26_QA_AUTH1_READONLY_PROOF_V1",
+    "permissionProofFields": [
+      "target basic database/OID16385/acting role",
+      "profile v21/catalogSha256 equal current purpose review",
+      "businessDML0/credentialReadfalse/rollbackReturnedtrue/clientsEndedtrue",
+      "qa account/staff fixed b0714 IDs/version1/authVersion1/notSourcetrue/sourceActorDisabledtrue/liveSessions0",
+      "noOriginalHistoryKeys true",
+      "can_read_identity/can_update_credential/can_revoke_sessions true",
+      "functions actual three known guard name+sha rows ordered as original RENEWAL_SQL.admission",
+      "triggers actual user_account attachments incl immediate account guard and deferred root/admin enabled with exact OID/name/routine/deferrable flags"
+    ],
+    "permissionSessionSemantics": "Original revocation is UPDATE auth_session.revoked_at, no session history DELETE; existing normal factory/issuer must additionally pass its original auth ACL/current review."
+  },
+  "executionOrder": [
+    "parent verifies pinned original terminal no-purpose/noHTTP boundary and closed workers, archived original publication metadata; never rereads stopped19 as current",
+    "new currentpurpose/RI/config/review/approvedInput/proof and original production factory+real issuer resolved BEFORE QA secret",
+    "same-TX current target/guard/trigger/schema26/existing four-column privileges+RLS/origin/nonSUPERnonBYPASS, QA1/staff/source absence, original PUBLISH+5 HREV keys absent and virgin heads/effective rows, unchanged bounded SYN facts",
+    "one new RAM secret, exact QA four-column CAS1to2, old session revocation, precise readback and unchanged history/stock/source/audit, original guards remain active",
+    "unknownCOMMIT same-RAM fresh READ ONLY matching current secret Boolean/version2+unchanged facts, rollback/read client cleanup; never second UPDATE or old-client rollback after uncertain ACK",
+    "one auth2 normal login/full unchanged approved runner/logout; API/read/setup cleanup and T45 ownPG stop"
+  ],
+  "next": "C fixed source and originalQB only these two affected leaves; T45 finite actual new-target permission/preimage proof and currentpurpose/RI readiness, then C one exact execution registration. No sourcePASS implies actual or publication release.",
+  "notTested": [
+    "Actual SYN26 QA credential CAS/recovery",
+    "Actual auth2 session and APPROVED/HREV/real23505 rollback",
+    "Real-source complete import",
+    "Formal business release"
+  ]
+}
