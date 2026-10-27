@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 748,
+    "round": 749,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation748",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation749",
     "fixedSource": "SOURCE747d36a6c173680f2752479ca6f72d86dd3e5e96f62 exactGitHubverified; source748 records actual outcomes",
     "fixedCandidates": {
       "synthetic": {
@@ -5095,7 +5095,7 @@
       "F4": "Completed category empty-state source patch, original effective evidence reused; await actual dictionary/barcode/season/group capabilities.",
       "D1": "Only failed rollback companion four harness logical leaves lease-preserving fix; no normalPASS/auth3 replay.",
       "D2": "151 fullcatalog exact131-required diff delivered; original seven production leaves and452REV3 evidence unchanged; wait original patch execution/current proof.",
-      "D3": "Only host/test logical-physical metadata read wiring gap repair; provider two leaves744 frozen. Job26 field mapping draft ready.",
+      "D3": "Originalhost/test exact path wiring delta delivered;9 scopedchecks PASS; source749pendingQB seam only. Provider744pair frozen.",
       "T45": "154 actual patches committed, no replay; collect exactcatalog/review then frozen740 preflight. R1 153prefix/runtime actualready; prepare v21 accurate job/review. Failed rollbackkey RO next afterD1 exactqueries.",
       "QB": "459 source/currentpurpose normal04 adopted; new native154 currentcatalog two product-purpose review next, original452source reused.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
@@ -14390,6 +14390,25 @@
       "native154": "Actual COMPLETED0/2.723471319s at06:11:34.805054Z. Existing category thenv19 original full SQL preconditions passed, both COMMIT_RETURNED;129to130to131, source740routines matchtrue, canonical2d1d7a99747c13c86bf7a7eaa0f318d4e16d6fc75ed7a6324dc4f78b950fc741. No initialization/seed/businessDML/PUBLISH. New two-purpose review and frozen740 RO preflight next. Never replay patches.",
       "R1prefix153": "Actual RRRO originalR1/OID1027659/runtime: STAGEDseq2cursor22/WAREHOUSE22/expected empty/historypayloadnull; original109receipt prefix0, all109uncommitted suffix. Node24.21.0/pg8.23.1 actualidentity; no command issued, closed.",
       "v21": "QB458 source PASS retained, full120module identity/152 evidence ready; D3 deterministic logical/physical decision-review path gap proven. Only originalhost/test registered minimal precise resolver wiring, provider two leaves frozen; no actualMAIN/PUBLISH before fixed delta/QB/evidence job currentruntimeReview."
+    },
+    "currentContinuation749": {
+      "status": "HOST_PATH_WIRING_SOURCE_READY_PENDING_AFFECTED_QB",
+      "files": [
+        {
+          "path": "scripts/import-v3/production-source-host.mjs",
+          "bytes": 40653,
+          "sha256": "ed6ee18c0c0a08991b63dce6611ef4c3c17e22d8f9217c9371fe812c9fc5f73b"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.test.mjs",
+          "bytes": 47777,
+          "sha256": "ec12e9be19b537ba78e6e7d6aba30a08204f7cf06b65ac3e9413c488e7f346a7"
+        }
+      ],
+      "change": "NonCORE initial decision/review read uses captured existing source reader exact logical-to-physical resolver after session capture but before preflight/group construction/DB activation. Logical job identity,79map and resolver whitelist preserved. CORE unchanged; legacy no-resolver original physical path supported. Wrong resolver rejects without fallback.",
+      "checks": "OriginalD3 RED logical ENOENT reproduced then GREEN9 scoped host checks/syntax PASS; no real data/PG/server or full suite.",
+      "unchanged": "Provider26 and test exact SOURCE744 pins unchanged; baseline730 algorithms and original109keys unchanged.",
+      "next": "OriginalQB only two-leaf path seam; T45 update unique consumerHost current byteSHA/review while retaining original730baseline/provider; current runtimeReview/job authority and actual111output validation still required."
     }
   },
   "historicalContinuation500Before716": {

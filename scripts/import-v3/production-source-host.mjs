@@ -336,18 +336,7 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
   must(signal instanceof AbortSignal&&!signal.aborted,'IMPORT_SOURCE_HOST_ABORTED');filePath(configFile);
   const bytes=await pinned(configFile,null,1048576),job=validateExecutableSourceHostJob26(JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes)));
   const core=job.binding.phase==='CORE_INITIALIZATION_26_V1';
-  if(!core){
-  const nativeBytes=await pinned(job.sources.referenceDecisionFile,job.sources.trustedReferenceDecisionSha256,8388608);
-  const decision=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(nativeBytes));
-  bag(decision,['schemaVersion','validatorVersion','schemaProfile','batchId','fixedSourceNamespace','selection','mappingFiles','decisions'],'IMPORT_SOURCE_HOST_NATIVE_DECISION_REQUIRED');
-  must(decision.schemaVersion===2&&decision.validatorVersion===NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26&&decision.schemaProfile==='EXACT26'
-    &&decision.batchId===job.binding.batchId&&decision.fixedSourceNamespace===job.binding.fixedSourceNamespace
-    &&decision.selection?.entity==='PRODUCT'&&decision.selection.selectionSha256===job.binding.selectionSha256
-    &&Array.isArray(decision.decisions)&&decision.decisions.length>0,'IMPORT_SOURCE_HOST_NATIVE_DECISION_REQUIRED');
-  // All three are independently supplied metadata pins. Source/native scope is
-  // still checked by the genuine source session and product authorizer below.
-  await pinned(job.sources.reviewFile,job.sources.trustedReviewSha256,4194304);
-  }else await pinned(job.sources.reviewFile,job.sources.trustedReviewSha256,4194304);
+  if(core)await pinned(job.sources.reviewFile,job.sources.trustedReviewSha256,4194304);
   const metadata=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(await pinned(job.runtime26Review.reviewFile,job.runtime26Review.trustedReviewSha256,65536)));
   validateSourceHostRuntimeReview26(metadata,job.binding);
   const independent=bag(metadata.independentReview,['path','sha256','result'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
@@ -371,6 +360,29 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
     const raw=await module.openSourceSession({binding:structuredClone(job.binding),sources:structuredClone(job.sources),database:gate.capability,signal:combined});
     const closeDescriptor=Object.getOwnPropertyDescriptor(raw??{},'close');if(closeDescriptor?.enumerable&&Object.hasOwn(closeDescriptor,'value')&&typeof closeDescriptor.value==='function')sessionClose=closeDescriptor.value;
     session=captureNativeSourceSession26(raw,job.binding);
+    if(!core){
+      // Keep logical job identities for the later native authorizer. Only this
+      // initial read resolves them through the captured exact original map.
+      // All native scope checks still precede source-group construction/DB.
+      const resolveFile=Object.getOwnPropertyDescriptor(session.nativeProductSourceReader,'resolveFile')?.value;
+      const readHostReference=async(logical,pin,maximum)=>{
+        active();const physical=resolveFile?await resolveFile({path:logical,sha256:pin}):{path:logical};active();
+        must(physical&&typeof physical.path==='string'&&(physical.sha256===undefined||physical.sha256===pin),'IMPORT_SOURCE_HOST_NATIVE_REFERENCE_PATH');
+        if(physical.bytes!==undefined)must(Number.isSafeInteger(physical.bytes)&&physical.bytes>0&&physical.bytes<=maximum,'IMPORT_SOURCE_HOST_NATIVE_REFERENCE_PATH');
+        const bytes=await pinned(physical.path,pin,maximum);active();
+        must(physical.bytes===undefined||bytes.length===physical.bytes,'IMPORT_SOURCE_HOST_NATIVE_REFERENCE_PATH');return bytes;
+      };
+      const nativeBytes=await readHostReference(job.sources.referenceDecisionFile,job.sources.trustedReferenceDecisionSha256,8388608);
+      const decision=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(nativeBytes));
+      bag(decision,['schemaVersion','validatorVersion','schemaProfile','batchId','fixedSourceNamespace','selection','mappingFiles','decisions'],'IMPORT_SOURCE_HOST_NATIVE_DECISION_REQUIRED');
+      must(decision.schemaVersion===2&&decision.validatorVersion===NATIVE_PRODUCT_REFERENCE_DECISION_VERSION_26&&decision.schemaProfile==='EXACT26'
+        &&decision.batchId===job.binding.batchId&&decision.fixedSourceNamespace===job.binding.fixedSourceNamespace
+        &&decision.selection?.entity==='PRODUCT'&&decision.selection.selectionSha256===job.binding.selectionSha256
+        &&Array.isArray(decision.decisions)&&decision.decisions.length>0,'IMPORT_SOURCE_HOST_NATIVE_DECISION_REQUIRED');
+      // All three are independently supplied metadata pins. Source/native scope is
+      // still checked by the genuine source session and product authorizer below.
+      await readHostReference(job.sources.reviewFile,job.sources.trustedReviewSha256,4194304);
+    }
     await completed(session.preflight,structuredClone(job.binding));await completed(session.assertExecutionAllowed,structuredClone(job.binding));active();
     if(!core){product=await openNativeProductAuthorizer26({sourceReader:session.nativeProductSourceReader,referenceDecisionFile:job.sources.referenceDecisionFile,
       trustedReferenceDecisionSha256:job.sources.trustedReferenceDecisionSha256,mappingFiles:job.sources.mappingFiles,

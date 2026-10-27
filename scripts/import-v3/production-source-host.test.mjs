@@ -194,7 +194,7 @@ async function negativeHost26Fixture(t,mode){
  if(mode==='adopted-denied')Object.assign(j.binding,{phase:'FULL_SOURCE_CONTINUATION_26_V1',coreSourceDigest:sha('c'),coreReceiptId:id(999)});
  const marker='host26:'+dir;globalThis[marker]={opened:0,closed:0,closedGate:false};t.after(()=>{delete globalThis[marker];});
  const groups=requiredNativeSourceInputs26().closureSourceGroups,code=`export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';export const sourceGroups=${JSON.stringify(groups)};export async function openSourceSession({binding,database}){const m=globalThis[${JSON.stringify(marker)}];m.opened++;${mode==='early'?'database.ready();':''}const close=async()=>{m.closed++;try{database.ready();}catch(e){m.closedGate=e.code==='IMPORT_SOURCE_HOST_DATABASE_PRECHECK';}};${mode==='malformed'?'return {close};':''}return {close,async *steps(){},async authorizeStep(){},async assertExecutionAllowed(){},async assertAllowed(){},async authorizeNativeCommand(){},async preflight(){${mode==='boolean'?'return true;':mode==='adopted-denied'?"throw Error('PRODUCTION_ADOPTED26_EVIDENCE');":''}},openSources:Object.fromEntries(sourceGroups.map(g=>[g,async()=>{}])),closureScope:{batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selectionSha256:binding.selectionSha256,authorizedPayloadHash:binding.authorizedPayloadHash,expectedCounts:{},expectedSourceEntityCounts:{}},nativeProductSourceReader:{async authorize(){}},${mode==='adopted-denied'?"adoptedClosure:{async expected(){throw Error('NO_SOURCE_ITERATOR');},async authorizeStage(){},async authorizePublish(){}},bootstrap26:null":'bootstrap26:{async authorizeStageSourceActor(){},async stageNewBatch26(){}}'}};}`;
- const provider=await save('provider.mjs',code);j.providers={path:provider.path,sha256:provider.sha};const config=await save('job.json',j);return {configFile:config.path,marker};
+ const provider=await save('provider.mjs',code);j.providers={path:provider.path,sha256:provider.sha};const config=await save('job.json',j);return {configFile:config.path,marker,dir,job:j,save,native,productReview};
 }
 test('executableHost26 denies provider target access and closes malformed sessions before any pool activation',async t=>{
  for(const mode of ['early','malformed']){const f=await negativeHost26Fixture(t,mode);await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),mode==='early'?/DATABASE_PRECHECK/:/SESSION_REQUIRED/);assert.equal(globalThis[f.marker].opened,1);assert.equal(globalThis[f.marker].closed,mode==='early'?0:1);if(mode==='malformed')assert.equal(globalThis[f.marker].closedGate,true);}
@@ -293,4 +293,48 @@ test('source742 host refuses unadmitted evidence in preflight while target capab
  const f=await negativeHost26Fixture(t,'adopted-denied');
  await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/PRODUCTION_ADOPTED26_EVIDENCE/);
  assert.equal(globalThis[f.marker].opened,1);assert.equal(globalThis[f.marker].closed,1);assert.equal(globalThis[f.marker].closedGate,true);
+});
+
+async function logicalHostReferenceFixture(t,{resolver=true,change=null}={}){
+ const f=await negativeHost26Fixture(t,'void'),j=f.job;
+ const logicalNative=f.dir+'/not-a-physical-directory/native.json',logicalReview=f.dir+'/not-a-physical-directory/review.json';
+ if(change==='batch'||change==='selection')f.native=await f.save('native.json',{schemaVersion:2,validatorVersion:'NATIVE_PRODUCT_REFERENCE_DECISIONS_V2_EXACT26',schemaProfile:'EXACT26',batchId:change==='batch'?id(999):j.binding.batchId,fixedSourceNamespace:j.binding.fixedSourceNamespace,selection:{entity:'PRODUCT',selectionSha256:change==='selection'?sha('f'):j.binding.selectionSha256},mappingFiles:[],decisions:[{synthetic:true}]});
+ if(change==='oversized-native')f.native=await f.save('native.json','x'.repeat(8388609));
+ if(change==='oversized-review')f.productReview=await f.save('native-ref-review.json','x'.repeat(4194305));
+ j.sources.referenceDecisionFile=resolver?logicalNative:f.native.path;j.sources.reviewFile=resolver?logicalReview:f.productReview.path;
+ j.sources.trustedReferenceDecisionSha256=f.native.sha;j.sources.trustedReviewSha256=f.productReview.sha;
+ const {stat}=await import('node:fs/promises');
+ const locations=await Promise.all([[logicalNative,f.native],[logicalReview,f.productReview]].map(async([logical,physical])=>{
+  const ref={path:physical.path,bytes:(await stat(physical.path)).size,sha256:physical.sha};return{logical:{...ref,path:logical},physical:ref,kind:'METADATA',roles:['synthetic-host-reference']};
+ }));
+ if(change==='pin')j.sources.trustedReferenceDecisionSha256=sha('f');
+ if(change==='review-pin')j.sources.trustedReviewSha256=sha('f');
+ if(change==='unlisted')locations.shift();
+ const providerUrl=new URL('./production-source-provider26.mjs',import.meta.url).href;
+ const code=`import {sourceFileResolver26} from ${JSON.stringify(providerUrl)};export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';export const sourceGroups=${JSON.stringify(requiredNativeSourceInputs26().closureSourceGroups)};
+ export async function openSourceSession({binding,database,sources}){const m=globalThis[${JSON.stringify(f.marker)}];m.opened++;m.events=[];
+ const resolve=sourceFileResolver26({fileLocations:${JSON.stringify(locations)}});
+ return{async close(){m.closed++;try{database.ready();}catch(e){m.closedGate=e.code==='IMPORT_SOURCE_HOST_DATABASE_PRECHECK';}},async *steps(){throw Error('NO_EXECUTION');},async authorizeStep(){},async assertExecutionAllowed(){},async assertAllowed(){},async authorizeNativeCommand(){},
+ async preflight(){m.events.push('source-groups-preflight');if(sources.referenceDecisionFile!==${JSON.stringify(j.sources.referenceDecisionFile)}||sources.reviewFile!==${JSON.stringify(j.sources.reviewFile)})throw Error('LOGICAL_IDENTITY_CHANGED');throw Error('HOST_REFERENCES_VERIFIED_BEFORE_GROUPS');},
+ openSources:Object.fromEntries(sourceGroups.map(g=>[g,async()=>{throw Error('NO_GROUP_CONSTRUCTOR');}])),closureScope:{batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selectionSha256:binding.selectionSha256,authorizedPayloadHash:binding.authorizedPayloadHash,expectedCounts:{},expectedSourceEntityCounts:{}},
+ nativeProductSourceReader:{async authorize(){},${resolver?"async resolveFile(ref){m.events.push('resolve:'+ref.path);return resolve(ref);}":''}},bootstrap26:{async authorizeStageSourceActor(){},async stageNewBatch26(){}}};}`;
+ const module=await f.save('logical-provider.mjs',code);j.providers={path:module.path,sha256:module.sha};const config=await f.save('logical-job.json',j);f.configFile=config.path;
+ return f;
+}
+test('source754 host resolves original logical metadata before source-group preflight and keeps target closed',async t=>{
+ const f=await logicalHostReferenceFixture(t);
+ await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/HOST_REFERENCES_VERIFIED_BEFORE_GROUPS/);
+ const m=globalThis[f.marker];assert.equal(m.opened,1);assert.deepEqual(m.events,['resolve:'+f.job.sources.referenceDecisionFile,'resolve:'+f.job.sources.reviewFile,'source-groups-preflight']);assert.equal(m.closed,1);assert.equal(m.closedGate,true);
+});
+test('source754 bad native pin, scope, missing exact map or original byte limit refuses before groups and activation',async t=>{
+ for(const change of ['pin','review-pin','batch','selection','unlisted','oversized-native','oversized-review']){
+  const f=await logicalHostReferenceFixture(t,{change});
+  await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}));
+  const m=globalThis[f.marker];assert.equal(m.events.includes('source-groups-preflight'),false);assert.equal(m.closed,1);assert.equal(m.closedGate,true);
+ }
+});
+test('source754 legacy physical metadata without resolver still validates before preflight',async t=>{
+ const f=await logicalHostReferenceFixture(t,{resolver:false});
+ await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/HOST_REFERENCES_VERIFIED_BEFORE_GROUPS/);
+ assert.deepEqual(globalThis[f.marker].events,['source-groups-preflight']);assert.equal(globalThis[f.marker].closedGate,true);
 });
