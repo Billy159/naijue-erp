@@ -1,0 +1,28 @@
+{
+  "status": "EXACT_CONTROLLER_AUTHORITY_ISSUED_ACTUAL_EXECUTION_PENDING",
+  "v21": {
+    "scope": "EXACT_SOURCE749_ADOPTED148_R1_NATIVE_FULL_CONTINUATION",
+    "jobId": "t45-source744-adopted148-consumer-preparation-20261027-152",
+    "mode": "FULL_NATIVE_CONTINUATION",
+    "controllerGrantBytes": 37012,
+    "controllerGrantSha256": "016e6389e65bde249b77013fdfbbd654a2ee347a01cff7c74ac82ac0a9157100",
+    "userApproval": "Current direct user v21 confirmation; original actual import/release authorization retained.",
+    "dataDigest": "a29c494174acf28faf350a3ad67c80f3a341a09da388dc7afc5380deffbd1748",
+    "controllerBindingCheck": "Original historySettlementRequestHash on exact six data fields independently calculated equal; adoptedPreparation exactref equal; template only issuingAuthority/realImportExecutionAuthorized changed.",
+    "deadlineUtc": "2026-10-27T09:00:00Z",
+    "originalArtifactRefs": 111,
+    "originalCommands": 109,
+    "committedPrefixActual153": 0,
+    "requirements": "Full runtime source/body42561-doc verification and original DB allmember/root/count/money/currentpermission/transaction guards mandatory; durable perstep journal; unknown COMMIT originalkey recovery only. No original148 reprepare, no app/public route change."
+  },
+  "rollbackOnly02": {
+    "scope": "ONE_ORIGINAL_SYN26_ROLLBACK_ONLY_CURRENT_PURPOSE",
+    "source": "SOURCE75091e8e20b4baadb902b96e6fd400413604e1a9b6d",
+    "preparedIndependentReview": "QB465",
+    "exactAuthorityIssued": true,
+    "deadlineUtc": "2026-10-27T08:00:00Z",
+    "latestStartUtc": "2026-10-27T07:45:00Z",
+    "requirements": "Fresh465purpose, currentQA3/3, fixed originalkey/IDs; no normalcase/login/CAS/secret, committedkey exactrecover-stop."
+  },
+  "actualResult": "Not yet available; execution authorization is not MAIN/PUBLISH/rollback PASS or formal release."
+}

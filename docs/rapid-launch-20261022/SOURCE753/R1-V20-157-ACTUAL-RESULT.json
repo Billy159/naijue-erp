@@ -1,0 +1,84 @@
+{
+  "status": "PASS_CURRENT_R1_V20_METADATA_READONLY_NO_EXECUTION",
+  "jobId": "t45-r1-v20-current-metadata-catalog-readonly-20261027-157",
+  "terminal": {
+    "jobId": "t45-r1-v20-current-metadata-catalog-readonly-20261027-157",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-9410471d87f7",
+    "atUTC": "2026-10-27T06:49:42.275301+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 1.6219935968983918,
+    "exports": [
+      "engine-result.json",
+      "r1-v20-catalog.json",
+      "r1-v20-metadata.json",
+      "r1-v20-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T06:49:44.033622+00:00"
+  },
+  "actual": {
+    "jobId": "t45-r1-v20-current-metadata-catalog-readonly-20261027-157",
+    "status": "COMPLETED_CURRENT_R1_V20_METADATA_CATALOG_READONLY",
+    "businessDML": 0,
+    "grantIssued": false,
+    "metadata": {
+      "file": "r1-v20-metadata.json",
+      "bytes": 567,
+      "sha256": "b9bc7bf416db345a179f8025dc52c877dc59a14707f527a04496de680e567c64"
+    },
+    "catalog": {
+      "file": "r1-v20-catalog.json",
+      "bytes": 1236079,
+      "sha256": "95dbc3b467cf59b7247da7bfc939818c67d4841f629dbbbd2f6a5ff049eaf9df"
+    },
+    "sourceRoutinesMatch": true,
+    "identity": {
+      "database": "erp_rewrite_20261022_r1",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database_oid": "1027659",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "canonicalSha256": "a9128360bad77c83afa4f6da8eafab2117a2a5d96d3a8bf23243e20617133cf5",
+    "rollbackReturned": true,
+    "clientsClosed": true
+  },
+  "controlExports": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/job.json",
+      "bytes": 601,
+      "sha256": "f768cac004f71973b59ba161a9c5d825d7140a634a96662033720876d410327e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/engine-result.json",
+      "bytes": 387,
+      "sha256": "3302c686f48d02d657e3a6c560890feac811850e66929d84e79e2513aab0f953"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-metadata.json",
+      "bytes": 780,
+      "sha256": "57a53630c21a3203f826be9a0752605c8e5174b042af3005e01ee06433bbf4d0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-catalog.json",
+      "bytes": 1448690,
+      "sha256": "5e3a327c3879f133251115f1629af7055fbb98f05b6d43edb18e5c2c3d5503c6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/release-submission/release-receipts/t45-r1-v20-current-metadata-catalog-readonly-20261027-157/r1-v20-result.json",
+      "bytes": 1099,
+      "sha256": "2d445ec92ab3b315705f14aea290bdb17fd66156edea1e73e9e2c952db09760e"
+    }
+  ],
+  "note": "Root raw byte pins in actual differ from pretty-printed control export pins; canonical a912 is shared. Metadata check only; no MAIN/PUBLISH or business acceptance."
+}
