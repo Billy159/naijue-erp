@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T14:28:50.897573+00:00",
+  "updatedAt": "2026-10-27T14:38:12.301491+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "28b07dc5a2fe8b00a370f0952b0cb090fe3f73e4",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -14854,6 +14854,14 @@
       "runtimeLimits": "Actualstatement120000/max1/conn10000/idle10000 +outer1800/deadline16:30Z; query125000/lock3000/idletxn30000 unimplemented/notclaimed. No codechanges.",
       "next": "T45 preserve184liveprocess and collectterminal; if successactualkeyreceipt/109PUBLISH then fullreadback/D2freshQA; iffailureoriginalkey recovery beforefix. QA185automaticalready-authorized next onlyafterresourcehandoff, no duplicate dispatch.",
       "goal": "Previousturnverifiedwait, thisturnprepared exactQA executionauthority plusactualUIqueuechecks. Overall37/67/realhistory/performance/formal ACTIVE incomplete."
+    },
+    "currentContinuation785": {
+      "status": "184_ACTUAL_FIRST_BIND_PREFIX_MISMATCH_186_ORIGINAL_KEY_RECOVERED_NO_RECEIPT",
+      "184": "FAILED2/1225.322807272s/2026-10-27T14:34:01.858737Z; originalhost/adopted148evidence/runtimeissuer returned, originalnative sequence ordinal1 BIND digest4e546e failed CORE_STAGED_PREFIX_MISMATCH/FAILED_OUTCOME_UNVERIFIED; hostclosed/stderr0/APPunchanged. No exactreason/SQLSTATE/group/field/stack captured.",
+      "186": "COMPLETED0/1.873062246s/2026-10-27T14:35:55.889Z; originalkey97d9c78b-d846-47af-a3d9-38d9f1ee83c8 receipt[], batchSTAGED/seq2/cursor22/WAREHOUSE22/other0/historyhashnull; 3SELECT/RRRO/ROLLBACK/clientsclosed. Snapshotnotglobal0writes proof.",
+      "response": "No184replay/suffix/newkey/186repeat. OriginalD1 onlytwo QAcontrolfiles staticDomainErrormessage strictwhitelist→reasoncategory plus basename:line if safe, unknowndynamicredacted. No productionadapter/SQL/expected/issuer/lease/querywrapper/rowvalues changes. Minimal1-2 outputincrementchecks then originalQB onlyoutputdelta.",
+      "QA185": "Originalsignedplan/authority remains, executionnotstarted; deferold475controlpins to avoidfullprefix retrywith no diagnostic. Cupdate exactnewtwo controlpins after review, one genuineordinaryQA RRRO fullcontents+coverage+reason observation, noBIND/DML/COMMIT/negativefixture. 184hostclosed/resourcesreturned.",
+      "remaining": "Actualmismatchcauseunknown; nextobservation determines targetedfix. OriginalSQL/148/INIT/109 identities protected, cannot relabelPASS or modify source tofitactual. Full37/67/history/performance/formal remainACTIVE incomplete."
     }
   },
   "historicalContinuation500Before716": {

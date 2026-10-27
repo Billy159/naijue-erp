@@ -1,3 +1,5 @@
+SOURCE785：184真实FAILED2/1225.323秒，14:34:01Z，source/evidence/issuer均返回，首BIND DOMAIN CORE_STAGED_PREFIX_MISMATCH，精确reason未留=UNKNOWN。186原key三SELECT真实恢复receipt[]/batchSTAGED2cursor22/WAREHOUSE22，RRRO回滚关闭；不能扩大为全表0write。旧184/186不重/不续后缀。D1仅两QAcontrol补strict静态白名单reason输出，原QB只此增量；不改生产源/SQL/expected/lease或凭猜改数据。185尚未提交，等新输出层固定后同一次实际QA内容覆盖定位，避免再整prefix只返总码。37页67弹层与真实业务/历史/性能/正式发布未完成。SOURCE784远端6c887006已核。
+
 SOURCE784：原184同unit仍真实RUNNING等待，内部阶段无证据不猜PASS；主控只要求原通道已有progress小投影能力核实，不新诊断job。F1/F4实际终态与已集成成果复用，无新重复任务。C已真实签185只读plan/authority/fixture并纯schema检查PASS，原T45在184终态或资源交还后可直接准确物化缺SQL/最终refs及3JSON→QA genuineordinary RRRO内容覆盖核验/回滚；0R1DB/BIND/DML/COMMIT/测试变体，实际尚未执行。真实已实施限额及未实现3限额如实记录。SOURCE783远端12e5f6a2已核；37页67弹层/真实业务历史/性能/正式发布仍ACTIVE未完成。
 
 SOURCE783：184已真实单次提交、unit7bab0ad69985由原T45原keycollect确认RUNNING，autoRetryfalse；当前dispatcher仅终态export，内部source/issuer/BIND阶段无可见证据，不冒PASS。C/T45继续同handle等，不插服务器job/重184。QA185原D1仅3JSON准备，T45确认180后未QA业务写；缺sourceSQL同byte物化及实际184三finalrefs、Cauthority，仅该只读分支等待。限额只记冻结真实statement120000等，未实现query/lock/idletxn不冒生效。SOURCE782远端8db459f3已GET准确并修本地tracking旧值，原CAS失败记录保全。37页67弹层/真实历史/性能/正式发布仍ACTIVE未完成。
