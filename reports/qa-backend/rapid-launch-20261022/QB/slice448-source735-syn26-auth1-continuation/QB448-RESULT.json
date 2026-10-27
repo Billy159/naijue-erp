@@ -1,0 +1,44 @@
+{
+  "reviewId": "QB448",
+  "decision": "PASS_SOURCE735_FIXED_TWO_LEAF_SYN26_AUTH1_CONTINUATION_ONLY_NOT_ACTUAL",
+  "fixedCommit": "2a9d3d5f9443d808630ddb174024f2af9202341a",
+  "sourcePins": [
+    {
+      "path": "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 75954,
+      "sha256": "7c895f29234d743fd344f4d6c4f8028f183d00019b9ce0519bf6a478ec194bda"
+    },
+    {
+      "path": "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 34556,
+      "sha256": "cc9013ad2eba91f016701800ff7a39d95f3f1b9c7d3d1d5b4ce74052079e993c"
+    }
+  ],
+  "ownerResult": {
+    "bytes": 5922,
+    "sha256": "47ebf49fac706b0e7ef2b637acdecabd394395229f1161a189f078fcb0398915"
+  },
+  "checks": [
+    "FixedGit and originalK twoleaves exact releasedpins/mirror equality. Removing additive source732 block/import and newtest block including separator restores originalparent35d59/testf06d exactly; originalold07 primitive/renewal and seed/upgrade/ACL/publication paths not changed.",
+    "Parent closed sameSYN26 DB/OID16385/QA b0714/currenttarget/outputcredential-continuation-01. Pinnedterminal firstseed11upgrade+ACL/v21COMMIT/no-purpose/noHTTP and closedworkers/ownPG required; originalpublication references reused. Existingoutput/result/intent refuse overwrite.",
+    "Currentgate/config/review/catalog+proof equality, originalnormalproductionfactory and genuineissuer resolved before CASsecretgeneration. SameTX currenttransport/target/schema26/origin/RLS/nonSUPERnonBYPASS/current3functionbodies+triggerattachments and4credentialcolumns/revocationprivileges compared again. No rolecreation/grant/triggerdisable/ownerfallback implemented.",
+    "FixedQA auth1/version1 preimage/staff/sourceabsence/disabledsourceactor/liveSessions0, original5HREVkeysabsent/APPROVEDvirginheads/noeffective, originalPUBLISH+audit and boundedallsource/history/stock/audit/receipts snapshots required. CAS1to2 only one four-columnUPDATE +originalsessionrevoked_atUPDATE, readbackand unchangedfacts checked beforeCOMMIT.",
+    "Secret/hash remain RAM and intent excludescredentials. UnknownCOMMIT uses supplied recovery-client lifecycle for RR READ ONLY sameRAM hash-equalityBoolean/version2/time/facts/currentadmission readback; no secondCAS/rekey/login onunknown or olduncertainclientROLLBACK. CallerT45 must bind genuinelyfreshclient/close lifecycle.",
+    "Once auth2 normal login/sessionfixedprincipal/approvedrunner/logout with privatecookie. Failure keeps committed2 boundary/noautoresave; escaped sessionclosure expires. Parent independently attempts api/readpool/setup end and cleanupunknown cannot PASS; ownPG remainsT45.",
+    "Adopt owner7 finiteprotocolfakePASS/syntax0: closedinputs, onceCAS/session/no recordedsecret, permissions/preimage/key/CASrefusal, unknownsameRAM confirmed/unconfirmed, postcommitworkfailure/logout/closureexpiry, invalidprior setupclose. No actualPG/session/credentialread or oldsuite repeated."
+  ],
+  "remaining": [
+    "T45 finite actualpermission/preimage proof, exactfresh currenttarget/catalog/sixpurpose RI-normalize corrected newworker and sameDATA normalcontinuation carrier registration.",
+    "T45 recoverycallback must own fresh RO connection/end; actualCAS, unknowncommitconfirmation and auth2approvedΔ/23505rollback/cleanup remain untested.",
+    "No seed/upgrade/ACL/PUBLISH replay or old07 auth2to3/generalrenewal authorized by thissource review."
+  ],
+  "actualPostgres": false,
+  "actualCredentialRenewal": false,
+  "actualNormalSession": false,
+  "actualUnknownCommitRecovery": false,
+  "liveReviewIssued": false,
+  "sourceChangedByQB": false,
+  "databaseOrServiceActionByQB": false,
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}
