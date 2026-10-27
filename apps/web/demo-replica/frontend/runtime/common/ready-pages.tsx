@@ -41,7 +41,7 @@ const roles = Object.freeze([
 ]);
 
 /** Session workspaces survive page unmount. Only the selected page loads code or data. */
-export function createReadyPageMounts(options: ReadyPageOptions, navigate: (route: string) => void, prepareRoute?: (route: string, signal: AbortSignal) => Promise<void>) {
+export function createReadyPageMounts(options: ReadyPageOptions, navigate: (route: string) => void | Promise<boolean>, prepareRoute?: (route: string, signal: AbortSignal) => Promise<void>) {
   const { session } = options;
   let owner: ReadScope | null = null;
   let sales: ReplicaSalesSession | null = null, salesView: SalesListViewState | null = null;
@@ -64,12 +64,18 @@ export function createReadyPageMounts(options: ReadyPageOptions, navigate: (rout
     }
     return inventoryContextScope;
   };
-  const openProductInventory = (scope: ReadScope, product: InventoryProductContext['product']) => {
+  const openProductInventory = async (scope: ReadScope, product: InventoryProductContext['product']) => {
     if (!scope.active) return false;
     const contextOwner = inventoryContextOwner();
-    inventoryProductContext = snapshotQueryParameters({ identity: contextOwner.identity, product, previousQuery: inventoryQuery });
-    navigate('inventory');
-    return true;
+    const entry = snapshotQueryParameters({ identity: contextOwner.identity, product, previousQuery: inventoryQuery });
+    inventoryProductContext = entry;
+    let accepted = false;
+    try {
+      accepted = await navigate('inventory') === true;
+      return accepted;
+    } finally {
+      if (!accepted && inventoryProductContext === entry) inventoryProductContext = null;
+    }
   };
   const productRecovery = new Map<string | null, ProductMaintenanceCommand>();
   let catalogue: CatalogueCommandSession | undefined;

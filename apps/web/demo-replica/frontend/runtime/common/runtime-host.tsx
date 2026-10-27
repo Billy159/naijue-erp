@@ -75,7 +75,7 @@ export function mountNormalReplica(options: ReadyPageOptions & { readonly page: 
  const { session, page, app, breadcrumb } = options;
  if (options.transportMode === 'same-origin-https' && (location.protocol !== 'https:' || location.origin !== session.http.origin)) throw new TypeError('正常运行需要已配置的同源 HTTPS。');
  app.dataset.replicaTransport = options.transportMode;
- const pages = createReadyPageMounts({ ...options, inventory: { ...options.inventory, onOpenSource: options.inventory.onOpenSource ?? openInventorySource } }, next => { void navigate(next); }, options.prepareRoute), chromeHost = document.createElement('div');
+ const pages = createReadyPageMounts({ ...options, inventory: { ...options.inventory, onOpenSource: options.inventory.onOpenSource ?? openInventorySource } }, next => navigate(next), options.prepareRoute), chromeHost = document.createElement('div');
  chromeHost.dataset.replicaSession = ''; document.body.append(chromeHost); const chromeRoot = createRoot(chromeHost);
  let current: MountedReplicaPage | null = null, scope: ReadScope | null = null, route = '', serial = 0, disposed = false;
  let identity: object | null = null, toastTimer: number | undefined;

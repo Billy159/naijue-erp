@@ -1,3 +1,5 @@
+SOURCE817：SOURCE815独立QF2 NEED_FIX/F01已采用：导航被拒仍留下商品上下文。C已透传真实导航Promise并在拒绝/异常时清理对应pending，草稿/身份守卫不变；runtime类型检查及既有host测试（新增拒绝/异常后普通库存不带商品断言）均exit0，旧警告保留。SOURCE815 normal35/57924已构建151资源但明确未通过，保留不冒新版修复；待本次固定源码QF2仅复F01、T45必要后继normal36。normal34/57923继续原对比，201原watch仍运行、无终态。SOURCE816d024427d已远端准确回读。本次仅源码检查，不算整页UI/真实业务/发布完成。
+
 SOURCE816：P13修复源码固定SOURCE815 f4574831452236e3f66178233a4c23ec97992442，F2库存三叶＋C唯一共享ready-pages接线。库存定向DOM/scoped类型检查通过，C runtime类型检查和既有runtime-host测试exit0（原React警告保留）；editor回调类型问题已修后通过。仅源码/必要检查，不算浏览器或真实业务通过。QF2接原P13独立新范围，原T45下一资源窗口形成不可变normal35；normal34/57923保持给原比较Chat。201继续原watcher，尚无终态，不重跑或并发PG。SOURCE81472558f8b已GitHub准确回读，815及本接续另同步。全站37页67弹层/真实历史可编辑/性能/正式发布仍未完成。
 
 SOURCE814：201原作业继续运行，尚无终态；私有逐步日志当前通道不可安全读取，不绕权限、不重跑或另开数据库探测。既有P1 N34-P13-INVENTORY-CONTEXT-01成对证据已采用，原F2实际Sol-medium接续库存商品带入/返回原查询，C独占ready-pages.tsx共享接线，边界见WRITE-OWNERSHIP.inventoryContext814。F2交typed seam后集成固定新候选，再由QF2只复受影响项；57923/normal34保持不变。104项29未检查/33局部/42差异、整项通过0；37页67弹层和真实业务正式发布仍未完成。GitHub SOURCE813 e18c31cb已远端准确核实。

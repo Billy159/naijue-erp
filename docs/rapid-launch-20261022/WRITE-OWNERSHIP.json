@@ -6614,6 +6614,15 @@
     ],
     "noConcurrentWriter": "CnotF2sharedready-pages; F2notCinventoryimplementation; request exactnewleafbeforeunregisteredfilechanges",
     "evidence": "Existingfixednormal34 P1 paired finding in ui-demo-comparison/20261027-normal32-review/FINDINGS.json plusPROGRESS screenshots; source2357cf5; no fullpagePASS",
-    "next": "F2 deliver minimaltypedseam+fixedleaves→Cwiring→uniqueT45fixedcandidate→QF2affectedactualonly; original34comparisoncontinuesuntouched"
+    "next": "F2 deliver minimaltypedseam+fixedleaves→Cwiring→uniqueT45fixedcandidate→QF2affectedactualonly; original34comparisoncontinuesuntouched",
+    "CFollowupF01": {
+      "reason": "SOURCE815 QF2 F01: rejected product navigation leaves pending context",
+      "files": [
+        "apps/web/demo-replica/frontend/runtime/common/runtime-host.tsx",
+        "apps/web/demo-replica/frontend/runtime/common/runtime-host.test.mjs"
+      ],
+      "writer": "C only",
+      "scope": "Forward existing real navigate Promise<boolean>; clear refused/failed pending context; existing harness targeted refusal/ordinary-entry test. No new interface platform or service changes."
+    }
   }
 }

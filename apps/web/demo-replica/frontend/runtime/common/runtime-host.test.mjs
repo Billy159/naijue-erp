@@ -64,6 +64,8 @@ try {
   b.onLoad({filter:/documents\/(sales|transfers)-session\.ts$/},a=>({loader:'ts',contents:a.path.endsWith('sales-session.ts')?
    'export function createReplicaSalesSession(session){const scope=session.reads.createScope("test-sales-editor");return {scope,dispose:()=>scope.dispose()};}':
    'export function createReplicaTransferSession(session){const scope=session.reads.createScope("test-transfer-editor");return {scope,dispose:()=>scope.dispose()};}export const transferCanLeave=()=>true;'}));
+  b.onLoad({filter:/runtime\/products\/index\.tsx$/},()=>({loader:'tsx',contents:'export async function mountProductDetail(host,options){host.openProductInventory=options.onOpenInventory;return ()=>{};}'}));
+  b.onLoad({filter:/runtime\/inventory\/index\.tsx$/},()=>({loader:'tsx',contents:'export function mountInventoryPage(host,options){host.inventoryOptions=options;return ()=>{};}'}));
  }}]});
  const views=await import(pathToFileURL(viewsOutput).href);
  for(const route of ['sales','transfer']){
@@ -85,5 +87,27 @@ try {
   active.leave();pages.dispose();assert.equal(capturedScopes.every(scope=>!scope.active),true,'dispose releases all list and editor scopes');reads.clear();
  }
  console.log('PASS T27 sales/transfer list state retained on editor reset and discarded on account/session/permission/forbidden changes; all owned scopes disposed. Isolated consumers with real ReadContext.');
+ // P13 F01: a refused/failed navigation must not seed a later ordinary inventory visit.
+ {
+  const reads=new views.ReadContext({accountId:id(900),sessionRevision:'s1',permissionRevision:'p1'}),host=document.createElement('div');
+  const session={reads,http:{origin:'https://catalogue.test',basePath:'/api',fetch:async()=>{throw Error('Navigation seam test must not read HTTP');}},auth:{getSnapshot:()=>({principal:{accountId:id(900),role:'ADMIN'}})},onAccessFailure(){}};
+  let mode='refused',pages;
+  const mountInventory=()=>pages.mount(host,'inventory',reads.createScope('inventory-context-test'));
+  pages=views.createReadyPageMounts({session,routes:{products:true,productFullPage:true,inventory:true},inventory:{},catalogue:{},newRequestKey:()=>id(800)},async()=>{
+   if(mode==='failed')throw Error('route failed');
+   if(mode==='refused')return false;
+   await mountInventory();return true;
+  });
+  const productScope=reads.createScope('product-context-test');
+  await pages.mount(host,'products/view/'+id(401),productScope);
+  const product={id:id(401),label:'actual product'};
+  assert.equal(await host.openProductInventory(product),false);
+  let inventory=await mountInventory();assert.equal(host.inventoryOptions.productContext,undefined,'refused jump cannot leak into sidebar inventory');inventory.dispose();
+  mode='failed';await assert.rejects(host.openProductInventory(product),/route failed/);
+  inventory=await mountInventory();assert.equal(host.inventoryOptions.productContext,undefined,'failed jump cannot leak into sidebar inventory');inventory.dispose();
+  mode='accepted';assert.equal(await host.openProductInventory(product),true);assert.deepEqual({...host.inventoryOptions.productContext.product},product,'accepted navigation receives exact product');
+  pages.dispose();reads.clear();
+ }
+ console.log('PASS P13 refused/failed product navigation clears pending context; successful navigation forwards exact product. Isolated route consumers only.');
  console.log('PASS normal host403 explicit recovery/no retry, navigation/identity cleanup/no write replay; host-owned dirty-leave dialog closes on access loss. Synthetic HTTP and isolated page double only.');
 }finally{await act(async()=>runtime?.dispose());dom.window.close();await rm(temp,{recursive:true,force:true});}

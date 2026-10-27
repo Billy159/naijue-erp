@@ -15960,6 +15960,23 @@
       "server": "201 original watcher active, no terminal receipt; no replay or concurrent PG probe.",
       "github": "SOURCE81472558f8b99e62c151b12e6948d2eb232551a4e85 exact remote GET verified; SOURCE815 + this record pending sync",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation817": {
+      "status": "SOURCE815_QF2_F01_NEED_FIX_FIXED_PENDING_DELTA_REVIEW",
+      "issueId": "N34-P13-INVENTORY-CONTEXT-01/F01",
+      "cause": "Pending product context stored before navigate, while shared host discarded Promise<boolean>; blocked editor leave could leave stale context for a later sidebar visit.",
+      "fix": "C forwards actual runtime navigate Promise, product-inventory helper returns actual result and clears its own pending context on false or rejection; identity scope and draft guard preserved. Only sharedready-pages/runtime-host and existing runtime-host test changed; ownership registered.",
+      "checks": "Replica runtime tsc exit0; existing runtime-host.test.mjs exit0 including added refusal/failure->ordinary inventory no product, successful exact product seam assertions. Existing React warnings retained. No real HTTP/browser/DB claim.",
+      "preview35": {
+        "source": "f4574831452236e3f66178233a4c23ec97992442",
+        "build": "phase2-normal-f457483-35",
+        "address": "http://127.0.0.1:57924/#products",
+        "status": "Built151resources/3.1s/exit0/three keyHTTP200 exact; NEED_FIX_NOT_ACCEPTED due QF2F01; do not use as fixed-source result; preserve normal34/57923."
+      },
+      "next": "OriginalQF2 F01delta only then originalT45 immutable next candidate normal36; Chrome shared by comparison until bounded handover.",
+      "server": "Original201 watcher active; no terminal receipt, no replay/extra PG.",
+      "github": "SOURCE816d024427d6b14ca56dce23a1cd3b6e2ef5c7fbe28 exactremoteverified; this fix pending sync",
+      "goal": "ACTIVE incomplete"
     }
   },
   "historicalContinuation500Before716": {
