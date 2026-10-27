@@ -1,19 +1,23 @@
 {
   "normal-fullsave-v19.mjs": {
-    "bytes": 14597,
-    "sha256": "26cb7ef243f415809779f227a3564b18f24866d7bb8bd07147a69aee6f802dcb"
+    "bytes": 18575,
+    "sha256": "901c921b51a9433ab086238cb94ab9fc863db1517b038f9450734af36c2148cd"
+  },
+  "normal-fullsave-v19.test.mjs": {
+    "bytes": 7351,
+    "sha256": "ea853bc605a141045e5d0c7e248db83404e9a80bd49fe0e7c2d2f0e43b362f20"
   },
   "NORMAL-FULLSAVE-INPUT.json": {
     "bytes": 1963,
     "sha256": "ea9abd281528f25580d266089ec9c6a2f3e89681ac708ed51e859bf919400b16"
   },
   "NORMAL-FULLSAVE-RESULT.json": {
-    "bytes": 7796,
-    "sha256": "badcceb67276bd819efc22b1ba25696627b797dd1fe0569a4b231ae15d24f13c"
+    "bytes": 10627,
+    "sha256": "58e973c89a4bddfe6fe403fd19c58121cf1d38016923d85c81bf106d2b9d47b7"
   },
   "NORMAL-FULLSAVE-HANDOFF.md": {
-    "bytes": 5149,
-    "sha256": "28f10c3e6ed6a092c1ba0608892d8656d2e1c98411d6afc6db7e1b0f82328876"
+    "bytes": 7279,
+    "sha256": "b9f73102d3b513edd33a0d9f37f84bfc67469d08ed0d596e86ce5359008d0b55"
   },
   "V19-IMPLEMENTATION-SOURCE-PINS.json": {
     "bytes": 1355,

@@ -314,3 +314,18 @@ test('SYN diagnostic actual parent error keeps safe prior phase while closing se
  let error;try{await runB07ExistingSyn26SessionContinuationParent({plan,setupClient:f.client,withRecoveryClient:f.withRecoveryClient});}catch(e){error=e;}
  assert.equal(error.syn26ParentFailure.phase,'PRIOR_TERMINAL');assert.equal(error.syn26ParentFailure.errorCode,'B07_SYN26_ORIGINAL_TERMINAL_BOUNDARY_REQUIRED');assert.equal(f.state.setupEnded,1);assert.equal(f.state.updates,0);assert.equal(f.calls.length,0);
 });
+
+// Specific UTC startup seam. These constructor probes never connect to PostgreSQL.
+import {syn26UtcOrdinaryDriver} from './qa-identity-parent.mjs';
+test('SYN UTC driver explicitly aligns normal factory and independent issuer startup timezone with sampling',()=>{
+ const seen=[];class NoConnectionPool{constructor(config){seen.push(config);}}
+ const create=syn26UtcOrdinaryDriver(NoConnectionPool),input={host:'/private/tmp/nj-b07-syn-approved-protocol',port:55714,database:APPROVED_SYN_DATABASE,user:'t45_b07_syn_approved_protocol',password:'PROTOCOL_FAKE_RAM_SHAPE',ssl:false,options:'-c default_transaction_read_only=on',statement_timeout:15000,query_timeout:20000,lock_timeout:4000,replication:'false'};
+ create(input);create({...input});assert.equal(seen.length,2);
+ for(const actual of seen){assert.equal(actual.options,'-c default_transaction_read_only=off -c timezone=UTC');const {options,...other}=actual;const {options:originalOptions,...expected}=input;assert.deepEqual(other,expected);}
+ assert.equal(input.options,'-c default_transaction_read_only=on','Caller config is not mutated');
+});
+test('SYN UTC seam preserves original old07 driver and its diagnostic readonly override',()=>{
+ let oldConfig,newConfig;class OldPool{constructor(c){oldConfig=c;}}class SynPool{constructor(c){newConfig=c;}}
+ const input={host:'PROTOCOL_FAKE_UNIX',port:55714,database:APPROVED_SYN_DATABASE,user:'PROTOCOL_FAKE_ORDINARY',ssl:false};ordinaryDriver(OldPool)(input);syn26UtcOrdinaryDriver(SynPool)(input);
+ assert.equal(oldConfig.options,'-c default_transaction_read_only=off');assert.equal(newConfig.options,'-c default_transaction_read_only=off -c timezone=UTC');assert.equal(Object.hasOwn(input,'options'),false);
+});

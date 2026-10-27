@@ -1,6 +1,6 @@
 {
   "taskId": "D2-V19-NORMAL-PRODUCT-FULLSAVE-ACTUAL-v1",
-  "status": "EXISTING_QA_EXECUTABLE_PREFLIGHT_AND_NORMAL_SAVE_ENTRY_PREPARED_NOT_EXECUTED",
+  "status": "QB452_F01_F02_F04_CLOSED_F03_BIGINT_FIX_READY_PENDING_INDEPENDENT_REVIEW_NOT_EXECUTED",
   "entry": "normal-fullsave-v19.mjs exports preflight(pool,issued,input) and runner(api,pool,issued,input,privateCookie,checkpoint)",
   "input": "NORMAL-FULLSAVE-INPUT.json (fixed originalnativeQA/references/newisolatedfixturekeys, executionEnabled:false)",
   "sourceAccepted": "QB340 exactseven correctedsourcepins remain byte-identical currentR this turn; source review reused, no tests rerun. Actualfullgraph sourceRoot/sourceCheckpoint must be fixed by C/T45, not inferred fromcurrentWIP or historicalSOURCE346.",
@@ -32,13 +32,13 @@
       "Appendoriginalrawcompatibilitycode to exactnewcolorSKU, originalMAIN unchanged, finalversion4/newbarcodes2M+1"
     ],
     "replay": "ExactoriginalCREATE/append receipts+samekeyreplay and zeroadditionalroots/SKU/barcode/audit/receipts; fixedkeysjournal via originalcallercheckpoint beforeeachHTTP. Failurestops preservingphase/originalkey/committedresults; noautomaticretry orcleanup.",
-    "readback": "OriginalcreateProductMaintenanceHttpClientV2+createProductMaintenanceHttpReaderV2 through alreadycreatedfactory.app.inject; requiresnormalrealauth/plugin/service/UOW/actualPG, not baremockservice. Originalprotectedbase800/C1890351 fullroot/SKU/barcodes andinventorycounts unchanged. No stock write.",
+    "readback": "Original V2 client/reader through normal factory. Both original protected roots required; protected root/SKU/barcode and bounded protected inventory key/content retained. Each of four receipt/audit associations read back. Global inventory counts unchanged; no stock writes.",
     "scope": "Baseproduct+SKU/MAIN+compatible save only. Images untouched, noimageChanges field sent. Does not strip imageChanges from a usermedia request; mediaworkflow hasindependentgenuine stage requirement."
   },
   "realRemaining": {
     "2026Fixture": "Knownnative189historicalschemeUUID0207…700 is not2026; currentexistence2026NOT_MEASURED. ApprovedpostCOREinitializer requiresSTAGED/empty6/zeroBARCODE so cannotblindlyrun against alreadyIMPORTEDnative189orupsert intoitsnonempty scheme table. If preflight confirmsmissing, C must pick an alreadyregistered isolatedfixture legitimatelyinitialized2026+published or explicitlyroute minimal approvedoriginalQAsetup viaD1/T45. This is exactdata prerequisite, not newR1grant/MAIN/148wait.",
     "nonowner": "OldC189owner cannotbeusedasnormalnonownerPASS. Existingrole native privileges45 were insufficienthistorically; needcurrentactualreview/precise originalconsumerACL, noD2GRANT.",
-    "localWindow": "T45 canrun inertentry/preflight in originallocalshortwindow throughactualmanagedconnection; artifactsdo notallocate newserver/DB. No currentlyprovenlocalnative189pool/session handedD2, so do notclaimwritewindowready. Remote148Linuxprepare/B07historydiagnostic notlogicalprerequisites.",
+    "localWindow": "CORRECTED actual topology per T45: native189 target is Linux naijue-prod-db-1, not Mac. Original /proc/1780/root/run/postgresql is remote. No authorized same-target Mac pool/issuer found. Unique original dispatcher grant execution.lock LOCK_EX held for whole remote148 job; actual native RO must queue until148 releases. No bypass/newforward/copy/alternateSYN26. B07 not logical prerequisite.",
     "sourceFix": "No newbackendproductsource defect ormissingprovideridentified. QB340sevenleavesunchanged. ActualF2consumerisreplica runtime/products/editor.tsx (notunusedgeneric product-editor.tsx)."
   },
   "F2Consumer": {
@@ -53,12 +53,49 @@
   },
   "localChecks": {
     "Node24Syntax": 0,
-    "inertImportExactExports": "PASS (no DB/API/pool constructed)",
+    "finiteOfflineTests": {
+      "file": "normal-fullsave-v19.test.mjs",
+      "total": 8,
+      "pass": 8,
+      "fail": 0,
+      "scope": "F01 four lease paths; F02 ignore-disable/identity negatives; F03 absent roots and equal-count inventory mutation; F04 exact four operation associations and field mismatch negatives",
+      "method": "preflight with offline pool; private live assertion functions evaluated in same realm without running runner; no fake actualPASS",
+      "execution": "Previous seven retained; current change ran ONLY new F03 adjacent-bigint test (1 PASS), not old F01/F02/F04 or seven production tests.",
+      "bigintCounterexample": {
+        "low": "9007199254740992",
+        "high": "9007199254740993",
+        "legacyJsonNumbersEqual": true,
+        "textQuantitiesDistinctAndDetectedBothTables": true,
+        "sqlProjectionAsserted": true
+      }
+    },
     "productionSourceChanges": 0,
     "oldTestsRerun": 0,
-    "actualInvocation": false
+    "actualInvocation": false,
+    "actualPostgres": false,
+    "actualSaves": 0
   },
-  "next": "C/QB narrownewartifactreview, T45 originalshortwindow firstreadonlypreflight; resolveactualmissing2026/role/session viaoriginalowner only; samefixedinputexecutionEnabled becomestrue onlyonceactualready andoriginaljobjournalapproved. No dependence on148/B07.",
+  "next": "Original QB rechecks only F03 two quantity text overrides and new finite bigint counterexample; F01/F02/F04 independently closed reused. C fixes corrected pins, T45 original Linux dispatcher native RO queue waits148 release. Four actual SAVEs still disabled pending review and real admission.",
   "requestedModel": "gpt-6.1-sol/medium",
-  "fast": "UNVERIFIED"
+  "fast": "UNVERIFIED",
+  "revision": "QB452_F03_BIGINT_TEXT_FIX_02",
+  "reviewAdopted": {
+    "path": "QB/slice452-d2-normal-fullsave-package/QB452-INITIAL-RESULT.json",
+    "bytes": 7085,
+    "sha256": "cf66b7dc0627abbdb39e171fbea4343cf84273820bb581f3075bd0e4e6506ae7",
+    "decision": "NEED_FIX retained; original frozen package unchanged",
+    "findingsFixed": [
+      "QB452-F01",
+      "QB452-F02",
+      "QB452-F03",
+      "QB452-F04"
+    ],
+    "independentFixReview": "QB direct original-thread reply: F01/F02/F04 closed; original F03 remains NEED_FIX for bigint JSON precision, fixed here pending F03-only re-review."
+  },
+  "packageFixes": {
+    "F01": "Nested finally calls release exactly once, rollback failure discards lease; original+rollback errors retained with original SQLSTATE. Successful-read rollback failure also discards; failed BEGIN releases without rollback.",
+    "F02": "Selected actual new SKU and MAIN identities/coordinates retained, both enabled=false after disable/append/final. MAIN lookup explicitly kind MAIN.",
+    "F03": "Exact two protected root ID set before SAVE, protected product inventory ledger/balance keyed full-row comparison in memory with 5001 bounded query/reject over5000; original root/SKU/barcode and global counts checks retained. No all-database fingerprint or claim about unrelated inventory field contents. Follow-up original F03: JSONB full row retains all fields but quantity_delta/quantity overridden as ::text inside the two bounded projections, preventing adjacent bigint rounding beyond2^53. No stored data/type/parser change.",
+    "F04": "Each successful command DB receipt ID/actor/key/type/target/action/status/result and audit operation/actor/object/action/old-new version match exact command/result. Four operation IDs unique. Original receipt API/replays/global deltas retained."
+  }
 }

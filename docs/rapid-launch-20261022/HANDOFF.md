@@ -1,3 +1,11 @@
+SOURCE740最终：原QB452-REV3源码限定PASS5550/16699fe9已采用，商品新包四项发现全部闭合，原三通过复用、仅F03文本数量差异复验；真实PG/预检/四SAVE仍0，不能当业务通过。
+
+SOURCE740再续：D2已交原F03 bigint文本投影修复02（entry18575/901c921b、test7351/ea853bc6），仅新增相邻大整数反例定向PASS，原7项复用，原QB只复F03；其余三项不重验，0实际数据库/四SAVE。
+
+SOURCE740续：D1同两叶SYN UTC连接修复已交（parent82891/7f797f81、test40775/c0a35669，两有限PASS），固定后只交原QB UTC差异，真实修后效果未测。D2四项复验F01/F02/F04已闭合；F03保护快照JSON bigint精度仍NEED_FIX，原owner仅两只读投影改文本并补>2^53相邻值反例，不改生产源，不重过三项。
+
+SOURCE740：构造only57706实际1.945s失败已捕获CREATE_NORMAL_FACTORY/NATIVE_RUNTIME26_NOT_READY/RUNTIME_TARGET_MISMATCH；真实QA1/auth1、451用途审核和gate通过，0secret/CAS/HTTP，owned清理全闭。原D1登记仅SYN UTC普通连接两叶修复（采样UTC/normal未设/服务器Shanghai文本时区接缝），不改strictguard，失败lease具体字段未导出仍待修后实际验证。商品包QB452四项NEEDFIX已交原D2定向修好（7有限PASS），原QB只复验四项；写开关false，实际0。native189核实在远程Linux、原dispatcher LOCK_EX被148持有，非Mac可直接用，需原通道释放后短RO，不绕锁或泛等B07。SOURCE739/ca100ca远端精确已核；normal34/57923仍合成，全站37/67真实业务/历史/性能/正式发布未整体完成。
+
 SOURCE739：QB450 SOURCE738两叶诊断源码PASS、QB451最小构造载体准备PASS均采用，原T45接最终pin后一次240秒构造only实际，0凭据/CAS/HTTP/业务保存，不重旧载体。D2原商品新包已就绪（先RRRO准入，满足条件再原normalhost四次保存），七生产源QB340未变；原QB只审新包，T45核既有native189 QA/原连接，2026方案/普通权限/真实会话尚未测，无正式R1写入、GRANT或盲初始化。F2原consumer接缝明确，等实际同商品/SKU而非148。14804:11:39Z原unit仍真实active，约7.479GiB cgroup/CPU2081.45秒，细阶段未导出，未冒完整成功。SOURCE738/706ad044远端精确已核；normal34/57923合成、37/67全站真实业务及正式发布未整体完成。
 
 SOURCE738：原D1两叶安全阶段/错误码诊断修复已交，4项有限检查及syntax通过，未确认旧运行时具体根因，未重PG/CAS/载体；将固定后交原QB只审该差异，再由原T45做最小构造点诊断。原SYN26实际终态及449当前purpose通过保留，最终auth版本未知。已核D2/F2原Chat终态，D2正式接续普通商品fullSAVE/SKU条码实际最小包与F2准确接缝准备，不笼统等148或历史分支；无新共享writer/正式库测试。SOURCE737/2d8f733远端精确已核。统一normal34/57923仍合成，37/67全站全部状态、真实业务/历史/性能/正式发布未完成。

@@ -1,0 +1,68 @@
+{
+  "status": "SOURCE_SYN_UTC_CONNECTION_SEAM_FIXED_ACTUAL_RECHECK_NOT_RUN",
+  "files": [
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 82891,
+      "sha256": "7f797f816090363e95f961a1c08262f5641bdb1ef4c0056fd5d8752b8ed37915",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 40775,
+      "sha256": "c0a356696e75e74c219c5e1ce99c842b0e7358409851cd1c2a6f9c96692046ac",
+      "mirrorsEqual": true
+    }
+  ],
+  "adoptedActual": {
+    "scope": "construction-only57706",
+    "failedPhase": "CREATE_NORMAL_FACTORY",
+    "errorCode": "NATIVE_RUNTIME26_NOT_READY",
+    "reason": "RUNTIME_TARGET_MISMATCH",
+    "constructed": [],
+    "qaVersion": 1,
+    "qaAuthVersion": 1,
+    "currentProofAndQb451": "PASS_REUSED_NOT_RETESTED",
+    "ownCleanup": "CLOSED_STOPPED_PID_ABSENT",
+    "actualResultBytes": 3668,
+    "actualResultSha256": "12a154484a5badae2d813e472c9ab5d94d412af3aab0e74007a20e1a6bd41a17"
+  },
+  "confirmedSourceDefect": "Review/proof sampling sets timezoneUTC. Original ordinaryDriver replaces startup options with only default_transaction_read_only=off, omitting timezone and inheriting DATA Asia/Shanghai. Both metadata/identity probes render pg_postmaster_start_time()::text and exact issuer guard compares it to review. Session timezone therefore changes the compared text.",
+  "actualFailingLeaseTuple": "NOT_EXPORTED; unique differing field/value is not claimed as fieldwise measured",
+  "fix": [
+    "Added syn26UtcOrdinaryDriver(Pool), startup options off + timezoneUTC, matching approved sampling connection",
+    "Only two closed SYN parent entries use new driver for normal factory and independent read issuer",
+    "Original ordinaryDriver and old07 callsite unchanged, no server-config/GUC source rewrite or issuer guard relaxation",
+    "Factory/issuer/current proof/purposes/business inputs/CAS strategy unchanged"
+  ],
+  "checks": {
+    "targetedNoConnectionFakePoolTests": {
+      "passed": 2,
+      "skipped": 0,
+      "scope": [
+        "both factory/read-issuer driver constructor calls explicitly pass UTC and preserve host/user/timeouts/other fields without mutating input",
+        "old07 ordinaryDriver still exact original off-only options"
+      ]
+    },
+    "node24SyntaxExitCode": 0,
+    "normalizedPriorSourceBaselineSha256": "35d59b70decae1006c31eca9634f8bfef9885c0b23602f8b4d1d361921939ea0"
+  },
+  "actualPostgresByD1": false,
+  "actualFactoryRecheck": false,
+  "actualCarrierReplay": false,
+  "actualCasOrSecret": false,
+  "sourceOrMetadata451Reverified": false,
+  "next": [
+    "C pin and originalQB only two UTC-seam leaf delta",
+    "T45 separately registered construction-only uses NEW syn26UtcOrdinaryDriver export, not old ordinaryDriver; fresh current target/purpose, capture safe phase and cleanup",
+    "Only if construction succeeds C separately registers one existing QA1to2 parent actual continuation; original pub/seed/upgrades/ACL/v21 untouched"
+  ],
+  "notDone": [
+    "actual UTC normal-factory/issuer success",
+    "fieldwise captured failing old lease tuple",
+    "actual credential/session/HREV/real23505 rollback",
+    "real full import or business release"
+  ]
+}

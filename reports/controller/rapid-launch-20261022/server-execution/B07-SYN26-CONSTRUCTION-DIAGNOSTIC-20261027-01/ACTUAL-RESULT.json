@@ -1,0 +1,82 @@
+{
+  "status": "TERMINAL_CONSTRUCTION_FAILURE_CAPTURED_TARGET_MISMATCH_NO_REPLAY",
+  "atUtc": "2026-10-27T04:27:30.044532+00:00",
+  "failedPhase": "CREATE_NORMAL_FACTORY",
+  "diagnostic": {
+    "phase": "CREATE_NORMAL_FACTORY",
+    "errorClass": "Error",
+    "errorCode": "NATIVE_RUNTIME26_NOT_READY",
+    "reason": "RUNTIME_TARGET_MISMATCH",
+    "sourceFrames": [
+      {
+        "file": "native-import-accounting-capability.ts",
+        "line": 526,
+        "column": 66
+      },
+      {
+        "file": "native-import-accounting-capability.ts",
+        "line": 654,
+        "column": 68
+      },
+      {
+        "file": "native-import-accounting-capability.ts",
+        "line": 684,
+        "column": 108
+      }
+    ]
+  },
+  "constructed": [],
+  "currentROQaVersion": 1,
+  "currentROAuthVersion": 1,
+  "currentProofAndPurposePassed": true,
+  "credentialRenewalExecuted": false,
+  "normalSessionExecuted": false,
+  "HTTPAttempted": false,
+  "seedUpgradeRoleGrantPublishExecuted": false,
+  "clientsClosed": true,
+  "workersClosed": true,
+  "ownPgStopped": true,
+  "pidFileAbsent": true,
+  "elapsedSeconds": 1.94514525,
+  "timezoneSeamFacts": {
+    "existingPostgresqlConfTimezone": "Asia/Shanghai",
+    "reviewMetadataConnectionStartupTimezone": "UTC",
+    "normalOrdinaryDriverStartupTimezone": "Not set (only default_transaction_read_only=off)",
+    "guardComparison": "identity.postmaster_start text must equal review.postmasterStart exactly",
+    "failedLeaseIdentityTuple": "NOT_EXPORTED; candidate seam, not direct fieldwise mismatch proof"
+  },
+  "noSourceOrConfigChanged": true,
+  "noServer148Touch": true,
+  "remaining": [
+    "Confirm exact mismatching identity field from same normal connection settings",
+    "Original owner only minimal connection/config fix; guard must remain strict",
+    "No CAS/auth2/approved normal business acceptance"
+  ],
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-CONSTRUCTION-DIAGNOSTIC-20261027-01/NODE-PIPELINE-RESULT.json",
+      "bytes": 1255,
+      "sha256": "5cbdf937be1027948865fbb45a8fae30e7e72d6c5f3d32d9ab9f7da68c71daf0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-CONSTRUCTION-DIAGNOSTIC-20261027-01/OS-LIFECYCLE.json",
+      "bytes": 548,
+      "sha256": "15bd0204c4d837c777c7b5db95fb323f8dc0af0a5c8a7dfee04e1c9d24d38480"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-CONSTRUCTION-DIAGNOSTIC-20261027-01/CURRENT-PERMISSION-PROOF.json",
+      "bytes": 2411,
+      "sha256": "cb779450f6abd8900471c077d3539e13e648360edf735a84d52b0ced843e40a7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-CONSTRUCTION-DIAGNOSTIC-20261027-01/GATE-CONSUMPTION-RESULT.json",
+      "bytes": 1152,
+      "sha256": "02bcefa24a071b8544e50c26f12a06be6adc943717cfbaf8b52cd23f8051750a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice451-syn26-construction-purpose/QB451-LIVE-RESULT.json",
+      "bytes": 8605,
+      "sha256": "9be5c4540d95e115a257dc5b29c921391d7307eb31c4e59634c8ce9aeee3efa2"
+    }
+  ]
+}

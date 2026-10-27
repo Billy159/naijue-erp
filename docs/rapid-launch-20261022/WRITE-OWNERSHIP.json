@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-27T04:06:10.090627+00:00",
+  "updatedAt": "2026-10-27T04:30:26.295472+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -6471,5 +6471,15 @@
     ],
     "status": "DELIVERED_FIXED_PENDING_QB_DELTA",
     "actual": "0PG/0CAS/0carrier replay"
+  },
+  "source740Syn26UtcConnection": {
+    "owner": "D1",
+    "files": [
+      "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
+    ],
+    "scope": "Only SYN dedicated ordinarydriver explicitUTC to match original metadata/review timezone, two closed SYN entry consumers; original old07 driver/calls untouched. Preserve host/user/timeout, strictguard/factory/issuer/serverconfig unchanged. T45 successor uses same exported driver.",
+    "actualEvidence": "construction57706 failedCREATE_NORMAL_FACTORY/NATIVE_RUNTIME26_NOT_READY/RUNTIME_TARGET_MISMATCH; sameROactualQAauth1/version1, constructed0, noCAS/secret/HTTP. Candidate timezone seam source+config confirmed; failedlease exacttuple notexported, onlynextactualcanverify.",
+    "state": "DELIVERED_FIXED_PENDING_QB_DELTA"
   }
 }

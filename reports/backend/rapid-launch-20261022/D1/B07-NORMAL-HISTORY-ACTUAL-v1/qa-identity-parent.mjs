@@ -39,6 +39,9 @@ export function prepareOrdinaryConfiguration(config,target){
  return {...config,postgres:{...config.postgres,target:{...pg,password:randomBytes(32).toString('base64url')}}};
 }
 export const ordinaryDriver=Pool=>options=>new Pool({...options,options:'-c default_transaction_read_only=off'});
+// SYN metadata/review sampling is explicitly UTC. Keep the SAME startup timezone
+// for the real normal factory and its independent read issuer; target guard stays exact.
+export const syn26UtcOrdinaryDriver=Pool=>options=>new Pool({...options,options:'-c default_transaction_read_only=off -c timezone=UTC'});
 export async function pinned(ref,max=2*1024*1024){
  must(ref&&resolve(ref.path)===ref.path&&Number.isInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=max&&/^[0-9a-f]{64}$/.test(ref.sha256),'B07_PARENT_PIN_REQUIRED');
  const s=await lstat(ref.path);must(s.isFile()&&!s.isSymbolicLink()&&s.size===ref.bytes,'B07_PARENT_FILE_REQUIRED');
@@ -441,7 +444,7 @@ export async function runB07ApprovedSynSessionParent({plan:raw,setupClient,after
     &&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_SYN_CURRENT_NONOWNER_PURPOSE_REQUIRED');
    must(stable(input.references)===stable(publication.references)&&stable(input.actor)===stable({accountId:APPROVED_SYN_QA.accountId,hallId:null})
     &&stable(input.target)===stable({database:t.database,oid:t.oid,role:pg.user})&&input.sourceRoot===plan.sourceRoot&&input.origin===config.publicOrigin,'B07_SYN_EXACT_RUNNER_INPUT_REQUIRED');
-   const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=ordinaryDriver(Pool);
+   const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=syn26UtcOrdinaryDriver(Pool);
    const {createProductionRuntime26HistoryRevisionApplicationApi}=await at('apps/api/src/production-provider-composition.ts');
    const {BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts');
    const {createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
@@ -625,7 +628,7 @@ export async function runB07ExistingSyn26SessionContinuationParent({plan,setupCl
    &&review.catalog?.patchLevel===EFFECTIVE_VALUE_PROFILE&&review.catalog.sha256===permissionProof.catalogSha256&&review.target.database===t.database&&review.target.databaseOid===t.oid
    &&review.target.actingRole===pg.user&&review.target.sessionUser===pg.user&&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_SYN26_CURRENT_NONOWNER_REVIEW_REQUIRED');
   phase='ORIGINAL_INPUT_LINKS';must(stable(approvedInput.references)===stable(publication.references)&&approvedInput.sourceRoot===plan.sourceRoot&&approvedInput.origin===config.publicOrigin,'B07_SYN26_ORIGINAL_INPUT_CHANGED');
-  phase='LOAD_RUNTIME_MODULES';const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=ordinaryDriver(Pool);
+  phase='LOAD_RUNTIME_MODULES';const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=syn26UtcOrdinaryDriver(Pool);
   const {createProductionRuntime26HistoryRevisionApplicationApi}=await at('apps/api/src/production-provider-composition.ts'),{BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts'),{createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
   phase='CREATE_NORMAL_FACTORY';resources.api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'},driver);
   phase='CREATE_READ_POOL';resources.readPool=new BoundedPostgresPool(config.postgres,driver);
