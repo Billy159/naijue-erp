@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T16:05:48.185130+00:00",
+  "updatedAt": "2026-10-27T18:54:46.184311+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -15384,6 +15384,43 @@
       },
       "next": "Exactverify existing84+3 and prehoststop/noattempt/live process; wx missing original package members only, metadata/closure then complete never-started signedinner193 once; no replay193/overwrite/arbitrarypaths.",
       "goal": "ACTIVE incomplete37/67/allstates realhistory/performance/formal; no actual107ACCOUNT/PUBLISH PASS"
+    },
+    "currentContinuation804": {
+      "status": "195_ACTUAL_PREFLIGHT_PASSED_HOST_RUNNING_NOT_TERMINAL",
+      "194": {
+        "status": "FAILED2 beforematerialization/credentials/PG; reaped193 unit incorrectly required status2",
+        "receipt": {
+          "bytes": 2364,
+          "sha256": "050fb738bc8472ebf742077a420c2db53e372aa6a0c6cc0a475bf60fd0571a4c"
+        }
+      },
+      "195": {
+        "jobId": "t45-r1-193-reaped-unit-successor-20261028-195",
+        "unit": "naijue-erp-op-5cc58239-e63f5a1c1971",
+        "phase": "PREFLIGHT_PASSED_HOST_STARTING",
+        "phaseAtUtc": "2026-10-27T18:48:15.638033+00:00",
+        "originalBind": "COMMITTED/STAGED3/cursor22/history1acb; noACCOUNT/PUBLISH at preflight",
+        "deadlineUtc": "2026-10-27T20:45:00Z",
+        "authority": "original193 grantc433/inputc538/host0575 unchanged; max7200/4096/12000",
+        "actualCurrentProofAndSuffix": "UNKNOWN_IN_FLIGHT"
+      },
+      "uiComparison": "Original human requested57923 recovery; originalT45 sent fixednormal34 localstatic recovery, no rebuild/noPG/no browserdraft loss; source2357cf5/build34. Fullreport not yet delivered.",
+      "next": "OriginalT45 collect same195 originalkey; localnormal34 restore independently. Adopt actual receipts, no replay or repeated technical review.",
+      "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal",
+      "evidence": {
+        "T45-194-RESULT.json": {
+          "bytes": 2364,
+          "sha256": "050fb738bc8472ebf742077a420c2db53e372aa6a0c6cc0a475bf60fd0571a4c"
+        },
+        "C-195-ADOPTION.json": {
+          "bytes": 2302,
+          "sha256": "7a82075f3e13e221f8ea5073d3294ebb1ab92fd6554320eb58fc04f55aea69dc"
+        },
+        "T45-195-RUNNING-PHASE-01.json": {
+          "bytes": 1112,
+          "sha256": "3133fa9107515ff835d25dac1121f14b28e05e93c94402994894ae3ad976b0fa"
+        }
+      }
     }
   },
   "historicalContinuation500Before716": {
