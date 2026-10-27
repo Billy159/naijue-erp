@@ -1,0 +1,78 @@
+{
+  "registration": "source724ApprovedPublicationRecovery",
+  "status": "SOURCE_FIXED_TARGETED_OFFLINE_PASS_ACTUAL_RECOVERY_NOT_RUN",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/integration/b07-approved-publication-fixture.ts",
+      "bytes": 47617,
+      "sha256": "8417b6e43def70ce34793592d7dd866bf11a61b5c6e37d173b7da7d418591d5d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/tests/sealed-history17-approved-fixture.test.ts",
+      "bytes": 14787,
+      "sha256": "fa9deb989086b5be8e04ff51406f0591bff3b78970bae078eb74698109bf6f64"
+    }
+  ],
+  "failure": "Postcommit finally wrongly asserted cumulative source closes==11 although every expected/authorizeStage reopens all11. It can also mask earlier metadata errors. Original PUBLISH COMMITTED is retained.",
+  "fix": [
+    "Each fresh source session individually tracks open/close; missing/duplicate close rejected, cumulative counts correctly cover repeated authorization.",
+    "Primary error remains unchanged when cleanup succeeds; cleanup failure aggregates original error first.",
+    "readB07CommittedApprovedPublication reads existing committed SYN02 only; no source generation, service.execute, DDL/DML or PUBLISH."
+  ],
+  "checks": {
+    "targetedRegressionTests": {
+      "passed": 4,
+      "skipped": 0,
+      "scope": [
+        "real source-reader repeated expected/authorizeStage closes33",
+        "close-once and original-error preservation",
+        "protocol fake successful readonly original metadata",
+        "protocol fake rejects missing publication/wrong unit/stale postmaster with rollback/release"
+      ]
+    },
+    "targetedStrictTypescriptExitCode": 0
+  },
+  "actualPostgresByD1": false,
+  "actualReadonlyRecoveryByD1": false,
+  "oldAcceptedTargetsReplayed": false,
+  "readOnlyRecoveryInterface": {
+    "function": "readB07CommittedApprovedPublication(pool,target)",
+    "target": {
+      "database": "naijue_erp_test_b07_syn_approved_20261027_01",
+      "oid": "16385",
+      "role": "naijue_erp_test",
+      "postmasterStart": "T45_FRESH_CURRENT_WINDOW_REGISTRATION_REQUIRED_NOT_OLD_STOPPED_TIMESTAMP",
+      "port": "T45_CURRENT_EXACT_PORT",
+      "serverAddress": null,
+      "serverPort": null
+    },
+    "originalOperationId": "89d8e3cb-5b42-4637-ed8c-0adf2091344a",
+    "originalRequestKey": "B07-SYN-APPROVED-V1-PUBLISH",
+    "originalBatchId": "00000000-0000-0000-0000-000000000001",
+    "transaction": "one REPEATABLE READ READ ONLY, successful end by ROLLBACK, release client; T45 owns pool/end/ownPG stop",
+    "verifies": [
+      "current target/isolation/readonly/nonSUPER/nonBYPASS",
+      "actual schema19 guards and versions",
+      "original STAGE/CHUNK/PUBLISH committed, PREPARE absent",
+      "PUBLISH+FINAL+claim+audit+global/document manifests/checkpoint/count closure",
+      "all5 record/claims committed and finite target counts",
+      "APPROVED original SALE/TRANSFER versions/date/raw state, full16/1 lines and SALE settlement32, exact original warehouse/SKU binding",
+      "same SKU/source unit件,2 original contributors and baseline ledger/balance target-7; published complete scope absent-zero WH2 basis, runtime admission remains later",
+      "derived opening computed from actual target and approved quantities to28/-3, never posted again"
+    ],
+    "returns": "original profile/sourceKind/basic target/references/publicationResult + explicit readonly recovery proof; accepted by existing SYN parent metadata loader. Does not claim regenerated fixture or new STAGED visibility/normal-role proof."
+  },
+  "next": [
+    "C fix/pin and QB only two affected leaves; old source715 PASS retained historical",
+    "C/T45 register one same-DATA original-key readonly metadata recovery window",
+    "Only after recovered metadata C separately registers QAseed/reviewed26/current purpose/normal session continuation"
+  ],
+  "notDone": [
+    "actual readonly recovery",
+    "QA seed",
+    "schema26 upgrade",
+    "normal session/HREV/real23505 rollback",
+    "real source approved sample/full import",
+    "production release"
+  ]
+}

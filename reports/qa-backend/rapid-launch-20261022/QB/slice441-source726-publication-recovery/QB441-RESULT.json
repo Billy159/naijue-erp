@@ -1,0 +1,43 @@
+{
+  "reviewId": "QB441",
+  "decision": "PASS_SOURCE726_TWO_LEAF_PUBLICATION_LIFECYCLE_AND_READONLY_RECOVERY_ONLY",
+  "fixedCommit": "ff42ead07b43748fecee4a16bab9bb1c7ddd9753",
+  "sourcePins": [
+    {
+      "path": "tests/integration/b07-approved-publication-fixture.ts",
+      "bytes": 47617,
+      "sha256": "8417b6e43def70ce34793592d7dd866bf11a61b5c6e37d173b7da7d418591d5d"
+    },
+    {
+      "path": "tests/sealed-history17-approved-fixture.test.ts",
+      "bytes": 14787,
+      "sha256": "fa9deb989086b5be8e04ff51406f0591bff3b78970bae078eb74698109bf6f64"
+    }
+  ],
+  "ownerResult": {
+    "bytes": 4207,
+    "sha256": "9e78f8b53e400e4c9c15e0b6e8a554cb355bf22d77e1e3703d704d345cd834bf"
+  },
+  "checks": [
+    "Exacttwo leaves fixedGit bytes/hash match owner releasedpins. Existing original approvedfixture testprefix unchanged; only affected lifecycle/recovery tests added. Reuse SOURCE715 scope otherwise.",
+    "Lifecycle accounts per actualfactory session, eachfresh11open has independently one close. Repeatedexpected/authorization not incorrectly forced to cumulative11. Missing/duplicateclose reject; finalclose success preserves primarythrow, cleanupfailure aggregates originalfirst. Source generation/import/publication command behavior otherwise unchanged.",
+    "Recovery pure suppliedpool/client interface; exactcommitted SYNdatabase/OID16385/actingnaijue and callerfreshpostmaster/port/nullTCP identity compared within one RR READ ONLY snapshot; nonSUPER/nonBYPASS and actual19guards/migrations required. No source creation/serviceexecute/DDL/DML/PUBLISH or COMMIT call in recovery.",
+    "Originalactor/batch STAGE/CHUNK/PUBLISH exactcommitted keyset, PREPARE absent and fixedPUBLISH89d8e3cb-5b42-4637-ed8c-0adf2091344a enforced. Publication/finalcomplete-scope/importclaim/audit/global-documentmanifest/count/checkpoint joins required; all5recordclaims committed and finitefulltargettablecounts checked.",
+    "OriginalAPPROVED SALE/TRANSFER version1/date/rawstate/NULLtimes, complete16/1line quantities,SALE32.00settlement, originalwarehouse/SKU andpaymentaccount bindings checked. SameSKU/件/contributor2/baselineledger andtargetbalance-7, distincttransferTO and completepublishedabsent-zero basis explicit. Derivedopening28/-3 computed from actualsnapshot and never posted again; later runtimeadmission remains unclaimed.",
+    "Success endsROLLBACK thenrelease; validationfailure rollsback/releases, rollbackfailure aggregatesoriginal and discardsclient. T45 owns suppliedpool/socket/currentpostmaster registration/end/ownPG stop; stoppedoldwindow cannot serve as currentidentity.",
+    "Adopt owner4 targetedofflinePASS and targetedstrict0: actualsource-reader expected+twiceauthorize closes33; close-once/primaryerror; protocolfake readonlysuccessful metadata; missingpublication/wrongunit/stalepostmaster rejectwithrollback/release. No oldsuite/actualfixture orPG run."
+  ],
+  "actualReadonlyRecovery": false,
+  "actualPostgres": false,
+  "actualPublish": false,
+  "normalSession": false,
+  "businessSourceChangedByQB": false,
+  "serverOrWorkerActionByQB": false,
+  "realSourceImportVerified": false,
+  "remaining": [
+    "T45/C exact sameDATA freshpostmaster/port/socket originalkey readonly recovery window and actualrecoveredmetadata proof. Do not replay originalpublish or adopt oldstoppedpostmaster.",
+    "Only after readonlyrecovery C separately registers QAseed/reviewed26/currentpurpose/normal session continuation. SourcePASS does not resolve actualrecovery/session/23505 outcomes."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

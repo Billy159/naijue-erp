@@ -1,3 +1,5 @@
+SOURCE727：SOURCE726/ff42ead已推GitHub精确回读，QB441两叶实际失败修复与原已提交metadata只读恢复源码PASS采用：逐session只关一次/全闭合，原错不覆、双错保留；固定SYN19/OID/原三COMMITTED键及原89d8e3cb PUBLISH全小范围metadata核验、RR READ ONLY后ROLLBACK/release，不生成源/DDL/DML/pub。未实际RO恢复或QAseed/26/purpose/normal/HREV。原T45正轻量准备准确同现场只读载体；147原handle最后collect仍RUNNING，不重提、不凭Chat活跃替代实际进程。37/67全站所有状态/真实业务/历史/性能/正式发布仍未完成。
+
 SOURCE725：QB440准确147单codec载体增量PASS采用，439源码结论复用；C采用原03:00Z/start≤02:43:40Z/900930970980与6pins，T45已唯一submit unitnaijue-erp-op-5cc58239-1854b7c151c1/autoRetryfalse，同handle收终态，0PG/MAIN/PUBLISH执行/APP/profile。SOURCE724/325a8f6远端精确已核；SYN02已提交19/PUBLISH现场保全，D1两叶关闭计数与原metadata只读恢复在途，未进入QAseed/26/purpose/正常业务，不能重fixture/pub。37/67全站真实业务/历史/性能/正式发布未完成。
 
 SOURCE724：SOURCE723/124c4ad已推GitHub并精确回读，QB439两叶codec源码PASS采用，未冒全量提速。SYN02实际6.971s ERR_ASSERTION，但原19迁移及STAGE/CHUNK/PUBLISH已COMMITTED；T45原键RR只读查回确认，不重建/fixture/发布。D1确定helper关闭session固定11与重复授权实际11×次数矛盾，已登记唯一helper+test两叶修逐session生命周期并原已提交metadata只读恢复；无新写合同。新QAseed/26/purpose/normal/HREV尚未开始，原失败/已提交现场保全。原T45准备同版codec下一source载体，不执行盲重试；146不重放。normal32合成预览已恢复，37/67全站真实业务/历史/性能/正式发布未完成。
