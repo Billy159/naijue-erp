@@ -1,0 +1,754 @@
+{
+  "jobId": "t45-v22-qa-first-projection-diagnostic-preparation-20261027-188",
+  "job": {
+    "jobId": "t45-v22-qa-first-projection-diagnostic-preparation-20261027-188",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-5e60e7e4fbc9",
+    "atUTC": "2026-10-27T15:25:07.408264+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 4.63127122214064,
+    "exports": [
+      "qa-prefix-engine-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T15:25:12.049120+00:00"
+  },
+  "engine": {
+    "APPChanged": false,
+    "BINDExecuted": false,
+    "COMMITExecuted": false,
+    "R1DatabaseAccess": false,
+    "automaticReplay": false,
+    "businessDML": 0,
+    "errorCode": "KeyError",
+    "finishedAtUtc": "2026-10-27T15:25:11.997794+00:00",
+    "jobId": "t45-v22-qa-first-projection-diagnostic-preparation-20261027-188",
+    "materializedFiles": [
+      {
+        "bytes": 15825,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/bounded-pool.ts",
+        "sha256": "e9b8643a48a64d8a1aa529e90ac662600d3b34628954ef7bda8d8bd27e0c5c67",
+        "uid": 0
+      },
+      {
+        "bytes": 49577,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/catalogue-completeness.ts",
+        "sha256": "e1ed6303448384565079c3cbb630fac1cb7da62a865ae55406f7f23215f6edeb",
+        "uid": 0
+      },
+      {
+        "bytes": 2896,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/codec.ts",
+        "sha256": "18496bac8de90fce54cdcb861ef057c51d38ce826ebd103456dc203e288b553c",
+        "uid": 0
+      },
+      {
+        "bytes": 35552,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/history-import-lifecycle.ts",
+        "sha256": "2e789595bba6e53e4c8369d229ea44c8e9f46dc99d2457250ac6ce52451cae51",
+        "uid": 0
+      },
+      {
+        "bytes": 10920,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/history-typed-closure19.ts",
+        "sha256": "1a15fd9ed19e3641e45df57035276773701b8ef49df90f90bd1f9829cc82ced7",
+        "uid": 0
+      },
+      {
+        "bytes": 6754,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/history-typed-publication.ts",
+        "sha256": "0e563c20a8a0eba2fe8d87593d0d437a06ae83323412e338ee7c9932eee3d597",
+        "uid": 0
+      },
+      {
+        "bytes": 10672,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+        "sha256": "349970b9ef191013a21c715ca5c48bb1c0497bf8b977b4ba6629fb44b5bd3552",
+        "uid": 0
+      },
+      {
+        "bytes": 12089,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/import-v3-history-header-staging-store.ts",
+        "sha256": "2563ee91ca1d4167ea893f3e7ddd734707e682a7fe5e313e9691ab824b20dbf9",
+        "uid": 0
+      },
+      {
+        "bytes": 19561,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+        "sha256": "cd32df6cdf256b17e5387bc00bf33bf9ee2d2d5483b6a3a329089fa15065f5f5",
+        "uid": 0
+      },
+      {
+        "bytes": 17927,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+        "sha256": "c104b91ec37659e6a410da720ec1ce7b252b21a4920e8dc7bae325dfc289c8c7",
+        "uid": 0
+      },
+      {
+        "bytes": 7114,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/import-v3-history-staging-store.ts",
+        "sha256": "52dbe7eb58fa081e46976259f539c0e9a014b7ed7b3e579f45a8489de707b7a0",
+        "uid": 0
+      },
+      {
+        "bytes": 72282,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "sha256": "c0064daa8c74960814b236f8280c48b9c051bc8843a1ac265c3ef44b67ba61f6",
+        "uid": 0
+      },
+      {
+        "bytes": 2658,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/inventory-publication-guards.ts",
+        "sha256": "274e5395102c5690a0c879e450eb938ddb1fb22d29790c5cdae6ac70421f3872",
+        "uid": 0
+      },
+      {
+        "bytes": 28921,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1",
+        "uid": 0
+      },
+      {
+        "bytes": 13292,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-barcode-import.ts",
+        "sha256": "ccb8e66279029919033f00e2e8cef47ce03ad7ad4111c60ebf21704c70c7d921",
+        "uid": 0
+      },
+      {
+        "bytes": 17699,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-catalogue-import.ts",
+        "sha256": "4dc578d581bc2156f4eed42b74634456c641b060c98fd8556e29a4e1229b65a3",
+        "uid": 0
+      },
+      {
+        "bytes": 79436,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts",
+        "sha256": "bf138b170144a15bcd5d68fad059e68705f4f7e67ae4906b93420d5cee4d0931",
+        "uid": 0
+      },
+      {
+        "bytes": 63678,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-import-record-accounting.ts",
+        "sha256": "6576013975d496acbbcc76ee6026a1e7f2af8608926a291725f8cc939bf7c2b4",
+        "uid": 0
+      },
+      {
+        "bytes": 19643,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-party-import.ts",
+        "sha256": "12b81cef1bfe3ea37f4240abca2b88d292e5cb42691615341883d611bb0b9455",
+        "uid": 0
+      },
+      {
+        "bytes": 12693,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-payment-import.ts",
+        "sha256": "600b4455db8a46565a64c830cdff2bf97d232a87665a4f4161724074dcefc673",
+        "uid": 0
+      },
+      {
+        "bytes": 17107,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-product-import.ts",
+        "sha256": "d2667af2a5e27f2a42a5728256960e853cc15e176357f24e5b7e4809cdd34f0c",
+        "uid": 0
+      },
+      {
+        "bytes": 19582,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-sku-import.ts",
+        "sha256": "a83372608cce9c7eecb2a986d9d5af330a8e0272fcc4c5fdfb805711cfcca770",
+        "uid": 0
+      },
+      {
+        "bytes": 16843,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-stock-contributor-import.ts",
+        "sha256": "63eba52f1c0f7db05f6f95398d9a5ff9c33c1ed9d00f2fa071715c9e18537c48",
+        "uid": 0
+      },
+      {
+        "bytes": 105770,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/package-lock.json",
+        "sha256": "72dc3028e4519890d7970c1569f1587249d039e1181b40b99fd937b37d889770",
+        "uid": 0
+      },
+      {
+        "bytes": 6121,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/package.json",
+        "sha256": "ddd3baaa2bd447914bbd9172b32f00408074af284860554aed99824a4d06f2f3",
+        "uid": 0
+      },
+      {
+        "bytes": 7511,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/catalogue-maintenance-validation.ts",
+        "sha256": "83efc7884cb2ff02773a17582c84e275c0bb08aa13046e943254bd2b5f9e1fc7",
+        "uid": 0
+      },
+      {
+        "bytes": 1945,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/catalogue-price-input.ts",
+        "sha256": "d1a713379e03532dda0d2812945ad1be1324cfb02520e50de2f3dd56e43199d7",
+        "uid": 0
+      },
+      {
+        "bytes": 3219,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/catalogue-settings-read-ports.ts",
+        "sha256": "e22e2e3892cd9593763f72ee0f5914daf1af099c9fd89d78801627d0eae95a1a",
+        "uid": 0
+      },
+      {
+        "bytes": 3286,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/catalogue-source-proof.ts",
+        "sha256": "b1481007ce402158186023a6cb670d6214d62e51588f8466b56421566c3baaa7",
+        "uid": 0
+      },
+      {
+        "bytes": 2871,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/history-import-lifecycle.ts",
+        "sha256": "2232fe5981b6db1fbc4feb25c86590a2f2a0f6b7663d96a2cb92fe6a0a356606",
+        "uid": 0
+      },
+      {
+        "bytes": 6913,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/history-storage-contract.ts",
+        "sha256": "0a7e6bc4fa0ca7247971f4372e44669a1022dc0c8f5573b020622c20034cb450",
+        "uid": 0
+      },
+      {
+        "bytes": 5699,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/history-temporal-mapping.ts",
+        "sha256": "274a09cc4567d1aec860ae0d8679480b71a5003188b261ab9f26c8474663bb1c",
+        "uid": 0
+      },
+      {
+        "bytes": 37914,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/history-typed-closure.ts",
+        "sha256": "c688749a18c8ad780a15178527aa6aae731e86a2198208bb5473eb90b95a94e3",
+        "uid": 0
+      },
+      {
+        "bytes": 4011,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/history-typed-publication.ts",
+        "sha256": "57d459ca48dd2ffb1a70ab1b8ea5f865adfd73020eafe25eb5b9cfd17d74f005",
+        "uid": 0
+      },
+      {
+        "bytes": 20742,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/import-v2-contract.ts",
+        "sha256": "b4c210f6cb3729ab241899f4034de059dec56cde5fe338305b889bbb3faf32ba",
+        "uid": 0
+      },
+      {
+        "bytes": 10869,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/import-v2.ts",
+        "sha256": "de808fcf2d8a2b4ffa919d0d680474b594bb824b72516cae943605f910070294",
+        "uid": 0
+      },
+      {
+        "bytes": 20603,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/import-v3-history-header-native-reference.ts",
+        "sha256": "70d5f165464d86abde0a3d3bed09f199ff5835360d45f6f3106249f3fea4b293",
+        "uid": 0
+      },
+      {
+        "bytes": 5574,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/import-v3-history-header-staging.ts",
+        "sha256": "f6a2e2ff3d4f38b60aa87c4ae508705a7afbf21b164e588f60152c25e09ad22c",
+        "uid": 0
+      },
+      {
+        "bytes": 14908,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/import-v3-history-header.ts",
+        "sha256": "07a1b6e832b5b501c375391a3d566263b3ad1a599eece7296349a1467d29962b",
+        "uid": 0
+      },
+      {
+        "bytes": 13704,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/import-v3-history-sales-detail.ts",
+        "sha256": "ed6558d6382a36da46f9a28082847a6e48f8c30673c82f21eea491c8b55a52d7",
+        "uid": 0
+      },
+      {
+        "bytes": 12631,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/import-v3-history-settlement.ts",
+        "sha256": "c7684de01216f8df950f5c903dc231843665df428093a3edeb5e7caa5c637616",
+        "uid": 0
+      },
+      {
+        "bytes": 8722,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/import-v3-history-staging.ts",
+        "sha256": "8e5fe853f52c012b8b754cbe8a8c5212162c47808a88262338f9c0fe1144c104",
+        "uid": 0
+      },
+      {
+        "bytes": 28775,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/inventory-cutoff-import.ts",
+        "sha256": "d9089865e417e2a174e36cc0f8cff98ba3311d3837a4d6bfd0c1f5404f0267da",
+        "uid": 0
+      },
+      {
+        "bytes": 4107,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/maintenance-commit-ports.ts",
+        "sha256": "3ab60d5d82efeed6c0e4e910c9146e9e32d3e2d54df94c9350d811b8a31a588e",
+        "uid": 0
+      },
+      {
+        "bytes": 16051,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-barcode-import.ts",
+        "sha256": "5aaee52b0f624b774f2105131ecffd9f26c62187ba6afb3dc5e22d823fcb5f02",
+        "uid": 0
+      },
+      {
+        "bytes": 20487,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-catalogue-import.ts",
+        "sha256": "2b7e6894158fea6a0948d4128c84f305ad03fedf71deb2fae55f990047eb8008",
+        "uid": 0
+      },
+      {
+        "bytes": 20974,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-import-record-accounting.ts",
+        "sha256": "a34acfb811ff6484fbe3b3ce5f773ee9b48ce2fef0266a833965f3a76fb7bf7c",
+        "uid": 0
+      },
+      {
+        "bytes": 14388,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-import-schema-contract.ts",
+        "sha256": "8a4fe91e76fae0cc53f1d44c11f50acc25b91b75922c29e38dfaacb2c2f1a053",
+        "uid": 0
+      },
+      {
+        "bytes": 13813,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-party-import.ts",
+        "sha256": "acbbd139de873581a1b7baab99ad8df0bb01188b54b491d9eba1b06b9bd2bb03",
+        "uid": 0
+      },
+      {
+        "bytes": 11101,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-payment-import.ts",
+        "sha256": "2d2d1d109211f3c4ec2df6c8fdbae246e5453c1735814d3b1dbba26fdf71702c",
+        "uid": 0
+      },
+      {
+        "bytes": 25503,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-product-import.ts",
+        "sha256": "bd4bf41b1d9dbe4dd3db30dc38056658c242f1b6db1c757943da5d0449a73659",
+        "uid": 0
+      },
+      {
+        "bytes": 17796,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-sku-import.ts",
+        "sha256": "3720bbf699e2702aa7026fac4333db74db1492aa72b25176fcaed43b3807695b",
+        "uid": 0
+      },
+      {
+        "bytes": 10901,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/native-stock-contributor-import.ts",
+        "sha256": "87f43586fd737755e6bebcb046116ce8de0d447525e5bfebb2abe1fae6463448",
+        "uid": 0
+      },
+      {
+        "bytes": 4755,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/party-maintenance-validation.ts",
+        "sha256": "9dccee7922e9fd16cebecdd232ffe32ce3f4fc29cf6b74216f30c95006587a23",
+        "uid": 0
+      },
+      {
+        "bytes": 8249,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/product-evidence-staging.ts",
+        "sha256": "753efac4a2e1d142bba66683233725db13912037510d9dc60eec8542a1872177",
+        "uid": 0
+      },
+      {
+        "bytes": 1488,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/request-hash.ts",
+        "sha256": "d899736c2e7096c21eafdf5a34f51445d4c3ab025a2958492cc0e95badc5eefb",
+        "uid": 0
+      },
+      {
+        "bytes": 8242,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/sales-business-rules.ts",
+        "sha256": "925bb3d5a0da89f18e4c0535e5a7db0930ca8b4fb33caa14c245955d95b44b8f",
+        "uid": 0
+      },
+      {
+        "bytes": 6869,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/application/src/sales-native-facts.ts",
+        "sha256": "675c80f71671471fa23947bb6fb73c437df8d8ea081f97307b1d6fb740cd025e",
+        "uid": 0
+      },
+      {
+        "bytes": 353,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/domain/src/errors.ts",
+        "sha256": "e5e0e61ef9ab9527da50424acb2dce9deac8e94460944bb3aabbfcef950347c9",
+        "uid": 0
+      },
+      {
+        "bytes": 2022,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/domain/src/sales-money.ts",
+        "sha256": "fc41a60266fdd90192d5df4e6a59225dfd532df7dec864cb0cdf8b959b1e8b30",
+        "uid": 0
+      },
+      {
+        "bytes": 4820,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/packages/domain/src/values.ts",
+        "sha256": "351c2246f5bc342099cc1844cc0be3e41f69e42b2d8d8ba679977a66a22fea02",
+        "uid": 0
+      },
+      {
+        "bytes": 27766,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v2/authorized-header-reader.mjs",
+        "sha256": "d16ee579794f5a5ca6d8710e30d2de9265fad1dee3bc79d1788261affd2bac0d",
+        "uid": 0
+      },
+      {
+        "bytes": 13906,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v2/authorized-history-closure-reader.mjs",
+        "sha256": "8c197db5cc4ce50b7cd6d032cef30c2b47cb2f23033f014af1e7110c163235d6",
+        "uid": 0
+      },
+      {
+        "bytes": 22468,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v2/authorized-native-product-reader.mjs",
+        "sha256": "f731c2f70fcc1499c3fd9413e63f6710a3fc80e70fd52a2ef382e01161e2be2f",
+        "uid": 0
+      },
+      {
+        "bytes": 12683,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v2/authorized-reader.mjs",
+        "sha256": "3cd141bd2a2623973b0f632e9fb90ee5c7919f9b6e4872b5de4a1d69a9fcee23",
+        "uid": 0
+      },
+      {
+        "bytes": 29081,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v2/authorized-sales-detail-reader.mjs",
+        "sha256": "4640e4bb8a6ff65733fc6470ad5f644c09cfdb48b47e068c0bda379f882531d0",
+        "uid": 0
+      },
+      {
+        "bytes": 3551,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v2/authorized-settlement-reader.mjs",
+        "sha256": "c02f0e75bd8ab3f5d2ab7aaa37a09a1d9fb26fe41d8009af215b020cb8f0dcc5",
+        "uid": 0
+      },
+      {
+        "bytes": 41512,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v2/run.mjs",
+        "sha256": "76a1094a56fedeb06b8c0f418393604f9e36acde8af1bb3219c9ad59813d487b",
+        "uid": 0
+      },
+      {
+        "bytes": 17868,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v2/sealed-payment-source.mjs",
+        "sha256": "8ec14d73f882c73ef217a1b31d765b5f06c2d1b85277fc17738aad149cd5bb70",
+        "uid": 0
+      },
+      {
+        "bytes": 11040,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/historical-customer-source.mjs",
+        "sha256": "fc7297be39fe007df60393ae1063bebe2ebf361ecb19f92facb857d7666f679c",
+        "uid": 0
+      },
+      {
+        "bytes": 23690,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/native-party-source26.mjs",
+        "sha256": "df9044648d60c9d6cd8c909d04a28df8e01a1f8c1821373c17fa9f61df9d521a",
+        "uid": 0
+      },
+      {
+        "bytes": 10819,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/native-payment-source26.mjs",
+        "sha256": "491deae8ce6660038d45ea8c4bc745c91fd7daf4614f3e319d0cec7ba546a077",
+        "uid": 0
+      },
+      {
+        "bytes": 9068,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/native-product-source26.mjs",
+        "sha256": "1c41c5c2a4c1a7d35504fbde9675b1ea6978df56764337d181212d9b4370d886",
+        "uid": 0
+      },
+      {
+        "bytes": 18848,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/native-sku-source26.mjs",
+        "sha256": "bc8bd34ea9676eacc62b95bb20cad17a2fc4e81b1e98e9a8f2743921a361bc20",
+        "uid": 0
+      },
+      {
+        "bytes": 50941,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/native-source-authorizers.mjs",
+        "sha256": "56b712ccdf523047e629444a20f0581e90b7dcc6b246c7937198ffff78adcaa7",
+        "uid": 0
+      },
+      {
+        "bytes": 20345,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/native-stock-source26.mjs",
+        "sha256": "65f317c9706a5013d2b938b271ee4cd00f3e9c04489f891ca55d9c1cf692cb8c",
+        "uid": 0
+      },
+      {
+        "bytes": 25454,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/native-transfer-header-source26.mjs",
+        "sha256": "9c4026f871a49d17385b06597e8832734c9af7b54642719c2ec909850283c2cd",
+        "uid": 0
+      },
+      {
+        "bytes": 35303,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/native-transfer-line-source26.mjs",
+        "sha256": "587128f1534b5466f0b627d9fc1a1bf513dcf3ee381a1acf9f5e4486cf6b73c9",
+        "uid": 0
+      },
+      {
+        "bytes": 40456,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/prepare-native-bindings.mjs",
+        "sha256": "26204d29b788ea9df119ba63e681452d332ee1ffdaea2a440ee39496e8b1b7bd",
+        "uid": 0
+      },
+      {
+        "bytes": 7058,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/prepare-native-stock26-bindings.mjs",
+        "sha256": "a3a90d355179a0b79a9b64bce87a7e81f698d938ab7653e1f6c9301d8734f418",
+        "uid": 0
+      },
+      {
+        "bytes": 42203,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/production-source-host.mjs",
+        "sha256": "9399bf46e465c14ddc7c9306b20e70a416e17142d45a44b757fefc6620b8b6f8",
+        "uid": 0
+      },
+      {
+        "bytes": 139504,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/production-source-provider26.mjs",
+        "sha256": "8e0a95058b794ddbc5975e244fbf7b1d76702dc7a5dfe7eeda679c1234db86f2",
+        "uid": 0
+      },
+      {
+        "bytes": 30492,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/run.mjs",
+        "sha256": "5f6d0242f8cbf875f3f88ba8a4bbcde719699a28c338aa7796d26876b13f0245",
+        "uid": 0
+      },
+      {
+        "bytes": 14481,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/verified-offset-source.mjs",
+        "sha256": "3da64bdb8ba59a9675863cb622606fcc95ee46a2b817aec3bf01e3cc54fe0b64",
+        "uid": 0
+      },
+      {
+        "bytes": 6121,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/provenance/git730-metadata/package.json",
+        "sha256": "ddd3baaa2bd447914bbd9172b32f00408074af284860554aed99824a4d06f2f3",
+        "uid": 0
+      },
+      {
+        "bytes": 105770,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/provenance/git730-metadata/package-lock.json",
+        "sha256": "72dc3028e4519890d7970c1569f1587249d039e1181b40b99fd937b37d889770",
+        "uid": 0
+      },
+      {
+        "bytes": 23570,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-core-staged-prefix-bind.ts",
+        "sha256": "536f85177ab432e4ca0c35e844182c563252869f4e874f8b978d0f879f034a99",
+        "uid": 0
+      },
+      {
+        "bytes": 86450,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/evidence/V22-CONSUMER-REVIEW.json",
+        "sha256": "6a24656b3915031c16190062dc40a3d73d891285e94be4880fd36a07aaf7b69a",
+        "uid": 0
+      },
+      {
+        "bytes": 1881,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/evidence/ADOPTED-PREPARATION.V22.json",
+        "sha256": "faf1a3cf933551751e501ae96b5f243725ee8ed57b3ba4ed630dde8635d768c0",
+        "uid": 0
+      },
+      {
+        "bytes": 5029,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/executable-host-job26.json",
+        "sha256": "e9e5186667ac6e291e32e58225bc4967b0f4bd78f564e010e9da6ae4f528f91c",
+        "uid": 0
+      },
+      {
+        "bytes": 37329,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+        "sha256": "709d36aa3ca888add105a600ef89afb71c0391390a229f67fc05fcda2b7cd4ae",
+        "uid": 0
+      },
+      {
+        "bytes": 188953,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/provider-INPUT.FINAL.json",
+        "sha256": "eb4f8b7f906c887e6357dad29c33a2f8061f078381fa716ceb613080549e64af",
+        "uid": 0
+      },
+      {
+        "bytes": 2885,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/QA188-FIXTURE.json",
+        "sha256": "8a520b7862b437fd45f4c538e1001062847016fbd6bcb1221dc184957756bec4",
+        "uid": 0
+      },
+      {
+        "bytes": 4444,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/C-QA188-AUTHORITY.json",
+        "sha256": "0d02d440c85ef3fc4ea1979233748b19ff91b32bd2b629b0173c8152d8f0aa50",
+        "uid": 0
+      },
+      {
+        "bytes": 4682,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/QA188-PLAN.json",
+        "sha256": "fe5d755bd2dca99f3aead6c7b0891e6476e77c96073c4fbde448c227b02d7256",
+        "uid": 0
+      },
+      {
+        "bytes": 34178,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/qa-control/qa-prefix-bind.mjs",
+        "sha256": "1ae1e5a0b1214524a4e1c0aecbe1c4aa73230d3721b61fcc28c14b5a2a8f5cc6",
+        "uid": 0
+      },
+      {
+        "bytes": 19061,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/qa-control/qa-prefix-bind.test.mjs",
+        "sha256": "bebd70b2c1012ba93f8721b722be50e017731491934afbbbf3bc79e8bd8a22df",
+        "uid": 0
+      },
+      {
+        "bytes": 354,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/evidence/STAGED-PREFIX-BINDING26.json",
+        "sha256": "69cf987d82b45131b2fc8b6f7f45806c564a0dc6f362046c94625d15815b0fc2",
+        "uid": 0
+      },
+      {
+        "bytes": 80495,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+        "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750",
+        "uid": 0
+      },
+      {
+        "bytes": 3594,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/reviews/QB481-RESULT.json",
+        "sha256": "9a65ac9ac1d3bb02bfcc8a415a1fd103083a5ad03cac33eed60a2651b7986134",
+        "uid": 0
+      },
+      {
+        "bytes": 184647,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/reviewed-tests/production-source-provider26.test.mjs",
+        "sha256": "fb948d51bfa131dc1de6d9ebb56b35cb84a5e68638d420bcba189eb594ada6b6",
+        "uid": 0
+      }
+    ],
+    "scope": "READONLY_PREFIX_ADAPTER",
+    "status": "STOP_QA_PREFIX_READONLY_NO_REPLAY"
+  },
+  "exports": {
+    "job.json": {
+      "bytes": 531,
+      "sha256": "840352fdea68ebbb5c0d397b10ce970b94414f5bfd50a542b14eb5bb9541ab98"
+    },
+    "qa-prefix-engine-result.json": {
+      "bytes": 36975,
+      "sha256": "f821199bad4c0934792aea7bbdb9b3058e41e471e320dc05cc7c6b8c6d41de7e"
+    }
+  },
+  "diagnosis": "All101files materialized, next dependency identity access p.pgEntrySha256 missing in copied157-based transport plan =>KeyError. Carrier never reached source/QA child or credential loading. No attemptedOnce/process/runtimeStatus fields. Source and signedplan files preserved; no replay.",
+  "scope": "Materialization only failure, not actual adapter mismatch."
+}

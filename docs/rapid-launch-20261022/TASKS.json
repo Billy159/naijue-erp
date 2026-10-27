@@ -1353,9 +1353,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T15:24:14.532813+00:00",
+  "updatedAt": "2026-10-27T15:30:21.893161+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "0c0f6b171d616d57951c757d215f54590e04c45c",
+  "lastVerifiedRemoteCommit": "b7a82c46ffba9d9d84b7332024bd4e1d18bde288",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -14996,6 +14996,24 @@
       },
       "next": "OriginalT45 new immutable188 files/materialization then one genuineQA178 ordinary RRRO prefix observation/ROLLBACK, hard-prohibited originalR1 DB. Requiredsource INPUTPATH+INPUTSHA eb4f8b7f+externalAUTH_SHA709d36aa all new. No148preparation/replay187/184/BIND/DML/COMMIT/APP. Actual submission not yet received.",
       "goal": "37pages67overlays/allapplicable states/realbusiness/history/performance/formal ACTIVE incomplete. Newsource/independentdelta/authority not runtime content PASS."
+    },
+    "currentContinuation791": {
+      "status": "188_CARRIER_EARLY_DEPENDENCY_PIN_FAILURE_189_EXACT_TRANSPORT_SUCCESSOR_RUNNING",
+      "188": "FAILED2/4.631271222s/2026-10-27T15:25:12.049120Z. All101files actualroot0400materialized, then missing pgEntrySha256 caused KeyError before child/source/QA/credential use. Preserve39758/797ee7cb. Not prefix data failure or a repeated content read.",
+      "C189": "OriginalC explicit authorizes only completion of never-started188 inner QA operation via new outer189 transport; strict188 prior KeyError/101files/noattempt and absent outputs-private/ATTEMPT/RESULT preflight; any contrary orunknown stops. Only original169 known dependencyentry/packageSHA added; original188 signed refs/registration/output/source/body/QA tuple and deadlines unchanged. All8carrierrequiredkeys checked, no skipguard/deps reinstall.",
+      "189": {
+        "jobId": "t45-v22-qa188-materialized-execution-successor-20261027-189",
+        "taskId": "T45",
+        "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+        "status": "RUNNING",
+        "unit": "naijue-erp-op-5cc58239-5a1f7ef6b4fd",
+        "atUTC": "2026-10-27T15:28:13.205180+00:00",
+        "grantId": "5cc58239751e4e2a",
+        "privateLogsExported": false,
+        "businessAcceptanceClaimed": false
+      },
+      "next": "OriginalT45 collect only same189 unit5a1f7ef6b4fd; ifearlyfailure precisefix/originalevidence, ifruntime mismatch report safe firstrelation/fieldnames/rowSHA. Do not replay188/189, noR1DB/BIND/DML/COMMIT/DDL/APP.",
+      "goal": "37/67 allstates realbusiness/history/performance/formal ACTIVE incomplete; no actualprefix content PASS."
     }
   },
   "historicalContinuation500Before716": {
