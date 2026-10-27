@@ -16003,6 +16003,23 @@
       "server": "201 originalwatch29273 continues; no terminal outcome yet. Never infer completion or replay.",
       "github": "SOURCE817feae851d7eaaf28a5b582c8aa87add43e29f4fdb exactremoteGET verified; this record pending sync",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation819": {
+      "status": "F1_TWO_VERIFIED_P1_SALES_EXCHANGE_REPAIRS_DISPATCHED",
+      "issues": [
+        "N34-S03-HIDDEN-01",
+        "N34-S03-DISCOUNT-01"
+      ],
+      "evidence": "Original FINDINGS.json normal34 paired screenshots read; both directions filled but inactive entries hidden; discount/dealPrice/gift display desynchronization, actual amounts differ by sample but same observable relation.",
+      "owner": "OriginalF1; actual lastturn fixture30+30 completed and integrated, no duplicate dispatch",
+      "writeScope": "WRITE-OWNERSHIP.salesExchangeContext819 three leaves; F1 only. Extra leaf exact seam first.",
+      "model": "gpt-6.1-sol/medium",
+      "Fast": "UNVERIFIED",
+      "next": "F1 necessary affected checks -> C fixed source -> originalQF one technical scope -> T45 one associated candidate. No normal34/36 or browser draft change.",
+      "parallel": "P13SOURCE817 independent source deltaPASS/normal36buildready, QF2 waits actual browserlease; comparison continues current payments module.201 originalwatcher no terminalreceipt, T45 currenthandlecollection requested without unsupportedjournalprobe/PG/newjob.",
+      "github": "SOURCE81876852ff0d30026cdff541bb451a1c68ff98d17ab exactremoteverified; this dispatch pending sync",
+      "coverage": "37pages67overlays unchanged; prior104=29NOT_RUN/33PARTIAL/42DIFFERENCE/wholePASS0. No new entire-page/business/deployed claim.",
+      "goal": "ACTIVE incomplete"
     }
   },
   "historicalContinuation500Before716": {

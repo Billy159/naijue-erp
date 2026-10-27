@@ -6624,5 +6624,22 @@
       "writer": "C only",
       "scope": "Forward existing real navigate Promise<boolean>; clear refused/failed pending context; existing harness targeted refusal/ordinary-entry test. No new interface platform or service changes."
     }
+  },
+  "salesExchangeContext819": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/medium",
+    "Fast": "UNVERIFIED",
+    "issues": [
+      "N34-S03-HIDDEN-01",
+      "N34-S03-DISCOUNT-01"
+    ],
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
+      "apps/web/src/current-form/sales-proposal.ts",
+      "apps/web/src/current-form/sales-proposal.test.ts"
+    ],
+    "boundary": "Original F1 sole writer; complete both-direction sales proposal entry visibility and discount/deal price/gift display wiring. Existing exact money/quantity/rights/save contracts unchanged. Extra leaf requires C registration; no globalCSS/sharedhost/locks/build/server/DB/Demo/Git edits.",
+    "evidence": "Original normal34 independent paired findings in K/reports/ui-demo-comparison-20261022/20261027-normal32-review/FINDINGS.json; no same-scope current F1 work per actual last completed fixture handoff.",
+    "next": "Necessary own checks -> C fixed source -> original QF technical affected scope + T45 one complete candidate; follow-up ready package after actual handoff."
   }
 }
