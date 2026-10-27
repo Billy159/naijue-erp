@@ -1,0 +1,76 @@
+{
+  "reviewId": "QB485",
+  "decision": "PASS_SOURCE_STATIC_197_EXACT_EIGHT_TABLE_COLUMN_ACL_PATCH_ONLY",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/grant-exact-197-columns.sql",
+      "bytes": 60600,
+      "sha256": "0936ab9cac570e5b94f8f760330a1d57d9bc5f23e266f94dc61a0ab705cf97ed"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/revoke-only-exact-197-added-columns.sql",
+      "bytes": 60519,
+      "sha256": "929ec2180c722b271a0297d69a9e559e65fcb2e0ef504c8a549b31ae3cba3a40"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/CAPTURED-197-EXACT-PRESTATE.json",
+      "bytes": 47054,
+      "sha256": "8a1ebdf7fa96d4b71508dc5e695aef283a300f4c20f552b88834bea58ec3f374"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/README.md",
+      "bytes": 4941,
+      "sha256": "347954c0ed4bf86ba266f2b1f307cb5a0af1651c5eff584ce4bc8c22fb870e79"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/STATIC-CHECK.json",
+      "bytes": 578,
+      "sha256": "9b36d6264f272b6725260b6bcc8a223dbfbec8eb8bca1910f5dae600b1c01158"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/RESULT.json",
+      "bytes": 3363,
+      "sha256": "b6e418c4894878a71d5f15313163ef4bddc7637287cc57f8fa7bffb0a47514a7"
+    }
+  ],
+  "actualPrestate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/release-submission/release-receipts/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/original-key-result.json",
+    "bytes": 60922,
+    "sha256": "5abfee228c16a410b279b5de0a7cb14d8ea92eb7b2add4adbad2ba677186b603"
+  },
+  "Standards": {
+    "blockingFindings": []
+  },
+  "Spec": {
+    "blockingFindings": []
+  },
+  "independentChecks": {
+    "allFourEmbeddedPrestateObjectsExactCaptured197": true,
+    "eightTableOidRawTableAclRlsCompleteColumnsRawColumnAclMatchActual197": true,
+    "sixteenGrantRevokeStatementsExactMirror": true,
+    "newBits": {
+      "INSERT": 59,
+      "SELECT": 9,
+      "UPDATE": 8
+    },
+    "totalNewBits": 76,
+    "allExistingNormalizedAclEntriesPreserved": true,
+    "onlyOriginalOwnerGrantorRuntimeGranteeNoGrantOption": true,
+    "allSELECTINSERTColumnsObservedMissing197": true,
+    "eightUPDATEoneColumnOnly": "id six tables, paymentbindingbatch_id, accounthallpayment_account_id; existingFOR SHARE/FORUPDATE locks needatleastoneUPDATEcolumn",
+    "writerCrosscheck": "Originalbarcode/payment/salesdetail/settlement fixedINSERTcolumns orjsonb_populate_record fullrow andreturning/replayto_jsonb matchspecifiedfullcolumnscope; no writer changes. FiveEXECUTEalreadytrue/no functiongrant.",
+    "guards": "ExactR1databaseOID1027659/originalpostmaster/socket/owner/runtime roleproperties/zero memberships/schemaUSAGE. Bothscripts shorttransaction eightwholecolumnsets/OID/owner/rawtableACL/RLS; forwardrawattacl+normalizedbefore match197, afterexactold+76; reverseexactafter precondition thenonly76revoke andoldnormalizedbits retained.",
+    "noScopeExpansion": "No tablelevelprivileges/PUBLIC/role/schema/routine/profile/trigger/registry/TS/businessDML changes.",
+    "readback": "Same8tables completecolumnACL/effectiveSELECTINSERTUPDATE beforeafter exported, no realbusinessrowreads; T45 retainsactualfullcatalog/roles evidence."
+  },
+  "rollbackLimits": "C/T45 verifyexactforwardreceipt/no laterACLchanges before reverse. REVOKE restores effective/normalizedoldbits, may leaveemptyattacl vsNULL; oldtext/canonical not guaranteed, no pg_catalog edits. No businessrollback or replay authorized.",
+  "actualExecution": "NOT_RUN_BY_QB_OR_D1; SQLparse/PGgrant not tested. STATICchecks accepted andindependentlyrecomputed, no197rerun/oldsource/fullsuite.",
+  "next": "T45only afterC exactauthority executesv2 once, oldbarcodeonlyv1 remainsunexecuted. Actualordinarynewcatalog/preciseACLdelta/currentreview+freshpurpose/config/consumer/externalgrant rebind mandatory; old6d3e cannotcovernewACL. OriginalcommittedBIND not replayed.",
+  "notClaimed": [
+    "Original19542501 exacterrorcontext recovered",
+    "Allfuturebranchprivileges complete",
+    "Actualwriter/import/MAIN/PUBLISH/businessPASS"
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED"
+}

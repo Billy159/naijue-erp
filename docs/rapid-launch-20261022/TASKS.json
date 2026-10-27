@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T19:14:10.348015+00:00",
+  "updatedAt": "2026-10-27T19:19:41.996058+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -15636,6 +15636,49 @@
       "budget": "16225conditionalupper bound adopted fromD3, current196STAGEDnoACCOUNT matches; nextwriterproofrequired, timeUNKNOWN.",
       "github": "SOURCE8061508478805759c2a5763d00ff44ecbcf342bb928 exactremoteGET verified",
       "ui": "normal34restored; originalcomparisonongoing, reportnotfullcomplete, no duplicate dispatch or falsewholepagePASS.",
+      "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation808": {
+      "status": "QB485_FIXED_ACL_SOURCE_PASS_ADOPTED_EXACT198_ACL_ONLY_AUTHORIZED",
+      "evidence": {
+        "D1/grant-exact-197-columns.sql": {
+          "bytes": 60600,
+          "sha256": "0936ab9cac570e5b94f8f760330a1d57d9bc5f23e266f94dc61a0ab705cf97ed"
+        },
+        "D1/revoke-only-exact-197-added-columns.sql": {
+          "bytes": 60519,
+          "sha256": "929ec2180c722b271a0297d69a9e559e65fcb2e0ef504c8a549b31ae3cba3a40"
+        },
+        "D1/CAPTURED-197-EXACT-PRESTATE.json": {
+          "bytes": 47054,
+          "sha256": "8a1ebdf7fa96d4b71508dc5e695aef283a300f4c20f552b88834bea58ec3f374"
+        },
+        "D1/README.md": {
+          "bytes": 4941,
+          "sha256": "347954c0ed4bf86ba266f2b1f307cb5a0af1651c5eff584ce4bc8c22fb870e79"
+        },
+        "D1/STATIC-CHECK.json": {
+          "bytes": 578,
+          "sha256": "9b36d6264f272b6725260b6bcc8a223dbfbec8eb8bca1910f5dae600b1c01158"
+        },
+        "D1/RESULT.json": {
+          "bytes": 3363,
+          "sha256": "b6e418c4894878a71d5f15313163ef4bddc7637287cc57f8fa7bffb0a47514a7"
+        },
+        "QB485-RESULT.json": {
+          "bytes": 5174,
+          "sha256": "63fa0022e75b74a1bf407064288c23690416f52e909b199e81859619daf5b94c"
+        },
+        "C-198-ADOPTION.json": {
+          "bytes": 2710,
+          "sha256": "bf6f7d179cd0d5118acb45d501c5ea09939016997ed94144edd6f31d7f9ba2bd"
+        }
+      },
+      "actual": "D1fixedv2/16columnGRANT only76bits,197currentwholeprestate. QB485independentsource/static PASS actuallyread, no repeat technical review. No actualPGparse/grant yet.",
+      "198": "C exactSQL60600/0936ab9c authority issued tooriginalT45; originalowner/target/prestate/oneexecution; exactCOMMIT/76bits+alloldpreserved/currentordinarycatalog+canonical thenoriginalQBcurrentreview. No writer/MAIN/PUBLISH/APP/publicswitch. UnknownCOMMIT checkpre/post beforeanyretry.",
+      "rollback": "Exact76only afterfixedforward/no laterACLdrift; rawNULLvsEMPTY/canonicaltext notguaranteed; no businessrollback.",
+      "frontendDedup": "Current originalF1 final30+30fixtures alreadyintegratednormal34; F4categoryemptyfix alreadyintegrated; QF705andQF2normal32evidence unchanged, no duplicate dispatch. Originalcomparisonnormal34 active.",
+      "github": "SOURCE80723f8915a351bc17d6f262462a4b8d7e5cadec085 exactremoteGET verified",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
     }
   },

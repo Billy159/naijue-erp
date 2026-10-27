@@ -1,0 +1,67 @@
+{
+  "decision": "SOURCE_READY_197_OBSERVED_FINITE_COLUMN_ACL_PATCH_NOT_PG_EXECUTED",
+  "supersedesUnexecutedCandidate": "R1-BARCODE-STAGE-MINIMUM-ACL-v1 barcode-only candidate; preserve and do not execute both",
+  "prestate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/release-submission/release-receipts/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/original-key-result.json",
+    "bytes": 60922,
+    "sha256": "5abfee228c16a410b279b5de0a7cb14d8ea92eb7b2add4adbad2ba677186b603"
+  },
+  "actual197Result": {
+    "bytes": 8927,
+    "sha256": "eb7f309c7c30fbe483f79e89eccfffade1284dc7c1b154d9b444f9bcb984dbb6"
+  },
+  "delta": {
+    "SELECT": 9,
+    "INSERT": 59,
+    "UPDATE_for_existing_row_locks": 8
+  },
+  "tableCount": 8,
+  "grantStatements": 16,
+  "functionChanges": 0,
+  "productionTypeScriptOrRoutineBodyChanges": 0,
+  "canonicalRebindRequired": true,
+  "checks": {
+    "status": "PASS_LOCAL_FINITE_STATIC_CHECKS_NOT_DATABASE_PARSE_OR_EXECUTION",
+    "grantStatements": 16,
+    "reverseStatements": 16,
+    "exactNewEffectiveBits": {
+      "SELECT": 9,
+      "INSERT": 59,
+      "UPDATE_for_existing_row_locks": 8
+    },
+    "allOldPrivilegeBitsPreserved": true,
+    "allAddedBitsUseOriginalOwnerGrantorOriginalRuntimeGranteeNoGrantOption": true,
+    "onlyObserved197MissingColumns": true,
+    "scopeBeyondEightTables": false,
+    "businessDMLOrRoutineSchemaRoleChanges": false,
+    "databaseExecution": "NOT_EXECUTED_D1_NOT_OWNER",
+    "databaseSQLParse": "NOT_TESTED"
+  },
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/CAPTURED-197-EXACT-PRESTATE.json",
+      "bytes": 47054,
+      "sha256": "8a1ebdf7fa96d4b71508dc5e695aef283a300f4c20f552b88834bea58ec3f374"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/README.md",
+      "bytes": 4941,
+      "sha256": "347954c0ed4bf86ba266f2b1f307cb5a0af1651c5eff584ce4bc8c22fb870e79"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/STATIC-CHECK.json",
+      "bytes": 578,
+      "sha256": "9b36d6264f272b6725260b6bcc8a223dbfbec8eb8bca1910f5dae600b1c01158"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/grant-exact-197-columns.sql",
+      "bytes": 60600,
+      "sha256": "0936ab9cac570e5b94f8f760330a1d57d9bc5f23e266f94dc61a0ab705cf97ed"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/revoke-only-exact-197-added-columns.sql",
+      "bytes": 60519,
+      "sha256": "929ec2180c722b271a0297d69a9e559e65fcb2e0ef504c8a549b31ae3cba3a40"
+    }
+  ]
+}
