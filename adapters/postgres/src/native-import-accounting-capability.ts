@@ -512,7 +512,7 @@ export const NATIVE_RUNTIME26_V20_METADATA_PROBE = replaceOne(NATIVE_RUNTIME26_V
 /** Exact v22 staged-prefix first binding successor, one original function body only. */
 export const NATIVE_RUNTIME26_V22_METADATA_PROBE = replaceOne(NATIVE_RUNTIME26_V20_METADATA_PROBE,
   "('assert_core_initialization_v14','5ca42bcac20e7ad3affb3ac09829fd27c481752a303b1090133f23ecee3ad99d')",
-  "('assert_core_initialization_v14','19771e3d08cf5c30c501224e1e55584346a7178a5ec7e133d2b4e21a4b6b6512')");
+  "('assert_core_initialization_v14','8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5')");
 
 /** Daily managed-application lease identity only. The complete catalog was awaited at startup.
  * A baseline switch stops/disposes that application before DDL/ACL changes, then creates a new issuer.

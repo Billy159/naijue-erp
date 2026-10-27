@@ -1,3 +1,5 @@
+SOURCE776：原D1四生产+两tests、D3五叶已冻结，C仅验11件身份吻合不重技术审。D1单函数body8a8374fb/131routines/ACL保持、26unique本地协议codec有效+旧CORE/BIND5复用、定向tsc0；D3原16+末增2有效且端口已对齐。实际源码交付进入原QB一次合批差异验收；真实PG解析/trigger/回滚/根耗时尚未测，隔离v22入口缺口交C/T45协调，不用旧B07/19冒父态。新普通role辅助函数权限差异已通过同编码公式展开处理，不加GRANT。0v22实际DDL/BIND/PUBLISH。目标ACTIVE未完成，37/67整页与真实业务/历史/性能/正式状态未因source-ready提升。
+
 SOURCE775：v22原D3五叶实际接线与定向检查完成（16PASS；SKU原record末增量2PASS，其余复用），D1四生产叶/单函数successor仍在实施，当前源码仅WIP不冒已验交付。173原121初始化保全文件4214/dcf816实际metadata固定，原116key沿121真实COMMIT，不重初始化。原SKU import_record全11列属于已批SKU来源必要关系，不删原137拒绝/不加业务table动作；来源闭包准确声明v22 run/store/issuer变化与新增adapter无148baseline，其他guard保持。D1相应2test叶已唯一登记；未跑v22数据库/DDL/BIND/发布。源码WIP、允许的安全回执与本接续保存，原QB待最终稳定包合批一次差异验收。目标ACTIVE未完成。
 
 SOURCE774：用户明确“确认 v22，按此实施”（call_71399ed4794f41288149ccc520cea6e2），批准已记录，相关实现等待解除。沿原D1 SQL/store/privateadapter/issuer、D3 provider/host/run与对应有限tests唯一writer接续，原T45服务器/QB独验路由保持。原8表来源逐成员/native内容证明、其他17空、原109命令keys/权限/回滚/发布核验不减；不清表/重导/重旧job。先固定D1-D3私有接缝再实现依赖段，完整source/review/catalog/grant后才原T45新后继实际执行。v22源码/运行/BIND尚未通过，全站37/67及真实业务/历史/性能/正式发布目标继续未完成。
