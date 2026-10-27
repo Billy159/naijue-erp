@@ -6677,5 +6677,33 @@
     ],
     "boundary": "Reuse already loaded actual product base code/name for inventory Selection label; original true product id unchanged. No extra lookup/full catalogue, no shared ready-pages change, no new DTO/state owner/fields/writes. Editor unreadable fixture remains untested, do not fabricate.",
     "next": "F2 minimum affected selfcheck -> C fixed source -> QF2 only label delta -> next necessary accurate preview; prior P13 actual query/return evidence reused."
+  },
+  "queryReset830": {
+    "owner": "F2",
+    "model": "gpt-6.1-sol/medium",
+    "Fast": "UNVERIFIED",
+    "issue": "N34-P01-RESET-01 (product and inventory same cause)",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/products/list.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/product-runtime.test.mjs",
+      "apps/web/demo-replica/frontend/runtime/inventory/page.tsx",
+      "apps/web/demo-replica/frontend/runtime/inventory/inventory-runtime.test.mjs"
+    ],
+    "boundary": "Reset user action clears filters/page and executes existing authorized query once; preserve P13 returncontext/session/late-response guards. No newAPI/DTO/local fakepagination/sharedhost/globalCSS/build/server/DB/Git. Additional leaves register before write."
+  },
+  "salesPaymentDraft830": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/medium",
+    "Fast": "UNVERIFIED",
+    "issues": [
+      "N34-S03-PAYMENT-EMPTY-01",
+      "N34-S-PAYMENT-DRAFT-01"
+    ],
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
+      "apps/web/src/current-form/sales-proposal.ts",
+      "apps/web/src/current-form/sales-proposal.test.ts"
+    ],
+    "boundary": "Trace current draft display/add guards vs frozenDemo and approved exact money/save contract; fix same-root UI-only differences if no contract change. Blank unused draft rows must not erase valid known payment display; invalid nonempty money remains explicit unknown/error. Preserve original write validation/real account refs/idempotency/transaction. Do not infer zero or silently remove incomplete saved rows. Extra leaves/contracts require C review before mutation."
   }
 }
