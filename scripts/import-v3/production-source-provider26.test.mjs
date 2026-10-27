@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createProductionSourceProvider26,providerVersion,sourceGroups,openSourceSession} from './production-source-provider26.mjs';
+import {createProductionSourceProvider26,providerVersion,sourceGroups,openSourceSession,stagedPrefixStockRow22} from './production-source-provider26.mjs';
 import {captureNativeSourceProvider26,captureNativeSourceSession26} from './production-source-host.mjs';
 import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';
 import {HISTORY_CLOSURE_SOURCE_ENTITIES} from '../../packages/application/src/history-typed-closure.ts';
@@ -360,7 +360,7 @@ async function retainedNativeFiles(t,group,{prefix22=false}={}){
   f.inputs.adoptedPreparation={path:'/synthetic/adopted.json',bytes:1,sha256:digest('a')};f.inputs.stagedPrefixBinding26={path:'/synthetic/prefix.json',bytes:1,sha256:digest('b')};
   f.authority.adoptedClosure=async()=>({async expected(){throw Error('NO_CLOSURE_RECOMPUTATION');},async authorizeStage(){},async authorizePublish(){}});
   f.authority.captureStagedPrefixBinding26=async()=>({binding:{commandHash:digest('c')},preparation:{inputDigest:digest('a'),manifestSha256:digest('b')},schemeRows:nativeBarcodeSchemeInitializationRows26(),schemeInitialization:{requestKey:'original-init'}});
-  const old=f.authority.openRetained;f.authority.openRetained=async(...args)=>{const reader=await old(...args);if(args[0]==='BARCODES')reader.prefixSchemes26=async()=>nativeBarcodeSchemeInitializationRows26();return reader;};
+  const old=f.authority.openRetained;f.authority.openRetained=async(...args)=>{const reader=await old(...args);if(args[0]==='BARCODES')reader.prefixSchemes26=async()=>nativeBarcodeSchemeInitializationRows26();if(args[0]==='SKUS')reader.skuRecords22=async function*(){};return reader;};
  }
  const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());
  return{...f,s,prepared,expected,writeFile,file,sha,body};
@@ -1034,11 +1034,13 @@ test('v22 provider passes only original five complete source/native streams and 
   if(name==='SKUS')reader.skuRecords22=async function*(){seen.push('SKU_RECORDS');yield {relation:'import_record',key:'original',projection:{reviewed_at:'2026-10-24T00:00:00.123456Z'}};};
   reader.openClosure=async()=>{assert.ok(prefixGroups.includes(name));opened.push(name);let sourceDone=false;return {async verify(){},
    async *sourceRows(){sourceDone=true;seen.push(name+':source');yield {relation:'import_source_row',key:name,projection:{original:null,quantity:'0',person:null}};},
-   async *typedRows(){assert.equal(sourceDone,true);seen.push(name+':typed');yield {relation:'original-native',key:name,projection:{original:null,quantity:'0',person:null}};},async close(){}};};return reader;};
+   async *typedRows(){assert.equal(sourceDone,true);seen.push(name+':typed');
+    if(name==='STOCK_CONTRIBUTORS'){const {historyClosureProjectionRow26}=await import('../../packages/application/src/history-typed-closure.ts');yield historyClosureProjectionRow26('import_stock_contributor',{batch_id:f.binding.batchId,source_row_id:id(1),warehouse_id:id(2),canonical_sku_id:id(3),old_source_sku_id:'OLD',canonical_stock_source_key:'STOCK',source_unit:'件',signed_quantity:'-3',baseline_ledger_id:id(4)});}
+    else yield {relation:'original-native',key:name,projection:{original:null,quantity:'0',person:null}};},async close(){}};};return reader;};
  const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);
  try{await s.preflight();const proof=await s.stagedPrefixBinding26.capture({requestKey:'synthetic-original'});assert.deepEqual(opened,prefixGroups);assert.deepEqual(proof.groups.map(x=>x.name),prefixGroups);assert.equal(proof.schemes.length,6);
   await assert.rejects(Array.fromAsync(proof.skuRecords()),{code:'PRODUCTION_PREFIX22_SKU_RECORD_ORDER'});
-  for(const group of proof.groups){const sources=await Array.fromAsync(group.sourceRows()),typed=await Array.fromAsync(group.typedRows());assert.deepEqual(sources[0].projection,{original:null,quantity:'0',person:null});assert.deepEqual(typed[0].projection,sources[0].projection);}
+  for(const group of proof.groups){const sources=await Array.fromAsync(group.sourceRows()),typed=await Array.fromAsync(group.typedRows());assert.deepEqual(sources[0].projection,{original:null,quantity:'0',person:null});if(group.name==='STOCK_CONTRIBUTORS'){assert.equal(typed[0].projection.baseline_ledger_id,null);assert.equal(typed[0].projection.signed_quantity,'-3');}else assert.deepEqual(typed[0].projection,sources[0].projection);}
   const records=await Array.fromAsync(proof.skuRecords());assert.equal(records[0].projection.reviewed_at,'2026-10-24T00:00:00.123456Z');
   assert.equal(seen.length,11);assert.equal(f.trace.ready,0);
  }finally{await s.close();}
@@ -1058,5 +1060,27 @@ test('v22 SKU record proof reads original eleven writer fields from the pinned p
    await assert.rejects(Array.fromAsync(proof.skuRecords()),{code:'PRODUCTION_PREFIX22_SKU_RECORD_REUSED'});
   }
   assert.equal(f.trace.ready,0);await f.s.close();
+ }
+});
+
+test('v22 prefix STOCK uses the exact STAGE nine-field image while retained publication keeps its original MAIN ledger identity',async t=>{
+ const f=await retainedNativeFiles(t,'STOCK_CONTRIBUTORS',{prefix22:true});await f.s.preflight();
+ const proof=await f.s.stagedPrefixBinding26.capture({synthetic:'original'}),stock=proof.groups.find(g=>g.name==='STOCK_CONTRIBUTORS');
+ const sources=await Array.fromAsync(stock.sourceRows()),typed=await Array.fromAsync(stock.typedRows());
+ const order=rows=>rows.toSorted((a,b)=>Buffer.compare(Buffer.from(a.relation+'\0'+a.key),Buffer.from(b.relation+'\0'+b.key)));
+ assert.deepEqual(sources,order(f.expected.sources));
+ assert.deepEqual(typed,order(f.expected.typed).map(row=>({...row,projection:{...row.projection,baseline_ledger_id:null}})));
+ assert.ok(f.expected.typed.every(row=>typeof row.projection.baseline_ledger_id==='string'));
+ assert.ok(typed.some(row=>BigInt(row.projection.signed_quantity)<0n));assert.equal(f.trace.ready,0);
+ await f.s.close();
+ const original=await retainedNativeFiles(t,'STOCK_CONTRIBUTORS');await original.s.preflight();
+ const closure=await original.s.openSources.STOCK_CONTRIBUTORS(original.inputs.closureScope,{group:'STOCK_CONTRIBUTORS',signal:original.controller.signal});
+ await Array.fromAsync(closure.sourceRows());assert.deepEqual(await Array.fromAsync(closure.typedRows()),order(original.expected.typed));
+ await closure.close();await original.s.close();
+ for(const row of f.expected.typed){
+  assert.throws(()=>stagedPrefixStockRow22({...row,relation:'product'}),/STOCK_RELATION/);
+  const missing=structuredClone(row);delete missing.projection.source_unit;assert.throws(()=>stagedPrefixStockRow22(missing));
+  assert.throws(()=>stagedPrefixStockRow22({...row,key:'not-original'}),/STOCK_PROJECTION/);
+  assert.throws(()=>stagedPrefixStockRow22({...row,extra:true}),/STOCK_PROJECTION/);
  }
 });

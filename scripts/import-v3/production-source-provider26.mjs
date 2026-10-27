@@ -156,6 +156,14 @@ export function unclaimedNativeStage26({group,payload,progress}){
  * authority; REVIEWED recipes invoke the actual original readers below. */
 /** The original native-SKU writer's eleven immutable import_record values.
  * The caller supplies an already validated/pinned original prepared SKU. */
+/** First BIND proves STAGE rows. The authenticated closure row is the later
+ * publication image; only its MAIN-established ledger link differs at STAGE. */
+export function stagedPrefixStockRow22(original){
+ must(original?.relation==='import_stock_contributor','PRODUCTION_PREFIX22_STOCK_RELATION');
+ const publication=historyClosureProjectionRow26('import_stock_contributor',original.projection);
+ must(capture(original)===capture(publication),'PRODUCTION_PREFIX22_STOCK_PROJECTION');
+ return historyClosureProjectionRow26('import_stock_contributor',{...publication.projection,baseline_ledger_id:null});
+}
 export function stagedPrefixSkuRecord22(prepared){
  const r=prepared.importRecord,s=prepared.canonicalSource;
  return {relation:'import_record',key:r.id,projection:{id:r.id,import_batch_id:prepared.batchId,source_entity_type:'SKU',source_key:s.sourceKey,
@@ -561,7 +569,7 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
      const original=await readers.get(name).openClosure(structuredClone(fixed.closureScope),{group:name,signal});active();
      const stream=methods(original,['verify','sourceRows','typedRows','close']);disposers.push(stream.close);
      groups.push({name,async *sourceRows(){await checked(stream.verify);for await(const row of stream.sourceRows()){active();yield row;}await checked(stream.verify);},
-      async *typedRows(){await checked(stream.verify);for await(const row of stream.typedRows()){active();yield row;}await checked(stream.verify);if(name==='SKUS')skuTypedComplete=true;}});
+      async *typedRows(){await checked(stream.verify);for await(const row of stream.typedRows()){active();yield name==='STOCK_CONTRIBUTORS'?stagedPrefixStockRow22(row):row;}await checked(stream.verify);if(name==='SKUS')skuTypedComplete=true;}});
     }
     return {version:'CORE_STAGED_PREFIX_BIND_V22',binding:proof.binding,preparation:proof.preparation,groups,
      schemes:schemeRows.map(row=>structuredClone(row.native)),schemeInitialization:proof.schemeInitialization,
