@@ -1,0 +1,41 @@
+{
+  "reviewId": "QB453",
+  "decision": "PASS_SOURCE740_FIXED_TWO_LEAF_UTC_DRIVER_SEAM_ONLY_NOT_ACTUAL_CONSTRUCTION",
+  "fixedCommit": "746b73f39118453a5112ecad0b1bd59b28d07064",
+  "sourcePins": [
+    {
+      "path": "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 82891,
+      "sha256": "7f797f816090363e95f961a1c08262f5641bdb1ef4c0056fd5d8752b8ed37915"
+    },
+    {
+      "path": "reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 40775,
+      "sha256": "c0a356696e75e74c219c5e1ce99c842b0e7358409851cd1c2a6f9c96692046ac"
+    }
+  ],
+  "ownerResult": {
+    "bytes": 3984,
+    "sha256": "2a2736f45697205648f09555ea4e666a07decacfc2b658d5342ff87c3d961899"
+  },
+  "checks": [
+    "Exacttwo fixedGit/Kmirror leaves match releasedpins. Removing newthree-line UTCexportblock and reversingexacttwoSYNdriver callsites restorespriorparent fullbytes; oldtestprefix unchanged. No othercontrolflow/guard/diagnostic/credentials/businesssource change.",
+    "syn26UtcOrdinaryDriver constructs same suppliedPool with fresh options spread; onlystartup options explicitly default_transaction_read_only=off plus timezone=UTC. Host/port/database/user/password/ssl/timeouts/otherfields kept, input notmutated.",
+    "BothclosedSYNparent entries now use sameexport for originalnormalfactory and independentreadpool/issuer driver; no copiedpercallUTC behavior. OriginalordinaryDriver/off-only andallold07callpaths byteunchanged afterinverse.",
+    "UTC startup aligns postmastertext rendering with explicitlyUTC sampling. Originalexacttarget/catalog/purpose assertions notrelaxed; no serverconfig/GUCsource update, oldmetadata rewrite, newrole orfalse identity normalization.",
+    "Adopt owner2 no-connectionfakePoolPASS/syntax0 only; constructorfieldpreservation/immutability andold07driver behavior checked. Do not repeat450 diagnostics/451catalog/proof/backend/PG."
+  ],
+  "adoptedHistoricalActual": "57706 CREATE_NORMAL_FACTORY NATIVE_RUNTIME26_NOT_READY/RUNTIME_TARGET_MISMATCH; actualfailing lease tuple NOT_EXPORTED. UTCsampling+ordinarystartupomission/serverShanghai seam is evidenced, but unique actualdifferingfield notmeasured.",
+  "actualFailingLeaseTupleExported": false,
+  "actualFactoryRecheck": false,
+  "actualUtcIssuerSuccess": false,
+  "actualPostgres": false,
+  "actualCredentialOrCas": false,
+  "sourceChangedByQB": false,
+  "remaining": [
+    "T45 separatelyregistered construction-only successor must importthisexactexport syn26UtcOrdinaryDriver, notcopy or oldordinaryDriver; freshcurrenttarget/purpose andsafephase/cleanup required.",
+    "Only afteractualconstruction succeeds C separatelyadopts closedQA1to2/session continuation. SourcePASS neither actualfixPASS nor unique runtimecause proof."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

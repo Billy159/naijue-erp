@@ -1,0 +1,41 @@
+{
+  "status": "SOURCE_STRICT_NEW02_OUTPUT_READY_NOT_ACTUAL",
+  "files": [
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 82891,
+      "sha256": "813150b1473ca9841ff054f7c7c8af3ad76212dc9b6a62907f8c11d0abe1bf9f",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 42121,
+      "sha256": "52f7e64f1bb89d16987e5bcb46f3436262ccbfa651ebdf7837e0dc8b52e5cdd5",
+      "mirrorsEqual": true
+    }
+  ],
+  "change": "One constant credential-continuation-01→credential-continuation-02, strict original contract/gate equality unchanged; old01 terminal receipts and SOURCE740 historical evidence retained.",
+  "unchanged": [
+    "SYN target and QA auth1to2 only",
+    "syn26UtcOrdinaryDriver / factory / issuer",
+    "guard/proof/current-purpose checks",
+    "credential/CAS/recovery/business/cleanup sequence",
+    "old07 and original seed/publication/upgrades/ACL/v21"
+  ],
+  "checks": {
+    "singleTargetedOfflineTest": {
+      "passed": 1,
+      "skipped": 0,
+      "scope": "fixed02 output; old01/03/arbitrary output or old01 gate rejected before any client/query/credential callback"
+    },
+    "node24SyntaxExitCode": 0,
+    "entireParentExceptOneConstantIdenticalToPrior": true,
+    "existingTestsUnchangedBeforeAppend": true
+  },
+  "actualPostgres": false,
+  "actualCasOrSession": false,
+  "newOutputDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-02",
+  "next": "C fix two leaves and exact new02 actual registration; T45 consume fixed new root/source, original UTCconstruction PASS reused, no independent construction replay, no seed/upgrade/republication. No business release implied."
+}

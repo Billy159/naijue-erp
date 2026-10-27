@@ -467,7 +467,7 @@ export async function runB07ApprovedSynSessionParent({plan:raw,setupClient,after
  must(result.status==='PASS_SYN_APPROVED_ONE_SESSION_LIMITED_SCOPE'&&result.clientsClosed,'B07_SYN_PARENT_STOPPED_SEE_PRIVATE_RESULT');return result;
 }
 // source732: existing SYN26 QA auth1→2 only. No seed/upgrade/ACL/function install.
-export const SYN26_CONTINUATION_OUTPUT=join(APPROVED_SYN_OUTPUT,'credential-continuation-01');
+export const SYN26_CONTINUATION_OUTPUT=join(APPROVED_SYN_OUTPUT,'credential-continuation-02');
 const synCredentialFunctions={guard_maintenance_account_event:['965d9d3433b929ccd151b9a147eeef713770d7b7311e49c80cfaa3d17b118549'],validate_maintenance_root_commit:['8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512','002818dfd8d764e99221bb0548da1141054871ae674aba6bb9f6ce59c9d92d1c'],validate_available_administrator_commit:['3a9a1bea930614761185af90b8591a539b855647974b68b004869c80f5e5ba18']};
 // Fixed diagnostic labels only: never serialize message, SQL, config, values or full stack.
 const syn26DiagnosticPhases=new Set(['BASE_REGISTRATION','PRIOR_TERMINAL','ORIGINAL_PUBLICATION','OUTPUT_RESERVATION','CURRENT_PURPOSE_GATE','CURRENT_PURPOSE_FILES','VALIDATE_SYN26_INPUT','CURRENT_REVIEW_LINKS','ORIGINAL_INPUT_LINKS','LOAD_RUNTIME_MODULES','CREATE_NORMAL_FACTORY','CREATE_READ_POOL','CREATE_ISSUER','QA_CREDENTIAL_AND_NORMAL_SCOPE','CURRENT_ADMISSION','CREDENTIAL_CAS','COMMIT','SAME_RAM_READONLY_COMMIT_RECOVERY','ONE_NORMAL_SESSION']);

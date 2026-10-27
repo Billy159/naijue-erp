@@ -1,0 +1,59 @@
+{
+  "status": "PASS_ACTUAL_UTC_FACTORY_READPOOL_ISSUER_CONSTRUCTION_ONLY",
+  "sourceCommit": "746b73f39118453a5112ecad0b1bd59b28d07064",
+  "elapsedSeconds": 2.088672792,
+  "constructed": [
+    "CREATE_NORMAL_FACTORY",
+    "CREATE_READ_POOL",
+    "CREATE_ISSUER"
+  ],
+  "actualROPreimage": {
+    "qaVersion": 1,
+    "authVersion": 1
+  },
+  "currentPurpose": "QB454-LIVE actual PASS consumed",
+  "clientsClosed": true,
+  "workersClosed": true,
+  "ownPgStopped": true,
+  "pidFileAbsent": true,
+  "credentialRenewalExecuted": false,
+  "normalSessionExecuted": false,
+  "HTTPAttempted": false,
+  "seedUpgradeRoleGrantPublishExecuted": false,
+  "strictTargetGuardPreserved": true,
+  "earlierFailingLeaseTuple": "NOT_EXPORTED; old57706 retained, no invented fieldwise reconstruction",
+  "formalBusinessAcceptance": false,
+  "remaining": [
+    "Actual QA1to2 parent continuation under separately registered newwindow/currentpurpose",
+    "Actual normal approvedHREV/delta/conservation/rollback",
+    "Native189 genuine RO preflight",
+    "Formal source import/publish release not authorized by this result"
+  ],
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-UTC-CONSTRUCTION-DIAGNOSTIC-20261027-02/NODE-PIPELINE-RESULT.json",
+      "bytes": 725,
+      "sha256": "3b5dd8216af291e50764e1b3d918a8d40e72c8c4f27bcbcf9241c67866003e55"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-UTC-CONSTRUCTION-DIAGNOSTIC-20261027-02/OS-LIFECYCLE.json",
+      "bytes": 509,
+      "sha256": "6e1587d256e92cb7e21f6767e76fdf2d135bd12ae99399a6cd494f410fec8cc6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-UTC-CONSTRUCTION-DIAGNOSTIC-20261027-02/CURRENT-PERMISSION-PROOF.json",
+      "bytes": 2411,
+      "sha256": "cb779450f6abd8900471c077d3539e13e648360edf735a84d52b0ced843e40a7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-UTC-CONSTRUCTION-DIAGNOSTIC-20261027-02/GATE-CONSUMPTION-RESULT.json",
+      "bytes": 1158,
+      "sha256": "1cda837f201afeee0e0b2a58b84b0d2193e470ff552b87b31530d30e42a61b1a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice454-syn26-utc-construction-successor/QB454-LIVE-RESULT.json",
+      "bytes": 8993,
+      "sha256": "414b7249c11ebca12745de602f71749b56a4aad110b8b19ed52b54cb782003db"
+    }
+  ]
+}

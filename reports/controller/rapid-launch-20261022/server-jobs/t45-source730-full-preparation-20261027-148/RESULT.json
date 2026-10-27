@@ -1,0 +1,115 @@
+{
+  "status": "TERMINAL_PASS_COMPLETE_SOURCE_ONLY_PREPARATION_NOT_EXECUTION_AUTHORIZED",
+  "jobId": "t45-source730-full-preparation-20261027-148",
+  "sourceCommit": "3d99a4ab783c9ee566c20d1c23b85fee19b6b4c2",
+  "jobReceipt": {
+    "jobId": "t45-source730-full-preparation-20261027-148",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-a78462edb040",
+    "atUTC": "2026-10-27T03:16:36.460130+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 4367.170767478878,
+    "exports": [
+      "engine-result.json",
+      "preparation-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T04:29:23.738537+00:00"
+  },
+  "engine": {
+    "MAINOrPublishExecuted": false,
+    "applicationChanged": false,
+    "automaticRetry": false,
+    "businessDML": 0,
+    "checkedAtUtc": "2026-10-27T04:29:23.660087+00:00",
+    "databaseConnected": false,
+    "diagnosticLimitReached": false,
+    "grantIssued": false,
+    "jobId": "t45-source730-full-preparation-20261027-148",
+    "preparationStatus": "ORIGINAL_FULL_SOURCE_BINDINGS_PREPARED_NOT_EXECUTION_AUTHORIZED",
+    "priorOutputDirectEntries": 0,
+    "priorOutputParentExists": true,
+    "priorRegistrationExists": false,
+    "processExitCode": 0,
+    "status": "PASS_ACTUAL_SOURCE_ONLY_PREPARATION_NOT_EXECUTION_AUTHORIZED",
+    "stderrBytes": 0,
+    "stdoutBytes": 150,
+    "twentyAndRoutePreserved": true
+  },
+  "preparationStatus": "ORIGINAL_FULL_SOURCE_BINDINGS_PREPARED_NOT_EXECUTION_AUTHORIZED",
+  "privateOutputDirectory": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01",
+  "sourceGroups": 11,
+  "nativeSkus": 14999,
+  "baselineItems": 38303,
+  "unrepresentedWarehouseCount": 24,
+  "artifactRoleCounts": {
+    "FULL_DATA": 1,
+    "EXPECTED": 1,
+    "BIND": 1,
+    "ACCOUNT": 107,
+    "PUBLISH": 1
+  },
+  "listedArtifacts": 111,
+  "fixedCompleteArtifactRefs": [
+    {
+      "logicalRole": "FULL_DATA",
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/DATA.json",
+      "bytes": 316960,
+      "sha256": "7d34bcf788003963696d203140072ea8ab4dba81c10bf4b1046c482aa65b0219"
+    },
+    {
+      "logicalRole": "EXPECTED",
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/EXPECTED.json",
+      "bytes": 25987624,
+      "sha256": "4c8ba7a200a84b59c9795b52351045fc231c0cd76cd9c312ede51c2826a2343a"
+    },
+    {
+      "logicalRole": "BIND",
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/BIND.json",
+      "bytes": 73746,
+      "sha256": "3a350163b35c771c8fd85401cf7c9d88a6736157300c444c10022c8b2e740609"
+    },
+    {
+      "logicalRole": "PUBLISH",
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/PUBLISH.json",
+      "bytes": 24179,
+      "sha256": "f28b17db7a33a763f13d31f894d8bb1ca3759b2818ff1c65b9d501a0cba98c5b"
+    }
+  ],
+  "accountRefsUseOriginalPreparationReceipt": true,
+  "authorizedPayloadHash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8",
+  "executionReady": false,
+  "executionAuthorizationIssuedExport": "[REDACTED]",
+  "executionAuthorizationNote": "Export field is redacted string; engine records grantIssuedfalse and source status NOT_EXECUTION_AUTHORIZED. No grant or MAIN/PUBLISH performed.",
+  "DBConnected": false,
+  "MAINOrPublishExecuted": false,
+  "completeArtifactBodiesDownloadedOrRehashed": false,
+  "originalKeysReplayed": false,
+  "unitObservedAfterCompletion": "inactive/dead/MainPID0 at04:43:53Z",
+  "unitMemoryMaxAfterCompletion": "infinity",
+  "unitMemoryCurrentAfterCompletion": "not set; cannot infer last/peak RSS or pressure",
+  "midstreamResumeClaimed": false,
+  "formalBusinessAcceptance": false,
+  "next": "Preserve complete private artifacts; originalCommands/EXPECTED and original key recovery may be consumed only by separately admitted next controlled action, never rerun148. Native189 server-lane eligibility can now be checked without148 occupancy.",
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/release-submission/release-receipts/t45-source730-full-preparation-20261027-148/job.json",
+      "bytes": 536,
+      "sha256": "5b7feadb74c8b2f8f390b665435f12011221ee419818a5e9cb35115dd5720f07"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/release-submission/release-receipts/t45-source730-full-preparation-20261027-148/engine-result.json",
+      "bytes": 687,
+      "sha256": "06d1546a267fc201e0d023eec65c21c6b4e0aea15c098f707e1f7ed019db1031"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/release-submission/release-receipts/t45-source730-full-preparation-20261027-148/preparation-result.json",
+      "bytes": 42638,
+      "sha256": "31d1772ebfc837cf5cb4cb9b1adc36f289f6832f50d1a46deb9bfb5292f8ba5c"
+    }
+  ]
+}
