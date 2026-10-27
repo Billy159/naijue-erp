@@ -1,0 +1,11 @@
+{
+  "jobId": "t45-r1-stock-stage-v22-original109-continuation-20261027-190",
+  "taskId": "T45",
+  "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+  "status": "RUNNING",
+  "unit": "naijue-erp-op-5cc58239-afef5715f67e",
+  "atUTC": "2026-10-27T16:02:15.803992+00:00",
+  "grantId": "5cc58239751e4e2a",
+  "privateLogsExported": false,
+  "businessAcceptanceClaimed": false
+}

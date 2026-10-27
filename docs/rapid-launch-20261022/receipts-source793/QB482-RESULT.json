@@ -1,0 +1,245 @@
+{
+  "reviewId": "QB482",
+  "decision": "PASS_ACTUAL_QA178_READONLY_PREFIX_FULL_MEMBER_CONTENT_AND_7SET_COVERAGE_ONLY",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa188-materialized-execution-successor-20261027-189/RESULT.json",
+      "bytes": 11364,
+      "sha256": "600e72a3652ae39e15e5354953fb5d9e2b328aacbfc3cf7b119a7d08917c7948"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa188-materialized-execution-successor-20261027-189/release-submission/release-receipts/t45-v22-qa188-materialized-execution-successor-20261027-189/qa-prefix-readonly-result.json",
+      "bytes": 6867,
+      "sha256": "c957aaaf254c6ac1951d3f46b316ce7b7f754bdda2b2fb1e5b77f7eab336bdb6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/QA188-PLAN.json",
+      "bytes": 4682,
+      "sha256": "fe5d755bd2dca99f3aead6c7b0891e6476e77c96073c4fbde448c227b02d7256"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/RESULT.json",
+      "bytes": 39758,
+      "sha256": "797ee7cb883126a50f8a4a38cd254498282eb370e64eb035c9c426d7302afe1a"
+    }
+  ],
+  "scope": "Singlecompleted189 execution of previouslyunstarted188registered readonly operation. Receipt/identity/fixedpins/proofcoverage/rollbackclose review only; QB479/480/481 accepted source/ops reused, no DB scan/test/operation replay.",
+  "actualStatus": "COMPLETED",
+  "actualExitCode": 0,
+  "actualElapsedSeconds": 1407.374977095984,
+  "fixedIdentity": {
+    "actingRole": "erp_rewrite_runtime_20261022",
+    "database": "erp_rewrite_20261022_r1",
+    "databaseOid": "16391",
+    "ownerRole": "erp_rewrite_owner_20261022",
+    "postmasterStart": "2026-10-27 13:22:19.696753+00",
+    "serverAddress": null,
+    "serverPort": null,
+    "sessionUser": "erp_rewrite_runtime_20261022",
+    "socketDirectory": "/srv/naijue-erp/qa-v22-20261027-01/s",
+    "systemIdentifier": "7701337335828107278"
+  },
+  "fixedConsumer": {
+    "provider": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 139504,
+      "sha256": "8e0a95058b794ddbc5975e244fbf7b1d76702dc7a5dfe7eeda679c1234db86f2"
+    },
+    "qaControl": {
+      "bytes": 34178,
+      "mode": "0400",
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/qa-control/qa-prefix-bind.mjs",
+      "sha256": "1ae1e5a0b1214524a4e1c0aecbe1c4aa73230d3721b61fcc28c14b5a2a8f5cc6",
+      "uid": 0
+    },
+    "other4Modules": {
+      "host": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/scripts/import-v3/production-source-host.mjs",
+        "bytes": 42203,
+        "sha256": "9399bf46e465c14ddc7c9306b20e70a416e17142d45a44b757fefc6620b8b6f8"
+      },
+      "store": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "bytes": 72282,
+        "sha256": "c0064daa8c74960814b236f8280c48b9c051bc8843a1ac265c3ef44b67ba61f6"
+      },
+      "issuer": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts",
+        "bytes": 79436,
+        "sha256": "bf138b170144a15bcd5d68fad059e68705f4f7e67ae4906b93420d5cee4d0931"
+      },
+      "adapter": {
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/source/adapters/postgres/src/native-core-staged-prefix-bind.ts",
+        "bytes": 23570,
+        "sha256": "536f85177ab432e4ca0c35e844182c563252869f4e874f8b978d0f879f034a99"
+      }
+    },
+    "materialized188Files": "0400 fixedbytesSHA;189 owner verified101 files; originaldependencies linked,no install"
+  },
+  "independentReceiptChecks": {
+    "standaloneRuntimeBytesHashMatchesSummaryExactly": true,
+    "actualQaTupleEqualsRegisteredPlan": true,
+    "originalR1SourceBindingPreservedAndSourceDbAccessProhibited": true,
+    "original148BindRefMatchesPlan": true,
+    "proofBindingMatchesOriginalSource": true,
+    "sixGroupsSourceTypedProofCountShaAndCoverageAgree": true,
+    "skuRecord14999ProofCountAndCoverageAgree": true,
+    "coverageUniqueExact7Groups": true,
+    "rollbackReturned": true,
+    "clientsClosed": true,
+    "noBindBusinessDmlCommitDeferredGuardsOrNegativeFixture": true
+  },
+  "coverage": [
+    {
+      "name": "HEADERS",
+      "source_rows": 42561,
+      "typed_rows": 42561
+    },
+    {
+      "name": "TRANSFER_LINES",
+      "source_rows": 261641,
+      "typed_rows": 261641
+    },
+    {
+      "name": "PRODUCTS",
+      "source_rows": 2956,
+      "typed_rows": 2956
+    },
+    {
+      "name": "SKUS",
+      "source_rows": 15121,
+      "typed_rows": 30120
+    },
+    {
+      "name": "STOCK_CONTRIBUTORS",
+      "source_rows": 38314,
+      "typed_rows": 38314
+    },
+    {
+      "name": "SCHEMES",
+      "source_rows": 0,
+      "typed_rows": 6
+    },
+    {
+      "name": "SKU_RECORDS",
+      "source_rows": 0,
+      "typed_rows": 14999
+    }
+  ],
+  "proof": {
+    "binding": {
+      "actorAccountId": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+      "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+      "commandHash": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+      "cutoffAt": "2026-10-04T12:00:00+08:00",
+      "fixedSourceNamespace": "naijue:tplus:primary-ledger",
+      "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba"
+    },
+    "groups": [
+      {
+        "name": "HEADERS",
+        "source": {
+          "rows": 42561,
+          "sha256": "81fd2503f3f185ef08dfa5712f0bb07b9213fb532bba71c2bb5298aba9ce3fd2"
+        },
+        "typed": {
+          "rows": 42561,
+          "sha256": "1c9f459c9e97e1cb87ce458112830c1c664e1689f1fe68e9a383e9667d7701aa"
+        }
+      },
+      {
+        "name": "TRANSFER_LINES",
+        "source": {
+          "rows": 261641,
+          "sha256": "07819517ff591b20acafd13d2d8e2063c55d5a1e3934b73d4ab9734e6406ca38"
+        },
+        "typed": {
+          "rows": 261641,
+          "sha256": "e9f7a699a496fdf649c400deaa5e9b7930a7c5a5056c9ff18ca0c54e39d1fc00"
+        }
+      },
+      {
+        "name": "PRODUCTS",
+        "source": {
+          "rows": 2956,
+          "sha256": "15a33224da468bbdbc3188658f7a151b91aeb817812c09637d6e41fb2417f88c"
+        },
+        "typed": {
+          "rows": 2956,
+          "sha256": "0ce7ce01030ba06ead8dba49dd7e1c3d4a0968bf5f14a616bb7023647327dd80"
+        }
+      },
+      {
+        "name": "SKUS",
+        "source": {
+          "rows": 15121,
+          "sha256": "362068e34289f6515ca3f3c0fff60d132f8e98c0c33ee6bbba53b58569c065fe"
+        },
+        "typed": {
+          "rows": 30120,
+          "sha256": "5bc8971c9678ddb7f4a531e94440cf88c2c7599b7454f5cfd2b561903ab20700"
+        }
+      },
+      {
+        "name": "STOCK_CONTRIBUTORS",
+        "source": {
+          "rows": 38314,
+          "sha256": "b688f799e9df9779c7e3293a3768599c268e1501d2453fa2d6d1039479ffe215"
+        },
+        "typed": {
+          "rows": 38314,
+          "sha256": "cd0d2ca5ca43ff997b78872c7adff27c22ffc83d74f0fd53f631923379a6cbf8"
+        }
+      },
+      {
+        "name": "SCHEMES",
+        "source": {
+          "rows": 0,
+          "sha256": "41fd25ece6a18a735db49386b36ee50f2e36f3d6b800c91bce1740451090489a"
+        },
+        "typed": {
+          "rows": 6,
+          "sha256": "71e949edbe8c4e2eb7badd0f177fe72a9e9d34faee01d348f1e0361e072e9afa"
+        }
+      }
+    ],
+    "preparation": {
+      "inputDigest": "6dd84ff95d3b715433fc82dd2147295cd14e4f8ecd88325d7dfcba5e2bf984cc",
+      "manifestSha256": "4645f3703d2888861257406e4824306a6ec919e324e4328eaddf94ccec464e12"
+    },
+    "schemeInitialization": {
+      "approvalPins": {
+        "approvalSha256": "f9da50c270c14321b17af06255a5f0649daf8b55a725b6a29fe483f342517533",
+        "proposalSha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00",
+        "writeContractReplySha256": "9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc"
+      },
+      "operationId": "d1fa6f60-7268-704e-81ec-d7da432b05d5",
+      "requestHash": "ec699bdd07b38c0c5bd3147f2b57ff93fba3e3e49f4e12abf8327600393c375b",
+      "requestKey": "t45-r1-six-scheme-initialization-v19-20261026-116"
+    },
+    "skuRecords": {
+      "rows": 14999,
+      "sha256": "cda07c49f31f72ae622fff46458b112a06262780dcc9dc8175e89fecd041382c"
+    },
+    "version": "CORE_STAGED_PREFIX_BIND_V22"
+  },
+  "acceptedMeaning": "Originalproduction verifyCoreStagedPrefix22 on genuineordinaryQAlease underRRRO completed perexpectedrow fullprojection comparison, then same-snapshot completeactualcounts match uniqueapprovedexpectedsets; thisis actualreadonlycontent+coveragePASS, not justcount/health/sourcePASS. Source/lifecycle/realownerexecution contract accepted in priorreviews andT45tasklevelresult, not rerunbyQB.",
+  "causalityLimit": "No failure observed after fixedSTOCKstageimage+observer. Cannot retroactively identify187firstrow/field or assert184 exactsamecause. Oldfailure evidence remains.",
+  "notValidated": [
+    "ActualSQLBIND/deferredbusinessguards and17table negativecases",
+    "RealR1/completeproductionhost/samepoolBIND/remaining109MAIN/PUBLISH",
+    "UNKNOWNCOMMITrecovery",
+    "Formalqueryperformance/concurrency/capacity"
+  ],
+  "timeLimit": "1407.374977s is observed QAoperation elapsedtime, notformalperformancePASS",
+  "noDuplicateDispatch": "Original190R1 carrier alreadyinflight perC; QB doesnot dispatch/replay/changegrants/keys or execute.",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "qbNo": [
+    "PG/SSH/serverexecution",
+    "sourceedit",
+    "businessrowread",
+    "fullsuite/newfullprefix",
+    "newchat/subagent"
+  ]
+}
