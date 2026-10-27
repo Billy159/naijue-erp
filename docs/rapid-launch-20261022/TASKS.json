@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T18:58:22.643784+00:00",
+  "updatedAt": "2026-10-27T19:05:50.667872+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -15433,6 +15433,45 @@
       "next": "OriginalT45 one bounded196readonly same195journal/originalkey/currentR1 RRRO recovery; no replay195/newbusinesskey/ACLexpand/SQLwrite.",
       "preview": "57923normal34 restoredoriginalbuild/PID10937/3HTTP200exact; originalcomparison Terra-medium continuation sent.",
       "github": "SOURCE8048388aa83272d66da1b8425ec98c422118c87e901 exactremoteGET verified",
+      "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation806": {
+      "status": "196_ACTUAL_READONLY_RECOVERY_ADOPTED_D1_MINIMAL_BARCODE_PRIVILEGE_FIX_IN_PROGRESS",
+      "evidence": {
+        "T45-196-RESULT.json": {
+          "bytes": 7143,
+          "sha256": "bf6fb80ea39f828ad5f5fd86bf8dde0b3bce32c987278dda201891110c9681b1"
+        },
+        "D3-FINE-STEP-BUDGET.json": {
+          "bytes": 4090,
+          "sha256": "c97ccc399a620ba4777ee7af0bb02b7760f8442c9f071c8711f8b8304a005fbc"
+        }
+      },
+      "actual": "8SELECT RRRO/rollback/closed/node0; wrapperFAILED2 due PASS195_ vs PASS_ naming, preserve no rerun.18source steps PARTY8replay515/CATALOGUE10replay344, inserted0. BARCODE19 exactnative/source bothabsent. STAGED3cursor22/BINDonly/noACCOUNT/PUBLISH.",
+      "causeEvidence": "Current runtime sku_barcode SELECTtrue/anyUPDATEfalse (target FORUPDATE first required privilege deficit), sixINSERT columnsfalse. Prior requiredSQL privileges present; original195 detailed servererror not retained, this is currentcatalog+fixedSQL evidence.",
+      "next": "OriginalD1 inspect approvedcontract/initialization, minimalregisteredsource+necessarytargetedchecks+originalQBdelta thenT45actualexecution. No broadGRANT/ownerbypass/lockremoval/automaticretry.",
+      "budget": {
+        "conditionalUpperBound": 16225,
+        "4096Sufficient": false,
+        "components": {
+          "partyCatalogueReplay": 18,
+          "barcode": 15018,
+          "payment": 12,
+          "salesDetail": 810,
+          "settlement": 258,
+          "account": 107,
+          "closure": 1,
+          "publish": 1
+        },
+        "condition": "Samefixedsource/STAGED/noACCOUNT/currentfullproofrequired;196boundarymatches, trueproof recheck at newwriter. No elapsedtime/performancePASS.",
+        "humanAuthority": {
+          "thread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+          "message": "01a17eb9-f0b5-7ac2-996f-4dfe94c78090",
+          "text": "你看要不要调整上限吧 跟主控说",
+          "actuallyReadByC": true
+        }
+      },
+      "github": "SOURCE805ccdbbe65f3e706a07d7ce37d326592d48c7e35cd exactremoteGET verified",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
     }
   },
