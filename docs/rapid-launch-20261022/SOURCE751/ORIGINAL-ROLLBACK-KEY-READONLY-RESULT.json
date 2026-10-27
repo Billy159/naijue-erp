@@ -1,0 +1,112 @@
+{
+  "status": "NO_COMMITTED_ORIGINAL_ROLLBACK_ROWS_OBSERVED_NOT_EXECUTION_AUTHORIZATION",
+  "finishedAtUtc": "2026-10-27T06:31:37.722316+00:00",
+  "target": {
+    "database": "naijue_erp_test_b07_syn_approved_20261027_01",
+    "role": "t45_b07_syn_approved_20261027_01",
+    "oid": "16385",
+    "readonly": "on"
+  },
+  "originalKey": "B07_SYN_APPROVED_V1_ROLLBACK",
+  "originalRequestSha256": "2d6eb543f1daf7f8db6665499196f827bfe61c7f6317b62fb4a909989f0e87bf",
+  "newCompanionRowsPresent": false,
+  "originalCollisionRetained": true,
+  "receiptCount": 0,
+  "revisionCount": 0,
+  "currentActor": {
+    "id": "b0714000-0000-4000-8000-000000000002",
+    "staff_id": "b0714000-0000-4000-8000-000000000001",
+    "login_enabled": true,
+    "version": 3,
+    "auth_version": 3,
+    "role": "WAREHOUSE",
+    "employment_status": "\u5728\u804c",
+    "hall_id": null
+  },
+  "effectiveVersion": 2,
+  "effectiveQuantity": "4",
+  "exactTwoEndpointBalances": [
+    {
+      "warehouse_id": "00000000-0000-0000-0000-000000000040",
+      "sku_id": "00000000-0000-0000-0000-000000000050",
+      "quantity": "-9",
+      "version": 3,
+      "last_operation_id": "4855c67f-df31-48fa-bf4e-d0e4cc81e7d3"
+    },
+    {
+      "warehouse_id": "00000000-0000-0000-0000-000000000041",
+      "sku_id": "00000000-0000-0000-0000-000000000050",
+      "quantity": "1",
+      "version": 1,
+      "last_operation_id": "4855c67f-df31-48fa-bf4e-d0e4cc81e7d3"
+    }
+  ],
+  "metadata": {
+    "identity": {
+      "database": "naijue_erp_test_b07_syn_approved_20261027_01",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "t45_b07_syn_approved_20261027_01",
+      "database_oid": "16385",
+      "session_user": "t45_b07_syn_approved_20261027_01",
+      "database_owner": "naijue_erp_test",
+      "postmaster_start": "2026-10-27 06:31:37.34942+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "migration_versions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26
+    ],
+    "catalog_sha256": "d92797336281ddc4d831842ee4d8cd4468272aa5974a4ae04e5b91b053fa2632",
+    "source_routines_match": true
+  },
+  "businessDML": 0,
+  "credentialRead": false,
+  "loginOrCAS": false,
+  "rollbackReturned": true,
+  "clientsClosed": true,
+  "ownPgStopped": true,
+  "serviceExecutionAuthorized": false,
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-KEY-READONLY-20261027-01/NODE-RESULT.json",
+      "bytes": 4694,
+      "sha256": "aaf87b104e562b3d252a8e6b68edd3f909ea131bc9c0a7961cd83e7c048f3890"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-KEY-READONLY-20261027-01/OS-RESULT.json",
+      "bytes": 252,
+      "sha256": "aa7c4a25d784fefeecf7421f4ab9b627844da526e9cbb86d935f666503d7fbd7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-KEY-READONLY-20261027-01/EXECUTION-AUTHORITY.json",
+      "bytes": 1966,
+      "sha256": "50139e7660e38242d0f9b3e1ab6c89e8d8f69736cc06c56471aeaf60dfbdfcaa"
+    }
+  ]
+}

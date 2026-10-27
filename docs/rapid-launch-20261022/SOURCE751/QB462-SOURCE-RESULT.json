@@ -1,0 +1,78 @@
+{
+  "reviewId": "QB462-SOURCE",
+  "task": "SOURCE750 original04key failed-only rollback companion fourleaf source increment",
+  "decision": "PASS_FIXED_FOUR_LEAF_SOURCE_ONLY_ACTUAL_ROLLBACK_AND_CARRIER_PENDING",
+  "fixedCommit": "91e8e20b4baadb902b96e6fd400413604e1a9b6d",
+  "sourcePins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.mjs",
+      "bytes": 29863,
+      "sha256": "f6f549fbec8b4790ba22e03b253f78c58c83bd84a35965a9fce5431437f5bbb4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/approved-normal-history-v16.test.mjs",
+      "bytes": 16267,
+      "sha256": "1fa0022d40de479f6371378a0ca0144a5ea77d88d678b9a303830dc58962c7b8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 95557,
+      "sha256": "befd02fa27acfad44f2c2405b9c6e0a41af3ee225ee2d9c990adbe14a82afdde"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 52194,
+      "sha256": "0341eba0ad9e3b07052b5717822da97f66acfa1066d0f9b50db7df346e30dc3b"
+    }
+  ],
+  "ownerResultRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/SOURCE750/ROLLBACK-ONLY-SOURCE-RESULT.json",
+    "bytes": 7654,
+    "sha256": "25afcabea50706e7ba836c24942e866b9f8c3c5c4bd1f98a3febbc3138dcd4fb"
+  },
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "Standards": {
+    "findings": [],
+    "checks": [
+      "Fourregisteredharnessleaves only; noapps/adapters/packages productionAPI/SQL/guard/issuer/policy changes. ExactGit/control/mirrorpinsallmatched.",
+      "Rawdriver observer preservesoriginalclientobject/on/release/queryargs/results/errors withReflect.apply, installsidempotentlyperrawclientWeakSet; originalfrozenissuerlease neitherwrappednormutated. SameexportedUTCdriver used, no copiedconnectionoptions."
+    ]
+  },
+  "Spec": {
+    "findings": [],
+    "checks": [
+      "Originalcompanionstore nowreceivesissuer.pooldirectly, preservingoriginalWeakMaplease provenance. Source-confirmedauthorization andstore bothuse samegenuinepool/runtime; noowner/definer/directwritebypass.",
+      "Observer only exacthistory-posting:ledgermarker plusfixedfirst/collisionIDs, sameactualrawclient; countsfirstledgerrow1,firstbalanceupdate/insertrow1,secondledgerattempt+raw23505,ROLLBACK andzeroCOMMIT; no SQLparams/errors/secretserialized.",
+      "SanitizedrollbackEvidence recordedbefore23505assert soactualinnerfailure cannotbehiddenbyouterexpectederrorassertion. Originalservice receivesfixedIDgenerator solelyexistingharnessseam, notproductionfaultflag.",
+      "Separateclosedrollbackparentfixedrollback-companion-01, contract/currentaccount3/3, fourexactoriginal04refs andfreshoriginalkeyproof/noDML/noCredentialread/readonlyrollback+clientsclosed mandatory. NoAPI construction/login/session/credential/CAS path.",
+      "OriginalrequestBuffer1068/2d6eb543 exactpin fixescommand,key,operation/revision/firstledger/collisionledger IDs, actor,target,quantity5,expectedversion2; validatesprior twoPASSnormalcases/version2/exactoperations and adoptswithoutHTTPresave.",
+      "Originalkey firstchecked viaoriginalissuerlease andboundednonownertarget. ExistingCOMMITTED mustmatchexactoperation/action/HISTORY_TRANSFER/document/hash andreturnsstoredresultbeforeobserver/service/newrequest. Missingreceipt permitsonlyfixedoriginalcommand aftercurrentQA3/staff/hall proofandfreshsourceconfirmedpolicy.",
+      "Before/after fullboundedsources/projections/ledger+balance/audits/receipts/identity/currentfacts/admission equality includesretainedcollisionrow. OriginalstoreactualCAS/permissions/transaction/UNKNOWNCOMMIT handling unchanged; noautomaticsecondattempt ornewkey.",
+      "Actualnormal04twoHTTPcases/auth2to3/ACL/UTC/parser/catalogacceptedresultsreused, not rerun. Tests explicitlymarkprotocolonly; actualPostgres23505/fullrollback notclaimed."
+    ]
+  },
+  "finiteChecks": {
+    "adopted": "Owner5newrunner+2newparentdriver necessarytests/syntaxPASS reused. Reviewed actualPostgresHistoryRevisionStore protocol-fake regression oldwrappedleaseWeakMapfailure vsoriginallease progresses, rawobserveridentity/marker/order/error/logoutzero-normal/keyrecovery andfixedoriginalpin refusal cases.",
+    "qbAdditionalChecks": "FixedGit/current/control/mirror4pins, productiontreeunchanged, originalpostingbalance+ledger markers/errorpropagation/sourcecallchain confirmed; nofullsuite oractualPG."
+  },
+  "carrierCurrentPurposeRequirements": [
+    "Newexactfailed-onlycarrier/rootrollback-companion-01/contractB07_SYN26_ORIGINAL_ROLLBACK_ONLY_PARENT_V1; currentAccountVersion3/currentAuthVersion3; original04request/approved/parent/actualrefs exactlysourcepinned; priornormalcases neverrerun.",
+    "FreshoriginalkeyRRROproof with exacttargetSYN/OID16385/nonowner+currentpostmaster/QAaccountversion3auth3/currentstaffrole/hall/source/guardpermissions, businessDML0/credentialReadfalse/rollbackReturnedtrue/clientsClosedtrue, originalrequestSHA2d6eb543. OriginalkeyCOMMITTED routeexactreadonlyrecoveryandstop, absent onlyonecompanion; unknownneverrekey/replay.",
+    "Freshaccuratev21catalogd927/sourceprobe/currentruntime independentreview. MinimalneededpurposesHISTORY_REVISION+INVENTORY_ADMISSION fororiginalstore/policy andinventoryadmission; noextraimport/product/CAS/login authority. Samegenuineissuer.pool required, originalUTCobservingrawdriveronly.",
+    "Boundedwindow/currentpurpose/OScleanupownedT45, immutablepreparedregistration/currentdeadlineonly protocol asprior. No worker/config/carrier actualPASS issuedbythissourcereview."
+  ],
+  "remaining": [
+    "T45 exactminimalfailed-onlycarrier/proof/currentpurposeprepare thennecessarycombinedincrement review.",
+    "Actualfirstledger+balancepersist/secondactual23505/wholetransactionROLLBACK/zeroCOMMIT andfullsnapshotsequality NOT_TESTED.",
+    "ActualoriginalkeyCOMMITTEDrecovery NOT_TESTED; realFULLimport/formalbusiness notaccepted."
+  ],
+  "sourceChangedByQB": false,
+  "databaseOrRemoteAction": false,
+  "actualRollbackCompanion": false,
+  "actualCommittedRecovery": false,
+  "actualNormalCasesReexecuted": false,
+  "actualCredentialCASLoginOrSecret": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}
