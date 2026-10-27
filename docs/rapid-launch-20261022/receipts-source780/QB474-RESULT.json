@@ -1,0 +1,103 @@
+{
+  "reviewId": "QB474",
+  "decision": "PASS_QA178_V22_SINGLE_BODY_INSTALLED_CURRENT_METADATA_ONLY",
+  "scope": "Actual180 vs accepted179 delta only; sourceQB472/QAparentQB473 reused, no repeatedtests/businessscans",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/RESULT.json",
+      "bytes": 6235,
+      "sha256": "ced0fe9e256a3fd31147de93263cab804ddd3596468a85d6622b61c00f4ed652"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/release-submission/release-receipts/t45-qa178-v22-one-body-install-catalog-20261027-180/r1-v20-catalog.json",
+      "bytes": 1477758,
+      "sha256": "208b3bd3698f3186e749d070321686e47c1a6f168fc1fb0afeb7306a88adcc5e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/release-submission/release-receipts/t45-qa178-v22-one-body-install-catalog-20261027-180/r1-v20-metadata.json",
+      "bytes": 778,
+      "sha256": "94b23b42798afa5440054585e3f3e78345d4d822662d2de1ea9fa1b4cd3f408c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-qa178-v22-one-body-install-catalog-20261027-180/release-submission/release-receipts/t45-qa178-v22-one-body-install-catalog-20261027-180/r1-v20-result.json",
+      "bytes": 1086,
+      "sha256": "f690e4bd76e1580cec4151e98d7e2a63b7911d13bb9e13a6afe8453e3e7d8cd1"
+    }
+  ],
+  "actualInstallEvidence": {
+    "ownerInstallerCommitReturned": true,
+    "installerExitCode": 0,
+    "installerStderrBytes": 0,
+    "installer": {
+      "bytes": 80493,
+      "sha256": "3cc2b3814762c94dd16ff10eaac2cf3e7ec14248d610e149a4ebd24b6bbad19b"
+    },
+    "ordinaryExportRRRO": true,
+    "rollbackReturned": true,
+    "clientsClosed": true,
+    "scope": "AcceptedT45 actualDDL/COMMIT plus ordinarycatalog, not functionbusiness invocation"
+  },
+  "independentDelta": {
+    "onlyTopLevelChanged": "routines",
+    "onlyRoutineChanged": "naijue_erp.assert_core_initialization_v14(uuid,uuid,boolean)",
+    "changedRoutineFields": [
+      "source",
+      "body_md5",
+      "body_sha256",
+      "definition_sha256"
+    ],
+    "other130RoutineObjects": "EXACT",
+    "allOtherCatalogSectionsIncluding943TriggersAclRolesColumnsRelations": "EXACT",
+    "identitySameActualQA179": {
+      "database": "erp_rewrite_20261022_r1",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database_oid": "16391",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-27 13:22:19.696753+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    },
+    "newBodyBytes": 49980,
+    "newBodySha256": "8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5",
+    "bodyBytesEqualFrozenSourceAndQaInstaller": true,
+    "bodyMd5Recomputed": true,
+    "definitionSha256Actual": "e64cbeed6c2074df00161da7a157948805f4a2dcf37a45023155c96a73d34146",
+    "routineOwnerConfigInvokerAclSignatureUnchanged": true,
+    "routineCount": 131,
+    "sourceRoutinesMatch": true,
+    "canonicalIndependentlyRecomputedWithoutNormalization": "b2e735f997cfaf3711177b1503b76597d5ed84d79722abf24538858dcf67f7f2"
+  },
+  "profile": "26_v22_staged_prefix_bind_from_v20",
+  "purposes": [
+    "IMPORT_STAGE"
+  ],
+  "realImportExecutionAuthorized": false,
+  "runtimeTarget": "QA178 only; originalR1 currentruntime not changed or reviewed by actual180",
+  "knownLimitations": {
+    "bindingCaseStatus": "NOT_TESTED_BINDING_IDENTITY_INCOMPATIBLE",
+    "reason": "OriginalINITtarget has2026-10-04postmaster, actualQA2026-10-27. SamebodyL241 strictactualtarget prevents firstBIND; C declinedQAvariant orsource/INIT/guard change.",
+    "notMeasured": [
+      "ActualBINDcommit/rollback/deferredtrigger behavior",
+      "Member/native/17table negativecases",
+      "UNKNOWNCOMMIT",
+      "Fullprefix content/timing",
+      "OriginalR1 installation/import109/PUBLISH"
+    ]
+  },
+  "fileNaming": "r1-v20 historicalexportfilenames contain actualQA v22catalog here; never label parentv20 orproductioncurrent",
+  "noReplay": "175..180 terminal jobs and acceptedsource/tests not replayed",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "qbNo": [
+    "DB",
+    "SSH",
+    "DDL",
+    "businessDML",
+    "source edits",
+    "newchat/subagent",
+    "build/deploy"
+  ]
+}

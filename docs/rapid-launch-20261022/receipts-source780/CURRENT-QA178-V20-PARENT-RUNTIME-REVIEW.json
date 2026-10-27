@@ -1,0 +1,28 @@
+{
+  "version": "C_NATIVE_RUNTIME26_REVIEW_V1",
+  "decision": "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA",
+  "target": {
+    "database": "erp_rewrite_20261022_r1",
+    "databaseOid": "16391",
+    "actingRole": "erp_rewrite_runtime_20261022",
+    "sessionUser": "erp_rewrite_runtime_20261022",
+    "serverAddress": null,
+    "serverPort": null,
+    "postmasterStart": "2026-10-27 13:22:19.696753+00"
+  },
+  "catalog": {
+    "format": "EXACT26_RUNTIME_CATALOG_EXPORT_V1",
+    "sha256": "b0f0ee525a0fcdb21f6266718394a4118c22dfcf1731903178685ad0ee5a5a8e",
+    "patchLevel": "26_v20_history_insert_identity_from_v19"
+  },
+  "purposes": [
+    "IMPORT_STAGE"
+  ],
+  "scope": "EXACT_TARGET_METADATA_ONLY",
+  "independentReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice473-qa178-control-parent/QB473-QA-PARENT-METADATA-RESULT.json",
+    "sha256": "9993040d18f57ba5ea4b9aeb047caaef89091a3a887913d2dbfc2ecda017829d",
+    "result": "PASS"
+  },
+  "realImportExecutionAuthorized": false
+}

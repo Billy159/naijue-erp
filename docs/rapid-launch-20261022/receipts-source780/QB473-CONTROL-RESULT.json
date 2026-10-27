@@ -1,0 +1,92 @@
+{
+  "reviewId": "QB473_CONTROL",
+  "decision": "PASS_CONTROL_PREPARATION_AND_INSTALLER_STATIC_APPLICABILITY_ONLY",
+  "scope": "FourexactD1control leaves and actual179QAparent, originalQB472/SOURCE777 source and acceptedowner14mock/syntax0 reused without rerun",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.mjs",
+      "bytes": 21270,
+      "sha256": "44f2a98d9a6861426dc9e4cb18032215c0c20e88a2da2f684f60c33b5eff8c5c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.test.mjs",
+      "bytes": 9235,
+      "sha256": "58b7e15afd53b0189f90f280eb5875659dd0ea515b28660dc4089f6a4cff9735"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/QA178-INPUT.json",
+      "bytes": 5651,
+      "sha256": "bda51961447f2d23331aa7cc49fb6533e745f411f31ddfc22923993096deb5be"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/INSTALL-QA178.sql",
+      "bytes": 80493,
+      "sha256": "3cc2b3814762c94dd16ff10eaac2cf3e7ec14248d610e149a4ebd24b6bbad19b"
+    }
+  ],
+  "Standards": {
+    "findings": [],
+    "result": "No blocking finding for narrowed read-only preparation/installer scope"
+  },
+  "Spec": {
+    "findings": [],
+    "result": "Preparation and actualtarget derivation conform; binding positive/contentnegative scope explicitly incompatible and not tested per currentC decision"
+  },
+  "installer": {
+    "sourceSql": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "bytes": 80495,
+      "sha256": "980c4f58dd7fc92290ab104d0253880fa25937a33ac643f5858e2368dd1a5750"
+    },
+    "exactDifferences": [
+      "Parent databaseOID1027659 ->16391",
+      "Parent postmaster2026-10-04 08:16:07.895273+00 ->2026-10-27 13:22:19.696753+00"
+    ],
+    "logicalDbNameUnchanged": true,
+    "allOtherBytesExact": true,
+    "businessBodyBytes": 49980,
+    "businessBodySha256": "8a8374fb193ed9e5ddcc388b0141a91dc17420cef0baee4ffbb700cd9737add5",
+    "all131ParentPinsOwnerSocketAclGuardsRetained": true,
+    "ddlApplied": false,
+    "staticApplicability": "Actual179 routine/registry/owner/socket/QAidentity parent conforms; exactC carrier still required for actualownerDDL. Not PGcompile/runtimePASS."
+  },
+  "controlBoundaries": {
+    "sourceDb": "Originalprovider/sourcehostsession capture and preflight/authorization/capture only; ready() always throws, no source SQLpool/session.steps/fullhost/run invocation. Originalsourcebinding/INIT/109 untouched.",
+    "qaDb": "Own actualQAordinaryrole socket via originalhost gate/issuer/service/store/adapter, no owner business operations. C sourceauthority and QAexecutionauthority separate.",
+    "pinsAndInputs": "Private regularfile/nlink1/bytes/SHA/metadata pin checks, exactCplan/authority/fixture refs required. CurrentQA178INPUT executionReadyfalse and missingruntime/sourcegrant/fixture refs accurately prepared-only, not runnable. Old16410:45Z job is baseline only.",
+    "recovery": "RRRO exacttarget+originalactor/key/hash/action/target receipt and pairedprefixaudit/checkpoint SELECT, explicitROLLBACK; UNKNOWN mode read-only/noexecute. wx intent/result avoids carrier replay. Captured errors and cleanup outputs do not prove prefix fullcontents unchanged.",
+    "negativeObservations": "Entry records errorCode/mainAttempted and only metadata rollback observation, not assertion-specific negativePASS. Do not count any knownidentity23514 or unrelatedfailure as source/native/17table guard coverage."
+  },
+  "bindingIdentityIncompatibility": {
+    "id": "QA178-INIT-TARGET-POSTMASTER-01",
+    "status": "NOT_TESTED_BINDING_IDENTITY_INCOMPATIBLE",
+    "sqlPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/INSTALL-QA178.sql",
+    "line": 241,
+    "condition": "init->'target'=jsonb_build_object(...,'postmasterStartedAt',pg_postmaster_start_time()::text)",
+    "originalInitializerTargetPostmaster": "2026-10-04 08:16:07.895273+00",
+    "actualQaPostmaster": "2026-10-27 13:22:19.696753+00",
+    "effect": "Under preserved original121INIT/sourceidentity and unchangedbusinessbody, firstBIND creation rejects23514 at sixscheme identity predicate even if source/memberproof passes. Positive and member/17table negatives cannot be accepted on this path.",
+    "coordinatorDecision": "C adopted concreteconflict. Do not createQAvariant, changeINIT, source orproductionguard, or run knownfailing23514 trials. QAinstaller/metadata/compile separated. OriginalR1 actualapprovedv22 import remains separate actualwork, not thisQAregression."
+  },
+  "parentMetadata": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice473-qa178-control-parent/QB473-QA-PARENT-METADATA-RESULT.json",
+    "bytes": 4937,
+    "sha256": "9993040d18f57ba5ea4b9aeb047caaef89091a3a887913d2dbfc2ecda017829d"
+  },
+  "localParentReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice473-qa178-control-parent/CURRENT-QA178-V20-PARENT-RUNTIME-REVIEW.json",
+    "bytes": 1095,
+    "sha256": "39648629d9f89735f8492ad2c3bcef65771d218c98dc77520597c5d12282be0d"
+  },
+  "linuxMaterialization": "Notyetassigned; T45 requested localrefs only. No inventedLinuxpath and no179bundle/input modification. Exactnewcarrier may later materialize samepins.",
+  "notValidated": [
+    "Actualinstaller/PLpgSQLcompile/deferredtriggers",
+    "BINDpositive/source-native-content negatives/17table negatives",
+    "ActualUNKNOWNCOMMIT",
+    "RealoriginalR1 fullhost/import109/PUBLISH"
+  ],
+  "noExecution": "QB noDB/SSH/server/DDL/businessrows/credentials/sourceedits/build",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED",
+  "writtenAtUtc": "2026-10-27T13:42:49.951467+00:00"
+}
