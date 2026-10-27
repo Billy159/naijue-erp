@@ -1,0 +1,115 @@
+{
+  "jobId": "t45-r1-first-history-source-link-readonly-20261027-172",
+  "recordedAtUtc": "2026-10-27T12:12:32.776760+00:00",
+  "status": "COMPLETED",
+  "exitCode": 0,
+  "finishedAtUTC": "2026-10-27T12:08:57.522785+00:00",
+  "elapsedSeconds": 5.13101770193316,
+  "evidence": {
+    "history-source-link-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-history-source-link-readonly-20261027-172/release-submission/release-receipts/t45-r1-first-history-source-link-readonly-20261027-172/history-source-link-result.json",
+      "bytes": 3361,
+      "sha256": "2784fe0eb62e18378971d0ff3abbb4119c64777603c22ef9253a5f239c3af3a1"
+    },
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-first-history-source-link-readonly-20261027-172/release-submission/release-receipts/t45-r1-first-history-source-link-readonly-20261027-172/job.json",
+      "bytes": 528,
+      "sha256": "a81d6b2146f19d369f8f4f2546b41821b05de41854c03ce376422978e201ca35"
+    }
+  },
+  "actual": {
+    "automaticReplay": false,
+    "batchMetadata": {
+      "checkpointJson": "{\"counts\": {\"SKU\": 0, \"WAREHOUSE\": 22, \"IMPORT_BATCH\": 0, \"INVENTORY_LEDGER\": 0}, \"cursor\": 22, \"expected\": {}, \"sequence\": 2}",
+      "cutoff_at": "2026-10-04 04:00:00+00",
+      "history_expected_countsJson": null,
+      "history_payload_hash": null,
+      "id": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+      "mapping_version": "V2_HISTORY_NULLABLE_1",
+      "source_hash": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+      "source_name": "naijue:tplus:primary-ledger",
+      "status": "STAGED"
+    },
+    "businessDML": 0,
+    "businessFunctionsExecuted": false,
+    "finishedAtUtc": "2026-10-27T12:08:57.476354+00:00",
+    "historyAggregates": [
+      {
+        "exact_batch": "28282",
+        "foreign_or_missing_source": "0",
+        "original_source_link": "28282",
+        "relation": "history_sales_header",
+        "total": "28282"
+      },
+      {
+        "exact_batch": "14279",
+        "foreign_or_missing_source": "0",
+        "original_source_link": "14279",
+        "relation": "history_transfer_header",
+        "total": "14279"
+      },
+      {
+        "exact_batch": "261641",
+        "foreign_or_missing_source": "0",
+        "original_source_link": "261641",
+        "relation": "history_transfer_line",
+        "total": "261641"
+      }
+    ],
+    "identity": {
+      "current_user": "erp_rewrite_owner_20261022",
+      "database": "erp_rewrite_20261022_r1",
+      "database_oid": "1027659",
+      "postmaster": "2026-10-04 08:16:07.895273+00",
+      "readonly": "on",
+      "serverAddress": null,
+      "serverPort": null,
+      "session_user": "t15_prod_bootstrap"
+    },
+    "jobId": "t45-r1-first-history-source-link-readonly-20261027-172",
+    "limits": "Only approved aggregates/receipt metadata; no rowbody, individual sourcekeys, quantities or amounts; no native function/BIND/guard/data change. This does not authorize binding an already populated prefix or prove every other nonempty table lineage.",
+    "missingAggregateGroups": [],
+    "originalOwnerProcessReturned": true,
+    "permissionsChanged": false,
+    "readonlyRollbackReturned": true,
+    "sameBatchReceipts": [
+      {
+        "action": "IMPORT_CORE_STAGE",
+        "actor_account_id": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+        "id": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
+        "matched_audits": "1",
+        "paired_audits": "1",
+        "request_hash": "948b20c6ff49d936ed2263c93d9baaa5a69f19bc375d8d30010092647c138f23",
+        "request_key": "c128_real_core_20261024_01",
+        "status": "COMMITTED",
+        "target_id": "aeeba5c6-fb54-4b94-bf80-93d98212a70d"
+      },
+      {
+        "action": "IMPORT_INITIALIZE_BARCODE_SCHEMES",
+        "actor_account_id": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+        "id": "d1fa6f60-7268-704e-81ec-d7da432b05d5",
+        "matched_audits": "1",
+        "paired_audits": "1",
+        "request_hash": "ec699bdd07b38c0c5bd3147f2b57ff93fba3e3e49f4e12abf8327600393c375b",
+        "request_key": "t45-r1-six-scheme-initialization-v19-20261026-116",
+        "status": "COMMITTED",
+        "target_id": "aeeba5c6-fb54-4b94-bf80-93d98212a70d"
+      }
+    ],
+    "sqlProcesses": [
+      {
+        "elapsedSeconds": 5.020805,
+        "exitCode": 0,
+        "phase": "history-link172",
+        "processExited": true,
+        "stderrBytes": 0,
+        "stdoutBytes": 1095
+      }
+    ],
+    "status": "COMPLETED_EXACT_HISTORY_SOURCE_LINK_AND_RECEIPT_AUDIT_AGGREGATES_READONLY"
+  },
+  "conclusion": "Three history relations match exact batch/source row/entity in aggregates; two committed CORE/scheme receipts each pair with one matching audit. No BIND receipt returned. Existing STAGED checkpoint preserved. Does not prove lineage of five other nonempty relations, complete body equivalence, or business acceptance. Committed-prefix BIND contract change not implemented.",
+  "replay": false,
+  "sourceChanges": false,
+  "APPChanged": false
+}

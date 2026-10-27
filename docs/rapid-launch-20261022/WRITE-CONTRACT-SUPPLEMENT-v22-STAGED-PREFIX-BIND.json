@@ -1,0 +1,47 @@
+{
+  "version": "v22",
+  "status": "PENDING_EXPLICIT_USER_CONFIRMATION_DOCUMENT_ONLY",
+  "owner": "D1",
+  "authority": "C original-thread explicit request for minimal write-contract supplement; no implementation authorization",
+  "target": {
+    "database": "erp_rewrite_20261022_r1",
+    "databaseOid": "1027659",
+    "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+    "namespace": "naijue:tplus:primary-ledger",
+    "sourceHash": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+    "cutoff": "Actual172 batch 2026-10-04 04:00:00+00; must still match original CORE and approved148 input"
+  },
+  "changes": [
+    "Exact original-source eight-table staged-prefix path for first BIND creation",
+    "Strict stagedPrefixProof added to existing audit_change.after_values JSON",
+    "One assert_core_initialization_v14 body successor; 131 routines retained; new exact metadata profile from v20"
+  ],
+  "unchanged": [
+    "Original109 command bodies/order/request keys/digests and original BIND result",
+    "Other17 tables remain empty at BIND",
+    "Original source/full-member/native snapshots, current ADMIN, permissions, transaction, audit/receipt and conservation/publication checks",
+    "No tables/columns/indexes/HTTP/frontend/shared command schema changes",
+    "168 two-column ACL retained",
+    "Old v20 and B07v21 source profiles unchanged"
+  ],
+  "currentEvidence": {
+    "169": "Failed actual first MAIN23514; no zero-write inference",
+    "170": "Original-key snapshot no receipt, STAGED sequence2/cursor22 unbound",
+    "171": "Eight nonempty tables, first history_sales_header28282",
+    "historical106_09_10": "Existing actual stage COMMIT and readback evidence reused",
+    "currentSourceAssociation": "172 three history tables exact batch/source row/entity match with zero missing/foreign; other five tables NOT_VERIFIED",
+    "currentNativeSnapshotAgreement": "NOT_VERIFIED",
+    "172": {
+      "resultBytes": 5246,
+      "sha256": "fd6e3dda930155db5f46546a310ab939f2f9f701b27d27194e105d4e16872f1f",
+      "sameBatchCoreAndSchemeCommittedPairedAudit": true,
+      "bindReceiptReturned": false,
+      "fullRowAgreementProven": false
+    }
+  },
+  "implementationStarted": false,
+  "sqlOrGuardChanged": false,
+  "databaseTestsStarted": false,
+  "businessImportOrPublishPass": false,
+  "document": "WRITE-CONTRACT-SUPPLEMENT-v22-STAGED-PREFIX-BIND.md"
+}
