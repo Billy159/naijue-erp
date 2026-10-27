@@ -1,3 +1,4 @@
+import {qaBarcodeSnapshot,qaPrices,type QaReferenceProfile} from '../../qa-reference-fixtures.ts';
 import { CATALOGUE_PRICE_KEYS } from '../../../../../../packages/application/src/catalogue-price-input.ts';
 import { parseProductQuery } from '../../../../../../packages/application/src/product-query-validation.ts';
 import { parseProductBarcodeQuery,parseProductDetailsPageQuery,parseProductStockOverviewQuery } from '../../../../../../packages/application/src/product-details-query-validation.ts';
@@ -14,6 +15,7 @@ export interface SyntheticBarcodeSnapshot {
  readonly skus:readonly ProductBarcodeSkuRow[];readonly bindings:readonly ProductBarcodeDetails[];
 }
 export interface SyntheticProductPreviewOptions {
+ readonly dataset?:QaReferenceProfile;
  /** The SAME existing unified fixture instance, before C's new details wrapper.
   * Do not supply global fetch, a production client or a newly generated identity map. */
  readonly existingFetch:(url:string,init:RequestInit)=>Promise<Response>;
@@ -70,11 +72,11 @@ export function createSyntheticProductPreviewTransport(options:SyntheticProductP
    }
    if(path==='/products/prices/query'){
     const query=parseProductQuery(body),base=productBasicsResponse(await load('/products/basics/query',query),query);if(!base)return unavailable();
-    const prices=Object.fromEntries(CATALOGUE_PRICE_KEYS.map(key=>[key,key==='retail_price'?base.retailPrice:null]));
+    const prices=options.dataset?qaPrices(query.productId)!.prices:Object.fromEntries(CATALOGUE_PRICE_KEYS.map(key=>[key,key==='retail_price'?base.retailPrice:null]));
     return json(productPricesResponse({productId:query.productId,version:options.snapshotVersion,prices},query));
    }
    if(path==='/products/barcodes/query'){
-    const query=parseProductBarcodeQuery(body);let snapshot=options.barcodeSnapshots?.get(query.productId);if(!snapshot&&options.syntheticUnboundBarcodeFixture!==true)return unavailable();if(snapshot&&snapshot.productId!==query.productId)return unavailable();
+    const query=parseProductBarcodeQuery(body);let snapshot=options.dataset?qaBarcodeSnapshot(query.productId):options.barcodeSnapshots?.get(query.productId);if(!snapshot&&options.syntheticUnboundBarcodeFixture!==true)return unavailable();if(snapshot&&snapshot.productId!==query.productId)return unavailable();
     const specs=productSpecificationsResponse(await load('/products/specifications/query',{productId:query.productId}),query);if(!specs)return unavailable();
     if(!snapshot){snapshot={productId:query.productId,version:1,defaultScheme:{state:'NOT_SET'},bindings:[],skus:specs.skus.map(sku=>({skuId:sku.id,skuCode:'SYNTHETIC-SKU-'+sku.id,skuEnabled:true,colorId:sku.colorId,colorLabel:specs.colors.find(x=>x.id===sku.colorId)?.label??null,fitId:sku.fitId,fitLabel:specs.fits.find(x=>x.id===sku.fitId)?.label??null,sizeId:sku.sizeId,sizeLabel:specs.sizes.find(x=>x.id===sku.sizeId)?.label??null,bindingCount:0,main:null,disabledMainCount:0,confirmedOldCount:0,firstConfirmedOld:null}))};}
     const actual=new Map(specs.skus.map(sku=>[sku.id,sku]));if(actual.size!==snapshot.skus.length||snapshot.skus.some(sku=>{const original=actual.get(sku.skuId);return !original||original.colorId!==sku.colorId||original.fitId!==sku.fitId||original.sizeId!==sku.sizeId;}))return unavailable();

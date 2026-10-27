@@ -1,3 +1,4 @@
+import {qaPrincipal,qaReferenceRead,type QaReferenceProfile} from '../demo-replica/frontend/qa-reference-fixtures.ts';
 import {createSyntheticManagementTransport,MANAGEMENT_SYNTHETIC_ORIGIN,syntheticId,type SyntheticReadFailure} from '../management-browser-harness/synthetic-transport.ts';
 import {createSyntheticSalesTransport} from './sales-transport.ts';
 import {createSyntheticTransferTransport} from './transfer-transport.ts';
@@ -14,9 +15,9 @@ const receipt=/^\/(?:sales|transfers)\/receipts\/[A-Za-z0-9._:%-]{1,600}$/;
 const party=/^\/(customers|suppliers)(?:\/(?:candidates|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}))?$/;
 /** One closed injected boundary for one actual Application, with one identity.
  * No fallback to real network, no credentials, no database or stock writes. */
-export function createSyntheticUnifiedTransport(onCall?: (call:SyntheticCall)=>void, profile:UnifiedReviewProfile='standard'){
+export function createSyntheticUnifiedTransport(onCall?: (call:SyntheticCall)=>void, profile:UnifiedReviewProfile='standard',dataset?:QaReferenceProfile){
  const selected=reviewProfile(profile);
- const management=createSyntheticManagementTransport(),sales=createSyntheticSalesTransport(),transfers=createSyntheticTransferTransport(undefined,selected),inventoryParties=createSyntheticInventoryPartiesTransport(),storeSettings=createSyntheticStoreSettingsTransport();
+ const management=createSyntheticManagementTransport(),sales=createSyntheticSalesTransport(undefined,dataset),transfers=createSyntheticTransferTransport(undefined,selected,dataset),inventoryParties=createSyntheticInventoryPartiesTransport(),storeSettings=createSyntheticStoreSettingsTransport();
  let authorized=false,nextFailure:SyntheticReadFailure='none',nextDelay=0;
  const calls:SyntheticCall[]=[];
  return Object.freeze({calls:()=>Object.freeze([...calls]),authorize(){authorized=true;management.authorize();},revoke(){authorized=false;management.revoke();},
@@ -33,12 +34,13 @@ export function createSyntheticUnifiedTransport(onCall?: (call:SyntheticCall)=>v
    if(isParty){const allowed=path.endsWith('/candidates')?['search','page','pageSize']:path==='/customers'||path==='/suppliers'?['search','enabled','page','pageSize']:[];if([...url.searchParams.keys()].some(key=>!allowed.includes(key))||new Set(url.searchParams.keys()).size!==[...url.searchParams.keys()].length)throw new TypeError('Invalid synthetic party query');}
    if(init.signal?.aborted)throw new DOMException('Synthetic read aborted','AbortError');
    const call=Object.freeze({method,path,syntheticOnly:true as const});calls.push(call);onCall?.(call);
-   if(path==='/auth/session')return authorized?json({principal:{accountId:syntheticId(900),staffId:syntheticId(901),loginName:'SYNTHETIC-UNIFIED-ONLY',role:'ADMIN',hallId:null,authVersion:1}}):error(401);
+   if(path==='/auth/session')return authorized?json({principal:dataset?qaPrincipal:{accountId:syntheticId(900),staffId:syntheticId(901),loginName:'SYNTHETIC-UNIFIED-ONLY',role:'ADMIN',hallId:null,authVersion:1}}):error(401);
    if(path==='/auth/logout'){authorized=false;management.revoke();return json({ok:true});}
    if(!authorized)return error(401);
    const isRead=!path.endsWith('/commands')&&!path.endsWith('/prepare-create')&&!isReceipt;
    let failure:SyntheticReadFailure='none';
    if(isRead){failure=nextFailure;nextFailure='none';const delay=nextDelay;nextDelay=0;if(delay)await new Promise(resolve=>setTimeout(resolve,delay));if(failure==='forbidden')return error(403);if(failure==='unavailable')return error(503);if(failure==='network')throw new Error('Synthetic dropped read');}
+   if(dataset&&isRead){const fixture=qaReferenceRead(path,init.body?JSON.parse(String(init.body)):{},failure==='empty');if(fixture)return fixture;}
    if(managementPaths.has(path)){management.setNextFailure(failure);return management.http.fetch(input,init);}
    const body=init.body?JSON.parse(String(init.body)):null;
    if(storeSettingsSyntheticPaths.has(path))return storeSettings.request(path,body,failure==='empty');

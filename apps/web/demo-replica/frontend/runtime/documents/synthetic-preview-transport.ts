@@ -1,3 +1,4 @@
+import {qaReferenceRead,type QaReferenceProfile} from '../../qa-reference-fixtures.ts';
 import {DomainError} from '../../../../../../packages/domain/src/errors.ts';
 import {HttpQueryError} from '../../../../src/transport/http-query.ts';
 import {entityId} from '../../../../../../packages/domain/src/values.ts';
@@ -19,7 +20,7 @@ import type {TransferDetailDto} from '../../../../src/transfers/contracts.ts';
 import {normalSalesResponse,normalTransferResponse,type NormalSalesRow,type NormalTransferRow} from './normal-list-reader.ts';
 import {detail as declaredTransferFixture} from '../../../../src/transfers/tests/fixtures.ts';
 
-interface Options{readonly syntheticOnly:true;readonly origin:string;readonly existingFetch:(input:string,init:RequestInit)=>Promise<Response>}
+interface Options{readonly dataset?:QaReferenceProfile;readonly syntheticOnly:true;readonly origin:string;readonly existingFetch:(input:string,init:RequestInit)=>Promise<Response>}
 const paths=new Set(['/sales/query','/transfers/query','/sales/detail/query','/transfers/detail/query','/current-form/products/query','/current-form/sku-batch/query','/current-form/barcode/query','/dictionary-read/size-groups/query','/sales/references/query','/sales/commands','/transfers/commands','/sales/prepare-existing','/transfers/prepare-existing','/sales/history/query','/transfers/history/query']);
 const json=(value:unknown,status=200)=>new Response(JSON.stringify(value),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-data-source':'SYNTHETIC-DOCUMENT-PREVIEW-ONLY'}});
 const unavailable=(code='SYNTHETIC_DOCUMENT_OPERATION_NOT_DECLARED')=>json({error:{code,message:'Finite preview fixture does not provide this operation; no real service or alternative business store was called.'}},501);
@@ -49,6 +50,7 @@ export function createSyntheticDocumentPreviewTransport(options:Options){
   const load=async(leaf:string,body:unknown,method='POST')=>{active();const request:RequestInit={...init,method};if(method==='POST')request.body=JSON.stringify(body);else delete request.body;const response=await options.existingFetch(options.origin+'/api'+leaf,request);active();if(!response.ok)throw new FixtureRejected(response);const value:unknown=await response.json();active();return value;};
   try{
    active();const auth=object(await load('/auth/session',null,'GET')),principal=object(auth.principal);let body:unknown;try{body=JSON.parse(String(init.body));}catch{return json({error:{code:'INVALID_SYNTHETIC_DOCUMENT_JSON'}},400);}
+   const fixture=options.dataset?qaReferenceRead(path,object(body)):undefined;if(fixture)return fixture;
    const allProducts=async(context:CurrentFormContext)=>{const result=[];for(let page=1;;page++){const data=await current.readProducts({context,search:'',page,pageSize:20},signal);result.push(...data.items);if(BigInt(page)*20n>=data.exactTotal)break;}return result;};
    const allSkus=async(context:CurrentFormContext)=>{const result:CurrentFormSku[]=[];for(const product of await allProducts(context))for(let page=1;;page++){const data=await current.readProductSkus({context,productId:product.id,page,pageSize:20},signal);result.push(...data.items);if(BigInt(page)*20n>=data.exactTotal)break;}return result;};
    const creator=(header:Record<string,unknown>,names:Record<string,unknown>)=>{if(typeof names.createdByName==='string')return names.createdByName;if(header.createdByAccountId!==principal.accountId)throw new TypeError('No declared creator label');return text(principal.loginName);};

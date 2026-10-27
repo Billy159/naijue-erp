@@ -1,15 +1,16 @@
+import {QA_REFERENCE_PROFILE} from './qa-reference-fixtures.ts';
 import {createSyntheticUnifiedTransport} from '../../unified-browser-harness/synthetic-transport.ts';
 const detailPaths=new Set(['/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
 type Call={method:string;path:string;phase:'pending'|'completed'|'aborted'|'failed';started:number;finished?:number};
 /** Explicit local SYNTHETIC preview only. Never selected as a production fallback. */
 export function createReplicaPreviewTransport(){
- const base=createSyntheticUnifiedTransport();base.authorize();const records:Call[]=[];
+ const base=createSyntheticUnifiedTransport(undefined,'standard',QA_REFERENCE_PROFILE);base.authorize();const records:Call[]=[];
  let products:Promise<Awaited<ReturnType<typeof import('./runtime/products/synthetic-preview-transport.ts')['createSyntheticProductPreviewTransport']>>>|undefined;
  let settings:Promise<ReturnType<typeof import('./runtime/settings/synthetic-preview-transport.ts')['createSettingsPreviewTransport']>>|undefined;
  let documents:Promise<ReturnType<typeof import('./runtime/documents/synthetic-preview-transport.ts')['createSyntheticDocumentPreviewTransport']>>|undefined;
- const document=()=>documents??=Promise.all([import('./runtime/documents/synthetic-preview-transport.ts'),import('./runtime-native-preview-seeds.ts')]).then(async([m,seeds])=>{await seeds.seedFiniteNativePreviewDocuments(base);return m.createSyntheticDocumentPreviewTransport({syntheticOnly:true,origin:base.http.origin,existingFetch:base.http.fetch});});
- const product=()=>products??=import('./runtime/products/synthetic-preview-transport.ts').then(m=>m.createSyntheticProductPreviewTransport({origin:base.http.origin,existingFetch:base.http.fetch,snapshotVersion:1,syntheticUnboundBarcodeFixture:true,syntheticFiniteInventoryOutput:true}));
- const setting=()=>settings??=import('./runtime/settings/synthetic-preview-transport.ts').then(m=>m.createSettingsPreviewTransport());
+ const document=()=>documents??=import('./runtime/documents/synthetic-preview-transport.ts').then(m=>m.createSyntheticDocumentPreviewTransport({dataset:QA_REFERENCE_PROFILE,syntheticOnly:true,origin:base.http.origin,existingFetch:base.http.fetch}));
+ const product=()=>products??=import('./runtime/products/synthetic-preview-transport.ts').then(m=>m.createSyntheticProductPreviewTransport({origin:base.http.origin,existingFetch:base.http.fetch,snapshotVersion:1,dataset:QA_REFERENCE_PROFILE,syntheticFiniteInventoryOutput:true}));
+ const setting=()=>settings??=import('./runtime/settings/synthetic-preview-transport.ts').then(m=>m.createSettingsPreviewTransport(QA_REFERENCE_PROFILE));
  const fetch=async(input:string,init:RequestInit):Promise<Response>=>{
   const url=new URL(input);if(url.origin!==base.http.origin||url.username||url.password||!url.pathname.startsWith('/api/'))throw new TypeError('Closed synthetic preview origin');
   const path=url.pathname.slice(4),method=init.method??'GET',record:Call={method,path,phase:'pending',started:performance.now()};records.push(record);if(records.length>200)records.shift();

@@ -1,3 +1,4 @@
+import {qaOrganization,qaCustomers,qaSuppliers,type QaReferenceProfile} from '../../qa-reference-fixtures.ts';
 /** SYNTHETIC preview only. The production session/reader must never import this file.
  * Finite, read-only samples; no network, credentials, commands, receipts or mutable store. */
 import type { OrganizationMaintenanceKind, OrganizationMaintenanceRecord, OrganizationReadListQuery, OrganizationReference } from '../../../../../../packages/application/src/organization-maintenance-ports.ts';
@@ -34,11 +35,12 @@ const compare = (left: string, right: string) => left < right ? -1 : left > righ
 const hall = (index: number): OrganizationReference => ({ id: id(6100 + index), name: `SYNTHETIC 合成营业厅 ${ordinal(index)}`, enabled: index % 7 !== 6 });
 const method = (index: number): OrganizationReference => ({ id: id(10100 + index), name: `SYNTHETIC 合成收款方式 ${ordinal(index)}`, enabled: index % 5 !== 4 });
 
-export function createSettingsPreviewTransport() {
+export function createSettingsPreviewTransport(dataset?:QaReferenceProfile) {
   const native = new Map<OrganizationMaintenanceKind, readonly OrganizationMaintenanceRecord[]>();
   const parties = new Map<PartyKind, readonly PartyRecord[]>();
   let auditSamples: readonly SettingsAuditItem[] | null = null;
   function partyRows(kind: PartyKind): readonly PartyRecord[] {
+    if(dataset)return kind==='CUSTOMER'?qaCustomers:qaSuppliers;
     let result = parties.get(kind);
     if (!result) {
       result = Array.from({ length: 23 }, (_, index) => ({ id: id((kind === 'CUSTOMER' ? 910000 : 920000) + index), code: `SYN-${kind === 'CUSTOMER' ? 'C' : 'S'}-${ordinal(index)}`,
@@ -48,6 +50,7 @@ export function createSettingsPreviewTransport() {
     return result;
   }
   function nativeRows(kind: OrganizationMaintenanceKind): readonly OrganizationMaintenanceRecord[] {
+    if(dataset)return qaOrganization[kind];
     const cached = native.get(kind); if (cached) return cached;
     const base = (number: number, index: number) => ({ id: id(number + index), version: index + 1, createdAt: null, updatedAt: null });
     let rows: readonly OrganizationMaintenanceRecord[];
