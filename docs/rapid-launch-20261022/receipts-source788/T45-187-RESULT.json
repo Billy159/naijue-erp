@@ -1,0 +1,172 @@
+{
+  "jobId": "t45-v22-qa-readonly-prefix-adapter-successor-20261027-187",
+  "job": {
+    "jobId": "t45-v22-qa-readonly-prefix-adapter-successor-20261027-187",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-8d56d37edd9e",
+    "atUTC": "2026-10-27T14:44:36.017440+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 1336.7438969030045,
+    "exports": [
+      "qa-prefix-engine-result.json",
+      "qa-prefix-readonly-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T15:06:52.803329+00:00"
+  },
+  "runtime": {
+    "automaticReplay": false,
+    "businessAcceptance": false,
+    "clientsClosed": true,
+    "errorCode": "CORE_STAGED_PREFIX_MISMATCH",
+    "firstBind": {
+      "bytes": 73746,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/BIND.json",
+      "sha256": "3a350163b35c771c8fd85401cf7c9d88a6736157300c444c10022c8b2e740609"
+    },
+    "mainAttempted": false,
+    "originalSourceBinding": {
+      "actorAccountId": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+      "authorizedPayloadHash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8",
+      "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+      "coreReceiptId": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
+      "coreSourceDigest": "2589b25c06bb1312b9d1f40627fb7432f44b4293b5d1ae7186223948b144cc28",
+      "cutoffAt": "2026-10-04T12:00:00+08:00",
+      "fixedSourceNamespace": "naijue:tplus:primary-ledger",
+      "phase": "FULL_SOURCE_CONTINUATION_26_V1",
+      "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+      "target": {
+        "database": "erp_rewrite_20261022_r1",
+        "postmasterStartedAt": "2026-10-04 08:16:07.895273+00",
+        "role": "erp_rewrite_runtime_20261022",
+        "serverAddress": null,
+        "serverPort": null
+      },
+      "version": "NATIVE_IMPORT_EXECUTION_26_V1"
+    },
+    "originalSourceDatabaseAccess": "PROHIBITED",
+    "prefixDiagnostic": {
+      "reason": "COMPLETE_PROJECTION"
+    },
+    "qaTuple": {
+      "actingRole": "erp_rewrite_runtime_20261022",
+      "database": "erp_rewrite_20261022_r1",
+      "databaseOid": "16391",
+      "ownerRole": "erp_rewrite_owner_20261022",
+      "postmasterStart": "2026-10-27 13:22:19.696753+00",
+      "serverAddress": null,
+      "serverPort": null,
+      "sessionUser": "erp_rewrite_runtime_20261022",
+      "socketDirectory": "/srv/naijue-erp/qa-v22-20261027-01/s",
+      "systemIdentifier": "7701337335828107278"
+    },
+    "registrationId": "t45-v22-qa-readonly-prefix-adapter-successor-20261027-187",
+    "scenario": "READONLY_PREFIX_ADAPTER",
+    "scope": "QA_STORE_ONLY_NOT_PRODUCTION_SOURCE_HOST_EXECUTION",
+    "status": "STOP_NO_RETRY"
+  },
+  "engine": {
+    "APPChanged": false,
+    "BINDExecuted": false,
+    "COMMITExecuted": false,
+    "R1DatabaseAccess": false,
+    "attemptedOnce": true,
+    "automaticReplay": false,
+    "businessDML": 0,
+    "clientsClosed": true,
+    "errorCode": "QA_READONLY_STOP_SEE_ORIGINAL_RESULT",
+    "existingSourceSqlReused": true,
+    "finishedAtUtc": "2026-10-27T15:06:52.732780+00:00",
+    "jobId": "t45-v22-qa-readonly-prefix-adapter-successor-20261027-187",
+    "materializedFiles": [
+      {
+        "bytes": 4586,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/inputs/QA187-PLAN.json",
+        "sha256": "3dc5b646abe92d28916868b5891acaa6ce8b47cb81b7fa065fe2c8cf76c3411d",
+        "uid": 0
+      },
+      {
+        "bytes": 4363,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/inputs/C-QA187-AUTHORITY.json",
+        "sha256": "e86cdee882a1d1f0224ad1d4a55f044f8ee32cd74f8a5d56c1f6f6d623417cfa",
+        "uid": 0
+      },
+      {
+        "bytes": 2207,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/inputs/QA187-FIXTURE.json",
+        "sha256": "3cdd97882c6709b8ede05634c24809259b8d3ef6b1a42f913c25a933f693be61",
+        "uid": 0
+      },
+      {
+        "bytes": 29173,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/inputs/qa-control/qa-prefix-bind.mjs",
+        "sha256": "dbb2f336c37a1a5e8134dad2afcfe4afab7e6b2f88256e34ea9eeef06a320537",
+        "uid": 0
+      },
+      {
+        "bytes": 14728,
+        "mode": "0400",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/inputs/qa-control/qa-prefix-bind.test.mjs",
+        "sha256": "00aae03b8584a86f534afbf35bd6c781a7c92f0c4ef49ab7f39f3e31a06bf0ed",
+        "uid": 0
+      }
+    ],
+    "original184FinalRefsVerified": [
+      {
+        "bytes": 37302,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+        "sha256": "27878ca323190831fa1142901ed24bec8d6c012cd18b9a0c6884c6ba6e822581"
+      },
+      {
+        "bytes": 188917,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/provider-INPUT.FINAL.json",
+        "sha256": "c7e1a1b42952b3cb7fc42468c52f7e2b3add59b069d5904998c7458d362d3acd"
+      },
+      {
+        "bytes": 5007,
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-shared-source-package-preparation-20261027-182/inputs/executable-host-job26.json",
+        "sha256": "6a68c9bb8bac08e75bc6c406ba1a83ca0cc2be60ce92ff131461b49b0ee302f9"
+      }
+    ],
+    "phase": "SOURCE_ONLY_CAPTURE_THEN_QA_ORDINARY_RRRO_PREFIX",
+    "prefixDiagnostic": {
+      "reason": "COMPLETE_PROJECTION"
+    },
+    "process": {
+      "elapsedSeconds": 1336.0158913240302,
+      "exitCode": 0,
+      "processExited": true,
+      "stderrBytes": 0,
+      "stdoutBytes": 1910
+    },
+    "runtimeStatus": "STOP_NO_RETRY",
+    "scope": "READONLY_PREFIX_ADAPTER",
+    "status": "STOP_QA_PREFIX_READONLY_NO_REPLAY"
+  },
+  "exports": {
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/release-submission/release-receipts/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/job.json",
+      "bytes": 565,
+      "sha256": "f3845ead4c0a212bdc3d8b1b81a9bd331c86942f9f65fc7ed9a2b7313f845ec7"
+    },
+    "qa-prefix-readonly-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/release-submission/release-receipts/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/qa-prefix-readonly-result.json",
+      "bytes": 2174,
+      "sha256": "ede6b51cbca1b923c4aeec62f9bbad8bba0263c5d7674d71b3f61860e61f88af"
+    },
+    "qa-prefix-engine-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/release-submission/release-receipts/t45-v22-qa-readonly-prefix-adapter-successor-20261027-187/qa-prefix-engine-result.json",
+      "bytes": 3414,
+      "sha256": "896e4384974315ac296b0f3796e8153f1652b8346796ffaf616bd2ff9eadd328"
+    }
+  },
+  "limits": "First full QA readonly prefix round stopped CORE_STAGED_PREFIX_MISMATCH safe reason COMPLETE_PROJECTION. No specific group/table/field/value exported or known; no content/coverage PASS, no BIND/DML/COMMIT or R1DatabaseAccess. clientsClosedtrue; failed adapter throw did not export successful adapterReadback proof. No replay."
+}
