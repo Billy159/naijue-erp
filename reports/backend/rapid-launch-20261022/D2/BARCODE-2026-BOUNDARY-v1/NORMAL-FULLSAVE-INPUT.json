@@ -1,0 +1,40 @@
+{
+  "taskId": "D2-V19-NORMAL-PRODUCT-FULLSAVE-ACTUAL-v1",
+  "executionEnabled": false,
+  "sourceRoot": "C_BIND_CURRENT_FROZEN_SOURCE_WITH_QB340_7_EXACT_PINS",
+  "sourceCheckpoint": "C_BIND_ORIGINAL_SOURCE_COMMIT",
+  "origin": "C_BIND_ORIGINAL_NORMAL_FACTORY_TRUSTED_ORIGIN",
+  "target": {
+    "database": "erp_qa_rapid26_native_20261023_01",
+    "oid": "1032586",
+    "role": "erp_qa_v14_core_runtime_20261024_01"
+  },
+  "actor": {
+    "accountId": "00000000-0207-4000-8000-000000000100",
+    "hallId": null
+  },
+  "publishedBatchId": "00000000-0207-4000-8000-000000000001",
+  "referenceProductId": "00000000-0299-4000-8000-000000000010",
+  "protectedProductIds": [
+    "00000000-0207-4000-8000-000000000800",
+    "00000000-0351-4000-8000-000000000001"
+  ],
+  "colorIds": [
+    "00000000-0299-4000-8000-000000000001",
+    "00000000-0299-4000-8000-000000000002"
+  ],
+  "fitId": "00000000-0027-4000-8000-000000000004",
+  "groupId": "00000000-0027-4000-8000-000000000006",
+  "schemeId": "0e70e45e-1a51-4d44-afe8-0002cf3fb7ef",
+  "productCode": "QA_D2_V19_FULLSAVE_01",
+  "productName": "SYNTHETIC D2 V19 FULL SAVE",
+  "manualSystemItemCode": "9876543",
+  "compatibleRaw": "D2_V19_COMPAT_00001",
+  "keys": {
+    "create": "D2_V19_NORMAL_FULLSAVE_CREATE_01",
+    "disable": "D2_V19_NORMAL_FULLSAVE_DISABLE_NEW_01",
+    "append": "D2_V19_NORMAL_FULLSAVE_APPEND_COLOR_01",
+    "compatible": "D2_V19_NORMAL_FULLSAVE_COMPAT_01"
+  },
+  "bindingsAuthority": "Original C189/QB260 registered native QA; references copied from original V17 INPUT. New isolated product/fullsave four commands prepared under C SOURCE738 delegation, not executed. Same known nonownerrole must be proved on this DB; old C189 owner role is NOT substitution. T45 may bind an already-authorized QA ADMIN normal session (including original QA02 setup if actually completed); no new account/credential created here. Target/session/issuer/source bindings are actual preconditions, not inferred ready."
+}

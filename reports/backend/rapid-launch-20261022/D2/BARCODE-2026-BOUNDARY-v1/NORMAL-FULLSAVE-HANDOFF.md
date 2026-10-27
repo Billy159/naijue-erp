@@ -1,0 +1,25 @@
+# Original product actual increment: use the existing native QA and host
+
+This is the original D2/v17-v19 task continuation, not a new QA platform. Historical C189/QB260 and QB340 source checks remain adopted. No old runner, fixture, import, publication or source suite is replayed.
+
+## Immediate original T45 read-only step
+
+Load `normal-fullsave-v19.mjs`, read `NORMAL-FULLSAVE-INPUT.json`, and call `preflight(originalPool, originalIssuer, input)`. This export is inert until called and constructs no resources. It accepts ONLY original native QA database `erp_qa_rapid26_native_20261023_01`, OID1032586, existing nonowner role `erp_qa_v14_core_runtime_20261024_01`. Use original managed connection/issuer and current actual independent review; do not substitute owner. No API/session required for this first read-only step. It reads only exact registered actor/batch/scheme/ref/key targets plus finite native group, returns safe ready/missing counts. A first privilege failure stops with original SQLSTATE; no grant or role fallback.
+
+The same original target has valid historical C75 publication and C189 real products. D1's current direct answer confirms that a current 2026scheme fixture and normal product runtime/session have NOT been measured. Do not mistake R1 scheme preparation or QA37 CORE for this target. In particular postCORE exactsix initialization cannot simply be run against a published nativeQA with existing schemes/barcodes. If current preflight finds no2026, C/D1/T45 must select an existing approved qualified QA fixture or prepare it through original approved initialization/publication chain; no bareINSERT/upsert/borrowedR1 rows. This exactdata dependency is independent of remote148 or B07 work.
+
+## Once precise current bindings are ready
+
+C/T45 freezes one source graph containing the seven unchanged QB340 pins (the old source pin file is reused); binds sourceRoot, sourceCheckpoint, actual original factory trustedOrigin, approved existing ADMIN account and normal session. The original normal factory has `productMaintenance:true` and genuine exactmetadata/PM+seasons purpose. Native full startup uses the original full-purpose set documented in D1 FULL-NORMAL-HOST-BOUNDARY-01. Existing target/roles/credentials stay originalowner responsibility. This package creates no credentials and does not read browser/session files.
+
+Set only the reviewed fixed INPUT executionEnabled true in original T45 job after admission. Call `runner(originalApi, originalPool, originalIssuer, input, privateCookie, originalCheckpointWriter)`. The original factory API is already ready/non-listening. The callback durably saves INTENT before each request and COMMITTED result afterward in the existing job's private inputs/results, never logs cookie or passwords. The API/pool/session lifecycle is original T45 caller-owned; close/dispose in original finally. No separate driver or temporary server is introduced. Requests use existing V2 client/reader through actual api.app.inject with original session+Origin, stripping /api exactly as original outer handler; this is normal API/PG proof, not network/TLS/browser proof.
+
+Four saves create one synthetic product, disable one newlycreatedSKU/main, add secondcolor fullgroup and missing MAIN, then add one compatible raw binding. N is actualfullgroup; M is actualvalidsizecodes. Final deltas: products+1, SKU+2N, barcodes+2M+1, audit+4, receipt+4, rootversion4; oldfixtures andinventory unchanged. ActualNULLsize remains a realSKU without fakeMAIN; no newNULLfixture is created. If N=1, report multiSizeWitness false instead of claiming a multirange witness. Exactkey replays are bounded checks; oldC189 keys are never used for writes. Fixed fresh productCode/systemItemCode/raw/key collisions STOP and require originalkey recovery, not newkey retries.
+
+Failure reports phase/key/knowncommittedresults and safe errorCode, stops immediately, preserves actual rows and journals. Unknown commit requires original receipt lookup. No automatic rerun of the wholefour-save runner; no rollback/deletion of committed olddata or newfixture. The C189 original0351/base800 protected data are reread internally and never emitted as business payload.
+
+## F2 exact consumer
+
+Current normal copied page is `runtime/products/editor.tsx` mounted by `editor-entry.tsx` and `runtime/common/ready-pages.tsx`, not the generic `apps/web/src/products/product-editor.tsx`. It already submits original V2 skuSelection (completegroup×colors×fits), preserves manual systemItemCode/defaultscheme, uses original client/reader/key recovery, and reloads exact saved productId/version before acknowledging save. It compares newenabledSKU with actualMAIN coordinates for missingcode feedback. No frontend source edit is needed from D2. F2 should consume the same fixed backend graph and later actualtarget/detail results. A standalone healthyhost/UIflag/HTTP200 is not real fullSAVE or a reason to bypass source publication.
+
+No production source changed in this preparation; only syntax/inert-import checked. No schema, SQL privilege mutation, DB connection, fixture creation, server, build or Git action by D2.

@@ -1,0 +1,64 @@
+{
+  "taskId": "D2-V19-NORMAL-PRODUCT-FULLSAVE-ACTUAL-v1",
+  "status": "EXISTING_QA_EXECUTABLE_PREFLIGHT_AND_NORMAL_SAVE_ENTRY_PREPARED_NOT_EXECUTED",
+  "entry": "normal-fullsave-v19.mjs exports preflight(pool,issued,input) and runner(api,pool,issued,input,privateCookie,checkpoint)",
+  "input": "NORMAL-FULLSAVE-INPUT.json (fixed originalnativeQA/references/newisolatedfixturekeys, executionEnabled:false)",
+  "sourceAccepted": "QB340 exactseven correctedsourcepins remain byte-identical currentR this turn; source review reused, no tests rerun. Actualfullgraph sourceRoot/sourceCheckpoint must be fixed by C/T45, not inferred fromcurrentWIP or historicalSOURCE346.",
+  "existingReferences": {
+    "v17": "D2/V17-NATIVE-ACTUAL-v1 original runner/input, C189 actualnormalproductfullsave at nativeQA OID1032586. Historical0351fixtures unchanged, oldrunner not invoked.",
+    "detail": "B/server-execution/PRODUCT425-DETAIL28-ACTUAL-RESULT.json original0351normaldetail (ownercontext) accepted; original C111 reviewfile/purpose reference available, notcurrentnonownerproof",
+    "publication": "B/server-execution/NATIVE75-PUBLISH-EVIDENCE-CORRECTION-AND-QA-PREPARATION.json original dc56cedf-bfd1-995c-bb77-9991b7283b27 IMPORT_PUBLISH receipt and synthetic zero-history baseline validhistorical; no stage/publish replay",
+    "normalFactoryPreparation": "D1/NATIVE189-SAVE-QA-DELTA-02/{INPUT.json,prepare-native189.mjs,QA-DELTA.md}, D1/FULL-NORMAL-HOST-BOUNDARY-01/REPORT.md and originalproduction-provider-composition.ts factory. Reuse only actuallyprepared existingnormal actor/session/issuer, no D2 accounts/credentials created.",
+    "knownInsufficiency": "D1 current directreply: actual2026CURRENT15 row, validfit/colors/sizes/group>1 and usablecurrentnative189normalruntime/session all NOT_MEASURED, not a hard dependency on B07/remote148."
+  },
+  "readOnlyFirst": {
+    "requires": "Only originalgenuine managedpool+issuer exactexistingtarget/role with PRODUCT_MAINTENANCE/PRODUCT_SEASONS_READ for productpath; C/T45 binds actualtarget in original context. No cookie/API needed for preflight.",
+    "returns": "Safe report of target/OID/role, currentADMINbool, originalbatchready, actual2026scheme/code/groupcounts, fixednewkey/codeoccupied, nine exact referenceSELECT privileges; refs actualsyntheticdictionarycodes for same-run assertions. Do not publish extra private inputs.",
+    "blockingConditions": [
+      "Actualexact2026CURRENT15 notinstalled in chosenQA",
+      "Currentnonownerrole/schemause/read/write/rowlock/currentreview notadmitted",
+      "Fixedexistingtwo color/fit/group codes unavailable; at leastone validactualsize required forpositiveMAIN; NULL sizes kept and tested whenpresent",
+      "Newfixturekeys/code alreadyused -> recoveroriginalkey, do notrerun allcommands",
+      "ExistingqualifiednormalADMINcookie/factoryconfig missing (neededonlywritephase)"
+    ]
+  },
+  "normalWriteIncrement": {
+    "factory": "Original createProductionRuntime26ApplicationApi with productMaintenance:true. Native full profile additionally originalfullstartup purposes PRODUCT_SEASONS_READ/CURRENT_CUSTOMER_READ_WRITE/CURRENT_FORM_READ/HISTORY_READ/INVENTORY_ADMISSION plus PRODUCT_MAINTENANCE. No COREmemberreader substituted for publishednativeQA; originalmetadata/source/ACL lifecycle applies.",
+    "authentication": "T45 suppliesexistingauthorizednormalQA cookie only privateargument; runner firstnormal/auth/session checks exactactor/ADMIN/hall. No fakeauthenticate or newloginpassword provider in artifact. Api/issuer/pool callerowned; originalfinally closes/disposes; diagnosticleases releasedbeforeHTTP.",
+    "fourOriginalV2Saves": [
+      "Newsyntheticproductmanual9876543 + firstcolor/fit/fullnativegroup, verifyNnewSKU andMactuallycodedMAIN",
+      "Disable onlyone justcreatedtestSKU anditsMAIN throughsame originalEDIT",
+      "Appendsecondactualcolor with bothcolors selected, verify2Nskus and2Mmain; olddisabledSKU/main unchanged, wholefullgroup notmanualsingle-size creation",
+      "Appendoriginalrawcompatibilitycode to exactnewcolorSKU, originalMAIN unchanged, finalversion4/newbarcodes2M+1"
+    ],
+    "replay": "ExactoriginalCREATE/append receipts+samekeyreplay and zeroadditionalroots/SKU/barcode/audit/receipts; fixedkeysjournal via originalcallercheckpoint beforeeachHTTP. Failurestops preservingphase/originalkey/committedresults; noautomaticretry orcleanup.",
+    "readback": "OriginalcreateProductMaintenanceHttpClientV2+createProductMaintenanceHttpReaderV2 through alreadycreatedfactory.app.inject; requiresnormalrealauth/plugin/service/UOW/actualPG, not baremockservice. Originalprotectedbase800/C1890351 fullroot/SKU/barcodes andinventorycounts unchanged. No stock write.",
+    "scope": "Baseproduct+SKU/MAIN+compatible save only. Images untouched, noimageChanges field sent. Does not strip imageChanges from a usermedia request; mediaworkflow hasindependentgenuine stage requirement."
+  },
+  "realRemaining": {
+    "2026Fixture": "Knownnative189historicalschemeUUID0207…700 is not2026; currentexistence2026NOT_MEASURED. ApprovedpostCOREinitializer requiresSTAGED/empty6/zeroBARCODE so cannotblindlyrun against alreadyIMPORTEDnative189orupsert intoitsnonempty scheme table. If preflight confirmsmissing, C must pick an alreadyregistered isolatedfixture legitimatelyinitialized2026+published or explicitlyroute minimal approvedoriginalQAsetup viaD1/T45. This is exactdata prerequisite, not newR1grant/MAIN/148wait.",
+    "nonowner": "OldC189owner cannotbeusedasnormalnonownerPASS. Existingrole native privileges45 were insufficienthistorically; needcurrentactualreview/precise originalconsumerACL, noD2GRANT.",
+    "localWindow": "T45 canrun inertentry/preflight in originallocalshortwindow throughactualmanagedconnection; artifactsdo notallocate newserver/DB. No currentlyprovenlocalnative189pool/session handedD2, so do notclaimwritewindowready. Remote148Linuxprepare/B07historydiagnostic notlogicalprerequisites.",
+    "sourceFix": "No newbackendproductsource defect ormissingprovideridentified. QB340sevenleavesunchanged. ActualF2consumerisreplica runtime/products/editor.tsx (notunusedgeneric product-editor.tsx)."
+  },
+  "F2Consumer": {
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/common/ready-pages.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/editor-entry.tsx",
+      "apps/web/src/products/product-maintenance-http-client.ts"
+    ],
+    "existing": "ready-pages createsoriginalV2reader/client andallowedActions fromactualmaintenance.products/currentrole. Replicaeditor restores/passes skuSelection fullgroup, manualrequired/default2026, onlyactualdirtyimages sendsimageChanges; originalkeyunchanged. committed-save waitsdetailtarget/version thencomparesnewenabledSKU/main todisplaymissingcodefeedback; notallSAVE200meanallbarcodesgenerated. Originalcompatibilityeditor realcoordinate contract remains.",
+    "next": "Use sameCfixed productruntime andactualDTO/client, backendactualreceipt IDs/details feed originalF2page; no newconsumerseam required now. C/F2 browserafteractualproductexecution verifiesnewcolorfullgroup/mainreadback andmissingcodereason. Do not enableR1STAGED onlybyUIflag."
+  },
+  "localChecks": {
+    "Node24Syntax": 0,
+    "inertImportExactExports": "PASS (no DB/API/pool constructed)",
+    "productionSourceChanges": 0,
+    "oldTestsRerun": 0,
+    "actualInvocation": false
+  },
+  "next": "C/QB narrownewartifactreview, T45 originalshortwindow firstreadonlypreflight; resolveactualmissing2026/role/session viaoriginalowner only; samefixedinputexecutionEnabled becomestrue onlyonceactualready andoriginaljobjournalapproved. No dependence on148/B07.",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}
