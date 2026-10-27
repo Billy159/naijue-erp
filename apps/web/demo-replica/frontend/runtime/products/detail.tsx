@@ -36,6 +36,7 @@ export function ProductDetail(p:ProductDetailOptions){
  const basic=useProductRead<{productId:string},ProductBasics|null>(p.scope,p.reader.base?.read,{productId:entityId('product',p.product.id)},tab==='base',p.onAccessFailure);
  const specs=useProductRead<{productId:string},ProductSpecifications|null>(p.scope,p.reader.specs?.read,{productId:entityId('product',p.product.id)},tab==='specs'||tab==='images',p.onAccessFailure);
  useEffect(()=>{const data=basic.snapshot.success?.data;if(data)setHeading(data.code+' · '+data.name);},[basic.snapshot.success]);
+ const base=basic.snapshot.success?.data;const inventoryProduct=base?.productId===p.product.id?{id:p.product.id,label:base.code+' · '+base.name}:p.product;
  const title=useRef<HTMLHeadingElement>(null);useLayoutEffect(()=>title.current?.focus({preventScroll:true}),[]);
  if(!p.scope.active)return null;
  return <div className="pc-detail-workbench"><div className="pc-detail-sticky"><div className="gold-head iw-head pc-page-head"><h1 ref={title} tabIndex={-1}>{heading}</h1></div><div className="tabs" role="tablist" aria-label="商品详情">{productTabs.map(([key,label])=><button type="button" role="tab" aria-selected={tab===key} className={tab===key?'active':''} key={key} onClick={()=>changeTab(key)}>{label}</button>)}</div></div><section className="pc-editor-body pc-detail-body">
@@ -45,7 +46,7 @@ export function ProductDetail(p:ProductDetailOptions){
  {visited.has('prices')&&<Prices {...p} active={tab==='prices'}/>}
  {tab==='images'&&<ReadNotice phase={specs.snapshot.phase} retry={()=>void specs.query.run({productId:entityId('product',p.product.id)})} cancel={()=>specs.query.cancel()}/>}
  {visited.has('images')&&<Photos {...p} active={tab==='images'} specs={specs.snapshot.success?.data??null}/>}
- {visited.has('stock')&&<Stock {...p} active={tab==='stock'}/>}
+ {visited.has('stock')&&<Stock {...p} product={inventoryProduct} active={tab==='stock'}/>}
  </section></div>;
 }
 export function Field(p:{name:string;value:React.ReactNode}){return <div className="field"><span className="pc-field-caption">{p.name.replace(/\s*\*$/,'')}{p.name.endsWith('*')&&<span className="ui-required"> *</span>}</span><span className="pc-read-value">{p.value??'—'}</span></div>;}
