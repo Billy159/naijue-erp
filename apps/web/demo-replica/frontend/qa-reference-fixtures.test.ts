@@ -61,10 +61,45 @@ test('organization, account, customer/funds references and product filters decod
  const query={filter:{productIds:[],categoryIds:[],years:[],seasonIds:[],supplierIds:[],fitIds:[],thicknesses:[],shapeCodes:[]},page:1,pageSize:100 as const};
  const products=checkedProductManagementResponse(await post('/product-management/query',query),query);assert.equal(products.items.length,qaProducts.length);
  for(const kind of ['product','category','fit','supplier','season','year'] as const){const q={kind,search:'',selectedIds:[],page:1,pageSize:20 as const};checkedProductManagementCandidates(await post('/product-management/candidates/query',q),q);}
- const list=await post('/sales/query',{filter:{startDate:null,endDate:null,statuses:[],businessTypes:[],hallIds:[],salespersonIds:[],customerIds:[],warehouseIds:[],number:null},page:1,pageSize:20});assert.equal(list.exactTotal,'0');assert.deepEqual(list.items,[],'new QA has no old seeded SYN document');
+ const list=await post('/sales/query',{filter:{startDate:null,endDate:null,statuses:[],businessTypes:[],hallIds:[],salespersonIds:[],customerIds:[],warehouseIds:[],number:null},page:1,pageSize:20});assert.equal(list.exactTotal,'30');assert.ok(list.items.every((r:{number:string})=>r.number.startsWith('QA-')),'new QA has no old seeded SYN document');
 });
 
 test('warehouse selection preserves declared same-SKU quantities instead of renumbering selected warehouses',()=>{
- const all=qaInventory(filter),selected=qaInventory({...filter,warehouses:[{id:qaWarehouses[2]!.id,label:qaWarehouses[2]!.name}]});
+ const all=qaInventory(filter),selected=qaInventory({...filter,warehouses:[{id:qaWarehouses[2]!.id}]});
  for(const p of selected){const original=all.find(x=>x.id===p.id)!;for(const group of p.colorFits){const match=original.colorFits.find(x=>x.color.id===group.color.id&&x.fit.id===group.fit.id)!;assert.deepEqual(group.rows[0]!.cells,match.rows.find(row=>row.warehouse.id===qaWarehouses[2]!.id)!.cells);}}
+});
+
+test('populated QA document lists have second pages, all statuses, coherent multi-product details/refunds and explicit HISTORY identities',async()=>{
+ const {normalSalesResponse,normalTransferResponse}=await import('./runtime/documents/normal-list-reader.ts');
+ const {salesDetailResponse}=await import('../../src/sales/response-validation.ts'),{transferDetailResponse}=await import('../../src/transfers/response-validation.ts');
+ const {historyDetailResponse}=await import('./runtime/documents/history-reader.ts');
+ const sf={startDate:null,endDate:null,statuses:[],businessTypes:[],hallIds:[],salespersonIds:[],customerIds:[],warehouseIds:[],number:null},tf={startDate:null,endDate:null,statuses:[],fromWarehouseIds:[],toWarehouseIds:[],number:null};
+ for(const kind of ['sales','transfers'] as const){
+  const rows:Record<string,any>[]=[];
+  for(const page of [1,2]){
+   const q={filter:kind==='sales'?sf:tf,page,pageSize:20};const raw=await post('/'+kind+'/query',q);if(kind==='sales')normalSalesResponse(raw,q as never);else normalTransferResponse(raw,q as never);
+   assert.equal(raw.exactTotal,'30');assert.equal(raw.items.length,page===1?20:10);rows.push(...raw.items);
+  }
+  assert.deepEqual(new Set(rows.map(r=>r.status)),new Set(['DRAFT','APPROVED','VOID']));assert.equal(rows.filter(r=>r.dataset==='HISTORY').length,6);
+  if(kind==='sales')assert.deepEqual(new Set(rows.map(r=>r.businessType)),new Set(['SALE','RETURN','EXCHANGE']));
+  for(const row of rows){
+   if(row.dataset==='HISTORY'){
+    const q={documentId:row.documentId,linePage:1,linePageSize:20,settlementPage:1,settlementPageSize:20};const target={kind,documentId:row.documentId,batchId:row.batchId,effectiveVersion:row.effectiveVersion};
+    const d=historyDetailResponse(await post('/imported-history/'+kind+'/detail/query',q),target,q as never);assert.equal(d.document?.sourceStatus,row.status);assert.equal(d.lines.items.length,3);assert.equal(d.document?.createdBy.state,'UNKNOWN');
+   }else if(kind==='sales'){
+    const q={salesId:entityId('sales',row.id)},d=salesDetailResponse(await post('/sales/detail/query',q),q);assert.equal(d.document.header.status,row.status);assert.equal(d.document.lines.length,3);
+    assert.equal(d.document.lines.reduce((sum,l)=>sum+BigInt(l.lineAmount),0n).toString(),row.netDue);
+    assert.equal(d.document.settlements.reduce((sum,s)=>sum+(s.direction==='REFUND'?-1n:1n)*BigInt(s.amount),0n).toString(),row.netDue);
+   }else{
+    const q={transferId:entityId('transfer',row.id)},d=transferDetailResponse(await post('/transfers/detail/query',q),q);assert.equal(d.document.header.status,row.status);assert.equal(d.document.lines.reduce((sum,l)=>sum+BigInt(l.quantity),0n).toString(),row.totalQuantity);
+   }
+  }
+ }
+});
+
+test('empty documents remain an independent fixture scenario and unsupported edit/status actions never report success',async()=>{
+ const empty=createReplicaPreviewTransport({emptyDocuments:true});const filter={startDate:null,endDate:null,statuses:[],businessTypes:[],hallIds:[],salespersonIds:[],customerIds:[],warehouseIds:[],number:null};
+ const result=await empty.http.fetch(empty.http.origin+'/api/sales/query',{method:'POST',credentials:'same-origin',body:JSON.stringify({filter,page:1,pageSize:20})});const value=await result.json();assert.equal(value.exactTotal,'0');assert.deepEqual(value.items,[]);
+ const response=await http.fetch(http.origin+'/api/sales/prepare-existing',{method:'POST',credentials:'same-origin',body:'{}'});assert.equal(response.status,501,'fixtures do not implement a new SAVE/edit engine');
+ const q={filter,page:1,pageSize:20},normal=await post('/sales/query',q);assert.equal(normal.exactTotal,'30','empty scenario cannot clear the populated preview');
 });

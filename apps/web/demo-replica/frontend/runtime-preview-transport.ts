@@ -3,12 +3,12 @@ import {createSyntheticUnifiedTransport} from '../../unified-browser-harness/syn
 const detailPaths=new Set(['/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
 type Call={method:string;path:string;phase:'pending'|'completed'|'aborted'|'failed';started:number;finished?:number};
 /** Explicit local SYNTHETIC preview only. Never selected as a production fallback. */
-export function createReplicaPreviewTransport(){
+export function createReplicaPreviewTransport(options:{readonly emptyDocuments?:boolean}={}){
  const base=createSyntheticUnifiedTransport(undefined,'standard',QA_REFERENCE_PROFILE);base.authorize();const records:Call[]=[];
  let products:Promise<Awaited<ReturnType<typeof import('./runtime/products/synthetic-preview-transport.ts')['createSyntheticProductPreviewTransport']>>>|undefined;
  let settings:Promise<ReturnType<typeof import('./runtime/settings/synthetic-preview-transport.ts')['createSettingsPreviewTransport']>>|undefined;
  let documents:Promise<ReturnType<typeof import('./runtime/documents/synthetic-preview-transport.ts')['createSyntheticDocumentPreviewTransport']>>|undefined;
- const document=()=>documents??=import('./runtime/documents/synthetic-preview-transport.ts').then(m=>m.createSyntheticDocumentPreviewTransport({dataset:QA_REFERENCE_PROFILE,syntheticOnly:true,origin:base.http.origin,existingFetch:base.http.fetch}));
+ const document=()=>documents??=import('./runtime/documents/synthetic-preview-transport.ts').then(m=>m.createSyntheticDocumentPreviewTransport({emptyDocuments:options.emptyDocuments===true,dataset:QA_REFERENCE_PROFILE,syntheticOnly:true,origin:base.http.origin,existingFetch:base.http.fetch}));
  const product=()=>products??=import('./runtime/products/synthetic-preview-transport.ts').then(m=>m.createSyntheticProductPreviewTransport({origin:base.http.origin,existingFetch:base.http.fetch,snapshotVersion:1,dataset:QA_REFERENCE_PROFILE,syntheticFiniteInventoryOutput:true}));
  const setting=()=>settings??=import('./runtime/settings/synthetic-preview-transport.ts').then(m=>m.createSettingsPreviewTransport(QA_REFERENCE_PROFILE));
  const fetch=async(input:string,init:RequestInit):Promise<Response>=>{
@@ -24,7 +24,7 @@ export function createReplicaPreviewTransport(){
    if(path.startsWith('/organization/')||path.startsWith('/organization-maintenance/')||path.startsWith('/staff/')||path.startsWith('/accounts/')||path.startsWith('/payment/')||path==='/settings/audit/query'||/^\/(customers|suppliers)(?:\/|$)/.test(path)){
     const adapter=await setting();if(adapter.canHandle(path,method))return adapter.request(url,init);
    }
-   if(/^\/(?:sales|transfers|current-form|dictionary-read)(?:\/|$)/.test(path)){const adapter=await document();if(adapter.canHandle(path,method))return adapter.request(url,init);}
+   if(/^\/(?:sales|transfers|current-form|dictionary-read|imported-history)(?:\/|$)/.test(path)){const adapter=await document();if(adapter.canHandle(path,method))return adapter.request(url,init);}
    return base.http.fetch(input,init);
   });
   void pending.then(response=>{if(signal?.aborted)void response.body?.cancel().catch(()=>{});},()=>{});

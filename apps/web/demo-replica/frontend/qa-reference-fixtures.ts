@@ -1793,3 +1793,56 @@ export function qaBarcodeSnapshot(productId:string){
   return {skuId:s.id,skuCode:s.skuCode,skuEnabled:true,colorId:s.colorId,colorLabel:s.colorName,fitId:s.fitId,fitLabel:s.fitName,sizeId:s.sizeId,sizeLabel:s.sizeName,bindingCount:2,main:summary(records[0]!),disabledMainCount:0,confirmedOldCount:1,firstConfirmedOld:summary(records[1]!)};
  })};
 }
+
+/** Predeclared QA read specimens. Statuses/history are sample facts only, never
+ * the outcome of a simulated approve/revise command or an actual import. */
+const qaStamp=(i:number)=>`2026-10-${String(1+i%24).padStart(2,'0')}T09:30:00.000000Z`;
+const qaMinor=(s:string)=>{const [w,f='']=s.split('.');return BigInt(w!)*100n+BigInt(f.padEnd(2,'0'));};
+const qaYuan=(s:string)=>{const v=BigInt(s),a=v<0n?-v:v;return `${v<0n?'-':''}${a/100n}.${String(a%100n).padStart(2,'0')}`;};
+const qaDocumentCatalog={skus:qaSkus.map(s=>({skuId:s.id,productId:s.productId,productCode:s.productCode,productName:s.productName,colorId:s.colorId,colorName:s.colorName,fitId:s.fitId,fitName:s.fitName,sizeId:s.sizeId,sizeGroupId:s.sizeGroupId})),sizeGroups:qaGroups.map(g=>({sizeGroupId:g.id,code:g.key,name:g.name,members:g.sizes.map(s=>({sizeId:s.id,code:s.code||null,name:s.name,displayOrder:s.displayOrder}))}))};
+export function qaTransferCatalog(lines:readonly {skuId:string}[]){
+ const tuples=new Set(lines.map(l=>{const sku=qaSkus.find(s=>s.id===l.skuId)!;return [sku.productId,sku.colorId,sku.fitId].join('|');}));
+ const skus=qaDocumentCatalog.skus.filter(s=>tuples.has([s.productId,s.colorId,s.fitId].join('|'))),groups=new Set(skus.map(s=>s.sizeGroupId));
+ return {skus,sizeGroups:qaDocumentCatalog.sizeGroups.filter(g=>groups.has(g.sizeGroupId))};
+}
+export const qaSalesDocuments=Array.from({length:24},(_,i)=>{
+ const id=qaId(700000+i),status=(['DRAFT','APPROVED','VOID'] as const)[i%3]!,businessType=(['SALE','RETURN','EXCHANGE'] as const)[Math.floor(i/3)%3]!,stamp=qaStamp(i);
+ const lines=[0,1,2].map((p,n)=>{
+  const skus=qaSkus.filter(s=>s.productId===qaProducts[p]!.id),sku=skus[(i*3+n)%skus.length]!,reference=qaMinor(qaProducts[p]!.retailPrice),discount=n===1,price=discount?(reference*80n+50n)/100n:reference;
+  const qty=BigInt(n+1)*(businessType==='RETURN'||businessType==='EXCHANGE'&&n===0?-1n:1n);
+  return {id:qaId(710000+i*10+n),salesId:id,lineNo:n+1,skuId:sku.id,quantity:String(qty),referencePrice:String(reference),dealPrice:String(price),pricingRule:discount?'DISCOUNT':'UNIT_PRICE',discountTenths:discount?80:null,zeroConfirmed:false,isGift:false,lineAmount:String(qty*price),allocatedDiscount:'0',isCurrent:true,snapshot:{productCode:sku.productCode,productName:sku.productName,colorName:sku.colorName,fitName:sku.fitName,sizeName:sku.sizeName,barcode:sku.barcode}};
+ });
+ const gross=lines.reduce((sum,l)=>sum+BigInt(l.lineAmount),0n),absolute=gross<0n?-gross:gross;
+ const settlements=absolute===0n?[]:[absolute/2n,absolute-absolute/2n].filter(v=>v!==0n).map((value,n)=>{const account=qaPaymentAccounts[(i+n)%qaPaymentAccounts.length]!;return {id:qaId(720000+i*10+n),salesId:id,lineNo:n+1,paymentAccountId:account.id,paymentMethodId:account.paymentMethod.id,direction:gross<0n?'REFUND':'RECEIVE',amount:String(value)};});
+ const header={id,number:'QA-XS-'+String(i+1).padStart(4,'0'),businessType,businessDate:stamp.slice(0,10),hallId:qaHalls[0]!.id,customerId:qaCustomers[i%2]!.id,salespersonId:qaStaff[2+i%2]!.id,warehouseId:qaWarehouses[i%4]!.id,status,version:i%3+1,grossAmount:String(gross),orderDiscount:'0',netDue:String(gross),responsibleStaffId:qaStaff[1]!.id,note:'隔离QA预置样例；非真实单据，未执行保存、审核或迁移。',createdByAccountId:qaPrincipal.accountId,createdHallId:qaHalls[0]!.id,createdAt:stamp,updatedAt:stamp,approvedByAccountId:status==='APPROVED'?qaPrincipal.accountId:null,approvedAt:status==='APPROVED'?stamp:null};
+ return {stockBasis:'RUNTIME_LEDGER',document:{header,lines,settlements},referenceNames:{hallName:qaHalls[0]!.name,customerName:qaCustomers[i%2]!.name,warehouseName:qaWarehouses[i%4]!.name,salespersonName:qaStaff[2+i%2]!.name,responsibleName:qaStaff[1]!.name,createdByName:qaStaff[0]!.name},settlementNames:settlements.map(s=>({settlementId:s.id,paymentAccountId:s.paymentAccountId,accountNameSnapshot:qaPaymentAccounts.find(a=>a.id===s.paymentAccountId)!.name,methodNameSnapshot:qaMethods.find(m=>m.id===s.paymentMethodId)!.name,currentAccountName:qaPaymentAccounts.find(a=>a.id===s.paymentAccountId)!.name,currentMethodName:qaMethods.find(m=>m.id===s.paymentMethodId)!.name}))};
+});
+export const qaTransferDocuments=Array.from({length:24},(_,i)=>{
+ const id=qaId(730000+i),status=(['DRAFT','APPROVED','VOID'] as const)[i%3]!,stamp=qaStamp(i),from=qaWarehouses[i%4]!,to=qaWarehouses[(i+1)%4]!;
+ const lines=[0,1,2].map((p,n)=>{const skus=qaSkus.filter(s=>s.productId===qaProducts[p]!.id),sku=skus[(i+n*10)%skus.length]!;return {id:qaId(740000+i*10+n),transferId:id,lineNo:n+1,skuId:sku.id,quantity:String(n+1+i%3),isCurrent:true,snapshot:{productCode:sku.productCode,productName:sku.productName,colorName:sku.colorName,fitName:sku.fitName,sizeName:sku.sizeName,barcode:sku.barcode}};});
+ return {stockBasis:'RUNTIME_LEDGER',document:{header:{id,number:'QA-DB-'+String(i+1).padStart(4,'0'),businessDate:stamp.slice(0,10),fromWarehouseId:from.id,toWarehouseId:to.id,status,version:i%3+1,responsibleStaffId:qaStaff[1]!.id,note:'隔离QA预置调拨；非真实单据，未执行库存移动或审核。',createdByAccountId:qaPrincipal.accountId,createdHallId:qaHalls[0]!.id,createdRole:'ADMIN',createdAt:stamp,updatedAt:stamp,approvedByAccountId:status==='APPROVED'?qaPrincipal.accountId:null,approvedAt:status==='APPROVED'?stamp:null},lines},references:{fromWarehouseName:from.name,toWarehouseName:to.name,fromHallName:from.hall.name,toHallName:to.hall.name,createdByName:qaStaff[0]!.name,approvedByName:status==='APPROVED'?qaStaff[0]!.name:null,responsibleName:qaStaff[1]!.name},catalog:qaTransferCatalog(lines)};
+});
+export const qaHistoryDocuments=(['sales','transfers'] as const).flatMap(kind=>Array.from({length:6},(_,i)=>{
+ const origin=kind==='sales'?qaSalesDocuments[i]!:qaTransferDocuments[i]!,h=origin.document.header,id=qaId((kind==='sales'?750000:760000)+i),batchId=qaId(770000);
+ const lines=origin.document.lines.map((l,n)=>({id:qaId((kind==='sales'?780000:790000)+i*10+n),lineNo:l.lineNo,skuId:l.skuId,quantity:l.quantity,productCodeSnapshot:l.snapshot.productCode,productNameSnapshot:l.snapshot.productName,colorNameSnapshot:l.snapshot.colorName,fitNameSnapshot:l.snapshot.fitName,sizeNameSnapshot:l.snapshot.sizeName,barcodeSnapshot:'OLD-'+l.snapshot.barcode,...(kind==='sales'&&'dealPrice'in l?{referencePrice:qaYuan(l.referencePrice),dealPrice:qaYuan(l.dealPrice),lineAmount:qaYuan(l.lineAmount),allocatedDiscount:'0.00',isGift:l.isGift,pricingMethodSource:l.pricingRule,discountTenths:l.discountTenths,ordinaryZeroConfirmed:false}:{})}));
+ const settlements=kind==='sales'?qaSalesDocuments[i]!.document.settlements.map((s,n)=>({id:qaId(800000+i*10+n),lineNo:s.lineNo,paymentAccountId:s.paymentAccountId,direction:s.direction,amount:qaYuan(s.amount),accountNameSnapshot:qaPaymentAccounts.find(a=>a.id===s.paymentAccountId)!.name,methodNameSnapshot:qaMethods.find(m=>m.id===s.paymentMethodId)!.name,paymentMethodIdSnapshot:s.paymentMethodId})):[];
+ const document={dataset:'HISTORY',kind,batchId,documentId:id,version:1,number:(kind==='sales'?'QA-HXS-':'QA-HDB-')+String(i+1).padStart(4,'0'),businessDate:h.businessDate,sourceStatus:h.status,note:'隔离QA模拟历史记录；非真实来源、导入或迁移验收。',createdBy:{state:'UNKNOWN',staffId:null},approvedBy:{state:'UNKNOWN',staffId:null},responsibleStaffId:null,responsibleName:null,createdHallId:null,createdHallProvenance:'UNKNOWN',createdLocalAt:h.createdAt.slice(0,-1),updatedLocalAt:h.updatedAt.slice(0,-1),approvedLocalAt:h.approvedAt?.slice(0,-1)??null,createdInstant:null,updatedInstant:null,approvedInstant:null,...(kind==='sales'?{businessType:qaSalesDocuments[i]!.document.header.businessType,hallId:qaHalls[0]!.id,customerId:qaCustomers[i%2]!.id,warehouseId:qaWarehouses[i%4]!.id,salespersonId:null,grossAmount:qaYuan(qaSalesDocuments[i]!.document.header.grossAmount),orderDiscount:'0.00',netDue:qaYuan(qaSalesDocuments[i]!.document.header.netDue)}:{fromWarehouseId:qaTransferDocuments[i]!.document.header.fromWarehouseId,toWarehouseId:qaTransferDocuments[i]!.document.header.toWarehouseId})};
+ return {kind,document,lines,settlements,origin};
+}));
+export function qaHistoryRead(kind:'sales'|'transfers',q:{documentId:string;linePage:number;linePageSize:number;settlementPage:number;settlementPageSize:number}){
+ const entry=qaHistoryDocuments.find(d=>d.kind===kind&&d.document.documentId===q.documentId);
+ const paged=(rows:readonly unknown[],page:number,pageSize:number)=>({...qaPage(rows,{page,pageSize},'total'),total:String(rows.length)});
+ return {dataset:'HISTORY',kind,document:entry?.document??null,lines:paged(entry?.lines??[],q.linePage,q.linePageSize),settlements:paged(entry?.settlements??[],q.settlementPage,q.settlementPageSize)};
+}
+export function qaHistorySummary(kind:'sales'|'transfers'){
+ return qaHistoryDocuments.filter(d=>d.kind===kind).map(e=>{
+  const d=e.document,h=e.origin.document.header,products=Array.from(new Map(e.origin.document.lines.map(l=>{const sku=qaSkus.find(s=>s.id===l.skuId)!;return [sku.productId,{productId:sku.productId,productCodeSnapshot:sku.productCode,productNameSnapshot:sku.productName}] as const;})).values());
+  const base={id:d.documentId,documentId:d.documentId,number:d.number,businessDate:d.businessDate,status:d.sourceStatus,version:1,dataset:'HISTORY',batchId:d.batchId,effectiveVersion:1,responsibleStaffId:null,responsibleName:null,createdByName:null,createdLocalAt:d.createdLocalAt,updatedLocalAt:d.updatedLocalAt,updatedAt:null,productSummary:{productCount:String(products.length),items:products.slice(0,3),hasMore:products.length>3}};
+  if(kind==='sales'){
+   const source=qaSalesDocuments.find(x=>x.document.header.id===h.id)!,sum=source.document.lines.reduce((v,l)=>v+BigInt(l.quantity),0n),incoming=source.document.lines.reduce((v,l)=>v+(BigInt(l.quantity)<0n?-BigInt(l.quantity):0n),0n),outgoing=source.document.lines.reduce((v,l)=>v+(BigInt(l.quantity)>0n?BigInt(l.quantity):0n),0n);
+   return {...base,businessType:source.document.header.businessType,hallId:qaHalls[0]!.id,customerId:source.document.header.customerId,warehouseId:source.document.header.warehouseId,salespersonId:null,grossAmount:source.document.header.grossAmount,orderDiscount:'0',netDue:source.document.header.netDue,hallName:qaHalls[0]!.name,customerName:source.referenceNames.customerName,warehouseName:source.referenceNames.warehouseName,salespersonName:null,quantity:String(sum),incomingQuantity:String(incoming),outgoingQuantity:String(outgoing)};
+  }
+  const source=qaTransferDocuments.find(x=>x.document.header.id===h.id)!;
+  return {...base,fromWarehouseId:source.document.header.fromWarehouseId,toWarehouseId:source.document.header.toWarehouseId,createdByAccountId:null,createdAt:null,...source.references,createdByName:null,responsibleName:null,approvedByName:null,totalQuantity:String(source.document.lines.reduce((v,l)=>v+BigInt(l.quantity),0n))};
+ });
+}
