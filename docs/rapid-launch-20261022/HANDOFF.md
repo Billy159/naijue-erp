@@ -1,3 +1,5 @@
+SOURCE756：原03实际回滚验证PASS，07:51:24Z结束/1.819秒，真实23505、首条ledger和balance曾执行、第二端尝试后全事务ROLLBACK、0COMMIT；原正常销货/调拨两PASS仅采用未重跑，未登录/旋转凭据，clients/worker/gate/自有PG已关闭。仅合成隔离证据，不代表真实来源/正式上线。SOURCE755时间格式两叶已固定3dd3ec824cdc6c9c70c672ee702413b50285cde1，原QB必要增量在途；152原终态保全，0MAIN/PUBLISH，后继采用新固定载体不重148。
+
 SOURCE755：152首次实际执行在预检3.228秒失败，MAIN/PUBLISH均未执行。D3精确定位同一截止时刻的PG文本与ISO文本直接比较误拒绝；原provider/test两叶严格整秒等值修复已交，5项定向检查及语法通过，独立QB增量待验，不重148产物或原152终态。QB466完整worker→实际consumer内存链准备验收通过；03旧窗未启动已保全，新08:20Z/latest08:05Z精确三refs外部AUTH已落，仅原key回滚companion实际验证在途，不重两PASS/登录/CAS。UI仍normal34合成，37页67弹层全状态/真实业务/性能/正式发布整体未完成。
 
 SOURCE754：回滚only02已自然终态清理；准确是parent进入用途等待后停止、companion未执行。旧consumer仍6用途与LIVE2用途不符，原QB承认载体覆盖缺口，后继必须实际consumer端到端最小复核；原D1仅固定新root02两叶已交，旧root01保全。v21首次大文件上传在请求/调度前截断，原152同键有界续传获采用，核全部原包后首次提交，不增超时/新key/重业务，grant与09Z原范围不变。

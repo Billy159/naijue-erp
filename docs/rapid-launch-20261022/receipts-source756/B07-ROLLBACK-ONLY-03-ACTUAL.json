@@ -1,0 +1,177 @@
+{
+  "status": "PASS_ACTUAL_ORIGINAL_KEY_ROLLBACK_ONLY_SYNTHETIC_NOT_FORMAL_BUSINESS",
+  "sourceCommit": "d15ea68d2e5704303afadbc4248b3c26cdecc578",
+  "scope": "Exact original rollback companion only; normal cases adopted unchanged not reexecuted",
+  "lifecycle": {
+    "status": "COMPLETED_ORIGINAL_ROLLBACK_ONLY",
+    "old07Touched": false,
+    "automaticReplay": false,
+    "pgStarted": true,
+    "existingSyn26Only": true,
+    "privatePid": 28963,
+    "startEpoch": 1793087483.196464,
+    "pipelineExitCode": 0,
+    "stdoutBytes": 46,
+    "stderrBytes": 0,
+    "reviewWorkerClosed": true,
+    "reviewWorkerExitCode": 0,
+    "gateWorkerClosed": true,
+    "gateWorkerExitCode": 0,
+    "ownPgStopped": true,
+    "finishedAtUtc": "2026-10-27T07:51:24.881184+00:00",
+    "elapsedSeconds": 1.818688625
+  },
+  "node": {
+    "status": "COMPLETED_ORIGINAL_ROLLBACK_ONLY",
+    "sourceKind": "SYNTHETIC_ONLY",
+    "normalCasesReexecuted": false,
+    "credentialRenewalExecuted": false,
+    "loginExecuted": false,
+    "readOnlyStage": "CURRENT_PURPOSE_AND_ORIGINAL_COMPANION",
+    "currentReadOnlyProofReady": true,
+    "parentResult": {
+      "status": "PASS_ORIGINAL_KEY_DIRECT_SERVICE_ROLLBACK_ONLY",
+      "sourceKind": "SYNTHETIC_ONLY",
+      "realSourceImportVerified": false,
+      "normalCasesReexecuted": false,
+      "credentialRenewalExecuted": false,
+      "loginExecuted": false,
+      "clientsClosed": true,
+      "postgresStopOwnedByT45": true,
+      "rollback": {
+        "status": "PASS_ACTUAL_ORIGINAL_KEY_ROLLBACK_ONLY_NORMAL_CASES_ADOPTED",
+        "sourceKind": "SYNTHETIC_ONLY",
+        "realSourceImportVerified": false,
+        "cases": [
+          {
+            "kind": "sales",
+            "status": "PASS_NORMAL_HTTP_SYN_APPROVED_DELTA_READBACK_AUDIT_REPLAY_CAS",
+            "operationId": "e3eee080-c3e7-46c4-8a14-8ab681c8285e",
+            "revisionId": "6f987c7e-b6fa-4f70-b44f-62c3ee7b8010",
+            "version": 2,
+            "ledgerEntryIds": [
+              "61b2ee8e-962c-4a5a-9a0d-7c8d1a721ad1"
+            ],
+            "adoptedNotReexecuted": true
+          },
+          {
+            "kind": "transfers",
+            "status": "PASS_NORMAL_HTTP_SYN_APPROVED_DELTA_READBACK_AUDIT_REPLAY_CAS",
+            "operationId": "4855c67f-df31-48fa-bf4e-d0e4cc81e7d3",
+            "revisionId": "362563e2-0bb3-4814-bc39-6e19e1b48dfc",
+            "version": 2,
+            "ledgerEntryIds": [
+              "0568019e-d3dc-49ce-84c6-f233729514fb",
+              "564fe744-6737-4fd7-af20-036e9d579f93"
+            ],
+            "adoptedNotReexecuted": true
+          },
+          {
+            "kind": "transfers",
+            "status": "PASS_DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_FULL_ROLLBACK",
+            "evidence": {
+              "errorCode": "23505",
+              "firstLedgerInserted": 1,
+              "firstBalancePersisted": 1,
+              "secondLedgerAttempted": 1,
+              "rolledBack": true,
+              "commits": 0
+            }
+          }
+        ],
+        "automaticRetry": false,
+        "notTested": [
+          "Real-source APPROVED sample/import",
+          "Originally NULL-date approved money",
+          "Actual UNKNOWN COMMIT",
+          "Full roles/browser/HTTPS/formal business"
+        ],
+        "rollbackEvidence": {
+          "errorCode": "23505",
+          "firstLedgerInserted": 1,
+          "firstBalancePersisted": 1,
+          "secondLedgerAttempted": 1,
+          "rolledBack": true,
+          "commits": 0,
+          "serviceErrorCode": "23505"
+        }
+      }
+    },
+    "clientsClosed": true
+  },
+  "gateConsumption": {
+    "status": "CONSUMED_INDEPENDENT_CURRENT_SYN_PURPOSE_ONLY",
+    "gate": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/rollback-companion-02/CURRENT-PURPOSE-GATE.json",
+      "bytes": 1102,
+      "sha256": "5218e3aae889206a60821c02213ae2dda9830c823aacda72a066511b1f601c00"
+    },
+    "review": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/rollback-companion-02/CURRENT-RUNTIME-REVIEW.json",
+      "bytes": 1166,
+      "sha256": "7971d50603a9d746ce35e978920abb83d99807d59bc5b4f30e59910048f61d34"
+    },
+    "report": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice466-rollback-consumer-two-purpose-successor03/QB466-LIVE-RESULT.json",
+      "bytes": 14964,
+      "sha256": "0e4310a636c97ca1f12d4064d37f0eec4d6c26a82f4282b3faec81a69e53d581"
+    },
+    "reviewIssuedByT45": false,
+    "PG": false,
+    "secretRead": false
+  },
+  "privateEvidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/rollback-companion-02/PARENT-RESULT.json",
+      "bytes": 2155,
+      "sha256": "139e3aea6be71ecea3753a52983478d93689817d821fd27d3838fd52641330cf"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/rollback-companion-02/ROLLBACK-ACTUAL-RESULT.json",
+      "bytes": 1733,
+      "sha256": "3dc6bb9e5d0bebf2565fca6d91377f45dd6fbd86ab1611cd76bba770bf279001"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/rollback-companion-02/OBSERVATION-001.json",
+      "bytes": 338,
+      "sha256": "6291535af85eee66e44be19d9404ec08790ce23ca9d8bc7d695d3b17f288c5ba"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/rollback-companion-02/REQUEST-DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_ROLLBACK.json",
+      "bytes": 1068,
+      "sha256": "2d6eb543f1daf7f8db6665499196f827bfe61c7f6317b62fb4a909989f0e87bf"
+    }
+  ],
+  "localEvidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-03/EXECUTION-AUTHORITY.json",
+      "bytes": 1869,
+      "sha256": "8902a6167e262b40fef11d6534716a31be8147aff6ffdba4a34f793e72fd7a4d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-03/NODE-PIPELINE-RESULT.json",
+      "bytes": 2614,
+      "sha256": "7fb6d17e1d7c5314a2f0bff4d19a9ebb6bdc792389f2533076a15e0b8890956c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-03/OS-LIFECYCLE.json",
+      "bytes": 504,
+      "sha256": "6cdeab5fd37c26dacd205d6baccff1ce7810b7d1b034373fce2c6b82e4874832"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-03/GATE-CONSUMPTION-RESULT.json",
+      "bytes": 1158,
+      "sha256": "06ae407fd06444b2843a1fa5da8a54c6691123ef1c2e6b23c23efec950f8aaef"
+    }
+  ],
+  "noCredentialCASOrLogin": true,
+  "businessAcceptance": false,
+  "applicationSwitch": false,
+  "ownedPostmasterPidAbsentReadback": true,
+  "notTested": [
+    "Real-source APPROVED sample/import",
+    "Originally NULL-date approved money",
+    "Actual UNKNOWN COMMIT",
+    "Full roles/browser/HTTPS/formal business"
+  ]
+}
