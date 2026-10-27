@@ -1,0 +1,30 @@
+{
+  "version": "C_NATIVE_RUNTIME26_REVIEW_V1",
+  "decision": "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA",
+  "target": {
+    "database": "erp_rewrite_20261022_r1",
+    "databaseOid": "1027659",
+    "actingRole": "erp_rewrite_runtime_20261022",
+    "sessionUser": "erp_rewrite_runtime_20261022",
+    "serverAddress": null,
+    "serverPort": null,
+    "postmasterStart": "2026-10-04 08:16:07.895273+00"
+  },
+  "catalog": {
+    "format": "EXACT26_RUNTIME_CATALOG_EXPORT_V1",
+    "sha256": "1050b2aa3329ca8956365578765f89027808dd7f3f9b81ff970de66b82f5ad3f",
+    "patchLevel": "26_v22_staged_prefix_bind_from_v20"
+  },
+  "purposes": [
+    "IMPORT_STAGE",
+    "IMPORT_PRODUCT_SEASONS",
+    "IMPORT_PUBLISH"
+  ],
+  "scope": "EXACT_TARGET_METADATA_ONLY",
+  "independentReview": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/reviews/QB487-RESULT.json",
+    "sha256": "1e2d01d4c3a52a105240638bdd867bde897ee1ab24572c6ae5ed1f273bed0662",
+    "result": "PASS"
+  },
+  "realImportExecutionAuthorized": false
+}
