@@ -1,0 +1,67 @@
+{
+  "reviewId": "QB447",
+  "decision": "PASS_SOURCE_ONLY_JOB148_TWO_OVERLAY_AND_REGISTERED_BUDGET_INCREMENT_NOT_ACTUAL",
+  "jobId": "t45-source730-full-preparation-20261027-148",
+  "reuses": [
+    "QB444 SOURCE730 fourleaf sourcePASS",
+    "QB440 prior147 carrier/sourceclosure"
+  ],
+  "bundlePins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/bundle/PLAN.json",
+      "bytes": 9243,
+      "sha256": "726d582efad8cb0b8ab1c64256ce111f6a1d6059ce08747788a2156811479459"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/bundle/source-input.json",
+      "bytes": 187711,
+      "sha256": "6dd84ff95d3b715433fc82dd2147295cd14e4f8ecd88325d7dfcba5e2bf984cc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/bundle/source-preparation-carrier.py",
+      "bytes": 6292,
+      "sha256": "9970888023b86d6dcdd747f5ba59da70fa719f2c91a484816b37f2330fefc09c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/bundle/source-preparation.mjs",
+      "bytes": 4697,
+      "sha256": "328072ae2d10d1c09b27f784361960d4ed0e978641654380bb83abbe0fb44b41"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/bundle/source-scope.json",
+      "bytes": 22315,
+      "sha256": "8b09a45bd25b7a9d75a5242f89c7de07cf0c83dc975eceffebda44c471c4cfbd"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/bundle/source730-overlay.json",
+      "bytes": 54865,
+      "sha256": "38b5fadb40019af00779cc1d86a5cd9b7f3b4dcfb3b76156c20e42e2ca61e339"
+    }
+  ],
+  "ownerPreparation": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/PREPARATION-RESULT.json",
+    "bytes": 3819,
+    "sha256": "dc43ea8a8013fe3fcb2d458c0bba6bccae5745c0bdeccd8bf05304929942fd93"
+  },
+  "checks": [
+    "Sourcebase147 completecopy and exact twoordered destinations/payloads match fixedSOURCE730 Git codec37914/c688 +reader13906/8c19. Each exactbytes/SHA/write0400/readback beforefreshNode spawn; neither codeleaf alone or oldmodulecache reused.",
+    "Provider/SKU SOURCE713 leaves inherited unchanged; provider and same-tree reader relativeimports consume new148 codec/reader; existingnativehelper physical146/ada8 and original sourceCodec/functionbag mechanisms reused. Onlytwo C144 sourceRoots change148; inverse restoresentire147input and79nonCODE/DATA/binding/auth/proofs.",
+    "Scope inverseonlynewinputref/outputroot/deadline restores147 originalregistration/artifactRows/sourceManifest/109keys/chunk500/baseline/125core24zero exactly. No prefixresume/partialstate invented; old147/146 evidence not overwritten.",
+    "Newonce exactprior147 FAILED receipt beforebasecopy plus outputparentexistsandempty/registrationabsent checks. Fresh148 input/output creation exclusive. Protected20/routeCAS match147; sourceOnly/noDB/noMAIN/noPUBLISH/noAPP/grantfalse contract retained.",
+    "Soft10710/child10740/helper10770/outerdispatcher10800 strictly nested with30sec steps; original2048heap/modeNULL/fineprogress/Iterator andsessioncleanup/wxSTOP/noautoretry retained.07:30Z absolute deadline andnow+10800<=cutoff implystart<=04:30Z.",
+    "Adopt C/T45 registeredexisting realrootdispatcher10800 limit and existing TERM20/KILL10/systemd+90 cleanup, without servercodechange. Ownerpreparedreport cites admin_exec.py line85 andREADYgrant expires1794419556.056917, beyondlatestcutoff+60. QB didnot connectremote/readgrantsecret or independently re-run rootdispatcher. Finalsubmission must retain exacttimeout10800 andcurrentgrantremaining>timeout+60; no widerbudget assumed.",
+    "MJS identical147 exceptjobroot; softtimer stilldrivesoriginalsignal/STOP. Threehours is resourceceiling only, no completetime guarantee/linear extrapolation/profile/watchdog/newmidstreamstate. Python compiledonly."
+  ],
+  "actualSourcePreparationRun": false,
+  "actualInstalledCodeVerified": false,
+  "actualPerformanceMeasured": false,
+  "databaseOrRemoteAction": false,
+  "sourceChangedByQB": false,
+  "executionAuthorizedByReview": false,
+  "remaining": [
+    "C finalexact148 adoption/submissiontimeout/grantlifetime and T45 single147 terminal/residuepreflight. No submission orgrant issuedbyQB.",
+    "One complete source+typed preparation result/timing still required; sourcePASS neither fullpreparePASS nor actualspeed guarantee."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

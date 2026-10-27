@@ -1,0 +1,43 @@
+{
+  "status": "PASS_FIXED_SOURCE733_DOCUMENT_READS_BUILD_AND_KEY_HTTP_NOT_FORMAL_BUSINESS",
+  "source": "2357cf508ee6e8188bcc1dddfa4735f735d70d36",
+  "build": "phase2-normal-2357cf5-34",
+  "urls": {
+    "sales": "http://127.0.0.1:57923/#sales",
+    "transfers": "http://127.0.0.1:57923/#transfer"
+  },
+  "documentReadEvidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-2357cf5-phase2-34/DOCUMENT-READ-RESULT.json",
+    "bytes": 1129,
+    "sha256": "83430f78d6efc9bf281970dc8af265a8d2e6a7103089716b3ce1c13d4da09e10"
+  },
+  "resources": 151,
+  "browserStrictSeconds": 4.724,
+  "viteBuildSeconds": 2.566,
+  "realBackend": false,
+  "PG": false,
+  "saveApproveOrPermissionsAcceptance": false,
+  "oldPreviewAndUserDraftsUntouched": true,
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-2357cf5-phase2-34/BUILD-RESULT.json",
+      "bytes": 466,
+      "sha256": "837e4fc0da8e85d30ad392e02ceec579f7c6ff7da9524510d072e73249deb6a4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-2357cf5-phase2-34/RESOURCE-MANIFEST.json",
+      "bytes": 25714,
+      "sha256": "c802fae9a3ad49ac130da050b835b3d76e4bbc63699143a58508cdf5fe34ecfa"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-2357cf5-phase2-34/HTTP-RESULT.json",
+      "bytes": 604,
+      "sha256": "cff54b0e2454441865dcf5a2914bb765184093f4004c005787d383a4589f3342"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-2357cf5-phase2-34/SERVER.json",
+      "bytes": 329,
+      "sha256": "3ea67636a82edb2a74bbe9bf3d293c6b7505957e04e030d690644e3aff6b4da5"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "observedAtUtc": "2026-10-27T03:19:27.031172+00:00",
+  "pid": 85976,
+  "sessionId": 27098,
+  "url": "http://127.0.0.1:57923/#sales",
+  "source": "2357cf508ee6e8188bcc1dddfa4735f735d70d36",
+  "build": "phase2-normal-2357cf5-34",
+  "syntheticOnly": true,
+  "dataset": "demo-reference-v1",
+  "old57922And57921Unchanged": true
+}

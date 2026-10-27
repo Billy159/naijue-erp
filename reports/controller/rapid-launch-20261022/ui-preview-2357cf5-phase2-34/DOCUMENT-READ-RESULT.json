@@ -1,0 +1,45 @@
+{
+  "status": "PASS_FIXED_SOURCE733_ACTUAL_PREVIEW_TRANSPORT_DOCUMENT_READS",
+  "source": "2357cf508ee6e8188bcc1dddfa4735f735d70d36",
+  "credentials": "same-origin",
+  "results": [
+    {
+      "kind": "sales",
+      "exactTotal": 30,
+      "pages": [
+        20,
+        10
+      ],
+      "live": 24,
+      "history": 6,
+      "strictListDecoder": true,
+      "oneLiveDetailStrictDecoder": true,
+      "detailLines": 3,
+      "exactQuantityOrAmountMatched": true,
+      "approvedFilterCount": 10,
+      "exactNumberFilterCount": 1,
+      "returnBusinessFilterCount": 12
+    },
+    {
+      "kind": "transfers",
+      "exactTotal": 30,
+      "pages": [
+        20,
+        10
+      ],
+      "live": 24,
+      "history": 6,
+      "strictListDecoder": true,
+      "oneLiveDetailStrictDecoder": true,
+      "detailLines": 3,
+      "exactQuantityOrAmountMatched": true,
+      "approvedFilterCount": 10,
+      "exactNumberFilterCount": 1,
+      "returnBusinessFilterCount": null
+    }
+  ],
+  "realNetwork": false,
+  "PG": false,
+  "saveOrApproveTested": false,
+  "allOtherFixtureScenarios": "Reuse F1 same-source evidence; not rerun"
+}
