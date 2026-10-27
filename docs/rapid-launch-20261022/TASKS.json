@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 767,
+    "round": 768,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation767",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation768",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -14577,6 +14577,13 @@
       "next": "Exact two-column permission repair, actualmetadata/currentreview, originalkey recovery-aware revised continuation",
       "notYetDone": "No ACL repair/actualBIND commit/PUBLISH/formalAPPswitch",
       "model": "gpt-6.1-sol/medium"
+    },
+    "currentContinuation768": {
+      "summary": "SOURCE768：原QB470具体两列GRANT/回退SQL静态窄审PASS，C已采用exactSQL4854/5a177d64、回退4871/cebd7aec，T45收到有效PASS可直接原受控单次实施，不再等开始授权。当前T45复用原owner SQL/registered runtime方法准备实际，尚无实际ACL提交回执；已提醒anti-over-defense不另造通用carrier/保护框架。必要目标/SQLpin/同事务前后两ACL与其余不变/原键snapshot/commit及新catalog保留，0BIND/不重164。实际修后只两columnACLdelta当前review重绑，不重131source/469/468/正常业务PASS。全站目标ACTIVE未完成。",
+      "current": "T45 single exact two-column ACL implementation active; QB470 SOURCEPASS adopted",
+      "next": "Collect actualrepair/currentcatalog then QB ACLdelta currentreview -> revised originalkey fullcontinuation",
+      "notCompleted": "ActualACL repair/BIND commit/fullPUBLISH/UI realwrite/formalrelease",
+      "noDuplicateDispatch": true
     }
   },
   "historicalContinuation500Before716": {

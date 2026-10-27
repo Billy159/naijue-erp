@@ -1,3 +1,5 @@
+SOURCE768：原QB470具体两列GRANT/回退SQL静态窄审PASS，C已采用exactSQL4854/5a177d64、回退4871/cebd7aec，T45收到有效PASS可直接原受控单次实施，不再等开始授权。当前T45复用原owner SQL/registered runtime方法准备实际，尚无实际ACL提交回执；已提醒anti-over-defense不另造通用carrier/保护框架。必要目标/SQLpin/同事务前后两ACL与其余不变/原键snapshot/commit及新catalog保留，0BIND/不重164。实际修后只两columnACLdelta当前review重绑，不重131source/469/468/正常业务PASS。全站目标ACTIVE未完成。
+
 SOURCE767：167实际R1 RRRO精准证明：schemaUSAGE/全15列SELECT/checkpoint UPDATE/任一列UPDATE均足，只有history_expected_counts与history_payload_hash两列UPDATE缺少，恰属已批BIND三写列；owner/角色/RLS/原OID身份准确。原D1准备仅两列补权及原前态/回退，QB窄审后T45唯一执行，其他role/privilege/function/schema/业务合同不动；实际修复尚未执行。165原键无receipt且STAGED2/22有效证据复用，164终态不重放，修复后新目录canonical需准确更新当前review，不能借旧证明冒新ACL。整体37页67弹层/真实业务/性能/正式部署仍未完成。
 
 SOURCE766：165实际原键RRRO查无receipt，R1仍STAGED/sequence2/cursor22，snapshot不推全局0DML；查询已回滚关闭。166现存同时间窗日志仅候选import_batch表权限拒绝，缺DB/role标记，不能冒完整因果。原D1收敛实际全列SELECT/三写列UPDATE/FORUPDATE任一列UPDATE/schemaUSAGE与角色RLS必要metadata，T45按原授权只读核，无业务调用/GRANT/重放。164来源证据与actualissuer通过、首MAIN尝试42501及未核结局原记录保留；新读回有限事实叠加，不抹历史失败。全站目标仍ACTIVE未完成。
