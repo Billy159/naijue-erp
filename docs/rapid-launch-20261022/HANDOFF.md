@@ -1,3 +1,5 @@
+SOURCE766：165实际原键RRRO查无receipt，R1仍STAGED/sequence2/cursor22，snapshot不推全局0DML；查询已回滚关闭。166现存同时间窗日志仅候选import_batch表权限拒绝，缺DB/role标记，不能冒完整因果。原D1收敛实际全列SELECT/三写列UPDATE/FORUPDATE任一列UPDATE/schemaUSAGE与角色RLS必要metadata，T45按原授权只读核，无业务调用/GRANT/重放。164来源证据与actualissuer通过、首MAIN尝试42501及未核结局原记录保留；新读回有限事实叠加，不抹历史失败。全站目标仍ACTIVE未完成。
+
 SOURCE765：164实际FAILED2/14.483秒，09:27:48Z终态。原完整来源证据检查、actual runtime issuer均已真实通过，随后第1 MAIN/BIND已尝试42501，journal FAILED_OUTCOME_UNVERIFIED，不能把仅COMMITTED才置true的MAINOrPublishExecuted=false解释为未写。host已关闭/APP未切换。原T45按原业务键单次RRRO查receipt与R1checkpoint，结局未核前禁止重164/换key/继续后缀；原D1只读准确权限调用链和现存证据定位，不泛加GRANT/重写复现。148产物/原keys保留，整体目标ACTIVE未完成。
 
 SOURCE764：QB469本地prepared两独立Git730metadata定位增量PASS，精确7pins/稳定proof固定；467/461/468有效结论直接采用不重审。C核sixdata+109原命令不变后实际签164准确grant36998/defa71cf及ADOPTION4313/90893d6a，新10:45Z4096 FULL_NATIVE_CONTINUATION。原T45开始首次bounded上传/提交；实际Linux运行/issuer/MAIN/PUBLISH尚未验证，不冒授权为成功。旧148/158/shared/B07保护，真实来源不入Git。UI仍normal34合成，全37页67弹层与真实业务/性能/正式发布目标ACTIVE未完成。

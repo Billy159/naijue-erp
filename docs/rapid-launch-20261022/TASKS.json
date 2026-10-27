@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 765,
+    "round": 766,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation765",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation766",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -14564,6 +14564,12 @@
       "next": "Establish original committed/absent outcome; locate actual permission gap from existing evidence; minimal fix only afterward",
       "noReplay": true,
       "noApplicationSwitch": true
+    },
+    "currentContinuation766": {
+      "summary": "SOURCE766：165实际原键RRRO查无receipt，R1仍STAGED/sequence2/cursor22，snapshot不推全局0DML；查询已回滚关闭。166现存同时间窗日志仅候选import_batch表权限拒绝，缺DB/role标记，不能冒完整因果。原D1收敛实际全列SELECT/三写列UPDATE/FORUPDATE任一列UPDATE/schemaUSAGE与角色RLS必要metadata，T45按原授权只读核，无业务调用/GRANT/重放。164来源证据与actualissuer通过、首MAIN尝试42501及未核结局原记录保留；新读回有限事实叠加，不抹历史失败。全站目标仍ACTIVE未完成。",
+      "current": "T45 actualR1 bounded ACL metadata; D1 precise gap analysis",
+      "next": "Proven exact missing privileges -> originalowner minimal repair review -> originalkey recovery-aware continuation, no blindretry",
+      "unknown": "166 time/container candidate not fullyDBrole attributed; no speculativeGRANT"
     }
   },
   "historicalContinuation500Before716": {
