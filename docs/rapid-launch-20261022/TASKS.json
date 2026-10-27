@@ -16145,6 +16145,36 @@
       "server": "Original201/watch29273 ongoing no terminal; original22:00Z/7200s/16225 limits; no restart/PGprobe. Actual success then148readback/backup/registeredQArestore.",
       "github": "SOURCE8308c8c6198ba42a1286651511652475fa6f7121f0c exactremoteverified;831832thisrecord pending sync",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation834": {
+      "status": "NORMAL40_RESET_AND_PAYMENT_ACTUAL_LIMITED_UI_ACCEPTED",
+      "candidate": {
+        "source": "dce93800eae01ec1cd0fc6653e6a90be6015c32a",
+        "build": "phase2-normal-dce9380-40",
+        "url": "http://127.0.0.1:57929/#products",
+        "resources": 151,
+        "buildSeconds": 3.499,
+        "report": "K/reports/controller/rapid-launch-20261022/ui-preview-dce9380-phase2-40/RESULT.json",
+        "resultSHA256": "27d7dcbd87275698484b7bd83119c75cbe9d7bc9973394b0c7cc965ce9f01aae",
+        "boundary": "synthetic only; no realbackend/PG/formalswitch; old34-39 and drafts preserved"
+      },
+      "QF2": {
+        "report": "K/reports/qa-frontend/rapid-launch-20261022/QF2/SOURCE832-NORMAL40-P01-RESET-BROWSER/RESULT.json actually read",
+        "verdict": "PASS_AFFECTED_BROWSER_SCOPE; N34-P01-RESET-01 CLOSED",
+        "products": "1row -> 6rows/page1/size100/no pendinghint without extra Query click",
+        "inventory": "1product/4warehouses344 ->6products/4warehouses1504/page1/100",
+        "limits": "6productfixture multipage unreachable; failureDOM reused; no requestcounts/performance/realSAVE"
+      },
+      "QF": {
+        "report": "K/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/RESULT.json normal40PaymentUiSupplement actually read",
+        "verdict": "PASS_LIMITED_NORMAL40_SYNTHETIC_PAYMENT_UI_NOT_SAVE",
+        "observed": "Sales completed100+0 then thirdunusedblank settled; invalid oops add refused and retained+notice; valid5 withoutrefs can add, unknownsummary; 3rowlimit; exchange refunds1374.40 +unusedblank settled; partialmethod unknown. All edits discarded/temp IAB closed.",
+        "limits": "No realHTTP/PG/SAVE/APPROVE/persistence/fullUI/performance/pixelparity; old820822824 evidence reused"
+      },
+      "next": "Originalcomparison ledger owner links resolved versions/reports without rerun; only new ready findings to original owners. Original201 terminal success first then148readback/consistentbackup/registeredisolatedQArestore/D2fourSAVE and actualconsumers.",
+      "server": "201 originalwatch29273 no terminal; no replay/newPGprobe/publicswitch; original limits unchanged.",
+      "github": "SOURCE833 da21901ba88880941777415147acc640cd71f436 exactremoteverified; thisrecord pending sync",
+      "goal": "ACTIVE incomplete37pages67overlays/allstates/realhistory/performance/formal release"
     }
   },
   "historicalContinuation500Before716": {
