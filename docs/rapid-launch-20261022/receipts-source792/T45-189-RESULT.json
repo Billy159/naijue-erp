@@ -1,0 +1,267 @@
+{
+  "jobId": "t45-v22-qa188-materialized-execution-successor-20261027-189",
+  "registeredOperation": "t45-v22-qa-first-projection-diagnostic-preparation-20261027-188",
+  "job": {
+    "jobId": "t45-v22-qa188-materialized-execution-successor-20261027-189",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-5a1f7ef6b4fd",
+    "atUTC": "2026-10-27T15:28:13.205180+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 1407.374977095984,
+    "exports": [
+      "qa-prefix-readonly-result.json",
+      "qa-successor-engine-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T15:51:40.608289+00:00"
+  },
+  "runtime": {
+    "adapterReadback": {
+      "bindExecuted": false,
+      "businessDml": false,
+      "commitAttempted": false,
+      "coverage": [
+        {
+          "name": "HEADERS",
+          "source_rows": 42561,
+          "typed_rows": 42561
+        },
+        {
+          "name": "TRANSFER_LINES",
+          "source_rows": 261641,
+          "typed_rows": 261641
+        },
+        {
+          "name": "PRODUCTS",
+          "source_rows": 2956,
+          "typed_rows": 2956
+        },
+        {
+          "name": "SKUS",
+          "source_rows": 15121,
+          "typed_rows": 30120
+        },
+        {
+          "name": "STOCK_CONTRIBUTORS",
+          "source_rows": 38314,
+          "typed_rows": 38314
+        },
+        {
+          "name": "SCHEMES",
+          "source_rows": 0,
+          "typed_rows": 6
+        },
+        {
+          "name": "SKU_RECORDS",
+          "source_rows": 0,
+          "typed_rows": 14999
+        }
+      ],
+      "deferredGuardsExecuted": false,
+      "negativeFixturesCreated": false,
+      "productionBodyPositiveTested": false,
+      "proof": {
+        "binding": {
+          "actorAccountId": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+          "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+          "commandHash": "4e546e95983e3ab76ed66bc2bb0f4cb74f6d399b95f876f04e7fbd3a66d806f3",
+          "cutoffAt": "2026-10-04T12:00:00+08:00",
+          "fixedSourceNamespace": "naijue:tplus:primary-ledger",
+          "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba"
+        },
+        "groups": [
+          {
+            "name": "HEADERS",
+            "source": {
+              "rows": 42561,
+              "sha256": "81fd2503f3f185ef08dfa5712f0bb07b9213fb532bba71c2bb5298aba9ce3fd2"
+            },
+            "typed": {
+              "rows": 42561,
+              "sha256": "1c9f459c9e97e1cb87ce458112830c1c664e1689f1fe68e9a383e9667d7701aa"
+            }
+          },
+          {
+            "name": "TRANSFER_LINES",
+            "source": {
+              "rows": 261641,
+              "sha256": "07819517ff591b20acafd13d2d8e2063c55d5a1e3934b73d4ab9734e6406ca38"
+            },
+            "typed": {
+              "rows": 261641,
+              "sha256": "e9f7a699a496fdf649c400deaa5e9b7930a7c5a5056c9ff18ca0c54e39d1fc00"
+            }
+          },
+          {
+            "name": "PRODUCTS",
+            "source": {
+              "rows": 2956,
+              "sha256": "15a33224da468bbdbc3188658f7a151b91aeb817812c09637d6e41fb2417f88c"
+            },
+            "typed": {
+              "rows": 2956,
+              "sha256": "0ce7ce01030ba06ead8dba49dd7e1c3d4a0968bf5f14a616bb7023647327dd80"
+            }
+          },
+          {
+            "name": "SKUS",
+            "source": {
+              "rows": 15121,
+              "sha256": "362068e34289f6515ca3f3c0fff60d132f8e98c0c33ee6bbba53b58569c065fe"
+            },
+            "typed": {
+              "rows": 30120,
+              "sha256": "5bc8971c9678ddb7f4a531e94440cf88c2c7599b7454f5cfd2b561903ab20700"
+            }
+          },
+          {
+            "name": "STOCK_CONTRIBUTORS",
+            "source": {
+              "rows": 38314,
+              "sha256": "b688f799e9df9779c7e3293a3768599c268e1501d2453fa2d6d1039479ffe215"
+            },
+            "typed": {
+              "rows": 38314,
+              "sha256": "cd0d2ca5ca43ff997b78872c7adff27c22ffc83d74f0fd53f631923379a6cbf8"
+            }
+          },
+          {
+            "name": "SCHEMES",
+            "source": {
+              "rows": 0,
+              "sha256": "41fd25ece6a18a735db49386b36ee50f2e36f3d6b800c91bce1740451090489a"
+            },
+            "typed": {
+              "rows": 6,
+              "sha256": "71e949edbe8c4e2eb7badd0f177fe72a9e9d34faee01d348f1e0361e072e9afa"
+            }
+          }
+        ],
+        "preparation": {
+          "inputDigest": "6dd84ff95d3b715433fc82dd2147295cd14e4f8ecd88325d7dfcba5e2bf984cc",
+          "manifestSha256": "4645f3703d2888861257406e4824306a6ec919e324e4328eaddf94ccec464e12"
+        },
+        "schemeInitialization": {
+          "approvalPins": {
+            "approvalSha256": "f9da50c270c14321b17af06255a5f0649daf8b55a725b6a29fe483f342517533",
+            "proposalSha256": "826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00",
+            "writeContractReplySha256": "9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc"
+          },
+          "operationId": "d1fa6f60-7268-704e-81ec-d7da432b05d5",
+          "requestHash": "ec699bdd07b38c0c5bd3147f2b57ff93fba3e3e49f4e12abf8327600393c375b",
+          "requestKey": "t45-r1-six-scheme-initialization-v19-20261026-116"
+        },
+        "skuRecords": {
+          "rows": 14999,
+          "sha256": "cda07c49f31f72ae622fff46458b112a06262780dcc9dc8175e89fecd041382c"
+        },
+        "version": "CORE_STAGED_PREFIX_BIND_V22"
+      },
+      "rollbackReturned": true,
+      "scope": "READONLY_PREFIX_ADAPTER",
+      "status": "OBSERVED_READONLY_PREFIX_ADAPTER_COMPLETE_MEMBER_CONTENT_AND_COVERAGE"
+    },
+    "automaticReplay": false,
+    "businessAcceptance": false,
+    "clientsClosed": true,
+    "firstBind": {
+      "bytes": 73746,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/BIND.json",
+      "sha256": "3a350163b35c771c8fd85401cf7c9d88a6736157300c444c10022c8b2e740609"
+    },
+    "mainAttempted": false,
+    "originalSourceBinding": {
+      "actorAccountId": "151693ec-3f0f-4d39-89a4-4f44601a06b7",
+      "authorizedPayloadHash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8",
+      "batchId": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+      "coreReceiptId": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
+      "coreSourceDigest": "2589b25c06bb1312b9d1f40627fb7432f44b4293b5d1ae7186223948b144cc28",
+      "cutoffAt": "2026-10-04T12:00:00+08:00",
+      "fixedSourceNamespace": "naijue:tplus:primary-ledger",
+      "phase": "FULL_SOURCE_CONTINUATION_26_V1",
+      "selectionSha256": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+      "target": {
+        "database": "erp_rewrite_20261022_r1",
+        "postmasterStartedAt": "2026-10-04 08:16:07.895273+00",
+        "role": "erp_rewrite_runtime_20261022",
+        "serverAddress": null,
+        "serverPort": null
+      },
+      "version": "NATIVE_IMPORT_EXECUTION_26_V1"
+    },
+    "originalSourceDatabaseAccess": "PROHIBITED",
+    "qaTuple": {
+      "actingRole": "erp_rewrite_runtime_20261022",
+      "database": "erp_rewrite_20261022_r1",
+      "databaseOid": "16391",
+      "ownerRole": "erp_rewrite_owner_20261022",
+      "postmasterStart": "2026-10-27 13:22:19.696753+00",
+      "serverAddress": null,
+      "serverPort": null,
+      "sessionUser": "erp_rewrite_runtime_20261022",
+      "socketDirectory": "/srv/naijue-erp/qa-v22-20261027-01/s",
+      "systemIdentifier": "7701337335828107278"
+    },
+    "registrationId": "t45-v22-qa-first-projection-diagnostic-preparation-20261027-188",
+    "scenario": "READONLY_PREFIX_ADAPTER",
+    "scope": "QA_STORE_ONLY_NOT_PRODUCTION_SOURCE_HOST_EXECUTION",
+    "status": "OBSERVED_READONLY_PREFIX_ADAPTER_COMPLETE_MEMBER_CONTENT_AND_COVERAGE"
+  },
+  "engine": {
+    "APPChanged": false,
+    "BINDExecuted": false,
+    "COMMITExecuted": false,
+    "R1DatabaseAccess": false,
+    "attemptedRegistered188Once": true,
+    "automaticReplay": false,
+    "businessDML": 0,
+    "clientsClosed": true,
+    "finishedAtUtc": "2026-10-27T15:51:40.582076+00:00",
+    "jobId": "t45-v22-qa188-materialized-execution-successor-20261027-189",
+    "materializationRepeated": false,
+    "original188FilesVerified": 101,
+    "originalDependenciesLinkedNoInstall": true,
+    "phase": "ORIGINAL188_SOURCE_ONLY_CAPTURE_AND_QA_READONLY_OBSERVER",
+    "prefixDiagnostic": null,
+    "process": {
+      "elapsedSeconds": 1406.791917179944,
+      "exitCode": 0,
+      "processExited": true,
+      "stderrBytes": 0,
+      "stdoutBytes": 5169
+    },
+    "registrationId": "t45-v22-qa-first-projection-diagnostic-preparation-20261027-188",
+    "runtimeStatus": "OBSERVED_READONLY_PREFIX_ADAPTER_COMPLETE_MEMBER_CONTENT_AND_COVERAGE",
+    "scope": "READONLY_PREFIX_ADAPTER",
+    "status": "PASS_REGISTERED_QA188_READONLY_OBSERVATION_ONLY"
+  },
+  "exports": {
+    "qa-successor-engine-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa188-materialized-execution-successor-20261027-189/release-submission/release-receipts/t45-v22-qa188-materialized-execution-successor-20261027-189/qa-successor-engine-result.json",
+      "bytes": 997,
+      "sha256": "70a1f863bfe4ad1f75b7964031ad22b28adee1c98c02f89283de57fe0345c371"
+    },
+    "job.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa188-materialized-execution-successor-20261027-189/release-submission/release-receipts/t45-v22-qa188-materialized-execution-successor-20261027-189/job.json",
+      "bytes": 572,
+      "sha256": "26e7b8b90397d7087cdf5002bceee270e2403ffd9f454ce9e95bf313f3adb6ff"
+    },
+    "qa-prefix-readonly-result.json": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-v22-qa188-materialized-execution-successor-20261027-189/release-submission/release-receipts/t45-v22-qa188-materialized-execution-successor-20261027-189/qa-prefix-readonly-result.json",
+      "bytes": 6867,
+      "sha256": "c957aaaf254c6ac1951d3f46b316ce7b7f754bdda2b2fb1e5b77f7eab336bdb6"
+    }
+  },
+  "scope": "QA178 genuine ordinary-role RRRO original production prefix adapter per-member full-field comparison and complete7set coverage only; rollback returned and clients closed. Outer189 completed previously unstarted registered188 once. NoBIND/businessDML/COMMIT/R1DatabaseAccess/DDL/APP. Not productionbody/deferredguard/negativecase/UNKNOWN recovery/actualR1import/publication/business acceptance or formalquery performancePASS.",
+  "preservedFailures": [
+    "184",
+    "185",
+    "187",
+    "188"
+  ],
+  "causalityLimit": "Current188provider8e0a stage-image fix+observer pass in original QA snapshot. Does not retroactively identify187 first row/field or prove original184 exact same mismatch; no failure observed so no firstmismatch metadata."
+}
