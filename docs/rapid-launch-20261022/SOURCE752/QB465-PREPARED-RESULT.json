@@ -1,0 +1,115 @@
+{
+  "reviewId": "QB465-PREPARED",
+  "task": "Originalrollback-only proofsubject minimal02 successor carrier/currentpurpose binding",
+  "decision": "PASS_PREPARED_PROOF_SOURCE_AND_NEW_BINDING_ONLY_NOT_ACTUAL",
+  "sourceReviewReuse": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice462-source750-original-key-rollback/QB462-SOURCE-RESULT.json",
+    "bytes": 6852,
+    "sha256": "9b2695ce37e1851ccd4ce94e89078745798cf91a2d7b4087f71d1136789d0ddd"
+  },
+  "priorTechnicalReviewReuse": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice463-original-key-rollback-current-purpose/QB463-PREPARED-RESULT.json",
+    "bytes": 9833,
+    "sha256": "e860282dd8d33d84fb1fae397fb905d9381202717e14526ecad7c429a274ebb5"
+  },
+  "preparedRegistrationRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-02/REGISTRATION.BASELINE.json",
+    "bytes": 16081,
+    "sha256": "e5c1ec4b9e874e5a742a5ed3863554c4a384725949c286ae94798aa1b62bdaf4"
+  },
+  "carrierReadyRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-02/READY.json",
+    "bytes": 3183,
+    "sha256": "63ab7c2bc938daa5893850ecf2bb103416f681ec559ba9eb2d0b18fd3269779b"
+  },
+  "carrierPins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-02/REGISTRATION.PREPARED.json",
+      "bytes": 16081,
+      "sha256": "e5c1ec4b9e874e5a742a5ed3863554c4a384725949c286ae94798aa1b62bdaf4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-02/REGISTRATION.BASELINE.json",
+      "bytes": 16081,
+      "sha256": "e5c1ec4b9e874e5a742a5ed3863554c4a384725949c286ae94798aa1b62bdaf4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-02/SOURCE-REFERENCES.PREPARED.json",
+      "bytes": 10624,
+      "sha256": "acb065617bfdabc3ca18c58a0d7f6a525e38a7a3ac6d964a855677e431dee9f4"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-02/run-original-rollback.PREPARED.mjs",
+      "bytes": 8617,
+      "sha256": "b68c9a586b573518f0feaf08938cdb7c5afdf921f68f99add7008ea472ff887a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-02/run-existing-window.PREPARED.py",
+      "bytes": 6662,
+      "sha256": "d8ce5dd8fc000a692a8502b94ca3ef232cbf4974a073a91dfe86cfc0ad4f2633"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN26-ORIGINAL-ROLLBACK-ONLY-20261027-02/consume-current-purpose.PREPARED.py",
+      "bytes": 7221,
+      "sha256": "58f326eb06b6eb99d57fd27c8eaf0948150eead4ec44717bf94cf9ef9656994c"
+    }
+  ],
+  "workerRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice465-rollback-proof-subject-successor02/review-original-key-rollback-current-purpose.py",
+    "bytes": 18769,
+    "sha256": "56b8b600618fa9b50e863da63458afca669706713455b976e6b24d74ac7f63ac"
+  },
+  "configurationRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice465-rollback-proof-subject-successor02/QB465-REVIEW-CONFIGURATION.json",
+    "bytes": 11196,
+    "sha256": "697731b407b2e008be3043089429a5bf56534323c4575f935818d94a480b6462"
+  },
+  "smallHarnessRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice465-rollback-proof-subject-successor02/verify-successor-binding-in-memory.py",
+    "bytes": 2834,
+    "sha256": "2a74f05fd2c3cc3e92ee9837fb594d72b1b51b51e5d622396186c8f74924dfa3"
+  },
+  "authorityScope": "ONE_ORIGINAL_SYN26_ROLLBACK_ONLY_CURRENT_PURPOSE",
+  "purposes": [
+    "HISTORY_REVISION",
+    "INVENTORY_ADMISSION"
+  ],
+  "liveResultPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice465-rollback-proof-subject-successor02/QB465-LIVE-RESULT.json",
+  "liveFailurePath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice465-rollback-proof-subject-successor02/QB465-LIVE-FAILURE.json",
+  "reviewIdForLive": "QB465-LIVE",
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "checks": [
+    "Onlyfreshproofsourcequerysubject changed: non-sourceboolean read viaexistingbootstrap SETROLEnaijue_erp_test RRRO sameSYNtarget; samefixedQAstaffId pinned byparent750. Ordinaryactorquerychecks staff_id exactequalsfixedstaff thencombinesboolean; actor3/authsessions/schema/keymetadata remainordinaryrole RRRO/currentpostmaster. NoGRANT/ACL orbusinessDML.",
+    "Source750parent+runner/sourcehash+originalkey/IDs/actor3/d927/fixedunusedrollback-companion-01 remainunchanged. Prior0142501 isreadstagefailure, exactdeniedobjectunmeasured; do notclaimtargetrootcauseprovedorbusinessrolegrantneeded.",
+    "AddedfixedreadOnlyStage enums andpermissionerror regex ONLYtable/function/schema/sequence plus fixedobjectallowlist. No rawmessage/stack/SQLparams exported. Failurechildnowexit2; successonly0. Node24syntaxPASS, noactualexecution.",
+    "NewREG+BASELINE16081/e5c1ec4b andallREADY/fullrefspinsmatch. REGonlystatus/pipelineScript/priorProofAttemptTerminal/priorProofAttemptLifecycle differfrom01; fullrefs10624/acb06561. OS6662/d8ce5dd8 andgate7221/58f326eb byteidentical.",
+    "QB465worker onlyQB463IDs/newB02 pluspinnedpriorproofterminal/lifecycleguard. Inverse restoreswholeacceptedQB463worker bytes. Alloriginal04boundary/proof/QA3/keyhash/COMMITTEDrecover/ABSENT/fullcatalog/UTC/RI/deadline functions identical, originalcommandhashsame.",
+    "Prior012066/775b1da3 statusproof42501beforepurpose/parent/companion,outputrootabsent/0DML/normalcasecredentialloginfalse/allclientsworkersownedPGclosed accepted. OS560/05828acf closed. Thisexplicitboundary newlycheckedbeforepreposition; noold01replay oroldLIVEpurposeborrowed.",
+    "Only3successorRAMcasesPASS: exact02 reachesprepositionfirstwaitthenintercept; oldpurposeissued orownedPGnotclosed eachreject. Existing463fullproof/wholemetadata-pathcases notrerun; matchingfunctions verifiedunchanged. Noactualworker/purpose/rootfilescreated."
+  ],
+  "executionContract": {
+    "budgetSeconds": 900,
+    "parentTimeoutSeconds": 860,
+    "cleanupMarginSeconds": 40,
+    "purposeWaitMs": 300000,
+    "preparedWindowDeadlineUtc": null,
+    "immutableBASELINE": "16081/e5c1ec4b9e874e5a742a5ed3863554c4a384725949c286ae94798aa1b62bdaf4",
+    "currentRegAllowedChange": "windowDeadlineUtc only, correspondingfullrefsREGpin update",
+    "unchangedOutputRoot": "rollback-companion-01",
+    "scope": "Onlysameoriginal04keycompanion or exactCOMMITTEDreadonlyrecovery, nologin/CAS/normalcases"
+  },
+  "remaining": [
+    "C/T45 accuratecurrentwindow/AUTH+finalhandoff, immutableBASELINE preserved. Proposed08Z/latest07:45Z notissuedbyQB.",
+    "T45 exactworker/configpreposition once rootabsent/DATA+socket/noPID; newfreshordinarycatalog/postmaster/actor3/keyproof+maintenanceboolean mustpassindependentQB465-LIVE beforeoriginalgate.",
+    "Actual42501fix/currentproof/currentpurpose/real23505/wholePGrollback stillunmeasured; no source/preparedPASS asbusinessPASS."
+  ],
+  "source750ChangedByQB": false,
+  "databaseOrRemoteAction": false,
+  "actualWorkerRun": false,
+  "actualPurposeIssued": false,
+  "actualCompanionOrCommittedRecovery": false,
+  "actualCredentialCASLoginOrNormalCases": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}
