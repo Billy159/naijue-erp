@@ -1,0 +1,60 @@
+{
+  "scope": "EXACT_R1_POST_ACL_ADOPTED148_169_FULL_CONTINUATION",
+  "actualExecutionAdopted": true,
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/PLAN.PREPARED.json",
+      "bytes": 7684,
+      "sha256": "c569a85300dca7a7a71483a77bb65c2e2d71b8d1803409bda724ec5f3dc1f1f9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/source-consumer-carrier.py",
+      "bytes": 6618,
+      "sha256": "ae57c3448ce6eba78bc588ffff3b7ba0d95dbafae10589d4a0a477e13224133a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/execute-original-consumer.mjs",
+      "bytes": 5177,
+      "sha256": "1c4521af3b04417fa390cf271f9adaa438eade7801efa22b9b4c470fa27e1278"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/consumer-package.json",
+      "bytes": 2124118,
+      "sha256": "055bf2122c2eb2275a08594f7e4eebf96f245bbbcfeb764701246464e9228b78"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/source-input-prepared.json",
+      "bytes": 188384,
+      "sha256": "deba20f3bc03fe6c0dd05c2f145311df641b5f22e37e5b70f7640d838be8f1d8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/inputs/executable-host-job26.json",
+      "bytes": 4989,
+      "sha256": "873e33609ec2c0d5895c135a2783d6064beb9210d25ae982fac2a8578e14de35"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/inputs/evidence/C-EXECUTION-GRANT.TEMPLATE.NOT-AUTHORIZED.json",
+      "bytes": 37028,
+      "sha256": "742a70806b703c412e5fe4360ca19b58e1f8d5f95604cfb5ccdc62102c56f93f"
+    }
+  ],
+  "grantRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/C-EXECUTION-GRANT.json",
+    "bytes": 37000,
+    "sha256": "60ce6455f63c786f0900685fd3a2ca380824408c14c6dee2156e1bfdd7ffac65"
+  },
+  "executionMode": "FULL_NATIVE_CONTINUATION",
+  "allowFinalPlanExecutionEnabled": true,
+  "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+  "atUtc": "2026-10-27T11:45:22.970306+00:00",
+  "authorizationSource": {
+    "userV21": "确认 v21，按此实施",
+    "questionItemId": "[\"request_user_input_async\",\"call_647ce0dfb6a74d0d97a2b78b8dc3cc82\",0]",
+    "scope": "User v21 actual continuation. Adopt actual168 exact two ACL commit and QB471 current canonical64c4 three-purpose metadata review; reuse accepted164 source/provenance and original148 artifacts/109 keys/six data objects. Failed164 terminal retained, new169 single revised execution only. No APP/public route switch."
+  },
+  "deadlineUtc": "2026-10-27T13:30:00Z",
+  "maxSteps": 4096,
+  "automaticReplay": false,
+  "noApplicationOrPublicRouteSwitch": true,
+  "required": "Runtime full42561-document/source pin checks and original DB all-root/member/count/money/permissions/transaction guards unchanged. Unknown COMMIT recover original key only; preserve journal/previouscommits."
+}

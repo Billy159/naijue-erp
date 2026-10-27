@@ -1,0 +1,66 @@
+{
+  "status": "FINAL_EXACT_POST_ACL169_CANDIDATE_READY_FOR_EXTERNAL_C_GRANT_NOT_EXECUTED",
+  "jobId": "t45-r1-post-acl-adopted148-continuation-20261027-169",
+  "deadlineUtc": "2026-10-27T13:30:00Z",
+  "maxSteps": 4096,
+  "currentCanonical": "64c4f6ad85a8683df3e1ce5bc341618f612b90d03232a2d4eefed84f2c1462f8",
+  "currentRuntimeReview": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/inputs/reviews/CURRENT-R1-RUNTIME-REVIEW.json",
+    "bytes": 1107,
+    "sha256": "72630bbf7bd78bfdbad6ecb6f2b92527486b6bd66b5f0c2c5fb8035428cc4450"
+  },
+  "QB471": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice471-r1-two-acl-current-runtime/QB471-RESULT.json",
+    "bytes": 8446,
+    "sha256": "7f4465ad4471196dbe8a24f497b9659cc506153dc7172f59fa119fab1e0c14cd"
+  },
+  "codeAll84FilesExactlySame164": true,
+  "allBaselineLocatorsExactlySame164": true,
+  "sourceDataSixObjectsExactlySame164": true,
+  "original109BusinessKeysAnd111ArtifactsAnd79NonCODEPreserved": true,
+  "sourceInputDigest": "a29c494174acf28faf350a3ad67c80f3a341a09da388dc7afc5380deffbd1748",
+  "scope": "Only exact current471/runtime64c4 binding plus newjob/deadline/derivedmetadata refs. Source issuer160/provenance469/provider755/host749/guards retained. Old464/a912 history files not current authority.",
+  "files": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/PLAN.PREPARED.json",
+      "bytes": 7684,
+      "sha256": "c569a85300dca7a7a71483a77bb65c2e2d71b8d1803409bda724ec5f3dc1f1f9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/source-consumer-carrier.py",
+      "bytes": 6618,
+      "sha256": "ae57c3448ce6eba78bc588ffff3b7ba0d95dbafae10589d4a0a477e13224133a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/execute-original-consumer.mjs",
+      "bytes": 5177,
+      "sha256": "1c4521af3b04417fa390cf271f9adaa438eade7801efa22b9b4c470fa27e1278"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/consumer-package.json",
+      "bytes": 2124118,
+      "sha256": "055bf2122c2eb2275a08594f7e4eebf96f245bbbcfeb764701246464e9228b78"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/bundle/source-input-prepared.json",
+      "bytes": 188384,
+      "sha256": "deba20f3bc03fe6c0dd05c2f145311df641b5f22e37e5b70f7640d838be8f1d8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/inputs/executable-host-job26.json",
+      "bytes": 4989,
+      "sha256": "873e33609ec2c0d5895c135a2783d6064beb9210d25ae982fac2a8578e14de35"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-post-acl-adopted148-continuation-20261027-169/inputs/evidence/C-EXECUTION-GRANT.TEMPLATE.NOT-AUTHORIZED.json",
+      "bytes": 37028,
+      "sha256": "742a70806b703c412e5fe4360ca19b58e1f8d5f95604cfb5ccdc62102c56f93f"
+    }
+  ],
+  "CRequired": "ExternalC grant/adoption needed against final7pins, new13:30 registration. Candidate is disabled and template false; no BIND/provider writes in preparation.",
+  "adoptedReceipts": {
+    "164": "FirstMAIN42501terminal no replay",
+    "165": "OriginalBIND key receipt[]/STAGED2/22 RRRO",
+    "168": "Only2ACL COMMIT+exact64c4 catalog; originalkey/state unchanged, notBINDPASS"
+  }
+}

@@ -1,3 +1,5 @@
+SOURCE770：QB471独立两ACL增量/current64c4三IMPORT用途证明PASS已采用，不重旧源码/函数验收；169最终7pins和两证明均实核，六data对象/原commands一致，C真实外部grant与adoption已写并交原T45单次执行，13:30Z/max4096。实际BIND/MAIN/PUBLISH尚待回执，不把授权称实际完成。旧164/168/148不重放。SOURCE769首次GitHub读请求网络超时且未改远端，已保全本地，最后远端确认仍SOURCE768；继续有界同步。全站37/67真实业务/历史编辑/性能/正式发布仍ACTIVE未完成。
+
 SOURCE769：原168实际两列GRANT COMMIT_RETURNED，11:32:26Z/1.522秒，精确only2bits新增UPDATE，其他列ACL/table/schema/role/membership/RLS/原键receipt[]与STAGED2cursor22保持，0BIND/业务DML/APP切换。普通runtime新V20catalog64c4f6ad85a8683df3e1ce5bc341618f612b90d03232a2d4eefed84f2c1462f8，source_routines_matchtrue，较157仅columns209/211两ACL a→aw。QB原三IMPORT用途当前review重绑在途，旧a912失效；T45并行准备原完整来源后继唯一包，164已验源与provenance复用、六data/111产物/109业务keys保持。旧10:45窗口已过，新后继准确登记13:30Z4096，具体7pins和新review到齐后C外部授权；未恢复BIND/导入/发布，整体目标ACTIVE未完成。
 
 SOURCE768：原QB470具体两列GRANT/回退SQL静态窄审PASS，C已采用exactSQL4854/5a177d64、回退4871/cebd7aec，T45收到有效PASS可直接原受控单次实施，不再等开始授权。当前T45复用原owner SQL/registered runtime方法准备实际，尚无实际ACL提交回执；已提醒anti-over-defense不另造通用carrier/保护框架。必要目标/SQLpin/同事务前后两ACL与其余不变/原键snapshot/commit及新catalog保留，0BIND/不重164。实际修后只两columnACLdelta当前review重绑，不重131source/469/468/正常业务PASS。全站目标ACTIVE未完成。
