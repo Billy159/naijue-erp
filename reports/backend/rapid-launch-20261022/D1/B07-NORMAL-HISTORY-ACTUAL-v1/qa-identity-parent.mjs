@@ -466,6 +466,40 @@ export async function runB07ApprovedSynSessionParent({plan:raw,setupClient,after
 // source732: existing SYN26 QA auth1→2 only. No seed/upgrade/ACL/function install.
 export const SYN26_CONTINUATION_OUTPUT=join(APPROVED_SYN_OUTPUT,'credential-continuation-01');
 const synCredentialFunctions={guard_maintenance_account_event:['965d9d3433b929ccd151b9a147eeef713770d7b7311e49c80cfaa3d17b118549'],validate_maintenance_root_commit:['8556d1ed234adb3bae1d99c9bb8e867db4070eadafa39dbb8b31752c7e24b512','002818dfd8d764e99221bb0548da1141054871ae674aba6bb9f6ce59c9d92d1c'],validate_available_administrator_commit:['3a9a1bea930614761185af90b8591a539b855647974b68b004869c80f5e5ba18']};
+// Fixed diagnostic labels only: never serialize message, SQL, config, values or full stack.
+const syn26DiagnosticPhases=new Set(['BASE_REGISTRATION','PRIOR_TERMINAL','ORIGINAL_PUBLICATION','OUTPUT_RESERVATION','CURRENT_PURPOSE_GATE','CURRENT_PURPOSE_FILES','VALIDATE_SYN26_INPUT','CURRENT_REVIEW_LINKS','ORIGINAL_INPUT_LINKS','LOAD_RUNTIME_MODULES','CREATE_NORMAL_FACTORY','CREATE_READ_POOL','CREATE_ISSUER','QA_CREDENTIAL_AND_NORMAL_SCOPE','CURRENT_ADMISSION','CREDENTIAL_CAS','COMMIT','SAME_RAM_READONLY_COMMIT_RECOVERY','ONE_NORMAL_SESSION']);
+const syn26DiagnosticCodes=new Set(['NATIVE_RUNTIME26_NOT_READY','PG_INVALID_CONFIG','PG_POOL_OVERLOADED','PG_POOL_CLOSED','PG_ACQUIRE_TIMEOUT','PG_ACQUIRE_FAILED','PG_CLIENT_CLOSED','PG_QUERY_IN_PROGRESS','PG_QUERY_FAILED','PG_RELEASE_FAILED','PG_DISPOSE_FAILED','PG_DISPOSE_TIMEOUT','ERR_ASSERTION','ERR_MODULE_NOT_FOUND','ERR_PACKAGE_PATH_NOT_EXPORTED','ERR_UNKNOWN_FILE_EXTENSION','ERR_UNSUPPORTED_NODE_MODULES_TYPE_STRIPPING','ENOENT','EACCES','EINVAL','FST_ERR_DUPLICATED_ROUTE','FST_ERR_PLUGIN_TIMEOUT','FST_ERR_PLUGIN_VERSION_MISMATCH','FST_ERR_DEC_ALREADY_PRESENT','23514','23505','42501','28P01','08006','08001','57P01','57014','40001','40P01','25006','25P02','42P01','42703','42883','53300','53400','55000']);
+const syn26DiagnosticMessages=new Set(['B07_SYN_EXPLICIT_REGISTRATION_REQUIRED','B07_SYN_FIXED_OUTPUT_REQUIRED','B07_SYN_FIXED_SOURCE_REQUIRED','B07_SYN_BOUNDED_PURPOSE_REQUIRED','B07_SYN_EXACT_TARGET_REQUIRED','B07_SYN_REGISTERED_ORDINARY_ROLE_REQUIRED','B07_SYN_FIXED_CREATED_AT_REQUIRED','B07_SYN_CONTROLLER_REGISTRATION_REQUIRED','B07_SYN_ORIGINAL_PUBLICATION_REQUIRED','B07_SYN_PUBLICATION_TARGET_CHANGED','B07_SYN_EXACT_PUBLISHED_REFERENCES_REQUIRED','B07_SYN26_AUTH1_ONLY','B07_SYN26_EXACT_EXISTING_TARGET_TIME_REQUIRED','B07_SYN26_ORIGINAL_APPROVED_REFERENCES_REQUIRED','B07_SYN26_LIFECYCLE_CALLBACK_REQUIRED','B07_PARENT_PIN_REQUIRED','B07_PARENT_FILE_REQUIRED','B07_PARENT_PIN_CHANGED','B07_CONFIGURATION_MUST_NOT_STORE_CREDENTIALS','B07_BOUNDED_PURPOSE_WAIT_REQUIRED','B07_CURRENT_PURPOSE_GATE_NOT_READY','B07_PURPOSE_GATE_INVALID','B07_PRIVATE_PURPOSE_GATE_REQUIRED','B07_SYN26_ORIGINAL_TERMINAL_BOUNDARY_REQUIRED','B07_SYN26_CURRENT_PURPOSE_REQUIRED','B07_SYN26_CURRENT_NONOWNER_REVIEW_REQUIRED','B07_SYN26_ORIGINAL_INPUT_CHANGED','B07_SYN26_CURRENT_READONLY_PROOF_REQUIRED','B07_SYN26_ORIGINAL_GUARD_BODIES_REQUIRED','B07_SYN26_ACTIVE_GUARD_ATTACHMENTS_REQUIRED','B07_SYN26_REQUIRED_GUARD_ATTACHMENT_MISSING','B07_SYN26_CURRENT_TRANSPORT_CHANGED','B07_SYN26_CURRENT_TARGET_CHANGED','B07_SYN26_CURRENT_GUARDS_OR_PRIVILEGES_CHANGED','B07_SYN26_QA_LOCK_REQUIRED','B07_SYN26_ORIGINAL_KEY_PRESENT_READONLY_RECOVERY_REQUIRED','B07_SYN26_APPROVED_PREIMAGE_CHANGED','B07_SYN26_ORIGINAL_PUBLICATION_CHANGED','B07_SYN26_QA_SOURCE_BINDING_PRESENT','B07_SYN26_BOUNDED_SYN_FACTS_REQUIRED','B07_SYN26_UNEXPECTED_HISTORY_REVISION','B07_SYN26_QA_ROW_MISSING','B07_SYN26_FIXED_NON_SOURCE_QA_REQUIRED','B07_SYN26_AUTH1_PREIMAGE_CONFLICT','B07_SYN26_CREDENTIAL_CAS_CONFLICT','B07_SYN26_CAS_READBACK_CHANGED','B07_SYN26_HISTORY_PUBLICATION_STOCK_CHANGED','B07_SYN26_UNKNOWN_COMMIT_FACTS_CHANGED','B07_SYN26_PRECOMMIT_STOP_NO_RETRY','B07_SYN26_COMMIT_UNKNOWN_STOP_NO_RETRY','B07_SYN26_COMMITTED_NORMAL_SCOPE_FAILED_NO_RETRY','B07_SYN26_OUTPUT_USED_PRESERVE_ORIGINAL']);
+const syn26DiagnosticReasons=new Map([
+ ['Actual exact schema, source bodies or catalog differs from independent review','RUNTIME_CATALOG_OR_SOURCE_MISMATCH'],
+ ['Actual runtime target, process or role differs from independent review','RUNTIME_TARGET_MISMATCH'],
+ ['One actual verification row on the original lease required','RUNTIME_VERIFICATION_ROW_INVALID'],
+ ['Purpose absent from independent review','RUNTIME_PURPOSE_ABSENT'],
+ ['Original idle live lease and explicitly reviewed purpose required','RUNTIME_LEASE_OR_PURPOSE_UNAVAILABLE'],
+ ['Independent review files changed or became unavailable','RUNTIME_REVIEW_CHANGED_OR_UNAVAILABLE'],
+ ['One explicitly owned pool and independently pinned review required','RUNTIME_OWNED_POOL_OR_REVIEW_REQUIRED'],
+ ['HISTORY revision requires the full read application and separate historical write policy','HISTORY_FACTORY_OPTIONS_INVALID'],
+ ['HISTORY revision requires the original published-history read application','HISTORY_FACTORY_READ_CAPABILITY_MISSING'],
+ ['CORE initialization does not enable historical document writes','HISTORY_FACTORY_CORE_PROFILE_NOT_ALLOWED'],
+ ['Incomplete or unknown production configuration fields','PRODUCTION_CONFIG_FIELDS_INVALID'],
+ ['Invalid explicit production host or authentication configuration','PRODUCTION_HOST_OR_AUTH_CONFIG_INVALID'],
+ ['Explicit exact26 R1 profile, disabled commands and closed independent review pin required','PRODUCTION_R1_REVIEW_CONFIG_INVALID']
+]);
+export function syn26SafeFailure(error,phase){
+ const one=value=>{
+  const classes=new Set(['Error','TypeError','RangeError','SyntaxError','AssertionError','AggregateError','PostgresResourceError','PostgresQueryError','DomainError']);
+  const code=syn26DiagnosticCodes.has(value?.code)?value.code:syn26DiagnosticMessages.has(value?.message)?value.message:null;
+  const frames=[];
+  if(typeof value?.stack==='string')for(const line of value.stack.split('\n').slice(1,12)){
+   const match=line.match(/\/(qa-identity-parent\.mjs|approved-normal-history-v16\.mjs|production-provider-composition\.ts|postgres-read-api\.ts|bounded-pool\.ts|native-import-accounting-capability\.ts):(\d+):(\d+)/);
+   if(match&&frames.length<3)frames.push({file:match[1],line:Number(match[2]),column:Number(match[3])});
+  }
+  return {errorClass:classes.has(value?.name)?value.name:'Error',errorCode:code,reason:syn26DiagnosticReasons.get(value?.message)??null,sourceFrames:frames};
+ };
+ const result={phase:syn26DiagnosticPhases.has(phase)?phase:'UNCLASSIFIED',...one(error)};
+ if(error instanceof AggregateError)result.causes=error.errors.slice(0,3).map(one);
+ return result;
+}
 export function validateSyn26Auth1Continuation(input){
  must(input?.contract==='B07_SYN26_QA_AUTH1_CONTINUATION_V1'&&input.expectedVersion===1&&input.expectedAuthVersion===1,'B07_SYN26_AUTH1_ONLY');
  validateApprovedSynParentPlan({...input,contract:'B07_SYN_APPROVED_SESSION_PARENT_V1',sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,outputDirectory:APPROVED_SYN_OUTPUT,purposeGateFile:join(APPROVED_SYN_OUTPUT,'CURRENT-PURPOSE-GATE.json')});
@@ -551,16 +585,16 @@ export async function withB07Syn26Auth1Continuation({client,input:raw,recordPrep
   must(stable(await syn26UnchangedFacts(client,input))===stable(beforeFacts),'B07_SYN26_HISTORY_PUBLICATION_STOCK_CHANGED');await syn26Admission(client,input);
   phase='COMMIT';commitAttempted=true;await client.query('COMMIT');began=false;
  }catch(error){
-  if(!commitAttempted){if(began)try{await client.query('ROLLBACK');}catch{}password=null;passwordHash=null;const safe=Error('B07_SYN26_PRECOMMIT_STOP_NO_RETRY');safe.syn26Failure={phase,commitAttempted:false,pgCode:typeof error.code==='string'&&/^[A-Z0-9]{5}$/.test(error.code)?error.code:null};throw safe;}
+  if(!commitAttempted){if(began)try{await client.query('ROLLBACK');}catch{}password=null;passwordHash=null;const safe=Error('B07_SYN26_PRECOMMIT_STOP_NO_RETRY');safe.syn26Failure={phase,commitAttempted:false,pgCode:typeof error.code==='string'&&/^[A-Z0-9]{5}$/.test(error.code)?error.code:null,diagnostic:syn26SafeFailure(error,phase)};throw safe;}
   try{phase='SAME_RAM_READONLY_COMMIT_RECOVERY';await withRecoveryClient(async c=>{let readonly=false;try{await c.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');readonly=true;
    await syn26Admission(c,input);syn26CredentialCompleted(await syn26CredentialState(c,input,passwordHash),before,input);must(stable(await syn26UnchangedFacts(c,input))===stable(beforeFacts),'B07_SYN26_UNKNOWN_COMMIT_FACTS_CHANGED');
    await c.query('ROLLBACK');readonly=false;}finally{if(readonly)await c.query('ROLLBACK');}});commitRecovered=true;
-  }catch{password=null;passwordHash=null;const safe=Error('B07_SYN26_COMMIT_UNKNOWN_STOP_NO_RETRY');safe.syn26Failure={phase,commitAttempted:true};throw safe;}
+  }catch(error){password=null;passwordHash=null;const safe=Error('B07_SYN26_COMMIT_UNKNOWN_STOP_NO_RETRY');safe.syn26Failure={phase,commitAttempted:true,diagnostic:syn26SafeFailure(error,phase)};throw safe;}
  }
  try{
   phase='ONE_NORMAL_SESSION';await afterRenewal({qaIdentity:APPROVED_SYN_QA,authVersion:2,withNormalSession:async(api,work)=>{must(active&&!loginUsed,'B07_SYN26_SINGLE_SESSION_REQUIRED');loginUsed=true;return runNormalSession({api,password,authVersion:2,work});}});
   must(loginUsed,'B07_SYN26_NORMAL_SESSION_NOT_USED');return {status:'SYN26_QA_AUTH1_TO2_ONE_NORMAL_SESSION_COMPLETED',qaAccountId:APPROVED_SYN_QA.accountId,version:2,authVersion:2,commitRecovered,automaticRetry:false,sourceIdentityChanged:false};
- }catch(error){const safe=Error('B07_SYN26_COMMITTED_NORMAL_SCOPE_FAILED_NO_RETRY');safe.syn26Failure={phase,commitAttempted:true};throw safe;}
+ }catch(error){const safe=Error('B07_SYN26_COMMITTED_NORMAL_SCOPE_FAILED_NO_RETRY');safe.syn26Failure={phase,commitAttempted:true,diagnostic:syn26SafeFailure(error,phase)};throw safe;}
  finally{active=false;password=null;passwordHash=null;}
 }
 export async function withB07Syn26ManagedNormalSession({api,password,authVersion,work}){must(authVersion===2&&api?.app?.server?.listening===false&&typeof api.trustedOrigin==='string','B07_SYN26_EXACT_NORMAL_SESSION_REQUIRED');let cookie=null;
@@ -573,36 +607,37 @@ export async function withB07Syn26ManagedNormalSession({api,password,authVersion
 export async function runB07ExistingSyn26SessionContinuationParent({plan,setupClient,withRecoveryClient}){
  must(plan?.contract==='B07_SYN26_QA_AUTH1_CONTINUATION_PARENT_V1'&&plan.outputDirectory===SYN26_CONTINUATION_OUTPUT&&plan.purposeGateFile===join(SYN26_CONTINUATION_OUTPUT,'CURRENT-PURPOSE-GATE.json'),'B07_SYN26_PARENT_REGISTRATION_REQUIRED');
  must(typeof setupClient?.end==='function'&&typeof withRecoveryClient==='function','B07_SYN26_OWNED_CLIENTS_REQUIRED');
- const resources={},result={status:'STARTED',qaCredentialActual:false,httpActual:false,sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,automaticRetry:false,clientsClosed:true,postgresStopOwnedByT45:true};let setupEnded=false,observations=0,outputReady=false,resultWritable=false;
+ const resources={},result={status:'STARTED',qaCredentialActual:false,httpActual:false,sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,automaticRetry:false,clientsClosed:true,postgresStopOwnedByT45:true};let setupEnded=false,observations=0,outputReady=false,resultWritable=false,phase='BASE_REGISTRATION';
  try{
  validateApprovedSynParentPlan({...plan,contract:'B07_SYN_APPROVED_SESSION_PARENT_V1',outputDirectory:APPROVED_SYN_OUTPUT,purposeGateFile:join(APPROVED_SYN_OUTPUT,'CURRENT-PURPOSE-GATE.json')});
- const prior=JSON.parse((await pinned(plan.priorTerminalResult)).toString('utf8')),lifecycle=JSON.parse((await pinned(plan.priorLifecycle)).toString('utf8'));
+ phase='PRIOR_TERMINAL';const prior=JSON.parse((await pinned(plan.priorTerminalResult)).toString('utf8')),lifecycle=JSON.parse((await pinned(plan.priorLifecycle)).toString('utf8'));
  must(prior.status==='TERMINAL_STOP_CURRENT_PURPOSE_REJECTED_NO_REPLAY'&&prior.qaFirstSeedCommitted===true&&prior.upgradeCommitReceipts===11&&prior.ordinaryRoleCommitReturned===true&&prior.effectiveV21CommitReturned===true&&prior.purposeIssued===false&&prior.normalHttpActual===false&&prior.clientsClosed===true&&prior.ownPgStopped===true
   &&lifecycle.reviewWorkerClosed===true&&lifecycle.gateWorkerClosed===true&&lifecycle.ownPgStopped===true,'B07_SYN26_ORIGINAL_TERMINAL_BOUNDARY_REQUIRED');
- const publication=await loadApprovedSynPublication(plan);await mkdir(plan.outputDirectory,{mode:0o700,recursive:true});outputReady=true;
+ phase='ORIGINAL_PUBLICATION';const publication=await loadApprovedSynPublication(plan);phase='OUTPUT_RESERVATION';await mkdir(plan.outputDirectory,{mode:0o700,recursive:true});outputReady=true;
  for(const name of ['PARENT-RESULT.json','SYN26-CREDENTIAL-INTENT.json','APPROVED-ACTUAL-RESULT.json']){try{await lstat(join(plan.outputDirectory,name));throw Error('B07_SYN26_OUTPUT_USED_PRESERVE_ORIGINAL');}catch(e){if(e.code!=='ENOENT')throw e;}}resultWritable=true;
   // Resolve the already-known current-purpose prerequisite BEFORE generating a secret.
-  const gate=await waitForPurposeGate(plan.purposeGateFile,plan.purposeWaitMs);must(gate.format==='B07_SYN_APPROVED_NORMAL_PURPOSE_GATE_V1','B07_SYN26_CURRENT_PURPOSE_REQUIRED');
-  const template=JSON.parse((await pinned(gate.runtimeConfiguration)).toString('utf8')),config=prepareOrdinaryConfiguration(template,plan.target),review=JSON.parse((await pinned(gate.review)).toString('utf8'));
+  phase='CURRENT_PURPOSE_GATE';const gate=await waitForPurposeGate(plan.purposeGateFile,plan.purposeWaitMs);must(gate.format==='B07_SYN_APPROVED_NORMAL_PURPOSE_GATE_V1','B07_SYN26_CURRENT_PURPOSE_REQUIRED');
+  phase='CURRENT_PURPOSE_FILES';const template=JSON.parse((await pinned(gate.runtimeConfiguration)).toString('utf8')),config=prepareOrdinaryConfiguration(template,plan.target),review=JSON.parse((await pinned(gate.review)).toString('utf8'));
   const approvedInput=validateApprovedInput(JSON.parse((await pinned(gate.approvedInput)).toString('utf8'))),permissionProof=JSON.parse((await pinned(plan.permissionProof)).toString('utf8'));
-  const input=validateSyn26Auth1Continuation({...plan,contract:'B07_SYN26_QA_AUTH1_CONTINUATION_V1',expectedVersion:1,expectedAuthVersion:1,approvedInput,permissionProof});
-  const pg=config.postgres.target,t=plan.target;
+  phase='VALIDATE_SYN26_INPUT';const input=validateSyn26Auth1Continuation({...plan,contract:'B07_SYN26_QA_AUTH1_CONTINUATION_V1',expectedVersion:1,expectedAuthVersion:1,approvedInput,permissionProof});
+  phase='CURRENT_REVIEW_LINKS';const pg=config.postgres.target,t=plan.target;
   must(config.runtime26Review.reviewFile===gate.review.path&&config.runtime26Review.trustedReviewSha256===gate.review.sha256&&pg.user===plan.ordinaryRole
    &&review.catalog?.patchLevel===EFFECTIVE_VALUE_PROFILE&&review.catalog.sha256===permissionProof.catalogSha256&&review.target.database===t.database&&review.target.databaseOid===t.oid
    &&review.target.actingRole===pg.user&&review.target.sessionUser===pg.user&&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_SYN26_CURRENT_NONOWNER_REVIEW_REQUIRED');
-  must(stable(approvedInput.references)===stable(publication.references)&&approvedInput.sourceRoot===plan.sourceRoot&&approvedInput.origin===config.publicOrigin,'B07_SYN26_ORIGINAL_INPUT_CHANGED');
-  const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=ordinaryDriver(Pool);
+  phase='ORIGINAL_INPUT_LINKS';must(stable(approvedInput.references)===stable(publication.references)&&approvedInput.sourceRoot===plan.sourceRoot&&approvedInput.origin===config.publicOrigin,'B07_SYN26_ORIGINAL_INPUT_CHANGED');
+  phase='LOAD_RUNTIME_MODULES';const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=ordinaryDriver(Pool);
   const {createProductionRuntime26HistoryRevisionApplicationApi}=await at('apps/api/src/production-provider-composition.ts'),{BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts'),{createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
-  resources.api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'},driver);resources.readPool=new BoundedPostgresPool(config.postgres,driver);
-  const issuer=await createNativeRuntime26Issuer(resources.readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
-  const continued=await withB07Syn26Auth1Continuation({client:setupClient,input,withRecoveryClient,recordPreparation:value=>record(plan.outputDirectory,'SYN26-CREDENTIAL-INTENT.json',value),runNormalSession:withB07Syn26ManagedNormalSession,
+  phase='CREATE_NORMAL_FACTORY';resources.api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'},driver);
+  phase='CREATE_READ_POOL';resources.readPool=new BoundedPostgresPool(config.postgres,driver);
+  phase='CREATE_ISSUER';const issuer=await createNativeRuntime26Issuer(resources.readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
+  phase='QA_CREDENTIAL_AND_NORMAL_SCOPE';const continued=await withB07Syn26Auth1Continuation({client:setupClient,input,withRecoveryClient,recordPreparation:value=>record(plan.outputDirectory,'SYN26-CREDENTIAL-INTENT.json',value),runNormalSession:withB07Syn26ManagedNormalSession,
    afterRenewal:async({withNormalSession})=>{result.qaCredentialActual=true;await setupClient.end();setupEnded=true;
     await withNormalSession(resources.api,async({privateCookie})=>{try{const actual=await runApprovedNormalHistory({api:resources.api,pool:issuer.pool,runtime26:issuer.runtime26,input:approvedInput,privateCookie,now:()=>new Date().toISOString(),recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),recordObservation:value=>record(plan.outputDirectory,'HTTP-'+String(++observations).padStart(3,'0')+'.json',value),readBackgroundFailureCount:()=>resources.api.postgresBackgroundFailureCount+resources.readPool.backgroundFailureCount});await record(plan.outputDirectory,'APPROVED-ACTUAL-RESULT.json',actual);result.httpActual=true;}catch(e){if(e.approvedHistoryResult)await record(plan.outputDirectory,'APPROVED-ACTUAL-RESULT.json',e.approvedHistoryResult);throw Error('B07_SYN26_APPROVED_SCOPE_FAILED');}});
    }});
   result.continuation=continued;result.status='PASS_SYN26_EXISTING_QA_AUTH1_TO2_APPROVED_SCOPE';
- }catch(e){result.status='STOP_SYN26_CONTINUATION_NO_REPLAY';result.errorCode=typeof e.message==='string'&&/^B07_SYN26_[A-Z0-9_]+$/.test(e.message)?e.message:'B07_SYN26_DETAIL_OMITTED';if(e.syn26Failure)result.failure=e.syn26Failure;}
+ }catch(e){result.status='STOP_SYN26_CONTINUATION_NO_REPLAY';result.failedPhase=phase;result.diagnostic=syn26SafeFailure(e,phase);result.errorCode=result.diagnostic.errorCode??'B07_SYN26_DETAIL_OMITTED';if(e.syn26Failure)result.failure=e.syn26Failure;}
  finally{for(const close of [()=>resources.api?.close(),()=>resources.readPool?.dispose(),()=>!setupEnded?setupClient.end():undefined])try{await close();}catch{result.clientsClosed=false;result.status='STOP_SYN26_CLEANUP_UNKNOWN';}if(outputReady&&resultWritable)await record(plan.outputDirectory,'PARENT-RESULT.json',result);}
- must(result.status==='PASS_SYN26_EXISTING_QA_AUTH1_TO2_APPROVED_SCOPE'&&result.clientsClosed,'B07_SYN26_PARENT_STOPPED_SEE_PRIVATE_RESULT');return result;
+ if(result.status!=='PASS_SYN26_EXISTING_QA_AUTH1_TO2_APPROVED_SCOPE'||!result.clientsClosed){const error=Error('B07_SYN26_PARENT_STOPPED_SEE_PRIVATE_RESULT');Object.defineProperty(error,'syn26ParentFailure',{value:result.diagnostic??null});throw error;}return result;
 }
 
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){

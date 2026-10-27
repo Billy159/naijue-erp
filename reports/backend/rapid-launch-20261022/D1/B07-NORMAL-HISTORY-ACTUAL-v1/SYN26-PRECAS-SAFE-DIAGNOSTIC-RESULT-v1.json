@@ -1,0 +1,58 @@
+{
+  "status": "TARGETED_SAFE_DIAGNOSTIC_SOURCE_READY_ACTUAL_ROOT_NOT_YET_CAPTURED",
+  "ownerScope": "Original D1 parent/test only; K originals and registered R mirrors",
+  "files": [
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 82565,
+      "sha256": "69342519c525a8094717da0042b6e34d357f6034d4f0a64fbe2c5dd26f49d66a",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 39056,
+      "sha256": "adfe2fab36d5a51b5faa24e9ddb4bd97600d84a9d65f8239a6854f7ea6c1d68e",
+      "mirrorsEqual": true
+    }
+  ],
+  "confirmedDefect": "Existing parent discarded any error not matching B07_SYN26 message and persisted no phase. Runtime factory/issuer errors, TypeError/PG codes, and other original pin errors became DETAIL_OMITTED; actual prior underlying exception cannot be reconstructed from that output.",
+  "actualEvidenceAdopted": "B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-01 terminal exit2/2.508973125s; current finite proof and QB449-LIVE/gate already PASS; no new credential intent/HTTP/result; ownPG and workers closed. No repeated verification of proof/QB449.",
+  "offlineAdditionalFact": "Only saved parent extra links compared,14 booleans all true: review/config refs/catalog/recorded target links/source refs/origin. Historical artifact comparison is not current live-postmaster evidence. Adopt T45 existing pure parse/import checks without repeating.",
+  "runtimeRootCause": "UNKNOWN. The additional context narrows primarily to createProductionRuntime26HistoryRevisionApplicationApi(including its original internal eager issuer/purpose admission), new BoundedPostgresPool, or parent separate createNativeRuntime26Issuer; no error code/phase preserved before, so none is declared the runtime root.",
+  "actualCredentialVersion": "UNKNOWN_UNTIL_T45_TARGETED_READBACK",
+  "changes": [
+    "Fixed phases preceding parent artifacts/purpose/validation/module load/CREATE_NORMAL_FACTORY/CREATE_READ_POOL/CREATE_ISSUER/QA lifecycle",
+    "Safe whitelist error class/code/static reason and at most3 known source basename/line/column frames; aggregate at most3 equally sanitized immediate causes",
+    "Never records raw message/full stack/config/SQL/actual-expected/cookies/tokens/environment",
+    "Preserves sanitized inner cause through existing precommit/unknownCOMMIT/normal scope wrapper; no change to credential/business execution sequence",
+    "Parent terminal error carries same safe diagnostic programmatically as syn26ParentFailure and records failedPhase/diagnostic in PARENT-RESULT; old receipts never edited"
+  ],
+  "checks": {
+    "newTargetedOfflineTests": {
+      "passed": 4,
+      "skipped": 0,
+      "names": [
+        "distinct factory/readpool/issuer phases and error codes",
+        "sensitive message/config/SQL/path redaction and bounded causes",
+        "underlying precommit/uncertain recovery safe cause no CAS retry",
+        "actual parent prior failure safe phase + setup close no write"
+      ]
+    },
+    "node24SyntaxExitCode": 0
+  },
+  "oldParentPreSource732BaselineUnchanged": true,
+  "actualPostgres": false,
+  "actualCarrierReplay": false,
+  "actualCasReplay": false,
+  "currentProofOrQb449Repeated": false,
+  "noChanges": [
+    "production factory/issuer",
+    "guard/permissions/roles/DDL",
+    "approved business inputs/contracts",
+    "T45 actual driver/scripts",
+    "old07/seed/publication/upgrades"
+  ],
+  "next": "C fix/pin and originalQB review only diagnostic two-leaf delta. If C separately registers a targeted actual, T45 captures syn26SafeFailure at only original factory/readpool/issuer construction stages and closes resources; no parent carrier/CAS replay or unproven version claims. Current target/postmaster must be fresh; stopped449 review is historical, not current authority."
+}

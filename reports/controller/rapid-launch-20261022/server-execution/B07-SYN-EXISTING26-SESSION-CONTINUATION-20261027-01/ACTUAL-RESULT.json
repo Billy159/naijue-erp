@@ -1,0 +1,71 @@
+{
+  "status": "TERMINAL_STOP_AFTER_CURRENT_PROOF_PURPOSE_BEFORE_RECORDED_CREDENTIAL_INTENT_NO_REPLAY",
+  "atUtc": "2026-10-27T03:51:36.197223+00:00",
+  "elapsedSeconds": 2.5089731250000002,
+  "currentProofActual": true,
+  "currentPurposeActual": "QB449-LIVE PASS consumed by original gate",
+  "catalogSha256": "1df15aabea32be466d993621c926398a501b979bef6c19caa659b6ab73415205",
+  "permissionFlags": {
+    "can_read_identity": true,
+    "can_update_credential": true,
+    "can_revoke_sessions": true
+  },
+  "qaAuthVersionBeforeParent": 1,
+  "qaVersionBeforeParent": 1,
+  "qaCredentialActualReported": false,
+  "normalHttpActualReported": false,
+  "parentErrorCode": "B07_SYN26_DETAIL_OMITTED",
+  "parentFailurePhaseOrSQLState": "NOT_EXPORTED_UNKNOWN",
+  "credentialIntentFileExists": false,
+  "finalDatabaseAuthVersion": "UNKNOWN_NOT_READ_BACK_AFTER_PARENT_FAILURE",
+  "secretGeneratedDuringParent": "UNKNOWN_NO_CLAIM",
+  "clientsClosed": true,
+  "reviewWorkerClosed": true,
+  "gateWorkerClosed": true,
+  "ownPgStopped": true,
+  "pidFileAbsent": true,
+  "noSeedUpgradeRoleGrantPublishReplay": true,
+  "noServer148Touch": true,
+  "offlineOnlyChecks": [
+    "Three same runtime TS modules import with exact original Node invocation PASS",
+    "Pure validateSyn26Auth1Continuation with original plan/proof/input PASS",
+    "Pure runtime config/host/options with fixed noncredential shape placeholder PASS; no API/pool or QA secret created"
+  ],
+  "remaining": [
+    "Exact parent factory/issuer/admission failure phase/SQLSTATE not exported",
+    "Final actual QA auth version not independently read back",
+    "Actual CAS/auth2/approved scope/23505 not passed"
+  ],
+  "receipts": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-01/OS-LIFECYCLE.json",
+      "bytes": 555,
+      "sha256": "c2ef7a1b512c07eb62f96455bc8fcfc622ccc791be8874fe02822f7ca97fd769"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-01/NODE-PIPELINE-RESULT.json",
+      "bytes": 588,
+      "sha256": "51d75ed322732d2b25f7b50ec8a5f2216879a9c29354b13f28d6013940db92c8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-01/CURRENT-PERMISSION-PROOF.json",
+      "bytes": 2411,
+      "sha256": "cb779450f6abd8900471c077d3539e13e648360edf735a84d52b0ced843e40a7"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-01/GATE-CONSUMPTION-RESULT.json",
+      "bytes": 1152,
+      "sha256": "d1304005c36eba3b75c87151b4779f0fda29da9fd6e711b1d5fed0adb198ba6c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-01/PARENT-RESULT.json",
+      "bytes": 306,
+      "sha256": "2f8750f8727d50b51dcc8631d3171b6fc137308f75a40393d244d2cf1b551a31"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice449-existing26-current-purpose/QB449-LIVE-RESULT.json",
+      "bytes": 8286,
+      "sha256": "beff38b66dc06e4d3ab1a27e46c11c22d4cc712f7288dbd5388f38fd1fc0c4bf"
+    }
+  ]
+}

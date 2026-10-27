@@ -283,3 +283,34 @@ test('SYN source732 accepted carrier closes setup on invalid prior evidence befo
  await assert.rejects(runB07ExistingSyn26SessionContinuationParent({plan,setupClient:f.client,withRecoveryClient:f.withRecoveryClient}),/PARENT_STOPPED/);
  assert.equal(f.state.setupEnded,1);assert.equal(f.state.updates,0);assert.equal(f.calls.length,0);
 });
+
+// Owned targeted diagnosis increment only. No original current-purpose/PG replay.
+import {syn26SafeFailure} from './qa-identity-parent.mjs';
+test('SYN diagnostic preserves distinct factory/read-pool/issuer phase and finite actual error codes',()=>{
+ const catalog=Object.assign(Error('Actual exact schema, source bodies or catalog differs from independent review'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+ const factory=syn26SafeFailure(catalog,'CREATE_NORMAL_FACTORY');assert.equal(factory.phase,'CREATE_NORMAL_FACTORY');assert.equal(factory.errorCode,'NATIVE_RUNTIME26_NOT_READY');assert.equal(factory.reason,'RUNTIME_CATALOG_OR_SOURCE_MISMATCH');
+ const pool=syn26SafeFailure(Object.assign(Error('PRIVATE_CONFIG_BODY'),{code:'PG_INVALID_CONFIG'}),'CREATE_READ_POOL');assert.equal(pool.phase,'CREATE_READ_POOL');assert.equal(pool.errorCode,'PG_INVALID_CONFIG');assert.equal(pool.reason,null);
+ const issuer=syn26SafeFailure(Object.assign(Error('Actual runtime target, process or role differs from independent review'),{code:'NATIVE_RUNTIME26_NOT_READY'}),'CREATE_ISSUER');assert.equal(issuer.phase,'CREATE_ISSUER');assert.equal(issuer.reason,'RUNTIME_TARGET_MISMATCH');
+ assert.equal(syn26SafeFailure(Object.assign(Error('/private/SECRET_MODULE'),{code:'ERR_MODULE_NOT_FOUND'}),'LOAD_RUNTIME_MODULES').errorCode,'ERR_MODULE_NOT_FOUND');
+});
+test('SYN diagnostic never emits messages/config/SQL/actual-expected/private paths and bounds aggregate causes',()=>{
+ const secret='PRIVATE_SECRET_CONFIG_TOKEN_PASSWORD';const error=Object.assign(new TypeError(secret),{code:secret,actual:{password:secret},expected:secret,config:{password:secret},sql:secret});
+ error.stack=`TypeError: ${secret}\n at secret (/private/${secret}/secret.mjs:9:1)\n at host (file:///private/${secret}/production-provider-composition.ts:188:4)`;
+ const aggregate=new AggregateError([error,error,error,error],secret),result=syn26SafeFailure(aggregate,'PRIVATE_PHASE_'+secret);
+ const text=JSON.stringify(result);assert.equal(text.includes(secret),false);assert.equal(text.includes('/private/'),false);assert.equal(result.phase,'UNCLASSIFIED');assert.equal(result.causes.length,3);
+ for(const c of result.causes){assert.equal(c.errorCode,null);assert.equal(c.reason,null);assert.deepEqual(c.sourceFrames,[{file:'production-provider-composition.ts',line:188,column:4}]);assert.equal(Object.hasOwn(c,'message'),false);assert.equal(Object.hasOwn(c,'stack'),false);}
+});
+test('SYN diagnostic retains precommit and uncertain recovery cause through the existing safe wrapper without CAS replay',async t=>{
+ for(const options of [{guard:false},{unknownCommit:true,unknownAbsent:true}]){
+  const f=await syn26Fixture(t,options);let error;try{await withB07Syn26Auth1Continuation({...f,afterRenewal:async()=>{throw Error('MUST_NOT_RUN');}});}catch(e){error=e;}
+  assert.ok(error.syn26Failure.diagnostic);assert.equal(error.syn26Failure.diagnostic.phase,options.guard===false?'CURRENT_ADMISSION':'SAME_RAM_READONLY_COMMIT_RECOVERY');
+  assert.equal(error.syn26Failure.diagnostic.errorCode,options.guard===false?'B07_SYN26_CURRENT_GUARDS_OR_PRIVILEGES_CHANGED':'B07_SYN26_CAS_READBACK_CHANGED');
+  assert.equal(f.state.updates,options.guard===false?0:1);assert.equal(f.state.logins,0);assert.equal(JSON.stringify(error.syn26Failure).includes(f.state.hash),false);
+ }
+});
+test('SYN diagnostic actual parent error keeps safe prior phase while closing setup and doing no credential work',async t=>{
+ const f=await syn26Fixture(t),dir=await mkdtemp(join(tmpdir(),'b07-syn-diagnostic-'));t.after(()=>rm(dir,{recursive:true,force:true}));const path=join(dir,'PRIOR.json'),bytes=Buffer.from('{}');await writeFile(path,bytes,{mode:0o600});
+ const ref={path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};const plan={...f.input,contract:'B07_SYN26_QA_AUTH1_CONTINUATION_PARENT_V1',sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,outputDirectory:SYN26_CONTINUATION_OUTPUT,purposeGateFile:join(SYN26_CONTINUATION_OUTPUT,'CURRENT-PURPOSE-GATE.json'),priorTerminalResult:ref,priorLifecycle:ref};
+ let error;try{await runB07ExistingSyn26SessionContinuationParent({plan,setupClient:f.client,withRecoveryClient:f.withRecoveryClient});}catch(e){error=e;}
+ assert.equal(error.syn26ParentFailure.phase,'PRIOR_TERMINAL');assert.equal(error.syn26ParentFailure.errorCode,'B07_SYN26_ORIGINAL_TERMINAL_BOUNDARY_REQUIRED');assert.equal(f.state.setupEnded,1);assert.equal(f.state.updates,0);assert.equal(f.calls.length,0);
+});
