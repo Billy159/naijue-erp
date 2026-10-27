@@ -1,0 +1,59 @@
+{
+  "reviewId": "QB467",
+  "task": "SOURCE755 CORE cutoff exacttimestamp representation affectedprovider increment",
+  "decision": "PASS_FIXED_TWO_LEAF_SOURCE_ONLY_ACTUAL_R1_PREFLIGHT_PENDING",
+  "fixedCommit": "3dd3ec824cdc6c9c70c672ee702413b50285cde1",
+  "sourcePins": [
+    {
+      "path": "scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 131559,
+      "sha256": "35137b9f9c1b7a38f36cd8ee91c4aac7a9c0c440a07fd1e1355563d4ca159107"
+    },
+    {
+      "path": "scripts/import-v3/production-source-provider26.test.mjs",
+      "bytes": 171907,
+      "sha256": "87fc724c3dba0604a42f828e740af4c01d472a46e8d2615d4d3b6a0dc96c4a78"
+    }
+  ],
+  "testResultRef": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice467-source755-core-cutoff-equality/TARGETED-TEST-RESULT.json",
+    "bytes": 330,
+    "sha256": "9978797be13d794a67580a5037ef324b5d5cb5ea4998cf0e706b119c1ce68f1b"
+  },
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED",
+  "Standards": {
+    "findings": [],
+    "checks": [
+      "Privatehelper only; originalexactstring branchretained. NoexportedAPI/sourceDTO/hash/callercontract/grant/SQL/store changes.",
+      "Inverse deletingnewhelper andrestoringonecomparison restoreswholepreincrementproviderbyteforbyte. HostexactSOURCE749 unchanged."
+    ]
+  },
+  "Spec": {
+    "findings": [],
+    "checks": [
+      "Only completeCOREprojection cutoffAt comparison changedfromrawequalityto privatecoreCutoffMatches26; otherCOREidentity/target/publicationAuthorized/missing/original22claim guards identical.",
+      "Whenexactstringsdiffer,newbranchacceptsonlyPGUTCwhole-second YYYY-MM-DD HH:mm:ss+00 andexplicitzonedISOwhole-second YYYY-MM-DDTHH:mm:ssZor±HH:mm. FiniteDateparse+localwallclockISOroundtrip rejectsinvalidcalendar/time normalization.",
+      "ComputedUTCmustremainexact4digit-yearwhole-secondISO andrenderbacktoexactoriginalPGtext; nofractionrounding/missingtimezone/unknownPGoffset/precision/coercion accepted. Exactlegacystrings—includingpreviousacceptedprecisefractionliteral—remainonunchangedexactpath.",
+      "SameinstantPG2026-10-04 04:00:00+00 matchesbound2026-10-04T12:00:00+08:00; UTCZ and-04:00 equivalentrepresentationsalsoPASS. Wrongsecond/missingzone/PGfraction/unknownoffset/invalidcalendar andfractionalboundmismatchreject.",
+      "Inputs/sourceCOREfilebytes/ISO binding/authorizedPayloadHash/DTO/109originalcommands andrequestkeys notmutated. Fixisconsumer-sideCOREproofcomparison only; no148sourcepreparation orcanonicalDATAderivationchange."
+    ]
+  },
+  "tests": {
+    "actualQbRun": "Only3newtargetedtests executed:3PASS0FAIL0SKIP/Node24.21.0. Tempfixture andsourceauthorityfakes only, noPG/server/business source bodies.",
+    "originalCoverageReused": "QB458/461/464 sourceandruntime/120module/currentchain notrerun."
+  },
+  "runtimeAndVersionHandoff": [
+    "CurrentCONSUMER_PROVIDER ref mustupdate to131559/35137b9f9c1b7a38f36cd8ee91c4aac7a9c0c440a07fd1e1355563d4ca159107 withoriginalSOURCE730baseline retained; consumer-review evidencechain includesQB458plusQB467. CONSUMER_HOST remainsSOURCE74940653/ed6ee18c.",
+    "SOURCE755only fixesCOREproof timestamprepresentation; actualR1 preflight/issuer/currentgrant/full148evidence/original109uncommittedsuffix stillmustpassactualcontrolledexecution. MetadatareviewQB464doesnotgrantMAINorPUBLISH.",
+    "152actualCORE_DATA_REQUIREDpreflightfailure remainsrecorded, 0MAIN/PUBLISH forfailedattempt. NoactualR1success/performanceclaimfromfinitefixture."
+  ],
+  "adoptedParallelResult": "C/T45 tasklevel03companionactualPASS adopted: real23505+firstledger/balance+wholeROLLBACK/0COMMIT; twoearliernormalcasePASS notrerun. Noadditionaltechnicalreview performedbyQB467.",
+  "sourceChangedByQB": false,
+  "databaseOrRemoteAction": false,
+  "actualR1PreflightRun": false,
+  "actualMainOrPublish": false,
+  "actualPerformanceMeasured": false,
+  "businessAcceptance": false,
+  "realImportExecutionAuthorized": false
+}
