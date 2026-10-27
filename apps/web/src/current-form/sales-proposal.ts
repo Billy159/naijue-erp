@@ -94,6 +94,22 @@ export function salesProposalMoney(draft: Omit<SalesProposal, 'lines'> & { reado
       differenceMinor: settled === null ? null : (net - settled).toString(), balanced: settled !== null && net === settled };
   } catch { return null; }
 }
+/** Visible linked fields only; the original pricingRule remains the SAVE authority.
+ * Keep raw unit-price/discount input, including incomplete text, untouched. */
+export function salesProposalPriceDisplay(row:SalesProposalPricingLine):{dealPrice:string;discount:string}{
+ if(row.isGift)return {dealPrice:'0.00',discount:'0'};
+ const yuan=(v:bigint)=>`${v/100n}.${String(v%100n).padStart(2,'0')}`;
+ if(row.pricingRule==='DISCOUNT'){
+  try{
+   if(row.product.retailPrice===null||!/^\d{1,2}(?:\.\d)?$/.test(row.discount.trim()))throw Error();
+   const [whole,fraction='0']=row.discount.trim().split('.'),tenths=Number(whole)*10+Number(fraction);
+   return {dealPrice:yuan(discountUnitPrice(minorAmount(amount(row.product.retailPrice).toString()),tenths)),discount:row.discount};
+  }catch{return {dealPrice:'',discount:row.discount};}
+ }
+ let discount='';
+ try{const reference=row.product.retailPrice===null?0n:amount(row.product.retailPrice);if(reference>0n){const tenths=(amount(row.dealPrice)*100n+reference/2n)/reference;discount=tenths%10n===0n?String(tenths/10n):`${tenths/10n}.${tenths%10n}`;}}catch{/* Unknown input stays blank. */}
+ return {dealPrice:row.dealPrice,discount};
+}
 /** Local sales/independent return/exchange proposals. Never creates native numbers/IDs, barcode facts,
  * minimum-price authority, approval eligibility, inventory effects or commands. */
 export class SalesProposalSession {

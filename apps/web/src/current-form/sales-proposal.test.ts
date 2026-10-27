@@ -180,3 +180,31 @@ test('SAVE discount quote uses integer pennies for large amounts, signed returns
  h.session.updateLine(sku.id,{isGift:true,zeroConfirmed:false});assert.equal(h.session.saveProposal(null)?.lines[0]!.dealPrice,null);
  h.context.clear();
 });
+
+test('exchange price display follows discount/unit price/gift exactly while preserving original SAVE intent and cancel',async()=>{
+ const {salesProposalPriceDisplay,salesProposalMoney}=await import('./sales-proposal.ts');const h=setup({},'239.00');await fill(h.session);const key=h.session.getSnapshot().draft.lines[0]!.key;
+ h.session.setBusinessType('RETURN');h.session.updateLine(key,{quantity:'-1',dealPrice:'239',pricingRule:'DISCOUNT',discount:'5'});
+ let row=h.session.getSnapshot().draft.lines[0]!;assert.deepEqual(salesProposalPriceDisplay(row),{dealPrice:'119.50',discount:'5'});assert.equal(salesProposalMoney({...h.session.getSnapshot().draft,lines:[row]})?.grossMinor,'-11950');assert.equal(h.session.saveProposal(null)!.lines[0]!.dealPrice,'119.50');assert.equal(row.dealPrice,'239','display never overwrites original input');
+ h.session.updateLine(key,{dealPrice:'200',pricingRule:'UNIT_PRICE'});row=h.session.getSnapshot().draft.lines[0]!;assert.deepEqual(salesProposalPriceDisplay(row),{dealPrice:'200',discount:'8.4'});
+ h.session.updateLine(key,{isGift:true});assert.deepEqual(salesProposalPriceDisplay(h.session.getSnapshot().draft.lines[0]!),{dealPrice:'0.00',discount:'0'});
+ h.session.updateLine(key,{isGift:false});assert.equal(salesProposalPriceDisplay(h.session.getSnapshot().draft.lines[0]!).dealPrice,'200');
+ const before=h.session.getSnapshot().draft;assert.equal(h.session.beginLineEdit(key),true);h.session.updateLineEdit({pricingRule:'DISCOUNT',discount:'0'});assert.equal(salesProposalPriceDisplay(h.session.getSnapshot().lineEdit!).dealPrice,'0.00');h.session.cancelLineEdit();assert.equal(h.session.getSnapshot().draft,before);
+ h.session.setBusinessType('SALE');h.session.updateLine(key,{quantity:'2',pricingRule:'DISCOUNT',discount:'5'});assert.equal(h.session.saveProposal(null)!.lines[0]!.dealPrice,'119.50');
+ h.session.updateLine(key,{discount:'5.'});assert.equal(salesProposalPriceDisplay(h.session.getSnapshot().draft.lines[0]!).dealPrice,'');assert.equal(h.session.saveProposal(null),null);
+ const large={...row,product:{...row.product,retailPrice:'90071992547409.93'},pricingRule:'DISCOUNT' as const,discount:'8'};assert.equal(salesProposalPriceDisplay(large).dealPrice,'72057594037927.94');
+ h.context.clear();
+});
+test('actual proposal form keeps both filled exchange sections visible and renders linked price/gift fields',async()=>{
+ const {build}=await import('esbuild'),{mkdtemp,rm}=await import('node:fs/promises'),{pathToFileURL}=await import('node:url'),{resolve,join}=await import('node:path');
+ const temp=await mkdtemp(resolve('apps/web/src/current-form/.exchange-form-'));
+ try{
+  const output=join(temp,'form.mjs');await build({entryPoints:['apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx'],outfile:output,bundle:true,platform:'node',format:'esm',jsx:'automatic',external:['react','react-dom','react-dom/*'],plugins:[{name:'nonvisual-picker-only',setup(b){b.onLoad({filter:/source-controls\.tsx$/},()=>({loader:'tsx',contents:'export const SourceDate=()=>null;export const SourceSingle=()=>null;'}));b.onLoad({filter:/proposal-picker\.tsx$/},()=>({loader:'tsx',contents:'export const ProposalReference=()=>null;export const ProposalPopup=()=>null;export const ProposalTrigger=p=>p.children;'}));b.onLoad({filter:/native-dialog\.tsx$/},()=>({loader:'tsx',contents:'export const SaleDialog=p=><div>{p.children}{p.footer}</div>;'}));}}]});
+  const {SalesProposalForm}=await import(pathToFileURL(output).href),{createElement}=await import('react'),{renderToStaticMarkup}=await import('react-dom/server');
+  const {createRequire}=await import('node:module');const {JSDOM}=createRequire(import.meta.url)('jsdom') as {JSDOM:new(html:string)=>{window:{document:Document;close:()=>void}}};
+  const h=setup();await fill(h.session);h.session.setBusinessType('EXCHANGE');const key=h.session.getSnapshot().draft.lines[0]!.key;h.session.updateLine(key,{quantity:'-1',dealPrice:'10'});
+  for(const dir of ['IN','OUT'] as const){const k=h.session.getSnapshot().entries[dir].at(-1)!.key;await h.session.openEntryPicker(dir,'product',k);await h.session.select(product.id);h.session.updateEntry(dir,{dealPrice:'10'},k);}
+  const render=()=>new JSDOM(renderToStaticMarkup(createElement(SalesProposalForm,{session:h.session,scope:h.scope,productReader:{},denied(){},actions:null,busy:false})));
+  let dom=render();assert.equal(dom.window.document.querySelectorAll('[data-business-section=out] [data-entry-row]').length,1,'filled inactive entry remains visible');assert.equal(dom.window.document.querySelectorAll('[data-business-section=in] [data-entry-row]').length,3,'saved line, filled entry and active blank input');dom.window.close();
+  h.session.updateLine(key,{pricingRule:'DISCOUNT',discount:'5',isGift:true});dom=render();const row=dom.window.document.querySelector(`[data-entry-row="${key}"]`)!;assert.equal(row.querySelector('input[aria-label="本行成交单价"]')?.getAttribute('value'),'0.00');assert.equal(row.querySelector('input[aria-label="本行折扣"]')?.getAttribute('value'),'0');assert.equal(row.querySelector('.sale-gift')?.textContent,'赠品');dom.window.close();h.context.clear();
+ }finally{await rm(temp,{recursive:true,force:true});}
+});
