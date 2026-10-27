@@ -951,3 +951,24 @@ test('source742 provider full step routing keeps each group authorizer and uses 
  const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);
  try{await s.preflight();const steps=await Array.fromAsync(s.steps());assert.deepEqual(steps.filter(x=>x.kind==='CLOSURE').map(x=>x.payload),[expected]);assert.equal(steps.at(-1).payload.action,'IMPORT_PUBLISH');assert.equal(loads,1);assert.equal(gets,1);assert.equal(f.trace.sourceChecks,10);await s.adoptedClosure.authorizeStage(expected);assert.equal(stageChecks,1);}finally{await s.close();}
 });
+
+test('source152 CORE cutoff accepts original PostgreSQL UTC whole-second readback without changing source or ISO binding',async t=>{
+ for(const cutoffAt of ['2026-10-04T12:00:00+08:00','2026-10-04T04:00:00Z','2026-10-04T00:00:00-04:00']){
+  const f=await productionAuthorityFiles(t,{binding:{cutoffAt},mutateProjection:p=>{p.cutoffAt='2026-10-04 04:00:00+00';}});
+  const before=structuredClone(f.inputs),{readFile}=await import('node:fs/promises'),body=await readFile(f.coreRef.path);
+  const a=await f.open();try{await a.assertExecutionAllowed(f.binding);assert.equal(f.binding.cutoffAt,cutoffAt);assert.deepEqual(f.inputs,before);assert.deepEqual(await readFile(f.coreRef.path),body);}finally{await a.close();}
+ }
+});
+test('source152 CORE cutoff refuses different instant, missing timezone or unfamiliar fractional/offset representation',async t=>{
+ for(const cutoffAt of ['2026-10-04 04:00:01+00','2026-10-04 04:00:00','2026-10-04 04:00:00.000001+00','2026-10-04 04:00:00.000+00','2026-10-04 05:00:00+01','2026-10-04 04:00:00+00:00','2026-10-04T04:00:00Z','2026-02-30 04:00:00+00']){
+  const f=await productionAuthorityFiles(t,{mutateProjection:p=>{p.cutoffAt=cutoffAt;}});await assert.rejects(f.open(),{code:'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED'});
+ }
+});
+
+test('source152 CORE cutoff retains exact-string support and never rounds fractional binding or normalizes invalid calendar dates',async t=>{
+ const precise='2026-10-04T12:00:00.000001+08:00';
+ const exact=await productionAuthorityFiles(t,{binding:{cutoffAt:precise}}),a=await exact.open();await a.close();
+ for(const[bound,projected]of [[precise,'2026-10-04 04:00:00+00'],['2026-10-04T12:00:00.001+08:00','2026-10-04 04:00:00+00'],['2026-02-30T12:00:00+08:00','2026-03-02 04:00:00+00']]){
+  const f=await productionAuthorityFiles(t,{binding:{cutoffAt:bound},mutateProjection:p=>{p.cutoffAt=projected;}});await assert.rejects(f.open(),{code:'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED'});
+ }
+});

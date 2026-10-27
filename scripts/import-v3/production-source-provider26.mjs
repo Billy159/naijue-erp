@@ -54,6 +54,18 @@ const stages=Object.freeze({PARTIES:['PARTY','chunks'],CATALOGUE:['CATALOGUE','c
  BARCODES:['BARCODE','rows'],STOCK_CONTRIBUTORS:['STOCK_CONTRIBUTOR','groups'],PAYMENT:['PAYMENT','chunks'],HEADERS:['HEADER','chunks'],
  SALES_DETAILS:['SALES_DETAIL','chunks'],SETTLEMENTS:['SETTLEMENT','chunks'],TRANSFER_LINES:['TRANSFER_LINES','chunks']});
 const same=(a,b)=>['dev','ino','mode','size','mtimeMs','ctimeMs'].every(k=>a[k]===b[k]);
+/** Compare only the observed PG UTC whole-second rendering with an explicit
+ * zoned ISO whole-second binding. Evidence bytes/DTO values remain untouched. */
+function coreCutoffMatches26(projected,bound){
+ if(projected===bound)return true;
+ if(typeof projected!=='string'||typeof bound!=='string'
+  ||!/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\+00$/.test(projected)
+  ||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/.test(bound))return false;
+ const local=bound.slice(0,19),wall=Date.parse(local+'Z'),instant=Date.parse(bound);
+ if(!Number.isFinite(wall)||!Number.isFinite(instant)||new Date(wall).toISOString()!==local+'.000Z')return false;
+ const utc=new Date(instant).toISOString();
+ return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.000Z$/.test(utc)&&projected===utc.slice(0,10)+' '+utc.slice(11,19)+'+00';
+}
 /** A signed finite logical-file map changes IO location only. Identity is the
  * exact original logical path AND original bytes/SHA, not basename/prefix. */
 export function sourceFileResolver26(recipe){
@@ -922,7 +934,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
   if(projectionData.dataComplete===true){
    must(projectionData.publicationAuthorized===false&&Array.isArray(projectionData.missing)&&projectionData.missing.length===0
     &&exact(projectionData.identity,['batchId','actorAccountId','fixedSourceNamespace','selectionSha256','coreReceiptId','coreSourceDigest'])
-    &&Object.entries(projectionData.identity).every(([key,value])=>binding[key]===value)&&projectionData.cutoffAt===binding.cutoffAt
+    &&Object.entries(projectionData.identity).every(([key,value])=>binding[key]===value)&&coreCutoffMatches26(projectionData.cutoffAt,binding.cutoffAt)
     &&projectionData.target?.database===binding.target.database&&projectionData.target.role===binding.target.role
     &&Array.isArray(projectionData.originalCoreClaimRecordIds)&&new Set(projectionData.originalCoreClaimRecordIds).size===22,'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED');
    projection={authorizedPayloadHash:binding.authorizedPayloadHash,coreMembers:projectionData.coreMembers,staffProofs:projectionData.staffProofs,coreMaintenanceBinding:projectionData.coreMaintenanceBinding};

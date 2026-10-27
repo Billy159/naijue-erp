@@ -6524,5 +6524,15 @@
     "D1": "approved-normal-history-v16.mjs/test and qa-identity-parent.mjs/test only, control originals and safe mirrors; lease identity preserving rollback companion harness fix.",
     "D3": "production-source-host.mjs/test only logical-to-physical initial decision/review read; provider26 pair remain744 frozen.",
     "T45": "Sole server/database/build/release owner; original154 patches alreadyCOMMITTED, no replay; no MAIN/PUBLISH by this source checkpoint."
+  },
+  "currentContinuation755": {
+    "owner": "D3",
+    "scope": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs"
+    ],
+    "status": "DELIVERED_FROZEN_FOR_QB",
+    "reason": "152 proven exact textual cutoff mismatch; no schema/source data/hash/key changes",
+    "controllerRecordsOwner": "C"
   }
 }
