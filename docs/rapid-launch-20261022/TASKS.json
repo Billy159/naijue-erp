@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 757,
+    "round": 758,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation757",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation758",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -14505,6 +14505,14 @@
       "review": "QB467 fixed PASS only SOURCE755 cutoff increment",
       "next": "Original T45 revised carrier + exact external C authority then bounded actual; no replay152/148",
       "ui": "normal34 SYNTHETIC_ONLY; no new pagePASS/formalrelease"
+    },
+    "currentContinuation758": {
+      "summary": "SOURCE758：明确修订后继158固定完成，QB467/458/461/464有效证据采用。六数据对象及109原业务命令与152完全相同；adoptedPreparation仅更新新158证明路径与provider755/467审核引用，scope与148receipt字节哈希不变。C首次写入前整体ref相等断言停止，未落授权，提前已落消息已纠正；随后核准确差异，真实grant37014/76445b63和ADOPTION4281/0631f1bb已成功写入。原T45接续首次有界提交，09Z4096/noAPP切换；实际结果仍待，不重152/148。SOURCE757远端精确24a93637daf910d9b8dcb02d6ae1d07c3717e3a0。",
+      "job": "t45-source755-adopted148-consumer-continuation-20261027-158",
+      "state": "C_EXACT_AUTHORITY_WRITTEN_ORIGINAL_T45_FIRST_SUBMISSION_PENDING",
+      "next": "Actual158 preflight/full adopted148 checks/109 original-key continuation then publish result; do not infer success from grant",
+      "businessAcceptance": false,
+      "applicationSwitch": false
     }
   },
   "historicalContinuation500Before716": {
