@@ -6544,7 +6544,10 @@
         "adapters/postgres/src/native-core-staged-prefix-bind.ts",
         "adapters/postgres/src/native-import-accounting-capability.ts"
       ],
-      "tests": "Only exact corresponding existing or new prefix/issuer/store targeted tests, D1 registers leaf names before writing",
+      "tests": [
+        "tests/native-core-staged-prefix-bind.test.ts",
+        "tests/native-core-staged-prefix-store.test.ts"
+      ],
       "scope": "Approved single routine body successor, exact original8table member/native evidence at original transaction lease and auditJSON; stable private seam to D3; no shared command/109keys/schema/ACL change"
     },
     "D3": {
@@ -6555,7 +6558,8 @@
         "scripts/import-v3/production-source-host.test.mjs",
         "scripts/import-v3/run.mjs"
       ],
-      "scope": "Original independent authority prefix expected/proof port and original148/109identity bindings; align D1 private seam before dependent writes; no SQL/store/issuer mutation"
+      "scope": "Original independent authority prefix expected/proof port and original148/109identity bindings; align D1 private seam before dependent writes; no SQL/store/issuer mutation",
+      "sourceIdentity": "v22 exact path/pins only: original provider/host roles, CONSUMER_RUN ./run.mjs, CONSUMER_PREFIX_STORE exact store, CONSUMER_PREFIX_ISSUER exact issuer with real baseline/current; ADDED_PREFIX_ADAPTER exact native-core-staged-prefix-bind.ts baseline:null/current real. Original v21 branch/other5 criticalCODE/recipeCODE/79nonCODE/111/109 unchanged. QB samechangedclosure review."
     },
     "T45": "Sole server/database/build/deploy owner; preserves169/170/171/172 terminal, no new runtime attempt before source/review/currentcatalog/grant fixed",
     "QB": "Independent changed source/profile scope only; source/actual distinction; no duplicate old passes",

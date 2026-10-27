@@ -338,3 +338,14 @@ test('source754 legacy physical metadata without resolver still validates before
  await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/HOST_REFERENCES_VERIFIED_BEFORE_GROUPS/);
  assert.deepEqual(globalThis[f.marker].events,['source-groups-preflight']);assert.equal(globalThis[f.marker].closedGate,true);
 });
+
+test('v22 host captures only a private full-continuation prefix source method and never reads caller getters',async()=>{
+ const b={...job26().binding,phase:'FULL_SOURCE_CONTINUATION_26_V1',coreSourceDigest:sha('c'),coreReceiptId:id(999)},s=session26Fixture();s.bootstrap26=null;
+ s.adoptedClosure={async expected(){},async authorizeStage(){},async authorizePublish(){}};
+ let calls=0;s.stagedPrefixBinding26={async capture(command){calls++;return {original:command};}};
+ const captured=captureNativeSourceSession26(s,b);s.stagedPrefixBinding26.capture=()=>{throw Error('LATE_REPLACEMENT');};
+ assert.deepEqual(await captured.stagedPrefixBinding26.capture({synthetic:'original'}),{original:{synthetic:'original'}});assert.equal(calls,1);
+ for(const value of [true,{capture:true},{capture:async()=>{},verified:true}])assert.throws(()=>captureNativeSourceSession26({...s,stagedPrefixBinding26:value},b));
+ let gets=0;const value=Object.defineProperty({},'capture',{enumerable:true,get(){gets++;return async()=>{};}});assert.throws(()=>captureNativeSourceSession26({...s,stagedPrefixBinding26:value},b));assert.equal(gets,0);
+ const noAdopted={...s};delete noAdopted.adoptedClosure;assert.throws(()=>captureNativeSourceSession26(noAdopted,b),/PREFIX_SCOPE/);
+});

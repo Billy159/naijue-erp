@@ -166,7 +166,7 @@ function capturedStep26(original, b) {
  * source host must supply the actual D1 issued pool+capability and genuine full
  * source/49 bootstrap authorization. This module issues none of those grants. */
 export function createPostgresImportExecutor26(options) {
-  const o = bag(options, ['pool','binding','authorization','now','runtime26','bootstrap26',...(Object.hasOwn(options??{},'barcodeSchemeInitialization26')?['barcodeSchemeInitialization26']:[])]);
+  const o = bag(options, ['pool','binding','authorization','now','runtime26','bootstrap26',...(Object.hasOwn(options??{},'barcodeSchemeInitialization26')?['barcodeSchemeInitialization26']:[]),...(Object.hasOwn(options??{},'stagedPrefixBinding26')?['stagedPrefixBinding26']:[])]);
   must(typeof o.pool?.connect === 'function' && typeof o.now === 'function', 'IMPORT_EXECUTION_PROVIDER_REQUIRED');
   const runtime26 = checkedNativeRuntime26Capability(o.runtime26);
   must(runtime26 !== undefined, 'IMPORT_EXECUTION26_RUNTIME_REQUIRED');
@@ -202,6 +202,7 @@ export function createPostgresImportExecutor26(options) {
     store: new PostgresCutoffImportStore(o.pool, { runtime26, nativeAccountingAuthorization: { assertAllowed: (...args) => completed(a.authorizeNativeCommand, ...args) },
       coreAuthorization:{assertAllowed:(...args)=>completed(a.authorizeNativeCommand,...args)},
       ...(Object.hasOwn(o,'barcodeSchemeInitialization26')?{barcodeSchemeInitialization26:o.barcodeSchemeInitialization26}:{}),
+      ...(Object.hasOwn(o,'stagedPrefixBinding26')?{stagedPrefixBinding26:o.stagedPrefixBinding26}:{}),
       ...(bootstrap?{stageBootstrap26: { stageNewBatch26: (...args) => completed(bootstrap.stageNewBatch26, ...args) }}:{}) }) });
   return async original => {
     const step = capturedStep26(original,b);

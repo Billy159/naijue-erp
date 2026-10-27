@@ -1,0 +1,57 @@
+{
+  "jobId": "t45-r1-initialization-record-metadata-readonly-20261027-173",
+  "recordedAtUtc": "2026-10-27T12:35:53.750440+00:00",
+  "job": {
+    "jobId": "t45-r1-initialization-record-metadata-readonly-20261027-173",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-c418b20d339d",
+    "atUTC": "2026-10-27T12:35:19.480849+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.0676609380170703,
+    "exports": [
+      "initialization-record-metadata.json"
+    ],
+    "finishedAtUTC": "2026-10-27T12:35:19.581509+00:00"
+  },
+  "actual": {
+    "contentExported": false,
+    "databaseAccess": false,
+    "finishedAtUtc": "2026-10-27T12:35:19.567595+00:00",
+    "jobId": "t45-r1-initialization-record-metadata-readonly-20261027-173",
+    "limits": "Metadata and file digest only; wrapper body not parsed/exported; no PG, initializer, source scan or permission change.",
+    "oldRunnerExecuted": false,
+    "originalFileModified": false,
+    "record": {
+      "bytes": 4214,
+      "ctimeNs": 1792999746488865115,
+      "device": 66304,
+      "gid": 0,
+      "inode": 17966951,
+      "mode": "0o400",
+      "mtimeNs": 1792999746488865115,
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-six-scheme-init-warehouse-count-20261026-121/inputs/private-init-original-request.json",
+      "regular": true,
+      "sha256": "dcf816f1edbc5f2e2cf44b47888910cd2ac5450f9f4040d747e3a76b6027f0c2",
+      "stableBeforeAfter": true,
+      "symlink": false,
+      "uid": 0
+    },
+    "status": "COMPLETED_SINGLE_INITIALIZATION_RECORD_METADATA_ONLY"
+  },
+  "evidence": {
+    "initialization-record-metadata.json": {
+      "bytes": 984,
+      "sha256": "b9b465d69dd1111e3c19ce6d4ea8292ca891b8ee44f92f334dbf711318e4e564"
+    },
+    "job.json": {
+      "bytes": 539,
+      "sha256": "694a67859eb2a3668c53b7466b7fa2b223ad9f7ba45fb271389349af7b9e3918"
+    }
+  },
+  "limits": "Single approved original file metadata only; no database, body parsing/export, initializer, guard, authority or APP change."
+}

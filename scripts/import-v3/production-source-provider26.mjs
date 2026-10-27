@@ -154,11 +154,19 @@ export function unclaimedNativeStage26({group,payload,progress}){
  * code, never derived from the input/CORE/source manifest's own checksum.
  * RETAINED recipes consume already captured prepared/closure rows under that
  * authority; REVIEWED recipes invoke the actual original readers below. */
+/** The original native-SKU writer's eleven immutable import_record values.
+ * The caller supplies an already validated/pinned original prepared SKU. */
+export function stagedPrefixSkuRecord22(prepared){
+ const r=prepared.importRecord,s=prepared.canonicalSource;
+ return {relation:'import_record',key:r.id,projection:{id:r.id,import_batch_id:prepared.batchId,source_entity_type:'SKU',source_key:s.sourceKey,
+  source_record_hash:s.rowSha256,source_file_ref:s.fileRef,target_type:'SKU',target_id:prepared.nativeSku.id,status:'IMPORTED',
+  decision_reason:r.decisionReason,reviewed_at:r.reviewedAt}};
+}
 export function createProductionSourceProvider26(inputs,authority){return createOriginalProductionSources26(inputs,{authority});}
 function createOriginalProductionSources26(inputs,{authority,sourcePreparation}){
  capture(inputs);const fixed=structuredClone(inputs),inputDigest=capture(fixed);
  const a=sourcePreparation?null:methods(authority,['verifyInputs','assertGroupAllowed','assertExecutionAllowed','authorizeStep','assertAllowed','authorizeNativeCommand',
-  'openRetained','capturedOptions','openRetainedClosure','coreProjection','mainCommands','authorizeProductSource','close','now',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedClosure']:[])]);
+  'openRetained','capturedOptions','openRetainedClosure','coreProjection','mainCommands','authorizeProductSource','close','now',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedClosure']:[]),...(Object.hasOwn(fixed,'stagedPrefixBinding26')?['captureStagedPrefixBinding26']:[])]);
  must(fixed.version==='PRODUCTION_SOURCE_PROVIDER26_INPUT_V1'&&fixed.binding?.phase==='FULL_SOURCE_CONTINUATION_26_V1'
   &&(sourcePreparation?fixed.binding.authorizedPayloadHash===null||hash(fixed.binding.authorizedPayloadHash):hash(fixed.binding.authorizedPayloadHash))&&hash(fixed.binding.coreSourceDigest)&&fixed.binding.authorizedPayloadHash!==fixed.binding.coreSourceDigest,
   'PRODUCTION_PROVIDER26_FULL_BINDING_REQUIRED');
@@ -259,7 +267,7 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
     closureReader=makeClosure({original,index:{...manifest,records,permutations},readRecord,verify:verifySource,close:async()=>{},current:()=>{current();must(!closureSignal?.aborted,'PRODUCTION_BARCODE26_CLOSED');}});
     for(const entry of records){must(!members.has(entry.sourceRowId),'PRODUCTION_BARCODE26_MEMBERSHIP');members.set(entry.sourceRowId,entry);ranges.set(entry.prepared.offset,entry);}
     preparedFile=await hold(manifest.artifacts.prepared,manifest.selectedRows*4194304);current();await verifySource();
-    return{verify:verifySource,async authorize(row){current();capture(row);const entry=members.get(row?.source?.id);must(entry,'PRODUCTION_BARCODE26_MEMBERSHIP');checkPrepared(row,entry);await verifySource();},
+    return{verify:verifySource,async prefixSchemes26(){await verifySource();return structuredClone(permutations.schemes.rows);},async authorize(row){current();capture(row);const entry=members.get(row?.source?.id);must(entry,'PRODUCTION_BARCODE26_MEMBERSHIP');checkPrepared(row,entry);await verifySource();},
      async *rows(){current();must(!rowsStarted,'PRODUCTION_BARCODE26_SINGLE_ROWS');rowsStarted=true;await verifySource();
       for(const entry of records){const row=await readRecord({file:'prepared',offset:entry.prepared.offset,bytes:entry.prepared.bytes,sha256:entry.prepared.sha256});current();checkPrepared(row,entry);yield row;current();}await verifySource();},
      async openClosure(scope,ctx){current();must(!closureStarted&&capture(scope)===capture(fixed.closureScope)&&ctx?.group==='BARCODES'&&ctx.signal instanceof AbortSignal&&!ctx.signal.aborted,'PRODUCTION_BARCODE26_CLOSURE_SCOPE');
@@ -378,11 +386,11 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
     &&spec.sourceRows===fixed.closureScope.expectedSourceEntityCounts[group==='PRODUCTS'?'PRODUCT':group==='SKUS'?'SKU':'INVENTORY_BASELINE']
     &&spec.typedRows===(group==='PRODUCTS'?spec.sourceRows:group==='SKUS'?spec.records+spec.sourceRows:fixed.closureScope.expectedCounts.import_stock_contributor)
     &&Array.isArray(spec.files)&&spec.files.length>0&&spec.files.length<=(group==='PRODUCTS'?30:1),'PRODUCTION_RETAINED_NATIVE26_SPEC');
-   let ended=false,closingSource,build,closureReader,closureSignal,iterated=false;const held=new Map(),entries=[],members=new Map();
+   let ended=false,closingSource,build,closureReader,closureSignal,iterated=false;const held=new Map(),entries=[],members=new Map(),skuRecordOrder=[];let skuRecordsStarted=false;
    const current=()=>{active();must(!ended&&!closureSignal?.aborted,'PRODUCTION_RETAINED_NATIVE26_CLOSED');};
    const closeSource=async()=>{if(closingSource)return closingSource;ended=true;closingSource=(async()=>{const errors=[];
     if(closureReader)try{await closureReader.close();}catch(e){errors.push(e);}for(const f of held.values())try{await f.fd.close();}catch(e){errors.push(e);}
-    held.clear();entries.length=0;members.clear();if(errors.length)throw new AggregateError(errors,'Retained native cleanup failed');})();return closingSource;};
+    held.clear();entries.length=0;members.clear();skuRecordOrder.length=0;if(errors.length)throw new AggregateError(errors,'Retained native cleanup failed');})();return closingSource;};
    disposers.push(closeSource);
    async function verifyFiles(){current();await verify();for(const f of held.values()){must(same(f.stat,await f.fd.stat())&&same(f.stat,await lstat(f.ref.path)),'PRODUCTION_RETAINED_NATIVE26_CHANGED');current();}}
    const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -399,6 +407,7 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
       const entry=helper.captureRetainedNativeClosureRecord26(original,{group,binding,ref,prepared});
       if(sourcePreparation)must(sourcePreparation.observePrepared(group,prepared,spec.files[Number(file)],entry)===undefined,'SOURCE_PREPARATION26_OBSERVER_RESULT');
       must(!members.has(entry.preparedHash),'PRODUCTION_RETAINED_NATIVE26_DUPLICATE');members.set(entry.preparedHash,entry);records.push(entry);offset+=bytes.length;
+      if(group==='SKUS'&&Object.hasOwn(fixed,'stagedPrefixBinding26'))skuRecordOrder.push({id:prepared.importRecord.id,ref,preparedHash:entry.preparedHash});
       sourceRows+=entry.sources.length;typedRows+=entry.typed.length;must(records.length<=spec.records&&sourceRows<=spec.sourceRows&&typedRows<=spec.typedRows,'PRODUCTION_RETAINED_NATIVE26_COUNT');};
      if(group==='PRODUCTS'){must(f.ref.bytes<=4194304,'PRODUCTION_RETAINED_NATIVE26_RECORD_BOUND');const bytes=Buffer.allocUnsafe(f.ref.bytes);while(position<bytes.length){const got=await f.fd.read(bytes,position,bytes.length-position,position);current();must(got.bytesRead>0,'PRODUCTION_RETAINED_NATIVE26_EOF');position+=got.bytesRead;}digest.update(bytes);append(bytes);}
      else{while(position<f.ref.bytes){const bytes=Buffer.allocUnsafe(Math.min(262144,f.ref.bytes-position)),got=await f.fd.read(bytes,0,bytes.length,position);current();must(got.bytesRead>0,'PRODUCTION_RETAINED_NATIVE26_EOF');position+=got.bytesRead;const read=bytes.subarray(0,got.bytesRead);digest.update(read);pending=Buffer.concat([pending,read]);let end;
@@ -419,7 +428,13 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
      const stat=await lstat(ref.path);current();must(stat.isFile()&&!stat.isSymbolicLink()&&(stat.mode&0o077)===0&&stat.size===ref.bytes,'PRODUCTION_RETAINED_NATIVE26_PRIVATE_FILE');
      const fd=await open(ref.path,constants.O_RDONLY|constants.O_NOFOLLOW);if(ended||closed||signal.aborted){await fd.close();current();}held.set(String(n),{ref,stat,fd});current();must(same(stat,await fd.stat()),'PRODUCTION_RETAINED_NATIVE26_CHANGED');}
     await verifyFiles();
-    return {verify:verifyFiles,...(sourcePreparation?{async prepareFacts(){await ensureIndex();await verifyFiles();}}:{}),async authorize(prepared){await ensureIndex();current();const entry=members.get(capture(prepared));must(entry&&entry.fingerprint===prepared.fingerprint,'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');
+    return {verify:verifyFiles,...(group==='SKUS'&&Object.hasOwn(fixed,'stagedPrefixBinding26')?{async *skuRecords22(){
+     current();must(!skuRecordsStarted,'PRODUCTION_PREFIX22_SKU_RECORD_REUSED');skuRecordsStarted=true;await ensureIndex();
+     const ordered=[...skuRecordOrder].sort((a,b)=>Buffer.compare(Buffer.from(a.id),Buffer.from(b.id)));let previous;
+     for(const entry of ordered){current();must(previous===undefined||previous!==entry.id,'PRODUCTION_PREFIX22_SKU_RECORD_DUPLICATE');previous=entry.id;
+      const prepared=await range(entry.ref);must(capture(prepared)===entry.preparedHash,'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');yield stagedPrefixSkuRecord22(prepared);current();}
+     await verifyFiles();
+    }}:{}),...(sourcePreparation?{async prepareFacts(){await ensureIndex();await verifyFiles();}}:{}),async authorize(prepared){await ensureIndex();current();const entry=members.get(capture(prepared));must(entry&&entry.fingerprint===prepared.fingerprint,'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');
       const actual=helper.captureRetainedNativeClosureRecord26(original,{group,binding,ref:entry.ref,prepared});must(capture(actual)===capture(entry),'PRODUCTION_RETAINED_NATIVE26_MEMBERSHIP');await verifyFiles();},
      async *[stages[group][1]](){current();must(!iterated,'PRODUCTION_RETAINED_NATIVE26_SINGLE_STAGE');iterated=true;await ensureIndex();for(const entry of entries){const prepared=await range(entry.ref);current();yield prepared;current();}await verifyFiles();},
      async openClosure(scope,ctx){current();must(!closureSignal&&capture(scope)===capture(fixed.closureScope)&&ctx?.group===group&&ctx.signal instanceof AbortSignal&&!ctx.signal.aborted,'PRODUCTION_RETAINED_NATIVE26_SCOPE');closureSignal=ctx.signal;await ensureIndex();return closureReader;},close:closeSource};
@@ -474,6 +489,8 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
       reader.authorize=bind.authorizePartyChunk;
      }
      if(sourcePreparation&&Object.hasOwn(raw,'prepareFacts'))reader.prepareFacts=own(raw,'prepareFacts').bind(raw);
+     if(group==='BARCODES'&&Object.hasOwn(fixed,'stagedPrefixBinding26'))reader.prefixSchemes26=methods(raw,['prefixSchemes26']).prefixSchemes26;
+     if(group==='SKUS'&&Object.hasOwn(fixed,'stagedPrefixBinding26'))reader.skuRecords22=methods(raw,['skuRecords22']).skuRecords22;
      readers.set(group,reader);await checked(reader.verify);
   }
   async function preflight(){
@@ -533,6 +550,23 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
    }};
   return {preflight,close,openSources,closureScope:structuredClone(fixed.closureScope),bootstrap26:null,
    ...(Object.hasOwn(fixed,'adoptedPreparation')?{adoptedClosure:Object.freeze({expected:async()=>{must(preflightDone&&adoptedClosure,'PRODUCTION_ADOPTED26_PREFLIGHT');return adoptedClosure.expected();},authorizeStage:async input=>{must(preflightDone&&adoptedClosure,'PRODUCTION_ADOPTED26_PREFLIGHT');return adoptedClosure.authorizeStage(input);},authorizePublish:async command=>{must(preflightDone&&adoptedClosure,'PRODUCTION_ADOPTED26_PREFLIGHT');return adoptedClosure.authorizePublish(command);}})}:{}),
+   ...(Object.hasOwn(fixed,'stagedPrefixBinding26')?{stagedPrefixBinding26:{async capture(command){
+    must(preflightDone&&adoptedClosure,'PRODUCTION_PREFIX22_PREFLIGHT');
+    const proof=await a.captureStagedPrefixBinding26(structuredClone(command));active();
+    const schemeRows=await readers.get('BARCODES').prefixSchemes26();active();
+    const ordered=rows=>[...rows].sort((a,b)=>Buffer.compare(Buffer.from(a.sourceSchemeKey),Buffer.from(b.sourceSchemeKey)));
+    must(capture(ordered(schemeRows))===capture(ordered(proof.schemeRows)),'PRODUCTION_PREFIX22_SCHEMES');
+    const groups=[];let skuTypedComplete=false;
+    for(const name of ['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS']){
+     const original=await readers.get(name).openClosure(structuredClone(fixed.closureScope),{group:name,signal});active();
+     const stream=methods(original,['verify','sourceRows','typedRows','close']);disposers.push(stream.close);
+     groups.push({name,async *sourceRows(){await checked(stream.verify);for await(const row of stream.sourceRows()){active();yield row;}await checked(stream.verify);},
+      async *typedRows(){await checked(stream.verify);for await(const row of stream.typedRows()){active();yield row;}await checked(stream.verify);if(name==='SKUS')skuTypedComplete=true;}});
+    }
+    return {version:'CORE_STAGED_PREFIX_BIND_V22',binding:proof.binding,preparation:proof.preparation,groups,
+     schemes:schemeRows.map(row=>structuredClone(row.native)),schemeInitialization:proof.schemeInitialization,
+     async *skuRecords(){active();must(skuTypedComplete,'PRODUCTION_PREFIX22_SKU_RECORD_ORDER');yield* readers.get('SKUS').skuRecords22();active();}};
+   }}}:{}),
    nativeProductSourceReader:{resolveFile:sourceFileResolver26(fixed.producers.PRODUCTS),async authorize(payload){await checked(a.authorizeProductSource,payload,structuredClone(binding));}},
    now:a.now,
    async assertExecutionAllowed(actual){must(requestHash(actual)===requestHash(binding),'PRODUCTION_PROVIDER26_BINDING_CHANGED');await verify();await checked(a.assertExecutionAllowed,structuredClone(actual));},
@@ -796,16 +830,20 @@ async function loadAdoptedPreparation26({fixed,binding,grant,byPhase,metadata,un
   &&review.decision==='ACCEPT_EXACT_CONSUMER_ONLY_SUCCESSOR'&&review.closureComplete==='SOURCE_DERIVATION_CLOSURE_COMPLETE'&&review.baselineCommit===receipt.sourceCommit
   &&/^[0-9a-f]{40}$/.test(review.baselineCommit)&&Array.isArray(review.modules)&&review.modules.length>=2);
  await metadata(review.independentReview);
+ const prefix22=Object.hasOwn(fixed,'stagedPrefixBinding26');
+ const consumerPaths={CONSUMER_PROVIDER:'./production-source-provider26.mjs',CONSUMER_HOST:'./production-source-host.mjs',
+  ...(prefix22?{CONSUMER_RUN:'./run.mjs',CONSUMER_PREFIX_STORE:'../../adapters/postgres/src/inventory-cutoff-import-store.ts',
+   CONSUMER_PREFIX_ISSUER:'../../adapters/postgres/src/native-import-accounting-capability.ts',ADDED_PREFIX_ADAPTER:'../../adapters/postgres/src/native-core-staged-prefix-bind.ts'}:{})};
  const paths=new Set(),roles=new Set();
  for(const m of review.modules){
-  need(exact(m,['role','baseline','current'])&&['UNCHANGED','CONSUMER_PROVIDER','CONSUMER_HOST'].includes(m.role)&&!paths.has(m.current.path));
-  paths.add(m.current.path);for(const ref of [m.baseline,m.current]){need(exact(ref,['path','bytes','sha256']));const before=await lstat(ref.path),bytes=await pinnedSmall(ref.path,ref.sha256);need(bytes.length===ref.bytes);const st=await lstat(ref.path);need(same(before,st));files.set(ref.path,{ref:structuredClone(ref),stat:st,physicalPath:ref.path});}
+  need(exact(m,['role','baseline','current'])&&(m.role==='UNCHANGED'||Object.hasOwn(consumerPaths,m.role))&&!paths.has(m.current.path));
+  paths.add(m.current.path);if(m.role==='ADDED_PREFIX_ADAPTER')need(m.baseline===null);for(const ref of (m.role==='ADDED_PREFIX_ADAPTER'?[m.current]:[m.baseline,m.current])){need(exact(ref,['path','bytes','sha256']));const before=await lstat(ref.path),bytes=await pinnedSmall(ref.path,ref.sha256);need(bytes.length===ref.bytes);const st=await lstat(ref.path);need(same(before,st));files.set(ref.path,{ref:structuredClone(ref),stat:st,physicalPath:ref.path});}
   if(m.role==='UNCHANGED')need(m.baseline.bytes===m.current.bytes&&m.baseline.sha256===m.current.sha256);
-  else {need(!roles.has(m.role));roles.add(m.role);need(m.current.path===fileURLToPath(new URL(m.role==='CONSUMER_PROVIDER'?'./production-source-provider26.mjs':'./production-source-host.mjs',import.meta.url)));}
+  else {need(!roles.has(m.role));roles.add(m.role);need(m.current.path===fileURLToPath(new URL(consumerPaths[m.role],import.meta.url)));}
  }
- need(roles.size===2);
+ need(roles.size===(prefix22?6:2));
  for(const name of ['../../packages/application/src/history-typed-closure.ts','../../packages/application/src/request-hash.ts','../../packages/application/src/native-import-record-accounting.ts','../import-v2/authorized-history-closure-reader.mjs','./prepare-native-bindings.mjs','./run.mjs']){
-  const path=fileURLToPath(new URL(name,import.meta.url));need(review.modules.some(m=>m.role==='UNCHANGED'&&m.current.path===path));
+  const path=fileURLToPath(new URL(name,import.meta.url));need(review.modules.some(m=>m.role===(prefix22&&name==='./run.mjs'?'CONSUMER_RUN':'UNCHANGED')&&m.current.path===path));
  }
  // Normalize ONLY the five assignments performed by the original bindRealData.
  const derived=structuredClone(original);derived.binding.authorizedPayloadHash=derived.closureScope.authorizedPayloadHash=binding.authorizedPayloadHash;
@@ -856,7 +894,7 @@ async function loadAdoptedPreparation26({fixed,binding,grant,byPhase,metadata,un
  // string; no source rows or externally supplied prehash are accepted.
  const serialized=JSON.stringify(expected),evidencePaths=[...files.keys()];
  const check=async()=>{await verify();for(const path of evidencePaths)await unchanged(path);};
- return Object.freeze({verify:check,async expected(){await check();return structuredClone(expected);},
+ return Object.freeze({verify:check,preparation:Object.freeze({inputDigest:scope.input.sha256,manifestSha256:evidence.manifest.sha256}),async expected(){await check();return structuredClone(expected);},
   async authorizeStage(input){await check();need(JSON.stringify(captureHistoryTypedClosureStageInput(input))===serialized);},
   async authorizePublish(command){await check();need(capture(command)===capture(publish));}});
 }
@@ -895,7 +933,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
  try{
   files.set(inputFile,{ref:{path:inputFile,bytes:inputBytes.length,sha256:trustedInputSha256},stat:inputStat});must(same(inputStat,await lstat(inputFile)),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');active();
   grant=await metadata(authorization);
-  must(exact(grant,['version','decision','issuingAuthority','realImportExecutionAuthorized','job','sourceInputDigest','groups','mainCommands',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedPreparation']:[])])
+  must(exact(grant,['version','decision','issuingAuthority','realImportExecutionAuthorized','job','sourceInputDigest','groups','mainCommands',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedPreparation']:[]),...(Object.hasOwn(fixed,'stagedPrefixBinding26')?['stagedPrefixBinding26']:[])])
    &&grant.version==='C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1'&&grant.decision==='AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION'
    &&grant.issuingAuthority==='C'&&grant.realImportExecutionAuthorized===true&&grant.sourceInputDigest===dataDigest
    &&Array.isArray(grant.groups)&&grant.groups.length===sourceGroups.length&&new Set(grant.groups).size===sourceGroups.length
@@ -957,10 +995,37 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
    if(command.action==='IMPORT_CHUNK'&&fixed.closureScope.expectedSourceEntityCounts.INVENTORY_BASELINE>0)must(stockGroups.size===baselineItems.size,'PRODUCTION_AUTHORITY26_STOCK_MAIN_INCOMPLETE');capture(command);validateCutoffImportCommand(command);const expected=commands.get(command.requestKey);
    must(actor===binding.actorAccountId&&command.actorAccountId===actor&&expected&&capture(command)===expected.digest,'PRODUCTION_AUTHORITY26_MAIN_NOT_AUTHORIZED');await unchanged(expected.file);if(command.action==='IMPORT_PUBLISH'&&adopted)await adopted.authorizePublish(command);}
   const adopted=Object.hasOwn(fixed,'adoptedPreparation')?await loadAdoptedPreparation26({fixed,binding,grant,byPhase,metadata,unchanged,verify,active,files,revive,projection}):null;
+  let prefix22,initializationCommand;
+  if(Object.hasOwn(fixed,'stagedPrefixBinding26')){
+   must(adopted&&capture(fixed.stagedPrefixBinding26)===capture(grant.stagedPrefixBinding26),'PRODUCTION_PREFIX22_EVIDENCE');
+   prefix22=await metadata(grant.stagedPrefixBinding26);
+   must(exact(prefix22,['version','initializationRecord'])&&prefix22.version==='CORE_STAGED_PREFIX_BIND_V22','PRODUCTION_PREFIX22_EVIDENCE');
+   const record=await metadata(prefix22.initializationRecord,4194304,revive);
+   must(exact(record,['command','requestHash','operationId','runtime26Review']),'PRODUCTION_PREFIX22_INITIALIZATION');
+   initializationCommand=record.command;validateCutoffImportCommand(initializationCommand);
+   must(record.requestHash===requestHash(initializationCommand)&&record.operationId===stableImportId('operation',binding.actorAccountId,initializationCommand.requestKey),'PRODUCTION_PREFIX22_INITIALIZATION');
+   const i=initializationCommand.schemeInitialization;
+   must(initializationCommand.action==='IMPORT_INITIALIZE_BARCODE_SCHEMES'&&initializationCommand.actorAccountId===binding.actorAccountId&&initializationCommand.batchId===binding.batchId
+    &&i.coreReceiptId===binding.coreReceiptId&&i.coreSourceDigest===binding.coreSourceDigest&&i.fixedSourceNamespace===binding.fixedSourceNamespace
+    &&i.selectionSha256===binding.selectionSha256&&i.cutoffAt===binding.cutoffAt&&capture(i.target)===capture(binding.target)
+    &&i.approvalPins.proposalSha256==='826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00'
+    &&i.approvalPins.approvalSha256==='f9da50c270c14321b17af06255a5f0649daf8b55a725b6a29fe483f342517533'
+    &&i.approvalPins.writeContractReplySha256==='9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc','PRODUCTION_PREFIX22_INITIALIZATION');
+   validateNativeBarcodeSchemeInitializationRows26(i.schemes);
+  }
   const originalCaptured=originalCapturedSourceIO26({binding,fixed,signal,verify,active,code,owned,captured});
   let productSource;
   const authority={
    ...(adopted?{async adoptedClosure(){await adopted.verify();return adopted;}}:{}),
+   ...(prefix22?{async captureStagedPrefixBinding26(command){
+    await mainAllowed(binding.actorAccountId,command);must(command.action==='IMPORT_BIND_FULL_SOURCE','PRODUCTION_PREFIX22_COMMAND');
+    await adopted.verify();await unchanged(grant.stagedPrefixBinding26.path);await unchanged(prefix22.initializationRecord.path);
+    return {binding:{...Object.fromEntries(['batchId','actorAccountId','fixedSourceNamespace','cutoffAt','selectionSha256'].map(key=>[key,binding[key]])),commandHash:requestHash(command)},
+     preparation:structuredClone(adopted.preparation),schemeRows:structuredClone(initializationCommand.schemeInitialization.schemes),
+     schemeInitialization:{operationId:stableImportId('operation',binding.actorAccountId,initializationCommand.requestKey),requestKey:initializationCommand.requestKey,
+      requestHash:requestHash(initializationCommand),approvalPins:structuredClone(initializationCommand.schemeInitialization.approvalPins)}};
+   }}:{}),
+
    async verifyInputs(actual){await verify();must(actual.inputDigest===inputDigest&&capture(actual.binding)===capture(binding)&&capture(actual.core)===capture(fixed.core),'PRODUCTION_AUTHORITY26_INPUT_CHANGED');},
    assertGroupAllowed:groupAllowed,
    async assertExecutionAllowed(actual){await verify();must(capture(actual)===capture(binding),'PRODUCTION_AUTHORITY26_BINDING_CHANGED');},

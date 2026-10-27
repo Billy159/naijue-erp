@@ -284,7 +284,7 @@ export function captureNativeSourceSession26(value,binding) {
     return Object.freeze({...s,bootstrap26:Object.freeze(bootstrap)});
   }
   const s=bag(value,['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight',
-    'openSources','closureScope','nativeProductSourceReader','bootstrap26',...(Object.hasOwn(value??{},'adoptedClosure')?['adoptedClosure']:[]),...(Object.hasOwn(value??{},'now')?['now']:[])],'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
+    'openSources','closureScope','nativeProductSourceReader','bootstrap26',...(Object.hasOwn(value??{},'stagedPrefixBinding26')?['stagedPrefixBinding26']:[]),...(Object.hasOwn(value??{},'adoptedClosure')?['adoptedClosure']:[]),...(Object.hasOwn(value??{},'now')?['now']:[])],'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   for(const key of ['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight'])
     must(typeof s[key]==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   if(Object.hasOwn(s,'now'))must(typeof s.now==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
@@ -302,6 +302,11 @@ export function captureNativeSourceSession26(value,binding) {
    must(binding.phase==='FULL_SOURCE_CONTINUATION_26_V1','IMPORT_SOURCE_HOST26_ADOPTED_SCOPE');
    const a=bag(s.adoptedClosure,['expected','authorizeStage','authorizePublish'],'IMPORT_SOURCE_HOST26_ADOPTED_REQUIRED');
    must(Object.values(a).every(fn=>typeof fn==='function'),'IMPORT_SOURCE_HOST26_ADOPTED_REQUIRED');s.adoptedClosure=Object.freeze(a);
+  }
+  if(Object.hasOwn(s,'stagedPrefixBinding26')){
+   must(binding.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&Object.hasOwn(s,'adoptedClosure'),'IMPORT_SOURCE_HOST22_PREFIX_SCOPE');
+   const prefix=bag(s.stagedPrefixBinding26,['capture'],'IMPORT_SOURCE_HOST22_PREFIX_REQUIRED');
+   must(typeof prefix.capture==='function','IMPORT_SOURCE_HOST22_PREFIX_REQUIRED');s.stagedPrefixBinding26=Object.freeze(prefix);
   }
   return Object.freeze({...s,closureScope:scope,openSources:Object.freeze(factories),bootstrap26:bootstrap===null?null:Object.freeze(bootstrap)});
 }
@@ -391,6 +396,7 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
       trustedSelectionSha256:job.binding.selectionSha256,trustedAuthorizedPayloadHash:job.binding.authorizedPayloadHash});}
     active();const runtime=await gate.activate();active();
     return {executor:{pool:runtime.pool,runtime26:runtime.runtime26,binding:structuredClone(job.binding),now:session.now??(()=>new Date().toISOString()),bootstrap26:session.bootstrap26,
+      ...(session.stagedPrefixBinding26?{stagedPrefixBinding26:{async capture(command){active();const expected=await session.stagedPrefixBinding26.capture(command);active();return expected;}}}:{}),
       authorization:{async assertExecutionAllowed(binding){active();must(requestHash(binding)===requestHash(job.binding),'IMPORT_SOURCE_HOST_BINDING');await completed(session.assertExecutionAllowed,structuredClone(binding));active();},
         async authorizeStep(step){active();await completed(session.authorizeStep,step);if(step.kind==='PRODUCT')await product.authorize(step.payload);active();},
         async assertAllowed(actor,command){active();await completed(session.assertAllowed,actor,command);active();},

@@ -230,6 +230,28 @@ async function productionAuthorityFiles(t,options={}){
   const evidence=await save('ADOPTED.json',evidenceValue);f.inputs.adoptedPreparation=evidence;grant.adoptedPreparation=evidence;
   adoptedFiles={evidence,evidenceValue,originalInput,dataRef,expectedRef,manifest,receipt,review,modules};
  }
+ if(options.prefix22){
+  const {nativeBarcodeSchemeInitializationRows26}=await import('../../packages/application/src/native-barcode-import.ts');
+  const initialization={action:'IMPORT_INITIALIZE_BARCODE_SCHEMES',actorAccountId:f.binding.actorAccountId,requestKey:'synthetic-scheme-init22',batchId:f.binding.batchId,expectedSequence:1,expectedCursor:22,
+   schemeInitialization:{version:'BARCODE_SCHEME_INITIALIZATION_V19',coreReceiptId:f.binding.coreReceiptId,coreSourceDigest:f.binding.coreSourceDigest,
+    fixedSourceNamespace:f.binding.fixedSourceNamespace,selectionSha256:f.binding.selectionSha256,cutoffAt:f.binding.cutoffAt,target:f.binding.target,
+    approvalPins:{proposalSha256:'826e63b33e8e2f52a521d5ba3e930899d61092dfb22f65b11db4f799f7efef00',approvalSha256:'f9da50c270c14321b17af06255a5f0649daf8b55a725b6a29fe483f342517533',writeContractReplySha256:'9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc'},schemes:nativeBarcodeSchemeInitializationRows26()}};
+  options.mutateInitialization?.(initialization);
+  const {requestHash}=await import('../../packages/application/src/request-hash.ts'),{stableImportId}=await import('../../packages/application/src/inventory-cutoff-import.ts');
+  const initializationRecord=await save('INITIALIZATION22.json',{command:initialization,requestHash:requestHash(initialization),operationId:stableImportId('operation',f.binding.actorAccountId,initialization.requestKey),runtime26Review:{synthetic:true}}),prefix=await save('PREFIX22.json',{version:'CORE_STAGED_PREFIX_BIND_V22',initializationRecord});
+  f.inputs.stagedPrefixBinding26=grant.stagedPrefixBinding26=prefix;
+  const modules=adoptedFiles.modules;modules.splice(modules.findIndex(m=>m.current.path.endsWith('/run.mjs')),1);
+  for(const [role,name]of [['CONSUMER_RUN','./run.mjs'],['CONSUMER_PREFIX_STORE','../../adapters/postgres/src/inventory-cutoff-import-store.ts'],['CONSUMER_PREFIX_ISSUER','../../adapters/postgres/src/native-import-accounting-capability.ts'],['ADDED_PREFIX_ADAPTER','../../adapters/postgres/src/native-core-staged-prefix-bind.ts']]){
+   const path=fileURLToPath(new URL(name,import.meta.url)),bytes=await readFile(path);let baseline=null;
+   if(role!=='ADDED_PREFIX_ADAPTER'){baseline=await save('BASELINE-'+role,{});await writeFile(baseline.path,bytes);Object.assign(baseline,{bytes:bytes.length,sha256:sha(bytes)});}
+   modules.push({role,baseline,current:{path,bytes:bytes.length,sha256:sha(bytes)}});
+  }
+  options.mutatePrefixModules?.(modules);
+  const reviewValue=JSON.parse(await readFile(adoptedFiles.review.path,'utf8'));reviewValue.modules=modules;
+  adoptedFiles.review=adoptedFiles.evidenceValue.review=await save('REVIEW.json',reviewValue);
+  adoptedFiles.evidence=f.inputs.adoptedPreparation=grant.adoptedPreparation=await save('ADOPTED.json',adoptedFiles.evidenceValue);
+  adoptedFiles.initialization=initialization;adoptedFiles.prefix=prefix;
+ }
  options.mutateGrant?.(grant);const grantRef=await save('C-EXECUTION-AUTHORIZATION.json',grant);f.inputs.executionAuthorization=grantRef;const inputRef=await save('INPUT.json',f.inputs);
  const progress=initialContinuationProgress26(f.binding,warehouses);if(options.initialSequence===2)appendInitialization26(progress,f.binding);
  return{...f,bind,account,accounts,publish,plan,progress,grant,grantRef,inputRef,job,jobRef,coreRef,writeFile,save,capture,adoptedFiles,
@@ -318,7 +340,7 @@ test('provider26 production authority: explicit original genuine product reader 
 });
 
 const retainedFixtureRoot='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3';
-async function retainedNativeFiles(t,group){
+async function retainedNativeFiles(t,group,{prefix22=false}={}){
  const {pathToFileURL}=await import('node:url'),{mkdtemp,realpath,readFile,writeFile,rm}=await import('node:fs/promises'),{tmpdir}=await import('node:os'),{join}=await import('node:path'),{createHash}=await import('node:crypto');
  const module={PRODUCTS:'product',SKUS:'sku',STOCK_CONTRIBUTORS:'stock'}[group],data=await(await import(pathToFileURL(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/'+module+'.mjs'))).fixture(t);
  const prepared=group==='STOCK_CONTRIBUTORS'?data.groups[0]:data.prepared,f=fixture();Object.assign(f.binding,data.options.binding);Object.assign(f.inputs.closureScope,Object.fromEntries(['batchId','fixedSourceNamespace','selectionSha256'].map(k=>[k,f.binding[k]])));
@@ -333,6 +355,13 @@ async function retainedNativeFiles(t,group){
  f.inputs.closureScope.expectedCounts.import_source_row=expected.sources.length;
  if(group==='SKUS')f.inputs.closureScope.expectedCounts.import_sku_alias=expected.sources.length;
  if(group==='STOCK_CONTRIBUTORS')f.inputs.closureScope.expectedCounts.import_stock_contributor=expected.typed.length;
+ if(prefix22){
+  const {nativeBarcodeSchemeInitializationRows26}=await import('../../packages/application/src/native-barcode-import.ts');
+  f.inputs.adoptedPreparation={path:'/synthetic/adopted.json',bytes:1,sha256:digest('a')};f.inputs.stagedPrefixBinding26={path:'/synthetic/prefix.json',bytes:1,sha256:digest('b')};
+  f.authority.adoptedClosure=async()=>({async expected(){throw Error('NO_CLOSURE_RECOMPUTATION');},async authorizeStage(){},async authorizePublish(){}});
+  f.authority.captureStagedPrefixBinding26=async()=>({binding:{commandHash:digest('c')},preparation:{inputDigest:digest('a'),manifestSha256:digest('b')},schemeRows:nativeBarcodeSchemeInitializationRows26(),schemeInitialization:{requestKey:'original-init'}});
+  const old=f.authority.openRetained;f.authority.openRetained=async(...args)=>{const reader=await old(...args);if(args[0]==='BARCODES')reader.prefixSchemes26=async()=>nativeBarcodeSchemeInitializationRows26();return reader;};
+ }
  const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>s.close());
  return{...f,s,prepared,expected,writeFile,file,sha,body};
 }
@@ -970,5 +999,64 @@ test('source152 CORE cutoff retains exact-string support and never rounds fracti
  const exact=await productionAuthorityFiles(t,{binding:{cutoffAt:precise}}),a=await exact.open();await a.close();
  for(const[bound,projected]of [[precise,'2026-10-04 04:00:00+00'],['2026-10-04T12:00:00.001+08:00','2026-10-04 04:00:00+00'],['2026-02-30T12:00:00+08:00','2026-03-02 04:00:00+00']]){
   const f=await productionAuthorityFiles(t,{binding:{cutoffAt:bound},mutateProjection:p=>{p.cutoffAt=projected;}});await assert.rejects(f.open(),{code:'PRODUCTION_AUTHORITY26_CORE_DATA_REQUIRED'});
+ }
+});
+
+test('v22 prefix authority binds original INIT and BIND commands, exact148 preparation and exact scoped successor code',async t=>{
+ const f=await productionAuthorityFiles(t,{adopted:true,prefix22:true}),a=await f.open();t.after(()=>a.close());
+ const {requestHash}=await import('../../packages/application/src/request-hash.ts');
+ const proof=await a.captureStagedPrefixBinding26(f.bind);
+ assert.equal(proof.binding.commandHash,requestHash(f.bind));assert.equal(proof.preparation.inputDigest,f.adoptedFiles.originalInput.sha256);
+ assert.equal(proof.preparation.manifestSha256,f.adoptedFiles.manifest.sha256);
+ assert.equal(proof.schemeRows.length,6);assert.equal(proof.schemeInitialization.requestHash,requestHash(f.adoptedFiles.initialization));
+ await assert.rejects(a.captureStagedPrefixBinding26({...f.bind,requestKey:'not-original'}));
+ await assert.rejects(a.captureStagedPrefixBinding26(f.publish));
+ const legacy=await productionAuthorityFiles(t,{adopted:true}),old=await legacy.open();t.after(()=>old.close());assert.equal(Object.hasOwn(old,'captureStagedPrefixBinding26'),false);
+});
+test('v22 prefix authority refuses altered original initialization, new baseline fiction and wrong scoped consumer path',async t=>{
+ for(const mode of ['actor','source','approval','addedBaseline','runPath']){
+  const f=await productionAuthorityFiles(t,{adopted:true,prefix22:true,
+   mutateInitialization(c){if(mode==='actor')c.actorAccountId=id(888);if(mode==='source')c.schemeInitialization.selectionSha256=digest('e');if(mode==='approval')c.schemeInitialization.approvalPins.approvalSha256=digest('e');},
+   mutatePrefixModules(ms){if(mode==='addedBaseline')ms.find(m=>m.role==='ADDED_PREFIX_ADAPTER').baseline=ms.find(m=>m.role==='CONSUMER_RUN').baseline;
+    if(mode==='runPath')ms.find(m=>m.role==='CONSUMER_RUN').current=ms.find(m=>m.role==='CONSUMER_HOST').baseline;}});
+  await assert.rejects(f.open());assert.equal(f.trace.ready,0);
+ }
+});
+
+test('v22 provider passes only original five complete source/native streams and approved schemes without opening the database or all11 closure',async()=>{
+ const f=fixture(),{nativeBarcodeSchemeInitializationRows26}=await import('../../packages/application/src/native-barcode-import.ts');
+ const schemes=nativeBarcodeSchemeInitializationRows26(),prefixGroups=['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS'],opened=[],seen=[];
+ f.inputs.adoptedPreparation={path:'/synthetic/adopted.json',bytes:1,sha256:digest('a')};f.inputs.stagedPrefixBinding26={path:'/synthetic/prefix.json',bytes:1,sha256:digest('b')};
+ f.authority.adoptedClosure=async()=>({async expected(){throw Error('NO_CLOSURE_RECOMPUTATION');},async authorizeStage(){},async authorizePublish(){}});
+ f.authority.captureStagedPrefixBinding26=async command=>{assert.equal(command.requestKey,'synthetic-original');return {binding:{commandHash:digest('c')},preparation:{inputDigest:digest('a'),manifestSha256:digest('b')},schemeRows:schemes,schemeInitialization:{requestKey:'original-init'}};};
+ const original=f.authority.openRetained;f.authority.openRetained=async(...args)=>{const reader=await original(...args),name=args[0];
+  if(name==='BARCODES')reader.prefixSchemes26=async()=>structuredClone(schemes);
+  if(name==='SKUS')reader.skuRecords22=async function*(){seen.push('SKU_RECORDS');yield {relation:'import_record',key:'original',projection:{reviewed_at:'2026-10-24T00:00:00.123456Z'}};};
+  reader.openClosure=async()=>{assert.ok(prefixGroups.includes(name));opened.push(name);let sourceDone=false;return {async verify(){},
+   async *sourceRows(){sourceDone=true;seen.push(name+':source');yield {relation:'import_source_row',key:name,projection:{original:null,quantity:'0',person:null}};},
+   async *typedRows(){assert.equal(sourceDone,true);seen.push(name+':typed');yield {relation:'original-native',key:name,projection:{original:null,quantity:'0',person:null}};},async close(){}};};return reader;};
+ const s=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);
+ try{await s.preflight();const proof=await s.stagedPrefixBinding26.capture({requestKey:'synthetic-original'});assert.deepEqual(opened,prefixGroups);assert.deepEqual(proof.groups.map(x=>x.name),prefixGroups);assert.equal(proof.schemes.length,6);
+  await assert.rejects(Array.fromAsync(proof.skuRecords()),{code:'PRODUCTION_PREFIX22_SKU_RECORD_ORDER'});
+  for(const group of proof.groups){const sources=await Array.fromAsync(group.sourceRows()),typed=await Array.fromAsync(group.typedRows());assert.deepEqual(sources[0].projection,{original:null,quantity:'0',person:null});assert.deepEqual(typed[0].projection,sources[0].projection);}
+  const records=await Array.fromAsync(proof.skuRecords());assert.equal(records[0].projection.reviewed_at,'2026-10-24T00:00:00.123456Z');
+  assert.equal(seen.length,11);assert.equal(f.trace.ready,0);
+ }finally{await s.close();}
+});
+
+test('v22 SKU record proof reads original eleven writer fields from the pinned prepared SKU and rejects a changed source file',async t=>{
+ for(const changed of [false,true]){
+  const f=await retainedNativeFiles(t,'SKUS',{prefix22:true});await f.s.preflight();
+  const proof=await f.s.stagedPrefixBinding26.capture({synthetic:'original'});
+  await assert.rejects(Array.fromAsync(proof.skuRecords()),{code:'PRODUCTION_PREFIX22_SKU_RECORD_ORDER'});
+  for(const group of proof.groups){await Array.fromAsync(group.sourceRows());await Array.fromAsync(group.typedRows());}
+  if(changed){await f.writeFile(f.file.path,Buffer.alloc(f.body.length,32));await assert.rejects(Array.fromAsync(proof.skuRecords()));}
+  else{const rows=await Array.fromAsync(proof.skuRecords()),p=f.prepared;
+   assert.deepEqual(rows,[{relation:'import_record',key:p.importRecord.id,projection:{id:p.importRecord.id,import_batch_id:p.batchId,source_entity_type:'SKU',
+    source_key:p.canonicalSource.sourceKey,source_record_hash:p.canonicalSource.rowSha256,source_file_ref:p.canonicalSource.fileRef,target_type:'SKU',target_id:p.nativeSku.id,
+    status:'IMPORTED',decision_reason:p.importRecord.decisionReason,reviewed_at:p.importRecord.reviewedAt}}]);
+   await assert.rejects(Array.fromAsync(proof.skuRecords()),{code:'PRODUCTION_PREFIX22_SKU_RECORD_REUSED'});
+  }
+  assert.equal(f.trace.ready,0);await f.s.close();
  }
 });

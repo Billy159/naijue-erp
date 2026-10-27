@@ -19,6 +19,8 @@ import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { auditJson, integerValue, jsonObject, nullableString, stringValue } from "./codec.ts";
 import type { PgSalesClient, PgSalesPool, PgSalesResult } from "./sales-unit-of-work.ts";
+import { captureCoreStagedPrefixBinding22, verifyCoreStagedPrefix22 } from "./native-core-staged-prefix-bind.ts";
+import type { CoreStagedPrefixBinding22 } from "./native-core-staged-prefix-bind.ts";
 
 const stamp = (column: string): string => `to_char(${column} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 const targets: readonly ImportTarget[] = ["WAREHOUSE", "SKU", "INVENTORY_LEDGER", "IMPORT_BATCH"];
@@ -223,12 +225,14 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
   private readonly coreAuthorization: { assertAllowed(actorAccountId: CoreImportCommand["actorAccountId"], command: CoreImportCommand): Promise<void> } | undefined;
   private readonly stageBootstrap26: ImportStageBootstrap26 | undefined;
   private readonly barcodeSchemeInitialization26: BarcodeSchemeInitialization26 | undefined;
+  private readonly stagedPrefixBinding26: CoreStagedPrefixBinding22 | undefined;
   constructor(pool: PgSalesPool, options: {
     readonly nativeAccountingAuthorization?: Parameters<typeof authorizeNativeImportAccountingCommand>[1];
     readonly stageBootstrap?: ImportStageBootstrap;
     readonly runtime26?: NativeRuntime26Capability;
     readonly stageBootstrap26?: ImportStageBootstrap26;
     readonly barcodeSchemeInitialization26?: BarcodeSchemeInitialization26;
+    readonly stagedPrefixBinding26?: CoreStagedPrefixBinding22;
     coreAuthorization?: { assertAllowed(actorAccountId: CoreImportCommand["actorAccountId"], command: CoreImportCommand): Promise<void> };
   } = {}) {
     this.pool = pool;
@@ -236,6 +240,9 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
     requireDomain(coreAuthorization === undefined || typeof coreAuthorization.assertAllowed === "function", "NATIVE_IMPORT_AUTHORIZATION_REQUIRED", "Exact CORE source authorizer required");
     this.coreAuthorization = coreAuthorization === undefined ? undefined : Object.freeze({ assertAllowed: coreAuthorization.assertAllowed.bind(coreAuthorization) });
     this.runtime26 = checkedNativeRuntime26Capability(options.runtime26);
+    requireDomain(options.stagedPrefixBinding26 === undefined || this.runtime26 !== undefined,
+      "IMPORT_BOOTSTRAP_REQUIRED", "Staged prefix binding requires the original exact26 runtime");
+    this.stagedPrefixBinding26 = captureCoreStagedPrefixBinding22(options.stagedPrefixBinding26);
     const schemeInitialization = options.barcodeSchemeInitialization26;
     if (schemeInitialization !== undefined) {
       requireDomain(this.runtime26 && Object.getPrototypeOf(schemeInitialization) === Object.prototype && Reflect.ownKeys(schemeInitialization).length === 2,
@@ -642,10 +649,12 @@ export class PostgresCutoffImportStore implements CutoffImportStore {
       coreSourceDigest = command.fullBinding.coreSourceDigest; coreCounts = birth.coreCounts as CoreStageCommand["coreInitialization"]["coreCounts"];
       const counted = counts(current.counts, false);
       requireDomain(targets.every(type => counted[type] <= command.fullBinding.inventoryExpectedCounts[type]), "IMPORT_EXPECTED_COUNT_EXCEEDED", "Full scope must include existing genuine CORE claims");
+      const stagedPrefixProof = this.stagedPrefixBinding26 === undefined ? undefined : await verifyCoreStagedPrefix22(client, command,
+        { source_name: found.source_name, source_hash: found.source_hash, cutoff_at: found.cutoff_at }, this.stagedPrefixBinding26);
       checkpoint = { sequence: command.expectedSequence + 1, cursor: command.expectedCursor, counts: counted, expected: command.fullBinding.inventoryExpectedCounts };
       before = { checkpoint: current, fullBinding: null, fullFrozen: false, coreReceiptId: command.fullBinding.coreReceiptId, coreSourceDigest };
       after = { schemaVersion: 1, phase: "FULL_SOURCE_BOUND_V1", coreSourceDigest, coreReceiptId: command.fullBinding.coreReceiptId,
-        checkpoint, fullBinding: command.fullBinding, fullFrozen: true };
+        checkpoint, fullBinding: command.fullBinding, fullFrozen: true, ...(stagedPrefixProof === undefined ? {} : { stagedPrefixProof }) };
       const update = await client.query(`/* native-core:bind-full */ UPDATE naijue_erp.import_batch SET checkpoint=$2::jsonb,history_expected_counts=$3::jsonb,history_payload_hash=$4
         WHERE id=$1::uuid AND status='STAGED' AND checkpoint=$5::jsonb AND history_expected_counts IS NULL AND history_payload_hash IS NULL AND NOT history_validation_passed`,
       [command.batchId, auditJson(checkpoint), JSON.stringify(command.fullBinding.historyExpectedCounts), command.fullBinding.authorizedPayloadHash, auditJson(current)]);
