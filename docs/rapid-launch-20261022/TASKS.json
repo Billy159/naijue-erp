@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T19:27:27.433612+00:00",
+  "updatedAt": "2026-10-27T19:33:02.741983+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -15698,6 +15698,61 @@
       "rootCause": "Actual199 exact originalcoalesceNULL/emptyaclarray expression both22023 ACL arrays must be one-dimensional; existingnonemptyworks. ProposedCASE NULL/empty ->[] andnonemptyaclexplode preserves originalnormalizedACL in3actualbuiltinprobes. Not claiming198originalerrorcontextrecovered.",
       "next": "OriginalD1 finalv3onlyCASE normalization, preserve197prestate/76bits/16GRANTreverse, originalQBdelta reuse485, thennewexactCACLjob. No old198replay/newwriter/APP.",
       "github": "SOURCE808ae952e7895783a06e3011916403a2d4d7ea7741b exactremoteGET verified",
+      "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation810": {
+      "status": "200_ACTUAL_ACL_COMMITTED_QB487_CURRENT_REVIEW_AND_SUCCESSOR_REBIND_IN_PROGRESS",
+      "evidence": {
+        "D1-v3/grant-exact-197-columns.sql": {
+          "bytes": 60726,
+          "sha256": "16d99000f90ab87be3a3471b0b64c0b9dbb8fd610e3282be6538fb82a0bd2b5f"
+        },
+        "D1-v3/revoke-only-exact-197-added-columns.sql": {
+          "bytes": 60645,
+          "sha256": "35097f0b90491bd203a66738919c823a78ed9e793c615311fa99c32475e98932"
+        },
+        "D1-v3/NORMALIZATION-DELTA.json": {
+          "bytes": 2852,
+          "sha256": "8110be8b1ad71e1c80cf4aa3196db54a42bd6371aa26e738e7fbbad908ea1408"
+        },
+        "D1-v3/README.md": {
+          "bytes": 2915,
+          "sha256": "25ebaa2cf555620ed580662cd65b28d7f8c864993b691cf15eb21663bc11aff8"
+        },
+        "D1-v3/RESULT.json": {
+          "bytes": 1709,
+          "sha256": "b28eb0c861fdc9fa656ce43d18c2b8b234ea870d07cd5357fdd9962ee937ab99"
+        },
+        "QB486-RESULT.json": {
+          "bytes": 4284,
+          "sha256": "d572269aff68279f2f86f87ec63aed8e74bd5db02140a0b4a74432074770e26f"
+        },
+        "C-200-ADOPTION.json": {
+          "bytes": 3143,
+          "sha256": "40d27d08d0c1f15ba4d86f7524d6c14497a942a3fec00516feac39d0f6214e1b"
+        },
+        "T45-200-RESULT.json": {
+          "bytes": 11813,
+          "sha256": "819636613bbceeb6e2ad3aac4f02eec533b671fad76351bf40089978cdaa2d00"
+        }
+      },
+      "actual": "200COMPLETED0/1.269965s/19:30:11Z; v3psql0stderr0COMMITmarkertrue. OrdinarysameR1 metadata beforeafter rollbackclosed. Onlycolumnssection/8tables60columns exact76bits9SELECT59INSERT8UPDATE;othersections allsame131routines match.",
+      "canonical": {
+        "old": "6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd",
+        "current": "1050b2aa3329ca8956365578765f89027808dd7f3f9b81ff970de66b82f5ad3f",
+        "linuxRawCatalog": {
+          "bytes": 1269989,
+          "sha256": "c3ee1cbdbe71cf13e1d76f122c5497e3da41ee5331603a77eb6da511915eb5ee"
+        },
+        "linuxRawMetadata": {
+          "bytes": 567,
+          "sha256": "4a8fd2289c45221c12133c0f82e37f9eda6c2100d2288ca65fc9c0f7a66c7edc"
+        }
+      },
+      "next": "OriginalQB487 actualcurrentACLdelta+runtimeReview only, reuse485486476others. T45prepare newcurrentconfig/purpose/consumer/externalhost bound1050 andfinite16225; finalfields toCbeforeanywriter. Original148121109 unchanged.",
+      "notDone": "NoBIND/ACCOUNT/PUBLISH/businessDML/APP/publicchange; original195failed/198failed/199recovery preserved,noreplay.",
+      "ui": "57923stillLISTENPID10937/root200 Xcandidate normal34 at19:31Z, no redundantrestart; comparisonresumed, no newwholepageUI/realbusinessPASS.",
+      "github": "SOURCE809a1ceb91bbb0ead674e269898f4907db1c58149b9 exactremoteGET verified",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
     }
   },

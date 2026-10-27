@@ -1,0 +1,47 @@
+{
+  "status": "C_EXACT_V3_EMPTY_ACL_FIX_SINGLE_ACL_EXECUTION_AUTHORIZED_AFTER_QB486",
+  "jobId": "t45-r1-eight-table-empty-acl-fix-20261028-200",
+  "atUtc": "2026-10-27T19:28:57.625573+00:00",
+  "model": "gpt-6.1-sol/medium",
+  "Fast": "UNVERIFIED",
+  "authority": "Original user continuous implementation/import/operations authorization; originalT45 uniqueDBowner; minimal already-approved nativebarcode/payment/history staging capability ACL installation only. No new field/constraint/write-contract.",
+  "review": {
+    "id": "QB486",
+    "bytes": 4284,
+    "sha256": "d572269aff68279f2f86f87ec63aed8e74bd5db02140a0b4a74432074770e26f",
+    "reused": "QB485 whole76bit/197prestate/16statement scope"
+  },
+  "exactSql": {
+    "name": "grant-exact-197-columns.sql",
+    "bytes": 60726,
+    "sha256": "16d99000f90ab87be3a3471b0b64c0b9dbb8fd610e3282be6538fb82a0bd2b5f"
+  },
+  "rollbackOnlyIfSeparatelyNeeded": {
+    "name": "revoke-only-exact-197-added-columns.sql",
+    "bytes": 60645,
+    "sha256": "35097f0b90491bd203a66738919c823a78ed9e793c615311fa99c32475e98932",
+    "rule": "Not automatic replay; prove exactforwardreceipt/no laterACLdrift. Restore only76bits, do not promiseNULL/emptyattacl rawtext canonical restoration or business rollback."
+  },
+  "target": {
+    "database": "erp_rewrite_20261022_r1",
+    "oid": "1027659",
+    "runtimeRole": "erp_rewrite_runtime_20261022",
+    "ownerRole": "erp_rewrite_owner_20261022",
+    "postmaster": "2026-10-04 08:16:07.895273+00",
+    "socket": "/proc/1780/root/run/postgresql",
+    "systemIdentifier": "7691989034661916697"
+  },
+  "precondition": "Exact fixed197 embeddedwhole8table/OID/rawACL/RLS/columns/roleattributes/zeromemberships/schemaUSAGE as reviewedSQL; any mismatch rollback stop, no rewriteprestate. Prior195terminal/196bothbarcodeabsent/BINDonly evidence preserved. No live writer started.",
+  "scope": "One boundednew200 execute exactSQL once viaexistingowner channel; sixteencolumnGRANT only9SELECT+59INSERT+8singlecolumnUPDATE existinglocks. Preserve oldallbits; nofunction/tablelevel/GRANTOPTION/PUBLIC/newrole/profile/trigger/businessDML. Existingbarcodeonlyv1 neverexecute.",
+  "after": "Capture returnedCOMMIT/exactbeforeafter76bits+alloldpreserved and ordinaryrole currentfullcatalog/currenttarget/roles using existingmetadataexport; preserve newcanonical thenoriginalQB currentACLreview beforeconsumer/config/purpose/externalwritergrant. Metadataonly no businessfunction/DML.",
+  "failure": "Preservefailure; unknownCOMMIT read exactcurrentACLagainstoriginalpre/post beforeanyreplay. No blindnew200retry/noPGcatalogmanualedits.",
+  "notAuthorized": "No source148regeneration/INIT/BIND/ACCOUNT/PUBLISH/replay195/APP/publicURLswitch; no executionbudget change here; newwriter authority separatelyrequired.; no old198/199/v2 replay",
+  "priorFailure": {
+    "198": "FAILED2/22023; preserved no replay",
+    "199": "ACTUALCOMPLETED0; allcatalog/prestate unchanged, no durable198ACLdelta; exactexpressionNULLempty22023/CASE3probesPASS",
+    "199Result": {
+      "bytes": 5829,
+      "sha256": "dc6f08ac83364c3724f12e6790e1c65117152c843c978af16d994c3efa0ed526"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "decision": "SOURCE_FIXED_199_BUILTIN_PROBES_PASS_AWAIT_QB_AND_C_NEW_EXECUTION_AUTHORITY",
+  "fix": "NULL and zero-cardinality ACLs normalize to empty explicit column privileges without calling aclexplode; nonempty ACL uses unchanged fields/order/codec. No default table rights substitution.",
+  "actual199": {
+    "result": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/RESULT.json",
+    "bytes": 5829,
+    "sha256": "dc6f08ac83364c3724f12e6790e1c65117152c843c978af16d994c3efa0ed526",
+    "rawReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/release-submission/release-receipts/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/original-key-result.json",
+      "bytes": 46835,
+      "sha256": "86cf526c800678edaa26e567c8e67f7217763dcc894d0cf97749b7179a9b6912"
+    },
+    "persistent198Delta": "NONE_ACTUAL_WHOLE_CATALOG_AND_RAW_COLUMN_ACLS_MATCH_197_PRESTATE",
+    "oldExpression": "NULL and empty probes both SQLSTATE22023: ACL arrays must be one-dimensional",
+    "newCase": "NULL/empty [] and existing nonempty exact original normalized set; all actual probes PASS",
+    "boundary": "199 reproduced exact expression; original198 context/line remains unavailable"
+  },
+  "unchanged197Prestate": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/R1-NEXT-STAGE-MINIMUM-ACL-v2-197/CAPTURED-197-EXACT-PRESTATE.json",
+    "bytes": 47054,
+    "sha256": "8a1ebdf7fa96d4b71508dc5e695aef283a300f4c20f552b88834bea58ec3f374"
+  },
+  "checks": [
+    {
+      "file": "grant-exact-197-columns.sql",
+      "onlyTwoNormalizationReadsDiffer": true,
+      "exact197EmbeddedBeforeAfterSetsPreserved": true,
+      "all16AuthorizationStatementsUnchanged": true,
+      "bytes": 60726,
+      "sha256": "16d99000f90ab87be3a3471b0b64c0b9dbb8fd610e3282be6538fb82a0bd2b5f"
+    },
+    {
+      "file": "revoke-only-exact-197-added-columns.sql",
+      "onlyTwoNormalizationReadsDiffer": true,
+      "exact197EmbeddedBeforeAfterSetsPreserved": true,
+      "all16AuthorizationStatementsUnchanged": true,
+      "bytes": 60645,
+      "sha256": "35097f0b90491bd203a66738919c823a78ed9e793c615311fa99c32475e98932"
+    }
+  ],
+  "unchangedAuthorizationDelta": {
+    "SELECT": 9,
+    "INSERT": 59,
+    "rowLockSingleColumnUPDATE": 8,
+    "statementsPerDirection": 16,
+    "functionsRolesBodiesSchemaTriggersChanged": 0
+  },
+  "fullNewSQLExecution": "NOT_EXECUTED_D1_NOT_PG_OWNER",
+  "old198And199ReplayAuthorized": false
+}
