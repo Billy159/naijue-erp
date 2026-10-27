@@ -87,3 +87,67 @@ test('source702 digest reuse preserves strict order, document membership, own-da
  const f = mixedDigestFixture(); let calls = 0; Object.defineProperty(f.sourceRows[0]!.projection, 'raw_fields', { enumerable: true, get() { calls++; return {}; } });
  await assert.rejects(buildHistoryTypedClosureExpected({ ...f.options, sourceRows: f.sourceRows, typedRows: f.typedRows })); assert.equal(calls, 0);
 });
+
+// Original Buffer-per-frame implementation retained only as a finite independent
+// byte oracle. Production representation changes must preserve its exact output.
+const source722Limit = 4 * 1024 * 1024;
+const source722Must = (ok: unknown): void => { if (!ok) throw Object.assign(Error("original codec rejected"), { code: "INVALID_HISTORY_CLOSURE_ENCODING" }); };
+const source722ValidString = (v: string): boolean => !v.includes("\0") && ![...v].some(c => { const n = c.codePointAt(0)!; return n >= 0xd800 && n <= 0xdfff; });
+function source722OriginalEncoder(value: unknown): Buffer {
+ const chunks: Buffer[] = [], active = new Set<object>(); let bytes = 0;
+ const emit = (part: string | Buffer) => { const b = typeof part === "string" ? Buffer.from(part, "utf8") : part; bytes += b.length; source722Must(bytes <= source722Limit); chunks.push(b); };
+ const visit = (v: unknown, depth: number): void => {
+  source722Must(depth <= 64);
+  if (v === null) { emit("n"); return; }
+  if (typeof v === "boolean") { emit(v ? "t" : "f"); return; }
+  if (typeof v === "string") { source722Must(v.length <= source722Limit && source722ValidString(v)); const length = Buffer.byteLength(v, "utf8"); source722Must(length <= source722Limit); const b = Buffer.from(v, "utf8"); emit("s" + b.length + ":"); emit(b); return; }
+  if (typeof v === "number") { source722Must(Number.isSafeInteger(v) && !Object.is(v, -0)); emit("i" + v.toString() + ";"); return; }
+  source722Must(typeof v === "object" && v !== null && !active.has(v)); const o = v as object;
+  const array = Array.isArray(o); source722Must(Object.getPrototypeOf(o) === (array ? Array.prototype : Object.prototype));
+  const keys = Reflect.ownKeys(o), descriptors = new Map<string, PropertyDescriptor>();
+  for (const k of keys) { source722Must(typeof k === "string"); const d = Object.getOwnPropertyDescriptor(o, k)!; source722Must(Object.hasOwn(d, "value") && (d.enumerable || array && k === "length")); descriptors.set(k as string, d); }
+  active.add(o);
+  if (array) {
+   const a = o as unknown[]; source722Must(keys.length === a.length + 1 && keys.every(k => k === "length" || typeof k === "string" && /^(0|[1-9]\d*)$/.test(k) && Number(k) < a.length));
+   emit("a" + a.length + ":"); for (let i = 0; i < a.length; i++) visit(descriptors.get(String(i))!.value, depth + 1);
+  } else {
+   const ordered = [...descriptors.keys()].sort((a, b) => Buffer.compare(Buffer.from(a, "utf8"), Buffer.from(b, "utf8")));
+   emit("o" + ordered.length + ":"); for (const k of ordered) { visit(k, depth + 1); visit(descriptors.get(k)!.value, depth + 1); }
+  }
+  active.delete(o);
+ };
+ visit(value, 0); return Buffer.concat(chunks, bytes);
+}
+test('source722 codec representation preserves original bytes for finite nested Unicode, key order and exact size boundary', () => {
+ const shared = { 中文: '𠮷😀', absent: null, empty: '', n: -123, yes: true, no: false };
+ const values: unknown[] = [null, false, true, 0, -1, Number.MAX_SAFE_INTEGER, '', '中文𠮷😀\n', [], {}, shared, [shared, shared],
+  { '\u{10000}': 'astral', '\ue000': 'bmp', '': '', '中文': [1, '1', null, { z: '', a: false }] }];
+ for (let n = 0; n < 32; n++) values.push(Object.fromEntries(Array.from({ length: n }, (_, i) => ['键' + (n - i) + '😀', [i, null, '行' + i, i % 2 === 0]])));
+ // s4194295: is nine bytes, so this complete frame is exactly 4MiB.
+ values.push('x'.repeat(source722Limit - 9));
+ let depth: unknown = null; for (let n = 0; n < 64; n++) depth = [depth]; values.push(depth);
+ for (const value of values) assert.deepEqual(encodeHistoryClosureValue(value), source722OriginalEncoder(value));
+ assert.equal(encodeHistoryClosureValue(values[values.length - 2]).length, source722Limit);
+});
+test('source722 codec retains rejection and own-data guards before getters and over-limit continuation', () => {
+ let reads = 0;
+ const getter = Object.defineProperty({}, 'x', { enumerable: true, get() { reads++; return 'x'; } });
+ const arrayGetter: unknown[] = []; Object.defineProperty(arrayGetter, '0', { enumerable: true, get() { reads++; return 'x'; } });
+ const cycle: Record<string, unknown> = {}; cycle.self = cycle;
+ let depth: unknown = null; for (let n = 0; n < 65; n++) depth = [depth];
+ const values: unknown[] = [getter, arrayGetter, new Array(1), Object.assign(['x'], { extra: 'x' }), cycle, depth,
+  { [Symbol('x')]: 'x' }, Object.defineProperty({}, 'x', { value: 'x' }), new Date(), Object.create(null),
+  -0, 0.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1, undefined, 1n, '\ud800', '\udfff', 'NUL\0',
+  { '\ud800': 'key' }, 'x'.repeat(source722Limit - 8), ['x'.repeat(source722Limit - 9)]];
+ for (const value of values) {
+  assert.throws(() => source722OriginalEncoder(value), { code: 'INVALID_HISTORY_CLOSURE_ENCODING' });
+  assert.throws(() => encodeHistoryClosureValue(value), { code: 'INVALID_HISTORY_CLOSURE_ENCODING' });
+ }
+ for (const encoder of [source722OriginalEncoder, encodeHistoryClosureValue]) {
+  let laterInspections = 0;
+  const later = new Proxy({}, { ownKeys() { laterInspections++; return []; } });
+  assert.throws(() => encoder(['x'.repeat(source722Limit - 8), later]), { code: 'INVALID_HISTORY_CLOSURE_ENCODING' });
+  assert.equal(laterInspections, 0); // Reject immediately at the overflowing frame.
+ }
+ assert.equal(reads, 0);
+});

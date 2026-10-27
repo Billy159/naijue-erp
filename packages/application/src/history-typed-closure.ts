@@ -62,13 +62,15 @@ const validString = (value: string): boolean => {
  * a<count>:<frames>,o<count>:<key frame,value frame> with UTF8 byte-ordered keys.
  * NULL/absence/empty/string-number distinctions survive PostgreSQL jsonb normalization. */
 export function encodeHistoryClosureValue(value: unknown): Buffer {
- const chunks: Buffer[] = [], active = new Set<object>(); let bytes = 0;
- const emit = (part: string | Buffer) => { const b = typeof part === "string" ? Buffer.from(part, "utf8") : part; bytes += b.length; must(bytes <= MAX_ROW_BYTES); chunks.push(b); };
+ const chunks: string[] = [], active = new Set<object>(); let bytes = 0;
+ // Each fragment is valid Unicode or an ASCII frame. Keep exact UTF8 byte
+ // accounting at every emit; materialize the complete bytes only once.
+ const emit = (part: string) => { bytes += Buffer.byteLength(part, "utf8"); must(bytes <= MAX_ROW_BYTES); chunks.push(part); };
  const visit = (v: unknown, depth: number): void => {
   must(depth <= 64);
   if (v === null) { emit("n"); return; }
   if (typeof v === "boolean") { emit(v ? "t" : "f"); return; }
-  if (typeof v === "string") { must(v.length <= MAX_ROW_BYTES && validString(v)); const length = Buffer.byteLength(v, "utf8"); must(length <= MAX_ROW_BYTES); const b = Buffer.from(v, "utf8"); emit("s" + b.length + ":"); emit(b); return; }
+  if (typeof v === "string") { must(v.length <= MAX_ROW_BYTES && validString(v)); const length = Buffer.byteLength(v, "utf8"); must(length <= MAX_ROW_BYTES); emit("s" + length + ":"); emit(v); return; }
   if (typeof v === "number") { must(Number.isSafeInteger(v) && !Object.is(v, -0)); emit("i" + v.toString() + ";"); return; }
   must(typeof v === "object" && v !== null && !active.has(v)); const o = v as object;
   const array = Array.isArray(o); must(Object.getPrototypeOf(o) === (array ? Array.prototype : Object.prototype));
@@ -79,12 +81,13 @@ export function encodeHistoryClosureValue(value: unknown): Buffer {
    const a = o as unknown[]; must(keys.length === a.length + 1 && keys.every(k => k === "length" || typeof k === "string" && /^(0|[1-9]\d*)$/.test(k) && Number(k) < a.length));
    emit("a" + a.length + ":"); for (let i = 0; i < a.length; i++) visit(descriptors.get(String(i))!.value, depth + 1);
   } else {
-   const ordered = [...descriptors.keys()].sort((a, b) => Buffer.compare(Buffer.from(a, "utf8"), Buffer.from(b, "utf8")));
-   emit("o" + ordered.length + ":"); for (const k of ordered) { visit(k, depth + 1); visit(descriptors.get(k)!.value, depth + 1); }
+   const ordered = [...descriptors.keys()].map(key => ({ key, bytes: Buffer.from(key, "utf8") }))
+    .sort((a, b) => Buffer.compare(a.bytes, b.bytes));
+   emit("o" + ordered.length + ":"); for (const { key } of ordered) { visit(key, depth + 1); visit(descriptors.get(key)!.value, depth + 1); }
   }
   active.delete(o);
  };
- visit(value, 0); return Buffer.concat(chunks, bytes);
+ visit(value, 0); return Buffer.from(chunks.join(""), "utf8");
 }
 function captureRow(value: HistoryClosureRow): HistoryClosureRow {
  must(value !== null && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype);
