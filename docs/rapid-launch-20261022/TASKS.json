@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T19:19:41.996058+00:00",
+  "updatedAt": "2026-10-27T19:27:27.433612+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -15679,6 +15679,25 @@
       "rollback": "Exact76only afterfixedforward/no laterACLdrift; rawNULLvsEMPTY/canonicaltext notguaranteed; no businessrollback.",
       "frontendDedup": "Current originalF1 final30+30fixtures alreadyintegratednormal34; F4categoryemptyfix alreadyintegrated; QF705andQF2normal32evidence unchanged, no duplicate dispatch. Originalcomparisonnormal34 active.",
       "github": "SOURCE80723f8915a351bc17d6f262462a4b8d7e5cadec085 exactremoteGET verified",
+      "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation809": {
+      "status": "198_FAILED_199_ACTUAL_UNCHANGED_ACL_EMPTY_ARRAY_CAUSE_REPRODUCED_D1_V3_FIX_IN_PROGRESS",
+      "evidence": {
+        "T45-198-RESULT.json": {
+          "bytes": 3773,
+          "sha256": "a930e4c66ed1e5bba2a214059b61b37af91dbdcdf8a025b0101d788f52eb0386"
+        },
+        "T45-199-RESULT.json": {
+          "bytes": 5829,
+          "sha256": "dc6f08ac83364c3724f12e6790e1c65117152c843c978af16d994c3efa0ed526"
+        }
+      },
+      "198": "FAILED2/0.919s/ownerpsql3/22023/COMMITmarkerabsent; originalcontextnotretained; no replay/reverse.",
+      "199": "COMPLETED0/0.7187s/RRRO/rollback+closed; allcatalog sections equal198parent,currentcanonical6d3e;8table rawACL+normalized equals197pre, no durable198delta.",
+      "rootCause": "Actual199 exact originalcoalesceNULL/emptyaclarray expression both22023 ACL arrays must be one-dimensional; existingnonemptyworks. ProposedCASE NULL/empty ->[] andnonemptyaclexplode preserves originalnormalizedACL in3actualbuiltinprobes. Not claiming198originalerrorcontextrecovered.",
+      "next": "OriginalD1 finalv3onlyCASE normalization, preserve197prestate/76bits/16GRANTreverse, originalQBdelta reuse485, thennewexactCACLjob. No old198replay/newwriter/APP.",
+      "github": "SOURCE808ae952e7895783a06e3011916403a2d4d7ea7741b exactremoteGET verified",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
     }
   },

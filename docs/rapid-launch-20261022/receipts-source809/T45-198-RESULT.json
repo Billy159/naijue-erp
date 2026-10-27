@@ -1,0 +1,77 @@
+{
+  "jobId": "t45-r1-eight-table-exact-column-acl-20261028-198",
+  "status": "TERMINAL_FAILED_ACL_PROCESS_SQLSTATE22023_COMMIT_NOT_RETURNED_ORIGINAL_PREPOST_READ_REQUIRED",
+  "jobReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-eight-table-exact-column-acl-20261028-198/release-submission/release-receipts/t45-r1-eight-table-exact-column-acl-20261028-198/job.json",
+    "bytes": 614,
+    "sha256": "82e29f4ed8531ad106deb4141ca8f8bc762cbec6a0d415f17970eed5db0c056e"
+  },
+  "engineReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-eight-table-exact-column-acl-20261028-198/release-submission/release-receipts/t45-r1-eight-table-exact-column-acl-20261028-198/acl-current-result.json",
+    "bytes": 2415,
+    "sha256": "a6673ae21cf16d55713a90861c4076220cbfe8fa7cf9d3fcb182f4dadc8a71c9"
+  },
+  "finishedAtUtc": "2026-10-27T19:20:15.236727+00:00",
+  "elapsedSeconds": 0.919277659850195,
+  "unit": "naijue-erp-op-5cc58239-ecbc55effb62",
+  "installerAttempted": true,
+  "psqlExitCode": 3,
+  "commitMarkerReturned": false,
+  "stderr": {
+    "bytes": 14,
+    "sha256": "0f3df927a1c6a311768ea7d14b0f9e9d75be414c5ad4242400dd47bb363ea232",
+    "exactReconstructedBytes": "ERROR:  22023\n",
+    "exactByteHashMatch": true,
+    "sqlstate": "22023",
+    "serverMessageContext": "NOT_RETAINED_BY_CARRIER"
+  },
+  "parentOrdinaryCatalog": {
+    "businessDML": 0,
+    "canonicalSha256": "6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd",
+    "catalog": {
+      "bytes": 1266665,
+      "file": "parent-r1-v20-catalog.json",
+      "sha256": "a221438160ef429593f470712270782f7933a4fb0ca5a26d1a208189cff57297"
+    },
+    "clientsClosed": true,
+    "grantIssued": false,
+    "identity": {
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database": "erp_rewrite_20261022_r1",
+      "database_oid": "1027659",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "replication_role": "origin",
+      "server_addr": null,
+      "server_port": null,
+      "server_version_num": "170011",
+      "session_user": "erp_rewrite_runtime_20261022"
+    },
+    "jobId": "t45-r1-eight-table-exact-column-acl-20261028-198",
+    "metadata": {
+      "bytes": 567,
+      "file": "parent-r1-v20-metadata.json",
+      "sha256": "5a303d2d693dc4b228beeb2c8ccce3379a13fc51a834cc8f478fc6a26cf14f64"
+    },
+    "rollbackReturned": true,
+    "sourceRoutinesMatch": true,
+    "status": "COMPLETED_ORIGINAL_R1_V22_PHASE_CATALOG_READONLY"
+  },
+  "ownerPreimage": {
+    "database": "erp_rewrite_20261022_r1",
+    "oid": "1027659",
+    "postmaster": "2026-10-04 08:16:07.895273+00",
+    "sessionUser": "t15_prod_bootstrap",
+    "systemIdentifier": "7691989034661916697"
+  },
+  "durableACLPoststate": "NOT_READ_YET; cannot assert committed or durable zero solely from missing marker",
+  "sourceFailureHypothesis": "Fixed SQL aclexplode(coalesce(a.attacl,empty aclitem array)) may reject zero-dimensional empty ACL array. Unverified; need read-only pg_catalog probe and originalpre/post ACL readback before minimal owner-source fix.",
+  "actions": {
+    "no198Replay": true,
+    "noAutoReverse": true,
+    "noWriterOrApp": true,
+    "BINDorMAINorPUBLISHExecuted": false,
+    "newCatalogOrRuntimeReviewIssued": false
+  },
+  "next": "C-authorized narrow original198pre/post metadata recovery, optionally safe built-in aclexplode empty-array probe underRRRO/savepoint; originalD1 source fix and QB delta only after actual evidence. Do not change captured197prestate."
+}

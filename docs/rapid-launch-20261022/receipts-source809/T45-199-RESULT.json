@@ -1,0 +1,140 @@
+{
+  "jobId": "t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199",
+  "status": "ACTUAL_COMPLETED_198_PRESTATE_UNCHANGED_EMPTY_ACL_ERROR_REPRODUCED_NO_ACTION",
+  "jobReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/release-submission/release-receipts/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/job.json",
+    "bytes": 614,
+    "sha256": "cd138ef90cc0ab857f966b995b0b825d7bdc277000ae931dbfc688f9a3759bc4"
+  },
+  "readerReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/release-submission/release-receipts/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/original-key-result.json",
+    "bytes": 46835,
+    "sha256": "86cf526c800678edaa26e567c8e67f7217763dcc894d0cf97749b7179a9b6912"
+  },
+  "engineReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/release-submission/release-receipts/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/engine-result.json",
+    "bytes": 378,
+    "sha256": "48990781aa8e78b8ff5a9a26b8c660a35320eee0b2a2ffae2840f73754f85193"
+  },
+  "currentCatalog": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/release-submission/release-receipts/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/current-r1-catalog.json",
+    "bytes": 1479276,
+    "sha256": "e98cea537c1d0aa209a9d282780df7fbaa8bf85d0a976c77fe7a39c9e4405ebf"
+  },
+  "currentMetadata": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/release-submission/release-receipts/t45-r1-198-acl-prepost-empty-probe-readonly-20261028-199/current-r1-metadata.json",
+    "bytes": 780,
+    "sha256": "5ea32feb0dbce08b62b3454b22e903ca66eb12bf99cb53ab503295e966d1132a"
+  },
+  "finishedAtUtc": "2026-10-27T19:25:29.589074+00:00",
+  "elapsedSeconds": 0.7186918291263282,
+  "unit": "naijue-erp-op-5cc58239-954383c5dce1",
+  "actualIdentity": {
+    "database": "erp_rewrite_20261022_r1",
+    "server_addr": null,
+    "server_port": null,
+    "current_user": "erp_rewrite_runtime_20261022",
+    "database_oid": "1027659",
+    "session_user": "erp_rewrite_runtime_20261022",
+    "database_owner": "erp_rewrite_owner_20261022",
+    "postmaster_start": "2026-10-04 08:16:07.895273+00",
+    "replication_role": "origin",
+    "server_version_num": "170011"
+  },
+  "durable198State": {
+    "raw197PreExact": true,
+    "normalized197PreExact": true,
+    "normalizedExpectedPostExact": false,
+    "currentCanonical": "6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd",
+    "wholeCatalogMatches198Pre": true,
+    "state": "ORIGINAL_PRESTATE_PRESERVED_NO_DURABLE198_COLUMN_ACL_DELTA",
+    "changedColumnsFromPre": []
+  },
+  "currentCanonical": "6d3e6d1aed92d0dd66441d92c3e6b2b3b17fabc5f0f642b5e54a981343a3fcdd",
+  "allCatalogSectionsMatch198Pre": true,
+  "changedCatalogSections": [],
+  "builtinMetadata": [
+    {
+      "strict": true,
+      "signature": "aclexplode(aclitem[])"
+    }
+  ],
+  "emptyArrayMetadata": [
+    {
+      "cardinality": 0,
+      "ndims": null
+    }
+  ],
+  "originalExpressionProbes": [
+    {
+      "name": "NULL_ORIGINAL_COALESCE",
+      "status": "SQL_ERROR",
+      "sqlstate": "22023",
+      "message": "ACL arrays must be one-dimensional"
+    },
+    {
+      "name": "EMPTY_ORIGINAL_COALESCE",
+      "status": "SQL_ERROR",
+      "sqlstate": "22023",
+      "message": "ACL arrays must be one-dimensional"
+    },
+    {
+      "name": "EXISTING_NONEMPTY_ORIGINAL_COALESCE",
+      "status": "RETURNED",
+      "rows": [
+        {
+          "acl_items": 1
+        }
+      ]
+    }
+  ],
+  "candidateCaseProbes": [
+    {
+      "name": "NULL_CASE",
+      "status": "RETURNED",
+      "rows": [
+        {
+          "normalized_acl": []
+        }
+      ]
+    },
+    {
+      "name": "EMPTY_CASE",
+      "status": "RETURNED",
+      "rows": [
+        {
+          "normalized_acl": []
+        }
+      ]
+    },
+    {
+      "name": "EXISTING_NONEMPTY_CASE",
+      "status": "RETURNED",
+      "rows": [
+        {
+          "normalized_acl": [
+            {
+              "grantee": "erp_rewrite_runtime_20261022",
+              "grantor": "erp_rewrite_owner_20261022",
+              "grantable": false,
+              "privilege": "INSERT"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "candidateCaseMatchesExpected": true,
+  "rootCauseEvidenceBoundary": "Actual199 reproduces22023 ACL arrays must be one-dimensional from the exact original normalization expression on NULL/emptyACL and verifies safeCASE alternative; full198prestate unchanged. Original198 statement context/line notretained, so no false claim that originalserver context was recovered.",
+  "cleanup": {
+    "RRRO": true,
+    "rollbackReturned": true,
+    "clientsClosed": true,
+    "businessDML": 0,
+    "ACLChanged": false,
+    "businessFunctionsCalled": 0,
+    "writerReplayed": false
+  },
+  "next": "OriginalD1 finalv3 minimal NULL/emptyACL normalization only, preserve197snapshot and76bits/16GRANT+reverse, QB delta then C exact newACLjob. Do not replay198 or199; no writer/APP authorization.",
+  "actualModelAndFast": "UNVERIFIED"
+}
