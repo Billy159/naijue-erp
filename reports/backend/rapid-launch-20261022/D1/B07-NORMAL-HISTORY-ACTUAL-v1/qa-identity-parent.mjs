@@ -688,7 +688,7 @@ async function runSyn26ClosedParent({plan,setupClient,withRecoveryClient},mode){
  if(result.status!==(auth2?'PASS_SYN26_EXISTING_QA_AUTH2_TO3_APPROVED_SCOPE':'PASS_SYN26_EXISTING_QA_AUTH1_TO2_APPROVED_SCOPE')||!result.clientsClosed){const error=Error('B07_SYN26_PARENT_STOPPED_SEE_PRIVATE_RESULT');Object.defineProperty(error,'syn26ParentFailure',{value:result.diagnostic??null});throw error;}return result;
 }
 
-export const SYN26_ROLLBACK_ONLY_OUTPUT=join(APPROVED_SYN_OUTPUT,'rollback-companion-01');
+export const SYN26_ROLLBACK_ONLY_OUTPUT=join(APPROVED_SYN_OUTPUT,'rollback-companion-02');
 export const SYN26_ROLLBACK_ORIGINAL_PINS=Object.freeze({
  request:{bytes:1068,sha256:'2d6eb543f1daf7f8db6665499196f827bfe61c7f6317b62fb4a909989f0e87bf'},
  approved:{bytes:1217,sha256:'00234117a33419d0fde210b6c6dbdabdd93d99f50e375b1ac2bf31d56d726756'},

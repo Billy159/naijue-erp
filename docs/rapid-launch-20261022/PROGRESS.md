@@ -1,3 +1,5 @@
+SOURCE754：回滚only02已自然终态清理；准确是parent进入用途等待后停止、companion未执行。旧consumer仍6用途与LIVE2用途不符，原QB承认载体覆盖缺口，后继必须实际consumer端到端最小复核；原D1仅固定新root02两叶已交，旧root01保全。v21首次大文件上传在请求/调度前截断，原152同键有界续传获采用，核全部原包后首次提交，不增超时/新key/重业务，grant与09Z原范围不变。
+
 SOURCE753：主控已按用户v21明确确认签发准确外部Cgrant37012/016e6389，原六数据字段摘要实算一致，选择原152 FULL_NATIVE_CONTINUATION/09:00Z，保111产物/109原键/完整42561文档与数据库守卫；实际MAIN/PUBLISH结果仍待。独立failed-only02三refs精确AUTH已落，原465新purpose后仅原键回滚用例，无normalcase/登录/CAS/秘密读取。授权不冒执行成功；原T45收到即各原key一次实际，不互等。
 
 SOURCE752：R1实际157目录V20匹配已由QB464当前三IMPORT用途与Linux路径审核采用，原152最终Cgrant组装中，MAIN/PUBLISH尚未执行。回滚only01仅辅助proof42501提前停止，原owner02将布尔核回既有维护RRRO，QB465必要增量通过，不扩业务权限/不重两PASS。商品4SAVE准确等待R1完整发布后固定快照恢复新登记隔离QA，再有限重绑；不在R1回归、不对PUBLISHED旧QA重初始化、不为QA再导484k。
