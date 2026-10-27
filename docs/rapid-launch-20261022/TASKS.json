@@ -15128,6 +15128,45 @@
       "actualPreflight": "OriginalT45 current-execution-phase2026-10-27T16:02:18.396045Z PREFLIGHT_PASSED_HOST_STARTING; exact6d3e catalog/oldR1identity, originalkeyreceiptCount0,STAGEDseq2cursor22/WAREHOUSE22/other0/historyhashnull; ordinaryRRROrollbackReturnedtrue/clientsClosedtrue. Actualoriginalhost admission started, not BIND COMMIT.",
       "next": "Collect onlysame190/unitafef5715f67e current smallphase/terminal; no repeat189/190/sourcepreparation. Actual failure originalkey recovery, success full109/PUBLISH/readback then originalD2 published isolatedQA and realUI integration/release.",
       "goal": "All37/67/allstates/realhistory/performance/formal ACTIVE incomplete. No newUIwholepage or releasePASS."
+    },
+    "currentContinuation794": {
+      "status": "190_TERMINAL_STEP_LIMIT_191_ORIGINAL_KEY_RECOVERY_IN_FLIGHT",
+      "190": {
+        "jobId": "t45-r1-stock-stage-v22-original109-continuation-20261027-190",
+        "status": "STOP_SOURCE749_ADOPTED148_OR_OUTCOME_UNKNOWN_NO_REPLAY",
+        "automaticReplay": false,
+        "sourceReadyOnly": false,
+        "MAINOrPublishExecuted": true,
+        "phase": "ORIGINAL_NATIVE_SOURCE_STEP_SEQUENCE",
+        "originalHostReturned": true,
+        "adoptedFullEvidenceCheckedByOriginalBranch": true,
+        "actualRuntimeIssuerReturned": true,
+        "lastJournalEvent": {
+          "ordinal": 4096,
+          "kind": "SKU",
+          "digest": "71d6be3a8fcca2173885a2c101479f4293c8595984a18dbdc89e671761691631",
+          "state": "COMMITTED",
+          "receipt": {
+            "inserted": 0,
+            "replayed": 1
+          }
+        },
+        "committedSteps": 4096,
+        "mainCommittedSteps": 1,
+        "errorCode": "IMPORT_SOURCE_HOST_STEP_LIMIT",
+        "originalHostClosed": true,
+        "finishedAtUtc": "2026-10-27T17:31:53.168Z"
+      },
+      "receipt": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/docs/rapid-launch-20261022/receipts-source794/T45-190-runtime-terminal.json",
+        "bytes": 832,
+        "sha256": "e6b523edcf4f4bb2a5444da44635ac7c9bae2197e6f1818f08f9546c472a0358"
+      },
+      "recovery": "T45 original191 once in flight: original BIND key + <=109 MAIN receipts/checkpoint ordinary RRRO and existing190 journal bounded metadata only; no replay190/newkey/maxstep increase. Actual committed set pending.",
+      "D1": "Existing committed MAIN suffix selector can skip exact committed BIND; source.steps separately traverses native staging; already-staged unclaimed SKU absent from claimed records and may replay while consuming steps. This is static seam finding, not assertion all4095 steps replayed. D1 production leaves unchanged.",
+      "D3": "Original solewriter source.steps/provider diagnosis successfully relayed by D1 existing route; C direct two threadnotfound preserved. No replacement team. Await actual191 chain/proof before bounded exact prefix omission.",
+      "next": "Recover actual committed set; originalD3 precise continuation fix preserving uncompleted stages and original107 ACCOUNT/PUBLISH/stockGroups authorization; targeted delta checks + existingQB review before newly bounded exact execution.",
+      "goal": "37pages/67overlays/allstates/realhistory/performance/formal remains ACTIVE incomplete; no new wholepage/business/release PASS."
     }
   },
   "historicalContinuation500Before716": {
