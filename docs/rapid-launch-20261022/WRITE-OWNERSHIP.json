@@ -6399,5 +6399,13 @@
       "tests/history-typed-closure-expected.test.ts"
     ],
     "scope": "Only encodeHistoryClosureValue internal allocation: bounded string fragments and final UTF8 Buffer; object key UTF8 buffers computed once per current sort. Preserve exact frame bytes, UTF8 byte order, all own-data/prototype/getter/cycle/depth/surrogate/NUL/sparse-array and 4MiB immediate limits, root hashes and independent validations. No cross-row cache, SQL, source-data or business-contract change. Finite original-code oracle byte equivalence and affected golden hashes; no blind full retry. Based on146 source-stream stop and original139/144 codec CPU evidence; no full speed claim."
+  },
+  "source724ApprovedPublicationRecovery": {
+    "owner": "D1",
+    "files": [
+      "tests/integration/b07-approved-publication-fixture.ts",
+      "tests/sealed-history17-approved-fixture.test.ts"
+    ],
+    "scope": "Fix actual post-COMMITTED helper lifecycle: every opened session must close exactly once, instead of erroneous fixed11 across repeated expected/authorize reads. Preserve failed02 and original committed schema19 fixture/publication. Add same helper read-only recovery of original committed PUBLISH/FINAL/claim/audit and exact closure/document/header/child/unit identity metadata; no source generation/service.execute/DB writes/fixture/PUBLISH replay. Existing original keys and source profile only. Finite repeated-authorization lifecycle checks plus read-only recovery checks; T45 solely executes on existing target under RR READ ONLY then ROLLBACK/end/stop; original QB only affected scope. No schema/business-contract change."
   }
 }

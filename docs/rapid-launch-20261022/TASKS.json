@@ -4637,16 +4637,16 @@
   ],
   "newPendingReviews": [
     {
-      "task": "B07_SYN_APPROVED_SUCCESSOR02",
+      "task": "B07_SYN02_POST_COMMITTED_RECOVERY",
       "owner": "QB",
-      "state": "AWAIT_ACTUAL_CURRENT_PURPOSE_IN_T45_WINDOW",
-      "scope": "SOURCE715 approved source already435PASS;437corrected02preparedPASS; only actual current-purpose and runtime results pending"
+      "state": "WAIT_D1_FIXED_SCOPE724",
+      "scope": "Only lifecycle actualfailure and original committed19 RO recovery; no old fixture/PUBLISH rerun"
     },
     {
-      "task": "SOURCE722_CLOSURE_CODEC",
+      "task": "SOURCE723_CODEC_CARRIER",
       "owner": "QB",
-      "state": "WAIT_D3_FIXED_TWO_FILE_DELIVERY",
-      "scope": "New codec internal allocation only, not wholebackend re-review"
+      "state": "WAIT_T45_PREPARED_DELTA",
+      "scope": "439 sourcePASS adopted; only accurate newcodec runtime carrier delta"
     }
   ],
   "openFindingsCurrent": [
@@ -5059,10 +5059,10 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 722,
+    "round": 724,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation722; historical numbered entries remain evidence, not current queue",
-    "fixedSource": "SOURCE721 cfaae03e579a7734db372ffc5a7981445366be54 GitHub verified; SOURCE722 current in-progress records",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation724",
+    "fixedSource": "SOURCE723 124c4ad2155457689fc7bc617989ef92624de62f exactGitHub verified",
     "fixedCandidates": {
       "synthetic": {
         "source": "8c7ed0c78018f9d479b191e3c01d36b2ab10c456",
@@ -5079,7 +5079,7 @@
       }
     },
     "backendActual": {
-      "B07": "Original limited DRAFT3cases passed; new approved SYN01 failed before initdb (0DB), QB437 two worker defects corrected. Successor02 exact authority adopted02:30Z deadline/lateststart02:15Z, actual result pending; real-source approved still unverified.",
+      "B07": "SYN02 actual6.971s ERR_ASSERTION after schema1..19 and original STAGE/CHUNK/PUBLISH COMMITTED; original-key RO confirmed. QAseed/26/currentpurpose/session/HREV not started. D1 exactfixed11 close-count helper defect identified; two-leaf lifecycle+original-committed metadata RO recovery in progress; never reinit/fixture/PUBLISH replay.",
       "R1": "Actual125 STAGEDseq2/cursor22, MAIN0/PUBLISH0/fullBindingfalse. 146 fullsource prepare FAILED2 after901.238s/source65189 unfinished/typed0; no fullDATA or commands success. D3 targeted codec allocation fix current, no replay146."
     },
     "roleQueue": {
@@ -5087,11 +5087,11 @@
       "F2": "Existing product/stock consumers ready; synthetic detail/maintenance facts incoherent/missing, no fake state platform; await actual product capability from D2/T45.",
       "F3": "Completed settings source packages; await actual samebuild maintenance permissions/provider to validate requested writes.",
       "F4": "Completed category empty-state source patch, original effective evidence reused; await actual dictionary/barcode/season/group capabilities.",
-      "D1": "SOURCE7157files QB435PASS adopted; newSYN02 actual pending, source owner available for concrete runtime defect only.",
+      "D1": "Active724 exacthelper+test lifecycle counting and original committed19 read-only metadata recovery; existing successfulPUBLISH preserved.",
       "D2": "Original source handed back, QB340 NULL-size source PASS preserved; actual PostgreSQL maintenance/full-save consumers remain dependent on original capability/data execution.",
-      "D3": "Active original task: registered722 codec representation2files, byte-equivalence/affected checks; no blind full retry.",
-      "T45": "normal32 restored57921;146 actual terminal adopted/no replay; newSYN02 authority exact adopted/current purpose+normal session actual pending.",
-      "QB": "437corrected successor02 sourcePASS adopted; current live review only inside actual02; next722 source2files when delivered, no completed review replay.",
+      "D3": "SOURCE723 twoleaf codec delivered, independentQB439PASS adopted, no actual speed claim; no further source writes.",
+      "T45": "SYN02 stopped/cleaned, original-keyRO committed boundary confirmed; preparing next source-only sameversion codec carrier only, no execute before adoption. normal32 restored57921.",
+      "QB": "QB439 SOURCE723 exacttwoleafPASS adopted. Wait D1 fixed724 and next sourcecarrier affected delta;437 currentpurpose never reached, no issued LIVEPASS.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
@@ -14186,6 +14186,14 @@
       "syn02": "Authority3076/3c863878 adopted accurate02:30Z deadline; actual pending, no old01 replay",
       "model": "User verified formerLuna→gpt-6.1-terra/medium; Sol61medium technical unchanged",
       "completion": "Full37pages67overlays/allstates/realhistory/performance/formal release incomplete"
+    },
+    "currentContinuation724": {
+      "status": "ACTIVE",
+      "source723": "124c4ad exactGitHub remote; QB439 sourcePASS, runtimeperformance unmeasured",
+      "SYN02": "ERR_ASSERTION afterCOMMITTED19 PUBLISH; RO confirmsoriginal3keys/source57/record5/claims5/closure1/docs3, no QA/26/HREV",
+      "rootCause": "D1 fixed11 closedSessions assertion contradicts repeated11source authorizations. Fix per-session accounting and RO originalmetadata; no replay",
+      "authority": "User awake/newbusiness decisions only user; existing approved technical/QA work continues",
+      "ui": "normal32 samefixedSOURCE705 SYN, 37/67 allstates/realbusiness/formalnotcomplete"
     }
   },
   "historicalContinuation500Before716": {

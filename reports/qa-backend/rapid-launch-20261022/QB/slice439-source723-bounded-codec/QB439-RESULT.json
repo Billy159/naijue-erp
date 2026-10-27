@@ -1,0 +1,36 @@
+{
+  "reviewId": "QB439",
+  "decision": "PASS_SOURCE723_FIXED_TWO_LEAF_CODEC_INCREMENT_ONLY",
+  "fixedCommit": "124c4ad2155457689fc7bc617989ef92624de62f",
+  "sourcePins": [
+    {
+      "path": "packages/application/src/history-typed-closure.ts",
+      "bytes": 37630,
+      "sha256": "d32d9f748cc1d73792a9bec06c453be4462a63aba62f8f54bdaba8e7b9c50bee"
+    },
+    {
+      "path": "tests/history-typed-closure-expected.test.ts",
+      "bytes": 16369,
+      "sha256": "970a7c3cd337f46db87e17adfefa8d27383e21b7b4a243e728b67362dd40484e"
+    }
+  ],
+  "checks": [
+    "Only encodeHistoryClosureValue implementation changes; all production source before/after codec is byteidentical parent. Existing test prefix unchanged, two finite oracle/guard cases appended.",
+    "String fragments retain exact peremit Buffer.byteLength UTF8 accounting and immediate4MiB rejection before push; finaljoin+oneBuffer preserves byte concatenation because every payload string passes original Unicode/NUL guard, everyframeASCII. No surrogate fragments can combine across frame boundaries to alter bytes.",
+    "String length framing uses same originalUTF8 length; null/bool/integer/array/object syntax/order identical. Objectkeys use one local byteBuffer perkey and same Buffer.compare UTF8 ordering; no crossrow cache/prehash/exported unchecked capability.",
+    "Original active cycle set, depth64, exact prototype, Reflect.ownKeys/data-descriptor/enumerability, symbol/sparse/extraarraykey/safeinteger/-0 and malformedUnicode/NUL guards retained. Object key validation order unchanged relative valuevisit; no getter invocation added.",
+    "Original captureRow/root/rowhash/independent global/document fold/count/order/coverage validation and final manifest builders unchanged. Accepted complete builder golden9439c2ee remains explicit unchanged test.",
+    "Adopt owner two relevant files10PASS/targetstrictPASS only. New independent originalBuffer-per-frame oracle covers nested Unicode/astral-vsBMP keyorder, sameobject repeated, exact4MiB, maxdepth and32finite keyshapes. Rejection parity covers bounds/accessors/cycle/prototype/symbol/depth/Unicode/sparse cases; laterProxy ownKeys untouched after immediateoverflow. No oldsuite rerun."
+  ],
+  "actualLargeSourceRun": false,
+  "actualPerformanceMeasured": false,
+  "databaseOrRemoteAction": false,
+  "businessAcceptance": false,
+  "sourceChangedByQB": false,
+  "remaining": [
+    "T45 exact same-version installation of new shared codec within accepted fullsource carrier; collect one bounded actualfullsource result without conflating source correctness with measured speed.",
+    "Previous146 source65189/typed0 stop is not corrected or declared faster by source-only review. SYN02 commit boundary remains original T45 read-only investigation; no worker/service action byQB."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}
