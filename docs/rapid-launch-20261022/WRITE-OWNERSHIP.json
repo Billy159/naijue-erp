@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-27T04:51:18.526640+00:00",
+  "updatedAt": "2026-10-27T04:56:52.472421+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -6491,5 +6491,28 @@
     "scope": "Exact closed child credential-continuation-01 → credential-continuation-02 and matching finite assertions only; old01 evidence preserved. No generic root abstraction/target/CAS/UTC/guard/business change. T45same new02 carrier binding.",
     "state": "DELIVERED_FIXED_PENDING_COMBINED_CARRIER_REVIEW",
     "reason": "source740 constant+plan hardbinds old01, which is terminalSTOP and mustnotbeoverwritten; actualQA1/auth1 confirmed UTC02."
+  },
+  "source742AdoptedFullPreparationEvidence": {
+    "owner": "D3",
+    "files": [
+      "scripts/import-v3/production-source-provider26.mjs",
+      "scripts/import-v3/production-source-provider26.test.mjs",
+      "scripts/import-v3/production-source-host.mjs",
+      "scripts/import-v3/production-source-host.test.mjs"
+    ],
+    "priorOwner": "D3 exact original source623 host/provider handback; T45 current work carrier/inputs only, no shared sourcewriter",
+    "scope": "Explicit consumption of exact completed148 FULL DATA/EXPECTED/manifest evidence from original C external grant, same source/batch/version/recipes; provider and host share captured fullstageinput instead of3whole source recomputations. OriginalPGstage fullactual DBroots/documents/membership and all per-source authorizers/109 original commands/currentpermissions/transaction/receipts stay unchanged. No business schema/constraint/persistedJSON/action change; prewrite sourceauthorization evidence basis does change and needs user confirmation.",
+    "authorization": "D3 exactfollowup confirms CLOSURE and IMPORT_PUBLISH prewrite source authorization basis changes from source recompute to explicit adopted EXPECTED. User writecontract confirmation rule applies; C prior technical-only classification superseded before implementation. Other normal/native189RO work continues.",
+    "requiredBoundaries": [
+      "No callerprovided expectedobject/PASS flag/implicit cache",
+      "Original148 manifest/DATA/EXPECTED exactbytesSHA and actual successreceipt + requestHash(DATAmanifest) identity, notfileSHAasbusinesspayloadhash",
+      "FullEXPECTED originalcapture validator/all42561documents/roots, currentbatch/publishplan/counts/source recipes andactualcurrentexecutioncode lineage",
+      "Only EXPECTED file-specific reader limit exactrefbytes andoriginalstage64MiB cap; allothersmallmetadata4MiB unchanged",
+      "No3iterators in snapshot path, but DBstage and all source stageauthorizers intact; defaultoriginalpath unchanged",
+      "Wrongpin/recipe/batch/version/doc/root/grant/109command rejected before DBactivation",
+      "If source-code closure cannot match source148 without broad excludingfieldlists, report exact conflict before implementation; no invented equivalence"
+    ],
+    "state": "RESERVED_NO_SOURCE_IMPLEMENTATION_PENDING_PRECISE_USER_WRITE_AUTHORITY_CONFIRMATION",
+    "notAllowed": "No SQL/store/writer/schema/permissions/source mappings/old730 algorithm/realdata/DB/server execution or hidden fallback/cache/platform"
   }
 }

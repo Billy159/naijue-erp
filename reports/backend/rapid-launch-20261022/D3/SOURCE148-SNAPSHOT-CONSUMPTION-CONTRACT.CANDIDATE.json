@@ -1,0 +1,159 @@
+{
+  "version": "D3_SOURCE148_ADOPTED_FULL_PREPARATION_CONTRACT_CANDIDATE_V1",
+  "status": "REVIEWABLE_PROPOSAL_ONLY_NO_GUARD_OR_SOURCE_CHANGE",
+  "authorizationDelta": {
+    "changesPreWriteAuthorizationBasis": true,
+    "affectedWrites": [
+      "CLOSURE stage",
+      "IMPORT_PUBLISH"
+    ],
+    "before": "在各授权点从原11组source重新计算expected；provider步骤另先计算一次。",
+    "afterProposed": "在相同授权点验证C明确采用的148完整EXPECTED与原来源/代码/命令绑定；实际DB闭包独立校验原样保留。",
+    "notChanged": [
+      "普通业务行stage的逐项source/native authorizer、父项及逐键replay校验",
+      "原FULL真实payload绑定和C外部执行授权",
+      "原109命令、checkpoint与未提交suffix选择",
+      "真实PG成员/根/逐单文档/数量金额和库存守恒核验"
+    ],
+    "approvalBoundary": "这是CLOSURE/PUBLISH写入前来源证据消费合同的显式变化，按用户新增写合同须确认规则，由C提交一次准确差异确认；只有此新分支等待。当前normal/native189只读工作不受影响。"
+  },
+  "actual148": {
+    "result": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/RESULT.json",
+      "bytes": 5877,
+      "sha256": "8b5a40f1c6ce8a76510b2357823e6ee3a87dfe089a65624bb8418dfd64304a32"
+    },
+    "status": "TERMINAL_PASS_COMPLETE_SOURCE_ONLY_PREPARATION_NOT_EXECUTION_AUTHORIZED",
+    "sourceCommit": "3d99a4ab783c9ee566c20d1c23b85fee19b6b4c2",
+    "elapsedSeconds": 4367.170767478878,
+    "authorizedPayloadHash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8",
+    "artifacts": [
+      {
+        "logicalRole": "FULL_DATA",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/DATA.json",
+        "bytes": 316960,
+        "sha256": "7d34bcf788003963696d203140072ea8ab4dba81c10bf4b1046c482aa65b0219"
+      },
+      {
+        "logicalRole": "EXPECTED",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/EXPECTED.json",
+        "bytes": 25987624,
+        "sha256": "4c8ba7a200a84b59c9795b52351045fc231c0cd76cd9c312ede51c2826a2343a"
+      },
+      {
+        "logicalRole": "BIND",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/BIND.json",
+        "bytes": 73746,
+        "sha256": "3a350163b35c771c8fd85401cf7c9d88a6736157300c444c10022c8b2e740609"
+      },
+      {
+        "logicalRole": "PUBLISH",
+        "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/PUBLISH.json",
+        "bytes": 24179,
+        "sha256": "f28b17db7a33a763f13d31f894d8bb1ca3759b2818ff1c65b9d501a0cba98c5b"
+      }
+    ],
+    "originalAccountRefs": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source730-full-preparation-20261027-148/release-submission/release-receipts/t45-source730-full-preparation-20261027-148/preparation-result.json",
+      "bytes": 42638,
+      "sha256": "31d1772ebfc837cf5cb4cb9b1adc36f289f6832f50d1a46deb9bfb5292f8ba5c"
+    },
+    "note": "111个产物引用=DATA+EXPECTED+109原命令；107 ACCOUNT逐条引用沿原完整preparation-result，不能用本文简表代替。DATA文件SHA与requestHash(DATA)是不同概念。没有DB/MAIN/PUBLISH授权。",
+    "outputManifest": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/outputs-private/c-full-source-preparation-20261026-01/MANIFEST.json",
+      "bytes": 39111,
+      "sha256": "4645f3703d2888861257406e4824306a6ec919e324e4328eaddf94ccec464e12",
+      "evidenceJob": "t45-source148-manifest-reference-readonly-20261027-149",
+      "evidencePath": "server-jobs/t45-source148-manifest-reference-readonly-20261027-149/release-submission/release-receipts/t45-source148-manifest-reference-readonly-20261027-149/source148-manifest-reference.json",
+      "verificationScope": "T45仅stat+小文件hash；内容未解析/导出，逐字段关系待受控匹配；D3未读取远端文件。",
+      "checkedAtUtc": "2026-10-27T05:09:21.878693Z"
+    }
+  },
+  "requiredExternalBindings": [
+    "C原execution authorization外部SHA必须显式批准adopted-full-preparation26分支；grant绑定148成功回执、输出MANIFEST、DATA、EXPECTED及109原命令各准确refs。禁止仅靠输入对象/布尔PASS/进度count。",
+    "输出MANIFEST与原sourceManifestRef分开：前者是148输出目录清单，后者是旧来源effective-selection引用。输出MANIFEST准确39111/4645f3703d2888861257406e4824306a6ec919e324e4328eaddf94ccec464e12已由T45的149只读stat+hash确认，内容逐字段关系仍待受控匹配，不把meta pin冒充关系验证。",
+    "DATA原文件bytes/SHA验证后requestHash(dataManifest)必须为1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8；core receipt/digest、batch/namespace/selection/cutoff、11组sourceClosurePins/counts/stock plan须与BIND/PUBLISH及执行INPUT一致。DATA不是raw contributors/effectiveGroups输入，不回灌prepareFullPayloadData26。",
+    "EXPECTED原文件bytes/SHA验证后，原captureHistoryTypedClosureStageInput执行完整结构/边界校验，核batch/namespace/plan payloadHash/selection/counts/42561 documents及完整文档内容；与PUBLISH plan一致。授权比对必须包括全部documents，不能只比plan根。",
+    "原79 nonCODE精确logical refs/bytes/SHA/身份不变，producer全11、mapper/helper/codec/source reader准备基线为148实测commit 3d99a4ab783c9ee566c20d1c23b85fee19b6b4c2。执行候选commit仍待固定；不能笼统称740或730等同。新4叶消费者差异由QB确认；其余参与源推导的代码pins须精确相同，或另行明确已验证兼容范围，不能默认接受任意新版本。",
+    "只允许原bindRealData已定义的payloadHash接线变化（binding/closureScope、PARTIES/PAYMENT options、CATALOGUE options.binding）；actor/target/实际current chain等仍走原job/authority guards。不得通用删除字段后宽松比较。",
+    "109命令仍从原grant.mainCommands精确refs读取；selectProductionContinuation26保持按原current receipt/audit/claim链证明未提交suffix，键和命令体不重写。"
+  ],
+  "exactFilesAndSeams": [
+    {
+      "path": "scripts/import-v3/production-source-provider26.mjs",
+      "functions": [
+        "openProductionSourceAuthority26",
+        "createOriginalProductionSources26.preflight",
+        "createOriginalProductionSources26.steps",
+        "original authority authorizeStep/authorizeNativeCommand"
+      ],
+      "proposal": "新增显式fixed preparation evidence refs及严格装载/绑定；provider CLOSURE步骤返回原完整EXPECTED，不调用全源closure.expected。新分支沿原C grant与verify/close，无公开unchecked能力。所有组authorize/mapper、mainCommands及原默认分支保留。"
+    },
+    {
+      "path": "scripts/import-v3/production-source-provider26.test.mjs",
+      "proposal": "有限真实文件fixture，涵盖完整EXPECTED/DATA/manifest/109 refs接线、外pin/批次/版本/文档/来源/命令篡改拒绝和默认分支保留。"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.mjs",
+      "functions": [
+        "captureNativeSourceSession26",
+        "openImportHost26 session/preactivation setup",
+        "authorization.authorizeClosure",
+        "authorization.authorizeNativeCommand IMPORT_PUBLISH branch"
+      ],
+      "proposal": "仅明确新session contract捕获来源证据消费者；CLOSURE授权核整个原EXPECTED，PUBLISH授权核原plan与同一证据绑定；不调用原全源closure.authorizeStage/expected。原Pool激活顺序、target/runtime26、执行权限和实际DB store逐字保留。solewriter归属须C核，不在本报告实施。"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.test.mjs",
+      "proposal": "证明未获明确新分支/准确C pin不可激活；snapshot分支无source closure迭代；篡改某文档/版本/批次/pin/未知旧partial拒绝；实际DB授权接线仍调用原独立stage验证。"
+    }
+  ],
+  "ioAndRefusalRules": [
+    "EXPECTED约25.99MiB，新增仅适用该固定角色的bounded reader（上限沿stage64MiB并核准确ref.bytes），保持regular/private/O_NOFOLLOW/stable stat/原字节SHA/原captureStage。不得全局放大pinnedSmall现4MiB限制；其余小文件沿原限额。",
+    "缺manifest或成功receipt、错pin、错batch/namespace/selection/payloadHash、错源/代码、某文档改值、仅旧146/147 partial/count、改命令或新键均拒绝。失败不会fallback到假expected或自动重复72分钟prepare。",
+    "原业务行stage authorizer仍读取/核实本次各原始prepared/source与父映射，不能把snapshot分支变成跳行导入授权。原DB closure store继续对真实数据库计算并核成员/所有根/逐单文档；不加SQL、不改store。",
+    "新增来源证明消费分支不能无声明冒充原现场重算；实际来源文件变动使snapshot依赖失效，须明确新证据处理，禁止原EXPECTED替新来源背书。"
+  ],
+  "necessaryFiniteChecks": [
+    "新分支完整fixture逐值采用固定EXPECTED，provider与host全源iterator调用计数0；普通逐项authorizer/执行准入仍调用。",
+    "错误pin/来源/代码/批次/文档/命令/旧partial任一拒绝；未授权不得Pool激活。",
+    "原默认分支不变；复用730/QB444已验成果，只检查新增消费差异。",
+    "源码有限测试与局部类型检查后原QB一次增量；实际DB验真仅T45按C新准入，不以fixture证明生产事实。"
+  ],
+  "currentDelivery": {
+    "sourceFilesChanged": 0,
+    "databaseConnected": false,
+    "realBodyReadOrDownloaded": false,
+    "executionIssued": false,
+    "normalOrNative189Changed": false,
+    "pending": [
+      "C一次确认是否采用新的CLOSURE/PUBLISH来源证据消费合同",
+      "host solewriter归属",
+      "原148输入/代码来源pins及输出MANIFEST逐字段关系；清单准确meta pin已补",
+      "4叶明确登记后才实施并复核"
+    ]
+  },
+  "consumerOnlySuccessorIdentityProposal": {
+    "status": "PROPOSAL_ONLY_PENDING_PRECISE_USER_WRITE_AUTHORITY_CONFIRMATION",
+    "preparationSourceBaselineCommit": "3d99a4ab783c9ee566c20d1c23b85fee19b6b4c2",
+    "executionConsumerCommit": "NOT_CREATED_OR_FIXED",
+    "identityMeaning": "来源推导基线与148精确相同；新消费者必须是另一个明确固定、审核的唯一后继版本。不能称整个执行版本与148同版。",
+    "exactBindingRules": [
+      "原C external execution grant须显式绑定148真实成功receipt、原preparation INPUT精确path/bytes/SHA、输出MANIFEST、DATA、EXPECTED以及109原命令逐项refs。本文本或PASS flag不是执行准入。",
+      "准备侧来源推导闭包采用148实际基线commit及原reader/helper/mapper/runtime/codec/merge逐文件pins；不能仅用SOURCE730标签替代精确闭包证据。缺原闭包pins时新分支不可准入。",
+      "新消费者身份必须由C grant精确固定当前provider/host模块refs及其baseline refs，并绑定QB对仅消费接缝差异的具体审核引用；当前实际模块bytes/SHA必须相符。不接受任意未来版本或仅声明兼容。",
+      "provider同一文件同时含producer与consumer，文件变化不能整体排除于源身份比较。必须明确原producer/mapper/730算法保持的审阅证据；四个允许改动叶并不代表允许改其所有内容。",
+      "其余源推导代码pins及原79 nonCODE逻辑refs/bytes/SHA/角色/memberCoverage完整相等，不省略任何源组。consumer-only审阅不替代完整来源身份比较。",
+      "原INPUT到执行INPUT只允许原bindRealData已经定义的五处payloadHash接线：binding.authorizedPayloadHash、closureScope.authorizedPayloadHash、PARTIES.options.authorizedPayloadHash、PAYMENT.options.authorizedPayloadHash、CATALOGUE.options.binding.authorizedPayloadHash。其余version/core/warehouses/producers保持逐值相同；原grant.sourceInputDigest校验仍保留。",
+      "不得通用排除字段、物理路径或全部CODE项。若确需物理搬运，必须另有C精确批准的原logical→physical同bytes/SHA映射并逐项核对；当前提案不默许此例外。",
+      "任何错版本/错模块pin/非consumer-only差异/缺原148输入或成功证明/未知partial/来源变化均拒绝，不回退到自报EXPECTED、隐性缓存或自动全量重跑。"
+    ],
+    "pendingEvidence": [
+      "148输出MANIFEST字段、111产物refs及DATA/EXPECTED/109命令关系待受控匹配（准确meta pin已收）",
+      "原148 preparation INPUT与来源推导闭包实际pins",
+      "用户对CLOSURE/PUBLISH来源授权依据变化的一次明确确认",
+      "新消费者候选精确固定身份与QB增量审核（仅确认并登记实施后产生）"
+    ],
+    "implementationReservation": "四个预留生产/测试叶未开写；保留原默认行为与guards。"
+  }
+}
