@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T14:12:45.096648+00:00",
+  "updatedAt": "2026-10-27T14:19:00.726872+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "28b07dc5a2fe8b00a370f0952b0cb090fe3f73e4",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -14832,6 +14832,18 @@
       "boundary": "Only originalR1 genuine actualimport: evidence/issuer→originalkeyBIND→original107ACCOUNT→PUBLISH; noAPP/publicswitch. Failure stop/originalkeyreadback first/no newkey blindretry. Actual184 outcome pending; QAreadonly content notyet observed.",
       "next": "T45 actual184 receipt/status; C consume successful originalkey or precisefailure recovery. QA readonlyauthority separate; no evidence means no pass.",
       "fullGoal": "37pages67overlays/allstates/realhistory/performance/formal remainACTIVE incomplete; no new UIwholepage/releasePASS."
+    },
+    "currentContinuation783": {
+      "status": "184_ACTUAL_SINGLE_SUBMITTED_RUNNING_VERIFIED_WAIT",
+      "job": "t45-r1-v22-original109-controlled-continuation-20261027-184",
+      "actualUnit": "naijue-erp-op-5cc58239-7bab0ad69985",
+      "actualHandle": "OriginalT45 collect original184 key reportsRUNNING; no retry; dispatcher terminal-only exports so no visibleinternalphase",
+      "owner": "OriginalT45 active thread01a100d0-cad5-71c1-8042-dc594311d3be turn01a17db4-24e5-7113-b20b-a6997b230844",
+      "boundary": "No source/issuer/BIND/MAIN/PUBLISH success inferred fromRUNNING. Originalregister184, cutoff16:30Z/max7200, no APP/publicswitch. Waitsamehandle/terminal; failure originalkeyreadback before continuation.",
+      "QA185": "D1 only3controlJSON prepared, noexecution; sourceSQL80495/980c missing182 sourcepath and final3refs must use actual184receipt. T45 confirms noQA businesswrites/negativefixture pollution after178restore+180onebody. PendingC exactauthority and sourceSQLmaterialization onlyafter184critical/terminal; no competing serverjob.",
+      "QABudgetDecision": "Use frozenactual statement120000/maxconn1/connection10000/idle10000 and outer1800/deadline. proposedquery125000/lock3000/idletxn30000 notimplemented/notclaimed; no code/test expansion justtoaddnonrequiredcontrols.",
+      "GitHub": "SOURCE7828db459f3088ea1a85010ab6133c0b912cfad9682 remoteGETexact; script initial localtrackingCAS mismatch aftersuccessfulremote update retained; localtracking reconciled onlyafterGET exact. No duplicate servercommit.",
+      "fullGoal": "Previousgoalturnprogress: actual182/183materialization, Cexact184grant+sourcecheckpoint; current184verifiedwait. All37/67/realhistory/performance/formal remainACTIVE incomplete."
     }
   },
   "historicalContinuation500Before716": {
