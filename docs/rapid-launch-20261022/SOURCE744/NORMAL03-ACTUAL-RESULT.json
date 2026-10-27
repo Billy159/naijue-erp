@@ -1,0 +1,64 @@
+{
+  "status": "TERMINAL_STOP_CREDENTIAL_COMMITTED_NORMAL_SALES_42501_NO_REPLAY",
+  "sourceCommit": "114de7bcba83f5d67eb4a6d72867e162cec76222",
+  "execSession": 38044,
+  "finishedAtUtc": "2026-10-27T05:29:20.455758+00:00",
+  "elapsedSeconds": 2.28497,
+  "currentReadOnlyProofReady": true,
+  "independentPurposeIssued": true,
+  "qaCredentialActual": true,
+  "credentialCommitAttempted": true,
+  "actualNormalResult": {
+    "status": "FAILED_STOP_NO_RETRY",
+    "sourceKind": "SYNTHETIC_ONLY",
+    "realSourceImportVerified": false,
+    "cases": [],
+    "automaticRetry": false,
+    "notTested": [
+      "Real-source APPROVED sample/import",
+      "Originally NULL-date approved money",
+      "Actual UNKNOWN COMMIT",
+      "Full roles/browser/HTTPS/formal business"
+    ],
+    "failedPhase": "NORMAL_HTTP_sales",
+    "requestKey": null,
+    "errorCode": "42501"
+  },
+  "normalHttpScopePassed": false,
+  "clientsClosed": true,
+  "reviewWorkerClosed": true,
+  "gateWorkerClosed": true,
+  "ownPgStopped": true,
+  "postmasterPidFileAbsent": true,
+  "automaticReplay": false,
+  "seedOrUpgradeOrRoleOrGrantOrPublish": false,
+  "realSourceImportVerified": false,
+  "remaining": "Do not replay auth1to2. Existing credential state has committed; locate first sales 42501 at exact source/role from existing safe receipt before a separately bound continuation. No password/token/cookie read or exported.",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-03/OS-LIFECYCLE.json",
+      "bytes": 543,
+      "sha256": "a52eea2550acfc11c3c7244694eaa2ed2ab54fe8e73f134bdc66dea1b03bb073"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-EXISTING26-SESSION-CONTINUATION-20261027-03/NODE-PIPELINE-RESULT.json",
+      "bytes": 588,
+      "sha256": "51d75ed322732d2b25f7b50ec8a5f2216879a9c29354b13f28d6013940db92c8"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-03/PARENT-RESULT.json",
+      "bytes": 1382,
+      "sha256": "9c75e7c744664ae61c37915b1d6412bf4fd8acee630bd67869806914c5c50574"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-03/APPROVED-ACTUAL-RESULT.json",
+      "bytes": 419,
+      "sha256": "590d818eff73587112645dae1d17498274f3ed8d886d04984fb66b5094f758a9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice457-source743-normal03-purpose/QB457-LIVE-RESULT.json",
+      "bytes": 9008,
+      "sha256": "afcc7b2599511556a0edd13bdcc10b4a79f7cf6d9278164049865c1e5c230286"
+    }
+  ]
+}

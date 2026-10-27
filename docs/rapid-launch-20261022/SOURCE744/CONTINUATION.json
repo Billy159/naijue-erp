@@ -1,0 +1,30 @@
+{
+  "status": "SOURCE_READY_PENDING_INDEPENDENT_QB_AND_ACTUAL_ADMISSION",
+  "v21": "Current user explicitly approved v21; original D3 sole four-leaf writer delivered; no DB or 148 preparation replay.",
+  "files": [
+    {
+      "path": "scripts/import-v3/production-source-provider26.mjs",
+      "bytes": 130719,
+      "sha256": "08ef2f86f40f18a25105a96ab2f8c5f7c1ad82588a736581434e8247e315f01d"
+    },
+    {
+      "path": "scripts/import-v3/production-source-provider26.test.mjs",
+      "bytes": 169943,
+      "sha256": "f523a4967e2b554baf12b2c0f6edd24f907b30af4cb60d1ae0b6e9621294d8aa"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.mjs",
+      "bytes": 39530,
+      "sha256": "818e6b16df74b77984b4fd4241e65ea6757eb9005e071d1ce689299c619a07d7"
+    },
+    {
+      "path": "scripts/import-v3/production-source-host.test.mjs",
+      "bytes": 42562,
+      "sha256": "18ad074b63b93908c060a31b9523d30285c0f48bbb3dfb53cf2333feac53f0da"
+    }
+  ],
+  "checks": "D3 reports 6 new scoped checks plus 10 affected old checks PASS; syntax PASS; no actual PG/build/performance claim.",
+  "normal03": "terminal exit2; credential auth1 to2 COMMITTED; first sales pre-save snapshot SQLSTATE42501 before command/requestKey; no case save formed; all owned resources closed. Never replay auth1 or original03.",
+  "native150": "Actual nonowner readonly connected OID1032586, migration1..26; old189 embedded pins source_routines_match=false is not current740 drift conclusion. Accurate source740/two purpose proof still pending.",
+  "next": "QB one four-leaf increment; T45 exact evidence/consumer identity/grant then uncommitted original109-key suffix; T45 minimal no-CAS readonly snapshot permission diagnosis."
+}

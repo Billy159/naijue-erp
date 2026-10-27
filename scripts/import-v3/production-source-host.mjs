@@ -284,7 +284,7 @@ export function captureNativeSourceSession26(value,binding) {
     return Object.freeze({...s,bootstrap26:Object.freeze(bootstrap)});
   }
   const s=bag(value,['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight',
-    'openSources','closureScope','nativeProductSourceReader','bootstrap26',...(Object.hasOwn(value??{},'now')?['now']:[])],'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
+    'openSources','closureScope','nativeProductSourceReader','bootstrap26',...(Object.hasOwn(value??{},'adoptedClosure')?['adoptedClosure']:[]),...(Object.hasOwn(value??{},'now')?['now']:[])],'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   for(const key of ['steps','close','authorizeStep','assertExecutionAllowed','assertAllowed','authorizeNativeCommand','preflight'])
     must(typeof s[key]==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   if(Object.hasOwn(s,'now'))must(typeof s.now==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
@@ -298,6 +298,11 @@ export function captureNativeSourceSession26(value,binding) {
   const reader=s.nativeProductSourceReader,d=Object.getOwnPropertyDescriptor(reader??{},'authorize');
   must(d?.enumerable&&Object.hasOwn(d,'value')&&typeof d.value==='function','IMPORT_SOURCE_HOST_SESSION_REQUIRED');
   const physical=Object.getOwnPropertyDescriptor(reader??{},'resolveFile');must(!physical||physical.enumerable&&Object.hasOwn(physical,'value')&&(physical.value===undefined||typeof physical.value==='function'),'IMPORT_SOURCE_HOST_SESSION_REQUIRED');
+  if(Object.hasOwn(s,'adoptedClosure')){
+   must(binding.phase==='FULL_SOURCE_CONTINUATION_26_V1','IMPORT_SOURCE_HOST26_ADOPTED_SCOPE');
+   const a=bag(s.adoptedClosure,['expected','authorizeStage','authorizePublish'],'IMPORT_SOURCE_HOST26_ADOPTED_REQUIRED');
+   must(Object.values(a).every(fn=>typeof fn==='function'),'IMPORT_SOURCE_HOST26_ADOPTED_REQUIRED');s.adoptedClosure=Object.freeze(a);
+  }
   return Object.freeze({...s,closureScope:scope,openSources:Object.freeze(factories),bootstrap26:bootstrap===null?null:Object.freeze(bootstrap)});
 }
 /** Keep the original source generator return (verified prior publication) while
@@ -355,7 +360,7 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
   const completed=async(fn,...args)=>must(await fn(...args)===undefined,'IMPORT_SOURCE_HOST26_AUTHORITY_RESULT');
   async function closeSource(){if(!sourceClosed&&sessionClose){sourceClosed=true;await sessionClose();}}
   async function close(){if(closed)return;closed=true;clearTimeout(timer);cancellation.abort();const errors=[];
-    for(const dispose of [async()=>{if(closure)await closure.close();},async()=>{if(product)await product.close();},closeSource,async()=>{if(gate)await gate.close();}])try{await dispose();}catch(error){errors.push(error);}
+    for(const dispose of [async()=>{if(closure?.close)await closure.close();},async()=>{if(product)await product.close();},closeSource,async()=>{if(gate)await gate.close();}])try{await dispose();}catch(error){errors.push(error);}
     if(errors.length)throw new AggregateError(errors,'Import source host26 close failed');
   }
   try{
@@ -370,14 +375,14 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
     if(!core){product=await openNativeProductAuthorizer26({sourceReader:session.nativeProductSourceReader,referenceDecisionFile:job.sources.referenceDecisionFile,
       trustedReferenceDecisionSha256:job.sources.trustedReferenceDecisionSha256,mappingFiles:job.sources.mappingFiles,
       reviewFile:job.sources.reviewFile,trustedReviewSha256:job.sources.trustedReviewSha256},{resolveFile:Object.getOwnPropertyDescriptor(session.nativeProductSourceReader,'resolveFile')?.value});
-    closure=await openAuthorizedHistoryClosureReader26({scope:session.closureScope,openSources:session.openSources,
+    closure=session.adoptedClosure??await openAuthorizedHistoryClosureReader26({scope:session.closureScope,openSources:session.openSources,
       trustedSelectionSha256:job.binding.selectionSha256,trustedAuthorizedPayloadHash:job.binding.authorizedPayloadHash});}
     active();const runtime=await gate.activate();active();
     return {executor:{pool:runtime.pool,runtime26:runtime.runtime26,binding:structuredClone(job.binding),now:session.now??(()=>new Date().toISOString()),bootstrap26:session.bootstrap26,
       authorization:{async assertExecutionAllowed(binding){active();must(requestHash(binding)===requestHash(job.binding),'IMPORT_SOURCE_HOST_BINDING');await completed(session.assertExecutionAllowed,structuredClone(binding));active();},
         async authorizeStep(step){active();await completed(session.authorizeStep,step);if(step.kind==='PRODUCT')await product.authorize(step.payload);active();},
         async assertAllowed(actor,command){active();await completed(session.assertAllowed,actor,command);active();},
-        async authorizeNativeCommand(actor,command){active();await completed(session.authorizeNativeCommand,actor,command);if(command.action==='IMPORT_PUBLISH'){const expected=await closure.expected();must(requestHash(command.historyClosure)===requestHash(expected.plan),'IMPORT_SOURCE_HOST_PUBLISH_SOURCE_MISMATCH');}active();},
+        async authorizeNativeCommand(actor,command){active();await completed(session.authorizeNativeCommand,actor,command);if(command.action==='IMPORT_PUBLISH'){if(session.adoptedClosure)await completed(session.adoptedClosure.authorizePublish,command);else{const expected=await closure.expected();must(requestHash(command.historyClosure)===requestHash(expected.plan),'IMPORT_SOURCE_HOST_PUBLISH_SOURCE_MISMATCH');}}active();},
         async authorizeClosure(input){active();must(!core&&closure,'IMPORT_SOURCE_HOST26_CORE_ONLY');await closure.authorizeStage(input);active();}}},
       source:{steps:()=>forwardSourceSteps26({steps:()=>session.steps(),active,maxSteps:job.maxSteps,core}),close:closeSource},close};
   }catch(error){try{await close();}catch(cleanup){throw new AggregateError([error,cleanup],'Import host26 construction and cleanup failed');}throw error;}
