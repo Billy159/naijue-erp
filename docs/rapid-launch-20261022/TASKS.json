@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T14:42:31.133962+00:00",
+  "updatedAt": "2026-10-27T14:44:33.018190+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "28b07dc5a2fe8b00a370f0952b0cb090fe3f73e4",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -14871,6 +14871,15 @@
       "boundary": "Only genuineordinaryQA RRRO contents/coverage+safe reason thenROLLBACK, noR1DB/BIND/DML/COMMIT/fakeexpected/negativefixture. Existingcredential onlyserverRAM childPGPASSWORD; max1800/deadline16:30Z/actualstatement120000 etc.",
       "next": "Collectsame185 outcome; originalD1 targetedreason fix; originalQB affecteddelta only. No184/186replay.",
       "goal": "Full37/67/realhistory/performance/formal ACTIVE incomplete."
+    },
+    "currentContinuation787": {
+      "status": "185_EARLY_ENV_PIN_FAILURE_PRESERVED_187_REVISED_AUTHORIZED",
+      "185": "FAILED2/1.220423241s/2026-10-27T14:41:43.274157Z; PRODUCTION_AUTHORITY26_C_EXECUTION_PIN_REQUIRED/prefixreasonUNKNOWN; carrier omitted mandatory third existinggrantSHA env. Before fullsource/QAactivation/adapter; not184mismatch diagnostic. OriginalATTEMPT/RESULT preserved no replay.",
+      "fix": "No source/guard/SQL/role/control changes. 187 newregistration/output and fixture/authorityrefs only; exact existingenvgrantSHA27878ca3 restored. Providerinput file182/final c7e1 and originalgrant/body unchanged. T45 required finite allrequired-env-name/CLIconditions preflight without secretvalues.",
+      "C187": "Plan4586/3dc5b646abe92d28916868b5891acaa6ce8b47cb81b7fa065fe2c8cf76c3411d;authority4363/e86cdee882a1d1f0224ad1d4a55f044f8ee32cd74f8a5d56c1f6f6d623417cfa;fixture2207/3cdd97882c6709b8ede05634c24809259b8d3ef6b1a42f913c25a933f693be61. Cactualsigned, pureplanSchemaPASS/noexecute; T45 once revised187authorized same readonlybudget16:30Z/max1800.",
+      "boundary": "Only same trueQA ordinarygenuinelease RRRO contents/coverage+safe reason thenROLLBACK;0R1DB/BIND/DML/COMMIT. Firstactualprefixread remainsnotyetobserved, no repeat20min source preparation or alreadyread content.",
+      "next": "T45 revised187actual outcome, D1 original184mismatch staticreason-based diagnosis afterevidence; no old185/184/186replay.",
+      "goal": "37/67/realbusiness/history/performance/formal ACTIVE incomplete."
     }
   },
   "historicalContinuation500Before716": {
