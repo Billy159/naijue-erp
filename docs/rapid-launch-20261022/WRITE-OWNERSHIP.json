@@ -6649,9 +6649,21 @@
     "files": [
       "apps/web/demo-replica/frontend/runtime/documents/proposal-picker.tsx",
       "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
-      "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx"
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-picker-keyboard.test.mjs"
     ],
     "boundary": "Original F1 next ready package after SOURCE820 released. Fix existing spec chooser trigger/menu Escape/arrows/focus/close without business or full size-group changes. Shared actual consumers included; no other writer/source/QF browser lease. Extra exact leaf first C registration.",
-    "next": "F1 affected selfchecks -> C fixed source -> originalQF failed/new scope -> T45 one associated candidate with SOURCE820 after source reviews; QF2 P13 independent."
+    "next": "F1 affected selfchecks -> C fixed source -> originalQF failed/new scope -> T45 one associated candidate with SOURCE820 after source reviews; QF2 P13 independent.",
+    "testSeam": "F1 exact requested leaf; existing React/Arco/DOM finite Trigger/Portal focus regression for observed Esc/arrows issue; no new test framework or global listener. Registered before write."
+  },
+  "documentActionContext823": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/medium",
+    "issue": "N34-T08-VOID-CONTEXT-01",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/documents/sales-entry.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/transfers-entry.tsx"
+    ],
+    "boundary": "Next F1 ready package after SOURCE822 release. Original fixed-view document number and Demo confirmation/action wording; preserve shown-version refresh/reject, permission/state/transaction and no execution in Demo/browser. No changed business contract, no new modal or source fact. Extra leaf exact request first."
   }
 }
