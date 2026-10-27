@@ -1,0 +1,37 @@
+{
+  "jobId": "t45-r1-committed-prefix-original108-continuation-20261028-193",
+  "status": "TERMINAL_FAILED_CARRIER_PACKAGE_PROVENANCE_PATH_BEFORE_CREDENTIAL_OR_DB_NO_REPLAY",
+  "unit": "naijue-erp-op-5cc58239-90ea9e737839",
+  "jobReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-committed-prefix-original108-continuation-20261028-193/release-submission/release-receipts/t45-r1-committed-prefix-original108-continuation-20261028-193/job.json",
+    "bytes": 529,
+    "sha256": "e4716dc0e7ff5d71389558f29af91bcf0a02f152dd99dc13ef46eadad48d5f37"
+  },
+  "engine": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-committed-prefix-original108-continuation-20261028-193/release-submission/release-receipts/t45-r1-committed-prefix-original108-continuation-20261028-193/consumer-engine-result.json",
+    "bytes": 28885,
+    "sha256": "f5874ad4a7cba8a2cbaed7647aa35006778fff779247804fd5f1f3287d81752a"
+  },
+  "elapsedSeconds": 4.129551122896373,
+  "finishedAtUtc": "2026-10-27T18:41:23.902919+00:00",
+  "errorCode": "EXACT_192_SOURCE_PATH",
+  "cause": "T45 source-path guard required every exact package member under inputs/source, but accepted unchanged8e655 package includes2 original inputs/provenance/git730-metadata/package.json and package-lock.json members. Rejected first provenance member after84code files.",
+  "original188ImmutableFilesVerified": 101,
+  "currentR1ClusterControlMetadata": {
+    "containerId": "3d428c7fc107996d315fc1e32d32e805ef7f6b284c08a5bfdef97b3ec1ec8baf",
+    "pid": 1780,
+    "rawOutputExported": false,
+    "systemIdentifier": "7691989034661916697"
+  },
+  "finalFilesMaterialized": 3,
+  "sourceFilesMaterialized": 84,
+  "metadataMaterializationReached": false,
+  "credentialLoadingReached": false,
+  "pgConnected": false,
+  "businessCommandsIssued": 0,
+  "applicationOrRouteChanged": false,
+  "schemaOrACLChanged": false,
+  "noReplay193": true,
+  "next": "C exact materialization-only successor. Keep193partialimmutable; allow only existing accepted87 package exact paths (85source+2provenance), not arbitrary inputpaths. No source/business key change. Verify preDB stop from own engine/control flow before continuation.",
+  "modelAndFast": "UNVERIFIED"
+}
