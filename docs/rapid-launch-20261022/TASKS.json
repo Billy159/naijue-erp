@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T08:35:00+08:00",
+  "updatedAt": "2026-10-27T01:55:31.445546+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "c58b216050338fb415cff75b795fac29a9c058ce",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -1776,18 +1776,15 @@
     }
   ],
   "currentModelDirective": {
-    "recordedAtUtc": "2026-10-24T10:27:22.773479+00:00",
-    "source": "2026-10-24本主控用户最新统一执行要求及全站范围补充纠正",
-    "pureUI": {
-      "model": "gpt-6-luna",
-      "reasoningEffort": "max"
-    },
-    "technical": {
-      "model": "gpt-6.1-sol",
-      "reasoningEffort": "medium"
-    },
-    "flow": "Sol界定接入边界→Luna整页迁入→Sol接线→Luna外观→Sol必要业务性能。每次实际指定，保全旧档在途与有效证据，不重跑、不自行换档；Fast请求OFF工具未核。",
-    "controllerHotSwitch": "当前turn无热切模型工具，不以文档冒充切换；同主控后续消息显式指定medium。"
+    "pureUI": "gpt-6.1-terra/medium",
+    "technical": "gpt-6.1-sol/medium",
+    "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+    "source": {
+      "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+      "humanMessageId": "01a17b0b-68d0-7110-a178-251b9a6868ed",
+      "text": "跟主控说后续luna-max的场景都改成用terra6.1-medium",
+      "scope": "All subsequent formerLuna pure UI/copy/appearance work. Existing completed checks retained; no artificial model-change job. Technical dispatch explicitlySol61medium; no claim idle chats runtime changed."
+    }
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
@@ -4640,11 +4637,16 @@
   ],
   "newPendingReviews": [
     {
-      "task": "NEW_SYN_ACTUAL_CARRIER",
+      "task": "B07_SYN_APPROVED_SUCCESSOR02",
       "owner": "QB",
-      "state": "IN_PROGRESS_AFTER_QB435",
-      "source": "bcc3b24308522736f077852db5705d2415d74e0f",
-      "scope": "new target carrier necessary source and fresh6purpose worker/config only"
+      "state": "AWAIT_ACTUAL_CURRENT_PURPOSE_IN_T45_WINDOW",
+      "scope": "SOURCE715 approved source already435PASS;437corrected02preparedPASS; only actual current-purpose and runtime results pending"
+    },
+    {
+      "task": "SOURCE722_CLOSURE_CODEC",
+      "owner": "QB",
+      "state": "WAIT_D3_FIXED_TWO_FILE_DELIVERY",
+      "scope": "New codec internal allocation only, not wholebackend re-review"
     }
   ],
   "openFindingsCurrent": [
@@ -5057,10 +5059,10 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 721,
+    "round": 722,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation715 and subsequent numbered continuation; prior round500 is historicalContinuation500Before716, not current queue",
-    "fixedSource": "bcc3b24308522736f077852db5705d2415d74e0f SOURCE715, exact GitHub remote verified",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation722; historical numbered entries remain evidence, not current queue",
+    "fixedSource": "SOURCE721 cfaae03e579a7734db372ffc5a7981445366be54 GitHub verified; SOURCE722 current in-progress records",
     "fixedCandidates": {
       "synthetic": {
         "source": "8c7ed0c78018f9d479b191e3c01d36b2ab10c456",
@@ -5077,26 +5079,32 @@
       }
     },
     "backendActual": {
-      "B07": "Limited DRAFT sales quantity/transfer quantity/money original-key actual cases passed; sales effectivev3 and transfer v2 retained; old07auth4 closed, no replay. Approved synthetic7 source complete/offline16checks, actual not run. Real-source approved sample remains unverified.",
-      "R1": "Actual125 STAGEDseq2/cursor22 only; MAIN0/PUBLISH0/fullBindingfalse. Migrations1..26/patch26_v20;131routineCount. Full-source141 fixed1000 diagnostic stop/typed0, not complete preparation."
+      "B07": "Original limited DRAFT3cases passed; new approved SYN01 failed before initdb (0DB), QB437 two worker defects corrected. Successor02 exact authority adopted02:30Z deadline/lateststart02:15Z, actual result pending; real-source approved still unverified.",
+      "R1": "Actual125 STAGEDseq2/cursor22, MAIN0/PUBLISH0/fullBindingfalse. 146 fullsource prepare FAILED2 after901.238s/source65189 unfinished/typed0; no fullDATA or commands success. D3 targeted codec allocation fix current, no replay146."
     },
     "roleQueue": {
       "F1": "Completed source delivery, original limited normal32 QF scope adopted; await real samebuild document capabilities/data for affected business branch. No new duplicate task.",
       "F2": "Existing product/stock consumers ready; synthetic detail/maintenance facts incoherent/missing, no fake state platform; await actual product capability from D2/T45.",
       "F3": "Completed settings source packages; await actual samebuild maintenance permissions/provider to validate requested writes.",
       "F4": "Completed category empty-state source patch, original effective evidence reused; await actual dictionary/barcode/season/group capabilities.",
-      "D1": "SOURCE7157files source released; waits original QB incremental source acceptance and T45 new registered SYN target; no old07 credential change.",
+      "D1": "SOURCE7157files QB435PASS adopted; newSYN02 actual pending, source owner available for concrete runtime defect only.",
       "D2": "Original source handed back, QB340 NULL-size source PASS preserved; actual PostgreSQL maintenance/full-save consumers remain dependent on original capability/data execution.",
-      "D3": "Active source-only next complete preparation technical choice based145 actual+139/144 original profile; no repeat1000probe/linear extrapolation/blind900/SQL/cache.",
-      "T45": "146 fullsource-only actually submitted once unitnaijue-erp-op-5cc58239-985c3a25e85d, collect samehandle;0PG/MAIN/APP. SYN01 stoppedpreinitdb, SYN02 prepared no actual until146terminal/newexactadoption.",
-      "QB": "QB437 two worker defects fixed and independent02binding prepared; QB438146carrier sourcePASS adopted. No LIVE review preissued; await real target, no duplicate review.",
+      "D3": "Active original task: registered722 codec representation2files, byte-equivalence/affected checks; no blind full retry.",
+      "T45": "normal32 restored57921;146 actual terminal adopted/no replay; newSYN02 authority exact adopted/current purpose+normal session actual pending.",
+      "QB": "437corrected successor02 sourcePASS adopted; current live review only inside actual02; next722 source2files when delivered, no completed review replay.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
     "models": {
-      "pureUI": "gpt-6-luna/max",
+      "pureUI": "gpt-6.1-terra/medium",
       "technical": "gpt-6.1-sol/medium",
-      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH"
+      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+      "source": {
+        "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+        "humanMessageId": "01a17b0b-68d0-7110-a178-251b9a6868ed",
+        "text": "跟主控说后续luna-max的场景都改成用terra6.1-medium",
+        "scope": "All subsequent formerLuna pure UI/copy/appearance work. Existing completed checks retained; no artificial model-change job. Technical dispatch explicitlySol61medium; no claim idle chats runtime changed."
+      }
     },
     "completion": "37pages/67overlays unchanged. Literal Demo copy evidence is distinct from per-page/all-state/real-business/production acceptance; none automatically promoted. Formal root unchanged.",
     "previousExternalBlockingCondition717": {
@@ -14169,6 +14177,15 @@
       },
       "GitHub": "SOURCE720d5ea2a7b53e06db5394f7272ef1836bdb7925312 exact remote verified",
       "goal": "ACTIVE37/67/allstate/full realbusiness/history/performance/formal release incomplete"
+    },
+    "currentContinuation722": {
+      "status": "ACTIVE",
+      "actual146": "FAILED901.238s/source65189notdone/typed0/noPG/noMAIN/noPUBLISH/noAPP",
+      "sourceFix": "D3 unique2files codec internal allocation, all bytes/validators/root preserved",
+      "preview": "normal32 restored57921, same705 source/build152resources/SYN only",
+      "syn02": "Authority3076/3c863878 adopted accurate02:30Z deadline; actual pending, no old01 replay",
+      "model": "User verified formerLuna→gpt-6.1-terra/medium; Sol61medium technical unchanged",
+      "completion": "Full37pages67overlays/allstates/realhistory/performance/formal release incomplete"
     }
   },
   "historicalContinuation500Before716": {

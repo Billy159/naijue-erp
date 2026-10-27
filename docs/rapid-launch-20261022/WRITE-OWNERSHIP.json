@@ -6391,5 +6391,13 @@
       "K/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs"
     ],
     "scope": "Closed explicit SYN_APPROVED new-target parent entry only for registered new fixture target/output, original07 and credential-renewal untouched. Reuse original controlled fixture QA insertion/RAM-secret normal login/logout/factory/issuer/cleanup. Require actual exact target/OID/schema19 publication→reviewed26 migration/catalog/capability/admission before normal approved runner; never use19 as26 or bypass hardcoded old07 admission. No generic target/platform/credentials reuse, no production permissions/DDL changes or direct DB action. SoleT45 actual after independent review."
+  },
+  "source722ClosureCodecRepresentation": {
+    "owner": "D3",
+    "files": [
+      "packages/application/src/history-typed-closure.ts",
+      "tests/history-typed-closure-expected.test.ts"
+    ],
+    "scope": "Only encodeHistoryClosureValue internal allocation: bounded string fragments and final UTF8 Buffer; object key UTF8 buffers computed once per current sort. Preserve exact frame bytes, UTF8 byte order, all own-data/prototype/getter/cycle/depth/surrogate/NUL/sparse-array and 4MiB immediate limits, root hashes and independent validations. No cross-row cache, SQL, source-data or business-contract change. Finite original-code oracle byte equivalence and affected golden hashes; no blind full retry. Based on146 source-stream stop and original139/144 codec CPU evidence; no full speed claim."
   }
 }
