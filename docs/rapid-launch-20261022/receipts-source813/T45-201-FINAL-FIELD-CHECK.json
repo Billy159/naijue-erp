@@ -1,0 +1,25 @@
+{
+  "jobId": "t45-r1-post200-original108-continuation-20261028-201",
+  "status": "PASS_FINITE201_FINAL_ACTUAL_FIELDS_AST_NO_FULL_REVIEW",
+  "hostSha256": "55753050def020e7844bb27e8716226110fcdfa887a860629e365d82adc222d8",
+  "freshGrant": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+    "bytes": 37307,
+    "sha256": "195b1d5824b023b8f101672a648c9f7e94f2e484676a4e5288c9c355c4dad7bc"
+  },
+  "freshInput": {
+    "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-r1-post200-original108-continuation-20261028-201/inputs/provider-INPUT.FINAL.json",
+    "bytes": 188929,
+    "sha256": "0dec29b3d03facb9940f15c38cc98ab3a27a4ba5c208317994a6f471082d966f"
+  },
+  "deadline": [
+    "2026-10-27T22:00:00Z"
+  ],
+  "maxStepsHostPlanRunner": 16225,
+  "wallLimit": 7200,
+  "statementTimeoutMs": 12000,
+  "requiredPlanKeysMissing": [],
+  "sixObjectsAnd109RefsUnchanged": true,
+  "runtimeReviewNew1050Bound": true,
+  "submitted": false
+}

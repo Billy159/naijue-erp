@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T19:41:05.236109+00:00",
+  "updatedAt": "2026-10-27T19:44:12.595492+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -15850,6 +15850,64 @@
       },
       "next": "OriginalT45 finalcarrier fieldscheck only andsingle201submit; exactnewmetadatawx/old193immutable/deps proof,actual1050/BINDcurrentproof thenremaining source107/CLOSURE/PUBLISH. Actualsubmissionnotyetconfirmed.",
       "github": "SOURCE811035aa300c4ee0b659058c097912ddc0672133952 exactremoteGET verified",
+      "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation813": {
+      "status": "201_ACTUAL_RUNNING_FRESH1050_PREFLIGHT_PASSED_HOST_STARTING_NOT_TERMINAL",
+      "evidence": {
+        "T45-201-FINAL-FIELD-CHECK.json": {
+          "bytes": 1090,
+          "sha256": "5bd750c26d259fde434439750c0b89e5996f4850dd3f5663e6cbb213abf91655"
+        },
+        "T45-201-RUNNING-PHASE-01.json": {
+          "bytes": 1157,
+          "sha256": "c0ce830fd7990915f868a5eca6c103e83709784d89b75468485677d13d8c05a7"
+        },
+        "T45-201-JOB-RUNNING.json": {
+          "bytes": 356,
+          "sha256": "531a02c847b3b6e1206c90fd2b9c62d43e0ec6327e17a72cf3ffa564ca4d4d70"
+        }
+      },
+      "unit": "naijue-erp-op-5cc58239-ed5cb0f18ccf",
+      "phaseAtUtc": "2026-10-27T19:41:59.450617Z",
+      "phase": {
+        "jobId": "t45-r1-post200-original108-continuation-20261028-201",
+        "status": "ACTUAL_RUNNING_PREFLIGHT1050_PASSED_ORIGINAL_HOST_STARTING_NOT_TERMINAL",
+        "checkedAtUtc": "2026-10-27T19:43:35.348926+00:00",
+        "phase": "PREFLIGHT_PASSED_HOST_STARTING",
+        "phaseAtUtc": "2026-10-27T19:41:59.450617+00:00",
+        "unit": "naijue-erp-op-5cc58239-ed5cb0f18ccf",
+        "unitMetadata": {
+          "MainPID": 2154774,
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running"
+        },
+        "actualCanonical": "1050b2aa3329ca8956365578765f89027808dd7f3f9b81ff970de66b82f5ad3f",
+        "originalBindReceiptCount": 1,
+        "batch": {
+          "status": "STAGED",
+          "sequence": "3",
+          "cursor": "22",
+          "counts": {
+            "SKU": 0,
+            "WAREHOUSE": 22,
+            "IMPORT_BATCH": 0,
+            "INVENTORY_LEDGER": 0
+          },
+          "history_payload_hash": "1acb9ed93d8e29aebd8f62b8cfbfbd26481aecb62dad370993d9754e6219b1e8"
+        },
+        "preflightRollbackReturned": true,
+        "preflightClientsClosed": true,
+        "nativeCurrentProofAndSuffixOutcome": "UNKNOWN_IN_FLIGHT",
+        "maxSteps": 16225,
+        "maxWallSeconds": 7200,
+        "absoluteDeadlineUtc": "2026-10-27T22:00:00Z",
+        "replayAllowed": false
+      },
+      "actual": "201physicalnewmetadata/old193source87+121refs/deps verified; actual1050/BINDCOMMITTED/STAGED3cursor22/history1acb/noACCOUNT-PUBLISH preflightpassed;RRROrollbackclosed. Hoststarted, currentfullproof/suffixinflight notPASS.",
+      "next": "OriginalT45 same201key watcher session29273 finite45scollect meaningfulphase/terminal; no newjob or replay. Ifterminalfailure originalkey/nativeidentity recovery beforeanyrepair. Onsuccess exact148readback→consistentisolatedQArestore→D2fourSAVE+frontendrealconsumers/QFQB→batchformalrelease.",
+      "github": "SOURCE81261f8c8e63021731653beee7fa2371eb6129d8df1 exactremoteGET verified",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
     }
   },
