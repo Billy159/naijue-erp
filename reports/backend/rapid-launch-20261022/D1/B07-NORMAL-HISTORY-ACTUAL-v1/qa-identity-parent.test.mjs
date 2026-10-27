@@ -215,7 +215,9 @@ async function syn26Fixture(t,options={}){
   references:{batchId:'00000000-0000-0000-0000-000000000001',publishedOperationId:'89d8e3cb-5b42-4637-ed8c-0adf2091344a',cases:['sales','transfers'].map((kind,i)=>({kind,documentId:id(10+i),lineId:id(20+i),capturedVersion:1,capturedSourceStatus:'APPROVED',capturedQuantity:i?'3':'2',proposedQuantity:i?'4':'3'}))},keys:Object.fromEntries(['sales','salesCas','transfers','transfersCas','rollback'].map(k=>[k,'B07_SYN_APPROVED_V1_'+k.toUpperCase()]))};
  const proof={format:'B07_SYN26_QA_AUTH1_READONLY_PROOF_V1',target:{database:target.database,oid:target.oid,role:target.role},profile:EFFECTIVE_VALUE_PROFILE,catalogSha256:'a'.repeat(64),businessDML:0,credentialRead:false,rollbackReturned:true,clientsEnded:true,qa:{accountId:q.accountId,staffId:q.staffId,version:1,authVersion:1,notSource:true,sourceActorDisabled:true,liveSessions:0},noOriginalHistoryKeys:true,can_read_identity:true,can_update_credential:true,can_revoke_sessions:true,functions,triggers};
  const input={...base.plan,target,contract:'B07_SYN26_QA_AUTH1_CONTINUATION_V1',expectedVersion:1,expectedAuthVersion:1,changedAt:'2026-10-27T00:01:00.000Z',approvedInput,permissionProof:proof};
- const calls=[],records=[],events=[],state={version:options.version??1,hash:'PROTOCOL_FAKE_OLD_UNREAD',updatedAt:input.createdAt,updates:0,logins:0,logouts:0,recoveryCalls:0,recoveryEnded:0,setupEnded:0,newPassword:null};
+ if(options.auth2){input.contract='B07_SYN26_QA_AUTH2_CONTINUATION_V1';input.expectedVersion=2;input.expectedAuthVersion=2;input.priorCredentialChangedAt='2026-10-27T05:29:18.656Z';input.changedAt='2026-10-27T06:00:00.000Z';proof.format='B07_SYN26_QA_AUTH2_READONLY_PROOF_V1';proof.qa.version=2;proof.qa.authVersion=2;proof.catalogSha256='d92797336281ddc4d831842ee4d8cd4468272aa5974a4ae04e5b91b053fa2632';}
+ const expected=options.auth2?2:1;
+ const calls=[],records=[],events=[],state={version:options.version??expected,hash:'PROTOCOL_FAKE_OLD_UNREAD',updatedAt:options.auth2?input.priorCredentialChangedAt:input.createdAt,updates:0,logins:0,logouts:0,recoveryCalls:0,recoveryEnded:0,setupEnded:0,newPassword:null};
  const makeClient=readonly=>({connectionParameters:{host:target.unix_socket_directories,port:target.port},async query(sql,args=[]){calls.push({sql,readonly});let rows=[],rowCount=0;
   if(sql===RENEWAL_SQL.target){const {unix_socket_directories,...value}=target;rows=[value];}
   else if(sql===RENEWAL_SQL.admission)rows=[{versions:Array.from({length:26},(_,i)=>i+1),functions,triggers,management_role_safe:options.guard!==false,can_read_identity:true,can_update_credential:options.permission!==false,can_revoke_sessions:true}];
@@ -226,10 +228,10 @@ async function syn26Fixture(t,options={}){
   else if(sql.includes('/* syn26-auth1:source-absence */'))rows=[{parties:0,header_staff:0,records:0,claims:0}];
   else if(sql.includes('/* syn26-auth1:facts:'))rows=[];
   else if(sql===RENEWAL_SQL.state){rows=[{account:{id:q.accountId,staff_id:q.staffId,login_name:q.loginName,login_enabled:true,version:state.version,auth_version:state.version,created_at:input.createdAt,updated_at:state.updatedAt},staff:{id:q.staffId,name:q.name,role:'WAREHOUSE',hall_id:null,employment_status:'在职',contact:null,version:1},live_sessions:0,source_disabled:true,qa_not_source:true,no_colliding_audit:true,other_accounts:[{id:'00000000-0000-0000-0000-000000000802',login_enabled:false}],credential_matches:args[3]===state.hash}];}
-  else if(sql===RENEWAL_SQL.update){state.updates++;events.push('CAS');assert.equal(args[0],q.accountId);assert.equal(args[3],1);assert.equal(args[4],1);
-   if(!options.casConflict){state.hash=args[5];state.version=2;state.updatedAt=input.changedAt;rows=[{id:q.accountId,version:2,auth_version:2}];rowCount=1;}}
+  else if(sql===RENEWAL_SQL.update){state.updates++;events.push('CAS');assert.equal(args[0],q.accountId);assert.equal(args[3],expected);assert.equal(args[4],expected);
+   if(!options.casConflict){state.hash=args[5];state.version=expected+1;state.updatedAt=input.changedAt;rows=[{id:q.accountId,version:expected+1,auth_version:expected+1}];rowCount=1;}}
   else if(sql===RENEWAL_SQL.sessions)rowCount=0;
-  else if(sql==='COMMIT'&&!readonly&&options.unknownCommit){if(options.unknownAbsent){state.version=1;state.hash='PROTOCOL_FAKE_OLD_UNREAD';state.updatedAt=input.createdAt;}const e=Error('PROTOCOL_FAKE_COMMIT_ACK_LOST');e.code='08006';throw e;}
+  else if(sql==='COMMIT'&&!readonly&&options.unknownCommit){if(options.unknownAbsent){state.version=expected;state.hash='PROTOCOL_FAKE_OLD_UNREAD';state.updatedAt=options.auth2?input.priorCredentialChangedAt:input.createdAt;}const e=Error('PROTOCOL_FAKE_COMMIT_ACK_LOST');e.code='08006';throw e;}
   else assert.ok(sql==='BEGIN'||sql.startsWith('SET LOCAL')||sql.startsWith('LOCK TABLE')||sql==='COMMIT'||sql==='ROLLBACK'||sql==='BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY','Unexpected continuation query');
   return {rows,rowCount:rowCount||rows.length};},async end(){state.setupEnded++;}});
  const api={trustedOrigin:approvedInput.origin,app:{server:{listening:false},async inject(req){
@@ -340,4 +342,55 @@ test('SYN new03 output is fixed and old01/02 or arbitrary roots reject before an
  const directory=SYN26_CONTINUATION_OUTPUT;
  await assert.rejects(runB07ExistingSyn26SessionContinuationParent({plan:{contract:'B07_SYN26_QA_AUTH1_CONTINUATION_PARENT_V1',outputDirectory:directory,purposeGateFile:join(APPROVED_SYN_OUTPUT,'credential-continuation-01','CURRENT-PURPOSE-GATE.json')},setupClient,withRecoveryClient:async()=>{touched++;}}),/^Error: B07_SYN26_PARENT_REGISTRATION_REQUIRED$/);
  assert.equal(touched,0);
+});
+
+// C registered closed existing auth2→3/04 only. All DB calls below are protocol fakes.
+import {validateSyn26Auth2Continuation,withB07Syn26Auth2Continuation,withB07Syn26Auth3ManagedNormalSession,runB07ExistingSyn26Auth2ContinuationParent,SYN26_AUTH2_CONTINUATION_OUTPUT,SYN26_AUTH2_BOUNDARY_PINS} from './qa-identity-parent.mjs';
+test('SYN auth2 fixed04 rejects old roots, old proof/catalog, auth1/auth3/arbitrary version and mismatched preimage time',async t=>{
+ const f=await syn26Fixture(t,{auth2:true});assert.equal(validateSyn26Auth2Continuation(f.input).expectedVersion,2);
+ assert.equal(SYN26_AUTH2_CONTINUATION_OUTPUT,join(APPROVED_SYN_OUTPUT,'credential-continuation-04'));
+ for(const mutate of [x=>x.expectedVersion=1,x=>x.expectedAuthVersion=3,x=>x.expectedVersion=9,x=>x.permissionProof.format='B07_SYN26_QA_AUTH1_READONLY_PROOF_V1',x=>x.permissionProof.qa.authVersion=1,x=>x.permissionProof.catalogSha256='1df15aabea32be466d993621c926398a501b979bef6c19caa659b6ab73415205',x=>x.priorCredentialChangedAt='2026-10-27T00:00:00.000Z',x=>x.target.database='naijue_erp_test_19e00102']){
+  const input=structuredClone(f.input);mutate(input);await assert.rejects(withB07Syn26Auth2Continuation({...f,input,afterRenewal:async()=>{throw Error('MUST_NOT_RUN');}}));}
+ for(const root of ['credential-continuation-01','credential-continuation-02','credential-continuation-03','credential-continuation-05','arbitrary']){
+  const directory=join(APPROVED_SYN_OUTPUT,root);await assert.rejects(runB07ExistingSyn26Auth2ContinuationParent({plan:{contract:'B07_SYN26_QA_AUTH2_CONTINUATION_PARENT_V1',outputDirectory:directory,purposeGateFile:join(directory,'CURRENT-PURPOSE-GATE.json')},setupClient:f.client,withRecoveryClient:f.withRecoveryClient}),/PARENT_REGISTRATION_REQUIRED/);}
+ await assert.rejects(withB07Syn26Auth1Continuation({...f,afterRenewal:async()=>{}}),/AUTH1_ONLY/);assert.equal(f.calls.length,0);
+});
+test('SYN auth2 sameQA CAS2to3 uses new catalog, revokes sessions and one normal auth3 login/logout without exporting secret',async t=>{
+ const f=await syn26Fixture(t,{auth2:true});let escaped;
+ const result=await withB07Syn26Auth2Continuation({...f,runNormalSession:withB07Syn26Auth3ManagedNormalSession,afterRenewal:async({withNormalSession,authVersion})=>{assert.equal(authVersion,3);escaped=withNormalSession;await withNormalSession(f.api,async()=>{});}});
+ assert.equal(result.version,3);assert.equal(result.authVersion,3);assert.equal(f.state.updates,1);assert.equal(f.state.logins,1);assert.equal(f.state.logouts,1);assert.equal(f.state.recoveryCalls,0);
+ assert.equal(f.records[0].expectedVersion,2);assert.equal(f.records[0].nextVersion,3);assert.equal(f.records[0].catalogSha256,f.input.permissionProof.catalogSha256);
+ assert.equal(f.calls.filter(c=>c.sql===RENEWAL_SQL.sessions).length,1);assert.equal(f.calls.some(c=>/^\s*(INSERT|GRANT|ALTER|CREATE|DELETE)\b/.test(c.sql)),false);
+ const output=JSON.stringify(f.records);for(const secret of [f.state.hash,f.state.newPassword,'PROTOCOL_FAKE_COOKIE'])assert.equal(output.includes(secret),false);
+ await assert.rejects(escaped(f.api,async()=>{}),/SINGLE_SESSION/);
+});
+test('SYN auth2 stale account/guard/permission/original key/CAS conflict stops without login, second update or new source',async t=>{
+ for(const options of [{version:1},{version:3},{guard:false},{permission:false},{originalKey:true},{casConflict:true}]){
+  const f=await syn26Fixture(t,{auth2:true,...options});await assert.rejects(withB07Syn26Auth2Continuation({...f,runNormalSession:withB07Syn26Auth3ManagedNormalSession,afterRenewal:async()=>{throw Error('MUST_NOT_RUN');}}),/PRECOMMIT_STOP_NO_RETRY/);
+  assert.equal(f.state.updates,options.casConflict?1:0);assert.equal(f.state.logins,0);assert.equal(f.state.recoveryCalls,0);assert.equal(f.calls.filter(c=>c.sql==='ROLLBACK').length,1);}
+});
+test('SYN auth2 unknownCOMMIT sameRAM readonly match3 proceeds once; absent/mismatched match stops, no second CAS',async t=>{
+ for(const absent of [false,true]){
+  const f=await syn26Fixture(t,{auth2:true,unknownCommit:true,unknownAbsent:absent});let result,error;
+  try{result=await withB07Syn26Auth2Continuation({...f,runNormalSession:withB07Syn26Auth3ManagedNormalSession,afterRenewal:async({withNormalSession})=>withNormalSession(f.api,async()=>{})});}catch(e){error=e;}
+  if(absent){assert.match(error.message,/COMMIT_UNKNOWN_STOP_NO_RETRY/);assert.equal(f.state.logins,0);}else{assert.equal(result.commitRecovered,true);assert.equal(result.authVersion,3);assert.equal(f.state.logins,1);assert.equal(f.state.logouts,1);}
+  assert.equal(f.state.updates,1);assert.equal(f.state.recoveryCalls,1);assert.equal(f.state.recoveryEnded,1);assert.equal(f.calls.some(c=>c.sql==='ROLLBACK'&&!c.readonly),false);assert.equal(f.calls.filter(c=>c.sql==='ROLLBACK'&&c.readonly).length,1);assert.equal(f.calls.filter(c=>c.readonly).some(c=>/^\s*UPDATE/.test(c.sql)),false);
+ }
+});
+test('SYN auth2 work failure logs out and retains committed3 without allowing auth2 session helper or replay',async t=>{
+ const f=await syn26Fixture(t,{auth2:true});let error,escaped;
+ try{await withB07Syn26Auth2Continuation({...f,runNormalSession:withB07Syn26Auth3ManagedNormalSession,afterRenewal:async({withNormalSession})=>{escaped=withNormalSession;await withNormalSession(f.api,async()=>{throw Error('FAKE_WORK_FAIL');});}});}catch(e){error=e;}
+ assert.equal(error.syn26Failure.commitAttempted,true);assert.equal(f.state.version,3);assert.equal(f.state.logouts,1);assert.equal(f.state.updates,1);
+ await assert.rejects(escaped(f.api,async()=>{}),/SINGLE_SESSION/);await assert.rejects(withB07Syn26ManagedNormalSession({api:f.api,password:'NOT_USED',authVersion:3,work:async()=>{}}),/EXACT_NORMAL_SESSION_REQUIRED/);
+});
+test('SYN auth2 parent refuses missing immutable normal03 committed boundary while closing accepted setup before source/secret',async t=>{
+ const f=await syn26Fixture(t,{auth2:true});const parentBase={...f.input,contract:'B07_SYN26_QA_AUTH2_CONTINUATION_PARENT_V1',sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,outputDirectory:SYN26_AUTH2_CONTINUATION_OUTPUT,purposeGateFile:join(SYN26_AUTH2_CONTINUATION_OUTPUT,'CURRENT-PURPOSE-GATE.json')};
+ // Original accepted schema26 terminal evidence only: the subsequent normal03
+ // immutable boundary is intentionally omitted and must fail before any write.
+ const actualRoot=P+'/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-NORMAL-PREPARATION-20261027-01';
+ const pin=async path=>{const bytes=await readFile(path);return {path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};};
+ const plan={...parentBase,priorTerminalResult:await pin(actualRoot+'/ACTUAL-RESULT.json'),priorLifecycle:await pin(actualRoot+'/OS-LIFECYCLE.json')};let error;
+ try{await runB07ExistingSyn26Auth2ContinuationParent({plan,setupClient:f.client,withRecoveryClient:f.withRecoveryClient});}catch(e){error=e;}
+ assert.equal(error.syn26ParentFailure.errorCode,'B07_SYN26_AUTH2_BOUNDARY_REQUIRED');assert.equal(f.state.setupEnded,1);assert.equal(f.state.updates,0);assert.equal(f.calls.length,0);
+ assert.equal(SYN26_AUTH2_BOUNDARY_PINS.intent.sha256,'f77e22786e9b3ea1e2ac3a58d6e45b8aa249ac3036ce0a47f1179238ce180605');
 });

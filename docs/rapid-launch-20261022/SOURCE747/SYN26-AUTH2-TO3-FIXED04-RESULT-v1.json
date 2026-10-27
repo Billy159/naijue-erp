@@ -1,0 +1,85 @@
+{
+  "status": "SOURCE_CLOSED_AUTH2_TO3_FIXED04_READY_NOT_ACTUAL",
+  "ownerScope": "C registered existing parent/test two leaves K originals + R safe mirrors",
+  "files": [
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.mjs",
+      "bytes": 87649,
+      "sha256": "b392e04ce121d84c624198ccfbab43d6eeae95ef19d49debcc7d9751d0ae1d60",
+      "mirrorsEqual": true
+    },
+    {
+      "controlOriginalPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "safeMirrorPath": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022/reports/backend/rapid-launch-20261022/D1/B07-NORMAL-HISTORY-ACTUAL-v1/qa-identity-parent.test.mjs",
+      "bytes": 50055,
+      "sha256": "6832f63840a8bb3855d951ad239efc7f596a5d62c9447af5c937036b8a99e885",
+      "mirrorsEqual": true
+    }
+  ],
+  "actualBoundaryAdopted": {
+    "normal03Credential1to2Committed": true,
+    "currentQaVersion": 2,
+    "currentQaAuthVersion": 2,
+    "priorCredentialChangedAt": "2026-10-27T05:29:18.656Z",
+    "normal03ApprovedSaveAttempted": false,
+    "normal03FirstSnapshot42501": true,
+    "originalReceiptsPreserved": true,
+    "fourDictionaryColumnSelectRepair": "Actual3619/7729d334 and admittedtrue adopted, no revalidation",
+    "catalogSha256": "d92797336281ddc4d831842ee4d8cd4468272aa5974a4ae04e5b91b053fa2632"
+  },
+  "interfaces": {
+    "newParent": "runB07ExistingSyn26Auth2ContinuationParent({plan,setupClient,withRecoveryClient})",
+    "parentContract": "B07_SYN26_QA_AUTH2_CONTINUATION_PARENT_V1",
+    "newLifecycle": "withB07Syn26Auth2Continuation",
+    "inputValidator": "validateSyn26Auth2Continuation",
+    "normalSession": "withB07Syn26Auth3ManagedNormalSession",
+    "fixedOutput": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-04",
+    "inputContract": "B07_SYN26_QA_AUTH2_CONTINUATION_V1",
+    "proofFormat": "B07_SYN26_QA_AUTH2_READONLY_PROOF_V1",
+    "additionalPlanFields": [
+      "priorCredentialChangedAt=2026-10-27T05:29:18.656Z",
+      "priorAuth2Boundary exact pinned intent,parent,approved,actual,aclRepair"
+    ],
+    "currentPermissionProof": "same exact new target/guard/trigger/privilege/source/key proof fields, qa.version=qa.authVersion=2, refreshed exactd927 catalog and current fresh actualpostmaster/purpose required. Original457 purpose/catalog rejected.",
+    "priorAuth2BoundaryPins": {
+      "intent": "1018/f77e22786e9b3ea1e2ac3a58d6e45b8aa249ac3036ce0a47f1179238ce180605",
+      "parent": "1382/9c75e7c744664ae61c37915b1d6412bf4fd8acee630bd67869806914c5c50574",
+      "approved": "419/590d818eff73587112645dae1d17498274f3ed8d886d04984fb66b5094f758a9",
+      "actual": "3156/20e72a8081fe48b33cb4856c82b621617d3e04194133a91de15c6e3b9bd85b20",
+      "aclRepair": "3619/7729d334ffb9b71839cb1d54f06c813be2d64bb4e3438e293a03c0d23312a1a5"
+    }
+  },
+  "minimalChanges": [
+    "Two explicit exported fixed entry families only: historicalauth1→2/03 and approvedauth2→3/04; common private lifecycle/parent selected by unexported symbol, no arbitrary version/root/API selector",
+    "Exact auth2 preimage reads version2/auth2 and original last credential timestamp; CAS uses expected2/2→3/3, collision-audit check uses3, normal principal verifiesauth3",
+    "New04 requires normal03 immutable committed boundary and actual five-column SELECT repair receipt, actual originalpublication refs and original business request keys unchanged",
+    "Original SQL constants, credential/sessionrevocation/COMMITunknown sameRAMRO/no-secondUPDATE, issuer/factory/UTC/guard/proof/cleanup retained; only expected finite step differs",
+    "Old07 modules/functions/paths untouched; oldauth1 validator rejectsauth2 and oldparent rejects04"
+  ],
+  "checks": {
+    "newAuth2TargetedTests": {
+      "passed": 6,
+      "skipped": 0
+    },
+    "affectedSharedAuth1Tests": {
+      "passed": 7,
+      "skipped": 0
+    },
+    "node24SyntaxExitCode": 0,
+    "old07HistoricalBaselineRestoredSha256": "35d59b70decae1006c31eca9634f8bfef9885c0b23602f8b4d1d361921939ea0"
+  },
+  "actualPostgresByD1": false,
+  "actualCredential2to3": false,
+  "actualNormalAuth3Session": false,
+  "newPermissionsOrBusinessSQL": false,
+  "existingFixturePubUpgradeReplayed": false,
+  "next": "C fix pins, originalQB only auth2/shared affected delta; T45 new exact04 carrier/currentguard preimage/corrected freshcurrentpurpose tied d927catalog, one session/whole remaining approved scope. No independentconstruction/old03 replay.",
+  "unverified": [
+    "actual2to3 CAS/currentpurpose/auth3 normalcase",
+    "actualHREV/conservation/true23505 rollback",
+    "originalfirst42501unique object",
+    "realFULL import/businessrelease"
+  ],
+  "fast": "UNVERIFIED"
+}
