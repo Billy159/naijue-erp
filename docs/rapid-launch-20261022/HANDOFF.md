@@ -1,3 +1,5 @@
+SOURCE765：164实际FAILED2/14.483秒，09:27:48Z终态。原完整来源证据检查、actual runtime issuer均已真实通过，随后第1 MAIN/BIND已尝试42501，journal FAILED_OUTCOME_UNVERIFIED，不能把仅COMMITTED才置true的MAINOrPublishExecuted=false解释为未写。host已关闭/APP未切换。原T45按原业务键单次RRRO查receipt与R1checkpoint，结局未核前禁止重164/换key/继续后缀；原D1只读准确权限调用链和现存证据定位，不泛加GRANT/重写复现。148产物/原keys保留，整体目标ACTIVE未完成。
+
 SOURCE764：QB469本地prepared两独立Git730metadata定位增量PASS，精确7pins/稳定proof固定；467/461/468有效结论直接采用不重审。C核sixdata+109原命令不变后实际签164准确grant36998/defa71cf及ADOPTION4313/90893d6a，新10:45Z4096 FULL_NATIVE_CONTINUATION。原T45开始首次bounded上传/提交；实际Linux运行/issuer/MAIN/PUBLISH尚未验证，不冒授权为成功。旧148/158/shared/B07保护，真实来源不入Git。UI仍normal34合成，全37页67弹层与真实业务/性能/正式发布目标ACTIVE未完成。
 
 SOURCE763：采用163最小来源澄清：current完整Git730 package/lock内容及依赖版本保持，仅idx118/119 baseline locator在新私有目录独立物化准确Git730元数据，显式Git推导比较，不冒actual148原件；旧18byte/缺lock事实保全。与QB468已审actualissuer78034/247c四引用修正合并，provider755/host749不改、111产物/109原业务键及guards不变。T45准备唯一新固定载体，QB仅两metadata locator及来源澄清增量并行，不重467/468/全依赖。原09Z失败窗关闭，新准确技术窗10:45Z/4096已登记；实际新包未提交、未导入/发布。
