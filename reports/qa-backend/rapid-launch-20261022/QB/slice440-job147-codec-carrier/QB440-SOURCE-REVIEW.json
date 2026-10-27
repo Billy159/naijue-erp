@@ -1,0 +1,64 @@
+{
+  "reviewId": "QB440",
+  "decision": "PASS_SOURCE_ONLY_JOB147_CODEC_CARRIER_INCREMENT_NOT_ACTUAL",
+  "jobId": "t45-source723-codec-full-preparation-20261027-147",
+  "fixedCodecCommit": "124c4ad2155457689fc7bc617989ef92624de62f",
+  "reuses": [
+    "QB439 SOURCE723 codec correctness",
+    "QB438 job146 complete source-only carrier"
+  ],
+  "bundlePins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source723-codec-full-preparation-20261027-147/bundle/PLAN.json",
+      "bytes": 8798,
+      "sha256": "6643474cb27733abb821487d6dbe8ea5b6abab8290e2c283e4f717d9fd4f31b6"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source723-codec-full-preparation-20261027-147/bundle/codec-overlay.json",
+      "bytes": 40359,
+      "sha256": "ae88f796d2b2f1af571c4505ceb70c9e82f7a64908ad136d3fa2f617e569c08d"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source723-codec-full-preparation-20261027-147/bundle/source-input.json",
+      "bytes": 187723,
+      "sha256": "32a1fad0eb66cf866619a7743696cd42b542ae68849d70d6c947e892c5a87df2"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source723-codec-full-preparation-20261027-147/bundle/source-preparation-carrier.py",
+      "bytes": 5948,
+      "sha256": "4d21aaec675f286f132642fedc6518005bb2ed3a46579cebd5c48ddb1d76d637"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source723-codec-full-preparation-20261027-147/bundle/source-preparation.mjs",
+      "bytes": 4703,
+      "sha256": "503e27da49ac1295621701377089a743c49c4a23d981f807cd6a9d131ddbb280"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source723-codec-full-preparation-20261027-147/bundle/source-scope.json",
+      "bytes": 22327,
+      "sha256": "0cfec26c339eb790e6ec304309483a1b35779f32fb34abd68d7497ae38cb97aa"
+    }
+  ],
+  "checks": [
+    "Fresh147 sourcebase copy from146; exact one codec destination37630/d32d9f74 matches fixedSOURCE723 Git bytes, exactoverlay length/hash40359/ae88 and bytes/readback0400 before newNode child startup. No resident module cache or oldprocess reuse.",
+    "Inherited SOURCE713 application/provider runtime remains unchanged. Provider new147 relative imports reference installed codec; nativehelper pinned physical146/ada8 accepts provider original functionbag; headerclosure sourceCodec explicitly injected new147 encode/hash/projection; captured D1 sales/settlement sourceRoot147 follows newtree. No helper rebuild or source validator bypass.",
+    "Input inverseONLY two SALES_DETAILS/SETTLEMENTS sourceRoot values restores146 byte-equivalent structure; original4helperphysical146 pins/79nonCODE/DATA/auth/binding/proofs retained. Scope inverseinput/output/deadline restores146 registration/artifactRows/sourceManifest/109keys/12524/date/chunk exactly.",
+    "MJS byteidentical146 except jobroot, diagnosticMode null/fullpath retained; finephase/11group/native/merged progress whitelist and failureSTOP/noautoretry/wx result policy unchanged. No profiling.",
+    "Original soft900/child930/helper970/hard980 unchanged; newscope03:00Z cutoff and now+980<=deadline imply lateststart02:43:40Z. Protected20 and routeCAS equal146. NoPG/MAIN/PUBLISH/APP/grant entry added.",
+    "Single original146 residue check requires prioroutputparent existsandempty and registration absent before fresh147 inputs/outputroot; old146 not overwritten. This review does not claim residue actualstate or actualdispatcher/window adoption."
+  ],
+  "pythonSyntax": "PASS_COMPILE_ONLY",
+  "actualInstalledCodecVerified": false,
+  "actualPreparationRun": false,
+  "actualPerformanceMeasured": false,
+  "databaseOrRemoteAction": false,
+  "businessAcceptance": false,
+  "sourceChangedByQB": false,
+  "executionAuthorizedByReview": false,
+  "remaining": [
+    "C/T45 exact147 dispatch/window adoption and one original146 residue observation; stop on unknown/existingoutput/key, no replay.",
+    "Actual complete prepare/source+typed results and timing still needed. Source carrier PASS is not full preparation/performance PASS."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

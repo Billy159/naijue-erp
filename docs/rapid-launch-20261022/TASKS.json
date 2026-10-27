@@ -4640,13 +4640,7 @@
       "task": "B07_SYN02_POST_COMMITTED_RECOVERY",
       "owner": "QB",
       "state": "WAIT_D1_FIXED_SCOPE724",
-      "scope": "Only lifecycle actualfailure and original committed19 RO recovery; no old fixture/PUBLISH rerun"
-    },
-    {
-      "task": "SOURCE723_CODEC_CARRIER",
-      "owner": "QB",
-      "state": "WAIT_T45_PREPARED_DELTA",
-      "scope": "439 sourcePASS adopted; only accurate newcodec runtime carrier delta"
+      "scope": "Only new lifecycle/RO recovery source, existing committedPUBLISH preserved"
     }
   ],
   "openFindingsCurrent": [
@@ -5059,10 +5053,10 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 724,
+    "round": 725,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation724",
-    "fixedSource": "SOURCE723 124c4ad2155457689fc7bc617989ef92624de62f exactGitHub verified",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation725",
+    "fixedSource": "SOURCE724325a8f6cc549c77617df550466b5317e8d091866 exactGitHub remote verified; runtimeSOURCE723124c4ad codec",
     "fixedCandidates": {
       "synthetic": {
         "source": "8c7ed0c78018f9d479b191e3c01d36b2ab10c456",
@@ -5090,8 +5084,8 @@
       "D1": "Active724 exacthelper+test lifecycle counting and original committed19 read-only metadata recovery; existing successfulPUBLISH preserved.",
       "D2": "Original source handed back, QB340 NULL-size source PASS preserved; actual PostgreSQL maintenance/full-save consumers remain dependent on original capability/data execution.",
       "D3": "SOURCE723 twoleaf codec delivered, independentQB439PASS adopted, no actual speed claim; no further source writes.",
-      "T45": "SYN02 stopped/cleaned, original-keyRO committed boundary confirmed; preparing next source-only sameversion codec carrier only, no execute before adoption. normal32 restored57921.",
-      "QB": "QB439 SOURCE723 exacttwoleafPASS adopted. Wait D1 fixed724 and next sourcecarrier affected delta;437 currentpurpose never reached, no issued LIVEPASS.",
+      "T45": "147 unique submitted unitnaijue-erp-op-5cc58239-1854b7c151c1/autoRetryfalse source-only900930970980, collectsamehandle. SYN02 committed19 untouched; D1 recovery source pending.",
+      "QB": "439codec sourcePASS and440147carrierPASS adopted. D1 recovery fixed delivery pending, currentpurpose not reached/no LIVEPASS.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
@@ -14194,6 +14188,23 @@
       "rootCause": "D1 fixed11 closedSessions assertion contradicts repeated11source authorizations. Fix per-session accounting and RO originalmetadata; no replay",
       "authority": "User awake/newbusiness decisions only user; existing approved technical/QA work continues",
       "ui": "normal32 samefixedSOURCE705 SYN, 37/67 allstates/realbusiness/formalnotcomplete"
+    },
+    "currentContinuation725": {
+      "status": "ACTIVE",
+      "runtimeSource": "SOURCE723124c4ad codec, QB439PASS",
+      "carrier": "QB440147 sourcePASS adopted, 6exactbundlepins preserved",
+      "actual147": {
+        "state": "SUBMITTED_QUEUED",
+        "unit": "naijue-erp-op-5cc58239-1854b7c151c1",
+        "autoRetry": false,
+        "deadlineUtc": "2026-10-27T03:00:00Z",
+        "latestStartUtc": "2026-10-27T02:43:40Z",
+        "bounds": "900930970980 unchanged",
+        "scope": "source-only preparation, noPG/MAIN/PUBLISHexecution/APP/profile",
+        "next": "Collectoriginalhandle terminal, no restart"
+      },
+      "D1": "Scope724 lifecycle/committed19metadata RO recovery in progress; no fixture/pub replay",
+      "notComplete": "Full37/67 allstate UI/realbusiness/history/performance/formalrelease incomplete"
     }
   },
   "historicalContinuation500Before716": {
