@@ -1,0 +1,333 @@
+{
+  "status": "TERMINAL_FULL_SOURCE_PREPARATION_STOP_NOT_PASS_NO_REPLAY",
+  "jobId": "t45-source723-codec-full-preparation-20261027-147",
+  "jobReceipt": {
+    "jobId": "t45-source723-codec-full-preparation-20261027-147",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-1854b7c151c1",
+    "atUTC": "2026-10-27T02:11:46.302312+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 901.2550655789673,
+    "exports": [
+      "engine-result.json",
+      "preparation-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T02:26:47.599074+00:00"
+  },
+  "sourceCommit": "124c4ad2155457689fc7bc617989ef92624de62f",
+  "codecSha256": "d32d9f748cc1d73792a9bec06c453be4462a63aba62f8f54bdaba8e7b9c50bee",
+  "errorCode": "PRODUCTION_PROVIDER26_CLOSED",
+  "phase": "ORIGINAL_BINDINGS_AND_STREAMS",
+  "progress": {
+    "version": "SOURCE_PREPARATION_PROGRESS26_V1",
+    "stage": "PREPARER_SOURCE_STREAM",
+    "elapsedMs": 899781,
+    "nativeFacts": {
+      "PRODUCTS": {
+        "records": 30,
+        "sourceRows": 2956
+      },
+      "SKUS": {
+        "records": 14999,
+        "sourceRows": 15121
+      },
+      "STOCK_CONTRIBUTORS": {
+        "records": 38303,
+        "sourceRows": 38314
+      }
+    },
+    "merged": {
+      "sourceRows": {
+        "count": 118810,
+        "started": true,
+        "done": false,
+        "lastProgressElapsedMs": 899760
+      },
+      "typedRows": {
+        "count": 0,
+        "started": false,
+        "done": false,
+        "lastProgressElapsedMs": 0
+      }
+    },
+    "groups": [
+      {
+        "group": "PARTIES",
+        "sourceRows": {
+          "count": 172,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 893501
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 112366
+        }
+      },
+      {
+        "group": "CATALOGUE",
+        "sourceRows": {
+          "count": 88,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 886865
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 112366
+        }
+      },
+      {
+        "group": "PRODUCTS",
+        "sourceRows": {
+          "count": 744,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 899732
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 112368
+        }
+      },
+      {
+        "group": "SKUS",
+        "sourceRows": {
+          "count": 3780,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 899758
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 112368
+        }
+      },
+      {
+        "group": "BARCODES",
+        "sourceRows": {
+          "count": 3698,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 899369
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 112368
+        }
+      },
+      {
+        "group": "STOCK_CONTRIBUTORS",
+        "sourceRows": {
+          "count": 9260,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 899643
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 112368
+        }
+      },
+      {
+        "group": "PAYMENT",
+        "sourceRows": {
+          "count": 299,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 894969
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 112368
+        }
+      },
+      {
+        "group": "HEADERS",
+        "sourceRows": {
+          "count": 10549,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 899609
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 42561,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 114192
+        }
+      },
+      {
+        "group": "SALES_DETAILS",
+        "sourceRows": {
+          "count": 19792,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 899672
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 114192
+        }
+      },
+      {
+        "group": "SETTLEMENTS",
+        "sourceRows": {
+          "count": 6365,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 899740
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 114192
+        }
+      },
+      {
+        "group": "TRANSFER_LINES",
+        "sourceRows": {
+          "count": 64073,
+          "started": true,
+          "done": false,
+          "lastProgressElapsedMs": 899727
+        },
+        "typedRows": {
+          "count": 0,
+          "started": false,
+          "done": false,
+          "lastProgressElapsedMs": 0
+        },
+        "documents": {
+          "count": 0,
+          "started": true,
+          "done": true,
+          "lastProgressElapsedMs": 114192
+        }
+      }
+    ]
+  },
+  "groupSourceCounts": [
+    172,
+    88,
+    744,
+    3780,
+    3698,
+    9260,
+    299,
+    10549,
+    19792,
+    6365,
+    64073
+  ],
+  "groupSourcePrefetchSum": 118820,
+  "observation146": {
+    "sameSoft900Budget": true,
+    "previousConsumedSourceRows": 65189,
+    "thisConsumedSourceRows": 118810,
+    "additionalRows": 53621,
+    "notControlledCausalAttribution": true,
+    "fullRuntimeExtrapolation": false
+  },
+  "fullPreparationReceiptObtained": false,
+  "prior146OutputEntries": 0,
+  "prior146RegistrationExists": false,
+  "post147Residue": "NOT_INSPECTED_DO_NOT_ASSUME_EMPTY_OR_REPLAY",
+  "post147ProtectedStateReadback": "NOT_IN_RECEIPT_STOP_PREVENTED_TRAILING_PROTECT",
+  "databaseConnected": false,
+  "businessDML": 0,
+  "MAINOrPublishExecuted": false,
+  "applicationChanged": false,
+  "grantIssued": false,
+  "newProfile": false,
+  "automaticRetry": false,
+  "notTested": [
+    "Source EOF",
+    "Entire typed stream",
+    "Full DATA/EXPECTED/command manifest",
+    "MAIN import/publication",
+    "Business/frontend performance/formal release"
+  ]
+}

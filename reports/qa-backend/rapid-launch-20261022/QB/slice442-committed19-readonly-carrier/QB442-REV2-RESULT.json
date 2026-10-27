@@ -1,0 +1,53 @@
+{
+  "reviewId": "QB442-REV2",
+  "decision": "PASS_F01_AFFECTED_CARRIER_SOURCE_ONLY_NOT_ACTUAL_RECOVERY",
+  "supersedesScope": "QB442-INITIAL F01 only; original NEED_FIX retained",
+  "pins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/run-readonly.PREPARED.py",
+      "bytes": 4019,
+      "sha256": "5b480745fea1ba4c1b1ad956b13731117dca4c0ff337fc0e6a98bf087eae10ef"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/SOURCE-REFERENCES.PREPARED.json",
+      "bytes": 1851,
+      "sha256": "b57464bab989c5e08ae8e4b231748b1b1a9105dcf1eb795eed8fc8227b77a11e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/PREPARATION-RESULT.json",
+      "bytes": 4287,
+      "sha256": "f40864c44fa1c078e4113eb3936dbbfc1c887ded5d1dcc028c409ae6a3f8b7d3"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/REGISTRATION.PREPARED.json",
+      "bytes": 1735,
+      "sha256": "51e6cece425af55308624082795ca7969db508f6d8cd80018da495dc455ccc20"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/recover-metadata.PREPARED.mjs",
+      "bytes": 3717,
+      "sha256": "cd1faa144dd068e2f2752516521a7e5ec2e9e26ec9564026157c0f3cb3575e05"
+    }
+  ],
+  "proof": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/slice442-committed19-readonly-carrier/QB442-F01-OFFLINE-PROOF.json",
+    "bytes": 798,
+    "sha256": "74461301248cfbb4fe065e3f9789f85171c7759d97c36275f01720e989adcca6"
+  },
+  "checks": [
+    "Exactnew4019/5b480745 and1851/b57464ba match releasedpins; originalregistration andNode readonlysource unchanged; QB441 and priorothercarrier checks reused.",
+    "Monotonic180 and absolute cutoff both bound remaining(). Normalstatus/start/ownps/Node calls subtractcleanup30; querychild min120/remaining-reserve. Finallycleanup_end start+30 and ownps/stop share minimum originaltotalremaining/absolute/cleanupremaining.",
+    "ASTextracted exactremaining/run only with fakeclock/subprocess; original206 counterexample stopsNode at150total (timeout91), thenownps1/stop29 reaches180 and nofurtheroperationallowed. Absolute shorterremaining and monotonic180 stillrefuse; no subprocess/DB run in proof.",
+    "Exception path retains originalerrorType; cleanupfailure adds cleanupErrorType/onlyOwnPgStoppedfalse and forcesSTOP_READONLY_CLEANUP_UNKNOWN; no success on unknownstop. ExistingownPID/epoch/data/socket validation retained beforestop."
+  ],
+  "actualRecoveryExecuted": false,
+  "actualPostgresOrWorkerStarted": false,
+  "actualMetadataRecovered": false,
+  "sourceChangedByQB": false,
+  "remaining": [
+    "C final precise sourceRefs/window/newREADONLY authority adoption and T45 only originalkey one recovery execution; deadline stillnull in prepared registration.",
+    "Collect actual readonlyROLLBACK/poolend/ownPGstop and originalreturnedmetadata before any separately registered normalparent continuation."
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

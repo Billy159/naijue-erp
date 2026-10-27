@@ -1,3 +1,5 @@
+SOURCE729：147完整准备实际901.255s失败/source118810未EOF/typed0，0PG/MAIN/APP，不重放。QB442初审F01时间累计缺陷保留，原T45修正总预算后REV2PASS采用；新RO实际0.413s PASS，原已提交19 metadata3022/9b502b57恢复、RR回滚/end/ownPGstop，0fixture/pub/QAseed/26/HTTP。T45准备同已有19正常parent。用户任务书真人两条明确先修全QA测试资料，F1已查normal32多provider不自洽，source728唯一12测试数据叶实施统一Demo参考profile，旧构建/证据/草稿/Demo真实资料保护，不借数据改UI。D3source729四叶消除projection校验被丢Buffer及merge当前head重复key物化，原guard/字节/root保，未实测。727/89b32938远端已核，37/67全站真实业务/历史/性能/正式发布未完成。
+
 SOURCE727：SOURCE726/ff42ead已推GitHub精确回读，QB441两叶实际失败修复与原已提交metadata只读恢复源码PASS采用：逐session只关一次/全闭合，原错不覆、双错保留；固定SYN19/OID/原三COMMITTED键及原89d8e3cb PUBLISH全小范围metadata核验、RR READ ONLY后ROLLBACK/release，不生成源/DDL/DML/pub。未实际RO恢复或QAseed/26/purpose/normal/HREV。原T45正轻量准备准确同现场只读载体；147原handle最后collect仍RUNNING，不重提、不凭Chat活跃替代实际进程。37/67全站所有状态/真实业务/历史/性能/正式发布仍未完成。
 
 SOURCE725：QB440准确147单codec载体增量PASS采用，439源码结论复用；C采用原03:00Z/start≤02:43:40Z/900930970980与6pins，T45已唯一submit unitnaijue-erp-op-5cc58239-1854b7c151c1/autoRetryfalse，同handle收终态，0PG/MAIN/PUBLISH执行/APP/profile。SOURCE724/325a8f6远端精确已核；SYN02已提交19/PUBLISH现场保全，D1两叶关闭计数与原metadata只读恢复在途，未进入QAseed/26/purpose/正常业务，不能重fixture/pub。37/67全站真实业务/历史/性能/正式发布未完成。

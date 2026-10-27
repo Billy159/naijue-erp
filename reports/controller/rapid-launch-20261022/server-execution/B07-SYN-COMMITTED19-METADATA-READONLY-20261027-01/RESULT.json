@@ -1,0 +1,13 @@
+{
+  "status": "PASS_EXISTING_COMMITTED19_PUBLICATION_METADATA_READONLY",
+  "businessDML": 0,
+  "fixtureGenerated": false,
+  "publishExecuted": false,
+  "qaSeedExecuted": false,
+  "publicationMetadata": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/RECOVERED-PUBLICATION-METADATA.json",
+    "bytes": 3022,
+    "sha256": "9b502b573a27157da8b39fed3b765b84412b1b1cde61aef20ea4ea455ece47d2"
+  },
+  "poolClosed": true
+}

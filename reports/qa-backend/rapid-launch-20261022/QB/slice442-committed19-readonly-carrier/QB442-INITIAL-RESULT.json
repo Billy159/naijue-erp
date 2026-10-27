@@ -1,0 +1,45 @@
+{
+  "reviewId": "QB442-INITIAL",
+  "decision": "NEED_FIX_TOTAL180_SECONDS_NOT_ENFORCED",
+  "scope": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01",
+  "reuses": "QB441 SOURCE726 twoleaf correctness",
+  "pins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/REGISTRATION.PREPARED.json",
+      "bytes": 1735,
+      "sha256": "51e6cece425af55308624082795ca7969db508f6d8cd80018da495dc455ccc20"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/recover-metadata.PREPARED.mjs",
+      "bytes": 3717,
+      "sha256": "cd1faa144dd068e2f2752516521a7e5ec2e9e26ec9564026157c0f3cb3575e05"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/run-readonly.PREPARED.py",
+      "bytes": 3446,
+      "sha256": "86e6a41782ba9c5a22f01e2b3e6b8bb4d8b759d291616202f3f0c6ee891dd6d9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-execution/B07-SYN-COMMITTED19-METADATA-READONLY-20261027-01/SOURCE-REFERENCES.PREPARED.json",
+      "bytes": 1761,
+      "sha256": "7ae1b2a05d3f4ac49113287dae4135908de9daf45bfe8fe80840cd4b75171295"
+    }
+  ],
+  "finding": {
+    "id": "QB442-F01",
+    "file": "run-readonly.PREPARED.py",
+    "problem": "Only admission uses absolute cutoff now+180; fixed individual status/start/Node/stop timeouts may cumulatively exceed total180. RegisteredcleanupMargin30 is not consumed anywhere.",
+    "counterexample": "status29s +start29s +Node119s +stop29s =206s, each under originalindividual limit; latestadmitted03:07Z can exceed03:10Z cutoff. ownps and fileIO add further time.",
+    "required": "Originalmechanism monotonic180 and absolute cutoff remainingbudget, childmin120 and remaining-cleanup30, boundedstart/probes/ownstop toremaining; preserve ownPID cleanup and exceptionreporting. No largerbudget/autorun/replay/newframework."
+  },
+  "otherScopeReviewed": [
+    "Original147 terminal-key receipt before ownDATAstart, fixedexistingSYN19/database/OID/source leaf, dedicatednewREADONLY authority distinct fromold02.",
+    "FreshownPID/epoch/socket/noTCP/defaultRO and Nodefreshpostmaster/port/nullTCP registration before QB441 originalhelper; wx returnedmetadata not hand-authored.",
+    "No initdb/schema/fixture/publication/QAseed/role actions. Poolend and ownPGstop path present; totalbudget needsfix before adoption."
+  ],
+  "actualExecution": false,
+  "databaseOrWorkerAction": false,
+  "sourceChangedByQB": false,
+  "requestedModel": "gpt-6.1-sol/medium",
+  "fast": "UNVERIFIED"
+}

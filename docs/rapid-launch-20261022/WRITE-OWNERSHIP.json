@@ -6407,5 +6407,47 @@
       "tests/sealed-history17-approved-fixture.test.ts"
     ],
     "scope": "Fix actual post-COMMITTED helper lifecycle: every opened session must close exactly once, instead of erroneous fixed11 across repeated expected/authorize reads. Preserve failed02 and original committed schema19 fixture/publication. Add same helper read-only recovery of original committed PUBLISH/FINAL/claim/audit and exact closure/document/header/child/unit identity metadata; no source generation/service.execute/DB writes/fixture/PUBLISH replay. Existing original keys and source profile only. Finite repeated-authorization lifecycle checks plus read-only recovery checks; T45 solely executes on existing target under RR READ ONLY then ROLLBACK/end/stop; original QB only affected scope. No schema/business-contract change."
+  },
+  "source728DemoReferenceQaDataset": {
+    "owner": "F1",
+    "userSource": {
+      "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
+      "humanMessageIds": [
+        "01a17b30-d02c-7ee0-b5c2-39ceca0031c8",
+        "01a17b32-3930-7b00-af35-7e8f296b5378"
+      ]
+    },
+    "files": [
+      "apps/web/demo-replica/frontend/qa-reference-fixtures.ts",
+      "apps/web/demo-replica/frontend/qa-reference-fixtures.test.ts",
+      "apps/web/unified-browser-harness/sales-transport.ts",
+      "apps/web/unified-browser-harness/transfer-transport.ts",
+      "apps/web/unified-browser-harness/synthetic-transport.ts",
+      "apps/web/management-browser-harness/synthetic-transport.ts",
+      "apps/web/unified-browser-harness/inventory-parties-transport.ts",
+      "apps/web/unified-browser-harness/store-settings-transport.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts",
+      "apps/web/demo-replica/frontend/runtime/products/synthetic-preview-transport.ts",
+      "apps/web/demo-replica/frontend/runtime/settings/synthetic-preview-transport.ts",
+      "apps/web/demo-replica/frontend/runtime-preview-transport.ts"
+    ],
+    "scope": "Temporary solewriter handoff of TEST DATA hunks only. One finite coherent Demo-reference QA data module/profile across existing synthetic providers; use actual fixednormal32 chain, not unused phase1fixturetransport. Demo non-sensitive display dictionaries/barcode/classification/fullsizegroups/relationships; anonymize personal/account fields, no credential extraction. Replace old placeholder dataset in newprofile only, preserve olddefault test fixtures/evidence and oldimmutablebuild. Maintain blank validdraft, no forcedsaleprice/unknown0, no productionUI/businesslogic/permissions/success emulation changes. Existing runtime-preview C data-selection hunk yielded toF1 only for this package; runtime-bootstrap/build/server remain C/T45. New isolated QA storage namespace only if existing storage actually used; never clear userbrowser. Finite relational/reference/size/price checks, no new platform. Return precise changedleaves and productbugs separately; userUI findings not delegated forfix."
+  },
+  "source729ClosureValidationOnlyWalk": {
+    "owner": "D3",
+    "files": [
+      "packages/application/src/history-typed-closure.ts",
+      "tests/history-typed-closure-expected.test.ts"
+    ],
+    "scope": "Only eliminate discarded encoded-buffer materialization at projectHistoryClosureRow validation. One private commonwalker, exportedencode still collects exactfragments/bytes, projection walks every same value through same byteLength/4MiB/depth/descriptors/prototype/sort/Unicode/NUL/sparse/cycle guards without collecting/join/finalBuffer. Every independent boundary still invokes fullvalidation; no shared proof/unchecked/prehash/cache/API/root/source/SQL change. Existingbyteoracle/golden plus finite projectionreject/encodingboundary alignment. No blindfull/profile; mergeheadkey proposal separately owned."
+  },
+  "source729MergeHeadOrderReuse": {
+    "owner": "D3",
+    "files": [
+      "scripts/import-v2/authorized-history-closure-reader.mjs",
+      "scripts/import-v2/authorized-history-closure-reader.test.mjs"
+    ],
+    "basis": "Originalsource635 readerownerD3; no otherinflight writer",
+    "scope": "Store order Buffer already produced in next() on current privatehead, use samehead.order for 11-way compare until thathead replaced. No content/hash/source/cache lifetime beyond currenthead. Preserve identical keybytes/order and duplicate/order guards, rowcapture/clone/16MiB accounting, errors/IteratorClose/exhaustion. Finite old merge byte/order and sameheadkeycomputecount evidence, no new source reads/profile/PG."
   }
 }

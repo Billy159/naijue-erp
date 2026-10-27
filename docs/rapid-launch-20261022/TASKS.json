@@ -4637,10 +4637,20 @@
   ],
   "newPendingReviews": [
     {
-      "task": "B07_COMMITTED19_METADATA_READONLY_CARRIER",
+      "task": "EXISTING19_NORMAL_PARENT",
       "owner": "QB",
-      "state": "WAIT_T45_EXACT_CARRIER",
-      "scope": "441 sourcePASS adopted; only freshpostmaster/readonlymetadata carrier delta, no source replay"
+      "state": "WAIT_T45_PREPARED_DELTA"
+    },
+    {
+      "task": "SOURCE729_4LEAF_PERFORMANCE",
+      "owner": "QB",
+      "state": "WAIT_D3_FIXED_SOURCE"
+    },
+    {
+      "task": "QA_REFERENCE_DATA",
+      "owner": "QF_QF2",
+      "state": "WAIT_F1_DATA_T45_FIXED_CANDIDATE",
+      "scope": "Only userauthorizedtestdata; otherUIresults useronly"
     }
   ],
   "openFindingsCurrent": [
@@ -5053,10 +5063,10 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 727,
+    "round": 729,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation727",
-    "fixedSource": "SOURCE726 ff42ead07b43748fecee4a16bab9bb1c7ddd9753 exact GitHub remote verified; source-only147 runtime fixedSOURCE723",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation729",
+    "fixedSource": "SOURCE72789b32938c3e9d919c904f684db300b002bef0b87 exactGitHub remote; SOURCE726ff42ead ROhelper; SOURCE723124c4ad codec",
     "fixedCandidates": {
       "synthetic": {
         "source": "8c7ed0c78018f9d479b191e3c01d36b2ab10c456",
@@ -5073,19 +5083,19 @@
       }
     },
     "backendActual": {
-      "B07": "SYN02 actual6.971s ERR_ASSERTION after schema1..19 and original STAGE/CHUNK/PUBLISH COMMITTED; original-key RO confirmed. QAseed/26/currentpurpose/session/HREV not started. D1 exactfixed11 close-count helper defect identified; two-leaf lifecycle+original-committed metadata RO recovery in progress; never reinit/fixture/PUBLISH replay.",
-      "R1": "Actual125 STAGEDseq2/cursor22, MAIN0/PUBLISH0/fullBindingfalse. 146 fullsource prepare FAILED2 after901.238s/source65189 unfinished/typed0; no fullDATA or commands success. D3 targeted codec allocation fix current, no replay146."
+      "B07": "Actual committed19metadata ROPASS0.413s/ROLLBACK/poolClosed/ownPGstopped, metadata3022/9b502b57 original89d8e3cb op; nofixture/pub/QAseed/26/purpose/HTTP. T45prepares existing19normalparent.",
+      "R1": "125 STAGEDseq2cursor22 MAIN0PUBLISH0/fullBindingfalse.147 FAILED901.255s/source118810notdone/typed0/no fullDATA or commands. D3registered7294leaves in progress."
     },
     "roleQueue": {
-      "F1": "Completed source delivery, original limited normal32 QF scope adopted; await real samebuild document capabilities/data for affected business branch. No new duplicate task.",
+      "F1": "Active userauthorized coherentDemo-reference QAdata; source72812testdata files solewriter; no productionUI/permissions changes, T45buildlater.",
       "F2": "Existing product/stock consumers ready; synthetic detail/maintenance facts incoherent/missing, no fake state platform; await actual product capability from D2/T45.",
       "F3": "Completed settings source packages; await actual samebuild maintenance permissions/provider to validate requested writes.",
       "F4": "Completed category empty-state source patch, original effective evidence reused; await actual dictionary/barcode/season/group capabilities.",
-      "D1": "SOURCE726 exacttwoleaf delivered andQB441sourcePASS adopted, stoppedwriting; wait T45 actual originalcommitted19 metadata recovery, no fixture/pub replay.",
+      "D1": "726/QB441PASS; actualT45metadataROPASS adopted, wait concrete normalparent runtime needs.",
       "D2": "Original source handed back, QB340 NULL-size source PASS preserved; actual PostgreSQL maintenance/full-save consumers remain dependent on original capability/data execution.",
-      "D3": "SOURCE723 twoleaf codec delivered, independentQB439PASS adopted, no actual speed claim; no further source writes.",
-      "T45": "147 original unit1854b7c151c1 lastactualcollect RUNNING; also lightprepare existing19metadata ROcarrier, no newPGuntil147terminal and exactadoption.",
-      "QB": "439/440/441 sourcePASS adopted. Next only T45 exactnew readonlycarrier necessarydelta; no source726 re-review/noLIVEpurposeissued.",
+      "D3": "Active source7294leaves validation-only no discardedBuffer + currentmergeheadorder, allguards/root preserved; one batchQA then actual.",
+      "T45": "147terminal no replay; committed19actualROPASScleanstop; preparing same19normalparent without init/schema/fixture/pub.",
+      "QB": "439440441 adopted;442initialF01NEEDFIX preserved REV2PASS adopted; wait newparentcarrier and729fixedsource.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
@@ -14214,6 +14224,14 @@
       "recovery": "SameSYN02 committed19/PUBLISHop89d8e3cb, noinitdb/schema/fixture/pub/seed. T45prepares exactROcarrier/freshidentity, noPGuntilseparateadoption",
       "UI": "Normal32 source705 SYN stillcurrent; no new整页/allstate/realbusiness/formalPASS; whole37/67notcomplete",
       "next": "Original147 terminal; preparedROcarrier neededdeltaQB then exactwindowactual; normalparentafterrealmetadata separate"
+    },
+    "currentContinuation729": {
+      "status": "ACTIVE",
+      "actual147": "FAILED901.255s/source118810notdone/typed0/0PG_MAIN_APP",
+      "actualRO": "PASS0.413s RRROLLBACK/end/ownPGstop, original19metadata3022/9b502b57; no pub replay",
+      "next": "Existing19normalparent exactcarrier pending; D3fourleafoptimization; F1Demo-reference coherentQA profile",
+      "humanFixtureAuthorization": "taskbook01a17b30-d02c-7ee0-b5c2-39ceca0031c8 +01a17b32-3930-7b00-af35-7e8f296b5378, dataonly",
+      "notComplete": "37pages67overlays/allstates/realbusiness/history/performance/formalrelease incomplete"
     }
   },
   "historicalContinuation500Before716": {
