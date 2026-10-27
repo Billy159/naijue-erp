@@ -1,0 +1,71 @@
+{
+  "status": "READONLY_DIAGNOSTIC_COMPLETED_FIRST_INCLUDED_BASELINE_SIZE_MISMATCH",
+  "jobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+  "terminal": {
+    "jobId": "t45-source158-small-pin-first-mismatch-readonly-20261027-159",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "COMPLETED",
+    "unit": "naijue-erp-op-5cc58239-a68c7fc8d3e0",
+    "atUTC": "2026-10-27T08:34:22.093355+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 0,
+    "elapsedSeconds": 0.06763945799320936,
+    "exports": [
+      "ordered-small-pin-result.json"
+    ],
+    "finishedAtUTC": "2026-10-27T08:34:22.190051+00:00"
+  },
+  "checkedRefCount": 57,
+  "remainingListedRefsNotRead": 206,
+  "firstMismatch": {
+    "expectedSizeMatch": false,
+    "failureCategory": "PRE_READ_FILE_METADATA_MISMATCH",
+    "index": 22,
+    "lengthMatch": null,
+    "nonSymlink": true,
+    "pathClass": "OLD148_BASELINE_CODE",
+    "regularFile": true,
+    "role": "REVIEW_MODULE_BASELINE",
+    "sequence": 57,
+    "shaMatch": null,
+    "sourceCallOrdinal": 168,
+    "statMatch": null,
+    "withinSmallCap": true
+  },
+  "exactListedDescriptor": {
+    "sequence": 57,
+    "sourceCallOrdinal": 168,
+    "role": "REVIEW_MODULE_BASELINE",
+    "index": 22,
+    "logicalPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts",
+    "physicalPath": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-source730-full-preparation-20261027-148/inputs/source/adapters/postgres/src/native-import-accounting-capability.ts",
+    "expectedBytes": 78829,
+    "expectedSha256": "f5effdc774355c0e34f44f80c933cec349a86f6bd204ec3ddee04c45d73101ab",
+    "maximumBytes": 4194304,
+    "pathClass": "OLD148_BASELINE_CODE",
+    "callSite": "loadAdoptedPreparation26 modules[index] pinnedSmall(baseline)"
+  },
+  "bounds": "Current-time first mismatch among included CODE/metadata list only; not established original158 first failing call across excluded gaps. Wrong-size file body/hash not read; all later refs not read.",
+  "noDBOrProviderOrMAINOrMutation": true,
+  "excluded": "109 commands, CORE projection, DATA, EXPECTED, business bodies, secrets and large sources remain unread",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source158-small-pin-first-mismatch-readonly-20261027-159/release-submission/release-receipts/t45-source158-small-pin-first-mismatch-readonly-20261027-159/ordered-small-pin-result.json",
+      "bytes": 22311,
+      "sha256": "a42a9e764fc98c4cc635c3fe4c8cacb5ed7a3053b995c26c6971f781cc087ab9"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source158-small-pin-first-mismatch-readonly-20261027-159/release-submission/release-receipts/t45-source158-small-pin-first-mismatch-readonly-20261027-159/job.json",
+      "bytes": 535,
+      "sha256": "3cb5b974af9fc0c763a0e2ba15938cf9f42897194a662c823286adff120b2992"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-\u4e1a\u52a1\u7ba1\u7406\u7cfb\u7edf/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source158-small-pin-first-mismatch-readonly-20261027-159/bundle/ordered-small-pins.json",
+      "bytes": 218986,
+      "sha256": "035524551e023c979d250002a206043cf77057e4e62b6956ac36518dd96c4579"
+    }
+  ]
+}

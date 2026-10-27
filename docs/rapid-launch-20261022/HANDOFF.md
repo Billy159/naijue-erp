@@ -1,3 +1,5 @@
+SOURCE760：159原单次小CODE/metadata只读实际完成，57/263受检即因旧148 BASELINE index22 native-import-accounting-capability.ts长度不符停止，余206未读、该文件正文/SHA未读；明确不是已证明158全链首错，业务正文/CORE/DATA/EXPECTED均排除。D3接续可信SOURCE730 exactGitexport与baseline契约核对，准备保留旧现场的新不可变原基线接线；禁止把current冒充baseline或改pin绕过。158/152均预检失败0MAIN/PUBLISH，148产物未重制；03隔离回滚及两正常HTTP PASS有效保留。
+
 SOURCE759：修订158首次实际提交后FAILED2/3.427秒，08:18:34Z终态，预检新错误PRODUCTION_PROVIDER26_INPUT_CHANGED，已越过原CORE_DATA_REQUIRED，但MAIN/PUBLISH/stepjournal仍未执行。实际finalInput188613/ce1939fa，原grant76445b63采用；原T45回执保全，D3只读准确predicate与capture输入接线定位在途，禁止原样重158/152或重148、禁止改数据/hash绕过。既有回滚03实际PASS及两正常PASS保留。全站真实接线/性能/发布目标仍ACTIVE未完成。
 
 SOURCE758：明确修订后继158固定完成，QB467/458/461/464有效证据采用。六数据对象及109原业务命令与152完全相同；adoptedPreparation仅更新新158证明路径与provider755/467审核引用，scope与148receipt字节哈希不变。C首次写入前整体ref相等断言停止，未落授权，提前已落消息已纠正；随后核准确差异，真实grant37014/76445b63和ADOPTION4281/0631f1bb已成功写入。原T45接续首次有界提交，09Z4096/noAPP切换；实际结果仍待，不重152/148。SOURCE757远端精确24a93637daf910d9b8dcb02d6ae1d07c3717e3a0。

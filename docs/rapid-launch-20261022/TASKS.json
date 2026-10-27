@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 759,
+    "round": 760,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation759",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation760",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -14519,6 +14519,13 @@
       "owner": "D3 exact source diagnosis; T45 sole server owner evidence retained",
       "next": "Evidence-based minimal wiring repair if proven; originalQB affected increment; bounded revised execution only",
       "noDataOrHashBypass": true
+    },
+    "currentContinuation760": {
+      "summary": "SOURCE760：159原单次小CODE/metadata只读实际完成，57/263受检即因旧148 BASELINE index22 native-import-accounting-capability.ts长度不符停止，余206未读、该文件正文/SHA未读；明确不是已证明158全链首错，业务正文/CORE/DATA/EXPECTED均排除。D3接续可信SOURCE730 exactGitexport与baseline契约核对，准备保留旧现场的新不可变原基线接线；禁止把current冒充baseline或改pin绕过。158/152均预检失败0MAIN/PUBLISH，148产物未重制；03隔离回滚及两正常HTTP PASS有效保留。",
+      "owner": "D3 baseline provenance/wiring; T45 server only",
+      "next": "Exact frozen730 file verification; preserve old148 and use accurate immutable baseline only if proven; no retry unknown inputs",
+      "actual159": "COMPLETED0/0.067639458s at08:34:22Z; expectedSizeMatchfalse atOLD148 baseline module22",
+      "wholeGoal": "ACTIVE_INCOMPLETE_37_67_ALLSTATES"
     }
   },
   "historicalContinuation500Before716": {
