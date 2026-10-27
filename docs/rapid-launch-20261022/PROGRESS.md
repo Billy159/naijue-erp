@@ -1,3 +1,5 @@
+SOURCE828：当前cua实证QF/QF2各自不同Chat-IAB codexSessionId、DOM-only，真隔离nativeChrome与彼此；已解除等Chrome交还，用户/比较草稿全保留。QF2 normal36实际P13精确商品查询及返回idle/原单仓200查询通过，6款多页/编辑基础失败不可达、性能未测；新F02标签UUID已F2修为SOURCE827bd717798（真实id不变、复用已加载款号品名、0新请求），仅标签DOM通过待最小复验。QF820/822/824独立限定技术PASS全已采用；准确SOURCE824 normal38/57927已构151资源/keyHTTP200，QF owniab实际单据包在做。T45必要39用827修实际新label缺陷，保留旧版/各验收target，不重原整套。201继续原watch未终态。SOURCE8252f052d8c已远端精确核实，本次源码/记录另同步。全37页67弹层/真实业务历史编辑性能正式发布仍未完成。
+
 SOURCE825：已实际读原QF RESULT采用820退换双区/精确价格赠品及822共用规格键盘两独立技术限定PASS，不重复核验；未验真实浏览器/保存。SOURCE8224ce8a1a3已固。F1最后两行单据确认上下文固定SOURCE824b2eaf1eb：作废实际单号/确认按钮、销货弃审结算与历史保留说明，原2action测试/类型0通过，QF仅新两行复核。T45原37若未启动，等此精准回执后用824完整同批只构一次；36保留。QF2仍等比较Chat实际交还控制，不抢草稿；201沿原watch未终态。SOURCE8211fb4956a远端精确核实，后续源码/本记录另同步。全37页67弹层、真实数据历史编辑性能正式发布仍未完成。
 
 SOURCE821：F1两P1完整包固定SOURCE8202b9cd415，exact3叶/必要价格精度赠品及两区SSR-DOM检查、类型program0通过已采用；原QF只核新3叶技术范围，尚非浏览器/真实保存。F1立即接下一已证N34-T03-COLOR-ESC-01，共用选择器触发/菜单键盘焦点完整修复，唯一3叶登记；完成后与820一次必要候选。P13 normal36固定57925，QF2仍等比较Chat实际交还Chrome，草稿保留不抢窗口。201本轮20:19:50Z实际原watch收据RUNNING/exitnull，unit loaded/active/running/PID2154774，未终态，继续原键。SOURCE8191008f7dc远端已核实。全37/67真实业务历史编辑性能及正式上线仍未完成。

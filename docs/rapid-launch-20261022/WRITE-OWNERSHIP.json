@@ -6665,5 +6665,17 @@
       "apps/web/demo-replica/frontend/runtime/documents/transfers-entry.tsx"
     ],
     "boundary": "Next F1 ready package after SOURCE822 release. Original fixed-view document number and Demo confirmation/action wording; preserve shown-version refresh/reject, permission/state/transaction and no execution in Demo/browser. No changed business contract, no new modal or source fact. Extra leaf exact request first."
+  },
+  "inventoryProductLabel826": {
+    "owner": "F2",
+    "model": "gpt-6.1-sol/medium",
+    "issue": "P13 actual normal36 QF2 label UUID finding",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/products/detail.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/product-runtime.test.mjs"
+    ],
+    "boundary": "Reuse already loaded actual product base code/name for inventory Selection label; original true product id unchanged. No extra lookup/full catalogue, no shared ready-pages change, no new DTO/state owner/fields/writes. Editor unreadable fixture remains untested, do not fabricate.",
+    "next": "F2 minimum affected selfcheck -> C fixed source -> QF2 only label delta -> next necessary accurate preview; prior P13 actual query/return evidence reused."
   }
 }

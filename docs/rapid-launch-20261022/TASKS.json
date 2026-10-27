@@ -16053,6 +16053,34 @@
       "server": "201 original liveverified20:19:50Z loadedactivePID2154774, originalwatch29273 continues, terminaloutcome unknown.",
       "github": "SOURCE8211fb4956ac508bc2a5370eb53eaa1ccd2b0ccc7ff exactremoteverified;822/824/thisrecord pending sync",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation828": {
+      "status": "TRUE_ISOLATED_IAB_REVIEWS_ACTIVE_P13_BROWSER_FLOW_PASS_F02_FIXED_SOURCE827",
+      "actualIsolation": {
+        "QF": "iab codexSessionId01a161d2-717e-7f50-87bc-73a2d91f90a3; browserID2 tabsinitialempty",
+        "QF2": "iab codexSessionId01a1673a-53e8-7923-8fb3-a97c8143d37d; browserID3/tab1 ownhidden",
+        "proof": "Each reviewer read current cua inventory/docs: current-chat DOM-only locator/screenshot, no nativeChrome input/focus; distinct actual session IDs, not more sharedChrome tabs. ComparisonChrome lease and drafts unchanged; priorhandoverrequests withdrawn after independentproof."
+      },
+      "P13Browser": {
+        "report": "K/reports/qa-frontend/rapid-launch-20261022/QF2/SOURCE817-NORMAL36-P13-BROWSER/RESULT.json actually read",
+        "source": "feae851d7eaaf28a5b582c8aa87add43e29f4fdb",
+        "build": "phase2-normal-feae851-36",
+        "passed": "Actualreadonly exactproduct→1product/4warehouses344; return prioridle; prior successful totalwarehouse/page1-size200/6products328 restored. F01 sourceclosure reused.",
+        "limits": "6productfixture makes page>1 unreachable; editorbaseline readfails/noSAVE so dirtyflowunreachable; performance/networknotmeasured; notrealbusiness.",
+        "F02": "P2 chip/scope/copycode UUID display found, queryidentity/results correct. OriginalF2 fix now SOURCE827bd7177984062660b45f52f3d91532a6f6d50d905 exact3 product leaves, uses loadedsameidbasic/canonicalbase code+name/noextraHTTP. TargetedactualcomponentDOMpassed. QF2onlylabeldelta review; oldquery/returnnotrerun."
+      },
+      "documentCandidate": {
+        "source": "b2eaf1eb0304d3194631ce285e8cb06dbfec2962",
+        "build": "phase2-normal-b2eaf1e-38",
+        "url": "http://127.0.0.1:57927/#sales",
+        "receipt": "K/reports/controller/rapid-launch-20261022/ui-preview-b2eaf1e-phase2-38/RESULT.json actually read",
+        "actual": "Build0/2.9s/151resources/3keyHTTP200exact; same7canonicalinputs/30+30; old34-37preserved.37actually822not824.",
+        "review": "820822824 originalQF limitedtechnicalPASS actually adopted; QF nowowniab onlyassociated affectedactualUI, noChrome/DB/SAVE."
+      },
+      "next": "OriginalT45 necessarynormal39 fixed827 for realnewP13F02label only; preserveQF38target. QF2 minimalnewlabelbrowser; originalP13observedflows/sourceclosedbranchesreuse. No newteams/secondtestplatform/fullregression.",
+      "server": "201 originalwatcher29273 continues, last actualunitverified20:19:50Z loaded/active/runningPID2154774; no terminalreceipt/PGprobe/replay/newjob/publicswitch.",
+      "github": "SOURCE8252f052d8c090d59ef8cd89d205055435459e4ab9d exactremoteverified;827+thisrecord pending sync",
+      "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
     }
   },
   "historicalContinuation500Before716": {
