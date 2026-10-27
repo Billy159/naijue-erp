@@ -1353,7 +1353,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T19:05:50.667872+00:00",
+  "updatedAt": "2026-10-27T19:14:10.348015+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
   "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -15472,6 +15472,170 @@
         }
       },
       "github": "SOURCE805ccdbbe65f3e706a07d7ce37d326592d48c7e35cd exactremoteGET verified",
+      "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
+    },
+    "currentContinuation807": {
+      "status": "197_CURRENT_FINITE_ACL_MATRIX_ACTUAL_PASS_D1_COMBINED_MINIMUM_PATCH_IN_PROGRESS",
+      "receipt": {
+        "bytes": 8927,
+        "sha256": "eb7f309c7c30fbe483f79e89eccfffade1284dc7c1b154d9b444f9bcb984dbb6"
+      },
+      "actual": "COMPLETED0/0.518119s/19:11:30Z;19directtables/5explicitfunctions/21triggers metadata only, ordinaryR1 RRRO/rollback+closed.0businessrows/functions/DML/ACL.",
+      "gaps": [
+        {
+          "relation": "naijue_erp.history_sales_header",
+          "missingRelation": false,
+          "missingSelect": [],
+          "missingInsert": [],
+          "rowLockNeedsAnyColumnUpdate": true,
+          "actualAnyColumnUpdate": false,
+          "missingRowLockUpdate": true
+        },
+        {
+          "relation": "naijue_erp.history_sales_line",
+          "missingRelation": false,
+          "missingSelect": [],
+          "missingInsert": [
+            "id",
+            "source_row_id",
+            "batch_id",
+            "header_id",
+            "line_no",
+            "sku_id",
+            "quantity",
+            "product_code_snapshot",
+            "product_name_snapshot",
+            "color_name_snapshot",
+            "fit_name_snapshot",
+            "size_name_snapshot",
+            "barcode_snapshot",
+            "reference_price",
+            "deal_price",
+            "line_amount",
+            "allocated_discount",
+            "is_gift",
+            "pricing_method_source",
+            "discount_tenths",
+            "ordinary_zero_confirmed"
+          ],
+          "rowLockNeedsAnyColumnUpdate": true,
+          "actualAnyColumnUpdate": false,
+          "missingRowLockUpdate": true
+        },
+        {
+          "relation": "naijue_erp.history_sales_settlement",
+          "missingRelation": false,
+          "missingSelect": [],
+          "missingInsert": [
+            "id",
+            "source_row_id",
+            "batch_id",
+            "header_id",
+            "line_no",
+            "payment_account_id",
+            "direction",
+            "amount",
+            "account_name_snapshot",
+            "method_name_snapshot",
+            "payment_method_id_snapshot"
+          ],
+          "rowLockNeedsAnyColumnUpdate": true,
+          "actualAnyColumnUpdate": false,
+          "missingRowLockUpdate": true
+        },
+        {
+          "relation": "naijue_erp.import_native_payment_binding",
+          "missingRelation": false,
+          "missingSelect": [
+            "entity_type",
+            "source_key",
+            "source_row_id",
+            "native_payment_method_id",
+            "native_payment_account_id",
+            "native_hall_id",
+            "native_snapshot",
+            "evidence_fingerprint",
+            "validator_version"
+          ],
+          "missingInsert": [
+            "batch_id",
+            "entity_type",
+            "source_key",
+            "source_row_id",
+            "native_payment_method_id",
+            "native_payment_account_id",
+            "native_hall_id",
+            "native_snapshot",
+            "evidence_fingerprint",
+            "validator_version"
+          ],
+          "rowLockNeedsAnyColumnUpdate": true,
+          "actualAnyColumnUpdate": false,
+          "missingRowLockUpdate": true
+        },
+        {
+          "relation": "naijue_erp.payment_account",
+          "missingRelation": false,
+          "missingSelect": [],
+          "missingInsert": [
+            "id",
+            "name",
+            "payment_method_id",
+            "enabled",
+            "version"
+          ],
+          "rowLockNeedsAnyColumnUpdate": true,
+          "actualAnyColumnUpdate": false,
+          "missingRowLockUpdate": true
+        },
+        {
+          "relation": "naijue_erp.payment_account_hall",
+          "missingRelation": false,
+          "missingSelect": [],
+          "missingInsert": [
+            "payment_account_id",
+            "hall_id"
+          ],
+          "rowLockNeedsAnyColumnUpdate": true,
+          "actualAnyColumnUpdate": false,
+          "missingRowLockUpdate": true
+        },
+        {
+          "relation": "naijue_erp.payment_method",
+          "missingRelation": false,
+          "missingSelect": [],
+          "missingInsert": [
+            "id",
+            "name",
+            "enabled",
+            "version"
+          ],
+          "rowLockNeedsAnyColumnUpdate": true,
+          "actualAnyColumnUpdate": false,
+          "missingRowLockUpdate": true
+        },
+        {
+          "relation": "naijue_erp.sku_barcode",
+          "missingRelation": false,
+          "missingSelect": [],
+          "missingInsert": [
+            "id",
+            "barcode",
+            "sku_id",
+            "barcode_kind",
+            "scheme_id",
+            "enabled"
+          ],
+          "rowLockNeedsAnyColumnUpdate": true,
+          "actualAnyColumnUpdate": false,
+          "missingRowLockUpdate": true
+        }
+      ],
+      "functions": "All5explicitEXECUTEtrue, no extra automatictrigger EXECUTE grant inferred;21triggersenabled/securitydefiner0.",
+      "next": "D1 originalminimumforward/reverse scope includes actual8tables notbarcodeonly; QBdelta once thenCexactauthority/T45onlyexecution/currentcanonical/runtime/consumerbinding. No currentwriter grant/no oldjobreplay.",
+      "budget": "16225conditionalupper bound adopted fromD3, current196STAGEDnoACCOUNT matches; nextwriterproofrequired, timeUNKNOWN.",
+      "github": "SOURCE8061508478805759c2a5763d00ff44ecbcf342bb928 exactremoteGET verified",
+      "ui": "normal34restored; originalcomparisonongoing, reportnotfullcomplete, no duplicate dispatch or falsewholepagePASS.",
       "goal": "ACTIVE incomplete37/67/allstates/realhistory/performance/formal"
     }
   },

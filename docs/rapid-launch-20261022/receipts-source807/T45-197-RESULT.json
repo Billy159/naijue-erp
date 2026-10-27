@@ -1,0 +1,255 @@
+{
+  "jobId": "t45-r1-next-stage-permissions-metadata-readonly-20261028-197",
+  "status": "ACTUAL_COMPLETED_ORDINARY_R1_FINITE_PRIVILEGE_TRIGGER_METADATA_ONLY_NOT_WRITER_AUTHORITY",
+  "unit": "naijue-erp-op-5cc58239-2045de8442c8",
+  "jobReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/release-submission/release-receipts/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/job.json",
+    "bytes": 555,
+    "sha256": "4d66d557de36b00852daea71408b581e8e308776de74ae21b73d3c974ad892af"
+  },
+  "readerReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/release-submission/release-receipts/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/original-key-result.json",
+    "bytes": 60922,
+    "sha256": "5abfee228c16a410b279b5de0a7cb14d8ea92eb7b2add4adbad2ba677186b603"
+  },
+  "engineReceipt": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/release-submission/release-receipts/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/engine-result.json",
+    "bytes": 374,
+    "sha256": "720646f804656f07f8cc398f6e34bb23185673ce4bdc5cf01e58d32d4ae5ad59"
+  },
+  "finishedAtUtc": "2026-10-27T19:11:30.326348+00:00",
+  "finishedAtChina": "2026-10-28 03:11:30 +08:00",
+  "elapsedSeconds": 0.5181189991999418,
+  "D1Sql": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-next-stage-permissions-metadata-readonly-20261028-197/execution-bundle/READONLY-NEXT-STAGE-PRIVILEGES.sql",
+    "bytes": 3377,
+    "sha256": "c8aeadf13b26defee37797c5bd71bf3372591babc04232ce54d1cd08fe5da371"
+  },
+  "actualIdentity": {
+    "database": "erp_rewrite_20261022_r1",
+    "oid": "1027659",
+    "role": "erp_rewrite_runtime_20261022",
+    "session_user": "erp_rewrite_runtime_20261022",
+    "server_address": null,
+    "server_port": null,
+    "postmaster_start": "2026-10-04 08:16:07.895273+00",
+    "readonly": "on"
+  },
+  "serverSideExactIdentityGuardPassed": true,
+  "tablesRead": 19,
+  "actualGaps": [
+    {
+      "relation": "naijue_erp.history_sales_header",
+      "missingRelation": false,
+      "missingSelect": [],
+      "missingInsert": [],
+      "rowLockNeedsAnyColumnUpdate": true,
+      "actualAnyColumnUpdate": false,
+      "missingRowLockUpdate": true
+    },
+    {
+      "relation": "naijue_erp.history_sales_line",
+      "missingRelation": false,
+      "missingSelect": [],
+      "missingInsert": [
+        "id",
+        "source_row_id",
+        "batch_id",
+        "header_id",
+        "line_no",
+        "sku_id",
+        "quantity",
+        "product_code_snapshot",
+        "product_name_snapshot",
+        "color_name_snapshot",
+        "fit_name_snapshot",
+        "size_name_snapshot",
+        "barcode_snapshot",
+        "reference_price",
+        "deal_price",
+        "line_amount",
+        "allocated_discount",
+        "is_gift",
+        "pricing_method_source",
+        "discount_tenths",
+        "ordinary_zero_confirmed"
+      ],
+      "rowLockNeedsAnyColumnUpdate": true,
+      "actualAnyColumnUpdate": false,
+      "missingRowLockUpdate": true
+    },
+    {
+      "relation": "naijue_erp.history_sales_settlement",
+      "missingRelation": false,
+      "missingSelect": [],
+      "missingInsert": [
+        "id",
+        "source_row_id",
+        "batch_id",
+        "header_id",
+        "line_no",
+        "payment_account_id",
+        "direction",
+        "amount",
+        "account_name_snapshot",
+        "method_name_snapshot",
+        "payment_method_id_snapshot"
+      ],
+      "rowLockNeedsAnyColumnUpdate": true,
+      "actualAnyColumnUpdate": false,
+      "missingRowLockUpdate": true
+    },
+    {
+      "relation": "naijue_erp.import_native_payment_binding",
+      "missingRelation": false,
+      "missingSelect": [
+        "entity_type",
+        "source_key",
+        "source_row_id",
+        "native_payment_method_id",
+        "native_payment_account_id",
+        "native_hall_id",
+        "native_snapshot",
+        "evidence_fingerprint",
+        "validator_version"
+      ],
+      "missingInsert": [
+        "batch_id",
+        "entity_type",
+        "source_key",
+        "source_row_id",
+        "native_payment_method_id",
+        "native_payment_account_id",
+        "native_hall_id",
+        "native_snapshot",
+        "evidence_fingerprint",
+        "validator_version"
+      ],
+      "rowLockNeedsAnyColumnUpdate": true,
+      "actualAnyColumnUpdate": false,
+      "missingRowLockUpdate": true
+    },
+    {
+      "relation": "naijue_erp.payment_account",
+      "missingRelation": false,
+      "missingSelect": [],
+      "missingInsert": [
+        "id",
+        "name",
+        "payment_method_id",
+        "enabled",
+        "version"
+      ],
+      "rowLockNeedsAnyColumnUpdate": true,
+      "actualAnyColumnUpdate": false,
+      "missingRowLockUpdate": true
+    },
+    {
+      "relation": "naijue_erp.payment_account_hall",
+      "missingRelation": false,
+      "missingSelect": [],
+      "missingInsert": [
+        "payment_account_id",
+        "hall_id"
+      ],
+      "rowLockNeedsAnyColumnUpdate": true,
+      "actualAnyColumnUpdate": false,
+      "missingRowLockUpdate": true
+    },
+    {
+      "relation": "naijue_erp.payment_method",
+      "missingRelation": false,
+      "missingSelect": [],
+      "missingInsert": [
+        "id",
+        "name",
+        "enabled",
+        "version"
+      ],
+      "rowLockNeedsAnyColumnUpdate": true,
+      "actualAnyColumnUpdate": false,
+      "missingRowLockUpdate": true
+    },
+    {
+      "relation": "naijue_erp.sku_barcode",
+      "missingRelation": false,
+      "missingSelect": [],
+      "missingInsert": [
+        "id",
+        "barcode",
+        "sku_id",
+        "barcode_kind",
+        "scheme_id",
+        "enabled"
+      ],
+      "rowLockNeedsAnyColumnUpdate": true,
+      "actualAnyColumnUpdate": false,
+      "missingRowLockUpdate": true
+    }
+  ],
+  "missingRelations": [],
+  "fiveFunctionPrivileges": [
+    {
+      "signature": "naijue_erp.cutoff_import_lock()",
+      "actual_signature": "naijue_erp.cutoff_import_lock()",
+      "runtime_execute": true
+    },
+    {
+      "signature": "naijue_erp.import_source_key_lock(text,text,text)",
+      "actual_signature": "naijue_erp.import_source_key_lock(text,text,text)",
+      "runtime_execute": true
+    },
+    {
+      "signature": "naijue_erp.maintenance_audit_is_current(uuid)",
+      "actual_signature": "naijue_erp.maintenance_audit_is_current(uuid)",
+      "runtime_execute": true
+    },
+    {
+      "signature": "naijue_erp.maintenance_complete_row_matches(jsonb,jsonb)",
+      "actual_signature": "naijue_erp.maintenance_complete_row_matches(jsonb,jsonb)",
+      "runtime_execute": true
+    },
+    {
+      "signature": "naijue_erp.maintenance_evidence_matches(jsonb,jsonb)",
+      "actual_signature": "naijue_erp.maintenance_evidence_matches(jsonb,jsonb)",
+      "runtime_execute": true
+    }
+  ],
+  "missingFunctionExecute": [],
+  "triggerRelations": [
+    "import_source_row",
+    "sku_barcode",
+    "payment_method",
+    "payment_account",
+    "payment_account_hall",
+    "import_native_payment_binding",
+    "history_sales_line",
+    "history_sales_settlement"
+  ],
+  "noninternalTriggers": 21,
+  "triggersNotEnabled": [],
+  "triggerSecurityDefinerCount": 0,
+  "columnGapCounts": {
+    "select": 9,
+    "insert": 59,
+    "relationsNeedingAtLeastOneColumnUpdateForExistingLock": 8
+  },
+  "cleanup": {
+    "RRRO": true,
+    "rollbackReturned": true,
+    "clientsClosed": true,
+    "businessRowsRead": 0,
+    "businessFunctionsCalled": 0,
+    "businessDML": 0,
+    "ACLChanged": false,
+    "sourceOrJournalReread": false
+  },
+  "limitations": [
+    "Only19directdependencytables/5explicitnestedfunctions/8insert-target21noninternaltriggers metadata; not all MAIN/PUBLISH branches or actual writer execution",
+    "Do not infer required trigger-routine EXECUTE grants from automatictrigger ACL; explicitnested5privileges alreadytrue",
+    "No privileges changed, no writer or APP/public authorization added",
+    "Existing196native/source absence and BINDonly/STAGED3 are previoussnapshot evidence, not reread in197"
+  ],
+  "next": "OriginalD1 use actual197per-column matrix to prepare one scoped minimum forward/reverse patch, then QB delta and C exact ACL execution authority; no old181-based grants or repeated permission-collision runs.",
+  "actualModelAndFast": "UNVERIFIED"
+}
