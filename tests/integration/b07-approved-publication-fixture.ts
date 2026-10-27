@@ -53,6 +53,7 @@ import { PostgresV3HistoryStagingStore } from "../../adapters/postgres/src/impor
 
 import { requestHash } from "../../packages/application/src/request-hash.ts";
 import { stableImportId } from "../../packages/application/src/inventory-cutoff-import.ts";
+import { COMPLETE_SCOPE_DECISION } from "../../packages/application/src/inventory-cutoff-import.ts";
 import { quantity,businessDate } from "../../packages/domain/src/values.ts";
 
 import type { TestContext } from "node:test";
@@ -61,6 +62,20 @@ import { PostgresImportedHistoryQueryReader } from "../../adapters/postgres/src/
 import { historyListQuery,historyDetailQuery } from "../support/imported-history-query-fixtures.ts";
 import type { ImportedHistoryReadIntent } from "../../packages/application/src/imported-history-query-ports.ts";
 
+/** Counts sessions, not reader invocations: each source authorization reopens all11. */
+export function b07FixtureSourceLifecycle() {
+ const sessions: Array<{ group: HistoryClosureSourceGroup; closed: boolean }> = [];
+ return {
+  open(group: HistoryClosureSourceGroup) { const session={group,closed:false};sessions.push(session);
+   return async () => { assert.equal(session.closed,false,"A fixture source session must close exactly once");session.closed=true; }; },
+  assertClosed() { assert.ok(sessions.every(s=>s.closed),"Every opened fixture source session must close"); },
+  counts() { return {opened:sessions.length,closed:sessions.filter(s=>s.closed).length}; }
+ };
+}
+export async function closeB07FixtureSources(composite: {close(): Promise<void>}, lifecycle: ReturnType<typeof b07FixtureSourceLifecycle>, primaryError?: unknown) {
+ try { await composite.close(); lifecycle.assertClosed(); }
+ catch(cleanup) { if(primaryError!==undefined)throw new AggregateError([primaryError,cleanup],"Fixture source cleanup failed after primary error");throw cleanup; }
+}
 type FixturePool = PgSalesPool & { query(text: string, values?: unknown[]): Promise<PgSalesResult> };
 export async function prepareB07ApprovedPublication(t: TestContext, pool: FixturePool,
  target: { database: string; oid: string; role: string }) {
@@ -170,17 +185,18 @@ export async function prepareB07ApprovedPublication(t: TestContext, pool: Fixtur
    // readers' authorized prepared DTOs and the independent synthetic native prerequisite plan.
    // This cannot be used as the missing production source/mapping/header approval provider.
    const collected = facts.snapshot(), baselineId = stableImportId("baseline",options.fixedSourceNamespace,"INVENTORY_BASELINE","STOCK:synthetic");
-   const snapshot = { ...collected, typedRows: collected.typedRows.map(row => row.relation === "import_stock_contributor" ? { ...row, projection: { ...(row.projection as Record<string,unknown>), baseline_ledger_id: baselineId } } : row) }, documentAllocations = structuredClone(allocations); let closedSessions = 0;
+   const snapshot = { ...collected, typedRows: collected.typedRows.map(row => row.relation === "import_stock_contributor" ? { ...row, projection: { ...(row.projection as Record<string,unknown>), baseline_ledger_id: baselineId } } : row) }, documentAllocations = structuredClone(allocations); const lifecycle = b07FixtureSourceLifecycle();
    const factory = (group: HistoryClosureSourceGroup): HistoryClosureSourceFactory => async (scope, context) => {
-    assert.deepEqual(scope, expectedScope); assert.equal(context.group, group);
+    assert.deepEqual(scope, expectedScope); assert.equal(context.group, group);const close=lifecycle.open(group);
     const source = snapshot.sourceRows.filter(r => HISTORY_CLOSURE_SOURCE_GROUP_ENTITIES[group].includes((r.projection as { entity_type: typeof HISTORY_CLOSURE_SOURCE_ENTITIES[number] }).entity_type));
     const typed = snapshot.typedRows.filter(r => HISTORY_CLOSURE_SOURCE_GROUP_RELATIONS[group].includes(r.relation));
     return { verify: async () => { assert.deepEqual(await pinSyntheticClosureSourceFiles(sourceRoots), initialFilePins, "Every phase/replay rechecks full initial SYNTHETIC source bytes"); },
      sourceRows: function* () { yield* structuredClone(source); }, typedRows: function* () { yield* structuredClone(typed); },
-     documents: function* () { if (group === "HEADERS") yield* structuredClone(documentAllocations); }, close: async () => { closedSessions++; } };
+     documents: function* () { if (group === "HEADERS") yield* structuredClone(documentAllocations); }, close };
    };
    const openSources = Object.fromEntries(HISTORY_CLOSURE_SOURCE_GROUPS.map(g => [g, factory(g)])) as Record<HistoryClosureSourceGroup, HistoryClosureSourceFactory>;
    const composite = await openAuthorizedHistoryClosureReader({ scope: expectedScope, openSources, trustedSelectionSha256: fixture.selectionSha256, trustedAuthorizedPayloadHash: "f".repeat(64) });
+   let primaryError: unknown;
    try {
     closureInput = await composite.expected();
     publicationSourceAuthorization = plan => composite.authorizeStage({ ...closureInput, plan: plan! });
@@ -214,5 +230,142 @@ export async function prepareB07ApprovedPublication(t: TestContext, pool: Fixtur
     return {profile:B07_SYN_APPROVED_PROFILE,sourceKind:"SYNTHETIC_ONLY",target,fixture,
      references:{batchId:options.batchId,publishedOperationId:receipts[0]!.id,cases},stagedVisibility,
      publicationResult,requiredNextStep:"T45_EXISTING_REVIEWED_SCHEMA26_UPGRADE_AND_RUNTIME26_ISSUER_ADMISSION_NORMAL_SESSION",realSourceImportVerified:false};
-   } finally {await composite.close();assert.equal(closedSessions,HISTORY_CLOSURE_SOURCE_GROUPS.length);}
+   } catch(error) { primaryError=error;throw error; } finally {await closeB07FixtureSources(composite,lifecycle,primaryError);}
+}
+
+/** Recovery is closed to the already COMMITTED SYN-02 target and ORIGINAL key.
+ * No fixture construction, command execution, publication or schema upgrade.
+ * T45 supplies a fresh current postmaster identity after starting its same DATA;
+ * no stopped-window postmaster timestamp is reused as a current fact. */
+export interface B07Committed19RecoveryTarget {
+ database: 'naijue_erp_test_b07_syn_approved_20261027_01'; oid: '16385'; role: 'naijue_erp_test';
+ postmasterStart: string; port: number; serverAddress: null; serverPort: null;
+}
+export const B07_COMMITTED19_PUBLISH = Object.freeze({
+ batchId:'00000000-0000-0000-0000-000000000001', operationId:'89d8e3cb-5b42-4637-ed8c-0adf2091344a',
+ requestKey:'B07-SYN-APPROVED-V1-PUBLISH', actorAccountId:'00000000-0000-0000-0000-000000000802'
+});
+export async function readB07CommittedApprovedPublication(pool: PgSalesPool,target: B07Committed19RecoveryTarget) {
+ assert.equal(target.database,'naijue_erp_test_b07_syn_approved_20261027_01');assert.equal(target.oid,'16385');assert.equal(target.role,'naijue_erp_test');
+ assert.ok(typeof target.postmasterStart==='string'&&target.postmasterStart.length>0);assert.ok(Number.isInteger(target.port)&&target.port>0&&target.port<=65535);
+ assert.equal(target.serverAddress,null);assert.equal(target.serverPort,null);
+ const c=await pool.connect();let began=false;let discard: Error|boolean|undefined;
+ const original=B07_COMMITTED19_PUBLISH;
+ const bounded=async(sql:string,values:unknown[]=[])=>{const rows=(await c.query(sql,values)).rows;assert.ok(rows.length<=100,'Bounded original SYN recovery only');return rows;};
+ try {
+  await c.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');began=true;
+  const identities=await bounded(`/* b07-recover:target */ SELECT current_database() AS database,
+   (SELECT oid::text FROM pg_database WHERE datname=current_database()) AS oid,current_user AS role,
+   pg_postmaster_start_time()::text AS "postmasterStart",current_setting('port')::int AS port,
+   inet_server_addr()::text AS "serverAddress",inet_server_port() AS "serverPort",
+   current_setting('transaction_read_only') AS readonly,current_setting('transaction_isolation') AS isolation,
+   (SELECT rolsuper FROM pg_roles WHERE rolname=current_user) AS superuser,(SELECT rolbypassrls FROM pg_roles WHERE rolname=current_user) AS bypass`);
+  assert.equal(identities.length,1);const {readonly,isolation,superuser,bypass,...actual}=identities[0]!;
+  assert.deepEqual(actual,target);assert.equal(readonly,'on');assert.equal(isolation,'repeatable read');assert.equal(superuser,false);assert.equal(bypass,false);
+  await assertNativeImportAccountingSchema19Guards(c);
+  const versions=await bounded('/* b07-recover:versions */ SELECT version FROM naijue_erp.schema_migration ORDER BY version');
+  assert.deepEqual(versions.map(r=>r.version),Array.from({length:19},(_,i)=>i+1));
+  const keys=await bounded(`/* b07-recover:original-keys */ SELECT id,request_key,action,status FROM naijue_erp.operation_receipt
+   WHERE actor_account_id=$1::uuid AND request_key=ANY($2::text[]) ORDER BY request_key`,[original.actorAccountId,
+   ['B07-SYN-APPROVED-V1-STAGE','B07-SYN-APPROVED-V1-CHUNK',original.requestKey,'B07-SYN-APPROVED-V1-PREPARE']]);
+  assert.deepEqual(keys.map(r=>({key:r.request_key,action:r.action,status:r.status})),[
+   {key:'B07-SYN-APPROVED-V1-CHUNK',action:'IMPORT_CHUNK',status:'COMMITTED'},
+   {key:original.requestKey,action:'IMPORT_PUBLISH',status:'COMMITTED'},
+   {key:'B07-SYN-APPROVED-V1-STAGE',action:'IMPORT_STAGE',status:'COMMITTED'}]);
+  assert.equal(keys.find(r=>r.request_key===original.requestKey)!.id,original.operationId);
+  const publication=await bounded(`/* b07-recover:publication */ SELECT r.id,r.result_data,b.source_hash,b.source_manifest_ref,
+   (b.source_name='synthetic.b07.approved.v1' AND b.mapping_version='V2_HISTORY_NULLABLE_1'
+    AND b.inventory_mode='CUTOFF_STOCK_BASELINE' AND b.status='IMPORTED' AND b.completed_at IS NOT NULL
+    AND b.history_validation_passed IS TRUE AND b.history_actual_counts=b.history_expected_counts
+    AND b.checkpoint->'counts'=b.checkpoint->'expected' AND b.checkpoint->'counts'->>'IMPORT_BATCH'='1'
+    AND m.validator_version='HISTORY_TYPED_CLOSURE_V1' AND m.selection_sha256=b.source_hash
+    AND m.authorized_payload_hash=b.history_payload_hash AND m.expected_counts=b.history_expected_counts
+    AND m.document_count=3 AND m.document_count=(SELECT count(*) FROM naijue_erp.import_history_document_manifest md WHERE md.batch_id=b.id)
+    AND f.status='IMPORTED' AND f.source_record_hash=b.source_hash AND f.source_file_ref=b.source_manifest_ref
+    AND f.decision_reason=$4::text AND cl.checkpoint_sequence=(b.checkpoint->>'sequence')::integer
+    AND r.result_data->>'status'='IMPORTED' AND r.result_data->>'batchId'=b.id::text
+    AND r.result_data->>'sequence'=b.checkpoint->>'sequence' AND r.result_data->>'cursor'=b.checkpoint->>'cursor'
+    AND a.actor_account_id=r.actor_account_id AND a.occurred_at=r.completed_at) AS published
+   FROM naijue_erp.import_batch b JOIN naijue_erp.import_history_closure_manifest m ON m.batch_id=b.id
+   JOIN naijue_erp.import_record f ON f.import_batch_id=b.id AND f.target_type='IMPORT_BATCH' AND f.target_id=b.id
+    AND f.source_entity_type='INVENTORY_SCOPE_APPROVAL' AND f.source_key='FINAL_COMPLETE_SCOPE'
+   JOIN naijue_erp.import_record_accounting_claim cl ON cl.import_batch_id=b.id AND cl.import_record_id=f.id AND cl.target_type=f.target_type AND cl.target_id=f.target_id
+   JOIN naijue_erp.operation_receipt r ON r.id=cl.operation_id AND r.target_type='IMPORT' AND r.target_id=b.id AND r.action='IMPORT_PUBLISH' AND r.status='COMMITTED'
+   JOIN naijue_erp.audit_change a ON a.operation_id=r.id AND a.object_type='IMPORT' AND a.object_id=b.id AND a.action='IMPORT_PUBLISH'
+   WHERE b.id=$1::uuid AND r.id=$2::uuid AND r.request_key=$3 AND r.actor_account_id=$5::uuid`,
+   [original.batchId,original.operationId,original.requestKey,COMPLETE_SCOPE_DECISION,original.actorAccountId]);
+  assert.equal(publication.length,1);assert.equal(publication[0]!.published,true);
+  const expectedCounts={import_source_row:57,import_sku_alias:2,import_stock_contributor:2,import_record:5,import_record_accounting_claim:5,import_history_closure_manifest:1,import_history_document_manifest:3,
+   product:1,sku:1,warehouse:2,inventory_ledger:1,inventory_balance:1,history_sales_header:2,history_sales_line:32,history_sales_settlement:2,history_transfer_header:1,history_transfer_line:1,user_account:1,staff:1,auth_session:0};
+  const counts: Record<string,number>={};
+  for(const [table,expected] of Object.entries(expectedCounts)){
+   const got=await bounded(`/* b07-recover:count:${table} */ SELECT count(*)::integer AS n FROM naijue_erp.${table}`);
+   assert.equal(got.length,1);assert.equal(got[0]!.n,expected,table);counts[table]=expected;
+  }
+  const claims=await bounded(`/* b07-recover:all-claims */ SELECT r.id FROM naijue_erp.import_record r
+   JOIN naijue_erp.import_record_accounting_claim cl ON cl.import_batch_id=r.import_batch_id AND cl.import_record_id=r.id AND cl.target_type=r.target_type AND cl.target_id=r.target_id
+   JOIN naijue_erp.operation_receipt op ON op.id=cl.operation_id AND op.status='COMMITTED'
+   WHERE r.import_batch_id=$1::uuid AND r.status='IMPORTED'`,[original.batchId]);assert.equal(claims.length,5);
+  const cases=[];let saleWarehouse='',transferFrom='',transferTo='',skuId='',saleQuantity=0n,transferQuantity=0n;
+  for(const [kind,sourceKey] of [['sales','header-SALE'],['transfers','header-TRANSFER']] as const){
+   const family=kind==='sales'?'sales':'transfer';
+   const heads=await bounded(`/* b07-recover:head:${family} */ SELECT h.id,h.version,h.source_status,to_char(h.business_date,'YYYY-MM-DD') AS business_date,
+    ${kind==='sales'?"h.warehouse_id,h.gross_amount::text AS gross_amount,h.order_discount::text AS order_discount,h.net_due::text AS net_due":"h.from_warehouse_id,h.to_warehouse_id"},
+    h.created_local_at,h.updated_local_at,h.approved_local_at,s.raw_fields,m.line_count,m.settlement_count,
+    (m.header_source_row_id=h.source_row_id AND m.document_kind=$3) AS manifest_identity
+    FROM naijue_erp.history_${family}_header h JOIN naijue_erp.import_source_row s ON s.batch_id=h.batch_id AND s.id=h.source_row_id
+    JOIN naijue_erp.import_history_document_manifest m ON m.batch_id=h.batch_id AND m.${family}_header_id=h.id
+    WHERE h.batch_id=$1::uuid AND s.source_key=$2 AND s.entity_type=$4`,[original.batchId,sourceKey,kind==='sales'?'SALES':'TRANSFER',kind==='sales'?'SALES_HEADER':'TRANSFER_HEADER']);
+   assert.equal(heads.length,1);const h=heads[0]!;assert.equal(h.version,1);assert.equal(h.source_status,'APPROVED');assert.equal(h.business_date,'2024-11-18');assert.equal(h.manifest_identity,true);
+   for(const k of ['created_local_at','updated_local_at','approved_local_at'])assert.equal(h[k],null);
+   const raw=h.raw_fields as Record<string,unknown>;assert.equal(raw.原审核状态,'已审核');assert.equal(raw.业务日期,'45614');
+   if(kind==='sales'){saleWarehouse=h.warehouse_id as string;assert.equal(h.gross_amount,'32.00');assert.equal(h.order_discount,'0.00');assert.equal(h.net_due,'32.00');}
+   else {transferFrom=h.from_warehouse_id as string;transferTo=h.to_warehouse_id as string;assert.notEqual(transferFrom,transferTo);}
+   for(const [field,id] of kind==='sales'?[['仓库来源编号',saleWarehouse]]:[['调出仓来源编号',transferFrom],['调入仓来源编号',transferTo]]){
+    const warehouse=await bounded(`/* b07-recover:warehouse-binding */ SELECT r.target_id FROM naijue_erp.import_record r
+     WHERE r.import_batch_id=$1::uuid AND r.source_entity_type='WAREHOUSE' AND r.source_key=$2 AND r.target_type='WAREHOUSE' AND r.status='IMPORTED'`,[original.batchId,raw[field!]]);
+    assert.equal(warehouse.length,1);assert.equal(warehouse[0]!.target_id,id);
+   }
+   const lines=await bounded(`/* b07-recover:lines:${family} */ SELECT l.id,l.sku_id,l.quantity::text AS quantity,l.line_no,
+    ${kind==='sales'?"l.deal_price::text AS deal_price,l.line_amount::text AS line_amount,":""}
+    s.raw_fields,s.normalized_fields,(s.normalized_fields->>'单据来源编号'=$3 AND EXISTS(SELECT 1 FROM naijue_erp.import_sku_alias a
+     WHERE a.batch_id=l.batch_id AND a.canonical_sku_id=l.sku_id AND a.canonical_source_key=s.normalized_fields->>'SKU来源编号')) AS exact_identity
+    FROM naijue_erp.history_${family}_line l JOIN naijue_erp.import_source_row s ON s.batch_id=l.batch_id AND s.id=l.source_row_id
+    WHERE l.batch_id=$1::uuid AND l.header_id=$2::uuid ORDER BY l.line_no,l.id`,[original.batchId,h.id,sourceKey]);
+   assert.equal(lines.length,kind==='sales'?16:1);assert.equal(h.line_count,lines.length);assert.equal(h.settlement_count,kind==='sales'?1:0);
+   for(const l of lines){assert.equal(l.exact_identity,true);assert.equal(l.quantity,kind==='sales'?'2':'3');if(skuId)assert.equal(l.sku_id,skuId);else skuId=l.sku_id as string;
+    if(kind==='sales')saleQuantity+=BigInt(l.quantity as string);else transferQuantity+=BigInt(l.quantity as string);
+    assert.equal((l.normalized_fields as Record<string,unknown>).原数量,l.quantity);if(kind==='sales'){assert.equal(l.deal_price,'1.00');assert.equal(l.line_amount,'2.00');}}
+   if(kind==='sales'){
+    const payments=await bounded(`/* b07-recover:settlements */ SELECT p.id,p.direction,p.amount::text AS amount,
+     (s.normalized_fields->>'单据来源编号'=$3 AND EXISTS(SELECT 1 FROM naijue_erp.import_native_payment_binding pb
+      WHERE pb.batch_id=p.batch_id AND pb.entity_type='PAYMENT_ACCOUNT' AND pb.source_key=s.normalized_fields->>'账户来源编号' AND pb.native_payment_account_id=p.payment_account_id)) AS exact_identity
+     FROM naijue_erp.history_sales_settlement p JOIN naijue_erp.import_source_row s ON s.batch_id=p.batch_id AND s.id=p.source_row_id WHERE p.batch_id=$1::uuid AND p.header_id=$2::uuid`,[original.batchId,h.id,sourceKey]);
+    assert.equal(payments.length,1);assert.equal(payments[0]!.direction,'RECEIVE');assert.equal(payments[0]!.amount,'32.00');assert.equal(payments[0]!.exact_identity,true);
+   }
+   cases.push({kind,documentId:h.id,lineId:lines[0]!.id,capturedVersion:1,capturedSourceStatus:'APPROVED',capturedQuantity:lines[0]!.quantity,proposedQuantity:kind==='sales'?'3':'4'});
+  }
+  assert.equal(saleWarehouse,transferFrom);
+  const units=await bounded(`/* b07-recover:stock-unit */ SELECT c.warehouse_id,c.canonical_sku_id,c.source_unit,c.signed_quantity::text AS signed_quantity,c.baseline_ledger_id,
+   l.event_kind,l.endpoint,l.quantity_delta::text AS quantity_delta,l.source_import_batch_id,l.warehouse_id AS ledger_warehouse,l.sku_id AS ledger_sku
+   FROM naijue_erp.import_stock_contributor c JOIN naijue_erp.inventory_ledger l ON l.id=c.baseline_ledger_id
+   WHERE c.batch_id=$1::uuid ORDER BY c.source_row_id`,[original.batchId]);assert.equal(units.length,2);
+  for(const u of units){assert.equal(u.canonical_sku_id,skuId);assert.equal(u.warehouse_id,saleWarehouse);assert.equal(u.source_unit,'件');assert.equal(u.event_kind,'CUTOFF_BASELINE');assert.equal(u.endpoint,'IMPORT_BASELINE');assert.equal(u.quantity_delta,'-7');assert.equal(u.source_import_batch_id,original.batchId);assert.equal(u.ledger_warehouse,saleWarehouse);assert.equal(u.ledger_sku,skuId);}
+  assert.equal(units.reduce((n,u)=>n+BigInt(u.signed_quantity as string),0n),-7n);
+  const balances=await bounded('/* b07-recover:balances */ SELECT warehouse_id,sku_id,quantity::text AS quantity FROM naijue_erp.inventory_balance ORDER BY warehouse_id,sku_id');
+  assert.equal(balances.length,1);assert.deepEqual(balances[0],{warehouse_id:saleWarehouse,sku_id:skuId,quantity:'-7'});
+  const derivedFrom=BigInt(balances[0]!.quantity as string)+saleQuantity+transferQuantity,derivedTo=-transferQuantity;
+  assert.equal(derivedFrom,28n);assert.equal(derivedTo,-3n);
+  const publicationResult=publication[0]!.result_data as Record<string,unknown>;
+  assert.equal(publicationResult.operationId,original.operationId);assert.equal(publicationResult.batchId,original.batchId);assert.equal(publicationResult.status,'IMPORTED');
+  await c.query('ROLLBACK');began=false;
+  return {profile:B07_SYN_APPROVED_PROFILE,sourceKind:'SYNTHETIC_ONLY',target:{database:target.database,oid:target.oid,role:target.role},
+   references:{batchId:original.batchId,publishedOperationId:original.operationId,cases},publicationResult,
+   recovery:{readOnly:true,rollbackReturned:true,originalKey:original.requestKey,currentTarget:target,counts,
+    stockIdentity:{saleWarehouse,transferFrom,transferTo,skuId,unit:'件'},openingBasis:'DERIVED_FROM_TARGET_INVENTORY',derivedOpening:{from:derivedFrom.toString(),to:derivedTo.toString()},
+    absentToTargetBasis:'PUBLISHED_COMPLETE_SCOPE_ABSENT_IS_ZERO_NOT_RUNTIME_ADMISSION',
+    stagedVisibilityReexecuted:false,sourceFixtureRegenerated:false,publishReexecuted:false},realSourceImportVerified:false,
+   requiredNextStep:'C_REGISTER_T45_EXISTING_REVIEWED_SCHEMA26_UPGRADE_AND_RUNTIME26_ISSUER_ADMISSION_NORMAL_SESSION'};
+ }catch(error){if(began)try{await c.query('ROLLBACK');}catch(rollback){discard=rollback instanceof Error?rollback:true;throw new AggregateError([error,rollback],'Read-only publication recovery rollback failed');}throw error;}
+ finally{c.release(discard);}
 }
