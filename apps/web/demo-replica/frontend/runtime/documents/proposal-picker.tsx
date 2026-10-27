@@ -1,4 +1,4 @@
-import { isValidElement, useState, type ReactNode, type ComponentType } from 'react';
+import { isValidElement, cloneElement, useRef, useLayoutEffect, useState, type ReactNode, type ComponentType } from 'react';
 import Select from '@arco-design/web-react/es/Select';
 import type { SelectProps } from '@arco-design/web-react/es/Select';
 import Trigger from '@arco-design/web-react/es/Trigger';
@@ -32,8 +32,35 @@ export function ProposalPopup(p:{session:SalesProposalSession;picker:NonNullable
  </div>;
 }
 export function ProposalTrigger(p:{visible:boolean;popup:()=>ReactNode;close:()=>void;children:ReactNode;spec?:boolean;width?:number}) {
+ const trigger=useRef<HTMLElement|null>(null),menu=useRef<HTMLDivElement|null>(null),pending=useRef<'first'|'last'|null>(null);
+ const focusOption=()=>{if(!p.visible||!pending.current)return;const options=menu.current?.querySelectorAll<HTMLButtonElement>('[role="option"]:not(:disabled)');if(options?.length){options[pending.current==='first'?0:options.length-1]?.focus();pending.current=null;}};
+ useLayoutEffect(()=>{if(!p.visible)pending.current=null;else focusOption();});
+ const escape=(event:React.KeyboardEvent)=>{event.preventDefault();event.stopPropagation();pending.current=null;p.close();if(trigger.current?.isConnected)trigger.current.focus({preventScroll:true});};
+ const popupKey=(event:React.KeyboardEvent<HTMLDivElement>)=>{
+  if(event.nativeEvent.isComposing||event.keyCode===229)return;
+  if(event.key==='Escape'){escape(event);return;}
+  const options=Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="option"]:not(:disabled)'));
+  if(event.key==='ArrowDown'||event.key==='ArrowUp'){event.preventDefault();event.stopPropagation();const index=options.indexOf(event.target as HTMLButtonElement),next=index<0?(event.key==='ArrowDown'?0:options.length-1):(index+(event.key==='ArrowDown'?1:-1)+options.length)%options.length;options[next]?.focus();}
+  else if(event.key==='Enter'&&options.includes(event.target as HTMLButtonElement)){event.preventDefault();event.stopPropagation();(event.target as HTMLButtonElement).click();}
+ };
+ type ChildProps={disabled?:boolean;onKeyDown?:(event:React.KeyboardEvent<HTMLElement>)=>void;onClickCapture?:(event:React.MouseEvent<HTMLElement>)=>void};
+ let child=p.children;
+ if(p.spec&&isValidElement<ChildProps>(child)){
+  const original=child.props;
+  child=cloneElement(child,{onClickCapture:event=>{trigger.current=event.currentTarget;original.onClickCapture?.(event);},onKeyDown:event=>{
+   trigger.current=event.currentTarget;
+   if(event.nativeEvent.isComposing||event.keyCode===229)return;
+   if(p.visible&&event.key==='Escape'){escape(event);return;}
+   if(['ArrowDown','ArrowUp','Enter',' '].includes(event.key)){
+    event.preventDefault();pending.current=event.key==='ArrowUp'?'last':'first';
+    if(p.visible)focusOption();else event.currentTarget.click();
+    return;
+   }
+   original.onKeyDown?.(event);
+  }});
+ }
  // Arco moves a disabled button class to a wrapper span; retain the original
  // disabled source button instead. It has no popup action until available.
  if(isValidElement<{disabled?:boolean}>(p.children)&&p.children.props.disabled)return <>{p.children}</>;
- return <Trigger popupVisible={p.visible} trigger={[]} position="bl" popup={p.popup} unmountOnExit autoAlignPopupWidth={false} popupStyle={{width:p.width??(p.spec?250:660),maxWidth:'calc(100vw - 16px)'}} onVisibleChange={visible=>{if(!visible)p.close();}}>{p.children}</Trigger>;
+ return <Trigger popupVisible={p.visible} trigger={[]} position="bl" popup={p.spec?()=> <div ref={node=>{menu.current=node;focusOption();}} onKeyDownCapture={popupKey}>{p.popup()}</div>:p.popup} unmountOnExit autoAlignPopupWidth={false} popupStyle={{width:p.width??(p.spec?250:660),maxWidth:'calc(100vw - 16px)'}} onVisibleChange={visible=>{if(!visible)p.close();}}>{child}</Trigger>;
 }
