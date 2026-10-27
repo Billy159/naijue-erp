@@ -1,3 +1,5 @@
+SOURCE762：163最后14小项一次核完：13匹配或准确复用，旧148 baseline lock原位不存在；旧package仅18byte模块声明，与预填Git7306121byte不符。有限CODE/metadata清单现全受检/复用，3类真实差异明确，业务正文/CORE/DATA/EXPECTED/PG未读；不能称整包通过或旧目录损坏。D3核源码比较基线与source-only实际capture责任边界，禁止造旧锁/改pin冒UNCHANGED/关闭完整性检查。新158package与lock准确pin通过，不改依赖或安装。原09Z执行窗已过且152/158均终态0MAIN/PUBLISH；新具体载体就绪后再准确登记窗口，不追溯重试。37页67弹层真实接线、性能及发布仍未完成。
+
 SOURCE761：160实际单CODE78034/247cea8e与Git73078829/f5effdc7仅2hunk新增B07v21元数据分支，当前R1精确v20功能不变。原D1静态意见及QB468有限10协议case核验通过，支持仅新R1私有包使用actual148原字节，shared/B07/旧148保持；清单原先将Git730指纹预填旧物理路径的假设已撤回，不称旧文件损坏。相同叶4处引用(22baseline/current、93baseline/current)全部需准确实证pin，93current保旧原路径。161已通过141小项又遇同叶重复引用；后续复用159/160/161，只余63未检小项交T45首错RO，不再重复已知同叶。实际导入/发布未执行；原09Z近，新载体另准确技术窗口，不原样重试失败。
 
 SOURCE760：159原单次小CODE/metadata只读实际完成，57/263受检即因旧148 BASELINE index22 native-import-accounting-capability.ts长度不符停止，余206未读、该文件正文/SHA未读；明确不是已证明158全链首错，业务正文/CORE/DATA/EXPECTED均排除。D3接续可信SOURCE730 exactGitexport与baseline契约核对，准备保留旧现场的新不可变原基线接线；禁止把current冒充baseline或改pin绕过。158/152均预检失败0MAIN/PUBLISH，148产物未重制；03隔离回滚及两正常HTTP PASS有效保留。
