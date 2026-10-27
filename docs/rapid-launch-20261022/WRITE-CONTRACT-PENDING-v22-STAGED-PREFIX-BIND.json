@@ -1,10 +1,11 @@
 {
   "version": "v22",
-  "status": "PENDING_USER_CONFIRMATION",
+  "status": "APPROVED_BY_EXPLICIT_USER_REPLY",
   "document": "WRITE-CONTRACT-SUPPLEMENT-v22-STAGED-PREFIX-BIND.md",
-  "implementationAllowed": false,
+  "implementationAllowed": true,
   "requiredDecision": "Only exact staged-prefix first-BIND contract and audit JSON proof described in supplement",
   "currentBoundedReadOnlyEvidencePending": false,
   "notProductionOrPublishApproval": true,
-  "boundedEvidenceScope": "172 three-history structural association and original CORE/scheme paired receipts only; remaining five lineage and all full-row agreement unverified"
+  "boundedEvidenceScope": "172 three-history structural association and original CORE/scheme paired receipts only; remaining five lineage and all full-row agreement unverified",
+  "approvalRecord": "WRITE-CONTRACT-APPROVAL-v22-STAGED-PREFIX-BIND.json"
 }

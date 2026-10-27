@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-27T05:23:18.635307+00:00",
+  "updatedAt": "2026-10-27T12:24:29.112058+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -6534,5 +6534,32 @@
     "status": "DELIVERED_FROZEN_FOR_QB",
     "reason": "152 proven exact textual cutoff mismatch; no schema/source data/hash/key changes",
     "controllerRecordsOwner": "C"
+  },
+  "source774V22StagedPrefixBind": {
+    "authorization": "[\"request_user_input_async\",\"call_71399ed4794f41288149ccc520cea6e2\",0] 确认 v22，按此实施",
+    "D1": {
+      "files": [
+        "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/native-core-staged-prefix-bind.ts",
+        "adapters/postgres/src/native-import-accounting-capability.ts"
+      ],
+      "tests": "Only exact corresponding existing or new prefix/issuer/store targeted tests, D1 registers leaf names before writing",
+      "scope": "Approved single routine body successor, exact original8table member/native evidence at original transaction lease and auditJSON; stable private seam to D3; no shared command/109keys/schema/ACL change"
+    },
+    "D3": {
+      "files": [
+        "scripts/import-v3/production-source-provider26.mjs",
+        "scripts/import-v3/production-source-provider26.test.mjs",
+        "scripts/import-v3/production-source-host.mjs",
+        "scripts/import-v3/production-source-host.test.mjs",
+        "scripts/import-v3/run.mjs"
+      ],
+      "scope": "Original independent authority prefix expected/proof port and original148/109identity bindings; align D1 private seam before dependent writes; no SQL/store/issuer mutation"
+    },
+    "T45": "Sole server/database/build/deploy owner; preserves169/170/171/172 terminal, no new runtime attempt before source/review/currentcatalog/grant fixed",
+    "QB": "Independent changed source/profile scope only; source/actual distinction; no duplicate old passes",
+    "controllerRecordsOwner": "C",
+    "status": "USER_APPROVED_SOURCE_IMPLEMENTATION_OPEN_RUNTIME_NOT_YET_AUTHORIZED"
   }
 }
