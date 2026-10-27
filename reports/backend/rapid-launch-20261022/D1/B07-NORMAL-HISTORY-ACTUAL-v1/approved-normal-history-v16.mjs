@@ -2,7 +2,7 @@
 // ordinary pool and genuine runtime26 issuer. No connections, credentials,
 // fixture source, listener or schema are created here.
 import assert from 'node:assert/strict';
-import {randomUUID} from 'node:crypto';
+import {randomUUID,createHash} from 'node:crypto';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {assertCompleteHistoryPage,historyResponseObservation} from './draft-normal-history-v16.mjs';
@@ -60,9 +60,52 @@ export function assertPkRollbackEvidence(evidence){
  assert.equal(evidence.errorCode,'23505');assert.equal(evidence.firstLedgerInserted,1);assert.equal(evidence.firstBalancePersisted,1);
  assert.equal(evidence.secondLedgerAttempted,1);assert.equal(evidence.rolledBack,true);assert.equal(evidence.commits,0);
 }
-export async function runApprovedNormalHistory({api,pool,runtime26,input:raw,privateCookie,recordRequest,recordObservation,readBackgroundFailureCount,now}){
- const input=validateApprovedInput(structuredClone(raw));assert.equal(api.trustedOrigin,input.origin);assert.equal(api.app.server.listening,false);
- assert.equal(typeof privateCookie,'string');assert.ok(privateCookie&&!/[\r\n]/.test(privateCookie));
+export function createSynRollbackObserver(){
+ let active=null,last=null;const attached=new WeakSet();
+ const zero=()=>({errorCode:null,firstLedgerInserted:0,firstBalancePersisted:0,secondLedgerAttempted:0,rolledBack:false,commits:0});
+ return Object.freeze({
+  start(ids){assert.equal(active,null);for(const id of Object.values(ids))assert.ok(uuid(id));assert.notEqual(ids.firstLedger,ids.collisionLedger);active={ids:{...ids},evidence:zero(),client:null};last=active.evidence;},
+  attachRawClient(raw){assert.equal(typeof raw?.query,'function');if(attached.has(raw))return raw;const query=raw.query;
+   // This is the ORIGINAL pg driver client below BoundedPool/issuer. Its object,
+   // on/release methods, query arguments/results/errors are retained. Issuer
+   // leases are neither wrapped nor mutated.
+   Object.defineProperty(raw,'query',{configurable:true,writable:true,value:async function(...args){
+    const sql=args[0],values=args[1],current=active;
+    const ledger=current&&typeof sql==='string'&&sql.includes('/* history-posting:ledger */')&&Array.isArray(values)&&[current.ids.firstLedger,current.ids.collisionLedger].includes(values[0]);
+    if(ledger){if(current.client===null)current.client=raw;assert.equal(current.client,raw,'Both endpoints must use the same actual driver transaction');
+     if(values[0]===current.ids.collisionLedger)current.evidence.secondLedgerAttempted++;}
+    try{const result=await Reflect.apply(query,this,args);
+     if(current&&active===current&&current.client===raw){
+      if(ledger&&values[0]===current.ids.firstLedger){assert.equal(result.rowCount,1);current.evidence.firstLedgerInserted++;}
+      if(current.evidence.firstLedgerInserted===1&&current.evidence.secondLedgerAttempted===0&&typeof sql==='string'&&/^\s*(INSERT INTO|UPDATE) naijue_erp\.inventory_balance/.test(sql)){assert.equal(result.rowCount,1);current.evidence.firstBalancePersisted++;}
+      if(sql==='ROLLBACK')current.evidence.rolledBack=true;if(sql==='COMMIT')current.evidence.commits++;
+     }return result;
+    }catch(error){if(ledger&&values[0]===current.ids.collisionLedger)current.evidence.errorCode=error?.code==='23505'?'23505':null;throw error;}
+   }});attached.add(raw);return raw;
+  },
+  finish(){assert.ok(active);const evidence={...active.evidence};last=evidence;active=null;return evidence;},
+  snapshot(){return last?{...last}:null;}
+ });
+}
+export function validateOriginalRollbackContinuation(input,continuation){
+ assert.equal(input.target.database,'naijue_erp_test_b07_syn_approved_20261027_01');assert.equal(input.target.oid,'16385');
+ assert.equal(input.actor.accountId,'b0714000-0000-4000-8000-000000000002');assert.equal(input.actor.hallId,null);
+ assert.ok(Buffer.isBuffer(continuation.originalRequestBytes));assert.equal(continuation.originalRequestBytes.length,1068);
+ assert.equal(createHash('sha256').update(continuation.originalRequestBytes).digest('hex'),'2d6eb543f1daf7f8db6665499196f827bfe61c7f6317b62fb4a909989f0e87bf');
+ const request=JSON.parse(continuation.originalRequestBytes.toString('utf8'));same(request.target,input.target);same(request.actor,input.actor);assert.equal(request.contract,input.contract);
+ assert.equal(request.phase,'DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_ROLLBACK');assert.equal(request.command.requestKey,input.keys.rollback);assert.equal(request.command.kind,'transfers');assert.equal(request.command.expectedVersion,2);
+ assert.equal(request.command.documentId,input.references.cases[1].documentId);assert.equal(request.command.lines.length,1);assert.equal(request.command.lines[0].lineId,input.references.cases[1].lineId);assert.equal(request.command.lines[0].quantity,'5');
+ assert.ok(continuation.priorApprovedResult?.cases?.length===2);assert.equal(continuation.priorApprovedResult.failedPhase,request.phase);assert.equal(continuation.priorApprovedResult.requestKey,request.command.requestKey);
+ for(const [i,kind]of ['sales','transfers'].entries()){const prior=continuation.priorApprovedResult.cases[i];assert.equal(prior.kind,kind);assert.equal(prior.status,'PASS_NORMAL_HTTP_SYN_APPROVED_DELTA_READBACK_AUDIT_REPLAY_CAS');assert.equal(prior.version,2);}
+ assert.equal(continuation.priorApprovedResult.cases[0].operationId,'e3eee080-c3e7-46c4-8a14-8ab681c8285e');assert.equal(continuation.priorApprovedResult.cases[1].operationId,'4855c67f-df31-48fa-bf4e-d0e4cc81e7d3');
+ for(const id of Object.values(request.companionIds))assert.ok(uuid(id));return request;
+}
+export async function runApprovedNormalHistory(options){return runApprovedHistoryCore(options);}
+export async function runApprovedOriginalRollbackOnly(options){return runApprovedHistoryCore(options,options.rollbackContinuation);}
+async function runApprovedHistoryCore({api,pool,runtime26,input:raw,privateCookie,recordRequest,recordObservation,readBackgroundFailureCount,now,rollbackObserver},rollbackContinuation){
+ const input=validateApprovedInput(structuredClone(raw));
+ const originalRollback=rollbackContinuation?validateOriginalRollbackContinuation(input,rollbackContinuation):null;
+ if(!originalRollback){assert.equal(api.trustedOrigin,input.origin);assert.equal(api.app.server.listening,false);assert.equal(typeof privateCookie,'string');assert.ok(privateCookie&&!/[\r\n]/.test(privateCookie));}
  for(const fn of [recordRequest,recordObservation,readBackgroundFailureCount,now])assert.equal(typeof fn,'function');
  const at=p=>import(pathToFileURL(resolve(input.sourceRoot,p)).href);
  const {checkedNativeRuntime26Capability}=await at('packages/application/src/native-import-schema-contract.ts');assert.ok(checkedNativeRuntime26Capability(runtime26));
@@ -105,7 +148,7 @@ export async function runApprovedNormalHistory({api,pool,runtime26,input:raw,pri
   assert.equal(d.settlements.items.length,expected.settlements.length);for(const row of expected.settlements){const got=d.settlements.items.find(r=>r.id===row.settlementId);assert.ok(got);assert.equal(got.amount,row.amount);assert.equal(got.direction,row.direction);}return d;}
  const revise=(kind,command)=>http(`/imported-history/${kind}/revise`,command);
  try{
-  const session=await api.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json().principal;same({accountId:principal.accountId,hallId:principal.hallId},input.actor);
+  if(!originalRollback){const session=await api.app.inject({method:'GET',url:'/auth/session',headers});assert.equal(session.statusCode,200);const principal=session.json().principal;same({accountId:principal.accountId,hallId:principal.hallId},input.actor);
   await reading(async c=>assert.equal((await c.query('SELECT request_key FROM naijue_erp.operation_receipt WHERE actor_account_id=$1::uuid AND request_key=ANY($2::text[])',[input.actor.accountId,Object.values(input.keys)])).rows.length,0,'Fresh SYN run only; recover existing keys separately without resave'));
   for(const reference of input.references.cases){phase=`NORMAL_HTTP_${reference.kind}`;requestKey=null;const before=await snapshot(reference);
    const command=parseHistoryRevisionCommand(approvedQuantityCommand(before.current,reference,input.keys[reference.kind]));requestKey=command.requestKey;
@@ -128,22 +171,33 @@ export async function runApprovedNormalHistory({api,pool,runtime26,input:raw,pri
    const cas=await revise(reference.kind,{...command,requestKey:input.keys[`${reference.kind}Cas`]});assert.equal(cas.statusCode,409);assert.equal(cas.json().error.code,'VERSION_CONFLICT');same(await snapshot(reference),after);
    report.cases.push({kind:reference.kind,status:'PASS_NORMAL_HTTP_SYN_APPROVED_DELTA_READBACK_AUDIT_REPLAY_CAS',operationId:receipt.operationId,revisionId:receipt.revisionId,version:receipt.version,ledgerEntryIds:receipt.ledgerEntryIds});
   }
+  }else{
+   phase='ORIGINAL_ROLLBACK_KEY_READBACK';requestKey=originalRollback.command.requestKey;
+   const stored=await reading(async c=>(await c.query('SELECT id,action,target_type,target_id,status,request_hash,result_data FROM naijue_erp.operation_receipt WHERE actor_account_id=$1::uuid AND request_key=$2',[input.actor.accountId,requestKey])).rows);
+   if(stored.length){assert.equal(stored.length,1);assert.equal(stored[0].status,'COMMITTED');assert.equal(stored[0].id,originalRollback.companionIds.operation);assert.equal(stored[0].action,'HISTORY_REVISE');assert.equal(stored[0].target_type,'HISTORY_TRANSFER');assert.equal(stored[0].target_id,originalRollback.command.documentId);assert.equal(stored[0].request_hash,requestHash({actorAccountId:input.actor.accountId,command:originalRollback.command}));return {...report,status:'ORIGINAL_ROLLBACK_KEY_COMMITTED_READONLY_RECOVERY_NO_EXECUTION',originalCommittedResult:stored[0].result_data,normalCasesReexecuted:false};}
+   report.cases=structuredClone(rollbackContinuation.priorApprovedResult.cases).map(c=>({...c,adoptedNotReexecuted:true}));
+   await reading(async c=>{const identity=(await c.query(`/* rollback-only:current-actor */ SELECT a.id,a.auth_version,a.version,a.login_enabled,s.id AS staff_id,s.role,s.employment_status,s.hall_id
+    FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id WHERE a.id=$1::uuid`,[input.actor.accountId])).rows;
+    assert.equal(identity.length,1);const a=identity[0];assert.equal(a.id,input.actor.accountId);assert.equal(a.auth_version,3);assert.equal(a.version,3);assert.equal(a.login_enabled,true);assert.equal(a.staff_id,'b0714000-0000-4000-8000-000000000001');assert.equal(a.role,'WAREHOUSE');assert.equal(a.employment_status,'在职');assert.equal(a.hall_id,null);
+   });
+  }
   phase='DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_ROLLBACK';const reference=input.references.cases[1],before=await snapshot(reference),current=before.current,line=current.lines.find(l=>l.lineId===reference.lineId);
-  const command={kind:'transfers',documentId:reference.documentId,expectedVersion:current.version,requestKey:input.keys.rollback,reason:'明确SYN隔离事务验证：第二端真实ledger主键冲突，要求整笔回滚。',lines:[{lineId:line.lineId,quantity:(BigInt(line.quantity)+1n).toString()}],totals:null,settlements:[]};requestKey=command.requestKey;
+  if(originalRollback){for(const prior of report.cases){const r=before.receipts.map(JSON.parse).find(r=>r.id===prior.operationId);assert.ok(r);assert.equal(r.actor_account_id,input.actor.accountId);assert.equal(r.status,'COMMITTED');same(r.result_data,{operationId:prior.operationId,dataset:'HISTORY',kind:prior.kind,documentId:input.references.cases.find(c=>c.kind===prior.kind).documentId,revisionId:prior.revisionId,version:2,ledgerEntryIds:prior.ledgerEntryIds});}assert.equal(current.version,2);assert.equal(current.previousRevisionId,report.cases[1].revisionId);assert.equal(line.quantity,'4');}
+
+  const command=originalRollback?.command??{kind:'transfers',documentId:reference.documentId,expectedVersion:current.version,requestKey:input.keys.rollback,reason:'明确SYN隔离事务验证：第二端真实ledger主键冲突，要求整笔回滚。',lines:[{lineId:line.lineId,quantity:(BigInt(line.quantity)+1n).toString()}],totals:null,settlements:[]};requestKey=command.requestKey;
   const collision=before.stock.inventory_ledger.find(r=>r.source_history_revision_id===report.cases[1].revisionId&&r.endpoint==='TO');assert.ok(collision);
-  const ids={operation:randomUUID(),revision:randomUUID(),firstLedger:randomUUID()};
+  const ids=originalRollback?{operation:originalRollback.companionIds.operation,revision:originalRollback.companionIds.revision,firstLedger:originalRollback.companionIds.firstLedger}:{operation:randomUUID(),revision:randomUUID(),firstLedger:randomUUID()};
+  if(originalRollback)assert.equal(collision.id,originalRollback.companionIds.collisionLedger);
   await reading(async c=>{for(const [table,id] of [['operation_receipt',ids.operation],['history_revision',ids.revision],['inventory_ledger',ids.firstLedger]])assert.equal((await c.query(`SELECT id FROM naijue_erp.${table} WHERE id=$1::uuid`,[id])).rows.length,0);});
-  const evidence={errorCode:null,firstLedgerInserted:0,firstBalancePersisted:0,secondLedgerAttempted:0,rolledBack:false,commits:0};let generatedLedger=0;
-  const samePool={async connect(){const c=await pool.connect();return {async query(sql,args){if(sql.includes('/* history-posting:ledger */')&&args?.[0]===collision.id)evidence.secondLedgerAttempted++;
-   const r=await c.query(sql,args);if(sql.includes('/* history-posting:ledger */')&&args?.[0]===ids.firstLedger){assert.equal(r.rowCount,1);evidence.firstLedgerInserted++;}
-   if(evidence.firstLedgerInserted===1&&evidence.secondLedgerAttempted===0&&/^\s*(INSERT INTO|UPDATE) naijue_erp\.inventory_balance/.test(sql)){assert.equal(r.rowCount,1);evidence.firstBalancePersisted++;}
-   if(sql==='ROLLBACK')evidence.rolledBack=true;if(sql==='COMMIT')evidence.commits++;return r;},release(error){c.release(error);}};}};
+  assert.equal(typeof rollbackObserver?.start,'function','Actual raw-driver observer required; never wrap issuer leases');assert.equal(typeof rollbackObserver.finish,'function');let generatedLedger=0;
   const service=createHistoryRevisionService({authorization:createSourceConfirmedHistoryRevisionAuthorization(pool,runtime26),now,
-   store:PostgresHistoryRevisionStore.forRuntime26(samePool,{runtime26,newId:kind=>kind==='operation'?ids.operation:kind==='revision'?ids.revision:++generatedLedger===1?ids.firstLedger:collision.id})});
+   store:PostgresHistoryRevisionStore.forRuntime26(pool,{runtime26,newId:kind=>kind==='operation'?ids.operation:kind==='revision'?ids.revision:++generatedLedger===1?ids.firstLedger:collision.id})});
   await recordRequest({contract:input.contract,target:input.target,actor:input.actor,phase,command,companionIds:{...ids,collisionLedger:collision.id}});
-  let failure;try{await service.execute(input.actor,command,signal);}catch(e){failure=e;evidence.errorCode=e.code;}
-  assert.ok(failure,'Expected actual second-endpoint PK conflict');assertPkRollbackEvidence(evidence);same(await snapshot(reference),before,'Actual partial endpoint work must fully roll back, including the retained collision row');
+  rollbackObserver.start({...ids,collisionLedger:collision.id});let failure,evidence;try{await service.execute(input.actor,command,signal);}catch(e){failure=e;}finally{evidence=rollbackObserver.finish();}
+  report.rollbackEvidence={...evidence,serviceErrorCode:typeof failure?.code==='string'&&/^(?:[0-9A-Z]{5}|NATIVE_RUNTIME26_NOT_READY)$/.test(failure.code)?failure.code:null};
+  await recordObservation({phase,requestKey,rollbackEvidence:report.rollbackEvidence});
+  assert.ok(failure,'Expected actual second-endpoint PK conflict');assert.equal(failure.code,'23505');assertPkRollbackEvidence(evidence);same(await snapshot(reference),before,'Actual partial endpoint work must fully roll back, including the retained collision row');
   report.cases.push({kind:'transfers',status:'PASS_DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_FULL_ROLLBACK',evidence});
-  assert.equal(await readBackgroundFailureCount(),0);report.status='PASS_ACTUAL_SYN_APPROVED_LIMITED_SCOPE';return report;
+  assert.equal(await readBackgroundFailureCount(),0);report.status=originalRollback?'PASS_ACTUAL_ORIGINAL_KEY_ROLLBACK_ONLY_NORMAL_CASES_ADOPTED':'PASS_ACTUAL_SYN_APPROVED_LIMITED_SCOPE';return report;
  }catch(e){report.status='FAILED_STOP_NO_RETRY';report.failedPhase=phase;report.requestKey=requestKey;report.errorCode=typeof e.code==='string'?e.code:null;await recordObservation({phase,requestKey,status:report.status,errorCode:report.errorCode});e.approvedHistoryResult=report;throw e;}
 }

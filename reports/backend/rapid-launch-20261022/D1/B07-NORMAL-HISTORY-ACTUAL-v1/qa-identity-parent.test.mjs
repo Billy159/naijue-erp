@@ -394,3 +394,19 @@ test('SYN auth2 parent refuses missing immutable normal03 committed boundary whi
  assert.equal(error.syn26ParentFailure.errorCode,'B07_SYN26_AUTH2_BOUNDARY_REQUIRED');assert.equal(f.state.setupEnded,1);assert.equal(f.state.updates,0);assert.equal(f.calls.length,0);
  assert.equal(SYN26_AUTH2_BOUNDARY_PINS.intent.sha256,'f77e22786e9b3ea1e2ac3a58d6e45b8aa249ac3036ce0a47f1179238ce180605');
 });
+
+// Raw driver observer runs BEFORE original issuer construction. Never wrap a lease.
+import {syn26UtcRollbackDriver,runB07OriginalRollbackOnlyParent,SYN26_ROLLBACK_ONLY_OUTPUT,SYN26_ROLLBACK_ORIGINAL_PINS} from './qa-identity-parent.mjs';
+import {createSynRollbackObserver} from './approved-normal-history-v16.mjs';
+test('SYN rollback driver preserves raw object/on/release identity and UTC options across pool reuse',async()=>{
+ const observer=createSynRollbackObserver(),raw={async query(){return {rows:[],rowCount:1};},on(){},release(){}};let seen;
+ class FakePool{constructor(config){seen=config;}async connect(){assert.ok(this instanceof FakePool);return raw;}async end(){}}
+ const driver=syn26UtcRollbackDriver(FakePool,observer)({host:'PROTOCOL_FAKE',options:'-c default_transaction_read_only=on',ssl:false});const on=raw.on,release=raw.release;
+ const a=await driver.connect(),query=a.query,b=await driver.connect();assert.equal(a,raw);assert.equal(b,raw);assert.equal(b.query,query);assert.equal(b.on,on);assert.equal(b.release,release);assert.equal(seen.options,'-c default_transaction_read_only=off -c timezone=UTC');
+ const lease=Object.freeze({query:(...args)=>a.query(...args),release});const registered=new WeakMap([[lease,true]]);assert.equal(registered.has(lease),true);assert.equal(Object.isFrozen(lease),true);
+});
+test('SYN rollback-only parent refuses credential roots, arbitrary root or missing original04 pins before resources/login/CAS',async()=>{
+ assert.equal(SYN26_ROLLBACK_ONLY_OUTPUT,join(APPROVED_SYN_OUTPUT,'rollback-companion-01'));
+ for(const root of [join(APPROVED_SYN_OUTPUT,'credential-continuation-04'),join(APPROVED_SYN_OUTPUT,'rollback-companion-02'),join(APPROVED_SYN_OUTPUT,'other')])await assert.rejects(runB07OriginalRollbackOnlyParent({plan:{contract:'B07_SYN26_ORIGINAL_ROLLBACK_ONLY_PARENT_V1',outputDirectory:root,purposeGateFile:join(root,'CURRENT-PURPOSE-GATE.json')}}),/REGISTRATION_REQUIRED/);
+ assert.equal(SYN26_ROLLBACK_ORIGINAL_PINS.request.bytes,1068);assert.equal(SYN26_ROLLBACK_ORIGINAL_PINS.request.sha256,'2d6eb543f1daf7f8db6665499196f827bfe61c7f6317b62fb4a909989f0e87bf');
+});

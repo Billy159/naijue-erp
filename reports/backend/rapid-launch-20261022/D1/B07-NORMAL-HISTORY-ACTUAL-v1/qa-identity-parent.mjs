@@ -7,7 +7,7 @@ import {isDeepStrictEqual} from 'node:util';
 import {spawn} from 'node:child_process';
 import {setTimeout as delay} from 'node:timers/promises';
 import {withB07QaIdentityFixture,QA_IDENTITY,SQL as fixtureSql} from './qa-identity-schema19.mjs';
-import {runApprovedNormalHistory,validateApprovedInput} from './approved-normal-history-v16.mjs';
+import {runApprovedNormalHistory,validateApprovedInput,createSynRollbackObserver,runApprovedOriginalRollbackOnly} from './approved-normal-history-v16.mjs';
 import {runDraftNormalHistory,runDraftNormalHistoryCommittedContinuation,runDraftNormalHistoryRemainingMoneyContinuation,runDraftNormalHistoryRegisteredMoneyRetry,REGISTERED_MONEY_RETRY_PINS} from './draft-normal-history-v16.mjs';
 import {RENEWAL_SQL,withB07QaIdentityCredentialRenewal,validateCredentialRenewalInput,credentialPermissionProofFromOriginal,credentialPermissionProofFromCommittedLifecycle,credentialPermissionProofFromRegisteredMoneyAttempt,QA_AUTH2_CHAIN_PINS,QA_AUTH3_MONEY_ATTEMPT_PINS} from './qa-identity-credential-renewal.mjs';
 const must=(ok,code)=>{if(!ok)throw Error(code);};
@@ -42,6 +42,16 @@ export const ordinaryDriver=Pool=>options=>new Pool({...options,options:'-c defa
 // SYN metadata/review sampling is explicitly UTC. Keep the SAME startup timezone
 // for the real normal factory and its independent read issuer; target guard stays exact.
 export const syn26UtcOrdinaryDriver=Pool=>options=>new Pool({...options,options:'-c default_transaction_read_only=off -c timezone=UTC'});
+/** Observation below issuer leases. Preserve each original driver-client object;
+ * the real issuer remains solely responsible for producing/authenticating leases. */
+export const syn26UtcRollbackDriver=(Pool,observer)=>{
+ must(typeof observer?.attachRawClient==='function','B07_SYN_ROLLBACK_RAW_OBSERVER_REQUIRED');
+ const create=syn26UtcOrdinaryDriver(Pool);
+ return options=>{const driver=create(options),connect=driver.connect;
+  Object.defineProperty(driver,'connect',{configurable:true,writable:true,value:async function(...args){const raw=await Reflect.apply(connect,this,args);return observer.attachRawClient(raw);}});
+  return driver;
+ };
+};
 export async function pinned(ref,max=2*1024*1024){
  must(ref&&resolve(ref.path)===ref.path&&Number.isInteger(ref.bytes)&&ref.bytes>0&&ref.bytes<=max&&/^[0-9a-f]{64}$/.test(ref.sha256),'B07_PARENT_PIN_REQUIRED');
  const s=await lstat(ref.path);must(s.isFile()&&!s.isSymbolicLink()&&s.size===ref.bytes,'B07_PARENT_FILE_REQUIRED');
@@ -444,7 +454,7 @@ export async function runB07ApprovedSynSessionParent({plan:raw,setupClient,after
     &&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_SYN_CURRENT_NONOWNER_PURPOSE_REQUIRED');
    must(stable(input.references)===stable(publication.references)&&stable(input.actor)===stable({accountId:APPROVED_SYN_QA.accountId,hallId:null})
     &&stable(input.target)===stable({database:t.database,oid:t.oid,role:pg.user})&&input.sourceRoot===plan.sourceRoot&&input.origin===config.publicOrigin,'B07_SYN_EXACT_RUNNER_INPUT_REQUIRED');
-   const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=syn26UtcOrdinaryDriver(Pool);
+   const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=syn26UtcRollbackDriver(Pool,resources.rollbackObserver=createSynRollbackObserver());
    const {createProductionRuntime26HistoryRevisionApplicationApi}=await at('apps/api/src/production-provider-composition.ts');
    const {BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts');
    const {createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
@@ -452,7 +462,7 @@ export async function runB07ApprovedSynSessionParent({plan:raw,setupClient,after
    resources.readPool=new BoundedPostgresPool(config.postgres,driver);
    const issuer=await createNativeRuntime26Issuer(resources.readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
    await withNormalSession(resources.api,async({privateCookie})=>{
-    try{const actual=await runApprovedNormalHistory({api:resources.api,pool:issuer.pool,runtime26:issuer.runtime26,input,privateCookie,now:()=>new Date().toISOString(),
+    try{const actual=await runApprovedNormalHistory({api:resources.api,rollbackObserver:resources.rollbackObserver,pool:issuer.pool,runtime26:issuer.runtime26,input,privateCookie,now:()=>new Date().toISOString(),
      recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),
      recordObservation:value=>record(plan.outputDirectory,'HTTP-'+String(++observations).padStart(3,'0')+'.json',value),
      readBackgroundFailureCount:()=>resources.api.postgresBackgroundFailureCount+resources.readPool.backgroundFailureCount});
@@ -663,14 +673,14 @@ async function runSyn26ClosedParent({plan,setupClient,withRecoveryClient},mode){
    &&review.catalog?.patchLevel===EFFECTIVE_VALUE_PROFILE&&review.catalog.sha256===permissionProof.catalogSha256&&review.target.database===t.database&&review.target.databaseOid===t.oid
    &&review.target.actingRole===pg.user&&review.target.sessionUser===pg.user&&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null,'B07_SYN26_CURRENT_NONOWNER_REVIEW_REQUIRED');
   phase='ORIGINAL_INPUT_LINKS';must(stable(approvedInput.references)===stable(publication.references)&&approvedInput.sourceRoot===plan.sourceRoot&&approvedInput.origin===config.publicOrigin,'B07_SYN26_ORIGINAL_INPUT_CHANGED');
-  phase='LOAD_RUNTIME_MODULES';const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=syn26UtcOrdinaryDriver(Pool);
+  phase='LOAD_RUNTIME_MODULES';const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs'),driver=syn26UtcRollbackDriver(Pool,resources.rollbackObserver=createSynRollbackObserver());
   const {createProductionRuntime26HistoryRevisionApplicationApi}=await at('apps/api/src/production-provider-composition.ts'),{BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts'),{createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
   phase='CREATE_NORMAL_FACTORY';resources.api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{profile:'SOURCE_CONFIRMED_HISTORY_REVISION_V16'},driver);
   phase='CREATE_READ_POOL';resources.readPool=new BoundedPostgresPool(config.postgres,driver);
   phase='CREATE_ISSUER';const issuer=await createNativeRuntime26Issuer(resources.readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
   phase='QA_CREDENTIAL_AND_NORMAL_SCOPE';const continued=await (auth2?withB07Syn26Auth2Continuation:withB07Syn26Auth1Continuation)({client:setupClient,input,withRecoveryClient,recordPreparation:value=>record(plan.outputDirectory,'SYN26-CREDENTIAL-INTENT.json',value),runNormalSession:auth2?withB07Syn26Auth3ManagedNormalSession:withB07Syn26ManagedNormalSession,
    afterRenewal:async({withNormalSession})=>{result.qaCredentialActual=true;await setupClient.end();setupEnded=true;
-    await withNormalSession(resources.api,async({privateCookie})=>{try{const actual=await runApprovedNormalHistory({api:resources.api,pool:issuer.pool,runtime26:issuer.runtime26,input:approvedInput,privateCookie,now:()=>new Date().toISOString(),recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),recordObservation:value=>record(plan.outputDirectory,'HTTP-'+String(++observations).padStart(3,'0')+'.json',value),readBackgroundFailureCount:()=>resources.api.postgresBackgroundFailureCount+resources.readPool.backgroundFailureCount});await record(plan.outputDirectory,'APPROVED-ACTUAL-RESULT.json',actual);result.httpActual=true;}catch(e){if(e.approvedHistoryResult)await record(plan.outputDirectory,'APPROVED-ACTUAL-RESULT.json',e.approvedHistoryResult);throw Error('B07_SYN26_APPROVED_SCOPE_FAILED');}});
+    await withNormalSession(resources.api,async({privateCookie})=>{try{const actual=await runApprovedNormalHistory({api:resources.api,rollbackObserver:resources.rollbackObserver,pool:issuer.pool,runtime26:issuer.runtime26,input:approvedInput,privateCookie,now:()=>new Date().toISOString(),recordRequest:value=>record(plan.outputDirectory,'REQUEST-'+value.phase+'.json',value),recordObservation:value=>record(plan.outputDirectory,'HTTP-'+String(++observations).padStart(3,'0')+'.json',value),readBackgroundFailureCount:()=>resources.api.postgresBackgroundFailureCount+resources.readPool.backgroundFailureCount});await record(plan.outputDirectory,'APPROVED-ACTUAL-RESULT.json',actual);result.httpActual=true;}catch(e){if(e.approvedHistoryResult)await record(plan.outputDirectory,'APPROVED-ACTUAL-RESULT.json',e.approvedHistoryResult);throw Error('B07_SYN26_APPROVED_SCOPE_FAILED');}});
    }});
   result.continuation=continued;result.status=auth2?'PASS_SYN26_EXISTING_QA_AUTH2_TO3_APPROVED_SCOPE':'PASS_SYN26_EXISTING_QA_AUTH1_TO2_APPROVED_SCOPE';
  }catch(e){result.status='STOP_SYN26_CONTINUATION_NO_REPLAY';result.failedPhase=phase;result.diagnostic=syn26SafeFailure(e,phase);result.errorCode=result.diagnostic.errorCode??'B07_SYN26_DETAIL_OMITTED';if(e.syn26Failure)result.failure=e.syn26Failure;}
@@ -678,6 +688,53 @@ async function runSyn26ClosedParent({plan,setupClient,withRecoveryClient},mode){
  if(result.status!==(auth2?'PASS_SYN26_EXISTING_QA_AUTH2_TO3_APPROVED_SCOPE':'PASS_SYN26_EXISTING_QA_AUTH1_TO2_APPROVED_SCOPE')||!result.clientsClosed){const error=Error('B07_SYN26_PARENT_STOPPED_SEE_PRIVATE_RESULT');Object.defineProperty(error,'syn26ParentFailure',{value:result.diagnostic??null});throw error;}return result;
 }
 
+export const SYN26_ROLLBACK_ONLY_OUTPUT=join(APPROVED_SYN_OUTPUT,'rollback-companion-01');
+export const SYN26_ROLLBACK_ORIGINAL_PINS=Object.freeze({
+ request:{bytes:1068,sha256:'2d6eb543f1daf7f8db6665499196f827bfe61c7f6317b62fb4a909989f0e87bf'},
+ approved:{bytes:1217,sha256:'00234117a33419d0fde210b6c6dbdabdd93d99f50e375b1ac2bf31d56d726756'},
+ parent:{bytes:1382,sha256:'690084029c1a0c66fac09cc56263f771d5e65ebad5744d423629aa7d47a8965c'},
+ actual:{bytes:5315,sha256:'8886b1e6aa90b814daa688e1b240dd3fbbc39945ce8435e054f944c7323f0cbb'}
+});
+/** Closed original04 companion only. No normal API/login/password/account update.
+ * Actor comes from pinned original normal-session evidence and is re-authorized
+ * against actual current account/staff/publication by the ORIGINAL source policy.
+ * T45 supplies fresh current-purpose and exact original-key RO evidence. */
+export async function runB07OriginalRollbackOnlyParent({plan}){
+ must(plan?.contract==='B07_SYN26_ORIGINAL_ROLLBACK_ONLY_PARENT_V1'&&plan.outputDirectory===SYN26_ROLLBACK_ONLY_OUTPUT&&plan.purposeGateFile===join(SYN26_ROLLBACK_ONLY_OUTPUT,'CURRENT-PURPOSE-GATE.json'),'B07_SYN_ROLLBACK_ONLY_REGISTRATION_REQUIRED');
+ validateApprovedSynParentPlan({...plan,contract:'B07_SYN_APPROVED_SESSION_PARENT_V1',outputDirectory:APPROVED_SYN_OUTPUT,purposeGateFile:join(APPROVED_SYN_OUTPUT,'CURRENT-PURPOSE-GATE.json')});
+ must(plan.target.oid==='16385'&&plan.currentAuthVersion===3&&plan.currentAccountVersion===3,'B07_SYN_ROLLBACK_AUTH3_ONLY');
+ const captured={};for(const [name,expected]of Object.entries(SYN26_ROLLBACK_ORIGINAL_PINS)){const ref=plan.original04?.[name];must(ref?.bytes===expected.bytes&&ref.sha256===expected.sha256,'B07_SYN_ROLLBACK_ORIGINAL_PIN_REQUIRED');captured[name]=await pinned(ref);}
+ const priorApprovedResult=JSON.parse(captured.approved.toString('utf8')),parent=JSON.parse(captured.parent.toString('utf8')),actual=JSON.parse(captured.actual.toString('utf8'));
+ must(parent.qaCredentialActual===true&&parent.failure?.commitAttempted===true&&parent.clientsClosed===true&&actual.clientsClosed===true&&actual.ownPgStopped===true,'B07_SYN_ROLLBACK_ORIGINAL_NORMAL_BOUNDARY_REQUIRED');
+ const readonly=JSON.parse((await pinned(plan.originalKeyReadOnlyProof)).toString('utf8'));
+ must(readonly.businessDML===0&&readonly.credentialRead===false&&readonly.rollbackReturned===true&&readonly.clientsClosed===true
+  &&readonly.originalRequestSha256===SYN26_ROLLBACK_ORIGINAL_PINS.request.sha256&&readonly.target?.database===APPROVED_SYN_DATABASE&&readonly.target.oid==='16385'&&readonly.target.role===plan.ordinaryRole
+  &&readonly.actor?.accountId===APPROVED_SYN_QA.accountId&&readonly.actor.version===3&&readonly.actor.authVersion===3,'B07_SYN_ROLLBACK_CURRENT_KEY_READONLY_REQUIRED');
+ const resources={},result={status:'STARTED',sourceKind:'SYNTHETIC_ONLY',realSourceImportVerified:false,normalCasesReexecuted:false,credentialRenewalExecuted:false,loginExecuted:false,clientsClosed:true,postgresStopOwnedByT45:true};let outputReady=false,observations=0;
+ try{
+  await mkdir(plan.outputDirectory,{mode:0o700,recursive:true});
+  for(const name of ['PARENT-RESULT.json','ROLLBACK-ACTUAL-RESULT.json','REQUEST-DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_ROLLBACK.json']){try{await lstat(join(plan.outputDirectory,name));throw Error('B07_SYN_ROLLBACK_OUTPUT_USED');}catch(e){if(e.code!=='ENOENT')throw e;}}outputReady=true;
+  const gate=await waitForPurposeGate(plan.purposeGateFile,plan.purposeWaitMs);must(gate.format==='B07_SYN_APPROVED_NORMAL_PURPOSE_GATE_V1','B07_SYN_ROLLBACK_CURRENT_PURPOSE_REQUIRED');
+  const template=JSON.parse((await pinned(gate.runtimeConfiguration)).toString('utf8')),config=prepareOrdinaryConfiguration(template,plan.target),review=JSON.parse((await pinned(gate.review)).toString('utf8')),input=validateApprovedInput(JSON.parse((await pinned(gate.approvedInput)).toString('utf8')));
+  const pg=config.postgres.target,t=plan.target;
+  must(config.runtime26Review.reviewFile===gate.review.path&&config.runtime26Review.trustedReviewSha256===gate.review.sha256&&pg.user===plan.ordinaryRole
+   &&review.catalog?.patchLevel===EFFECTIVE_VALUE_PROFILE&&review.target.database===t.database&&review.target.databaseOid===t.oid&&review.target.actingRole===pg.user&&review.target.sessionUser===pg.user
+   &&review.target.postmasterStart===t.postmaster_started_at&&review.target.serverAddress===null&&review.target.serverPort===null
+   &&stable(input.target)===stable({database:t.database,oid:t.oid,role:pg.user})&&input.sourceRoot===plan.sourceRoot,'B07_SYN_ROLLBACK_CURRENT_REVIEW_REQUIRED');
+  const at=p=>import(pathToFileURL(resolve(plan.sourceRoot,p)).href),{Pool}=await at('node_modules/pg/esm/index.mjs');
+  const observer=createSynRollbackObserver(),driver=syn26UtcRollbackDriver(Pool,observer);
+  const {BoundedPostgresPool}=await at('adapters/postgres/src/bounded-pool.ts'),{createNativeRuntime26Issuer}=await at('adapters/postgres/src/native-import-accounting-capability.ts');
+  resources.readPool=new BoundedPostgresPool(config.postgres,driver);
+  const issuer=await createNativeRuntime26Issuer(resources.readPool,{...config.runtime26Review,verificationProfile:'DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1'});
+  try{const actual=await runApprovedOriginalRollbackOnly({pool:issuer.pool,runtime26:issuer.runtime26,input,rollbackObserver:observer,rollbackContinuation:{originalRequestBytes:captured.request,priorApprovedResult},now:()=>new Date().toISOString(),
+   recordRequest:async value=>{const original=JSON.parse(captured.request.toString('utf8'));must(stable(value.command)===stable(original.command)&&stable(value.companionIds)===stable(original.companionIds),'B07_SYN_ROLLBACK_REQUEST_CHANGED');await writeFile(join(plan.outputDirectory,'REQUEST-'+value.phase+'.json'),captured.request,{flag:'wx',mode:0o600});},
+   recordObservation:value=>record(plan.outputDirectory,'OBSERVATION-'+String(++observations).padStart(3,'0')+'.json',value),readBackgroundFailureCount:()=>resources.readPool.backgroundFailureCount});
+   await record(plan.outputDirectory,'ROLLBACK-ACTUAL-RESULT.json',actual);result.rollback=actual;result.status=actual.status==='ORIGINAL_ROLLBACK_KEY_COMMITTED_READONLY_RECOVERY_NO_EXECUTION'?'RECOVERED_COMMITTED_ORIGINAL_KEY_NO_EXECUTION':'PASS_ORIGINAL_KEY_DIRECT_SERVICE_ROLLBACK_ONLY';
+  }catch(e){if(e.approvedHistoryResult)await record(plan.outputDirectory,'ROLLBACK-ACTUAL-RESULT.json',e.approvedHistoryResult);throw e;}
+ }catch(e){result.status='STOP_ORIGINAL_ROLLBACK_ONLY_NO_RETRY';result.diagnostic=syn26SafeFailure(e,'QA_CREDENTIAL_AND_NORMAL_SCOPE');}
+ finally{try{await resources.readPool?.dispose();}catch{result.clientsClosed=false;result.status='STOP_ORIGINAL_ROLLBACK_CLEANUP_UNKNOWN';}if(outputReady)await record(plan.outputDirectory,'PARENT-RESULT.json',result);}
+ must(['PASS_ORIGINAL_KEY_DIRECT_SERVICE_ROLLBACK_ONLY','RECOVERED_COMMITTED_ORIGINAL_KEY_NO_EXECUTION'].includes(result.status)&&result.clientsClosed,'B07_SYN_ROLLBACK_ONLY_STOPPED');return result;
+}
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){
  try{must(process.argv.length===4&&process.argv[2]==='--registration','B07_PARENT_REGISTRATION_ARGUMENT_REQUIRED');
   const s=await lstat(process.argv[3]);must(s.isFile()&&!s.isSymbolicLink()&&s.size<=65536&&(s.mode&0o077)===0,'B07_PRIVATE_PARENT_REGISTRATION_REQUIRED');

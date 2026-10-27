@@ -51,3 +51,61 @@ test('protocol fake only: first 500 or unknown ACK stops once, persists original
  assert.equal(writes,1,error?.stack);assert.deepEqual(events,['REQUEST','HTTP']);assert.equal(error.approvedHistoryResult.status,'FAILED_STOP_NO_RETRY');assert.equal(error.approvedHistoryResult.requestKey,i.keys.sales);assert.ok(released>0);
  }
 });
+
+import {readFile} from 'node:fs/promises';
+import {createSynRollbackObserver,validateOriginalRollbackContinuation} from './approved-normal-history-v16.mjs';
+test('rollback raw observer records first ledger+balance then actual second23505 and rollback, without replacing raw identity',async()=>{
+ const observer=createSynRollbackObserver(),ids={operation:id(70),revision:id(71),firstLedger:id(72),collisionLedger:id(73)},calls=[];
+ const duplicate=Object.assign(Error('PRIVATE_PG_DETAIL'),{code:'23505'});
+ const raw={async query(sql,values){calls.push({sql,values});if(sql.includes('history-posting:ledger')&&values[0]===ids.collisionLedger)throw duplicate;return {rowCount:1,rows:[]};},on(){},release(){}};
+ const query=raw.query;assert.equal(observer.attachRawClient(raw),raw);const wrappedQuery=raw.query;assert.notEqual(wrappedQuery,query);assert.equal(observer.attachRawClient(raw),raw);assert.equal(raw.query,wrappedQuery);
+ // A separate original leased object is frozen by issuer; observer never sees/mutates it.
+ const lease=Object.freeze({query:(...args)=>raw.query(...args),release:()=>raw.release()});const leases=new WeakSet([lease]);
+ observer.start(ids);assert.equal(leases.has(lease),true);await lease.query('BEGIN ISOLATION LEVEL READ COMMITTED');
+ await lease.query('/* history-posting:ledger */ INSERT INTO naijue_erp.inventory_ledger',[ids.firstLedger,'PRIVATE_VALUES']);
+ await lease.query('UPDATE naijue_erp.inventory_balance SET quantity=$1',['PRIVATE_VALUES']);
+ await assert.rejects(lease.query('/* history-posting:ledger */ INSERT INTO naijue_erp.inventory_ledger',[ids.collisionLedger,'PRIVATE_VALUES']),e=>e===duplicate);
+ await lease.query('ROLLBACK');const evidence=observer.finish();assertPkRollbackEvidence(evidence);assert.equal(Object.isFrozen(lease),true);assert.equal(JSON.stringify(evidence).includes('PRIVATE'),false);assert.equal(evidence.commits,0);
+ assert.equal(calls[1].values[1],'PRIVATE_VALUES','Original args preserved for driver, never exported');
+});
+test('rollback observer refuses missing first endpoint, wrong-client second endpoint and committed partial transaction',async()=>{
+ for(const mode of ['missing-first','other-client','commit']){const observer=createSynRollbackObserver(),ids={operation:id(70),revision:id(71),firstLedger:id(72),collisionLedger:id(73)};
+  const raw=()=>({async query(){return {rowCount:1,rows:[]};}}),one=observer.attachRawClient(raw()),two=observer.attachRawClient(raw());observer.start(ids);
+  if(mode!=='missing-first'){await one.query('/* history-posting:ledger */ INSERT',[ids.firstLedger]);await one.query('UPDATE naijue_erp.inventory_balance SET quantity=1');}
+  if(mode==='other-client')await assert.rejects(two.query('/* history-posting:ledger */ INSERT',[ids.collisionLedger]),/same actual driver transaction/);
+  if(mode==='commit')await one.query('COMMIT');assert.throws(()=>assertPkRollbackEvidence(observer.finish()));
+ }
+});
+test('actual original store readiness accepts the original frozen issuer lease, while old wrapper demonstrably loses WeakMap identity',async()=>{
+ const {PostgresHistoryRevisionStore}=await import(pathToFileURL(resolve(sourceRoot,'adapters/postgres/src/history-revision-store.ts')).href);
+ const currentFacts=current('transfers'),command=approvedQuantityCommand(currentFacts,reference('transfers'),input().keys.transfers),actor=input().actor;
+ const originalError=Object.assign(Error('REACHED_ORIGINAL_CLIENT_SQL'),{code:'TEST_STOP'});let businessQueries=0,checks=0;
+ const raw={async query(sql){if(sql.startsWith('SELECT pg_advisory')){businessQueries++;throw originalError;}return {rows:[],rowCount:0};},release(){}};
+ const lease=Object.freeze(raw),leases=new WeakMap([[lease,true]]),runtime26={profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(client){checks++;if(!leases.has(client))throw Object.assign(Error('Original issuer lease required'),{code:'NATIVE_RUNTIME26_NOT_READY'});}};
+ const grant={dataset:'HISTORY',kind:'transfers',documentId:command.documentId,actorAccountId:actor.accountId};
+ const direct=PostgresHistoryRevisionStore.forRuntime26({async connect(){return lease;}},{runtime26,newId:()=>id(80)});
+ await assert.rejects(direct.revise(actor,command,grant,'2026-10-27T00:00:00.000Z',new AbortController().signal),e=>e===originalError);assert.equal(businessQueries,1);
+ const wrapped=PostgresHistoryRevisionStore.forRuntime26({async connect(){return {query:(...args)=>lease.query(...args),release:()=>lease.release()};}},{runtime26,newId:()=>id(80)});
+ await assert.rejects(wrapped.revise(actor,command,grant,'2026-10-27T00:00:00.000Z',new AbortController().signal),e=>e.code==='HISTORY_REVISION_SCHEMA_NOT_READY');assert.equal(businessQueries,1);assert.ok(checks>=3);
+});
+test('rollback-only continuation binds exact original04 bytes/IDs and adopts two priorPASS cases, no rekey or actor substitution',async()=>{
+ const dir='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-04/';
+ const originalRequestBytes=await readFile(dir+'REQUEST-DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_ROLLBACK.json'),priorApprovedResult=JSON.parse(await readFile(dir+'APPROVED-ACTUAL-RESULT.json','utf8')),approved=JSON.parse(await readFile(dir+'APPROVED-INPUT.json','utf8'));
+ const continuation={originalRequestBytes,priorApprovedResult},request=validateOriginalRollbackContinuation(approved,continuation);assert.equal(request.command.expectedVersion,2);assert.equal(request.command.lines[0].quantity,'5');
+ const changed=Buffer.from(originalRequestBytes);changed[changed.length-3]^=1;assert.throws(()=>validateOriginalRollbackContinuation(approved,{...continuation,originalRequestBytes:changed}));
+ const actorChanged=structuredClone(approved);actorChanged.actor.accountId=id(90);assert.throws(()=>validateOriginalRollbackContinuation(actorChanged,continuation));
+ const stale=structuredClone(priorApprovedResult);stale.cases[0].version=1;assert.throws(()=>validateOriginalRollbackContinuation(approved,{...continuation,priorApprovedResult:stale}));
+});
+
+import {runApprovedOriginalRollbackOnly} from './approved-normal-history-v16.mjs';
+test('rollback-only original committed key recovery returns before any service execution, HTTP, driver observation or new request',async()=>{
+ const dir='/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-private-data/rapid-launch-20261022/b07-syn-approved-20261027-01/credential-continuation-04/';
+ const originalRequestBytes=await readFile(dir+'REQUEST-DIRECT_SERVICE_ACTUAL_SECOND_ENDPOINT_PK_ROLLBACK.json'),priorApprovedResult=JSON.parse(await readFile(dir+'APPROVED-ACTUAL-RESULT.json','utf8')),approved=JSON.parse(await readFile(dir+'APPROVED-INPUT.json','utf8')),original=JSON.parse(originalRequestBytes);
+ const {requestHash}=await import(pathToFileURL(resolve(sourceRoot,'packages/application/src/request-hash.ts')).href);let recorded=0,released=0;const queries=[];
+ const pool={async connect(){return {async query(sql){queries.push(sql);let rows=[];
+  if(sql.includes('current_database()'))rows=[{...approved.target,nonowner:true,superuser:false,bypass_rls:false}];
+  else if(sql.startsWith('SELECT id,action,target_type,target_id,status,request_hash,result_data'))rows=[{id:original.companionIds.operation,action:'HISTORY_REVISE',target_type:'HISTORY_TRANSFER',target_id:original.command.documentId,status:'COMMITTED',request_hash:requestHash({actorAccountId:approved.actor.accountId,command:original.command}),result_data:{operationId:original.companionIds.operation}}];
+  else assert.ok(sql==='BEGIN ISOLATION LEVEL REPEATABLE READ'||sql==='COMMIT');return {rows,rowCount:rows.length};},release(){released++;}};}};
+ const result=await runApprovedOriginalRollbackOnly({pool,runtime26:{profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(){}},input:approved,rollbackContinuation:{originalRequestBytes,priorApprovedResult},recordRequest:async()=>{recorded++;},recordObservation:async()=>{},readBackgroundFailureCount:async()=>0,now:()=>new Date().toISOString()});
+ assert.equal(result.status,'ORIGINAL_ROLLBACK_KEY_COMMITTED_READONLY_RECOVERY_NO_EXECUTION');assert.equal(recorded,0);assert.equal(released,1);assert.equal(result.normalCasesReexecuted,false);assert.equal(queries.some(s=>/^\s*(INSERT|UPDATE|DELETE)/.test(s)),false);
+});
