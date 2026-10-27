@@ -1353,9 +1353,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T12:43:07.966229+00:00",
+  "updatedAt": "2026-10-27T13:21:52.928967+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "6d62d630a2336e9fca3d5565dfd0a3a263c569b1",
+  "lastVerifiedRemoteCommit": "28b07dc5a2fe8b00a370f0952b0cb090fe3f73e4",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -5059,9 +5059,9 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 777,
+    "round": 778,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation777",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation778",
     "fixedSource": "SOURCE754 d15ea68d2e5704303afadbc4248b3c26cdecc578 exact remote verified; SOURCE755 cutoff provider/test and continuity",
     "fixedCandidates": {
       "synthetic": {
@@ -14724,6 +14724,15 @@
       "QA": "175 exactsnapshot clone RUNNING unit61ab390836a4; no replay/strongstop. Sameclusternewdbname conflicts original source/CORE/148/INIT logical target; C instead requests reuse samearchive into independent privatePG17 same logicalR1dbname/ordinaryrole, true QA OID/socket/postmaster/systemidentifier explicitly registered, no productiontuple impersonation/source remap. Feasibility/actualrestore pending.",
       "D1": "Control-only qa-prefix-bind.mjs/test preparation active; frozenproductionbody8a8374fb unchanged; installer actualQA identity adapted onlyafterT45 tuple",
       "notPassed": "No realPGv22 patch/BIND/negativecases/fullsourcecontinuation/PUBLISH/formal. Overall37/67 goalACTIVE incomplete."
+    },
+    "currentContinuation778": {
+      "status": "QB472_SOURCE_ACCEPTED_REAL_PG_TARGET_AND_CONTROL_ENTRY_IN_PROGRESS",
+      "sourceAccepted": "QB47213,216/2f7f19887578734c68a6da731032b2ec13f4acf059d55abd615c7af20f67abcd; SOURCE777 actual11leaves, old776alone notPASS; no repeatedtechnicalreview",
+      "actual175": "FAILED2/128.914463788s/2026-10-27T13:15:29.884895Z. Consistentdump196161886/ac2dcd5afcd368617aa16a3177211e8de9a72ab4eb55bf80b863b145d1ec04dc and restoreexit0, cloneOID1405172; schemafingerprint mismatch stopped beforeordinarylogin. Terminalpreserved/no replay.",
+      "actual176": "T45 reported COMPLETED0 finite1968catalog comparison, only13rawACLrepresentation differences; no othercomparedstructuraldelta. EffectiveACL comparison stillpending, no GRANT toforcehash.",
+      "QA177": "T45 preparing samearchive independentprivatePG17/noports/none-network/same logicalR1dbname+ordinaryrole, actualQA tuple true. Preparation only, no patch/BIND authorizedyet.",
+      "controlOnlyQAScope": "D1two K scripts: originalsourceprovider/session readonly expected/authorize with R1 gates/connections/writes disabled; actualQA independentgenuineissuer/pool tosame productionstore/adapter/samebodySQL. OriginalsourceBinding/148/INIT/109 not remapped, qaRuntimeIdentity truthfulseparate. Completeproductionhost/run intentionallynotusedinQA becausepostmasterexactbinding; realR1 host remains later actualstep. No falseexpected/ownerasruntime/fake productiontuple.",
+      "remaining": "Need actualQA parent/effectiveACL metadata, exactinstaller+QAcontrolentry review, realPGsuccess/necessaryfailures/rollback/performance; then accurateR1 patchedcatalog+ordinaryreview/newgrant/original109 actualcontinuation. No realBIND/PUBLISH/formalPASS."
     }
   },
   "historicalContinuation500Before716": {

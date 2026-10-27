@@ -1,0 +1,326 @@
+{
+  "job": {
+    "jobId": "t45-v22-r1-snapshot-isolated-clone-20261027-175",
+    "taskId": "T45",
+    "scope": "ERP_EXISTING_TASKS_THROUGH_T51",
+    "status": "FAILED",
+    "unit": "naijue-erp-op-5cc58239-61ab390836a4",
+    "atUTC": "2026-10-27T13:13:20.966565+00:00",
+    "grantId": "5cc58239751e4e2a",
+    "privateLogsExported": false,
+    "businessAcceptanceClaimed": false,
+    "exitCode": 2,
+    "elapsedSeconds": 128.91446378803812,
+    "exports": [
+      "clone-preparation.json"
+    ],
+    "finishedAtUTC": "2026-10-27T13:15:29.901009+00:00"
+  },
+  "actual": {
+    "APPChanged": false,
+    "BINDExecuted": false,
+    "archive": {
+      "bytes": 196161886,
+      "consistentSnapshot": true,
+      "mode": "0400",
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-r1-snapshot-isolated-clone-20261027-175/inputs/r1-v20-consistent-snapshot.dump",
+      "sha256": "ac2dcd5afcd368617aa16a3177211e8de9a72ab4eb55bf80b863b145d1ec04dc"
+    },
+    "cloneCreated": true,
+    "cloneMetadata": {
+      "batch": {
+        "checkpoint": {
+          "counts": {
+            "IMPORT_BATCH": 0,
+            "INVENTORY_LEDGER": 0,
+            "SKU": 0,
+            "WAREHOUSE": 22
+          },
+          "cursor": 22,
+          "expected": {},
+          "sequence": 2
+        },
+        "expected": null,
+        "historyHash": null,
+        "id": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+        "sourceHash": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+        "status": "STAGED"
+      },
+      "collate": "en_US.utf8",
+      "coreAssertBodyMd5": "f633136228014fb74368a0ec7c85959e",
+      "counts": {
+        "barcode_scheme": 6,
+        "history_revision": 0,
+        "history_sales_header": 28282,
+        "history_sales_line": 0,
+        "history_sales_settlement": 0,
+        "history_transfer_header": 14279,
+        "history_transfer_line": 261641,
+        "import_history_closure_manifest": 0,
+        "import_history_document_manifest": 0,
+        "import_sku_alias": 15121,
+        "import_stock_contributor": 38314,
+        "inventory_balance": 0,
+        "inventory_ledger": 0,
+        "payment_account": 0,
+        "payment_account_hall": 0,
+        "payment_method": 0,
+        "product": 2956,
+        "product_image": 0,
+        "sales_header": 0,
+        "sales_line": 0,
+        "sales_settlement": 0,
+        "sku": 14999,
+        "sku_barcode": 0,
+        "transfer_header": 0,
+        "transfer_line": 0
+      },
+      "ctype": "en_US.utf8",
+      "database": "erp_qa_rapid26_v22_20261027_01",
+      "dbAcl": [
+        {
+          "grantable": false,
+          "privilege": "CONNECT",
+          "role": "erp_rewrite_owner_20261022"
+        },
+        {
+          "grantable": false,
+          "privilege": "CREATE",
+          "role": "erp_rewrite_owner_20261022"
+        },
+        {
+          "grantable": false,
+          "privilege": "TEMPORARY",
+          "role": "erp_rewrite_owner_20261022"
+        },
+        {
+          "grantable": false,
+          "privilege": "CONNECT",
+          "role": "erp_rewrite_runtime_20261022"
+        }
+      ],
+      "dbSettings": [],
+      "encoding": "UTF8",
+      "oid": "1405172",
+      "owner": "erp_rewrite_owner_20261022",
+      "postmaster": "2026-10-04T08:16:07.895273+00:00",
+      "readOnly": "on",
+      "receipts": [
+        {
+          "action": "IMPORT_CORE_STAGE",
+          "hash": "948b20c6ff49d936ed2263c93d9baaa5a69f19bc375d8d30010092647c138f23",
+          "id": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
+          "key": "c128_real_core_20261024_01",
+          "status": "COMMITTED"
+        },
+        {
+          "action": "IMPORT_INITIALIZE_BARCODE_SCHEMES",
+          "hash": "ec699bdd07b38c0c5bd3147f2b57ff93fba3e3e49f4e12abf8327600393c375b",
+          "id": "d1fa6f60-7268-704e-81ec-d7da432b05d5",
+          "key": "t45-r1-six-scheme-initialization-v19-20261026-116",
+          "status": "COMMITTED"
+        }
+      ],
+      "routines": 131,
+      "schemaFingerprint": "1590f6702af1c7313141483f61dd0c9b",
+      "twoAcl": {
+        "history_expected_counts": true,
+        "history_payload_hash": true
+      }
+    },
+    "databaseACLAndSettingsCopied": true,
+    "errorCode": "RESTORE_FIELD_MISMATCH_schemaFingerprint",
+    "finishedAtUtc": "2026-10-27T13:15:29.884895+00:00",
+    "freeBytesBefore": 52522274816,
+    "jobId": "t45-v22-r1-snapshot-isolated-clone-20261027-175",
+    "phase": "CREATE_SUBMITTED_NO_REPLAY",
+    "processes": [
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "exitCode": 0,
+        "processExited": true,
+        "program": "docker",
+        "stderrBytes": 0,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "restoreReturned": true,
+    "rolesCreatedOrChanged": false,
+    "snapshot": {
+      "capturedAtUtc": "2026-10-27T13:13:21.382583+00:00",
+      "exportedSnapshot": "0000000F-00003EED-1",
+      "source": {
+        "batch": {
+          "checkpoint": {
+            "counts": {
+              "IMPORT_BATCH": 0,
+              "INVENTORY_LEDGER": 0,
+              "SKU": 0,
+              "WAREHOUSE": 22
+            },
+            "cursor": 22,
+            "expected": {},
+            "sequence": 2
+          },
+          "expected": null,
+          "historyHash": null,
+          "id": "aeeba5c6-fb54-4b94-bf80-93d98212a70d",
+          "sourceHash": "964038610b470b38996133fa6a7311aea72ef8fe2749ae6fa3d751d09f079cba",
+          "status": "STAGED"
+        },
+        "collate": "en_US.utf8",
+        "coreAssertBodyMd5": "f633136228014fb74368a0ec7c85959e",
+        "counts": {
+          "barcode_scheme": 6,
+          "history_revision": 0,
+          "history_sales_header": 28282,
+          "history_sales_line": 0,
+          "history_sales_settlement": 0,
+          "history_transfer_header": 14279,
+          "history_transfer_line": 261641,
+          "import_history_closure_manifest": 0,
+          "import_history_document_manifest": 0,
+          "import_sku_alias": 15121,
+          "import_stock_contributor": 38314,
+          "inventory_balance": 0,
+          "inventory_ledger": 0,
+          "payment_account": 0,
+          "payment_account_hall": 0,
+          "payment_method": 0,
+          "product": 2956,
+          "product_image": 0,
+          "sales_header": 0,
+          "sales_line": 0,
+          "sales_settlement": 0,
+          "sku": 14999,
+          "sku_barcode": 0,
+          "transfer_header": 0,
+          "transfer_line": 0
+        },
+        "ctype": "en_US.utf8",
+        "database": "erp_rewrite_20261022_r1",
+        "dbAcl": [
+          {
+            "grantable": false,
+            "privilege": "CONNECT",
+            "role": "erp_rewrite_owner_20261022"
+          },
+          {
+            "grantable": false,
+            "privilege": "CREATE",
+            "role": "erp_rewrite_owner_20261022"
+          },
+          {
+            "grantable": false,
+            "privilege": "TEMPORARY",
+            "role": "erp_rewrite_owner_20261022"
+          },
+          {
+            "grantable": false,
+            "privilege": "CONNECT",
+            "role": "erp_rewrite_runtime_20261022"
+          }
+        ],
+        "dbSettings": [],
+        "encoding": "UTF8",
+        "oid": "1027659",
+        "owner": "erp_rewrite_owner_20261022",
+        "postmaster": "2026-10-04T08:16:07.895273+00:00",
+        "readOnly": "on",
+        "receipts": [
+          {
+            "action": "IMPORT_CORE_STAGE",
+            "hash": "948b20c6ff49d936ed2263c93d9baaa5a69f19bc375d8d30010092647c138f23",
+            "id": "b48694d2-ad13-5c5c-9bd8-aed1d02fffb1",
+            "key": "c128_real_core_20261024_01",
+            "status": "COMMITTED"
+          },
+          {
+            "action": "IMPORT_INITIALIZE_BARCODE_SCHEMES",
+            "hash": "ec699bdd07b38c0c5bd3147f2b57ff93fba3e3e49f4e12abf8327600393c375b",
+            "id": "d1fa6f60-7268-704e-81ec-d7da432b05d5",
+            "key": "t45-r1-six-scheme-initialization-v19-20261026-116",
+            "status": "COMMITTED"
+          }
+        ],
+        "routines": 131,
+        "schemaFingerprint": "55e37ac01394a14dbaa5d662641bf418",
+        "twoAcl": {
+          "history_expected_counts": true,
+          "history_payload_hash": true
+        }
+      }
+    },
+    "snapshotRollbackReturned": true,
+    "sourceBusinessWrites": false,
+    "sourceConfigurationChanged": false,
+    "status": "STOP_PARTIAL_CLONE_PREPARATION_PRESERVED_NO_REPLAY",
+    "v22PatchApplied": false
+  },
+  "evidence": {
+    "clone-preparation.json": {
+      "bytes": 9019,
+      "sha256": "08f7ffd4974b28f1c94547478be0eabbe4858f8ad6e283d9e50a10b490f5e89c"
+    },
+    "job.json": {
+      "bytes": 511,
+      "sha256": "90c699148737459a21e9bd0d26d1cf651e5828c1b29ee562cb6c6b6fce38a0ad"
+    }
+  },
+  "limitations": "Terminal FAILED2 at schema fingerprint comparison after pg_restore returned0; snapshot and clone preserved. Ordinary direct login not reached. No replay."
+}

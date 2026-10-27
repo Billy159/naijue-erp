@@ -6548,7 +6548,12 @@
         "tests/native-core-staged-prefix-bind.test.ts",
         "tests/native-core-staged-prefix-store.test.ts"
       ],
-      "scope": "Approved single routine body successor, exact original8table member/native evidence at original transaction lease and auditJSON; stable private seam to D3; no shared command/109keys/schema/ACL change"
+      "scope": "Approved single routine body successor, exact original8table member/native evidence at original transaction lease and auditJSON; stable private seam to D3; no shared command/109keys/schema/ACL change",
+      "qaControlOnlyFiles": [
+        "K/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.mjs",
+        "K/reports/backend/rapid-launch-20261022/D1/V22-STAGED-PREFIX-BIND-v1/qa-prefix-bind.test.mjs"
+      ],
+      "qaControlOnlyScope": "Explicit C authorized v22 testcoordination: sourceorigin immutableR1 vs trueQA runtime split, no productionhost bypass/remap/no frozenproduction edits/noPG byD1; T45 onlyexecution"
     },
     "D3": {
       "files": [
