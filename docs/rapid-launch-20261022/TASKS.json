@@ -8,11 +8,11 @@
     "remote": "github",
     "visibility": "private observed 2026-10-22",
     "currentBranchObserved": "codex/local-takeover-wip-20261022-082411",
-    "headObserved": "b9101ab0ef79077ec75e2508cd3f5a3f8898b5fc",
+    "headObserved": "64a723be8ae595694347b72f4b408f5e4813fa7d",
     "workingTreeNotFullyCommitted": true,
-    "remoteHeadVerified": "b9101ab0ef79077ec75e2508cd3f5a3f8898b5fc",
-    "remoteReadbackMethod": "SOURCE351 exact original Git object nonforcedFF and independent remote GET verified",
-    "pushPendingLocalCommits": true,
+    "remoteHeadVerified": "64a723be8ae595694347b72f4b408f5e4813fa7d",
+    "remoteReadbackMethod": "SOURCE736 exact original Git object nonforcedFF and independent remote GET verified",
+    "pushPendingLocalCommits": false,
     "recoverableDraftCheckpoint": {
       "status": "PRIVATE_DRAFT_UPLOAD_DOWNLOAD_SHA_AND_BUNDLE_VERIFY_PASS",
       "atUtc": "2026-10-22T22:17:05.718753+00:00",
@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "b9101ab0ef79077ec75e2508cd3f5a3f8898b5fc"
+    "lastVerifiedRemoteCommit": "64a723be8ae595694347b72f4b408f5e4813fa7d"
   },
   "concurrency": {
     "chats": 11,
@@ -1353,9 +1353,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T01:55:31.445546+00:00",
+  "updatedAt": "2026-10-27T03:49:26.707327+00:00",
   "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
-  "lastVerifiedRemoteCommit": "c58b216050338fb415cff75b795fac29a9c058ce",
+  "lastVerifiedRemoteCommit": "64a723be8ae595694347b72f4b408f5e4813fa7d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -4637,10 +4637,10 @@
   ],
   "newPendingReviews": [
     {
-      "task": "EXISTING_SYN26_CURRENT_PROOF_NORMAL_CARRIER",
-      "owner": "QB",
-      "state": "WAIT_T45_FIXED_DELTA",
-      "scope": "448735source reused; carrier/freshproof/446RIprefix worker only"
+      "task": "SYN26_PARENT_STOP_DIAGNOSIS",
+      "owner": "D1",
+      "state": "IN_PROGRESS",
+      "scope": "Existing actual88157 stop after currentpurpose/gatePASS; sameparent/test minimal safe exactphase/code diagnosis, no replay"
     }
   ],
   "openFindingsCurrent": [
@@ -5053,10 +5053,10 @@
   ],
   "historicalFailuresPreserved": true,
   "currentContinuation": {
-    "round": 736,
+    "round": 737,
     "goal": "ACTIVE_FULL37_PAGES_67_OVERLAYS_ALL_APPLICABLE_STATES_REAL_BUSINESS_HISTORY_EDIT_PERFORMANCE_FORMAL_RELEASE",
-    "authoritativeDetail": "currentExecutionPriority620.currentContinuation736",
-    "fixedSource": "SOURCE7352a9d3d5f9443d808630ddb174024f2af9202341a exactGitHub remote; normal34SOURCE733; source148runtimeSOURCE730",
+    "authoritativeDetail": "currentExecutionPriority620.currentContinuation737",
+    "fixedSource": "SOURCE73664a723be8ae595694347b72f4b408f5e4813fa7d exactGitHub remote; actualSYN26source735; normal34source733; remote148source730",
     "fixedCandidates": {
       "synthetic": {
         "source": "2357cf508ee6e8188bcc1dddfa4735f735d70d36",
@@ -5078,19 +5078,19 @@
       }
     },
     "backendActual": {
-      "B07": "Committed19 metadataROPASS retained. FirstQAseed+11upgrades+ordinaryACL/v21 nowCOMMITTED in normalattempt, terminal300.944s with allclients/workers/ownPGclosed; no normalHTTP/currentpurpose. QB445 confirmed180RI ownname embeddeddefinition normalization mismatch only; QB446 exactprefixcandidate finitePASS not yet live. D1closed sameSYN26 auth1→2 continuation2leaves active; noseed/upgrade/pub replay.",
-      "R1": "125 STAGEDseq2cursor22 MAIN0PUBLISH0/fullBindingfalse.147 FAILED901.255s/source118810notdone/typed0/no fullDATA or commands. D3registered7294leaves in progress."
+      "B07": "Once actual88157 terminal2.508973s exit2; currentRRROproof and QB449-LIVE actualPASS/gate consumed. Parent STOP_SYN26_CONTINUATION_NO_REPLAY/B07_SYN26_DETAIL_OMITTED, qaCredentialActualfalse/httpActualfalse; no credential intent, finalDBauthversion not readback. Allclients/workers/ownedPG closed, pid absent. D1 same twoleaf diagnosis active; no replay.",
+      "R1": "125 STAGEDseq2cursor22 MAIN0PUBLISH0/fullBindingfalse.148 remoteSOURCE730 fullprepare active03:46:29Z, finalsource/typed/DATA/commands unconfirmed.146/147 failures preserved; no replay."
     },
     "roleQueue": {
       "F1": "SOURCE733 coherent testdocuments6leaves delivered/strictfinitePASS; T45normal34actualread/builddone. No new UIrepairqueue, comparefindings useronly.",
       "F2": "Existing product/stock consumers ready; synthetic detail/maintenance facts incoherent/missing, no fake state platform; await actual product capability from D2/T45.",
       "F3": "Completed settings source packages; await actual samebuild maintenance permissions/provider to validate requested writes.",
       "F4": "Completed category empty-state source patch, original effective evidence reused; await actual dictionary/barcode/season/group capabilities.",
-      "D1": "SOURCE735 twoleaf delivered/QB448sourcePASS adopted/frozen; actualcurrentproof and normalcarrier pending, no seed/upgrade/pub replay.",
+      "D1": "Same parent/test twoleaf narrow diagnosis of B07_SYN26_DETAIL_OMITTED after actualcurrentpurposePASS; no DB/CAS replay or writecontract expansion.",
       "D2": "Original source handed back, QB340 NULL-size source PASS preserved; actual PostgreSQL maintenance/full-save consumers remain dependent on original capability/data execution.",
       "D3": "730fourleaf444PASS adopted, shortestlongboundedprepare selected; no group-only/or unsafe resume platform, wait actual148newstageevidence.",
-      "T45": "LocalSYN26currentproof+closednormalcarrier preparation active, independent localMac resources from remote148Linux.148lastoriginalcollectactive03:23:56Z/unit-a78462edb040, no rerun.",
-      "QB": "448sourcePASS adopted; wait exactnewcarrier/446RIprefix integratednewworker/config, old443 frozen.",
+      "T45": "LocalSYN26 actual88157 terminalSTOP, freshproof+449LIVE+gate passed, ownedPG/workers closed; collect exactsafe result/coordinateD1diagnosis, no rerun.148 last03:46:29Zremoteactive.",
+      "QB": "QB449-LIVE actual current sixpurpose PASS consumed, businessAcceptancefalse; no source re-review, normal session not yet reached.",
       "QF": "Normal32 representative F1 scope completed, browser released; no full all-state business/performance PASS.",
       "QF2": "Normal32 representative F2 scope completed, browser released; T11 detail/T12Stock runtime missing facts not verified, no full pass."
     },
@@ -5131,11 +5131,11 @@
     }
   },
   "latestReadySource": {
-    "round": 445,
-    "commit": "207e1d5b798fa668fc7fb4d6678bf60ba299bc3c",
-    "build": "phase2-normal-207e1d5-24",
-    "url": "http://127.0.0.1:57913/#product-settings",
-    "resources": 140,
+    "round": 733,
+    "commit": "2357cf508ee6e8188bcc1dddfa4735f735d70d36",
+    "build": "phase2-normal-2357cf5-34",
+    "url": "http://127.0.0.1:57923/#sales",
+    "resources": 151,
     "syntheticOnly": true,
     "wholePageAccepted": false,
     "newBackendConnected": false
@@ -14260,6 +14260,15 @@
       "localQA": "Macarm64PG and148remoteLinux independent CPU/RAM; no pointless3hwait, actualstillrequiresfixedcarrier and currentproof",
       "remote148": "Lastactual03:23:56Z active/running MainPID1784379 Memory2.141GiB CPU326.081s Tasks13; no sourceEOF/typed/DATA successclaim or no-stall inference",
       "next": "T45exactcarrier then QBnecessarydelta/newworker then Cexactadoption then one closedauth1to2normal;148samekeycollect",
+      "completion": "37pages67overlays/allstates realdata/history/business/performance/formalURL incomplete"
+    },
+    "currentContinuation737": {
+      "status": "ACTIVE",
+      "source736": "64a723be8ae595694347b72f4b408f5e4813fa7d exactGitHubremote",
+      "reviews": "448sourcePASS plus449PREPARED7381/091c5403 adopted; actualLIVE remains pending",
+      "localQA": "Once actual88157 terminal2.508973s/exit2 at03:48:25Z, RRRO proof and449LIVE8286/beff38b6 PASS/gateConsumed. ParentB07_SYN26_DETAIL_OMITTED/qaCredentialActualfalse/httpActualfalse/noINTENT; finalDBauthversion unknown. Allclients/workers/ownPGclosed/pidabsent.",
+      "remote148": "03:46:29Z originalunit-a78462edb040 active/running MainPID1784379/Tasks13, cgroupMemory5805948928B/CPU1153.446789s. No progress proportion or terminalPASS inferred.",
+      "next": "D1original2leaf exactstop diagnosis; no reinit/seed/upgrade/role/pub/CAS replay; preserve449currentpurpose evidence; samekey148terminal.",
       "completion": "37pages67overlays/allstates realdata/history/business/performance/formalURL incomplete"
     }
   },
