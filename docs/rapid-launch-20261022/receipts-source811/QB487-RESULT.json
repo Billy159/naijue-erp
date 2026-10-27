@@ -1,0 +1,326 @@
+{
+  "reviewId": "QB487",
+  "decision": "PASS_ACTUAL_R1_200_EXACT_COLUMN_ACL_DELTA_CURRENT_METADATA_ONLY",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-eight-table-empty-acl-fix-20261028-200/RESULT.json",
+      "bytes": 11813,
+      "sha256": "819636613bbceeb6e2ad3aac4f02eec533b671fad76351bf40089978cdaa2d00"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-eight-table-empty-acl-fix-20261028-200/release-submission/release-receipts/t45-r1-eight-table-empty-acl-fix-20261028-200/parent-r1-v20-catalog.json",
+      "bytes": 1479276,
+      "sha256": "e98cea537c1d0aa209a9d282780df7fbaa8bf85d0a976c77fe7a39c9e4405ebf"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-eight-table-empty-acl-fix-20261028-200/release-submission/release-receipts/t45-r1-eight-table-empty-acl-fix-20261028-200/current-r1-v20-catalog.json",
+      "bytes": 1482600,
+      "sha256": "176da71114e18b3c7597ca7dcdeba066fc3730553b77a9c6d80c22f715907b3e"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-eight-table-empty-acl-fix-20261028-200/release-submission/release-receipts/t45-r1-eight-table-empty-acl-fix-20261028-200/current-r1-v20-metadata.json",
+      "bytes": 780,
+      "sha256": "ad40517fada93ceafb1682172300c5c71858ee608aa6ddda6cd3c5ad42a82c38"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-eight-table-empty-acl-fix-20261028-200/release-submission/release-receipts/t45-r1-eight-table-empty-acl-fix-20261028-200/acl-current-result.json",
+      "bytes": 9791,
+      "sha256": "3312f5bc6ceb1d41bb5a8e4faf77f3da1e533361d610c6c33def845fa7f85c3c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-r1-eight-table-empty-acl-fix-20261028-200/release-submission/release-receipts/t45-r1-eight-table-empty-acl-fix-20261028-200/job.json",
+      "bytes": 720,
+      "sha256": "0cca0b72b90d067e62f5de380ce93bb329572603214404ee48847025b3d4e02b"
+    }
+  ],
+  "scope": "Actual200 current60columnACL/76newbits only; QB476identity/profile/3purposes andQB485486source/prestate accepted reused. No source/PGprobe/testsuite/business reread.",
+  "independentChecks": {
+    "onlyTopSectionChanged": "columns",
+    "changedColumns": [
+      {
+        "table": "history_sales_header",
+        "column": "id"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "id"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "source_row_id"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "batch_id"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "header_id"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "line_no"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "sku_id"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "quantity"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "product_code_snapshot"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "product_name_snapshot"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "color_name_snapshot"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "fit_name_snapshot"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "size_name_snapshot"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "barcode_snapshot"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "reference_price"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "deal_price"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "line_amount"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "allocated_discount"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "is_gift"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "pricing_method_source"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "discount_tenths"
+      },
+      {
+        "table": "history_sales_line",
+        "column": "ordinary_zero_confirmed"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "id"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "source_row_id"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "batch_id"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "header_id"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "line_no"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "payment_account_id"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "direction"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "amount"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "account_name_snapshot"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "method_name_snapshot"
+      },
+      {
+        "table": "history_sales_settlement",
+        "column": "payment_method_id_snapshot"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "batch_id"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "entity_type"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "source_key"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "source_row_id"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "native_payment_method_id"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "native_payment_account_id"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "native_hall_id"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "native_snapshot"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "evidence_fingerprint"
+      },
+      {
+        "table": "import_native_payment_binding",
+        "column": "validator_version"
+      },
+      {
+        "table": "payment_account",
+        "column": "id"
+      },
+      {
+        "table": "payment_account",
+        "column": "name"
+      },
+      {
+        "table": "payment_account",
+        "column": "payment_method_id"
+      },
+      {
+        "table": "payment_account",
+        "column": "enabled"
+      },
+      {
+        "table": "payment_account",
+        "column": "version"
+      },
+      {
+        "table": "payment_account_hall",
+        "column": "payment_account_id"
+      },
+      {
+        "table": "payment_account_hall",
+        "column": "hall_id"
+      },
+      {
+        "table": "payment_method",
+        "column": "id"
+      },
+      {
+        "table": "payment_method",
+        "column": "name"
+      },
+      {
+        "table": "payment_method",
+        "column": "enabled"
+      },
+      {
+        "table": "payment_method",
+        "column": "version"
+      },
+      {
+        "table": "sku_barcode",
+        "column": "id"
+      },
+      {
+        "table": "sku_barcode",
+        "column": "barcode"
+      },
+      {
+        "table": "sku_barcode",
+        "column": "sku_id"
+      },
+      {
+        "table": "sku_barcode",
+        "column": "barcode_kind"
+      },
+      {
+        "table": "sku_barcode",
+        "column": "scheme_id"
+      },
+      {
+        "table": "sku_barcode",
+        "column": "enabled"
+      }
+    ],
+    "changedColumnCount": 60,
+    "onlyChangedColumnField": "acl",
+    "eightTableOldRawAndNormalizedColumnAclsMatchAccepted197": true,
+    "exactNewNormalizedColumnAclMatchesApprovedAfter": true,
+    "allOldPrivilegeEntriesRetained": true,
+    "newBits": {
+      "UPDATE": 8,
+      "INSERT": 59,
+      "SELECT": 9
+    },
+    "noGrantOptionOtherGrantorOrGrantee": true,
+    "allOtherColumnsAndSectionsExact": "Includingactual131routineobjects/roles/memberships/schema/tableACL/relations/constraints/indexes/triggers/identity unchanged",
+    "newCanonicalIndependentlyRecomputed": "1050b2aa3329ca8956365578765f89027808dd7f3f9b81ff970de66b82f5ad3f",
+    "sourceRoutinesMatch": true,
+    "identity": {
+      "database": "erp_rewrite_20261022_r1",
+      "server_addr": null,
+      "server_port": null,
+      "current_user": "erp_rewrite_runtime_20261022",
+      "database_oid": "1027659",
+      "session_user": "erp_rewrite_runtime_20261022",
+      "database_owner": "erp_rewrite_owner_20261022",
+      "postmaster_start": "2026-10-04 08:16:07.895273+00",
+      "replication_role": "origin",
+      "server_version_num": "170011"
+    }
+  },
+  "actualOwnerEvidence": "FixedV3SQL60726/16d99000 exact ownerapply COMMITmarkertrue/psql0/stderr0; ordinaryparent/currentRRRO rollbackandclientsclosedtrue. Tasklevelactualreceipt adopted; no serveractionbyQB.",
+  "profile": "26_v22_staged_prefix_bind_from_v20",
+  "purposes": [
+    "IMPORT_STAGE",
+    "IMPORT_PRODUCT_SEASONS",
+    "IMPORT_PUBLISH"
+  ],
+  "realImportExecutionAuthorized": false,
+  "executionBoundary": "OnlyACL/metadataPASS; no BIND/ACCOUNT/MAIN/PUBLISH/businessDML/APPswitch/newkeys. PreservecommittedBIND andoldterminaljobs.",
+  "handoff": "C/T45 mustrebind exactcurrentreview/config/currentpurpose/consumer/externalfreshwritergrant to1050. Old6d3e review cannotcoverchangedACL. Linuxreviewdestination notprovided; localcurrentreview supplied withoutinventedserverpath.",
+  "reverse": "Notrun; onlyafterCexactauthority/no laterACLdrift. NULL/emptyattacl ororiginalcanonical exactrestoration notpromised, no pg_catalog writes.",
+  "notValidated": [
+    "Actualwriter/source stages orremainingMAIN",
+    "Businessconservation/fullimport/PUBLISH",
+    "Formalperformance"
+  ],
+  "requestedModel": "gpt-6.1-sol/medium",
+  "actualModelAndFast": "UNVERIFIED"
+}
