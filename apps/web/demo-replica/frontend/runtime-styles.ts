@@ -6,7 +6,7 @@ const groups: Readonly<Record<string, readonly string[]>> = {
  products:['inventory-workbench.css','inventory-refinement.css','product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
  catalogue:['inventory-workbench.css','inventory-refinement.css','product-current.css','product-refinement.css','product-inventory-unified.css','product-rework.css'],
  settings:['inventory-workbench.css','inventory-refinement.css'],
- sales:['inventory-workbench.css','inventory-refinement.css','sales-current.css','entry-shared.css','matrix-experiments.css','sales-returns.css','sales-golden.css','sales-refinement.css','sales-detail-alignment.css','product-current.css'],
+ sales:['inventory-workbench.css','inventory-refinement.css','transfer-current.css','sales-current.css','entry-shared.css','matrix-experiments.css','sales-returns.css','sales-golden.css','sales-refinement.css','sales-detail-alignment.css','product-current.css'],
  transfer:['inventory-workbench.css','inventory-refinement.css','transfer-current.css','entry-shared.css','matrix-experiments.css','transfer-scan-drawer.css','product-current.css','product-inventory-unified.css'],
 };
 const slots = new Map(order.map(name => {
@@ -26,6 +26,12 @@ const sharedNavigationStyle=document.createElement('style');
 sharedNavigationStyle.dataset.replicaSharedNavigation='';
 sharedNavigationStyle.textContent=".tc-nav-group>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between}.tc-nav-group>summary::-webkit-details-marker{display:none}.tc-nav-group>summary:after{content:'';width:6px;height:6px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(-45deg);margin-right:9px}.tc-nav-group[open]>summary:after{transform:rotate(45deg)}.tc-nav-children>.nav.child{padding-left:42px}";
 document.head.append(sharedNavigationStyle);
+
+// Both document lists reuse the inventory pager; its one footer child must own the available row.
+const documentPaginationStyle=document.createElement('style');
+documentPaginationStyle.dataset.replicaDocumentPagination='';
+documentPaginationStyle.textContent='.tc-list-pagination>.tc-document-pagination{flex:1;min-width:0}';
+document.head.append(documentPaginationStyle);
 
 let assetBase='/';
 export function configureReplicaStyleAssetBase(base:string):void { assetBase=base; }

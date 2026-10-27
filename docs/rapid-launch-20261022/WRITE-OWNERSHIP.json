@@ -6724,5 +6724,14 @@
       "apps/web/demo-replica/frontend/runtime/documents/sales-list.tsx"
     ],
     "boundary": "Original fullDemo sales-list structure/action placement and semantics on normal entry, preserve current authorized reader/paging/total/sum and callbacks. Do not remove approved summary; classify separately. Shared CSS/pager unique owner C; report seam before changes, no other leaves without registration. Mixed markup/events technical work Sol-medium."
+  },
+  "documentListStyles836": {
+    "owner": "C",
+    "model": "gpt-6.1-sol/medium",
+    "issue": "N34-S01-01 shared dependency/footer seam",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime-styles.ts"
+    ],
+    "boundary": "Restore actual frozen transfer-current.css dependency in sales route using existing frozen slots/order; full-width existing common Pagination in document footer only. No second doc pager/markup implementation, no current data/events/paging changes, no frozen CSS mutation."
   }
 }
