@@ -1,0 +1,60 @@
+{
+  "status": "C_ADOPTED_EXACT_SUCCESSOR_ONE_QA_READONLY_ATTEMPT_AUTHORIZED",
+  "atUtc": "2026-10-27T15:23:03.050987+00:00",
+  "registrationId": "t45-v22-qa-first-projection-diagnostic-preparation-20261027-188",
+  "deadlineUtc": "2026-10-27T16:30:00Z",
+  "maxWallSeconds": 1800,
+  "adoptedQB": [
+    "QB479",
+    "QB480",
+    "QB481"
+  ],
+  "refs": {
+    "consumer": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/evidence/V22-CONSUMER-REVIEW.json",
+      "bytes": 86450,
+      "sha256": "6a24656b3915031c16190062dc40a3d73d891285e94be4880fd36a07aaf7b69a"
+    },
+    "adopted": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/evidence/ADOPTED-PREPARATION.V22.json",
+      "bytes": 1881,
+      "sha256": "faf1a3cf933551751e501ae96b5f243725ee8ed57b3ba4ed630dde8635d768c0"
+    },
+    "hostJob": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/executable-host-job26.json",
+      "bytes": 5029,
+      "sha256": "e9e5186667ac6e291e32e58225bc4967b0f4bd78f564e010e9da6ae4f528f91c"
+    },
+    "sourceGrant": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/authorization/C-SOURCE-EXECUTION-GRANT.json",
+      "bytes": 37329,
+      "sha256": "709d36aa3ca888add105a600ef89afb71c0391390a229f67fc05fcda2b7cd4ae"
+    },
+    "providerInput": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/provider-INPUT.FINAL.json",
+      "bytes": 188953,
+      "sha256": "eb4f8b7f906c887e6357dad29c33a2f8061f078381fa716ceb613080549e64af"
+    },
+    "fixture": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/QA188-FIXTURE.json",
+      "bytes": 2885,
+      "sha256": "8a520b7862b437fd45f4c538e1001062847016fbd6bcb1221dc184957756bec4"
+    },
+    "authority": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/C-QA188-AUTHORITY.json",
+      "bytes": 4444,
+      "sha256": "0d02d440c85ef3fc4ea1979233748b19ff91b32bd2b629b0173c8152d8f0aa50"
+    },
+    "plan": {
+      "path": "/root/erp-release-20261006-01-worker/grant-5cc58239751e4e2a/jobs/t45-v22-qa-first-projection-diagnostic-preparation-20261027-188/inputs/QA188-PLAN.json",
+      "bytes": 4682,
+      "sha256": "fe5d755bd2dca99f3aead6c7b0891e6476e77c96073c4fbde448c227b02d7256"
+    }
+  },
+  "executionBoundary": "Source session capture/authorize only. Original R1 DB gate hard prohibited. Only actual QA178 ordinary-role RRRO adapter first-mismatch observation then ROLLBACK; no BIND/DDL/DML/COMMIT/APP or originalR1 continuation. Grant runtime schema flag cannot enlarge this explicit scope. Preserve old182/184/185/186/187 and original148/121/109 keys. No source rematerialization/repreparation; code package upload only.",
+  "sourceIdentitiesUnchanged": true,
+  "actualExecution": "NOT_SUBMITTED",
+  "model": "gpt-6.1-sol/medium",
+  "Fast": "UNVERIFIED",
+  "preparationNote": "Final JSON files created once; source equality check initially used absent local182 path; resumed against actual original184 local references, all six source objects and109refs equal. No remote execution."
+}
