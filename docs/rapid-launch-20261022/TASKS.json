@@ -35,7 +35,7 @@
     },
     "normalGitProtocolPushSucceeded": false,
     "remoteNormalBranchFastForwardSucceeded": true,
-    "lastVerifiedRemoteCommit": "cf23c3d040478e20839c37027f1b818512aa0289",
+    "lastVerifiedRemoteCommit": "235016774f1e8998bd54c641237e4a71b4873417",
     "activeBranch": "codex/erp"
   },
   "concurrency": {
@@ -18648,16 +18648,17 @@
     },
     "P02ProductionComposition887": {
       "owner": "C",
-      "state": "SOURCE_WIP_4_TARGETED_TESTS_PASS_NOT_FIXED_CLOSURE",
+      "state": "WIP_CHECKPOINT_DEPENDS_ON_D1_CORE_NOT_CANDIDATE",
       "current": "Explicit authentication passwordWork/loginAdmission JSON, sameapplication factories and no productiondefaults; R1hostconversion retains shape",
-      "checks": "4targetedconfiguration/contention/isolationPASS;noPG/production",
-      "next": "Join D1sourcehandoff fixedcandidate beforeindependentQA;actualproductionbudgets/configuration unassigned"
+      "checks": "C8affectedPASS; legacyfixture snapshotinitialfailure corrected +onlyfailed1rerunPASS",
+      "next": "D1core22leafhandback then completefixedsource QA; noformalbudgetdefault"
     },
     "A01PendingCapacity887": {
       "owner": "D2",
-      "state": "EXACT_WRITE_DELTA_PREPARATION_SOURCE_READONLY",
+      "state": "HUMAN_APPROVED_EXACT_SOURCE_IMPLEMENTATION_ACTIVE",
       "current": "Currentgrowthentry/pendingcountbytes/port/errorcodes explicitproposal beforetruewritecontract approval",
-      "next": "Caccurateconsolidatedhumanconfirmation thenoriginalowner registeredsource;noDB/ACL"
+      "next": "OriginalD2 exact10leaves; sharedAPIerrorconsumer seams toC/D1;actualPG/SLO remainseparate",
+      "approval": "call_d51f6d152d15476cb063527e1d542136/0"
     }
   }
 }

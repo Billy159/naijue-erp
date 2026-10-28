@@ -7451,6 +7451,28 @@
       ],
       "scope": "P02 explicit JSON authentication budget shape validated without defaults; oneperapplication passwordGate/loginAdmission passed to D1hostoptions; no runtime deployment/secret or invented production values",
       "model": "gpt-6.1-sol/medium"
+    },
+    "A01PendingCapacity888": {
+      "owner": "D2",
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "status": "APPROVED_ACTIVE_EXACT_SOURCE",
+      "approval": "Human call_d51f6d152d15476cb063527e1d542136/0:确认 A01 容量保护修订",
+      "files": [
+        "adapters/postgres/src/catalogue-completeness.ts",
+        "packages/application/src/product-maintenance-ports.ts",
+        "packages/application/src/product-maintenance-service.ts",
+        "adapters/postgres/src/product-maintenance-store.ts",
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "adapters/postgres/src/native-document-specification.ts",
+        "tests/catalogue-completeness.test.ts",
+        "tests/product-maintenance.test.ts",
+        "tests/product-maintenance-postgres-protocol.test.ts",
+        "tests/catalogue-proof-capacity.test.ts"
+      ],
+      "handoff": "D1 explicit original3sharedleaves noWIP/inflight 2026-10-29; D3P01adapter/source disjoint",
+      "scope": "Approved exactD2A01-PENDING-CAPACITY-DELTA; unchanged1024/16MiB;actual sparsecompletion pendingadmission sameclient/lock;originalreceiptfirst recovery; noDBschema/ACL/production",
+      "reserved": "postgres-read-api.ts D1P02; HTTP/browser errors exactseam toC/originalowners; no concurrentsharedwriter"
     }
   }
 }

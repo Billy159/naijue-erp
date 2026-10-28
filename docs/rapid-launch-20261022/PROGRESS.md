@@ -1,3 +1,7 @@
+SOURCE888：人类call_d51f6d152d15476cb063527e1d542136/0已明确批准A01容量保护最小修订，原D1三共享叶无WIP并交原D2；C登记10叶准确源码边界。按原1024/16MiB上限在商品维护/单据补规格同事务核本次sparse证据，原key恢复、锁与整笔回滚保持，不加表列/SQL/ACL。API仍D1P02独占，其他错误consumer由准确接缝交C，禁止抢写。P01原D3五叶在途，P02原D1核心及C配置接线在途；实际PG/权限/性能和正式发布仍未通过。
+
+SOURCE887为C两叶P02配置WIP及唯一owner记录，依赖D1未交核心，不是可运行固定候选；其GitHub23501677已回读。C配置8项受影响检查通过，legacy夹具新snapshot缺失一次失败已修并仅复失败1项通过，未放宽原兼容密码/200/401断言。主控记录写入曾因脚本编码失败未入887，本节准确补记，不伪称前记录已写。旧源码和在途成果保全，生产环境未动，整体ACTIVE。
+
 SOURCE886：H02原QB885限定源码/脚本协议PASS 1eb56e06已采用：三个reader真实消费共享identity/page/nullableexact，原标量/数组厅参数与source/effective端点/可信creator保护、P03一条dataquery的count/page/全筛选total、B08范围及已确认例外均保留；13定向0fail/0skip及严格五TS叶通过，不重旧套。实际PG过滤/ACL/EXPLAIN/SLO/同条件跨consumer与详情输出仍未测，不记整体H02/G01/G02通过。远端cf23c3d0已准确回读。P02原D1十八叶实际开始文件修改；H03原D3定点生命周期准备在途，主控不抢源。P04新ACL与Chrome交还仍待原问题明确答案，正式环境未动，整体ACTIVE。
 
 SOURCE885：H01原QB884限定静态归属/边界/入口PASS b21b7cf8采用，固定archive359源/35writer/57表/29fixture及入口1PASS；D1此前360含未提交reader叶，非新的扫描失败。H02原D3六叶实际交回，收敛重复调拨按厅谓词和三reader的有效身份/精确分页/NULL语义，13定向＋五TS叶严格检查通过，固定后交原QB，不重B08/P03/P04旧套；真实PG/权限/性能/详情输出仍未测。P02原D1开始准确18叶源码包，原D2已明确交回API+staff四叶无WIP；保留H06和原事务保护，内部只读快照不再无谓审批，生产预算/新PG不自行猜定。P04新ACL/Chrome交还仍待人类答案，正式环境未动，目标ACTIVE。
