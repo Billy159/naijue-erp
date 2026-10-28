@@ -25,6 +25,7 @@ const productionMediaAdapterSources = new Set([
   'adapters/media/src/controlled-product-media.ts',
   'adapters/media/src/product-media-stage.ts',
   'adapters/media/src/sharp-product-image-codec.ts',
+  'adapters/media/src/product-image-signature.ts',
 ]);
 // Exact already-approved immutable runtime SQL paths; all content/provenance checks remain below.
 const reviewedMigrationSources = new Set([

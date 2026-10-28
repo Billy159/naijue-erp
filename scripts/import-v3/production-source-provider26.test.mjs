@@ -1155,3 +1155,55 @@ test('B15 real provider REVIEWED transfer reader consumes public six-field scope
  assert.equal(closure.plan.sourceEntityCounts.TRANSFER_LINE,2);assert.equal(closure.plan.sourceEntityCounts.TRANSFER_HEADER,1);
  await session.close();
 });
+
+
+test('PF02 continuation indices avoid repeated claim-array scans at 100/1000/10000 records and preserve suffix and conflict refusals',async t=>{
+ const {selectProductionContinuation26}=await import('./production-source-provider26.mjs');
+ for(const n of [100,1000,10000]){
+  const f=await productionAuthorityFiles(t,{splitAccount:true}),progress=structuredClone(f.progress),commands=[f.bind];
+  await commitContinuationCommand26(progress,f.binding,f.bind);
+  const template=f.accounts.find(c=>c.items.some(i=>i.targetType==='SKU'));
+  for(let i=0;i<n;i++){
+   const command=structuredClone(template),item=command.items.find(i=>i.targetType==='SKU');
+   command.requestKey=`SYNTHETIC-PF02-${i}`;command.expectedSequence=progress.checkpoint.sequence;command.expectedCursor=progress.checkpoint.cursor;
+   item.nativeRecord.id=id(100000+i);item.targetId=id(200000+i);item.sourceKey=`PF02-${i}`;command.items=[item];
+   commands.push(command);await commitContinuationCommand26(progress,f.binding,command);
+  }
+  const publish=structuredClone(f.publish);publish.expectedSequence=progress.checkpoint.sequence;publish.expectedCursor=progress.checkpoint.cursor;commands.push(publish);
+  const before=structuredClone(progress),filter=Array.prototype.filter,find=Array.prototype.find;let comparisons=0;
+  const instrument=original=>function(predicate,...args){return original.call(this,(value,...rest)=>{if(value&&Object.hasOwn(value,'importRecordId'))comparisons++;return predicate(value,...rest);},...args);};
+  let selected;
+  try{Array.prototype.filter=instrument(filter);Array.prototype.find=instrument(find);selected=selectProductionContinuation26({binding:f.binding,commands,progress});}
+  finally{Array.prototype.filter=filter;Array.prototype.find=find;}
+  assert.deepEqual(selected.remaining,[publish]);assert.equal(selected.prefix,n+1);assert.equal(comparisons,0);assert.deepEqual(progress,before);
+  for(const mutate of [p=>{p.claims.at(-1).importRecordId=p.claims.at(-2).importRecordId;},p=>{p.records.at(-1).sourceFileRef='CHANGED';},p=>{p.committedOperations.at(-1).requestKey='NEW_KEY';},p=>{p.checkpoint.cursor++;}]){
+   const bad=structuredClone(progress);mutate(bad);assert.throws(()=>selectProductionContinuation26({binding:f.binding,commands,progress:bad}),/PRODUCTION_CONTINUATION26_/);
+  }
+  t.diagnostic(`records=${n+22}, operations=${n+1}, repeated claim filter/find comparisons=${comparisons}`);
+ }
+});
+
+
+test('PF02 exact snapshot reuse spans phases but rejects in-place source mutation and clears on close',async t=>{
+ const f=await productionAuthorityFiles(t,{splitAccount:true}),a=await f.open();t.after(()=>a.close());const progress=structuredClone(f.progress);
+ await commitContinuationCommand26(progress,f.binding,f.bind);await commitContinuationCommand26(progress,f.binding,f.accounts[0]);
+ const ids=new Set(progress.committedOperations.map(o=>o.operationId)),set=Map.prototype.set;let builds=0;
+ Map.prototype.set=function(key,value){if(ids.has(key)&&Array.isArray(value)&&value.length===0)builds++;return set.call(this,key,value);};
+ try{
+  for(const phase of ['BIND','ACCOUNT','PUBLISH'])await Array.fromAsync(a.mainCommands(phase,{binding:f.binding,core:f.inputs.core,progress}));
+  assert.equal(builds,1); // BIND owns no claims; only the one ACCOUNT claim group.
+  progress.records.at(-1).sourceRecordHash=digest('f');
+  await assert.rejects(Array.fromAsync(a.mainCommands('ACCOUNT',{binding:f.binding,core:f.inputs.core,progress})),/ITEM_CONFLICT/);
+  assert.equal(builds,2);
+ }finally{Map.prototype.set=set;}
+ await a.close();await assert.rejects(Array.fromAsync(a.mainCommands('ACCOUNT',{binding:f.binding,core:f.inputs.core,progress})),/CLOSED/);
+});
+
+test('PF02 stage indices retain first-match refusal across record-id and source-key collisions',async t=>{
+ const {pathToFileURL}=await import('node:url'),data=await(await import(pathToFileURL(retainedFixtureRoot+'/retained-native-closure-fixtures-20261026/sku.mjs'))).fixture(t),p=data.prepared,{unclaimedNativeStage26}=await import('./production-source-provider26.mjs');
+ const record={importRecordId:p.importRecord.id,targetType:'SKU',targetId:p.nativeSku.id,sourceEntityType:'SKU',sourceKey:p.canonicalSource.sourceKey,sourceRecordHash:p.canonicalSource.rowSha256,sourceFileRef:p.canonicalSource.fileRef};
+ for(const conflict of [{...record,importRecordId:id(99999)},{...record,sourceKey:'OTHER',targetId:id(88888)}]){
+  assert.throws(()=>unclaimedNativeStage26({group:'SKUS',payload:p,progress:{records:[conflict,record],warehouses:[]}}),/STAGE_CONTENT_CONFLICT/);
+  assert.equal(unclaimedNativeStage26({group:'SKUS',payload:p,progress:{records:[record,conflict],warehouses:[]}}),null);
+ }
+});

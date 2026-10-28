@@ -280,6 +280,7 @@ test('backend media runtime source paths remain production code', async () => {
     'adapters/media/src/controlled-product-media.ts',
     'adapters/media/src/product-media-stage.ts',
     'adapters/media/src/sharp-product-image-codec.ts',
+    'adapters/media/src/product-image-signature.ts',
   ]) {
     const bytes = 'export const runtimeMediaCode = true;\n';
     f.source.files.push(record(name, bytes)); await put(f.sourceRoot, name, bytes);

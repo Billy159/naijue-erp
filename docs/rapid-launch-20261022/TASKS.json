@@ -18087,6 +18087,39 @@
       },
       "result": "ACTUAL_NEW_EMPTY_TARGETS_AND_OWNER_NONOWNER_LOOPBACK_PASS_ONLY",
       "unmeasured": "schema/fixture/SQLguards/transactions/performance/session/business allnotyet"
+    },
+    "source850": {
+      "parent": "2eaf1ae2d45941a9d7f161744acc8b63c3b386d8",
+      "files": {
+        "scripts/import-v3/production-source-provider26.mjs": {
+          "bytes": 143628,
+          "sha256": "50870209df7ae1a83974725a0096638075f04c739f3b09f457adb1f143cd43c9"
+        },
+        "scripts/import-v3/production-source-provider26.test.mjs": {
+          "bytes": 198074,
+          "sha256": "12adbec1c16d03b5d4951ddef34d33bcba746e4c122e3c2883278a2891f28a4c"
+        },
+        "scripts/import-v3/production-source-host.mjs": {
+          "bytes": 42367,
+          "sha256": "e6c53008b57ab12db54b93716c3d09c8ac954029a45875003d182118a0cb5f5b"
+        },
+        "scripts/import-v3/production-source-host.test.mjs": {
+          "bytes": 53040,
+          "sha256": "856c07334ddc1f627bfda172ddfd1b72bf58440428e12d818655a55c54725f5d"
+        },
+        "scripts/release/manifest.mjs": {
+          "bytes": 34134,
+          "sha256": "25fb1cb021275b916744693ede0840ee8cc512003a49c930300749527f5b285d"
+        },
+        "scripts/release/pack.test.mjs": {
+          "bytes": 26365,
+          "sha256": "1d41c2553b22d91462b497485636a9ba64d82e60d13f2931d03d0b76dd15b359"
+        }
+      },
+      "D3": "PF02narrow4leaves handedback116localPASS0SKIP0PG;privateprogressindices/exactsamecontentsreuse/changedcontentsreject/closeclear;V2xminprofileexactconsumer. No newproof/skipcontract,201original3groupcurrentprefixproofmissing;1189conditionalonly. ActualPG/SLO/PF02wholeNOT_PASS.",
+      "C": "B09productionproduct-image-signature.ts oldreleaseallowlist false rejection reproduced1PASS1FAIL then exactnewsourceexception2PASS0FAIL;private/data/testmediarejectionsretained. H04 sharedrelease stillunfinished/notrealbuild.",
+      "frontend": "Originalnormal34comparison waitMacunlock;existingevidencepreserved,noimplicitrestartorchangeversion",
+      "211": "Creadexactcarrier/runner/PLAN;enabled-onlyfinalPLAN+once originalschema1..19 on newOID16399/16400 authorized under existingnewisolatedapproval,actualpending,noR1/fixtures/patches."
     }
   }
 }

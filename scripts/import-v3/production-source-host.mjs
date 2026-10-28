@@ -328,7 +328,8 @@ export async function* forwardSourceSteps26({steps,active,maxSteps,core}){
  * real source/session authority and the original independently issued client. */
 export function validateSourceHostRuntimeReview26(metadata,binding,stagedPrefixBinding26) {
   bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
-  const prefix22=metadata.catalog?.patchLevel==='26_v22_staged_prefix_bind_from_v20';
+  const xmin=metadata.catalog?.patchLevel==='26_hv2_source_xmin_from_v22';
+  const prefix22=xmin||metadata.catalog?.patchLevel==='26_v22_staged_prefix_bind_from_v20';
   if(prefix22){
     must(binding.phase==='FULL_SOURCE_CONTINUATION_26_V1','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
     const prefix=bag(stagedPrefixBinding26,['capture'],'IMPORT_SOURCE_HOST22_PREFIX_REQUIRED');
@@ -337,7 +338,7 @@ export function validateSourceHostRuntimeReview26(metadata,binding,stagedPrefixB
   const approvedPatch=metadata.catalog?.patchLevel===(binding.phase?'26_v14_core_initialization':'26_v11_document_specification_save')
     ||binding.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&(prefix22||['26_v16_history_responsible_from_v14','26_v20_history_insert_identity_from_v19'].includes(metadata.catalog?.patchLevel));
   must(metadata.version==='C_NATIVE_RUNTIME26_REVIEW_V1'&&metadata.decision==='ACCEPT_EXACT_RUNTIME26_TARGET_METADATA'
-    &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&metadata.catalog?.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V1'&&hash(metadata.catalog?.sha256)&&approvedPatch,'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
+    &&metadata.scope==='EXACT_TARGET_METADATA_ONLY'&&metadata.realImportExecutionAuthorized===false&&metadata.catalog?.format===(xmin?'EXACT26_RUNTIME_CATALOG_EXPORT_V2':'EXACT26_RUNTIME_CATALOG_EXPORT_V1')&&hash(metadata.catalog?.sha256)&&approvedPatch,'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   const target=bag(metadata.target,['database','databaseOid','actingRole','sessionUser','serverAddress','serverPort','postmasterStart'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW'),b=binding.target;
   must(target.database===b.database&&target.actingRole===b.role&&target.serverAddress===b.serverAddress&&target.serverPort===b.serverPort
     &&target.postmasterStart===b.postmasterStartedAt,'IMPORT_SOURCE_HOST26_RUNTIME_TARGET');
@@ -352,7 +353,7 @@ export async function openImportHost26({signal,configFile=process.env.NAIJUE_IMP
   // The v22 runtime profile also requires the source-owned capture port. Its
   // pinned provider loads the exact external grant/148/INIT references before
   // returning that session; validate it below before native reads or activation.
-  const prefix22=metadata.catalog?.patchLevel==='26_v22_staged_prefix_bind_from_v20';
+  const prefix22=['26_v22_staged_prefix_bind_from_v20','26_hv2_source_xmin_from_v22'].includes(metadata.catalog?.patchLevel);
   if(!prefix22)validateSourceHostRuntimeReview26(metadata,job.binding);
   const independent=bag(metadata.independentReview,['path','sha256','result'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
   must(independent.result==='PASS','IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');await pinned(independent.path,independent.sha256,8388608);

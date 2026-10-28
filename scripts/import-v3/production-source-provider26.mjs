@@ -95,11 +95,16 @@ export function selectProductionContinuation26({binding,commands,progress}){
   &&Array.isArray(p.coreClaims)&&p.coreClaims.length===22&&Array.isArray(p.coreWarehouses)&&p.coreWarehouses.length===22,'PRODUCTION_CONTINUATION26_PROOF_REQUIRED');
  const first=original[0],last=original.at(-1);must(first.action==='IMPORT_BIND_FULL_SOURCE'&&last.action==='IMPORT_PUBLISH'&&original.slice(1,-1).every(c=>c.action==='IMPORT_CHUNK'),'PRODUCTION_CONTINUATION26_COMMAND_CHAIN');
  const targets=['WAREHOUSE','SKU','INVENTORY_LEDGER','IMPORT_BATCH'],birth={sequence:1,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}};
+ const claimsByOperation=new Map(),claimValues=new Set(),counts=new Map();
+ for(const claim of p.claims){
+  let owned=claimsByOperation.get(claim.operationId);if(!owned)claimsByOperation.set(claim.operationId,owned=[]);owned.push(claim);
+  claimValues.add(capture(claim));counts.set(claim.targetType,(counts.get(claim.targetType)??0)+1);
+ }
  let checkpoint=birth,prefix=0,bound=false;const used=new Set(p.coreClaims.map(c=>c.importRecordId)),recordMap=new Map(p.records.map(r=>[r.importRecordId,r]));
- must(used.size===22&&recordMap.size===p.records.length&&p.records.length===p.claims.length&&p.coreClaims.every(c=>p.claims.some(x=>capture(x)===capture(c))),'PRODUCTION_CONTINUATION26_CLAIM_SCOPE');
+ must(used.size===22&&recordMap.size===p.records.length&&p.records.length===p.claims.length&&p.coreClaims.every(c=>claimValues.has(capture(c))),'PRODUCTION_CONTINUATION26_CLAIM_SCOPE');
  for(const op of p.committedOperations){
   must(capture(op.beforeCheckpoint)===capture(checkpoint)&&op.checkpoint.sequence===checkpoint.sequence+1,'PRODUCTION_CONTINUATION26_CHAIN_GAP');
-  const owned=p.claims.filter(c=>c.operationId===op.operationId);
+  const owned=claimsByOperation.get(op.operationId)??[],ownedRecords=new Map(owned.map(c=>[c.importRecordId,c]));
   if(op.action==='IMPORT_INITIALIZE_BARCODE_SCHEMES'){
    must(!bound&&owned.length===0&&op.checkpoint.cursor===checkpoint.cursor&&capture(op.checkpoint.counts)===capture(checkpoint.counts)&&capture(op.checkpoint.expected)===capture(checkpoint.expected),'PRODUCTION_CONTINUATION26_INITIALIZATION_ORDER');checkpoint=op.checkpoint;continue;
   }
@@ -112,7 +117,7 @@ export function selectProductionContinuation26({binding,commands,progress}){
   }else if(command.action==='IMPORT_CHUNK'){
    must(bound&&owned.length===command.items.length,'PRODUCTION_CONTINUATION26_CLAIM_SCOPE');
    for(const item of command.items){const ledger=item.targetType==='INVENTORY_LEDGER',recordId=ledger?stableImportId('source',binding.fixedSourceNamespace,item.sourceEntityType,item.sourceKey):item.nativeRecord?.id,
-     targetId=ledger?stableImportId('baseline',binding.fixedSourceNamespace,item.sourceEntityType,item.sourceKey):item.targetId,claim=owned.find(c=>c.importRecordId===recordId),record=recordMap.get(recordId);
+     targetId=ledger?stableImportId('baseline',binding.fixedSourceNamespace,item.sourceEntityType,item.sourceKey):item.targetId,claim=ownedRecords.get(recordId),record=recordMap.get(recordId);
     must(claim&&record&&!used.has(recordId)&&claim.targetType===item.targetType&&claim.targetId===targetId&&claim.checkpointSequence===op.checkpoint.sequence
      &&record.targetType===item.targetType&&record.targetId===targetId&&record.sourceEntityType===item.sourceEntityType&&record.sourceKey===item.sourceKey
      &&record.sourceRecordHash===item.sourceRecordHash&&record.sourceFileRef===item.sourceFileRef,'PRODUCTION_CONTINUATION26_ITEM_CONFLICT');used.add(recordId);nextCounts[item.targetType]++;
@@ -127,7 +132,7 @@ export function selectProductionContinuation26({binding,commands,progress}){
   checkpoint=after;prefix++;
  }
  must(capture(checkpoint)===capture(p.checkpoint)&&used.size===p.claims.length&&p.claims.length===checkpoint.cursor
-  &&targets.every(t=>p.claims.filter(c=>c.targetType===t).length===checkpoint.counts[t])&&bound===(p.fullBinding!==null),'PRODUCTION_CONTINUATION26_CURRENT_CHECKPOINT');
+  &&targets.every(t=>(counts.get(t)??0)===checkpoint.counts[t])&&bound===(p.fullBinding!==null),'PRODUCTION_CONTINUATION26_CURRENT_CHECKPOINT');
  const imported=prefix===original.length;must((p.status==='IMPORTED')===imported,'PRODUCTION_CONTINUATION26_PUBLICATION_CONFLICT');
  const remaining=original.slice(prefix);if(remaining.length)must(remaining[0].expectedSequence===checkpoint.sequence&&remaining[0].expectedCursor===checkpoint.cursor,'PRODUCTION_CONTINUATION26_CURRENT_CHECKPOINT');
  return{remaining,prefix,imported,result:imported?structuredClone(p.committedOperations.at(-1).result):null};
@@ -146,20 +151,40 @@ export async function* pendingProductionStageRows26({group,readRows,proved,autho
  }
  yield* readRows();
 }
+// An operation owns this immutable copy and its indices. No process-wide cache
+// or later snapshot can supply membership to this source session.
+function nativeStageSelector26(progress){
+ const p=structuredClone(progress),records=p.records??[],byId=new Map(),bySource=new Map(),warehouses=new Map();
+ for(const [ordinal,record]of records.entries()){
+  const entry={ordinal,record},key=capture([record.sourceEntityType,record.sourceKey]);
+  if(!byId.has(record.importRecordId))byId.set(record.importRecordId,entry);
+  if(!bySource.has(key))bySource.set(key,entry);
+ }
+ for(const warehouse of p.warehouses??[]){
+  let values=warehouses.get(warehouse.targetId);if(!values)warehouses.set(warehouse.targetId,values=new Set());values.add(capture(warehouse.nativeRecord));
+ }
+ const hasSku=records.some(r=>r.targetType==='SKU');
+ return(group,payload)=>{
+  if(!['PARTIES','SKUS'].includes(group))return payload;
+  const prove=(source,targetType,targetId,record)=>{
+   const id=byId.get(record?.id),sourceEntry=bySource.get(capture([targetType,source.sourceKey]));
+   // Preserve the original find's first match across its two alternatives.
+   const found=(!id?sourceEntry:!sourceEntry?id:id.ordinal<sourceEntry.ordinal?id:sourceEntry)?.record;
+   if(!found)return false;
+   must(record&&found.importRecordId===record.id&&found.targetType===targetType&&found.targetId===targetId
+    &&found.sourceEntityType===source.entityType&&found.sourceKey===source.sourceKey&&found.sourceRecordHash===source.rowSha256&&found.sourceFileRef===source.fileRef,
+    'PRODUCTION_CONTINUATION26_STAGE_CONTENT_CONFLICT');
+   if(targetType==='WAREHOUSE')must(warehouses.get(targetId)?.has(capture(record)),'PRODUCTION_CONTINUATION26_STAGE_CONTENT_CONFLICT');
+   return true;
+  };
+  if(group==='SKUS')return hasSku&&prove(payload.canonicalSource,'SKU',payload.nativeSku.id,payload.importRecord)?null:payload;
+  const rows=payload.rows.filter(row=>row.entity!=='WAREHOUSE'||!prove(row.input.source,'WAREHOUSE',row.nativeId,row.input.warehouseRecord));
+  return rows.length===payload.rows.length?payload:rows.length?prepareNativePartyImportChunk(rows.map(row=>row.input)):null;
+ };
+}
 export function unclaimedNativeStage26({group,payload,progress}){
  if(!['PARTIES','SKUS'].includes(group))return payload;
- const records=progress.records??[],prove=(source,targetType,targetId,record)=>{
-  const found=records.find(r=>r.importRecordId===record?.id||r.sourceEntityType===targetType&&r.sourceKey===source.sourceKey);
-  if(!found)return false;
-  must(record&&found.importRecordId===record.id&&found.targetType===targetType&&found.targetId===targetId
-   &&found.sourceEntityType===source.entityType&&found.sourceKey===source.sourceKey&&found.sourceRecordHash===source.rowSha256&&found.sourceFileRef===source.fileRef,
-   'PRODUCTION_CONTINUATION26_STAGE_CONTENT_CONFLICT');
-  if(targetType==='WAREHOUSE')must(progress.warehouses.some(w=>w.targetId===targetId&&capture(w.nativeRecord)===capture(record)),'PRODUCTION_CONTINUATION26_STAGE_CONTENT_CONFLICT');
-  return true;
- };
- if(group==='SKUS')return records.some(r=>r.targetType==='SKU')&&prove(payload.canonicalSource,'SKU',payload.nativeSku.id,payload.importRecord)?null:payload;
- const rows=payload.rows.filter(row=>row.entity!=='WAREHOUSE'||!prove(row.input.source,'WAREHOUSE',row.nativeId,row.input.warehouseRecord));
- return rows.length===payload.rows.length?payload:rows.length?prepareNativePartyImportChunk(rows.map(row=>row.input)):null;
+ return nativeStageSelector26(progress)(group,payload);
 }
 /** Inputs are DATA only. Authority is separately supplied reviewed executable
  * code, never derived from the input/CORE/source manifest's own checksum.
@@ -602,6 +627,7 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
     if(progress.status==='IMPORTED')return structuredClone(progress.committedOperations.at(-1).result);
     const stagedPrefixGroups=progress.stagedPrefixProof22==null?new Set():new Set(['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS']);
     if(stagedPrefixGroups.size)await checked(a.assertStagedPrefixContinuation26,structuredClone(progress));
+    const pendingStage=nativeStageSelector26(progress);
     for(const group of sourceGroups){const [kind,iterator]=stages[group],reader=readers.get(group);
      for await(const original of pendingProductionStageRows26({group,readRows:()=>reader[iterator](),proved:stagedPrefixGroups.has(group),authorize:payload=>authorizeStep({kind,payload})})){
       active();let payload=original;
@@ -610,7 +636,7 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
        payload=prepareNativePartyImportChunk(rows.map(row=>row.input));
       }
       let step={kind,payload};await authorizeStep(step);active();
-      const pending=unclaimedNativeStage26({group,payload,progress});if(pending===null)continue;
+      const pending=pendingStage(group,payload);if(pending===null)continue;
       if(pending!==payload){step={kind,payload:pending};await authorizeStep(step);active();}
       yield step;
      }
@@ -932,7 +958,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
   &&hash(binding.authorizedPayloadHash)&&binding.authorizedPayloadHash!==binding.coreSourceDigest,'PRODUCTION_AUTHORITY26_FULL_BINDING_REQUIRED');
  const externalPin=process.env.NAIJUE_IMPORT_EXECUTION26_AUTHORIZATION_SHA256,authorization=fixed.executionAuthorization;
  must(hash(externalPin)&&authorization?.sha256===externalPin,'PRODUCTION_AUTHORITY26_C_EXECUTION_PIN_REQUIRED');
- let closed=false,closing,job,grant;const files=new Map(),resources=new Set(),pending=new Set(),commands=new Map(),captured=new Map();
+ let closed=false,closing,job,grant,continuationSnapshot;const files=new Map(),resources=new Set(),pending=new Set(),commands=new Map(),captured=new Map();
  const inputDigest=capture(fixed),dataDigest=capture(Object.fromEntries(['version','binding','core','closureScope','warehouses','producers'].map(k=>[k,fixed[k]])));
  const active=()=>must(!closed&&!signal.aborted&&(!job||Date.now()<Date.parse(job.deadlineUtc)),'PRODUCTION_AUTHORITY26_CLOSED');
  const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
@@ -943,7 +969,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
  async function verify(){active();for(const path of [inputFile,authorization.path,grant.job.path])await unchanged(path);active();}
  async function close(){if(closing)return closing;closed=true;closing=(async()=>{const failures=[];
   await Promise.allSettled([...pending]);for(const resource of [...resources].reverse())try{await resource.close();}catch(error){failures.push(error);}
-  resources.clear();captured.clear();commands.clear();files.clear();if(failures.length)throw new AggregateError(failures,'Production authority26 cleanup failed');})();return closing;}
+  resources.clear();captured.clear();commands.clear();files.clear();continuationSnapshot=undefined;if(failures.length)throw new AggregateError(failures,'Production authority26 cleanup failed');})();return closing;}
  async function owned(openSource){active();let operation;operation=(async()=>{const raw=await openSource();
   must(typeof raw?.close==='function','PRODUCTION_AUTHORITY26_SOURCE_REQUIRED');let closingResource;
   const resource={...raw,close(){if(!closingResource)closingResource=Promise.resolve().then(()=>raw.close());return closingResource;}};
@@ -1038,6 +1064,12 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
   }
   const originalCaptured=originalCapturedSourceIO26({binding,fixed,signal,verify,active,code,owned,captured});
   let productSource;
+  const continuationCommands=[...byPhase.BIND,...byPhase.ACCOUNT,...byPhase.PUBLISH],phaseKeys=Object.fromEntries(Object.entries(byPhase).map(([phase,commands])=>[phase,new Set(commands.map(c=>c.requestKey))]));
+  const selectContinuation=progress=>{
+   const key=capture(progress);
+   if(continuationSnapshot?.key!==key)continuationSnapshot={key,selected:selectProductionContinuation26({binding,commands:continuationCommands,progress})};
+   return continuationSnapshot.selected;
+  };
   const authority={
    ...(adopted?{async adoptedClosure(){await adopted.verify();return adopted;}}:{}),
    ...(prefix22?{async captureStagedPrefixBinding26(command){
@@ -1051,7 +1083,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
 
    ...(prefix22?{async assertStagedPrefixContinuation26(progress){
     await verify();await adopted.verify();await unchanged(grant.stagedPrefixBinding26.path);await unchanged(prefix22.initializationRecord.path);
-    const selected=selectProductionContinuation26({binding,commands:[...byPhase.BIND,...byPhase.ACCOUNT,...byPhase.PUBLISH],progress});
+    const selected=selectContinuation(progress);
     const p=progress.stagedPrefixProof22,command=byPhase.BIND[0],i=initializationCommand;
     must(selected.prefix===1&&!selected.imported&&progress.status==='STAGED'&&p?.version==='CORE_STAGED_PREFIX_BIND_V22'
      &&capture(p.binding)===capture({...Object.fromEntries(['batchId','actorAccountId','fixedSourceNamespace','cutoffAt','selectionSha256'].map(k=>[k,binding[k]])),commandHash:requestHash(command)})
@@ -1088,14 +1120,14 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
     return{...structuredClone(projection),async verify(){await verify();await unchanged(fixed.core.coreProjection.path);}};
    },
    async *mainCommands(phase,{binding:actual,core,progress}){await verify();must(Object.hasOwn(byPhase,phase)&&capture(actual)===capture(binding)&&capture(core)===capture(fixed.core),'PRODUCTION_AUTHORITY26_CURRENT_CHECKPOINT');
-    const selected=selectProductionContinuation26({binding,commands:[...byPhase.BIND,...byPhase.ACCOUNT,...byPhase.PUBLISH],progress});
+    const selected=selectContinuation(progress);
     const expected=new Map(warehouses.map(w=>[w.nativeRecord?.id,w]));
     must(progress.warehouses.length+progress.remainingWarehouses.length===warehouses.length,'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');
     const seen=new Set();for(const item of [...progress.warehouses,...progress.remainingWarehouses]){must(!seen.has(item.nativeRecord?.id)&&capture(expected.get(item.nativeRecord?.id))===capture(item),'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');seen.add(item.nativeRecord.id);}
     const committed=new Set(progress.warehouses.map(item=>item.nativeRecord.id)),remaining=new Map(progress.remainingWarehouses.map(item=>[item.nativeRecord.id,item]));
     const accounted=selected.remaining.filter(c=>c.action==='IMPORT_CHUNK').flatMap(command=>command.items.filter(item=>item.targetType==='WAREHOUSE'));
     must(accounted.length===remaining.size&&accounted.every(item=>!committed.has(item.nativeRecord?.id)&&capture(item)===capture(remaining.get(item.nativeRecord.id))),'PRODUCTION_AUTHORITY26_WAREHOUSE_IDENTITY');
-    for(const command of selected.remaining.filter(c=>byPhase[phase].some(original=>original.requestKey===c.requestKey))){await mainAllowed(binding.actorAccountId,command);yield structuredClone(command);active();}
+    for(const command of selected.remaining.filter(c=>phaseKeys[phase].has(c.requestKey))){await mainAllowed(binding.actorAccountId,command);yield structuredClone(command);active();}
    },
    async authorizeProductSource(payload){await verify();const options=fixed.producers.PRODUCTS.productEvidenceSource;must(options,'PRODUCTION_AUTHORITY26_PRODUCT_EVIDENCE_REQUIRED');
     productSource??=await owned(()=>openReviewedProductEvidenceSource(structuredClone(options),{resolveFile:sourceFileResolver26(fixed.producers.PRODUCTS)}));await productSource.authorize(payload);active();

@@ -7002,9 +7002,10 @@
           "scripts/release/deploy-candidate.py",
           "scripts/release/boot-entry.py",
           "scripts/release/release-file-contract.test.mjs",
-          "config/release-contract.json"
+          "config/release-contract.json",
+          "scripts/release/pack.test.mjs"
         ],
-        "state": "C_SOLE_LOCAL_WRITER_T45_EXPLICIT_HANDOFF_20261028",
+        "state": "C_SOLE_WRITER_B09_EXACT_MEDIA_SOURCE_ALLOWLIST_FIXED_2CHECKS_PASS_H04_UNFINISHED",
         "scope": "Existing Fullrelease mechanical factsJS/Python shared;no genericplatform/noenvironmentexecution;T45stillsolebuildserverexecutor"
       },
       "D3_P03": {
@@ -7072,7 +7073,7 @@
           "scripts/import-v3/production-source-host.mjs",
           "scripts/import-v3/production-source-host.test.mjs"
         ],
-        "state": "ACTIVE_ORIGINAL_D3_AFTER_P03_QB_SOURCE846_PASS",
+        "state": "HANDED_BACK_SOURCE850_READONLY_PENDING_QB",
         "scope": "V2xmin exact reviewed runtime consumer and currentprogress continuation indices only; oldV1 unchanged; no change finalstage/executiongrant/DB writecontract without explicit delta; noPG/actualimport"
       }
     },
