@@ -1926,6 +1926,20 @@
       ],
       "owner": "D1 existing history PostgreSQL authorization adapter; C concrete assembly owner",
       "reason": "C 2026-10-29 inspected actual role and three consumers: file implements HistoryRevisionDependencies.authorization, contains no HTTP/Fastify handler, and uses same-history PG fact fragments. Exact existing-role exception, not cross-domain HTTP persistence access; no source move/duplicate factory/SQL or transaction change."
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/catalogue-completeness.ts",
+      "typeOnly": false,
+      "owner": "C exact assembly / D1 A01ApiFactory891",
+      "reason": "Approved A01 concrete maintenance assembly only: createMaintainedCatalogue26TransactionProof; original active context/client/runtime proof; no HTTP-handler wildcard"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/product-maintenance-store.ts",
+      "typeOnly": true,
+      "owner": "C exact assembly / D1 A01ApiFactory891",
+      "reason": "Approved A01 concrete maintenance assembly only: ProductCapacityFactory; original active context/client/runtime proof; no HTTP-handler wildcard"
     }
   ],
   "sharedClientEdges": [

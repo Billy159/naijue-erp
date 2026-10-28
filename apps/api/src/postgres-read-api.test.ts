@@ -23,6 +23,11 @@ import type { SalesListQuery } from "../../../packages/application/src/sales-que
 import { createPostgresReadApi } from "./postgres-read-api.ts";
 import type { PostgresReadApiAuthorization, PostgresReadApiExplicitAuthorization, PostgresReadApiOptions } from "./postgres-read-api.ts";
 import { ids, sid } from "../../../tests/support/synthetic-fixtures.ts";
+import { createSourceConfirmedProductCapacityFactory } from './postgres-read-api.ts';
+import { PostgresMaintenanceCommandUnitOfWork } from '../../../adapters/postgres/src/maintenance-command-unit-of-work.ts';
+import type { MaintenanceCompletion } from '../../../packages/application/src/maintenance-commit-ports.ts';
+import type { NativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
+import { PostgresProductMaintenanceUnitOfWork } from '../../../adapters/postgres/src/product-maintenance-store.ts';
 
 const ORIGIN = "https://synthetic-erp.invalid";
 const TIME = "2026-10-20T12:00:00.000Z";
@@ -559,4 +564,39 @@ test('H06 exact issuer readiness rechecks original same-pool identity, fails on 
  const api=await createPostgresRuntime26ApplicationApi({...currentOptions(),nativeReadExtensions:{profile:'source-confirmed-r1-v1'}},{reviewFile,trustedReviewSha256:hash(text)},()=>driver);
  try{const initial=acquired;assert.equal(await api.readiness!(),true);assert.equal(acquired,initial+1);assert.equal(acquired,released);role='WRONG_ROLE';assert.equal(await api.readiness!(),false);assert.equal(acquired,released);}finally{await api.close();}
  const closed=acquired;assert.equal(await api.readiness!(),false);assert.equal(acquired,closed);assert.equal(ended,1);
+});
+test('A01 concrete capacity factory borrows only the original active maintenance client, reuses proof within callback and never caches across transactions',async()=>{
+  let leases=0,releases=0,reads=0,checks=0;const sqls:string[]=[];
+  const client={async query(sql:string){sqls.push(sql);if(sql.includes('maintained-catalogue26:new-capacity')){reads++;return{rows:[{occupied:false}],rowCount:1};}assert.ok(['BEGIN ISOLATION LEVEL READ COMMITTED','COMMIT','ROLLBACK'].includes(sql));return{rows:[],rowCount:0};},release(){releases++;}};
+  const pool={async connect(){leases++;return client;}},driver=new PostgresMaintenanceCommandUnitOfWork(pool);
+  const runtime:NativeRuntime26Capability={profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(actual,purpose){assert.equal(actual,client);assert.equal(purpose,'INVENTORY_ADMISSION');checks++;}};
+  const factory=createSourceConfirmedProductCapacityFactory(pool,runtime);
+  const completion:MaintenanceCompletion={operationId:sid('operation',19000),actorAccountId:ids.account,requestKey:'a01-new-root',requestHash:'a'.repeat(64),kind:'PRODUCT',action:'CREATE',targetId:sid('product',19001),oldVersion:null,newVersion:1,beforeValues:null,afterValues:{version:1,name:'合成商品'},completedAt:TIME};
+  let escaped:((value:MaintenanceCompletion)=>Promise<void>)|undefined;
+  await driver.transaction(async context=>{escaped=factory(context);await escaped(completion);await escaped(completion);assert.equal(leases,1);assert.equal(reads,1);});
+  assert.equal(releases,1);assert.equal(checks,2);const previous=sqls.length;
+  await assert.rejects(escaped!(completion),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(sqls.length,previous);assert.equal(checks,2);
+  await driver.transaction(async context=>{await factory(context)(completion);});assert.equal(reads,2);assert.equal(leases,2);assert.equal(releases,2);
+  assert.ok(sqls.every(sql=>!/^INSERT|^UPDATE|^DELETE/.test(sql)),'Factory checks capacity; evidence/root writers retain their existing transaction roles');
+});
+test('A01 capacity factory rejects foreign/stale context before SQL, and unknown capacity rolls back original transaction',async()=>{
+  let queried=0;const client={async query(sql:string){queried++;if(sql.includes('new-capacity'))return{rows:[{occupied:true}],rowCount:1};return{rows:[],rowCount:0};},release(){}};
+  const pool={async connect(){return client;}},other={async connect(){assert.fail('No second pool connection permitted');return client;}},driver=new PostgresMaintenanceCommandUnitOfWork(pool);
+  const runtime:NativeRuntime26Capability={profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(actual){assert.equal(actual,client);}};
+  const foreign=createSourceConfirmedProductCapacityFactory(other,runtime),original=createSourceConfirmedProductCapacityFactory(pool,runtime);
+  await driver.transaction(async context=>{const before=queried;assert.throws(()=>foreign(context),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(queried,before);});
+  const completion:MaintenanceCompletion={operationId:sid('operation',19002),actorAccountId:ids.account,requestKey:'a01-occupied-root',requestHash:'a'.repeat(64),kind:'PRODUCT',action:'CREATE',targetId:sid('product',19003),oldVersion:null,newVersion:1,beforeValues:null,afterValues:{version:1},completedAt:TIME};
+  await assert.rejects(driver.transaction(async context=>original(context)(completion)),{code:'PRODUCT_EVIDENCE_CAPACITY_NOT_READY'});
+});
+test('A01 actual product UOW forwards concrete factory after original root lock; missing root CREATE capacity is available on one lease',async()=>{
+  const sqls:string[]=[];let borrowed=0,released=0;
+  const client={async query(sql:string){sqls.push(sql);return sql.includes('new-capacity')?{rows:[{occupied:false}],rowCount:1}:{rows:[],rowCount:0};},release(){released++;}};
+  const pool={async connect(){borrowed++;return client;}},driver=new PostgresMaintenanceCommandUnitOfWork(pool);
+  const runtime:NativeRuntime26Capability={profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(actual){assert.equal(actual,client);}};
+  const unitOfWork=new PostgresProductMaintenanceUnitOfWork(driver,{deletionGuard:null,capacity:createSourceConfirmedProductCapacityFactory(pool,runtime)});
+  const completion={operationId:sid('operation',19004),actorAccountId:ids.account,requestKey:'a01-create-through-uow',requestHash:'a'.repeat(64),kind:'PRODUCT' as const,action:'CREATE' as const,targetId:sid('product',19005),oldVersion:null,newVersion:1,beforeValues:null,afterValues:{version:1},completedAt:TIME};
+  await unitOfWork.transaction(async tx=>{assert.equal(await tx.load(completion.targetId),undefined);assert.ok(tx.assertPendingCapacity);await tx.assertPendingCapacity(completion);});
+  assert.equal(borrowed,1);assert.equal(released,1);const root=sqls.findIndex(sql=>sql.includes('FROM naijue_erp.product WHERE id=$1::uuid FOR UPDATE'));
+  const capacity=sqls.findIndex(sql=>sql.includes('new-capacity'));assert.ok(root>0&&capacity>root);assert.equal(sqls.at(-1),'COMMIT');
+  assert.equal(sqls.some(sql=>/^INSERT|^UPDATE|^DELETE/.test(sql)),false);
 });

@@ -13,8 +13,21 @@ import { sessionTokenHash } from "../../../packages/authentication/src/service.t
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { ids, sid, SYNTHETIC_RULES } from "../../../tests/support/synthetic-fixtures.ts";
 import { createSourceConfirmedTransferAuthorization, createSourceConfirmedTransferReferences } from "../../../packages/application/src/transfer-policy.ts";
+import { readFileSync } from 'node:fs';
+import ts from 'typescript';
 
 const origin = "https://127.0.0.1:55601";
+test('A01 current concrete factory wires both standalone product providers; borrowed native SAVE keeps parent capacity proof',()=>{
+  const source=ts.createSourceFile('postgres-read-api.ts',readFileSync(new URL('./postgres-read-api.ts',import.meta.url),'utf8'),ts.ScriptTarget.Latest,true);
+  const constructions:ts.NewExpression[]=[];const walk=(node:ts.Node)=>{if(ts.isNewExpression(node)&&node.expression.getText(source)==='PostgresProductMaintenanceUnitOfWork')constructions.push(node);ts.forEachChild(node,walk);};walk(source);
+  assert.equal(constructions.length,2,'Both original ordinary and media-capable product providers remain covered');
+  for(const node of constructions){const options=node.arguments?.[1];assert.ok(options&&ts.isObjectLiteralExpression(options));
+    const capacity=options.properties.find(property=>ts.isPropertyAssignment(property)&&property.name.getText(source)==='capacity');assert.ok(capacity&&ts.isPropertyAssignment(capacity));
+    assert.equal(capacity.initializer.getText(source),'createSourceConfirmedProductCapacityFactory(pool, issuer.runtime26)');}
+  // This is source wiring evidence only. Existing independent D2 same-client protocol tests exercise the borrowed seam itself.
+  const borrowed=readFileSync(new URL('../../../adapters/postgres/src/native-document-specification.ts',import.meta.url),'utf8');
+  assert.match(borrowed,/assertPendingCapacity\s*:\s*[^\n]*context\.catalogue\.assertPendingCapacity/);
+});
 const base = (): PostgresApplicationApiOptions => ({ postgres: {
   target: { host: "synthetic-not-connected.invalid", port: 5432, database: "SYNTHETIC_ONLY", user: "SYNTHETIC_ONLY", password: "SYNTHETIC_NOT_A_CREDENTIAL", ssl: false },
   max: 2, maxPendingAcquisitions: 2, connectionTimeoutMillis: 1000, acquisitionTimeoutMillis: 1000, queryTimeoutMillis: 1000,

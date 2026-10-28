@@ -1,6 +1,8 @@
 import { validateCoreSourceMembers } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import type { CoreSourceMembers } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import type { NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
+import { createMaintainedCatalogue26TransactionProof } from '../../../adapters/postgres/src/catalogue-completeness.ts';
+import type { ProductCapacityFactory } from '../../../adapters/postgres/src/product-maintenance-store.ts';
 import { AsyncLocalStorage } from "node:async_hooks";
 import { randomUUID } from "node:crypto";
 import { createSettingsAuditHttpPlugin } from "./settings-audit-http.ts";
@@ -142,6 +144,15 @@ export interface PostgresReadApiOptions {
   /** Separate trusted opt-in: absence (including native profile alone) installs no CURRENT routes.
    * Proposals only; grants never enable commands or create a listener. */
   readonly currentForms?: { readonly authorization: CurrentFormAuthorization };
+}
+/** Concrete assembly only: one proof per ORIGINAL active maintenance callback, no pool lease or request cache. */
+export function createSourceConfirmedProductCapacityFactory(pool: PgSalesPool, runtime: NativeRuntime26Capability): ProductCapacityFactory {
+  return context => {
+    const client = maintenanceContextClient(context, pool);
+    const active = () => { requireDomain(maintenanceContextClient(context, pool) === client, 'TRANSACTION_SCOPE', 'Original product capacity client required'); };
+    const proof = createMaintainedCatalogue26TransactionProof(client, runtime, active);
+    return async completion => { active(); await proof.assertPendingCapacity(completion); active(); };
+  };
 }
 export interface PostgresReadApi {
   /** Ready for inject or an explicitly configured host. Never listening on return. */
@@ -645,7 +656,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       // normal imageChanges contract still rejects absent media capabilities.
       const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
       app.register(createProductMaintenanceHttpPlugin({ authenticate, dependencies: {
-        unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, seasonCapability: issuer.productSeasonArray }),
+        unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, seasonCapability: issuer.productSeasonArray,
+          capacity: createSourceConfirmedProductCapacityFactory(pool, issuer.runtime26) }),
         now: host.now, newId: () => randomUUID(), media: host.media } }));
       if (capabilities.coreInitializationRead || extensions === null) app.register(createProductManagementQueryHttpPlugin({ authenticate,
         dependencies: { authorization: createSourceConfirmedApplicationReadAuthorization(pool).productManagement,
@@ -689,7 +701,8 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       if (issuer === null) throw new TypeError("R3 requires the original exact26 issuer");
       const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
       const originalWork = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null,
-        seasonCapability: issuer.productSeasonArray, mediaWriteCapability: issuer.productMediaWrite, imageColorSwapCapability: issuer.imageColorSwap });
+        seasonCapability: issuer.productSeasonArray, mediaWriteCapability: issuer.productMediaWrite, imageColorSwapCapability: issuer.imageColorSwap,
+        capacity: createSourceConfirmedProductCapacityFactory(pool, issuer.runtime26) });
       // consume runs within the original product transaction. It must not acquire
       // a second lease (including when the configured pool has just one slot).
       const currentWork = new AsyncLocalStorage<{ tx: ProductMaintenanceTransaction; active: boolean }>();
