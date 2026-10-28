@@ -6,7 +6,7 @@ import { PostgresStaffMaintenanceUnitOfWork } from "../adapters/postgres/src/sta
 import { PostgresMaintenanceCommandUnitOfWork } from "../adapters/postgres/src/maintenance-command-unit-of-work.ts";
 import { actor, sid } from "./support/synthetic-fixtures.ts";
 const target = sid("staff", 20), accountId = sid("account", 10), stamp = "2026-10-21T01:00:00.123456Z";
-function setup(options: { otherAdmin?: boolean; role?: string; targetRole?: string; hallEnabled?: boolean; staleAccount?: boolean; receiptFault?: boolean; commitFault?: boolean } = {}) {
+function setup(options: { otherAdmin?: boolean; role?: string; targetRole?: string; hallEnabled?: boolean; staleAccount?: boolean; receiptFault?: boolean; commitFault?: boolean; passwordHash?: () => Promise<string> } = {}) {
   const calls: { sql: string; values: unknown[] }[] = [], releases: unknown[] = []; let sequence = 100, connections = 0;
   const driver = new PostgresMaintenanceCommandUnitOfWork({ async connect() { connections++; return { async query(sql: string, values: unknown[] = []) {
     calls.push({ sql, values: structuredClone(values) });
@@ -22,7 +22,7 @@ function setup(options: { otherAdmin?: boolean; role?: string; targetRole?: stri
     if (sql === "COMMIT" && options.commitFault) throw Error("UNKNOWN COMMIT");
     return { rows: [], rowCount: sql.startsWith("UPDATE") || sql.startsWith("INSERT") ? 1 : 0 };
   }, release(error?: unknown) { releases.push(error); } }; } });
-  return { calls, releases, connections: () => connections, service: createStaffMaintenanceService({ unitOfWork: new PostgresStaffMaintenanceUnitOfWork(driver), credentials: null, now: () => "2026-10-22T08:30:00Z", newId: kind => sid(kind, sequence++) }) };
+  return { calls, releases, connections: () => connections, service: createStaffMaintenanceService({ unitOfWork: new PostgresStaffMaintenanceUnitOfWork(driver), credentials: options.passwordHash ? {passwords:{hash:options.passwordHash,async verify(){return false;}},credentialRequestTag:()=>"a".repeat(64),assertNewPassword:()=>undefined} : null, now: () => "2026-10-22T08:30:00Z", newId: kind => sid(kind, sequence++) }) };
 }
 const leave = { action: "LEAVE", requestKey: "leave", id: target, expectedVersion: 4 };
 test("staff PG protocol: global/key/identity then account/staff locks; root, child and sessions share one original transaction", async () => {
@@ -46,4 +46,12 @@ test("staff PG protocol: account CAS or receipt failure rolls back the original 
 });
 test("staff PG protocol: uncertain COMMIT discards connection without rollback or automatic replay", async () => {
   const f = setup({ commitFault: true }); await assert.rejects(f.service.execute(actor, leave), /UNKNOWN COMMIT/); assert.equal(f.calls.at(-1)!.sql, "COMMIT"); assert.ok(!f.calls.some(c => c.sql === "ROLLBACK")); assert.equal(f.connections(), 1); assert.equal(f.releases.length, 1); assert.ok(f.releases[0] instanceof Error);
+});
+
+test("staff PG credential protocol: preliminary key/current-authority transaction releases before hash; final original transaction owns all writes",async()=>{
+  const encoded=`naijue:scrypt:1:32768:8:1:${"1".repeat(32)}:${"2".repeat(128)}`;
+  const f=setup({passwordHash:async()=>{assert.equal(f.connections(),1);assert.equal(f.releases.length,1);assert.equal(f.calls.at(-1)!.sql,"COMMIT");assert.ok(!f.calls.some(c=>/^INSERT|^UPDATE/.test(c.sql)));return encoded;}});
+  const result=await f.service.execute(actor,{action:"EDIT",requestKey:"p02-password-prepare",id:target,expectedVersion:4,values:{name:"合成员工",role:"ADMIN",hallId:null,contact:null},account:{id:accountId,expectedVersion:9,loginName:"SOURCE LOGIN",loginEnabled:true,password:"synthetic-password-only"}});
+  assert.equal(result.version,5);assert.equal(f.connections(),2);assert.equal(f.releases.length,2);const first=f.calls.findIndex(c=>c.sql==="COMMIT");assert.ok(f.calls.filter(c=>/^INSERT|^UPDATE/.test(c.sql)).every(c=>f.calls.indexOf(c)>first));
+  assert.equal(f.calls.filter(c=>c.sql.includes("maintenance:complete")).length,1);assert.equal(f.calls.at(-1)!.sql,"COMMIT");
 });

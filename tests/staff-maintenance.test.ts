@@ -11,12 +11,12 @@ import { actor, sid } from "./support/synthetic-fixtures.ts";
 const password = "SYNTHETIC-ONLY-PASSWORD", encoded = `naijue:scrypt:1:32768:8:1:${"1".repeat(32)}:${"2".repeat(128)}`;
 const values = { name: "合成员工", role: "WAREHOUSE", hallId: null, contact: null };
 const create = { action: "CREATE", requestKey: "create", values, account: { id: null, expectedVersion: null, loginName: "EXACT LOGIN", loginEnabled: true, password } };
-function fixture(credentialsAvailable = true, prepareMode: "ready" | "missing" | "fail" = "ready") {
-  let sequence = 100, allow = true, fault = false, hashCalls = 0, revokes = 0;
+function fixture(credentialsAvailable = true, prepareMode: "ready" | "missing" | "fail" = "ready", hashWork?: () => Promise<string>) {
+  let sequence = 100, allow = true, fault = false, hashCalls = 0, revokes = 0, activeTransactions = 0;
   const rows = new Map<string, StaffMaintenanceAggregate>(), receipts = new Map<string, MaintenanceReceipt>(), audit: MaintenanceCompletion[] = [], hashes = new Map<string, string>();
-  const credentials = { passwords: { async hash() { hashCalls++; return encoded; }, async verify() { return false; } }, credentialRequestTag: createNodeCredentialRequestTag(new Uint8Array(32).fill(6)), assertNewPassword: createSourceAuthenticationPolicy(3600).assertNewPassword };
+  const credentials = { passwords: { async hash() { assert.equal(activeTransactions, 0, "Credential calculation must not retain the maintenance transaction"); hashCalls++; return hashWork ? hashWork() : encoded; }, async verify() { return false; } }, credentialRequestTag: createNodeCredentialRequestTag(new Uint8Array(32).fill(6)), assertNewPassword: createSourceAuthenticationPolicy(3600).assertNewPassword };
   const dependencies: StaffMaintenanceDependencies = { now: () => "2026-10-22T08:30:00Z", newId: kind => sid(kind, sequence++), credentials: credentialsAvailable ? credentials : null, unitOfWork: { async transaction(work) {
-    let prepared: MaintenanceCompletion | undefined;
+    activeTransactions++; let prepared: MaintenanceCompletion | undefined;
       const before = structuredClone(rows), prior = structuredClone(receipts), oldHashes = structuredClone(hashes), count = audit.length, oldRevokes = revokes;
     try { return await work({ evidence: {
       async assertAllowed() { requireDomain(allow, "FORBIDDEN", "SYNTHETIC DENIED"); }, async getReceipt(_actor, key) { requireDomain(allow, "FORBIDDEN", "SYNTHETIC DENIED"); return receipts.get(key); },
@@ -25,7 +25,7 @@ function fixture(credentialsAvailable = true, prepareMode: "ready" | "missing" |
     }, async load(id) { return structuredClone(rows.get(id)); }, async validateChange() {},
     async putStaff(previous, next) { assert.ok(prepared, "audit must precede business mutation"); rows.set(next.id, { staff: structuredClone(next), account: previous ? rows.get(previous.id)!.account : null }); },
     async putAccount(previous, next, hash) { const row = rows.get(next.staffId)!; rows.set(next.staffId, { staff: row.staff, account: structuredClone(next) }); if (hash) hashes.set(next.id, hash); if (previous) revokes++; }
-    }); } catch (error) { rows.clear(); for (const [k, v] of before) rows.set(k, v); receipts.clear(); for (const [k, v] of prior) receipts.set(k, v); hashes.clear(); for (const [k, v] of oldHashes) hashes.set(k, v); audit.length = count; revokes = oldRevokes; throw error; }
+    }); } catch (error) { rows.clear(); for (const [k, v] of before) rows.set(k, v); receipts.clear(); for (const [k, v] of prior) receipts.set(k, v); hashes.clear(); for (const [k, v] of oldHashes) hashes.set(k, v); audit.length = count; revokes = oldRevokes; throw error; } finally { activeTransactions--; }
   } } };
   return { dependencies, service: createStaffMaintenanceService(dependencies), rows, receipts, audit, hashes, hashCalls: () => hashCalls, revokes: () => revokes, revoke: () => { allow = false; }, fault: () => { fault = true; } };
 }
@@ -76,4 +76,11 @@ test("staff write: native account/root versions, strict inputs, policy, current 
   await assert.rejects(f.service.execute(actor, { action: "LEAVE", requestKey: "stale-staff", id: saved.targetId, expectedVersion: 2 }), { code: "VERSION_CONFLICT" });
   f.fault(); await assert.rejects(f.service.execute(actor, { action: "LEAVE", requestKey: "fault", id: saved.targetId, expectedVersion: 1 })); assert.deepEqual(f.rows, previous); assert.equal(f.revokes(), 0); assert.ok(!f.receipts.has("fault"));
   f.revoke(); await assert.rejects(f.service.receipt(actor, "create"), { code: "FORBIDDEN" });
+});
+
+test("staff credential work: authority revoked during unlocked hash preparation rejects before all persistent writes", async () => {
+  let entered!:()=>void, finish!:(value:string)=>void; const started=new Promise<void>(done=>{entered=done;}), pending=new Promise<string>(done=>{finish=done;});
+  const f=fixture(true,"ready",async()=>{entered();return pending;});const result=f.service.execute(actor,create);await started;
+  assert.equal(f.rows.size,0);assert.equal(f.receipts.size,0);assert.equal(f.audit.length,0);f.revoke();finish(encoded);
+  await assert.rejects(result,{code:"FORBIDDEN"});assert.equal(f.rows.size,0);assert.equal(f.receipts.size,0);assert.equal(f.audit.length,0);assert.equal(f.hashCalls(),1);
 });

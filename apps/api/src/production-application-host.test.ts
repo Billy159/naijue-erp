@@ -20,7 +20,7 @@ import { runProductionMain, runProductionRuntime26Main, runProductionRuntime26R2
 function config(root: string): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "DISABLED", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
     http: { host: "0.0.0.0", port: 3000, acceptedHosts: ["1n5635n614.goho.co", "web:8080"] }, assets: { root, entry: "index.html" },
-    build: { sourceCommit: "a".repeat(40), buildId: "SYNTHETIC_HANDLER_CHECK" }, authentication: { sessionTtlSeconds: 900, policy: "source-confirmed-v1" },
+    build: { sourceCommit: "a".repeat(40), buildId: "SYNTHETIC_HANDLER_CHECK" }, authentication: { sessionTtlSeconds: 900, policy: "source-confirmed-v1", passwordWork:{maxConcurrent:1,maxAnonymous:1,retryAfterSeconds:1},loginAdmission:{global:{burst:10,tokens:10,intervalMillis:1000},source:{burst:10,tokens:10,intervalMillis:1000},sourceAccount:{burst:10,tokens:10,intervalMillis:1000},entryTtlMillis:1000,maxEntries:100,maxRetryAfterSeconds:1} },
     postgres: { target: { host: "never-connected.invalid", port: 5432, database: "SYNTHETIC_ONLY", user: "SYNTHETIC_ONLY", password: "SYNTHETIC_NOT_A_CREDENTIAL", ssl: false },
       max: 1, maxPendingAcquisitions: 1, connectionTimeoutMillis: 1000, acquisitionTimeoutMillis: 1000, queryTimeoutMillis: 1100, statementTimeoutMillis: 900,
       lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000 } };

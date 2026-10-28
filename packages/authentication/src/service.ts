@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from "node:crypto";
 import { entityId } from "../../domain/src/values.ts";
-import type { AuthenticationAccount, AuthenticationDependencies, AuthenticationPrincipal, AuthenticationSession, AuthenticationTransaction } from "./ports.ts";
+import type { AuthenticationAccount, AuthenticationDependencies, AuthenticationLoginSnapshot, AuthenticationPrincipal, AuthenticationSession, AuthenticationTransaction } from "./ports.ts";
+import { assertAuthenticationActive } from './password-work-gate.ts';
 
 export class AuthenticationError extends Error {
   readonly code: "INVALID_AUTH_INPUT" | "INVALID_CREDENTIALS" | "UNAUTHENTICATED" | "PASSWORD_REJECTED";
@@ -24,16 +25,17 @@ function timestamp(value: string): number {
 }
 export interface AuthenticationService {
   /** Only explicit successful login creates a fresh opaque credential. The raw token must never be persisted or logged. */
-  login(loginName: string, password: string): Promise<{ readonly token: string; readonly principal: AuthenticationPrincipal; readonly expiresAt: string }>;
+  login(loginName: string, password: string, signal?: AbortSignal): Promise<{ readonly token: string; readonly principal: AuthenticationPrincipal; readonly expiresAt: string }>;
   resolve(token: string): Promise<AuthenticationPrincipal | null>;
   logout(token: string): Promise<void>;
   /** Does not silently sign in again: every existing session, including this one, is invalidated. */
-  changeOwnPassword(token: string, currentPassword: string, newPassword: string): Promise<void>;
+  changeOwnPassword(token: string, currentPassword: string, newPassword: string, signal?: AbortSignal): Promise<void>;
 }
 /** No account seed, listener, environment lookup, credential file, or permissive policy is constructed here. */
 export function createAuthenticationService(dependencies: AuthenticationDependencies): AuthenticationService {
   const policy = dependencies?.policy;
-  if (typeof dependencies?.store?.transaction !== "function" || typeof dependencies?.now !== "function"
+  if (typeof dependencies?.store?.transaction !== "function" || typeof dependencies?.store?.readLoginSnapshot !== 'function'
+    || typeof dependencies?.store?.readPasswordChangeSnapshot !== 'function' || typeof dependencies?.now !== "function"
     || typeof dependencies?.passwords?.hash !== "function" || typeof dependencies?.passwords?.verify !== "function"
     || typeof policy?.assertNewPassword !== "function" || !Number.isSafeInteger(policy?.sessionTtlSeconds) || policy.sessionTtlSeconds <= 0
     || !Array.isArray(policy.activeEmploymentStatuses) || policy.activeEmploymentStatuses.length === 0
@@ -50,6 +52,14 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
   if (!Number.isSafeInteger(ttlMilliseconds)) throw new TypeError("Authentication session lifetime is invalid");
   const assertNewPassword = policy.assertNewPassword;
   const clock = (): { text: string; milliseconds: number } => { const text = now(); return { text, milliseconds: timestamp(text) }; };
+  const sameCredential = (current: AuthenticationAccount, snapshot: AuthenticationLoginSnapshot): boolean => current.accountId === snapshot.accountId
+    && current.loginName === snapshot.loginName && current.passwordHash === snapshot.passwordHash && current.authVersion === snapshot.authVersion;
+  const sessionCurrent = (session: AuthenticationSession, account: AuthenticationAccount, hash: string): boolean => {
+    const {milliseconds} = clock();
+    return session.tokenHash === hash && session.accountId === account.accountId && session.revokedAt === null
+      && session.authVersion === account.authVersion && timestamp(session.createdAt) <= milliseconds
+      && timestamp(session.expiresAt) > milliseconds && timestamp(session.expiresAt) > timestamp(session.createdAt);
+  };
   function principal(account: AuthenticationAccount): AuthenticationPrincipal | null {
     if (account.loginEnabled !== true || !employmentStatuses.has(account.employmentStatus) || !Number.isSafeInteger(account.authVersion) || account.authVersion < 1) return null;
     const scope = roleHallScopes.get(account.role);
@@ -82,19 +92,28 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
     return identity ? { account, principal: identity } : null;
   }
   return Object.freeze({
-    async login(loginName: string, password: string) {
+    async login(loginName: string, password: string, signal?: AbortSignal) {
       if (typeof loginName !== "string" || !loginName || Buffer.byteLength(loginName, "utf8") > 256) throw new AuthenticationError("INVALID_AUTH_INPUT");
       passwordInput(password);
+      assertAuthenticationActive(signal);
+      const snapshot = await store.readLoginSnapshot(loginName);
+      assertAuthenticationActive(signal);
+      const verified = await passwords.verify(password, snapshot?.passwordHash, 'login', signal);
+      if (!snapshot || snapshot.loginName !== loginName || !verified) throw new AuthenticationError('INVALID_CREDENTIALS');
+      assertAuthenticationActive(signal);
       return store.transaction(async tx => {
-        const account = await tx.findAccountByLogin(loginName);
+        assertAuthenticationActive(signal);
+        const account = await tx.getAccount(snapshot.accountId);
         const identity = account && account.loginName === loginName ? principal(account) : null;
-        if (!account || !identity || !await passwords.verify(password, account.passwordHash)) throw new AuthenticationError("INVALID_CREDENTIALS");
+        if (!account || !identity || !sameCredential(account, snapshot)) throw new AuthenticationError("INVALID_CREDENTIALS");
+        assertAuthenticationActive(signal);
         const time = clock();
         const expiresAt = new Date(time.milliseconds + ttlMilliseconds).toISOString();
         const token = randomBytes(32).toString("base64url");
         const row: AuthenticationSession = { tokenHash: sessionTokenHash(token)!, accountId: identity.accountId, authVersion: identity.authVersion,
           createdAt: time.text, expiresAt, revokedAt: null };
         await tx.insertSession(row);
+        assertAuthenticationActive(signal);
         return { token, principal: identity, expiresAt };
       });
     },
@@ -109,19 +128,31 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
       const time = clock();
       await store.transaction(tx => tx.revokeSession(hash, time.text));
     },
-    async changeOwnPassword(token: string, currentPassword: string, newPassword: string) {
+    async changeOwnPassword(token: string, currentPassword: string, newPassword: string, signal?: AbortSignal) {
       passwordInput(currentPassword); passwordInput(newPassword);
       const hash = sessionTokenHash(token);
       if (!hash) throw new AuthenticationError("UNAUTHENTICATED");
+      assertAuthenticationActive(signal);
+      const snapshot = await store.readPasswordChangeSnapshot(hash);
+      assertAuthenticationActive(signal);
+      if (!snapshot || !sessionCurrent(snapshot.session, snapshot.account, hash) || !principal(snapshot.account)) throw new AuthenticationError('UNAUTHENTICATED');
+      if (!await passwords.verify(currentPassword, snapshot.account.passwordHash, 'authenticated', signal)) throw new AuthenticationError('INVALID_CREDENTIALS');
+      try { await assertNewPassword(newPassword); }
+      catch { throw new AuthenticationError('PASSWORD_REJECTED'); }
+      assertAuthenticationActive(signal);
+      const passwordHash = await passwords.hash(newPassword, signal);
+      assertAuthenticationActive(signal);
       await store.transaction(async tx => {
+        assertAuthenticationActive(signal);
         const found = await sessionAccount(tx, hash);
-        if (!found) throw new AuthenticationError("UNAUTHENTICATED");
-        if (!await passwords.verify(currentPassword, found.account.passwordHash)) throw new AuthenticationError("INVALID_CREDENTIALS");
-        try { await assertNewPassword(newPassword); }
-        catch { throw new AuthenticationError("PASSWORD_REJECTED"); }
-        const passwordHash = await passwords.hash(newPassword);
+        if (!found || !sameCredential(found.account, snapshot.account)
+          || found.account.staffId !== snapshot.account.staffId || found.account.role !== snapshot.account.role
+          || found.account.hallId !== snapshot.account.hallId || found.account.hallEnabled !== snapshot.account.hallEnabled
+          || found.account.employmentStatus !== snapshot.account.employmentStatus || found.account.loginEnabled !== snapshot.account.loginEnabled) throw new AuthenticationError("UNAUTHENTICATED");
+        assertAuthenticationActive(signal);
         const time = clock();
         if (!await tx.changePassword(found.account.accountId, found.account.authVersion, found.account.passwordHash, passwordHash, time.text)) throw new AuthenticationError("UNAUTHENTICATED");
+        assertAuthenticationActive(signal);
       });
     }
   });

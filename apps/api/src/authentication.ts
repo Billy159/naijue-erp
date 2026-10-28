@@ -4,6 +4,9 @@ import type { ActorContext } from "../../../packages/application/src/ports.ts";
 import { AuthenticationError } from "../../../packages/authentication/src/service.ts";
 import type { AuthenticationService } from "../../../packages/authentication/src/service.ts";
 import type { SalesAuthenticationInput } from "./sales-http.ts";
+import { PasswordWorkRejected } from '../../../packages/authentication/src/password-work-gate.ts';
+import { LoginAdmissionRejected } from './login-admission.ts';
+import type { LoginAdmission } from './login-admission.ts';
 
 const COOKIE = "__Host-naijue_session";
 class RequestRejected extends Error {
@@ -14,6 +17,8 @@ export interface AuthenticationHttpOptions {
   readonly service: AuthenticationService;
   /** Exact external HTTPS origin, from trusted server configuration. No request Host/X-Forwarded-* inference. */
   readonly trustedOrigin: string;
+  /** Mandatory for login routes in production; shared by both external /api and internal /auth dispatch. */
+  readonly loginAdmission?: LoginAdmission;
 }
 function configuration(options: AuthenticationHttpOptions): { service: AuthenticationService; trustedOrigin: string } {
   const service = options?.service;
@@ -66,6 +71,9 @@ const clearCookie = (): string => `${COOKIE}=; Path=/; HttpOnly; Secure; SameSit
 /** Encapsulated routes only. This does not listen, select a database, create accounts, enable CORS, or log credentials. */
 export function createAuthenticationHttpPlugin(options: AuthenticationHttpOptions): FastifyPluginAsync {
   const { service, trustedOrigin } = configuration(options);
+  const admission = options.loginAdmission;
+  if (typeof admission?.acquire !== 'function') throw new TypeError('Authentication routes require explicit bounded login admission');
+  const acquireLogin = admission.acquire.bind(admission);
   return async function authenticationHttp(app) {
     app.addHook("onRequest", async (request, reply) => {
       reply.header("Cache-Control", "no-store").header("Pragma", "no-cache");
@@ -73,6 +81,10 @@ export function createAuthenticationHttpPlugin(options: AuthenticationHttpOption
       cookieToken(request.headers);
     });
     app.setErrorHandler((error, _request, reply) => {
+      if (error instanceof LoginAdmissionRejected || error instanceof PasswordWorkRejected && error.code === 'PASSWORD_WORK_BUSY')
+        return reply.header('Retry-After', String(error.retryAfterSeconds)).code(429).send({error: {code: 'AUTHENTICATION_BUSY', message: 'Authentication capacity is temporarily unavailable'}});
+      if (error instanceof PasswordWorkRejected && error.code === 'AUTHENTICATION_CANCELLED')
+        return reply.code(408).send({error: {code: 'AUTHENTICATION_CANCELLED', message: 'Authentication request ended'}});
       if (error instanceof RequestRejected) return reply.code(error.code === "ORIGIN_REJECTED" ? 403 : 400).send({ error: { code: error.code, message: "Authentication request rejected" } });
       if (error instanceof AuthenticationError) {
         const status = error.code === "INVALID_AUTH_INPUT" ? 400 : error.code === "PASSWORD_REJECTED" ? 422 : 401;
@@ -88,12 +100,26 @@ export function createAuthenticationHttpPlugin(options: AuthenticationHttpOption
     const json = (headers: Readonly<IncomingHttpHeaders>): void => {
       if (headers["content-type"]?.split(";")[0]?.trim().toLowerCase() !== "application/json") throw new RequestRejected("INVALID_AUTH_INPUT");
     };
+    const workSignal = (request: { raw: import('node:http').IncomingMessage }, reply: { raw: import('node:http').ServerResponse }) => {
+      const controller = new AbortController();
+      const abort = () => controller.abort();
+      const closed = () => { if (!reply.raw.writableEnded) abort(); };
+      request.raw.once('aborted', abort); reply.raw.once('close', closed);
+      if (request.raw.aborted) abort();
+      return {signal: controller.signal, close() { request.raw.removeListener('aborted', abort); reply.raw.removeListener('close', closed); }};
+    };
     app.post("/auth/login", { bodyLimit: 8192 }, async (request, reply) => {
       noQuery(request.query); json(request.headers);
       const body = fields(request.body, ["loginName", "password"]);
-      const result = await service.login(stringField(body, "loginName"), stringField(body, "password"));
-      reply.header("Set-Cookie", `${COOKIE}=${result.token}; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=${new Date(result.expiresAt).toUTCString()}`);
-      return { principal: result.principal, expiresAt: result.expiresAt };
+      const loginName = stringField(body, 'loginName'), password = stringField(body, 'password');
+      if (loginName.length === 0 || Buffer.byteLength(loginName, 'utf8') > 256) throw new RequestRejected('INVALID_AUTH_INPUT');
+      // trustProxy is false at the production assembly: never consume request headers as a source identity.
+      const lease = acquireLogin(request.raw.socket.remoteAddress ?? '', loginName), work = workSignal(request, reply);
+      try {
+        const result = await service.login(loginName, password, work.signal);
+        reply.header("Set-Cookie", `${COOKIE}=${result.token}; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=${new Date(result.expiresAt).toUTCString()}`);
+        return { principal: result.principal, expiresAt: result.expiresAt };
+      } finally { work.close(); lease.release(); }
     });
     app.get("/auth/session", async request => {
       noQuery(request.query);
@@ -112,7 +138,9 @@ export function createAuthenticationHttpPlugin(options: AuthenticationHttpOption
       const body = fields(request.body, ["currentPassword", "newPassword"]);
       const token = cookieToken(request.headers);
       if (!token) throw new AuthenticationError("UNAUTHENTICATED");
-      await service.changeOwnPassword(token, stringField(body, "currentPassword"), stringField(body, "newPassword"));
+      const work = workSignal(request, reply);
+      try { await service.changeOwnPassword(token, stringField(body, "currentPassword"), stringField(body, "newPassword"), work.signal); }
+      finally { work.close(); }
       return reply.header("Set-Cookie", clearCookie()).code(204).send();
     });
   };

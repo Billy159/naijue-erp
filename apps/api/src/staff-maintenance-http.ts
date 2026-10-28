@@ -5,6 +5,7 @@ import type { StaffMaintenanceDependencies } from "../../../packages/application
 import { createStaffMaintenanceService } from "../../../packages/application/src/staff-maintenance-service.ts";
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { assertNoQuery } from "./input.ts";
+import { PasswordWorkRejected } from '../../../packages/authentication/src/password-work-gate.ts';
 export interface StaffMaintenanceHttpOptions { readonly authenticate: (input: ProductQueryAuthenticationInput) => Promise<ActorContext | null>; readonly dependencies: StaffMaintenanceDependencies }
 export function createStaffMaintenanceHttpPlugin(options: StaffMaintenanceHttpOptions): FastifyPluginAsync {
   if (typeof options?.authenticate !== "function") throw new TypeError("Staff writes require trusted authentication"); const authenticate = options.authenticate, service = createStaffMaintenanceService(options.dependencies);
@@ -15,6 +16,8 @@ export function createStaffMaintenanceHttpPlugin(options: StaffMaintenanceHttpOp
     });
     app.addHook("onResponse", async request => { actors.delete(request); });
     app.setErrorHandler((error, _request, reply) => {
+      if (error instanceof PasswordWorkRejected && error.code === 'PASSWORD_WORK_BUSY')
+        return reply.header('Retry-After',String(error.retryAfterSeconds)).code(429).send({error:{code:'AUTHENTICATION_BUSY',message:'Authentication capacity is temporarily unavailable'}});
       if (error instanceof DomainError) {
         const status = ["INVALID_STAFF_COMMAND", "INVALID_ACCOUNT_COMMAND", "INVALID_ACCOUNT_PASSWORD", "INVALID_PARTY_INPUT", "INVALID_ID", "INVALID_HTTP_INPUT", "INVALID_REQUEST"].includes(error.code) ? 400 : error.code === "FORBIDDEN" ? 403
           : ["STAFF_NOT_FOUND", "RECEIPT_NOT_FOUND"].includes(error.code) ? 404 : ["VERSION_CONFLICT", "IDEMPOTENCY_CONFLICT", "VERSION_STORAGE_OVERFLOW", "NO_STAFF_CHANGE", "INVALID_STAFF_STATE", "INVALID_STAFF_ACCOUNT_STATE", "STAFF_REFERENCE_UNAVAILABLE", "LAST_AVAILABLE_ADMIN", "ACCOUNT_LOGIN_CONFLICT"].includes(error.code) ? 409 : ["ACCOUNT_CREDENTIALS_NOT_READY", "MAINTENANCE_PREPARE_NOT_READY"].includes(error.code) ? 503 : undefined;

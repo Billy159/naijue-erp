@@ -1,3 +1,6 @@
+import {createPasswordWorkGate} from "../../../packages/authentication/src/password-work-gate.ts";
+import {createLoginAdmission} from "./login-admission.ts";
+const authenticationWork = () => ({passwordGate:createPasswordWorkGate({maxConcurrent:2,maxAnonymous:1,retryAfterSeconds:1}),loginAdmission:createLoginAdmission({global:{burst:100,tokens:100,intervalMillis:1000},source:{burst:100,tokens:100,intervalMillis:1000},sourceAccount:{burst:100,tokens:100,intervalMillis:1000},entryTtlMillis:1000,maxEntries:1000,maxRetryAfterSeconds:1,now:()=>performance.now()})});
 /** Synthetic driver boundary + Fastify.inject only; no engine, listener or network acceptance. */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -16,7 +19,7 @@ const base = (): PostgresApplicationApiOptions => ({ postgres: {
   target: { host: "synthetic-not-connected.invalid", port: 5432, database: "SYNTHETIC_ONLY", user: "SYNTHETIC_ONLY", password: "SYNTHETIC_NOT_A_CREDENTIAL", ssl: false },
   max: 2, maxPendingAcquisitions: 2, connectionTimeoutMillis: 1000, acquisitionTimeoutMillis: 1000, queryTimeoutMillis: 1000,
   statementTimeoutMillis: 900, lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000,
-}, authentication: { trustedOrigin: origin, now: () => "2026-10-21T00:00:00.000Z", policy: createSourceAuthenticationPolicy(900) },
+}, authentication: { trustedOrigin: origin, now: () => "2026-10-21T00:00:00.000Z", policy: createSourceAuthenticationPolicy(900), work:authenticationWork() },
   authorization: { mode: "source-confirmed-native" }, productMedia: null });
 function driver() {
   let allocations = 0, connects = 0, ends = 0;
@@ -64,11 +67,16 @@ test("application transfer prepare serializes warehouse facts on its one bounded
           created_at: "2026-10-21T00:00:00.000Z", expires_at: "2026-10-21T00:15:00.000Z", revoked_at: null }]);
         if (sql.includes("FROM naijue_erp.user_account a JOIN")) return rows([{ account_id: ids.account, staff_id: sid("staff", 120), login_name: "SYNTHETIC.employee",
           password_hash: "SYNTHETIC_UNUSED_HASH", login_enabled: true, auth_version: 1, role, employment_status: "在职", hall_id: hallId }]);
+        if (sql.includes("/* transfer-authorization:hall */")) return rows([{id:values[0],enabled:true}]);
         if (sql === "SELECT enabled FROM naijue_erp.hall WHERE id = $1 FOR SHARE") return rows([{ enabled: true }]);
-        if (sql.includes("FROM naijue_erp.transfer_header")) return rows([]);
+        if (sql.includes("/* document-number:lock */")) return rows([]);
+        if (sql.includes("/* document-number:existing */")) return rows([]);
+        if (sql.includes("/* document-number:reserve */")) return rows([{number:"V2-DB-000000000001",actor_account_id:ids.account}]);
+        if (sql.includes("FROM naijue_erp.transfer_header") || sql.includes("FROM naijue_erp.operation_receipt")) return rows([]);
         if (sql.includes("FROM naijue_erp.warehouse w JOIN")) return rows(missingWarehouse && values[0] === to ? [] : [{ id: values[0], hall_id: ids.hall,
           enabled: true, hall_enabled: true, has_nonzero_inventory: false }]);
         if (sql.includes("/* native-transfer-snapshots:schema */")) return rows([{ installed: true }]);
+        if (sql.includes("/* native-transfer-snapshots:main */")) return rows([{sku_id:ids.sku,barcode:"000123"}]);
         if (sql.includes("/* native-transfer-snapshots:targets */")) return rows([{ id: ids.sku, product_code: "SYNTHETIC", product_name: "SYNTHETIC product",
           color_name: "SYNTHETIC color", fit_name: "SYNTHETIC fit", size_name: "SYNTHETIC size", barcode: "000123" }]);
         if (sql.includes("FROM naijue_erp.sku s JOIN")) return rows([{ id: ids.sku, enabled: true }]);
@@ -102,6 +110,7 @@ test("application transfer prepare serializes warehouse facts on its one bounded
     const denied = await api.app.inject({ method: "POST", url: "/transfers/prepare-create", headers: { ...headers, origin: "https://other.invalid" }, payload: proposal });
     assert.equal(denied.statusCode, 401); assert.equal(calls.length, beforeDenied);
     assert.ok(calls.every(c => !/^(INSERT|UPDATE|DELETE|TRUNCATE)\b/.test(c.sql)));
+    assert.equal(calls.filter(c=>c.sql.includes("/* document-number:reserve */")).length,3,"Each acknowledged preparation reserves its original database number; no other writes allowed");
   } finally { await api.close(); }
   assert.equal(ends, 1); assert.equal(borrowed, released);
 });

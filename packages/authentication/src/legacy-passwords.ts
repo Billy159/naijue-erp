@@ -1,9 +1,14 @@
 import { pbkdf2, timingSafeEqual } from "node:crypto";
 import type { PasswordCodec } from "./ports.ts";
-import { createNodeScryptPasswords } from "./passwords.ts";
+import { createNodeScryptPasswords, isNodeScryptPasswordHash } from "./passwords.ts";
 
 const ENVELOPE = /^naijue:pbkdf2-sha256:1:(600000|210000):([0-9a-f]{48}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}):([0-9a-f]{64})$/;
 const SALT = /^(?:[0-9a-f]{48}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/;
+export function isNodeMigratedPasswordHash(encoded: string): boolean {
+  if (isNodeScryptPasswordHash(encoded)) return true;
+  const match = typeof encoded === 'string' ? ENVELOPE.exec(encoded) : null;
+  return match !== null && match[0] === encoded;
+}
 /** Private C-operated migration helper only. Source identity/authorization must be
  * verified separately; this function proves format, never source trust. Preserves
  * the exact original UTF-8 salt TEXT and digest without seeing a password. No

@@ -1,3 +1,6 @@
+import {createPasswordWorkGate} from "../../../packages/authentication/src/password-work-gate.ts";
+import {createLoginAdmission} from "./login-admission.ts";
+const authenticationWork = () => ({passwordGate:createPasswordWorkGate({maxConcurrent:2,maxAnonymous:1,retryAfterSeconds:1}),loginAdmission:createLoginAdmission({global:{burst:100,tokens:100,intervalMillis:1000},source:{burst:100,tokens:100,intervalMillis:1000},sourceAccount:{burst:100,tokens:100,intervalMillis:1000},entryTtlMillis:1000,maxEntries:1000,maxRetryAfterSeconds:1,now:()=>performance.now()})});
 /** SYNTHETIC Fastify.inject + scripted pg protocol only. Real adapters/service/Node scrypt,
  * but no actual PostgreSQL SQL, listener, network, account seeding or credentials access. */
 import assert from "node:assert/strict";
@@ -36,13 +39,31 @@ const postgres = (): BoundedPostgresConfig => ({ target: { host: "synthetic-neve
   queryTimeoutMillis: 1000, statementTimeoutMillis: 900, lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000,
   disposeGraceMillis: 0, disposeTimeoutMillis: 1000 });
 function options(): PostgresReadApiOptions & { readonly authorization: PostgresReadApiExplicitAuthorization } {
-  return { postgres: postgres(), authentication: { trustedOrigin: ORIGIN, now: () => TIME, policy: createSourceAuthenticationPolicy(900) }, authorization: {
+  return { postgres: postgres(), authentication: { trustedOrigin: ORIGIN, now: () => TIME, policy: createSourceAuthenticationPolicy(900), work:authenticationWork() }, authorization: {
     inventory: { async authorize() { return { hallIds: [ids.hall], warehouses: [warehouse] }; } },
     sales: { async authorize(actor) { assert.equal(actor.hallId, ids.hall); return { kind: "restricted", clauses: [{ hallId: actor.hallId! }] }; } },
     transfers: createSourceConfirmedTransferQueryAuthorization(), products: { async authorize(_actor, intent) { return { productId: intent.parameters.productId }; } }
   }, productMedia: null };
 }
 const nativeOptions = (): PostgresReadApiOptions => ({ ...options(), authorization: { mode: "source-confirmed-native" } });
+test('P02 actual API refuses missing instance budgets before pool allocation and never silently selects production defaults',async()=>{
+  const value=options();const {work:_work,...withoutWork}=value.authentication;const driver=new ScriptedDriver();
+  await assert.rejects(createPostgresReadApi({...value,authentication:withoutWork},driver.factory),/explicit shared password work/);
+  assert.equal(driver.allocations,0);assert.equal(driver.connects,0);
+});
+test('P02 actual API CPU overload returns429 after released snapshot, without inserting a session or exposing codec details',async t=>{
+  const value=options(),driver=new ScriptedDriver(),gate=value.authentication.work!.passwordGate;
+  let entered!:()=>void,finish!:()=>void;const started=new Promise<void>(done=>{entered=done;}),held=new Promise<void>(done=>{finish=done;});
+  const pending=gate.run('login',async()=>{entered();await held;});await started;
+  const api=await createPostgresReadApi(value,driver.factory);t.after(()=>api.close());
+  try{
+    const response=await api.app.inject({method:'POST',url:'/auth/login',headers:{origin:ORIGIN,'content-type':'application/json'},payload:{loginName:driver.account.login_name,password:PASSWORD}});
+    assert.equal(response.statusCode,429);assert.equal(response.headers['set-cookie'],undefined);assert.ok(Number(response.headers['retry-after'])>=1);
+    assert.equal(driver.calls.filter(call=>call.sql.includes('auth:login-snapshot')).length,1);
+    assert.equal(driver.calls.some(call=>call.sql.startsWith('INSERT INTO naijue_erp.auth_session')),false);
+    assert.equal(driver.connects,driver.releases.length);
+  }finally{finish();await pending;}
+});
 const currentOptions = (): PostgresReadApiOptions => ({ ...nativeOptions(), currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() } });
 const currentRoutes = [
   ["/current-form/sales-references/query", { kind: "hall", hallId: null, search: "", page: 1, pageSize: 20 }],
@@ -81,6 +102,7 @@ class ScriptedDriver extends EventEmitter {
   async end(): Promise<void> { this.ends++; if (this.failEnd) throw new Error("SYNTHETIC private driver disposal error"); }
   private async query(sql: string, values: unknown[]): Promise<BoundedPostgresResult> {
     const rows = (value: Record<string, unknown>[]): BoundedPostgresResult => ({ rows: value, rowCount: value.length });
+    if (sql.includes("auth:login-snapshot")) return rows(values[0]===this.account.login_name?[{account_id:this.account.account_id,login_name:this.account.login_name,password_hash:this.account.password_hash,auth_version:this.account.auth_version}]:[]);
     if (sql.startsWith("BEGIN ") || sql === "COMMIT" || sql === "ROLLBACK") return rows([]);
     if (sql.includes("FROM naijue_erp.user_account a JOIN") && !sql.includes("/* read-authorization:identity */") && !sql.includes("/* current-form:identity */")) {
       const matches = sql.includes("a.login_name = $1") ? values[0] === this.account.login_name : values[0] === this.account.account_id;

@@ -1,5 +1,5 @@
 import type { Pool } from "pg";
-import type { AuthenticationAccount, AuthenticationSession, AuthenticationStore, AuthenticationTransaction } from "../../../packages/authentication/src/ports.ts";
+import type { AuthenticationAccount, AuthenticationSession, AuthenticationLoginSnapshot, AuthenticationPasswordChangeSnapshot, AuthenticationStore, AuthenticationTransaction } from "../../../packages/authentication/src/ports.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import type { EntityId } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
@@ -37,6 +37,31 @@ export class PostgresAuthenticationStore implements AuthenticationStore {
   constructor(pool: PgAuthenticationPool) {
     if (typeof pool?.connect !== "function") throw new TypeError("Authentication requires an explicit trusted PostgreSQL pool");
     this.pool = pool;
+  }
+  private async snapshot<T>(sql: string, values: unknown[], decode: (row: Record<string, unknown>) => T): Promise<T | undefined> {
+    const client = await this.pool.connect(); let discard: Error | undefined;
+    try {
+      const result = await client.query(sql, values);
+      requireDomain(result.rows.length <= 1, 'INVALID_DATABASE_VALUE', 'One exact authentication snapshot required');
+      return result.rows[0] === undefined ? undefined : decode(result.rows[0]);
+    } catch (error) { discard = error instanceof Error ? error : Error('Authentication snapshot failed'); throw error; }
+    finally { client.release(discard); }
+  }
+  readLoginSnapshot(loginName: string): Promise<AuthenticationLoginSnapshot | undefined> {
+    return this.snapshot(`/* auth:login-snapshot */ SELECT id AS account_id,login_name,password_hash,auth_version
+      FROM naijue_erp.user_account WHERE login_name=$1`, [loginName], row => ({accountId: entityId('account', stringValue(row.account_id)),
+      loginName: stringValue(row.login_name), passwordHash: stringValue(row.password_hash), authVersion: integerValue(row.auth_version)}));
+  }
+  readPasswordChangeSnapshot(tokenHash: string): Promise<AuthenticationPasswordChangeSnapshot | undefined> {
+    return this.snapshot(`/* auth:password-snapshot */ SELECT a.id AS account_id,a.staff_id,a.login_name,a.password_hash,a.login_enabled,a.auth_version,
+      s.role,s.employment_status,s.hall_id,s.name AS staff_name,h.enabled AS hall_enabled,
+      se.token_hash,se.account_id AS session_account_id,se.auth_version AS session_auth_version,
+      ${stamp('se.created_at')} AS created_at,${stamp('se.expires_at')} AS expires_at,${stamp('se.revoked_at')} AS revoked_at
+      FROM naijue_erp.auth_session se JOIN naijue_erp.user_account a ON a.id=se.account_id
+      JOIN naijue_erp.staff s ON s.id=a.staff_id LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id WHERE se.token_hash=$1`, [tokenHash], row => ({
+      account: decodeAccount({...row, hall_enabled: row.hall_id === null ? null : row.hall_enabled ?? false}),
+      session: decodeSession({...row, account_id: row.session_account_id, auth_version: row.session_auth_version})
+    }));
   }
   async transaction<T>(work: (tx: AuthenticationTransaction) => Promise<T>): Promise<T> {
     const client = await this.pool.connect();

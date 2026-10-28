@@ -27,6 +27,23 @@ export function createStaffMaintenanceService(dependencies: StaffMaintenanceDepe
         const { password: _password, ...safe } = accountInput!; fingerprint = { ...command, account: { ...safe, credentialTag: tag } };
       }
       const hash = requestHash({ actorAccountId: actor.accountId, kind: "STAFF", command: fingerprint });
+      let encoded: string | null = null;
+      if (password !== null) {
+        // This preliminary transaction is read-only at the business level. It ends before
+        // password policy/codec work; the final original transaction repeats key/authority/CAS.
+        const replay = await dependencies.unitOfWork.transaction(async tx => {
+          const receipt = await tx.evidence.getReceipt(actor.accountId, command.requestKey, 'STAFF');
+          await authorizeStaffMaintenance(tx.evidence, actor, command.action);
+          if (!receipt) return undefined;
+          requireDomain(receipt.requestHash === hash && receipt.action === command.action && receipt.result.kind === 'STAFF', 'IDEMPOTENCY_CONFLICT', 'Original staff key differs');
+          return receipt.result;
+        });
+        if (replay) return replay;
+        try { await credentials!.assertNewPassword(password); }
+        catch { requireDomain(false, 'INVALID_ACCOUNT_PASSWORD', 'Password rejected by current policy'); }
+        encoded = await credentials!.passwords.hash(password);
+        requireDomain(/^naijue:scrypt:1:32768:8:1:[0-9a-f]{32}:[0-9a-f]{128}$/.test(encoded), 'INVALID_CREDENTIAL_PROVIDER', 'Current supported password encoding required');
+      }
       return dependencies.unitOfWork.transaction(async tx => {
         const receipt = await tx.evidence.getReceipt(actor.accountId, command.requestKey, "STAFF"); await authorizeStaffMaintenance(tx.evidence, actor, command.action);
         if (receipt) { requireDomain(receipt.requestHash === hash && receipt.action === command.action && receipt.result.kind === "STAFF", "IDEMPOTENCY_CONFLICT", "Original staff key differs"); return receipt.result; }
@@ -58,8 +75,6 @@ export function createStaffMaintenanceService(dependencies: StaffMaintenanceDepe
         if (accountChanged || command.action === "LEAVE" || command.action === "REINSTATE") { if (previous) before.accounts = oldAccount ? [accountMaintenanceFacts(oldAccount)] : []; after.accounts = account ? [accountMaintenanceFacts(account)] : []; }
         requireDomain(previous === undefined || accountChanged || Object.keys(after).some(k => k !== "version"), "NO_STAFF_CHANGE", "No staff or linked account change supplied");
         await tx.validateChange(previous, { staff, account });
-        let encoded: string | null = null;
-        if (password !== null) { try { await credentials!.assertNewPassword(password); } catch { requireDomain(false, "INVALID_ACCOUNT_PASSWORD", "Password rejected by current policy"); } encoded = await credentials!.passwords.hash(password); requireDomain(/^naijue:scrypt:1:32768:8:1:[0-9a-f]{32}:[0-9a-f]{128}$/.test(encoded), "INVALID_CREDENTIAL_PROVIDER", "Current supported password encoding required"); }
         if (encoded !== null) after.account_credentials = [{ account_id: account!.id, action: oldAccount ? "RESET_PASSWORD" : "CREATE" }];
         const completion = { operationId, actorAccountId: actor.accountId, requestKey: command.requestKey, requestHash: hash, kind: "STAFF" as const, action: command.action, targetId: id, oldVersion: previous?.staff.version ?? null, newVersion: staff.version, beforeValues: previous ? before : null, afterValues: after, completedAt };
         requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");

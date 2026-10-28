@@ -5,6 +5,12 @@ import type { PasswordCodec } from "./ports.ts";
 const PREFIX = "naijue:scrypt:1:32768:8:1:";
 const FORMAT = /^naijue:scrypt:1:32768:8:1:([0-9a-f]{32}):([0-9a-f]{128})$/;
 const MAX_PASSWORD_BYTES = 1024;
+/** Public, fixed work-only vector (zero salt / 'naijue-authentication-dummy-v1-not-an-account'), never an account credential. */
+export const NODE_SCRYPT_DUMMY_HASH = PREFIX + '00000000000000000000000000000000:35b8d4df40dc10ca9506d2a4a8530d7f7f22bb9884793d4f81a0a1038d7c85104f02733bfe02db12f0b2d1d726d1914e41eb74a6d6e3250367e1faa77c417ed0';
+export function isNodeScryptPasswordHash(encoded: string): boolean {
+  const match = typeof encoded === 'string' ? FORMAT.exec(encoded) : null;
+  return match !== null && match[0] === encoded;
+}
 /** Stable server-private key, reused across all instances/restarts. Never a
  * password hash, bare digest, request-selected salt or generated fallback.
  * Only this tag may enter the CREATE/RESET_PASSWORD request fingerprint. */

@@ -18,6 +18,12 @@ import type { AuthenticationHttpOptions } from "./authentication.ts";
 import { createSalesHttpPlugin, exactJson } from "./sales-http.ts";
 import { fixture, ids, SYNTHETIC_RULES, sid, syntheticDraft } from "../../../tests/support/synthetic-fixtures.ts";
 
+import { createAuthenticationPasswordWork, createPasswordWorkGate } from "../../../packages/authentication/src/password-work-gate.ts";
+import { createLoginAdmission } from "./login-admission.ts";
+const passwordWork = (raw: PasswordCodec) => createAuthenticationPasswordWork(raw, createPasswordWorkGate({maxConcurrent: 8, maxAnonymous: 8, retryAfterSeconds: 1}), {
+  supports: value => value === OLD_HASH || value === NEW_HASH, dummyHash: OLD_HASH
+});
+const admission = () => createLoginAdmission({global: {burst: 1000, tokens: 1000, intervalMillis: 1000}, source: {burst: 1000, tokens: 1000, intervalMillis: 1000}, sourceAccount: {burst: 1000, tokens: 1000, intervalMillis: 1000}, entryTtlMillis: 1000, maxEntries: 1000, maxRetryAfterSeconds: 1, now: () => performance.now()});
 const ORIGIN = "https://synthetic-erp.invalid";
 const COOKIE = "__Host-naijue_session";
 const OLD_PASSWORD = "SYNTHETIC old password";
@@ -43,6 +49,14 @@ class SyntheticAuthenticationStore implements AuthenticationStore {
   calls = 0;
   failRevoke = false;
   failChange = false;
+  async readLoginSnapshot(loginName: string) {
+    this.calls++; const value = [...this.accounts.values()].find(row => row.loginName === loginName);
+    return value ? structuredClone({accountId:value.accountId,loginName:value.loginName,passwordHash:value.passwordHash,authVersion:value.authVersion}) : undefined;
+  }
+  async readPasswordChangeSnapshot(hash: string) {
+    this.calls++; const session=this.sessions.get(hash), value=session && this.accounts.get(session.accountId);
+    return session && value ? structuredClone({account:value,session}) : undefined;
+  }
   private serial = Promise.resolve();
   async transaction<T>(work: (tx: AuthenticationTransaction) => Promise<T>): Promise<T> {
     this.calls++;
@@ -78,14 +92,14 @@ function setupService(options: { account?: AuthenticationAccount; passwords?: Pa
   const store = new SyntheticAuthenticationStore();
   if (options.account) store.accounts.set(ACCOUNT_ID, options.account);
   let time = TIME;
-  const dependencies: AuthenticationDependencies = { store, now: options.now ?? (() => time), policy: createSourceAuthenticationPolicy(3600), passwords: options.passwords ?? SYNTHETIC_PASSWORDS };
+  const dependencies: AuthenticationDependencies = { store, now: options.now ?? (() => time), policy: createSourceAuthenticationPolicy(3600), passwords: passwordWork(options.passwords ?? SYNTHETIC_PASSWORDS) };
   const service = createAuthenticationService(dependencies);
   return { store, service, dependencies, clock: (value: string) => { time = value; } };
 }
 async function setupHttp(t: TestContext, provided?: AuthenticationService) {
   const f = setupService();
   const app = Fastify({ logger: false });
-  app.register(createAuthenticationHttpPlugin({ service: provided ?? f.service, trustedOrigin: ORIGIN }));
+  app.register(createAuthenticationHttpPlugin({ service: provided ?? f.service, trustedOrigin: ORIGIN, loginAdmission: admission() }));
   t.after(() => app.close()); await app.ready();
   const post = (url: string, payload: unknown, cookie?: string, headers: Record<string, string> = {}) => app.inject({ method: "POST", url,
     headers: { origin: ORIGIN, "content-type": "application/json", ...(cookie ? { cookie } : {}), ...headers }, payload: JSON.stringify(payload) });
@@ -176,7 +190,7 @@ test("SYNTHETIC auth: revocation or expiry committed while waiting for account l
     let time = TIME;
     let current: AuthenticationSession = { tokenHash: hash, accountId: ACCOUNT_ID, authVersion: 1, createdAt: TIME, expiresAt: "2026-10-20T13:00:00.000Z", revokedAt: null };
     let locked = false;
-    const store: AuthenticationStore = { async transaction(work) {
+    const store: AuthenticationStore = { async readLoginSnapshot() { throw Error("Unused"); }, async readPasswordChangeSnapshot() { throw Error("Unused"); }, async transaction(work) {
       const tx: AuthenticationTransaction = {
         async getSession() { return { ...current }; },
         async getAccount() {
@@ -191,7 +205,7 @@ test("SYNTHETIC auth: revocation or expiry committed while waiting for account l
       };
       return work(tx);
     } };
-    const service = createAuthenticationService({ store, now: () => time, policy: createSourceAuthenticationPolicy(3600), passwords: SYNTHETIC_PASSWORDS });
+    const service = createAuthenticationService({ store, now: () => time, policy: createSourceAuthenticationPolicy(3600), passwords: passwordWork(SYNTHETIC_PASSWORDS) });
     assert.equal(await service.resolve(token), null);
   }
 });
@@ -295,7 +309,7 @@ class ProtocolClient implements PgAuthenticationClient {
     return { rows: step.rows ?? [], rowCount: step.count ?? step.rows?.length ?? 1 };
   }
   release(error?: Error | boolean): void { this.released.push(error); }
-  done(): void { assert.equal(this.steps.length, 0); assert.equal(this.released.length, 1); }
+  done(releases = 1): void { assert.equal(this.steps.length, 0); assert.equal(this.released.length, releases); }
 }
 const begin = (): Step => ({ sql: /^BEGIN ISOLATION LEVEL READ COMMITTED$/ });
 const commit = (): Step => ({ sql: /^COMMIT$/ });
@@ -306,11 +320,11 @@ function accountRow(): Record<string, unknown> {
     login_enabled: a.loginEnabled, auth_version: a.authVersion, role: a.role, employment_status: a.employmentStatus, hall_id: a.hallId, hall_enabled: a.hallEnabled };
 }
 test("SCRIPTED pg auth: login is parameterized, account/staff locked, token hash only inserted inside transaction", async () => {
-  const client = new ProtocolClient([begin(), { sql: /WHERE a.login_name = \$1 FOR UPDATE OF a, s$/, rows: [accountRow()], inspect(values, sql) { assert.deepEqual(values, [account().loginName]); assert.equal(sql.includes(account().loginName), false); } },
+  const client = new ProtocolClient([{sql: /auth:login-snapshot/, rows: [{account_id:ACCOUNT_ID,login_name:account().loginName,password_hash:OLD_HASH,auth_version:1}]}, begin(), { sql: /WHERE a.id = \$1 FOR UPDATE OF a, s$/, rows: [accountRow()], inspect(values, sql) { assert.deepEqual(values, [ACCOUNT_ID]); assert.equal(sql.includes(account().loginName), false); } },
     { sql: /^SELECT enabled FROM naijue_erp.hall WHERE id = \$1 FOR SHARE$/, rows: [{ enabled: true }] },
     { sql: /^INSERT INTO naijue_erp.auth_session/, count: 1, inspect(values) { assert.match(String(values[0]), /^[a-f0-9]{64}$/); assert.deepEqual(values.slice(1), [ACCOUNT_ID, 1, TIME, "2026-10-20T13:00:00.000Z", null]); } }, commit()]);
-  const service = createAuthenticationService({ store: pgStore(client), now: () => TIME, policy: createSourceAuthenticationPolicy(3600), passwords: SYNTHETIC_PASSWORDS });
-  const result = await service.login(account().loginName, OLD_PASSWORD); assert.match(result.token, /^[A-Za-z0-9_-]{43}$/); client.done();
+  const service = createAuthenticationService({ store: pgStore(client), now: () => TIME, policy: createSourceAuthenticationPolicy(3600), passwords: passwordWork(SYNTHETIC_PASSWORDS) });
+  const result = await service.login(account().loginName, OLD_PASSWORD); assert.match(result.token, /^[A-Za-z0-9_-]{43}$/); client.done(2);
 });
 test("SCRIPTED pg auth: password CAS and all-session revocation share the same transaction; closed handles reject", async () => {
   let captured: AuthenticationTransaction | undefined;
@@ -330,22 +344,22 @@ test("SCRIPTED pg auth: resolve locks account, fresh hall, then re-reads/locks t
     { sql: /WHERE a.id = \$1 FOR UPDATE OF a, s$/, rows: [accountRow()] },
     { sql: /^SELECT enabled FROM naijue_erp.hall WHERE id = \$1 FOR SHARE$/, rows: [{ enabled: true }], inspect(values) { assert.deepEqual(values, [HALL_ID]); } },
     { sql: /WHERE token_hash = \$1 AND account_id = \$2 FOR UPDATE$/, rows: [{ ...row, revoked_at: TIME }], inspect(values) { assert.deepEqual(values, [hash, ACCOUNT_ID]); } }, commit()]);
-  const service = createAuthenticationService({ store: pgStore(client), now: () => TIME, policy: createSourceAuthenticationPolicy(3600), passwords: SYNTHETIC_PASSWORDS });
+  const service = createAuthenticationService({ store: pgStore(client), now: () => TIME, policy: createSourceAuthenticationPolicy(3600), passwords: passwordWork(SYNTHETIC_PASSWORDS) });
   assert.equal(await service.resolve(token), null); client.done();
 });
 test("SCRIPTED pg auth: newly disabled or missing hall after account lock denies login before session creation", async () => {
   for (const rows of [[{ enabled: false }], []]) {
-    const client = new ProtocolClient([begin(), { sql: /WHERE a.login_name = \$1 FOR UPDATE OF a, s$/, rows: [accountRow()] },
+    const client = new ProtocolClient([{sql: /auth:login-snapshot/, rows: [{account_id:ACCOUNT_ID,login_name:account().loginName,password_hash:OLD_HASH,auth_version:1}]}, begin(), { sql: /WHERE a.id = \$1 FOR UPDATE OF a, s$/, rows: [accountRow()] },
       { sql: /^SELECT enabled FROM naijue_erp.hall WHERE id = \$1 FOR SHARE$/, rows }, rollback()]);
-    const service = createAuthenticationService({ store: pgStore(client), now: () => TIME, policy: createSourceAuthenticationPolicy(3600), passwords: SYNTHETIC_PASSWORDS });
-    await assert.rejects(service.login(account().loginName, OLD_PASSWORD), expectAuthCode("INVALID_CREDENTIALS")); client.done();
+    const service = createAuthenticationService({ store: pgStore(client), now: () => TIME, policy: createSourceAuthenticationPolicy(3600), passwords: passwordWork(SYNTHETIC_PASSWORDS) });
+    await assert.rejects(service.login(account().loginName, OLD_PASSWORD), expectAuthCode("INVALID_CREDENTIALS")); client.done(2);
   }
 });
 test("SCRIPTED pg auth: storage/revocation error rolls back; commit failure discards connection; rollback failure aggregates", async () => {
   const failure = new Error("SYNTHETIC database failure");
   const normal = new ProtocolClient([begin(), { sql: /^UPDATE naijue_erp.auth_session/, error: failure }, rollback()]);
   await assert.rejects(pgStore(normal).transaction(tx => tx.revokeSession("11".repeat(32), TIME)), failure); normal.done();
-  const uncertain = new ProtocolClient([begin(), { sql: /^COMMIT$/, error: failure }, rollback()]);
+  const uncertain = new ProtocolClient([begin(), { sql: /^COMMIT$/, error: failure }]);
   await assert.rejects(pgStore(uncertain).transaction(async () => undefined), failure); uncertain.done(); assert.equal(uncertain.released[0], failure);
   const broken = new ProtocolClient([begin(), { sql: /^ROLLBACK$/, error: failure }]);
   await assert.rejects(pgStore(broken).transaction(async () => { throw new Error("SYNTHETIC callback failed"); }), AggregateError); broken.done(); assert.equal(broken.released[0], failure);

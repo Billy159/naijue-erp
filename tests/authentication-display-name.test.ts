@@ -8,6 +8,7 @@ import type { AuthenticationAccount, AuthenticationSession, AuthenticationStore,
 import { createSourceAuthenticationPolicy } from "../packages/authentication/src/source-policy.ts";
 import { entityId } from "../packages/domain/src/values.ts";
 
+import {createAuthenticationPasswordWork,createPasswordWorkGate} from "../packages/authentication/src/password-work-gate.ts";
 const accountId = entityId("account", "00000000-0000-0000-0000-00000000a021");
 const staffId = entityId("staff", "00000000-0000-0000-0000-00000000a022");
 const time = "2026-10-24T13:00:00.000Z";
@@ -25,10 +26,10 @@ function service(account: AuthenticationAccount) {
     async revokeSession() { assert.fail("Display-name reads do not revoke a session"); },
     async changePassword() { assert.fail("Display-name reads do not change a password"); }
   };
-  const store: AuthenticationStore = { async transaction(work) { return work(tx); } };
+  const store: AuthenticationStore = {async readLoginSnapshot() {return {accountId:account.accountId,loginName:account.loginName,passwordHash:account.passwordHash,authVersion:account.authVersion};},async readPasswordChangeSnapshot() {throw Error("Unused");}, async transaction(work) { return work(tx); } };
   return { sessions, api: createAuthenticationService({ store, now: () => time, policy: createSourceAuthenticationPolicy(3600),
-    passwords: { async verify(value, hash) { assert.equal(value, "SYNTHETIC_PASSWORD_A02"); assert.equal(hash, base.passwordHash); return true; },
-      async hash() { assert.fail("No password hashing in this read projection"); } } }) };
+    passwords: createAuthenticationPasswordWork({ async verify(value, hash) { assert.equal(value, "SYNTHETIC_PASSWORD_A02"); assert.equal(hash, base.passwordHash); return true; },
+      async hash() { assert.fail("No password hashing in this read projection"); } },createPasswordWorkGate({maxConcurrent:2,maxAnonymous:1,retryAfterSeconds:1}),{supports:value=>value===base.passwordHash,dummyHash:base.passwordHash}) }) };
 }
 function scriptedStore(staffName: unknown) {
   const statements: string[] = [], releases: unknown[] = [];

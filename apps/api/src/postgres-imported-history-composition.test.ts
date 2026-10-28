@@ -1,3 +1,6 @@
+import {createPasswordWorkGate} from "../../../packages/authentication/src/password-work-gate.ts";
+import {createLoginAdmission} from "./login-admission.ts";
+const authenticationWork = () => ({passwordGate:createPasswordWorkGate({maxConcurrent:2,maxAnonymous:1,retryAfterSeconds:1}),loginAdmission:createLoginAdmission({global:{burst:100,tokens:100,intervalMillis:1000},source:{burst:100,tokens:100,intervalMillis:1000},sourceAccount:{burst:100,tokens:100,intervalMillis:1000},entryTtlMillis:1000,maxEntries:1000,maxRetryAfterSeconds:1,now:()=>performance.now()})});
 /** Host composition with scripted driver only; no engine, listener or network claims. */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -17,7 +20,7 @@ const base = (): PostgresApplicationApiOptions => ({ postgres: {
   target: { host: "synthetic-not-connected.invalid", port: 5432, database: "SYNTHETIC_ONLY", user: "SYNTHETIC_ONLY", password: "SYNTHETIC_NOT_A_CREDENTIAL", ssl: false },
   max: 2, maxPendingAcquisitions: 2, connectionTimeoutMillis: 1000, acquisitionTimeoutMillis: 1000, queryTimeoutMillis: 1000,
   statementTimeoutMillis: 900, lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000,
-}, authentication: { trustedOrigin: origin, now: () => "2026-10-22T00:00:00.000Z", policy: createSourceAuthenticationPolicy(900) },
+}, authentication: { trustedOrigin: origin, now: () => "2026-10-22T00:00:00.000Z", policy: createSourceAuthenticationPolicy(900), work:authenticationWork() },
   authorization: { mode: "source-confirmed-native" }, productMedia: null });
 const denied = { async authorize(): Promise<never> { throw new DomainError("IMPORTED_HISTORY_FORBIDDEN", "SYNTHETIC denied history scope"); } };
 function noReadDriver() {

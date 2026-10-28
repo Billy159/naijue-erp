@@ -27,8 +27,11 @@ import { createSourceConfirmedTransferQueryAuthorization } from "../../../packag
 import type { ControlledProductMedia, ProductQueryAuthorization } from "../../../packages/application/src/product-query-ports.ts";
 import type { AuthenticationPolicy } from "../../../packages/authentication/src/ports.ts";
 import { createAuthenticationService } from "../../../packages/authentication/src/service.ts";
-import { createNodeScryptPasswords } from "../../../packages/authentication/src/passwords.ts";
-import { createNodeMigratedLegacyPasswords } from "../../../packages/authentication/src/legacy-passwords.ts";
+import { createNodeScryptPasswords, isNodeScryptPasswordHash, NODE_SCRYPT_DUMMY_HASH } from "../../../packages/authentication/src/passwords.ts";
+import { createNodeMigratedLegacyPasswords, isNodeMigratedPasswordHash } from "../../../packages/authentication/src/legacy-passwords.ts";
+import { createAuthenticationPasswordWork, gatePasswordCodec } from '../../../packages/authentication/src/password-work-gate.ts';
+import type { PasswordWorkGate } from '../../../packages/authentication/src/password-work-gate.ts';
+import type { LoginAdmission } from './login-admission.ts';
 import { createAuthenticationHttpPlugin, createSalesSessionAuthenticator } from "./authentication.ts";
 import { createTransferSessionAuthenticator } from "./transfer-authentication.ts";
 import { createInventoryHttpPlugin } from "./inventory-http.ts";
@@ -128,6 +131,8 @@ export interface PostgresReadApiOptions {
     readonly policy: AuthenticationPolicy;
     /** Trusted host opt-in only; absent keeps the original scrypt-only codec. */
     readonly credentialCompatibility?: "legacy-pbkdf2-v1";
+    /** Explicit shared instance resources; optional in the legacy configuration type, required before constructing any active API. */
+    readonly work?: { readonly passwordGate: PasswordWorkGate; readonly loginAdmission: LoginAdmission };
   };
   /** Trusted host-only selection: explicit providers OR the closed source-confirmed native profile.
    * No default, mixed overrides, request-selected mode, invented or widened hall grants. */
@@ -420,12 +425,17 @@ function checkedHost(options: PostgresReadApiOptions) {
       || typeof media.resolveThumbnails !== "function" || typeof media.resolveOriginal !== "function"))) {
     throw new TypeError("PostgreSQL read API requires explicit trusted HTTPS origin, authentication policy/clock, read authorization and media availability");
   }
+  const work = auth.work;
+  if (typeof work?.passwordGate?.run !== 'function' || typeof work?.loginAdmission?.acquire !== 'function')
+    throw new TypeError('PostgreSQL authentication requires explicit shared password work and login admission; no production defaults');
+  const authenticationWork = Object.freeze({passwordGate: Object.freeze({run: work.passwordGate.run.bind(work.passwordGate)}),
+    loginAdmission: Object.freeze({acquire: work.loginAdmission.acquire.bind(work.loginAdmission)})});
   const inventoryOutputSpool = Object.hasOwn(options, "inventoryOutputSpool")
     ? Object.freeze({ ...exactBag(options.inventoryOutputSpool, ["directory", "maxBytes", "maxConcurrent", "maxDurationMs"]) }) as unknown as InventoryOutputSpoolOptions : undefined;
   // Capture provider methods and origins before the first await. Changing the caller's
   // configuration object later cannot replace these boundaries or enable a write plugin.
   return {
-    inventoryOutputSpool, trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility,
+    inventoryOutputSpool, trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility, authenticationWork,
     authorization: checkedAuthorization(options.authorization), currentForms: checkedCurrentForms(options),
     media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
       resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media),
@@ -583,10 +593,11 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     const extensions = capabilities?.nativeReadExtensions ? createSourceConfirmedApplicationReadAuthorization(pool) : null;
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
     app.addHook("onClose", async () => { closing = true; await ownedPool.dispose(); });
-    const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool),
-      now: host.now, policy: host.policy, passwords: host.credentialCompatibility === "legacy-pbkdf2-v1"
-        ? createNodeMigratedLegacyPasswords() : createNodeScryptPasswords() });
-    const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin });
+    const migrated = host.credentialCompatibility === 'legacy-pbkdf2-v1';
+    const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool), now: host.now, policy: host.policy,
+      passwords: createAuthenticationPasswordWork(migrated ? createNodeMigratedLegacyPasswords() : createNodeScryptPasswords(), host.authenticationWork.passwordGate,
+        {supports: migrated ? isNodeMigratedPasswordHash : isNodeScryptPasswordHash, dummyHash: NODE_SCRYPT_DUMMY_HASH}) });
+    const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin, loginAdmission: host.authenticationWork.loginAdmission });
     const authenticate = createSalesSessionAuthenticator(authentication);
     const authenticateTransfer = createTransferSessionAuthenticator(authentication);
     if (issuer && (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || issuer.categoryOrderWrite)) {
@@ -617,7 +628,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
         const tag = capabilities.staffMaintenance.credentialRequestTag;
         app.register(createStaffMaintenanceHttpPlugin({ authenticate,
           dependencies: { unitOfWork: new PostgresStaffMaintenanceUnitOfWork(work), now: host.now, newId: () => randomUUID(),
-            credentials: tag === null ? null : { passwords: createNodeScryptPasswords(), credentialRequestTag: tag,
+            credentials: tag === null ? null : { passwords: gatePasswordCodec(createNodeScryptPasswords(), host.authenticationWork.passwordGate, 'authenticated'), credentialRequestTag: tag,
               assertNewPassword: host.policy.assertNewPassword.bind(host.policy) } } }));
         if (capabilities.coreInitializationRead || extensions === null) app.register(createOrganizationMaintenanceReadHttpPlugin({ authenticate,
           kinds: ["STAFF"], unitOfWork: new PostgresOrganizationMaintenanceReadUnitOfWork(work) }));

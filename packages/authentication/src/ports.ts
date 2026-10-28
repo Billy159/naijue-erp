@@ -24,6 +24,17 @@ export interface AuthenticationSession {
   readonly expiresAt: string;
   readonly revokedAt: string | null;
 }
+/** Calculation evidence only; never an authenticated principal or a substitute for a locked current read. */
+export interface AuthenticationLoginSnapshot {
+  readonly accountId: EntityId<"account">;
+  readonly loginName: string;
+  readonly passwordHash: string;
+  readonly authVersion: number;
+}
+export interface AuthenticationPasswordChangeSnapshot {
+  readonly account: AuthenticationAccount;
+  readonly session: AuthenticationSession;
+}
 export interface AuthenticationTransaction {
   /** Account reads must serialize login/password changes against the same account and its staff/hall status. */
   findAccountByLogin(loginName: string): Promise<AuthenticationAccount | undefined>;
@@ -39,12 +50,22 @@ export interface AuthenticationTransaction {
 }
 /** MUST commit or roll back all callback writes together. No default in-memory or real database is selected. */
 export interface AuthenticationStore {
+  /** One unlocked statement; its lease MUST be released before this promise resolves or rejects. */
+  readLoginSnapshot(loginName: string): Promise<AuthenticationLoginSnapshot | undefined>;
+  /** One unlocked statement joining the session/current account/qualification; no transaction or locks. */
+  readPasswordChangeSnapshot(tokenHash: string): Promise<AuthenticationPasswordChangeSnapshot | undefined>;
   transaction<T>(work: (tx: AuthenticationTransaction) => Promise<T>): Promise<T>;
 }
 export interface PasswordCodec {
   hash(password: string): Promise<string>;
   /** Exact supported format only. Unknown/malformed/legacy hashes must return false, never accept plaintext. */
   verify(password: string, encoded: string): Promise<boolean>;
+}
+export type PasswordWorkKind = "login" | "authenticated";
+/** Shared instance budget; native computation must settle before releasing its slot, even after cancellation. */
+export interface AuthenticationPasswordWork {
+  verify(password: string, encoded: string | undefined, kind: PasswordWorkKind, signal?: AbortSignal): Promise<boolean>;
+  hash(password: string, signal?: AbortSignal): Promise<string>;
 }
 export interface AuthenticationPolicy {
   readonly sessionTtlSeconds: number;
@@ -58,7 +79,7 @@ export interface AuthenticationDependencies {
   readonly store: AuthenticationStore;
   readonly now: () => string;
   readonly policy: AuthenticationPolicy;
-  readonly passwords: PasswordCodec;
+  readonly passwords: AuthenticationPasswordWork;
 }
 export interface AuthenticationPrincipal {
   readonly accountId: EntityId<"account">;
