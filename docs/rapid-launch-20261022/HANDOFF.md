@@ -1,3 +1,5 @@
+SOURCE894：采用原QB SOURCE893容量宿主装配窄PASS：4新项及严格三根闭包通过，原组件/HTTP/P02不重复验。A01仍缺web接缝和真实PG并发/回滚/容量/SLO；不能称已完整可用。原D1已接A02只读盘点工具两叶，先统计session/关系/媒体实际占用，不读凭据、不执行业务、不猜远端PG盘余量或保留期。原任务总表同步当前P01/P02/A01/H01/H02/H06/P04实际层级，旧REVIEWED_PLAN/ACTIVE记录只保留历史，避免误派重做。T45原SOURCE867四case载体准备中，C确定隔离auth TTL900秒，仅该合成验证，不改生产默认。
+
 SOURCE893补充固定：A01原D1宿主三叶已交回并核pins，普通及media两构造点同context/client/runtime单proof；borrowed继续父proof。四不同定向检查及三叶严格类型通过；C只补H01两个精确装配import例外，原checker29fixtures/362files通过，无泛化HTTP豁免。原QB后继仅该装配，真实PG/并发/容量/SLO与web未接仍不记整项完成。234原runtime目录两个purpose已独立review通过，T45继续SOURCE867载体准备，不冒业务通过。
 
 SOURCE893：原QB SOURCE891已限定通过：新admission/shortlock41项、受影响8项及26根严格类型闭包通过；并非真实PG/代理/负载或生产参数通过，不重原全套。A01原D1三叶装配在途，普通及媒体维护回调同client接线，尚未交回。实际234由原非owner账号完成135/V1只读导出，准确catalog交原QB两个purpose review，T45并行准备SOURCE867四case载体，尚未正常登录或业务执行。Demo原Chat当前实际继续员工状态筛选/重置，旧Chrome空闲阻塞已被实际运行证据替代；全站对比未完不启动中途UI修补。

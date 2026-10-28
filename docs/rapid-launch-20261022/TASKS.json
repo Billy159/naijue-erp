@@ -17232,8 +17232,8 @@
         "dependsOn": [
           "HV2-G00"
         ],
-        "owner": "D1",
-        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "owner": "D1/D2",
+        "state": "SOURCE890_COMPONENT_HTTP_AND_SOURCE893_HOST_QB_NARROW_PASS;WEB_REAL_PG_SLO_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/A01.txt"
       },
@@ -17245,7 +17245,7 @@
           "HV2-G00"
         ],
         "owner": "D1",
-        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "state": "SOURCE891_QB_NARROW_PASS;REAL_PG_PROXY_LOAD_BUDGET_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P02.txt"
       },
@@ -17258,7 +17258,7 @@
           "HV2-P02"
         ],
         "owner": "D1",
-        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "state": "READONLY_INVENTORY_TWO_LEAF_IMPLEMENTATION_ACTIVE;BUDGET_ADMISSION_ACTUAL_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/A02.txt"
       },
@@ -17503,7 +17503,7 @@
           "HV2-G00"
         ],
         "owner": "D1",
-        "state": "D1_ACTIVE_FINITE_MATRIX_AND_BOUNDARY_CHECKER_EXACT_TWO_NEW_LEAVES",
+        "state": "SOURCE884_QB_STATIC_PASS;SOURCE893_EXACT_ASSEMBLY_EDGES_REGISTERED;ACTUAL_RUNTIME_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H01.txt"
       },
@@ -17527,8 +17527,8 @@
           "HV2-G00",
           "HV2-B07"
         ],
-        "owner": "D1",
-        "state": "SOURCE_LOCAL_QB_PASS;ACTUAL222_ORIGINAL_SYNTHETIC_PUBLICATION_DONE;UPGRADE_NORMAL_QA_REVISION_PERFORMANCE_PENDING",
+        "owner": "D1/T45",
+        "state": "SOURCE867_DRIVER_FIXED;ACTUAL233_ACL_234_RUNTIME_METADATA_QB_PASS;AUTH_FOUR_CASE_EXECUTION_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P04.txt"
       },
@@ -17543,7 +17543,7 @@
           "HV2-P04"
         ],
         "owner": "D3",
-        "state": "D3_ACTIVE_FINITE_SOURCE_READER_SEMANTICS;P04_REAL_PG_PENDING_SEPARATE",
+        "state": "SOURCE885_QB_NARROW_PASS;ACTUAL_PG_CROSS_CONSUMER_OUTPUT_SLO_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H02.txt"
       },
@@ -17556,7 +17556,7 @@
           "HV2-A01"
         ],
         "owner": "D3",
-        "state": "SOURCE_IMPLEMENTATION_ACTIVE",
+        "state": "SOURCE889_QB_NARROW_PASS;CURRENT_EXACT26_REAL_PG_RUNNER_ACTIVE",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P01.txt",
         "handoff": "OriginalD1 explicit noWIP/inflight; exactP01SalesFacts887 fourleaflease; A01/realPG/SLO still uncompleted"
@@ -17628,8 +17628,8 @@
           "HV2-A02",
           "HV2-PF02"
         ],
-        "owner": "D1",
-        "state": "D2_HOST_READINESS_DRAIN_FIRST_SLICE_ACTIVE_EXACT4_SOURCE;REMAINING_RETENTION_LOGGING_GC_NOT_IMPLEMENTED",
+        "owner": "D2",
+        "state": "SOURCE863_DRAIN_SOURCE864_BOUNDED_LOGS_QB_NARROW_PASS;ACTUAL_LIFECYCLE_RETENTION_GC_RESTORE_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H06.txt"
       },
@@ -18667,13 +18667,14 @@
     },
     "A01PendingCapacity887": {
       "owner": "D2",
-      "state": "HOST_FACTORY_HANDED_BACK_SOURCE893_PENDING_QB",
+      "state": "SOURCE893_COMPONENT_HTTP_HOST_QB_NARROW_PASS_WEB_AND_REAL_PG_PENDING",
       "current": "Currentgrowthentry/pendingcountbytes/port/errorcodes explicitproposal beforetruewritecontract approval",
-      "next": "QB fixed host factory; frontend original owner handback and actual PG concurrency/SLO pending",
+      "next": "Frontend transport owner handback; actual same-product PG concurrency/rollback/capacity and SLO; no repeat component tests",
       "approval": "call_d51f6d152d15476cb063527e1d542136/0",
       "receipt": "reports/backend/rapid-launch-20261022/D2/A01-CAPACITY-IMPLEMENTATION-20261029/RESULT.json",
       "checks": "D2 79targetedPASS/0fail Node24stripcompatible;D2owned0typeerrors/root142NOTPASS;C3HTTPerrorcasesPASS+productHTTP7PASS;D1 host4uniquePASS/strict3leafclosurePASS;not real PG",
-      "qa": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE890/QB-SOURCE890-RESULT.json"
+      "qa": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE890/QB-SOURCE890-RESULT.json",
+      "qaHost": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE893/QB-SOURCE893-RESULT.json"
     },
     "delegatedTechnicalDecisions889": {
       "sourceThread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
@@ -18705,6 +18706,16 @@
       "scope": "Actual nonowner runtime connection RRRO export only; rollback/client0; no login or business",
       "next": "T45 complete precise SOURCE867 auth/fourcase carrier; rebind copied independent receipt path, no invented signature",
       "qa": "reports/qa-backend/rapid-launch-20261022/QB/HV2-P04-234-RUNTIME135-REVIEW/QB-P04-234-RUNTIME-REVIEW.json"
+    },
+    "A02Inventory894": {
+      "owner": "D1",
+      "status": "ACTIVE_READONLY_TOOL_SOURCE",
+      "files": [
+        "scripts/ops/capacity-inventory.mjs",
+        "tests/capacity-inventory.test.ts"
+      ],
+      "scope": "A02 card step2 inventory only; no actual PG/media/server execution; no policy defaults or new write admission",
+      "next": "Fixed source and targeted checks; T45 exact synthetic target read-only inventory; C actual T/R/space budget after evidence"
     }
   }
 }

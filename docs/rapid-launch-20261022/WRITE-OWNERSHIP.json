@@ -7515,6 +7515,17 @@
       "dependsOn": "SOURCE889 P01 and fixed A01 host before actual end-to-end run",
       "executionOwner": "T45",
       "next": "Hand back executable finite runner and exact target prerequisites; actual database only original T45 after bound synthetic setup"
+    },
+    "A02Inventory894": {
+      "owner": "D1",
+      "status": "ACTIVE_EXACT_READONLY_TOOL_AND_TEST",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "scripts/ops/capacity-inventory.mjs",
+        "tests/capacity-inventory.test.ts"
+      ],
+      "scope": "Original A02 card step2 finite read-only session/relation/database and media allocated usage inventory; no token/password data, no DB execution/ACL/DDL/delete; no invented capacity or retention defaults",
+      "next": "Handback executable tool and targeted tests; actual target execution only T45; trusted remote filesystem/WAL unknown stays unknown"
     }
   }
 }
