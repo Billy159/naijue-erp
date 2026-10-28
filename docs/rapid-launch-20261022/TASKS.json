@@ -18709,19 +18709,20 @@
     },
     "A02Inventory894": {
       "owner": "D1",
-      "status": "SOURCE899_ROOT_OVERLAP_FIX_HANDED_BACK_PENDING_QB_F01_ONLY",
+      "status": "SOURCE899_QB_F01_CLOSED_NARROW_PASS_ACTUAL_INVENTORY_PENDING",
       "files": [
         "scripts/ops/capacity-inventory.mjs",
         "tests/capacity-inventory.test.ts"
       ],
       "scope": "A02 card step2 inventory only; no actual PG/media/server execution; no policy defaults or new write admission",
-      "next": "QB fixed F01 only then T45 exact target read-only inventory",
+      "next": "OriginalT45 newQA read-only inventory after source/table readiness and exact media root; old testsource not mixed",
       "receipt": "reports/backend/rapid-launch-20261022/D1/A02-INVENTORY-RESULT.json",
       "checks": "20unique cases across recorded targeted runs; initial2fixture failures fixed/retested; necessary affected FS tests/types/syntax pass; no actual PG or media target",
       "finding": "QB898-F01 POSIX root / ancestry overlap, both orders must reject before connect/fs",
       "qa": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE898/QB-SOURCE898-RESULT.json",
       "fixReceipt": "reports/backend/rapid-launch-20261022/D1/A02-SOURCE898-ROOT-OVERLAP-FIX.json",
-      "fixChecks": "2targetedPASS;root-child both orders and parent-child rejected before pool/fs; adjacent roots preserved;no original20/12rerun"
+      "fixChecks": "2targetedPASS;root-child both orders and parent-child rejected before pool/fs; adjacent roots preserved;no original20/12rerun",
+      "qaFix": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE899/QB-SOURCE899-RESULT.json"
     },
     "H03Lifecycle895": {
       "owner": "D2",
@@ -18771,14 +18772,16 @@
     },
     "Current897QA899": {
       "owner": "T45",
-      "status": "C_EXACT_NEW_SYNTHETIC_TARGET_BOOTSTRAP_DECIDED_NOT_YET_ACTUAL",
+      "status": "ACTUAL237_NEW_EMPTY_TARGET_CREATED_PREFIX_SCHEMA_DISPATCHED",
       "sourceCommit": "c53cec427882f70d51a53d6d84652bc54181736a",
       "proposal": "reports/controller/rapid-launch-20261022/T45-CURRENT897-QA-PREPARATION-01/EXACT-QA-PROPOSAL.json",
       "target": {
         "database": "naijue_erp_test_hv2_qa897_20261029_01",
         "owner": "hv2_qa897_owner_20261029_01",
         "runtime": "hv2_qa897_runtime_20261029_01",
-        "oid": null
+        "oid": 21551,
+        "ownerOid": 21549,
+        "runtimeOid": 21550
       },
       "decision": "C under verified user technical delegation 01a1837b-674f-7a20-aab5-da1300b4690c: original isolated PG identity/resources revalidate then one new DB/two ordinary roles only; no clone/P04 changes/schema/fixture/ACL until exact subsequent decision",
       "syntheticAuthBudgets": {
@@ -18810,7 +18813,18 @@
         }
       },
       "budgetBoundary": "Synthetic functional cold1/repeat2 and finite rejection tests only; verify resource premise before use; NOT production defaults or SLO acceptance",
-      "next": "Actual target IDs from T45 receipt; D1 exact maintained fixture/LIVE ACL seams; distinguish P01 synthetic session from P02 normal auth; A02 root fix first"
+      "next": "T45 actualprefix131/newv22preciseguard; D3 currentfixture adapter; D1 exactminimalruntime ACL draft; no production",
+      "bootstrapReceipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-current897-new-empty-db-roles-20261029-237/RESULT237.json",
+      "bootstrapResult": "Ordinary two-role loopback RO identity/empty userrelations/nonmember and clients0 pass; no business ACL/seed/media/app",
+      "schemaDecision": "Only exact new21551 original26migrations+first7 approvedpatches throughv20; stop before v22 for actual full131parent; targetboundwrapper decision separate",
+      "qaProcessIdentity": {
+        "uid": 10001,
+        "gid": 10001,
+        "basis": "Actual238 existing application config and process UID, not web101 or PG999",
+        "mediaRoot": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/media",
+        "publicRoot": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/public",
+        "directoryDecision": "Create newonly media700/public755 owned10001; no existingpath chmod/overwrite; actual media still not tested"
+      }
     },
     "H06Retention899": {
       "owner": "D2",
@@ -18826,7 +18840,15 @@
       "file": "tests/integration/current-runtime26-sales-fixture.ts",
       "target": "naijue_erp_test_hv2_qa897_20261029_01",
       "scope": "Reuse original current26 import+maintained contracts; exact synthetic nonnull hall actor/live refs/lawful missingSKU tuple; no oldschema11/P04guard relaxation/mockproof/direct table seed",
-      "next": "Callable adapter/accurate target/source-grant required; T45 actual execution only after binding"
+      "next": "Callable adapter/accurate target/source-grant required; T45 actual execution only after binding",
+      "sourceRequirement": "All synthetic49accounts(45direct+4planlinked), original CORE115(22halls+22warehouses+49staff+22customers); NULL importer separate from maintained nonnullhall LIVE actor; original guard unchanged; credentials/sourceauthority/grant private original factories, no real49 input reuse"
+    },
+    "Current897RuntimeACL900": {
+      "owner": "D1",
+      "status": "EXACT_CONTROL_DRAFT_ACTIVE_NOT_EXECUTED",
+      "target": "DB21551/hv2_qa897_runtime_20261029_01",
+      "scope": "Current fixed897 P01/A01/P02 exact callchain columns/rowlock/EXEC/sequence; originalimport/seed owner separated; not P04ACL clone or broadgrant",
+      "next": "C exact delta decision afteractualcatalog135 and D3fixture branch; T45 only actualGRANT"
     }
   }
 }
