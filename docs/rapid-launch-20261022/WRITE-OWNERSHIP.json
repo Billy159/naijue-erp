@@ -7565,7 +7565,7 @@
     "H06Reclaim904": {
       "owner": "D2",
       "model": "gpt-6.1-sol/medium",
-      "status": "SOURCE907_THREE_LEAF_HANDED_BACK_FIXED_FOR_QB",
+      "status": "SOURCE907_QB907_F01_BACKUP_PHYSICAL_ALIAS_FIX_D2_ACTIVE",
       "files": [
         "scripts/ops/resource-reclaim.mjs",
         "tests/resource-reclaim.test.ts",
@@ -7582,6 +7582,24 @@
         "scripts/release/test_stop_full_lifecycle.py"
       ],
       "scope": "Original244 config evidence shows no explicit finite json-file rotation in inspected application settings; require explicit role limits.logging on new candidate plans, apply Docker native max-size/max-file/compress and verify actual LogConfig in original own-container flow. No chosen production values, server changes, deletion, new collector or app logging rewrite."
+    },
+    "A02HostWiring908": {
+      "owner": "D1",
+      "model": "gpt-6.1-sol/medium",
+      "status": "QUEUED_AFTER_CURRENT_NORMAL_ACL_HANDOFF",
+      "files": [
+        "packages/authentication/src/ports.ts",
+        "packages/authentication/src/service.ts",
+        "apps/api/src/authentication.ts",
+        "apps/api/src/authentication.test.ts",
+        "apps/api/src/product-media-http.ts",
+        "apps/api/src/product-media-http.test.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/postgres-read-api.test.ts",
+        "apps/api/src/postgres-application-api.test.ts",
+        "tests/authentication-commit-outcome.test.ts"
+      ],
+      "scope": "V2 A02 already explicit503/RetryAfter/no cookie on unknown expired low capacity for new session/upload; wire accepted906 singleton only at true new issue/upload before body, retain original key/cancel/unknown transaction and resource release. No thresholds/probe defaults/SQL/permissions/production; existing session/logout/revoke/mediaGET not gated. C owns producer config/shared release seams separately."
     }
   }
 }

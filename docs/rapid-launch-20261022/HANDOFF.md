@@ -1,3 +1,7 @@
+SOURCE908补充：原QB907明确NEED_FIX/P1 QB907-F01，虚拟bind-mount别名反例证实备份路径不同但dev/ino同源会删除所谓备份；0真实删除。原D2同三叶定修所有备份对全部源物理身份交集，其他session/引用/围栏scope与6pure检查保留不重。C采用V2 A02步骤5已明确的503/Retry-After拒新发行/上传语义，原D1完成normalACL后接准确10叶host接线，不新增表/权限/阈值，不让已有session/退出/撤权/旧图读受阻；真实probe与窗口尚未接，不冒整体完成。原T45获准私有prepare-only producer仅生成全合成49来源候选、止独立review前；D3控制准备权限与D1普通运行权限分开，不借owner做业务或95全授，0新role/ACL/init。
+
+SOURCE908：采用原QB SOURCE906三scope窄PASS，903 F01/F02由后继修复关闭：除身份等式，还实际用非执行纯合成材料调用原catalogue工厂9行授权并验证改动/close拒绝；私密49bootstrap仍未成功。A02组件30新case/strict、原日志旋转3新case/AST通过，0真实probe/PG/Docker/旋转。SOURCE907原H06三叶已GitHub22af5a576a37330fdb0c6963bc9b6da24791282b回读，QB接独立窄审；原T45继续私密材料/准确准备issuer，原D1收窄普通runtime列级差集，不整批授95。正式业务、全站前端与性能/恢复仍未通过，生产边界保持。
+
 SOURCE907：原D2 H06有限回收三新叶已交回，6不同局部case分轮通过、Node语法/strict通过，默认dry-run/准确隔离apply、撤销且过期会话每账号保留见证、媒体真实引用及离线围栏/备份接缝；全部PG/FS仍脚本或虚拟，0实际清理/恢复。正式/indexed媒体、原key、审计回执继续保留；准确cutoff/ops权限/实际删除与恢复批准及可信围栏尚缺，不冒H06整体完成。原QB先收SOURCE906三范围，后续本三叶独立窄审，主控不重做技术验收。原903两消费者NEED_FIX结论保留，D3后继906尚待补验和原T45工厂实际输入准备，生产保护保持。
 
 SOURCE906源码合批：D3原903 F01/F02同叶后继已交回（统一49来源身份；改消费原reviewed catalogueSource实际chunks/authorize，不重建授权DTO），2定向/strict/syntax通过，0私密工厂/PG；原QB903消费者NEED_FIX采用，后继只复两项。原D1 A02容量窗口两新叶交回，30局部PASS/strict，未接auth/media/host、无实际probe/生产预算。C依据T45 244准确配置仅读，补原deploy-candidate.py显式limits各role.logging(maxSizeBytes/maxFiles/compress)、原Docker创建参数及LogConfig读回/fingerprint；无生产值默认、无新collector。新增3检查/既有生命周期文件9项全过、PythonAST过，0Docker/服务器变更。仅固定源码，不冒真实轮转/容量/业务/SLO通过；H06回收源码仍D2在途，未获实际删除许可。SOURCE905 e79b4b163fbddc0531e964769d9fdc9ad95ac7bd已GitHub回读。
