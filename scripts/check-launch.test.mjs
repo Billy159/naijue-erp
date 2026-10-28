@@ -17,6 +17,7 @@ const base = {nodeVersion: '24.21.0', npmVersion: '11.9.0', commit, acceptance,
 test('launch gate enumerates actual replica/import/release and preserves original root gate once', () => {
   const rows = launchCommands();
   assert.equal(rows.filter(row => row.id === 'existing-root-check-all').length, 1);
+  assert.deepEqual(rows.find(row => row.id === 'module-boundaries').args, ['scripts/check-module-boundaries.mjs']);
   for (const file of ['filter-selection-runtime.test.mjs', 'normal-entry.test.mjs', 'production-source-provider26.test.mjs', 'production-source-host.test.mjs'])
     assert.ok(rows.some(row => row.args.some(arg => arg.endsWith(file))), file);
   assert.ok(rows.some(row => row.args.includes('tsconfig.launch-api.json')));

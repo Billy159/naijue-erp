@@ -2225,6 +2225,18 @@
           "path": "tests/history-settlement.test.ts",
           "group": "B06_EXISTING_NATIVE_BIGINT_CAPTURE_SEAM",
           "reason": "Actual C175 source preflight rejected already-contracted native MAIN bigint quantity; direct hash preclone bug only, no new schema/field/command/permission"
+        },
+        {
+          "path": "adapters/postgres/src/history-typed-closure.ts",
+          "group": "H01_EXISTING_IMPORT_ADAPTER_OWNER_REGISTRATION_ONLY",
+          "fieldGate": "NO_SCHEMA_WRITE_CONTRACT_CHANGE_WITHOUT_EXISTING_APPROVAL",
+          "scope": "Logical/import moduleD3;preserveexistingcode/H01matrixonly;notanadditionalactivewritelease;currentH02sixleafscopeunchanged"
+        },
+        {
+          "path": "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+          "group": "H01_EXISTING_IMPORT_ADAPTER_OWNER_REGISTRATION_ONLY",
+          "fieldGate": "NO_SCHEMA_WRITE_CONTRACT_CHANGE_WITHOUT_EXISTING_APPROVAL",
+          "scope": "Logical/import moduleD3;preserveexistingcode/H01matrixonly;notanadditionalactivewritelease;currentH02sixleafscopeunchanged"
         }
       ]
     },
@@ -7343,6 +7355,15 @@
           "tests/integration/history-revision-set-guards.integration.test.ts"
         ],
         "boundary": "ExactexistingpathnotAPIwildcard;forbiddenotherhandlerfixturemustfail;nochangepermission/SQL/transactionorcopyimplementation"
+      },
+      "existingImportAdapterRegistration": {
+        "owner": "D3",
+        "files": [
+          "adapters/postgres/src/history-typed-closure.ts",
+          "adapters/postgres/src/import-v3-history-header-native-reference-store.ts"
+        ],
+        "scope": "Existingtypedclosure/native-referenceadapterownership;Cgitlog/exportedAPIverified;noimplementationchange/newwriteauthority",
+        "transactionOwner": "Standalone store owns original transaction;insertValidatedHistoryHeaderNativeReferences borrows existing client and cannot BEGIN/COMMIT/ROLLBACK"
       }
     },
     "H02EffectiveReaders880": {

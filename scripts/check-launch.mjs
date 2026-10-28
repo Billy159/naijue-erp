@@ -44,6 +44,7 @@ export function launchCommands() {
     ? {command: process.execPath, prefix: [process.env.npm_execpath]}
     : {command: 'npm', prefix: []};
   return [
+    node('module-boundaries', ['scripts/check-module-boundaries.mjs']),
     node('production-api-types', ['node_modules/typescript/bin/tsc', '--noEmit', '-p', 'tsconfig.launch-api.json']),
     node('replica-runtime-types', ['node_modules/typescript/bin/tsc', '--noEmit', '-p', 'apps/web/demo-replica/tsconfig.runtime.json']),
     node('replica-runtime-tests', ['--test', ...runtime]),

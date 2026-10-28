@@ -1,0 +1,2677 @@
+{
+  "taskId": "H01FiniteOwnership879",
+  "version": 1,
+  "sourceAuthority": "Current R source plus WRITE-OWNERSHIP.handoverV2.H01FiniteOwnership879; this document does not transfer file ownership or grant database access",
+  "scope": {
+    "roots": [
+      "packages/domain/src",
+      "packages/application/src",
+      "packages/authentication/src",
+      "adapters/postgres/src",
+      "adapters/media/src",
+      "apps/api/src",
+      "apps/web/demo-replica/frontend/runtime",
+      "scripts/import-v3"
+    ],
+    "files": [
+      "apps/web/demo-replica/frontend/production-bootstrap.ts",
+      "apps/web/demo-replica/frontend/runtime-bootstrap.ts",
+      "apps/web/demo-replica/frontend/runtime-styles.ts",
+      "apps/web/demo-replica/frontend/frozen-style-order.ts"
+    ],
+    "excludedDirectories": [
+      "node_modules",
+      "tests",
+      "__tests__",
+      "archive",
+      "archives",
+      "review-builds",
+      "fixtures"
+    ],
+    "notes": "Current owned backend/CLI source roots and current replica runtime only. Excludes tests/fixtures/archive/node_modules/frozen Demo. Matrix records the exact original three policy consumers; only production assembly is in normal runtime scan, tests consumed by their original commands."
+  },
+  "modules": {
+    "identity": {
+      "facts": "Current account/staff identity, credentials and revocable sessions",
+      "ports": [
+        "packages/authentication/src/ports.ts",
+        "packages/application/src/account-maintenance-ports.ts",
+        "packages/application/src/staff-maintenance-ports.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "catalogue": {
+      "facts": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "ports": [
+        "packages/application/src/product-maintenance-ports.ts",
+        "packages/application/src/catalogue-maintenance-ports.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "organization": {
+      "facts": "Hall/warehouse identity; one current owning hall per warehouse",
+      "ports": [
+        "packages/application/src/organization-maintenance-ports.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "party": {
+      "facts": "Customer/supplier identity and classification",
+      "ports": [
+        "packages/application/src/party-maintenance-ports.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "payment": {
+      "facts": "Payment methods/accounts and authorized halls",
+      "ports": [
+        "packages/application/src/payment-maintenance-ports.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "sales": {
+      "facts": "LIVE sales current document/lines/settlements, original key/CAS",
+      "ports": [
+        "packages/application/src/ports.ts",
+        "packages/application/src/sales-service.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "transfer": {
+      "facts": "LIVE transfer document/lines, paired stock endpoints, original key/CAS",
+      "ports": [
+        "packages/application/src/transfer-ports.ts",
+        "packages/application/src/transfer-service.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "history": {
+      "facts": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "ports": [
+        "packages/application/src/history-revision-contracts.ts",
+        "packages/application/src/imported-history-query-ports.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "inventory": {
+      "facts": "Per warehouse/original SKU signed ledger and cumulative balance",
+      "ports": [
+        "packages/application/src/inventory-posting.ts",
+        "packages/application/src/history-revision-posting.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "import": {
+      "facts": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "ports": [
+        "packages/application/src/inventory-cutoff-import.ts",
+        "packages/application/src/native-import-record-accounting.ts"
+      ],
+      "accountableOwner": "D3 import/fact owner clarified by C; original transaction/evidence/admission implementation owners remain registered per exact write port"
+    },
+    "evidence": {
+      "facts": "Original operation audit/receipt, written within the originating business transaction",
+      "ports": [
+        "packages/application/src/maintenance-commit-ports.ts",
+        "packages/application/src/ports.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "governance": {
+      "facts": "Dataset read revision and controlled schema history",
+      "ports": [
+        "adapters/postgres/src/read-dataset-version.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    },
+    "numbering": {
+      "facts": "Immutable runtime document number allocation on original SAVE client",
+      "ports": [
+        "adapters/postgres/src/runtime-document-number.ts"
+      ],
+      "accountableOwner": "C architecture/fact-owner registration; implementation file ownership remains original WRITE-OWNERSHIP registrations"
+    }
+  },
+  "tables": {
+    "staff": {
+      "module": "identity",
+      "fact": "Current account/staff identity, credentials and revocable sessions",
+      "writerAuthority": "identity fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-party-import.ts",
+        "adapters/postgres/src/staff-maintenance-store.ts"
+      ]
+    },
+    "user_account": {
+      "module": "identity",
+      "fact": "Current account/staff identity, credentials and revocable sessions",
+      "writerAuthority": "identity fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/account-maintenance-store.ts",
+        "adapters/postgres/src/auth-store.ts",
+        "adapters/postgres/src/staff-maintenance-store.ts",
+        "scripts/import-v3/native-bootstrap.mjs"
+      ]
+    },
+    "auth_session": {
+      "module": "identity",
+      "fact": "Current account/staff identity, credentials and revocable sessions",
+      "writerAuthority": "identity fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/account-maintenance-store.ts",
+        "adapters/postgres/src/auth-store.ts",
+        "adapters/postgres/src/staff-maintenance-store.ts"
+      ]
+    },
+    "product": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-product-import.ts",
+        "adapters/postgres/src/product-maintenance-store.ts"
+      ]
+    },
+    "product_category": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/catalogue-maintenance-store.ts",
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ]
+    },
+    "product_image": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/product-maintenance-store.ts"
+      ]
+    },
+    "sku": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-sku-import.ts",
+        "adapters/postgres/src/product-maintenance-store.ts"
+      ]
+    },
+    "sku_barcode": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-barcode-import.ts",
+        "adapters/postgres/src/product-maintenance-store.ts"
+      ]
+    },
+    "barcode_scheme": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-barcode-import.ts"
+      ]
+    },
+    "color": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/catalogue-maintenance-store.ts",
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ]
+    },
+    "fit": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/catalogue-maintenance-store.ts",
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ]
+    },
+    "season": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ]
+    },
+    "size": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ]
+    },
+    "size_group": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ]
+    },
+    "size_group_member": {
+      "module": "catalogue",
+      "fact": "Product/SKU coordinate, retained dictionaries, size membership, barcode and controlled image metadata",
+      "writerAuthority": "catalogue fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ]
+    },
+    "hall": {
+      "module": "organization",
+      "fact": "Hall/warehouse identity; one current owning hall per warehouse",
+      "writerAuthority": "organization fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-party-import.ts",
+        "adapters/postgres/src/organization-maintenance-store.ts"
+      ]
+    },
+    "warehouse": {
+      "module": "organization",
+      "fact": "Hall/warehouse identity; one current owning hall per warehouse",
+      "writerAuthority": "organization fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-party-import.ts",
+        "adapters/postgres/src/organization-maintenance-store.ts"
+      ]
+    },
+    "customer": {
+      "module": "party",
+      "fact": "Customer/supplier identity and classification",
+      "writerAuthority": "party fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-party-import.ts",
+        "adapters/postgres/src/party-maintenance-store.ts"
+      ]
+    },
+    "supplier": {
+      "module": "party",
+      "fact": "Customer/supplier identity and classification",
+      "writerAuthority": "party fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-party-import.ts",
+        "adapters/postgres/src/party-maintenance-store.ts"
+      ]
+    },
+    "payment_method": {
+      "module": "payment",
+      "fact": "Payment methods/accounts and authorized halls",
+      "writerAuthority": "payment fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-payment-import.ts",
+        "adapters/postgres/src/payment-maintenance-store.ts"
+      ]
+    },
+    "payment_account": {
+      "module": "payment",
+      "fact": "Payment methods/accounts and authorized halls",
+      "writerAuthority": "payment fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-payment-import.ts",
+        "adapters/postgres/src/payment-maintenance-store.ts"
+      ]
+    },
+    "payment_account_hall": {
+      "module": "payment",
+      "fact": "Payment methods/accounts and authorized halls",
+      "writerAuthority": "payment fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-payment-import.ts",
+        "adapters/postgres/src/payment-maintenance-store.ts"
+      ]
+    },
+    "sales_header": {
+      "module": "sales",
+      "fact": "LIVE sales current document/lines/settlements, original key/CAS",
+      "writerAuthority": "sales fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/sales-unit-of-work.ts"
+      ]
+    },
+    "sales_line": {
+      "module": "sales",
+      "fact": "LIVE sales current document/lines/settlements, original key/CAS",
+      "writerAuthority": "sales fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/sales-unit-of-work.ts"
+      ]
+    },
+    "sales_settlement": {
+      "module": "sales",
+      "fact": "LIVE sales current document/lines/settlements, original key/CAS",
+      "writerAuthority": "sales fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/sales-unit-of-work.ts"
+      ]
+    },
+    "transfer_header": {
+      "module": "transfer",
+      "fact": "LIVE transfer document/lines, paired stock endpoints, original key/CAS",
+      "writerAuthority": "transfer fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/transfer-unit-of-work.ts"
+      ]
+    },
+    "transfer_line": {
+      "module": "transfer",
+      "fact": "LIVE transfer document/lines, paired stock endpoints, original key/CAS",
+      "writerAuthority": "transfer fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/transfer-unit-of-work.ts"
+      ]
+    },
+    "history_revision": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "history fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-revision-store.ts"
+      ]
+    },
+    "history_sales_header": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "Trusted original import STAGE path; immutable after publication, no LIVE source rewrite",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/import-v3-history-header-staging-store.ts"
+      ]
+    },
+    "history_sales_line": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "Trusted original import STAGE path; immutable after publication, no LIVE source rewrite",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts"
+      ]
+    },
+    "history_sales_settlement": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "Trusted original import STAGE path; immutable after publication, no LIVE source rewrite",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/import-v3-history-settlement-staging-store.ts"
+      ]
+    },
+    "history_transfer_header": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "Trusted original import STAGE path; immutable after publication, no LIVE source rewrite",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/import-v3-history-header-staging-store.ts"
+      ]
+    },
+    "history_transfer_line": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "Trusted original import STAGE path; immutable after publication, no LIVE source rewrite",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/import-v3-history-staging-store.ts"
+      ]
+    },
+    "history_sales_effective": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "history fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-revision-store.ts"
+      ]
+    },
+    "history_sales_line_effective": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "history fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-revision-store.ts"
+      ]
+    },
+    "history_sales_settlement_effective": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "history fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-revision-store.ts"
+      ]
+    },
+    "history_transfer_effective": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "history fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-revision-store.ts"
+      ]
+    },
+    "history_transfer_line_effective": {
+      "module": "history",
+      "fact": "Immutable imported historical facts and explicit numeric revision/effective projections",
+      "writerAuthority": "history fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-revision-store.ts"
+      ]
+    },
+    "inventory_ledger": {
+      "module": "inventory",
+      "fact": "Per warehouse/original SKU signed ledger and cumulative balance",
+      "writerAuthority": "inventory fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/inventory-posting-balances.ts",
+        "adapters/postgres/src/sales-unit-of-work.ts",
+        "adapters/postgres/src/transfer-unit-of-work.ts"
+      ]
+    },
+    "inventory_balance": {
+      "module": "inventory",
+      "fact": "Per warehouse/original SKU signed ledger and cumulative balance",
+      "writerAuthority": "inventory fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/inventory-posting-balances.ts"
+      ]
+    },
+    "import_batch": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts"
+      ]
+    },
+    "import_header_native_reference": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/import-v3-history-header-native-reference-store.ts"
+      ]
+    },
+    "import_history_closure_manifest": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-typed-closure.ts",
+        "adapters/postgres/src/history-typed-closure19.ts"
+      ]
+    },
+    "import_history_document_manifest": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-typed-closure.ts",
+        "adapters/postgres/src/history-typed-closure19.ts"
+      ]
+    },
+    "import_native_catalogue_binding": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ]
+    },
+    "import_native_payment_binding": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-payment-import.ts"
+      ]
+    },
+    "import_record": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/native-party-import.ts",
+        "adapters/postgres/src/native-sku-import.ts"
+      ]
+    },
+    "import_record_accounting_claim": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-import-record-accounting.ts"
+      ]
+    },
+    "import_sku_alias": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-sku-import.ts"
+      ]
+    },
+    "import_source_row": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/catalogue-completeness.ts",
+        "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+        "adapters/postgres/src/import-v3-history-header-staging-store.ts",
+        "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+        "adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+        "adapters/postgres/src/import-v3-history-staging-store.ts",
+        "adapters/postgres/src/native-barcode-import.ts",
+        "adapters/postgres/src/native-catalogue-import.ts",
+        "adapters/postgres/src/native-party-import.ts",
+        "adapters/postgres/src/native-payment-import.ts",
+        "adapters/postgres/src/native-sku-import.ts",
+        "adapters/postgres/src/native-stock-contributor-import.ts"
+      ]
+    },
+    "import_stock_contributor": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/native-stock-contributor-import.ts"
+      ]
+    },
+    "native_party_import_evidence": {
+      "module": "import",
+      "fact": "Source/provenance/bindings/accounting/closure and controlled published batch state; STAGED is not published",
+      "writerAuthority": "import fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/native-party-import.ts"
+      ]
+    },
+    "audit_change": {
+      "module": "evidence",
+      "fact": "Original operation audit/receipt, written within the originating business transaction",
+      "writerAuthority": "Originating registered UOW client, no independently successful evidence writer",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-revision-store.ts",
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "adapters/postgres/src/party-maintenance-store.ts",
+        "adapters/postgres/src/sales-unit-of-work.ts",
+        "adapters/postgres/src/transfer-unit-of-work.ts"
+      ]
+    },
+    "operation_receipt": {
+      "module": "evidence",
+      "fact": "Original operation audit/receipt, written within the originating business transaction",
+      "writerAuthority": "Originating registered UOW client, no independently successful evidence writer",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/history-revision-store.ts",
+        "adapters/postgres/src/inventory-cutoff-import-store.ts",
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "adapters/postgres/src/party-maintenance-store.ts",
+        "adapters/postgres/src/sales-unit-of-work.ts",
+        "adapters/postgres/src/transfer-unit-of-work.ts"
+      ]
+    },
+    "schema_migration": {
+      "module": "governance",
+      "fact": "Dataset read revision and controlled schema history",
+      "writerAuthority": "T45/C original approved migration only; never application runtime SQL",
+      "allowedWriterPorts": []
+    },
+    "read_dataset_version": {
+      "module": "governance",
+      "fact": "Dataset read revision and controlled schema history",
+      "writerAuthority": "governance fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/read-dataset-version.ts"
+      ]
+    },
+    "runtime_document_number_allocation": {
+      "module": "numbering",
+      "fact": "Immutable runtime document number allocation on original SAVE client",
+      "writerAuthority": "numbering fact owner through explicitly registered ports; trusted import is a finite alternate writer, not a second fact owner",
+      "allowedWriterPorts": [
+        "adapters/postgres/src/runtime-document-number.ts"
+      ]
+    }
+  },
+  "writePorts": [
+    {
+      "file": "adapters/postgres/src/account-maintenance-store.ts",
+      "module": "identity",
+      "publicPorts": [
+        "PostgresAccountMaintenanceUnitOfWork"
+      ],
+      "transaction": "delegates-owner",
+      "transactionOwner": [
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts"
+      ],
+      "borrowedScopes": [
+        "AccountSqlTransaction"
+      ],
+      "tables": [
+        "user_account",
+        "auth_session"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D2"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/auth-store.ts",
+      "module": "identity",
+      "publicPorts": [
+        "PostgresAuthenticationStore"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/auth-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "auth_session",
+        "user_account"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/catalogue-completeness.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresImportedCatalogueCompletenessVerifier",
+        "insertValidatedCatalogueSourceProof",
+        "createMaintainedCatalogue26TransactionProof"
+      ],
+      "transaction": "mixed-read-owner-write-borrowed",
+      "transactionOwner": [
+        "adapters/postgres/src/catalogue-completeness.ts"
+      ],
+      "borrowedScopes": [
+        "insertValidatedCatalogueSourceProof"
+      ],
+      "tables": [
+        "import_source_row"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/catalogue-maintenance-store.ts",
+      "module": "catalogue",
+      "publicPorts": [
+        "PostgresCatalogueMaintenanceUnitOfWork"
+      ],
+      "transaction": "delegates-owner",
+      "transactionOwner": [
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts"
+      ],
+      "borrowedScopes": [
+        "CatalogueSqlTransaction"
+      ],
+      "tables": [
+        "product_category",
+        "color",
+        "fit"
+      ],
+      "dynamicTables": {
+        "table(next.kind)": [
+          "product_category",
+          "color",
+          "fit"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D2"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "dynamicTableDeclarations": [
+        {
+          "name": "table",
+          "initializers": [
+            "(kind: CatalogueMaintenanceKind): \"product_category\" | \"color\" | \"fit\" => kind === \"CATEGORY\" ? \"product_category\" : kind === \"COLOR\" ? \"color\" : \"fit\""
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/history-revision-store.ts",
+      "module": "history",
+      "publicPorts": [
+        "PostgresHistoryRevisionStore"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/history-revision-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "history_revision",
+        "history_sales_effective",
+        "history_transfer_effective",
+        "history_sales_line_effective",
+        "history_transfer_line_effective",
+        "history_sales_settlement_effective",
+        "audit_change",
+        "operation_receipt"
+      ],
+      "dynamicTables": {
+        "family": [
+          "sales",
+          "transfer"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "historyPostingClient": "client",
+      "dynamicTableDeclarations": [
+        {
+          "name": "family",
+          "initializers": [
+            "tables[command.kind]"
+          ]
+        },
+        {
+          "name": "tables",
+          "initializers": [
+            "{ sales: 'sales', transfers: 'transfer' } as const"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/history-typed-closure.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresHistoryTypedClosureStore"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/history-typed-closure.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_history_closure_manifest",
+        "import_history_document_manifest"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "C 2026-10-29 verified original history/exports and recorded exact path in WRITE-OWNERSHIP.roles.D3.registeredFiles; ownership clarification only, no new active write lease"
+    },
+    {
+      "file": "adapters/postgres/src/history-typed-closure19.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresHistoryTypedClosure19Store",
+        "PostgresHistoryTypedClosure26Store"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/history-typed-closure19.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_history_closure_manifest",
+        "import_history_document_manifest"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+      "module": "import",
+      "publicPorts": [
+        "historyHeaderNativeReferenceEvidence",
+        "PostgresV3HistoryHeaderNativeReferenceStore",
+        "insertValidatedHistoryHeaderNativeReferences"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/import-v3-history-header-native-reference-store.ts"
+      ],
+      "borrowedScopes": [
+        "insertValidatedHistoryHeaderNativeReferences"
+      ],
+      "tables": [
+        "import_source_row",
+        "import_header_native_reference"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "C 2026-10-29 verified original history/exports and recorded exact path in WRITE-OWNERSHIP.roles.D3.registeredFiles; ownership clarification only, no new active write lease"
+    },
+    {
+      "file": "adapters/postgres/src/import-v3-history-header-staging-store.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresV3HistoryHeaderStagingStore",
+        "PostgresV3HistoryHeaderStagingStore26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/import-v3-history-header-staging-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_source_row",
+        "history_sales_header",
+        "history_transfer_header"
+      ],
+      "dynamicTables": {
+        "table": [
+          "history_sales_header",
+          "history_transfer_header"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "dynamicTableDeclarations": [
+        {
+          "name": "table",
+          "initializers": [
+            "target.entity==='HALL'?'hall':target.entity==='CUSTOMER'?'customer':target.entity==='STAFF'?'staff':'warehouse'",
+            "p.entity === 'SALES_HEADER' ? 'history_sales_header' : 'history_transfer_header'"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresHistorySalesDetailStagingStore",
+        "PostgresHistorySalesDetailStagingStore26",
+        "createPostgresHistorySalesDetailBindingResolver",
+        "createPostgresHistorySalesDetailBindingResolver26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_source_row",
+        "history_sales_line"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresHistorySettlementStagingStore",
+        "PostgresHistorySettlementStagingStore26",
+        "createPostgresHistorySettlementBindingResolver",
+        "createPostgresHistorySettlementBindingResolver26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/import-v3-history-settlement-staging-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_source_row",
+        "history_sales_settlement"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/import-v3-history-staging-store.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresV3HistoryStagingStore",
+        "PostgresV3HistoryStagingStore26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/import-v3-history-staging-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_source_row",
+        "history_transfer_line"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "module": "import",
+      "publicPorts": [
+        "decodeImportCheckpoint",
+        "PostgresCutoffImportStore"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_batch",
+        "audit_change",
+        "operation_receipt",
+        "import_record",
+        "inventory_ledger",
+        "inventory_balance",
+        "import_stock_contributor"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/inventory-posting-balances.ts",
+      "module": "inventory",
+      "publicPorts": [
+        "PostgresPostingBalances",
+        "createPostgresHistoryRevisionPosting"
+      ],
+      "transaction": "borrowed-client",
+      "transactionOwner": [
+        "originating business owner; exact sharedClientEdges only"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "inventory_balance",
+        "inventory_ledger"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "module": "evidence",
+      "publicPorts": [
+        "readDocumentAppendEvidence",
+        "assertMaintenanceDriverPool",
+        "maintenanceContextClient",
+        "bindMaintenanceCategoryOrderGuard",
+        "assertMaintenanceProductImagesPrepared",
+        "withDocumentSpecificationMaintenanceContext",
+        "PostgresMaintenanceCommandUnitOfWork"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts"
+      ],
+      "borrowedScopes": [
+        "withDocumentSpecificationMaintenanceContext"
+      ],
+      "tables": [
+        "audit_change",
+        "operation_receipt"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/native-barcode-import.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresNativeBarcodeImportStore",
+        "PostgresNativeBarcodeImportStore26",
+        "initializeNativeBarcodeSchemesOnClient26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/native-barcode-import.ts"
+      ],
+      "borrowedScopes": [
+        "initializeNativeBarcodeSchemesOnClient26"
+      ],
+      "tables": [
+        "sku_barcode",
+        "import_source_row",
+        "barcode_scheme"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/native-catalogue-import.ts",
+      "module": "import",
+      "publicPorts": [
+        "nativeCatalogueBindingEvidence",
+        "PostgresNativeCatalogueImportStore",
+        "PostgresNativeCatalogueImportStore26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/native-catalogue-import.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "product_category",
+        "color",
+        "fit",
+        "size",
+        "size_group",
+        "season",
+        "size_group_member",
+        "import_source_row",
+        "import_native_catalogue_binding"
+      ],
+      "dynamicTables": {
+        "TABLES[row.entity]": [
+          "product_category",
+          "color",
+          "fit",
+          "size",
+          "size_group",
+          "season",
+          "size_group_member"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "dynamicTableDeclarations": [
+        {
+          "name": "TABLES",
+          "initializers": [
+            "{ CATEGORY: \"product_category\", COLOR: \"color\", FIT: \"fit\", SIZE: \"size\",\n  SIZE_GROUP: \"size_group\", SEASON: \"season\", SIZE_GROUP_MEMBER: \"size_group_member\" }"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/native-import-record-accounting.ts",
+      "module": "import",
+      "publicPorts": [
+        "createNativeImportRecordAccountant",
+        "reconcileNativeImportStockConservation",
+        "claimNativeCoreWarehouseRecords",
+        "readNativeCoreWarehouseCarryForward"
+      ],
+      "transaction": "borrowed-client",
+      "transactionOwner": [
+        "originating business owner; exact sharedClientEdges only"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_record_accounting_claim"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/native-party-import.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresNativePartyImportStore",
+        "stageNativePartyImportsOnClient"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/native-party-import.ts"
+      ],
+      "borrowedScopes": [
+        "stageNativePartyImportsOnClient"
+      ],
+      "tables": [
+        "native_party_import_evidence",
+        "customer",
+        "supplier",
+        "hall",
+        "warehouse",
+        "staff",
+        "import_source_row",
+        "import_record"
+      ],
+      "dynamicTables": {
+        "table(row)": [
+          "customer",
+          "supplier",
+          "hall",
+          "warehouse",
+          "staff"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "dynamicTableDeclarations": [
+        {
+          "name": "table",
+          "initializers": [
+            "(row: PreparedNativePartyImportRow): 'hall' | 'customer' | 'supplier' | 'staff' | 'warehouse' => row.entity.toLowerCase() as 'hall' | 'customer' | 'supplier' | 'staff' | 'warehouse'"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/native-payment-import.ts",
+      "module": "import",
+      "publicPorts": [
+        "nativePaymentSourceEvidence",
+        "nativePaymentBindingEvidence",
+        "PostgresNativePaymentImportStore",
+        "PostgresNativePaymentImportStore26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/native-payment-import.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "payment_method",
+        "payment_account",
+        "payment_account_hall",
+        "import_source_row",
+        "import_native_payment_binding"
+      ],
+      "dynamicTables": {
+        "table": [
+          "payment_method",
+          "payment_account",
+          "payment_account_hall"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "dynamicTableDeclarations": [
+        {
+          "name": "table",
+          "initializers": [
+            "ref.entity===\"HALL\"?\"hall\":TABLES[ref.entity]",
+            "hall?\"import_header_native_reference\":\"import_native_payment_binding\"",
+            "TABLES[row.entity]"
+          ]
+        },
+        {
+          "name": "TABLES",
+          "initializers": [
+            "{PAYMENT_METHOD:\"payment_method\",PAYMENT_ACCOUNT:\"payment_account\",PAYMENT_ACCOUNT_HALL:\"payment_account_hall\"} as const"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/native-product-import.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresNativeProductImportStore",
+        "PostgresNativeProductImportStore26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/native-product-import.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "product"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/native-sku-import.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresNativeSkuImportStore",
+        "PostgresNativeSkuImportStore26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/native-sku-import.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "sku",
+        "import_source_row",
+        "import_sku_alias",
+        "import_record"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/native-stock-contributor-import.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresNativeStockContributorStore",
+        "PostgresNativeStockContributorStore26"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/native-stock-contributor-import.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "import_source_row",
+        "import_stock_contributor"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/organization-maintenance-store.ts",
+      "module": "organization",
+      "publicPorts": [
+        "PostgresOrganizationMaintenanceUnitOfWork",
+        "PostgresOrganizationMaintenanceReadUnitOfWork"
+      ],
+      "transaction": "delegates-owner",
+      "transactionOwner": [
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts"
+      ],
+      "borrowedScopes": [
+        "OrganizationWriteSqlTransaction"
+      ],
+      "tables": [
+        "hall",
+        "warehouse"
+      ],
+      "dynamicTables": {
+        "organizationTable(next.kind)": [
+          "hall",
+          "warehouse"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "dynamicTableDeclarations": [
+        {
+          "name": "organizationTable",
+          "initializers": [
+            "(kind: OrganizationWriteKind): \"hall\" | \"warehouse\" => kind === \"HALL\" ? \"hall\" : \"warehouse\""
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/party-maintenance-store.ts",
+      "module": "party",
+      "publicPorts": [
+        "PostgresPartyUnitOfWork"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/party-maintenance-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "customer",
+        "supplier",
+        "audit_change",
+        "operation_receipt"
+      ],
+      "dynamicTables": {
+        "table(kind)": [
+          "customer",
+          "supplier"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D2"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "dynamicTableDeclarations": [
+        {
+          "name": "table",
+          "initializers": [
+            "(kind: PartyKind): \"customer\" | \"supplier\" => kind === \"CUSTOMER\" ? \"customer\" : \"supplier\""
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/payment-maintenance-store.ts",
+      "module": "payment",
+      "publicPorts": [
+        "PostgresPaymentMaintenanceUnitOfWork"
+      ],
+      "transaction": "delegates-owner",
+      "transactionOwner": [
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts"
+      ],
+      "borrowedScopes": [
+        "PaymentTransaction"
+      ],
+      "tables": [
+        "payment_method",
+        "payment_account",
+        "payment_account_hall"
+      ],
+      "dynamicTables": {
+        "table(next.kind)": [
+          "payment_method",
+          "payment_account"
+        ]
+      },
+      "registeredSourceOwners": [
+        "D2"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes",
+      "dynamicTableDeclarations": [
+        {
+          "name": "table",
+          "initializers": [
+            "(kind: PaymentMaintenanceKind): \"payment_method\" | \"payment_account\" => kind === \"PAYMENT_METHOD\" ? \"payment_method\" : \"payment_account\""
+          ]
+        }
+      ]
+    },
+    {
+      "file": "adapters/postgres/src/product-maintenance-store.ts",
+      "module": "catalogue",
+      "publicPorts": [
+        "PostgresProductMaintenanceUnitOfWork",
+        "withProductMaintenanceTransaction"
+      ],
+      "transaction": "delegates-owner",
+      "transactionOwner": [
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts"
+      ],
+      "borrowedScopes": [
+        "ProductTransaction",
+        "withProductMaintenanceTransaction"
+      ],
+      "tables": [
+        "product_image",
+        "product",
+        "sku",
+        "sku_barcode"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D2"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/read-dataset-version.ts",
+      "module": "governance",
+      "publicPorts": [
+        "readDatasetVersion",
+        "createDatasetVersionChanges"
+      ],
+      "transaction": "borrowed-client",
+      "transactionOwner": [
+        "originating business owner; exact sharedClientEdges only"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "read_dataset_version"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/runtime-document-number.ts",
+      "module": "numbering",
+      "publicPorts": [
+        "reserveRuntimeDocumentNumber",
+        "assertRuntimeDocumentNumber"
+      ],
+      "transaction": "borrowed-client",
+      "transactionOwner": [
+        "originating business owner; exact sharedClientEdges only"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "runtime_document_number_allocation"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/sales-unit-of-work.ts",
+      "module": "sales",
+      "publicPorts": [
+        "PostgresSalesUnitOfWork"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/sales-unit-of-work.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "sales_header",
+        "sales_line",
+        "sales_settlement",
+        "inventory_ledger",
+        "audit_change",
+        "operation_receipt"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/staff-maintenance-store.ts",
+      "module": "identity",
+      "publicPorts": [
+        "PostgresStaffMaintenanceUnitOfWork"
+      ],
+      "transaction": "delegates-owner",
+      "transactionOwner": [
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts"
+      ],
+      "borrowedScopes": [
+        "StaffSqlTransaction"
+      ],
+      "tables": [
+        "staff",
+        "user_account",
+        "auth_session"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D2"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "module": "transfer",
+      "publicPorts": [
+        "PostgresTransferUnitOfWork"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/transfer-unit-of-work.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "inventory_ledger",
+        "transfer_header",
+        "transfer_line",
+        "audit_change",
+        "operation_receipt"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json; historical registrations do not authorize new writes"
+    },
+    {
+      "file": "scripts/import-v3/native-bootstrap.mjs",
+      "module": "import",
+      "publicPorts": [
+        "openNativeImportBootstrap",
+        "openNativeImportBootstrap26"
+      ],
+      "transaction": "borrowed-client",
+      "transactionOwner": [
+        "adapters/postgres/src/inventory-cutoff-import-store.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [
+        "user_account"
+      ],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D3"
+      ],
+      "registrationAuthority": "Original registered production first-STAGE callback, source/credential binding only; no independent transaction or bootstrap authority"
+    },
+    {
+      "file": "adapters/postgres/src/native-document-specification.ts",
+      "module": "catalogue",
+      "publicPorts": [
+        "resolveNativeDocumentSpecifications"
+      ],
+      "transaction": "borrowed-client",
+      "transactionOwner": [
+        "adapters/postgres/src/sales-unit-of-work.ts",
+        "adapters/postgres/src/transfer-unit-of-work.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "Original same-client SAVE SKU append seam; no standalone SQL writer"
+    },
+    {
+      "file": "adapters/postgres/src/product-evidence-staging.ts",
+      "module": "import",
+      "publicPorts": [
+        "PostgresProductEvidenceStagingStore"
+      ],
+      "transaction": "owns-transaction",
+      "transactionOwner": [
+        "adapters/postgres/src/product-evidence-staging.ts"
+      ],
+      "borrowedScopes": [],
+      "tables": [],
+      "dynamicTables": {},
+      "registeredSourceOwners": [
+        "D1"
+      ],
+      "registrationAuthority": "Original stage wrapper owns the transaction; exact catalogue source proof helper performs its SQL on client query callback"
+    }
+  ],
+  "adapterImportExceptions": [
+    {
+      "from": "apps/api/src/history-revision-authorization.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing type-only provider/client contract seam, no concrete constructor or persistence execution; no wildcard adapter exception"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/settings-audit-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/settings-audit-reader.ts",
+      "typeOnly": true,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/bounded-pool.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/bounded-pool.ts",
+      "typeOnly": true,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/auth-store.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/inventory-query-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/sales-query-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/transfer-query-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/product-query-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/current-form-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/source-confirmed-read-authorization.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/store-settings-read-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/sales-native-facts.ts",
+      "typeOnly": true,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/product-management-query-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/catalogue-settings-read-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/dictionary-read-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/party-read-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/party-maintenance-store.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/imported-history-query-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/history-revision-store.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/source-confirmed-read-authorization.ts",
+      "typeOnly": true,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/product-details-query-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/catalogue-maintenance-store.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/payment-maintenance-store.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/staff-maintenance-store.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/organization-maintenance-store.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/media/src/product-media-stage.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/media/src/controlled-product-media.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/media/src/sharp-product-image-codec.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/postgres-read-api.ts",
+      "to": "adapters/postgres/src/product-maintenance-store.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/product-media-http.ts",
+      "to": "adapters/media/src/controlled-product-media.ts",
+      "typeOnly": true,
+      "owner": "D3 media boundary owner; C composition owner",
+      "reason": "Existing type-only provider/client contract seam, no concrete constructor or persistence execution; no wildcard adapter exception"
+    },
+    {
+      "from": "apps/api/src/product-media-http.ts",
+      "to": "adapters/media/src/product-media-stage.ts",
+      "typeOnly": true,
+      "owner": "D3 media boundary owner; C composition owner",
+      "reason": "Existing type-only provider/client contract seam, no concrete constructor or persistence execution; no wildcard adapter exception"
+    },
+    {
+      "from": "apps/api/src/production-application-host.ts",
+      "to": "adapters/media/src/sharp-product-image-codec.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/production-provider-composition.ts",
+      "to": "adapters/postgres/src/catalogue-completeness.ts",
+      "typeOnly": false,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/production-provider-composition.ts",
+      "to": "adapters/postgres/src/bounded-pool.ts",
+      "typeOnly": true,
+      "owner": "C concrete assembly owner / original D1-D3 sources",
+      "reason": "Existing exact production assembly/lifecycle root selects concrete provider, bounded pool, same-client UOW or media implementation"
+    },
+    {
+      "from": "apps/api/src/history-revision-authorization.ts",
+      "to": "adapters/postgres/src/imported-history-query-reader.ts",
+      "typeOnly": false,
+      "symbols": [
+        "importedHistoryReadSql",
+        "importedHistoryTransferHallScopeSql"
+      ],
+      "owner": "D1 existing history PostgreSQL authorization adapter; C concrete assembly owner",
+      "reason": "C 2026-10-29 inspected actual role and three consumers: file implements HistoryRevisionDependencies.authorization, contains no HTTP/Fastify handler, and uses same-history PG fact fragments. Exact existing-role exception, not cross-domain HTTP persistence access; no source move/duplicate factory/SQL or transaction change."
+    }
+  ],
+  "sharedClientEdges": [
+    {
+      "from": "adapters/postgres/src/account-maintenance-store.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/catalogue-completeness.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/catalogue-completeness.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/catalogue-completeness.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/catalogue-maintenance-store.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/history-revision-store.ts",
+      "to": "adapters/postgres/src/inventory-posting-balances.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/history-revision-store.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/history-typed-closure.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/history-typed-closure19.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/import-v3-history-header-staging-store.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/import-v3-history-sales-detail-staging-store.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/import-v3-history-settlement-staging-store.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/import-v3-history-staging-store.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-posting-balances.ts",
+      "to": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-posting-balances.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-posting-balances.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-barcode-import.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-catalogue-import.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-import-record-accounting.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-party-import.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-payment-import.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-product-import.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-sku-import.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-stock-contributor-import.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/organization-maintenance-store.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/party-maintenance-store.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/payment-maintenance-store.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/product-maintenance-store.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/runtime-document-number.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/sales-unit-of-work.ts",
+      "to": "adapters/postgres/src/runtime-document-number.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/sales-unit-of-work.ts",
+      "to": "adapters/postgres/src/inventory-posting-balances.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/sales-unit-of-work.ts",
+      "to": "adapters/postgres/src/catalogue-completeness.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/sales-unit-of-work.ts",
+      "to": "adapters/postgres/src/catalogue-completeness.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/staff-maintenance-store.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "to": "adapters/postgres/src/inventory-posting-balances.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "to": "adapters/postgres/src/catalogue-completeness.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "to": "adapters/postgres/src/catalogue-completeness.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing explicit PostgreSQL client/context type seam only; cannot select a concrete implementation through this exception"
+    },
+    {
+      "from": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "to": "adapters/postgres/src/runtime-document-number.ts",
+      "typeOnly": false,
+      "owner": "D1 transaction/adapter owner, C registration authority",
+      "reason": "Existing original-client collaboration: caller retains transaction outcome and evidence responsibility; no nested transaction or standalone stock/evidence success"
+    },
+    {
+      "from": "adapters/postgres/src/native-document-specification.ts",
+      "to": "adapters/postgres/src/catalogue-completeness.ts",
+      "typeOnly": true,
+      "owner": "D1 original transaction adapter owner / C registration authority",
+      "reason": "Original captured maintained-catalogue transaction proof type; no independent verifier transaction"
+    },
+    {
+      "from": "adapters/postgres/src/native-document-specification.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": false,
+      "owner": "D1 original transaction adapter owner / C registration authority",
+      "reason": "Existing withDocumentSpecificationMaintenanceContext spreads original context/client, yields original evidence child without BEGIN/COMMIT/connect"
+    },
+    {
+      "from": "adapters/postgres/src/native-document-specification.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 original transaction adapter owner / C registration authority",
+      "reason": "Original shared PgSalesClient/PgSalesPool structural types only"
+    },
+    {
+      "from": "adapters/postgres/src/sales-unit-of-work.ts",
+      "to": "adapters/postgres/src/native-document-specification.ts",
+      "typeOnly": false,
+      "owner": "D1 original transaction adapter owner / C registration authority",
+      "reason": "Original SAVE resolves/creates SKU on captured sales context/client before document ledger/audit/receipt completion"
+    },
+    {
+      "from": "adapters/postgres/src/transfer-unit-of-work.ts",
+      "to": "adapters/postgres/src/native-document-specification.ts",
+      "typeOnly": false,
+      "owner": "D1 original transaction adapter owner / C registration authority",
+      "reason": "Original SAVE resolves/creates SKU on captured transfer context/client before paired ledger/audit/receipt completion"
+    },
+    {
+      "from": "adapters/postgres/src/product-evidence-staging.ts",
+      "to": "adapters/postgres/src/catalogue-completeness.ts",
+      "typeOnly": false,
+      "owner": "D1 original import owner",
+      "reason": "Original stage transaction passes (sql,values)=>client.query(sql,values) to insertValidatedCatalogueSourceProof; helper never acquires a lease"
+    },
+    {
+      "from": "adapters/postgres/src/product-evidence-staging.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "owner": "D1 original import adapter owner",
+      "reason": "Only original PgSalesClient/PgSalesPool shared structural protocol types; no sales constructor or separate transaction"
+    }
+  ],
+  "sameClientFlows": [
+    {
+      "id": "LIVE_SALES",
+      "entry": "packages/application/src/sales-service.ts:createSalesService",
+      "owner": "adapters/postgres/src/sales-unit-of-work.ts:PostgresSalesUnitOfWork.transaction",
+      "collaborators": [
+        "adapters/postgres/src/inventory-posting-balances.ts",
+        "adapters/postgres/src/runtime-document-number.ts",
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "adapters/postgres/src/product-maintenance-store.ts",
+        "adapters/postgres/src/native-document-specification.ts"
+      ],
+      "rule": "One captured client for current permission/key/CAS/document/ledger/balance/audit/receipt and optional document SKU append; product append uses original input.client/context, never a second UOW."
+    },
+    {
+      "id": "LIVE_TRANSFER",
+      "entry": "packages/application/src/transfer-service.ts:createTransferService",
+      "owner": "adapters/postgres/src/transfer-unit-of-work.ts:PostgresTransferUnitOfWork.transaction",
+      "collaborators": [
+        "adapters/postgres/src/inventory-posting-balances.ts",
+        "adapters/postgres/src/runtime-document-number.ts",
+        "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+        "adapters/postgres/src/product-maintenance-store.ts",
+        "adapters/postgres/src/native-document-specification.ts"
+      ],
+      "rule": "Both signed endpoints and accumulated key balances plus audit/receipt on original client; same document append constraint."
+    },
+    {
+      "id": "HISTORY_DELTA",
+      "entry": "packages/application/src/history-revision-service.ts",
+      "owner": "adapters/postgres/src/history-revision-store.ts:PostgresHistoryRevisionStore.revise",
+      "collaborators": [
+        "adapters/postgres/src/inventory-posting-balances.ts"
+      ],
+      "rule": "createPostgresHistoryRevisionPosting(...).post(client,...) borrows original exact client; no imported source rewrite, new connection, own commit or independent audit/receipt."
+    },
+    {
+      "id": "MAINTENANCE",
+      "entry": "Original registered maintenance services through application ports",
+      "owner": "adapters/postgres/src/maintenance-command-unit-of-work.ts:PostgresMaintenanceCommandUnitOfWork.transaction",
+      "collaborators": [
+        "adapters/postgres/src/account-maintenance-store.ts",
+        "adapters/postgres/src/catalogue-maintenance-store.ts",
+        "adapters/postgres/src/organization-maintenance-store.ts",
+        "adapters/postgres/src/payment-maintenance-store.ts",
+        "adapters/postgres/src/product-maintenance-store.ts",
+        "adapters/postgres/src/staff-maintenance-store.ts"
+      ],
+      "rule": "All leaf context.client/evidence belongs to original driver; only driver begins/commits/rolls back and writes original audit/receipt.",
+      "entryFiles": [
+        "packages/application/src/account-maintenance-ports.ts",
+        "packages/application/src/staff-maintenance-ports.ts",
+        "packages/application/src/product-maintenance-ports.ts",
+        "packages/application/src/catalogue-maintenance-ports.ts",
+        "packages/application/src/organization-maintenance-ports.ts",
+        "packages/application/src/party-maintenance-ports.ts",
+        "packages/application/src/payment-maintenance-ports.ts"
+      ]
+    },
+    {
+      "id": "IMPORT_PUBLISH",
+      "entry": "packages/application/src/inventory-cutoff-import.ts",
+      "owner": "adapters/postgres/src/inventory-cutoff-import-store.ts:PostgresCutoffImportStore",
+      "collaborators": [
+        "adapters/postgres/src/native-import-record-accounting.ts",
+        "adapters/postgres/src/native-party-import.ts",
+        "adapters/postgres/src/native-barcode-import.ts"
+      ],
+      "rule": "Stage/continuation/PUBLISH each original request transaction; accountant/on-client leaves cannot publish independently. No STAGED visibility or publish authorization inferred from staged success."
+    }
+  ],
+  "remainingConcreteViolationCandidates": [],
+  "limitations": [
+    "This is a finite current source checker, not a TypeScript call graph, SQL parser or actual PostgreSQL atomicity proof. Dynamic function variables and SQL created outside literals require original tests and review.",
+    "Do not count source fixtures/protocol tests as real P04, four HISTORY POST HTTP or production acceptance. Existing B02/unknown-COMMIT/source protections remain.",
+    "C owns package.json/check-launch integration and any new registered source seams. No report-only success: unregistered writes/private imports fail with nonzero exit.",
+    "read-dataset-version.ts has a registered borrowed write helper but no current runtime callers; do not claim LIVE/HISTORY wiring or actual dataset revision updates from its mere existence."
+  ],
+  "adapterHelperImports": [
+    {
+      "from": "adapters/postgres/src/current-account-recommendations.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesResult"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/current-form-reader.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesPool",
+        "PgSalesResult"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/history-import-lifecycle.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/history-typed-publication.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/imported-history-query-reader.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient",
+        "PgSalesPool",
+        "PgSalesResult"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-cutoff-scope-reader.ts",
+      "to": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "typeOnly": false,
+      "symbols": [
+        "decodeImportCheckpoint"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing named pure checkpoint/evidence helper or original driver/context binding function; cannot select any store/UOW implementation using this exception"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-cutoff-scope-reader.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient",
+        "PgSalesPool"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-key-admission-reader.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-ledger-query-reader.ts",
+      "to": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "typeOnly": false,
+      "symbols": [
+        "decodeImportCheckpoint"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing named pure checkpoint/evidence helper or original driver/context binding function; cannot select any store/UOW implementation using this exception"
+    },
+    {
+      "from": "adapters/postgres/src/inventory-query-reader.ts",
+      "to": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "typeOnly": false,
+      "symbols": [
+        "decodeImportCheckpoint"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing named pure checkpoint/evidence helper or original driver/context binding function; cannot select any store/UOW implementation using this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-core-staged-prefix-bind.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesPool",
+        "PgSalesResult"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "to": "adapters/postgres/src/product-maintenance-store.ts",
+      "typeOnly": true,
+      "symbols": [
+        "ProductMediaWriteCapability"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "to": "adapters/postgres/src/catalogue-maintenance-store.ts",
+      "typeOnly": true,
+      "symbols": [
+        "CategoryOrderWriteCapability"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": false,
+      "symbols": [
+        "assertMaintenanceDriverPool",
+        "maintenanceContextClient",
+        "assertMaintenanceProductImagesPrepared",
+        "bindMaintenanceCategoryOrderGuard"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing named pure checkpoint/evidence helper or original driver/context binding function; cannot select any store/UOW implementation using this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/native-stage-continuation26.ts",
+      "to": "adapters/postgres/src/import-v3-history-header-native-reference-store.ts",
+      "typeOnly": false,
+      "symbols": [
+        "historyHeaderNativeReferenceEvidence"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing named pure checkpoint/evidence helper or original driver/context binding function; cannot select any store/UOW implementation using this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-stage-continuation26.ts",
+      "to": "adapters/postgres/src/native-catalogue-import.ts",
+      "typeOnly": false,
+      "symbols": [
+        "nativeCatalogueBindingEvidence"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing named pure checkpoint/evidence helper or original driver/context binding function; cannot select any store/UOW implementation using this exception"
+    },
+    {
+      "from": "adapters/postgres/src/native-stage-continuation26.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/native-transfer-snapshots.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesResult"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/party-read-reader.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesPool",
+        "PgSalesClient",
+        "PgSalesResult"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/product-management-query-reader.ts",
+      "to": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "typeOnly": false,
+      "symbols": [
+        "decodeImportCheckpoint"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing named pure checkpoint/evidence helper or original driver/context binding function; cannot select any store/UOW implementation using this exception"
+    },
+    {
+      "from": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+      "to": "adapters/postgres/src/inventory-cutoff-import-store.ts",
+      "typeOnly": false,
+      "symbols": [
+        "decodeImportCheckpoint"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing named pure checkpoint/evidence helper or original driver/context binding function; cannot select any store/UOW implementation using this exception"
+    },
+    {
+      "from": "adapters/postgres/src/product-warehouse-stock-reader.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesClient",
+        "PgSalesPool"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/sales-native-facts.ts",
+      "to": "adapters/postgres/src/sales-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "PgSalesResult"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    },
+    {
+      "from": "adapters/postgres/src/settings-audit-reader.ts",
+      "to": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "typeOnly": true,
+      "symbols": [
+        "MaintenancePgContext",
+        "MaintenancePgUnitOfWork"
+      ],
+      "owner": "D1 current read/capability adapter owner; C registration authority",
+      "reason": "Existing explicitly named client/context/row contract types, no writer constructor"
+    }
+  ],
+  "restrictedAdapterConsumers": [
+    {
+      "file": "apps/api/src/history-revision-authorization.ts",
+      "role": "postgres-authorization-adapter",
+      "module": "history",
+      "owner": "D1",
+      "publicPort": "createSourceConfirmedHistoryRevisionAuthorization",
+      "consumers": [
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/history-revision-authorization.test.ts",
+        "tests/integration/history-revision-set-guards.integration.test.ts"
+      ],
+      "authority": "C source inspection and exact existing-role ruling 2026-10-29; only these3 original consumers, no wildcard"
+    }
+  ],
+  "codeWriterRegistrationGaps": [],
+  "checksRun": {
+    "command": "node scripts/check-module-boundaries.mjs",
+    "fixtureCases": 29,
+    "result": "PASS_SOURCE_BOUNDARIES after C exact history policy adapter role ruling; source working tree pending C fixed export",
+    "existingCommand": "node --test tests/runtime-document-commit-outcome.test.ts",
+    "existingResult": {
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0
+    },
+    "postgresExecuted": false,
+    "releaseIntegrated": false,
+    "integrationOwner": "C",
+    "notClaimed": "No independent acceptance/current fixed export, actual PG transaction atomicity, four HISTORY POST runtime or production acceptance. Static findings zero; explicit writer registration gaps resolved by C. Existing launch runner/package integration remains C scope.",
+    "fixturesMeaning": "29 explicit allowed/forbidden source fixtures executed by the normal checker; source PASS is distinct from overall H01 acceptance and current code-owner registration completion."
+  },
+  "sourceMatrixLookup": "tables[name].allowedWriterPorts holds exact file references; resolve publicPorts/transactionOwner/registeredSourceOwners from the unique writePorts[file] entry, avoiding a second copied port/transaction definition per table.",
+  "ownerClarification": {
+    "owner": "D3",
+    "files": [
+      "adapters/postgres/src/history-typed-closure.ts",
+      "adapters/postgres/src/import-v3-history-header-native-reference-store.ts"
+    ],
+    "factModule": "import",
+    "authority": "C explicit source/history/export inspection and authoritative WRITE-OWNERSHIP registration 2026-10-29",
+    "doesNotGrant": "No active new source lease, database/SQL/ACL execution or file move; H01 writes remain exactly its two registered new leaves. Original standalone stores own their transaction; insertValidatedHistoryHeaderNativeReferences borrows original client."
+  },
+  "technicalExecution": {
+    "requestedModel": "gpt-6.1-sol",
+    "requestedEffort": "medium",
+    "actualModelAndEffort": "UNVERIFIED",
+    "Fast": "UNVERIFIED"
+  }
+}
