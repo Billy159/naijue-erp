@@ -18639,13 +18639,15 @@
       "next": "QB fixed source narrow review; D1 next A01 factory wiring after fixed checkpoint",
       "dependencies": "No productionbudgetdefaults/noPGorACLexecution; exactpersistentwrite-semanticdelta if any beforedependentwork",
       "model": "gpt-6.1-sol/medium",
-      "receipt": "reports/backend/rapid-launch-20261022/D1/P02-RESULT.json"
+      "receipt": "reports/backend/rapid-launch-20261022/D1/P02-RESULT.json",
+      "sourceCommit": "f6cc6b65e50b547783d31a12ac01434ee7ba2e81",
+      "github": "EXACT_REMOTE_READBACK_PASS"
     },
     "P01SalesFacts887": {
       "owner": "D3",
       "state": "QB_NARROW_SOURCE_AND_7_SYNTHETIC_PASS_REAL_PG_PENDING",
       "current": "P01 fourleaf exactprivate transaction facts/snapshot reuse; successfullockedfacts only, originalrules retained",
-      "next": "Actual1/20/200PG/SLO/append equivalence with approvedtarget;no repeatedsourcechecks",
+      "next": "D3 bounded real-PG 1/20/200 runner; actual T45 execution waits fixed A01 host and precise synthetic fixture",
       "model": "gpt-6.1-sol/medium",
       "receipt": "reports/backend/rapid-launch-20261022/D3/P01-RESULT.json",
       "receiptSha256": "3dd5d0ee98469001ffc4326cd39f190a31a44bbf945ea58017bd36af03544cc9",
@@ -18665,7 +18667,7 @@
       "owner": "D2",
       "state": "SOURCE890_COMPONENT_HTTP_QB_PASS_INTEGRATION_PENDING",
       "current": "Currentgrowthentry/pendingcountbytes/port/errorcodes explicitproposal beforetruewritecontract approval",
-      "next": "D1 original API factory; Web owner handback pending; actual PG concurrency and SLO unverified",
+      "next": "D1 active exact API3leaf factory; frontend original owner noWIP handback pending; actual PG/concurrency/SLO unverified",
       "approval": "call_d51f6d152d15476cb063527e1d542136/0",
       "receipt": "reports/backend/rapid-launch-20261022/D2/A01-CAPACITY-IMPLEMENTATION-20261029/RESULT.json",
       "checks": "D2 79targetedPASS/0fail Node24stripcompatible;D2owned0typeerrors/root142NOTPASS;C3HTTPerrorcasesPASS+productHTTP7PASS",

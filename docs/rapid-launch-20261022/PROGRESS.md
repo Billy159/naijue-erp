@@ -1,3 +1,5 @@
+SOURCE892调度接续：SOURCE891 f6cc6b65已推GitHub且独立回读一致。原D1接A01唯一API三叶factory，原D3接P01必要1/20/200真实PG有限runner源码一个新叶，原T45仍唯一数据库执行者；不与P02固定验收或Demo固定对比抢写。原QB正在SOURCE891限定验收。D3实际执行依赖A01宿主固定与准确合成fixture；尚不称真实性能通过。
+
 SOURCE891：原D1 P02二十四叶已交回并逐文件核对回执，23改动叶固定；含SOURCE887配置所依赖的原auth/宿主装配，不再只有孤立配置WIP。原QB接限定新改动验收，实际PG负载、代理及正式参数/SLO未验证；已有检查按回执复用，旧失败及未挂载account边界不隐去。原D1下一包为A01同事务capacity factory，不混入本固定版。
 
 SOURCE890 A01组件及HTTP限定QB通过（9项新容量/HTTP；productHTTP7项含重叠新case不累加），未接factory/web仍未完成。P01 SOURCE889原QB限定7项/严格类型通过已采用。T45实际233准确66条最小授权提交及332项回读通过，40表和原回执保持；不是业务验证。后继仅原runtime只读metadata，供原QB签准确目录，再接SOURCE867历史修订真实隔离验证。Demo固定全站对比继续；正式部署、迁移及真实库权限未执行。

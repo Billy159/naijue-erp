@@ -7490,6 +7490,31 @@
       "scope": "Approved A01 capacity409503 exacterror propagation only; originalD1 explicitsixleafhandoff/noWIP; noUI/runtimePG",
       "model": "gpt-6.1-sol/medium",
       "status": "SOURCE890_3HTTP_ERRORS_AND_FIXTURES_CHECKED"
+    },
+    "A01ApiFactory891": {
+      "owner": "D1",
+      "status": "ACTIVE_AFTER_P02_FIXED",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/postgres-read-api.test.ts",
+        "apps/api/src/postgres-application-api.test.ts"
+      ],
+      "scope": "Wire approved D2 capacity factory with same maintenance context/client/active guard; no P02 semantic changes or SQL/ACL; tests only actual affected integration",
+      "dependsOn": "SOURCE890 capacity and SOURCE891 fixed P02",
+      "next": "Handback exact leaves; original QB affected integration; frontend handback separate"
+    },
+    "P01RealPg892": {
+      "owner": "D3",
+      "status": "ACTIVE_RUNNER_IMPLEMENTATION_NO_DB_EXECUTION",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "tests/integration/sales-save-facts-cache.integration.test.ts"
+      ],
+      "scope": "Use existing native sales PG fixture and real application paths for required 1/20/200 saves; original evidence/data rules; no production source or new test platform",
+      "dependsOn": "SOURCE889 P01 and fixed A01 host before actual end-to-end run",
+      "executionOwner": "T45",
+      "next": "Hand back executable finite runner and exact target prerequisites; actual database only original T45 after bound synthetic setup"
     }
   }
 }
