@@ -7278,6 +7278,27 @@
       ],
       "scope": "Preserve root existing frontend/browser excludes in NodeNext emit config;runtime remains independently required tsconfig.runtime typecheck, no officialbackend excludes",
       "status": "WIP"
+    },
+    "B12FixtureModuleRename872": {
+      "owner": "F1",
+      "status": "F1_HANDED_BACK_C_FIXED_CANDIDATE_NEXT",
+      "approval": "call_e9e290ded28b4119bfc06c7db140de90/0:确认这项源码文件改名及引用同步",
+      "rename": [
+        "apps/web/demo-replica/frontend/qa-reference-fixtures.ts",
+        "apps/web/demo-replica/frontend/qa-reference-fixtures.mts"
+      ],
+      "files": [
+        "apps/web/unified-browser-harness/transfer-transport.ts",
+        "apps/web/unified-browser-harness/sales-transport.ts",
+        "apps/web/unified-browser-harness/synthetic-transport.ts",
+        "apps/web/demo-replica/frontend/qa-reference-fixtures.test.ts",
+        "apps/web/demo-replica/frontend/runtime-preview-transport.ts",
+        "apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts",
+        "apps/web/demo-replica/frontend/runtime/products/synthetic-preview-transport.ts",
+        "apps/web/demo-replica/frontend/runtime/settings/synthetic-preview-transport.ts"
+      ],
+      "configOwner": "C",
+      "boundary": "Contentidenticalrename+imports suffixonly;noDemo/UI/contract/testassertionchanges"
     }
   }
 }

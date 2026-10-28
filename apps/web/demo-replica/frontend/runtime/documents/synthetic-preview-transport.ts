@@ -1,4 +1,4 @@
-import {qaReferenceRead,qaHistoryRead,qaHistorySummary,type QaReferenceProfile} from '../../qa-reference-fixtures.ts';
+import {qaReferenceRead,qaHistoryRead,qaHistorySummary,type QaReferenceProfile} from '../../qa-reference-fixtures.mts';
 import {DomainError} from '../../../../../../packages/domain/src/errors.ts';
 import {HttpQueryError} from '../../../../src/transport/http-query.ts';
 import {entityId} from '../../../../../../packages/domain/src/values.ts';

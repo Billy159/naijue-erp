@@ -1,4 +1,4 @@
-import {QA_REFERENCE_PROFILE} from './qa-reference-fixtures.ts';
+import {QA_REFERENCE_PROFILE} from './qa-reference-fixtures.mts';
 import {createSyntheticUnifiedTransport} from '../../unified-browser-harness/synthetic-transport.ts';
 const detailPaths=new Set(['/inventory/output/query','/products/prices/query','/products/barcodes/query','/products/stock/query','/products/stock-overview/query']);
 type Call={method:string;path:string;phase:'pending'|'completed'|'aborted'|'failed';started:number;finished?:number};

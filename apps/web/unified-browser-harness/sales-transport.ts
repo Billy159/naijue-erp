@@ -1,4 +1,4 @@
-import {qaPrincipal,qaCurrentProducts,qaCurrentSkus,qaSkus,qaSalesReferences,qaHalls,qaCustomers,qaWarehouses,qaPaymentAccounts,qaMethods,qaStaff,qaSalesDocuments,type QaReferenceProfile} from '../demo-replica/frontend/qa-reference-fixtures.ts';
+import {qaPrincipal,qaCurrentProducts,qaCurrentSkus,qaSkus,qaSalesReferences,qaHalls,qaCustomers,qaWarehouses,qaPaymentAccounts,qaMethods,qaStaff,qaSalesDocuments,type QaReferenceProfile} from '../demo-replica/frontend/qa-reference-fixtures.mts';
 import { detail as seedFixtureDetail, summary as seedFixtureSummary } from '../src/sales/tests/fixtures.ts';
 import { detail as fixtureDetail } from '../src/sales/commands/fixtures.test-support.ts';
 import type { SalesDraftDto } from '../src/sales/commands/contracts.ts';

@@ -1,3 +1,5 @@
+SOURCE872：人类call_e9e290ded28b4119bfc06c7db140de90/0确认单fixture改名，原F1已完成qa-reference-fixtures.ts→.mts内容逐字不变及8个import后缀；C两配置同步。原harness严格NodeNext noEmit实际0，原38条TS1287解除。原F1 runtime类型在现有混合树仍报React双类型/焦点never，保留失败；固定干净根后由原T45必要复核，不重复源码/后台全套。旧868cleanroot三类型通过不冒本872通过。人类在重构任务书thread01a16189-fe73-7a81-b7ad-3c24ede6fd24/message01a1831b-7c16-7581-8368-79f1ff547e19明确“后续这样的不用问我了直接弄”，C实际读取核实：后续为构建/模块识别的纯源码改名与配套引用/配置、无业务/UI/数据含义变化沿原owner直接实施，不重复询问；不含真实资料/Demo/备份/删除/正式操作。原P04到135准备继续；normal34对比不变。目标ACTIVE。
+
 SOURCE871：230原P04 v22单函数隔离后继实际COMMIT_RETURNED/1.219617s；原40关系/222批次三回执及QA不变，131函数仅目标4内容字段变，目录ef725a20，client0，原T45受托结果dcea094d采用不重验。仍非135/P04真实业务驱动；原D1接已批B07null/B14/P04到135必要后继准备，准确ACL待实际目录后再申请，正式未动。
 
 剩余编译问题已由原F1定位：harness真实消费qa-reference-fixtures.ts，复制包最近package缺type导致NodeNext判CJS；只排除文件不能解决且会隐藏实际消费者。建议单fixture显式.mts/8引用2配置，不改内容或包级语义。全局agents.md63要求文件改名用户确认，C已发准确单文件改名问题，未获答前保持只读；不得以本轮已授权修复冒称已获文件改名批准。8引用为harness transfer/sales/synthetic-transport.ts；frontend qa-reference-fixtures.test.ts/runtime-preview-transport.ts；frontend/runtime documents/products/settings的synthetic-preview-transport.ts。C两配置tsconfig.build.json及tsconfig.runtime.json。该分支等待确认，其余P04、Demo对比继续。目标ACTIVE。

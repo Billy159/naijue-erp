@@ -1,4 +1,4 @@
-import {qaPrincipal,qaCurrentProducts,qaCurrentSkus,qaSkus,qaTransferWarehouses,qaHalls,qaGroups,qaTransferDocuments,qaTransferCatalog,type QaReferenceProfile} from '../demo-replica/frontend/qa-reference-fixtures.ts';
+import {qaPrincipal,qaCurrentProducts,qaCurrentSkus,qaSkus,qaTransferWarehouses,qaHalls,qaGroups,qaTransferDocuments,qaTransferCatalog,type QaReferenceProfile} from '../demo-replica/frontend/qa-reference-fixtures.mts';
 import { detail as seedFixtureDetail, summary as seedFixtureSummary } from '../src/transfers/tests/fixtures.ts';
 import { detail as fixtureDetail } from '../src/transfers/commands/fixtures.test-support.ts';
 import { sourceConfirmedCreateDocumentNumber } from '../../../packages/application/src/source-confirmed-document-number.ts';

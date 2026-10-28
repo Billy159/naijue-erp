@@ -19,7 +19,7 @@
     "apps/web/demo-replica/frontend/runtime-preview-transport.ts",
     "apps/web/demo-replica/frontend/production-bootstrap.ts",
     "apps/web/demo-replica/frontend/frozen-style-order.ts",
-    "apps/web/demo-replica/frontend/qa-reference-fixtures.ts",
+    "apps/web/demo-replica/frontend/qa-reference-fixtures.mts",
     "apps/web/demo-replica/frontend/runtime-native-preview-seeds.ts"
   ]
 }

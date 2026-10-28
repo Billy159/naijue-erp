@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {qaGroups,qaSkus,qaProducts,qaWarehouses,qaOrganization,qaSalesReferences,qaPrincipal,qaSchemes,qaColors,qaFits,qaInventory,qaPrices,qaBarcodeSnapshot,QA_REFERENCE_PROFILE,qaId} from './qa-reference-fixtures.ts';
+import {qaGroups,qaSkus,qaProducts,qaWarehouses,qaOrganization,qaSalesReferences,qaPrincipal,qaSchemes,qaColors,qaFits,qaInventory,qaPrices,qaBarcodeSnapshot,QA_REFERENCE_PROFILE,qaId} from './qa-reference-fixtures.mts';
 import {createReplicaPreviewTransport} from './runtime-preview-transport.ts';
 import {createSyntheticUnifiedTransport} from '../../unified-browser-harness/synthetic-transport.ts';
 import {createCurrentFormHttpReader} from '../../src/current-form/http-reader.ts';

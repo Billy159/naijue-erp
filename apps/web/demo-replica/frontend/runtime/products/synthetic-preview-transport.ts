@@ -1,4 +1,4 @@
-import {qaBarcodeSnapshot,qaPrices,type QaReferenceProfile} from '../../qa-reference-fixtures.ts';
+import {qaBarcodeSnapshot,qaPrices,type QaReferenceProfile} from '../../qa-reference-fixtures.mts';
 import { CATALOGUE_PRICE_KEYS } from '../../../../../../packages/application/src/catalogue-price-input.ts';
 import { parseProductQuery } from '../../../../../../packages/application/src/product-query-validation.ts';
 import { parseProductBarcodeQuery,parseProductDetailsPageQuery,parseProductStockOverviewQuery } from '../../../../../../packages/application/src/product-details-query-validation.ts';

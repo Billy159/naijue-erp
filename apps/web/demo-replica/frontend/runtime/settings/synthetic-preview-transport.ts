@@ -1,4 +1,4 @@
-import {qaOrganization,qaCustomers,qaSuppliers,type QaReferenceProfile} from '../../qa-reference-fixtures.ts';
+import {qaOrganization,qaCustomers,qaSuppliers,type QaReferenceProfile} from '../../qa-reference-fixtures.mts';
 /** SYNTHETIC preview only. The production session/reader must never import this file.
  * Finite, read-only samples; no network, credentials, commands, receipts or mutable store. */
 import type { OrganizationMaintenanceKind, OrganizationMaintenanceRecord, OrganizationReadListQuery, OrganizationReference } from '../../../../../../packages/application/src/organization-maintenance-ports.ts';

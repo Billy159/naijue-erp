@@ -1,4 +1,4 @@
-import {qaPrincipal,qaReferenceRead,type QaReferenceProfile} from '../demo-replica/frontend/qa-reference-fixtures.ts';
+import {qaPrincipal,qaReferenceRead,type QaReferenceProfile} from '../demo-replica/frontend/qa-reference-fixtures.mts';
 import {createSyntheticManagementTransport,MANAGEMENT_SYNTHETIC_ORIGIN,syntheticId,type SyntheticReadFailure} from '../management-browser-harness/synthetic-transport.ts';
 import {createSyntheticSalesTransport} from './sales-transport.ts';
 import {createSyntheticTransferTransport} from './transfer-transport.ts';
