@@ -3,16 +3,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {setImmediate as tick} from 'node:timers/promises';
 import {createCapacityAdmission, CapacityAdmissionRejected, CAPACITY_VOLUMES} from '../apps/api/src/capacity-admission.ts';
-import type {CapacityBinding, CapacityBytes, CapacityReading, CapacityWindow} from '../apps/api/src/capacity-admission.ts';
+import type {CapacityBinding, CapacityBytes, CapacityReading, CapacityWindow, CapacityPhysicalVolumes} from '../apps/api/src/capacity-admission.ts';
 const amount = (n: bigint): CapacityBytes => Object.fromEntries(CAPACITY_VOLUMES.map(k => [k,n])) as Record<typeof CAPACITY_VOLUMES[number],bigint>;
-const identity = (): CapacityBinding => ({candidateFingerprint:'SYNTHETIC-CANDIDATE',targetFingerprint:'SYNTHETIC-PG-WAL-MEDIA',writerTopologyFingerprint:'SYNTHETIC-ONE-WRITER',inventoryFingerprint:'SYNTHETIC-INVENTORY',processInstanceId:'SYNTHETIC-PROCESS-1',restartGeneration:0,writerCount:1});
+const distinctVolumes:CapacityPhysicalVolumes={postgres:'SYNTHETIC-PG-VOL',wal:'SYNTHETIC-WAL-VOL',backup:'SYNTHETIC-BACKUP-VOL',system:'SYNTHETIC-SYSTEM-VOL',media:'SYNTHETIC-MEDIA-VOL'};
+const identity = (physicalVolumes:CapacityPhysicalVolumes=distinctVolumes): CapacityBinding => ({candidateFingerprint:'SYNTHETIC-CANDIDATE',targetFingerprint:'SYNTHETIC-PG-WAL-MEDIA',writerTopologyFingerprint:'SYNTHETIC-ONE-WRITER',inventoryFingerprint:'SYNTHETIC-INVENTORY',processInstanceId:'SYNTHETIC-PROCESS-1',restartGeneration:0,writerCount:1,physicalVolumes:{...physicalVolumes}});
 const deferred = <T>() => {let resolve!: (v:T)=>void;let reject!: (e:Error)=>void;const promise=new Promise<T>((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 const failure = (reason: string) => (e:unknown) => e instanceof CapacityAdmissionRejected && e.reason===reason && e.statusCode===503 && e.retryAfterSeconds===2;
 const cancelled = (e:unknown) => e instanceof Error && e.name==='AbortError';
-function setup() {
-  let at=1000,actual=identity(),calls=0;
-  const window:CapacityWindow={approved:true,token:'SYNTHETIC-WINDOW-ONLY-NOT-A-LOGIN-TOKEN',inventoryObservedAt:900,startsAt:1000,expiresAt:10000,binding:identity()};
-  const known = ():CapacityReading=>({status:'KNOWN',windowToken:window.token,binding:identity(),observedAt:at,databaseBytes:100n,sessionRelationBytes:10n,freeBytes:amount(10000n)});
+function setup(physicalVolumes:CapacityPhysicalVolumes=distinctVolumes) {
+  let at=1000,actual=identity(physicalVolumes),calls=0;
+  const window:CapacityWindow={approved:true,token:'SYNTHETIC-WINDOW-ONLY-NOT-A-LOGIN-TOKEN',inventoryObservedAt:900,startsAt:1000,expiresAt:10000,binding:identity(physicalVolumes)};
+  const known = ():CapacityReading=>({status:'KNOWN',windowToken:window.token,binding:identity(physicalVolumes),observedAt:at,databaseBytes:100n,sessionRelationBytes:10n,freeBytes:amount(10000n)});
   const options={window,budgets:{session:{maxAdmissions:4,maxInFlight:2,worstCaseBytes:amount(10n)},upload:{maxAdmissions:3,maxInFlight:1,worstCaseBytes:amount(20n)}},minimumFreeBytes:amount(100n),safetyBytes:amount(50n),probeTtlMillis:100,probeTimeoutMillis:50,maxProbeWaiters:3,retryAfterSeconds:2,now:()=>at,currentBinding:()=>actual,probe:async()=>{calls++;return known();}};
   return {options,window,known,calls:()=>calls,setTime:(v:number)=>{at=v;},setBinding:(v:CapacityBinding)=>{actual=v;}};
 }
@@ -147,4 +148,61 @@ test('A02 another request refreshing the cache cannot extend an already issued l
   const f=setup(),a=createCapacityAdmission(f.options),lease=await a.acquire('session');await tick();f.setTime(1100);
   (await a.acquire('upload')).release();assert.equal(f.calls(),2);
   assert.throws(()=>lease.assertValid(),failure('PROBE_UNAVAILABLE'));lease.release();a.close();
+});
+
+const sharedVolumes:CapacityPhysicalVolumes={...distinctVolumes,wal:distinctVolumes.postgres,media:distinctVolumes.system};
+const cost = (values:Partial<Record<typeof CAPACITY_VOLUMES[number],bigint>>):CapacityBytes=>({...amount(0n),...values});
+test('A02 physical shared PG/WAL and system/media combine each write demand instead of admitting two60 on one100 volume',async()=>{
+  for(const kind of ['session','upload']as const){
+    const f=setup(sharedVolumes),budget=f.options.budgets[kind];
+    const a=createCapacityAdmission({...f.options,minimumFreeBytes:amount(0n),safetyBytes:amount(0n),
+      budgets:{...f.options.budgets,[kind]:{...budget,worstCaseBytes:kind==='session'?cost({postgres:60n,wal:60n}):cost({system:60n,media:60n})}},
+      probe:async()=>({...f.known(),freeBytes:amount(100n)}) as CapacityReading});
+    await assert.rejects(a.acquire(kind),failure('LOW_WATER'));a.close();
+  }
+});
+test('A02 physical distinct volumes preserve separate capacity instead of summing independent disk demands',async()=>{
+  const f=setup(),a=createCapacityAdmission({...f.options,minimumFreeBytes:amount(0n),safetyBytes:amount(0n),
+    budgets:{...f.options.budgets,session:{...f.options.budgets.session,worstCaseBytes:cost({postgres:60n,wal:60n})}},
+    probe:async()=>({...f.known(),freeBytes:amount(100n)}) as CapacityReading});
+  const lease=await a.acquire('session');lease.assertValid();lease.release();a.close();
+});
+test('A02 physical shared volume serializes session/upload charges and a fresh probe or release cannot refund them',async()=>{
+  const f=setup(sharedVolumes);let probes=0;
+  const a=createCapacityAdmission({...f.options,minimumFreeBytes:amount(0n),safetyBytes:amount(0n),
+    budgets:{session:{...f.options.budgets.session,worstCaseBytes:cost({postgres:60n})},upload:{...f.options.budgets.upload,worstCaseBytes:cost({wal:60n})}},
+    probe:async()=>{probes++;return {...f.known(),freeBytes:amount(100n)} as CapacityReading;}});
+  const result=await Promise.allSettled([a.acquire('session'),a.acquire('upload')]);
+  assert.equal(result.filter(r=>r.status==='fulfilled').length,1);assert.equal(result.filter(r=>r.status==='rejected'&&failure('LOW_WATER')(r.reason)).length,1);
+  for(const r of result)if(r.status==='fulfilled'){r.value.release();r.value.release();}
+  await tick();f.setTime(1100);
+  for(const kind of ['session','upload']as const)await assert.rejects(a.acquire(kind),failure('LOW_WATER'));
+  assert.equal(probes,2);a.close();
+});
+test('A02 physical shared free is minimum once, floors are maximum and independent safety reservations add',async()=>{
+  for(const [pgFree,walFree,accept]of [[100n,100n,true],[100n,99n,false],[99n,100n,false]]as const){
+    const f=setup(sharedVolumes),a=createCapacityAdmission({...f.options,
+      minimumFreeBytes:cost({postgres:30n,wal:40n}),safetyBytes:cost({postgres:10n,wal:15n}),
+      budgets:{...f.options.budgets,session:{...f.options.budgets.session,worstCaseBytes:cost({postgres:20n,wal:15n})}},
+      probe:async()=>({...f.known(),freeBytes:{...amount(100n),postgres:pgFree,wal:walFree}}) as CapacityReading});
+    if(accept)(await a.acquire('session')).release();else await assert.rejects(a.acquire('session'),failure('LOW_WATER'));
+    a.close();
+  }
+});
+test('A02 physical mapping or volume identity drift rejects cached admission and the existing synchronous lease',async()=>{
+  for(const replacement of [{...sharedVolumes,wal:distinctVolumes.wal},{...sharedVolumes,postgres:'REPLACED-PG',wal:'REPLACED-PG'}]){
+    const f=setup(sharedVolumes),a=createCapacityAdmission(f.options),lease=await a.acquire('session');
+    f.setBinding(identity(replacement));
+    assert.throws(()=>lease.assertValid(),failure('BINDING_CHANGED'));await assert.rejects(a.acquire('upload'),failure('BINDING_CHANGED'));
+    assert.equal(f.calls(),1);lease.release();a.close();
+  }
+});
+test('A02 physical unknown mapping has no distinct-volume fallback at window/current/probe boundaries',async()=>{
+  const f=setup(),unknown={...identity(),physicalVolumes:{...distinctVolumes,wal:undefined}} as unknown as CapacityBinding;
+  assert.throws(()=>createCapacityAdmission({...f.options,window:{...f.window,binding:unknown}}),/physical-volume/);
+  const current=createCapacityAdmission(f.options);f.setBinding(unknown);await assert.rejects(current.acquire('session'),failure('BINDING_CHANGED'));assert.equal(f.calls(),0);current.close();
+  const g=setup(),probe=createCapacityAdmission({...g.options,probe:async()=>({...g.known(),binding:unknown}) as CapacityReading});
+  await assert.rejects(probe.acquire('upload'),failure('PROBE_UNAVAILABLE'));probe.close();
+  const h=setup(),drift=createCapacityAdmission({...h.options,probe:async()=>({...h.known(),binding:identity(sharedVolumes)}) as CapacityReading});
+  await assert.rejects(drift.acquire('session'),failure('PROBE_UNAVAILABLE'));drift.close();
 });

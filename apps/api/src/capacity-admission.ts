@@ -4,6 +4,7 @@ import type {LoginAdmission} from './login-admission.ts';
 export const CAPACITY_VOLUMES = ['postgres', 'wal', 'backup', 'system', 'media'] as const;
 export type CapacityVolume = typeof CAPACITY_VOLUMES[number];
 export type CapacityBytes = Readonly<Record<CapacityVolume, bigint>>;
+export type CapacityPhysicalVolumes = Readonly<Record<CapacityVolume, string>>;
 export type CapacityWriteKind = 'session' | 'upload';
 export interface CapacityBinding {
   readonly candidateFingerprint: string;
@@ -13,6 +14,8 @@ export interface CapacityBinding {
   readonly processInstanceId: string;
   readonly restartGeneration: number;
   readonly writerCount: number;
+  /** Trusted inventory volume identities, scoped across the actual PG/media namespaces. Equal IDs mean the SAME physical capacity. */
+  readonly physicalVolumes: CapacityPhysicalVolumes;
 }
 export interface CapacityWindow {
   readonly approved: boolean;
@@ -26,12 +29,14 @@ export interface CapacityWindow {
 export type CapacityReading = {
   readonly status: 'KNOWN'; readonly windowToken: string; readonly binding: CapacityBinding;
   readonly observedAt: number; readonly databaseBytes: bigint; readonly sessionRelationBytes: bigint;
-  /** Actual target volumes. API-local statfs cannot supply a remote PostgreSQL/WAL value. */
+  /** Actual target-volume readings. Aliases of one physical ID use the minimum reading, never their sum.
+   * API-local statfs cannot supply a remote PostgreSQL/WAL value; unknown identity/space must return UNKNOWN. */
   readonly freeBytes: CapacityBytes;
 } | { readonly status: 'UNKNOWN' };
 export interface CapacityWriteBudget {
   readonly maxAdmissions: number;
   readonly maxInFlight: number;
+  /** Independent per-logical-resource byte demands; aliases of the same physical volume SUM. */
   readonly worstCaseBytes: CapacityBytes;
 }
 export interface CapacityAdmissionLease extends ReturnType<LoginAdmission['acquire']> {
@@ -61,11 +66,14 @@ function bytes(v: CapacityBytes): boolean {
 }
 function binding(v: CapacityBinding): boolean {
   return !!v && bindingKeys.every(k => typeof v[k] === 'string' && v[k].length > 0 && v[k].length <= 256)
-    && timestamp(v.restartGeneration) && v.writerCount === 1;
+    && timestamp(v.restartGeneration) && v.writerCount === 1
+    && !!v.physicalVolumes && CAPACITY_VOLUMES.every(k => typeof v.physicalVolumes[k] === 'string'
+      && v.physicalVolumes[k].length > 0 && v.physicalVolumes[k].length <= 256);
 }
 function sameBinding(a: CapacityBinding, b: CapacityBinding): boolean {
   return binding(a) && binding(b) && bindingKeys.every(k => a[k] === b[k])
-    && a.restartGeneration === b.restartGeneration && a.writerCount === b.writerCount;
+    && a.restartGeneration === b.restartGeneration && a.writerCount === b.writerCount
+    && CAPACITY_VOLUMES.every(k => a.physicalVolumes[k] === b.physicalVolumes[k]);
 }
 /** One component per approved process/writer. Recreating a counter is not a cross-restart quota.
  * Every restart needs a newly inventoried approval bound to that actual process identity.
@@ -75,8 +83,9 @@ function sameBinding(a: CapacityBinding, b: CapacityBinding): boolean {
 export function createCapacityAdmission(options: {
   readonly window: CapacityWindow | null;
   readonly budgets: Readonly<Record<CapacityWriteKind, CapacityWriteBudget>>;
+  /** Minimum remaining physical free space for each logical consumer. Shared-volume constraints combine by MAX. */
   readonly minimumFreeBytes: CapacityBytes;
-  /** Owner-measured margin covering TTL growth plus already admitted in-flight worst-case work. */
+  /** Additive per-consumer growth margin covering TTL/in-flight work. Shared-volume margins SUM, not MAX. */
   readonly safetyBytes: CapacityBytes;
   readonly probeTtlMillis: number; readonly probeTimeoutMillis: number;
   readonly maxProbeWaiters: number; readonly retryAfterSeconds: number;
@@ -97,8 +106,13 @@ export function createCapacityAdmission(options: {
   const window = options.window === null ? null : structuredClone(options.window);
   if (window !== null && (!binding(window.binding) || ![window.inventoryObservedAt, window.startsAt, window.expiresAt].every(timestamp)
     || window.inventoryObservedAt > window.startsAt || window.startsAt >= window.expiresAt || typeof window.approved !== 'boolean'
-    || typeof window.token !== 'string' || window.token.length > 256)) throw new TypeError('Exact approved observation window and single-writer process binding required');
+    || typeof window.token !== 'string' || window.token.length > 256)) throw new TypeError('Exact approved observation window, single-writer and trusted physical-volume binding required');
   const budgets = structuredClone(options.budgets), minimum = {...options.minimumFreeBytes}, safety = {...options.safetyBytes};
+  const physicalGroups = new Map<string, CapacityVolume[]>();
+  if (window !== null) for (const logical of CAPACITY_VOLUMES) {
+    const physical = window.binding.physicalVolumes[logical], members = physicalGroups.get(physical) ?? [];
+    members.push(logical); physicalGroups.set(physical, members);
+  }
   const admitted = {session: 0, upload: 0}, active = {session: 0, upload: 0};
   const charged: Record<CapacityVolume, bigint> = {postgres: 0n, wal: 0n, backup: 0n, system: 0n, media: 0n};
   let closed = false, lastTime = -1, cache: {reading: CapacityReading; until: number} | undefined;
@@ -192,7 +206,16 @@ export function createCapacityAdmission(options: {
       const budget = budgets[kind];
       if (admitted[kind] >= budget.maxAdmissions) throw rejected('WINDOW_BUDGET_EXHAUSTED');
       if (active[kind] >= budget.maxInFlight) throw rejected('IN_FLIGHT_LIMIT');
-      if (CAPACITY_VOLUMES.some(v => available.freeBytes[v] < minimum[v] + safety[v] + charged[v] + budget.worstCaseBytes[v])) throw rejected('LOW_WATER');
+      for (const members of physicalGroups.values()) {
+        // Distinct observations of one physical volume are conservative lower bounds, never additive capacity.
+        let free = available.freeBytes[members[0]!], floor = 0n, required = 0n;
+        for (const v of members) {
+          if (available.freeBytes[v] < free) free = available.freeBytes[v];
+          if (minimum[v] > floor) floor = minimum[v];
+          required += safety[v] + charged[v] + budget.worstCaseBytes[v];
+        }
+        if (free < floor + required) throw rejected('LOW_WATER');
+      }
       admitted[kind]++; active[kind]++;
       // Conservative window charge is never refunded by cancellation, unknown COMMIT, release or a fresh probe.
       // A later reading may already include the bytes: accepting that double charge avoids crediting unproven reclamation.

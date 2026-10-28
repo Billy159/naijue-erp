@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-28T11:57:07.191893+00:00",
+  "updatedAt": "2026-10-28T19:51:33.559295+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -7660,7 +7660,7 @@
     },
     "A02SharedVolume916": {
       "owner": "D1",
-      "status": "ACTIVE_TWO_ORIGINAL_LEAVES",
+      "status": "HANDED_BACK_FIXED_SOURCE916_QB_PENDING_NO_ACTIVE_WRITER",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "apps/api/src/capacity-admission.ts",

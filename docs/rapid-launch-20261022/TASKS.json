@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-29",
+  "updatedAt": "2026-10-28T19:51:33.559295+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "dec99542a2d09ced2a036dbafbe08cda928ee649",
+  "lastVerifiedRemoteCommit": "0d63cdcecde7da9b77a5429513ef4641037380ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18670,7 +18670,7 @@
     "A01PendingCapacity887": {
       "owner": "D2",
       "state": "SOURCE893_COMPONENT_HTTP_HOST_QB_NARROW_PASS_WEB_AND_REAL_PG_PENDING",
-      "current": "Currentgrowthentry/pendingcountbytes/port/errorcodes explicitproposal beforetruewritecontract approval",
+      "current": "Explicit user approval retained; existing SOURCE893 limited source evidence reused; real PG and web consumers pending",
       "next": "Frontend transport owner handback; actual same-product PG concurrency/rollback/capacity and SLO; no repeat component tests",
       "approval": "call_d51f6d152d15476cb063527e1d542136/0",
       "receipt": "reports/backend/rapid-launch-20261022/D2/A01-CAPACITY-IMPLEMENTATION-20261029/RESULT.json",
@@ -19033,7 +19033,7 @@
     },
     "QA22SourceFixture914": {
       "owner": "D3",
-      "status": "SOURCE915_TWO_LEAF_NONEMPTY_32CELL_CANDIDATE_FIXED_QB_PENDING",
+      "status": "SOURCE915_FIXED_ORIGINAL_QB_ACTIVE_NO_ACTUAL_IMPORT",
       "files": [
         "tests/integration/current-runtime26-full-source-fixture.ts",
         "tests/current-runtime26-full-source-fixture.test.ts"
@@ -19068,11 +19068,20 @@
     },
     "A02SharedVolume916": {
       "owner": "D1",
-      "status": "VERIFIED_LOCAL_COUNTEREXAMPLE_NEW_FIX_IN_FLIGHT",
+      "status": "SOURCE916_HANDED_BACK_FIXED_ORIGINAL_QB_PENDING",
       "id": "A02-SHARED-VOLUME-01",
       "actual247": "PG/WAL one tmpfs; system/media one ext4",
       "reproduction": "Node24 protocol: sharedphysicalfree100, sessionworstPG60+WAL60; current ADMITTED, expected LOW_WATER. Synthetic only, no disk/PG writes.",
-      "next": "Original2 capacity leaves uniqueD1; bind real group identity and sum physical write obligations/charges. Original independent-volume cases reused/affected cases only. No waiver of probe/window/PG/business acceptance."
+      "next": "OriginalQB affected same-volume review; actual trusted physical mapping/probe/window and budgets pending",
+      "files": [
+        "apps/api/src/capacity-admission.ts",
+        "tests/capacity-admission.test.ts"
+      ],
+      "pins": [
+        "14356/02b47bf0a80a29d9cfd4788cc596afa3eb05763691138663c64c464122ef46df",
+        "18800/e6feeb6f8b59cab766697feade658f82e5ef7af50eae90983fc1e5fe4919b372"
+      ],
+      "checks": "OriginalD1 9 affected cases PASS, strict two-root transitive closure0; no actual probe/PG/server"
     }
   }
 }
