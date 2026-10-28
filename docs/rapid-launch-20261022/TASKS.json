@@ -18740,6 +18740,16 @@
       "scope": "One original auth-only login/session with TTL900 then fixed four history revision cases 0/1/16/2, original keys and receipts; owner before/after read-only, no production/ACL/DDL/delete",
       "next": "T45 original235 raw reporter bounded read-only diagnostics; NEVER repeat driver/auth/newkeys; keep original FAILED",
       "observed": "Original auth true; driver process exit0 not timedout but counters null; four fixed keys COMMITTED; original source guard pass; logout204/session1revoked/active0/pool/client0"
+    },
+    "P01RealPg892": {
+      "owner": "D3",
+      "status": "SOURCE897_RUNNER_HANDED_BACK_NO_ACTUAL_PG",
+      "file": "tests/integration/sales-save-facts-cache.integration.test.ts",
+      "receipt": "reports/backend/rapid-launch-20261022/D3/P01-PG-RUNNER-RESULT.json",
+      "checks": "Strict transitive closure/Node syntax/3 observer-entry local checks pass; bare node-test rejects missing host",
+      "scope": "4 finite scenarios/15commands;1/20/200 actual lines + missing-spec rollback/originalkey; actual issuer observer below lease boundary; no DDL/ACL/seed/credentials",
+      "notProven": "Real PG execution, SLO/scale, network/auth/proxy; 1SKU repeated lines per shape are not full source diversity",
+      "next": "OriginalQB source/necessary type delta, then T45 current fixed A01/P02 host accurate synthetic fixture and review; do not reuse P04 old867 host"
     }
   }
 }
