@@ -7541,7 +7541,7 @@
     },
     "Current897Fixture899": {
       "owner": "D3",
-      "status": "ACTIVE_EXACT_SYNTHETIC_FIXTURE_ADAPTER_SOURCE_ONLY",
+      "status": "HANDED_BACK_SOURCE903_FROZEN_FOR_QB",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "tests/integration/current-runtime26-sales-fixture.ts"
@@ -7550,6 +7550,17 @@
       "target": "naijue_erp_test_hv2_qa897_20261029_01",
       "executionOwner": "T45 only after bound actual target/source grant/ACL",
       "next": "Hand back callable adapter with exact source inputs and genuine reference readback; report missing existing port before widening files"
+    },
+    "A02Admission903": {
+      "owner": "D1",
+      "model": "gpt-6.1-sol/medium",
+      "status": "ASSIGNED_TWO_NEW_LEAVES_CAPACITY_ADMISSION",
+      "files": [
+        "apps/api/src/capacity-admission.ts",
+        "tests/capacity-admission.test.ts"
+      ],
+      "scope": "Explicit V2 A02 step5 finite observation window/target/restart binding, trusted probe TTL/shared in-flight/low-water refusal; only required new session/upload actions. No production defaults, PG/FS mutation/schema/ACL, auth/media integration shared leaves not leased. Original targeted inventory and P02 reused.",
+      "next": "Implement component and meaningful finite local refusal/cancel/expiry tests, hand back exact source pins and smallest real host seam/write-contract delta before production wiring. Actual budget and PG/media performance remain unproven."
     }
   }
 }
