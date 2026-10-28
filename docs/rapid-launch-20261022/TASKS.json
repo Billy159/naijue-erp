@@ -17573,7 +17573,7 @@
           "HV2-P04"
         ],
         "owner": "D1",
-        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "state": "P01_A01_IMPLEMENTATION_REUSED;D2_MISSING_LIFECYCLE_EQUIVALENCE_ACTIVE;REAL_PG_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H03.txt"
       },
@@ -18716,6 +18716,16 @@
       ],
       "scope": "A02 card step2 inventory only; no actual PG/media/server execution; no policy defaults or new write admission",
       "next": "Fixed source and targeted checks; T45 exact synthetic target read-only inventory; C actual T/R/space budget after evidence"
+    },
+    "H03Lifecycle895": {
+      "owner": "D2",
+      "status": "ACTIVE_MISSING_LIFECYCLE_EQUIVALENCE_ONLY",
+      "decision": "Retain original online proofs; same-transaction reuse only; no checkpoint/cross-request cache/proof retirement",
+      "files": [
+        "docs/controller-handoff-20261028/PROOF-LIFECYCLE.json",
+        "tests/proof-lifecycle-equivalence.test.ts"
+      ],
+      "next": "Reuse P01/A01 actual implementation and valid evidence; add missing refusal cases only; any production-source gap needs exact handoff; genuine PG unverified"
     }
   }
 }

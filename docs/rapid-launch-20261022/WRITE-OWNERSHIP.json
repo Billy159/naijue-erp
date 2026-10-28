@@ -7526,6 +7526,18 @@
       ],
       "scope": "Original A02 card step2 finite read-only session/relation/database and media allocated usage inventory; no token/password data, no DB execution/ACL/DDL/delete; no invented capacity or retention defaults",
       "next": "Handback executable tool and targeted tests; actual target execution only T45; trusted remote filesystem/WAL unknown stays unknown"
+    },
+    "H03Lifecycle895": {
+      "owner": "D2",
+      "status": "ACTIVE_FINITE_LIFECYCLE_EQUIVALENCE",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "docs/controller-handoff-20261028/PROOF-LIFECYCLE.json",
+        "tests/proof-lifecycle-equivalence.test.ts"
+      ],
+      "scope": "Reuse actual P01/A01 transaction proof implementation; map four lifecycles and add only missing refusal equivalence cases; no production verifier/SQL/ACL/checkpoint/cache rewrite",
+      "decision": "Preserve all original online proofs; only transaction-local reuse, current identity/version/reference/lock checks remain; no claim against malicious code-and-database administrator",
+      "next": "Exact missing tests and evidence handback; genuine PG refusal/concurrency stays later original T45"
     }
   }
 }
