@@ -1,3 +1,5 @@
+SOURCE929：采用原QB928 F01/F02限定源码PASS（旧927失败保留）；原T45258合成稳定key及私有恢复副本已实际就绪，32byte/私有模式及UID10001真实读取/内部副本相等通过，不泄露key或摘要，原reader未测。T45对准确SOURCE928/092821ff独立git archive后原build+pack各一次exit0，1429输入/209构建文件/206成员闭包读回通过、旧878同lock依赖复用无install。该新包不冒normal34对比、Linux启动或PG业务；机器key只读读取器后继仅在准确现有Linux镜像/依赖可用时受控一次，不改API/权限/生产。Demo负责人已接当前轮有限可执行清单交还要求，避免无限微补查；原人批pending不重问。
+
 SOURCE928：原D1已定向修B10入口F01/F02并交还新leaf20107/18d532b0337bbc2c7cf72e877572a4e2b2f632d3b476ec25171d200cb5ee3222：usable-admin实读对齐原启用厅条件；失败保留12个固定无秘密phase及后续未执行，不输出cause/请求。D1 strict/惰性缺host拒绝通过；原QB已收到该同一增量，C不重复派工/技术验收，PG/key/实际业务仍未测。C另依已核合成技术输入代决策，交T45仅准备QA897新的稳定32byte机器HMAC key及私有恢复副本（新路径0600/0700，不覆盖旧文件、不出key内容、不改生产/权限/启动）；实际供给尚待原回执。
 
 SOURCE927：原D1已交回B10单新leaf19360/cdf0dc157703bad564bf42f17df93bd99652175453bf8c261d300b21787fa80c，补正式R3/Full私有key→真实HTTP认证/员工维护的隔离验收入口。原D1撤回其对“新库”措辞的额外解释：准确复用现QA897/OID21551，不复制bootstrap或另建B10库；仍须真实CORE/fullPUBLISH/readback及role/key/scenario/capacity。strict单TS根依赖0诊断、惰性/缺host拒绝通过；PG/key/业务执行0，不冒实际通过。冻结后交原QB仅新叶窄审，旧五叶不重复；真实last-admin/角色权限和secret供给仍缺。

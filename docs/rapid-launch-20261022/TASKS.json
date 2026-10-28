@@ -17406,7 +17406,7 @@
           "HV2-B02"
         ],
         "owner": "T45",
-        "state": "CLEAN_ROOT_TYPES_AND_FIXED878_LOCAL_BUILD_PACK_PASS;LINUX_RUNTIME_FINAL_ACCEPTANCE_PENDING",
+        "state": "SOURCE928_FIXED_LOCAL_BUILD_PACK206_PASS;LINUX_RUNTIME_FINAL_ACCEPTANCE_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B12.txt"
       },
@@ -17588,7 +17588,7 @@
           "HV2-B12"
         ],
         "owner": "T45",
-        "state": "SHARED135_CONTRACT_AND_ACTUAL_LOCAL_PACK_PASS;TARGET_BINDING_CROSS_LAYER_RUNTIME_PENDING",
+        "state": "SHARED135_CONTRACT_AND_FIXED_SOURCE928_LOCAL_BUILD_PACK_PASS;CROSS_LAYER_RUNTIME_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H04.txt"
       },
@@ -19254,12 +19254,12 @@
     "B10RealEntry926": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "status": "SOURCE928_F01_F02_D1_HANDED_BACK_ORIGINAL_QB_AFFECTED_REVIEW",
+      "status": "SOURCE928_QB_F01_F02_LIMITED_SOURCE_PASS_NO_ACTIVE_WRITER",
       "files": [
         "tests/integration/staff-credential-production-entry.test.ts"
       ],
       "scope": "Existing B10 card missing exact real-PG host integration runner. D1 host test only, original D2 implementation/key/CLI five leaves read-only. Reuse actual issuer/authentication/maintenance/fixture; no owner bypass/mockproof/directseed/key provisioning/PG/roleDDL/GRANT/server/data deletion. Current full source publish prerequisites remain.",
-      "next": "Original QB already received D1 exact same fix, only F01/F02 + necessary type/no-host check; no duplicate dispatch or PG.",
+      "next": "No repeat source tests. Actual shared QA CORE/full publication/normalrole permission/review/capacity/scenario and owner-controlled stable key supply required before original T45 B10 execution.",
       "pins": [
         {
           "path": "tests/integration/staff-credential-production-entry.test.ts",
@@ -19273,17 +19273,62 @@
       "findings": [
         "F01 P2 usable administrator query omits original enabled-hall predicate, may falsely reject accurate one usable admin scenario. No disabling extra admins to make fixture pass.",
         "F02 P2 all failures collapsed to one error, loses failed step/remaining untested scope; add finite non-secret phase/check ID only, no raw cause/request/credentials."
-      ]
+      ],
+      "independentReview": "QB/HV2-SOURCE928/QB-SOURCE928-F01F02-RESULT.json1235/497ff75d0b7ba43197527a2d1214a9457c867b525d6eec1f2bad68d67630186e",
+      "fixedCommit": "092821ff20d2d55854959a5afc04dd89818daa80",
+      "githubRemoteVerified": true
     },
     "B10SyntheticKeySupply": {
       "owner": "T45",
-      "state": "C_EXACT_SYNTHETIC_INPUT_AUTHORIZED_DISPATCHED_NO_PG_OR_APPLICATION",
+      "state": "ACTUAL258_KEY_AND_PRIVATE_BACKUP_READY_READER_PENDING",
       "authorizationSource": "Human technical synthetic-input delegation userMessage01a1837b-674f-7a20-aab5-da1300b4690c; C exact QA897-only B10 machine HMAC input decision. Not production/real employee password or any ACL approval.",
       "sourcePath": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/b10-private-credential/credential-request-key.bin",
       "backupPath": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/recovery-backups/b10-credential-request-key-01/",
       "constraints": "Create only new private directory0700/file0600 owner existingAPI10001, crypto random exactly32bytes, stable reuse only provenance-known sameQAkey; no existing chmod/chown/overwrite, unknown existing path stops. Machine copy equality only, no contents/hex/base64/hash output/download/Git. Actual reader check only existing correctUID tools, otherwise untested.",
       "forbidden": "No application/start/mount/runtime config change/PG/roleDDL/GRANT/business/production/restore/deletion/migration. Existing normal90 and preparation189 human questions still pending.",
-      "next": "Adopt original T45 metadata-only result, reuse stable key+private recovery copy later; not proof CLI/HTTP/business passed."
+      "next": "C exactly permits one existing cached Node image bounded networknone UID10001/rootfsRO/capdropALL/NNP read-only container with fixed928 payload +258 source/backup dirs only, after build/actual Linux dependency evidence. Call only original readProductionStaffCredentialRequestTag and internal same/different synthetic-input tag booleans, no tag/content output; no app/listen/PG/role/runtime config/production/delete. Block if actual image/deps unavailable, no install/pull/extra mounts.",
+      "receipt": {
+        "path": "server-jobs/t45-qa897-b10-stable-key-supply-20261029-258/B10-KEY258-RESULT.json",
+        "bytes": 2591,
+        "sha256": "1ec93e896d5458e112e60afaa6180534fdcfa65dcb3dce2013e645dd67ea2537"
+      },
+      "checks": "Original T45 once new32 cryptorandom bytes; original exact new source+backup directories0700/files0600 owner10001; machine copy equality true and actual UID10001 32byte source read true. No value/tag/hash/content/model download/Git.",
+      "unverified": "Actual production reader/CLI/HTTP/PG/B10 business not tested; host Node unavailable at UID10001, no executor workaround used in258."
+    },
+    "B12Source928Build": {
+      "owner": "T45",
+      "status": "ACTUAL_LOCAL_BUILD_AND_PACK_PASS_NOT_LINUX_OR_APPLICATION",
+      "receipt": {
+        "path": "B12-source928-production-closure-pack-01/RESULT.json",
+        "bytes": 6980,
+        "sha256": "40a20ab83e55f0dc8e10b5ef49d91ae0b436b4cd6b9caf3c5c35e5e07ec0cb65"
+      },
+      "sourceCommit": "092821ff20d2d55854959a5afc04dd89818daa80",
+      "sourceTree": "5a1e4cdfa51872ad5bcb4048063e20d7a358c5f0",
+      "buildId": "t45-source928-production-closure-20261029-01",
+      "checks": "Original build-production and pack once exit0 each; git archive fixed code no WIP;1429inputs/209buildfiles/206packmembers readback;26 migrations+originalpatches packed only;Node24.21/existing878 verified physicaldependencies reused identicallock/noinstall. Nonfatal MODULE_TYPELESS_PACKAGE_JSON retained.",
+      "lockSha256": "c0997c162a31b22a6e2c01c75fe777ff5a68c740994e6765eb3180b11c108048",
+      "archiveBytes": 1819390,
+      "archiveSha256": "7be9f7db814ea6ac6775a36d77d5da65df4fbc0477911ec726180636f694aaad",
+      "releaseManifestSha256": "090ac7f07c7ea0e88eaf8975f7010d732aa4f6bf60e51eab58789bcecf0fb325",
+      "untested": "Linux dependencies/CLI/key/actual135PG/business/browser/HTTP/deployment; normal34 comparison remains fixed oldcandidate and is NOT this package.",
+      "next": "Original T45 bounded B10 reader check conditional on actual existing Linux dependency closure; real permissions/sharedQApublication/capacity/actualbusiness acceptance still pending, no automatic deploy."
+    },
+    "source929": {
+      "scope": "Adopt original QB928 limited fix closure, T45 actual258 synthetic stable key and fixed928 build/pack. No duplicated validation, new image install or production/PG permissions.",
+      "receipts": {
+        "key": {
+          "path": "server-jobs/t45-qa897-b10-stable-key-supply-20261029-258/B10-KEY258-RESULT.json",
+          "bytes": 2591,
+          "sha256": "1ec93e896d5458e112e60afaa6180534fdcfa65dcb3dce2013e645dd67ea2537"
+        },
+        "build": {
+          "path": "B12-source928-production-closure-pack-01/RESULT.json",
+          "bytes": 6980,
+          "sha256": "40a20ab83e55f0dc8e10b5ef49d91ae0b436b4cd6b9caf3c5c35e5e07ec0cb65"
+        }
+      },
+      "githubPreviousVerified": "092821ff20d2d55854959a5afc04dd89818daa80"
     }
   }
 }

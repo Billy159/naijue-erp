@@ -7744,12 +7744,12 @@
     "B10RealEntry926": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "status": "SOURCE928_F01_F02_D1_HANDED_BACK_ORIGINAL_QB_AFFECTED_REVIEW",
+      "status": "SOURCE928_QB_F01_F02_LIMITED_SOURCE_PASS_NO_ACTIVE_WRITER",
       "files": [
         "tests/integration/staff-credential-production-entry.test.ts"
       ],
       "scope": "Existing B10 card missing exact real-PG host integration runner. D1 host test only, original D2 implementation/key/CLI five leaves read-only. Reuse actual issuer/authentication/maintenance/fixture; no owner bypass/mockproof/directseed/key provisioning/PG/roleDDL/GRANT/server/data deletion. Current full source publish prerequisites remain.",
-      "next": "Original QB already received D1 exact same fix, only F01/F02 + necessary type/no-host check; no duplicate dispatch or PG.",
+      "next": "No repeat source tests. Actual shared QA CORE/full publication/normalrole permission/review/capacity/scenario and owner-controlled stable key supply required before original T45 B10 execution.",
       "pins": [
         {
           "path": "tests/integration/staff-credential-production-entry.test.ts",
@@ -7763,7 +7763,10 @@
       "findings": [
         "F01 P2 usable administrator query omits original enabled-hall predicate, may falsely reject accurate one usable admin scenario. No disabling extra admins to make fixture pass.",
         "F02 P2 all failures collapsed to one error, loses failed step/remaining untested scope; add finite non-secret phase/check ID only, no raw cause/request/credentials."
-      ]
+      ],
+      "independentReview": "QB/HV2-SOURCE928/QB-SOURCE928-F01F02-RESULT.json1235/497ff75d0b7ba43197527a2d1214a9457c867b525d6eec1f2bad68d67630186e",
+      "fixedCommit": "092821ff20d2d55854959a5afc04dd89818daa80",
+      "githubRemoteVerified": true
     }
   }
 }
