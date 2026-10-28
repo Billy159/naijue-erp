@@ -18298,7 +18298,7 @@
       "boundary": "Productiondeploy/migration/downtime/permission/deletion remainseparateapproval;onlythisminimumisolatedpermissionbranch waits"
     },
     "permissionConfirmationB14": {
-      "status": "223_PREGRANT_PROBE_SYNTAX_FAILED_225_ALIAS_CORRECTION_PREPARING",
+      "status": "225_APPROVED_ACL_COMMIT_RETURNED_POSTMANIFEST_MISMATCH_226_READONLY_NEXT",
       "document": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-CONFIRMATION.md",
       "sql": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL.sql",
       "rollback": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-ROLLBACK.sql",
@@ -18307,8 +18307,11 @@
       "humanApproval": "call_0ccc172a36184c2282757d2e9dd43303/0",
       "approvedAnswer": "确认 B14 最小权限及原隔离验证",
       "carrier": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-b14-approved-minimum-column-acl-20261028-223",
-      "next": "225 exactschema_create alias+namespace only,originalapprovedSQL unchanged;224blockeduntilnewknownsuccess",
-      "failure": "42601position107 reservedaliascreate in schema privilege probe beforeACLintent/stagesempty;rollback/client0"
+      "next": "OriginalT45 exact226RRRO adopt onlyapprovedACL+sameexistingroleobservation;ifpass thenoriginal224driveronce underexistinghumanapproval",
+      "failure": "42601position107 reservedaliascreate in schema privilege probe beforeACLintent/stagesempty;rollback/client0",
+      "actual": "225 originalSQL65b2a5cc COMMITreturned,38bits/exactcolumns/schema anddirectrolecomparisonpassed;finalwholemanifest mismatch;rollback/end/client0",
+      "hypothesis": "schemaACLnewgrantee causes alreadyexistingruntime to appear inmanifest.roles;not yetactualpostmanifestproof",
+      "noReplay": "223pregrantfailureand225committedpreserved;noGRANTretry/REVOKE/DELETE/R1/P04"
     },
     "H06Review863": {
       "status": "QB_NARROW_PASS_SOURCE_AND_SYNTHETIC_ONLY",
@@ -18330,7 +18333,7 @@
       "scope": "1nestedcase9variants andgeneration;noSQL/ACL/server/build/fullH04"
     },
     "H06LoggingNext864": {
-      "status": "SOURCE_READY_FIXED_QB_NEXT",
+      "status": "QB_NARROW_PASS_SOURCE_AND_LOG_CHECKS",
       "owner": "D2",
       "files": [
         "apps/api/src/production-application-host.ts",
@@ -18340,8 +18343,12 @@
       "thinking": "medium",
       "scope": "ExistingH06 finiteboundedredactedrequest/lifecyclelogs only;otherentryfile seamtoC,rotationT45;noPG/SQL/ACL/server",
       "wholeH06Pass": false,
-      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/HV2-H06-STRUCTURED-LOGS/RESULT.json",
-      "checks": "3newaffectedlocalPASS;noPG/server/collector/wholeH06"
+      "receipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE864/QB-SOURCE864-RESULT-CORRECTED.json",
+      "checks": "3newaffectedlocalPASS;noPG/server/collector/wholeH06",
+      "fixedCommit": "d7d9dbaaccc6f29f433471c5788dd35778a961c8",
+      "sha256": "b21719643d71be1c5a2c1e042d956047be5f19fdf8aa7d4e7111ad0b790eed0a",
+      "bound": "Requests128/monotonicsecond plusoneclose2;combinedmax130;event1024bytes;notcompleteaudit",
+      "next": "Realcollector/rotation/retention/GC andrealserverevidence unresolved;do notinventretention ordeleteproduction"
     },
     "v23Source858ClosureAdopted864": {
       "status": "ORIGINAL_D3_SELECTED_SOURCE_CLOSURE_ADOPTED_NOT_SIGNED_RUNTIME",
