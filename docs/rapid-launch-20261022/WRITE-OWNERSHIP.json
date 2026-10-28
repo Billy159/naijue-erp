@@ -7327,7 +7327,23 @@
       "model": "gpt-6.1-sol",
       "thinking": "medium",
       "CReserved": "package.json/check-launch/releaseconfigs/TASKS/PROGRESS/HANDOFF;owner requests exactseam beforeotherfiles",
-      "dependency": "P04realdriver waits humanACL only;H01 source independent"
+      "dependency": "P04realdriver waits humanACL only;H01 source independent",
+      "preciseExistingAdapterException": {
+        "file": "apps/api/src/history-revision-authorization.ts",
+        "owner": "D1",
+        "role": "postgres-history-authorization-adapter",
+        "sourceReview": "C fullfile+allconsumerlookup;noHTTP/Fastifyhandler;implementsapplicationauthorizationport,PGsource-factsandoriginalclientlifecycle",
+        "allowedImports": [
+          "adapters/postgres/src/imported-history-query-reader.ts:importedHistoryReadSql,importedHistoryTransferHallScopeSql",
+          "adapters/postgres/src/sales-unit-of-work.ts:type PgSalesPool"
+        ],
+        "callers": [
+          "apps/api/src/postgres-read-api.ts",
+          "apps/api/src/history-revision-authorization.test.ts",
+          "tests/integration/history-revision-set-guards.integration.test.ts"
+        ],
+        "boundary": "ExactexistingpathnotAPIwildcard;forbiddenotherhandlerfixturemustfail;nochangepermission/SQL/transactionorcopyimplementation"
+      }
     },
     "H02EffectiveReaders880": {
       "owner": "D3",

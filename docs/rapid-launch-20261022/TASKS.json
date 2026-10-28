@@ -18583,7 +18583,8 @@
       "current": "FiniteH01module/writeownership matrix and concrete dependency checker",
       "next": "Knownviolatingprivateimports only afterexactfilehandoff;no speculative refactor",
       "dependencies": "NoP04ACLdependency;runtimeQA separate",
-      "model": "gpt-6.1-sol/medium"
+      "model": "gpt-6.1-sol/medium",
+      "existingAdapterDecision": "Creadexactpolicyand3consumers:history-revision-authorization.ts is PG authorizationadapter notHTTPhandler;exactexistingpath/owner/helper/callerexception only,noAPIwildcard,noSQLorpermissionchanges;D1mustproveforbiddenotherhandlerfixture"
     },
     "H02Current880": {
       "owner": "D3",
