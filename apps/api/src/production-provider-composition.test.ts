@@ -270,7 +270,7 @@ function exact26Fixture(purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_RE
     serverAddress: null, serverPort: null, postmasterStart: "2026-10-23 00:00:00+00" };
   const receipt = JSON.stringify({ result: "PASS", notice: "SYNTHETIC_PROTOCOL_ONLY_NOT_ACTUAL_APPROVAL" }); writeFileSync(independent, receipt, { mode: 0o600 });
   const review = { version: "C_NATIVE_RUNTIME26_REVIEW_V1", decision: "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA", target,
-    catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v10_native_creation_record_scope" }, purposes, scope: "EXACT_TARGET_METADATA_ONLY",
+    catalog: { format: "EXACT26_RUNTIME_CATALOG_EXPORT_V1", sha256: digest, patchLevel: "26_v11_document_specification_save" }, purposes, scope: "EXACT_TARGET_METADATA_ONLY",
     independentReview: { path: independent, sha256: hash(receipt), result: "PASS" }, realImportExecutionAuthorized: false };
   const body = JSON.stringify(review); writeFileSync(reviewFile, body, { mode: 0o600 });
   const configuration: ProductionRuntime26Configuration = { ...config(), profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",
@@ -492,8 +492,15 @@ test("production R2 exact26: command, receipt and existing preparation UOWs all 
       const commandLeases = new Set(p.calls.filter(call => call.sql.startsWith("SELECT pg_advisory_xact_lock")).map(call => call.lease)); assert.equal(commandLeases.size, 6);
       for (const lease of commandLeases) {
         const calls = p.calls.filter(call => call.lease === lease), probes = calls.filter(call => call.sql === NATIVE_RUNTIME26_IDENTITY_PROBE);
-        assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_IDENTITY_PROBE); assert.ok(probes.length >= 3);
-        assert.equal(probes.length, calls.at(-1)!.sql === "COMMIT" ? 4 : 3);
+        // Both UOWs check inside BEGIN and before successful COMMIT. Transfer also checks before BEGIN;
+        // sales intentionally relies on the issuer's acquisition check instead of duplicating it.
+        const sales = calls.some(c => c.sql.includes("sales:current-schema"));
+        const begin = calls.findIndex(c => c.sql.startsWith("BEGIN"));
+        assert.equal(calls[0]!.sql, NATIVE_RUNTIME26_IDENTITY_PROBE);
+        assert.equal(probes.length,(sales ? 2 : 3)+(calls.at(-1)!.sql === "COMMIT" ? 1 : 0));
+        assert.equal(calls.slice(0,begin).filter(c=>c.sql===NATIVE_RUNTIME26_IDENTITY_PROBE).length,sales?1:2);
+        assert.equal(calls[begin+1]!.sql,NATIVE_RUNTIME26_IDENTITY_PROBE);
+        if(calls.at(-1)!.sql==="COMMIT")assert.equal(calls.at(-2)!.sql,NATIVE_RUNTIME26_IDENTITY_PROBE);
       }
       assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql))); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().connects, p.counts().releases);
     } finally { await api.close(); }
@@ -862,7 +869,10 @@ test('production CORE audit: original endpoint binds committed members current r
       assert.ok(at('maintenance:administrator-lock') < at('maintenance:identity'));
       assert.ok(at('maintenance:identity') < at('core-settings:committed-proof') && at('core-settings:current-identity') < at('settings-audit:page'));
       assert.equal(calls.filter(c => c.sql.includes('settings-audit:page')).length, 1); assert.equal(calls.at(-1)!.sql, 'COMMIT');
-      assert.ok(calls.some(c => c.sql === NATIVE_RUNTIME26_V14_METADATA_PROBE));
+      // Managed host binds full metadata once on startup, then checks this request's live identity.
+      assert.equal(p.calls.filter(c => c.sql === NATIVE_RUNTIME26_V14_METADATA_PROBE).length,1);
+      assert.equal(calls[0]!.sql,NATIVE_RUNTIME26_IDENTITY_PROBE);
+      assert.ok(calls.some(c => c.sql === NATIVE_RUNTIME26_IDENTITY_PROBE));
       assert.ok(!response.body.includes('coreSourceMembers') && !response.body.includes('password') && !response.body.includes(f.configuration.coreInitializationRead!.coreSourceDigest));
       state.role = 'WAREHOUSE';
       const single = await api.app.inject({ method: 'POST', url: '/settings/audit/query', headers,

@@ -662,3 +662,38 @@ test("human F transient identity transport failure discards only that lease; fre
   p.failure();const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,"IMPORT_STAGE");client.release();assert.equal(p.calls.filter(q=>q===NATIVE_RUNTIME26_METADATA_PROBE).length,1);
  }finally{f.cleanup();}
 });
+
+
+import {NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE,NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE,NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE} from '../adapters/postgres/src/native-import-accounting-capability.ts';
+test('HV2 category and batch revision metadata pins all exact successor function bodies and unchanged parent',()=>{
+ const category=readFileSync(new URL('../adapters/postgres/patches/0026-category-depth-successor.sql',import.meta.url),'utf8');
+ const batch=readFileSync(new URL('../adapters/postgres/patches/0026-history-revision-set-guards-successor.sql',import.meta.url),'utf8');
+ const bodies=(sql:string)=>[...sql.matchAll(/CREATE (?:OR REPLACE )?FUNCTION naijue_erp\.(\w+)\(\)[\s\S]*? AS (\$\w+\$)([\s\S]*?)\2;/g)].map(m=>[m[1]!,hash(m[3]!)] as const);
+ assert.equal(bodies(category).length,2);assert.equal(bodies(batch).length,5);
+ for(const [name,pin] of bodies(category)){
+  assert.ok(NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE.includes(`('${name}','${pin}')`));
+  assert.ok(NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE.includes(`('${name}','${pin}')`));
+ }
+ for(const [name,pin] of bodies(batch))assert.ok(NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE.includes(`('${name}','${pin}')`),name);
+ assert.ok(NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=133"));
+ assert.ok(NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=135"));
+ assert.ok(NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=135"));
+ assert.ok(NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=131"));
+ assert.ok(!NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE.includes('system_column_acls'));
+ assert.ok(NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE.includes('AS source_xmin_acl_match'));
+});
+test('HV2 category and batch revision issuers select only exact fixed profiles and reject changed evidence',async()=>{
+ for(const [patch,probe,v2] of [
+  ['26_hv2_category_depth_from_v22',NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE,false],
+  ['26_hv2_history_set_guards_from_v22',NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE,false],
+  ['26_hv2_history_set_guards_source_xmin_from_v22',NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE,true],
+ ] as const){
+  const f=fixture();try{
+   const row={...observation(),...(v2?{source_xmin_acl_match:true}:{})};
+   const pool={async connect(){return{async query(sql:string){assert.equal(sql,probe);return{rows:[{...row}],rowCount:1};},release(){}};}};
+   const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,format:v2?'EXACT26_RUNTIME_CATALOG_EXPORT_V2':'EXACT26_RUNTIME_CATALOG_EXPORT_V1',patchLevel:patch},purposes:['HISTORY_REVISION','IMPORT_STAGE']}));
+   const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,'HISTORY_REVISION');
+   row.source_routines_match=false;await assert.rejects(issuer.runtime26.assertReady(client,'HISTORY_REVISION'),{code:'NATIVE_RUNTIME26_NOT_READY'});client.release();
+  }finally{f.cleanup();}
+ }
+});

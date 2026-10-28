@@ -123,6 +123,29 @@ export class PostgresPostingBalances {
     this.batchId = entityId("operation", stringValue(row.id));
     return this.batchId;
   }
+  /** Only the borrowed HISTORY exact24 path batches missing-key evidence.
+   * Existing sales/transfer first-use semantics keep their original path. */
+  async assertHistoryZeros(keys: readonly Key[]): Promise<void> {
+    requireDomain(this.admissionRuntime?.profile === "EXACT24" && this.runtime26 === undefined,
+      "TRANSACTION_SCOPE", "Original historical posting context required");
+    const unique=[...new Map(keys.map(row=>[key(row.warehouseId,row.skuId),row])).entries()]
+      .filter(([identity])=>!this.provenZero.has(identity));
+    if(!unique.length)return;
+    requireDomain(unique.every(([identity])=>this.locked?.has(identity)&&!this.balances.has(identity)),"TRANSACTION_SCOPE","Only absent locked historical keys may prove zero");
+    const batchId=await this.publication();await this.admissionRuntime.assertReady({query:this.query});
+    const admissions=await readInventoryKeyAdmissions({query:this.query},unique.map(([,row])=>row));
+    requireDomain(admissions.length===unique.length&&admissions.every(row=>row.admitted&&row.publishedBatchId===batchId),"INVENTORY_NOT_READY","Every historical first key requires original native admission");
+    const rows=(await this.query(`/* history-posting:unused-keys */ SELECT k.warehouse_id::text,k.sku_id::text,
+      NOT EXISTS(SELECT 1 FROM naijue_erp.inventory_balance b WHERE b.warehouse_id=k.warehouse_id AND b.sku_id=k.sku_id) AS balance_absent,
+      NOT EXISTS(SELECT 1 FROM naijue_erp.inventory_ledger l WHERE l.warehouse_id=k.warehouse_id AND l.sku_id=k.sku_id) AS ledger_absent
+      FROM unnest($1::uuid[],$2::uuid[]) AS k(warehouse_id,sku_id)`,
+    [unique.map(([,row])=>row.warehouseId),unique.map(([,row])=>row.skuId)])).rows;
+    const pending=new Set(unique.map(([identity])=>identity));
+    for(const row of rows){const identity=key(stringValue(row.warehouse_id),stringValue(row.sku_id));
+      integrity(pending.delete(identity)&&row.balance_absent===true&&row.ledger_absent===true,"Historical first use cannot adopt an already used or unproven key");}
+    integrity(pending.size===0,"Every historical missing key must be observed");
+    for(const [identity] of unique)this.provenZero.add(identity);
+  }
   async assertZero(warehouseId: EntityId<"warehouse">, skuId: EntityId<"sku">): Promise<void> {
     const identity = key(warehouseId, skuId);
     requireDomain(this.locked?.has(identity) && !this.balances.has(identity), "TRANSACTION_SCOPE", "Only an absent locked posting key can acquire a zero proof");
@@ -232,23 +255,47 @@ export function createPostgresHistoryRevisionPosting(runtime: InventoryAdmission
     const query: Query = (sql, values = []) => client.query(sql, values);
     const balances = new PostgresPostingBalances(query, Object.freeze({ profile: "EXACT24", assertReady }));
     await balances.lock(entries);
-    for (const entry of entries) if (!balances.get(entry.warehouseId, entry.skuId)) await balances.assertZero(entry.warehouseId, entry.skuId);
+    await balances.assertHistoryZeros(entries.filter(entry=>!balances.get(entry.warehouseId,entry.skuId)));
+    const grouped = new Map<string, { warehouseId: string; skuId: string; previous: InventoryBalanceRow | undefined; delta: bigint; count: number }>();
     for (const entry of entries) {
-      const previous = balances.get(entry.warehouseId, entry.skuId);
-      const proof: PostingProof = { warehouseId: entry.warehouseId, skuId: entry.skuId, quantityDelta: entry.delta,
-        operationId, postedAt: context.postedAt, eventKind: "HISTORY_REVISION", reversesEntryId: null };
-      balances.assertCanAppend(proof);
-      const result = await query(`/* history-posting:ledger */ INSERT INTO naijue_erp.inventory_ledger
-        (id,operation_id,event_kind,warehouse_id,sku_id,quantity_delta,source_history_revision_id,
-        source_history_sales_line_id,source_history_transfer_line_id,endpoint,source_document_version,reverses_entry_id,source_import_batch_id,business_date,posted_at)
-        VALUES($1::uuid,$2::uuid,'HISTORY_REVISION',$3::uuid,$4::uuid,$5::bigint,$6::uuid,$7::uuid,$8::uuid,$9,$10,NULL,NULL,$11::date,$12::timestamptz)`,
-      [entry.ledgerId, operationId, entry.warehouseId, entry.skuId, entry.delta.toString(), context.revisionId,
-        context.kind === "sales" ? entry.lineId : null, context.kind === "transfers" ? entry.lineId : null,
-        entry.endpoint, context.toVersion, date, context.postedAt]);
-      integrity(result.rowCount === 1, "Exact historical correction ledger was not appended"); balances.didAppend(proof);
-      await balances.put({ warehouseId: entry.warehouseId, skuId: entry.skuId,
-        quantity: previous ? addQuantity(previous.quantity, entry.delta) : entry.delta,
-        version: previous ? nextVersion(previous.version) : version(1), lastOperationId: operationId, updatedAt: context.postedAt });
+      balances.assertCanAppend({ warehouseId:entry.warehouseId,skuId:entry.skuId,quantityDelta:entry.delta,
+        operationId,postedAt:context.postedAt,eventKind:"HISTORY_REVISION",reversesEntryId:null });
+      const identity=key(entry.warehouseId,entry.skuId), group=grouped.get(identity);
+      if(group){group.delta=addQuantity(quantity(group.delta.toString()),entry.delta);group.count++;}
+      else grouped.set(identity,{warehouseId:entry.warehouseId,skuId:entry.skuId,previous:balances.get(entry.warehouseId,entry.skuId),delta:entry.delta,count:1});
+    }
+    const ledger=await query(`/* history-posting:ledger */ INSERT INTO naijue_erp.inventory_ledger
+      (id,operation_id,event_kind,warehouse_id,sku_id,quantity_delta,source_history_revision_id,
+       source_history_sales_line_id,source_history_transfer_line_id,endpoint,source_document_version,reverses_entry_id,source_import_batch_id,business_date,posted_at)
+      SELECT x.id,$2::uuid,'HISTORY_REVISION',x.warehouse_id,x.sku_id,x.delta,$6::uuid,
+       CASE WHEN $10::text='sales' THEN x.line_id ELSE NULL END,CASE WHEN $10::text='transfers' THEN x.line_id ELSE NULL END,
+       x.endpoint,$11::integer,NULL,NULL,$12::date,$13::timestamptz
+      FROM unnest($1::uuid[],$3::uuid[],$4::uuid[],$5::bigint[],$7::uuid[],$8::text[]) AS x(id,warehouse_id,sku_id,delta,line_id,endpoint)
+      WHERE $9::integer=cardinality($1::uuid[]) RETURNING id::text`,
+    [entries.map(e=>e.ledgerId),operationId,entries.map(e=>e.warehouseId),entries.map(e=>e.skuId),entries.map(e=>e.delta.toString()),context.revisionId,
+      entries.map(e=>e.lineId),entries.map(e=>e.endpoint),entries.length,context.kind,context.toVersion,date,context.postedAt]);
+    const actualIds=new Set(ledger.rows.map(row=>stringValue(row.id)));
+    integrity(ledger.rowCount===entries.length&&actualIds.size===entries.length&&entries.every(e=>actualIds.has(e.ledgerId)),"Exact historical correction ledger set was not appended");
+    const rows=[...grouped.values()].map(g=>({...g,quantity:(g.previous?addQuantity(g.previous.quantity,quantity(g.delta.toString())):quantity(g.delta.toString())).toString(),
+      version:versionToSql(version((g.previous?.version??0)+g.count))}));
+    for(const fresh of [false,true]){
+      const selected=rows.filter(g=>(g.previous===undefined)===fresh);if(!selected.length)continue;
+      const result=await query(fresh?`/* history-posting:balances-insert */ INSERT INTO naijue_erp.inventory_balance
+        (warehouse_id,sku_id,quantity,version,last_operation_id,updated_at)
+        SELECT x.warehouse_id,x.sku_id,x.quantity,x.version,$5::uuid,$6::timestamptz
+        FROM unnest($1::uuid[],$2::uuid[],$3::bigint[],$4::integer[]) AS x(warehouse_id,sku_id,quantity,version)
+        ON CONFLICT(warehouse_id,sku_id) DO NOTHING RETURNING warehouse_id::text,sku_id::text,quantity::text,version`
+      :`/* history-posting:balances-update */ UPDATE naijue_erp.inventory_balance b
+        SET quantity=x.quantity,version=x.version,last_operation_id=$5::uuid,updated_at=$6::timestamptz
+        FROM unnest($1::uuid[],$2::uuid[],$3::bigint[],$4::integer[],$7::integer[]) AS x(warehouse_id,sku_id,quantity,version,old_version)
+        WHERE b.warehouse_id=x.warehouse_id AND b.sku_id=x.sku_id AND b.version=x.old_version
+        RETURNING b.warehouse_id::text,b.sku_id::text,b.quantity::text,b.version`,
+      [selected.map(g=>g.warehouseId),selected.map(g=>g.skuId),selected.map(g=>g.quantity),selected.map(g=>g.version),operationId,context.postedAt,...(fresh?[]:[selected.map(g=>g.previous!.version)])]);
+      const expected=new Map(selected.map(g=>[key(g.warehouseId,g.skuId),g]));
+      requireDomain(result.rowCount===selected.length&&result.rows.length===selected.length,"VERSION_CONFLICT","Historical balance batch CAS incomplete");
+      for(const row of result.rows){const identity=key(stringValue(row.warehouse_id),stringValue(row.sku_id)),g=expected.get(identity);
+        integrity(g&&row.quantity===g.quantity&&row.version===g.version,"Exact historical balance batch RETURNING mismatch");expected.delete(identity);}
+      integrity(expected.size===0,"Missing historical balance batch member");
     }
     return Object.freeze({ ledgerEntryIds: Object.freeze(entries.map(entry => entry.ledgerId)) });
   } });

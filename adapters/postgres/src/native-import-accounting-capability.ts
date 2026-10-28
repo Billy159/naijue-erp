@@ -520,6 +520,20 @@ export const NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE = rep
   "('history_revision_not_enabled','1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c')",
   "('history_revision_not_enabled','581a44ad13d184d594731b7c9ded219a3933fdb8a6c58f2ed63463fdc795ac4f')");
 
+/** Approved B14 then P04 successors on the full v22/B07 branch.
+ * Each profile pins the entire routine set; existing profiles stay unchanged. */
+export const NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE = [
+  ["jsonb_array_length(manifest->'routines')=131", "jsonb_array_length(manifest->'routines')=133"],
+  ["SELECT 1 FROM (VALUES", "SELECT 1 FROM (VALUES\n    ('lock_category_tree_statement','fe2f9bd7ed49d52697cb8a5aab6100bc61f2246c0f8ad02f945a7dbbd4a54834'),('validate_category_final_component','f6eba82eceeaf19ad781500cebcfc5b515f38bf11ed428d41897e909b821a07d'),"],
+].reduce((probe, [before, after]) => replaceOne(probe, before!, after!), NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE);
+export const NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE = [
+  ["jsonb_array_length(manifest->'routines')=133", "jsonb_array_length(manifest->'routines')=135"],
+  ["('history_revision_not_enabled','581a44ad13d184d594731b7c9ded219a3933fdb8a6c58f2ed63463fdc795ac4f')", "('history_revision_not_enabled','917601e4a32df8b38047094d05a581883e040876ee091c7de0f5ffe8999a5d16')"],
+  ["('history_effective_writes_closed','c06027597f11a9cf7f2ae06bf5e47e5c21349b54851fb21df6895ef22a2855b7')", "('history_effective_writes_closed','5cfe1d51d7cfa4f30c5fe758ed3b203ec714fa4fc99185a901454d705ea3ba54')"],
+  ["('guard_history_numeric_ledger','b32ccd2af06876d91fe4b33a4e2309a3f79af7d012ddf301ce84b773118e5794')", "('guard_history_numeric_ledger','014f98557c5fc57e5e6f0ba3d21483be5e7eb3e3adbc86c9162dcd120df40797')"],
+  ["SELECT 1 FROM (VALUES", "SELECT 1 FROM (VALUES\n    ('history_effective_set_guard','a2fc6d48df9560e281a7b7a8604624d7b3219623b9dedc55a53284ad9951a900'),('history_numeric_ledger_set_guard','83d5ef1ec17d817433ac8b19b3921eba86208f2979a41581a198813bc88ddef3'),"],
+].reduce((probe, [before, after]) => replaceOne(probe, before!, after!), NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE);
+
 // V1 intentionally remains immutable. This finite V2 observation adds the one
 // approved system-column ACL, which the positive-attnum column export omits.
 function sourceXminCatalogProbe(probe: string): string {
@@ -551,6 +565,7 @@ FROM observed`);
 }
 export const NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE = sourceXminCatalogProbe(NATIVE_RUNTIME26_V22_METADATA_PROBE);
 export const NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE = sourceXminCatalogProbe(NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE);
+export const NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE = sourceXminCatalogProbe(NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE);
 
 /** Daily managed-application lease identity only. The complete catalog was awaited at startup.
  * A baseline switch stops/disposes that application before DDL/ACL changes, then creates a new issuer.
@@ -675,16 +690,18 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  const sourceXmin = catalog.patchLevel === "26_hv2_source_xmin_from_v22" || catalog.patchLevel === "26_hv2_responsible_null_source_xmin_from_v22";
-  if (catalog.format !== (sourceXmin ? "EXACT26_RUNTIME_CATALOG_EXPORT_V2" : "EXACT26_RUNTIME_CATALOG_EXPORT_V1") || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15", "26_v20_history_insert_identity_from_v19", "26_v21_history_effective_value_from_v16_v14", "26_v22_staged_prefix_bind_from_v20", "26_hv2_responsible_null_from_v22", "26_hv2_source_xmin_from_v22", "26_hv2_responsible_null_source_xmin_from_v22"] as readonly unknown[]).includes(catalog.patchLevel))
+  const historySet = catalog.patchLevel === "26_hv2_history_set_guards_from_v22" || catalog.patchLevel === "26_hv2_history_set_guards_source_xmin_from_v22";
+  const categoryDepth = historySet || catalog.patchLevel === "26_hv2_category_depth_from_v22";
+  const sourceXmin = catalog.patchLevel === "26_hv2_source_xmin_from_v22" || catalog.patchLevel === "26_hv2_responsible_null_source_xmin_from_v22" || catalog.patchLevel === "26_hv2_history_set_guards_source_xmin_from_v22";
+  if (catalog.format !== (sourceXmin ? "EXACT26_RUNTIME_CATALOG_EXPORT_V2" : "EXACT26_RUNTIME_CATALOG_EXPORT_V1") || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15", "26_v20_history_insert_identity_from_v19", "26_v21_history_effective_value_from_v16_v14", "26_v22_staged_prefix_bind_from_v20", "26_hv2_responsible_null_from_v22", "26_hv2_source_xmin_from_v22", "26_hv2_responsible_null_source_xmin_from_v22", "26_hv2_category_depth_from_v22", "26_hv2_history_set_guards_from_v22", "26_hv2_history_set_guards_source_xmin_from_v22"] as readonly unknown[]).includes(catalog.patchLevel))
     throw runtime26Error("Exact independently reviewed v11, v14 or v15 catalog required");
   const effectiveValueDisambiguation = catalog.patchLevel === "26_v21_history_effective_value_from_v16_v14";
-  const responsibleNull = catalog.patchLevel === "26_hv2_responsible_null_from_v22" || catalog.patchLevel === "26_hv2_responsible_null_source_xmin_from_v22";
+  const responsibleNull = categoryDepth || catalog.patchLevel === "26_hv2_responsible_null_from_v22" || catalog.patchLevel === "26_hv2_responsible_null_source_xmin_from_v22";
   const stagedPrefixBind = sourceXmin || responsibleNull || catalog.patchLevel === "26_v22_staged_prefix_bind_from_v20";
   const historyInsertIdentity = stagedPrefixBind || catalog.patchLevel === "26_v20_history_insert_identity_from_v19";
   const barcodeSchemeInitialization = historyInsertIdentity || catalog.patchLevel === "26_v19_barcode_scheme_initialization_from_v16_v15";
   const historyResponsible = effectiveValueDisambiguation || barcodeSchemeInitialization || catalog.patchLevel === "26_v16_history_responsible_from_v14" || catalog.patchLevel === "26_v16_history_responsible_from_v15";
-  const metadataProbe = sourceXmin ? (responsibleNull ? NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE : NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE) : responsibleNull ? NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE : stagedPrefixBind ? NATIVE_RUNTIME26_V22_METADATA_PROBE : effectiveValueDisambiguation ? NATIVE_RUNTIME26_V21_EFFECTIVE_VALUE_FROM_V16_V14_METADATA_PROBE : historyInsertIdentity ? NATIVE_RUNTIME26_V20_METADATA_PROBE : barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
+  const metadataProbe = historySet ? (sourceXmin ? NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE : NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE) : categoryDepth ? NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE : sourceXmin ? (responsibleNull ? NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE : NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE) : responsibleNull ? NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE : stagedPrefixBind ? NATIVE_RUNTIME26_V22_METADATA_PROBE : effectiveValueDisambiguation ? NATIVE_RUNTIME26_V21_EFFECTIVE_VALUE_FROM_V16_V14_METADATA_PROBE : historyInsertIdentity ? NATIVE_RUNTIME26_V20_METADATA_PROBE : barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
     : catalog.patchLevel === "26_v16_history_responsible_from_v15" ? NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v15_category_order_undo" ? NATIVE_RUNTIME26_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;

@@ -11,7 +11,7 @@ const context: HistoryRevisionPostingContext = { operationId: id(1), revisionId:
   kind: "sales", documentId: id(4), toVersion: 2, businessDate: "2020-01-02", postedAt: "2026-10-22T07:00:00Z" };
 const effect = (n = 10, delta = "-2"): HistoryRevisionPostingEffect => ({ ledgerEntryId: id(n), lineId: id(n + 100),
   warehouseId: id(20), skuId: id(30), endpoint: "SALES_WAREHOUSE", quantityDelta: delta });
-interface Options { absent?: boolean; admitted?: boolean; priorLedger?: boolean; publication?: boolean; guards?: boolean; writeCount?: number }
+interface Options { absent?: boolean; admitted?: boolean; priorLedger?: boolean; publication?: boolean; guards?: boolean; writeCount?: number; corruptLedger?: boolean; corruptBalance?: boolean }
 function protocol(options: Options = {}) {
   const calls: { sql: string; values: unknown[] }[] = [], capabilities: unknown[] = [];
   const counts = { WAREHOUSE: 1, SKU: 1, INVENTORY_LEDGER: 1, IMPORT_BATCH: 1 };
@@ -25,8 +25,9 @@ function protocol(options: Options = {}) {
     else if (sql.includes("posting:guards")) rows = [{ integrity_guards_present: options.guards !== false }];
     else if (sql.includes("inventory-admission:keys")) rows = [{ warehouse_id: id(20), sku_id: id(30), admitted: options.admitted !== false,
       published_batch_id: id(40), warehouse_basis: "CUTOFF_MEMBER", sku_basis: "POST_CUTOFF_CREATED", warehouse_created_operation_id: null, sku_created_operation_id: id(41) }];
-    else if (sql.includes("posting:admitted-unused-key")) rows = [{ balance_absent: true, ledger_absent: options.priorLedger !== true }];
-    else if (sql.includes("history-posting:ledger") || sql.startsWith("UPDATE naijue_erp.inventory_balance") || sql.startsWith("INSERT INTO naijue_erp.inventory_balance")) rowCount = options.writeCount ?? 1;
+    else if (sql.includes("history-posting:unused-keys")) rows = (values[0] as string[]).map((w,i)=>({warehouse_id:w,sku_id:(values[1] as string[])[i],balance_absent:true,ledger_absent:options.priorLedger!==true}));
+    else if(sql.includes("history-posting:ledger")){rowCount=options.writeCount??(values[0] as string[]).length;rows=(values[0] as string[]).slice(0,rowCount).map(id=>({id:options.corruptLedger?"FOREIGN":id}));}
+    else if(sql.includes("history-posting:balances-")){rowCount=options.writeCount??(values[0] as string[]).length;rows=(values[0] as string[]).slice(0,rowCount).map((w,i)=>({warehouse_id:w,sku_id:(values[1] as string[])[i],quantity:options.corruptBalance?"999":(values[2] as string[])[i],version:(values[3] as number[])[i]}));}
     else throw Error(`Unexpected SQL: ${sql}`);
     return { rows, rowCount };
   } };
@@ -50,30 +51,29 @@ test("invalid nonzero effects/date/transfer conservation fail before touching ca
     const p = protocol(); await assert.rejects(p.post(p.client, ctx, effects)); assert.equal(p.calls.length, 0); assert.equal(p.capabilities.length, 0);
   }
 });
-test("existing balances receive exact original-client revision deltas, source IDs and one CAS per real line", async () => {
+test("existing balances receive exact original-client revision deltas, source IDs and one CAS per locked key with original effect-count version", async () => {
   const p = protocol(), effects = [effect(), effect(11, "1")];
   assert.deepEqual(await p.post(p.client, context, effects), { ledgerEntryIds: [id(10), id(11)] });
   assert.strictEqual(p.capabilities[0], p.client);
-  const ledgers = ledgerCalls(p), balances = p.calls.filter(c => c.sql.startsWith("UPDATE naijue_erp.inventory_balance"));
-  assert.equal(ledgers.length, 2); assert.deepEqual(ledgers[0]!.values, [id(10), id(1), id(20), id(30), "-2", id(2), id(110), null, "SALES_WAREHOUSE", 2, "2020-01-02", context.postedAt]);
-  assert.deepEqual(balances.map(c => c.values.slice(2, 4)), [["8", 5], ["9", 6]]);
-  assert.deepEqual(balances.map(c => c.values[6]), [4, 5]);
+  const ledgers = ledgerCalls(p), balances = p.calls.filter(c => c.sql.includes("history-posting:balances-update"));
+  assert.equal(ledgers.length,1);assert.deepEqual(ledgers[0]!.values,[[id(10),id(11)],id(1),[id(20),id(20)],[id(30),id(30)],["-2","1"],id(2),[id(110),id(111)],["SALES_WAREHOUSE","SALES_WAREHOUSE"],2,"sales",2,"2020-01-02",context.postedAt]);
+  assert.equal(balances.length,1);assert.deepEqual(balances[0]!.values,[[id(20)],[id(30)],["9"],[6],id(1),context.postedAt,[4]]);
   assert.ok(p.calls.every(c => !/^(?:BEGIN|COMMIT|ROLLBACK)/.test(c.sql) && !/sales_header|history_sales_header/.test(c.sql)));
   assert.equal(p.calls.filter(c => c.sql.startsWith("SELECT naijue_erp.inventory_key_lock")).length, 1);
 });
 test("transfer corrections conserve quantity at the two distinct original endpoints", async () => {
   const p = protocol(), from = { ...effect(), endpoint: "FROM" as const }, to = { ...effect(11, "2"), lineId: from.lineId, warehouseId: id(21), endpoint: "TO" as const };
   await p.post(p.client, { ...context, kind: "transfers" }, [from, to]);
-  assert.deepEqual(ledgerCalls(p).map(c => c.values.slice(6, 9)), [[null, from.lineId, "FROM"], [null, from.lineId, "TO"]]);
-  const quantities = p.calls.filter(c => c.sql.startsWith("UPDATE naijue_erp.inventory_balance")).map(c => BigInt(c.values[2] as string));
+  assert.deepEqual(ledgerCalls(p)[0]!.values[6],[from.lineId,from.lineId]);assert.deepEqual(ledgerCalls(p)[0]!.values[7],["FROM","TO"]);
+  const quantities = p.calls.filter(c => c.sql.includes("history-posting:balances-update")).flatMap(c => (c.values[2] as string[]).map(BigInt));
   assert.equal(quantities.reduce((a, b) => a + b), 17n);
   assert.deepEqual(p.calls.filter(c => c.sql.startsWith("SELECT naijue_erp.inventory_key_lock")).map(c => c.values[0]), [id(20), id(21)]);
 });
 test("admitted unpublished-key first use persists only actual negative delta and version one", async () => {
   const p = protocol({ absent: true }); await p.post(p.client, context, [effect()]);
-  const insert = p.calls.find(c => c.sql.startsWith("INSERT INTO naijue_erp.inventory_balance"))!;
-  assert.deepEqual(insert.values, [id(20), id(30), "-2", 1, id(1), context.postedAt]);
-  assert.ok(p.calls.findIndex(c => c.sql.includes("posting:admitted-unused-key")) < p.calls.findIndex(c => c.sql.includes("history-posting:ledger")));
+  const insert = p.calls.find(c => c.sql.includes("history-posting:balances-insert"))!;
+  assert.deepEqual(insert.values, [[id(20)], [id(30)], ["-2"], [1], id(1), context.postedAt]);
+  assert.ok(p.calls.findIndex(c => c.sql.includes("history-posting:unused-keys")) < p.calls.findIndex(c => c.sql.includes("history-posting:ledger")));
   assert.equal(p.calls.filter(c => c.sql.includes("posting:publication")).length, 1);
 });
 test("unpublished scope, missing guards, unadmitted key and prior-ledger missing balance reject before writes", async () => {
@@ -84,5 +84,18 @@ test("unpublished scope, missing guards, unadmitted key and prior-ledger missing
 });
 test("append failure is propagated to original transaction owner without balance write or local rollback", async () => {
   const p = protocol({ writeCount: 0 }); await assert.rejects(p.post(p.client, context, [effect()]), { code: "INVENTORY_INTEGRITY_FAILED" });
-  assert.ok(p.calls.every(c => !c.sql.startsWith("UPDATE naijue_erp.inventory_balance") && c.sql !== "ROLLBACK"));
+  assert.ok(p.calls.every(c => !c.sql.includes("history-posting:balances-") && c.sql !== "ROLLBACK"));
+});
+
+test("P04 exact returned identity and balance facts reject counterfeit counts",async()=>{
+ for(const options of [{corruptLedger:true},{corruptBalance:true}]){
+  const p=protocol(options);await assert.rejects(p.post(p.client,context,[effect()]),{code:"INVENTORY_INTEGRITY_FAILED"});
+  assert.ok(p.calls.every(c=>! /^(BEGIN|COMMIT|ROLLBACK)/.test(c.sql)));
+ }
+});
+test("P04 multiple first effects use proven missing key once and preserve effect-count version",async()=>{
+ const p=protocol({absent:true});await p.post(p.client,context,[effect(),effect(11,"1")]);
+ const writes=p.calls.filter(c=>c.sql.includes('history-posting:balances-insert'));
+ assert.equal(writes.length,1);assert.deepEqual(writes[0]!.values,[[id(20)],[id(30)],["-1"],[2],id(1),context.postedAt]);
+ assert.equal(p.calls.filter(c=>c.sql.includes('history-posting:unused-keys')).length,1);
 });

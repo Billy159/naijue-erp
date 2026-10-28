@@ -6936,7 +6936,7 @@
           "tests/category-depth-successor.test.ts",
           "tests/integration/category-depth.integration.test.ts"
         ],
-        "state": "SOURCE843_SQL_FIXED_QB_PENDING;ONE_INTEGRATION_DRIVER_FIX_D1_B14_DRIVER_CLEANUP01",
+        "state": "SOURCE843_SQL_QB_STATIC_PASS;DRIVER_CLEANUP_01_QB_CLOSED_OVERLAY_6ce1b5b0;REAL_PG_NOT_RUN",
         "readOnly": [
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "adapters/postgres/patches/0026-category-reorder-undo.sql",
@@ -6955,7 +6955,7 @@
           "tests/integration/history-revision-set-guards.integration.test.ts",
           "tests/history-revision-postgres-protocol.test.ts"
         ],
-        "state": "ACTIVE_ORIGINAL_D1_gpt-6.1-sol_medium_HUMAN_CONFIRMATION_3b47_ITEM1",
+        "state": "HANDED_BACK_6_SOURCE_LEAVES_OWNER27PASS_STRICT_TYPES;FIXED845_QB_NEXT_NO_PG",
         "readOnly": [
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "adapters/postgres/patches/0026-history-responsible-null-successor.sql"
@@ -6968,7 +6968,7 @@
         "files": [
           "apps/api/src/production-provider-composition.test.ts"
         ],
-        "state": "ACTIVE_D2_EXACT_ONE_TEST_LEAF",
+        "state": "HANDED_BACK_ONE_TEST_LEAF_501401ae;ORIGINAL8_FAILURES_AFFECTED_CHECKS_PASS;QB_NEXT",
         "readOnly": [
           "apps/api/src/production-provider-composition.ts",
           "adapters/postgres/src/native-import-accounting-capability.ts"
@@ -6986,6 +6986,47 @@
         ],
         "state": "C_ONLY_ROOT_LOCK_MODEL_NO_PACKAGE_UPGRADE",
         "scope": "Actual production API graph with root lock only;existing runtime/release commands finite checks notnewplatform;root fail remainsreported. Frontend runtime config stillreadonly until explicitownerhandoff."
+      },
+      "C_H04_RELEASE": {
+        "id": "HV2-H04_B01_B12",
+        "files": [
+          "scripts/release/manifest.mjs",
+          "scripts/release/deploy-candidate.py",
+          "scripts/release/boot-entry.py",
+          "scripts/release/release-file-contract.test.mjs",
+          "config/release-contract.json"
+        ],
+        "state": "C_SOLE_LOCAL_WRITER_T45_EXPLICIT_HANDOFF_20261028",
+        "scope": "Existing Fullrelease mechanical factsJS/Python shared;no genericplatform/noenvironmentexecution;T45stillsolebuildserverexecutor"
+      },
+      "D3_P03": {
+        "id": "HV2-P03",
+        "files": [
+          "adapters/postgres/src/sales-query-reader.ts",
+          "adapters/postgres/src/imported-history-query-reader.ts",
+          "tests/imported-history-query.test.ts",
+          "tests/sales-query-postgres-protocol.test.ts",
+          "tests/transfer-query-postgres-protocol.test.ts",
+          "tests/history-query-shared-cte.test.ts",
+          "tests/integration/history-query-slo.integration.test.ts"
+        ],
+        "state": "ACTIVE_ORIGINAL_D3_AFTER_B08_FIXED_SOURCE844",
+        "readOnly": [
+          "adapters/postgres/src/transfer-query-reader.ts",
+          "adapters/postgres/migrations",
+          "adapters/postgres/patches",
+          "adapters/postgres/src/native-import-accounting-capability.ts"
+        ],
+        "scope": "NoDDL;onequerysharedcandidate+summary+boundedpage,allauthorizedhistoryproofpreserved;exactprecision;realPGrequiresseparateexacttargetauthorization;oldbaseline844preserved"
+      },
+      "C_B14_P04_METADATA": {
+        "id": "HV2_B14_P04_EXACT_PROFILES",
+        "files": [
+          "adapters/postgres/src/native-import-accounting-capability.ts",
+          "tests/native-runtime26-capability.test.ts"
+        ],
+        "state": "C_SOURCE_IMPLEMENTED_2_TARGETED_PASS_API_GRAPH_TYPES_PASS",
+        "scope": "3finiteprofiles B14postB07count133/P04count135/V2xmincount135;oldprofilesunchanged;no actualcatalogreviewuntilnewisolatedPG"
       }
     },
     "protectedTrackedWip": [

@@ -46,6 +46,8 @@ function protocol(options:Options={}) {
       rowCount=options.headWriteCount??1;
     }
     else if(sql.includes('history-revise:put-line')||sql.includes('history-revise:put-settlement'))rowCount=options.projectionWriteCount??(values[0] as string[]).length;
+    else if(sql.includes('history-posting:ledger')){rowCount=(values[0] as string[]).length;rows=(values[0] as string[]).map(id=>({id}));}
+    else if(sql.includes('history-posting:balances-')){rowCount=(values[0] as string[]).length;rows=(values[0] as string[]).map((w,i)=>({warehouse_id:w,sku_id:(values[1] as string[])[i],quantity:(values[2] as string[])[i],version:(values[3] as number[])[i]}));}
     else if(sql.startsWith('SELECT naijue_erp.inventory_key_lock')){}
     else if(sql.includes('FOR UPDATE OF b'))rows=(values[0] as string[]).map((w,i)=>({warehouse_id:w,sku_id:(values[1] as string[])[i],quantity:i===0?'10':'7',version:4,last_operation_id:null,updated_at:now}));
     else if(sql.includes('history-revise:revision')||sql.includes('history-revise:put-')||sql.includes('history-revise:audit')||sql.includes('history-revise:complete')||sql.includes('history-posting:ledger')||sql.startsWith('UPDATE naijue_erp.inventory_balance')){}
@@ -75,9 +77,10 @@ test('history numeric store: amount-only correction preserves nullable allocatio
 test('history numeric store: approved transfer posts only exact delta at both endpoints on original client',async()=>{
   const p=protocol({kind:'transfers'}),result=await p.run();
   assert.equal(result.ledgerEntryIds.length,2);
-  const entries=p.calls.filter(c=>c.sql.includes('history-posting:ledger'));assert.equal(entries.length,2);
-  assert.deepEqual(entries.map(c=>[c.values[2],c.values[4],c.values[7],c.values[8]]),[[id(30),'-1',id(11),'FROM'],[id(31),'1',id(11),'TO']]);
-  assert.equal(entries.reduce((sum,c)=>sum+BigInt(c.values[4] as string),0n),0n);
+  const entries=p.calls.filter(c=>c.sql.includes('history-posting:ledger'));assert.equal(entries.length,1);
+  assert.deepEqual(entries[0]!.values[2],[id(30),id(31)]);assert.deepEqual(entries[0]!.values[4],['-1','1']);
+  assert.deepEqual(entries[0]!.values[6],[id(11),id(11)]);assert.deepEqual(entries[0]!.values[7],['FROM','TO']);
+  assert.equal((entries[0]!.values[4] as string[]).reduce((sum,n)=>sum+BigInt(n),0n),0n);
   assert.equal(p.calls.filter(c=>c.sql==='COMMIT').length,1);assert.deepEqual(p.releases,[undefined]);
 });
 test('history numeric store: draft quantity has no ledger and revoked/foreign/unpublished/CAS/unknown-date cases roll back without writes',async()=>{
