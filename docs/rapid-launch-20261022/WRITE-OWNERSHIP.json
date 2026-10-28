@@ -7586,7 +7586,7 @@
     "A02HostWiring908": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "status": "QUEUED_AFTER_CURRENT_NORMAL_ACL_HANDOFF",
+      "status": "ACTIVE_D1_TWELVE_EXACT_LEAVES",
       "files": [
         "packages/authentication/src/ports.ts",
         "packages/authentication/src/service.ts",
@@ -7597,9 +7597,11 @@
         "apps/api/src/postgres-read-api.ts",
         "apps/api/src/postgres-read-api.test.ts",
         "apps/api/src/postgres-application-api.test.ts",
-        "tests/authentication-commit-outcome.test.ts"
+        "tests/authentication-commit-outcome.test.ts",
+        "apps/api/src/capacity-admission.ts",
+        "tests/capacity-admission.test.ts"
       ],
-      "scope": "V2 A02 already explicit503/RetryAfter/no cookie on unknown expired low capacity for new session/upload; wire accepted906 singleton only at true new issue/upload before body, retain original key/cancel/unknown transaction and resource release. No thresholds/probe defaults/SQL/permissions/production; existing session/logout/revoke/mediaGET not gated. C owns producer config/shared release seams separately."
+      "scope": "V2 A02 already explicit503/RetryAfter/no cookie on unknown expired low capacity for new session/upload; wire accepted906 singleton only at true new issue/upload before body, retain original key/cancel/unknown transaction and resource release. No thresholds/probe defaults/SQL/permissions/production; existing session/logout/revoke/mediaGET not gated. C owns producer config/shared release seams separately. Explicit additional same-owner lease.assertValid synchronous current window/binding/captured probe TTL check before session INSERT/upload irreversible work after waits; no probe IO under locks. Production requires singleton; ordinary original nonhost caller optional port compatibility only."
     }
   }
 }
