@@ -1,4 +1,4 @@
-import { normalDocumentListOn, documentProductSummary, normalNullableQuantity, type NativeDocumentListOptions } from "./sales-query-reader.ts";
+import { normalDocumentReferenceScopeOn, assertNormalReferenceHistoryOn, normalDocumentListOn, documentProductSummary, normalNullableQuantity, type NativeDocumentListOptions } from "./sales-query-reader.ts";
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { TransferUnifiedListPage, TransferUnifiedSummary } from "../../../packages/application/src/transfer-query-ports.ts";
 import type { Pool } from "pg";
@@ -232,8 +232,17 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
     const restrictions = [authorized];
     if (parameters.search) { const search = p.parameter(parameters.search); restrictions.push(`(strpos(w.name, ${search}) > 0 OR strpos(wh.name, ${search}) > 0)`); }
     if (parameters.selectedIds.length) restrictions.push(`w.id = ANY(${p.parameter([...parameters.selectedIds])}::uuid[])`);
-    const relation = `FROM naijue_erp.warehouse w JOIN naijue_erp.hall wh ON wh.id = w.hall_id WHERE ${restrictions.join(" AND ")}`;
-    return this.snapshot(read.signal, async query => {
+    return this.snapshot(read.signal, async (query,client) => {
+      if(scope.kind!=="all"&&this.normalLists!==undefined){
+        const scoped=await normalDocumentReferenceScopeOn(client,this.normalLists,'transfers',read,{scope:p.where(),values:p.values});
+        await assertNormalReferenceHistoryOn(scoped);
+        restrictions[0]=`w.id IN (SELECT h.from_warehouse_id ${RELATIONS} WHERE ${scoped.liveScope}
+          UNION SELECT h.to_warehouse_id ${RELATIONS} WHERE ${scoped.liveScope}
+          UNION SELECT ${scoped.history.fromWarehouseIdExpression} FROM ${scoped.history.headerFrom} WHERE ${scoped.history.publishedPredicate} AND (${scoped.historyScope})
+          UNION SELECT ${scoped.history.toWarehouseIdExpression} FROM ${scoped.history.headerFrom} WHERE ${scoped.history.publishedPredicate} AND (${scoped.historyScope}))`;
+        p.values.splice(0,p.values.length,...scoped.values);
+      }
+      const relation = `FROM naijue_erp.warehouse w JOIN naijue_erp.hall wh ON wh.id = w.hall_id WHERE ${restrictions.join(" AND ")}`;
       const exactTotal = count(one(await query(`SELECT COUNT(*)::text AS exact_total ${relation}`, [...p.values])).exact_total);
       const paging = p.page(parameters.page, parameters.pageSize);
       const rows = (await query(`SELECT w.id, w.name, w.hall_id, wh.name AS hall_name, w.enabled, wh.enabled AS hall_enabled ${relation}

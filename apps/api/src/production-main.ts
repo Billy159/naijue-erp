@@ -1,3 +1,6 @@
+import { readProductionCredentialRequestKey } from "./production-credential-key.ts";
+import { createNodeCredentialRequestTag } from "../../../packages/authentication/src/passwords.ts";
+import type { ProductionRuntime26R3Configuration } from "./production-provider-composition.ts";
 import { lstat, readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -76,6 +79,14 @@ export async function runProductionRuntime26R2Main(args: readonly string[]): Pro
   process.stdout.write(JSON.stringify({ event: "PRODUCTION_EXACT26_R2_HOST_STARTED", publicOrigin: host.publicOrigin, ...config.build }) + "\n");
 }
 
+/** Only the selected R3/Full CLI loads this private file. Direct factories keep their explicit null default. */
+export async function readProductionStaffCredentialRequestTag(config: ProductionRuntime26R3Configuration): Promise<((password: string) => string) | null> {
+  if (config.staffMaintenance !== true) return null;
+  if (config.staffCredentialRequestKeyFile === undefined) throw new TypeError("Selected staff credentials require a stable private request key");
+  const key=await readProductionCredentialRequestKey(config.staffCredentialRequestKeyFile);
+  try { return createNodeCredentialRequestTag(key); } finally { key.fill(0); }
+}
+
 /** Explicit R3 successor; private configuration and host shutdown use the original boundary. */
 async function runProductionRuntime26R3SelectedMain(args: readonly string[], full: boolean): Promise<void> {
   if (args.length !== 1 || !args[0] || !path.isAbsolute(args[0]) || path.resolve(args[0]) !== args[0])
@@ -86,7 +97,8 @@ async function runProductionRuntime26R3SelectedMain(args: readonly string[], ful
   const bytes = await readFile(filename);
   if (bytes.length !== stat.size || bytes.length > 65_536) throw new TypeError("Exact26 R3 runtime configuration changed while reading");
   const config = parseProductionRuntime26R3Configuration(JSON.parse(bytes.toString("utf8")) as unknown);
-  const api = full ? await createProductionRuntime26FullApplicationApi(config) : await createProductionRuntime26R3ApplicationApi(config);
+  const staffCredentialRequestTag = await readProductionStaffCredentialRequestTag(config);
+  const api = full ? await createProductionRuntime26FullApplicationApi(config, undefined, staffCredentialRequestTag) : await createProductionRuntime26R3ApplicationApi(config, undefined, staffCredentialRequestTag);
   const host = await startProductionRuntime26R3ApplicationHost({ api, configuration: config });
   let stopping = false;
   const stop = (): void => {

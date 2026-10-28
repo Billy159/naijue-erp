@@ -1,3 +1,4 @@
+import { productImageSignatureMatches } from "./product-image-signature.ts";
 import { createHash, randomUUID } from "node:crypto";
 import { constants } from "node:fs";
 import { link, lstat, mkdir, open, realpath } from "node:fs/promises";
@@ -193,10 +194,8 @@ export class PrivateProductMediaStage {
     const original = await this.boundedFile(path.join(directory, "original.bin"), limits.inputBytesMax, signal), thumbnail = await this.boundedFile(path.join(directory, "thumbnail.webp"), limits.thumbnailBytesMax, signal);
     ready(BigInt(original.length).toString() === record.original.byteSize && hash(original) === record.original.sha256 && BigInt(thumbnail.length).toString() === record.thumbnail.byteSize && hash(thumbnail) === record.thumbnail.sha256);
     const mime = record.original.mime;
-    ready(mime === "image/png" ? original.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
-      : mime === "image/jpeg" ? original.length >= 3 && original[0] === 255 && original[1] === 216 && original[2] === 255
-        : original.toString("ascii", 0, 4) === "RIFF" && original.toString("ascii", 8, 12) === "WEBP");
-    ready(thumbnail.length >= 12 && thumbnail.toString("ascii", 0, 4) === "RIFF" && thumbnail.toString("ascii", 8, 12) === "WEBP" && thumbnail.readUInt32LE(4) + 8 === thumbnail.length);
+    ready(productImageSignatureMatches(original, mime));
+    ready(productImageSignatureMatches(thumbnail, "image/webp"));
     active(signal); const verifiedAt = this.instant().getTime(); ready(verifiedAt >= Date.parse(record.createdAt));
     requireDomain(verifiedAt < Date.parse(record.expiresAt), "UPLOAD_EXPIRED", "Original staged media expired");
     return Object.freeze({ profile: this.profile, uploadId: record.uploadId, fileRef: record.fileRef, actorAccountId: record.actorAccountId, productId: record.productId,

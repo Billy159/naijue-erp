@@ -159,8 +159,16 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
     const authorized = `EXISTS (SELECT 1 FROM naijue_erp.sales_header h WHERE ${p.where()} AND h.${column} = r.id)`;
     const search = p.parameter(parameters.search);
     const searched = parameters.kind === "customer" ? `(strpos(r.name, ${search}) > 0 OR strpos(r.code, ${search}) > 0)` : `strpos(r.name, ${search}) > 0`;
-    const source = `FROM naijue_erp.${table} r WHERE ${authorized} AND ${searched}`;
-    return this.snapshot(read.signal, async query => {
+    return this.snapshot(read.signal, async (query,client) => {
+      let candidates=authorized;
+      if(this.normalLists!==undefined){
+        const scoped=await normalDocumentReferenceScopeOn(client,this.normalLists,'sales',read,{scope:p.where(),values:p.values});
+        await assertNormalReferenceHistoryOn(scoped);
+        candidates=`r.id IN (SELECT h.${column} FROM naijue_erp.sales_header h WHERE ${scoped.liveScope}
+          UNION SELECT h.${column} FROM ${scoped.history.headerFrom} WHERE ${scoped.history.publishedPredicate} AND (${scoped.historyScope}))`;
+        p.values.splice(0,p.values.length,...scoped.values);
+      }
+      const source = `FROM naijue_erp.${table} r WHERE ${candidates} AND ${searched}`;
       const exactTotal = count(rowOf(await query(`SELECT COUNT(*)::text AS exact_total ${source}`, [...p.values])).exact_total);
       const paging = p.page(parameters.page, parameters.pageSize);
       const rows = (await query(`SELECT r.id, r.name AS label ${source} ORDER BY r.name COLLATE "C", r.id ${paging}`, p.values)).rows;
@@ -311,9 +319,9 @@ export interface NormalDocumentListResult {
   readonly rows: readonly Record<string, unknown>[]; readonly totals: Record<string, unknown>;
   readonly exactTotal: bigint; readonly historyCoverage: DocumentHistoryCoverage;
 }
-export async function normalDocumentListOn(client: PgSalesQueryClient, options: NativeDocumentListOptions,
-  kind: 'sales' | 'transfers', read: SalesScopedRead<SalesListQuery> | TransferScopedRead<TransferListQuery>,
-  native: { readonly from: string; readonly columns: string; readonly scope: string; readonly values: readonly unknown[] }): Promise<NormalDocumentListResult> {
+export async function normalDocumentReferenceScopeOn(client: PgSalesQueryClient, options: NativeDocumentListOptions,
+ kind: 'sales' | 'transfers', read: { readonly actor: SalesScopedRead<SalesListQuery>['actor']; readonly signal: AbortSignal },
+ native: { readonly scope: string; readonly values: readonly unknown[] }) {
   const active = () => { if (read.signal.aborted) throw new DomainError(kind === 'sales' ? 'SALES_READ_ABORTED' : 'TRANSFER_READ_ABORTED', 'Document read aborted'); };
   const query: ReadQuery = async (sql, values = []) => { active(); const result = await client.query(sql, values); active(); return result; };
   active(); await options.runtime26.assertReady(client, 'HISTORY_READ'); active();
@@ -337,6 +345,19 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
         (${history.originalCreatedHallPredicate} AND h.created_hall_id=${hall} AND h.created_role_source='SALESPERSON' AND h.created_by_source_key IS NOT NULL))`;
     }
   }
+  return {query,values,bind,history,liveScope,historyScope};
+}
+export async function assertNormalReferenceHistoryOn(scoped: Awaited<ReturnType<typeof normalDocumentReferenceScopeOn>>): Promise<void> {
+ const h=scoped.history;
+ const row=rowOf(await scoped.query(`/* normal-reference:validity */ SELECT coalesce(bool_and((${h.headerValidityPredicate}) IS TRUE AND
+   NOT EXISTS(SELECT 1 FROM ${h.lineTable} l ${h.lineEffectiveJoins} WHERE l.batch_id=h.batch_id AND l.header_id=h.id AND (${h.lineValidityPredicate}) IS NOT TRUE)),true) AS valid
+   FROM ${h.headerFrom} WHERE ${h.publishedPredicate} AND (${scoped.historyScope})`,scoped.values));
+ requireDomain(row.valid===true,'INVALID_DATABASE_VALUE','Published historical reference facts contradict effective revision');
+}
+export async function normalDocumentListOn(client: PgSalesQueryClient, options: NativeDocumentListOptions,
+  kind: 'sales' | 'transfers', read: SalesScopedRead<SalesListQuery> | TransferScopedRead<TransferListQuery>,
+  native: { readonly from: string; readonly columns: string; readonly scope: string; readonly values: readonly unknown[] }): Promise<NormalDocumentListResult> {
+  const {query,values,bind,history,liveScope,historyScope}=await normalDocumentReferenceScopeOn(client,options,kind,read,native);
   const names = kind === 'sales'
     ? 'hn.name AS hall_name,wn.name AS warehouse_name,cn.name AS customer_name,spn.name AS salesperson_name'
     : 'fw.name AS from_warehouse_name,tw.name AS to_warehouse_name,fh.name AS from_hall_name,th.name AS to_hall_name';

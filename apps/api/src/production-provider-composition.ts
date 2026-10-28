@@ -229,21 +229,27 @@ export async function createProductionRuntime26R2ApplicationApi(input: unknown, 
  * R1/R2 remain closed to these media fields; private maintenance opt-ins do not provide a stage. */
 export interface ProductionRuntime26R3Configuration extends Omit<ProductionRuntime26R2Configuration, "profile"> {
   readonly profile: "source-confirmed-native-exact26-r3-v1";
+  readonly staffCredentialRequestKeyFile?: string;
   readonly productMedia: { readonly root: string; readonly rootKey: string };
 }
 export function parseProductionRuntime26R3Configuration(input: unknown): ProductionRuntime26R3Configuration {
   const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", "runtime26Review", "existingPreparation", "productMedia",
+    ...(input !== null && typeof input === "object" && Object.hasOwn(input,"staffCredentialRequestKeyFile") ? ["staffCredentialRequestKeyFile"] : []),
     ...(input !== null && typeof input === "object" ? ["organizationMaintenance", "catalogueMaintenance", "paymentMaintenance", "partyMaintenance", "staffMaintenance", "productMaintenance"].filter(key => Object.hasOwn(input, key)) : []), ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const media = bag(c.productMedia, ["root", "rootKey"]);
   if (c.profile !== "source-confirmed-native-exact26-r3-v1" || !text(media.root) || !path.isAbsolute(media.root)
     || path.resolve(media.root) !== media.root || typeof media.rootKey !== "string" || !/^[A-Za-z0-9_-]{1,100}$/.test(media.rootKey))
     throw new TypeError("Explicit R3 private product media root and key required");
-  const { productMedia: _media, ...base } = c;
+  if (Object.hasOwn(c,"staffCredentialRequestKeyFile") && (c.staffMaintenance !== true || !text(c.staffCredentialRequestKeyFile)
+    || !path.isAbsolute(c.staffCredentialRequestKeyFile) || path.resolve(c.staffCredentialRequestKeyFile) !== c.staffCredentialRequestKeyFile))
+    throw new TypeError("Explicit staff-selected canonical private credential file required");
+  const { productMedia: _media, staffCredentialRequestKeyFile: _credentialFile, ...base } = c;
   const checked = parseProductionRuntime26R2Configuration({ ...base, profile: "source-confirmed-native-exact26-r2-v1" });
-  return { ...checked, profile: "source-confirmed-native-exact26-r3-v1", productMedia: { root: media.root, rootKey: media.rootKey } };
+  return { ...checked, profile: "source-confirmed-native-exact26-r3-v1", productMedia: { root: media.root, rootKey: media.rootKey },
+    ...(Object.hasOwn(c,"staffCredentialRequestKeyFile") ? {staffCredentialRequestKeyFile:c.staffCredentialRequestKeyFile as string} : {}) };
 }
 export function productionRuntime26R3HostConfiguration(input: unknown): ProductionRuntimeConfiguration {
-  const { productMedia: _media, ...base } = parseProductionRuntime26R3Configuration(input);
+  const { productMedia: _media, staffCredentialRequestKeyFile: _credentialFile, ...base } = parseProductionRuntime26R3Configuration(input);
   return productionRuntime26R2HostConfiguration({ ...base, profile: "source-confirmed-native-exact26-r2-v1" });
 }
 export async function createProductionRuntime26R3ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,

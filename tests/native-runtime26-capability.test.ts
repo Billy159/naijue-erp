@@ -458,7 +458,7 @@ test("v15 category original context unwraps the real managed lease and rechecks 
 });
 
 import {NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE,NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE} from '../adapters/postgres/src/native-import-accounting-capability.ts';
-import {NATIVE_RUNTIME26_V22_METADATA_PROBE,NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE} from '../adapters/postgres/src/native-import-accounting-capability.ts';
+import {NATIVE_RUNTIME26_V22_METADATA_PROBE,NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE,NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE,NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE} from '../adapters/postgres/src/native-import-accounting-capability.ts';
 
 test('HV2 responsible-null metadata selects the exact successor and retains full v22 purposes',async()=>{
  const old="('history_revision_not_enabled','1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c')";
@@ -491,6 +491,59 @@ test('HV2 responsible-null metadata rejects stale or mismatched successor eviden
    const pool={async connect(){return{async query(sql:string){assert.equal(sql,NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE);return{rows:[row],rowCount:1};},release(){releases++;}};}};
    await assert.rejects(createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,patchLevel:'26_hv2_responsible_null_from_v22'},purposes:['HISTORY_REVISION']})),{code:'NATIVE_RUNTIME26_NOT_READY'});
    assert.equal(releases,1);
+  }finally{f.cleanup();}
+ }
+});
+
+test('HV2 xmin catalog records the system-column ACL without changing V1 exports', () => {
+ for(const probe of [NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE,NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE]){
+  assert.ok(probe.includes("'format','EXACT26_RUNTIME_CATALOG_EXPORT_V2'"));
+  assert.ok(probe.includes("'system_column_acls'"));
+  assert.ok(probe.includes("a.attnum=-2 AND a.attname='xmin'"));
+  assert.ok(probe.includes("WHERE r.relname='import_source_row'"));
+  assert.ok(probe.includes("FROM pg_catalog.aclexplode(a.attacl) x"));
+  assert.ok(probe.includes("'grantor',manifest#>>'{system_column_acls,0,owner}','grantee',current_user::text,'privilege','SELECT','grantable',false"));
+  assert.ok(probe.includes("'{system_column_acls,0,table_select}'='false'::jsonb"));
+  assert.ok(probe.includes("(manifest-'identity')::text"));
+  assert.ok(probe.includes("AS source_xmin_acl_match"));
+  assert.ok(probe.includes("jsonb_array_length(manifest->'routines')=131"));
+ }
+ assert.ok(!NATIVE_RUNTIME26_V22_METADATA_PROBE.includes('system_column_acls'));
+ assert.ok(!NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE.includes('system_column_acls'));
+ assert.ok(NATIVE_RUNTIME26_V22_METADATA_PROBE.includes("'format','EXACT26_RUNTIME_CATALOG_EXPORT_V1'"));
+ assert.ok(NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE.includes("('history_revision_not_enabled','1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c')"));
+ assert.ok(NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE.includes("('history_revision_not_enabled','581a44ad13d184d594731b7c9ded219a3933fdb8a6c58f2ed63463fdc795ac4f')"));
+});
+
+test('HV2 xmin issuer requires the exact V2 profile and ACL proof on every full check', async () => {
+ for(const [patch,probe] of [
+  ['26_hv2_source_xmin_from_v22',NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE],
+  ['26_hv2_responsible_null_source_xmin_from_v22',NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE],
+ ] as const){
+  const f=fixture();try{
+   const row={...observation(),source_xmin_acl_match:true};let releases=0;
+   const pool={async connect(){return{async query(sql:string){assert.equal(sql,probe);return{rows:[{...row}],rowCount:1};},release(){releases++;}};}};
+   const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V2',patchLevel:patch},purposes:['IMPORT_STAGE','HISTORY_REVISION']}));
+   const c=await issuer.pool.connect();await issuer.runtime26.assertReady(c,'IMPORT_STAGE');
+   row.source_xmin_acl_match=false;
+   await assert.rejects(issuer.runtime26.assertReady(c,'IMPORT_STAGE'),{code:'NATIVE_RUNTIME26_NOT_READY'});c.release();
+   assert.equal(releases,2);
+  }finally{f.cleanup();}
+ }
+});
+
+test('HV2 xmin issuer rejects absent ACL evidence, wrong digest and cross-version review formats', async () => {
+ for(const row of [observation(),{...observation(),source_xmin_acl_match:false},{...observation(),source_xmin_acl_match:true,catalog_sha256:'f'.repeat(64)}]){
+  const f=fixture();try{
+   const pool={async connect(){return{async query(){return{rows:[row],rowCount:1};},release(){}};}};
+   await assert.rejects(createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V2',patchLevel:'26_hv2_source_xmin_from_v22'}})),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  }finally{f.cleanup();}
+ }
+ for(const [patch,format] of [['26_hv2_source_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V1'],['26_v22_staged_prefix_bind_from_v20','EXACT26_RUNTIME_CATALOG_EXPORT_V2']]){
+  const f=fixture();try{
+   let borrowed=0;const pool={async connect(){borrowed++;throw Error('MUST_NOT_BORROW');}};
+   await assert.rejects(createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,format,patchLevel:patch}})),{code:'NATIVE_RUNTIME26_NOT_READY'});
+   assert.equal(borrowed,0);
   }finally{f.cleanup();}
  }
 });

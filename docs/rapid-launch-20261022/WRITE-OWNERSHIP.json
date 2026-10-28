@@ -6744,9 +6744,9 @@
       "latestObserved": "ACTIVE color 515/clear/page2/pageSize50/lastPage evidence on Demo8877 + normal34/57923; proceeding size/fit. Read live thread 2026-10-28, original progress preserved.",
       "workDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
       "directoryConfirmation": "SHARED_R_READBACK_ONLY_CHAT_SPECIFIC_ACK_REQUESTED",
-      "writeScope": "apps/web/** excluding src/application/contracts.ts and any explicit shared public contracts;exact first package below. frontend build source owned by frontend;execution by T45",
+      "writeScope": "Only original comparison evidence directory until complete;future solefrontend sourceowner retained",
       "trackedWip": "tests/product-query-postgres-protocol.test.ts +13 lines protected,owner not inferred;vendor/temp/report untracked preserved",
-      "sourceChangesByThisChat": "NOT_YET_REPORTED_DO_NOT_INFER_FROM_SHARED_GIT",
+      "sourceChangesByThisChat": "NO_SOURCE_IMPLEMENTATION_REQUESTED_DURING_COMPARISON",
       "wholePagePass": 0,
       "wholeOverlayPass": 0,
       "denominator": {
@@ -6759,7 +6759,11 @@
         "DIFFERENCE": 46
       },
       "countsBoundary": "Historical cross-version matrix coverage80/104;not current outstanding count or latest whole-page acceptance",
-      "candidate": "normal34 2357cf5/57923 is comparison binding;normal41 b2e6ffc/57930 is last built successor,affected browser result incomplete;never assign34result to41"
+      "candidate": "Fixed normal34/2357cf508ee6e8188bcc1dddfa4735f735d70d36/buildphase2-normal-2357cf5-34/http://127.0.0.1:57923;Demo8877/b8bcfe3;do not migrate evidence to latestsource",
+      "latestAuthority": "Direct human call_0d51b13684f745cbb5b05c7f9613b8e4/0:finish full comparison first,then consolidatedrepair",
+      "currentRole": "READONLY_FULL_SITE_DEMO_COMPARISON",
+      "actualDispatchedModel": "gpt-6.1-terra/medium",
+      "modelVerification": "Dispatch parameter specified;UI/effective runtime not independently verified"
     },
     "soleWriters": {
       "frontend": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
@@ -6778,7 +6782,7 @@
           "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
           "apps/web/demo-replica/frontend/runtime/documents/transfer-matrix-scan-edit.test.mjs"
         ],
-        "state": "OPEN_AFTER_EXISTING_SEGMENT_ACK"
+        "state": "NOT_ACTIVE_SOURCE_LEASE_WAIT_FULL_COMPARISON_PER_LATEST_HUMAN"
       },
       "T45": {
         "id": "HV2-B01/B02/B03/P05_SERVER",
@@ -6825,7 +6829,21 @@
         "profile": "26_hv2_responsible_null_from_v22",
         "bodyParent": "1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c",
         "bodyNew": "581a44ad13d184d594731b7c9ded219a3933fdb8a6c58f2ed63463fdc795ac4f",
-        "boundary": "Oldprofiles unchanged;newprofile requires fresh actualcatalog and independentreview;notpermissiongrant"
+        "boundary": "Oldprofiles unchanged;newprofile requires fresh actualcatalog and independentreview;notpermissiongrant",
+        "sourceXminV2": {
+          "files": {
+            "adapters/postgres/src/native-import-accounting-capability.ts": {
+              "bytes": 83608,
+              "sha256": "4204746aefcb14ef5d18681f75f58b58f8f67fd0e45e90bf2c29b9b78dae3534"
+            },
+            "tests/native-runtime26-capability.test.ts": {
+              "bytes": 62650,
+              "sha256": "8843fd2002924441322a382e0d070013e02e4cf00c2f2f191b44a5164e523e90"
+            }
+          },
+          "state": "SOURCE842_READY3TARGETEDPASS_STRICT_TSC;QB_AND_REALPG_NEXT",
+          "oldV1Unchanged": true
+        }
       },
       "D2": {
         "id": "HV2-B14",
@@ -6868,7 +6886,79 @@
           "adapters/postgres/src/transfer-unit-of-work.ts",
           "adapters/postgres/src/native-import-accounting-capability.ts"
         ],
-        "state": "EXACT_NODE24_21_REPRO_18PASS4FAIL;TRACE_APPROVED2PHASE_CONTRACT_BEFORE_FIX;NO_PG"
+        "state": "HANDED_BACK_TEST_ONLY_SOURCE842_22PASS;SOURCE_UOW_UNCHANGED"
+      },
+      "D2_B09": {
+        "id": "HV2-B09",
+        "files": [
+          "adapters/media/src/product-image-signature.ts",
+          "adapters/media/src/sharp-product-image-codec.ts",
+          "adapters/media/src/product-media-stage.ts",
+          "adapters/media/src/controlled-product-media.ts",
+          "tests/product-media-jpeg-contract.test.ts"
+        ],
+        "readOnly": [
+          "apps/api/src/product-media-http.ts",
+          "apps/api/src/postgres-read-api.ts",
+          "apps/web/demo-replica/frontend/runtime/products/photos.tsx"
+        ],
+        "state": "HANDED_BACK_FIXED_SOURCE842_OWNER_LOCAL_SCOPE_PASS;REAL_ENV_NOT_VERIFIED"
+      },
+      "D3_B08": {
+        "id": "HV2-B08",
+        "files": [
+          "adapters/postgres/src/sales-query-reader.ts",
+          "adapters/postgres/src/transfer-query-reader.ts",
+          "tests/history-filter-reference-union.test.ts"
+        ],
+        "readOnly": [
+          "apps/web/demo-replica/frontend/runtime/common/ready-pages.tsx"
+        ],
+        "state": "HANDED_BACK_FIXED_SOURCE842_OWNER_LOCAL_SCOPE_PASS;REAL_ENV_NOT_VERIFIED"
+      },
+      "D2_B10": {
+        "id": "HV2-B10",
+        "files": [
+          "apps/api/src/production-main.ts",
+          "apps/api/src/production-credential-key.ts",
+          "tests/production-credential-key.test.ts",
+          "apps/api/src/production-provider-composition.ts",
+          "apps/api/src/production-provider-composition.test.ts"
+        ],
+        "readOnly": [],
+        "state": "HANDED_BACK_FIXED_SOURCE842_OWNER_LOCAL_SCOPE_PASS;REAL_ENV_NOT_VERIFIED",
+        "decision": "ClosedstaffCredentialRequestKeyFile optional canonicalabsolute file-reference onR3/Full only;flagbinding,CLI selectedstaff requiresvalidkey;old directfactorynull remainsfailclosed;noCLIflag/envfallback"
+      },
+      "D1_B14_SQL": {
+        "id": "HV2-B14_SQL",
+        "files": [
+          "adapters/postgres/patches/0026-category-depth-successor.sql",
+          "tests/category-depth-successor.test.ts",
+          "tests/integration/category-depth.integration.test.ts"
+        ],
+        "state": "HUMAN_CONFIRMED_SOURCE_AND_NEW_ISOLATED_QA;EXECUTION_BY_T45_AFTER_EXACT_TARGET_REGISTRATION",
+        "readOnly": [
+          "adapters/postgres/src/native-import-accounting-capability.ts",
+          "adapters/postgres/patches/0026-category-reorder-undo.sql",
+          "adapters/postgres/patches/0026-history-responsible-null-successor.sql"
+        ],
+        "parent": "Source840B07 exactguard581a44 and fullv22source lineage131routines;actualR1notpatched,do notexecute there"
+      },
+      "D1_P04_SQL": {
+        "id": "HV2-P04_SET_GUARDS_BATCH_LEDGER",
+        "files": [
+          "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+          "adapters/postgres/src/inventory-posting-balances.ts",
+          "tests/history-revision-posting-postgres-protocol.test.ts",
+          "tests/history-revision-set-guards.test.ts",
+          "tests/integration/history-revision-set-guards.integration.test.ts"
+        ],
+        "state": "HUMAN_CONFIRMED_SOURCE_AND_SYNTHETIC_ISOLATED_QA_AFTER_B14_HANDOFF",
+        "readOnly": [
+          "adapters/postgres/src/native-import-accounting-capability.ts",
+          "adapters/postgres/patches/0026-history-responsible-null-successor.sql"
+        ],
+        "boundary": "historyposting path only;0persistentfacts tables/columns;nonhistorypostingunchanged;actualPGT45exacttargetonly"
       }
     },
     "protectedTrackedWip": [

@@ -1,3 +1,4 @@
+import { productImageSignatureMatches } from "./product-image-signature.ts";
 import { createHash } from "node:crypto";
 import { constants } from "node:fs";
 import { lstat, open, realpath } from "node:fs/promises";
@@ -43,13 +44,6 @@ const fingerprint = (manifest: PrivateProductMediaManifest): string => createHas
   manifest.productId, manifest.imageId, manifest.fileRef,
   ...[manifest.original, manifest.thumbnail].map(b => b === null ? null : [b.rootKey, b.relativePath, b.mime, b.byteSize.toString(), b.sha256])
 ])).digest("hex");
-/** Signature guard only. This is not a decoder or proof of successful image processing. */
-function signature(bytes: Buffer, mime: ProductImageMime): boolean {
-  if (mime === "image/png") return bytes.length >= 8 && bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
-  if (mime === "image/jpeg") return bytes.length >= 4 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255 && bytes.at(-2) === 255 && bytes.at(-1) === 217;
-  return bytes.length >= 12 && bytes.toString("ascii", 0, 4) === "RIFF" && bytes.toString("ascii", 8, 12) === "WEBP" && bytes.readUInt32LE(4) + 8 === bytes.length;
-}
-
 /** Read-only controlled delivery. No upload, codec, migration, public fallback or file deletion.
  * Link resolution consults only the explicit private manifest index, never original bytes. */
 export class PrivateControlledProductMedia implements ControlledProductMediaProvider {
@@ -139,7 +133,7 @@ export class PrivateControlledProductMedia implements ControlledProductMediaProv
       const after = await handle.stat(), current = await lstat(file);
       available(length === Number(blob.byteSize) && after.size === before.size && after.mtimeMs === before.mtimeMs && after.ino === current.ino && after.dev === current.dev
         && !current.isSymbolicLink() && inside(root, await realpath(file)) && createHash("sha256").update(result.subarray(0, length)).digest("hex") === blob.sha256
-        && signature(result.subarray(0, length), blob.mime));
+        && productImageSignatureMatches(result.subarray(0, length), blob.mime));
       activeProductRead(signal); return result.subarray(0, length);
     } finally { await handle.close(); }
   }

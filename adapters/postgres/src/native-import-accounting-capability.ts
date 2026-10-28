@@ -520,6 +520,38 @@ export const NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE = rep
   "('history_revision_not_enabled','1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c')",
   "('history_revision_not_enabled','581a44ad13d184d594731b7c9ded219a3933fdb8a6c58f2ed63463fdc795ac4f')");
 
+// V1 intentionally remains immutable. This finite V2 observation adds the one
+// approved system-column ACL, which the positive-attnum column export omits.
+function sourceXminCatalogProbe(probe: string): string {
+  const versioned = replaceOne(probe, "'format','EXACT26_RUNTIME_CATALOG_EXPORT_V1'", "'format','EXACT26_RUNTIME_CATALOG_EXPORT_V2'");
+  const exported = replaceOne(versioned, " 'routines',(SELECT", ` 'system_column_acls',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object(
+   'schema','naijue_erp','table',r.relname,'owner',pg_catalog.pg_get_userbyid(r.relowner),
+   'number',a.attnum,'name',a.attname,'type',pg_catalog.format_type(a.atttypid,a.atttypmod),'acl',a.attacl::text,
+   'runtime_select',pg_catalog.has_column_privilege(current_user,r.oid,a.attnum,'SELECT'),
+   'table_select',pg_catalog.has_table_privilege(current_user,r.oid,'SELECT'),
+   'privileges',(SELECT coalesce(pg_catalog.jsonb_agg(pg_catalog.jsonb_build_object(
+     'grantor',pg_catalog.pg_get_userbyid(x.grantor),'grantee',CASE WHEN x.grantee=0 THEN 'PUBLIC' ELSE pg_catalog.pg_get_userbyid(x.grantee) END,
+     'privilege',x.privilege_type,'grantable',x.is_grantable) ORDER BY x.grantor,x.grantee,x.privilege_type),'[]'::jsonb)
+     FROM pg_catalog.aclexplode(a.attacl) x)) ORDER BY r.relname,a.attnum),'[]'::jsonb)
+   FROM rels r JOIN pg_catalog.pg_attribute a ON a.attrelid=r.oid AND a.attnum=-2 AND a.attname='xmin' AND NOT a.attisdropped
+   WHERE r.relname='import_source_row'),
+ 'routines',(SELECT`);
+  return replaceOne(exported, "AS source_routines_match\nFROM observed", `AS source_routines_match,
+ (pg_catalog.jsonb_array_length(manifest->'system_column_acls')=1
+   AND manifest#>>'{system_column_acls,0,schema}'='naijue_erp'
+   AND manifest#>>'{system_column_acls,0,table}'='import_source_row'
+   AND manifest#>>'{system_column_acls,0,number}'='-2'
+   AND manifest#>>'{system_column_acls,0,name}'='xmin'
+   AND manifest#>>'{system_column_acls,0,type}'='xid'
+   AND manifest#>'{system_column_acls,0,runtime_select}'='true'::jsonb
+   AND manifest#>'{system_column_acls,0,table_select}'='false'::jsonb
+   AND manifest#>'{system_column_acls,0,privileges}'=pg_catalog.jsonb_build_array(pg_catalog.jsonb_build_object(
+     'grantor',manifest#>>'{system_column_acls,0,owner}','grantee',current_user::text,'privilege','SELECT','grantable',false))) AS source_xmin_acl_match
+FROM observed`);
+}
+export const NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE = sourceXminCatalogProbe(NATIVE_RUNTIME26_V22_METADATA_PROBE);
+export const NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE = sourceXminCatalogProbe(NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE);
+
 /** Daily managed-application lease identity only. The complete catalog was awaited at startup.
  * A baseline switch stops/disposes that application before DDL/ACL changes, then creates a new issuer.
  * This signal does not claim to detect uncoordinated schema changes while an old application runs. */
@@ -643,15 +675,16 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
-  if (catalog.format !== "EXACT26_RUNTIME_CATALOG_EXPORT_V1" || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15", "26_v20_history_insert_identity_from_v19", "26_v21_history_effective_value_from_v16_v14", "26_v22_staged_prefix_bind_from_v20", "26_hv2_responsible_null_from_v22"] as readonly unknown[]).includes(catalog.patchLevel))
+  const sourceXmin = catalog.patchLevel === "26_hv2_source_xmin_from_v22" || catalog.patchLevel === "26_hv2_responsible_null_source_xmin_from_v22";
+  if (catalog.format !== (sourceXmin ? "EXACT26_RUNTIME_CATALOG_EXPORT_V2" : "EXACT26_RUNTIME_CATALOG_EXPORT_V1") || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15", "26_v20_history_insert_identity_from_v19", "26_v21_history_effective_value_from_v16_v14", "26_v22_staged_prefix_bind_from_v20", "26_hv2_responsible_null_from_v22", "26_hv2_source_xmin_from_v22", "26_hv2_responsible_null_source_xmin_from_v22"] as readonly unknown[]).includes(catalog.patchLevel))
     throw runtime26Error("Exact independently reviewed v11, v14 or v15 catalog required");
   const effectiveValueDisambiguation = catalog.patchLevel === "26_v21_history_effective_value_from_v16_v14";
-  const responsibleNull = catalog.patchLevel === "26_hv2_responsible_null_from_v22";
-  const stagedPrefixBind = responsibleNull || catalog.patchLevel === "26_v22_staged_prefix_bind_from_v20";
+  const responsibleNull = catalog.patchLevel === "26_hv2_responsible_null_from_v22" || catalog.patchLevel === "26_hv2_responsible_null_source_xmin_from_v22";
+  const stagedPrefixBind = sourceXmin || responsibleNull || catalog.patchLevel === "26_v22_staged_prefix_bind_from_v20";
   const historyInsertIdentity = stagedPrefixBind || catalog.patchLevel === "26_v20_history_insert_identity_from_v19";
   const barcodeSchemeInitialization = historyInsertIdentity || catalog.patchLevel === "26_v19_barcode_scheme_initialization_from_v16_v15";
   const historyResponsible = effectiveValueDisambiguation || barcodeSchemeInitialization || catalog.patchLevel === "26_v16_history_responsible_from_v14" || catalog.patchLevel === "26_v16_history_responsible_from_v15";
-  const metadataProbe = responsibleNull ? NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE : stagedPrefixBind ? NATIVE_RUNTIME26_V22_METADATA_PROBE : effectiveValueDisambiguation ? NATIVE_RUNTIME26_V21_EFFECTIVE_VALUE_FROM_V16_V14_METADATA_PROBE : historyInsertIdentity ? NATIVE_RUNTIME26_V20_METADATA_PROBE : barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
+  const metadataProbe = sourceXmin ? (responsibleNull ? NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE : NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE) : responsibleNull ? NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE : stagedPrefixBind ? NATIVE_RUNTIME26_V22_METADATA_PROBE : effectiveValueDisambiguation ? NATIVE_RUNTIME26_V21_EFFECTIVE_VALUE_FROM_V16_V14_METADATA_PROBE : historyInsertIdentity ? NATIVE_RUNTIME26_V20_METADATA_PROBE : barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
     : catalog.patchLevel === "26_v16_history_responsible_from_v15" ? NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v15_category_order_undo" ? NATIVE_RUNTIME26_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;
@@ -688,10 +721,12 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
       const full = !managedBaseline || !baselineVerified;
       const observed = await lease.query(full ? metadataProbe : NATIVE_RUNTIME26_IDENTITY_PROBE);
       if (!lease.active || observed.rows.length !== 1 || observed.rowCount !== 1) fail("One actual verification row on the original lease required");
-      const row = exactData(observed.rows[0], full ? ["identity", "migration_versions", "catalog_sha256", "source_routines_match"] : ["identity"]);
+      const row = exactData(observed.rows[0], full ? ["identity", "migration_versions", "catalog_sha256", "source_routines_match", ...(sourceXmin ? ["source_xmin_acl_match"] : [])] : ["identity"]);
       const identity = exactData(row.identity, ["database", "database_oid", "database_owner", "current_user", "session_user", "server_version_num", "server_addr", "server_port", "postmaster_start", "replication_role"]);
       if (full && (row.catalog_sha256 !== catalog.sha256 || row.source_routines_match !== true || !exactVersions26(row.migration_versions)))
         fail("Actual exact schema, source bodies or catalog differs from independent review");
+      if (full && sourceXmin && row.source_xmin_acl_match !== true)
+        fail("Exact source xmin-only column grant differs from the independently reviewed boundary");
       if (identity.database !== target.database || identity.database_oid !== target.databaseOid || identity.current_user !== target.actingRole
         || identity.session_user !== target.sessionUser || identity.server_addr !== target.serverAddress || identity.server_port !== target.serverPort
         || identity.postmaster_start !== target.postmasterStart || identity.replication_role !== "origin") fail("Actual runtime target, process or role differs from independent review");

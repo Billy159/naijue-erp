@@ -1,3 +1,4 @@
+import { productImageSignatureMatches } from "./product-image-signature.ts";
 import sharp from "sharp";
 import type { Sharp, SharpOptions } from "sharp";
 import { createHash } from "node:crypto";
@@ -45,7 +46,7 @@ async function acquire(signal: AbortSignal): Promise<() => void> {
   });
 }
 function binaryFormat(bytes: Buffer): ProductImageMime {
-  if (bytes.length >= 8 && bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) {
+  if (productImageSignatureMatches(bytes, "image/png")) {
     let offset = 8, ended = false;
     while (offset < bytes.length) {
       valid(offset + 12 <= bytes.length); const length = bytes.readUInt32BE(offset), type = bytes.toString("ascii", offset + 4, offset + 8);
@@ -54,7 +55,7 @@ function binaryFormat(bytes: Buffer): ProductImageMime {
     }
     valid(ended && offset === bytes.length); return "image/png";
   }
-  if (bytes.length >= 4 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255) {
+  if (productImageSignatureMatches(bytes, "image/jpeg")) {
     // Reject multi-picture JPEG containers rather than silently decoding their first image.
     let offset = 2;
     while (offset < bytes.length) {
@@ -66,7 +67,7 @@ function binaryFormat(bytes: Buffer): ProductImageMime {
     }
     return "image/jpeg";
   }
-  if (bytes.length >= 12 && bytes.toString("ascii", 0, 4) === "RIFF" && bytes.toString("ascii", 8, 12) === "WEBP") {
+  if (productImageSignatureMatches(bytes, "image/webp")) {
     valid(bytes.readUInt32LE(4) + 8 === bytes.length); let offset = 12;
     while (offset < bytes.length) {
       valid(offset + 8 <= bytes.length); const type = bytes.toString("ascii", offset, offset + 4), length = bytes.readUInt32LE(offset + 4);

@@ -13,9 +13,9 @@ import { EventEmitter } from "node:events";
 import { createProductionApplicationApi, createProductionRuntime26ApplicationApi, parseProductionRuntimeConfiguration, parseProductionRuntime26Configuration, productionApplicationOptions, PRODUCTION_PUBLIC_ORIGIN } from "./production-provider-composition.ts";
 import { createProductionRuntime26HistoryRevisionApplicationApi } from "./production-provider-composition.ts";
 import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration } from "./production-provider-composition.ts";
-import { createProductionRuntime26R3ApplicationApi, parseProductionRuntime26R3Configuration, createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
+import { createProductionRuntime26R3ApplicationApi, productionRuntime26R3HostConfiguration, parseProductionRuntime26R3Configuration, createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
 import type { ProductionRuntime26R3Configuration, ProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
-import { runProductionMain, runProductionRuntime26Main } from "./production-main.ts";
+import { runProductionMain, runProductionRuntime26Main, runProductionRuntime26R3Main, readProductionStaffCredentialRequestTag } from "./production-main.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { createHash, pbkdf2Sync } from "node:crypto";
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
@@ -1928,4 +1928,32 @@ test("human F production full baseline failure prevents application return; chan
    }finally{await api.close();}
   }finally{f.cleanup();}
  }
+});
+
+test('B10 R3 private credential file is closed, staff-selected, host-private and rejected by R1/R2',()=>{
+ const c=r3Configuration(exact26Fixture().configuration,'/private/media');
+ const enabled={...c,staffMaintenance:true,staffCredentialRequestKeyFile:'/private/credential-key'};
+ assert.equal(parseProductionRuntime26R3Configuration(enabled).staffCredentialRequestKeyFile,'/private/credential-key');
+ for(const file of ['relative','/private/../key','',null])assert.throws(()=>parseProductionRuntime26R3Configuration({...enabled,staffCredentialRequestKeyFile:file}));
+ assert.throws(()=>parseProductionRuntime26R3Configuration({...enabled,staffMaintenance:false}));
+ assert.throws(()=>parseProductionRuntime26R3Configuration({...enabled,credentialKeyBytes:'FORBIDDEN'}));
+ assert.throws(()=>parseProductionRuntime26R2Configuration({...r2Configuration(exact26Fixture().configuration),staffCredentialRequestKeyFile:'/private/key'}));
+ assert.throws(()=>parseProductionRuntime26Configuration({...exact26Fixture().configuration,staffCredentialRequestKeyFile:'/private/key'}));
+ assert.equal(Object.hasOwn(productionRuntime26R3HostConfiguration(enabled),'staffCredentialRequestKeyFile'),false);
+});
+
+test('B10 selected CLI refuses missing key before pool; disabled path does no file IO; reconstructed tags stable',async()=>{
+ const root=mkdtempSync(join(realpathSync(tmpdir()),'b10-cli-synthetic-'));
+ try {
+  const c={...r3Configuration(exact26Fixture().configuration,root),staffMaintenance:true};
+  const file=join(root,'configuration.json');writeFileSync(file,JSON.stringify(c),{mode:0o600});
+  for(const run of [runProductionRuntime26R3Main,runProductionRuntime26FullMain]) await assert.rejects(run([file]),/stable private request key/);
+  const {staffMaintenance:_staff,...disabled}=c;
+  assert.equal(await readProductionStaffCredentialRequestTag({...disabled,staffCredentialRequestKeyFile:'/nonexistent-private-key'}),null);
+  const key=join(root,'synthetic-key');writeFileSync(key,Buffer.alloc(32,11),{mode:0o600});
+  const selected=parseProductionRuntime26R3Configuration({...c,staffCredentialRequestKeyFile:key});
+  const a=await readProductionStaffCredentialRequestTag(selected),b=await readProductionStaffCredentialRequestTag(selected);
+  assert.ok(a&&b);assert.equal(a('SYNTHETIC_PASSWORD'),b('SYNTHETIC_PASSWORD'));assert.notEqual(a('SYNTHETIC_PASSWORD'),b('SYNTHETIC_DIFFERENT'));
+  await assert.rejects(readProductionStaffCredentialRequestTag({...selected,staffCredentialRequestKeyFile:join(root,'missing')}),{message:'Private credential request key is unavailable or invalid'});
+ } finally {rmSync(root,{recursive:true,force:true});}
 });

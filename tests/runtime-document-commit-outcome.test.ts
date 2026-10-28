@@ -65,6 +65,9 @@ function runtime26Uow(kind: 'sales' | 'transfer', pool: PgSalesPool, runtime26: 
     : new PostgresTransferUnitOfWork(pool, { runtime26 });
 }
 for (const kind of ['sales', 'transfer'] as const) {
+  // C276 dbd1b231: sales proves after BEGIN before schema/work and after callback close.
+  // Transfer retains its independently approved pre-BEGIN check.
+  const proofPhases=kind==='sales'?['inside-BEGIN','before-COMMIT']:['before-BEGIN','inside-BEGIN','before-COMMIT'];
   function exactProtocol(commitFailure?: Error) {
     const statements: string[] = [], released: unknown[] = []; let connections = 0;
     const client: PgSalesClient = { async query(sql) {
@@ -74,28 +77,30 @@ for (const kind of ['sales', 'transfer'] as const) {
     const pool = { async connect() { connections++; return client; } };
     return { pool, client, statements, released, connections: () => connections };
   }
-  test(`runtime26 ${kind}: actual original client purpose gates BEGIN/work/COMMIT and callback handle closes before the final proof`, async () => {
+  test(`runtime26 ${kind}: original client purpose follows approved transaction proof phases and closes callback before final proof`, async () => {
     const p = exactProtocol(), checkedAt: number[] = []; let late: (() => Promise<unknown>) | undefined, closed = 0;
     const runtime26: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client, purpose) {
       assert.equal(client, p.client); assert.equal(purpose, 'INVENTORY_ADMISSION'); checkedAt.push(p.statements.length);
-      if (checkedAt.length === 3) { await assert.rejects(late!(), { code: 'TRANSACTION_CLOSED' }); closed++; }
+      if (checkedAt.length === proofPhases.length) { await assert.rejects(late!(), { code: 'TRANSACTION_CLOSED' }); closed++; }
     } };
     const result = await runtime26Uow(kind, p.pool, runtime26).transaction(async tx => {
       late = () => tx.getReceipt(entityId('account', '00000000-0000-4000-8000-000000000001'), 'late'); return 'done';
     });
-    assert.equal(result, 'done'); assert.deepEqual(checkedAt, kind === 'sales' ? [0, 1, 2] : [0, 1, 1]);
+    assert.equal(result, 'done'); assert.deepEqual(checkedAt, kind === 'sales' ? [1, 2] : [0, 1, 1]);
+    if(kind==='sales'){assert.equal(p.statements[0],'BEGIN ISOLATION LEVEL READ COMMITTED');assert.match(p.statements[1]!,/sales:current-schema/);}
     assert.equal(closed, 1); assert.equal(p.statements.at(-1), 'COMMIT'); assert.deepEqual(p.released, [undefined]); assert.equal(p.connections(), 1);
   });
   test(`runtime26 ${kind}: each rejected proof phase prevents work or commit with original rollback/discard rules`, async () => {
-    for (const rejectAt of [1, 2, 3]) {
+    for (let rejectAt=1;rejectAt<=proofPhases.length;rejectAt++) {
       const p = exactProtocol(), failure = Error('SYNTHETIC_PROOF_REVOKED_' + rejectAt); let assertions = 0, work = 0;
       const runtime26: NativeRuntime26Capability = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady(client) {
         assert.equal(client, p.client); if (++assertions === rejectAt) throw failure;
       } };
       await assert.rejects(runtime26Uow(kind, p.pool, runtime26).transaction(async () => { work++; }), error => error === failure);
-      assert.equal(work, rejectAt === 3 ? 1 : 0); assert.ok(!p.statements.includes('COMMIT'));
-      assert.equal(p.statements.filter(sql => sql === 'ROLLBACK').length, rejectAt === 1 ? 0 : 1);
-      assert.deepEqual(p.released, [rejectAt === 1 ? failure : undefined]); assert.equal(p.connections(), 1);
+      assert.equal(work, rejectAt === proofPhases.length ? 1 : 0);
+      if(kind==='sales'&&rejectAt===1)assert.deepEqual(p.statements,['BEGIN ISOLATION LEVEL READ COMMITTED','ROLLBACK']); assert.ok(!p.statements.includes('COMMIT'));
+      assert.equal(p.statements.filter(sql => sql === 'ROLLBACK').length, kind==='transfer'&&rejectAt === 1 ? 0 : 1);
+      assert.deepEqual(p.released, [kind==='transfer'&&rejectAt === 1 ? failure : undefined]); assert.equal(p.connections(), 1);
     }
   });
   test(`runtime26 ${kind}: unknown COMMIT still keeps the original key outcome and error without rollback or retry`, async () => {
@@ -104,7 +109,7 @@ for (const kind of ['sales', 'transfer'] as const) {
       assert.equal(client, p.client); assert.equal(purpose, 'INVENTORY_ADMISSION'); ready++;
     } };
     await assert.rejects(runtime26Uow(kind, p.pool, runtime26).transaction(async () => { work++; }), error => error === failure);
-    assert.equal(ready, 3); assert.equal(work, 1); assert.equal(p.connections(), 1); assert.deepEqual(p.released, [failure]);
+    assert.equal(ready, proofPhases.length); assert.equal(work, 1); assert.equal(p.connections(), 1); assert.deepEqual(p.released, [failure]);
     assert.equal(p.statements.filter(sql => sql === 'COMMIT').length, 1); assert.ok(!p.statements.includes('ROLLBACK'));
   });
   test(`runtime26 ${kind}: malformed or boolean authority never borrows or runs command work`, async () => {
@@ -114,7 +119,9 @@ for (const kind of ['sales', 'transfer'] as const) {
     assert.equal(getterCalls, 0); assert.equal(p.connections(), 0);
     const runtime26 = { profile: 'EXACT26', contract: 'NATIVE_RUNTIME26_V1', async assertReady() { return false; } } as unknown as NativeRuntime26Capability;
     let work = 0; await assert.rejects(runtime26Uow(kind, p.pool, runtime26).transaction(async () => { work++; }), /without a boolean substitute/);
-    assert.equal(work, 0); assert.equal(p.statements.length, 0); assert.ok(p.released[0] instanceof TypeError);
+    assert.equal(work, 0);
+    if(kind==='sales'){assert.deepEqual(p.statements,['BEGIN ISOLATION LEVEL READ COMMITTED','ROLLBACK']);assert.deepEqual(p.released,[undefined]);}
+    else {assert.deepEqual(p.statements,[]);assert.ok(p.released[0] instanceof TypeError);}
   });
 }
 
