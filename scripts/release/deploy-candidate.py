@@ -42,8 +42,8 @@ RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CU
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
-RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql","member":"patches/0026-v8-bootstrap-field-provenance.sql"},{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql","member":"patches/0026-v10-native-creation-trigger-record-scope.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_v20_history_insert_identity_from_v19"},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576}]}''')
-RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":1632,"sha256":"18dbb9988107905ba07df5fa45907d8a3a45aac52a75bcbd5d77b618266ba1de"}''')
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql","member":"patches/0026-v8-bootstrap-field-provenance.sql"},{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql","member":"patches/0026-v10-native-creation-trigger-record-scope.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_v20_history_insert_identity_from_v19"},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}}}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":1911,"sha256":"a95f00476f402b205fbf9e8f0b15f622c3e86b6f9e50f5493f154a74bcc6c332"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -230,7 +230,7 @@ def verified_archive(archive_ref, manifest_ref, build_id, source_commit):
              HASH.fullmatch(row.get('sha256', '')) and isinstance(row.get('bytes'), int) and 0 <= row['bytes'] <= 64 * 1024 * 1024, 'INVALID_ARCHIVE_MEMBER_RECORD')
         expected[row['path']] = row
     expected['release-manifest.json'] = {'path': 'release-manifest.json', 'bytes': len(manifest_bytes), 'sha256': digest(manifest_bytes)}
-    need({'package.json', 'package-lock.json', 'web/index.html', 'backend/production-main.js'} <= set(expected), 'RUNTIME_ENTRY_MEMBERS_REQUIRED')
+    need({'package.json', 'package-lock.json', 'web/index.html', RELEASE_CONTRACT['entrypoints']['backend']['member']} <= set(expected), 'RUNTIME_ENTRY_MEMBERS_REQUIRED')
     archive = canonical(archive_ref.get('path'))
     data = bytes_file(archive, 128 * 1024 * 1024)
     need(len(data) == archive_ref.get('bytes') and digest(data) == archive_ref.get('sha256'), 'ARCHIVE_SHA256_OR_SIZE_MISMATCH')
@@ -389,16 +389,16 @@ def validate_runtime_build(p, manifest, refs):
     graph = manifest.get('graphs', {}).get('backend', {})
     component = build.get('components', {}).get('backend', {})
     inputs = graph.get('inputs', [])
-    required = {'apps/api/src/production-main.ts', 'apps/api/src/production-provider-composition.ts', 'apps/api/src/production-application-host.ts',
+    required = {RELEASE_CONTRACT['entrypoints']['backend']['source'], 'apps/api/src/production-provider-composition.ts', 'apps/api/src/production-application-host.ts',
                 'apps/api/src/postgres-read-api.ts', 'adapters/postgres/src/bounded-pool.ts', 'adapters/postgres/src/native-import-accounting-capability.ts'}
     if exact26_full(p):
         required.add('adapters/postgres/src/history-revision-store.ts')
     source_inputs = {row['path']: row for row in source.get('files', [])}
     need(source_inputs.get(RELEASE_CONTRACT_SOURCE['path']) == RELEASE_CONTRACT_SOURCE,
          'EXACT_RELEASE_CONTRACT_SOURCE_REQUIRED')
-    need(manifest.get('entrypoints', {}).get('backend') == 'backend/production-main.js' and
-         graph.get('entrySource') == component.get('entrySource') == 'apps/api/src/production-main.ts' and
-         graph.get('entryOutput') == component.get('entryOutput') == 'backend/production-main.js' and
+    need(manifest.get('entrypoints', {}).get('backend') == RELEASE_CONTRACT['entrypoints']['backend']['member'] and
+         graph.get('entrySource') == component.get('entrySource') == RELEASE_CONTRACT['entrypoints']['backend']['source'] and
+         graph.get('entryOutput') == component.get('entryOutput') == RELEASE_CONTRACT['entrypoints']['backend']['member'] and
          inputs and inputs == component.get('inputs') and required <= {row['path'] for row in inputs} and
          all(row == source_inputs.get(row['path']) for row in inputs), 'EXACT26_NATIVE_BACKEND_GRAPH_REQUIRED')
     build_outputs = {row.get('member'): row for row in build.get('files', []) if row.get('role') == 'backend'}
@@ -716,7 +716,7 @@ def create_app(p, docker):
             '--tmpfs', '/tmp:rw,noexec,nosuid,size=16m', *limits_args(p, 'app'), *labels(p, 'app'),
             *mount(Path(p['releaseDirectory']) / 'payload', '/app'), *mount(p['runtimeConfiguration']['path'], '/run/naijue-rewrite/runtime.json')]
     args += runtime_mount_arguments(p)
-    args += ['--entrypoint', 'node', p['images']['node']['id'], '/app/backend/production-main.js']
+    args += ['--entrypoint', 'node', p['images']['node']['id'], '/app/' + RELEASE_CONTRACT['entrypoints']['backend']['member']]
     args += runtime_entry_arguments(p)
     cid = docker.run(args).decode().strip()
     need(HASH.fullmatch(cid), 'CREATED_CANDIDATE_ID_REQUIRED')

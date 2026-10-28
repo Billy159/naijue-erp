@@ -11,11 +11,23 @@ const begin = '# BEGIN GENERATED RELEASE CONTRACT';
 const end = '# END GENERATED RELEASE CONTRACT';
 
 export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify(contract, null, 2) + '\n')) {
-  const keys = ['format', 'migrationCount', 'fontLicense', 'runtimeSqlPatches', 'full', 'node', 'requestBodyBudgets'];
+  const keys = ['format', 'migrationCount', 'fontLicense', 'runtimeSqlPatches', 'full', 'node', 'requestBodyBudgets', 'entrypoints'];
   if (!contract || Object.keys(contract).sort().join() !== keys.sort().join()
       || contract.format !== 'naijue-release-contract-v1' || contract.migrationCount !== 26
       || !Array.isArray(contract.runtimeSqlPatches) || !Array.isArray(contract.requestBodyBudgets)
       || !/^24\.[0-9]+\.[0-9]+$/.test(contract.node)) throw Error('INVALID_RELEASE_CONTRACT');
+  const exactKeys = (value, names) => value && typeof value === 'object' && !Array.isArray(value)
+    && Object.keys(value).sort().join() === [...names].sort().join();
+  if (!exactKeys(contract.entrypoints, ['frontend', 'backend'])) throw Error('INVALID_RELEASE_ENTRYPOINTS');
+  for (const kind of ['frontend', 'backend']) {
+    const entry = contract.entrypoints[kind];
+    if (!exactKeys(entry, ['source', 'member']) || typeof entry.source !== 'string' || typeof entry.member !== 'string'
+        || !(kind === 'frontend'
+          ? /^apps\/web\/demo-replica\/frontend\/[A-Za-z0-9_-]+\.ts$/.test(entry.source) && /^web\/[A-Za-z0-9_-]+\.js$/.test(entry.member)
+          : /^apps\/api\/src\/production[-A-Za-z0-9_]*\.ts$/.test(entry.source) && /^backend\/production[-A-Za-z0-9_]*\.js$/.test(entry.member))) {
+      throw Error('INVALID_RELEASE_ENTRYPOINTS');
+    }
+  }
   const sources = new Set(), members = new Set(), routes = new Set();
   for (const row of contract.runtimeSqlPatches) {
     if (!/^adapters\/postgres\/patches\/[A-Za-z0-9_-]+\.sql$/.test(row.source)

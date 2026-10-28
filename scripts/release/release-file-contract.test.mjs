@@ -9,6 +9,7 @@ test('shared release facts generate the standalone Python consumer without drift
 m=runpy.run_path('scripts/release/deploy-candidate.py'); payload=json.loads(sys.stdin.read());expected=payload['contract']
 assert m['RELEASE_CONTRACT']==expected
 assert m['RELEASE_CONTRACT_SOURCE']==payload['source']
+assert m['RELEASE_CONTRACT']['entrypoints']==expected['entrypoints']
 assert list(m['APPROVED_SQL_PATCHES'].items())==[(r['source'],r['member']) for r in expected['runtimeSqlPatches']]
 assert m['FULL_PROFILE']==expected['full']['profile'] and m['FULL_PATCH']==expected['full']['patchLevel']
 config=m['nginx_configuration']('naijue-rewrite-tool-only-app').decode('utf-8')
@@ -26,6 +27,9 @@ test('release generator rejects duplicate SQL, unsafe members and ambiguous rout
   c=>c.requestBodyBudgets.push({...c.requestBodyBudgets[0]}),
   c=>{c.requestBodyBudgets[0].bytes=0;},
   c=>{c.extra=true;},
+  c=>{c.entrypoints.backend.member='../production-main.js';},
+  c=>{c.entrypoints.backend.extra=true;},
+  c=>{c.entrypoints.frontend.source='apps/web/src/old.ts';},
  ]) {
   const c=structuredClone(releaseContract);change(c);
   assert.throws(()=>contractBlock(c),/INVALID_RELEASE/);

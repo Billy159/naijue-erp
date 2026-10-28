@@ -271,8 +271,8 @@ async function verifyGraph(kind, component, context) {
   const { sourceRoot, buildRoot, sources, sourceBytes, files, fileBytes, packageJson, lock } = context;
   requireRelease(component && typeof component === 'object' && !Array.isArray(component), 'EXPLICIT_COMPONENT_GRAPH_REQUIRED');
   relativeName(component.workingDirectory, true); allowedSource(component.entrySource);
-  requireRelease(kind === 'frontend' ? component.entrySource==='apps/web/demo-replica/frontend/production-bootstrap.ts'
-    : /^apps\/api\/src\/production[-A-Za-z0-9_]*\.(?:ts|mjs|js)$/.test(component.entrySource), 'PRODUCTION_ENTRY_SOURCE_REQUIRED');
+  requireRelease(component.entrySource === releaseContract.entrypoints[kind].source, 'PRODUCTION_ENTRY_SOURCE_REQUIRED');
+  requireRelease(component.entryOutput === releaseContract.entrypoints[kind].member, 'PRODUCTION_ENTRY_OUTPUT_REQUIRED');
   requireRelease(sources.has(component.entrySource), 'ENTRY_SOURCE_NOT_FROZEN');
   relativeName(component.metafile); relativeName(component.entryOutput);
   requireRelease(files.get(component.metafile)?.role === 'evidence' && files.get(component.entryOutput)?.role === kind, 'GRAPH_ARTIFACT_ROLES_REQUIRED');

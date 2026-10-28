@@ -53,5 +53,15 @@
       "path": "/api/catalogue/categories/commands",
       "bytes": 1048576
     }
-  ]
+  ],
+  "entrypoints": {
+    "frontend": {
+      "source": "apps/web/demo-replica/frontend/production-bootstrap.ts",
+      "member": "web/application.js"
+    },
+    "backend": {
+      "source": "apps/api/src/production-main.ts",
+      "member": "backend/production-main.js"
+    }
+  }
 }

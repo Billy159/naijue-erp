@@ -3,11 +3,11 @@ import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContractSource, ReleaseError } from './manifest.mjs';
+import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContract, releaseContractSource, ReleaseError } from './manifest.mjs';
 
 const FRONTEND_BUILDER = 'apps/web/demo-replica/build-production-host.mjs';
-const FRONTEND_ENTRY = 'apps/web/demo-replica/frontend/production-bootstrap.ts';
-const BACKEND_ENTRY = 'apps/api/src/production-main.ts';
+const FRONTEND_ENTRY = releaseContract.entrypoints.frontend.source;
+const BACKEND_ENTRY = releaseContract.entrypoints.backend.source;
 const COMMIT_PROOF = '.release-source-commit';
 const forbiddenGraph = /unified-browser-harness|new-document-browser-harness|management-browser-harness|visual-acceptance-host|development-host|local-https-application-host|fixture|synthetic|(?:^|\/)(?:tests?|test-support)(?:\/|$)|\.(?:test|spec)\./i;
 const jsonBytes = value => Buffer.from(JSON.stringify(value, null, 2) + '\n');
@@ -160,7 +160,7 @@ export async function buildProduction(options) {
   const esbuild = await import(pathToFileURL(path.join(sourceRoot, 'node_modules/esbuild/lib/main.js')).href);
   await mkdir(path.join(buildRoot, 'backend'));
   const result = await esbuild.build({ absWorkingDir: sourceRoot, entryPoints: [BACKEND_ENTRY],
-    outfile: path.join(buildRoot, 'backend/production-main.js'), bundle: true, packages: 'external', platform: 'node', target: 'node24',
+    outfile: path.join(buildRoot, releaseContract.entrypoints.backend.member), bundle: true, packages: 'external', platform: 'node', target: 'node24',
     format: 'esm', metafile: true, sourcemap: false, logLevel: 'silent',
     plugins: [{ name: 'frozen-backend-inputs', setup(build) {
       build.onLoad({ filter: /\.(?:[cm]?js|tsx?|json)$/ }, async args => {
@@ -173,8 +173,8 @@ export async function buildProduction(options) {
   await writeFile(path.join(buildRoot, 'backend/metafile.json'), jsonBytes(result.metafile), { flag: 'wx' });
   const graphs = {}, graphOutputs = new Set();
   for (const [kind, workingDirectory, metafile, entrySource, entryOutput] of [
-    ['frontend', '.', 'web/metafile.json', FRONTEND_ENTRY, 'web/application.js'],
-    ['backend', '.', 'backend/metafile.json', BACKEND_ENTRY, 'backend/production-main.js'],
+    ['frontend', '.', 'web/metafile.json', FRONTEND_ENTRY, releaseContract.entrypoints.frontend.member],
+    ['backend', '.', 'backend/metafile.json', BACKEND_ENTRY, releaseContract.entrypoints.backend.member],
   ]) {
     const graph = (await readJson(path.join(buildRoot, metafile))).value, inputs = [];
     requireRelease(graph.inputs && graph.outputs, 'ACTUAL_ESBUILD_METAFILE_REQUIRED');

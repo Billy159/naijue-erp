@@ -363,3 +363,18 @@ test('copied static shell keeps hash navigation and native dialogs without allow
  else await assert.rejects(validateRelease(f.options),e=>e.code===(mutation==='external'?'UNSUPPORTED_HTML_NAVIGATION':'UNSUPPORTED_OR_DUPLICATE_HTML_ATTRIBUTE'));
  }
 });
+
+test('release graph uses the shared exact entry instead of accepting another production-named backend', async () => {
+ const f=await fixture('shared-entry-backend');
+ const original=f.build.components.backend.entrySource, alternate='apps/api/src/production-alternate.ts';
+ await put(f.sourceRoot,alternate,f.sourceData[original]);
+ const input=f.source.files.find(row=>row.path===original);input.path=alternate;
+ f.build.components.backend.entrySource=alternate;
+ const metafile=f.build.components.backend.metafile;
+ f.buildData[metafile]=f.buildData[metafile].split(original).join(alternate);
+ Object.assign(f.build.files.find(row=>row.path===metafile),record(metafile,f.buildData[metafile]));
+ await f.save(); await rejects(f,'PRODUCTION_ENTRY_SOURCE_REQUIRED');
+ const g=await fixture('shared-entry-output');
+ g.build.components.backend.entryOutput='backend/production-alternate.js';
+ await g.save(); await rejects(g,'PRODUCTION_ENTRY_OUTPUT_REQUIRED');
+});
