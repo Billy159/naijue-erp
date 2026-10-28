@@ -144,6 +144,8 @@ export interface PostgresReadApi {
   /** Delegates to Fastify shutdown, then disposes this API's one owned bounded pool. */
   close(): Promise<void>;
   readonly postgresBackgroundFailureCount: number;
+  /** Fresh original-issuer admission; false for legacy/unverified dependencies and closing APIs. */
+  readiness?(): Promise<boolean>;
 }
 export interface PostgresApplicationApi extends PostgresReadApi { readonly trustedOrigin: string }
 export interface PostgresDocumentCommandsCapability {
@@ -554,12 +556,14 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver);
   let app: FastifyInstance | undefined;
+  let closing = false;
   try {
     const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
       ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"
     });
     const pool = issuer === null ? ownedPool : issuer.pool;
-    if (issuer !== null) {
+    const checkAdmission = async (): Promise<boolean> => {
+      if (closing || issuer === null) return false;
       const admission = await pool.connect();
       try {
         if (capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) await issuer.runtime26.assertReady(admission, "PRODUCT_MAINTENANCE");
@@ -568,14 +572,17 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
         if (runtime26HistoryAuthorization !== undefined) await issuer.runtime26.assertReady(admission, "HISTORY_REVISION");
         for (const purpose of capabilities?.coreInitializationRead ? ["CURRENT_FORM_READ"] as const : ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_READ_WRITE", "CURRENT_FORM_READ", "HISTORY_READ", "INVENTORY_ADMISSION"] as const)
           await issuer.runtime26.assertReady(admission, purpose);
+        return !closing;
       } finally { admission.release(); }
-    }
+    };
+    const readiness = async (): Promise<boolean> => { try { return await checkAdmission(); } catch { return false; } };
+    if (issuer !== null) await checkAdmission();
     const policies = host.authorization.kind === "source-confirmed-native"
       ? Object.freeze({ ...createSourceConfirmedPostgresReadAuthorization(pool), transfers: createSourceConfirmedTransferQueryAuthorization() })
       : host.authorization.providers;
     const extensions = capabilities?.nativeReadExtensions ? createSourceConfirmedApplicationReadAuthorization(pool) : null;
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
-    app.addHook("onClose", async () => { await ownedPool.dispose(); });
+    app.addHook("onClose", async () => { closing = true; await ownedPool.dispose(); });
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool),
       now: host.now, policy: host.policy, passwords: host.credentialCompatibility === "legacy-pbkdf2-v1"
         ? createNodeMigratedLegacyPasswords() : createNodeScryptPasswords() });
@@ -662,7 +669,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       if (capabilities.coreReadModules.includes("catalogue")) app.register(createCatalogueSettingsReadHttpPlugin({ authenticate,
         dependencies: { authorization: core.catalogueAuthorization, reader: new PostgresCatalogueSettingsReadReader(pool, null, core.catalogueCapability) } }));
       await app.ready(); const readyApp = app;
-      return Object.freeze({ app: readyApp, close: () => readyApp.close(), trustedOrigin: host.trustedOrigin,
+      return Object.freeze({ app: readyApp, readiness, close: () => { closing = true; return readyApp.close(); }, trustedOrigin: host.trustedOrigin,
         get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; } });
     }
     const productReader = new PostgresProductQueryReader(pool, issuer?.catalogueRetainedDelete ?? null, issuer?.productSeasonArray ?? null);
@@ -763,7 +770,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     }
     await app.ready();
     const readyApp = app;
-    return Object.freeze({ app: readyApp, close: () => readyApp.close(), get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; },
+    return Object.freeze({ app: readyApp, readiness, close: () => { closing = true; return readyApp.close(); }, get postgresBackgroundFailureCount() { return ownedPool.backgroundFailureCount; },
       ...(capabilities === null ? {} : { trustedOrigin: host.trustedOrigin }) });
   } catch (error) {
     // Even failed registration owns its pool. Both operations are idempotent; explicitly

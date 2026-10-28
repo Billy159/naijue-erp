@@ -1,3 +1,4 @@
+import { PRODUCT_IMAGE_CODEC_LIMITS } from "../../../adapters/media/src/sharp-product-image-codec.ts";
 import { createServer } from "node:http";
 import type { IncomingMessage, Server, ServerResponse } from "node:http";
 import type { Duplex } from "node:stream";
@@ -113,14 +114,15 @@ export async function createProductionRequestHandler(options: ProductionApplicat
     || api.trustedOrigin !== config.publicOrigin) throw new TypeError("Explicit non-listening application with the exact public origin required");
   const routing = api.app.routing.bind(api.app), hosts = new Set(config.http.acceptedHosts), entry = config.assets.entry;
   const assets = await captureBuild(config.assets.root, entry);
-  const health = Buffer.from(JSON.stringify({ status: "HOST_READY", databaseChecked: false, apiBase: "/api", ...config.build }));
+  const health = Buffer.from(JSON.stringify({ status: "HOST_ALIVE", databaseChecked: false, apiBase: "/api", ...config.build }));
   return (request, response) => {
     const raw = request.url;
     // Proxy headers are deliberately ignored. The trusted origin is configuration,
     // and accepted Host values must be supplied by the deployment owner.
-    if (isClosing()) return failure(response, 503);
+
     if (typeof raw !== "string" || !raw.startsWith("/") || raw.startsWith("//") || /[\\\x00-\x1f\x7f]/.test(raw)
       || !hosts.has(request.headers.host ?? "")) return failure(response, 400);
+    if (isClosing() && raw.split("?",1)[0] !== "/healthz") return failure(response, 503);
     if (raw === "/api" || raw.startsWith("/api/") || raw.startsWith("/api?")) {
       request.url = raw.slice(4) || "/"; if (request.url.startsWith("?")) request.url = "/" + request.url;
       routing(request, response); return;
@@ -130,6 +132,16 @@ export async function createProductionRequestHandler(options: ProductionApplicat
     if (pathname === "/healthz") {
       response.writeHead(200, { "content-type": "application/json; charset=utf-8", "content-length": health.byteLength, "cache-control": "no-store", "x-content-type-options": "nosniff" });
       response.end(request.method === "HEAD" ? undefined : health); return;
+    }
+    if (pathname === "/readyz") {
+      const send = (ready: boolean): void => {
+        if (request.destroyed || response.destroyed || response.writableEnded) return;
+        const payload = Buffer.from(JSON.stringify({ status: ready && !isClosing() ? "READY" : "NOT_READY" }));
+        response.writeHead(ready && !isClosing() ? 200 : 503,{"content-type":"application/json; charset=utf-8","content-length":payload.length,"cache-control":"no-store"});
+        response.end(request.method === "HEAD" ? undefined : payload);
+      };
+      if (typeof api.readiness !== "function") { send(false); return; }
+      void api.readiness().then(send,()=>send(false)).catch(()=>{ if (!response.destroyed) response.destroy(); }); return;
     }
     let name: string;
     try { name = pathname === "/" ? entry : pathname.startsWith("/assets/") ? decodeURIComponent(pathname.slice(8)) : ""; }
@@ -151,28 +163,39 @@ export async function createProductionRequestHandler(options: ProductionApplicat
     response.end(request.method === "HEAD" ? undefined : bytes);
   };
 }
-async function closeListener(server: Server | undefined, sockets: ReadonlySet<Duplex>): Promise<void> {
+async function closeListener(server: Server | undefined, sockets: ReadonlySet<Duplex>, drainMs: number): Promise<void> {
   if (!server) return;
   const stopped = new Promise<void>((resolve, reject) => server.close(error => {
     if (error && (error as NodeJS.ErrnoException).code !== "ERR_SERVER_NOT_RUNNING") reject(error); else resolve();
   }));
-  for (const socket of sockets) socket.destroy();
-  await stopped;
+  // Operation budget, then configured acquisition/disposal allowance; requestTimeout only bounds incoming bytes.
+  let timer: NodeJS.Timeout | undefined;
+  const deadline = new Promise<never>((_resolve,reject) => { timer=setTimeout(()=>{
+    for(const socket of sockets) socket.destroy();
+    reject(new Error("Production request drain deadline exceeded; request outcomes may require original-key recovery"));
+  },drainMs); timer.unref(); });
+  try { await Promise.race([stopped,deadline]); } finally { if(timer)clearTimeout(timer); }
 }
 /** Internal container HTTP only. C must keep port 3000 off public bindings and
  * terminate HTTPS on the approved existing proxy. No X-Forwarded trust, migrations
  * or automatic database discovery. Takes API ownership even if startup fails. */
 export async function startProductionApplicationHost(options: ProductionApplicationHostOptions): Promise<ProductionApplicationHost> {
   const apiClose = typeof options?.api?.close === "function" ? options.api.close.bind(options.api) : undefined;
+  let drainMs = 0; // No listener exists until configuration has supplied resource budgets.
   let server: Server | undefined, closing: Promise<void> | undefined; const sockets = new Set<Duplex>();
   const close = (): Promise<void> => closing ??= (async () => {
     const errors: unknown[] = [];
-    try { await closeListener(server, sockets); } catch (error) { errors.push(error); }
+    try { await closeListener(server, sockets, drainMs); } catch (error) { errors.push(error); }
     try { await apiClose?.(); } catch (error) { errors.push(error); }
     if (errors.length) throw new AggregateError(errors, "Production listener/API shutdown failed");
   })();
   try {
     const config = parseProductionRuntimeConfiguration(options.configuration);
+    const p = config.postgres;
+    drainMs = Math.max(config.inventoryOutputSpool?.maxDurationMs ?? 0,
+      PRODUCT_IMAGE_CODEC_LIMITS.processingSecondsMax * 1000, p.queryTimeoutMillis)
+      + p.acquisitionTimeoutMillis + p.disposeGraceMillis + p.disposeTimeoutMillis;
+
     const handle = await createProductionRequestHandler({ api: options.api, configuration: config }, () => closing !== undefined);
     server = createServer({ maxHeaderSize: 16_384 }, handle);
     server.requestTimeout = 30_000; server.headersTimeout = 10_000; server.keepAliveTimeout = 1_000;

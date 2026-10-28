@@ -1,3 +1,6 @@
+import http from "node:http";
+import { EventEmitter } from "node:events";
+import { syncBuiltinESMExports } from "node:module";
 import { parseProductionHostConfiguration, productionAssetUrl } from "../../web/src/production-host/configuration.ts";
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -55,7 +58,7 @@ test("production handler strips only /api and captures actual emitted assets wit
     await writeFile(path.join(root, "app.js"), "CHANGED_AFTER_CAPTURE");
     assert.equal(invoke(handle, "/assets/app.js", "GET", "web:8080").body, "SYNTHETIC_EMITTED_BUILD_ONLY");
     const head = invoke(handle, "/assets/app.js", "HEAD"); assert.equal(head.status, 200); assert.equal(head.body, undefined); assert.equal(head.headers["content-length"], 28);
-    const health = JSON.parse(invoke(handle, "/healthz").body!); assert.equal(health.databaseChecked, false); assert.equal(health.status, "HOST_READY"); assert.equal(health.sourceCommit, "a".repeat(40));
+    const health = JSON.parse(invoke(handle, "/healthz").body!); assert.equal(health.databaseChecked, false); assert.equal(health.status, "HOST_ALIVE"); assert.equal(health.sourceCommit, "a".repeat(40));
     assert.equal(p.closed(), 0);
   } finally { await rm(root, { recursive: true, force: true }); }
 });
@@ -382,4 +385,63 @@ test("immutable caching applies only to successful canonical current-version JS/
     const closed = invoke(handle, `/assets/${buildId}/app.js`);
     assert.equal(closed.status, 503); assert.equal(closed.headers["cache-control"], "no-store");
   } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('H06 readiness is independent, live and fails closed without admitted dependencies or during drain',async()=>{
+ const root=await build(),p=apiDouble();let closing=false,admitted=false,checks=0;
+ try {
+  const api={...p.api,async readiness(){checks++;return admitted;}};
+  const handle=await createProductionRequestHandler({api,configuration:config(root)},()=>closing);
+  const ready=()=>new Promise<{status:number;body:string}>(resolve=>{
+   let status=0;const req={url:'/readyz',method:'GET',headers:{host:'web:8080'}} as IncomingMessage;
+   const res={writeHead(n:number){status=n;},end(bytes?:Buffer){resolve({status,body:bytes?.toString()??''});}} as unknown as ServerResponse;handle(req,res);
+  });
+  assert.equal((await ready()).status,503);admitted=true;assert.equal((await ready()).status,200);
+  admitted=false;assert.equal((await ready()).status,503);assert.equal(checks,3);
+  closing=true;assert.equal((await ready()).status,503);assert.equal(checks,3);
+  assert.equal(invoke(handle,'/healthz','GET','web:8080').status,200);
+  const absent=await createProductionRequestHandler({api:p.api,configuration:config(root)});assert.equal(invoke(absent,'/readyz','GET','web:8080').status,503);
+ }finally{await rm(root,{recursive:true,force:true});}
+});
+
+test('H06 closing waits for admitted listener work before API disposal without eagerly destroying sockets',async()=>{
+ const root=await build(),p=apiDouble(),original=http.createServer;
+ let finish:((error?:Error)=>void)|undefined,destroyed=0;
+ const server=new EventEmitter() as EventEmitter & {listen():void;close(callback:(error?:Error)=>void):void};
+ server.listen=()=>{queueMicrotask(()=>server.emit('listening'));};server.close=callback=>{finish=callback;};
+ http.createServer=(()=>server) as unknown as typeof http.createServer;syncBuiltinESMExports();
+ try {
+  const host=await startProductionApplicationHost({api:p.api,configuration:config(root)});
+  const socket=new EventEmitter() as EventEmitter & {destroy():void};socket.destroy=()=>{destroyed++;};server.emit('connection',socket);
+  const closing=host.close();assert.equal(p.closed(),0);assert.equal(destroyed,0);assert.ok(finish);
+  finish();await closing;assert.equal(p.closed(),1);assert.equal(destroyed,0);await host.close();assert.equal(p.closed(),1);
+ }finally{http.createServer=original;syncBuiltinESMExports();await rm(root,{recursive:true,force:true});}
+});
+
+test('H06 drain uses configured 120s output budget, completes beyond30s or reports unknown only at deadline',async t=>{
+ const root=await build(),original=http.createServer;
+ try{for(const expires of [false,true]){
+  const p=apiDouble();let finish:((e?:Error)=>void)|undefined,destroyed=0;
+  const server=new EventEmitter() as EventEmitter & {listen():void;close(cb:(e?:Error)=>void):void};
+  server.listen=()=>queueMicrotask(()=>server.emit('listening'));server.close=cb=>{finish=cb;};
+  http.createServer=(()=>server) as unknown as typeof http.createServer;syncBuiltinESMExports();
+  const c={...config(root),inventoryOutputSpool:{directory:'/private/inventory-exports',maxBytes:536870912,maxConcurrent:1,maxDurationMs:120000}};
+  const host=await startProductionApplicationHost({api:p.api,configuration:c});
+  const socket=new EventEmitter() as EventEmitter & {destroy():void};socket.destroy=()=>{destroyed++;};server.emit('connection',socket);
+  t.mock.timers.enable({apis:['setTimeout']});const closing=host.close();
+  const checked=expires?assert.rejects(closing,error=>error instanceof AggregateError && error.errors.some((e:Error)=>e.message.includes('outcomes may require original-key recovery'))):closing;
+  t.mock.timers.tick(31000);assert.equal(destroyed,0);assert.equal(p.closed(),0);
+  if(expires)t.mock.timers.tick(91000);else finish!();
+  await checked;assert.equal(destroyed,expires?1:0);assert.equal(p.closed(),1);t.mock.timers.reset();
+ }}finally{t.mock.timers.reset();http.createServer=original;syncBuiltinESMExports();await rm(root,{recursive:true,force:true});}
+});
+test('H06 detached readiness response never writes after late probe completion',async()=>{
+ const root=await build(),p=apiDouble();let complete!:(v:boolean)=>void,writes=0;
+ try{const api={...p.api,readiness:()=>new Promise<boolean>(resolve=>{complete=resolve;})};
+ const handle=await createProductionRequestHandler({api,configuration:config(root)});
+ const req={url:'/readyz',method:'GET',headers:{host:'web:8080'},destroyed:false} as IncomingMessage;
+ const res={destroyed:false,writableEnded:false,writeHead(){writes++;},end(){writes++;}} as unknown as ServerResponse;
+ handle(req,res);Object.assign(req,{destroyed:true});Object.assign(res,{destroyed:true});complete(true);
+ await new Promise(resolve=>setImmediate(resolve));assert.equal(writes,0);
+ }finally{await rm(root,{recursive:true,force:true});}
 });

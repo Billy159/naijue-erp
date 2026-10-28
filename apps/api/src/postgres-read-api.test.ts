@@ -384,12 +384,23 @@ test("SYNTHETIC composition: pool disposal errors reject shutdown and never repe
     assert.equal(driver.allocations, 1);
   }
 });
-test("SYNTHETIC composition source: no ambient configuration, startup, migration or business command registration", () => {
+test("SYNTHETIC composition source: read-only factory selects no application capabilities or unauthorized write routes", async t => {
   const source = readFileSync(new URL("./postgres-read-api.ts", import.meta.url), "utf8");
-  assert.doesNotMatch(source, /process\.env|dotenv|\.listen\s*\(|readFile|createSalesHttpPlugin|createTransferHttpPlugin|createPartyMaintenanceHttpPlugin/);
+  assert.doesNotMatch(source, /process\.env|dotenv|\.listen\s*\(|readFile/);
   assert.equal((source.match(/new BoundedPostgresPool\(/g) ?? []).length, 1);
-  assert.equal((source.match(/app\.register\(/g) ?? []).length, 13); // Original seven plus separately opted-in application settings/commands, three management reads and party reads.
+  // Scope this guard to the read-only factory, not every opted-in factory in the shared module.
+  const factory = source.slice(source.indexOf("export async function createPostgresReadApi("),source.indexOf("export async function createPostgresApplicationApi("));
+  assert.match(factory,/return composePostgresApi\(options, createDriver, null\)/);
+  assert.doesNotMatch(factory,/app\.register|createSalesHttpPlugin|createTransferHttpPlugin|createPartyMaintenanceHttpPlugin/);
+  const f = await setup(t);
+  for (const url of ["/sales/commands","/transfers/commands","/customers/commands","/suppliers/commands","/products/v2/commands","/catalogue/categories/commands"])
+    assert.equal(f.app.hasRoute({method:"POST",url}),false,url);
+  for(const url of ["/inventory/query","/sales/query","/transfers/query"]){
+    assert.equal(f.app.hasRoute({method:"POST",url}),true,url);
+    assert.equal((await f.app.inject({method:"POST",url,payload:{}})).statusCode,401);
+  }
 });
+
 test("SYNTHETIC CURRENT composition: absent option, including native profile alone, keeps all five routes 404", async t => {
   for (const value of [options(), nativeOptions()]) {
     const f = await setup(t, value);
@@ -503,4 +514,27 @@ test("SYNTHETIC CURRENT composition: salesperson may propose cross-hall transfer
     if (direction === "FROM") assert.match(count.sql, /w\.enabled OR EXISTS/); else assert.match(count.sql, /TRUE AND w\.enabled AND/);
   }
   assert.equal(driver.calls.some(call => call.sql.includes("read-authorization:")), false); assert.equal(driver.connects, 4);
+});
+
+
+test('H06 legacy API cannot claim admitted database readiness from construction or healthy background counts',async t=>{
+ const f=await setup(t);const connects=f.driver.connects;
+ assert.equal(await f.readiness!(),false);assert.equal(f.driver.connects,connects);
+ await f.close();assert.equal(await f.readiness!(),false);
+});
+
+test('H06 exact issuer readiness rechecks original same-pool identity, fails on drift and releases every lease',async t=>{
+ const {mkdtemp,realpath,writeFile,rm}=await import('node:fs/promises');const {tmpdir}=await import('node:os');const {join}=await import('node:path');const {createHash}=await import('node:crypto');
+ const {NATIVE_RUNTIME26_METADATA_PROBE,NATIVE_RUNTIME26_IDENTITY_PROBE}=await import('../../../adapters/postgres/src/native-import-accounting-capability.ts');
+ const {createPostgresRuntime26ApplicationApi}=await import('./postgres-read-api.ts');
+ const root=await mkdtemp(join(await realpath(tmpdir()),'h06-proof-synthetic-'));t.after(()=>rm(root,{recursive:true,force:true}));
+ const hash=(bytes:string)=>createHash('sha256').update(bytes).digest('hex'),independent=join(root,'independent.json'),reviewFile=join(root,'review.json');
+ await writeFile(independent,'SYNTHETIC_PASS',{mode:0o600});const target={database:'SYNTHETIC_ONLY',databaseOid:'123',actingRole:'SYNTHETIC_ROLE',sessionUser:'SYNTHETIC_SESSION',serverAddress:null,serverPort:null,postmasterStart:'2026-10-28 00:00:00+00'};
+ const review={version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target,catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V1',sha256:'a'.repeat(64),patchLevel:'26_v11_document_specification_save'},purposes:['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION'],scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{path:independent,sha256:hash('SYNTHETIC_PASS'),result:'PASS'},realImportExecutionAuthorized:false};
+ const text=JSON.stringify(review);await writeFile(reviewFile,text,{mode:0o600});let role=target.actingRole,acquired=0,released=0,ended=0;
+ const identity=()=>({database:target.database,database_oid:target.databaseOid,database_owner:'SYNTHETIC_OWNER',current_user:role,session_user:target.sessionUser,server_version_num:'170011',server_addr:null,server_port:null,postmaster_start:target.postmasterStart,replication_role:'origin'});
+ const driver=Object.assign(new EventEmitter(),{async connect(){acquired++;return Object.assign(new EventEmitter(),{async query(sql:string){if(sql===NATIVE_RUNTIME26_METADATA_PROBE)return {rows:[{identity:identity(),migration_versions:Array.from({length:26},(_,i)=>i+1),catalog_sha256:'a'.repeat(64),source_routines_match:true}],rowCount:1};if(sql===NATIVE_RUNTIME26_IDENTITY_PROBE)return {rows:[{identity:identity()}],rowCount:1};throw Error('Unexpected synthetic SQL');},release(){released++;}});},async end(){ended++;}});
+ const api=await createPostgresRuntime26ApplicationApi({...currentOptions(),nativeReadExtensions:{profile:'source-confirmed-r1-v1'}},{reviewFile,trustedReviewSha256:hash(text)},()=>driver);
+ try{const initial=acquired;assert.equal(await api.readiness!(),true);assert.equal(acquired,initial+1);assert.equal(acquired,released);role='WRONG_ROLE';assert.equal(await api.readiness!(),false);assert.equal(acquired,released);}finally{await api.close();}
+ const closed=acquired;assert.equal(await api.readiness!(),false);assert.equal(acquired,closed);assert.equal(ended,1);
 });
