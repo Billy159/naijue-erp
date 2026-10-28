@@ -7561,6 +7561,18 @@
       ],
       "scope": "Explicit V2 A02 step5 finite observation window/target/restart binding, trusted probe TTL/shared in-flight/low-water refusal; only required new session/upload actions. No production defaults, PG/FS mutation/schema/ACL, auth/media integration shared leaves not leased. Original targeted inventory and P02 reused.",
       "next": "Implement component and meaningful finite local refusal/cancel/expiry tests, hand back exact source pins and smallest real host seam/write-contract delta before production wiring. Actual budget and PG/media performance remain unproven."
+    },
+    "H06Reclaim904": {
+      "owner": "D2",
+      "model": "gpt-6.1-sol/medium",
+      "status": "ASSIGNED_FINITE_IMPLEMENTATION_NO_ACTUAL_DELETION",
+      "files": [
+        "scripts/ops/resource-reclaim.mjs",
+        "tests/resource-reclaim.test.ts",
+        "docs/controller-handoff-20261028/RESOURCE-LIFECYCLE.json"
+      ],
+      "scope": "V2 H06 finite operator cleanup mechanism only: explicit approved plan/cutoff/target/candidate inputs, offline all-writer fence, actual reference/key/audit/unknown-commit exclusions, default dry-run and explicit isolated apply; no production execution/deletion/TTL assumptions/SQL guard changes. Preserve original auth_session-dependent predicates.",
+      "next": "Original owner implement directly with exact finite tests; any unsupported original session guard or permission/retention delta enumerate once for C/user. T45 sole real execution after accurate approved isolated list."
     }
   }
 }
