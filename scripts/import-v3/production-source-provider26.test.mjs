@@ -1126,3 +1126,32 @@ test('191 accounting reader is a required exact-path delta with independently ve
  }
  const old=await productionAuthorityFiles(t,{adopted:true}),legacy=await old.open();await legacy.close();
 });
+
+test('B15 real provider REVIEWED transfer reader consumes public six-field scope with matching header and complete eleven-group closure',async t=>{
+ const {readFile}=await import('node:fs/promises');
+ const fixtureUrl=new URL('./native-transfer-line-source26.test.mjs',import.meta.url),text=await readFile(fixtureUrl,'utf8');
+ // Reuse only the existing synthetic fixture and header projection helper;
+ // do not register that test module's tests or open original business sources.
+ let fixtureCode=text.slice(0,text.indexOf('const scope='));
+ fixtureCode+=text.slice(text.indexOf('async function documentExpected('),text.indexOf("test('transfer lines category6:"));
+ fixtureCode=fixtureCode.replace('return buildHistoryTypedClosureExpected26({','return ({');
+ fixtureCode=fixtureCode.replace(/from '([^']+)'/g,(all,path)=>path.startsWith('.')?`from '${new URL(path,fixtureUrl).href}'`:all);
+ const helpers=await import('data:text/javascript;base64,'+Buffer.from(fixtureCode+'\nexport {fixture,documentExpected};').toString('base64'));
+ const line=await helpers.fixture(t),f=fixture();Object.assign(f.binding,line.m.binding);
+ const empty=async function*(){},headers=await helpers.documentExpected(line,{sourceRows:empty,typedRows:empty});
+ f.inputs.closureScope={...f.inputs.closureScope,...Object.fromEntries(['batchId','fixedSourceNamespace','selectionSha256'].map(k=>[k,f.binding[k]])),expectedCounts:headers.expectedCounts,expectedSourceEntityCounts:headers.expectedSourceEntityCounts};
+ f.inputs.producers.TRANSFER_LINES={mode:'REVIEWED',options:line.options};
+ f.inputs.warehouses=Array.from({length:53},(_,i)=>({targetType:'WAREHOUSE',targetId:id(1000+i),sourceEntityType:'WAREHOUSE',sourceKey:`SYN_${i}`,sourceRecordHash:digest('a'),sourceFileRef:'SYNTHETIC.xlsx',nativeRecord:{id:id(2000+i),reviewedAt:'2026-10-24T00:00:00Z',decisionReason:'SYNTHETIC'}}));
+ const checkpoint={sequence:1,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}};
+ const client={async query(sql){const rows=(sql.includes('native-core:carry-forward')||sql.includes('native-core:all-claims'))?f.inputs.warehouses.slice(0,22).map(w=>({checkpoint,core_checkpoint:checkpoint,status:'STAGED',source_name:f.binding.fixedSourceNamespace,source_hash:f.binding.selectionSha256,source_manifest_ref:'SYNTHETIC:core',history_payload_hash:null,core_actor:f.binding.actorAccountId,record_ok:true,source_ok:true,import_batch_id:f.binding.batchId,import_record_id:w.nativeRecord.id,target_type:'WAREHOUSE',target_id:w.targetId,operation_id:f.binding.coreReceiptId,checkpoint_sequence:1,source_entity_type:'WAREHOUSE',source_key:w.sourceKey,source_record_hash:w.sourceRecordHash,source_file_ref:w.sourceFileRef,warehouse_record:w.nativeRecord})):[];return{rows,rowCount:rows.length};},release(){}};
+ f.context.database.ready=()=>({pool:{async connect(){return client;}},runtime26:{profile:'EXACT26',contract:'NATIVE_RUNTIME26_V1',async assertReady(){}}});
+ const open=f.authority.openRetained;f.authority.openRetained=async(...args)=>{const r=await open(...args);for(const method of ['chunks','rows','groups'])r[method]=empty;
+  if(args[0]==='HEADERS')r.openClosure=async()=>({async verify(){},async *sourceRows(){yield*headers.sourceRows;},async *typedRows(){yield*headers.typedRows;},async *documents(){yield*headers.documents;},async close(){}});return r;};
+ f.authority.mainCommands=async function*(phase){yield{action:phase==='BIND'?'IMPORT_BIND_FULL_SOURCE':phase==='ACCOUNT'?'IMPORT_CHUNK':'IMPORT_PUBLISH',batchId:f.binding.batchId,actorAccountId:f.binding.actorAccountId,...(phase==='BIND'?{fullBinding:{coreReceiptId:f.binding.coreReceiptId,coreSourceDigest:f.binding.coreSourceDigest,authorizedPayloadHash:f.binding.authorizedPayloadHash}}:phase==='ACCOUNT'?{items:[]}:{})};};
+ const session=await createProductionSourceProvider26(f.inputs,f.authority).openSourceSession(f.context);t.after(()=>session.close());await session.preflight();
+ const steps=await Array.fromAsync(session.steps()),closure=steps.find(s=>s.kind==='CLOSURE').payload;
+ assert.equal(steps.filter(s=>s.kind==='TRANSFER_LINES').length,1);assert.equal(closure.documents[0].lineCount,2);
+ for(const key of ['sourceManifestSha256','typedManifestSha256','documentManifestSha256'])assert.match(closure.plan[key],/^[a-f0-9]{64}$/);
+ assert.equal(closure.plan.sourceEntityCounts.TRANSFER_LINE,2);assert.equal(closure.plan.sourceEntityCounts.TRANSFER_HEADER,1);
+ await session.close();
+});

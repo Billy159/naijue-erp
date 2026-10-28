@@ -76,9 +76,11 @@ function setup(options: { reference?: boolean; duplicate?: boolean; cycle?: bool
     if (sql.includes("maintenance:identity")) return { rows: [{ account_id: actor.accountId, staff_id: id(99), login_enabled: true, employment_status: "在职", role: options.role ?? "ADMIN", hall_id: actor.hallId }], rowCount: 1 };
     if (sql.includes("maintenance:hall")) return { rows: [{ id: actor.hallId, enabled: true }], rowCount: 1 };
     if (sql.startsWith("SELECT id,name,version")) return { rows: [{ id: target, name: "SOURCE", version: 3, deleted_at: null, parent_id: null, display_order: 0, code: "001", enabled: true }], rowCount: 1 };
+    if (sql.includes("category-depth:subtree")) return { rows: [{ id: target, depth: 0, cyclic: false }], rowCount: 1 };
     if (sql.startsWith("WITH RECURSIVE ancestors")) return { rows: [{ id: options.cycle ? target : id(20), parent_id: null, retained: true, cyclic: false }], rowCount: 1 };
     if (sql.includes(" AS duplicate")) return { rows: [{ duplicate: options.duplicate ?? false }], rowCount: 1 };
     if (sql.includes(" AS referenced")) return { rows: [{ referenced: options.reference ?? false }], rowCount: 1 };
+    if (sql.includes("maintenance:audit")) return { rows: [], rowCount: 1 };
     if (sql.includes("maintenance:complete")) { if (options.receiptFault) throw Error("SYNTHETIC RECEIPT FAILURE"); return { rows: [{ result_data: JSON.parse(values[7] as string) as unknown }], rowCount: 1 }; }
     return { rows: [], rowCount: sql.startsWith("UPDATE") || sql.startsWith("INSERT") ? 1 : 0 };
   }, release() {} }; } });

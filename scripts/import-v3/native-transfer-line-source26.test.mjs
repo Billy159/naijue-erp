@@ -61,7 +61,7 @@ async function fixture(t){
  return {m,paths,state,save,get prepared(){return prepared;},get decisions(){return decisions;},get complete(){return complete;},options:await save()};
 }
 async function collect(iterable){const out=[];for await(const x of iterable)out.push(x);return out;}
-const scope=f=>({batchId:f.m.binding.batchId,fixedSourceNamespace:f.m.binding.fixedSourceNamespace,selectionSha256:f.m.binding.selectionSha256,authorizedPayloadHash:payload});
+const scope=f=>({batchId:f.m.binding.batchId,fixedSourceNamespace:f.m.binding.fixedSourceNamespace,selectionSha256:f.m.binding.selectionSha256,authorizedPayloadHash:payload,expectedCounts:{...Object.fromEntries(HISTORY_COUNT_KEYS.map(k=>[k,0])),history_transfer_line:2,import_source_row:2},expectedSourceEntityCounts:{...Object.fromEntries(HISTORY_CLOSURE_SOURCE_ENTITIES.map(k=>[k,0])),TRANSFER_LINE:2}});
 const context=()=>({group:'TRANSFER_LINES',signal:new AbortController().signal});
 
 test('transfer lines category1: pure existing mapper preserves signed quantity, old alias, stable identities and complete global coverage',()=>{
@@ -125,4 +125,15 @@ test('transfer lines category6: null actual payload refuses closure; real synthe
  const f=await fixture(t),reader=await openReviewedTransferLineSource26({...f.options,authorizedPayloadHash:null});t.after(()=>reader.close());await assert.rejects(reader.openClosure(scope(f),context()),/CLOSURE_SCOPE/);
  const r=await openReviewedTransferLineSource26(f.options);t.after(()=>r.close());const s=await r.openClosure(scope(f),context()),expected=await documentExpected(f,s);assert.equal(expected.documents[0].lineCount,2);assert.equal(expected.documents[0].settlementCount,0);assert.match(expected.documents[0].sourceDocumentSha256,/^[a-f0-9]{64}$/);assert.match(expected.documents[0].typedDocumentSha256,/^[a-f0-9]{64}$/);await assert.rejects(documentExpected(f,s,true));
  const g=await fixture(t);g.m.canonicals[0].原数量='-3';g.m.raws[0].data.原数量='-3';g.m.rawLines[0]=JSON.stringify(g.m.raws[0])+'\r';const changed=await openReviewedTransferLineSource26(await g.save());t.after(()=>changed.close());const cs=await changed.openClosure(scope(g),context()),second=await documentExpected(g,cs);assert.equal(second.documents[0].lineCount,2);assert.notEqual(second.documents[0].sourceDocumentSha256,expected.documents[0].sourceDocumentSha256);assert.notEqual(second.documents[0].typedDocumentSha256,expected.documents[0].typedDocumentSha256);await cs.close();await s.close();
+});
+
+test('B15 strict public six-field scope accepts real counts and rejects malformed identity/count objects',async t=>{
+ const f=await fixture(t),r=await openReviewedTransferLineSource26(f.options);t.after(()=>r.close());
+ const ok=await r.openClosure(scope(f),context());assert.equal((await collect(ok.sourceRows())).length,2);await ok.close();
+ for(const mutate of [s=>s.batchId=id(999),s=>s.fixedSourceNamespace+='x',s=>s.selectionSha256='e'.repeat(64),s=>s.authorizedPayloadHash='e'.repeat(64),
+  s=>s.expectedCounts.history_transfer_line=1,s=>s.expectedSourceEntityCounts.TRANSFER_LINE=1,s=>delete s.expectedCounts.barcodes,
+  s=>s.expectedSourceEntityCounts.EXTRA=0,s=>s.expectedCounts.barcodes=-0,s=>s.expectedCounts.barcodes=2147483646,s=>s.expectedCounts.barcodes=-1,
+  s=>Object.defineProperty(s.expectedCounts,'barcodes',{enumerable:true,get(){throw Error('GETTER_EXECUTED');}})]){
+  const bad=structuredClone(scope(f));mutate(bad);await assert.rejects(r.openClosure(bad,context()));
+ }
 });

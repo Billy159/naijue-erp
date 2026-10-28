@@ -17134,7 +17134,7 @@
     "status": "PLAN_ACCEPTED_WITH_EXECUTION_CORRECTIONS_SOURCE_IMPLEMENTATION_OPEN_NO_ENVIRONMENT_MUTATIONS",
     "package": "/Users/billy/Downloads/奈爵ERP_主控交接V2",
     "sourceCommit": "ed4d044da3c67b09fd23bab0ab08fd7a01b68136",
-    "branch": "codex/local-takeover-wip-20261022-082411",
+    "branch": "codex/erp",
     "packageVersion": "0.1.0",
     "packageCheck": "Existing 校验交接包.py exit0;35 cards complete,explicit DAG acyclic;not source acceptance",
     "model": "gpt-6.1-sol/medium",
@@ -17328,7 +17328,7 @@
           "HV2-G00"
         ],
         "owner": "D1",
-        "state": "SOURCE_SUCCESSOR_EXACT_METADATA_LOCAL_CHECKED;QB_SOURCE_DELTA_NEXT;REAL_PG_NOT_RUN",
+        "state": "SOURCE840_QB_SOURCE_PROTOCOL_PASS;FRESH_CATALOG_REAL_PG_SAVE_NOT_RUN",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B07.txt"
       },
@@ -17414,7 +17414,7 @@
           "HV2-G00"
         ],
         "owner": "D2",
-        "state": "REGISTERED_ORIGINAL_OWNER_SOURCE_IMPLEMENTATION",
+        "state": "APPLICATION_SOURCE6TARGETEDPASS;1EXISTING_READ_ASSERT_FAIL;SQL_FINAL_GUARD_REAL_CONCURRENCY_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B14.txt"
       },
@@ -17426,7 +17426,7 @@
           "HV2-G00"
         ],
         "owner": "D3",
-        "state": "REGISTERED_ORIGINAL_OWNER_SOURCE_IMPLEMENTATION",
+        "state": "SOURCE_OWNER142PASS0FAIL;FIXED_SOURCE_QB_NEXT;NO_REAL_IMPORT",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B15.txt"
       },
@@ -17675,20 +17675,20 @@
     "parallel": {
       "frontendCurrent": "HV2-B04 complete scanner/saved actualSKU matrix edit package after current comparison segment and ownership ack",
       "frontendNext": "HV2-B06/B11/B13/PF01 same candidate/filter files then B05/H05;no duplicate whole site comparison",
-      "T45Current": "HV2-B01/B02 local release mismatch/lifecycle fixes;no stop/deploy/PG",
+      "T45Current": "205 final3pinsCaccepted,originalruntimexminpermission humanapproved;one freshisolatedPG17test first,noR1in205",
       "T45Next": "HV2-B03/P05 then B12/H04 after actual SQL lineage supplied",
-      "D1Current": "B07/P04 fourleaf handedback;C exactmetadata twoleaf ready;QBfixedsource delta next",
+      "D1Current": "B12 salesproofcontract source/fixture mismatch exactNode24.21 4FAIL;twoleaf lease,priorB07fixed/QBdeltaPASS",
       "D1Next": "204 minimalSELECT(xmin) and P04typedmapping/setguard proposals delivered;read precise differences before confirmation;noPG/GRANT/migration/replay",
-      "D2": "CurrentHV2-B14 registered application/store/HTTP+targetedtests;newDBconstraint proposal only,noPG. NextB09/B10;old4SAVEQA waitunchanged.",
-      "D3": "CurrentHV2-B15 registered3leaves sixfieldrealreader/provider syntheticcombination,0import/PG. NextPF02 originalsourcegroup exactcontractfirst;201/204 retained."
+      "D2": "B14 threeleafhandoff;DBproposalawaitCprecise registration;readerassertfailure pending accuratecause. NextB09/B10 originalowner;old4SAVEenvironmentstillwait.",
+      "D3": "B15threeleafhandoff/142PASS;nextPF02 preciseprivateproof/batchbindingdelta beforeimplementation,0realimport"
     },
     "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
-    "next": "Receive unique owner ack,implement scoped first packages,adopt original QA delta,freeze integration and save allowed GitHub checkpoint. Final 37/67/business/history/performance/formal remain incomplete.",
+    "next": "Adopt QB840 limitedPASS,freeze D2/D3exactsource and originalQBdelta;205 actualresult then precise R1permission/sysACLmetadata successor;frontendcurrenthandoff stillpending. No full37/67/formal claim.",
     "githubCheckpoint": {
-      "commit": "aeac96c15d8e193ec7a2f1701f92eee2a0560c9a",
+      "commit": "e195c32bb3895f713386062f09f34851f8cd55cb",
       "remoteVerified": true,
-      "mechanism": "existing exact-object nonforce FF REST",
-      "newCheckpoint": "SOURCE840 source ready; remote refs paused for original taskbook user-authorized branch consolidation"
+      "mechanism": "exact-original-object nonforceFF codex/erp +GET",
+      "sourceRound": 840
     },
     "firstProgress": {
       "T45": "SOURCE839 fixed6leaves,pack31/crosslanguage1/lifecycle4/proxyrender2 localPASS;notfinalpack/runtime.204 actual4SELECT RRRO confirms xminpermission gap,noGRANT/replay.",
@@ -17696,6 +17696,61 @@
       "frontend": "ExistingChat continues normal34 comparison;ownbranch/WIP and B04implementation ack not yetdelivered,no otherfrontendwriter.",
       "toolchain": "T45 found existing exactNode24.21.0;root defaultNode25 not used for acceptance"
     },
-    "updatedAtUtc": "2026-10-28T08:18:57.906347+00:00"
+    "updatedAtUtc": "2026-10-28T08:18:57.906347+00:00",
+    "branchConsolidation": {
+      "owner": "original taskbook Chat",
+      "status": "HANDED_BACK",
+      "remoteMain": "b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3",
+      "remoteERPBefore840": "aeac96c15d8e193ec7a2f1701f92eee2a0560c9a",
+      "frozenTagUnchanged": true,
+      "snapshotPreservedAsArchiveTag": true,
+      "currentBranch": "codex/erp",
+      "noOldBranchRecreated": true
+    },
+    "xminApproval": {
+      "question": "call_367a876e394946dca30d4adda76c6800/0",
+      "answer": "confirmed minimal permission fix and isolated verification",
+      "source": "direct human current turn",
+      "scope": "only SELECT(xmin) naijue_erp.import_source_row for originalruntime; isolatedverify first,then exact R1singlegrant/readback/revokeplan;0writerreplay/deploy/migration/downtime/deletion",
+      "proposalSHA256": "231293567cad4c1a1e0dd14080e528b2c092aca28f9ce75df664c9ceb5229043",
+      "205": "C read3exactfiles;isolatedonlynewnetworknonePG17/0rows/retain,readyonce;R1notin205"
+    },
+    "acceptedDelta": {
+      "B07_P04_SOURCE840": {
+        "reviewer": "originalQB",
+        "report": "reports/qa-backend/rapid-launch-20261022/QB/HV2-B07-P04/QB-HV2-B07-P04-RESULT.json",
+        "sha256": "ed2cffacf9d50d3da0aeab408d2146b96dd1849513c17a84be077483388c0b2c",
+        "result": "SOURCE_PROTOCOL_LIMITED_PASS_6_NEW_TESTS_0FAIL_0SKIP",
+        "unverified": "realPGinstall/nullHTTP/UNNESTtrigger/P04hotspots/performance/build/deploy"
+      }
+    },
+    "source841": {
+      "D2": {
+        "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/HV2-B14/RESULT.json",
+        "files": [
+          "adapters/postgres/src/catalogue-maintenance-store.ts",
+          "tests/catalogue-maintenance-postgres-protocol.test.ts",
+          "tests/category-reparent-launch-block.test.ts"
+        ],
+        "state": "APPLICATION_SOURCE_READY6TARGETEDPASS;25COMBINED24PASS1EXISTING_READER_ASSERT_FAIL;DB_FINAL_GUARD_NOT_IMPLEMENTED",
+        "notDone": "exactSQLsuccessor/constraintconfirmation/currentmetadata/actualPGconcurrency;notwholeB14PASS"
+      },
+      "D3": {
+        "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D3/HV2-B15-RESULT.json",
+        "files": [
+          "scripts/import-v3/native-transfer-line-source26.mjs",
+          "scripts/import-v3/native-transfer-line-source26.test.mjs",
+          "scripts/import-v3/production-source-provider26.test.mjs"
+        ],
+        "state": "SOURCE_READY_OWNER142PASS0FAIL0SKIP_READER_PROVIDER_FULL11_SYNTHETIC",
+        "notDone": "QB fixedsource delta next;noPG/import/runtimebuild/deploy"
+      },
+      "B12": {
+        "command": "Node24.21.0 --test tests/runtime-document-commit-outcome.test.ts",
+        "result": "18PASS4FAIL0SKIP",
+        "scope": "salesfixture assumes3proof butsourceC276intentionally2;originalD1 assignedtraceexactapprovedcontract beforefix,notblindcountchange",
+        "sourceCommit": "dbd1b23191768362d5f46589aeada7d14eb06f0e"
+      }
+    }
   }
 }

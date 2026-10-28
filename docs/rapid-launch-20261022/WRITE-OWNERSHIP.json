@@ -6830,12 +6830,8 @@
       "D2": {
         "id": "HV2-B14",
         "files": [
-          "packages/application/src/catalogue-maintenance-service.ts",
           "adapters/postgres/src/catalogue-maintenance-store.ts",
-          "apps/api/src/catalogue-maintenance-http.ts",
-          "tests/catalogue-maintenance.test.ts",
           "tests/catalogue-maintenance-postgres-protocol.test.ts",
-          "apps/api/src/catalogue-maintenance-http.test.ts",
           "tests/category-reparent-launch-block.test.ts"
         ],
         "readOnly": [
@@ -6843,7 +6839,7 @@
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "adapters/postgres/src/inventory-query-reader.ts"
         ],
-        "state": "REGISTERED_SOURCE_ONLY_NEW_SQL_CONSTRAINT_PROPOSAL_BEFORE_IMPLEMENTATION",
+        "state": "HANDED_BACK3LEAVES_APPLICATION6PASS;ONE_RETAINED_READER_ASSERT_FAIL;SQL_PROPOSAL_ONLY",
         "next": "HV2-B09/B10 source sameowner after firstpackage;original4SAVEQA stillwaitactualenvironment"
       },
       "D3": {
@@ -6859,8 +6855,20 @@
           "packages/application/src/history-storage-contract.ts",
           "packages/application/src/history-typed-closure.ts"
         ],
-        "state": "REGISTERED_SOURCE_AND_SYNTHETIC_COMBINATION_ONLY_NO_IMPORT_OR_PG",
+        "state": "HANDED_BACK3LEAVES_OWNER142PASS;NO_PG_REAL_SOURCE_IMPORT",
         "next": "PF02 sameoriginalsourceowner,precisecontractdelta first;B08/P03 laterquerygroup"
+      },
+      "D1_B12": {
+        "id": "HV2-B12_SALES_PROOF_DELTA",
+        "files": [
+          "adapters/postgres/src/sales-unit-of-work.ts",
+          "tests/runtime-document-commit-outcome.test.ts"
+        ],
+        "readOnly": [
+          "adapters/postgres/src/transfer-unit-of-work.ts",
+          "adapters/postgres/src/native-import-accounting-capability.ts"
+        ],
+        "state": "EXACT_NODE24_21_REPRO_18PASS4FAIL;TRACE_APPROVED2PHASE_CONTRACT_BEFORE_FIX;NO_PG"
       }
     },
     "protectedTrackedWip": [
@@ -6868,6 +6876,7 @@
     ],
     "oldFrontRoles": "F1-F4 latest turns completed and files released/idle;current human supersedes historical sourceWriteEnabled",
     "exclusions": "No one writes frozen Demo/oldproject/currentWIP unassigned/publiccontracts/rootconfig/lock or SQL/runtimeprobes without exactCregistration;T45 sourcelease excludes manifest.mjs pending onefactsource H04 handoff.",
-    "updatedAtUtc": "2026-10-28T08:18:57.906347+00:00"
+    "updatedAtUtc": "2026-10-28T08:18:57.906347+00:00",
+    "branch": "codex/erp"
   }
 }

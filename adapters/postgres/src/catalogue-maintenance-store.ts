@@ -105,6 +105,8 @@ class CatalogueSqlTransaction implements CatalogueMaintenanceTransaction {
     if (next.deletedAt !== null) return;
     if (next.kind === "CATEGORY") {
       requireDomain(next.parentId !== next.id, "CATEGORY_CYCLE", "Category cannot parent itself");
+      const moved = previous === undefined || previous.kind !== "CATEGORY" || previous.parentId !== next.parentId;
+      let ancestorDepth = 0;
       if (next.parentId !== null) {
         const chain = (await this.query(`WITH RECURSIVE ancestors AS (
           SELECT id,parent_id,deleted_at,ARRAY[id] AS trail,false AS cyclic,0 AS depth FROM naijue_erp.product_category WHERE id=$1::uuid
@@ -112,9 +114,21 @@ class CatalogueSqlTransaction implements CatalogueMaintenanceTransaction {
           JOIN naijue_erp.product_category c ON c.id=a.parent_id WHERE NOT a.cyclic AND a.depth<4999)
           SELECT id,parent_id,deleted_at IS NULL AS retained,cyclic FROM ancestors ORDER BY depth`, [next.parentId])).rows;
         requireDomain(chain.length > 0 && chain.length <= 5000 && chain.at(-1)!.parent_id === null && chain.every(c => c.retained === true && c.cyclic === false && c.id !== next.id), "CATEGORY_CYCLE", "Category parent path is missing, deleted or cyclic");
-        const moved = previous === undefined || previous.kind !== "CATEGORY" || previous.parentId !== next.parentId;
+        ancestorDepth = chain.length;
         requireDomain(!moved || chain.length === 1, "CATEGORY_DEPTH", "New category parent must be a first-level category; legacy structure remains retained");
         await this.query("SELECT id FROM naijue_erp.product_category WHERE id=ANY($1::uuid[]) ORDER BY id FOR SHARE", [chain.map(c => uuid(c.id))]);
+      }
+      if (moved && previous !== undefined) {
+        const subtree = (await this.query(`/* category-depth:subtree */ WITH RECURSIVE descendants AS (
+          SELECT id,ARRAY[id] AS trail,false AS cyclic,0 AS depth FROM naijue_erp.product_category WHERE id=$1::uuid AND deleted_at IS NULL
+          UNION ALL SELECT c.id,d.trail||c.id,c.id=ANY(d.trail),d.depth+1 FROM descendants d
+          JOIN naijue_erp.product_category c ON c.parent_id=d.id AND c.deleted_at IS NULL
+          WHERE NOT d.cyclic AND d.depth<2)
+          SELECT id,depth,cyclic FROM descendants ORDER BY depth,id LIMIT 5001`, [next.id])).rows;
+        requireDomain(subtree.length > 0 && subtree.length <= 5000 && subtree.every(r => r.cyclic === false && r.id !== next.parentId),
+          "CATEGORY_CYCLE", "Moving category subtree is missing, cyclic or contains its new parent");
+        const height = Math.max(...subtree.map(r => integerValue(r.depth))) + 1;
+        requireDomain(ancestorDepth + height <= 2, "CATEGORY_DEPTH", "New ancestor depth and live subtree height exceed two levels");
       }
       const duplicate = (await this.query("SELECT EXISTS(SELECT 1 FROM naijue_erp.product_category WHERE id<>$1::uuid AND parent_id IS NOT DISTINCT FROM $2::uuid AND name=$3 AND deleted_at IS NULL) AS duplicate", [next.id, next.parentId, next.name])).rows;
       requireDomain(duplicate.length === 1 && duplicate[0]!.duplicate === false, "CATALOGUE_NAME_CONFLICT", "Sibling category name already exists");
