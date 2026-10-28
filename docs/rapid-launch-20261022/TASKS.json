@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T15:04:06.296084+00:00",
+  "updatedAt": "2026-10-28T15:09:43.746440+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "b39a3ec4b3ae290b92dab008186ab64bc805ac0f",
+  "lastVerifiedRemoteCommit": "ab10d77c5e5d76a850bf9ec40186168420a5711d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18386,7 +18386,7 @@
     },
     "C_B12_Launch866": {
       "owner": "C",
-      "status": "QB_NARROW_RUNNER_SOURCE_CHECKS_PASS_ACTUAL_ENV_BLOCKED",
+      "status": "CLEAN_ROOT_INSTALL_DEPENDENCIES_API_AND_RUNTIME_TYPES_SCOPED_PASS_NOT_WHOLE_B12",
       "files": [
         "package.json",
         "package-lock.json",
@@ -18394,13 +18394,15 @@
         "scripts/check-launch.mjs",
         "scripts/check-launch.test.mjs"
       ],
-      "checks": "4newrunnerchecksPASS;existing14directdependencies/219lockedentriesverifyPASS,noinstall;actualNode24.21npm11.19returnsBLOCKED_ENVexit2beforelocalgates",
+      "checks": "Node24.21.0/npm11.9.0;rootnpmci0;dependencies0;launchAPItypes0;runtimetypes0;ownGitrootclean;noexistingWIPdepschanged",
       "expectedToolchain": "Node24.21.0/npm11.9.0;nodefromreleasecontract/npmfrompackageManager;rootengines+lockrootmetadataalignedwithoutdependencychange",
       "scope": "CurrentrecursiveAPI/runtime/import-v3/release/originalkeytests;originalrootcheckallonce;31requiredaccepted-scope/cleaninstallreceiptentriesmissingarenotgreen",
       "missing": "Cleanrootinstall/runtimeactualtypesFAILcurrentmixedtree/fullcurrentcandidatePGbrowserproxyperformanceH01-H06D01",
       "receipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE866/QB-SOURCE866-RESULT.json",
       "sha256": "525f5a1a660c1045ea5b649040e4c696fab42151c4ea5398bfecaf8b8708ed89",
-      "next": "OriginalT45 independentfixedGitcheckout/exactnpm11.9 rootci andtargetedtypes;noexistingdependencycleanup"
+      "next": "T45 samefixedcheckout originalnpmrunbuildonce;no9stage/fullbusinessclaim",
+      "fixedCommit": "ab10d77c5e5d76a850bf9ec40186168420a5711d",
+      "actualReceipt": "reports/controller/rapid-launch-20261022/B12-source868-clean-root-01/RESULT.json"
     },
     "P04Upgrade228": {
       "status": "ACTUAL_COMPLETED_ORIGINAL_T45_RESULT_ADOPTED",
@@ -18421,7 +18423,18 @@
       "frontend": "OriginalTerra medium normal34 fullcomparisonongoing;nofreshwholepagecount",
       "production": "NOT_CHANGED",
       "model": "gpt-6.1-sol/medium",
-      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH"
+      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+      "qaReceipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE868/QB-SOURCE868-RESULT.json",
+      "qaStatus": "PASS_NARROW_GIT_IDENTITY_AND_CONFIG_SCOPE_NOT_RUNTIME_TYPES"
+    },
+    "v23Registration229": {
+      "owner": "T45",
+      "status": "ORIGINAL_OWNER_CODE_CARRIER_PREPARATION_ONLY",
+      "namespace": "t45-hv2-v23-source858-code-registration-20261028-229",
+      "source": "89ae916178716175dbf5b9b70181f485cc0b51b8",
+      "scope": "87newcurrent+PythonGit730baseline;6external14activealiasesretained;107strictrefs;originalD3closureadopted",
+      "notAuthorized": "Noactualservertransfer/PythonprobeuntilexactCcarrier;noPG/realbody/ACL/201/INIT/BIND/PUBLISH/R1",
+      "model": "gpt-6.1-sol/medium"
     }
   }
 }
