@@ -349,9 +349,14 @@ export async function normalDocumentReferenceScopeOn(client: PgSalesQueryClient,
 }
 export async function assertNormalReferenceHistoryOn(scoped: Awaited<ReturnType<typeof normalDocumentReferenceScopeOn>>): Promise<void> {
  const h=scoped.history;
- const row=rowOf(await scoped.query(`/* normal-reference:validity */ SELECT coalesce(bool_and((${h.headerValidityPredicate}) IS TRUE AND
+ // This statement uses only history parameters. Native filters/search/selected
+ // IDs belong to later statements; remove those unused slots for pg Parse.
+ const sql=`/* normal-reference:validity */ SELECT coalesce(bool_and((${h.headerValidityPredicate}) IS TRUE AND
    NOT EXISTS(SELECT 1 FROM ${h.lineTable} l ${h.lineEffectiveJoins} WHERE l.batch_id=h.batch_id AND l.header_id=h.id AND (${h.lineValidityPredicate}) IS NOT TRUE)),true) AS valid
-   FROM ${h.headerFrom} WHERE ${h.publishedPredicate} AND (${scoped.historyScope})`,scoped.values));
+   FROM ${h.headerFrom} WHERE ${h.publishedPredicate} AND (${scoped.historyScope})`;
+ const indices=[...new Set([...sql.matchAll(/\$(\d+)/g)].map(m=>Number(m[1])))].sort((a,b)=>a-b);
+ const positions=new Map(indices.map((index,i)=>[index,i+1]));
+ const row=rowOf(await scoped.query(sql.replace(/\$(\d+)/g,(_,index:string)=>`$${positions.get(Number(index))!}`),indices.map(index=>scoped.values[index-1])));
  requireDomain(row.valid===true,'INVALID_DATABASE_VALUE','Published historical reference facts contradict effective revision');
 }
 export async function normalDocumentListOn(client: PgSalesQueryClient, options: NativeDocumentListOptions,

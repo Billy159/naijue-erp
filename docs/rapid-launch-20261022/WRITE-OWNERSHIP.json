@@ -6914,7 +6914,7 @@
         "readOnly": [
           "apps/web/demo-replica/frontend/runtime/common/ready-pages.tsx"
         ],
-        "state": "ACTIVE_ORIGINAL_D3_B08_PARAM_01_ONLY_SAME3LEAF;FIXED842_FINDING_NOT_CLOSED"
+        "state": "HANDED_BACK_EXACT_SOURCE844_OVERLAY;QB512242d4_AND57ce1832_SOURCE_PROTOCOL_CLOSED;READONLY"
       },
       "D2_B10": {
         "id": "HV2-B10",
@@ -6936,13 +6936,14 @@
           "tests/category-depth-successor.test.ts",
           "tests/integration/category-depth.integration.test.ts"
         ],
-        "state": "HANDED_BACK_FIXED_NEXT_SOURCE843;READONLY_UNTIL_QB_FINDING;FRESH_SYNTHETIC_PG_T45_NOT_R1",
+        "state": "SOURCE843_SQL_FIXED_QB_PENDING;ONE_INTEGRATION_DRIVER_FIX_D1_B14_DRIVER_CLEANUP01",
         "readOnly": [
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "adapters/postgres/patches/0026-category-reorder-undo.sql",
           "adapters/postgres/patches/0026-history-responsible-null-successor.sql"
         ],
-        "parent": "Source840B07 exactguard581a44 and fullv22source lineage131routines;actualR1notpatched,do notexecute there"
+        "parent": "Source840B07 exactguard581a44 and fullv22source lineage131routines;actualR1notpatched,do notexecute there",
+        "activeOnly": "tests/integration/category-depth.integration.test.ts:connection acquisition finally + explicit noCUTOFF bootstrap assumption;originalSQL/source test readonly"
       },
       "D1_P04_SQL": {
         "id": "HV2-P04_SET_GUARDS_BATCH_LEDGER",
@@ -6951,14 +6952,40 @@
           "adapters/postgres/src/inventory-posting-balances.ts",
           "tests/history-revision-posting-postgres-protocol.test.ts",
           "tests/history-revision-set-guards.test.ts",
-          "tests/integration/history-revision-set-guards.integration.test.ts"
+          "tests/integration/history-revision-set-guards.integration.test.ts",
+          "tests/history-revision-postgres-protocol.test.ts"
         ],
         "state": "ACTIVE_ORIGINAL_D1_gpt-6.1-sol_medium_HUMAN_CONFIRMATION_3b47_ITEM1",
         "readOnly": [
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "adapters/postgres/patches/0026-history-responsible-null-successor.sql"
         ],
-        "boundary": "historyposting path only;0persistentfacts tables/columns;nonhistorypostingunchanged;actualPGT45exacttargetonly"
+        "boundary": "historyposting path only;0persistentfacts tables/columns;nonhistorypostingunchanged;actualPGT45exacttargetonly",
+        "fixtureSeam": "Only synthetic exact ledger RETURNING rows needed by new batchposting;preserve original guard/versions/key/rollback assertions;no productionhistory-store change"
+      },
+      "D2_B12_COMPOSITION_FIXTURE": {
+        "id": "HV2-B12_EXISTING_COMPOSITION_FAILURES",
+        "files": [
+          "apps/api/src/production-provider-composition.test.ts"
+        ],
+        "state": "ACTIVE_D2_EXACT_ONE_TEST_LEAF",
+        "readOnly": [
+          "apps/api/src/production-provider-composition.ts",
+          "adapters/postgres/src/native-import-accounting-capability.ts"
+        ],
+        "scope": "Trace eight known prior capability/issuerfixturefailures against original approved source before changing only inaccurate fixture. Preserve strict identity/CAS/key/proof/refusal assertions;report actual implementation bug instead of relaxing."
+      },
+      "C_B12_ROOT": {
+        "id": "HV2-B12",
+        "files": [
+          "tsconfig.launch-api.json",
+          "package.json",
+          "package-lock.json",
+          "scripts/check-launch.mjs",
+          "scripts/check-launch.test.mjs"
+        ],
+        "state": "C_ONLY_ROOT_LOCK_MODEL_NO_PACKAGE_UPGRADE",
+        "scope": "Actual production API graph with root lock only;existing runtime/release commands finite checks notnewplatform;root fail remainsreported. Frontend runtime config stillreadonly until explicitownerhandoff."
       }
     },
     "protectedTrackedWip": [
@@ -6966,7 +6993,7 @@
     ],
     "oldFrontRoles": "F1-F4 latest turns completed and files released/idle;current human supersedes historical sourceWriteEnabled",
     "exclusions": "No one writes frozen Demo/oldproject/currentWIP unassigned/publiccontracts/rootconfig/lock or SQL/runtimeprobes without exactCregistration;T45 sourcelease excludes manifest.mjs pending onefactsource H04 handoff.",
-    "updatedAtUtc": "2026-10-28T09:19:25.749473+00:00",
+    "updatedAtUtc": "2026-10-28T09:28:22.626778+00:00",
     "branch": "codex/erp"
   }
 }
