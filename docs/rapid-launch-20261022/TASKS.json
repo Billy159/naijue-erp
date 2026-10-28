@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-28T15:53:27.647571+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "b56e7cc32bafd91103f62cad5717f0a0df6041b0",
+  "lastVerifiedRemoteCommit": "ac765cc0b8695fe140b206d758652f52b39c486d",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18513,15 +18513,21 @@
       "status": "ACTUAL_METADATA_READONLY_OBSERVATION_PASS_NOT_BUSINESS",
       "receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-p04-runtime-acl-readonly-20261028-232/RESULT232.json",
       "observations": "SchemaUSAGEfalse/35tables379columnsfalse/4xminfalse/2historyhelpersEXECfalse;other4app5builtinEXECtrue",
-      "next": "D1exactminimumproposal_userapprovalbeforeGRANT;noobserverrerun"
+      "next": "Human exactP04syntheticACL confirmation pending; originalQB narrowSQL review running; noGRANT/PGdriveruntilapproved",
+      "proposal": "reports/backend/rapid-launch-20261022/D1/HV2-B07/P04-232-ACL-CONFIRMATION.txt",
+      "proposalScope": "OID16400/runtime16398 only;32tables/4wholeSELECTincludingxmin/211columnSELECT/81INSERT/33UPDATE/2EXEC/schemaUSAGE;lockUPDATEisrealability;noDELETE/admin/production"
     },
     "H04B10Current875": {
       "owner": "D2deploy2leaves/Cotherrelease",
-      "status": "D2_TWO_LEAF_SOURCE_READY_2TARGETED_PASS_C_GENERATOR_REFRESH_FIXED_QB_NEXT",
+      "status": "QB_PASS_SOURCE_AND_SYNTHETIC_MOUNT_ONLY",
       "reason": "SelectedstaffCLIrequiresprivatekeypath;deployclosedselector+mountdoesnotyetcarryit",
       "notAuthorized": "Noactualkeyread/generation/server/PG/ACL/production",
       "receipt": "reports/backend/rapid-launch-20261022/D2/H04-B10-PRIVATE-CREDENTIAL-MOUNT875/RESULT.json",
-      "next": "OriginalQB fixednewprivatepath/mount+generatedhelperonly;actualprivatekeyprovisionnotexecuted"
+      "next": "C Full135sharedorderedSQLcontract;actualkeyprovision/deploymentNOT_TESTED",
+      "fixedCommit": "ac765cc0b8695fe140b206d758652f52b39c486d",
+      "qaReceipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE876/QB-SOURCE876-RESULT.json",
+      "qaSha256": "003ef38c9e35c5647ce42f17a81fcd443959531b0b5deb1dc22e63858c2c6a59",
+      "checks": "CredentialMount2PASS;generatorCheckPASS;nooldLifecycleOrPackRerun"
     },
     "Graph872": {
       "receipt": "reports/controller/rapid-launch-20261022/B12-source872-production-closure-02/GRAPH-SUMMARY.json",

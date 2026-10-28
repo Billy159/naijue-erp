@@ -1,3 +1,7 @@
+SOURCE877：采用原QB SOURCE876限定PASS（003ef38c）：两项私有凭据挂载合成检查及现有生成一致性检查通过；0密钥内容读取/摘要，未重复旧Lifecycle/pack。真实key供给、启动和部署未验，完整H04/B10未完成。GitHub原分支已准确回读ac765cc0。
+
+P04最小权限确认单现已提交人类：仅合成OID16400/runtime16398，四表SELECT含xmin，其他指定列读写及两函数/schemaUSAGE；明确行锁所需UPDATE仍是真实更新能力，无DELETE/owner/正式库。原QB只核新SQL与撤回差异，未执行GRANT；实际四病例/genuine会话仍等待该批准。C继续135共享发布合同收口，原D2只读交接准确有序SQL成员，暂无新源码writer。Demo原normal34保留，Chrome窗口问题仍待用户，无新增整页/弹层完成数。整体ACTIVE，正式环境未动。
+
 SOURCE876：原D2已交B10/H04私有credential文件接缝两叶source（deploy-candidate.py/test_stop_full_lifecycle.py）：Full受选staff必须准确私有host/container引用、固定readonly单文件mount，未选不得多挂；runtime路径字段不按bool校验；原file_identity仅stat加入既有binding，0key内容读取/摘要，0真实文件/PG/server。2新定向测试及AST通过，旧Lifecycle/pack不重。C沿现有generator同步boot helper pin；固定后只交原QB新增源差异，非实际密钥供给/完整H04/B10或部署通过。FullpatchLevel/SQL有序闭包仍C未完。
 
 原Demo Chat实际已idle/BLOCKED等待Chrome使用安排，原normal34版本/草稿/断点保留，不再误报实操正在进行。C已在本Chat一次转达窗口交还问题，未获答前不重派比较或切换窗口；后台D1最小P04权限确认单及D2源修接续继续。没有新增整页/弹层完成结论，37/67分母不缩。源876前远端b56e7cc3已精确回读，目标ACTIVE，正式环境未动。
