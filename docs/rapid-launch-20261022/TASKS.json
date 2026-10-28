@@ -17701,11 +17701,10 @@
     "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
     "next": "QB845P04/Cmetadata/B12fixturelimitedreview;T45freshB14/P04isolationprep;CfiniteH04release mechanics;D3P03;frontendnormal34fullcomparisonfirst",
     "githubCheckpoint": {
-      "commit": "980ad642205338299a06232062acd288c26e3ffb",
+      "commit": "ab3a1d06b1d5ba2ee85a2d10b84779b6625d814d",
       "remoteVerified": true,
-      "sourceRound": 847,
-      "branch": "codex/erp",
-      "mechanism": "exactoriginalobjects nonforceFF+GET"
+      "sourceRound": 848,
+      "branch": "codex/erp"
     },
     "firstProgress": {
       "T45": "SOURCE839 fixed6leaves,pack31/crosslanguage1/lifecycle4/proxyrender2 localPASS;notfinalpack/runtime.204 actual4SELECT RRRO confirms xminpermission gap,noGRANT/replay.",
@@ -18070,12 +18069,24 @@
       }
     },
     "currentDispatch848": {
-      "T45": "Exact210finalPLANf638d795/carrier361759f2/MJS2209af58 Cread and authorizedonce only4newroles/2emptyDBs;no schema/fixture/R1;actualresultpending",
+      "T45": "210actualCOMPLETED0/1.821907s;B14DB16399/P04DB16400/4dedicatedlowprivilegeLOGINroles/ownerandnonownerloopbackRRROreadbackPASS;0schema/fixture/R1/oldDB. Original847helpernextcarrierpreparing.",
       "D3": "Originalowner PF02 exact4provider/hostleaves V2xminconsumer+snapshotindices;no actualimport;newproof/writecontract differencesmustconfirm",
       "D1": "SOURCE847fixture/typehandedback,QBclosed;nextactualnewtargetcatalog+necessaryfreshv22installer onlyafterT45facts",
       "QF": "B04limitedPASSadopted;no browser/normal41resume;actualcandidateSAVEpending",
       "frontend": "OriginalTerra-mediumnormal34 fullcomparisoncontinues;fullcountsnotnewlyreported",
       "C": "H04sharedrelease andcleanrootbuild stillunimplemented;no claimdone"
+    },
+    "isolated210": {
+      "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-two-new-empty-db-role-bootstrap-20261028-210/RESULT.json",
+      "bytes": 9976,
+      "sha256": "4245b608bd4b025fac2698b7a6c4a13d12a0e6a7f288fd44c2c141e3b56a949d",
+      "finishedAtUtc": "2026-10-28T10:12:30.506065Z",
+      "databaseOids": {
+        "erp_hv2_b14_20261028_01": "16399",
+        "naijue_erp_test_b07_syn_approved_hv2p04_20261028_01": "16400"
+      },
+      "result": "ACTUAL_NEW_EMPTY_TARGETS_AND_OWNER_NONOWNER_LOOPBACK_PASS_ONLY",
+      "unmeasured": "schema/fixture/SQLguards/transactions/performance/session/business allnotyet"
     }
   }
 }
