@@ -1,9 +1,9 @@
 import { historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
 import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
-import { loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
+import { NATIVE_TRANSFER_SNAPSHOT_LIMIT, loadNativeTransferSnapshots } from "./native-transfer-snapshots.ts";
 import { reserveRuntimeDocumentNumber, assertRuntimeDocumentNumber } from "./runtime-document-number.ts";
 import type { RuntimeDocumentNumberInput } from "../../../packages/application/src/runtime-document-number.ts";
-import { PostgresNativeSalesFacts } from "./sales-native-facts.ts";
+import { checkedNativeSalesFactInput, PostgresNativeSalesFacts } from "./sales-native-facts.ts";
 import type { NativeCatalogueCompletenessVerifier, NativeSalesHistoricalCustomers } from "./sales-native-facts.ts";
 import type { NativeSalesReferenceFacts } from "../../../packages/application/src/sales-native-facts.ts";
 import { PostgresPostingBalances } from "./inventory-posting-balances.ts";
@@ -165,7 +165,19 @@ class PostgresSalesTransaction implements SalesTransaction {
   private readonly previousLines = new Map<string, SalesLineRow>();
   private readonly previousSettlements = new Map<EntityId<"settlement">, SalesSettlementRow>();
   private receiptKey: string | undefined;
-  close(): void { this.active = false; }
+  // One entry per kind, private to this original client/receipt/target lifetime.
+  private referenceGeneration = 0;
+  private factsCache: { readonly key: string; readonly value: NativeSalesReferenceFacts } | undefined;
+  private snapshotsCache: { readonly key: string; readonly value: ReadonlyMap<EntityId<"sku">, SalesLineRow["snapshot"]> } | undefined;
+  private invalidateReferenceReads(): void {
+    this.referenceGeneration++; this.factsCache = undefined; this.snapshotsCache = undefined;
+  }
+  private referenceScopeKey(): string {
+    return JSON.stringify([this.receiptActor, this.receiptKey, this.sales?.id, this.sales?.version, this.sales?.stockBasis,
+      this.specificationResolved, this.referenceGeneration, [...this.previousLines.values()].filter(line => line.isCurrent)
+        .map(line => [line.id, line.skuId, line.snapshot]).sort((a, b) => String(a[0]).localeCompare(String(b[0])))]);
+  }
+  close(): void { this.active = false; this.invalidateReferenceReads(); }
   private readonly client: PgSalesClient;
   private readonly nativeFacts: PostgresNativeSalesFacts;
   private readonly specificationCatalogue: MaintainedCatalogue26TransactionProof | undefined;
@@ -173,6 +185,7 @@ class PostgresSalesTransaction implements SalesTransaction {
   private readonly specificationPool: PgSalesPool | undefined;
   private readonly specificationNativeFacts: PostgresNativeSalesFacts | undefined;
   private specificationResolved = false;
+  private specificationResolving = false;
   constructor(client: PgSalesClient, verifier?: NativeCatalogueCompletenessVerifier, historicalCustomers?: NativeSalesHistoricalCustomers, runtime26?: NativeRuntime26Capability, maintainedCatalogue = false, pool?: PgSalesPool) {
     this.client = client; this.balances = runtime26 === undefined ? new PostgresPostingBalances((sql, values) => this.query(sql, values))
       : PostgresPostingBalances.forRuntime26(client, runtime26, () => requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes"));
@@ -198,8 +211,15 @@ class PostgresSalesTransaction implements SalesTransaction {
     bound(); await this.getCurrentSalesIdentity(input.scope.actor.accountId);
     requireDomain(this.specificationRuntime && this.specificationPool && this.specificationCatalogue,
       'NATIVE_CATALOGUE_FACTS_UNAVAILABLE','Reviewed exact26 maintained catalogue authority required');
-    const ids=await resolveNativeDocumentSpecifications({pool:this.specificationPool,client:this.client,runtime:this.specificationRuntime,
-      catalogue:this.specificationCatalogue,assertBound:bound},input);this.specificationResolved=true;return ids;
+    requireDomain(!this.specificationResolving, "TRANSACTION_SCOPE", "One original specification resolution at a time");
+    // The resolver is the only sales path that can append product/SKU/barcode
+    // facts using the raw original client. Invalidate on both sides, even failure.
+    this.invalidateReferenceReads(); this.specificationResolving = true;
+    try {
+      const ids = await resolveNativeDocumentSpecifications({pool:this.specificationPool,client:this.client,runtime:this.specificationRuntime,
+        catalogue:this.specificationCatalogue,assertBound:bound},input);
+      bound(); this.specificationResolved = true; return ids;
+    } finally { this.specificationResolving = false; this.invalidateReferenceReads(); }
   }
   private assertNumberScope(input: RuntimeDocumentNumberInput): void {
     requireDomain(this.active && input.kind === "SALES" && input.actorAccountId === this.receiptActor
@@ -216,18 +236,32 @@ class PostgresSalesTransaction implements SalesTransaction {
     await assertRuntimeDocumentNumber((sql, values) => this.query(sql, values), input);
     this.assertNumberScope(input);
   }
-  async getCurrentSalesReferenceFacts(document: SalesDraft | SalesDocument): Promise<NativeSalesReferenceFacts> {
-    requireDomain(this.active && this.receiptActor !== undefined && this.sales?.id === document.header.id,
+  async getCurrentSalesReferenceFacts(input: SalesDraft | SalesDocument): Promise<NativeSalesReferenceFacts> {
+    const check = (salesId: EntityId<"sales">): void => requireDomain(this.active && !this.specificationResolving && this.receiptActor !== undefined && this.sales?.id === salesId,
       "TRANSACTION_SCOPE", "Native facts require the original receipt actor and loaded sales target");
-    await this.getCurrentSalesIdentity(this.receiptActor);
-    return (this.specificationResolved?this.specificationNativeFacts!:this.nativeFacts).load(document);
+    check(input.header.id);
+    const { document, referenceKey } = checkedNativeSalesFactInput(input);
+    await this.getCurrentSalesIdentity(this.receiptActor!); check(document.header.id);
+    const scope = this.referenceScopeKey(), key = JSON.stringify([scope, referenceKey]);
+    if (this.factsCache?.key === key) return this.factsCache.value;
+    const value = await (this.specificationResolved ? this.specificationNativeFacts! : this.nativeFacts).load(document);
+    check(document.header.id);
+    requireDomain(this.referenceScopeKey() === scope, "TRANSACTION_SCOPE", "Native facts changed during their original read");
+    this.factsCache = { key, value }; return value;
   }
   async getCurrentSalesSnapshots(skuIds: readonly EntityId<"sku">[]): Promise<ReadonlyMap<EntityId<"sku">, SalesLineRow["snapshot"]>> {
-    requireDomain(this.active && this.receiptActor !== undefined && this.sales !== undefined,
+    const check = (): void => requireDomain(this.active && !this.specificationResolving && this.receiptActor !== undefined && this.sales !== undefined,
       "TRANSACTION_SCOPE", "Native snapshots require the original bound sales actor and target");
-    await this.getCurrentSalesIdentity(this.receiptActor);
-    // Shared manual-SKU MAIN snapshot authority; no pricing or transfer mutation.
-    return loadNativeTransferSnapshots((sql, values) => this.query(sql, values), skuIds);
+    check();
+    const ids = [...new Set(skuIds.map(value => entityId("sku", value)))].sort();
+    requireDomain(ids.length > 0 && ids.length <= NATIVE_TRANSFER_SNAPSHOT_LIMIT, "INVALID_LINES", "Bounded SKU selection required");
+    await this.getCurrentSalesIdentity(this.receiptActor!); check();
+    const scope = this.referenceScopeKey(), key = JSON.stringify([scope, ids]);
+    if (this.snapshotsCache?.key === key) return new Map(this.snapshotsCache.value);
+    const value = await loadNativeTransferSnapshots((sql, values) => this.query(sql, values), ids);
+    check();
+    requireDomain(this.referenceScopeKey() === scope, "TRANSACTION_SCOPE", "Native snapshots changed during their original read");
+    this.snapshotsCache = { key, value: new Map(value) }; return new Map(value);
   }
   private query(text: string, values: unknown[] = []): Promise<PgSalesResult> {
     requireDomain(this.active, "TRANSACTION_CLOSED", "Transaction handle cannot be used after its callback completes");

@@ -7418,19 +7418,22 @@
         "apps/api/src/postgres-read-api.test.ts",
         "apps/api/src/postgres-application-api.test.ts",
         "apps/api/src/postgres-imported-history-composition.test.ts",
-        "apps/api/src/production-application-host.test.ts"
+        "apps/api/src/production-application-host.test.ts",
+        "apps/api/src/staff-maintenance-http.ts",
+        "apps/api/src/staff-maintenance-http.test.ts"
       ],
       "scope": "P02 explicit snapshot/read-release/password-work/final-short-lock-revalidation; finite injected admission budget with no production defaults; no codec cost/format change; actual PG not authorized by source lease",
       "CReserved": "production-provider-composition/sharedconfiguration/release/rootconfigs/aggregate records; exact needed seam beforewriting",
       "boundary": "Internal readports and local SQL SELECT follow current source authorization; true new persistent/write-contract semantic differences must be precisely reported, no speculative blanketapproval or actualDB/ACL/server",
       "handoff": "OriginalD2 explicit four-leaf handback 2026-10-29; idle/noWIP/commands; preserve acceptedH06 readiness+close",
-      "fixtureHandoff": "C verifies exact D1 request; originalD2 H06 source handed back/source863 accepted, D2 current A01 readonly only; fixture data/interface adapt, preserve assertions"
+      "fixtureHandoff": "C verifies exact D1 request; originalD2 H06 source handed back/source863 accepted, D2 current A01 readonly only; fixture data/interface adapt, preserve assertions",
+      "staffBusySeam": "Only precise PasswordWorkRejected PASSWORD_WORK_BUSY ->429 Retry-After; preserveDomainError/unknownCOMMIT"
     },
     "P01SalesFacts887": {
       "owner": "D3",
       "model": "gpt-6.1-sol",
       "thinking": "medium",
-      "status": "ACTIVE_EXACT_FOUR_LEAF_SOURCE",
+      "status": "HANDED_BACK_SOURCE889_FIXED_QB_NEXT",
       "files": [
         "adapters/postgres/src/sales-unit-of-work.ts",
         "adapters/postgres/src/sales-native-facts.ts",
@@ -7473,6 +7476,19 @@
       "handoff": "D1 explicit original3sharedleaves noWIP/inflight 2026-10-29; D3P01adapter/source disjoint",
       "scope": "Approved exactD2A01-PENDING-CAPACITY-DELTA; unchanged1024/16MiB;actual sparsecompletion pendingadmission sameclient/lock;originalreceiptfirst recovery; noDBschema/ACL/production",
       "reserved": "postgres-read-api.ts D1P02; HTTP/browser errors exactseam toC/originalowners; no concurrentsharedwriter"
+    },
+    "A01CapacityHttp889": {
+      "owner": "C",
+      "files": [
+        "apps/api/src/product-maintenance-http.ts",
+        "apps/api/src/product-maintenance-http.test.ts",
+        "apps/api/src/sales-http.ts",
+        "apps/api/src/sales-http.test.ts",
+        "apps/api/src/transfer-http.ts",
+        "apps/api/src/transfer-http.test.ts"
+      ],
+      "scope": "Approved A01 capacity409503 exacterror propagation only; originalD1 explicitsixleafhandoff/noWIP; noUI/runtimePG",
+      "model": "gpt-6.1-sol/medium"
     }
   }
 }

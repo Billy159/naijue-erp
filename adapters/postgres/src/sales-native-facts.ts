@@ -2,7 +2,7 @@ import { historicalCustomerExclusionEnabled } from "./party-read-reader.ts";
 import type { HistoricalCustomerExclusionCapability } from "./party-read-reader.ts";
 import type { SalesDocument, SalesDraft, SalesLineRow } from "../../../packages/domain/src/documents.ts";
 import type { EntityId, EntityKind } from "../../../packages/domain/src/values.ts";
-import { entityId } from "../../../packages/domain/src/values.ts";
+import { entityId, version } from "../../../packages/domain/src/values.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
 import { SALES_NATIVE_FACT_MAX_LINES, SALES_NATIVE_FACT_QUERY_BATCH_SIZE } from "../../../packages/application/src/sales-native-facts.ts";
 import type { NativeSalesReferenceFacts } from "../../../packages/application/src/sales-native-facts.ts";
@@ -34,6 +34,38 @@ function exactMap<K extends EntityKind>(kind: K, rows: readonly Record<string, u
     "SALES_REFERENCE_UNAVAILABLE", "Native target fact set is incomplete or inconsistent"); return result;
 }
 
+/** Pure input checks are shared by cache hits and the original database loader.
+ * Only reference primitives form the key; money/quantity/snapshot labels are
+ * deliberately left to the original pure rules on every invocation. */
+export function checkedNativeSalesFactInput(input: SalesDraft | SalesDocument): { readonly document: SalesDraft | SalesDocument; readonly referenceKey: string } {
+  const document = structuredClone(input), h = document.header;
+  if ("version" in h) version(h.version);
+  for (const line of document.lines) requireDomain(typeof line.isCurrent === "boolean", "INVALID_LINE", "Explicit current line flag required");
+  const current = document.lines.filter(line => line.isCurrent);
+  requireDomain(current.length > 0 && current.length <= SALES_NATIVE_FACT_MAX_LINES && document.settlements.length <= 3,
+    "NATIVE_SALES_FACTS_TOO_LARGE", "Native fact request exceeds the technical current-document bound");
+  id("sales", h.id); id("hall", h.hallId); id("warehouse", h.warehouseId); id("customer", h.customerId);
+  if (h.salespersonId !== null) id("staff", h.salespersonId);
+  const lineIds = new Set<string>();
+  for (const line of current) {
+    id("salesLine", line.id); id("sku", line.skuId);
+    requireDomain(line.salesId === h.id && !lineIds.has(line.id), "TRANSACTION_SCOPE", "Native facts require unique owned actual sales lines");
+    lineIds.add(line.id);
+    if (line.snapshot.barcode !== null) stringValue(line.snapshot.barcode);
+  }
+  const settlementIds = new Set<string>();
+  for (const row of document.settlements) {
+    id("settlement", row.id); id("paymentAccount", row.paymentAccountId);
+    if (row.paymentMethodId !== null) id("paymentMethod", row.paymentMethodId);
+    requireDomain(row.salesId === h.id && !settlementIds.has(row.id), "TRANSACTION_SCOPE", "Native facts require unique owned settlements");
+    settlementIds.add(row.id);
+  }
+  const ordered = (rows: unknown[][]): string[] => rows.map(row => JSON.stringify(row)).sort();
+  return { document, referenceKey: JSON.stringify([h.id, "version" in h ? h.version : null, h.hallId, h.warehouseId, h.customerId, h.salespersonId,
+    ordered(current.map(line => [line.id, line.salesId, line.skuId, line.isCurrent, line.snapshot.barcode])),
+    ordered(document.settlements.map(row => [row.id, row.salesId, row.paymentAccountId, row.paymentMethodId]))]) };
+}
+
 /** Owned by one bound sales transaction. No pool, BEGIN/COMMIT, independent cache,
  * identity grant or document mutation. Every query is through its original client. */
 export interface NativeSalesHistoricalCustomers { readonly target: object; readonly capability: HistoricalCustomerExclusionCapability }
@@ -60,14 +92,9 @@ export class PostgresNativeSalesFacts {
     return exactMap(kind, rows, wanted);
   }
   async load(input: SalesDraft | SalesDocument): Promise<NativeSalesReferenceFacts> {
-    const document = structuredClone(input); const h = document.header; this.checkScope(h.id);
+    const { document } = checkedNativeSalesFactInput(input); const h = document.header; this.checkScope(h.id);
     requireDomain(this.verifier, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "A real validated product-input completeness verifier is required");
     const current = document.lines.filter(line => line.isCurrent);
-    requireDomain(current.length > 0 && current.length <= SALES_NATIVE_FACT_MAX_LINES && document.settlements.length <= 3,
-      "NATIVE_SALES_FACTS_TOO_LARGE", "Native fact request exceeds the technical current-document bound");
-    for (const line of current) { id("salesLine", line.id); id("sku", line.skuId); requireDomain(line.salesId === h.id, "TRANSACTION_SCOPE", "Native facts require owned actual sales lines"); }
-    id("sales", h.id); id("hall", h.hallId); id("warehouse", h.warehouseId); id("customer", h.customerId);
-    if (h.salespersonId !== null) id("staff", h.salespersonId);
     const schema = one((await this.query("/* native-sales-facts:schema */ SELECT EXISTS (SELECT 1 FROM naijue_erp.schema_migration WHERE version = 10) AS installed")).rows);
     requireDomain(schema.installed === true, "NATIVE_CATALOGUE_FACTS_UNAVAILABLE", "Current native sales schema including the original-method snapshot has not been installed");
     const hall = one((await this.query("/* native-sales-facts:hall */ SELECT id, enabled FROM naijue_erp.hall WHERE id = $1::uuid FOR SHARE", [h.hallId])).rows);
