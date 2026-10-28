@@ -1,3 +1,7 @@
+SOURCE874：完整SOURCE872候选build attempt02实际exit0，原builder REAL_BUILD_AND_PACK_CONTRACT_VALIDATED：3959固定源码文件/1418选用输入/202产物11365475B，production-bootstrap→web/application.js及真实backend入口图均已形成；原native硬链接复制错误只在新copy2副本修正，0重ci/0源码或守卫放宽，旧失败01保留。采用原T45 B12-source872-production-closure-02/RESULT.json；仅本地完整构建/pack输入合同，不是实际pack、启动、代理/PG或正式业务PASS。旧source598公开配置仅settings子集、销货调拨库存false/旧assetprefix仍准确单列；V20共享合同尚未135收口，构建图详细共享/首屏静态可达证据由原owner仅读现有metafile，不重build。
+
+231原三SQL已真正逐步COMMIT_RETURNED+独立回读，最终135/profile26_hv2_history_set_guards_from_v22/catalog74a42644，1.721447s；每步原40数据/222batch三receipt/QA均不变、clients0，原B14constraint自然投影精确核对，不是新写合同。采用原T45 RESULT231/c9b1d2e2，仅安装通过，普通角色ACL/genuineQA/driver/实际历史修订仍未验。原D1开始基于实际135目录核有限权限现状和最小差异，必要只读观察先交T45；未获用户明确批准不GRANT。正常normal34全站Demo仍在原Chat固定版本对比，目标/37页67类分母不变，正式未动。
+
 SOURCE873：原T45固定SOURCE872复用868未变锁/已装根依赖，不重ci；API/runtime/harness严格types及原rootbuild四项全部0，新独立输出、trackedclean。限定回执B12-source872-reused-root-01/RESULT.json采用，不重复；完整发布闭包仍未通过。原完整build首次在native依赖阶段FILE_LINK_OR_SIZE_LIMIT拒绝：新副本esbuild/bin与@esbuild/darwin-arm64/bin同inode/nlink2，9934834B；无candidate输出，源与原ci依赖/失败现场保留。原T45获准新attempt02按regularfile逐个实体复制解除新副本硬链接，标准npm symlink保留，守卫/源码/锁不变、不重ci，不原样重试。
 
 D1已交230→135原三SQL适用性准备fcfa5b79：B07null131→131、B14depth→133、P04set→135；直接复用原guard/已批函数，不新增包装/权限。原T45准备新231精确载体，尚未执行。前端原normal34全量逐页及状态对比继续，仅差异已登记不冒整页通过；源码872的夹具编译改名不改该固定UI候选。正式环境不动、目标ACTIVE。

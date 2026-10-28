@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T15:32:25.244262+00:00",
+  "updatedAt": "2026-10-28T15:39:24.738200+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "2b5815aaa7e58cdba78b1b2ac1d9de5aae2d53e8",
+  "lastVerifiedRemoteCommit": "b4f995369ed23f956c4bb47fec18cdec02c1afab",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18481,16 +18481,19 @@
     },
     "productionClosure872": {
       "owner": "T45",
-      "status": "ATTEMPT01_FILE_LINK_GUARD_FAIL_ATTEMPT02_COPY_CORRECTION_ACTIVE",
-      "receipt": "reports/controller/rapid-launch-20261022/B12-source872-production-closure-01/RESULT.json",
+      "status": "ATTEMPT02_ACTUAL_FULL_BUILD_SCOPED_PASS_NOT_RUNTIME_OR_RELEASE",
+      "receipt": "reports/controller/rapid-launch-20261022/B12-source872-production-closure-02/RESULT.json",
       "cause": "Copiednpmnativeesbuildpairnlink2;guardrequires1;beforecandidateoutput",
-      "next": "Freshcopytreeindividualregularfiles/samesourceanddeps/config/newoutputs;noCI/noguardchange",
-      "boundary": "Reusedsource598publicsettingssubsetoldassetprefix;noactivations/businesscapabilityclaim"
+      "next": "Originalowner existingmetafile readonly sharedruntime/staticreachable analysis;C135sharedcontractstillopen;no rebuild",
+      "boundary": "Reusedsource598publicsettingssubsetoldassetprefix;noactivations/businesscapabilityclaim",
+      "buildId": "t45-source872-production-closure-20261028-02",
+      "buildFiles": 202,
+      "buildBytes": 11365475
     },
     "P04Successors135": {
       "owner": "D1prepared/T45carrier231",
-      "status": "SOURCE_REUSE_PREPARED_NOT_PG_EXECUTED",
-      "receipt": "reports/backend/rapid-launch-20261022/D1/HV2-B07/P04-SUCCESSORS-135-PREPARATION.json",
+      "status": "ACTUAL231_THREE_COMMIT_RETURNED_READBACK135_SCOPED_PASS",
+      "receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-p04-approved-successors135-20261028-231/RESULT231.json",
       "order": [
         "B07null",
         "B14depth",
@@ -18502,7 +18505,9 @@
         133,
         135
       ],
-      "next": "OriginalT45exactnew231carrier;no230replay/newACL/driver"
+      "next": "D1actual135finiteACLobservations/minimumproposal thenhumanapproval;genuineQAissuer/driver pending",
+      "catalog": "74a426445b77fd60f75029856525b88df53fa4eeef50ea714da77fd9197e49db",
+      "data": "40relations/222batch3receiptsQAunchanged/client0"
     }
   }
 }
