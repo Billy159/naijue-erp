@@ -1,3 +1,5 @@
+SOURCE927：原D1已交回B10单新leaf19360/cdf0dc157703bad564bf42f17df93bd99652175453bf8c261d300b21787fa80c，补正式R3/Full私有key→真实HTTP认证/员工维护的隔离验收入口。原D1撤回其对“新库”措辞的额外解释：准确复用现QA897/OID21551，不复制bootstrap或另建B10库；仍须真实CORE/fullPUBLISH/readback及role/key/scenario/capacity。strict单TS根依赖0诊断、惰性/缺host拒绝通过；PG/key/业务执行0，不冒实际通过。冻结后交原QB仅新叶窄审，旧五叶不重复；真实last-admin/角色权限和secret供给仍缺。
+
 SOURCE926调度：去重核实B10卡指定真实staff凭证PG入口尚无现存等效leaf，交原D1仅新tests/integration/staff-credential-production-entry.test.ts，原D2已验五叶只读保留；复用真实issuer/auth/CLI/tag和原fixture，禁止STAGED或mock冒通过。本轮不读/生成key、PG/权限/业务写。A02总表纠正过时“UID探测在途”：254只读挂载失败、256备份已通过但restore及实际probe/window/benchmark仍缺。原Demo当前normal34日期边界对比active，前端未切修复，权限原问题pending不重问。
 
 SOURCE925：采用原T45 256实际只读私有备份回执8155/1400b8150b7a5afa7af84042155f672503cf7c15a335f20ce4914967e2f54da2，pg_dump一次exit0/871207字节、双读稳定、TOC845目录可读；257仅安全元数据回读。准确QA21551前后135函数/55空业务表/实例身份一致，两时点无其他client不冒持续围栏。backup实际device66304与system/media同盘，不重复算余量；普通UID访问/新free读数仍未测。归档服务器私有root0600，不取回/Git；实际restore及role/WAL/config恢复仍未执行、不称恢复PASS。原权限确认仍pending，不重复备份/授权/生产动作。

@@ -19254,12 +19254,22 @@
     "B10RealEntry926": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "status": "DISPATCHED_NEW_SINGLE_INTEGRATION_TEST_LEAF_ONLY",
+      "status": "SOURCE927_D1_HANDED_BACK_LOCAL_CHECKS_PASS_ORIGINAL_QB_PENDING",
       "files": [
         "tests/integration/staff-credential-production-entry.test.ts"
       ],
       "scope": "Existing B10 card missing exact real-PG host integration runner. D1 host test only, original D2 implementation/key/CLI five leaves read-only. Reuse actual issuer/authentication/maintenance/fixture; no owner bypass/mockproof/directseed/key provisioning/PG/roleDDL/GRANT/server/data deletion. Current full source publish prerequisites remain.",
-      "next": "Check equivalent existing runner once; if absent implement actual original entry tests and narrow type/no-environment checks. Hand back exact source, actual PG remains separately authorized/pending."
+      "next": "Original QB narrow new single-leaf review, no old five-leaf/protocol suite. T45 actual shared QA execution only after accurate published fixture/role/review/private key/scenario/capacity and human permission conditions. No new DB/bootstrap requirement.",
+      "pins": [
+        {
+          "path": "tests/integration/staff-credential-production-entry.test.ts",
+          "bytes": 19360,
+          "sha256": "cdf0dc157703bad564bf42f17df93bd99652175453bf8c261d300b21787fa80c"
+        }
+      ],
+      "target": "Reuse current registered QA897/OID21551 only, not new b10 DB; original CORE/full PUBLISH/typed readback required",
+      "checks": "D1 Node24.21 targeted strict TS-root/dependencies0 diagnostics; lazy import/missing-host refusal before file/key/PG PASS; no PG/key/HTTP business/SQL/server execution.",
+      "remaining": "Actual creation/reset/CAS/last-admin/key-replay/unknown-COMMIT and secret/rescue/normalrole permissions not tested; one usable-admin scenario must be actually justified, no automatic disabling others."
     }
   }
 }
