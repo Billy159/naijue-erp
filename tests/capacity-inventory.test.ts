@@ -79,6 +79,22 @@ test('A02 explicit symlink root/ancestor and overlapping roots refuse or reportU
   const result=await inventoryCapacity(options([{key:'alias',path:alias}]),{pool:pg().pool});assert.equal(result.status,'UNKNOWN');assert.equal(result.media[0].counts,null);
   await assert.rejects(inventoryCapacity(options([{key:'parent',path:root},{key:'child',path:path.join(root,'nested')}]),{pool:pg().pool}),/OVERLAPPING/);
 });
+test('A02 root and ordinary ancestor overlap rejects in both orders before any pool or filesystem use',async()=>{
+  let connects=0,fsCalls=0;
+  const dependencies={pool:{async connect(){connects++;throw Error('Must not connect');}},fs:new Proxy({},{get(){fsCalls++;throw Error('Must not inspect filesystem');}})};
+  for(const [parent,child] of [['/','/synthetic-child'],['/synthetic-parent','/synthetic-parent/child']]){
+    for(const paths of [[parent,child],[child,parent]])await assert.rejects(inventoryCapacity(options(paths.map((value,index)=>({key:`root${index}`,path:value}))),dependencies),/OVERLAPPING_MEDIA_ROOTS_REFUSED/);
+  }
+  assert.equal(connects,0);assert.equal(fsCalls,0);
+});
+test('A02 adjacent independent roots pass configuration and use only their explicit synthetic trees',async t=>{
+  const parent=await temporary(t),first=path.join(parent,'media'),second=path.join(parent,'media-extra');
+  await mkdir(first);await mkdir(second);
+  for(const paths of [[first,second],[second,first]]){
+    const f=pg(),result=await inventoryCapacity(options(paths.map((value,index)=>({key:`root${index}`,path:value}))),{pool:f.pool});
+    assert.equal(f.connects(),1);assert.equal(result.status,'OBSERVED');assert.equal(result.media.length,2);
+  }
+});
 test('A02 formula is exact ceil(rT)+B(R+1)+inflight with no chosen production window or restart assumption',()=>{
   assert.equal(observationWindowSessionBound({rateTokens:60,rateIntervalMillis:60000,windowMillis:7*24*60*60000,burst:10,restarts:0,inFlight:2}),'604812');
   assert.equal(observationWindowSessionBound({rateTokens:1,rateIntervalMillis:3,windowMillis:10,burst:2,restarts:3,inFlight:1}),'13');

@@ -18709,15 +18709,19 @@
     },
     "A02Inventory894": {
       "owner": "D1",
-      "status": "SOURCE898_READONLY_TOOL_DELIVERED_QB_PENDING",
+      "status": "SOURCE899_ROOT_OVERLAP_FIX_HANDED_BACK_PENDING_QB_F01_ONLY",
       "files": [
         "scripts/ops/capacity-inventory.mjs",
         "tests/capacity-inventory.test.ts"
       ],
       "scope": "A02 card step2 inventory only; no actual PG/media/server execution; no policy defaults or new write admission",
-      "next": "QB exact two-leaf delta then original T45 precise current QA target private config and actual read-only observation; no invented capacity/retention",
+      "next": "QB fixed F01 only then T45 exact target read-only inventory",
       "receipt": "reports/backend/rapid-launch-20261022/D1/A02-INVENTORY-RESULT.json",
-      "checks": "20unique cases across recorded targeted runs; initial2fixture failures fixed/retested; necessary affected FS tests/types/syntax pass; no actual PG or media target"
+      "checks": "20unique cases across recorded targeted runs; initial2fixture failures fixed/retested; necessary affected FS tests/types/syntax pass; no actual PG or media target",
+      "finding": "QB898-F01 POSIX root / ancestry overlap, both orders must reject before connect/fs",
+      "qa": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE898/QB-SOURCE898-RESULT.json",
+      "fixReceipt": "reports/backend/rapid-launch-20261022/D1/A02-SOURCE898-ROOT-OVERLAP-FIX.json",
+      "fixChecks": "2targetedPASS;root-child both orders and parent-child rejected before pool/fs; adjacent roots preserved;no original20/12rerun"
     },
     "H03Lifecycle895": {
       "owner": "D2",
@@ -18756,13 +18760,73 @@
     },
     "P01RealPg892": {
       "owner": "D3",
-      "status": "SOURCE897_RUNNER_HANDED_BACK_NO_ACTUAL_PG",
+      "status": "SOURCE897_QB_NARROW_RUNNER_PASS_NO_ACTUAL_PG",
       "file": "tests/integration/sales-save-facts-cache.integration.test.ts",
       "receipt": "reports/backend/rapid-launch-20261022/D3/P01-PG-RUNNER-RESULT.json",
       "checks": "Strict transitive closure/Node syntax/3 observer-entry local checks pass; bare node-test rejects missing host",
       "scope": "4 finite scenarios/15commands;1/20/200 actual lines + missing-spec rollback/originalkey; actual issuer observer below lease boundary; no DDL/ACL/seed/credentials",
       "notProven": "Real PG execution, SLO/scale, network/auth/proxy; 1SKU repeated lines per shape are not full source diversity",
-      "next": "OriginalQB source/necessary type delta, then T45 current fixed A01/P02 host accurate synthetic fixture and review; do not reuse P04 old867 host"
+      "next": "T45 accurate new QA target/current host/ACL/fixture preparation; distinguish synthetic session from P02 genuine auth; actual PG not executed",
+      "qa": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE897/QB-SOURCE897-RESULT.json"
+    },
+    "Current897QA899": {
+      "owner": "T45",
+      "status": "C_EXACT_NEW_SYNTHETIC_TARGET_BOOTSTRAP_DECIDED_NOT_YET_ACTUAL",
+      "sourceCommit": "c53cec427882f70d51a53d6d84652bc54181736a",
+      "proposal": "reports/controller/rapid-launch-20261022/T45-CURRENT897-QA-PREPARATION-01/EXACT-QA-PROPOSAL.json",
+      "target": {
+        "database": "naijue_erp_test_hv2_qa897_20261029_01",
+        "owner": "hv2_qa897_owner_20261029_01",
+        "runtime": "hv2_qa897_runtime_20261029_01",
+        "oid": null
+      },
+      "decision": "C under verified user technical delegation 01a1837b-674f-7a20-aab5-da1300b4690c: original isolated PG identity/resources revalidate then one new DB/two ordinary roles only; no clone/P04 changes/schema/fixture/ACL until exact subsequent decision",
+      "syntheticAuthBudgets": {
+        "sessionTtlSeconds": 900,
+        "passwordWork": {
+          "maxConcurrent": 2,
+          "maxAnonymous": 1,
+          "retryAfterSeconds": 1
+        },
+        "loginAdmission": {
+          "global": {
+            "burst": 20,
+            "tokens": 20,
+            "intervalMillis": 60000
+          },
+          "source": {
+            "burst": 20,
+            "tokens": 20,
+            "intervalMillis": 60000
+          },
+          "sourceAccount": {
+            "burst": 3,
+            "tokens": 3,
+            "intervalMillis": 60000
+          },
+          "entryTtlMillis": 120000,
+          "maxEntries": 256,
+          "maxRetryAfterSeconds": 60
+        }
+      },
+      "budgetBoundary": "Synthetic functional cold1/repeat2 and finite rejection tests only; verify resource premise before use; NOT production defaults or SLO acceptance",
+      "next": "Actual target IDs from T45 receipt; D1 exact maintained fixture/LIVE ACL seams; distinguish P01 synthetic session from P02 normal auth; A02 root fix first"
+    },
+    "H06Retention899": {
+      "owner": "D2",
+      "status": "EXACT_CURRENT_DEPENDENCIES_IDENTIFIED_POLICY_AND_APPLY_STILL_PENDING",
+      "scope": "No retention durations invented; current stage24h is attachment eligibility not deletion; formal references still depend stages/index; reuse A02 inventory; no deletion/source writes yet",
+      "next": "Accurate existing retention/rotation/ref/currentactivity seams plus minimum bounded GC implementation proposal; preserve explicit deletion approval boundary",
+      "receipt": "reports/backend/rapid-launch-20261022/D2/H06-RESOURCE-RETENTION-DELTA.json",
+      "findings": "Expired session rows participate category/staff/bootstrap guards; stage+keys remain permanent native reference/idempotency dependencies; physical cleanup is not TTL expiry; current collector/rotation not yet evidenced"
+    },
+    "Current897Fixture899": {
+      "owner": "D3",
+      "status": "ACTIVE_ONE_NEW_ADAPTER_LEAF_SOURCE_ONLY",
+      "file": "tests/integration/current-runtime26-sales-fixture.ts",
+      "target": "naijue_erp_test_hv2_qa897_20261029_01",
+      "scope": "Reuse original current26 import+maintained contracts; exact synthetic nonnull hall actor/live refs/lawful missingSKU tuple; no oldschema11/P04guard relaxation/mockproof/direct table seed",
+      "next": "Callable adapter/accurate target/source-grant required; T45 actual execution only after binding"
     }
   }
 }

@@ -43,7 +43,10 @@ function configuration(options) {
       || typeof root.path !== 'string' || !path.isAbsolute(root.path) || path.resolve(root.path) !== root.path) throw Error('EXPLICIT_DISTINCT_MEDIA_ROOTS_REQUIRED');
     keys.add(root.key); roots.push(root.path);
   }
-  for (const a of roots) for (const b of roots) if (a !== b && b.startsWith(a + path.sep)) throw Error('OVERLAPPING_MEDIA_ROOTS_REFUSED');
+  for (const a of roots) for (const b of roots) {
+    const relative = path.relative(a, b);
+    if (a !== b && relative !== '..' && !relative.startsWith('..' + path.sep) && !path.isAbsolute(relative)) throw Error('OVERLAPPING_MEDIA_ROOTS_REFUSED');
+  }
   if (new Set(roots).size !== roots.length) throw Error('OVERLAPPING_MEDIA_ROOTS_REFUSED');
   return structuredClone(options);
 }

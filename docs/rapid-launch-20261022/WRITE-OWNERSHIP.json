@@ -7518,13 +7518,13 @@
     },
     "A02Inventory894": {
       "owner": "D1",
-      "status": "ACTIVE_EXACT_READONLY_TOOL_AND_TEST",
+      "status": "D1_TARGETED_FIX_SOURCE898_QB_ROOT_OVERLAP",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "scripts/ops/capacity-inventory.mjs",
         "tests/capacity-inventory.test.ts"
       ],
-      "scope": "Original A02 card step2 finite read-only session/relation/database and media allocated usage inventory; no token/password data, no DB execution/ACL/DDL/delete; no invented capacity or retention defaults",
+      "scope": "Only root overlap / versus descendant exact finding and regression; same two leaves, no new scope or actual inventory",
       "next": "Handback executable tool and targeted tests; actual target execution only T45; trusted remote filesystem/WAL unknown stays unknown"
     },
     "H03Lifecycle895": {
@@ -7538,6 +7538,18 @@
       "scope": "Reuse actual P01/A01 transaction proof implementation; map four lifecycles and add only missing refusal equivalence cases; no production verifier/SQL/ACL/checkpoint/cache rewrite",
       "decision": "Preserve all original online proofs; only transaction-local reuse, current identity/version/reference/lock checks remain; no claim against malicious code-and-database administrator",
       "next": "Exact missing tests and evidence handback; genuine PG refusal/concurrency stays later original T45"
+    },
+    "Current897Fixture899": {
+      "owner": "D3",
+      "status": "ACTIVE_EXACT_SYNTHETIC_FIXTURE_ADAPTER_SOURCE_ONLY",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "tests/integration/current-runtime26-sales-fixture.ts"
+      ],
+      "scope": "Original current exact26 import/maintained paths for one explicit new QA target; real nonnull hall actor/salesperson/payment/existingSKU+lawful missingtuple; no schema11/old P04 target relaxation/direct table seed/proof mock",
+      "target": "naijue_erp_test_hv2_qa897_20261029_01",
+      "executionOwner": "T45 only after bound actual target/source grant/ACL",
+      "next": "Hand back callable adapter with exact source inputs and genuine reference readback; report missing existing port before widening files"
     }
   }
 }
