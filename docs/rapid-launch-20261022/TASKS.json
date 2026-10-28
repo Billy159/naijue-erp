@@ -17258,7 +17258,7 @@
           "HV2-P02"
         ],
         "owner": "D1",
-        "state": "READONLY_INVENTORY_TWO_LEAF_IMPLEMENTATION_ACTIVE;BUDGET_ADMISSION_ACTUAL_PENDING",
+        "state": "SOURCE898_READONLY_TOOL_DELIVERED_QB_PENDING;ACTUAL_INVENTORY_BUDGET_ADMISSION_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/A02.txt"
       },
@@ -17528,7 +17528,7 @@
           "HV2-B07"
         ],
         "owner": "D1/T45",
-        "state": "SOURCE867_DRIVER_FIXED;ACTUAL233_ACL_234_RUNTIME_METADATA_QB_PASS;AUTH_FOUR_CASE_EXECUTION_PENDING",
+        "state": "ACTUAL235_NORMAL_AUTH_ISSUER_4CASE_SCOPED_PASS;HTTP_UI_SCALE_SLO_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P04.txt"
       },
@@ -18709,37 +18709,50 @@
     },
     "A02Inventory894": {
       "owner": "D1",
-      "status": "ACTIVE_READONLY_TOOL_SOURCE",
+      "status": "SOURCE898_READONLY_TOOL_DELIVERED_QB_PENDING",
       "files": [
         "scripts/ops/capacity-inventory.mjs",
         "tests/capacity-inventory.test.ts"
       ],
       "scope": "A02 card step2 inventory only; no actual PG/media/server execution; no policy defaults or new write admission",
-      "next": "Fixed source and targeted checks; T45 exact synthetic target read-only inventory; C actual T/R/space budget after evidence"
+      "next": "QB exact two-leaf delta then original T45 precise current QA target private config and actual read-only observation; no invented capacity/retention",
+      "receipt": "reports/backend/rapid-launch-20261022/D1/A02-INVENTORY-RESULT.json",
+      "checks": "20unique cases across recorded targeted runs; initial2fixture failures fixed/retested; necessary affected FS tests/types/syntax pass; no actual PG or media target"
     },
     "H03Lifecycle895": {
       "owner": "D2",
-      "status": "SOURCE896_HANDED_BACK_LOCAL3PASS_PENDING_QB",
+      "status": "SOURCE896_QB_NARROW_LIFECYCLE_PASS_REAL_PG_PENDING",
       "decision": "Retain original online proofs; same-transaction reuse only; no checkpoint/cross-request cache/proof retirement",
       "files": [
         "docs/controller-handoff-20261028/PROOF-LIFECYCLE.json",
         "tests/proof-lifecycle-equivalence.test.ts"
       ],
-      "next": "Fixed QB only missing lifecycle delta; original T45 genuine PG negative/concurrent evidence pending",
+      "next": "Actual exact26 PG wrongbatch/bypass/1024+1/16MiB/concurrency/permissions; no repeat local suites",
       "checks": "8 warm/cold pairs/16transitions zero difference; original active proof revocation case; strict closure pass; no PG",
-      "receipt": "reports/backend/rapid-launch-20261022/D2/H03-LIFECYCLE-895/RESULT.json"
+      "receipt": "reports/backend/rapid-launch-20261022/D2/H03-LIFECYCLE-895/RESULT.json",
+      "qa": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE896/QB-SOURCE896-RESULT.json"
     },
     "P04Actual235": {
       "owner": "T45",
-      "state": "ACTUAL_KEYS_ALL_COMMITTED_WRAPPER_REPORTER_PARSE_FAILED_READONLY_DIAG_PENDING",
+      "state": "SCOPED_ACTUAL_AUTH_ISSUER_FOUR_CASES_PASS_ORIGINAL_FAILED_PRESERVED",
       "sourceCommit": "b39a3ec4b3ae290b92dab008186ab64bc805ac0f",
       "jobId": "t45-hv2-p04-original-auth-and-fourcases-20261029-235",
       "decisionSource": "C reviewed exact new carrier; verified user delegation 01a1837b-674f-7a20-aab5-da1300b4690c",
       "targetDatabaseOid": 16400,
       "runtimeRoleOid": 16398,
       "scope": "One original auth-only login/session with TTL900 then fixed four history revision cases 0/1/16/2, original keys and receipts; owner before/after read-only, no production/ACL/DDL/delete",
-      "next": "T45 original235 raw reporter bounded read-only diagnostics; NEVER repeat driver/auth/newkeys; keep original FAILED",
-      "observed": "Original auth true; driver process exit0 not timedout but counters null; four fixed keys COMMITTED; original source guard pass; logout204/session1revoked/active0/pool/client0"
+      "next": "Adopt exact original T45 actual scope without duplicate QA; current-host P01/A01/P02 QA target preparation, preserve oldP04",
+      "observed": "Original auth true; driver process exit0 not timedout but counters null; four fixed keys COMMITTED; original source guard pass; logout204/session1revoked/active0/pool/client0",
+      "receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-p04-original-auth-and-fourcases-20261029-235/RESULT235-RECOVERED.json",
+      "sha256": "f6741878c4111ae31a44ce463a748cb926da6ca8c78e21678a18e81f276cdca6",
+      "counters": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      "coverage": "0/1/16/2 effects/fullstate original-key replay/CASrollback samePID/advisorywait; real auth principal/logout/client0; protected source unchanged",
+      "notProven": "Four HISTORY HTTP routes/UI/scale/performanceSLO/production"
     },
     "P01RealPg892": {
       "owner": "D3",

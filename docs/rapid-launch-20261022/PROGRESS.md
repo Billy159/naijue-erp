@@ -1,3 +1,5 @@
+SOURCE898：原D1 A02只读盘点两叶已交回固定，20不同case分轮定向通过（保留初2fixture失败与修复，未虚称最终整套同跑）；无实际PG/媒体/server盘点，UNKNOWN/失败不当零，远端PG/WAL空间不冒本机statfs。235原输出只读恢复证实tests1/pass1/fail0/skip0，正常auth/真实issuer及0-1-16-2、原keyfullstate/CASrollback/advisorywait真实通过，准确source/QA保护和logout/client0已验；采用T45受托范围，不另重复技术验收。原FAILED/nullcount与236只读恢复均保留，合成16行timing不冒全量SLO/HTTP/UI。H03 SOURCE896原QB限定PASS采用。T45接当前P01/A01/P02准确新QA目标准备，不复用旧P04库冒LIVE能力、不清库或未经准确决定执行。
+
 SOURCE897：原D3单叶真实PG验证runner已交回固定，1/20/200行及补规格失败回滚/原key恢复场景可由准确宿主调用；无默认目标、凭据、建库或seed。严格闭包/语法及3项本地入口透传检查通过，未实际PG执行，裸test拒绝缺宿主，不能算空跑PASS。原T45 235已提交四键，236仅只读解析原私有测试输出，不重业务。
 
 SOURCE896：H03原D2两叶交回固定，3项新局部检查/严格类型通过，8组warm/cold配对16过渡差异0及权限失效拒绝；实际PG边界未验。235实际已normal auth/真实issuer并完成四固定键提交，原source/QA保护和logout/client0通过，但Node reporter计数解析null让外壳FAILED，原失败不改；只读解析原raw确认实际断言，不重业务/登录/换键。尚不将子进程exit0单独当业务PASS。
