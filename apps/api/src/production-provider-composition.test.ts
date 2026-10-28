@@ -29,7 +29,12 @@ import { createPostgresApplicationApi, createPostgresRuntime26DocumentApplicatio
 function config(): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "NATIVE_RUNTIME", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
     http: { host: "0.0.0.0", port: 3000, acceptedHosts: ["1n5635n614.goho.co"] }, assets: { root: "/unopened-output", entry: "index.html" },
-    build: { sourceCommit: "f".repeat(40), buildId: "SYNTHETIC_PROTOCOL_ONLY" }, authentication: { sessionTtlSeconds: 900, policy: "source-confirmed-v1" },
+    build: { sourceCommit: "f".repeat(40), buildId: "SYNTHETIC_PROTOCOL_ONLY" }, authentication: { sessionTtlSeconds: 900, policy: "source-confirmed-v1",
+      // Explicit synthetic budgets, not proposed or approved production values.
+      passwordWork: { maxConcurrent: 1, maxAnonymous: 1, retryAfterSeconds: 1 },
+      loginAdmission: { global: { burst: 10, tokens: 10, intervalMillis: 1000 },
+        source: { burst: 10, tokens: 10, intervalMillis: 1000 }, sourceAccount: { burst: 10, tokens: 10, intervalMillis: 1000 },
+        entryTtlMillis: 1000, maxEntries: 100, maxRetryAfterSeconds: 1 } },
     postgres: { target: { host: "never-connected.invalid", port: 5432, database: "SYNTHETIC_ONLY", user: "SYNTHETIC_ONLY", password: "SYNTHETIC_NOT_A_CREDENTIAL", ssl: false },
       max: 1, maxPendingAcquisitions: 1, connectionTimeoutMillis: 1000, acquisitionTimeoutMillis: 1000, queryTimeoutMillis: 1100, statementTimeoutMillis: 900,
       lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000 } };
@@ -187,6 +192,10 @@ test("explicit production legacy opt-in reaches actual auth service while defaul
   const factory = () => Object.assign(new EventEmitter(), {
     async connect() { return Object.assign(new EventEmitter(), { async query(sql: string) {
       if (sql.includes("INSERT INTO naijue_erp.auth_session")) inserted++;
+      if (sql.includes("auth:login-snapshot")) {
+        assert.doesNotMatch(sql, /FOR UPDATE|FOR SHARE|JOIN/i);
+        return { rows: [{ account_id: account, login_name: "SYNTHETIC_LEGACY_USER", password_hash: hash, auth_version: 1 }], rowCount: 1 };
+      }
       return { rows: sql.includes("FROM naijue_erp.user_account a JOIN naijue_erp.staff s") ? [{ account_id: account,
         staff_id: "00000000-0000-4000-8000-000000000003", login_name: "SYNTHETIC_LEGACY_USER", password_hash: hash, login_enabled: true,
         auth_version: 1, role: "ADMIN", employment_status: "在职", hall_id: null }] : [], rowCount: 1 };
@@ -1968,4 +1977,44 @@ test('B10 selected CLI refuses missing key before pool; disabled path does no fi
   assert.ok(a&&b);assert.equal(a('SYNTHETIC_PASSWORD'),b('SYNTHETIC_PASSWORD'));assert.notEqual(a('SYNTHETIC_PASSWORD'),b('SYNTHETIC_DIFFERENT'));
   await assert.rejects(readProductionStaffCredentialRequestTag({...selected,staffCredentialRequestKeyFile:join(root,'missing')}),{message:'Private credential request key is unavailable or invalid'});
  } finally {rmSync(root,{recursive:true,force:true});}
+});
+
+
+test("P02 production rejects missing, unknown and inconsistent budgets before allocating PG", async () => {
+  const changes = [
+    (c: any) => { delete c.authentication.passwordWork; },
+    (c: any) => { delete c.authentication.loginAdmission; },
+    (c: any) => { c.authentication.passwordWork.maxAnonymous = 2; },
+    (c: any) => { c.authentication.passwordWork.maxConcurrent = 0; },
+    (c: any) => { c.authentication.passwordWork.productionDefault = true; },
+    (c: any) => { c.authentication.loginAdmission.source.extra = 1; },
+    (c: any) => { c.authentication.loginAdmission.entryTtlMillis = 1; },
+    (c: any) => { c.authentication.loginAdmission.maxEntries = 2; },
+    (c: any) => { c.authentication.loginAdmission.now = 0; }
+  ];
+  for (const change of changes) {
+    const c = structuredClone(config()); change(c);
+    assert.throws(() => parseProductionRuntimeConfiguration(c), TypeError);
+    let allocations = 0;
+    await assert.rejects(createProductionApplicationApi(c, () => { allocations++; throw Error("must not allocate"); }), TypeError);
+    assert.equal(allocations, 0);
+  }
+});
+
+test("P02 production budget instances enforce contention, release and per-application isolation", async () => {
+  const c = config(), first = productionApplicationOptions(c).authentication.work!, second = productionApplicationOptions(c).authentication.work!;
+  let finish!: () => void;
+  const running = first.passwordGate.run("login", () => new Promise<void>(resolve => { finish = resolve; }));
+  await assert.rejects(first.passwordGate.run("authenticated", async () => true), { code: "PASSWORD_WORK_BUSY" });
+  assert.equal(await second.passwordGate.run("authenticated", async () => true), true);
+  finish(); await running;
+  assert.equal(await first.passwordGate.run("authenticated", async () => true), true);
+  const lease = first.loginAdmission.acquire("synthetic-socket-1", "synthetic-account");
+  assert.throws(() => first.loginAdmission.acquire("synthetic-socket-2", "synthetic-account"), { code: "LOGIN_ADMISSION_BUSY" });
+  const isolated = second.loginAdmission.acquire("synthetic-socket-2", "synthetic-account"); isolated.release();
+  lease.release();
+  const resumed = first.loginAdmission.acquire("synthetic-socket-2", "synthetic-account"); resumed.release();
+  const r1 = { ...c, profile: "source-confirmed-native-exact26-r1-v1", documentCommands: "DISABLED",
+    runtime26Review: { reviewFile: "/unopened-review.json", trustedReviewSha256: "a".repeat(64) } };
+  assert.deepEqual(parseProductionRuntime26Configuration(r1).authentication, c.authentication);
 });

@@ -7414,12 +7414,43 @@
         "apps/api/src/postgres-read-api.ts",
         "packages/application/src/staff-maintenance-service.ts",
         "tests/staff-maintenance.test.ts",
-        "tests/staff-maintenance-postgres-protocol.test.ts"
+        "tests/staff-maintenance-postgres-protocol.test.ts",
+        "apps/api/src/postgres-read-api.test.ts",
+        "apps/api/src/postgres-application-api.test.ts",
+        "apps/api/src/postgres-imported-history-composition.test.ts",
+        "apps/api/src/production-application-host.test.ts"
       ],
       "scope": "P02 explicit snapshot/read-release/password-work/final-short-lock-revalidation; finite injected admission budget with no production defaults; no codec cost/format change; actual PG not authorized by source lease",
       "CReserved": "production-provider-composition/sharedconfiguration/release/rootconfigs/aggregate records; exact needed seam beforewriting",
       "boundary": "Internal readports and local SQL SELECT follow current source authorization; true new persistent/write-contract semantic differences must be precisely reported, no speculative blanketapproval or actualDB/ACL/server",
-      "handoff": "OriginalD2 explicit four-leaf handback 2026-10-29; idle/noWIP/commands; preserve acceptedH06 readiness+close"
+      "handoff": "OriginalD2 explicit four-leaf handback 2026-10-29; idle/noWIP/commands; preserve acceptedH06 readiness+close",
+      "fixtureHandoff": "C verifies exact D1 request; originalD2 H06 source handed back/source863 accepted, D2 current A01 readonly only; fixture data/interface adapt, preserve assertions"
+    },
+    "P01SalesFacts887": {
+      "owner": "D3",
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "status": "ACTIVE_EXACT_FOUR_LEAF_SOURCE",
+      "files": [
+        "adapters/postgres/src/sales-unit-of-work.ts",
+        "adapters/postgres/src/sales-native-facts.ts",
+        "tests/sales-save-read-amplification.test.ts",
+        "tests/sales-transaction-facts-cache.test.ts",
+        "tests/support/sales-facts-cache-fixture.ts"
+      ],
+      "handoff": "OriginalD1 explicit noWIP/inflight and handback in mainChat 2026-10-29; P02auth18disjoint",
+      "scope": "P01 private transaction exact-key generation success-only immutable facts/snapshots reuse; prehit active/input/currentidentity checks; allrules/authorization/CAS/originalreceipt unchanged; one shared synthetic fixture support leaf for two actual composition/adapter tests, no production hooks",
+      "boundary": "A01 capacity/sourcegrowth and actualPG/SLO remain prerequisite uncompleted; no crossrequestproof/cache/SQLDDL/production; application/API/specification readonlyunlessexactnewseam",
+      "next": "Necessaryaffected local baseline thenprivatecache safety/composition count; fixedQB; no duplicateH03cache"
+    },
+    "P02ProductionComposition887": {
+      "owner": "C",
+      "files": [
+        "apps/api/src/production-provider-composition.ts",
+        "apps/api/src/production-provider-composition.test.ts"
+      ],
+      "scope": "P02 explicit JSON authentication budget shape validated without defaults; oneperapplication passwordGate/loginAdmission passed to D1hostoptions; no runtime deployment/secret or invented production values",
+      "model": "gpt-6.1-sol/medium"
     }
   }
 }

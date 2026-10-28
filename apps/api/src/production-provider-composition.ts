@@ -7,6 +7,9 @@ import { createNativeTransactionSalesBusinessRules } from "../../../packages/app
 import { createSourceConfirmedTransferAuthorization, createSourceConfirmedTransferReferences } from "../../../packages/application/src/transfer-policy.ts";
 import { createSourceConfirmedCurrentFormAuthorization } from "../../../packages/application/src/source-confirmed-current-form-authorization.ts";
 import { createSourceAuthenticationPolicy } from "../../../packages/authentication/src/source-policy.ts";
+import { createPasswordWorkGate } from "../../../packages/authentication/src/password-work-gate.ts";
+import { createLoginAdmission } from "./login-admission.ts";
+import type { LoginRateBudget } from "./login-admission.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { createPostgresApplicationApi } from "./postgres-read-api.ts";
 import { createPostgresRuntime26ApplicationApi } from "./postgres-read-api.ts";
@@ -33,6 +36,11 @@ export interface ProductionRuntimeConfiguration {
   readonly authentication: {
     readonly sessionTtlSeconds: number;
     readonly policy: "source-confirmed-v1";
+    readonly passwordWork: { readonly maxConcurrent: number; readonly maxAnonymous: number; readonly retryAfterSeconds: number };
+    readonly loginAdmission: {
+      readonly global: LoginRateBudget; readonly source: LoginRateBudget; readonly sourceAccount: LoginRateBudget;
+      readonly entryTtlMillis: number; readonly maxEntries: number; readonly maxRetryAfterSeconds: number;
+    };
   };
 }
 function bag(value: unknown, keys: readonly string[]): Record<string, unknown> {
@@ -49,7 +57,15 @@ function integer(value: unknown, min: number, max: number): value is number { re
 export function parseProductionRuntimeConfiguration(input: unknown): ProductionRuntimeConfiguration {
   const c = bag(input, ["schemaVersion", "profile", "documentCommands", "publicOrigin", "http", "assets", "build", "postgres", "authentication", ...(input !== null && typeof input === "object" && Object.hasOwn(input, "inventoryOutputSpool") ? ["inventoryOutputSpool"] : [])]);
   const http = bag(c.http, ["host", "port", "acceptedHosts"]), assets = bag(c.assets, ["root", "entry"]), build = bag(c.build, ["sourceCommit", "buildId"]);
-  const auth = bag(c.authentication, ["sessionTtlSeconds", "policy"]);
+  const auth = bag(c.authentication, ["sessionTtlSeconds", "policy", "passwordWork", "loginAdmission"]);
+  bag(auth.passwordWork, ["maxConcurrent", "maxAnonymous", "retryAfterSeconds"]);
+  const admission = bag(auth.loginAdmission, ["global", "source", "sourceAccount", "entryTtlMillis", "maxEntries", "maxRetryAfterSeconds"]);
+  for (const name of ["global", "source", "sourceAccount"] as const) bag(admission[name], ["burst", "tokens", "intervalMillis"]);
+  // Reuse the actual consumers' finite-budget validation at bootstrap. These
+  // constructors perform no password work, connection, timer or admission.
+  const authentication = auth as unknown as ProductionRuntimeConfiguration["authentication"];
+  createPasswordWorkGate(authentication.passwordWork);
+  createLoginAdmission({ ...authentication.loginAdmission, now: () => performance.now() });
   const pg = bag(c.postgres, ["target", "max", "maxPendingAcquisitions", "connectionTimeoutMillis", "acquisitionTimeoutMillis", "queryTimeoutMillis", "statementTimeoutMillis",
     "lockTimeoutMillis", "idleInTransactionTimeoutMillis", "idlePoolTimeoutMillis", "disposeGraceMillis", "disposeTimeoutMillis"]);
   const target = bag(pg.target, ["host", "port", "database", "user", "password", "ssl"]);
@@ -79,7 +95,9 @@ export function productionApplicationOptions(input: unknown): PostgresApplicatio
     postgres: config.postgres, productMedia: null, authorization: { mode: "source-confirmed-native" },
     nativeReadExtensions: { profile: "source-confirmed-r1-v1" },
     authentication: { trustedOrigin: config.publicOrigin, now: () => new Date().toISOString(), credentialCompatibility: "legacy-pbkdf2-v1",
-      policy: createSourceAuthenticationPolicy(config.authentication.sessionTtlSeconds) },
+      policy: createSourceAuthenticationPolicy(config.authentication.sessionTtlSeconds),
+      work: { passwordGate: createPasswordWorkGate(config.authentication.passwordWork),
+        loginAdmission: createLoginAdmission({ ...config.authentication.loginAdmission, now: () => performance.now() }) } },
     currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() },
     ...(config.documentCommands === "DISABLED" ? {} : { documentCommands: {
       sales: { authorization: createSalesActionAuthorization(), rules: createNativeTransactionSalesBusinessRules(), newId: kind => entityId(kind, randomUUID()) },
