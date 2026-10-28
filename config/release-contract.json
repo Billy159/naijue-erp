@@ -7,25 +7,53 @@
   },
   "runtimeSqlPatches": [
     {
-      "source": "adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql",
-      "member": "patches/0026-v8-bootstrap-field-provenance.sql"
-    },
-    {
       "source": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
       "member": "patches/0026-v9-empty-history-publication-dispatch.sql"
     },
     {
-      "source": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
-      "member": "patches/0026-v10-native-creation-trigger-record-scope.sql"
-    },
-    {
       "source": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
       "member": "patches/0026-v11-document-specification-save.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-v14-core-initialization.sql",
+      "member": "patches/0026-v14-core-initialization.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-history-revision-current-base.sql",
+      "member": "patches/0026-history-revision-current-base.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-category-reorder-undo.sql",
+      "member": "patches/0026-category-reorder-undo.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql",
+      "member": "patches/0026-v19-barcode-scheme-initialization.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-v20-history-insert-source-identity.sql",
+      "member": "patches/0026-v20-history-insert-source-identity.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-v22-staged-prefix-bind.sql",
+      "member": "patches/0026-v22-staged-prefix-bind.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+      "member": "patches/0026-history-responsible-null-successor.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-category-depth-successor.sql",
+      "member": "patches/0026-category-depth-successor.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-history-revision-set-guards-successor.sql",
+      "member": "patches/0026-history-revision-set-guards-successor.sql"
     }
   ],
   "full": {
     "profile": "source-confirmed-native-exact26-r3-v1",
-    "patchLevel": "26_v20_history_insert_identity_from_v19"
+    "patchLevel": "26_hv2_history_set_guards_from_v22"
   },
   "node": "24.21.0",
   "requestBodyBudgets": [

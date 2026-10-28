@@ -54,9 +54,9 @@ test('release generator refuses unknown nested facts instead of emitting unversi
 test('Python exact license and approved SQL grouping agree with JS baseline; successor map remains finite',()=>{
  const code=`import runpy,json,sys,copy
 m=runpy.run_path('scripts/release/deploy-candidate.py');patches=json.loads(sys.stdin.read());assert patches==m['APPROVED_SQL_PATCHES']
-for count in [4,5]:
+for count in [len(patches),len(patches)+1]:
  approved=dict(patches)
- if count==5:approved['adapters/postgres/patches/0026-approved-successor.sql']='patches/0026-approved-successor.sql'
+ if count==len(patches)+1:approved['adapters/postgres/patches/0026-approved-successor.sql']='patches/0026-approved-successor.sql'
  source={'files':[]};manifest={'members':[]}
  names={**{'adapters/postgres/migrations/%04d_example.sql'%i:'migrations/%04d_example.sql'%i for i in range(1,27)},**approved}
  for name,member in names.items():

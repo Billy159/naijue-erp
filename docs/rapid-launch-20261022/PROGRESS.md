@@ -1,3 +1,7 @@
+SOURCE878：C修现有共享release机械源：FullpatchLevel V20→26_hv2_history_set_guards_from_v22，准确11项patch顺序，原R3 profile/26迁移不变；v8/v10已被COMPLETEv14/v11覆盖，退出本支持成员清单，历史源码未删。原D1/D2复用228→230→231准确接续，不并入旧JSON/heap或其他替代分支。现generator同步deploy/boot，4项实际JS/Python消费测试通过，旧4/5条fixture改为实际清单长度及+1有限后继，原拒绝断言不放宽。
+
+明确：这不是SQL执行器，也不授权DB动作；包中原v22是body来源，仍硬绑定原目标，不能冒通用安装器，P04专用wrapper也只属OID16400。其他目标新载体、真实metadata/ACL/review及最终build/pack/runtime仍未完，H04不记整项PASS。源码固定后只交原QB该共享声明及两消费者差异，不重私有挂载/全后台。原P04权限问题与Chrome交还仍等待，其他开发继续。
+
 SOURCE877：采用原QB SOURCE876限定PASS（003ef38c）：两项私有凭据挂载合成检查及现有生成一致性检查通过；0密钥内容读取/摘要，未重复旧Lifecycle/pack。真实key供给、启动和部署未验，完整H04/B10未完成。GitHub原分支已准确回读ac765cc0。
 
 P04最小权限确认单现已提交人类：仅合成OID16400/runtime16398，四表SELECT含xmin，其他指定列读写及两函数/schemaUSAGE；明确行锁所需UPDATE仍是真实更新能力，无DELETE/owner/正式库。原QB只核新SQL与撤回差异，未执行GRANT；实际四病例/genuine会话仍等待该批准。C继续135共享发布合同收口，原D2只读交接准确有序SQL成员，暂无新源码writer。Demo原normal34保留，Chrome窗口问题仍待用户，无新增整页/弹层完成数。整体ACTIVE，正式环境未动。
