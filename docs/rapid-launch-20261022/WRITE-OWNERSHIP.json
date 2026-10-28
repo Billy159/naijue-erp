@@ -6914,7 +6914,7 @@
         "readOnly": [
           "apps/web/demo-replica/frontend/runtime/common/ready-pages.tsx"
         ],
-        "state": "HANDED_BACK_FIXED_SOURCE842_OWNER_LOCAL_SCOPE_PASS;REAL_ENV_NOT_VERIFIED"
+        "state": "ACTIVE_ORIGINAL_D3_B08_PARAM_01_ONLY_SAME3LEAF;FIXED842_FINDING_NOT_CLOSED"
       },
       "D2_B10": {
         "id": "HV2-B10",
@@ -6936,7 +6936,7 @@
           "tests/category-depth-successor.test.ts",
           "tests/integration/category-depth.integration.test.ts"
         ],
-        "state": "HUMAN_CONFIRMED_SOURCE_AND_NEW_ISOLATED_QA;EXECUTION_BY_T45_AFTER_EXACT_TARGET_REGISTRATION",
+        "state": "HANDED_BACK_FIXED_NEXT_SOURCE843;READONLY_UNTIL_QB_FINDING;FRESH_SYNTHETIC_PG_T45_NOT_R1",
         "readOnly": [
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "adapters/postgres/patches/0026-category-reorder-undo.sql",
@@ -6953,7 +6953,7 @@
           "tests/history-revision-set-guards.test.ts",
           "tests/integration/history-revision-set-guards.integration.test.ts"
         ],
-        "state": "HUMAN_CONFIRMED_SOURCE_AND_SYNTHETIC_ISOLATED_QA_AFTER_B14_HANDOFF",
+        "state": "ACTIVE_ORIGINAL_D1_gpt-6.1-sol_medium_HUMAN_CONFIRMATION_3b47_ITEM1",
         "readOnly": [
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "adapters/postgres/patches/0026-history-responsible-null-successor.sql"
@@ -6966,7 +6966,7 @@
     ],
     "oldFrontRoles": "F1-F4 latest turns completed and files released/idle;current human supersedes historical sourceWriteEnabled",
     "exclusions": "No one writes frozen Demo/oldproject/currentWIP unassigned/publiccontracts/rootconfig/lock or SQL/runtimeprobes without exactCregistration;T45 sourcelease excludes manifest.mjs pending onefactsource H04 handoff.",
-    "updatedAtUtc": "2026-10-28T08:18:57.906347+00:00",
+    "updatedAtUtc": "2026-10-28T09:19:25.749473+00:00",
     "branch": "codex/erp"
   }
 }

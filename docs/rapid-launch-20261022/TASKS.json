@@ -17145,7 +17145,7 @@
     "frontend": {
       "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
       "title": "奈爵 ERP｜Demo 逐页实操对比",
-      "latestObserved": "ACTIVE color 515/clear/page2/pageSize50/lastPage evidence on Demo8877 + normal34/57923; proceeding size/fit. Read live thread 2026-10-28, original progress preserved.",
+      "latestObserved": "Livewait2026-10-28: inventory displayreset then documentlists productinfo evidence, fixednormal34;fullpage/state report notcomplete",
       "workDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
       "directoryConfirmation": "SHARED_R_READBACK_ONLY_CHAT_SPECIFIC_ACK_REQUESTED",
       "writeScope": "Only original comparison evidence directory until complete;future solefrontend sourceowner retained",
@@ -17348,7 +17348,7 @@
           "HV2-G00"
         ],
         "owner": "D3",
-        "state": "SOURCE842_OWNER_TARGETEDPASS;QB_DELTA_NEXT;REAL_INTEGRATION_NOT_DONE",
+        "state": "SOURCE842_QB_NEED_FIX_B08_PARAM_01;ORIGINAL_D3_DIRECTED_FIX_IN_PROGRESS;REAL_PG_NOT_RUN",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B08.txt"
       },
@@ -17422,7 +17422,7 @@
           "HV2-G00"
         ],
         "owner": "D2",
-        "state": "APPLICATION_SOURCE_AND_FAILED_FIXTURE_QB_PASS;HUMAN_CONFIRMED_SQL_FINAL_GUARD_IMPLEMENTATION",
+        "state": "APPLICATION_AND_FIXTURE_QB_LIMITED_PASS;DATABASE_GUARD_SOURCE_HANDOFF;FRESH_PG_CONCURRENCY_NOT_RUN",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B14.txt"
       },
@@ -17434,7 +17434,7 @@
           "HV2-G00"
         ],
         "owner": "D3",
-        "state": "SOURCE_OWNER142PASS0FAIL;FIXED_SOURCE_QB_NEXT;NO_REAL_IMPORT",
+        "state": "SOURCE841_QB_SOURCE_PROTOCOL_PASS;NO_REAL_IMPORT",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B15.txt"
       },
@@ -17520,7 +17520,7 @@
           "HV2-B07"
         ],
         "owner": "D1",
-        "state": "BATCH_STORE_SOURCE840_QB_PASS;HUMAN_CONFIRMED_STATELESS_SET_GUARDS_BATCH_LEDGER_NEXT",
+        "state": "BATCH_STORE_SOURCE840_QB_PASS;HUMAN_CONFIRMED_SET_GUARDS_BATCH_LEDGER_IMPLEMENTING_D1",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P04.txt"
       },
@@ -17683,15 +17683,15 @@
     "parallel": {
       "frontendCurrent": "Full37pages67overlays/allapplicablestates readonlycomparison on fixednormal34,Terra6.1-medium,existingevidence/decisionsreused,pagecompletionexplicit",
       "frontendNext": "Afterfullreport merge V2findings,compare latestcode,remove alreadyfixed issues,Sol6.1-medium batchedrepair and affectedretest;B04 waitsfullreport",
-      "T45Current": "207 actualcolumn-onlyGRANTREVOKEPASS;208 preciseR1onlypermission preparation waitingfixedCsource andQB;releaseprep remainsindependent",
+      "T45Current": "208 finalPLANbinding using QB842xmin sourcePASS/207actualmechanismPASS;onlyhumanapproved xmin permission,notimportrestart",
       "T45Next": "HV2-B03/P05 then B12/H04 after actual SQL lineage supplied",
-      "D1Current": "HumanapprovedB14new2function2trigger SQL+isolatedrunner source;P04setguards/batchledger approvednext,exactleasesbeforewrite",
-      "D1Next": "204 minimalSELECT(xmin) and P04typedmapping/setguard proposals delivered;read precise differences before confirmation;noPG/GRANT/migration/replay",
+      "D1Current": "P04 approved statelesssetguards/batchledger/balanceCAS exact5source implementing;B14 SQL3handedback awaiting originalQB/freshsyntheticPG",
+      "D1Next": "AfterP04fixedsource realisolatedPG with originalT45/QB;H01/H03/A01/P01/P02 dependencies remain,notcompleted",
       "D2": "B09/B10sourcehandoff fixed842nextQB;realstablekeyprovision/backup/rescue/PGlifecycle remainunapproved/unverified,notfullcardPASS",
-      "D3": "B08sourcehandoff fixed842nextQB;nextP03 samequerygroup after fixedsource;PF02proofproposal separate"
+      "D3": "B08-PARAM-01 directedoriginalD3fix active;P03samequerygroup next after fixedhandoff;PF02proposal separate"
     },
     "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
-    "next": "Adopt QB840 limitedPASS,freeze D2/D3exactsource and originalQBdelta;205 actualresult then precise R1permission/sysACLmetadata successor;frontendcurrenthandoff stillpending. No full37/67/formal claim.",
+    "next": "208 onebounded exactR1 xminfix/currentV2readback then QBactualcatalog;B14freeze/QB/freshPG;P04source and B08directedfix parallel;frontendfullfixednormal34comparison first",
     "githubCheckpoint": {
       "commit": "e6921f6e49ed26196adf34ef2f5484291d2fe0da",
       "remoteVerified": true,
@@ -17705,7 +17705,7 @@
       "frontend": "ExistingChat continues normal34 comparison;ownbranch/WIP and B04implementation ack not yetdelivered,no otherfrontendwriter.",
       "toolchain": "T45 found existing exactNode24.21.0;root defaultNode25 not used for acceptance"
     },
-    "updatedAtUtc": "2026-10-28T08:18:57.906347+00:00",
+    "updatedAtUtc": "2026-10-28T09:19:25.749473+00:00",
     "branchConsolidation": {
       "owner": "original taskbook Chat",
       "status": "HANDED_BACK",
@@ -17844,7 +17844,24 @@
         "businessRows": 0,
         "instance": "exactnew205preserved/no stop/drop/remove"
       },
-      "208": "OnlypreparationwaitingfixedSOURCE842/Cmodulepin/QBsource;notexecuted,noR1ACLchange/no201replay"
+      "208": "Exact842bundle/QBsourcePASS adopted,C carrierreadcomplete;finalPLANenable/pin requested;not submitted yet,noR1ACLchange/no201replay"
+    },
+    "source843": {
+      "parent": "0e5e6b12b9de5662673116f90bcba4b144bce65a",
+      "branch": "codex/erp",
+      "B14_SQL": {
+        "files": {
+          "adapters/postgres/patches/0026-category-depth-successor.sql": "6341b48840bf60a6f20fa76ec1ef08a0909e42f9138335db81bfb1eb200f227f",
+          "tests/category-depth-successor.test.ts": "e6a9d2d48b4703064c0f0c68b55f28b6ef0554c4732822a1ad48a07cba7476f3",
+          "tests/integration/category-depth.integration.test.ts": "4f2a9a86592d945ace52d65bbe91ee0c600178abe56932bac11184a74f85d0f8"
+        },
+        "report": "reports/backend/rapid-launch-20261022/D1/HV2-B07/B14-RESULT.json",
+        "state": "SOURCE_HANDED_BACK_2_STATIC_TESTS_STRICT_TYPES_PASS;QB_AND_FRESH_PG_NOT_YET",
+        "scope": "2invokerfunctions2triggers;131postB07parentpins/original4triggerspreserved;noR1apply"
+      },
+      "P04": "HUMAN_CONFIRMED;D1 resumed gpt-6.1-sol/medium on registered5files,0newtablescolumns",
+      "B08": "QB found B08-PARAM-01 boundparameterhole in validityquery;D3 actualfix inprogress;notPASS",
+      "xminQB": "SOURCE842 twoleaf SOURCE_PROTOCOL_PASS_ONLY,3PASS0FAIL0SKIP;ec47aaa377347e5e2049959fd6968e4d033a7fda162e689dc98ee468f73b4e15;actualR1newcatalognotyet"
     }
   }
 }
