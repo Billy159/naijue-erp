@@ -18,6 +18,14 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
       || !/^24\.[0-9]+\.[0-9]+$/.test(contract.node)) throw Error('INVALID_RELEASE_CONTRACT');
   const exactKeys = (value, names) => value && typeof value === 'object' && !Array.isArray(value)
     && Object.keys(value).sort().join() === [...names].sort().join();
+  if (!exactKeys(contract.fontLicense, ['source', 'member'])
+      || contract.fontLicense.source !== 'apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt'
+      || contract.fontLicense.member !== 'web/source-styles/assets/fonts/LICENSE.txt'
+      || !exactKeys(contract.full, ['profile', 'patchLevel'])
+      || typeof contract.full.profile !== 'string' || !/^source-confirmed-native-exact26-r3-v[1-9][0-9]*$/.test(contract.full.profile)
+      || typeof contract.full.patchLevel !== 'string' || !/^26_[A-Za-z0-9_]+$/.test(contract.full.patchLevel)) {
+    throw Error('INVALID_RELEASE_CONTRACT');
+  }
   if (!exactKeys(contract.entrypoints, ['frontend', 'backend'])) throw Error('INVALID_RELEASE_ENTRYPOINTS');
   for (const kind of ['frontend', 'backend']) {
     const entry = contract.entrypoints[kind];
@@ -30,13 +38,15 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
   }
   const sources = new Set(), members = new Set(), routes = new Set();
   for (const row of contract.runtimeSqlPatches) {
-    if (!/^adapters\/postgres\/patches\/[A-Za-z0-9_-]+\.sql$/.test(row.source)
+    if (!exactKeys(row, ['source', 'member']) || typeof row.source !== 'string' || typeof row.member !== 'string'
+        || !/^adapters\/postgres\/patches\/[A-Za-z0-9_-]+\.sql$/.test(row.source)
         || row.member !== row.source.slice('adapters/postgres/'.length)
         || sources.has(row.source) || members.has(row.member)) throw Error('INVALID_RELEASE_PATCH');
     sources.add(row.source); members.add(row.member);
   }
   for (const row of contract.requestBodyBudgets) {
-    if (!/^\/api\/[a-z0-9/-]+$/.test(row.path) || routes.has(row.path)
+    if (!exactKeys(row, ['path', 'bytes']) || typeof row.path !== 'string'
+        || !/^\/api\/[a-z0-9/-]+$/.test(row.path) || routes.has(row.path)
         || !Number.isSafeInteger(row.bytes) || row.bytes <= 0) throw Error('INVALID_RELEASE_BODY_BUDGET');
     routes.add(row.path);
   }

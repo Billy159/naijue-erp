@@ -17430,7 +17430,7 @@
           "HV2-G00"
         ],
         "owner": "D2",
-        "state": "SOURCE843_SQL_QB_STATIC_PASS_PLUS845_DRIVER_QB_CLOSED;REAL_PG_NOT_RUN",
+        "state": "ACTUAL219_GUARDS_INSTALLED_133_ROUTINES_6_TRIGGERS;NONOWNER_DRIVER_PENDING_MINIMUM_ACL_HUMAN_CONFIRMATION",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B14.txt"
       },
@@ -17528,7 +17528,7 @@
           "HV2-B07"
         ],
         "owner": "D1",
-        "state": "SOURCE_AND_LOCAL_QB_PASS;ACTUAL212_COMMITTED_PREFIX_PRESERVED;216_EXACT_ORIGINAL_SOURCE_RECOVERED;SAME_CHECKPOINT_CONTINUATION_PENDING",
+        "state": "SOURCE_LOCAL_QB_PASS;ACTUAL222_ORIGINAL_SYNTHETIC_PUBLICATION_DONE;UPGRADE_NORMAL_QA_REVISION_PERFORMANCE_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P04.txt"
       },
@@ -17628,7 +17628,7 @@
           "HV2-PF02"
         ],
         "owner": "D1",
-        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "state": "D2_HOST_READINESS_DRAIN_FIRST_SLICE_ACTIVE_EXACT4_SOURCE;REMAINING_RETENTION_LOGGING_GC_NOT_IMPLEMENTED",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H06.txt"
       },
@@ -17691,11 +17691,11 @@
     "parallel": {
       "frontendCurrent": "Full37pages67overlays/allapplicablestates readonlycomparison on fixednormal34,Terra6.1-medium,existingevidence/decisionsreused,pagecompletionexplicit",
       "frontendNext": "Afterfullreport merge V2findings,compare latestcode,remove alreadyfixed issues,Sol6.1-medium batchedrepair and affectedretest;B04 waitsfullreport",
-      "T45Current": "208actual+QB488metadataPASS;accurate remaining1189proposal only;D3V2consumer/prefixskip/newconsistentbackup/humanexecutionapproval missing",
+      "T45Current": "v23completefixed858actualconsumergraph/baseline/code-onlypreparation;222syntheticpublicationdone",
       "T45Next": "HV2-B03/P05 then B12/H04 after actual SQL lineage supplied",
-      "D1Current": "P04sixleaveshandedbackfixed845,metadataCnewprofiles;B14driveroriginalQBclosed;nextfreshsyntheticPGfixture/guards viaT45",
+      "D1Current": "P04schema19published→accuratecurrentupgrade/normalQA+B14nonowner permissiondiff controlonly",
       "D1Next": "AfterQBsource findings resolve affectedscope;A01/P01/P02/H01/H03 stillnotdone,exactleasebeforewriting",
-      "D2": "B12onecompositiontesthandedback8oldfailuresfixed;originalQBdelta;B09/B10priorlimitedPASSreused",
+      "D2": "HV2-H06 exact4host/APIleaves dependencyreadyz/gracefulclose source+targetedtests;noPG/SQL/ACL/frontend",
       "D3": "P03singleSQL/materializedmatched/summarypage original7leafactive;noDDL;844B08sourceprotocolclosed"
     },
     "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
@@ -18281,6 +18281,29 @@
       "notTested": "NormalQAlogin/nonowner/P04revision/realperformance,actualnewERPbuild/proxy/H04whole/fullfrontend/formaldeploy",
       "next": "D1 existingP04fixeddriver upgrade sequence+accurate combined B14/P04nonowner permissiondelta proposal;T45 completefixed858modulegraph code-only preparation",
       "authorization": "Source/approvedsyntheticisolation only;noR1/ACL/201replay/productionmigration/deploy"
+    },
+    "currentDispatch862": {
+      "D2": "H06hostreadiness/gracefulclose4leafsourcelease",
+      "baseline": "f2d09ba67861e7921e4ad5f1ccab9f7da1918bad",
+      "D1": "P04upgrade/permissions source-onlycontrolpreparation",
+      "T45": "v23accuratebaselineASTgraph,extra5businessdiffinitialsuspicionwithdrawn;packagegeneratedcapsule notoldconsumergraph",
+      "boundary": "Noformalactions,existingfrontendfixedcomparisoncontinues"
+    },
+    "source862": {
+      "H04": "Cfinitegenerator nestedkey/shape refusal;local4PASS;Python/boot/configunchanged,noactualbuild/proxy/wholeH04claim",
+      "H06": "OriginalD2exact4host/API sourcelease after verifiedidle,readyz/gracefulclose firstslice,Solmedium;D1SQL/control unaffected",
+      "P04": "OriginalD1nextupgrade/ACLreview29699/cc2ef694 read;T45 original14SQLparent131 preparationnext,0execution/ACL",
+      "v23": "T45accurateold148finalpins replaceinitialincompletebaseline;initial5businessleafextrasnotnewdiff,package18generatedcapsule notoldconsumergraph. FullASTgraphnotyethandedback",
+      "pendingB14ACL": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-CONFIRMATION.md;originalruntime only targetOID16399 schemaUSAGE+explicitcolumnrights;humanquestion sent,0GRANT",
+      "boundary": "Productiondeploy/migration/downtime/permission/deletion remainseparateapproval;onlythisminimumisolatedpermissionbranch waits"
+    },
+    "permissionConfirmationB14": {
+      "status": "WAITING_EXPLICIT_HUMAN_CONFIRMATION",
+      "document": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-CONFIRMATION.md",
+      "sql": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL.sql",
+      "rollback": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-ROLLBACK.sql",
+      "scope": "OnlyB14OID16399/hv2_b14_runtime_20261028_01;noP04/R1/production",
+      "questionSource": "ThisCturn asyncminimumisolatedpermission question;latestV2 explicitpermissionapprovalboundary"
     }
   }
 }

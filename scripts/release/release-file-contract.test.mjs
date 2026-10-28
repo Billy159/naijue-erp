@@ -35,6 +35,22 @@ test('release generator rejects duplicate SQL, unsafe members and ambiguous rout
   assert.throws(()=>contractBlock(c),/INVALID_RELEASE/);
  }
 });
+test('release generator refuses unknown nested facts instead of emitting unversioned mechanical fields', () => {
+ for (const change of [
+  c=>{c.fontLicense.extra='unregistered';},
+  c=>{c.fontLicense.source='apps/web/other/LICENSE.txt';},
+  c=>{c.full.extra='unregistered';},
+  c=>{c.full.profile='unknown-selector';},
+  c=>{c.full.patchLevel=null;},
+  c=>{c.runtimeSqlPatches[0].extra='unregistered';},
+  c=>{c.requestBodyBudgets[0].extra='unregistered';},
+  c=>{c.runtimeSqlPatches[0]=null;},
+  c=>{c.requestBodyBudgets[0]=null;},
+ ]) {
+  const c=structuredClone(releaseContract);change(c);
+  assert.throws(()=>contractBlock(c),/INVALID_RELEASE/);
+ }
+});
 test('Python exact license and approved SQL grouping agree with JS baseline; successor map remains finite',()=>{
  const code=`import runpy,json,sys,copy
 m=runpy.run_path('scripts/release/deploy-candidate.py');patches=json.loads(sys.stdin.read());assert patches==m['APPROVED_SQL_PATCHES']
