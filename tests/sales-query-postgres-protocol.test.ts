@@ -10,7 +10,20 @@ interface Step { readonly sql: RegExp; readonly rows?: Record<string, unknown>[]
 class ProtocolClient implements PgSalesQueryClient {
   readonly calls: { sql: string; values: unknown[] }[] = []; readonly releases: (Error | boolean | undefined)[] = [];
   private readonly steps: Step[];
-  constructor(steps: Step[]) { this.steps = steps; }
+  constructor(steps: Step[]) {
+    // P03 replaces two wire queries with one envelope. Retain both original
+    // predicate/page assertions, applied to that same emitted SQL statement.
+    this.steps=[];
+    for(let i=0;i<steps.length;i++){
+      const summary=steps[i]!;
+      if(summary.sql.source==='normal-document-list:totals'){
+        const page=steps[i+1]?.sql.source==='normal-document-list:page'?steps[++i]:undefined;
+        this.steps.push({...summary,sql:/normal-document-list:shared/,
+          ...(summary.rows===undefined?{}:{rows:summary.rows.map(row=>({...row,items:page?.rows??[]}))}),
+          inspect(values,sql){summary.inspect?.(values.slice(0,-2),sql);page?.inspect?.(values,sql);}});
+      }else this.steps.push(summary);
+    }
+  }
   async query(sql: string, values: unknown[] = []): Promise<PgSalesQueryResult> {
     this.calls.push({ sql, values: structuredClone(values) }); const step = this.steps.shift(); assert.ok(step, `Unexpected protocol call ${sql}`);
     assert.match(sql, step.sql); step.inspect?.(values, sql); if (step.error) throw step.error;
@@ -65,7 +78,7 @@ test("sales query pg protocol: exact count, relational page and one page-batched
   } }, commit()]);
   const result = await reader(client).readList(read(input)); assert.equal(result.exactTotal, 9007199254740993n); assert.equal(result.items[0]!.netDue, 9007199254740993n);
   assert.equal(result.items[0]!.quantity, 9007199254740993n); assert.equal(result.items[0]!.incomingQuantity, 0n); assert.equal(result.items[0]!.outgoingQuantity, 9007199254740993n);
-  assert.equal(result.items[0]!.updatedAt, time); assert.equal(client.calls.length, 5); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|pg_advisory/.test(call.sql))); client.done();
+  assert.equal(result.items[0]!.updatedAt, time); assert.equal(client.calls.length, 4); assert.ok(client.calls.every(call => !/INSERT|UPDATE|DELETE|pg_advisory/.test(call.sql))); client.done();
 });
 test("sales query pg protocol: count and page use case-insensitive literal number inclusion with original bound text, never LIKE wildcards", async () => {
   for (const number of ["synthetic", "SyNtHeTiC_%\\", "%'_\\ OR TRUE"]) {
@@ -109,7 +122,7 @@ test("sales query pg protocol: one bounded batch preserves signed SALE/RETURN/EX
   const result = await reader(client).readList(read(parameters()));
   assert.deepEqual(result.items.map(row => [row.quantity, row.incomingQuantity, row.outgoingQuantity]),
     [[18446744073709551616n, 0n, 18446744073709551616n], [-9223372036854775808n, 9223372036854775808n, 0n], [-2n, 5n, 3n], [0n, 0n, 0n]]);
-  assert.equal(client.calls.length, 5); client.done();
+  assert.equal(client.calls.length, 4); client.done();
 });
 test("sales query pg protocol: incomplete, foreign, duplicate or malformed quantity facts fail closed", async () => {
   for (const aggregateRows of [[], [quantities(sid("sales", 999))], [quantities(), quantities()],
@@ -129,7 +142,7 @@ test("sales query pg protocol: detail reads authorized native header/current sna
     { sql: /FROM naijue_erp.sales_line/, rows: [line()], inspect(values, sql) { assert.deepEqual(values, [ids.sales, SALES_DETAIL_MAX_CURRENT_LINES + 1]); assert.match(sql, /WHERE sales_id = \$1 AND is_current ORDER BY line_no, id LIMIT \$2/); } },
     { sql: /FROM naijue_erp.sales_settlement/, rows: [], inspect(_values, sql) { assert.match(sql, /LIMIT 4$/); } }, commit()]);
   const result = await reader(client).readDetail(read({ salesId: ids.sales })); assert.equal(result.document.lines[0]!.quantity, 9007199254740993n); assert.equal(result.document.lines[0]!.pricingRule, null);
-  assert.equal(result.document.lines[0]!.zeroConfirmed, null); assert.equal(result.stockBasis, "RUNTIME_LEDGER"); assert.equal(client.calls.length, 5); client.done();
+  assert.equal(result.document.lines[0]!.zeroConfirmed, null); assert.equal(result.stockBasis, "RUNTIME_LEDGER"); assert.equal(client.calls.length, 4); client.done();
 });
 test("sales query pg protocol: hidden/missing detail and history rollback without reading child facts", async () => {
   for (const kind of ["readDetail", "readHistory"] as const) {
@@ -238,7 +251,7 @@ test("sales detail pg protocol: current master labels and authoritative settleme
     accountNameSnapshot: settlement.account_name_snapshot, methodNameSnapshot: settlement.method_name_snapshot,
     currentAccountName: settlement.current_account_name, currentMethodName: settlement.current_method_name }]);
   assert.equal(detail.document.settlements[0]!.amount, 9007199254740993n); assert.equal(detail.document.settlements[0]!.id, detail.settlementNames[0]!.settlementId);
-  assert.equal(client.calls.length, 5); client.done();
+  assert.equal(client.calls.length, 4); client.done();
 });
 
 test("sales query pg protocol: list/count and both statistics reads share identical six-dimensional authorized predicates", async () => {
@@ -320,7 +333,7 @@ test('normal sales union: exact same-client authorization precedes published eff
   const h = result.items[1]!; assert.equal(h.dataset, 'HISTORY'); assert.equal(h.id, result.items[0]!.id); assert.equal(h.effectiveVersion, 3);
   assert.equal(h.updatedAt, null); assert.equal(h.businessDate, null); assert.equal(h.createdByName, null); assert.equal(h.quantity, null); assert.equal(h.status, 'DRAFT');
   assert.equal(h.productSummary.productCount, 1n); assert.equal(h.productSummary.items[0]!.productNameSnapshot, 'ORIGINAL SNAPSHOT');
-  assert.equal(client.calls.length, 5); client.done();
+  assert.equal(client.calls.length, 4); client.done();
 });
 test('normal sales union: corrupt effective facts and current identity reject before page; SQL error remains an error and abort rolls back', async () => {
   for (const mode of ['header-line', 'identity', 'sql', 'abort'] as const) {
@@ -372,12 +385,12 @@ test('normal sales pushdown: both branches filter before projection, all-match t
       assert.doesNotMatch(proof, /ANY\(|strpos\(|business_date[<>]=/);
       assert.match(proof, /IS NOT TRUE\) AS lines_valid/); assert.match(sql, /FROM history_validity\) AS history_valid/);
       scoped(values, live); assert.equal(history.includes('AND (h.hall_id='), role === 'SALESPERSON');
-      assert.match(sql, /all_lines AS \(SELECT[^]*FROM matched p/); assert.match(sql, /FROM matched h LEFT JOIN metrics q/);
-      assert.doesNotMatch(sql, /LIMIT|OFFSET|product_summaries|JOIN naijue_erp\.sku/);
+      assert.match(sql, /all_lines AS \(SELECT[^]*FROM matched p/); assert.match(sql, /FROM matched h LEFT JOIN total_metrics q/);
+      assert.doesNotMatch(sql.split('page_headers AS MATERIALIZED')[0]!, /LIMIT|OFFSET|product_summaries|JOIN naijue_erp\.sku/);
       assert.match(sql, /sum\(h.net_due::numeric\)/); assert.match(sql, /WHEN NOT is_gift AND quantity<0 THEN -quantity/);
     } }, { sql: /normal-document-list:page/, rows: [historical], inspect(values, sql) {
       assert.deepEqual(values.slice(0, -2), bound); assert.deepEqual(values.slice(-2), [20, '20']);
-      assert.doesNotMatch(sql, /history_validity AS|AS lines_valid/);
+      assert.equal((sql.match(/history_validity AS/g)??[]).length,1);assert.equal((sql.match(/AS lines_valid/g)??[]).length,1);
       assert.match(sql, /page_lines AS MATERIALIZED \(SELECT[^]*FROM page_headers p JOIN naijue_erp.sales_line/);
       assert.match(sql, /FROM page_headers p JOIN naijue_erp.history_sales_line/);
       assert.match(sql, /FILTER\(WHERE preview_row<=3\)/);

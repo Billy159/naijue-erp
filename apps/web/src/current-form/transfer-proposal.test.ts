@@ -4,7 +4,7 @@ import { entityId } from '../../../../packages/domain/src/values.ts';
 import type { CurrentFormPage, CurrentFormProduct, CurrentFormSku, CurrentTransferWarehouse } from '../../../../packages/application/src/current-form-ports.ts';
 import { ReadContext } from '../loading/read-scope.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
-import { TransferProposalSession, type TransferProposalReader } from './transfer-proposal.ts';
+import { TransferProposalSession, transferProposalRowKey, type TransferProposalReader } from './transfer-proposal.ts';
 const uuid = (n: number) => `00000000-0000-4000-8000-${n.toString().padStart(12, '0')}`;
 const warehouse = (n: number): CurrentTransferWarehouse => ({ id: entityId('warehouse', uuid(n)), name: `TEST warehouse ${n}`, hallId: entityId('hall', uuid(90)), hallName: 'TEST hall', enabled: true, hallEnabled: true, hasNonzeroInventory: false });
 const product: CurrentFormProduct = { id: entityId('product', uuid(3)), code: 'TEST', name: 'TEST product', retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' };
@@ -83,4 +83,36 @@ test('pagination preserves search, uses 20-item server pages, blocks invalid/out
   await session.openPicker('PRODUCT'); await session.search('TEST'); await session.page(2); assert.equal(session.getSnapshot().picker?.page, 2);
   await session.page(3); await session.page(0); await session.page(1.5); assert.equal(queries.length, 3);
   assert.deepEqual(queries.map(row => [row.search, row.page, row.pageSize]), [['', 1, 20], ['TEST', 1, 20], ['TEST', 2, 20]]);
+});
+
+const matrixGroup = { id: sku.sizeGroupId, name: 'TEST group', sizes: [{id:sku.sizeId,name:sku.sizeName,displayOrder:1}] };
+test('B04 scanned SKU-only matrix edits preserve raw and exact scanner boundaries', async () => {
+ const {session}=setup({async readBarcode(query){return {state:'FOUND',barcode:query.barcode,binding:{id:uuid(89),kind:'MAIN'},sku};}});
+ session.setHeader({businessDate:'2026-10-28'});
+ await session.openPicker('FROM');await session.select(uuid(1));await session.openPicker('TO');await session.select(uuid(2));
+ const scanner=session.createScanner();assert.equal(await scanner.scan('TEST-BARCODE'),true);
+ const key=transferProposalRowKey(sku);assert.equal(session.getSnapshot().draft.lines[0]!.product,undefined);
+ assert.equal(session.setMatrixSizeQuantity(key,matrixGroup,sku.sizeId,'8'),true);
+ assert.equal(session.validate()!.lines[0]!.quantity,'8');assert.equal(await scanner.scan('TEST-BARCODE'),true);
+ assert.equal(session.getSnapshot().draft.lines[0]!.quantity,'9');
+ for(const raw of ['', '0','01','1.5','9223372036854775808','9223372036854775807']){
+  assert.equal(session.setMatrixSizeQuantity(key,matrixGroup,sku.sizeId,raw),true);
+  assert.equal(session.getSnapshot().draft.lines[0]!.quantity,raw);
+  assert.equal(!!session.validate(),raw==='9223372036854775807');
+  assert.equal(await scanner.scan('TEST-BARCODE'),false);assert.equal(session.getSnapshot().draft.lines[0]!.quantity,raw);
+ }
+ const before=session.getSnapshot().draft;
+ for(const [row,group,id] of [[key,{...matrixGroup,id:uuid(80)},sku.sizeId],[key,matrixGroup,uuid(81)],['wrong',matrixGroup,sku.sizeId]] as const){
+  assert.equal(session.setMatrixSizeQuantity(row,group,id,'8'),false);assert.equal(session.getSnapshot().draft,before);assert.match(session.getSnapshot().notice!,/规格|商品/);
+ }
+ assert.equal(session.setMatrixSizeQuantity(key,{...matrixGroup,sizes:[...matrixGroup.sizes,{id:uuid(82),name:'new',displayOrder:2}]},uuid(82),'8'),false);
+ scanner.dispose();session.cancel(true);
+});
+test('B04 reopened SKU-only matrix keeps existing line and source snapshot', () => {
+ const {session}=setup();
+ const snapshot={productCode:'OLD',productName:'old product',colorName:'old red',fitName:'old fit',sizeName:'old size',barcode:null};
+ assert.equal(session.initializeFromSaved({businessDate:'2026-10-28',note:'unsaved note',from:warehouse(1),to:warehouse(2),lines:[{sku,quantity:'1',existingLineId:uuid(85),sourceSnapshot:snapshot}]}),true);
+ assert.equal(session.setMatrixSizeQuantity(transferProposalRowKey(sku),matrixGroup,sku.sizeId,'8'),true);
+ const row=session.validate()!.lines[0]!;assert.equal(row.quantity,'8');assert.equal(row.existingLineId,uuid(85));assert.deepEqual(row.sourceSnapshot,snapshot);assert.equal(row.sku!.id,sku.id);
+ assert.equal(session.cancel(),false);assert.equal(session.getSnapshot().draft.note,'unsaved note');
 });

@@ -155,15 +155,18 @@ export class TransferProposalSession {
    * real SKU IDs. The approved formal preparation must resolve new specs. */
   setMatrixSizeQuantity(rowKey: string, group: DictionarySizeGroup, sizeId: string, raw: string): boolean {
     const anchor = this.#state.draft.lines.find(row => transferProposalRowKey(transferProposalLineIdentity(row)) === rowKey), size = group.sizes.find(size => size.id === sizeId);
-    if (this.#state.disposed || !anchor?.product?.sizeGroupId || anchor.product.sizeGroupId !== group.id || !size) return false;
+    if (this.#state.disposed) return false;
+    const reject = () => { this.#publish({ notice: '当前商品或规格资料不匹配，数量未修改；请重新核对规格。' }); return false; };
+    if (!anchor || transferProposalLineIdentity(anchor).sizeGroupId !== group.id || !size) return reject();
     this.#sizeGroups.set(group.id, freeze(structuredClone(group)));
+    const known = [...this.#state.draft.lines.flatMap(row => row.sku ? [row.sku] : []), ...(this.#state.entry?.skus ?? [])].find(sku => transferProposalRowKey(sku) === rowKey && sku.sizeId === sizeId);
+    if (known) return this.setMatrixQuantity(known.id, raw);
     const local = this.#state.draft.lines.find(row => row.sku === null && transferProposalRowKey(transferProposalLineIdentity(row)) === rowKey && transferProposalLineIdentity(row).sizeId === sizeId);
     if (local) {
       const matrixQuantities = { ...this.#state.matrixQuantities }; delete matrixQuantities[JSON.stringify([rowKey, sizeId])];
       return this.#edit({ ...this.#state.draft, lines: this.#state.draft.lines.map(row => row === local ? { ...row, quantity: raw } : row) }, matrixQuantities);
     }
-    const known = [...this.#state.draft.lines.flatMap(row => row.sku ? [row.sku] : []), ...(this.#state.entry?.skus ?? [])].find(sku => transferProposalRowKey(sku) === rowKey && sku.sizeId === sizeId);
-    if (known) return this.setMatrixQuantity(known.id, raw);
+    if (!anchor.product?.sizeGroupId || anchor.product.sizeGroupId !== group.id) return reject();
     const key = JSON.stringify([rowKey, sizeId]), values = { ...this.#state.matrixQuantities };
     if (raw === '') delete values[key];
     else values[key] = { rowKey, product: anchor.product, colorId: transferProposalLineIdentity(anchor).colorId, fitId: transferProposalLineIdentity(anchor).fitId, sizeId, sizeName: size.name, quantity: raw };

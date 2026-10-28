@@ -10,7 +10,20 @@ interface Step { readonly sql: RegExp; readonly rows?: readonly Record<string, u
 class ProtocolClient implements PgTransferQueryClient {
   readonly calls: { sql: string; values: unknown[] }[] = []; readonly releases: (Error | boolean | undefined)[] = [];
   private readonly steps: Step[];
-  constructor(steps: Step[]) { this.steps = steps; }
+  constructor(steps: Step[]) {
+    // P03 replaces two wire queries with one envelope. Retain both original
+    // predicate/page assertions, applied to that same emitted SQL statement.
+    this.steps=[];
+    for(let i=0;i<steps.length;i++){
+      const summary=steps[i]!;
+      if(summary.sql.source==='normal-document-list:totals'){
+        const page=steps[i+1]?.sql.source==='normal-document-list:page'?steps[++i]:undefined;
+        this.steps.push({...summary,sql:/normal-document-list:shared/,
+          ...(summary.rows===undefined?{}:{rows:summary.rows.map(row=>({...row,items:page?.rows??[]}))}),
+          inspect(values,sql){summary.inspect?.(values.slice(0,-2),sql);page?.inspect?.(values,sql);}});
+      }else this.steps.push(summary);
+    }
+  }
   async query(sql: string, values: unknown[] = []): Promise<PgTransferQueryResult> {
     this.calls.push({ sql, values: structuredClone(values) }); const step = this.steps.shift(); assert.ok(step, `Unexpected call ${sql}`);
     assert.match(sql, step.sql); step.inspect?.(values, sql); if (step.error) throw step.error;
@@ -295,10 +308,10 @@ test('normal transfer pushdown: effective date/endpoints filter before projectio
       if (role === 'SALESPERSON') { assert.match(history, /scope_fw\.hall_id=/); assert.match(history, /scope_tw\.hall_id=/); assert.match(history, /created_hall_provenance='ORIGINAL'/); }
       assert.doesNotMatch(history, /creator\.hall_id|creator\.role/);
       assert.doesNotMatch(proof, /ANY\(|strpos\(|business_date[<>]=/); assert.match(proof, /IS NOT TRUE\) AS lines_valid/);
-      assert.match(sql, /all_lines AS \(SELECT[^]*FROM matched p/); assert.match(sql, /FROM matched h LEFT JOIN metrics q/);
-      assert.doesNotMatch(sql, /LIMIT|OFFSET|product_summaries|JOIN naijue_erp\.sku/);
+      assert.match(sql, /all_lines AS \(SELECT[^]*FROM matched p/); assert.match(sql, /FROM matched h LEFT JOIN total_metrics q/);
+      assert.doesNotMatch(sql.split('page_headers AS MATERIALIZED')[0]!, /LIMIT|OFFSET|product_summaries|JOIN naijue_erp\.sku/);
     } }, { sql: /normal-document-list:page/, rows: [historical], inspect(values, sql) {
-      assert.deepEqual(values.slice(0, -2), bound); assert.deepEqual(values.slice(-2), [20, '20']); assert.doesNotMatch(sql, /history_validity AS|AS lines_valid/);
+      assert.deepEqual(values.slice(0, -2), bound); assert.deepEqual(values.slice(-2), [20, '20']); assert.equal((sql.match(/history_validity AS/g)??[]).length,1);assert.equal((sql.match(/AS lines_valid/g)??[]).length,1);
       assert.match(sql, /page_lines AS MATERIALIZED \(SELECT[^]*FROM page_headers p JOIN naijue_erp.transfer_line/);
       assert.match(sql, /FROM page_headers p JOIN naijue_erp.history_transfer_line/);
     } }, commit()]);

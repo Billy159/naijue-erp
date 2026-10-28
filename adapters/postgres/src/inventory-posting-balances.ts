@@ -256,13 +256,13 @@ export function createPostgresHistoryRevisionPosting(runtime: InventoryAdmission
     const balances = new PostgresPostingBalances(query, Object.freeze({ profile: "EXACT24", assertReady }));
     await balances.lock(entries);
     await balances.assertHistoryZeros(entries.filter(entry=>!balances.get(entry.warehouseId,entry.skuId)));
-    const grouped = new Map<string, { warehouseId: string; skuId: string; previous: InventoryBalanceRow | undefined; delta: bigint; count: number }>();
+    const grouped = new Map<string, { warehouseId: string; skuId: string; previous: InventoryBalanceRow | undefined; running: InventoryBalanceRow["quantity"]; count: number }>();
     for (const entry of entries) {
       balances.assertCanAppend({ warehouseId:entry.warehouseId,skuId:entry.skuId,quantityDelta:entry.delta,
         operationId,postedAt:context.postedAt,eventKind:"HISTORY_REVISION",reversesEntryId:null });
       const identity=key(entry.warehouseId,entry.skuId), group=grouped.get(identity);
-      if(group){group.delta=addQuantity(quantity(group.delta.toString()),entry.delta);group.count++;}
-      else grouped.set(identity,{warehouseId:entry.warehouseId,skuId:entry.skuId,previous:balances.get(entry.warehouseId,entry.skuId),delta:entry.delta,count:1});
+      if(group){group.running=addQuantity(group.running,entry.delta);group.count++;}
+      else {const previous=balances.get(entry.warehouseId,entry.skuId);grouped.set(identity,{warehouseId:entry.warehouseId,skuId:entry.skuId,previous,running:previous?addQuantity(previous.quantity,entry.delta):entry.delta,count:1});}
     }
     const ledger=await query(`/* history-posting:ledger */ INSERT INTO naijue_erp.inventory_ledger
       (id,operation_id,event_kind,warehouse_id,sku_id,quantity_delta,source_history_revision_id,
@@ -276,7 +276,7 @@ export function createPostgresHistoryRevisionPosting(runtime: InventoryAdmission
       entries.map(e=>e.lineId),entries.map(e=>e.endpoint),entries.length,context.kind,context.toVersion,date,context.postedAt]);
     const actualIds=new Set(ledger.rows.map(row=>stringValue(row.id)));
     integrity(ledger.rowCount===entries.length&&actualIds.size===entries.length&&entries.every(e=>actualIds.has(e.ledgerId)),"Exact historical correction ledger set was not appended");
-    const rows=[...grouped.values()].map(g=>({...g,quantity:(g.previous?addQuantity(g.previous.quantity,quantity(g.delta.toString())):quantity(g.delta.toString())).toString(),
+    const rows=[...grouped.values()].map(g=>({...g,quantity:g.running.toString(),
       version:versionToSql(version((g.previous?.version??0)+g.count))}));
     for(const fresh of [false,true]){
       const selected=rows.filter(g=>(g.previous===undefined)===fresh);if(!selected.length)continue;

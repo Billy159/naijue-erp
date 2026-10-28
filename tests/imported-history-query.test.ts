@@ -66,8 +66,7 @@ function protocol(options: { failure?: string; final?: boolean; kind?: ImportedH
     if (tag === 'imported-history:schema') rows = [{ versions: options.schema ?? Array.from({ length: 19 }, (_, i) => i + 1) }];
     if (tag === 'inventory:guards') rows = [{ integrity_guards_present: options.guards !== false }];
     if (sql === NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY) rows = [{ accounting_guards_present: options.guards !== false }];
-    if (tag === 'imported-history:list-count') rows = [{ total: options.final ? '1' : '0' }];
-    if (tag === 'imported-history:list-page') rows = options.final ? [headerRow(options.kind ?? 'sales')] : [];
+        if (tag === 'imported-history:list-shared') rows = options.final ? [headerRow(options.kind ?? 'sales')] : [];
     if (tag === 'imported-history:detail') rows = options.final ? [{ ...headerRow(options.kind ?? 'sales'), line_count: options.mismatch ? 1 : 0, settlement_count: 0 }] : [];
     if (tag.endsWith('-count') && !tag.includes('list-count')) rows = [{ total: '0' }];
     if (sql.includes(' AS effective_valid')) rows = rows.map(row => ({ ...row, effective_valid: true }));
@@ -75,6 +74,7 @@ function protocol(options: { failure?: string; final?: boolean; kind?: ImportedH
     if (tag === 'imported-history:line-catalog') rows = lastLineRows.map(row => ({ line_id: row.id, sku_id: row.sku_id, line_source_id: null }));
     rows = options.transform?.(tag, sql, rows) ?? rows;
     if (tag === 'imported-history:line-page') lastLineRows = rows;
+    if(tag==='imported-history:list-shared')rows=[{total:options.final?'1':'0',items:rows}];
     options.afterQuery?.(tag); return { rows, rowCount: rows.length };
   }, release(error) { releases.push(error); } };
   const pool: PgSalesPool = { async connect() { connects++; return client; } };
@@ -83,7 +83,7 @@ function protocol(options: { failure?: string; final?: boolean; kind?: ImportedH
 
 function effectiveProtocol(kind: ImportedHistoryKind, failStage?: string) {
   return protocol({ final: true, kind, schema: Array.from({ length: 26 }, (_, i) => i + 1), transform(tag, sql, rows) {
-    if (tag === 'imported-history:list-page' || tag === 'imported-history:detail') {
+    if (tag === 'imported-history:list-shared' || tag === 'imported-history:detail') {
       assert.match(sql, /coalesce\(e.version,h.version\)/); assert.match(sql, /er.to_version=e.version/);
       assert.match(sql, /er\.document_kind=/); assert.match(sql, /er\.operation_id IS NOT NULL/);
       rows = rows.map(row => ({ ...row, source_status: 'DRAFT', version: 3, line_count: 1, settlement_count: kind === 'sales' ? 1 : 0,
@@ -135,9 +135,9 @@ test('history effective projection26: transfer uses its actual current line quan
   assert.equal(p.calls.at(-1)!.tag, 'COMMIT'); assert.deepEqual(p.releases, [undefined]);
 });
 test('history effective projection26: contradictory document/revision or ahead-of-head line and settlement bindings reject the whole read', async () => {
-  for (const kind of ['sales', 'transfers'] as const) for (const stage of ['imported-history:list-page', 'imported-history:detail', 'imported-history:line-page', ...(kind === 'sales' ? ['imported-history:settlement-page'] : [])]) {
+  for (const kind of ['sales', 'transfers'] as const) for (const stage of ['imported-history:list-shared', 'imported-history:detail', 'imported-history:line-page', ...(kind === 'sales' ? ['imported-history:settlement-page'] : [])]) {
     const p = effectiveProtocol(kind, stage), reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) });
-    await assert.rejects(stage === 'imported-history:list-page' ? reader.readList(scoped(intent(kind))) : reader.readDetail(scoped(intent(kind, true))), { code: 'INVALID_DATABASE_VALUE' });
+    await assert.rejects(stage === 'imported-history:list-shared' ? reader.readList(scoped(intent(kind))) : reader.readDetail(scoped(intent(kind, true))), { code: 'INVALID_DATABASE_VALUE' });
     assert.equal(p.calls.at(-1)!.tag, 'ROLLBACK'); assert.deepEqual(p.releases, [undefined]);
   }
 });
@@ -158,7 +158,7 @@ test('HISTORY26: each sales and transfer list/detail proves the original client 
     assert.deepEqual((await reader.readList(scoped(intent(kind)))).documents.items, [header(kind)]); previousQueries = p.calls.length;
     assert.deepEqual((await reader.readDetail(scoped(intent(kind, true)))).document, header(kind));
     assert.equal(calls, 2); assert.equal(p.connects(), 2); assert.deepEqual(p.releases, [undefined, undefined]);
-    for (const q of p.calls.filter(q => ['imported-history:list-count', 'imported-history:list-page', 'imported-history:detail'].includes(q.tag))) {
+    for (const q of p.calls.filter(q => ['imported-history:list-shared', 'imported-history:detail'].includes(q.tag))) {
       assert.match(q.sql, /b\.status='IMPORTED'/); assert.match(q.sql, /history_validation_passed IS TRUE/);
       assert.match(q.sql, /import_record_accounting_claim/); assert.match(q.sql, /operation_receipt/); assert.match(q.sql, /audit_change/);
     }
@@ -210,12 +210,12 @@ test('protocol: one RR READ ONLY snapshot; COUNT/page use same FINAL closure/rec
   const constrained = { ...read, intent: { kind: 'sales' as const, operation: 'list' as const, parameters: { ...listQuery(), number: "'; DROP TABLE x;--" } }, grant: { ...read.grant, scope: { kind: 'HALL_IDS' as const, hallIds: [id(2)] } } };
   // No match is expected for the injection-shaped literal, so use empty protocol results.
   const empty = protocol(); await new PostgresImportedHistoryQueryReader(empty.pool).readList(constrained);
-  const queries = empty.calls.filter(c => ['imported-history:list-count', 'imported-history:list-page'].includes(c.tag)); assert.equal(queries.length, 2);
+  const queries = empty.calls.filter(c => ['imported-history:list-shared'].includes(c.tag)); assert.equal(queries.length, 1);
   for (const q of queries) {
     assert.match(q.sql, /b\.status='IMPORTED'/); assert.match(q.sql, /history_validation_passed IS TRUE/); assert.match(q.sql, /import_record_accounting_claim/); assert.match(q.sql, /operation_receipt/); assert.match(q.sql, /audit_change/); assert.match(q.sql, /h\.hall_id=ANY\(\$2::uuid\[\]\)/);
     assert.ok(q.values.includes("'; DROP TABLE x;--")); assert.ok(!q.sql.includes('DROP TABLE'));
   }
-  assert.deepEqual(queries[1]!.values.slice(0, -2), queries[0]!.values);
+  assert.deepEqual(queries[0]!.values.slice(-2),[20,'0']);
   const result = await new PostgresImportedHistoryQueryReader(p.pool).readList(read);
   assert.equal(result.documents.total, '1'); assert.deepEqual(result.documents.items[0], header('sales'));
   assert.equal(p.calls[0]!.sql, 'BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY'); assert.equal(p.calls.at(-1)!.sql, 'COMMIT');
@@ -239,7 +239,7 @@ test('protocol: finite19 missing/old/future schema and disabled guard reject bef
   }
 });
 test('protocol: query failure rolls back; unknown COMMIT discards without rollback/retry; cancellation opens no connection', async () => {
-  for (const failure of ['imported-history:list-page', 'COMMIT']) {
+  for (const failure of ['imported-history:list-shared', 'COMMIT']) {
     const p = protocol({ failure }); await assert.rejects(new PostgresImportedHistoryQueryReader(p.pool).readList(scoped()), new RegExp('SYNTHETIC:' + failure));
     assert.equal(p.connects(), 1); assert.equal(p.calls.filter(c => c.tag === 'ROLLBACK').length, failure === 'COMMIT' ? 0 : 1); assert.equal(p.releases[0] instanceof Error, failure === 'COMMIT');
   }
@@ -288,7 +288,7 @@ test('empty hall scope grants no SQL-visible rows; invalid input never silently 
 
 test('v16 history projection: effective date endpoints responsible drive same count page detail and retain true creator', async () => {
   const p = protocol({ final: true, kind: 'transfers', schema: Array.from({ length: 26 }, (_, i) => i + 1), transform(tag, _sql, rows) {
-    if (tag === 'imported-history:list-page' || tag === 'imported-history:detail') return rows.map(row => ({ ...row, version: 2, source_status: 'DRAFT', business_date: '2026-10-24', from_warehouse_id: id(40), to_warehouse_id: id(41), responsible_staff_id: id(42), responsible_name: 'Synthetic responsible' }));
+    if (tag === 'imported-history:list-shared' || tag === 'imported-history:detail') return rows.map(row => ({ ...row, version: 2, source_status: 'DRAFT', business_date: '2026-10-24', from_warehouse_id: id(40), to_warehouse_id: id(41), responsible_staff_id: id(42), responsible_name: 'Synthetic responsible' }));
     return rows;
   } });
   const reader = new PostgresImportedHistoryQueryReader(p.pool, { runtime26: effectiveRuntime(p) });
@@ -297,13 +297,13 @@ test('v16 history projection: effective date endpoints responsible drive same co
   assert.equal(list.documents.total, '1'); assert.deepEqual(list.documents.items[0], detail.document);
   assert.equal(detail.document!.responsibleStaffId, id(42)); assert.equal(detail.document!.responsibleName, 'Synthetic responsible');
   assert.deepEqual(detail.document!.createdBy, header('transfers').createdBy); assert.equal(detail.document!.createdLocalAt, header('transfers').createdLocalAt);
-  for (const call of p.calls.filter(c => ['imported-history:list-count', 'imported-history:list-page'].includes(c.tag))) {
+  for (const call of p.calls.filter(c => ['imported-history:list-shared'].includes(c.tag))) {
     assert.match(call.sql, /after_facts->>'businessDate'/); assert.match(call.sql, /after_facts->>'fromWarehouseId'/);
     assert.ok(call.values.includes('2026-10-24') && call.values.includes(id(40)));
   }
-  const pageSQL = p.calls.find(c => c.tag === 'imported-history:list-page')!.sql;
+  const pageSQL = p.calls.find(c => c.tag === 'imported-history:list-shared')!.sql;
   assert.match(pageSQL, /responsible_staff\.id=\(er.after_facts->>'responsibleStaffId'\)::uuid/);
-  assert.match(pageSQL, /ORDER BY \(CASE WHEN e.header_id IS NULL THEN h.business_date/);
+  assert.match(pageSQL, /ORDER BY business_date DESC NULLS LAST,number COLLATE "C",id/);
 });
 test('v16 history projection: old missing responsible stays null and orphan name cannot become creator fallback', async () => {
   const p = protocol({ final: true, schema: Array.from({ length: 26 }, (_, i) => i + 1) });
@@ -395,7 +395,7 @@ test('TRANSFER_HALL_IDS: list count/page and detail share the explicit source sc
     const i = intent('transfers', detail), read = { ...scoped(i), grant: { ...grant(i), scope: { kind: 'TRANSFER_HALL_IDS' as const, hallIds: [id(2)] } } };
     const result = detail ? await reader.readDetail(read) : await reader.readList(read); assert.equal(result.kind, 'transfers');
     const position = detail ? 3 : 2, predicate = importedHistoryTransferHallScopeSql(position, effective);
-    for (const q of p.calls.filter(q => ['imported-history:list-count', 'imported-history:list-page', 'imported-history:detail'].includes(q.tag))) {
+    for (const q of p.calls.filter(q => ['imported-history:list-shared', 'imported-history:detail'].includes(q.tag))) {
       assert.ok(q.sql.includes('AND ' + predicate)); assert.deepEqual(q.values[position - 1], [id(2)]);
       if (q.tag !== 'imported-history:list-count') assert.ok(q.sql.includes(predicate + ' AS transfer_scope_valid'));
     }

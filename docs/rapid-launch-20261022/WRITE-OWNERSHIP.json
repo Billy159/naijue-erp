@@ -6763,11 +6763,19 @@
       "latestAuthority": "Direct human call_0d51b13684f745cbb5b05c7f9613b8e4/0:finish full comparison first,then consolidatedrepair",
       "currentRole": "READONLY_FULL_SITE_DEMO_COMPARISON",
       "actualDispatchedModel": "gpt-6.1-terra/medium",
-      "modelVerification": "Dispatch parameter specified;UI/effective runtime not independently verified"
+      "modelVerification": "Dispatch parameter specified;UI/effective runtime not independently verified",
+      "B04Exception": {
+        "owner": "F1/01a16161-ca35-7573-b8cc-1f8d3147a46f",
+        "humanException": "Human01a181e3-1d7d-71b1-ae9c-f1aa12322593 in taskbook01a16189-fe73-7a81-b7ad-3c24ede6fd24 actualread byC;onlyB04parallelfunctionalrepairallowed",
+        "receiptTurn": "01a181ea-1404-75c3-b16f-558325decd22",
+        "model": "gpt-6.1-sol/medium",
+        "checks": "17modelcommandsPASS;2actualForminputpathsPASS;runtime tscPASS;root177unrelateddiagnosticsretained",
+        "unmeasured": "normalbootstrap->candidate->save/readback8/CAS/realPG;0Chrome/server/build"
+      }
     },
     "soleWriters": {
-      "frontend": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
-      "releaseSourceAndServer": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
+      "frontend": "OriginalcomparisonChat evidence/futurevisualfix;B04only verifiedhumanexception originalF1 exact4leaf nowreadonly",
+      "releaseSourceAndServer": "CexactH04localsourcelease;originalT45onlybuild/server/database/execution",
       "sqlSourceAndRuntimeProbes": "D1;exactSQL successions require C registration and user confirmation when real contract difference",
       "publicContractsRootPackageLockReleaseLineageRecords": "C;no other writer unless exact handoff",
       "D2": "Existing module source only,HV2-B14 service/store pending exact nonintersecting assignment",
@@ -6782,7 +6790,7 @@
           "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
           "apps/web/demo-replica/frontend/runtime/documents/transfer-matrix-scan-edit.test.mjs"
         ],
-        "state": "NOT_ACTIVE_SOURCE_LEASE_WAIT_FULL_COMPARISON_PER_LATEST_HUMAN"
+        "state": "INACTIVE_B04_LEASE_RELEASED_ORIGINAL_F1_BY_HUMAN_EXCEPTION_OTHER_UI_WAITFULLREPORT"
       },
       "T45": {
         "id": "HV2-B01/B02/B03/P05_SERVER",
@@ -6955,7 +6963,7 @@
           "tests/integration/history-revision-set-guards.integration.test.ts",
           "tests/history-revision-postgres-protocol.test.ts"
         ],
-        "state": "HANDED_BACK_6_SOURCE_LEAVES_OWNER27PASS_STRICT_TYPES;FIXED845_QB_NEXT_NO_PG",
+        "state": "HANDED_BACK_SOURCE846_READONLY_PENDING_AFFECTED_ACCEPTANCE_REAL_ENV",
         "readOnly": [
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "adapters/postgres/patches/0026-history-responsible-null-successor.sql"
@@ -6968,7 +6976,7 @@
         "files": [
           "apps/api/src/production-provider-composition.test.ts"
         ],
-        "state": "HANDED_BACK_ONE_TEST_LEAF_501401ae;ORIGINAL8_FAILURES_AFFECTED_CHECKS_PASS;QB_NEXT",
+        "state": "HANDED_BACK_SOURCE846_READONLY_PENDING_AFFECTED_ACCEPTANCE_REAL_ENV",
         "readOnly": [
           "apps/api/src/production-provider-composition.ts",
           "adapters/postgres/src/native-import-accounting-capability.ts"
@@ -7010,7 +7018,7 @@
           "tests/history-query-shared-cte.test.ts",
           "tests/integration/history-query-slo.integration.test.ts"
         ],
-        "state": "ACTIVE_ORIGINAL_D3_AFTER_B08_FIXED_SOURCE844",
+        "state": "HANDED_BACK_SOURCE846_READONLY_PENDING_AFFECTED_ACCEPTANCE_REAL_ENV",
         "readOnly": [
           "adapters/postgres/src/transfer-query-reader.ts",
           "adapters/postgres/migrations",
@@ -7027,6 +7035,26 @@
         ],
         "state": "C_SOURCE_IMPLEMENTED_2_TARGETED_PASS_API_GRAPH_TYPES_PASS",
         "scope": "3finiteprofiles B14postB07count133/P04count135/V2xmincount135;oldprofilesunchanged;no actualcatalogreviewuntilnewisolatedPG"
+      },
+      "F1_HV2_B04": {
+        "id": "HV2-B04",
+        "files": [
+          "apps/web/src/current-form/transfer-proposal.ts",
+          "apps/web/src/current-form/transfer-proposal.test.ts",
+          "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
+          "apps/web/demo-replica/frontend/runtime/documents/transfer-matrix-scan-edit.test.mjs"
+        ],
+        "state": "HANDED_BACK_SOURCE846_READONLY_PENDING_AFFECTED_ACCEPTANCE_REAL_ENV",
+        "scope": "KnownSKUscan/savedinitialization quantityediting before productmetadatarequirement,fullsizegroupidentity/rawprecision/permissions/CAS/key preserved;noappearance/backendcontractchanges;normal34comparisonunmodified"
+      },
+      "D1_P04_FIXTURE_SEAMS": {
+        "id": "HV2-P04_ISOLATED_FIXTURE",
+        "files": [
+          "tests/integration/history-revision-set-guards.integration.test.ts",
+          "tests/integration/b07-approved-publication-fixture.ts"
+        ],
+        "state": "HANDED_BACK_SOURCE846_READONLY_PENDING_AFFECTED_ACCEPTANCE_REAL_ENV",
+        "scope": "Stricthv2p04DBprefix/genuineauthorizationgrant;minimalexplicitnormalQAidentitythroughoriginalbootstraporserviceonlyinnewemptydb,oldsource/importer/historyidentityunchanged;noPGexecutionbyD1"
       }
     },
     "protectedTrackedWip": [
@@ -7034,7 +7062,73 @@
     ],
     "oldFrontRoles": "F1-F4 latest turns completed and files released/idle;current human supersedes historical sourceWriteEnabled",
     "exclusions": "No one writes frozen Demo/oldproject/currentWIP unassigned/publiccontracts/rootconfig/lock or SQL/runtimeprobes without exactCregistration;T45 sourcelease excludes manifest.mjs pending onefactsource H04 handoff.",
-    "updatedAtUtc": "2026-10-28T09:28:22.626778+00:00",
-    "branch": "codex/erp"
+    "updatedAtUtc": "2026-10-28T09:59:44.746490+00:00",
+    "branch": "codex/erp",
+    "source846Files": {
+      "adapters/postgres/src/sales-query-reader.ts": {
+        "bytes": 49553,
+        "sha256": "398af8068b7ce21f82784864303a21489120358a3eb0d6a7c3036e6003ca45bd"
+      },
+      "adapters/postgres/src/imported-history-query-reader.ts": {
+        "bytes": 44926,
+        "sha256": "1be1cee3a0ab0416b45fa5425e690b28b195ad18f20970ca25fa1ac069eb4107"
+      },
+      "tests/imported-history-query.test.ts": {
+        "bytes": 55404,
+        "sha256": "6524f359161f195834b6b99642383ed6560ae3d5236281f3506b8d189dc12fa7"
+      },
+      "tests/sales-query-postgres-protocol.test.ts": {
+        "bytes": 43748,
+        "sha256": "c1436aab35c7ac1eedd1b1559f3e4daea766fed5197e00b0f3bd2ed338a47d44"
+      },
+      "tests/transfer-query-postgres-protocol.test.ts": {
+        "bytes": 36835,
+        "sha256": "dce822eede666acc525cfd1502b951993a401d9b0b4f60c7cec59b0b58298aeb"
+      },
+      "tests/history-query-shared-cte.test.ts": {
+        "bytes": 4127,
+        "sha256": "3c87d6c1fdd696c3d87dc66924b3fa22bb5622932ee49657271ccdfcf537e126"
+      },
+      "tests/integration/history-query-slo.integration.test.ts": {
+        "bytes": 2419,
+        "sha256": "7673ba1cbe546207924a7f6c14ede5a416ce3bd20ea5b0319ae5ec617b0a542a"
+      },
+      "adapters/postgres/src/inventory-posting-balances.ts": {
+        "bytes": 27463,
+        "sha256": "ab7749ae646994584c86ae4f520084d0ea8739c23ad5e715bf89cb88c75637c1"
+      },
+      "tests/history-revision-posting-postgres-protocol.test.ts": {
+        "bytes": 10386,
+        "sha256": "645d3188b4cb1802eaf87012a7ae3ac5c2538082611007c659916ac89dd7ec78"
+      },
+      "apps/api/src/production-provider-composition.test.ts": {
+        "bytes": 185571,
+        "sha256": "89fbeacd940ad13f5253468e7779485b6d2c7d3f5e21ca8fc8e47c8d33d24cae"
+      },
+      "tests/integration/b07-approved-publication-fixture.ts": {
+        "bytes": 49419,
+        "sha256": "00fc6384ebeb8b42975c1e606d398a0fed08e6ab75e4ba6cc656cc6997e10575"
+      },
+      "tests/integration/history-revision-set-guards.integration.test.ts": {
+        "bytes": 6069,
+        "sha256": "5da878f05ff18351adbe48eb75a9d87a252544231d9aad9e1ce620148ed553d8"
+      },
+      "apps/web/src/current-form/transfer-proposal.ts": {
+        "bytes": 46949,
+        "sha256": "5550693060e1dd2a706e43b7a7c94fccbc2d1378d84baf1da3fce2050b6dd303"
+      },
+      "apps/web/src/current-form/transfer-proposal.test.ts": {
+        "bytes": 11766,
+        "sha256": "60f9c9d8a58728e8bbaf74193ea5a5a72f79dfec0dbb62292dd1dddb51e0b054"
+      },
+      "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx": {
+        "bytes": 29588,
+        "sha256": "a8d261052c2d0e4c4b137822e00b693785fce59a8f623cc4ff804c18ec820f33"
+      },
+      "apps/web/demo-replica/frontend/runtime/documents/transfer-matrix-scan-edit.test.mjs": {
+        "bytes": 5710,
+        "sha256": "1c8ddecabb04736fd5d3d594c419c10ad1e1f709e1bb9abbb131520293f014d3"
+      }
+    }
   }
 }

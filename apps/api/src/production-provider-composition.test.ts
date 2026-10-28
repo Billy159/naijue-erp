@@ -298,8 +298,8 @@ function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observati
       else if (sql.includes("current-form:count")) rows = [{ total: "0" }];
       else if (sql.includes("current-form:page")) {}
       else if (sql.includes("imported-history:schema")) rows = [{ versions: Array.from({ length: 26 }, (_, i) => i + 1) }];
-      else if (sql.includes("imported-history:list-count")) rows = [{ total: "0" }];
-      else if (sql.includes("imported-history:list-page") || sql.includes("imported-history:detail")) {}
+      else if (sql.includes("imported-history:list-shared")) rows = [{ total: "0", items: [] }];
+      else if (sql.includes("imported-history:detail")) {}
       else if (sql.includes("sales:current-schema")) rows = [{ current_sales_schema_ready: true }];
       else if (sql.startsWith("SELECT pg_advisory_xact_lock") || sql.includes("FROM naijue_erp.operation_receipt")
         || sql.includes("FROM naijue_erp.sales_header") || sql.includes("FROM naijue_erp.transfer_header")) {}
@@ -419,7 +419,9 @@ test("production exact26: HISTORY four POST routes use their separate policy and
         assert.ok(calls.filter(call => call.sql === NATIVE_RUNTIME26_IDENTITY_PROBE).length >= 2);
         assert.equal(calls.at(-1)!.sql, "COMMIT");
       }
-      const published = p.calls.filter(call => /imported-history:(list-count|list-page|detail)/.test(call.sql)); assert.equal(published.length, 6);
+      const published = p.calls.filter(call => /imported-history:(list-shared|detail)/.test(call.sql)); assert.equal(published.length, 4);
+      assert.equal(published.filter(c=>c.sql.includes("imported-history:list-shared")).length,2);
+      assert.equal(published.filter(c=>c.sql.includes("imported-history:detail")).length,2);
       assert.ok(published.every(call => call.sql.includes("IMPORTED") && call.sql.includes("IMPORT_BATCH")));
       assert.ok(p.calls.every(call => !/^(INSERT|UPDATE|DELETE)|nextval|setval/.test(call.sql))); assert.equal(p.counts().allocations, 1); assert.equal(p.counts().releases, p.counts().connects);
     } finally { await api.close(); }

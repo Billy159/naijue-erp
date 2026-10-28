@@ -428,27 +428,31 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
   const metricValue = (column: string) => `CASE WHEN q.document_id IS NULL THEN 0 ELSE q.${column} END`;
   const quantityTotals = ['quantity','incoming_quantity','outgoing_quantity'].map(c => `CASE WHEN count(*) FILTER(WHERE ${metricValue(c)} IS NULL)>0 THEN NULL ELSE coalesce(sum(${metricValue(c)}),0) END::text AS ${c}`).join(',');
   const moneyTotals = kind === 'sales' ? ',' + ['gross_amount','order_discount','net_due'].map(c => `CASE WHEN count(*) FILTER(WHERE h.${c} IS NULL)>0 THEN NULL ELSE coalesce(sum(h.${c}::numeric),0) END::text AS ${c}`).join(',') : '';
-  const summary = rowOf(await query(`/* normal-document-list:totals */ WITH ${common},${historyValidity},all_lines AS (${lines('matched', false)}),metrics AS (${metrics('all_lines')})
+  const pageValues=[...values,read.parameters.pageSize,String((read.parameters.page-1)*read.parameters.pageSize)];
+  const summary = rowOf(await query(`/* normal-document-list:shared */ WITH ${common},${historyValidity},
+    all_lines AS (${lines('matched',false)}),total_metrics AS (${metrics('all_lines')}),summary AS MATERIALIZED (
     SELECT count(*)::text AS exact_total,${quantityTotals}${moneyTotals},
       (SELECT coalesce(bool_and(effective_valid IS TRUE AND lines_valid IS TRUE),true) FROM history_validity) AS history_valid,
       EXISTS(SELECT 1 FROM ${history.publicationFrom} WHERE ${history.publishedPredicate}) AS history_published
-    FROM matched h LEFT JOIN metrics q ON ${metricJoin}`, [...values]));
-  requireDomain(summary.history_valid === true && typeof summary.history_published === 'boolean', 'INVALID_DATABASE_VALUE', 'Published historical header/line facts contradict their effective revision');
-  const exactTotal = count(summary.exact_total), pageValues = [...values, read.parameters.pageSize, String((read.parameters.page - 1) * read.parameters.pageSize)];
-  const rows = (await query(`/* normal-document-list:page */ WITH ${common},page_headers AS MATERIALIZED (
+    FROM matched h LEFT JOIN total_metrics q ON ${metricJoin}),
+    page_headers AS MATERIALIZED (
       SELECT * FROM matched ORDER BY updated_at DESC NULLS LAST,id ASC,dataset ASC LIMIT $${values.length + 1} OFFSET $${values.length + 2}::bigint),
-    page_lines AS MATERIALIZED (${lines('page_headers', true)}),metrics AS (${metrics('page_lines')}),
+    page_lines AS MATERIALIZED (${lines('page_headers', true)}),page_metrics AS (${metrics('page_lines')}),
     products AS (SELECT *,row_number() OVER(PARTITION BY dataset,batch_id,document_id,coalesce(product_id::text,'line:'||line_id::text) ORDER BY line_no,line_id) AS identity_row FROM page_lines),
     previews AS (SELECT *,row_number() OVER(PARTITION BY dataset,batch_id,document_id ORDER BY line_no,line_id) AS preview_row FROM products WHERE identity_row=1),
     product_summaries AS (SELECT dataset,batch_id,document_id,
       CASE WHEN count(*) FILTER(WHERE product_id IS NULL)>0 THEN NULL ELSE count(*) END::text AS product_count,
       coalesce(jsonb_agg(jsonb_build_object('productId',product_id,'productCodeSnapshot',product_code_snapshot,'productNameSnapshot',product_name_snapshot) ORDER BY preview_row) FILTER(WHERE preview_row<=3),'[]'::jsonb) AS product_items,
-      count(*)>3 AS product_has_more FROM previews GROUP BY dataset,batch_id,document_id)
-    SELECT h.*,${['quantity','incoming_quantity','outgoing_quantity'].map(c => `${metricValue(c)}::text AS ${c}`).join(',')},
+      count(*)>3 AS product_has_more FROM previews GROUP BY dataset,batch_id,document_id),
+    page_rows AS (    SELECT h.*,${['quantity','incoming_quantity','outgoing_quantity'].map(c => `${metricValue(c)}::text AS ${c}`).join(',')},
       CASE WHEN ps.document_id IS NULL THEN '0' ELSE ps.product_count END AS product_count,coalesce(ps.product_items,'[]'::jsonb) AS product_items,coalesce(ps.product_has_more,false) AS product_has_more
-    FROM page_headers h LEFT JOIN metrics q ON ${metricJoin}
+    FROM page_headers h LEFT JOIN page_metrics q ON ${metricJoin}
       LEFT JOIN product_summaries ps ON ps.dataset=h.dataset AND ps.batch_id IS NOT DISTINCT FROM h.batch_id AND ps.document_id=h.id
-    ORDER BY h.updated_at DESC NULLS LAST,h.id ASC,h.dataset ASC`, pageValues)).rows;
+    ORDER BY h.updated_at DESC NULLS LAST,h.id ASC,h.dataset ASC)
+    SELECT summary.*,coalesce((SELECT jsonb_agg(to_jsonb(p) ORDER BY p.updated_at DESC NULLS LAST,p.id ASC,p.dataset ASC) FROM page_rows p),'[]'::jsonb) AS items FROM summary`,pageValues));
+  requireDomain(summary.history_valid === true && typeof summary.history_published === 'boolean','INVALID_DATABASE_VALUE','Published historical header/line facts contradict their effective revision');
+  requireDomain(Array.isArray(summary.items),'INVALID_DATABASE_VALUE','Bounded document items required');
+  const rows=summary.items as Record<string,unknown>[],exactTotal=count(summary.exact_total);
   requireDomain(rows.length === Number(exactTotal > BigInt((read.parameters.page - 1) * read.parameters.pageSize)
     ? (exactTotal - BigInt((read.parameters.page - 1) * read.parameters.pageSize) < BigInt(read.parameters.pageSize) ? exactTotal - BigInt((read.parameters.page - 1) * read.parameters.pageSize) : BigInt(read.parameters.pageSize)) : 0n), 'INVALID_DATABASE_VALUE', 'Normal document page differs from its exact union count');
   const identities = rows.map(r => `${r.dataset}:${r.batch_id}:${r.id}`);

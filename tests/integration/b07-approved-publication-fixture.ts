@@ -78,8 +78,18 @@ export async function closeB07FixtureSources(composite: {close(): Promise<void>}
 }
 type FixturePool = PgSalesPool & { query(text: string, values?: unknown[]): Promise<PgSalesResult> };
 export async function prepareB07ApprovedPublication(t: TestContext, pool: FixturePool,
- target: { database: string; oid: string; role: string }) {
+ target: { database: string; oid: string; role: string },
+ hv2?: { readonly qaBootstrap: { readonly staffId:string; readonly accountId:string; readonly loginName:string; readonly passwordHash:string } }) {
  assert.match(target.database,/^naijue_erp_test_b07_syn_approved_[a-z0-9_]+$/);
+ if(hv2!==undefined){
+  assert.match(target.database,/^naijue_erp_test_b07_syn_approved_hv2p04_[a-z0-9_]+$/);
+  assert.deepEqual(Object.keys(hv2),['qaBootstrap']);
+  const q=hv2.qaBootstrap;assert.deepEqual(Object.keys(q).sort(),['accountId','loginName','passwordHash','staffId']);
+  assert.match(q.staffId,/^f0400000-0000-4000-8000-[0-9]{12}$/);assert.match(q.accountId,/^f0400000-0000-4000-8000-[0-9]{12}$/);assert.notEqual(q.staffId,q.accountId);
+  assert.match(q.loginName,/^SYNTHETIC_HV2_P04_[A-Z0-9_]+$/);
+  assert.match(q.passwordHash,/^naijue:scrypt:1:32768:8:1:[0-9a-f]{32}:[0-9a-f]{128}$/);
+ }
+
  const identity=(await pool.query("SELECT current_database() AS database,current_user AS role,(SELECT oid::text FROM pg_database WHERE datname=current_database()) AS oid")).rows;
  assert.deepEqual(identity,[target]);
  const client=await pool.connect();try{await assertNativeImportAccountingSchema19Guards(client);}finally{client.release();}
@@ -105,6 +115,19 @@ export async function prepareB07ApprovedPublication(t: TestContext, pool: Fixtur
   const authorization = { async assertAllowed(a: string, c: CutoffImportCommand) { assert.equal(a, actor); assert.deepEqual(c, commands.get(c.requestKey), "Exact independent synthetic command plan required"); if (c.action === "IMPORT_PUBLISH" && Object.hasOwn(c,"historyClosure")) { assert.ok(sourceAllowed,"SYNTHETIC_SOURCE_REVOKED"); assert.ok(publicationSourceAuthorization); await publicationSourceAuthorization((c as NativeAccountingPublishCommand).historyClosure); } } };
   const service = createCutoffImportService({ store: new PostgresCutoffImportStore(pool, { nativeAccountingAuthorization: authorization }), authorization, now: () => ENGINE_TIME });
   await (async () => {
+   // New HV2 synthetic bootstrap only, before ANY import batch or cutoff exists.
+   // T45 supplies an ephemeral hash from the original Node scrypt codec; never export it.
+   // This is separate QA identity, never the historical creator/importer802.
+   if(hv2){
+    const q=hv2.qaBootstrap;
+    assert.equal(Number((await pool.query("SELECT count(*) n FROM naijue_erp.user_account")).rows[0]!.n),0,"QA identity requires a truly fresh empty account target");
+    await pool.query("BEGIN ISOLATION LEVEL READ COMMITTED");
+    try{
+     await pool.query("INSERT INTO naijue_erp.staff(id,name,role,employment_status,version) VALUES($1,'SYNTHETIC HV2 P04 NORMAL QA','ADMIN','在职',1)",[q.staffId]);
+     await pool.query("INSERT INTO naijue_erp.user_account(id,staff_id,login_name,password_hash,login_enabled,auth_version,version,created_at,updated_at) VALUES($1,$2,$3,$4,true,1,1,$5,$5)",[q.accountId,q.staffId,q.loginName,q.passwordHash,ENGINE_TIME]);
+     await pool.query("COMMIT");
+    }catch(error){await pool.query("ROLLBACK");throw error;}
+   }
    await pool.query("INSERT INTO naijue_erp.staff(id,name,role,employment_status,version) VALUES($1,'SYNTHETIC NONLOGIN SEALED IMPORTER','WAREHOUSE','在职',1)", [id(801)]);
    await pool.query("INSERT INTO naijue_erp.user_account(id,staff_id,login_name,password_hash,login_enabled,auth_version,version,created_at,updated_at) VALUES($1,$2,'SYNTHETIC_SEALED_NONLOGIN','SYNTHETIC_NOT_A_PASSWORD',false,1,1,$3,$3)", [actor, id(801), ENGINE_TIME]);
    await service.execute(stage);

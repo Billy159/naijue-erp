@@ -388,8 +388,14 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
       for (const [key, column] of (intent.kind === 'sales' ? [['hallId', 'hall_id'], ['warehouseId', 'warehouse_id'], ['customerId', 'customer_id'], ['salespersonId', 'salesperson_id']] : [['fromWarehouseId', 'from_warehouse_id'], ['toWarehouseId', 'to_warehouse_id']]) as [keyof typeof q, string][]) {
         if (q[key] !== null) predicates.push(`${headColumn(column, effective)}=${bind(q[key])}::uuid`);
       }
-      const source = from(intent.kind, effective), predicate = predicates.join(' AND '), total = count((await query(`/* imported-history:list-count */ SELECT count(*)::text total FROM ${source} WHERE ${predicate}`, [...values])).rows);
-      const rows = (await query(`/* imported-history:list-page */ SELECT ${headerColumns(intent.kind, effective)}${transferScope ? `,${transferScope} AS transfer_scope_valid` : ''} FROM ${source} WHERE ${predicate} ORDER BY ${headColumn('business_date', effective)} DESC NULLS LAST,h.number COLLATE "C",h.id LIMIT $${values.length + 1} OFFSET $${values.length + 2}`, [...values, q.pageSize, (q.page - 1) * q.pageSize])).rows;
+      const source=from(intent.kind,effective),predicate=predicates.join(' AND ');
+      const result=(await query(`/* imported-history:list-shared */ WITH filtered AS MATERIALIZED (
+        SELECT ${headerColumns(intent.kind,effective)}${transferScope?`,${transferScope} AS transfer_scope_valid`:''} FROM ${source} WHERE ${predicate}),
+        total AS (SELECT count(*)::text AS total FROM filtered),
+        paged AS (SELECT * FROM filtered ORDER BY business_date DESC NULLS LAST,number COLLATE "C",id LIMIT $${values.length+1} OFFSET $${values.length+2}::bigint)
+        SELECT total.total,coalesce((SELECT jsonb_agg(to_jsonb(p) ORDER BY p.business_date DESC NULLS LAST,p.number COLLATE "C",p.id) FROM paged p),'[]'::jsonb) AS items FROM total`,[...values,q.pageSize,String((q.page-1)*q.pageSize)])).rows;
+      const total=count(result);requireDomain(result.length===1&&Array.isArray(result[0]!.items),'INVALID_DATABASE_VALUE','Exact historical summary and bounded items required');
+      const rows=result[0]!.items as Record<string,unknown>[];
       return validateImportedHistoryList({ dataset: 'HISTORY', kind: intent.kind, documents: page(q.page, q.pageSize, total, rows.map(r => header(r, intent.kind, grant, effective))) }, intent, grant);
     });
   }

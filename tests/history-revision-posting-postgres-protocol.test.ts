@@ -11,7 +11,7 @@ const context: HistoryRevisionPostingContext = { operationId: id(1), revisionId:
   kind: "sales", documentId: id(4), toVersion: 2, businessDate: "2020-01-02", postedAt: "2026-10-22T07:00:00Z" };
 const effect = (n = 10, delta = "-2"): HistoryRevisionPostingEffect => ({ ledgerEntryId: id(n), lineId: id(n + 100),
   warehouseId: id(20), skuId: id(30), endpoint: "SALES_WAREHOUSE", quantityDelta: delta });
-interface Options { absent?: boolean; admitted?: boolean; priorLedger?: boolean; publication?: boolean; guards?: boolean; writeCount?: number; corruptLedger?: boolean; corruptBalance?: boolean }
+interface Options { absent?: boolean; admitted?: boolean; priorLedger?: boolean; publication?: boolean; guards?: boolean; writeCount?: number; corruptLedger?: boolean; corruptBalance?: boolean; initialQuantity?:string }
 function protocol(options: Options = {}) {
   const calls: { sql: string; values: unknown[] }[] = [], capabilities: unknown[] = [];
   const counts = { WAREHOUSE: 1, SKU: 1, INVENTORY_LEDGER: 1, IMPORT_BATCH: 1 };
@@ -19,7 +19,7 @@ function protocol(options: Options = {}) {
     calls.push({ sql, values }); let rows: Record<string, unknown>[] = [], rowCount = 1;
     if (sql.startsWith("SELECT naijue_erp.inventory_key_lock")) { /* same exact key lock namespace */ }
     else if (sql.includes("FOR UPDATE OF b")) rows = options.absent ? [] : (values[0] as string[]).map((w, index) => ({ warehouse_id: w,
-      sku_id: (values[1] as string[])[index], quantity: index === 0 ? "10" : "7", version: 4, last_operation_id: null, updated_at: "2026-10-20T00:00:00.000000Z" }));
+      sku_id: (values[1] as string[])[index], quantity: options.initialQuantity??(index === 0 ? "10" : "7"), version: 4, last_operation_id: null, updated_at: "2026-10-20T00:00:00.000000Z" }));
     else if (sql.includes("posting:publication")) rows = options.publication === false ? [] : [{ id: id(40), completed: true, final_approval: true,
       checkpoint: { sequence: 2, cursor: 4, counts, expected: counts } }];
     else if (sql.includes("posting:guards")) rows = [{ integrity_guards_present: options.guards !== false }];
@@ -98,4 +98,13 @@ test("P04 multiple first effects use proven missing key once and preserve effect
  const writes=p.calls.filter(c=>c.sql.includes('history-posting:balances-insert'));
  assert.equal(writes.length,1);assert.deepEqual(writes[0]!.values,[[id(20)],[id(30)],["-1"],[2],id(1),context.postedAt]);
  assert.equal(p.calls.filter(c=>c.sql.includes('history-posting:unused-keys')).length,1);
+});
+
+test("P04-QUANTITY-01 preserves per-effect balance overflow boundaries while batching SQL",async()=>{
+ const min="-9223372036854775808",max="9223372036854775807";
+ const valid=protocol({initialQuantity:min});await valid.post(valid.client,context,[effect(10,max),effect(11,max)]);
+ const written=valid.calls.find(c=>c.sql.includes('history-posting:balances-update'))!;
+ assert.deepEqual(written.values[2],["9223372036854775806"]);
+ const invalid=protocol({initialQuantity:max});await assert.rejects(invalid.post(invalid.client,context,[effect(10,"1"),effect(11,"-1")]),{code:"QUANTITY_OVERFLOW"});
+ assert.equal(ledgerCalls(invalid).length,0);assert.ok(!invalid.calls.some(c=>c.sql.includes('history-posting:balances-')));
 });
