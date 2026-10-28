@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-29",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "ebc4d5e8dddfac85953662552e7ffad1fa03a32e",
+  "lastVerifiedRemoteCommit": "1df075dcc5911d6684d80feb88726d51e9ba2248",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18885,7 +18885,14 @@
       "next": "C/QB exact90 current normalbranch SQL/callclosure review and13xmin probe/catalog binding; T45 only authorized exactdelta after;prepareissuer excluded",
       "receipt": "reports/backend/rapid-launch-20261022/D1/QA897-NORMAL-RUNTIME-ACL-SELECTED-02/RESULT.json",
       "sqlSha256": "f1118e9eca8b28cf4e32ba0701001a7058e7aecae4d38bbae41dd61edbd85679",
-      "nextIndependentReview": "OriginalQB finite static normal90 review before exact permission confirmation; no execution or 42501-driven extra grants"
+      "nextIndependentReview": "OriginalQB finite static normal90 review before exact permission confirmation; no execution or 42501-driven extra grants",
+      "current": "QBnormal90 static review found2 stale sourcepins/missing postCOMMIT exact rollback; originalD1 live03 successor preparation in own control directory; 02 preserved/no execution",
+      "staticReview": "QB/HV2-QA897-NORMAL90/QB-NORMAL90-STATIC-RESULT.json8592/368a9b9311483d82bc4f4e6cdc506cc1a488e1f31a1a0024bada231dc06369c2; no execution authorization",
+      "findings": [
+        "QB-N90-F01: exact2 source pins/V3 and246 state must update",
+        "QB-N90-F02: postCOMMIT inverse and original semantic privilege readback; preserve actual rawACL/hash differences, no system-catalog normalization or oldhash reuse"
+      ],
+      "rollbackDirective": "C clarified: inverse90 restores exact prior effective privilege/grantor/grantee/grantable semantics using original pg acldefault rules; raw NULL vs explicit default recorded separately. Canonical change requires fresh actual export/review/binding, cannot claim oldhash restored. Unknown subsequent grants/same-grantor regrant still refuse. Original D1 preparing03; no PG/GRANT/REVOKE."
     },
     "A02Admission903": {
       "owner": "D1",
@@ -19009,9 +19016,42 @@
     },
     "ImportHostMetadata913": {
       "owner": "D3",
-      "status": "SOURCE913_FIXED_LOCAL_NEW6_AND_AFFECTED12_PASS_QB_PENDING",
+      "status": "ORIGINAL_QB_NARROW_SOURCE_PASS_REAL_PIPELINE_NOT_READY",
       "scope": "2 original host leaves admit only existing135 profiles exactV1/V2/V3 plus original prefix/target/source/issuer checks; no QA22 producer, no source/defaults/SQL/ACL/53 boundary changes",
-      "next": "OriginalQB new6 only, old12 local results preserved/reused; complete synthetic11 producer and publication ACL remain NOT_READY"
+      "next": "OriginalQB new6 only, old12 local results preserved/reused; complete synthetic11 producer and publication ACL remain NOT_READY",
+      "receipt": "QB/HV2-SOURCE913/QB-SOURCE913-RESULT.json3738/0e1f315f2b8c9d745395785ac70b3cabc9596e2705266eacac048755479bcdfe",
+      "checks": "3 new top-level+3 nested assertions PASS, syntax0; affectedold12 evidence reused. No actualPG/private source/server."
+    },
+    "QA22SourceFixture914": {
+      "owner": "D3",
+      "status": "ACTUAL_LIVE_ORIGINAL_THREAD_01a183ec_034e",
+      "files": [
+        "tests/integration/current-runtime26-full-source-fixture.ts",
+        "tests/current-runtime26-full-source-fixture.test.ts"
+      ],
+      "scope": "Original synthetic source preparation gap; reuse49/115+9dict, explicit QA22 one warehouse10/21zero, 1unreviewed transfer header/line qty1; no real data facts/source authority/PG/production53 contract changes",
+      "next": "Original validators produce DTOs; handback toC/QB then T45 private original factory. Current original12scope source912 dormant until full11 actual."
+    },
+    "A02ActualFacts247": {
+      "owner": "T45",
+      "receipt": "A02-FACTS.json6441/660f154c3c7a9ccf710cdc4b3b23fb1ce9407d03bab1c271b1054e018e512290",
+      "status": "PARTIAL_ACTUAL_READ_ONLY_NOT_ADMISSION_READY",
+      "postgresWal": "Shared512MiB tmpfs/mount2538/device1048593; available433516544 once, not summed",
+      "systemMedia": "Shared ext4 /dev/md0p1/mount31/device66304; unprivilegedavailable47244242944 once, not summed",
+      "unknown": [
+        "backup exact QA path/volume",
+        "application writer/process/restart/window",
+        "runtime inventory SQL access",
+        "measured budget/thresholds"
+      ],
+      "notDone": "No full capacity-inventory run, no defaults/quota/grants/config/mount/server changes"
+    },
+    "A02ProductionMain915": {
+      "owner": "C",
+      "status": "SOURCE914_MAIN_FORWARDING_IMPLEMENTED_STRICT_CLOSURE_PASS",
+      "file": "apps/api/src/production-main.ts",
+      "scope": "Five exported original startup wrappers and selectedR3/full forward explicit trusted singleton to original composition factories. JSON/config/CLI does not infer a provider; no default probe/budget/fallback. Existing missing capacity rejects remain. No service start or PG.",
+      "checks": "Node24.19.0 strict one-root transitive closure exit0; routine parameter forwarding diff inspected; actual in-process trusted launcher/probe/window and startup integration still untested"
     }
   }
 }

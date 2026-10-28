@@ -7639,6 +7639,24 @@
         "scripts/import-v3/production-source-host.test.mjs"
       ],
       "scope": "Accept only existing SOURCE911 independently-issued exact135 history-set V1 and normal13-xmin V3 profiles with original staged-prefix requirement. Preserve old profiles/target/purpose/independent review/53 production warehouse boundary; no QA22 fake provider, SQL/ACL, integration fixture or server edits."
+    },
+    "QA22SourceFixture914": {
+      "owner": "D3",
+      "status": "ACTIVE_ORIGINAL_FIXTURE_PREPARATION_GAP",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "tests/integration/current-runtime26-full-source-fixture.ts",
+        "tests/current-runtime26-full-source-fixture.test.ts"
+      ],
+      "scope": "Pure deterministic synthetic remaining nine groups and exact22 source scope for original actual executor; reuse existing49/115 and9dict. No production provider/run53 changes, private credential files, SQL, grants, source authority fabrication or new framework. T45 integrates original private factory; QB independent source review before execution."
+    },
+    "A02ProductionMain915": {
+      "owner": "C",
+      "status": "FIXED_SOURCE914_HANDOFF_TO_QB_NEXT",
+      "files": [
+        "apps/api/src/production-main.ts"
+      ],
+      "scope": "Forward explicitly host-supplied CapacityAdmission object through original startup functions to current existing composition factories. No default/probe/threshold/JSON function/CLI fallback/service start. Actual measured trusted provider and original QA integration still required."
     }
   }
 }

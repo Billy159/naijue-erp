@@ -1,3 +1,4 @@
+import type { CapacityAdmission } from "./capacity-admission.ts";
 import { readProductionCredentialRequestKey } from "./production-credential-key.ts";
 import { createNodeCredentialRequestTag } from "../../../packages/authentication/src/passwords.ts";
 import type { ProductionRuntime26R3Configuration } from "./production-provider-composition.ts";
@@ -11,9 +12,12 @@ import { startProductionRuntime26ApplicationHost } from "./production-applicatio
 import { createProductionRuntime26R3ApplicationApi, parseProductionRuntime26R3Configuration, createProductionRuntime26R2ApplicationApi, parseProductionRuntime26R2Configuration } from "./production-provider-composition.ts";
 import { startProductionRuntime26R3ApplicationHost, startProductionRuntime26R2ApplicationHost } from "./production-application-host.ts";
 
-/** C supplies an absolute private JSON configuration path as the sole argument.
+/** C supplies an absolute private JSON configuration path as the sole CLI argument.
+ * A trusted in-process launcher supplies the measured capacity singleton separately.
+ * No capacity is inferred from JSON or silently installed by the CLI; the active
+ * factory retains its explicit missing-capacity rejection until that provider exists.
  * Never emit that file, its pathname, parsed configuration or raw error causes. */
-export async function runProductionMain(args: readonly string[]): Promise<void> {
+export async function runProductionMain(args: readonly string[], capacityAdmission?: CapacityAdmission): Promise<void> {
   if (args.length !== 1 || !args[0] || !path.isAbsolute(args[0]) || path.resolve(args[0]) !== args[0])
     throw new TypeError("One absolute private runtime configuration path is required");
   const filename = args[0], stat = await lstat(filename);
@@ -22,7 +26,7 @@ export async function runProductionMain(args: readonly string[]): Promise<void> 
   const bytes = await readFile(filename);
   if (bytes.length !== stat.size || bytes.length > 65_536) throw new TypeError("Runtime configuration changed while reading");
   const config = parseProductionRuntimeConfiguration(JSON.parse(bytes.toString("utf8")) as unknown);
-  const api = await createProductionApplicationApi(config);
+  const api = await createProductionApplicationApi(config, undefined, capacityAdmission);
   const host = await startProductionApplicationHost({ api, configuration: config });
   let stopping = false;
   const stop = (): void => {
@@ -36,7 +40,7 @@ export async function runProductionMain(args: readonly string[]): Promise<void> 
 
 /** Explicit --exact26-r1 entry only. The legacy entry above never auto-upgrades
  * a config or reuses an already running pool. Operational files stay private. */
-export async function runProductionRuntime26Main(args: readonly string[]): Promise<void> {
+export async function runProductionRuntime26Main(args: readonly string[], capacityAdmission?: CapacityAdmission): Promise<void> {
   if (args.length !== 1 || !args[0] || !path.isAbsolute(args[0]) || path.resolve(args[0]) !== args[0])
     throw new TypeError("One absolute private exact26 runtime configuration path is required");
   const filename = args[0], stat = await lstat(filename);
@@ -45,7 +49,7 @@ export async function runProductionRuntime26Main(args: readonly string[]): Promi
   const bytes = await readFile(filename);
   if (bytes.length !== stat.size || bytes.length > 65_536) throw new TypeError("Exact26 runtime configuration changed while reading");
   const config = parseProductionRuntime26Configuration(JSON.parse(bytes.toString("utf8")) as unknown);
-  const api = await createProductionRuntime26ApplicationApi(config);
+  const api = await createProductionRuntime26ApplicationApi(config, undefined, null, capacityAdmission);
   const host = await startProductionRuntime26ApplicationHost({ api, configuration: config });
   let stopping = false;
   const stop = (): void => {
@@ -58,7 +62,7 @@ export async function runProductionRuntime26Main(args: readonly string[]): Promi
 }
 
 /** Independent --exact26-r2 selects reviewed native commands explicitly. */
-export async function runProductionRuntime26R2Main(args: readonly string[]): Promise<void> {
+export async function runProductionRuntime26R2Main(args: readonly string[], capacityAdmission?: CapacityAdmission): Promise<void> {
   if (args.length !== 1 || !args[0] || !path.isAbsolute(args[0]) || path.resolve(args[0]) !== args[0])
     throw new TypeError("One absolute private exact26 R2 configuration path is required");
   const filename = args[0], stat = await lstat(filename);
@@ -67,7 +71,7 @@ export async function runProductionRuntime26R2Main(args: readonly string[]): Pro
   const bytes = await readFile(filename);
   if (bytes.length !== stat.size || bytes.length > 65_536) throw new TypeError("Exact26 R2 runtime configuration changed while reading");
   const config = parseProductionRuntime26R2Configuration(JSON.parse(bytes.toString("utf8")) as unknown);
-  const api = await createProductionRuntime26R2ApplicationApi(config);
+  const api = await createProductionRuntime26R2ApplicationApi(config, undefined, null, undefined, capacityAdmission);
   const host = await startProductionRuntime26R2ApplicationHost({ api, configuration: config });
   let stopping = false;
   const stop = (): void => {
@@ -88,7 +92,7 @@ export async function readProductionStaffCredentialRequestTag(config: Production
 }
 
 /** Explicit R3 successor; private configuration and host shutdown use the original boundary. */
-async function runProductionRuntime26R3SelectedMain(args: readonly string[], full: boolean): Promise<void> {
+async function runProductionRuntime26R3SelectedMain(args: readonly string[], full: boolean, capacityAdmission?: CapacityAdmission): Promise<void> {
   if (args.length !== 1 || !args[0] || !path.isAbsolute(args[0]) || path.resolve(args[0]) !== args[0])
     throw new TypeError("One absolute private exact26 R3 configuration path is required");
   const filename = args[0], stat = await lstat(filename);
@@ -98,7 +102,7 @@ async function runProductionRuntime26R3SelectedMain(args: readonly string[], ful
   if (bytes.length !== stat.size || bytes.length > 65_536) throw new TypeError("Exact26 R3 runtime configuration changed while reading");
   const config = parseProductionRuntime26R3Configuration(JSON.parse(bytes.toString("utf8")) as unknown);
   const staffCredentialRequestTag = await readProductionStaffCredentialRequestTag(config);
-  const api = full ? await createProductionRuntime26FullApplicationApi(config, undefined, staffCredentialRequestTag) : await createProductionRuntime26R3ApplicationApi(config, undefined, staffCredentialRequestTag);
+  const api = full ? await createProductionRuntime26FullApplicationApi(config, undefined, staffCredentialRequestTag, capacityAdmission) : await createProductionRuntime26R3ApplicationApi(config, undefined, staffCredentialRequestTag, undefined, capacityAdmission);
   const host = await startProductionRuntime26R3ApplicationHost({ api, configuration: config });
   let stopping = false;
   const stop = (): void => {
@@ -111,12 +115,12 @@ async function runProductionRuntime26R3SelectedMain(args: readonly string[], ful
 }
 
 // Importing the module is inert, including during a source check.
-export async function runProductionRuntime26R3Main(args: readonly string[]): Promise<void> {
-  return runProductionRuntime26R3SelectedMain(args, false);
+export async function runProductionRuntime26R3Main(args: readonly string[], capacityAdmission?: CapacityAdmission): Promise<void> {
+  return runProductionRuntime26R3SelectedMain(args, false, capacityAdmission);
 }
 /** Full is an explicit trusted launch mode; the JSON remains the closed R3 shape. */
-export async function runProductionRuntime26FullMain(args: readonly string[]): Promise<void> {
-  return runProductionRuntime26R3SelectedMain(args, true);
+export async function runProductionRuntime26FullMain(args: readonly string[], capacityAdmission?: CapacityAdmission): Promise<void> {
+  return runProductionRuntime26R3SelectedMain(args, true, capacityAdmission);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
