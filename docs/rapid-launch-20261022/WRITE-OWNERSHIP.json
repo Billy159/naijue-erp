@@ -7053,8 +7053,16 @@
           "tests/integration/history-revision-set-guards.integration.test.ts",
           "tests/integration/b07-approved-publication-fixture.ts"
         ],
-        "state": "HANDED_BACK_SOURCE846_READONLY_PENDING_AFFECTED_ACCEPTANCE_REAL_ENV",
+        "state": "HANDED_BACK_SOURCE847_EXACT_SAME_CLIENT_REPLAY_FIX_PENDING_QB",
         "scope": "Stricthv2p04DBprefix/genuineauthorizationgrant;minimalexplicitnormalQAidentitythroughoriginalbootstraporserviceonlyinnewemptydb,oldsource/importer/historyidentityunchanged;noPGexecutionbyD1"
+      },
+      "D1_NEW_ISOLATED_OWNER_TYPE": {
+        "id": "HV2-P04_B14_FIXTURE_TYPE",
+        "files": [
+          "tests/integration/safety.ts"
+        ],
+        "state": "HANDED_BACK_SOURCE847_TYPE_ONLY_88220997",
+        "scope": "OnlyIntegrationSettings.user finite oldrole OR two exact20261028newownerroles. Originalenvparser/allruntimeassertFresh/loopback/exclusive/sourcehashes unchanged;noPG."
       }
     },
     "protectedTrackedWip": [
@@ -7062,7 +7070,7 @@
     ],
     "oldFrontRoles": "F1-F4 latest turns completed and files released/idle;current human supersedes historical sourceWriteEnabled",
     "exclusions": "No one writes frozen Demo/oldproject/currentWIP unassigned/publiccontracts/rootconfig/lock or SQL/runtimeprobes without exactCregistration;T45 sourcelease excludes manifest.mjs pending onefactsource H04 handoff.",
-    "updatedAtUtc": "2026-10-28T09:59:44.746490+00:00",
+    "updatedAtUtc": "2026-10-28T10:08:14.958838+00:00",
     "branch": "codex/erp",
     "source846Files": {
       "adapters/postgres/src/sales-query-reader.ts": {

@@ -120,13 +120,14 @@ export async function prepareB07ApprovedPublication(t: TestContext, pool: Fixtur
    // This is separate QA identity, never the historical creator/importer802.
    if(hv2){
     const q=hv2.qaBootstrap;
-    assert.equal(Number((await pool.query("SELECT count(*) n FROM naijue_erp.user_account")).rows[0]!.n),0,"QA identity requires a truly fresh empty account target");
-    await pool.query("BEGIN ISOLATION LEVEL READ COMMITTED");
+    const qaClient=await pool.connect();
     try{
-     await pool.query("INSERT INTO naijue_erp.staff(id,name,role,employment_status,version) VALUES($1,'SYNTHETIC HV2 P04 NORMAL QA','ADMIN','在职',1)",[q.staffId]);
-     await pool.query("INSERT INTO naijue_erp.user_account(id,staff_id,login_name,password_hash,login_enabled,auth_version,version,created_at,updated_at) VALUES($1,$2,$3,$4,true,1,1,$5,$5)",[q.accountId,q.staffId,q.loginName,q.passwordHash,ENGINE_TIME]);
-     await pool.query("COMMIT");
-    }catch(error){await pool.query("ROLLBACK");throw error;}
+     await qaClient.query("BEGIN ISOLATION LEVEL READ COMMITTED");
+     assert.equal(Number((await qaClient.query("SELECT count(*) n FROM naijue_erp.user_account")).rows[0]!.n),0,"QA identity requires a truly fresh empty account target");
+     await qaClient.query("INSERT INTO naijue_erp.staff(id,name,role,employment_status,version) VALUES($1,'SYNTHETIC HV2 P04 NORMAL QA','ADMIN','在职',1)",[q.staffId]);
+     await qaClient.query("INSERT INTO naijue_erp.user_account(id,staff_id,login_name,password_hash,login_enabled,auth_version,version,created_at,updated_at) VALUES($1,$2,$3,$4,true,1,1,$5,$5)",[q.accountId,q.staffId,q.loginName,q.passwordHash,ENGINE_TIME]);
+     await qaClient.query("COMMIT");
+    }catch(error){await qaClient.query("ROLLBACK");throw error;}finally{qaClient.release();}
    }
    await pool.query("INSERT INTO naijue_erp.staff(id,name,role,employment_status,version) VALUES($1,'SYNTHETIC NONLOGIN SEALED IMPORTER','WAREHOUSE','在职',1)", [id(801)]);
    await pool.query("INSERT INTO naijue_erp.user_account(id,staff_id,login_name,password_hash,login_enabled,auth_version,version,created_at,updated_at) VALUES($1,$2,'SYNTHETIC_SEALED_NONLOGIN','SYNTHETIC_NOT_A_PASSWORD',false,1,1,$3,$3)", [actor, id(801), ENGINE_TIME]);

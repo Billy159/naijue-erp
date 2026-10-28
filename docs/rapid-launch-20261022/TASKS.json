@@ -17701,11 +17701,11 @@
     "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
     "next": "QB845P04/Cmetadata/B12fixturelimitedreview;T45freshB14/P04isolationprep;CfiniteH04release mechanics;D3P03;frontendnormal34fullcomparisonfirst",
     "githubCheckpoint": {
-      "commit": "740f983e1a7fecdc67228f1240ed78821e3e0ab0",
+      "commit": "f0d8ad5e11bbfe0e38d5c356b12c02132b9e03f9",
       "remoteVerified": true,
-      "sourceRound": 845,
+      "sourceRound": 846,
       "branch": "codex/erp",
-      "mechanism": "exact originalobjects nonforceFF+GET"
+      "mechanism": "exactoriginalobjects nonforceFF+GET"
     },
     "firstProgress": {
       "T45": "SOURCE839 fixed6leaves,pack31/crosslanguage1/lifecycle4/proxyrender2 localPASS;notfinalpack/runtime.204 actual4SELECT RRRO confirms xminpermission gap,noGRANT/replay.",
@@ -17713,7 +17713,7 @@
       "frontend": "ExistingChat continues normal34 comparison;ownbranch/WIP and B04implementation ack not yetdelivered,no otherfrontendwriter.",
       "toolchain": "T45 found existing exactNode24.21.0;root defaultNode25 not used for acceptance"
     },
-    "updatedAtUtc": "2026-10-28T09:59:44.746490+00:00",
+    "updatedAtUtc": "2026-10-28T10:08:14.958838+00:00",
     "branchConsolidation": {
       "owner": "original taskbook Chat",
       "status": "HANDED_BACK",
@@ -18030,7 +18030,32 @@
         "checks": "17modelcommandsPASS;2actualForminputpathsPASS;runtime tscPASS;root177unrelateddiagnosticsretained",
         "unmeasured": "normalbootstrap->candidate->save/readback8/CAS/realPG;0Chrome/server/build"
       },
-      "209": "CreadfinalPLAN1158/ff4c5252 andcarrier4739/8846605a;originalT45actualCOMPLETED0/0.217581s;twoDBs/fourrolesabsent,otherclients0,RRROrollbackclosed;RESULT0b5633f0;0DDL/ACL/R1/business.210prepareonly."
+      "209": "CreadfinalPLAN1158/ff4c5252 andcarrier4739/8846605a;originalT45actualCOMPLETED0/0.217581s;twoDBs/fourrolesabsent,otherclients0,RRROrollbackclosed;RESULT0b5633f0;0DDL/ACL/R1/business.210prepareonly.",
+      "independentReview": {
+        "report": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE846/QB-SOURCE846-RESULT.json",
+        "bytes": 7491,
+        "sha256": "21aff6594e74343ce06bad40db6c4fdd68c2c1674e3d793471c9567035c89e61",
+        "adopted": "P03source/protocolPASS_ONLY36PASS1realPGSKIP+normal8PASS;quantityfindingCLOSED;HISTORY1PASS;0realSQL/EXPLAIN/SLO/PG. FixtureTXfinding originalD1fixed successor847,notyetQB."
+      }
+    },
+    "source847": {
+      "parent": "f0d8ad5e11bbfe0e38d5c356b12c02132b9e03f9",
+      "files": {
+        "tests/integration/b07-approved-publication-fixture.ts": {
+          "bytes": 49514,
+          "sha256": "d29c961d84bf7772e8b6ad66551874871f868e72f9687dfd5c74fd5ae15c92d7"
+        },
+        "tests/integration/history-revision-set-guards.integration.test.ts": {
+          "bytes": 6204,
+          "sha256": "0d7154b22d65eaffcca8cfb0eaf507860bed37a4e3dcc7c5dacca6b63b1597da"
+        },
+        "tests/integration/safety.ts": {
+          "bytes": 4246,
+          "sha256": "88220997e565f809f62328a474fefafb496c3fd2e753fb5f2a223c2caac115f7"
+        }
+      },
+      "status": "D1_SOURCE_FIXED_TYPES_PASS_PENDING_ONLY_FIXTURE_RECHECK_NO_PG",
+      "scope": "Newhv2bootstrap sameborrowedclient forBEGIN/emptycheck/twoINSERT/COMMIT/ROLLBACK/release;replaygenuinepolicyreauthorize/deepcompare. TestIntegrationSettings.user onlyfinite exacttwo newownerroles+olddefault;oldenvparser/runtimefreshguard unchanged. Original846failurepreserved."
     }
   }
 }

@@ -50,7 +50,8 @@ test('P04 isolated real nonowner store, full ledger set, per-key conservation/CA
     const after=(await pool.query('SELECT quantity::text,version FROM naijue_erp.inventory_balance WHERE warehouse_id=$1 AND sku_id=$2',[warehouse,sku])).rows[0];
     assert.equal(BigInt(after.quantity),BigInt(old.quantity??'0')+total.delta);assert.equal(after.version,(old.version??0)+total.count);
    }
-   const replay=await store.revise(c.actor,command,grant,c.now,new AbortController().signal);assert.deepEqual(replay,receipt);
+   const replayGrant=await policy.authorize(c.actor,command,new AbortController().signal);assert.deepEqual(replayGrant,c.grant);
+   const replay=await store.revise(c.actor,command,replayGrant,c.now,new AbortController().signal);assert.deepEqual(replay,receipt);
    assert.equal((await pool.query('SELECT count(*)::integer n FROM naijue_erp.history_revision WHERE operation_id=$1',[receipt.operationId])).rows[0].n,1);
   }
   assert.ok(effectSizes.includes(0)&&effectSizes.includes(1)&&effectSizes.some(n=>n>1),'Actual fixture must exercise zero/one/many effect paths');

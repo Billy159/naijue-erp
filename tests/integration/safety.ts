@@ -4,7 +4,7 @@ export interface IntegrationSettings {
   readonly host: "127.0.0.1" | "::1";
   readonly port: number;
   readonly database: string;
-  readonly user: "naijue_erp_test";
+  readonly user: "naijue_erp_test" | "hv2_b14_owner_20261028_01" | "hv2_p04_owner_20261028_01";
   readonly password: string;
 }
 type Environment = Readonly<Record<string, string | undefined>>;
