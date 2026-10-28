@@ -7614,11 +7614,21 @@
     },
     "FixturePublication911": {
       "owner": "D3",
-      "status": "ACTIVE_ORIGINAL_SINGLE_LEAF_SUCCESSOR",
+      "status": "HANDED_BACK_SOURCE912_WIP_QB_PENDING",
       "files": [
         "tests/integration/current-runtime26-sales-fixture.ts"
       ],
       "scope": "Original26 publisher consumption and maintenance-after-publish; exact full11 input/authority required, no fake PUBLISH/true authorizer/private outputs/SQL grants."
+    },
+    "A02ProductionComposition912": {
+      "owner": "D1",
+      "status": "HANDED_BACK_FIXED_SOURCE912_QB_PENDING",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "apps/api/src/production-provider-composition.ts",
+        "apps/api/src/production-provider-composition.test.ts"
+      ],
+      "scope": "Forward one explicit trusted CapacityAdmission singleton from composition function argument into actual existing API factories for current normal/exact26/R1/R2/R3/full/history entries. No JSON function/default/always-allow/dummy probe; no rewrite parser, no production-main/server/threshold/SQL edits. C retains real probe/process lifecycle and operational configuration."
     }
   }
 }

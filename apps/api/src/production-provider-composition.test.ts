@@ -25,6 +25,8 @@ import { NATIVE_RUNTIME26_METADATA_PROBE, NATIVE_RUNTIME26_V14_METADATA_PROBE, N
 import { historyDetailQuery, historyListQuery } from "../../../tests/support/imported-history-query-fixtures.ts";
 import { wrapTrustedLegacyCredential } from "../../../packages/authentication/src/legacy-passwords.ts";
 import { createPostgresApplicationApi, createPostgresRuntime26DocumentApplicationApi, createSourceConfirmedApplicationReadAuthorization } from "./postgres-read-api.ts";
+import {CapacityAdmissionRejected} from './capacity-admission.ts';
+import type {CapacityAdmission} from './capacity-admission.ts';
 
 function config(): ProductionRuntimeConfiguration {
   return { schemaVersion: 1, profile: "source-confirmed-native-v1", documentCommands: "NATIVE_RUNTIME", publicOrigin: PRODUCTION_PUBLIC_ORIGIN,
@@ -40,6 +42,54 @@ function config(): ProductionRuntimeConfiguration {
       lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000 } };
 }
 const account = entityId("account", "00000000-0000-4000-8000-000000000001"), hall = entityId("hall", "00000000-0000-4000-8000-000000000002");
+test('A02 composition carries the original trusted singleton separately while all JSON parsers stay closed',()=>{
+  const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_UNKNOWN',2);},close(){}};
+  const c=config(),r1={...c,profile:'source-confirmed-native-exact26-r1-v1' as const,documentCommands:'DISABLED' as const,
+    runtime26Review:{reviewFile:'/unopened-a02-review.json',trustedReviewSha256:'f'.repeat(64)}},r2=r2Configuration(r1,false,false),r3=r3Configuration(r1,'/unopened-a02-media');
+  const options=productionApplicationOptions(c,capacity);assert.equal(options.capacityAdmission,capacity);
+  assert.equal(Object.hasOwn(productionApplicationOptions(c),'capacityAdmission'),false);
+  for(const [parse,value]of [[parseProductionRuntimeConfiguration,c],[parseProductionRuntime26Configuration,r1],[parseProductionRuntime26R2Configuration,r2],[parseProductionRuntime26R3Configuration,r3]]as const)
+    for(const key of ['capacityAdmission','capacityWindow','capacityProbe'])assert.throws(()=>parse({...value,[key]:capacity}),TypeError);
+});
+test('A02 normal/R1/CORE/R2/R3/full/history composition rejects missing singleton before any pool allocation',async()=>{
+  const f=mixedProductionFixture(true),core=coreProductionFixture();let allocations=0;
+  const driver=()=>{allocations++;throw Error('Must not allocate');},r2=r2Configuration(f.configuration,false,false),r3={...r2,profile:'source-confirmed-native-exact26-r3-v1' as const,productMedia:{root:'/unopened-a02-media',rootKey:'a02-private'}};
+  const history={authorization:{async authorize():Promise<never>{throw Error('No request');}}};
+  try{
+    for(const create of [()=>createProductionApplicationApi(config(),driver),()=>createProductionRuntime26ApplicationApi(f.configuration,driver),
+      ()=>createProductionRuntime26ApplicationApi(core.configuration,driver),()=>createProductionRuntime26R2ApplicationApi(r2,driver),
+      ()=>createProductionRuntime26R3ApplicationApi(r3,driver),()=>createProductionRuntime26FullApplicationApi(r3,driver),
+      ()=>createProductionRuntime26HistoryRevisionApplicationApi(f.configuration,history,driver)])
+      await assert.rejects(create(),/explicit singleton capacity admission/);
+    assert.equal(allocations,0);
+  }finally{f.cleanup();core.cleanup();}
+});
+test('A02 full production chain uses one supplied singleton for actual login/upload and closes it once; old sessions bypass it',async()=>{
+  const f=mixedProductionFixture(true),password='SYNTHETIC_A02_COMPOSITION',salt='a'.repeat(48);
+  const passwordHash=wrapTrustedLegacyCredential({salt,hash:pbkdf2Sync(password,salt,210000,32,'sha256').toString('hex')});
+  const loginName='SYNTHETIC_A02_COMPOSITION',p=exact26Driver(f.observation,sql=>{
+    if(sql===V16HistoryProbe)return [structuredClone(f.observation)];
+    if(sql.includes('auth:login-snapshot'))return [{account_id:account,login_name:loginName,password_hash:passwordHash,auth_version:1}];
+    if(sql.includes('FROM naijue_erp.user_account a JOIN naijue_erp.staff s'))return [{account_id:account,staff_id:'00000000-0000-4000-8000-000000000003',login_name:loginName,password_hash:passwordHash,login_enabled:true,auth_version:1,role:'ADMIN',employment_status:'在职',hall_id:hall,native_hall_id:hall,hall_enabled:true}];
+    return undefined;
+  });
+  const selected={...r2Configuration(f.configuration,false,false),profile:'source-confirmed-native-exact26-r3-v1' as const,productMedia:{root:'/unopened-a02-media',rootKey:'a02-private'}};
+  const kinds:string[]=[];let closes=0;
+  const capacity:CapacityAdmission={async acquire(kind){assert.equal(this,capacity);kinds.push(kind);throw new CapacityAdmissionRejected('SYNTHETIC_UNKNOWN',2);},close(){assert.equal(this,capacity);closes++;}};
+  try{
+    const api=await createProductionRuntime26FullApplicationApi(selected,p.factory,null,capacity);
+    try{
+      const login=await api.app.inject({method:'POST',url:'/auth/login',headers:{origin:PRODUCTION_PUBLIC_ORIGIN},payload:{loginName,password}});
+      assert.equal(login.statusCode,503,login.body);assert.equal(login.json().error.code,'CAPACITY_ADMISSION_UNAVAILABLE');assert.equal(login.headers['set-cookie'],undefined);
+      const upload=await api.app.inject({method:'POST',url:'/products/media/uploads',headers:{origin:PRODUCTION_PUBLIC_ORIGIN,cookie:`__Host-naijue_session=${p.token}`,'content-type':'image/png','x-command-key':'a02-command','x-upload-key':'a02-file'},payload:Buffer.from([1])});
+      assert.equal(upload.statusCode,503,upload.body);assert.equal(upload.headers['retry-after'],'2');assert.equal(upload.json().error.code,'CAPACITY_ADMISSION_UNAVAILABLE');
+      assert.equal((await api.app.inject({url:'/auth/session',headers:{cookie:`__Host-naijue_session=${p.token}`}})).statusCode,200);
+      assert.deepEqual(kinds,['session','upload']);assert.equal(p.counts().allocations,1);
+      assert.equal(p.calls.some(c=>c.sql.startsWith('INSERT INTO naijue_erp.auth_session')),false);
+    }finally{await api.close();}
+    assert.equal(closes,1);assert.equal(p.counts().connects,p.counts().releases);assert.equal(p.counts().ends,1);
+  }finally{f.cleanup();}
+});
 
 test("production configuration has no missing, widened, unknown or ambient selectors", async () => {
   assert.deepEqual(parseProductionRuntimeConfiguration(config()), config());

@@ -20,6 +20,7 @@ import type { Runtime26HistoryRevisionConfiguration } from "./postgres-read-api.
 import type { InventoryOutputSpoolOptions } from "./inventory-http.ts";
 import { checkedCoreReadModules } from "./postgres-read-api.ts";
 import type { CoreReadModule, PostgresApplicationApiOptions, PostgresApplicationApi, CommittedCoreReadBinding } from "./postgres-read-api.ts";
+import type { CapacityAdmission } from './capacity-admission.ts';
 
 export const PRODUCTION_PUBLIC_ORIGIN = "https://1n5635n614.goho.co";
 export interface ProductionRuntimeConfiguration {
@@ -88,9 +89,12 @@ export function parseProductionRuntimeConfiguration(input: unknown): ProductionR
   return structuredClone(c) as unknown as ProductionRuntimeConfiguration;
 }
 
-export function productionApplicationOptions(input: unknown): PostgresApplicationApiOptions {
+/** Trusted executable resource is passed separately, by identity; closed JSON configuration never carries it.
+ * Omitting it leaves active-factory configuration refusal intact, rather than constructing a permissive gate. */
+export function productionApplicationOptions(input: unknown, capacityAdmission?: CapacityAdmission): PostgresApplicationApiOptions {
   const config = parseProductionRuntimeConfiguration(input);
   return {
+    ...(capacityAdmission === undefined ? {} : {capacityAdmission}),
     ...(config.inventoryOutputSpool === undefined ? {} : { inventoryOutputSpool: config.inventoryOutputSpool }),
     postgres: config.postgres, productMedia: null, authorization: { mode: "source-confirmed-native" },
     nativeReadExtensions: { profile: "source-confirmed-r1-v1" },
@@ -109,8 +113,9 @@ export function productionApplicationOptions(input: unknown): PostgresApplicatio
 /** A single owned bounded pool is constructed inside the existing application
  * factory. All native facts/completeness checks run on the original command tx.
  * No fixtures, migrations, seeds, fake authentication or retry loop are composed. */
-export async function createProductionApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory): Promise<PostgresApplicationApi> {
-  return createPostgresApplicationApi(productionApplicationOptions(input), driver);
+export async function createProductionApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
+  capacityAdmission?: CapacityAdmission): Promise<PostgresApplicationApi> {
+  return createPostgresApplicationApi(productionApplicationOptions(input, capacityAdmission), driver);
 }
 
 /** Independent R1 successor. The old closed nine-field parser/factory/profile
@@ -187,9 +192,9 @@ function maintenanceOptions(config: MaintenanceSelection, staffCredentialRequest
     ...(config.staffMaintenance === true ? { staffMaintenance: { credentialRequestTag: staffCredentialRequestTag } } : {}) };
 }
 export async function createProductionRuntime26ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
+  staffCredentialRequestTag: CredentialRequestTag | null = null, capacityAdmission?: CapacityAdmission): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26Configuration(input);
-  const options = { ...productionApplicationOptions(productionRuntime26HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) };
+  const options = { ...productionApplicationOptions(productionRuntime26HostConfiguration(config), capacityAdmission), ...maintenanceOptions(config, staffCredentialRequestTag) };
   if (config.coreInitializationRead !== undefined) {
     const { nativeReadExtensions: _extensions, currentForms: _forms, ...coreOptions } = options;
     return createPostgresRuntime26ApplicationApi({ ...coreOptions, coreInitializationRead: config.coreInitializationRead, ...(config.coreReadModules === undefined ? {} : { coreReadModules: config.coreReadModules }) }, config.runtime26Review, driver);
@@ -201,11 +206,11 @@ export async function createProductionRuntime26ApplicationApi(input: unknown, dr
  * the separately supplied HISTORY authorization never comes from JSON/HTTP. */
 export async function createProductionRuntime26HistoryRevisionApplicationApi(input: unknown,
   history: Runtime26HistoryRevisionConfiguration, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
+  staffCredentialRequestTag: CredentialRequestTag | null = null, capacityAdmission?: CapacityAdmission): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26Configuration(input);
   if (config.coreInitializationRead !== undefined) throw new TypeError("CORE initialization does not enable historical document writes");
   return createPostgresRuntime26HistoryRevisionApplicationApi(
-    { ...productionApplicationOptions(productionRuntime26HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) },
+    { ...productionApplicationOptions(productionRuntime26HostConfiguration(config), capacityAdmission), ...maintenanceOptions(config, staffCredentialRequestTag) },
     config.runtime26Review, history, driver);
 }
 
@@ -236,10 +241,11 @@ export function productionRuntime26R2HostConfiguration(input: unknown): Producti
   return parseProductionRuntimeConfiguration({ ...base, profile: "source-confirmed-native-v1" });
 }
 export async function createProductionRuntime26R2ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null, history?: Runtime26HistoryRevisionConfiguration): Promise<PostgresApplicationApi> {
+  staffCredentialRequestTag: CredentialRequestTag | null = null, history?: Runtime26HistoryRevisionConfiguration,
+  capacityAdmission?: CapacityAdmission): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26R2Configuration(input);
   return createPostgresRuntime26DocumentApplicationApi(
-    { ...productionApplicationOptions(productionRuntime26R2HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) },
+    { ...productionApplicationOptions(productionRuntime26R2HostConfiguration(config), capacityAdmission), ...maintenanceOptions(config, staffCredentialRequestTag) },
     config.runtime26Review, config.existingPreparation, driver, history);
 }
 
@@ -271,17 +277,18 @@ export function productionRuntime26R3HostConfiguration(input: unknown): Producti
   return productionRuntime26R2HostConfiguration({ ...base, profile: "source-confirmed-native-exact26-r2-v1" });
 }
 export async function createProductionRuntime26R3ApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null, history?: Runtime26HistoryRevisionConfiguration): Promise<PostgresApplicationApi> {
+  staffCredentialRequestTag: CredentialRequestTag | null = null, history?: Runtime26HistoryRevisionConfiguration,
+  capacityAdmission?: CapacityAdmission): Promise<PostgresApplicationApi> {
   const config = parseProductionRuntime26R3Configuration(input);
-  return createPostgresRuntime26MediaApplicationApi({ ...productionApplicationOptions(productionRuntime26R3HostConfiguration(config)), ...maintenanceOptions(config, staffCredentialRequestTag) },
+  return createPostgresRuntime26MediaApplicationApi({ ...productionApplicationOptions(productionRuntime26R3HostConfiguration(config), capacityAdmission), ...maintenanceOptions(config, staffCredentialRequestTag) },
     config.runtime26Review, config.existingPreparation, { ...config.productMedia, publicRoots: [config.assets.root] }, driver, history);
 }
 
-/** Complete explicitly selected production successor. Existing R1/R2/R3 calls
- * keep their defaults. The original historical write provider is built only
+/** Complete explicitly selected production successor. Existing R1/R2/R3 selectors
+ * remain closed; capacity is a separate explicit host resource. The original historical write provider is built only
  * inside the owned application pool, never from JSON functions or LIVE policy. */
 export async function createProductionRuntime26FullApplicationApi(input: unknown, driver?: PostgresPoolDriverFactory,
-  staffCredentialRequestTag: CredentialRequestTag | null = null): Promise<PostgresApplicationApi> {
+  staffCredentialRequestTag: CredentialRequestTag | null = null, capacityAdmission?: CapacityAdmission): Promise<PostgresApplicationApi> {
   return createProductionRuntime26R3ApplicationApi(input, driver, staffCredentialRequestTag,
-    { profile: "SOURCE_CONFIRMED_HISTORY_REVISION_V16" });
+    { profile: "SOURCE_CONFIRMED_HISTORY_REVISION_V16" }, capacityAdmission);
 }

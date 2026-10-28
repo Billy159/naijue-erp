@@ -4,6 +4,9 @@
  */
 import assert from "node:assert/strict";
 import { createHash, randomUUID } from "node:crypto";
+import { isAbsolute } from "node:path";
+import { integerValue, jsonObject } from "../../adapters/postgres/src/codec.ts";
+import { readNativeCoreWarehouseCarryForward } from "../../adapters/postgres/src/native-import-record-accounting.ts";
 import { IMPORT_V2_TABLES } from "../../packages/application/src/import-v2-contract.ts";
 import { engineFixtures } from "./native-import-accounting-fixture.ts";
 import { syntheticId } from "./fixtures.ts";
@@ -220,9 +223,113 @@ export async function collectCurrentReviewedCatalogue(blueprint: CurrentSalesBlu
   await source.verify(); return chunks;
 }
 
+/** Original openImportHost26 job file and its original technical journal sink.
+ * T45 owns the full independently reviewed QA22/11-source provider, including
+ * prefix staging before BIND. The production 53-warehouse provider is not a
+ * substitute. No fixture callback is allowed to declare publication successful.
+ */
+export interface CurrentSalesPublicationOptions {
+  readonly configFile: string;
+  readonly signal: AbortSignal;
+  readonly maxSteps: number;
+  readonly append: (entry: Readonly<Record<string, unknown>>) => Promise<void>;
+}
+export function validateCurrentSalesPublicationOptions(value: CurrentSalesPublicationOptions): void {
+  assert.ok(value && typeof value.configFile === "string" && isAbsolute(value.configFile),
+    "Original full11 QA22 publication job file required; CORE/dictionary inputs alone cannot publish");
+  assert.ok(value.signal instanceof AbortSignal && !value.signal.aborted, "Live original publication cancellation signal required");
+  assert.ok(Number.isSafeInteger(value.maxSteps) && value.maxSteps > 0 && value.maxSteps <= 1_000_000,
+    "Original bounded import step limit required");
+  assert.equal(typeof value.append, "function", "Original technical import journal required");
+}
+interface CurrentOriginalPublicationHost {
+  readonly executor: {
+    readonly pool: NativeRuntime26Issuer["pool"];
+    readonly runtime26: NativeRuntime26Issuer["runtime26"];
+    readonly binding: {
+      readonly phase: string; readonly target: unknown; readonly batchId: string;
+      readonly actorAccountId: string; readonly fixedSourceNamespace: string;
+      readonly selectionSha256: string; readonly coreReceiptId: string;
+      readonly coreSourceDigest: string; readonly authorizedPayloadHash: string;
+    };
+  };
+  readonly source: { steps(): AsyncIterable<{ kind: string; payload: unknown }>; close(): Promise<void> };
+  close(): Promise<void>;
+}
+interface CurrentOriginalPublicationRunner {
+  createPostgresImportExecutor26(options: CurrentOriginalPublicationHost["executor"]): (step: { kind: string; payload: unknown }) => Promise<unknown>;
+  runImportSteps(options: {
+    source: CurrentOriginalPublicationHost["source"];
+    execute: (step: { kind: string; payload: unknown }) => Promise<unknown>;
+    append: CurrentSalesPublicationOptions["append"]; signal: AbortSignal; maxSteps: number;
+  }): Promise<unknown>;
+}
+async function openCurrentSalesPublication(options: CurrentSalesPublicationOptions, blueprint: CurrentSalesBlueprint, target: unknown) {
+  validateCurrentSalesPublicationOptions(options);
+  // Fixed original module, not an injected execute/authorize/true callback. It
+  // checks the pinned full11 provider and independent source/runtime reviews
+  // before activation; missing source groups fail in the original consumer.
+  const module = await import(new URL("../../scripts/import-v3/production-source-host.mjs", import.meta.url).href) as {
+    openImportHost26(options: { configFile: string; signal: AbortSignal }): Promise<CurrentOriginalPublicationHost>;
+  };
+  const original = await module.openImportHost26({ configFile: options.configFile, signal: options.signal });
+  try {
+    const binding = original.executor.binding;
+    assert.equal(binding.phase, "FULL_SOURCE_CONTINUATION_26_V1");
+    assert.deepEqual(binding.target, target, "CORE and publisher must bind the same actual target and preparation role");
+    assert.equal(binding.batchId, blueprint.batchId); assert.equal(binding.actorAccountId, blueprint.refs.importer.nativeAccountId);
+    assert.equal(binding.fixedSourceNamespace, blueprint.namespace); assert.equal(binding.selectionSha256, blueprint.pins.selectionSha256);
+    assert.match(binding.authorizedPayloadHash, /^[a-f0-9]{64}$/);
+    assert.notEqual(binding.authorizedPayloadHash, binding.coreSourceDigest, "Full source authority must differ from CORE-only authority");
+    const runner = await import(new URL("../../scripts/import-v3/run.mjs", import.meta.url).href) as CurrentOriginalPublicationRunner;
+    const execute = runner.createPostgresImportExecutor26(original.executor);
+    return { original, async publish(core: { operationId: string }, expectedDatabaseOid: string) {
+      assert.equal(binding.coreReceiptId, core.operationId, "Actual original CORE receipt must match publisher input");
+      const client = await original.executor.pool.connect();
+      try {
+        await original.executor.runtime26.assertReady(client, "IMPORT_STAGE");
+        const rows = (await client.query("SELECT current_database() AS db,(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()) AS oid")).rows;
+        assert.equal(rows.length, 1); assert.equal(rows[0]!.db, CURRENT_SALES_QA_TARGET); assert.equal(rows[0]!.oid, expectedDatabaseOid);
+      } finally { client.release(); }
+      // The approved source owns the exact prefix -> BIND -> remaining stage ->
+      // ACCOUNT -> CLOSURE -> PUBLISH order and continuation filtering. No local
+      // reconstruction, pre-walk, second prefix traversal or automatic retry.
+      await runner.runImportSteps({ source: original.source, execute, append: options.append,
+        signal: options.signal, maxSteps: options.maxSteps });
+      const proofClient = await original.executor.pool.connect(); let began = false, committing = false; let discard: Error | undefined;
+      try {
+        await proofClient.query("BEGIN ISOLATION LEVEL REPEATABLE READ"); began = true;
+        // Reuse the original generic actual receipt/claim/CAS reader, rather
+        // than run.mjs's production-only 53-warehouse continuation wrapper.
+        const proof = await readNativeCoreWarehouseCarryForward(proofClient, binding, original.executor.runtime26);
+        assert.equal(proof.status, "IMPORTED", "Actual cutoff publication must precede ordinary product/SKU creation");
+        assert.equal(proof.fixedSourceNamespace, blueprint.namespace); assert.equal(proof.selectionSha256, blueprint.pins.selectionSha256);
+        assert.equal(proof.actorAccountId, blueprint.refs.importer.nativeAccountId);
+        assert.equal(proof.coreWarehouses.length, 22); assert.equal(proof.warehouses.length, 22, "This QA uses only the explicit22 warehouse scope");
+        const checkpoint = jsonObject(proof.checkpoint);
+        assert.deepEqual(checkpoint.counts, checkpoint.expected);
+        assert.equal(proof.fullBinding?.authorizedPayloadHash, binding.authorizedPayloadHash);
+        const final = proof.committedOperations.at(-1);
+        assert.ok(final && final.action === "IMPORT_PUBLISH", "Original final receipt/claim chain required");
+        committing = true; await proofClient.query("COMMIT"); began = false;
+        return { status: "IMPORTED" as const, sequence: integerValue(checkpoint.sequence), cursor: integerValue(checkpoint.cursor) };
+      } catch (error) {
+        if (!began || committing) discard = error instanceof Error ? error : new Error("Publication readback outcome unknown");
+        else try { await proofClient.query("ROLLBACK"); }
+        catch (rollback) { discard = rollback instanceof Error ? rollback : new Error("Publication readback rollback failed"); throw new AggregateError([error, rollback], "Original publication readback and rollback failed"); }
+        throw error;
+      } finally { proofClient.release(discard); }
+    } };
+  } catch (error) {
+    try { await original.close(); } catch (close) { throw new AggregateError([error, close], "Original publication host and cleanup failed"); }
+    throw error;
+  }
+}
+
 export interface CurrentSalesFixtureHost {
   readonly issuer: NativeRuntime26Issuer;
   readonly expectedDatabaseOid: string;
+  readonly publication: CurrentSalesPublicationOptions;
   readonly blueprint: CurrentSalesBlueprint;
   /** Original factory options contain private FILE REFERENCES/partySource methods.
    * This adapter does not parse/read/return login names or credential values. */
@@ -240,14 +347,17 @@ export interface CurrentSalesFixtureHost {
  * deliberately excludes private bootstrap reports and normal-login material.
  */
 export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixtureHost) {
-  assert.ok(host?.issuer?.runtime26 && host.issuer.pool && host.blueprint && host.bootstrapOptions && host.coreAuthorization && host.catalogueSource && host.schemes,
-    "Current issuer, full synthetic blueprint and original independently reviewed source factories/grants required");
+  assert.ok(host?.issuer?.runtime26 && host.issuer.pool && host.blueprint && host.bootstrapOptions && host.coreAuthorization && host.catalogueSource && host.schemes && host.publication,
+    "Current issuer, full synthetic blueprint, original full11 publication job and independently reviewed source factories/grants required");
+  validateCurrentSalesPublicationOptions(host.publication);
   const b = structuredClone(host.blueprint), { pool, runtime26 } = host.issuer;
   assert.equal(b.database, CURRENT_SALES_QA_TARGET); assert.match(host.expectedDatabaseOid, /^[1-9]\d*$/);
   const binding = host.bootstrapOptions.binding as { target: { database: string }; batchId: string; actorAccountId: string; fixedSourceNamespace: string; selectionSha256: string; phase: string };
   assert.equal(binding?.target?.database, CURRENT_SALES_QA_TARGET); assert.equal(binding.batchId, b.batchId);
   assert.equal(binding.actorAccountId, b.refs.importer.nativeAccountId); assert.equal(binding.fixedSourceNamespace, CURRENT_SALES_QA_NAMESPACE);
   assert.equal(binding.selectionSha256, b.pins.selectionSha256); assert.equal(binding.phase, "CORE_INITIALIZATION_26_V1");
+  const publication = await openCurrentSalesPublication(host.publication, b, binding.target);
+  try {
   const reviewedCatalogue = await collectCurrentReviewedCatalogue(b, host.catalogueSource);
   assert.equal(b.parties.length, 115); assert.equal(b.accountIdentities.length, 49);
   assert.equal(b.accountIdentities.filter(a => a.sourceEmployeeNativeId !== null).length, 45);
@@ -301,6 +411,9 @@ export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixt
       await new PostgresNativeCatalogueImportStore26(pool, runtime26).stage(chunk);
     }
     await host.catalogueSource.verify();
+    const publicationResult = await publication.publish(coreResult, host.expectedDatabaseOid);
+    // All ordinary maintenance begins only after the original real publication
+    // and readback. No STAGED/core success is treated as runtime SKU readiness.
     const importer: ActorContext = { accountId: entityId("account", b.refs.importer.nativeAccountId), hallId: null };
     const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
     const staff = createStaffMaintenanceService({ unitOfWork: new PostgresStaffMaintenanceUnitOfWork(driver), credentials: null, now: () => b.now, newId });
@@ -361,10 +474,11 @@ export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixt
       // expectation checked by the actual subsequent MAIN loader, not a new fact.
       append: { spec: { productId: created.targetId, colorId: b.refs.color.id as string, fitId: b.refs.fit.id as string, sizeId: b.refs.secondSizeId },
         dealPrice: deal, expectedReferencePriceMinor: referenceMinor, expectedSnapshot: { ...snapshot, sizeName: member[0]!.name as string, barcode: null } } };
-    return { fixture, coreResult, actualCoreCounts,
+    return { fixture, coreResult, actualCoreCounts, publicationResult,
       p02: { accountId: actualActor.id, staffId: actualActor.staff_id, hallId: actualActor.hall_id, authVersion: actualActor.auth_version,
         normalLoginMaterial: "T45_PRIVATE_ORIGINAL_SYNTHETIC_FACTORY_ONLY" as const },
       a01: { productId: created.targetId, version: current.version, existingSkuId: current.sku_id, lawfulMissingTuple: fixture.append.spec },
       scope: "Actual source/stores and readback only when invoked by T45; no password/credential exported, no production acceptance" };
   } finally { await bootstrap.close(); }
+  } finally { await publication.original.close(); }
 }
