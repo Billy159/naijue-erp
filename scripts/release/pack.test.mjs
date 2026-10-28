@@ -13,12 +13,14 @@ const testParent = configured ? path.resolve(configured) : await realpath(os.tmp
 if (configured) await mkdir(testParent, { recursive: false, mode: 0o700 });
 const temporary = await mkdtemp(path.join(testParent, 'release-pack-tools-'));
 const sourceCommit = 'a'.repeat(40);
+const contractBytes = await readFile(new URL('../../config/release-contract.json', import.meta.url), 'utf8');
 const record = (name, bytes, extra = {}) => ({ path: name, bytes: Buffer.byteLength(bytes), sha256: sha256(bytes), ...extra });
 async function put(root, name, bytes) { await mkdir(path.dirname(path.join(root, name)), { recursive: true }); await writeFile(path.join(root, name), bytes); }
 async function fixture(name) {
   const root = path.join(temporary, name), sourceRoot = path.join(root, 'source'), buildRoot = path.join(root, 'build');
   await mkdir(sourceRoot, { recursive: true }); await mkdir(buildRoot);
   const sourceData = {
+    'config/release-contract.json': contractBytes,
     'package.json': JSON.stringify({ name: 'tool-only-fixture', private: true, type: 'module', dependencies: {} }),
     'package-lock.json': JSON.stringify({ name: 'tool-only-fixture', lockfileVersion: 3, packages: { '': { dependencies: {} } } }),
     'adapters/postgres/migrations/0001_initial.sql': 'CREATE SCHEMA release_tool_fixture;\n',
@@ -163,6 +165,20 @@ test('tiny tool fixture packs, extracts once, verifies members and refuses overw
   assert.equal(manifest.sourceCommit, sourceCommit); assert.equal(manifest.members.length, 6);
   assert(!manifest.members.some(row => row.path.includes('evidence')));
   await rejects(f, 'OUTPUT_EXISTS_NO_OVERWRITE');
+});
+test('release refuses missing or mixed mechanical source even when its source record is self-consistent', async () => {
+  const missing = await fixture('missing-contract');
+  missing.source.files = missing.source.files.filter(row => row.path !== 'config/release-contract.json');
+  await missing.save();
+  await assert.rejects(validateRelease(missing.options), error => error.code === 'RELEASE_CONTRACT_SOURCE_REQUIRED');
+  const mixed = await fixture('mixed-contract');
+  const name = 'config/release-contract.json', value = JSON.parse(contractBytes);
+  value.full.patchLevel = '26_unreviewed_candidate';
+  const bytes = JSON.stringify(value, null, 2) + '\n';
+  await put(mixed.sourceRoot, name, bytes);
+  mixed.source.files = mixed.source.files.map(row => row.path === name ? record(name, bytes) : row);
+  await mixed.save();
+  await assert.rejects(validateRelease(mixed.options), error => error.code === 'FILE_HASH_MISMATCH');
 });
 test('member traversal cannot escape the fresh output', async () => {
   const f = await fixture('traversal'); f.build.files[0].member = '../outside.js'; await f.save(); await rejects(f, 'UNSAFE_RELATIVE_PATH');

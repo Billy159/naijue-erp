@@ -7179,10 +7179,14 @@
         "scripts/release/manifest.mjs",
         "scripts/release/deploy-candidate.py",
         "scripts/release/boot-entry.py",
-        "scripts/release/release-file-contract.test.mjs"
+        "scripts/release/release-file-contract.test.mjs",
+        "scripts/release/build-production.mjs",
+        "scripts/release/build-production.test.mjs",
+        "scripts/release/pack.test.mjs"
       ],
       "scope": "Existing facts only: ordered4patch mappings/fontlicense/count26/fullprofile20/node24.21/sixproxybodybudgets. JS reads JSON; generated Python embeds identical JSON and remains standalone. Existing helper digest mechanism regenerates Fullboot pin. No SQL/ACL/server changes.",
-      "state": "FIRST_SHARED_FACTS_SLICE_LOCAL_CHECKS_PASS_NOT_FULL_H04"
+      "state": "FIRST_SHARED_FACTS_SLICE_LOCAL_CHECKS_PASS_NOT_FULL_H04",
+      "candidateBinding": "Frozen config/release-contract.json required by build/JSvalidation and Pythonactualbuildconsumer; exact bytes/sourcehash must equal tool-consumed contract. Existing source/buildmanifest identity retained; legacy helpers unmodified."
     }
   }
 }

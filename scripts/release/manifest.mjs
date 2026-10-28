@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { lstat, open, readdir, realpath } from 'node:fs/promises';
-import { constants } from 'node:fs';
+import { constants, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { builtinModules } from 'node:module';
 import releaseContract from '../../config/release-contract.json' with { type: 'json' };
@@ -8,6 +8,9 @@ import releaseContract from '../../config/release-contract.json' with { type: 'j
 export { releaseContract };
 
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
+const releaseContractBytes = readFileSync(new URL('../../config/release-contract.json', import.meta.url));
+export const releaseContractSource = Object.freeze({ path: 'config/release-contract.json',
+  bytes: releaseContractBytes.length, sha256: sha256(releaseContractBytes) });
 export class ReleaseError extends Error {
   constructor(code) { super(code); this.name = 'ReleaseError'; this.code = code; }
 }
@@ -402,6 +405,8 @@ export async function validateRelease({ sourceManifest, buildManifest, buildRoot
     allowedSource(name); const bytes = await boundedFile(sourceRoot, name); matches(bytes, record); sourceBytes.set(name, bytes);
     total += bytes.length; requireRelease(total <= 512 * 1024 * 1024, 'SOURCE_SIZE_LIMIT');
   }
+  requireRelease(sources.has(releaseContractSource.path), 'RELEASE_CONTRACT_SOURCE_REQUIRED');
+  matches(sourceBytes.get(releaseContractSource.path), releaseContractSource);
   let packageJson, lock;
   try { packageJson = JSON.parse(sourceBytes.get('package.json')); lock = JSON.parse(sourceBytes.get('package-lock.json')); }
   catch { throw new ReleaseError('INVALID_RUNTIME_LOCK'); }

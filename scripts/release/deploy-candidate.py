@@ -43,6 +43,7 @@ FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 's
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
 RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql","member":"patches/0026-v8-bootstrap-field-provenance.sql"},{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql","member":"patches/0026-v10-native-creation-trigger-record-scope.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_v20_history_insert_identity_from_v19"},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576}]}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":1632,"sha256":"18dbb9988107905ba07df5fa45907d8a3a45aac52a75bcbd5d77b618266ba1de"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -393,6 +394,8 @@ def validate_runtime_build(p, manifest, refs):
     if exact26_full(p):
         required.add('adapters/postgres/src/history-revision-store.ts')
     source_inputs = {row['path']: row for row in source.get('files', [])}
+    need(source_inputs.get(RELEASE_CONTRACT_SOURCE['path']) == RELEASE_CONTRACT_SOURCE,
+         'EXACT_RELEASE_CONTRACT_SOURCE_REQUIRED')
     need(manifest.get('entrypoints', {}).get('backend') == 'backend/production-main.js' and
          graph.get('entrySource') == component.get('entrySource') == 'apps/api/src/production-main.ts' and
          graph.get('entryOutput') == component.get('entryOutput') == 'backend/production-main.js' and

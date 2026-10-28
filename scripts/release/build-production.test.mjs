@@ -55,7 +55,8 @@ async function fixture(name, dependencies = false, syntheticGraph = false) {
   const pkg = { name: 'tiny-build-tool-check', private: true, type: 'module', dependencies: {}, devDependencies: { esbuild: esbuildVersion } };
   const lock = { name: pkg.name, lockfileVersion: 3, packages: { '': { dependencies: {}, devDependencies: pkg.devDependencies },
     'node_modules/esbuild': actualLock.packages['node_modules/esbuild'], [`node_modules/${nativePackage}`]: actualLock.packages[`node_modules/${nativePackage}`] } };
-  const data = { 'package.json': JSON.stringify(pkg), 'package-lock.json': JSON.stringify(lock), 'tsconfig.json': '{}',
+  const data = { 'config/release-contract.json': await readFile(new URL('../../config/release-contract.json', import.meta.url), 'utf8'),
+    'package.json': JSON.stringify(pkg), 'package-lock.json': JSON.stringify(lock), 'tsconfig.json': '{}',
     'apps/web/tsconfig.json': '{}', 'apps/web/src/application/tsconfig.json': '{}',
     'apps/web/demo-replica/build-production-host.mjs': builder,
     'apps/web/src/application/build-application.mjs': 'export const onlyToolPlaceholder = true;',

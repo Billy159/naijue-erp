@@ -10,7 +10,7 @@ const root = new URL('../../', import.meta.url);
 const begin = '# BEGIN GENERATED RELEASE CONTRACT';
 const end = '# END GENERATED RELEASE CONTRACT';
 
-export function contractBlock(contract) {
+export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify(contract, null, 2) + '\n')) {
   const keys = ['format', 'migrationCount', 'fontLicense', 'runtimeSqlPatches', 'full', 'node', 'requestBodyBudgets'];
   if (!contract || Object.keys(contract).sort().join() !== keys.sort().join()
       || contract.format !== 'naijue-release-contract-v1' || contract.migrationCount !== 26
@@ -31,11 +31,14 @@ export function contractBlock(contract) {
   // An ASCII JSON literal avoids Python escape or platform encoding differences.
   const literal = JSON.stringify(contract).replace(/[\u007f-\uffff]/g, c => `\\u${c.charCodeAt(0).toString(16).padStart(4, '0')}`);
   if (literal.includes("'''")) throw Error('INVALID_RELEASE_LITERAL');
-  return `${begin}\n# Generated from config/release-contract.json; edit that source, then regenerate.\nRELEASE_CONTRACT = json.loads(r'''${literal}''')\n${end}`;
+  const source = JSON.stringify({path: 'config/release-contract.json', bytes: sourceBytes.length,
+    sha256: createHash('sha256').update(sourceBytes).digest('hex')});
+  return `${begin}\n# Generated from config/release-contract.json; edit that source, then regenerate.\nRELEASE_CONTRACT = json.loads(r'''${literal}''')\nRELEASE_CONTRACT_SOURCE = json.loads(r'''${source}''')\n${end}`;
 }
 
 export async function generateReleaseContract(check = false) {
-  const block = contractBlock(JSON.parse(await readFile(new URL('config/release-contract.json', root), 'utf8')));
+  const sourceBytes = await readFile(new URL('config/release-contract.json', root));
+  const block = contractBlock(JSON.parse(sourceBytes), sourceBytes);
   const deployPath = new URL('scripts/release/deploy-candidate.py', root);
   const oldDeploy = await readFile(deployPath, 'utf8');
   const pattern = /# BEGIN GENERATED RELEASE CONTRACT[\s\S]*?# END GENERATED RELEASE CONTRACT/;

@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, ReleaseError } from './manifest.mjs';
+import { boundedFile, canonicalAbsolute, checkedRecord, matches, readJson, relativeName, requireRelease, sha256, validateRelease, walkFiles, runtimeSqlPatches, releaseContractSource, ReleaseError } from './manifest.mjs';
 
 const FRONTEND_BUILDER = 'apps/web/demo-replica/build-production-host.mjs';
 const FRONTEND_ENTRY = 'apps/web/demo-replica/frontend/production-bootstrap.ts';
@@ -145,6 +145,7 @@ export async function buildProduction(options) {
   }
   for (const name of [FRONTEND_BUILDER, FRONTEND_ENTRY, BACKEND_ENTRY,
     'apps/web/src/production-host/configuration.ts', 'package.json', 'package-lock.json', 'tsconfig.json', 'apps/web/tsconfig.json']) await select(name);
+  await select(releaseContractSource.path, releaseContractSource);
   await mkdir(buildRoot, { mode: 0o700 }); await mkdir(manifestDirectory, { mode: 0o700 });
   const frontend = await import(pathToFileURL(path.join(sourceRoot, FRONTEND_BUILDER)).href);
   requireRelease(typeof frontend.buildProductionHost === 'function', 'F1_PRODUCTION_BUILDER_REQUIRED');

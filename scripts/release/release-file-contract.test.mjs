@@ -1,13 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
-import {runtimeSqlPatches, releaseContract} from './manifest.mjs';
+import {runtimeSqlPatches, releaseContract, releaseContractSource} from './manifest.mjs';
 import {contractBlock, generateReleaseContract} from './generate-release-contract.mjs';
 test('shared release facts generate the standalone Python consumer without drift', async () => {
  await generateReleaseContract(true);
  const code=`import runpy,json,sys
-m=runpy.run_path('scripts/release/deploy-candidate.py'); expected=json.loads(sys.stdin.read())
+m=runpy.run_path('scripts/release/deploy-candidate.py'); payload=json.loads(sys.stdin.read());expected=payload['contract']
 assert m['RELEASE_CONTRACT']==expected
+assert m['RELEASE_CONTRACT_SOURCE']==payload['source']
 assert list(m['APPROVED_SQL_PATCHES'].items())==[(r['source'],r['member']) for r in expected['runtimeSqlPatches']]
 assert m['FULL_PROFILE']==expected['full']['profile'] and m['FULL_PATCH']==expected['full']['patchLevel']
 config=m['nginx_configuration']('naijue-rewrite-tool-only-app').decode('utf-8')
@@ -15,7 +16,7 @@ for row in expected['requestBodyBudgets']:
  section=config.split('location = '+row['path']+' {',1)[1].split('}',1)[0]
  assert 'client_max_body_size '+str(row['bytes'])+';' in section
 `;
- const r=spawnSync('python3',['-c',code],{input:JSON.stringify(releaseContract),encoding:'utf8'});
+ const r=spawnSync('python3',['-c',code],{input:JSON.stringify({contract:releaseContract,source:releaseContractSource}),encoding:'utf8'});
  assert.equal(r.status,0,r.stderr);
 });
 test('release generator rejects duplicate SQL, unsafe members and ambiguous route budgets', () => {
