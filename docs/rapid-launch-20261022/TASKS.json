@@ -18719,13 +18719,27 @@
     },
     "H03Lifecycle895": {
       "owner": "D2",
-      "status": "ACTIVE_MISSING_LIFECYCLE_EQUIVALENCE_ONLY",
+      "status": "SOURCE896_HANDED_BACK_LOCAL3PASS_PENDING_QB",
       "decision": "Retain original online proofs; same-transaction reuse only; no checkpoint/cross-request cache/proof retirement",
       "files": [
         "docs/controller-handoff-20261028/PROOF-LIFECYCLE.json",
         "tests/proof-lifecycle-equivalence.test.ts"
       ],
-      "next": "Reuse P01/A01 actual implementation and valid evidence; add missing refusal cases only; any production-source gap needs exact handoff; genuine PG unverified"
+      "next": "Fixed QB only missing lifecycle delta; original T45 genuine PG negative/concurrent evidence pending",
+      "checks": "8 warm/cold pairs/16transitions zero difference; original active proof revocation case; strict closure pass; no PG",
+      "receipt": "reports/backend/rapid-launch-20261022/D2/H03-LIFECYCLE-895/RESULT.json"
+    },
+    "P04Actual235": {
+      "owner": "T45",
+      "state": "ACTUAL_KEYS_ALL_COMMITTED_WRAPPER_REPORTER_PARSE_FAILED_READONLY_DIAG_PENDING",
+      "sourceCommit": "b39a3ec4b3ae290b92dab008186ab64bc805ac0f",
+      "jobId": "t45-hv2-p04-original-auth-and-fourcases-20261029-235",
+      "decisionSource": "C reviewed exact new carrier; verified user delegation 01a1837b-674f-7a20-aab5-da1300b4690c",
+      "targetDatabaseOid": 16400,
+      "runtimeRoleOid": 16398,
+      "scope": "One original auth-only login/session with TTL900 then fixed four history revision cases 0/1/16/2, original keys and receipts; owner before/after read-only, no production/ACL/DDL/delete",
+      "next": "T45 original235 raw reporter bounded read-only diagnostics; NEVER repeat driver/auth/newkeys; keep original FAILED",
+      "observed": "Original auth true; driver process exit0 not timedout but counters null; four fixed keys COMMITTED; original source guard pass; logout204/session1revoked/active0/pool/client0"
     }
   }
 }

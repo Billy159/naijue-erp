@@ -1,0 +1,238 @@
+{
+  "id": "H03-PROOF-LIFECYCLE-895",
+  "status": "SOURCE_LIFECYCLE_MAPPED_DELTA_PROTOCOL_VERIFIED_REAL_PG_PENDING",
+  "authority": {
+    "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+    "decision": "C technical delegation 01a1837b-674f-7a20-aab5-da1300b4690c; WRITE-OWNERSHIP.handoverV2.H03Lifecycle895",
+    "writer": "D2; two new leaves only",
+    "chosenImplementation": "Preserve every current online proof. Adopt actual P01/A01 transaction-local reuse; no checkpoint, cross-request proof cache or retired-proof replacement.",
+    "priorAcceptance": "C supplied QB limited acceptance source890 A01 component/source893 host; reused, not rerun.",
+    "observedAt": "2026-10-28T17:34:52.413371+00:00"
+  },
+  "threatModel": {
+    "included": [
+      "Client-forged actor/product/SKU/source/version/proof-token or structurally copied context cannot become trusted authority.",
+      "Ordinary runtime bypass/omitted mapping remains subject to existing original transaction, publication/identity/constraint/ACL guards; none removed here.",
+      "Changed release evidence, source identity/version, request permission or transaction scope cannot inherit prior admission beyond its defined lifetime."
+    ],
+    "excluded": "Same-database hashes do not prove resistance to an administrator who can alter both application code and the entire database. No independent external trust root is introduced or claimed.",
+    "residual": "Managed deployment baseline checks full metadata at startup, then live target/process/role identity and pinned-file metadata. It is not continuous per-request full-catalog hashing or arbitrary privileged-DDL detection; actual privilege isolation and real PG negative/concurrency evidence remain separately required."
+  },
+  "lifecycles": [
+    {
+      "id": "deployment-and-release",
+      "authority": [
+        "Independently pinned reviewFile + trustedReviewSha256 and independentReview receipt; exact reviewed schema/catalog/source-routine profile and target identity.",
+        "Source/build manifest records + locked dependencies + release contract; runtime metadata receipt is separate from artifact/source hash binding."
+      ],
+      "actualConsumers": [
+        "native-import-accounting-capability.ts:createNativeRuntime26Issuer/verify/filesReady",
+        "scripts/release/manifest.mjs:validateRelease/checkIdentity/matches",
+        "scripts/release/pack.mjs:packRelease repeated validateRelease before archive",
+        "postgres-read-api.ts:createSourceConfirmedProductCapacityFactory actual host binding"
+      ],
+      "scope": "One explicitly owned pool/issuer and candidate release. Managed profile verifies full metadata before issuer returns, then fresh identity probes on live leases/explicit checks.",
+      "invalidates": [
+        "Pinned review/receipt file identity or permission changes/revocation",
+        "Wrong target/databaseOID/role/process/replicationRole or unreviewed purpose",
+        "Source/build/member bytes or source/build identity disagreement during packaging",
+        "New deployment/candidate/approved schema profile requires new bound review evidence, not inheritance from an old PASS"
+      ],
+      "cost": "Full metadata probe at managed startup; later live identity and file-pin checks. Original nonmanaged mode retains full-probe semantics. No claimed runtime SLO measurement.",
+      "reusedEvidence": [
+        "tests/native-runtime26-capability.test.ts human F startup/full baseline, purpose/file/current-identity drift rejection cases",
+        "tests/native-runtime26-capability.test.ts foreign/raw/copied lease and modified file pin cases",
+        "C source893 exact host limited acceptance"
+      ],
+      "qualification": "Runtime file pins are review/certificate pins, not a runtime hash of all source. Release packaging independently binds source/build; C/T45 must bind actual deployed candidate."
+    },
+    {
+      "id": "object-version-and-source",
+      "authority": [
+        "Actual full publication/source/raw price proof or native CREATE anchor",
+        "Complete untruncated audit + original committed receipt chain and actual root/children/references",
+        "Original loaded target/version and retained observations; exact sparse pending completion"
+      ],
+      "actualConsumers": [
+        "catalogue-completeness.ts:createMaintainedCatalogue26TransactionProof verifier/assertPendingCapacity/captureDocumentAppendBaseline/registerDocumentAppend",
+        "sales-native-facts.ts:checkedNativeSalesFactInput/PostgresNativeSalesFacts.load",
+        "sales-unit-of-work.ts:referenceScopeKey/getCurrentSalesReferenceFacts/resolveDocumentSkus",
+        "sales-query-reader.ts:normalDocumentReferenceScopeOn/assertNormalReferenceHistoryOn"
+      ],
+      "scope": "Same original active client callback only. P01 fact key includes receipt actor/key, loaded sales identity/version/stockBasis, generation, retained lines and every checked reference/version/observation. A01 capacity retains count/bytes/currentVersion only after full proof.",
+      "invalidates": [
+        "Different actor/key/loaded document/version/source or retained snapshots cannot reuse old key",
+        "Specification resolution invalidates facts/snapshots both before and finally, including failure",
+        "Current-xid append needs opaque same-client evidence and matching admitted completion, not a current-xid blanket permit",
+        "Root/source/chain/receipt gaps or ambiguity reject on next callback; old PASS is not zero/default authority"
+      ],
+      "cost": "First checked reference set performs full native facts/proof; same exact set in the original transaction reuses immutable facts. Changed key/generation performs original validation. Chain1024 and exact JSON16777216 limits preserved.",
+      "reusedEvidence": [
+        "D3/P01-EQUIVALENCE.json exact response/SQL-write bind equality and synthetic counts",
+        "tests/sales-transaction-facts-cache.test.ts six boundary tests; prior accepted evidence, not rerun",
+        "D2/A01-CAPACITY-IMPLEMENTATION-20261029/RESULT.json and C source890 limited acceptance",
+        "tests/document-specification-postgres-protocol.test.ts original append token/reconstruction cases"
+      ],
+      "newEvidence": "proof-lifecycle-equivalence.test.ts ROLLBACK and UNKNOWN_COMMIT next-request source ambiguity/version gap differential cases"
+    },
+    {
+      "id": "request-actor-permission-references-locks",
+      "authority": [
+        "Trusted session authenticator creates current actor; client actor never selects a grant",
+        "Original receipt advisory lock, target lock, locked current account/staff/hall, current action policy",
+        "Actual references/memberships/MAIN bindings and sorted original product/SKU locks"
+      ],
+      "actualConsumers": [
+        "authenticated-document-commands.ts:createAuthenticatedDocumentCommandsPlugin",
+        "sales-unit-of-work.ts:getReceipt/getSales/getCurrentSalesIdentity/getCurrentSalesReferenceFacts/getCurrentSalesSnapshots",
+        "packages/application/src/sales-authorization.ts:createSalesActionAuthorization/assertSalesActionAllowed",
+        "maintenance-command-unit-of-work.ts:Evidence.current/assertAllowed/maintenanceContextClient",
+        "native-document-specification.ts:resolveNativeDocumentSpecifications"
+      ],
+      "scope": "A current command callback; locked identity may be reused inside that original transaction. Identity and current action policy are distinct from cached product facts. Session/actor are resolved again for the next request.",
+      "invalidates": [
+        "Next request must reacquire current identity/reference/target locks; no cross-request allowed=true",
+        "Actor/key/target mismatch, disabled account or wrong hall/action rejects",
+        "A01 exact pending-operation hit still rechecks runtime authority; stored receipt recovery retains original current-authorization/hash policy"
+      ],
+      "cost": "Original lock/current identity work is retained. No claim that an in-flight transaction observes a concurrent revocation while holding SHARE locks; real lock scheduling remains untested here.",
+      "reusedEvidence": [
+        "tests/postgres-protocol.test.ts locked identity/replay revocation cases",
+        "tests/sales-transaction-facts-cache.test.ts identity-before-hit and action/economics/labels cases",
+        "Existing runtime ACL/DB-guard evidence retained, not replaced by a fixture assertion"
+      ],
+      "newEvidence": "proof-lifecycle-equivalence.test.ts after terminal transition current disabled identity denies before full fact lookup; warmed A01 operation cannot hide runtime revocation"
+    },
+    {
+      "id": "transaction-end-and-inflight",
+      "authority": [
+        "Original UOW callback and active client/context guards",
+        "Opaque append-token WeakMap bound to original client/active callback",
+        "Original commit/rollback outcome and receipt key"
+      ],
+      "actualConsumers": [
+        "sales-unit-of-work.ts:PostgresSalesUnitOfWork.transaction/PostgresSalesTransaction.close/invalidateReferenceReads",
+        "maintenance-command-unit-of-work.ts:maintenanceContextClient/readDocumentAppendEvidence",
+        "catalogue-completeness.ts:createMaintainedCatalogue26TransactionProof active guard",
+        "native-import-accounting-capability.ts:leases WeakMap/verify/pool.release"
+      ],
+      "scope": "No fact, admission, identity or append capability is reusable after close/release, including in-flight result publication. New request constructs a fresh transaction even if a physical connection is reused.",
+      "invalidates": [
+        "Success closes callback before precommit runtime check",
+        "Callback failure closes before rollback",
+        "COMMIT error closes and discards client; it does not prove rollback and cannot permit automatic replay with a new key",
+        "Released/revoked/failed lease and wrong-client token remain rejected"
+      ],
+      "cost": "Constant-time closure/cache invalidation; next callback performs original reads. No performance estimate.",
+      "reusedEvidence": [
+        "tests/sales-transaction-facts-cache.test.ts close/inflight/client separation and generation-drift cases",
+        "tests/native-runtime26-capability.test.ts original lease/release/failure/revocation cases",
+        "tests/postgres-protocol.test.ts unknown COMMIT/no retry/discard cases"
+      ],
+      "newEvidence": "proof-lifecycle-equivalence.test.ts rollback/unknown-COMMIT warm-vs-cold next-callback matrix; escaped handles do not query; unknown COMMIT emits no fake rollback"
+    }
+  ],
+  "deltaVerification": {
+    "test": "tests/proof-lifecycle-equivalence.test.ts",
+    "node": "24.21.0 direct TypeScript strip-only",
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "differentialMatrix": {
+      "terminals": [
+        "ROLLBACK",
+        "UNKNOWN_COMMIT"
+      ],
+      "nextRequest": [
+        "unchanged",
+        "source-ambiguous",
+        "version-gap",
+        "revoked-account"
+      ],
+      "comparison": [
+        "cold-no-prior-facts",
+        "prior-exact-facts-and-snapshot-cache-hit"
+      ],
+      "pairedScenarios": 8,
+      "runs": 16,
+      "mismatches": 0
+    },
+    "additionalCase": "Already admitted exact A01 completion still rejects runtime revocation before further SQL",
+    "testBoundary": "Existing scripted client purposely reused even after a synthetic discard to stress closure isolation. This is not proof that a real pool reuses discarded connections or a real unknown COMMIT outcome. Runtime revocation in the third case is an injected capability; actual issuer drift/refusal is reused evidence.",
+    "notRerun": [
+      "A01 79 source checks",
+      "A01 host 4 checks",
+      "P01 existing accepted tests and baseline equivalence",
+      "Full repository tests or build"
+    ],
+    "typecheck": "PASS: isolated new-test dependency closure under strict project-equivalent flags; full repository not rerun"
+  },
+  "remainingGate": {
+    "status": "REAL_PG_NOT_TESTED_H03_WHOLE_NOT_PASS",
+    "owner": "Original T45 via C",
+    "required": [
+      "Exact approved isolated current source/runtime fixture binding",
+      "1024/1025 and 16777216/+1 real chain/capacity cases",
+      "Actual account revocation/locks/same-product concurrency/atomic rollback",
+      "Ordinary runtime bypass and unmapped-reference rejection under actual privileges",
+      "Actual published source/header/line revision and missing-row/wrong-version/wrong-batch negatives",
+      "A01 capacity inventory and real runtime SLO/operational signals"
+    ],
+    "onlineProofRetirement": "NONE; no switch requiring an alternative checkpoint/control platform is authorized or performed"
+  },
+  "rollback": "This H03 delta adds only the lifecycle JSON and local test. Remove only those two exact leaves if C reverts; preserve all production P01/A01 controls, prior source/evidence and business data.",
+  "sourceBindings": [
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "sha256": "d25c4655327e231c6e419a819b8c8513eb6f0c5e5533037c70882d453ee104f8"
+    },
+    {
+      "path": "scripts/release/manifest.mjs",
+      "sha256": "2539f52cd19d17710b7e5f3c8d0ac0c615ca02a3e5fa8e473c75cb72fbd3283c"
+    },
+    {
+      "path": "scripts/release/pack.mjs",
+      "sha256": "bfa89869c8a4bbc49ec33baef238dfeacf2927ed2a1942eec1af2cd250c8dc90"
+    },
+    {
+      "path": "adapters/postgres/src/catalogue-completeness.ts",
+      "sha256": "2406060de5a3bacc642fd2ea8264b38dcb5f812186e67cbd926d61324dff8d21"
+    },
+    {
+      "path": "adapters/postgres/src/sales-unit-of-work.ts",
+      "sha256": "99cd597bd789c1ca5b32107a1dff4b7cccf93686e31c5d19cd60d7fb2ad0b9ae"
+    },
+    {
+      "path": "adapters/postgres/src/sales-native-facts.ts",
+      "sha256": "9ba2274b88a5c5598afd73dbf17203c7e56a906d5caceb3267880e4e7f5d6833"
+    },
+    {
+      "path": "adapters/postgres/src/native-document-specification.ts",
+      "sha256": "b769b6a6bb4f78aff63028fa2bde6f779d174706405d8d53db6a393b1c390d8f"
+    },
+    {
+      "path": "adapters/postgres/src/maintenance-command-unit-of-work.ts",
+      "sha256": "a29a5942f116b048a47fab35c2728121a656adf9097114ca79eec3ef264c6ea1"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "sha256": "acaa21eea7dad3114904fcf71972b234b4c74ccbc27e67f97ef26f1de070b6d5"
+    },
+    {
+      "path": "apps/api/src/authenticated-document-commands.ts",
+      "sha256": "63e641e6dd969dd138640816360b0df4e29cef20685aa6a62923dc9dfc120bed"
+    },
+    {
+      "path": "packages/application/src/sales-authorization.ts",
+      "sha256": "5b482ebbf43bfa4b07fdc23e13630dd88363ed04dabb926dd68390bdca9c56a2"
+    },
+    {
+      "path": "adapters/postgres/src/sales-query-reader.ts",
+      "sha256": "e70e92112d8969d1140be49842d027782a095ad6aa5ba5dabec27f00633a8ee6"
+    },
+    {
+      "path": "tests/support/sales-facts-cache-fixture.ts",
+      "sha256": "93f15a6bd96fd5de5970f3f04372855ecd5d6c7913a78f722e8cf7fdb37421d2"
+    }
+  ]
+}
