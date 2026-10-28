@@ -1,7 +1,35 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
-import {runtimeSqlPatches} from './manifest.mjs';
+import {runtimeSqlPatches, releaseContract} from './manifest.mjs';
+import {contractBlock, generateReleaseContract} from './generate-release-contract.mjs';
+test('shared release facts generate the standalone Python consumer without drift', async () => {
+ await generateReleaseContract(true);
+ const code=`import runpy,json,sys
+m=runpy.run_path('scripts/release/deploy-candidate.py'); expected=json.loads(sys.stdin.read())
+assert m['RELEASE_CONTRACT']==expected
+assert list(m['APPROVED_SQL_PATCHES'].items())==[(r['source'],r['member']) for r in expected['runtimeSqlPatches']]
+assert m['FULL_PROFILE']==expected['full']['profile'] and m['FULL_PATCH']==expected['full']['patchLevel']
+config=m['nginx_configuration']('naijue-rewrite-tool-only-app').decode('utf-8')
+for row in expected['requestBodyBudgets']:
+ section=config.split('location = '+row['path']+' {',1)[1].split('}',1)[0]
+ assert 'client_max_body_size '+str(row['bytes'])+';' in section
+`;
+ const r=spawnSync('python3',['-c',code],{input:JSON.stringify(releaseContract),encoding:'utf8'});
+ assert.equal(r.status,0,r.stderr);
+});
+test('release generator rejects duplicate SQL, unsafe members and ambiguous route budgets', () => {
+ for (const change of [
+  c=>c.runtimeSqlPatches.push({...c.runtimeSqlPatches[0]}),
+  c=>{c.runtimeSqlPatches[0].member='../escape.sql';},
+  c=>c.requestBodyBudgets.push({...c.requestBodyBudgets[0]}),
+  c=>{c.requestBodyBudgets[0].bytes=0;},
+  c=>{c.extra=true;},
+ ]) {
+  const c=structuredClone(releaseContract);change(c);
+  assert.throws(()=>contractBlock(c),/INVALID_RELEASE/);
+ }
+});
 test('Python exact license and approved SQL grouping agree with JS baseline; successor map remains finite',()=>{
  const code=`import runpy,json,sys,copy
 m=runpy.run_path('scripts/release/deploy-candidate.py');patches=json.loads(sys.stdin.read());assert patches==m['APPROVED_SQL_PATCHES']

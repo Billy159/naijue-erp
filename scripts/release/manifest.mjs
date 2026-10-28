@@ -3,6 +3,9 @@ import { lstat, open, readdir, realpath } from 'node:fs/promises';
 import { constants } from 'node:fs';
 import path from 'node:path';
 import { builtinModules } from 'node:module';
+import releaseContract from '../../config/release-contract.json' with { type: 'json' };
+
+export { releaseContract };
 
 export const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
 export class ReleaseError extends Error {
@@ -12,8 +15,8 @@ export function requireRelease(condition, code) { if (!condition) throw new Rele
 const hashPattern = /^[a-f0-9]{64}$/;
 const excludedSegment = /(?:^|[-_.])(?:synthetic[^/]*|fixtures?[^/]*|tests?|test-only|secrets?|private|credentials?|passwords?|tokens?|backups?|originals?|product-media|media|provenance)(?:$|[-_.])/i;
 const excludedGraph = /(?:unified-browser-harness|new-document-browser-harness|management-browser-harness|visual-acceptance-host|development-host|local-https-application-host|fixturegraph)/i;
-const copiedFontLicenseSource='apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt';
-const copiedFontLicenseMember='web/source-styles/assets/fonts/LICENSE.txt';
+const copiedFontLicenseSource = releaseContract.fontLicense.source;
+const copiedFontLicenseMember = releaseContract.fontLicense.member;
 const sourceExtensions = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.css', '.json', '.sql', '.svg', '.woff', '.woff2']);
 const registeredProductionStyles = new Set([
   'apps/web/src/demo-controls/idle-selection-tokens.css',
@@ -37,12 +40,7 @@ const reviewedMigrationMembers = new Set([
   'migrations/0023_inventory_key_admission.sql',
 ]);
 // Approved successors to migration 0026 travel as separate patches; packaging never executes them.
-export const runtimeSqlPatches = new Map([
-  ['adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql', 'patches/0026-v8-bootstrap-field-provenance.sql'],
-  ['adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql', 'patches/0026-v9-empty-history-publication-dispatch.sql'],
-  ['adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql', 'patches/0026-v10-native-creation-trigger-record-scope.sql'],
-  ['adapters/postgres/patches/0026-v11-document-specification-save.sql', 'patches/0026-v11-document-specification-save.sql'],
-]);
+export const runtimeSqlPatches = new Map(releaseContract.runtimeSqlPatches.map(row => [row.source, row.member]));
 const roleExtensions = {
   frontend: new Set(['.html', '.js', '.mjs', '.css', '.json', '.svg', '.woff', '.woff2']),
   backend: new Set(['.js', '.mjs', '.cjs', '.json']),

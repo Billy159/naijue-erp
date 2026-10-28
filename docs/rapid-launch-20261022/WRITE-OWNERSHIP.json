@@ -7170,6 +7170,19 @@
       "sharedInterface": "D1 exports nativeStageContinuationCommitments26; capture preparation/groups/onVerified(progress); providerassertbeforeclone; singlewriter each leaf",
       "metadata": "D3 exact optional fixed.nativeStageContinuation26 and grant.nativeStageContinuation26 same original pinned ref; preparation refs bound to adopted148/201; no metadata self-authorized members; no old-job implicit authority",
       "notAuthorized": "R1 continuation/migration/ACL/deploy/201 replay; no SQL/schema change"
+    },
+    "H04MechanicalSource": {
+      "writer": "C",
+      "files": [
+        "config/release-contract.json",
+        "scripts/release/generate-release-contract.mjs",
+        "scripts/release/manifest.mjs",
+        "scripts/release/deploy-candidate.py",
+        "scripts/release/boot-entry.py",
+        "scripts/release/release-file-contract.test.mjs"
+      ],
+      "scope": "Existing facts only: ordered4patch mappings/fontlicense/count26/fullprofile20/node24.21/sixproxybodybudgets. JS reads JSON; generated Python embeds identical JSON and remains standalone. Existing helper digest mechanism regenerates Fullboot pin. No SQL/ACL/server changes.",
+      "state": "FIRST_SHARED_FACTS_SLICE_LOCAL_CHECKS_PASS_NOT_FULL_H04"
     }
   }
 }

@@ -1,0 +1,57 @@
+{
+  "format": "naijue-release-contract-v1",
+  "migrationCount": 26,
+  "fontLicense": {
+    "source": "apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt",
+    "member": "web/source-styles/assets/fonts/LICENSE.txt"
+  },
+  "runtimeSqlPatches": [
+    {
+      "source": "adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql",
+      "member": "patches/0026-v8-bootstrap-field-provenance.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql",
+      "member": "patches/0026-v9-empty-history-publication-dispatch.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql",
+      "member": "patches/0026-v10-native-creation-trigger-record-scope.sql"
+    },
+    {
+      "source": "adapters/postgres/patches/0026-v11-document-specification-save.sql",
+      "member": "patches/0026-v11-document-specification-save.sql"
+    }
+  ],
+  "full": {
+    "profile": "source-confirmed-native-exact26-r3-v1",
+    "patchLevel": "26_v20_history_insert_identity_from_v19"
+  },
+  "node": "24.21.0",
+  "requestBodyBudgets": [
+    {
+      "path": "/api/products/media/uploads",
+      "bytes": 8388608
+    },
+    {
+      "path": "/api/imported-history/sales/revise",
+      "bytes": 4194304
+    },
+    {
+      "path": "/api/imported-history/transfers/revise",
+      "bytes": 4194304
+    },
+    {
+      "path": "/api/products/commands",
+      "bytes": 1048576
+    },
+    {
+      "path": "/api/products/v2/commands",
+      "bytes": 1048576
+    },
+    {
+      "path": "/api/catalogue/categories/commands",
+      "bytes": 1048576
+    }
+  ]
+}

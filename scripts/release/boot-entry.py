@@ -29,7 +29,7 @@ NO = {'Name': 'no', 'MaximumRetryCount': 0}
 DEPLOYMENT_SHA256 = 'a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a'
 # Explicit exact26-r1 only; adoption depends on C90's independent source review.
 DEPLOYMENT26_SHA256 = '3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d'
-DEPLOYMENT_FULL_SHA256 = 'a7655f237631015c07c72cfdfce2d597d45da341cb156c588e74c9f28872ead3'
+DEPLOYMENT_FULL_SHA256 = '6ec559f7e8f3486ac5423be502b25fdd63553792baf166ab05b48f804562f1cd'
 
 
 class Refused(Exception):

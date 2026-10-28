@@ -40,8 +40,12 @@ RUNTIME26_CATALOG = {'format': 'EXACT26_RUNTIME_CATALOG_EXPORT_V1', 'sha256': 'f
                      'patchLevel': '26_v7_media_color_swap'}
 RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CURRENT_FORM_READ', 'HISTORY_READ', 'INVENTORY_ADMISSION']
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
-FULL_PROFILE = 'source-confirmed-native-exact26-r3-v1'
-FULL_PATCH = '26_v20_history_insert_identity_from_v19'
+# BEGIN GENERATED RELEASE CONTRACT
+# Generated from config/release-contract.json; edit that source, then regenerate.
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql","member":"patches/0026-v8-bootstrap-field-provenance.sql"},{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql","member":"patches/0026-v10-native-creation-trigger-record-scope.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_v20_history_insert_identity_from_v19"},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576}]}''')
+# END GENERATED RELEASE CONTRACT
+FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
+FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
 
 
 class Refused(Exception):
@@ -164,12 +168,7 @@ def file_identity(filename):
 
 
 # Exact baseline approved source/member mapping. Candidate successors require SQL-owner approval.
-APPROVED_SQL_PATCHES = {
-    'adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql': 'patches/0026-v8-bootstrap-field-provenance.sql',
-    'adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql': 'patches/0026-v9-empty-history-publication-dispatch.sql',
-    'adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql': 'patches/0026-v10-native-creation-trigger-record-scope.sql',
-    'adapters/postgres/patches/0026-v11-document-specification-save.sql': 'patches/0026-v11-document-specification-save.sql',
-}
+APPROVED_SQL_PATCHES = {row['source']: row['member'] for row in RELEASE_CONTRACT['runtimeSqlPatches']}
 
 
 def validate_sql_members(manifest, source, approvedPatchMap):
@@ -181,7 +180,7 @@ def validate_sql_members(manifest, source, approvedPatchMap):
             need(name not in expected, 'DUPLICATE_SQL_SOURCE')
             expected[name] = row
             migrations.append(name)
-    need(len(migrations) == 26 and {int(PurePosixPath(n).name.split('_', 1)[0]) for n in migrations} == set(range(1, 27)), 'FULL_SAME_MIGRATION_SOURCES_REQUIRED')
+    need(len(migrations) == RELEASE_CONTRACT['migrationCount'] and {int(PurePosixPath(n).name.split('_', 1)[0]) for n in migrations} == set(range(1, RELEASE_CONTRACT['migrationCount'] + 1)), 'FULL_SAME_MIGRATION_SOURCES_REQUIRED')
     sources = {r['path']: r for r in source.get('files', [])}
     mapping = {name: name.removeprefix('adapters/postgres/') for name in migrations}
     for name, member in approvedPatchMap.items():
@@ -197,7 +196,7 @@ def validate_sql_members(manifest, source, approvedPatchMap):
              all(row.get(k) == expected[name].get(k) for k in ('bytes', 'sha256')), 'EXACT_SQL_SOURCE_BINDING_REQUIRED')
         seen.add(name)
     need(seen == set(mapping), 'EXACT_SQL_MEMBER_SET_REQUIRED')
-    return {'migrationCount': 26, 'patchCount': len(approvedPatchMap)}
+    return {'migrationCount': RELEASE_CONTRACT['migrationCount'], 'patchCount': len(approvedPatchMap)}
 
 
 def member_allowed(name, approvedPatchMap=None):
@@ -207,7 +206,7 @@ def member_allowed(name, approvedPatchMap=None):
         return
     runtime_media_module = bool(re.fullmatch(r'web/chunks/product-editor-media-[A-Z0-9]{8}\.js', name))
     need(runtime_media_module or not re.search(r'(?:^|[/_.-])(?:secret|private|password|credential|token|backup|fixture|synthetic|test|media|node_modules)(?:s?)(?:$|[/_.-])', name, re.I), 'NON_RUNTIME_ARCHIVE_MEMBER')
-    if name in ('release-manifest.json', 'package.json', 'package-lock.json', 'web/source-styles/assets/fonts/LICENSE.txt') or name in (APPROVED_SQL_PATCHES if approvedPatchMap is None else approvedPatchMap).values():
+    if name in ('release-manifest.json', 'package.json', 'package-lock.json', RELEASE_CONTRACT['fontLicense']['member']) or name in (APPROVED_SQL_PATCHES if approvedPatchMap is None else approvedPatchMap).values():
         return
     need(bool(re.fullmatch(r'web/[A-Za-z0-9_./-]+\.(?:html|js|mjs|css|json|svg|woff2?)', name)) or
          bool(re.fullmatch(r'backend/[A-Za-z0-9_./-]+\.(?:js|mjs|cjs|json)', name)) or
@@ -277,8 +276,8 @@ def nginx_configuration(app_name):
         budget = ('      client_max_body_size %s;\n' % body) if body is not None else ''
         return '    location ' + path + ' {\n' + budget + settings + '    }\n'
     locations = location('/')
-    for path, body in [('/api/products/media/uploads', 8388608), ('/api/imported-history/sales/revise', 4194304), ('/api/imported-history/transfers/revise', 4194304), ('/api/products/commands', 1048576), ('/api/products/v2/commands', 1048576), ('/api/catalogue/categories/commands', 1048576)]:
-        locations += location('= ' + path, body)
+    for row in RELEASE_CONTRACT['requestBodyBudgets']:
+        locations += location('= ' + row['path'], row['bytes'])
     locations += location('= /api/inventory/output/query', read_seconds=130)
     return ('''worker_processes 1;
 pid /tmp/nginx.pid;
@@ -385,7 +384,7 @@ def validate_runtime_build(p, manifest, refs):
          receipt.get('format') == 'naijue-production-build-receipt-v1' and receipt.get('status') == 'REAL_BUILD_AND_PACK_CONTRACT_VALIDATED' and
          all(row.get('sourceCommit') == p['sourceCommit'] and row.get('buildId') == p['buildId'] for row in (source, build, receipt)) and
          receipt.get('sourceManifestSha256') == refs['sourceManifest']['sha256'] and receipt.get('buildManifestSha256') == refs['buildManifest']['sha256'] and
-         receipt.get('node') == '24.21.0', 'EXACT26_SAME_FIXED_BUILD_REQUIRED')
+         receipt.get('node') == RELEASE_CONTRACT['node'], 'EXACT26_SAME_FIXED_BUILD_REQUIRED')
     graph = manifest.get('graphs', {}).get('backend', {})
     component = build.get('components', {}).get('backend', {})
     inputs = graph.get('inputs', [])
@@ -495,7 +494,7 @@ def validate_runtime26(p, manifest, db, runtime):
     need(len(expected) == 19 and set(expected) == set(range(1, 20)), 'EXACT_PREFIX19_RECEIPT_REQUIRED')
     expected.update({row['version']: row['sourceSha256'] for row in rows})
     migrations = [row for row in manifest['members'] if row.get('role') == 'migration']
-    need(len(migrations) == 26 and {int(PurePosixPath(row['path']).name.split('_', 1)[0]): row['sha256'] for row in migrations} == expected,
+    need(len(migrations) == RELEASE_CONTRACT['migrationCount'] and {int(PurePosixPath(row['path']).name.split('_', 1)[0]): row['sha256'] for row in migrations} == expected,
          'EXACT26_RELEASE_MIGRATION_HASH_MISMATCH')
     validate_runtime_build(p, manifest, refs)
     need(isinstance(runtime, dict) and set(runtime) == {'schemaVersion', 'profile', 'documentCommands', 'publicOrigin', 'http', 'assets', 'build', 'postgres', 'authentication', 'runtime26Review'} and
@@ -531,7 +530,7 @@ def read_plan(filename):
     need(set(p['images']) == {'node', 'web'}, 'EXACT_TWO_RUNTIME_IMAGES_REQUIRED')
     for key in ('node', 'web'):
         need(isinstance(p['images'].get(key), dict) and IMAGE.fullmatch(p['images'][key].get('id', '')), 'IMMUTABLE_LOCAL_IMAGE_ID_REQUIRED')
-    need(p['images']['node'].get('nodeVersion') == '24.21.0' and re.fullmatch(r'11\.[0-9]+\.[0-9]+', p['images']['node'].get('npmVersion', '')), 'EXACT_NODE_AND_NPM_VERSION_REQUIRED')
+    need(p['images']['node'].get('nodeVersion') == RELEASE_CONTRACT['node'] and re.fullmatch(r'11\.[0-9]+\.[0-9]+', p['images']['node'].get('npmVersion', '')), 'EXACT_NODE_AND_NPM_VERSION_REQUIRED')
     need(p['images']['node'].get('platform') == 'linux/amd64' and p['images']['web'].get('platform') == 'linux/amd64', 'LINUX_AMD64_IMAGE_REQUIRED')
     for key in ('front', 'data', 'install'):
         row = p['networks'].get(key)
