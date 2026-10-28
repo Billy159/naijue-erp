@@ -1,3 +1,5 @@
+SOURCE934：原QB933新producer/唯一pool接线限定PASS，独立19项与strict通过，无新发现；真实PG/卷事实/预算/SLO/主宿主选入未测，旧底层transport超时不冒服务端取消。C采用原结论不重验；按A02任务卡明确原缺失tests/integration/capacity-window-performance.test.ts，仅交原D1一个真实QA入口叶，拒缺host/事实/窗口/SLO，不新平台、不自动执行/seed/权限；原容量源码交还。933 GitHub31f5bbea已回读。
+
 SOURCE933：原D1交回A02真实容量probe源码4叶，原6叶lease另2host叶未改；唯一ownedpool在compose后绑定，连接外读取显式新鲜卷事实，再RR READ ONLY核准确DB/角色/postmaster及占用，rollback/finally释放。D1新producer16+新wiring1+原影响2共19定向检查/strict通过，C只核交付pin不重复技术验收；现冻结交原QB窄验。真实PG/卷事实producer/窗口预算/SLO及主宿主实际选入均未测，不冒接入或上线；不碰原WIP。932远端34241906已回读。
 
 SOURCE932：原T45263真实production导出密钥读取器在UID10001、networknone、准确928/Linux262及258源key只读两挂载下通过；原reader调用2次、同合成输入相等/不同输入不同true，key元数据与payload未变，不出key/tag/摘要，不启动main/API/PG。采用原回执3619/40bc9dd8…不重验。C将原A02缺失真实容量probe producer/唯一ownedpool接缝交空闲原D1源码实施，6叶唯一lease登记，保留已验admission，无第二pool/新平台/默认容量，不执行DB或权限。原normal90/preparation189人批与共享QA完整发布仍是真实业务前置，Demo原normal34完整对比继续。931 GitHubf0f3eac5已核实。

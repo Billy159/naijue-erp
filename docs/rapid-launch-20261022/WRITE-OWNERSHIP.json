@@ -7771,7 +7771,7 @@
     "A02RuntimeProbe932": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "state": "HANDED_BACK_FOUR_LEAVES_SOURCE933_QB_PENDING_NO_ACTIVE_WRITER",
+      "state": "SOURCE933_QB_LIMITED_SOURCE_PROTOCOL_PASS_NO_ACTIVE_WRITER",
       "files": [
         "apps/api/src/capacity-runtime-probe.ts",
         "tests/capacity-runtime-probe.test.ts",
@@ -7793,7 +7793,21 @@
         "bytes": 6097,
         "sha256": "69368b710e963aa421ab29456963976ceb64d16410b692635e416647f515f2e6"
       },
-      "checks": "D1 19 unique targeted cases PASS/no skips and4TSroots strict0; sameownedpool no eager connect, RR readonly identity/size rollback/release, stale/unknown beforeborrow, oldsession read/logout bypass. ActualPG/disk/window/budget/SLO/host selection not tested."
+      "checks": "D1 19 unique targeted cases PASS/no skips and4TSroots strict0; sameownedpool no eager connect, RR readonly identity/size rollback/release, stale/unknown beforeborrow, oldsession read/logout bypass. ActualPG/disk/window/budget/SLO/host selection not tested.",
+      "independentReview": {
+        "path": "QB/HV2-SOURCE933/QB-SOURCE933-RESULT.json",
+        "bytes": 4855,
+        "sha256": "3cda59bff3eb4be8a33337e06d031a4b9203900bf1427ade65b2db29cba633d8"
+      }
+    },
+    "A02RealRunner934": {
+      "owner": "D1",
+      "model": "gpt-6.1-sol/medium",
+      "state": "LEASED_EXISTING_A02_CARD_MISSING_ACTUAL_QA_RUNNER",
+      "files": [
+        "tests/integration/capacity-window-performance.test.ts"
+      ],
+      "scope": "Existing A02 named test file absent; implement finite actual registered QA host test entry only, original capacity/main/factory and real PG/codec inputs; no simulated evidence passed as real, no seed/SQL/ACL/runtime source edits or new test platform. Explicit host/window/facts/SLO required; no autonomous execution."
     }
   }
 }
