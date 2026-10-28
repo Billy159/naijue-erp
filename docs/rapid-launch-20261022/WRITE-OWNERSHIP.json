@@ -7697,6 +7697,40 @@
       "result": "D1/QA897-PREPARATION-PUBLISH-ACL-01/RESULT.json272286/c494067d52b54a021787fea7a46dee84867d1668a3b77ebcc702180e59350bbb",
       "candidate": "51599/df6558fc08d6d32fec216f2737c6c9532e3ccb90879398a624aeea3b99ba9e17",
       "withdrawal": "43008/ffb9bb627da6c294bd18be774f620498c78e1630396d649a5c860b28982e39df"
+    },
+    "PreparationXminCatalog922": {
+      "owner": "C",
+      "status": "SOURCE922_FIXED_LOCAL_CHECKS_PASSED_ORIGINAL_QB_PENDING",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "tests/native-runtime26-capability.test.ts",
+        "scripts/import-v3/production-source-host.mjs",
+        "scripts/import-v3/production-source-host.test.mjs"
+      ],
+      "scope": "Distinct exact135 preparation12 read-only metadata V4 profile and original host selection; preserve V1/V2/normal13 V3 output. No grants, migrations, database writes, 135 function changes or business contract change. Original D3 host913 and D1 shared leases handed back; latest git has no diff in these four files.",
+      "pins": [
+        {
+          "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+          "bytes": 90988,
+          "sha256": "3e8080231f4d4fa3873afc8cf034fb77d6d16c402f7e7a28a9dfd82866036ba2"
+        },
+        {
+          "path": "tests/native-runtime26-capability.test.ts",
+          "bytes": 72963,
+          "sha256": "5a3d091ff1715068c9004e498eacc320af81f799d7cbc4355303b20d7dbee41e"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.mjs",
+          "bytes": 43041,
+          "sha256": "4a5fe8c95f6c8ca9e5b122f59718c5538f3cf0ff59e4fdd163f6860bb3c82dc7"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.test.mjs",
+          "bytes": 57360,
+          "sha256": "f21cfb3247866135cd14cd868fd7389cab4668bc1fc9dcf5712fda7030fe9467"
+        }
+      ]
     }
   }
 }

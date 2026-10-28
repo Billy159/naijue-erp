@@ -11,6 +11,7 @@ const history135HostProfiles=[
  ['h135-v1-no-prefix','26_hv2_history_set_guards_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V1'],
  ['h135-v2-no-prefix','26_hv2_history_set_guards_source_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V2'],
  ['h135-v3-no-prefix','26_hv2_history_set_guards_maintenance_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V3'],
+ ['h135-v4-no-prefix','26_hv2_history_set_guards_preparation_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V4'],
 ];
 const id = n => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 const sha = c => c.repeat(64);
@@ -392,12 +393,12 @@ test('PF02 xmin profile cannot activate the target without original independentl
 });
 
 
-test('H135 host accepts only issuer exact V1 V2 V3 formats with full continuation and original prefix',()=>{
+test('H135 host accepts only issuer exact V1 V2 V3 V4 formats with full continuation and original prefix',()=>{
  const {base,b,m}=v20FullRuntimeFixture(),prefix={async capture(){throw Error('METADATA_MUST_NOT_CAPTURE');}};
  for(const [,patchLevel,format] of history135HostProfiles){
   const review={...m,catalog:{...m.catalog,patchLevel,format}};
   assert.equal(validateSourceHostRuntimeReview26(review,b,prefix),undefined);
-  for(const wrongFormat of ['EXACT26_RUNTIME_CATALOG_EXPORT_V1','EXACT26_RUNTIME_CATALOG_EXPORT_V2','EXACT26_RUNTIME_CATALOG_EXPORT_V3'].filter(x=>x!==format))
+  for(const wrongFormat of ['EXACT26_RUNTIME_CATALOG_EXPORT_V1','EXACT26_RUNTIME_CATALOG_EXPORT_V2','EXACT26_RUNTIME_CATALOG_EXPORT_V3','EXACT26_RUNTIME_CATALOG_EXPORT_V4'].filter(x=>x!==format))
    assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,format:wrongFormat}},b,prefix),/RUNTIME_REVIEW/);
   for(const absent of [undefined,true,{capture:true},{capture:async()=>{},verified:true}])
    assert.throws(()=>validateSourceHostRuntimeReview26(review,b,absent),/PREFIX_REQUIRED/);

@@ -19153,6 +19153,36 @@
       "result": "D1/QA897-PREPARATION-PUBLISH-ACL-01/RESULT.json272286/c494067d52b54a021787fea7a46dee84867d1668a3b77ebcc702180e59350bbb",
       "candidate": "51599/df6558fc08d6d32fec216f2737c6c9532e3ccb90879398a624aeea3b99ba9e17",
       "withdrawal": "43008/ffb9bb627da6c294bd18be774f620498c78e1630396d649a5c860b28982e39df"
+    },
+    "PreparationXminCatalog922": {
+      "owner": "C",
+      "status": "SOURCE_READY_LOCAL_CHECKS_PASS_NOT_ACTUAL_PG_OR_PERMISSION_APPROVAL",
+      "pins": [
+        {
+          "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+          "bytes": 90988,
+          "sha256": "3e8080231f4d4fa3873afc8cf034fb77d6d16c402f7e7a28a9dfd82866036ba2"
+        },
+        {
+          "path": "tests/native-runtime26-capability.test.ts",
+          "bytes": 72963,
+          "sha256": "5a3d091ff1715068c9004e498eacc320af81f799d7cbc4355303b20d7dbee41e"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.mjs",
+          "bytes": 43041,
+          "sha256": "4a5fe8c95f6c8ca9e5b122f59718c5538f3cf0ff59e4fdd163f6860bb3c82dc7"
+        },
+        {
+          "path": "scripts/import-v3/production-source-host.test.mjs",
+          "bytes": 57360,
+          "sha256": "f21cfb3247866135cd14cd868fd7389cab4668bc1fc9dcf5712fda7030fe9467"
+        }
+      ],
+      "scope": "Distinct exact135 preparation12/V4 read-only metadata profile and original source host mapping; normal13/V3 SQL byte-for-byte unchanged; no database/permission/business writes.",
+      "checks": "Node24.19 metadata six tests PASS, affected H135 host seven tests including four subtests PASS; strict two TS roots closure exit0; original V3 SQL exact-byte comparison PASS. Protocol only, actual SQL/ACL/PG not executed.",
+      "next": "D1 update only changed source references in existing preparation permission candidate; original QB independently review source920 and source922 finite additions, then candidate; no duplicate reviewer or new role.",
+      "reviewDispatch": "Original QB notLoaded/readable but prior send twice thread-not-found, no queued review."
     }
   }
 }

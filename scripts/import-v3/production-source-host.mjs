@@ -327,13 +327,14 @@ export async function* forwardSourceSteps26({steps,active,maxSteps,core}){
 /** Pure metadata/target check only; execution still requires separately pinned
  * real source/session authority and the original independently issued client. */
 // Exact issuer profiles only. V3 is the existing normal13 maintenance-xmin
-// export; it does not stand for a preparation9 or an arbitrary future profile.
+// export; V4 independently observes preparation12, never an arbitrary future profile.
 const sourceHostPrefixFormats26=new Map([
  ['26_v22_staged_prefix_bind_from_v20','EXACT26_RUNTIME_CATALOG_EXPORT_V1'],
  ['26_hv2_source_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V2'],
  ['26_hv2_history_set_guards_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V1'],
  ['26_hv2_history_set_guards_source_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V2'],
  ['26_hv2_history_set_guards_maintenance_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V3'],
+ ['26_hv2_history_set_guards_preparation_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V4'],
 ]);
 export function validateSourceHostRuntimeReview26(metadata,binding,stagedPrefixBinding26) {
   bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');

@@ -1,3 +1,5 @@
+SOURCE922：C已补齐准确prepare12只读metadata V4及原host接线，normal13/V3保留且生成SQL逐字节不变；新增12范围不冒日常13权限。Node24.19定向metadata6项、宿主7项及两TS根严格类型通过；无实际PG/GRANT/CORE/导入/PUBLISH，不记真实业务通过。原QB消息未送达仍待，下一由原D1仅同步候选准确源码引用，再交原QB有限审；19表MAINTAIN与normal90仍各自待准确人批。
+
 接续核实：SOURCE920 b7ced6b2e507f960ef97eb40c66e16a5e1c74afd 已推GitHub并独立回读一致。原QB记录可读，连续两次发送source920限定验收返回thread not found，未入队，不另开重复验收。A01用户确认沿原893已验实现复用；前端接线及真实PG仍待，不重实现、不重问批准。D1 prepare权限候选已交回，prep12只读metadata接缝待实现；19表MAINTAIN及normal90不因此获授权。Demo仍原固定normal34全站对比，不切修复。
 
 SOURCE920：原D3 QA22 provider两新叶已交回并核准确SHA，仅这两叶固定：复用11原reader/stepauthorizer/实际CORE与续办选择器，金额用C真实工件经原Set，有限barcode/header适配验证原字节/canonical/native映射；已BIND不再迭代五组prefix，party绑定成功后才cache。9定向局部PASS，完整11实际factory/CORE/PG/PUBLISH仍未测。D1完整prepare权限候选已具体交回：189原子(含仅待人批的19table MAINTAIN，不是lock-only)/系统xmin12；实际role及BEFORE未知，normal90仍独立pending。C下一补只读prep12 metadata独立目的profile，不能拿normal13假通过；不改原135函数或权限。原T45 253只读证实Node镜像缓存/noVOLUME；254实际OCI启动bind /proc/PID/root→/probe/pg失败invalidargument，255确认未运行Node/UID/statfs，旧现场保留，0PG/权限/业务服务。此路线不再盲重试，应用真实probe与backup仍缺。

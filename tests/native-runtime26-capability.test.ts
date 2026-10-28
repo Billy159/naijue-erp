@@ -733,3 +733,45 @@ test('maintenance xmin V3 cannot reuse older format or issue older profile with 
   ['EXACT26_RUNTIME_CATALOG_EXPORT_V3','26_hv2_history_set_guards_source_xmin_from_v22'],
  ] as const){const f=fixture();try{const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,format,patchLevel}})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(p.connects(),0);}finally{f.cleanup();}}
 });
+
+import { NATIVE_RUNTIME26_HV2_HISTORY_SET_PREPARATION_XMIN_FROM_V22_METADATA_PROBE as preparationProbe, NATIVE_RUNTIME26_PREPARATION_XMIN_TABLES } from '../adapters/postgres/src/native-import-accounting-capability.ts';
+test('preparation xmin V4 covers preparation reads without inheriting normal thirteen tables',()=>{
+ assert.deepEqual(NATIVE_RUNTIME26_PREPARATION_XMIN_TABLES,[
+  'audit_change','import_batch','import_history_closure_manifest','import_source_row',
+  'inventory_ledger','operation_receipt','payment_account','payment_account_hall',
+  'payment_method','product','staff','user_account',
+ ]);
+ assert.ok(preparationProbe.includes("EXACT26_RUNTIME_CATALOG_EXPORT_V4"));
+ assert.ok(preparationProbe.includes("jsonb_array_length(manifest->'system_column_acls')=12"));
+ assert.ok(preparationProbe.includes("OR pg_catalog.has_column_privilege(current_user,r.oid,a.attnum,'SELECT')"));
+ assert.ok(preparationProbe.includes('AS preparation_xmin_acl_match'));
+ assert.ok(!preparationProbe.includes('AS maintenance_xmin_acl_match'));
+ // The observation includes all other effective xmin grants as well, so the
+ // fixed count/table comparison cannot accept an additional normal-runtime grant.
+ assert.ok(preparationProbe.includes("item->'table_select'='false'::jsonb"));
+ assert.ok(preparationProbe.includes("privilege->>'grantee'='PUBLIC'"));
+});
+test('preparation xmin V4 uses preparation result and rejects missing or mismatched metadata',async()=>{
+ for(const changed of ['acl','missing','normal-result','catalog','source','identity'] as const){const f=fixture();try{
+  const row:Record<string,unknown>={...observation(),preparation_xmin_acl_match:true};
+  const pool={async connect(){return{async query(sql:string){assert.equal(sql,preparationProbe);return{rows:[structuredClone(row)],rowCount:1};},release(){}};}};
+  const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V4',patchLevel:'26_hv2_history_set_guards_preparation_xmin_from_v22'},purposes:['IMPORT_STAGE']}));
+  const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,'IMPORT_STAGE');
+  if(changed==='acl')row.preparation_xmin_acl_match=false;
+  if(changed==='missing')delete row.preparation_xmin_acl_match;
+  if(changed==='normal-result'){delete row.preparation_xmin_acl_match;row.maintenance_xmin_acl_match=true;}
+  if(changed==='catalog')row.catalog_sha256='b'.repeat(64);
+  if(changed==='source')row.source_routines_match=false;
+  if(changed==='identity')row.identity={...observation().identity,current_user:'OTHER'};
+  await assert.rejects(issuer.runtime26.assertReady(client,'IMPORT_STAGE'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  client.release();
+ }finally{f.cleanup();}}
+});
+test('preparation xmin V4 cannot borrow normal or older independently reviewed catalog format',async()=>{
+ for(const [format,patchLevel] of [
+  ['EXACT26_RUNTIME_CATALOG_EXPORT_V1','26_hv2_history_set_guards_preparation_xmin_from_v22'],
+  ['EXACT26_RUNTIME_CATALOG_EXPORT_V2','26_hv2_history_set_guards_preparation_xmin_from_v22'],
+  ['EXACT26_RUNTIME_CATALOG_EXPORT_V3','26_hv2_history_set_guards_preparation_xmin_from_v22'],
+  ['EXACT26_RUNTIME_CATALOG_EXPORT_V4','26_hv2_history_set_guards_maintenance_xmin_from_v22'],
+ ] as const){const f=fixture();try{const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,format,patchLevel}})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(p.connects(),0);}finally{f.cleanup();}}
+});

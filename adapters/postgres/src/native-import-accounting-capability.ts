@@ -574,10 +574,19 @@ export const NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES = Object.freeze([
   'import_record_accounting_claim', 'import_source_row', 'operation_receipt',
   'product', 'product_image', 'sales_header', 'sales_line', 'sku', 'sku_barcode',
 ] as const);
-function maintenanceXminCatalogProbe(): string {
+export const NATIVE_RUNTIME26_PREPARATION_XMIN_TABLES = Object.freeze([
+  'audit_change', 'import_batch', 'import_history_closure_manifest', 'import_source_row',
+  'inventory_ledger', 'operation_receipt', 'payment_account', 'payment_account_hall',
+  'payment_method', 'product', 'staff', 'user_account',
+] as const);
+function maintenanceXminCatalogProbe(
+  observedTables: readonly string[] = NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES,
+  format = 'EXACT26_RUNTIME_CATALOG_EXPORT_V3',
+  resultColumn = 'maintenance_xmin_acl_match',
+): string {
   let probe = replaceOne(NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE,
-    "'format','EXACT26_RUNTIME_CATALOG_EXPORT_V2'", "'format','EXACT26_RUNTIME_CATALOG_EXPORT_V3'");
-  const tables = NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES.map(name => `'${name}'`).join(',');
+    "'format','EXACT26_RUNTIME_CATALOG_EXPORT_V2'", `'format','${format}'`);
+  const tables = observedTables.map(name => `'${name}'`).join(',');
   probe = replaceOne(probe, "WHERE r.relname='import_source_row'",
     `WHERE r.relname IN (${tables}) OR pg_catalog.has_column_privilege(current_user,r.oid,a.attnum,'SELECT')`);
   const start = probe.indexOf(" (pg_catalog.jsonb_array_length(manifest->'system_column_acls')=1");
@@ -585,7 +594,7 @@ function maintenanceXminCatalogProbe(): string {
   const end = probe.indexOf(endMarker, start);
   if (start < 0 || end < start) throw new Error('Original system-column observation boundary required');
   return replaceOne(probe, probe.slice(start, end + endMarker.length), `
- (pg_catalog.jsonb_array_length(manifest->'system_column_acls')=13
+ (pg_catalog.jsonb_array_length(manifest->'system_column_acls')=${observedTables.length}
    AND (SELECT pg_catalog.array_agg(item->>'table' ORDER BY item->>'table')
      FROM pg_catalog.jsonb_array_elements(manifest->'system_column_acls') item)=ARRAY[${tables}]::text[]
    AND NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_array_elements(manifest->'system_column_acls') item
@@ -598,9 +607,13 @@ function maintenanceXminCatalogProbe(): string {
          WHERE privilege->>'grantee'=current_user::text AND privilege->>'grantor'=item->>'owner'
            AND privilege->>'privilege'='SELECT' AND privilege->'grantable'='false'::jsonb)
        AND NOT EXISTS (SELECT 1 FROM pg_catalog.jsonb_array_elements(item->'privileges') privilege
-         WHERE privilege->>'grantee'='PUBLIC'),false))) AS maintenance_xmin_acl_match`);
+         WHERE privilege->>'grantee'='PUBLIC'),false))) AS ${resultColumn}`);
 }
 export const NATIVE_RUNTIME26_HV2_HISTORY_SET_MAINTENANCE_XMIN_FROM_V22_METADATA_PROBE = maintenanceXminCatalogProbe();
+/** Preparation is a separate exact twelve-table observation, never normal13 evidence. */
+export const NATIVE_RUNTIME26_HV2_HISTORY_SET_PREPARATION_XMIN_FROM_V22_METADATA_PROBE = maintenanceXminCatalogProbe(
+  NATIVE_RUNTIME26_PREPARATION_XMIN_TABLES, 'EXACT26_RUNTIME_CATALOG_EXPORT_V4', 'preparation_xmin_acl_match',
+);
 
 /** Daily managed-application lease identity only. The complete catalog was awaited at startup.
  * A baseline switch stops/disposes that application before DDL/ACL changes, then creates a new issuer.
@@ -725,11 +738,12 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
     || target.serverPort !== null && !(typeof target.serverPort === "number" && Number.isInteger(target.serverPort) && target.serverPort >= 1 && target.serverPort <= 65535))
     throw runtime26Error("Exact database, process, role and nullable socket identity required");
   const catalog = exactData(review.catalog, ["format", "sha256", "patchLevel"]);
+  const preparationXmin = catalog.patchLevel === "26_hv2_history_set_guards_preparation_xmin_from_v22";
   const maintenanceXmin = catalog.patchLevel === "26_hv2_history_set_guards_maintenance_xmin_from_v22";
-  const historySet = maintenanceXmin || catalog.patchLevel === "26_hv2_history_set_guards_from_v22" || catalog.patchLevel === "26_hv2_history_set_guards_source_xmin_from_v22";
+  const historySet = preparationXmin || maintenanceXmin || catalog.patchLevel === "26_hv2_history_set_guards_from_v22" || catalog.patchLevel === "26_hv2_history_set_guards_source_xmin_from_v22";
   const categoryDepth = historySet || catalog.patchLevel === "26_hv2_category_depth_from_v22";
   const sourceXmin = catalog.patchLevel === "26_hv2_source_xmin_from_v22" || catalog.patchLevel === "26_hv2_responsible_null_source_xmin_from_v22" || catalog.patchLevel === "26_hv2_history_set_guards_source_xmin_from_v22";
-  if (catalog.format !== (maintenanceXmin ? "EXACT26_RUNTIME_CATALOG_EXPORT_V3" : sourceXmin ? "EXACT26_RUNTIME_CATALOG_EXPORT_V2" : "EXACT26_RUNTIME_CATALOG_EXPORT_V1") || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15", "26_v20_history_insert_identity_from_v19", "26_v21_history_effective_value_from_v16_v14", "26_v22_staged_prefix_bind_from_v20", "26_hv2_responsible_null_from_v22", "26_hv2_source_xmin_from_v22", "26_hv2_responsible_null_source_xmin_from_v22", "26_hv2_category_depth_from_v22", "26_hv2_history_set_guards_from_v22", "26_hv2_history_set_guards_source_xmin_from_v22", "26_hv2_history_set_guards_maintenance_xmin_from_v22"] as readonly unknown[]).includes(catalog.patchLevel))
+  if (catalog.format !== (preparationXmin ? "EXACT26_RUNTIME_CATALOG_EXPORT_V4" : maintenanceXmin ? "EXACT26_RUNTIME_CATALOG_EXPORT_V3" : sourceXmin ? "EXACT26_RUNTIME_CATALOG_EXPORT_V2" : "EXACT26_RUNTIME_CATALOG_EXPORT_V1") || !sha(catalog.sha256) || !(["26_v11_document_specification_save", "26_v14_core_initialization", "26_v15_category_order_undo", "26_v16_history_responsible_from_v14", "26_v16_history_responsible_from_v15", "26_v19_barcode_scheme_initialization_from_v16_v15", "26_v20_history_insert_identity_from_v19", "26_v21_history_effective_value_from_v16_v14", "26_v22_staged_prefix_bind_from_v20", "26_hv2_responsible_null_from_v22", "26_hv2_source_xmin_from_v22", "26_hv2_responsible_null_source_xmin_from_v22", "26_hv2_category_depth_from_v22", "26_hv2_history_set_guards_from_v22", "26_hv2_history_set_guards_source_xmin_from_v22", "26_hv2_history_set_guards_maintenance_xmin_from_v22", "26_hv2_history_set_guards_preparation_xmin_from_v22"] as readonly unknown[]).includes(catalog.patchLevel))
     throw runtime26Error("Exact independently reviewed v11, v14 or v15 catalog required");
   const effectiveValueDisambiguation = catalog.patchLevel === "26_v21_history_effective_value_from_v16_v14";
   const responsibleNull = categoryDepth || catalog.patchLevel === "26_hv2_responsible_null_from_v22" || catalog.patchLevel === "26_hv2_responsible_null_source_xmin_from_v22";
@@ -737,7 +751,7 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
   const historyInsertIdentity = stagedPrefixBind || catalog.patchLevel === "26_v20_history_insert_identity_from_v19";
   const barcodeSchemeInitialization = historyInsertIdentity || catalog.patchLevel === "26_v19_barcode_scheme_initialization_from_v16_v15";
   const historyResponsible = effectiveValueDisambiguation || barcodeSchemeInitialization || catalog.patchLevel === "26_v16_history_responsible_from_v14" || catalog.patchLevel === "26_v16_history_responsible_from_v15";
-  const metadataProbe = maintenanceXmin ? NATIVE_RUNTIME26_HV2_HISTORY_SET_MAINTENANCE_XMIN_FROM_V22_METADATA_PROBE : historySet ? (sourceXmin ? NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE : NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE) : categoryDepth ? NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE : sourceXmin ? (responsibleNull ? NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE : NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE) : responsibleNull ? NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE : stagedPrefixBind ? NATIVE_RUNTIME26_V22_METADATA_PROBE : effectiveValueDisambiguation ? NATIVE_RUNTIME26_V21_EFFECTIVE_VALUE_FROM_V16_V14_METADATA_PROBE : historyInsertIdentity ? NATIVE_RUNTIME26_V20_METADATA_PROBE : barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
+  const metadataProbe = preparationXmin ? NATIVE_RUNTIME26_HV2_HISTORY_SET_PREPARATION_XMIN_FROM_V22_METADATA_PROBE : maintenanceXmin ? NATIVE_RUNTIME26_HV2_HISTORY_SET_MAINTENANCE_XMIN_FROM_V22_METADATA_PROBE : historySet ? (sourceXmin ? NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE : NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE) : categoryDepth ? NATIVE_RUNTIME26_HV2_CATEGORY_FROM_V22_METADATA_PROBE : sourceXmin ? (responsibleNull ? NATIVE_RUNTIME26_RESPONSIBLE_NULL_SOURCE_XMIN_FROM_V22_METADATA_PROBE : NATIVE_RUNTIME26_SOURCE_XMIN_FROM_V22_METADATA_PROBE) : responsibleNull ? NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE : stagedPrefixBind ? NATIVE_RUNTIME26_V22_METADATA_PROBE : effectiveValueDisambiguation ? NATIVE_RUNTIME26_V21_EFFECTIVE_VALUE_FROM_V16_V14_METADATA_PROBE : historyInsertIdentity ? NATIVE_RUNTIME26_V20_METADATA_PROBE : barcodeSchemeInitialization ? NATIVE_RUNTIME26_V19_METADATA_PROBE : catalog.patchLevel === "26_v16_history_responsible_from_v14" ? NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE
     : catalog.patchLevel === "26_v16_history_responsible_from_v15" ? NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v15_category_order_undo" ? NATIVE_RUNTIME26_V15_METADATA_PROBE
     : catalog.patchLevel === "26_v14_core_initialization" ? NATIVE_RUNTIME26_V14_METADATA_PROBE : NATIVE_RUNTIME26_METADATA_PROBE;
@@ -774,12 +788,14 @@ export async function createNativeRuntime26Issuer(originalPool: PgSalesPool, opt
       const full = !managedBaseline || !baselineVerified;
       const observed = await lease.query(full ? metadataProbe : NATIVE_RUNTIME26_IDENTITY_PROBE);
       if (!lease.active || observed.rows.length !== 1 || observed.rowCount !== 1) fail("One actual verification row on the original lease required");
-      const row = exactData(observed.rows[0], full ? ["identity", "migration_versions", "catalog_sha256", "source_routines_match", ...(maintenanceXmin ? ["maintenance_xmin_acl_match"] : sourceXmin ? ["source_xmin_acl_match"] : [])] : ["identity"]);
+      const row = exactData(observed.rows[0], full ? ["identity", "migration_versions", "catalog_sha256", "source_routines_match", ...(preparationXmin ? ["preparation_xmin_acl_match"] : maintenanceXmin ? ["maintenance_xmin_acl_match"] : sourceXmin ? ["source_xmin_acl_match"] : [])] : ["identity"]);
       const identity = exactData(row.identity, ["database", "database_oid", "database_owner", "current_user", "session_user", "server_version_num", "server_addr", "server_port", "postmaster_start", "replication_role"]);
       if (full && (row.catalog_sha256 !== catalog.sha256 || row.source_routines_match !== true || !exactVersions26(row.migration_versions)))
         fail("Actual exact schema, source bodies or catalog differs from independent review");
       if (full && sourceXmin && row.source_xmin_acl_match !== true)
         fail("Exact source xmin-only column grant differs from the independently reviewed boundary");
+      if (full && preparationXmin && row.preparation_xmin_acl_match !== true)
+        fail("Exact preparation xmin column grants differ from the independently reviewed boundary");
       if (full && maintenanceXmin && row.maintenance_xmin_acl_match !== true)
         fail("Exact maintained xmin column grants differ from the independently reviewed boundary");
       if (identity.database !== target.database || identity.database_oid !== target.databaseOid || identity.current_user !== target.actingRole
