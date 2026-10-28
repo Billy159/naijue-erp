@@ -1,3 +1,5 @@
+SOURCE938纠正937派工状态：SOURCE936构建消息并未送达，原T45 wait确认notLoaded，初发及一次explicit local host纠正重试均thread not found；无实际构建启动。937所记DISPATCHED仅派工意图，本条准确覆盖为NOT_DISPATCHED，保留历史不冒运行。已单次请求用户打开原T45恢复原路由，不换owner或另造构建任务；真实QA人批及前端normal34对比依旧各自处理。936 QB F01限定PASS有效，无重测。
+
 SOURCE937：采用原QB936 F01限定PASS（2875/4c723977…），原935其余有效证据复用/旧NEED_FIX保留；D1七叶已全部交还，不重测。C交唯一原T45对准确936/4e7cc136必要build+pack各一次，新独立archive，核同lock复用旧依赖，不重ci/native/keyreader；只构建不启动/接PG/部署，不把新包冒normal34对比。真实容量与sharedQA人批/完整发布/新鲜facts/窗口预算/SLO仍前置。936远端已回读。
 
 SOURCE936：原QB935发现F01/P2 session成本coverage读测后可变预算，原本已捕获费用1被外部改100可错误放行需求2，旧935NEED_FIX保留。原D1仅修runner单叶34824/9d0c811f…：开跑前capture深拷贝冻结sessionCost，coverage只读capture，另核实际admitted数与5卷fee增量；原1→100窄反例/strict/惰性缺host拒绝通过，另6叶未变。C固定后继交原QB只复F01，不重933/旧snapshot。真实QA/PG/TCP/物理restart/SLO仍未跑，原人批及发布依赖不变；935 GitHubde95a7e6已回读。

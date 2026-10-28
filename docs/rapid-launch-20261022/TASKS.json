@@ -19443,9 +19443,11 @@
     "B12Source936Build": {
       "owner": "T45",
       "model": "gpt-6.1-sol/medium",
-      "state": "DISPATCHED_NECESSARY_FIXED_LOCAL_BUILD_PACK_ONLY",
+      "state": "NOT_DISPATCHED_ORIGINAL_T45_NOTLOADED_THREAD_NOT_FOUND",
       "sourceCommit": "4e7cc136e4b8eb179cfd4ca17e342c6a8b4e5b83",
-      "scope": "Original build/pack once from fixed git archive in new directory; reuse exact matching dependencies, no ci/reader/PG/native replay. Not normal34 comparison or app startup/deployment."
+      "scope": "Original build/pack once from fixed git archive in new directory; reuse exact matching dependencies, no ci/reader/PG/native replay. Not normal34 comparison or app startup/deployment.",
+      "deliveryEvidence": "Initial send and one explicit local host retry both isError thread not found; wait confirms original notLoaded, last263 completed. No matching new build accepted or started.",
+      "next": "Human asked once to open original T45 Chat; preserve exact936 work and unique buildowner; no alternate duplicate writer/build/install."
     }
   }
 }
