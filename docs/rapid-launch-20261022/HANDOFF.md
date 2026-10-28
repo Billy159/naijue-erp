@@ -1,3 +1,7 @@
+SOURCE873：原T45固定SOURCE872复用868未变锁/已装根依赖，不重ci；API/runtime/harness严格types及原rootbuild四项全部0，新独立输出、trackedclean。限定回执B12-source872-reused-root-01/RESULT.json采用，不重复；完整发布闭包仍未通过。原完整build首次在native依赖阶段FILE_LINK_OR_SIZE_LIMIT拒绝：新副本esbuild/bin与@esbuild/darwin-arm64/bin同inode/nlink2，9934834B；无candidate输出，源与原ci依赖/失败现场保留。原T45获准新attempt02按regularfile逐个实体复制解除新副本硬链接，标准npm symlink保留，守卫/源码/锁不变、不重ci，不原样重试。
+
+D1已交230→135原三SQL适用性准备fcfa5b79：B07null131→131、B14depth→133、P04set→135；直接复用原guard/已批函数，不新增包装/权限。原T45准备新231精确载体，尚未执行。前端原normal34全量逐页及状态对比继续，仅差异已登记不冒整页通过；源码872的夹具编译改名不改该固定UI候选。正式环境不动、目标ACTIVE。
+
 SOURCE872：人类call_e9e290ded28b4119bfc06c7db140de90/0确认单fixture改名，原F1已完成qa-reference-fixtures.ts→.mts内容逐字不变及8个import后缀；C两配置同步。原harness严格NodeNext noEmit实际0，原38条TS1287解除。原F1 runtime类型在现有混合树仍报React双类型/焦点never，保留失败；固定干净根后由原T45必要复核，不重复源码/后台全套。旧868cleanroot三类型通过不冒本872通过。人类在重构任务书thread01a16189-fe73-7a81-b7ad-3c24ede6fd24/message01a1831b-7c16-7581-8368-79f1ff547e19明确“后续这样的不用问我了直接弄”，C实际读取核实：后续为构建/模块识别的纯源码改名与配套引用/配置、无业务/UI/数据含义变化沿原owner直接实施，不重复询问；不含真实资料/Demo/备份/删除/正式操作。原P04到135准备继续；normal34对比不变。目标ACTIVE。
 
 SOURCE871：230原P04 v22单函数隔离后继实际COMMIT_RETURNED/1.219617s；原40关系/222批次三回执及QA不变，131函数仅目标4内容字段变，目录ef725a20，client0，原T45受托结果dcea094d采用不重验。仍非135/P04真实业务驱动；原D1接已批B07null/B14/P04到135必要后继准备，准确ACL待实际目录后再申请，正式未动。
