@@ -21,6 +21,7 @@ test('launch gate enumerates actual replica/import/release and preserves origina
     assert.ok(rows.some(row => row.args.some(arg => arg.endsWith(file))), file);
   assert.ok(rows.some(row => row.args.includes('tsconfig.launch-api.json')));
   assert.ok(rows.some(row => row.args.includes('scripts/release/build-production.test.mjs')));
+  assert.ok(rows.find(row => row.id === 'commit-outcomes').args.includes('tests/cross-layer-contract-fixtures.test.mjs'));
 });
 
 test('local failure propagates and does not hide later command results', () => {

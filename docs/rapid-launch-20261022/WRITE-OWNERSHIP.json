@@ -7328,6 +7328,31 @@
       "thinking": "medium",
       "CReserved": "package.json/check-launch/releaseconfigs/TASKS/PROGRESS/HANDOFF;owner requests exactseam beforeotherfiles",
       "dependency": "P04realdriver waits humanACL only;H01 source independent"
+    },
+    "H02EffectiveReaders880": {
+      "owner": "D3",
+      "status": "ACTIVE_FINITE_READERS_AND_SHARED_SEMANTICS",
+      "files": [
+        "adapters/postgres/src/sales-query-reader.ts",
+        "adapters/postgres/src/transfer-query-reader.ts",
+        "adapters/postgres/src/imported-history-query-reader.ts",
+        "packages/application/src/authorized-effective-documents.ts",
+        "tests/authorized-effective-documents.test.ts",
+        "docs/controller-handoff-20261028/READ-PROJECTION-PLAN.md"
+      ],
+      "scope": "H02 consumeB08/P03/P04acceptedsource;noSQLDDL/writes/republication;sharedreadsemantics and exactconsumeradaptation only",
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "CReserved": "Rootconfig/sharedcontracts/history-storage-contract.ts unlessexacthandoff",
+      "independence": "D1H01onlytwo newfiles;P04realACLdoesnotblockreadonlysourceimplementation"
+    },
+    "H04CrossLayerOutcome881": {
+      "owner": "C",
+      "files": [
+        "tests/cross-layer-contract-fixtures.test.mjs"
+      ],
+      "scope": "ExistingH04 required goldenfixture joining actualfrontendOwner/httptransport/Fastify/applicationparser originalkeyoutcome;testonlynoUIcodeorSQLchange",
+      "boundary": "SyntheticstoreseamNOTrealPG/idempotenceimplementationproof;originalP04actualdriverseparate"
     }
   }
 }

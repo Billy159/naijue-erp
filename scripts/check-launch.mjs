@@ -50,7 +50,7 @@ export function launchCommands() {
     node('import-v3-tests', ['--test', ...imports]),
     node('release-contract-current', ['scripts/release/generate-release-contract.mjs', '--check']),
     node('release-tests', ['--test', 'scripts/release/build-production.test.mjs', 'scripts/release/pack.test.mjs', 'scripts/release/release-file-contract.test.mjs']),
-    node('commit-outcomes', ['--test', 'tests/runtime-document-commit-outcome.test.ts', 'tests/authentication-commit-outcome.test.ts']),
+    node('commit-outcomes', ['--test', 'tests/runtime-document-commit-outcome.test.ts', 'tests/authentication-commit-outcome.test.ts', 'tests/cross-layer-contract-fixtures.test.mjs']),
     node('launch-runner-tests', ['--test', 'scripts/check-launch.test.mjs']),
     // check:all already includes check/typecheck/build/smoke/npm test: do not repeat those wrappers.
     {id: 'existing-root-check-all', command: npm.command, args: [...npm.prefix, 'run', 'check:all']}
