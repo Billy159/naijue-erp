@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-28T07:58:36.595933+00:00",
+  "updatedAt": "2026-10-28T11:57:07.191893+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -7149,6 +7149,27 @@
         "bytes": 5710,
         "sha256": "1c8ddecabb04736fd5d3d594c419c10ad1e1f709e1bb9abbb131520293f014d3"
       }
+    },
+    "v23": {
+      "authorization": "Human call_97f1c99e6f4640eea8e58dd8c8c82933/0 source+dependencycontract only",
+      "model": "gpt-6.1-sol/medium",
+      "Fast": "UNVERIFIED",
+      "D1": [
+        "scripts/import-v3/run.mjs",
+        "scripts/import-v3/run.test.mjs",
+        "adapters/postgres/src/native-import-record-accounting.ts",
+        "adapters/postgres/src/native-stage-continuation26.ts",
+        "tests/native-stage-continuation26.test.ts"
+      ],
+      "D3": [
+        "scripts/import-v3/production-source-provider26.mjs",
+        "scripts/import-v3/production-source-provider26.test.mjs",
+        "scripts/import-v3/production-source-host.mjs",
+        "scripts/import-v3/production-source-host.test.mjs"
+      ],
+      "sharedInterface": "D1 exports nativeStageContinuationCommitments26; capture preparation/groups/onVerified(progress); providerassertbeforeclone; singlewriter each leaf",
+      "metadata": "D3 exact optional fixed.nativeStageContinuation26 and grant.nativeStageContinuation26 same original pinned ref; preparation refs bound to adopted148/201; no metadata self-authorized members; no old-job implicit authority",
+      "notAuthorized": "R1 continuation/migration/ACL/deploy/201 replay; no SQL/schema change"
     }
   }
 }

@@ -17701,9 +17701,9 @@
     "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
     "next": "QB845P04/Cmetadata/B12fixturelimitedreview;T45freshB14/P04isolationprep;CfiniteH04release mechanics;D3P03;frontendnormal34fullcomparisonfirst",
     "githubCheckpoint": {
-      "commit": "ecc222dc62e4d9e0103707e96a886f3fcfe36beb",
+      "commit": "39badcc716c6d084247393b92a87808a6bc2319f",
+      "sourceRound": 852,
       "remoteVerified": true,
-      "sourceRound": 851,
       "branch": "codex/erp"
     },
     "firstProgress": {
@@ -18159,7 +18159,8 @@
           "ACL expansion",
           "201 replay"
         ],
-        "model": "gpt-6.1-sol/medium"
+        "model": "gpt-6.1-sol/medium",
+        "writerRegistry": "WRITE-OWNERSHIP.json handoverV2.v23"
       },
       "actual212": {
         "status": "FAILED",
