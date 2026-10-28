@@ -7803,7 +7803,7 @@
     "A02RealRunner934": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "state": "HANDED_BACK_SEVEN_LEAVES_SOURCE935_QB_PENDING_NO_ACTIVE_WRITER",
+      "state": "SOURCE936_F01_FIXED_SINGLE_LEAF_QB_RECHECK_PENDING_NO_ACTIVE_WRITER",
       "files": [
         "tests/integration/capacity-window-performance.test.ts"
       ],
@@ -7824,7 +7824,19 @@
       },
       "checks": "Three new read-only snapshot cases PASS/no skips; four test-root strict0; both real entry lazy import/undefined-host refusal PASS. No actual QA/server/listener/PG/ACL/write/key/scenario execution.",
       "actualPending": "Original exactQA897 complete published source/review/nonowner SQL permissions; controlled real fixtures; fresh5volume identity/space; preapproved finite windows/budgets/SLO; loopback fixed authorized port for actual TCP cancellation; separate actual new process proof for physical restart.",
-      "next": "C freeze7pins→original QB only new runner/snapshot scope. Original T45 actual run only after accurate dependencies/authorization; no mocks or factory rebuild as physical restart."
+      "next": "C freeze7pins→original QB only new runner/snapshot scope. Original T45 actual run only after accurate dependencies/authorization; no mocks or factory rebuild as physical restart.",
+      "activeRepairFiles": [],
+      "finding": "QB F01 P2 session coverage reads caller mutable context.normal.budgets.session after measurement; real admission cloned old budget but caller poststart mutation can falsely pass coverage. Capture immutable sessionCost before awaits, use captured cost and verify actual fee delta where appropriate. Original935 failure retained, no PG.",
+      "fixedRunner": {
+        "bytes": 34824,
+        "sha256": "9d0c811febbd098e0f9e8ca3ca3f9a93e280e3c1efcfdbc103a93b5a98d64e66"
+      },
+      "fixReceipt": {
+        "path": "D1/A02-REAL-RUNNER934-F01-RESULT.json",
+        "bytes": 2622,
+        "sha256": "52413549ac5bdec9c323bafcad8f4024757eac534c2f1e793ea6d4293cd62f0d"
+      },
+      "fixChecks": "D1 exact old caller1→100 actual admission original1/capturedcost1 demand2 remainsfalse; immutable cost and5volume actualfee delta check; singleTSroot strict0 and lazy nohost refusal. Other6leaves unchanged; no actualQA."
     }
   }
 }

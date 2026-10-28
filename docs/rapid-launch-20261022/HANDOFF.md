@@ -1,3 +1,5 @@
+SOURCE936：原QB935发现F01/P2 session成本coverage读测后可变预算，原本已捕获费用1被外部改100可错误放行需求2，旧935NEED_FIX保留。原D1仅修runner单叶34824/9d0c811f…：开跑前capture深拷贝冻结sessionCost，coverage只读capture，另核实际admitted数与5卷fee增量；原1→100窄反例/strict/惰性缺host拒绝通过，另6叶未变。C固定后继交原QB只复F01，不重933/旧snapshot。真实QA/PG/TCP/物理restart/SLO仍未跑，原人批及发布依赖不变；935 GitHubde95a7e6已回读。
+
 SOURCE935：原D1交还A02真实QA入口+6叶只读计数接缝共7叶，原计数同源不可变无HTTPmetrics或新状态owner。新增snapshot3检查/strict与缺host安全拒绝通过；C只核固定pin，交原QB增量窄验。runner代表真实PG/codec成本、窗口收费、低水位/到期与旧读、资源回稳；取消须真实TCP断开且实观原native队列，物理restart须真实新进程双收据，不冒inject.abort或factory重建。全部真实场景未跑；原normal90/preparation189人批/fullQA发布/新鲜卷事实/窗口预算SLO仍前置，不自动grant/seed/listen。934远端69da30a2已回读。
 
 SOURCE934：原QB933新producer/唯一pool接线限定PASS，独立19项与strict通过，无新发现；真实PG/卷事实/预算/SLO/主宿主选入未测，旧底层transport超时不冒服务端取消。C采用原结论不重验；按A02任务卡明确原缺失tests/integration/capacity-window-performance.test.ts，仅交原D1一个真实QA入口叶，拒缺host/事实/窗口/SLO，不新平台、不自动执行/seed/权限；原容量源码交还。933 GitHub31f5bbea已回读。

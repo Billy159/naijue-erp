@@ -129,7 +129,8 @@ async function host(context: CapacityWindowPerformanceContext) {
     && [slo.sessionRelationBytesPerSession,slo.walBytesPerSession,slo.mediaAllocationBytesPerUpload].every(decimal)
     && slo.loginP95Millis > 0 && slo.loginP99Millis > 0 && slo.uploadMillis > 0 && slo.readP95Millis > 0 && slo.readP99Millis > 0,
   'All growth/resource/SLO thresholds required BEFORE measuring');
-  const normalWindow=structuredClone(context.normal?.window),uploadCost=structuredClone(context.normal?.budgets?.upload?.worstCaseBytes);
+  const normalWindow=structuredClone(context.normal?.window),uploadCost=structuredClone(context.normal?.budgets?.upload?.worstCaseBytes),
+    sessionCost=Object.freeze(structuredClone(context.normal?.budgets?.session?.worstCaseBytes));
   const inputs=[context.normal,context.lowWater,context.expiry];
   assert.ok(inputs.every(v=>v?.window?.approved && v.runtimeProbe?.target?.database===CURRENT_SALES_QA_TARGET
     && v.runtimeProbe.target.databaseOid==='21551' && v.runtimeProbe.target.role===context.target.runtimeRole
@@ -229,7 +230,7 @@ async function host(context: CapacityWindowPerformanceContext) {
     assert.ok(measured.p95Millis<=slo.readP95Millis && measured.p99Millis<=slo.readP99Millis,'Existing read SLO exceeded');
     return measured;
   };
-  return {c,limits,slo,normalWindow,uploadCost,readMeasurements,observation,read,inventory,resources,open,close,finish,login,cookie,upload,cancellableUpload,settled,reads,
+  return {c,limits,slo,normalWindow,uploadCost,sessionCost,readMeasurements,observation,read,inventory,resources,open,close,finish,login,cookie,upload,cancellableUpload,settled,reads,
     get api(){return api!;},get admission(){return admission!;}};
 }
 
@@ -241,15 +242,20 @@ export async function runCapacityWindowPerformance(context: CapacityWindowPerfor
     assert.ok(h.observation.snapshot().storageReads>0,'Actual storage probe must run on this factory owned pool');
     const baselineReads=await h.reads(session);await until(h.settled,h.limits);
     const beforeResource=await h.resources(),before=await h.inventory(),latencies:number[]=[];
+    const beforeSessions=h.admission.snapshot();
     phase='A02-03-REAL-PG-SESSION-UNIT-GROWTH';
     for(let i=0;i<h.limits.loginSamples;i++){const at=performance.now();h.cookie(await h.login());latencies.push(performance.now()-at);}
     await until(h.settled,h.limits);const afterSessions=await h.inventory();
+    const issued=h.admission.snapshot();
+    assert.ok(issued.admitted.session-beforeSessions.admitted.session===h.limits.loginSamples,'Actual original admission count must match measured successful issuance');
+    for(const v of CAPACITY_VOLUMES)assert.ok(issued.chargedBytes[v]-beforeSessions.chargedBytes[v]===h.sessionCost[v]*BigInt(h.limits.loginSamples),
+      'Original admission fee delta must match the captured approved session budget');
     assert.ok(afterSessions.sessions-before.sessions === BigInt(h.limits.loginSamples),'Actual session count must equal successful issuance; exclusive QA required');
     const unitSession=ceil(afterSessions.sessionBytes-before.sessionBytes,h.limits.loginSamples),unitWal=ceil(afterSessions.wal-before.wal,h.limits.loginSamples);
     measurements.session={samples:latencies.length,p95Millis:percentile(latencies,.95),p99Millis:percentile(latencies,.99),
       relationBytesPerSession:unitSession.toString(),walBytesPerSession:unitWal.toString(),databaseDeltaBytes:(afterSessions.databaseBytes-before.databaseBytes).toString()};
     assert.ok(unitSession>=0n && unitSession<=BigInt(h.slo.sessionRelationBytesPerSession) && unitWal>=0n && unitWal<=BigInt(h.slo.walBytesPerSession),'Actual PG growth bound exceeded');
-    assert.ok(context.normal.budgets.session.worstCaseBytes.postgres>=unitSession && context.normal.budgets.session.worstCaseBytes.wal>=unitWal,
+    assert.ok(h.sessionCost.postgres>=unitSession && h.sessionCost.wal>=unitWal,
       'Original approved per-session budget must cover measured native relation/index and WAL demand');
     assert.ok(percentile(latencies,.95)<=h.slo.loginP95Millis && percentile(latencies,.99)<=h.slo.loginP99Millis,'Actual issuance SLO exceeded');
     phase='A02-04-REAL-CODEC-UPLOAD-GROWTH';const at=performance.now(),uploaded=await h.upload(0,session);
