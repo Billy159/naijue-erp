@@ -1,4 +1,5 @@
-import { importedHistoryReadSql } from "./imported-history-query-reader.ts";
+import { authorizedEffectiveDocumentIdentity, assertEffectiveDocumentPage, nullableEffectiveDocumentQuantity as normalNullableQuantity, nullableEffectiveDocumentMoney as normalNullableMoney } from '../../../packages/application/src/authorized-effective-documents.ts';
+import { importedHistoryReadSql, importedHistoryTransferSingleHallScopeSql } from "./imported-history-query-reader.ts";
 import { sourceConfirmedReadIdentityOn } from "./source-confirmed-read-authorization.ts";
 import { checkedNativeRuntime26Capability, type NativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { DocumentProductSummary, DocumentHistoryCoverage, SalesUnifiedListPage, SalesUnifiedSummary } from "../../../packages/application/src/sales-query-ports.ts";
@@ -194,13 +195,13 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
           JOIN naijue_erp.staff creator ON creator.id=creator_account.staff_id`,
         columns: `${SUMMARY_COLUMNS},hall.name AS hall_name,wh.name AS warehouse_name,c.name AS customer_name,sp.name AS salesperson_name`, scope: p.where(), values: p.values });
       const items: SalesUnifiedSummary[] = result.rows.map(row => {
-        const productSummary = documentProductSummary(row), documentId = id("sales", row.id), effectiveVersion = versionFromSql(row.version);
-        if (row.dataset === "LIVE") { requireDomain(row.batch_id === null, "INVALID_DATABASE_VALUE", "LIVE has no import batch");
+        const identity = authorizedEffectiveDocumentIdentity(row.dataset, row.batch_id, row.id, row.version);
+        const productSummary = documentProductSummary(row), documentId = id("sales", identity.documentId), effectiveVersion = versionFromSql(identity.effectiveVersion);
+        if (identity.dataset === "LIVE") {
           return { ...decodeSummary(row, summaryQuantities(row)), dataset: "LIVE", batchId: null, documentId, effectiveVersion, productSummary }; }
-        requireDomain(row.dataset === "HISTORY", "INVALID_DATABASE_VALUE", "Exact document dataset required");
         const quantity = normalNullableQuantity(row.quantity), incomingQuantity = normalNullableQuantity(row.incoming_quantity), outgoingQuantity = normalNullableQuantity(row.outgoing_quantity);
         requireDomain(quantity === null && incomingQuantity === null && outgoingQuantity === null || quantity !== null && incomingQuantity !== null && outgoingQuantity !== null && quantity === outgoingQuantity - incomingQuantity, "INVALID_DATABASE_VALUE", "Historical signed quantity totals disagree");
-        return { dataset: "HISTORY", batchId: id("operation", row.batch_id), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary,
+        return { dataset: "HISTORY", batchId: id("operation", identity.batchId), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary,
           number: stringValue(row.number), businessType: choice(row.business_type, ["SALE", "RETURN", "EXCHANGE"]), businessDate: row.business_date === null ? null : businessDate(stringValue(row.business_date)),
           status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]), hallId: id("hall", row.hall_id), warehouseId: id("warehouse", row.warehouse_id), customerId: id("customer", row.customer_id),
           salespersonId: nullableId("staff", row.salesperson_id), responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name), createdByName: nullableString(row.created_by_name),
@@ -289,6 +290,8 @@ export class PostgresSalesQueryReader implements TrustedSalesSnapshotReader {
         occurredAt: stringValue(row.occurred_at), oldVersion: row.old_version === null ? null : versionFromSql(row.old_version), newVersion: versionFromSql(row.new_version) })) };
     });
   }
+  /** Existing LIVE APPROVED account statistics; historical settlements are not
+   * part of this endpoint or the unified document totals. */
   async readSettlementStatistics(read: SalesScopedRead<SalesListQuery>): Promise<SalesSettlementStatistics> {
     const parameters = parseSalesListQuery(read.parameters); const p = new Predicate(checkedSalesReadScope(read.scope)); p.filter(parameters); p.parts.push("h.status = 'APPROVED'");
     const approved = `SELECT h.id FROM naijue_erp.sales_header h WHERE ${p.where()}`;
@@ -331,7 +334,7 @@ export async function normalDocumentReferenceScopeOn(client: PgSalesQueryClient,
   let liveScope = native.scope, historyScope = 'TRUE';
   if (identity.role === 'SALESPERSON') {
     requireDomain(identity.hallId !== null, 'FORBIDDEN', 'Authoritative current hall required');
-    const hall = `${bind(identity.hallId)}::uuid`;
+    const hallIndex = values.length + 1, hall = `${bind(identity.hallId)}::uuid`;
     if (kind === 'sales') {
       liveScope = `(${liveScope}) AND h.hall_id=${hall}`;
       historyScope = `h.hall_id=${hall}`;
@@ -339,10 +342,7 @@ export async function normalDocumentReferenceScopeOn(client: PgSalesQueryClient,
       liveScope = `(${liveScope}) AND (fw.hall_id=${hall} OR tw.hall_id=${hall} OR (h.created_hall_id=${hall} AND h.created_role='SALESPERSON'))`;
       // Explicit approved source rule, independent of LIVE and of the old
       // imported-history HALL_IDS validator (which still rejects transfers).
-      historyScope = `((${history.sourceWarehouseBindingsPredicate} AND (
-        EXISTS(SELECT 1 FROM naijue_erp.warehouse scope_fw WHERE scope_fw.id=${history.fromWarehouseIdExpression} AND scope_fw.hall_id=${hall}) OR
-        EXISTS(SELECT 1 FROM naijue_erp.warehouse scope_tw WHERE scope_tw.id=${history.toWarehouseIdExpression} AND scope_tw.hall_id=${hall}))) OR
-        (${history.originalCreatedHallPredicate} AND h.created_hall_id=${hall} AND h.created_role_source='SALESPERSON' AND h.created_by_source_key IS NOT NULL))`;
+      historyScope = importedHistoryTransferSingleHallScopeSql(hallIndex);
     }
   }
   return {query,values,bind,history,liveScope,historyScope};
@@ -453,10 +453,7 @@ export async function normalDocumentListOn(client: PgSalesQueryClient, options: 
   requireDomain(summary.history_valid === true && typeof summary.history_published === 'boolean','INVALID_DATABASE_VALUE','Published historical header/line facts contradict their effective revision');
   requireDomain(Array.isArray(summary.items),'INVALID_DATABASE_VALUE','Bounded document items required');
   const rows=summary.items as Record<string,unknown>[],exactTotal=count(summary.exact_total);
-  requireDomain(rows.length === Number(exactTotal > BigInt((read.parameters.page - 1) * read.parameters.pageSize)
-    ? (exactTotal - BigInt((read.parameters.page - 1) * read.parameters.pageSize) < BigInt(read.parameters.pageSize) ? exactTotal - BigInt((read.parameters.page - 1) * read.parameters.pageSize) : BigInt(read.parameters.pageSize)) : 0n), 'INVALID_DATABASE_VALUE', 'Normal document page differs from its exact union count');
-  const identities = rows.map(r => `${r.dataset}:${r.batch_id}:${r.id}`);
-  requireDomain(new Set(identities).size === identities.length, 'INVALID_DATABASE_VALUE', 'Repeated normal document identity');
+  assertEffectiveDocumentPage(rows.map(row => authorizedEffectiveDocumentIdentity(row.dataset, row.batch_id, row.id, row.version)), read.parameters.page, read.parameters.pageSize, exactTotal);
   return { rows, totals: summary, exactTotal, historyCoverage: summary.history_published ? 'PUBLISHED_AUTHORIZED' : 'NOT_PUBLISHED' };
 }
 export function documentProductSummary(row: Record<string, unknown>): DocumentProductSummary {
@@ -470,9 +467,4 @@ export function documentProductSummary(row: Record<string, unknown>): DocumentPr
   requireDomain(productCount === null || (productCount >= BigInt(items.length) && row.product_has_more === (productCount > 3n)), 'INVALID_DATABASE_VALUE', 'Product preview count mismatch');
   return { productCount, items, hasMore: row.product_has_more };
 }
-export const normalNullableQuantity = (value: unknown): bigint | null => {
-  if (value === null) return null;
-  requireDomain(typeof value === 'string' && /^(?:0|[1-9]\d*|-[1-9]\d*)$/.test(value), 'INVALID_DATABASE_VALUE', 'Exact nullable document quantity required');
-  return BigInt(value);
-};
-export const normalNullableMoney = (value: unknown): bigint | null => value === null ? null : decimalToMinor(stringValue(value), { scale: 2 });
+export { normalNullableQuantity, normalNullableMoney };

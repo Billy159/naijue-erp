@@ -1,3 +1,5 @@
+SOURCE885：H01原QB884限定静态归属/边界/入口PASS b21b7cf8采用，固定archive359源/35writer/57表/29fixture及入口1PASS；D1此前360含未提交reader叶，非新的扫描失败。H02原D3六叶实际交回，收敛重复调拨按厅谓词和三reader的有效身份/精确分页/NULL语义，13定向＋五TS叶严格检查通过，固定后交原QB，不重B08/P03/P04旧套；真实PG/权限/性能/详情输出仍未测。P02原D1开始准确18叶源码包，原D2已明确交回API+staff四叶无WIP；保留H06和原事务保护，内部只读快照不再无谓审批，生产预算/新PG不自行猜定。P04新ACL/Chrome交还仍待人类答案，正式环境未动，目标ACTIVE。
+
 SOURCE884：H01原D1两叶已交还，360当前源码/29允许禁止fixture及原22交易协议自检通过；C仅接入既有check-launch，并用原入口枚举1项检查确认，未重全后台。两条原导入adapter归属准确登记D3，不新增active写租约、不改SQL或事务；固定后交原QB窄验。D1继续P02登录/本人改密锁范围、准确端口/文件/写合同差异准备，未授权猜预算或改未登记auth源码。H02原D3六叶仍在途，受影响读取检查通过、类型夹具修正后收尾；主控未碰其WIP。用户批准的qa-reference-fixtures改名早已SOURCE872完成且构建通过，不重复实施。P04新ACL及Chrome交还仍等待各自明确人类答案，未执行依赖动作。正式环境未动，整体ACTIVE。
 
 SOURCE883：H01首轮报告的apps/api/src/history-revision-authorization.ts依赖已由C完整核源码与全部3消费者：该叶实为同历史模块的PG授权适配器、实现应用authorization端口，未含HTTP/Fastify handler，装配根/原两定向测试调用。按H01卡允许精确现有例外登记唯一D1 owner及原helper/consumer路径，不按目录误判而搬函数，不增加复制实现或改变授权/SQL/事务；其他API handler导入PG私有SQL仍须被fixture拒绝。原D1继续两叶检查与矩阵收口，未宣告H01整项PASS；原22交易协议自检结果只作源范围，真实PG不替代。

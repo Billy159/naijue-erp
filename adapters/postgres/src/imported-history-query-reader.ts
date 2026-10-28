@@ -1,3 +1,4 @@
+import { authorizedEffectiveDocumentIdentity, assertEffectiveDocumentPage } from '../../../packages/application/src/authorized-effective-documents.ts';
 import type { ImportedHistoryDetail, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryLineCatalog, ImportedHistoryList, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReader, ImportedHistorySalesLine, ImportedHistoryScopedRead, ImportedHistorySettlement } from '../../../packages/application/src/imported-history-query-ports.ts';
 import { activeImportedHistoryRead, checkedImportedHistoryActor, checkedImportedHistoryGrant, checkedImportedHistoryIntent, validateImportedHistoryDetail, validateImportedHistoryHeader, validateImportedHistoryLine, validateImportedHistoryList, validateImportedHistorySettlement } from '../../../packages/application/src/imported-history-query-validation.ts';
 import { assertHistoryPublicationSchema19 } from '../../../packages/application/src/history-typed-publication.ts';
@@ -148,16 +149,26 @@ export function importedHistoryReadSql(kind: ImportedHistoryKind, approvalParame
  * Fixed header alias h; effective reads additionally use e/er. Revision callers
  * bind their locked current/proposed endpoints instead, retaining original h
  * for source binding. Every position is a trusted positive bind index. */
-export function importedHistoryTransferHallScopeSql(hallIdsParameterIndex: number, effective: boolean, endpointParameterIndices?: readonly [number, number]): string {
+function transferHallScopeSql(hallIdsParameterIndex: number, effective: boolean, endpointParameterIndices: readonly [number, number] | undefined, singleHall: boolean): string {
   requireDomain(typeof effective === 'boolean' && [hallIdsParameterIndex, ...(endpointParameterIndices ?? [])].every(n => Number.isSafeInteger(n) && n > 0)
     && (endpointParameterIndices === undefined || endpointParameterIndices.length === 2), 'IMPORTED_HISTORY_INVALID_QUERY', 'Exact transfer scope bind positions required');
-  const facts = importedHistoryReadSql('transfers'), halls = `$${hallIdsParameterIndex}::uuid[]`;
+  const facts = importedHistoryReadSql('transfers'), halls = `$${hallIdsParameterIndex}::${singleHall ? 'uuid' : 'uuid[]'}`;
+  const inHall = (column: string) => singleHall ? `${column}=${halls}` : `${column}=ANY(${halls})`;
   const fromId = endpointParameterIndices ? `$${endpointParameterIndices[0]}::uuid` : headColumn('from_warehouse_id', effective);
   const toId = endpointParameterIndices ? `$${endpointParameterIndices[1]}::uuid` : headColumn('to_warehouse_id', effective);
   return `((${facts.sourceWarehouseBindingsPredicate} AND (
-    EXISTS(SELECT 1 FROM naijue_erp.warehouse scope_fw WHERE scope_fw.id=${fromId} AND scope_fw.hall_id=ANY(${halls})) OR
-    EXISTS(SELECT 1 FROM naijue_erp.warehouse scope_tw WHERE scope_tw.id=${toId} AND scope_tw.hall_id=ANY(${halls})))) OR
-    (${facts.originalCreatedHallPredicate} AND h.created_hall_id=ANY(${halls}) AND h.created_role_source='SALESPERSON' AND h.created_by_source_key IS NOT NULL))`;
+    EXISTS(SELECT 1 FROM naijue_erp.warehouse scope_fw WHERE scope_fw.id=${fromId} AND ${inHall('scope_fw.hall_id')}) OR
+    EXISTS(SELECT 1 FROM naijue_erp.warehouse scope_tw WHERE scope_tw.id=${toId} AND ${inHall('scope_tw.hall_id')}))) OR
+    (${facts.originalCreatedHallPredicate} AND ${inHall('h.created_hall_id')} AND h.created_role_source='SALESPERSON' AND h.created_by_source_key IS NOT NULL))`;
+}
+/** Existing array grant, including explicit corrected endpoint checks. */
+export function importedHistoryTransferHallScopeSql(hallIdsParameterIndex: number, effective: boolean, endpointParameterIndices?: readonly [number, number]): string {
+  return transferHallScopeSql(hallIdsParameterIndex, effective, endpointParameterIndices, false);
+}
+/** Current authoritative single hall uses the same source/endpoint/creator
+ * predicate, retaining its original scalar bind (no new grant or array cast). */
+export function importedHistoryTransferSingleHallScopeSql(hallParameterIndex: number): string {
+  return transferHallScopeSql(hallParameterIndex, true, undefined, true);
 }
 export interface ImportedHistoryReadScopeSql { readonly predicate: string; readonly values: readonly unknown[] }
 /** Explicit checked grant only. Legacy transfer HALL_IDS continues to reject.
@@ -396,7 +407,9 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
         SELECT total.total,coalesce((SELECT jsonb_agg(to_jsonb(p) ORDER BY p.business_date DESC NULLS LAST,p.number COLLATE "C",p.id) FROM paged p),'[]'::jsonb) AS items FROM total`,[...values,q.pageSize,String((q.page-1)*q.pageSize)])).rows;
       const total=count(result);requireDomain(result.length===1&&Array.isArray(result[0]!.items),'INVALID_DATABASE_VALUE','Exact historical summary and bounded items required');
       const rows=result[0]!.items as Record<string,unknown>[];
-      return validateImportedHistoryList({ dataset: 'HISTORY', kind: intent.kind, documents: page(q.page, q.pageSize, total, rows.map(r => header(r, intent.kind, grant, effective))) }, intent, grant);
+      const resultPage = validateImportedHistoryList({ dataset: 'HISTORY', kind: intent.kind, documents: page(q.page, q.pageSize, total, rows.map(r => header(r, intent.kind, grant, effective))) }, intent, grant);
+      assertEffectiveDocumentPage(resultPage.documents.items.map(row => authorizedEffectiveDocumentIdentity(row.dataset, row.batchId, row.documentId, row.version)), q.page, q.pageSize, BigInt(total));
+      return resultPage;
     });
   }
   async readDetail(read: ImportedHistoryScopedRead): Promise<ImportedHistoryDetail> {

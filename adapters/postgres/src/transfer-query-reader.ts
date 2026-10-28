@@ -1,4 +1,5 @@
-import { normalDocumentReferenceScopeOn, assertNormalReferenceHistoryOn, normalDocumentListOn, documentProductSummary, normalNullableQuantity, type NativeDocumentListOptions } from "./sales-query-reader.ts";
+import { authorizedEffectiveDocumentIdentity, nullableEffectiveDocumentQuantity as normalNullableQuantity } from '../../../packages/application/src/authorized-effective-documents.ts';
+import { normalDocumentReferenceScopeOn, assertNormalReferenceHistoryOn, normalDocumentListOn, documentProductSummary, type NativeDocumentListOptions } from "./sales-query-reader.ts";
 import { checkedNativeRuntime26Capability } from "../../../packages/application/src/native-import-schema-contract.ts";
 import type { TransferUnifiedListPage, TransferUnifiedSummary } from "../../../packages/application/src/transfer-query-ports.ts";
 import type { Pool } from "pg";
@@ -191,11 +192,12 @@ export class PostgresTransferQueryReader implements TrustedTransferSnapshotReade
     if (this.normalLists !== undefined) return this.snapshot(read.signal, async (_query, client) => {
       const result = await normalDocumentListOn(client, this.normalLists!, "transfers", { ...read, parameters }, { from: RELATIONS.replace(/^FROM /, ""), columns: `${SUMMARY_COLUMNS},${REFERENCES}`, scope: p.where(), values: p.values });
       const items: TransferUnifiedSummary[] = result.rows.map(row => {
-        const documentId = id("transfer", row.id), effectiveVersion = versionFromSql(row.version), productSummary = documentProductSummary(row);
-        if (row.dataset === "LIVE") { requireDomain(row.batch_id === null, "INVALID_DATABASE_VALUE", "LIVE has no import batch");
+        const identity = authorizedEffectiveDocumentIdentity(row.dataset, row.batch_id, row.id, row.version);
+        const documentId = id("transfer", identity.documentId), effectiveVersion = versionFromSql(identity.effectiveVersion), productSummary = documentProductSummary(row);
+        if (identity.dataset === "LIVE") {
           return { ...decodeSummary(row, count(row.quantity)), dataset: "LIVE", batchId: null, documentId, effectiveVersion, productSummary }; }
-        requireDomain(row.dataset === "HISTORY" && row.created_by_account_id === null, "INVALID_DATABASE_VALUE", "Historical actor account is not inferred from current staff");
-        return { dataset: "HISTORY", batchId: id("operation", row.batch_id), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary,
+        requireDomain(row.created_by_account_id === null, "INVALID_DATABASE_VALUE", "Historical actor account is not inferred from current staff");
+        return { dataset: "HISTORY", batchId: id("operation", identity.batchId), id: documentId, documentId, version: effectiveVersion, effectiveVersion, productSummary,
           number: stringValue(row.number), businessDate: row.business_date === null ? null : businessDate(stringValue(row.business_date)), status: choice(row.status, ["DRAFT", "APPROVED", "VOID"]),
           fromWarehouseId: id("warehouse", row.from_warehouse_id), toWarehouseId: id("warehouse", row.to_warehouse_id), responsibleStaffId: nullableId("staff", row.responsible_staff_id), responsibleName: nullableString(row.responsible_name),
           createdByAccountId: null, createdByName: nullableString(row.created_by_name), approvedByName: nullableString(row.approved_by_name), createdAt: nullableString(row.created_at), updatedAt: nullableString(row.updated_at),

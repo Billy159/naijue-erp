@@ -7330,7 +7330,7 @@
     },
     "H01FiniteOwnership879": {
       "owner": "D1",
-      "status": "ACTIVE_EXACT_TWO_NEW_LEAVES",
+      "status": "HANDED_BACK_FIXED_SOURCE884_QB_STATIC_PASS",
       "files": [
         "scripts/check-module-boundaries.mjs",
         "docs/controller-handoff-20261028/MODULE-OWNERSHIP.json"
@@ -7368,7 +7368,7 @@
     },
     "H02EffectiveReaders880": {
       "owner": "D3",
-      "status": "ACTIVE_FINITE_READERS_AND_SHARED_SEMANTICS",
+      "status": "HANDED_BACK_SOURCE885_FIXED_QB_NEXT",
       "files": [
         "adapters/postgres/src/sales-query-reader.ts",
         "adapters/postgres/src/transfer-query-reader.ts",
@@ -7390,6 +7390,36 @@
       ],
       "scope": "ExistingH04 required goldenfixture joining actualfrontendOwner/httptransport/Fastify/applicationparser originalkeyoutcome;testonlynoUIcodeorSQLchange",
       "boundary": "SyntheticstoreseamNOTrealPG/idempotenceimplementationproof;originalP04actualdriverseparate"
+    },
+    "P02Authentication885": {
+      "owner": "D1",
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "status": "ACTIVE_CORE_AUTH_AND_EXACT_FOUR_LEAF_HANDOFF",
+      "files": [
+        "packages/authentication/src/ports.ts",
+        "packages/authentication/src/service.ts",
+        "packages/authentication/src/passwords.ts",
+        "packages/authentication/src/legacy-passwords.ts",
+        "packages/authentication/src/password-work-gate.ts",
+        "adapters/postgres/src/auth-store.ts",
+        "apps/api/src/authentication.ts",
+        "apps/api/src/authentication.test.ts",
+        "apps/api/src/login-admission.ts",
+        "tests/authentication-display-name.test.ts",
+        "tests/authentication-commit-outcome.test.ts",
+        "tests/login-admission.test.ts",
+        "tests/authentication-short-lock.test.ts",
+        "tests/integration/authentication-login-load.test.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "packages/application/src/staff-maintenance-service.ts",
+        "tests/staff-maintenance.test.ts",
+        "tests/staff-maintenance-postgres-protocol.test.ts"
+      ],
+      "scope": "P02 explicit snapshot/read-release/password-work/final-short-lock-revalidation; finite injected admission budget with no production defaults; no codec cost/format change; actual PG not authorized by source lease",
+      "CReserved": "production-provider-composition/sharedconfiguration/release/rootconfigs/aggregate records; exact needed seam beforewriting",
+      "boundary": "Internal readports and local SQL SELECT follow current source authorization; true new persistent/write-contract semantic differences must be precisely reported, no speculative blanketapproval or actualDB/ACL/server",
+      "handoff": "OriginalD2 explicit four-leaf handback 2026-10-29; idle/noWIP/commands; preserve acceptedH06 readiness+close"
     }
   }
 }
