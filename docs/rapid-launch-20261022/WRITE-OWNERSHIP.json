@@ -7642,13 +7642,13 @@
     },
     "QA22SourceFixture914": {
       "owner": "D3",
-      "status": "ACTIVE_ORIGINAL_FIXTURE_PREPARATION_GAP",
+      "status": "HANDED_BACK_FIXED_SOURCE915_QB_AND_T45_ORIGINAL_FACTORY_PENDING",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "tests/integration/current-runtime26-full-source-fixture.ts",
         "tests/current-runtime26-full-source-fixture.test.ts"
       ],
-      "scope": "Pure deterministic synthetic remaining nine groups and exact22 source scope for original actual executor; reuse existing49/115 and9dict. No production provider/run53 changes, private credential files, SQL, grants, source authority fabrication or new framework. T45 integrates original private factory; QB independent source review before execution."
+      "scope": "Same exact2 source/test leaves. Current handed-back emptyPAYMENT version remains WIP; successor uses original nonempty reviewed payment format with one syntheticmethod/account/hall relation, preserves exact22 scene/49/115/9 identities. No source authority/SQL/PG/production source changes."
     },
     "A02ProductionMain915": {
       "owner": "C",
@@ -7657,6 +7657,18 @@
         "apps/api/src/production-main.ts"
       ],
       "scope": "Forward explicitly host-supplied CapacityAdmission object through original startup functions to current existing composition factories. No default/probe/threshold/JSON function/CLI fallback/service start. Actual measured trusted provider and original QA integration still required."
+    },
+    "A02SharedVolume916": {
+      "owner": "D1",
+      "status": "ACTIVE_TWO_ORIGINAL_LEAVES",
+      "model": "gpt-6.1-sol/medium",
+      "files": [
+        "apps/api/src/capacity-admission.ts",
+        "tests/capacity-admission.test.ts"
+      ],
+      "finding": "A02-SHARED-VOLUME-01",
+      "basis": "Actual247 postgres/wal same tmpfs and system/media same device; original acquire compares independent logical roles. Synthetic100free/60PG+60WAL admitted vs120physical demand. No real writes.",
+      "scope": "Bind actual physical volume alias groups in trusted window/reading; aggregate real shared-volume costs/charges, never sum shared free bytes. No thresholds/default-distinct guess/SQL/PG/server/main/other source changes."
     }
   }
 }
