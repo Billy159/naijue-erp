@@ -19098,15 +19098,20 @@
     },
     "QA22SourceProvider918": {
       "owner": "D3",
-      "status": "ACTIVE_TWO_NEW_QA_COMPOSITION_LEAVES",
+      "status": "SOURCE920_HANDED_BACK_FIXED_ORIGINAL_QB_PENDING",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "tests/integration/current-runtime26-source-provider.mjs",
         "tests/current-runtime26-source-provider.test.mjs"
       ],
       "scope": "Original generic26 host composition for fixed QA22/11 source only; reuse original readers, preparers, step authorizers, actual CORE receipt reader/continuation selector. No change production53 wrapper, run, source915 helpers, host, SQL, authority issuance, ACL, private config or server. Finite missing barcode/sales header reader adaptation stays this provider, same genuine source bytes/native/ref/selection checks. No callbacks claiming authority, no dummy close/verify, no copied second import platform.",
-      "dependencies": "Original T45 materialized915+actual C synthetic32 decision and original pure money results; original independent source/full-payload review and actual CORE/bootstrap proofs, preparation role permissions still required before execution.",
-      "next": "Implement directly; original host capture/source refusal/closed/cancel/continuation affected tests only; no PG/fake publication/source authorization"
+      "dependencies": "Actual input/grant/whole11 source reviews and original115/49 COREproof still required; provider consumes externally authenticated input. Originalproduction191 BIND COMMITTED sequence3/cursor22 preserved; 4096 source-stage commits not109 MAIN.",
+      "next": "Implement directly; original host capture/source refusal/closed/cancel/continuation affected tests only; no PG/fake publication/source authorization",
+      "pins": [
+        "38827/2defe5e1dda67384a0b75004355f6f73cc33d7caf3de24b87b98edc2155991ec",
+        "13732/a560c100912ae2c6264673040317de84a0b0568c84f1b551c4844e92af647d0d"
+      ],
+      "checks": "OriginalD3 Node24.21 targeted9/9PASS; not whole11 actualfactory/PG/CORE/PUBLISH"
     },
     "taskQueueAccuracy919": {
       "scope": "Correct existing task states from already adopted exact evidence; no new tests, implementation, permission or success promotion",
@@ -19137,9 +19142,14 @@
     },
     "QA897PreparationPublishACL919": {
       "owner": "D1",
-      "state": "ACTIVE_CONTROL_CANDIDATE_ONLY_NO_DATABASE_CHANGES",
+      "state": "D1_SOURCE_CANDIDATE_HANDED_BACK_ORIGINAL_QB_PENDING_NO_GRANTS",
       "files": "D1/QA897-PREPARATION-PUBLISH-ACL-01/ candidateSQL/delta/withdrawal only; originalD3 prepare126 and normal90-03 readonly",
-      "scope": "Current generic26 full preparation/publish lifecycle actual minimal columns/xmin/purpose metadata gap; no owner/allgrant/currentnormal90 shortcut; originalrole nonexistent/OID unknown; exact new permission userapproval after originalQB review required"
+      "scope": "Current generic26 full preparation/publish lifecycle actual minimal columns/xmin/purpose metadata gap; no owner/allgrant/currentnormal90 shortcut; originalrole nonexistent/OID unknown; exact new permission userapproval after originalQB review required",
+      "requirements": "Old126/585 bits ->170/938 bits exactfullpath + proposed19tableMAINTAIN=189/957; not actual missing-delta, role/OID/BEFORE unknown. Systemxmin12=old9+import_source_row/payment_account_hall/import_history_closure_manifest. Current exporter profile normal13 does not satisfy preparation12.",
+      "maintain": "C selected only as explicit human-review option for new syntheticQA21551 prepare role; includes VACUUM/ANALYZE/REINDEX/CLUSTER etc, not lock-only. No19tableUPDATE/DELETE/TRUNCATE/owner/normalruntime/production grant. No SECURITY DEFINER/helper or original135 change.",
+      "result": "D1/QA897-PREPARATION-PUBLISH-ACL-01/RESULT.json272286/c494067d52b54a021787fea7a46dee84867d1668a3b77ebcc702180e59350bbb",
+      "candidate": "51599/df6558fc08d6d32fec216f2737c6c9532e3ccb90879398a624aeea3b99ba9e17",
+      "withdrawal": "43008/ffb9bb627da6c294bd18be774f620498c78e1630396d649a5c860b28982e39df"
     }
   }
 }
