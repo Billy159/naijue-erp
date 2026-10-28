@@ -19254,22 +19254,36 @@
     "B10RealEntry926": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "status": "SOURCE927_D1_HANDED_BACK_LOCAL_CHECKS_PASS_ORIGINAL_QB_PENDING",
+      "status": "SOURCE928_F01_F02_D1_HANDED_BACK_ORIGINAL_QB_AFFECTED_REVIEW",
       "files": [
         "tests/integration/staff-credential-production-entry.test.ts"
       ],
       "scope": "Existing B10 card missing exact real-PG host integration runner. D1 host test only, original D2 implementation/key/CLI five leaves read-only. Reuse actual issuer/authentication/maintenance/fixture; no owner bypass/mockproof/directseed/key provisioning/PG/roleDDL/GRANT/server/data deletion. Current full source publish prerequisites remain.",
-      "next": "Original QB narrow new single-leaf review, no old five-leaf/protocol suite. T45 actual shared QA execution only after accurate published fixture/role/review/private key/scenario/capacity and human permission conditions. No new DB/bootstrap requirement.",
+      "next": "Original QB already received D1 exact same fix, only F01/F02 + necessary type/no-host check; no duplicate dispatch or PG.",
       "pins": [
         {
           "path": "tests/integration/staff-credential-production-entry.test.ts",
-          "bytes": 19360,
-          "sha256": "cdf0dc157703bad564bf42f17df93bd99652175453bf8c261d300b21787fa80c"
+          "bytes": 20107,
+          "sha256": "18d532b0337bbc2c7cf72e877572a4e2b2f632d3b476ec25171d200cb5ee3222"
         }
       ],
       "target": "Reuse current registered QA897/OID21551 only, not new b10 DB; original CORE/full PUBLISH/typed readback required",
-      "checks": "D1 Node24.21 targeted strict TS-root/dependencies0 diagnostics; lazy import/missing-host refusal before file/key/PG PASS; no PG/key/HTTP business/SQL/server execution.",
-      "remaining": "Actual creation/reset/CAS/last-admin/key-replay/unknown-COMMIT and secret/rescue/normalrole permissions not tested; one usable-admin scenario must be actually justified, no automatic disabling others."
+      "checks": "D1 strict single TS-root/dependencies0; lazy import/missing-host refusal PASS. Exact original enabled-hall usable-admin SQL + fixed12 secret-free failure stages. Actual PG scenarios remain untested.",
+      "remaining": "Actual creation/reset/CAS/last-admin/key-replay/unknown-COMMIT and secret/rescue/normalrole permissions not tested; one usable-admin scenario must be actually justified, no automatic disabling others.",
+      "findings": [
+        "F01 P2 usable administrator query omits original enabled-hall predicate, may falsely reject accurate one usable admin scenario. No disabling extra admins to make fixture pass.",
+        "F02 P2 all failures collapsed to one error, loses failed step/remaining untested scope; add finite non-secret phase/check ID only, no raw cause/request/credentials."
+      ]
+    },
+    "B10SyntheticKeySupply": {
+      "owner": "T45",
+      "state": "C_EXACT_SYNTHETIC_INPUT_AUTHORIZED_DISPATCHED_NO_PG_OR_APPLICATION",
+      "authorizationSource": "Human technical synthetic-input delegation userMessage01a1837b-674f-7a20-aab5-da1300b4690c; C exact QA897-only B10 machine HMAC input decision. Not production/real employee password or any ACL approval.",
+      "sourcePath": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/b10-private-credential/credential-request-key.bin",
+      "backupPath": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/recovery-backups/b10-credential-request-key-01/",
+      "constraints": "Create only new private directory0700/file0600 owner existingAPI10001, crypto random exactly32bytes, stable reuse only provenance-known sameQAkey; no existing chmod/chown/overwrite, unknown existing path stops. Machine copy equality only, no contents/hex/base64/hash output/download/Git. Actual reader check only existing correctUID tools, otherwise untested.",
+      "forbidden": "No application/start/mount/runtime config change/PG/roleDDL/GRANT/business/production/restore/deletion/migration. Existing normal90 and preparation189 human questions still pending.",
+      "next": "Adopt original T45 metadata-only result, reuse stable key+private recovery copy later; not proof CLI/HTTP/business passed."
     }
   }
 }

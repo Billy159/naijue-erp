@@ -1,3 +1,5 @@
+SOURCE928：原D1已定向修B10入口F01/F02并交还新leaf20107/18d532b0337bbc2c7cf72e877572a4e2b2f632d3b476ec25171d200cb5ee3222：usable-admin实读对齐原启用厅条件；失败保留12个固定无秘密phase及后续未执行，不输出cause/请求。D1 strict/惰性缺host拒绝通过；原QB已收到该同一增量，C不重复派工/技术验收，PG/key/实际业务仍未测。C另依已核合成技术输入代决策，交T45仅准备QA897新的稳定32byte机器HMAC key及私有恢复副本（新路径0600/0700，不覆盖旧文件、不出key内容、不改生产/权限/启动）；实际供给尚待原回执。
+
 SOURCE927：原D1已交回B10单新leaf19360/cdf0dc157703bad564bf42f17df93bd99652175453bf8c261d300b21787fa80c，补正式R3/Full私有key→真实HTTP认证/员工维护的隔离验收入口。原D1撤回其对“新库”措辞的额外解释：准确复用现QA897/OID21551，不复制bootstrap或另建B10库；仍须真实CORE/fullPUBLISH/readback及role/key/scenario/capacity。strict单TS根依赖0诊断、惰性/缺host拒绝通过；PG/key/业务执行0，不冒实际通过。冻结后交原QB仅新叶窄审，旧五叶不重复；真实last-admin/角色权限和secret供给仍缺。
 
 SOURCE926调度：去重核实B10卡指定真实staff凭证PG入口尚无现存等效leaf，交原D1仅新tests/integration/staff-credential-production-entry.test.ts，原D2已验五叶只读保留；复用真实issuer/auth/CLI/tag和原fixture，禁止STAGED或mock冒通过。本轮不读/生成key、PG/权限/业务写。A02总表纠正过时“UID探测在途”：254只读挂载失败、256备份已通过但restore及实际probe/window/benchmark仍缺。原Demo当前normal34日期边界对比active，前端未切修复，权限原问题pending不重问。

@@ -146,10 +146,13 @@ export async function runStaffCredentialProductionEntry(context: StaffCredential
   'Original complete import/PUBLISH and typed readback must finish before ordinary maintenance; STAGED is forbidden');
   const s = await privateScenario(context.privateScenarioFile);
   const admins = await read(`SELECT a.id,a.staff_id FROM naijue_erp.user_account a JOIN naijue_erp.staff s ON s.id=a.staff_id
-    WHERE a.login_enabled AND s.role='ADMIN' AND s.employment_status='在职'`);
+    LEFT JOIN naijue_erp.hall h ON h.id=s.hall_id
+    WHERE a.login_enabled AND s.role='ADMIN' AND s.employment_status='在职' AND (s.hall_id IS NULL OR h.enabled)`);
   assert.ok(admins.length === 1 && admins[0]!.id === s.adminAccountId && admins[0]!.staff_id === s.adminStaffId,
-    'Approved synthetic single-admin fixture required for actual LAST_AVAILABLE_ADMIN check; no automatic demotion/seeding');
+    'Approved synthetic exactly-one-usable-admin fixture required for actual LAST_AVAILABLE_ADMIN check; no automatic demotion/seeding');
   const fault = commitAcknowledgementFault(); let api: PostgresApplicationApi | undefined;
+  // Only these fixed labels enter diagnostics; never request/response/cause data.
+  let phase = 'B10-01-FIRST-HOST-ADMIN-LOGIN';
   const open = async (index: 0 | 1) => {
     const tag = await readProductionStaffCredentialRequestTag(c); // Original CLI reader + original stable HMAC, no random fallback.
     assert.ok(tag, 'Selected approved stable private credential key required');
@@ -179,24 +182,31 @@ export async function runStaffCredentialProductionEntry(context: StaffCredential
       assert.ok(rows.length === 1, 'Exactly one actual linked account required'); return rows[0]!;
     };
     api = await open(0); let adminCookie = cookie(await login(s.adminLoginName, s.adminPassword));
+    phase = 'B10-02-CREATE';
     const created = accepted(await command(s.create, adminCookie)); assert.ok(created.kind === 'STAFF' && created.version === 1);
+    phase = 'B10-03-INITIAL-ACCOUNT-SESSIONS';
     const initialAccount = await account(created.targetId), originalPassword = s.create.account!.password!, loginName = s.create.account!.loginName;
     const oldSessions = [cookie(await login(loginName, originalPassword)), cookie(await login(loginName, originalPassword))];
+    phase = 'B10-04-REBUILD-HOST';
     await api.close(); api = undefined;
     api = await open(1); adminCookie = cookie(await login(s.adminLoginName, s.adminPassword));
+    phase = 'B10-05-CROSS-HOST-SAME-KEY-REPLAY';
     const writesBeforeReplay = fault.counts().staffWrites;
     assert.ok(JSON.stringify(accepted(await command(s.create, adminCookie))) === JSON.stringify(created), 'Cross-host original-key receipt must match');
+    phase = 'B10-06-SAME-KEY-PASSWORD-CONFLICT';
     rejected(await command({...s.create, account: {...s.create.account!, password: s.resetPasswords[0]}}, adminCookie), 'IDEMPOTENCY_CONFLICT');
     assert.ok(fault.counts().staffWrites === writesBeforeReplay, 'Replay/conflict must not reapply staff writes');
     const edit = (requestKey: string, password: string): StaffMaintenanceCommand => ({action: 'EDIT', requestKey,
       id: created.targetId, expectedVersion: 1, values: s.create.values,
       account: {...s.create.account!, id: String(initialAccount.id), expectedVersion: Number(initialAccount.version), password}});
     const resetCommands = [edit(s.requestKeys.resetA, s.resetPasswords[0]), edit(s.requestKeys.resetB, s.resetPasswords[1])] as const;
+    phase = 'B10-07-CONCURRENT-RESET-CAS';
     const resets = await Promise.all(resetCommands.map(body => command(body, adminCookie)));
     assert.ok(resets.filter(r => r.statusCode === 200).length === 1 && resets.filter(r => r.statusCode === 409).length === 1,
       'Concurrent credential reset CAS must have exactly one winner');
     const winner = resets[0]!.statusCode === 200 ? 0 : 1;
     rejected(resets[1 - winner]!, 'VERSION_CONFLICT');
+    phase = 'B10-08-RESET-VERSIONS-OLD-CREDENTIALS';
     const changed = accepted(resets[winner]!), afterReset = await account(created.targetId);
     assert.ok(afterReset.auth_version === Number(initialAccount.auth_version) + 1 && afterReset.version === Number(initialAccount.version) + 1,
       'Reset must increment native account and authorization versions once');
@@ -206,6 +216,7 @@ export async function runStaffCredentialProductionEntry(context: StaffCredential
       assert.ok(resolved.statusCode === 200 && resolved.json<{principal: unknown}>().principal === null, 'Every pre-reset session must be invalid');
     }
     const resetSession = cookie(await login(loginName, s.resetPasswords[winner]));
+    phase = 'B10-09-LAST-AVAILABLE-ADMIN';
     const adminVersion = await read('SELECT version FROM naijue_erp.staff WHERE id=$1::uuid', [s.adminStaffId]);
     rejected(await command({action: 'LEAVE', requestKey: s.requestKeys.lastAdmin, id: s.adminStaffId,
       expectedVersion: Number(adminVersion[0]!.version)}, adminCookie), 'LAST_AVAILABLE_ADMIN');
@@ -213,9 +224,11 @@ export async function runStaffCredentialProductionEntry(context: StaffCredential
       expectedVersion: changed.version, values: s.create.values,
       account: {...s.create.account!, id: String(afterReset.id), expectedVersion: Number(afterReset.version), password: s.unknownCommitPassword}};
     const writesBeforeFault = fault.counts().staffWrites; fault.arm();
+    phase = 'B10-10-UNKNOWN-COMMIT-DISCARD';
     const lost = await command(unknown, adminCookie);
     assert.ok(lost.statusCode === 500 && fault.counts().faults === 1 && fault.counts().discarded === 1
       && fault.counts().staffWrites === writesBeforeFault + 1, 'Lost actual COMMIT ACK must discard once, return uncertainty and never auto-retry');
+    phase = 'B10-11-ORIGINAL-RECEIPT-RECOVERY';
     const receipt = await api.app.inject({method: 'GET', url: `/staff/receipts/${encodeURIComponent(unknown.requestKey)}`,
       headers: {cookie: adminCookie}});
     assert.ok(receipt.statusCode === 200, 'Original request-key receipt must recover actual committed outcome');
@@ -223,6 +236,7 @@ export async function runStaffCredentialProductionEntry(context: StaffCredential
     assert.ok(recovered.status === 'COMMITTED' && JSON.stringify(accepted(await command(unknown, adminCookie))) === JSON.stringify(recovered.result),
       'Explicit same-key recovery must return the actual original receipt');
     assert.ok(fault.counts().staffWrites === writesBeforeFault + 1, 'Unknown-COMMIT replay cannot mutate twice');
+    phase = 'B10-12-RECOVERED-RESET-VERSIONS-SESSIONS-LOGIN';
     const afterUnknown = await account(created.targetId);
     assert.ok(afterUnknown.auth_version === Number(afterReset.auth_version) + 1
       && afterUnknown.version === Number(afterReset.version) + 1, 'Unknown-COMMIT recovery must preserve exactly one account version increment');
@@ -234,7 +248,7 @@ export async function runStaffCredentialProductionEntry(context: StaffCredential
   } catch {
     // Raw HTTP/PG/assertion objects can contain private fixture material. Keep
     // them only in owner-controlled process memory, never TAP/model artifacts.
-    throw new Error('B10 real host acceptance failed; owner must inspect private diagnostics without exporting credentials');
+    throw new Error(`B10 real host acceptance failed at ${phase}; subsequent checks NOT_EXECUTED; no private diagnostic contents exported`);
   } finally {
     try {if (api) await api.close();} finally {for (const admission of context.capacityAdmissions) admission.close();}
   }
