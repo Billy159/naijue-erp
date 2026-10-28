@@ -6,7 +6,7 @@
 import type {PgSalesPool} from '../../../adapters/postgres/src/sales-unit-of-work.ts';
 import type {BoundedPostgresConfig} from '../../../adapters/postgres/src/bounded-pool.ts';
 import {CAPACITY_VOLUMES, createCapacityAdmission} from './capacity-admission.ts';
-import type {CapacityAdmission, CapacityBinding, CapacityBytes, CapacityReading, CapacityWindow} from './capacity-admission.ts';
+import type {CapacityAdmission, ObservableCapacityAdmission, CapacityBinding, CapacityBytes, CapacityReading, CapacityWindow} from './capacity-admission.ts';
 
 export interface CapacityRuntimeTarget {
   readonly host: string; readonly port: number; readonly database: string;
@@ -62,7 +62,7 @@ function sameBinding(a: CapacityBinding, b: CapacityBinding): boolean {
 /** Pass this singleton through the existing production factory/main capacity
  * parameter. No JSON/parser/permission contract or automatic approval is added.
  */
-export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptions): CapacityAdmission {
+export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptions): ObservableCapacityAdmission {
   const input = options?.runtimeProbe, t = input?.target;
   if (!t || !['host', 'database', 'role', 'postmasterStart'].every(key => typeof t[key as keyof CapacityRuntimeTarget] === 'string'
     && String(t[key as keyof CapacityRuntimeTarget]).length > 0)
@@ -123,7 +123,8 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
     catch {return unknown();}
     return result;
   }});
-  const owned: CapacityAdmission = Object.freeze({acquire: admission.acquire.bind(admission), close() {closed = true; admission.close();}});
+  const owned: ObservableCapacityAdmission = Object.freeze({acquire: admission.acquire.bind(admission), snapshot: admission.snapshot,
+    close() {closed = true; admission.close();}});
   binders.set(owned, (original, target) => {
     if (closed || pool || !original || typeof original.connect !== 'function' || target.host !== expected.host || target.port !== expected.port
       || target.database !== expected.database || target.user !== expected.role) throw new TypeError('Capacity runtime requires its one exact owned pool target');

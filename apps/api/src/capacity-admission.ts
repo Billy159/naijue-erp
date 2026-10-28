@@ -48,6 +48,18 @@ export interface CapacityAdmission {
   /** Stops new admission and aborts the probe; never releases another consumer's active work early. */
   close(): void;
 }
+/** Process-local read-only state of these exact original resources. No target,
+ * window token, request identity or reset/override capability is exposed. */
+export interface CapacityAdmissionSnapshot {
+  readonly closed: boolean;
+  readonly admitted: Readonly<Record<CapacityWriteKind, number>>;
+  readonly active: Readonly<Record<CapacityWriteKind, number>>;
+  readonly chargedBytes: CapacityBytes;
+  readonly probe: {readonly inFlight: boolean; readonly waiters: number};
+}
+export interface ObservableCapacityAdmission extends CapacityAdmission {
+  readonly snapshot: () => CapacityAdmissionSnapshot;
+}
 export class CapacityAdmissionRejected extends Error {
   readonly code = 'CAPACITY_ADMISSION_UNAVAILABLE';
   readonly statusCode = 503;
@@ -92,7 +104,7 @@ export function createCapacityAdmission(options: {
   readonly now: () => number;
   readonly currentBinding: () => CapacityBinding;
   readonly probe: (context: { readonly window: CapacityWindow; readonly signal: AbortSignal }) => Promise<CapacityReading>;
-}): CapacityAdmission {
+}): ObservableCapacityAdmission {
   if (!options || ![options.probeTtlMillis, options.probeTimeoutMillis, options.maxProbeWaiters, options.retryAfterSeconds].every(positive)
     || options.probeTtlMillis > 30_000 || options.probeTimeoutMillis > options.probeTtlMillis
     || !bytes(options.minimumFreeBytes) || !bytes(options.safetyBytes)
@@ -195,6 +207,8 @@ export function createCapacityAdmission(options: {
     }
   }
   return Object.freeze({
+    snapshot: () => Object.freeze({closed, admitted: Object.freeze({...admitted}), active: Object.freeze({...active}),
+      chargedBytes: Object.freeze({...charged}), probe: Object.freeze({inFlight: pending !== undefined, waiters: pending?.listeners.size ?? 0})}),
     async acquire(kind: CapacityWriteKind, signal?: AbortSignal) {
       if (kind !== 'session' && kind !== 'upload') throw new TypeError('Only new session or upload admission is supported');
       if (signal?.aborted) throw cancelled();

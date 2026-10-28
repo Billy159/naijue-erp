@@ -7803,11 +7803,28 @@
     "A02RealRunner934": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "state": "LEASED_EXISTING_A02_CARD_MISSING_ACTUAL_QA_RUNNER",
+      "state": "HANDED_BACK_SEVEN_LEAVES_SOURCE935_QB_PENDING_NO_ACTIVE_WRITER",
       "files": [
         "tests/integration/capacity-window-performance.test.ts"
       ],
-      "scope": "Existing A02 named test file absent; implement finite actual registered QA host test entry only, original capacity/main/factory and real PG/codec inputs; no simulated evidence passed as real, no seed/SQL/ACL/runtime source edits or new test platform. Explicit host/window/facts/SLO required; no autonomous execution."
+      "scope": "Existing A02 named test file absent; implement finite actual registered QA host test entry only, original capacity/main/factory and real PG/codec inputs; no simulated evidence passed as real, no seed/SQL/ACL/runtime source edits or new test platform. Explicit host/window/facts/SLO required; no autonomous execution.",
+      "additionalFiles": [
+        "apps/api/src/capacity-admission.ts",
+        "apps/api/src/capacity-runtime-probe.ts",
+        "adapters/media/src/sharp-product-image-codec.ts",
+        "tests/capacity-admission.test.ts",
+        "tests/capacity-runtime-probe.test.ts",
+        "tests/sharp-product-image-codec.test.ts"
+      ],
+      "observationBoundary": "C grants original D1 only immutable internal process snapshots of existing counters for A02 real resource assertions; no external HTTP metrics, reset/set counters, IDs/secrets, new scheduler/state owner or admission/codec behavior changes. Prior D2_B09 handed back and current six leaves no diff before lease. Use necessary targeted test subset.",
+      "receipt": {
+        "path": "D1/A02-REAL-RUNNER934-RESULT.json",
+        "bytes": 9432,
+        "sha256": "e10010be60ceef784c701e137cda7ab254593996662864d99a26b18c2001c7b5"
+      },
+      "checks": "Three new read-only snapshot cases PASS/no skips; four test-root strict0; both real entry lazy import/undefined-host refusal PASS. No actual QA/server/listener/PG/ACL/write/key/scenario execution.",
+      "actualPending": "Original exactQA897 complete published source/review/nonowner SQL permissions; controlled real fixtures; fresh5volume identity/space; preapproved finite windows/budgets/SLO; loopback fixed authorized port for actual TCP cancellation; separate actual new process proof for physical restart.",
+      "next": "C freeze7pins→original QB only new runner/snapshot scope. Original T45 actual run only after accurate dependencies/authorization; no mocks or factory rebuild as physical restart."
     }
   }
 }

@@ -10,6 +10,23 @@ const identity = (physicalVolumes:CapacityPhysicalVolumes=distinctVolumes): Capa
 const deferred = <T>() => {let resolve!: (v:T)=>void;let reject!: (e:Error)=>void;const promise=new Promise<T>((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
 const failure = (reason: string) => (e:unknown) => e instanceof CapacityAdmissionRejected && e.reason===reason && e.statusCode===503 && e.retryAfterSeconds===2;
 const cancelled = (e:unknown) => e instanceof Error && e.name==='AbortError';
+test('A02 snapshot reads the original immutable charges, active leases and pending waiters without control methods',async()=>{
+  const f=setup(),work=deferred<CapacityReading>();let probes=0;
+  const a=createCapacityAdmission({...f.options,probe:()=>probes++===0?work.promise:Promise.resolve(f.known())});
+  const initial=a.snapshot(),abort=new AbortController(),pending=a.acquire('upload',abort.signal),rejected=assert.rejects(pending,cancelled);
+  await tick();assert.deepEqual(a.snapshot().probe,{inFlight:true,waiters:1});abort.abort();await rejected;
+  assert.deepEqual(a.snapshot().probe,{inFlight:true,waiters:0});work.resolve(f.known());await tick();await tick();
+  assert.deepEqual(a.snapshot().probe,{inFlight:false,waiters:0});
+  // The abandoned original probe is UNKNOWN; advance past that cache and use
+  // its actual next probe result, without resetting any counters.
+  f.setTime(1200);const lease=await a.acquire('upload'),held=a.snapshot();
+  assert.equal(held.admitted.upload,1);assert.equal(held.active.upload,1);assert.deepEqual(held.chargedBytes,amount(20n));
+  assert.throws(()=>{(held.chargedBytes as Record<string,bigint>).postgres=0n;},TypeError);
+  assert.throws(()=>{(held.active as Record<string,number>).upload=0;},TypeError);
+  lease.release();assert.equal(a.snapshot().active.upload,0);assert.equal(a.snapshot().admitted.upload,1);assert.deepEqual(a.snapshot().chargedBytes,amount(20n));
+  assert.equal(initial.admitted.upload,0);assert.equal(held.active.upload,1);a.close();assert.equal(a.snapshot().closed,true);
+  assert.deepEqual(Object.keys(held).sort(),['active','admitted','chargedBytes','closed','probe']);
+});
 function setup(physicalVolumes:CapacityPhysicalVolumes=distinctVolumes) {
   let at=1000,actual=identity(physicalVolumes),calls=0;
   const window:CapacityWindow={approved:true,token:'SYNTHETIC-WINDOW-ONLY-NOT-A-LOGIN-TOKEN',inventoryObservedAt:900,startsAt:1000,expiresAt:10000,binding:identity(physicalVolumes)};

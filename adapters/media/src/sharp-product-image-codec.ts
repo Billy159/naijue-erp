@@ -26,6 +26,10 @@ function valid(ok: unknown, code = "INVALID_UPLOAD"): asserts ok { requireDomain
 // One shared gate across instances. A cancelled native operation keeps its lease until it settles.
 type Waiter = { signal: AbortSignal; resolve(release: () => void): void; reject(error: Error): void; abort(): void };
 const waiting: Waiter[] = []; let occupied = false;
+/** Same module-global codec lease/queue, without input identities or mutation. */
+export function productImageCodecSnapshot(): {readonly active: number; readonly queued: number} {
+  return Object.freeze({active: occupied ? 1 : 0, queued: waiting.length});
+}
 function lease(): () => void {
   let released = false;
   return () => {

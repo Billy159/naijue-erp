@@ -3,9 +3,16 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import sharp from "sharp";
 import { createHash } from "node:crypto";
-import { SharpProductImageCodec, PRODUCT_IMAGE_CODEC_LIMITS } from "../adapters/media/src/sharp-product-image-codec.ts";
+import { SharpProductImageCodec, PRODUCT_IMAGE_CODEC_LIMITS, productImageCodecSnapshot } from "../adapters/media/src/sharp-product-image-codec.ts";
 const signal = () => new AbortController().signal;
 const encoded = async (format: "png" | "jpeg" | "webp", width = 64, height = 32) => sharp({ create: { width, height, channels: 4, background: { r: 42, g: 80, b: 120, alpha: 0.5 } } }).toFormat(format).toBuffer();
+test('A02 codec snapshot is immutable and directly observes original active/queued cancellation and settle',async()=>{
+  const codec=new SharpProductImageCodec(),bytes=await encoded('png'),before=productImageCodecSnapshot();assert.deepEqual(before,{active:0,queued:0});
+  const first=codec.decode(bytes,'image/png',signal()),abort=new AbortController(),second=codec.decode(bytes,'image/png',abort.signal);
+  const rejected=assert.rejects(second,{code:'PRODUCT_READ_ABORTED'}),held=productImageCodecSnapshot();assert.deepEqual(held,{active:1,queued:1});
+  assert.throws(()=>{(held as {active:number}).active=0;},TypeError);abort.abort();await rejected;await first;
+  assert.deepEqual(productImageCodecSnapshot(),{active:0,queued:0});assert.deepEqual(held,{active:1,queued:1});assert.deepEqual(before,{active:0,queued:0});
+});
 test("W16 codec actual PNG JPEG WEBP fully decode, preserve originals and derive independent bounded WEBP thumbnails", async () => {
   const codec = new SharpProductImageCodec();
   for (const format of ["png", "jpeg", "webp"] as const) {

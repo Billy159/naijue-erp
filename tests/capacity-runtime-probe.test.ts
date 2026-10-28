@@ -13,6 +13,13 @@ const identity = () => ({database: target.database, role: target.role, session_u
 const storage = () => ({relation_bytes: '9007199254740993', index_bytes: '1', total_relation_bytes: '9007199254740994', database_bytes: '9007199254741994'});
 const deferred = <T>() => {let resolve!: (v: T) => void; const promise = new Promise<T>(done => {resolve = done;}); return {promise, resolve};};
 const unavailable = {code: 'CAPACITY_ADMISSION_UNAVAILABLE', reason: 'PROBE_UNAVAILABLE'};
+test('A02 owned snapshot observes the same bound admission leases and immutable original charge',async()=>{
+  const f=fixture();f.bind();const before=f.admission.snapshot(),lease=await f.admission.acquire('upload'),held=f.admission.snapshot();
+  assert.equal(held.active.upload,1);assert.equal(held.admitted.upload,1);assert.deepEqual(held.chargedBytes,amounts(2n));
+  assert.throws(()=>{(held.admitted as Record<string,number>).upload=0;},TypeError);
+  lease.release();assert.equal(f.admission.snapshot().active.upload,0);assert.deepEqual(f.admission.snapshot().chargedBytes,held.chargedBytes);
+  assert.equal(before.admitted.upload,0);f.admission.close();assert.equal(f.admission.snapshot().closed,true);
+});
 function fixture() {
   let at = 1000, factCalls = 0, connects = 0;
   const binding = {candidateFingerprint: 'synthetic-source', targetFingerprint: 'synthetic-target', writerTopologyFingerprint: 'one-writer',

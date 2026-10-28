@@ -1,3 +1,5 @@
+SOURCE935：原D1交还A02真实QA入口+6叶只读计数接缝共7叶，原计数同源不可变无HTTPmetrics或新状态owner。新增snapshot3检查/strict与缺host安全拒绝通过；C只核固定pin，交原QB增量窄验。runner代表真实PG/codec成本、窗口收费、低水位/到期与旧读、资源回稳；取消须真实TCP断开且实观原native队列，物理restart须真实新进程双收据，不冒inject.abort或factory重建。全部真实场景未跑；原normal90/preparation189人批/fullQA发布/新鲜卷事实/窗口预算SLO仍前置，不自动grant/seed/listen。934远端69da30a2已回读。
+
 SOURCE934：原QB933新producer/唯一pool接线限定PASS，独立19项与strict通过，无新发现；真实PG/卷事实/预算/SLO/主宿主选入未测，旧底层transport超时不冒服务端取消。C采用原结论不重验；按A02任务卡明确原缺失tests/integration/capacity-window-performance.test.ts，仅交原D1一个真实QA入口叶，拒缺host/事实/窗口/SLO，不新平台、不自动执行/seed/权限；原容量源码交还。933 GitHub31f5bbea已回读。
 
 SOURCE933：原D1交回A02真实容量probe源码4叶，原6叶lease另2host叶未改；唯一ownedpool在compose后绑定，连接外读取显式新鲜卷事实，再RR READ ONLY核准确DB/角色/postmaster及占用，rollback/finally释放。D1新producer16+新wiring1+原影响2共19定向检查/strict通过，C只核交付pin不重复技术验收；现冻结交原QB窄验。真实PG/卷事实producer/窗口预算/SLO及主宿主实际选入均未测，不冒接入或上线；不碰原WIP。932远端34241906已回读。
