@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-28T15:53:27.647571+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "d784baf4aa792e7a6732809b15638dc1bfb18bea",
+  "lastVerifiedRemoteCommit": "28f989bfb40eb08876140d007e925d7677cbf8e3",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18590,11 +18590,12 @@
       "current": "Currentreadersconsumeunifiedauthorizedeffectivecollectionsemantics",
       "next": "ExactfixedsourceQA thennecessaryrealPGproofunderapprovedtarget",
       "dependency": "B08/P03/P04sourceaccepted;actualP04ACL/driverseparatepending",
-      "model": "gpt-6.1-sol/medium"
+      "model": "gpt-6.1-sol/medium",
+      "scopeDecision": "PreserveexistingLIVE_APPROVEDsettlementstatsclearlymarked;B08all-scopewarehousecatalogexceptionretained;noinventedlist-exportendpoint;detailoutputeffectiveconsumptionfinalversionverificationpending"
     },
     "H04CrossLayerOutcome881": {
       "owner": "C",
-      "status": "SOURCE_TEST_IMPLEMENTED_4_CROSS_LAYER_CASES_AND_1_RUNNER_ENUMERATION_PASS_FIXED_QB_NEXT",
+      "status": "QB_NARROW_PASS_REAL_CONSUMERS_SYNTHETIC_BOUNDARIES",
       "files": [
         "tests/cross-layer-contract-fixtures.test.mjs",
         "scripts/check-launch.mjs",
@@ -18603,7 +18604,11 @@
       "scope": "ActualHistoryRevisionOwner→HttpJsonQuery→Fastifyplugin→applicationparser/grant→syntheticstoreseam;two kinds timesresponse-loss/commit-ackloss",
       "assertions": "Originalbody/keyretained;newkeynotdispatchedwhileuncertain;originalreplay200receiptconfirmed;transferexplicitNULLpreserved",
       "notProven": "PGrollback/realstoreidempotency/inventoryeffect/realbrowser/fullH04;originalP04driverseparate",
-      "boundary": "TestonlynoUIruntimechange;MJS matchesexistingbrowserboundaryteststyle andavoids pullingbrowserCJS intoNodeNextbackendemit"
+      "boundary": "TestonlynoUIruntimechange;MJS matchesexistingbrowserboundaryteststyle andavoids pullingbrowserCJS intoNodeNextbackendemit",
+      "fixedCommit": "28f989bfb40eb08876140d007e925d7677cbf8e3",
+      "qaReceipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE881/QB-SOURCE881-RESULT.json",
+      "qaSha256": "3f6bf46a9d5a6704527b171db885a07cec960a51607429403224f2cca9c5926b",
+      "next": "Adopt4newcases+runner1;no repeat;realP04store/PG/permissions/inventoryeffectsremainpending"
     }
   }
 }
