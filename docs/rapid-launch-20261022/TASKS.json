@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T15:49:54.354217+00:00",
+  "updatedAt": "2026-10-28T15:53:27.647571+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "807ca6fc7461325541678b19b4b463c2cac82390",
+  "lastVerifiedRemoteCommit": "b56e7cc32bafd91103f62cad5717f0a0df6041b0",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18517,9 +18517,11 @@
     },
     "H04B10Current875": {
       "owner": "D2deploy2leaves/Cotherrelease",
-      "status": "SOURCE_FIX_ACTIVE_PRIVATE_PATH_AND_READONLY_MOUNT",
+      "status": "D2_TWO_LEAF_SOURCE_READY_2TARGETED_PASS_C_GENERATOR_REFRESH_FIXED_QB_NEXT",
       "reason": "SelectedstaffCLIrequiresprivatekeypath;deployclosedselector+mountdoesnotyetcarryit",
-      "notAuthorized": "Noactualkeyread/generation/server/PG/ACL/production"
+      "notAuthorized": "Noactualkeyread/generation/server/PG/ACL/production",
+      "receipt": "reports/backend/rapid-launch-20261022/D2/H04-B10-PRIVATE-CREDENTIAL-MOUNT875/RESULT.json",
+      "next": "OriginalQB fixednewprivatepath/mount+generatedhelperonly;actualprivatekeyprovisionnotexecuted"
     },
     "Graph872": {
       "receipt": "reports/controller/rapid-launch-20261022/B12-source872-production-closure-02/GRAPH-SUMMARY.json",
@@ -18532,6 +18534,15 @@
       "ArcoCSSDuplicateContributions": "1JS+5CSS",
       "H01Acceptance": false,
       "next": "Originalfrontendfullfixedcomparisonthenmergedrepair;noimmediatemutablecandidate/rebuild"
+    },
+    "frontendComparisonCurrent876": {
+      "owner": "OriginalDemoChat01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "status": "IDLE_BLOCKED_CHROME_AVAILABILITY",
+      "fixedCandidate": "normal34/57923/2357cf508ee6e8188bcc1dddfa4735f735d70d36",
+      "breakpoint": "Transfercandidatekeyboardpairedcomparison;preservedunsaveddrafts",
+      "next": "Pendinghumanwindowhandover;nooriginaltaskrestartorparallelUIwriter",
+      "models": "gpt-6.1-terra/medium",
+      "scope": "Full37pages67overlays/allapplicablestatesstillunfinished"
     }
   }
 }

@@ -325,12 +325,38 @@ def exact26_r1(p):
     return True
 
 
+def credential_key_binding(p):
+    """Private file stat identity only. Never read/hash credential bytes."""
+    key = p['runtime26Full']['credentialRequestKey']
+    need(isinstance(key, dict) and set(key) == {'hostFile', 'containerFile'}, 'CLOSED_CREDENTIAL_KEY_REFERENCE_REQUIRED')
+    need(key.get('containerFile') == '/run/naijue-rewrite/credential-request.key', 'EXACT_PRIVATE_CREDENTIAL_CONTAINER_FILE_REQUIRED')
+    host = key.get('hostFile')
+    need(isinstance(host, str) and not re.search(r'[\s,:\\\x00-\x1f]', host), 'EXACT_PRIVATE_CREDENTIAL_HOST_FILE_REQUIRED')
+    filename = canonical(host, private=True, root=ROOT)
+    need(not filename.is_relative_to(ROOT / 'releases') and not filename.is_relative_to(Path(p['runtime26Full']['media']['hostRoot'])), 'SEPARATE_PRIVATE_CREDENTIAL_FILE_REQUIRED')
+    if 'inventorySpool' in p['runtime26Full']:
+        need(not filename.is_relative_to(Path(p['runtime26Full']['inventorySpool']['hostRoot'])), 'SEPARATE_PRIVATE_CREDENTIAL_FILE_REQUIRED')
+    identity = file_identity(filename)
+    need(identity['bytes'] == 32 and identity['mode'] == 0o600 and identity['uid'] == int(p['limits']['app']['user'].split(':')[0]), 'EXACT_PRIVATE_CREDENTIAL_FILE_IDENTITY_REQUIRED')
+    need(not filename.parent.stat().st_mode & 0o022, 'PRIVATE_CREDENTIAL_PARENT_REQUIRED')
+    return {'hostFile': str(filename), 'containerFile': key['containerFile'], 'identity': identity}
+
+
+def validate_full_credential(p, runtime):
+    selected = runtime.get('staffMaintenance') is True
+    present = 'credentialRequestKey' in p['runtime26Full']
+    need(selected == present and selected == ('staffCredentialRequestKeyFile' in runtime), 'STAFF_PRIVATE_CREDENTIAL_SELECTION_MISMATCH')
+    if selected:
+        key = credential_key_binding(p)
+        need(runtime['staffCredentialRequestKeyFile'] == key['containerFile'], 'STAFF_PRIVATE_CREDENTIAL_PATH_MISMATCH')
+
+
 def exact26_full(p):
     if p.get('runtimeSelector') != 'exact26-full':
         return False
     need('runtime26' not in p, 'FULL_MUST_NOT_REUSE_R1_REFERENCES')
     full = p.get('runtime26Full')
-    need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool'}, 'CLOSED_FULL_REFERENCES_REQUIRED')
+    need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool', 'credentialRequestKey'}, 'CLOSED_FULL_REFERENCES_REQUIRED')
     refs = full['references']
     need(isinstance(refs, dict) and set(refs) == FULL_REFERENCES, 'CLOSED_FULL_REFERENCES_REQUIRED')
     for ref in refs.values():
@@ -353,6 +379,8 @@ def exact26_full(p):
         need(path.is_absolute() and str(path) == os.path.normpath(str(path)) and path != ROOT and path.is_relative_to(ROOT) and
              not path.is_relative_to(ROOT / 'releases') and not re.search(r'[\s,:\\\x00-\x1f]', str(path)) and
              not path.is_relative_to(Path(media['hostRoot'])) and not Path(media['hostRoot']).is_relative_to(path), 'SEPARATE_FULL_PRIVATE_SPOOL_REQUIRED')
+    if 'credentialRequestKey' in full:
+        credential_key_binding(p)
     return True
 
 
@@ -375,6 +403,8 @@ def runtime_binding(p):
     if exact26_full(p):
         value['media'] = p['runtime26Full']['media']
         value['inventorySpool'] = p['runtime26Full'].get('inventorySpool')
+        if 'credentialRequestKey' in p['runtime26Full']:
+            value['credentialRequestKey'] = credential_key_binding(p)
     return digest(encoded(value))
 
 
@@ -410,15 +440,16 @@ def validate_full_metadata(p, runtime, review, metadata, independent):
     """Fresh original issuer observation/review, without old C38/catalog constants."""
     refs = runtime_references(p)
     required = {'schemaVersion', 'profile', 'documentCommands', 'publicOrigin', 'http', 'assets', 'build', 'postgres', 'authentication', 'runtime26Review', 'existingPreparation', 'productMedia'}
-    optional = {'organizationMaintenance', 'catalogueMaintenance', 'paymentMaintenance', 'partyMaintenance', 'staffMaintenance', 'productMaintenance', 'inventoryOutputSpool'}
+    optional = {'organizationMaintenance', 'catalogueMaintenance', 'paymentMaintenance', 'partyMaintenance', 'staffMaintenance', 'productMaintenance', 'inventoryOutputSpool', 'staffCredentialRequestKeyFile'}
     need(isinstance(runtime, dict) and required <= set(runtime) and set(runtime) <= required | optional and runtime['schemaVersion'] == 1 and
          runtime['profile'] == FULL_PROFILE and runtime['documentCommands'] == 'NATIVE_RUNTIME' and runtime['publicOrigin'] == ORIGIN and
          runtime['http'] == {'host': '0.0.0.0', 'port': 3000, 'acceptedHosts': [HOST]} and runtime['assets'] == {'root': '/app/web', 'entry': 'index.html'} and
          runtime['build'] == {'buildId': p['buildId'], 'sourceCommit': p['sourceCommit']} and runtime['runtime26Review'] ==
          {'reviewFile': RUNTIME26_REVIEW, 'trustedReviewSha256': refs['review']['sha256']}, 'CLOSED_FULL_R3_RUNTIME_REQUIRED')
+    validate_full_credential(p, runtime)
     preparation = runtime['existingPreparation']
     need(isinstance(preparation, dict) and set(preparation) == {'sales', 'transfers'} and all(type(v) is bool for v in preparation.values()) and
-         all(runtime[k] is True for k in optional - {'inventoryOutputSpool'} if k in runtime), 'EXPLICIT_FULL_CAPABILITIES_REQUIRED')
+         all(runtime[k] is True for k in optional - {'inventoryOutputSpool', 'staffCredentialRequestKeyFile'} if k in runtime), 'EXPLICIT_FULL_CAPABILITIES_REQUIRED')
     need(runtime['productMedia'] == {'root': p['runtime26Full']['media']['containerRoot'], 'rootKey': p['runtime26Full']['media']['rootKey']}, 'FULL_MEDIA_BINDING_CHANGED')
     need(('inventoryOutputSpool' in runtime) == ('inventorySpool' in p['runtime26Full']), 'FULL_SPOOL_SELECTION_CHANGED')
     if 'inventoryOutputSpool' in runtime:
@@ -698,6 +729,9 @@ def runtime_mount_arguments(p):
         refs = runtime_references(p)
         args += [*mount(refs['review']['path'], RUNTIME26_REVIEW), *mount(refs['independentReview']['path'], RUNTIME26_INDEPENDENT)]
     if exact26_full(p):
+        if 'credentialRequestKey' in p['runtime26Full']:
+            key = credential_key_binding(p)
+            args += mount(key['hostFile'], key['containerFile'], True)
         media = p['runtime26Full']['media']
         args += mount(media['hostRoot'], media['containerRoot'], False)
         if 'inventorySpool' in p['runtime26Full']:

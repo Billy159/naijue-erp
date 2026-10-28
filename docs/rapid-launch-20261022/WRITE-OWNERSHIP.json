@@ -7302,7 +7302,7 @@
     },
     "H04B10PrivateCredentialMount875": {
       "owner": "D2",
-      "status": "C_EXPLICIT_EXACT_LEAF_HANDOFF_ACTIVE",
+      "status": "D2_HANDED_BACK_C_GENERATED_HELPER_REFRESHED_FIXED_QB_NEXT",
       "files": [
         "scripts/release/deploy-candidate.py",
         "scripts/release/test_stop_full_lifecycle.py"
