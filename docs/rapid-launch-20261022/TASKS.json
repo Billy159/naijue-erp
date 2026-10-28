@@ -92,12 +92,12 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "medium",
-      "sourceWriteEnabled": true,
+      "sourceWriteEnabled": false,
       "fastRequested": false,
       "currentWork": "DOC195 approved salesperson default/required pairedsource integrated493, originalQF/QB limitedPASS",
-      "currentPackage": "公共壳/会话/正常路由＋销货完整开单接线",
+      "currentPackage": "HV2 human transferred frontend modifications to existing comparison Chat; prior final deliveries preserved",
       "nextReadyPackage": "Real employee HTTP/PG/newSAVE/readback after originalD1 QA input release; no duplicate source work",
-      "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
+      "currentDependencies": "No overlapping source edits. Explicit handoff required before any future writer change.",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -151,12 +151,12 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "medium",
-      "sourceWriteEnabled": true,
+      "sourceWriteEnabled": false,
       "fastRequested": false,
       "currentWork": "465/468 product image-parent failure fix delivered/integrated; original inventory/product copy source retained",
-      "currentPackage": "I01库存完整页正式摘要查询/筛选/矩阵/流水输出接线",
+      "currentPackage": "HV2 human transferred frontend modifications to existing comparison Chat; prior final deliveries preserved",
       "nextReadyPackage": "Product six-tab/real inventory normal consumers await actual MAIN or enabled scopedhost; no fabricated source issue",
-      "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
+      "currentDependencies": "No overlapping source edits. Explicit handoff required before any future writer change.",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -212,12 +212,12 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "medium",
-      "sourceWriteEnabled": true,
+      "sourceWriteEnabled": false,
       "fastRequested": false,
       "currentWork": "Employee transient diagnosis finished zero sourcechanges; actual normalreadonly49/20 successful",
-      "currentPackage": "B01/B02厅仓整页正式读取/维护接线",
+      "currentPackage": "HV2 human transferred frontend modifications to existing comparison Chat; prior final deliveries preserved",
       "nextReadyPackage": "Existing settings maintenance consumer awaits exact same-target permissions; independent ready interface gaps only",
-      "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
+      "currentDependencies": "No overlapping source edits. Explicit handoff required before any future writer change.",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -422,13 +422,13 @@
       "hostId": "local",
       "model": "gpt-6.1-sol",
       "reasoningEffort": "medium",
-      "sourceWriteEnabled": true,
+      "sourceWriteEnabled": false,
       "fastRequested": false,
       "fastToolVerified": false,
       "currentWork": "CORE05 normalcategory/colors/fits ready; originalQF2 actualbrowser affected recheck active; PM exact10bit permission execution next",
-      "currentPackage": "P14分类及P15-P18字典完整正式读取/维护接线",
+      "currentPackage": "HV2 human transferred frontend modifications to existing comparison Chat; prior final deliveries preserved",
       "nextReadyPackage": "CORE05 category/colors/fits browser recheck then original maintenance actual writable consumer",
-      "currentDependencies": "Shared root/bridge/build seams C only; actual ready API capabilities vs absent explicit, historical v5 only related branch waits",
+      "currentDependencies": "No overlapping source edits. Explicit handoff required before any future writer change.",
       "dispatch": {
         "status": "SENT_TOOL_COMPLETED",
         "atUtc": "2026-10-24T01:52:39.822598+00:00",
@@ -1353,8 +1353,8 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-27T19:44:12.595492+00:00",
-  "stage": "ACTIVE_PRIVATE447_RUNNING_HISTORY_TRANSFER09_CURRENT_10_NEXT",
+  "updatedAt": "2026-10-28T07:43:48.206308+00:00",
+  "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
@@ -1776,15 +1776,9 @@
     }
   ],
   "currentModelDirective": {
-    "pureUI": "gpt-6.1-terra/medium",
-    "technical": "gpt-6.1-sol/medium",
+    "allExecutionAndReview": "gpt-6.1-sol/medium",
     "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
-    "source": {
-      "threadId": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
-      "humanMessageId": "01a17b0b-68d0-7110-a178-251b9a6868ed",
-      "text": "跟主控说后续luna-max的场景都改成用terra6.1-medium",
-      "scope": "All subsequent formerLuna pure UI/copy/appearance work. Existing completed checks retained; no artificial model-change job. Technical dispatch explicitlySol61medium; no claim idle chats runtime changed."
-    }
+    "source": "Latest main Chat handoverV2 explicit sol-6.1-medium overrides historical profiles"
   },
   "operationalState": {
     "newDatabase": "erp_rewrite_20261022_r1",
@@ -2932,6 +2926,16 @@
       "status": "CLOSED_BY_DIRECT_HUMAN",
       "nextOwner": "Existing QF01",
       "doNotResume": true
+    },
+    "FRONTEND_EXISTING": {
+      "title": "奈爵 ERP｜Demo 逐页实操对比",
+      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "sourceWriteEnabled": true,
+      "currentPackage": "HV2-B04",
+      "nextReadyPackage": "HV2-B06/B11/B13/PF01 same-file package",
+      "source": "Latest explicit human sole frontend owner;reuse existing comparison evidence"
     }
   },
   "fieldApprovalRecords": [
@@ -5208,12 +5212,12 @@
   },
   "currentGoal": {
     "status": "ACTIVE",
-    "objective": "Strict two phases under latest human directive: Phase1 complete running frozen Demo frontend replica at apps/web/demo-replica, all original pages/styles/resources/controls/routes/interactions, marked isolated Demo samples, no new requirements or old rewrite body or real DB. After original QA completeness/representative states and fixed baseline, Phase2 modify only this replica for approved requirements and connect existing new backend/real data/history editing. Full37 pages/67 overlays and additions; approved additions absent in Demo are Phase2 only. Existing backend continues independently. Preserve creator/responsible v16 semantics, precision/permissions/source/SKU/transactions/idempotency/original-key unknown recovery/inventory delta/conservation. On-demand loading/pagination/windowed same matrix, no fake pagination/zero or dropped duplicates. Same original roles and unique file owners, Luna max pure UI and Sol medium technical/mixed, actual tool parameters. Preserve old337 and WIP/rollback; no old-body normal runtime fallback. GitHub allowed source checkpoints, no credentials or real business datasets; existing records support Dot. Phase1 replica is not real business or deployment; Phase2 qualified modules release original URL with existing authorizations and required affected acceptance. Final full business/history/performance/formal URL completion must be evidenced.",
+    "objective": "Complete all37 pages/67overlays and additions on original frozenDemo replica,realbackend/data/history edits,known bugs and all performance/H01-H06 before launch;reuse sole existingfrontendChat,existingbackend/T45/QA,unique writer. Source implementation now authorized;productiondeployment/migration/downtime/permissionchange/deletion separately confirmed. Same merged formal candidate final Demo/realPG/proxy/browser/performance acceptance. Existing approved business and source/data protection remain.",
     "latestAuthority": "HUMAN_EDITED_LIVE_GOAL_VERIFIED_20261024",
     "liveGoalUpdatedAt": 1792840499,
     "verifiedAtUtc": "2026-10-24T11:29:21.184294+00:00",
     "latestBusinessAmendment": "Creator immutable real creation identity; responsible separate nullable staff; approved v16 remains approved.",
-    "latestHumanAuthority": "Latest strict two-phase full frozen Demo copy then only copied frontend wiring; v17 human confirmation retained",
+    "latestHumanAuthority": "2026-10-28 handoverV2 latest explicit requirements",
     "phase1AcceptedSource": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
     "currentPhase": "PHASE2_EXISTING_ORIGINAL_COPY_BUSINESS_ADAPTATION",
     "phase1": "COMPLETE_LIMITED_REPRESENTATIVE_ACCEPTANCE_SOURCE343",
@@ -5225,7 +5229,9 @@
       "verified": "Direct userMessage read by C",
       "decision": "真实业务页面此页面尚未接入当前版本第一优先；T01/T07/T08/T09/T20新增修复上线后；第一组优先，第二组随功能，第三组小检查失败才修，第四组默认上线后，纯整理可不单做"
     },
-    "priority": "REAL_NORMAL_BUSINESS_PAGES_FIRST_WITHOUT_FAKE_FLAGS"
+    "priority": "REAL_NORMAL_BUSINESS_PAGES_FIRST_WITHOUT_FAKE_FLAGS",
+    "currentExecutionAuthority": "handoverV2",
+    "liveGoalCard": "Cannot edit objective via available goal tools;original card usageLimited remains untouched,not completed/recreated. This current record controls execution."
   },
   "historyHeaderProposal": {
     "id": "v16_HISTORY_HEAD_AND_RESPONSIBLE",
@@ -17122,5 +17128,552 @@
     "executionOwner": "T45",
     "independentReviewOwner": "QB",
     "executionNotAutomaticallyGranted": true
+  },
+  "handoverV2": {
+    "atUtc": "2026-10-28T07:43:48.206308+00:00",
+    "status": "PLAN_ACCEPTED_WITH_EXECUTION_CORRECTIONS_SOURCE_IMPLEMENTATION_OPEN_NO_ENVIRONMENT_MUTATIONS",
+    "package": "/Users/billy/Downloads/奈爵ERP_主控交接V2",
+    "sourceCommit": "ed4d044da3c67b09fd23bab0ab08fd7a01b68136",
+    "branch": "codex/local-takeover-wip-20261022-082411",
+    "packageVersion": "0.1.0",
+    "packageCheck": "Existing 校验交接包.py exit0;35 cards complete,explicit DAG acyclic;not source acceptance",
+    "model": "gpt-6.1-sol/medium",
+    "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH",
+    "frontend": {
+      "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "title": "奈爵 ERP｜Demo 逐页实操对比",
+      "latestObserved": "ACTIVE color 515/clear/page2/pageSize50/lastPage evidence on Demo8877 + normal34/57923; proceeding size/fit. Read live thread 2026-10-28, original progress preserved.",
+      "workDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
+      "directoryConfirmation": "SHARED_R_READBACK_ONLY_CHAT_SPECIFIC_ACK_REQUESTED",
+      "writeScope": "apps/web/** excluding src/application/contracts.ts and any explicit shared public contracts;exact first package below. frontend build source owned by frontend;execution by T45",
+      "trackedWip": "tests/product-query-postgres-protocol.test.ts +13 lines protected,owner not inferred;vendor/temp/report untracked preserved",
+      "sourceChangesByThisChat": "NOT_YET_REPORTED_DO_NOT_INFER_FROM_SHARED_GIT",
+      "wholePagePass": 0,
+      "wholeOverlayPass": 0,
+      "denominator": {
+        "pages": 37,
+        "overlays": 67
+      },
+      "matrixStatuses": {
+        "NOT_RUN": 24,
+        "PARTIAL": 34,
+        "DIFFERENCE": 46
+      },
+      "countsBoundary": "Historical cross-version matrix coverage80/104;not current outstanding count or latest whole-page acceptance",
+      "candidate": "normal34 2357cf5/57923 is comparison binding;normal41 b2e6ffc/57930 is last built successor,affected browser result incomplete;never assign34result to41"
+    },
+    "corrections": [
+      "Use existing TASKS/PROGRESS/HANDOFF/WRITE-OWNERSHIP, no new controller-handoff control/report system or static JSON-completeness test. HV2- IDs distinguish package B07/G00 from existing legacy IDs.",
+      "Latest human explicitly authorizes source implementation; package authoring-only wording is historical delivery scope,not a new implementation block.",
+      "Frontend sole owner is existing comparison Chat. F1-F4 prior deliveries and evidence retained,source writer leases handed back per actual idle readback;no overlapping reissue.",
+      "Suggested p95/p99/4vCPU8GiB/20concurrency/60min are UNAPPROVED proposals,not facts or automatic new blockers. Preserve current applicable <=2000ms query and cold1/repeat2 scope;measure representative data,raw values,counts. 3runs do not establish p95/p99. Known performance fixes and H01-H06 still all before launch.",
+      "A01/H03 conceptual dependency resolved by C initial decision now: keep existing proofs and ordinary-role/source/identity threat boundary;deduplicate only successful locked transaction-local facts with explicit invalidation. No new checkpoint/crossrequest proof certificate/retirement by default. H03 later verifies actual lifecycle;any true contract change submitted accurately.",
+      "A02/H06 initial retention decision: no deletion of audit,receipts,source,backup or referenced media. Unknown retention not guessed. Resource measurements/drain and bounded cancellation can proceed;apply/delete and real environment actions wait exact authorization.",
+      "Code/file fixtures may run now. Production deployment,migration,downtime,permission changes,data deletion require latest human confirmation;no automatic re-use of old blanket permission. Final acceptance same merged formal candidate + Demo + realPG + proxy + browser + performance,not synthetic preview."
+    ],
+    "verifiedCurrentFindings": {
+      "HV2-B01": "JS accepts exact font LICENSE.txt and four patch members;Python member_allowed rejects both and Full validator counts all role=migration as26. Static current-source mismatch confirmed;owner repro pending.",
+      "HV2-B02": "boot Journal has action but no event;disarm passes it to stop_full_app which invokes event. Static exact caller mismatch confirmed;full FakeDocker repro pending.",
+      "HV2-B04": "setMatrixSizeQuantity rejects !anchor.product before locating known actualSKU. Static current-source order confirmed;frontend correct-seam failing regression required.",
+      "toolchain": "ShellNode25.8.2 unsupported by package engines;bundledNode24.19.0 available within declared range,not exact release24.21.0. T45 to use already available exact release runtime;no global upgrade/install."
+    },
+    "tasks": [
+      {
+        "id": "HV2-G00",
+        "card": "G00",
+        "title": "主控预检：复用最新基线、Demo差异、全量上线门槛与owner",
+        "dependsOn": [],
+        "owner": "C",
+        "state": "REVIEW_COMPLETE_CURRENT_OWNER_ACK_PENDING",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/G00.txt"
+      },
+      {
+        "id": "HV2-G03",
+        "card": "G03",
+        "title": "可选：仅新明确授权的有限能力裁剪或不适用判定",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "C",
+        "state": "CONDITIONAL_NOT_ACTIVATED_NO_SCOPE_CUT",
+        "requiredBeforeLaunch": false,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/G03.txt"
+      },
+      {
+        "id": "HV2-A01",
+        "card": "A01",
+        "title": "商品证据容量、同事务准入及H03批准的checkpoint/proof方案",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/A01.txt"
+      },
+      {
+        "id": "HV2-P02",
+        "card": "P02",
+        "title": "登录性能上线前修复：入口限流、计算并发与锁外计算/锁内重验",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P02.txt"
+      },
+      {
+        "id": "HV2-A02",
+        "card": "A02",
+        "title": "容量最低观察窗预算、低水位准入与取消释放；H06保留/安全回收/恢复前置",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-P02"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/A02.txt"
+      },
+      {
+        "id": "HV2-B01",
+        "card": "B01",
+        "title": "最小修复JS归档→Python文件校验：准确许可证白名单及26迁移/有限批准补丁分组",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "T45",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B01.txt"
+      },
+      {
+        "id": "HV2-B02",
+        "card": "B02",
+        "title": "修通Full停入口的Journal.action调用并确认准确App/Web均已停止",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B01"
+        ],
+        "owner": "T45",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B02.txt"
+      },
+      {
+        "id": "HV2-B03",
+        "card": "B03",
+        "title": "仅为已开放大请求API设置准确Nginx body预算",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B01"
+        ],
+        "owner": "T45",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B03.txt"
+      },
+      {
+        "id": "HV2-B04",
+        "card": "B04",
+        "title": "调拨矩阵先识别真实SKU，再要求新增规格元数据",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "FRONTEND_EXISTING",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B04.txt"
+      },
+      {
+        "id": "HV2-B05",
+        "card": "B05",
+        "title": "首发录单异步叶加载失败局部降级，保住草稿与保存/取消",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "FRONTEND_EXISTING",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B05.txt"
+      },
+      {
+        "id": "HV2-B06",
+        "card": "B06",
+        "title": "库存/商品款号粘贴绑定当前意图，重置后旧结果不得复活",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "FRONTEND_EXISTING",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B06.txt"
+      },
+      {
+        "id": "HV2-B07",
+        "card": "B07",
+        "title": "修复历史负责人explicit null合同及精确SQL successor",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B07.txt"
+      },
+      {
+        "id": "HV2-B08",
+        "card": "B08",
+        "title": "按正式列表授权集合补齐历史筛选候选",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D3",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B08.txt"
+      },
+      {
+        "id": "HV2-B09",
+        "card": "B09",
+        "title": "媒体：统一已完整解码JPEG上传与原图交付合同",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D2",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B09.txt"
+      },
+      {
+        "id": "HV2-B10",
+        "card": "B10",
+        "title": "员工凭证：稳定私有tag接入正式CLI并验收创建/重置",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D2",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B10.txt"
+      },
+      {
+        "id": "HV2-B11",
+        "card": "B11",
+        "title": "筛选接受前按接口预算预检，超限保留旧范围",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "FRONTEND_EXISTING",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B11.txt"
+      },
+      {
+        "id": "HV2-B12",
+        "card": "B12",
+        "title": "最小首发门禁：根依赖可复建、当前runtime及发布闭环实际进入go/no-go",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B01",
+          "HV2-B02"
+        ],
+        "owner": "T45",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B12.txt"
+      },
+      {
+        "id": "HV2-B13",
+        "card": "B13",
+        "title": "商品筛选browse/search不再携带selectedIds",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "FRONTEND_EXISTING",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B13.txt"
+      },
+      {
+        "id": "HV2-B14",
+        "card": "B14",
+        "title": "分类重挂：完整二层深度/无环守卫与DB最终防线",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D2",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B14.txt"
+      },
+      {
+        "id": "HV2-B15",
+        "card": "B15",
+        "title": "仅修REVIEWED调拨行reader接受并验证公共六字段ClosureScope",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D3",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B15.txt"
+      },
+      {
+        "id": "HV2-H05",
+        "card": "H05",
+        "title": "单一正式前端宿主图与会话/草稿隔离的持续门禁",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B05",
+          "HV2-B06",
+          "HV2-B12"
+        ],
+        "owner": "FRONTEND_EXISTING",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H05.txt"
+      },
+      {
+        "id": "HV2-PF01",
+        "card": "PF01",
+        "title": "上线前完成前端有界性能改造：粘贴队列、SKU分页、Excel内存预算",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B06",
+          "HV2-B11"
+        ],
+        "owner": "FRONTEND_EXISTING",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/PF01.txt"
+      },
+      {
+        "id": "HV2-D01",
+        "card": "D01",
+        "title": "现有Demo逐页四列对比整合的最终验收",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-H05",
+          "HV2-B04",
+          "HV2-B05",
+          "HV2-B06",
+          "HV2-B11",
+          "HV2-B12",
+          "HV2-B13",
+          "HV2-PF01"
+        ],
+        "owner": "FRONTEND_EXISTING",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/D01.txt"
+      },
+      {
+        "id": "HV2-H01",
+        "card": "H01",
+        "title": "事务/表写入所有权与模块公开端口收敛",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H01.txt"
+      },
+      {
+        "id": "HV2-P03",
+        "card": "P03",
+        "title": "上线前合并历史列表计数/页面SQL，单请求共享候选与完整授权证明",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D3",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P03.txt"
+      },
+      {
+        "id": "HV2-P04",
+        "card": "P04",
+        "title": "上线前历史修订批量SQL＋集合守卫，消除逐行全JSON扫描",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B07"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P04.txt"
+      },
+      {
+        "id": "HV2-H02",
+        "card": "H02",
+        "title": "统一历史/实时查询口径、有效集合与读模型所有权",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B08",
+          "HV2-P03",
+          "HV2-P04"
+        ],
+        "owner": "D3",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H02.txt"
+      },
+      {
+        "id": "HV2-P01",
+        "card": "P01",
+        "title": "上线前消除销货SAVE同事务重复事实/快照读取",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-A01"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P01.txt"
+      },
+      {
+        "id": "HV2-H03",
+        "card": "H03",
+        "title": "按威胁模型收敛证明生命周期与可退役在线proof",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-A01",
+          "HV2-P01",
+          "HV2-P03",
+          "HV2-P04"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H03.txt"
+      },
+      {
+        "id": "HV2-H04",
+        "card": "H04",
+        "title": "共享版本化release合同与跨层变更影响闭环",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B01",
+          "HV2-B02",
+          "HV2-B12"
+        ],
+        "owner": "T45",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H04.txt"
+      },
+      {
+        "id": "HV2-P05",
+        "card": "P05",
+        "title": "库存导出专用预算对齐：应用120s、代理130s、客户端150s",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-B01"
+        ],
+        "owner": "T45",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P05.txt"
+      },
+      {
+        "id": "HV2-PF02",
+        "card": "PF02",
+        "title": "上线前附加导入性能：seal复用、captured批量binding与续跑索引",
+        "dependsOn": [
+          "HV2-G00"
+        ],
+        "owner": "D3",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/PF02.txt"
+      },
+      {
+        "id": "HV2-H06",
+        "card": "H06",
+        "title": "日志、readyz/drain、保留策略与安全回收/再准入",
+        "dependsOn": [
+          "HV2-G00",
+          "HV2-P02",
+          "HV2-P05",
+          "HV2-A02",
+          "HV2-PF02"
+        ],
+        "owner": "D1",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H06.txt"
+      },
+      {
+        "id": "HV2-G01",
+        "card": "G01",
+        "title": "最终集成：全部修复、性能、H01-H06架构及Demo量化验收",
+        "dependsOn": [
+          "HV2-A01",
+          "HV2-A02",
+          "HV2-B01",
+          "HV2-B02",
+          "HV2-B03",
+          "HV2-B04",
+          "HV2-B05",
+          "HV2-B06",
+          "HV2-B07",
+          "HV2-B08",
+          "HV2-B09",
+          "HV2-B10",
+          "HV2-B11",
+          "HV2-B12",
+          "HV2-B13",
+          "HV2-B14",
+          "HV2-B15",
+          "HV2-D01",
+          "HV2-G00",
+          "HV2-H01",
+          "HV2-H02",
+          "HV2-H03",
+          "HV2-H04",
+          "HV2-H05",
+          "HV2-H06",
+          "HV2-P01",
+          "HV2-P02",
+          "HV2-P03",
+          "HV2-P04",
+          "HV2-P05",
+          "HV2-PF01",
+          "HV2-PF02"
+        ],
+        "owner": "C",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/G01.txt"
+      },
+      {
+        "id": "HV2-G02",
+        "card": "G02",
+        "title": "发版go/no-go：完整门禁、生产授权与数据保全恢复人工计划",
+        "dependsOn": [
+          "HV2-G01"
+        ],
+        "owner": "T45",
+        "state": "REVIEWED_PLAN_NOT_IMPLEMENTED",
+        "requiredBeforeLaunch": true,
+        "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/G02.txt"
+      }
+    ],
+    "parallel": {
+      "frontendCurrent": "HV2-B04 complete scanner/saved actualSKU matrix edit package after current comparison segment and ownership ack",
+      "frontendNext": "HV2-B06/B11/B13/PF01 same candidate/filter files then B05/H05;no duplicate whole site comparison",
+      "T45Current": "HV2-B01/B02 local release mismatch/lifecycle fixes;no stop/deploy/PG",
+      "T45Next": "HV2-B03/P05 then B12/H04 after actual SQL lineage supplied",
+      "D1Current": "HV2-B07 current responsible explicit-null source/contract delta + successor proposal only;no old SQL edit/PG/ACL",
+      "D1Next": "HV2-P04/H01/H03 same transaction scope after precise delta",
+      "D2": "Current four-save QA binding waits actual full publication+backup+registered QA restore;HV2-B14 then B09/B10 source packages when slot/ownership assigned",
+      "D3": "Current import201 terminal,204 zero-rowprobe prepared notexecuted;HV2-B15/PF02 next existing source group;no replay/stage/publish"
+    },
+    "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
+    "next": "Receive unique owner ack,implement scoped first packages,adopt original QA delta,freeze integration and save allowed GitHub checkpoint. Final 37/67/business/history/performance/formal remain incomplete."
   }
 }
