@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T15:16:34.880248+00:00",
+  "updatedAt": "2026-10-28T15:21:14.952145+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "72f65930df6c12936eee4c4d680c5528da703f8a",
+  "lastVerifiedRemoteCommit": "e70fba0c03b420b6e36228c92562a1bbcf874249",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18445,10 +18445,24 @@
       "next": "F1 accuratecompilerboundaryassessment;Crootconfig integration;T45fixedsuccessorbuildonce"
     },
     "P04V22PublishedTarget": {
-      "status": "QB_PARENT_BINDING_SOURCE_PASS_NOT_PG_EXECUTED",
+      "status": "ACTUAL230_COMMIT_RETURNED_SCOPED_PASS",
       "owner": "D1source/T45actual",
       "qaReceipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-P04-V22-PUBLISHED-TARGET/QB-P04-V22-PUBLISHED-TARGET-RESULT.json",
-      "next": "T45new230carrieronly;Cexactscopeafterready;no228replay"
+      "next": "OriginalD1 necessaryapprovedsuccessors to135;noactualdriver/ACL/newcontractinthisscope",
+      "receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-p04-published-v22-successor-20261028-230/RESULT230.json",
+      "catalog": "ef725a209d3dc68330dc7f5c6de56b841f682b5339a8aac562234f876727613c"
+    },
+    "B12FixtureModuleRename": {
+      "status": "WAIT_USER_EXPLICIT_SINGLE_FILE_RENAME_CONFIRMATION",
+      "sourceRule": "/Users/billy/Desktop/Workspace/agents.md:63",
+      "rename": {
+        "from": "apps/web/demo-replica/frontend/qa-reference-fixtures.ts",
+        "to": "apps/web/demo-replica/frontend/qa-reference-fixtures.mts"
+      },
+      "owner": "F1renameand8imports/C2configs",
+      "question": "call pending async 20261028 singlefixturemoduleextension;notapprovedyet",
+      "boundary": "Contentunchanged;noUI/backend/businesschange;nohiddenharnessconsumer",
+      "next": "Afterhumanapproval exactrename8imports2configs;targetedruntime+harness+roottypes thenT45fixedbuild"
     }
   }
 }
