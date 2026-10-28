@@ -17702,8 +17702,8 @@
     "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
     "next": "QB845P04/Cmetadata/B12fixturelimitedreview;T45freshB14/P04isolationprep;CfiniteH04release mechanics;D3P03;frontendnormal34fullcomparisonfirst",
     "githubCheckpoint": {
-      "commit": "de95a7e6c1a5ca0a4c26c3663960eff404350955",
-      "sourceRound": 935,
+      "commit": "4e7cc136e4b8eb179cfd4ca17e342c6a8b4e5b83",
+      "sourceRound": 936,
       "branch": "codex/erp",
       "remoteVerified": true,
       "method": "exact original objects nonforced FF and independent GET"
@@ -19400,7 +19400,7 @@
     "A02RealRunner934": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "state": "SOURCE936_F01_FIXED_SINGLE_LEAF_QB_RECHECK_PENDING_NO_ACTIVE_WRITER",
+      "state": "SOURCE936_QB_F01_LIMITED_PASS_NO_ACTIVE_WRITER",
       "files": [
         "tests/integration/capacity-window-performance.test.ts"
       ],
@@ -19433,7 +19433,19 @@
         "bytes": 2622,
         "sha256": "52413549ac5bdec9c323bafcad8f4024757eac534c2f1e793ea6d4293cd62f0d"
       },
-      "fixChecks": "D1 exact old caller1→100 actual admission original1/capturedcost1 demand2 remainsfalse; immutable cost and5volume actualfee delta check; singleTSroot strict0 and lazy nohost refusal. Other6leaves unchanged; no actualQA."
+      "fixChecks": "D1 exact old caller1→100 actual admission original1/capturedcost1 demand2 remainsfalse; immutable cost and5volume actualfee delta check; singleTSroot strict0 and lazy nohost refusal. Other6leaves unchanged; no actualQA.",
+      "independentFixReview": {
+        "path": "QB/HV2-SOURCE936/QB-SOURCE936-F01-RESULT.json",
+        "bytes": 2875,
+        "sha256": "4c7239775893f23141cd18e0347dfc7de5280402e1e880031e98d264352c6dfc"
+      }
+    },
+    "B12Source936Build": {
+      "owner": "T45",
+      "model": "gpt-6.1-sol/medium",
+      "state": "DISPATCHED_NECESSARY_FIXED_LOCAL_BUILD_PACK_ONLY",
+      "sourceCommit": "4e7cc136e4b8eb179cfd4ca17e342c6a8b4e5b83",
+      "scope": "Original build/pack once from fixed git archive in new directory; reuse exact matching dependencies, no ci/reader/PG/native replay. Not normal34 comparison or app startup/deployment."
     }
   }
 }

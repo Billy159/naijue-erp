@@ -7803,7 +7803,7 @@
     "A02RealRunner934": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "state": "SOURCE936_F01_FIXED_SINGLE_LEAF_QB_RECHECK_PENDING_NO_ACTIVE_WRITER",
+      "state": "SOURCE936_QB_F01_LIMITED_PASS_NO_ACTIVE_WRITER",
       "files": [
         "tests/integration/capacity-window-performance.test.ts"
       ],
@@ -7836,7 +7836,12 @@
         "bytes": 2622,
         "sha256": "52413549ac5bdec9c323bafcad8f4024757eac534c2f1e793ea6d4293cd62f0d"
       },
-      "fixChecks": "D1 exact old caller1→100 actual admission original1/capturedcost1 demand2 remainsfalse; immutable cost and5volume actualfee delta check; singleTSroot strict0 and lazy nohost refusal. Other6leaves unchanged; no actualQA."
+      "fixChecks": "D1 exact old caller1→100 actual admission original1/capturedcost1 demand2 remainsfalse; immutable cost and5volume actualfee delta check; singleTSroot strict0 and lazy nohost refusal. Other6leaves unchanged; no actualQA.",
+      "independentFixReview": {
+        "path": "QB/HV2-SOURCE936/QB-SOURCE936-F01-RESULT.json",
+        "bytes": 2875,
+        "sha256": "4c7239775893f23141cd18e0347dfc7de5280402e1e880031e98d264352c6dfc"
+      }
     }
   }
 }

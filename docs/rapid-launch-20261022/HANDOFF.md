@@ -1,3 +1,5 @@
+SOURCE937：采用原QB936 F01限定PASS（2875/4c723977…），原935其余有效证据复用/旧NEED_FIX保留；D1七叶已全部交还，不重测。C交唯一原T45对准确936/4e7cc136必要build+pack各一次，新独立archive，核同lock复用旧依赖，不重ci/native/keyreader；只构建不启动/接PG/部署，不把新包冒normal34对比。真实容量与sharedQA人批/完整发布/新鲜facts/窗口预算/SLO仍前置。936远端已回读。
+
 SOURCE936：原QB935发现F01/P2 session成本coverage读测后可变预算，原本已捕获费用1被外部改100可错误放行需求2，旧935NEED_FIX保留。原D1仅修runner单叶34824/9d0c811f…：开跑前capture深拷贝冻结sessionCost，coverage只读capture，另核实际admitted数与5卷fee增量；原1→100窄反例/strict/惰性缺host拒绝通过，另6叶未变。C固定后继交原QB只复F01，不重933/旧snapshot。真实QA/PG/TCP/物理restart/SLO仍未跑，原人批及发布依赖不变；935 GitHubde95a7e6已回读。
 
 SOURCE935：原D1交还A02真实QA入口+6叶只读计数接缝共7叶，原计数同源不可变无HTTPmetrics或新状态owner。新增snapshot3检查/strict与缺host安全拒绝通过；C只核固定pin，交原QB增量窄验。runner代表真实PG/codec成本、窗口收费、低水位/到期与旧读、资源回稳；取消须真实TCP断开且实观原native队列，物理restart须真实新进程双收据，不冒inject.abort或factory重建。全部真实场景未跑；原normal90/preparation189人批/fullQA发布/新鲜卷事实/窗口预算SLO仍前置，不自动grant/seed/listen。934远端69da30a2已回读。
