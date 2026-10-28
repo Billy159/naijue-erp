@@ -61,7 +61,7 @@
         "invalid": "Missing methods, true substitute, no callback or unresolved recovery refuses. Assertions are rechecked through final reference read and every deletion step. This source does not itself prove stopped processes or settled remote transactions.",
         "scope": "All relevant upload/consume/delivery and DB attach/mutation writers must remain stopped; hold through final DB references and file removal. No online GC lock or platform introduced."
       },
-      "recovery": "Before any unlink, reads all three files from separate canonical private recoveryRoot/stages/<uploadId> and verifies exact hashes against fixed original files. Uses no newly created backup as proof. Partial/cancelled removal returns RESTORE_REQUIRED; verified backups are never removed or automatically overwritten. Real restore must be explicitly executed and read back by T45, not faked with SQL ROLLBACK.",
+      "recovery": "Before any unlink, reads all three files from separate canonical private recoveryRoot/stages/<uploadId> and verifies exact hashes against fixed original files. Uses no newly created backup as proof. Partial/cancelled removal returns RESTORE_REQUIRED; verified backups are never removed or automatically overwritten. Real restore must be explicitly executed and read back by T45, not faked with SQL ROLLBACK. QB907-F01: each backup (dev,ino) must be disjoint from the union of ALL deletion-source (dev,ino) identities before the first deletion, including other candidates.",
       "database": "Media mode uses READ COMMITTED READ ONLY, including apply. Only original SELECT reference/target checks, then ROLLBACK; filesystem deletion is separate and nontransactional.",
       "remaining": "Exact T45 offline/recovery authority executor, fixed root/UUID/backup list, final isolation authorization and real delete/cancel/restore/re-admission exercise."
     },
@@ -110,5 +110,16 @@
     "No production deletion/stop/migration is authorized or executed by this source delivery"
   ],
   "rollback": "Revert only these three new leaves if needed; do not remove existing P01/A01/H03/host/auth/media protections or business facts. Session precommit error rolls back original batch. Unknown COMMIT requires exact original run reconciliation. Media partial deletion requires separately authorized restore from preverified independent backups before re-admission.",
-  "Fast": "UNVERIFIED"
+  "Fast": "UNVERIFIED",
+  "reviewCorrections": [
+    {
+      "id": "QB907-F01",
+      "base": "SOURCE907 22af5a576a37330fdb0c6963bc9b6da24791282b",
+      "finding": "Separate canonical backup path plus equal SHA does not establish independent physical storage; a bind-mount alias can expose the same dev/ino with nlink1.",
+      "fix": "Before any unlink/rmdir collect dev/ino identities of ALL candidate source files. Every validated backup must differ from every candidate source identity, including cross-upload identities; reject before mutation otherwise. Existing hash, nlink1 source, fence and reference rules unchanged.",
+      "red": "New virtual same-candidate alias test observed APPLIED on predecessor source; simulated unlink also removes alias entry. No real filesystem deletion.",
+      "green": "New same- and cross-candidate alias matrix plus original independent-copy success and partial cancellation/backup preservation: 3 targeted tests PASS. Strict isolated test dependency closure PASS. Unaffected session and older checks reused.",
+      "remaining": "Candidate fix awaits C freeze/QB exact re-review. Original SOURCE907 record stays historical. No actual bind mount/PG/filesystem cleanup/recovery or execution approval."
+    }
+  ]
 }

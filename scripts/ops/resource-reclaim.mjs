@@ -158,7 +158,12 @@ export async function reclaimResources(input, options = {}) {
         if(mode==='dry-run')return;
         requireValue(report.planHash===c.approval.planHash,'APPROVED_PLAN_CHANGED');
         requireValue(typeof c.media.recoveryRoot==='string'&&path.isAbsolute(c.media.recoveryRoot)&&!inside(c.media.root,c.media.recoveryRoot)&&!inside(c.media.recoveryRoot,c.media.root),'SEPARATE_RECOVERY_REQUIRED');
-        for(const p of plans)for(const f of p.files){const backup=await boundedFile(path.join(c.media.recoveryRoot,'stages',p.uploadId,f.name),f.bytes.length,io,check);requireValue(sha(backup.bytes)===f.hash,'RECOVERY_BYTES_UNVERIFIED');}
+        // A different canonical path can still be a bind-mount alias. Check all
+        // deletion candidates, not only the matching file or current upload.
+        const deletingInodes=new Set(plans.flatMap(p=>p.files.map(f=>JSON.stringify([f.dev,f.ino]))));
+        for(const p of plans)for(const f of p.files){const backup=await boundedFile(path.join(c.media.recoveryRoot,'stages',p.uploadId,f.name),f.bytes.length,io,check);
+          requireValue(!deletingInodes.has(JSON.stringify([backup.dev,backup.ino])),'RECOVERY_ALIASES_DELETION_CANDIDATE');
+          requireValue(sha(backup.bytes)===f.hash,'RECOVERY_BYTES_UNVERIFIED');}
         for(let i=0;i<plans.length;i++){
           const p=plans[i];check();await assertHeld();
           const fresh=await mediaCandidate(c,c.media.candidates[i],client,io,check,assertHeld,assertRecoverySettled);

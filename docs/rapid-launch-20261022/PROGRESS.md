@@ -1,3 +1,5 @@
+SOURCE909：原D2 QB907-F01同三叶定修已交回并核pins，所有备份dev/ino对全部源候选去交集、命中首删前拒绝；先复现旧错，再3定向媒体case/strict通过，0真实删除。固定后原QB只复F01与受影响独立copy/partial恢复。原T45已实际一次生成全合成49私密候选，原wrap/密码验证49均接受及三party依赖组通过，安全49/45/4/115投影交独立review，0openBootstrap/PG/init/role/ACL，不把生成候选冒初始化成功。SOURCE908 37752dbaa04f35804ecd7ec16358fdb108cba7b4已远端读回。
+
 SOURCE908补充：原QB907明确NEED_FIX/P1 QB907-F01，虚拟bind-mount别名反例证实备份路径不同但dev/ino同源会删除所谓备份；0真实删除。原D2同三叶定修所有备份对全部源物理身份交集，其他session/引用/围栏scope与6pure检查保留不重。C采用V2 A02步骤5已明确的503/Retry-After拒新发行/上传语义，原D1完成normalACL后接准确10叶host接线，不新增表/权限/阈值，不让已有session/退出/撤权/旧图读受阻；真实probe与窗口尚未接，不冒整体完成。原T45获准私有prepare-only producer仅生成全合成49来源候选、止独立review前；D3控制准备权限与D1普通运行权限分开，不借owner做业务或95全授，0新role/ACL/init。
 
 SOURCE908：采用原QB SOURCE906三scope窄PASS，903 F01/F02由后继修复关闭：除身份等式，还实际用非执行纯合成材料调用原catalogue工厂9行授权并验证改动/close拒绝；私密49bootstrap仍未成功。A02组件30新case/strict、原日志旋转3新case/AST通过，0真实probe/PG/Docker/旋转。SOURCE907原H06三叶已GitHub22af5a576a37330fdb0c6963bc9b6da24791282b回读，QB接独立窄审；原T45继续私密材料/准确准备issuer，原D1收窄普通runtime列级差集，不整批授95。正式业务、全站前端与性能/恢复仍未通过，生产边界保持。

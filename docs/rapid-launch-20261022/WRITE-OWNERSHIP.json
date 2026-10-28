@@ -7565,7 +7565,7 @@
     "H06Reclaim904": {
       "owner": "D2",
       "model": "gpt-6.1-sol/medium",
-      "status": "SOURCE907_QB907_F01_BACKUP_PHYSICAL_ALIAS_FIX_D2_ACTIVE",
+      "status": "SOURCE909_F01_THREE_LEAF_FIXED_FOR_QB",
       "files": [
         "scripts/ops/resource-reclaim.mjs",
         "tests/resource-reclaim.test.ts",

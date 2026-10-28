@@ -98,3 +98,26 @@ test('H06 media final reference recheck closes preview race; cancellation after 
  // Explicit operator recovery in the virtual fixture only; no production restore is invoked or claimed.
  w.install();assert.ok(w.map.has(`/private/media/stages/${upload}/manifest.json`));
 });
+test('QB907-F01 media recovery files cannot alias any deletion candidate inode, including another candidate',async()=>{
+ for(const crossCandidate of [false,true]){
+  const v=virtualMedia(),f=db();let sourceUpload=upload;
+  if(crossCandidate){
+   sourceUpload=sid('product',41003);const m={...v.m,uploadId:sourceUpload,fileRef:`staged-product-media:${sourceUpload}`};
+   v.put(`/private/media/stages/${sourceUpload}`,'','directory');v.put(`/recovery/stages/${sourceUpload}`,'','directory');
+   for(const name of ['manifest.json','original.bin','thumbnail.webp']){
+    const bytes=name==='manifest.json'?Buffer.from(JSON.stringify(m)):v.map.get(`/private/media/stages/${upload}/${name}`)!.bytes;
+    v.put(`/private/media/stages/${sourceUpload}/${name}`,bytes);v.put(`/recovery/stages/${sourceUpload}/${name}`,bytes);
+   }
+   v.c.media.candidates.push({uploadId:sourceUpload,manifestSha256:sha(JSON.stringify(m))});
+  }
+  // Bind-mount aliases may report canonical distinct paths and nlink1, yet one physical inode.
+  const alias=`/recovery/stages/${upload}/original.bin`,source=`/private/media/stages/${sourceUpload}/original.bin`;
+  v.map.set(alias,v.map.get(source)!);const unlink=v.io.unlink.bind(v.io);
+  v.io.unlink=async name=>{const inode=v.map.get(name);await unlink(name);for(const [p,entry] of [...v.map])if(entry===inode)v.map.delete(p);};
+  const c=await approved(v.c,f,{io:v.io});
+  const result=await api.reclaimResources(c,{pool:f.pool,io:v.io,mode:'apply-isolated',withOfflineFence:fence});
+  assert.equal(result.status,'REFUSED',crossCandidate?'Cross-candidate backup alias':'Same-candidate backup alias');
+  assert.equal(v.removed.length,0,'Reject every alias before the first unlink');assert.equal(v.handles(),0);
+  assert.ok(v.map.has(alias)&&v.map.has(source),'Both source and supposed backup survive refusal');
+ }
+});

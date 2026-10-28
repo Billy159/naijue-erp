@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-28T18:02:41.749681+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "22af5a576a37330fdb0c6963bc9b6da24791282b",
+  "lastVerifiedRemoteCommit": "37752dbaa04f35804ecd7ec16358fdb108cba7b4",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18832,7 +18832,14 @@
       "schemaResult": "33 transactions COMMITTED_AND_REGISTRY_READ_BACK;55 business relations0;runtime ordinary attrs unchanged;pool/client0",
       "v22Receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-qa897-newtarget-v22-single-install-20261029-242/RESULT242.json",
       "v22ReceiptSha256": "bcfb5aaa145a482277a494fe580793326a3bee14f790305ce67d1dd38a401b00",
-      "successorReceipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-qa897-original-three-successors135-20261029-243/RESULT243.json"
+      "successorReceipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-qa897-original-three-successors135-20261029-243/RESULT243.json",
+      "privateSourcePreparation": {
+        "status": "GENERATED_ONCE_ORIGINAL_CREDENTIAL_FORMAT_VERIFY49_PASS_REVIEW_PENDING",
+        "receipt": "reports/controller/rapid-launch-20261022/T45-QA897-SOURCE906-PRIVATE-PACKET-PREPARATION-01/CANDIDATE-RESULT.json",
+        "safeProjectionSha256": "364bd3c5001bc02b89077906c498c64164dab4758fbe3f8dbce18ccb99787657",
+        "scope": "49safe synthetic accounts45direct4plan andCORE115; privatecredentials not exposed/no hash exported;0PG/bootstrap/roles/ACL",
+        "next": "OriginalQB independent safe projection/producer review; C delegated synthetic technical decision and exact dependent input pin binding; prepare vs normal privilege separate"
+      }
     },
     "H06Retention899": {
       "owner": "D2",
@@ -18882,16 +18889,16 @@
     },
     "H06Reclaim904": {
       "owner": "D2",
-      "status": "SOURCE907_QB907_F01_NEED_FIX_ORIGINAL_D2_ACTIVE",
+      "status": "SOURCE909_QB907_F01_FIXED_TARGETED3_PASS_AWAIT_QB",
       "files": [
         "scripts/ops/resource-reclaim.mjs",
         "tests/resource-reclaim.test.ts",
         "docs/controller-handoff-20261028/RESOURCE-LIFECYCLE.json"
       ],
       "boundary": "No actual deletion/SQL DELETE/server/production, no invented TTL, preserve original session guard and all indexed/formal/audit/receipt/recovery media",
-      "receipt": "reports/backend/rapid-launch-20261022/D2/H06-RECLAIM904/RESULT.json",
+      "receipt": "reports/backend/rapid-launch-20261022/D2/H06-RECLAIM904-QB907-F01/RESULT.json",
       "checks": "6distinct protocol cases passed in targeted runs;syntax/strict pass;all PG/FS virtual",
-      "next": "OriginalD2 same3leaf directed fix; originalQB onlyF01 and affected media cases; no actualGC",
+      "next": "QB only physicalsame/crosscandidate alias F01 and affected copy/partial; real isolatedcleanup/restore remains unauthorized and untested",
       "qa": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE907/QB-SOURCE907-RESULT.json",
       "finding": "P1 same physical dev/ino backup alias despite nonoverlap paths; require all backup identities disjoint from all delete candidates before any removal"
     },
