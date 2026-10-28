@@ -31,6 +31,7 @@ import type { MaintenanceCompletion } from '../../../packages/application/src/ma
 import type { NativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
 import { PostgresProductMaintenanceUnitOfWork } from '../../../adapters/postgres/src/product-maintenance-store.ts';
 import {CapacityAdmissionRejected} from './capacity-admission.ts';
+import {createOwnedPoolCapacityAdmission} from './capacity-runtime-probe.ts';
 
 const ORIGIN = "https://synthetic-erp.invalid";
 const TIME = "2026-10-20T12:00:00.000Z";
@@ -67,6 +68,46 @@ test('A02 actual API forwards new-session capacity after credential work and bef
   assert.equal(response.statusCode,503);assert.equal(response.headers['retry-after'],'2');assert.equal(response.headers['set-cookie'],undefined);assert.equal(calls,1);
   assert.equal(driver.sessions.size,before);assert.equal(driver.calls.some(c=>c.sql.startsWith('INSERT INTO naijue_erp.auth_session')),false);
   assert.equal((await api.app.inject({url:'/auth/session',headers:{cookie:`__Host-naijue_session=${TOKEN}`}})).statusCode,200);assert.equal(calls,1);
+});
+test('A02 runtime producer is bound to the sole actual API pool; fresh facts permit login and stale facts preserve existing session/logout',async t=>{
+  const value=options(),driver=new ScriptedDriver();let at=1000,facts=0;
+  const binding={candidateFingerprint:'SYNTHETIC_SOURCE',targetFingerprint:'SYNTHETIC_TARGET',writerTopologyFingerprint:'ONE_WRITER',
+    inventoryFingerprint:'SYNTHETIC_INVENTORY',processInstanceId:'SYNTHETIC_INSTANCE',restartGeneration:1,writerCount:1,
+    physicalVolumes:{postgres:'pg-wal',wal:'pg-wal',backup:'backup',system:'system-media',media:'system-media'}};
+  const bytes=(n:bigint)=>({postgres:n,wal:n,backup:n,system:n,media:n});
+  const capacityAdmission=createOwnedPoolCapacityAdmission({window:{approved:true,token:'SYNTHETIC_WINDOW',inventoryObservedAt:900,startsAt:1000,expiresAt:10000,binding},
+    budgets:{session:{maxAdmissions:10,maxInFlight:2,worstCaseBytes:bytes(1n)},upload:{maxAdmissions:10,maxInFlight:2,worstCaseBytes:bytes(2n)}},
+    minimumFreeBytes:bytes(10n),safetyBytes:bytes(1n),probeTtlMillis:100,probeTimeoutMillis:100,maxProbeWaiters:2,retryAfterSeconds:2,
+    now:()=>at,currentBinding:()=>binding,runtimeProbe:{target:{host:value.postgres.target.host,port:value.postgres.target.port,
+      database:value.postgres.target.database,role:value.postgres.target.user,databaseOid:'999',postmasterStart:'SYNTHETIC_POSTMASTER'},
+      async readVolumeFacts({window}){facts++;assert.equal(driver.connects,driver.releases.length,'Password/preflight lease must finish before operational IO');
+        return{status:'KNOWN',windowToken:window.token,binding,observedAt:1000,freeBytes:bytes(1000n)};}}});
+  driver.business=async sql=>{
+    if(sql.includes('capacity-runtime:identity'))return{rows:[{database:value.postgres.target.database,role:value.postgres.target.user,session_user:value.postgres.target.user,
+      database_oid:'999',postmaster_start:'SYNTHETIC_POSTMASTER',read_only:'on',isolation:'repeatable read'}],rowCount:1};
+    if(sql.includes('capacity-inventory:storage'))return{rows:[{relation_bytes:'1',index_bytes:'1',total_relation_bytes:'2',database_bytes:'10'}],rowCount:1};
+    throw Error('Unexpected synthetic business query');
+  };
+  const api=await createPostgresReadApi({...value,capacityAdmission},driver.factory);t.after(()=>api.close());
+  assert.equal(driver.allocations,1);assert.equal(driver.connects,0,'Binding the probe must not eagerly open a connection');
+  const login=()=>api.app.inject({method:'POST',url:'/auth/login',headers:{origin:ORIGIN,'content-type':'application/json'},payload:{loginName:driver.account.login_name,password:PASSWORD}});
+  assert.equal((await login()).statusCode,200);assert.equal(facts,1);
+  assert.equal(driver.allocations,1);assert.equal(driver.connects,driver.releases.length);
+  const sqls=driver.calls.map(c=>c.sql),storageIndex=sqls.findIndex(s=>s.includes('capacity-inventory:storage'));
+  assert.ok(storageIndex>=0&&storageIndex<sqls.findIndex(s=>s.startsWith('INSERT INTO naijue_erp.auth_session')));
+  assert.equal(sqls[storageIndex+1],'ROLLBACK','The original read-only probe must end before session transaction');
+  const before=driver.sessions.size;at=1100;
+  const unavailable=await login();assert.equal(unavailable.statusCode,503);assert.equal(unavailable.headers['set-cookie'],undefined);
+  assert.equal(driver.sessions.size,before);assert.equal(facts,2);assert.equal(driver.allocations,1);
+  assert.equal(driver.calls.filter(c=>c.sql.includes('capacity-inventory:storage')).length,1,'Stale operational facts refuse before PG sampling');
+  const cookie=`__Host-naijue_session=${TOKEN}`;
+  const old=await api.app.inject({url:'/auth/session',headers:{cookie}});assert.equal(old.statusCode,200);assert.ok(old.json().principal);
+  assert.equal((await api.app.inject({method:'POST',url:'/auth/logout',headers:{origin:ORIGIN,'content-type':'application/json',cookie},payload:{}})).statusCode,204);
+  assert.equal(facts,2,'Existing session reads and logout must bypass new-write capacity');assert.equal(driver.connects,driver.releases.length);
+  await api.close();assert.equal(driver.ends,1);
+  const retryDriver=new ScriptedDriver();
+  await assert.rejects(createPostgresReadApi({...value,capacityAdmission},retryDriver.factory),/one exact owned pool/);
+  assert.equal(retryDriver.allocations,1);assert.equal(retryDriver.connects,0);assert.equal(retryDriver.ends,1,'Rejected rebind disposes its newly owned pool without a query');
 });
 test('P02 actual API refuses missing instance budgets before pool allocation and never silently selects production defaults',async()=>{
   const value=options();const {work:_work,...withoutWork}=value.authentication;const driver=new ScriptedDriver();

@@ -7771,7 +7771,7 @@
     "A02RuntimeProbe932": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "state": "LEASE_GRANTED_EXISTING_A02_REAL_PROBE_SOURCE_ONLY",
+      "state": "HANDED_BACK_FOUR_LEAVES_SOURCE933_QB_PENDING_NO_ACTIVE_WRITER",
       "files": [
         "apps/api/src/capacity-runtime-probe.ts",
         "tests/capacity-runtime-probe.test.ts",
@@ -7781,7 +7781,19 @@
         "apps/api/src/production-application-host.test.ts"
       ],
       "scope": "C hands back only producer/shared pool seam for actual A02 probe to original D1. Reuse exact owned BoundedPostgresPool and existing CapacityAdmission; current relation/database aggregates plus separately trusted fresh target volume facts; no second PG pool, API-local statfs as remote PG/WAL, DB grants/schema/write changes, guessed capacity/window/SLO or deployment. Check source consumer/config gap before edits; only necessary leaves from lease. No new collector/platform.",
-      "next": "Implement smallest real read-only producer seam and affected tests; report any additional file need before editing. Actual QA probe/window/performance remains separate original T45 execution."
+      "next": "Fixed four leaf source→original QB new affected scope only. Runtime operational producer/window and realQA remain T45/C dependencies.",
+      "changedFiles": [
+        "apps/api/src/capacity-runtime-probe.ts",
+        "tests/capacity-runtime-probe.test.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/postgres-read-api.test.ts"
+      ],
+      "receipt": {
+        "path": "D1/A02-RUNTIME-PROBE932-RESULT.json",
+        "bytes": 6097,
+        "sha256": "69368b710e963aa421ab29456963976ceb64d16410b692635e416647f515f2e6"
+      },
+      "checks": "D1 19 unique targeted cases PASS/no skips and4TSroots strict0; sameownedpool no eager connect, RR readonly identity/size rollback/release, stale/unknown beforeborrow, oldsession read/logout bypass. ActualPG/disk/window/budget/SLO/host selection not tested."
     }
   }
 }

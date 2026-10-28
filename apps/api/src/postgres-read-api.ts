@@ -106,6 +106,7 @@ import type { ProductMaintenanceTransaction, ProductMaintenanceUnitOfWork } from
 import { createProductMaintenanceHttpPlugin } from "./product-maintenance-http.ts";
 import { createProductMediaHttpPlugin } from "./product-media-http.ts";
 import type { CapacityAdmission } from './capacity-admission.ts';
+import {captureCapacityRuntimePoolBinder} from './capacity-runtime-probe.ts';
 
 export interface PostgresReadApiExplicitAuthorization {
   readonly mode?: never;
@@ -448,12 +449,13 @@ function checkedHost(options: PostgresReadApiOptions) {
   if (typeof capacity?.acquire !== 'function' || typeof capacity.close !== 'function')
     throw new TypeError('PostgreSQL API requires explicit singleton capacity admission; no default window or probe');
   const capacityAdmission = Object.freeze({acquire: capacity.acquire.bind(capacity), close: capacity.close.bind(capacity)});
+  const capacityRuntimePoolBinder = captureCapacityRuntimePoolBinder(capacity);
   const inventoryOutputSpool = Object.hasOwn(options, "inventoryOutputSpool")
     ? Object.freeze({ ...exactBag(options.inventoryOutputSpool, ["directory", "maxBytes", "maxConcurrent", "maxDurationMs"]) }) as unknown as InventoryOutputSpoolOptions : undefined;
   // Capture provider methods and origins before the first await. Changing the caller's
   // configuration object later cannot replace these boundaries or enable a write plugin.
   return {
-    inventoryOutputSpool, trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility, authenticationWork, capacityAdmission,
+    inventoryOutputSpool, trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility, authenticationWork, capacityAdmission, capacityRuntimePoolBinder,
     authorization: checkedAuthorization(options.authorization), currentForms: checkedCurrentForms(options),
     media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
       resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media),
@@ -586,6 +588,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   let app: FastifyInstance | undefined;
   let closing = false;
   try {
+    host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
     const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
       ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1"
     });
@@ -808,6 +811,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     // Even failed registration owns its pool. Both operations are idempotent; explicitly
     // dispose as a fallback if Fastify fails before reaching the close hook.
     const failures: unknown[] = [error];
+    try { host.capacityAdmission.close(); } catch (closeError) { failures.push(closeError); }
     try { await app?.close(); } catch (closeError) { failures.push(closeError); }
     try { await ownedPool.dispose(); } catch (disposeError) { if (!failures.includes(disposeError)) failures.push(disposeError); }
     if (failures.length > 1) throw new AggregateError(failures, "PostgreSQL read API construction failed; resource cleanup is not confirmed");
