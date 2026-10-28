@@ -1,11 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, realpath, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, realpath, readFile, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { openImportHost, requiredNativeSourceInputs, validateSourceHostJob, createSourcePreflightDatabaseGate,
   requiredNativeSourceInputs26, validateSourceHostJob26, captureNativeSourceProvider26, validateExecutableSourceHostJob26, createSourcePreflightRuntimeGate26, captureNativeSourceSession26,validateSourceHostRuntimeReview26, openImportHost26 } from './production-source-host.mjs';
+import { createNativeRuntime26Issuer } from '../../adapters/postgres/src/native-import-accounting-capability.ts';
+const history135HostProfiles=[
+ ['h135-v1-no-prefix','26_hv2_history_set_guards_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V1'],
+ ['h135-v2-no-prefix','26_hv2_history_set_guards_source_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V2'],
+ ['h135-v3-no-prefix','26_hv2_history_set_guards_maintenance_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V3'],
+];
 const id = n => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 const sha = c => c.repeat(64);
 function job(at = Date.now()) {
@@ -187,13 +193,14 @@ test('executableHost26 captures concrete preflight and all11 source sessions plu
  let gets=0;const getter=session26Fixture();Object.defineProperty(getter,'preflight',{enumerable:true,get(){gets++;return async()=>{};}});assert.throws(()=>captureNativeSourceSession26(getter,job26().binding));assert.equal(gets,0);
 });
 async function negativeHost26Fixture(t,mode){
+ const historyProfile=history135HostProfiles.find(([key])=>key===mode),fullContinuation=['adopted-denied','v22-no-prefix','xmin-no-prefix'].includes(mode)||historyProfile!==undefined;
  const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-executable-host26-'));t.after(()=>rm(dir,{recursive:true,force:true}));const j=executableJob26(),save=async(name,value)=>{const bytes=Buffer.from(typeof value==='string'?value:JSON.stringify(value)),path=join(dir,name);await writeFile(path,bytes);return {path,sha:createHash('sha256').update(bytes).digest('hex')};};
  const native=await save('native.json',{schemaVersion:2,validatorVersion:'NATIVE_PRODUCT_REFERENCE_DECISIONS_V2_EXACT26',schemaProfile:'EXACT26',batchId:j.binding.batchId,fixedSourceNamespace:j.binding.fixedSourceNamespace,selection:{entity:'PRODUCT',selectionSha256:j.binding.selectionSha256},mappingFiles:[],decisions:[{synthetic:true}]});j.sources.referenceDecisionFile=native.path;j.sources.trustedReferenceDecisionSha256=native.sha;
  const productReview=await save('native-ref-review.json',{});j.sources.reviewFile=productReview.path;j.sources.trustedReviewSha256=productReview.sha;
- const qb=await save('QB.json',{result:'PASS',scope:'SYNTHETIC_NEGATIVE_PREFLIGHT_ONLY'}),metadata=await save('C-runtime.json',{version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target:{database:j.binding.target.database,databaseOid:'1',actingRole:j.binding.target.role,sessionUser:j.binding.target.role,serverAddress:j.binding.target.serverAddress,serverPort:j.binding.target.serverPort,postmasterStart:j.binding.target.postmasterStartedAt},catalog:{format:mode==='xmin-no-prefix'?'EXACT26_RUNTIME_CATALOG_EXPORT_V2':'EXACT26_RUNTIME_CATALOG_EXPORT_V1',patchLevel:mode==='xmin-no-prefix'?'26_hv2_source_xmin_from_v22':mode==='v22-no-prefix'?'26_v22_staged_prefix_bind_from_v20':mode==='adopted-denied'?'26_v14_core_initialization':'26_v11_document_specification_save',sha256:sha('a')},purposes:['IMPORT_STAGE'],scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{path:qb.path,sha256:qb.sha,result:'PASS'},realImportExecutionAuthorized:false});j.runtime26Review={reviewFile:metadata.path,trustedReviewSha256:metadata.sha};
- if(['adopted-denied','v22-no-prefix','xmin-no-prefix'].includes(mode))Object.assign(j.binding,{phase:'FULL_SOURCE_CONTINUATION_26_V1',coreSourceDigest:sha('c'),coreReceiptId:id(999)});
+ const qb=await save('QB.json',{result:'PASS',scope:'SYNTHETIC_NEGATIVE_PREFLIGHT_ONLY'}),metadata=await save('C-runtime.json',{version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target:{database:j.binding.target.database,databaseOid:'1',actingRole:j.binding.target.role,sessionUser:j.binding.target.role,serverAddress:j.binding.target.serverAddress,serverPort:j.binding.target.serverPort,postmasterStart:j.binding.target.postmasterStartedAt},catalog:{format:historyProfile?.[2]??(mode==='xmin-no-prefix'?'EXACT26_RUNTIME_CATALOG_EXPORT_V2':'EXACT26_RUNTIME_CATALOG_EXPORT_V1'),patchLevel:historyProfile?.[1]??(mode==='xmin-no-prefix'?'26_hv2_source_xmin_from_v22':mode==='v22-no-prefix'?'26_v22_staged_prefix_bind_from_v20':mode==='adopted-denied'?'26_v14_core_initialization':'26_v11_document_specification_save'),sha256:sha('a')},purposes:['IMPORT_STAGE'],scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{path:qb.path,sha256:qb.sha,result:'PASS'},realImportExecutionAuthorized:false});j.runtime26Review={reviewFile:metadata.path,trustedReviewSha256:metadata.sha};
+ if(fullContinuation)Object.assign(j.binding,{phase:'FULL_SOURCE_CONTINUATION_26_V1',coreSourceDigest:sha('c'),coreReceiptId:id(999)});
  const marker='host26:'+dir;globalThis[marker]={opened:0,closed:0,closedGate:false};t.after(()=>{delete globalThis[marker];});
- const groups=requiredNativeSourceInputs26().closureSourceGroups,code=`export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';export const sourceGroups=${JSON.stringify(groups)};export async function openSourceSession({binding,database}){const m=globalThis[${JSON.stringify(marker)}];m.opened++;${mode==='early'?'database.ready();':''}const close=async()=>{m.closed++;try{database.ready();}catch(e){m.closedGate=e.code==='IMPORT_SOURCE_HOST_DATABASE_PRECHECK';}};${mode==='malformed'?'return {close};':''}return {close,async *steps(){},async authorizeStep(){},async assertExecutionAllowed(){},async assertAllowed(){},async authorizeNativeCommand(){},async preflight(){${mode==='boolean'?'return true;':mode==='adopted-denied'?"throw Error('PRODUCTION_ADOPTED26_EVIDENCE');":''}},openSources:Object.fromEntries(sourceGroups.map(g=>[g,async()=>{}])),closureScope:{batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selectionSha256:binding.selectionSha256,authorizedPayloadHash:binding.authorizedPayloadHash,expectedCounts:{},expectedSourceEntityCounts:{}},nativeProductSourceReader:{async authorize(){}},${['adopted-denied','v22-no-prefix','xmin-no-prefix'].includes(mode)?"adoptedClosure:{async expected(){throw Error('NO_SOURCE_ITERATOR');},async authorizeStage(){},async authorizePublish(){}},bootstrap26:null":'bootstrap26:{async authorizeStageSourceActor(){},async stageNewBatch26(){}}'}};}`;
+ const groups=requiredNativeSourceInputs26().closureSourceGroups,code=`export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';export const sourceGroups=${JSON.stringify(groups)};export async function openSourceSession({binding,database}){const m=globalThis[${JSON.stringify(marker)}];m.opened++;${mode==='early'?'database.ready();':''}const close=async()=>{m.closed++;try{database.ready();}catch(e){m.closedGate=e.code==='IMPORT_SOURCE_HOST_DATABASE_PRECHECK';}};${mode==='malformed'?'return {close};':''}return {close,async *steps(){},async authorizeStep(){},async assertExecutionAllowed(){},async assertAllowed(){},async authorizeNativeCommand(){},async preflight(){${mode==='boolean'?'return true;':mode==='adopted-denied'?"throw Error('PRODUCTION_ADOPTED26_EVIDENCE');":''}},openSources:Object.fromEntries(sourceGroups.map(g=>[g,async()=>{}])),closureScope:{batchId:binding.batchId,fixedSourceNamespace:binding.fixedSourceNamespace,selectionSha256:binding.selectionSha256,authorizedPayloadHash:binding.authorizedPayloadHash,expectedCounts:{},expectedSourceEntityCounts:{}},nativeProductSourceReader:{async authorize(){}},${fullContinuation?"adoptedClosure:{async expected(){throw Error('NO_SOURCE_ITERATOR');},async authorizeStage(){},async authorizePublish(){}},bootstrap26:null":'bootstrap26:{async authorizeStageSourceActor(){},async stageNewBatch26(){}}'}};}`;
  const provider=await save('provider.mjs',code);j.providers={path:provider.path,sha256:provider.sha};const config=await save('job.json',j);return {configFile:config.path,marker,dir,job:j,save,native,productReview};
 }
 test('executableHost26 denies provider target access and closes malformed sessions before any pool activation',async t=>{
@@ -382,4 +389,46 @@ test('PF02 xmin profile cannot activate the target without original independentl
  const f=await negativeHost26Fixture(t,'xmin-no-prefix');
  await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/PREFIX_REQUIRED/);
  assert.equal(globalThis[f.marker].opened,1);assert.equal(globalThis[f.marker].closed,1);assert.equal(globalThis[f.marker].closedGate,true);
+});
+
+
+test('H135 host accepts only issuer exact V1 V2 V3 formats with full continuation and original prefix',()=>{
+ const {base,b,m}=v20FullRuntimeFixture(),prefix={async capture(){throw Error('METADATA_MUST_NOT_CAPTURE');}};
+ for(const [,patchLevel,format] of history135HostProfiles){
+  const review={...m,catalog:{...m.catalog,patchLevel,format}};
+  assert.equal(validateSourceHostRuntimeReview26(review,b,prefix),undefined);
+  for(const wrongFormat of ['EXACT26_RUNTIME_CATALOG_EXPORT_V1','EXACT26_RUNTIME_CATALOG_EXPORT_V2','EXACT26_RUNTIME_CATALOG_EXPORT_V3'].filter(x=>x!==format))
+   assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,format:wrongFormat}},b,prefix),/RUNTIME_REVIEW/);
+  for(const absent of [undefined,true,{capture:true},{capture:async()=>{},verified:true}])
+   assert.throws(()=>validateSourceHostRuntimeReview26(review,b,absent),/PREFIX_REQUIRED/);
+  for(const wrongBinding of [base,job26().binding])assert.throws(()=>validateSourceHostRuntimeReview26(review,wrongBinding,prefix),/RUNTIME_REVIEW/);
+  for(const change of [{database:'different'},{actingRole:'different'},{serverAddress:'127.0.0.2'},{serverPort:1234},{postmasterStart:'different'}])
+   assert.throws(()=>validateSourceHostRuntimeReview26({...review,target:{...review.target,...change}},b,prefix),/RUNTIME_TARGET/);
+  for(const change of [{realImportExecutionAuthorized:true},{scope:'EXECUTION'},{decision:'PASS'},{independentReview:m.independentReview,extra:true}])
+   assert.throws(()=>validateSourceHostRuntimeReview26({...review,...change},b,prefix),/RUNTIME_REVIEW/);
+  assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,extra:true}},b,prefix),/RUNTIME_REVIEW/);
+  assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...review.catalog,sha256:'invalid'}},b,prefix),/RUNTIME_REVIEW/);
+ }
+ for(const patchLevel of ['26_hv2_category_depth_from_v22','26_hv2_responsible_null_from_v22','26_hv2_history_set_guards_prepare_xmin_from_v22','26_hv2_history_set_guards_maintenance_xmin_from_v23'])
+  assert.throws(()=>validateSourceHostRuntimeReview26({...m,catalog:{...m.catalog,patchLevel}},b,prefix),/RUNTIME_REVIEW/);
+});
+
+test('H135 original host refuses missing prefix and closes source before database activation for all exact formats',async t=>{
+ for(const [mode] of history135HostProfiles)await t.test(mode,async t=>{
+  const f=await negativeHost26Fixture(t,mode);
+  await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/PREFIX_REQUIRED/);
+  assert.equal(globalThis[f.marker].opened,1);assert.equal(globalThis[f.marker].closed,1);assert.equal(globalThis[f.marker].closedGate,true);
+ });
+});
+
+test('H135 original issuer retains finite reviewed purposes behind the source host gate',async t=>{
+ const f=await negativeHost26Fixture(t,'h135-v3-no-prefix');
+ const original=JSON.parse(await readFile(f.job.runtime26Review.reviewFile,'utf8'));
+ for(const [i,purposes] of [[],['IMPORT_STAGE','IMPORT_STAGE'],['UNREVIEWED_EXECUTION']].entries()){
+  const review=await f.save('invalid-purpose-'+i+'.json',{...original,purposes});let borrowed=0,ended=0;
+  const gate=createSourcePreflightRuntimeGate26(()=>({async connect(){borrowed++;throw Error('MUST_NOT_BORROW');},async end(){ended++;}}),createNativeRuntime26Issuer,
+   {reviewFile:review.path,trustedReviewSha256:review.sha});
+  await assert.rejects(gate.activate(),{code:'NATIVE_RUNTIME26_NOT_READY'});await gate.close();
+  assert.equal(borrowed,0);assert.equal(ended,1);
+ }
 });
