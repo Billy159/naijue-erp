@@ -579,7 +579,7 @@ def disarm(p, d, dp, stage, journal):
             journal.action('STOP_EXACT_NEW_WEB_PRESERVE_DATA', lambda: docker.run(['stop', '--time', '15', info['Id']], 30))
         need(not docker.inspect(info['Id'])['State']['Running'], 'NEW_ENTRY_STOP_UNCONFIRMED')
         if dp.get('runtimeSelector') == 'exact26-full':
-            d.stop_full_app(dp, docker, journal)
+            state['fullAppStop'] = d.stop_full_app(dp, docker, journal)
     else:
         need(state['ownerUnit']['sha256'] is None, 'ACTIVATION_ID_REQUIRED_FOR_INSTALLED_OWNER')
     return state

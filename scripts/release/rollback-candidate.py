@@ -53,18 +53,19 @@ def rollback(p, mode, implementation=None):
                 journal.event('STOP_EXACT_NEW_WEB_INTENT', containerId=public['id'])
                 docker.run(['stop', '--time', '20', public['id']], 40)
             C.need(not docker.inspect(public['id'])['State']['Running'], 'NEW_ENTRY_STOP_UNCONFIRMED')
+            full_app_stop = None
             if mode == 'restore-old-entry':
                 restored = C.restore_old_entry(p, docker, journal)
                 status = 'OLD_ENTRY_RESTORED_PRE_BUSINESS_WRITES_NO_DATABASE_RESTORE'
             else:
                 if C.exact26_full(p):
-                    C.stop_full_app(p, docker, journal)
+                    full_app_stop = C.stop_full_app(p, docker, journal)
                 C.check_old(p, docker, web_running=False)
                 restored = None
                 status = 'NEW_ENTRY_STOPPED_NO_HTTP_MAINTENANCE_RESPONSE'
             value = {'format': 'naijue-entry-rollback-v1', 'status': status, 'mode': mode, 'buildId': p['buildId'],
                      'sourceCommit': p['sourceCommit'], 'archiveSha256': p['archive']['sha256'], 'oldWeb': restored,
-                     'newWebId': public['id'], 'database': C.DATABASE, 'newDatabaseAndReceiptsPreserved': True,
+                     'newWebId': public['id'], 'fullAppStop': full_app_stop, 'database': C.DATABASE, 'newDatabaseAndReceiptsPreserved': True,
                      'oldAppAndDatabaseUnchanged': True, 'databaseRestoredOrDowngraded': False,
                      'publicHttpsReadbackPerformed': False, 'finishedAtUtc': C.now()}
             journal.finish(status, dockerCommands=docker.commands)

@@ -163,14 +163,51 @@ def file_identity(filename):
             'uid': s.st_uid, 'gid': s.st_gid, 'mode': stat.S_IMODE(s.st_mode)}
 
 
-def member_allowed(name):
+# Exact baseline approved source/member mapping. Candidate successors require SQL-owner approval.
+APPROVED_SQL_PATCHES = {
+    'adapters/postgres/patches/0026-v8-bootstrap-field-provenance.sql': 'patches/0026-v8-bootstrap-field-provenance.sql',
+    'adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql': 'patches/0026-v9-empty-history-publication-dispatch.sql',
+    'adapters/postgres/patches/0026-v10-native-creation-trigger-record-scope.sql': 'patches/0026-v10-native-creation-trigger-record-scope.sql',
+    'adapters/postgres/patches/0026-v11-document-specification-save.sql': 'patches/0026-v11-document-specification-save.sql',
+}
+
+
+def validate_sql_members(manifest, source, approvedPatchMap):
+    expected = {}
+    migrations = []
+    for row in source.get('files', []):
+        name = row.get('path', '')
+        if re.fullmatch(r'adapters/postgres/migrations/[0-9]{4}_[A-Za-z0-9_-]+\.sql', name):
+            need(name not in expected, 'DUPLICATE_SQL_SOURCE')
+            expected[name] = row
+            migrations.append(name)
+    need(len(migrations) == 26 and {int(PurePosixPath(n).name.split('_', 1)[0]) for n in migrations} == set(range(1, 27)), 'FULL_SAME_MIGRATION_SOURCES_REQUIRED')
+    sources = {r['path']: r for r in source.get('files', [])}
+    mapping = {name: name.removeprefix('adapters/postgres/') for name in migrations}
+    for name, member in approvedPatchMap.items():
+        need(re.fullmatch(r'adapters/postgres/patches/[A-Za-z0-9_-]+\.sql', name) and member == name.removeprefix('adapters/postgres/') and name in sources, 'APPROVED_PATCH_SOURCE_REQUIRED')
+        mapping[name] = member
+        expected[name] = sources[name]
+    rows = [r for r in manifest['members'] if r.get('role') == 'migration' or r.get('path', '').startswith(('migrations/', 'patches/'))]
+    need(len(rows) == len(mapping) and len({r['path'] for r in rows}) == len(rows), 'EXACT_SQL_MEMBER_SET_REQUIRED')
+    seen = set()
+    for row in rows:
+        name = row.get('sourcePath')
+        need(row.get('role') == 'migration' and name in mapping and row['path'] == mapping[name] and name not in seen and
+             all(row.get(k) == expected[name].get(k) for k in ('bytes', 'sha256')), 'EXACT_SQL_SOURCE_BINDING_REQUIRED')
+        seen.add(name)
+    need(seen == set(mapping), 'EXACT_SQL_MEMBER_SET_REQUIRED')
+    return {'migrationCount': 26, 'patchCount': len(approvedPatchMap)}
+
+
+def member_allowed(name, approvedPatchMap=None):
     relative(name)
     # Exact approved migration, not product-media data; archive/hash checks still apply.
     if name == 'migrations/0022_product_media_retained_delete.sql':
         return
     runtime_media_module = bool(re.fullmatch(r'web/chunks/product-editor-media-[A-Z0-9]{8}\.js', name))
     need(runtime_media_module or not re.search(r'(?:^|[/_.-])(?:secret|private|password|credential|token|backup|fixture|synthetic|test|media|node_modules)(?:s?)(?:$|[/_.-])', name, re.I), 'NON_RUNTIME_ARCHIVE_MEMBER')
-    if name in ('release-manifest.json', 'package.json', 'package-lock.json'):
+    if name in ('release-manifest.json', 'package.json', 'package-lock.json', 'web/source-styles/assets/fonts/LICENSE.txt') or name in (APPROVED_SQL_PATCHES if approvedPatchMap is None else approvedPatchMap).values():
         return
     need(bool(re.fullmatch(r'web/[A-Za-z0-9_./-]+\.(?:html|js|mjs|css|json|svg|woff2?)', name)) or
          bool(re.fullmatch(r'backend/[A-Za-z0-9_./-]+\.(?:js|mjs|cjs|json)', name)) or
@@ -233,6 +270,16 @@ def verified_archive(archive_ref, manifest_ref, build_id, source_commit):
 
 def nginx_configuration(app_name):
     need(re.fullmatch(r'naijue-rewrite-[a-z0-9-]{1,55}-app', app_name), 'EXACT_CANDIDATE_APP_NAME_REQUIRED')
+    def location(path, body=None, read_seconds=30):
+        settings = '      proxy_pass http://\'\'\' + app_name + \'\'\':3000;\n      proxy_http_version 1.1;\n      proxy_set_header Connection "";\n      proxy_set_header Host \'\'\' + HOST + \'\'\';\n      proxy_set_header Forwarded "";\n      proxy_set_header X-Forwarded-For "";\n      proxy_set_header X-Real-IP "";\n      proxy_set_header X-Forwarded-Host "";\n      proxy_set_header X-Forwarded-Proto "";\n      proxy_set_header X-Forwarded-Port "";\n      proxy_connect_timeout 5s;\n      proxy_read_timeout 30s;\n      proxy_send_timeout 30s;\n      proxy_next_upstream off;\n      proxy_cache off;\n      proxy_redirect off;\n'
+        settings = settings.replace("''' + app_name + '''", app_name).replace("''' + HOST + '''", HOST)
+        settings = settings.replace('proxy_read_timeout 30s;', 'proxy_read_timeout %ss;' % read_seconds)
+        budget = ('      client_max_body_size %s;\n' % body) if body is not None else ''
+        return '    location ' + path + ' {\n' + budget + settings + '    }\n'
+    locations = location('/')
+    for path, body in [('/api/products/media/uploads', 8388608), ('/api/imported-history/sales/revise', 4194304), ('/api/imported-history/transfers/revise', 4194304), ('/api/products/commands', 1048576), ('/api/products/v2/commands', 1048576), ('/api/catalogue/categories/commands', 1048576)]:
+        locations += location('= ' + path, body)
+    locations += location('= /api/inventory/output/query', read_seconds=130)
     return ('''worker_processes 1;
 pid /tmp/nginx.pid;
 error_log /dev/stderr warn;
@@ -257,24 +304,7 @@ http {
     add_header Cache-Control $naijue_response_cache_control always;
     add_header X-Content-Type-Options nosniff always;
     add_header X-Frame-Options DENY always;
-    location / {
-      proxy_pass http://''' + app_name + ''':3000;
-      proxy_http_version 1.1;
-      proxy_set_header Connection "";
-      proxy_set_header Host ''' + HOST + ''';
-      proxy_set_header Forwarded "";
-      proxy_set_header X-Forwarded-For "";
-      proxy_set_header X-Real-IP "";
-      proxy_set_header X-Forwarded-Host "";
-      proxy_set_header X-Forwarded-Proto "";
-      proxy_set_header X-Forwarded-Port "";
-      proxy_connect_timeout 5s;
-      proxy_read_timeout 30s;
-      proxy_send_timeout 30s;
-      proxy_next_upstream off;
-      proxy_cache off;
-      proxy_redirect off;
-    }
+''' + locations + '''
   }
 }
 ''').encode()
@@ -418,9 +448,7 @@ def validate_runtime26_full(p, manifest, runtime):
     validate_full_metadata(p, runtime, review, reference(refs['metadata']), reference(refs['independentReview'], 8 * 1024 * 1024))
     validate_runtime_build(p, manifest, refs)
     source = reference(refs['sourceManifest'], 16 * 1024 * 1024)
-    migrations = {r['path']: r['sha256'] for r in source.get('files', []) if re.fullmatch(r'adapters/postgres/migrations/[0-9]{4}_.+\.sql', r['path'])}
-    need(len([r for r in manifest['members'] if r.get('role') == 'migration']) == 26 and all(
-         migrations.get('adapters/postgres/' + r['path']) == r['sha256'] for r in manifest['members'] if r.get('role') == 'migration'), 'FULL_SAME_MIGRATION_SOURCES_REQUIRED')
+    validate_sql_members(manifest, source, APPROVED_SQL_PATCHES)
     publication = reference(refs['publication'])
     batch, record = publication.get('batch', {}), publication.get('receipt', {})
     cp, result = batch.get('checkpoint', {}), record.get('result_data', {})
@@ -855,6 +883,14 @@ class Journal:
         self.data['events'].append({'atUtc': now(), 'event': label, **values})
         replace_json(self.path, self.data)
 
+    def action(self, label, operation):
+        self.data['events'].append({'atUtc': now(), 'action': label, 'state': 'INTENT_OUTCOME_UNKNOWN'})
+        replace_json(self.path, self.data)
+        result = operation()
+        self.data['events'][-1].update(state='RETURNED_SUCCESS_PENDING_READBACK', returnedAtUtc=now())
+        replace_json(self.path, self.data)
+        return result
+
     def finish(self, status, **values):
         self.data.update(status=status, finishedAtUtc=now(), **values)
         replace_json(self.path, self.data)
@@ -961,8 +997,8 @@ def stop_full_app(p, docker, journal):
     assert_own(info, p, 'app')
     need(own_container_fingerprint(info) == expected['specSha256'], 'FULL_APP_CHANGED_REFUSE_GUESS')
     if info['State']['Running']:
-        journal.event('STOP_EXACT_FULL_APP_PRESERVE_DATA_INTENT', containerId=info['Id'])
-        docker.run(['stop', '--time', '20', info['Id']], 40)
+        journal.action('STOP_EXACT_FULL_APP_PRESERVE_DATA:' + info['Id'],
+                       lambda: docker.run(['stop', '--time', '20', info['Id']], 40))
     need(docker.inspect(info['Id'])['State']['Running'] is False, 'FULL_APP_STOP_UNCONFIRMED')
     return {'appId': info['Id'], 'stopped': True, 'dataPreserved': True, 'transactionOutcome': 'REQUIRES_ORIGINAL_KEY_READBACK'}
 

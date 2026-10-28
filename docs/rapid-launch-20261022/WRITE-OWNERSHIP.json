@@ -1,6 +1,6 @@
 {
   "version": "2026-10-22-v1",
-  "updatedAt": "2026-10-28T07:43:48.206308+00:00",
+  "updatedAt": "2026-10-28T07:58:36.595933+00:00",
   "controller": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseSourceCheckpoint": "82112855eba3983582c719660b90be79b5024cd0",
   "currentHandoffCheckpoint": "ab6b837eb731b401f67cbc13184e79d166899798",
@@ -6781,37 +6781,41 @@
         "state": "OPEN_AFTER_EXISTING_SEGMENT_ACK"
       },
       "T45": {
-        "id": "HV2-B01/B02",
+        "id": "HV2-B01/B02/B03/P05_SERVER",
         "files": [
           "scripts/release/deploy-candidate.py",
           "scripts/release/boot-entry.py",
           "scripts/release/rollback-candidate.py",
           "scripts/release/release-file-contract.test.mjs",
-          "scripts/release/test_stop_full_lifecycle.py"
+          "scripts/release/test_stop_full_lifecycle.py",
+          "scripts/release/test_proxy_budget.py"
         ],
         "readOnly": [
           "scripts/release/manifest.mjs",
           "scripts/release/build-production.mjs",
           "scripts/release/pack.test.mjs"
         ],
-        "state": "OPEN_LOCAL_SOURCE_ONLY_NO_ENVIRONMENT_MUTATIONS"
+        "state": "OPEN_LOCAL_SOURCE_AND_FAKE_OR_PURE_RENDER_ONLY;NO_REAL_NGINX_DOCKER_OR_PG"
       },
       "D1": {
         "id": "HV2-B07",
         "files": [
           "packages/application/src/history-revision-contracts.ts",
           "packages/application/src/history-revision-service.ts",
-          "adapters/postgres/src/history-revision-store.ts"
+          "adapters/postgres/src/history-revision-store.ts",
+          "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
+          "tests/history-responsible-null-successor.test.ts",
+          "tests/history-revision-postgres-protocol.test.ts"
         ],
         "readOnly": [
           "adapters/postgres/patches/0026-history-revision-current-base.sql",
           "adapters/postgres/src/native-import-accounting-capability.ts",
           "apps/api/src/history-revision-http.ts"
         ],
-        "proposalOnly": [
-          "adapters/postgres/patches/0026-history-responsible-null-successor.sql"
-        ],
-        "state": "OPEN_CURRENT_SCOPE_VERIFICATION_AND_MINIMUM_SOURCE_FIX;any newSQL canonical/shared exactdelta C first"
+        "proposalOnly": [],
+        "state": "OPEN_SQL_SOURCE_ONLY_EXACT_PARENT1e69497;NO_PG_ACL_OR_EXECUTION;CURRENT_NULL_APP_CORRECT_KEEP",
+        "currentParentEvidence": "200 actual current-r1-v20-catalog.json routines[60] body_sha256/source=1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c; currentcanonical1050b2aa;retained snapshot not freshPG",
+        "next": "HV2-P04 history-revision-store and sameprotocoltest batch UNNEST per family,original transaction/rowguards intact;no newSQL successor until exactCregistration"
       }
     },
     "protectedTrackedWip": [
