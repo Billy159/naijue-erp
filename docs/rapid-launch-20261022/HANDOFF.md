@@ -1,3 +1,5 @@
+SOURCE931：原T45准确928 Linux依赖闭包已实测通过：完整离线npm ci仅1次exit0、锁未改，UID10001加载fastify/pg/sharp及一像素原生转换、111生产placement匹配通过。259收据目录失败和260原生首错UNKNOWN保留；261确认公开文件root0600不可读，262新目录同字节0644修正后通过，无旧现场/权限/生产改动。采用原回执7749/9b7fd38c…，C不重复验收；已接原production密钥读取器纯只读后继，仅合成boolean、不出key/tag、不启API/PG。原Demo仍normal34完整对比在途，105项61差异/30局部/14未跑，整页/弹层整项PASS0；不冒全量收口。930 GitHub5fe12771已回读。
+
 SOURCE930接续：T45已实证928入口eager依赖fastify/pg/sharp；本地新包用darwin-arm64，现远端Linux依赖仅旧5669锁，不能拿partial旧模块冒新锁。原B10读取器没有create/start，key258保全。C沿原部署依赖安装任务交唯一T45准确928 Linux新受控安装：先新旧production lock/cache索引/resolved/integrity/platform差异，必要首个ENOTCACHED最小复现修复后实际npm ci及sharp原生加载；不改lock/版本、旧cache/node_modules/生产/PG/权限，不重复旧长超时。929 ffee1770已远端回读；原Demo有限剩余清单在途，权限原人批pending。
 
 SOURCE929：采用原QB928 F01/F02限定源码PASS（旧927失败保留）；原T45258合成稳定key及私有恢复副本已实际就绪，32byte/私有模式及UID10001真实读取/内部副本相等通过，不泄露key或摘要，原reader未测。T45对准确SOURCE928/092821ff独立git archive后原build+pack各一次exit0，1429输入/209构建文件/206成员闭包读回通过、旧878同lock依赖复用无install。该新包不冒normal34对比、Linux启动或PG业务；机器key只读读取器后继仅在准确现有Linux镜像/依赖可用时受控一次，不改API/权限/生产。Demo负责人已接当前轮有限可执行清单交还要求，避免无限微补查；原人批pending不重问。

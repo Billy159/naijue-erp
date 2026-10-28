@@ -17702,8 +17702,8 @@
     "authorizationSource": "Latest human messages handoverV2/first verify then execute/continue;frontendsoleowner explicit;environment mutations separately confirmed.",
     "next": "QB845P04/Cmetadata/B12fixturelimitedreview;T45freshB14/P04isolationprep;CfiniteH04release mechanics;D3P03;frontendnormal34fullcomparisonfirst",
     "githubCheckpoint": {
-      "commit": "ffee1770cdb4fd6bec45f1dbc665430131666ff5",
-      "sourceRound": 929,
+      "commit": "5fe12771031802659c5180a078a36fd64dfdae6a",
+      "sourceRound": 930,
       "branch": "codex/erp",
       "remoteVerified": true,
       "method": "exact original objects nonforced FF and independent GET"
@@ -19294,8 +19294,8 @@
       },
       "checks": "Original T45 once new32 cryptorandom bytes; original exact new source+backup directories0700/files0600 owner10001; machine copy equality true and actual UID10001 32byte source read true. No value/tag/hash/content/model download/Git.",
       "unverified": "Actual production reader/CLI/HTTP/PG/B10 business not tested; host Node unavailable at UID10001, no executor workaround used in258.",
-      "readerState": "NOT_STARTED_ACTUAL_LINUX_DEPENDENCY_CLOSURE_MISSING",
-      "readerReason": "Fixed928 bundle eager-imports fastify/pg/sharp; existing Linux r1-5669 old lock d206... differs exact928 root c099..., local build used darwin-arm64 dependencies. No new reader container or booleans. Source/backup preserved."
+      "readerState": "DISPATCHED_ORIGINAL_PRODUCTION_READER_WITH_EXACT928_LINUX_PAYLOAD_262",
+      "readerReason": "Exact Linux closure now accepted. One networknone readonly UID10001 original exported reader/HMAC verification only; same/different synthetic input booleans; no values/tags/key hashes, PG or API."
     },
     "B12Source928Build": {
       "owner": "T45",
@@ -19335,12 +19335,24 @@
     "LinuxDependencies930": {
       "owner": "T45",
       "model": "gpt-6.1-sol/medium",
-      "status": "DISPATCHED_EXISTING_DEPENDENCY_INSTALL_TASK_FOR_FIXED928",
+      "status": "PASS_EXACT928_LINUX_PRODUCTION_INSTALL_AND_NATIVE_LOAD_ONLY",
       "sourceCommit": "092821ff20d2d55854959a5afc04dd89818daa80",
       "scope": "Current exact928 production package/lock Linux closure; dedupe existing matching jobs; reuse exact existing cache packages after lock/resolved/integrity/platform delta. If ENOTCACHED identify first actual request/cache/index mismatch and minimal fix in new cache; then actual npm ci production install/native load. No version/lock/policy weakening or old cache/node_modules overwrite.",
       "executionBoundary": "Original T45 existing authorized Linux executor/job/workdir only; new controlled install dirs/necessary bounded verification container. No PG/role permissions/key/production/application-start/deploy/migration/deletion or Docker shared cleanup.",
       "completionEvidence": "Matching Linux/Node/npm/productionlock actual npm ci exit0, unchanged lock, required fastify/pg/sharp native modules load and accurate artifact closure; counts/digests alone not success.",
-      "next": "Original owner execute, report actual first failure and changed-method minimal repair or real install result. Reader container remains conditional, no automatic application release."
+      "next": "Original T45 exact928 production key-reader pure check dispatched; no application/PG/production start.",
+      "receipt": {
+        "path": "B12-source928-linux-dependencies-01/RESULT.json",
+        "bytes": 7749,
+        "sha256": "9b7fd38cfab205035faf611db92fc6f46b023894fbeb2ddc5db4d3aa09112d01"
+      },
+      "checks": "One actual offline npm ci exit0 with unchanged exact lock; Node24.21/npm11.19 Linuxamd64 glibc2.36; UID10001 fastify/pg/sharp plus one-pixel native PNG roundtrip and111productionplacements passed. No network downloads or install replay.",
+      "rootCause": "259 receipt directory missing;260 ci succeeded but native generic error lost exact module/errno.261 confirmed public package/lock/backend root0600 unreadable;262 new independent payload same bytes0644/dirs0755 reused installed modules, actual loading passed. No cache repair needed; do not invent original native exception."
+    },
+    "source931": {
+      "state": "LINUX_CLOSURE_ACCEPTED_B10_PURE_READER_IN_PROGRESS",
+      "owner": "C/T45",
+      "frontend": "Original normal34 full comparison active; no replacement source writer or candidate switch. Matrix105=61DIFFERENCE/30PARTIAL/14NOT_RUN, wholepage/overlay PASS0; not final full-state comparison closure."
     }
   }
 }
