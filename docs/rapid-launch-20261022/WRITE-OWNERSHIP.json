@@ -7206,6 +7206,13 @@
       "path": "reports/controller/rapid-launch-20261022/hv2-b14-isolated-v22-target-20261028-01/apply-v22-b14-target.sql",
       "sqlSHA256": "ca6a84fd35aee5b6f0a345ba43f3f0c9ca82b8c51ba016e4b38226679abfe116",
       "scope": "newB14OID16399only originalv22prosrc8a8374fb unchanged;noR1/P04/ACL. T45uniqueexecutor."
+    },
+    "currentExecution859": {
+      "C": "Existing metadata/release-only source and records;adopt independentQB scope,not duplicate technicalQA",
+      "T45": "219done;217FAILEDpreserved,no replay;v23fixed858nine-rolepreparationonly",
+      "D1": "ExistingHV2-B07prepare-original212-continuation.mjs/testcontrolonly concrete217codecfix;source-only,noSQL/PG/server;permissionanalysispaused",
+      "frontend": "Original Terra-medium fixednormal34 readonlyfullcomparison,otherUI repairs waitfullreport",
+      "boundary": "No newteam/noACL/noR1/noformal migration/deploy/no201replay"
     }
   }
 }

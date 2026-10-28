@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-28T11:49:13.840939+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "e73819b5091d5f7447cddb6f5a5703603cad88ff",
+  "lastVerifiedRemoteCommit": "89ae916178716175dbf5b9b70181f485cc0b51b8",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18253,6 +18253,16 @@
       "P04RecoveryQA": "OriginalQB7180/11ec89744813387d8b963a4a65a4bf8d02d6a35dfa06e7ed1b588bf360e5519c limitedsource+pure1PASS,NOT_A_DEFECT countincluded. Actualcarrier notyetexecuted",
       "actual220": "PurefilehashCOMPLETED0/.067393281s exact215proof88596/1e3518eac9d5dc1450a3b1fde2e426d9319ba3bb6fbc7106cdc8216fab7063cc;root0600/inode-size-mtime stable/0DB,noJSONcontentexport.217nowPLAN6503d725/carrierad197161checksproof beforeNode;originalQBinputdeltaongoing",
       "next": "217samecheckpoint remainingactualsyntheticpublication afterfixedcarrierreview;219originalB07+B14twoSQLpreparation;v23ninthrolefixedQB andactualPG/ACL/seed/performance remainunverified"
+    },
+    "source859": {
+      "source858": "89ae916178716175dbf5b9b70181f485cc0b51b8",
+      "acceptedQB858": "4750/e856f735515af9e048e1b096ec8c18a1e76b292c40e7c36be2bc117e153bcd7e two-leaf three-targeted PASS only",
+      "accepted217PinOverlay": "4064/749423e5c486517ac09517dbe1dbe05ee924e7f3378ad82f2f01b3e4e69573c9 closes input-binding gap only",
+      "actual219": "COMPLETED0/1.120672385s RESULT14685/31e9c0412361a07447c3eaf9fbceb1a23700cf64eac4b3f5161fdfe173520e95 newB14OID16399 final133catalog318dfcbd71835690c108d686a2f4e4f4a8cd2b5a013a8762a51424cabb905fe8;source-match/4old2newtriggers/business-empty/client0;notdriverPASS",
+      "actual217": "FAILED2/1.119706313s INVALID_REQUEST canonical encode/requestHash,SQLState null;original2receipts andseq1cursor4 unchanged/clients0;later-table partialwritesUNKNOWN,notpublicationPASS,no217replay",
+      "next": "OriginalD1 exact217source-only codec/DTOdiagnosis,existingcontroltool/testonly if concretebug;permissionreviewpaused;T45fixed858nine-rolepreparation continues,0R1/ACL/formalexecution",
+      "model": "gpt-6.1-sol/medium",
+      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH"
     }
   }
 }
