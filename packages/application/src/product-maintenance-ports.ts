@@ -122,6 +122,7 @@ export interface ProductBarcodeGenerationReferences {
 }
 export interface ProductMaintenanceTransaction {
   readonly evidence: ProductMaintenanceEvidence;
+  assertPendingCapacity(completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void>;
   assertImageWriteReady?(): Promise<void>;
   assertImagesPrepared?(completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void>;
   assertImageColorSwapReady?(completion: Parameters<ProductMaintenanceEvidence["complete"]>[0]): Promise<void>;

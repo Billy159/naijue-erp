@@ -7459,7 +7459,7 @@
       "owner": "D2",
       "model": "gpt-6.1-sol",
       "thinking": "medium",
-      "status": "APPROVED_ACTIVE_EXACT_SOURCE",
+      "status": "HANDED_BACK_SOURCE890_COMPONENT_FIXED_INTEGRATION_PENDING",
       "approval": "Human call_d51f6d152d15476cb063527e1d542136/0:确认 A01 容量保护修订",
       "files": [
         "adapters/postgres/src/catalogue-completeness.ts",
@@ -7488,7 +7488,8 @@
         "apps/api/src/transfer-http.test.ts"
       ],
       "scope": "Approved A01 capacity409503 exacterror propagation only; originalD1 explicitsixleafhandoff/noWIP; noUI/runtimePG",
-      "model": "gpt-6.1-sol/medium"
+      "model": "gpt-6.1-sol/medium",
+      "status": "SOURCE890_3HTTP_ERRORS_AND_FIXTURES_CHECKED"
     }
   }
 }

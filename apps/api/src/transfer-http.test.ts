@@ -286,3 +286,16 @@ test("SYNTHETIC transfer HTTP: unknown provider errors never leak diagnostic tex
     assert.ok(!response.body.includes("PRIVATE")); assert.deepEqual(f.store.snapshot(), before);
   }
 });
+
+
+test("A01 transfer HTTP carries exact capacity errors and keeps rejected SAVE atomic", async t => {
+  for (const [code, status] of [["PRODUCT_EVIDENCE_CAPACITY_EXCEEDED", 409], ["PRODUCT_EVIDENCE_CAPACITY_NOT_READY", 503]] as const) {
+    const f = await setup(t, { authorize: async () => { throw new DomainError(code, "PRIVATE_CAPACITY_FACTS"); } });
+    const before = f.store.snapshot();
+    const response = await f.post(save());
+    assert.equal(response.statusCode, status, response.body);
+    assert.equal(response.json().error.code, code);
+    assert.doesNotMatch(response.body, /PRIVATE_CAPACITY_FACTS/);
+    assert.deepEqual(f.store.snapshot(), before);
+  }
+});

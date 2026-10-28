@@ -41,7 +41,7 @@ test("v17 HTTP original V2 accepts selection without client SKU codes; unsupport
   app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => current ? actor : null, dependencies: {
     now: () => "2026-10-25T00:00:00Z", newId: kind => sid(kind, 17100), unitOfWork: { seasonContract: "product-season-array-v1", async transaction(work) {
       return work({ evidence: { async assertAllowed() { if (!granted) throw new DomainError("FORBIDDEN", "PRIVATE_ROLE"); }, async getReceipt() { return undefined; }, complete: unexpected },
-        async load() { return undefined; }, readReferences: unexpected, readCandidates: unexpected, validateReferences: unexpected, assertCanDelete: unexpected, putProduct: unexpected, putSku: unexpected, putBarcode: unexpected });
+        async assertPendingCapacity() {}, async load() { return undefined; }, readReferences: unexpected, readCandidates: unexpected, validateReferences: unexpected, assertCanDelete: unexpected, putProduct: unexpected, putSku: unexpected, putBarcode: unexpected });
     } }
   } }));
   const { seasonId, ...old } = values;
@@ -63,7 +63,7 @@ test("v19 HTTP original V2 keeps required manual code400 and missing actual barc
   app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => actor, dependencies: {
     now: () => "2026-10-26T00:00:00Z", newId: kind => sid(kind, 19100), unitOfWork: { seasonContract: "product-season-array-v1", async transaction(work) {
       return work({ evidence: { async assertAllowed() {}, async getReceipt() { return undefined; }, complete: unexpected },
-        async load() { return undefined; }, readReferences: unexpected, readCandidates: unexpected, validateReferences: unexpected, assertCanDelete: unexpected, putProduct: unexpected, putSku: unexpected, putBarcode: unexpected });
+        async assertPendingCapacity() {}, async load() { return undefined; }, readReferences: unexpected, readCandidates: unexpected, validateReferences: unexpected, assertCanDelete: unexpected, putProduct: unexpected, putSku: unexpected, putBarcode: unexpected });
     } }
   } }));
   const { seasonId, ...old } = values;
@@ -75,7 +75,7 @@ test("v19 HTTP original V2 keeps required manual code400 and missing actual barc
 });
 test("W17 media extended V2 is closed before mutation without actual stage/driver capability and malformed changes stay 400", async t => {
   let touched = 0; const unexpected = async (): Promise<never> => { touched++; throw Error("UNEXPECTED_MUTATION"); };
-  const tx = { evidence: { async assertAllowed() {}, async getReceipt() { return undefined; }, complete: unexpected }, load: unexpected, readReferences: unexpected,
+  const tx = { assertPendingCapacity: unexpected, evidence: { async assertAllowed() {}, async getReceipt() { return undefined; }, complete: unexpected }, load: unexpected, readReferences: unexpected,
     readCandidates: unexpected, validateReferences: unexpected, assertCanDelete: unexpected, putProduct: unexpected, putSku: unexpected, putBarcode: unexpected };
   const app = Fastify({ logger: false }); t.after(() => app.close()); app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => actor, dependencies: {
     now: () => "2026-10-23T00:00:00Z", newId: () => id(1), unitOfWork: { seasonContract: "product-season-array-v1", async transaction(work) { return work(tx); } }
@@ -94,7 +94,7 @@ test("product maintenance HTTP: save/replay/original receipt traverses the actua
       async assertAllowed() { if (!granted) throw new DomainError("FORBIDDEN", "PRIVATE_POLICY"); }, async getReceipt(_actor, key) { return receipts.get(key); },
       async prepare() {}, async complete(c) { const result = { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion };
         receipts.set(c.requestKey, { requestHash: c.requestHash, action: c.action, result, completedAt: c.completedAt }); return result; }
-    }, async load(target) { return p?.product.id === target ? p : undefined; },
+    }, async assertPendingCapacity() {}, async load(target) { return p?.product.id === target ? p : undefined; },
     async readReferences(root) { return { categoryPath: [{ id: root.categoryId, name: "SYNTHETIC CATEGORY" }], sizeGroup: { id: root.sizeGroupId, name: "SYNTHETIC GROUP" },
       supplier: root.supplierId === null ? null : { id: root.supplierId, name: "SYNTHETIC SUPPLIER", enabled: true }, season: root.seasonId === null ? null : { id: root.seasonId, name: "SYNTHETIC SEASON" },
       defaultBarcodeScheme: root.defaultBarcodeSchemeId === null ? null : { id: root.defaultBarcodeSchemeId, name: "SYNTHETIC SCHEME", ruleVersion: "1", status: "CURRENT" as const } }; },
@@ -124,7 +124,7 @@ test("season v2 HTTP: new routes require verified contract; old editor upgrade a
   let ready = false, active = true;
   const unitOfWork: ProductMaintenanceDependencies["unitOfWork"] = { async transaction(work) { return work({ evidence: {
     async assertAllowed() {}, async getReceipt() { return undefined; }, async complete() { throw Error("No write"); }
-  }, async load() { throw Error("Must stop before load"); }, async readReferences() { throw Error("Must stop before refs"); },
+  }, async assertPendingCapacity() { throw Error("Must stop before capacity"); }, async load() { throw Error("Must stop before load"); }, async readReferences() { throw Error("Must stop before refs"); },
   async readCandidates(q) { return { ...q, total: 0, items: [] }; }, async validateReferences() {}, async assertCanDelete() {}, async putProduct() { throw Error("No write"); }, async putSku() {}, async putBarcode() {} }); } };
   Object.defineProperty(unitOfWork, "seasonContract", { get: () => ready ? "product-season-array-v1" : undefined });
   const dependencies = { unitOfWork, now: () => "unused", newId: () => "unused" };
@@ -141,4 +141,17 @@ test("season v2 HTTP: new routes require verified contract; old editor upgrade a
     const result = await post(url, body); assert.equal(result.statusCode, 409, result.body); assert.equal(result.json().error.code, "PRODUCT_EDIT_CONTRACT_UPGRADE_REQUIRED");
   }
   active = false; assert.equal((await post("/products/v2/commands", v2)).statusCode, 401); assert.equal(app.server.listening, false);
+});
+
+
+test("A01 product HTTP carries exact capacity rejection without exposing private evidence", async t => {
+  for (const [code, status] of [["PRODUCT_EVIDENCE_CAPACITY_EXCEEDED", 409], ["PRODUCT_EVIDENCE_CAPACITY_NOT_READY", 503]] as const) {
+    const app = Fastify({ logger: false }); t.after(() => app.close());
+    app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => actor,
+      dependencies: { now: () => "2026-10-29T00:00:00Z", newId: kind => sid(kind, 18100),
+        unitOfWork: { async transaction() { throw new DomainError(code, "PRIVATE_CAPACITY_FACTS"); } } } }));
+    const response = await app.inject({ method: "POST", url: "/products/commands", payload: command });
+    assert.equal(response.statusCode, status, response.body); assert.equal(response.json().error.code, code);
+    assert.doesNotMatch(response.body, /PRIVATE_CAPACITY_FACTS/);
+  }
 });

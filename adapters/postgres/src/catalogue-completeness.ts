@@ -251,8 +251,16 @@ function replayChildren(kind: "skus" | "barcodes" | "images", before: unknown, a
 /** Only the trusted explicit26 UOW creates this pair. The runtime issuer checks
  * the actual managed client, never a supplied query wrapper. The verifier accepts
  * only its own query, with a fresh proof for every call and no fallback on error. */
+export function assertProductEvidencePendingCapacity(base: {count:number;bytes:number}, before: unknown, after: unknown): {count:number;bytes:number} {
+  requireDomain(Number.isSafeInteger(base.count) && base.count>=0 && Number.isSafeInteger(base.bytes) && base.bytes>=0,
+    "PRODUCT_EVIDENCE_CAPACITY_NOT_READY", "Verified product evidence capacity required");
+  const bytes=Buffer.byteLength(JSON.stringify([before,after]));
+  const next={count:base.count+1,bytes:base.bytes+bytes};
+  requireDomain(next.count<=CHAIN_LIMIT && next.bytes<=AUDIT_BYTES,"PRODUCT_EVIDENCE_CAPACITY_EXCEEDED","Product evidence capacity exceeded");return next;
+}
 export interface MaintainedCatalogue26TransactionProof {
   readonly query: FactQuery; readonly verifier: NativeCatalogueCompletenessVerifier;
+  assertPendingCapacity(completion: MaintenanceCompletion): Promise<void>;
   captureDocumentAppendBaseline(productIds: readonly string[]): Promise<void>;
   registerDocumentAppend(proof: DocumentAppendEvidence): void;
 }
@@ -269,6 +277,7 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
     active(); return result;
   };
   const legacy = new PostgresImportedCatalogueCompletenessVerifier();
+  const capacity = new Map<string,{count:number;bytes:number;version:number}>(), admitted = new Map<string,string>();
   const captured = new Map<string, number>(), appends = new Map<string, MaintenanceCompletion>(); let capturing = false;
   const pendingAudit = (audit: Facts, productId: string): boolean => {
     const p = appends.get(productId); if (!p) return false;
@@ -308,7 +317,7 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
       complete(audits.length <= CHAIN_LIMIT, "Maintenance chain exceeds 1024 steps; proof was not truncated");
       if (!capturing && source && audits.length === 0 && baselineVersion === current.version) {
         // An explicit routing decision, never exception handling or fallback.
-        complete(source.published === true, "Unchanged import still requires full publication"); await legacy.assertComplete({ productIds: [productId], query }); continue;
+        complete(source.published === true, "Unchanged import still requires full publication"); await legacy.assertComplete({ productIds: [productId], query }); capacity.set(productId,{count:0,bytes:0,version:baselineVersion}); continue;
       }
       let state: Facts | undefined; const sets = { skus: new Map<string, Facts>(), barcodes: new Map<string, Facts>(), images: new Map<string, Facts>() };
       if (source) {
@@ -363,11 +372,30 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
       const images = (await query(`/* maintained-catalogue26:images */ SELECT jsonb_build_object(${MAINTAINED_IMAGE.map(k => `'${k}',${k === "byte_size" ? "i.byte_size::text" : k === "created_at" ? `to_char(i.created_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.US"Z"')` : `i.${k}`}`).join(",")}) AS facts,${committedBefore("i")} AS committed_before FROM naijue_erp.product_image i WHERE i.product_id=$1::uuid ORDER BY i.id LIMIT $2 FOR SHARE`, [productId, IMAGE_LIMIT + 1])).rows;
       complete(images.length <= IMAGE_LIMIT && images.every(r => r.committed_before === true) && sameChildren(sets.images, children("images", images.map(r => r.facts), productId)), "Image metadata differs from continuous audit; no file validation is implied");
       await currentReferences(query, current, sets.skus, sets.barcodes);
+      capacity.set(productId,{count:audits.length,bytes:totalBytes,version:current.version as number});
     }
     active(); await runtime.assertReady(client, "INVENTORY_ADMISSION"); active();
     if (capturing) for (const [id, root] of roots) captured.set(id, root.version as number);
   } });
   return Object.freeze({ query, verifier,
+    async assertPendingCapacity(completion: MaintenanceCompletion) {
+      active();await runtime.assertReady(client, "INVENTORY_ADMISSION");active();
+      const p=structuredClone(completion);entityId("product",p.targetId);
+      requireDomain(p.kind==="PRODUCT" && p.newVersion===(p.oldVersion??0)+1,"PRODUCT_EVIDENCE_CAPACITY_NOT_READY","Exact pending product completion required");
+      const fingerprint=requestHash(p),prior=admitted.get(p.operationId);
+      if(prior!==undefined){requireDomain(prior===fingerprint,"PRODUCT_EVIDENCE_CAPACITY_NOT_READY","Pending operation changed");return;}
+      let base=capacity.get(p.targetId);
+      if(!base){
+        if(p.oldVersion===null){
+          const rows=(await query("/* maintained-catalogue26:new-capacity */ SELECT EXISTS(SELECT 1 FROM naijue_erp.product WHERE id=$1::uuid) OR EXISTS(SELECT 1 FROM naijue_erp.audit_change WHERE object_type='PRODUCT' AND object_id=$1::uuid) OR EXISTS(SELECT 1 FROM naijue_erp.import_source_row WHERE entity_type='PRODUCT' AND field_provenance->>'native_product_id'=$1::text) AS occupied",[p.targetId])).rows;
+          requireDomain(rows.length===1 && rows[0]!.occupied===false,"PRODUCT_EVIDENCE_CAPACITY_NOT_READY","New product capacity requires absent original identity");base={count:0,bytes:0,version:0};
+        }else{
+          capturing=true;try{await verifier.assertComplete({productIds:[entityId("product",p.targetId)],query});}finally{capturing=false;}base=capacity.get(p.targetId);
+        }
+      }
+      requireDomain(base!==undefined && base.version===(p.oldVersion??0),"PRODUCT_EVIDENCE_CAPACITY_NOT_READY","Pending version must match verified capacity");
+      const next=assertProductEvidencePendingCapacity(base,p.beforeValues,p.afterValues);active();capacity.set(p.targetId,{...next,version:p.newVersion});admitted.set(p.operationId,fingerprint);
+    },
     async captureDocumentAppendBaseline(productIds: readonly string[]) {
       active(); complete(!capturing && productIds.every(id => !appends.has(id)), 'Capture the complete committed baseline before the first append');
       capturing = true; try { await verifier.assertComplete({ productIds:productIds.map(id=>entityId('product',id)), query }); } finally { capturing = false; }
@@ -375,6 +403,7 @@ export function createMaintainedCatalogue26TransactionProof(client: PgSalesClien
     registerDocumentAppend(proof: DocumentAppendEvidence) {
       active(); const { completion: p } = readDocumentAppendEvidence(proof, client);
       complete(!capturing && !appends.has(p.targetId) && captured.get(p.targetId) === p.oldVersion, 'Exact previously verified committed baseline required');
+      requireDomain(admitted.get(p.operationId)===requestHash(p), 'PRODUCT_EVIDENCE_CAPACITY_NOT_READY', 'Append must have pending capacity admission');
       appends.set(p.targetId, p);
     }
   });

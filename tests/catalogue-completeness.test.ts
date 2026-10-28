@@ -138,7 +138,8 @@ function h06Protocol(fixture = h06Native(), override?: (sql: string, rows: H06Fa
   const client: PgSalesClient = { async query(sql, values = []) {
     calls.push(sql); assert.doesNotMatch(sql, /\b(?:INSERT|UPDATE|DELETE|COMMIT|ROLLBACK)\b/);
     let rows: H06Facts[];
-    if (sql.includes("maintained-catalogue26:roots")) rows = [{ ...fixture.root, committed_before: true }];
+    if (sql.includes("maintained-catalogue26:new-capacity")) rows = [{occupied:false}];
+    else if (sql.includes("maintained-catalogue26:roots")) rows = [{ ...fixture.root, committed_before: true }];
     else if (sql.includes("maintained-catalogue26:product-source")) { assert.match(sql, /FINAL_COMPLETE_SCOPE/); assert.match(sql, /import_history_closure_manifest/); assert.match(sql, /age\(s.xmin\)/); rows = fixture.sources; }
     else if (sql.includes("maintained-catalogue26:chain")) { assert.equal(values[2], 1025); assert.match(sql, /age\(a.xmin\).*age\(r.xmin\)/s); rows = fixture.audits; }
     else if (sql.includes("maintained-catalogue26:import-skus")) rows = fixture.importSkus;
@@ -236,4 +237,32 @@ test("H06 refuses immutable SKU changes, version-only audit and excessive nestin
     if (type === "depth") { let deep: unknown = "synthetic"; for (let i = 0; i < 18; i++) deep = { nested: deep }; after.images = deep; }
     fixture.audits.push(h06Audit(2, before, after)); await assert.rejects(h06Protocol(fixture).verify(), { code: "NATIVE_CATALOGUE_FACTS_UNAVAILABLE" });
   }
+});
+
+function a01Completion(oldVersion: number | null = 1): import("../packages/application/src/maintenance-commit-ports.ts").MaintenanceCompletion {
+  return {operationId:sid("operation",910), actorAccountId:sid("account",624), kind:"PRODUCT",targetId:h06.product,action:oldVersion===null?"CREATE":"EDIT",requestKey:"SYNTHETIC-A01",requestHash:"a".repeat(64),oldVersion,newVersion:(oldVersion??0)+1,beforeValues:oldVersion===null?null:{version:oldVersion,name:"SYNTHETIC COMPLETE"},afterValues:{version:(oldVersion??0)+1,name:"SYNTHETIC-A01"},completedAt:"2026-10-22T00:00:00.000Z"};
+}
+test("A01 admission reconstructs same-client committed capacity once and binds exact operation/version and active scope",async()=>{
+ const p=h06Protocol();const c=a01Completion();await p.pair.assertPendingCapacity(c);const n=p.calls.length;
+ await p.pair.assertPendingCapacity(structuredClone(c));assert.equal(p.calls.length,n);
+ await assert.rejects(p.pair.assertPendingCapacity({...c,afterValues:{name:"CHANGED"}}),{code:"PRODUCT_EVIDENCE_CAPACITY_NOT_READY"});
+ await assert.rejects(p.pair.assertPendingCapacity({...c,operationId:sid("operation",911)}),{code:"PRODUCT_EVIDENCE_CAPACITY_NOT_READY"});
+ assert.equal(p.calls.filter(sql=>sql.includes("maintained-catalogue26:chain")).length,1);
+ p.close();await assert.rejects(p.pair.assertPendingCapacity(c),/SYNTHETIC_SCOPE_CLOSED/);
+ const broken=h06Native();broken.audits[0]!.receipt_id=null;await assert.rejects(h06Protocol(broken).pair.assertPendingCapacity(c));
+});
+test("A01 imported baseline and CREATE anchor capacity use original evidence and reject occupied identities",async()=>{
+ const imported=h06Protocol(h06Imported());await imported.pair.assertPendingCapacity(a01Completion(2));
+ const p=h06Protocol();await p.pair.assertPendingCapacity(a01Completion(null));assert.equal(p.checks(),1);assert.equal(p.calls.length,1);
+ await assert.rejects(h06Protocol(h06Native(),(sql,rows)=>sql.includes(":new-capacity")?[{occupied:true}]:rows).pair.assertPendingCapacity(a01Completion(null)),{code:"PRODUCT_EVIDENCE_CAPACITY_NOT_READY"});
+});
+test("A01 actual proof admits step 1024 and rejects step 1025 without truncating the committed chain",async()=>{
+ for(const count of [1023,1024]){
+  const f=h06Native();let name=f.root.name;
+  for(let v=2;v<=count;v++){const next="SYNTHETIC-"+v;f.audits.push(h06Audit(v,{version:v-1,name},{version:v,name:next}));name=next;}
+  f.root={...f.root,version:count,name};const p=h06Protocol(f);
+  if(count===1023) await p.pair.assertPendingCapacity(a01Completion(count));
+  else await assert.rejects(p.pair.assertPendingCapacity(a01Completion(count)),{code:"PRODUCT_EVIDENCE_CAPACITY_EXCEEDED"});
+  assert.equal(p.calls.filter(sql=>sql.includes("maintained-catalogue26:chain")).length,1);
+ }
 });

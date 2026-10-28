@@ -68,7 +68,7 @@ export async function resolveNativeDocumentSpecifications(context: {
       const appended=await withDocumentSpecificationMaintenanceContext({ ...context, append:{parent:input.scope,productId,operationId,requestKey,
         expectedVersion:versions.get(productId)!,skuFacts} }, borrowed=>withProductMaintenanceTransaction(borrowed,
           tx=>appendProductSkusInTransaction(tx,{actor:input.scope.actor,productId,expectedVersion:versions.get(productId)!,operationId,requestKey,
-            completedAt:input.scope.completedAt,skus}),{seasonArray:true}));
+            completedAt:input.scope.completedAt,skus}),{seasonArray:true,assertPendingCapacity:completion=>context.catalogue.assertPendingCapacity(completion)}));
       context.catalogue.registerDocumentAppend(appended.proof);
     } catch(error) {
       if(error!==null && typeof error==='object' && 'code' in error && error.code==='23505')

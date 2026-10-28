@@ -16,7 +16,7 @@ function imageService(snapshot: ProductMaintenanceImageSnapshot | null, media: C
   let reads = 0; const unused = async (): Promise<never> => { throw Error("UNEXPECTED_WRITE_OR_DETAIL"); };
   const tx: ProductMaintenanceTransaction = { evidence: { async assertAllowed(_actor, kind, action) { assert.equal(kind, "PRODUCT"); assert.equal(action, "DETAIL"); requireDomain(!denied, "FORBIDDEN", "SYNTHETIC DENIED"); }, getReceipt: unused, complete: unused },
     ...(!missing ? { async readImageSnapshot() { reads++; if (failed) throw Error("PRIVATE_SQL"); return snapshot; } } : {}),
-    load: unused, readReferences: unused, readCandidates: unused, validateReferences: unused, assertCanDelete: unused, putProduct: unused, putSku: unused, putBarcode: unused };
+    assertPendingCapacity: unused, load: unused, readReferences: unused, readCandidates: unused, validateReferences: unused, assertCanDelete: unused, putProduct: unused, putSku: unused, putBarcode: unused };
   return { service: createProductMaintenanceService({ unitOfWork: { async transaction(work) { return work(tx); } }, now: () => "UNUSED", newId: () => "UNUSED", media }), reads: () => reads };
 }
 const imageSnapshot = (): ProductMaintenanceImageSnapshot => ({ productId: gid(12001), version: 7, images: [{ id: gid(12002), productId: gid(12001), version: 3,
@@ -52,6 +52,7 @@ function sku(colorId = gid(806)): ProductSkuInput { return { id: null, expectedV
 function barcode(item: ProductSkuInput, raw = "000012345 "): ProductBarcodeInput { return { id: null, barcode: raw, colorId: item.colorId, fitId: item.fitId, sizeId: item.sizeId, kind: "MAIN", schemeId: gid(805), enabled: true }; }
 function command(key = "create") { const s = sku(); return { action: "CREATE" as const, requestKey: key, values: values(), skus: [s], barcodes: [barcode(s)] }; }
 function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode = false, groupSizes?: readonly string[], barcodeMode?: "ready" | "invalid" | "nullsize") {
+  let capacity = true;
   let selectionReads = 0, barcodeReads = 0;
   let sequence = 900, product: ProductAggregate | undefined, allow = true, failComplete = false, references = true, deletable = true;
   const receipts = new Map<string, NonNullable<Awaited<ReturnType<ProductMaintenanceEvidence["getReceipt"]>>>>();
@@ -72,6 +73,7 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
         }
       };
       const tx: ProductMaintenanceTransaction = { evidence,
+        async assertPendingCapacity() { requireDomain(capacity, "PRODUCT_EVIDENCE_CAPACITY_EXCEEDED", "SYNTHETIC CAPACITY"); },
         ...(barcodeMode === undefined ? {} : { async readBarcodeGenerationReferences(productId: string, schemeId: string, skus: readonly ProductSkuRecord[]) {
           barcodeReads++; assert.equal(productId, skus[0]!.productId);
           const refs = (key: "colorId" | "fitId" | "sizeId", code: (id: string, i: number) => string | null) => [...new Set(skus.map(s => s[key]))].sort().map((id, i) => ({ id, code: code(id, i) }));
@@ -94,7 +96,7 @@ function fixture(prepareMode: "ready" | "missing" | "fail" = "ready", seasonMode
     }
   } };
   return { dependencies, service: createProductMaintenanceService(dependencies), state: () => structuredClone(product), receipts, audit, writes: () => writes, selectionReads: () => selectionReads, barcodeReads: () => barcodeReads,
-    activate: () => Object.defineProperty(dependencies.unitOfWork, "seasonContract", { value: "product-season-array-v1" }), seed: (value: ProductAggregate) => { product = structuredClone(value); }, revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
+    fullCapacity: () => { capacity = false; }, activate: () => Object.defineProperty(dependencies.unitOfWork, "seasonContract", { value: "product-season-array-v1" }), seed: (value: ProductAggregate) => { product = structuredClone(value); }, revoke: () => { allow = false; }, fault: (value: boolean) => { failComplete = value; }, badReferences: () => { references = false; }, unknownStock: () => { deletable = false; } };
 }
 test("prepared product: root and SKU/barcode writes require prepared exact evidence; missing/failing capability writes nothing", async () => {
   for (const mode of ["missing", "fail"] as const) { const f = fixture(mode); await assert.rejects(f.service.execute(actor, command()), mode === "missing" ? { code: "MAINTENANCE_PREPARE_NOT_READY" } : /SYNTHETIC PREPARE FAILURE/); assert.equal(f.writes(), 0); assert.equal(f.state(), undefined); assert.equal(f.receipts.size, 0); }
@@ -504,4 +506,11 @@ test("season v2: stored set order is preserved when unchanged; no reorder-only v
   await f.service.executeV2(actor, { ...edit, values: { ...edit.values, name: "OTHER CHANGE" } });
   assert.deepEqual(f.state()!.product.seasonIds, [gid(850), gid(803)]); assert.ok(!Object.hasOwn(f.audit[1]!.after, "season_ids"));
   const detail = await f.service.detailV2(actor, { productId: saved.targetId }); assert.deepEqual(detail.references.seasons.map(s => s.id), [gid(850), gid(803)]);
+});
+
+test('A01 every new product completion admits capacity before any prepared write; original key recovery stays first',async()=>{
+ const f=fixture(),c=command();f.fullCapacity();await assert.rejects(f.service.execute(actor,c),{code:'PRODUCT_EVIDENCE_CAPACITY_EXCEEDED'});assert.equal(f.writes(),0);assert.equal(f.audit.length,0);assert.equal(f.receipts.size,0);
+ const g=fixture();const saved=await g.service.execute(actor,c);g.fullCapacity();assert.deepEqual(await g.service.execute(actor,c),saved);
+ await assert.rejects(g.service.execute(actor,{action:'EDIT',id:saved.targetId,expectedVersion:1,requestKey:'A01newkey',values:{...values(),name:'Changed'},skus:[],barcodes:[]}),{code:'PRODUCT_EVIDENCE_CAPACITY_EXCEEDED'});
+ assert.equal(g.audit.length,1);
 });

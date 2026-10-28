@@ -20,7 +20,7 @@ test("v17 selection leaf locks original group and enabled selected references an
     if (sql.includes("product-selection:members")) rows = sizes.map(size_id => ({ size_id }));
     return { rows, rowCount: rows.length };
   } } }); } };
-  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null });
+  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null });
   await uow.transaction(async tx => {
     await assert.rejects(tx.readSkuSelectionSizes!(product, group, { colorIds: [color], fitIds: [fit] }), { code: "TRANSACTION_SCOPE" }); assert.equal(calls.length, 0);
     assert.equal(await tx.load(product), undefined);
@@ -47,7 +47,7 @@ test("product visibility: original load gates published imports and committed bi
     else if (sql.includes("FROM naijue_erp.sku WHERE")) rows = [{ id: sku, product_id: product, sku_code: "KEEP-0001", color_id: id(6), fit_id: id(7), size_id: id(8), enabled: false, version: 3, created_operation_id: id(19003) }];
     return { rows, rowCount: rows.length };
   } } }); } };
-  const result = await new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }).transaction(tx => tx.load(product));
+  const result = await new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null }).transaction(tx => tx.load(product));
   assert.equal(result!.product.version, 9); assert.equal(result!.skus[0]!.skuCode, "KEEP-0001"); assert.equal(result!.skus[0]!.enabled, false);
   const children = calls.filter(c => c.sql.includes("FROM naijue_erp.sku WHERE") || c.sql.includes("FROM naijue_erp.sku_barcode bc"));
   assert.equal(children.length, 2);
@@ -76,7 +76,7 @@ test("v19 barcode reference leaf reads actual scheme/color/fit/size codes on ori
     if (sql.includes("product-barcode:codes") && !missing) rows = (values[0] as string[]).map(id => ({ id, code: sql.includes("naijue_erp.fit") ? "B" : sql.includes("naijue_erp.color") ? "001" : "202" }));
     return { rows, rowCount: rows.length };
   } } }); } };
-  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null });
+  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null });
   const sku = { id: id(19101), productId: product, skuCode: "REAL", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true, version: 1, createdOperationId: id(19102) };
   await uow.transaction(async tx => {
     await assert.rejects(tx.readBarcodeGenerationReferences!(product, scheme, [sku]), { code: "TRANSACTION_SCOPE" }); assert.equal(calls.length, 0);
@@ -100,7 +100,7 @@ test("v19 NULL native size code stays NULL through original leaf while color and
     if (sql.includes("product-barcode:codes")) rows = (values[0] as string[]).map(id => ({ id, code: sql.includes("naijue_erp.size") ? null : sql.includes("naijue_erp.fit") ? "A" : "001" }));
     return { rows, rowCount: rows.length };
   } } }); } };
-  await new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }).transaction(async tx => {
+  await new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null }).transaction(async tx => {
     await tx.load(product);
     const refs = await tx.readBarcodeGenerationReferences!(product, scheme, [{ id: id(19111), productId: product, skuCode: "NULL-SIZE", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true, version: 1, createdOperationId: id(19112) }]);
     assert.equal(refs.sizes[0]!.code, null); assert.equal(refs.colors[0]!.code, "001"); assert.equal(refs.fits[0]!.code, "A");
@@ -114,7 +114,7 @@ function imageProtocol(options: { absent?: boolean; rows?: readonly Record<strin
     assert.ok(authorized); calls.push({ sql, values }); if (options.fail) throw Error("SYNTHETIC_METADATA_FAILURE");
     const rows = options.absent ? [] : [{ id: id(12001), version: 7, images: options.rows ?? [] }]; return { rows, rowCount: rows.length };
   } } }); } };
-  return { calls, service: createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }), now: () => "UNUSED", newId: () => "UNUSED" }) };
+  return { calls, service: createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null }), now: () => "UNUSED", newId: () => "UNUSED" }) };
 }
 const imageRow = () => ({ id: id(12002), product_id: id(12001), file_ref: "PRIVATE_REAL_REF", mime: "image/png", byte_size: "68", display_order: 0, version: 3, image_role: "COLOR", color_id: id(6), created_at: "2026-10-22T00:00:00.123456Z", created_by_account_id: null, valid_color: true });
 function imageWriteProtocol(options: { capability?: boolean; zeroCas?: boolean; badFinal?: boolean; rejectPrepared?: boolean; cycleCount?: 2 | 3; swap?: boolean; rejectSwap?: boolean; skipReinsert?: boolean } = {}) {
@@ -152,7 +152,7 @@ function imageWriteProtocol(options: { capability?: boolean; zeroCas?: boolean; 
     if (options.rejectSwap) throw Object.assign(Error("SYNTHETIC_ACTUAL_V7_GUARD_UNAVAILABLE"), { code: "PRODUCT_MEDIA_NOT_READY" });
     calls.push({ sql: "PROVE_APPROVED_ACTUAL_COLOR_SWAP_GUARD", values: [] });
   } };
-  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, ...(options.capability === false ? {} : { mediaWriteCapability: proof }), ...(options.swap ? { imageColorSwapCapability: swapProof } : {}) });
+  const uow = new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null, ...(options.capability === false ? {} : { mediaWriteCapability: proof }), ...(options.swap ? { imageColorSwapCapability: swapProof } : {}) });
   async function write(replace: boolean) { return uow.transaction(async tx => {
     await tx.assertImageWriteReady!(); const aggregate = (await tx.load(id(12001)))!, previous = await tx.loadImages!(id(12001)), old = previous[0]!;
     const next: ProductMaintenanceImageMetadata = replace ? { ...old, version: 4, fileRef: "NEW_PRIVATE_REF", displayOrder: 2 } : { ...old, id: id(12003), version: 1, createdAt: "2026-10-22T01:00:00.000Z" };
@@ -236,7 +236,7 @@ const command: Extract<ProductMaintenanceCommand, { action: "CREATE" }> = { acti
   prices: Object.fromEntries(CATALOGUE_PRICE_KEYS.map(k => [k, k === "retail_price" ? "0.00" : null])) as Extract<ProductMaintenanceCommand, { action: "CREATE" }>["values"]["prices"]
 }, skus: [{ id: null, expectedVersion: null, skuCode: "0001-A", colorId: id(6), fitId: id(7), sizeId: id(8), enabled: true }],
 barcodes: [{ id: null, barcode: "000012345 ", colorId: id(6), fitId: id(7), sizeId: id(8), kind: "MAIN", schemeId: id(5), enabled: true }] };
-function setup(options: { badSize?: boolean; barcodeCollision?: boolean; seasonArray?: boolean; retained?: boolean; selectedGroup?: string; members?: readonly string[] } = {}) {
+function setup(options: { badSize?: boolean; barcodeCollision?: boolean; seasonArray?: boolean; retained?: boolean; selectedGroup?: string; members?: readonly string[]; capacity?: "missing" | "full" } = {}) {
   const calls: { sql: string; values: unknown[] }[] = [], prepared: unknown[] = []; let completed = 0, seq = 900;
   const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: {
     async assertAllowed() {}, async getReceipt() { return undefined; }, async prepare(c) { prepared.push(structuredClone(c)); }, async complete(c) { completed++; return { operationId: c.operationId, kind: c.kind, targetId: c.targetId, version: c.newVersion }; }
@@ -259,7 +259,7 @@ function setup(options: { badSize?: boolean; barcodeCollision?: boolean; seasonA
     return { rows, rowCount: /^(INSERT|UPDATE)/.test(sql) ? 1 : rows.length };
   } } }); } };
   const dependencies: ProductMaintenanceDependencies = { newId: kind => sid(kind, seq++), now: () => "2026-10-22T06:00:00Z",
-    unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, ...(options.seasonArray ? { seasonCapability: { profile: "product-season-array-v1" as const, assertVerified(target: object) { assert.equal(target, driver); } } } : {}) }) };
+    unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { ...(options.capacity === "missing" ? {} : {capacity: (context: PgProductMaintenanceContext) => async () => { assert.ok(context.client); assert.equal(prepared.length,0); if(options.capacity === "full") throw Object.assign(Error("SYNTHETIC_CAPACITY_FULL"),{code:"PRODUCT_EVIDENCE_CAPACITY_EXCEEDED"}); }}), deletionGuard: null, ...(options.seasonArray ? { seasonCapability: { profile: "product-season-array-v1" as const, assertVerified(target: object) { assert.equal(target, driver); } } } : {}) }) };
   return { service: createProductMaintenanceService(dependencies), calls, driver, prepared, completed: () => completed };
 }
 function borrowedAppendInput(): DocumentProductSkuAppendInput {
@@ -272,7 +272,7 @@ test("v11 borrowed product append PG: original leased context writes root/SKU on
   const f = setup({ retained: true, members: [id(8), id(9)] }); let escaped!: ProductMaintenanceTransaction;
   const saved = await f.driver.transaction(context => withProductMaintenanceTransaction(context, async tx => {
     escaped = tx; return appendProductSkusInTransaction(tx, borrowedAppendInput());
-  }, { seasonArray: true }));
+  }, { seasonArray: true, assertPendingCapacity: async () => {} }));
   assert.equal(saved.result.version, 8); assert.equal(f.completed(), 1); assert.equal(f.prepared.length, 1);
   const writes = f.calls.filter(c => /^(INSERT|UPDATE)/.test(c.sql)); assert.equal(writes.length, 2);
   assert.match(writes[0]!.sql, /^UPDATE naijue_erp.product/); assert.match(writes[0]!.sql, /version=\$\d+/);
@@ -285,12 +285,12 @@ test("v11 borrowed product append PG: original leased context writes root/SKU on
 test("v11 borrowed product append PG: foreign/no-size outside actual product group and denied purpose cannot mutate", async () => {
   const f = setup({ retained: true, members: [id(8)] });
   await assert.rejects(f.driver.transaction(context => withProductMaintenanceTransaction(context,
-    tx => appendProductSkusInTransaction(tx, borrowedAppendInput()), { seasonArray: true })), { code: "PRODUCT_SIZE_GROUP_MISMATCH" });
+    tx => appendProductSkusInTransaction(tx, borrowedAppendInput()), { seasonArray: true, assertPendingCapacity: async () => {} })), { code: "PRODUCT_SIZE_GROUP_MISMATCH" });
   assert.equal(f.prepared.length, 0); assert.ok(f.calls.every(c => !/^(INSERT|UPDATE|BEGIN|COMMIT|ROLLBACK)/.test(c.sql))); assert.equal(f.completed(), 0);
   let queries = 0;
   await assert.rejects(withProductMaintenanceTransaction({ client: { async query() { queries++; throw Error("Must not query"); } }, evidence: {
     async assertAllowed() { throw Object.assign(Error("SYNTHETIC_PARENT_DENIED"), { code: "FORBIDDEN" }); }, async getReceipt() { throw Error("Must not query"); }, async complete() { throw Error("Must not complete"); }
-  } }, tx => appendProductSkusInTransaction(tx, borrowedAppendInput()), { seasonArray: true }), { code: "FORBIDDEN" });
+  } }, tx => appendProductSkusInTransaction(tx, borrowedAppendInput()), { seasonArray: true, assertPendingCapacity: async () => {} }), { code: "FORBIDDEN" });
   assert.equal(queries, 0);
 });
 test("product leaf PG: actual root/SKU/raw-barcode inserts stay in injected D1 context with explicit nullable prices and creation operation", async () => {
@@ -344,7 +344,7 @@ test("product leaf PG: complete editable snapshot uses real IDs/versions/path; n
       ]; }
       return { rows, rowCount: rows.length };
     } } }); } };
-    const service = createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }), now: () => "unused", newId: () => "unused" });
+    const service = createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null }), now: () => "unused", newId: () => "unused" });
     const detail = await service.detail(actor, { productId: targetId });
     assert.equal(detail.version, 9); assert.equal(detail.skus[0]!.expectedVersion, 3); assert.equal(detail.values.thickness, "偏厚"); assert.equal(detail.values.collarPantsType, "翻领");
     assert.equal(detail.values.defaultBarcodeSchemeId, selected); assert.equal(detail.barcodes[0]!.schemeId, id(11)); assert.equal(detail.references.defaultBarcodeScheme?.id ?? null, selected);
@@ -357,7 +357,7 @@ test("product leaf PG: candidate count/page share one bounded statement and lite
   const driver: PgProductMaintenanceDriver = { async transaction(work) { return work({ evidence: {
     async assertAllowed(_actor, _kind, action) { assert.equal(action, "CANDIDATES"); }, async getReceipt() { return undefined; }, async complete() { throw Error("No writes"); }
   }, client: { async query(sql, values = []) { calls.push({ sql, values }); return { rows: [{ total: "1", items: [{ id: id(6), name: "EXACT COLOR", code: "00006", parent_id: null, version: 2 }] }], rowCount: 1 }; } } }); } };
-  const service = createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }), now: () => "unused", newId: () => "unused" });
+  const service = createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null }), now: () => "unused", newId: () => "unused" });
   const result = await service.candidates(actor, { kind: "colors", search, page: 1, pageSize: 20 });
   assert.equal(result.items[0]!.code, "00006"); assert.equal(calls.length, 1); assert.deepEqual(calls[0]!.values, [search, 20, 0]);
   assert.ok(!calls[0]!.sql.includes(search)); assert.match(calls[0]!.sql, /m.enabled AND m.deleted_at IS NULL/); assert.match(calls[0]!.sql, /LIMIT \$2 OFFSET \$3/);
@@ -374,7 +374,7 @@ test("year candidates: Demo 2015 through Shanghai current year plus one joins re
     const years = [2027, 2026, 2015, 2012].filter(year => String(year).includes(String(values[0])));
     return { rows: [{ total: String(years.length), items: years.map(year => ({ id: String(year), name: String(year), code: null, parent_id: null, version: null })) }], rowCount: 1 };
   } } }); } };
-  const service = createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null }), now: () => "unused", newId: () => "unused" });
+  const service = createProductMaintenanceService({ unitOfWork: new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null }), now: () => "unused", newId: () => "unused" });
   const result = await service.candidates(actor, { kind: "years", search: "", page: 1, pageSize: 20 });
   assert.deepEqual(result.items.map(i => i.id), ["2027", "2026", "2015", "2012"]); assert.equal(result.total, 4);
   const next = await service.candidates(actor, { kind: "years", search: "2027", page: 1, pageSize: 20 });
@@ -405,7 +405,7 @@ test("season v2 PG: actual array column and dictionary locks share driver; EDIT 
       if (sql.startsWith("UPDATE")) { assert.equal(audits.length, 1, "prepared original audit first"); return { rows: [], rowCount: 1 }; }
       return { rows, rowCount: rows.length };
     } } }); } };
-    const unitOfWork = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, seasonCapability: { profile: "product-season-array-v1", assertVerified(actual) { assert.equal(actual, driver); } } });
+    const unitOfWork = new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null, seasonCapability: { profile: "product-season-array-v1", assertVerified(actual) { assert.equal(actual, driver); } } });
     const service = createProductMaintenanceService({ unitOfWork, newId: () => id(999), now: () => "2026-10-22T08:00:00Z" });
     const { seasonId: _scalar, ...values } = command.values;
     await service.executeV2(actor, { action: "EDIT", requestKey: "array-edit", id: target, expectedVersion: 1, values: { ...values, name: "CHANGED", seasonIds: [id(44), id(4)] }, skus: [], barcodes: [] });
@@ -429,8 +429,12 @@ test("season v2 PG: missing dictionary, malformed stored array and mismatched pr
       season_ids: [id(4), id(4)], size_group_id: id(3), year: null, system_item_code: null, thickness: null, collar_pants_type: null, default_barcode_scheme_id: null, enabled: true, version: 1, deleted_at: null }], rowCount: 1 };
     assert.ok(!/^(INSERT|UPDATE)/.test(sql)); return { rows: [], rowCount: 0 };
   } } }); } };
-  assert.throws(() => new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, seasonCapability: { profile: "product-season-array-v1", assertVerified() { throw Error("UNVERIFIED TARGET"); } } }), /UNVERIFIED TARGET/);
-  const unitOfWork = new PostgresProductMaintenanceUnitOfWork(driver, { deletionGuard: null, seasonCapability: { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, driver); } } });
+  assert.throws(() => new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null, seasonCapability: { profile: "product-season-array-v1", assertVerified() { throw Error("UNVERIFIED TARGET"); } } }), /UNVERIFIED TARGET/);
+  const unitOfWork = new PostgresProductMaintenanceUnitOfWork(driver, { capacity: () => async () => {}, deletionGuard: null, seasonCapability: { profile: "product-season-array-v1", assertVerified(target) { assert.equal(target, driver); } } });
   const service = createProductMaintenanceService({ unitOfWork, now: () => "unused", newId: () => "unused" });
   await assert.rejects(service.detailV2(actor, { productId: id(1) }), { code: "INVALID_DATABASE_VALUE" });
+});
+
+test("A01 PG leaf missing/full capacity rejects before prepared evidence or root/child writes",async()=>{
+ for(const capacity of ["missing","full"] as const){const f=setup({capacity});await assert.rejects(f.service.execute(actor,command),{code:capacity==="missing"?"PRODUCT_EVIDENCE_CAPACITY_NOT_READY":"PRODUCT_EVIDENCE_CAPACITY_EXCEEDED"});assert.equal(f.prepared.length,0);assert.equal(f.completed(),0);assert.ok(f.calls.every(c=>!/^(INSERT|UPDATE|DELETE)/.test(c.sql)));}
 });

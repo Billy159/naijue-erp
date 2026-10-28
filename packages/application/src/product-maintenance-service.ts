@@ -115,6 +115,8 @@ export async function appendProductSkusInTransaction(tx: ProductMaintenanceTrans
   const completion = { operationId, actorAccountId: actor.accountId, requestKey, requestHash: hash, kind: "PRODUCT" as const, action: "EDIT" as const,
     targetId: productId, oldVersion: expectedVersion, newVersion: next.product.version, beforeValues: before, afterValues: after, completedAt: input.completedAt };
   requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
+  requireDomain(typeof tx.assertPendingCapacity === "function", "PRODUCT_EVIDENCE_CAPACITY_NOT_READY", "Product capacity admission unavailable");
+  await tx.assertPendingCapacity(completion);
   await tx.evidence.prepare(completion); await tx.putProduct(next.product, previous.product);
   for (const sku of skus) await tx.putSku(sku, undefined);
   const saved = result(await tx.evidence.complete(completion));
@@ -327,6 +329,8 @@ export function createProductMaintenanceService(dependencies: ProductMaintenance
         beforeValues: previous ? before : null, afterValues: after, completedAt: timestamp };
       requireDomain(typeof tx.evidence.prepare === "function", "MAINTENANCE_PREPARE_NOT_READY", "Original audit preparation is unavailable");
       if (imagePlan) { activeProductRead(signal); requireDomain(imagePlan.expiries.every(t => Date.parse(dependencies.now()) < t), "UPLOAD_EXPIRED", "Image stage expired before mutation"); }
+      requireDomain(typeof tx.assertPendingCapacity === "function", "PRODUCT_EVIDENCE_CAPACITY_NOT_READY", "Product capacity admission unavailable");
+      await tx.assertPendingCapacity(completion);
       await tx.evidence.prepare(completion);
       if (imagePlan) await tx.assertImagesPrepared!(completion);
       if (imagePlan?.reinsertIds.length) await tx.assertImageColorSwapReady!(completion);

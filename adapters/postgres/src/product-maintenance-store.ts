@@ -1,3 +1,4 @@
+import type { MaintenanceCompletion } from "../../../packages/application/src/maintenance-commit-ports.ts";
 import { COMPLETE_SCOPE_DECISION } from "../../../packages/application/src/inventory-cutoff-import.ts";
 import { requestHash } from "../../../packages/application/src/request-hash.ts";
 import { requireDomain } from "../../../packages/domain/src/errors.ts";
@@ -145,14 +146,17 @@ const visibleBarcode = `(${committedBefore("bc")} AND (
       AND EXISTS(SELECT 1 FROM jsonb_array_elements(a.after_values->'barcodes') item
         WHERE item-'enabled'=to_jsonb(bc)-'enabled'))))`;
 
+export type ProductCapacityFactory = (context: PgProductMaintenanceContext) => (completion: MaintenanceCompletion) => Promise<void>;
 export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceUnitOfWork {
   readonly seasonContract?: "product-season-array-v1";
+  private readonly capacity: ProductCapacityFactory | undefined;
   private readonly driver: PgProductMaintenanceDriver; private readonly deletion: ProductDeletionGuard | null;
   private readonly imageCapability: ProductMediaWriteCapability | null;
   private readonly swapCapability: ProductImageColorSwapCapability | null;
-  constructor(driver: PgProductMaintenanceDriver, options: { readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null; readonly mediaWriteCapability?: ProductMediaWriteCapability | null; readonly imageColorSwapCapability?: ProductImageColorSwapCapability | null }) {
+  constructor(driver: PgProductMaintenanceDriver, options: { readonly capacity?: ProductCapacityFactory; readonly deletionGuard: ProductDeletionGuard | null; readonly seasonCapability?: ProductSeasonArrayCapability | null; readonly mediaWriteCapability?: ProductMediaWriteCapability | null; readonly imageColorSwapCapability?: ProductImageColorSwapCapability | null }) {
     if (typeof driver?.transaction !== "function" || !options || !Object.hasOwn(options, "deletionGuard")
       || (options.deletionGuard !== null && typeof options.deletionGuard?.assertCanDelete !== "function")) throw new TypeError("Product maintenance requires D1 driver and explicit deletion guard availability");
+    this.capacity = options.capacity;
     this.driver = driver; this.deletion = options.deletionGuard;
     this.imageCapability = mediaCapability(driver, options.mediaWriteCapability ?? null);
     this.swapCapability = colorSwapCapability(driver, options.imageColorSwapCapability ?? null);
@@ -160,7 +164,7 @@ export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceU
   }
   transaction<T>(work: (tx: ProductMaintenanceTransaction) => Promise<T>): Promise<T> {
     return this.driver.transaction(async context => {
-      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined, this.imageCapability, this.swapCapability);
+      const tx = new ProductTransaction(context, this.deletion, this.seasonContract !== undefined, this.imageCapability, this.swapCapability, this.capacity?.(context));
       try { return await work(tx); } finally { tx.close(); }
     });
   }
@@ -168,10 +172,10 @@ export class PostgresProductMaintenanceUnitOfWork implements ProductMaintenanceU
 /** Internal borrowed scope. The caller owns actual runtime/evidence authority and
  * the surrounding transaction; closing this leaf never releases or commits it. */
 export async function withProductMaintenanceTransaction<T>(context: PgProductMaintenanceContext,
-  work: (tx: ProductMaintenanceTransaction) => Promise<T>, options: { readonly seasonArray: boolean }): Promise<T> {
+  work: (tx: ProductMaintenanceTransaction) => Promise<T>, options: { readonly seasonArray: boolean; readonly assertPendingCapacity?: (completion: MaintenanceCompletion) => Promise<void> }): Promise<T> {
   if (typeof context?.client?.query !== "function" || typeof context?.evidence?.assertAllowed !== "function"
     || typeof work !== "function" || typeof options?.seasonArray !== "boolean") throw new TypeError("Original borrowed product context and explicit season contract required");
-  const tx = new ProductTransaction(context, null, options.seasonArray, null, null);
+  const tx = new ProductTransaction(context, null, options.seasonArray, null, null, options.assertPendingCapacity);
   try { return await work(tx); } finally { tx.close(); }
 }
 class ProductTransaction implements ProductMaintenanceTransaction {
@@ -184,7 +188,12 @@ class ProductTransaction implements ProductMaintenanceTransaction {
   private imagesPrepared = false;
   private preparedImagesHash: string | undefined; private swapReady = false;
   private readonly swapCapability: ProductImageColorSwapCapability | null;
-  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean, imageCapability: ProductMediaWriteCapability | null, swapCapability: ProductImageColorSwapCapability | null) { this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; this.imageCapability = imageCapability; this.swapCapability = swapCapability; }
+  private readonly capacity: ((completion: MaintenanceCompletion) => Promise<void>) | undefined;
+  constructor(context: PgProductMaintenanceContext, deletion: ProductDeletionGuard | null, seasonArray: boolean, imageCapability: ProductMediaWriteCapability | null, swapCapability: ProductImageColorSwapCapability | null, capacity?: (completion: MaintenanceCompletion) => Promise<void>) { this.capacity = capacity; this.seasonArray = seasonArray; this.context = context; this.evidence = context.evidence; this.deletion = deletion; this.imageCapability = imageCapability; this.swapCapability = swapCapability; }
+  async assertPendingCapacity(completion: MaintenanceCompletion): Promise<void> {
+    requireDomain(this.active && this.loadedId===completion.targetId && typeof this.capacity==="function", "PRODUCT_EVIDENCE_CAPACITY_NOT_READY", "Original locked transaction capacity proof required");
+    await this.capacity(completion); requireDomain(this.active,"TRANSACTION_CLOSED","Product transaction closed");
+  }
   close(): void { this.active = false; }
   private query(sql: string, values: unknown[] = []) { requireDomain(this.active, "TRANSACTION_CLOSED", "Product transaction is closed"); return this.context.client.query(sql, values); }
   async assertImageWriteReady(): Promise<void> {

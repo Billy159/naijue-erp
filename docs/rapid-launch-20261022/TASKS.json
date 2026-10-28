@@ -18660,10 +18660,12 @@
     },
     "A01PendingCapacity887": {
       "owner": "D2",
-      "state": "HUMAN_APPROVED_EXACT_SOURCE_IMPLEMENTATION_ACTIVE",
+      "state": "SOURCE890_COMPONENT_DELIVERED_HOST_AND_WEB_INTEGRATION_PENDING",
       "current": "Currentgrowthentry/pendingcountbytes/port/errorcodes explicitproposal beforetruewritecontract approval",
-      "next": "OriginalD2 exact10leaves; sharedAPIerrorconsumer seams toC/D1;actualPG/SLO remainseparate",
-      "approval": "call_d51f6d152d15476cb063527e1d542136/0"
+      "next": "FixedQBcomponent;D1 API actualfactory+webtransport allowlist thenaffectedintegration;realPG/concurrency/inventory/SLO stillunverified",
+      "approval": "call_d51f6d152d15476cb063527e1d542136/0",
+      "receipt": "reports/backend/rapid-launch-20261022/D2/A01-CAPACITY-IMPLEMENTATION-20261029/RESULT.json",
+      "checks": "D2 79targetedPASS/0fail Node24stripcompatible;D2owned0typeerrors/root142NOTPASS;C3HTTPerrorcasesPASS+productHTTP7PASS"
     },
     "delegatedTechnicalDecisions889": {
       "sourceThread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
