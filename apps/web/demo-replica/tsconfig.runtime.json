@@ -22,7 +22,9 @@
     "frontend/runtime-styles.ts",
     "frontend/runtime-preview-transport.ts",
     "frontend/production-bootstrap.ts",
-    "frontend/frozen-style-order.ts"
+    "frontend/frozen-style-order.ts",
+    "frontend/qa-reference-fixtures.ts",
+    "frontend/runtime-native-preview-seeds.ts"
   ],
   "exclude": []
 }

@@ -7270,6 +7270,14 @@
       ],
       "model": "gpt-6.1-sol",
       "thinking": "medium"
+    },
+    "B12BuildConfig870": {
+      "owner": "C",
+      "files": [
+        "tsconfig.build.json"
+      ],
+      "scope": "Preserve root existing frontend/browser excludes in NodeNext emit config;runtime remains independently required tsconfig.runtime typecheck, no officialbackend excludes",
+      "status": "WIP"
     }
   }
 }
