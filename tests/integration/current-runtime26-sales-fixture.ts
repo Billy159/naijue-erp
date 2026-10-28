@@ -12,7 +12,7 @@ import type { EntityKind } from "../../packages/domain/src/values.ts";
 import type { JsonObject } from "../../packages/application/src/history-storage-contract.ts";
 import type { NativePartyImportInput } from "../../packages/application/src/native-party-import.ts";
 import { prepareNativePartyImportChunk } from "../../packages/application/src/native-party-import.ts";
-import { NATIVE_CATALOGUE_IMPORT_VERSION_26, prepareNativeCatalogueImportChunk26 } from "../../packages/application/src/native-catalogue-import.ts";
+import { NATIVE_CATALOGUE_IMPORT_VERSION_26, prepareNativeCatalogueImportChunk26, validatePreparedNativeCatalogueImportChunk26 } from "../../packages/application/src/native-catalogue-import.ts";
 import type { NativeCatalogueImportChunk26, PreparedNativeCatalogueImportChunk26 } from "../../packages/application/src/native-catalogue-import.ts";
 
 import type { NativeRuntime26Issuer } from "../../adapters/postgres/src/native-import-accounting-capability.ts";
@@ -71,7 +71,10 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
   assert.equal(new Date(input.now).toISOString(), input.now);
   for (const pin of Object.values(input.pins)) assert.match(pin, /^[a-f0-9]{64}$/);
   const accountRows = Array.from({ length: 49 }, (_, i) => {
-    const sourceEmployeeKey = label("EMPLOYEE-SOURCE", i), hallIndex = i < 2 ? null : (i - 2) % 22;
+    // The original factory requires the direct account/employee source identity
+    // to be the same value, and plan-linked STAFF also keys by sourceAccountId.
+    // These are NEW synthetic source identities, not reused native target IDs.
+    const sourceEmployeeKey = native("account", 100 + i), hallIndex = i < 2 ? null : (i - 2) % 22;
     return { sourceAccountId: native("account", 100 + i), nativeAccountId: native("account", 200 + i), nativeStaffId: native("staff", 300 + i),
       staffSourceKey: sourceEmployeeKey, sourceAccountVersion: 1, sourceEmployeeNativeId: i < 45 ? sourceEmployeeKey : null,
       sourceEmployeeCode: i < 45 ? `QA897E${String(i + 1).padStart(3, "0")}` : null,
@@ -153,11 +156,23 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
     selection: { ...template.selection, ...input.pins }, rows: dictionaryRows.map((row, i) => ({ ...row,
       source: { ...row.source, id: native("product", 1400 + i), batchId: input.batchId, fileRef: "synthetic:qa897/catalogue.ndjson", sheet: row.source.entityType, rowNo: String(i + 1),
         sourceFileSha256: dictionarySha, rowSha256: digest(JSON.stringify(row.source.rawFields)), fieldProvenance: provenance(row.source.rawFields) } })) };
+  // Safe mapping INPUT for the original factory, not a technical review or a
+  // prepared authorization. T45 supplies actual absolute paths and outside pins.
+  const catalogueMappingCandidate = { version: "NATIVE_CATALOGUE_OCCURRENCE_CANDIDATE_V1", batchId: input.batchId,
+    fixedSourceNamespace: CURRENT_SALES_QA_NAMESPACE, selectionSha256: input.pins.selectionSha256,
+    baseManifestSha256: input.pins.baseManifestSha256, groups: [catalogue.rows.map(row => ({
+      entity: row.source.entityType, sourceKey: row.source.sourceKey, nativeId: row.nativeId,
+      values: Object.fromEntries(Object.entries(row.decisions).map(([field, decision]) => {
+        assert.equal(decision.kind, "SOURCE_FIELD", "This finite synthetic mapping preserves explicit literal cells");
+        return [field, row.source.rawFields[(decision as { field: string }).field]];
+      })), references: structuredClone(row.references), originalEvidence: { syntheticOnly: true, target: CURRENT_SALES_QA_TARGET,
+        fileRef: row.source.fileRef, rowNo: row.source.rowNo, sourceFileSha256: row.source.sourceFileSha256, rawFields: row.source.rawFields }
+    }))] };
   const preparedCatalogue = prepareNativeCatalogueImportChunk26(catalogue);
   const find = (entity: string) => preparedCatalogue.rows.find(r => r.entity === entity)!.nativeSnapshot;
   return { version: "SYNTHETIC_QA897_CURRENT_SALES_BLUEPRINT_V1" as const, database: input.database, batchId: input.batchId, now: input.now, pins: structuredClone(input.pins),
     namespace: CURRENT_SALES_QA_NAMESPACE, accountIdentities: accountRows, parties, partySourceCandidates, partyArtifacts,
-    catalogue, catalogueArtifact: { fileRef: "synthetic:qa897/catalogue.ndjson", utf8: dictionaryUtf8, sha256: dictionarySha },
+    catalogue, catalogueMappingCandidate, catalogueArtifact: { fileRef: "synthetic:qa897/catalogue.ndjson", utf8: dictionaryUtf8, sha256: dictionarySha },
     counts: { HALL: 22, WAREHOUSE: 22, STAFF: 49, CUSTOMER: 22, SUPPLIER: 0, accounts: 49, directLinks: 45, planLinks: 4 },
     refs: { importer: accountRows[0]!, businessActor: accountRows[1]!, salesperson: accountRows[2]!, hallId: native("hall", 400), warehouseId: native("warehouse", 500), customerId: native("customer", 600),
       category: find("CATEGORY"), color: find("COLOR"), fit: find("FIT"), size: find("SIZE"), sizeGroup: find("SIZE_GROUP"), secondSizeId, seasonId },
@@ -174,6 +189,37 @@ interface OriginalBootstrap26 {
   now(): string;
   close(): Promise<void>;
 }
+export interface CurrentReviewedCatalogueSource {
+  verify(): Promise<void>;
+  chunks(): AsyncIterable<PreparedNativeCatalogueImportChunk26>;
+  authorize(chunk: PreparedNativeCatalogueImportChunk26): Promise<void>;
+}
+/** Capture exact original-factory chunks before any database initialization.
+ * Compare intended native values/coverage, while leaving source IDs, physical
+ * mapping paths, row numbers, raw/provenance and fingerprints factory-owned. */
+export async function collectCurrentReviewedCatalogue(blueprint: CurrentSalesBlueprint, source: CurrentReviewedCatalogueSource) {
+  assert.ok(source && typeof source.verify === "function" && typeof source.chunks === "function" && typeof source.authorize === "function",
+    "Original reviewed catalogue factory/chunks/authorize required");
+  const expected = prepareNativeCatalogueImportChunk26(blueprint.catalogue), key = (entity: string, sourceKey: string) => JSON.stringify([entity, sourceKey]);
+  const wanted = new Map(expected.rows.map(row => [key(row.entity, row.source.sourceKey), row.nativeSnapshot]));
+  const seen = new Set<string>(), chunks: PreparedNativeCatalogueImportChunk26[] = [];
+  await source.verify();
+  for await (const chunk of source.chunks()) {
+    validatePreparedNativeCatalogueImportChunk26(chunk);
+    assert.equal(chunk.batchId, blueprint.batchId); assert.equal(chunk.fixedSourceNamespace, blueprint.namespace);
+    assert.equal(chunk.selection.selectionSha256, blueprint.pins.selectionSha256);
+    for (const row of chunk.rows) {
+      const identity = key(row.entity, row.source.sourceKey);
+      assert.ok(wanted.has(identity) && !seen.has(identity), "Exact reviewed QA897 catalogue coverage required");
+      assert.deepEqual(row.nativeSnapshot, wanted.get(identity), "Original factory native values must match the explicit synthetic blueprint");
+      seen.add(identity);
+    }
+    await source.authorize(chunk); chunks.push(chunk);
+  }
+  assert.equal(seen.size, wanted.size, "Original factory must cover all intended dictionary members");
+  await source.verify(); return chunks;
+}
+
 export interface CurrentSalesFixtureHost {
   readonly issuer: NativeRuntime26Issuer;
   readonly expectedDatabaseOid: string;
@@ -182,7 +228,9 @@ export interface CurrentSalesFixtureHost {
    * This adapter does not parse/read/return login names or credential values. */
   readonly bootstrapOptions: Readonly<Record<string, unknown>>;
   readonly coreAuthorization: { assertAllowed(actor: string, command: CoreImportCommand): Promise<void> };
-  readonly authorizeCatalogue: (chunk: PreparedNativeCatalogueImportChunk26) => Promise<void>;
+  /** Actual original openReviewedCatalogueSource26 result. The factory owns
+   * source-row IDs/fileRefs/raw/provenance/fingerprints; never rebuild its DTO. */
+  readonly catalogueSource: CurrentReviewedCatalogueSource;
   readonly schemes: { readonly command: BarcodeSchemeInitializationCommand; readonly source: BarcodeSchemeInitialization26; readonly defaultSchemeId: string };
 }
 
@@ -192,7 +240,7 @@ export interface CurrentSalesFixtureHost {
  * deliberately excludes private bootstrap reports and normal-login material.
  */
 export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixtureHost) {
-  assert.ok(host?.issuer?.runtime26 && host.issuer.pool && host.blueprint && host.bootstrapOptions && host.coreAuthorization && typeof host.authorizeCatalogue === "function" && host.schemes,
+  assert.ok(host?.issuer?.runtime26 && host.issuer.pool && host.blueprint && host.bootstrapOptions && host.coreAuthorization && host.catalogueSource && host.schemes,
     "Current issuer, full synthetic blueprint and original independently reviewed source factories/grants required");
   const b = structuredClone(host.blueprint), { pool, runtime26 } = host.issuer;
   assert.equal(b.database, CURRENT_SALES_QA_TARGET); assert.match(host.expectedDatabaseOid, /^[1-9]\d*$/);
@@ -200,7 +248,7 @@ export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixt
   assert.equal(binding?.target?.database, CURRENT_SALES_QA_TARGET); assert.equal(binding.batchId, b.batchId);
   assert.equal(binding.actorAccountId, b.refs.importer.nativeAccountId); assert.equal(binding.fixedSourceNamespace, CURRENT_SALES_QA_NAMESPACE);
   assert.equal(binding.selectionSha256, b.pins.selectionSha256); assert.equal(binding.phase, "CORE_INITIALIZATION_26_V1");
-  const preparedCatalogue = prepareNativeCatalogueImportChunk26(b.catalogue);
+  const reviewedCatalogue = await collectCurrentReviewedCatalogue(b, host.catalogueSource);
   assert.equal(b.parties.length, 115); assert.equal(b.accountIdentities.length, 49);
   assert.equal(b.accountIdentities.filter(a => a.sourceEmployeeNativeId !== null).length, 45);
   assert.equal(b.accountIdentities.filter(a => a.sourceEmployeeNativeId === null).length, 4);
@@ -247,8 +295,12 @@ export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixt
       store: new PostgresCutoffImportStore(pool, { runtime26, barcodeSchemeInitialization26: host.schemes.source }),
       authorization: { async assertAllowed(actor, command) { assert.deepEqual(command, schemeCommand); await host.schemes.source.assertAllowed(actor, command as BarcodeSchemeInitializationCommand); } }
     }).execute(schemeCommand);
-    await host.authorizeCatalogue(preparedCatalogue);
-    await new PostgresNativeCatalogueImportStore26(pool, runtime26).stage(preparedCatalogue);
+    for (const chunk of reviewedCatalogue) {
+      // Original DTO and source authorizer stay paired through the actual stage.
+      await host.catalogueSource.authorize(chunk);
+      await new PostgresNativeCatalogueImportStore26(pool, runtime26).stage(chunk);
+    }
+    await host.catalogueSource.verify();
     const importer: ActorContext = { accountId: entityId("account", b.refs.importer.nativeAccountId), hallId: null };
     const driver = new PostgresMaintenanceCommandUnitOfWork(pool);
     const staff = createStaffMaintenanceService({ unitOfWork: new PostgresStaffMaintenanceUnitOfWork(driver), credentials: null, now: () => b.now, newId });

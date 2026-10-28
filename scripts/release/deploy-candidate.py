@@ -580,6 +580,7 @@ def read_plan(filename):
         row = p['limits'].get(key)
         need(isinstance(row, dict) and isinstance(row.get('memoryMiB'), int) and 64 <= row['memoryMiB'] <= 2048
              and isinstance(row.get('cpus'), (int, float)) and 0.1 <= row['cpus'] <= 2, 'EXPLICIT_FINITE_CONTAINER_LIMITS_REQUIRED')
+        logging_config(p, key)
     need(re.fullmatch(r'[1-9][0-9]{0,5}:[1-9][0-9]{0,5}', p['limits']['app'].get('user', '')) and p['limits']['web'].get('user') == '101:101', 'NONROOT_APPLICATION_AND_NGINX_UID_REQUIRED')
     need(set(p['beforeCAS'].get('services', {})) == set(OLD_NAMES), 'EXACT_OLD_THREE_SERVICE_CAS_REQUIRED')
     need(isinstance(p['beforeCAS'].get('files'), list) and p['beforeCAS']['files'], 'EXACT_OLD_CONFIG_CAS_REQUIRED')
@@ -692,7 +693,7 @@ def check_images_networks(p, docker):
 def own_container_fingerprint(info):
     # Only the tool's controlled, secret-free spec fields. Runtime config content is not included.
     value = {'id': info['Id'], 'image': info['Image'], 'config': {k: info['Config'].get(k) for k in ['User', 'WorkingDir', 'Entrypoint', 'Cmd', 'Env', 'Labels']},
-             'host': {k: info['HostConfig'].get(k) for k in ['Binds', 'Mounts', 'PortBindings', 'ReadonlyRootfs', 'CapDrop', 'SecurityOpt', 'Memory', 'MemorySwap', 'NanoCpus', 'RestartPolicy', 'Tmpfs']},
+             'host': {k: info['HostConfig'].get(k) for k in ['Binds', 'Mounts', 'PortBindings', 'ReadonlyRootfs', 'CapDrop', 'SecurityOpt', 'Memory', 'MemorySwap', 'NanoCpus', 'RestartPolicy', 'Tmpfs', 'LogConfig']},
              'networks': {name: {'id': row.get('NetworkID'), 'aliases': row.get('Aliases')} for name, row in info['NetworkSettings']['Networks'].items()}}
     return digest(encoded(value))
 
@@ -704,13 +705,30 @@ def assert_own(info, p, role, public=False):
     image = p['images']['node' if role == 'app' else 'web']['id']
     need(info['Image'] == image and info['HostConfig']['ReadonlyRootfs'] and
          not info['HostConfig'].get('Privileged') and not info['HostConfig'].get('CapAdd'), 'CANDIDATE_IMAGE_OR_PRIVILEGE_CHANGED')
+    need(info['HostConfig'].get('LogConfig') == logging_config(p, 'app' if role == 'app' else 'web'),
+         'CANDIDATE_LOG_ROTATION_CHANGED')
     ports = info['HostConfig'].get('PortBindings') or {}
     need(ports == ({'8080/tcp': [{'HostIp': '127.0.0.1', 'HostPort': '18080'}]} if public else {}), 'CANDIDATE_PUBLIC_BINDING_CHANGED')
 
 
+def logging_config(p, key):
+    row = p['limits'][key].get('logging')
+    need(isinstance(row, dict) and set(row) == {'maxSizeBytes', 'maxFiles', 'compress'} and
+         type(row['maxSizeBytes']) is int and row['maxSizeBytes'] > 0 and
+         type(row['maxFiles']) is int and row['maxFiles'] > 0 and type(row['compress']) is bool,
+         'EXPLICIT_FINITE_LOG_ROTATION_REQUIRED')
+    return {'Type': 'json-file', 'Config': {'max-size': str(row['maxSizeBytes']),
+            'max-file': str(row['maxFiles']), 'compress': str(row['compress']).lower()}}
+
+
 def limits_args(p, key):
     row = p['limits'][key]
-    return ['--memory', str(row['memoryMiB']) + 'm', '--memory-swap', str(row['memoryMiB']) + 'm', '--cpus', str(row['cpus']), '--pids-limit', '128']
+    log = logging_config(p, key)
+    args = ['--memory', str(row['memoryMiB']) + 'm', '--memory-swap', str(row['memoryMiB']) + 'm', '--cpus', str(row['cpus']), '--pids-limit', '128',
+            '--log-driver', log['Type']]
+    for name, value in log['Config'].items():
+        args += ['--log-opt', name + '=' + value]
+    return args
 
 
 def labels(p, role):

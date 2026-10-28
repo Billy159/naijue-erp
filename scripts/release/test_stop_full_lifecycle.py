@@ -78,4 +78,42 @@ class CredentialMount(unittest.TestCase):
     link=root/'link';link.symlink_to(key);bad=copy.deepcopy(p);bad['runtime26Full']['credentialRequestKey']['hostFile']=str(link)
     with self.assertRaises(D.Refused):D.exact26_full(bad)
 
+class LogRotation(unittest.TestCase):
+ def plan(self):
+  return {'buildId':'isolated-logging-test','operationId':'isolated-logging-test','archive':{'sha256':'a'*64},
+   'names':{'app':'app','stageWeb':'stage-web','publicWeb':'public-web'},
+   'networks':{'front':{'id':'front'},'data':{'id':'data'}},
+   'images':{'node':{'id':'node-image'},'web':{'id':'web-image'}},
+   'releaseDirectory':'/isolated/logging-test','runtimeConfiguration':{'path':'/isolated/runtime.json'},
+   'nginxConfiguration':{'path':'/isolated/nginx.conf'},
+   'limits':{key:{'user':'10001:10001','memoryMiB':128,'cpus':1,
+    'logging':{'maxSizeBytes':1048576,'maxFiles':2,'compress':True}} for key in ('app','web','install')}}
+ def test_new_containers_receive_explicit_native_rotation(self):
+  class Docker:
+   def __init__(self):self.calls=[]
+   def run(self,args):self.calls.append(args);return ('c'*64).encode()
+  p=self.plan();docker=Docker()
+  D.create_app(p,docker);D.create_web(p,docker);D.create_web(p,docker,public=True)
+  for args in [row for row in docker.calls if row[0]=='create']+[D.limits_args(p,'install')]:
+   self.assertEqual(args[args.index('--log-driver')+1],'json-file')
+   for option in ('max-size=1048576','max-file=2','compress=true'):self.assertIn(option,args)
+ def test_missing_or_unbounded_rotation_refuses_before_container_creation(self):
+  import copy
+  for value in [None,{}, {'maxSizeBytes':0,'maxFiles':2,'compress':False},
+   {'maxSizeBytes':1,'maxFiles':0,'compress':False}, {'maxSizeBytes':True,'maxFiles':1,'compress':False},
+   {'maxSizeBytes':1,'maxFiles':1,'compress':'false'},
+   {'maxSizeBytes':1,'maxFiles':1,'compress':False,'endpoint':'not-allowed'}]:
+   p=copy.deepcopy(self.plan());p['limits']['app']['logging']=value
+   docker=types.SimpleNamespace(run=lambda args:self.fail('must not call Docker'))
+   with self.subTest(value=value),self.assertRaises(D.Refused):D.create_app(p,docker)
+ def test_actual_rotation_mismatch_is_rejected_and_part_of_owned_fingerprint(self):
+  import copy
+  p=self.plan();info={'Id':'c'*64,'Image':'node-image','Config':{'Labels':{
+   'naijue.rapid-launch.build-id':p['buildId'],'naijue.rapid-launch.archive-sha256':'a'*64,'naijue.rapid-launch.role':'app'}},
+   'HostConfig':{'ReadonlyRootfs':True,'LogConfig':D.logging_config(p,'app')},'NetworkSettings':{'Networks':{}}}
+  D.assert_own(info,p,'app');before=D.own_container_fingerprint(info)
+  changed=copy.deepcopy(info);changed['HostConfig']['LogConfig']['Config']['max-file']='1'
+  self.assertNotEqual(before,D.own_container_fingerprint(changed))
+  with self.assertRaises(D.Refused):D.assert_own(changed,p,'app')
+
 if __name__=='__main__':unittest.main()

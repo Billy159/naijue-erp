@@ -7541,7 +7541,7 @@
     },
     "Current897Fixture899": {
       "owner": "D3",
-      "status": "ACTIVE_SOURCE903_TWO_FACTORY_CONSUMER_FIX_SAME_D3_LEAF",
+      "status": "SOURCE906_F01_F02_HANDED_BACK_FIXED_FOR_QB",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "tests/integration/current-runtime26-sales-fixture.ts"
@@ -7554,7 +7554,7 @@
     "A02Admission903": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "status": "ASSIGNED_TWO_NEW_LEAVES_CAPACITY_ADMISSION",
+      "status": "SOURCE906_HANDED_BACK_FOR_QB_NOT_HOST_WIRED",
       "files": [
         "apps/api/src/capacity-admission.ts",
         "tests/capacity-admission.test.ts"
@@ -7573,6 +7573,15 @@
       ],
       "scope": "V2 H06 finite operator cleanup mechanism only: explicit approved plan/cutoff/target/candidate inputs, offline all-writer fence, actual reference/key/audit/unknown-commit exclusions, default dry-run and explicit isolated apply; no production execution/deletion/TTL assumptions/SQL guard changes. Preserve original auth_session-dependent predicates.",
       "next": "Original owner implement directly with exact finite tests; any unsupported original session guard or permission/retention delta enumerate once for C/user. T45 sole real execution after accurate approved isolated list."
+    },
+    "H06LogRotation906": {
+      "owner": "C",
+      "status": "SOURCE906_C_HANDED_BACK_FIXED_FOR_QB_LOCAL9_PASS",
+      "files": [
+        "scripts/release/deploy-candidate.py",
+        "scripts/release/test_stop_full_lifecycle.py"
+      ],
+      "scope": "Original244 config evidence shows no explicit finite json-file rotation in inspected application settings; require explicit role limits.logging on new candidate plans, apply Docker native max-size/max-file/compress and verify actual LogConfig in original own-container flow. No chosen production values, server changes, deletion, new collector or app logging rewrite."
     }
   }
 }

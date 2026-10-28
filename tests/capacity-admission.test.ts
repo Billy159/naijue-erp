@@ -1,0 +1,134 @@
+/** Injected clocks and finite probe workers only. No PG, business files, HTTP host or production budget. */
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {setImmediate as tick} from 'node:timers/promises';
+import {createCapacityAdmission, CapacityAdmissionRejected, CAPACITY_VOLUMES} from '../apps/api/src/capacity-admission.ts';
+import type {CapacityBinding, CapacityBytes, CapacityReading, CapacityWindow} from '../apps/api/src/capacity-admission.ts';
+const amount = (n: bigint): CapacityBytes => Object.fromEntries(CAPACITY_VOLUMES.map(k => [k,n])) as Record<typeof CAPACITY_VOLUMES[number],bigint>;
+const identity = (): CapacityBinding => ({candidateFingerprint:'SYNTHETIC-CANDIDATE',targetFingerprint:'SYNTHETIC-PG-WAL-MEDIA',writerTopologyFingerprint:'SYNTHETIC-ONE-WRITER',inventoryFingerprint:'SYNTHETIC-INVENTORY',processInstanceId:'SYNTHETIC-PROCESS-1',restartGeneration:0,writerCount:1});
+const deferred = <T>() => {let resolve!: (v:T)=>void;let reject!: (e:Error)=>void;const promise=new Promise<T>((a,b)=>{resolve=a;reject=b;});return {promise,resolve,reject};};
+const failure = (reason: string) => (e:unknown) => e instanceof CapacityAdmissionRejected && e.reason===reason && e.statusCode===503 && e.retryAfterSeconds===2;
+const cancelled = (e:unknown) => e instanceof Error && e.name==='AbortError';
+function setup() {
+  let at=1000,actual=identity(),calls=0;
+  const window:CapacityWindow={approved:true,token:'SYNTHETIC-WINDOW-ONLY-NOT-A-LOGIN-TOKEN',inventoryObservedAt:900,startsAt:1000,expiresAt:10000,binding:identity()};
+  const known = ():CapacityReading=>({status:'KNOWN',windowToken:window.token,binding:identity(),observedAt:at,databaseBytes:100n,sessionRelationBytes:10n,freeBytes:amount(10000n)});
+  const options={window,budgets:{session:{maxAdmissions:4,maxInFlight:2,worstCaseBytes:amount(10n)},upload:{maxAdmissions:3,maxInFlight:1,worstCaseBytes:amount(20n)}},minimumFreeBytes:amount(100n),safetyBytes:amount(50n),probeTtlMillis:100,probeTimeoutMillis:50,maxProbeWaiters:3,retryAfterSeconds:2,now:()=>at,currentBinding:()=>actual,probe:async()=>{calls++;return known();}};
+  return {options,window,known,calls:()=>calls,setTime:(v:number)=>{at=v;},setBinding:(v:CapacityBinding)=>{actual=v;}};
+}
+test('A02 requires explicit finite configuration and refuses TTL above 30 seconds',()=>{
+  const f=setup();assert.throws(()=>createCapacityAdmission({...f.options,probeTtlMillis:30001}),TypeError);
+  assert.throws(()=>createCapacityAdmission({...f.options,probeTimeoutMillis:101}),TypeError);
+  assert.throws(()=>createCapacityAdmission({...f.options,budgets:{...f.options.budgets,upload:{...f.options.budgets.upload,worstCaseBytes:amount(0n)}}}),TypeError);
+});
+for(const state of ['missing','unapproved','empty-token','not-started','expired']as const)test(`A02 ${state} window rejects both new writes before any probe; no implicit renewal`,async()=>{
+  const f=setup();let w:CapacityWindow|null=f.window;
+  if(state==='missing')w=null;
+  if(state==='unapproved')w={...f.window,approved:false};
+  if(state==='empty-token')w={...f.window,token:''};
+  if(state==='not-started')f.setTime(999);
+  if(state==='expired')f.setTime(10000);
+  const a=createCapacityAdmission({...f.options,window:w});
+  for(const kind of ['session','upload']as const)await assert.rejects(a.acquire(kind),failure(['missing','unapproved','empty-token'].includes(state)?'WINDOW_UNAPPROVED':'WINDOW_EXPIRED'));
+  assert.equal(f.calls(),0);
+});
+for(const key of ['candidateFingerprint','targetFingerprint','writerTopologyFingerprint','inventoryFingerprint','processInstanceId','restartGeneration','writerCount']as const)test(`A02 changed ${key} rejects a previously cached positive probe`,async()=>{
+  const f=setup(),a=createCapacityAdmission(f.options);(await a.acquire('session')).release();
+  f.setBinding({...identity(),[key]:typeof identity()[key]==='number'?1+(identity()[key]as number):'CHANGED'});
+  await assert.rejects(a.acquire('upload'),failure('BINDING_CHANGED'));assert.equal(f.calls(),1);
+});
+test('A02 shares one physical probe, enforces bounded waiters and releases cancelled waiters',async()=>{
+  const f=setup(),d=deferred<CapacityReading>();let calls=0;
+  const a=createCapacityAdmission({...f.options,maxProbeWaiters:2,probe:async()=>{calls++;return d.promise;}});
+  const abort=new AbortController(),first=a.acquire('session',abort.signal),firstRejected=assert.rejects(first,cancelled),second=a.acquire('session');
+  await assert.rejects(a.acquire('upload'),failure('PROBE_BUSY'));abort.abort();await firstRejected;
+  const third=a.acquire('upload');await tick();assert.equal(calls,1);d.resolve(f.known());
+  const held=await Promise.all([second,third]);held.forEach(x=>x.release());assert.equal(calls,1);a.close();
+});
+test('A02 cancelled waiters remove abort listeners and do not accumulate shared promise reactions',async()=>{
+  const f=setup(),d=deferred<CapacityReading>();let added=0,removed=0;
+  const a=createCapacityAdmission({...f.options,maxProbeWaiters:2,probe:()=>d.promise});
+  const interested=a.acquire('session');
+  for(let i=0;i<12;i++){
+    const c=new AbortController(),signal=c.signal,add=signal.addEventListener.bind(signal),remove=signal.removeEventListener.bind(signal);
+    signal.addEventListener=(...args:Parameters<typeof add>)=>{added++;return add(...args);};
+    signal.removeEventListener=(...args:Parameters<typeof remove>)=>{removed++;return remove(...args);};
+    const p=a.acquire('session',signal),rejected=assert.rejects(p,cancelled);c.abort();await rejected;
+  }
+  assert.equal(added,12);assert.equal(removed,12);
+  d.resolve(f.known());(await interested).release();a.close();
+});
+test('A02 last cancelled probe waiter aborts physical work without pretending its resources were released',async()=>{
+  const f=setup(),d=deferred<CapacityReading>(),c=new AbortController();let freed=0,signal:AbortSignal|undefined,calls=0;
+  const a=createCapacityAdmission({...f.options,probe:async context=>{calls++;signal=context.signal;try{return await d.promise;}finally{freed++;}}});
+  const running=a.acquire('session',c.signal),rejected=assert.rejects(running,cancelled);await tick();c.abort();await rejected;
+  assert.equal(signal?.aborted,true);assert.equal(freed,0);
+  await assert.rejects(a.acquire('upload'),failure('PROBE_UNAVAILABLE'));assert.equal(calls,1);
+  d.resolve(f.known());await tick();assert.equal(freed,1);a.close();
+});
+test('A02 clock failure or regression refuses admission with the same fixed unavailable error',async()=>{
+  const f=setup(),a=createCapacityAdmission(f.options);(await a.acquire('session')).release();f.setTime(999);
+  await assert.rejects(a.acquire('session'),failure('CLOCK_INVALID'));a.close();
+  const b=createCapacityAdmission({...f.options,now:()=>{throw Error('PRIVATE CLOCK ERROR');}});
+  await assert.rejects(b.acquire('session'),e=>failure('CLOCK_INVALID')(e)&&!String(e).includes('PRIVATE'));b.close();
+});
+test('A02 timeout aborts probe but does not start a replacement until the physical worker settles',async()=>{
+  const f=setup(),d=deferred<CapacityReading>();let calls=0,signal:AbortSignal|undefined,freed=0;
+  const a=createCapacityAdmission({...f.options,probeTimeoutMillis:5,probeTtlMillis:10,probe:async c=>{calls++;signal=c.signal;try{return await d.promise;}finally{freed++;}}});
+  await assert.rejects(a.acquire('session'),failure('PROBE_UNAVAILABLE'));assert.equal(signal?.aborted,true);assert.equal(freed,0);
+  f.setTime(1020);await assert.rejects(a.acquire('upload'),failure('PROBE_UNAVAILABLE'));assert.equal(calls,1);
+  d.resolve(f.known());await tick();assert.equal(freed,1);
+  (await a.acquire('session')).release();assert.equal(calls,2);a.close();
+});
+test('A02 probe exception is UNKNOWN, cached briefly, sanitized and eligible for a later real retry',async()=>{
+  const f=setup();let calls=0;
+  const a=createCapacityAdmission({...f.options,probe:async()=>{calls++;if(calls===1)throw Error('PRIVATE CONNECTION STRING');return f.known();}});
+  await assert.rejects(a.acquire('session'),failure('PROBE_UNAVAILABLE'));
+  await assert.rejects(a.acquire('upload'),e=>failure('PROBE_UNAVAILABLE')(e)&&!String(e).includes('PRIVATE'));assert.equal(calls,1);
+  await tick();f.setTime(1100);(await a.acquire('session')).release();assert.equal(calls,2);a.close();
+});
+for(const issue of ['token','binding','stale','future','unknown']as const)test(`A02 ${issue} probe cannot become a trusted cached result`,async()=>{
+  const f=setup();const known=f.known();assert.equal(known.status,'KNOWN');
+  const result:CapacityReading=issue==='unknown'?{status:'UNKNOWN'}:{...known,...(issue==='token'?{windowToken:'OTHER'}:issue==='binding'?{binding:{...identity(),targetFingerprint:'OTHER'}}:issue==='stale'?{observedAt:999}:{observedAt:1001})};
+  const a=createCapacityAdmission({...f.options,probe:async()=>result});await assert.rejects(a.acquire('session'),failure('PROBE_UNAVAILABLE'));a.close();
+});
+test('A02 old results arriving after expiry or identity change never grant a lease',async()=>{
+  for(const expiry of [true,false]){
+    const f=setup(),d=deferred<CapacityReading>(),a=createCapacityAdmission({...f.options,probe:()=>d.promise});
+    const p=a.acquire('session'),rejected=assert.rejects(p,failure(expiry?'WINDOW_EXPIRED':'BINDING_CHANGED'));await tick();
+    if(expiry)f.setTime(10000);else f.setBinding({...identity(),processInstanceId:'RESTARTED'});
+    d.resolve(f.known());await rejected;a.close();
+  }
+});
+test('A02 cache expires exactly at TTL and both ordinary writes require a new trusted reading',async()=>{
+  const f=setup(),a=createCapacityAdmission(f.options);(await a.acquire('session')).release();f.setTime(1099);(await a.acquire('upload')).release();assert.equal(f.calls(),1);
+  await tick();f.setTime(1100);(await a.acquire('session')).release();assert.equal(f.calls(),2);a.close();
+});
+test('A02 each real target volume has an independent low-water floor with worst-case and safety reserve',async()=>{
+  for(const volume of CAPACITY_VOLUMES){
+    const f=setup(),known=f.known();assert.equal(known.status,'KNOWN');
+    const a=createCapacityAdmission({...f.options,probe:async()=>({...known,freeBytes:{...known.freeBytes,[volume]:159n}})});
+    await assert.rejects(a.acquire('session'),failure('LOW_WATER'));a.close();
+  }
+});
+test('A02 in-flight slots release once, but cancelled/unknown writes never refund window count or byte charges',async()=>{
+  const f=setup(),known=f.known();assert.equal(known.status,'KNOWN');
+  const a=createCapacityAdmission({...f.options,probe:async()=>({...known,freeBytes:amount(180n)})});
+  const first=await a.acquire('session'),second=await a.acquire('session');await assert.rejects(a.acquire('session'),failure('IN_FLIGHT_LIMIT'));
+  first.release();first.release();second.release();
+  const third=await a.acquire('session');third.release();await assert.rejects(a.acquire('session'),failure('LOW_WATER'));a.close();
+  const b=createCapacityAdmission({...f.options,budgets:{...f.options.budgets,upload:{...f.options.budgets.upload,maxAdmissions:1}}});
+  const upload=await b.acquire('upload');upload.release();await assert.rejects(b.acquire('upload'),failure('WINDOW_BUDGET_EXHAUSTED'));b.close();
+});
+test('A02 consumer abort never releases an acquired work lease; other write category retains its own slot',async()=>{
+  const f=setup(),a=createCapacityAdmission(f.options),c=new AbortController(),held=await a.acquire('upload',c.signal);c.abort();
+  await assert.rejects(a.acquire('upload'),failure('IN_FLIGHT_LIMIT'));
+  (await a.acquire('session')).release();held.release();(await a.acquire('upload')).release();a.close();
+});
+test('A02 close cancels probe waiters, retains the physical worker until finally, and does not expose read/logout methods',async()=>{
+  const f=setup(),d=deferred<CapacityReading>();let released=0,signal:AbortSignal|undefined;
+  const a=createCapacityAdmission({...f.options,probe:async c=>{signal=c.signal;try{return await d.promise;}finally{released++;}}});
+  const p=a.acquire('session'),rejected=assert.rejects(p,failure('CLOSED'));await tick();a.close();a.close();await rejected;
+  assert.equal(signal?.aborted,true);assert.equal(released,0);d.resolve(f.known());await tick();assert.equal(released,1);
+  assert.deepEqual(Object.keys(a).sort(),['acquire','close']);await assert.rejects(a.acquire('session'),failure('CLOSED'));
+});
