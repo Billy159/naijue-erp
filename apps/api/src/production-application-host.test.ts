@@ -445,3 +445,43 @@ test('H06 detached readiness response never writes after late probe completion',
  await new Promise(resolve=>setImmediate(resolve));assert.equal(writes,0);
  }finally{await rm(root,{recursive:true,force:true});}
 });
+
+test('H06 logs fixed fields only, bounded size/rate, one finish or cancellation event without request data',async()=>{
+ const root=await build(),p=apiDouble(),lines:string[]=[];
+ try{
+  const handle=await createProductionRequestHandler({api:p.api,configuration:config(root),writeLog:(line:string)=>{lines.push(line);}});
+  const request=(cancel=false)=>{
+   const req=Object.assign(new EventEmitter(),{url:'/api/products/commands?token=SECRET_QUERY',method:'POST',headers:{host:'web:8080',cookie:'SECRET_COOKIE','x-request-id':'SECRET_HEADER'},body:'SECRET_BODY'}) as unknown as IncomingMessage;
+   const res=Object.assign(new EventEmitter(),{statusCode:0,writableEnded:false,writeHead(n:number){this.statusCode=n;},end(this:{writableEnded:boolean;emit(event:string):boolean}){if(!cancel){this.writableEnded=true;this.emit('finish');}},destroy(){}}) as unknown as ServerResponse;
+   handle(req,res);if(cancel)res.emit('close');else res.emit('close');
+  };
+  request();request(true);assert.equal(lines.length,2);const records=lines.map(s=>JSON.parse(s));
+  assert.equal(records[0].reason,'COMPLETED');assert.equal(records[0].status,404);assert.equal(records[1].reason,'CLIENT_CLOSED');
+  assert.match(records[0].requestId,/^[0-9a-f-]{36}$/);assert.equal(records[0].route,'API');assert.equal(records[0].operation,'WRITE');
+  assert.ok(!lines.join('').includes('SECRET'));assert.ok(lines.every(s=>Buffer.byteLength(s)<=1024));
+  for(let i=0;i<200;i++)request();assert.ok(lines.length<=128);
+ }finally{await rm(root,{recursive:true,force:true});}
+});
+
+test('H06 failing operational log sink cannot change the error response or emit private causes',async()=>{
+ const root=await build(),p=apiDouble();let calls=0;
+ try{const handle=await createProductionRequestHandler({api:p.api,configuration:config(root),writeLog:()=>{calls++;throw Error('PRIVATE_SINK_FAILURE');}});
+ const req=Object.assign(new EventEmitter(),{url:'/api/missing',method:'POST',headers:{host:'web:8080'}}) as unknown as IncomingMessage;
+ const res=Object.assign(new EventEmitter(),{statusCode:0,writableEnded:false,writeHead(n:number){this.statusCode=n;},end(this:{writableEnded:boolean;emit(event:string):boolean}){this.writableEnded=true;this.emit('finish');}}) as unknown as ServerResponse;
+ assert.doesNotThrow(()=>handle(req,res));assert.equal(res.statusCode,404);assert.equal(calls,1);
+ }finally{await rm(root,{recursive:true,force:true});}
+});
+
+test('H06 drain logs only fixed cleanup reason once, never the private cleanup error',async()=>{
+ const root=await build(),p=apiDouble(),original=http.createServer,lines:string[]=[];
+ const server=new EventEmitter() as EventEmitter & {listen():void;close(cb:(e?:Error)=>void):void};
+ server.listen=()=>queueMicrotask(()=>server.emit('listening'));server.close=cb=>cb();
+ http.createServer=(()=>server) as unknown as typeof http.createServer;syncBuiltinESMExports();
+ try{const api={...p.api,async close(){throw Error('PRIVATE_CLEANUP_SECRET');}};
+ const host=await startProductionApplicationHost({api,configuration:config(root),writeLog:line=>{lines.push(line);}});
+ await assert.rejects(host.close(),AggregateError);await assert.rejects(host.close(),AggregateError);
+ assert.equal(lines.length,2);const events=lines.map(s=>JSON.parse(s));assert.equal(events[0].phase,'DRAIN_START');
+ assert.equal(events[1].reason,'CLEANUP_FAILED_OUTCOME_UNKNOWN');assert.equal(events[0].requestId,events[1].requestId);
+ assert.ok(!lines.join('').includes('PRIVATE'));assert.ok(lines.every(s=>Buffer.byteLength(s)<=1024));
+ }finally{http.createServer=original;syncBuiltinESMExports();await rm(root,{recursive:true,force:true});}
+});

@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+import { performance } from "node:perf_hooks";
 import { PRODUCT_IMAGE_CODEC_LIMITS } from "../../../adapters/media/src/sharp-product-image-codec.ts";
 import { createServer } from "node:http";
 import type { IncomingMessage, Server, ServerResponse } from "node:http";
@@ -12,8 +14,20 @@ import { productionRuntime26HostConfiguration } from "./production-provider-comp
 import { productionRuntime26R3HostConfiguration, productionRuntime26R2HostConfiguration } from "./production-provider-composition.ts";
 import type { ProductionRuntimeConfiguration, ProductionRuntime26Configuration, ProductionRuntime26R2Configuration, ProductionRuntime26R3Configuration } from "./production-provider-composition.ts";
 
-export interface ProductionApplicationHostOptions { readonly api: PostgresApplicationApi; readonly configuration: ProductionRuntimeConfiguration }
+export interface ProductionApplicationHostOptions { readonly api: PostgresApplicationApi; readonly configuration: ProductionRuntimeConfiguration; readonly writeLog?: (line: string) => void }
 export interface ProductionApplicationHost { readonly publicOrigin: string; close(): Promise<void> }
+/** One bounded, nonblocking JSON-line emitter. Backpressure drops events, never queues business data. */
+function hostLog(write?: (line: string) => void) {
+  let window = performance.now(), emitted = 0;
+  return (record: {requestId: string; route: "API" | "HEALTH" | "STATIC" | "HOST"; operation: "READ" | "WRITE" | "CLOSE";
+    phase: "REQUEST_END" | "DRAIN_START" | "DRAIN_END"; status: number; durationMs: number;
+    reason: "DRAIN_REQUESTED" | "COMPLETED" | "CLIENT_CLOSED" | "CLEANUP_COMPLETE" | "CLEANUP_FAILED_OUTCOME_UNKNOWN"}): void => {
+    const now=performance.now();if(now-window>=1000){window=now;emitted=0;}
+    if(emitted>=128 || (!write && process.stdout.writableNeedDrain))return;
+    const line=JSON.stringify(record)+"\n";if(Buffer.byteLength(line)>1024)return;emitted++;
+    try{if(write)write(line);else process.stdout.write(line,()=>{});}catch{/* A failed operational sink must not alter a business response. */}
+  };
+}
 const forbidden = (name: string): boolean => name.startsWith(".")
   || /^(?:source(?:[-_.].*)?|incoming(?:[-_.].*)?|provenance(?:[-_.].*)?|metafile(?:[-_.].*)?)$/i.test(name)
   || /(?:^|[-_.])(?:keys?|private|secrets?|pem|crt|cert)(?:[-_.]|$)/i.test(name);
@@ -115,8 +129,16 @@ export async function createProductionRequestHandler(options: ProductionApplicat
   const routing = api.app.routing.bind(api.app), hosts = new Set(config.http.acceptedHosts), entry = config.assets.entry;
   const assets = await captureBuild(config.assets.root, entry);
   const health = Buffer.from(JSON.stringify({ status: "HOST_ALIVE", databaseChecked: false, apiBase: "/api", ...config.build }));
+  const log=hostLog(options.writeLog);
   return (request, response) => {
     const raw = request.url;
+    const requestId=randomUUID(),started=performance.now();let recorded=false;
+    const route=typeof raw==="string" && (raw==="/api" || raw.startsWith("/api/")) ? "API" : typeof raw==="string" && /^\/(?:healthz|readyz)(?:\?|$)/.test(raw) ? "HEALTH" : "STATIC";
+    const ended=(reason:"COMPLETED"|"CLIENT_CLOSED")=>{if(recorded)return;recorded=true;
+      log({requestId,route,operation:request.method==="GET"||request.method==="HEAD"?"READ":"WRITE",phase:"REQUEST_END",
+        status:Number.isInteger(response.statusCode)&&response.statusCode>=100&&response.statusCode<=599?response.statusCode:0,
+        durationMs:Math.min(2147483647,Math.max(0,Math.round(performance.now()-started))),reason});};
+    if(typeof response.once==="function"){response.once("finish",()=>ended("COMPLETED"));response.once("close",()=>ended(response.writableEnded?"COMPLETED":"CLIENT_CLOSED"));}
     // Proxy headers are deliberately ignored. The trusted origin is configuration,
     // and accepted Host values must be supplied by the deployment owner.
 
@@ -180,13 +202,17 @@ async function closeListener(server: Server | undefined, sockets: ReadonlySet<Du
  * terminate HTTPS on the approved existing proxy. No X-Forwarded trust, migrations
  * or automatic database discovery. Takes API ownership even if startup fails. */
 export async function startProductionApplicationHost(options: ProductionApplicationHostOptions): Promise<ProductionApplicationHost> {
+  const log=hostLog(options.writeLog);
   const apiClose = typeof options?.api?.close === "function" ? options.api.close.bind(options.api) : undefined;
   let drainMs = 0; // No listener exists until configuration has supplied resource budgets.
   let server: Server | undefined, closing: Promise<void> | undefined; const sockets = new Set<Duplex>();
   const close = (): Promise<void> => closing ??= (async () => {
-    const errors: unknown[] = [];
+    const errors: unknown[] = [],started=performance.now(),requestId=randomUUID();
+    log({requestId,route:"HOST",operation:"CLOSE",phase:"DRAIN_START",status:503,durationMs:0,reason:"DRAIN_REQUESTED"});
     try { await closeListener(server, sockets, drainMs); } catch (error) { errors.push(error); }
     try { await apiClose?.(); } catch (error) { errors.push(error); }
+    log({requestId,route:"HOST",operation:"CLOSE",phase:"DRAIN_END",status:errors.length?503:200,
+      durationMs:Math.min(2147483647,Math.max(0,Math.round(performance.now()-started))),reason:errors.length?"CLEANUP_FAILED_OUTCOME_UNKNOWN":"CLEANUP_COMPLETE"});
     if (errors.length) throw new AggregateError(errors, "Production listener/API shutdown failed");
   })();
   try {
@@ -196,7 +222,7 @@ export async function startProductionApplicationHost(options: ProductionApplicat
       PRODUCT_IMAGE_CODEC_LIMITS.processingSecondsMax * 1000, p.queryTimeoutMillis)
       + p.acquisitionTimeoutMillis + p.disposeGraceMillis + p.disposeTimeoutMillis;
 
-    const handle = await createProductionRequestHandler({ api: options.api, configuration: config }, () => closing !== undefined);
+    const handle = await createProductionRequestHandler({ api: options.api, configuration: config, ...(options.writeLog ? {writeLog:options.writeLog} : {}) }, () => closing !== undefined);
     server = createServer({ maxHeaderSize: 16_384 }, handle);
     server.requestTimeout = 30_000; server.headersTimeout = 10_000; server.keepAliveTimeout = 1_000;
     server.on("connection", socket => { sockets.add(socket); socket.once("close", () => sockets.delete(socket)); });

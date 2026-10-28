@@ -7226,6 +7226,18 @@
         "apps/api/src/postgres-read-api.test.ts"
       ],
       "scope": "H06firstslice real dependency readiness and graceful host/API close;reuse existing admission/pool/cancellation;noSQL/ACL/frontend/newplatform. D1 keeps database/runtime capability source and control preparation;these4soleD2 untilhandoff. Report remainingH06 logging/retention/GC separately unfinished."
+    },
+    "H06LoggingNext864": {
+      "owner": "D2",
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "files": [
+        "apps/api/src/production-application-host.ts",
+        "apps/api/src/production-application-host.test.ts"
+      ],
+      "scope": "ExistingH06 finiteboundedredactedrequest/lifecyclelogs only;otherentryfile seamtoC,rotationT45;noPG/SQL/ACL/server",
+      "current": "boundedredactedlogs",
+      "next": "necessaryaffectedchecks andfixedhandoff;no overlapT45"
     }
   }
 }

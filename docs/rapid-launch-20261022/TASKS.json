@@ -18298,30 +18298,62 @@
       "boundary": "Productiondeploy/migration/downtime/permission/deletion remainseparateapproval;onlythisminimumisolatedpermissionbranch waits"
     },
     "permissionConfirmationB14": {
-      "status": "HUMAN_APPROVED_WAIT_EXACT_T45_CARRIER",
+      "status": "223_PREGRANT_PROBE_SYNTAX_FAILED_225_ALIAS_CORRECTION_PREPARING",
       "document": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-CONFIRMATION.md",
       "sql": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL.sql",
       "rollback": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-ROLLBACK.sql",
       "scope": "OnlyB14OID16399/hv2_b14_runtime_20261028_01;noP04/R1/production",
       "questionSource": "ThisCturn asyncminimumisolatedpermission question;latestV2 explicitpermissionapprovalboundary",
       "humanApproval": "call_0ccc172a36184c2282757d2e9dd43303/0",
-      "approvedAnswer": "确认 B14 最小权限及原隔离验证"
+      "approvedAnswer": "确认 B14 最小权限及原隔离验证",
+      "carrier": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-b14-approved-minimum-column-acl-20261028-223",
+      "next": "225 exactschema_create alias+namespace only,originalapprovedSQL unchanged;224blockeduntilnewknownsuccess",
+      "failure": "42601position107 reservedaliascreate in schema privilege probe beforeACLintent/stagesempty;rollback/client0"
     },
     "H06Review863": {
-      "status": "SOURCE_READY_FIXED_CANDIDATE_QB_NEXT",
+      "status": "QB_NARROW_PASS_SOURCE_AND_SYNTHETIC_ONLY",
       "finding": "30sserver.requestTimeout bounds incoming request not duration of admitted120s inventory export;do not killlegalrequest at30s",
       "owner": "D2existingexact4leaves",
-      "next": "OriginalQB correctedbudget/disconnect/readOnlyfactoryfixture only;no wholeH06PASS",
+      "next": "D2 samehost2leaves boundedredactedlogs;T45 actualenvironmentevidence remainspending",
       "boundary": "NoPG/SQL/ACL/server/production,noH06PASS",
       "correctedReceipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/HV2-H06-HOST-LIFECYCLE/CORRECTED-DRAIN-RESULT.json",
       "ownerResult": "DRAIN_BUDGET_AND_DISCONNECT_CORRECTED_SOURCE_READY_NOT_ACTUAL_H06",
-      "checks": "Old44+genuineissuer1 reused;3affectedPASS;actualPG/TCP/proxy NOT_TESTED"
+      "checks": "Old44+genuineissuer1 reused;3affectedPASS;actualPG/TCP/proxy NOT_TESTED",
+      "fixedCommit": "d659d8f462b5195b95b7c70250dac5c0c79f7d7c",
+      "receipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE863/QB-SOURCE863-RESULT.json",
+      "receiptSha256": "106b0958ee596effe21ad70382c6e4c8ff993795efaa87b6f5d4376f50b8420d"
     },
     "source862Acceptance": {
       "status": "PASS_NARROW_SOURCE_AND_GENERATION",
       "receipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE862/QB-SOURCE862-RESULT.json",
       "sha256": "f888c0a461e00aa13496157abcfdb4717b338067c29c0a2d72938279258714ac",
       "scope": "1nestedcase9variants andgeneration;noSQL/ACL/server/build/fullH04"
+    },
+    "H06LoggingNext864": {
+      "status": "SOURCE_READY_FIXED_QB_NEXT",
+      "owner": "D2",
+      "files": [
+        "apps/api/src/production-application-host.ts",
+        "apps/api/src/production-application-host.test.ts"
+      ],
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "scope": "ExistingH06 finiteboundedredactedrequest/lifecyclelogs only;otherentryfile seamtoC,rotationT45;noPG/SQL/ACL/server",
+      "wholeH06Pass": false,
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D2/HV2-H06-STRUCTURED-LOGS/RESULT.json",
+      "checks": "3newaffectedlocalPASS;noPG/server/collector/wholeH06"
+    },
+    "v23Source858ClosureAdopted864": {
+      "status": "ORIGINAL_D3_SELECTED_SOURCE_CLOSURE_ADOPTED_NOT_SIGNED_RUNTIME",
+      "counts": {
+        "runtimeUnique": 107,
+        "changedOrAdded": 9,
+        "unchanged": 98,
+        "activeAliases": 14,
+        "typeOnly": 33
+      },
+      "sourceChangesRequired": false,
+      "next": "T45 strictrole/baseline/current refs projection;newnamespace Python Git730baseline andsource858relativecurrent;no148recompute/193composite"
     }
   }
 }
