@@ -34,8 +34,12 @@ export interface CapacityWriteBudget {
   readonly maxInFlight: number;
   readonly worstCaseBytes: CapacityBytes;
 }
+export interface CapacityAdmissionLease extends ReturnType<LoginAdmission['acquire']> {
+  /** Synchronous original-window/probe check only; never performs I/O while a business transaction is held. */
+  assertValid(): void;
+}
 export interface CapacityAdmission {
-  acquire(kind: CapacityWriteKind, signal?: AbortSignal): Promise<ReturnType<LoginAdmission['acquire']>>;
+  acquire(kind: CapacityWriteKind, signal?: AbortSignal): Promise<CapacityAdmissionLease>;
   /** Stops new admission and aborts the probe; never releases another consumer's active work early. */
   close(): void;
 }
@@ -194,7 +198,14 @@ export function createCapacityAdmission(options: {
       // A later reading may already include the bytes: accepting that double charge avoids crediting unproven reclamation.
       for (const v of CAPACITY_VOLUMES) charged[v] += budget.worstCaseBytes[v];
       let released = false;
-      return Object.freeze({release() { if (!released) { released = true; active[kind]--; } }});
+      return Object.freeze({
+        assertValid() {
+          if (released) throw rejected('LEASE_RELEASED');
+          const at = time(); current(at);
+          if (at - available.observedAt >= probeTtlMillis) throw rejected('PROBE_UNAVAILABLE');
+        },
+        release() { if (!released) { released = true; active[kind]--; } }
+      });
     },
     close() { if (!closed) { closed = true; cache = undefined; pending?.controller.abort(); } }
   });

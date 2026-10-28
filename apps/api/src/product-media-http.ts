@@ -6,27 +6,44 @@ import type { PrivateProductMediaStage } from "../../../adapters/media/src/produ
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { entityId } from "../../../packages/domain/src/values.ts";
 import { assertNoQuery, parseRequestKey } from "./input.ts";
+import { CapacityAdmissionRejected } from './capacity-admission.ts';
+import type { CapacityAdmission, CapacityAdmissionLease } from './capacity-admission.ts';
 const uploadLimit = 8388608;
 export interface ProductMediaHttpOptions {
   readonly authenticate: (input: ProductQueryAuthenticationInput) => Promise<ActorContext | null>;
   readonly provider: Pick<ControlledProductMediaProvider, "deliver"> | null;
   readonly imageStage?: Pick<PrivateProductMediaStage, "stage"> | null;
+  readonly capacityAdmission?: CapacityAdmission;
 }
 /** Existing controlled delivery and raw upload bridge to the actual private stage. */
 export function createProductMediaHttpPlugin(options: ProductMediaHttpOptions): FastifyPluginAsync {
   if (typeof options?.authenticate !== "function" || !Object.hasOwn(options, "provider") || options.provider !== null && typeof options.provider?.deliver !== "function") throw TypeError("Explicit media authentication and provider availability required");
   if (options.imageStage != null && typeof options.imageStage.stage !== "function") throw TypeError("Explicit private product media stage required");
   const imageStage = options.imageStage ?? null;
+  const capacity = options.capacityAdmission;
+  if (imageStage !== null && typeof capacity?.acquire !== 'function') throw TypeError('Product media upload requires explicit singleton capacity admission');
+  const acquire = capacity?.acquire.bind(capacity);
   return async app => {
     app.addContentTypeParser(["image/png", "image/jpeg", "image/webp"], { parseAs: "buffer", bodyLimit: uploadLimit }, (_request, body, done) => done(null, body));
     const actors = new WeakMap<object, ActorContext>();
+    type UploadWork = {controller: AbortController; lease: CapacityAdmissionLease | undefined; working: boolean; detach(): void};
+    const uploads = new WeakMap<object, UploadWork>();
+    const finish = (request: object): void => {
+      const work = uploads.get(request);
+      if (!work || work.working) return; // Response close cannot release a still-running codec/file worker.
+      uploads.delete(request); work.detach(); work.lease?.release();
+    };
     app.addHook("onRequest", async (request, reply) => {
       reply.header("Cache-Control", "no-store").header("Pragma", "no-cache").header("X-Content-Type-Options", "nosniff");
       const actor = await options.authenticate({ headers: Object.freeze({ ...request.headers }), ip: request.ip, method: request.method, url: request.url });
       if (actor === null) return reply.code(401).send({ error: { code: "UNAUTHENTICATED", message: "Authentication required" } }); actors.set(request, actor);
     });
-    app.addHook("onResponse", async request => { actors.delete(request); });
+    app.addHook("onResponse", async request => { actors.delete(request); finish(request); });
+    app.addHook('onError', async request => { finish(request); });
+    app.addHook('onRequestAbort', async request => { finish(request); });
     app.setErrorHandler((error, request, reply) => {
+      if (error instanceof CapacityAdmissionRejected)
+        return reply.header('Retry-After', String(error.retryAfterSeconds)).code(503).send({error: {code:error.code,message:error.message}});
       const statuses: Readonly<Record<string, number>> = { FORBIDDEN: 403, PRODUCT_IMAGE_NOT_FOUND: 404, PRODUCT_MEDIA_NOT_READY: 503, PRODUCT_READ_ABORTED: 408,
         INVALID_PRODUCT_QUERY: 400, INVALID_PRODUCT_IMAGE_QUERY: 400, INVALID_HTTP_INPUT: 400, INVALID_ID: 400,
         INVALID_UPLOAD: 400, INVALID_MEDIA_TYPE: 400, INVALID_MEDIA_DIMENSIONS: 400, MEDIA_TOO_LARGE: 413,
@@ -41,21 +58,39 @@ export function createProductMediaHttpPlugin(options: ProductMediaHttpOptions): 
       const mime = request.headers["content-type"]?.split(";")[0]?.trim().toLowerCase();
       if (!mime || !["image/png", "image/jpeg", "image/webp"].includes(mime))
         return reply.code(415).send({ error: { code: "UNSUPPORTED_MEDIA_TYPE", message: "Use binary PNG, JPEG or WEBP" } });
+      if (imageStage !== null) {
+        const controller = new AbortController(), abort = () => controller.abort(), close = () => { if (!reply.raw.writableFinished) controller.abort(); };
+        const work: UploadWork = {controller, lease:undefined, working:false, detach() {request.raw.off('aborted',abort);reply.raw.off('close',close);}};
+        uploads.set(request,work);request.raw.once('aborted',abort);reply.raw.once('close',close);
+        if (request.raw.aborted || reply.raw.destroyed) controller.abort();
+        try {
+          const lease = await acquire!('upload',controller.signal);
+          if (uploads.get(request) !== work || controller.signal.aborted) {lease.release();throw new DomainError('PRODUCT_READ_ABORTED','Upload request ended');}
+          work.lease=lease;lease.assertValid();
+        } catch(error) {
+          finish(request);
+          if (controller.signal.aborted) throw new DomainError('PRODUCT_READ_ABORTED','Upload request ended');
+          throw error;
+        }
+      }
     } }, async (request, reply) => {
-      assertNoQuery(request.query); const actor = actors.get(request); if (!actor) throw Error("Missing current media actor");
-      const declaredMime = request.headers["content-type"]!.split(";")[0]!.trim().toLowerCase();
-      const commandKey = parseRequestKey(request.headers["x-command-key"]), uploadKey = parseRequestKey(request.headers["x-upload-key"]);
-      const headerProductId = request.headers["x-product-id"];
-      if (headerProductId !== undefined && typeof headerProductId !== "string") throw new DomainError("INVALID_HTTP_INPUT", "Invalid upload product scope");
-      const productId = headerProductId === undefined ? null : entityId("product", headerProductId);
-      if (!Buffer.isBuffer(request.body)) throw new DomainError("INVALID_UPLOAD", "Binary image body required");
-      if (imageStage === null) throw new DomainError("PRODUCT_MEDIA_NOT_READY", "Private product media stage unavailable");
-      const controller = new AbortController(), abort = () => controller.abort(), close = () => { if (!reply.raw.writableFinished) controller.abort(); };
-      request.raw.once("aborted", abort); reply.raw.once("close", close);
+      const work=uploads.get(request);
+      if (work) work.working=true;
       try {
-        const uploaded = await imageStage.stage({ actor, productId, commandKey, uploadKey, declaredMime, bytes: request.body, signal: controller.signal });
+        assertNoQuery(request.query); const actor = actors.get(request); if (!actor) throw Error("Missing current media actor");
+        const declaredMime = request.headers["content-type"]!.split(";")[0]!.trim().toLowerCase();
+        const commandKey = parseRequestKey(request.headers["x-command-key"]), uploadKey = parseRequestKey(request.headers["x-upload-key"]);
+        const headerProductId = request.headers["x-product-id"];
+        if (headerProductId !== undefined && typeof headerProductId !== "string") throw new DomainError("INVALID_HTTP_INPUT", "Invalid upload product scope");
+        const productId = headerProductId === undefined ? null : entityId("product", headerProductId);
+        if (!Buffer.isBuffer(request.body)) throw new DomainError("INVALID_UPLOAD", "Binary image body required");
+        if (imageStage === null) throw new DomainError("PRODUCT_MEDIA_NOT_READY", "Private product media stage unavailable");
+        if (!work?.lease || work.controller.signal.aborted) throw new DomainError('PRODUCT_READ_ABORTED','Upload request ended');
+        work.lease.assertValid();
+        const uploaded = await imageStage.stage({ actor, productId, commandKey, uploadKey, declaredMime, bytes: request.body, signal: work.controller.signal });
+        if (work.controller.signal.aborted) throw new DomainError('PRODUCT_READ_ABORTED','Upload request ended');
         return { uploadId: uploaded.uploadId, mime: uploaded.mime, byteSize: uploaded.byteSize, expiresAt: uploaded.expiresAt };
-      } finally { request.raw.off("aborted", abort); reply.raw.off("close", close); }
+      } finally { if (work) work.working=false; finish(request); }
     });
     app.get<{ Params: { productId: string; imageId: string; revision: string; variant: string } }>("/products/media/:productId/:imageId/:revision/:variant", { exposeHeadRoute: false }, async (request, reply) => {
       assertNoQuery(request.query); const actor = actors.get(request); if (!actor) throw Error("Missing current media actor");

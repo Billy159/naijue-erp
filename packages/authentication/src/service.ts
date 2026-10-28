@@ -45,6 +45,9 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
     throw new TypeError("Authentication requires explicit trusted storage, clock, password codec, and complete policy");
   }
   const { store, now, passwords } = dependencies;
+  const admission = dependencies.sessionAdmission;
+  if (admission !== undefined && typeof admission.acquire !== 'function') throw new TypeError('Explicit session capacity admission required');
+  const sessionAdmission = admission === undefined ? undefined : {acquire: admission.acquire.bind(admission)};
   // Snapshot mutable host configuration so later accidental mutation cannot widen access.
   const employmentStatuses = new Set(policy.activeEmploymentStatuses);
   const roleHallScopes = new Map(Object.entries(policy.roleHallScopes));
@@ -101,21 +104,28 @@ export function createAuthenticationService(dependencies: AuthenticationDependen
       const verified = await passwords.verify(password, snapshot?.passwordHash, 'login', signal);
       if (!snapshot || snapshot.loginName !== loginName || !verified) throw new AuthenticationError('INVALID_CREDENTIALS');
       assertAuthenticationActive(signal);
-      return store.transaction(async tx => {
+      const capacity = await sessionAdmission?.acquire(signal).catch(error => { assertAuthenticationActive(signal); throw error; });
+      try {
         assertAuthenticationActive(signal);
-        const account = await tx.getAccount(snapshot.accountId);
-        const identity = account && account.loginName === loginName ? principal(account) : null;
-        if (!account || !identity || !sameCredential(account, snapshot)) throw new AuthenticationError("INVALID_CREDENTIALS");
-        assertAuthenticationActive(signal);
-        const time = clock();
-        const expiresAt = new Date(time.milliseconds + ttlMilliseconds).toISOString();
-        const token = randomBytes(32).toString("base64url");
-        const row: AuthenticationSession = { tokenHash: sessionTokenHash(token)!, accountId: identity.accountId, authVersion: identity.authVersion,
-          createdAt: time.text, expiresAt, revokedAt: null };
-        await tx.insertSession(row);
-        assertAuthenticationActive(signal);
-        return { token, principal: identity, expiresAt };
-      });
+        capacity?.assertValid();
+        return await store.transaction(async tx => {
+          assertAuthenticationActive(signal);
+          const account = await tx.getAccount(snapshot.accountId);
+          const identity = account && account.loginName === loginName ? principal(account) : null;
+          if (!account || !identity || !sameCredential(account, snapshot)) throw new AuthenticationError("INVALID_CREDENTIALS");
+          assertAuthenticationActive(signal);
+          const time = clock();
+          const expiresAt = new Date(time.milliseconds + ttlMilliseconds).toISOString();
+          const token = randomBytes(32).toString("base64url");
+          const row: AuthenticationSession = { tokenHash: sessionTokenHash(token)!, accountId: identity.accountId, authVersion: identity.authVersion,
+            createdAt: time.text, expiresAt, revokedAt: null };
+          capacity?.assertValid();
+          await tx.insertSession(row);
+          assertAuthenticationActive(signal);
+          capacity?.assertValid();
+          return { token, principal: identity, expiresAt };
+        });
+      } finally { capacity?.release(); }
     },
     async resolve(token: string) {
       const hash = sessionTokenHash(token);

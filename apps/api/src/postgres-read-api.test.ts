@@ -1,6 +1,8 @@
 import {createPasswordWorkGate} from "../../../packages/authentication/src/password-work-gate.ts";
 import {createLoginAdmission} from "./login-admission.ts";
 const authenticationWork = () => ({passwordGate:createPasswordWorkGate({maxConcurrent:2,maxAnonymous:1,retryAfterSeconds:1}),loginAdmission:createLoginAdmission({global:{burst:100,tokens:100,intervalMillis:1000},source:{burst:100,tokens:100,intervalMillis:1000},sourceAccount:{burst:100,tokens:100,intervalMillis:1000},entryTtlMillis:1000,maxEntries:1000,maxRetryAfterSeconds:1,now:()=>performance.now()})});
+// Explicit protocol-test admission only; real trusted capacity is separately exercised.
+const testCapacity = () => ({async acquire(){return {assertValid(){},release(){}};},close(){}});
 /** SYNTHETIC Fastify.inject + scripted pg protocol only. Real adapters/service/Node scrypt,
  * but no actual PostgreSQL SQL, listener, network, account seeding or credentials access. */
 import assert from "node:assert/strict";
@@ -28,6 +30,7 @@ import { PostgresMaintenanceCommandUnitOfWork } from '../../../adapters/postgres
 import type { MaintenanceCompletion } from '../../../packages/application/src/maintenance-commit-ports.ts';
 import type { NativeRuntime26Capability } from '../../../packages/application/src/native-import-schema-contract.ts';
 import { PostgresProductMaintenanceUnitOfWork } from '../../../adapters/postgres/src/product-maintenance-store.ts';
+import {CapacityAdmissionRejected} from './capacity-admission.ts';
 
 const ORIGIN = "https://synthetic-erp.invalid";
 const TIME = "2026-10-20T12:00:00.000Z";
@@ -44,13 +47,27 @@ const postgres = (): BoundedPostgresConfig => ({ target: { host: "synthetic-neve
   queryTimeoutMillis: 1000, statementTimeoutMillis: 900, lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000,
   disposeGraceMillis: 0, disposeTimeoutMillis: 1000 });
 function options(): PostgresReadApiOptions & { readonly authorization: PostgresReadApiExplicitAuthorization } {
-  return { postgres: postgres(), authentication: { trustedOrigin: ORIGIN, now: () => TIME, policy: createSourceAuthenticationPolicy(900), work:authenticationWork() }, authorization: {
+  return { capacityAdmission:testCapacity(), postgres: postgres(), authentication: { trustedOrigin: ORIGIN, now: () => TIME, policy: createSourceAuthenticationPolicy(900), work:authenticationWork() }, authorization: {
     inventory: { async authorize() { return { hallIds: [ids.hall], warehouses: [warehouse] }; } },
     sales: { async authorize(actor) { assert.equal(actor.hallId, ids.hall); return { kind: "restricted", clauses: [{ hallId: actor.hallId! }] }; } },
     transfers: createSourceConfirmedTransferQueryAuthorization(), products: { async authorize(_actor, intent) { return { productId: intent.parameters.productId }; } }
   }, productMedia: null };
 }
 const nativeOptions = (): PostgresReadApiOptions => ({ ...options(), authorization: { mode: "source-confirmed-native" } });
+test('A02 active API refuses a missing singleton before allocating a pool; no default capacity window',async()=>{
+  const {capacityAdmission:_capacity,...value}=options(),driver=new ScriptedDriver();
+  await assert.rejects(createPostgresReadApi(value,driver.factory),/explicit singleton capacity admission/);
+  assert.equal(driver.allocations,0);assert.equal(driver.connects,0);
+});
+test('A02 actual API forwards new-session capacity after credential work and before final transaction; old session still resolves',async t=>{
+  const value=options(),driver=new ScriptedDriver();let calls=0;
+  const api=await createPostgresReadApi({...value,capacityAdmission:{async acquire(kind){assert.equal(kind,'session');assert.equal(driver.connects,driver.releases.length);calls++;throw new CapacityAdmissionRejected('LOW_WATER',2);},close(){}}},driver.factory);t.after(()=>api.close());
+  const before=driver.sessions.size;
+  const response=await api.app.inject({method:'POST',url:'/auth/login',headers:{origin:ORIGIN,'content-type':'application/json'},payload:{loginName:driver.account.login_name,password:PASSWORD}});
+  assert.equal(response.statusCode,503);assert.equal(response.headers['retry-after'],'2');assert.equal(response.headers['set-cookie'],undefined);assert.equal(calls,1);
+  assert.equal(driver.sessions.size,before);assert.equal(driver.calls.some(c=>c.sql.startsWith('INSERT INTO naijue_erp.auth_session')),false);
+  assert.equal((await api.app.inject({url:'/auth/session',headers:{cookie:`__Host-naijue_session=${TOKEN}`}})).statusCode,200);assert.equal(calls,1);
+});
 test('P02 actual API refuses missing instance budgets before pool allocation and never silently selects production defaults',async()=>{
   const value=options();const {work:_work,...withoutWork}=value.authentication;const driver=new ScriptedDriver();
   await assert.rejects(createPostgresReadApi({...value,authentication:withoutWork},driver.factory),/explicit shared password work/);

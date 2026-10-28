@@ -80,6 +80,10 @@ export interface AuthenticationDependencies {
   readonly now: () => string;
   readonly policy: AuthenticationPolicy;
   readonly passwords: AuthenticationPasswordWork;
+  /** Trusted host admission for NEW issuance only. Probe before borrowing the final transaction; recheck synchronously before INSERT. */
+  readonly sessionAdmission?: {
+    acquire(signal?: AbortSignal): Promise<{ assertValid(): void; release(): void }>;
+  };
 }
 export interface AuthenticationPrincipal {
   readonly accountId: EntityId<"account">;

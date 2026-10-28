@@ -7586,7 +7586,7 @@
     "A02HostWiring908": {
       "owner": "D1",
       "model": "gpt-6.1-sol/medium",
-      "status": "ACTIVE_D1_TWELVE_EXACT_LEAVES",
+      "status": "HANDED_BACK_FIXED_SOURCE911_QB_PENDING",
       "files": [
         "packages/authentication/src/ports.ts",
         "packages/authentication/src/service.ts",
@@ -7602,6 +7602,23 @@
         "tests/capacity-admission.test.ts"
       ],
       "scope": "V2 A02 already explicit503/RetryAfter/no cookie on unknown expired low capacity for new session/upload; wire accepted906 singleton only at true new issue/upload before body, retain original key/cancel/unknown transaction and resource release. No thresholds/probe defaults/SQL/permissions/production; existing session/logout/revoke/mediaGET not gated. C owns producer config/shared release seams separately. Explicit additional same-owner lease.assertValid synchronous current window/binding/captured probe TTL check before session INSERT/upload irreversible work after waits; no probe IO under locks. Production requires singleton; ordinary original nonhost caller optional port compatibility only."
+    },
+    "MaintenanceXminCatalog911": {
+      "owner": "C",
+      "status": "FIXED_SOURCE911_QB_PENDING",
+      "files": [
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "tests/native-runtime26-capability.test.ts"
+      ],
+      "scope": "New explicit V3 metadata profile for exact135 branch and13 maintenance/doc-spec system xmin columns; preserve V1/V2/profiles. Capture raw and effective xmin ACL with current-role no table-level select and exact direct non-grantable select; independent full catalog still required. No GRANT/SQL DDL/schema/data/server execution or business contract change."
+    },
+    "FixturePublication911": {
+      "owner": "D3",
+      "status": "ACTIVE_ORIGINAL_SINGLE_LEAF_SUCCESSOR",
+      "files": [
+        "tests/integration/current-runtime26-sales-fixture.ts"
+      ],
+      "scope": "Original26 publisher consumption and maintenance-after-publish; exact full11 input/authority required, no fake PUBLISH/true authorizer/private outputs/SQL grants."
     }
   }
 }

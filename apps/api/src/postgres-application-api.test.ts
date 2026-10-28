@@ -1,6 +1,8 @@
 import {createPasswordWorkGate} from "../../../packages/authentication/src/password-work-gate.ts";
 import {createLoginAdmission} from "./login-admission.ts";
 const authenticationWork = () => ({passwordGate:createPasswordWorkGate({maxConcurrent:2,maxAnonymous:1,retryAfterSeconds:1}),loginAdmission:createLoginAdmission({global:{burst:100,tokens:100,intervalMillis:1000},source:{burst:100,tokens:100,intervalMillis:1000},sourceAccount:{burst:100,tokens:100,intervalMillis:1000},entryTtlMillis:1000,maxEntries:1000,maxRetryAfterSeconds:1,now:()=>performance.now()})});
+// Explicit protocol-test admission only; real trusted capacity is separately exercised.
+const testCapacity = () => ({async acquire(){return {assertValid(){},release(){}};},close(){}});
 /** Synthetic driver boundary + Fastify.inject only; no engine, listener or network acceptance. */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -28,7 +30,7 @@ test('A01 current concrete factory wires both standalone product providers; borr
   const borrowed=readFileSync(new URL('../../../adapters/postgres/src/native-document-specification.ts',import.meta.url),'utf8');
   assert.match(borrowed,/assertPendingCapacity\s*:\s*[^\n]*context\.catalogue\.assertPendingCapacity/);
 });
-const base = (): PostgresApplicationApiOptions => ({ postgres: {
+const base = (): PostgresApplicationApiOptions => ({ capacityAdmission:testCapacity(), postgres: {
   target: { host: "synthetic-not-connected.invalid", port: 5432, database: "SYNTHETIC_ONLY", user: "SYNTHETIC_ONLY", password: "SYNTHETIC_NOT_A_CREDENTIAL", ssl: false },
   max: 2, maxPendingAcquisitions: 2, connectionTimeoutMillis: 1000, acquisitionTimeoutMillis: 1000, queryTimeoutMillis: 1000,
   statementTimeoutMillis: 900, lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000,

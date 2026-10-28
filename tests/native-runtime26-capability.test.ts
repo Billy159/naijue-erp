@@ -697,3 +697,39 @@ test('HV2 category and batch revision issuers select only exact fixed profiles a
   }finally{f.cleanup();}
  }
 });
+
+import { NATIVE_RUNTIME26_HV2_HISTORY_SET_MAINTENANCE_XMIN_FROM_V22_METADATA_PROBE as maintenanceProbe, NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES } from '../adapters/postgres/src/native-import-accounting-capability.ts';
+test('maintenance xmin V3 observes exact thirteen effective grants without changing old catalog formats',()=>{
+ assert.equal(NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES.length,13);
+ assert.deepEqual([...NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES].sort(),NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES);
+ for(const table of NATIVE_RUNTIME26_MAINTENANCE_XMIN_TABLES)assert.ok(maintenanceProbe.includes(`'${table}'`));
+ assert.ok(maintenanceProbe.includes("EXACT26_RUNTIME_CATALOG_EXPORT_V3"));
+ assert.ok(maintenanceProbe.includes("jsonb_array_length(manifest->'system_column_acls')=13"));
+ assert.ok(maintenanceProbe.includes("OR pg_catalog.has_column_privilege(current_user,r.oid,a.attnum,'SELECT')"));
+ assert.ok(maintenanceProbe.includes("AS maintenance_xmin_acl_match"));
+ assert.ok(!maintenanceProbe.includes("AS source_xmin_acl_match"));
+ assert.ok(NATIVE_RUNTIME26_HV2_HISTORY_SET_SOURCE_XMIN_FROM_V22_METADATA_PROBE.includes("EXACT26_RUNTIME_CATALOG_EXPORT_V2"));
+ assert.ok(!NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE.includes('system_column_acls'));
+});
+test('maintenance xmin V3 selects fixed observation and revokes changed ACL, catalog and source evidence',async()=>{
+ for(const changed of ['acl','catalog','source','identity','missing'] as const){const f=fixture();try{
+  const row:Record<string,unknown>={...observation(),maintenance_xmin_acl_match:true};let released=false;
+  const pool={async connect(){return{async query(sql:string){assert.equal(sql,maintenanceProbe);return{rows:[structuredClone(row)],rowCount:1};},release(){released=true;}};}};
+  const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V3',patchLevel:'26_hv2_history_set_guards_maintenance_xmin_from_v22'},purposes:['PRODUCT_MAINTENANCE','IMPORT_STAGE']}));
+  const client=await issuer.pool.connect();await issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE');
+  if(changed==='acl')row.maintenance_xmin_acl_match=false;
+  if(changed==='catalog')row.catalog_sha256='b'.repeat(64);
+  if(changed==='source')row.source_routines_match=false;
+  if(changed==='identity')row.identity={...observation().identity,current_user:'OTHER'};
+  if(changed==='missing')delete row.maintenance_xmin_acl_match;
+  await assert.rejects(issuer.runtime26.assertReady(client,'PRODUCT_MAINTENANCE'),{code:'NATIVE_RUNTIME26_NOT_READY'});
+  client.release();assert.equal(released,true);
+ }finally{f.cleanup();}}
+});
+test('maintenance xmin V3 cannot reuse older format or issue older profile with V3 evidence',async()=>{
+ for(const [format,patchLevel] of [
+  ['EXACT26_RUNTIME_CATALOG_EXPORT_V1','26_hv2_history_set_guards_maintenance_xmin_from_v22'],
+  ['EXACT26_RUNTIME_CATALOG_EXPORT_V2','26_hv2_history_set_guards_maintenance_xmin_from_v22'],
+  ['EXACT26_RUNTIME_CATALOG_EXPORT_V3','26_hv2_history_set_guards_source_xmin_from_v22'],
+ ] as const){const f=fixture();try{const p=scripted();await assert.rejects(createNativeRuntime26Issuer(p.pool,f.options({...f.review,catalog:{...f.review.catalog,format,patchLevel}})),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(p.connects(),0);}finally{f.cleanup();}}
+});

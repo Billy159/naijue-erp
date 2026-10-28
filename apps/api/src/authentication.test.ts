@@ -14,6 +14,7 @@ import { entityId } from "../../../packages/domain/src/values.ts";
 import { PostgresAuthenticationStore } from "../../../adapters/postgres/src/auth-store.ts";
 import type { PgAuthenticationClient, PgAuthenticationResult } from "../../../adapters/postgres/src/auth-store.ts";
 import { createAuthenticationHttpPlugin, createSalesSessionAuthenticator } from "./authentication.ts";
+import {CapacityAdmissionRejected} from './capacity-admission.ts';
 import type { AuthenticationHttpOptions } from "./authentication.ts";
 import { createSalesHttpPlugin, exactJson } from "./sales-http.ts";
 import { fixture, ids, SYNTHETIC_RULES, sid, syntheticDraft } from "../../../tests/support/synthetic-fixtures.ts";
@@ -110,6 +111,49 @@ function responseCookie(value: string | string[] | number | undefined): string {
   assert.equal(typeof value, "string"); return String(value).split(";")[0]!;
 }
 function expectAuthCode(code: string) { return (error: unknown): boolean => error instanceof AuthenticationError && error.code === code; }
+test('A02 incorrect passwords retain original failure; successful verification alone enters pre-transaction capacity admission',async()=>{
+  const f=setupService();let capacityCalls=0;
+  const service=createAuthenticationService({...f.dependencies,sessionAdmission:{async acquire(){capacityCalls++;throw new CapacityAdmissionRejected('LOW_WATER',2);}}});
+  await assert.rejects(service.login(account().loginName,'wrong'),expectAuthCode('INVALID_CREDENTIALS'));assert.equal(capacityCalls,0);
+  await assert.rejects(service.login(account().loginName,OLD_PASSWORD),e=>e instanceof CapacityAdmissionRejected);assert.equal(capacityCalls,1);
+  assert.equal(f.store.sessions.size,0);
+});
+test('A02 both auth aliases return exact503/Retry-After without cookie; existing session/logout/password paths do not acquire capacity',async t=>{
+  const f=setupService(),existing=await f.service.login(account().loginName,OLD_PASSWORD);let calls=0;
+  const service=createAuthenticationService({...f.dependencies,sessionAdmission:{async acquire(){calls++;throw new CapacityAdmissionRejected('WINDOW_EXPIRED',2);}}});
+  const app=Fastify({trustProxy:false});t.after(()=>app.close());
+  for(const prefix of ['', '/api'])app.register(createAuthenticationHttpPlugin({service,trustedOrigin:ORIGIN,loginAdmission:admission()}),{prefix});
+  for(const prefix of ['', '/api']){
+    const result=await app.inject({method:'POST',url:prefix+'/auth/login',headers:{origin:ORIGIN,'content-type':'application/json'},payload:{loginName:account().loginName,password:OLD_PASSWORD}});
+    assert.equal(result.statusCode,503);assert.equal(result.headers['retry-after'],'2');assert.equal(result.headers['set-cookie'],undefined);
+    assert.equal(result.json().error.code,'CAPACITY_ADMISSION_UNAVAILABLE');
+  }
+  assert.equal(calls,2);assert.ok(await service.resolve(existing.token));
+  await service.changeOwnPassword(existing.token,OLD_PASSWORD,NEW_PASSWORD);await service.logout(existing.token);assert.equal(calls,2);
+});
+test('A02 expired capacity after account lock rolls back before issuance without another probe',async()=>{
+  const f=setupService();let checks=0,releases=0,acquires=0;
+  const service=createAuthenticationService({...f.dependencies,sessionAdmission:{async acquire(){acquires++;return {
+    assertValid(){if(++checks===2)throw new CapacityAdmissionRejected('WINDOW_EXPIRED',2);},release(){releases++;}
+  };}}});
+  await assert.rejects(service.login(account().loginName,OLD_PASSWORD),e=>e instanceof CapacityAdmissionRejected);
+  assert.equal(acquires,1);assert.equal(checks,2);assert.equal(releases,1);assert.equal(f.store.sessions.size,0);
+});
+test('A02 cancellation during capacity wait retains cancellation result and never borrows the final business transaction',async()=>{
+  for(const lateLease of [false,true]){
+    const f=setupService(),c=new AbortController();let entered!:()=>void,finish!:(v:{assertValid():void;release():void})=>void,releases=0;
+    const started=new Promise<void>(done=>{entered=done;});
+    const service=createAuthenticationService({...f.dependencies,sessionAdmission:{async acquire(signal){
+      return new Promise<{assertValid():void;release():void}>((resolve,reject)=>{
+        finish=resolve;if(!lateLease)signal!.addEventListener('abort',()=>reject(Object.assign(Error('cancelled'),{name:'AbortError'})),{once:true});entered();
+      });
+    }}});
+    const pending=service.login(account().loginName,OLD_PASSWORD,c.signal);
+    const rejected=assert.rejects(pending,e=>e instanceof Error && 'code'in e && e.code==='AUTHENTICATION_CANCELLED');
+    await started;const calls=f.store.calls;c.abort();if(lateLease)finish({assertValid(){},release(){releases++;}});
+    await rejected;assert.equal(f.store.calls,calls);assert.equal(f.store.sessions.size,0);assert.equal(releases,lateLease?1:0);
+  }
+});
 
 test("SYNTHETIC auth configuration fails closed and construction has no storage/credential side effect", () => {
   const f = setupService(); assert.equal(f.store.calls, 0); assert.equal(f.store.sessions.size, 0);

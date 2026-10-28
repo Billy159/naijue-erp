@@ -105,6 +105,7 @@ import { activeProductRead } from "../../../packages/application/src/product-que
 import type { ProductMaintenanceTransaction, ProductMaintenanceUnitOfWork } from "../../../packages/application/src/product-maintenance-ports.ts";
 import { createProductMaintenanceHttpPlugin } from "./product-maintenance-http.ts";
 import { createProductMediaHttpPlugin } from "./product-media-http.ts";
+import type { CapacityAdmission } from './capacity-admission.ts';
 
 export interface PostgresReadApiExplicitAuthorization {
   readonly mode?: never;
@@ -123,6 +124,8 @@ export interface PostgresReadApiNativeAuthorization {
 export type PostgresReadApiAuthorization = PostgresReadApiExplicitAuthorization | PostgresReadApiNativeAuthorization;
 
 export interface PostgresReadApiOptions {
+  /** Explicit singleton supplied by the trusted host; no default probe, capacity window or byte budget. Required by active assembly. */
+  readonly capacityAdmission?: CapacityAdmission;
   /** Trusted host-only private output resources; absence keeps output unavailable. */
   readonly inventoryOutputSpool?: InventoryOutputSpoolOptions;
   /** Explicit target, TLS choice and finite resource settings; never URI/env/pgpass discovery. */
@@ -441,12 +444,16 @@ function checkedHost(options: PostgresReadApiOptions) {
     throw new TypeError('PostgreSQL authentication requires explicit shared password work and login admission; no production defaults');
   const authenticationWork = Object.freeze({passwordGate: Object.freeze({run: work.passwordGate.run.bind(work.passwordGate)}),
     loginAdmission: Object.freeze({acquire: work.loginAdmission.acquire.bind(work.loginAdmission)})});
+  const capacity = options.capacityAdmission;
+  if (typeof capacity?.acquire !== 'function' || typeof capacity.close !== 'function')
+    throw new TypeError('PostgreSQL API requires explicit singleton capacity admission; no default window or probe');
+  const capacityAdmission = Object.freeze({acquire: capacity.acquire.bind(capacity), close: capacity.close.bind(capacity)});
   const inventoryOutputSpool = Object.hasOwn(options, "inventoryOutputSpool")
     ? Object.freeze({ ...exactBag(options.inventoryOutputSpool, ["directory", "maxBytes", "maxConcurrent", "maxDurationMs"]) }) as unknown as InventoryOutputSpoolOptions : undefined;
   // Capture provider methods and origins before the first await. Changing the caller's
   // configuration object later cannot replace these boundaries or enable a write plugin.
   return {
-    inventoryOutputSpool, trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility, authenticationWork,
+    inventoryOutputSpool, trustedOrigin: auth.trustedOrigin, now: auth.now, policy: auth.policy, credentialCompatibility: auth.credentialCompatibility, authenticationWork, capacityAdmission,
     authorization: checkedAuthorization(options.authorization), currentForms: checkedCurrentForms(options),
     media: media === null ? null : Object.freeze({ deliveryOrigin: media.deliveryOrigin,
       resolveThumbnails: media.resolveThumbnails.bind(media), resolveOriginal: media.resolveOriginal.bind(media),
@@ -603,9 +610,10 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       : host.authorization.providers;
     const extensions = capabilities?.nativeReadExtensions ? createSourceConfirmedApplicationReadAuthorization(pool) : null;
     app = Fastify({ logger: false, trustProxy: false, bodyLimit: 65_536 });
-    app.addHook("onClose", async () => { closing = true; await ownedPool.dispose(); });
+    app.addHook("onClose", async () => { closing = true; try { host.capacityAdmission.close(); } finally { await ownedPool.dispose(); } });
     const migrated = host.credentialCompatibility === 'legacy-pbkdf2-v1';
     const service = createAuthenticationService({ store: new PostgresAuthenticationStore(pool), now: host.now, policy: host.policy,
+      sessionAdmission: {acquire: signal => host.capacityAdmission.acquire('session', signal)},
       passwords: createAuthenticationPasswordWork(migrated ? createNodeMigratedLegacyPasswords() : createNodeScryptPasswords(), host.authenticationWork.passwordGate,
         {supports: migrated ? isNodeMigratedPasswordHash : isNodeScryptPasswordHash, dummyHash: NODE_SCRYPT_DUMMY_HASH}) });
     const authentication = Object.freeze({ service, trustedOrigin: host.trustedOrigin, loginAdmission: host.authenticationWork.loginAdmission });
@@ -734,7 +742,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
       productMedia = media;
       app.register(createProductMaintenanceHttpPlugin({ authenticate, dependencies: { unitOfWork, now: host.now,
         newId: () => randomUUID(), newImageId: () => randomUUID(), imageStage: stage, media } }));
-      app.register(createProductMediaHttpPlugin({ authenticate, provider: media, imageStage: stage }));
+      app.register(createProductMediaHttpPlugin({ authenticate, provider: media, imageStage: stage, capacityAdmission: host.capacityAdmission }));
     }
     // Each register call deliberately preserves the existing plugin's Fastify encapsulation:
     // independent error handlers, per-request identity and independent abort controllers.

@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T18:02:41.749681+00:00",
+  "updatedAt": "2026-10-29",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "749bf295470412a793628ae96eac7c67d1bade32",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -18932,15 +18932,46 @@
     },
     "A02HostWiring908": {
       "owner": "D1",
-      "status": "QUEUED_AFTER_NORMAL_ACL_CONTROL_HANDOFF",
-      "scope": "Exact registered10leaves; V2 existing503 contract newissue/upload beforebody/locks, no new DB/schema/permissions/thresholds; existing session/logout/revoke/mediaGET preserved",
+      "status": "SOURCE911_FIXED_FOR_ORIGINAL_QB_INCREMENTAL_REVIEW",
+      "scope": "12 handed-back exact leaves; receipt A02-HOST-WIRING908-RESULT.json 10277/ab7b4d6db72eff90e492aeaa7510fb9b8626a7ffc06d9546dadd5ab8baf80d3c; original906 evidence reused; local targeted protocol/Fastify only. C production singleton/probe forwarding remains unimplemented.",
       "notProven": "Actual trusted probe/approved window/PG/codec integration/SLO"
     },
     "Current897PrepareRole908": {
       "proposedRole": "hv2_qa897_prepare_20261029_01",
-      "status": "PROPOSED_ONLY_NOT_CREATED_NO_OID",
+      "status": "DRAFT_NOT_READY_PUBLICATION_LIFECYCLE_MISSING",
       "target": "DB21551 only",
-      "scope": "Ordinary nonowner/noinherit/no memberships; D3 preparation column closure separate from D1 normalruntime; T45 private prepare-only synthetic49 producer before independentreview; no signing/execution/init/ACL"
+      "scope": "Ordinary nonowner/noinherit/no memberships; D3 preparation column closure separate from D1 normalruntime; T45 private prepare-only synthetic49 producer before independentreview; no signing/execution/init/ACL",
+      "preparationXminTables": [
+        "import_batch",
+        "audit_change",
+        "operation_receipt",
+        "staff",
+        "user_account",
+        "inventory_ledger",
+        "payment_method",
+        "payment_account",
+        "product"
+      ],
+      "draft": "D3/QA897-PREPARATION-ACL-01/DRAFT.sql 32395/bb677b995f2c244c03ba04e1e26fb386aa3036aea05d9f3ef72b111d85e159e1",
+      "next": "Original D3 consumes original current26 full11 stage/BIND/ACCOUNT/CLOSURE/PUBLISH before ordinary maintenance; T45 exact synthetic source factory and independent proof; no direct IMPORTED update or owner bypass."
+    },
+    "MaintenanceXminCatalog911": {
+      "owner": "C",
+      "status": "SOURCE911_LOCAL_THREE_TESTS_STRICT_PASS_QB_PENDING",
+      "profile": "26_hv2_history_set_guards_maintenance_xmin_from_v22",
+      "format": "EXACT26_RUNTIME_CATALOG_EXPORT_V3",
+      "tables": 13,
+      "runtime": "Node24.19.0",
+      "checks": "3 new targeted protocol tests PASS/0SKIP; strict two-root transitive closure PASS; no real PG or ACL execution",
+      "scope": "Normal runtime13 only; preparation exact9 is separate and current publication lifecycle missing; old V1/V2 and135 source pins preserved."
+    },
+    "PrivateCompare911": {
+      "owner": "T45/QB/C",
+      "status": "ACTUAL_ONCE_MACHINE_COMPARE_ACCEPTED_NARROW",
+      "result": "independent-private-compare-run-01/RESULT.json 1266/adb3d03bd74704dcc577aa3a71d102986529b109d3908f3741892711490920c6",
+      "independentReview": "QB-MACHINE-RUN01-RECEIPT-REVIEW.json 2624/60854bec99c7318cbe6b7e3753e31d2177ec728e6fb88f63c909542673af7787",
+      "counts": "49/45/4/115; format49",
+      "notProven": "No password verification, old-new credential independent comparison, bootstrap, CORE, realPG, production"
     }
   }
 }

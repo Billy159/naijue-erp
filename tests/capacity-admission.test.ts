@@ -132,3 +132,19 @@ test('A02 close cancels probe waiters, retains the physical worker until finally
   assert.equal(signal?.aborted,true);assert.equal(released,0);d.resolve(f.known());await tick();assert.equal(released,1);
   assert.deepEqual(Object.keys(a).sort(),['acquire','close']);await assert.rejects(a.acquire('session'),failure('CLOSED'));
 });
+test('A02 lease sync recheck never renews captured TTL or probes inside a transaction; release/expiry/binding invalidate it',async()=>{
+  for(const change of ['ttl','window','binding','released']as const){
+    const f=setup(),a=createCapacityAdmission(f.options),lease=await a.acquire('session');lease.assertValid();
+    if(change==='ttl')f.setTime(1100);
+    if(change==='window')f.setTime(10000);
+    if(change==='binding')f.setBinding({...identity(),targetFingerprint:'OTHER'});
+    if(change==='released')lease.release();
+    assert.throws(()=>lease.assertValid(),failure(change==='ttl'?'PROBE_UNAVAILABLE':change==='window'?'WINDOW_EXPIRED':change==='binding'?'BINDING_CHANGED':'LEASE_RELEASED'));
+    assert.equal(f.calls(),1);lease.release();a.close();
+  }
+});
+test('A02 another request refreshing the cache cannot extend an already issued lease',async()=>{
+  const f=setup(),a=createCapacityAdmission(f.options),lease=await a.acquire('session');await tick();f.setTime(1100);
+  (await a.acquire('upload')).release();assert.equal(f.calls(),2);
+  assert.throws(()=>lease.assertValid(),failure('PROBE_UNAVAILABLE'));lease.release();a.close();
+});

@@ -7,6 +7,7 @@ import type { SalesAuthenticationInput } from "./sales-http.ts";
 import { PasswordWorkRejected } from '../../../packages/authentication/src/password-work-gate.ts';
 import { LoginAdmissionRejected } from './login-admission.ts';
 import type { LoginAdmission } from './login-admission.ts';
+import { CapacityAdmissionRejected } from './capacity-admission.ts';
 
 const COOKIE = "__Host-naijue_session";
 class RequestRejected extends Error {
@@ -81,6 +82,8 @@ export function createAuthenticationHttpPlugin(options: AuthenticationHttpOption
       cookieToken(request.headers);
     });
     app.setErrorHandler((error, _request, reply) => {
+      if (error instanceof CapacityAdmissionRejected)
+        return reply.header('Retry-After', String(error.retryAfterSeconds)).code(503).send({error: {code: error.code, message: error.message}});
       if (error instanceof LoginAdmissionRejected || error instanceof PasswordWorkRejected && error.code === 'PASSWORD_WORK_BUSY')
         return reply.header('Retry-After', String(error.retryAfterSeconds)).code(429).send({error: {code: 'AUTHENTICATION_BUSY', message: 'Authentication capacity is temporarily unavailable'}});
       if (error instanceof PasswordWorkRejected && error.code === 'AUTHENTICATION_CANCELLED')

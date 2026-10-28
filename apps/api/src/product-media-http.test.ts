@@ -1,3 +1,6 @@
+import {CapacityAdmissionRejected} from './capacity-admission.ts';
+// Controlled transport-only test lease, no real capacity probe.
+const testCapacity = () => ({async acquire(){return {assertValid(){},release(){}};},close(){}});
 /** Injected byte-provider protocol only; no listener, real session, storage or codec. */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -31,11 +34,54 @@ test("W15 media HTTP null provider, denied/replaced/missing and internal failure
 const uploadUrl = "/products/media/uploads";
 const uploadHeaders = { "content-type": "image/png", "x-command-key": "original-command", "x-upload-key": "original-file" };
 const uploaded = { uploadId: sid("product", 12003), mime: "image/png" as const, byteSize: "1", expiresAt: "2026-10-24T01:00:00.000Z" };
+test('A02 media low-water rejection occurs before raw-body parsing or codec/stage, while GET ignores capacity',async t=>{
+  let admissions=0,parsed=0,staged=0;const app=Fastify();t.after(()=>app.close());
+  app.addHook('preParsing',async(_req,_reply,payload)=>{parsed++;return payload;});
+  app.register(createProductMediaHttpPlugin({authenticate:async()=>actor,provider:{async deliver(){return {bytes:Buffer.from([1]),mime:'image/png'};}},
+    capacityAdmission:{async acquire(){admissions++;throw new CapacityAdmissionRejected('LOW_WATER',3);},close(){}},imageStage:{async stage(){staged++;return uploaded;}}}));
+  const response=await app.inject({method:'POST',url:uploadUrl,headers:uploadHeaders,payload:Buffer.from([1])});
+  assert.equal(response.statusCode,503);assert.equal(response.headers['retry-after'],'3');assert.equal(response.json().error.code,'CAPACITY_ADMISSION_UNAVAILABLE');
+  assert.equal(parsed,0);assert.equal(staged,0);assert.equal(admissions,1);assert.equal((await app.inject(url)).statusCode,200);assert.equal(admissions,1);
+});
+test('A02 upload admission is checked again after body parsing and parser rejection returns the lease once',async t=>{
+  for(const oversized of [false,true]){
+    let valid=true,releases=0,staged=0;const app=Fastify();t.after(()=>app.close());
+    app.addHook('preValidation',async()=>{valid=false;});
+    app.register(createProductMediaHttpPlugin({authenticate:async()=>actor,provider:null,
+      capacityAdmission:{async acquire(){return {assertValid(){if(!valid)throw new CapacityAdmissionRejected('PROBE_UNAVAILABLE',2);},release(){releases++;}};},close(){}},
+      imageStage:{async stage(){staged++;return uploaded;}}}));
+    const response=await app.inject({method:'POST',url:uploadUrl,headers:uploadHeaders,payload:Buffer.alloc(oversized?8388609:1)});
+    assert.equal(response.statusCode,oversized?413:503);assert.equal(staged,0);assert.equal(releases,1);
+  }
+});
+test('A02 premature reply close aborts upload but retains its capacity lease until the physical stage settles',async t=>{
+  let releases=0,response!:import('node:http').ServerResponse,signal:AbortSignal|undefined,entered!:()=>void,settle!:()=>void;
+  const started=new Promise<void>(done=>{entered=done;}),worker=new Promise<void>(done=>{settle=done;});
+  const app=Fastify();t.after(()=>app.close());app.addHook('preHandler',async(_request,reply)=>{response=reply.raw;});
+  app.register(createProductMediaHttpPlugin({authenticate:async()=>actor,provider:null,
+    capacityAdmission:{async acquire(){return {assertValid(){},release(){releases++;}};},close(){}},
+    imageStage:{async stage(input){signal=input.signal;entered();await worker;return uploaded;}}}));
+  const pending=app.inject({method:'POST',url:uploadUrl,headers:uploadHeaders,payload:Buffer.from([1])});
+  const disconnected=assert.rejects(pending,e=>e instanceof Error && (e as Error & {code?:string}).code==='LIGHT_ECONNRESET');await started;
+  response.emit('close');assert.equal(signal?.aborted,true);assert.equal(releases,0);
+  await disconnected;assert.equal(releases,0);settle();await new Promise<void>(done=>setImmediate(done));assert.equal(releases,1);
+});
+test('A02 abort during pre-body capacity wait releases a late lease without entering parser/stage',async t=>{
+  let raw!:import('node:http').IncomingMessage,entered!:()=>void,admit!:(v:{assertValid():void;release():void})=>void,releases=0,parsed=0,staged=0;
+  const started=new Promise<void>(done=>{entered=done;}),gate=new Promise<{assertValid():void;release():void}>(done=>{admit=done;});
+  const app=Fastify();t.after(()=>app.close());app.addHook('onRequest',async request=>{raw=request.raw;});
+  app.addHook('preParsing',async(_req,_reply,payload)=>{parsed++;return payload;});
+  app.register(createProductMediaHttpPlugin({authenticate:async()=>actor,provider:null,
+    capacityAdmission:{async acquire(){entered();return gate;},close(){}},imageStage:{async stage(){staged++;return uploaded;}}}));
+  const request=app.inject({method:'POST',url:uploadUrl,headers:uploadHeaders,payload:Buffer.from([1])});await started;raw.emit('aborted');
+  admit({assertValid(){},release(){releases++;}});assert.equal((await request).statusCode,408);
+  assert.equal(releases,1);assert.equal(parsed,0);assert.equal(staged,0);
+});
 // The real stage/Sharp/PG evidence is C40. These tests isolate only the new HTTP
 // transport and reuse the existing stage port without decoding fixture images.
 test("media upload HTTP sends exact raw bytes and trusted actor/original keys for existing product or explicit draft", async t => {
   const inputs: ProductMediaUploadInput[] = [], app = Fastify({ logger: false }); t.after(() => app.close());
-  app.register(createProductMediaHttpPlugin({ authenticate: async () => actor, provider: null, imageStage: { async stage(input) {
+  app.register(createProductMediaHttpPlugin({ authenticate: async () => actor, provider: null, capacityAdmission:testCapacity(), imageStage: { async stage(input) {
     inputs.push(input); return { ...uploaded, mime: input.declaredMime as ProductImageMime, byteSize: input.bytes.byteLength.toString(), fileRef: "PRIVATE_MUST_NOT_LEAK" };
   } } }));
   const bytes = Buffer.from([0, 255, 13, 10, 128]);
@@ -54,7 +100,7 @@ test("media upload HTTP sends exact raw bytes and trusted actor/original keys fo
 });
 test("media upload HTTP enforces the original 8MiB raw-body boundary, MIME, headers and session before stage", async t => {
   let calls = 0, current = true; const app = Fastify({ logger: false }); t.after(() => app.close());
-  app.register(createProductMediaHttpPlugin({ authenticate: async () => current ? actor : null, provider: null, imageStage: { async stage(input) { calls++; return { ...uploaded, byteSize: input.bytes.byteLength.toString() }; } } }));
+  app.register(createProductMediaHttpPlugin({ authenticate: async () => current ? actor : null, provider: null, capacityAdmission:testCapacity(), imageStage: { async stage(input) { calls++; return { ...uploaded, byteSize: input.bytes.byteLength.toString() }; } } }));
   assert.equal((await app.inject({ method: "POST", url: uploadUrl, headers: uploadHeaders, payload: Buffer.alloc(8388608) })).statusCode, 200);
   const large = await app.inject({ method: "POST", url: uploadUrl, headers: uploadHeaders, payload: Buffer.alloc(8388609) });
   assert.equal(large.statusCode, 413); assert.equal(large.json().error.code, "BODY_TOO_LARGE"); assert.equal(calls, 1);
@@ -71,7 +117,7 @@ test("media upload HTTP preserves stage refusal/conflict/cancellation errors and
   for (const [code, status] of [["INVALID_UPLOAD", 400], ["FORBIDDEN", 403], ["PRODUCT_NOT_FOUND", 404], ["PRODUCT_DELETED", 409], ["IDEMPOTENCY_CONFLICT", 409], ["MEDIA_TOO_LARGE", 413],
     ["PRODUCT_MEDIA_NOT_READY", 503], ["PRODUCT_READ_ABORTED", 408], ["UNEXPECTED", 500]] as const) {
     const app = Fastify({ logger: false }); t.after(() => app.close());
-    app.register(createProductMediaHttpPlugin({ authenticate: async () => actor, provider: null, imageStage: { async stage() {
+    app.register(createProductMediaHttpPlugin({ authenticate: async () => actor, provider: null, capacityAdmission:testCapacity(), imageStage: { async stage() {
       if (code === "UNEXPECTED") throw Error("PRIVATE_ROOT_OR_INTERNAL"); throw new DomainError(code, "PRIVATE_STAGE_FACTS");
     } } }));
     const response = await app.inject({ method: "POST", url: uploadUrl, headers: uploadHeaders, payload: Buffer.from([1]) });
@@ -86,8 +132,8 @@ test("media upload HTTP aborts the existing stage signal and removes request/res
   let raw: import("node:http").IncomingMessage, response: import("node:http").ServerResponse, stageSignal: AbortSignal;
   let requestBefore: Function[] = [], responseBefore: Function[] = [], requestAdded: Function[] = [], responseAdded: Function[] = [];
   let entered!: () => void; const started = new Promise<void>(resolve => { entered = resolve; });
-  app.addHook("preHandler", async (request, reply) => { raw = request.raw; response = reply.raw; requestBefore = raw.listeners("aborted"); responseBefore = response.listeners("close"); });
-  app.register(createProductMediaHttpPlugin({ authenticate: async () => actor, provider: null, imageStage: { async stage(input) {
+  app.addHook("onRequest", async (request, reply) => { raw = request.raw; response = reply.raw; requestBefore = raw.listeners("aborted"); responseBefore = response.listeners("close"); });
+  app.register(createProductMediaHttpPlugin({ authenticate: async () => actor, provider: null, capacityAdmission:testCapacity(), imageStage: { async stage(input) {
     stageSignal = input.signal; requestAdded = raw.listeners("aborted").filter(fn => !requestBefore.includes(fn)); responseAdded = response.listeners("close").filter(fn => !responseBefore.includes(fn));
     return new Promise((_resolve, reject) => { input.signal.addEventListener("abort", () => reject(new DomainError("PRODUCT_READ_ABORTED", "cancelled")), { once: true }); entered(); });
   } } }));
