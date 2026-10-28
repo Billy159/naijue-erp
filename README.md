@@ -13,9 +13,15 @@
 
 ## 运行验证
 
-已用 Node 24.19.0、npm 11.9.0、TypeScript 5.9.2 在云端验证。依赖使用已有安装的软链接复用路径，未下载或重装大套依赖；node_modules 不提交。
+本轮正式候选固定 Node 24.21.0、npm 11.9.0；版本依据为 release-contract 与 packageManager。旧 Node 24.19.0 及软链接复用的云端结果仅作历史证据，不能证明当前候选可独立安装。
 
-有已安装的匹配依赖时，直接运行 npm run check。首次独立安装可按 package-lock.json 使用标准 npm ci（该独立安装在本轮未执行）。不要把其他项目的 node_modules 软链接挂上后运行 install：npm 即使指定 --package-lock-only 仍可能重写被复用目录的隐藏锁元数据。本轮观察到这项行为，已记录在 evidence/local-dependency-reuse.json。
+在新的固定源码导出目录，核对上述精确版本后，仅在根目录执行 npm ci，再运行 npm run check:dependencies。不要清理在途工作目录或复用其他项目的依赖来冒充干净安装；当前干净安装仍待实际证明。
+
+`npm run check:launch -- --plan` 列出有限首发检查，不执行或代表通过；默认 `npm run check:launch` 实行正式 API 类型、当前 replica runtime、import-v3、release、原键结果及原 check:all，保留所有原有脚本。根 check:all 已包含 check/typecheck/build/smoke/npm test，不再重复调用这些包装。
+
+最终候选使用 `npm run check:launch -- --acceptance /绝对路径/现有验收汇总.json`。汇总由原主控沿现有 G01 记录提供，形态为 `{candidateCommit, entries:[{taskId,status:"PASS",level:"ACTUAL_REQUIRED_SCOPE",receipt:{path,bytes,sha256}}]}`；任务 ID 由 runner 的 requiredAcceptance 明确枚举，B12 由本 runner 自身及 ROOT_CLEAN_INSTALL 证据覆盖，不循环要求一个尚不存在的 B12 PASS。引用必须是原有效回执，不能自行生成“实际通过”标签。runner 只检查声明范围、固定版本和文件完整性，不替代原独立验收对业务及性能证据的判断。
+
+工具版本不符、缺当前候选的真实 PG／浏览器／代理／性能／Demo／架构／根干净安装证据时返回 BLOCKED_ENV（退出2）；本地命令失败返回 FAIL（退出1）。只有全部必过项目通过才退出0。源码、模拟检查、旧版本回执不能代替 ACTUAL_REQUIRED_SCOPE，当前前端和其余未完成项继续如实阻断首发。
 
 检查命令：
 

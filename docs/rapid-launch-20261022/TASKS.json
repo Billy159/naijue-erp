@@ -18298,7 +18298,7 @@
       "boundary": "Productiondeploy/migration/downtime/permission/deletion remainseparateapproval;onlythisminimumisolatedpermissionbranch waits"
     },
     "permissionConfirmationB14": {
-      "status": "225_APPROVED_ACL_COMMIT_RETURNED_POSTMANIFEST_MISMATCH_226_READONLY_NEXT",
+      "status": "APPROVED_ACL_ACTUAL_READBACK_AND_ORIGINAL_NONOWNER_DRIVER_PASSED",
       "document": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-CONFIRMATION.md",
       "sql": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL.sql",
       "rollback": "docs/rapid-launch-20261022/HV2-B14-ISOLATED-ACL-ROLLBACK.sql",
@@ -18307,11 +18307,14 @@
       "humanApproval": "call_0ccc172a36184c2282757d2e9dd43303/0",
       "approvedAnswer": "确认 B14 最小权限及原隔离验证",
       "carrier": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-b14-approved-minimum-column-acl-20261028-223",
-      "next": "OriginalT45 exact226RRRO adopt onlyapprovedACL+sameexistingroleobservation;ifpass thenoriginal224driveronce underexistinghumanapproval",
+      "next": "OriginalT45P04exact14SQLpreparationandv23refs;do notrerunB14",
       "failure": "42601position107 reservedaliascreate in schema privilege probe beforeACLintent/stagesempty;rollback/client0",
-      "actual": "225 originalSQL65b2a5cc COMMITreturned,38bits/exactcolumns/schema anddirectrolecomparisonpassed;finalwholemanifest mismatch;rollback/end/client0",
+      "actual": "225COMMIT+227exactACLreadback/38bits/onlyexistingruntimeobservation;224ordinarydriver1PASS realwait/RR40001/COMMIT23514/legalmove/3retainedsyntheticrows/client0",
       "hypothesis": "schemaACLnewgrantee causes alreadyexistingruntime to appear inmanifest.roles;not yetactualpostmanifestproof",
-      "noReplay": "223pregrantfailureand225committedpreserved;noGRANTretry/REVOKE/DELETE/R1/P04"
+      "noReplay": "223pregrantfailureand225committedpreserved;noGRANTretry/REVOKE/DELETE/R1/P04",
+      "receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-b14-original-nonowner-category-driver-20261028-224/RESULT.json",
+      "sha256": "c7e09683789c4064e6fa34eb74656e7e9bc28633796eefe744f0c04a235d3b59",
+      "notTested": "FullcategoryAPI/UI/roles/business/performance/formalrelease"
     },
     "H06Review863": {
       "status": "QB_NARROW_PASS_SOURCE_AND_SYNTHETIC_ONLY",
@@ -18361,6 +18364,33 @@
       },
       "sourceChangesRequired": false,
       "next": "T45 strictrole/baseline/current refs projection;newnamespace Python Git730baseline andsource858relativecurrent;no148recompute/193composite"
+    },
+    "P04DriverProofNext866": {
+      "status": "DISPATCHED_ORIGINAL_IDLE_D1",
+      "owner": "D1",
+      "files": [
+        "tests/integration/history-revision-set-guards.integration.test.ts"
+      ],
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "sourceBase": "SOURCE865/6e188302",
+      "reason": "OriginalD1 delivery explicitly lacks realrollback/replaybalance/ledger andlockproof;prepare onlyaffectedfinitecases,not fullbackendrerun",
+      "actualPG": "NOT_AUTHORIZED_IN_THIS_DISPATCH_T45_EXISTING_EXACTTARGET_ROUTE"
+    },
+    "C_B12_Launch866": {
+      "owner": "C",
+      "status": "FINITE_RUNNER_SOURCE_READY_QB_NEXT_NOT_LAUNCH_PASS",
+      "files": [
+        "package.json",
+        "package-lock.json",
+        "README.md",
+        "scripts/check-launch.mjs",
+        "scripts/check-launch.test.mjs"
+      ],
+      "checks": "4newrunnerchecksPASS;existing14directdependencies/219lockedentriesverifyPASS,noinstall;actualNode24.21npm11.19returnsBLOCKED_ENVexit2beforelocalgates",
+      "expectedToolchain": "Node24.21.0/npm11.9.0;nodefromreleasecontract/npmfrompackageManager;rootengines+lockrootmetadataalignedwithoutdependencychange",
+      "scope": "CurrentrecursiveAPI/runtime/import-v3/release/originalkeytests;originalrootcheckallonce;31requiredaccepted-scope/cleaninstallreceiptentriesmissingarenotgreen",
+      "missing": "Frontendnestedtsconfighandoff/cleanrootci/actualERPbuild+crosslanguage/completecurrentcandidatePGbrowserproxyperformanceH01-H06D01;notwholeB12"
     }
   }
 }

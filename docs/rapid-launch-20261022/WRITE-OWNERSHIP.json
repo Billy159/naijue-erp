@@ -6990,9 +6990,10 @@
           "package.json",
           "package-lock.json",
           "scripts/check-launch.mjs",
-          "scripts/check-launch.test.mjs"
+          "scripts/check-launch.test.mjs",
+          "README.md"
         ],
-        "state": "C_ONLY_ROOT_LOCK_MODEL_NO_PACKAGE_UPGRADE",
+        "state": "C_SOLE_WRITER_FINITE_LAUNCH_RUNNER_SOURCE_READY_NOT_FULL_GATE",
         "scope": "Actual production API graph with root lock only;existing runtime/release commands finite checks notnewplatform;root fail remainsreported. Frontend runtime config stillreadonly until explicitownerhandoff."
       },
       "C_H04_RELEASE": {
@@ -7238,6 +7239,17 @@
       "scope": "ExistingH06 finiteboundedredactedrequest/lifecyclelogs only;otherentryfile seamtoC,rotationT45;noPG/SQL/ACL/server",
       "current": "boundedredactedlogs",
       "next": "necessaryaffectedchecks andfixedhandoff;no overlapT45"
+    },
+    "P04DriverProofNext866": {
+      "owner": "D1",
+      "files": [
+        "tests/integration/history-revision-set-guards.integration.test.ts"
+      ],
+      "model": "gpt-6.1-sol",
+      "thinking": "medium",
+      "scope": "Originaldriver realPG rejectionrollback/exactreplay-noeffects/boundedsamedockeycontention+observedtiming;sourceonly untilT45 fixedtarget+ACL+review;noDBaction/contractrelaxation",
+      "current": "Originaldriver finiteproofgaps",
+      "next": "FixedsourceQA;originalT45 onlyactualonce"
     }
   }
 }

@@ -5,8 +5,8 @@
   "type": "module",
   "description": "Naijue ERP application, native data contracts and controlled production release",
   "engines": {
-    "node": ">=24.19.0 <25",
-    "npm": ">=11.9.0 <12"
+    "node": "24.21.0",
+    "npm": "11.9.0"
   },
   "packageManager": "npm@11.9.0",
   "scripts": {
@@ -40,7 +40,9 @@
     "preflight:import-v2": "node --max-old-space-size=768 scripts/import-v2/run.mjs",
     "test:history:cell-evidence": "python3 scripts/import-v2/test_history_cell_evidence.py",
     "release:pack": "node scripts/release/pack.mjs",
-    "test:release:pack": "node --test scripts/release/pack.test.mjs"
+    "test:release:pack": "node --test scripts/release/pack.test.mjs",
+    "typecheck:launch-api": "tsc --noEmit -p tsconfig.launch-api.json",
+    "check:launch": "node scripts/check-launch.mjs"
   },
   "dependencies": {
     "@arco-design/web-react": "2.66.16",
