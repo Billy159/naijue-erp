@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T15:53:27.647571+00:00",
+  "updatedAt": "2026-10-28T18:02:41.749681+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "28f989bfb40eb08876140d007e925d7677cbf8e3",
+  "lastVerifiedRemoteCommit": "1cc44d125b32f60555925eb2e924696321ac9746",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18553,7 +18553,8 @@
       "breakpoint": "Original Chat live 01a18389-a2a9-7352-9a56-eccb85ffd5f6 staff status filtering/reset after payment combined filters",
       "next": "Original Chat finishes full fixed matrix then merge/dedupe current-code repairs; pending transport handback must not interrupt UI compare",
       "models": "gpt-6.1-terra/medium",
-      "scope": "Full37pages67overlays/allapplicablestatesstillunfinished"
+      "scope": "Full37pages67overlays/allapplicablestatesstillunfinished",
+      "current902": "Fixednormal34/57923:105 registered records,0wholepage/overlay pass;15unchecked35partial55difference index, not issuecount. Original Terra-medium fullcomparison first; precise environment/readonly/unreachable blockers retained, no duplicate scope or frontend repair midcomparison."
     },
     "H04Release135878": {
       "owner": "C",
@@ -18772,7 +18773,7 @@
     },
     "Current897QA899": {
       "owner": "T45",
-      "status": "ACTUAL239_PREFIX26_V20_131_COMPLETE_EMPTY_BUSINESS",
+      "status": "ACTUAL242_V22_131_EMPTY_BUSINESS_LAST3_DISPATCHED",
       "sourceCommit": "c53cec427882f70d51a53d6d84652bc54181736a",
       "proposal": "reports/controller/rapid-launch-20261022/T45-CURRENT897-QA-PREPARATION-01/EXACT-QA-PROPOSAL.json",
       "target": {
@@ -18813,7 +18814,7 @@
         }
       },
       "budgetBoundary": "Synthetic functional cold1/repeat2 and finite rejection tests only; verify resource premise before use; NOT production defaults or SLO acceptance",
-      "next": "T45 target-bound v22 wrapper exact new21551/full131parent to C before execute; three approved successors after; D3 full synthetic core fixture/D1 exact runtime ACL; no production",
+      "next": "T45 exact SOURCE897 last3 original approved successors to135 once; actual parent and percommit registry; no seed/runtime95 candidate ACL or production",
       "bootstrapReceipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-current897-new-empty-db-roles-20261029-237/RESULT237.json",
       "bootstrapResult": "Ordinary two-role loopback RO identity/empty userrelations/nonmember and clients0 pass; no business ACL/seed/media/app",
       "schemaDecision": "Only exact new21551 original26migrations+first7 approvedpatches throughv20; stop before v22 for actual full131parent; targetboundwrapper decision separate",
@@ -18823,11 +18824,14 @@
         "basis": "Actual238 existing application config and process UID, not web101 or PG999",
         "mediaRoot": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/media",
         "publicRoot": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/public",
-        "directoryDecision": "Create newonly media700/public755 owned10001; no existingpath chmod/overwrite; actual media still not tested"
+        "directoryDecision": "Create newonly media700/public755 owned10001; no existingpath chmod/overwrite; actual media still not tested",
+        "directoryActual": "241 two new empty target directories and necessary parents created; no existing path mode changes; ordinary UID actualstage/read not tested"
       },
       "schemaReceipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-qa897-schema26-v20-prefix-20261029-239/RESULT239.json",
-      "actualParentCatalog": "39380ba48305b8da7d71eebfb6033cfbd6c945ea769c2c92c3b2bc047952a21f",
-      "schemaResult": "33 transactions COMMITTED_AND_REGISTRY_READ_BACK;55 business relations0;runtime ordinary attrs unchanged;pool/client0"
+      "actualParentCatalog": "032f14ca10eb51df371564296b71bad13f5c8a134147639ea291aa2c2b6c737b",
+      "schemaResult": "33 transactions COMMITTED_AND_REGISTRY_READ_BACK;55 business relations0;runtime ordinary attrs unchanged;pool/client0",
+      "v22Receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-qa897-newtarget-v22-single-install-20261029-242/RESULT242.json",
+      "v22ReceiptSha256": "bcfb5aaa145a482277a494fe580793326a3bee14f790305ce67d1dd38a401b00"
     },
     "H06Retention899": {
       "owner": "D2",
@@ -18848,10 +18852,12 @@
     },
     "Current897RuntimeACL900": {
       "owner": "D1",
-      "status": "EXACT_CONTROL_DRAFT_ACTIVE_NOT_EXECUTED",
+      "status": "CONTROL_ONLY_DRAFT_DELIVERED_95_CONDITIONAL_ATOMS_NOT_AUTHORIZATION",
       "target": "DB21551/hv2_qa897_runtime_20261029_01",
       "scope": "Current fixed897 P01/A01/P02 exact callchain columns/rowlock/EXEC/sequence; originalimport/seed owner separated; not P04ACL clone or broadgrant",
-      "next": "C exact delta decision afteractualcatalog135 and D3fixture branch; T45 only actualGRANT"
+      "next": "Select actual D3 fixture/A01 operation branches + new135 catalog then original owner minimal executable delta; no blanket95 grant or42501 trial",
+      "receipt": "reports/backend/rapid-launch-20261022/D1/CURRENT897-RUNTIME-ACL-DRAFT-01/RESULT.json",
+      "sqlSha256": "f1118e9eca8b28cf4e32ba0701001a7058e7aecae4d38bbae41dd61edbd85679"
     }
   }
 }
