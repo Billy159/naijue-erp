@@ -1,3 +1,5 @@
+SOURCE925：采用原T45 256实际只读私有备份回执8155/1400b8150b7a5afa7af84042155f672503cf7c15a335f20ce4914967e2f54da2，pg_dump一次exit0/871207字节、双读稳定、TOC845目录可读；257仅安全元数据回读。准确QA21551前后135函数/55空业务表/实例身份一致，两时点无其他client不冒持续围栏。backup实际device66304与system/media同盘，不重复算余量；普通UID访问/新free读数仍未测。归档服务器私有root0600，不取回/Git；实际restore及role/WAL/config恢复仍未执行、不称恢复PASS。原权限确认仍pending，不重复备份/授权/生产动作。
+
 SOURCE924：采用原QB有限结论，不重技术验收：920旧版F01保留NEED_FIX；923错nativeId修复2项定向复验PASS并关闭F01；922metadata6/host7及strict两根通过，V3SQL字节不变；权限候选189/957仅静态一致性PASS，非实际充分性或PG/PUBLISH通过。准确QA21551准备角色创建+170基础权限+19表MAINTAIN（含维护能力非lock-only）的清单已提交一次人批；仅该分支等待，不自动导入/发布，normal90原问题不重问。T45原准确QA备份在途，Demo固定normal34对比继续。
 
 SOURCE923：D3已交回SOURCE920-F01两叶定向修复，原prepared.header.id与独立native.nativeId准确对比，不重建ID。C核新pins一致，原D3新文件10/10自检PASS；等待原QB仅复验F01，不自行改独立PASS。922及原权限候选继续独立审，无PG/权限/导入/生产变化。

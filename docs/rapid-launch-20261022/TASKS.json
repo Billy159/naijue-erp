@@ -19206,10 +19206,20 @@
     },
     "QA897RecoveryBackup": {
       "owner": "T45",
-      "status": "DISPATCHED_ORIGINAL_OWNER_DEDUPE_AND_READONLY_BACKUP_ONLY",
+      "status": "ACTUAL_BACKUP256_PASS_TOC_READABLE_RESTORE_NOT_EXECUTED",
       "target": "QA897/OID21551 exact current CID/system/postmaster",
       "scope": "Reuse same-version backup if exists; else fresh identity/empty synthetic target/writer check and one private pg_dump, actual exit/artifact/pg_restore list. No restore/roleDDL/GRANT/migration/production/deletion; no claim real restore passed.",
-      "model": "gpt-6.1-sol/medium"
+      "model": "gpt-6.1-sol/medium",
+      "receipt": "server-jobs/t45-qa897-private-recovery-backup-readonly-20261029-256/BACKUP256-RESULT.json",
+      "receiptBytes": 8155,
+      "receiptSha256": "1400b8150b7a5afa7af84042155f672503cf7c15a335f20ce4914967e2f54da2",
+      "checks": "T45 job256 pg_dump17.11 -Fc readonly once exit0,871207bytes,PGDMP header/two full byte reads stable;pg_restore --list exit0/845 TOC entries.257 only safe metadata readback. OID21551/owner21549/system/postmaster/versions1..26/135 function bodies+definitions/55 empty business counts before-after match and no other clients at both instants; not continuous writer fence/fullV4 hash/actualrestore.",
+      "archiveSha256": "9a8d4df041c9addb28f66d959e2ede5d28cde36da5f79e5bd880c3122573d8b3",
+      "archive": "/srv/naijue-erp/isolated-qa/qa897-20261029-01/recovery-backups/t45-qa897-private-recovery-backup-readonly-20261029-256/database-21551.dump",
+      "privacy": "Server-only root0600/newdir0700; no dump/private config download or Git.",
+      "physicalVolume": "device66304 same as existing247 system/media; do not sum capacity. UID10001 access and fresh backup free-space probe not measured.",
+      "remaining": "Actual restore destination/role/ACL preparation, WAL/global roles/config recovery and actual business recovery remain untested; no new DB/GRANT/restore or source execution authorized.",
+      "next": "Reuse exact archive for accurately scoped restore preparation when target/permissions authorized. No repeated dump or TOC-as-restore claim."
     },
     "source924": {
       "scope": "Adopt original QB920/923/922 and preparation static receipts; preserve old failure/new limitedPASS; expose exact QA-only permission question once. No technical repeat or PG/production changes.",
@@ -19236,6 +19246,10 @@
         }
       ],
       "githubPreviousVerified": "fffc10bedb36e53e42281906609f00dde31a9f32"
+    },
+    "source925": {
+      "scope": "Adopt originalT45 task-level backup256 and safe metadata257, no duplicate technical review or dump. Keep restore/permissions/production unproven.",
+      "githubPreviousVerified": "28cdc4d39a7ffcaedbc116eec008d16878363977"
     }
   }
 }
