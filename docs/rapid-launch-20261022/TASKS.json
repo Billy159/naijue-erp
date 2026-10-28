@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T20:05:15.675812+00:00",
+  "updatedAt": "2026-10-28T20:25:03.973922+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "9f1cd38d94ccd8fd517a9f7387250b302f168d38",
+  "lastVerifiedRemoteCommit": "4b180e6f404baae6ac30aca1d0b707128aefd76a",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -17245,7 +17245,7 @@
           "HV2-G00"
         ],
         "owner": "D1",
-        "state": "SOURCE891_QB_NARROW_PASS;REAL_PG_PROXY_LOAD_BUDGET_PENDING",
+        "state": "SOURCE891_AUTH_AND911_CAPACITY_HOST_QB_NARROW_PASS;REAL_PG_PROXY_LOAD_WINDOW_BUDGET_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P02.txt"
       },
@@ -17258,7 +17258,7 @@
           "HV2-P02"
         ],
         "owner": "D1",
-        "state": "SOURCE898_READONLY_TOOL_DELIVERED_QB_PENDING;ACTUAL_INVENTORY_BUDGET_ADMISSION_PENDING",
+        "state": "SOURCE916_SHARED_VOLUME_COMPONENT_QB_NARROW_PASS;ACTUAL247_PARTIAL;UID10001_PROBE_FEASIBILITY_ACTIVE;WINDOW_BUDGET_REAL_BENCHMARK_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/A02.txt"
       },
@@ -17556,7 +17556,7 @@
           "HV2-A01"
         ],
         "owner": "D3",
-        "state": "SOURCE889_QB_NARROW_PASS;CURRENT_EXACT26_REAL_PG_RUNNER_ACTIVE",
+        "state": "SOURCE889_QB_NARROW_PASS_AND897_REAL_RUNNER_READY;TARGET_CORE_FULL_PUBLISH_AND_RUNTIME_ACL_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/P01.txt",
         "handoff": "OriginalD1 explicit noWIP/inflight; exactP01SalesFacts887 fourleaflease; A01/realPG/SLO still uncompleted"
@@ -17573,7 +17573,7 @@
           "HV2-P04"
         ],
         "owner": "D1",
-        "state": "P01_A01_IMPLEMENTATION_REUSED;D2_MISSING_LIFECYCLE_EQUIVALENCE_ACTIVE;REAL_PG_PENDING",
+        "state": "SOURCE896_LIFECYCLE_EQUIVALENCE_QB_NARROW_PASS;P01_A01_EXISTING_IMPLEMENTATION_REUSED;REAL_PG_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H03.txt"
       },
@@ -17629,7 +17629,7 @@
           "HV2-PF02"
         ],
         "owner": "D2",
-        "state": "SOURCE863_DRAIN_SOURCE864_BOUNDED_LOGS_QB_NARROW_PASS;ACTUAL_LIFECYCLE_RETENTION_GC_RESTORE_PENDING",
+        "state": "SOURCE863_DRAIN_864_LOGS_906_ROTATION_AND909_RECLAIM_QB_NARROW_PASS;REAL_ISOLATED_LIFECYCLE_GC_RESTORE_PENDING_NO_DELETE_AUTHORIZATION",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/H06.txt"
       },
@@ -19067,7 +19067,8 @@
         "runtime inventory SQL access",
         "measured budget/thresholds"
       ],
-      "notDone": "No full capacity-inventory run, no defaults/quota/grants/config/mount/server changes"
+      "notDone": "No full capacity-inventory run, no defaults/quota/grants/config/mount/server changes",
+      "next": "OriginalT45 finite read-only actual application UID10001 statfs feasibility on same PG/WAL mount; static existing QA candidate read-only volume mapping seam only, no mounts/chmod/service/grants; accurate QA backup path remains unresolved. Avoid duplicate full247 inventory and denied246."
     },
     "A02ProductionMain915": {
       "owner": "C",
@@ -19106,6 +19107,39 @@
       "scope": "Original generic26 host composition for fixed QA22/11 source only; reuse original readers, preparers, step authorizers, actual CORE receipt reader/continuation selector. No change production53 wrapper, run, source915 helpers, host, SQL, authority issuance, ACL, private config or server. Finite missing barcode/sales header reader adaptation stays this provider, same genuine source bytes/native/ref/selection checks. No callbacks claiming authority, no dummy close/verify, no copied second import platform.",
       "dependencies": "Original T45 materialized915+actual C synthetic32 decision and original pure money results; original independent source/full-payload review and actual CORE/bootstrap proofs, preparation role permissions still required before execution.",
       "next": "Implement directly; original host capture/source refusal/closed/cancel/continuation affected tests only; no PG/fake publication/source authorization"
+    },
+    "taskQueueAccuracy919": {
+      "scope": "Correct existing task states from already adopted exact evidence; no new tests, implementation, permission or success promotion",
+      "corrections": {
+        "HV2-P01": "SOURCE889_QB_NARROW_PASS_AND897_REAL_RUNNER_READY;TARGET_CORE_FULL_PUBLISH_AND_RUNTIME_ACL_PENDING",
+        "HV2-A02": "SOURCE916_SHARED_VOLUME_COMPONENT_QB_NARROW_PASS;ACTUAL247_PARTIAL;UID10001_PROBE_FEASIBILITY_ACTIVE;WINDOW_BUDGET_REAL_BENCHMARK_PENDING",
+        "HV2-H03": "SOURCE896_LIFECYCLE_EQUIVALENCE_QB_NARROW_PASS;P01_A01_EXISTING_IMPLEMENTATION_REUSED;REAL_PG_PENDING",
+        "HV2-H06": "SOURCE863_DRAIN_864_LOGS_906_ROTATION_AND909_RECLAIM_QB_NARROW_PASS;REAL_ISOLATED_LIFECYCLE_GC_RESTORE_PENDING_NO_DELETE_AUTHORIZATION",
+        "HV2-P02": "SOURCE891_AUTH_AND911_CAPACITY_HOST_QB_NARROW_PASS;REAL_PG_PROXY_LOAD_WINDOW_BUDGET_PENDING"
+      },
+      "current": "D3 actual QA22 provider two leaves active; T45 actualUID10001 directed read-only probe feasibility active; frontend original fixed comparison active; normal90 permission pending human",
+      "next": "Adopt actual results, then original owners integrate affected scopes. No duplicate source work."
+    },
+    "A02ActualUID249": {
+      "owner": "T45",
+      "status": "ACTUAL_DATA_ROOT_UID10001_OBSERVED_WAL_EACCES_APP_PROBE_PENDING",
+      "receipt": "server-jobs/t45-a02-uid10001-pg-roots-stat-readonly-20261029-249/A02-UID10001-FACTS.json6965/1d67dbd8783bea489b3988af32f1b52243e131843baeb51c8a94c5c2c454b4f8",
+      "observed": "UID/GID10001 actual; data root dev1048593/inode1 mode0700 UID999; tmpfs536870912/available433516544; WAL parent search EACCES; no chmod/root fallback/PG"
+    },
+    "A02ROBind250": {
+      "owner": "T45",
+      "status": "CREATED_BOUNDARY_FAILURE_NO_START_NO_STATFS",
+      "receipt": "server-jobs/t45-a02-pg-tmpfs-ro-bind-probe-20261029-250/A02-RO-BIND-RESULT.json5484/7e4e2a0afbf5b8780eff9b6994d07d66e06603259b5c9df2db84d895183ba777",
+      "cause": "ExistingPGimage Config.Volumes autoadds RW anonymousvolume beside requested exactRO bind; guard rejects before start. Docker acceptance not actual mounted-volume/UID evidence.",
+      "preservedContainer": "98bb19737ca099517685f0972389913c8e1d44e200262ea45e076b086844be0b",
+      "preservedVolume": "ddb0ef4a4202698819fb1bd97e72d8cd683c69d491422b954c8e9075be7f44c5",
+      "successor": "One explicitly revised bounded originalT45 probe using existingproject Nodeimage with empty Config.Volumes and exactRO binding; no oldjob replay or guardrelaxation. No production/ACL/data writes."
+    },
+    "QA897PreparationPublishACL919": {
+      "owner": "D1",
+      "state": "ACTIVE_CONTROL_CANDIDATE_ONLY_NO_DATABASE_CHANGES",
+      "files": "D1/QA897-PREPARATION-PUBLISH-ACL-01/ candidateSQL/delta/withdrawal only; originalD3 prepare126 and normal90-03 readonly",
+      "scope": "Current generic26 full preparation/publish lifecycle actual minimal columns/xmin/purpose metadata gap; no owner/allgrant/currentnormal90 shortcut; originalrole nonexistent/OID unknown; exact new permission userapproval after originalQB review required"
     }
   }
 }
