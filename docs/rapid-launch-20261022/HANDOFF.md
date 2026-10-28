@@ -1,3 +1,7 @@
+SOURCE879：原QB878限定源/消费PASS8a42b20f采用，4相关检查及生成一致性通过，不重876/旧pack/PG。原T45已接固定d784baf4一次本地新build及原pack实际解包回读；只验11patch闭包，公共配置原598仍settings子集，非当前全业务运行或正式发布。C同步既有DEPLOYMENT说明到135及私有key路径，明确v22非通用安装器，目标绑定缺口保留。
+
+P04-232权限草案原QB修正版210b815a已通过66授权/撤回、原基线和固定病例源范围核对；仅草案通过，仍等本Chat准确人类批准，未GRANT/登录/driver。normal34对比仍等窗口交回，原证据/草稿保留，暂无新整页计数。GitHub d784baf4已准确回读，目标ACTIVE。
+
 SOURCE878：C修现有共享release机械源：FullpatchLevel V20→26_hv2_history_set_guards_from_v22，准确11项patch顺序，原R3 profile/26迁移不变；v8/v10已被COMPLETEv14/v11覆盖，退出本支持成员清单，历史源码未删。原D1/D2复用228→230→231准确接续，不并入旧JSON/heap或其他替代分支。现generator同步deploy/boot，4项实际JS/Python消费测试通过，旧4/5条fixture改为实际清单长度及+1有限后继，原拒绝断言不放宽。
 
 明确：这不是SQL执行器，也不授权DB动作；包中原v22是body来源，仍硬绑定原目标，不能冒通用安装器，P04专用wrapper也只属OID16400。其他目标新载体、真实metadata/ACL/review及最终build/pack/runtime仍未完，H04不记整项PASS。源码固定后只交原QB该共享声明及两消费者差异，不重私有挂载/全后台。原P04权限问题与Chrome交还仍等待，其他开发继续。

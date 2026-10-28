@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-28T15:53:27.647571+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "ac765cc0b8695fe140b206d758652f52b39c486d",
+  "lastVerifiedRemoteCommit": "d784baf4aa792e7a6732809b15638dc1bfb18bea",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18513,9 +18513,12 @@
       "status": "ACTUAL_METADATA_READONLY_OBSERVATION_PASS_NOT_BUSINESS",
       "receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-p04-runtime-acl-readonly-20261028-232/RESULT232.json",
       "observations": "SchemaUSAGEfalse/35tables379columnsfalse/4xminfalse/2historyhelpersEXECfalse;other4app5builtinEXECtrue",
-      "next": "Human exactP04syntheticACL confirmation pending; originalQB narrowSQL review running; noGRANT/PGdriveruntilapproved",
+      "next": "Exacthumanconfirmationstillpending;noGRANTorPGdriver;originalT45onlyonceapproved",
       "proposal": "reports/backend/rapid-launch-20261022/D1/HV2-B07/P04-232-ACL-CONFIRMATION.txt",
-      "proposalScope": "OID16400/runtime16398 only;32tables/4wholeSELECTincludingxmin/211columnSELECT/81INSERT/33UPDATE/2EXEC/schemaUSAGE;lockUPDATEisrealability;noDELETE/admin/production"
+      "proposalScope": "OID16400/runtime16398 only;32tables/4wholeSELECTincludingxmin/211columnSELECT/81INSERT/33UPDATE/2EXEC/schemaUSAGE;lockUPDATEisrealability;noDELETE/admin/production",
+      "qaReceipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-P04-232-MINIMAL-ACL/QB-P04-232-MINIMAL-ACL-DRAFT-RESULT-CORRECTED.json",
+      "qaSha256": "210b815a1f2654803fe6972a4490cb69ae6b806ddbe93942158b80ed08e2c3bf",
+      "qaStatus": "PASS_DRAFT_ONLY_NO_PERMISSION_EXECUTION"
     },
     "H04B10Current875": {
       "owner": "D2deploy2leaves/Cotherrelease",
@@ -18552,7 +18555,7 @@
     },
     "H04Release135878": {
       "owner": "C",
-      "status": "SOURCE_CHANGED_4_AFFECTED_CONSUMER_TESTS_PASS_FIXED_QB_NEXT",
+      "status": "QB_NARROW_PASS_SOURCE_AND_CONSUMERS_ACTUAL_LOCAL_BUILD_PACK_RUNNING",
       "files": [
         "config/release-contract.json",
         "scripts/release/deploy-candidate.py",
@@ -18565,7 +18568,10 @@
       "profileUnchanged": "source-confirmed-native-exact26-r3-v1",
       "sourceBasis": "D1actual228/230/231 + originalD2readOnlyseam;v8supersededbyCOMPLETEv14/v10byv11",
       "boundary": "PackageorderedmembersNOTautomatedSQLexecutor;rawv22R1bodyisnottargetagnosticinstaller;P04wrapperOID16400notreusableonotherDB;noPG/server/ACL/deploy",
-      "remaining": "Newtargetboundv22carrier/actualcurrentmetadataACLrefs/finalbuildpackandruntime;H04notcomplete"
+      "remaining": "Newtargetboundv22carrier/actualcurrentmetadataACLrefs/finalbuildpackandruntime;H04notcomplete",
+      "qaReceipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE878/QB-SOURCE878-RESULT.json",
+      "qaSha256": "8a42b20fde65fc215fb41aa2ae9e73a3d763c4a820be6a69dbfb1993c280e284",
+      "next": "OriginalT45 fixed878 localbuild+actualpackreadback only;noPG/server/deploy"
     }
   }
 }

@@ -188,7 +188,11 @@ Boot persistence is separate: boot-entry.py still limits schema19. This source s
 }
 ```
 
-示例 SHA 故意无效，不是实际回执。`newDatabaseReceipt` 精确等于 `references.metadata`，不再引用旧 schema19 空库记录。metadata 是原 v20 issuer probe 的原四键 `{identity,migration_versions,catalog_sha256,source_routines_match}` 实际结果；保持 PostgreSQL 原 canonical 摘要，不 hash 漂亮打印 JSON 来替代。新独立 review 仍为原 `C_NATIVE_RUNTIME26_REVIEW_V1`，严格目标/OID/current+session role/socket或TCP/postmaster、1..26、`26_v20_history_insert_identity_from_v19`、当前函数及 ACL canonical 全绑定。不能沿用旧 QB/旧121或130记录。用途准确为原五读用途加 `PRODUCT_MAINTENANCE`、`HISTORY_REVISION`；未授实际用途就拒绝。
+示例 SHA 故意无效，不是实际回执。`newDatabaseReceipt` 精确等于 `references.metadata`。当前 Full 支持 `26_hv2_history_set_guards_from_v22`（135 函数），应用 profile 仍为 `source-confirmed-native-exact26-r3-v1`。metadata 使用现有对应 issuer probe 的四键 `{identity,migration_versions,catalog_sha256,source_routines_match}` 实际结果；review 仍为原 `C_NATIVE_RUNTIME26_REVIEW_V1`，绑定实际目标、身份、postmaster、1..26、该 patchLevel、当前函数与 ACL canonical。不能沿用旧 V20 或隔离 P04 的目录/权限证明。保持 PostgreSQL 原 canonical 摘要，不以格式化 JSON 的摘要替代。原用途授权保持，未授实际用途就拒绝。
+
+`config/release-contract.json.runtimeSqlPatches` 是 JS/Python 共用的 11 项有序包成员来源，不是自动 SQL 执行器。v8/v10 已被完整 v14/v11 覆盖，退出本支持清单，历史原件保留。包内 v22 原件提供受控函数体与父版本来源，仍绑定原 R1 目标，不能用于其他目标；实际 230 的 P04 载体也只适用 OID16400。其他目标准确安装载体由原 SQL/服务器 owner 绑定并获得对应环境授权。已有库只执行实际父版本所需增量，不重放整链；228→230→231 仅证明原已发布 schema19 合成 P04 目标接续，不证明任意空库安装或正式升级。
+
+选择人员维护时，`runtime26Full.credentialRequestKey` 必须提供 `{hostFile,containerFile:"/run/naijue-rewrite/credential-request.key"}`，与私有 runtime 的 `staffCredentialRequestKeyFile` 一致；部署器单文件只读挂载。未选择时两处均省略。路径与文件元数据进入既有绑定，密钥内容不读取、摘要或记录；真实密钥供给及保护由原服务器 owner 负责，此示例不生成或授权真实密钥。
 
 新 review / QB 文件分别 readonly 挂到原 `/run/naijue-rewrite/runtime26/C-RUNTIME-REVIEW.json` 和 `INDEPENDENT-REVIEW.json`，private config 内引用相应 review SHA。源码、静态资源、runtime config 及元数据只读挂载；R3 媒体目录独立可写、归 app UID、不在 release/public web 中，精确等于 private config 的 `productMedia:{root,rootKey}`。若明确选择现有库存输出，`runtime26Full.inventorySpool` 另给 `{hostRoot,containerRoot:"/private/inventory-exports"}`；hostRoot 须与媒体隔离并归 app UID，config 仍用原批准 `directory/maxBytes=536870912/maxConcurrent=1/maxDurationMs=120000`。不选择则两处均省略，不默开路由或给 `/app` 写权限。
 
