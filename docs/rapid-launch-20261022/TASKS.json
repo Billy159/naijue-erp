@@ -19099,7 +19099,7 @@
     },
     "QA22SourceProvider918": {
       "owner": "D3",
-      "status": "SOURCE920_FIXED_QB_DELIVERY_FAILED_THREAD_NOT_FOUND",
+      "status": "SOURCE923_F01_FIXED_D3_HANDED_BACK_ORIGINAL_QB_RETEST_PENDING",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "tests/integration/current-runtime26-source-provider.mjs",
@@ -19107,14 +19107,23 @@
       ],
       "scope": "Original generic26 host composition for fixed QA22/11 source only; reuse original readers, preparers, step authorizers, actual CORE receipt reader/continuation selector. No change production53 wrapper, run, source915 helpers, host, SQL, authority issuance, ACL, private config or server. Finite missing barcode/sales header reader adaptation stays this provider, same genuine source bytes/native/ref/selection checks. No callbacks claiming authority, no dummy close/verify, no copied second import platform.",
       "dependencies": "Actual input/grant/whole11 source reviews and original115/49 COREproof still required; provider consumes externally authenticated input. Originalproduction191 BIND COMMITTED sequence3/cursor22 preserved; 4096 source-stage commits not109 MAIN.",
-      "next": "Original QB source920 review only; read_thread succeeds but two send_message attempts return thread not found, neither dispatch queued. Preserve original owner, no duplicate reviewer. Independent preparation12 read-only metadata implementation remains ready, no ACL execution.",
+      "next": "Original QB F01 only independent retest with exact new pins; no old9/915/916 repeats or actual PG claim.",
       "pins": [
-        "38827/2defe5e1dda67384a0b75004355f6f73cc33d7caf3de24b87b98edc2155991ec",
-        "13732/a560c100912ae2c6264673040317de84a0b0568c84f1b551c4844e92af647d0d"
+        {
+          "path": "tests/integration/current-runtime26-source-provider.mjs",
+          "bytes": 38901,
+          "sha256": "095e8b724b02ffe7c7226f57a6abbbe68d1c06252bc73c74980a60e0d5680081"
+        },
+        {
+          "path": "tests/current-runtime26-source-provider.test.mjs",
+          "bytes": 14515,
+          "sha256": "079738ff668d61ab951e017284308bf7d5dcf5a467f53837410005733ffefa67"
+        }
       ],
-      "checks": "OriginalD3 Node24.21 targeted9/9PASS; not whole11 actualfactory/PG/CORE/PUBLISH",
+      "checks": "D3 original Node24.21 same provider10/10 PASS including independently reviewed wrong nativeId refusal; C only exact handback pins, not repeat technical review.",
       "fixedCommit": "b7ced6b2e507f960ef97eb40c66e16a5e1c74afd",
-      "githubRemoteVerified": true
+      "githubRemoteVerified": true,
+      "finding": "QB SOURCE920 F01 P2, original9 protocol PASS does not catch mismatched independently reviewed nativeId. Pure local repro preserved in QB/HV2-SOURCE920/QB-HEADER-NATIVE-ID-REPRO.mjs."
     },
     "taskQueueAccuracy919": {
       "scope": "Correct existing task states from already adopted exact evidence; no new tests, implementation, permission or success promotion",
@@ -19152,7 +19161,8 @@
       "maintain": "C selected only as explicit human-review option for new syntheticQA21551 prepare role; includes VACUUM/ANALYZE/REINDEX/CLUSTER etc, not lock-only. No19tableUPDATE/DELETE/TRUNCATE/owner/normalruntime/production grant. No SECURITY DEFINER/helper or original135 change.",
       "result": "D1/QA897-PREPARATION-PUBLISH-ACL-01/RESULT.json272286/c494067d52b54a021787fea7a46dee84867d1668a3b77ebcc702180e59350bbb",
       "candidate": "51599/df6558fc08d6d32fec216f2737c6c9532e3ccb90879398a624aeea3b99ba9e17",
-      "withdrawal": "43008/ffb9bb627da6c294bd18be774f620498c78e1630396d649a5c860b28982e39df"
+      "withdrawal": "43008/ffb9bb627da6c294bd18be774f620498c78e1630396d649a5c860b28982e39df",
+      "source922Delta": "D1 original SOURCE922-DELTA.json 7626/20262ad31c4861bc2d04f6dc432d617dd58a871fdec26300d5e98a943ab46869 adopted reference-only handback; permission candidate and withdrawal unchanged, human approval pending."
     },
     "PreparationXminCatalog922": {
       "owner": "C",
@@ -19182,7 +19192,14 @@
       "scope": "Distinct exact135 preparation12/V4 read-only metadata profile and original source host mapping; normal13/V3 SQL byte-for-byte unchanged; no database/permission/business writes.",
       "checks": "Node24.19 metadata six tests PASS, affected H135 host seven tests including four subtests PASS; strict two TS roots closure exit0; original V3 SQL exact-byte comparison PASS. Protocol only, actual SQL/ACL/PG not executed.",
       "next": "D1 update only changed source references in existing preparation permission candidate; original QB independently review source920 and source922 finite additions, then candidate; no duplicate reviewer or new role.",
-      "reviewDispatch": "Original QB notLoaded/readable but prior send twice thread-not-found, no queued review."
+      "reviewDispatch": "User opened original QB; exact SOURCE920/SOURCE922 and D1 candidate delta successfully sent to original QB with explicit Sol6.1-medium. QB active; no duplicate reviewer."
+    },
+    "QA897RecoveryBackup": {
+      "owner": "T45",
+      "status": "DISPATCHED_ORIGINAL_OWNER_DEDUPE_AND_READONLY_BACKUP_ONLY",
+      "target": "QA897/OID21551 exact current CID/system/postmaster",
+      "scope": "Reuse same-version backup if exists; else fresh identity/empty synthetic target/writer check and one private pg_dump, actual exit/artifact/pg_restore list. No restore/roleDDL/GRANT/migration/production/deletion; no claim real restore passed.",
+      "model": "gpt-6.1-sol/medium"
     }
   }
 }

@@ -98,3 +98,14 @@ test('QA22 preparation-only decision cannot activate an execution source session
  const input={version:'QA897_FULL_SOURCE_PROVIDER26_INPUT_V1',binding:binding(),core:{},closureScope:{},warehouses:[],producers:Object.fromEntries(module.sourceGroups.map(g=>[g,{}])),productEvidence:{},coreProjection:{},initialization:{},preparation:{},money:{},executionAuthorization:grant};
  const ref=await s.save(input);await assert.rejects(module.createQa22SourceSession({inputFile:ref.path,trustedInputSha256:ref.sha256,executionAuthorizationSha256:grant.sha256,binding:binding(),sources:{},database:{ready(){borrowed++;throw Error('MUST_NOT_ACTIVATE');}},signal:new AbortController().signal}),/C_EXECUTION_SCOPE/);assert.equal(borrowed,0);
 });
+
+test('QA22 sales header rejects a reviewed native ID differing from the original preparer',async t=>{
+ const f=await capture(t,'SALES_HEADER');
+ const bindings=JSON.parse(await readFile(f.recipe.nativeBindings.path,'utf8'));bindings[0].nativeId=id(999);
+ const nativeBindings=await f.save(bindings);
+ const originalReview=JSON.parse(await readFile(f.recipe.review.path,'utf8'));
+ const qb=JSON.parse(await readFile(originalReview.independentReview.path,'utf8'));
+ const independentReview=await f.save({...qb,nativeBindingsSha256:nativeBindings.sha256});
+ const review=await f.save({...originalReview,nativeBindings,independentReview});
+ await assert.rejects(module.openReviewedQa22Capture({...f.recipe,nativeBindings,review},f.b,new AbortController().signal),/NATIVE_BINDING/);
+});

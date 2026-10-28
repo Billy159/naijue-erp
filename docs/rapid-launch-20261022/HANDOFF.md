@@ -1,3 +1,7 @@
+SOURCE923：D3已交回SOURCE920-F01两叶定向修复，原prepared.header.id与独立native.nativeId准确对比，不重建ID。C核新pins一致，原D3新文件10/10自检PASS；等待原QB仅复验F01，不自行改独立PASS。922及原权限候选继续独立审，无PG/权限/导入/生产变化。
+
+原QB已由用户打开并成功恢复接包，正在唯一有限审SOURCE920/922及D1候选。已实证SOURCE920-F01 P2：SALES_HEADER忽略已审nativeId，与原prepared.header.id可不等仍授权；交原D3仅两叶修复及错ID拒绝，未假通过。D1 SOURCE922-DELTA引用更新已交回，原权限/19MAINTAIN/人批/撤权不变。T45接准确QA21551同版本备份去重，必要时只读私有pg_dump及目录检查；不restore/授权/生产。
+
 SOURCE922：C已补齐准确prepare12只读metadata V4及原host接线，normal13/V3保留且生成SQL逐字节不变；新增12范围不冒日常13权限。Node24.19定向metadata6项、宿主7项及两TS根严格类型通过；无实际PG/GRANT/CORE/导入/PUBLISH，不记真实业务通过。原QB消息未送达仍待，下一由原D1仅同步候选准确源码引用，再交原QB有限审；19表MAINTAIN与normal90仍各自待准确人批。
 
 接续核实：SOURCE920 b7ced6b2e507f960ef97eb40c66e16a5e1c74afd 已推GitHub并独立回读一致。原QB记录可读，连续两次发送source920限定验收返回thread not found，未入队，不另开重复验收。A01用户确认沿原893已验实现复用；前端接线及真实PG仍待，不重实现、不重问批准。D1 prepare权限候选已交回，prep12只读metadata接缝待实现；19表MAINTAIN及normal90不因此获授权。Demo仍原固定normal34全站对比，不切修复。

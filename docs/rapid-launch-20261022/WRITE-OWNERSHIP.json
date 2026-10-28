@@ -7672,7 +7672,7 @@
     },
     "QA22SourceProvider918": {
       "owner": "D3",
-      "status": "SOURCE920_HANDED_BACK_FIXED_ORIGINAL_QB_PENDING",
+      "status": "SOURCE923_F01_FIXED_D3_HANDED_BACK_ORIGINAL_QB_RETEST_PENDING",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "tests/integration/current-runtime26-source-provider.mjs",
@@ -7680,12 +7680,21 @@
       ],
       "scope": "Original generic26 host composition for fixed QA22/11 source only; reuse original readers, preparers, step authorizers, actual CORE receipt reader/continuation selector. No change production53 wrapper, run, source915 helpers, host, SQL, authority issuance, ACL, private config or server. Finite missing barcode/sales header reader adaptation stays this provider, same genuine source bytes/native/ref/selection checks. No callbacks claiming authority, no dummy close/verify, no copied second import platform.",
       "dependencies": "Actual input/grant/whole11 source reviews and original115/49 COREproof still required; provider consumes externally authenticated input. Originalproduction191 BIND COMMITTED sequence3/cursor22 preserved; 4096 source-stage commits not109 MAIN.",
-      "next": "Implement directly; original host capture/source refusal/closed/cancel/continuation affected tests only; no PG/fake publication/source authorization",
+      "next": "Original QB F01 only independent retest with exact new pins; no old9/915/916 repeats or actual PG claim.",
       "pins": [
-        "38827/2defe5e1dda67384a0b75004355f6f73cc33d7caf3de24b87b98edc2155991ec",
-        "13732/a560c100912ae2c6264673040317de84a0b0568c84f1b551c4844e92af647d0d"
+        {
+          "path": "tests/integration/current-runtime26-source-provider.mjs",
+          "bytes": 38901,
+          "sha256": "095e8b724b02ffe7c7226f57a6abbbe68d1c06252bc73c74980a60e0d5680081"
+        },
+        {
+          "path": "tests/current-runtime26-source-provider.test.mjs",
+          "bytes": 14515,
+          "sha256": "079738ff668d61ab951e017284308bf7d5dcf5a467f53837410005733ffefa67"
+        }
       ],
-      "checks": "OriginalD3 Node24.21 targeted9/9PASS; not whole11 actualfactory/PG/CORE/PUBLISH"
+      "checks": "D3 original Node24.21 same provider10/10 PASS including independently reviewed wrong nativeId refusal; C only exact handback pins, not repeat technical review.",
+      "current": "QB SOURCE920 F01 P2 actual reviewed nativeId ignored in SALES_HEADER prepared header. Same original two leaves only; no metadata/host/SQL writes."
     },
     "QA897PreparationPublishACL919": {
       "owner": "D1",
