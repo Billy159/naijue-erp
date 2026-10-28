@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T19:51:33.559295+00:00",
+  "updatedAt": "2026-10-28T19:59:10.131868+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "0d63cdcecde7da9b77a5429513ef4641037380ff",
+  "lastVerifiedRemoteCommit": "210a76fc8fedb9e26efb4b706eebfcf927629ab2",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -17713,7 +17713,7 @@
       "frontend": "ExistingChat continues normal34 comparison;ownbranch/WIP and B04implementation ack not yetdelivered,no otherfrontendwriter.",
       "toolchain": "T45 found existing exactNode24.21.0;root defaultNode25 not used for acceptance"
     },
-    "updatedAtUtc": "2026-10-28T16:09:04Z",
+    "updatedAtUtc": "2026-10-28T19:59:10.131868+00:00",
     "branchConsolidation": {
       "owner": "original taskbook Chat",
       "status": "HANDED_BACK",
@@ -19033,16 +19033,19 @@
     },
     "QA22SourceFixture914": {
       "owner": "D3",
-      "status": "SOURCE915_FIXED_ORIGINAL_QB_ACTIVE_NO_ACTUAL_IMPORT",
+      "status": "SOURCE915_ORIGINAL_QB_SOURCE_AND_ACTUAL_BYTES_LIMITED_PASS",
       "files": [
         "tests/integration/current-runtime26-full-source-fixture.ts",
         "tests/current-runtime26-full-source-fixture.test.ts"
       ],
       "scope": "Same original two-leaf synthetic generator; remaining groups nonempty per original real-source factories: payment method/account/hall1, barcode1, sales header1 with16 actual lines and16 actual settlements;32 uniquely sourced raw1.00000000000001-to1.00 candidate money cells require external actual independent review/C adopted source decision. Totalqty16/amount16.00, draft historical entries do not post; stock10 and21 explicit zero warehouses retained. No fake approvals or production-data reuse.",
-      "next": "Original validators produce DTOs; handback toC/QB then T45 private original factory. Current original12scope source912 dormant until full11 actual.",
+      "next": "T45 original money representation/pure mapper preparation; D3 original QA22 provider seam and minimal file lease; authentic CORE/full11/source authority/permissions still pending",
       "checks": "Original preparers, exact source bytes/32 actual candidate cell pointers;5 affected protocol tests and strict transitive closure pass; old7 evidence preserved. Default money pending, external reviewedMap required.",
       "notReady": "No independent actual32 adoption/full11 source authority or actual generic QA22 provider/publication/PG/ACL/CORE pass; original production53 wrappers unchanged.",
-      "moneyCandidateArtifact": "4536/1914a514d2b3c0d2df9e7cdc63715311bf22c06c78ff3d8a79895aeee722fe13"
+      "moneyCandidateArtifact": "4536/1914a514d2b3c0d2df9e7cdc63715311bf22c06c78ff3d8a79895aeee722fe13",
+      "receipt": "QB/HV2-SOURCE915/QB-SOURCE915-RESULT.json3198/ad86d6d7a03e0f8f246ee9bae484dab585a9238a1c0aecc5029ce4b92d4c238c",
+      "materialization": "QB-SOURCE915-ACTUAL-MATERIALIZATION-SUPPLEMENT.json4956/0987b3d76974fb6afe40528b2cb226dc6e46123d908fcd699ab42171fd4072d7; actual101 files/43source/32cells",
+      "syntheticDecision": "Existing C-SYNTHETIC-INPUT-DECISION.source915SyntheticMoneyDecision adopts exact32 cells under human technical delegation for nonexecution preparation only; no full source/PG/ACL/execution approval"
     },
     "A02ActualFacts247": {
       "owner": "T45",
@@ -19068,7 +19071,7 @@
     },
     "A02SharedVolume916": {
       "owner": "D1",
-      "status": "SOURCE916_HANDED_BACK_FIXED_ORIGINAL_QB_PENDING",
+      "status": "ORIGINAL_QB_NARROW_SOURCE_PASS_REAL_PROBE_WINDOW_PENDING",
       "id": "A02-SHARED-VOLUME-01",
       "actual247": "PG/WAL one tmpfs; system/media one ext4",
       "reproduction": "Node24 protocol: sharedphysicalfree100, sessionworstPG60+WAL60; current ADMITTED, expected LOW_WATER. Synthetic only, no disk/PG writes.",
@@ -19081,7 +19084,8 @@
         "14356/02b47bf0a80a29d9cfd4788cc596afa3eb05763691138663c64c464122ef46df",
         "18800/e6feeb6f8b59cab766697feade658f82e5ef7af50eae90983fc1e5fe4919b372"
       ],
-      "checks": "OriginalD1 9 affected cases PASS, strict two-root transitive closure0; no actual probe/PG/server"
+      "checks": "Independent9PASS/0FAIL 78.779583ms strict2roots0; old30/P02/host/PG not rerun",
+      "receipt": "QB/HV2-SOURCE916/QB-SOURCE916-RESULT.json 2554/573682613be31e5a61a75e964de722130f4b201552e71d6798194462a0e05810"
     }
   }
 }
