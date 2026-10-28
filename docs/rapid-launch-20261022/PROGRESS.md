@@ -1,3 +1,5 @@
+SOURCE932：原T45263真实production导出密钥读取器在UID10001、networknone、准确928/Linux262及258源key只读两挂载下通过；原reader调用2次、同合成输入相等/不同输入不同true，key元数据与payload未变，不出key/tag/摘要，不启动main/API/PG。采用原回执3619/40bc9dd8…不重验。C将原A02缺失真实容量probe producer/唯一ownedpool接缝交空闲原D1源码实施，6叶唯一lease登记，保留已验admission，无第二pool/新平台/默认容量，不执行DB或权限。原normal90/preparation189人批与共享QA完整发布仍是真实业务前置，Demo原normal34完整对比继续。931 GitHubf0f3eac5已核实。
+
 SOURCE931：原T45准确928 Linux依赖闭包已实测通过：完整离线npm ci仅1次exit0、锁未改，UID10001加载fastify/pg/sharp及一像素原生转换、111生产placement匹配通过。259收据目录失败和260原生首错UNKNOWN保留；261确认公开文件root0600不可读，262新目录同字节0644修正后通过，无旧现场/权限/生产改动。采用原回执7749/9b7fd38c…，C不重复验收；已接原production密钥读取器纯只读后继，仅合成boolean、不出key/tag、不启API/PG。原Demo仍normal34完整对比在途，105项61差异/30局部/14未跑，整页/弹层整项PASS0；不冒全量收口。930 GitHub5fe12771已回读。
 
 SOURCE930接续：T45已实证928入口eager依赖fastify/pg/sharp；本地新包用darwin-arm64，现远端Linux依赖仅旧5669锁，不能拿partial旧模块冒新锁。原B10读取器没有create/start，key258保全。C沿原部署依赖安装任务交唯一T45准确928 Linux新受控安装：先新旧production lock/cache索引/resolved/integrity/platform差异，必要首个ENOTCACHED最小复现修复后实际npm ci及sharp原生加载；不改lock/版本、旧cache/node_modules/生产/PG/权限，不重复旧长超时。929 ffee1770已远端回读；原Demo有限剩余清单在途，权限原人批pending。

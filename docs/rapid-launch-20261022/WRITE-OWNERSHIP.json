@@ -7767,6 +7767,21 @@
       "independentReview": "QB/HV2-SOURCE928/QB-SOURCE928-F01F02-RESULT.json1235/497ff75d0b7ba43197527a2d1214a9457c867b525d6eec1f2bad68d67630186e",
       "fixedCommit": "092821ff20d2d55854959a5afc04dd89818daa80",
       "githubRemoteVerified": true
+    },
+    "A02RuntimeProbe932": {
+      "owner": "D1",
+      "model": "gpt-6.1-sol/medium",
+      "state": "LEASE_GRANTED_EXISTING_A02_REAL_PROBE_SOURCE_ONLY",
+      "files": [
+        "apps/api/src/capacity-runtime-probe.ts",
+        "tests/capacity-runtime-probe.test.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "apps/api/src/postgres-read-api.test.ts",
+        "apps/api/src/production-application-host.ts",
+        "apps/api/src/production-application-host.test.ts"
+      ],
+      "scope": "C hands back only producer/shared pool seam for actual A02 probe to original D1. Reuse exact owned BoundedPostgresPool and existing CapacityAdmission; current relation/database aggregates plus separately trusted fresh target volume facts; no second PG pool, API-local statfs as remote PG/WAL, DB grants/schema/write changes, guessed capacity/window/SLO or deployment. Check source consumer/config gap before edits; only necessary leaves from lease. No new collector/platform.",
+      "next": "Implement smallest real read-only producer seam and affected tests; report any additional file need before editing. Actual QA probe/window/performance remains separate original T45 execution."
     }
   }
 }
