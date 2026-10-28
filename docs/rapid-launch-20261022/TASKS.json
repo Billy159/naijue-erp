@@ -1354,9 +1354,9 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T11:49:13.840939+00:00",
+  "updatedAt": "2026-10-28T15:04:06.296084+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "58d106c0418190fb00a6504ca5f3631f6d15f90e",
+  "lastVerifiedRemoteCommit": "b39a3ec4b3ae290b92dab008186ab64bc805ac0f",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18366,7 +18366,7 @@
       "next": "T45 strictrole/baseline/current refs projection;newnamespace Python Git730baseline andsource858relativecurrent;no148recompute/193composite"
     },
     "P04DriverProofNext866": {
-      "status": "SOURCE_READY_FIXED_QB_NEXT",
+      "status": "QB_SOURCE_ONLY_NARROW_PASS_NOT_REAL_PG",
       "owner": "D1",
       "files": [
         "tests/integration/history-revision-set-guards.integration.test.ts"
@@ -18380,7 +18380,9 @@
       "sha256": "d79aebc6d139bdf6c54333257afd183f22bf3eadd9e2af193313e35db085cae3",
       "receipt": "reports/backend/rapid-launch-20261022/D1/HV2-B07/P04-DRIVER-DELTA-RESULT.json",
       "checks": "Syntax+targetedstrictTypesPASS;noactualPGtest",
-      "next": "OriginalQBfixedsingleleafreview;T45schema135/ACL/currentreview/realQA beforeonceactualrun"
+      "next": "Actual135parent/approvedACL/genuineQAissuer then originalT45run",
+      "fixedCommit": "b39a3ec4b3ae290b92dab008186ab64bc805ac0f",
+      "qaReceipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE867/QB-SOURCE867-RESULT.json"
     },
     "C_B12_Launch866": {
       "owner": "C",
@@ -18395,19 +18397,31 @@
       "checks": "4newrunnerchecksPASS;existing14directdependencies/219lockedentriesverifyPASS,noinstall;actualNode24.21npm11.19returnsBLOCKED_ENVexit2beforelocalgates",
       "expectedToolchain": "Node24.21.0/npm11.9.0;nodefromreleasecontract/npmfrompackageManager;rootengines+lockrootmetadataalignedwithoutdependencychange",
       "scope": "CurrentrecursiveAPI/runtime/import-v3/release/originalkeytests;originalrootcheckallonce;31requiredaccepted-scope/cleaninstallreceiptentriesmissingarenotgreen",
-      "missing": "Frontendnestedtsconfighandoff/cleanrootci/actualERPbuild+crosslanguage/completecurrentcandidatePGbrowserproxyperformanceH01-H06D01;notwholeB12",
+      "missing": "Cleanrootinstall/runtimeactualtypesFAILcurrentmixedtree/fullcurrentcandidatePGbrowserproxyperformanceH01-H06D01",
       "receipt": "reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE866/QB-SOURCE866-RESULT.json",
       "sha256": "525f5a1a660c1045ea5b649040e4c696fab42151c4ea5398bfecaf8b8708ed89",
-      "next": "F1 singlefrontendtsconfig handoff pending;T45exactnpm11.9 cleanrootexport actualwindow"
+      "next": "OriginalT45 independentfixedGitcheckout/exactnpm11.9 rootci andtargetedtypes;noexistingdependencycleanup"
     },
     "P04Upgrade228": {
-      "status": "PREPARED_C_SCOPE_AUTHORIZED_AFTER_EXACT_CLEANUP_DB_FIX",
+      "status": "ACTUAL_COMPLETED_ORIGINAL_T45_RESULT_ADOPTED",
       "owner": "T45",
       "targetOid": 16400,
       "source": "980ad642/original21414SQL/a1037086",
-      "scope": "Existingpublished222 schema19→26/V20/131;preserve38oldtables/QA/3keys;noACL/v22/bootstrap/publish/driver/R1",
+      "scope": "14SQL/schema1..26/V20/131;40protectedrelations/original222batch3receiptsQAunchanged;client0;noACL/v22/driver/R1",
       "finding": "PreparedPythoncleanupstillB14dbname;mustcorrectP04beforefirstsubmit,labelsaccurate",
-      "next": "T45accuratefinalpins onceexecute;actual131catalogthenP04specificv22"
+      "next": "OriginalD1 P04 published-parentv22 wrapper active;then originalroute successors and preciseACL beforeactualdriver",
+      "receipt": "reports/controller/rapid-launch-20261022/server-jobs/t45-hv2-p04-published222-schema26-v20-parent-preparation-20261028-228/RESULT.json",
+      "sha256": "abdddfc05a3468a32626d8d45d05331f1af04327a8a71e72a7180bdf1f95c069"
+    },
+    "source868": {
+      "owner": "C",
+      "status": "WIP_CHECKPOINT_NOT_FULL_ACCEPTANCE",
+      "frontendConfig": "OriginalF1explicitsolewriterhandoff;removeonlynestedtypeRoots/paths;currentmixedtreeTSCexit2;rootonlyinstallNOT_RUN",
+      "candidateIdentity": "OwncleanGitrootrequired;noarchiveborrowingparentHEAD;1newtargetedtestPASS;old4reused",
+      "frontend": "OriginalTerra medium normal34 fullcomparisonongoing;nofreshwholepagecount",
+      "production": "NOT_CHANGED",
+      "model": "gpt-6.1-sol/medium",
+      "Fast": "UNVERIFIED_TOOL_HAS_NO_SWITCH"
     }
   }
 }

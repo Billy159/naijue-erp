@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {launchCommands, requiredAcceptance, runLaunch} from './check-launch.mjs';
+import {mkdtempSync, mkdirSync, writeFileSync, rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {launchCommands, requiredAcceptance, runLaunch, fixedCheckoutCommit} from './check-launch.mjs';
 
 const commit = 'a'.repeat(40), bytes = Buffer.from('fixed independently accepted receipt');
 const acceptance = {candidateCommit: commit, entries: requiredAcceptance.map(taskId => ({taskId,
@@ -39,4 +43,18 @@ test('wrong tool versions block before commands and never report a green candida
     assert.equal(runLaunch({...base, ...change, run: () => {throw Error('must not execute');}}).reason,
       'EXACT_NODE_NPM_AND_FIXED_COMMIT_REQUIRED');
   }
+});
+
+test('fixed candidate uses its own clean checkout, never parent HEAD or changed tracked files', () => {
+  const directory = mkdtempSync(path.join(tmpdir(), 'naijue-launch-identity-'));
+  try {
+    const git = args => {const value = spawnSync('git', args, {cwd: directory, encoding: 'utf8'}); assert.equal(value.status, 0, value.stderr); return value.stdout.trim();};
+    git(['init', '-q']); writeFileSync(path.join(directory, 'source.mjs'), 'original');
+    git(['add', 'source.mjs']); git(['-c', 'user.name=Launch Test', '-c', 'user.email=launch-test@example.invalid', 'commit', '-qm', 'synthetic identity fixture']);
+    const head = git(['rev-parse', 'HEAD']); assert.equal(fixedCheckoutCommit(directory), head);
+    const archive = path.join(directory, 'archive'); mkdirSync(archive);
+    assert.equal(fixedCheckoutCommit(archive), '');
+    writeFileSync(path.join(directory, 'source.mjs'), 'changed'); assert.equal(fixedCheckoutCommit(directory), '');
+    git(['add', 'source.mjs']); assert.equal(fixedCheckoutCommit(directory), '');
+  } finally { rmSync(directory, {recursive: true, force: true}); }
 });

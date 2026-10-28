@@ -7250,6 +7250,26 @@
       "scope": "Originaldriver realPG rejectionrollback/exactreplay-noeffects/boundedsamedockeycontention+observedtiming;sourceonly untilT45 fixedtarget+ACL+review;noDBaction/contractrelaxation",
       "current": "Originaldriver finiteproofgaps",
       "next": "FixedsourceQA;originalT45 onlyactualonce"
+    },
+    "B12FrontendConfigHandoff868": {
+      "owner": "C",
+      "previousOwner": "F1",
+      "files": [
+        "apps/web/demo-replica/tsconfig.runtime.json"
+      ],
+      "handoffSource": "F1 01a16161-ca35-7573-b8cc-1f8d3147a46f final01a18300-11a1-79c3-b5e3-44dc571ba72c noWIP explicitCsolewriter",
+      "originalSha256": "721c1bdb3b5795821457690ad1e7e58c13fa649fd2b728c1bffa6b9a14dbcba0",
+      "scope": "Onlyremove nestedtypeRoots/reactpaths;retainUI/source/include/exclude;actualrootonlyinstallT45pending"
+    },
+    "P04V22PublishedParent868": {
+      "owner": "D1",
+      "scope": "Kcontrol-only exactP04v22installer wrapper fromactual228publishedparent;originalv22functionbodyunchanged,noRSQL/noexecution",
+      "files": [
+        "reports/backend/rapid-launch-20261022/D1/HV2-B07/P04-V22-PUBLISHED-TARGET.sql",
+        "reports/backend/rapid-launch-20261022/D1/HV2-B07/P04-V22-PUBLISHED-TARGET-PREPARATION.json"
+      ],
+      "model": "gpt-6.1-sol",
+      "thinking": "medium"
     }
   }
 }

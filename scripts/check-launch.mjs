@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Finite V2 launch checks. This does not install, migrate, start or deploy an app.
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, realpathSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -15,6 +15,19 @@ export const requiredAcceptance = Object.freeze([
   'P01', 'P02', 'P03', 'P04', 'P05', 'PF01', 'PF02', 'A01', 'A02',
   'H01', 'H02', 'H03', 'H04', 'H05', 'H06', 'D01', 'ROOT_CLEAN_INSTALL'
 ]);
+
+export function fixedCheckoutCommit(directory) {
+  const git = args => spawnSync('git', args, {cwd: directory, encoding: 'utf8', maxBuffer: 1024 * 1024});
+  try {
+    const top = git(['rev-parse', '--show-toplevel']);
+    // An archive under a worktree must never borrow that parent's HEAD.
+    if (top.status !== 0 || realpathSync(top.stdout.trim()) !== realpathSync(directory)) return '';
+    const head = git(['rev-parse', 'HEAD']);
+    if (head.status !== 0 || !/^[a-f0-9]{40}$/.test(head.stdout.trim())
+        || git(['diff', '--quiet', 'HEAD', '--']).status !== 0) return '';
+    return head.stdout.trim();
+  } catch { return ''; }
+}
 
 function testsUnder(directory) {
   return readdirSync(path.join(root, directory), {recursive: true, withFileTypes: true})
@@ -103,7 +116,7 @@ function main() {
   const npmVersion = process.env.npm_execpath
     ? get(process.execPath, [process.env.npm_execpath, '--version']) : get('npm', ['--version']);
   const result = runLaunch({nodeVersion: process.versions.node, npmVersion,
-    commit: get('git', ['rev-parse', 'HEAD']), acceptance, commands,
+    commit: fixedCheckoutCommit(root), acceptance, commands,
     run: ({command, args}) => spawnSync(command, args, {cwd: root, stdio: 'inherit'}).status});
   console.log(JSON.stringify(result, null, 2));
   process.exitCode = result.status === 'PASS' ? 0 : result.status === 'FAIL' ? 1 : 2;

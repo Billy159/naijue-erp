@@ -19,7 +19,7 @@
 
 `npm run check:launch -- --plan` 列出有限首发检查，不执行或代表通过；默认 `npm run check:launch` 实行正式 API 类型、当前 replica runtime、import-v3、release、原键结果及原 check:all，保留所有原有脚本。根 check:all 已包含 check/typecheck/build/smoke/npm test，不再重复调用这些包装。
 
-最终候选使用 `npm run check:launch -- --acceptance /绝对路径/现有验收汇总.json`。汇总由原主控沿现有 G01 记录提供，形态为 `{candidateCommit, entries:[{taskId,status:"PASS",level:"ACTUAL_REQUIRED_SCOPE",receipt:{path,bytes,sha256}}]}`；任务 ID 由 runner 的 requiredAcceptance 明确枚举，B12 由本 runner 自身及 ROOT_CLEAN_INSTALL 证据覆盖，不循环要求一个尚不存在的 B12 PASS。引用必须是原有效回执，不能自行生成“实际通过”标签。runner 只检查声明范围、固定版本和文件完整性，不替代原独立验收对业务及性能证据的判断。
+最终候选在自身干净 Git 根（新建固定提交 clone／checkout）使用 `npm run check:launch -- --acceptance /绝对路径/现有验收汇总.json`。导出目录仍可做定向检查，但不能借父仓库 HEAD 充当完整门禁的候选身份；暂存或未暂存的跟踪文件变化也会阻断。汇总由原主控沿现有 G01 记录提供，形态为 `{candidateCommit, entries:[{taskId,status:"PASS",level:"ACTUAL_REQUIRED_SCOPE",receipt:{path,bytes,sha256}}]}`；任务 ID 由 runner 的 requiredAcceptance 明确枚举，B12 由本 runner 自身及 ROOT_CLEAN_INSTALL 证据覆盖，不循环要求一个尚不存在的 B12 PASS。引用必须是原有效回执，不能自行生成“实际通过”标签。runner 只检查声明范围、固定版本和文件完整性，不替代原独立验收对业务及性能证据的判断。
 
 工具版本不符、缺当前候选的真实 PG／浏览器／代理／性能／Demo／架构／根干净安装证据时返回 BLOCKED_ENV（退出2）；本地命令失败返回 FAIL（退出1）。只有全部必过项目通过才退出0。源码、模拟检查、旧版本回执不能代替 ACTUAL_REQUIRED_SCOPE，当前前端和其余未完成项继续如实阻断首发。
 
