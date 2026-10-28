@@ -1,3 +1,5 @@
+SOURCE924：采用原QB有限结论，不重技术验收：920旧版F01保留NEED_FIX；923错nativeId修复2项定向复验PASS并关闭F01；922metadata6/host7及strict两根通过，V3SQL字节不变；权限候选189/957仅静态一致性PASS，非实际充分性或PG/PUBLISH通过。准确QA21551准备角色创建+170基础权限+19表MAINTAIN（含维护能力非lock-only）的清单已提交一次人批；仅该分支等待，不自动导入/发布，normal90原问题不重问。T45原准确QA备份在途，Demo固定normal34对比继续。
+
 SOURCE923：D3已交回SOURCE920-F01两叶定向修复，原prepared.header.id与独立native.nativeId准确对比，不重建ID。C核新pins一致，原D3新文件10/10自检PASS；等待原QB仅复验F01，不自行改独立PASS。922及原权限候选继续独立审，无PG/权限/导入/生产变化。
 
 原QB已由用户打开并成功恢复接包，正在唯一有限审SOURCE920/922及D1候选。已实证SOURCE920-F01 P2：SALES_HEADER忽略已审nativeId，与原prepared.header.id可不等仍授权；交原D3仅两叶修复及错ID拒绝，未假通过。D1 SOURCE922-DELTA引用更新已交回，原权限/19MAINTAIN/人批/撤权不变。T45接准确QA21551同版本备份去重，必要时只读私有pg_dump及目录检查；不restore/授权/生产。

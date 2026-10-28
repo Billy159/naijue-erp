@@ -7672,7 +7672,7 @@
     },
     "QA22SourceProvider918": {
       "owner": "D3",
-      "status": "SOURCE923_F01_FIXED_D3_HANDED_BACK_ORIGINAL_QB_RETEST_PENDING",
+      "status": "SOURCE923_HANDED_BACK_F01_QB_LIMITED_PASS_NO_ACTIVE_WRITER",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "tests/integration/current-runtime26-source-provider.mjs",
@@ -7709,7 +7709,7 @@
     },
     "PreparationXminCatalog922": {
       "owner": "C",
-      "status": "SOURCE922_FIXED_LOCAL_CHECKS_PASSED_ORIGINAL_QB_PENDING",
+      "status": "SOURCE922_QB_LIMITED_PASS_NO_ACTIVE_WRITER",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "adapters/postgres/src/native-import-accounting-capability.ts",
