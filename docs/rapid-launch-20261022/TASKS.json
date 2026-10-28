@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-28T11:49:13.840939+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "89ae916178716175dbf5b9b70181f485cc0b51b8",
+  "lastVerifiedRemoteCommit": "58d106c0418190fb00a6504ca5f3631f6d15f90e",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18272,6 +18272,15 @@
       "P04fix": "D1controltool19764/f5a76460/test7135/670c9ff7 strictdeepfullrowmultiset only;originalQBdeltaactive;no217replay",
       "v23": "SOURCE858nine-rolepreparation18838/cfac8c0cf59e4688516ed27fdf9fb6f894b51ae98274c63b979f1327aca6649d;actualpositivePGseed/runtimeclosure/ACL/SLOstillnotdone",
       "next": "Adopt exactQBcontrolfix then Cread newoncecarrier;H04fixedsourceQA and remainingfullcandidate work;noformalaction"
+    },
+    "source861": {
+      "parent": "58d106c0418190fb00a6504ca5f3631f6d15f90e",
+      "acceptedQB860": "3957/19d8d3483979d117169d691e875fc6f2411b2835169da8436bd5f20ea0e4380a correcteddirectparent6661a010/sourcebaseline89ae9161;3targetedPASS/inertPython3selectorssame;notwholeH04",
+      "acceptedP04tool": "4533/d4815194c8e64c5cb3c101e4532a5dc19369ef5531c347f75fea1fd3cb787fa8 twoleaf2purePASS;actual221cause separatelyadopted",
+      "actual222": "COMPLETED0/17.170323418s RESULT7846/accb781f225d022187b2887e345848109a5192ff1069c5a48115ce1b0cb69781 originalfullprefix+HEADERonwardreturned;PUBLISH89d8e3cb/keyB07-SYN-APPROVED-V1-PUBLISH/hashcf24b8c0 COMMITTED,16400/schema19/IMPORTEDseq2cursor5;STAGECHUNKsame/client0",
+      "notTested": "NormalQAlogin/nonowner/P04revision/realperformance,actualnewERPbuild/proxy/H04whole/fullfrontend/formaldeploy",
+      "next": "D1 existingP04fixeddriver upgrade sequence+accurate combined B14/P04nonowner permissiondelta proposal;T45 completefixed858modulegraph code-only preparation",
+      "authorization": "Source/approvedsyntheticisolation only;noR1/ACL/201replay/productionmigration/deploy"
     }
   }
 }

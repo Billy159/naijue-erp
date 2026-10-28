@@ -7209,10 +7209,11 @@
     },
     "currentExecution859": {
       "C": "H04 sharedrelease exact8sourcefiles fixed860;records uniqueC;no frontend writer",
-      "T45": "219done;217FAILEDpreserved,no replay;v23fixed858nine-rolepreparationonly",
-      "D1": "Recovery controltool/testfrozenf5a76460/670c9ff7;originalQBdeltaactive;noSQL/PG/writer",
+      "T45": "219guards+222originalsyntheticpublication done;v23fixed858 actualcompletecodeclosure preparationonly next",
+      "D1": "Recoverytool frozen;existingP04upgrade sequence/normalQA+B14nonowner permissions exactproposal inoriginalcontrolrecords only,noPG/ACL/server",
       "frontend": "Original Terra-medium fixednormal34 readonlyfullcomparison,otherUI repairs waitfullreport",
-      "boundary": "No newteam/noACL/noR1/noformal migration/deploy/no201replay"
+      "boundary": "No newteam/noACL/noR1/noformal migration/deploy/no201replay",
+      "QB": "Rawdecimal/H04entrydeltaaccepted;idleuntilactualnewdelivery,norepeatchecks"
     }
   }
 }
