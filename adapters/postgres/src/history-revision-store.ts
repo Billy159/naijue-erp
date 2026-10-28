@@ -240,17 +240,25 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
             WHERE header_id=$1::uuid AND version=$2::integer AND revision_id=$3::uuid`,
           [command.documentId,plan.fromVersion,before.previousRevisionId,plan.toVersion,revisionId,...headAmounts]);
         must(head.rowCount===1,'VERSION_CONFLICT');
-        for(const patch of command.lines) {
-          const l=afterLines.get(patch.lineId)!;
+        // One statement per changed family; untouched rows remain untouched.
+        // Original row guards still validate each resulting projection.
+        if(command.lines.length) {
+          const rows=command.lines.map(patch=>afterLines.get(patch.lineId)!);
           const write=await query(`/* history-revise:put-line */ INSERT INTO naijue_erp.history_${family}_line_effective
             (line_id,revision_id,quantity${command.kind==='sales'?',deal_price,line_amount,allocated_discount':''})
-            VALUES($1::uuid,$2::uuid,$3::bigint${command.kind==='sales'?',$4::numeric,$5::numeric,$6::numeric':''})
+            SELECT x.line_id,$2::uuid,x.quantity${command.kind==='sales'?',x.deal_price,x.line_amount,x.allocated_discount':''}
+            FROM unnest($1::uuid[],$3::bigint[]${command.kind==='sales'?',$4::numeric[],$5::numeric[],$6::numeric[]':''})
+              AS x(line_id,quantity${command.kind==='sales'?',deal_price,line_amount,allocated_discount':''})
             ON CONFLICT(line_id) DO UPDATE SET revision_id=EXCLUDED.revision_id,quantity=EXCLUDED.quantity${command.kind==='sales'?',deal_price=EXCLUDED.deal_price,line_amount=EXCLUDED.line_amount,allocated_discount=EXCLUDED.allocated_discount':''}`,
-          [l.lineId,revisionId,l.quantity,...(command.kind==='sales'?[l.dealPrice,l.lineAmount,l.allocatedDiscount]:[])]);must(write.rowCount===1);
+          [rows.map(l=>l.lineId),revisionId,rows.map(l=>l.quantity),...(command.kind==='sales'?[rows.map(l=>l.dealPrice),rows.map(l=>l.lineAmount),rows.map(l=>l.allocatedDiscount)]:[])]);
+          must(write.rowCount===rows.length);
         }
-        for(const patch of command.settlements) {
+        if(command.settlements.length) {
+          const rows=command.settlements;
           const write=await query(`/* history-revise:put-settlement */ INSERT INTO naijue_erp.history_sales_settlement_effective(settlement_id,revision_id,amount)
-            VALUES($1::uuid,$2::uuid,$3::numeric) ON CONFLICT(settlement_id) DO UPDATE SET revision_id=EXCLUDED.revision_id,amount=EXCLUDED.amount`,[patch.settlementId,revisionId,patch.amount]);must(write.rowCount===1);
+            SELECT x.settlement_id,$2::uuid,x.amount FROM unnest($1::uuid[],$3::numeric[]) AS x(settlement_id,amount)
+            ON CONFLICT(settlement_id) DO UPDATE SET revision_id=EXCLUDED.revision_id,amount=EXCLUDED.amount`,
+          [rows.map(r=>r.settlementId),revisionId,rows.map(r=>r.amount)]);must(write.rowCount===rows.length);
         }
         // The existing borrowed posting leaf also verifies through its private query view.
         // Always prove the captured original lease; never approve a supplied structural copy.

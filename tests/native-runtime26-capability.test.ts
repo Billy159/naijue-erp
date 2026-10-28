@@ -458,6 +458,42 @@ test("v15 category original context unwraps the real managed lease and rechecks 
 });
 
 import {NATIVE_RUNTIME26_V16_FROM_V14_METADATA_PROBE,NATIVE_RUNTIME26_V16_FROM_V15_METADATA_PROBE} from '../adapters/postgres/src/native-import-accounting-capability.ts';
+import {NATIVE_RUNTIME26_V22_METADATA_PROBE,NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE} from '../adapters/postgres/src/native-import-accounting-capability.ts';
+
+test('HV2 responsible-null metadata selects the exact successor and retains full v22 purposes',async()=>{
+ const old="('history_revision_not_enabled','1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c')";
+ const sql=readFileSync(new URL('../adapters/postgres/patches/0026-history-responsible-null-successor.sql',import.meta.url),'utf8');
+ const body=sql.split('$nullable$')[1]!;
+ assert.equal(NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE,
+   NATIVE_RUNTIME26_V22_METADATA_PROBE.replace(old,`('history_revision_not_enabled','${hash(body)}')`));
+ assert.ok(NATIVE_RUNTIME26_V22_METADATA_PROBE.includes(old));
+ assert.ok(NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE.includes("jsonb_array_length(manifest->'routines')=131"));
+ for(const [patch,probe] of [
+  ['26_hv2_responsible_null_from_v22',NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE],
+  ['26_v22_staged_prefix_bind_from_v20',NATIVE_RUNTIME26_V22_METADATA_PROBE],
+ ] as const){
+  const f=fixture();try{
+   const calls:string[]=[];
+   const pool={async connect(){return{async query(sql:string){calls.push(sql);assert.equal(sql,probe);return{rows:[observation()],rowCount:1};},release(){}};}};
+   const issuer=await createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,patchLevel:patch},purposes:['IMPORT_STAGE','HISTORY_REVISION','PRODUCT_MAINTENANCE']}));
+   assert.ok(issuer.categoryOrderWrite);
+   const client=await issuer.pool.connect();
+   await issuer.runtime26.assertReady(client,'IMPORT_STAGE');await issuer.runtime26.assertReady(client,'HISTORY_REVISION');client.release();
+   assert.equal(calls.length,4);
+  }finally{f.cleanup();}
+ }
+});
+
+test('HV2 responsible-null metadata rejects stale or mismatched successor evidence',async()=>{
+ for(const row of [{...observation(),source_routines_match:false},{...observation(),catalog_sha256:'f'.repeat(64)}]){
+  const f=fixture();try{
+   let releases=0;
+   const pool={async connect(){return{async query(sql:string){assert.equal(sql,NATIVE_RUNTIME26_HV2_RESPONSIBLE_NULL_FROM_V22_METADATA_PROBE);return{rows:[row],rowCount:1};},release(){releases++;}};}};
+   await assert.rejects(createNativeRuntime26Issuer(pool,f.options({...f.review,catalog:{...f.review.catalog,patchLevel:'26_hv2_responsible_null_from_v22'},purposes:['HISTORY_REVISION']})),{code:'NATIVE_RUNTIME26_NOT_READY'});
+   assert.equal(releases,1);
+  }finally{f.cleanup();}
+ }
+});
 
 test("v16 HISTORY issuer requires exact current successor and preserves base CORE and category fingerprints",async()=>{
  for(const [patch,probe,count,category] of [

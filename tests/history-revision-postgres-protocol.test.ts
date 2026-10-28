@@ -13,7 +13,7 @@ const actor={accountId:entityId('account',id(1)),hallId:entityId('hall',id(2))};
 const now='2026-10-23T12:00:00.000000Z';
 const command=(kind:'sales'|'transfers'='sales'):HistoryRevisionCommand=>({kind,documentId:id(10),expectedVersion:1,
   requestKey:'history-numeric-original-key',reason:'SYNTHETIC numeric correction',lines:[{lineId:id(11),quantity:'3'}],totals:null,settlements:[]});
-interface Options { headWriteCount?:number; kind?:'sales'|'transfers'; sourceStatus?:string; revoked?:boolean; foreignHall?:boolean; published?:boolean;
+interface Options { projectionWriteCount?:number; multiRows?:boolean; headWriteCount?:number; kind?:'sales'|'transfers'; sourceStatus?:string; revoked?:boolean; foreignHall?:boolean; published?:boolean;
   date?:string|null; receipt?:{command:HistoryRevisionCommand;result:HistoryRevisionReceipt}; failure?:string; headVersion?:number; responsible?:string|null; missingResponsible?:boolean; effectiveDate?:string|null; missingStaff?:boolean; proposedEnabled?:boolean; proposedStock?:boolean; transferScopeResults?:readonly (boolean|null|undefined)[]; effectiveFrom?:string; effectiveTo?:string }
 function protocol(options:Options={}) {
   const kind=options.kind??'sales', calls:{sql:string;values:unknown[]}[]=[],releases:unknown[]=[],proofClients:unknown[]=[];
@@ -27,7 +27,7 @@ function protocol(options:Options={}) {
     else if(sql.includes('history-revise:source'))rows=[{id:id(10),batch_id:id(20),version:1,source_status:options.sourceStatus??'APPROVED',
       business_date:options.date===undefined?'2020-01-02':options.date,hall_id:options.foreignHall?id(900):actor.hallId,warehouse_id:id(30),
       from_warehouse_id:id(30),to_warehouse_id:id(31),created_role_source:'SALESPERSON',created_hall_id:actor.hallId,
-      created_hall_provenance:'ORIGINAL',created_by_source_key:'SYNTHETIC old staff',line_count:1,settlement_count:kind==='sales'?1:0,
+      created_hall_provenance:'ORIGINAL',created_by_source_key:'SYNTHETIC old staff',line_count:options.multiRows?2:1,settlement_count:kind==='sales'?1:0,
       gross_amount:'2.50',order_discount:'0.00',net_due:'2.50',document_manifest_hash:'a'.repeat(64),published_operation_id:id(21),published:options.published!==false}];
     else if(sql.includes('history-revise:identity'))rows=[{id:actor.accountId,staff_id:id(3),login_enabled:!options.revoked,role:'SALESPERSON',employment_status:'在职',hall_id:actor.hallId}];
     else if(sql.includes('history-revise:hall'))rows=[{id:actor.hallId,enabled:true}];
@@ -38,13 +38,14 @@ function protocol(options:Options={}) {
     else if(sql.includes('history-revise:head-chain'))rows=[{id:id(90),document_kind:kind==='sales'?'SALES':'TRANSFER',sales_id:kind==='sales'?id(10):null,
       transfer_id:kind==='transfers'?id(10):null,from_version:(options.headVersion??2)-1,to_version:options.headVersion,operation_id:id(91),after_facts:{businessDate:options.effectiveDate??(options.date===undefined?'2020-01-02':options.date),fromWarehouseId:options.effectiveFrom??id(30),toWarehouseId:options.effectiveTo??id(31),...(options.missingResponsible?{}:{responsibleStaffId:options.responsible??null})}}];
     else if(sql.includes('history-revise:head'))rows=options.headVersion?[{header_id:id(10),version:options.headVersion,revision_id:id(90),gross_amount:'2.50',order_discount:'0.00',net_due:'2.50'}]:[];
-    else if(sql.includes('history-revise:lines'))rows=[{id:id(11),sku_id:id(12),quantity:'2',deal_price:'1.25',line_amount:'2.50',allocated_discount:null,effective_valid:true}];
+    else if(sql.includes('history-revise:lines'))rows=[{id:id(11),sku_id:id(12),quantity:'2',deal_price:'1.25',line_amount:'2.50',allocated_discount:null,effective_valid:true},...(options.multiRows?[{id:id(14),sku_id:id(15),quantity:'2',deal_price:'1.25',line_amount:'2.50',allocated_discount:null,effective_valid:true}]:[])];
     else if(sql.includes('history-revise:settlements'))rows=[{id:id(13),direction:'RECEIVE',amount:'2.50',effective_valid:true}];
     else if(sql.includes('history-revise:put-head')){
       // Existing installed BEFORE INSERT guard runs before an ON CONFLICT UPDATE.
       if(options.headVersion&&sql.includes('INSERT INTO'))throw Object.assign(Error('SYNTHETIC first-head insert rejected for successor revision'),{code:'40001'});
       rowCount=options.headWriteCount??1;
     }
+    else if(sql.includes('history-revise:put-line')||sql.includes('history-revise:put-settlement'))rowCount=options.projectionWriteCount??(values[0] as string[]).length;
     else if(sql.startsWith('SELECT naijue_erp.inventory_key_lock')){}
     else if(sql.includes('FOR UPDATE OF b'))rows=(values[0] as string[]).map((w,i)=>({warehouse_id:w,sku_id:(values[1] as string[])[i],quantity:i===0?'10':'7',version:4,last_operation_id:null,updated_at:now}));
     else if(sql.includes('history-revise:revision')||sql.includes('history-revise:put-')||sql.includes('history-revise:audit')||sql.includes('history-revise:complete')||sql.includes('history-posting:ledger')||sql.startsWith('UPDATE naijue_erp.inventory_balance')){}
@@ -201,4 +202,20 @@ test('successor current head does not turn original-key receipt replay into anot
  const q=command(),receipt:HistoryRevisionReceipt={operationId:id(60),dataset:'HISTORY',kind:'sales',documentId:id(10),revisionId:id(61),version:2,ledgerEntryIds:[]};
  const p=protocol({sourceStatus:'DRAFT',headVersion:2,receipt:{command:q,result:receipt}});assert.deepEqual(await p.run(q),receipt);
  assert.equal(writes(p).length,0);assert.equal(p.calls.filter(c=>c.sql.includes('history-revise:put-head')).length,0);assert.equal(p.calls.at(-1)!.sql,'COMMIT');
+});
+
+test('HV2-P04 batches only selected line projections preserving order and exact signed quantity strings',async()=>{
+ const p=protocol({kind:'transfers',sourceStatus:'DRAFT',multiRows:true});
+ const q={...command('transfers'),lines:[{lineId:id(14),quantity:'-3'},{lineId:id(11),quantity:'0'}]};
+ const result=await p.run(q);assert.deepEqual(result.ledgerEntryIds,[]);
+ const writes=p.calls.filter(c=>c.sql.includes('history-revise:put-line'));
+ assert.equal(writes.length,1);assert.match(writes[0]!.sql,/FROM unnest\(\$1::uuid\[\],\$3::bigint\[\]\)/);
+ assert.deepEqual(writes[0]!.values,[[id(14),id(11)],id(101),['-3','0']]);
+ assert.equal(p.calls.filter(c=>c.sql.includes('history-revise:put-settlement')).length,0);
+ assert.equal(p.calls.at(-1)!.sql,'COMMIT');assert.equal(p.connections(),1);
+});
+test('HV2-P04 incomplete batch write rolls back original transaction without audit or receipt',async()=>{
+ const p=protocol({kind:'transfers',sourceStatus:'DRAFT',multiRows:true,projectionWriteCount:1});
+ await assert.rejects(p.run({...command('transfers'),lines:[{lineId:id(14),quantity:'-3'},{lineId:id(11),quantity:'0'}]}));
+ assert.equal(p.calls.at(-1)!.sql,'ROLLBACK');assert.equal(p.calls.filter(c=>c.sql.includes('history-revise:audit')||c.sql.includes('history-revise:complete')).length,0);
 });

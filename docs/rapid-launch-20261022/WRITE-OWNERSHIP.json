@@ -6795,16 +6795,14 @@
           "scripts/release/build-production.mjs",
           "scripts/release/pack.test.mjs"
         ],
-        "state": "OPEN_LOCAL_SOURCE_AND_FAKE_OR_PURE_RENDER_ONLY;NO_REAL_NGINX_DOCKER_OR_PG"
+        "state": "SOURCE839_FIXED6_OWNER_TARGETEDPASS;FINAL_PACK_HELPERPINS_REALPROXY_NOT_DONE"
       },
       "D1": {
         "id": "HV2-B07",
         "files": [
-          "packages/application/src/history-revision-contracts.ts",
-          "packages/application/src/history-revision-service.ts",
-          "adapters/postgres/src/history-revision-store.ts",
           "adapters/postgres/patches/0026-history-responsible-null-successor.sql",
           "tests/history-responsible-null-successor.test.ts",
+          "adapters/postgres/src/history-revision-store.ts",
           "tests/history-revision-postgres-protocol.test.ts"
         ],
         "readOnly": [
@@ -6813,15 +6811,63 @@
           "apps/api/src/history-revision-http.ts"
         ],
         "proposalOnly": [],
-        "state": "OPEN_SQL_SOURCE_ONLY_EXACT_PARENT1e69497;NO_PG_ACL_OR_EXECUTION;CURRENT_NULL_APP_CORRECT_KEEP",
+        "state": "HANDED_BACK4_FIXED_SOURCE_LOCAL18PASS;NO_PG;APPLICATION_ALREADY_CORRECT",
         "currentParentEvidence": "200 actual current-r1-v20-catalog.json routines[60] body_sha256/source=1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c; currentcanonical1050b2aa;retained snapshot not freshPG",
-        "next": "HV2-P04 history-revision-store and sameprotocoltest batch UNNEST per family,original transaction/rowguards intact;no newSQL successor until exactCregistration"
+        "next": "204minimalcolumnACL/P04setguard controlproposals only,noCmetadatawrite"
+      },
+      "C_METADATA": {
+        "id": "HV2-B07_EXACT_PROFILE",
+        "files": [
+          "adapters/postgres/src/native-import-accounting-capability.ts",
+          "tests/native-runtime26-capability.test.ts"
+        ],
+        "state": "SOURCE_READY2TARGETEDPASS_STRICT_TSC_PASS;NO_PG_OR_CATALOG_AUTHORITY_SYNTHESIS",
+        "profile": "26_hv2_responsible_null_from_v22",
+        "bodyParent": "1e69497d7023ab61fdac15e358707c9b9b73b7f3b281a01c306c2fd25d3c985c",
+        "bodyNew": "581a44ad13d184d594731b7c9ded219a3933fdb8a6c58f2ed63463fdc795ac4f",
+        "boundary": "Oldprofiles unchanged;newprofile requires fresh actualcatalog and independentreview;notpermissiongrant"
+      },
+      "D2": {
+        "id": "HV2-B14",
+        "files": [
+          "packages/application/src/catalogue-maintenance-service.ts",
+          "adapters/postgres/src/catalogue-maintenance-store.ts",
+          "apps/api/src/catalogue-maintenance-http.ts",
+          "tests/catalogue-maintenance.test.ts",
+          "tests/catalogue-maintenance-postgres-protocol.test.ts",
+          "apps/api/src/catalogue-maintenance-http.test.ts",
+          "tests/category-reparent-launch-block.test.ts"
+        ],
+        "readOnly": [
+          "adapters/postgres/patches/0026-category-reorder-undo.sql",
+          "adapters/postgres/src/native-import-accounting-capability.ts",
+          "adapters/postgres/src/inventory-query-reader.ts"
+        ],
+        "state": "REGISTERED_SOURCE_ONLY_NEW_SQL_CONSTRAINT_PROPOSAL_BEFORE_IMPLEMENTATION",
+        "next": "HV2-B09/B10 source sameowner after firstpackage;original4SAVEQA stillwaitactualenvironment"
+      },
+      "D3": {
+        "id": "HV2-B15",
+        "files": [
+          "scripts/import-v3/native-transfer-line-source26.mjs",
+          "scripts/import-v3/native-transfer-line-source26.test.mjs",
+          "scripts/import-v3/production-source-provider26.test.mjs"
+        ],
+        "readOnly": [
+          "scripts/import-v3/production-source-provider26.mjs",
+          "scripts/import-v2/authorized-history-closure-reader.mjs",
+          "packages/application/src/history-storage-contract.ts",
+          "packages/application/src/history-typed-closure.ts"
+        ],
+        "state": "REGISTERED_SOURCE_AND_SYNTHETIC_COMBINATION_ONLY_NO_IMPORT_OR_PG",
+        "next": "PF02 sameoriginalsourceowner,precisecontractdelta first;B08/P03 laterquerygroup"
       }
     },
     "protectedTrackedWip": [
       "tests/product-query-postgres-protocol.test.ts"
     ],
     "oldFrontRoles": "F1-F4 latest turns completed and files released/idle;current human supersedes historical sourceWriteEnabled",
-    "exclusions": "No one writes frozen Demo/oldproject/currentWIP unassigned/publiccontracts/rootconfig/lock or SQL/runtimeprobes without exactCregistration;T45 sourcelease excludes manifest.mjs pending onefactsource H04 handoff."
+    "exclusions": "No one writes frozen Demo/oldproject/currentWIP unassigned/publiccontracts/rootconfig/lock or SQL/runtimeprobes without exactCregistration;T45 sourcelease excludes manifest.mjs pending onefactsource H04 handoff.",
+    "updatedAtUtc": "2026-10-28T08:18:57.906347+00:00"
   }
 }
