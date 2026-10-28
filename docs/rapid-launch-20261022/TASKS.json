@@ -17258,7 +17258,7 @@
           "HV2-P02"
         ],
         "owner": "D1",
-        "state": "SOURCE916_SHARED_VOLUME_COMPONENT_QB_NARROW_PASS;ACTUAL247_PARTIAL;UID10001_PROBE_FEASIBILITY_ACTIVE;WINDOW_BUDGET_REAL_BENCHMARK_PENDING",
+        "state": "SOURCE916_COMPONENT_QB_PASS;ACTUAL247_249_PARTIAL;254_RO_MOUNT_FAILED;256_BACKUP_PASS_NOT_RESTORE;ACTUAL_PROBE_WINDOW_BENCHMARK_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/A02.txt"
       },
@@ -17380,7 +17380,7 @@
           "HV2-G00"
         ],
         "owner": "D2",
-        "state": "SOURCE842_QB_CLI_SOURCE_PROTOCOL_PASS_ONLY;REAL_KEY_LIFECYCLE_NOT_RUN",
+        "state": "SOURCE842_CLI_QB_SCOPED_PASS;D1_SINGLE_REAL_ENTRY_RUNNER926_ACTIVE;ACTUAL_KEY_RESCUE_PG_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B10.txt"
       },
@@ -19250,6 +19250,16 @@
     "source925": {
       "scope": "Adopt originalT45 task-level backup256 and safe metadata257, no duplicate technical review or dump. Keep restore/permissions/production unproven.",
       "githubPreviousVerified": "28cdc4d39a7ffcaedbc116eec008d16878363977"
+    },
+    "B10RealEntry926": {
+      "owner": "D1",
+      "model": "gpt-6.1-sol/medium",
+      "status": "DISPATCHED_NEW_SINGLE_INTEGRATION_TEST_LEAF_ONLY",
+      "files": [
+        "tests/integration/staff-credential-production-entry.test.ts"
+      ],
+      "scope": "Existing B10 card missing exact real-PG host integration runner. D1 host test only, original D2 implementation/key/CLI five leaves read-only. Reuse actual issuer/authentication/maintenance/fixture; no owner bypass/mockproof/directseed/key provisioning/PG/roleDDL/GRANT/server/data deletion. Current full source publish prerequisites remain.",
+      "next": "Check equivalent existing runner once; if absent implement actual original entry tests and narrow type/no-environment checks. Hand back exact source, actual PG remains separately authorized/pending."
     }
   }
 }

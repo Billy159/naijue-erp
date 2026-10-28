@@ -7740,6 +7740,16 @@
           "sha256": "f21cfb3247866135cd14cd868fd7389cab4668bc1fc9dcf5712fda7030fe9467"
         }
       ]
+    },
+    "B10RealEntry926": {
+      "owner": "D1",
+      "model": "gpt-6.1-sol/medium",
+      "status": "DISPATCHED_NEW_SINGLE_INTEGRATION_TEST_LEAF_ONLY",
+      "files": [
+        "tests/integration/staff-credential-production-entry.test.ts"
+      ],
+      "scope": "Existing B10 card missing exact real-PG host integration runner. D1 host test only, original D2 implementation/key/CLI five leaves read-only. Reuse actual issuer/authentication/maintenance/fixture; no owner bypass/mockproof/directseed/key provisioning/PG/roleDDL/GRANT/server/data deletion. Current full source publish prerequisites remain.",
+      "next": "Check equivalent existing runner once; if absent implement actual original entry tests and narrow type/no-environment checks. Hand back exact source, actual PG remains separately authorized/pending."
     }
   }
 }
