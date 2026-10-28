@@ -7299,6 +7299,22 @@
       ],
       "configOwner": "C",
       "boundary": "Contentidenticalrename+imports suffixonly;noDemo/UI/contract/testassertionchanges"
+    },
+    "H04B10PrivateCredentialMount875": {
+      "owner": "D2",
+      "status": "C_EXPLICIT_EXACT_LEAF_HANDOFF_ACTIVE",
+      "files": [
+        "scripts/release/deploy-candidate.py",
+        "scripts/release/test_stop_full_lifecycle.py"
+      ],
+      "scope": "ExistingFullstaffcredentials privatefile reference/closedselector/read-onlymount;no actualkeymaterial/server/PG/ACL",
+      "CReserved": [
+        "config/release-contract.json",
+        "scripts/release/generate-release-contract.mjs",
+        "scripts/release/boot-entry.py",
+        "scripts/release/manifest.mjs"
+      ],
+      "model": "gpt-6.1-sol/medium"
     }
   }
 }
