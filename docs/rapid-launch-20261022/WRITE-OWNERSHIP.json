@@ -7541,7 +7541,7 @@
     },
     "Current897Fixture899": {
       "owner": "D3",
-      "status": "HANDED_BACK_SOURCE903_FROZEN_FOR_QB",
+      "status": "ACTIVE_SOURCE903_TWO_FACTORY_CONSUMER_FIX_SAME_D3_LEAF",
       "model": "gpt-6.1-sol/medium",
       "files": [
         "tests/integration/current-runtime26-sales-fixture.ts"

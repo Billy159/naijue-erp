@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-28T18:02:41.749681+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "06d3f98260ebfddb740ab5ff8808839619cb53a3",
+  "lastVerifiedRemoteCommit": "e5f1d4c9b90b4fd55a56d53ca346365e2e6ae69c",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -18844,15 +18844,20 @@
     },
     "Current897Fixture899": {
       "owner": "D3",
-      "status": "SOURCE903_SINGLE_LEAF_DELIVERED_QB_NARROW_REVIEW_PENDING_NO_REAL_PG",
+      "status": "SOURCE903_ORIGINAL_FACTORY_TWO_COUNTEREXAMPLES_D3_TARGETED_FIX_ACTIVE",
       "file": "tests/integration/current-runtime26-sales-fixture.ts",
       "target": "naijue_erp_test_hv2_qa897_20261029_01",
       "scope": "Reuse original current26 import+maintained contracts; exact synthetic nonnull hall actor/live refs/lawful missingSKU tuple; no oldschema11/P04guard relaxation/mockproof/direct table seed",
-      "next": "Original QB scoped fixed source review; T45 private genuine source49 packet/independent review and exact runtime ACL before real fixture execution",
+      "next": "D3 same one leaf targeted successor, T45 exact original factory interfaces; no guard changes or initialization until accurate input ready",
       "sourceRequirement": "All synthetic49accounts(45direct+4planlinked), original CORE115(22halls+22warehouses+49staff+22customers); NULL importer separate from maintained nonnullhall LIVE actor; original guard unchanged; credentials/sourceauthority/grant private original factories, no real49 input reuse",
       "receipt": "reports/backend/rapid-launch-20261022/D3/P01-QA897-FIXTURE-RESULT.json",
       "sha256": "c03985580467cbd1a189a7cf2e2619e77617b7169d406befa3bf042e81964cb7",
-      "checks": "6 pure input cases/strict transitive closure/Node syntax pass;0PG"
+      "checks": "6 pure input cases/strict transitive closure/Node syntax pass;0PG",
+      "findings": [
+        "45 direct sourceAccountId/sourceEmployeeNativeId mismatch under original bootstrap exact mapping",
+        "Catalogue authorization accepts original reviewed source transformed fingerprints; reconstructed fixture chunk not proven equivalent"
+      ],
+      "qaDisposition": "Original QB903 narrow PASS preserved but not adopted for uncovered real factory consumer; supplemental review requested only two findings"
     },
     "Current897RuntimeACL900": {
       "owner": "D1",
