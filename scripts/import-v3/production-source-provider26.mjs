@@ -968,16 +968,19 @@ async function loadAdoptedPreparation26({fixed,binding,grant,byPhase,metadata,un
   ...(prefix22?{CONSUMER_RUN:'./run.mjs',CONSUMER_PREFIX_STORE:'../../adapters/postgres/src/inventory-cutoff-import-store.ts',
    CONSUMER_PREFIX_ISSUER:'../../adapters/postgres/src/native-import-accounting-capability.ts',
    CONSUMER_PREFIX_ACCOUNTING_READER:'../../adapters/postgres/src/native-import-record-accounting.ts',ADDED_PREFIX_ADAPTER:'../../adapters/postgres/src/native-core-staged-prefix-bind.ts'}:{}),
-  ...(nativeStage?{ADDED_NATIVE_STAGE_ADAPTER:'../../adapters/postgres/src/native-stage-continuation26.ts'}:{})};
+  ...(nativeStage?{ADDED_NATIVE_STAGE_ADAPTER:'../../adapters/postgres/src/native-stage-continuation26.ts',CONSUMER_TRANSFER_READER:'./native-transfer-line-source26.mjs'}:{})};
  const paths=new Set(),roles=new Set();
  for(const m of review.modules){
   need(exact(m,['role','baseline','current'])&&(m.role==='UNCHANGED'||Object.hasOwn(consumerPaths,m.role))&&!paths.has(m.current.path));
   if(prefix22&&m.current.path===fileURLToPath(new URL(consumerPaths.CONSUMER_PREFIX_ACCOUNTING_READER,import.meta.url)))need(m.role==='CONSUMER_PREFIX_ACCOUNTING_READER');
+  if(nativeStage&&m.current.path===fileURLToPath(new URL(consumerPaths.CONSUMER_TRANSFER_READER,import.meta.url)))need(m.role==='CONSUMER_TRANSFER_READER');
+  if(m.role==='CONSUMER_TRANSFER_READER')need(m.baseline?.bytes===35303&&m.baseline.sha256==='587128f1534b5466f0b627d9fc1a1bf513dcf3ee381a1acf9f5e4486cf6b73c9'
+   &&m.current.bytes===35873&&m.current.sha256==='f6989efc0478b3d12ef4bde3c2ce556a010a69d9a980191da9bcb204e6424bcd');
   paths.add(m.current.path);if(['ADDED_PREFIX_ADAPTER','ADDED_NATIVE_STAGE_ADAPTER'].includes(m.role))need(m.baseline===null);for(const ref of (['ADDED_PREFIX_ADAPTER','ADDED_NATIVE_STAGE_ADAPTER'].includes(m.role)?[m.current]:[m.baseline,m.current])){need(exact(ref,['path','bytes','sha256']));const before=await lstat(ref.path),bytes=await pinnedSmall(ref.path,ref.sha256);need(bytes.length===ref.bytes);const st=await lstat(ref.path);need(same(before,st));files.set(ref.path,{ref:structuredClone(ref),stat:st,physicalPath:ref.path});}
   if(m.role==='UNCHANGED')need(m.baseline.bytes===m.current.bytes&&m.baseline.sha256===m.current.sha256);
   else {need(!roles.has(m.role));roles.add(m.role);need(m.current.path===fileURLToPath(new URL(consumerPaths[m.role],import.meta.url)));}
  }
- need(roles.size===(nativeStage?8:prefix22?7:2));
+ need(roles.size===(nativeStage?9:prefix22?7:2));
  for(const name of ['../../packages/application/src/history-typed-closure.ts','../../packages/application/src/request-hash.ts','../../packages/application/src/native-import-record-accounting.ts','../import-v2/authorized-history-closure-reader.mjs','./prepare-native-bindings.mjs','./run.mjs']){
   const path=fileURLToPath(new URL(name,import.meta.url));need(review.modules.some(m=>m.role===(prefix22&&name==='./run.mjs'?'CONSUMER_RUN':'UNCHANGED')&&m.current.path===path));
  }

@@ -1254,6 +1254,18 @@ test('v23 missing registration and changed source commitments, preparation, bind
   const f=await nativeContinuationFixture23();mutate(f.progress);await assert.rejects(f.captured.onVerified(f.progress),/VERIFIED_CONTEXT/);await assert.rejects(f.registry.port.assertVerifiedContinuation(f.progress),/CLOSED/);
  }
 });
+// Reconstruct the exact original148 reader bytes from the already fixed B15
+// pair, so this fixture does not depend on private machine/server snapshots.
+async function transferReaderReview23(f){
+ const {readFile,writeFile}=await import('node:fs/promises'),{fileURLToPath}=await import('node:url'),{createHash}=await import('node:crypto'),sha=b=>createHash('sha256').update(b).digest('hex');
+ const path=fileURLToPath(new URL('./native-transfer-line-source26.mjs',import.meta.url)),current=await readFile(path);
+ const beforeScope="exact(scope,['batchId','fixedSourceNamespace','selectionSha256','authorizedPayloadHash','expectedCounts','expectedSourceEntityCounts'])&&exact(scope.expectedCounts,HISTORY_COUNT_KEYS)&&exact(scope.expectedSourceEntityCounts,HISTORY_CLOSURE_SOURCE_ENTITIES)&&[...Object.values(scope.expectedCounts),...Object.values(scope.expectedSourceEntityCounts)].every(n=>Number.isSafeInteger(n)&&!Object.is(n,-0)&&n>=0&&n<=2147483645)&&scope.expectedCounts.history_transfer_line===m.rows&&scope.expectedSourceEntityCounts.TRANSFER_LINE===m.rows&&";
+ const original=Buffer.from(current.toString('utf8').replace("import {HISTORY_COUNT_KEYS} from '../../packages/application/src/history-storage-contract.ts';\n",'').replace('historyClosureProjectionRow26,HISTORY_CLOSURE_SOURCE_ENTITIES','historyClosureProjectionRow26').replace(beforeScope,"exact(scope,['batchId','fixedSourceNamespace','selectionSha256','authorizedPayloadHash'])&&"));
+ assert.equal(current.length,35873);assert.equal(sha(current),'f6989efc0478b3d12ef4bde3c2ce556a010a69d9a980191da9bcb204e6424bcd');
+ assert.equal(original.length,35303);assert.equal(sha(original),'587128f1534b5466f0b627d9fc1a1bf513dcf3ee381a1acf9f5e4486cf6b73c9');
+ const baseline=await f.save('BASELINE-TRANSFER-READER.mjs',{});await writeFile(baseline.path,original);Object.assign(baseline,{bytes:original.length,sha256:sha(original)});
+ return {role:'CONSUMER_TRANSFER_READER',baseline,current:{path,bytes:current.length,sha256:sha(current)}};
+}
 test('v23 metadata is an exact dual-pinned opt-in and cannot substitute source membership or old seven-role closure',async t=>{
  const {readFile}=await import('node:fs/promises'),{fileURLToPath}=await import('node:url'),{createHash}=await import('node:crypto');
  for(const mode of ['unmatched-grant','wrong-version','old-module-closure','different-ref','missing-201-refs','self-supplied-members']){
@@ -1262,7 +1274,7 @@ test('v23 metadata is an exact dual-pinned opt-in and cannot substitute source m
   const preparation={inputDigest:scope.input.sha256,manifestSha256:ev.manifest.sha256,original148Refs:[scope.input,ev.manifest].map(({path,sha256})=>({path,sha256})),original201Refs:[]};
   if(!['unmatched-grant','old-module-closure'].includes(mode)){
    const review=JSON.parse(await readFile(f.adoptedFiles.review.path,'utf8')),path=fileURLToPath(new URL('../../adapters/postgres/src/native-stage-continuation26.ts',import.meta.url)),bytes=await readFile(path);
-   review.modules.push({role:'ADDED_NATIVE_STAGE_ADAPTER',baseline:null,current:{path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}});
+   review.modules.push({role:'ADDED_NATIVE_STAGE_ADAPTER',baseline:null,current:{path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}},await transferReaderReview23(f));
    ev.review=await f.save('NATIVE23-REVIEW.json',review);f.inputs.adoptedPreparation=f.grant.adoptedPreparation=await f.save('ADOPTED.json',ev);
   }
   const body={version:mode==='wrong-version'?'UNSUPPORTED':'NATIVE_STAGE_CONTINUATION_26_V1',preparation,...(mode==='self-supplied-members'?{members:[]}:{})};
@@ -1295,4 +1307,28 @@ test('v23 source registration rejects asynchronous progress mutation or close be
  const closed=await nativeContinuationFixture23({async onVerify(n){if(n===2){entered();await held;}}});
  const registration=closed.captured.onVerified(closed.progress);await reached;closed.registry.revoke();release();
  await assert.rejects(registration,/CLOSED/);await assert.rejects(closed.registry.port.assertVerifiedContinuation(closed.progress),/CLOSED/);
+});
+
+test('v23 ninth source consumer requires the exact B15 pair and rejects eight-role, UNCHANGED, path, baseline and duplicate substitutions',async t=>{
+ const {readFile,writeFile}=await import('node:fs/promises'),{fileURLToPath}=await import('node:url'),{createHash}=await import('node:crypto');
+ for(const mode of ['exact-nine','old-eight','pretend-unchanged','wrong-path','null-baseline','false-baseline','wrong-current-pin','duplicate']){
+  const f=await productionAuthorityFiles(t,{adopted:true,prefix22:true,initialSequence:2}),ev=f.adoptedFiles.evidenceValue,review=JSON.parse(await readFile(ev.review.path,'utf8'));
+  const path=fileURLToPath(new URL('../../adapters/postgres/src/native-stage-continuation26.ts',import.meta.url)),bytes=await readFile(path);
+  review.modules.push({role:'ADDED_NATIVE_STAGE_ADAPTER',baseline:null,current:{path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}});
+  if(mode!=='old-eight'){
+   const entry=await transferReaderReview23(f);
+   if(mode==='pretend-unchanged')entry.role='UNCHANGED';
+   if(mode==='wrong-path'){const wrong=await f.save('WRONG-CURRENT-TRANSFER.mjs',{});await writeFile(wrong.path,await readFile(entry.current.path));entry.current.path=wrong.path;}
+   if(mode==='null-baseline')entry.baseline=null;
+   if(mode==='false-baseline'){await writeFile(entry.baseline.path,await readFile(entry.current.path));entry.baseline.bytes=entry.current.bytes;entry.baseline.sha256=entry.current.sha256;}
+   if(mode==='wrong-current-pin')entry.current.sha256=digest('0');
+   review.modules.push(entry);if(mode==='duplicate')review.modules.push(structuredClone(entry));
+  }
+  ev.review=await f.save('NINTH-REVIEW.json',review);f.inputs.adoptedPreparation=f.grant.adoptedPreparation=await f.save('ADOPTED.json',ev);
+  // Accepted exact9 closure reaches the next existing metadata validation;
+  // this is neither an executable grant nor a fabricated original201 source.
+  f.inputs.nativeStageContinuation26=f.grant.nativeStageContinuation26=await f.save('NATIVE23.json',{version:'STOP_BEFORE_ORIGINAL_SOURCE',preparation:{}});
+  Object.assign(f.grantRef,await f.save('C-EXECUTION-AUTHORIZATION.json',f.grant));f.inputs.executionAuthorization=f.grantRef;Object.assign(f.inputRef,await f.save('INPUT.json',f.inputs));
+  await assert.rejects(f.open(),{code:mode==='exact-nine'?'PRODUCTION_NATIVE_PREFIX26_EVIDENCE':'PRODUCTION_ADOPTED26_EVIDENCE'});
+ }
 });
