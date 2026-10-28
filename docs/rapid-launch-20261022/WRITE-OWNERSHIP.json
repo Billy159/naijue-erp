@@ -7565,7 +7565,7 @@
     "H06Reclaim904": {
       "owner": "D2",
       "model": "gpt-6.1-sol/medium",
-      "status": "ASSIGNED_FINITE_IMPLEMENTATION_NO_ACTUAL_DELETION",
+      "status": "SOURCE907_THREE_LEAF_HANDED_BACK_FIXED_FOR_QB",
       "files": [
         "scripts/ops/resource-reclaim.mjs",
         "tests/resource-reclaim.test.ts",

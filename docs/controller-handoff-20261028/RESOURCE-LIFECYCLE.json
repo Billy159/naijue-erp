@@ -1,0 +1,114 @@
+{
+  "id": "H06Reclaim904",
+  "status": "FINITE_SOURCE_IMPLEMENTED_LOCAL_SYNTHETIC_CHECKS_PASS_REAL_EXECUTION_NOT_AUTHORIZED_OR_RUN",
+  "authority": "WRITE-OWNERSHIP.handoverV2.H06Reclaim904; C original V2 technical implementation delegation. Only exact isolated execution may later be approved; production cleanup requires separate explicit approval.",
+  "observedAt": "2026-10-28T18:20:28.177364+00:00",
+  "implementation": {
+    "source": "scripts/ops/resource-reclaim.mjs",
+    "exports": [
+      "reclaimResources",
+      "RECLAIM_IDENTITY_SQL",
+      "SESSION_ACCOUNT_SQL",
+      "SESSION_ROWS_SQL",
+      "SESSION_DELETE_SQL",
+      "MEDIA_REFERENCES_SQL"
+    ],
+    "test": "tests/resource-reclaim.test.ts",
+    "modes": [
+      "dry-run default",
+      "apply-isolated explicit"
+    ],
+    "cli": "node scripts/ops/resource-reclaim.mjs --config /absolute/owner-private/config.json [--apply-isolated]",
+    "cliMediaApply": "REFUSED REAL_OFFLINE_FENCE_UNAVAILABLE. CLI cannot invent a real all-writer fence. Media apply implementation is callable only through an original trusted T45 host that supplies and actually holds withOfflineFence. No user-provided true flag is accepted as fence or reference evidence.",
+    "requiredInput": [
+      "resource sessions|media",
+      "original explicit bounded-pool postgres configuration including target and acquisition/query/statement/disposal timeouts",
+      "expected exact database/role/databaseOid/postmasterStart",
+      "explicit canonical ISO cutoff <= actual database timestamp",
+      "explicit maxCandidates/maxRows/maxBytes/maxDurationMillis",
+      "fixed distinct accountIds OR fixed uploadId+manifestSha256 list with canonical private root/publicRoots",
+      "for apply: approval.id, scope ISOLATED, exact dry-run planHash; actual target name demo_8877_* and exact database identity must match. These input fields bind the authorized run, they do not manufacture human approval.",
+      "for media apply: separate existing owner-private recoveryRoot containing all exact original backup bytes; trusted operational withOfflineFence executor"
+    ],
+    "output": "Fixed reason/status, counts and planHash. Never outputs session token_hashes, raw driver errors, paths/manifests, actor/command payload or credentials. Partial media mutations count means confirmed successful unlink/rmdir calls only, not proof that a failed syscall had no effect."
+  },
+  "resources": [
+    {
+      "kind": "sessions",
+      "logicalExpiry": "Existing explicit authentication.sessionTtlSeconds + per-row expires_at/revoked_at/authVersion, no change. Actual production value not read or inferred from test900.",
+      "physicalScope": "ONLY explicit account candidates, revoked_at IS NOT NULL AND expires_at<=confirmed cutoff, excluding an unconditional original keeper row for every account. Unrevoked (even expired), unexpired and at least one original row per nonempty account are kept. No finite retention days selected.",
+      "guardsPreserved": {
+        "anySessionExists": "Every nonempty account keeps an original row; for any bootstrap account set, EXISTS auth_session WHERE account_id ANY(set) has the same truth value. No previously empty account is populated.",
+        "unrevokedSessionExists": "No revoked_at IS NULL row is removed, so account/staff credential predicates using that existence check are unchanged.",
+        "constraint": "No schema/trigger/function/ACL changes, no ledger/audit/receipt writes."
+      },
+      "locking": "Apply locks exact account+staff before its ordered session rows, same account-first boundary as original auth store. user_account.staff_id is UNIQUE in original schema. Bounded accounts sorted, bounded row result; excessive rows refuse the entire transaction. DELETE rechecks account, exact original hashes, revoked+expired predicates and retained keeper. Exact rowCount required.",
+      "apply": "One explicit bounded transaction and exact candidate plan hash. Cancellation/count mismatch rolls back; COMMIT failure returns OUTCOME_UNKNOWN, discards client, performs no fake rollback or automatic retry. Caller must reconcile original fixed run before deciding another invocation.",
+      "remainingPolicy": "C must select approved cutoff/retention semantics and finite limits. Eligibility is not authorization. This narrower scope intentionally cannot reclaim unrevoked expired rows or the final keeper."
+    },
+    {
+      "kind": "unindexed-media-orphans",
+      "expiry": "86400 seconds remains consume/attachment eligibility only. Expired does not by itself make disk content collectible.",
+      "eligible": "Only exact complete three-file private candidate directory; pinned manifest hash, original format/codec/UUID/key binding/expiry, exact blob byte sizes+hashes+derivation, single-link files and no unknown content. No mtime-only age or orphan judgment. Incomplete/unparseable/missing metadata is REFUSED/KEEP.",
+      "actualReferences": "Original PostgreSQL client performs SELECT on all product_image.file_ref without user visibility filters; PRODUCT audit before/after images; original actor+commandKey operation_receipt; exact staged ref substring in import_source_row.field_provenance. Any hit or missing/failing/ambiguous result keeps candidates. Actual refs are checked again immediately before a candidate deletion, not supplied as a passed boolean.",
+      "index": "Bounded actual keys directory read verifies key-name binding; same uploadId or original actor+commandKey+uploadKey index is KEEP. Any unexpected/malformed index, hardlink, symlink, public-root overlap or unknown file is KEEP.",
+      "offlineFenceContract": {
+        "integration": "await withOfflineFence({expected,root,approval}, async guard => ...). Original trusted T45 host must own this executor; no JSON or HTTP caller can supply a function. CLI intentionally has no executor.",
+        "guardMethods": [
+          "async assertHeld():void validates live offline all-writer stop/exclusive operational fence for original target/root",
+          "async assertRecoverySettled({uploadId,actorAccountId,commandKey,uploadKey}):void validates actual original-key/unknown-COMMIT/pending recovery state with authoritative operational evidence"
+        ],
+        "invalid": "Missing methods, true substitute, no callback or unresolved recovery refuses. Assertions are rechecked through final reference read and every deletion step. This source does not itself prove stopped processes or settled remote transactions.",
+        "scope": "All relevant upload/consume/delivery and DB attach/mutation writers must remain stopped; hold through final DB references and file removal. No online GC lock or platform introduced."
+      },
+      "recovery": "Before any unlink, reads all three files from separate canonical private recoveryRoot/stages/<uploadId> and verifies exact hashes against fixed original files. Uses no newly created backup as proof. Partial/cancelled removal returns RESTORE_REQUIRED; verified backups are never removed or automatically overwritten. Real restore must be explicitly executed and read back by T45, not faked with SQL ROLLBACK.",
+      "database": "Media mode uses READ COMMITTED READ ONLY, including apply. Only original SELECT reference/target checks, then ROLLBACK; filesystem deletion is separate and nontransactional.",
+      "remaining": "Exact T45 offline/recovery authority executor, fixed root/UUID/backup list, final isolation authorization and real delete/cancel/restore/re-admission exercise."
+    },
+    {
+      "kind": "indexed-stage-and-formal-media",
+      "rule": "KEEP. Formal reads require original stage manifest and original keys hardlink/index even after upload expiry. No indexed key expiry, tombstone, promotion/move, formal/history/source/backup media deletion is implemented. Current product_image removal alone does not authorize blob deletion."
+    },
+    {
+      "kind": "audit-and-receipts",
+      "rule": "KEEP existing immutable evidence and original request keys. No TTL, archive/trim, source edits, checkpoint or deletion introduced."
+    },
+    {
+      "kind": "operational-logs",
+      "rule": "Reuse previously accepted bounded/redacted stdout emitter and health/drain; no source changes/retests to them. Emission bounds are not disk retention.",
+      "remaining": "Actual collector/service manager and existing rotation retention configuration must be read by T45; C selects exact approved settings. No new days/size/count chosen here."
+    }
+  ],
+  "reuse": {
+    "A02": "Existing capacity-inventory target/bounds/pool/private filesystem patterns, not a duplicate capacity traversal or budget platform. Original A02 leaf untouched.",
+    "acceptedEvidence": "SOURCE863/864 lifecycle+logs and H03 SOURCE896 retained without rerunning. No existing auth/media/HTTP/production source leaf changed."
+  },
+  "checks": {
+    "distinctTests": 6,
+    "coverage": [
+      "Preserve any-session and unrevoked-session existence across empty/single/mixed sets",
+      "Missing approval/wrong actual target/future cutoff/row bounds/changed plan refuse before mutation",
+      "Session cancellation or count mismatch rolls back; unknown COMMIT is not retried or claimed undone",
+      "Media default preview has no deletion; exact apply needs real fence and verified recovery bytes",
+      "Current/history/receipt/source refs, original key, hardlinks/missing manifest or backup/missing fence/unsettled recovery refuse all deletes",
+      "Final reference change refuses; partial cancellation reports restore needed and preserves verified backup"
+    ],
+    "execution": "Initial 2/6 pass, 4 fixture failures corrected (wrong codec profile and changing a keeper instead of delete candidate); only four affected cases rerun PASS. Later media source changes reran only three media cases PASS. Six distinct cases passed, not six plus repeated runs.",
+    "typescript": "Strict isolated new-test dependency closure PASS; source node --check PASS. Full repository tests/typecheck/build not run.",
+    "boundary": "All PG is scripted and all media IO virtual. Zero actual SQL DELETE/unlink/rmdir/rename/real-media traversal/server operations; disposable in-memory restoration only, no real restore claim."
+  },
+  "dbPermissionDelta": {
+    "sessions": "Ops-only SELECT on user_account/staff identity; SELECT+row locks on auth_session token_hash/account_id/revoked_at/expires_at and DELETE on exact approved auth_session scope. Original SELECT FOR UPDATE may require existing UPDATE privileges under PostgreSQL; do not broaden runtime account to obtain it, T45 must confirm exact existing operations-role privileges. This source grants nothing.",
+    "media": "Read-only ops access to product_image(file_ref), audit_change(object_type,before_values,after_values), operation_receipt(actor_account_id,request_key), import_source_row(field_provenance), and actual identity/time functions. Original operational fence provider also needs exact approved process/transaction/recovery observation, not permission guessed here.",
+    "schema": "NONE. No new table/index/guard/purpose or existing SQL predicate change. All ACL/real execution approval remains external."
+  },
+  "remainingGates": [
+    "C approve exact physical retention/cutoff/limits and register any separate ops-role permission delta",
+    "T45 actual exact-target A02 observation, existing collector/rotation config and fixed protected/private roots",
+    "T45 real offline fence + original-key recovery authority binding for media apply; CLI does not fabricate it",
+    "T45 approved isolated fixed-list delete/cancel/restore/session re-admission tests",
+    "No production deletion/stop/migration is authorized or executed by this source delivery"
+  ],
+  "rollback": "Revert only these three new leaves if needed; do not remove existing P01/A01/H03/host/auth/media protections or business facts. Session precommit error rolls back original batch. Unknown COMMIT requires exact original run reconciliation. Media partial deletion requires separately authorized restore from preverified independent backups before re-admission.",
+  "Fast": "UNVERIFIED"
+}
