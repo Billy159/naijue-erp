@@ -7063,6 +7063,17 @@
         ],
         "state": "HANDED_BACK_SOURCE847_TYPE_ONLY_88220997",
         "scope": "OnlyIntegrationSettings.user finite oldrole OR two exact20261028newownerroles. Originalenvparser/allruntimeassertFresh/loopback/exclusive/sourcehashes unchanged;noPG."
+      },
+      "D3_PF02_CONTINUATION": {
+        "id": "HV2-PF02_CONTINUATION_V2",
+        "files": [
+          "scripts/import-v3/production-source-provider26.mjs",
+          "scripts/import-v3/production-source-provider26.test.mjs",
+          "scripts/import-v3/production-source-host.mjs",
+          "scripts/import-v3/production-source-host.test.mjs"
+        ],
+        "state": "ACTIVE_ORIGINAL_D3_AFTER_P03_QB_SOURCE846_PASS",
+        "scope": "V2xmin exact reviewed runtime consumer and currentprogress continuation indices only; oldV1 unchanged; no change finalstage/executiongrant/DB writecontract without explicit delta; noPG/actualimport"
       }
     },
     "protectedTrackedWip": [
