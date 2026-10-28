@@ -457,6 +457,7 @@ export async function claimNativeCoreWarehouseRecords(client: PgSalesClient,
 }
 
 export interface NativeCoreContinuationReadback {
+  readonly nativeStagePrefixProof26?: import('./native-stage-continuation26.ts').NativeStagePrefixProof26 | null;
   readonly stagedPrefixProof22: CoreStagedPrefixProof22 | null;
   readonly checkpoint: unknown; readonly claims: readonly NativeImportRecordClaim[]; readonly warehouses: readonly CoreWarehouseItem[];
   readonly coreClaims: readonly NativeImportRecordClaim[]; readonly coreWarehouses: readonly CoreWarehouseItem[];

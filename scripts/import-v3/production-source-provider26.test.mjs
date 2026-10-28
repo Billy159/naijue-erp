@@ -1207,3 +1207,92 @@ test('PF02 stage indices retain first-match refusal across record-id and source-
   assert.equal(unclaimedNativeStage26({group:'SKUS',payload:p,progress:{records:[record,conflict],warehouses:[]}}),null);
  }
 });
+
+
+async function nativeContinuationFixture23({onVerify}={}){
+ const {createNativeStageContinuation26}=await import('./production-source-provider26.mjs');
+ const {nativeStageContinuationCommitments26}=await import('../../adapters/postgres/src/native-stage-continuation26.ts');
+ const binding=fixture().binding,controller=new AbortController();let denied=false,checks=0;
+ const context={binding,checkpoint:{sequence:3,cursor:22,counts:{WAREHOUSE:22,SKU:0,INVENTORY_LEDGER:0,IMPORT_BATCH:0},expected:{}},bind:{operationId:id(500),requestKey:'SYNTHETIC-ORIGINAL-BIND',requestHash:digest('a')}};
+ const preparation={inputDigest:digest('c'),manifestSha256:digest('d'),original148Refs:[{path:'/synthetic/148/input.json',sha256:digest('e')},{path:'/synthetic/148/manifest.json',sha256:digest('f')}],original201Refs:[{path:'/synthetic/201/input.json',sha256:digest('a')},{path:'/synthetic/201/grant.json',sha256:digest('b')}]};
+ // Only the private registry is exercised here; actual prepared row and SQL
+ // validation belongs to D1's separate targeted tests, never this fake source.
+ const groups=['PARTIES','CATALOGUE','BARCODES'].map((name,i)=>({name,members:Array.from({length:[515,344,15018][i]},(_,n)=>({syntheticOrdinal:n,sourceGroup:name}))}));
+ const registry=createNativeStageContinuation26({binding,signal:controller.signal,async verify(){checks++;if(denied)throw Error('SOURCE_CHANGED');await onVerify?.(checks);},async captureSource(){return {preparation,groups};}});
+ const captured=await registry.port.capture(context),proof={version:1,...structuredClone(context),preparation:structuredClone(captured.preparation),groups:nativeStageContinuationCommitments26(captured.groups)};
+ const progress={actorAccountId:binding.actorAccountId,fixedSourceNamespace:binding.fixedSourceNamespace,selectionSha256:binding.selectionSha256,checkpoint:structuredClone(context.checkpoint),remainingWarehouses:[],claims:[],nativeStagePrefixProof26:proof};
+ return {registry,captured,proof,progress,context,controller,deny(){denied=true;},checks:()=>checks};
+}
+test('v23 private source registration accepts only the exact original returned proof and complete committed progress',async()=>{
+ const f=await nativeContinuationFixture23();
+ await f.captured.onVerified(f.progress);await f.registry.port.assertVerifiedContinuation(f.progress);
+ assert.equal(f.progress.nativeStagePrefixProof26,f.proof);assert.equal(f.checks(),3);f.registry.revoke();
+ await assert.rejects(f.registry.port.assertVerifiedContinuation(f.progress),/CLOSED/);
+});
+test('v23 JSON, cloned proof, altered complete progress and old-call proof cannot authorize skipping',async()=>{
+ for(const mutate of [p=>JSON.parse(JSON.stringify(p)),p=>({...p,nativeStagePrefixProof26:structuredClone(p.nativeStagePrefixProof26)}),p=>({...p,remainingWarehouses:[{synthetic:'changed'}]}),p=>({...p,checkpoint:{...p.checkpoint,sequence:4}})]){
+  const f=await nativeContinuationFixture23();await f.captured.onVerified(f.progress);
+  await assert.rejects(f.registry.port.assertVerifiedContinuation(mutate(f.progress)),/PROOF_IDENTITY/);
+  await assert.rejects(f.registry.port.assertVerifiedContinuation(f.progress),/CLOSED/);
+ }
+ const old=await nativeContinuationFixture23(),fresh=await nativeContinuationFixture23();await old.captured.onVerified(old.progress);await fresh.captured.onVerified(fresh.progress);
+ await assert.rejects(fresh.registry.port.assertVerifiedContinuation({...fresh.progress,nativeStagePrefixProof26:old.proof}),/PROOF_IDENTITY/);old.registry.revoke();
+});
+test('v23 reentry, duplicate registration, cancellation and independent source failure revoke the operation',async()=>{
+ for(const mode of ['reentry','duplicate','abort','source']){
+  const f=await nativeContinuationFixture23();await f.captured.onVerified(f.progress);
+  if(mode==='reentry')await assert.rejects(f.registry.port.capture(f.context),/REENTRY/);
+  if(mode==='duplicate')await assert.rejects(f.captured.onVerified(f.progress),/REENTRY/);
+  if(mode==='abort')f.controller.abort();
+  if(mode==='source'){f.deny();await assert.rejects(f.registry.port.assertVerifiedContinuation(f.progress),/SOURCE_CHANGED/);}
+  await assert.rejects(f.registry.port.assertVerifiedContinuation(f.progress),/CLOSED/);
+ }
+});
+test('v23 missing registration and changed source commitments, preparation, binding or BIND identity refuse',async()=>{
+ const absent=await nativeContinuationFixture23();await assert.rejects(absent.registry.port.assertVerifiedContinuation(absent.progress),/PROOF_IDENTITY/);
+ for(const mutate of [p=>{p.nativeStagePrefixProof26.groups[2].sha256=digest('0');},p=>{p.nativeStagePrefixProof26.preparation.inputDigest=digest('0');},p=>{p.nativeStagePrefixProof26.binding.target.database='OTHER';},p=>{p.nativeStagePrefixProof26.bind.requestKey='NEW';},p=>{p.nativeStagePrefixProof26.groups.reverse();}]){
+  const f=await nativeContinuationFixture23();mutate(f.progress);await assert.rejects(f.captured.onVerified(f.progress),/VERIFIED_CONTEXT/);await assert.rejects(f.registry.port.assertVerifiedContinuation(f.progress),/CLOSED/);
+ }
+});
+test('v23 metadata is an exact dual-pinned opt-in and cannot substitute source membership or old seven-role closure',async t=>{
+ const {readFile}=await import('node:fs/promises'),{fileURLToPath}=await import('node:url'),{createHash}=await import('node:crypto');
+ for(const mode of ['unmatched-grant','wrong-version','old-module-closure','different-ref','missing-201-refs','self-supplied-members']){
+  const f=await productionAuthorityFiles(t,{adopted:true,prefix22:true,initialSequence:2}),ev=f.adoptedFiles.evidenceValue;
+  const scope=JSON.parse(await readFile(ev.preparationScope.path,'utf8'));
+  const preparation={inputDigest:scope.input.sha256,manifestSha256:ev.manifest.sha256,original148Refs:[scope.input,ev.manifest].map(({path,sha256})=>({path,sha256})),original201Refs:[]};
+  if(!['unmatched-grant','old-module-closure'].includes(mode)){
+   const review=JSON.parse(await readFile(f.adoptedFiles.review.path,'utf8')),path=fileURLToPath(new URL('../../adapters/postgres/src/native-stage-continuation26.ts',import.meta.url)),bytes=await readFile(path);
+   review.modules.push({role:'ADDED_NATIVE_STAGE_ADAPTER',baseline:null,current:{path,bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')}});
+   ev.review=await f.save('NATIVE23-REVIEW.json',review);f.inputs.adoptedPreparation=f.grant.adoptedPreparation=await f.save('ADOPTED.json',ev);
+  }
+  const body={version:mode==='wrong-version'?'UNSUPPORTED':'NATIVE_STAGE_CONTINUATION_26_V1',preparation,...(mode==='self-supplied-members'?{members:[]}:{})};
+  const ref=await f.save('NATIVE23.json',body);f.inputs.nativeStageContinuation26=ref;
+  if(mode!=='unmatched-grant')f.grant.nativeStageContinuation26=mode==='different-ref'?await f.save('OTHER23.json',body):ref;
+  Object.assign(f.grantRef,await f.save('C-EXECUTION-AUTHORIZATION.json',f.grant));f.inputs.executionAuthorization=f.grantRef;Object.assign(f.inputRef,await f.save('INPUT.json',f.inputs));
+  await assert.rejects(f.open(),new RegExp(mode==='unmatched-grant'?'C_EXECUTION_SCOPE':mode==='old-module-closure'?'ADOPTED26_EVIDENCE':mode==='missing-201-refs'?'NATIVE_PREFIX26_PREPARATION':'NATIVE_PREFIX26_EVIDENCE'));
+ }
+});
+
+test('v23 verified source proof omits exactly three original stage iterators; null or no port adds no omit authority',async()=>{
+ const {pendingProductionStageRows26}=await import('./production-source-provider26.mjs'),f=await nativeContinuationFixture23();await f.captured.onVerified(f.progress);
+ for(const group of ['PARTIES','CATALOGUE','BARCODES']){
+  assert.deepEqual(await Array.fromAsync(pendingProductionStageRows26({group,nativeStageContinuation26:f.registry.port,progress:f.progress,readRows(){throw Error('REPEATED_STAGE_ITERATOR');}})),[]);
+  async function* original(){yield {synthetic:group};}
+  assert.deepEqual(await Array.fromAsync(pendingProductionStageRows26({group,proved:false,progress:{nativeStagePrefixProof26:null},readRows:original})),[{synthetic:group}]);
+ }
+ for(const group of ['PAYMENT','SALES_DETAILS','SETTLEMENTS']){
+  async function* original(){yield {synthetic:group};}
+  assert.deepEqual(await Array.fromAsync(pendingProductionStageRows26({group,nativeStageContinuation26:f.registry.port,progress:f.progress,proved:false,readRows:original})),[{synthetic:group}]);
+ }
+ const clone=structuredClone(f.progress);
+ await assert.rejects(Array.fromAsync(pendingProductionStageRows26({group:'BARCODES',nativeStageContinuation26:f.registry.port,progress:clone,readRows(){throw Error('MUST_NOT_FALL_BACK_TO_REPLAY');}})),/PROOF_IDENTITY/);
+});
+
+test('v23 source registration rejects asynchronous progress mutation or close before verification completes',async()=>{
+ let target;const changed=await nativeContinuationFixture23({onVerify(){if(target)target.remainingWarehouses.push({synthetic:'changed-during-verify'});}});target=changed.progress;
+ await assert.rejects(changed.captured.onVerified(changed.progress),/PROOF_IDENTITY/);await assert.rejects(changed.registry.port.assertVerifiedContinuation(changed.progress),/CLOSED/);
+ let release,entered;const reached=new Promise(r=>{entered=r;}),held=new Promise(r=>{release=r;});
+ const closed=await nativeContinuationFixture23({async onVerify(n){if(n===2){entered();await held;}}});
+ const registration=closed.captured.onVerified(closed.progress);await reached;closed.registry.revoke();release();
+ await assert.rejects(registration,/CLOSED/);await assert.rejects(closed.registry.port.assertVerifiedContinuation(closed.progress),/CLOSED/);
+});

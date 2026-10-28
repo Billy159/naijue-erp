@@ -277,3 +277,23 @@ test('T19 runner preserves ordinary empty summary and rejects a malformed claime
  for(const value of [undefined,{status:'IMPORTED',operationId:'invalid'}]){let executed=0,closed=0;const run=runImportSteps({source:{async *steps(){return value;},async close(){closed++;}},async execute(){executed++;},async append(){throw Error('NO_NEW_JOURNAL');},signal:new AbortController().signal,maxSteps:1});
   if(value===undefined)assert.deepEqual(await run,{status:'REQUESTED_STEP_SEQUENCE_COMPLETE',completed:0,publicationReadback:'NOT_PERFORMED_BY_RUNNER'});else await assert.rejects(run);assert.equal(executed,0);assert.equal(closed,1);}
 });
+
+test('v23 original reader registers one original proof only after successful same-client COMMIT, with full remaining progress',async()=>{
+ // Execute the actual exported reader body; only its storage/capability dependencies are substituted.
+ // Separate adapter tests exercise the full source validators and161-query protocol.
+ const evaluate=new Function('bag','binding','checkedNativeRuntime26Capability','must','VERSION_26','historySettlementRequestHash','uuid','text','hash','requestHash','readNativeCoreWarehouseCarryForward','NATIVE_STAGE_CONTINUATION_VERSION26','captureNativeStageContinuationInput26','verifyCommittedNativeStagePrefix26',`return (${readCoreImportContinuation26.toString()});`);
+ for(const failure of [null,'capture','readback','COMMIT','callback']){
+  const b={...plan(),version:'NATIVE_IMPORT_EXECUTION_26_V1',phase:'FULL_SOURCE_CONTINUATION_26_V1',coreReceiptId:id(900),coreSourceDigest:sha('c')};
+  const warehouses=Array.from({length:53},(_,i)=>({targetType:'WAREHOUSE',targetId:id(1000+i),sourceEntityType:'WAREHOUSE',sourceKey:`SYNTHETIC_${i}`,sourceRecordHash:sha('a'),sourceFileRef:'SYNTHETIC.xlsx',nativeRecord:{id:id(2000+i),reviewedAt:cutoffTime,decisionReason:'SYNTHETIC'}}));
+  const progress={warehouses:warehouses.slice(0,22),coreWarehouses:warehouses.slice(0,22),coreClaims:Array.from({length:22},()=>({})),claims:Array.from({length:22},()=>({})),actorAccountId:b.actorAccountId,fixedSourceNamespace:b.fixedSourceNamespace,selectionSha256:b.selectionSha256,checkpoint:{counts:{WAREHOUSE:22},cursor:22},status:'STAGED',stagedPrefixProof22:{},committedOperations:[{action:'IMPORT_BIND_FULL_SOURCE',operationId:id(901),requestKey:'SYNTHETIC_BIND',requestHash:sha('d')}]};
+  const proof={version:1,SYNTHETIC:true},calls=[],releases=[];let callbacks=0,captures=0,lease;
+  const runtime26={async assertReady(c){assert.equal(c,lease);}};
+  const options={pool:{async connect(){assert.equal(lease,undefined);lease={async query(sql){calls.push(sql);if(sql===failure)throw Error(failure);return{rows:[]};},release(error){releases.push(error);}};return lease;}},binding:b,runtime26,assertExecutionAllowed:async()=>undefined,warehouses,nativeStageContinuation26:{version:'NATIVE_STAGE_CONTINUATION_26_V1',async capture(context){captures++;assert.deepEqual(context.binding,b);assert.notEqual(context.binding,b);if(failure==='capture')throw Error('capture');return{async onVerified(result){callbacks++;assert.equal(calls.at(-1),'COMMIT');assert.equal(result.nativeStagePrefixProof26,proof);assert.equal(result.remainingWarehouses.length,31);if(failure==='callback')throw Error('callback');}};},async assertVerifiedContinuation(){}}};
+  const reader=evaluate((v,keys)=>{assert.deepEqual(Object.keys(v).sort(),[...keys].sort());return v;},v=>structuredClone(v),v=>v,(ok,code)=>{if(!ok)throw Error(code);},'NATIVE_IMPORT_EXECUTION_26_V1',()=>{},v=>typeof v==='string',v=>typeof v==='string',()=>true,requestHash,async c=>{assert.equal(c,lease);return progress;},'NATIVE_STAGE_CONTINUATION_26_V1',v=>v,async c=>{assert.equal(c,lease);if(failure==='readback')throw Error('readback');return proof;});
+  if(failure)await assert.rejects(reader(options),new RegExp(failure));else{const result=await reader(options);assert.equal(result.nativeStagePrefixProof26,proof);assert.notEqual(result.checkpoint,progress.checkpoint);assert.equal(callbacks,1);}
+  assert.equal(captures,1);assert.equal(releases.length,1);
+  if(['capture','readback'].includes(failure)){assert.equal(callbacks,0);assert.equal(calls.at(-1),'ROLLBACK');assert.equal(releases[0],undefined);}
+  if(failure==='COMMIT'){assert.equal(callbacks,0);assert.equal(calls.at(-1),'COMMIT');assert.ok(releases[0] instanceof Error);}
+  if(failure==='callback'){assert.equal(callbacks,1);assert.equal(calls.at(-1),'COMMIT');assert.ok(releases[0] instanceof Error);}
+ }
+});

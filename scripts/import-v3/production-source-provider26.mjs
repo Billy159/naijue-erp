@@ -142,7 +142,10 @@ export function selectProductionContinuation26({binding,commands,progress}){
  * a count or discarded from the full closure. Call after genuine authorization. */
 /** Only a source-bound, current committed-prefix proof selects this path.
  * Stock still runs its original authorization to populate ACCOUNT source facts. */
-export async function* pendingProductionStageRows26({group,readRows,proved,authorize}){
+export async function* pendingProductionStageRows26({group,readRows,proved,authorize,nativeStageContinuation26,progress}){
+ if(nativeStageContinuation26&&['PARTIES','CATALOGUE','BARCODES'].includes(group)){
+  must(await nativeStageContinuation26.assertVerifiedContinuation(progress)===undefined,'PRODUCTION_NATIVE_PREFIX26_AUTHORITY_RESULT');return;
+ }
  if(proved){
   must(['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS'].includes(group),'PRODUCTION_PREFIX22_CONTINUATION');
   if(group!=='STOCK_CONTRIBUTORS')return;
@@ -206,11 +209,54 @@ export function stagedPrefixSkuRecord22(prepared){
   source_record_hash:s.rowSha256,source_file_ref:s.fileRef,target_type:'SKU',target_id:prepared.nativeSku.id,status:'IMPORTED',
   decision_reason:r.decisionReason,reviewed_at:r.reviewedAt}};
 }
+/** One source session owns one capture and one committed proof object. Nothing
+ * serializable is sufficient to register or reuse a database verification. */
+export function createNativeStageContinuation26({binding,signal,verify,captureSource}){
+ const exact=(v,keys)=>v&&Object.getPrototypeOf(v)===Object.prototype&&Reflect.ownKeys(v).length===keys.length&&keys.every(k=>Object.hasOwn(v,k));
+ const fixedBinding=structuredClone(binding);let attempted=false,revoked=false,contextKey,sourceKey,proofObject,progressKey;
+ const invalidate=()=>{revoked=true;contextKey=sourceKey=proofObject=progressKey=undefined;};
+ const active=()=>must(!revoked&&!signal.aborted,'PRODUCTION_NATIVE_PREFIX26_CLOSED');
+ signal.addEventListener('abort',invalidate,{once:true});
+ const revoke=()=>{invalidate();signal.removeEventListener('abort',invalidate);};
+ const port=Object.freeze({version:'NATIVE_STAGE_CONTINUATION_26_V1',async capture(context){
+  try{
+   active();must(!attempted,'PRODUCTION_NATIVE_PREFIX26_REENTRY');attempted=true;
+   capture(context);must(exact(context,['binding','checkpoint','bind'])&&capture(context.binding)===capture(fixedBinding),'PRODUCTION_NATIVE_PREFIX26_CONTEXT');
+   const originalContext=structuredClone(context);contextKey=capture(originalContext);await verify();active();
+   const source=await captureSource(structuredClone(originalContext));active();
+   capture(source);must(exact(source,['preparation','groups']),'PRODUCTION_NATIVE_PREFIX26_SOURCE');
+   const {nativeStageContinuationCommitments26}=await import('../../adapters/postgres/src/native-stage-continuation26.ts');active();
+   const frozen=structuredClone(source),groups=nativeStageContinuationCommitments26(frozen.groups);
+   must(groups.length===3&&groups.every((g,i)=>g.name===['PARTIES','CATALOGUE','BARCODES'][i]&&g.rows===[515,344,15018][i]),'PRODUCTION_NATIVE_PREFIX26_MEMBERS');
+   sourceKey=capture({preparation:frozen.preparation,groups});
+   const expected={version:1,binding:originalContext.binding,bind:originalContext.bind,checkpoint:originalContext.checkpoint,preparation:frozen.preparation,groups};
+   let registered=false;
+   return {...structuredClone(frozen),async onVerified(progress){
+    try{
+     active();must(!registered,'PRODUCTION_NATIVE_PREFIX26_REENTRY');registered=true;
+     const verifiedResultKey=capture(progress),verifiedProof=progress?.nativeStagePrefixProof26;await verify();active();const proof=progress?.nativeStagePrefixProof26;
+     must(proof&&capture(proof)===capture(expected)&&capture(progress.checkpoint)===capture(originalContext.checkpoint)
+      &&progress.actorAccountId===fixedBinding.actorAccountId&&progress.fixedSourceNamespace===fixedBinding.fixedSourceNamespace
+      &&progress.selectionSha256===fixedBinding.selectionSha256,'PRODUCTION_NATIVE_PREFIX26_VERIFIED_CONTEXT');
+     must(contextKey===capture(originalContext)&&sourceKey===capture({preparation:expected.preparation,groups:expected.groups}),'PRODUCTION_NATIVE_PREFIX26_SOURCE');
+     must(proof===verifiedProof&&capture(progress)===verifiedResultKey,'PRODUCTION_NATIVE_PREFIX26_PROOF_IDENTITY');
+     proofObject=proof;progressKey=verifiedResultKey;
+    }catch(error){revoke();throw error;}
+   }};
+  }catch(error){revoke();throw error;}
+ },async assertVerifiedContinuation(progress){
+  try{
+   active();const key=capture(progress);must(proofObject&&progress?.nativeStagePrefixProof26===proofObject&&key===progressKey,'PRODUCTION_NATIVE_PREFIX26_PROOF_IDENTITY');
+   await verify();active();must(progress.nativeStagePrefixProof26===proofObject&&capture(progress)===progressKey,'PRODUCTION_NATIVE_PREFIX26_PROOF_IDENTITY');
+  }catch(error){revoke();throw error;}
+ }});
+ return {port,revoke};
+}
 export function createProductionSourceProvider26(inputs,authority){return createOriginalProductionSources26(inputs,{authority});}
 function createOriginalProductionSources26(inputs,{authority,sourcePreparation}){
  capture(inputs);const fixed=structuredClone(inputs),inputDigest=capture(fixed);
  const a=sourcePreparation?null:methods(authority,['verifyInputs','assertGroupAllowed','assertExecutionAllowed','authorizeStep','assertAllowed','authorizeNativeCommand',
-  'openRetained','capturedOptions','openRetainedClosure','coreProjection','mainCommands','authorizeProductSource','close','now',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedClosure']:[]),...(Object.hasOwn(fixed,'stagedPrefixBinding26')?['captureStagedPrefixBinding26','assertStagedPrefixContinuation26']:[])]);
+  'openRetained','capturedOptions','openRetainedClosure','coreProjection','mainCommands','authorizeProductSource','close','now',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedClosure']:[]),...(Object.hasOwn(fixed,'stagedPrefixBinding26')?['captureStagedPrefixBinding26','assertStagedPrefixContinuation26']:[]),...(Object.hasOwn(fixed,'nativeStageContinuation26')?['captureNativeStagePreparation26']:[])]);
  must(fixed.version==='PRODUCTION_SOURCE_PROVIDER26_INPUT_V1'&&fixed.binding?.phase==='FULL_SOURCE_CONTINUATION_26_V1'
   &&(sourcePreparation?fixed.binding.authorizedPayloadHash===null||hash(fixed.binding.authorizedPayloadHash):hash(fixed.binding.authorizedPayloadHash))&&hash(fixed.binding.coreSourceDigest)&&fixed.binding.authorizedPayloadHash!==fixed.binding.coreSourceDigest,
   'PRODUCTION_PROVIDER26_FULL_BINDING_REQUIRED');
@@ -225,7 +271,7 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
   must(!opened,'PRODUCTION_PROVIDER26_SESSION_ALREADY_OPEN');opened=true;
   must(signal instanceof AbortSignal&&!signal.aborted&&requestHash(binding)===requestHash(fixed.binding),'PRODUCTION_PROVIDER26_BINDING_CHANGED');
   must(sourcePreparation?database===undefined:typeof database?.ready==='function','PRODUCTION_PROVIDER26_ORIGINAL_DATABASE_REQUIRED');binding=structuredClone(binding);
-  let closed=false,closing,closure,preflightDone=false,stepsStarted=false,adoptedClosure;const readers=new Map(),disposers=[],issued=new Set(),coreSourceIds=new Set();
+  let closed=false,closing,closure,preflightDone=false,stepsStarted=false,adoptedClosure,nativeContinuation,nativeStageContext,nativeStagePreparation;const readers=new Map(),disposers=[],issued=new Set(),coreSourceIds=new Set();
   const active=()=>must(!closed&&!signal.aborted,'PRODUCTION_PROVIDER26_CLOSED');
   const checked=async(fn,...args)=>{active();must(await fn(...args)===undefined,'PRODUCTION_PROVIDER26_AUTHORITY_RESULT');active();};
   async function close(){if(closing)return closing;closed=true;closing=(async()=>{const errors=[];
@@ -566,6 +612,34 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
    else must(['MAIN','CLOSURE'].includes(snapshot.kind),'PRODUCTION_PROVIDER26_STEP_KIND');
    await checked(a.authorizeStep,snapshot,structuredClone(binding));must(capture(snapshot)===before,'PRODUCTION_PROVIDER26_STEP_MUTATED');
   }
+  async function captureNativeStageSource(context){
+   active();must(preflightDone&&adoptedClosure,'PRODUCTION_NATIVE_PREFIX26_PREFLIGHT');
+   const preparation=await a.captureNativeStagePreparation26(structuredClone(context));active();
+   nativeStageContext=structuredClone(context);nativeStagePreparation=structuredClone(preparation);
+   const groups=[];
+   for(const name of ['PARTIES','CATALOGUE','BARCODES']){
+    const reader=readers.get(name),[kind,iterator]=stages[name],members=[];await checked(reader.verify);
+    for await(const original of reader[iterator]()){
+     active();let payload=original;
+     if(name==='PARTIES'){
+      const rows=original.rows.filter(row=>!coreSourceIds.has(row.input.source.id));if(!rows.length)continue;
+      payload=prepareNativePartyImportChunk(rows.map(row=>row.input));
+     }
+     await authorizeStep({kind,payload});active();
+     if(name==='BARCODES')members.push(structuredClone(payload));else members.push(...structuredClone(payload.rows));
+     must(members.length<=({PARTIES:515,CATALOGUE:344,BARCODES:15018}[name]),'PRODUCTION_NATIVE_PREFIX26_MEMBERS');
+    }
+    await checked(reader.verify);groups.push({name,members});
+   }
+   // Revalidate the independent source authority after the complete capture.
+   must(capture(preparation)===capture(await a.captureNativeStagePreparation26(structuredClone(context))),'PRODUCTION_NATIVE_PREFIX26_SOURCE');
+   return {preparation,groups};
+  }
+  async function verifyNativeStageContinuation(){
+   await verify();for(const name of ['PARTIES','CATALOGUE','BARCODES'])await checked(readers.get(name).verify);
+   if(nativeStageContext)must(capture(nativeStagePreparation)===capture(await a.captureNativeStagePreparation26(structuredClone(nativeStageContext))),'PRODUCTION_NATIVE_PREFIX26_SOURCE');
+   active();
+  }
   async function* main(phase,progress){
    let count=0;
    for await(const original of a.mainCommands(phase,{binding:structuredClone(binding),core:structuredClone(fixed.core),progress:structuredClone(progress)})){
@@ -619,8 +693,18 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
    async *steps(){
     active();must(preflightDone&&!stepsStarted,'PRODUCTION_PROVIDER26_PREFLIGHT_REQUIRED');stepsStarted=true;
     const runtime=database.ready();
-    const progress=await readCoreImportContinuation26({pool:runtime.pool,runtime26:runtime.runtime26,binding,
-     assertExecutionAllowed:actual=>a.assertExecutionAllowed(actual),warehouses:warehouseItems});active();
+    if(Object.hasOwn(fixed,'nativeStageContinuation26')){
+     nativeContinuation=createNativeStageContinuation26({binding,signal,verify:verifyNativeStageContinuation,captureSource:captureNativeStageSource});disposers.push(nativeContinuation.revoke);
+    }
+    let progress;
+    try{progress=await readCoreImportContinuation26({pool:runtime.pool,runtime26:runtime.runtime26,binding,
+     assertExecutionAllowed:actual=>a.assertExecutionAllowed(actual),warehouses:warehouseItems,...(nativeContinuation?{nativeStageContinuation26:nativeContinuation.port}:{})});active();}
+    catch(error){nativeContinuation?.revoke();throw error;}
+    if(nativeContinuation){
+     // Identity must be checked on the original returned object, before any clone.
+     await checked(nativeContinuation.port.assertVerifiedContinuation,progress);
+     must(progress.stagedPrefixProof22!=null,'PRODUCTION_NATIVE_PREFIX26_CORE_PREFIX_REQUIRED');
+    }
     // The original adapter proves immutable birth22 and the full current
     // receipt/audit/claim chain. C's complete signed commands retain their IDs.
     yield* main('BIND',progress);
@@ -628,8 +712,9 @@ function createOriginalProductionSources26(inputs,{authority,sourcePreparation})
     const stagedPrefixGroups=progress.stagedPrefixProof22==null?new Set():new Set(['HEADERS','TRANSFER_LINES','PRODUCTS','SKUS','STOCK_CONTRIBUTORS']);
     if(stagedPrefixGroups.size)await checked(a.assertStagedPrefixContinuation26,structuredClone(progress));
     const pendingStage=nativeStageSelector26(progress);
-    for(const group of sourceGroups){const [kind,iterator]=stages[group],reader=readers.get(group);
-     for await(const original of pendingProductionStageRows26({group,readRows:()=>reader[iterator](),proved:stagedPrefixGroups.has(group),authorize:payload=>authorizeStep({kind,payload})})){
+    for(const group of sourceGroups){
+     const [kind,iterator]=stages[group],reader=readers.get(group);
+     for await(const original of pendingProductionStageRows26({group,readRows:()=>reader[iterator](),proved:stagedPrefixGroups.has(group),authorize:payload=>authorizeStep({kind,payload}),nativeStageContinuation26:nativeContinuation?.port,progress})){
       active();let payload=original;
       if(group==='PARTIES'){
        const rows=original.rows.filter(row=>!coreSourceIds.has(row.input.source.id));if(!rows.length)continue;
@@ -877,20 +962,22 @@ async function loadAdoptedPreparation26({fixed,binding,grant,byPhase,metadata,un
   &&review.decision==='ACCEPT_EXACT_CONSUMER_ONLY_SUCCESSOR'&&review.closureComplete==='SOURCE_DERIVATION_CLOSURE_COMPLETE'&&review.baselineCommit===receipt.sourceCommit
   &&/^[0-9a-f]{40}$/.test(review.baselineCommit)&&Array.isArray(review.modules)&&review.modules.length>=2);
  await metadata(review.independentReview);
- const prefix22=Object.hasOwn(fixed,'stagedPrefixBinding26');
+ const prefix22=Object.hasOwn(fixed,'stagedPrefixBinding26'),nativeStage=Object.hasOwn(fixed,'nativeStageContinuation26');
+ need(!nativeStage||prefix22);
  const consumerPaths={CONSUMER_PROVIDER:'./production-source-provider26.mjs',CONSUMER_HOST:'./production-source-host.mjs',
   ...(prefix22?{CONSUMER_RUN:'./run.mjs',CONSUMER_PREFIX_STORE:'../../adapters/postgres/src/inventory-cutoff-import-store.ts',
    CONSUMER_PREFIX_ISSUER:'../../adapters/postgres/src/native-import-accounting-capability.ts',
-   CONSUMER_PREFIX_ACCOUNTING_READER:'../../adapters/postgres/src/native-import-record-accounting.ts',ADDED_PREFIX_ADAPTER:'../../adapters/postgres/src/native-core-staged-prefix-bind.ts'}:{})};
+   CONSUMER_PREFIX_ACCOUNTING_READER:'../../adapters/postgres/src/native-import-record-accounting.ts',ADDED_PREFIX_ADAPTER:'../../adapters/postgres/src/native-core-staged-prefix-bind.ts'}:{}),
+  ...(nativeStage?{ADDED_NATIVE_STAGE_ADAPTER:'../../adapters/postgres/src/native-stage-continuation26.ts'}:{})};
  const paths=new Set(),roles=new Set();
  for(const m of review.modules){
   need(exact(m,['role','baseline','current'])&&(m.role==='UNCHANGED'||Object.hasOwn(consumerPaths,m.role))&&!paths.has(m.current.path));
   if(prefix22&&m.current.path===fileURLToPath(new URL(consumerPaths.CONSUMER_PREFIX_ACCOUNTING_READER,import.meta.url)))need(m.role==='CONSUMER_PREFIX_ACCOUNTING_READER');
-  paths.add(m.current.path);if(m.role==='ADDED_PREFIX_ADAPTER')need(m.baseline===null);for(const ref of (m.role==='ADDED_PREFIX_ADAPTER'?[m.current]:[m.baseline,m.current])){need(exact(ref,['path','bytes','sha256']));const before=await lstat(ref.path),bytes=await pinnedSmall(ref.path,ref.sha256);need(bytes.length===ref.bytes);const st=await lstat(ref.path);need(same(before,st));files.set(ref.path,{ref:structuredClone(ref),stat:st,physicalPath:ref.path});}
+  paths.add(m.current.path);if(['ADDED_PREFIX_ADAPTER','ADDED_NATIVE_STAGE_ADAPTER'].includes(m.role))need(m.baseline===null);for(const ref of (['ADDED_PREFIX_ADAPTER','ADDED_NATIVE_STAGE_ADAPTER'].includes(m.role)?[m.current]:[m.baseline,m.current])){need(exact(ref,['path','bytes','sha256']));const before=await lstat(ref.path),bytes=await pinnedSmall(ref.path,ref.sha256);need(bytes.length===ref.bytes);const st=await lstat(ref.path);need(same(before,st));files.set(ref.path,{ref:structuredClone(ref),stat:st,physicalPath:ref.path});}
   if(m.role==='UNCHANGED')need(m.baseline.bytes===m.current.bytes&&m.baseline.sha256===m.current.sha256);
   else {need(!roles.has(m.role));roles.add(m.role);need(m.current.path===fileURLToPath(new URL(consumerPaths[m.role],import.meta.url)));}
  }
- need(roles.size===(prefix22?7:2));
+ need(roles.size===(nativeStage?8:prefix22?7:2));
  for(const name of ['../../packages/application/src/history-typed-closure.ts','../../packages/application/src/request-hash.ts','../../packages/application/src/native-import-record-accounting.ts','../import-v2/authorized-history-closure-reader.mjs','./prepare-native-bindings.mjs','./run.mjs']){
   const path=fileURLToPath(new URL(name,import.meta.url));need(review.modules.some(m=>m.role===(prefix22&&name==='./run.mjs'?'CONSUMER_RUN':'UNCHANGED')&&m.current.path===path));
  }
@@ -943,7 +1030,7 @@ async function loadAdoptedPreparation26({fixed,binding,grant,byPhase,metadata,un
  // string; no source rows or externally supplied prehash are accepted.
  const serialized=JSON.stringify(expected),evidencePaths=[...files.keys()];
  const check=async()=>{await verify();for(const path of evidencePaths)await unchanged(path);};
- return Object.freeze({verify:check,preparation:Object.freeze({inputDigest:scope.input.sha256,manifestSha256:evidence.manifest.sha256}),async expected(){await check();return structuredClone(expected);},
+ return Object.freeze({verify:check,original148Refs:Object.freeze([scope.input,evidence.manifest].map(ref=>Object.freeze({path:ref.path,sha256:ref.sha256}))),preparation:Object.freeze({inputDigest:scope.input.sha256,manifestSha256:evidence.manifest.sha256}),async expected(){await check();return structuredClone(expected);},
   async authorizeStage(input){await check();need(JSON.stringify(captureHistoryTypedClosureStageInput(input))===serialized);},
   async authorizePublish(command){await check();need(capture(command)===capture(publish));}});
 }
@@ -982,7 +1069,7 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
  try{
   files.set(inputFile,{ref:{path:inputFile,bytes:inputBytes.length,sha256:trustedInputSha256},stat:inputStat});must(same(inputStat,await lstat(inputFile)),'PRODUCTION_AUTHORITY26_METADATA_CHANGED');active();
   grant=await metadata(authorization);
-  must(exact(grant,['version','decision','issuingAuthority','realImportExecutionAuthorized','job','sourceInputDigest','groups','mainCommands',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedPreparation']:[]),...(Object.hasOwn(fixed,'stagedPrefixBinding26')?['stagedPrefixBinding26']:[])])
+  must(exact(grant,['version','decision','issuingAuthority','realImportExecutionAuthorized','job','sourceInputDigest','groups','mainCommands',...(Object.hasOwn(fixed,'adoptedPreparation')?['adoptedPreparation']:[]),...(Object.hasOwn(fixed,'stagedPrefixBinding26')?['stagedPrefixBinding26']:[]),...(Object.hasOwn(fixed,'nativeStageContinuation26')?['nativeStageContinuation26']:[])])
    &&grant.version==='C_PRODUCTION_SOURCE_EXECUTION26_AUTHORIZATION_V1'&&grant.decision==='AUTHORIZE_EXACT_REGISTERED_FULL_SOURCE_EXECUTION'
    &&grant.issuingAuthority==='C'&&grant.realImportExecutionAuthorized===true&&grant.sourceInputDigest===dataDigest
    &&Array.isArray(grant.groups)&&grant.groups.length===sourceGroups.length&&new Set(grant.groups).size===sourceGroups.length
@@ -1062,6 +1149,34 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
     &&i.approvalPins.writeContractReplySha256==='9ec37b0219f227fa39e754364ea04f1962866664283812f8d9b383ba19b2acfc','PRODUCTION_PREFIX22_INITIALIZATION');
    validateNativeBarcodeSchemeInitializationRows26(i.schemes);
   }
+  let nativeStagePreparation;const nativeStageFiles=[];
+  if(Object.hasOwn(fixed,'nativeStageContinuation26')){
+   must(adopted&&prefix22&&capture(fixed.nativeStageContinuation26)===capture(grant.nativeStageContinuation26),'PRODUCTION_NATIVE_PREFIX26_EVIDENCE');
+   const evidence=await metadata(grant.nativeStageContinuation26);
+   must(exact(evidence,['version','preparation'])&&evidence.version==='NATIVE_STAGE_CONTINUATION_26_V1','PRODUCTION_NATIVE_PREFIX26_EVIDENCE');
+   const preparation=evidence.preparation;
+   must(exact(preparation,['inputDigest','manifestSha256','original148Refs','original201Refs'])
+    &&preparation.inputDigest===adopted.preparation.inputDigest&&preparation.manifestSha256===adopted.preparation.manifestSha256
+    &&Array.isArray(preparation.original148Refs)&&Array.isArray(preparation.original201Refs)
+    &&capture(preparation.original148Refs)===capture(adopted.original148Refs)&&preparation.original201Refs.length===2,'PRODUCTION_NATIVE_PREFIX26_PREPARATION');
+   const pins=new Set(['0dec29b3d03facb9940f15c38cc98ab3a27a4ba5c208317994a6f471082d966f','195b1d5824b023b8f101672a648c9f7e94f2e484676a4e5288c9c355c4dad7bc']);
+   const paths=new Set(),original201=new Map();
+   for(const ref of [...preparation.original148Refs,...preparation.original201Refs]){
+    must(exact(ref,['path','sha256'])&&typeof ref.path==='string'&&isAbsolute(ref.path)&&hash(ref.sha256)&&!paths.has(ref.path),'PRODUCTION_NATIVE_PREFIX26_REF');paths.add(ref.path);
+    const from201=preparation.original201Refs.includes(ref);
+    if(from201)must(pins.delete(ref.sha256),'PRODUCTION_NATIVE_PREFIX26_ORIGINAL201');
+    const before=await lstat(ref.path);active();const bytes=await pinnedSmall(ref.path,ref.sha256);active();const stat=await lstat(ref.path);active();
+    must(same(before,stat),'PRODUCTION_NATIVE_PREFIX26_REF_CHANGED');
+    if(from201)original201.set(ref.sha256,JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(bytes)));
+    // The original refs remain inputs, never execution authority or stage proof.
+    files.set(ref.path,{ref:{...ref,bytes:bytes.length},stat,physicalPath:ref.path});nativeStageFiles.push(ref.path);
+   }
+   must(pins.size===0,'PRODUCTION_NATIVE_PREFIX26_ORIGINAL201');
+   const originalInput=original201.get('0dec29b3d03facb9940f15c38cc98ab3a27a4ba5c208317994a6f471082d966f'),originalGrant=original201.get('195b1d5824b023b8f101672a648c9f7e94f2e484676a4e5288c9c355c4dad7bc');
+   must(capture(Object.fromEntries(['version','binding','core','closureScope','warehouses','producers'].map(k=>[k,originalInput[k]])))===dataDigest
+    &&originalGrant.sourceInputDigest===dataDigest&&capture(originalGrant.mainCommands)===capture(grant.mainCommands),'PRODUCTION_NATIVE_PREFIX26_ORIGINAL201');
+   nativeStagePreparation=structuredClone(preparation);
+  }
   const originalCaptured=originalCapturedSourceIO26({binding,fixed,signal,verify,active,code,owned,captured});
   let productSource;
   const continuationCommands=[...byPhase.BIND,...byPhase.ACCOUNT,...byPhase.PUBLISH],phaseKeys=Object.fromEntries(Object.entries(byPhase).map(([phase,commands])=>[phase,new Set(commands.map(c=>c.requestKey))]));
@@ -1071,6 +1186,14 @@ export async function openProductionSourceAuthority26({binding,inputFile,trusted
    return continuationSnapshot.selected;
   };
   const authority={
+   ...(nativeStagePreparation?{async captureNativeStagePreparation26(context){
+    await verify();await adopted.verify();await unchanged(grant.nativeStageContinuation26.path);for(const path of nativeStageFiles)await unchanged(path);
+    capture(context);const command=byPhase.BIND[0];
+    must(exact(context,['binding','checkpoint','bind'])&&capture(context.binding)===capture(binding)
+     &&capture(context.bind)===capture({operationId:stableImportId('operation',binding.actorAccountId,command.requestKey),requestKey:command.requestKey,requestHash:requestHash(command)})
+     &&context.checkpoint?.sequence===command.expectedSequence+1&&context.checkpoint.cursor===command.expectedCursor,'PRODUCTION_NATIVE_PREFIX26_CONTEXT');
+    return structuredClone(nativeStagePreparation);
+   }}:{}),
    ...(adopted?{async adoptedClosure(){await adopted.verify();return adopted;}}:{}),
    ...(prefix22?{async captureStagedPrefixBinding26(command){
     await mainAllowed(binding.actorAccountId,command);must(command.action==='IMPORT_BIND_FULL_SOURCE','PRODUCTION_PREFIX22_COMMAND');

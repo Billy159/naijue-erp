@@ -27,6 +27,7 @@ import { checkedNativeRuntime26Capability } from '../../packages/application/src
 
 import { requestHash } from '../../packages/application/src/request-hash.ts';
 import { readNativeCoreWarehouseCarryForward } from '../../adapters/postgres/src/native-import-record-accounting.ts';
+import { NATIVE_STAGE_CONTINUATION_VERSION26, captureNativeStageContinuationInput26, verifyCommittedNativeStagePrefix26 } from '../../adapters/postgres/src/native-stage-continuation26.ts';
 const VERSION = 'NATIVE_IMPORT_EXECUTION_19_V1';
 const STAGES = Object.freeze({ PARTY: PostgresNativePartyImportStore, CATALOGUE: PostgresNativeCatalogueImportStore,
   PRODUCT: PostgresNativeProductImportStore, SKU: PostgresNativeSkuImportStore, BARCODE: PostgresNativeBarcodeImportStore,
@@ -221,7 +222,9 @@ export function createPostgresImportExecutor26(options) {
 /** The original full provider reads actual CORE progress before generating MAIN.
  * This does not produce source rows/commands or turn all53 into new claims. */
 export async function readCoreImportContinuation26(options) {
-  const o=bag(options,['pool','binding','runtime26','assertExecutionAllowed','warehouses']);
+  const o=bag(options,['pool','binding','runtime26','assertExecutionAllowed','warehouses',...(Object.hasOwn(options??{},'nativeStageContinuation26')?['nativeStageContinuation26']:[])]);
+  const nativeStageAuthority=o.nativeStageContinuation26===undefined?undefined:bag(o.nativeStageContinuation26,['version','capture','assertVerifiedContinuation']);
+  if(nativeStageAuthority)must(nativeStageAuthority.version===NATIVE_STAGE_CONTINUATION_VERSION26&&typeof nativeStageAuthority.capture==='function'&&typeof nativeStageAuthority.assertVerifiedContinuation==='function','IMPORT_EXECUTION26_NATIVE_STAGE_AUTHORITY');
   const b=binding(o.binding,VERSION_26),runtime=checkedNativeRuntime26Capability(o.runtime26);
   must(b.phase==='FULL_SOURCE_CONTINUATION_26_V1'&&runtime&&typeof o.pool?.connect==='function'&&typeof o.assertExecutionAllowed==='function','IMPORT_EXECUTION26_CONTINUATION');
   historySettlementRequestHash(o.warehouses);const warehouses=structuredClone(o.warehouses);
@@ -247,8 +250,18 @@ export async function readCoreImportContinuation26(options) {
       &&progress.actorAccountId===b.actorAccountId&&progress.fixedSourceNamespace===b.fixedSourceNamespace&&progress.selectionSha256===b.selectionSha256
       &&progress.checkpoint.counts.WAREHOUSE===claimed.size&&progress.claims.length===progress.checkpoint.cursor,'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');
     const remainingWarehouses=warehouses.filter(item=>!claimed.has(item.nativeRecord.id));must(remainingWarehouses.length+claimed.size===53,'IMPORT_EXECUTION26_CORE_RECORD_CONFLICT');
+    let nativeStagePrefixProof26=null,onVerified;
+    if(nativeStageAuthority){
+      const bind=progress.committedOperations.filter(op=>op.action==='IMPORT_BIND_FULL_SOURCE');
+      must(progress.status==='STAGED'&&progress.stagedPrefixProof22!==null&&bind.length===1&&!progress.committedOperations.some(op=>op.action==='IMPORT_CHUNK'||op.action==='IMPORT_PUBLISH'),'IMPORT_EXECUTION26_NATIVE_STAGE_CHECKPOINT');
+      const context={binding:structuredClone(b),checkpoint:structuredClone(progress.checkpoint),bind:{operationId:bind[0].operationId,requestKey:bind[0].requestKey,requestHash:bind[0].requestHash}};
+      const captured=captureNativeStageContinuationInput26(await nativeStageAuthority.capture(structuredClone(context)));
+      nativeStagePrefixProof26=await verifyCommittedNativeStagePrefix26(client,context,captured);onVerified=captured.onVerified;
+    }
+    const result={...structuredClone(progress),remainingWarehouses,nativeStagePrefixProof26};
     committing=true;await client.query('COMMIT');
-    return {...structuredClone(progress),remainingWarehouses};
+    if(onVerified)must(await onVerified(result)===undefined,'IMPORT_EXECUTION26_NATIVE_STAGE_VERIFIED_RESULT');
+    return result;
   }catch(error){
     if(!began||committing)discard=error instanceof Error?error:Error('Import continuation outcome unknown');
     else try{await client.query('ROLLBACK');}catch(rollback){discard=rollback;throw new AggregateError([error,rollback],'Import continuation read failed');}
