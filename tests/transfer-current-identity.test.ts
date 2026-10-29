@@ -22,7 +22,7 @@ function scenario(options: { action?: "SAVE" | "APPROVE" | "UNAPPROVE"; replay?:
   const action = options.action ?? "SAVE", who: TransferActor = { ...actor, role: options.role ?? actor.role,
     hallId: options.hallId === undefined ? actor.hallId : options.hallId };
   const value = draft();
-  const document: TransferDocument = { header: { ...value.header,
+  const document: TransferDocument = { header: { ...value.header, responsibleStaffId: value.header.responsibleStaffId ?? null,
     status: action === "UNAPPROVE" ? options.replay ? "DRAFT" : "APPROVED" : action === "APPROVE" && options.replay ? "APPROVED" : "DRAFT",
     version: version(options.replay ? action === "UNAPPROVE" ? 3 : 2 : action === "UNAPPROVE" ? 2 : 1),
     createdByAccountId: actor.accountId, createdHallId: actor.hallId, createdRole: actor.role,

@@ -11,7 +11,7 @@ const actions: readonly SalesAction[] = ["SAVE", "APPROVE", "UNAPPROVE", "VOID"]
 const time = "2026-10-20T12:00:00Z";
 function document(overrides: Partial<SalesDocument["header"]> = {}): SalesDocument {
   const draft = syntheticDraft();
-  return { ...draft, header: { ...draft.header, status: "DRAFT", version: version(1), createdByAccountId: actor.accountId,
+  return { ...draft, header: { ...draft.header, responsibleStaffId: draft.header.responsibleStaffId ?? null, status: "DRAFT", version: version(1), createdByAccountId: actor.accountId,
     createdHallId: actor.hallId, createdAt: time, updatedAt: time, approvedByAccountId: null, approvedAt: null, ...overrides } };
 }
 function actionFixture(identity: SalesCurrentIdentity = syntheticSalesIdentity()) {

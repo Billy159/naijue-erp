@@ -46,7 +46,7 @@ const rollback = (): Step => ({ sql: /^ROLLBACK$/ });
 const uow = (client: ProtocolClient): PostgresSalesUnitOfWork => new PostgresSalesUnitOfWork({ async connect() { return client; } });
 const time = "2026-10-20T12:00:00.000000Z";
 function storedDocument(draft: SalesDraft = syntheticDraft(), status: "DRAFT" | "APPROVED" = "DRAFT", docVersion = 1): SalesDocument {
-  return { ...draft, header: { ...draft.header, status, version: version(docVersion), createdByAccountId: actor.accountId, createdHallId: actor.hallId,
+  return { ...draft, header: { ...draft.header, responsibleStaffId: draft.header.responsibleStaffId ?? null, status, version: version(docVersion), createdByAccountId: actor.accountId, createdHallId: actor.hallId,
     createdAt: time, updatedAt: time, approvedByAccountId: status === "APPROVED" ? actor.accountId : null, approvedAt: status === "APPROVED" ? time : null } };
 }
 function headerRow(document: SalesDocument, basis = "RUNTIME_LEDGER"): Record<string, unknown> {

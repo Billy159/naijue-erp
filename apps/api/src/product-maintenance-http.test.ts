@@ -1,7 +1,7 @@
 /** Synthetic HTTP/application composition. No listener, real account or database. */
 import test from "node:test";
 import assert from "node:assert/strict";
-import Fastify from "fastify";
+import Fastify, { type LightMyRequestResponse } from "fastify";
 import { createProductMaintenanceHttpPlugin } from "./product-maintenance-http.ts";
 import type { ProductAggregate, ProductMaintenanceCommand, ProductMaintenanceDependencies, ProductMaintenanceEvidence, ProductWriteValues } from "../../../packages/application/src/product-maintenance-ports.ts";
 import { CATALOGUE_PRICE_KEYS } from "../../../packages/application/src/catalogue-price-input.ts";
@@ -150,7 +150,7 @@ test("A01 product HTTP carries exact capacity rejection without exposing private
     app.register(createProductMaintenanceHttpPlugin({ authenticate: async () => actor,
       dependencies: { now: () => "2026-10-29T00:00:00Z", newId: kind => sid(kind, 18100),
         unitOfWork: { async transaction() { throw new DomainError(code, "PRIVATE_CAPACITY_FACTS"); } } } }));
-    const response = await app.inject({ method: "POST", url: "/products/commands", payload: command });
+    const response: LightMyRequestResponse = await app.inject({ method: "POST", url: "/products/commands", payload: command });
     assert.equal(response.statusCode, status, response.body); assert.equal(response.json().error.code, code);
     assert.doesNotMatch(response.body, /PRIVATE_CAPACITY_FACTS/);
   }

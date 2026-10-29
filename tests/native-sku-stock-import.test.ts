@@ -421,8 +421,9 @@ function v18StockGroups() {
 }
 function v18BatchProtocol(kind: 'sku'|'stock', options: { replay?: boolean; failSecond?: boolean; denyPrecommit?: boolean; commitUnknown?: boolean; linked?: boolean; failRollback?: boolean } = {}) {
   const skuRows=v18SkuRows(), stockGroups=v18StockGroups();
-  const delegates=kind==='sku'?skuRows.map(input=>sku26Protocol({input,replay:options.replay}).client)
-    :stockGroups.map(()=>leaf26Protocol('stock',{replay:options.replay}).client);
+  const replay = options.replay === undefined ? {} : { replay: options.replay };
+  const delegates=kind==='sku'?skuRows.map(input=>sku26Protocol({input,...replay}).client)
+    :stockGroups.map(()=>leaf26Protocol('stock',replay).client);
   const calls:Array<{sql:string;values:unknown[]}>=[],releases:Array<unknown>=[];let current=0,proofs=0,connects=0;
   const answer=(rows:Record<string,unknown>[]=[])=>( {rows,rowCount:rows.length} );
   const client={async query(sql:string,values:unknown[]=[]){

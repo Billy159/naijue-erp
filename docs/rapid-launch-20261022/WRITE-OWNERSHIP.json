@@ -8001,7 +8001,7 @@
     "source": "SOURCE946 root after module fix14 diagnostics",
     "D1": {
       "owner": "01a16161-e65d-7742-8471-4b3c786ed314",
-      "status": "NOT_DISPATCHED_THREAD_NOT_FOUND_TWO_ATTEMPTS_NO_IMPLEMENTATION",
+      "status": "UNSTARTED_LEASE_WITHDRAWN_TO_C_NO_DELIVERY_NO_WIP",
       "files": [
         "apps/api/src/product-maintenance-http.test.ts",
         "tests/capacity-inventory.test.ts",
@@ -8026,6 +8026,35 @@
       "tests/product-query-postgres-protocol.test.ts"
     ],
     "scope": "Only current strict test fixture/type corrections consistent with existing approved identities/contracts. No production source, assertion weakening, expected-value laundering, excludes or any casts to hide errors. Meaningful mismatch report original owner.",
-    "basis": "Latest whole formal candidate goal/B12 actual failure; exact files verified tracked clean before dispatch"
+    "basis": "Latest whole formal candidate goal/B12 actual failure; exact files verified tracked clean before dispatch",
+    "C": {
+      "owner": "C/01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
+      "status": "HANDED_BACK_SOURCE_TYPES_ROOT1_DIRECTED48_BASELINE_FAILURES_OPEN",
+      "files": [
+        "apps/api/src/product-maintenance-http.test.ts",
+        "tests/capacity-inventory.test.ts",
+        "tests/integration/method-identity-acceptance.ts",
+        "tests/native-sales-schema11-source.test.ts",
+        "tests/native-sku-stock-import.test.ts",
+        "tests/postgres-protocol.test.ts",
+        "tests/sales-authorization.test.ts",
+        "tests/sales-business-rules.test.ts",
+        "tests/transfer-current-identity.test.ts",
+        "tests/integration/native-sales-schema11-acceptance.ts"
+      ],
+      "dispatch": "Initial plus one explicit local correction rejected; original routing retained, no replacement writer",
+      "handoff": "D1 never dispatched; all sends rejected, current prior scope read-only, exact files tracked clean. C explicitly withdraws unstarted lease and becomes sole writer.",
+      "scopeSupplement": "One clean test-only audit assertion helper: include current stored nullable responsibleStaffId in exact expected audit; do not remove any assertions or alter production audit. Triggered by actual directed failure after truthful persisted fixture normalization."
+    }
+  },
+  "b13AsyncCategorySuccessor": {
+    "owner": "F2/01a161d2-6bd9-7181-8386-1ecddddd386a",
+    "status": "HANDED_BACK_EXACT3_READ_ONLY",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/products/filters.tsx",
+      "apps/web/demo-replica/frontend/runtime/products/filter-contract.test.mjs",
+      "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx"
+    ],
+    "basis": "QF2 actual normal42 finding; user same-cause repair authority; no running candidate changed"
   }
 }

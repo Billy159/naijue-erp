@@ -11,7 +11,7 @@ import { PostgresCurrentFormReader } from "../../adapters/postgres/src/current-f
 import { readCurrentRecentAccount } from "../../adapters/postgres/src/current-account-recommendations.ts";
 import { createNativeTransactionSalesBusinessRules } from "../../packages/application/src/sales-native-facts.ts";
 import { createSalesService } from "../../packages/application/src/sales-service.ts";
-import type { SalesCommand, SalesResult } from "../../packages/application/src/ports.ts";
+import type { LegacySalesCommand, SalesResult } from "../../packages/application/src/ports.ts";
 import type { SalesDraft } from "../../packages/domain/src/documents.ts";
 import type { EntityId } from "../../packages/domain/src/values.ts";
 import { version } from "../../packages/domain/src/values.ts";
@@ -29,9 +29,9 @@ const makeDraft = (number: number, accountId = a, methodId = m1): SalesDraft => 
   const draft = salesDraft(number);
   return { ...draft, settlements: draft.settlements.map(row => ({ ...row, paymentAccountId: accountId, paymentMethodId: methodId })) };
 };
-const save = (draft: SalesDraft, requestKey: string, expectedVersion: number | null = null): SalesCommand => ({ actor, action: "SAVE", draft,
+const save = (draft: SalesDraft, requestKey: string, expectedVersion: number | null = null): LegacySalesCommand => ({ actor, action: "SAVE", draft,
   requestKey, expectedVersion: expectedVersion === null ? null : version(expectedVersion) });
-const approve = (salesId: EntityId<"sales">, requestKey: string, expectedVersion: number): SalesCommand => ({ actor, action: "APPROVE", salesId, requestKey, expectedVersion: version(expectedVersion) });
+const approve = (salesId: EntityId<"sales">, requestKey: string, expectedVersion: number): LegacySalesCommand => ({ actor, action: "APPROVE", salesId, requestKey, expectedVersion: version(expectedVersion) });
 
 /** Explicit fixture-only completeness provenance: all requested products must be the one synthetic nine-key fixture,
  * and the same original command transaction must re-read its exact persisted values. NOT a production/import verifier. */
@@ -68,7 +68,7 @@ async function eligible(pool: Pool, method: EntityId<"paymentMethod">) {
   return reader.readSalesReferences(readerActor, { kind: "paymentAccount", hallId: ids.hall, paymentMethodId: method,
     search: "SYNTHETIC IDENTITY ACCOUNT", page: 1, pageSize: 20 }, signal());
 }
-async function unchangedRejection(pool: Pool, service: ReturnType<typeof nativeService>, command: SalesCommand, code: string) {
+async function unchangedRejection(pool: Pool, service: ReturnType<typeof nativeService>, command: LegacySalesCommand, code: string) {
   const salesId = command.action === "SAVE" ? command.draft.header.id : command.salesId;
   const before = await commandSnapshot(pool, "SALES", salesId);
   await assert.rejects(service.execute(command), { code });

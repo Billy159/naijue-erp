@@ -82,7 +82,7 @@ test('A02 explicit symlink root/ancestor and overlapping roots refuse or reportU
 test('A02 root and ordinary ancestor overlap rejects in both orders before any pool or filesystem use',async()=>{
   let connects=0,fsCalls=0;
   const dependencies={pool:{async connect(){connects++;throw Error('Must not connect');}},fs:new Proxy({},{get(){fsCalls++;throw Error('Must not inspect filesystem');}})};
-  for(const [parent,child] of [['/','/synthetic-child'],['/synthetic-parent','/synthetic-parent/child']]){
+  for(const [parent,child] of [['/','/synthetic-child'],['/synthetic-parent','/synthetic-parent/child']] as const){
     for(const paths of [[parent,child],[child,parent]])await assert.rejects(inventoryCapacity(options(paths.map((value,index)=>({key:`root${index}`,path:value}))),dependencies),/OVERLAPPING_MEDIA_ROOTS_REFUSED/);
   }
   assert.equal(connects,0);assert.equal(fsCalls,0);

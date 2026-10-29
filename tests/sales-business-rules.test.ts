@@ -59,7 +59,7 @@ test("candidate adapter / synthetic: SALE positive; RETURN and EXCHANGE share in
     assert.equal(rules().inventoryDelta(document, value.lines[0]!), -BigInt(q));
   }
 });
-function fixtureDocumentHeader() { return { status: "DRAFT" as const, version: version(1), createdByAccountId: actor.accountId, createdHallId: actor.hallId,
+function fixtureDocumentHeader() { return { responsibleStaffId: null, status: "DRAFT" as const, version: version(1), createdByAccountId: actor.accountId, createdHallId: actor.hallId,
   createdAt: "2026-10-20T12:00:00Z", updatedAt: "2026-10-20T12:00:00Z", approvedByAccountId: null, approvedAt: null }; }
 
 test("candidate adapter / synthetic: direct deal prices may differ within one product and preserve old reference snapshots", () => {

@@ -44,7 +44,7 @@ function scripted(options: { badCount?: boolean; commitError?: Error; workError?
 /** Actual serializer output, synthetic driver row shape: NOT engine evidence. */
 function auditContractFixture() {
   const time = "2026-10-21T12:00:00.000Z", draft = syntheticDraft();
-  const document: SalesDocument = { ...draft, header: { ...draft.header, status: "DRAFT", version: version(1),
+  const document: SalesDocument = { ...draft, header: { ...draft.header, responsibleStaffId: draft.header.responsibleStaffId ?? null, status: "DRAFT", version: version(1),
     createdByAccountId: auditActor.accountId, createdHallId: auditActor.hallId, createdAt: time, updatedAt: time,
     approvedByAccountId: null, approvedAt: null } };
   const saved = { operationId: sid("operation", 901001), salesId: draft.header.id, version: 1, status: "DRAFT" as const, ledgerEntryIds: [] };

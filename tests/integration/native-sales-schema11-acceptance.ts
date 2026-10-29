@@ -47,7 +47,7 @@ export function assertNativeSaleCreateEvidence(input: {
   assert.ok(draft.lines.every(row => row.salesId === h.id), "each expected line belongs to this native document");
   assert.ok(draft.settlements.every(row => row.salesId === h.id), "each expected settlement belongs to this native document");
   const after = { header: { version: 1, number: h.number, businessType: h.businessType, businessDate: h.businessDate,
-    hallId: h.hallId, salespersonId: h.salespersonId, customerId: h.customerId, warehouseId: h.warehouseId, status: "DRAFT",
+    hallId: h.hallId, salespersonId: h.salespersonId, responsibleStaffId: h.responsibleStaffId ?? null, customerId: h.customerId, warehouseId: h.warehouseId, status: "DRAFT",
     grossAmount: h.grossAmount, orderDiscount: h.orderDiscount, netDue: h.netDue, note: h.note,
     updatedAt: time, approvedByAccountId: null, approvedAt: null },
   lines: draft.lines.map(row => ({ id: row.id, lineNo: row.lineNo, skuId: row.skuId, quantity: row.quantity,
