@@ -19822,5 +19822,15 @@
       "clarification": "legacy schemas through19; exact26 independent capability; never claim20..25 approved"
     },
     "B13": "SECOND_CAUSE_LABEL_SELECTION_FIX_EXACT3_HANDED_BACK_WAIT_BUILD_BROWSER"
+  },
+  "dotCurrentHandoff": {
+    "source": "8f346e0cf19f740f1a3da2ce2461c5396fce5cbc",
+    "candidate": "phase2-normal-8f346e0-44",
+    "url": "http://127.0.0.1:60096/#inventory",
+    "QF2": "FOUR_CATEGORY_SELECTION_SCENARIOS_DISPATCHED_RESULT_PENDING",
+    "QB949": "PASS_SCOPED_PROTOCOL_FIXTURES",
+    "actual267": "QB_AND_C_EXACT_METADATA_ACCEPTED_NOT_APP_STARTUP",
+    "T45": "SOURCE947_FOUR_CASE_EXECUTION_IN_PROGRESS;NO_FORMAL_DEPLOYMENT",
+    "reports": "reports/dot-handoff-current"
   }
 }

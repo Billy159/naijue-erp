@@ -1,0 +1,32 @@
+{
+  "version": "C_NATIVE_RUNTIME26_REVIEW_V1",
+  "decision": "ACCEPT_EXACT_RUNTIME26_TARGET_METADATA",
+  "target": {
+    "database": "naijue_erp_test_hv2_qa897_20261029_01",
+    "databaseOid": "21551",
+    "actingRole": "hv2_qa897_runtime_20261029_01",
+    "sessionUser": "hv2_qa897_runtime_20261029_01",
+    "serverAddress": "127.0.0.1/32",
+    "serverPort": 5432,
+    "postmasterStart": "2026-10-28 08:36:13.490836+00"
+  },
+  "catalog": {
+    "format": "EXACT26_RUNTIME_CATALOG_EXPORT_V1",
+    "sha256": "81a80e5c781af536d8581d3a4545490e208dd19c587417072c4b6fd9f546563c",
+    "patchLevel": "26_hv2_history_set_guards_from_v22"
+  },
+  "purposes": [
+    "PRODUCT_SEASONS_READ",
+    "CURRENT_CUSTOMER_READ_WRITE",
+    "CURRENT_FORM_READ",
+    "HISTORY_READ",
+    "INVENTORY_ADMISSION"
+  ],
+  "scope": "EXACT_TARGET_METADATA_ONLY",
+  "independentReview": {
+    "path": "/run/naijue-rewrite/runtime26/INDEPENDENT-REVIEW.json",
+    "sha256": "d2a76fc023a771b5adffb8b5e0f8b6a7b375e3b80e22c9a1ef70bb6b2d5a7b6a",
+    "result": "PASS"
+  },
+  "realImportExecutionAuthorized": false
+}

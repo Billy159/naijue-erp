@@ -1,0 +1,60 @@
+{
+  "taskId": "QB-SOURCE949",
+  "status": "PASS_THREE_TEST_FIXTURE_SOURCE_DELTA_ONLY_REAL_PG_NOT_TESTED",
+  "source": "9be6889ee97c0f299ccc1c9a1578c0eb861c292f",
+  "parent": "2434a672ea30e12435fd3ccfeece43ccee884dd4",
+  "scope": "Fixed Git blobs for three test leaves only; standards and current-contract review locally. No source edits, suite reruns, protected WIP reads or environment operations.",
+  "files": [
+    {
+      "relativePath": "tests/native-sku-stock-import.test.ts",
+      "bytes": 51608,
+      "sha256": "6e029ab17fcb5e5284d482aa71bd51731fe52a94fae72a32814904dc9161d869"
+    },
+    {
+      "relativePath": "tests/postgres-protocol.test.ts",
+      "bytes": 54663,
+      "sha256": "a515566224826697de20e182d63cdf06b3aa9ec91874bc7a99784f09f5cb24d1"
+    },
+    {
+      "relativePath": "tests/transfer-current-identity.test.ts",
+      "bytes": 12061,
+      "sha256": "360eb9cf0e5d96944a21fc79abea3646533eead82571951ad3638c69790f32dc"
+    }
+  ],
+  "standards": {
+    "findings": [],
+    "conclusion": "Three-leaf test-only scope preserved; no test deletion, skip additions, error-code weakening or production changes in reviewed diff."
+  },
+  "spec": {
+    "findings": [],
+    "checks": [
+      "Unreviewed exact1..27 rejects with the same three schema error codes, ROLLBACK, no INSERT/batch/target assertions. Version19 is a registered legacy prefix; changing the formerly future19 negative fixture is justified.",
+      "New successful SAVE only uses canonical V2-XS-000000000001; scripted allocation read binds SALES/document ID and returns original number/creator. Stored historical fixture numbers remain unchanged. Actual runtime allocator validates original actor/document/number with FOR SHARE.",
+      "Nullable responsible_staff_id follows actual sales/transfer projection and decoder; writer checks original responsible value at bind20, number at bind1, and version CAS $22 at bind21, matching the 21-column source writer.",
+      "Unknown COMMIT preserves original failure, exactly one COMMIT, no ROLLBACK and discard; this matches commitAttempted cleanup in original adapter. Existing rollback-failure test remains.",
+      "Original authorization, same-client identity, immutable creation, row ownership, audit, settlement and receipt assertions remain in fixed diff."
+    ]
+  },
+  "clarification": "Owner correction wording suggests REVIEWED_NATIVE_IMPORT_SCHEMA_CONTRACTS includes19 through26. Actual fixed source registers legacy through19; exact26 is a separate capability-gated branch and does not register20..25 or a generic legacy26 prefix. Current negative27 fixture is still correct; no blanket schema19..26 acceptance is inferred.",
+  "verification": {
+    "method": "git diff parent..fixed -- exact3 plus bounded original contract/adapter reads; actual byte/SHA checks of owner report, fixed3 and two logs",
+    "reusedEffectiveCases": 88,
+    "reusedBreakdown": {
+      "nativeSku": 28,
+      "sales": 49,
+      "transfer": 11
+    },
+    "evidence": "First batch88/72pass16salesfail, then sales49pass0fail; no rerun of earlier passing SKU/transfer. Both original evidence logs byte/SHA verified.",
+    "strict": "Three-root strict zero diagnostics adopted from owner receipt; not rerun or independently executed by QB.",
+    "newTestsExecuted": 0,
+    "suiteReruns": 0
+  },
+  "notMeasured": [
+    "Actual PostgreSQL parser/locking/transaction durability/role behavior",
+    "Global typecheck/full suite/build",
+    "Production deployment or runtime performance"
+  ],
+  "blocking": [],
+  "next": "C may adopt this exact three-leaf fixture delta; retain other task/global blockers and actual PG acceptance separately.",
+  "execution": "Requested gpt-6.1-sol/medium; actual model and Fast UNVERIFIED."
+}

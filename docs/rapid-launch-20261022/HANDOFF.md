@@ -1,3 +1,5 @@
+Dot同步：SOURCE950新候选normal44已构建，准确8f346e0/phase2-normal-8f346e0-44/60096/153资源/单次2.975s，QF2仅四选择场景复验已派未回；不是B13整体或真实业务PASS。QB949三叶限定PASS和ACTUAL267普通角色V1 metadata限定PASS已采用，C原格式review已交T45；SOURCE947真实四case在原T45执行中，两个获批权限暂保并须结束CAS撤回，不改正式。源码950无新增差异，当前推送补齐回执、对比报告与Dot准确断点，不重复造实现或启用旧WIP。
+
 SOURCE950：用户call_59165a3a4f0045ba9f5a17708ab51356/0明确批准本批隔离启动验证及最小权限变更，绑定原T45确认稿8e3835f4…/机器清单b4fb79dd…/固定947；已派原T45实际四case与必要运行闭包，不重复审批，不扩正式/真实数据/权限，执行尚未回执。原QB949三叶限定PASS已采用3738B/SHA70e1dcde…，88及strict复用；纠正文案：legacy注册到19，exact26独立capability，不能称19..26全部注册或20..25获准；27拒绝夹具正确，生产规则未变。B13原F2搜索后label选择第二根因已确证Arco optionChecked自动清空触发cleanup取消同次异步choose，两页只将自动清空移至成功提交后，手工关闭/搜索/范围取消保持；exact3 pins已交还，真实Arco两页ALL减子49/none加子1及原选择回归通过，实际新候选待构建复验；normal43局部显示修复不算整项PASS。
 
 接续补充：D2已实证受保护+13为原被否决跨组v11历史RED/skip草稿，与原D2/ALL-SIZE-SKU-SEAM-v1记录before SHA09303ec1…完全匹配；仅在该草稿内部新增非空断言后after SHAff0a526d…，不改业务规则或skip。因新行位于原未提交块内，C不stage整叶，+14继续保全，不把旧草稿混入正式提交。当前工作目录根tsc exit0/0诊断（包括该保全WIP），不是demo-runtime typecheck或真实业务通过；未重全测试。SOURCE949远端已准确回读9be6889e。normal43 B13两页匹配树显示/清空局部已修，选择提交未确认，F2重新接同三叶唯一修复，QF2有限范围已交回不扩大重测。

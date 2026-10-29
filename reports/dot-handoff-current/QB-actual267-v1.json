@@ -1,0 +1,91 @@
+{
+  "taskId": "QB-ACTUAL267-V1",
+  "decision": "PASS",
+  "result": "PASS",
+  "scope": "EXACT_TARGET_METADATA_ONLY",
+  "sourceCommit": "482d883c4b4f7cb78ee673705bd75a804cdec1f1",
+  "jobId": "t45-source947-two-atoms-catalog-20261029-267",
+  "target": {
+    "database": "naijue_erp_test_hv2_qa897_20261029_01",
+    "databaseOid": "21551",
+    "actingRole": "hv2_qa897_runtime_20261029_01",
+    "sessionUser": "hv2_qa897_runtime_20261029_01",
+    "serverAddress": "127.0.0.1/32",
+    "serverPort": 5432,
+    "postmasterStart": "2026-10-28 08:36:13.490836+00"
+  },
+  "catalog": {
+    "format": "EXACT26_RUNTIME_CATALOG_EXPORT_V1",
+    "sha256": "81a80e5c781af536d8581d3a4545490e208dd19c587417072c4b6fd9f546563c",
+    "patchLevel": "26_hv2_history_set_guards_from_v22"
+  },
+  "purposes": [
+    "PRODUCT_SEASONS_READ",
+    "CURRENT_CUSTOMER_READ_WRITE",
+    "CURRENT_FORM_READ",
+    "HISTORY_READ",
+    "INVENTORY_ADMISSION"
+  ],
+  "realImportExecutionAuthorized": false,
+  "reviewMeaning": "Independent review accepts the exact ordinary-role V1 metadata observation and its compatibility with the five existing issuer purpose names. This is not SQL permission sufficiency, business-operation PASS, application startup, source authorization or approval for new actions. C may bind this independent artifact in its original C_NATIVE_RUNTIME26_REVIEW_V1 using exactly this target/catalog/purpose set.",
+  "checks": {
+    "receiptPins": "ACTUAL267 and all six listed export pins independently matched bytes/SHA",
+    "querySource": "Actual22210-byte metadata SQL equals evaluated SOURCE947 NATIVE_RUNTIME26_HV2_HISTORY_SET_FROM_V22_METADATA_PROBE exactly; SHA d8cf9b3d92217efa6addaef6f116862bb0288d6e2f4e763fa991a9737b0d9659. Identity SQL also exactly matches fixed source. Local evaluation only; no PG execution.",
+    "metadataShape": "One ordinary-role row with exact four fields, exact identity, versions1..26, source_routines_match true and original PostgreSQL catalog digest; no digest substitution by JSON file hash.",
+    "profile": "V1 history-set135 source branch, not source-xmin V2, maintenance V3 or preparation V4. No xmin-specific claims.",
+    "aclDelta": "Before false/false, after schema USAGE and schema_migration.version SELECT true; CREATE and table SELECT remain false. Owner21549/runtime21550, no role membership or elevated flags. Explicit non-grantable owner-issued ACL entries.",
+    "transaction": "Original receipt COMMIT returned success; ordinary metadata RR READ ONLY, ROLLBACK returned and both original clients closed.",
+    "physicalBinding": "Carrier original PG CID4ef68faedf28b431cd884fedc5a40435f20b2bc16ea6475e59424426a54a8251/PID2419003 unchanged and original postmaster matched; application connection route remains unproved."
+  },
+  "limitations": [
+    "Full catalog preimage not exported in this four-field ordinary V1 receipt; canonical digest and routine-match are adopted from exact executed original probe, not independently recomputed from full catalog.",
+    "Five purposes are valid finite metadata capability labels; no actual business read/write or purpose permission sufficiency has been tested here.",
+    "Application not started, same app-owned pool metadata verification and four actual CLI cases not executed here.",
+    "Two temporary permission atoms are still present at receipt time. Batch-end CAS withdrawal and effective restoration require original T45 completion evidence; no restoration PASS.",
+    "No new SQL, ACL, network, mounts, containers, private credential access or server operations by QB."
+  ],
+  "findings": [],
+  "inputs": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source947-two-atoms-catalog-20261029-267/ACTUAL267-RESULT.json",
+      "bytes": 6236,
+      "sha256": "9933a28f28ca4c2a985523ec9d2499f967310658b49a533f60e4f2454e9036e0"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source947-two-atoms-catalog-20261029-267/release-submission/release-receipts/t45-source947-two-atoms-catalog-20261029-267/job.json",
+      "bytes": 639,
+      "sha256": "63ded7ba8ee89a02ff03e50cbb2da2f36da8bd0f1424780e538cfbdc22b212e2"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source947-two-atoms-catalog-20261029-267/release-submission/release-receipts/t45-source947-two-atoms-catalog-20261029-267/acl-before.json",
+      "bytes": 995,
+      "sha256": "2feb56e27b88373940875eb4a60d3e858f574e22818851d0d2e1615bc3369955"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source947-two-atoms-catalog-20261029-267/release-submission/release-receipts/t45-source947-two-atoms-catalog-20261029-267/acl-post.json",
+      "bytes": 1202,
+      "sha256": "36c3da550bce872ea163ec7eb9d56ec05f1aa27b4b7c0665bb96743a4e56a099"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source947-two-atoms-catalog-20261029-267/release-submission/release-receipts/t45-source947-two-atoms-catalog-20261029-267/runtime-catalog.json",
+      "bytes": 1729,
+      "sha256": "c3af21998a5962f6e140ccaa14ac4c5e3088c907764c5357893ab6c91f0dd35b"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source947-two-atoms-catalog-20261029-267/release-submission/release-receipts/t45-source947-two-atoms-catalog-20261029-267/acl-catalog-result.json",
+      "bytes": 3947,
+      "sha256": "55dd2d3d9bc05c7b9a18f8f59b817babb6e1d2e1b2f2681710832a53eca7a024"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-source947-two-atoms-catalog-20261029-267/release-submission/release-receipts/t45-source947-two-atoms-catalog-20261029-267/two-atoms-carrier.json",
+      "bytes": 2504,
+      "sha256": "510df880fec65e473a8b0c90bcc725a1e5a7f2873ded27910551a8f8aece4d9d"
+    }
+  ],
+  "next": "C bind this exact independent review and current target/catalog in original V1 review. Original T45 alone continues already-approved scoped isolated execution and closes batch with accurate CAS withdrawal evidence. Recheck original target/catalog if changed.",
+  "model": {
+    "requested": "gpt-6.1-sol/medium",
+    "actual": "UNVERIFIED",
+    "fast": "UNVERIFIED"
+  }
+}

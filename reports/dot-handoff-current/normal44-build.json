@@ -1,0 +1,90 @@
+{
+  "status": "PASS_SOURCE950_FRONTEND44_ONE_BUILD_SERVE_HTTP_ONLY_NOT_BUSINESS",
+  "source": "8f346e0cf19f740f1a3da2ce2461c5396fce5cbc",
+  "build": "phase2-normal-8f346e0-44",
+  "port": 60096,
+  "pid": 78504,
+  "urls": {
+    "inventory": "http://127.0.0.1:60096/#inventory",
+    "products": "http://127.0.0.1:60096/#products",
+    "transfer": "http://127.0.0.1:60096/#transfer",
+    "sales": "http://127.0.0.1:60096/#sales"
+  },
+  "resources": 153,
+  "buildSeconds": 2.975,
+  "buildInvocations": 1,
+  "chunkClosureMissing": [],
+  "affectedConsumers": [
+    {
+      "file": "assets/index-jZO66tLG.js",
+      "affectedModules": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8f346e0-phase2-44/source/apps/web/demo-replica/frontend/runtime/products/filters.tsx"
+      ]
+    },
+    {
+      "file": "assets/pagination-B-8M5fsS.js",
+      "affectedModules": [
+        "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8f346e0-phase2-44/source/apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx"
+      ]
+    }
+  ],
+  "syntheticOnly": true,
+  "dataset": "demo-reference-v1",
+  "CSP": "connect-src 'none'",
+  "PG": false,
+  "backendBuild": false,
+  "dependencyInstall": false,
+  "browserRun": false,
+  "rootTypeCheck": "NOT_RUN",
+  "protectedServers": [
+    {
+      "port": 57923,
+      "pid": 10937,
+      "samePidReadback": true,
+      "action": "NONE"
+    },
+    {
+      "port": 64966,
+      "pid": 64488,
+      "samePidReadback": true,
+      "action": "NONE"
+    },
+    {
+      "port": 53567,
+      "pid": 70921,
+      "samePidReadback": true,
+      "action": "NONE"
+    }
+  ],
+  "nextAffectedScope": "QF2 only product/inventory search then label selection from ALL and none; no full regression",
+  "actual947ServerTask": "Separate exact SOURCE947; UI44 is not PG/runtime proof",
+  "actualModelAndEffort": "UNVERIFIED",
+  "Fast": "UNVERIFIED",
+  "evidence": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8f346e0-phase2-44/SOURCE-EXPORT-RESULT.json",
+      "bytes": 3380,
+      "sha256": "ca0bf64dc4eaea98fe29b77b6226da6cf904501f1278d52d66a7cabf0bcd57bc"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8f346e0-phase2-44/BUILD-RESULT.json",
+      "bytes": 755,
+      "sha256": "2191f580020facd0d9d70d375c3c3c014919c08446d55d35bd0d62b083184039"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8f346e0-phase2-44/RESOURCE-MANIFEST.json",
+      "bytes": 26051,
+      "sha256": "e0e06b9cb6e704c46993296b99d77ae4ed40802f89e022e01a1892fa167cc29c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8f346e0-phase2-44/HTTP-RESULT.json",
+      "bytes": 1147,
+      "sha256": "bd49db5e1a4cf4f075bbc3ef4e965ad615b93df9f05e819d07d0e86e95df9742"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8f346e0-phase2-44/SERVER.json",
+      "bytes": 219,
+      "sha256": "f9e13690c5603c294ca6a2c86c1b8769d822dedc82378e5ee6b5bcbbf77e59cf"
+    }
+  ]
+}
