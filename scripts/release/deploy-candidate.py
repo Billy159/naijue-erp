@@ -21,6 +21,7 @@ import subprocess
 import tarfile
 import time
 import threading
+import pwd
 
 ROOT = Path('/srv/naijue-erp/rapid-launch-20261022')
 OLD = Path('/srv/naijue-erp/prod')
@@ -1028,58 +1029,224 @@ def capacity_process_tuple(p, docker, cid, phase='shell'):
     return {k: value[k] for k in ('pid', 'linuxStartTicks', 'linuxBootId')}
 
 
+
+def capacity_transport_json(raw):
+    def pairs(rows):
+        value = {}
+        for key, item in rows:
+            need(key not in value, 'DUPLICATE_CAPACITY_TRANSPORT_KEY'); value[key] = item
+        return value
+    return json.loads(raw.decode('utf8'), object_pairs_hook=pairs,
+                      parse_constant=lambda _: (_ for _ in ()).throw(Refused('FINITE_CAPACITY_TRANSPORT_JSON_REQUIRED')))
+
+
+def capacity_control_read(filename, owner_uid, limit=65536):
+    source = canonical(filename, private=True)
+    before = source.lstat()
+    need(before.st_uid == owner_uid and before.st_nlink == 1 and before.st_size <= limit, 'EXACT_CAPACITY_CONTROL_OWNER_REQUIRED')
+    return bytes_file(source, limit, private=True)
+
+
+def capacity_control_summary(directory, name, value):
+    need(name in ('gate-ready.json', 'content-ready.json', 'delivery-result.json'), 'FINITE_CAPACITY_SUMMARY_NAME')
+    need(os.geteuid() == 0, 'ORIGINAL_ROOT_CONTROLLER_SUMMARY_REQUIRED')
+    path = directory / name
+    new_json(path, value)
+    # This newly-created safe summary is readable to the control owner, but stays root-owned.
+    os.chmod(path, 0o644)
+    return digest(encoded(value))
+
+
+def capacity_wait_control_packet(p, docker, cid, directory, uid, phase, scope, deadline):
+    names = {'CONTENT': ('capacity-launch.json', 'owner-profile.json', 'content-manifest.json'),
+             'APPROVAL': ('approved-final-delivery.json', 'approval-manifest.json')}[phase]
+    marker = directory / (phase.lower() + '.complete')
+    while True:
+        need(time.monotonic() < deadline and time.time()*1000 < scope['deadlineAt'], 'CAPACITY_OWNER_FINAL_INPUT_DEADLINE')
+        state = docker.inspect(cid, 3)
+        need(state['Id'] == cid and state['State']['Running'], 'CAPACITY_GATE_EXITED_BEFORE_APPROVAL')
+        if os.path.lexists(marker):
+            data = capacity_control_read(marker, uid, 64)
+            # A marker can be visible between O_EXCL and its sole atomic short write.
+            if len(data) == 64: break
+            need(len(data) == 0, 'CAPACITY_COMPLETE_MARKER_INVALID')
+        time.sleep(min(.05, max(0, deadline-time.monotonic())))
+    need(re.fullmatch(b'[a-f0-9]{64}', data), 'CAPACITY_COMPLETE_FINGERPRINT_REQUIRED')
+    files = {name: capacity_control_read(directory/name, uid) for name in names}
+    need(sum(map(len, files.values())) <= 196608, 'CAPACITY_CONTROL_BATCH_LIMIT')
+    records = {name: {'text': raw.decode('utf8'), 'bytes': len(raw), 'sha256': digest(raw)} for name, raw in files.items()}
+    request_sha = digest(encoded({'phase': phase, 'scope': scope, 'files': records}))
+    need(request_sha.encode() == data, 'CAPACITY_CONTROL_PACKET_FINGERPRINT_CHANGED')
+    manifest = capacity_transport_json(files[names[-1]])
+    expected_keys = ('format', 'scope', 'files') if phase == 'CONTENT' else ('format', 'scope', 'files', 'decisionReference')
+    capacity_bag(manifest, expected_keys)
+    need(manifest['format'] == ('CAPACITY_CONTENT_MANIFEST_V1' if phase == 'CONTENT' else 'CAPACITY_APPROVAL_MANIFEST_V1') and
+         manifest['scope'] == scope and manifest['files'] == {n: {'bytes': len(files[n]), 'sha256': digest(files[n])} for n in names[:-1]}, 'CAPACITY_MANIFEST_SCOPE_CHANGED')
+    return files, request_sha
+
+
+def capacity_frozen_identity(filename):
+    return {**file_identity(filename), 'ctimeNs': Path(filename).lstat().st_ctime_ns}
+
+
+def capacity_install_content(p, scope, files, provisional, provisional_profile, private):
+    """Only two typed operational objects enter. Credentials remain in the original private runtime in memory."""
+    c = capacity_transport_json(files['capacity-launch.json'])
+    profile = capacity_transport_json(files['owner-profile.json'])
+    need(type(c) is dict and set(c) == {'schemaVersion','profile','target','window','process','budgets','minimumFreeBytes','safetyBytes',
+         'probeTtlMillis','probeTimeoutMillis','maxProbeWaiters','retryAfterSeconds','producer'}, 'ONLY_CAPACITY_CONTENT_ALLOWED')
+    need(c['process'] == scope['process'] and digest(encoded(c['target'])) == scope['targetFingerprint'] and
+         c.get('window', {}).get('binding', {}).get('candidateFingerprint') == scope['sourceCommit'] and
+         c.get('window', {}).get('binding', {}).get('targetFingerprint') == scope['targetFingerprint'] and
+         c.get('window', {}).get('expiresAt', float('inf')) <= scope['deadlineAt'], 'CAPACITY_CONTENT_APPROVED_SCOPE_MISMATCH')
+    need(file_identity(p['runtimeConfiguration']['path']) == provisional and
+         file_identity(p['capacityHost']['profile']['hostFile']) == provisional_profile, 'PROVISIONAL_PRIVATE_INODES_CHANGED')
+    runtime = json_file(p['runtimeConfiguration']['path'], private=True)
+    need('capacityLaunch' not in runtime, 'PROVISIONAL_MUST_NOT_CONTAIN_OLD_APPROVAL')
+    final = json.loads(json.dumps(p))
+    profile_bytes = encoded(profile)
+    need(len(profile_bytes) <= 65536, 'CAPACITY_PROFILE_SIZE_LIMIT')
+    same_inode_runtime_write(p['capacityHost']['profile']['hostFile'], provisional_profile, profile_bytes)
+    final['capacityHost']['profile']['sha256'] = digest(profile_bytes)
+    runtime['capacityLaunch'] = c
+    # Validate the whole data shape against the original business object BEFORE runtime mutation.
+    capacity_runtime_configuration(final, runtime)
+    final['runtimeConfiguration']['identity'] = same_inode_runtime_write(p['runtimeConfiguration']['path'], provisional, encoded(runtime))
+    final_ref = {'path': str(private/'approved-capacity-final-plan.json'), 'sha256': digest(encoded(final))}
+    new_json(final_ref['path'], final)
+    return final, final_ref
+
+
+
+_CAPACITY_ORIGINAL_OWNER_PROOF = object()
+
+
+def capacity_original_owner_authority(p, scope, directory, authority, authority_ref):
+    """Consume the existing lease and frozen job delegation, not a new dynamic signing/approval system."""
+    need(os.geteuid() == 0 and os.environ.get('ERP_SHARED_TASK_ID') == 'T45', 'ORIGINAL_T45_ROOT_PHASE_REQUIRED')
+    job = canonical(Path(os.environ.get('ERP_SHARED_JOB_DIR', '/nonexistent')), kind='directory', private=True)
+    control = canonical(Path(os.environ.get('ERP_SHARED_CONTROL_DIR', '/nonexistent')), kind='directory', private=True)
+    need(job.name == scope['jobId'] == control.name and directory == control/'capacity-final', 'ORIGINAL_LIVE_JOB_CHANNEL_REQUIRED')
+    config_path = Path('/usr/local/lib/naijue-erp-night')/('grant-'+scope['grantId'])/'grant.json'
+    grant_file = canonical(config_path)
+    need(grant_file.stat().st_uid == 0 and not grant_file.stat().st_mode & 0o022, 'ORIGINAL_ROOT_GRANT_CONFIGURATION_REQUIRED')
+    grant = json_file(grant_file)
+    need(grant.get('grantId') == scope['grantId'] and grant.get('scope') == 'ERP_EXISTING_TASKS_THROUGH_T51' and
+         not grant.get('revoked') and type(grant.get('expiresAtEpoch')) in (int, float) and
+         time.time()*1000 < scope['deadlineAt'] <= grant['expiresAtEpoch']*1000 and
+         grant.get('private') == str(job.parent.parent) and grant.get('control') == str(control.parent.parent) and
+         grant.get('humanAuthorization', {}).get('sourceChat') == '01a0f6f9-0e2f-7be0-b410-2001c6f81356', 'ORIGINAL_ACTIVE_HUMAN_GRANT_REQUIRED')
+    account = pwd.getpwnam(grant['user'])
+    need(control.stat().st_uid == directory.stat().st_uid == account.pw_uid and
+         control.stat().st_gid == directory.stat().st_gid == account.pw_gid and account.pw_uid != 0, 'ORIGINAL_AUTHENTICATED_CONTROL_OWNER_REQUIRED')
+    request_file = canonical(job/'request.json', private=True)
+    manifest_file = canonical(job/'bundle/bundle-manifest.json', private=True)
+    need(job.stat().st_uid == request_file.stat().st_uid == manifest_file.stat().st_uid == 0, 'ROOT_FROZEN_ORIGINAL_REQUEST_REQUIRED')
+    request = json_file(request_file, private=True)
+    receipt = json_file(control.parent.parent/'results'/(job.name+'.json'))
+    need(receipt.get('status') == 'RUNNING' and receipt.get('jobId') == scope['jobId'] and receipt.get('taskId') == 'T45' and
+         receipt.get('grantId') == scope['grantId'], 'ORIGINAL_JOB_MUST_STILL_BE_RUNNING')
+    manifest_raw = bytes_file(manifest_file, 131072, private=True)
+    manifest = capacity_transport_json(manifest_raw)
+    need(request.get('jobId') == scope['jobId'] and request.get('taskId') == 'T45' and request.get('grantId') == scope['grantId'] and
+         request.get('scope') == grant['scope'] and request.get('manifestSha256') == digest(manifest_raw) and
+         manifest.get('jobId') == scope['jobId'] and manifest.get('taskId') == 'T45', 'ORIGINAL_REQUEST_MANIFEST_BINDING_REQUIRED')
+    records = {r['name']: r for r in manifest.get('files', [])}
+    frozen_authority = canonical(job/'bundle/capacity-input-authority.json', private=True)
+    frozen_helper = canonical(job/'bundle/deploy-candidate.py', private=True)
+    need(frozen_authority.stat().st_uid == frozen_helper.stat().st_uid == 0 and
+         file_hash(frozen_helper) == scope['helperSha256'], 'ROOT_FROZEN_AUTHORITY_AND_HELPER_REQUIRED')
+    need(authority_ref['path'] == str(job/'bundle/capacity-input-authority.json') and
+         records.get('capacity-input-authority.json', {}).get('sha256') == authority_ref['sha256'] and
+         records.get('deploy-candidate.py', {}).get('sha256') == scope['helperSha256'] == file_hash(Path(__file__)) and
+         reference(authority_ref) == authority and authority.get('action') == 'ONE_FINAL_CAPACITY_PLAN_ONLY' and
+         authority.get('target') is not None and digest(encoded(authority['target'])) == scope['targetFingerprint'] and
+         authority.get('sourceCommit') == scope['sourceCommit'] and authority.get('deadlineAt') == scope['deadlineAt'] and
+         authority.get('operationId') == p['operationId'] and authority.get('buildId') == p['buildId'], 'ORIGINAL_SCOPED_FINAL_INPUT_DELEGATION_REQUIRED')
+    # This original authenticated account already has the scoped ONE_FINAL input
+    # delegation. Its later exact decision is DATA consumed under that authority,
+    # not an authority inferred from uid0, a JSON claim, nonce or a new signature.
+    return _CAPACITY_ORIGINAL_OWNER_PROOF
+
+
+def capacity_verify_final_decision(authority, scope, ready, ready_sha, approval, owner_proof=None):
+    capacity_bag(approval, ('format','scope','decisionReference','decision','contentReadySha256','finalPlanSha256'))
+    ref = capacity_bag(approval['decisionReference'], ('sourcePath','sha256'))
+    decision = capacity_bag(approval['decision'], ('format','scope','contentReadySha256','finalPlanSha256','finalRuntimeIdentity','finalProfileIdentity','authority'))
+    need(approval['format'] == 'CAPACITY_APPROVED_DELIVERY_V1' and approval['scope'] == scope and
+         approval['contentReadySha256'] == ready_sha and approval['finalPlanSha256'] == ready['finalPlanSha256'] and
+         decision['format'] == 'C_APPROVED_CAPACITY_FINAL_PLAN_V1' and decision['scope'] == scope and decision['authority'] == scope['authority'] and
+         decision['contentReadySha256'] == ready_sha and decision['finalPlanSha256'] == ready['finalPlanSha256'] and
+         decision['finalRuntimeIdentity'] == ready['finalRuntimeIdentity'] and decision['finalProfileIdentity'] == ready['finalProfileIdentity'] and
+         isinstance(ref['sourcePath'], str) and Path(ref['sourcePath']).is_absolute() and Path(ref['sourcePath']).name == 'C-CAPACITY-FINAL-APPROVAL.json' and
+         ref['sha256'] == digest(encoded(decision)), 'C_FINAL_DECISION_SCOPE_OR_BYTES_CHANGED')
+    # No circular pre-binding of unpredictable final ctime/plan bytes. The root
+    # derives this capability only by revalidating its original active grant,
+    # frozen request/manifest, scoped delegation and original control account.
+    need(owner_proof is _CAPACITY_ORIGINAL_OWNER_PROOF, 'ORIGINAL_FINAL_INPUT_AUTHORITY_UNCONFIRMED')
+
+    return True
+
+
 def wait_capacity_owner_final(p, docker, cid, process, provisional, provisional_profile, journal):
-    """One original bounded controller keeps ownership while its original private control channel delivers an approved final plan."""
     gate = capacity_gate_binding(p)
     delivery = capacity_bag(p.get('capacityFinalInput'), ('path', 'authority'))
-    need(capacity_path(delivery['path']) and Path(delivery['path']).is_relative_to(Path(os.environ.get('ERP_SHARED_JOB_DIR', '/nonexistent')) / 'inputs-private'), 'ORIGINAL_JOB_PRIVATE_FINAL_INPUT_REQUIRED')
+    private_job = Path(os.environ.get('ERP_SHARED_JOB_DIR', '/nonexistent'))
+    private = canonical(Path(delivery['path']).parent, kind='directory', private=True)
+    need(private == private_job/'inputs-private' and private.stat().st_uid == 0 and
+         Path(delivery['path']).name == 'approved-capacity-final-delivery.json', 'ORIGINAL_JOB_FIXED_PRIVATE_DESTINATION_REQUIRED')
     authority_ref = capacity_bag(delivery['authority'], ('path', 'sha256'))
+    need(authority_ref['path'] == str(private_job/'bundle/capacity-input-authority.json'), 'ORIGINAL_FROZEN_AUTHORITY_REQUIRED')
     authority = reference(authority_ref)
-    capacity_bag(authority, ('format', 'jobId', 'operationId', 'buildId', 'sourceCommit', 'archiveSha256', 'target', 'deadlineAt', 'controlOwnerUid', 'action'))
+    keys = {'format','jobId','operationId','buildId','sourceCommit','archiveSha256','target','deadlineAt','controlOwnerUid','action'}
+    need(type(authority) is dict and set(authority) == keys, 'CLOSED_ORIGINAL_CAPACITY_AUTHORITY_REQUIRED')
     need(authority['format'] == 'OWNER_CAPACITY_FINAL_INPUT_AUTHORITY_V1' and authority['action'] == 'ONE_FINAL_CAPACITY_PLAN_ONLY' and
-         authority['controlOwnerUid'] == 0 and authority['jobId'] == Path(os.environ.get('ERP_SHARED_JOB_DIR', '')).name and
-         authority['operationId'] == p['operationId'] and authority['buildId'] == p['buildId'] and authority['sourceCommit'] == p['sourceCommit'] and
-         authority['archiveSha256'] == p['archive']['sha256'] and authority['deadlineAt'] == gate['deadlineAt'], 'EXACT_ORIGINAL_CAPACITY_AUTHORITY_REQUIRED')
-    parent = canonical(Path(delivery['path']).parent, kind='directory', private=True)
-    need(parent.stat().st_uid == 0, 'ORIGINAL_OWNER_FINAL_INPUT_DIRECTORY_REQUIRED')
-    deadline = time.monotonic() + max(0, (gate['deadlineAt']-time.time()*1000)/1000)
-    while True:
-        need(time.monotonic() < deadline and time.time()*1000 < gate['deadlineAt'], 'CAPACITY_OWNER_FINAL_INPUT_DEADLINE')
-        info = docker.inspect(cid, 3)
-        need(info['Id'] == cid and info['State']['Running'], 'CAPACITY_GATE_EXITED_BEFORE_APPROVAL')
-        if Path(delivery['path']).exists(): break
-        time.sleep(min(0.05, max(0, deadline-time.monotonic())))
-    source = canonical(delivery['path'], private=True)
-    need(source.stat().st_uid == 0, 'FINAL_INPUT_CONTROL_OWNER_REQUIRED')
-    need(file_identity(p['runtimeConfiguration']['path'])['inode'] == provisional['inode'], 'PROVISIONAL_RUNTIME_INODE_REPLACED')
-    body = json.loads(bytes_file(source, 65536, private=True))
-    capacity_bag(body, ('format', 'authority', 'containerId', 'process', 'provisionalRuntimeIdentity', 'provisionalProfileIdentity', 'fifoIdentity', 'helperSha256', 'finalRuntimeCtimeNs', 'finalProfileCtimeNs', 'finalPlan'))
-    need(body['format'] == 'OWNER_CAPACITY_FINAL_PLAN_DELIVERY_V1' and body['authority'] == authority_ref and body['containerId'] == cid and body['process'] == process and
-         body['provisionalRuntimeIdentity'] == provisional and body['provisionalProfileIdentity'] == provisional_profile and body['fifoIdentity'] == gate['identity'] and
-         body['helperSha256'] == file_hash(Path(__file__)), 'EXACT_FINAL_CAPACITY_DELIVERY_REQUIRED')
-    final_ref = capacity_bag(body['finalPlan'], ('path', 'sha256'))
-    need(Path(final_ref['path']).is_relative_to(parent), 'FINAL_PLAN_OUTSIDE_ORIGINAL_PRIVATE_CHANNEL')
-    final_source = canonical(final_ref['path'], private=True)
-    need(final_source.stat().st_uid == 0, 'FINAL_PLAN_CONTROL_OWNER_REQUIRED')
-    final = reference(final_ref)
-    need(type(final) is dict and set(final) == set(p), 'FINAL_PLAN_SHAPE_CHANGED')
-    for key in p:
-        if key not in ('runtimeConfiguration', 'capacityHost'): need(final[key] == p[key], 'FINAL_PLAN_SCOPE_OR_CAS_CHANGED')
-    original_host = json.loads(json.dumps(p['capacityHost']))
-    final_host = json.loads(json.dumps(final['capacityHost']))
-    original_host['profile'].pop('sha256'); final_host['profile'].pop('sha256')
-    need(original_host == final_host, 'FINAL_PRODUCER_SCOPE_CHANGED')
-    profile_identity = file_identity(final['capacityHost']['profile']['hostFile'])
-    need(all(profile_identity[k] == body['provisionalProfileIdentity'][k] for k in ('device', 'inode', 'uid', 'gid', 'mode')), 'FINAL_OWNER_PROFILE_INODE_CHANGED')
-    need(final['runtimeConfiguration']['path'] == p['runtimeConfiguration']['path'] and
-         all(final['runtimeConfiguration']['identity'][key] == provisional[key] for key in ('device', 'inode', 'uid', 'gid', 'mode')), 'FINAL_RUNTIME_MUST_KEEP_PRIVATE_INODE')
-    need(file_identity(final['runtimeConfiguration']['path']) == final['runtimeConfiguration']['identity'] and
-         Path(final['runtimeConfiguration']['path']).lstat().st_ctime_ns == body['finalRuntimeCtimeNs'] and
-         Path(final['capacityHost']['profile']['hostFile']).lstat().st_ctime_ns == body['finalProfileCtimeNs'], 'FINAL_RUNTIME_IDENTITY_UNCONFIRMED')
-    runtime = json_file(final['runtimeConfiguration']['path'], private=True)
-    need(runtime.get('capacityLaunch', {}).get('target') == authority['target'] and runtime.get('capacityLaunch', {}).get('process') == process, 'FINAL_APPROVED_TARGET_PROCESS_MISMATCH')
-    journal.event('CAPACITY_EXACT_FINAL_INPUT_RECEIVED', containerId=cid)
-    return final, final_ref
+         authority['controlOwnerUid'] == 0 and authority['jobId'] == private_job.name and authority['operationId'] == p['operationId'] and
+         authority['buildId'] == p['buildId'] and authority['sourceCommit'] == p['sourceCommit'] and authority['archiveSha256'] == p['archive']['sha256'] and
+         authority['deadlineAt'] == gate['deadlineAt'], 'EXACT_ORIGINAL_CAPACITY_AUTHORITY_REQUIRED')
+    control = canonical(Path(os.environ.get('ERP_SHARED_CONTROL_DIR', '/nonexistent')), kind='directory', private=True)
+    need(control.name == private_job.name and control.parent.name == 'jobs' and control.stat().st_uid != 0, 'ORIGINAL_UNPRIVILEGED_CONTROL_JOB_REQUIRED')
+    uid, gid = control.stat().st_uid, control.stat().st_gid
+    directory = control/'capacity-final'
+    if not os.path.lexists(directory):
+        directory.mkdir(mode=0o700); os.chown(directory, uid, gid, follow_symlinks=False)
+    canonical(directory, kind='directory', private=True)
+    need(directory.stat().st_uid == uid and directory.stat().st_gid == gid, 'ORIGINAL_CONTROL_OWNER_INBOX_REQUIRED')
+    scope = {'jobId': private_job.name, 'taskId':'T45', 'grantId':control.parent.parent.name.removeprefix('grant-'), 'containerId':cid,
+             'sourceCommit':p['sourceCommit'], 'helperSha256':file_hash(Path(__file__)), 'authority':authority_ref, 'deadlineAt':gate['deadlineAt'],
+             'process':process, 'targetFingerprint':digest(encoded(authority['target'])), 'producerReviewSha256':p['capacityHost']['reviewSha256']}
+    need(re.fullmatch(r'[a-f0-9]{16}', scope['grantId']), 'ORIGINAL_CONTROL_GRANT_REQUIRED')
+    capacity_original_owner_authority(p,scope,directory,authority,authority_ref)
+    capacity_control_summary(directory, 'gate-ready.json', {'format':'CAPACITY_GATE_READY_V1','scope':scope,
+         'provisionalRuntimeIdentity':provisional,'provisionalProfileIdentity':provisional_profile})
+    deadline = time.monotonic()+max(0,(gate['deadlineAt']-time.time()*1000)/1000)
+    files, request_sha = capacity_wait_control_packet(p,docker,cid,directory,uid,'CONTENT',scope,deadline)
+    capacity_original_owner_authority(p,scope,directory,authority,authority_ref)
+    final, final_ref = capacity_install_content(p,scope,files,provisional,provisional_profile,private)
+    ready = {'format':'CAPACITY_CONTENT_READY_V1','scope':scope,'contentManifestSha256':digest(files['content-manifest.json']),
+             'finalPlanSha256':final_ref['sha256'],'finalRuntimeIdentity':capacity_frozen_identity(final['runtimeConfiguration']['path']),
+             'finalProfileIdentity':capacity_frozen_identity(final['capacityHost']['profile']['hostFile'])}
+    ready_sha = capacity_control_summary(directory,'content-ready.json',ready)
+    files, request_sha = capacity_wait_control_packet(p,docker,cid,directory,uid,'APPROVAL',scope,deadline)
+    approval = capacity_transport_json(files['approved-final-delivery.json'])
+    try:
+        owner_proof = capacity_original_owner_authority(p,scope,directory,authority,authority_ref)
+        capacity_verify_final_decision(authority,scope,ready,ready_sha,approval,owner_proof)
+    except Refused:
+        capacity_control_summary(directory,'delivery-result.json',{'format':'CAPACITY_DELIVERY_RESULT_V1','scope':scope,'phase':'APPROVAL','status':'REFUSED',
+             'requestSha256':request_sha,'safeCode':'ORIGINAL_FINAL_INPUT_AUTHORITY_OR_SCOPE_UNCONFIRMED'})
+        raise
+    need(reference(authority_ref) == authority and reference(final_ref) == final and capacity_frozen_identity(final['runtimeConfiguration']['path']) == ready['finalRuntimeIdentity'] and
+         capacity_frozen_identity(final['capacityHost']['profile']['hostFile']) == ready['finalProfileIdentity'], 'FINAL_OWNER_REFERENCE_OR_IDENTITY_CHANGED')
+    body={'format':'OWNER_CAPACITY_FINAL_PLAN_DELIVERY_V1','authority':authority_ref,'containerId':cid,'process':process,
+          'provisionalRuntimeIdentity':provisional,'provisionalProfileIdentity':provisional_profile,'fifoIdentity':gate['identity'],
+          'helperSha256':scope['helperSha256'],'finalRuntimeCtimeNs':ready['finalRuntimeIdentity']['ctimeNs'],
+          'finalProfileCtimeNs':ready['finalProfileIdentity']['ctimeNs'],'finalPlan':final_ref}
+    new_json(delivery['path'],body)
+    capacity_control_summary(directory,'delivery-result.json',{'format':'CAPACITY_DELIVERY_RESULT_V1','scope':scope,'phase':'APPROVAL','status':'VERIFIED_FOR_FINAL_CLOSED_GUARDS',
+          'requestSha256':request_sha,'safeCode':'NO_FIFO_RELEASE_CLAIM'})
+    journal.event('CAPACITY_EXACT_FINAL_INPUT_RECEIVED',containerId=cid)
+    return final,final_ref
 
 
 def run_capacity_gate_controller(p, docker, journal):

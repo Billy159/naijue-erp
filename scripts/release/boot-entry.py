@@ -29,7 +29,7 @@ NO = {'Name': 'no', 'MaximumRetryCount': 0}
 DEPLOYMENT_SHA256 = 'a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a'
 # Explicit exact26-r1 only; adoption depends on C90's independent source review.
 DEPLOYMENT26_SHA256 = '3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d'
-DEPLOYMENT_CAPACITY_SHA256 = '8021c5456b5543158581c1ae3bbc40a4c33cc648db75b7480f285d01a0350928'
+DEPLOYMENT_CAPACITY_SHA256 = '32781cb1a8c5d04979687b4e5d4d121a16718eeb2a0066bd271bfd6aaae4805d'
 DEPLOYMENT_FULL_SHA256 = 'a2c149cd7543b82c76b249c975d01d6961d22a3fd0bb2ec26b3797e077bbe578'
 
 
@@ -234,6 +234,23 @@ def deployment_binding(dp):
         need(re.fullmatch(r'naijue-rewrite-[a-z0-9-]{1,55}-' + suffix, dp['names'].get(key, '')), 'FIXED_CANDIDATE_NAME_REQUIRED')
 
 
+
+def capacity_stage_binding(p, dp, stage):
+    """Consume all three final-stage fields, including the existing exact boot-copy relocation."""
+    selected = p.get('deploymentPlan')
+    need(isinstance(selected, dict) and set(selected) == {'path', 'sha256'} and HASH.fullmatch(selected.get('sha256', '')), 'CAPACITY_SELECTED_FINAL_PLAN_REQUIRED')
+    original = p.get('originalReferences', {}).get('deploymentPlan')
+    if original is not None:
+        need(isinstance(original, dict) and set(original) == {'path', 'sha256'} and selected['sha256'] == original['sha256'] and
+             selected['path'] == str(owner_root(p) / 'deployment-plan.json'), 'CAPACITY_FINAL_PLAN_RELOCATION_CHANGED')
+        selected = original
+    need(stage.get('capacityFinalPlan') == selected, 'STAGE_CAPACITY_FINAL_PLAN_MISMATCH')
+    need(stage.get('capacityFinalRuntimeIdentity') == dp.get('runtimeConfiguration', {}).get('identity') and
+         isinstance(stage.get('capacityFinalRuntimeIdentity'), dict), 'STAGE_CAPACITY_RUNTIME_IDENTITY_MISMATCH')
+    need(stage.get('capacityProducer') == dp.get('capacityHost') and isinstance(stage.get('capacityProducer'), dict), 'STAGE_CAPACITY_PRODUCER_MISMATCH')
+    return True
+
+
 def load_plan(filename):
     p = json.loads(read(filename))
     need(p.get('format') == 'naijue-boot-entry-v1', 'PLAN_FORMAT_REQUIRED')
@@ -258,6 +275,7 @@ def load_plan(filename):
     exec(compile(source, d.__file__, 'exec'), d.__dict__)
     dp['stageReceipt'] = p['stageReceipt']
     stage = reference(p['stageReceipt'])
+    capacity_stage_binding(p, dp, stage)
     need(stage.get('status') == 'CANDIDATE_STAGED_HEALTH_ONLY_NOT_BUSINESS' and
          all(stage.get(k) == dp[k] for k in ('buildId', 'sourceCommit', 'releaseDirectory')) and
          stage.get('archiveSha256') == dp['archive']['sha256'] and
@@ -395,6 +413,7 @@ def candidate(p, d, dp, stage, docker, public=False):
 
 
 def artifacts(p, d, dp, stage):
+    capacity_stage_binding(p, dp, stage)
     # The staged payload carries the verified manifest; do not depend on an expiring job bundle at boot.
     manifest = d.reference({'path': str(Path(dp['releaseDirectory']) / 'payload/release-manifest.json'),
                             'sha256': dp['manifest']['sha256']})
@@ -546,6 +565,7 @@ def arm(p, d, dp, stage, journal):
     journal.action('SAVE_BOOT_HELPER', lambda: write_new(root / 'boot-entry.py', source))
     journal.action('SAVE_PINNED_DEPLOYMENT_HELPER', lambda: write_new(root / 'deploy-candidate.py', reference(p['deploymentTool'], False)))
     # Persist a local copy of the exact base plan; its references remain immutable server paths.
+    capacity_stage_binding(p, dp, stage)
     journal.action('SAVE_DEPLOYMENT_PLAN', lambda: write_new(root / 'deployment-plan.json', reference(p['deploymentPlan'], False)))
     saved['deploymentTool'] = {'path': str(root / 'deploy-candidate.py'), 'sha256': p['deploymentTool']['sha256']}
     saved['deploymentPlan'] = {'path': str(root / 'deployment-plan.json'), 'sha256': p['deploymentPlan']['sha256']}

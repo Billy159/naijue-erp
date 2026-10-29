@@ -7882,7 +7882,7 @@
   },
   "capacityFinalTransport943": {
     "owner": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
-    "status": "ACTIVE_F01_FIX_AND_BOUNDED_DELIVERY_SUCCESSOR",
+    "status": "HANDED_BACK_FIXED_PINS_PENDING_QB_INCREMENT",
     "files": [
       "scripts/release/ssh-control.py",
       "scripts/release/deploy-candidate.py",

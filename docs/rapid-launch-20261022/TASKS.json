@@ -19554,7 +19554,7 @@
     "finding": "F01/P2 boot must consume stage.capacityFinalPlan, capacityFinalRuntimeIdentity and capacityProducer against selected final deployment plan; preserve controlled relocation, runtime hash and CAS.",
     "checks": "Independent 10 Python, 4 Node collector cases and 3 Python AST checks; no remote, real PostgreSQL, application start or performance evidence.",
     "owner": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
-    "successor": "SOURCE943 active five-file lease combines exact F01 correction and bounded existing-channel CONTENT/APPROVAL delivery; preserve all WIP.",
+    "successor": "SOURCE943 final five leaves handed back; original authorization consumption implemented; fixed candidate pending QB increment and actual isolated E2E",
     "next": "T45 fixed delivery then original QB affected-scope review; actual isolated startup remains a distinct incomplete requirement.",
     "authority": "User latest capacity CLI closure request; no production, ACL, network or database change authorized by this source work.",
     "latestHumanClosure": {
@@ -19569,6 +19569,12 @@
       "owner": "Original T45; original QB affected increments only",
       "prohibited": "No extra control layer or repeat approval step; no production, new ACL or unapproved topology",
       "status": "ORIGINAL_OWNER_ACTIVE_NOT_ACTUAL_STARTUP_PASS"
+    },
+    "successorReceipt": {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/B12-capacity-final-transport943-source-06/FINAL-RESULT.json",
+      "bytes": 5991,
+      "sha256": "f221a10130cdeb5bbbd99190a6a597d8d83cd269cd61ba0988b9c02b83041a25",
+      "checks": "9 new directed cases PASS; four syntax checks; no old-suite repetition or actual startup"
     }
   }
 }

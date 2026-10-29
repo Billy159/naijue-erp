@@ -328,3 +328,116 @@ same-inode writes, local FIFO/shell PID preservation, bad nonce/EOF, deadline,
 final-guard failure and owned-candidate cleanup. They do not verify actual QA
 PG/WAL, Linux CLI ready, low-water admission, approval expiry or target cleanup.
 Retain original source/protocol results and rerun only this affected increment.
+
+### SOURCE943 original-channel CONTENT / APPROVAL increment
+
+The leased client now has only two additional commands:
+`capacity-final-status --task T45 --job-id J --binding ABS` and
+`capacity-final-deliver --task T45 --job-id J --binding ABS --phase CONTENT|APPROVAL --input ABS`.
+Both reuse the exact existing SSH identity and control namespace; neither invokes
+sudo, starts a dispatcher job, chooses a remote destination or changes modes.
+Local input is canonical private0600, single-link, owned by the current operator,
+and located under the original J evidence directory. The original submitted
+registry/grant must already contain J. Status permits expired/terminal readback;
+delivery requires the exact RUNNING receipt, live gate scope and deadline.
+
+`CAPACITY_FINAL_CLIENT_BINDING_V1` contains exactly `format` and `scope`. The
+scope contains jobId/taskId/grantId/containerId/sourceCommit/helperSha256,
+`authority={path,sha256}`, deadlineAt, process, targetFingerprint and
+producerReviewSha256. Authority is exactly this frozen job bundle's
+`capacity-input-authority.json`; targetFingerprint is SHA256 of canonical compact
+UTF8 target JSON with one LF. No password, token from an account, key, full
+runtime object or connection string is accepted. The operational windowToken is
+part of the explicitly closed capacity data only.
+
+The existing root job creates one original-account0700 `capacity-final` directory
+inside its trusted ERP_SHARED_CONTROL_DIR. The client may create only these
+fixed regular, single-link0600 input files, without overwrite:
+
+- CONTENT: capacity-launch.json, owner-profile.json, content-manifest.json;
+- APPROVAL: approved-final-delivery.json, approval-manifest.json.
+
+Each phase writes its 64-byte request fingerprint marker (`content.complete` or
+`approval.complete`) last, after all files are fsynced. The root consumer never
+interprets that completeness marker as authorization. The manifest covers the
+fixed names, bytes and digests; no supplied filename becomes a destination.
+Individual files are at most64KiB, a phase at most192KiB, and the entire encoded
+packet at most256KiB. The original-account upload lock is separate from the
+root job's global execution lock. Partial or differing existing submissions are
+UNKNOWN_NO_REPLAY; a complete identical submission only queries the old receipt.
+The client cannot overwrite the old phase, start another job or retry execution.
+
+The root controller independently verifies source/control owner, original frozen
+authority, exact job/CID/process/grant/scope/deadline, links, modes and every byte.
+It emits only root-owned, readable safe `gate-ready.json`, `content-ready.json`
+and `delivery-result.json` summaries. The client reads only those three fixed
+summaries and validates their closed shapes; no private log/runtime/config file
+is fetched. The root observer may publish operational SHA/identity metadata;
+no credential content or credential digest is included.
+
+CONTENT is a transport stage, not write admission. Only capacityLaunch and the
+separate profile enter; the root process retains authentication material from
+its original private runtime in memory. It fills the two candidate-owned inodes,
+validates full capacity data and writes an exact final plan into its own fixed
+inputs-private path. content-ready includes the actual final identities/ctime,
+content manifest digest and final plan digest. No credential is copied into
+control. It then waits under the same watchdog/deadline for C's final reference.
+
+APPROVAL input is only `decisionReference={sourcePath,sha256}`. The client must
+read the pre-existing private canonical controller artifact named
+`C-CAPACITY-FINAL-APPROVAL.json`, whose canonical JSON is
+`C_APPROVED_CAPACITY_FINAL_PLAN_V1` with exact scope, contentReadySha256,
+finalPlanSha256, finalRuntimeIdentity, finalProfileIdentity and authority. It
+must match the real root-owned content-ready byte digest and identities.
+The client preserves the decision; it does not sign, invent an actor, issue
+approval or accept `approved:true`. The source reference alone does not prove C
+authored that document.
+
+The final decision is consumed under the **existing** original authority, not a
+new signing system or an impossible pre-pin of future ctime. Before accepting
+CONTENT and again before APPROVAL, the root controller verifies the installed
+root-owned active original grant, its original humanAuthorization/scope,
+expiry/revocation, the same RUNNING T45 receipt, exact root-frozen request and
+bundle manifest, and the manifest-pinned `capacity-input-authority.json` and
+actual deployment helper. The original grant's actual account UID/GID must own
+the original control directory and inbox. The frozen authority action is only
+`ONE_FINAL_CAPACITY_PLAN_ONLY`, with original job/source/target/deadline. This is
+the existing authenticated account's scoped delegation to supply final runtime
+facts; it does not authorize another target, ACL, topology or production change.
+No JSON field, file mode, nonce or client-created `approved:true` creates that
+authority. There is no new signer, issuer, registry or independent approval step.
+
+The client still reads the pre-existing canonical C decision artifact and its
+exact reference. The root compares it to the actual content-ready digest,
+final identities, candidate process and scoped original authority. Its source
+reference is preserved as input provenance, not claimed as cryptographic proof
+of a Chat identity. The program's unforgeable-in-JSON owner capability is issued
+only after those original grant/request/account checks and is revalidated during
+the original bounded job. A standalone C-looking document, supplied hash or
+UID0 file without that active original delegation rejects. The final plan,
+profile/runtime identities and original authority are checked again before
+FIFO release. Approval is consumed once; no content/configuration may be replaced
+afterward. Missing/revoked/expired/foreign scope or a different final digest
+refuses and stops only the candidate. Existing user delegation covers necessary
+technical choices within this task; this code does not approve new privileges
+or invent unmeasured volume, writer, budget or target facts.
+
+
+QB942 F01 is fixed at the actual boot consumers: load, artifacts checks and the
+persistent deployment-plan copy compare stage.capacityFinalPlan to the selected
+exact plan reference, stage.capacityFinalRuntimeIdentity to the selected private
+identity, and stage.capacityProducer to capacityHost. All three missing or
+mismatched cases reject. The existing installed owner-plan copy may relocate
+only to its own deployment-plan.json with the unchanged digest and original
+reference; arbitrary same-byte path substitution is not allowed. Original
+runtime binding, source hashes and CAS checks remain.
+
+Only this increment's checks need rerunning:
+`python3 -m unittest scripts/release/test_capacity_launch_wiring.py -k CapacityTransportIncrement`.
+They use private local synthetic files and mocked channel calls, never the real
+connection/identity. They verify client construction/refusal, actual bounded
+packet consumption, same-inode private-content preservation, exact final stage
+binding/relocation, and rejection without the original active human grant/frozen job/control-owner authority.
+No server identity/mode/upload/root consumer execution or actual CLI ready is
+proved. SOURCE942's NEED_FIX remains historical evidence; do not rewrite it as
+PASS because of this successor.
