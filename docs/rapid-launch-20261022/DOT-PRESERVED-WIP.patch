@@ -1,0 +1,25 @@
+diff --git a/tests/product-query-postgres-protocol.test.ts b/tests/product-query-postgres-protocol.test.ts
+index 0adcbe54..8aeb384c 100644
+--- a/tests/product-query-postgres-protocol.test.ts
++++ b/tests/product-query-postgres-protocol.test.ts
+@@ -25,6 +25,20 @@ const productId = sid("product", 701), groupId = sid("sizeGroup", 702), colorId
+ const parameters = { productId }; const imageParameters = { productId, imageId };
+ const read = <P extends ProductQuery>(parameters: P, signal = new AbortController().signal): ProductScopedRead<P> => ({ actor, grant: { productId }, parameters, signal });
+ const reader = (client: Client) => new PostgresProductQueryReader({ async connect() { return client; } });
++// Preserved WIP from the superseded cross-group proposal. The corrected business
++// scope keeps the product's actual size group as a hard boundary; this is not an acceptance target.
++test.skip("superseded v11 cross-group WIP: product specifications retain default sizes and actual cross-group/no-size SKU sizes", async () => {
++  const outside = sid("size", 799), nativeSku = { ...sku(), size_id: outside, member_size_id: outside };
++  const client = new Client([begin(), { sql: /^SELECT p.id/, rows: [group()] },
++    { sql: /^SELECT s.id, s.name/, rows: [member(), { id: outside, name: "无尺码", display_order: null }], inspect(values, sql) {
++      assert.deepEqual(values, [groupId, PRODUCT_READ_MAX_GROUP_MEMBERS + 1, productId]);
++      assert.match(sql, /EXISTS[\s\S]*FROM naijue_erp.sku/); assert.match(sql, /NULLS LAST/);
++    } }, { sql: /^SELECT s.id, s.product_id/, rows: [nativeSku] }, commit()]);
++  const result = await reader(client).readSpecifications(read(parameters));
++  assert.ok(result?.sizeGroup);
++  assert.deepEqual(result!.sizes.map(s => s.id), [size1, outside]); assert.equal(result!.sizeGroup.id, groupId);
++  assert.deepEqual(result!.skus, [{ id: nativeSku.id, colorId, fitId, sizeId: outside }]); client.done();
++});
+ const basic = () => ({ id: productId, product_code: "SYNTHETIC ORIGINAL CODE", name: "SYNTHETIC PRODUCT", year: null, system_item_code: null, retail_price: null, category_name: "完整分类名称", season_name: null, supplier_name: null });
+ const group = () => ({ id: productId, size_group_id: groupId, size_group_name: "完整尺码组名称" });
+ const member = (id = size1, order = 20) => ({ id, name: id === size1 ? "165/S（完整标签）" : "无尺码（完整标签）", display_order: order });
