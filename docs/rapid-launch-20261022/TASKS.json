@@ -19598,5 +19598,82 @@
       "scope": "No ACL/mount/network/config/application/production changes; no business scans",
       "next": "Original T45 prepares exact minimal isolated execution delta and rollback for separately required permission/topology confirmation; no repeat265"
     }
+  },
+  "frontendConfirmedRepairBatch": {
+    "authority": "Latest human message: retain fixed Demo candidate; combine confirmed B06/PF01 same-file task, assign B13/B05 by file ownership; check WIP, unique writer, affected retest then unified acceptance",
+    "status": "B05_AND_F2_COMBINED_EXACT_LEASES_OPEN",
+    "comparison": {
+      "owner": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
+      "candidate": "normal34/2357cf508ee6e8188bcc1dddfa4735f735d70d36/57923",
+      "model": "gpt-6.1-terra/medium",
+      "boundary": "Fixed read-only comparison continues; explicit source handback requested; do not change served candidate"
+    },
+    "proposedWriters": {
+      "B06_PF01_B13": "F2/01a161d2-6bd9-7181-8386-1ecddddd386a; B13 overlapping products filters same writer serial, existing application validation seam C-coordinated",
+      "B05": "F1/01a16161-ca35-7573-b8cc-1f8d3147a46f; runtime documents and exact async leaf only, no PF01 current-form writer overlap"
+    },
+    "writeGate": "B05 exact five lease opened after current-state/F1 WIP checks; F2 exact leaf list and seams still required. Original Demo evidence-only continues; all repair implementation excluded from its scope.",
+    "observedTrackedWip": "Only tests/product-query-postgres-protocol.test.ts +13 unrelated protected; untracked vendor/reports/test directories preserved and owner not inferred",
+    "verification": "Reuse current same-scope fixed evidence; development targeted checks, new fixed candidate affected scenes only, final same-candidate unified acceptance",
+    "actualSendAcknowledged": true,
+    "Fast": "UNVERIFIED",
+    "B05": {
+      "owner": "F1/01a16161-ca35-7573-b8cc-1f8d3147a46f",
+      "status": "SOURCE_WRITE_ENABLED_EXACT_FIVE",
+      "files": [
+        "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
+        "apps/web/demo-replica/frontend/runtime/documents/transfers-entry.tsx",
+        "apps/web/demo-replica/frontend/runtime/documents/sales-entry.tsx",
+        "apps/web/demo-replica/frontend/runtime/common/async-leaf.tsx",
+        "apps/web/demo-replica/frontend/runtime/documents/lazy-leaf-recovery.test.mjs"
+      ],
+      "basis": "Current human assignment; original Demo continues READONLY comparison, no implementation dispatched; actual git and original F1 preflight confirm three existing leaves no tracked WIP and two proposed leaves absent",
+      "exclusions": "No current-form model, frozen Demo, build/config/service, business or write-contract changes"
+    },
+    "CSharedConstant": {
+      "owner": "C",
+      "files": [
+        "packages/application/src/product-management-query-validation.ts"
+      ],
+      "scope": "Export existing maximum200 and use it as unchanged default; no parser/DTO/permission/SQL behavior change"
+    },
+    "F2": {
+      "owner": "F2/01a161d2-6bd9-7181-8386-1ecddddd386a",
+      "status": "SOURCE_WRITE_ENABLED_EXACT_21",
+      "productionFiles": [
+        "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx",
+        "apps/web/demo-replica/frontend/runtime/inventory/page.tsx",
+        "apps/web/demo-replica/frontend/runtime/inventory/output.tsx",
+        "apps/web/demo-replica/frontend/runtime/inventory/filter-selection.ts",
+        "apps/web/demo-replica/frontend/runtime/products/filters.tsx",
+        "apps/web/demo-replica/frontend/runtime/products/list.tsx",
+        "apps/web/demo-replica/frontend/runtime/common/original-workbook.ts",
+        "apps/web/src/current-form/transfer-proposal.ts",
+        "apps/web/src/current-form/sales-proposal.ts",
+        "apps/web/src/inventory/output-adapter.ts",
+        "apps/web/src/inventory/output-budget.ts",
+        "apps/web/src/loading/bounded-read-pool.ts"
+      ],
+      "testFiles": [
+        "apps/web/demo-replica/frontend/runtime/inventory/candidate-paste-intent.test.mjs",
+        "apps/web/demo-replica/frontend/runtime/inventory/output-runtime.test.mjs",
+        "apps/web/demo-replica/frontend/runtime/inventory/filter-selection.test.ts",
+        "apps/web/demo-replica/frontend/runtime/products/filter-contract.test.mjs",
+        "apps/web/demo-replica/frontend/runtime/common/frontend-performance-bounds.test.mjs",
+        "apps/web/demo-replica/frontend/runtime/common/frontend-performance-benchmark.mjs",
+        "apps/web/src/current-form/transfer-proposal.test.ts",
+        "apps/web/src/current-form/sales-proposal.test.ts",
+        "apps/web/src/inventory/output-adapter.test.ts"
+      ],
+      "scope": "B06+PF01 together, B13 serial same filters writer; B11 existing selection limit enforcement only at shared seam, no separate duplicate implementation",
+      "basis": "Actual latest git clean on exact leaves and original F2 read-only preflight; original F1 B05 explicitly excludes current-form/output leaves; original Demo restricted to comparison evidence",
+      "readOnlySeams": [
+        "packages/application/src/product-management-query-validation.ts",
+        "packages/application/src/current-form-ports.ts",
+        "apps/web/src/products/candidate-window.ts",
+        "apps/web/src/products/http-reader.ts"
+      ],
+      "budgets": "Use V2 PF01 finite technical baseline for initial measurement; do not claim official workload performance or full export complete when bounds reject required real workload. Capacity insufficient must return concrete streaming followup, not hide/truncate."
+    }
   }
 }

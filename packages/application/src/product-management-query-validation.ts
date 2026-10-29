@@ -4,6 +4,8 @@ import type { EntityKind } from "../../domain/src/values.ts";
 import type { ProductManagementCandidateKind, ProductManagementCandidatePage, ProductManagementCandidateQuery, ProductManagementListPage,
   ProductManagementListQuery, ProductManagementReadGrant } from "./product-management-query-ports.ts";
 
+export const PRODUCT_MANAGEMENT_MAX_SELECTIONS = 200;
+
 export function invalidProductManagementQuery(): never { throw new DomainError("INVALID_PRODUCT_MANAGEMENT_QUERY", "Invalid product management read parameters"); }
 export function productManagementRecord(value: unknown, keys: readonly string[]): Record<string, unknown> {
   if (!value || typeof value !== "object" || Array.isArray(value) || Object.getPrototypeOf(value) !== Object.prototype
@@ -20,7 +22,7 @@ function year(value: unknown): string {
   if (typeof value !== "string" || !/^(?:0|[1-9]\d*|-[1-9]\d*)$/.test(value) || !Number.isSafeInteger(Number(value)) || Number(value) < -2147483648 || Number(value) > 2147483647) invalidProductManagementQuery();
   return value;
 }
-function values(value: unknown, parse: (value: unknown) => string, maximum = 200): readonly string[] {
+function values(value: unknown, parse: (value: unknown) => string, maximum = PRODUCT_MANAGEMENT_MAX_SELECTIONS): readonly string[] {
   if (!Array.isArray(value) || value.length > maximum) invalidProductManagementQuery();
   const result = value.map(parse); if (new Set(result).size !== result.length) invalidProductManagementQuery();
   return Object.freeze(result);

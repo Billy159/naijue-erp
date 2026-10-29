@@ -1,3 +1,7 @@
+前端源码包已实际开放并去重：F1已核B05三现有叶无WIP/两新叶不存在，exact5唯一writer实施9个lazy暴露叶的局部恢复；F2已核B06/PF01/B13尚未修、相关叶无WIP，exact21合批唯一writer（含共享filter-selection接缝），B13同filters串行。C仅同值导出application PRODUCT_MANAGEMENT_MAX_SELECTIONS=200，解析/权限/DTO不改。原Demo已明确交接为fixednormal34/57923只读比较，不再同时修上述源；新源码不改已serve候选。技术预算按PF01有限基线测量，超限不截断但不得据此称完整导出/正式性能完成。两线原Chat派参Sol61medium，比较Terra61medium，Fast不可核验。交付后原T45统一新候选，补测实际影响场景，最后同候选统一验收；当前未测/未构建/未发布。
+
+前端最新调度：用户明确保normal34固定对比并行修复。已实际发至原Demo、F2、F1，当前仅交还/WIP核实和只读预检，不冒已开源码写。拟B06+PF01合批归F2，B13共享products/filters由同F2串行；B05 runtime documents/async-leaf归F1，与PF01 current-form文件隔离。等待原solefrontendowner明确无冲突交还和原作者exact叶回执后，C登记唯一writer再实施；不新建团队、不改normal34服务。已完成同范围复用，新候选只补受影响场景，最后统一验收。
+
 SOURCE943 验收与265实测：原QB回执7812B/SHA92a4fb9f…限定源码/本机传输协议PASS，关闭942F01，真实E2E未执行。原T45只读265一次提交COMPLETED/exit0/0.568s，RESULT11363B/SHA19192dc2…：QA21551/runtime21550 CONNECT=true但schema USAGE、migration SELECT、auth session读写均false；PG networknone，普通应用连接路径未证；UID10001 backup EACCES13，PG/WAL tmpfs在现有探测namespace不可见、当前free UNKNOWN。两条目录只读SQL/RR/ROLLBACK/client关闭，无业务扫描或权限/拓扑/服务变化。原T45继续准备精确最小隔离E2E变更和撤回清单，沿用户另行确认权限/拓扑边界；不重265、不重旧源码检查、不把静态PASS作ready。技术预算仅规划建议，未知空间不能放行。
 
 SOURCE943 固定交付：原T45五叶最终pins已与工作文件匹配；FINAL-RESULT 5991B/SHA f221a10130cdeb5bbbd99190a6a597d8d83cd269cd61ba0988b9c02b83041a25，9新增定向检查及4语法检查通过，未重旧12/4。三stage消费已修；CONTENT/APPROVAL沿原有效grant、人工授权、冻结request/manifest及受托control owner核验，不再预绑定未知最终ctime，不新增签名/审批平台。客户端不生成批准，同任务/候选/进程/最终摘要、一次消费和仅清本候选保持。原owner已交还只读，固定候选交原QB只验新增影响。实际CLI/preflight/readyz及三类拒绝清理仍未跑，真实QA权限、五卷可见性和明确预算窗须原T45核实；无生产、ACL、挂载、网络或数据库变更。
