@@ -17145,11 +17145,11 @@
     "frontend": {
       "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
       "title": "奈爵 ERP｜Demo 逐页实操对比",
-      "latestObserved": "SOURCE939: original fixed normal34 comparison continuing after disk cleanup. Adopt keyboard warehouse-close and new-size append-confirmation differences; seasonal first-Esc finding withdrawn after browser autofill controlled recheck. Complete finite remaining-action list/full report pending; no frontend repair dispatched.",
+      "latestObserved": "SOURCE950 exceptions B05/B06/PF01/B13 implemented through original F1/F2 exact leases; normal42/43 limited browser evidence and pending selection successor. Original normal34 full Demo comparison continues unchanged Terra-medium.",
       "workDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
       "directoryConfirmation": "SHARED_R_READBACK_ONLY_CHAT_SPECIFIC_ACK_REQUESTED",
       "writeScope": "Only original comparison evidence directory until complete;future solefrontend sourceowner retained",
-      "trackedWip": "tests/product-query-postgres-protocol.test.ts +13 lines protected,owner not inferred;vendor/temp/report untracked preserved",
+      "trackedWip": "Protected original D2 superseded cross-group +13 plus one type assertion = +14 uncommitted, provenance verified, not production candidate or acceptance target.",
       "sourceChangesByThisChat": "NO_SOURCE_IMPLEMENTATION_REQUESTED_DURING_COMPARISON",
       "wholePagePass": 0,
       "wholeOverlayPass": 0,
@@ -17164,7 +17164,7 @@
       },
       "countsBoundary": "Historical cross-version matrix coverage80/104;not current outstanding count or latest whole-page acceptance",
       "candidate": "Fixed normal34/2357cf508ee6e8188bcc1dddfa4735f735d70d36/buildphase2-normal-2357cf5-34/http://127.0.0.1:57923;Demo8877/b8bcfe3;do not migrate evidence to latestsource",
-      "latestAuthority": "Direct human call_0d51b13684f745cbb5b05c7f9613b8e4/0:finish full comparison first,then consolidatedrepair",
+      "latestAuthority": "Human B05/B06+PF01/B13 exact exception after prior full-comparison-first order; other unrelated frontend repairs still await complete report/de-dup.",
       "currentRole": "READONLY_FULL_SITE_DEMO_COMPARISON",
       "actualDispatchedModel": "gpt-6.1-terra/medium",
       "modelVerification": "Dispatch parameter specified;UI/effective runtime not independently verified",
@@ -17225,7 +17225,7 @@
         "title": "主控预检：复用最新基线、Demo差异、全量上线门槛与owner",
         "dependsOn": [],
         "owner": "C",
-        "state": "REVIEW_COMPLETE_CURRENT_OWNER_ACK_PENDING",
+        "state": "REVIEW_COMPLETE_EXISTING_OWNER_ROUTING_AND_EXACT_LEASES_IN_USE",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/G00.txt"
       },
@@ -17273,8 +17273,8 @@
           "HV2-G00",
           "HV2-P02"
         ],
-        "owner": "D1",
-        "state": "SOURCE916_COMPONENT_QB_PASS;ACTUAL247_249_PARTIAL;254_RO_MOUNT_FAILED;256_BACKUP_PASS_NOT_RESTORE;ACTUAL_PROBE_WINDOW_BENCHMARK_PENDING",
+        "owner": "D1/T45/QB",
+        "state": "SOURCE947_OBSERVER_QB_SCOPED_PASS;EXACT_QA21551_FOUR_CASE_APPROVAL_RECORDED;REAL_EXECUTION_RESULTS_PENDING;NOT_CAPACITY_COMPLETE",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/A02.txt"
       },
@@ -17335,8 +17335,8 @@
         "dependsOn": [
           "HV2-G00"
         ],
-        "owner": "FRONTEND_EXISTING",
-        "state": "WAIT_FULL_FIXED_CANDIDATE_COMPARISON_REPORT_THEN_DEDUP_LATEST_SOURCE",
+        "owner": "F1/QF",
+        "state": "SOURCE945_LAZY9_IMPLEMENTED;NORMAL42_REQUESTED_UI_REMAINDER_CLOSED;FULL_PAGE_REAL_BUSINESS_NOT_PROVEN",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B05.txt"
       },
@@ -17347,8 +17347,8 @@
         "dependsOn": [
           "HV2-G00"
         ],
-        "owner": "FRONTEND_EXISTING",
-        "state": "WAIT_FULL_FIXED_CANDIDATE_COMPARISON_REPORT_THEN_DEDUP_LATEST_SOURCE",
+        "owner": "F2/QF2",
+        "state": "SOURCE946_PASTE_INTENT_SOURCE_MODEL_PASS;NORMAL42_PARTIAL_ACTUAL;ALL_CANCEL_RACES_AND_REAL_CHAIN_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B06.txt"
       },
@@ -17407,8 +17407,8 @@
         "dependsOn": [
           "HV2-G00"
         ],
-        "owner": "FRONTEND_EXISTING",
-        "state": "WAIT_FULL_FIXED_CANDIDATE_COMPARISON_REPORT_THEN_DEDUP_LATEST_SOURCE",
+        "owner": "F2/QF2",
+        "state": "SOURCE946_SELECTION_BUDGET_SOURCE_PASS;NORMAL42_FIXTURE_BELOW_LIMIT_ACTUAL_BOUNDARY_NOT_RUN",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B11.txt"
       },
@@ -17421,8 +17421,8 @@
           "HV2-B01",
           "HV2-B02"
         ],
-        "owner": "T45",
-        "state": "SOURCE928_FIXED_LOCAL_BUILD_PACK206_PASS;LINUX_RUNTIME_FINAL_ACCEPTANCE_PENDING",
+        "owner": "T45/D1/D2/QB",
+        "state": "SOURCE949_PROTOCOL88_QB_SCOPED_PASS;WORKTREE_ROOT_TSC0_WITH_PRESERVED_WIP;SOURCE947_ACTUAL_LINUX_CLI_E2E_APPROVED_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B12.txt"
       },
@@ -17433,8 +17433,8 @@
         "dependsOn": [
           "HV2-G00"
         ],
-        "owner": "FRONTEND_EXISTING",
-        "state": "WAIT_FULL_FIXED_CANDIDATE_COMPARISON_REPORT_THEN_DEDUP_LATEST_SOURCE",
+        "owner": "F2/QF2",
+        "state": "SOURCE950_ASYNC_TREE_AND_LABEL_SELECTION_TWO_CAUSES_FIXED;LOCAL_AFFECTED_PASS;NORMAL43_PARTIAL;NEW_CANDIDATE_RETEST_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/B13.txt"
       },
@@ -17486,8 +17486,8 @@
           "HV2-B06",
           "HV2-B11"
         ],
-        "owner": "FRONTEND_EXISTING",
-        "state": "WAIT_FULL_FIXED_CANDIDATE_COMPARISON_REPORT_THEN_DEDUP_LATEST_SOURCE",
+        "owner": "F2",
+        "state": "SOURCE946_BOUNDED_REQUESTS_SKU_EXPORT_LOCAL_PASS;SYNTHETIC_BENCHMARK_ONLY;REAL_API_MEMORY_FULL_OUTPUT_AND_SLO_PENDING",
         "requiredBeforeLaunch": true,
         "cardPath": "/Users/billy/Downloads/奈爵ERP_主控交接V2/02_按需任务卡/PF01.txt"
       },
