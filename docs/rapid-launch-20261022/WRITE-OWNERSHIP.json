@@ -7914,7 +7914,7 @@
     "Fast": "UNVERIFIED",
     "B05": {
       "owner": "F1/01a16161-ca35-7573-b8cc-1f8d3147a46f",
-      "status": "SOURCE_WRITE_ENABLED_EXACT_FIVE",
+      "status": "HANDED_BACK_LOCAL_PASS_WAIT_FIXED_CANDIDATE",
       "files": [
         "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
         "apps/web/demo-replica/frontend/runtime/documents/transfers-entry.tsx",
@@ -7970,5 +7970,22 @@
       ],
       "budgets": "Use V2 PF01 finite technical baseline for initial measurement; do not claim official workload performance or full export complete when bounds reject required real workload. Capacity insufficient must return concrete streaming followup, not hide/truncate."
     }
+  },
+  "capacityIsolatedObserverSuccessor": {
+    "owner": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
+    "status": "SOURCE_ONLY_WRITE_ENABLED_EXACT_SIX",
+    "base": "SOURCE943 c86a88a64f1f7e6a66ca730e2e7bf7a313a3a4ba preserved",
+    "files": [
+      "scripts/ops/capacity-live-statfs.mjs",
+      "scripts/release/deploy-candidate.py",
+      "scripts/release/boot-entry.py",
+      "scripts/release/test_capacity_launch_wiring.py",
+      "tests/capacity-live-statfs.test.mjs",
+      "scripts/release/DEPLOYMENT.md"
+    ],
+    "scope": "Minimal existing bounded job fixed-path FIFO observer for real separate namespace statfs; existing producer/main/probe/single pool contracts unchanged; no new service/control platform",
+    "authorization": "Existing user minimal actual CLI closure and technical source authorization; environment ACL/network/mount steps separately pending",
+    "environment": "No grants/mount/network/container execution until exact prepared change separately human-approved",
+    "boundaries": "No generic exec/arbitrary paths/root API/docker socket/proc PG/storage copy; runtime live measurements only; failure unknown and settle cleanup"
   }
 }

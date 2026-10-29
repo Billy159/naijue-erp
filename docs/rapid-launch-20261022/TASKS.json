@@ -19674,6 +19674,14 @@
         "apps/web/src/products/http-reader.ts"
       ],
       "budgets": "Use V2 PF01 finite technical baseline for initial measurement; do not claim official workload performance or full export complete when bounds reject required real workload. Capacity insufficient must return concrete streaming followup, not hide/truncate."
+    },
+    "B05Delivery": {
+      "owner": "Original F1",
+      "status": "SOURCE_HANDED_BACK_FIVE_FILES_TARGETED_LOCAL_PASS_NOT_BUILT",
+      "sourceBase": "d2ac023a87916c77ded12f360b13cebad7cc0f9f",
+      "checks": "Actual TransferProposalSession/Form scanner reject baseline reproduces parent loss; fixed nine lazy consumer reject/retry/cancel/late response/unmount/render error cases, draft/actions and guard retained; existing runtime-host3 and transfers-session3 pass",
+      "limits": "No production chunk browser test/build/real PostgreSQL/save/readback; strict14 outside-five diagnostics retained; F2 in-flight unknown event diagnostics notified original owner",
+      "next": "Fix exact five source checkpoint; unified new candidate after appropriate combined delivery, affected browser scenes then final unified acceptance"
     }
   }
 }

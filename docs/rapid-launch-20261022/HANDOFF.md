@@ -1,3 +1,5 @@
+B05原F1已交还exact5，停止写入。真实父session/form加载Scanner拒绝的基线反例已复现；新增局部恢复修复覆盖九个消费点的拒绝/新attempt重试/取消/迟到/unmount及render错误，草稿/actions/原离页guard保留。新增故障检查及原host3/session3通过；runtime strict14条均在这五叶外，原F2在途unknown事件诊断已交原F2修自身新增。0构建/浏览器/PG/真实保存，normal34固定不变。F2合批仍在实施，后续统一新候选只复影响场景并最终统一验收；不冒B05整链通过。
+
 前端源码包已实际开放并去重：F1已核B05三现有叶无WIP/两新叶不存在，exact5唯一writer实施9个lazy暴露叶的局部恢复；F2已核B06/PF01/B13尚未修、相关叶无WIP，exact21合批唯一writer（含共享filter-selection接缝），B13同filters串行。C仅同值导出application PRODUCT_MANAGEMENT_MAX_SELECTIONS=200，解析/权限/DTO不改。原Demo已明确交接为fixednormal34/57923只读比较，不再同时修上述源；新源码不改已serve候选。技术预算按PF01有限基线测量，超限不截断但不得据此称完整导出/正式性能完成。两线原Chat派参Sol61medium，比较Terra61medium，Fast不可核验。交付后原T45统一新候选，补测实际影响场景，最后同候选统一验收；当前未测/未构建/未发布。
 
 前端最新调度：用户明确保normal34固定对比并行修复。已实际发至原Demo、F2、F1，当前仅交还/WIP核实和只读预检，不冒已开源码写。拟B06+PF01合批归F2，B13共享products/filters由同F2串行；B05 runtime documents/async-leaf归F1，与PF01 current-form文件隔离。等待原solefrontendowner明确无冲突交还和原作者exact叶回执后，C登记唯一writer再实施；不新建团队、不改normal34服务。已完成同范围复用，新候选只补受影响场景，最后统一验收。
