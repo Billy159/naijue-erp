@@ -8043,7 +8043,7 @@
   },
   "b13AsyncCategorySuccessor": {
     "owner": "F2/01a161d2-6bd9-7181-8386-1ecddddd386a",
-    "status": "HANDED_BACK_EXACT3_READ_ONLY",
+    "status": "F2_EXACT3_REOPENED_SELECTION_COMMIT_ORDER_INVESTIGATION_NORMAL43_FIXED",
     "files": [
       "apps/web/demo-replica/frontend/runtime/products/filters.tsx",
       "apps/web/demo-replica/frontend/runtime/products/filter-contract.test.mjs",
@@ -8054,7 +8054,7 @@
   "b12ProtectedProductQueryWip": {
     "owner": "D2/01a161d2-6956-7672-9ce0-1c5ca4b52853",
     "file": "tests/product-query-postgres-protocol.test.ts",
-    "status": "ORIGINAL_OWNER_PROVENANCE_AND_EXACT_NULL_NARROWING_DISPATCHED",
+    "status": "D2_HANDED_BACK_PROVENANCE_VERIFIED_PLUS14_PRESERVED_UNCOMMITTED",
     "scope": "Preserve superseded v11 +13 WIP; no delete/skip change or rule/SQL changes, no competing writer."
   }
 }

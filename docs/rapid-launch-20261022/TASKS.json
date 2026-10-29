@@ -19795,7 +19795,15 @@
       "resources": 153,
       "scope": "SYNTHETIC_CONNECT_NONE_QF2_B13_TARGETED_RETEST"
     },
-    "protectedWip": "D2 exact leaf provenance/type correction dispatched, no C overwrite",
-    "next": "QB three fixture delta; T45 exact approval draft; QF2 browser retest"
+    "protectedWip": "D2 original provenance verified; +14 retained uncommitted, never staged with SOURCE949",
+    "next": "QB three fixture delta; T45 exact approval draft; QF2 browser retest",
+    "rootTypecheck": {
+      "scope": "CURRENT_WORKING_TREE_WITH_PRESERVED_HISTORICAL_WIP",
+      "exitCode": 0,
+      "diagnostics": 0,
+      "runtimeTypecheck": "NOT_RUN_THIS_INCREMENT",
+      "business": "NOT_PROVEN"
+    },
+    "githubVerified": "9be6889ee97c0f299ccc1c9a1578c0eb861c292f"
   }
 }
