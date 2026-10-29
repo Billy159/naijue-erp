@@ -1,0 +1,56 @@
+{
+  "version": "normal32 / source 8c7ed0c",
+  "classification": "SYNTHETIC_FIXTURE_NOT_PRODUCTION",
+  "pins": [
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8c7ed0c-phase2-32/source/apps/web/demo-replica/frontend/runtime-bootstrap.ts",
+      "bytes": 2245,
+      "sha256": "dd6fc403ae9c6a1d64929a84df5a68fc351f59ba091be47e74efff8e1de2247a"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8c7ed0c-phase2-32/source/apps/web/demo-replica/frontend/runtime-preview-transport.ts",
+      "bytes": 4058,
+      "sha256": "8fd56e8be95ab76fdee32154ff41f9ac478d30bdec1fea22e73620a906c35704"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8c7ed0c-phase2-32/source/apps/web/demo-replica/frontend/runtime/documents/synthetic-preview-transport.ts",
+      "bytes": 21378,
+      "sha256": "55f1d3ca0ff689a1dc5e9cf81a7f45eb57c4e314ab9aef33b783e2b1491f4c41"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8c7ed0c-phase2-32/source/apps/web/unified-browser-harness/sales-transport.ts",
+      "bytes": 10007,
+      "sha256": "16a089c4bdde87847630474acef7fd550dd5b8c6308b86ea3bdfc1312b57efeb"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8c7ed0c-phase2-32/source/apps/web/unified-browser-harness/transfer-transport.ts",
+      "bytes": 10189,
+      "sha256": "37560b277fe920e1a3074b1d76e317da517c64322ed8a03f6b30a7e2c042c52c"
+    },
+    {
+      "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-8c7ed0c-phase2-32/source/apps/web/src/transfers/tests/fixtures.ts",
+      "bytes": 3445,
+      "sha256": "5fad2697bda6c6c30b17b6c2cd084362123936c4537f178e2d2dc899b5cac676"
+    }
+  ],
+  "facts": [
+    "runtime-bootstrap 选择 runtime-preview-transport，文档适配器复用 unified 合成 transport。",
+    "销货/调拨作者产品 SYN-001 零售价39.90，红色+Y版有两个明确SKU，分别165/S、170/M；缺条码可用性与最低价资料。",
+    "文档适配器从调拨原catalog的sizeGroup取完整4成员并绑定商品；组内可见尺码不等同均有已绑定SKU。",
+    "销货作者合成厅、客户、营业员、仓、现金及账户有限各1项；合成登录staff与候选营业员身份不同，默认不自动匹配。",
+    "价格39.90是参考价；待填写成交价及未选尺码属于未完成输入状态，不能凭此判定数据损坏或把未知改0。",
+    "条码查询适配器明确返回未声明；本样例无法验证真实扫码成功。"
+  ],
+  "limits": [
+    "新用户要求QA基础资料、条码方案及设置资料与Demo一致，当前SYN占位不再作为最终可比样例。",
+    "未读取凭据或复制个人敏感资料；不从Demo推断SKU绑定。",
+    "未改应用、Demo、真实库或测试数据；新固定构建与实际候选仍待原owner。",
+    "旧候选依赖样例的销货/调拨/商品选择及金额比较暂停，静态与裁决梳理可继续。"
+  ],
+  "minimumFixtureScope": [
+    "在获准隔离环境由原owner确定非敏感基础资料名称、编码、排序、状态与相互引用；客户与供应商身份保持区分。",
+    "商品规格应存在完整合法尺码组及明确SKU映射；分别覆盖空白和可完成选择状态，不把选中项强行预填。",
+    "完整有效价格及厅仓、在职营业员、客户、付款方式账户引用一致；按明确测试场景验证，不伪造业务源数据。",
+    "保持Demo只读、真实数据和正式接口不变；新固定候选需源码、构建和样本证明。"
+  ]
+}

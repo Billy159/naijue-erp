@@ -1,0 +1,515 @@
+{
+  "scope": "normal34矩阵中非NOT_RUN条目，按证据文件名和存在性初筛；不能代替逐操作核验",
+  "rows": [
+    {
+      "id": "A02",
+      "name": "主框架、菜单、面包屑、账户位置",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo34-shell-inventory.png",
+        "demo34-nav-transfer-collapsed.png"
+      ],
+      "qaFiles": [
+        "candidate34-shell-inventory.png",
+        "candidate34-nav-transfer-collapsed.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "I01",
+      "name": "库存状况表",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo-inventory-entry.png",
+        "demo-inventory-query.png",
+        "demo-category-dropdown.png",
+        "demo-warehouse-all.png",
+        "demo34-inventory-query.png",
+        "demo34-inventory-fold.png"
+      ],
+      "qaFiles": [
+        "candidate-inventory-entry.png",
+        "candidate-inventory-query.png",
+        "candidate-category-dropdown.png",
+        "candidate-warehouse-all.png",
+        "candidate34-inventory-query.png",
+        "candidate34-inventory-fold.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "T01",
+      "name": "调拨单列表",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo-transfer-list.png",
+        "demo34-transfer-list.png",
+        "demo34-transfer-page2.png",
+        "demo34-transfer-return.png"
+      ],
+      "qaFiles": [
+        "candidate-transfer-list.png",
+        "candidate34-transfer-list.png",
+        "candidate34-transfer-page2.png",
+        "candidate34-transfer-return.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "T02",
+      "name": "新增调拨单",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo-transfer-new.png",
+        "demo-transfer-product-focus.png",
+        "demo-transfer-scan.png",
+        "demo34-transfer-creator-menu.png"
+      ],
+      "qaFiles": [
+        "candidate-transfer-new.png",
+        "candidate-transfer-product-focus.png",
+        "candidate-transfer-scan.png",
+        "candidate34-transfer-new-blank.png",
+        "candidate34-transfer-owner-click.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "T03",
+      "name": "既有调拨单查看/编辑及状态",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo34-transfer-audited.png",
+        "demo34-transfer-return.png",
+        "demo34-transfer-draft.png"
+      ],
+      "qaFiles": [
+        "candidate34-transfer-detail-nav-expanded.png",
+        "candidate34-transfer-return.png",
+        "candidate34-transfer-draft.png",
+        "candidate34-transfer-edit-attempt.png",
+        "candidate34-transfer-edit-quantity.png",
+        "candidate34-transfer-edit-cancel.png",
+        "candidate34-transfer-edit-retained.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "S01",
+      "name": "销货单列表",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo34-sales-list.png"
+      ],
+      "qaFiles": [
+        "candidate34-sales-list.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "S02",
+      "name": "新增销售单",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo-sales-new.png"
+      ],
+      "qaFiles": [
+        "candidate-sales-new.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "S04",
+      "name": "既有销货单查看/编辑及状态",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo34-sales-audited.png",
+        "demo34-sales-audited-detail.png",
+        "demo34-sales-audited-view-product.png"
+      ],
+      "qaFiles": [
+        "candidate34-sales-audited.png",
+        "candidate34-sales-audited-detail.png",
+        "candidate34-sales-audited-view-product.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "P15",
+      "name": "商品设置 · 颜色",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "P16",
+      "name": "商品设置 · 尺码组",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "P17",
+      "name": "商品设置 · 版型",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "P18",
+      "name": "商品设置 · 季节",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [],
+      "qaFiles": [],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "P19",
+      "name": "条码方案列表",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo-schemes-paired.png"
+      ],
+      "qaFiles": [
+        "candidate33-schemes.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-A01",
+      "name": "当前员工下拉菜单",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo34-account-menu.png"
+      ],
+      "qaFiles": [
+        "candidate34-account-menu.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-A02",
+      "name": "放弃未保存填写确认",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [
+        "candidate-transfer-leave-confirm.png",
+        "candidate-transfer-after-cancel.png",
+        "candidate34-transfer-dirty-nav.png",
+        "candidate34-transfer-nav-continue.png",
+        "candidate34-transfer-nav-discard.png"
+      ],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "O-I01",
+      "name": "商品多选搜索及最近搜索",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo34-inventory-product-selector.png",
+        "demo34-inventory-search-shirts.png"
+      ],
+      "qaFiles": [
+        "candidate34-inventory-product-selector.png",
+        "candidate34-inventory-search-shirts.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-I02",
+      "name": "商品分类树多选",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo-category-dropdown.png",
+        "demo34-category.png"
+      ],
+      "qaFiles": [
+        "candidate-category-dropdown.png",
+        "candidate-category-child-click.png",
+        "candidate-category-all-after-selection.png",
+        "candidate34-category.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-I03",
+      "name": "仓库多选",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo-warehouse-all.png",
+        "demo34-inventory-warehouse.png"
+      ],
+      "qaFiles": [
+        "candidate-warehouse-all.png",
+        "candidate34-inventory-warehouse.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-I04",
+      "name": "高级条件与辅助选择器",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo34-inventory-advanced.png"
+      ],
+      "qaFiles": [
+        "candidate34-inventory-advanced.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-I05",
+      "name": "显示设置",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo34-inventory-display.png"
+      ],
+      "qaFiles": [
+        "candidate34-inventory-display.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-I06",
+      "name": "已执行查询范围",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo-inventory-scope.png",
+        "demo34-inventory-scope.png"
+      ],
+      "qaFiles": [
+        "candidate-inventory-scope.png",
+        "candidate34-inventory-scope.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-I07",
+      "name": "库存流水抽屉",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo34-ledger-nonzero.png"
+      ],
+      "qaFiles": [
+        "candidate34-ledger-after-fit.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-I08",
+      "name": "流水日期/类型/来源过滤器",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo34-ledger-type.png",
+        "demo34-ledger-date.png"
+      ],
+      "qaFiles": [
+        "candidate34-ledger-type.png",
+        "candidate34-ledger-date.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-I09",
+      "name": "版型/来源身份选择",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [
+        "candidate34-ledger-nonzero.png",
+        "candidate34-ledger-after-fit.png"
+      ],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "O-I11",
+      "name": "导出库存模板选择",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [
+        "candidate34-inventory-export.png",
+        "candidate34-inventory-export-cancel.png"
+      ],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "O-I12",
+      "name": "库存打印预览",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo34-inventory-print-after.png",
+        "demo34-print-close.png"
+      ],
+      "qaFiles": [
+        "candidate34-inventory-print.png",
+        "candidate34-print-close.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-T01",
+      "name": "调出/入仓及创建者选择",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [
+        "candidate-transfer-from-menu.png",
+        "candidate-transfer-to-menu.png"
+      ],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "O-T02",
+      "name": "行内商品候选与预览",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo-transfer-product-focus.png"
+      ],
+      "qaFiles": [
+        "candidate-transfer-product-focus.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-T06",
+      "name": "扫码录入抽屉及成功/失败状态",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo-transfer-scan.png",
+        "demo34-scan-two-warehouses.png"
+      ],
+      "qaFiles": [
+        "candidate34-transfer-scan-default.png",
+        "candidate34-scan-two-warehouses.png",
+        "candidate34-transfer-scan-invalid-result.png",
+        "candidate34-transfer-scan-valid.png",
+        "candidate34-transfer-scan-repeat.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-S01",
+      "name": "厅/营业员/客户/仓候选",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [
+        "candidate-sales-hall-menu.png",
+        "candidate-sales-selected-hall.png",
+        "candidate-sales-staff-menu.png"
+      ],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "O-S03",
+      "name": "行内找货候选及图片预览",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [
+        "candidate-sales-product-menu.png",
+        "candidate-sales-product-selected.png"
+      ],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "O-S04",
+      "name": "行内颜色/版型/尺码改选",
+      "matrixState": "PARTIAL",
+      "demoFiles": [],
+      "qaFiles": [
+        "candidate-sales-color-menu.png",
+        "candidate-sales-fit-menu.png",
+        "candidate-sales-size-menu.png"
+      ],
+      "audit": "缺少可识别双侧截图，须回查或重做",
+      "wholePass": false
+    },
+    {
+      "id": "O-S19",
+      "name": "操作历史",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo34-sales-history.png"
+      ],
+      "qaFiles": [
+        "candidate34-sales-history-error.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-S20",
+      "name": "已保存单据打印预览",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo34-sales-print.png"
+      ],
+      "qaFiles": [
+        "candidate34-sales-print.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-P01",
+      "name": "商品只读抽屉（三页签）",
+      "matrixState": "PARTIAL",
+      "demoFiles": [
+        "demo34-inventory-detail.png",
+        "demo34-product-drawer-spec.png",
+        "demo34-product-drawer-image.png"
+      ],
+      "qaFiles": [
+        "candidate34-inventory-detail.png",
+        "candidate34-product-drawer-spec.png",
+        "candidate34-product-drawer-image.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    },
+    {
+      "id": "O-P07",
+      "name": "查看条码方案",
+      "matrixState": "DIFFERENCE",
+      "demoFiles": [
+        "demo-scheme-2026-detail.png"
+      ],
+      "qaFiles": [
+        "candidate33-scheme-2026-detail.png"
+      ],
+      "audit": "证据文件成对，仍需核对操作和状态",
+      "wholePass": false
+    }
+  ]
+}

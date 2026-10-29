@@ -1,0 +1,68 @@
+{
+  "source": "55cd8581da35b490f51f45f7b6d381125b786b2e",
+  "build": "phase2-normal-55cd858-33",
+  "url": "http://127.0.0.1:57922/#product-settings",
+  "profile": "demo-reference-v1; synthetic only",
+  "at": "2026-10-27T03:05:48.543681+00:00",
+  "fixturePin": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-55cd858-phase2-33/source/apps/web/demo-replica/frontend/qa-reference-fixtures.ts",
+    "sha256": "e7f722cfac4ab1229eaf4e46d26315fb0ac1b7e965dfed17c67a5c6edb763f63",
+    "bytes": 51893
+  },
+  "scope": [
+    {
+      "region": "颜色第一页",
+      "demo": "182条，第一页20条名称/编码/顺序",
+      "candidate": "182条，第一页20条与Demo显示相同",
+      "screens": [
+        "demo-colors-stable.png",
+        "candidate33-settings-colors.png"
+      ],
+      "limits": "其余页、全部状态及实际维护未验；候选明确显示维护未接通，不能推断正式权限或数据。"
+    },
+    {
+      "region": "尺码组",
+      "demo": "6组及各组完整可见成员",
+      "candidate": "6组和列表顺序相同",
+      "screens": [
+        "demo-sizegroups-stable.png",
+        "candidate33-sizegroups.png"
+      ],
+      "limits": "组名及成员显示配对；编码、编辑操作和每个商品SKU身份未全部验。"
+    },
+    {
+      "region": "版型",
+      "demo": "Y/A/B/C/D/E六项名称及码",
+      "candidate": "同样六项顺序名称及码",
+      "screens": [
+        "demo-fits-stable.png",
+        "candidate33-fits.png"
+      ],
+      "limits": "具体编辑能力及状态未验。"
+    },
+    {
+      "region": "季节",
+      "demo": "春、夏、秋、冬",
+      "candidate": "春季、夏季、秋季、冬季、春夏、秋冬",
+      "screens": [
+        "demo-seasons-stable.png",
+        "candidate33-seasons.png"
+      ],
+      "limits": "v3-A明确不增加春夏/秋冬组合字典项；这是合成样例与已批准口径不一致，不能据此认定正式数据库状态。"
+    }
+  ],
+  "finding": {
+    "id": "N33-FIXTURE-SEASON-01",
+    "severity": "P1",
+    "status": "测试资料与已批准合同不一致",
+    "evidence": "qa-reference-fixtures.ts:1298 qaSeasons，商品行1713引用这些项；SCHEMA-SUPPLEMENT-v3-PRODUCT-SEASONS.md:5明确不新增组合字典。",
+    "owner": "原fixture owner，用户决定后处理；本次只审查",
+    "suggestion": "隔离样例按已批准独立四季和有效ID引用重备；保持多选语义，不改正式数据，不凭假组合项跳过。",
+    "retest": "新固定构建分别核字典、商品选择和筛选实际引用，不仅改文案。"
+  },
+  "boundaries": [
+    "价格NULL保持未提供；预览不是正式业务。",
+    "资料匹配不代表全页操作、权限或真实业务验收。",
+    "旧32配对不能当新33修后证据。"
+  ]
+}

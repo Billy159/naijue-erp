@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-28",
+  "basis": "PAGE-MATRIX.json, normal34 fixed comparison",
+  "statesByKind": {
+    "page": {
+      "NOT_RUN": 1,
+      "PARTIAL": 8,
+      "DIFFERENCE": 28
+    },
+    "overlay": {
+      "NOT_RUN": 15,
+      "PARTIAL": 30,
+      "DIFFERENCE": 23
+    }
+  },
+  "wholePagePass": 0,
+  "wholeOverlayPass": 0,
+  "missingEvidenceFiles": [],
+  "differenceRowsWithoutExplicitIssueId": [
+    "T01",
+    "T02",
+    "S01",
+    "S03",
+    "S04",
+    "P03",
+    "P04",
+    "P06",
+    "P14",
+    "P15",
+    "P16",
+    "P17",
+    "P19",
+    "B01",
+    "B02",
+    "B03",
+    "B05",
+    "B06",
+    "O-I02",
+    "O-I06",
+    "O-I08",
+    "O-I12",
+    "O-T06",
+    "O-T08",
+    "O-T09",
+    "O-S16",
+    "O-S17",
+    "O-S19",
+    "O-S20",
+    "O-P04",
+    "O-P05",
+    "O-P06",
+    "O-P07",
+    "O-B02",
+    "O-B04",
+    "O-B05",
+    "O-B06",
+    "O-P12"
+  ],
+  "qualification": "只检查文件存在和矩阵字段含编号；文件存在不证明内容配对，未显式编号不证明没有问题记录。后续逐项核对应关系。"
+}
