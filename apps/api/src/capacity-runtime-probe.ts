@@ -29,6 +29,12 @@ export interface CapacityRuntimeProbeOptions {
 export type OwnedPoolCapacityOptions = Omit<Parameters<typeof createCapacityAdmission>[0], 'probe'> & {
   readonly runtimeProbe: CapacityRuntimeProbeOptions;
 };
+export interface PreparedOwnedPoolCapacityAdmission extends ObservableCapacityAdmission {
+  /** Startup only, after the factory binds its sole pool and before listening.
+   * Valid low free space is observed, not changed into UNKNOWN or credited.
+   * This read does not admit a write or consume/refund any window budget. */
+  preflight(): Promise<void>;
+}
 type PoolBinder = (pool: PgSalesPool, target: BoundedPostgresConfig['target']) => void;
 const binders = new WeakMap<CapacityAdmission, PoolBinder>();
 
@@ -62,15 +68,21 @@ function sameBinding(a: CapacityBinding, b: CapacityBinding): boolean {
 /** Pass this singleton through the existing production factory/main capacity
  * parameter. No JSON/parser/permission contract or automatic approval is added.
  */
-export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptions): ObservableCapacityAdmission {
+export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptions): PreparedOwnedPoolCapacityAdmission {
   const input = options?.runtimeProbe, t = input?.target;
   if (!t || !['host', 'database', 'role', 'postmasterStart'].every(key => typeof t[key as keyof CapacityRuntimeTarget] === 'string'
     && String(t[key as keyof CapacityRuntimeTarget]).length > 0)
     || !Number.isSafeInteger(t.port) || t.port < 1 || t.port > 65535 || !/^[1-9]\d*$/.test(t.databaseOid)
     || typeof input.readVolumeFacts !== 'function') throw new TypeError('Explicit capacity runtime target and authorized fresh volume facts required');
-  const expected = structuredClone(t), readVolumeFacts = input.readVolumeFacts.bind(input), {now, probeTtlMillis} = options;
+  const expected = structuredClone(t), readVolumeFacts = input.readVolumeFacts.bind(input), {now, probeTtlMillis, probeTimeoutMillis} = options;
   let pool: PgSalesPool | undefined, closed = false;
-  const admission = createCapacityAdmission({...options, async probe({window, signal}) {
+  let startup: AbortController | undefined, probing = false;
+  const probe: Parameters<typeof createCapacityAdmission>[0]['probe'] = async ({window, signal}) => {
+    if (probing) return unknown();
+    probing = true;
+    try {return await observe(window, signal);} finally {probing = false;}
+  };
+  async function observe(window: CapacityWindow, signal: AbortSignal): Promise<CapacityReading> {
     const started = now();
     if (!pool || closed || signal.aborted || !timestamp(started)) return unknown();
     const active = () => {
@@ -82,6 +94,7 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
     let client: Awaited<ReturnType<PgSalesPool['connect']>> | undefined, began = false, discard: Error | undefined;
     let result: CapacityReading = unknown();
     try {
+      active();
       // Operational IO finishes BEFORE borrowing the database lease. The original
       // admission retains its in-flight slot until this entire worker settles,
       // even if a provider ignores abort or a bounded acquisition is still pending.
@@ -122,9 +135,22 @@ export function createOwnedPoolCapacityAdmission(options: OwnedPoolCapacityOptio
     try {if (active() - (result.status === 'KNOWN' ? result.observedAt : started) >= probeTtlMillis) return unknown();}
     catch {return unknown();}
     return result;
-  }});
-  const owned: ObservableCapacityAdmission = Object.freeze({acquire: admission.acquire.bind(admission), snapshot: admission.snapshot,
-    close() {closed = true; admission.close();}});
+  }
+  const admission = createCapacityAdmission({...options, probe});
+  const window = options.window === null ? null : structuredClone(options.window), currentBinding = options.currentBinding;
+  const owned: PreparedOwnedPoolCapacityAdmission = Object.freeze({acquire: admission.acquire.bind(admission), snapshot: admission.snapshot,
+    async preflight() {
+      if (closed || !pool || startup || !window?.approved || !window.token || probing) throw new Error('Capacity startup observation unavailable');
+      const controller = new AbortController(); startup = controller;
+      const timer = setTimeout(() => controller.abort(), probeTimeoutMillis);
+      try {
+        if (!sameBinding(currentBinding(), window.binding)) throw new Error('Capacity startup binding differs');
+        const reading = await probe({window: structuredClone(window), signal: controller.signal});
+        if (reading.status !== 'KNOWN' || controller.signal.aborted || closed || !sameBinding(currentBinding(), window.binding))
+          throw new Error('Capacity startup observation unavailable');
+      } finally {clearTimeout(timer); if (startup === controller) startup = undefined;}
+    },
+    close() {closed = true; startup?.abort(); admission.close();}});
   binders.set(owned, (original, target) => {
     if (closed || pool || !original || typeof original.connect !== 'function' || target.host !== expected.host || target.port !== expected.port
       || target.database !== expected.database || target.user !== expected.role) throw new TypeError('Capacity runtime requires its one exact owned pool target');

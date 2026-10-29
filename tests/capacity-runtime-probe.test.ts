@@ -20,6 +20,23 @@ test('A02 owned snapshot observes the same bound admission leases and immutable 
   lease.release();assert.equal(f.admission.snapshot().active.upload,0);assert.deepEqual(f.admission.snapshot().chargedBytes,held.chargedBytes);
   assert.equal(before.admitted.upload,0);f.admission.close();assert.equal(f.admission.snapshot().closed,true);
 });
+test('A02 CLI preflight reads its bound pool without admission/charge and accepts valid low-water facts as readonly-ready',async()=>{
+  const f=fixture();f.bind();f.setFacts(()=>({status:'KNOWN',windowToken:'synthetic-window',binding:f.binding,observedAt:1000,freeBytes:amounts(1n)}));
+  await f.admission.preflight();assert.deepEqual(f.admission.snapshot().admitted,{session:0,upload:0});assert.deepEqual(f.admission.snapshot().chargedBytes,amounts(0n));
+  await assert.rejects(f.admission.acquire('session'),{reason:'LOW_WATER'});assert.equal(f.releases.length,2);f.admission.close();
+});
+for(const state of ['unbound','unknown','expired']as const)test(`A02 CLI preflight ${state} refuses startup without admitting a write`,async()=>{
+  const f=fixture();if(state!=='unbound')f.bind();if(state==='unknown')f.setFacts(()=>({status:'UNKNOWN'}));if(state==='expired')f.setTime(10000);
+  await assert.rejects(f.admission.preflight());assert.deepEqual(f.admission.snapshot().admitted,{session:0,upload:0});f.admission.close();
+});
+test('A02 CLI startup cancellation waits for original in-flight pool work, then rolls back and releases without charge',async()=>{
+  const f=fixture(),waiting=deferred<void>(),entered=deferred<void>();f.bind();
+  f.holdStorage(async()=>{entered.resolve();await waiting.promise;});let finished=false;
+  const pending=f.admission.preflight().finally(()=>{finished=true;}),rejected=assert.rejects(pending);await entered.promise;
+  f.admission.close();await tick();assert.equal(finished,false);assert.equal(f.releases.length,0);
+  waiting.resolve();await rejected;assert.equal(f.sql.at(-1),'ROLLBACK');assert.equal(f.releases.length,1);
+  assert.deepEqual(f.admission.snapshot().admitted,{session:0,upload:0});
+});
 function fixture() {
   let at = 1000, factCalls = 0, connects = 0;
   const binding = {candidateFingerprint: 'synthetic-source', targetFingerprint: 'synthetic-target', writerTopologyFingerprint: 'one-writer',

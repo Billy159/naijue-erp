@@ -7843,5 +7843,27 @@
         "sha256": "4c7239775893f23141cd18e0347dfc7de5280402e1e880031e98d264352c6dfc"
       }
     }
+  },
+  "capacityCli941": {
+    "owner": "D1/01a16161-e65d-7742-8471-4b3c786ed314",
+    "status": "FIXED_DELIVERY_HANDED_BACK_PENDING_QB",
+    "authority": "Current direct human request: production CLI capacity wiring, actual entry isolated validation; no production/ACL changes",
+    "files": [
+      "apps/api/src/production-main.ts",
+      "apps/api/src/production-capacity-launch.ts",
+      "apps/api/src/production-capacity-launch.test.ts",
+      "apps/api/src/production-provider-composition.test.ts",
+      "apps/api/src/production-application-host.test.ts",
+      "apps/api/src/capacity-runtime-probe.ts",
+      "tests/capacity-runtime-probe.test.ts"
+    ],
+    "boundary": "Original admission and unique API-owned pool; explicit budget/window/fresh authorized facts. No default approvals, SQL/schema/ACL/release script changes. Extra leaves request exact seam first. T45 sole release/real execution owner.",
+    "changedFiles": [
+      "apps/api/src/production-main.ts",
+      "apps/api/src/production-capacity-launch.ts",
+      "apps/api/src/production-capacity-launch.test.ts",
+      "apps/api/src/capacity-runtime-probe.ts",
+      "tests/capacity-runtime-probe.test.ts"
+    ]
   }
 }
