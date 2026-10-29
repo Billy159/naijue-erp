@@ -8043,7 +8043,7 @@
   },
   "b13AsyncCategorySuccessor": {
     "owner": "F2/01a161d2-6bd9-7181-8386-1ecddddd386a",
-    "status": "F2_EXACT3_REOPENED_SELECTION_COMMIT_ORDER_INVESTIGATION_NORMAL43_FIXED",
+    "status": "F2_SECOND_CAUSE_EXACT3_FROZEN_READONLY_WAIT_BUILD_AND_QF2",
     "files": [
       "apps/web/demo-replica/frontend/runtime/products/filters.tsx",
       "apps/web/demo-replica/frontend/runtime/products/filter-contract.test.mjs",
@@ -8056,5 +8056,11 @@
     "file": "tests/product-query-postgres-protocol.test.ts",
     "status": "D2_HANDED_BACK_PROVENANCE_VERIFIED_PLUS14_PRESERVED_UNCOMMITTED",
     "scope": "Preserve superseded v11 +13 WIP; no delete/skip change or rule/SQL changes, no competing writer."
+  },
+  "capacityQa21551ExecutionApproval": {
+    "source": "Human call_59165a3a4f0045ba9f5a17708ab51356/0",
+    "owner": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
+    "sourceCommit": "482d883c4b4f7cb78ee673705bd75a804cdec1f1",
+    "scope": "Original exact reviewed confirmation four-case batch only; no production/real-data/deletion"
   }
 }

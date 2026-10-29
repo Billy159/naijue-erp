@@ -19805,5 +19805,22 @@
       "business": "NOT_PROVEN"
     },
     "githubVerified": "9be6889ee97c0f299ccc1c9a1578c0eb861c292f"
+  },
+  "source950Continuation": {
+    "capacityApproval": {
+      "source": "Human call_59165a3a4f0045ba9f5a17708ab51356/0",
+      "answer": "确认本批隔离验证及最小权限变更",
+      "sourceCommit": "482d883c4b4f7cb78ee673705bd75a804cdec1f1",
+      "confirmationSha256": "8e3835f416195be80572d2b1f51c95b139ee92cefdba9795fc120080befc2e80",
+      "executionDiffSha256": "b4fb79dd737c236441acf99add2ecabe2b3b84f5af7fcc982397cd71fa128c99",
+      "scope": "QA21551 only; exact missing two atoms plus private temporary network/IPC, four cases and cleanup",
+      "status": "ORIGINAL_T45_DISPATCH_ACKNOWLEDGED_ACTUAL_RESULTS_PENDING"
+    },
+    "QB949": {
+      "decision": "PASS_THREE_TEST_FIXTURE_SOURCE_DELTA_ONLY_REAL_PG_NOT_TESTED",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE949/QB-SOURCE949-RESULT.json",
+      "clarification": "legacy schemas through19; exact26 independent capability; never claim20..25 approved"
+    },
+    "B13": "SECOND_CAUSE_LABEL_SELECTION_FIX_EXACT3_HANDED_BACK_WAIT_BUILD_BROWSER"
   }
 }

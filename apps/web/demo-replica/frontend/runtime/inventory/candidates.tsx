@@ -113,6 +113,8 @@ function CandidateContent(p:CandidateSelectProps&{portal:HTMLElement;host:HTMLEl
  else roots.push(...nodes);
  const completeCandidates=loaded?.signature===signature&&!input.trim()&&items.length===loaded.total;
  const checked=checkedFilterValues(p.value,items,completeCandidates),allSelected=checked.includes(ALL);
+ // Commit async selection before clearing its search; optionChecked is an
+ // automatic reset from that same click, not a new user search intent.
  const choose=async(next:unknown,extra:Parameters<typeof resolveFilterSelection>[3])=>{
   invalidatePaste();
   selectionRequest.current?.abort();const own=new AbortController();selectionRequest.current=own;const signal=AbortSignal.any([own.signal,p.scope.signal]);setSelecting(true);
@@ -124,7 +126,7 @@ function CandidateContent(p:CandidateSelectProps&{portal:HTMLElement;host:HTMLEl
   }catch(e){if(signal.aborted)return;if(e instanceof HttpQueryError&&(e.kind==='forbidden'||e.kind==='unauthenticated')){p.onAccessFailure(e);p.scope.dispose();}else notify(e instanceof Error&&!(e instanceof HttpQueryError)?e.message:'读取完整候选失败，当前选择已保留，请重试。');}
   finally{if(selectionRequest.current===own){selectionRequest.current=null;setSelecting(false);}}
  };
- return <TreeSelect ref={selectRef as never} loading={selecting} allowClear className={allSelected?'inv-all-selected':p.kind==='category'?'inventory-category-tree':''} aria-label={labels[p.kind]+'，多选'} style={{width:'100%'}} treeData={[{key:ALL,value:ALL,title:allLabel},...roots]} treeCheckable multiple treeCheckStrictly treeCheckedStrategy={TreeSelect.SHOW_ALL} showSearch={{retainInputValueWhileSelect:false}} onSearch={()=>{ /* Remote results already filtered; bypass Arco cached local hitKeys. */ }} inputValue={input} onInputValueChange={value=>{invalidatePaste();setInput(value);}} value={checked} placeholder={'搜索'+labels[p.kind]} notFoundContent={<div className="inv-filter-empty">没有匹配的{labels[p.kind]}</div>}
+ return <TreeSelect ref={selectRef as never} loading={selecting} allowClear className={allSelected?'inv-all-selected':p.kind==='category'?'inventory-category-tree':''} aria-label={labels[p.kind]+'，多选'} style={{width:'100%'}} treeData={[{key:ALL,value:ALL,title:allLabel},...roots]} treeCheckable multiple treeCheckStrictly treeCheckedStrategy={TreeSelect.SHOW_ALL} showSearch={{retainInputValueWhileSelect:false}} onSearch={()=>{ /* Remote results already filtered; bypass Arco cached local hitKeys. */ }} inputValue={input} onInputValueChange={(value,reason)=>{if(reason!=='optionChecked'){invalidatePaste();setInput(value);}}} value={checked} placeholder={'搜索'+labels[p.kind]} notFoundContent={<div className="inv-filter-empty">没有匹配的{labels[p.kind]}</div>}
   maxTagCount={{count:allSelected?1:tagLimit,render:n=>allSelected?null:<span className="inv-filter-count">+{n} 更多</span>,showPopover:false}} renderFormat={(_,id)=>names.get(typeof id==='string'?id:id.value)??String(id)} getPopupContainer={()=>p.portal} triggerProps={{position:'bl',autoAlignPopupWidth:false,popupStyle:{width:Math.min(Math.max(geometry.width,300),innerWidth-p.host.getBoundingClientRect().left-12)}}}
   onVisibleChange={visible=>{setOpen(visible);if(!visible){invalidatePaste();query.cancel();}}} onChange={(next,extra)=>void choose(next,extra)}
   dropdownRender={menu=><div onScrollCapture={scroll}><div className="inv-filter-tools">{loaded?'匹配 '+loaded.total+' 项':'请选择'} · {allSelected?'全部':`已选 ${selected.length} 项`}</div>{menu}{status}</div>}/>;
