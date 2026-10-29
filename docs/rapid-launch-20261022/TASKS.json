@@ -19701,10 +19701,16 @@
     },
     "newCandidateBuild": {
       "source": "70f0c091ea2a40b9ac4cfc77c8fbe259aacc7068",
+      "build": "phase2-normal-70f0c09-42",
+      "resources": 153,
+      "url": "http://127.0.0.1:64966/#inventory",
+      "status": "BUILT_AND_SERVED_SYNTHETIC_NOT_REAL_BUSINESS",
       "owner": "Original T45",
-      "dispatch": "ACKNOWLEDGED_QUEUED_AFTER_CURRENT_CAPACITY_SOURCE_HANDOFF",
-      "normal34": "Untouched immutable fixed comparison",
-      "status": "NOT_YET_BUILT"
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/ui-preview-70f0c09-phase2-42/RESULT.json",
+      "sha256": "7efd92bf1b8d1319e8e45d89918b055358f7d0f8e7d5d8dde1eba9a6f3963d29",
+      "normal34": "57923 unchanged immutable comparison PID10937; no switch",
+      "buildResult": "One Vite build exit0/2.844s; no backend pack/deps/native/PG; same original synthetic fixture bytes .mts rename accurately included",
+      "qa": "Original QF and QF2 dispatch acknowledged. Only affected scopes; QF2 checks independent IAB versus Demo Chrome isolation before browser action. QF source prep pending Chrome handoff, no shared-control contention."
     }
   },
   "b12RemainingFixtureTypes": {
@@ -19723,7 +19729,7 @@
         "tests/sales-business-rules.test.ts",
         "tests/transfer-current-identity.test.ts"
       ],
-      "dispatch": "Initial plus one explicit local correction rejected; original routing retained, no replacement writer"
+      "dispatch": "Human opened and screenshot confirmed exact ID; C navigate succeeded but send still thread not found. Original9 not started, no replacement writer."
     },
     "F2": {
       "owner": "01a161d2-6bd9-7181-8386-1ecddddd386a",
@@ -19753,6 +19759,7 @@
       "Actual CLI same-owned-pool preflight/readyz and three refusal/cleanup cases"
     ],
     "environmentApproval": "Pending exact two ACL atoms and temporary QA network/IPC; no server or database changes",
-    "next": "Original QB only related increment; T45 builds fixed SOURCE946 separately"
+    "next": "Original QB only related increment; T45 builds fixed SOURCE946 separately",
+    "independentReviewDispatch": "NOT_DISPATCHED_QB_THREAD_NOT_FOUND_INITIAL_AND_EXPLICIT_LOCAL_CORRECTION"
   }
 }
