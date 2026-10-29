@@ -22,6 +22,8 @@ import tarfile
 import time
 import threading
 import pwd
+import select
+import errno
 
 ROOT = Path('/srv/naijue-erp/rapid-launch-20261022')
 OLD = Path('/srv/naijue-erp/prod')
@@ -322,7 +324,7 @@ def exact26_r1(p):
     need(isinstance(refs, dict) and set(refs) == {'upgradeReceipt', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest'}, 'CLOSED_EXACT26_REFERENCES_REQUIRED')
     for row in refs.values():
         need(isinstance(row, dict) and set(row) == {'path', 'sha256'} and HASH.fullmatch(row.get('sha256', '')), 'HASH_BOUND_EXACT26_REFERENCE_REQUIRED')
-        canonical(row.get('path'), root=ROOT)
+        canonical(row.get('path'), root=capacity_artifact_root(p))
     need(len({row['path'] for row in refs.values()}) == len(refs), 'DISTINCT_EXACT26_REFERENCES_REQUIRED')
     return True
 
@@ -403,6 +405,7 @@ def runtime_binding(p):
         return None
     value = {'selector': p['runtimeSelector'], 'references': runtime_references(p), 'runtimeFile': p['runtimeConfiguration'],
              'capacityHost': p.get('capacityHost'), 'capacityGate': p.get('capacityGate'), 'capacityFinalInput': p.get('capacityFinalInput')}
+    if 'capacityQaObserver' in p: value['capacityQaObserver'] = p['capacityQaObserver']
     if exact26_full(p):
         value['media'] = p['runtime26Full']['media']
         value['inventorySpool'] = p['runtime26Full'].get('inventorySpool')
@@ -469,14 +472,15 @@ def capacity_bytes(value):
 
 
 def capacity_host_binding(p, verify_files=True):
+    artifact_root = capacity_artifact_root(p)
     host = capacity_bag(p.get('capacityHost'), ('collector', 'profile', 'interpreter', 'reviewSha256'))
     need(isinstance(host['reviewSha256'], str) and HASH.fullmatch(host['reviewSha256']), 'CAPACITY_REVIEW_PIN_REQUIRED')
     for key, destination in [('collector', CAPACITY_COLLECTOR), ('profile', CAPACITY_PROFILE)]:
         row = capacity_bag(host[key], ('hostFile', 'containerFile', 'sha256'))
-        need(capacity_path(row['hostFile']) and Path(row['hostFile']).is_relative_to(ROOT) and
+        need(capacity_path(row['hostFile']) and Path(row['hostFile']).is_relative_to(artifact_root) and
              row['containerFile'] == destination and isinstance(row['sha256'], str) and HASH.fullmatch(row['sha256']), 'EXACT_CAPACITY_ARTIFACT_REQUIRED')
         if verify_files:
-            source = canonical(row['hostFile'], root=ROOT)
+            source = canonical(row['hostFile'], root=artifact_root)
             info, parent = source.stat(), source.parent.stat()
             need(info.st_uid in (0, int(p['limits']['app']['user'].split(':')[0])) and parent.st_uid in (0, info.st_uid) and
                  not parent.st_mode & 0o022 and (info.st_mode & 0o004 or key == 'profile' and info.st_uid == int(p['limits']['app']['user'].split(':')[0]) and info.st_mode & 0o400) and info.st_size <= 65536 and
@@ -536,18 +540,36 @@ def capacity_runtime_configuration(p, runtime, pending=False):
          capacity_number(producer['maxOutputBytes']) and producer['maxOutputBytes'] <= 65536, 'OWNER_FIXED_CAPACITY_PRODUCER_REQUIRED')
     capacity_bag(producer['volumes'], CAPACITY_VOLUMES)
     profile = json.loads(bytes_file(host['profile']['hostFile'], 65536))
-    capacity_bag(profile, ('schemaVersion', 'profile', 'reviewSha256', 'target', 'binding', 'windowToken', 'startsAt', 'expiresAt', 'maxAgeMillis', 'namespace', 'volumes'))
-    need(type(profile['schemaVersion']) is int and profile['schemaVersion'] == 1 and profile['profile'] == 'OWNER_FIXED_STATFS_V1' and
+    remote = profile.get('profile') == 'OWNER_QA_FIFO_STATFS_V1'
+    capacity_bag(profile, ('schemaVersion', 'profile', 'reviewSha256', 'target', 'binding', 'windowToken', 'startsAt', 'expiresAt', 'maxAgeMillis',
+                           'ipc' if remote else 'namespace', 'volumes'))
+    need(type(profile['schemaVersion']) is int and profile['schemaVersion'] == 1 and
+         profile['profile'] in ('OWNER_FIXED_STATFS_V1', 'OWNER_QA_FIFO_STATFS_V1') and
          profile['reviewSha256'] == host['reviewSha256'] and profile['target'] == target and profile['binding'] == binding and
          profile['windowToken'] == window['token'] and profile['startsAt'] == window['startsAt'] and profile['expiresAt'] == window['expiresAt'] and
-         profile['maxAgeMillis'] == c['probeTtlMillis'] and capacity_text(profile['namespace']), 'OWNER_CAPACITY_PROFILE_MISMATCH')
+         profile['maxAgeMillis'] == c['probeTtlMillis'], 'OWNER_CAPACITY_PROFILE_MISMATCH')
+    if remote:
+        capacity_qa_binding(p)
+        need(profile['ipc'] == {'request': CAPACITY_LIVE+'/request.fifo', 'response': CAPACITY_LIVE+'/response.fifo'} and
+             target == CAPACITY_QA_TARGET and window['expiresAt']-window['startsAt'] <= 240000 and
+             window['expiresAt'] <= p['capacityQaObserver']['deadlineAt'], 'EXACT_QA_OBSERVER_PROFILE_REQUIRED')
+    else:
+        need(capacity_text(profile['namespace']), 'OWNER_CAPACITY_NAMESPACE_REQUIRED')
     capacity_bag(profile['volumes'], CAPACITY_VOLUMES)
+    devices, physical = {}, {}
     for k, mapping in producer['volumes'].items():
         capacity_bag(mapping, ('path', 'physicalVolume', 'namespace'))
         observed = capacity_bag(profile['volumes'][k], ('path', 'physicalVolume', 'namespace', 'device', 'filesystemType'))
         need(capacity_path(mapping['path']) and mapping['physicalVolume'] == binding['physicalVolumes'][k] and
-             mapping['namespace'] == profile['namespace'] and all(observed[n] == mapping[n] for n in mapping) and
+             capacity_text(mapping['namespace']) and (remote or mapping['namespace'] == profile['namespace']) and
+             all(observed[n] == mapping[n] for n in mapping) and
              all(isinstance(observed[n], str) and re.fullmatch(r'(?:0|[1-9][0-9]*)', observed[n]) for n in ('device', 'filesystemType')), 'OWNER_CAPACITY_VOLUME_MISMATCH')
+        if remote:
+            need(mapping['path'] == CAPACITY_QA_PATHS[k], 'FIXED_QA_VOLUME_PATH_REQUIRED')
+            identity = (observed['namespace'], observed['device'], observed['filesystemType'])
+            need(devices.get(identity, mapping['physicalVolume']) == mapping['physicalVolume'] and
+                 physical.get(mapping['physicalVolume'], identity) == identity, 'QA_PHYSICAL_VOLUME_ALIAS_MISMATCH')
+            devices[identity], physical[mapping['physicalVolume']] = mapping['physicalVolume'], identity
     if 'productMedia' in runtime: need(producer['volumes']['media']['path'] == runtime['productMedia']['root'], 'CAPACITY_MEDIA_ROOT_MISMATCH')
     return {k: v for k, v in runtime.items() if k != 'capacityLaunch'}
 
@@ -889,10 +911,11 @@ CAPACITY_GATE_PATH = '/run/naijue-rewrite/capacity-gate'
 CAPACITY_GATE_BODY = 'IFS= read -r decision < /run/naijue-rewrite/capacity-gate || exit 1; [ "$decision" = "$1" ] || exit 1; shift; exec "$@"'
 
 
-def capacity_fifo_identity(filename):
+def capacity_fifo_identity(filename, root=None):
+    if root is None: root = ROOT
     path = Path(filename)
-    need(capacity_path(str(path)) and path.is_relative_to(ROOT), 'EXACT_CAPACITY_FIFO_PATH_REQUIRED')
-    canonical(path.parent, kind='directory', private=True, root=ROOT)
+    need(capacity_path(str(path)) and path.is_relative_to(root), 'EXACT_CAPACITY_FIFO_PATH_REQUIRED')
+    canonical(path.parent, kind='directory', private=True, root=root)
     value = path.lstat()
     need(stat.S_ISFIFO(value.st_mode) and not path.is_symlink() and stat.S_IMODE(value.st_mode) == 0o600, 'EXACT_PRIVATE_CAPACITY_FIFO_REQUIRED')
     return {'device': value.st_dev, 'inode': value.st_ino, 'uid': value.st_uid, 'gid': value.st_gid, 'mode': stat.S_IMODE(value.st_mode)}
@@ -902,12 +925,13 @@ def create_capacity_gate_fifo(p):
     """New candidate only; existing FIFO or parent modes are never changed."""
     gate = p.get('capacityGate', {})
     filename = Path(gate.get('hostFifo', ''))
-    need(capacity_path(str(filename)) and filename.is_relative_to(ROOT) and not os.path.lexists(filename), 'NEW_CAPACITY_FIFO_ONLY')
-    canonical(filename.parent, kind='directory', private=True, root=ROOT)
+    artifact_root = capacity_artifact_root(p)
+    need(capacity_path(str(filename)) and filename.is_relative_to(artifact_root) and not os.path.lexists(filename), 'NEW_CAPACITY_FIFO_ONLY')
+    canonical(filename.parent, kind='directory', private=True, root=artifact_root)
     uid, gid = map(int, p['limits']['app']['user'].split(':'))
     os.mkfifo(filename, 0o600)
     os.chown(filename, uid, gid, follow_symlinks=False)
-    return capacity_fifo_identity(filename)
+    return capacity_fifo_identity(filename, artifact_root)
 
 
 def capacity_gate_binding(p):
@@ -917,7 +941,7 @@ def capacity_gate_binding(p):
     shell = capacity_bag(gate['shell'], ('containerFile', 'sha256', 'imageId'))
     need(shell['containerFile'] == '/bin/sh' and isinstance(shell['sha256'], str) and HASH.fullmatch(shell['sha256']) and
          shell['imageId'] == p['images']['node']['id'], 'EXACT_CAPACITY_GATE_SHELL_REQUIRED')
-    identity = capacity_fifo_identity(gate['hostFifo'])
+    identity = capacity_fifo_identity(gate['hostFifo'], capacity_artifact_root(p))
     need(identity == gate['identity'] and identity['uid'] == int(p['limits']['app']['user'].split(':')[0]) and
          identity['gid'] == int(p['limits']['app']['user'].split(':')[1]), 'CAPACITY_FIFO_IDENTITY_CHANGED')
     return gate
@@ -979,7 +1003,7 @@ def release_capacity_fifo(p, docker, cid, process, final_identity, final_guard):
         need(file_identity(p['runtimeConfiguration']['path']) == final_identity and Path(p['runtimeConfiguration']['path']).lstat().st_ctime_ns == frozen_ctime, 'PRIVATE_RUNTIME_CHANGED_AFTER_FINAL_GUARD')
         while True:
             need(time.monotonic() < deadline and time.time()*1000 < gate['deadlineAt'], 'CAPACITY_FIFO_DEADLINE_EXPIRED')
-            need(capacity_fifo_identity(gate['hostFifo']) == gate['identity'], 'CAPACITY_FIFO_REPLACED')
+            need(capacity_fifo_identity(gate['hostFifo'], capacity_artifact_root(p)) == gate['identity'], 'CAPACITY_FIFO_REPLACED')
             try:
                 fd = os.open(gate['hostFifo'], os.O_WRONLY | os.O_NONBLOCK | os.O_NOFOLLOW)
                 break
@@ -1309,6 +1333,435 @@ def run_capacity_gate_controller(p, docker, journal):
         finished.set(); watchdog.join(17)
         need(not watchdog.is_alive() and not watchdog_failure, 'CAPACITY_DEADLINE_WATCHDOG_STOP_UNCONFIRMED')
         need(not expired.is_set(), 'CAPACITY_CONTROLLER_DEADLINE_EXPIRED')
+
+
+
+# Dedicated isolated QA seam. The formal read_plan/validate_references and networks
+# remain unchanged and do not accept capacityQaObserver. Only the existing original
+# bounded root job may call these functions, after its frozen authority is checked.
+CAPACITY_LIVE = '/run/naijue-rewrite/capacity/live'
+CAPACITY_QA_ROOT = Path('/srv/naijue-erp/isolated-qa/qa897-20261029-01/capacity-e2e-266')
+CAPACITY_QA_PG = '4ef68faedf28b431cd884fedc5a40435f20b2bc16ea6475e59424426a54a8251'
+CAPACITY_QA_IMAGE = 'sha256:b3721d9bd40bf0da8dde2ef10bb0557d5b6615cbf12f63c448acbf5279b417c2'
+CAPACITY_QA_TARGET = {'host':'127.0.0.1','port':5432,'database':'naijue_erp_test_hv2_qa897_20261029_01',
+    'role':'hv2_qa897_runtime_20261029_01','databaseOid':'21551','postmasterStart':'2026-10-28 08:36:13.490836+00'}
+CAPACITY_QA_PATHS = {'postgres':'/var/lib/postgresql/data','wal':'/var/lib/postgresql/data/pg_wal',
+    'system':'/srv/naijue-erp','media':'/srv/naijue-erp/isolated-qa/qa897-20261029-01/media',
+    'backup':'/srv/naijue-erp/isolated-qa/qa897-20261029-01/recovery-backups'}
+
+
+def capacity_artifact_root(p):
+    if 'capacityQaObserver' not in p: return ROOT
+    capacity_qa_binding(p, files=False)
+    return CAPACITY_QA_ROOT/p['capacityQaObserver']['case']
+
+
+def capacity_qa_binding(p, files=True, closing=False):
+    q = capacity_bag(p.get('capacityQaObserver'), ('format','case','deadlineAt','pg','timeoutSha256'))
+    need(q['format'] == 'QA21551_BOUNDED_JOB_STATFS_V1' and q['case'] in ('ok','noapproval','wrongconfig','timeout') and
+         p['runtimeSelector'] == 'exact26-r1' and p['limits']['app']['user'] == '10001:10001' and
+         p['images']['node']['id'] == 'sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f' and
+         p['images']['node']['nodeVersion'] == RELEASE_CONTRACT['node'] and p['images']['node']['platform'] == 'linux/amd64' and
+         type(p['limits']['app']['memoryMiB']) is int and 64 <= p['limits']['app']['memoryMiB'] <= 2048 and
+         type(p['limits']['app']['cpus']) in (int,float) and 0.1 <= p['limits']['app']['cpus'] <= 2 and
+         p['names']['app'] == 'naijue-rewrite-qa897-capacity-e2e-266-'+q['case']+'-app' and
+         capacity_number(q['deadlineAt']) and (closing or time.time()*1000 < q['deadlineAt'] <= time.time()*1000+240000) and
+         q['deadlineAt'] == p['capacityGate']['deadlineAt'] and HASH.fullmatch(q['timeoutSha256']), 'EXACT_BOUNDED_QA_OBSERVER_REQUIRED')
+    need(q['pg'] == {'id':CAPACITY_QA_PG,'imageId':CAPACITY_QA_IMAGE,'pid':2419003,
+         'startedAt':'2026-10-28T08:36:11.455335721Z','restartCount':0}, 'EXACT_EXISTING_QA_PG_REQUIRED')
+    live = CAPACITY_QA_ROOT/q['case']/'live'
+    if files:
+        parent = canonical(live.parent, kind='directory', private=True)
+        need(parent.stat().st_uid == 0 and stat.S_IMODE(parent.stat().st_mode) == 0o700, 'QA_PRIVATE_PARENT_REQUIRED')
+        info = live.lstat()
+        need(stat.S_ISDIR(info.st_mode) and not live.is_symlink() and (info.st_uid,info.st_gid,stat.S_IMODE(info.st_mode)) == (0,10001,0o510), 'QA_PIPE_DIRECTORY_ONLY')
+        for name,mode in [('request.fifo',0o620),('response.fifo',0o640)]:
+            value = (live/name).lstat()
+            need(stat.S_ISFIFO(value.st_mode) and value.st_nlink == 1 and not (live/name).is_symlink() and
+                 (value.st_uid,value.st_gid,stat.S_IMODE(value.st_mode)) == (0,10001,mode), 'QA_FIXED_FIFO_ONLY')
+    return live
+
+
+def capacity_qa_pg_cas(p, docker, closing=False):
+    capacity_qa_binding(p,closing=closing)
+    info = docker.inspect(CAPACITY_QA_PG, 2)
+    need(info['Id'] == CAPACITY_QA_PG and info['Image'] == CAPACITY_QA_IMAGE and info['State']['Running'] and
+         info['State']['Pid'] == 2419003 and info['State']['StartedAt'] == '2026-10-28T08:36:11.455335721Z' and
+         info['RestartCount'] == 0 and info['HostConfig']['NetworkMode'] == 'none' and not info.get('Mounts') and
+         not info['HostConfig'].get('PortBindings') and
+         info['HostConfig'].get('Tmpfs') == {'/var/lib/postgresql/data':'rw,size=512m'}, 'EXISTING_QA_PG_CAS_CHANGED')
+    return ['--network','container:'+CAPACITY_QA_PG]
+
+
+def capacity_qa_mount_arguments(p):
+    live = capacity_qa_binding(p)
+    # Only pipe traffic is writable. Ordinary application uid has no directory write.
+    return mount(live, CAPACITY_LIVE, False)
+
+
+# No caller path, command, shell text or user is interpolated from a live request.
+# Existing PG uid999 observes metadata; no credentials or SQL are accessed.
+_CAPACITY_PG_STAT = r"""set -eu
+LC_ALL=C; export LC_ALL
+[ "$(/usr/bin/sha256sum /usr/bin/timeout | /usr/bin/cut -d' ' -f1)" = "$1" ] || exit 2
+exec /usr/bin/timeout --signal=TERM --kill-after=0.1s 0.6s /bin/sh -c '
+set -eu
+/usr/bin/readlink /proc/self/ns/mnt
+for d in /var/lib/postgresql/data /var/lib/postgresql/data/pg_wal; do
+ [ "$(/usr/bin/readlink -f "$d")" = "$d" ] || exit 2
+ /usr/bin/stat -c "%F|%d|%i" "$d"
+ /usr/bin/stat -f -c "%t|%a|%S" "$d"
+ /usr/bin/stat -c "%F|%d|%i" "$d"
+done'
+"""
+
+
+def capacity_qa_native_observation(p):
+    """One actual metadata batch. A failed/unknown child yields no capacity result."""
+    q = p['capacityQaObserver']
+    command = ['/usr/bin/docker','exec','--user','999:999',CAPACITY_QA_PG,'/bin/sh','-c',_CAPACITY_PG_STAT,
+               'capacity-fixed-statfs',q['timeoutSha256']]
+    # subprocess.run communicates and reaps the CLI on success and timeout. A CLI
+    # timeout does NOT prove its remote exec settled: refuse the whole QA window.
+    result = subprocess.run(command, capture_output=True, timeout=1.5,
+        env={'PATH':'/usr/bin:/bin','HOME':'/root','LANG':'C'})
+    need(result.returncode == 0 and not result.stderr and 0 < len(result.stdout) <= 4096, 'QA_NATIVE_STATFS_UNSETTLED_OR_FAILED')
+    rows = result.stdout.decode('ascii').splitlines()
+    need(len(rows) == 7 and re.fullmatch(r'mnt:\[[0-9]+\]',rows[0]), 'QA_NATIVE_STATFS_FRAME_REQUIRED')
+    observed = {}
+    for k,offset in [('postgres',1),('wal',4)]:
+        before,fs,after = rows[offset].split('|'),rows[offset+1].split('|'),rows[offset+2].split('|')
+        need(before == after and len(before) == len(fs) == 3 and before[0] == 'directory' and
+             all(re.fullmatch(r'[0-9]+',v) for v in before[1:]+fs[1:]) and re.fullmatch(r'[a-fA-F0-9]+',fs[0]) and int(fs[2]) > 0,
+             'QA_NATIVE_STATFS_IDENTITY_CHANGED')
+        observed[k] = {'namespace':'linux:'+rows[0],'device':before[1],'filesystemType':str(int(fs[0],16)),
+                       'availableBytes':str(int(fs[1])*int(fs[2]))}
+    namespace = 'linux:'+os.readlink('/proc/self/ns/mnt')
+    for k in ('system','media','backup'):
+        filename = Path(CAPACITY_QA_PATHS[k])
+        need(filename.resolve(strict=True) == filename, 'QA_HOST_VOLUME_ALIAS_REFUSED')
+        before = filename.lstat()
+        need(stat.S_ISDIR(before.st_mode) and not filename.is_symlink(), 'QA_HOST_DIRECTORY_REQUIRED')
+        # stat -f supplies real filesystem type, unavailable from Python statvfs.
+        result = subprocess.run(['/usr/bin/stat','-f','-c','%t',str(filename)],capture_output=True,timeout=.3,
+                                env={'PATH':'/usr/bin:/bin','LANG':'C'})
+        need(result.returncode == 0 and not result.stderr and len(result.stdout) <= 32 and
+             re.fullmatch(rb'[a-fA-F0-9]+\n',result.stdout), 'QA_HOST_STATFS_FAILED')
+        fs,after = os.statvfs(filename),filename.lstat()
+        need((before.st_dev,before.st_ino) == (after.st_dev,after.st_ino) and stat.S_ISDIR(after.st_mode), 'QA_HOST_DIRECTORY_CHANGED')
+        observed[k] = {'namespace':namespace,'device':str(before.st_dev),'filesystemType':str(int(result.stdout,16)),
+                       'availableBytes':str(fs.f_bavail*fs.f_frsize)}
+    return observed
+
+
+class _CapacityQaClosing(Exception):
+    pass
+
+
+class CapacityQaObserver:
+    """Lives only inside one original bounded job; no detached thread or second DB pool."""
+    def __init__(self, p, docker, cid):
+        self.p,self.docker,self.cid = p,docker,cid
+        self.stop = threading.Event(); self.failure = None; self.count = 0; self.challenges = set()
+        self.thread = None; self.fd = None; self.identities = {}; self.request_deadline = None
+        self.deadline = time.monotonic()+min(240,max(0,(p['capacityQaObserver']['deadlineAt']-time.time()*1000)/1000))
+
+    def check(self):
+        if self.stop.is_set(): raise _CapacityQaClosing()
+        need(time.monotonic() < self.deadline and
+             time.time()*1000 < self.p['capacityQaObserver']['deadlineAt'], 'QA_OBSERVER_DEADLINE_EXPIRED')
+        need(self.request_deadline is None or time.monotonic() < self.request_deadline, 'QA_OBSERVER_REQUEST_EXPIRED')
+        live = capacity_qa_binding(self.p)
+        for name,expected in self.identities.items():
+            v = (live/name).lstat()
+            need((v.st_dev,v.st_ino,v.st_uid,v.st_gid,stat.S_IMODE(v.st_mode)) == expected and stat.S_ISFIFO(v.st_mode), 'QA_OBSERVER_FIFO_REPLACED')
+        info = self.docker.inspect(self.cid, .5); assert_own(info,self.p,'app')
+        need(info['Id'] == self.cid and info['State']['Running'] and info['Config']['User'] == '10001:10001' and
+             info['HostConfig']['NetworkMode'] == 'container:'+CAPACITY_QA_PG, 'QA_OBSERVER_CANDIDATE_CHANGED')
+        capacity_qa_pg_cas(self.p,self.docker)
+
+    def observe(self, request):
+        self.check()
+        need(self.count < 32 and type(request) is dict and set(request) == {'format','challenge','target','windowToken','binding','volumes','producerReviewSha256','requestedAt'}, 'QA_OBSERVER_REQUEST_LIMIT_OR_FIELDS')
+        runtime = json_file(self.p['runtimeConfiguration']['path'],private=True)
+        capacity_runtime_configuration(self.p,runtime)
+        c = runtime['capacityLaunch']; profile = json.loads(bytes_file(self.p['capacityHost']['profile']['hostFile'],65536))
+        expected = {'format':'CAPACITY_LIVE_REQUEST_V1','target':c['target'],'windowToken':c['window']['token'],
+                    'binding':c['window']['binding'],'volumes':c['producer']['volumes'],'producerReviewSha256':c['producer']['reviewSha256']}
+        need(all(request[k] == v for k,v in expected.items()) and capacity_text(request['challenge']) and
+             request['challenge'] not in self.challenges and capacity_number(request['requestedAt']) and
+             c['window']['startsAt'] <= request['requestedAt'] <= time.time()*1000 < min(c['window']['expiresAt'],request['requestedAt']+c['probeTtlMillis']),
+             'QA_OBSERVER_REQUEST_BINDING_OR_FRESHNESS')
+        need(capacity_process_tuple(self.p,self.docker,self.cid,'node') == c['process'], 'QA_OBSERVER_PROCESS_CHANGED')
+        self.request_deadline = min(self.deadline,time.monotonic()+max(0,(request['requestedAt']+c['probeTtlMillis']-time.time()*1000)/1000))
+        self.challenges.add(request['challenge']); self.count += 1
+        identity = capacity_frozen_identity(self.p['capacityHost']['profile']['hostFile'])
+        started = int(time.time()*1000)
+        observed = capacity_qa_native_observation(self.p)  # ALWAYS after this live request
+        self.check()
+        need(capacity_frozen_identity(self.p['capacityHost']['profile']['hostFile']) == identity and
+             int(time.time()*1000)-request['requestedAt'] < c['probeTtlMillis'], 'QA_OBSERVER_PROFILE_CHANGED_OR_STALE')
+        volumes,devices,physical = {},{},{}
+        for k in CAPACITY_VOLUMES:
+            v,configured = observed[k],profile['volumes'][k]
+            need(all(v[n] == configured[n] for n in ('namespace','device','filesystemType')) and
+                 re.fullmatch(r'(?:0|[1-9][0-9]*)',v['availableBytes']), 'QA_OBSERVED_VOLUME_IDENTITY_MISMATCH')
+            device = (v['namespace'],v['device'],v['filesystemType']); label = configured['physicalVolume']
+            need(devices.get(device,label) == label and physical.get(label,device) == device, 'QA_OBSERVED_PHYSICAL_ALIAS_MISMATCH')
+            devices[device],physical[label] = label,device
+            volumes[k] = dict(request['volumes'][k],availableBytes=v['availableBytes'])
+        return dict(format='CAPACITY_LIVE_RESULT_V1',challenge=request['challenge'],target=request['target'],windowToken=request['windowToken'],
+                    binding=request['binding'],producerReviewSha256=request['producerReviewSha256'],collectionStartedAt=started,
+                    collectionFinishedAt=int(time.time()*1000),volumes=volumes)
+
+    def serve(self):
+        try:
+            buffer = bytearray(); frame_deadline = None
+            while not self.stop.is_set():
+                self.check()
+                need(frame_deadline is None or time.monotonic() < frame_deadline, 'QA_OBSERVER_INCOMPLETE_FRAME')
+                if not select.select([self.fd],[],[],.01)[0]: continue
+                part = os.read(self.fd,65537)
+                need(part and len(buffer)+len(part) <= 65536, 'QA_OBSERVER_FRAME_LIMIT')
+                if frame_deadline is None: frame_deadline = time.monotonic()+1
+                buffer.extend(part)
+                if b'\n' not in buffer: continue
+                need(buffer.endswith(b'\n') and buffer.count(b'\n') == 1, 'QA_OBSERVER_SINGLE_FRAME_REQUIRED')
+                request = capacity_transport_json(bytes(buffer[:-1])); buffer.clear(); frame_deadline = None
+                response = encoded(self.observe(request))
+                need(len(response) <= 65536 and not select.select([self.fd],[],[],0)[0], 'QA_OBSERVER_OVERLAPPING_REQUEST_REFUSED')
+                writer = None
+                try:
+                    live = capacity_qa_binding(self.p)
+                    while writer is None:
+                        self.check()
+                        try: writer = os.open(live/'response.fifo',os.O_WRONLY|os.O_NONBLOCK|os.O_NOFOLLOW)
+                        except OSError as error:
+                            if error.errno != errno.ENXIO: raise
+                            self.stop.wait(.002)
+                    info = os.fstat(writer)
+                    need((info.st_dev,info.st_ino,info.st_uid,info.st_gid,stat.S_IMODE(info.st_mode)) == self.identities['response.fifo'], 'QA_OBSERVER_RESPONSE_FIFO_CHANGED')
+                    sent = 0
+                    while sent < len(response):
+                        self.check()
+                        try:
+                            count = os.write(writer,response[sent:]); need(count > 0,'QA_OBSERVER_SHORT_WRITE'); sent += count
+                        except BlockingIOError: self.stop.wait(.002)
+                finally:
+                    if writer is not None: os.close(writer)
+                self.request_deadline = None
+        except _CapacityQaClosing:
+            pass
+        except Exception as error:
+            self.failure = type(error).__name__  # never export raw native output or config
+            self.stop.set()
+
+    def __enter__(self):
+        live = capacity_qa_binding(self.p)
+        for name in ('request.fifo','response.fifo'):
+            value = (live/name).lstat()
+            self.identities[name] = (value.st_dev,value.st_ino,value.st_uid,value.st_gid,stat.S_IMODE(value.st_mode))
+        self.fd = os.open(live/'request.fifo',os.O_RDWR|os.O_NONBLOCK|os.O_NOFOLLOW)
+        actual = os.fstat(self.fd)
+        if (actual.st_dev,actual.st_ino,actual.st_uid,actual.st_gid,stat.S_IMODE(actual.st_mode)) != self.identities['request.fifo']:
+            os.close(self.fd); self.fd = None
+            raise Refused('QA_OBSERVER_OPEN_FIFO_CHANGED')
+        self.thread = threading.Thread(target=self.serve,name='original-job-capacity-statfs',daemon=False)
+        self.thread.start(); return self
+
+    def __exit__(self, kind, value, trace):
+        self.stop.set()
+        if self.thread is not None: self.thread.join(5)
+        try:
+            need(self.thread is not None and not self.thread.is_alive(), 'QA_NATIVE_OBSERVER_SETTLEMENT_UNCONFIRMED')
+            need(self.failure is None, 'QA_OBSERVER_FAILED_UNKNOWN_CAPACITY')
+        finally:
+            if self.thread is None or not self.thread.is_alive():
+                if self.fd is not None: os.close(self.fd); self.fd = None
+        return False
+
+
+def capacity_qa_original_proof(p, cid='NOT_CREATED'):
+    """Reuse original live grant/request/manifest/account checks. No new signer."""
+    job = Path(os.environ.get('ERP_SHARED_JOB_DIR','/nonexistent'))
+    control = Path(os.environ.get('ERP_SHARED_CONTROL_DIR','/nonexistent'))
+    ref = p['capacityFinalInput']['authority']; authority = reference(ref)
+    control = canonical(control,kind='directory',private=True)
+    need(control.name == job.name and control.parent.name == 'jobs' and control.stat().st_uid != 0, 'ORIGINAL_UNPRIVILEGED_CONTROL_JOB_REQUIRED')
+    directory = control/'capacity-final'
+    if not os.path.lexists(directory):
+        directory.mkdir(mode=0o700); os.chown(directory,control.stat().st_uid,control.stat().st_gid,follow_symlinks=False)
+    canonical(directory,kind='directory',private=True)
+    scope = {'jobId':job.name,'grantId':control.parent.parent.name.removeprefix('grant-'),'containerId':cid,
+        'sourceCommit':p['sourceCommit'],'helperSha256':file_hash(Path(__file__)),
+        'targetFingerprint':digest(encoded(CAPACITY_QA_TARGET)),'deadlineAt':p['capacityQaObserver']['deadlineAt']}
+    need(authority.get('target') == CAPACITY_QA_TARGET and authority.get('archiveSha256') == p['archive']['sha256'] and
+         authority.get('deadlineAt') == scope['deadlineAt'], 'QA_ORIGINAL_AUTHORITY_TARGET_REQUIRED')
+    need(re.fullmatch(r'[a-f0-9]{16}',scope['grantId']) and type(authority) is dict and
+         set(authority) == {'format','jobId','operationId','buildId','sourceCommit','archiveSha256','target','deadlineAt','controlOwnerUid','action'} and
+         authority['format'] == 'OWNER_CAPACITY_FINAL_INPUT_AUTHORITY_V1' and authority['jobId'] == job.name and
+         authority['controlOwnerUid'] == 0, 'QA_ORIGINAL_CLOSED_AUTHORITY_REQUIRED')
+    proof = capacity_original_owner_authority(p,scope,directory,authority,ref)
+    # The extra QA shape is data in this exact frozen original request, never
+    # derived from root uid, a standalone review, or producer stdin.
+    frozen = job/'bundle/capacity-qa-input.json'
+    manifest = json_file(job/'bundle/bundle-manifest.json',private=True)
+    records = {r['name']:r for r in manifest['files']}
+    keys = ('capacityQaObserver','sourceCommit','buildId','operationId','archive','manifest','packReceipt','images','names','limits','runtime26')
+    frozen_raw = bytes_file(frozen,65536,private=True)
+    need(frozen.stat().st_uid == 0 and records.get('capacity-qa-input.json',{}).get('sha256') == digest(frozen_raw) and
+         capacity_transport_json(frozen_raw) == {k:p[k] for k in keys}, 'QA_EXACT_FROZEN_INPUT_REQUIRED')
+    return proof
+
+
+def create_capacity_qa_live_fifos(p):
+    """New case only; do not chmod or replace an existing directory or pipe."""
+    capacity_qa_binding(p,files=False); capacity_qa_original_proof(p)
+    root = capacity_artifact_root(p)
+    canonical(CAPACITY_QA_ROOT,kind='directory',private=True)
+    need(CAPACITY_QA_ROOT.stat().st_uid == 0 and not os.path.lexists(root), 'QA_NEW_CASE_ONLY')
+    root.mkdir(mode=0o700)
+    live = root/'live'; live.mkdir(mode=0o700)
+    os.chown(live,0,10001,follow_symlinks=False); os.chmod(live,0o510,follow_symlinks=False)
+    for name,mode in [('request.fifo',0o620),('response.fifo',0o640)]:
+        os.mkfifo(live/name,mode); os.chown(live/name,0,10001,follow_symlinks=False); os.chmod(live/name,mode,follow_symlinks=False)
+    capacity_qa_binding(p)
+    return str(live)
+
+
+def create_capacity_qa_gate_app(p, docker):
+    """Separate ephemeral carrier. Never used by formal deploy/boot entry."""
+    capacity_qa_original_proof(p)
+    capacity_host_binding(p); gate = capacity_gate_binding(p)
+    root = capacity_artifact_root(p)
+    need(p['releaseDirectory'] == str(root) and p['runtimeConfiguration']['path'] == str(root/'runtime.json') and
+         gate['hostFifo'] == str(root/'gate.fifo'), 'QA_FIXED_ARTIFACT_LOCATIONS_REQUIRED')
+    canonical(root/'payload',kind='directory',root=root)
+    # Do not call formal create_capacity_gate_app or attach either formal network.
+    args = ['create','--name',p['names']['app'],'--pull=never',*capacity_qa_pg_cas(p,docker),
+        '--read-only','--cap-drop=ALL','--security-opt=no-new-privileges','--restart=no','--user','10001:10001','--workdir','/app',
+        '--tmpfs','/tmp:rw,noexec,nosuid,size=16m',*limits_args(p,'app'),*labels(p,'app'),
+        *mount(root/'payload','/app'),*mount(root/'runtime.json','/run/naijue-rewrite/runtime.json'),
+        *runtime_mount_arguments(p),*capacity_qa_mount_arguments(p),*mount(gate['hostFifo'],CAPACITY_GATE_PATH),*capacity_gate_arguments(p)]
+    cid = docker.run(args,5).decode().strip()
+    need(HASH.fullmatch(cid),'QA_CREATED_CANDIDATE_ID_REQUIRED')
+    return cid
+
+
+def capacity_qa_references(p, pending=False):
+    """QA-specific exact target; formal target/schema/backup guards stay untouched."""
+    capacity_qa_original_proof(p)
+    root = capacity_artifact_root(p)
+    need(p['releaseDirectory'] == str(root) and p['runtimeConfiguration']['path'] == str(root/'runtime.json'), 'QA_FIXED_PRIVATE_RUNTIME_REQUIRED')
+    need(file_identity(root/'runtime.json') == p['runtimeConfiguration']['identity'], 'QA_PRIVATE_RUNTIME_CHANGED')
+    runtime = json_file(root/'runtime.json',private=True)
+    business = capacity_runtime_configuration(p,runtime,pending)
+    need(set(business) == {'schemaVersion','profile','documentCommands','publicOrigin','http','assets','build','postgres','authentication','runtime26Review'} and
+         business['schemaVersion'] == 1 and business['profile'] == RUNTIME26_PROFILE and business['documentCommands'] == 'DISABLED' and
+         business['build'] == {'buildId':p['buildId'],'sourceCommit':p['sourceCommit']} and business['publicOrigin'] == ORIGIN and
+         business['http'] == {'host':'0.0.0.0','port':3000,'acceptedHosts':[HOST]} and
+         business['assets'] == {'root':'/app/web','entry':'index.html'}, 'QA_CLOSED_MINIMAL_R1_RUNTIME_REQUIRED')
+    target = business['postgres']['target']
+    need(all(target.get(k) == v for k,v in {'host':'127.0.0.1','port':5432,'database':CAPACITY_QA_TARGET['database'],
+         'user':CAPACITY_QA_TARGET['role'],'ssl':False}.items()) and bool(target.get('password')) and
+         p['runtimeConfiguration']['identity']['uid'] == 10001, 'QA_ORDINARY_EXACT21551_ROLE_REQUIRED')
+    refs = runtime_references(p)
+    review, independent = reference(refs['review']), reference(refs['independentReview'])
+    need(business['runtime26Review'] == {'reviewFile':RUNTIME26_REVIEW,'trustedReviewSha256':refs['review']['sha256']} and
+         set(review) == {'version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'} and
+         review['version'] == 'C_NATIVE_RUNTIME26_REVIEW_V1' and review['decision'] == 'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA' and
+         review['scope'] == 'EXACT_TARGET_METADATA_ONLY' and review['realImportExecutionAuthorized'] is False and
+         review['purposes'] == RUNTIME26_PURPOSES and
+         review['catalog']['format'] == 'EXACT26_RUNTIME_CATALOG_EXPORT_V1' and review['catalog']['patchLevel'] == FULL_PATCH and
+         HASH.fullmatch(review['catalog']['sha256']) and independent.get('result') == 'PASS' and
+         review['independentReview'] == {'path':RUNTIME26_INDEPENDENT,'sha256':refs['independentReview']['sha256'],'result':'PASS'},
+         'QA_FRESH_V1_R1_REVIEW_REQUIRED')
+    need(review['target'] == {'database':CAPACITY_QA_TARGET['database'],'databaseOid':'21551',
+         'actingRole':CAPACITY_QA_TARGET['role'],'sessionUser':CAPACITY_QA_TARGET['role'],
+         'serverAddress':'127.0.0.1/32','serverPort':5432,'postmasterStart':CAPACITY_QA_TARGET['postmasterStart']}, 'QA_REVIEW_EXACT_TARGET_REQUIRED')
+    manifest,entries = verified_archive(p['archive'],p['manifest'],p['buildId'],p['sourceCommit'])
+    validate_runtime_build(p,manifest,refs)
+    pack = reference(p['packReceipt'])
+    need(pack.get('status') == 'PACKED_AND_EXTRACTED_READBACK_MATCH' and pack.get('buildId') == p['buildId'] and
+         pack.get('sourceCommit') == p['sourceCommit'] and pack.get('archive',{}).get('sha256') == p['archive']['sha256'] and
+         pack.get('manifestSha256') == p['manifest']['sha256'] and pack.get('members') == len(entries), 'QA_EXISTING_EXACT_PACK_REQUIRED')
+    return runtime
+
+
+def capacity_qa_wait_ready(p,docker,cid,observer):
+    # This HTTP request does not create a DB pool. It is a fixed GET inside the
+    # exact candidate; production main itself owns the one preflight pool.
+    code = "const h=require('node:http');const q=h.get({host:'127.0.0.1',port:3000,path:'/readyz',headers:{host:'"+HOST+"'}},r=>{let b='';r.on('data',c=>{b+=c;if(b.length>4096)q.destroy()});r.on('end',()=>{if(r.statusCode===200){try{const v=JSON.parse(b);if(v.status==='READY'){process.stdout.write('READY');return}}catch{}}process.exitCode=2})});q.setTimeout(200,()=>q.destroy());q.on('error',()=>{process.exitCode=2});"
+    while True:
+        need(observer.failure is None,'QA_OBSERVER_FAILED_UNKNOWN_CAPACITY')
+        observer.check()
+        try:
+            result = docker.run(['exec','--user','10001:10001',cid,'/usr/local/bin/node','-e',code],.6)
+            if result == b'READY':
+                need(observer.count > 0 and observer.failure is None,'QA_REAL_OBSERVER_REQUEST_REQUIRED')
+                return {'readyz':True,'observerRequests':observer.count,'sameOwnedPoolPreflight':'BEFORE_MAIN_LISTEN',
+                        'businessAccepted':False,'loginTested':False,'capacityAcquireTested':False}
+        except Refused:
+            pass
+        observer.stop.wait(.02)
+
+
+def run_capacity_qa_gate_controller(p,docker,journal):
+    """One original job, final input → observer → exec → readyz → own stop/readback.
+    Not a CLI phase and never a persistent boot candidate. Environment approval
+    and exact prepared inputs still have to arrive through the original job.
+    """
+    capacity_qa_binding(p); capacity_qa_references(p,pending=True)
+    provisional = file_identity(p['runtimeConfiguration']['path'])
+    profile_identity = file_identity(p['capacityHost']['profile']['hostFile'])
+    cid = create_capacity_qa_gate_app(p,docker)
+    done,expired = threading.Event(),threading.Event(); watchdog_failure = []
+    def watch():
+        if not done.wait(max(0,(p['capacityGate']['deadlineAt']-time.time()*1000)/1000)):
+            expired.set()
+            try: capacity_gate_stop(p,docker,cid)
+            except Exception: watchdog_failure.append(True)
+    watchdog = threading.Thread(target=watch,name='original-job-qa-deadline',daemon=False); watchdog.start()
+    outcome = None
+    try:
+        spec = docker.inspect(cid,2); assert_own(spec,p,'app')
+        need(spec['Config'].get('Entrypoint') == ['/bin/sh'] and spec['Config'].get('Cmd') == capacity_gate_arguments(p)[3:] and
+             spec['Config'].get('User') == '10001:10001' and not spec['HostConfig'].get('Init') and
+             spec['HostConfig']['NetworkMode'] == 'container:'+CAPACITY_QA_PG, 'QA_EXACT_PID1_GATE_REQUIRED')
+        expected = [(str(capacity_artifact_root(p)/'payload'),'/app',False),
+                    (p['runtimeConfiguration']['path'],'/run/naijue-rewrite/runtime.json',False),
+                    (p['capacityHost']['collector']['hostFile'],CAPACITY_COLLECTOR,False),
+                    (p['capacityHost']['profile']['hostFile'],CAPACITY_PROFILE,False),
+                    (p['runtime26']['review']['path'],RUNTIME26_REVIEW,False),
+                    (p['runtime26']['independentReview']['path'],RUNTIME26_INDEPENDENT,False),
+                    (str(capacity_qa_binding(p)),CAPACITY_LIVE,True),(p['capacityGate']['hostFifo'],CAPACITY_GATE_PATH,False)]
+        need(sorted((v['Source'],v['Destination'],v['RW']) for v in spec.get('Mounts',[])) == sorted(expected), 'QA_EXACT_MOUNTS_ONLY')
+        docker.run(['start',cid],3)
+        process = capacity_process_tuple(p,docker,cid)
+        journal.event('QA_CAPACITY_GATE_WAITING_OWNER_FINAL_INPUT',containerId=cid,process=process)
+        final,final_ref = wait_capacity_owner_final(p,docker,cid,process,provisional,profile_identity,journal)
+        frozen_profile = capacity_frozen_identity(final['capacityHost']['profile']['hostFile'])
+        def guard(plan,candidate,actual,identity):
+            need(reference(final_ref) == plan and actual == process and candidate == cid and
+                 capacity_frozen_identity(plan['capacityHost']['profile']['hostFile']) == frozen_profile,'QA_FINAL_CONTENT_CHANGED')
+            capacity_qa_references(plan); capacity_qa_pg_cas(plan,docker)
+            check_old(plan,docker)
+            need(capacity_process_tuple(plan,docker,candidate) == actual,'QA_SAME_PROCESS_REQUIRED')
+            return True
+        with CapacityQaObserver(final,docker,cid) as observer:
+            release_capacity_fifo(final,docker,cid,process,final['runtimeConfiguration']['identity'],guard)
+            result = capacity_qa_wait_ready(final,docker,cid,observer)
+        need(not expired.is_set() and not watchdog_failure,'QA_WINDOW_EXPIRED_OR_STOP_UNKNOWN')
+        outcome = {'containerId':cid,'finalPlan':final_ref,'result':result,'ephemeral':True}
+        return outcome
+    finally:
+        try:
+            capacity_gate_stop(p,docker,cid)
+            capacity_qa_pg_cas(p,docker,closing=True)
+            if outcome is not None: outcome.update(qaStoppedReadback=True,originalPgCasUnchanged=True,observerJoined=True)
+        finally:
+            done.set(); watchdog.join(17)
+            need(not watchdog.is_alive() and not watchdog_failure,'QA_WATCHDOG_SETTLEMENT_UNCONFIRMED')
 
 
 def create_app(p, docker):

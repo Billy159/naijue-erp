@@ -43,17 +43,78 @@ async function ownerProfile(filename,digest){
 }
 function target(v){bag(v,['host','port','database','role','databaseOid','postmasterStart']);requireValue(['host','database','role','postmasterStart'].every(k=>text(v[k]))&&positive(v.port)&&v.port<=65535&&decimal(v.databaseOid)&&v.databaseOid!=='0');}
 function binding(v){bag(v,['candidateFingerprint','targetFingerprint','writerTopologyFingerprint','inventoryFingerprint','processInstanceId','restartGeneration','writerCount','physicalVolumes']);bag(v.physicalVolumes,VOLUMES);requireValue(['candidateFingerprint','targetFingerprint','writerTopologyFingerprint','inventoryFingerprint','processInstanceId'].every(k=>text(v[k]))&&Number.isSafeInteger(v.restartGeneration)&&v.restartGeneration>=0&&v.writerCount===1&&VOLUMES.every(k=>text(v.physicalVolumes[k])));}
+const LIVE='/run/naijue-rewrite/capacity/live';
+const pause=()=>new Promise(resolve=>setTimeout(resolve,2));
+/** Fixed pipe exchange; exported only so local tests can exercise actual FIFO framing. */
+export async function exchangeFifos(request,{requestFile=LIVE+'/request.fifo',responseFile=LIVE+'/response.fifo',deadline,now=Date.now}={}){
+  requireValue(positive(deadline));
+  const identity=async(filename,mode)=>{
+    const v=await lstat(filename);requireValue(v.isFIFO()&&v.nlink===1&&!v.isSymbolicLink()&&(v.mode&0o777)===mode&&[0,process.getuid()].includes(v.uid));return v;
+  };
+  const ri=await identity(requestFile,0o620),si=await identity(responseFile,0o640);
+  const monotonic=performance.now()+Math.max(0,deadline-now());
+  const check=()=>requireValue(now()<deadline&&performance.now()<monotonic);
+  let reader,writer;
+  try{
+    reader=await open(responseFile,constants.O_RDONLY|constants.O_NONBLOCK|constants.O_NOFOLLOW);
+    const rstat=await reader.stat();requireValue(rstat.dev===si.dev&&rstat.ino===si.ino);
+    while(!writer){check();try{writer=await open(requestFile,constants.O_WRONLY|constants.O_NONBLOCK|constants.O_NOFOLLOW);}catch(e){requireValue(e.code==='ENXIO');await pause();}}
+    const wstat=await writer.stat();requireValue(wstat.dev===ri.dev&&wstat.ino===ri.ino);
+    const wire=Buffer.from(JSON.stringify(request)+'\n');requireValue(wire.length<=MAX_BYTES);
+    let sent=0;
+    while(sent<wire.length){check();try{const {bytesWritten}=await writer.write(wire,sent,wire.length-sent);requireValue(bytesWritten>0);sent+=bytesWritten;}catch(e){requireValue(e.code==='EAGAIN');await pause();}}
+    await writer.close();writer=undefined;
+    const chunks=[];let length=0,complete=false;
+    while(!complete){
+      check();const buffer=Buffer.alloc(4096);let count;
+      try{count=(await reader.read(buffer,0,buffer.length,null)).bytesRead;}catch(e){requireValue(e.code==='EAGAIN');await pause();continue;}
+      if(count===0){requireValue(length===0);await pause();continue;}
+      const part=buffer.subarray(0,count);length+=count;requireValue(length<=MAX_BYTES);chunks.push(part);
+      if(part.includes(10))complete=true;
+    }
+    const raw=Buffer.concat(chunks);requireValue(raw[raw.length-1]===10&&raw.subarray(0,-1).indexOf(10)===-1);
+    // A second frame/bytes already queued are never ignored.
+    const extra=Buffer.alloc(1);try{requireValue((await reader.read(extra,0,1,null)).bytesRead===0);}catch(e){requireValue(e.code==='EAGAIN');}
+    const result=JSON.parse(new TextDecoder('utf8',{fatal:true}).decode(raw));
+    const rf=await identity(requestFile,0o620),sf=await identity(responseFile,0o640);
+    requireValue(rf.dev===ri.dev&&rf.ino===ri.ino&&sf.dev===si.dev&&sf.ino===si.ino);check();return result;
+  }finally{if(writer)await writer.close();if(reader)await reader.close();}
+}
+function observerResult(result,request,p,start,finish){
+  bag(result,['format','challenge','target','windowToken','binding','producerReviewSha256','collectionStartedAt','collectionFinishedAt','volumes']);
+  requireValue(result.format==='CAPACITY_LIVE_RESULT_V1'&&result.challenge===request.challenge&&result.windowToken===request.windowToken&&result.producerReviewSha256===p.reviewSha256&&isDeepStrictEqual(result.target,p.target)&&isDeepStrictEqual(result.binding,p.binding));
+  requireValue(positive(result.collectionStartedAt)&&positive(result.collectionFinishedAt)&&result.collectionStartedAt>=start&&result.collectionFinishedAt>=result.collectionStartedAt&&result.collectionFinishedAt<=finish);
+  bag(result.volumes,VOLUMES);
+  for(const k of VOLUMES){const v=bag(result.volumes[k],['path','physicalVolume','namespace','availableBytes']);requireValue(decimal(v.availableBytes)&&['path','physicalVolume','namespace'].every(n=>v[n]===p.volumes[k][n]));}
+  return result;
+}
 /** Profile is independently owner-mounted, hash selected on argv, never supplied on stdin. */
 export async function collectLive(request,{profileFile=PROFILE,profileSha256,now=Date.now}={}){
   bag(request,['format','challenge','target','windowToken','binding','volumes','producerReviewSha256','requestedAt']);
   requireValue(request.format==='CAPACITY_LIVE_REQUEST_V1'&&text(request.challenge)&&text(request.windowToken)&&hash(request.producerReviewSha256)&&positive(request.requestedAt));
   target(request.target);binding(request.binding);bag(request.volumes,VOLUMES);
-  const p=bag(await ownerProfile(profileFile,profileSha256),['schemaVersion','profile','reviewSha256','target','binding','windowToken','startsAt','expiresAt','maxAgeMillis','namespace','volumes']);
-  requireValue(p.schemaVersion===1&&p.profile==='OWNER_FIXED_STATFS_V1'&&hash(p.reviewSha256)&&p.reviewSha256===request.producerReviewSha256&&p.windowToken===request.windowToken);
+  const p=await ownerProfile(profileFile,profileSha256);
+  const remote=p.profile==='OWNER_QA_FIFO_STATFS_V1';
+  bag(p,['schemaVersion','profile','reviewSha256','target','binding','windowToken','startsAt','expiresAt','maxAgeMillis',...(remote?['ipc']:['namespace']),'volumes']);
+  requireValue(p.schemaVersion===1&&(p.profile==='OWNER_FIXED_STATFS_V1'||remote)&&hash(p.reviewSha256)&&p.reviewSha256===request.producerReviewSha256&&p.windowToken===request.windowToken);
   target(p.target);binding(p.binding);bag(p.volumes,VOLUMES);
   requireValue(isDeepStrictEqual(p.target,request.target)&&isDeepStrictEqual(p.binding,request.binding));
   requireValue(positive(p.startsAt)&&positive(p.expiresAt)&&p.startsAt<p.expiresAt&&positive(p.maxAgeMillis)&&p.maxAgeMillis<=30000);
   const checkTime=()=>{const at=now();requireValue(positive(at)&&at>=request.requestedAt&&request.requestedAt>=p.startsAt&&at<p.expiresAt&&at-request.requestedAt<p.maxAgeMillis);return at;};
+  if(remote){
+    bag(p.ipc,['request','response']);requireValue(p.ipc.request===LIVE+'/request.fifo'&&p.ipc.response===LIVE+'/response.fifo'&&p.expiresAt-p.startsAt<=240000);
+    const devices=new Map(),physical=new Map();
+    for(const k of VOLUMES){
+      const v=bag(p.volumes[k],['path','physicalVolume','namespace','device','filesystemType']),supplied=bag(request.volumes[k],['path','physicalVolume','namespace']);
+      requireValue(absolute(v.path)&&text(v.namespace)&&text(v.physicalVolume)&&decimal(v.device)&&decimal(v.filesystemType)&&v.physicalVolume===p.binding.physicalVolumes[k]&&['path','physicalVolume','namespace'].every(n=>v[n]===supplied[n]));
+      const id=v.namespace+':'+v.device+':'+v.filesystemType;
+      requireValue((!devices.has(id)||devices.get(id)===v.physicalVolume)&&(!physical.has(v.physicalVolume)||physical.get(v.physicalVolume)===id));devices.set(id,v.physicalVolume);physical.set(v.physicalVolume,id);
+    }
+    const start=checkTime();
+    const result=await exchangeFifos(request,{deadline:Math.min(p.expiresAt,request.requestedAt+p.maxAgeMillis),now});
+    observerResult(result,request,p,start,checkTime());
+    requireValue(isDeepStrictEqual(p,await ownerProfile(profileFile,profileSha256)));return result;
+  }
   checkTime();requireValue(p.namespace===await mountNamespace());const start=checkTime(),observed={},devices=new Map(),physical=new Map();
   for(const k of VOLUMES){
     const configured=bag(p.volumes[k],['path','physicalVolume','namespace','device','filesystemType']);

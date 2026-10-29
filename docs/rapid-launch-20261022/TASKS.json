@@ -19698,6 +19698,61 @@
       "result": "Root diagnostics139 to14; module errors0; actual output-adapter17 PASS",
       "remaining": "14 test/acceptance-fixture diagnostics unclosed; no overall typecheck PASS",
       "evidenceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/B12-replica-module-boundary-20261029-01"
+    },
+    "newCandidateBuild": {
+      "source": "70f0c091ea2a40b9ac4cfc77c8fbe259aacc7068",
+      "owner": "Original T45",
+      "dispatch": "ACKNOWLEDGED_QUEUED_AFTER_CURRENT_CAPACITY_SOURCE_HANDOFF",
+      "normal34": "Untouched immutable fixed comparison",
+      "status": "NOT_YET_BUILT"
     }
+  },
+  "b12RemainingFixtureTypes": {
+    "source": "SOURCE946 root after module fix14 diagnostics",
+    "D1": {
+      "owner": "01a16161-e65d-7742-8471-4b3c786ed314",
+      "status": "NOT_DISPATCHED_THREAD_NOT_FOUND_TWO_ATTEMPTS_NO_IMPLEMENTATION",
+      "files": [
+        "apps/api/src/product-maintenance-http.test.ts",
+        "tests/capacity-inventory.test.ts",
+        "tests/integration/method-identity-acceptance.ts",
+        "tests/native-sales-schema11-source.test.ts",
+        "tests/native-sku-stock-import.test.ts",
+        "tests/postgres-protocol.test.ts",
+        "tests/sales-authorization.test.ts",
+        "tests/sales-business-rules.test.ts",
+        "tests/transfer-current-identity.test.ts"
+      ],
+      "dispatch": "Initial plus one explicit local correction rejected; original routing retained, no replacement writer"
+    },
+    "F2": {
+      "owner": "01a161d2-6bd9-7181-8386-1ecddddd386a",
+      "status": "HANDED_BACK_EXACT1_SEMANTIC0_TEST7_PASS",
+      "files": [
+        "apps/web/src/inventory/display-projection.test.ts"
+      ],
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/F2/B12-display-projection-fixture/RESULT.json"
+    },
+    "protectedUntouched": [
+      "tests/product-query-postgres-protocol.test.ts"
+    ],
+    "scope": "Only current strict test fixture/type corrections consistent with existing approved identities/contracts. No production source, assertion weakening, expected-value laundering, excludes or any casts to hide errors. Meaningful mismatch report original owner.",
+    "basis": "Latest whole formal candidate goal/B12 actual failure; exact files verified tracked clean before dispatch"
+  },
+  "capacityObserverSuccessor": {
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/T45-QA21551-CAPACITY-OBSERVER-SOURCE-SUCCESSOR-01/RESULT.json",
+    "sha256": "07ccb8a9b1e15de7aeee513ca7175fd3fe17f9d7631a10ac3b020bf13bb26b26",
+    "status": "SOURCE_AND_LOCAL_INCREMENT_PASS_ONLY_INDEPENDENT_REVIEW_PENDING",
+    "checks": "Python11 new plus3 affected=14 PASS; Node3 new plus1 affected=4 PASS; syntax/scoped diff pass",
+    "scope": "Original bounded job fixed FIFO real namespace observer, exact QA-only ephemeral carrier; main/probe/owned pool unchanged",
+    "unmeasured": [
+      "Real Linux FIFO/mount/uid/PG native command lifecycle",
+      "Actual timeout executable existence/hash and shell pins",
+      "Actual five volume profile identities/free space",
+      "Minimal ACL two atoms and fresh V1 exact role/catalog review",
+      "Actual CLI same-owned-pool preflight/readyz and three refusal/cleanup cases"
+    ],
+    "environmentApproval": "Pending exact two ACL atoms and temporary QA network/IPC; no server or database changes",
+    "next": "Original QB only related increment; T45 builds fixed SOURCE946 separately"
   }
 }

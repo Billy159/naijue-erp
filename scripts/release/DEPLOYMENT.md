@@ -441,3 +441,75 @@ binding/relocation, and rejection without the original active human grant/frozen
 No server identity/mode/upload/root consumer execution or actual CLI ready is
 proved. SOURCE942's NEED_FIX remains historical evidence; do not rewrite it as
 PASS because of this successor.
+
+
+### Isolated QA21551 observer successor (source only)
+
+The original local `OWNER_FIXED_STATFS_V1` remains the default. Explicit
+`OWNER_QA_FIFO_STATFS_V1` has the same request/result wire as the production
+main/probe/one-owned-pool launcher, but replaces the single profile namespace
+with `ipc` and independent namespace/device/type mappings for all five volumes.
+The only container endpoints are
+`/run/naijue-rewrite/capacity/live/{request,response}.fifo`. Neither stdin nor
+argv can select a command, path, user, callback, DSN or another target. JSON is
+newline framed and bounded to 64 KiB in each direction; truncation, extra frames,
+replacement, expiry and unavailable peers refuse. Local FIFO tests use synthetic
+paths only through the exported transport test seam; the production profile
+continues to require the fixed paths.
+
+The existing `deploy-candidate.py` provides the dedicated, import-only
+`run_capacity_qa_gate_controller`, separate from formal `read_plan`, formal
+network creation and boot persistence. Only the original bounded T45 root job,
+active human grant, frozen request/manifest/helper, original control owner and
+existing final CONTENT/APPROVAL decision can operate it. The original job must
+include `capacity-qa-input.json`, the exact public input subset consumed by
+`capacity_qa_original_proof`, as a frozen manifest member. It is input data under
+the existing authority, not a new approval or signer. No CLI phase is added.
+
+Cases `ok/noapproval/wrongconfig/timeout` have separate new-only directories
+under `/srv/naijue-erp/isolated-qa/qa897-20261029-01/capacity-e2e-266/<case>`.
+This is an explicit successor to the earlier proposed shared parent: no pipe,
+phase file, old container or unknown request key is reused between cases.
+`create_capacity_qa_live_fifos` creates only a previously absent case and the
+live pipe directory (root:10001/0510, request0620, response0640). All application
+payload, runtime, profile, collector, reviews and gate mounts are read-only;
+only that pipe directory is writable as a mount, with no directory write bit
+for the application. The ordinary application stays 10001:10001, shares only
+the exact existing PG container network namespace, has its own PID namespace,
+no ports, no Docker socket and no PG or backup directory mounts. The fixed
+cached Node image, exact PG CID/image/PID/start/restart/tmpfs and isolated
+21551/ordinary role are checked; nothing connects to formal networks.
+
+The single in-job observer stays alive across gate release, actual CLI
+preflight and GET `/readyz` (`200`, existing `{status:"READY"}` body). It
+accepts one in-flight request, at most32 unique challenges, at most64KiB per
+frame and an absolute window no longer than240seconds. An unfinished request
+frame is refused after1second. Each accepted request is checked against the
+owner profile, process, target, review and original window before actual native
+work. PG/WAL metadata uses only the existing PG uid999 and fixed paths, with an
+existing `/usr/bin/timeout` whose actual hash is independently pinned; host
+metadata uses only the three fixed system/media/backup paths under the original
+operator. No SQL or second PG pool is introduced. Only actual statfs after the
+request can produce known free bytes. Separate namespaces and same-device
+physical aliases are checked without summing shared space.
+
+Native commands must exit and be reaped before a result is returned. Missing
+tools, denied metadata, changed identity, invalid output, timeout or a lost exec
+result make capacity UNKNOWN. Reaping a timed-out Docker client does not prove
+its remote exec ended; that failure cannot produce a capacity/cleanup PASS.
+The observer joins before return, and every exit stops/readbacks only the new
+candidate, then rechecks the original PG CAS even after the window expires.
+Results can report readyz only after an actual live observer request and record
+the stopped/PG-unchanged readbacks. No login, `capacity.acquire`, LOW_WATER
+business admission, real document write or business acceptance is claimed.
+The ephemeral QA plan is explicitly rejected by `boot-entry` persistence.
+
+This source change performs no server command, grant, mount, network change,
+container start, build, PG operation or old job replay. Actual execution still
+needs the separately approved exact two missing startup ACL atoms and
+network/IPC changes, fresh QA V1 role/catalog review, real volume identities,
+timeout/shell pins, finite budgets and the original final decision. Historical
+265 metadata and local synthetic checks do not supply those runtime facts.
+Increment-only checks:
+`python3 -m unittest scripts.release.test_capacity_launch_wiring.CapacityQaObserverIncrement`
+and `node --test --test-name-pattern='QA FIFO|QA profile' tests/capacity-live-statfs.test.mjs`.

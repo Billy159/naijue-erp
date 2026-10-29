@@ -6,7 +6,7 @@ import path from 'node:path';
 import {createHash} from 'node:crypto';
 import {spawn} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
-import {collectLive,mountNamespace} from '../scripts/ops/capacity-live-statfs.mjs';
+import {collectLive,mountNamespace,exchangeFifos} from '../scripts/ops/capacity-live-statfs.mjs';
 const keys=['postgres','wal','backup','system','media'];
 const moduleUrl=new URL('../scripts/ops/capacity-live-statfs.mjs',import.meta.url).href;
 async function fixture(){
@@ -59,4 +59,54 @@ test('actual CLI rejects arbitrary profile, oversized/truncated input and finish
   for(const [args,input]of [[[], '{}'],[['--profile=arbitrary'],'{}'],[['--profile='+'a'.repeat(64)],'x'.repeat(65537)],[['--profile='+'a'.repeat(64)],'{']]){
     const result=await child([file,...args],input);assert.equal(result.code,2);assert.equal(result.out,'');assert.equal(result.err,'');assert.equal(result.signal,null);
   }
+});
+
+// New isolated FIFO branch only; real local pipes, no server or PG.
+async function fifoFixture(){
+  const root=await realpath(await mkdtemp(path.join(tmpdir(),'capacity-fifo-')));await chmod(root,0o700);
+  const requestFile=path.join(root,'request.fifo'),responseFile=path.join(root,'response.fifo');
+  const p=spawn('python3',['-c','import os,sys; os.mkfifo(sys.argv[1],0o620); os.chmod(sys.argv[1],0o620); os.mkfifo(sys.argv[2],0o640); os.chmod(sys.argv[2],0o640)',requestFile,responseFile]);
+  await new Promise((resolve,reject)=>{p.on('error',reject);p.on('close',code=>code===0?resolve():reject(Error('mkfifo')));});
+  return {root,requestFile,responseFile};
+}
+async function pipePeer(f,body){
+  const p=spawn('python3',['-c',`import os,sys,time,json
+r=os.open(sys.argv[1],os.O_RDONLY)
+b=b''
+while not b.endswith(b'\\n'):
+ c=os.read(r,4096)
+ if not c: break
+ b+=c
+os.close(r)
+request=json.loads(b)
+${body}`,f.requestFile,f.responseFile],{stdio:['ignore','pipe','pipe']});
+  let stderr='';p.stderr.on('data',b=>stderr+=b);const done=new Promise((resolve,reject)=>{p.on('error',reject);p.on('close',code=>resolve({code,stderr}));});return {p,done};
+}
+test('QA FIFO actual exchange waits for fragmented response, validates frame and closes peer',async()=>{
+  const f=await fifoFixture();let peer;try{
+    peer=await pipePeer(f,"w=os.open(sys.argv[2],os.O_WRONLY)\nfor part in [b'{\"challenge\":',json.dumps(request['challenge']).encode(),b'}\\n']:\n os.write(w,part); time.sleep(.005)\nos.close(w)");
+    const result=await exchangeFifos({challenge:'fresh'},{...f,deadline:Date.now()+2000});assert.deepEqual(result,{challenge:'fresh'});
+    assert.equal((await peer.done).code,0);
+  }finally{if(peer)peer.p.kill('SIGKILL');await rm(f.root,{recursive:true,force:true});}
+});
+test('QA FIFO actual exchange rejects truncated, multiple, oversized frames and expired peer',async()=>{
+  for(const body of ["os.write(w,b'{'); os.close(w)","os.write(w,b'{}\\n{}\\n'); os.close(w)","os.write(w,b'x'*65537); os.close(w)"]){
+    const f=await fifoFixture();let peer;try{
+      peer=await pipePeer(f,"w=os.open(sys.argv[2],os.O_WRONLY)\n"+body);
+      await assert.rejects(exchangeFifos({challenge:'fresh'},{...f,deadline:Date.now()+1000}));
+    }finally{if(peer){peer.p.kill('SIGKILL');await peer.done;}await rm(f.root,{recursive:true,force:true});}
+  }
+  const f=await fifoFixture();try{
+    const started=Date.now();await assert.rejects(exchangeFifos({challenge:'no-peer'},{...f,deadline:started+80}));assert.ok(Date.now()-started<1000);
+  }finally{await rm(f.root,{recursive:true,force:true});}
+});
+test('QA profile refuses unreviewed FIFO paths and preserves per-volume mapping checks',async()=>{
+  const f=await fixture();try{
+    f.profile.profile='OWNER_QA_FIFO_STATFS_V1';delete f.profile.namespace;
+    f.profile.ipc={request:'/caller/request.fifo',response:'/caller/response.fifo'};
+    await assert.rejects(collectLive(f.request,{profileFile:f.file,profileSha256:await f.save()}));
+    f.profile.ipc={request:'/run/naijue-rewrite/capacity/live/request.fifo',response:'/run/naijue-rewrite/capacity/live/response.fifo'};
+    f.profile.volumes.wal.namespace='foreign';
+    await assert.rejects(collectLive(f.request,{profileFile:f.file,profileSha256:await f.save()}));
+  }finally{await rm(f.root,{recursive:true,force:true});}
 });

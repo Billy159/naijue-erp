@@ -378,4 +378,207 @@ class CapacityTransportIncrement(unittest.TestCase):
             bad=copy.deepcopy(scope);bad['helperSha256']='0'*64
             with self.assertRaises(D.Refused):D.capacity_original_owner_authority(plan,bad,control/'capacity-final',authority,ref)
 
+
+# Dedicated increment: actual local FIFO transport, synthetic metadata adapters,
+# no remote Docker/PG calls and no ordinary full-schema replay.
+class CapacityQaObserverIncrement(unittest.TestCase):
+    def plan(self):
+        at=int(time.time()*1000)
+        return {'runtimeSelector':'exact26-r1','limits':{'app':{'user':'10001:10001','memoryMiB':128,'cpus':0.5}},
+            'images':{'node':{'id':'sha256:20eea9b7258e90078cb24ed89abde93e9e4253416d7304073ae8cb18c35cb77f','nodeVersion':'24.21.0','platform':'linux/amd64'}},
+            'names':{'app':'naijue-rewrite-qa897-capacity-e2e-266-ok-app'},'capacityGate':{'deadlineAt':at+3000},
+            'capacityQaObserver':{'format':'QA21551_BOUNDED_JOB_STATFS_V1','case':'ok','deadlineAt':at+3000,
+                'pg':{'id':D.CAPACITY_QA_PG,'imageId':D.CAPACITY_QA_IMAGE,'pid':2419003,
+                      'startedAt':'2026-10-28T08:36:11.455335721Z','restartCount':0},'timeoutSha256':'a'*64}}
+
+    def test_exact_qa_data_and_formal_scope_remain_distinct(self):
+        p=self.plan();self.assertEqual(D.capacity_qa_binding(p,files=False),D.CAPACITY_QA_ROOT/'ok/live')
+        for mutate in [lambda p:p['capacityQaObserver']['pg'].update(id='f'*64),
+                       lambda p:p['limits']['app'].update(user='0:0'),lambda p:p.update(runtimeSelector='exact26-full'),
+                       lambda p:p['capacityQaObserver'].update(case='arbitrary'),
+                       lambda p:p['capacityQaObserver'].update(deadlineAt=int(time.time()*1000)+240001),
+                       lambda p:p['capacityQaObserver'].update(callback='forbidden')]:
+            q=copy.deepcopy(p);mutate(q)
+            with self.assertRaises(D.Refused):D.capacity_qa_binding(q,files=False)
+        self.assertEqual(D.capacity_artifact_root({}),D.ROOT)
+        self.assertEqual(D.capacity_artifact_root(p),D.CAPACITY_QA_ROOT/'ok')
+        with self.assertRaisesRegex(B.Refused,'EPHEMERAL_QA'):
+            B.capacity_stage_binding({},p,{})
+
+    def test_qa_network_cas_has_no_mutating_fallback(self):
+        p=self.plan()
+        info={'Id':D.CAPACITY_QA_PG,'Image':D.CAPACITY_QA_IMAGE,'State':{'Running':True,'Pid':2419003,'StartedAt':'2026-10-28T08:36:11.455335721Z'},
+              'RestartCount':0,'Mounts':[],'HostConfig':{'NetworkMode':'none','PortBindings':{},'Tmpfs':{'/var/lib/postgresql/data':'rw,size=512m'}}}
+        docker=unittest.mock.Mock();docker.inspect.return_value=info
+        with patch.object(D,'capacity_qa_binding'):
+            self.assertEqual(D.capacity_qa_pg_cas(p,docker),['--network','container:'+D.CAPACITY_QA_PG])
+            info['HostConfig']['NetworkMode']='bridge'
+            with self.assertRaises(D.Refused):D.capacity_qa_pg_cas(p,docker)
+        docker.run.assert_not_called()
+
+    def test_native_statfs_waits_for_real_command_exit_and_parses_separate_namespace(self):
+        p=self.plan();calls=[]
+        def run(args,**kwargs):
+            calls.append(args)
+            if args[0]=='/usr/bin/docker':
+                return types.SimpleNamespace(returncode=0,stderr=b'',stdout=b'mnt:[55]\ndirectory|8|9\n1021994|12|4096\ndirectory|8|9\ndirectory|8|10\n1021994|12|4096\ndirectory|8|10\n')
+            return types.SimpleNamespace(returncode=0,stderr=b'',stdout=b'ef53\n')
+        directory=types.SimpleNamespace(st_mode=0o40700,st_dev=66,st_ino=99)
+        fs=types.SimpleNamespace(f_bavail=100,f_frsize=4096)
+        with patch.object(D.subprocess,'run',side_effect=run),patch.object(D.os,'readlink',return_value='mnt:[77]'),patch.object(pathlib.Path,'resolve',lambda p,**kwargs:p),patch.object(pathlib.Path,'lstat',return_value=directory),patch.object(D.os,'statvfs',return_value=fs):
+            result=D.capacity_qa_native_observation(p)
+            self.assertEqual(result['postgres'],dict(namespace='linux:mnt:[55]',device='8',filesystemType=str(int('1021994',16)),availableBytes=str(12*4096)))
+            self.assertEqual(result['backup']['namespace'],'linux:mnt:[77]')
+            self.assertEqual(calls[0][:6],['/usr/bin/docker','exec','--user','999:999',D.CAPACITY_QA_PG,'/bin/sh'])
+            self.assertIn('--kill-after=0.1s',calls[0][7]);self.assertEqual(calls[0][-1],'a'*64)
+        # A timeout never becomes stale/cached capacity; caller must close its own QA.
+        with patch.object(D.subprocess,'run',side_effect=D.subprocess.TimeoutExpired('docker',1.5)):
+            with self.assertRaises(D.subprocess.TimeoutExpired):D.capacity_qa_native_observation(p)
+
+    def test_real_local_fifo_fragmentation_single_flight_and_joined_close(self):
+        import os,threading
+        with tempfile.TemporaryDirectory() as tmp:
+            live=pathlib.Path(tmp)
+            for name,mode in [('request.fifo',0o620),('response.fifo',0o640)]:os.mkfifo(live/name,mode);os.chmod(live/name,mode)
+            p=self.plan();observer=D.CapacityQaObserver(p,None,'synthetic')
+            seen=[]
+            def observe(request):seen.append(request);observer.count+=1;return {'challenge':request['challenge']}
+            with patch.object(D,'capacity_qa_binding',return_value=live),patch.object(observer,'check',side_effect=lambda:None),patch.object(observer,'observe',side_effect=observe):
+                with observer:
+                    response=os.open(live/'response.fifo',os.O_RDONLY|os.O_NONBLOCK)
+                    request=os.open(live/'request.fifo',os.O_WRONLY)
+                    os.write(request,b'{"challenge":');time.sleep(.01);self.assertEqual(seen,[])
+                    os.write(request,b'"fresh"}\n');os.close(request)
+                    deadline=time.monotonic()+1;raw=b''
+                    while not raw.endswith(b'\n') and time.monotonic()<deadline:
+                        try:raw+=os.read(response,4096)
+                        except BlockingIOError:pass
+                        time.sleep(.002)
+                    os.close(response)
+                    self.assertEqual(json.loads(raw),{'challenge':'fresh'});self.assertEqual(len(seen),1)
+                self.assertFalse(observer.thread.is_alive());self.assertIsNone(observer.fd);self.assertIsNone(observer.failure)
+
+    def test_real_local_fifo_multiple_frames_or_bad_json_refuse_and_join(self):
+        import os
+        for raw in (b'{}\n{}\n',b'{bad}\n',b'x'*65537):
+            with tempfile.TemporaryDirectory() as tmp:
+                live=pathlib.Path(tmp)
+                for name,mode in [('request.fifo',0o620),('response.fifo',0o640)]:os.mkfifo(live/name,mode);os.chmod(live/name,mode)
+                observer=D.CapacityQaObserver(self.plan(),None,'synthetic')
+                with patch.object(D,'capacity_qa_binding',return_value=live),patch.object(observer,'check',side_effect=lambda:None),patch.object(observer,'observe') as observe:
+                    with self.assertRaisesRegex(D.Refused,'QA_OBSERVER_FAILED'):
+                        with observer:
+                            fd=os.open(live/'request.fifo',os.O_WRONLY|os.O_NONBLOCK)
+                            try:
+                                sent=0;deadline=time.monotonic()+1
+                                while sent<len(raw) and not observer.stop.is_set() and time.monotonic()<deadline:
+                                    try:sent+=os.write(fd,raw[sent:])
+                                    except BlockingIOError:time.sleep(.002)
+                            finally:os.close(fd)
+                            self.assertTrue(observer.stop.wait(1))
+                    self.assertFalse(observer.thread.is_alive());self.assertIsNone(observer.fd);observe.assert_not_called()
+
+    def test_profile_branch_is_explicit_and_default_local_profile_unchanged(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve();root.chmod(0o755)
+            with patch.object(D,'ROOT',root):
+                p,r=CapacityWiring().fixture(root)
+                self.assertIn('unknownBusiness',D.capacity_runtime_configuration(p,r))
+                file=pathlib.Path(p['capacityHost']['profile']['hostFile']);profile=json.loads(file.read_text())
+                profile['profile']='OWNER_QA_FIFO_STATFS_V1';profile.pop('namespace');profile['ipc']={'request':D.CAPACITY_LIVE+'/request.fifo','response':D.CAPACITY_LIVE+'/response.fifo'}
+                file.write_text(json.dumps(profile));p['capacityHost']['profile']['sha256']=hashlib.sha256(file.read_bytes()).hexdigest();r['capacityLaunch']['producer']['args']=['--profile='+p['capacityHost']['profile']['sha256']]
+                # Merely selecting FIFO in a profile cannot opt a formal plan into QA.
+                with self.assertRaises(D.Refused):D.capacity_runtime_configuration(p,r)
+
+
+    def test_live_observe_binds_original_request_rejects_replay_and_returns_exact_fresh_result(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=pathlib.Path(tmp).resolve();root.chmod(0o755)
+            with patch.object(D,'ROOT',root),patch.object(D,'capacity_artifact_root',return_value=root),patch.object(D,'capacity_qa_binding',return_value=root/'live'):
+                p,r=CapacityWiring().fixture(root);p['capacityQaObserver']=self.plan()['capacityQaObserver'];p['runtimeConfiguration']={'path':str(root/'runtime.json')}
+                cap=r['capacityLaunch'];cap['target']=copy.deepcopy(D.CAPACITY_QA_TARGET)
+                r['postgres']['target']={'host':'127.0.0.1','port':5432,'database':D.CAPACITY_QA_TARGET['database'],'user':D.CAPACITY_QA_TARGET['role']}
+                profile=json.loads(pathlib.Path(p['capacityHost']['profile']['hostFile']).read_text())
+                profile.update(profile='OWNER_QA_FIFO_STATFS_V1',target=cap['target'],ipc={'request':D.CAPACITY_LIVE+'/request.fifo','response':D.CAPACITY_LIVE+'/response.fifo'})
+                del profile['namespace'];profile['expiresAt']=p['capacityQaObserver']['deadlineAt'];cap['window']['expiresAt']=profile['expiresAt']
+                for k in V:
+                    namespace='linux:mnt:[55]' if k in ('postgres','wal') else 'linux:mnt:[77]'
+                    physical='pg-tmpfs' if k in ('postgres','wal') else 'host-disk'
+                    cap['window']['binding']['physicalVolumes'][k]=physical
+                    cap['producer']['volumes'][k]={'path':D.CAPACITY_QA_PATHS[k],'physicalVolume':physical,'namespace':namespace}
+                    profile['volumes'][k]=dict(cap['producer']['volumes'][k],device='1',filesystemType='2')
+                profile['binding']=cap['window']['binding']
+                file=pathlib.Path(p['capacityHost']['profile']['hostFile']);file.write_text(json.dumps(profile))
+                p['capacityHost']['profile']['sha256']=hashlib.sha256(file.read_bytes()).hexdigest();cap['producer']['args']=['--profile='+p['capacityHost']['profile']['sha256']]
+                request={'format':'CAPACITY_LIVE_REQUEST_V1','challenge':'one-live-request','target':cap['target'],'windowToken':cap['window']['token'],
+                    'binding':cap['window']['binding'],'volumes':cap['producer']['volumes'],'producerReviewSha256':cap['producer']['reviewSha256'],'requestedAt':int(time.time()*1000)}
+                observed={k:{n:profile['volumes'][k][n] for n in ('namespace','device','filesystemType')}|{'availableBytes':'12345'} for k in V}
+                observer=D.CapacityQaObserver(p,None,'own')
+                with patch.object(observer,'check'),patch.object(D,'json_file',return_value=r),patch.object(D,'capacity_process_tuple',return_value=cap['process']),patch.object(D,'capacity_qa_native_observation',return_value=observed) as native:
+                    result=observer.observe(request)
+                    self.assertEqual(result['challenge'],request['challenge']);self.assertEqual(result['target'],request['target'])
+                    self.assertGreaterEqual(result['collectionStartedAt'],request['requestedAt']);self.assertGreaterEqual(result['collectionFinishedAt'],result['collectionStartedAt'])
+                    self.assertEqual(result['volumes'],{k:dict(request['volumes'][k],availableBytes='12345') for k in V})
+                    native.assert_called_once_with(p)
+                    with self.assertRaises(D.Refused):observer.observe(request)
+                    wrong=copy.deepcopy(request);wrong['challenge']='two';wrong['target']['database']='formal'
+                    with self.assertRaises(D.Refused):observer.observe(wrong)
+                    wrong=copy.deepcopy(request);wrong.update(challenge='three',requestedAt=1)
+                    with self.assertRaises(D.Refused):observer.observe(wrong)
+                    native.assert_called_once_with(p)
+                    observer.count=32;wrong=copy.deepcopy(request);wrong['challenge']='over-limit'
+                    with self.assertRaises(D.Refused):observer.observe(wrong)
+
+    def test_missing_original_authority_refuses_before_candidate_creation(self):
+        docker=unittest.mock.Mock()
+        with patch.object(D,'capacity_qa_original_proof',side_effect=D.Refused('ORIGINAL_AUTHORITY_MISSING')):
+            with self.assertRaisesRegex(D.Refused,'ORIGINAL_AUTHORITY'):
+                D.create_capacity_qa_gate_app(self.plan(),docker)
+        docker.run.assert_not_called()
+
+    def test_qa_builder_only_attaches_existing_pg_namespace_and_exact_ipc(self):
+        p=self.plan();p.update(releaseDirectory='/synthetic/ok',runtimeConfiguration={'path':'/synthetic/ok/runtime.json'})
+        gate={'hostFifo':'/synthetic/ok/gate.fifo'};docker=unittest.mock.Mock();docker.run.return_value=('f'*64).encode()
+        with patch.object(D,'capacity_qa_original_proof'),patch.object(D,'capacity_host_binding'),patch.object(D,'capacity_gate_binding',return_value=gate),patch.object(D,'capacity_artifact_root',return_value=pathlib.Path('/synthetic/ok')),patch.object(D,'canonical'),patch.object(D,'capacity_qa_pg_cas',return_value=['--network','container:'+D.CAPACITY_QA_PG]),patch.object(D,'limits_args',return_value=[]),patch.object(D,'labels',return_value=[]),patch.object(D,'runtime_mount_arguments',return_value=[]),patch.object(D,'capacity_qa_mount_arguments',return_value=D.mount('/synthetic/live',D.CAPACITY_LIVE,False)),patch.object(D,'capacity_gate_arguments',return_value=['--entrypoint','/bin/sh','image']):
+            self.assertEqual(D.create_capacity_qa_gate_app(p,docker),'f'*64)
+        self.assertEqual(docker.run.call_count,1)
+        args=docker.run.call_args.args[0];self.assertEqual(args[args.index('--network')+1],'container:'+D.CAPACITY_QA_PG)
+        self.assertEqual(args[args.index('--user')+1],'10001:10001');self.assertNotIn('--init',args);self.assertNotIn('--publish',args)
+        self.assertIn('type=bind,src=/synthetic/live,dst='+D.CAPACITY_LIVE,args)
+        self.assertTrue(all(v.endswith(',readonly') for v in args if v.startswith('type=bind,') and 'dst='+D.CAPACITY_LIVE not in v))
+
+
+    def test_ephemeral_controller_keeps_observer_through_ready_and_always_stops_own_candidate(self):
+        for fails in (False,True):
+            p=self.plan();p.update(releaseDirectory='/synthetic/ok',runtimeConfiguration={'path':'private','identity':{'inode':1}},
+                capacityHost={'collector':{'hostFile':'collector'},'profile':{'hostFile':'profile'}},
+                runtime26={'review':{'path':'review'},'independentReview':{'path':'independent'}})
+            p['capacityGate'].update(hostFifo='fifo')
+            order=[];process={'pid':1,'linuxStartTicks':'1','linuxBootId':'a'*36}
+            spec={'Config':{'Entrypoint':['/bin/sh'],'Cmd':['-c','body'],'User':'10001:10001'},'HostConfig':{'Init':False,'NetworkMode':'container:'+D.CAPACITY_QA_PG},
+                  'Mounts':[dict(Source=a,Destination=b,RW=c) for a,b,c in [('/synthetic/ok/payload','/app',False),('private','/run/naijue-rewrite/runtime.json',False),
+                    ('collector',D.CAPACITY_COLLECTOR,False),('profile',D.CAPACITY_PROFILE,False),('review',D.RUNTIME26_REVIEW,False),('independent',D.RUNTIME26_INDEPENDENT,False),
+                    ('/synthetic/live',D.CAPACITY_LIVE,True),('fifo',D.CAPACITY_GATE_PATH,False)]]}
+            class Observer:
+                def __init__(self,*args):pass
+                def __enter__(self):order.append('observer-enter');return self
+                def __exit__(self,*args):order.append('observer-exit')
+            def release(*args):self.assertEqual(order[-1],'observer-enter');order.append('release')
+            def ready(*args):
+                self.assertEqual(order[-1],'release');order.append('ready')
+                if fails:raise D.Refused('PREFLIGHT_UNKNOWN')
+                return {'readyz':True}
+            def stop(*args):order.append('stopped')
+            docker=unittest.mock.Mock();docker.inspect.return_value=spec
+            with patch.object(D,'capacity_qa_binding',return_value=pathlib.Path('/synthetic/live')),patch.object(D,'capacity_qa_references'),patch.object(D,'file_identity',return_value={'inode':1}),patch.object(D,'create_capacity_qa_gate_app',return_value='own'),patch.object(D,'assert_own'),patch.object(D,'capacity_gate_arguments',return_value=['--entrypoint','/bin/sh','image','-c','body']),patch.object(D,'capacity_artifact_root',return_value=pathlib.Path('/synthetic/ok')),patch.object(D,'capacity_process_tuple',return_value=process),patch.object(D,'wait_capacity_owner_final',return_value=(p,{'path':'final','sha256':'a'*64})),patch.object(D,'capacity_frozen_identity',return_value={'inode':2}),patch.object(D,'CapacityQaObserver',Observer),patch.object(D,'release_capacity_fifo',side_effect=release),patch.object(D,'capacity_qa_wait_ready',side_effect=ready),patch.object(D,'capacity_gate_stop',side_effect=stop) as stopped,patch.object(D,'capacity_qa_pg_cas') as pg:
+                if fails:
+                    with self.assertRaisesRegex(D.Refused,'PREFLIGHT_UNKNOWN'):D.run_capacity_qa_gate_controller(p,docker,unittest.mock.Mock())
+                else:
+                    result=D.run_capacity_qa_gate_controller(p,docker,unittest.mock.Mock());self.assertTrue(result['qaStoppedReadback']);self.assertTrue(result['observerJoined']);self.assertTrue(result['originalPgCasUnchanged'])
+                self.assertEqual(order,['observer-enter','release','ready','observer-exit','stopped'])
+                stopped.assert_called_once_with(p,docker,'own');pg.assert_called_with(p,docker,closing=True)
+
+    def test_helper_boot_pin_matches_exact_successor(self):
+        self.assertEqual(hashlib.sha256((HERE/'deploy-candidate.py').read_bytes()).hexdigest(),B.DEPLOYMENT_CAPACITY_SHA256)
+
 if __name__=='__main__':unittest.main()

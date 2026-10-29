@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { makeSyntheticInventoryProduct } from '../../preview/synthetic-reader.ts';
-import { emptyInventoryFilter, type InventoryProduct, type StockCell } from './contracts.ts';
+import { emptyInventoryFilter, type InventoryProduct, type InventoryOutputData, type StockCell } from './contracts.ts';
 import { knownDisplaySources, projectInventoryColors } from './display-projection.ts';
 import { totalOf } from './model.ts';
 import { inventoryWorkbookRows, createInventoryPrintHtml } from './output-adapter.ts';
@@ -142,7 +142,7 @@ test('representative page projection resolves only accessed cells and does not r
 
 test('full-model workbook/print consumers traverse lazy colors without losing identities, zero, negatives or groups', () => {
   const first = product(), second = { ...makeSyntheticInventoryProduct(1, { ...emptyInventoryFilter(), fits: [first.colorFits[0]!.fit] }), id: 'second-product', code: 'SECOND', sizeGroup: { id: 'other-group', label: '另一组' } };
-  const filter = emptyInventoryFilter(), data = { readReference: 'FIXTURE-OUTPUT', exactTotalProducts: 2, products: [first, second], warehouseLabels: first.colorFits[0]!.rows.map(row => row.warehouse.label), allMatchesTotal: { knownQuantity: (BigInt(first.total.knownQuantity) + BigInt(second.total.knownQuantity)).toString(), completeness: 'complete' as const, unknownCells: 0 } };
+  const filter = emptyInventoryFilter(), data: InventoryOutputData = { readReference: 'FIXTURE-OUTPUT', exactTotalProducts: 2, products: [first, second], warehouseLabels: first.colorFits[0]!.rows.map(row => row.warehouse.label), allMatchesTotal: { knownQuantity: (BigInt(first.total.knownQuantity) + BigInt(second.total.knownQuantity)).toString(), completeness: 'complete' as const, unknownCells: 0 } };
   const settings = { category: true, supplier: false, fit: false, sizeGroup: true, season: false, subtotal: true, total: true, sizeDescription: true };
   const rows = inventoryWorkbookRows(data, filter, settings), html = createInventoryPrintHtml(data, filter, settings);
   assert.equal(rows.filter(row => row[0] === first.code).length, 4);

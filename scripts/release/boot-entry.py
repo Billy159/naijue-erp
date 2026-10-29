@@ -29,7 +29,7 @@ NO = {'Name': 'no', 'MaximumRetryCount': 0}
 DEPLOYMENT_SHA256 = 'a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a'
 # Explicit exact26-r1 only; adoption depends on C90's independent source review.
 DEPLOYMENT26_SHA256 = '3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d'
-DEPLOYMENT_CAPACITY_SHA256 = '32781cb1a8c5d04979687b4e5d4d121a16718eeb2a0066bd271bfd6aaae4805d'
+DEPLOYMENT_CAPACITY_SHA256 = 'cb3c146b29d0becc50485d57891d774884905110eb635c99610d50d5a94e23da'
 DEPLOYMENT_FULL_SHA256 = 'a2c149cd7543b82c76b249c975d01d6961d22a3fd0bb2ec26b3797e077bbe578'
 
 
@@ -237,6 +237,7 @@ def deployment_binding(dp):
 
 def capacity_stage_binding(p, dp, stage):
     """Consume all three final-stage fields, including the existing exact boot-copy relocation."""
+    need('capacityQaObserver' not in dp, 'EPHEMERAL_QA_CANNOT_PERSIST_OR_BOOT')
     selected = p.get('deploymentPlan')
     need(isinstance(selected, dict) and set(selected) == {'path', 'sha256'} and HASH.fullmatch(selected.get('sha256', '')), 'CAPACITY_SELECTED_FINAL_PLAN_REQUIRED')
     original = p.get('originalReferences', {}).get('deploymentPlan')
