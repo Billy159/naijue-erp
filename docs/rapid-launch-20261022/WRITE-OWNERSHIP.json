@@ -7934,7 +7934,7 @@
     },
     "F2": {
       "owner": "F2/01a161d2-6bd9-7181-8386-1ecddddd386a",
-      "status": "SOURCE_WRITE_ENABLED_EXACT_21",
+      "status": "HANDED_BACK_FIXED_PINS_PENDING_INTEGRATED_CANDIDATE",
       "productionFiles": [
         "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx",
         "apps/web/demo-replica/frontend/runtime/inventory/page.tsx",
@@ -7987,5 +7987,14 @@
     "authorization": "Existing user minimal actual CLI closure and technical source authorization; environment ACL/network/mount steps separately pending",
     "environment": "No grants/mount/network/container execution until exact prepared change separately human-approved",
     "boundaries": "No generic exec/arbitrary paths/root API/docker socket/proc PG/storage copy; runtime live measurements only; failure unknown and settle cleanup"
+  },
+  "b12ReplicaModuleBoundary": {
+    "owner": "C",
+    "files": [
+      "apps/web/demo-replica/package.json"
+    ],
+    "scope": "Declare existing ESM implementation as module; no dependency/lock/framework/compiler exclusion change",
+    "cause": "Root NodeNext/verbatim interpreted original-workbook ESM as CJS due closest nested package lacking type; baseline1295/1287 plus new import1295",
+    "status": "IMPLEMENTED_MODULE_ERRORS_ZERO_OUTPUT17_PASS_ROOT14_OPEN"
   }
 }

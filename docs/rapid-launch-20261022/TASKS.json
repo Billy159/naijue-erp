@@ -19682,6 +19682,22 @@
       "checks": "Actual TransferProposalSession/Form scanner reject baseline reproduces parent loss; fixed nine lazy consumer reject/retry/cancel/late response/unmount/render error cases, draft/actions and guard retained; existing runtime-host3 and transfers-session3 pass",
       "limits": "No production chunk browser test/build/real PostgreSQL/save/readback; strict14 outside-five diagnostics retained; F2 in-flight unknown event diagnostics notified original owner",
       "next": "Fix exact five source checkpoint; unified new candidate after appropriate combined delivery, affected browser scenes then final unified acceptance"
+    },
+    "F2Delivery": {
+      "status": "SOURCE_HANDED_BACK_21_FILES_LOCAL_PASS_NOT_BROWSER_OR_REAL_PERFORMANCE_PASS",
+      "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/F2/B06-PF01-B13/RESULT.json",
+      "bytes": 10318,
+      "sha256": "7a99109c76bae6320daa868979082e1adef040c956da660bf8a330250083d8d6",
+      "checks": "B06 actual inputs/two-page reset late success/failure/cancel; B13 eight parser kinds; selection100/200 bounds;47 model/output;9 pool/SKU/budget; existing runtime/selection/download passes",
+      "performance": "30 rounds synthetic Node fixed workload: max100 to4, SKU p50 57.53 to15.44ms; paste1.38 to29.73ms/workbook26.80 to27.51ms; no demonstrated memory improvement or real performance acceptance",
+      "limits": "Finite browser export budget can reject required full workload; this remains incomplete until actual capacity/streaming followup validated"
+    },
+    "B12ModuleFix": {
+      "file": "apps/web/demo-replica/package.json",
+      "change": "Existing ESM type module declaration only; no dependencies/lock/exclusions changed",
+      "result": "Root diagnostics139 to14; module errors0; actual output-adapter17 PASS",
+      "remaining": "14 test/acceptance-fixture diagnostics unclosed; no overall typecheck PASS",
+      "evidenceDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/B12-replica-module-boundary-20261029-01"
     }
   }
 }

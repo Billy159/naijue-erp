@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import {mkdtemp,rm} from 'node:fs/promises';
+import {fileURLToPath,pathToFileURL} from 'node:url';
+import path from 'node:path';
+import {build} from 'esbuild';
+import {JSDOM} from 'jsdom';
+// Targeted synthetic lifecycle/quantity tests. Geometry below is a declared test
+// double; it supplies NO browser measurement, visual, HTTP, PG or performance proof.
+const here=path.dirname(fileURLToPath(import.meta.url));const temp=await mkdtemp(path.join(here,'.test-'));
+const dom=new JSDOM('<!doctype html><body class="inventory-workbench"><div id="root"></div><dialog id="gold-drawer"><div id="gold-drawer-content"></div></dialog></body>',{url:'https://synthetic.test/',pretendToBeVisual:true});
+for(const key of ['window','document','HTMLElement','HTMLInputElement','HTMLDialogElement','HTMLTextAreaElement','HTMLSelectElement','HTMLButtonElement','HTMLIFrameElement','Node','Event','MouseEvent','KeyboardEvent','Element','SVGElement','MutationObserver','ShadowRoot','getComputedStyle','requestAnimationFrame','cancelAnimationFrame','localStorage'])Object.defineProperty(globalThis,key,{configurable:true,value:dom.window[key]});
+Object.defineProperty(globalThis,'navigator',{configurable:true,value:dom.window.navigator});globalThis.pageXOffset=0;globalThis.pageYOffset=0;window.scrollTo=()=>{};globalThis.innerWidth=1470;globalThis.innerHeight=724;globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+window.matchMedia=q=>({matches:false,media:q,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}});
+class ResizeObserver {observe(){}unobserve(){}disconnect(){}}globalThis.ResizeObserver=window.ResizeObserver=ResizeObserver;
+Object.defineProperty(HTMLElement.prototype,'clientWidth',{configurable:true,get(){return this.id==='iw-results'?1200:300;}});Object.defineProperty(HTMLElement.prototype,'clientHeight',{configurable:true,get(){return 400;}});
+HTMLElement.prototype.getBoundingClientRect=function(){let width=300;if(this.tagName==='TH')width=[300,116,152][this.cellIndex]??(this.cellIndex===this.parentElement.children.length-1?70:76);const height=this.tagName==='TR'?(this.dataset.probeRow?.startsWith('["meta"')?54:36):this.tagName==='H3'?32:32;return {x:0,y:0,top:0,left:0,right:width,bottom:height,width,height,toJSON(){return this;}};};
+HTMLElement.prototype.scrollTo=function({top=0,left=0}){this.scrollTop=top;this.scrollLeft=left;};
+HTMLDialogElement.prototype.showModal=function(){this.open=true;};HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new Event('close'));};
+globalThis.URL.createObjectURL=()=> 'blob:synthetic-output';globalThis.URL.revokeObjectURL=()=>{};window.HTMLAnchorElement.prototype.click=function(){};
+window.HTMLCanvasElement.prototype.getContext=()=>({measureText:text=>({width:String(text).length*7})});
+let root;
+try{
+ const output=path.join(temp,'entry.mjs');await build({stdin:{contents:"export {createElement,useState,act} from 'react';export {createRoot} from 'react-dom/client';export {CandidateSelect} from '../inventory/candidates.tsx';export {ProductFilter} from './filters.tsx';export {parseProductManagementCandidateQuery} from '../../../../../../packages/application/src/product-management-query-validation.ts';export {ReadContext} from '../../../../src/loading/read-scope.ts';",resolveDir:here,sourcefile:'entry.tsx',loader:'tsx'},outfile:output,bundle:true,platform:'browser',format:'esm',external:['react','react-dom','react-dom/*'],banner:{js:"import {createRequire} from 'node:module';const require=createRequire(import.meta.url);"},jsx:'automatic',plugins:[{name:'source-css-test-only',setup(b){b.onResolve({filter:/\.css(?:\?inline)?$/},args=>({path:args.path,namespace:'test-css'}));b.onLoad({filter:/.*/,namespace:'test-css'},()=>({contents:'export default "";',loader:'js'}));}}],logLevel:'warning'});
+
+ const {createElement:h,useState,act,createRoot,CandidateSelect,ProductFilter,parseProductManagementCandidateQuery,ReadContext}=await import(pathToFileURL(output));
+ const uid=n=>'10000000-0000-4000-8000-'+String(n).padStart(12,'0');const context=new ReadContext({accountId:uid(1),sessionRevision:'1',permissionRevision:'1'}),host=document.getElementById('root');
+ const settle=async()=>act(async()=>{await new Promise(r=>setTimeout(r,50));});const click=async el=>{assert.ok(el,'native click target exists');await act(async()=>el.click());await settle();};
+ const payloads=[];
+ for(const kind of ['product','category','year','season','supplier','fit','thickness','shape']){
+  const id=kind==='year'?'2026':['thickness','shape'].includes(kind)?'原值':uid(3),scope=context.createScope('filter-contract-'+kind);
+  let failOnce=false;const reader={readCandidates:async read=>{payloads.push(read.parameters);parseProductManagementCandidateQuery(JSON.parse(JSON.stringify(read.parameters)));if(failOnce){failOnce=false;throw Error('synthetic retry');}return {page:read.parameters.page,pageSize:20,exactTotal:0,items:[]};}};
+  root=createRoot(host);await act(async()=>root.render(h(ProductFilter,{kind,value:[{id,label:'旧标签'}],scope,reader,productReader:{},denied(){},change(){}})));await settle();const shadow=host.firstElementChild.shadowRoot;await click(shadow.querySelector(kind==='product'?'.arco-select-view':'.arco-tree-select-view'));const input=shadow.querySelector('input');await act(async()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,'second');input.dispatchEvent(new Event('input',{bubbles:true}));});await act(async()=>{await new Promise(r=>setTimeout(r,230));});const search=payloads.filter(x=>x.kind===kind&&x.search==='second');assert.ok(search.length,kind+' sends search');assert.deepEqual(search.at(-1).selectedIds,[],kind+' browse/search must not become lookup');parseProductManagementCandidateQuery(JSON.parse(JSON.stringify(search.at(-1))));assert.match(shadow.querySelector('#root').textContent,/旧标签/);failOnce=true;await act(async()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,'retry');input.dispatchEvent(new Event('input',{bubbles:true}));});await act(async()=>{await new Promise(r=>setTimeout(r,230));});const retry=[...shadow.querySelectorAll('button')].find(x=>x.textContent==='重试');assert.ok(retry,kind+' exposes failed query retry');await click(retry);const retried=payloads.filter(x=>x.kind===kind&&x.search==='retry');assert.equal(retried.length,2);assert.deepEqual(retried[1].selectedIds,[]);if(kind!=='product'){await act(async()=>{Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(input,'');input.dispatchEvent(new Event('input',{bubbles:true}));});await act(async()=>{await new Promise(r=>setTimeout(r,230));});assert.deepEqual(payloads.at(-1).selectedIds,[]);assert.equal(payloads.at(-1).search,'');}assert.match(shadow.querySelector('#root').textContent,/旧标签/);await act(async()=>root.unmount());root=null;scope.dispose();
+ }
+ console.log('PASS: B13 eight real controls search with selectedIds empty, real parser accepts and old labels remain.');
+}finally{if(root)root.unmount();dom.window.close();await rm(temp,{recursive:true,force:true});}

@@ -1,3 +1,4 @@
+import { BoundedReadPool,readCompleteSkuPages } from '../loading/bounded-read-pool.ts';
 import type { DictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import type { SalesDraftDto } from '../sales/commands/contracts.ts';
 import type { CurrentFormPage, CurrentFormProduct, CurrentFormSku, CurrentSalesReferenceItem, CurrentSalesReferenceQuery } from '../../../../packages/application/src/current-form-ports.ts';
@@ -115,12 +116,12 @@ export function salesProposalPriceDisplay(row:SalesProposalPricingLine):{dealPri
 /** Local sales/independent return/exchange proposals. Never creates native numbers/IDs, barcode facts,
  * minimum-price authority, approval eligibility, inventory effects or commands. */
 export class SalesProposalSession {
+  readonly #skuPool=new BoundedReadPool();
   readonly #scope: ReadScope; readonly #reader: SalesProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined; readonly #listeners = new Set<() => void>();
   #seeded = false;
   #salespersonDefaultClosed = false;
   readonly #specSkus = new Map<string, readonly CurrentFormSku[]>();
   readonly #dictionaryGroups = new Map<string, DictionarySizeGroup>();
-  #dictionaryComplete = false;
   #savedWarehouse: { readonly hallId: string; readonly warehouseId: string } | null = null;
   readonly #savedLines = new Map<string, { readonly skuId: string; readonly snapshot: SalesDraftDto['lines'][number]['snapshot']; readonly product: CurrentFormProduct }>();
   #request: AbortController | null = null; #sequence = 0; #nextSettlement = 0; #nextLine = 0; #settlementTarget: string | null = null; #revision = 0; #entryTarget: { readonly direction: 'IN' | 'OUT'; readonly key: string } | null = null; #nextEntry = 0; #nextEntryOrder = 0; #inlineSettlement = false;
@@ -446,7 +447,7 @@ export class SalesProposalSession {
     if (!p || p.phase !== 'ready' || !p.result || !Number.isSafeInteger(page) || page < 1 || BigInt(page - 1) * 20n >= p.result.exactTotal) return;
     await this.#read(p.kind, p.search, page, p.product, p.method);
   }
-  async retry(): Promise<void> { const p = this.#state.picker; if (p?.phase === 'error' && p.kind === 'sku') { this.#dictionaryGroups.clear(); this.#dictionaryComplete = false; } if (p?.phase === 'error') await this.#read(p.kind, p.search, p.page, p.product, p.method); }
+  async retry(): Promise<void> { const p = this.#state.picker; if (p?.phase === 'error' && p.kind === 'sku') { this.#dictionaryGroups.clear();  } if (p?.phase === 'error') await this.#read(p.kind, p.search, p.page, p.product, p.method); }
   closePicker(): void { this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; if (!this.#state.disposed) this.#publish({ picker: null }); }
   async #read(kind: SalesProposalPicker, search: string, page: number, product: CurrentFormProduct | null, method: CurrentSalesReferenceItem | null): Promise<void> {
     if (this.#state.disposed) return;
@@ -459,17 +460,12 @@ export class SalesProposalSession {
       if (kind === 'product') result = await this.#reader.readProducts({ context: { kind: 'SALES', hallId: hallId! }, search, page, pageSize: 20 }, signal);
       else if (kind === 'sku') {
         const query = { context: { kind: 'SALES' as const, hallId: hallId! }, productId: product!.id, page, pageSize: 20 as const };
-        result = await this.#reader.readProductSkus(query, signal);
-        const key = `${hallId}:${product!.id}`;
-        if (!this.#specSkus.has(key)) {
-          const rows = [...result.items] as CurrentFormSku[];
-          for (let next = 1; BigInt(next - 1) * 20n < result.exactTotal; next++) {
-            if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
-            if (next !== page) rows.push(...(await this.#reader.readProductSkus({ ...query, page: next }, signal)).items);
-          }
-          if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
-          this.#specSkus.set(key, Object.freeze(rows));
-        }
+        this.#specSkus.clear();
+        if(!product?.sizeGroupId)throw new Error('CURRENT_PRODUCT_SIZE_GROUP_MISSING');
+        const complete=await readCompleteSkuPages(this.#skuPool,signal,(next,operationSignal)=>this.#reader.readProductSkus({...query,page:next},operationSignal),page,product.id,product.sizeGroupId);
+        if(signal.aborted||sequence!==this.#sequence||this.#state.disposed)return;
+        result=complete.first;
+        const key=`${hallId}:${product.id}`;this.#specSkus.set(key,complete.items);
         if (this.#reader.readSizeGroups) {
           const skus = this.#specSkus.get(key) ?? [];
           const declared = product && 'sizeGroupId' in product && typeof product.sizeGroupId === 'string' ? product.sizeGroupId : null;
@@ -479,17 +475,17 @@ export class SalesProposalSession {
           // supply missing product metadata, including for zero-SKU products.
           if (!declared) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_MISSING');
           if (projected.size > 1 || [...projected].some(id => id !== declared)) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_CONFLICT');
-          const assigned = declared;
-          if (!this.#dictionaryComplete) {
+          const assigned = declared;this.#dictionaryGroups.delete(assigned);
+          {
             const groups: DictionarySizeGroup[] = [];
             for (let next = 1; ; next++) {
               const data = await this.#reader.readSizeGroups({ search: '', page: next, pageSize: 100 }, signal);
               if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
               groups.push(...data.items);
-              if (next * data.pageSize >= data.total) break;
+              if(data.items.some(group=>group.id===assigned)||next*data.pageSize>=data.total)break;
             }
             for (const group of groups) this.#dictionaryGroups.set(group.id, group);
-            this.#dictionaryComplete = true;
+
           }
           if (signal.aborted || sequence !== this.#sequence || this.#state.disposed) return;
           const actual = this.#dictionaryGroups.get(assigned);
@@ -658,8 +654,8 @@ export class SalesProposalSession {
   reset(discardConfirmed = false): boolean {
     if (this.#state.disposed || this.#state.dirty && !discardConfirmed) return false;
     this.#salespersonDefaultClosed = false;
-    this.#savedLines.clear(); this.#specSkus.clear(); this.#dictionaryGroups.clear(); this.#dictionaryComplete = false; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, sizeGroups: { phase: 'unavailable', groups: [] }, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
+    this.#savedLines.clear(); this.#specSkus.clear(); this.#dictionaryGroups.clear();  this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#revision++; this.#publish({ draft: empty(), dirty: false, sizeGroups: { phase: 'unavailable', groups: [] }, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); return true;
   }
   cancel(discardConfirmed = false): boolean { if (!this.reset(discardConfirmed)) return false; this.dispose(); return true; }
-  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedLines.clear(); this.#specSkus.clear(); this.#dictionaryGroups.clear(); this.#dictionaryComplete = false; this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, sizeGroups: { phase: 'unavailable', groups: [] }, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
+  readonly dispose = (): void => { if (this.#state.disposed) return; this.#savedLines.clear(); this.#specSkus.clear(); this.#dictionaryGroups.clear();  this.#savedWarehouse = null; this.#cancelRead(); this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false; this.#scope.signal.removeEventListener('abort', this.dispose); this.#publish({ draft: empty(), dirty: false, disposed: true, sizeGroups: { phase: 'unavailable', groups: [] }, picker: null, lineEdit: null, entries: emptyEntries(), errors: [], notice: null, totals: null }); this.#listeners.clear(); };
 }

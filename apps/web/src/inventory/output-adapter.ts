@@ -1,3 +1,4 @@
+import { InventoryOutputBudget } from './output-budget.ts';
 import type { InventoryFilter, InventoryOutputData, InventoryOutputReader, InventoryOutputChunk, InventoryProduct, StockTotal } from './contracts.ts';
 import type { InventoryDisplaySettings } from './inventory-matrix.tsx';
 import { projectInventoryColors } from './display-projection.ts';
@@ -188,7 +189,7 @@ export async function* inventoryWorkbookRowsAsync(data:InventoryOutputData,filte
  * product DTOs plus a second table. This is not a constant-memory ZIP pipeline. */
 export async function* inventoryWorkbookRowsStream(reader:InventoryOutputReader,read:Parameters<InventoryOutputReader['readOutput']>[0],settings:InventoryDisplaySettings):AsyncGenerator<readonly string[]>{
  if(!reader.streamOutput)throw new HttpQueryError('not-implemented','INVENTORY_OUTPUT_STREAM_NOT_CONFIGURED');
- const checkpoint=outputCheckpoint(read.signal),groups=new Map<string,string[]>();let summary:Omit<InventoryOutputData,'products'>|null=null,complete=false;
+ const checkpoint=outputCheckpoint(read.signal),budget=new InventoryOutputBudget(),groups=new Map<string,string[]>();let summary:Omit<InventoryOutputData,'products'>|null=null,complete=false;
  try{
   for await(const chunk of reader.streamOutput(read)){
    await checkpoint();
@@ -196,10 +197,10 @@ export async function* inventoryWorkbookRowsStream(reader:InventoryOutputReader,
    if(chunk.kind==='complete'){complete=true;continue;}
    if(!summary)return invalid();
    const product=chunk.product,key=JSON.stringify([product.sizeGroup.id,product.sizes.map(size=>[size.id,size.label])]);let group=groups.get(key);const first=!group;if(!group){group=[];groups.set(key,group);}
-   let index=0;for(const row of workbookRows({...summary,products:[product]},read.parameters,settings)){if(index++<2)continue;if(!first&&index<=4)continue;group.push(JSON.stringify(row));await checkpoint();}
+   let index=0;for(const row of workbookRows({...summary,products:[product]},read.parameters,settings)){if(index++<2)continue;if(!first&&index<=4)continue;budget.reserveRow(row);group.push(JSON.stringify(row));await checkpoint();}
   }
   if(!summary||!complete)return invalid();await checkpoint();
-  yield ['奈爵服饰 库存状况'];yield ['查询范围',inventoryOutputScope(read.parameters,summary)];
+  const heading=['奈爵服饰 库存状况'],scopeRow=['查询范围',inventoryOutputScope(read.parameters,summary)];budget.reserveRow(heading);budget.reserveRow(scopeRow);yield heading;yield scopeRow;
   for(const [key,rows] of groups){for(let index=0;index<rows.length;index++){await checkpoint();const encoded=rows[index]!;rows[index]='';yield JSON.parse(encoded) as string[];}rows.length=0;groups.delete(key);}
  }finally{for(const rows of groups.values())rows.length=0;groups.clear();}
 }
@@ -208,16 +209,16 @@ export async function* inventoryWorkbookRowsStream(reader:InventoryOutputReader,
  * The final preview document still occupies memory and is published after EOF. */
 export async function createInventoryPrintHtmlStream(reader:InventoryOutputReader,read:Parameters<InventoryOutputReader['readOutput']>[0],settings:InventoryDisplaySettings):Promise<string>{
  if(!reader.streamOutput)throw new HttpQueryError('not-implemented','INVENTORY_OUTPUT_STREAM_NOT_CONFIGURED');
- const checkpoint=outputCheckpoint(read.signal),groups=new Map<string,{head:string;parts:string[]}>();let summary:Omit<InventoryOutputData,'products'>|null=null,complete=false,detailRows=0;
+ const budget=new InventoryOutputBudget(),checkpoint=outputCheckpoint(read.signal),groups=new Map<string,{head:string;parts:string[]}>();let summary:Omit<InventoryOutputData,'products'>|null=null,complete=false,detailRows=0;
  try{
   for await(const chunk of reader.streamOutput(read)){
    await checkpoint();if(chunk.kind==='summary'){const {kind:_,...data}=chunk;summary=data;continue;}if(chunk.kind==='complete'){complete=true;continue;}if(!summary)return invalid();
-   const product=chunk.product,key=JSON.stringify([product.sizeGroup.id,product.sizes.map(size=>[size.id,size.label])]);const fragments=printTables({...summary,products:[product]},settings);let first=fragments.next();if(first.done)return invalid();let group=groups.get(key);if(!group){group={head:first.value,parts:[]};groups.set(key,group);}
-   let previous:string|null=null,next=fragments.next();while(!next.done){if(previous!==null)group.parts.push(previous);previous=next.value;await checkpoint();next=fragments.next();}detailRows+=next.value;
+   const product=chunk.product,key=JSON.stringify([product.sizeGroup.id,product.sizes.map(size=>[size.id,size.label])]);const fragments=printTables({...summary,products:[product]},settings);let first=fragments.next();if(first.done)return invalid();let group=groups.get(key);if(!group){budget.reserveXml(first.value);group={head:first.value,parts:[]};groups.set(key,group);}
+   let previous:string|null=null,next=fragments.next();while(!next.done){if(previous!==null){budget.reserveRow(Array.from({length:product.sizes.length+4},()=>''));budget.reserveXml(previous);group.parts.push(previous);}previous=next.value;await checkpoint();next=fragments.next();}detailRows+=next.value;
    // The last yielded fragment closes the section; close once after all products.
   }
   if(!summary||!complete)return invalid();const parts:string[]=[];for(const [key,group] of groups){parts.push(group.head,group.parts.join(''),'</tbody></table></section>');group.parts.length=0;groups.delete(key);await checkpoint();}
-  const html=printDocument(summary,read.parameters,detailRows,parts.join(''));parts.length=0;await checkpoint();return html;
+  budget.reserveXml(printDocument(summary,read.parameters,detailRows,''));const html=printDocument(summary,read.parameters,detailRows,parts.join(''));parts.length=0;await checkpoint();return html;
  }finally{for(const group of groups.values())group.parts.length=0;groups.clear();}
 }
 

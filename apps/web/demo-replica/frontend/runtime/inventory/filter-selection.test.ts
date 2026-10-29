@@ -1,3 +1,5 @@
+import {parseInventoryQuery} from '../../../../../../packages/application/src/inventory-query-validation.ts';
+import {parseProductManagementListQuery} from '../../../../../../packages/application/src/product-management-query-validation.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {ALL_FILTER_VALUE as ALL,checkedFilterValues,resolveFilterSelection} from './filter-selection.ts';
@@ -20,4 +22,12 @@ test('clear and tag close stay empty; choosing all concrete candidates restores 
 });
 test('failed full-candidate materialization rejects without returning a false subset',async()=>{
  await assert.rejects(resolveFilterSelection(null,rows.slice(0,2),[],{trigger:{value:'a'},checked:false},async()=>{throw new Error('unavailable');}),/unavailable/);
+});
+
+test('B11 explicit caller budgets reject All-minus-one overflow without truncation',async()=>{
+ const rows=(count:number)=>Array.from({length:count},(_,n)=>({id:`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,label:String(n)}));
+ for(const maximum of [100,200]){
+  const accepted=rows(maximum+1),result=(await resolveFilterSelection(null,accepted,[],{trigger:{key:accepted[0]!.id},checked:false},async()=>accepted,true,maximum))!;assert.equal(result.length,maximum);if(maximum===100)parseInventoryQuery({filter:{products:result,categories:[],warehouses:[],suppliers:[],fits:[],seasons:[]},page:1,pageSize:100});else parseProductManagementListQuery({filter:{productIds:result.map(x=>x.id),categoryIds:[],years:[],seasonIds:[],supplierIds:[],fitIds:[],thicknesses:[],shapeCodes:[]},page:1,pageSize:100});
+  const rejected=rows(maximum+2);await assert.rejects(resolveFilterSelection(null,rejected,[],{trigger:{key:rejected[0]!.id},checked:false},async()=>rejected,true,maximum),new RegExp(String(maximum)));
+ }
 });

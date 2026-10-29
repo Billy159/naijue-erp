@@ -7,7 +7,7 @@ import { HttpQueryError } from '../transport/http-query.ts';
 import { TransferProposalSession, transferProposalRowKey, type TransferProposalReader } from './transfer-proposal.ts';
 const uuid = (n: number) => `00000000-0000-4000-8000-${n.toString().padStart(12, '0')}`;
 const warehouse = (n: number): CurrentTransferWarehouse => ({ id: entityId('warehouse', uuid(n)), name: `TEST warehouse ${n}`, hallId: entityId('hall', uuid(90)), hallName: 'TEST hall', enabled: true, hallEnabled: true, hasNonzeroInventory: false });
-const product: CurrentFormProduct = { id: entityId('product', uuid(3)), code: 'TEST', name: 'TEST product', retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' };
+const product: CurrentFormProduct = { id: entityId('product', uuid(3)), code: 'TEST', name: 'TEST product', sizeGroupId: entityId('sizeGroup', uuid(8)), retailPrice: null, minimumPriceAvailability: 'UNAVAILABLE' };
 const sku: CurrentFormSku = { id: entityId('sku', uuid(4)), skuCode: 'TEST-SKU', productId: product.id, productCode: product.code, productName: product.name, colorId: entityId('color', uuid(5)), colorName: 'TEST red', fitId: entityId('fit', uuid(6)), fitName: 'TEST fit', sizeId: entityId('size', uuid(7)), sizeName: '165/S', sizeGroupId: entityId('sizeGroup', uuid(8)), barcodeAvailability: 'UNAVAILABLE' };
 const page = <T>(items: readonly T[], n = 1, total = BigInt(items.length)): CurrentFormPage<T> => ({ page: n, pageSize: 20, exactTotal: total, items });
 function setup(overrides: Partial<TransferProposalReader> = {}) {
@@ -115,4 +115,10 @@ test('B04 reopened SKU-only matrix keeps existing line and source snapshot', () 
  assert.equal(session.setMatrixSizeQuantity(transferProposalRowKey(sku),matrixGroup,sku.sizeId,'8'),true);
  const row=session.validate()!.lines[0]!;assert.equal(row.quantity,'8');assert.equal(row.existingLineId,uuid(85));assert.deepEqual(row.sourceSnapshot,snapshot);assert.equal(row.sku!.id,sku.id);
  assert.equal(session.cancel(),false);assert.equal(session.getSnapshot().draft.note,'unsaved note');
+});
+
+test('PF01 pending product reads complete bounded SKU pages once; incomplete responses keep pending error',async()=>{
+ for(const broken of [false,true]){const calls:number[]=[],size=41;let active=0,peak=0;
+ const {session}=setup({async readProducts(){return page([product]);},async readProductSkus(query){calls.push(query.page);active++;peak=Math.max(peak,active);await new Promise(r=>setImmediate(r));active--;return page(Array.from({length:broken&&query.page===2?0:Math.min(20,size-(query.page-1)*20)},(_,i)=>({...sku,id:entityId('sku',uuid(1000+(query.page-1)*20+i)),sizeId:entityId('size',uuid(2000+(query.page-1)*20+i))})),query.page,BigInt(size));}});
+ await session.openPicker('PRODUCT');await session.selectPendingProduct(product.id);assert.equal(session.getSnapshot().pending.phase,broken?'error':'ready');if(!broken){assert.equal(session.getSnapshot().pending.skus.length,size);assert.deepEqual([...calls].sort((a,b)=>a-b),[1,2,3]);assert.ok(peak<=4);}session.dispose();}
 });

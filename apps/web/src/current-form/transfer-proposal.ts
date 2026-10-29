@@ -1,3 +1,4 @@
+import { BoundedReadPool,readCompleteSkuPages } from '../loading/bounded-read-pool.ts';
 import type { DictionaryListQuery, DictionarySizeGroup } from '../../../../packages/application/src/dictionary-read-ports.ts';
 import { TRANSFER_PREPARE_MAX_LINES, TRANSFER_PREPARE_MAX_NOTE_LENGTH } from '../../../../packages/application/src/transfer-payload-budget.ts';
 import type { CurrentFormPage, CurrentFormProduct, CurrentFormSku, CurrentTransferWarehouse } from '../../../../packages/application/src/current-form-ports.ts';
@@ -66,6 +67,7 @@ function freeze<T>(value: T): T {
  * barcode snapshot, authority, write request or optimistic success is invented.
  * Host must revalidate all facts through trusted preparation before native SAVE. */
 export class TransferProposalSession {
+  readonly #skuPool=new BoundedReadPool();
   readonly #scope: ReadScope; readonly #reader: TransferProposalReader; readonly #onAccessFailure: ((error: HttpQueryError) => void) | undefined;
   readonly #listeners = new Set<() => void>();
   #request: AbortController | null = null; #sequence = 0; #revision = 0;
@@ -220,15 +222,10 @@ export class TransferProposalSession {
     this.#cancelSkuRead(); const sequence = this.#skuSequence, request = new AbortController(); this.#skuRead = request;
     const signal = AbortSignal.any([request.signal, this.#scope.signal]); this.#publish({ pending: { ...pending, phase: 'loading', page } });
     try {
-      const result = await this.#reader.readProductSkus({ context: { kind: 'TRANSFER' }, productId: product.id, page, pageSize: 20 }, signal);
-      if (signal.aborted || this.#state.disposed || sequence !== this.#skuSequence || this.#state.pending.product?.id !== product.id) return;
-      const all = [...result.items];
       if (!product.sizeGroupId) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_MISSING');
-      for (let nextPage = 1; BigInt(nextPage - 1) * 20n < result.exactTotal; nextPage++) {
-        if (nextPage !== page) all.push(...(await this.#reader.readProductSkus({ context: { kind: 'TRANSFER' }, productId: product.id, page: nextPage, pageSize: 20 }, signal)).items);
-        if (signal.aborted || this.#state.disposed || sequence !== this.#skuSequence || this.#state.pending.product?.id !== product.id) return;
-      }
-      if (all.some(sku => sku.productId !== product.id || sku.sizeGroupId !== product.sizeGroupId)) throw new Error('CURRENT_PRODUCT_SIZE_GROUP_CONFLICT');
+      const complete=await readCompleteSkuPages(this.#skuPool,signal,(nextPage,operationSignal)=>this.#reader.readProductSkus({context:{kind:'TRANSFER'},productId:product.id,page:nextPage,pageSize:20},operationSignal),page,product.id,product.sizeGroupId);
+      if(signal.aborted||this.#state.disposed||sequence!==this.#skuSequence||this.#state.pending.product?.id!==product.id)return;
+      const result=complete.first,all=complete.items;
       const now = this.#state.pending, known = new Map<string, CurrentFormSku>();
       for (const sku of now.skus) if (now.quantities[sku.id] || this.#state.draft.lines.some(row => row.sku?.id === sku.id)) known.set(sku.id, sku);
       for (const sku of all) { if (sku.productId !== product.id) throw new TypeError('Foreign product SKU.'); known.set(sku.id, sku); }

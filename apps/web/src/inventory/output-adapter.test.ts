@@ -264,3 +264,9 @@ test('replica async row seam produces the original XLSX with exact text identiti
  const zip=await JSZip.loadAsync(bytes),sheet=await zip.file('xl/worksheets/sheet1.xml')!.async('string'),workbook=await zip.file('xl/workbook.xml')!.async('string');
  assert.match(workbook,/name="库存状况"/);assert.match(sheet,/0001/);assert.match(sheet,/-9007199254740993/);assert.match(sheet,/t="inlineStr"/);assert.doesNotMatch(sheet,/颜色小计|商品合计|<script>/);assert.equal((sheet.match(/<row r=/g)??[]).length,6);
 });
+
+test('PF01 rejects row accumulation before EOF, closes producer and publishes no partial workbook rows',async()=>{
+ const settings={category:true,supplier:false,fit:false,sizeGroup:false,season:false,subtotal:true,total:true,sizeDescription:true};let closed=false,published=0;const data=product(1,10001,1,'1'),summary={readReference:'budget',exactTotalProducts:1,warehouseLabels:['合成仓'],allMatchesTotal:data.total};
+ const source={readOutput:async()=>{throw Error('not used');},async *streamOutput(){try{yield {kind:'summary' as const,...summary};yield {kind:'product' as const,product:data};yield {kind:'complete' as const,...summary};}finally{closed=true;}}};
+ await assert.rejects(async()=>{for await(const row of inventoryWorkbookRowsStream(source,read(),settings)){published++;}},/浏览器导出预算/);assert.equal(published,0);assert.equal(closed,true);
+});

@@ -9,7 +9,7 @@ const uuid = (n: number) => `00000000-0000-4000-8000-${n.toString().padStart(12,
 const hallId = entityId('hall', uuid(1));
 const ref = (n: number, more = {}): CurrentSalesReferenceItem => ({ id: uuid(n), name: `TEST reference ${n}`, code: null, hallId: null, hallName: null, paymentMethodId: null, paymentMethodName: null, ...more });
 const hall = ref(1, { hallId, hallName: 'TEST hall' }), otherHall = ref(2, { hallId: entityId('hall', uuid(2)), hallName: 'TEST hall 2' });
-const product: CurrentFormProduct = { id: entityId('product', uuid(3)), code: 'TEST', name: 'TEST product', retailPrice: '10.05', minimumPriceAvailability: 'UNAVAILABLE' };
+const product: CurrentFormProduct = { id: entityId('product', uuid(3)), code: 'TEST', name: 'TEST product', sizeGroupId: entityId('sizeGroup', uuid(8)), retailPrice: '10.05', minimumPriceAvailability: 'UNAVAILABLE' };
 const sku: CurrentFormSku = { id: entityId('sku', uuid(4)), skuCode: 'TEST-SKU', productId: product.id, productCode: product.code, productName: product.name, colorId: entityId('color', uuid(5)), colorName: 'TEST red', fitId: entityId('fit', uuid(6)), fitName: 'TEST fit', sizeId: entityId('size', uuid(7)), sizeName: '165/S', sizeGroupId: entityId('sizeGroup', uuid(8)), barcodeAvailability: 'UNAVAILABLE' };
 const page = <T>(items: readonly T[]): CurrentFormPage<T> => ({ page: 1, pageSize: 20, exactTotal: BigInt(items.length), items });
 function setup(overrides: Partial<SalesProposalReader> = {}, retailPrice: string | null = product.retailPrice) {
@@ -91,7 +91,7 @@ test('failed lookup does not retry or discard raw input; explicit retry works an
   await session.retry(); assert.equal(calls, 2); await session.search('deny'); assert.equal(session.getSnapshot().disposed, true); assert.equal(session.getSnapshot().draft.note, '');
 });
 test('independent RETURN/EXCHANGE retain signed rows, exact net and zero-only order discount', async () => {
- const second = { ...sku, id: entityId('sku', uuid(44)), skuCode: 'TEST-SECOND' };
+ const second = { ...sku, id: entityId('sku', uuid(44)), skuCode: 'TEST-SECOND', sizeId: entityId('size', uuid(45)), sizeName:'170/M' };
  const { session } = setup({ async readProductSkus() { return page([sku, second]); } }); await fill(session);
  session.updateLine(sku.id, { dealPrice:'10.00', quantity:'-2' }); session.setBusinessType('RETURN');
  assert.ok(session.validate()); assert.equal(session.getSnapshot().totals?.netDueMinor,'-2000');
@@ -231,4 +231,9 @@ test('payment draft add follows Demo amount-only rule, rejects invalid amount wi
  h.session.updateSettlement(second.key,{amount:'1.001'});assert.equal(h.session.addSettlement(),false);assert.equal(h.session.getSnapshot().draft.settlements[1]!.amount,'1.001');
  h.session.updateSettlement(second.key,{amount:'0'});assert.equal(h.session.addSettlement(),true);assert.equal(h.session.getSnapshot().draft.settlements.length,3);assert.equal(h.session.saveProposal(null),null);assert.equal(h.session.validate(),null);
  assert.equal(h.session.addSettlement(),false);assert.match(h.session.getSnapshot().notice??'',/最多.*3/);h.context.clear();
+});
+
+test('PF01 selecting the same product again rereads complete SKU set without revision-free cache',async()=>{
+ let count=0;const {session}=setup({async readProductSkus(query){count++;return {page:query.page,pageSize:20,exactTotal:21n,items:Array.from({length:query.page===1?20:1},(_,i)=>({...sku,id:entityId('sku',uuid(1000+(query.page-1)*20+i)),sizeId:entityId('size',uuid(2000+(query.page-1)*20+i))}))};}});
+ await session.openPicker('hall');await session.select(hall.id);for(let round=0;round<2;round++){await session.openPicker('product');await session.select(product.id);assert.equal(session.getSnapshot().picker?.phase,'ready');assert.equal(session.getSnapshot().picker?.specSkus?.length,21);session.closePicker();}assert.equal(count,4);session.dispose();
 });
