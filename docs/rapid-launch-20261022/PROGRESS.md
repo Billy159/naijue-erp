@@ -1,3 +1,5 @@
+SOURCE943 在途接续：已采用原QB对固定SOURCE942/08f97928的正式回执（8509B/SHA256 0c565af7ce4715e5cb043187fc70391f11dcf4b0bbf4e45c5495eea8bd124f07），结论NEED_FIX，不作启动通过。F01/P2：boot必须实际消费stage的final plan、runtime identity、producer三项，与所选最终计划逐项绑定，保留原受控路径迁移/hash/CAS。原T45正在唯一五文件租约内合批修复，并补原运行作业的CONTENT/APPROVAL有限交付；当前实际WIP为ssh-control.py和boot-entry.py，未冻结、未构建、未启动。QB独立10Python+4Node及3AST源码检查采用，不重复；后继仅复受影响项。真实Linux启动、五卷拓扑、预算观察窗及QA实际接线仍未验，生产/权限/数据库未变。
+
 SOURCE942：原T45六叶交付F01容量配置完整校验再剥离/原businessguard、F03独立ownerprofile专用statfs collector、F02同PID FIFOexec单controller有界finalinput等待/同inode最终guard及失败只停自CID。12Python+4Node本机定向通过，精确pins核匹配，原D1叶/WIP/锁/公共releasecontract未动；固定交原QB只增量，不冒真实startup。原ssh-control仅dispatch前上传，无运行中root-private finalinput通道，实际递交路线仍NOT_IMPLEMENTED；真Linux FIFO/UID/RO mount/exec、五卷可见拓扑、预算窗/权限网络/PUBLISH仍未齐，0远端/PG/权限/启动。941原source限定PASS与release NEED_FIX保留。
 
 SOURCE941：用户点名正式CLI容量undefined确定缺口，原D1已交5叶main/newlaunch+test/probe+test，5模式实际CLI统一创建原ownedpool准入，listen前preflight；缺依赖/未知过期拒ready并清资源，低水位由原门禁拒新增保只读。24定向源码/协议及真实缺输入子进程拒绝、strict通过；正向为本机合成collector+scriptedpool，不是真PG启动。producer当前不存在/未预审部署，QA网络/权限及真实预算窗仍缺，不能把nonce或时间当测量真实性。固定交原QB窄验，原T45同版配置/collector/启动验证待接，0生产/权限变更。

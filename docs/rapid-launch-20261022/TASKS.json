@@ -1354,7 +1354,7 @@
   ],
   "controllerThreadId": "01a161ca-f5d5-7de1-a8ad-1cdd43c96915",
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
-  "updatedAt": "2026-10-28T20:25:03.973922+00:00",
+  "updatedAt": "2026-10-29T02:43:42.597519+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
   "lastVerifiedRemoteCommit": "4b180e6f404baae6ac30aca1d0b707128aefd76a",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
@@ -19544,6 +19544,31 @@
         "normal90/preparation189 roles/network/publication and realwindow/budget conditions unresolved; no privileges/topology changed."
       ],
       "next": "Original QB six-leaf delta; actual live-delivery route still NOT_IMPLEMENTED, no startup claim"
+    }
+  },
+  "capacityCliLatestAcceptedReview": {
+    "source": "SOURCE942/08f97928440b63a59adadf4549b515e1bac509b0",
+    "status": "NEED_FIX_STAGE_FINAL_EVIDENCE_CONSUMER_ACTUAL_STARTUP_STILL_BLOCKED",
+    "receipt": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/HV2-SOURCE942/QB-SOURCE942-RESULT.json",
+    "receiptSha256": "0c565af7ce4715e5cb043187fc70391f11dcf4b0bbf4e45c5495eea8bd124f07",
+    "finding": "F01/P2 boot must consume stage.capacityFinalPlan, capacityFinalRuntimeIdentity and capacityProducer against selected final deployment plan; preserve controlled relocation, runtime hash and CAS.",
+    "checks": "Independent 10 Python, 4 Node collector cases and 3 Python AST checks; no remote, real PostgreSQL, application start or performance evidence.",
+    "owner": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
+    "successor": "SOURCE943 active five-file lease combines exact F01 correction and bounded existing-channel CONTENT/APPROVAL delivery; preserve all WIP.",
+    "next": "T45 fixed delivery then original QB affected-scope review; actual isolated startup remains a distinct incomplete requirement.",
+    "authority": "User latest capacity CLI closure request; no production, ACL, network or database change authorized by this source work.",
+    "latestHumanClosure": {
+      "requirements": [
+        "CONTENT content only; APPROVAL consumes existing effective authorization without client self-approval",
+        "Same task, fixed source, target process and final configuration digest",
+        "Incomplete/missing approval/digest mismatch/terminal/timeout refuse; duplicate must not restart",
+        "Approved configuration immutable; failed cleanup only own candidate",
+        "One fixed combined candidate actual isolated delivery to CLI, capacity preflight and readyz",
+        "Same batch missing approval, invalid config and timeout rejection with resource release"
+      ],
+      "owner": "Original T45; original QB affected increments only",
+      "prohibited": "No extra control layer or repeat approval step; no production, new ACL or unapproved topology",
+      "status": "ORIGINAL_OWNER_ACTIVE_NOT_ACTUAL_STARTUP_PASS"
     }
   }
 }

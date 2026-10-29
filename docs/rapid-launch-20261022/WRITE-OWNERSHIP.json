@@ -7879,5 +7879,19 @@
       "scripts/release/DEPLOYMENT.md"
     ],
     "boundary": "F01/F03 only; D1 owns process handshake. No second pool/privilege/shell/remote credentials/proc access/new platform. Real mount/permissions/network/start remain gated."
+  },
+  "capacityFinalTransport943": {
+    "owner": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
+    "status": "ACTIVE_F01_FIX_AND_BOUNDED_DELIVERY_SUCCESSOR",
+    "files": [
+      "scripts/release/ssh-control.py",
+      "scripts/release/deploy-candidate.py",
+      "scripts/release/boot-entry.py",
+      "scripts/release/test_capacity_launch_wiring.py",
+      "scripts/release/DEPLOYMENT.md"
+    ],
+    "authority": "Latest human actual capacity CLI closure; C accepts original bounded control-channel implementation, no server/ACL/network/production action",
+    "boundary": "One job fixed allowlist CONTENT then exact final-plan APPROVAL; no secrets in control, arbitrary path/action, new sudo, dispatcher or approval platform; unknown result read same receipt.",
+    "fix": "QB942 F01 stage finalplan/runtimeidentity/producer must be consumed by boot; no old suite replay"
   }
 }
