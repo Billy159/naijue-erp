@@ -29,6 +29,7 @@ NO = {'Name': 'no', 'MaximumRetryCount': 0}
 DEPLOYMENT_SHA256 = 'a03a8bd34f68b2df1589a4c057a4bb8315368205b0842fc4856bb2aa882fad5a'
 # Explicit exact26-r1 only; adoption depends on C90's independent source review.
 DEPLOYMENT26_SHA256 = '3e9a642f82a5355b797135fc13e5012b502e8b0bd08fbd6481e1f93b82de596d'
+DEPLOYMENT_CAPACITY_SHA256 = '8021c5456b5543158581c1ae3bbc40a4c33cc648db75b7480f285d01a0350928'
 DEPLOYMENT_FULL_SHA256 = 'a2c149cd7543b82c76b249c975d01d6961d22a3fd0bb2ec26b3797e077bbe578'
 
 
@@ -196,6 +197,19 @@ def deployment_binding(dp):
         safe(ref['path'], exists=False)
         if key == 'nginxConfiguration':
             need(Path(ref['path']).is_relative_to(ROOT), 'RUNTIME_ARTIFACT_OUTSIDE_RELEASE_ROOT')
+    need('capacityHost' in dp, 'CAPACITY_RELEASE_ARTIFACTS_REQUIRED')
+    capacity = dp['capacityHost']
+    need(isinstance(capacity, dict) and set(capacity) == {'collector', 'profile', 'interpreter', 'reviewSha256'}, 'CLOSED_CAPACITY_ARTIFACTS_REQUIRED')
+    for key, suffix in [('collector', 'capacity-live-statfs.mjs'), ('profile', 'owner-profile.json')]:
+        row = capacity[key]
+        need(isinstance(row, dict) and set(row) == {'hostFile', 'containerFile', 'sha256'} and HASH.fullmatch(row.get('sha256', '')) and
+             row.get('containerFile') == '/run/naijue-rewrite/capacity/' + suffix, 'EXACT_CAPACITY_MOUNT_REQUIRED')
+        safe(row.get('hostFile'), exists=False)
+        need(Path(row['hostFile']).is_relative_to(ROOT), 'CAPACITY_ARTIFACT_OUTSIDE_RELEASE_ROOT')
+    interpreter = capacity['interpreter']
+    need(isinstance(interpreter, dict) and set(interpreter) == {'containerFile', 'sha256', 'imageId'} and interpreter.get('containerFile') == '/usr/local/bin/node' and
+         HASH.fullmatch(interpreter.get('sha256', '')) and interpreter.get('imageId') == dp.get('images', {}).get('node', {}).get('id') and
+         HASH.fullmatch(capacity.get('reviewSha256', '')), 'PINNED_CAPACITY_INTERPRETER_REQUIRED')
     runtime = dp.get('runtimeConfiguration', {})
     safe(runtime.get('path'), exists=False)
     need(Path(runtime['path']).is_relative_to(ROOT) and isinstance(runtime.get('identity'), dict), 'PRIVATE_RUNTIME_REFERENCE_REQUIRED')
@@ -235,7 +249,7 @@ def load_plan(filename):
     # Select from the hash-bound base plan before executing either known helper.
     dp = reference(p.get('deploymentPlan'))
     deployment_binding(dp)
-    helper_sha = DEPLOYMENT_FULL_SHA256 if dp.get('runtimeSelector') == 'exact26-full' else DEPLOYMENT26_SHA256 if dp.get('runtimeSelector') == 'exact26-r1' else DEPLOYMENT_SHA256
+    helper_sha = DEPLOYMENT_CAPACITY_SHA256 if 'capacityHost' in dp else (DEPLOYMENT_FULL_SHA256 if dp.get('runtimeSelector') == 'exact26-full' else DEPLOYMENT26_SHA256 if dp.get('runtimeSelector') == 'exact26-r1' else DEPLOYMENT_SHA256)
     # Execute only the bytes that were actually hash-checked, not a second import path lookup.
     need(p.get('deploymentTool', {}).get('sha256') == helper_sha, 'REVIEWED_DEPLOYMENT_HELPER_REQUIRED')
     source = reference(p.get('deploymentTool'), False)
@@ -667,8 +681,11 @@ def boot_start(p, d, dp, stage, journal):
     app = candidate(p, d, dp, stage, docker)
     web = candidate(p, d, dp, stage, docker, True)
     need(not web['State']['Running'], 'BOOT_ENTRY_ALREADY_RUNNING_REQUIRES_OPERATOR')
-    if not app['State']['Running']:
-        journal.action('START_EXACT_CANDIDATE_APP', lambda: docker.run(['start', app['Id']]))
+    need(app['State']['Running'], 'CAPACITY_PROCESS_RESTART_REQUIRES_NEW_OWNER_STAGE')
+    # A previous approved process tuple/window never authorizes another start.
+    runtime = d.json_file(dp['runtimeConfiguration']['path'], private=True)
+    d.capacity_runtime_configuration(dp, runtime)
+    need(d.capacity_process_tuple(dp, docker, app['Id'], phase='node') == runtime['capacityLaunch']['process'], 'CAPACITY_BOOT_PROCESS_CHANGED')
     d.health(dp, docker, app['Id'])
     fenced(p)
     old_identity(p, d, dp, docker, exact_start=False, web_running=False)

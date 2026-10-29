@@ -19523,6 +19523,27 @@
       "checks": "24 directed source/scripted and actual missing-config subprocess refusals; strict passed",
       "untested": "real producer, Linux process binding, real PG startup/ready, proxy, low-water/expiry and resource release on actual target",
       "next": "Original QB new CLI/config/producer/preflight/lifecycle only; T45 exact isolated prerequisites, no production or ACL execution"
+    },
+    "capacityRelease942": {
+      "owner": "T45",
+      "status": "SOURCE_IMPLEMENTED_F01_F02_F03_INCREMENT_LOCAL_CHECKS_PASS_QB_PENDING_RUNTIME_BLOCKED",
+      "files": [
+        "scripts/release/deploy-candidate.py",
+        "scripts/release/boot-entry.py",
+        "scripts/ops/capacity-live-statfs.mjs",
+        "scripts/release/test_capacity_launch_wiring.py",
+        "tests/capacity-live-statfs.test.mjs",
+        "scripts/release/DEPLOYMENT.md"
+      ],
+      "evidence": "B12-capacity-release941-F01F02F03-source-04/RESULT.json",
+      "checks": "12 Python+4 Node directed local cases; no real Linux/PG/startup",
+      "blockers": [
+        "Original QB review of exact six frozen leaves pending.",
+        "Actual owner-controlled live finalinput delivery route while one job runs unproved; source waits exact private authority/ref and fails/closes on deadline, no appearance-as-approval.",
+        "Actual Linux shell/node binary pins, FIFO uid/RO-bind, tuple/exec/cleanup and collector truthful namespace/remote/native cancellation still require original isolated target tests.",
+        "normal90/preparation189 roles/network/publication and realwindow/budget conditions unresolved; no privileges/topology changed."
+      ],
+      "next": "Original QB six-leaf delta; actual live-delivery route still NOT_IMPLEMENTED, no startup claim"
     }
   }
 }

@@ -7865,5 +7865,19 @@
       "apps/api/src/capacity-runtime-probe.ts",
       "tests/capacity-runtime-probe.test.ts"
     ]
+  },
+  "capacityRelease941": {
+    "owner": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
+    "status": "FIXED_SIX_LEAF_HANDED_BACK_QB_PENDING",
+    "authority": "Latest human capacity CLI closure request; source implementation only, no real topology/ACL/deployment approval",
+    "files": [
+      "scripts/release/deploy-candidate.py",
+      "scripts/release/boot-entry.py",
+      "scripts/ops/capacity-live-statfs.mjs",
+      "scripts/release/test_capacity_launch_wiring.py",
+      "tests/capacity-live-statfs.test.mjs",
+      "scripts/release/DEPLOYMENT.md"
+    ],
+    "boundary": "F01/F03 only; D1 owns process handshake. No second pool/privilege/shell/remote credentials/proc access/new platform. Real mount/permissions/network/start remain gated."
   }
 }

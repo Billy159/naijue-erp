@@ -205,3 +205,126 @@ Full writeBoundary 仍用原 format，但实际同目标读回须含 `target/out
 恢复旧入口另需 `writeFence` 的真实引用，不能只用五分钟内的零写 JSON：原 T45 先关闭所有写入口、停对应 app/worker、排空原事务，再同一一致快照记录零新业务写。fence 明确 `database/target/buildId/sourceCommit/allWriteEntrypointsClosed/inFlightTransactions:0/closedAtUtc/drainedAtUtc/snapshotAtUtc`、`snapshot:{newBusinessWrites:0,firstBusinessWriteAtUtc:null,outcome:"KNOWN"}`、`writers:[{id,startedAt,finishedAt}]` 以及 `oldEntry:{compatible:true,appId,dbId,appImageId,catalogSha256}`。全部目标和旧入口 IDs/image/catalog 精确绑定；工具实际 inspect 每个 writer 仍 stopped/Pid0/restart=no/相同起止时间，并包含 stage app。snapshot 必须晚于 drain；新写、未知、复起、缺旧兼容证据一律拒恢复旧入口。没有该真实 fence 时 Full 失败不自动假恢复旧站。`stop-entry` 同时停本次准确 app 和 public entry，保 DB/媒体/回执，事务结论另按原键读回；不做旧 DB 覆盖或 schema inverse。已有写只能用当前 schema/data 兼容 APP，或保持维护后修当前版本。
 
 实际回执分 install/start、data-ready+业务、fence/arm、root HTTPS 四组。当前仅离线源码和有限纯计划检查；实际 Full/PUBLISH/新权限/备份恢复/部署/公网及重启均 NOT_RUN，不能凭新增选择器安装或重启服务。
+
+### Capacity CLI941 release increment (source only; actual launch blocked)
+
+All selectors keep the single private `/run/naijue-rewrite/runtime.json` path.
+`capacityLaunch` is a private host field: deployment validates its complete closed
+shape, explicit target/window/process/budgets and owner artifacts before removing
+it for the unchanged business configuration guards. Missing inputs, unknown keys,
+expired approval, altered owner profile or a different target reject. No default
+window or budget and no new CLI flag is introduced. No private runtime bytes or
+hash belong in a public plan, receipt or application archive.
+
+`capacityHost` is a closed deployment-plan object with `collector`, `profile`,
+`interpreter` and `reviewSha256`. Collector/profile references each contain
+`hostFile`, `containerFile`, `sha256`, within the existing protected release root.
+The two fixed container paths are
+`/run/naijue-rewrite/capacity/capacity-live-statfs.mjs` and
+`/run/naijue-rewrite/capacity/owner-profile.json`; both bind read-only.
+The dedicated collector has the absolute `#!/usr/local/bin/node` shebang and uses
+only Node core modules. `interpreter` has `containerFile=/usr/local/bin/node`, its
+actual binary `sha256`, and the exact cached Node `imageId`. These pins require
+actual owner verification in the chosen image; merely supplying a digest is not
+proof that the interpreter was checked. No interpreter or package is installed
+by this increment.
+
+The collector receives `--profile=<64 lowercase hex profile SHA256>` and a bounded
+`CAPACITY_LIVE_REQUEST_V1` stdin message. Its separate owner-mounted profile has
+exact fields `schemaVersion=1`, `profile=OWNER_FIXED_STATFS_V1`, `reviewSha256`,
+`target`, `binding`, `windowToken`, `startsAt`, `expiresAt`, `maxAgeMillis`,
+`namespace`, `volumes`. The target/binding/window must equal the private launch
+approval. Every logical volume has `path`, `physicalVolume`, `namespace`,
+`device`, `filesystemType`; the latter two are actual observed decimal
+`stat.dev` and `statfs.type` values. Linux namespace is the actual collector's own
+`linux:` plus `/proc/self/ns/mnt` link identity. This is only its own namespace;
+no other process's filesystem or PG `/proc` path is accessed. Node statfs has no
+fsid, and the collector does not claim one. Darwin local tests use
+`darwin:local`, which a Linux collector cannot accept.
+
+The owner fixes the profile and its physical labels independently of the request.
+Each collection checks the actual namespace/device/type, protected canonical
+profile and five canonical directories, closes opened descriptors, observes
+`bavail*bsize` only after the live request, and returns the exact LIVE result.
+Aliases of the same observed device/type in one namespace must use the same
+physical label, and distinct observed identities cannot be collapsed to one.
+Missing/invisible paths, aliases, wrong mapping/profile, stale/expired time or
+file replacement produce bounded failure with no receipt substitution. There
+is no pool, remote command, credential, Docker socket, privilege escalation,
+recursive scan or child process. A 30-second incomplete-input deadline and the
+stricter original941 producer timeout bound the subprocess; actual native kernel
+cancellation and descendant cleanup still require platform verification. A
+nonce or digest binds bytes/responses, never proves truthful collection.
+
+Current QA897 has no authorized namespace where UID10001 can see all five true
+volumes. PG/WAL remain the separate PG container's tmpfs; host backup's protected
+parent is not accessible to that UID. Do not substitute `/app`, `/tmp`, host free
+space or old receipts for them. No mounts, connectivity, permissions or owner
+profile values are created by this source delivery. Normal90/preparation189 and
+actual writer topology/window/budgets remain prerequisites.
+
+F02 uses the reviewed fixed `/bin/sh -c` builtin read/exec body, explicit `$0`
+placeholder, one synchronization nonce as `$1`, then the absolute Node/backend
+and original selector/runtime argv. `capacityGate` contains the new candidate
+FIFO's `hostFifo`, exact `identity`, `nonce`, absolute `deadlineAt`, and pinned
+`shell={containerFile:/bin/sh,sha256,imageId}`. The FIFO is0600 owned by the actual
+application UID/GID, under a private candidate parent and bound read-only at
+`/run/naijue-rewrite/capacity-gate`. Creating a new FIFO never changes an existing
+file/parent. There is no `--init`, background process or second shell. Before
+release, an in-container bounded metadata check verifies namespace PID1,
+start ticks/boot ID and actual shell/Node binary hashes. This check runs no
+business code. After release, the same tuple and PID1's actual Node executable
+are confirmed; health still comes from the original941 listener/preflight path.
+
+The original controller stays in one bounded job. A joined in-job deadline thread also stops only its candidate if another bounded validation is still running at the absolute deadline; it is not a separate supervisor process or service. `capacityFinalInput` has only
+`path` and `authority={path,sha256}`. Its path is inside that exact job's existing
+`inputs-private` directory, not a new registry or polling service. An independently
+provided, hash-pinned `OWNER_CAPACITY_FINAL_INPUT_AUTHORITY_V1` record has exactly
+`format`, `jobId`, `operationId`, `buildId`, `sourceCommit`, `archiveSha256`,
+`target`, `deadlineAt`, `controlOwnerUid=0`, and
+`action=ONE_FINAL_CAPACITY_PLAN_ONLY`. No such real authority record is generated
+by this source change. A file merely appearing or a nonce never grants approval.
+The root-owned private delivery must be
+`OWNER_CAPACITY_FINAL_PLAN_DELIVERY_V1` with exact `authority`, `containerId`,
+`process`, `provisionalRuntimeIdentity`, `provisionalProfileIdentity`,
+`fifoIdentity`, `helperSha256`, `finalRuntimeCtimeNs`, `finalProfileCtimeNs`, and
+`finalPlan={path,sha256}`. The final plan stays within that same private directory.
+Its scope/source/CAS/producer/interpreter/window authority must equal the original
+plan: only the private runtime identity and profile's owner-approved final hash
+may change. Profile and runtime keep the original device/inode/UID/GID/mode.
+The profile must be private0600 owned by the application UID, so its namespace
+and actual observed mapping can be finalized in the same bound inode after the
+container exists. Its operational digest is permitted; private runtime content
+and digest are never exported.
+
+The original control owner alone supplies approved final bytes via the existing
+private channel. `same_inode_runtime_write` supports bounded write/truncate,
+fsync and exact readback without rename; it does not manufacture approval or
+write passwords to a receipt. Before release all original closed runtime,
+backup/source/target/CAS/image guards rerun against the actual final plan, then
+runtime/profile metadata including ctime and final-plan reference are rechecked.
+The FIFO writer is nonblocking with a monotonic deadline and original absolute
+wall deadline; ENXIO cannot hang indefinitely. The nonce is one short atomic
+line, and the descriptor is closed. Any rejection, EOF/exit or deadline stops
+only the exact owned candidate, reads back its stopped state and preserves all
+artifacts. There is no detached provisional return or automatic approval renewal.
+The provisional owner profile may be filled in its original inode after the container mount namespace exists; only its explicitly approved final SHA may change between plans. The stage receipt explicitly names the final plan reference and identity; boot
+must consume that final plan, never the provisional file identity. Boot refuses
+a stopped candidate instead of replaying a process-bound approval on restart.
+
+The existing transport currently uploads bundle/request files before job start;
+actual ongoing delivery to a running job's root-private `inputs-private` location
+has NOT been proved. No transport, privilege or server change is made here. The
+controller strictly refuses missing authority/input and times out safely if the
+original owner cannot deliver it. That platform gap, five-volume visibility,
+actual fixed image shell/FIFO/RO-bind semantics, permissions, network and budgets
+must be established before any real startup claim. No ready state or usable
+owner approval is synthesized by source tests.
+
+Increment checks: `python3 -m unittest scripts/release/test_capacity_launch_wiring.py`
+and Node24 `--test tests/capacity-live-statfs.test.mjs`. These cover new guards,
+readonly mount construction, actual local synthetic statfs subprocesses,
+same-inode writes, local FIFO/shell PID preservation, bad nonce/EOF, deadline,
+final-guard failure and owned-candidate cleanup. They do not verify actual QA
+PG/WAL, Linux CLI ready, low-water admission, approval expiry or target cleanup.
+Retain original source/protocol results and rerun only this affected increment.

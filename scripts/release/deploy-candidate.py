@@ -20,6 +20,7 @@ import stat
 import subprocess
 import tarfile
 import time
+import threading
 
 ROOT = Path('/srv/naijue-erp/rapid-launch-20261022')
 OLD = Path('/srv/naijue-erp/prod')
@@ -399,7 +400,8 @@ def runtime_binding(p):
     # Public reference/stat binding only; never hash the private runtime bytes.
     if not exact26_selected(p):
         return None
-    value = {'selector': p['runtimeSelector'], 'references': runtime_references(p), 'runtimeFile': p['runtimeConfiguration']}
+    value = {'selector': p['runtimeSelector'], 'references': runtime_references(p), 'runtimeFile': p['runtimeConfiguration'],
+             'capacityHost': p.get('capacityHost'), 'capacityGate': p.get('capacityGate'), 'capacityFinalInput': p.get('capacityFinalInput')}
     if exact26_full(p):
         value['media'] = p['runtime26Full']['media']
         value['inventorySpool'] = p['runtime26Full'].get('inventorySpool')
@@ -436,8 +438,122 @@ def validate_runtime_build(p, manifest, refs):
          row['bytes'] == build_outputs[name]['bytes'] for row in manifest['members']) for name in graph['outputs']), 'EXACT26_NATIVE_OUTPUT_BINDING_REQUIRED')
 
 
-def validate_full_metadata(p, runtime, review, metadata, independent):
+
+CAPACITY_VOLUMES = ('postgres', 'wal', 'backup', 'system', 'media')
+CAPACITY_DIRECTORY = '/run/naijue-rewrite/capacity'
+CAPACITY_COLLECTOR = CAPACITY_DIRECTORY + '/capacity-live-statfs.mjs'
+CAPACITY_PROFILE = CAPACITY_DIRECTORY + '/owner-profile.json'
+
+
+def capacity_bag(value, keys):
+    need(type(value) is dict and set(value) == set(keys), 'CLOSED_CAPACITY_FIELDS_REQUIRED')
+    return value
+
+
+def capacity_number(value, positive=True):
+    return type(value) is int and (value > 0 if positive else value >= 0) and value <= 9007199254740991
+
+
+def capacity_text(value):
+    return isinstance(value, str) and 0 < len(value) <= 4096 and not re.search(r'[\x00-\x1f\x7f]', value)
+
+
+def capacity_path(value):
+    return capacity_text(value) and Path(value).is_absolute() and os.path.normpath(value) == value and not re.search(r'[,\s\\]', value)
+
+
+def capacity_bytes(value):
+    capacity_bag(value, CAPACITY_VOLUMES)
+    need(all(isinstance(v, str) and re.fullmatch(r'(?:0|[1-9][0-9]*)', v) for v in value.values()), 'EXPLICIT_CAPACITY_BYTES_REQUIRED')
+
+
+def capacity_host_binding(p, verify_files=True):
+    host = capacity_bag(p.get('capacityHost'), ('collector', 'profile', 'interpreter', 'reviewSha256'))
+    need(isinstance(host['reviewSha256'], str) and HASH.fullmatch(host['reviewSha256']), 'CAPACITY_REVIEW_PIN_REQUIRED')
+    for key, destination in [('collector', CAPACITY_COLLECTOR), ('profile', CAPACITY_PROFILE)]:
+        row = capacity_bag(host[key], ('hostFile', 'containerFile', 'sha256'))
+        need(capacity_path(row['hostFile']) and Path(row['hostFile']).is_relative_to(ROOT) and
+             row['containerFile'] == destination and isinstance(row['sha256'], str) and HASH.fullmatch(row['sha256']), 'EXACT_CAPACITY_ARTIFACT_REQUIRED')
+        if verify_files:
+            source = canonical(row['hostFile'], root=ROOT)
+            info, parent = source.stat(), source.parent.stat()
+            need(info.st_uid in (0, int(p['limits']['app']['user'].split(':')[0])) and parent.st_uid in (0, info.st_uid) and
+                 not parent.st_mode & 0o022 and (info.st_mode & 0o004 or key == 'profile' and info.st_uid == int(p['limits']['app']['user'].split(':')[0]) and info.st_mode & 0o400) and info.st_size <= 65536 and
+                 (key != 'collector' or info.st_mode & 0o111) and file_hash(source) == row['sha256'], 'CAPACITY_ARTIFACT_IDENTITY_CHANGED')
+            if key == 'collector':
+                need(bytes_file(source).startswith(b'#!/usr/local/bin/node\n'), 'PINNED_CAPACITY_INTERPRETER_REQUIRED')
+    interpreter = capacity_bag(host['interpreter'], ('containerFile', 'sha256', 'imageId'))
+    need(interpreter['containerFile'] == '/usr/local/bin/node' and isinstance(interpreter['sha256'], str) and HASH.fullmatch(interpreter['sha256']) and
+         interpreter['imageId'] == p['images']['node']['id'], 'EXACT_CAPACITY_INTERPRETER_IMAGE_REQUIRED')
+    return host
+
+
+def capacity_runtime_configuration(p, runtime, pending=False):
+    """Validate the complete private host field BEFORE stripping it for original closed business guards."""
+    if pending:
+        need(type(runtime) is dict and 'capacityLaunch' not in runtime, 'PROVISIONAL_MUST_NOT_REUSE_CAPACITY_APPROVAL')
+        capacity_host_binding(p); capacity_gate_binding(p)
+        return dict(runtime)
+    need(type(runtime) is dict and 'capacityLaunch' in runtime, 'EXPLICIT_CAPACITY_LAUNCH_REQUIRED')
+    c = capacity_bag(runtime['capacityLaunch'], ('schemaVersion', 'profile', 'target', 'window', 'process', 'budgets',
+        'minimumFreeBytes', 'safetyBytes', 'probeTtlMillis', 'probeTimeoutMillis', 'maxProbeWaiters', 'retryAfterSeconds', 'producer'))
+    need(type(c['schemaVersion']) is int and c['schemaVersion'] == 1 and c['profile'] == 'OWNER_REVIEWED_CAPACITY_EXEC_V1', 'CAPACITY_PROFILE_REQUIRED')
+    target = capacity_bag(c['target'], ('host', 'port', 'database', 'role', 'databaseOid', 'postmasterStart'))
+    need(all(capacity_text(target[k]) for k in ('host', 'database', 'role', 'postmasterStart')) and capacity_number(target['port']) and target['port'] <= 65535 and
+         isinstance(target['databaseOid'], str) and re.fullmatch(r'[1-9][0-9]*', target['databaseOid']), 'CAPACITY_EXACT_TARGET_REQUIRED')
+    actual = runtime.get('postgres', {}).get('target', {})
+    need(all(target[a] == actual.get(b) for a, b in [('host', 'host'), ('port', 'port'), ('database', 'database'), ('role', 'user')]), 'CAPACITY_RUNTIME_TARGET_MISMATCH')
+    window = capacity_bag(c['window'], ('approved', 'token', 'inventoryObservedAt', 'startsAt', 'expiresAt', 'binding'))
+    need(window['approved'] is True and capacity_text(window['token']) and len(window['token']) <= 256 and
+         all(capacity_number(window[k]) for k in ('inventoryObservedAt', 'startsAt', 'expiresAt')) and
+         window['inventoryObservedAt'] <= window['startsAt'] < window['expiresAt'] and window['startsAt'] <= time.time() * 1000 < window['expiresAt'], 'FRESH_APPROVED_CAPACITY_WINDOW_REQUIRED')
+    binding = capacity_bag(window['binding'], ('candidateFingerprint', 'targetFingerprint', 'writerTopologyFingerprint', 'inventoryFingerprint',
+        'processInstanceId', 'restartGeneration', 'writerCount', 'physicalVolumes'))
+    need(all(capacity_text(binding[k]) and len(binding[k]) <= 256 for k in ('candidateFingerprint', 'targetFingerprint', 'writerTopologyFingerprint', 'inventoryFingerprint', 'processInstanceId')) and
+         binding['candidateFingerprint'] == p['sourceCommit'] and capacity_number(binding['restartGeneration'], False) and
+         type(binding['writerCount']) is int and binding['writerCount'] == 1, 'EXACT_SINGLE_WRITER_CAPACITY_BINDING_REQUIRED')
+    capacity_bag(binding['physicalVolumes'], CAPACITY_VOLUMES)
+    need(all(capacity_text(v) and len(v) <= 256 for v in binding['physicalVolumes'].values()), 'CAPACITY_PHYSICAL_VOLUME_REQUIRED')
+    process = capacity_bag(c['process'], ('pid', 'linuxStartTicks', 'linuxBootId'))
+    need(capacity_number(process['pid']) and isinstance(process['linuxStartTicks'], str) and re.fullmatch(r'(?:0|[1-9][0-9]*)', process['linuxStartTicks']) and
+         isinstance(process['linuxBootId'], str) and re.fullmatch(r'[a-f0-9-]{36}', process['linuxBootId']) and
+         binding['processInstanceId'] == f"{process['linuxBootId']}:{process['pid']}:{process['linuxStartTicks']}", 'CAPACITY_PROCESS_BINDING_REQUIRED')
+    capacity_bag(c['budgets'], ('session', 'upload'))
+    for value in c['budgets'].values():
+        capacity_bag(value, ('maxAdmissions', 'maxInFlight', 'worstCaseBytes'))
+        need(capacity_number(value['maxAdmissions']) and capacity_number(value['maxInFlight']) and value['maxInFlight'] <= value['maxAdmissions'], 'FINITE_CAPACITY_BUDGET_REQUIRED')
+        capacity_bytes(value['worstCaseBytes'])
+        need(any(int(v) > 0 for v in value['worstCaseBytes'].values()), 'NONZERO_CAPACITY_DEMAND_REQUIRED')
+    for k in ('minimumFreeBytes', 'safetyBytes'): capacity_bytes(c[k])
+    need(all(capacity_number(c[k]) for k in ('probeTtlMillis', 'probeTimeoutMillis', 'maxProbeWaiters', 'retryAfterSeconds')) and
+         c['probeTimeoutMillis'] <= c['probeTtlMillis'] <= 30000, 'BOUNDED_CAPACITY_PROBE_REQUIRED')
+    producer = capacity_bag(c['producer'], ('executable', 'sha256', 'args', 'timeoutMillis', 'maxOutputBytes', 'reviewSha256', 'volumes'))
+    host = capacity_host_binding(p)
+    need(producer['executable'] == CAPACITY_COLLECTOR and producer['sha256'] == host['collector']['sha256'] and
+         producer['reviewSha256'] == host['reviewSha256'] and producer['args'] == ['--profile=' + host['profile']['sha256']] and
+         capacity_number(producer['timeoutMillis']) and producer['timeoutMillis'] <= c['probeTimeoutMillis'] and
+         capacity_number(producer['maxOutputBytes']) and producer['maxOutputBytes'] <= 65536, 'OWNER_FIXED_CAPACITY_PRODUCER_REQUIRED')
+    capacity_bag(producer['volumes'], CAPACITY_VOLUMES)
+    profile = json.loads(bytes_file(host['profile']['hostFile'], 65536))
+    capacity_bag(profile, ('schemaVersion', 'profile', 'reviewSha256', 'target', 'binding', 'windowToken', 'startsAt', 'expiresAt', 'maxAgeMillis', 'namespace', 'volumes'))
+    need(type(profile['schemaVersion']) is int and profile['schemaVersion'] == 1 and profile['profile'] == 'OWNER_FIXED_STATFS_V1' and
+         profile['reviewSha256'] == host['reviewSha256'] and profile['target'] == target and profile['binding'] == binding and
+         profile['windowToken'] == window['token'] and profile['startsAt'] == window['startsAt'] and profile['expiresAt'] == window['expiresAt'] and
+         profile['maxAgeMillis'] == c['probeTtlMillis'] and capacity_text(profile['namespace']), 'OWNER_CAPACITY_PROFILE_MISMATCH')
+    capacity_bag(profile['volumes'], CAPACITY_VOLUMES)
+    for k, mapping in producer['volumes'].items():
+        capacity_bag(mapping, ('path', 'physicalVolume', 'namespace'))
+        observed = capacity_bag(profile['volumes'][k], ('path', 'physicalVolume', 'namespace', 'device', 'filesystemType'))
+        need(capacity_path(mapping['path']) and mapping['physicalVolume'] == binding['physicalVolumes'][k] and
+             mapping['namespace'] == profile['namespace'] and all(observed[n] == mapping[n] for n in mapping) and
+             all(isinstance(observed[n], str) and re.fullmatch(r'(?:0|[1-9][0-9]*)', observed[n]) for n in ('device', 'filesystemType')), 'OWNER_CAPACITY_VOLUME_MISMATCH')
+    if 'productMedia' in runtime: need(producer['volumes']['media']['path'] == runtime['productMedia']['root'], 'CAPACITY_MEDIA_ROOT_MISMATCH')
+    return {k: v for k, v in runtime.items() if k != 'capacityLaunch'}
+
+
+def validate_full_metadata(p, runtime, review, metadata, independent, capacity_pending=False):
     """Fresh original issuer observation/review, without old C38/catalog constants."""
+    runtime = capacity_runtime_configuration(p, runtime, capacity_pending)
     refs = runtime_references(p)
     required = {'schemaVersion', 'profile', 'documentCommands', 'publicOrigin', 'http', 'assets', 'build', 'postgres', 'authentication', 'runtime26Review', 'existingPreparation', 'productMedia'}
     optional = {'organizationMaintenance', 'catalogueMaintenance', 'paymentMaintenance', 'partyMaintenance', 'staffMaintenance', 'productMaintenance', 'inventoryOutputSpool', 'staffCredentialRequestKeyFile'}
@@ -475,10 +591,11 @@ def validate_full_metadata(p, runtime, review, metadata, independent):
              ('server_addr', 'serverAddress'), ('server_port', 'serverPort'), ('postmaster_start', 'postmasterStart')]) and identity.get('replication_role') == 'origin', 'FULL_CURRENT_TARGET_CHANGED')
 
 
-def validate_runtime26_full(p, manifest, runtime):
+def validate_runtime26_full(p, manifest, runtime, capacity_pending=False):
+    capacity_runtime_configuration(p, runtime, capacity_pending)
     refs = runtime_references(p)
     review = reference(refs['review'], 65536)
-    validate_full_metadata(p, runtime, review, reference(refs['metadata']), reference(refs['independentReview'], 8 * 1024 * 1024))
+    validate_full_metadata(p, runtime, review, reference(refs['metadata']), reference(refs['independentReview'], 8 * 1024 * 1024), capacity_pending)
     validate_runtime_build(p, manifest, refs)
     source = reference(refs['sourceManifest'], 16 * 1024 * 1024)
     validate_sql_members(manifest, source, APPROVED_SQL_PATCHES)
@@ -505,9 +622,10 @@ def validate_runtime26_full(p, manifest, runtime):
         need(canonical(refs[key]['path'], root=ROOT).stat().st_mode & 0o004, 'NONROOT_METADATA_READ_REQUIRED')
 
 
-def validate_runtime26(p, manifest, db, runtime):
+def validate_runtime26(p, manifest, db, runtime, capacity_pending=False):
     if exact26_full(p):
-        return validate_runtime26_full(p, manifest, runtime)
+        return validate_runtime26_full(p, manifest, runtime, capacity_pending)
+    runtime = capacity_runtime_configuration(p, runtime, capacity_pending)
     refs = p['runtime26']
     upgrade = reference(refs['upgradeReceipt'])
     before, after = upgrade.get('before', {}), upgrade.get('after', {})
@@ -599,7 +717,7 @@ def file_hash(filename):
     return digest(bytes_file(filename, 16 * 1024 * 1024))
 
 
-def validate_references(p):
+def validate_references(p, capacity_pending=False):
     manifest, entries = verified_archive(p['archive'], p['manifest'], p['buildId'], p['sourceCommit'])
     pack = reference(p['packReceipt'])
     need(pack.get('status') == 'PACKED_AND_EXTRACTED_READBACK_MATCH' and pack.get('archiveExtractions') == 1 and
@@ -627,7 +745,9 @@ def validate_references(p):
          runtime.get('assets') == {'root': '/app/web', 'entry': 'index.html'} and
          runtime.get('profile') == (FULL_PROFILE if exact26_full(p) else RUNTIME26_PROFILE if exact26_selected(p) else 'source-confirmed-native-v1'), 'R1_RUNTIME_CONFIGURATION_MISMATCH')
     if exact26_selected(p):
-        validate_runtime26(p, manifest, db, runtime)
+        validate_runtime26(p, manifest, db, runtime, capacity_pending)
+    else:
+        capacity_runtime_configuration(p, runtime, capacity_pending)
     target = runtime.get('postgres', {}).get('target', {})
     need(target.get('database') == DATABASE and target.get('user') == ROLE and target.get('host') == 'naijue-prod-db-1' and target.get('port') == 5432,
          'OLD_OR_WRONG_DATABASE_CONFIGURATION_REFUSED')
@@ -653,8 +773,8 @@ class Docker:
         need(len(r.stdout) <= 4 * 1024 * 1024, 'DOCKER_OUTPUT_LIMIT')
         return r.stdout
 
-    def inspect(self, name):
-        result = json.loads(self.run(['container', 'inspect', name]))
+    def inspect(self, name, seconds=60):
+        result = json.loads(self.run(['container', 'inspect', name], seconds))
         need(len(result) == 1, 'EXACT_CONTAINER_REQUIRED')
         return result[0]
 
@@ -742,7 +862,8 @@ def mount(source, target, readonly=True):
 
 
 def runtime_mount_arguments(p):
-    args = []
+    host = capacity_host_binding(p)
+    args = [*mount(host['collector']['hostFile'], CAPACITY_COLLECTOR), *mount(host['profile']['hostFile'], CAPACITY_PROFILE)]
     if exact26_selected(p):
         refs = runtime_references(p)
         args += [*mount(refs['review']['path'], RUNTIME26_REVIEW), *mount(refs['independentReview']['path'], RUNTIME26_INDEPENDENT)]
@@ -762,18 +883,269 @@ def runtime_entry_arguments(p):
     return (['--exact26-full'] if exact26_full(p) else ['--exact26-r1'] if exact26_selected(p) else []) + ['/run/naijue-rewrite/runtime.json']
 
 
-def create_app(p, docker):
+
+CAPACITY_GATE_PATH = '/run/naijue-rewrite/capacity-gate'
+CAPACITY_GATE_BODY = 'IFS= read -r decision < /run/naijue-rewrite/capacity-gate || exit 1; [ "$decision" = "$1" ] || exit 1; shift; exec "$@"'
+
+
+def capacity_fifo_identity(filename):
+    path = Path(filename)
+    need(capacity_path(str(path)) and path.is_relative_to(ROOT), 'EXACT_CAPACITY_FIFO_PATH_REQUIRED')
+    canonical(path.parent, kind='directory', private=True, root=ROOT)
+    value = path.lstat()
+    need(stat.S_ISFIFO(value.st_mode) and not path.is_symlink() and stat.S_IMODE(value.st_mode) == 0o600, 'EXACT_PRIVATE_CAPACITY_FIFO_REQUIRED')
+    return {'device': value.st_dev, 'inode': value.st_ino, 'uid': value.st_uid, 'gid': value.st_gid, 'mode': stat.S_IMODE(value.st_mode)}
+
+
+def create_capacity_gate_fifo(p):
+    """New candidate only; existing FIFO or parent modes are never changed."""
+    gate = p.get('capacityGate', {})
+    filename = Path(gate.get('hostFifo', ''))
+    need(capacity_path(str(filename)) and filename.is_relative_to(ROOT) and not os.path.lexists(filename), 'NEW_CAPACITY_FIFO_ONLY')
+    canonical(filename.parent, kind='directory', private=True, root=ROOT)
+    uid, gid = map(int, p['limits']['app']['user'].split(':'))
+    os.mkfifo(filename, 0o600)
+    os.chown(filename, uid, gid, follow_symlinks=False)
+    return capacity_fifo_identity(filename)
+
+
+def capacity_gate_binding(p):
+    gate = capacity_bag(p.get('capacityGate'), ('hostFifo', 'identity', 'nonce', 'deadlineAt', 'shell'))
+    need(capacity_text(gate['nonce']) and re.fullmatch(r'[a-f0-9]{64}', gate['nonce']) and capacity_number(gate['deadlineAt']) and
+         time.time()*1000 < gate['deadlineAt'] <= time.time()*1000 + 300000, 'BOUNDED_CAPACITY_GATE_REQUIRED')
+    shell = capacity_bag(gate['shell'], ('containerFile', 'sha256', 'imageId'))
+    need(shell['containerFile'] == '/bin/sh' and isinstance(shell['sha256'], str) and HASH.fullmatch(shell['sha256']) and
+         shell['imageId'] == p['images']['node']['id'], 'EXACT_CAPACITY_GATE_SHELL_REQUIRED')
+    identity = capacity_fifo_identity(gate['hostFifo'])
+    need(identity == gate['identity'] and identity['uid'] == int(p['limits']['app']['user'].split(':')[0]) and
+         identity['gid'] == int(p['limits']['app']['user'].split(':')[1]), 'CAPACITY_FIFO_IDENTITY_CHANGED')
+    return gate
+
+
+def capacity_gate_arguments(p):
+    gate = capacity_gate_binding(p)
+    return ['--entrypoint', gate['shell']['containerFile'], p['images']['node']['id'], '-c', CAPACITY_GATE_BODY,
+            'naijue-capacity-gate', gate['nonce'], '/usr/local/bin/node', '/app/' + RELEASE_CONTRACT['entrypoints']['backend']['member'],
+            *runtime_entry_arguments(p)]
+
+
+def same_inode_runtime_write(filename, expected, contents):
+    """Original owner-only private carrier may fill a candidate file; never replace a bind-mounted inode."""
+    need(isinstance(contents, bytes) and 0 < len(contents) <= 65536 and file_identity(filename) == expected, 'PRIVATE_RUNTIME_WRITE_CAS_REQUIRED')
+    fd = os.open(filename, os.O_RDWR | os.O_NOFOLLOW)
+    try:
+        info = os.fstat(fd)
+        need((info.st_dev, info.st_ino, info.st_uid, stat.S_IMODE(info.st_mode)) ==
+             (expected['device'], expected['inode'], expected['uid'], expected['mode']), 'OPENED_PRIVATE_RUNTIME_CAS_CHANGED')
+        os.lseek(fd, 0, os.SEEK_SET)
+        with os.fdopen(fd, 'r+b', closefd=False) as file:
+            file.write(contents); file.truncate(); file.flush(); os.fsync(fd); file.seek(0)
+            need(file.read(65537) == contents, 'PRIVATE_RUNTIME_READBACK_FAILED')
+        final = file_identity(filename)
+        need((final['device'], final['inode']) == (expected['device'], expected['inode']), 'PRIVATE_RUNTIME_INODE_REPLACED')
+        return final
+    finally:
+        os.close(fd)
+
+
+def capacity_gate_stop(p, docker, cid):
+    """Only the exact candidate, never any old writer or shared service."""
+    info = docker.inspect(cid, 3)
+    assert_own(info, p, 'app')
+    need(info['Id'] == cid and info['Config'].get('Labels', {}).get('naijue.rapid-launch.created-by') == p['operationId'], 'ONLY_OWN_CAPACITY_CANDIDATE')
+    if info['State']['Running']: docker.run(['stop', '--time', '5', cid], 10)
+    need(not docker.inspect(cid, 3)['State']['Running'], 'CAPACITY_CANDIDATE_STOP_UNCONFIRMED')
+
+
+def release_capacity_fifo(p, docker, cid, process, final_identity, final_guard):
+    """Final owner carrier supplies exact approval; nonce is synchronization only. No approval is manufactured here."""
+    gate = capacity_gate_binding(p)
+    deadline = time.monotonic() + max(0, (gate['deadlineAt'] - time.time()*1000)/1000)
+    fd = None
+    frozen_ctime = Path(p['runtimeConfiguration']['path']).lstat().st_ctime_ns
+    try:
+        need(type(process) is dict and set(process) == {'pid', 'linuxStartTicks', 'linuxBootId'}, 'FINAL_PROCESS_TUPLE_REQUIRED')
+        info = docker.inspect(cid, 3); assert_own(info, p, 'app')
+        need(info['Id'] == cid and info['State']['Running'] and info['HostConfig']['RestartPolicy'] == {'Name':'no','MaximumRetryCount':0} and
+             info['Config'].get('Labels', {}).get('naijue.rapid-launch.created-by') == p['operationId'], 'EXACT_LIVE_CAPACITY_CANDIDATE_REQUIRED')
+        need(file_identity(p['runtimeConfiguration']['path']) == final_identity == p['runtimeConfiguration']['identity'], 'FINAL_PRIVATE_RUNTIME_IDENTITY_REQUIRED')
+        runtime = json_file(p['runtimeConfiguration']['path'], private=True)
+        capacity_runtime_configuration(p, runtime)
+        need(runtime['capacityLaunch']['process'] == process and process['pid'] == 1, 'FINAL_NAMESPACE_PID1_REQUIRED')
+        # This callback is an explicit original owner-controller function, never a CLI/config path or runtime callback.
+        # It must verify final helper/plan hash, tuple/CID/source/target/producer/CAS and all original closed guards.
+        need(callable(final_guard) and final_guard(p, cid, process, final_identity) is True, 'FINAL_OWNER_APPROVAL_GUARD_REQUIRED')
+        need(file_identity(p['runtimeConfiguration']['path']) == final_identity and Path(p['runtimeConfiguration']['path']).lstat().st_ctime_ns == frozen_ctime, 'PRIVATE_RUNTIME_CHANGED_AFTER_FINAL_GUARD')
+        while True:
+            need(time.monotonic() < deadline and time.time()*1000 < gate['deadlineAt'], 'CAPACITY_FIFO_DEADLINE_EXPIRED')
+            need(capacity_fifo_identity(gate['hostFifo']) == gate['identity'], 'CAPACITY_FIFO_REPLACED')
+            try:
+                fd = os.open(gate['hostFifo'], os.O_WRONLY | os.O_NONBLOCK | os.O_NOFOLLOW)
+                break
+            except OSError as error:
+                if error.errno != __import__('errno').ENXIO: raise Refused('CAPACITY_FIFO_OPEN_FAILED') from None
+                time.sleep(min(0.01, max(0, deadline-time.monotonic())))
+        actual = os.fstat(fd)
+        need(actual.st_ino == gate['identity']['inode'] and actual.st_dev == gate['identity']['device'] and stat.S_ISFIFO(actual.st_mode), 'OPENED_CAPACITY_FIFO_CHANGED')
+        need(file_identity(p['runtimeConfiguration']['path']) == final_identity and Path(p['runtimeConfiguration']['path']).lstat().st_ctime_ns == frozen_ctime and time.monotonic() < deadline and time.time()*1000 < gate['deadlineAt'], 'FINAL_RELEASE_CAS_OR_DEADLINE_CHANGED')
+        data=(gate['nonce']+'\n').encode('ascii')
+        need(os.write(fd, data) == len(data), 'CAPACITY_FIFO_RELEASE_NOT_COMPLETE')
+        return {'released': True, 'runtimeIdentity': final_identity, 'process': process, 'containerId': cid}
+    except Exception:
+        capacity_gate_stop(p, docker, cid)
+        raise
+    finally:
+        if fd is not None: os.close(fd)
+
+
+def create_capacity_gate_app(p, docker):
+    capacity_host_binding(p)
+    gate = capacity_gate_binding(p)
     args = ['create', '--name', p['names']['app'], '--pull=never', '--network', p['networks']['front']['id'], '--network-alias', p['names']['app'], '--read-only', '--cap-drop=ALL',
             '--security-opt=no-new-privileges', '--restart=no', '--user', p['limits']['app']['user'], '--workdir', '/app',
             '--tmpfs', '/tmp:rw,noexec,nosuid,size=16m', *limits_args(p, 'app'), *labels(p, 'app'),
             *mount(Path(p['releaseDirectory']) / 'payload', '/app'), *mount(p['runtimeConfiguration']['path'], '/run/naijue-rewrite/runtime.json')]
     args += runtime_mount_arguments(p)
-    args += ['--entrypoint', 'node', p['images']['node']['id'], '/app/' + RELEASE_CONTRACT['entrypoints']['backend']['member']]
-    args += runtime_entry_arguments(p)
+    args += mount(gate['hostFifo'], CAPACITY_GATE_PATH, True)
+    args += capacity_gate_arguments(p)
     cid = docker.run(args).decode().strip()
     need(HASH.fullmatch(cid), 'CREATED_CANDIDATE_ID_REQUIRED')
     docker.run(['network', 'connect', p['networks']['data']['id'], cid])
     return cid
+
+
+
+def capacity_process_tuple(p, docker, cid, phase='shell'):
+    """Finite metadata-only exec in the same container namespace; never starts application code."""
+    gate = capacity_gate_binding(p); host = capacity_host_binding(p)
+    code = "const f=require('node:fs'),c=require('node:crypto');const s=f.readFileSync('/proc/1/stat','utf8'),e=s.lastIndexOf(')'),ticks=s.slice(e+2).split(/\\s+/)[19],boot=f.readFileSync('/proc/sys/kernel/random/boot_id','utf8').trim();const hash=p=>c.createHash('sha256').update(f.readFileSync(p)).digest('hex');process.stdout.write(JSON.stringify({pid:1,linuxStartTicks:ticks,linuxBootId:boot,nodeSha256:hash('/usr/local/bin/node'),shellSha256:hash('/bin/sh'),pidOneExeSha256:hash('/proc/1/exe')}));"
+    value = json.loads(docker.run(['exec', cid, '/usr/local/bin/node', '-e', code], 5))
+    need(type(value) is dict and set(value) == {'pid', 'linuxStartTicks', 'linuxBootId', 'nodeSha256', 'shellSha256', 'pidOneExeSha256'} and value['pid'] == 1 and
+         value['nodeSha256'] == host['interpreter']['sha256'] and value['shellSha256'] == gate['shell']['sha256'] and
+         value['pidOneExeSha256'] == (host['interpreter']['sha256'] if phase == 'node' else gate['shell']['sha256']) and
+         isinstance(value['linuxStartTicks'], str) and re.fullmatch(r'[0-9]+', value['linuxStartTicks']) and
+         isinstance(value['linuxBootId'], str) and re.fullmatch(r'[a-f0-9-]{36}', value['linuxBootId']), 'ACTUAL_NAMESPACE_TUPLE_OR_EXECUTABLE_PIN_MISMATCH')
+    return {k: value[k] for k in ('pid', 'linuxStartTicks', 'linuxBootId')}
+
+
+def wait_capacity_owner_final(p, docker, cid, process, provisional, provisional_profile, journal):
+    """One original bounded controller keeps ownership while its original private control channel delivers an approved final plan."""
+    gate = capacity_gate_binding(p)
+    delivery = capacity_bag(p.get('capacityFinalInput'), ('path', 'authority'))
+    need(capacity_path(delivery['path']) and Path(delivery['path']).is_relative_to(Path(os.environ.get('ERP_SHARED_JOB_DIR', '/nonexistent')) / 'inputs-private'), 'ORIGINAL_JOB_PRIVATE_FINAL_INPUT_REQUIRED')
+    authority_ref = capacity_bag(delivery['authority'], ('path', 'sha256'))
+    authority = reference(authority_ref)
+    capacity_bag(authority, ('format', 'jobId', 'operationId', 'buildId', 'sourceCommit', 'archiveSha256', 'target', 'deadlineAt', 'controlOwnerUid', 'action'))
+    need(authority['format'] == 'OWNER_CAPACITY_FINAL_INPUT_AUTHORITY_V1' and authority['action'] == 'ONE_FINAL_CAPACITY_PLAN_ONLY' and
+         authority['controlOwnerUid'] == 0 and authority['jobId'] == Path(os.environ.get('ERP_SHARED_JOB_DIR', '')).name and
+         authority['operationId'] == p['operationId'] and authority['buildId'] == p['buildId'] and authority['sourceCommit'] == p['sourceCommit'] and
+         authority['archiveSha256'] == p['archive']['sha256'] and authority['deadlineAt'] == gate['deadlineAt'], 'EXACT_ORIGINAL_CAPACITY_AUTHORITY_REQUIRED')
+    parent = canonical(Path(delivery['path']).parent, kind='directory', private=True)
+    need(parent.stat().st_uid == 0, 'ORIGINAL_OWNER_FINAL_INPUT_DIRECTORY_REQUIRED')
+    deadline = time.monotonic() + max(0, (gate['deadlineAt']-time.time()*1000)/1000)
+    while True:
+        need(time.monotonic() < deadline and time.time()*1000 < gate['deadlineAt'], 'CAPACITY_OWNER_FINAL_INPUT_DEADLINE')
+        info = docker.inspect(cid, 3)
+        need(info['Id'] == cid and info['State']['Running'], 'CAPACITY_GATE_EXITED_BEFORE_APPROVAL')
+        if Path(delivery['path']).exists(): break
+        time.sleep(min(0.05, max(0, deadline-time.monotonic())))
+    source = canonical(delivery['path'], private=True)
+    need(source.stat().st_uid == 0, 'FINAL_INPUT_CONTROL_OWNER_REQUIRED')
+    need(file_identity(p['runtimeConfiguration']['path'])['inode'] == provisional['inode'], 'PROVISIONAL_RUNTIME_INODE_REPLACED')
+    body = json.loads(bytes_file(source, 65536, private=True))
+    capacity_bag(body, ('format', 'authority', 'containerId', 'process', 'provisionalRuntimeIdentity', 'provisionalProfileIdentity', 'fifoIdentity', 'helperSha256', 'finalRuntimeCtimeNs', 'finalProfileCtimeNs', 'finalPlan'))
+    need(body['format'] == 'OWNER_CAPACITY_FINAL_PLAN_DELIVERY_V1' and body['authority'] == authority_ref and body['containerId'] == cid and body['process'] == process and
+         body['provisionalRuntimeIdentity'] == provisional and body['provisionalProfileIdentity'] == provisional_profile and body['fifoIdentity'] == gate['identity'] and
+         body['helperSha256'] == file_hash(Path(__file__)), 'EXACT_FINAL_CAPACITY_DELIVERY_REQUIRED')
+    final_ref = capacity_bag(body['finalPlan'], ('path', 'sha256'))
+    need(Path(final_ref['path']).is_relative_to(parent), 'FINAL_PLAN_OUTSIDE_ORIGINAL_PRIVATE_CHANNEL')
+    final_source = canonical(final_ref['path'], private=True)
+    need(final_source.stat().st_uid == 0, 'FINAL_PLAN_CONTROL_OWNER_REQUIRED')
+    final = reference(final_ref)
+    need(type(final) is dict and set(final) == set(p), 'FINAL_PLAN_SHAPE_CHANGED')
+    for key in p:
+        if key not in ('runtimeConfiguration', 'capacityHost'): need(final[key] == p[key], 'FINAL_PLAN_SCOPE_OR_CAS_CHANGED')
+    original_host = json.loads(json.dumps(p['capacityHost']))
+    final_host = json.loads(json.dumps(final['capacityHost']))
+    original_host['profile'].pop('sha256'); final_host['profile'].pop('sha256')
+    need(original_host == final_host, 'FINAL_PRODUCER_SCOPE_CHANGED')
+    profile_identity = file_identity(final['capacityHost']['profile']['hostFile'])
+    need(all(profile_identity[k] == body['provisionalProfileIdentity'][k] for k in ('device', 'inode', 'uid', 'gid', 'mode')), 'FINAL_OWNER_PROFILE_INODE_CHANGED')
+    need(final['runtimeConfiguration']['path'] == p['runtimeConfiguration']['path'] and
+         all(final['runtimeConfiguration']['identity'][key] == provisional[key] for key in ('device', 'inode', 'uid', 'gid', 'mode')), 'FINAL_RUNTIME_MUST_KEEP_PRIVATE_INODE')
+    need(file_identity(final['runtimeConfiguration']['path']) == final['runtimeConfiguration']['identity'] and
+         Path(final['runtimeConfiguration']['path']).lstat().st_ctime_ns == body['finalRuntimeCtimeNs'] and
+         Path(final['capacityHost']['profile']['hostFile']).lstat().st_ctime_ns == body['finalProfileCtimeNs'], 'FINAL_RUNTIME_IDENTITY_UNCONFIRMED')
+    runtime = json_file(final['runtimeConfiguration']['path'], private=True)
+    need(runtime.get('capacityLaunch', {}).get('target') == authority['target'] and runtime.get('capacityLaunch', {}).get('process') == process, 'FINAL_APPROVED_TARGET_PROCESS_MISMATCH')
+    journal.event('CAPACITY_EXACT_FINAL_INPUT_RECEIVED', containerId=cid)
+    return final, final_ref
+
+
+def run_capacity_gate_controller(p, docker, journal):
+    """No detached provisional return. On every failure/deadline stop only this candidate and preserve its evidence."""
+    gate = capacity_gate_binding(p)
+    provisional = file_identity(p['runtimeConfiguration']['path'])
+    need(provisional == p['runtimeConfiguration']['identity'], 'PROVISIONAL_PRIVATE_IDENTITY_CHANGED')
+    # Missing actual authority/channel refuses BEFORE allocating a container.
+    delivery = capacity_bag(p.get('capacityFinalInput'), ('path', 'authority'))
+    reference(capacity_bag(delivery['authority'], ('path', 'sha256')))
+    cid = create_capacity_gate_app(p, docker)
+    finished = threading.Event(); expired = threading.Event(); watchdog_failure = []
+    remaining = max(0, (gate['deadlineAt'] - time.time()*1000)/1000)
+    def watch_deadline():
+        if not finished.wait(remaining):
+            expired.set()
+            try: capacity_gate_stop(p, docker, cid)
+            except Exception: watchdog_failure.append(True)
+    watchdog = threading.Thread(target=watch_deadline, name='capacity-candidate-deadline', daemon=False)
+    watchdog.start()
+    try:
+        spec = docker.inspect(cid, 3)
+        need(spec['Id'] == cid and spec['Config'].get('Entrypoint') == ['/bin/sh'] and
+             spec['Config'].get('Cmd') == capacity_gate_arguments(p)[3:] and not spec['HostConfig'].get('Init') and
+             spec['Config'].get('User') == p['limits']['app']['user'] and
+             any(m.get('Source') == gate['hostFifo'] and m.get('Destination') == CAPACITY_GATE_PATH and m.get('RW') is False for m in spec.get('Mounts', [])), 'EXACT_PID1_GATE_AND_READONLY_FIFO_REQUIRED')
+        docker.run(['start', cid], 5)
+        process = capacity_process_tuple(p, docker, cid)
+        profile_identity = file_identity(p['capacityHost']['profile']['hostFile'])
+        journal.event('CAPACITY_GATE_WAITING_OWNER_FINAL_INPUT', containerId=cid, process=process, provisionalRuntimeIdentity=provisional,
+                      deadlineAt=gate['deadlineAt'], provisionalProfileIdentity=profile_identity)
+        final, final_ref = wait_capacity_owner_final(p, docker, cid, process, provisional, profile_identity, journal)
+        final_profile_identity = file_identity(final['capacityHost']['profile']['hostFile'])
+        final_profile_ctime = Path(final['capacityHost']['profile']['hostFile']).lstat().st_ctime_ns
+        def final_guard(plan, candidate, actual_process, identity):
+            need(reference(final_ref) == plan, 'FINAL_PLAN_CHANGED_AFTER_DELIVERY')
+            validate_references(plan)  # All original source/backup/metadata/business/target guards.
+            check_old(plan, docker); check_images_networks(plan, docker)
+            need(capacity_process_tuple(plan, docker, candidate) == actual_process, 'SAME_PID_EXEC_TUPLE_CHANGED_BEFORE_RELEASE')
+            need(file_identity(plan['runtimeConfiguration']['path']) == identity and
+                 file_identity(plan['capacityHost']['profile']['hostFile']) == final_profile_identity and
+                 Path(plan['capacityHost']['profile']['hostFile']).lstat().st_ctime_ns == final_profile_ctime, 'FINAL_RUNTIME_CHANGED_DURING_CLOSED_GUARDS')
+            return True
+        release_capacity_fifo(final, docker, cid, process, final['runtimeConfiguration']['identity'], final_guard)
+        exec_deadline = min(gate['deadlineAt'], time.time()*1000 + 5000)
+        while True:
+            try:
+                need(capacity_process_tuple(final, docker, cid, phase='node') == process, 'SAME_PID_EXEC_TUPLE_CHANGED_AFTER_RELEASE')
+                break
+            except Refused:
+                need(time.time()*1000 < exec_deadline, 'CAPACITY_NODE_EXEC_NOT_CONFIRMED')
+                time.sleep(0.01)
+        need(not expired.is_set() and not watchdog_failure, 'CAPACITY_CONTROLLER_DEADLINE_OR_STOP_UNCONFIRMED')
+        # Return the FINAL plan explicitly; caller must never persist/reuse provisional identity.
+        return cid, final, final_ref
+    except Exception:
+        capacity_gate_stop(p, docker, cid)
+        raise
+    finally:
+        finished.set(); watchdog.join(17)
+        need(not watchdog.is_alive() and not watchdog_failure, 'CAPACITY_DEADLINE_WATCHDOG_STOP_UNCONFIRMED')
+        need(not expired.is_set(), 'CAPACITY_CONTROLLER_DEADLINE_EXPIRED')
+
+
+def create_app(p, docker):
+    raise Refused('CAPACITY_USE_BOUNDED_CONTROLLER_WITH_FINAL_PLAN_REQUIRED')
 
 
 def create_web(p, docker, public=False):
@@ -997,9 +1369,9 @@ def stage(p, docker, journal, manifest, entries):
     journal.event('INSTALL_LOCKED_LINUX_RUNTIME_DEPENDENCIES_ONCE')
     installed = install_linux_dependencies(p, docker, release, manifest)
     journal.event('CREATE_PRIVATE_CANDIDATE_APP')
-    app = create_app(p, docker)
-    journal.event('APP_CREATED', containerId=app)
-    docker.run(['start', app])
+    app, final_plan, final_ref = run_capacity_gate_controller(p, docker, journal)
+    p.clear(); p.update(final_plan)
+    journal.event('APP_CREATED_AND_CAPACITY_GATE_RELEASED', containerId=app)
     app_health = health(p, docker, app)
     web = create_web(p, docker)
     journal.event('PRIVATE_WEB_CREATED', containerId=web)
@@ -1013,6 +1385,8 @@ def stage(p, docker, journal, manifest, entries):
         containers[role] = {'id': cid, 'specSha256': own_container_fingerprint(info), 'imageId': info['Image']}
     value = {'format': 'naijue-candidate-stage-v1', 'status': 'CANDIDATE_STAGED_HEALTH_ONLY_NOT_BUSINESS', 'buildId': p['buildId'],
              'sourceCommit': p['sourceCommit'], 'archiveSha256': p['archive']['sha256'], 'manifestSha256': p['manifest']['sha256'],
+             'capacityFinalPlan': final_ref, 'capacityFinalRuntimeIdentity': p['runtimeConfiguration']['identity'],
+             'capacityProducer': p['capacityHost'],
              'releaseDirectory': str(release), 'installedPayloadSha256': installed, 'containers': containers,
              'health': {'app': app_health, 'proxy': web_health}, 'schemaVersions': p['schemaVersions'], 'database': DATABASE,
              'databaseQueriedByDeploymentTool': False, 'productionEntryChanged': False, 'businessAcceptance': False, 'finishedAtUtc': now()}
@@ -1124,7 +1498,7 @@ def execute(p, phase):
         journal = Journal(p, phase)
         docker = Docker()
         try:
-            manifest, entries = validate_references(p)
+            manifest, entries = validate_references(p, capacity_pending=phase == 'stage')
             check_old(p, docker)
             check_images_networks(p, docker)
             value = stage(p, docker, journal, manifest, entries) if phase == 'stage' else activate(p, docker, journal, manifest)
