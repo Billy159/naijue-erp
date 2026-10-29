@@ -1,3 +1,5 @@
+SOURCE939阶段接续：原normal34/2357cf5/57923完整对比未收口，现矩阵105项、状态{"NOT_RUN": 14, "PARTIAL": 29, "DIFFERENCE": 62}，整页/整类PASS仍0，含旧版历史不冒最新源码验收。采用原N34-T01-WAREHOUSE-KEY-CLOSE-01两端仓键盘Enter选中候选不关；N34-T05-APPEND-CONTEXT-01补齐同商品颜色版型追加新尺码时Demo确认/QA直接合并的过程截图；数量正确不等于交互或真实保存通过。N34-P18-SEARCH-FIRST-ESC-01因自动填充干扰已撤回，同状态复核双方首次Esc清空。C不重复技术验收或派源码修复。磁盘写入曾在开始前失败，三记录未改；用户call_baadc3254d4a4f81b6dfbfb23cc7c493/0仅批7个旧QB副本，逐文件Git一致/无增改/无占用后准确删除，340606976B文件占用，回读可用521138176B，源码/WIP/报告/Git引用及worktree保护通过，回执原controller/cleanup-qb-seven-20261029-01.json。原对比已通知同断点恢复且只补必要证据；原T45仍notLoaded/936未构建，normal90/preparation189人批仍待，未改DB/服务/生产。
+
 SOURCE938纠正937派工状态：SOURCE936构建消息并未送达，原T45 wait确认notLoaded，初发及一次explicit local host纠正重试均thread not found；无实际构建启动。937所记DISPATCHED仅派工意图，本条准确覆盖为NOT_DISPATCHED，保留历史不冒运行。已单次请求用户打开原T45恢复原路由，不换owner或另造构建任务；真实QA人批及前端normal34对比依旧各自处理。936 QB F01限定PASS有效，无重测。
 
 SOURCE937：采用原QB936 F01限定PASS（2875/4c723977…），原935其余有效证据复用/旧NEED_FIX保留；D1七叶已全部交还，不重测。C交唯一原T45对准确936/4e7cc136必要build+pack各一次，新独立archive，核同lock复用旧依赖，不重ci/native/keyreader；只构建不启动/接PG/部署，不把新包冒normal34对比。真实容量与sharedQA人批/完整发布/新鲜facts/窗口预算/SLO仍前置。936远端已回读。

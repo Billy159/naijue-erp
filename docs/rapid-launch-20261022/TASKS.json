@@ -17145,7 +17145,7 @@
     "frontend": {
       "threadId": "01a16273-28b3-7331-bcc7-dcbf104b07f0",
       "title": "奈爵 ERP｜Demo 逐页实操对比",
-      "latestObserved": "OriginalTerra-medium fixednormal34 fullsitecomparison continues,lastsupplier filtering/search;no complete new count received. OriginalF1 B04fourleaf handed back under verifiedhumanexception.",
+      "latestObserved": "SOURCE939: original fixed normal34 comparison continuing after disk cleanup. Adopt keyboard warehouse-close and new-size append-confirmation differences; seasonal first-Esc finding withdrawn after browser autofill controlled recheck. Complete finite remaining-action list/full report pending; no frontend repair dispatched.",
       "workDirectory": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-local-source-20261022",
       "directoryConfirmation": "SHARED_R_READBACK_ONLY_CHAT_SPECIFIC_ACK_REQUESTED",
       "writeScope": "Only original comparison evidence directory until complete;future solefrontend sourceowner retained",
@@ -17175,6 +17175,22 @@
         "model": "gpt-6.1-sol/medium",
         "checks": "17modelcommandsPASS;2actualForminputpathsPASS;runtime tscPASS;root177unrelateddiagnosticsretained",
         "unmeasured": "normalbootstrap->candidate->save/readback8/CAS/realPG;0Chrome/server/build"
+      },
+      "latestMatrixRead939": {
+        "atUtc": "2026-10-29T00:05:44.605864+00:00",
+        "denominator": {
+          "pages": 37,
+          "overlayClasses": 68,
+          "total": 105
+        },
+        "statuses": {
+          "NOT_RUN": 14,
+          "PARTIAL": 29,
+          "DIFFERENCE": 62
+        },
+        "wholePagePass": 0,
+        "wholeOverlayPass": 0,
+        "boundary": "按现行105行状态汇总；顶部 version 为原始矩阵历史版本，当前目标见 currentComparison；未逐项确认的旧证据不得自动归属 normal34。"
       }
     },
     "corrections": [
@@ -19448,6 +19464,35 @@
       "scope": "Original build/pack once from fixed git archive in new directory; reuse exact matching dependencies, no ci/reader/PG/native replay. Not normal34 comparison or app startup/deployment.",
       "deliveryEvidence": "Initial send and one explicit local host retry both isError thread not found; wait confirms original notLoaded, last263 completed. No matching new build accepted or started.",
       "next": "Human asked once to open original T45 Chat; preserve exact936 work and unique buildowner; no alternate duplicate writer/build/install."
+    },
+    "source939": {
+      "atUtc": "2026-10-29T00:05:44.605864+00:00",
+      "owner": "C coordination only",
+      "scope": "Adopt original normal34 phase evidence and exact approved cleanup; no duplicate technical QA/source edits",
+      "sourceBase": "8d8124f749f2db54a5389e587beb7896379d4c92",
+      "candidate": {
+        "demo": "http://127.0.0.1:8877/",
+        "qa": "http://127.0.0.1:57923/",
+        "qaBuild": "phase2-normal-2357cf5-34",
+        "qaSource": "2357cf508ee6e8188bcc1dddfa4735f735d70d36",
+        "note": "目标固定版本；不表示每行均已在该版本验证。"
+      },
+      "confirmed": [
+        "N34-T01-WAREHOUSE-KEY-CLOSE-01",
+        "N34-T05-APPEND-CONTEXT-01"
+      ],
+      "withdrawn": [
+        "N34-P18-SEARCH-FIRST-ESC-01"
+      ],
+      "cleanup": {
+        "humanApproval": "call_baadc3254d4a4f81b6dfbfb23cc7c493/0",
+        "receipt": "reports/controller/rapid-launch-20261022/cleanup-qb-seven-20261029-01.json",
+        "deletedExactApprovedDirectories": 7,
+        "allocatedFileBytes": 340606976,
+        "freeBytesAfter": 521138176,
+        "protectionReadback": "PASS; source/WIP/reports/Git refs/worktrees unchanged"
+      },
+      "queue": "Original comparison resumed from same fixed candidate after disk blockage; finite remainder/full report pending. Original T45 notLoaded/SOURCE936 build NOT_DISPATCHED; normal90/preparation189 human decisions pending. No database/service/production action."
     }
   }
 }
