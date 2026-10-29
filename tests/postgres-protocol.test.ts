@@ -12,6 +12,14 @@ import type { SalesDocument, SalesDraft } from "../packages/domain/src/documents
 import { minorAmount, quantity, version } from "../packages/domain/src/values.ts";
 import { actor, ids, sid, syntheticDraft, SYNTHETIC_RULES } from "./support/synthetic-fixtures.ts";
 
+// NEW native SAVE must validate a persisted original actor/document allocation.
+// Keep existing stored/historical fixture numbers unchanged; only new SAVE uses
+// the canonical database-issued family/positive bigint suffix.
+const allocatedDraft: typeof syntheticDraft = (...args) => {
+  const draft = syntheticDraft(...args);
+  return {...draft, header: {...draft.header, number: 'V2-XS-000000000001'}};
+};
+
 interface Step {
   readonly sql: RegExp;
   readonly rows?: Record<string, unknown>[];
@@ -53,7 +61,7 @@ function headerRow(document: SalesDocument, basis = "RUNTIME_LEDGER"): Record<st
   const h = document.header;
   return { id: h.id, number: h.number, business_type: h.businessType, business_date: h.businessDate, hall_id: h.hallId, customer_id: h.customerId,
     salesperson_id: h.salespersonId, warehouse_id: h.warehouseId, status: h.status, version: h.version, gross_amount: moneyToSql(h.grossAmount),
-    order_discount: moneyToSql(h.orderDiscount), net_due: moneyToSql(h.netDue), note: h.note, created_by_account_id: h.createdByAccountId,
+    order_discount: moneyToSql(h.orderDiscount), net_due: moneyToSql(h.netDue), note: h.note, responsible_staff_id: h.responsibleStaffId, created_by_account_id: h.createdByAccountId,
     created_hall_id: h.createdHallId, created_at: h.createdAt, updated_at: h.updatedAt, approved_by_account_id: h.approvedByAccountId, approved_at: h.approvedAt, stock_basis: basis };
 }
 function lineRows(document: SalesDocument): Record<string, unknown>[] {
@@ -97,10 +105,15 @@ function documentWrites(document: SalesDocument, isNew = false, previous: SalesD
   const oldSettlements = new Map(isNew ? [] : previous.settlements.map(row => [row.id, row]));
   const nextIds = new Set(document.settlements.map(row => row.id));
   const removedIds = [...oldSettlements.keys()].filter(id => !nextIds.has(id));
-  return [{ sql: isNew ? /^INSERT INTO naijue_erp.sales_header/ : /^UPDATE naijue_erp.sales_header/, inspect(values, sql) {
+  return [...(isNew ? [{sql: /\/\* document-number:validate \*\/ SELECT number,actor_account_id FROM naijue_erp.runtime_document_number_allocation/,
+    rows: [{number: document.header.number, actor_account_id: document.header.createdByAccountId}], inspect(values:unknown[]) {
+      assert.deepEqual(values,['SALES',document.header.id]);
+    }}] : []), { sql: isNew ? /^INSERT INTO naijue_erp.sales_header/ : /^UPDATE naijue_erp.sales_header/, inspect(values, sql) {
+    assert.equal(values[1], document.header.number);
     assert.equal(values[10], moneyToSql(document.header.grossAmount)); assert.equal(values[12], moneyToSql(document.header.netDue));
     assert.equal(values[14], document.header.createdByAccountId); assert.equal(values[15], document.header.createdHallId); assert.equal(values[16], document.header.createdAt);
-    if (!isNew) { assert.match(sql, /WHERE id = \$1 AND version = \$21 AND stock_basis = 'RUNTIME_LEDGER'/); assert.equal(values[20], document.header.version - 1); }
+    assert.equal(values[20], document.header.responsibleStaffId); assert.match(sql, /responsible_staff_id/);
+    if (!isNew) { assert.match(sql, /WHERE id = \$1 AND version = \$22 AND stock_basis = 'RUNTIME_LEDGER'/); assert.equal(values[21], document.header.version - 1); }
   } },
   ...(freedIds.length ? [{ sql: /^UPDATE naijue_erp.sales_line SET is_current = false/, inspect(values: unknown[], sql: string) {
     assert.match(sql, /AND id = ANY\(\$2::uuid\[\]\) AND is_current/); assert.deepEqual(values, [ids.sales, freedIds]);
@@ -162,8 +175,10 @@ test("pg protocol: BEGIN/connect failures do not run callback", async () => {
   await assert.rejects(() => new PostgresSalesUnitOfWork({ async connect() { throw failure; } }).transaction(async () => assert.fail("must not run")), error => error === failure);
 });
 test("pg protocol: uncertain COMMIT failure is not retried and client is discarded", async () => {
-  const failure = new Error("SYNTHETIC lost commit response"); const client = new ProtocolClient([begin(), { sql: /^COMMIT$/, error: failure }, rollback()]);
+  const failure = new Error("SYNTHETIC lost commit response"); const client = new ProtocolClient([begin(), { sql: /^COMMIT$/, error: failure }]);
   await assert.rejects(() => uow(client).transaction(async () => 1), error => error === failure);
+  assert.equal(client.calls.filter(call => call.sql === 'COMMIT').length, 1);
+  assert.equal(client.calls.some(call => call.sql === 'ROLLBACK'), false, 'An unknown COMMIT is not retried or treated as a known rollback');
   assert.equal(client.releases[0], failure); client.done();
 });
 test("pg protocol: failed rollback reports both errors and discards client", async () => {
@@ -173,7 +188,7 @@ test("pg protocol: failed rollback reports both errors and discards client", asy
   assert.equal(client.releases[0], rollbackFailure); client.done();
 });
 test("pg protocol: new SAVE writes native rows, snapshots, audit and actor/key receipt without stock writes", async () => {
-  const draft = syntheticDraft("RETURN"); const command: SalesCommand = { action: "SAVE", actor, requestKey: "SYNTHETIC-SAVE", expectedVersion: null, draft };
+  const draft = allocatedDraft("RETURN"); const command: SalesCommand = { action: "SAVE", actor, requestKey: "SYNTHETIC-SAVE", expectedVersion: null, draft };
   const document = storedDocument(draft);
   const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...documentWrites(document, true), ...finalWrites("SAVE"), commit()]);
   const result = await service(client).execute(command);
@@ -410,8 +425,8 @@ function actionService(client: ProtocolClient) {
 }
 
 test("pg protocol sales authorization: identity locks stay on the command connection after receipt/target, not a second snapshot", async () => {
-  const command: SalesCommand = { action: "SAVE", actor, requestKey: "native-save", expectedVersion: null, draft: syntheticDraft() };
-  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...identityRead(), ...documentWrites(storedDocument(), true), ...finalWrites("SAVE"), commit()]);
+  const command: SalesCommand = { action: "SAVE", actor, requestKey: "native-save", expectedVersion: null, draft: allocatedDraft() };
+  const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...identityRead(), ...documentWrites(storedDocument(command.draft), true), ...finalWrites("SAVE"), commit()]);
   assert.equal((await actionService(client).execute(command)).status, "DRAFT");
   assert.equal(client.calls.filter(call => /sales-authorization:identity/.test(call.sql)).length, 1); client.done();
 });
@@ -545,8 +560,8 @@ test("pg protocol sales authorization: approval uses the locked stored creator, 
 
 test("pg protocol sales authorization: genuine null-hall ADMIN skips hall lookup and preserves null creation hall", async () => {
   const context = { ...actor, hallId: null };
-  const command: SalesCommand = { action: "SAVE", actor: context, requestKey: "native-null-hall", expectedVersion: null, draft: syntheticDraft() };
-  const expected = storedDocument(); const document = { ...expected, header: { ...expected.header, createdHallId: null } };
+  const command: SalesCommand = { action: "SAVE", actor: context, requestKey: "native-null-hall", expectedVersion: null, draft: allocatedDraft() };
+  const expected = storedDocument(command.draft); const document = { ...expected, header: { ...expected.header, createdHallId: null } };
   const client = new ProtocolClient([begin(), ...receiptRead(command), ...salesRead(), ...identityRead(identityRow({ hall_id: null, role: "ADMIN" })),
     ...documentWrites(document, true), ...finalWrites("SAVE"), commit()]);
   assert.equal((await actionService(client).execute(command)).status, "DRAFT");

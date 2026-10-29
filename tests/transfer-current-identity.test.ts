@@ -51,6 +51,7 @@ function scenario(options: { action?: "SAVE" | "APPROVE" | "UNAPPROVE"; replay?:
       const h = document.header;
       rows = [{ id: h.id, number: h.number, business_date: h.businessDate, from_warehouse_id: h.fromWarehouseId,
         to_warehouse_id: h.toWarehouseId, status: h.status, version: h.version, note: h.note,
+        responsible_staff_id: h.responsibleStaffId,
         created_by_account_id: h.createdByAccountId, created_hall_id: h.createdHallId, created_role: h.createdRole,
         created_at: h.createdAt, updated_at: h.updatedAt, approved_by_account_id: h.approvedByAccountId,
         approved_at: h.approvedAt, stock_basis: "RUNTIME_LEDGER" }];

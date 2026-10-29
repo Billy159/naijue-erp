@@ -8001,19 +8001,13 @@
     "source": "SOURCE946 root after module fix14 diagnostics",
     "D1": {
       "owner": "01a16161-e65d-7742-8471-4b3c786ed314",
-      "status": "UNSTARTED_LEASE_WITHDRAWN_TO_C_NO_DELIVERY_NO_WIP",
+      "status": "HANDED_BACK_EXACT3_PROTOCOL88_AND_STRICT_PASS_READONLY",
       "files": [
-        "apps/api/src/product-maintenance-http.test.ts",
-        "tests/capacity-inventory.test.ts",
-        "tests/integration/method-identity-acceptance.ts",
-        "tests/native-sales-schema11-source.test.ts",
         "tests/native-sku-stock-import.test.ts",
         "tests/postgres-protocol.test.ts",
-        "tests/sales-authorization.test.ts",
-        "tests/sales-business-rules.test.ts",
         "tests/transfer-current-identity.test.ts"
       ],
-      "dispatch": "Initial plus one explicit local correction rejected; original routing retained, no replacement writer"
+      "dispatch": "Original route restored; send acknowledged current turn. C exact nine type scope committed and handed back. No production/SQL/expected-assertion relaxation."
     },
     "F2": {
       "owner": "01a161d2-6bd9-7181-8386-1ecddddd386a",
@@ -8056,5 +8050,11 @@
       "apps/web/demo-replica/frontend/runtime/inventory/candidates.tsx"
     ],
     "basis": "QF2 actual normal42 finding; user same-cause repair authority; no running candidate changed"
+  },
+  "b12ProtectedProductQueryWip": {
+    "owner": "D2/01a161d2-6956-7672-9ce0-1c5ca4b52853",
+    "file": "tests/product-query-postgres-protocol.test.ts",
+    "status": "ORIGINAL_OWNER_PROVENANCE_AND_EXACT_NULL_NARROWING_DISPATCHED",
+    "scope": "Preserve superseded v11 +13 WIP; no delete/skip change or rule/SQL changes, no competing writer."
   }
 }

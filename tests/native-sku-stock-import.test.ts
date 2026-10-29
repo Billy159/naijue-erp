@@ -315,7 +315,7 @@ test("all source-only stores preserve unknown COMMIT error and discard without R
     assert.equal(discarded, unknownCommit);
   }
 });
-test("SKU, barcode and stock SQL paths refuse future schema19 before targets or writes", async () => {
+test("SKU, barcode and stock SQL paths refuse unreviewed future schema27 before targets or writes", async () => {
   for (const [label, run, code] of [
     ["SKU", (pool: ConstructorParameters<typeof PostgresNativeSkuImportStore>[0]) =>
       new PostgresNativeSkuImportStore(pool).stage(prepareNativeSkuImport(skuInput())), "NATIVE_SKU_SCHEMA_NOT_READY"],
@@ -327,7 +327,9 @@ test("SKU, barcode and stock SQL paths refuse future schema19 before targets or 
     const calls: string[] = [];
     const client = { async query(sql: string) {
       calls.push(sql);
-      if (sql.includes(":schema")) return { rows: [{ installed_versions: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19] }], rowCount: 1 };
+      // 19 is now an explicitly reviewed prefix; 27 is outside the current
+      // exact1..26 contract and must still fail before target access/writes.
+      if (sql.includes(":schema")) return { rows: [{ installed_versions: Array.from({length:27},(_,i)=>i+1) }], rowCount: 1 };
       if (sql.startsWith("BEGIN") || sql === "ROLLBACK" || sql.includes(":cutoff")) return { rows: [], rowCount: 0 };
       throw Error(`${label} target/write reached after unknown schema`);
     }, release() {} };
