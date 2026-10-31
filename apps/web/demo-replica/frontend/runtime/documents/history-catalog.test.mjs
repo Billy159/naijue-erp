@@ -38,3 +38,10 @@ test('draft note preserves omitted/null/empty and lineSet emits independent exac
 test('V2 complete edit capture keeps full200 rows and distinct revision snapshots; over-budget or conflicting groups never enable edit',async()=>{
  for(const invalid of ['none','duplicate','over-budget']){const scope=new ReadScope({accountId:id(90),sessionRevision:'1',permissionRevision:'1'},'v2-full',id(1),()=>{});const reader=createHistoryReader({origin:'https://erp.local',basePath:'/api',fetch:async(_url,init)=>{const q=JSON.parse(init.body),pageLines=Array.from({length:200},(_,i)=>line(i+1)),v2=v2Catalog(pageLines);if(invalid==='duplicate')v2.currentGroups.push(structuredClone(v2.currentGroups[0]));return Response.json({dataset:'HISTORY',kind:'transfers',document:header,lines:{page:q.linePage,pageSize:200,total:invalid==='over-budget'?'201':'200',items:pageLines},settlements:{page:1,pageSize:200,total:'0',items:[]},lineCatalog:v2});}});const work=collectHistoryDocument(reader,target,{parameters:query,signal:scope.signal,identity:scope.identity,routeInstanceId:scope.routeInstanceId,entityId:id(1)});if(invalid!=='none')await assert.rejects(work);else{const result=await work;assert.equal(result.lineCatalog.basis,'HISTORY_EFFECTIVE_SKU_IDENTITY_V2');assert.equal(result.lineCatalog.items.length,200);assert.equal(result.lineCatalog.currentGroups.length,2);assert.equal(historicalTransferProjection(result).sections.length,2);}scope.dispose();}
 });
+
+test('V2 SOURCE origin must reference the exact effective source line ID',()=>{
+ const row=lines[0],source={basis:'HISTORY_EFFECTIVE_SKU_IDENTITY_V2',items:[{...coordinate(row),origin:{kind:'SOURCE',sourceLineId:row.id},currentGroup:{state:'UNKNOWN'}}],groups:[group],currentGroups:[]},payload={...detail(),lines:{page:1,pageSize:20,total:'1',items:[row]},lineCatalog:source};
+ assert.equal(historyDetailResponse(payload,target,query).lineCatalog.items[0].origin.sourceLineId,row.id);
+ const contradictory=structuredClone(payload);contradictory.lineCatalog.items[0].origin.sourceLineId=id(999);
+ assert.throws(()=>historyDetailResponse(contradictory,target,query));
+});

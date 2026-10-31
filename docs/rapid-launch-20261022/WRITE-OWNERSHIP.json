@@ -8591,6 +8591,24 @@
         "apps/web/demo-replica/frontend/runtime/documents/history-edit-read.test.mjs",
         "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs",
         "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx"
+      ],
+      "F1_F01": [
+        "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
+        "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs"
+      ],
+      "D1_metadata": [
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "tests/native-runtime26-capability.test.ts",
+        "scripts/release/generate-release-contract.mjs",
+        "scripts/release/render-runtime26-readonly-check.mjs",
+        "scripts/release/render-runtime26-readonly-check.test.mjs",
+        "scripts/release/compare-runtime26-metadata.py",
+        "scripts/release/compare-runtime26-metadata.test.py",
+        "apps/api/src/postgres-read-api.ts",
+        "config/release-contract.json",
+        "scripts/release/v8-release-contract.test.mjs",
+        "apps/api/src/production-provider-composition.test.ts",
+        "scripts/release/deploy-candidate.py"
       ]
     },
     "constraints": "Original D3/F1/D1 package leases returned. C delegates required finite metadata/API/release profile closure to original D1, sole writer; exact additional leaves recorded before edits. No SQL installation, actual permission, build/service or QA03 authority.",
@@ -8598,8 +8616,8 @@
     "ownerStatus": {
       "D3": "DELIVERED_FIXED_EIGHT_LEAVES_LEASE_RETURNED",
       "D1": "FOUR_LEAVES_DELIVERED_NEXT_EXACT_PROFILE_CLOSURE",
-      "F1": "DELIVERED_FIVE_CHANGED_LEAVES_LEASE_RETURNED"
+      "F1": "F01_TWO_LEAF_FIX_DELIVERED_LEASE_RETURNED"
     },
-    "metadataClosureOwner": "D1 original chat 01a16161-e65d-7742-8471-4b3c786ed314; C not editing these leaves; exact list forthcoming"
+    "metadataClosureOwner": "Original D1 sole writer; distinct EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1 format and 26_hv2_history_draft_line_set_from_v8, exact four-body pins inheriting V8 137/ACL/pairs. deploy-candidate.py generated contract block only. Do not change boot/rollback approval pins or ssh-control."
   }
 }

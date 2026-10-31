@@ -21678,7 +21678,25 @@
           "new frontend integration/browser/build",
           "actual data import/PUBLISH/QA178 window03/production"
         ]
-      }
+      },
+      "fixedSource": "e1954086b57aad24364cdea1ed8b350018ffee00",
+      "remoteVerified": "github refs/heads/codex/db-v7-r1-preparation-20261031 at e1954086b57aad24364cdea1ed8b350018ffee00",
+      "independentFindings": [
+        {
+          "id": "HISTORY-LINESET-F01",
+          "owner": "F1",
+          "version": "499f9e52",
+          "status": "SOURCE_FIXED_DIRECTED4_PASS_PENDING_QB_RECHECK",
+          "finding": "V2 SOURCE origin.sourceLineId must equal effective source item.lineId; D3 rejects but frontend decoder accepted contradictory source identity.",
+          "retest": "Only malformed SOURCE identity case and impacted V1/V2 decoder compatibility",
+          "files": {
+            "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts": "86d4f5cc6c948c543b91c7b24c18c1e88b1d2090357dd353b5923ed21f2ece2f",
+            "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs": "6e36b70a24698d3262840636a823e06c97db5ca5ec1f68398b951a156a7e233d"
+          },
+          "selfcheck": "New SOURCE mismatch reproduced red; corrected source then four affected V1/V2 cases pass; no browser/PG"
+        }
+      ],
+      "independentReview": "QB fixed499f9e52 original13 leaves NEED_FIX only F01, 47b732394e2b62af725d880863d63239d5faf1e3e4946a4346f8138d2230c216; D1 fixede195 four-leaf review continuing"
     }
   }
 }
