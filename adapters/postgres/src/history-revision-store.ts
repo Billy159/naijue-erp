@@ -1,7 +1,8 @@
+import { loadNativeTransferSnapshots } from './native-transfer-snapshots.ts';
 import { DomainError, requireDomain } from '../../../packages/domain/src/errors.ts';
 import { entityId } from '../../../packages/domain/src/values.ts';
-import { parseHistoryRevisionCommand, planHistoryRevision } from '../../../packages/application/src/history-revision-service.ts';
-import type { HistoryRevisionCommand, HistoryRevisionCurrent, HistoryRevisionDependencies, HistoryRevisionGrant, HistoryRevisionReceipt } from '../../../packages/application/src/history-revision-contracts.ts';
+import { parseHistoryRevisionCommand, planHistoryRevision, checkedHistoryRevisionDraftLineSet } from '../../../packages/application/src/history-revision-service.ts';
+import type { HistoryRevisionCommand, HistoryRevisionCurrent, HistoryRevisionDependencies, HistoryRevisionGrant, HistoryRevisionReceipt, HistoryRevisionResolvedDraftLineSet, HistoryRevisionLineOrigin, HistoryRevisionNativeGroup } from '../../../packages/application/src/history-revision-contracts.ts';
 import type { ActorContext } from '../../../packages/application/src/ports.ts';
 import { requestHash } from '../../../packages/application/src/request-hash.ts';
 import { importedHistoryTransferHallScopeSql } from './imported-history-query-reader.ts';
@@ -18,7 +19,7 @@ export interface PostgresHistoryRevisionOptions {
   /** Original independently reviewed HISTORY numeric WRITE proof, on this exact leased client.
    * HISTORY_READ / INVENTORY_ADMISSION alone cannot supply this function. */
   readonly assertWriteReady: (client: PgSalesClient) => Promise<void>;
-  readonly newId: (kind: 'operation' | 'revision' | 'ledger') => string;
+  readonly newId: (kind: 'operation' | 'revision' | 'ledger' | 'transferLine') => string;
 }
 const must = (ok: unknown, code = 'HISTORY_REVISION_BASELINE_UNPROVEN'): void => requireDomain(ok, code, 'Historical correction rejected');
 const uuid = (value: unknown): string => { must(typeof value === 'string'); return entityId('operation', value as string); };
@@ -109,6 +110,10 @@ async function current(query: Query, command: HistoryRevisionCommand, header: Ro
       && revision[command.kind === 'sales' ? 'transfer_id' : 'sales_id'] === null && revision.to_version === version
       && integer(revision.from_version) + 1 === version); uuid(revision.operation_id);
   }
+  if (effectiveFacts?.draftLineSetVersion !== undefined) {
+    must(command.kind==='transfers' && header.source_status==='DRAFT' && effectiveFacts.draftLineSetVersion===1);
+    checkedHistoryRevisionDraftLineSet({lines:effectiveFacts.lines,nativeGroups:effectiveFacts.nativeGroups} as HistoryRevisionResolvedDraftLineSet);
+  }
   const lines = (await query(`/* history-revise:lines */ SELECT l.id,l.sku_id,coalesce(e.quantity,l.quantity)::text AS quantity,
     ${command.kind === 'sales' ? `coalesce(e.deal_price,l.deal_price)::text AS deal_price,coalesce(e.line_amount,l.line_amount)::text AS line_amount,
       CASE WHEN e.line_id IS NULL THEN l.allocated_discount ELSE e.allocated_discount END::text AS allocated_discount,` : ''}
@@ -136,9 +141,60 @@ async function current(query: Query, command: HistoryRevisionCommand, header: Ro
     responsibleStaffId: effectiveFacts?.responsibleStaffId == null ? null : uuid(effectiveFacts.responsibleStaffId),
     warehouseId: command.kind === 'sales' ? uuid(header.warehouse_id) : null,
     fromWarehouseId: command.kind === 'transfers' ? uuid(effectiveFacts?.fromWarehouseId ?? header.from_warehouse_id) : null, toWarehouseId: command.kind === 'transfers' ? uuid(effectiveFacts?.toWarehouseId ?? header.to_warehouse_id) : null,
-    lines: lines.map(l => ({ lineId: uuid(l.id), skuId: uuid(l.sku_id), quantity: text(l.quantity), ...(command.kind === 'sales'
+    ...(command.kind === 'transfers' ? {note: effectiveFacts && Object.hasOwn(effectiveFacts,'note') ? (effectiveFacts.note === null ? null : text(effectiveFacts.note)) : header.note == null ? null : text(header.note)} : {}),
+    ...(effectiveFacts?.draftLineSetVersion === 1 ? {draftLineSetVersion:1 as const,nativeGroups:structuredClone(effectiveFacts.nativeGroups) as HistoryRevisionNativeGroup[]} : {}),
+    lines: effectiveFacts?.draftLineSetVersion === 1 ? structuredClone(effectiveFacts.lines) as HistoryRevisionCurrent['lines'] : lines.map(l => ({ lineId: uuid(l.id), skuId: uuid(l.sku_id), quantity: text(l.quantity), ...(command.kind === 'sales'
       ? { dealPrice: text(l.deal_price), lineAmount: text(l.line_amount), allocatedDiscount: l.allocated_discount === null ? null : text(l.allocated_discount) } : {}) })),
     totals: command.kind === 'sales' ? { grossAmount: text(head?.gross_amount ?? header.gross_amount), orderDiscount: text(head?.order_discount ?? header.order_discount), netDue: text(head?.net_due ?? header.net_due) } : null, settlements };
+}
+
+/** Resolve only a submitted full set, on the original client after receipt recovery/CAS.
+ * Actual native snapshots and complete groups are captured once; no source rows are written. */
+async function resolveDraftLineSet(query: Query, before: HistoryRevisionCurrent, command: HistoryRevisionCommand, revisionId: string,
+  operationId: string, newId: PostgresHistoryRevisionOptions['newId']): Promise<HistoryRevisionResolvedDraftLineSet> {
+  must(before.kind==='transfers' && before.sourceStatus==='DRAFT' && before.baselineEffect==='EXCLUDED_NOT_EFFECTIVE' && before.version===command.expectedVersion,'VERSION_CONFLICT');
+  const submitted=command.lineSet!;
+  const ids=[...new Set(submitted.map(l=>entityId('sku',l.skuId)))].sort();
+  const snapshots=await loadNativeTransferSnapshots(query,ids);
+  const facts=await query(`/* history-revise:native-identities */ SELECT s.id,s.product_id,s.color_id,s.fit_id,s.size_id,p.size_group_id,
+    (p.deleted_at IS NULL AND c.deleted_at IS NULL AND f.deleted_at IS NULL
+      AND NOT EXISTS(SELECT 1 FROM naijue_erp.product_category pc WHERE pc.id=p.category_id AND pc.deleted_at IS NOT NULL)
+      AND NOT EXISTS(SELECT 1 FROM naijue_erp.import_source_row src JOIN naijue_erp.import_batch ib ON ib.id=src.batch_id
+        WHERE ib.status<>'IMPORTED' AND ((src.entity_type='SKU' AND src.field_provenance->'native_sku_import'->>'native_sku_id'=s.id::text) OR (src.entity_type='BARCODE' AND src.field_provenance->>'native_sku_id'=s.id::text)))) AS retained_published
+    FROM naijue_erp.sku s JOIN naijue_erp.product p ON p.id=s.product_id
+    JOIN naijue_erp.color c ON c.id=s.color_id JOIN naijue_erp.fit f ON f.id=s.fit_id
+    WHERE s.id=ANY($1::uuid[]) ORDER BY s.id FOR SHARE OF s,p,c,f`,[ids]);
+  must(facts.rows.length===ids.length && new Set(facts.rows.map(r=>r.id)).size===ids.length && facts.rows.every(r=>ids.includes(entityId('sku',r.id as string))&&r.retained_published===true),'HISTORY_REVISION_FOREIGN_ROW');
+  const bySku=new Map(facts.rows.map(r=>[uuid(r.id),r]));
+  const fresh=submitted.filter(l=>l.lineId===null || before.lines.find(old=>old.lineId===l.lineId)?.skuId!==l.skuId);
+  const groups=[...new Set(fresh.map(l=>uuid(bySku.get(l.skuId)!.size_group_id)))].sort();
+  const groupFacts:HistoryRevisionNativeGroup[]=[];
+  if(groups.length){
+    const heads=await query('/* history-revise:native-group-heads */ SELECT id,name FROM naijue_erp.size_group WHERE id=ANY($1::uuid[]) ORDER BY id FOR SHARE',[groups]);
+    const members=await query(`/* history-revise:native-group-members */ SELECT m.size_group_id,m.size_id,z.name,m.display_order
+      FROM naijue_erp.size_group_member m JOIN naijue_erp.size z ON z.id=m.size_id
+      WHERE m.size_group_id=ANY($1::uuid[]) ORDER BY m.size_group_id,m.display_order,m.size_id FOR SHARE OF m,z`,[groups]);
+    must(heads.rows.length===groups.length && new Set(heads.rows.map(r=>r.id)).size===groups.length);
+    for(const groupId of groups){const head=one(heads.rows.filter(r=>r.id===groupId));const rows=members.rows.filter(r=>r.size_group_id===groupId);
+      must(rows.length>0&&rows.length<=1000&&new Set(rows.map(r=>r.size_id)).size===rows.length);
+      groupFacts.push({revisionId,groupId,name:text(head.name),sizes:rows.map(r=>{must(Number.isSafeInteger(r.display_order));return {sizeId:uuid(r.size_id),name:text(r.name),displayOrder:r.display_order as number};})});
+    }
+  }
+  const sourceIds=await query('/* history-revise:source-line-identities */ SELECT id FROM naijue_erp.history_transfer_line WHERE header_id=$1::uuid ORDER BY id FOR SHARE',[command.documentId]);
+  const used=new Set([command.documentId,operationId,revisionId,...(before.previousRevisionId?[before.previousRevisionId]:[]),...before.lines.map(l=>l.lineId),...sourceIds.rows.map(l=>uuid(l.id))]);
+  const lines=submitted.map(row=>{
+    const old=row.lineId===null?undefined:before.lines.find(l=>l.lineId===row.lineId);
+    must(row.lineId===null||old!==undefined,'HISTORY_REVISION_FOREIGN_ROW');
+    let origin:HistoryRevisionLineOrigin,lineId:string;
+    if(old?.skuId===row.skuId){lineId=old.lineId;origin=structuredClone(old.origin??{kind:'SOURCE',sourceLineId:old.lineId});}
+    else {lineId=uuid(newId('transferLine'));must(!used.has(lineId));used.add(lineId);const fact=bySku.get(row.skuId)!,snap=snapshots.get(entityId('sku',row.skuId))!;
+      origin={kind:'REVISION',createdRevisionId:revisionId,identity:{productId:uuid(fact.product_id),colorId:uuid(fact.color_id),fitId:uuid(fact.fit_id),sizeId:uuid(fact.size_id)},groupId:uuid(fact.size_group_id),snapshot:{productCodeSnapshot:snap.productCode,productNameSnapshot:snap.productName,colorNameSnapshot:snap.colorName,fitNameSnapshot:snap.fitName,sizeNameSnapshot:snap.sizeName,barcodeSnapshot:snap.barcode}};
+    }
+    return {lineId,skuId:row.skuId,quantity:row.quantity,origin};
+  });
+  const needed=new Set(lines.flatMap(l=>l.origin.kind==='REVISION'?[l.origin.createdRevisionId+':'+l.origin.groupId]:[]));
+  const nativeGroups=[...(before.nativeGroups??[]),...groupFacts].filter(g=>needed.has(g.revisionId+':'+g.groupId)).sort((a,b)=>a.revisionId.localeCompare(b.revisionId)||a.groupId.localeCompare(b.groupId));
+  return {lines,nativeGroups};
 }
 
 /** Numeric-only original HISTORY correction. Owns exactly one original transaction;
@@ -197,18 +253,20 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
           && r.version===command.expectedVersion+1 && Array.isArray(r.ledgerEntryIds)); uuid(r.revisionId); r.ledgerEntryIds.forEach(uuid);
         result=structuredClone(r);
       } else {
+        must(before.version===command.expectedVersion,'VERSION_CONFLICT');
         if (command.header?.responsibleStaffId != null) {
           const staff=await query('/* history-revise:responsible */ SELECT id FROM naijue_erp.staff WHERE id=$1::uuid FOR SHARE',[command.header.responsibleStaffId]);
           must(staff.rows.length===1,'HISTORY_REVISION_FOREIGN_ROW');
         }
-        if (command.kind==='transfers' && command.header && (command.header.fromWarehouseId!==undefined || command.header.toWarehouseId!==undefined)) {
-          const from=command.header.fromWarehouseId??before.fromWarehouseId, to=command.header.toWarehouseId??before.toWarehouseId;
+        if (command.kind==='transfers' && (command.lineSet!==undefined || command.header && (command.header.fromWarehouseId!==undefined || command.header.toWarehouseId!==undefined))) {
+          const from=command.header?.fromWarehouseId??before.fromWarehouseId, to=command.header?.toWarehouseId??before.toWarehouseId;
           const refs=await query('/* history-revise:proposed-warehouses */ SELECT w.id,w.enabled,EXISTS(SELECT 1 FROM naijue_erp.inventory_balance b WHERE b.warehouse_id=w.id AND b.quantity<>0) AS has_nonzero_inventory FROM naijue_erp.warehouse w WHERE w.id=ANY($1::uuid[]) ORDER BY w.id FOR SHARE OF w',[[from,to]]);
-          must(from!==to && refs.rows.length===2 && refs.rows.every(w=> (w.id===before.fromWarehouseId || w.id===before.toWarehouseId) || w.enabled===true || w.id===from && w.has_nonzero_inventory===true),'HISTORY_REVISION_FOREIGN_ROW');
+          must(from!==to && refs.rows.length===2 && refs.rows.every(w=> command.lineSet!==undefined ? w.enabled===true || w.id===from && w.has_nonzero_inventory===true : (w.id===before.fromWarehouseId || w.id===before.toWarehouseId) || w.enabled===true || w.id===from && w.has_nonzero_inventory===true),'HISTORY_REVISION_FOREIGN_ROW');
           await authorize(query,actor,command,{...header,from_warehouse_id:from,to_warehouse_id:to});
         }
         const operationId=uuid(this.newId('operation')),revisionId=uuid(this.newId('revision'));
-        must(operationId!==revisionId);const plan=planHistoryRevision(before,command,revisionId);
+        must(operationId!==revisionId);const resolved=command.lineSet===undefined?undefined:await resolveDraftLineSet(query,before,command,revisionId,operationId,this.newId);
+        const plan=planHistoryRevision(before,command,revisionId,resolved);
         const beforeLines=new Map(before.lines.map(line=>[line.lineId,line]));
         const afterLines=new Map(plan.after.lines.map(line=>[line.lineId,line]));
         const effects=plan.effects.map(effect=>({...effect,ledgerEntryId:uuid(this.newId('ledger'))}));
@@ -242,7 +300,7 @@ export class PostgresHistoryRevisionStore implements HistoryRevisionStore {
         must(head.rowCount===1,'VERSION_CONFLICT');
         // One statement per changed family; untouched rows remain untouched.
         // Original row guards still validate each resulting projection.
-        if(command.lines.length) {
+        if(command.lines.length && plan.after.draftLineSetVersion!==1) {
           const rows=command.lines.map(patch=>afterLines.get(patch.lineId)!);
           const write=await query(`/* history-revise:put-line */ INSERT INTO naijue_erp.history_${family}_line_effective
             (line_id,revision_id,quantity${command.kind==='sales'?',deal_price,line_amount,allocated_discount':''})

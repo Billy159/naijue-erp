@@ -13,7 +13,7 @@ const actor={accountId:entityId('account',id(1)),hallId:entityId('hall',id(2))};
 const now='2026-10-23T12:00:00.000000Z';
 const command=(kind:'sales'|'transfers'='sales'):HistoryRevisionCommand=>({kind,documentId:id(10),expectedVersion:1,
   requestKey:'history-numeric-original-key',reason:'SYNTHETIC numeric correction',lines:[{lineId:id(11),quantity:'3'}],totals:null,settlements:[]});
-interface Options { projectionWriteCount?:number; multiRows?:boolean; headWriteCount?:number; kind?:'sales'|'transfers'; sourceStatus?:string; revoked?:boolean; foreignHall?:boolean; published?:boolean;
+interface Options { sourceNote?:string|null; headFacts?:Record<string,unknown>; newLineId?:string; nativeUnavailable?:boolean; projectionWriteCount?:number; multiRows?:boolean; headWriteCount?:number; kind?:'sales'|'transfers'; sourceStatus?:string; revoked?:boolean; foreignHall?:boolean; published?:boolean;
   date?:string|null; receipt?:{command:HistoryRevisionCommand;result:HistoryRevisionReceipt}; failure?:string; headVersion?:number; responsible?:string|null; missingResponsible?:boolean; effectiveDate?:string|null; missingStaff?:boolean; proposedEnabled?:boolean; proposedStock?:boolean; transferScopeResults?:readonly (boolean|null|undefined)[]; effectiveFrom?:string; effectiveTo?:string }
 function protocol(options:Options={}) {
   const kind=options.kind??'sales', calls:{sql:string;values:unknown[]}[]=[],releases:unknown[]=[],proofClients:unknown[]=[];
@@ -24,8 +24,8 @@ function protocol(options:Options={}) {
     else if(sql.includes('history-revise:receipt'))rows=options.receipt?[{id:options.receipt.result.operationId,actor_account_id:actor.accountId,
       target_type:kind==='sales'?'HISTORY_SALES':'HISTORY_TRANSFER',target_id:id(10),action:'HISTORY_REVISE',status:'COMMITTED',
       request_hash:requestHash({actorAccountId:actor.accountId,command:options.receipt.command}),result_data:options.receipt.result}]:[];
-    else if(sql.includes('history-revise:source'))rows=[{id:id(10),batch_id:id(20),version:1,source_status:options.sourceStatus??'APPROVED',
-      business_date:options.date===undefined?'2020-01-02':options.date,hall_id:options.foreignHall?id(900):actor.hallId,warehouse_id:id(30),
+    else if(sql.includes('/* history-revise:source */'))rows=[{id:id(10),batch_id:id(20),version:1,source_status:options.sourceStatus??'APPROVED',
+      note:options.sourceNote??null,business_date:options.date===undefined?'2020-01-02':options.date,hall_id:options.foreignHall?id(900):actor.hallId,warehouse_id:id(30),
       from_warehouse_id:id(30),to_warehouse_id:id(31),created_role_source:'SALESPERSON',created_hall_id:actor.hallId,
       created_hall_provenance:'ORIGINAL',created_by_source_key:'SYNTHETIC old staff',line_count:options.multiRows?2:1,settlement_count:kind==='sales'?1:0,
       gross_amount:'2.50',order_discount:'0.00',net_due:'2.50',document_manifest_hash:'a'.repeat(64),published_operation_id:id(21),published:options.published!==false}];
@@ -36,10 +36,17 @@ function protocol(options:Options={}) {
     else if(sql.includes('history-revise:responsible'))rows=options.missingStaff?[]:[{id:values[0]}];
     else if(sql.includes('history-revise:proposed-warehouses'))rows=(values[0] as string[]).map(id=>({id,enabled:options.proposedEnabled??true,has_nonzero_inventory:options.proposedStock??false}));
     else if(sql.includes('history-revise:head-chain'))rows=[{id:id(90),document_kind:kind==='sales'?'SALES':'TRANSFER',sales_id:kind==='sales'?id(10):null,
-      transfer_id:kind==='transfers'?id(10):null,from_version:(options.headVersion??2)-1,to_version:options.headVersion,operation_id:id(91),after_facts:{businessDate:options.effectiveDate??(options.date===undefined?'2020-01-02':options.date),fromWarehouseId:options.effectiveFrom??id(30),toWarehouseId:options.effectiveTo??id(31),...(options.missingResponsible?{}:{responsibleStaffId:options.responsible??null})}}];
+      transfer_id:kind==='transfers'?id(10):null,from_version:(options.headVersion??2)-1,to_version:options.headVersion,operation_id:id(91),after_facts:options.headFacts??{businessDate:options.effectiveDate??(options.date===undefined?'2020-01-02':options.date),fromWarehouseId:options.effectiveFrom??id(30),toWarehouseId:options.effectiveTo??id(31),...(options.missingResponsible?{}:{responsibleStaffId:options.responsible??null})}}];
     else if(sql.includes('history-revise:head'))rows=options.headVersion?[{header_id:id(10),version:options.headVersion,revision_id:id(90),gross_amount:'2.50',order_discount:'0.00',net_due:'2.50'}]:[];
     else if(sql.includes('history-revise:lines'))rows=[{id:id(11),sku_id:id(12),quantity:'2',deal_price:'1.25',line_amount:'2.50',allocated_discount:null,effective_valid:true},...(options.multiRows?[{id:id(14),sku_id:id(15),quantity:'2',deal_price:'1.25',line_amount:'2.50',allocated_discount:null,effective_valid:true}]:[])];
     else if(sql.includes('history-revise:settlements'))rows=[{id:id(13),direction:'RECEIVE',amount:'2.50',effective_valid:true}];
+    else if(sql.includes('native-transfer-snapshots:schema'))rows=[{installed:true}];
+    else if(sql.includes('native-transfer-snapshots:targets'))rows=(values[0] as string[]).map(id=>({id,product_code:'SYN-ACTUAL',product_name:'Actual product',color_name:'Actual color',fit_name:'Actual fit',size_name:'Actual size'}));
+    else if(sql.includes('native-transfer-snapshots:main'))rows=(values[0] as string[]).map(sku_id=>({sku_id,barcode:'000123'}));
+    else if(sql.includes('history-revise:native-identities'))rows=(values[0] as string[]).map(sku=>({id:sku,product_id:id(300),color_id:id(301),fit_id:id(302),size_id:id(303),size_group_id:id(304),retained_published:!options.nativeUnavailable}));
+    else if(sql.includes('history-revise:native-group-heads'))rows=(values[0] as string[]).map(id=>({id,name:'Whole actual group'}));
+    else if(sql.includes('history-revise:native-group-members'))rows=(values[0] as string[]).flatMap(size_group_id=>[{size_group_id,size_id:id(303),name:'Actual size',display_order:-1},{size_group_id,size_id:id(305),name:'Unused actual size',display_order:7}]);
+    else if(sql.includes('history-revise:source-line-identities'))rows=[{id:id(11)},{id:id(14)}];
     else if(sql.includes('history-revise:put-head')){
       // Existing installed BEFORE INSERT guard runs before an ON CONFLICT UPDATE.
       if(options.headVersion&&sql.includes('INSERT INTO'))throw Object.assign(Error('SYNTHETIC first-head insert rejected for successor revision'),{code:'40001'});
@@ -55,7 +62,7 @@ function protocol(options:Options={}) {
     return {rows,rowCount};
   },release(error?:unknown){releases.push(error);}};
   const pool:PgSalesPool={async connect(){connections++;return client;}};
-  const store=new PostgresHistoryRevisionStore(pool,{async assertWriteReady(actual){assert.strictEqual(actual,client);proofClients.push(actual);},newId:()=>id(sequence++)});
+  const store=new PostgresHistoryRevisionStore(pool,{async assertWriteReady(actual){assert.strictEqual(actual,client);proofClients.push(actual);},newId:kind=>kind==='transferLine'&&options.newLineId?options.newLineId:id(sequence++)});
   return {calls,releases,proofClients,store,client,connections:()=>connections,run:(q=command(kind))=>store.revise(actor,q,
     {dataset:'HISTORY',kind:q.kind,documentId:q.documentId,actorAccountId:actor.accountId},now,new AbortController().signal)};
 }
@@ -221,4 +228,34 @@ test('HV2-P04 incomplete batch write rolls back original transaction without aud
  const p=protocol({kind:'transfers',sourceStatus:'DRAFT',multiRows:true,projectionWriteCount:1});
  await assert.rejects(p.run({...command('transfers'),lines:[{lineId:id(14),quantity:'-3'},{lineId:id(11),quantity:'0'}]}));
  assert.equal(p.calls.at(-1)!.sql,'ROLLBACK');assert.equal(p.calls.filter(c=>c.sql.includes('history-revise:audit')||c.sql.includes('history-revise:complete')).length,0);
+});
+
+test('draft lineSet store resolves actual native facts/whole group on same client and keeps duplicate SKU row identities without stock or FK writes',async()=>{
+ const p=protocol({kind:'transfers',sourceStatus:'DRAFT',sourceNote:'original note'}),q={...command('transfers'),lines:[],header:{note:null},lineSet:[{lineId:id(11),skuId:id(12),quantity:'4'},{lineId:null,skuId:id(12),quantity:'1'},{lineId:null,skuId:id(12),quantity:'2'}]};
+ const result=await p.run(q);assert.equal(result.version,2);assert.deepEqual(result.ledgerEntryIds,[]);assert.equal(p.connections(),1);
+ const revision=p.calls.find(c=>c.sql.includes('history-revise:revision'))!,before=JSON.parse(revision.values[10] as string),after=JSON.parse(revision.values[11] as string);
+ assert.equal(before.note,'original note');assert.equal(after.note,null);assert.equal(after.draftLineSetVersion,1);assert.equal(after.lines.length,3);assert.equal(after.lines[0].lineId,id(11));assert.deepEqual(after.lines[0].origin,{kind:'SOURCE',sourceLineId:id(11)});assert.equal(new Set(after.lines.map((l:{lineId:string})=>l.lineId)).size,3);
+ assert.equal(after.lines[1].origin.createdRevisionId,result.revisionId);assert.equal(after.lines[1].origin.snapshot.barcodeSnapshot,'000123');assert.equal(after.nativeGroups.length,1);assert.deepEqual(after.nativeGroups[0].sizes.map((s:{sizeId:string})=>s.sizeId),[id(303),id(305)]);
+ assert.ok(p.calls.every(c=>!c.sql.includes('history-revise:put-line')&&!c.sql.includes('history-posting:')&&!/^(?:INSERT|UPDATE|DELETE).*naijue_erp.history_transfer_(?:header|line)\b/.test(c.sql)));
+ assert.match(p.calls.find(c=>c.sql.includes('native-transfer-snapshots:targets'))!.sql,/FOR SHARE OF s, p, c, f, sz, m/);
+ assert.ok(p.proofClients.every(c=>c===p.client));
+});
+test('draft lineSet store replaces an original SKU using fresh identity, removes omitted rows and never overwrites source identity',async()=>{
+ const p=protocol({kind:'transfers',sourceStatus:'DRAFT',multiRows:true});await p.run({...command('transfers'),lines:[],lineSet:[{lineId:id(11),skuId:id(99),quantity:'1'}]});
+ const after=JSON.parse(p.calls.find(c=>c.sql.includes('history-revise:revision'))!.values[11] as string);assert.equal(after.lines.length,1);assert.notEqual(after.lines[0].lineId,id(11));assert.equal(after.lines[0].skuId,id(99));assert.equal(after.lines[0].origin.kind,'REVISION');
+});
+test('draft lineSet store collision, unavailable native facts and write failures roll back; unknown COMMIT uses original recovery without allocating again',async()=>{
+ const q={...command('transfers'),lines:[],lineSet:[{lineId:null,skuId:id(99),quantity:'1'}]};
+ for(const options of [{newLineId:id(10)},{newLineId:id(11)},{newLineId:id(14)},{newLineId:id(100)},{newLineId:id(101)},{nativeUnavailable:true},{headWriteCount:0},{failure:'history-revise:audit'}]){const p=protocol({kind:'transfers',sourceStatus:'DRAFT',...options});await assert.rejects(p.run(q));assert.equal(p.calls.at(-1)!.sql,'ROLLBACK');assert.ok(!p.calls.some(c=>c.sql.includes('history-posting:')));}
+ const uncertain=protocol({kind:'transfers',sourceStatus:'DRAFT',failure:'COMMIT'});await assert.rejects(uncertain.run(q),{code:'HISTORY_REVISION_COMMIT_OUTCOME_UNKNOWN'});assert.ok(uncertain.releases[0] instanceof Error);assert.ok(!uncertain.calls.some(c=>c.sql==='ROLLBACK'));
+ const result:HistoryRevisionReceipt={operationId:id(100),dataset:'HISTORY',kind:'transfers',documentId:q.documentId,revisionId:id(101),version:2,ledgerEntryIds:[]};const replay=protocol({kind:'transfers',sourceStatus:'DRAFT',headVersion:9,receipt:{command:q,result}});assert.deepEqual(await replay.run(q),result);assert.ok(!replay.calls.some(c=>c.sql.includes('native-transfer-snapshots:')||c.sql.includes('history-revise:revision')));
+});
+test('draft lineSet successor current facts retain exact effective JSON, explicit null note and original group origins on numeric patch',async()=>{
+ const first=protocol({kind:'transfers',sourceStatus:'DRAFT',sourceNote:'source note'});const result=await first.run({...command('transfers'),lines:[],header:{note:null},lineSet:[{lineId:null,skuId:id(99),quantity:'1'}]});
+ const saved=JSON.parse(first.calls.find(c=>c.sql.includes('history-revise:revision'))!.values[11] as string);
+ const p=protocol({kind:'transfers',sourceStatus:'DRAFT',sourceNote:'source note',headVersion:result.version,headFacts:saved});
+ await p.run({...command('transfers'),expectedVersion:result.version,lines:[{lineId:saved.lines[0].lineId,quantity:'5'}]});
+ const revision=p.calls.find(c=>c.sql.includes('history-revise:revision'))!,before=JSON.parse(revision.values[10] as string),after=JSON.parse(revision.values[11] as string);
+ assert.equal(before.lines[0].skuId,id(99));assert.equal(before.note,null);assert.equal(after.note,null);assert.equal(after.lines[0].quantity,'5');assert.deepEqual(after.lines[0].origin,saved.lines[0].origin);assert.deepEqual(after.nativeGroups,saved.nativeGroups);assert.equal(after.draftLineSetVersion,1);
+ assert.ok(!p.calls.some(c=>c.sql.includes('history-revise:put-line')||c.sql.includes('native-transfer-snapshots:')||c.sql.includes('history-posting:')));
 });
