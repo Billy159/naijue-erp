@@ -8551,5 +8551,16 @@
       "apps/web/demo-replica/tests/unified-service-fixture.test.mjs"
     ],
     "scope": "real retained product aggregate DISABLE -> original PostgresCurrentFormReader finite query port -> original HTTP/frontend reader UNAVAILABLE; no productionSQL/contract/permission change or fabricated state"
+  },
+  "r1LongTableSizePopup": {
+    "owner": "F1",
+    "model": "gpt-6.1-sol/medium",
+    "status": "EXACT_TWO_FILES_REPAIR_LEASE",
+    "issue": "QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01",
+    "paths": [
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-picker.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-picker-keyboard.test.mjs"
+    ],
+    "scope": "Actual fixed59 sales row13 size menu outside1440x1000 viewport; minimum original popup position/direction/scroll fix, preserve Demo shape, full group, keyboard and draft identity. Other files require exact lease extension. No build/browser/PG."
   }
 }

@@ -21004,11 +21004,14 @@
     "next": "Original QF2 fixed48 minimal original SAVE setup only, then normal onSaved full readonly six tabs; no repeat full old CREATE/media/SKU suite; own report driver only; no PG.",
     "currentPreparation": {
       "owner": "QF2",
-      "status": "DISPATCHED_READONLY_FIXED59_MEDIA_SUCCESS_ERROR_RECOVERY_READINESS",
+      "status": "READINESS_COMPLETE_MINIMAL_OWN_REPORT_DRIVER_PREPARATION_ONLY",
       "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
       "scope": "Only remaining normal VIEW/EDIT image success and load-error recovery; reuse prior six-tab/normal stock evidence. Exact existing media/fixture/entry readiness and minimum browser setup; no source change/build/PG/browser until QF releases.",
       "model": "gpt-6.1-sol/medium",
-      "fast": "UNVERIFIED_TOOL_NO_SWITCH"
+      "fast": "UNVERIFIED_TOOL_NO_SWITCH",
+      "report": "reports/qa-frontend/rapid-launch-20261022/QF2/PRODUCT59-IMAGE-READINESS-20261101-01.md",
+      "next": "QF own processes0 and stopped long-table case; QF2 may prepare then execute exact fixed59 media increment in own visible session. F1 source repair has no browser.",
+      "finding": "Fixed59 original unified binary media path exists, no proven app blocker. Prior48/49 images evidence reusable only its original scope, not fixed59 actual PASS."
     }
   },
   "r1SalesReturnApprovedFollowup": {
@@ -21530,5 +21533,14 @@
     "manifestSHA": "73fe42040d529868d63c34a3c84940601b5caa804e6b83d2c21f197646aad16a",
     "verification": "T45 original one archive-integrity check and allsource Gitblob readback;missing59buildinputs0;C receipt+existence adopted",
     "notClaimed": "This exported source archive not independently offline fully built;realPG/history/fullsite/production remain incomplete;scanner browser evidence completed after archive cutoff, original archive not rewritten"
+  },
+  "r1LongTableSizePopup": {
+    "owner": "F1",
+    "status": "CONFIRMED_ACTUAL_CANDIDATE_DEFECT_ASSIGNED_ORIGINAL_OWNER",
+    "issue": "QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01",
+    "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
+    "reproduction": "12 independent manual product/size rows; row13 full11 member menu extends below1440x1000,195/4XL normal click outside viewport. No force/SAVE.",
+    "evidence": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP59-SALES-REMAINING-UI-05/",
+    "next": "F1 minimum leased source repair/selfcheck -> T45 fixed successor -> QF only row12-to13 popup and preserved draft/shared affected consumers; no old suites."
   }
 }

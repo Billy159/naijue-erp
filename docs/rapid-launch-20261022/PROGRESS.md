@@ -3560,3 +3560,7 @@ QF固定59新增销售页实际接续：browser可用，但原Demo8877明确登�
 D1只读确认固定59原producer支持同freshstore连续2–3商品及2个同方式空厅账户，原reader正常枚举；原商品容量<4/回执32保留，不能把driver单样本误判后台缺能力。本轮无源码修改/测试。原QF已接仅长表多商品、真实查看改选身份、多账户搜索清除Enter/Esc剩余状态，复用17图；Demo配对仍等原登录请求，无新增整页PASS、PG或发布结论。
 
 原QF同轮次仍inProgress，不因观察超时重启。原QF2已核idle，接固定59商品六页签图片成功/读取失败恢复剩余状态的只读就绪核定，复用旧有效16响应/六tab/stock证据，不改源码、不build/PG/操作浏览器；原QF继续独占。待准确最小setup后交接实操，不把准备当通过。
+
+QF回报剩余候选实操已有3商品/2账户真实CREATE及读回200、商品只读查看Esc、同draftkey改选第三商品/165-S、多账户search/Enter/nomatch/Esc/clear证据；当前仅长表继续，QA locator失败保留不判app缺陷，未先写最终PASS。QF2固定59图片就绪核定完成：原mediaStage/binaryBase64/metadata原服务已有，未证app阻塞；仅自己报告目录准备1CREATE+1真实PNG上传的VIEW/EDIT失败重试定向driver，等待QF释放浏览器。无源码/PG/生产变更、整页仍PARTIAL。
+
+QF实际发现QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01：12独立手工行后第13行所属组11项菜单向下超出1440×1000，195/4XL正常click outsideviewport，未force/缩组选项/写单。原图DOM/失败原始结果保留，原QF own全部0不重试。原F1仅proposal-picker.tsx+keyboard测试两文件唯一修复租，需其它文件先扩准确范围；T45后续固定构建/QF最小复验。原QF2收到窗口交接，可在准备准确最小driver后于不可变59执行无关媒体增量，不等新候选、不抢用户Demo。当前已确认功能缺陷，不冒Demo像素配对或整页PASS。
