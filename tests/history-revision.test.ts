@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHistoryRevisionService, parseHistoryRevisionCommand, planHistoryRevision } from '../packages/application/src/history-revision-service.ts';
-import type { HistoryRevisionCommand, HistoryRevisionCurrent, HistoryRevisionDependencies } from '../packages/application/src/history-revision-contracts.ts';
+import type { HistoryRevisionCommand, HistoryRevisionCurrent, HistoryRevisionResolvedDraftLineSet, HistoryRevisionDependencies } from '../packages/application/src/history-revision-contracts.ts';
 import { historyActor as actor } from './support/imported-history-query-fixtures.ts';
 
 const id = (n: number) => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
@@ -167,4 +167,54 @@ test('T16 indexed planner retains duplicate baseline identity and foreign settle
   const duplicateSettlements = current(); (duplicateSettlements as { settlements: HistoryRevisionCurrent['settlements'] }).settlements = [duplicateSettlements.settlements[0]!, { ...duplicateSettlements.settlements[0]!, amount: '1.00' }];
   assert.throws(() => plan(duplicateSettlements), { code: 'HISTORY_REVISION_INVALID' });
   assert.throws(() => plan(current(), { ...command(), settlements: [{ settlementId: id(9999), amount: '20.00' }] }), { code: 'HISTORY_REVISION_FOREIGN_ROW' });
+});
+
+const draftTransfer = (): HistoryRevisionCurrent => ({...current('transfers'),sourceStatus:'DRAFT',baselineEffect:'EXCLUDED_NOT_EFFECTIVE',note:null});
+const setCommand = (lineSet: NonNullable<HistoryRevisionCommand['lineSet']>): HistoryRevisionCommand => ({...command('transfers'),lines:[],lineSet});
+function nativeFacts(revisionId=id(99)): HistoryRevisionResolvedDraftLineSet {
+  const origin={kind:'REVISION' as const,createdRevisionId:revisionId,identity:{productId:id(201),colorId:id(202),fitId:id(203),sizeId:id(204)},groupId:id(205),snapshot:{productCodeSnapshot:'原生款号',productNameSnapshot:'本次新增品名',colorNameSnapshot:'红',fitNameSnapshot:'A',sizeNameSnapshot:'S',barcodeSnapshot:null}};
+  return {lines:[{lineId:id(101),skuId:id(102),quantity:'2',origin}],nativeGroups:[{revisionId,groupId:id(205),name:'完整当前尺码组',sizes:[{sizeId:id(204),name:'S',displayOrder:0},{sizeId:id(206),name:'M',displayOrder:1}]}]};
+}
+test('draft transfer note preserves omission, explicit null/empty and legacy long notes without tightening numeric edits',()=>{
+  const c={...draftTransfer(),note:'旧'.repeat(10001)};
+  assert.equal(plan(c,command('transfers')).after.note,c.note);
+  for(const note of [null,'','新'.repeat(10000)])assert.equal(plan(c,{...command('transfers'),lines:[],header:{note}}).after.note,note);
+  assert.throws(()=>parseHistoryRevisionCommand({...command('transfers'),lines:[],header:{note:'新'.repeat(10001)}}));
+  const oldSigned={...c,lines:[{lineId:id(6),skuId:id(7),quantity:'-4'}]};
+  assert.equal(plan(oldSigned,{...command('transfers'),lines:[{lineId:id(6),quantity:'-5'}]}).after.lines[0]!.quantity,'-5');
+  for(const status of ['APPROVED','VOID'] as const)assert.throws(()=>plan({...current('transfers'),sourceStatus:status,baselineEffect:status==='APPROVED'?'INCLUDED_APPROVED':'EXCLUDED_NOT_EFFECTIVE'},{...command('transfers'),lines:[],header:{note:'x'}}));
+});
+test('draft complete lineSet parses exact bounded positive lines and keeps legacy 10000 signed patches',()=>{
+  const valid=setCommand([{lineId:null,skuId:id(102),quantity:'9223372036854775807'}]);assert.deepEqual(parseHistoryRevisionCommand(valid),valid);
+  for(const lineSet of [null,[],Array(201).fill({lineId:null,skuId:id(102),quantity:'1'}),...[ '0','-1','+1','01','1.0','1e2','9223372036854775808'].map(quantity=>[{lineId:null,skuId:id(102),quantity}])])assert.throws(()=>parseHistoryRevisionCommand({...valid,lineSet}));
+  assert.throws(()=>parseHistoryRevisionCommand({...valid,lines:[{lineId:id(6),quantity:'1'}]}));
+  assert.throws(()=>parseHistoryRevisionCommand({...valid,kind:'sales'}));
+  const many=Array.from({length:10000},(_,i)=>({lineId:id(i+500),quantity:'-1'}));assert.equal(parseHistoryRevisionCommand({...command('transfers'),lines:many}).lines.length,10000);
+});
+test('draft lineSet uses only store-resolved identities and preserves repeated SKU lines as independent ordered IDs',()=>{
+  const facts=nativeFacts(),origin=facts.lines[0]!.origin;
+  const resolved={...facts,lines:[{lineId:id(6),skuId:id(7),quantity:'3',origin:{kind:'SOURCE' as const,sourceLineId:id(6)}},facts.lines[0]!,{...facts.lines[0]!,lineId:id(103),origin}]};
+  const input=setCommand([{lineId:id(6),skuId:id(7),quantity:'3'},{lineId:null,skuId:id(102),quantity:'2'},{lineId:null,skuId:id(102),quantity:'2'}]);
+  assert.throws(()=>planHistoryRevision(draftTransfer(),input,id(99)),{code:'HISTORY_REVISION_RESOLVED_LINE_SET_REQUIRED'});
+  const result=planHistoryRevision(draftTransfer(),input,id(99),resolved);
+  assert.deepEqual(result.after.lines.map(l=>l.lineId),[id(6),id(101),id(103)]);assert.equal(result.after.nativeGroups![0]!.sizes.length,2);assert.deepEqual(result.effects,[]);assert.equal(result.after.draftLineSetVersion,1);
+  const next=planHistoryRevision(result.after,{...command('transfers'),expectedVersion:2,lines:[{lineId:id(101),quantity:'4'}]},id(100));assert.deepEqual(next.after.lines[1]!.origin,origin);assert.deepEqual(next.after.nativeGroups,result.after.nativeGroups);
+  assert.throws(()=>planHistoryRevision(result.after,{...command('transfers'),expectedVersion:2,lines:[{lineId:id(101),quantity:'-1'}]},id(100)));
+});
+test('draft complete set removes/replaces without mutating source, rejects foreign and reused current IDs',()=>{
+  const before=draftTransfer(),unchanged=structuredClone(before),facts=nativeFacts();
+  const input=setCommand([{lineId:id(6),skuId:id(102),quantity:'2'}]);
+  const p=planHistoryRevision(before,input,id(99),facts);assert.deepEqual(before,unchanged);assert.deepEqual(p.after.lines.map(l=>l.lineId),[id(101)]);assert.equal(p.effects.length,0);
+  assert.throws(()=>planHistoryRevision(before,setCommand([{lineId:id(999),skuId:id(102),quantity:'2'}]),id(99),facts),{code:'HISTORY_REVISION_FOREIGN_ROW'});
+  assert.throws(()=>planHistoryRevision(before,input,id(99),{...facts,lines:[{...facts.lines[0]!,lineId:id(6)}]}));
+  assert.throws(()=>planHistoryRevision({...before,sourceStatus:'VOID'},input,id(99),facts));
+  assert.throws(()=>planHistoryRevision(before,input,id(99),{...facts,nativeGroups:[]}));
+  assert.throws(()=>planHistoryRevision({...before,businessDate:null},input,id(99),facts),{code:'HISTORY_REVISION_BUSINESS_DATE_UNKNOWN'});
+  const nextFacts={lines:[p.after.lines[0]!],nativeGroups:p.after.nativeGroups!} as HistoryRevisionResolvedDraftLineSet;
+  const retained=planHistoryRevision(p.after,{...setCommand([{lineId:id(101),skuId:id(102),quantity:'2'}]),expectedVersion:2,header:{note:'只改备注'}},id(100),nextFacts);
+  assert.deepEqual(retained.after.lines[0]!.origin,p.after.lines[0]!.origin);
+  const forged=structuredClone(nextFacts);if(forged.lines[0]!.origin.kind!=='REVISION')throw Error('origin');
+  (forged.lines[0]!.origin.snapshot as {productNameSnapshot:string}).productNameSnapshot='当前改名不能回写';
+  assert.throws(()=>planHistoryRevision(p.after,{...setCommand([{lineId:id(101),skuId:id(102),quantity:'2'}]),expectedVersion:2,header:{note:'x'}},id(100),forged));
+  assert.throws(()=>planHistoryRevision(p.after,{...setCommand([{lineId:id(6),skuId:id(102),quantity:'2'}]),expectedVersion:2},id(100),nextFacts),{code:'HISTORY_REVISION_FOREIGN_ROW'});
 });

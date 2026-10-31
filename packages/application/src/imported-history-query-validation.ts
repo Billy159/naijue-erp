@@ -3,7 +3,7 @@ import { entityId } from '../../domain/src/values.ts';
 import { isExactHistoryMoney, isHistoryQuantity } from './history-storage-contract.ts';
 import type { ActorContext } from './ports.ts';
 import { IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS, importedHistoryPageSizes } from './imported-history-query-ports.ts';
-import type { ImportedHistoryDetail, ImportedHistoryDetailQuery, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryLineCatalog, ImportedHistoryList, ImportedHistoryListQuery, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReadIntent, ImportedHistorySalesLine, ImportedHistoryScope, ImportedHistorySettlement } from './imported-history-query-ports.ts';
+import type { ImportedHistoryDetail, ImportedHistoryDetailQuery, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryLineCatalog, ImportedHistoryLineCatalogV1, ImportedHistoryLineCatalogV2, ImportedHistoryList, ImportedHistoryListQuery, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReadIntent, ImportedHistorySalesLine, ImportedHistoryScope, ImportedHistorySettlement } from './imported-history-query-ports.ts';
 
 type Reject = () => never;
 export function invalidImportedHistoryQuery(): never { throw new DomainError('IMPORTED_HISTORY_INVALID_QUERY', 'Invalid historical query'); }
@@ -176,7 +176,7 @@ export function validateImportedHistoryList(value: unknown, intent: Extract<Impo
   }
   return Object.freeze({ dataset: 'HISTORY', kind: intent.kind, documents });
 }
-function lineCatalog(value: unknown, lines: readonly ImportedHistoryLine[]): ImportedHistoryLineCatalog {
+function lineCatalogV1(value: unknown, lines: readonly ImportedHistoryLine[]): ImportedHistoryLineCatalogV1 {
   const r = bag(value, ['basis', 'items', 'groups'], invalidResponse);
   if (r.basis !== 'PUBLISHED_SOURCE_SKU_IDENTITY_V1') invalidResponse();
   const groups = dense(r.groups, lines.length, invalidResponse).map(value => {
@@ -216,6 +216,39 @@ function lineCatalog(value: unknown, lines: readonly ImportedHistoryLine[]): Imp
   if (items.length !== lines.length || usedGroups.size !== groups.length) invalidResponse();
   return Object.freeze({ basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1', items: Object.freeze(items), groups: Object.freeze(groups) });
 }
+function lineCatalog(value: unknown, lines: readonly ImportedHistoryLine[]): ImportedHistoryLineCatalog {
+  if (Object.getOwnPropertyDescriptor(value ?? {}, 'basis')?.value !== 'HISTORY_EFFECTIVE_SKU_IDENTITY_V2') return lineCatalogV1(value, lines);
+  const r = bag(value, ['basis','items','groups','currentGroups'], invalidResponse);
+  const raw = dense(r.items, lines.length, invalidResponse).map(v => bag(v,['lineId','skuId','identity','sourceGroup','origin','currentGroup'],invalidResponse));
+  const base = lineCatalogV1({basis:'PUBLISHED_SOURCE_SKU_IDENTITY_V1',items:raw.map(({origin:_o,currentGroup:_g,...item})=>item),groups:r.groups},lines);
+  const groups = dense(r.currentGroups, lines.length, invalidResponse).map(v => {
+    const g = bag(v,['revisionId','groupId','name','sizes'],invalidResponse), revisionId=id(g.revisionId,invalidResponse), groupId=id(g.groupId,invalidResponse);
+    const sizes=dense(g.sizes,IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS,invalidResponse).map(v=>{
+      const z=bag(v,['sizeId','name','displayOrder'],invalidResponse);if(!Number.isSafeInteger(z.displayOrder))invalidResponse();
+      return {sizeId:id(z.sizeId,invalidResponse),name:text(z.name,invalidResponse),displayOrder:z.displayOrder as number};
+    });
+    if(!sizes.length||new Set(sizes.map(z=>z.sizeId)).size!==sizes.length)invalidResponse();
+    for(let i=1;i<sizes.length;i++)if(sizes[i-1]!.displayOrder>sizes[i]!.displayOrder||sizes[i-1]!.displayOrder===sizes[i]!.displayOrder&&sizes[i-1]!.sizeId>=sizes[i]!.sizeId)invalidResponse();
+    return {revisionId,groupId,name:text(g.name,invalidResponse),sizes};
+  });
+  const byGroup=new Map(groups.map(g=>[g.revisionId+':'+g.groupId,g]));if(byGroup.size!==groups.length)invalidResponse();
+  for(let i=1;i<groups.length;i++){const a=groups[i-1]!,b=groups[i]!;if(!(a.revisionId<b.revisionId||a.revisionId===b.revisionId&&a.groupId<b.groupId))invalidResponse();}
+  const used=new Set<string>();
+  const items:ImportedHistoryLineCatalogV2['items'][number][]=raw.map((r,index)=>{
+    const item=base.items[index]!,kind=Object.getOwnPropertyDescriptor(r.origin??{},'kind')?.value;
+    if(kind==='SOURCE'){
+      const o=bag(r.origin,['kind','sourceLineId'],invalidResponse),g=bag(r.currentGroup,['state'],invalidResponse);
+      if(g.state!=='UNKNOWN'||o.sourceLineId!==item.lineId)invalidResponse();
+      return {...item,origin:{kind:'SOURCE',sourceLineId:id(o.sourceLineId,invalidResponse)},currentGroup:{state:'UNKNOWN'}};
+    }
+    const o=bag(r.origin,['kind','createdRevisionId'],invalidResponse),g=bag(r.currentGroup,['state','revisionId','groupId'],invalidResponse);
+    const revisionId=id(o.createdRevisionId,invalidResponse),groupId=id(g.groupId,invalidResponse),key=revisionId+':'+groupId,group=byGroup.get(key);
+    if(o.kind!=='REVISION'||g.state!=='BOUND'||g.revisionId!==revisionId||item.sourceGroup.state!=='UNKNOWN'||item.identity.state!=='BOUND'||!group||!group.sizes.some(z=>item.identity.state==='BOUND'&&z.sizeId===item.identity.sizeId))invalidResponse();
+    used.add(key);return {...item,origin:{kind:'REVISION',createdRevisionId:revisionId},currentGroup:{state:'BOUND',revisionId,groupId}};
+  });
+  if(used.size!==groups.length)invalidResponse();
+  return {basis:'HISTORY_EFFECTIVE_SKU_IDENTITY_V2',items,groups:base.groups,currentGroups:groups};
+}
 export function validateImportedHistoryDetail(value: unknown, intent: Extract<ImportedHistoryReadIntent, { operation: 'detail' }>, grant: ImportedHistoryReadGrant): ImportedHistoryDetail {
   const hasCatalog = value !== null && typeof value === 'object' && Object.hasOwn(value, 'lineCatalog');
   const r = bag(value, ['dataset', 'kind', 'document', 'lines', 'settlements', ...(hasCatalog ? ['lineCatalog'] : [])], invalidResponse);
@@ -226,5 +259,6 @@ export function validateImportedHistoryDetail(value: unknown, intent: Extract<Im
   const settlements = page(r.settlements, q.settlementPage, q.settlementPageSize, validateImportedHistorySettlement, v => v.id);
   for (const values of [lines.items, settlements.items]) for (let i = 1; i < values.length; i++) if (values[i - 1]!.lineNo >= values[i]!.lineNo) invalidResponse();
   if (document === null && (lines.total !== '0' || settlements.total !== '0') || intent.kind === 'transfers' && settlements.total !== '0') invalidResponse();
+  if (hasCatalog && Object.getOwnPropertyDescriptor(r.lineCatalog ?? {},'basis')?.value === 'HISTORY_EFFECTIVE_SKU_IDENTITY_V2' && (intent.kind !== 'transfers' || document?.sourceStatus !== 'DRAFT')) invalidResponse();
   return Object.freeze({ dataset: 'HISTORY', kind: intent.kind, document, lines, settlements, ...(hasCatalog ? { lineCatalog: lineCatalog(r.lineCatalog, lines.items) } : {}) });
 }

@@ -1,3 +1,9 @@
+## 2026-11-01：已批准历史未审核调拨补充，D3 八叶交付
+
+用户已明确确认备注与完整明细集合的源码及写合同修订。D3 八叶交付已逐叶核对 SHA/Blob，租约交回；D1 原事务/四函数后继和 F1 正常历史入口仍在原文件范围实施。复用 D3 原旧测试证据，只采用本次新增定向结果，不合称一次全量测试通过。新格式保留来源与独立行身份、重复 SKU 行和完整所属组；旧符号数量及旧长备注兼容不收紧。
+
+源码交付不等于联合验收、实际 PostgreSQL、页面或正式发布通过。当前可浏览版本仍为固定60（526ca75e），不包含在途历史编辑。本次批准不授权实际数据库变更；QA178 新窗口03及新 Demo 对照登录仍按原准确等待条件处理。下一步收 D1/F1 固定叶，接精确函数指纹和能力合同，再由原 QB/T45/QF只验相关增量。
+
 ## Latest user: existing unreviewed sales/transfer editable parity; Dot1900 review
 
 User requires existing DRAFT sales and transfer editable business fields to match respective new-entry form, without changing number, true creation identity/source/audit/version or permissions. OriginalF1 current read-only check: sales existing flagtrue and same SalesProposalForm; transfer-existing flagfalse in fixed50, responsible capability absent. Existing original factories/HTTP preparation/commands/datednote save-readback narrow synthetic checks pass, but complete field UI/PG/historical controlled revision not verified. OriginalF1 now owns exact existing-edit fixture/browser package; C will pair configuration only with actual supported candidate readers, not simply enable fake controls.

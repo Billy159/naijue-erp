@@ -94,12 +94,22 @@ export const IMPORTED_HISTORY_CATALOG_MAX_GROUP_MEMBERS = 1000;
 export type ImportedHistoryLineIdentity = { readonly state: 'UNKNOWN' }
   | { readonly state: 'BOUND'; readonly productId: string; readonly colorId: string; readonly fitId: string; readonly sizeId: string };
 export type ImportedHistorySourceGroup = { readonly state: 'UNKNOWN' } | { readonly state: 'BOUND'; readonly groupId: string };
-export interface ImportedHistoryLineCatalog {
+export interface ImportedHistoryLineCatalogV1 {
   readonly basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1';
   readonly items: readonly { readonly lineId: string; readonly skuId: string; readonly identity: ImportedHistoryLineIdentity; readonly sourceGroup: ImportedHistorySourceGroup }[];
   readonly groups: readonly { readonly groupId: string; readonly name: string;
     readonly sizes: readonly { readonly sizeId: string; readonly name: string; readonly displayOrder: number }[] }[];
 }
+export interface ImportedHistoryLineCatalogV2 {
+  readonly basis: 'HISTORY_EFFECTIVE_SKU_IDENTITY_V2';
+  readonly items: readonly (ImportedHistoryLineCatalogV1['items'][number] & {
+    readonly origin: { readonly kind: 'SOURCE'; readonly sourceLineId: string } | { readonly kind: 'REVISION'; readonly createdRevisionId: string };
+    readonly currentGroup: { readonly state: 'UNKNOWN' } | { readonly state: 'BOUND'; readonly revisionId: string; readonly groupId: string };
+  })[];
+  readonly groups: ImportedHistoryLineCatalogV1['groups'];
+  readonly currentGroups: readonly (ImportedHistoryLineCatalogV1['groups'][number] & { readonly revisionId: string })[];
+}
+export type ImportedHistoryLineCatalog = ImportedHistoryLineCatalogV1 | ImportedHistoryLineCatalogV2;
 export interface ImportedHistoryDetail {
   readonly dataset: 'HISTORY'; readonly kind: ImportedHistoryKind; readonly document: ImportedHistoryHeader | null;
   readonly lines: ImportedHistoryPage<ImportedHistoryLine | ImportedHistorySalesLine>;

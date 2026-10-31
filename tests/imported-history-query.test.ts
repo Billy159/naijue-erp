@@ -10,7 +10,7 @@ import { NATIVE_IMPORT_ACCOUNTING_SCHEMA19_GUARD_CAPABILITY } from '../adapters/
 import type { PgSalesClient, PgSalesPool } from '../adapters/postgres/src/sales-unit-of-work.ts';
 import type { NativeRuntime26Capability } from '../packages/application/src/native-import-schema-contract.ts';
 import { createImportedHistoryQueryHttpPlugin } from '../apps/api/src/imported-history-query-http.ts';
-import { historyActor as actor, historyId as id, historyListQuery as listQuery, historyDetailQuery as detailQuery, historyGrant as grant, historyHeader as header, historyHeaderRow as headerRow } from './support/imported-history-query-fixtures.ts';
+import { historyDraftLineSetFacts, historyActor as actor, historyId as id, historyListQuery as listQuery, historyDetailQuery as detailQuery, historyGrant as grant, historyHeader as header, historyHeaderRow as headerRow } from './support/imported-history-query-fixtures.ts';
 const signal = () => new AbortController().signal;
 function intent(kind: ImportedHistoryKind = 'sales', detail = false): ImportedHistoryReadIntent { return detail ? { kind, operation: 'detail', parameters: detailQuery() } : { kind, operation: 'list', parameters: listQuery() }; }
 function scoped(i = intent()): ImportedHistoryScopedRead { return { actor, intent: i, grant: grant(i), signal: signal() }; }
@@ -511,4 +511,50 @@ test('HISTORY lineCatalog: public validator preserves old absent providers and r
     { ...catalog, groups: [...catalog.groups, { groupId: id(99), name: 'unrelated', sizes: [{ sizeId: id(100), name: 'X', displayOrder: 0 }] }] }
   ];
   for (const lineCatalog of malformed) assert.throws(() => validateImportedHistoryDetail({ ...detail, lineCatalog }, i, p.read.grant), { code: 'IMPORTED_HISTORY_INVALID_RESPONSE' });
+});
+
+function draftSetProtocol(mutate?:(facts:ReturnType<typeof historyDraftLineSetFacts>)=>void) {
+ const facts=historyDraftLineSetFacts();mutate?.(facts);
+ const p=protocol({final:true,kind:'transfers',schema:Array.from({length:26},(_,i)=>i+1),transform(tag,sql,rows){
+   if(tag==='imported-history:detail') {assert.match(sql,/er.after_facts AS draft_facts/);assert.match(sql,/CASE WHEN er.after_facts \? 'note'/);return rows.map(r=>({...r,source_status:'DRAFT',version:3,business_date:'2026-11-01',effective_valid:true,note:facts.note,line_count:1,settlement_count:0,draft_facts:facts}));}
+   if(tag==='imported-history:line-count')return [{total:'1'}];
+   if(tag==='imported-history:line-catalog')return facts.lines.filter(l=>(l.origin as {kind:string}).kind==='SOURCE').map(l=>({line_id:l.lineId,sku_id:l.skuId,line_source_id:null}));
+   if(tag==='imported-history:draft-source-lines')return [{id:id(300),line_no:7,sku_id:id(102),quantity:'-2',product_code_snapshot:'原来源编号',product_name_snapshot:'原来源品名',color_name_snapshot:null,fit_name_snapshot:null,size_name_snapshot:null,barcode_snapshot:null}];
+   return rows;
+ }});
+ const reader=new PostgresImportedHistoryQueryReader(p.pool,{runtime26:effectiveRuntime(p)});
+ const read=(linePage=1)=>scoped({kind:'transfers',operation:'detail',parameters:{...detailQuery(),linePage}});
+ return {...p,facts,run:(page=1)=>reader.readDetail(read(page)),read};
+}
+test('draft lineSet detail pages the effective array and V2 identity from one revision; old source count stays original',async()=>{
+ const p=draftSetProtocol(),first=await p.run(),second=await p.run(2),beyond=await p.run(3);
+ assert.equal(first.lines.total,'23');assert.equal(first.lines.items.length,20);assert.equal(second.lines.items.length,3);assert.equal(second.lines.items[0]!.lineNo,21);assert.equal(second.lines.items[0]!.id,id(320));assert.equal(beyond.lines.total,'23');assert.deepEqual(beyond.lines.items,[]);
+ assert.equal(new Set(first.lines.items.map(l=>l.skuId)).size,1);assert.equal(new Set(first.lines.items.map(l=>l.id)).size,20);
+ assert.equal(first.lineCatalog!.basis,'HISTORY_EFFECTIVE_SKU_IDENTITY_V2');
+ if(first.lineCatalog!.basis!=='HISTORY_EFFECTIVE_SKU_IDENTITY_V2'||beyond.lineCatalog!.basis!=='HISTORY_EFFECTIVE_SKU_IDENTITY_V2')throw Error('V2 required');
+ assert.equal(first.lineCatalog!.currentGroups.length,2);assert.equal(first.lineCatalog!.currentGroups[0]!.sizes.length,2);assert.equal(first.lineCatalog!.groups.length,0);assert.deepEqual(beyond.lineCatalog!.currentGroups,[]);
+ assert.equal(first.lineCatalog!.items[0]!.sourceGroup.state,'UNKNOWN');assert.equal(first.lineCatalog!.items[0]!.origin.kind,'REVISION');assert.deepEqual(first.lineCatalog!.items.map(i=>i.lineId),first.lines.items.map(l=>l.id));
+ assert.ok(!p.calls.some(c=>c.tag==='imported-history:line-page'));assert.ok(p.calls.some(c=>c.tag==='imported-history:line-count'));assert.equal(p.calls.filter(c=>c.tag==='COMMIT').length,3);
+});
+test('draft V2 rejects incomplete groups duplicate line IDs and wrong page identity; old V1 never gains currentGroups',async()=>{
+ for(const mutate of [(f:ReturnType<typeof historyDraftLineSetFacts>)=>{f.lines[1]!.lineId=f.lines[0]!.lineId;},(f:ReturnType<typeof historyDraftLineSetFacts>)=>{f.nativeGroups=[];},(f:ReturnType<typeof historyDraftLineSetFacts>)=>{f.lines[0]!.quantity='0';}]){
+  const p=draftSetProtocol(mutate);await assert.rejects(p.run());assert.equal(p.calls.at(-1)!.tag,'ROLLBACK');
+ }
+ const p=draftSetProtocol(),r=await p.run();assert.equal(r.lineCatalog!.basis,'HISTORY_EFFECTIVE_SKU_IDENTITY_V2');
+ const i=p.read().intent;if(i.operation!=='detail')throw Error('detail');
+ const bad=structuredClone(r);(bad.lineCatalog!.items[0] as {lineId:string}).lineId=id(999);assert.throws(()=>validateImportedHistoryDetail(bad,i,grant(i)));
+ if(r.lineCatalog!.basis!=='HISTORY_EFFECTIVE_SKU_IDENTITY_V2')throw Error('V2');
+ const badGroup=structuredClone(r);if(badGroup.lineCatalog!.basis!=='HISTORY_EFFECTIVE_SKU_IDENTITY_V2')throw Error('V2');
+ (badGroup.lineCatalog!.currentGroups[0] as {revisionId:string}).revisionId=id(999);assert.throws(()=>validateImportedHistoryDetail(badGroup,i,grant(i)));
+ const badState={...r,document:{...r.document!,sourceStatus:'APPROVED'}};assert.throws(()=>validateImportedHistoryDetail(badState,i,grant(i)));
+ const original=await catalogFixture().run();assert.equal(original.lineCatalog!.basis,'PUBLISHED_SOURCE_SKU_IDENTITY_V1');assert.equal(Object.hasOwn(original.lineCatalog!,'currentGroups'),false);
+});
+
+test('draft SOURCE lines keep original snapshots while revision snapshots never become original source',async()=>{
+ const p=draftSetProtocol(f=>{Object.assign(f.lines[0]!,{origin:{kind:'SOURCE',sourceLineId:id(300)}});});
+ const r=await p.run();assert.equal(r.lines.items[0]!.productNameSnapshot,'原来源品名');assert.equal(r.lines.items[0]!.lineNo,1);assert.equal(r.lines.items[0]!.quantity,'1');
+ assert.equal(r.lines.items[1]!.productNameSnapshot,'本次修订新增98');
+ assert.equal(r.lineCatalog!.items[0]!.identity.state,'UNKNOWN');if(r.lineCatalog!.basis!=='HISTORY_EFFECTIVE_SKU_IDENTITY_V2')throw Error('V2');
+ assert.equal(r.lineCatalog!.items[0]!.origin.kind,'SOURCE');assert.equal(r.lineCatalog!.items[0]!.currentGroup.state,'UNKNOWN');assert.equal(r.lineCatalog!.items[1]!.origin.kind,'REVISION');
+ assert.equal(p.calls.filter(c=>c.tag==='imported-history:draft-source-lines').length,1);
 });

@@ -1,5 +1,7 @@
+import { checkedHistoryRevisionDraftLineSet } from '../../../packages/application/src/history-revision-service.ts';
+import type { HistoryRevisionResolvedDraftLineSet } from '../../../packages/application/src/history-revision-contracts.ts';
 import { authorizedEffectiveDocumentIdentity, assertEffectiveDocumentPage } from '../../../packages/application/src/authorized-effective-documents.ts';
-import type { ImportedHistoryDetail, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryLineCatalog, ImportedHistoryList, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReader, ImportedHistorySalesLine, ImportedHistoryScopedRead, ImportedHistorySettlement } from '../../../packages/application/src/imported-history-query-ports.ts';
+import type { ImportedHistoryDetail, ImportedHistoryHeader, ImportedHistoryKind, ImportedHistoryLine, ImportedHistoryLineCatalog, ImportedHistoryLineCatalogV1, ImportedHistoryLineCatalogV2, ImportedHistoryList, ImportedHistoryPage, ImportedHistoryPageSize, ImportedHistoryPerson, ImportedHistoryReadGrant, ImportedHistoryReader, ImportedHistorySalesLine, ImportedHistoryScopedRead, ImportedHistorySettlement } from '../../../packages/application/src/imported-history-query-ports.ts';
 import { activeImportedHistoryRead, checkedImportedHistoryActor, checkedImportedHistoryGrant, checkedImportedHistoryIntent, validateImportedHistoryDetail, validateImportedHistoryHeader, validateImportedHistoryLine, validateImportedHistoryList, validateImportedHistorySettlement } from '../../../packages/application/src/imported-history-query-validation.ts';
 import { assertHistoryPublicationSchema19 } from '../../../packages/application/src/history-typed-publication.ts';
 import { COMPLETE_SCOPE_DECISION } from '../../../packages/application/src/inventory-cutoff-import.ts';
@@ -67,6 +69,7 @@ function headerValidity(kind: ImportedHistoryKind): string {
      AND er.after_facts->>'kind'='${kind}' AND er.after_facts->>'documentId'=h.id::text
      AND er.after_facts->>'importBatchId'=h.batch_id::text AND er.after_facts->>'version'=e.version::text
      AND er.after_facts->>'sourceStatus'=h.source_status
+     AND (NOT (er.after_facts ? 'draftLineSetVersion') OR (h.source_status='DRAFT' AND er.after_facts->>'baselineEffect'='EXCLUDED_NOT_EFFECTIVE' AND er.after_facts->'draftLineSetVersion'='1'::jsonb))
      AND (${responsible} IS NULL OR responsible_staff.id IS NOT NULL)
      AND (h.source_status='DRAFT' OR (${responsible} IS NULL
        AND ${headColumn('business_date', true)} IS NOT DISTINCT FROM h.business_date
@@ -76,7 +79,7 @@ function headerColumns(kind: ImportedHistoryKind, effective = false): string {
   const amounts = ['gross_amount', 'order_discount', 'net_due'].map(name => effective ? `coalesce(e.${name},h.${name})::text ${name}` : `h.${name}::text`).join(',');
   const responsible = effective ? `(er.after_facts->>'responsibleStaffId')::uuid` : 'NULL::uuid';
   const warehouseColumns = ['from_warehouse_id', 'to_warehouse_id'].map(column => `${headColumn(column, effective)} AS ${column}`).join(',');
-  return `h.id,h.batch_id,${effective ? 'coalesce(e.version,h.version) AS version' : 'h.version'},h.number,to_char(${headColumn('business_date', effective)},'YYYY-MM-DD') business_date,h.source_status,h.note,
+  return `h.id,h.batch_id,${effective ? 'coalesce(e.version,h.version) AS version' : 'h.version'},h.number,to_char(${headColumn('business_date', effective)},'YYYY-MM-DD') business_date,h.source_status,${effective && kind === 'transfers' ? `(CASE WHEN er.after_facts ? 'note' THEN er.after_facts->>'note' ELSE h.note END) AS note` : 'h.note'},
    ${responsible} AS responsible_staff_id,${effective ? 'responsible_staff.name' : 'NULL::text'} AS responsible_name,
    h.created_hall_id,h.created_hall_provenance,
    (h.created_by_source_key IS NOT NULL) creator_known,(h.approved_by_source_key IS NOT NULL) approver_known,
@@ -231,7 +234,7 @@ function catalogCandidate(row: CatalogRow, line: ImportedHistoryLine): CatalogCa
 }
 /** Same authorized detail snapshot, current page only. Missing proof stays
  * UNKNOWN; enabled/current names/current product group never rebind history. */
-async function readLineCatalog(query: Query, kind: ImportedHistoryKind, document: ImportedHistoryHeader, lines: readonly ImportedHistoryLine[]): Promise<ImportedHistoryLineCatalog> {
+async function readLineCatalog(query: Query, kind: ImportedHistoryKind, document: ImportedHistoryHeader, lines: readonly ImportedHistoryLine[]): Promise<ImportedHistoryLineCatalogV1> {
   if (lines.length === 0) return { basis: 'PUBLISHED_SOURCE_SKU_IDENTITY_V1', items: [], groups: [] };
   const rows = (await query(`/* imported-history:line-catalog */ SELECT l.id line_id,l.sku_id,
     ls.id line_source_id,ls.entity_type line_source_entity,'${kind === 'sales' ? 'SALES_LINE' : 'TRANSFER_LINE'}'::text expected_line_entity,
@@ -412,6 +415,42 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
       return resultPage;
     });
   }
+  private async readDraftDetail(query: Query, raw: unknown, document: ImportedHistoryHeader,
+    intent: Extract<ImportedHistoryScopedRead['intent'],{operation:'detail'}>, grant: ImportedHistoryReadGrant): Promise<ImportedHistoryDetail> {
+    const facts=catalogObject(raw);catalogMust(facts && facts.draftLineSetVersion===1 && document.kind==='transfers' && document.sourceStatus==='DRAFT'
+      && facts.baselineEffect==='EXCLUDED_NOT_EFFECTIVE' && facts.version===document.version && facts.documentId===document.documentId && facts.importBatchId===document.batchId);
+    catalogMust(Object.hasOwn(facts!,'note') && facts!.note === document.note);
+    catalogMust(Array.isArray(facts!.lines) && Array.isArray(facts!.nativeGroups));
+    const resolved={lines:facts!.lines,nativeGroups:facts!.nativeGroups} as unknown as HistoryRevisionResolvedDraftLineSet;
+    checkedHistoryRevisionDraftLineSet(resolved);
+    const sourceIds=resolved.lines.filter(l=>l.origin.kind==='SOURCE').map(l=>l.lineId);
+    const originalRows=sourceIds.length ? (await query(`/* imported-history:draft-source-lines */ SELECT id,line_no,sku_id,quantity::text,
+      product_code_snapshot,product_name_snapshot,color_name_snapshot,fit_name_snapshot,size_name_snapshot,barcode_snapshot
+      FROM naijue_erp.history_transfer_line WHERE batch_id=$1::uuid AND header_id=$2::uuid AND id=ANY($3::uuid[])`,[document.batchId,document.documentId,sourceIds])).rows : [];
+    catalogMust(originalRows.length===sourceIds.length && new Set(originalRows.map(r=>r.id)).size===sourceIds.length);
+    const all=resolved.lines.map((l,index):ImportedHistoryLine=>{
+      if(l.origin.kind==='SOURCE'){
+        const sourceLineId=l.origin.sourceLineId;const original=originalRows.find(r=>r.id===sourceLineId);catalogMust(original && original.sku_id===l.skuId);
+        return {...line(original!,'transfers'),id:l.lineId,lineNo:index+1,quantity:l.quantity};
+      }
+      return validateImportedHistoryLine({id:l.lineId,lineNo:index+1,skuId:l.skuId,quantity:l.quantity,...l.origin.snapshot},'transfers');
+    });
+    const q=intent.parameters,offset=(q.linePage-1)*q.linePageSize,items=all.slice(offset,offset+q.linePageSize);
+    const byId=new Map(resolved.lines.map(l=>[l.lineId,l]));
+    const sourceItems=items.filter(l=>byId.get(l.id)!.origin.kind==='SOURCE');
+    const sourceCatalog=await readLineCatalog(query,'transfers',document,sourceItems);
+    const currentGroups:ImportedHistoryLineCatalogV2['currentGroups'][number][]=[], used=new Set<string>();
+    const catalogItems:ImportedHistoryLineCatalogV2['items'][number][]=items.map(l=>{
+      const row=byId.get(l.id)!,origin=row.origin;
+      if(origin.kind==='SOURCE')return {...sourceCatalog.items.find(i=>i.lineId===l.id)!,origin:{kind:'SOURCE',sourceLineId:origin.sourceLineId},currentGroup:{state:'UNKNOWN'}};
+      const key=origin.createdRevisionId+':'+origin.groupId;
+      if(!used.has(key)){used.add(key);currentGroups.push(resolved.nativeGroups.find(g=>g.revisionId===origin.createdRevisionId&&g.groupId===origin.groupId)!);}
+      return {lineId:l.id,skuId:l.skuId,identity:{state:'BOUND',...origin.identity},sourceGroup:{state:'UNKNOWN'},origin:{kind:'REVISION',createdRevisionId:origin.createdRevisionId},currentGroup:{state:'BOUND',revisionId:origin.createdRevisionId,groupId:origin.groupId}};
+    });
+    currentGroups.sort((a,b)=>a.revisionId<b.revisionId?-1:a.revisionId>b.revisionId?1:a.groupId<b.groupId?-1:a.groupId>b.groupId?1:0);
+    return validateImportedHistoryDetail({dataset:'HISTORY',kind:'transfers',document,lines:page(q.linePage,q.linePageSize,String(all.length),items),
+      settlements:page(q.settlementPage,q.settlementPageSize,'0',[]),lineCatalog:{basis:'HISTORY_EFFECTIVE_SKU_IDENTITY_V2',items:catalogItems,groups:sourceCatalog.groups,currentGroups}},intent,grant);
+  }
   async readDetail(read: ImportedHistoryScopedRead): Promise<ImportedHistoryDetail> {
     const { intent, grant } = this.validate(read, 'detail'); if (intent.operation !== 'detail') throw Error('Historical detail required');
     return this.snapshot(read.signal, async query => {
@@ -420,12 +459,16 @@ export class PostgresImportedHistoryQueryReader implements ImportedHistoryReader
       const transferScope = grant.scope.kind === 'TRANSFER_HALL_IDS' ? importedHistoryTransferHallScopeSql(3, effective) : undefined;
       const scoped = transferScope ? ` AND ${transferScope}` : grant.scope.kind === 'HALL_IDS' ? ' AND h.hall_id=ANY($3::uuid[])' : '';
       if (grant.scope.kind !== 'ALL') values.push([...grant.scope.hallIds]);
-      const rows = (await query(`/* imported-history:detail */ SELECT ${headerColumns(intent.kind, effective)}${transferScope ? `,${transferScope} AS transfer_scope_valid` : ''},d.line_count,d.settlement_count FROM ${from(intent.kind, effective)} WHERE ${published} AND h.id=$2::uuid${scoped} LIMIT 2`, values)).rows;
+      const rows = (await query(`/* imported-history:detail */ SELECT ${headerColumns(intent.kind, effective)}${transferScope ? `,${transferScope} AS transfer_scope_valid` : ''},d.line_count,d.settlement_count${effective && intent.kind === 'transfers' ? ',er.after_facts AS draft_facts' : ''} FROM ${from(intent.kind, effective)} WHERE ${published} AND h.id=$2::uuid${scoped} LIMIT 2`, values)).rows;
       requireDomain(rows.length <= 1, 'INVALID_DATABASE_VALUE', 'Repeated historical target');
       if (!rows.length) return validateImportedHistoryDetail({ dataset: 'HISTORY', kind: intent.kind, document: null, lines: page(q.linePage, q.linePageSize, '0', []), settlements: page(q.settlementPage, q.settlementPageSize, '0', []) }, intent, grant);
       const r = rows[0]!, document = header(r, intent.kind, grant, effective), lineTable = lineTables[intent.kind];
       const lineCount = count((await query(`/* imported-history:line-count */ SELECT count(*)::text total FROM naijue_erp.${lineTable} WHERE batch_id=$1::uuid AND header_id=$2::uuid`, [document.batchId, document.documentId])).rows);
       requireDomain(Number.isSafeInteger(r.line_count) && lineCount === String(r.line_count), 'INVALID_DATABASE_VALUE', 'Historical document line closure differs');
+      if (effective && intent.kind === 'transfers' && r.draft_facts && Object.hasOwn(r.draft_facts as object,'draftLineSetVersion')) {
+        requireDomain(r.settlement_count === 0, 'INVALID_DATABASE_VALUE', 'Transfer settlement closure differs');
+        return this.readDraftDetail(query, r.draft_facts, document, intent, grant);
+      }
       const lineValues = [document.batchId, document.documentId, q.linePageSize, (q.linePage - 1) * q.linePageSize];
       const lineSql = effective ? `SELECT ${effectiveLineColumns(intent.kind, '$5::integer')}
         FROM naijue_erp.${lineTable} l ${lineEffectiveJoins(intent.kind)}

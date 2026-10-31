@@ -15,6 +15,7 @@ export interface HistoryRevisionHeaderChange {
   readonly fromWarehouseId?: string; readonly toWarehouseId?: string;
   /** Transfer responsibility only; explicit NULL clears it, omission preserves it. Never creator/audit actor. */
   readonly responsibleStaffId?: string | null;
+  readonly note?: string | null;
 }
 export interface HistoryRevisionCommand {
   readonly kind: ImportedHistoryKind; readonly documentId: string; readonly expectedVersion: number;
@@ -22,10 +23,31 @@ export interface HistoryRevisionCommand {
   readonly totals: HistoryRevisionTotals | null;
   readonly settlements: readonly { readonly settlementId: string; readonly amount: string }[];
   readonly header?: HistoryRevisionHeaderChange;
+  readonly lineSet?: readonly HistoryRevisionDraftLineInput[];
+}
+export interface HistoryRevisionDraftLineInput {
+  readonly lineId: string | null; readonly skuId: string; readonly quantity: string;
+}
+export interface HistoryRevisionNativeGroup {
+  readonly revisionId: string; readonly groupId: string; readonly name: string;
+  readonly sizes: readonly { readonly sizeId: string; readonly name: string; readonly displayOrder: number }[];
+}
+export type HistoryRevisionLineOrigin = { readonly kind: 'SOURCE'; readonly sourceLineId: string }
+  | { readonly kind: 'REVISION'; readonly createdRevisionId: string;
+      readonly identity: { readonly productId: string; readonly colorId: string; readonly fitId: string; readonly sizeId: string };
+      readonly groupId: string; readonly snapshot: {
+        readonly productCodeSnapshot: string; readonly productNameSnapshot: string; readonly colorNameSnapshot: string;
+        readonly fitNameSnapshot: string; readonly sizeNameSnapshot: string; readonly barcodeSnapshot: string | null;
+      } };
+/** Store-owned resolved identities/snapshots from the locked transaction. Never client data or a pure-plan allocator. */
+export interface HistoryRevisionResolvedDraftLineSet {
+  readonly lines: readonly (HistoryRevisionLine & { readonly origin: HistoryRevisionLineOrigin })[];
+  readonly nativeGroups: readonly HistoryRevisionNativeGroup[];
 }
 export interface HistoryRevisionLine {
   readonly lineId: string; readonly skuId: string; readonly quantity: string;
   readonly dealPrice?: string; readonly lineAmount?: string; readonly allocatedDiscount?: string | null;
+  readonly origin?: HistoryRevisionLineOrigin;
 }
 export interface HistoryRevisionSettlement { readonly settlementId: string; readonly direction: 'RECEIVE' | 'REFUND'; readonly amount: string }
 /** Trusted transaction readback. This proof must be read with the locked original/effective document.
@@ -40,6 +62,9 @@ export interface HistoryRevisionCurrent {
   readonly settlements: readonly HistoryRevisionSettlement[];
   /** Old numeric facts omit this key: unknown responsibility is NULL. */
   readonly responsibleStaffId?: string | null;
+  readonly note?: string | null;
+  readonly draftLineSetVersion?: 1;
+  readonly nativeGroups?: readonly HistoryRevisionNativeGroup[];
 }
 export interface HistoryRevisionEffect {
   readonly lineId: string; readonly warehouseId: string; readonly skuId: string;
