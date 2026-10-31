@@ -21183,9 +21183,19 @@
   },
   "r1UnifiedSyntheticHostComposition": {
     "owner": "D1",
-    "status": "EXACT_NINE_TEST_HOST_LEASE_GRANTED",
+    "status": "SOURCE_FIXED_BF59BAC7_QB_REVIEW_ACTIVE_CONFIG_PARSED",
     "scope": "Unify actual existing synthetic constructors/current facts and posting transaction seams; no fake independent balances; exact files in WRITE-OWNERSHIP",
-    "next": "D1 directed correctness checks then fixed source/T45 one integrated build/QF-QF2 consumers",
-    "notClaimed": "No real PG or production; source-ready not fully writable"
+    "next": "QB fixed9 incremental review; original T45 one combined candidate after accepted result; QF/QF2 scoped actual consumers, no whole-page/PG claim",
+    "notClaimed": "No real PG or production; source-ready not fully writable",
+    "source": "bf59bac78119097328de24ed615b03fc56cf75f6",
+    "report": "reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/UNIFIED-SERVICE-COMPOSITION-RESULT.json",
+    "reportSha256": "873b6c03b43be6355601246c57f51f42fa42a0204b1508ea8d0d2e1ad564e55c",
+    "checks": "D1 exact43/43, roottypes0, diffcheck; QB independent increment in progress",
+    "publicConfig": {
+      "path": "apps/web/demo-replica/tests/unified-service-public-config.json",
+      "bytes": 1489,
+      "sha256": "064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711",
+      "parser": "PASS original parser; common management origin; products/catalogue/FIT/media/stock/documents/payment ready synthetic profile; staff/account/store maintenance/history/fullinventory remain disabled"
+    }
   }
 }

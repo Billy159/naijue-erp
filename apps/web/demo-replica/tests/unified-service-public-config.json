@@ -1,0 +1,64 @@
+{
+  "kind": "naijue-erp-production-host",
+  "http": {
+    "origin": "https://synthetic-management.invalid",
+    "basePath": "/api"
+  },
+  "assets": {
+    "basePath": "/assets/smoke/"
+  },
+  "session": {
+    "verifyOnMount": true
+  },
+  "routes": {
+    "staffSettings": true,
+    "paymentSettings": true,
+    "inventory": false,
+    "sales": true,
+    "transfers": true,
+    "inventoryLedger": false,
+    "salesManualCreate": true,
+    "transferManualCreate": true,
+    "salesExistingEdit": true,
+    "transferExistingEdit": true,
+    "products": true,
+    "productCategories": true,
+    "barcodeSchemes": true,
+    "productFullPage": true,
+    "salesProductFullPage": true,
+    "transferProductFullPage": true,
+    "productStockOverview": true,
+    "parties": {
+      "readOnly": true
+    },
+    "maintenance": {
+      "products": true,
+      "categories": true,
+      "colors": true,
+      "fits": true,
+      "categoryOrderReady": false,
+      "staffSettings": false,
+      "paymentSettings": true,
+      "accountSettings": false,
+      "storeSettings": false
+    },
+    "productSettings": {
+      "colors": true,
+      "fits": true,
+      "groups": true,
+      "seasons": true,
+      "initialTab": "colors"
+    },
+    "storeSettings": {
+      "allowedTabs": [
+        "stores",
+        "warehouses"
+      ],
+      "initialTab": "stores",
+      "allowHallDirectoryRead": true
+    },
+    "documentResponsibleReady": true,
+    "accountSettings": false,
+    "productMediaReady": true
+  }
+}

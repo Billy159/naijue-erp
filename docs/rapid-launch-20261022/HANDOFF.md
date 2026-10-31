@@ -3503,3 +3503,7 @@ T45只读证实统一合成host缺同事实/库存事务接缝，原D1精确9测
 
 ### 候选54正常销货扫码新增与未审核编辑独立通过
 采用原QF01-R1-APP54-NORMAL-SALES-SCAN-55A7AFD9-01限定结论。固定app ebbd7d2e/test55a7afd9，D54不可变fixture，CHECK SHA756defbe34f4f1dcc6ddfffd18518f50978b90907716fafee02f171323bb8b9c。10条码响应、仅2原SAVE、新key无重放；新建v1再编辑v2，OUT4/IN-2、单价239元、应收已收478元，原单据/两lineID/snapshot/settlementID保持；错误恢复、超时迟到、关闭取消和pending禁保存通过。首次观察超时3.914秒为单次实值，不称精确3秒/P95。自有进程0；UNAVAILABLE、硬件、PG、生产、审核与整页仍未测。已过字段/分页/调拨/模型未重验。D1统一host接缝继续在途。
+
+
+### 统一合成宿主已固定，进入QB增量验收
+D1精确9叶固定bf59bac78119097328de24ed615b03fc56cf75f6，交付SHA873b6c03b43be6355601246c57f51f42fa42a0204b1508ea8d0d2e1ad564e55c，43/43与root类型检查通过。新唯一--unified-service保留旧profile，跨模块当前商品/SKU/条码、收款、员工目录及同库存事务；新商品无库存事实仍UNKNOWN/拒绝不符审核。QB只核此增量，不改源码。C新增原schema统一public配置，SHA064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711，原parser通过；完整inventory/ledger、staff/account/store维护和历史未就绪不提前开启。未构建/浏览器/真实PG/生产通过。
