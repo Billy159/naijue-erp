@@ -19841,7 +19841,7 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "Actual A0 started: original channel and public queue observed, no duplicate05 job; QA identity/slot/new-name read pending, no role/database changes",
+    "current": "A0 job276 actual readonly PASS; A1 private material preparation and minimal missing QA finite-exit wiring with originalT45; no database/role/ACL writes",
     "next": "Receive original T45 actual preflight/create/readback; C and QB process actual fixed evidence at independent gates",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
@@ -20102,7 +20102,7 @@
       "originalPublicRequestsChecked": 928,
       "same05ScriptSubmittedMatch": false,
       "historical219": "PUBLIC_RECEIPT_STARTING_UNIT_NOT_FOUND_INACTIVE_MAINPID0_OUTCOME_UNKNOWN_NOT_REPLAYED",
-      "newJobsSubmitted": 0,
+      "newJobsSubmitted": 1,
       "newRoleOrDatabaseChanges": 0,
       "evidence": [
         {
@@ -20120,7 +20120,31 @@
           "bytes": 435,
           "sha256": "809587a530b8b3f53fc0575377c95e18393fc9ee0c229e118fe0f233a5c3f858"
         }
-      ]
+      ],
+      "status": "JOB276_COMPLETED_EXIT0_READONLY",
+      "facts": {
+        "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/controller/rapid-launch-20261022/server-jobs/t45-preparation13-approved-a0-readonly-20261031-276/release-submission/release-receipts/t45-preparation13-approved-a0-readonly-20261031-276/approved-a0-facts.json",
+        "bytes": 3555,
+        "sha256": "066a45a01dfb5e1a6c97e8dc0b4c13c79bc81af9e277b13848bdd89d5a40cc03"
+      },
+      "systemIdentifier": "7701337335828107278",
+      "postmasterStart": "2026-10-27 13:22:19.696753+00",
+      "serverVersion": 170011,
+      "maxConnections": 16,
+      "superuserReserved": 3,
+      "reservedConnections": 0,
+      "observedClientBackends": 1,
+      "observedNewRoleSessions": 0,
+      "newDatabaseAndRoleNames": "ALL_ABSENT",
+      "freeBytes": 46846803968
+    },
+    "finiteExitController": {
+      "status": "ACTUAL_MISSING_MINIMAL_ORIGINAL_T45_WIRING_ASSIGNED",
+      "existingOtherTargetHelper": "NOT_REUSED_WRONG_TARGET",
+      "owner": "T45",
+      "scope": "Existing original control channel, fixed QA178/new objects only; source pins then QB affected review, actual arm before referencing05",
+      "sourceApprovalAndArmedEvidence": "No fabricated PASS/armed allowed",
+      "deadline": "Original T0/deadlines unchanged"
     }
   }
 }

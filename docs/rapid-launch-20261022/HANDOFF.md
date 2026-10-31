@@ -1,3 +1,7 @@
+## 2026-10-31 actual A0 job276 and finite-exit gap
+
+Original276 COMPLETED/exit0, metadata-only repeatable-read rollback. ExactQA178 identity/Unix/new2DB+3role absent confirmed; systemIdentifier7701337335828107278, PG170011,postmaster2026-10-27 13:22:19.696753+00; max16/superreserved3/reserved0, client1/newrole sessions0; free46846803968B. Facts file pin recorded inTASKS. This is not pool/slot admission or businessPASS. OriginalT45 found no actualQA178 armed finite-exit controller; other helper hardcodes wrongtarget. Minimal original-channel target-specific wiring assigned, retaining05guard and original deadline; no general control platform, no fictitious armed/PASS, no foreign cleanup. A1 private files preparation may continue; no role/DB/ACL writes at this receipt.
+
 ## 2026-10-31 actual isolated A0 began
 
 OriginalT45 actual leasedSSH/dispatcher READY;928 original publicrequest states read. No submitted match for05 scriptSHA. Historical219 public STARTING retains unknown result; real originalunit is not-found/inactive/dead/MainPID0, defaultResult success is not a completedreceipt. No replay/state rewrite. T0=14:02:50+08, actions end15:32:50, cleanup-only end15:47:50. QA178 identity/newnames/slots still being checked; no newjob/PG/role/credentials at this handoff. Three A0 evidence files captured in original ACTUAL-ISOLATED-EXECUTION-20261031-01; their current pins stored in TASKS.
