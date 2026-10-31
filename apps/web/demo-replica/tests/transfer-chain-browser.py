@@ -6,15 +6,16 @@ import argparse, json, mimetypes, subprocess, sys, time, re
 from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
-p=argparse.ArgumentParser();p.add_argument('--return-mode',action='store_true');p.add_argument('--exchange-mode',action='store_true');p.add_argument('--staff-edit',action='store_true');p.add_argument('--keyboard-preview',action='store_true');p.add_argument('--draft-money',action='store_true');p.add_argument('--customer-recommendation',action='store_true');p.add_argument('--hall-confirm',action='store_true');p.add_argument('--drop-save-response',action='store_true');p.add_argument('--drop-unapprove-response',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');p.add_argument('--existing-fields',action='store_true');p.add_argument('--existing-pending',action='store_true');p.add_argument('--pagination',action='store_true');args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--return-mode',action='store_true');p.add_argument('--exchange-mode',action='store_true');p.add_argument('--staff-edit',action='store_true');p.add_argument('--keyboard-preview',action='store_true');p.add_argument('--draft-money',action='store_true');p.add_argument('--customer-recommendation',action='store_true');p.add_argument('--hall-confirm',action='store_true');p.add_argument('--drop-save-response',action='store_true');p.add_argument('--drop-unapprove-response',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');p.add_argument('--existing-fields',action='store_true');p.add_argument('--existing-pending',action='store_true');p.add_argument('--pagination',action='store_true');p.add_argument('--scan-recovery',action='store_true');args=p.parse_args()
 if args.existing_pending:args.existing_fields=True
 if args.existing_fields and (args.return_mode or args.exchange_mode or args.drop_save_response or args.drop_unapprove_response):p.error('--existing-fields is an independent SALE/DRAFT edit case; do not combine lifecycle variants')
 if args.pagination and (args.existing_fields or args.return_mode or args.exchange_mode or args.drop_save_response or args.drop_unapprove_response):p.error('--pagination is an independent DRAFT list case')
+if args.scan_recovery and any([args.existing_fields,args.pagination,args.return_mode,args.exchange_mode,args.staff_edit,args.keyboard_preview,args.draft_money,args.customer_recommendation,args.hall_confirm,args.drop_save_response,args.drop_unapprove_response]):p.error('--scan-recovery is an independent no-SAVE transfer scanner case')
 build=Path(args.build).resolve();out=Path(args.out).resolve();out.mkdir(parents=True,exist_ok=False)
 manifest=json.loads((build/'production-build.json').read_text());config=manifest['configuration'];origin=config['http']['origin'];base=config['assets']['basePath']
 if origin!='https://synthetic-management.invalid':raise SystemExit('Smoke requires the declared synthetic-only build configuration')
 allowed={x['path'] for x in manifest['outputs']};allowed.add('index.html')
-result={'commands':[],'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'categoryResponses':[],'case':'pagination' if args.pagination else 'existing-fields' if args.existing_fields else 'original-lifecycle','readbacks':[]}
+result={'commands':[],'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'categoryResponses':[],'case':'scan-recovery' if args.scan_recovery else 'pagination' if args.pagination else 'existing-fields' if args.existing_fields else 'original-lifecycle','readbacks':[]}
 bridge=None;browser=None;page=None
 held=[];hold_next={'active':False}
 @contextmanager
@@ -47,6 +48,11 @@ try:
    if request_origin!=origin:route.abort();return
    if url.path.startswith('/api/'):
     bridge.stdin.write(json.dumps({'url':request.url,'method':request.method,'headers':request.headers,'body':request.post_data})+'\n');bridge.stdin.flush();response=json.loads(bridge.stdout.readline())
+    if args.scan_recovery and url.path=='/api/current-form/barcode/query':
+     payload=json.loads(response['body']);result.setdefault('barcodeResponses',[]).append({'request':json.loads(request.post_data),'status':response['status'],'body':payload,'observedAt':time.monotonic(),'held':hold_next['active']})
+     if hold_next['active']:
+      assert response['status']==200 and payload['state']=='FOUND','hold only an original successful exact lookup'
+      hold_next['active']=False;held.append({'route':route,'request':request,'response':response,'started':time.monotonic()});return
     if args.pagination and url.path=='/api/transfers/query':result.setdefault('listResponses',[]).append({'request':json.loads(request.post_data),'status':response['status'],'body':json.loads(response['body'])})
     if url.path in ['/api/inventory/query','/api/product-management/query'] and response['status']==200:
      payload=json.loads(response['body']);result.setdefault('inventoryResponses',[]).append(payload) if url.path=='/api/inventory/query' else None;products=payload.get('products',payload.get('items',[]));result['categoryResponses'].append({'path':url.path,'products':[{'id':x['id'],'code':x['code'],'categoryLabel':x.get('categoryLabel'),'total':x.get('total',x.get('totalStock'))} for x in products]})
@@ -119,6 +125,40 @@ try:
    filters=result['listResponses'][-1]['request']['filter'];assert all(value is None or value==[] for value in filters.values()),filters
    if number.count():expect(number).to_have_value('')
    shot('pagination-07-new-save-first');result['coverage']=['25 original SAVE drafts','page2 detail return retains page','equal-time stable repeat boundary','size50 and20 reset page1','reset frompage2','filtered page2 new original UI SAVE','new saved ID first; filters reset; page size retained'];result['notTested']=['PG','production','whole page Demo parity','approval'];assert not errors;result['status']='PASS_LISTED_PAGINATION_STEPS';result['errors']=errors;(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));browser.close();browser=None
+  elif args.scan_recovery:
+   assert config['routes'].get('transferManualCreate') is True
+   page.locator('.sidebar a[data-route="transfer/new"]').click();page.get_by_role('heading',name='新增调拨单',exact=True).wait_for()
+   pick('调出仓库','备货仓');pick('调入仓库','温州仓');page.get_by_label('备注',exact=True).fill('SYN scanner recovery retained note')
+   page.get_by_role('button',name='扫码录入',exact=True).click();scan=page.locator('#transfer-scan-input');expect(scan).to_be_focused();feedback=page.locator('[data-transfer-scan-feedback]')
+   code='530000001721203';unknown='SYN-NOT-FOUND-SCAN-RECOVERY';result['scanRecovery']={'code':code,'unknown':unknown,'events':[]}
+   def read_count():return len(result.get('barcodeResponses',[]))
+   def quantity(expected):
+    rows=page.locator('[data-transfer-sku]');expect(rows).to_have_count(1)
+    expect(rows.locator('input[data-transfer-qty]')).to_have_value(str(expected));return rows.locator('input[data-transfer-qty]').input_value()
+   def release_original(index,label):
+    pending=held[index];response=pending['response'];event={'label':label,'heldSeconds':time.monotonic()-pending['started'],'originalStatus':response['status'],'originalBody':json.loads(response['body'])}
+    try:pending['route'].fulfill(status=response['status'],headers=response['headers'],body=response['body']);event['delivery']='FULFILLED'
+    except Exception as error:
+     event['delivery']='BROWSER_REJECTED_AFTER_ABORT';event['errorType']=type(error).__name__;event['message']=str(error);event['requestFailure']=pending['request'].failure
+     assert event['requestFailure'],'a failed route release needs an actual cancelled request, not a swallowed driver error'
+    result['scanRecovery']['events'].append(event)
+   def enter(value):expect(scan).to_be_enabled();scan.fill(value);scan.press('Enter')
+   hold_next['active']=True;enter(code);enter(unknown);enter(code);assert read_count()==1
+   assert time.monotonic()-held[0]['started']<3,'setup must release before the real lookup deadline';release_original(0,'first-success-before-error')
+   expect(feedback).to_contain_text('已暂停');expect(scan).to_be_disabled();expect(feedback).to_contain_text(unknown);quantity(1)
+   assert read_count()==2 and result['barcodeResponses'][-1]['body']['state']=='NOT_FOUND','actual unknown pauses and drops queued tail'
+   shot('scan-recovery-01-error-paused');before=read_count();page.get_by_role('button',name='重新扫码',exact=True).click();expect(scan).to_have_value(unknown);expect(scan).to_be_focused();assert read_count()==before,'restore is not automatic retry'
+   scan.press('Enter');expect(feedback).to_contain_text('已暂停');quantity(1);assert read_count()==3 and result['barcodeResponses'][-1]['body']['state']=='NOT_FOUND'
+   page.get_by_role('button',name='忽略并继续',exact=True).click();expect(scan).to_have_value('');expect(scan).to_be_focused();enter(code);quantity(2);assert read_count()==4;shot('scan-recovery-02-ignore-resumed')
+   hold_next['active']=True;enter(code);enter(code);assert read_count()==5;expect(feedback).to_contain_text('超时',timeout=5000);elapsed=time.monotonic()-held[1]['started'];result['scanRecovery']['timeoutFeedbackSeconds']=elapsed
+   expect(scan).to_be_disabled();quantity(2);assert read_count()==5,'timeout drops the unstarted queued tail';shot('scan-recovery-03-timeout')
+   release_original(1,'late-original-after-timeout');page.wait_for_timeout(200);quantity(2);expect(feedback).to_contain_text('超时');assert read_count()==5
+   page.get_by_role('button',name='重新扫码',exact=True).click();expect(scan).to_have_value(code);assert read_count()==5;scan.press('Enter');quantity(3);assert read_count()==6;shot('scan-recovery-04-explicit-retry-once')
+   hold_next['active']=True;enter(code);assert read_count()==7;page.get_by_role('button',name='关闭扫码抽屉',exact=True).click();expect(page.locator('#transfer-scan-drawer')).to_have_count(0)
+   note=page.get_by_label('备注',exact=True);note.focus();release_original(2,'late-original-after-explicit-close');page.wait_for_timeout(200);expect(page.locator('#transfer-scan-drawer')).to_have_count(0);expect(note).to_be_focused();expect(note).to_have_value('SYN scanner recovery retained note')
+   page.get_by_role('button',name='扫码录入',exact=True).click();expect(scan).to_be_focused();quantity(3);enter(code);quantity(4);assert read_count()==8;shot('scan-recovery-05-close-late-and-reopen')
+   page.get_by_role('button',name='关闭扫码抽屉',exact=True).click();expect(page.locator('#transfer-scan-drawer')).to_have_count(0);expect(page.get_by_role('button',name='扫码录入',exact=True)).to_be_focused()
+   assert not result['commands'] and not errors;result['coverage']=['original NOT_FOUND pauses and discards queued tail','restore failed code without auto-submit','ignore and explicit new scan resumes','real3s timeout visible and tail discarded','late original response after timeout adds nothing','one deliberate retry adds exactly1','explicit close then late response retains draft/note/focus and no drawer resurrection','fresh reopen continues exact quantity'];result['notTested']=['hardware scanner','PG','production network','UNAVAILABLE browser response','sales scanner normal UI','SAVE/approval'];result['status']='PASS_LISTED_SCAN_RECOVERY_STEPS';result['errors']=errors;(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));browser.close();browser=None
   else:
    if not args.existing_fields:
     page.get_by_role('button',name='查询',exact=True).click();page.locator('#iw-results tbody tr[data-inventory-product]').first.wait_for();page.wait_for_load_state('networkidle');baseline_stock=sum(int(x['total']['knownQuantity']) for x in result['categoryResponses'][-1]['products']);shot('00-stock-before')
