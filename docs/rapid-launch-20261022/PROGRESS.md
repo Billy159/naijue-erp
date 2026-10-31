@@ -3473,3 +3473,7 @@ QF补充：固定52应用＋原51fixture，两类调拨（已审核、作废）�
 ### 扫码恢复实操与销货正常入口接线
 F1固定5fc29047+app52完成调拨恢复自检：8条码请求、0SAVE，错误暂停恢复/忽略、超时及关闭迟到不加量、重开继续通过；可见超时首次观察3.881秒，非精确3秒/P95达标。QF已接同固定增量独立复验，源码只读。
 正常销货缺挂载，已有SalesProposalSession实际reader和scanner能力；C授原F1精确7叶唯一写，复用原DocumentScan/IN-OUT，补正常new/edit、FIFO恢复、pending保存保护及3000ms预算。不增API/字段/SQL/写合同，不复用旧入口结果冒充完成。硬件和真实PG未测；完整清单位于WRITE-OWNERSHIP.r1SalesNormalScannerIntegration。
+
+
+### QF调拨扫码恢复限定独立通过
+采用QF01-R1-APP52-SCAN-RECOVERY-5FC29047-01，报告SHA315e258fecfe92837af4c8144ffa2daf33da183218ed94acfab1eeb536f03243。固定app52/test5fc29047，8原条码响应、0commands、最终数量4；错误暂停恢复、忽略、超时与关闭后的原迟到响应不加量、重开继续通过。首次观察超时3.879秒，仅单次实际值，不称精确3秒/P95。自有进程0。UNAVAILABLE顶层、硬件、PG/生产、销货正常扫码和SAVE审核仍未测；旧已过范围不重验。F1继续已登记7叶正常销货接线，浏览器已释放。

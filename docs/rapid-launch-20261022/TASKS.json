@@ -21112,7 +21112,7 @@
   },
   "r1ScannerRemainingFollowup": {
     "owner": "F1",
-    "status": "TRANSFER_SELF_CHECK_PASSED_QF_REVIEW_ACTIVE_SALES_IMPLEMENTATION_GRANTED",
+    "status": "TRANSFER_QF_LIMITED_PASS_SALES_NORMAL_IMPLEMENTATION_ACTIVE",
     "model": "gpt-6.1-sol/medium",
     "fast": "UNVERIFIED_TOOL_NO_SWITCH",
     "baseline": "80b56347; app0a2fa82d; fixed52/53 profiles separately bound",
@@ -21121,6 +21121,26 @@
     "hardware": "NOT_TESTED_KEYBOARD_NOT_HARDWARE",
     "findings": "Transfer source/DOM already covers recovery/3s/late; remaining headed errors and timeout not covered by 2s pending case. Normal sales proposal has no scanner mount; old Arco path is not current proof.",
     "transferSelfCheck": "F1/SCAN-RECOVERY-52-20261031-01/SUMMARY.json; 8 barcode requests,0commands,late/reopen quantity1→2→3→4; observed timeout3.881s not exact3s SLO",
-    "salesGap": "Normal proposal missing DocumentScan mount despite existing real reader/controller; exact7 unique F1 lease granted"
+    "salesGap": "Normal proposal missing DocumentScan mount despite existing real reader/controller; exact7 unique F1 lease granted",
+    "independentTransfer": {
+      "taskId": "QF01-R1-APP52-SCAN-RECOVERY-5FC29047-01",
+      "status": "PASS_LIMITED_ACTUAL_NEW_TRANSFER_SCAN_RECOVERY",
+      "report": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP52-SCAN-RECOVERY-CHECK.json",
+      "sha256": "315e258fecfe92837af4c8144ffa2daf33da183218ed94acfab1eeb536f03243",
+      "barcodeResponses": 8,
+      "commands": 0,
+      "finalQuantity": "4",
+      "observedTimeoutSeconds": 3.8792104159947485,
+      "scope": "Only new scanner recovery increment; no exact3s/P95 claim",
+      "notTested": [
+        "UNAVAILABLE top-level",
+        "hardware",
+        "PG",
+        "production",
+        "normal sales scanner",
+        "SAVE/approval"
+      ],
+      "ownProcessesRemaining": 0
+    }
   }
 }
