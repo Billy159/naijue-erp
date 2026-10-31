@@ -20981,21 +20981,36 @@
   },
   "r1ProductReadonlyNormalEntry": {
     "owner": "QF2",
-    "status": "D3_FINITE_SYNTHETIC_FACT_DESIGN_ADOPTED_D1_EXACT3_IMPLEMENTING",
+    "status": "SOURCE_0A2FA82D_HOST11_STDIO4_PASS_QB_INCREMENT_REVIEW_T45_53_PREPARING",
     "setup": "One necessary synthetic CREATE200 only, onSaved normal VIEW route; old full CREATE/media/11SKU suite not rerun",
     "actual": "Basic/spec/barcode/prices/emptyimages200; stock failure UI without newHTTP observed, no fabricated501",
     "notClaimed": "Not production defect or zero stock; fixed48 stock capability off and originalhost stockReader:null are source clues",
-    "next": "D1 original host opt-in inventory port with actualCREATE SKU snapshots and independent bounded authority; C pairs flag only after checks; T45 successor build; QF2 P13 only recheck",
+    "next": "QB scoped independent source conclusion; T45 fixed53 build; QF2 only new normal stock read/UNKNOWN/warehouse modes/reentry, prerequisiteCREATE only; no production/PG proof",
     "realPg": false,
-    "diagnosis": "Capped48 config lacks readOverview, host stockReader null; single flag would only503. Formal stock reader/API exist; no production defect proved."
+    "diagnosis": "Capped48 config lacks readOverview, host stockReader null; single flag would only503. Formal stock reader/API exist; no production defect proved.",
+    "source": "0a2fa82d0835273f919a2a026766b73361e5c5d9",
+    "checks": {
+      "ownerHost": "11/11 D1 PASS adopted, not rerun",
+      "integrationStdio": "4/4 C PASS incl originalCREATE SKU×2 UNKNOWN/null actual read",
+      "configuration": "Original parser accepts routes.productStockOverview true"
+    }
   },
   "r1StaffNameContactReadback": {
     "owner": "QF2",
-    "status": "ACTUAL_SYNTHETIC_EDIT_200_V1_TO_V2_FINAL_REOPEN_INVARIANTS_CHECK_IN_PROGRESS",
+    "status": "QF2_LIMITED_ACTUAL_NAME_CONTACT_CANCEL_SAVE_REOPEN_PASS",
     "application": "b33829a6f34202916906959589e97920ff0aa8fa",
     "profile": "Original fixed49 --staff-edit, restricted name/contact only",
     "scope": "Clean cancel0write then singleEDIT, detail/list/reopen and unchanged role/hall/status/account metadata; no credentials or access actions",
     "report": "reports/qa-frontend/rapid-launch-20261022/QF2/STAFF49-NAME-CONTACT-EDIT-20261031-01",
-    "notClaimed": "No CREATE/account/permission/realPG or whole-page acceptance"
+    "notClaimed": "No CREATE/account/permission/realPG or whole-page acceptance",
+    "reportSha256": "4e0b4d407099efb30e35bfea64ead0ea02a9e45d93c42427230a267263380eaf",
+    "actual": "7steps PASS,8responses200,1EDIT/accountnull/v1→2; cancel0write/reopen saved values;role/hall/status/account metadata unchanged;0credentialreads/actions;closedexit0own0",
+    "notTested": [
+      "CREATE",
+      "LEAVE/RESTORE",
+      "account/permission/credential changes",
+      "realPG",
+      "wholepage"
+    ]
   }
 }

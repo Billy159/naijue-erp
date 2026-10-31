@@ -3423,3 +3423,6 @@ V7准备推进：C已按原QB PRODUCT1/PAYMENT3静态PASS签发原格式三份so
 
 
 D3有限合成库存事实/授权三叶方案已交原D1实施，默认hostnull不变，opt-in各状态明确声明、原service/HTTP/DTO复用，C配置待真实定向结果后成对。QF2员工49同版旧证据去重后，仅姓名/联系方式一EDIT已200v2，列表新名可见，最终重开及角色/厅/状态/账号不变核对在途，尚未登记完整PASS；不测账号/权限/真实PG。
+
+
+商品库存接线固定0a2fa82d：D1原host11/11、C接线后stdio4/4（原CREATE实际SKU×2库存UNKNOWN/null）及原配置parser通过；默认hostnull保留，显式stock场景及权限/失败不伪0。QB仅6叶增量独核、T45并行固定53构建；尚未新browser。QF2员工49姓名contact限定实际7步骤PASS/8响应200/单EDITv2/正常重开，role/hall/status/account元数据不变，取消零额外写，0密码读取，own0；仅列状态通过非整页/PG。
