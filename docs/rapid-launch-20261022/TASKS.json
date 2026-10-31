@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-29T02:43:42.597519+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "e1071f7cbafbadea2dfd203320153d7b9f741b13",
+  "lastVerifiedRemoteCommit": "b1f0099f7964247d098dd72e47d595c53b5a8431",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -20589,5 +20589,23 @@
     ],
     "rawSha256": "442a6d12ba7b5ce30dabb91df97858bf8a0db15834ddf96912d4c4b3eedecaf4",
     "ordinaryBusiness": "NOT_RUN"
+  },
+  "r1ActualM02": {
+    "job": "t45-qa178-p13-20261031-s1-schema-m02-319",
+    "status": "ACTUAL_COMPLETED_EXIT0",
+    "versions": [
+      1,
+      2
+    ],
+    "normalExit": "318 acknowledged;322 final readback pending",
+    "ordinaryBusiness": "NOT_RUN"
+  },
+  "r1BrowserRetry04": {
+    "status": "TWO_CASES_FAIL_NOT_ACCEPTED",
+    "fixedApp": "d76a54ac",
+    "driver": "b1f0099f",
+    "observed": "CATEGORY200+409;COLOR200;upload200;PRODUCTV2 SAVE200",
+    "missing": "category stable error readback; product spec detail and image/list/reopen chain",
+    "owner": "F1 original driver only; QF2 independent visible context"
   }
 }
