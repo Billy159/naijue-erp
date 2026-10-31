@@ -3544,3 +3544,9 @@ T45统一58闭包PASS采用：固定32da52f6/manifest388493ce…/原config064bc2
 固定58原F1调拨实际限定自检PASS：新商品/MAIN扫码/实际组11尺码及矩阵一致/qty1→SAVE200/detailDRAFTv1。恰2命令商品CREATE+调拨SAVE，0账户/销货/审核，自有进程0；raw0a4709f5…/回执f5762b04…保留，原QF已接58仅调拨独立短验。非PG/正式发布通过。
 
 2026-11-01 原QF固定58调拨限定独立实际PASS采用（APP58-TRANSFER-LINKAGE-CHECK ed7a5005…）：fresh正常商品CREATE+调拨SAVE两写，同SKU/原实际组11成员与矩阵/qty1/DRAFTv1读回，0账户/销货/审核，自有进程0。57字典500受影响consumer关闭，旧FAIL保留；资料56/销货57有效结论复用。三段跨页为隔离合成限定验收，不是整页全站/真实PG/权限事务/正式发布。下一独立未完成范围仍按原台账，QA178新窗口不得借本PASS启动。
+
+2026-11-01 接续剩余audit正常浏览器：原F1同一driver新增audit-linkage固定1e707ad4/hash40fb6968…，配不可变58应用/fixtures开始一次账户CREATE/EDIT两写及真实操作记录/筛选/日期/关闭重入验证，不重21写分页或三段跨页。当前状态与缺口头已刷新，QA178新03清单4941B/hash532bbfc7…仍等待真人确认，无实际DB动作。
+
+audit58 attempt01真实两账户写及操作记录200/total2，operation/target/version/实际actor/名称前后值通过；driver筛选中文CSS定位失败，raw5912374a…/PNG/DOM保留，筛选/日期/关闭重入未测、自有进程0。仅一行定位修正固定ed7aef0c/hashbda2c968…，原F1同58 freshattempt02继续；不改应用或夹具/不重构建。
+
+audit58 attempt02原F1实际限定自检PASS，raw4977908b…/回执60d452c3…/4PNG。两账户CREATE/EDIT真实operation/target/version/actor/名称beforeafter/UI匹配；五次audit200 totals2/1/2/0/2、日期筛选/未执行条件关闭不查询/重入/重置通过，自有进程0。原QF2已接同58+fixeddriver独立一次，不重后台21写/资料/单据；真实PG/其他模块/完整Demo布局仍未测。

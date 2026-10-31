@@ -8511,7 +8511,7 @@
   },
   "r1UnifiedCrossPageBrowser": {
     "owner": "F1",
-    "status": "16260DF7_FIXED_DOCUMENT03_REAL_CONTRACT_FAILURE_READONLY",
+    "status": "AUDIT_DRIVER_FIXED_1E707AD4_ACTUAL_RUNNING",
     "paths": [
       "apps/web/demo-replica/tests/unified-cross-page-browser.py"
     ],
@@ -8534,7 +8534,7 @@
   },
   "r1UnifiedPaymentRecommendationContract": {
     "owner": "D1",
-    "status": "DELIVERED_1FAB7FA6_READONLY_QB_INCREMENT",
+    "status": "DELIVERED_1FAB_QB_AND_BROWSER57_PASS_READONLY",
     "model": "gpt-6.1-sol/medium",
     "paths": [
       "apps/web/demo-replica/tests/unified-service-fixture.mjs",

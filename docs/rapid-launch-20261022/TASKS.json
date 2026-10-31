@@ -21359,7 +21359,7 @@
   },
   "r1UnifiedAuditReadback": {
     "owner": "D1",
-    "status": "QB_LIMITED_SOURCE_PASS_BROWSER_PENDING",
+    "status": "FIXED58_AUDIT_NORMAL_BROWSER_SELF_CHECK_PASS_QF2_RUNNING",
     "basis": "Current production SQL id=operationId; no independently generated different audit ID required; original committed producer facts via original HTTP/service/projector",
     "notClaimed": "No PG/production, no old records backfill/static samples; audit in56 remains unconnected",
     "source": "b47dd07acd179b1031f1d07b2c49405ce4fe2423",
@@ -21377,6 +21377,32 @@
         "actualACL",
         "production"
       ]
+    },
+    "browserPreparation": {
+      "driverCommit": "ed7aef0c514f69c39e998e26eeadd2ad153a49b9",
+      "driverSHA": "bda2c96831024b6fe472438888be571efaa3b2da9655eb23800c1f01c5383657",
+      "application": "fixed58 source32da52f6",
+      "fixture": "D58 immutable source tests",
+      "case": "audit-linkage",
+      "scope": "normal accountCREATE/EDIT two writes -> real audit operation/target/version/actor/name-before-after/filter/date/close-reentry;no21writes"
+    },
+    "next": "originalQF2 same58/latestfixeddriver one limited audit independent browser; PG/othermodules/fullDemo remain separate",
+    "browserAttempt01": {
+      "status": "PARTIAL_ACTUAL_AUDIT_READBACK_PASS_DRIVER_FILTER_SELECTOR_FAIL",
+      "rawSHA": "5912374a2e5add30da89caa9b9a477955e8c7d93cb8f457cca21dc54ff9e991f",
+      "actual": "two accountcommands200/detailv1->2/audit200total2/operation,target,version,actor,namebeforeafter verified",
+      "unmeasured": "filter/date/close/reentry",
+      "failure": "driver nested has locator/literal Unicode CSS labels,one line correction only",
+      "resources": "ownprocess0",
+      "next": "freshattempt02 same58 latestfixeddriver"
+    },
+    "browserAttempt02": {
+      "status": "PASS_LISTED_UNIFIED_AUDIT_LINKAGE_STEPS_SELF_CHECK",
+      "rawSHA": "4977908b319f13227134a535e6e998469eefcbbac4115dca27cacfde2473e872",
+      "receiptSHA": "60d452c36a66a80d12c23789c7dc1a45b93c661aa01250502472a2d0202edfde",
+      "actual": "two normal accountCREATE/EDIT200;operation,target,versions,actualactor,namebeforeafter andUI;fiveauditquery200totals[2,1,2,0,2]",
+      "scope": "filter/date/unappliedclose-noquery/reentry/no-match/reset;no21writes",
+      "resources": "ownprocess0"
     }
   }
 }
