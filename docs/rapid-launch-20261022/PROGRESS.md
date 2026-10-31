@@ -1,3 +1,9 @@
+## R01 repair fixed and next native-keyboard recheck
+
+OriginalF1 exact6 R01 fixed468cab7a49dd7447e1d6a5d9f61a925e0785fba1 pushed and remotely read back. Pending count synchronous ref rejects SAVE before stopScan; buttondisabled plus visiblependingnotice, queue/FIFO/3s/epoch unchanged. Directed queue11/11 and actual New/Native/Form consumer tests plus strictTS passed; actual nativeTab afterfix still pending fixed50 built by originalT45. Original49 RED evidence remains. QF2 fixed49 F08 strictknown429 correction/no retry and D01 nohallcontrols/retaineddetailhall UI/read passed; real password gate/payment writer unavailable, not businessPASS.
+
+OriginalQB catalogue9 static mappingPASS adopted, C exact original technicalreview34413b29 issued; D1 actual openReviewedCatalogueSource26/chunks/authorize/verify/close9rows succeeded locally withoutDB. PRODUCT/PAYMENT reference candidates next use actual preparedcatalogue facts, never obsoleteblueprint syntaxpins. Source06 sharedordinarygate adapter QB_PASS but oldc91 runtime pins remain until originalT45 precise successor; actual window/human/target configuration still pending. Five new performance optimizations remain PAUSED.
+
 ## R01 visible defect reproduced and original owner repairing
 
 OriginalQF fixed49 native-keyboard pending-scan reproduction:6 accepted M scans while original barcode response delayed2s (<3s timeout), Tab reached background Save while drawer still open, Enter saved200 with M quantity0 and no confirmation. R01 is now reproduced, not a source-risk-only item; originalF1 receives one targeted fix preserving pending queue/draft and blocking premature SAVE. F02/F04 actual synthetic checks passed; F06 new-document M5+scan1 became one M6 line, but existing-edit path disabled in fixed49 remains untested. Ordinary salesTab check does not close scanner-pending R01. OriginalQF released own contexts; QF2 now takes49 staff/payment limitedUI serially.

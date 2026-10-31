@@ -20667,10 +20667,11 @@
         "fixedSource": "2537dfc17bec83ffd731d1f3c39cd793559a27a1"
       },
       "R01": {
-        "status": "VISIBLE_REPRODUCED_PENDING6_DROPPED_BY_NATIVE_TAB_SAVE_ORIGINAL_F1_FIX_IN_PROGRESS",
+        "status": "SOURCE_FIXED_DIRECTED_CHECKS_PASS_FIXED50_NATIVE_TAB_RECHECK_PENDING",
         "scope": "visible keyboard scanner-pending save reachability first; pending blocks save without implicit cancel",
         "owner": "F1",
-        "actual": "Fixed49 original transfer-chain, lookup delayed2s below3s timeout;6accepted M scans pending, native Tab background Save/Enter saved200 without M or confirmation; original QF exact evidence retained. Ordinary sales Tab result is not R01 coverage."
+        "actual": "Fixed49 original transfer-chain, lookup delayed2s below3s timeout;6accepted M scans pending, native Tab background Save/Enter saved200 without M or confirmation; original QF exact evidence retained. Ordinary sales Tab result is not R01 coverage.",
+        "fixedSource": "468cab7a49dd7447e1d6a5d9f61a925e0785fba1"
       },
       "D01": {
         "status": "QF2_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
@@ -20726,7 +20727,7 @@
   },
   "r1FixedBrowser49": {
     "source": "b33829a6f34202916906959589e97920ff0aa8fa",
-    "status": "BUILD_PASS_ORIGINAL_QF_AFFECTED_VISIBLE_CHECK_IN_PROGRESS",
+    "status": "F02_F04_LISTED_STEPS_PASS_F06_NEW_ONLY_PARTIAL_F08_D01_UI_READ_PASS_R01_RED_PRESERVED",
     "build": "reports/controller/rapid-launch-20261022/ui-preview-b33829a6-affected-integration-49/build",
     "configurationSha256": "74175b3769eef974ece6dd1b7c33660af57e653991a483a60d7a7ee9b634c514",
     "manifestSha256": "b6223dc38618c40cc456b56b05a3dd6348c6b97c37e2f1adfb8b0529825f4d2c",
@@ -20753,13 +20754,14 @@
     "proposal": "reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/C-INDEPENDENT-ORDINARY-BUDGET-PROPOSAL-01/PROPOSED-BUDGET.json",
     "sha256": "049468937d5f0f1ced42baaa340410bfeb688fe337454bd5674bf2bca1a1c299",
     "review": "LIMITED_STATIC_BUDGET_ACCEPTANCE_EXISTING_OPEN_GATE_ADAPTATION_REQUIRED",
-    "consumerGap": "BUDGET-CONSUMER-F01 original05 requires issuerPoolMax>0/issuerConfigurationPin, contradicts actual shared-pool0; T45 exact successor source preparation, no extra pool or execution"
+    "consumerGap": "Source06 exact shared-pool gate adaptation QB_PASS; accurate pin/template integration and final human window approval remain pending, no actual OPEN"
   },
   "r1Qa22StaticSelection": {
     "baseAndSelectionSha256": "4370e72edceac0720e644f744fa8d80ade0ebe9e6b9834d5a01ecd6bf35bed8e",
     "meaning": "Actual synthetic base manifest adopted as complete18CSV selection identity under existingQA22; no borrowed production2958 exclusions",
     "catalogueMappingSha256": "663620a228f12990e5678a8d57ce5c27b8ddfebb4a1d75e9cd879321c45ef18c",
-    "status": "ORIGINAL_QB_MAPPING_REVIEW_IN_PROGRESS",
-    "money32": "C checked32 original raw fields and fileSHA; static adoption only; actual target-bound envelopes pending"
+    "status": "QB_CATALOGUE9_MAPPING_PASS_C_TECHNICAL_REVIEW_ISSUED_ORIGINAL_FACTORY9_ROWS_AUTHORIZED_LOCAL_ONLY",
+    "money32": "C checked32 original raw fields and fileSHA; static adoption only; actual target-bound envelopes pending",
+    "catalogueReviewSha256": "34413b29688c7afd63e0c01b64fc70ce45ec7079afe21e561b49bc85d8122bb7"
   }
 }

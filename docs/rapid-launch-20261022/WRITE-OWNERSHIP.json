@@ -8350,7 +8350,7 @@
   "r1TransferPendingScanR01": {
     "owner": "F1",
     "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
-    "status": "EXCLUSIVE_IMPLEMENTATION_IN_PROGRESS",
+    "status": "DELIVERED_READ_ONLY_FIXED_468cab7a",
     "sourceBefore": "b33829a6f34202916906959589e97920ff0aa8fa",
     "files": [
       "apps/web/demo-replica/frontend/runtime/documents/transfer-scanner.tsx",
