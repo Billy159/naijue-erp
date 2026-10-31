@@ -16,7 +16,7 @@ from urllib.parse import unquote, urlsplit
 
 p = argparse.ArgumentParser()
 p.add_argument('build'); p.add_argument('out')
-p.add_argument('--case', choices=['data-linkage', 'document-linkage', 'transfer-linkage'], action='append', required=True)
+p.add_argument('--case', choices=['data-linkage', 'document-linkage', 'transfer-linkage', 'audit-linkage'], action='append', required=True)
 p.add_argument('--fixture-tests', required=True)
 p.add_argument('--source-checkpoint', required=True)
 p.add_argument('--manifest-sha256', required=True)
@@ -251,60 +251,150 @@ try:
             assert len(transfer['lines']) == 1 and transfer['lines'][0]['skuId'] == product['skuId'] and transfer['lines'][0]['quantity'] == '1'
             result['transferReadback'] = transfer; shot('06-transfer-new-product-saved')
 
-        product = create_product()
-        if case != 'transfer-linkage':
-            account = create_account()
-        if case == 'data-linkage':
-            menu('settings/staff'); page.get_by_role('heading', name='员工与账号', exact=True).wait_for(); page.wait_for_load_state('networkidle')
-            staff = latest('/api/staff/query'); assert staff['status'] == 200 and staff['body']['items']
-            for name in ['新增员工', '编辑']:
-                for button in page.get_by_role('button', name=name, exact=True).all():
-                    assert button.is_disabled(), 'Staff read-only configuration must be honored'
-            shot('04-staff-directory-readonly')
-            result['checks'].append({'name': 'new stock UNKNOWN and normal staff directory read only', 'stock': result['stockTotal']})
-        elif case == 'transfer-linkage':
-            transfer_linkage(product)
-            assert not [r for r in result['responses'] if r['path'] in ['/api/payment/accounts/commands', '/api/sales/commands']], 'Transfer-only followup must not replay accounts or sales'
+        def audit_linkage():
+            account = create_account(); old_name = account['name']; new_name = old_name + ' 修改'
+            created = latest('/api/payment/accounts/commands', lambda r: r['request']['action'] == 'CREATE')
+            baseline = latest('/api/payment/accounts/detail/query', lambda r: r['request']['id'] == account['id'])['body']
+            page.get_by_label('搜索账户名称', exact=True).fill(old_name); page.get_by_role('button', name='查询', exact=True).click()
+            visible = page.get_by_role('row').filter(has=page.get_by_role('cell', name=old_name, exact=True)); visible.wait_for()
+            visible.get_by_role('button', name='编辑', exact=True).click(); dialog = page.get_by_role('dialog')
+            field = dialog.get_by_role('textbox', name='账户名称', exact=True); expect(field).to_have_value(old_name); field.fill(new_name)
+            dialog.get_by_role('button', name='确定', exact=True).click(); expect(dialog).to_have_count(0)
+            edited = latest('/api/payment/accounts/commands', lambda r: r['request']['action'] == 'EDIT')
+            assert edited['status'] == 200 and edited['request']['id'] == account['id']
+            assert edited['request']['expectedVersion'] == baseline['version'] == 1 and edited['body']['version'] == 2
+            assert edited['request']['values']['hallIds'] == []
+            assert edited['body']['operationId'] != created['body']['operationId']
+            principal = latest('/api/auth/session')['body']['principal']
+            drawer = page.locator('.bs-audit-drawer'); rows = drawer.locator('.bs-log-results tbody tr').filter(has=page.locator('td:nth-child(6)'))
+
+            def read_after(start):
+                deadline = time.monotonic() + 5
+                while True:
+                    responses = [r for r in result['responses'][start:] if r['path'] == '/api/settings/audit/query']
+                    if responses:
+                        response = responses[-1]; assert response['status'] == 200, response
+                        expect(rows).to_have_count(len(response['body']['items']))
+                        return response
+                    assert time.monotonic() < deadline, 'Normal audit drawer did not return an actual response'
+                    page.wait_for_timeout(50)
+
+            def open_audit():
+                start = len(result['responses']); trigger = page.get_by_role('button', name='操作记录', exact=True)
+                expect(trigger).to_be_enabled(); trigger.click(); expect(drawer).to_be_visible()
+                return read_after(start)
+
+            def apply_audit():
+                start = len(result['responses']); drawer.get_by_role('button', name='查询', exact=True).click()
+                return read_after(start)
+
+            def select_audit(label, text):
+                host = drawer.locator('.runtime-settings-select').filter(has=drawer.locator('.arco-select[aria-label=' + json.dumps(label) + ']'))
+                host.locator('.arco-select-view').click()
+                host.locator('.arco-select-option').filter(has_text=re.compile('^' + re.escape(text) + '$')).click()
+
+            initial = open_audit(); assert initial['body']['total'] == 2, 'Fresh store must show these two real writes, no static samples'
+            items = initial['body']['items']; assert len({item['operationId'] for item in items}) == 2
+            for write, action, old_version, new_version in [(created, 'CREATE', None, 1), (edited, 'EDIT', 1, 2)]:
+                item = next(row for row in items if row['operationId'] == write['body']['operationId'])
+                assert item['id'] and item['object']['id'] == account['id'] and item['object']['name'] == new_name
+                assert item['module'] == 'PAYMENT_ACCOUNT' and item['action'] == action
+                assert item['oldVersion'] == old_version and item['newVersion'] == new_version
+                assert item['actor']['accountId'] == principal['accountId'] and item['actor']['staffId'] == principal['staffId']
+                assert item['actor']['loginName'] == principal['loginName'] and item['actor']['name']
+                change = next(change for change in item['changes'] if change['field'] == 'name')
+                assert change['before'] == ({'state': 'ABSENT'} if action == 'CREATE' else {'state': 'VALUE', 'value': old_name})
+                assert change['after'] == {'state': 'VALUE', 'value': old_name if action == 'CREATE' else new_name}
+                rendered = rows.filter(has=page.get_by_role('cell', name='新增' if action == 'CREATE' else '修改', exact=True))
+                expect(rendered).to_have_count(1); expect(rendered).to_contain_text(item['actor']['name']); expect(rendered).to_contain_text(new_name)
+                expect(rendered).to_contain_text(('未记录' if action == 'CREATE' else old_name) + ' → ' + (old_name if action == 'CREATE' else new_name))
+            result['actualAuditItems'] = items; shot('audit-01-real-create-and-edit')
+            day = items[0]['occurredAt'][:10]  # Fixed fixture timestamps are 00:00Z, hence the same Shanghai calendar day.
+            assert items[0]['occurredAt'].endswith('T00:00:00Z')
+            select_audit('全部模块', '资金账户'); select_audit('全部操作', '修改')
+            drawer.get_by_role('textbox', name='数据对象', exact=True).fill(new_name)
+            drawer.get_by_role('textbox', name='操作人', exact=True).fill(principal['loginName'])
+            for label in ['开始日期', '结束日期']:
+                date = drawer.get_by_placeholder(label, exact=True); date.fill(day); date.press('Enter'); drawer.locator('.arco-drawer-header-title').click()
+            filtered = apply_audit(); q = filtered['request']
+            assert q['module'] == 'PAYMENT_ACCOUNT' and q['action'] == 'EDIT' and q['objectSearch'] == new_name and q['actorSearch'] == principal['loginName']
+            assert q['dateFrom'] == q['dateTo'] == day and filtered['body']['total'] == 1
+            assert filtered['body']['items'][0]['operationId'] == edited['body']['operationId']; shot('audit-02-normal-filters-and-date')
+            before_reads = len([r for r in result['responses'] if r['path'] == '/api/settings/audit/query'])
+            drawer.get_by_role('textbox', name='数据对象', exact=True).fill('SYN UNAPPLIED CANCEL')
+            drawer.locator('.arco-drawer-close-icon').click(); expect(drawer).to_have_count(0)
+            assert len([r for r in result['responses'] if r['path'] == '/api/settings/audit/query']) == before_reads
+            reopened = open_audit(); assert reopened['body']['total'] == 2
+            assert {item['operationId'] for item in reopened['body']['items']} == {item['operationId'] for item in items}
+            drawer.get_by_role('textbox', name='数据对象', exact=True).fill('SYN-NO-SUCH-AUDIT-OBJECT')
+            assert apply_audit()['body']['total'] == 0
+            start = len(result['responses']); drawer.get_by_role('button', name='重置', exact=True).click(); reset = read_after(start)
+            assert reset['body']['total'] == 2 and reset['request']['objectSearch'] == '' and reset['request']['dateFrom'] is None and reset['request']['action'] == 'ALL'
+            shot('audit-03-close-reenter-reset'); drawer.locator('.arco-drawer-close-icon').click(); expect(drawer).to_have_count(0)
             writes = [r for r in result['responses'] if r['path'].endswith('/commands')]
-            assert len(writes) == 2 and all(r['status'] == 200 for r in writes)
-            saved = next(r for r in writes if r['path'] == '/api/transfers/commands')
-            assert saved['request']['action'] == 'SAVE' and saved['request']['expectedVersion'] is None
-            assert saved['body']['transferId'] == result['transferReadback']['header']['id'] and saved['body']['version'] == 1
-            result['checks'].append({'name': 'new product real group/matrix/MAIN and original transfer SAVE/detail only', 'productId': product['id']})
+            assert len(writes) == 2 and all(r['path'] == '/api/payment/accounts/commands' and r['status'] == 200 for r in writes)
+            result['checks'].append({'name': 'normal account CREATE/EDIT and original audit identity/version/changes/filter/date/close/reentry', 'targetId': account['id'], 'operationIds': [created['body']['operationId'], edited['body']['operationId']]})
+
+        if case == 'audit-linkage':
+            audit_linkage()
         else:
-            menu('sales/new'); page.get_by_role('textbox', name='整单优惠 / 抹零', exact=True).wait_for()
-            choose_document('业务类型', '销售'); choose_document('营业厅', '网点营业厅')
-            choose_document('客户', '零售客户'); choose_document('出库仓', '备货仓')
-            search = page.get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); expect(search).to_have_count(1)
-            search_key = search.locator('xpath=ancestor::tr').get_attribute('data-entry-row')
-            assert search_key, 'Bind original sales entry before candidate reads can append another blank row'
-            search = page.locator('tr[data-entry-row=' + json.dumps(search_key) + ']').get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); search.fill(product['code'])
-            candidate = page.locator('[data-sale-candidate][data-finder-option]').filter(has_text=product['code']); candidate.wait_for(); expect(candidate).to_have_count(1)
-            products = latest('/api/current-form/products/query', lambda r: r['request'].get('search') == product['code'])
-            assert any(item['id'] == product['id'] for item in products['body']['items'])
-            shot('03-sales-picker-new-product'); search.fill(''); page.locator('#page h1').click()
-            page.get_by_role('button', name='扫码录入', exact=True).click(); scan = page.locator('.document-scan-input input'); expect(scan).to_be_focused()
-            scan.fill(product['barcode']); scan.press('Enter'); expect(page.locator('.document-scan-grid input')).to_have_value('1')
-            barcode = latest('/api/current-form/barcode/query'); assert barcode['status'] == 200 and barcode['body']['state'] == 'FOUND'
-            assert barcode['body']['sku']['id'] == product['skuId'] and barcode['body']['sku']['productId'] == product['id']
-            page.get_by_role('button', name='关闭扫码抽屉', exact=True).click(); expect(scan).to_have_count(0)
-            line = page.locator('tr[data-entry-row]').filter(has=page.locator('.sale-product-identity')); expect(line).to_have_count(1)
-            price = line.get_by_role('textbox', name='本行成交单价', exact=True); expect(price).to_have_value(''); price.fill('568')
-            choose_document('第1笔支付方式', '现金'); choose_document('第1笔资金账户', account['name'])
-            accounts = latest('/api/current-form/sales-references/query', lambda r: r['request']['kind'] == 'paymentAccount' and r['request']['paymentMethodId'] == account['methodId'])
-            assert any(item['id'] == account['id'] for item in accounts['body']['items']), 'Normal empty-hall account must be a real candidate'
-            page.get_by_role('textbox', name='第1笔收款金额', exact=True).fill('568'); page.get_by_role('button', name='保存', exact=True).click()
-            page.wait_for_url(re.compile(r'.*#sales/view/')); page.get_by_role('heading', name='查看销货单', exact=True).wait_for(); page.wait_for_load_state('networkidle')
-            sale = latest('/api/sales/detail/query')['body']['document']
-            assert sale['header']['status'] == 'DRAFT' and sale['header']['version'] == 1 and sale['header']['netDue'] == '56800'
-            assert len(sale['lines']) == 1 and sale['lines'][0]['skuId'] == product['skuId'] and sale['lines'][0]['quantity'] == '1' and sale['lines'][0]['dealPrice'] == '56800'
-            assert len(sale['settlements']) == 1 and sale['settlements'][0]['paymentAccountId'] == account['id'] and sale['settlements'][0]['amount'] == '56800'
-            result['salesReadback'] = sale; shot('04-sales-new-product-and-account-saved')
-            transfer_linkage(product)
-            result['checks'].append({'name': 'same-store created product and account feed normal proposals/scans and original DRAFT saves', 'productId': product['id'], 'accountId': account['id']})
+            product = create_product()
+            if case != 'transfer-linkage':
+                account = create_account()
+            if case == 'data-linkage':
+                menu('settings/staff'); page.get_by_role('heading', name='员工与账号', exact=True).wait_for(); page.wait_for_load_state('networkidle')
+                staff = latest('/api/staff/query'); assert staff['status'] == 200 and staff['body']['items']
+                for name in ['新增员工', '编辑']:
+                    for button in page.get_by_role('button', name=name, exact=True).all():
+                        assert button.is_disabled(), 'Staff read-only configuration must be honored'
+                shot('04-staff-directory-readonly')
+                result['checks'].append({'name': 'new stock UNKNOWN and normal staff directory read only', 'stock': result['stockTotal']})
+            elif case == 'transfer-linkage':
+                transfer_linkage(product)
+                assert not [r for r in result['responses'] if r['path'] in ['/api/payment/accounts/commands', '/api/sales/commands']], 'Transfer-only followup must not replay accounts or sales'
+                writes = [r for r in result['responses'] if r['path'].endswith('/commands')]
+                assert len(writes) == 2 and all(r['status'] == 200 for r in writes)
+                saved = next(r for r in writes if r['path'] == '/api/transfers/commands')
+                assert saved['request']['action'] == 'SAVE' and saved['request']['expectedVersion'] is None
+                assert saved['body']['transferId'] == result['transferReadback']['header']['id'] and saved['body']['version'] == 1
+                result['checks'].append({'name': 'new product real group/matrix/MAIN and original transfer SAVE/detail only', 'productId': product['id']})
+            else:
+                menu('sales/new'); page.get_by_role('textbox', name='整单优惠 / 抹零', exact=True).wait_for()
+                choose_document('业务类型', '销售'); choose_document('营业厅', '网点营业厅')
+                choose_document('客户', '零售客户'); choose_document('出库仓', '备货仓')
+                search = page.get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); expect(search).to_have_count(1)
+                search_key = search.locator('xpath=ancestor::tr').get_attribute('data-entry-row')
+                assert search_key, 'Bind original sales entry before candidate reads can append another blank row'
+                search = page.locator('tr[data-entry-row=' + json.dumps(search_key) + ']').get_by_role('combobox', name='商品款号 / 名称 / 条码', exact=True); search.fill(product['code'])
+                candidate = page.locator('[data-sale-candidate][data-finder-option]').filter(has_text=product['code']); candidate.wait_for(); expect(candidate).to_have_count(1)
+                products = latest('/api/current-form/products/query', lambda r: r['request'].get('search') == product['code'])
+                assert any(item['id'] == product['id'] for item in products['body']['items'])
+                shot('03-sales-picker-new-product'); search.fill(''); page.locator('#page h1').click()
+                page.get_by_role('button', name='扫码录入', exact=True).click(); scan = page.locator('.document-scan-input input'); expect(scan).to_be_focused()
+                scan.fill(product['barcode']); scan.press('Enter'); expect(page.locator('.document-scan-grid input')).to_have_value('1')
+                barcode = latest('/api/current-form/barcode/query'); assert barcode['status'] == 200 and barcode['body']['state'] == 'FOUND'
+                assert barcode['body']['sku']['id'] == product['skuId'] and barcode['body']['sku']['productId'] == product['id']
+                page.get_by_role('button', name='关闭扫码抽屉', exact=True).click(); expect(scan).to_have_count(0)
+                line = page.locator('tr[data-entry-row]').filter(has=page.locator('.sale-product-identity')); expect(line).to_have_count(1)
+                price = line.get_by_role('textbox', name='本行成交单价', exact=True); expect(price).to_have_value(''); price.fill('568')
+                choose_document('第1笔支付方式', '现金'); choose_document('第1笔资金账户', account['name'])
+                accounts = latest('/api/current-form/sales-references/query', lambda r: r['request']['kind'] == 'paymentAccount' and r['request']['paymentMethodId'] == account['methodId'])
+                assert any(item['id'] == account['id'] for item in accounts['body']['items']), 'Normal empty-hall account must be a real candidate'
+                page.get_by_role('textbox', name='第1笔收款金额', exact=True).fill('568'); page.get_by_role('button', name='保存', exact=True).click()
+                page.wait_for_url(re.compile(r'.*#sales/view/')); page.get_by_role('heading', name='查看销货单', exact=True).wait_for(); page.wait_for_load_state('networkidle')
+                sale = latest('/api/sales/detail/query')['body']['document']
+                assert sale['header']['status'] == 'DRAFT' and sale['header']['version'] == 1 and sale['header']['netDue'] == '56800'
+                assert len(sale['lines']) == 1 and sale['lines'][0]['skuId'] == product['skuId'] and sale['lines'][0]['quantity'] == '1' and sale['lines'][0]['dealPrice'] == '56800'
+                assert len(sale['settlements']) == 1 and sale['settlements'][0]['paymentAccountId'] == account['id'] and sale['settlements'][0]['amount'] == '56800'
+                result['salesReadback'] = sale; shot('04-sales-new-product-and-account-saved')
+                transfer_linkage(product)
+                result['checks'].append({'name': 'same-store created product and account feed normal proposals/scans and original DRAFT saves', 'productId': product['id'], 'accountId': account['id']})
         check_no_approval()
         creates = [r for r in result['responses'] if r['path'] == '/api/products/v2/commands' and r['request']['action'] == 'CREATE']
-        assert len(creates) == 1 and creates[0]['status'] == 200, 'Exactly one necessary normal product setup per fresh case'
+        if case == 'audit-linkage':
+            assert creates == [], 'Audit case does not create products or replay document setup'
+        else:
+            assert len(creates) == 1 and creates[0]['status'] == 200, 'Exactly one necessary normal product setup per fresh case'
         result['status'] = 'PASS_LISTED_UNIFIED_' + case.upper().replace('-', '_') + '_STEPS'; persist()
         browser.close(); browser = None
 except Exception as error:
