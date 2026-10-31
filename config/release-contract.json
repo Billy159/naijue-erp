@@ -113,6 +113,30 @@
     {
       "path": "/api/catalogue/categories/commands",
       "bytes": 1048576
+    },
+    {
+      "path": "/api/sales/prepare-create",
+      "bytes": 131072
+    },
+    {
+      "path": "/api/sales/prepare-existing",
+      "bytes": 131072
+    },
+    {
+      "path": "/api/sales/commands",
+      "bytes": 524288
+    },
+    {
+      "path": "/api/transfers/prepare-create",
+      "bytes": 131072
+    },
+    {
+      "path": "/api/transfers/prepare-existing",
+      "bytes": 131072
+    },
+    {
+      "path": "/api/transfers/commands",
+      "bytes": 524288
     }
   ],
   "entrypoints": {

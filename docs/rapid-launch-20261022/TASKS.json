@@ -20641,7 +20641,7 @@
         "fixedSource": "b3a18d37309da789cd5730ef17693d5961001460"
       },
       "F05": {
-        "status": "NEXT_AFTER_FIXED48_BUILD_CURRENT_SOURCE_PREFLIGHT",
+        "status": "C_EXACT6_BUDGETS_GENERATED_QB_SOURCE_REVIEW_PENDING_CAPACITY_PIN_UNCHANGED",
         "scope": "six exact LIVE proxy request budgets and independently approved helper pins",
         "owner": "T45"
       },
@@ -20695,27 +20695,28 @@
   },
   "r1FixedBrowser48": {
     "source": "824667c86e718c1066e3635f2779a3193b592dc0",
-    "status": "CATEGORY_LISTED_STEPS_PASS_PRODUCT_FAIL_ORIGINAL_IMAGE_BYTE_EQUALITY",
+    "status": "CATEGORY_AND_PRODUCT_LISTED_STEPS_PASS_SYNTHETIC_SERVICE_ONLY",
     "build": "reports/controller/rapid-launch-20261022/ui-preview-824667c8-product-association-48/build",
     "manifestSha256": "b4e8326791251ddbe65c129197f4e33cde26436d979f111ef52dff2fe4a96c4b",
     "driverSha256": "dbd5d366a72ec6314d18b8cf2143e803f5cdf908ab847eac90c6028fce967658",
     "scope": "CATEGORY stable rejection/fresh readback; PRODUCT sizes/images/codes/list/reopen",
     "boundary": "fresh synthetic original service host, not realPG or formal permission/performance",
-    "observed": "this version CATEGORY create+duplicate409+fresh readback PASS; PRODUCT 165/S visible, upload/SAVE200, original200/74bytes but exact content equality assertion failed; list/reopen NOT_RUN",
-    "next": "Original QF2 runs PRODUCT-only fresh visible synthetic context with immutable diagnostic driver d7781c06 and explicit original48 fixtures; application source unchanged824667c8. Strict image equality preserved.",
+    "observed": "Original CATEGORY listed steps PASS reused; PRODUCT fresh diagnostic passed upload/SAVE/list/fresh edit reopen, 11SKU/11MAIN/oneSAVE; expected/upload/originalbridge/fulfill74B same SHA f0dc2ad1567e988ac4108decf3c5eadef6674f7fcdd2842cd7ca8b74f1f90cdf. Earlier image assertion failure preserved with cause undetermined.",
+    "next": "Real PG ordinary-role business loop remains pending; next fixed integrated candidate for other source increments.",
     "diagnosticDriver": {
       "commit": "d7781c06c14b41ba687509783a38f8c702498feb",
       "sha256": "e10a2677fc66cea016656b922f9cf3964a6a05cf3cc8592ddc4df6aa2e7366a6",
       "case": "PRODUCT-ENTRY-SAVE",
-      "status": "ORIGINAL_QF2_ACTUAL_RUN_IN_PROGRESS",
+      "status": "PRODUCT_LIST_SAVE_REOPEN_IMAGE_BYTES_11SKU_11MAIN_PASS",
       "applicationSourceUnchanged": true
-    }
+    },
+    "diagnosticEvidence": "reports/qa-frontend/rapid-launch-20261022/QF2/PRODUCT-ASSOCIATION-824667C8-48-20261031-01-PRODUCT-MEDIA-DIAGNOSTIC-D7781C06-01"
   },
   "r1R4WindowSourceReview": {
-    "status": "QB_CONFIGURE_WINDOW_SOURCE_PASS_DOCUMENT_PIN_CORRECTION_PENDING",
+    "status": "QB_SOURCE_AND_DELIVERY_CORRECTION_PASS_ACTUAL_EXECUTION_PENDING",
     "owner": "T45",
     "ownerSha256": "93003c7a38ac6a161667bcb9aaecdc8fe71b6312e21c4e636f236c2723769fea",
-    "finding": "R4-DELIVERY-F01 old human-review document pin; original T45 correcting exact delivery only",
+    "finding": "R4-DELIVERY-F01 corrected in successor with honest recovered-record distinction; old failure preserved",
     "actualExecution": "NOT_AUTHORIZED_NEW_WINDOW_NOT_STARTED",
     "report": "reports/qa-backend/rapid-launch-20261022/QB/PRIVATE-PROCESS-QA22-NEW-WINDOW-20261031/QB-QA22-NEW-WINDOW-R4-RESULT.json"
   }

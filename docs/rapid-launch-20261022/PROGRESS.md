@@ -1,3 +1,9 @@
+## Product actual synthetic service loop completed; precise remaining boundary
+
+OriginalQF2 new PRODUCT-only diagnostic on unchanged824667c8/build48 PASS: create/save200, list and fresh edit reopen, 11SKU/11MAIN, oneSAVE. Expected PNG/upload/originalbridge/browser-fulfilled original all74B SHA f0dc2ad1567e988ac4108decf3c5eadef6674f7fcdd2842cd7ca8b74f1f90cdf; thumbnail60B WebP. OriginalD1 independently read this evidence and makes no speculative application patch. Earlier48 image assertion failure retained, cause remains undetermined. CATEGORY original listedsteps PASS reused. This is visible synthetic original-service/memory transaction evidence, not ordinary-role realPG/production/performance.
+
+OriginalQB R4 source plus metadata successor accepted; recovered records explicitly distinguished from untouched originals. Actual new window still not authorized or started. F05 C exact six proxy budgets now in JSON/generated helper plus two directed proxy checks PASS; independent source review pending, CAPACITY pins deliberately unchanged until that conclusion. No deployment or broader performance work.
+
 ## Current diagnostic and isolated successor source increment
 
 Diagnostic driver d7781c06c14b41ba687509783a38f8c702498feb pushed and remote SHA read back. OriginalQF2 now executes only PRODUCT-ENTRY-SAVE in a fresh visible synthetic context, using unchanged application824667c8/build48 plus four explicitly pinned original48 fixture dependencies; driver SHA e10a2677fc66cea016656b922f9cf3964a6a05cf3cc8592ddc4df6aa2e7366a6. Old38215 closed normally; old failure retained. No CATEGORY repeat, rebuild, assertion weakening or realPG. Actual new result pending. F03 originalQF2 source PASS adopted; browser/realPG not claimed.
