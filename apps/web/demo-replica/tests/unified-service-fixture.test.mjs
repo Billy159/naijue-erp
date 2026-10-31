@@ -161,3 +161,17 @@ test('dictionary group contract fixed57 blank search exposes full native groups 
  const exact=await reader.readSizeGroups({search:h.product.group.name,page:1,pageSize:20},signal);assert.deepEqual(exact.items,[h.product.group]);const past=await reader.readSizeGroups({...q,page:2},signal);assert.equal(past.total,expected.length);assert.deepEqual(past.items,[]);
  h.revoke();await assert.rejects(reader.readSizeGroups(q,signal),{kind:'forbidden'});
 });
+
+test('barcode unavailable original maintenance disable restore retains actual MAIN and original reader business states',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());const saved=await call(h,'/products/v2/commands',createProduct());assert.equal(saved.status,200);const aggregate=h.product.snapshot().state.products.get(saved.body.targetId),main=aggregate.barcodes.find(b=>b.kind==='MAIN');assert.ok(main);const initial=h.inventory.snapshot();
+ const fetch=async(url,init={})=>{const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};const {createCurrentFormHttpReader}=await import('../../src/current-form/http-reader.ts'),reader=createCurrentFormHttpReader({origin:h.origin,basePath:'/api',fetch}),signal=new AbortController().signal;
+ const contexts=[{kind:'SALES',hallId:qaHalls[0].id,warehouseId:qaWarehouses[3].id},{kind:'TRANSFER',fromWarehouseId:qaWarehouses[3].id,toWarehouseId:qaWarehouses[2].id}];
+ for(const context of contexts){const found=await reader.readBarcode({context,barcode:main.barcode},signal);assert.equal(found.state,'FOUND');assert.equal(found.binding.id,main.id);assert.equal(found.sku.id,main.skuId);}
+ const disable={action:'DISABLE',requestKey:'scan-disable',id:saved.body.targetId,expectedVersion:1},disabled=await call(h,'/products/v2/commands',disable);assert.equal(disabled.status,200);assert.deepEqual(await call(h,'/products/v2/commands',disable),disabled);
+ for(const context of contexts)assert.deepEqual(await reader.readBarcode({context,barcode:main.barcode},signal),{state:'UNAVAILABLE',barcode:main.barcode,binding:null,sku:null});
+ const retained=h.product.snapshot().state.products.get(saved.body.targetId);assert.deepEqual(retained.skus,aggregate.skus);assert.deepEqual(retained.barcodes,aggregate.barcodes);assert.deepEqual(h.inventory.snapshot(),initial);
+ const missing='SYNTHETIC-UNRECORDED-CODE';assert.deepEqual(await reader.readBarcode({context:contexts[1],barcode:missing},signal),{state:'NOT_FOUND',barcode:missing,binding:null,sku:null});
+ const restored=await call(h,'/products/v2/commands',{action:'RESTORE',requestKey:'scan-restore',id:saved.body.targetId,expectedVersion:2});assert.equal(restored.status,200);const found=await reader.readBarcode({context:contexts[1],barcode:main.barcode},signal);assert.equal(found.state,'FOUND');assert.equal(found.binding.id,main.id);assert.equal(found.sku.id,main.skuId);assert.deepEqual(h.inventory.snapshot(),initial);
+ assert.equal((await reader.readBarcode({context:contexts[1],barcode:qaSkus[0].barcode},signal)).state,'FOUND');
+ h.revoke();await assert.rejects(reader.readBarcode({context:contexts[1],barcode:main.barcode},signal),{kind:'forbidden'});
+});
