@@ -3558,3 +3558,5 @@ QF固定59新增销售页实际接续：browser可用，但原Demo8877明确登�
 原QF59新增销售页候选检查完成仍PARTIAL（checkd12b71b9…）：17状态PNG/DOM自然1440×1000/scale1，blank/filled/no-match/Esc/预览/颜色版型11尺码/gift568→0→568/收款候选/离开Esc与继续保留note；仅必要商品CREATE，0单据SAVE，自有进程0。原三QA定位失败保留不判appbug。剩余Demo配对、longtable/multiproduct/实际查看改选/多账户键盘；原D1只读核现有真实CREATE与reference能力，不先造新接口或fixture，Demo登录仍待用户。105分母未改，未新增整页PASS。
 
 D1只读确认固定59原producer支持同freshstore连续2–3商品及2个同方式空厅账户，原reader正常枚举；原商品容量<4/回执32保留，不能把driver单样本误判后台缺能力。本轮无源码修改/测试。原QF已接仅长表多商品、真实查看改选身份、多账户搜索清除Enter/Esc剩余状态，复用17图；Demo配对仍等原登录请求，无新增整页PASS、PG或发布结论。
+
+原QF同轮次仍inProgress，不因观察超时重启。原QF2已核idle，接固定59商品六页签图片成功/读取失败恢复剩余状态的只读就绪核定，复用旧有效16响应/六tab/stock证据，不改源码、不build/PG/操作浏览器；原QF继续独占。待准确最小setup后交接实操，不把准备当通过。
