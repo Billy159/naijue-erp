@@ -1,3 +1,7 @@
+## 2026-10-31 exact isolated environment approval received
+
+Human call_fb7f059ae86a4506a8b9ef7f0366a7e8/0 explicitly approved the fixed SCOPE02 environment range (scopeSHA504e7a0903733fadd48698128e59b01e809475dab504a444a4203d62213d73ad, confirmationSHAc394971df002c8142157d79c5428a370705089f2d47a48a388c2c99a519e876f). OriginalT45 dispatched actualA0 queue/samekey/target/resource preflight, then phased new2DB/3role synthetic preparation, exactACL, directLOGIN/business/recovery within90min actions+15mincleanup,512MiBbackup cap/min2.5GiBfree. This approval does not authorize production, oldtarget changes or public switch, and is not technicalPASS. Actualtarget/OIDs/slot/config/capture/independentC/QB reviews must be real; unknown stops dependent actions. No actual result assumed at dispatch; original failed/unknown jobs never replayed.
+
 ## 2026-10-31 ordinary entry05 independent acceptance
 
 QB05 source PASS adopted, no finding (7675B SHA5ca61d9df057a85d06c31ebdf8ff6106708e73d1fe07edec0f1053f1e6c771de). OPEN/FENCE/original-key UNKNOWN recovery and freshdirectLOGIN dependency accepted only at source level. Real pool/slot limits, target identity and exitarming facts remain unknown, PLAN disabled. No role changes or actual runtime/business chain. Final environment confirmation must bind reviewed carrier05 and physical-content package, actual observation steps and independent post-creation reviews; old schema/source passes reused.

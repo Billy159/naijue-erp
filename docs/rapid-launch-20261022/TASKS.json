@@ -19841,8 +19841,8 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "Physical synthetic content and ordinary-entry successor05 QB scoped PASS adopted; T45 final concrete environment scope in progress; all actual PG/business/recovery gates open",
-    "next": "Adopt fixed reviews; T45 final exact phase/environment/input/slot/fence execution scope; no environment changes before confirmation",
+    "current": "Exact isolated environment scope human-approved; original T45 dispatched A0 real queue/target/resource checks, then bounded phased execution; no actual outcome assumed",
+    "next": "Receive original T45 actual preflight/create/readback; C and QB process actual fixed evidence at independent gates",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
     "approvedHistoricalBalanceRule": "NULL_UNKNOWN_NO_BACKFILL",
@@ -20077,6 +20077,21 @@
       "actualConnectionBudget": "UNKNOWN_NOT_DEFAULTED",
       "qbReportSha256": "5ca61d9df057a85d06c31ebdf8ff6106708e73d1fe07edec0f1053f1e6c771de",
       "qbReportBytes": 7675
+    },
+    "isolatedEnvironmentApproval": {
+      "status": "HUMAN_APPROVED_DISPATCHED_ORIGINAL_T45_NOT_YET_EXECUTED",
+      "source": "human call_fb7f059ae86a4506a8b9ef7f0366a7e8/0",
+      "answer": "确认本批隔离执行范围",
+      "scopeSha256": "504e7a0903733fadd48698128e59b01e809475dab504a444a4203d62213d73ad",
+      "confirmationSha256": "c394971df002c8142157d79c5428a370705089f2d47a48a388c2c99a519e876f",
+      "owner": "T45",
+      "target": "Existing QA178 isolated instance only; two fixed new synthetic databases, three dedicated roles",
+      "actionWindowSeconds": 5400,
+      "cleanupOnlySeconds": 900,
+      "backupCapBytes": 536870912,
+      "minimumFreeBytes": 2684354560,
+      "productionExecution": false,
+      "realOidAndSlotFacts": "Must be observed; unknown blocks dependent stage"
     }
   }
 }
