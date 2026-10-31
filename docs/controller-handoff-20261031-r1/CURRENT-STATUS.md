@@ -2,7 +2,7 @@
 
 ## Fixed source and Git
 
-Worktree: work/erp-db-upgrade-r1-preparation-20261031. Branch: codex/db-v7-r1-preparation-20261031. Latest verified GitHub source: f421edfb57ecb275dc91fa78533c74a473792770. Every one of the 2,129 declared r1 source files was adopted at 56bc305a; 6a85 is comparison provenance only. Original worktree WIP, frozen Demo and historical evidence remain protected.
+Worktree: work/erp-db-upgrade-r1-preparation-20261031. Branch: codex/db-v7-r1-preparation-20261031. Latest source checkpoint: fc7c03bf (fresh provider successor and exact ledger receipt-ID fix); remote verification is recorded per push. Every one of the 2,129 declared r1 source files was adopted at 56bc305a; 6a85 is comparison provenance only. Original worktree WIP, frozen Demo and historical evidence remain protected.
 
 No deployment workflow or webhook was present when checked. CI is NOT_CONFIGURED, not PASS. No production deployment has been performed.
 
@@ -14,7 +14,7 @@ No deployment workflow or webhook was present when checked. CI is NOT_CONFIGURED
 - V8 preserves V7 ledger NULL/unknown semantics and adds only the approved two cmin SELECT and three specified child-table DELETE observations/rights in the source contract. Human call_4b2e8a96c83740ef9163778f9ef8c196/0 authorized source/contract work only. Actual grants are not authorized by that approval.
 - Business integration entry at65f17b8b received QB single-leaf source PASS. It requires real ordinary-login commits, fresh-connection reads, reversal/reopen, rollback and original-key recovery; actual PG execution has not occurred.
 - T45 installer successor02 fixes QB F01 via fixed connection-level lock3s/statement60s. QB narrow successor PASS adopted; old01 NEED_FIX retained. Four affected offline checks/syntax passed. Source transactions, CREATE DATABASE autocommit and UNKNOWN/no-replay behavior remain. Actual server timeout or cleanup is not verified.
-- D1 new-target scenario preparation exact5 leaves fixed atf421edfb.24 directed checks and strict types passed; QB incremental source review pending. Old QA897 identity and money approval are not reused. Actual database identity, independent money review, balances, versions and ledger samples remain absent.
+- D1 new-target scenario preparation exact5 leaves fixed atf421edfb.24 directed checks and strict types passed; QB found one duplicate-receipt-ID mapping issue; the exact two-leaf fix is frozen atfc7c03bf for affected-only review alongside the two-leaf provider successor. Old QA897 identity and money approval are not reused. Actual database identity, independent money review, balances, versions and ledger samples remain absent.
 
 ## Current owners and next work
 
@@ -26,6 +26,6 @@ T45 has identified that existing backup tools bind production or old QA, and is 
 
 The current r1 target is not complete V6: four missing routines, three body mismatches and exact ACL/constraint/trigger predecessors must be repaired against independently established source expectations. Migrations1–26 do not prove completeness. Do not overwrite expected hashes with actual values or sequentially replay old patches on the live target.
 
-QA finite Unix preparer source support is still awaiting its separate existing human confirmation. QA275 observed no TCP listener and /qa-socket:5432; no service configuration was changed. New database/role OIDs, target catalogs and private execution inputs must come from actual observations and independent review.
+Human call_7f5633370b664b06823b617c5848411b/0 has now approved the finite QA Unix preparer source extension only. T45 owns V7 and its directly affected tests; D1 owns V8 and its tests. Implementation is in progress; no environment execution is authorized. QA275 observed no TCP listener and /qa-socket:5432; no service configuration was changed. New database/role OIDs, target catalogs and private execution inputs must come from actual observations and independent review.
 
 No new database, actual grant, seed/import, ordinary-login business run, restore or service deployment has been performed. The next concrete execution request must bind the reviewed carrier, source, exact target, least privileges, time window and cleanup; production coordinated cutover requires its own confirmation after isolated acceptance and backup/restore evidence. The full goal remains active.

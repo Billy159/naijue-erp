@@ -1,3 +1,5 @@
+2026-10-31 新批准QA Unix增量：D1 V8准确2叶已交回，7定向PASS/语法通过，原TCP代表整输出逐字节不变；report3816B/SHAaab3ef42，原V6/V7/issuer/storage未改，待原QB窄验。场景F01及provider新封装4叶已固定fc7c03bf并远端回读，原QB在审。T45继续唯一V7/恢复载体，未执行真实环境。
+
 2026-10-31 用户call_7f5633370b664b06823b617c5848411b/0明确批准本批精确QA Unix源码扩展：仅原V7/V8准备器固定QA178分支；C登记T45唯一V7、D1唯一V8及各自受影响测试，原TCP/云Unix/V6保持，无环境授权。QB新场景5叶回执8801B/SHAcd8fb6f3为NEED_FIX，仅F01：历史修订receipt[A,A]可误配actual[A,B]；交原D1只修唯一性/集合相等及负例，既有24/243和其他有效证据不重跑。provider后继继续同owner，实际DB仍未创建/授权/启动。
 
 2026-10-31 原QB仅F01后继复验PASS已采用：QB-F01-SUCCESSOR02-RESULT.json3985B/SHAed44ba7594e3ce1505f497cf905e1081c2a5c69320745b42a8d65116ced5cb25。准确script9a5e5f52只一处连接参数后继关闭F01；旧01 NEED_FIX保留，不记实际server timeout/remote结算/普通PG业务/退出通过。下一实际前置为目标专属准备器、场景/来源封装、备份恢复载体与准确执行确认，未放行环境操作。
