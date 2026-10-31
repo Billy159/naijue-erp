@@ -13,6 +13,7 @@ import type { CataloguePageOptions } from './entry.tsx';
 import { Head, MaintenanceNotice, ReadNotice, Recovery, SourceModal, maintenanceUnavailable, useCommand, useRead } from './source-controls.tsx';
 
 type Draft = { name: string; parentId: string | null; displayOrder: number; original: CatalogueSettingsCategory | null };
+type CategoryNotice = { kind: 'status'; message: string } | { kind: 'error'; message: string };
 interface NativeTreeNode { key: string; title: string; children: NativeTreeNode[] }
 function SourceTree({ css, children }: { css: string; children: ReactNode }) {
   const host = useRef<HTMLDivElement>(null), [target, setTarget] = useState<HTMLElement | null>(null);
@@ -31,7 +32,7 @@ function Categories({ options }: { options: CataloguePageOptions }) {
   const { controller, state } = useCommand(options, capability);
   const [selected, setSelected] = useState<string | null>(null), [draft, setDraft] = useState<Draft | null>(null);
   const [search, setSearch] = useState(''), [expanded, setExpanded] = useState<string[]>([]);
-  const [notice, setNotice] = useState(''), [deleting, setDeleting] = useState(false), [deferred, setDeferred] = useState<(() => void) | null>(null);
+  const [notice, setNotice] = useState<CategoryNotice | null>(null), [deleting, setDeleting] = useState(false), [deferred, setDeferred] = useState<(() => void) | null>(null);
   const [lastOrder, setLastOrder] = useState<CategoryOrderResult | null>(null);
   const finishing = useRef(false), notified = useRef(new Set<string>()), submittedRead = useRef<unknown>(null);
   const data = snapshot.success?.data;
@@ -67,7 +68,7 @@ function Categories({ options }: { options: CataloguePageOptions }) {
     finishing.current = true;
     const { result, command } = current;
     if (!notified.current.has(result.operationId)) { notified.current.add(result.operationId); options.onChanged('CATEGORY'); }
-    setNotice('已提交，正在读取最新目录。');
+    setNotice({ kind: 'status', message: '已提交，正在读取最新目录。' });
     const outcome = await query.run({});
     if (outcome.status === 'success' && options.scope.active) {
       if ('order' in result) {
@@ -76,24 +77,24 @@ function Categories({ options }: { options: CataloguePageOptions }) {
         setLastOrder(command.action === 'REORDER' && matches ? result : null);
         controller.resetAfterOrderReload();
         const item = outcome.data.items.find(item => item.id === selected); if (!dirty) setRecord(item);
-        setNotice(matches ? command.action === 'REORDER' ? '同级顺序已调整，可撤销最近一次排序。' : '已撤销最近一次排序。' : '排序已提交，目录随后发生变化；请按当前目录继续操作。');
+        setNotice({ kind: 'status', message: matches ? command.action === 'REORDER' ? '同级顺序已调整，可撤销最近一次排序。' : '已撤销最近一次排序。' : '排序已提交，目录随后发生变化；请按当前目录继续操作。' });
       } else {
         const item = outcome.data.items.find(item => item.id === result.targetId);
         if (command.action === 'DELETE' ? !item : item && item.version >= result.version) {
           // DELETE has no surviving target version. Recreate the controller only
           // after this modal/page read confirms absence (the command stays bound).
           controller.resetAfterReload(result.targetId, item?.version ?? result.version);
-          setDeleting(false); setRecord(item); setNotice(command.action === 'DELETE' ? '已删除' : '分类已保存');
-        } else setNotice('保存已提交，最新目录版本尚未确认，请重新读取目录。');
+          setDeleting(false); setRecord(item); setNotice({ kind: 'status', message: command.action === 'DELETE' ? '已删除' : '分类已保存' });
+        } else setNotice({ kind: 'error', message: '保存已提交，最新目录版本尚未确认，请重新读取目录。' });
       }
-    } else setNotice('操作已提交，最新目录读取失败，请重新读取目录。');
+    } else setNotice({ kind: 'error', message: '操作已提交，最新目录读取失败，请重新读取目录。' });
     finishing.current = false;
   }
   useEffect(() => { if (state?.phase === 'committed') void finish(); }, [state]);
   async function submit(command: CatalogueEditorDraft) {
     if (!controller) return;
     submittedRead.current = snapshot.success;
-    setNotice(''); try { await controller.submit(command); } catch (error) { setNotice(error instanceof Error ? error.message : '请求未发送'); }
+    setNotice(null); try { await controller.submit(command); } catch (error) { setNotice({ kind: 'error', message: error instanceof Error ? error.message : '请求未发送' }); }
   }
   const create = (parentId: string | null) => request(() => {
     if (!canWrite('CREATE')) return;
@@ -101,7 +102,7 @@ function Categories({ options }: { options: CataloguePageOptions }) {
     setDraft({ name: '', parentId, displayOrder: siblings.reduce((max, item) => Math.max(max, item.displayOrder + 1), 0), original: null });
   });
   const save = () => {
-    if (!draft || !draft.name.trim() || !canWrite(draft.original ? 'EDIT' : 'CREATE')) { setNotice('分类名称必填'); return; }
+    if (!draft || !draft.name.trim() || !canWrite(draft.original ? 'EDIT' : 'CREATE')) { setNotice({ kind: 'error', message: '分类名称必填' }); return; }
     const values = { name: draft.name.trim(), parentId: draft.parentId, displayOrder: draft.displayOrder };
     void submit(draft.original ? { action: 'EDIT', id: draft.original.id, expectedVersion: draft.original.version, values } : { action: 'CREATE', values });
   };
@@ -146,7 +147,7 @@ function Categories({ options }: { options: CataloguePageOptions }) {
     <div className="pc-category-facts"><div className="field"><span>分类路径</span><p className="pc-text-block">{draft.parentId === null ? '一级分类' : categoryPath(index, draft.original?.id ?? draft.parentId).map(item => item.name).join(' / ')}</p></div><div className="field"><span className="pc-field-caption">分类名称</span><input data-cat="name" value={draft.name} required maxLength={40} title={!capability ? maintenanceUnavailable : undefined} disabled={!canWrite(draft.original ? 'EDIT' : 'CREATE')} onChange={event => setDraft({ ...draft, name: event.target.value })} /></div><div className="field"><span>商品数量</span><p className="pc-text-block">{draft.original?.productCount === null ? '未知' : `${draft.original?.productCount ?? 0} 款`}</p></div><div className="field"><span>下级分类数量</span><p className="pc-text-block">{draft.original?.childCount ?? 0} 个</p></div></div>
     {draft.original && <div className="pc-delete-zone"><button type="button" className="btn ghost pc-danger" title={!capability ? maintenanceUnavailable : undefined} disabled={!canWrite('DELETE')} onClick={() => { if (canWrite('DELETE')) setDeleting(true); }}>删除分类</button></div>}
   </form> : <><h2>分类资料</h2><SourceEmpty key={empty ? 'empty' : 'selection'} options={options} empty={empty} /></>}
-    <div id="pc-category-error" className="inline-error" role="alert">{notice}</div><MaintenanceNotice capability={capability} />{controller && <Recovery controller={controller} />}
+    <div id="pc-category-error" className={notice?.kind === 'error' ? 'inline-error' : 'hint'} role={notice?.kind === 'error' ? 'alert' : 'status'}>{notice?.message}</div><MaintenanceNotice capability={capability} />{controller && <Recovery controller={controller} />}
     {state?.phase === 'rejected' && <button className="btn ghost" onClick={() => request(() => { setDraft(null); void query.run({}); })}>读取最新目录</button>}
     <ReadNotice phase={snapshot.phase} error={snapshot.error} retry={() => state?.phase === 'committed' ? void finish() : void query.run({})} cancel={() => query.cancel()} />
     {state?.phase === 'committed' && <button className="btn ghost" onClick={() => void finish()}>重新读取目录</button>}

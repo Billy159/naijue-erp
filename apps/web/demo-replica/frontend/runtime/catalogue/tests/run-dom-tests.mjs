@@ -37,6 +37,16 @@ try {
   const entry = (value, name = `颜色${value}`, version = 1) => ({ id: sid(value), code: String(value).padStart(3, '0'), name, enabled: true, version });
   const page = (request, total, name) => { const input = JSON.parse(request.init.body); return { page: input.page, pageSize: input.pageSize, total, items: Array.from({ length: Math.min(input.pageSize, Math.max(0, total - (input.page - 1) * input.pageSize)) }, (_, i) => entry((input.page - 1) * input.pageSize + i + 1, name)) }; };
   const host = document.getElementById('root');
+  // Assert the real mounted region, not wording-derived severity or a helper
+  // imitation. Recovery has a separate error region and is intentionally unchanged.
+  const categoryNotice = (kind, message) => {
+    const notice = host.querySelector('#pc-category-error');
+    assert.ok(notice, 'category notice region remains mounted');
+    assert.equal(notice.textContent, message);
+    assert.equal(notice.getAttribute('role'), kind === 'error' ? 'alert' : 'status');
+    assert.equal(notice.classList.contains('inline-error'), kind === 'error');
+    assert.equal(notice.classList.contains('hint'), kind === 'status');
+  };
   let scope, context, leave;
   async function mount(route, maintenance) {
     if (dispose) await act(async () => dispose());
@@ -161,24 +171,99 @@ try {
   const edit = requests.at(-1); assert.ok(edit.url.endsWith('/catalogue/categories/commands')); assert.equal(JSON.parse(edit.init.body).action, 'EDIT'); assert.equal(JSON.parse(edit.init.body).expectedVersion, 2);
   assert.equal(host.querySelector('[data-cat="name"]').disabled, true);
   await resolve(edit, { operationId: sid(301), kind: 'CATEGORY', targetId: rootCategory.id, version: 3 });
+  categoryNotice('status', '已提交，正在读取最新目录。');
   const editedRoot = { ...rootCategory, name: '合成改名', version: 3 }; await resolve(requests.at(-1), tree([editedRoot]));
   assert.equal(host.querySelector('[data-cat="name"]').value, '合成改名');
+  categoryNotice('status', '分类已保存');
   await click(button('新增下级分类')); await type(host.querySelector('[data-cat="name"]'), '合成下级'); await click(button('保存'));
   assert.equal(JSON.parse(requests.at(-1).init.body).values.parentId, rootCategory.id);
   await resolve(requests.at(-1), { operationId: sid(302), kind: 'CATEGORY', targetId: sid(71), version: 1 });
   const child = { ...rootCategory, id: sid(71), parentId: rootCategory.id, name: '合成下级', displayOrder: 0, version: 1 };
   await resolve(requests.at(-1), tree([{ ...editedRoot, childCount: 1 }, child]));
   assert.equal(host.querySelector('[data-cat="name"]').value, '合成下级');
+  categoryNotice('status', '分类已保存');
   await click(button('删除分类')); await click(button('确认删除')); assert.equal(JSON.parse(requests.at(-1).init.body).action, 'DELETE');
   assert.equal(JSON.parse(requests.at(-1).init.body).expectedVersion, 1);
   await resolve(requests.at(-1), { operationId: sid(303), kind: 'CATEGORY', targetId: sid(71), version: 2 }); await resolve(requests.at(-1), tree([editedRoot]));
   assert.equal(button('新增一级分类').disabled, false, 'delete readback releases the same category command owner');
+  categoryNotice('status', '已删除');
   await click(button('新增一级分类')); await type(host.querySelector('[data-cat="name"]'), '合成新根'); await click(button('保存'));
   assert.equal(JSON.parse(requests.at(-1).init.body).values.parentId, null);
   await resolve(requests.at(-1), { operationId: sid(304), kind: 'CATEGORY', targetId: sid(72), version: 1 });
   await resolve(requests.at(-1), tree([editedRoot, { ...rootCategory, id: sid(72), name: '合成新根', displayOrder: 0, version: 1 }]));
   assert.equal(host.querySelector('[data-cat="name"]').value, '合成新根');
-  console.log('PASS catalogue repair: source actions visible/disabled without capability; exact category edit/child/root/delete commands and version readback with capability; actual operations column marker/C CSS; shared React pagination; server groups/seasons/total; cancellation/focus/unknown key recovery and lazy scheme consumers. Synthetic DOM only, not real R1 data or business acceptance.');
+  categoryNotice('status', '分类已保存');
+
+  // Same wording must not downgrade a real exception to success. The throw is
+  // before dispatch, inside the existing submit catch; no controller is mocked.
+  let failKey = true;
+  const categoryCommands = () => requests.filter(request => request.url.endsWith('/catalogue/categories/commands'));
+  const categoryReads = () => requests.filter(request => request.url.endsWith('/catalogue-settings-read/categories/query'));
+  const categoryChanges = () => changes.filter(kind => kind === 'CATEGORY').length;
+  await mount('product-categories', { CATEGORY: { kind: 'CATEGORY', client: categoryClient, allowedActions: ['CREATE','EDIT','DELETE'], newRequestKey: () => { if (failKey) { failKey = false; throw new Error('分类已保存'); } return sid(++key); }, onRecoveryRequired: command => recoveries.push(command) } });
+  await resolve(requests.at(-1), tree([rootCategory]));
+  const commandsBeforeValidation = categoryCommands().length;
+  await type(host.querySelector('[data-cat="name"]'), '   '); await click(button('保存'));
+  categoryNotice('error', '分类名称必填');
+  assert.equal(categoryCommands().length, commandsBeforeValidation, 'blank name must not dispatch a command');
+  await type(host.querySelector('[data-cat="name"]'), '合成读回重试'); await click(button('保存'));
+  categoryNotice('error', '分类已保存');
+  assert.equal(categoryCommands().length, commandsBeforeValidation, 'request-key failure is not a dispatched write');
+  assert.equal(button('保存').disabled, false);
+
+  await click(button('保存'));
+  categoryNotice('status', ''); // a fresh submit clears the old local exception
+  const readbackCommand = categoryCommands().at(-1), readbackBody = readbackCommand.init.body, changesBeforeReadback = categoryChanges();
+  await resolve(readbackCommand, { operationId: sid(305), kind: 'CATEGORY', targetId: rootCategory.id, version: 3 });
+  categoryNotice('status', '已提交，正在读取最新目录。');
+  await act(async () => categoryReads().at(-1).reject(new Error('synthetic category readback failure'))); await settle();
+  categoryNotice('error', '操作已提交，最新目录读取失败，请重新读取目录。');
+  assert.equal(button('保存').disabled, true, 'a readback failure must not release the committed command');
+  assert.equal(leave(), false);
+  const committedWrites = categoryCommands().length;
+  await click(button('重新读取目录'));
+  categoryNotice('status', '已提交，正在读取最新目录。');
+  await resolve(categoryReads().at(-1), tree([rootCategory]));
+  categoryNotice('error', '保存已提交，最新目录版本尚未确认，请重新读取目录。');
+  assert.equal(button('保存').disabled, true, 'an old version is not authoritative confirmation');
+  assert.equal(leave(), false);
+  await click(button('重新读取目录'));
+  const confirmedRoot = { ...rootCategory, name: '合成读回重试', version: 3 };
+  await resolve(categoryReads().at(-1), tree([confirmedRoot]));
+  categoryNotice('status', '分类已保存');
+  assert.equal(button('保存').disabled, false); assert.equal(leave(), true);
+  assert.equal(categoryCommands().length, committedWrites, 'readback retries never resubmit a committed command');
+  assert.equal(categoryChanges(), changesBeforeReadback + 1, 'readback retries do not repeat the committed change notification');
+  assert.equal(readbackCommand.init.body, readbackBody);
+
+  // Unknown outcome remains a real Recovery error until a same-key receipt and
+  // authoritative read confirm it. Notice styling must not unlock or resend it.
+  await type(host.querySelector('[data-cat="name"]'), '合成未知恢复'); await click(button('保存'));
+  categoryNotice('status', '');
+  const unknownCategory = categoryCommands().at(-1), unknownBody = unknownCategory.init.body;
+  const unknownInput = JSON.parse(unknownBody), writesBeforeReceipt = categoryCommands().length, keyBeforeReceipt = key, changesBeforeReceipt = categoryChanges();
+  await act(async () => unknownCategory.reject(new Error('synthetic lost category response'))); await settle();
+  assert.equal(button('保存').disabled, true); assert.equal(leave(), false);
+  assert.ok([...host.querySelectorAll('.inline-error[role="alert"]')].some(node => node.textContent.includes('连接中断。')), 'unknown outcome keeps the existing error treatment');
+  assert.ok(button('查回原请求结果')); assert.ok(button('按原请求重试'));
+  assert.equal(host.querySelector('#pc-category-error').textContent, '', 'unknown outcome must not manufacture a success notice');
+  await click(button('查回原请求结果'));
+  const categoryReceipt = requests.at(-1);
+  assert.ok(categoryReceipt.url.endsWith('/catalogue/categories/receipts/' + unknownInput.requestKey));
+  assert.equal(categoryReceipt.init.method, 'GET');
+  assert.equal(categoryCommands().length, writesBeforeReceipt); assert.equal(key, keyBeforeReceipt);
+  assert.equal(categoryChanges(), changesBeforeReceipt, 'unknown outcome does not announce a confirmed change');
+  await resolve(categoryReceipt, { requestKey: unknownInput.requestKey, action: 'EDIT', status: 'COMMITTED', completedAt: '2026-10-31T00:00:00Z', result: { operationId: sid(306), kind: 'CATEGORY', targetId: confirmedRoot.id, version: 4 } });
+  categoryNotice('status', '已提交，正在读取最新目录。');
+  assert.equal(button('保存').disabled, true, 'receipt alone still requires authoritative version readback');
+  await resolve(categoryReads().at(-1), tree([{ ...confirmedRoot, name: '合成未知恢复', version: 4 }]));
+  categoryNotice('status', '分类已保存');
+  assert.equal(button('保存').disabled, false); assert.equal(leave(), true);
+  assert.equal(button('查回原请求结果'), undefined); assert.equal(button('按原请求重试'), undefined);
+  assert.equal(categoryCommands().length, writesBeforeReceipt); assert.equal(key, keyBeforeReceipt);
+  assert.equal(categoryChanges(), changesBeforeReceipt + 1, 'same-key receipt recovery announces exactly one committed change');
+  assert.equal(unknownCategory.init.body, unknownBody, 'receipt recovery preserves the original request body/key');
+  console.log('PASS catalogue repair: source actions visible/disabled without capability; exact category edit/child/root/delete commands and version readback with capability; typed status/error DOM semantics including same-wording exception, failed/old-version readback and same-key category receipt recovery; actual operations column marker/C CSS; shared React pagination; server groups/seasons/total; cancellation/focus/unknown key recovery and lazy scheme consumers. Synthetic DOM only, not real R1 data or business acceptance.');
 } finally {
   if (dispose) await act(async () => dispose());
   dom.window.close(); await rm(temporary, { recursive: true, force: true });

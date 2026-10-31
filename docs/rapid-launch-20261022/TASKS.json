@@ -20211,5 +20211,50 @@
     "qbReceiptSha256": "1c9e23eff04801784abdc9d67bb3b26eb9c64ccfe049eabf54d1160381fe759c",
     "activeFindings": [],
     "withdrawnFinding": "F01 wrong consumer reference; correct production-provider env retained"
+  },
+  "r1LatestFullUserScope20261031": {
+    "authority": "Human six-part detailed handoff pasted directly in this Chat; user clarified this IS naijue-erp-codex-detailed-handoff-20261031.txt, no separate file needed",
+    "base": "r1 full source; input zip SHA4d885a3695d5e0970e907b9ab31a55094256365041f3abdafbe00323e52203f9",
+    "priority": [
+      "V7 full V6 prerequisite and isolated ordinary-account business/restore verification",
+      "Product create/images/colors/defaultA/spec barcodes",
+      "Sales/transfer edit/responsible/warehouse/line state",
+      "List refresh/stable newest-first pagination/window UI",
+      "Loading/scheme/navigation/scanner queue/all-site pagination/Demo review",
+      "New full source/change/test/browser evidence/build-release handoff"
+    ],
+    "productionAndRealBusinessData": "PROHIBITED by latest request; later exact production authorization required",
+    "fiveNewPerformanceOptimizations": "NOT_STARTED_OUT_OF_CURRENT_PHASE",
+    "categoryNotice": {
+      "status": "REPRODUCED_RED_IMPLEMENTATION_GREEN_SCOPED_TYPES_PASS_BROWSER_BUILD_PENDING",
+      "files": [
+        "apps/web/demo-replica/frontend/runtime/catalogue/category-page.tsx",
+        "apps/web/demo-replica/frontend/runtime/catalogue/tests/run-dom-tests.mjs"
+      ],
+      "red": "Actual DOM role alert != status after committed operation; exit1",
+      "green": "Same original runner including error/old-readback/same-key recovery passes exit0",
+      "scope": "Synthetic DOM only, no realPG or browser PASS"
+    },
+    "old13Todos": {
+      "status": "ALREADY_ARCHIVED_IN_R1_COVERAGE_CONFIRMED_INTACT",
+      "coverage": "docs/history-sales-detail-plan-coverage.md",
+      "checkedReferences": 13,
+      "testBodies": "Exact r1 for all13 referenced files; original5 contract tests + realPG TODO retained",
+      "retained": "Real PostgreSQL acceptance TODO and P03 performance SKIP unchanged; not PASS"
+    },
+    "actualExecutionState": "Original QA178 window CLOSED, no roles/DBs created; T45 local caller preparation active; new environment effects not implied by attachments",
+    "intake": {
+      "demoZip": "f1b9b81ac0ed927bbd9e19a5395fbd106161d78bb051799992850f3afd64becc",
+      "notReleaseZip": "fae108aeda73f808eb5b067f317d28e839c96c7a6e9565567a86f53288f91ea7",
+      "recoveryZip": "675515af1f001d5f800dc25d0e067348c86851abcdc550f8f5d316320015dcf9",
+      "manifestCounts": [
+        74,
+        2175,
+        8,
+        19
+      ],
+      "mismatches": 0,
+      "evidenceMeaning": "Demo source-only66 original files/0screenshots/not standalone; recovery logs separate old execution context not thisMac install/PG proof; NOT-RELEASE test-first only now category candidate applied"
+    }
   }
 }

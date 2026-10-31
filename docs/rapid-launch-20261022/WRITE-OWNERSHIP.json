@@ -8166,5 +8166,30 @@
     },
     "C": "Git and existing records only",
     "currentStatus": "D1 exact11 handed back; fixed b8fd9e14a9b3453951ac21442263e79fc00467ef; QB read-only incremental review; no further writer until directed findings"
+  },
+  "r1LatestUserFollowup20261031": {
+    "authority": "Human current six-part request with four attachments; production/real-data operations prohibited; prior exact schema/write approvals preserved",
+    "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-db-upgrade-r1-preparation-20261031",
+    "base": "r1 full source adopted; current preparation branch; NOT-RELEASE candidates unapplied until RED/GREEN",
+    "C": {
+      "soleWriter": [
+        "apps/web/demo-replica/frontend/runtime/catalogue/category-page.tsx",
+        "apps/web/demo-replica/frontend/runtime/catalogue/tests/run-dom-tests.mjs"
+      ],
+      "scope": "Only supplied category notice candidate: tests first reproduce, minimal fix, directed DOM/types/build/browser later; no category business-rule edits"
+    },
+    "F2": {
+      "threadId": "01a161d2-6bd9-7181-8386-1ecddddd386a",
+      "scope": "Original product create/edit/image/colors/barcode/fit UI plus exact own tests; announce exact leaves before edits, shared files require C handoff; no oldR WIP writes",
+      "current": "Original targeted baseline passed; reproduce missing defaultA and duplicate sibling key; repair exact2 only",
+      "next": "Source-fixed package to independent UI/actual isolation consumer verification",
+      "soleWriter": [
+        "apps/web/demo-replica/frontend/runtime/products/editor.tsx",
+        "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs"
+      ]
+    },
+    "T45": "Existing control carrier and server/DB sole owner continues original local caller task; existing CLOSED window not reopened",
+    "QB": "Original independent backend review, new increments only",
+    "pending": "Sales/transfer/scanner/list/all-site tasks remain required; assign original owner after latest delivery and file deduplication, not implied complete"
   }
 }
