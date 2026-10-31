@@ -19919,7 +19919,9 @@
       "status": "QB_PASS_SINGLE_LEAF_SOURCE_ONLY_REAL_PG_NOT_RUN",
       "reportBytes": 8233,
       "reportSha256": "5f8b5372f2ae9290efeedec3067a01b4173d3ba3194bdfbef93ddc964f2ea9b9",
-      "newTargetFixtures": "D1_ONLY_THREE_REGISTERED_LEAVES_WIP_NOT_ACCEPTED"
+      "newTargetFixtures": "D1_ONLY_THREE_REGISTERED_LEAVES_WIP_NOT_ACCEPTED",
+      "existingCallChainSha256": "0e3e877503af7bd2c8ab63e5554fe279088c0b36114d124c55a159a70c42ef99",
+      "remaining": "Original T45 private reviewed host/actual target/ordinary-login/capacity lifecycles; existing exported functions suffice, no new runner"
     },
     "isolatedInstaller": {
       "owner": "T45",
@@ -19936,10 +19938,13 @@
       "qbSuccessorReportSha256": "ed44ba7594e3ce1505f497cf905e1081c2a5c69320745b42a8d65116ced5cb25"
     },
     "backupRecovery": {
-      "status": "TARGET_SPECIFIC_EXECUTABLE_PREPARATION_IN_PROGRESS_NO_ENVIRONMENT_ACTION",
+      "status": "FIXED_EXECUTABLE_CARRIER_IN_QB_SOURCE_REVIEW_NO_ENVIRONMENT_ACTION",
       "owner": "T45",
-      "checklistSha256": "1b51a07e388be07cd0e525b7a2f1fcb39007c77776c68aa58590e3da7bd548fa",
-      "oldAppCompatibility": "NOT_PROVEN_NO_OLD_SNAPSHOT_OVERWRITE_AFTER_NEW_WRITES_OR_UNKNOWN"
+      "reportSha256": "2a62024531522ac191e02bf95786dc4441739d4b725baa88c138ba4e2dda8102",
+      "scriptSha256": "f44d56ca1e9f6e45313ec8751b94ef653981234b4e6a9cb97924b7af91a2259e",
+      "ownerOfflineChecks": 8,
+      "restoreTargetExecutionApproval": "NOT_GRANTED",
+      "actualBackupRestore": "NOT_RUN"
     },
     "businessScenarioPreparation": {
       "checkpoint": "f421edfb57ecb275dc91fa78533c74a473792770",

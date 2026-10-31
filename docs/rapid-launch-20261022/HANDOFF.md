@@ -1,3 +1,5 @@
+2026-10-31 恢复载体已具体交回并交原QB窄审：RECOVERY-CARRIER-01 script36400B/SHAf44d56ca1e9f6e45313ec8751b94ef653981234b4e6a9cb97924b7af91a2259e，report4686B/SHA2a620245；8owner offline+syntax通过，尚无实际backup/restore/建库/权限/服务。独立restorecheck目标执行未批准，disabled保持。D1已有函数调用链14704B/SHA0e3e8775已核并交T45，不新增runner；真实私有review/ordinaryLOGIN/target/capacity仍待供给。原T45接V7已批Unix扩展，V8固定f9c2ced7待同包窄验。
+
 2026-10-31 原QB fc7c03bf准确4叶后继PASS已采用：report7954B/SHA448381adf0bae35eb86177c3c32f41b5fa64f8259c7ab9bcca72ee61836527d8。场景F01关闭、新provider有限封装源码通过；旧f421 NEED_FIX保留，actual审核文件/数据/普通LOGIN业务均未执行。新QA Unix V8已固定f9c2ced7并远端回读，等T45V7同包后一次target合同窄验，不单独重复V8一轮。
 
 2026-10-31 新批准QA Unix增量：D1 V8准确2叶已交回，7定向PASS/语法通过，原TCP代表整输出逐字节不变；report3816B/SHAaab3ef42，原V6/V7/issuer/storage未改，待原QB窄验。场景F01及provider新封装4叶已固定fc7c03bf并远端回读，原QB在审。T45继续唯一V7/恢复载体，未执行真实环境。
