@@ -1,3 +1,4 @@
+import {fileURLToPath} from 'node:url';
 /** Isolated transfer real-service memory scenario. NOT shared sales ledger or PostgreSQL. */
 import assert from 'node:assert/strict';
 import {test} from 'node:test';
@@ -26,7 +27,7 @@ test('single committed snapshot owns transfer list/detail/history and two-sided 
  assert.equal((await query('/transfers/detail/query',{transferId:'00000000-0000-4000-8000-000000730021'})).status,404);h.revoke();assert.equal((await query('/transfers/detail/query',{transferId:id})).status,403);
 });
 test('actual preparation performs no writes and closed bridge refuses other origin and sales writes',async t=>{const h=await createTransferChainFixture();t.after(()=>h.close());const {transferId,lines,...rest}=proposal(),body={...rest,lines:lines.map(({existingLineId,...l})=>l)},before=h.snapshot();const r=await h.request({url:'https://synthetic-management.invalid/api/transfers/prepare-create',method:'POST',body:JSON.stringify(body)});assert.equal(r.status,200,r.body);assert.equal(JSON.parse(r.body).lines[0].snapshot.barcode,sku.barcode);assert.deepEqual(h.snapshot(),before);await assert.rejects(h.request({url:'https://not-allowed.invalid/api/transfers/commands',method:'POST',body:'{}'}));await assert.rejects(h.request({url:'https://synthetic-management.invalid/api/sales/commands',method:'POST',body:'{}'}));});
-test('browser bridge explicitly rejects simultaneous independent sales and transfer ledgers',async()=>{const {spawnSync}=await import('node:child_process');const result=spawnSync(process.execPath,['--experimental-transform-types',new URL('./production-browser-fixture.mjs',import.meta.url).pathname,'--sales-chain','--transfer-chain'],{input:'',encoding:'utf8',timeout:15000});assert.notEqual(result.status,0);assert.match(result.stderr,/Independent sales and transfer stores cannot share a preview/);});
+test('browser bridge explicitly rejects simultaneous independent sales and transfer ledgers',async()=>{const {spawnSync}=await import('node:child_process');const result=spawnSync(process.execPath,['--experimental-transform-types',fileURLToPath(new URL('./production-browser-fixture.mjs',import.meta.url)),'--sales-chain','--transfer-chain'],{input:'',encoding:'utf8',timeout:15000});assert.notEqual(result.status,0);assert.match(result.stderr,/Independent sales and transfer stores cannot share a preview/);});
 
 test('paired responsibility uses original transfer service SAVE/CAS/audit and keeps the immutable creator',async t=>{
  const h=await createTransferChainFixture({responsibleStaffValidation:true});t.after(()=>h.close());const initial=h.snapshot();
@@ -73,4 +74,20 @@ test('existing-fields: actual prepare-existing preserves native identity and sav
  const command={action:'SAVE',requestKey:'SYN.existing-fields',expectedVersion:ready.expectedVersion,draft:ready.draft},result=await h.command(command);assert.equal(result.status,200,JSON.stringify(result.body));assert.equal(result.body.version,2);const current=h.snapshot().transfers.get(id).document;assert.equal(current.header.status,'DRAFT');assert.equal(current.header.businessDate,intent.businessDate);assert.equal(current.header.note,intent.note);assert.equal(current.header.fromWarehouseId,intent.fromWarehouseId);assert.equal(current.header.toWarehouseId,intent.toWarehouseId);for(const key of ['id','number','createdByAccountId','createdAt'])assert.equal(current.header[key],original.header[key]);assert.equal(current.lines.filter(l=>l.isCurrent).length,2);assert.equal(current.lines.find(l=>l.id===old.id).quantity,3n);assert.deepEqual(current.lines.find(l=>l.id===old.id).snapshot,old.snapshot);assert.equal(h.snapshot().ledger.length,0);
  const read=await h.request({url:'https://synthetic-management.invalid/api/transfers/detail/query',method:'POST',body:JSON.stringify({transferId:id})});assert.equal(read.status,200);assert.equal(JSON.parse(read.body).document.header.version,2);const committed=h.snapshot();assert.deepEqual(await h.command(command),result);assert.deepEqual(h.snapshot(),committed);
  const stale=await h.request({url:'https://synthetic-management.invalid/api/transfers/prepare-existing',method:'POST',body:JSON.stringify({...intent,expectedVersion:1})});assert.equal(stale.status,409);assert.deepEqual(h.snapshot(),committed);
+});
+
+test('detail after SKU replacement and deletion exposes only current rows while store and audit retain originals',async t=>{
+ const h=await createTransferChainFixture();t.after(()=>h.close());assert.ok(qaSkus.length>=3);
+ const created=await h.command({action:'SAVE',requestKey:'current-only-new',expectedVersion:null,proposal:{...proposal(),lines:qaSkus.slice(0,2).map(row=>({existingLineId:null,skuId:row.id,quantity:'2'}))}});assert.equal(created.status,200,JSON.stringify(created.body));
+ const id=created.body.transferId,before=h.snapshot(),old=before.transfers.get(id).document.lines;
+ const edited=await h.command({action:'SAVE',requestKey:'current-only-replace-delete',expectedVersion:1,proposal:{...proposal(),transferId:id,lines:[{existingLineId:null,skuId:qaSkus[2].id,quantity:'3'}]}});assert.equal(edited.status,200,JSON.stringify(edited.body));
+ const after=h.snapshot(),stored=after.transfers.get(id).document;
+ assert.equal(stored.lines.filter(row=>!row.isCurrent).length,2);assert.equal(stored.lines.filter(row=>row.isCurrent).length,1);
+ for(const row of old)assert.ok(stored.lines.some(next=>next.id===row.id&&!next.isCurrent));
+ assert.deepEqual(after.audit.at(-1).before.lines,old.map(({transferId,...row})=>row));assert.deepEqual(after.balances,before.balances);assert.deepEqual(after.ledger,before.ledger);
+ for(let i=0;i<2;i++){
+  const detail=await h.request({url:'https://synthetic-management.invalid/api/transfers/detail/query',method:'POST',body:JSON.stringify({transferId:id})});assert.equal(detail.status,200,detail.body);
+  const read=JSON.parse(detail.body);assert.equal(read.document.header.version,2);assert.equal(read.document.lines.length,1);assert.equal(read.document.lines[0].skuId,qaSkus[2].id);assert.equal(read.document.lines[0].isCurrent,true);
+ }
+ assert.deepEqual(h.snapshot(),after,'new read requests must not mutate retained originals');
 });
