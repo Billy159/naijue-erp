@@ -141,13 +141,17 @@ try:
     writes=[x for x in result['readResponses'] if x['path']=='/api/catalogue/categories/commands'];assert len(writes)==1 and writes[0]['status']==200
     saved_id=writes[0]['body']['targetId'];assert saved_id
     item['step']='category original duplicate-name rejection';page.get_by_role('button',name='新增一级分类',exact=True).click();page.locator('input[data-cat="name"]').fill('SYN DRIVER 分类');page.get_by_role('button',name='保存',exact=True).click()
-    error=page.locator('#pc-category-error[role="alert"].inline-error');error.wait_for();assert error.inner_text().strip()
+    error=page.locator('.pc-categories .pc-category-detail > div.inline-error[role="alert"]:not(#pc-category-error)');error.wait_for();assert error.inner_text().strip()=='名称或编码已存在。'
     failed=[x for x in result['readResponses'] if x['path']=='/api/catalogue/categories/commands'];assert len(failed)==2 and failed[-1]['status']==409
     shot('PRODUCT-ENTRY-CATEGORY','rejected');page.locator('#pc-category-form').get_by_role('button',name='取消',exact=True).click()
     item['step']='category fresh route readback';page.goto(origin+'/#products');page.locator('.pc-products').wait_for();page.goto(origin+'/#product-categories');page.locator('.arco-tree-node-title').filter(has_text='SYN DRIVER 分类').wait_for()
     assert page.locator('#pc-category-error.inline-error').count()==0;item['actual']={'targetId':saved_id,'successRole':'status','duplicateStatus':409,'freshReadback':True}
    run('PRODUCT-ENTRY-CATEGORY',service_category)
    def service_product(item):
+    item['step']='leave category draft through original cancel'
+    category_form=page.locator('.pc-categories #pc-category-form')
+    if category_form.count():category_form.get_by_role('button',name='取消',exact=True).click()
+    page.goto(origin+'/#products');page.locator('.pc-products').wait_for()
     item['step']='open new product';page.goto(origin+'/#products/new');page.get_by_label('商品名称',exact=True).wait_for()
     page.get_by_label('款号',exact=True).fill('SYN-DRIVER-ENTRY');page.get_by_label('商品名称',exact=True).fill('SYN DRIVER 商品');page.get_by_label('系统货号',exact=True).fill('9000053')
     choose('商品分类','SYNTHETIC 西服',True);choose('年份','2026');choose('季节','秋');choose('供应商','SYNTHETIC 供应商')
