@@ -19841,8 +19841,8 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "V8 source/release independent scoped acceptance adopted; D1 real-business integration entry and T45 concrete isolated installer in progress; finite QA Unix source confirmation pending",
-    "next": "Target-specific repair script and concrete isolated execution confirmation",
+    "current": "Integration single-leaf QB source PASS adopted; T45 fixed installer 42-file carrier in original QB scoped review; D1 new-target synthetic fixture preparation in progress",
+    "next": "Complete target-specific scenario/proof inputs and installer incremental review; pending finite QA Unix source confirmation; no environment mutation",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
     "approvedHistoricalBalanceRule": "NULL_UNKNOWN_NO_BACKFILL",
@@ -19895,7 +19895,7 @@
         "affectedBoot": 14,
         "affectedRollback": 6
       },
-      "integratedAcceptance": "PENDING_D1_DELIVERY"
+      "integratedAcceptance": "SOURCE_ISSUER_AND_RELEASE_SCOPED_PASS_REAL_CHAIN_NOT_RUN"
     },
     "sourceV8": {
       "checkpoint": "19d6e5b9a1c753603840bd68625b8de1eefb3385",
@@ -19912,6 +19912,22 @@
       "qaUnix": "NOT_IMPLEMENTED_PENDING_HUMAN_CONFIRMATION",
       "qbReportSha256": "23adeaa47eec8248b9a25232daea91406f767da93d977d878c88459b96af0c0d",
       "qbReportBytes": 12464
+    },
+    "businessIntegration": {
+      "checkpoint": "65f17b8b9fddb2d1af8fe19f64a077e29e36839c",
+      "status": "QB_PASS_SINGLE_LEAF_SOURCE_ONLY_REAL_PG_NOT_RUN",
+      "reportBytes": 8233,
+      "reportSha256": "5f8b5372f2ae9290efeedec3067a01b4173d3ba3194bdfbef93ddc964f2ea9b9",
+      "newTargetFixtures": "D1_ONLY_THREE_REGISTERED_LEAVES_WIP_NOT_ACCEPTED"
+    },
+    "isolatedInstaller": {
+      "owner": "T45",
+      "status": "FIXED_CARRIER_IN_QB_INCREMENTAL_REVIEW_NOT_EXECUTED",
+      "contentsSha256": "118c49fb92436200d0af2fb12cd3e83b888da4f996527d640f534e12349b57b0",
+      "bundleFilesVerified": 42,
+      "scriptSha256": "9900b4aac22fb3874da2af2d01bb8f7b7c5c7c8fb7fd1f23258bb3275c854d60",
+      "offlineOwnerChecks": 12,
+      "actualPg": "NOT_RUN"
     }
   }
 }

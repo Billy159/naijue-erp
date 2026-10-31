@@ -8078,7 +8078,17 @@
         "scripts/import-v3/production-source-host.mjs",
         "tests/integration/live-ledger-balance-pairs.integration.test.ts"
       ],
-      "testScope": "Only directly affected V8 issuer/API/protocol/readonly/comparator and new V8 preparation tests; original V1-V7 source contracts keep meaning; announce exact changed leaves in receipt"
+      "testScope": "Only directly affected V8 issuer/API/protocol/readonly/comparator and new V8 preparation tests; original V1-V7 source contracts keep meaning; announce exact changed leaves in receipt",
+      "syntheticScenarioPreparation": {
+        "scope": "Test-only exact new synthetic target support; old QA897 behavior unchanged; no execution",
+        "soleWriter": [
+          "tests/integration/current-runtime26-sales-fixture.ts",
+          "tests/integration/current-runtime26-full-source-fixture.ts",
+          "tests/integration/current-runtime26-source-provider.mjs"
+        ],
+        "tests": "Only directly affected existing fixture/source-provider unit tests",
+        "constraints": "No production target widening, original review/issuer/approval byte pins never cloned or fabricated; exact new target/OID/namespace needs real external facts and later execution approval; no PG/seed in this source step"
+      }
     },
     "T45": {
       "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
