@@ -20629,7 +20629,7 @@
         "fixedSource": "b3a18d37309da789cd5730ef17693d5961001460"
       },
       "F03": {
-        "status": "SOURCE_FIXED_ORIGINAL_QF2_INDEPENDENT_REVIEW",
+        "status": "QF2_SOURCE_PASS_BROWSER_REAL_PG_NOT_RUN",
         "scope": "targetId/version catalogue readback through authorized pages",
         "owner": "F4",
         "fixedSource": "73764e68"
@@ -20702,6 +20702,21 @@
     "scope": "CATEGORY stable rejection/fresh readback; PRODUCT sizes/images/codes/list/reopen",
     "boundary": "fresh synthetic original service host, not realPG or formal permission/performance",
     "observed": "this version CATEGORY create+duplicate409+fresh readback PASS; PRODUCT 165/S visible, upload/SAVE200, original200/74bytes but exact content equality assertion failed; list/reopen NOT_RUN",
-    "next": "D1 original raw-media chain diagnosis from actual byte metadata; no speculative fix/no weakened assertion"
+    "next": "Original QF2 runs PRODUCT-only fresh visible synthetic context with immutable diagnostic driver d7781c06 and explicit original48 fixtures; application source unchanged824667c8. Strict image equality preserved.",
+    "diagnosticDriver": {
+      "commit": "d7781c06c14b41ba687509783a38f8c702498feb",
+      "sha256": "e10a2677fc66cea016656b922f9cf3964a6a05cf3cc8592ddc4df6aa2e7366a6",
+      "case": "PRODUCT-ENTRY-SAVE",
+      "status": "ORIGINAL_QF2_ACTUAL_RUN_IN_PROGRESS",
+      "applicationSourceUnchanged": true
+    }
+  },
+  "r1R4WindowSourceReview": {
+    "status": "QB_CONFIGURE_WINDOW_SOURCE_PASS_DOCUMENT_PIN_CORRECTION_PENDING",
+    "owner": "T45",
+    "ownerSha256": "93003c7a38ac6a161667bcb9aaecdc8fe71b6312e21c4e636f236c2723769fea",
+    "finding": "R4-DELIVERY-F01 old human-review document pin; original T45 correcting exact delivery only",
+    "actualExecution": "NOT_AUTHORIZED_NEW_WINDOW_NOT_STARTED",
+    "report": "reports/qa-backend/rapid-launch-20261022/QB/PRIVATE-PROCESS-QA22-NEW-WINDOW-20261031/QB-QA22-NEW-WINDOW-R4-RESULT.json"
   }
 }

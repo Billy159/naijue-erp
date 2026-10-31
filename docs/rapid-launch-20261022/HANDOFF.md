@@ -1,3 +1,9 @@
+## Current diagnostic and isolated successor source increment
+
+Diagnostic driver d7781c06c14b41ba687509783a38f8c702498feb pushed and remote SHA read back. OriginalQF2 now executes only PRODUCT-ENTRY-SAVE in a fresh visible synthetic context, using unchanged application824667c8/build48 plus four explicitly pinned original48 fixture dependencies; driver SHA e10a2677fc66cea016656b922f9cf3964a6a05cf3cc8592ddc4df6aa2e7366a6. Old38215 closed normally; old failure retained. No CATEGORY repeat, rebuild, assertion weakening or realPG. Actual new result pending. F03 originalQF2 source PASS adopted; browser/realPG not claimed.
+
+OriginalQB accepts R4 configure_window source increment, preserving R3 final pre-PG/deadline guards. R4-DELIVERY-F01 is an inaccurate human-review document pin, originalT45 appends exact correction while preserving old record; no owner rewrite/retest needed. New actual times/human approval remain null, execution false. Old database window remains CLOSED, M01/M02 only actual migrations, ordinary business and backup/restore still pending. Five new performance optimizations PAUSED.
+
 ## Associated48 actual outcome and next source checkpoints
 
 OriginalQF2 candidate48 actual CATEGORY full listed steps PASS (create/status, duplicate409, freshroute readback); PRODUCT visible165/S now PASS, upload and SAVE actual200, but original-image byte equality FAILED despite200/74bytes and thumbnail200/60. Exact actual response hash absent, so no inference content damaged/fixture wrong; originalD1 diagnoses only retained raw chain/metadata, no newSAVE or guessed patch. Final image/list/reopen/11MAIN assertions remain NOT_RUN. Own headed tty38215 preserves read-only image preview; no userChrome or production.
