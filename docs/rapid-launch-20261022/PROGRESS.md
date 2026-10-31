@@ -3564,3 +3564,7 @@ D1只读确认固定59原producer支持同freshstore连续2–3商品及2个同�
 QF回报剩余候选实操已有3商品/2账户真实CREATE及读回200、商品只读查看Esc、同draftkey改选第三商品/165-S、多账户search/Enter/nomatch/Esc/clear证据；当前仅长表继续，QA locator失败保留不判app缺陷，未先写最终PASS。QF2固定59图片就绪核定完成：原mediaStage/binaryBase64/metadata原服务已有，未证app阻塞；仅自己报告目录准备1CREATE+1真实PNG上传的VIEW/EDIT失败重试定向driver，等待QF释放浏览器。无源码/PG/生产变更、整页仍PARTIAL。
 
 QF实际发现QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01：12独立手工行后第13行所属组11项菜单向下超出1440×1000，195/4XL正常click outsideviewport，未force/缩组选项/写单。原图DOM/失败原始结果保留，原QF own全部0不重试。原F1仅proposal-picker.tsx+keyboard测试两文件唯一修复租，需其它文件先扩准确范围；T45后续固定构建/QF最小复验。原QF2收到窗口交接，可在准备准确最小driver后于不可变59执行无关媒体增量，不等新候选、不抢用户Demo。当前已确认功能缺陷，不冒Demo像素配对或整页PASS。
+
+采用QF2图片59限定实际PASS（333216a0…/raw6df98af3…/7PNG）：1CREATE+1真实74B PNG上传，VIEW/EDIT metadata单次失败→原重试200，原图单次失败→重点击成功/preview关闭，EDIT缓存未冒新GET；26原响应/4注入单列/0EDIT/own0。旧attemptcheckbox mask定位FAIL保留，不判app错。QF销货剩余最终check94bd6d1b…仍PARTIAL，长表真实FAIL准确证据为QF根APP59-SALES-REMAINING-UI-05；实际查看/改选和账户限定已到，14行/汇总未完。另收到用户未审核调拨同新增编辑合同，截图无URL/候选，待与fixed51已过LIVE DRAFT和历史分支去重，不凭单号登记当前59新缺陷。
+
+F1两叶定向源码交付采用（回执94a388d0…）：销货fixed菜单脱离Arco测高，改用原相对布局及spec滚动重定位；原5键盘/Portal加新增真实Portal-jsdom几何检查PASS/runtime types0，未冒实际click通过。两叶已交还只读，下一原T45同固定候选闭包→QF原1440×1000底行正常选择195/4XL及共享受影响滚动/焦点，旧资料/扫码/SAVE不重。

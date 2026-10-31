@@ -20948,7 +20948,7 @@
     },
     "currentQF": {
       "owner": "QF",
-      "status": "IN_PROGRESS_FIXED59_REMAINING_MULTI_PRODUCT_ACCOUNT_STATES_DEMO_PAIR_PENDING",
+      "status": "PARTIAL_ACTUAL_REMAINING_STATES_WITH_LONG_TABLE_DEFECT",
       "scope": "only normal new-sales SALE full-page uncovered states vs frozenb8bc;reuse accepted identical evidence;no oldv14/normal34/PG/save/scanner repeats",
       "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
       "denominator": "37pages+68overlays unchanged",
@@ -20973,7 +20973,8 @@
         "actualproductview and lineidentityreplacement",
         "multipleaccounts searchclearEnterEsc combinations"
       ],
-      "existingCapabilityReadOnly": "D1 confirmed original fresh unified store supports 2-3 product CREATE with unique manual seven-digit system codes and generated real SKU/MAIN, plus two same-method hallIds[] account CREATE; existing readers enumerate all. No source change or browser PASS implied; product capacity <4 and receipt limit32 remain."
+      "existingCapabilityReadOnly": "D1 confirmed original fresh unified store supports 2-3 product CREATE with unique manual seven-digit system codes and generated real SKU/MAIN, plus two same-method hallIds[] account CREATE; existing readers enumerate all. No source change or browser PASS implied; product capacity <4 and receipt limit32 remain.",
+      "remainingCheckSha256": "94bd6d1b69be524a68dfab2b826c1ab63f868e8f0f9b0deb937fc7408844f211"
     }
   },
   "r1Qa22CaptureStaticReview": {
@@ -21004,14 +21005,20 @@
     "next": "Original QF2 fixed48 minimal original SAVE setup only, then normal onSaved full readonly six tabs; no repeat full old CREATE/media/SKU suite; own report driver only; no PG.",
     "currentPreparation": {
       "owner": "QF2",
-      "status": "READINESS_COMPLETE_MINIMAL_OWN_REPORT_DRIVER_PREPARATION_ONLY",
+      "status": "QF2_PASS_LISTED_FIXED59_VIEW_EDIT_IMAGE_RECOVERY",
       "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
       "scope": "Only remaining normal VIEW/EDIT image success and load-error recovery; reuse prior six-tab/normal stock evidence. Exact existing media/fixture/entry readiness and minimum browser setup; no source change/build/PG/browser until QF releases.",
       "model": "gpt-6.1-sol/medium",
       "fast": "UNVERIFIED_TOOL_NO_SWITCH",
       "report": "reports/qa-frontend/rapid-launch-20261022/QF2/PRODUCT59-IMAGE-READINESS-20261101-01.md",
-      "next": "QF own processes0 and stopped long-table case; QF2 may prepare then execute exact fixed59 media increment in own visible session. F1 source repair has no browser.",
-      "finding": "Fixed59 original unified binary media path exists, no proven app blocker. Prior48/49 images evidence reusable only its original scope, not fixed59 actual PASS."
+      "next": "Reuse exact image-state evidence; no whole-page/realPG/production or upload-failure/race claims. Browser released for fixed successor long-table QF.",
+      "finding": "Fixed59 original unified binary media path exists, no proven app blocker. Prior48/49 images evidence reusable only its original scope, not fixed59 actual PASS.",
+      "evidence": {
+        "report": "reports/qa-frontend/rapid-launch-20261022/QF2/PRODUCT59-IMAGE-RECOVERY-20261101-01-ATTEMPT02/QF2-RESULT.json",
+        "sha256": "333216a0ef8911085944c5ebaa2a4a31bf797cbd4fc50c825da9781fad66ee8d",
+        "rawSha256": "6df98af3df7a9bcfc855258382332bdc90c8695cbf892154b1d1a5f7b03e7f2a",
+        "scope": "26 original service responses;4 single actual request aborts separated;1 product CREATE/1 PNG upload,0EDIT. VIEW/EDIT metadata retry and original-image reopen/preview close; EDIT cached image no new GET claimed. Own resources0/7PNG."
+      }
     }
   },
   "r1SalesReturnApprovedFollowup": {
@@ -21536,11 +21543,24 @@
   },
   "r1LongTableSizePopup": {
     "owner": "F1",
-    "status": "CONFIRMED_ACTUAL_CANDIDATE_DEFECT_ASSIGNED_ORIGINAL_OWNER",
+    "status": "F1_SOURCE_FIXED_DIRECTED_DOM_TYPE_PASS_PENDING_FIXED_BUILD_QF",
     "issue": "QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01",
     "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
     "reproduction": "12 independent manual product/size rows; row13 full11 member menu extends below1440x1000,195/4XL normal click outside viewport. No force/SAVE.",
-    "evidence": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP59-SALES-REMAINING-UI-05/",
-    "next": "F1 minimum leased source repair/selfcheck -> T45 fixed successor -> QF only row12-to13 popup and preserved draft/shared affected consumers; no old suites."
+    "evidence": "reports/qa-frontend/rapid-launch-20261022/QF/APP59-SALES-REMAINING-UI-05/",
+    "next": "F1 minimum leased source repair/selfcheck -> T45 fixed successor -> QF only row12-to13 popup and preserved draft/shared affected consumers; no old suites.",
+    "checkSha256": "94bd6d1b69be524a68dfab2b826c1ab63f868e8f0f9b0deb937fc7408844f211",
+    "sourceReceipt": "reports/qa-frontend/rapid-launch-20261022/F1/QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01/RESULT.json",
+    "sourceReceiptSha256": "94a388d01b85983432f699d012e883a9472a9c4b9989a6b72ee9bf5cd1eb2373",
+    "cause": "Sales mx-spec-menu fixed positioned inside existing Arco Trigger escaped layout height, preventing viewport flip; transfer already relative. Reuse Arco placement and spec-only updateOnScroll, no alternate positioning system.",
+    "checks": "Original5 keyboard/Portal cases and new real Arco Portal jsdom geometry case PASS; runtime types0/diffcheck0. No actual headed or save/PG/whole-page PASS."
+  },
+  "r1TransferDraftScreenshotFollowup": {
+    "status": "USER_CONTRACT_CONFIRMED_CANDIDATE_ID_UNKNOWN_NO_NEW_DEFECT_PASS",
+    "owner": "C coordinate original F1 after popup package",
+    "scope": "Unaudited transfer with actual edit permission should expose same applicable editable fields as new; system identifiers readonly, approved/void permissions retained. Reuse fixed51 LIVE DRAFT edits, distinguish history and actual screenshot candidate before repair.",
+    "screenshot": "/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/codex-clipboard-868492d8-25a0-4610-b355-19f34961dc7f.png",
+    "visibleFacts": "qa-demo-1 administrator, V2-DB-bdb6fb86, note QF50-R01-PENDING-RECHECK-SYNTHETIC; no visible URL/candidate; source unknown.",
+    "next": "Do not infer actual state/source from V2 number or old screenshot; exact existing branch/valid evidence dedup before assigning same file."
   }
 }
