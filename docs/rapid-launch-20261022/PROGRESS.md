@@ -3576,3 +3576,5 @@ F1调拨只读去重回执d885d806…采用：原id/note/1+6行精确命中候�
 QF60最终check1326c2d3…限定实际PASS采用，关闭QF59-S02：原1440×1000/12→13正常click195/4XL、旧12行key/qty/rawprice/note保留/13件7384.00汇总、规格方向键Enter/Esc焦点及共享调拨色/版型真实横滚0→17/18可用/11尺寸保留。全部单据SAVE/审核0/own0，原59FAIL及QA定位失败保留，加载瞬态bounds不冒稳定几何证据。仅问题与受影响consumer关闭，不新增整页、Demo配对、PG或上线PASS；后续无影响不重测。
 
 D1历史DRAFT精确补充交付：HISTORY-DRAFT-TRANSFER-EXACT-SUPPLEMENT-20261101.md SHAce965aea06e0f1ea08f9b185fd994554cd1f36dfe799eb8b5a3886eefa0b5ffc，零新表列/ACL、4现有函数后继、revision JSON显式格式与V2目录、旧来源/旧数量FK保留；备注与完整lineSet新分支沿200正整数/1万字符，旧signed数值路径保留。已按用户写合同先确认规则提交一次准确源码合同确认，未获答复，不实施新写分支/SQL/权限。QA178新03窗口及Demo登录仍为各自原等待条件，不以本合同请求替代。
+
+用户明确确认历史未审核调拨补充合同及源码修订（call_4cfb266f…/回答“确认本补充合同与源码修订”），已核原spec SHAce965aea…未变并登记独立批准记录。原D1/D3/F1无同范围WIP，按store/SQL、DTO/投影、前端3组精确独占文件实施；C元数据profile叶等实际SQL指纹后再登记。此确认不授权数据库变更/权限/QA178新03/生产，原两个等待条件仍保留。

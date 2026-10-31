@@ -8562,5 +8562,36 @@
       "apps/web/demo-replica/frontend/runtime/documents/proposal-picker-keyboard.test.mjs"
     ],
     "scope": "Actual fixed59 sales row13 size menu outside1440x1000 viewport; minimum original popup position/direction/scroll fix, preserve Demo shape, full group, keyboard and draft identity. Other files require exact lease extension. No build/browser/PG."
+  },
+  "r1HistoricalDraftLineSet": {
+    "status": "HUMAN_CONFIRMED_EXACT_SOURCE_WRITERS_ACTIVE_NO_DATABASE_EXECUTION",
+    "approval": "docs/rapid-launch-20261022/HISTORY-DRAFT-TRANSFER-WRITE-APPROVAL-20261101.json",
+    "model": "gpt-6.1-sol/medium",
+    "owners": {
+      "D3": [
+        "packages/application/src/history-revision-contracts.ts",
+        "packages/application/src/history-revision-service.ts",
+        "packages/application/src/imported-history-query-ports.ts",
+        "packages/application/src/imported-history-query-validation.ts",
+        "adapters/postgres/src/imported-history-query-reader.ts",
+        "tests/history-revision.test.ts",
+        "tests/imported-history-query.test.ts",
+        "tests/support/imported-history-query-fixtures.ts"
+      ],
+      "D1": [
+        "adapters/postgres/src/history-revision-store.ts",
+        "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+        "tests/history-revision-postgres-protocol.test.ts",
+        "tests/history-revision-set-guards.test.ts"
+      ],
+      "F1": [
+        "apps/web/demo-replica/frontend/runtime/documents/history-transfer-model.ts",
+        "apps/web/demo-replica/frontend/runtime/documents/transfers-history-page.tsx",
+        "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
+        "apps/web/demo-replica/frontend/runtime/documents/history-edit-read.test.mjs",
+        "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs"
+      ]
+    },
+    "constraints": "Each exact leaf unique writer; request exact extra-file lease before editing. C canonical/profile/metadata leaves remain unleased until actual SQL fingerprints. No tests with actual PG, build, service, production, old-source mutation or permissions."
   }
 }
