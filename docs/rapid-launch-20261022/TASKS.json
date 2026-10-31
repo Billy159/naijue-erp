@@ -20948,16 +20948,32 @@
     },
     "currentQF": {
       "owner": "QF",
-      "status": "CANDIDATE59_NEW_SALES_CHECK_RUNNING_DEMO_PAIR_LOGIN_WAIT",
+      "status": "IN_PROGRESS_FIXED59_REMAINING_MULTI_PRODUCT_ACCOUNT_STATES_DEMO_PAIR_PENDING",
       "scope": "only normal new-sales SALE full-page uncovered states vs frozenb8bc;reuse accepted identical evidence;no oldv14/normal34/PG/save/scanner repeats",
       "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
       "denominator": "37pages+68overlays unchanged",
-      "next": "actual differences immediate originalowner routing;partial remains partial until all applicable page evidence",
+      "next": "Original QF only long table/multiple products, actual readonly product view/line replacement identity, multiple-account search/clear/Enter/Esc; reuse 17 accepted states. Demo same-state pairs wait existing login request.",
       "demoPairing": {
         "observed": "original8877 settings/stores login expired and own new sales/new tab loginpage; own newtab closed, original not refreshed, no credentials read",
         "baselineEvidenceZip": "8877-ui-evidence-b8bcfe3.zip README says0screens;exact source-layout evidence only, not paired screenshot",
         "action": "user Demo login requested; continue fixed59 candidate checks; page remains PARTIAL pending actual comparable states"
-      }
+      },
+      "partialReview": {
+        "taskId": "QF01-R1-APP59-SALES-NEW-UI-PARTIAL-01",
+        "report": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP59-SALES-NEW-UI-CHECK.json",
+        "sha256": "d12b71b956d6e9ca898c3d9d5515aa3b2149b08592dba31dc8ba54d3b86ecaf2",
+        "scope": "17candidateUIstatePNG+DOM natural1440x1000scale1;blank/filled/no-match/Esc/queryfocus/candidate/color-fit11sizes/gift568->0->568/cash-emptyaccount/leaveEsc-continue note retained",
+        "writes": "only necessary normalproductCREATE per fresh context;0salesSAVE/account/transfer/approval",
+        "notApplicationBugs": "three own QA locator failures retained, no source/fixture/guard changes",
+        "resources": "ownprocess0"
+      },
+      "remaining": [
+        "liveDemo samebusinessstate viewport pairs",
+        "longtable/multiproduct",
+        "actualproductview and lineidentityreplacement",
+        "multipleaccounts searchclearEnterEsc combinations"
+      ],
+      "existingCapabilityReadOnly": "D1 confirmed original fresh unified store supports 2-3 product CREATE with unique manual seven-digit system codes and generated real SKU/MAIN, plus two same-method hallIds[] account CREATE; existing readers enumerate all. No source change or browser PASS implied; product capacity <4 and receipt limit32 remain."
     }
   },
   "r1Qa22CaptureStaticReview": {
