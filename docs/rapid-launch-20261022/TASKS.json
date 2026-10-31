@@ -19882,6 +19882,20 @@
       "bodyMismatches": 3,
       "actualFullDefinitionsCaptured": 3,
       "newDatabaseMutations": 0
+    },
+    "releaseV8": {
+      "checkpoint": "cc70d8ffd61b132a9ba72a72119113dec33244e6",
+      "helperSha256": "b313cf274ad50f47e5652bd23e24efcd41d3de92457d94934d40e0f3bf204485",
+      "qbDecision": "PASS_EXACT_EIGHT_LEAF_RELEASE_SOURCE_DELTA_ONLY",
+      "qbReportSha256": "88f7b114b53a413180777a220a7150b29fd5b55f71b1b1a73d2a211967ab64a3",
+      "reviewedPinAdoption": "T45_CHANGED_EXACT_BOOT_ROLLBACK_ONE_LINE_EACH",
+      "adoptionReportSha256": "d900a819543e5bf495142769470795dcc297d38fb4f9db4d8e248905a4a529ed",
+      "checks": {
+        "generatorCheck": "PASS",
+        "affectedBoot": 14,
+        "affectedRollback": 6
+      },
+      "integratedAcceptance": "PENDING_D1_DELIVERY"
     }
   }
 }

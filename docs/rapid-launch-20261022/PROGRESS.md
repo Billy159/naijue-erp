@@ -1,3 +1,5 @@
+2026-10-31 V8发布侧：cc70d8ff八叶已固定推GitHub；原QB独立限定PASS，准确deploy helper b313cf274ad50f47e5652bd23e24efcd41d3de92457d94934d40e0f3bf204485已由原T45仅更新boot/rollback对应capacity pin，历史pins/guard不变。generator--check通过，原受影响boot14/rollback6通过，原32定向PASS复用。D1 issuer/API/工具仍在途，不计整合通过；QA有限Unix目标扩展新提案已提交用户，仅待对应源码范围确认，不执行环境变更。
+
 2026-10-31 最新批准覆盖前条等待：用户human call_4b2e8a96c83740ef9163778f9ef8c196/0已确认五项最小权限与合同源码修订。D1接V8 issuer/API/工具及受影响测试，T45接release配置/生成/deploy/boot/rollback及相关测试，精确唯一writer见WRITE-OWNERSHIP.json dbUpgradeR1ApprovedFiveAtoms；C唯一Git/三台账。仅源码与定向检查获批，未授权新库/角色/实际GRANT/部署。T45 275另证现QA listen_addresses为空、/qa-socket:5432，不改旧服务/alias，不假定TCP可用；准确目标接线仍需实际脚本/独立验收。
 
 2026-10-31 r1权限闭包增量：D1已完成源最小权限用途闭包与T45 273/274实际差量；现4缺函数/3体差异保留，实际3定义SHA及完整相关结构已补C原报告。发现2 cmin读取及3指定子表DELETE与现V6/V7 renderer冲突，最小后继合同稿已一次提交用户确认（仅源码/合同，不据此执行权限）。新增审核后继V8不改变PG服务端/迁移版本或V7余额含义；未获确认前不实施。T45继续仅核现QA回环TCP等必要连接事实，避免无证据扩大socket支持；未新建库/角色/服务。当前源码checkpoint d880f3da已远端核对；源码、隔离、上线结论继续分开。
