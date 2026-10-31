@@ -149,3 +149,15 @@ test('recommendation contract actual doc03 body rejects in original client; unif
  for(const kind of ['hall','customer','warehouse','salesperson','paymentMethod']){const related=await reader.readSalesReferences({kind,hallId:kind==='hall'?null:qaHalls[0].id,search:'',page:1,pageSize:20},signal);assert.ok(related.items.length>0,kind);assert.ok(related.items.every(r=>!Object.hasOwn(r,'isRecommended')),kind);assert.equal(related.recommendationAvailability,undefined,kind);}
  h.revoke();await assert.rejects(reader.readSalesReferences(q,signal),{kind:'forbidden'});
 });
+
+test('dictionary group contract fixed57 blank search exposes full native groups and dynamic product members through original client',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());const saved=await call(h,'/products/v2/commands',createProduct());assert.equal(saved.status,200);
+ // Exact request that failed after the fixed57 transfer picker/MAIN scan.
+ const q={search:'',page:1,pageSize:100},raw=await call(h,'/dictionary-read/size-groups/query',q);assert.equal(raw.status,200,JSON.stringify(raw));
+ const {qaDictionaryGroups}=await import('../frontend/qa-reference-fixtures.mts');const expected=[...qaDictionaryGroups(),h.product.group];assert.deepEqual(raw.body.items,expected);assert.equal(raw.body.total,expected.length);
+ const fetch=async(url,init={})=>{const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};const {createCurrentFormHttpReader}=await import('../../src/current-form/http-reader.ts');const reader=createCurrentFormHttpReader({origin:h.origin,basePath:'/api',fetch}),signal=new AbortController().signal;
+ const all=await reader.readSizeGroups(q,signal);assert.deepEqual(all.items,expected);const current=await reader.readProducts({context:{kind:'TRANSFER'},search:VALUES.productCode,page:1,pageSize:20},signal);assert.equal(current.items[0].sizeGroupId,h.product.group.id);
+ const selected=all.items.find(g=>g.id===current.items[0].sizeGroupId);assert.deepEqual(selected,h.product.group);assert.equal(selected.sizes.length,11);assert.ok(all.items.some(g=>!h.product.snapshot().state.products.get(saved.body.targetId).skus.some(s=>g.sizes.some(z=>z.id===s.sizeId))),'dictionary remains complete independently of selected product SKUs');
+ const exact=await reader.readSizeGroups({search:h.product.group.name,page:1,pageSize:20},signal);assert.deepEqual(exact.items,[h.product.group]);const past=await reader.readSizeGroups({...q,page:2},signal);assert.equal(past.total,expected.length);assert.deepEqual(past.items,[]);
+ h.revoke();await assert.rejects(reader.readSizeGroups(q,signal),{kind:'forbidden'});
+});

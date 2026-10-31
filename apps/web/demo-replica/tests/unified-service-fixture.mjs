@@ -18,7 +18,7 @@ import {createTransferChainFixture} from './transfer-chain-fixture.mjs';
 import {createPaymentMaintenanceFixture} from './payment-maintenance-fixture.mjs';
 import {createStaffEditFixture} from './staff-edit-fixture.mjs';
 import {createReplicaPreviewTransport} from '../frontend/runtime-preview-transport.ts';
-import {qaPrincipal,qaProducts,qaSkus,qaGroups,qaSalesReferences,qaTransferWarehouses,qaHalls,qaCurrentProducts,qaReferenceRead} from '../frontend/qa-reference-fixtures.mts';
+import {qaPrincipal,qaProducts,qaSkus,qaGroups,qaSalesReferences,qaTransferWarehouses,qaHalls,qaCurrentProducts,qaReferenceRead,qaDictionaryGroups} from '../frontend/qa-reference-fixtures.mts';
 export const UNIFIED_ORIGIN='https://synthetic-management.invalid';
 export async function createUnifiedServiceFixture(){
  let enabled=true,inventoryAllowed=true,closed=false,product,sales,transfer,payment,staff;const owned=[],inventory=new SharedSyntheticInventory(),base=createReplicaPreviewTransport(),organizationRead=createSettingsPreviewTransport(QA_REFERENCE_PROFILE);
@@ -54,7 +54,7 @@ export async function createUnifiedServiceFixture(){
  }};
  try{
   payment=await createPaymentMaintenanceFixture();owned.push(payment);staff=await createStaffEditFixture();owned.push(staff);
-  product=await createProductEntryServiceHost({syntheticOnly:true,productWrite:true,colorWrite:true,categoryWrite:true,fitWrite:true,mediaStage:true,syntheticStock:false,unifiedCandidate:true},{currentFormReader:reader,stockReader,sizeGroups:()=>[...structuredClone(qaGroups),structuredClone(product.group)]});owned.push(product);assert.equal(product.http.origin,UNIFIED_ORIGIN);assert.equal(product.actor.accountId,qaPrincipal.accountId);
+  product=await createProductEntryServiceHost({syntheticOnly:true,productWrite:true,colorWrite:true,categoryWrite:true,fitWrite:true,mediaStage:true,syntheticStock:false,unifiedCandidate:true},{currentFormReader:reader,stockReader,sizeGroups:()=>[...qaDictionaryGroups(),structuredClone(product.group)]});owned.push(product);assert.equal(product.http.origin,UNIFIED_ORIGIN);assert.equal(product.actor.accountId,qaPrincipal.accountId);
   sales=await createSalesChainFixture({sharedInventory:inventory,references:refs});owned.push(sales);transfer=await createTransferChainFixture({sharedInventory:inventory,references:refs,responsibleStaffValidation:true});owned.push(transfer);
   const auditApp=Fastify({logger:false});owned.push(auditApp);auditApp.register(createSettingsAuditHttpPlugin({authenticate:async()=>product.actor,reader:auditReader}));await auditApp.ready();
   const requestImpl=async r=>{const url=new URL(r.url),method=r.method??'GET';requireDomain(url.origin===UNIFIED_ORIGIN&&(!url.search||method==='GET'&&/^\/api\/(?:customers|suppliers)(?:\/candidates|\/[0-9a-f-]{36})?$/.test(url.pathname))&&!url.hash&&!url.username&&!url.password,'FORBIDDEN','Exact unified origin required');active(product.actor,new AbortController().signal);if(Object.hasOwn(r,'binaryBase64')&&(Object.hasOwn(r,'body')||typeof r.binaryBase64!=='string'||Buffer.from(r.binaryBase64,'base64').toString('base64')!==r.binaryBase64))return {status:400,headers:{'content-type':'application/json'},body:JSON.stringify({error:{code:'INVALID_SYNTHETIC_BINARY'}})};
