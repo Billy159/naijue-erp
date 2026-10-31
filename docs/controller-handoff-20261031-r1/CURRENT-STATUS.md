@@ -1,3 +1,7 @@
+## 2026-10-31 installer04 fixed artifact handoff
+
+T45 original successor04 delivered; C verified its eight artifact pins against RESULT9063B SHA9b85b3ed2c01b117cbcda5807ec78de46168753fade765fc09cf99fa187b5d5f. OriginalQB reviews only this delta. Candidate is149 column groups/950 atoms,15 import private EXECUTE,0sequence/0table-level data privileges; seven new offline checks reportedPASS. Counts do not prove privilege sufficiency or realPG. Collector/host call plans remain NOT_READY; no actual role/grant/database/host execution. T45 continues the existing final exact environment scope and input gap list in parallel; source approval is not environment approval.
+
 ## 2026-10-31 preparation13 independent result adopted
 
 QB accepted b8fd9e14 exact11 source increment, no new findings. Receipt8170B SHA c058963910eee778552c594770dcbe1a4627b9f9bd1f63f3ccdc0a6ec0f2dc8f. Proof covers exact13 xmin; the additional history_revision15 business columns plus xmin still require T45 exact carrier and real catalog verification. No16READ, publication or ordinary-login business execution is claimed. T45 successor04 continues; existing installer03/source checks are reused.
