@@ -1,7 +1,7 @@
 import {salesLineDirectionQuantity} from './sales-line-direction.ts';
 import {FullCategoryTags} from './category-tags.tsx';
 import {salesQuantitySummary,salesExchangeSummary,salesDraftCategories} from './sales-detail-summary.ts';
-import { useState, useSyncExternalStore, type ReactNode } from 'react';
+import { useState, useRef, useEffect, useSyncExternalStore, type ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import type { SalesProposalSession, SalesProposalEntry, SalesProposalLine, SalesProposalSnapshot } from '../../../../src/current-form/sales-proposal.ts';
 import { salesProposalMoney, salesProposalMoneyInputDisplay, salesProposalLineSelection, salesProposalPriceDisplay } from '../../../../src/current-form/sales-proposal.ts';
@@ -25,6 +25,8 @@ const labels=['款号／商品名称','颜色','版型','尺码','数量','参�
 export function SalesProposalForm(p:{session:SalesProposalSession;scope:ReadScope;productReader:ProductReadOnlyReader;denied:(error:HttpQueryError)=>void;actions:ReactNode;number?:string;busy:boolean;notice?:string|null;viewProduct?:(product:{id:string;label:string})=>void;currentEmployeeId?:string;businessChoice?:'SALE'|'RETURN_EXCHANGE'|null;chooseBusiness?:(value:'SALE'|'RETURN_EXCHANGE'|null)=>void;onSalespersonIntent?:()=>void}) {
  const session=p.session,state=useSyncExternalStore(session.subscribe,session.getSnapshot,session.getSnapshot),d=state.draft;
  const [reference,setReference]=useState(''),[target,setTarget]=useState<Target|null>(null);
+ const warehouseRead=useRef(0),warehouseBusy=useRef(p.busy);warehouseBusy.current=p.busy;
+ useEffect(()=>()=>{warehouseRead.current++;},[session]);
  const [paymentNotice,setPaymentNotice]=useState(''),[focusedDiscount,setFocusedDiscount]=useState(false);
  const [lineQuery,setLineQuery]=useState<{key:string;value:string}|null>(null);
  const [confirm,setConfirm]=useState<{text:string;title:string;apply:()=>void}|null>(null);
@@ -42,10 +44,21 @@ export function SalesProposalForm(p:{session:SalesProposalSession;scope:ReadScop
   // select the raw amount for replacement; unchanged/invalid text keeps its caret.
   if(input.value!==shown)input.setSelectionRange(0,input.value.length);
  };
- const close=()=>{session.closePicker();setReference('');setTarget(null);};
+ const close=()=>{warehouseRead.current++;session.closePicker();setReference('');setTarget(null);};
  const productKeys=(event:React.KeyboardEvent<HTMLInputElement>)=>{if(event.nativeEvent.isComposing||event.keyCode===229)return;if(event.key==='Escape'){event.preventDefault();event.stopPropagation();close();return;}const options=event.currentTarget.ownerDocument.querySelectorAll<HTMLButtonElement>('#sale-inline-popup [data-sale-candidate]');if(event.key==='Enter'&&options.length===1){event.preventDefault();options[0]?.click();}else if((event.key==='ArrowDown'||event.key==='ArrowUp')&&options.length){event.preventDefault();options[event.key==='ArrowDown'?0:options.length-1]?.focus();}};
- const linkWarehouse=async()=>{const hall=session.getSnapshot().draft.hall;if(!hall||session.getSnapshot().draft.warehouse)return;await session.openPicker('warehouse');const next=session.getSnapshot(),picker=next.picker;if(next.draft.hall?.id!==hall.id||next.draft.warehouse||picker?.kind!=='warehouse'||picker.phase!=='ready')return;const rows=picker.result?.items??[];if(picker.result?.exactTotal===1n&&rows.length===1&&'hallId'in rows[0]!&&rows[0]!.hallId===hall.id)await session.select(rows[0]!.id);else session.closePicker();};
- const pick=(key:string,kind:'hall'|'salesperson'|'customer'|'warehouse')=><ProposalReference session={session} picker={state.picker} active={reference===key} label={{hall:'营业厅',salesperson:'营业员',customer:'客户',warehouse:'出库仓'}[kind]} selected={d[kind]} disabled={p.busy||kind!=='hall'&&!d.hall} clear={()=>{if(kind==='salesperson')p.onSalespersonIntent?.();session.clearReference(kind);}} {...(kind==='salesperson'&&p.currentEmployeeId?{recommendedId:p.currentEmployeeId}:{})} {...(kind==='hall'?{afterSelect:()=>void linkWarehouse(),select:async(id:string)=>{if(!session.hallChangeRequiresReset(id))return session.select(id);const apply=session.prepareHallChange(id);if(!apply)return false;setReference('');setConfirm({title:'切换营业厅',text:'切换营业厅将清空客户、营业员、仓库、商品明细、未完成商品录入、收退款和整单优惠；单据日期、业务类型和备注保留。确定切换吗？',apply:()=>{if(apply()){close();void linkWarehouse();}}});return false;}}:{})} open={()=>{if(kind==='salesperson')p.onSalespersonIntent?.();setReference(key);setTarget(null);void session.openPicker(kind);}} close={close}/>;
+ const linkWarehouse=async()=>{
+  const hall=session.getSnapshot().draft.hall;
+  if(p.number||p.busy||!p.scope.active||!hall||session.getSnapshot().draft.warehouse)return;
+  const attempt=++warehouseRead.current;
+  await session.openPicker('warehouse');
+  const next=session.getSnapshot(),picker=next.picker;
+  if(attempt!==warehouseRead.current||warehouseBusy.current||!p.scope.active||next.disposed||next.draft.hall?.id!==hall.id||next.draft.warehouse||picker?.kind!=='warehouse'||picker.phase!=='ready')return;
+  // The negotiated server page orders its one eligible default before other warehouses.
+  const recommended=picker.result?.recommendationAvailability==='AVAILABLE'?(picker.result.items??[]).filter(row=>'isRecommended'in row&&row.isRecommended===true):[];
+  if(recommended.length===1&&'hallId'in recommended[0]!&&recommended[0]!.hallId===hall.id)await session.select(recommended[0]!.id);
+  else session.closePicker();
+ };
+ const pick=(key:string,kind:'hall'|'salesperson'|'customer'|'warehouse')=><ProposalReference session={session} picker={state.picker} active={reference===key} label={{hall:'营业厅',salesperson:'营业员',customer:'客户',warehouse:'出库仓'}[kind]} selected={d[kind]} disabled={p.busy||kind!=='hall'&&!d.hall} clear={()=>{warehouseRead.current++;if(kind==='salesperson')p.onSalespersonIntent?.();session.clearReference(kind);}} {...(kind==='salesperson'&&p.currentEmployeeId?{recommendedId:p.currentEmployeeId}:{})} {...(kind==='hall'?{afterSelect:()=>{setReference('');void linkWarehouse();},select:async(id:string)=>{if(!session.hallChangeRequiresReset(id))return session.select(id);const apply=session.prepareHallChange(id);if(!apply)return false;setReference('');setConfirm({title:'切换营业厅',text:'切换营业厅将清空客户、营业员、仓库、商品明细、未完成商品录入、收退款和整单优惠；单据日期、业务类型和备注保留。确定切换吗？',apply:()=>{if(apply()){close();void linkWarehouse();}}});return false;}}:{})} open={()=>{warehouseRead.current++;if(kind==='salesperson')p.onSalespersonIntent?.();setReference(key);setTarget(null);void session.openPicker(kind);}} close={close}/>;
  const open=(next:Target)=>{setTarget(next);setReference('');if(next.line)void session.openLinePicker(next.key,next.spec?'sku':'product');else void session.openEntryPicker(next.direction,next.spec?'sku':'product',next.key);};
  const popup=(next:Target,selection:Pick<SalesProposalEntry,'color'|'fit'|'size'>)=><ProposalTrigger visible={target?.key===next.key&&target.spec===next.spec&&target.line===next.line&&!!state.picker} close={close} {...(next.spec?{spec:true}:{})} popup={()=>state.picker?<ProposalPopup session={session} picker={state.picker} {...(next.spec?{spec:next.spec,selection}:{})} scope={p.scope} productReader={p.productReader} denied={p.denied} choose={id=>{if(next.spec)session.selectSpec(next.spec,id);else {setLineQuery(null);void session.select(id);}}}/>:<></>}><button type="button" className={'mx-spec-picker'+(next.spec&&selection[next.spec]?' has-value':'')} aria-haspopup="listbox" aria-expanded={target?.key===next.key&&target.spec===next.spec&&!!state.picker} disabled={p.busy} aria-label={next.spec?{color:'颜色',fit:'版型',size:'尺码'}[next.spec]:'选择商品'} onClick={()=>{if(target?.key===next.key&&target.spec===next.spec&&target.line===next.line&&state.picker)close();else open(next);}}><span>{next.spec?(selection[next.spec]?.name??{color:'颜色',fit:'版型',size:'尺码'}[next.spec]): '改选商品'}</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 4 4 4 4-4"/></svg></button></ProposalTrigger>;
  const zero=(apply:()=>void)=>setConfirm({title:'确认普通零价商品',text:'此行单价为0.00元，不标为赠品，审核时仍按业务类型处理商品数量。',apply});

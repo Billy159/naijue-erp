@@ -30,16 +30,17 @@ function price(value: unknown): string | null {
   if (typeof value !== 'string' || !/^(?:0|[1-9]\d{0,15})\.\d{2}$/.test(value)) invalid(); return value;
 }
 function page<T extends { readonly id: string }>(value: unknown, parameters: { readonly page: number; readonly pageSize: 20 },
-  decode: (row: unknown, recommendation?: 'AVAILABLE' | 'UNAVAILABLE') => T, account = false,customer = false): CurrentFormPage<T> {
-  const row = object(value, ['page', 'pageSize', 'exactTotal', 'items'], account||customer ? ['recommendationAvailability'] : []);
+  decode: (row: unknown, recommendation?: 'AVAILABLE' | 'UNAVAILABLE') => T, account = false,customer = false,warehouse = false): CurrentFormPage<T> {
+  const row = object(value, ['page', 'pageSize', 'exactTotal', 'items'], account||customer||warehouse ? ['recommendationAvailability'] : []);
   if (row.page !== parameters.page || row.pageSize !== 20 || typeof row.exactTotal !== 'string' || !/^(?:0|[1-9]\d{0,19})$/.test(row.exactTotal)) invalid();
   const total = BigInt(row.exactTotal); const remaining = total - BigInt((parameters.page - 1) * 20);
   const expected = remaining < 0n ? 0 : remaining > 20n ? 20 : Number(remaining);
   const input = array(row.items); if (input.length !== expected) invalid();
-  const hasHint=account||customer&&Object.hasOwn(row,'recommendationAvailability');
+  const hasHint=account||(customer||warehouse)&&Object.hasOwn(row,'recommendationAvailability');
   if (hasHint && row.recommendationAvailability !== 'AVAILABLE' && row.recommendationAvailability !== 'UNAVAILABLE') invalid();
   const recommendation = hasHint ? row.recommendationAvailability as 'AVAILABLE' | 'UNAVAILABLE' : undefined;
   const items = input.map(item => decode(item, recommendation)); if (new Set(items.map(item => item.id)).size !== items.length) invalid();
+  if (warehouse && items.filter(item => 'isRecommended' in item && item.isRecommended === true).length > 1) invalid();
   return Object.freeze({ page: parameters.page, pageSize: 20, exactTotal: total, items: Object.freeze(items),
     ...(hasHint ? { recommendationAvailability: row.recommendationAvailability as 'AVAILABLE' | 'UNAVAILABLE' } : {}) });
 }
@@ -52,7 +53,8 @@ function salesReference(value: unknown, parameters: CurrentSalesReferenceQuery, 
   if (parameters.kind === 'hall' ? hallId !== nativeId : parameters.kind === 'warehouse' ? hallId !== parameters.hallId : parameters.kind === 'salesperson' ? false : hallId !== null) invalid();
   if (parameters.kind === 'paymentAccount' ? paymentMethodId !== parameters.paymentMethodId : paymentMethodId !== null) invalid();
   if (parameters.kind === 'customer' ? row.code === null : parameters.kind !== 'paymentAccount' && row.code !== null) invalid();
-  if (Object.hasOwn(row, 'isRecommended') && (parameters.kind !== 'paymentAccount' && parameters.kind !== 'customer' || recommendation !== 'AVAILABLE' || typeof row.isRecommended !== 'boolean')) invalid();
+  if (Object.hasOwn(row, 'isRecommended') && (parameters.kind !== 'paymentAccount' && parameters.kind !== 'customer' && parameters.kind !== 'warehouse' || recommendation !== 'AVAILABLE' || typeof row.isRecommended !== 'boolean')) invalid();
+  if (parameters.kind === 'warehouse' && recommendation === 'AVAILABLE' && !Object.hasOwn(row, 'isRecommended')) invalid();
   return Object.freeze({ ...(Object.hasOwn(row, 'isRecommended') ? { isRecommended: boolean(row.isRecommended) } : {}), id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName });
 }
 function warehouse(value: unknown, parameters: CurrentTransferWarehouseQuery): CurrentTransferWarehouse {
@@ -81,6 +83,7 @@ function sku(value: unknown): CurrentFormSku {
 export function createCurrentFormHttpReader(options: HttpQueryOptions) {
   const http = createHttpJsonQuery(options);
   const customerHttp=createHttpJsonQuery({...options,fetch:(input,init)=>{const headers=new Headers(init.headers);headers.set('x-naijue-current-form-recommendation','customer-v1');return options.fetch(input,{...init,headers});}});
+  const warehouseHttp=createHttpJsonQuery({...options,fetch:(input,init)=>{const headers=new Headers(init.headers);headers.set('x-naijue-current-form-recommendation','warehouse-v1');return options.fetch(input,{...init,headers});}});
   return Object.freeze({
     readFits(parameters: CatalogueSettingsListQuery, signal: AbortSignal) {
       const query = parseCatalogueSettingsListQuery(parameters);
@@ -106,7 +109,7 @@ export function createCurrentFormHttpReader(options: HttpQueryOptions) {
     },
     readSalesReferences(parameters: CurrentSalesReferenceQuery, signal: AbortSignal) {
       const parsed = parseCurrentSalesReferenceQuery(parameters);
-      return (parsed.kind==='customer'?customerHttp:http).post('/current-form/sales-references/query', parsed, signal, value => page(value, parsed, (row, recommendation) => salesReference(row, parsed, recommendation), parsed.kind === 'paymentAccount',parsed.kind==='customer'));
+      return (parsed.kind==='customer'?customerHttp:parsed.kind==='warehouse'?warehouseHttp:http).post('/current-form/sales-references/query', parsed, signal, value => page(value, parsed, (row, recommendation) => salesReference(row, parsed, recommendation), parsed.kind === 'paymentAccount',parsed.kind==='customer',parsed.kind==='warehouse'));
     },
     readTransferWarehouses(parameters: CurrentTransferWarehouseQuery, signal: AbortSignal) {
       const parsed = parseCurrentTransferWarehouseQuery(parameters);

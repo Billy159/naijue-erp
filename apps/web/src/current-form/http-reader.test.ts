@@ -95,3 +95,22 @@ test('customer recommendation opt-in accepts legacy pages and only proven boolea
  }
  for(const payload of [page([{...customer,isRecommended:true}]),page([{...customer,isRecommended:true}],{recommendationAvailability:'UNAVAILABLE'}),page([{...customer,isRecommended:'true'}],{recommendationAvailability:'AVAILABLE'}),page([customer],{recommendationAvailability:'GUESS'})])await assert.rejects(setup(payload).reader.readSalesReferences(query,signal()));
 });
+
+test('warehouse-v1 negotiates genuine default hints while preserving bounded queries and customer-v1', async () => {
+ const query = {...reference,kind:'warehouse' as const,hallId:hall};
+ const warehouse = {...item,id:uuid(80),isRecommended:true};
+ const f=setup(page([warehouse],{recommendationAvailability:'AVAILABLE'}));
+ const result=await f.reader.readSalesReferences(query,signal());
+ assert.equal(result.recommendationAvailability,'AVAILABLE');assert.equal(result.items[0]!.isRecommended,true);
+ assert.equal(new Headers(f.requests[0]!.init.headers).get('x-naijue-current-form-recommendation'),'warehouse-v1');
+ assert.deepEqual(JSON.parse(f.requests[0]!.init.body as string),query);
+ const legacy=setup(page([{...item,id:uuid(80)}]));assert.equal((await legacy.reader.readSalesReferences(query,signal())).recommendationAvailability,undefined);
+ const customer=setup(page([{...item,id:uuid(81),hallId:null,hallName:null,code:'KH',isRecommended:true}],{recommendationAvailability:'AVAILABLE'}));
+ await customer.reader.readSalesReferences({...reference,kind:'customer',hallId:hall},signal());assert.equal(new Headers(customer.requests[0]!.init.headers).get('x-naijue-current-form-recommendation'),'customer-v1');
+ const paged=setup(page([{...warehouse,isRecommended:false}],{page:2,exactTotal:'21',recommendationAvailability:'AVAILABLE'}));assert.equal((await paged.reader.readSalesReferences({...query,page:2},signal())).items[0]!.isRecommended,false);
+});
+test('warehouse-v1 rejects wrong-hall, invalid/missing/ambiguous hints and preserves denied access',async()=>{
+ const query={...reference,kind:'warehouse' as const,hallId:hall},warehouse={...item,id:uuid(80),isRecommended:true};
+ for(const response of [page([{...warehouse,hallId:uuid(91)}],{recommendationAvailability:'AVAILABLE'}),page([{...warehouse,isRecommended:'true'}],{recommendationAvailability:'AVAILABLE'}),page([warehouse],{recommendationAvailability:'UNAVAILABLE'}),page([warehouse],{recommendationAvailability:'UNKNOWN'}),page([{...item,id:uuid(80)}],{recommendationAvailability:'AVAILABLE'}),page([warehouse,{...warehouse,id:uuid(81)}],{recommendationAvailability:'AVAILABLE'})])await assert.rejects(()=>setup(response).reader.readSalesReferences(query,signal()),{kind:'malformed-response'});
+ await assert.rejects(()=>setup({error:{code:'FORBIDDEN'}},403).reader.readSalesReferences(query,signal()),{kind:'forbidden'});
+});

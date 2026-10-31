@@ -20312,7 +20312,24 @@
       },
       "negotiation": "x-naijue-current-form-recommendation: warehouse-v1",
       "meaning": "Existing optional AVAILABLE/isRecommended true only for actual hall.default_sales_warehouse_id within authorized eligible candidates; old wire strips hints; no new ACL/schema/write contract",
-      "next": "OriginalF1 negotiated consumer and originalQB affected review"
+      "next": "OriginalF1 negotiated consumer and originalQB affected review",
+      "independentReview": {
+        "status": "PASS_EXACT4_SOURCE_ONLY_FRONTEND_PG_PENDING",
+        "sha256": "12e7ebef59b79c76d39e5a678af08338a1d8746a9e52f9b024e75e93697e7c87",
+        "findings": 0
+      }
+    },
+    "defaultWarehouseConsumer": {
+      "owner": "originalF1",
+      "status": "EXACT4_FIXED_READER13_DOM16_TYPES_PASS_BUILD_BROWSER_PG_PENDING",
+      "files": {
+        "apps/web/src/current-form/http-reader.ts": "1b4baa9651d689e86edc4df93983450af69ea07b993259b15282a74f0d89751b",
+        "apps/web/src/current-form/http-reader.test.ts": "1e85b76427c32a782c0c41f67ad5f064cbad55a9ceabb637c909a7928a625035",
+        "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx": "ef118151aea0f3ddb05ba923e3c3b9f96fd04fbe6de01aaa5265b41ac4100968",
+        "apps/web/demo-replica/frontend/runtime/documents/default-warehouse-selection.test.mjs": "baef52d937bb47bb7a3b52472bcf05d1ab596c1d7de855eb6f03c69d34d2424f"
+      },
+      "meaning": "Only unique authorized samehall server recommendation; no single-row guess; manual intent, switch, original document, cancellation and stale responses preserved",
+      "next": "Independent affected QF and paired fixed candidate"
     }
   }
 }

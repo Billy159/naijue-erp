@@ -8195,8 +8195,8 @@
     "F1": {
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
       "scope": "Original documents module and own tests in N only; exact affected leaves announced before write; no shared config/contracts/API/SQL/product/category edits",
-      "current": "Warehouse hint exact4 consumer; wait exact D1 contract before mutation",
-      "next": "After exact3 handoff: negotiated warehouse hint consumer and original proposal-form linkWarehouse, announce exact source/test before writing",
+      "current": "Warehouse consumer exact4 fixed handed back; C integration only",
+      "next": "Fixed candidate affected browser verification; do not invent source changes without actual finding",
       "git": "C only",
       "soleWriter": [
         "apps/web/src/current-form/http-reader.ts",

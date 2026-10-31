@@ -1,3 +1,7 @@
+## 2026-10-31 default warehouse backend accepted; frontend exact4 handed back
+
+OriginalQB backend exact4 SOURCE_ONLY PASS report5605B SHA12e7ebef59b79c76d39e5a678af08338a1d8746a9e52f9b024e75e93697e7c87 adopted without repeat technical review. F1 paired reader/Form consumer actual RED then13 reader and16 DOM/model checks PASS, strict types PASS. Automatic selection requires one server-proven true same-hall recommendation; removed unique-candidate guessing, preserve manual/open/clear/original-document/late/cancel/scope/busy. Bounded first page is sufficient because server recommended-first; no full catalogue enumeration. Actual Chrome/HTTP/PG/save/readback still pending. Exact4 frozen handed back; C integrates source only. Earlier local candidate2b52 remains fixed and cannot prove this successor.
+
 ## 2026-10-31 original D1 default warehouse read exact4 handed back
 
 C matched four handed source/test hashes; original D18 unique directed protocol/Fastify checks PASS and two strict roots PASS, no actualPG. Original warehouse query uses existing hall.default_sales_warehouse_id and optional recommendation hints, same authorized enabled/hall/search/count/page rules. Header x-naijue-current-form-recommendation: warehouse-v1 opts in; legacy payload strips both hints, customer-v1 unchanged. No new ACL/schema/API/ports/write contract. OriginalF1 receives exact negotiation for registered consumer; originalQB only affected source increment. Frontend and actual business not passed. UI candidate stays immutable2b52b2b0, not mixed with this successor.
