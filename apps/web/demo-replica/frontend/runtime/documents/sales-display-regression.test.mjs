@@ -96,3 +96,25 @@ test('F04 actual proposal form exposes effective zero and explicit cancel/confir
   });
  }finally{await rm(temp,{recursive:true,force:true});}
 });
+
+
+test('QF51-S04-READ-DIRECTION-LABEL-01: actual shared readonly renderer preserves signed quantities and Demo direction in every native state',async()=>{
+ const here=path.dirname(fileURLToPath(import.meta.url)),temp=await mkdtemp(path.join(here,'.sales-display-'));
+ try{
+  const output=path.join(temp,'read.mjs');await build({entryPoints:[path.join(here,'sales-read-body.tsx')],outfile:output,bundle:true,platform:'node',format:'esm',jsx:'automatic',external:['react','react-dom','react-dom/*']});
+  const {SalesReadBody}=await import(pathToFileURL(output).href);
+  for(const businessType of ['SALE','RETURN','EXCHANGE'])for(const status of ['DRAFT','APPROVED','VOID']){
+   const quantities=businessType==='SALE'?['9007199254740993']:businessType==='RETURN'?['-1']:['-1','2'];
+   const detail={document:{header:{id:id(101),number:'SYN-READ',status,businessType,businessDate:'2026-10-31',note:null,orderDiscount:'0',grossAmount:businessType==='RETURN'?'-23900':'23900',netDue:businessType==='RETURN'?'-23900':'23900'},lines:quantities.map((quantity,index)=>({id:id(110+index),skuId:id(120+index),quantity,snapshot:{productCode:'SYN-'+index,productName:'Synthetic',colorName:'白色',fitName:'Y',sizeName:'M'},referencePrice:'23900',discountTenths:null,dealPrice:'23900',lineAmount:quantity.startsWith('-')?'-23900':'47800',isGift:false})),settlements:[]},referenceNames:{hallName:'TEST',salespersonName:null,customerName:'TEST',warehouseName:'TEST'},settlementNames:[],productSummary:{productCount:String(quantities.length)}};
+   const before=structuredClone(detail),html=renderToStaticMarkup(createElement(SalesReadBody,{detail,actions:null})),dom=new JSDOM(html);
+   try{
+    const doc=dom.window.document,cells=[...doc.querySelectorAll('.sale-lines-table tbody tr td:nth-child(5)')];
+    assert.deepEqual(cells.map(cell=>cell.textContent),quantities.map(q=>businessType==='SALE'?q:(q.startsWith('-')?'退回 ':'换出 ')+q));
+    assert.deepEqual(cells.map(cell=>!!cell.querySelector('.negative')),quantities.map(q=>q.startsWith('-')));
+    assert.equal(doc.querySelectorAll('.sale-entry-section').length,1,'readonly combined type remains one table');assert.equal(doc.querySelectorAll('input,select,textarea').length,0);
+    const footer=doc.querySelector('.sale-summary').textContent;if(businessType==='RETURN'){assert.match(footer,/退回 1件/);assert.match(footer,/换出 0件/);assert.match(footer,/应退 ¥239\.00/);}else if(businessType==='EXCHANGE'){assert.match(footer,/退回 1件/);assert.match(footer,/换出 2件/);assert.match(footer,/应收 ¥239\.00/);}else assert.match(footer,/9007199254740993件/);
+    assert.deepEqual(detail,before,'render never changes signed business quantities or amounts');assert.equal(renderToStaticMarkup(createElement(SalesReadBody,{detail,actions:null})),html,'reopening the same readonly DTO is stable');
+   }finally{dom.window.close();}
+  }
+ }finally{await rm(temp,{recursive:true,force:true});}
+});
