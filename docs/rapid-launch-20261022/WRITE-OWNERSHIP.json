@@ -8387,7 +8387,7 @@
   },
   "r1PaymentSettingsWriteReadbackFollowup": {
     "owner": "F3",
-    "status": "IN_PROGRESS",
+    "status": "FROZEN_505AD0D2_DRIVER_9E3E8E5A_QF2_LIMITED_PASS",
     "files": [
       "apps/web/demo-replica/tests/payment-maintenance-fixture.mjs",
       "apps/web/demo-replica/tests/payment-maintenance-fixture.test.mjs",
@@ -8398,11 +8398,26 @@
   },
   "r1TransferCurrentLineReadbackFixture": {
     "owner": "D1",
-    "status": "IN_PROGRESS",
+    "status": "FROZEN_0DD757B0_QF_LIMITED_PASS",
     "files": [
       "apps/web/demo-replica/tests/transfer-chain-fixture.mjs",
       "apps/web/demo-replica/tests/transfer-chain-fixture.test.mjs"
     ],
     "scope": "Public detail returns current rows only; underlying retired rows/audit preserved, no production validator relaxation."
+  },
+  "r1DocumentPaginationFollowup": {
+    "owner": "F1",
+    "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
+    "status": "ASSIGNED_CHECK_WIP_FIRST",
+    "files": [
+      "apps/web/demo-replica/tests/sales-chain-fixture.mjs",
+      "apps/web/demo-replica/tests/transfer-chain-fixture.mjs",
+      "apps/web/demo-replica/tests/production-browser-fixture.mjs",
+      "apps/web/demo-replica/tests/sales-chain-fixture.test.mjs",
+      "apps/web/demo-replica/tests/transfer-chain-fixture.test.mjs",
+      "apps/web/demo-replica/tests/sales-chain-browser.py",
+      "apps/web/demo-replica/tests/transfer-chain-browser.py"
+    ],
+    "scope": "Opt-in bounded synthetic SAVE headers >20 and faithful query pagination/sort; production SQL/API unchanged. This lease supersedes D1 transfer and F3 shared production bridge after their fixed handback. No actual browser before C slot handover."
   }
 }

@@ -20884,7 +20884,7 @@
     "next": "Only exact sparse driver exports and explicit future deletion approvals; no huge temporary restore."
   },
   "r1GlobalPaginationAndUiContinuation": {
-    "status": "ORIGINAL_QF2_DATA_PAGINATION_ACTUAL_CHECKS_ASSIGNED_QF_DOCUMENT_GAPS_PREPARING_NO_DUPLICATE_FULL_REVIEW",
+    "status": "QF2_14_LISTS_LIMITED_PARTIAL_ADOPTED_F1_DOCUMENT_PAGING_PACKAGE_ASSIGNED",
     "scope": {
       "pages": 37,
       "overlayClasses": 68,
@@ -20896,7 +20896,20 @@
       "documentPublicPreparation": "QF",
       "totalMatrixAndTaskProgressHandoff": "C"
     },
-    "browser": "QF2 exclusive; QF prepare read-only until explicit handover. User Chrome/Demo untouched.",
-    "rules": "Reuse same-version same-scope evidence; applicable lists only, single-page data cannot prove page2; no fake totals/zero or backend validation suppression. No five new performance work and no UI prerequisite to DB preparation."
+    "browser": "QF2 released own processes; F1 source work first, actual headed slot coordinated by C",
+    "rules": "Reuse same-version same-scope evidence; applicable lists only, single-page data cannot prove page2; no fake totals/zero or backend validation suppression. No five new performance work and no UI prerequisite to DB preparation.",
+    "actualEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/PAGINATION-49-READONLY-20261031-01/QF2-RESULT.json",
+    "actualScope": "14 lists, 46 query responses. Colors 182 supports page2/pageSize/reset and representative narrow viewport; other13 lists insufficient rows for page2. No application defect found, no whole-page closure.",
+    "next": "F1 bounded opt-in actual synthetic SAVE dataset and actual query comparator; no old edit chain rerun or PG claims"
+  },
+  "r1Qa22CaptureStaticReview": {
+    "status": "STATIC_ONLY_TARGET_BINDING_PENDING",
+    "staticChecksResult": "PASS",
+    "owner": "QB",
+    "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/BARCODE-SALES-HEADER-STATIC-20261031/QB-BARCODE-SALES-HEADER-STATIC-RESULT.json",
+    "sha256": "a1734841a790d5dc08a4901c208f028c86a5886f350d75f967829c7b61337149",
+    "scope": "BARCODE1/SALES_HEADER1 raw/native/source fingerprints and original pure consumers only",
+    "next": "Fresh actual target/session after human-authorized A0, then exact C/QB capture binding; static scope reused",
+    "executionAuthorized": false
   }
 }
