@@ -8195,10 +8195,12 @@
     "F1": {
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
       "scope": "Original documents module and own tests in N only; exact affected leaves announced before write; no shared config/contracts/API/SQL/product/category edits",
-      "current": "Driver3a5 frozen handed back; next revised DOC01 emptyhall selectors",
+      "current": "DOC01 first UI exact2 committed2aa27c6c; next existing nullable-hall salesperson seam only",
       "next": "Fixed affected source to original QF; actual57a browser/PG remains distinct",
       "git": "C only",
       "soleWriter": [
+        "apps/web/src/current-form/sales-proposal.ts",
+        "apps/web/src/current-form/sales-proposal.test.ts",
         "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
         "apps/web/demo-replica/frontend/runtime/documents/default-warehouse-selection.test.mjs"
       ],
@@ -8208,7 +8210,7 @@
         "apps/web/demo-replica/frontend/runtime/documents/transfers-detail-page.tsx": "c22306c891dcd6e28181e79f4196ef5e5008b75fe122c650cdcca8301b1dbc35",
         "apps/web/demo-replica/frontend/runtime/documents/document-leave-dialog.test.mjs": "ea1c85bdba875b18b739906be0dd8f8b8f2fbbf4d6377310cc315a0020f54bde"
       },
-      "boundary": "Only current sales missing-hall blanket selector UI and exact existing consumer tests; preserve busy/permissions/samehall warehouse SAVE/native IDs/defaultwarehouse57a/manual selection; no HTTP/model/contracts/API/SQL/config/driver/product/settings writes"
+      "boundary": "Only existing nullable-hall salesperson picker model and actual UI adapter/tests. Customers/warehouses retain real-hall protocol and save permissions. No HTTP/API/SQL/schema/new DTO/config/driver writes"
     },
     "D1": {
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",

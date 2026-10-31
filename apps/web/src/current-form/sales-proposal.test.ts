@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { entityId } from '../../../../packages/domain/src/values.ts';
 import type { CurrentFormPage, CurrentFormProduct, CurrentFormSku, CurrentSalesReferenceItem } from '../../../../packages/application/src/current-form-ports.ts';
 import { ReadContext } from '../loading/read-scope.ts';
+import {createCurrentFormHttpReader} from './http-reader.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { SalesProposalSession, type SalesProposalReader } from './sales-proposal.ts';
 const uuid = (n: number) => `00000000-0000-4000-8000-${n.toString().padStart(12, '0')}`;
@@ -272,4 +273,24 @@ test('direction-only updates preserve independent line/entry identity and edit c
  const key=h.session.getSnapshot().entries.IN.at(-1)!.key;await h.session.openEntryPicker('IN','product',key);await h.session.select(product.id);h.session.updateEntry('IN',{quantity:'-9007199254740993',dealPrice:'0.00',isGift:true,zeroConfirmed:true},key);
  const entry=h.session.getSnapshot().entries.IN.find(x=>x.key===key)!;h.session.updateEntry('IN',{quantity:sign(entry.quantity,'OUT')!},key);assert.deepEqual(h.session.getSnapshot().entries.OUT.find(x=>x.key===key),{...entry,quantity:'9007199254740993'});assert.ok(!h.session.getSnapshot().entries.IN.some(x=>x.key===key));
  h.session.clearEntry('OUT',key);assert.ok(!h.session.getSnapshot().entries.OUT.some(x=>x.key===key&&x.product));h.context.clear();
+});
+
+test('DOC01 staff is selectable before hall through the existing nullable-hall read, manual intent blocks defaults',async()=>{
+ const calls:unknown[]=[],staff=ref(15),wire=createCurrentFormHttpReader({origin:'https://staff.synthetic.test',basePath:'/api',fetch:async(_url,init)=>{assert.equal(init.credentials,'same-origin');const query=JSON.parse(init.body as string) as {kind:string};calls.push(query);return Response.json({page:1,pageSize:20,exactTotal:'1',items:query.kind==='hall'?[hall]:[staff]});}}),h=setup({readSalesReferences:wire.readSalesReferences});
+ await h.session.openPicker('salesperson');assert.equal(h.session.getSnapshot().picker?.phase,'ready');
+ assert.deepEqual(calls[0],{kind:'salesperson',hallId:null,search:'',page:1,pageSize:20});assert.equal(await h.session.select(staff.id),true);
+ assert.equal(h.session.getSnapshot().draft.hall,null);assert.equal(h.session.getSnapshot().draft.salesperson?.id,staff.id);
+ assert.equal(h.session.applyDefaultSalesperson(ref(16),uuid(16),h.session.getSnapshot().draft),false);
+ await h.session.openPicker('customer');await h.session.openPicker('warehouse');assert.equal(calls.length,1,'required hall context is not widened');
+ await h.session.openPicker('hall');await h.session.select(hall.id);assert.equal(h.session.getSnapshot().draft.salesperson?.id,staff.id,'selecting a hall preserves the manual staff');
+ assert.equal(h.session.saveProposal(null),null,'staff alone never bypasses ordinary save requirements');h.context.clear();
+});
+test('DOC01 nullable-hall staff reads preserve cancellation, superseding search and identity invalidation',async()=>{
+ const pending:{signal:AbortSignal;resolve:(p:CurrentFormPage<CurrentSalesReferenceItem>)=>void}[]=[],h=setup({readSalesReferences:(_query,signal)=>new Promise(resolve=>pending.push({signal,resolve}))});
+ const first=h.session.openPicker('salesperson');assert.equal(pending.length,1);h.session.closePicker();pending[0]!.resolve(page([ref(15)]));await first;assert.equal(h.session.getSnapshot().picker,null);
+ const old=h.session.openPicker('salesperson'),latest=h.session.search('latest');assert.equal(pending[1]!.signal.aborted,true);pending[2]!.resolve(page([ref(16)]));await latest;pending[1]!.resolve(page([ref(15)]));await old;assert.equal(h.session.getSnapshot().picker?.result?.items[0]!.id,ref(16).id);
+ const departed=h.session.openPicker('salesperson');h.context.clear();pending[3]!.resolve(page([ref(17)]));await departed;assert.equal(h.session.getSnapshot().disposed,true);assert.equal(h.session.getSnapshot().picker,null);assert.equal(h.session.getSnapshot().draft.salesperson,null);
+});
+test('DOC01 denied nullable-hall staff read keeps original access failure disposal',async()=>{
+ const h=setup({async readSalesReferences(){throw new HttpQueryError('forbidden','FORBIDDEN',403);}});await h.session.openPicker('salesperson');assert.equal(h.scope.active,false);assert.equal(h.session.getSnapshot().disposed,true);assert.equal(h.session.getSnapshot().draft.salesperson,null);
 });

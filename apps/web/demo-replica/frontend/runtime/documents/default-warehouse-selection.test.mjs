@@ -24,10 +24,13 @@ test('actual sales hall selection consumes only eligible warehouse recommendatio
    const f=await mount('no-default');sub.after(async()=>{if(root){await act(async()=>root.unmount());root=null;}f.context.clear();fixture=null;});
    await act(async()=>root.render(h(SalesProposalForm,{...f.props,notice:'SYN existing notice'})));
    const control=label=>deep('[aria-label="'+label+'"]').find(node=>node.classList.contains('arco-select'));
-   for(const label of ['营业员','客户','出库仓']){
+   await open('营业员');await choose('SYN staff');
+   assert.equal(f.session.getSnapshot().draft.hall,null);assert.equal(f.session.getSnapshot().draft.salesperson.id,id(70));
+   assert.deepEqual(f.calls[0],{kind:'salesperson',hallId:null,search:'',page:1,pageSize:20});
+   for(const label of ['客户','出库仓']){
     assert.equal(control(label).classList.contains('arco-select-disabled'),false,label+' must remain actionable before hall');
     await open(label);assert.match(host.querySelector('#sale-error').textContent,/请先选择营业厅/);assert.match(host.querySelector('#sale-error').textContent,/SYN existing notice/);
-    assert.notEqual(control(label).getAttribute('aria-expanded'),'true','missing context is not an empty candidate menu');assert.equal(f.calls.length,0,'no unscoped reference query');assert.equal(f.session.getSnapshot().picker,null);
+    assert.notEqual(control(label).getAttribute('aria-expanded'),'true','missing context is not an empty candidate menu');assert.equal(f.calls.length,1,'customer/warehouse never send an unscoped query');assert.equal(f.session.getSnapshot().picker,null);
    }
    await open('营业厅');await choose(hall.name);await open('营业员');await choose('SYN staff');await open('客户');await choose('SYN customer');await open('出库仓');await choose(manual.name);
    assert.equal(f.session.getSnapshot().draft.salesperson.id,id(70));assert.equal(f.session.getSnapshot().draft.customer.id,id(71));assert.equal(f.session.getSnapshot().draft.warehouse.id,manual.id);

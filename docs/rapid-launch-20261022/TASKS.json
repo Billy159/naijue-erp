@@ -1356,7 +1356,7 @@
   "baseCheckpoint": "f8352b3be19fa3e717262b5bb28073e559bc0795",
   "updatedAt": "2026-10-29T02:43:42.597519+00:00",
   "stage": "HANDOVER_V2_PLAN_REVIEWED_SOURCE_PACKAGES_OPEN",
-  "lastVerifiedRemoteCommit": "4b180e6f404baae6ac30aca1d0b707128aefd76a",
+  "lastVerifiedRemoteCommit": "2aa27c6ccdea4e1ab0a9ca7a6dba90c07fbecd5c",
   "reportingAuthorization": "REPORTING-AUTHORIZATION.json",
   "reportingRequiredFields": [
     "taskId",
@@ -20561,5 +20561,23 @@
         "next": "Reuse existing nullable-hall salesperson protocol with minimal model/UI adapter; no new API or relaxed save contract"
       }
     }
+  },
+  "r1Doc01NullableHallSalesperson": {
+    "status": "SOURCE_READY_PENDING_INDEPENDENT_AFFECTED_REVIEW",
+    "owner": "F1",
+    "paths": [
+      "apps/web/src/current-form/sales-proposal.ts",
+      "apps/web/src/current-form/sales-proposal.test.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/default-warehouse-selection.test.mjs"
+    ],
+    "checks": "owner model4/4; actualForm2/2; scopedtypes0; no browser or PG",
+    "next": "QF affected source review; unique build owner integrates complete package"
+  },
+  "r1ProductBrowserRetry02": {
+    "status": "INTERRUPTED_PARTIAL_OBSERVATION_NOT_PASS",
+    "fixedBuild": "d76a54ac47",
+    "evidence": "QF2/PRODUCT-ENTRY-SERVICE-D76A47-20261031-01/retry-02-playwright155",
+    "remaining": "category duplicate/readback and all PRODUCTv2 steps unproven; no replay until original state reconciled"
   }
 }

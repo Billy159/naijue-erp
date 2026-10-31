@@ -438,7 +438,7 @@ export class SalesProposalSession {
     if (this.#state.disposed) return;
     if (this.#state.lineEdit) { this.#publish({ notice: '请先确认或取消当前行的改选。' }); return; }
     if (kind === 'salesperson') this.#salespersonDefaultClosed = true;
-    if (kind !== 'hall' && !this.#state.draft.hall) { this.#publish({ notice: '请先选择营业厅。' }); return; }
+    if (kind !== 'hall' && kind !== 'salesperson' && !this.#state.draft.hall) { this.#publish({ notice: '请先选择营业厅。' }); return; }
     this.#settlementTarget = null; this.#entryTarget = null; this.#inlineSettlement = false;
     await this.#read(kind, '', 1, null, null);
   }
@@ -502,6 +502,7 @@ export class SalesProposalSession {
       }
       else {
         const query: CurrentSalesReferenceQuery = kind === 'hall' ? { kind, hallId: null, search, page, pageSize: 20 }
+          : kind === 'salesperson' ? { kind, hallId, search, page, pageSize: 20 }
           : kind === 'paymentAccount' ? { kind, hallId: hallId!, paymentMethodId: entityId('paymentMethod', method!.id), search, page, pageSize: 20 }
           : { kind, hallId: hallId!, search, page, pageSize: 20 };
         result = await this.#reader.readSalesReferences(query, signal);

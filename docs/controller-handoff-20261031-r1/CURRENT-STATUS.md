@@ -1,3 +1,11 @@
+## 2026-10-31 DOC01 nullable-hall salesperson source delivered; browser retry interrupted
+
+Original F1 exact4 handed back and hashes matched. Existing salesperson protocol hallId:null now consumed by model/UI; customer and warehouse retain real-hall prerequisite. Owner targeted model4/4 and actual Form parent+child2/2 passed, scoped types passed; old57a results reused. This is source checks only: no new build, visible browser or PG save acceptance. Source writer released; independent affected review next.
+
+T45 local Python3.12.14/Playwright1.55.0 import passed5.816s, no browser download/global changes. QF2 retry02 actually reached category saved screenshot, then interrupted: original exec66204 absent, no driver/stdio process or result.json. CATEGORY duplicate/readback and PRODUCTv2 cases unproven. Recovery evidence retained; no request replay. A shell reported no space; current df shows1GiB, so exact exit cause UNKNOWN. Original T45 checks own resources only, no unauthorized deletion. Fixed47 remains d76a54ac and does not include DOC01 later source.
+
+GitHub 2aa27c6ccdea4e1ab0a9ca7a6dba90c07fbecd5c independently remote-readback verified. Actual M01 original job314 terminal pending; current action deadline17:59:34 and cleanup18:14:34 unchanged. Five new performance optimizations remain PAUSED.
+
 ## Revised DOC01 first source increment; exact remaining selector boundaries
 
 OriginalF1 exact2 proposal-form/default-warehouse-selection test handed back: all three nonhall buttons actionable in active scope, preservebusy; withoutrequiredhall existingmodel notice shown, no unscoped requests/fake options. Actual Form/Session/Arco RED→GREEN2directedcases and strict scopedtypesPASS, old57a15cases reused not rerun. This does not prove nohall candidates. Existing salesperson protocol already allows nullhall; model/UI next minimal adapter may consume it. Customer/warehouse protocol requires realhall; do not widen by copying account rules or guessing default. Paired47 browser config precheck now passes, but Python Playwright missing before Chromium/stdio, so businesscases still NOT_RUN. T45 prepares independent local QA runtime, existing system/Chrome unchanged.
