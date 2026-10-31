@@ -3397,3 +3397,9 @@ C41已经真正R1 runtime TCP认证并捕获完整目录，canonical f62de0a301d
 
 
 未审核同新增字段收口接续：app51未变化。53ab驱动实际已通过销货参考价未知保护、重读239及5折119.50，调拨颜色/版型改选。后续停止点均为新用例操作前提：sales误取追加空白行/款号input当行文本，transfer漏真实改选确认，尚非已证生产计算/CSS缺陷。C已交原F1同两driver合并修并先完成前台浏览器自检；QF已关闭自身所有进程，不继续逐个新driver独立试错。最终edited SAVE/reopen/pending尚未PASS，跨厅、历史、PG仍未测。原失败日志和现场保留。下一回先收F1完整自检及准确hash，再交QF仅剩余受影响范围；不重build未变应用、不重复旧全链。
+
+
+V7准备推进：C已按原QB PRODUCT1/PAYMENT3静态PASS签发原格式三份source/reference技术采纳，D1正在原factory本机开/遍历/authorize/verify/close生成准确输入；不是SQL或导入授权。新有限窗口准确清单02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984已实际核读并向用户申请一次90+15隔离执行，等待明确答复；human/T0/ARM仍空，不能由技术采纳或用户沉默替代。旧窗口已关闭、M01/M02不重放，正式环境不动。前端原F1两driver完整自检继续，未提交WIP勿覆盖。
+
+
+销货未审核编辑本批独立QF限定闭环PASS：application51/2848f028，driver aebcf262，exit0/18.548s，真实合成HTTP SAVE1→edit SAVE2→列表重开删新增明细SAVE3，原号/创建身份保留，精确数量金额读回。采用有效结论不重验；跨厅/历史/nonDRAFT/未知恢复/PG/生产仍未测。调拨D1当前行公开读回修复已固定0dd757b0，fixture13+responsibility3通过；底层退役原行与审计保留。T45正在仅导出后继fixture快照，不重建未改应用，随后F1仅调拨续验。F3收款exact4本机准备中，浏览器按QF释放→F1调拨→F3顺序，无抢窗口。

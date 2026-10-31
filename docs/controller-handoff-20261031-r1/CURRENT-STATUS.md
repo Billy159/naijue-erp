@@ -1,3 +1,13 @@
+## 当前增量：销货未审核编辑限定闭环通过；V7静态输入已准备，实际新窗口待确认
+
+原QF在固定应用51（2848f028、manifest18e6ba25）和固定driver aebcf262上完成销货 SAVEv1→已有单修改SAVEv2→列表重开删除新增明细SAVEv3，精确数量/金额/收款及原单号、创建身份读回通过。仅合成HTTP/browser，跨厅、历史、真实PG及生产未通过。原失败用例及截图完整保留；已通过范围不重跑。
+
+调拨已在F1前台自检完成负责人、规格改选与六次扫码排队保存保护，并实际SAVEv2。旧验证夹具公开详情误带isCurrent=false退役行导致501；D1仅修夹具公开current-only读回，保留底层旧行/审计，定向13+3通过，固定0dd757b0。T45已给独立测试源码树，应用51不重建，F1只续调拨。F3沿原收款HTTP/service补显式验证接线，固定505ad0d2，3项定向通过但浏览器待时隙；应用49复用，不新增业务接口。
+
+商品1与收款3合成来源原QB静态PASS已由C采用，并签发原格式三份技术review；D1原factory读取/逐块authorize/verify/close通过，收退款引用本次实际PAYMENT输出。无目标会话或执行授权伪造，actualPG尚未运行。原QA178旧窗口关闭，新90+15准确清单02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984已向用户申请，human/T0/ARM仍空，不能执行。五项新增性能优化继续暂停。
+
+GitHub已实际推送并远端回读a72b881f（后继0dd/505及当前接续记录将合批推送），分支codex/db-v7-r1-preparation-20261031；推送与打包、正式上线分别报告。
+
 ## Latest user: existing unreviewed sales/transfer editable parity; Dot1900 review
 
 User requires existing DRAFT sales and transfer editable business fields to match respective new-entry form, without changing number, true creation identity/source/audit/version or permissions. OriginalF1 current read-only check: sales existing flagtrue and same SalesProposalForm; transfer-existing flagfalse in fixed50, responsible capability absent. Existing original factories/HTTP preparation/commands/datednote save-readback narrow synthetic checks pass, but complete field UI/PG/historical controlled revision not verified. OriginalF1 now owns exact existing-edit fixture/browser package; C will pair configuration only with actual supported candidate readers, not simply enable fake controls.

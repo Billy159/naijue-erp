@@ -8384,5 +8384,25 @@
     "configuration": "apps/web/demo-replica/tests/document-existing-fields-public-config.json",
     "buildOwner": "T45",
     "independentBrowserOwner": "QF"
+  },
+  "r1PaymentSettingsWriteReadbackFollowup": {
+    "owner": "F3",
+    "status": "IN_PROGRESS",
+    "files": [
+      "apps/web/demo-replica/tests/payment-maintenance-fixture.mjs",
+      "apps/web/demo-replica/tests/payment-maintenance-fixture.test.mjs",
+      "apps/web/demo-replica/tests/production-browser-fixture.mjs",
+      "apps/web/demo-replica/tests/recheck-payment-cancel-browser.py"
+    ],
+    "scope": "Original payment HTTP/service and same synthetic UOW only; new opt-in profile, old profile behavior preserved, no production/SQL/permissions changes."
+  },
+  "r1TransferCurrentLineReadbackFixture": {
+    "owner": "D1",
+    "status": "IN_PROGRESS",
+    "files": [
+      "apps/web/demo-replica/tests/transfer-chain-fixture.mjs",
+      "apps/web/demo-replica/tests/transfer-chain-fixture.test.mjs"
+    ],
+    "scope": "Public detail returns current rows only; underlying retired rows/audit preserved, no production validator relaxation."
   }
 }

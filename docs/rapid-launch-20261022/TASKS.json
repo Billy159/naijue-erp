@@ -20776,7 +20776,7 @@
   "r1UnreviewedDocumentEditableParity": {
     "userDirective": "Existing DRAFT sales/transfer must expose corresponding create-form editable business fields, preserving original number/creation/source/audit/permissions/version and controlled historical revision",
     "owner": "F1",
-    "status": "INTERFACE_PASS_APPLICATION51_FIXED_BROWSER_DRIVER_SELF_CHECK_BY_ORIGINAL_F1",
+    "status": "SALES_LIMITED_FULL_EDIT_SAVE_REOPEN_QF_PASS_TRANSFER_SUCCESSOR_FIXTURE_PENDING",
     "actual50": "Sales existingEdit true uses same SalesProposalForm; transferExistingEdit false and documentResponsibleReady absent. Existing native prepare/save interface present; cannot mark all fields or history verified.",
     "next": "T45 fixed51 building; original QF only affected existing-fields and existing-pending, including original responsible choices; preserve full field gaps and single-hall limit.",
     "coveredInterface": "F1 actual synthetic existing-fields2 PASS including sales SALE→RETURN version3, negative quantity/refund, exact replay and stale CAS409; no SAVE ledger effect. No real PG/full browser PASS.",
@@ -20793,6 +20793,63 @@
       "next": "Original F1 must complete visible full affected-case self-check with exact driver snapshot and immutable app51, then QF tests only remaining failed/unverified edited SAVE and reopen; no new full lifecycle regression.",
       "causesResolved": "Sales dynamic row locator and last blank row were test errors. Reference price becomes UNKNOWN after saved specification change; original re-read239 and discount119.50 now actually passed. Transfer edit auto-opens color menu; test toggled it closed, then omitted original replacement confirmation. No production pricing/CSS change warranted by those findings.",
       "latestDriverCheckpoint": "53ab04fbb0e6e6d7d7a79f28cbe2f2ccf68014ff, followed by original F1 two-driver WIP only; do not call WIP accepted."
+    },
+    "salesIndependent": {
+      "task": "QF01-R1-NORMAL51-AEBCF262-SALES-CLOSEOUT-01",
+      "application": "2848f0283fe3f7b5c577cc873607df05494c99e5",
+      "driver": "aebcf2626ee97f1d010898e0a966514abc526aa6",
+      "status": "PASS_LIMITED_SYNTHETIC_HTTP_BROWSER",
+      "actual": "SAVE v1→existing edit CAS1 SAVEv2→list reopen remove added product→CAS2 SAVEv3; original id/number/creator/source unchanged; exact quantity2/price20000/discount100/settlement39900 readback.",
+      "reportSha256": "d63b7c1f0065ab3b5dc17de68370522301a3819f65aa24ff6cc528c6ee0e9a70",
+      "notTested": [
+        "crossHall",
+        "historicalRevision",
+        "nonDraft",
+        "uncertainRecovery",
+        "realPostgres",
+        "production"
+      ]
+    },
+    "transferSuccessor": {
+      "source": "0dd757b0",
+      "fixtureSha256": "36171bbb2ae23defa69257167e89e1879ef2476f69627488a97ce67b5d047caf",
+      "owner": "D1 delivered current-only public detail, underlying retired rows/audit unchanged; original fixture13/responsibility3 PASS",
+      "next": "T45 exact fixture tree then F1 transfer-only visible selfcheck, QF only remaining range; no sales rerun."
     }
+  },
+  "r1Qa22ProductPaymentTechnicalAdoption": {
+    "status": "ORIGINAL_PRODUCT_PAYMENT_FACTORIES_READ_AUTHORIZE_VERIFY_CLOSE_PASS_STATIC_ONLY",
+    "productReferenceReviewSha256": "63ae84b3a9bf30359e125ada30f5342f12718b72f09b3109e1710e5168affa52",
+    "productSourceComponentReviewSha256": "176159bdce8eaf25d4d982f1e33339de3c8d476a0acb98a30486c1ff00cd03e2",
+    "paymentReferenceReviewSha256": "0e304ac339eb4da6aa3fdb23c3ac3cded4fcbe7ff541f354abd5fff960ace1f6",
+    "qbResultSha256": "b49fb8ca20615b4b128e19e2810913bb8db02530afe82c7c8ee5960a725a76c8",
+    "scope": "Exact synthetic PRODUCT1 PAYMENT3 references only; original formats. No target/session identity, SQL, process or import grant fabricated.",
+    "owner": "D1 original source factories; C technical adoption only",
+    "outputs": {
+      "PRODUCT-options.json": "ca659f72a70b132d354a884009f411590b3f7979a09abdc4bb58d024445a50e3",
+      "PRODUCT-chunks.json": "356f7f12df641bb4a54caa591f76cbaf5fd265b98c03bdd1017ca8e1c5ffd3f5",
+      "PAYMENT-options.json": "65b5804f1d56deb9b14dfc0bee964417984efeb03496eee971997458896e4866",
+      "PAYMENT-chunks.json": "10b8b195defb8e4ae936106e38a96b60d89045d6fd9f9818a1403228929e6733",
+      "SETTLEMENT-nativeBindings.json": "ceef3b4fba76a279868ae5cf7df52bb04df8887d4f25bccba39d943e2de22063"
+    },
+    "remaining": "Actual target/session for capture reviews, private bootstrap and current window human approval pending; no PostgreSQL actions authorized by these technical reviews."
+  },
+  "r1Qa178NewFiniteWindowConfirmation": {
+    "status": "CONCRETE_USER_CONFIRMATION_REQUEST_PENDING_NO_EXECUTION",
+    "documentSha256": "02379141c17d6c39be87eec8660a0e81d1a95e89ea5b8243f985b1c43ef47984",
+    "document": "reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/PRIVATE-PROCESS-QA22-SHARED-POOL-PINS-SOURCE-05/FINAL-ENVIRONMENT-CONFIRMATION-DELTA.NOT-APPROVAL.md",
+    "scope": "Same original QA178 target; 90min action+15min cleanup; source06/source05 reviewed shared original pool app1+observer1, cleanup1 reserved; actual facts required by phase. Prior M01/M02 not replayed.",
+    "humanApproval": null,
+    "actualT0": null,
+    "armed": false,
+    "executionOwner": "T45",
+    "noProductionChange": true
+  },
+  "r1PaymentSettingsWriteReadbackFollowup": {
+    "owner": "F3",
+    "status": "ORIGINAL_OWNER_CHECKING_EXISTING_API_AND_MINIMAL_SYNTHETIC_WRITER_SEAM",
+    "browserOwner": "QF2 after fixed delivery and F1 releases browser",
+    "lease": "Exact leaves pending original F3 report, production bridge read-only until C transfers; F1 drivers excluded",
+    "scope": "Create/edit payment method and account, retained hall relation, cancel no write and fresh readback. Reuse original host/UOW/API; no SQL or permission changes."
   }
 }
