@@ -1,3 +1,7 @@
+2026-10-31 最新批准覆盖前条等待：用户human call_4b2e8a96c83740ef9163778f9ef8c196/0已确认五项最小权限与合同源码修订。D1接V8 issuer/API/工具及受影响测试，T45接release配置/生成/deploy/boot/rollback及相关测试，精确唯一writer见WRITE-OWNERSHIP.json dbUpgradeR1ApprovedFiveAtoms；C唯一Git/三台账。仅源码与定向检查获批，未授权新库/角色/实际GRANT/部署。T45 275另证现QA listen_addresses为空、/qa-socket:5432，不改旧服务/alias，不假定TCP可用；准确目标接线仍需实际脚本/独立验收。
+
+2026-10-31 r1权限闭包增量：D1已完成源最小权限用途闭包与T45 273/274实际差量；现4缺函数/3体差异保留，实际3定义SHA及完整相关结构已补C原报告。发现2 cmin读取及3指定子表DELETE与现V6/V7 renderer冲突，最小后继合同稿已一次提交用户确认（仅源码/合同，不据此执行权限）。新增审核后继V8不改变PG服务端/迁移版本或V7余额含义；未获确认前不实施。T45继续仅核现QA回环TCP等必要连接事实，避免无证据扩大socket支持；未新建库/角色/服务。当前源码checkpoint d880f3da已远端核对；源码、隔离、上线结论继续分开。
+
 2026-10-31 r1增量：原QB对e2286116离线V7工具及直接消费者限定源码PASS已采用，0新发现，复用14+5+9定向检查，未连接PG；不冒真实升级通过。原T45正在补仅缺失的catalog/ACL定义及现QA身份只读事实；D1源码预期最小权限矩阵在途，同文件无双写。准备分支原源码及历史WIP保持。
 
 2026-10-31 r1 数据库升级准备接续：本期以 naijue-erp-db-upgrade-handoff-20261031-r1 的2129份源码为基线，独立目录 work/erp-db-upgrade-r1-preparation-20261031，分支 codex/db-v7-r1-preparation-20261031。源码检查点56bc305a4812574cbdfef9a27e4c3ac552b92c2d已推送并核对远端；main/codex/erp未改。当前仓库为公开仓库，仅推允许公开的源码与脱敏交接；GitHub Actions工作流0、该提交运行0，不记CI通过。原工作目录WIP保全。根类型检查、构建和219依赖校验通过；标准3417项：3414通过/1失败/1跳过/1TODO，容量启动文件单独复跑17通过但原失败保留，原因未证。用户call_60c2936d10684229a2f00ac301907319/0已明确批准仅删除准备分支旧inventory/pagination.tsx；已按清单删除，运行时类型检查exit0通过，未改原工作目录。

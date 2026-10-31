@@ -8062,5 +8062,45 @@
     "owner": "T45/01a100d0-cad5-71c1-8042-dc594311d3be",
     "sourceCommit": "482d883c4b4f7cb78ee673705bd75a804cdec1f1",
     "scope": "Original exact reviewed confirmation four-case batch only; no production/real-data/deletion"
+  },
+  "dbUpgradeR1ApprovedFiveAtoms": {
+    "authority": "Human call_4b2e8a96c83740ef9163778f9ef8c196/0: confirmed five minimal permissions and source contract revision; no environment permissions/deployment",
+    "root": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/erp-db-upgrade-r1-preparation-20261031",
+    "originalRootProtected": true,
+    "D1": {
+      "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
+      "soleWriter": [
+        "adapters/postgres/src/native-import-accounting-capability.ts",
+        "apps/api/src/postgres-read-api.ts",
+        "scripts/release/prepare-runtime26-v8.mjs",
+        "scripts/release/render-runtime26-readonly-check.mjs",
+        "scripts/release/compare-runtime26-metadata.py",
+        "scripts/import-v3/production-source-host.mjs",
+        "tests/integration/live-ledger-balance-pairs.integration.test.ts"
+      ],
+      "testScope": "Only directly affected V8 issuer/API/protocol/readonly/comparator and new V8 preparation tests; original V1-V7 source contracts keep meaning; announce exact changed leaves in receipt"
+    },
+    "T45": {
+      "threadId": "01a100d0-cad5-71c1-8042-dc594311d3be",
+      "soleWriter": [
+        "config/release-contract.json",
+        "scripts/release/generate-release-contract.mjs",
+        "scripts/release/deploy-candidate.py",
+        "scripts/release/boot-entry.py",
+        "scripts/release/rollback-candidate.py"
+      ],
+      "testScope": "Only related release contract/generated/pin tests; no DB/source issuer/comparator edits; no actual install/deploy"
+    },
+    "C": {
+      "soleWriter": [
+        "docs/rapid-launch-20261022/TASKS.json",
+        "docs/rapid-launch-20261022/PROGRESS.md",
+        "docs/rapid-launch-20261022/HANDOFF.md",
+        "docs/rapid-launch-20261022/WRITE-OWNERSHIP.json",
+        "docs/controller-handoff-20261031-r1/CURRENT-STATUS.md"
+      ],
+      "git": "Only C stages/commits/pushes; owner exact paths only"
+    },
+    "prohibited": "No V6/V7 byte or meaning change, no grants/DB/roles/listeners/deployment, no concurrent editing same file; additional consumer seam needs C assignment"
   }
 }
