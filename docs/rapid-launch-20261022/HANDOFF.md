@@ -1,3 +1,7 @@
+## 2026-10-31 ordinary direct-login opening gap
+
+T45 current source check found CREATE_ROLES leaves ordinary LOGIN CONNECTION LIMIT0; CONNECT ACL alone cannot permit the later independent ordinary directLOGIN proof. Original04 accepted scope retained. T45 owns a minimal successor (or reuse of an existing exact controlled opening) after full CLOSE_PREP and before FRESH_ORDINARY_V6, bounded own-role slots/readback/recovery/exit only. No admin SETROLE or preparation-pool fallback; no ordinary ACL expansion. Source preparation assigned; actual ALTER ROLE/run still requires final exact environment confirmation. D1 physical synthetic content preparation continues independently.
+
 ## 2026-10-31 installer04 scoped review adopted
 
 QB04 SOURCE PASS, no new finding; receipt9386B SHA a70488da523d3717a1d3fad345bc4a2c217c4ab7068745c0906394b463853f40. Exact matrix, quoted authorization INSERT/SELECT, minimal row-lock UPDATE,15 private calls/zero sequences and original-receipt inverse accepted within source scope. Real privilege sufficiency/collector/PUBLISH remain untested. T45 final concrete environment scope continues. D1 was verified idle and assigned the original next preparation package: reuse/prepare physical synthetic files,32 monetary fact candidates and manifest without actual target/private approval fabrication or shared-source changes. Physical content ownerD1, environment/installer ownerT45, C records/Git, QB fixed increments only. No new environment approval or operations.

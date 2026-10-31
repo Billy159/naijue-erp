@@ -19842,7 +19842,7 @@
       "QB": "Existing independent backend review"
     },
     "current": "Preparation13 exact11 and installer04 carrier scoped QB source PASS adopted; T45 final environment scope and D1 physical synthetic content preparation active",
-    "next": "Bind reviewed carrier and independently prepared content; final exact environment confirmation; then actual isolated operations, no source PASS substituted for PG",
+    "next": "T45 smallest ordinary-connection-opening successor plus final environment scope; D1 physical synthetic inputs in parallel",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
     "approvedHistoricalBalanceRule": "NULL_UNKNOWN_NO_BACKFILL",
@@ -20053,6 +20053,14 @@
       "scope": "Reuse or prepare existing-format synthetic source files, money32 fact candidates and manifest only; target/private envelope stays unbound until actual facts and independent authorization",
       "sourceMutation": false,
       "environmentExecution": false
+    },
+    "ordinaryConnectionOpening": {
+      "status": "SOURCE_SUCCESSOR_ASSIGNED_ORIGINAL_T45",
+      "finding": "CREATE_ROLES leaves ordinary LOGIN CONNECTION LIMIT0; BASELINE_ACL CONNECT does not enable directLOGIN; FRESH_ORDINARY_V6 consumes evidence only",
+      "owner": "T45",
+      "scope": "Reuse existing exact controlled channel if available; otherwise bounded own-role opening and readback after complete CLOSE_PREP before FRESH_ORDINARY_V6; original-key recovery and own-role exit",
+      "actualRoleChange": "NOT_AUTHORIZED_NOT_EXECUTED",
+      "reviewOwner": "QB affected increment only"
     }
   }
 }
