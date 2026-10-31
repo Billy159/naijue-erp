@@ -1,3 +1,5 @@
+2026-10-31 原QB初始化组合2叶固定0b772c0e源码限定PASS采用（report7781B/SHA99d3633cef3966803fa7ecce105ee5cbb9918bdf36ef8ce050ab8dde55005de1）。CORE前原Cgrant/sourcepreflight守卫、真实135/V4准备LOGIN、原初始化/续导/完整PUBLISH读回和异常关闭源码通过，strict+4offline复用；准备账号fence/权限/安装V7V8仍原T45阶段承接，不因module通过自动开启环境。第三role准确最小ACL与逆操作载体仍在原T45实施。
+
 2026-10-31 初始化真实组合2叶已固定0b772c0e并交原QB增量：原工厂/真实boundedPool与V4准备issuer，CORE写前先fullsource Cgrant/preflight，CORE→INIT→catalogue→原full续导→实际publishedpredicate/三facts/反序关闭；strict及4routing早拒离线PASS，尚未实际PG成功路径。report2777B/SHA3b8c78ed。原T45仅据源权限边界实现第三准备role准确列ACL/12xmin/EXEC/seq/DB入口及收口inverse的原installer后继，禁止normal矩阵盲合/普通V8扩权/实际创建或GRANT。最终环境确认尚未到可执行状态。
 
 2026-10-31 实际host接缝已定向核实：原full provider仅续导/无CORE，generic host未传scheme init能力，普通V8禁止原CORE必读ledger.xmin。C采用最小135前置阶段独立准备LOGIN+原V4 exact12/准备ACL→合成PUBLISH→封闭准备访问→V7/V8→普通真LOGIN路线，不新增137issuerprofile/不扩大普通V8。D1独占登记单test-only preparation-host叶复用原factory/service，T45精确最终安装清单承接新增准备身份及权限，当前未获任何实际环境批准。恢复02 source已QB PASS，普通PG/backup/restore/线上全部未验。

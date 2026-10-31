@@ -19969,7 +19969,7 @@
     "qaUnixApproval": "Human call_7f5633370b664b06823b617c5848411b/0",
     "qaUnixV7ReportSha256": "21eeb601bf45a4d4190f12f54a1344da1bddd8cb64b5377b750ffc0c3eaf65f8",
     "preparationRoute": {
-      "status": "FIXED_TWO_LEAF_SOURCE_DELIVERY_0B772C0E_QB_REVIEW_PENDING_NOT_EXECUTED",
+      "status": "QB_PASS_FIXED_0B772C0E_TWO_LEAF_SOURCE_ONLY_INSTALLER_PREP_ACL_PENDING",
       "owner": "D1 minimal test-only composition; T45 installer/environment",
       "sequence": "Strict135/V6 prerequisite, separate preparation LOGIN original V4 exact12, synthetic PUBLISH, fence preparation access, V7 then V8, genuine ordinary runtime LOGIN business acceptance",
       "minimalSourceLeaf": "tests/integration/current-runtime26-preparation-host.ts",
@@ -19979,7 +19979,8 @@
       "executionScopeDraftSha256": "93f4c1b8b9ad86252bb25c34a9bd55682304235e492aa45925a09783fbc75312",
       "installerSuccessor": "T45 implementing exact prep role ACL and inverse in original carrier successor, no environment action",
       "hostReportSha256": "3b8c78ed6eba32fbdb9d3869367187d3d3b3b058f0a1c559100995e71aa73ce5",
-      "hostChecks": "Strict types and4 directed early-rejection/routing checks PASS; no successful PG publication executed"
+      "hostChecks": "Strict types and4 directed early-rejection/routing checks PASS; no successful PG publication executed",
+      "qbReportSha256": "99d3633cef3966803fa7ecce105ee5cbb9918bdf36ef8ce050ab8dde55005de1"
     }
   }
 }
