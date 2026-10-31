@@ -3556,3 +3556,5 @@ audit58 attempt02原F1实际限定自检PASS，raw4977908b…/回执60d452c3…/
 扫码transport故障定向driver固定7798a27a/hashf52ef3b9…，仅静态准备通过，不记browser或业务UNAVAILABLE PASS。原QF实际cua状态browsers[]/Work禁用本地browser，已向用户请求启用，不用Playwright/CLI换通道绕过。F1仅补原54冻结输入准确未执行argv，D1只读核真实UNAVAILABLE合法service接缝；已过NOT_FOUND/timeout/FIFO/SAVE不重。
 
 D1只读定位业务UNAVAILABLE合法条件：生产reader对精确匹配但product/SKU等disabled返回UNAVAILABLE；现统一host预先滤掉disabled会误NOT_FOUND。原D1仅两testhost叶获租，先复现正常CREATE/原MAIN/DISABLE，再经原Postgres reader有限合成query端口修准确producer，非手写假响应/非生产合同改动；真实PG与browser仍未测，工具禁用不绕过。
+
+业务UNAVAILABLE合成宿主两叶最小修固定24151d69，D1focused1/1通过（9aa1d0d8…），原QB新增差异验收中；真实聚合停用/原MAIN/SKU事实经原PGreader有限query/HTTP/frontendreader返回UNAVAILABLE，恢复回同原SKU，非路由伪状态/非真实PG。原F1同一crossdriver仅静态准备业务unavailablecase，API状态准备若无UI入口须明确；browser禁用期间不执行。

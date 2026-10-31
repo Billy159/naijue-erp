@@ -21192,9 +21192,13 @@
       "next": "F1 exact immutable54 argv; D1 readonly legitimate business UNAVAILABLE seam; run only after allowed browser restored",
       "businessProducer": {
         "owner": "D1",
-        "status": "ACTUAL_PRODUCTION_SEAM_IDENTIFIED_TEST_HOST_CORRECTION_IN_PROGRESS",
+        "status": "D1_DIRECTED1_PASS_QB_INCREMENT_PENDING",
         "basis": "production PostgresCurrentFormReader.readBarcode retains disabled matched facts -> UNAVAILABLE; unified host filtering disabled early incorrectly yielded NOT_FOUND",
-        "scope": "two original testhost leaves; CREATE/realMAIN/DISABLE; original reader+HTTP+client; not realPG or browser"
+        "scope": "two original testhost leaves; CREATE/realMAIN/DISABLE; original reader+HTTP+client; not realPG or browser",
+        "source": "24151d6922dc36126176ae981bd57d7eead93242",
+        "reportSHA": "9aa1d0d8176c43db228df38ea85400c155447d7ee9a2f02a0927b1fe1ec58bfe",
+        "checks": "originalreader/HTTP/client SALES+TRANSFER FOUND->DISABLE/replay->UNAVAILABLE/nulls->RESTORE sameSKU FOUND; miss/baseline/revoke; no stockidentity changes",
+        "notRun": "browser/PG/schema26actual/build/release"
       },
       "transportHandoff": {
         "path": "reports/qa-frontend/rapid-launch-20261022/F1/SALES-SCAN-UNAVAILABLE-54-PREPARATION-20261101-01/HANDOFF.NOT-EXECUTED.json",

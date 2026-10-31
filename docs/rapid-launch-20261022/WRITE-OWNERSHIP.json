@@ -8511,7 +8511,7 @@
   },
   "r1UnifiedCrossPageBrowser": {
     "owner": "F1",
-    "status": "AUDIT_ED7AEF0C_QF2_LIMITED_BROWSER_PASS_READONLY",
+    "status": "BUSINESS_UNAVAILABLE_CASE_STATIC_PREPARATION_F1_WORK_BROWSER_DISABLED",
     "paths": [
       "apps/web/demo-replica/tests/unified-cross-page-browser.py"
     ],
@@ -8545,7 +8545,7 @@
   "r1UnifiedBusinessBarcodeUnavailable": {
     "owner": "D1",
     "model": "gpt-6.1-sol/medium",
-    "status": "REPRODUCE_THEN_MINIMAL_TEST_HOST_FIX",
+    "status": "DELIVERED_24151D69_QB_READONLY",
     "paths": [
       "apps/web/demo-replica/tests/unified-service-fixture.mjs",
       "apps/web/demo-replica/tests/unified-service-fixture.test.mjs"
