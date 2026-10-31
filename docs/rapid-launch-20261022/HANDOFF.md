@@ -3439,3 +3439,6 @@ D3有限合成库存事实/授权三叶方案已交原D1实施，默认hostnull�
 
 
 商品库存接线固定0a2fa82d：D1原host11/11、C接线后stdio4/4（原CREATE实际SKU×2库存UNKNOWN/null）及原配置parser通过；默认hostnull保留，显式stock场景及权限/失败不伪0。QB仅6叶增量独核、T45并行固定53构建；尚未新browser。QF2员工49姓名contact限定实际7步骤PASS/8响应200/单EDITv2/正常重开，role/hall/status/account元数据不变，取消零额外写，0密码读取，own0；仅列状态通过非整页/PG。
+
+
+库存候选53已固定构建，source0a2fa82d/manifest046d01bd/config764d4978，185outputs/1308inputs，QB六叶独核cb4e485e已采用（另补撤权/取消/未声明3探针，旧11+4不重跑）。QF2持独占，准备并运行精确stock-only后继，只正常必要CREATE→onSaved→实际库存请求/UNKNOWN/切换/重入，不借旧48失败或旧5tab冒53通过。原QF并行只读准备调拨APPROVED/VOID正常入口剩余状态，原合法实际命令setup、不造static状态、不重DRAFT链；等待stock窗口交回。新数据库隔离窗口未答，正式和实际QA不动。
