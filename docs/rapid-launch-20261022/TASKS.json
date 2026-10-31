@@ -19841,7 +19841,7 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "Approved five-atom V8 source successor: D1 issuer/API/tools and T45 release closure in disjoint ownership; no environment mutation authorized",
+    "current": "QB reviews fixed V8 source; D1 real ordinary-login business integration entry; T45 concrete isolated installer carrier source; QA finite Unix source extension awaiting confirmation",
     "next": "Target-specific repair script and concrete isolated execution confirmation",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
@@ -19896,6 +19896,20 @@
         "affectedRollback": 6
       },
       "integratedAcceptance": "PENDING_D1_DELIVERY"
+    },
+    "sourceV8": {
+      "checkpoint": "19d6e5b9a1c753603840bd68625b8de1eefb3385",
+      "remoteReadbackMatches": true,
+      "exactChangedLeaves": 16,
+      "ownerReportBytes": 10447,
+      "ownerReportSha256": "f1a89ead0ef12ed235cc3780a51c87f545434f68847d36a14d2de0f3957d4c32",
+      "checks": {
+        "offlineUniquePass": 243,
+        "strictIssuerAndFourApiRoots": "PASS"
+      },
+      "qbReview": "DISPATCHED_NEW_INCREMENT_ONLY_PENDING",
+      "realPg": "NOT_RUN",
+      "qaUnix": "NOT_IMPLEMENTED_PENDING_HUMAN_CONFIRMATION"
     }
   }
 }
