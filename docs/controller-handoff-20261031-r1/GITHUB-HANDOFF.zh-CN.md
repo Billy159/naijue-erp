@@ -1,3 +1,5 @@
+> Current paused handoff: [START-HERE.zh-CN.md](START-HERE.zh-CN.md). Source c0794b4bdcbdfcf1fff4026a6fcf798f84133ca2. Older entries below are historical.
+
 # 主控源码对齐与推送
 
 1. 先核对实际远端仓库URL、分支、HEAD和CI部署触发规则；本包没有查询或推送远端。

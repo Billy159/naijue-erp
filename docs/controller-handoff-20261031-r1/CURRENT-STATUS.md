@@ -1,3 +1,5 @@
+> Current paused handoff: [START-HERE.zh-CN.md](START-HERE.zh-CN.md). Source c0794b4bdcbdfcf1fff4026a6fcf798f84133ca2. Older entries below are historical.
+
 ## 2026-11-01：已批准历史未审核调拨补充，D3 八叶交付
 
 用户已明确确认备注与完整明细集合的源码及写合同修订。D3 八叶交付已逐叶核对 SHA/Blob，租约交回；D1 原事务/四函数后继和 F1 正常历史入口仍在原文件范围实施。复用 D3 原旧测试证据，只采用本次新增定向结果，不合称一次全量测试通过。新格式保留来源与独立行身份、重复 SKU 行和完整所属组；旧符号数量及旧长备注兼容不收紧。

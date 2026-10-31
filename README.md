@@ -1,3 +1,5 @@
+> Current paused handoff: [Dot entry](docs/controller-handoff-20261031-r1/START-HERE.zh-CN.md). Source push is not release; older stage descriptions below are historical.
+
 # 奈爵 ERP 干净重写：阶段实现与验证边界
 
 本目录是全新、独立的云端工程，不覆盖旧 Demo 或旧工程。当前已有领域、销货命令与持久化适配、精确金额规则和库存合成预览，不是已完成或可上线的 ERP。

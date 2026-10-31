@@ -1,3 +1,5 @@
+> Current repository branch: codex/db-v7-r1-preparation-20261031. Read [current Dot handoff](../controller-handoff-20261031-r1/START-HERE.zh-CN.md). User paused; do not continue automatically.
+
 # Dot 接续入口（2026-10-29）
 
 仓库：https://github.com/Billy159/naijue-erp ，分支 `codex/erp`。本文件所在提交就是本次源码快照；先读取本文件、TASKS.json、PROGRESS.md、HANDOFF.md、WRITE-OWNERSHIP.json，再按所改模块读取文件。不要从旧工程或冻结Demo直接开发。

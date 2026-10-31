@@ -8564,7 +8564,7 @@
     "scope": "Actual fixed59 sales row13 size menu outside1440x1000 viewport; minimum original popup position/direction/scroll fix, preserve Demo shape, full group, keyboard and draft identity. Other files require exact lease extension. No build/browser/PG."
   },
   "r1HistoricalDraftLineSet": {
-    "status": "HUMAN_CONFIRMED_EXACT_SOURCE_WRITERS_ACTIVE_NO_DATABASE_EXECUTION",
+    "status": "USER_PAUSED_ALL_WRITERS_RETURNED",
     "approval": "docs/rapid-launch-20261022/HISTORY-DRAFT-TRANSFER-WRITE-APPROVAL-20261101.json",
     "model": "gpt-6.1-sol/medium",
     "owners": {
@@ -8611,15 +8611,22 @@
         "scripts/release/deploy-candidate.py",
         "scripts/release/v6-release-contract.test.mjs",
         "scripts/release/v7-release-contract.test.mjs"
+      ],
+      "D3_synthetic_ui": [
+        "apps/web/demo-replica/tests/history-chain-fixture.mjs",
+        "apps/web/demo-replica/tests/unified-service-fixture.mjs",
+        "apps/web/demo-replica/tests/unified-service-fixture.test.mjs",
+        "apps/web/demo-replica/tests/unified-service-public-config.json"
       ]
     },
-    "constraints": "Original D3/F1/D1 package leases returned. C delegates required finite metadata/API/release profile closure to original D1, sole writer; exact additional leaves recorded before edits. No SQL installation, actual permission, build/service or QA03 authority.",
+    "constraints": "User requested GitHub handoff then stop. No active source leases. WIP preserved in local files and NOT-APPLIED patch; no restart until user directs.",
     "extraLeafBoundary": "transfer-proposal-form.tsx F1 only exports existing TransferProducts; function body and LIVE behavior unchanged, original picker reused; no other writer.",
     "ownerStatus": {
-      "D3": "DELIVERED_FIXED_EIGHT_LEAVES_LEASE_RETURNED",
-      "D1": "FOUR_LEAVES_DELIVERED_NEXT_EXACT_PROFILE_CLOSURE",
-      "F1": "F01_TWO_LEAF_FIX_DELIVERED_LEASE_RETURNED"
+      "D1": "METADATA14_DELIVERED_FROZEN",
+      "D3": "UNFINISHED_THREE_LEAF_WIP_FROZEN_NOT_MERGED",
+      "F1": "DELIVERED_F01_SOURCE_CLOSED"
     },
-    "metadataClosureOwner": "Original D1 sole writer; distinct EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1 format and 26_hv2_history_draft_line_set_from_v8, exact four-body pins inheriting V8 137/ACL/pairs. deploy-candidate.py generated contract block only. Do not change boot/rollback approval pins or ssh-control."
+    "metadataClosureOwner": "Original D1 sole writer; distinct EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1 format and 26_hv2_history_draft_line_set_from_v8, exact four-body pins inheriting V8 137/ACL/pairs. deploy-candidate.py generated contract block only. Do not change boot/rollback approval pins or ssh-control.",
+    "syntheticBoundary": "Only existing unified synthetic fixture/application+HTTP composition; not PostgreSQL/real permission/inventory/production acceptance; T45 sole build and QF actual UI after frozen package."
   }
 }

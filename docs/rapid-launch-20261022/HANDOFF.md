@@ -1,3 +1,7 @@
+## 2026-11-01 Paused GitHub handoff
+
+用户已暂停，整理推送后停止。完成源码 c0794b4bdcbdfcf1fff4026a6fcf798f84133ca2。最新14叶仅定向自检通过；独立验收、PG、构建和浏览器未验。生成器仍因DEPLOYMENT_HELPER_REAPPROVAL_REQUIRED退出1。三叶未完成合成样例已另存NOT-APPLIED补丁，未合入正常源码。当前入口为 docs/controller-handoff-20261031-r1/START-HERE.zh-CN.md。
+
 ## 2026-11-01：采用原 QB 两项有效结论
 
 D1 固定 e1954086 四叶源码／协议／SQL文字独立核查通过；F01 在固定17cb446f两叶独立复验通过，错误来源指针反例现已拒绝，原 V1 接受范围保留。主控直接采用 QB 的有效结论，不重复技术检查。原499f9e52的 NEED_FIX 和失败证据保留，F01 仅按新固定源码范围关闭。

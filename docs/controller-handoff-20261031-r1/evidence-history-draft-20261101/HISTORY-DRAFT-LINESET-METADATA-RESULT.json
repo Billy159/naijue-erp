@@ -1,0 +1,138 @@
+{
+  "task": "r1HistoricalDraftLineSet_MetadataSourceClosure_D1",
+  "sourceBase": "0eeb7b6be7d6c783b5ebe42d6ebb59c406268784",
+  "scope": "SOURCE_PROTOCOL_AND_EXISTING_GENERATED_DECLARATIONS_ONLY",
+  "files": [
+    {
+      "path": "adapters/postgres/src/native-import-accounting-capability.ts",
+      "bytes": 112346,
+      "sha256": "c41bdd26d29a414468676a2a5e858d128595761ba73f5ff8cbf4f561d0cf6413",
+      "gitBlob": "3946ccd86f7833205ad02eb27e8b15609e0dad54"
+    },
+    {
+      "path": "tests/native-runtime26-capability.test.ts",
+      "bytes": 97356,
+      "sha256": "37af33090370cd87ac0f0e32a2b08b919526f11ea3fe41e6fc457a5e3cff7830",
+      "gitBlob": "1d4de00de9b0142f7d2cc209fdcdf6dc98e28cbc"
+    },
+    {
+      "path": "apps/api/src/postgres-read-api.ts",
+      "bytes": 86473,
+      "sha256": "d0d2e2201305a39ce1df1e72f3459ada1607eb4b51d550f2d65729f98d966bda",
+      "gitBlob": "365d8af7c52a0445877b3692f99b1c5682503448"
+    },
+    {
+      "path": "apps/api/src/production-provider-composition.test.ts",
+      "bytes": 261166,
+      "sha256": "a1b49a4bd3461d83ce9ff1430f7953253cd854cd42f58e10cb059ef7b873747d",
+      "gitBlob": "57146de5924607f8d61ba180a5c69ec25e117b72"
+    },
+    {
+      "path": "config/release-contract.json",
+      "bytes": 5821,
+      "sha256": "d4d6e1faa58eb0b7d400e9f88753c4ee7966a16da3cf88cbfc07eeb3a132f4bc",
+      "gitBlob": "6aa2d1061c6ee8f614765bf58dbb3358adac2343"
+    },
+    {
+      "path": "scripts/release/generate-release-contract.mjs",
+      "bytes": 9221,
+      "sha256": "adc00d4182c06b44012b560970fc677cbc14d89487ad47b0b1c46361f43f5d6d",
+      "gitBlob": "f8e5f05768e0347c75fe7f11e8d87b4e90c57ef6"
+    },
+    {
+      "path": "scripts/release/deploy-candidate.py",
+      "bytes": 159752,
+      "sha256": "df93a2f14e153c2e89964735caf76891e22baf3305c6403dfabffa5c68719077",
+      "gitBlob": "06e2f8e82b3e4f12787f856601b26b3350a180a1"
+    },
+    {
+      "path": "scripts/release/render-runtime26-readonly-check.mjs",
+      "bytes": 5582,
+      "sha256": "eb99c7c35b6966ff3fa87b5990178354c22e4b00512332af3746bd33f1572f05",
+      "gitBlob": "b2807959f8fa805cb363e0db97661069cffee3db"
+    },
+    {
+      "path": "scripts/release/render-runtime26-readonly-check.test.mjs",
+      "bytes": 7657,
+      "sha256": "745eee2828cbd7a5eec9d0bc37b2f35309d7db731ed79e1c4c7e0ca008be7f5e",
+      "gitBlob": "b49d28cd2ba74d1d746cdcd65f728590eae1a03e"
+    },
+    {
+      "path": "scripts/release/compare-runtime26-metadata.py",
+      "bytes": 9670,
+      "sha256": "a6a324849324e0c0856b8f3ffeae3564df6408ba8fcb15223128c79628e1c70f",
+      "gitBlob": "2a065de5a8536d9db1d338ea23ffef4cf78652fc"
+    },
+    {
+      "path": "scripts/release/compare-runtime26-metadata.test.py",
+      "bytes": 9316,
+      "sha256": "980865ededef302c4faf4f51fe7a02dd0c164aae2db685df0b083d7bb15a8a2c",
+      "gitBlob": "1c621dc02b801133baa7ed431b8572afa63f6fa2"
+    },
+    {
+      "path": "scripts/release/v6-release-contract.test.mjs",
+      "bytes": 2722,
+      "sha256": "490a693a7ab01d0850262fdb7720359aa6fe682cc83863e2f52e8ddb2ad93694",
+      "gitBlob": "1adbb33d3d883dbed70a693bcc71fca4a5975dbb"
+    },
+    {
+      "path": "scripts/release/v7-release-contract.test.mjs",
+      "bytes": 6282,
+      "sha256": "ab4f18e43e389fb87bfea25f15fde0335a20098e8e4135ed4dde4cc39ab42bc5",
+      "gitBlob": "0aa45c4f6a61e78f828be6d77c91589d31614838"
+    },
+    {
+      "path": "scripts/release/v8-release-contract.test.mjs",
+      "bytes": 4697,
+      "sha256": "d8a7474cab16109cb9b325dd6426418cf16e7627eb6dd5aa07d5895da631989d",
+      "gitBlob": "96124e5d0e3375d63a460eabefd7a63c68a44d51"
+    }
+  ],
+  "profile": {
+    "patchLevel": "26_hv2_history_draft_line_set_from_v8",
+    "format": "EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1",
+    "requiredObservation": "HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8",
+    "releaseSelector": "history-draft-line-set-v1",
+    "routines": 137,
+    "bodyChanges": 4,
+    "aclChanges": 0,
+    "newRelationsOrColumnsOrTriggers": 0
+  },
+  "implementation": [
+    "Independent probe derives from original V8 through exactly format + four tuple replacements; original V1..V8 probe values retained",
+    "Issuer inherits all exact original V8 column/system-ACL/delete/balance/lease rules with new exact format+patch selector",
+    "Only API graph with explicit runtime26HistoryAuthorization requires new compiled observation before pool borrow; ordinary V8 graphs retain original scope",
+    "Existing readonly renderer selects exact successor; existing offline compare requires all four exact expected bodies and old V8 proofs; no SQL execution",
+    "Existing release contract adds explicit successor descriptor and 13th SQL resource after unchanged first12; generator writes only existing generated block"
+  ],
+  "checks": {
+    "distinctDirectedCases": 44,
+    "apiCases": 8,
+    "issuerCases": 3,
+    "readonlyRendererCases": 9,
+    "releaseContractCases": 12,
+    "offlineComparePythonCases": 12,
+    "skip": 0,
+    "strictTypes": "original strict root compiler options, explicit capability/API/affected test roots and transitive imports exit0",
+    "diffCheck": "exit0",
+    "generator": "RUN ONCE: generated block written; then existing DEPLOYMENT_HELPER_REAPPROVAL_REQUIRED exit1 retained as explicitly instructed. Not PASS or deploy approval.",
+    "generatedScope": "Compared deploy-candidate.py outside generated block to HEAD: identical; boot-entry.py/rollback-candidate.py unchanged"
+  },
+  "deploymentHelperReview": {
+    "state": "PENDING_C_EXISTING_REVIEW_PIN_NOT_CHANGED",
+    "oldApprovedCapacityHelperSha256": "7dde28550e9f4eaed427c6e1a57929d70cd11dc5c0866e79a87151bc5ebd7ff2",
+    "newGeneratedHelperSha256": "df93a2f14e153c2e89964735caf76891e22baf3305c6403dfabffa5c68719077"
+  },
+  "offlinePreparationGap": {
+    "existingTool": "scripts/release/prepare-runtime26-v8.mjs::renderRuntime26V8Preparation",
+    "actualScope": "Only explicit V7->V8 two-cmin/three-DELETE ACL renderer; does not install four new function bodies",
+    "resolution": "Not modified or executed. Future exact successor installation/preparation requires separate authorized C/T45 scope; this source package grants no environment authority."
+  },
+  "notTested": [
+    "actual SQL parse/installation or new canonical catalog capture",
+    "PostgreSQL/role privileges/QA178 window03",
+    "build/browser/release pack/deploy/production",
+    "old43/old24 full suites not repeated; only this package affected tests run"
+  ],
+  "handback": "14 exact leased existing leaves frozen for C fixed commit and original QB incremental review. Existing four SQL/store leaves from previous handback not modified."
+}

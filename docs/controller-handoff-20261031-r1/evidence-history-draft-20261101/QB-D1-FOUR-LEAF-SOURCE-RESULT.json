@@ -1,0 +1,53 @@
+{
+  "taskID": "QB_HISTORY_DRAFT_LINESET_D1_20261101",
+  "result": "PASS",
+  "scope": "FIXED_e1954086_EXACT4_SOURCE_PROTOCOL_REVIEW_AND_SQL_TEXT_ONLY",
+  "createdAt": "2026-10-31T18:51:19.863568+00:00",
+  "sourceCommit": "e1954086b57aad24364cdea1ed8b350018ffee00",
+  "artifacts": [
+    {
+      "repositoryPath": "adapters/postgres/src/history-revision-store.ts",
+      "bytes": 34008,
+      "sha256": "67fb25d55a33b5f98bc42449c6a53d2806a1ab237e46d5ff4b4fc2964fa1a767"
+    },
+    {
+      "repositoryPath": "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+      "bytes": 46713,
+      "sha256": "eb5937320e017b89790a5dd5aa2d08601087e21b35b771f902f55b02ad6f4aaa"
+    },
+    {
+      "repositoryPath": "tests/history-revision-postgres-protocol.test.ts",
+      "bytes": 31330,
+      "sha256": "4a7bb13af2e4a0b908b1b2ab15e813e453b8fd49c45ea09434c3f4839f06b73f"
+    },
+    {
+      "repositoryPath": "tests/history-revision-set-guards.test.ts",
+      "bytes": 4991,
+      "sha256": "be5446a28f2279fa423f5cf9916c8541d5e74af24afd338b6a36657365c5beac"
+    }
+  ],
+  "adoptedEvidence": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/HISTORY-DRAFT-LINESET-D1-IMPLEMENTATION-RESULT.json",
+    "bytes": 5346,
+    "sha256": "64eaeb8161bfacc7d129ca53e892f80a7f07510e9e808827d1b8341bd337c094"
+  },
+  "checks": [
+    "All four fixed blobs match delivery bytes/SHA; no current WIP/capability/API/release read as candidate.",
+    "Original same-client identity/publication/source/head locks and original hash/key replay remain before expectedVersion CAS and new ID/native read. Duplicate original keys return prior receipt before any new transferLine allocation.",
+    "New line allocator runs original transaction after CAS, distinguishes keep/new/replacement and rejects collisions with current/source line IDs,document,operation,revision,previoushead. Actual snapshots use original loadNativeTransferSnapshots SHARE locking; enabled/soft-delete/published identities and full groups queried on same client.",
+    "Full set preserves exact ordered individual IDs and immutable prior origins/groups; sameSKU retained old ID, replacement gets new REVISION origin; no new SKU/source writes or missing balance defaults. Marked subsequent numeric edits retain JSON metadata and skip old line_effective FK writes.",
+    "Original revision/head/audit/receipt and empty original posting leaf remain atomic; unknown COMMIT discards connection and uses original key recovery, no rollback/retry claim.",
+    "SQL only four same-signature function replacements with exact old-body parent gate. Extracted new four prosrc byte counts/SHA match report and four old parent pins independently match original source SQL bodies. Legacy numeric guard tail byte-identical to old body after size_before anchor. No table/column/sequence/trigger/ACL expansion or SECURITY DEFINER.",
+    "SQL new marked branch constrains DRAFT/EXCLUDED,nonempty1..200 positiveint64/distinct IDs,native reference+snapshot/fullgroup/compound origin preservation,non-downgrade,empty effects and ledger; same-transaction deferred receipt/audit/current-facts closure and no marked FK/ledger writes retained.",
+    "Owner protocol24 plus later1/final7, strict narrow type evidence adopted; not rerun. These are scripted query/text evidence, not SQL execution."
+  ],
+  "findings": [],
+  "notTested": [
+    "SQL parse/install/PLpgSQL execution, actual trigger behavior/locks/nonowner ACL/performance",
+    "Current successor profile/prosrc capability/canonical probes and real combined C metadata",
+    "Actual PG/historySAVE/readback/unknownCOMMIT recovery/UI/browser/build/QA03/production"
+  ],
+  "next": "Freeze matching C profile and full combined source before separate necessary joint checks. No installed/activated profile or PG PASS inferred. F01 frontend fix tracked separately.",
+  "executionAuthorized": false,
+  "actualModelAndFast": "UNVERIFIED"
+}

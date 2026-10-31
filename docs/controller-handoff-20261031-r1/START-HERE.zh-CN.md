@@ -1,3 +1,36 @@
+# Dot 接续：2026-11-01，用户暂停后交接
+
+仓库：https://github.com/Billy159/naijue-erp
+分支：codex/db-v7-r1-preparation-20261031
+完成源码提交：c0794b4bdcbdfcf1fff4026a6fcf798f84133ca2
+包含本说明的最终提交以远端该分支 HEAD 为准。旧 codex/erp、SOURCE950、normal44 不代表本次源码。
+
+已合入：历史未审核调拨备注与完整明细编辑；独立行身份、重复 SKU 和原来源保留；V2 有效读回与完整尺码组；正常历史页面接线；来源指针 F01 修复；四个原数据库函数后继 SQL；精确历史写能力、API观察及原发布清单接线。没有新增表、列或权限。
+
+## 验证边界及未完成
+
+- D3/F1/D1 原包已有定向自检；原 QB 已审 D3/F1 接缝及 D1 四叶源码/协议/SQL文字，F01 在17cb446f定向复验关闭。
+- 最新14叶能力/API/发布清单仅有44项定向自检及定向类型检查，独立验收、最新整组构建和浏览器验证均未做。证据副本在 evidence-history-draft-20261101/，绝对本机路径只作历史定位。
+- 生成器写完原发布声明块后按现有保护返回 DEPLOYMENT_HELPER_REAPPROVAL_REQUIRED（exit1）。原批准 pin 未更改，不能直接发布。
+- prepare-runtime26-v8.mjs 仅负责原 V7→V8 权限准备，不安装此次四函数。实际 SQL解析/安装、新canonical、普通账号保存→审核→重开→弃审→读回、锁/权限/回滚/库存余额与冲销、备份恢复仍未完成。V7/V8是ERP合同版本，不是PostgreSQL版本或迁移编号。
+- QA178窗口02已关闭，M01/M02已提交，不可重放；新03没有本轮环境执行批准。历史余额保持未知，不补零或倒算。
+- 浏览器固定60仍为526ca75e旧候选，不包含本次历史编辑，不能将旧PASS算到新源码。全站整页、真实业务、硬件扫码与正式性能仍有缺口；五项新增性能优化暂停。
+- 三叶历史合成样例未完成且未跑任何检查，未合入正常源码。WIP-history-synthetic-fixture.NOT-APPLIED.patch包含两个修改文件和一个新增文件，供Dot在独立工作区先审再应用。不能直接启用其中historyRevision.transfers=true。本机原三叶仍保留未提交。详见PAUSED-HANDOFF-20261101.json。
+
+## 运行环境和操作入口
+
+以package.json、lockfile和release-contract为准：Node24.21.0、npm11.9.0；React19.1.1、Arco2.66.16、Fastify、PostgreSQL。在干净clone根目录执行npm ci及npm run check:dependencies；旧机复用依赖不等于新机干净安装通过。sharp/esbuild必须匹配实际OS/CPU，不能把macOS node_modules复制到Linux。
+
+npm run typecheck和npm run build用于类型/编译，不代表前端产物、应用启动或PG验收。前端沿apps/web/demo-replica/build-production-host.mjs的buildProductionHost，传准确配置、固定40位提交和全新绝对输出目录；合成UI沿原unified-service fixture/browser脚本，保持SYNTHETIC/NOTPRODUCTION标识。
+
+正式API入口apps/api/src/production-main.ts需要准确私有配置、容量预算和新鲜观察、原单池、目标匹配的独立metadata审核及普通运行身份。仓库不包含密码、私有连接配置或真实数据；不得用owner运行或删校验来启动。SQL、权限、服务及生产操作仍须遵守用户授权边界。冻结8877 Demo只读，基线b8bcfe3eb43f6a7be0c60a77c6d6fb99e2ed5dd3。
+
+用户要求此次提交推送后停止。原owner已停写，后续由用户指挥Dot继续。推送不是上线；未测不标通过。
+
+---
+
+## Original r1 handoff history (superseded where conflicting)
+
 # 奈爵 ERP：数据库升级准备与 GitHub 源码交接
 
 本期按用户最新要求先交新源码与数据库升级配套材料，不等待全部 UI/global 验收。

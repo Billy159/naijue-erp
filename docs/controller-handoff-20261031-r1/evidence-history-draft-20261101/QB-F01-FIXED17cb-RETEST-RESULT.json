@@ -1,0 +1,41 @@
+{
+  "taskID": "QB_HISTORY_LINESET_F01_RETEST_20261101",
+  "result": "PASS",
+  "scope": "HISTORY_LINESET_F01_EXACT2_AFFECTED_V2_V1_SOURCE_RETEST_ONLY",
+  "sourceCommit": "17cb446f676a769448bda77c54f12f0d4fabaf94",
+  "artifacts": [
+    {
+      "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
+      "gitBlob": "e0c745bdd43ebb8b3e276c2a593de4cc2a23c27f",
+      "bytes": 20561,
+      "sha256": "86d4f5cc6c948c543b91c7b24c18c1e88b1d2090357dd353b5923ed21f2ece2f"
+    },
+    {
+      "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs",
+      "gitBlob": "bc62e97c3571e220a3f1af5d49159bfb7a9a0d32",
+      "bytes": 13103,
+      "sha256": "6e36b70a24698d3262840636a823e06c97db5ca5ec1f68398b951a156a7e233d"
+    }
+  ],
+  "priorReport": {
+    "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/HISTORY-DRAFT-LINESET-SEAM-20261101/QB-HISTORY-DRAFT-LINESET-SEAM-RESULT.json",
+    "bytes": 8603,
+    "sha256": "47b732394e2b62af725d880863d63239d5faf1e3e4946a4346f8138d2230c216"
+  },
+  "finding": "HISTORY-LINESET-F01",
+  "findingStatus": "CLOSED_FOR_FIXED17cb_SOURCE_ONLY",
+  "checks": [
+    "Only history-reader and history-catalog.test changed versus e1954086. Accurate requested blobs match.",
+    "SOURCE branch now checks origin.sourceLineId equals item.lineId, which already equals actual page line.id; new exact counterexample test added.",
+    "Original fixed499f9e52 failure independently replayed against fixed17cb in-memory git source: contradictorySOURCE...999 for actual...001 now throws. ValidV2 SOURCE remains accepted; originalV1 function symbol/shape accepted. No file copy/source edit/DB/browser.",
+    "Owner4 affected V1/V2 checks adopted; unrelated13leaf/old50/audit/regressions not rerun. Original NEED_FIX report/reproduction preserved unchanged."
+  ],
+  "findings": [],
+  "jointNotVerified": [
+    "D1 store/SQL actual PostgreSQL behavior and current matching C profile closure",
+    "Actual combined HISTORY note/full lineSet SAVE/readback/UI and inventory zero-effect runtime"
+  ],
+  "next": "C can adopt F01 closure and limited D1 source/text PASS; full combined profile/runtime/PG acceptance remains separate.",
+  "executionAuthorized": false,
+  "actualModelAndFast": "UNVERIFIED"
+}
