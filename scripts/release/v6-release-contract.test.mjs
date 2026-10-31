@@ -8,7 +8,7 @@ if(!root)throw Error('RELEASE_SOURCE_ROOT_REQUIRED');
 const {contractBlock}=await import(pathToFileURL(path.join(root,'scripts/release/generate-release-contract.mjs')));
 const contract=JSON.parse(fs.readFileSync(path.join(root,'config/release-contract.json')));
 test('explicit V6 contract is finite and additive, never replaces V1',()=>{
- assert.deepEqual(contract.full.catalogProfiles,{
+ assert.deepEqual(Object.fromEntries(Object.entries(contract.full.catalogProfiles).filter(([name])=>name!=='recorded-live-write-v8')),{
   'legacy-v1':{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V1',patchLevel:'26_hv2_history_set_guards_from_v22',aclProofField:null},
   'complete-write-v6':{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V6',patchLevel:'26_hv2_history_set_guards_complete_write_xmin_from_v22',aclProofField:'complete_write_xmin_acl_match'},
   'recorded-live-ledger-v7':{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V7',patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22',aclProofField:'complete_write_xmin_acl_match',observationProofField:'recorded_live_balance_contract_match',requiredObservation:'RECORDED_LIVE_LEDGER_PAIRS_V7',runtimeSqlPatch:'adapters/postgres/patches/0026-live-ledger-balance-pairs.sql'},

@@ -76,6 +76,15 @@
         "observationProofField": "recorded_live_balance_contract_match",
         "requiredObservation": "RECORDED_LIVE_LEDGER_PAIRS_V7",
         "runtimeSqlPatch": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"
+      },
+      "recorded-live-write-v8": {
+        "format": "EXACT26_RUNTIME_CATALOG_EXPORT_V8",
+        "patchLevel": "26_hv2_live_pairs_complete_write_acl_v8_from_v7",
+        "aclProofField": "complete_write_system_acl_match_v8",
+        "deleteAclProofField": "normal_delete_acl_match_v8",
+        "observationProofField": "recorded_live_balance_contract_match",
+        "requiredObservation": "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8",
+        "runtimeSqlPatch": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"
       }
     }
   },

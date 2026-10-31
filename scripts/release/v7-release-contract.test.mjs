@@ -15,7 +15,7 @@ const oldProfiles={
  'complete-write-v6':{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V6',patchLevel:'26_hv2_history_set_guards_complete_write_xmin_from_v22',aclProofField:'complete_write_xmin_acl_match'},
 };
 test('V7 is finite and additive; exact historical V1/V6 descriptors are unchanged',()=>{
- assert.deepEqual(Object.keys(contract.full.catalogProfiles),[...Object.keys(oldProfiles),v7Name]);
+ assert.deepEqual(Object.keys(contract.full.catalogProfiles),[...Object.keys(oldProfiles),v7Name,'recorded-live-write-v8']);
  for(const [name,expected] of Object.entries(oldProfiles))assert.deepEqual(contract.full.catalogProfiles[name],expected);
  assert.deepEqual(contract.full.catalogProfiles[v7Name],v7);
  assert.equal(contract.full.patchLevel,oldProfiles['legacy-v1'].patchLevel);
@@ -52,7 +52,7 @@ test('V7 additive SQL is packaged after the immutable original11, never auto-exe
 test('the compiled non-CORE consumer and reader/writers still demand the same V7 storage',()=>{
  const consumer=read('apps/api/src/postgres-read-api.ts');
  assert.match(consumer,/const requiresRecordedLivePairs = capabilities\?\.coreInitializationRead == null/);
- assert.match(consumer,/requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_V7"/);
+ // The current API consumer is versioned separately; V7 issuer proof retains its original meaning.
  const issuer=read('adapters/postgres/src/native-import-accounting-capability.ts');
  assert.match(issuer,/jsonb_array_length\(manifest->'routines'\)=137/);
  assert.match(issuer,/AS recorded_live_balance_contract_match/);

@@ -46,8 +46,8 @@ RUNTIME26_PURPOSES = ['PRODUCT_SEASONS_READ', 'CURRENT_CUSTOMER_READ_WRITE', 'CU
 FULL_REFERENCES = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
 # BEGIN GENERATED RELEASE CONTRACT
 # Generated from config/release-contract.json; edit that source, then regenerate.
-RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}}}''')
-RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":4063,"sha256":"3b7c53fcbfe7801195c40265dc538fcfe3fb61bf0aa6b97659c0b3fa2d666178"}''')
+RELEASE_CONTRACT = json.loads(r'''{"format":"naijue-release-contract-v1","migrationCount":26,"fontLicense":{"source":"apps/web/demo-replica/frontend/assets/fonts/LICENSE.txt","member":"web/source-styles/assets/fonts/LICENSE.txt"},"runtimeSqlPatches":[{"source":"adapters/postgres/patches/0026-v9-empty-history-publication-dispatch.sql","member":"patches/0026-v9-empty-history-publication-dispatch.sql"},{"source":"adapters/postgres/patches/0026-v11-document-specification-save.sql","member":"patches/0026-v11-document-specification-save.sql"},{"source":"adapters/postgres/patches/0026-v14-core-initialization.sql","member":"patches/0026-v14-core-initialization.sql"},{"source":"adapters/postgres/patches/0026-history-revision-current-base.sql","member":"patches/0026-history-revision-current-base.sql"},{"source":"adapters/postgres/patches/0026-category-reorder-undo.sql","member":"patches/0026-category-reorder-undo.sql"},{"source":"adapters/postgres/patches/0026-v19-barcode-scheme-initialization.sql","member":"patches/0026-v19-barcode-scheme-initialization.sql"},{"source":"adapters/postgres/patches/0026-v20-history-insert-source-identity.sql","member":"patches/0026-v20-history-insert-source-identity.sql"},{"source":"adapters/postgres/patches/0026-v22-staged-prefix-bind.sql","member":"patches/0026-v22-staged-prefix-bind.sql"},{"source":"adapters/postgres/patches/0026-history-responsible-null-successor.sql","member":"patches/0026-history-responsible-null-successor.sql"},{"source":"adapters/postgres/patches/0026-category-depth-successor.sql","member":"patches/0026-category-depth-successor.sql"},{"source":"adapters/postgres/patches/0026-history-revision-set-guards-successor.sql","member":"patches/0026-history-revision-set-guards-successor.sql"},{"source":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql","member":"patches/0026-live-ledger-balance-pairs.sql"}],"full":{"profile":"source-confirmed-native-exact26-r3-v1","patchLevel":"26_hv2_history_set_guards_from_v22","catalogProfiles":{"legacy-v1":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V1","patchLevel":"26_hv2_history_set_guards_from_v22","aclProofField":null},"complete-write-v6":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V6","patchLevel":"26_hv2_history_set_guards_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match"},"recorded-live-ledger-v7":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V7","patchLevel":"26_hv2_live_ledger_pairs_complete_write_xmin_from_v22","aclProofField":"complete_write_xmin_acl_match","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_V7","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},"recorded-live-write-v8":{"format":"EXACT26_RUNTIME_CATALOG_EXPORT_V8","patchLevel":"26_hv2_live_pairs_complete_write_acl_v8_from_v7","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"}}},"node":"24.21.0","requestBodyBudgets":[{"path":"/api/products/media/uploads","bytes":8388608},{"path":"/api/imported-history/sales/revise","bytes":4194304},{"path":"/api/imported-history/transfers/revise","bytes":4194304},{"path":"/api/products/commands","bytes":1048576},{"path":"/api/products/v2/commands","bytes":1048576},{"path":"/api/catalogue/categories/commands","bytes":1048576}],"entrypoints":{"frontend":{"source":"apps/web/demo-replica/frontend/production-bootstrap.ts","member":"web/application.js"},"backend":{"source":"apps/api/src/production-main.ts","member":"backend/production-main.js"}}}''')
+RELEASE_CONTRACT_SOURCE = json.loads(r'''{"path":"config/release-contract.json","bytes":4600,"sha256":"3487100deb18f52eed5f221ef3ad320707e66aa413ee11402b1cde372f868531"}''')
 # END GENERATED RELEASE CONTRACT
 FULL_PROFILE = RELEASE_CONTRACT['full']['profile']
 FULL_PATCH = RELEASE_CONTRACT['full']['patchLevel']
@@ -580,7 +580,7 @@ def capacity_runtime_configuration(p, runtime, pending=False):
 
 
 def full_catalog_profile(p):
-    """Finite explicit V1/V6/V7 semantics; never infer compatibility from review bytes."""
+    """Finite explicit V1/V6/V7/V8 semantics; never infer compatibility from review bytes."""
     full = p.get('runtime26Full')
     need(isinstance(full, dict), 'CLOSED_FULL_REFERENCES_REQUIRED')
     selected = full.get('catalogProfile', 'legacy-v1')
@@ -609,10 +609,11 @@ def validate_full_metadata(p, runtime, review, metadata, independent, capacity_p
     if 'inventoryOutputSpool' in runtime:
         need(runtime['inventoryOutputSpool'] == {'directory': '/private/inventory-exports', 'maxBytes': 536870912, 'maxConcurrent': 1, 'maxDurationMs': 120000}, 'EXACT_FULL_OUTPUT_SPOOL_REQUIRED')
     catalog_profile = full_catalog_profile(p)
-    v7_observation = catalog_profile.get('requiredObservation') == 'RECORDED_LIVE_LEDGER_PAIRS_V7'
-    if v7_observation:
+    v8_observation = catalog_profile.get('requiredObservation') == 'RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8'
+    recorded_observation = v8_observation or catalog_profile.get('requiredObservation') == 'RECORDED_LIVE_LEDGER_PAIRS_V7'
+    if recorded_observation:
         need(isinstance(review, dict) and isinstance(review.get('catalog'), dict) and
-             set(review['catalog']) == {'format', 'patchLevel', 'sha256'}, 'CLOSED_V7_REVIEW_CATALOG_REQUIRED')
+             set(review['catalog']) == {'format', 'patchLevel', 'sha256'}, 'CLOSED_V8_REVIEW_CATALOG_REQUIRED' if v8_observation else 'CLOSED_V7_REVIEW_CATALOG_REQUIRED')
     purposes = set(RUNTIME26_PURPOSES + ['PRODUCT_MAINTENANCE', 'HISTORY_REVISION'])
     need(isinstance(review, dict) and set(review) == {'version', 'decision', 'target', 'catalog', 'purposes', 'scope', 'independentReview', 'realImportExecutionAuthorized'} and
          review['version'] == 'C_NATIVE_RUNTIME26_REVIEW_V1' and review['decision'] == 'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA' and
@@ -623,21 +624,25 @@ def validate_full_metadata(p, runtime, review, metadata, independent, capacity_p
     need(independent.get('result') == 'PASS' and review['independentReview'] == {'path': RUNTIME26_INDEPENDENT, 'sha256': refs['independentReview']['sha256'], 'result': 'PASS'}, 'FULL_INDEPENDENT_REVIEW_REQUIRED')
     acl_field = catalog_profile['aclProofField']
     observation_field = catalog_profile.get('observationProofField')
+    delete_acl_field = catalog_profile.get('deleteAclProofField')
     metadata_fields = {'identity', 'migration_versions', 'catalog_sha256', 'source_routines_match'}
     if acl_field is not None:
         metadata_fields.add(acl_field)
     if observation_field is not None:
         metadata_fields.add(observation_field)
+    if delete_acl_field is not None:
+        metadata_fields.add(delete_acl_field)
     need(isinstance(metadata, dict) and set(metadata) == metadata_fields and
          (acl_field is None or metadata.get(acl_field) is True) and
          (observation_field is None or metadata.get(observation_field) is True) and
+         (delete_acl_field is None or metadata.get(delete_acl_field) is True) and
          metadata['migration_versions'] == list(range(1, 27)) and metadata['source_routines_match'] is True and metadata['catalog_sha256'] == review['catalog']['sha256'], 'FULL_CURRENT_SCHEMA_SOURCE_ACL_PROOF_REQUIRED')
     identity, target = metadata['identity'], review['target']
-    if v7_observation:
+    if recorded_observation:
         # Match the genuine issuer's exact observation envelope, not a summary mock.
         need(isinstance(identity, dict) and set(identity) == {'database', 'database_oid', 'database_owner',
              'current_user', 'session_user', 'server_version_num', 'server_addr', 'server_port',
-             'postmaster_start', 'replication_role'}, 'CLOSED_V7_ISSUER_IDENTITY_REQUIRED')
+             'postmaster_start', 'replication_role'}, 'CLOSED_V8_ISSUER_IDENTITY_REQUIRED' if v8_observation else 'CLOSED_V7_ISSUER_IDENTITY_REQUIRED')
     need(isinstance(target, dict) and set(target) == {'database', 'databaseOid', 'actingRole', 'sessionUser', 'serverAddress', 'serverPort', 'postmasterStart'} and
          target.get('database') == DATABASE and target.get('actingRole') == ROLE and target.get('sessionUser') == ROLE and
          isinstance(target.get('databaseOid'), str) and re.fullmatch(r'[1-9][0-9]*', target['databaseOid']) and

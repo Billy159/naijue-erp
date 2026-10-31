@@ -31,6 +31,7 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
     'legacy-v1': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V1', patchLevel: '26_hv2_history_set_guards_from_v22', aclProofField: null},
     'complete-write-v6': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V6', patchLevel: '26_hv2_history_set_guards_complete_write_xmin_from_v22', aclProofField: 'complete_write_xmin_acl_match'},
     'recorded-live-ledger-v7': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V7', patchLevel: '26_hv2_live_ledger_pairs_complete_write_xmin_from_v22', aclProofField: 'complete_write_xmin_acl_match', observationProofField: 'recorded_live_balance_contract_match', requiredObservation: 'RECORDED_LIVE_LEDGER_PAIRS_V7', runtimeSqlPatch: 'adapters/postgres/patches/0026-live-ledger-balance-pairs.sql'},
+    'recorded-live-write-v8': {"format": "EXACT26_RUNTIME_CATALOG_EXPORT_V8", "patchLevel": "26_hv2_live_pairs_complete_write_acl_v8_from_v7", "aclProofField": "complete_write_system_acl_match_v8", "deleteAclProofField": "normal_delete_acl_match_v8", "observationProofField": "recorded_live_balance_contract_match", "requiredObservation": "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8", "runtimeSqlPatch": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},
   };
   if (contract.full.patchLevel !== profiles['legacy-v1'].patchLevel) throw Error('INVALID_RELEASE_LEGACY_PROFILE_DRIFT');
   if (!exactKeys(contract.full.catalogProfiles, Object.keys(profiles))) throw Error('INVALID_RELEASE_CATALOG_PROFILE');

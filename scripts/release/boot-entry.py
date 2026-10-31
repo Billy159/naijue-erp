@@ -170,7 +170,7 @@ def deployment_binding(dp):
             need(isinstance(full, dict) and {'references', 'media'} <= set(full) <= {'references', 'media', 'inventorySpool', 'credentialRequestKey', 'catalogProfile'} and 'runtime26' not in dp, 'CLOSED_FULL_REFERENCES_REQUIRED')
             # Explicit versioned selection only; the pinned helper retains private-key stat checks.
             profile = full.get('catalogProfile', 'legacy-v1')
-            need(isinstance(profile, str) and profile in ('legacy-v1', 'complete-write-v6', 'recorded-live-ledger-v7'),
+            need(isinstance(profile, str) and profile in ('legacy-v1', 'complete-write-v6', 'recorded-live-ledger-v7', 'recorded-live-write-v8'),
                  'EXPLICIT_SUPPORTED_FULL_CATALOG_PROFILE_REQUIRED')
             refs = full['references']
             expected = {'metadata', 'review', 'independentReview', 'buildReceipt', 'sourceManifest', 'buildManifest', 'publication', 'backupCoverage'}
