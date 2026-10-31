@@ -1,3 +1,9 @@
+## 2026-10-31 existing headed driver source handed back; actual dependency closure adopted
+
+OriginalF1 only product-edit-browser.py fixed: explicit serviceprofile/strictsyntheticconfig/headedmode, binaryBase64 rawrequest/response preserves status/headers, old V1 profile unchanged. Added realpage category success/failure and productcreate/color/spec/barcode/PNG/save/reopen cases; only syntax/pureprotocol checks passed, no Playwright/browser/service execution. Fixedcandidate build and independent visible execution still needed.
+
+C adopted actual287 74selected/2228codefiles/26,134,537B closure against99lockentries (25missing alloptional), unique canonicalroot/filehash/requiredcoverage/package.json checked. Independent dependency review344832f4 is not fullinstall/materialization/ABI/PGproof. C exactcopy290 admission5d9f8c9a binds PLAN2772593e/script31c28f1d, only new approvedruntime directory/content copy/readback, no Node/DB or existingresource writes. 288/289 install attempts failed before writes;291 source/window metadata installed exact, oldcontroller collision preserved and refused overwrite. OriginalT45 uses unique successor controller path, no oldjob replay/deadline renewal.
+
 ## 2026-10-31 actual A0 facts and independent C source/window payloads
 
 OriginalT45 s1-a0-286 actual COMPlETED exit0/1.922sec16:33:02–04+08: same QA178 identity; proposed2DB/3roles absent,16connections/3superreserve/1adminbackend observed, free46.833GB. ExistingNode24 hash matched; actual99locked packages74present/25optionalabsent/no requiredmissing or versionmismatch per metadata. Per-file closure/ABI and actualpoolN still unverified; no write/materialization/ARM yet. C issued three exact metadata payloads: source0aa9f39e,window2dc35c97,controller0ef29a6e in originalP/ACTUAL-ISOLATED-SUCCESSOR-01/C-INDEPENDENT-ADMISSION-01 for originalT45 controlled install/readback. Not action/armed/materialABI/business approval. Deadlines unchanged.

@@ -1,18 +1,42 @@
 from visible_wait import keep_visible
 # Recovery of bounded real-artifact smoke; not original lost test source bytes.
 """Real production bytes, real Chromium layout, closed synthetic network. No sandbox bypass.
-Usage: python production-browser-smoke.py BUILD OUT --node NODE --chromium CHROMIUM
+Usage: python product-edit-browser.py BUILD OUT --node NODE --chromium CHROMIUM
+New service profile: add --product-entry-service --headed [--keep-open]; requires the C-owned product-entry-service-public-config.json build.
 Exit 2: browser/environment blocked; exit 1: executed smoke failed; exit 0: listed checks passed.
 """
-import argparse, json, mimetypes, subprocess, sys, re
+import argparse, base64, json, mimetypes, subprocess, sys, re, struct, zlib
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
-p=argparse.ArgumentParser();p.add_argument('--width',type=int,default=1440);p.add_argument('--category-overflow',action='store_true');p.add_argument('--headed',action='store_true');p.add_argument('--keep-open',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');args=p.parse_args()
+def bridge_request(url, method, headers, raw):
+ payload={'url':url,'method':method,'headers':dict(headers)}
+ if raw is not None:
+  content_type=headers.get('content-type','').lower()
+  if content_type.startswith('text/') or content_type.split(';')[0]=='application/json':payload['body']=raw.decode('utf-8')
+  else:payload['binaryBase64']=base64.b64encode(raw).decode('ascii')
+ return payload
+
+def bridge_response_bytes(response):
+ if 'binaryBase64' in response:
+  if 'body' in response:raise ValueError('Ambiguous stdio response')
+  return base64.b64decode(response['binaryBase64'],validate=True)
+ return response['body'].encode('utf-8')
+
+def synthetic_png():
+ def chunk(kind,data):return struct.pack('!I',len(data))+kind+data+struct.pack('!I',zlib.crc32(kind+data)&0xffffffff)
+ return b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('!2I5B',8,4,8,2,0,0,0))+chunk(b'IDAT',zlib.compress((b'\x00'+b'\x12\x34\x56'*8)*4))+chunk(b'IEND',b'')
+
+p=argparse.ArgumentParser();p.add_argument('--product-entry-service',action='store_true');p.add_argument('--width',type=int,default=1440);p.add_argument('--category-overflow',action='store_true');p.add_argument('--headed',action='store_true');p.add_argument('--keep-open',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');args=p.parse_args()
 build=Path(args.build).resolve();out=Path(args.out).resolve();out.mkdir(parents=True,exist_ok=False)
 manifest=json.loads((build/'production-build.json').read_text());config=manifest['configuration'];origin=config['http']['origin'];base=config['assets']['basePath']
-if origin!='https://synthetic-management.invalid':raise SystemExit('Smoke requires the declared synthetic-only build configuration')
+if args.product_entry_service and (not args.headed or args.category_overflow):raise SystemExit('Service profile requires --headed and no legacy variants')
+expected_origin='https://synthetic-product-entry.invalid' if args.product_entry_service else 'https://synthetic-management.invalid'
+if origin!=expected_origin:raise SystemExit('Smoke requires the declared synthetic-only build configuration')
+if args.product_entry_service:
+ declared=json.loads(Path(__file__).with_name('product-entry-service-public-config.json').read_text())
+ if config!=declared:raise SystemExit('Service profile build must use the declared C-owned public config')
 allowed={x['path'] for x in manifest['outputs']};allowed.add('index.html')
-result={'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[]}
+result={'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'fixtureProfile':'product-entry-service' if args.product_entry_service else 'product-edit','postgres':False}
 bridge=None;browser=None
 variant={'nullable':False,'notSet':False,'image':False,'imageFail':False,'stockFail':False};png='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR4nGOwq/78HwAFUwKs5SlCvgAAAABJRU5ErkJggg=='
 try:
@@ -21,19 +45,27 @@ try:
   try:browser=pw.chromium.launch(executable_path=args.chromium,headless=not args.headed,chromium_sandbox=True)
   except Exception as error:
    result['reason']=str(error);(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));print('BLOCKED_ENV: Chromium could not start with its sandbox enabled');sys.exit(2)
-  bridge=subprocess.Popen([args.node,'--experimental-transform-types',str(Path(__file__).with_name('production-browser-fixture.mjs')),'--product-edit']+(['--category-overflow'] if args.category_overflow else []),stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=(out/'fixture-stderr.log').open('w'),text=True,bufsize=1)
+  bridge=subprocess.Popen([args.node,'--experimental-transform-types',str(Path(__file__).with_name('production-browser-fixture.mjs')),('--product-entry-service' if args.product_entry_service else '--product-edit')]+(['--category-overflow'] if args.category_overflow else []),stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=(out/'fixture-stderr.log').open('w'),text=True,bufsize=1)
   context=browser.new_context(viewport={'width':args.width,'height':1000},device_scale_factor=1)
   errors=[];page=context.new_page();page.on('pageerror',lambda error:errors.append(str(error)))
-  detail_mode={'next':None,'versionDelta':0}
+  detail_mode={'next':None,'versionDelta':0};delivered_media=[]
   def respond(route):
    request=route.request;url=urlsplit(request.url);request_origin=f'{url.scheme}://{url.netloc}'
-   result['requests'].append({'method':request.method,'url':request.url,'body':request.post_data,'schemeCapability':request.headers.get('x-naijue-scheme-detail')})
+   wire=bridge_request(request.url,request.method,request.headers,request.post_data_buffer) if args.product_entry_service else {'url':request.url,'method':request.method,'headers':request.headers,'body':request.post_data,'schemeCapability':request.headers.get('x-naijue-scheme-detail')}
+   result['requests'].append({'method':request.method,'url':request.url,**({'binaryBytes':len(request.post_data_buffer or b'')} if 'binaryBase64' in wire else {'body':wire.get('body')}),'schemeCapability':request.headers.get('x-naijue-scheme-detail')})
    if request_origin!=origin:route.abort();return
    if url.path.startswith('/api/'):
     mode=detail_mode['next'] if url.path=='/api/transfers/detail/query' else None
     if mode:detail_mode['next']=None
     if mode=='fail':route.fulfill(status=503,content_type='application/json',body='{"error":{"code":"SYNTHETIC_READ_UNAVAILABLE"}}');return
-    bridge.stdin.write(json.dumps({'url':request.url,'method':request.method,'headers':request.headers,'body':request.post_data,'schemeCapability':request.headers.get('x-naijue-scheme-detail')})+'\n');bridge.stdin.flush();response=json.loads(bridge.stdout.readline())
+    bridge.stdin.write(json.dumps(wire)+'\n');bridge.stdin.flush();response=json.loads(bridge.stdout.readline())
+    if args.product_entry_service:
+     body=bridge_response_bytes(response)
+     if 'binaryBase64' in response:delivered_media.append((url.path,body,response['headers']))
+     try:decoded=json.loads(body)
+     except (ValueError,UnicodeDecodeError):decoded=None
+     result.setdefault('readResponses',[]).append({'path':url.path,'request':json.loads(wire['body']) if wire.get('body') and request.headers.get('content-type','').startswith('application/json') else {'binaryBytes':len(request.post_data_buffer or b'')},'status':response['status'],'body':decoded,'binaryBytes':len(body) if 'binaryBase64' in response else None})
+     route.fulfill(status=response['status'],headers=response['headers'],body=body);return
     q=json.loads(request.post_data or '{}')
     if url.path=='/api/products/basics/query' and response['status']==200 and variant['nullable']:
      value=json.loads(response['body'])
@@ -86,18 +118,74 @@ try:
     import traceback
     item.update(status='FAIL',reason=str(e),traceback=traceback.format_exc());shot(case,'failure')
    (out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
-  target='00000000-0000-4000-8000-000000004000'
-  page.goto(origin+'/#products/edit/'+target);page.get_by_label('商品名称',exact=True).wait_for();page.wait_for_function("document.querySelector('input[aria-label=商品名称]')?.value==='商务免烫衬衫'")
-  page.evaluate("document.title='PRODUCT EDIT · 合成名称九价有限写 · 非PG'")
-  def save_chain(item):
-   page.get_by_label('商品名称',exact=True).fill('QA实际服务保存名称');page.get_by_role('tab',name='价格',exact=True).click();page.get_by_label('采购价',exact=True).fill('0.00');page.get_by_label('零售价',exact=True).fill('123.45');page.get_by_role('button',name='保存',exact=True).click();page.wait_for_url(origin+'/#products/view/'+target);page.locator('.pc-detail-workbench h1').filter(has_text='QA实际服务保存名称').wait_for();page.get_by_role('tab',name='价格',exact=True).click();page.locator('.pc-price-table tbody td').first.wait_for();page.wait_for_load_state('networkidle');values=page.locator('.pc-price-table tbody td').all_text_contents();assert values[:3]==['0.00','123.45','—'];shot('PRODUCT-EDIT-LIFECYCLE','readonly-prices')
-   writes=[r for r in result['readResponses'] if r['path']=='/api/products/v2/commands'];assert len(writes)==1 and writes[0]['status']==200 and writes[0]['body']['version']==2
-   page.locator('.sidebar a[data-route="products"]').click();row=page.locator('.pc-data-table tbody tr').filter(has_text='M26001');row.wait_for();page.wait_for_load_state('networkidle');assert 'QA实际服务保存名称' in row.inner_text() and '123.45' in row.inner_text();shot('PRODUCT-EDIT-LIFECYCLE','list');row.get_by_role('button',name='编辑',exact=True).click();page.wait_for_function("document.querySelector('input[aria-label=商品名称]')?.value==='QA实际服务保存名称'");page.get_by_role('tab',name='价格',exact=True).click();assert page.get_by_label('采购价',exact=True).input_value()=='0.00';assert page.get_by_label('零售价',exact=True).input_value()=='123.45';shot('PRODUCT-EDIT-LIFECYCLE','reopen');item['actual']={'version':2,'readonlyPrices':values,'command':writes[0]['request']}
-  run('PRODUCT-EDIT-LIFECYCLE',save_chain)
-  result['errors']=errors;result['status']='FAIL' if errors or any(x['status']=='FAIL' for x in result['cases']) else 'PASS_LISTED_CASE_STEPS';browser.close();browser=None
+  if args.product_entry_service:
+   page.evaluate("document.title='PRODUCT ENTRY · 原服务/事务内存/真实暂存图片 · 非PG'")
+   def choose(label,text,cascader=False):
+    field=page.get_by_label(label,exact=True);field.click()
+    option=page.locator('.arco-cascader-list-item' if cascader else '.arco-select-option').filter(has_text=text)
+    option.first.wait_for();assert option.count()==1, 'candidate must be unambiguous: '+text
+    option.click();page.locator('h1').first.click()
+   def service_category(item):
+    item['step']='open category writer';page.goto(origin+'/#product-categories')
+    page.get_by_role('button',name='新增一级分类',exact=True).click();page.locator('input[data-cat="name"]').fill('SYN DRIVER 分类')
+    item['step']='category real CREATE and readback';page.get_by_role('button',name='保存',exact=True).click()
+    notice=page.locator('#pc-category-error[role="status"]');notice.wait_for();assert notice.inner_text().strip();assert 'inline-error' not in (notice.get_attribute('class') or '')
+    page.locator('.arco-tree-node-title').filter(has_text='SYN DRIVER 分类').wait_for();shot('PRODUCT-ENTRY-CATEGORY','success')
+    writes=[x for x in result['readResponses'] if x['path']=='/api/catalogue/categories/commands'];assert len(writes)==1 and writes[0]['status']==200
+    saved_id=writes[0]['body']['targetId'];assert saved_id
+    item['step']='category original duplicate-name rejection';page.get_by_role('button',name='新增一级分类',exact=True).click();page.locator('input[data-cat="name"]').fill('SYN DRIVER 分类');page.get_by_role('button',name='保存',exact=True).click()
+    error=page.locator('#pc-category-error[role="alert"].inline-error');error.wait_for();assert error.inner_text().strip()
+    failed=[x for x in result['readResponses'] if x['path']=='/api/catalogue/categories/commands'];assert len(failed)==2 and failed[-1]['status']==409
+    shot('PRODUCT-ENTRY-CATEGORY','rejected');page.locator('#pc-category-form').get_by_role('button',name='取消',exact=True).click()
+    item['step']='category fresh route readback';page.goto(origin+'/#products');page.locator('.pc-products').wait_for();page.goto(origin+'/#product-categories');page.locator('.arco-tree-node-title').filter(has_text='SYN DRIVER 分类').wait_for()
+    assert page.locator('#pc-category-error.inline-error').count()==0;item['actual']={'targetId':saved_id,'successRole':'status','duplicateStatus':409,'freshReadback':True}
+   run('PRODUCT-ENTRY-CATEGORY',service_category)
+   def service_product(item):
+    item['step']='open new product';page.goto(origin+'/#products/new');page.get_by_label('商品名称',exact=True).wait_for()
+    page.get_by_label('款号',exact=True).fill('SYN-DRIVER-ENTRY');page.get_by_label('商品名称',exact=True).fill('SYN DRIVER 商品');page.get_by_label('系统货号',exact=True).fill('9000053')
+    choose('商品分类','SYNTHETIC 西服',True);choose('年份','2026');choose('季节','秋');choose('供应商','SYNTHETIC 供应商')
+    item['step']='real default A and inline color CREATE';page.get_by_role('tab',name='规格',exact=True).click()
+    fit=page.locator('.pc-spec-section').filter(has=page.get_by_role('heading',name='版型',exact=True));fit.locator('.pc-spec-values').filter(has_text='A版（标准）').wait_for()
+    page.get_by_role('button',name='编辑颜色',exact=True).click();page.get_by_role('button',name='新增颜色',exact=True).click();page.locator('#pc-dict-name input').fill('SYN DRIVER 蓝');page.locator('#pc-dict-code input').fill('003');page.get_by_role('dialog').last.get_by_role('button',name='确定',exact=True).click()
+    page.locator('#pc-dict-name').wait_for(state='detached');page.get_by_role('dialog').last.get_by_role('button',name='确定',exact=True).wait_for();page.get_by_role('dialog').last.get_by_role('button',name='确定',exact=True).click()
+    choose('尺码组','SYNTHETIC 男装上衣尺码');page.locator('.pc-spec-section').filter(has=page.get_by_role('heading',name='颜色',exact=True)).filter(has_text='SYN DRIVER 蓝').wait_for()
+    item['step']='2026 scheme and whole-group draft preview';page.get_by_role('tab',name='条码',exact=True).click();scheme=page.get_by_label('主条码默认方案',exact=True);scheme.filter(has_text='2026年条码方案').wait_for()
+    page.wait_for_function("document.querySelectorAll('.pc-barcode-table tbody tr').length===11")
+    item['step']='real PNG upload';page.get_by_role('tab',name='图片',exact=True).click();image=synthetic_png();page.locator('.pc-photo-section').filter(has=page.get_by_role('heading',name='主图',exact=True)).locator('input[type=file]').set_input_files({'name':'synthetic-driver.png','mimeType':'image/png','buffer':image})
+    page.get_by_role('button',name='保存',exact=True).wait_for(state='visible');page.wait_for_function("[...document.querySelectorAll('button')].some(b=>b.textContent==='保存'&&!b.disabled)")
+    uploads=[x for x in result['readResponses'] if x['path']=='/api/products/media/uploads'];assert len(uploads)==1 and uploads[0]['status']==200 and uploads[0]['body']['uploadId'];assert uploads[0]['request']['binaryBytes']==len(image)
+    item['step']='original V2 SAVE and detail readback';page.get_by_role('button',name='保存',exact=True).click();page.wait_for_url(re.compile(re.escape(origin)+r'/#products/view/[0-9a-f-]+$'))
+    product_id=page.url.rsplit('/',1)[-1];commands=[x for x in result['readResponses'] if x['path']=='/api/products/v2/commands'];assert len(commands)==1 and commands[0]['status']==200 and commands[0]['body']['targetId']==product_id
+    command=commands[0]['request'];assert command['values']['defaultBarcodeSchemeId']=='0e70e45e-1a51-4d44-afe8-0002cf3fb7ef';assert len(command['skuSelection']['fitIds'])==1
+    page.get_by_role('tab',name='规格',exact=True).click();page.locator('.pc-detail-workbench').filter(has_text='165/S').wait_for();page.get_by_role('tab',name='图片',exact=True).click();page.locator('.pc-arco-photo-preview').first.wait_for();page.locator('.pc-arco-photo-preview').first.click()
+    page.wait_for_function("[...document.images].some(i=>i.complete&&i.naturalWidth===8)");page.wait_for_load_state('networkidle');assert any(data==image for _,data,_ in delivered_media), 'original image bytes must be delivered by the actual service'
+    shot('PRODUCT-ENTRY-SAVE','saved-image');item['step']='list and fresh edit reopen';page.goto(origin+'/#products');row=page.locator('.pc-data-table tbody tr').filter(has_text='SYN-DRIVER-ENTRY');row.wait_for();assert 'SYN DRIVER 商品' in row.inner_text();row.get_by_role('button',name='编辑',exact=True).click();page.wait_for_function("document.querySelector('input[aria-label=商品名称]')?.value==='SYN DRIVER 商品'")
+    page.get_by_role('tab',name='条码',exact=True).click();page.wait_for_function("document.querySelectorAll('.pc-barcode-table tbody tr').length===11");page.get_by_role('tab',name='图片',exact=True).click();page.locator('.pc-arco-photo-preview').first.wait_for()
+    details=[x['body'] for x in result['readResponses'] if x['path']=='/api/products/maintenance/v2/detail/query' and x['status']==200 and x['body']];assert details and len(details[-1]['skus'])==11 and len(details[-1]['barcodes'])==11
+    assert len([x for x in result['readResponses'] if x['path']=='/api/products/v2/commands'])==1
+    shot('PRODUCT-ENTRY-SAVE','reopened');item['actual']={'productId':product_id,'version':details[-1]['version'],'skus':11,'barcodes':11,'originalImageBytes':len(image),'saveCalls':1}
+   run('PRODUCT-ENTRY-SAVE',service_product)
+  else:
+   target='00000000-0000-4000-8000-000000004000'
+   page.goto(origin+'/#products/edit/'+target);page.get_by_label('商品名称',exact=True).wait_for();page.wait_for_function("document.querySelector('input[aria-label=商品名称]')?.value==='商务免烫衬衫'")
+   page.evaluate("document.title='PRODUCT EDIT · 合成名称九价有限写 · 非PG'")
+   def save_chain(item):
+    page.get_by_label('商品名称',exact=True).fill('QA实际服务保存名称');page.get_by_role('tab',name='价格',exact=True).click();page.get_by_label('采购价',exact=True).fill('0.00');page.get_by_label('零售价',exact=True).fill('123.45');page.get_by_role('button',name='保存',exact=True).click();page.wait_for_url(origin+'/#products/view/'+target);page.locator('.pc-detail-workbench h1').filter(has_text='QA实际服务保存名称').wait_for();page.get_by_role('tab',name='价格',exact=True).click();page.locator('.pc-price-table tbody td').first.wait_for();page.wait_for_load_state('networkidle');values=page.locator('.pc-price-table tbody td').all_text_contents();assert values[:3]==['0.00','123.45','—'];shot('PRODUCT-EDIT-LIFECYCLE','readonly-prices')
+    writes=[r for r in result['readResponses'] if r['path']=='/api/products/v2/commands'];assert len(writes)==1 and writes[0]['status']==200 and writes[0]['body']['version']==2
+    page.locator('.sidebar a[data-route="products"]').click();row=page.locator('.pc-data-table tbody tr').filter(has_text='M26001');row.wait_for();page.wait_for_load_state('networkidle');assert 'QA实际服务保存名称' in row.inner_text() and '123.45' in row.inner_text();shot('PRODUCT-EDIT-LIFECYCLE','list');row.get_by_role('button',name='编辑',exact=True).click();page.wait_for_function("document.querySelector('input[aria-label=商品名称]')?.value==='QA实际服务保存名称'");page.get_by_role('tab',name='价格',exact=True).click();assert page.get_by_label('采购价',exact=True).input_value()=='0.00';assert page.get_by_label('零售价',exact=True).input_value()=='123.45';shot('PRODUCT-EDIT-LIFECYCLE','reopen');item['actual']={'version':2,'readonlyPrices':values,'command':writes[0]['request']}
+   run('PRODUCT-EDIT-LIFECYCLE',save_chain)
+  result['errors']=errors;result['status']='FAIL' if errors or any(x['status']=='FAIL' for x in result['cases']) else 'PASS_LISTED_CASE_STEPS'
+  if args.keep_open:
+   if not args.headed:raise ValueError('--keep-open requires --headed')
+   page.bring_to_front();keep_visible(page,tick=lambda:(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)))
+  browser.close();browser=None
 except Exception as error:
  result['status']='FAIL';result['reason']=str(error)
 finally:
- if bridge:bridge.terminate();bridge.wait(timeout=5)
+ if browser:browser.close()
+ if bridge:
+  bridge.stdin.close()
+  try:bridge.wait(timeout=5)
+  except subprocess.TimeoutExpired:bridge.terminate();bridge.wait(timeout=5)
  (out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))
 sys.exit(0 if result['status']=='PASS_LISTED_CASE_STEPS' else 1)

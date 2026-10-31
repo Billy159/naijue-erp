@@ -20251,6 +20251,20 @@
         "controllerSha256": "0ef29a6e09a84d75cb1fb524116ab4ccd696c0bb7cefc7f4742175129c5f5912",
         "status": "ISSUED_FOR_ORIGINAL_EXACT_CONTENT_INSTALL_NOT_YET_OBSERVED",
         "meaning": "Human boundedwindow and independent source adoption only, no action/armed/actualOID/materialABI/PGPASS"
+      },
+      "dependencyReview": {
+        "sha256": "344832f4bf1971dc7fb3dd890537d8b0042af22cb9faebda6ba8763761c829c5",
+        "packages": 74,
+        "runtimeFiles": 2228,
+        "bytes": 26134537,
+        "optionalMissing": 25,
+        "scope": "Actual287 observed runtimefile closure only, no materialization/ABI/PGPASS"
+      },
+      "runtimeCopy290Admission": {
+        "planSha256": "2772593e3d40b1f6e6e0f771e6c0aa4b8ce2ed3d3e5583cfd62c0231c812819c",
+        "scriptSha256": "31c28f1d99866b645144b256c80cb6095f45cad97cae7318fc5b98999dac578b",
+        "approvalSha256": "5d9f8c9a9853672b338eae4a991a98a53ccb5f3aececb8e56a2fee9c21e8c70c",
+        "status": "ISSUED_ACTUAL_EXECUTION_NOT_YET_OBSERVED"
       }
     }
   },
@@ -20432,6 +20446,14 @@
           "sha256": "e5389a0ddb4dfb5f9e9efa2173376967592cff782812a7f1d01c730ec014a9e3",
           "findings": 0
         }
+      },
+      "headedDriver": {
+        "file": "apps/web/demo-replica/tests/product-edit-browser.py",
+        "sha256": "b65cd28eb3b5c327f480a3d944a6c12ea5a05874cc675b6e9a5e6769f774188a",
+        "bytes": 21459,
+        "status": "ORIGINAL_F1_FIXED_SYNTAX_AND_PURE_PROTOCOL_PASS_BROWSER_NOT_RUN",
+        "scope": "Explicit headed serviceprofile, originalbinary bytes/status/headers, original service page cases; legacyprofile preserved",
+        "next": "OriginalT45 paired immutable production-host build and originalQF2 visible execution, no normal45 reuse"
       }
     }
   }
