@@ -20667,9 +20667,10 @@
         "fixedSource": "2537dfc17bec83ffd731d1f3c39cd793559a27a1"
       },
       "R01": {
-        "status": "SOURCE_RISK_ONLY_VISIBLE_KEYBOARD_REPRODUCTION_PENDING",
+        "status": "VISIBLE_REPRODUCED_PENDING6_DROPPED_BY_NATIVE_TAB_SAVE_ORIGINAL_F1_FIX_IN_PROGRESS",
         "scope": "visible keyboard scanner-pending save reachability first; pending blocks save without implicit cancel",
-        "owner": "F1"
+        "owner": "F1",
+        "actual": "Fixed49 original transfer-chain, lookup delayed2s below3s timeout;6accepted M scans pending, native Tab background Save/Enter saved200 without M or confirmation; original QF exact evidence retained. Ordinary sales Tab result is not R01 coverage."
       },
       "D01": {
         "status": "QF2_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
@@ -20750,6 +20751,15 @@
     "actualConfig": null,
     "executionEnabled": false,
     "proposal": "reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/C-INDEPENDENT-ORDINARY-BUDGET-PROPOSAL-01/PROPOSED-BUDGET.json",
-    "sha256": "049468937d5f0f1ced42baaa340410bfeb688fe337454bd5674bf2bca1a1c299"
+    "sha256": "049468937d5f0f1ced42baaa340410bfeb688fe337454bd5674bf2bca1a1c299",
+    "review": "LIMITED_STATIC_BUDGET_ACCEPTANCE_EXISTING_OPEN_GATE_ADAPTATION_REQUIRED",
+    "consumerGap": "BUDGET-CONSUMER-F01 original05 requires issuerPoolMax>0/issuerConfigurationPin, contradicts actual shared-pool0; T45 exact successor source preparation, no extra pool or execution"
+  },
+  "r1Qa22StaticSelection": {
+    "baseAndSelectionSha256": "4370e72edceac0720e644f744fa8d80ade0ebe9e6b9834d5a01ecd6bf35bed8e",
+    "meaning": "Actual synthetic base manifest adopted as complete18CSV selection identity under existingQA22; no borrowed production2958 exclusions",
+    "catalogueMappingSha256": "663620a228f12990e5678a8d57ce5c27b8ddfebb4a1d75e9cd879321c45ef18c",
+    "status": "ORIGINAL_QB_MAPPING_REVIEW_IN_PROGRESS",
+    "money32": "C checked32 original raw fields and fileSHA; static adoption only; actual target-bound envelopes pending"
   }
 }

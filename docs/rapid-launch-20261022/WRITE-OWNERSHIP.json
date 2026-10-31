@@ -8346,5 +8346,20 @@
     "scope": "Diagnostic metadata only for actual synthetic upload/original response: SHA256 bytes count first16hex MIME encoding and event order; retain strict original equality and business assertions. Optional existing-case selection reuses category48 PASS; no new app/framework/profile or production request.",
     "baselineSha256": "dbd5d366a72ec6314d18b8cf2143e803f5cdf908ab847eac90c6028fce967658",
     "browserOwner": "QF2 only; frozen48 running driver is not modified in place"
+  },
+  "r1TransferPendingScanR01": {
+    "owner": "F1",
+    "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
+    "status": "EXCLUSIVE_IMPLEMENTATION_IN_PROGRESS",
+    "sourceBefore": "b33829a6f34202916906959589e97920ff0aa8fa",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/documents/transfer-scanner.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/transfer-proposal-form.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/transfers-create-page.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/transfers-detail-page.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/transfer-scanner-queue.test.mjs",
+      "apps/web/demo-replica/frontend/runtime/documents/transfer-matrix-scan-edit.test.mjs"
+    ],
+    "boundary": "Only pending scan count and pre-stopScan SAVE gate; FIFO/timeout/epoch/model/API/SQL unchanged; originalQF nativeTab reproduction and affected-only recheck"
   }
 }
