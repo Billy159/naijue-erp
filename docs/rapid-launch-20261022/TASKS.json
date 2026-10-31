@@ -21112,12 +21112,12 @@
   },
   "r1ScannerRemainingFollowup": {
     "owner": "F1",
-    "status": "TRANSFER_QF_LIMITED_PASS_SALES_NORMAL_IMPLEMENTATION_ACTIVE",
+    "status": "SALES_BUILD54_READY_F1_BROWSER_DRIVER_SINGLE_LEAF",
     "model": "gpt-6.1-sol/medium",
     "fast": "UNVERIFIED_TOOL_NO_SWITCH",
     "baseline": "80b56347; app0a2fa82d; fixed52/53 profiles separately bound",
     "scope": "Only remaining software error pause/resume/cancel, timeout feedback, late response isolation and equivalent sales consumers; reuse pendingM6, repeated quantity, paging results",
-    "next": "F1 normal sales scanner new/edit implementation; QF independent fixed52 transfer recovery increment; no new PG/window authorization",
+    "next": "F1 exact one driver then C fixed test version; immutable54 fixtures prevent D1 WIP mixing; headed exchange new/savev1/edit/scans/savev2/detail, then QF incremental review",
     "hardware": "NOT_TESTED_KEYBOARD_NOT_HARDWARE",
     "findings": "Transfer source/DOM already covers recovery/3s/late; remaining headed errors and timeout not covered by 2s pending case. Normal sales proposal has no scanner mount; old Arco path is not current proof.",
     "transferSelfCheck": "F1/SCAN-RECOVERY-52-20261031-01/SUMMARY.json; 8 barcode requests,0commands,late/reopen quantity1→2→3→4; observed timeout3.881s not exact3s SLO",
@@ -21141,6 +21141,24 @@
         "SAVE/approval"
       ],
       "ownProcessesRemaining": 0
+    },
+    "salesSource": "ebbd7d2e1c7e0469b98493b6670f2f5a488e08c7",
+    "sourceChecks": "F1 seven DOM+two model increments/root+runtime tsc passed; not browser/HTTP/save/PG",
+    "build54": {
+      "application": "ebbd7d2e1c7e0469b98493b6670f2f5a488e08c7",
+      "manifest": "b095ca7764c1d8ef7a4d7d6bcf56c8a21dab5a266dc078348c6a1ec4299c9180",
+      "config": "28470526e1c81c63beefa87aa02143efd3aff49ea465d085185c986a6cb49b7d",
+      "producerSeconds": 0.904,
+      "outputs": 190,
+      "inputs": 1310,
+      "scope": "Document profile; not unified all writers or PG"
     }
+  },
+  "r1UnifiedSyntheticHostComposition": {
+    "owner": "D1",
+    "status": "EXACT_NINE_TEST_HOST_LEASE_GRANTED",
+    "scope": "Unify actual existing synthetic constructors/current facts and posting transaction seams; no fake independent balances; exact files in WRITE-OWNERSHIP",
+    "next": "D1 directed correctness checks then fixed source/T45 one integrated build/QF-QF2 consumers",
+    "notClaimed": "No real PG or production; source-ready not fully writable"
   }
 }

@@ -3494,3 +3494,8 @@ F1固定5fc29047+app52完成调拨恢复自检：8条码请求、0SAVE，错误�
 
 ### QF调拨扫码恢复限定独立通过
 采用QF01-R1-APP52-SCAN-RECOVERY-5FC29047-01，报告SHA315e258fecfe92837af4c8144ffa2daf33da183218ed94acfab1eeb536f03243。固定app52/test5fc29047，8原条码响应、0commands、最终数量4；错误暂停恢复、忽略、超时与关闭后的原迟到响应不加量、重开继续通过。首次观察超时3.879秒，仅单次实际值，不称精确3秒/P95。自有进程0。UNAVAILABLE顶层、硬件、PG/生产、销货正常扫码和SAVE审核仍未测；旧已过范围不重验。F1继续已登记7叶正常销货接线，浏览器已释放。
+
+
+### 销货扫码源码与候选54
+F1精确7叶交付已固定ebbd7d2e1c7e0469b98493b6670f2f5a488e08c7并远端核实；normal新建/未审核编辑/退回换出挂现有DocumentScan，pending同步保护/3000ms/取消迟到，7DOM+2模型及root/runtime类型检查通过。T45单次构建54通过，190outputs/1310inputs，manifest b095ca7764c1d8ef7a4d7d6bcf56c8a21dab5a266dc078348c6a1ec4299c9180；原52配置，非所有模块统一可写或PG通过。F1下一唯一sales浏览器driver用54不可变fixture目录，避免原D1并行host修改混入本次输入。
+T45只读证实统一合成host缺同事实/库存事务接缝，原D1精确9测试host叶获租约补原constructor组合/FIT/跨模块当前事实及共享过账事务，不改生产SQL/API，不把独立ledger或UNKNOWN称共享余额。详细文件归属在WRITE-OWNERSHIP，未完成不称全站可写。

@@ -8447,7 +8447,7 @@
   },
   "r1SalesNormalScannerIntegration": {
     "owner": "F1",
-    "status": "ACTIVE_EXACT_SEVEN_LEAVES",
+    "status": "DELIVERED_FROZEN_EBBD7D2E_SOURCE_READONLY",
     "model": "gpt-6.1-sol/medium",
     "paths": [
       "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
@@ -8461,5 +8461,34 @@
     "scope": "Reuse original DocumentScan and existing SalesProposalSession reader/controller, mount normal new/edit IN/OUT; 3s timeout, FIFO recovery, pending-save protection; preserve original SKU/raw money/quantity/permissions. No API/SQL/contracts/root/CSS changes.",
     "base": "5fc2904716d8e3ff814c5f24c75849964e4ad1bf",
     "handoff": "Only one writer; original standard DocumentScan consumer semantics unchanged; fixed app/build by T45 after source delivery; QF sole affected independent review"
+  },
+  "r1UnifiedSyntheticHostComposition": {
+    "owner": "D1",
+    "status": "ACTIVE_EXACT_NINE_TEST_HOST_LEAVES",
+    "model": "gpt-6.1-sol/medium",
+    "paths": [
+      "apps/web/demo-replica/tests/production-browser-fixture.mjs",
+      "tests/support/product-entry-service-host-fixture.mjs",
+      "apps/web/demo-replica/tests/sales-chain-fixture.mjs",
+      "apps/web/demo-replica/tests/transfer-chain-fixture.mjs",
+      "apps/web/demo-replica/tests/unified-service-fixture.mjs",
+      "tests/product-entry-service-host.test.mjs",
+      "apps/web/demo-replica/tests/unified-service-fixture.test.mjs",
+      "tests/support/synthetic-store.ts",
+      "tests/support/synthetic-transfer.ts"
+    ],
+    "scope": "Compose existing host/service/UOW and shared authorized finite current facts incl existing stock/posting transaction seams; preserve old independent profiles, permissions, identities, UNKNOWN; no production API/SQL/config changes",
+    "constraints": "Original F1 app+drivers read-only to D1; C config; T45 build; no per-feature fake success or independent ledger represented as shared fact",
+    "source": "T45 READONLY-COMPOSITION-NOTES sha273bd7dd and D1 exact proposal; existing data/permissions approval boundaries unchanged"
+  },
+  "r1SalesScannerBrowserDriver": {
+    "owner": "F1",
+    "status": "ACTIVE_SINGLE_TEST_LEAF",
+    "paths": [
+      "apps/web/demo-replica/tests/sales-chain-browser.py"
+    ],
+    "scope": "Mutually exclusive --scan-recovery; immutable fixture directory arg to avoid D1 ongoing source WIP; preserve original default branches",
+    "build": "ui-preview-ebbd7d2e-sales-normal-scanner-54",
+    "model": "gpt-6.1-sol/medium"
   }
 }
