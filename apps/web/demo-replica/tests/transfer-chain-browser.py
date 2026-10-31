@@ -96,7 +96,9 @@ try:
    else:result.setdefault('notTested',[]).append('responsible selector: existing provider not enabled; do not claim full-field PASS')
    page.locator('.mx-spec-edit').first.click()
    for label in ['选择颜色','选择版型']:
-    page.get_by_role('button',name=label,exact=True).click();options=page.locator('.mx-spec-menu-options button');options.first.wait_for();option=options.last;option.scroll_into_view_if_needed()
+    trigger=page.get_by_role('button',name=label,exact=True)
+    if trigger.get_attribute('aria-expanded')!='true':trigger.click()
+    options=page.locator('.mx-spec-menu-options button');options.first.wait_for();option=options.last;option.scroll_into_view_if_needed()
     result.setdefault('specOptionEvidence',[]).append(option.evaluate("el=>{const rect=el.getBoundingClientRect(),point={x:rect.x+rect.width/2,y:rect.y+rect.height/2},describe=n=>{const r=n.getBoundingClientRect(),s=getComputedStyle(n);return {tag:n.tagName,id:n.id,classes:n.className,bounds:{x:r.x,y:r.y,width:r.width,height:r.height},position:s.position,zIndex:s.zIndex,overflow:s.overflow,transform:s.transform,opacity:s.opacity}};let ancestors=[],node=el;while(node){ancestors.push(describe(node));node=node.parentElement;}return {optionId:el.dataset.mxSpecOption,text:el.textContent,point,ancestors,hitStack:document.elementsFromPoint(point.x,point.y).map(describe)};}"));page.screenshot(path=str(out/('before-spec-'+label+'.png')),full_page=True);(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));option.click()
    quantity=page.locator('[data-transfer-pending="true"]').first;quantity.fill('3');quantity.press('Enter');page.locator('tr[data-mx-row]').first.wait_for()
    # Original line can be reselected; its original pointer remains a server-owned relation.
