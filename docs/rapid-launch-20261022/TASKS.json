@@ -20722,5 +20722,34 @@
     "finding": "R4-DELIVERY-F01 corrected in successor with honest recovered-record distinction; old failure preserved",
     "actualExecution": "NOT_AUTHORIZED_NEW_WINDOW_NOT_STARTED",
     "report": "reports/qa-backend/rapid-launch-20261022/QB/PRIVATE-PROCESS-QA22-NEW-WINDOW-20261031/QB-QA22-NEW-WINDOW-R4-RESULT.json"
+  },
+  "r1FixedBrowser49": {
+    "source": "b33829a6f34202916906959589e97920ff0aa8fa",
+    "status": "BUILD_PASS_ORIGINAL_QF_AFFECTED_VISIBLE_CHECK_IN_PROGRESS",
+    "build": "reports/controller/rapid-launch-20261022/ui-preview-b33829a6-affected-integration-49/build",
+    "configurationSha256": "74175b3769eef974ece6dd1b7c33660af57e653991a483a60d7a7ee9b634c514",
+    "manifestSha256": "b6223dc38618c40cc456b56b05a3dd6348c6b97c37e2f1adfb8b0529825f4d2c",
+    "outputCount": 185,
+    "inputCount": 1308,
+    "seconds": 0.849,
+    "owners": [
+      "QF documents first exclusive browser",
+      "QF2 staff/payment limited UI after handoff"
+    ],
+    "boundary": "memory synthetic service; transfer-existing and payment writer unsupported; F03 cross-page write chain not available; not realPG",
+    "preparationFailure": "one partial archive ENOSPC preserved; later actual free-space sufficient; exact existing files matched and missing files added without overwriting/deleting; cause of transient ENOSPC unknown"
+  },
+  "r1OrdinaryQaBudget": {
+    "status": "C_PROPOSED_FINITE_VALUES_NOT_ACTUAL_RUNTIME_CONFIGURATION",
+    "applicationPostgresMax": 1,
+    "externalIssuerMax": 0,
+    "issuerSharesApplicationPool": true,
+    "observerMax": 1,
+    "N": 2,
+    "cleanupControlReserve": 1,
+    "actualConfig": null,
+    "executionEnabled": false,
+    "proposal": "reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/C-INDEPENDENT-ORDINARY-BUDGET-PROPOSAL-01/PROPOSED-BUDGET.json",
+    "sha256": "049468937d5f0f1ced42baaa340410bfeb688fe337454bd5674bf2bca1a1c299"
   }
 }
