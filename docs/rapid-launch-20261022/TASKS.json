@@ -5212,30 +5212,7 @@
       "model": "gpt-6.1-sol/medium"
     }
   },
-  "currentGoal": {
-    "status": "ACTIVE",
-    "objective": "Based on ERP V2 handover, complete all known bugs,all performance and H01-H06 before safe formalcandidate launch;reuse existing frontend Chat and backend owners,unique writer,gpt-6.1-sol/medium. Full37pages67overlays/additions,realdata/historyedit remain. Same merged candidate final formalpages/realisolatedPG/proxy/browser/performance/recovery acceptance. Productiondeployment,migration,downtime,permissionchange,deletion require separate human confirmation.",
-    "latestAuthority": "HUMAN_CURRENT_GOAL_EDIT_RECEIVED_20261028",
-    "liveGoalUpdatedAt": 1792840499,
-    "verifiedAtUtc": "2026-10-24T11:29:21.184294+00:00",
-    "latestBusinessAmendment": "Creator immutable real creation identity; responsible separate nullable staff; approved v16 remains approved.",
-    "latestHumanAuthority": "Current human-edited live goal received 2026-10-28 and latest V2 request",
-    "phase1AcceptedSource": "51b65753ac15dc64f1bfbf28d1159c61b8318485",
-    "currentPhase": "PHASE2_EXISTING_ORIGINAL_COPY_BUSINESS_ADAPTATION",
-    "phase1": "COMPLETE_LIMITED_REPRESENTATIVE_ACCEPTANCE_SOURCE343",
-    "phase2": "IN_PROGRESS_ON_SAME_COPY",
-    "latestExecution": "SOURCE840 B07/P04/exactmetadata source ready;releaseSOURCE839 fixed;frontendowner ackpending;noPG/proxy/formalPASS",
-    "latestHumanPriority": {
-      "thread": "01a16189-fe73-7a81-b7ad-3c24ede6fd24",
-      "userMessage": "01a17711-6152-7712-920c-4e2a3f3ffff5",
-      "verified": "Direct userMessage read by C",
-      "decision": "真实业务页面此页面尚未接入当前版本第一优先；T01/T07/T08/T09/T20新增修复上线后；第一组优先，第二组随功能，第三组小检查失败才修，第四组默认上线后，纯整理可不单做"
-    },
-    "priority": "KNOWN_BUGS_ALL_PERFORMANCE_H01_H06_BEFORE_LAUNCH_REUSE_VALID_EVIDENCE",
-    "currentExecutionAuthority": "handoverV2",
-    "liveGoalCard": "User edited objective thisturn;adopted,no statuschange/recreate/pause;goalunfinished.",
-    "frontendOrder": "Finish fixednormal34 fullcomparison/allstates/overlays withTerra6.1-medium,then dedupV2 against latestcode and Sol6.1-medium batchrepair;otherbackend/releaseprep parallel"
-  },
+  "currentGoal": "R1_SOURCE_ALIGNMENT_V6_PREPARATION_V7_ISOLATED_ACCEPTANCE_THEN_APPROVED_COUPLED_RELEASE",
   "historyHeaderProposal": {
     "id": "v16_HISTORY_HEAD_AND_RESPONSIBLE",
     "status": "APPROVED_WITH_SUPERSEDING_BUSINESS_DEFINITION",
@@ -19832,5 +19809,48 @@
     "actual267": "QB_AND_C_EXACT_METADATA_ACCEPTED_NOT_APP_STARTUP",
     "T45": "SOURCE947_FOUR_CASE_EXECUTION_IN_PROGRESS;NO_FORMAL_DEPLOYMENT",
     "reports": "reports/dot-handoff-current"
+  },
+  "databaseUpgradeR1": {
+    "status": "PREPARATION_IN_PROGRESS_NOT_DEPLOYED",
+    "sourceCheckpoint": "56bc305a4812574cbdfef9a27e4c3ac552b92c2d",
+    "branch": "codex/db-v7-r1-preparation-20261031",
+    "sourceFiles": 2129,
+    "remoteReadbackMatches": true,
+    "ci": {
+      "workflows": 0,
+      "matchingRuns": 0,
+      "conclusion": "NOT_CONFIGURED_NOT_PASS"
+    },
+    "checks": {
+      "rootTypes": "PASS",
+      "build": "PASS",
+      "dependencyEntries": 219,
+      "standard": {
+        "total": 3417,
+        "pass": 3414,
+        "fail": 1,
+        "skip": 1,
+        "todo": 1
+      },
+      "capacityFileTargetedRerun": "17_PASS_ORIGINAL_FAILURE_RETAINED_CAUSE_UNKNOWN",
+      "runtimeTypes": "PASS_AFTER_EXPLICITLY_APPROVED_RETIRED_FILE_REMOVAL"
+    },
+    "owners": {
+      "C": "Git integration and existing three ledgers",
+      "D1": "Source-derived V6 ACL constraints trigger candidate matrix only",
+      "T45": "Sole server database execution owner",
+      "QB": "Existing independent backend review"
+    },
+    "current": "D1 exact source ACL and predecessor matrix in progress",
+    "next": "Target-specific repair script and concrete isolated execution confirmation",
+    "environmentMutations": "NOT_EXECUTED",
+    "production": "NOT_DEPLOYED",
+    "approvedHistoricalBalanceRule": "NULL_UNKNOWN_NO_BACKFILL",
+    "retiredFileRemoval": {
+      "path": "apps/web/demo-replica/frontend/runtime/inventory/pagination.tsx",
+      "scope": "PREPARATION_BRANCH_ONLY",
+      "approval": "call_60c2936d10684229a2f00ac301907319/0",
+      "status": "REMOVED_RUNTIME_TYPECHECK_PASS"
+    }
   }
 }
