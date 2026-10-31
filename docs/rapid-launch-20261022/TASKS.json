@@ -20901,7 +20901,9 @@
     "rules": "Reuse same-version same-scope evidence; applicable lists only, single-page data cannot prove page2; no fake totals/zero or backend validation suppression. No five new performance work and no UI prerequisite to DB preparation.",
     "actualEvidence": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF2/PAGINATION-49-READONLY-20261031-01/QF2-RESULT.json",
     "actualScope": "14 lists, 46 query responses. Colors 182 supports page2/pageSize/reset and representative narrow viewport; other13 lists insufficient rows for page2. No application defect found, no whole-page closure.",
-    "next": "F1 bounded opt-in actual synthetic SAVE dataset and actual query comparator; no old edit chain rerun or PG claims"
+    "next": "F1 bounded opt-in actual synthetic SAVE dataset and actual query comparator; no old edit chain rerun or PG claims",
+    "documentSource": "f2d2e7eee684d112332c508ed8832832aa70f621",
+    "documentProgress": "Original F1 bounded actualSAVE 25 drafts each;24 directed fixture checks pass. First headed sales page1/page2/detail reached, driver return-button assumption failed; original screenshots/response retained, original owner correcting drivers only. Browser not passed."
   },
   "r1Qa22CaptureStaticReview": {
     "status": "STATIC_ONLY_TARGET_BINDING_PENDING",
@@ -20915,10 +20917,26 @@
   },
   "r1ProductSixTabsContinuation": {
     "owner": "QF2",
-    "status": "ASSIGNED_READY_SCOPE_AND_EXISTING_EVIDENCE_DEDUP_FIRST",
+    "status": "QF2_LIMITED_CURRENT49_EDITOR_AND_DRAWER_PARTIAL_ADOPTED",
     "scope": "Remaining normal product EDIT/VIEW tab states only; reuse fixed48 create/media/11SKU/MAIN passes",
     "browser": "QF2 exclusive own headed context; F1 source work then coordinate handover",
     "writeBoundary": "QF2 own reports only, application source read-only",
-    "notAssumed": "No source factory or screenshot stands in for realPG/wholepage/production acceptance."
+    "notAssumed": "No source factory or screenshot stands in for realPG/wholepage/production acceptance.",
+    "report": "reports/qa-frontend/rapid-launch-20261022/QF2/PRODUCT-49-READ-TABS-20261031-01/QF2-RESULT.json",
+    "reportSha256": "5a5b1cca32672654565cdf21f865d364649bf83358da7fa84427607708916221",
+    "evidence": "16 responses200/0writes; six EDIT tabs read, basic/prices local draft survives tabs, explicit discard restores original; 44 real declared synthetic SKU barcode rows; stock344 authorized subset only; context closed own0",
+    "remaining": [
+      "Normal full six-tab read-only page entry not reached from observed list/three-tab drawer",
+      "Current image-success and load-failure states absent in this readonly carrier",
+      "RealPG/full-page/Demo whole-state acceptance not claimed"
+    ]
+  },
+  "r1SalesReturnApprovedFollowup": {
+    "owner": "QF",
+    "status": "ORIGINAL_SIX_SAMPLE_READONLY_PREP_READY_WAIT_BROWSER_HANDOVER",
+    "report": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP51-SALES-SIX-SAMPLE-PREP-01.json",
+    "sha256": "39e18e5bc87d60678a01cc3c8ca0f4d2660827c253967001501a4f27b911680c",
+    "scope": "Original SAVE/APPROVE synthetic SALE/RETURN/EXCHANGE six sample list/details; negative qty/refund, incoming/outgoing and approved readonly states only",
+    "boundary": "No new commands beyond original sample preparation; no DECLINE/VOID/PG/full permissions; F1 own browser first"
   }
 }
