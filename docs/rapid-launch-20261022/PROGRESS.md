@@ -1,3 +1,7 @@
+## 2026-10-31 caller F01 closed on fixed successor only
+
+OriginalQB affected review6291B SHA3fed525cc9f9f7824a18e6e2fd6bd9fad9584ddea035c183fe7a10ce8c15dade PASS_CALLER_F01_R1_AFFECTED_SOURCE_ONLY adopted. Newcaller ba42edff rejects original immediate-exit23 counterexample and binds same process liveness/absolute kill interval/137+TERM+KILL diagnostics/actual gone; base128ef3 NEED_FIX retained. Nine directed owner checks reused; localPython proof is not targetGNU/Docker/PG proof. No original-module/05/04 repeat. Actual new finite scope/independent pins/materialization/Node24/dependency ABI/ordinaryPG business/restore still pending, old window closed. T45 local2b52 UI candidate in progress; defaultwarehouse57a successor is separate.
+
 ## 2026-10-31 default warehouse backend accepted; frontend exact4 handed back
 
 OriginalQB backend exact4 SOURCE_ONLY PASS report5605B SHA12e7ebef59b79c76d39e5a678af08338a1d8746a9e52f9b024e75e93697e7c87 adopted without repeat technical review. F1 paired reader/Form consumer actual RED then13 reader and16 DOM/model checks PASS, strict types PASS. Automatic selection requires one server-proven true same-hall recommendation; removed unique-candidate guessing, preserve manual/open/clear/original-document/late/cancel/scope/busy. Bounded first page is sufficient because server recommended-first; no full catalogue enumeration. Actual Chrome/HTTP/PG/save/readback still pending. Exact4 frozen handed back; C integrates source only. Earlier local candidate2b52 remains fixed and cannot prove this successor.
