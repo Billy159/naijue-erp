@@ -49,3 +49,51 @@ test('actual transfer and sales default effects remain clean, editable, and igno
 
  }finally{for(const release of deferred)release();if(root)await act(async()=>root.unmount());activeFixture?.context.clear();dom.window.close();await rm(temp,{recursive:true,force:true});}
 });
+
+test('F02 actual feature renews only clean idle EXISTING owner and retains list view',async()=>{
+ const {ReadContext}=await import('../../../../src/loading/read-scope.ts');
+ const {detail,result}=await import('../../../../src/sales/commands/fixtures.test-support.ts');
+ const initial=detail(),principal={accountId:initial.document.header.createdByAccountId,staffId:null,hallId:null,loginName:'TEST F02',role:'ADMIN',authVersion:1};
+ const reads=new ReadContext({accountId:principal.accountId,sessionRevision:'F02',permissionRevision:'F02'});
+ const temp=await mkdtemp(path.join(here,'.sales-owner-'));
+ try{
+  const output=path.join(temp,'feature.mjs');
+  await build({stdin:{contents:"export {createSalesFeature} from './sales-feature.ts';export * from './sales-session.ts';",resolveDir:here,loader:'ts'},outfile:output,bundle:true,platform:'node',format:'esm',plugins:[{name:'capture-leaf-only',setup(b){
+   b.onLoad({filter:/sales-entry\.tsx$/},()=>({loader:'ts',contents:"export {newSalesListViewState} from './sales-list-state.ts';export function mountSales(host,route,options){return {session:options.session,view:options.view,dispose(){},canLeave(){return true}};}"}));
+   b.onLoad({filter:/document-activation\.ts$/},()=>({loader:'ts',contents:'export function createDocumentProductActivation(){throw Error("not used");}'}));
+  }}]});
+  const {createSalesFeature,salesCanStartFreshCreate}=await import(pathToFileURL(output).href);
+  let current=initial;const writes=[];
+  const runtime={auth:{getSnapshot:()=>({principal})},reads,http:{origin:'https://synthetic-f02.invalid',basePath:'/api',fetch:async(input,init)=>{const route=new URL(input).pathname;let body;if(route==='/api/sales/detail/query')body=current;else{assert.equal(route,'/api/sales/commands');const command=JSON.parse(init.body);assert.equal(command.action,'APPROVE');writes.push(command);current=detail('APPROVED',3);body=result(command);}return new Response(JSON.stringify(body),{headers:{'content-type':'application/json'}});}},onAccessFailure(){assert.fail('unexpected denied');}};
+  const feature=createSalesFeature({session:runtime,routes:{sales:true},newRequestKey:()=> 'TEST.F02'},()=>{});
+  try{
+   const mount=route=>feature.mount({},route,reads.createScope('route:'+route));
+   const first=await mount('sales'),old=first.session;
+   first.view.scrollTop=347;first.view.pageSize=50;const view=first.view;
+   assert.equal(await old.editor.openExisting(initial.document.header.id),true);
+   assert.equal(old.editor.getSnapshot().command.editor.mode,'EXISTING');assert.equal(old.editor.getSnapshot().command.write.phase,'idle');
+   const fresh=await mount('sales/new');assert.equal(fresh.session===old,false,'clean old owner must be replaced');assert.equal(old.scope.active,false);assert.equal(fresh.session.editor.getSnapshot().command.editor,null);assert.equal(fresh.session.create.getSnapshot().nativeHandoff,false);assert.equal(fresh.view===view,true);assert.equal(view.scrollTop,347);assert.equal(view.pageSize,50);
+   assert.equal((await mount('sales/new')).session===fresh.session,true,'do not clear an already new owner');
+   await fresh.session.editor.openExisting(initial.document.header.id);
+   const approvedOwner=fresh.session;assert.equal(await approvedOwner.editor.submit('APPROVE'),true);assert.equal(approvedOwner.editor.getSnapshot().command.write.phase,'committed');
+   assert.equal((await mount('sales/new')).session===approvedOwner,true,'committed is not an idle clean boundary');
+   assert.equal(await approvedOwner.editor.commands.readCurrent(),true);assert.equal(approvedOwner.editor.adoptCurrent(),true);assert.equal(approvedOwner.editor.getSnapshot().command.write.phase,'idle');
+   const afterApproval=await mount('sales/new');assert.equal(afterApproval.session===approvedOwner,false);assert.equal(approvedOwner.scope.active,false);assert.equal(afterApproval.view===view,true);assert.equal(writes.length,1);assert.equal(writes[0].salesId,initial.document.header.id);
+   current=initial;await afterApproval.session.editor.openExisting(initial.document.header.id);
+   const owner=afterApproval.session,state=owner.editor.getSnapshot(),command=state.command;
+   const clean=owner.editor.getSnapshot().input;owner.editor.updateInput({...clean,note:'raw changed',businessDate:'invalid'});const raw=owner.editor.getSnapshot().input;
+   assert.equal((await mount('sales/new')).session===owner,true,'raw invalid edit stays owned');assert.equal(owner.editor.getSnapshot().input,raw);owner.editor.updateInput(clean);
+
+   const wrap=(change={})=>({...owner,editor:{getSnapshot:()=>state,canLeave:()=>true,hasDirtyDraft:false,commands:{hasUnresolvedWrite:false},existingDocument:null,...change}});
+   assert.equal(salesCanStartFreshCreate(wrap()),true);
+   for(const phase of ['submitting','checking','replaying','uncertain','committed','rejected']){const original={...command,write:{...command.write,phase,command:{requestKey:'TEST.original',expectedVersion:2}}};const candidate=wrap({getSnapshot:()=>({...state,command:original})});assert.equal(salesCanStartFreshCreate(candidate),false,phase);assert.equal(candidate.editor.getSnapshot().command,original);assert.equal(original.write.command.requestKey,'TEST.original');}
+   for(const change of [{hasDirtyDraft:true},{commands:{hasUnresolvedWrite:true}},{getSnapshot:()=>({...state,preparing:true})},{existingDocument:{getSnapshot:()=>({preparing:true})}}])assert.equal(salesCanStartFreshCreate(wrap(change)),false);
+   assert.equal(salesCanStartFreshCreate({...wrap(),create:{getSnapshot:()=>({preparing:true})}}),false);
+   assert.equal(salesCanStartFreshCreate({...wrap(),historyOwners:new Map([['test',{owner:{unresolved:true}}]])}),false);
+   const proposal=owner.proposal.getSnapshot();
+   for(const patch of [{dirty:true},{lineEdit:{key:'raw'}},{entries:{OUT:[{product:null,query:'raw pending query'}]}}])assert.equal(salesCanStartFreshCreate({...wrap(),proposal:{getSnapshot:()=>({...proposal,...patch})}}),false);
+   owner.proposal.updateEntry('OUT',{query:'retain raw search'});
+   const before=owner.proposal.getSnapshot();assert.equal((await mount('sales/new')).session===owner,true);assert.equal(owner.scope.active,true);assert.equal(owner.proposal.getSnapshot(),before);
+  }finally{feature.dispose();}
+ }finally{reads.clear();await rm(temp,{recursive:true,force:true});}
+});

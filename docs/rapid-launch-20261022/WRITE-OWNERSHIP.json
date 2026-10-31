@@ -8288,5 +8288,13 @@
     "optionalTest": "inventory-membership-rewrite only if existing call-shape assertion affected",
     "scope": "Original trusted same-pool retained-delete capability; active tree and exact candidates; oldschema branch identical; no DDL/ACL/SQL files or runtime effects",
     "supportBoundary": "Exact two fixed retained-delete catalogStatus templates only; preserve legacy membership proof extraction, reject arbitrary interpolations; no proof algorithm weakening"
+  },
+  "r1OriginalReadonlyReceiptFixtureTypes": {
+    "owner": "D1",
+    "status": "ACTIVE_EXACT_ONE_TEST_LINE",
+    "files": [
+      "tests/current-runtime26-full-source-fixture.test.ts"
+    ],
+    "scope": "Preserve readonly production contracts and exact duplicate-ledger negative assertion; build a fresh spread object instead of assigning cloned readonly revisionReceipt. Existing baseline error fc7c03bf, not F01/F1 regression."
   }
 }

@@ -6,6 +6,7 @@ import { ReadContext } from '../loading/read-scope.ts';
 import {createCurrentFormHttpReader} from './http-reader.ts';
 import { HttpQueryError } from '../transport/http-query.ts';
 import { SalesProposalSession, type SalesProposalReader } from './sales-proposal.ts';
+import * as pricing from './sales-proposal.ts';
 const uuid = (n: number) => `00000000-0000-4000-8000-${n.toString().padStart(12, '0')}`;
 const hallId = entityId('hall', uuid(1));
 const ref = (n: number, more = {}): CurrentSalesReferenceItem => ({ id: uuid(n), name: `TEST reference ${n}`, code: null, hallId: null, hallName: null, paymentMethodId: null, paymentMethodName: null, ...more });
@@ -293,4 +294,21 @@ test('DOC01 nullable-hall staff reads preserve cancellation, superseding search 
 });
 test('DOC01 denied nullable-hall staff read keeps original access failure disposal',async()=>{
  const h=setup({async readSalesReferences(){throw new HttpQueryError('forbidden','FORBIDDEN',403);}});await h.session.openPicker('salesperson');assert.equal(h.scope.active,false);assert.equal(h.session.getSnapshot().disposed,true);assert.equal(h.session.getSnapshot().draft.salesperson,null);
+});
+
+test('F04 zero confirmation follows exact effective price without changing raw intent', () => {
+  const needs = (pricing as unknown as {salesProposalNeedsZeroConfirmation: (row: pricing.SalesProposalPricingLine) => boolean}).salesProposalNeedsZeroConfirmation;
+  assert.equal(typeof needs, 'function');
+  const base = {key:'zero-test',quantity:'1',product:{...product,retailPrice:'100.00'},dealPrice:'100',pricingRule:'DISCOUNT' as const,discount:'0',isGift:false,zeroConfirmed:false};
+  const cases: readonly (readonly [Partial<pricing.SalesProposalPricingLine>,boolean])[] = [
+    [{},true],[{dealPrice:''},true],[{zeroConfirmed:true},false],[{isGift:true},false],
+    [{product:{...product,retailPrice:'0.01'},discount:'0.1'},true],
+    [{product:{...product,retailPrice:'0.01'},discount:'5'},false],
+    ...['0','0.0','00.00',' 0.00 '].map(dealPrice=>[{pricingRule:'UNIT_PRICE' as const,dealPrice},true] as const),
+    ...['','0.','-0','NaN','1e2'].map(dealPrice=>[{pricingRule:'UNIT_PRICE' as const,dealPrice},false] as const),
+    ...['','5.','10.1','-1','5.55'].map(discount=>[{discount,dealPrice:'0'},false] as const),
+    [{product:{...product,retailPrice:null},dealPrice:'0'},false],
+    [{product:{...product,retailPrice:'90071992547409.93'},discount:'8'},false],
+  ];
+  for(const [patch,expected] of cases){const row={...base,...patch};const before=JSON.stringify(row);assert.equal(needs(row),expected,JSON.stringify(patch));assert.equal(JSON.stringify(row),before);}
 });

@@ -15,6 +15,7 @@ export function createSalesFeature(options:ReadyPageOptions,navigate:Navigate){
     if ((route==='sales'||route==='sales/new'||route.startsWith('sales/view/')||route.startsWith('sales/edit/')||route.startsWith('sales/history/')) && config.sales) {
       const [module,factory,references,products] = await Promise.all([import('./sales-entry.tsx'),import('./sales-session.ts'),import('../../../../src/sales/http-reader.ts'),import('../../../../src/transport/product-http-reader.ts')]);
       if(!scope.active)return {dispose:()=>{},canLeave:()=>true};
+      if(route==='sales/new'&&sales&&factory.salesCanStartFreshCreate(sales)){sales.dispose();sales=null;}
       if(!sales?.scope.active)sales=factory.createReplicaSalesSession(session,{instanceId:'replica-sales-owner',newRequestKey:options.newRequestKey,responsibleReady:config.documentResponsibleReady===true});
       if (!salesViewScope?.active) {
         salesViewScope = session.reads.createScope('replica-sales-list-view');

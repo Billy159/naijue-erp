@@ -118,6 +118,11 @@ export function salesProposalPriceDisplay(row:SalesProposalPricingLine):{dealPri
  try{const reference=row.product.retailPrice===null?0n:amount(row.product.retailPrice);if(reference>0n){const tenths=(amount(row.dealPrice)*100n+reference/2n)/reference;discount=tenths%10n===0n?String(tenths/10n):`${tenths/10n}.${tenths%10n}`;}}catch{/* Unknown input stays blank. */}
  return {dealPrice:row.dealPrice,discount};
 }
+/** Confirmation affordance only; minimum-price and SAVE authority stay unchanged. */
+export function salesProposalNeedsZeroConfirmation(row:SalesProposalPricingLine):boolean {
+ if(row.isGift||row.zeroConfirmed)return false;
+ try{return amount(salesProposalPriceDisplay(row).dealPrice)===0n;}catch{return false;}
+}
 /** Local sales/independent return/exchange proposals. Never creates native numbers/IDs, barcode facts,
  * minimum-price authority, approval eligibility, inventory effects or commands. */
 export class SalesProposalSession {

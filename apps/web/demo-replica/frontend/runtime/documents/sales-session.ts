@@ -55,6 +55,14 @@ export function createReplicaSalesSession(runtime: ReplicaSession, options: {
 
 export type ReplicaSalesSession = ReturnType<typeof createReplicaSalesSession>;
 
+/** Renew only a settled, untouched old document owner at the new-sale boundary. */
+export function salesCanStartFreshCreate(session:ReplicaSalesSession):boolean {
+ const state=session.editor.getSnapshot();
+ return session.scope.active&&state.command.editor?.mode==='EXISTING'&&state.command.write.phase==='idle'
+  &&!state.preparing&&!session.create.getSnapshot().preparing&&session.editor.existingDocument?.getSnapshot().preparing!==true
+  &&!session.editor.commands.hasUnresolvedWrite&&!session.editor.hasDirtyDraft&&salesCanLeave(session);
+}
+
 export function salesCanLeave(session:ReplicaSalesSession):boolean {
  if(!session.scope.active)return true;
  if([...session.historyOwners.values()].some(entry=>entry.owner.unresolved))return false;
