@@ -20283,14 +20283,23 @@
       "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
       "status": "F1_EXACT3_HANDED_BACK_DIRECTED_RED_GREEN_PASS_BUILD_BROWSER_PG_PENDING",
       "current": "Committed create clears stale list filter/request/page state only; preserves pageSize and expanded filters",
-      "next": "Unified immutable candidate and foreground affected scenarios; remaining actual warehouse-default read seam and full editing/scan acceptance",
+      "next": "Existing warehouse-v1 negotiated consumer paired with D1 exact4 backend; no new SQL/ACL",
       "protected": "No F2 product/C category/shared config/API/SQL/Git/service writes",
       "files": {
         "apps/web/demo-replica/frontend/runtime/documents/sales-new-page.tsx": "f8ef9c78a6d41993a48f0d0b0f9463871c58da6510b1a23dce2b6b041440e741",
         "apps/web/demo-replica/frontend/runtime/documents/transfers-create-page.tsx": "fde5f21fbca478fccf9601a588f61dc8508a196d8aa3ccb5c9fed2b499a264a7",
         "apps/web/demo-replica/frontend/runtime/documents/document-save-list-state.test.mjs": "4b5ef88213a138debbfc5b91c2daed072c93af24e2f2c7d8db7f98aeb9997964"
       },
-      "checks": "Original actual-page RED then GREEN eight branches; affected list-query-state checks and strict runtime types passed per original owner; scanner10 synthetic checks reused, hardware/browser/PG not run"
+      "checks": "Original actual-page RED then GREEN eight branches; affected list-query-state checks and strict runtime types passed per original owner; scanner10 synthetic checks reused, hardware/browser/PG not run",
+      "leaveDialog": {
+        "status": "F1_DIRECTED_COMPONENT_RED_GREEN_17_PASS_TYPES_PASS_BROWSER_PG_PENDING",
+        "files": {
+          "apps/web/demo-replica/frontend/runtime/documents/sales-edit-page.tsx": "966c4a7c5ea0f77bf621e28f124a564655f14fc2ab96116ac4bbd5d4cd037fe8",
+          "apps/web/demo-replica/frontend/runtime/documents/transfers-detail-page.tsx": "c22306c891dcd6e28181e79f4196ef5e5008b75fe122c650cdcca8301b1dbc35",
+          "apps/web/demo-replica/frontend/runtime/documents/document-leave-dialog.test.mjs": "ea1c85bdba875b18b739906be0dd8f8b8f2fbbf4d6377310cc315a0020f54bde"
+        },
+        "meaning": "Clean cancels directly; dirty uses original model including pending/query; uncertain/submitting/invalid scope cannot discard, no save/replay"
+      }
     }
   }
 }

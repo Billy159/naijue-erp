@@ -1,3 +1,7 @@
+## 2026-10-31 original F1 leave-dialog exact3 handed back
+
+Actual ExistingForm/NativeTransfer component tests reproduced clean cancel opening an extra confirmation; minimal fix uses original model.hasDirtyDraft/workspace.hasDirtyDraft, busy and active scope. Clean cancel invokes original discard/view/read path; dirty confirmation remains, sales labels follow frozenDemo. Uncertain/submitting/expired scope cannot discard or replay. Original owner reports17 directed component assertions PASS and strict runtime types PASS; body/models finite doubles, no browser/PG/native focus acceptance. C adopts exact3, no repeated technical review. Previous confirmed-create package and scanner checks unchanged. Next originalF1 exact4 consumes D1 existing authoritative default warehouse hint after precise contract handoff; D1 alone edits backend exact4, no new SQL/ACL.
+
 ## 2026-10-31 caller independent check NEED_FIX; no actual execution release
 
 Original QB fixed report7679B SHA47d538c6430c7ca967eab662f97d1c903566169495bc44fcdcf8b8f99db78f47 found P2 caller HARD_CEILING accepts early crash23 as timeout proof (3sec budget,0.000sec acceptance). Original T45 assigned only affected caller/test correction; previous three modules/05/04 not reopened. Current candidate not executable, actual Linux/DB business/restore still pending. Independent finding is not old withdrawn provider-name F01. C adopted result, does not repeat technical review.
