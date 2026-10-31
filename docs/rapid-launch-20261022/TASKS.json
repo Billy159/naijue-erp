@@ -20177,5 +20177,16 @@
       "observedMetadata": "Two independent root0600 credential JSON files; secret content/hash not exposed",
       "newRoleOrDatabaseChanges": 0
     }
+  },
+  "qa178FiniteExitCurrent": {
+    "status": "QB_SOURCE_PASS_C_REVIEW_ISSUED_ACTUAL_ARM_PENDING",
+    "qbReceiptSha256": "362d1293b0406162751452f4643d833de4f4bfc86ee512e9c6aae136fe41621f",
+    "cSourceReviewSha256": "0dac62a1bcf371ece8f0e2c09407dcb23666e937d046cdcf456119d29bec0863",
+    "owner": "T45",
+    "next": "Actual279ARM/280 bind; C exact281 plan action approval after real armed fact",
+    "humanApproval": "call_fb7f059ae86a4506a8b9ef7f0366a7e8/0",
+    "actionDeadline": "2026-10-31T15:32:50+08:00",
+    "cleanupDeadline": "2026-10-31T15:47:50+08:00",
+    "productionExecuted": false
   }
 }
