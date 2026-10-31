@@ -20776,7 +20776,7 @@
   "r1UnreviewedDocumentEditableParity": {
     "userDirective": "Existing DRAFT sales/transfer must expose corresponding create-form editable business fields, preserving original number/creation/source/audit/permissions/version and controlled historical revision",
     "owner": "F1",
-    "status": "SALES_LIMITED_FULL_EDIT_SAVE_REOPEN_QF_PASS_TRANSFER_SUCCESSOR_FIXTURE_PENDING",
+    "status": "SALES_AND_TRANSFER_LISTED_EDIT_SAVE_REOPEN_DELETE_INDEPENDENT_QF_PASS_SYNTHETIC_ONLY",
     "actual50": "Sales existingEdit true uses same SalesProposalForm; transferExistingEdit false and documentResponsibleReady absent. Existing native prepare/save interface present; cannot mark all fields or history verified.",
     "next": "T45 fixed51 building; original QF only affected existing-fields and existing-pending, including original responsible choices; preserve full field gaps and single-hall limit.",
     "coveredInterface": "F1 actual synthetic existing-fields2 PASS including sales SALE→RETURN version3, negative quantity/refund, exact replay and stale CAS409; no SAVE ledger effect. No real PG/full browser PASS.",
@@ -20815,6 +20815,24 @@
       "fixtureSha256": "36171bbb2ae23defa69257167e89e1879ef2476f69627488a97ce67b5d047caf",
       "owner": "D1 delivered current-only public detail, underlying retired rows/audit unchanged; original fixture13/responsibility3 PASS",
       "next": "T45 exact fixture tree then F1 transfer-only visible selfcheck, QF only remaining range; no sales rerun."
+    },
+    "transferIndependent": {
+      "task": "QF01-R1-TRANSFER-0DD757B0-EXISTING-CLOSEOUT-01",
+      "application": "2848f0283fe3f7b5c577cc873607df05494c99e5",
+      "testSource": "0dd757b02f8f22a5023f7af57ca6dfbc99c944c8",
+      "status": "PASS_LIMITED_ACTUAL_SYNTHETIC_HTTP_BROWSER",
+      "actual": "SAVE1→prepare/SAVE2/detail→list reopen/delete/prepare/SAVE3/detail; responsible3601; pending6 Tab blocks Save then M6 remains; original identity preserved.",
+      "resultSha256": "2712040580ffda7e430a04658d04a72b1299d2adcf2225d38173c9e39970ff1b",
+      "notTested": [
+        "controlledHistory",
+        "uncertainRecovery",
+        "nonDraft",
+        "fullPermissions",
+        "crossHallAuthorization",
+        "realPostgres",
+        "production",
+        "scannerHardware"
+      ]
     }
   },
   "r1Qa22ProductPaymentTechnicalAdoption": {
@@ -20847,9 +20865,38 @@
   },
   "r1PaymentSettingsWriteReadbackFollowup": {
     "owner": "F3",
-    "status": "ORIGINAL_OWNER_CHECKING_EXISTING_API_AND_MINIMAL_SYNTHETIC_WRITER_SEAM",
+    "status": "QF2_LISTED_SYNTHETIC_HTTP_BROWSER_SAVE_REOPEN_PASS",
     "browserOwner": "QF2 after fixed delivery and F1 releases browser",
     "lease": "Exact leaves pending original F3 report, production bridge read-only until C transfers; F1 drivers excluded",
-    "scope": "Create/edit payment method and account, retained hall relation, cancel no write and fresh readback. Reuse original host/UOW/API; no SQL or permission changes."
+    "scope": "Create/edit payment method and account, retained hall relation, cancel no write and fresh readback. Reuse original host/UOW/API; no SQL or permission changes.",
+    "application": "b33829a6f34202916906959589e97920ff0aa8fa",
+    "testSource": "505ad0d2c78642a9247a3a526c28c3cd969a8e5f",
+    "driver": "9e3e8e5a0e05c2e9fede22cd03583d540f3cbcf9",
+    "actual": "Four writes200: method create/edit and account create/edit; target detail/reopen matches; cancel no extra write; new hallIds[], existing hall3200 retained and version1→2. No PG or full permission claim.",
+    "evidence": "reports/qa-frontend/rapid-launch-20261022/QF2/PAYMENT-SAVE-REOPEN-49-FIXTURE505-DRIVER9E3-20261031-01",
+    "next": "Reuse accepted limited result; actual PG ordinary account verification waits original finite window and stage prerequisites."
+  },
+  "r1F3TemporarySourceCopyIncident": {
+    "status": "REPORTED_NO_FURTHER_CLEANUP_AUTHORIZED",
+    "path": "reports/frontend/rapid-launch-20261022/F3/r1-PAYMENT-WRITER-20261031/driver-record-fix-01/source",
+    "actual": "Original owner mistakenly archived full historical report tree, hit ENOSPC and deleted only its new incomplete derived copy without prior explicit deletion-list approval; recorded as unauthorized cleanup, not retroactive approval.",
+    "protected": "Original505 fixture tree,49 app, first committed-attempt evidence and source preserved per owner receipt; no further deletion/move.",
+    "next": "Only exact sparse driver exports and explicit future deletion approvals; no huge temporary restore."
+  },
+  "r1GlobalPaginationAndUiContinuation": {
+    "status": "ORIGINAL_QF2_DATA_PAGINATION_ACTUAL_CHECKS_ASSIGNED_QF_DOCUMENT_GAPS_PREPARING_NO_DUPLICATE_FULL_REVIEW",
+    "scope": {
+      "pages": 37,
+      "overlayClasses": 68,
+      "total": 105
+    },
+    "basis": "Original 20261027-normal32-review PAGE-MATRIX and COVERAGE-NEW-20261029 plus exact48/49/50/51 accepted increments; old normal34 is not current pass or current defect proof.",
+    "owners": {
+      "dataInventoryActual": "QF2",
+      "documentPublicPreparation": "QF",
+      "totalMatrixAndTaskProgressHandoff": "C"
+    },
+    "browser": "QF2 exclusive; QF prepare read-only until explicit handover. User Chrome/Demo untouched.",
+    "rules": "Reuse same-version same-scope evidence; applicable lists only, single-page data cannot prove page2; no fake totals/zero or backend validation suppression. No five new performance work and no UI prerequisite to DB preparation."
   }
 }
