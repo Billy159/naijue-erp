@@ -98,12 +98,15 @@ export function EntryEditor({ options, capability, entry, resumeCommand, close, 
   async function finish() {
     if (!state?.result || !state.command || finishing.current) return;
     finishing.current = true;
-    const { result, command } = state;
-    if (await saved(result, command.action, code.trim())) {
-      if (controller?.getSnapshot().phase === 'committed') controller.resetAfterReload(result.targetId, result.version);
-      close();
-    }
-    finishing.current = false;
+    try {
+      const { result, command } = state;
+      if (await saved(result, command.action, code.trim()) && options.scope.active) {
+        if (controller?.getSnapshot().phase === 'committed') controller.resetAfterReload(result.targetId, result.version);
+        close();
+      }
+    } catch {
+      if (options.scope.active) setError('保存已提交，最新资料读取失败，请重试读取。');
+    } finally { finishing.current = false; }
   }
   useEffect(() => { if (state?.phase === 'committed') void finish(); }, [state]);
   const submit = async (deleting = false) => {

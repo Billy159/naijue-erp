@@ -34,6 +34,8 @@ function Dictionary({ options, tab, guard, pageSize, rememberSize }: { pageSize:
   const [search, setSearch] = useState(''), [editing, setEditing] = useState<{ entry: CatalogueSettingsEntry | null; resumeCommand?: CatalogueMaintenanceCommand } | null>(null);
   const [notice, setNotice] = useState('');
   const changedOperations = useRef(new Set<string>());
+  const readback = useRef<{ sequence: number; controller: AbortController | null }>({ sequence: 0, controller: null });
+  useEffect(() => () => { readback.current.sequence++; readback.current.controller?.abort(); }, []);
   const parameters = snapshot.request?.parameters ?? initial, data = snapshot.success?.data;
   const fresh = snapshot.phase === 'success';
   const kind = tab === 'colors' ? 'COLOR' : tab === 'fits' ? 'FIT' : null;
@@ -55,20 +57,49 @@ function Dictionary({ options, tab, guard, pageSize, rememberSize }: { pageSize:
   const read = (next: Query) => { rememberSize(next.pageSize); void query.run(next); };
   async function saved(result: CatalogueMaintenanceResult, action: string, code: string) {
     if (!kind || !options.scope.active) return false;
-    if (!changedOperations.current.has(result.operationId)) { changedOperations.current.add(result.operationId); options.onChanged(kind); }
-    // A changed name/code may leave the current searched page. Confirm its version
-    // through the same authorized reader before closing the original modal.
-    if (action !== 'DELETE') {
-      const verify = { search: code, page: 1, pageSize: 20 as const };
-      try {
-        const target = await execute({ parameters: verify, signal: options.scope.signal, identity: options.scope.identity, routeInstanceId: options.scope.routeInstanceId, entityId: null });
-        if (!target.items.some(item => item.id === result.targetId && 'version' in item && typeof item.version === 'number' && item.version >= result.version)) { setNotice('保存已提交，最新资料版本尚未读回。'); return false; }
-      } catch (error) { const kind = (error as { kind?: string }).kind; if (kind === 'unauthenticated' || kind === 'forbidden') { options.scope.dispose(); options.onAccessFailure(kind); return false; } setNotice('保存已提交，最新资料读取失败，请重试读取。'); return false; }
+    readback.current.controller?.abort();
+    const controller = new AbortController(), sequence = ++readback.current.sequence;
+    readback.current.controller = controller;
+    const signal = AbortSignal.any([options.scope.signal, controller.signal, AbortSignal.timeout(30_000)]);
+    const current = () => options.scope.active && readback.current.sequence === sequence && !signal.aborted;
+    try {
+      if (!changedOperations.current.has(result.operationId)) { changedOperations.current.add(result.operationId); options.onChanged(kind); }
+      // A changed name/code may leave the current searched page. Confirm its version
+      // through the same authorized reader before closing the original modal.
+      if (action !== 'DELETE') {
+        let total: number | undefined, found = false;
+        const seen = new Set<string>();
+        for (let page = 1; current(); page++) {
+          const verify = { search: code, page, pageSize: 20 as const };
+          const target = await execute({ parameters: verify, signal, identity: options.scope.identity, routeInstanceId: options.scope.routeInstanceId, entityId: null });
+          if (!current()) return false;
+          // The original reader validates each page. Bind pages to one stable scan
+          // and stop on concurrent movement instead of treating it as absence.
+          if ((total !== undefined && target.total !== total) || target.items.some(item => seen.has(item.id))) throw new Error('Catalogue changed during readback');
+          total = target.total;
+          for (const item of target.items) seen.add(item.id);
+          found = target.items.some(item => item.id === result.targetId && 'version' in item && typeof item.version === 'number' && item.version >= result.version);
+          if (found || page >= Math.max(1, Math.ceil(total / verify.pageSize))) break;
+        }
+        if (!current()) return false;
+        if (!found) { setNotice('保存已提交，最新资料版本尚未读回。'); return false; }
+      }
+      if (!current()) return false;
+      let outcome = await query.run({ ...parameters });
+      if (!current()) return false;
+      if (outcome.status === 'success' && outcome.data.page > Math.max(1, Math.ceil(outcome.data.total / outcome.data.pageSize))) outcome = await query.run({ ...parameters, page: Math.max(1, Math.ceil(outcome.data.total / outcome.data.pageSize)) });
+      if (!current()) return false;
+      if (outcome.status !== 'success') { setNotice('保存已提交，当前列表尚未读回。'); return false; }
+      setNotice(action === 'DELETE' ? '已删除' : '已保存'); return true;
+    } catch (error) {
+      if (!options.scope.active || readback.current.sequence !== sequence || controller.signal.aborted) return false;
+      const failure = (error as { kind?: string }).kind;
+      if (!signal.aborted && (failure === 'unauthenticated' || failure === 'forbidden')) { options.scope.dispose(); options.onAccessFailure(failure); return false; }
+      setNotice('保存已提交，最新资料读取失败，请重试读取。'); return false;
+    } finally {
+      if (readback.current.sequence === sequence) readback.current.controller = null;
+      controller.abort();
     }
-    let outcome = await query.run({ ...parameters });
-    if (outcome.status === 'success' && outcome.data.page > Math.max(1, Math.ceil(outcome.data.total / outcome.data.pageSize))) outcome = await query.run({ ...parameters, page: Math.max(1, Math.ceil(outcome.data.total / outcome.data.pageSize)) });
-    if (outcome.status !== 'success') { setNotice('保存已提交，当前列表尚未读回。'); return false; }
-    setNotice(action === 'DELETE' ? '已删除' : '已保存'); return true;
   }
   return <div className="pc-editor-body pc-settings-body">
     <div className="pc-section-line"><input id="pc-dict-search" type="search" placeholder={`搜索${label}名称${kind ? '或编码' : ''}`} value={search} onChange={event => { const value = event.target.value; setSearch(value); read({ search: value, page: 1, pageSize: parameters.pageSize }); }} />{kind && <MaintenanceNotice capability={capability} inline />} {kind && <button className="btn primary" title={!capability ? maintenanceUnavailable : !capability.allowedActions.includes('CREATE') ? '当前账号未获新增权限' : undefined} disabled={!fresh || !capability?.allowedActions.includes('CREATE')} onClick={() => { if (fresh && capability?.allowedActions.includes('CREATE')) setEditing({ entry: null }); }}>新增{label}</button>}</div>
