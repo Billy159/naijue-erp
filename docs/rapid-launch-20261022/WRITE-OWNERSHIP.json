@@ -8408,7 +8408,7 @@
   "r1DocumentPaginationFollowup": {
     "owner": "F1",
     "threadId": "01a16161-ca35-7573-b8cc-1f8d3147a46f",
-    "status": "ASSIGNED_CHECK_WIP_FIRST",
+    "status": "FROZEN_0F87BC6A_F1_BROWSER_SELFCHECK_PASS_QF_INDEPENDENT_ASSIGNED",
     "files": [
       "apps/web/demo-replica/tests/sales-chain-fixture.mjs",
       "apps/web/demo-replica/tests/transfer-chain-fixture.mjs",
