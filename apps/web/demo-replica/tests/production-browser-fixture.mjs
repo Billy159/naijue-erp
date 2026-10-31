@@ -14,6 +14,8 @@ const productRead=process.argv.includes('--product-editor-read')?(await import('
 const transfer=process.argv.includes('--transfer-chain')?await(await import('./transfer-chain-fixture.mjs')).createTransferChainFixture({responsibleStaffValidation:true}):null;
 const sales=process.argv.includes('--sales-chain')?await(await import('./sales-chain-fixture.mjs')).createSalesChainFixture():null;
 if(process.argv.includes('--sales-preview')){if(!sales)throw Error('Sales preview requires actual service chain');await(await import('./sales-preview-seed.mjs')).seedSalesPreview(sales);}
+if(process.argv.includes('--payment-maintenance')&&['--product-entry-service','--product-edit','--sales-chain','--transfer-chain','--staff-edit'].some(flag=>process.argv.includes(flag)))throw Error('Payment maintenance requires its own isolated writer profile');
+const payment=process.argv.includes('--payment-maintenance')?await(await import('./payment-maintenance-fixture.mjs')).createPaymentMaintenanceFixture():null;
 const staff=process.argv.includes('--staff-edit')?await(await import('./staff-edit-fixture.mjs')).createStaffEditFixture():null;
 try{
 for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity})){
@@ -36,6 +38,7 @@ for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity}
   if(productRead&&url.origin==='https://synthetic-management.invalid'&&productRead.canHandle(url.pathname,method)){process.stdout.write(JSON.stringify(await productRead.request(request))+'\n');continue;}
   if(transfer&&url.origin==='https://synthetic-management.invalid'&&transfer.canHandle(url.pathname,method)){process.stdout.write(JSON.stringify(await transfer.request(request))+'\n');continue;}
   if(sales&&url.origin==='https://synthetic-management.invalid'&&sales.canHandle(url.pathname,method)){process.stdout.write(JSON.stringify(await sales.request(request))+'\n');continue;}
+  if(payment&&url.origin==='https://synthetic-management.invalid'&&payment.canHandle(url.pathname,method)){process.stdout.write(JSON.stringify(await payment.request(request))+'\n');continue;}
   if(staff&&url.origin==='https://synthetic-management.invalid'&&staff.canHandle(url.pathname,method)){process.stdout.write(JSON.stringify(await staff.request(request))+'\n');continue;}
   const partyRead=method==='GET'&&/^\/api\/(?:customers|suppliers)(?:\/(?:candidates|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))?$/.test(url.pathname);
   if(url.origin!=='https://synthetic-management.invalid'||!(partyRead||method==='GET'&&url.pathname==='/api/auth/session'||method==='POST'&&url.pathname.startsWith('/api/')&&url.pathname.endsWith('/query'))){process.stdout.write(JSON.stringify({status:501,headers:{'content-type':'application/json'},body:JSON.stringify({error:'SYNTHETIC_READ_ONLY'})})+'\n');continue;}
@@ -45,5 +48,5 @@ for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity}
 }
 
 }finally{
- try{await productEntry?.close();}finally{await productEdit?.close();await staff?.close();await sales?.close();await transfer?.close();}
+ try{await productEntry?.close();}finally{await productEdit?.close();await payment?.close();await staff?.close();await sales?.close();await transfer?.close();}
 }

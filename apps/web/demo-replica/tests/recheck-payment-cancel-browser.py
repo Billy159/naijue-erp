@@ -7,7 +7,7 @@ Exit 2: browser/environment blocked; exit 1: executed smoke failed; exit 0: list
 import argparse, json, mimetypes, subprocess, sys, re
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
-p=argparse.ArgumentParser();p.add_argument('--case',action='append',choices=['RECHECK-B05','RECHECK-B06']);p.add_argument('--width',type=int,default=1440);p.add_argument('--category-overflow',action='store_true');p.add_argument('--headed',action='store_true');p.add_argument('--keep-open',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--case',action='append',choices=['RECHECK-B05','RECHECK-B06','PAYMENT-SAVE-REOPEN']);p.add_argument('--width',type=int,default=1440);p.add_argument('--category-overflow',action='store_true');p.add_argument('--headed',action='store_true');p.add_argument('--keep-open',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');args=p.parse_args()
 build=Path(args.build).resolve();out=Path(args.out).resolve();out.mkdir(parents=True,exist_ok=False)
 manifest=json.loads((build/'production-build.json').read_text());config=manifest['configuration'];origin=config['http']['origin'];base=config['assets']['basePath']
 if origin!='https://synthetic-management.invalid':raise SystemExit('Smoke requires the declared synthetic-only build configuration')
@@ -22,7 +22,7 @@ try:
   try:browser=pw.chromium.launch(executable_path=args.chromium,headless=not args.headed,chromium_sandbox=True)
   except Exception as error:
    result['reason']=str(error);(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));print('BLOCKED_ENV: Chromium could not start with its sandbox enabled');sys.exit(2)
-  bridge=subprocess.Popen([args.node,'--experimental-transform-types',str(Path(__file__).with_name('foundation-readonly-fixture.mjs'))]+(['--category-overflow'] if args.category_overflow else []),stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=(out/'fixture-stderr.log').open('w'),text=True,bufsize=1)
+  bridge=subprocess.Popen([args.node,'--experimental-transform-types',str(Path(__file__).with_name('production-browser-fixture.mjs')),'--payment-maintenance']+(['--category-overflow'] if args.category_overflow else []),stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=(out/'fixture-stderr.log').open('w'),text=True,bufsize=1)
   context=browser.new_context(viewport={'width':args.width,'height':1000},device_scale_factor=1)
   errors=[];page=context.new_page();page.on('pageerror',lambda error:errors.append(str(error)))
   detail_mode={'next':None,'versionDelta':0}
@@ -76,7 +76,7 @@ try:
   page.add_init_script("""window.__geometryEvents=[];const NativeRO=window.ResizeObserver;window.ResizeObserver=class extends NativeRO{constructor(callback){super((entries,observer)=>{window.__geometryEvents.push(entries.map(e=>({id:e.target.id,rect:e.contentRect.toJSON(),height:e.target.clientHeight,width:e.target.clientWidth})));callback(entries,observer);});}};""")
   context.route('**/*',respond)
   page.bring_to_front();page.goto(origin+'/#inventory');page.locator('#page .iw-query').wait_for();page.wait_for_load_state('networkidle')
-  page.evaluate("title=>document.title=title",'测试 '+manifest['sourceCheckpoint']+' · B05/B06取消专用测试 非全面可用环境 禁止保存')
+  page.evaluate("title=>document.title=title",'测试 '+manifest['sourceCheckpoint']+' · 收款维护合成检查 非正式数据')
   result['checks']=[]
   result['cases']=[]
   def shot(case,name):
@@ -148,8 +148,7 @@ try:
     saved['enabled']=dialog.get_by_role('switch',name='使用状态',exact=True).get_attribute('aria-checked')
     if kind=='accounts':
      assert dialog.get_by_role('group',name='所属收款方式',exact=True).get_by_text(response['body']['paymentMethod']['name'],exact=True).is_visible()
-     halls=response['body']['halls'];assert len(halls)==1, 'Current approved sample must remain single-hall'
-     assert dialog.locator('.runtime-payment-halls').get_by_text(halls[0]['name'],exact=True).is_visible()
+     assert dialog.get_by_role('group',name='适用营业厅',exact=True).count()==0
    step(item,'真实合成ADMIN/读取现有详情/打开编辑',open_editor)
    step(item,'仅修改名称草稿不提交',lambda:box.fill(saved['name']+'未提交取消验证'))
    def continue_editing():
@@ -170,7 +169,7 @@ try:
     assert current(path)['body']==saved['record'],'Detail changed after unsaved cancellation'
     assert dialog.get_by_role('switch',name='使用状态',exact=True).get_attribute('aria-checked')==saved['enabled']
     if kind=='accounts':
-     assert dialog.locator('.runtime-payment-halls').get_by_text(saved['record']['halls'][0]['name'],exact=True).is_visible()
+     assert dialog.get_by_role('group',name='适用营业厅',exact=True).count()==0;assert current(path)['body']['halls']==saved['record']['halls']
    step(item,'重开详情及名称/状态/既有厅均未改变',reopen)
    def close_clean():
     dialog.get_by_role('button',name='取消',exact=True).click();dialog.wait_for(state='detached');settle()
@@ -190,16 +189,32 @@ try:
    step(item,'资金账户实际路由',lambda:(visit('settings/fundAccounts','搜索账户名称'),list_ok('/payment/accounts/query')))
    def method():
     choose('全部收款方式','现金');press_query();response=list_ok('/payment/accounts/query');assert response['request']['paymentMethodId']=='00000000-0000-4000-8000-000000003400';assert response['body']['total']==1 and response['body']['items'][0]['name']=='现金测试账户'
-    host=select('全部收款方式');host.locator('.arco-select-view').click();host.locator('input').fill('ZZZ987');settle();assert host.locator('.arco-select-option').count()==0;assert host.locator('.arco-empty').is_visible();host.locator('input').fill('');settle();host.locator('.arco-select-option').filter(has_text='全部收款方式').click();press_query();assert list_ok('/payment/accounts/query')['request']['paymentMethodId'] is None
+    host=select('全部收款方式');host.locator('.arco-select-view').click();host.locator('input').fill('ZZZ987');settle();assert host.locator('.arco-select-option').count()==1;assert host.locator('.arco-select-option').inner_text()=='全部收款方式';host.locator('input').fill('');settle();host.locator('.arco-select-option').filter(has_text='全部收款方式').click();press_query();assert list_ok('/payment/accounts/query')['request']['paymentMethodId'] is None
    step(item,'按收款方式/无匹配/全部恢复',method)
    step(item,'现金空格/去空格',lambda:trim_check('搜索账户名称','现金','/payment/accounts/query'))
    step(item,'重置恢复列表',lambda:(reset(),list_ok('/payment/accounts/query')))
-   partial(item,'现有QA账户仅单厅，列表无营业厅列；本次编辑只验证既有单厅，原多厅显示仍未覆盖。未伪造多厅历史。')
    payment_cancel(item,'accounts','账户名称')
    def tabs():
     page.get_by_role('tab',name='收款方式',exact=True).click();settle();list_ok('/payment/methods/query');page.get_by_role('tab',name='资金账户',exact=True).click();settle();list_ok('/payment/accounts/query')
    step(item,'收款方式/资金账户标签往返',tabs)
   run('RECHECK-B06',fund)
+  def payment_save(item):
+   def command_count():return len([r for r in result['requests'] if r['method']=='POST' and r['url'].endswith('/commands')])
+   def find_editor(search,name,label):
+    query(search,name);list_ok('/payment/'+('methods' if search=='搜索收款方式' else 'accounts')+'/query');page.get_by_role('row').filter(has=page.get_by_role('cell',name=name,exact=True)).get_by_role('button',name='编辑',exact=True).click();page.get_by_role('dialog').get_by_role('textbox',name=label,exact=True).wait_for();settle()
+   def save_close():
+    page.get_by_role('dialog').get_by_role('button',name='确定',exact=True).click();page.get_by_role('dialog').wait_for(state='hidden');settle();assert result['writeResponses'][-1]['status']==200,result['writeResponses'][-1]
+   names={'method':'SYNTHETIC 浏览器新收款方式','account':'SYNTHETIC 浏览器新账户'}
+   def method_flow():
+    visit('settings/payments','搜索收款方式');before=command_count();page.get_by_role('button',name='新增收款方式',exact=True).click();dialog=page.get_by_role('dialog');dialog.get_by_role('textbox',name='名称',exact=True).fill('SYNTHETIC 取消方式');dialog.get_by_role('button',name='取消',exact=True).click();dialog.wait_for(state='hidden');assert command_count()==before
+    page.get_by_role('button',name='新增收款方式',exact=True).click();page.get_by_role('dialog').get_by_role('textbox',name='名称',exact=True).fill(names['method']);save_close();names['methodId']=result['writeResponses'][-1]['body']['targetId'];find_editor('搜索收款方式',names['method'],'名称');assert page.get_by_role('dialog').get_by_role('textbox',name='名称',exact=True).input_value()==names['method'];page.get_by_role('dialog').get_by_role('textbox',name='名称',exact=True).fill(names['method']+'修改');save_close();find_editor('搜索收款方式',names['method']+'修改','名称');page.get_by_role('dialog').get_by_role('button',name='取消',exact=True).click();assert command_count()==before+2
+   step(item,'原真实method服务新增/改名/读回重开/取消不写',method_flow)
+   def account_flow():
+    visit('settings/fundAccounts','搜索账户名称');before=command_count();page.get_by_role('button',name='新增资金账户',exact=True).click();dialog=page.get_by_role('dialog');assert dialog.get_by_role('group',name='适用营业厅',exact=True).count()==0;dialog.get_by_role('textbox',name='账户名称',exact=True).fill(names['account']);choose('所属收款方式',names['method']+'修改');save_close();write=result['writeResponses'][-1];assert write['request']['values']['hallIds']==[];assert write['request']['values']['paymentMethodId']==names['methodId'];find_editor('搜索账户名称',names['account'],'账户名称');assert current('/payment/accounts/detail/query')['body']['halls']==[];dialog=page.get_by_role('dialog');assert dialog.get_by_role('group',name='适用营业厅',exact=True).count()==0;dialog.get_by_role('button',name='取消',exact=True).click();assert command_count()==before+1
+    reset();name='现金测试账户';find_editor('搜索账户名称',name,'账户名称');original=current('/payment/accounts/detail/query')['body'];ids=sorted(h['id'] for h in original['halls']);dialog=page.get_by_role('dialog');dialog.get_by_role('textbox',name='账户名称',exact=True).fill(name+'修改');save_close();write=result['writeResponses'][-1];assert sorted(write['request']['values']['hallIds'])==ids;assert write['request']['expectedVersion']==original['version'];find_editor('搜索账户名称',name+'修改','账户名称');after=current('/payment/accounts/detail/query')['body'];assert sorted(h['id'] for h in after['halls'])==ids;assert after['version']==original['version']+1;page.get_by_role('dialog').get_by_role('button',name='取消',exact=True).click();assert command_count()==before+2
+   step(item,'原真实account服务新增空关系/编辑原关系/详情重开',account_flow)
+   shot('PAYMENT-SAVE-REOPEN','complete')
+  run('PAYMENT-SAVE-REOPEN',payment_save)
   assert result['cases'], 'NO_REQUESTED_CASE_EXECUTED'
   healthy();result['status']='FAIL' if any(x['status']=='FAIL' for x in result['cases']) else 'PARTIAL' if any(x['status']=='PARTIAL' for x in result['cases']) else 'PASS_LISTED_CASE_STEPS';persist()
   if args.keep_open:keep_visible(page)
