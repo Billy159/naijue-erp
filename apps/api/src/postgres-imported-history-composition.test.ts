@@ -15,7 +15,7 @@ import { createNodeScryptPasswords } from "../../../packages/authentication/src/
 import { createSalesSessionAuthenticator } from "./authentication.ts";
 import { createImportedHistoryQueryHttpPlugin } from "./imported-history-query-http.ts";
 import { createSourceConfirmedCurrentFormAuthorization } from "../../../packages/application/src/source-confirmed-current-form-authorization.ts";
-import { createSyntheticV7Fixture } from "../../../tests/support/live-ledger-api-v7-fixtures.ts";
+import { createSyntheticV8Fixture } from "../../../tests/support/live-ledger-api-v8-fixtures.ts";
 import type { PostgresApplicationApiOptions } from "./postgres-read-api.ts";
 import type { PostgresPoolDriverFactory, BoundedPostgresResult } from "../../../adapters/postgres/src/bounded-pool.ts";
 import { createSourceAuthenticationPolicy } from "../../../packages/authentication/src/source-policy.ts";
@@ -52,15 +52,15 @@ test("historical legacy factory/opt-in shapes now refuse the unreviewed non-CORE
   for (const [factory, enabled] of [[createPostgresReadApi, false], [createPostgresApplicationApi, false], [createPostgresApplicationApi, true]] as const) {
     const d = noReadDriver();
     await assert.rejects(factory({ ...base(), ...(enabled || factory === createPostgresReadApi ? { importedHistoryRead: { authorization: denied } } : {}) }, d.factory),
-      /Recorded live ledger pairs require the independently reviewed V7 runtime/);
+      /Recorded live ledger pairs require the independently reviewed V8 complete-write runtime/);
     assert.deepEqual(d.counts(), { allocations: 0, connects: 0, ends: 0 });
   }
 });
 
 // The supported V7 graph deliberately selects closed native policies, not the old
 // per-family injected policy. This is a NEW fixture, not a relabelled old review.
-test("NEW SYNTHETIC V7 HISTORY graph installs four native read routes after full proof, no write or listener", async () => {
-  const value = base(), f = createSyntheticV7Fixture(value.postgres.target);
+test("NEW SYNTHETIC V8 HISTORY graph installs four native read routes after full proof, no write or listener", async () => {
+  const value = base(), f = createSyntheticV8Fixture(value.postgres.target);
   let allocations = 0, connects = 0, releases = 0, ends = 0;
   const statements: string[] = [];
   const scripted = Object.assign(new EventEmitter(), { async connect() {
@@ -90,8 +90,8 @@ test("NEW SYNTHETIC V7 HISTORY graph installs four native read routes after full
   } finally { f.cleanup(); }
 });
 
-test("NEW SYNTHETIC V7 HISTORY entry refuses explicit history-policy override before allocating its owned pool", async () => {
-  const value = base(), f = createSyntheticV7Fixture(value.postgres.target), d = noReadDriver();
+test("NEW SYNTHETIC V8 HISTORY entry refuses explicit history-policy override before allocating its owned pool", async () => {
+  const value = base(), f = createSyntheticV8Fixture(value.postgres.target), d = noReadDriver();
   try {
     await assert.rejects(createPostgresRuntime26ApplicationApi({ ...value,
       currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() }, nativeReadExtensions: { profile: "source-confirmed-r1-v1" },
@@ -169,8 +169,8 @@ test("original history HTTP plugin binds provider before first await; real sessi
 
 // Native composition coverage is separate from the original injected-policy
 // plugin contract above. Source-native identity denial must stop HISTORY SQL.
-test("NEW SYNTHETIC V7 native HISTORY graph authenticates current session and Origin before independent current HISTORY scope", async () => {
-  const value = base(), f = createSyntheticV7Fixture(value.postgres.target);
+test("NEW SYNTHETIC V8 native HISTORY graph authenticates current session and Origin before independent current HISTORY scope", async () => {
+  const value = base(), f = createSyntheticV8Fixture(value.postgres.target);
   const token = Buffer.alloc(32, 52).toString("base64url"), hash = sessionTokenHash(token)!;
   let enabled = true, nativeAllowed = false, nativeReads = 0, allocations = 0, connects = 0, releases = 0, ends = 0;
   const statements: string[] = [];

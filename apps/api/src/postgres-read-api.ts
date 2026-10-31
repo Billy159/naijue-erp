@@ -591,10 +591,11 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
   if ((capabilities?.organizationMaintenance || capabilities?.catalogueMaintenance || capabilities?.paymentMaintenance || capabilities?.partyMaintenance || capabilities?.staffMaintenance || capabilities?.productMaintenance) && runtime26Review === undefined) throw new TypeError("Maintenance requires the original independently reviewed runtime");
   // Every non-CORE graph below mounts the new stored-pair ledger reader; command
   // graphs also construct the new pair writers. Generic EXACT26 is insufficient.
-  // This compiled consumer requirement is not a JSON opt-in or a new authority.
+  // V8 additionally proves the two original category cmin reads and three
+  // exact child-row DELETE actions. This is not a JSON opt-in or new authority.
   const requiresRecordedLivePairs = capabilities?.coreInitializationRead == null;
   if (requiresRecordedLivePairs && runtime26Review === undefined)
-    throw new TypeError("Recorded live ledger pairs require the independently reviewed V7 runtime");
+    throw new TypeError("Recorded live ledger pairs require the independently reviewed V8 complete-write runtime");
   const ownedPool = new BoundedPostgresPool(options.postgres, createDriver, observeRequestStage);
   let app: FastifyInstance | undefined;
   let closing = false;
@@ -602,7 +603,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
     const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
       ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1",
-      ...(requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_V7" as const } : {})
+      ...(requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8" as const } : {})
     });
     const pool = issuer === null ? ownedPool : issuer.pool;
     const checkAdmission = async (signal?: AbortSignal): Promise<boolean> => {
@@ -624,7 +625,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
           await verify(admission, purpose);
         // Private staff selection needs actual column capability, not a purpose
         // label alone. This is a CREATE/read floor; original role/action guards
-        // and all V7/catalog/no-excess review boundaries remain unchanged.
+        // and the V8 finite ACL/catalog review boundary remains enforced.
         if (requiresRecordedLivePairs && capabilities?.staffMaintenance) {
           await verify(admission, "PRODUCT_MAINTENANCE");
           await assertStaffCreateReadPermissionAdmission(admission, capabilities.staffMaintenance.credentialRequestTag !== null);

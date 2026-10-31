@@ -334,7 +334,7 @@ test("W13 production mount uses shared pool and fresh maintenance identity; coun
 test("W13 unsupported issuer-null base graph now refuses before allocation instead of exposing a new-column reader", async () => {
   const base = productionApplicationOptions({ ...config(), documentCommands: "DISABLED" }), { nativeReadExtensions: _profile, ...without } = base;
   let allocations=0;
-  await assert.rejects(createPostgresApplicationApi({ ...without, capacityAdmission: syntheticCapacity() }, () => {allocations++;throw Error('MUST_NOT_ALLOCATE');}),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  await assert.rejects(createPostgresApplicationApi({ ...without, capacityAdmission: syntheticCapacity() }, () => {allocations++;throw Error('MUST_NOT_ALLOCATE');}),/Recorded live ledger pairs require the independently reviewed V8 complete-write runtime/);
   assert.equal(allocations,0);
 });
 
@@ -356,24 +356,24 @@ function exact26Fixture(purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_RE
     migration_versions: Array.from({ length: 26 }, (_, i) => i + 1), catalog_sha256: digest, source_routines_match: true };
   return { configuration, observation, cleanup: () => rmSync(directory, { recursive: true, force: true }) };
 }
-const newLivePairProbe=completeProductionProfiles.NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE;
+const newLivePairProbe=completeProductionProfiles.NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE;
 const newLivePairObservations=new WeakSet<object>();
 /** NEW synthetic-only consumer fixture, NOT an upgraded old review or an actual
- * V7 catalog pin. It writes fresh independent files and returns both full proof
+ * V8 catalog pin. It writes fresh independent files and returns all three full proof
  * booleans. Old exact26/category/mixed/CORE fixtures retain their own meaning. */
 function newLivePairFixture(purposes = ['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION']) {
- const directory=mkdtempSync(join(tmpdir(),'NEW-SYNTHETIC-LIVE-V7-')),independent=join(directory,'independent.json'),reviewFile=join(directory,'review.json');
+ const directory=mkdtempSync(join(tmpdir(),'NEW-SYNTHETIC-LIVE-V8-')),independent=join(directory,'independent.json'),reviewFile=join(directory,'review.json');
  const hash=(value:string)=>createHash('sha256').update(value).digest('hex'),digest='7'.repeat(64);
  const target={database:'SYNTHETIC_ONLY',databaseOid:'123',actingRole:'SYNTHETIC_ONLY',sessionUser:'SYNTHETIC_ONLY',serverAddress:null,serverPort:null,postmasterStart:'2026-10-23 00:00:00+00'};
- const receipt=JSON.stringify({result:'PASS',notice:'NEW_SYNTHETIC_V7_DRIVER_PROTOCOL_ONLY_NOT_ACTUAL_CATALOG_OR_APPROVAL'});writeFileSync(independent,receipt,{mode:0o600});
+ const receipt=JSON.stringify({result:'PASS',notice:'NEW_SYNTHETIC_V8_DRIVER_PROTOCOL_ONLY_NOT_ACTUAL_CATALOG_OR_APPROVAL'});writeFileSync(independent,receipt,{mode:0o600});
  const review={version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target,
-  catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V7',patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22',sha256:digest},purposes,
+  catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V8',patchLevel:'26_hv2_live_pairs_complete_write_acl_v8_from_v7',sha256:digest},purposes,
   scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{path:independent,sha256:hash(receipt),result:'PASS'},realImportExecutionAuthorized:false};
  const body=JSON.stringify(review);writeFileSync(reviewFile,body,{mode:0o600});
  const configuration:ProductionRuntime26Configuration={...config(),profile:'source-confirmed-native-exact26-r1-v1',documentCommands:'DISABLED',runtime26Review:{reviewFile,trustedReviewSha256:hash(body)}};
  const observation={identity:{database:target.database,database_oid:target.databaseOid,database_owner:'synthetic_owner',current_user:target.actingRole,session_user:target.sessionUser,
   server_version_num:'170011',server_addr:null,server_port:null,postmaster_start:target.postmasterStart,replication_role:'origin'},migration_versions:Array.from({length:26},(_,i)=>i+1),
-  catalog_sha256:digest,source_routines_match:true,complete_write_xmin_acl_match:true,recorded_live_balance_contract_match:true};
+  catalog_sha256:digest,source_routines_match:true,complete_write_system_acl_match_v8:true,normal_delete_acl_match_v8:true,recorded_live_balance_contract_match:true};
  newLivePairObservations.add(observation);
  return {configuration,observation,cleanup:()=>rmSync(directory,{recursive:true,force:true})};
 }
@@ -891,7 +891,7 @@ test('production v15 category: old non-CORE catalogs refuse new-column graph whi
     try {
       if (!core) {
         await assert.rejects(createProductionRuntime26ApplicationApi(f.configuration, p.factory, null, syntheticCapacity()),
-          { code: 'NATIVE_RUNTIME26_NOT_READY', message: 'Recorded live ledger pairs require the exact independently reviewed V7 catalog' });
+          { code: 'NATIVE_RUNTIME26_NOT_READY', message: 'Complete normal writes require the exact independently reviewed V8 catalog' });
         assert.deepEqual(p.calls, []); assert.deepEqual(p.counts(), { allocations: 1, connects: 0, releases: 0, ends: 1 });
         continue;
       }
@@ -1062,7 +1062,7 @@ test('v16 B07 production host: old exact HISTORY successor refuses new-column fu
  const p=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);let grants=0;
  try{
   await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(config,{authorization:{async authorize(actor,command){grants++;return{dataset:'HISTORY',kind:command.kind,documentId:command.documentId,actorAccountId:actor.accountId};}}},p.factory, null, syntheticCapacity()),
-   {code:'NATIVE_RUNTIME26_NOT_READY',message:'Recorded live ledger pairs require the exact independently reviewed V7 catalog'});
+   {code:'NATIVE_RUNTIME26_NOT_READY',message:'Complete normal writes require the exact independently reviewed V8 catalog'});
   assert.deepEqual(p.calls,[]);assert.deepEqual(p.counts(),{allocations:1,connects:0,releases:0,ends:1});assert.equal(grants,0);
  }finally{f.cleanup();}
 });
@@ -2218,7 +2218,7 @@ test('original V5 exact22 proof stays generic-only; old non-CORE review cannot a
   const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_NO_WRITE',2);},close(){}};
   try{
    await assert.rejects(createProductionRuntime26ApplicationApi(configuration,p.factory,null,capacity),
-    {code:'NATIVE_RUNTIME26_NOT_READY',message:'Recorded live ledger pairs require the exact independently reviewed V7 catalog'});
+    {code:'NATIVE_RUNTIME26_NOT_READY',message:'Complete normal writes require the exact independently reviewed V8 catalog'});
    assert.deepEqual(p.calls,[]);assert.deepEqual(p.counts(),{allocations:1,connects:0,releases:0,ends:1});
    // Preserve the real old-profile proof semantics on the general issuer instead
    // of changing this old V5 review into an invented V7 review.
@@ -2247,7 +2247,7 @@ test('original V6 exact23 proof stays generic-only; old non-CORE review cannot a
   const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_NO_WRITE',2);},close(){}};
   try{
    await assert.rejects(createProductionRuntime26ApplicationApi(configuration,p.factory,null,capacity),
-    {code:'NATIVE_RUNTIME26_NOT_READY',message:'Recorded live ledger pairs require the exact independently reviewed V7 catalog'});
+    {code:'NATIVE_RUNTIME26_NOT_READY',message:'Complete normal writes require the exact independently reviewed V8 catalog'});
    assert.deepEqual(p.calls,[]);assert.deepEqual(p.counts(),{allocations:1,connects:0,releases:0,ends:1});
    const generic=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined),raw=generic.factory();
    try{
@@ -2261,19 +2261,19 @@ test('original V6 exact23 proof stays generic-only; old non-CORE review cannot a
 
 /** LIVE layer5 original production composition; synthetic pinned metadata/driver only.
  * No PG, real approval, socket listen, DDL, grant or document writes. */
-test('LIVE layer5 API RED V7 original issuer is awaited before original routes; incomplete pair/xmin proof or stale catalog denies startup',async()=>{
- const symbol=(completeProductionProfiles as unknown as Record<string,unknown>).NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE;
- assert.equal(typeof symbol,'string','Original issuer lacks closed exact137 V7 successor');const probe=symbol as string;
- for(const state of ['complete','missing-pair','false-pair','missing-xmin','stale-catalog','extra-key'] as const){
+test('LIVE layer5 API RED V8 original issuer is awaited before original routes; incomplete pair/xmin proof or stale catalog denies startup',async()=>{
+ const symbol=(completeProductionProfiles as unknown as Record<string,unknown>).NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE;
+ assert.equal(typeof symbol,'string','Original issuer lacks closed exact137 V8 successor');const probe=symbol as string;
+ for(const state of ['complete','missing-pair','false-pair','missing-system','stale-catalog','extra-key'] as const){
   const f=exact26Fixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE']);
   const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));
-  review.catalog={...review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V7',patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22'};
+  review.catalog={...review.catalog,format:'EXACT26_RUNTIME_CATALOG_EXPORT_V8',patchLevel:'26_hv2_live_pairs_complete_write_acl_v8_from_v7'};
   const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
   const configuration={...f.configuration,catalogueMaintenance:true as const,paymentMaintenance:true as const,organizationMaintenance:true as const,
    runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
   const row:Record<string,unknown>={...f.observation,
    ...(state==='missing-pair'?{}:{recorded_live_balance_contract_match:state!=='false-pair'}),
-   ...(state==='missing-xmin'?{}:{complete_write_xmin_acl_match:true}),
+   ...(state==='missing-system'?{}:{complete_write_system_acl_match_v8:true}),normal_delete_acl_match_v8:true,
    ...(state==='stale-catalog'?{catalog_sha256:'b'.repeat(64)}:{}),...(state==='extra-key'?{unreviewed_pair_fallback:true}:{})};
   const p=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined);
   const capacity:CapacityAdmission={async acquire(){throw new CapacityAdmissionRejected('SYNTHETIC_NO_WRITE',2);},close(){}};
@@ -2316,15 +2316,16 @@ function liveAdmissionFixture(options: {
 } = {}) {
  const f=exact26Fixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE','HISTORY_REVISION']);
  const review=JSON.parse(readFileSync(f.configuration.runtime26Review.reviewFile,'utf8'));
- review.catalog={format:options.format??'EXACT26_RUNTIME_CATALOG_EXPORT_V7',
-  patchLevel:options.patchLevel??'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22',
+ review.catalog={format:options.format??'EXACT26_RUNTIME_CATALOG_EXPORT_V8',
+  patchLevel:options.patchLevel??'26_hv2_live_pairs_complete_write_acl_v8_from_v7',
   sha256:Object.hasOwn(options,'catalogHash')?options.catalogHash:'a'.repeat(64)};
  const body=JSON.stringify(review);writeFileSync(f.configuration.runtime26Review.reviewFile,body,{mode:0o600});
  const configuration={...f.configuration,runtime26Review:{...f.configuration.runtime26Review,trustedReviewSha256:createHash('sha256').update(body).digest('hex')}};
+ const v8=review.catalog.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V8';
  const v7=review.catalog.format==='EXACT26_RUNTIME_CATALOG_EXPORT_V7';
- const probe=v7?completeProductionProfiles.NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE
+ const probe=v8?completeProductionProfiles.NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE:v7?completeProductionProfiles.NATIVE_RUNTIME26_LIVE_LEDGER_PAIRS_V7_METADATA_PROBE
   :completeProductionProfiles.NATIVE_RUNTIME26_HV2_HISTORY_SET_COMPLETE_WRITE_XMIN_FROM_V22_METADATA_PROBE;
- const row:Record<string,unknown>={...f.observation,complete_write_xmin_acl_match:true,...(v7?{recorded_live_balance_contract_match:true}:{})};
+ const row:Record<string,unknown>={...f.observation,...(v8?{complete_write_system_acl_match_v8:true,normal_delete_acl_match_v8:true}:{complete_write_xmin_acl_match:true}),...((v7||v8)?{recorded_live_balance_contract_match:true}:{})};
  options.mutateRow?.(row);
  const p=exact26Driver(f.observation,sql=>sql===probe?[structuredClone(row)]:undefined);
  return {...f,configuration,p,probe};
@@ -2348,10 +2349,10 @@ test('LIVE admission RED original production R1/R2/R3/full V6 cannot expose new 
 });
 test('LIVE admission RED original non-CORE legacy API cannot instantiate new-column graph without any reviewed runtime',async()=>{
  let allocations=0;const driver=()=>{allocations++;throw Error('MUST_NOT_ALLOCATE_LEGACY_DRIVER');};
- await assert.rejects(createProductionApplicationApi(config(),driver,syntheticCapacity()),/Recorded live ledger pairs require the independently reviewed V7 runtime/);
+ await assert.rejects(createProductionApplicationApi(config(),driver,syntheticCapacity()),/Recorded live ledger pairs require the independently reviewed V8 complete-write runtime/);
  assert.equal(allocations,0);
 });
-test('LIVE admission original production V7 full proof is awaited before read/R2 route exposure and retains same managed baseline',async()=>{
+test('LIVE admission original production V8 full proof is awaited before read/R2 route exposure and retains same managed baseline',async()=>{
  for(const commands of [false,true]){
   const f=liveAdmissionFixture();
   try{
@@ -2369,12 +2370,14 @@ test('LIVE admission original production V7 full proof is awaited before read/R2
   }finally{f.cleanup();}
  }
 });
-test('LIVE admission V7 missing false nonboolean pair or xmin proof and stale or extra row never returns original application',async()=>{
+test('LIVE admission V8 missing false nonboolean pair or xmin proof and stale or extra row never returns original application',async()=>{
  const edits=[(r:Record<string,unknown>)=>{delete r.recorded_live_balance_contract_match;},
   (r:Record<string,unknown>)=>{r.recorded_live_balance_contract_match=false;},
   (r:Record<string,unknown>)=>{r.recorded_live_balance_contract_match='true';},
-  (r:Record<string,unknown>)=>{delete r.complete_write_xmin_acl_match;},
-  (r:Record<string,unknown>)=>{r.complete_write_xmin_acl_match=false;},
+  (r:Record<string,unknown>)=>{delete r.complete_write_system_acl_match_v8;},
+  (r:Record<string,unknown>)=>{r.complete_write_system_acl_match_v8=false;},
+  (r:Record<string,unknown>)=>{delete r.normal_delete_acl_match_v8;},
+  (r:Record<string,unknown>)=>{r.normal_delete_acl_match_v8=false;},
   (r:Record<string,unknown>)=>{r.catalog_sha256='b'.repeat(64);},
   (r:Record<string,unknown>)=>{r.unreviewedPairFallback=true;}];
  for(const mutateRow of edits){const f=liveAdmissionFixture({mutateRow});try{
@@ -2385,7 +2388,7 @@ test('LIVE admission V7 missing false nonboolean pair or xmin proof and stale or
 });
 test('LIVE admission null unknown future and borrowed catalogs fail original production before pool connect/query with owner disposal',async()=>{
  const cases=[...[null,undefined,'','PENDING_ACTUAL_PG_CANONICAL_EXPORT'].map(catalogHash=>({catalogHash})),
-  {format:'EXACT26_RUNTIME_CATALOG_EXPORT_V8'},
+  {format:'EXACT26_RUNTIME_CATALOG_EXPORT_V9'},
   {patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22_future'},
   {format:'EXACT26_RUNTIME_CATALOG_EXPORT_V6'}];
  for(const options of cases){const f=liveAdmissionFixture(options);try{
@@ -3149,4 +3152,18 @@ test('STAFF CREATE admission pending readiness preserves original cancellation a
       else{closing=api.close();assert.equal(await pending,false);await closing;const disposed=driver.releases.filter(r=>r.pending);assert.equal(disposed.length,1);assert.ok(disposed.every(r=>r.discarded),'Original close may retire an in-flight lease only by discard');gate.resolve();await drained.promise;}
       assert.equal(await api.readiness!(),false);assert.equal(f.p.counts().connects,before);assert.equal(f.p.counts().ends,1);assert.equal(f.p.counts().connects,f.p.counts().releases);assert.equal(f.p.calls.some(c=>staffAdmissionIsBusinessSql2159(c.sql)),false);
     }finally{gate.resolve();await pending?.catch(()=>false);await closing?.catch(()=>{});if(api&&!closing)await api.close();f.cleanup();}}
+});
+
+test('V8 compiled non-CORE consumers reject even complete old V7 before any driver connection',async()=>{
+ for(const mode of ['r1','r2','r3','full'] as const){
+  const f=liveAdmissionFixture({format:'EXACT26_RUNTIME_CATALOG_EXPORT_V7',patchLevel:'26_hv2_live_ledger_pairs_complete_write_xmin_from_v22'});
+  try{
+   const run=()=>mode==='r1'?createProductionRuntime26ApplicationApi(f.configuration,f.p.factory,null,syntheticCapacity())
+    :mode==='r2'?createProductionRuntime26R2ApplicationApi(r2Configuration(f.configuration),f.p.factory,null,undefined,syntheticCapacity())
+    :mode==='r3'?createProductionRuntime26R3ApplicationApi(r3Configuration(f.configuration,'/unopened-inactive-live-media'),f.p.factory,null,undefined,syntheticCapacity())
+    :createProductionRuntime26FullApplicationApi(r3Configuration(f.configuration,'/unopened-inactive-live-media'),f.p.factory,null,syntheticCapacity());
+   await assert.rejects(run,{code:'NATIVE_RUNTIME26_NOT_READY',message:'Complete normal writes require the exact independently reviewed V8 catalog'});
+   assert.deepEqual(f.p.calls,[]);assert.equal(f.p.counts().connects,0);assert.equal(f.p.counts().ends,1);
+  }finally{f.cleanup();}
+ }
 });

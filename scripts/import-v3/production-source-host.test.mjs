@@ -16,6 +16,7 @@ const history135HostProfiles=[
  ['h135-v6-no-prefix','26_hv2_history_set_guards_complete_write_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V6'],
 ];
 const live137HostProfile=['live137-v7-no-prefix','26_hv2_live_ledger_pairs_complete_write_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V7'];
+const completeWriteV8HostProfile=['complete-write-v8-no-prefix','26_hv2_live_pairs_complete_write_acl_v8_from_v7','EXACT26_RUNTIME_CATALOG_EXPORT_V8'];
 const id = n => `00000000-0000-0000-0000-${String(n).padStart(12, '0')}`;
 const sha = c => c.repeat(64);
 function job(at = Date.now()) {
@@ -197,7 +198,7 @@ test('executableHost26 captures concrete preflight and all11 source sessions plu
  let gets=0;const getter=session26Fixture();Object.defineProperty(getter,'preflight',{enumerable:true,get(){gets++;return async()=>{};}});assert.throws(()=>captureNativeSourceSession26(getter,job26().binding));assert.equal(gets,0);
 });
 async function negativeHost26Fixture(t,mode){
- const historyProfile=[...history135HostProfiles,live137HostProfile].find(([key])=>key===mode),fullContinuation=['adopted-denied','v22-no-prefix','xmin-no-prefix'].includes(mode)||historyProfile!==undefined;
+ const historyProfile=[...history135HostProfiles,live137HostProfile,completeWriteV8HostProfile].find(([key])=>key===mode),fullContinuation=['adopted-denied','v22-no-prefix','xmin-no-prefix'].includes(mode)||historyProfile!==undefined;
  const dir=await mkdtemp(join(await realpath(tmpdir()),'synthetic-executable-host26-'));t.after(()=>rm(dir,{recursive:true,force:true}));const j=executableJob26(),save=async(name,value)=>{const bytes=Buffer.from(typeof value==='string'?value:JSON.stringify(value)),path=join(dir,name);await writeFile(path,bytes);return {path,sha:createHash('sha256').update(bytes).digest('hex')};};
  const native=await save('native.json',{schemaVersion:2,validatorVersion:'NATIVE_PRODUCT_REFERENCE_DECISIONS_V2_EXACT26',schemaProfile:'EXACT26',batchId:j.binding.batchId,fixedSourceNamespace:j.binding.fixedSourceNamespace,selection:{entity:'PRODUCT',selectionSha256:j.binding.selectionSha256},mappingFiles:[],decisions:[{synthetic:true}]});j.sources.referenceDecisionFile=native.path;j.sources.trustedReferenceDecisionSha256=native.sha;
  const productReview=await save('native-ref-review.json',{});j.sources.reviewFile=productReview.path;j.sources.trustedReviewSha256=productReview.sha;
@@ -498,4 +499,18 @@ test('LIVE layer5b SOURCE-HOST hold V7 mapping does not relax original issuer fi
    {reviewFile:review.path,trustedReviewSha256:review.sha});
   await assert.rejects(gate.activate(),{code:'NATIVE_RUNTIME26_NOT_READY'});await gate.close();assert.equal(borrowed,0);assert.equal(ended,1);
  }
+});
+
+test('V8 source host accepts only exact metadata profile and keeps original FULL/prefix authority separate',()=>{
+ const {b,m}=v20FullRuntimeFixture();let captures=0;const prefix={async capture(){captures++;throw Error('NOT_EXECUTED');}};
+ const catalog={...m.catalog,patchLevel:completeWriteV8HostProfile[1],format:completeWriteV8HostProfile[2]};
+ const review={...m,catalog};assert.equal(validateSourceHostRuntimeReview26(review,b,prefix),undefined);assert.equal(captures,0);
+ assert.throws(()=>validateSourceHostRuntimeReview26(review,b),/PREFIX_REQUIRED/);
+ for(const patchLevel of [live137HostProfile[1],catalog.patchLevel+'_future'])assert.throws(()=>validateSourceHostRuntimeReview26({...review,catalog:{...catalog,patchLevel}},b,prefix),/RUNTIME_REVIEW/);
+ assert.throws(()=>validateSourceHostRuntimeReview26({...review,realImportExecutionAuthorized:true},b,prefix),/RUNTIME_REVIEW/);
+});
+test('V8 source host without original captured prefix closes before activating the database',async t=>{
+ const f=await negativeHost26Fixture(t,completeWriteV8HostProfile[0]);
+ await assert.rejects(openImportHost26({signal:new AbortController().signal,configFile:f.configFile}),/PREFIX_REQUIRED/);
+ assert.equal(globalThis[f.marker].opened,1);assert.equal(globalThis[f.marker].closed,1);assert.equal(globalThis[f.marker].closedGate,true);
 });

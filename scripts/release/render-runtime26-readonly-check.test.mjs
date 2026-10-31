@@ -42,3 +42,11 @@ test('renderer contains no driver/network/process execution import or production
  assert.doesNotMatch(src,/from ['"](?:pg|node:net|node:http|node:https|node:child_process)['"]|\b(?:fetch|connect|execFile|spawn)\s*\(/);
  assert.doesNotMatch(src,/postgres(?:ql)?:\/\//);
 });
+
+test('V8 observes25 system cells and exact three DELETE without borrowing old xmin proof',async()=>{
+ const p=plan();p.profile='V8';const sql=await renderReadOnlyCheck(p);
+ assert.ok(sql.includes(original.NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE.replace(anchor,replacement)+';'));
+ assert.ok(sql.includes('AS complete_write_system_acl_match_v8'));assert.ok(sql.includes('AS normal_delete_acl_match_v8'));
+ assert.ok(sql.includes('AS recorded_live_balance_contract_match'));assert.ok(!sql.includes('AS complete_write_xmin_acl_match'));
+ assert.ok(sql.endsWith('ROLLBACK;\n'));assert.ok(sql.includes('a.attnum<0'));
+});

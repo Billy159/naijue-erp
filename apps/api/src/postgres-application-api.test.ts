@@ -8,7 +8,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import { createPostgresReadApi, createPostgresApplicationApi, createPostgresRuntime26ApplicationApi, createPostgresRuntime26DocumentApplicationApi } from "./postgres-read-api.ts";
-import { createSyntheticV7Fixture } from "../../../tests/support/live-ledger-api-v7-fixtures.ts";
+import { createSyntheticV8Fixture } from "../../../tests/support/live-ledger-api-v8-fixtures.ts";
 import { createSourceConfirmedCurrentFormAuthorization } from "../../../packages/application/src/source-confirmed-current-form-authorization.ts";
 import type { PostgresApplicationApiOptions, PostgresDocumentCommandsCapability } from "./postgres-read-api.ts";
 import type { BoundedPostgresResult, PostgresPoolDriverFactory } from "../../../adapters/postgres/src/bounded-pool.ts";
@@ -38,7 +38,7 @@ const base = (): PostgresApplicationApiOptions => ({ capacityAdmission:testCapac
   statementTimeoutMillis: 900, lockTimeoutMillis: 800, idleInTransactionTimeoutMillis: 1000, idlePoolTimeoutMillis: 1000, disposeGraceMillis: 0, disposeTimeoutMillis: 1000,
 }, authentication: { trustedOrigin: origin, now: () => "2026-10-21T00:00:00.000Z", policy: createSourceAuthenticationPolicy(900), work:authenticationWork() },
   authorization: { mode: "source-confirmed-native" }, productMedia: null });
-function driver(proof?: ReturnType<typeof createSyntheticV7Fixture>) {
+function driver(proof?: ReturnType<typeof createSyntheticV8Fixture>) {
   let allocations = 0, connects = 0, ends = 0, releases = 0;
   const calls: string[] = [];
   const d = Object.assign(new EventEmitter(), { async connect() {
@@ -46,14 +46,14 @@ function driver(proof?: ReturnType<typeof createSyntheticV7Fixture>) {
     if (!proof) throw Error("Synthetic no-credential request must not borrow DB");
     return Object.assign(new EventEmitter(), { release() { releases++; }, async query(sql: string) {
       calls.push(sql); const result = proof.query(sql);
-      if (result === undefined) throw Error("Unexpected synthetic V7 proof SQL; unauthenticated requests must not borrow DB");
+      if (result === undefined) throw Error("Unexpected synthetic V8 proof SQL; unauthenticated requests must not borrow DB");
       return result;
     } });
   }, async end() { ends++; } });
   const factory: PostgresPoolDriverFactory = () => { allocations++; return d; };
   return { factory, calls, releases: () => releases, counts: () => ({ allocations, connects, ends }) };
 }
-const nativeV7Options = (): PostgresApplicationApiOptions => ({ ...base(),
+const nativeV8Options = (): PostgresApplicationApiOptions => ({ ...base(),
   currentForms: { authorization: createSourceConfirmedCurrentFormAuthorization() },
   nativeReadExtensions: { profile: "source-confirmed-r1-v1" },
 });
@@ -80,8 +80,8 @@ const partyRoutes = ["/customers", "/customers/candidates", "/customers/:id", "/
 
 // Real factory/authentication/BoundedPostgresPool/UoW/native preparation, scripted SQL only.
 // Unlike plain pg, this actual pool refuses concurrent queries on one leased client.
-test("NEW SYNTHETIC V7 application transfer prepare serializes warehouse facts on its one bounded transaction and returns exact quantity JSON", async t => {
-  const options = nativeV7Options(), f = createSyntheticV7Fixture(options.postgres.target); t.after(() => f.cleanup());
+test("NEW SYNTHETIC V8 application transfer prepare serializes warehouse facts on its one bounded transaction and returns exact quantity JSON", async t => {
+  const options = nativeV8Options(), f = createSyntheticV8Fixture(options.postgres.target); t.after(() => f.cleanup());
   const token = Buffer.alloc(32, 47).toString("base64url"), hash = sessionTokenHash(token)!;
   const from = sid("warehouse", 7001), to = sid("warehouse", 7002);
   let sequence = 7100, ends = 0, borrowed = 0, released = 0;
@@ -150,8 +150,8 @@ test("NEW SYNTHETIC V7 application transfer prepare serializes warehouse facts o
 });
 
 
-test("NEW SYNTHETIC V7 native read graph captures origin, protects all actual read routes and implies no command or receipt grant", async t => {
-  const options = nativeV7Options(), f = createSyntheticV7Fixture(options.postgres.target); t.after(() => f.cleanup());
+test("NEW SYNTHETIC V8 native read graph captures origin, protects all actual read routes and implies no command or receipt grant", async t => {
+  const options = nativeV8Options(), f = createSyntheticV8Fixture(options.postgres.target); t.after(() => f.cleanup());
   const d = driver(f), api = await createPostgresRuntime26ApplicationApi(options, f.review, d.factory);
   try {
     const baseline = d.counts().connects;
@@ -175,8 +175,8 @@ test("NEW SYNTHETIC V7 native read graph captures origin, protects all actual re
   assert.equal(d.counts().ends, 1); assert.equal(d.counts().connects, d.releases());
 });
 
-test("NEW SYNTHETIC V7 native management policies reject stale identity before readers and disabled session before native policy", async t => {
-  const options = nativeV7Options(), f = createSyntheticV7Fixture(options.postgres.target); t.after(() => f.cleanup());
+test("NEW SYNTHETIC V8 native management policies reject stale identity before readers and disabled session before native policy", async t => {
+  const options = nativeV8Options(), f = createSyntheticV8Fixture(options.postgres.target); t.after(() => f.cleanup());
   const token = Buffer.alloc(32, 32).toString("base64url"), hash = sessionTokenHash(token)!;
   let enabled = true, nativeCalls = 0, allocations = 0, connects = 0, releases = 0, ends = 0;
   const calls: string[] = [];
@@ -222,7 +222,7 @@ test("NEW SYNTHETIC V7 native management policies reject stale identity before r
 test("old issuer-null read/application defaults now refuse the live ledger graph before allocating or listening", async () => {
   for (const factory of [createPostgresReadApi, createPostgresApplicationApi]) {
     const d = driver();
-    await assert.rejects(factory(base(), d.factory), /Recorded live ledger pairs require the independently reviewed V7 runtime/);
+    await assert.rejects(factory(base(), d.factory), /Recorded live ledger pairs require the independently reviewed V8 complete-write runtime/);
     assert.deepEqual(d.counts(), { allocations: 0, connects: 0, ends: 0 });
   }
 });
@@ -230,12 +230,12 @@ test("old custom command/settings composition now refuses without reviewed V7 au
   const d = driver(), options = { ...base(), documentCommands: commands(), storeSettingsRead: {
     authorization: { async authorize(): Promise<never> { throw new DomainError("STORE_SETTINGS_FORBIDDEN", "Synthetic denied settings scope"); } },
   } };
-  await assert.rejects(createPostgresApplicationApi(options, d.factory), /Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  await assert.rejects(createPostgresApplicationApi(options, d.factory), /Recorded live ledger pairs require the independently reviewed V8 complete-write runtime/);
   assert.deepEqual(d.counts(), { allocations: 0, connects: 0, ends: 0 });
 });
 
-test("NEW SYNTHETIC V7 R2 command/settings routes retain missing-session denial with one proof-bound pool and no listener", async t => {
-  const options = { ...nativeV7Options(), documentCommands: commands() }, f = createSyntheticV7Fixture(options.postgres.target); t.after(() => f.cleanup());
+test("NEW SYNTHETIC V8 R2 command/settings routes retain missing-session denial with one proof-bound pool and no listener", async t => {
+  const options = { ...nativeV8Options(), documentCommands: commands() }, f = createSyntheticV8Fixture(options.postgres.target); t.after(() => f.cleanup());
   const d = driver(f), api = await createPostgresRuntime26DocumentApplicationApi(options, f.review, { sales: false, transfers: false }, d.factory);
   try {
     const baseline = d.counts().connects;
@@ -272,12 +272,12 @@ test("malformed/inherited/accessor capabilities and cross-pool UoW/time injectio
   assert.equal(getters, 0);
 });
 test("old independent management opt-ins now refuse before allocation; V7 native profile rejects custom policy overrides", async t => {
-  const native = nativeV7Options(), f = createSyntheticV7Fixture(native.postgres.target); t.after(() => f.cleanup());
+  const native = nativeV8Options(), f = createSyntheticV8Fixture(native.postgres.target); t.after(() => f.cleanup());
   for (const key of managementKeys) {
     const selected = { authorization: { async authorize(): Promise<never> { throw new DomainError("FORBIDDEN", "SYNTHETIC closed scope"); } } };
     for (const factory of [createPostgresReadApi, createPostgresApplicationApi]) {
       const d = driver();
-      await assert.rejects(factory({ ...base(), [key]: selected }, d.factory), /Recorded live ledger pairs require the independently reviewed V7 runtime/);
+      await assert.rejects(factory({ ...base(), [key]: selected }, d.factory), /Recorded live ledger pairs require the independently reviewed V8 complete-write runtime/);
       assert.deepEqual(d.counts(), { allocations: 0, connects: 0, ends: 0 });
     }
     const d = driver();
@@ -310,9 +310,9 @@ test("retired custom management/party provider graph now refuses before allocati
   const options = { ...base(), productManagementRead: { authorization }, catalogueSettingsRead: { authorization }, dictionaryRead: { authorization }, partyRead: { authorization } };
   const oldDriver = driver(), pending = createPostgresApplicationApi(options, oldDriver.factory);
   authorization.authorize = async () => { throw Error("Refused graph must never invoke the later replaced method"); };
-  await assert.rejects(pending, /Recorded live ledger pairs require the independently reviewed V7 runtime/);
+  await assert.rejects(pending, /Recorded live ledger pairs require the independently reviewed V8 complete-write runtime/);
   assert.deepEqual(oldDriver.counts(), { allocations: 0, connects: 0, ends: 0 }); assert.equal(providerCalls, 0);
-  const native = nativeV7Options(), f = createSyntheticV7Fixture(native.postgres.target); t.after(() => f.cleanup());
+  const native = nativeV8Options(), f = createSyntheticV8Fixture(native.postgres.target); t.after(() => f.cleanup());
   const d = driver();
   await assert.rejects(createPostgresRuntime26ApplicationApi({ ...native, productManagementRead: { authorization }, catalogueSettingsRead: { authorization }, dictionaryRead: { authorization }, partyRead: { authorization } }, f.review, d.factory), /Native read extensions require only their exact trusted profile and native identity policy/);
   assert.deepEqual(d.counts(), { allocations: 0, connects: 0, ends: 0 }); assert.equal(providerCalls, 0);
@@ -322,7 +322,7 @@ test("old explicit party read graph now refuses before allocation; malformed par
   const options = { ...base(), partyRead: { authorization: { async authorize(): Promise<never> { throw Error("not reached without session"); } } } };
   for (const factory of [createPostgresReadApi, createPostgresApplicationApi]) {
     const d = driver();
-    await assert.rejects(factory(options, d.factory), /Recorded live ledger pairs require the independently reviewed V7 runtime/);
+    await assert.rejects(factory(options, d.factory), /Recorded live ledger pairs require the independently reviewed V8 complete-write runtime/);
     assert.deepEqual(d.counts(), { allocations: 0, connects: 0, ends: 0 });
   }
   let getters = 0;

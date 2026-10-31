@@ -40,4 +40,14 @@ class Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             p=Path(d)/'large';p.write_bytes(b' '* (32*1024*1024+1))
             with self.assertRaises(ValueError):m.read(p)
+    def test_v8_proofs_and_system_deltas(self):
+        e=fixture();o=e['observation'];o['manifest']['format']='EXACT26_RUNTIME_CATALOG_EXPORT_V8'
+        o['manifest']['routines']+= [dict(signature=f'naijue_erp.v8_synthetic_{i}()',body_sha256='a'*64,definition_sha256='b'*64)for i in range(2)]
+        del o['complete_write_xmin_acl_match'];o.update(complete_write_system_acl_match_v8=True,normal_delete_acl_match_v8=True,recorded_live_balance_contract_match=True)
+        self.assertEqual(m.compare(copy.deepcopy(e),e)['differenceCount'],0)
+        for field in ['complete_write_system_acl_match_v8','normal_delete_acl_match_v8','recorded_live_balance_contract_match']:
+            a=copy.deepcopy(e);del a['observation'][field];r=m.compare(a,e)
+            self.assertEqual(r['decision'],'REFUSE');self.assertEqual(r['differences'][0]['field'],field)
+        a=copy.deepcopy(e);a['observation']['manifest']['system_column_acls'].append(dict(table='t',number=-3,name='cmin',acl='{}'))
+        self.assertEqual(m.compare(a,e)['decision'],'REFUSE')
 if __name__=='__main__':unittest.main()

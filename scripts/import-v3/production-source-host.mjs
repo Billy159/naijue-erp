@@ -341,6 +341,7 @@ const sourceHostPrefixFormats26=new Map([
  ['26_hv2_history_set_guards_complete_maintenance_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V5'],
  ['26_hv2_history_set_guards_complete_write_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V6'],
  ['26_hv2_live_ledger_pairs_complete_write_xmin_from_v22','EXACT26_RUNTIME_CATALOG_EXPORT_V7'],
+ ['26_hv2_live_pairs_complete_write_acl_v8_from_v7','EXACT26_RUNTIME_CATALOG_EXPORT_V8'],
 ]);
 export function validateSourceHostRuntimeReview26(metadata,binding,stagedPrefixBinding26) {
   bag(metadata,['version','decision','target','catalog','purposes','scope','independentReview','realImportExecutionAuthorized'],'IMPORT_SOURCE_HOST26_RUNTIME_REVIEW');
