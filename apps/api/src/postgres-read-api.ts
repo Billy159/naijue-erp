@@ -603,7 +603,7 @@ async function composePostgresApi(options: PostgresReadApiOptions, createDriver:
     host.capacityRuntimePoolBinder?.(ownedPool, options.postgres.target);
     const issuer = runtime26Review === undefined ? null : await createNativeRuntime26Issuer(ownedPool, {
       ...runtime26Review, verificationProfile: "DEPLOYMENT_BASELINE_REQUEST_IDENTITY_V1",
-      ...(requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8" as const } : {})
+      ...(runtime26HistoryAuthorization !== undefined ? { requiredObservation: "HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8" as const } : requiresRecordedLivePairs ? { requiredObservation: "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8" as const } : {})
     });
     const pool = issuer === null ? ownedPool : issuer.pool;
     const checkAdmission = async (signal?: AbortSignal): Promise<boolean> => {

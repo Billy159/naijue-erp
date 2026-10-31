@@ -41,7 +41,8 @@ def compare(actual,expected):
         schema=m.get('schema')
         need(isinstance(schema,dict) and set(schema)=={'name','owner','acl'} and schema['name']=='naijue_erp' and all(isinstance(schema[k],str) and schema[k] for k in ['owner','acl']),'SCHEMA_REQUIRED')
     need(a['identity']==e['identity']==am.get('identity')==em.get('identity'),'EXACT_SAME_TARGET_ROLE_REQUIRED')
-    need(em.get('format') in ['EXACT26_RUNTIME_CATALOG_EXPORT_V6','EXACT26_RUNTIME_CATALOG_EXPORT_V7','EXACT26_RUNTIME_CATALOG_EXPORT_V8','EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1'],'EXPECTED_V6_V7_V8_OR_PREPARATION13_REQUIRED')
+    need(em.get('format') in ['EXACT26_RUNTIME_CATALOG_EXPORT_V6','EXACT26_RUNTIME_CATALOG_EXPORT_V7','EXACT26_RUNTIME_CATALOG_EXPORT_V8','EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1','EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1'],'EXPECTED_V6_V7_V8_OR_PREPARATION13_REQUIRED')
+    draftset=em['format']=='EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1'
     prep13=em['format']=='EXACT26_RUNTIME_CATALOG_EXPORT_PREPARATION13_V1'
     if prep13:
         for x in [a,e]:need(set(x)=={'manifest','identity','migration_versions','catalog_sha256','source_routines_match','preparation13_xmin_acl_match'},'EXACT_PREPARATION13_OBSERVATION_REQUIRED')
@@ -56,6 +57,15 @@ def compare(actual,expected):
         need(isinstance(m.get('routines'),list),'ROUTINES_REQUIRED')
         for r in m['routines']:
             need(isinstance(r,dict) and all(re.fullmatch('[a-f0-9]{64}',r.get(k,'')) for k in ['body_sha256','definition_sha256']),'ROUTINE_HASH_REQUIRED')
+    if draftset:
+        # Finite approved successor, never infer it from a caller's PASS label.
+        bodies={
+            'naijue_erp.history_numeric_current_facts(text,uuid)':'e9b62d95e68633c4fa2e0d5de8ba8d4fd5a577fa863941332553818ff01de8dc',
+            'naijue_erp.history_revision_not_enabled()':'5d66ae3f7ad2dd49fe1d935299e44386923dfcc073d9485b992f03980c661a7c',
+            'naijue_erp.history_effective_set_guard()':'324d469b4452aa8a5b37cc51cf2e41ad50fdd94718738dbb59d6796dfbdb83a1',
+            'naijue_erp.validate_history_numeric_revision_commit()':'a73089ea7b30cfdb43f616ee1e8ae5fbc2f9a47d4c713b322b4012a28c6fe01c'}
+        expected_bodies={r['signature'].replace(' ',''):r['body_sha256'] for r in em['routines']}
+        need(all(expected_bodies.get(k)==v for k,v in bodies.items()),'EXACT_HISTORY_DRAFT_FOUR_BODIES_REQUIRED')
     diffs=[]
     def add(section,key,field,av,ev):
         # Values are safe metadata hashes/booleans only. Never print arbitrary source or ACL text.
@@ -74,7 +84,7 @@ def compare(actual,expected):
                 if av!=ev:add(section,key,field,av,ev)
     for field in ['format','migration_versions','schema']:
         if am.get(field)!=em.get(field):add('manifest',(),field,am.get(field),em.get(field))
-    for field in (['source_routines_match','preparation13_xmin_acl_match'] if prep13 else ['source_routines_match','recorded_live_balance_contract_match','complete_write_system_acl_match_v8','normal_delete_acl_match_v8'] if em['format'].endswith('_V8') else ['source_routines_match','complete_write_xmin_acl_match']+(['recorded_live_balance_contract_match'] if em['format'].endswith('_V7') else [])):
+    for field in (['source_routines_match','preparation13_xmin_acl_match'] if prep13 else ['source_routines_match','recorded_live_balance_contract_match','complete_write_system_acl_match_v8','normal_delete_acl_match_v8'] if draftset or em['format'].endswith('_V8') else ['source_routines_match','complete_write_xmin_acl_match']+(['recorded_live_balance_contract_match'] if em['format'].endswith('_V7') else [])):
         if a.get(field) is not True or e.get(field) is not True:add('proof',(),field,a.get(field),e.get(field))
     if a['catalog_sha256']!=e['catalog_sha256']:add('observation',(),'catalog_sha256',a['catalog_sha256'],e['catalog_sha256'])
     return {'format':'RUNTIME26_OFFLINE_DIFF_CANDIDATE_V1','decision':'REFUSE' if diffs else 'EXACT_METADATA_ONLY_NOT_UPGRADE_AUTHORIZATION','differenceCount':len(diffs),'differences':diffs,'actualCatalogSha256':a['catalog_sha256'],'expectedCatalogSha256':e['catalog_sha256'],'sourceCommit':actual['sourceCommit'],'sourceSha256':actual['sourceSha256'],'warning':'Expected review provenance must be independently verified; JSON labels are not signatures. No DB or business tests executed.'}

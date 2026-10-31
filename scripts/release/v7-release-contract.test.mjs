@@ -15,7 +15,7 @@ const oldProfiles={
  'complete-write-v6':{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V6',patchLevel:'26_hv2_history_set_guards_complete_write_xmin_from_v22',aclProofField:'complete_write_xmin_acl_match'},
 };
 test('V7 is finite and additive; exact historical V1/V6 descriptors are unchanged',()=>{
- assert.deepEqual(Object.keys(contract.full.catalogProfiles),[...Object.keys(oldProfiles),v7Name,'recorded-live-write-v8']);
+ assert.deepEqual(Object.keys(contract.full.catalogProfiles),[...Object.keys(oldProfiles),v7Name,'recorded-live-write-v8','history-draft-line-set-v1']);
  for(const [name,expected] of Object.entries(oldProfiles))assert.deepEqual(contract.full.catalogProfiles[name],expected);
  assert.deepEqual(contract.full.catalogProfiles[v7Name],v7);
  assert.equal(contract.full.patchLevel,oldProfiles['legacy-v1'].patchLevel);
@@ -42,7 +42,7 @@ test('V7 proof/consumer/patch facts cannot be omitted, substituted, widened or a
 test('V7 additive SQL is packaged after the immutable original11, never auto-executed',()=>{
  const originals=['0026-v9-empty-history-publication-dispatch.sql','0026-v11-document-specification-save.sql','0026-v14-core-initialization.sql','0026-history-revision-current-base.sql','0026-category-reorder-undo.sql','0026-v19-barcode-scheme-initialization.sql','0026-v20-history-insert-source-identity.sql','0026-v22-staged-prefix-bind.sql','0026-history-responsible-null-successor.sql','0026-category-depth-successor.sql','0026-history-revision-set-guards-successor.sql'];
  assert.deepEqual(contract.runtimeSqlPatches.slice(0,11),originals.map(name=>({source:'adapters/postgres/patches/'+name,member:'patches/'+name})));
- assert.equal(contract.runtimeSqlPatches.length,12);
+ assert.equal(contract.runtimeSqlPatches.length,13);
  assert.deepEqual(contract.runtimeSqlPatches[11],{source:v7.runtimeSqlPatch,member:'patches/0026-live-ledger-balance-pairs.sql'});
  const ddl=read(v7.runtimeSqlPatch);
  assert.match(ddl,/ADD COLUMN quantity_before bigint/);assert.match(ddl,/ADD COLUMN quantity_after bigint/);

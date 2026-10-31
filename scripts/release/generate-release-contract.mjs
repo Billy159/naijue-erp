@@ -32,6 +32,7 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
     'complete-write-v6': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V6', patchLevel: '26_hv2_history_set_guards_complete_write_xmin_from_v22', aclProofField: 'complete_write_xmin_acl_match'},
     'recorded-live-ledger-v7': {format: 'EXACT26_RUNTIME_CATALOG_EXPORT_V7', patchLevel: '26_hv2_live_ledger_pairs_complete_write_xmin_from_v22', aclProofField: 'complete_write_xmin_acl_match', observationProofField: 'recorded_live_balance_contract_match', requiredObservation: 'RECORDED_LIVE_LEDGER_PAIRS_V7', runtimeSqlPatch: 'adapters/postgres/patches/0026-live-ledger-balance-pairs.sql'},
     'recorded-live-write-v8': {"format": "EXACT26_RUNTIME_CATALOG_EXPORT_V8", "patchLevel": "26_hv2_live_pairs_complete_write_acl_v8_from_v7", "aclProofField": "complete_write_system_acl_match_v8", "deleteAclProofField": "normal_delete_acl_match_v8", "observationProofField": "recorded_live_balance_contract_match", "requiredObservation": "RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8", "runtimeSqlPatch": "adapters/postgres/patches/0026-live-ledger-balance-pairs.sql"},
+    'history-draft-line-set-v1': {"format":"EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1","patchLevel":"26_hv2_history_draft_line_set_from_v8","aclProofField":"complete_write_system_acl_match_v8","deleteAclProofField":"normal_delete_acl_match_v8","observationProofField":"recorded_live_balance_contract_match","requiredObservation":"HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8","runtimeSqlPatch":"adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql"},
   };
   if (contract.full.patchLevel !== profiles['legacy-v1'].patchLevel) throw Error('INVALID_RELEASE_LEGACY_PROFILE_DRIFT');
   if (!exactKeys(contract.full.catalogProfiles, Object.keys(profiles))) throw Error('INVALID_RELEASE_CATALOG_PROFILE');
@@ -60,10 +61,13 @@ export function contractBlock(contract, sourceBytes = Buffer.from(JSON.stringify
   }
   // Packaged source artifact only; this registration never applies SQL or grants.
   // A V7 descriptor may not borrow the original11 patch closure without its DDL.
-  const livePatch = contract.runtimeSqlPatches.at(-1);
+  const livePatch = contract.runtimeSqlPatches[11];
   if (!livePatch || livePatch.source !== profiles['recorded-live-ledger-v7'].runtimeSqlPatch
       || livePatch.member !== 'patches/0026-live-ledger-balance-pairs.sql')
     throw Error('INVALID_RELEASE_V7_STORAGE_PATCH');
+  const draftPatch = contract.runtimeSqlPatches.at(-1);
+  if (!draftPatch || draftPatch.source !== profiles['history-draft-line-set-v1'].runtimeSqlPatch || draftPatch.member !== 'patches/0026-history-draft-transfer-line-set-successor.sql')
+    throw Error('INVALID_RELEASE_HISTORY_DRAFT_PATCH');
   for (const row of contract.requestBodyBudgets) {
     if (!exactKeys(row, ['path', 'bytes']) || typeof row.path !== 'string'
         || !/^\/api\/[a-z0-9/-]+$/.test(row.path) || routes.has(row.path)

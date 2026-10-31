@@ -983,3 +983,33 @@ test('PREPARATION13 missing false alias extra proof, wrong target and V8 consume
  }
  const f=preparation13Fixture();try{await assert.rejects(createNativeRuntime26Issuer(f.pool,{...f.options(f.review),requiredObservation:'RECORDED_LIVE_LEDGER_PAIRS_COMPLETE_WRITE_V8'}));assert.equal(f.connects(),0);}finally{f.cleanup();}
 });
+
+import {NATIVE_RUNTIME26_HISTORY_DRAFT_LINESET_METADATA_PROBE as draftSetProbe,NATIVE_RUNTIME26_HISTORY_DRAFT_LINESET_FORMAT as draftSetFormat,NATIVE_RUNTIME26_HISTORY_DRAFT_LINESET_PATCH_LEVEL as draftSetPatch,NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE as originalV8Probe} from '../adapters/postgres/src/native-import-accounting-capability.ts';
+test('HISTORY draft successor exact four bodies derive from immutable V8 and match delivered SQL',()=>{
+ const source=readFileSync(new URL('../adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql',import.meta.url),'utf8');
+ const bodies=[...source.matchAll(/CREATE OR REPLACE FUNCTION naijue_erp\.(\w+)\(.*?\) RETURNS[^;]+? AS (\$\w*\$)([\s\S]*?)\2;/g)];assert.equal(bodies.length,4);
+ for(const m of bodies)assert.ok(draftSetProbe.includes(`('${m[1]}','${hash(m[3]!)}')`),m[1]);
+ assert.ok(draftSetProbe.includes("jsonb_array_length(manifest->'routines')=137"));
+ const pairs=JSON.parse(source.split('$pins$')[1]!) as {signature:string;sha256:string}[];let restored=draftSetProbe.replace(draftSetFormat,'EXACT26_RUNTIME_CATALOG_EXPORT_V8');
+ for(const m of bodies){const old=pairs.find(p=>p.signature.startsWith('naijue_erp.'+m[1]+'('))!;restored=restored.replace(`('${m[1]}','${hash(m[3]!)}')`,`('${m[1]}','${old.sha256}')`);}
+ assert.equal(restored,originalV8Probe,'only format and four exact tuples differ');
+});
+test('HISTORY draft successor full metadata observes native HISTORY capability; body or original V8 ACL drift rejects',async()=>{
+ for(const mutation of ['valid','wrong-body','missing-system','missing-delete','missing-pairs'] as const){const f=fixture();let connects=0;const calls:string[]=[];
+  try{const row:Record<string,unknown>={...observation(),complete_write_system_acl_match_v8:true,normal_delete_acl_match_v8:true,recorded_live_balance_contract_match:true};
+   if(mutation==='wrong-body')row.source_routines_match=false;
+   for(const [condition,key]of [['missing-system','complete_write_system_acl_match_v8'],['missing-delete','normal_delete_acl_match_v8'],['missing-pairs','recorded_live_balance_contract_match']])if(mutation===condition)delete row[key!];
+   const pool={async connect(){connects++;return {async query(sql:string){assert.equal(sql,draftSetProbe);calls.push(sql);return {rows:[row],rowCount:1};},release(){}};}};
+   const review={...f.review,catalog:{format:draftSetFormat,patchLevel:draftSetPatch,sha256:digest},purposes:['HISTORY_REVISION']};
+   const settings={...f.options(review),requiredObservation:'HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8' as const};
+   if(mutation==='valid'){const issuer=await createNativeRuntime26Issuer(pool,settings);const lease=await issuer.pool.connect();await issuer.runtime26.assertReady(lease,'HISTORY_REVISION');lease.release();assert.equal(calls.length,3);}
+   else await assert.rejects(createNativeRuntime26Issuer(pool,settings),{code:'NATIVE_RUNTIME26_NOT_READY'});
+   assert.ok(connects>0);
+  }finally{f.cleanup();}
+ }
+});
+test('HISTORY draft successor compiled requirement refuses original V8 and mismatched format before pool borrow',async()=>{
+ for(const [format,patchLevel]of [['EXACT26_RUNTIME_CATALOG_EXPORT_V8','26_hv2_live_pairs_complete_write_acl_v8_from_v7'],['EXACT26_RUNTIME_CATALOG_EXPORT_V8',draftSetPatch],[draftSetFormat,'26_hv2_live_pairs_complete_write_acl_v8_from_v7']]){
+  const f=fixture();let connects=0;try{const review={...f.review,catalog:{format,patchLevel,sha256:digest},purposes:['HISTORY_REVISION']};const pool={async connect():Promise<never>{connects++;throw Error('No borrow');}};await assert.rejects(createNativeRuntime26Issuer(pool,{...f.options(review),requiredObservation:'HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8'}),{code:'NATIVE_RUNTIME26_NOT_READY'});assert.equal(connects,0);}finally{f.cleanup();}
+ }
+});

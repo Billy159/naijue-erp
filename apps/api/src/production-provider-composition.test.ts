@@ -358,23 +358,25 @@ function exact26Fixture(purposes = ["PRODUCT_SEASONS_READ", "CURRENT_CUSTOMER_RE
 }
 const newLivePairProbe=completeProductionProfiles.NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE;
 const newLivePairObservations=new WeakSet<object>();
+const draftHistoryObservations=new WeakSet<object>();
+const draftHistoryProbe=completeProductionProfiles.NATIVE_RUNTIME26_HISTORY_DRAFT_LINESET_METADATA_PROBE;
 /** NEW synthetic-only consumer fixture, NOT an upgraded old review or an actual
  * V8 catalog pin. It writes fresh independent files and returns all three full proof
  * booleans. Old exact26/category/mixed/CORE fixtures retain their own meaning. */
-function newLivePairFixture(purposes = ['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION']) {
+function newLivePairFixture(purposes = ['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION'], historyDraft=false) {
  const directory=mkdtempSync(join(tmpdir(),'NEW-SYNTHETIC-LIVE-V8-')),independent=join(directory,'independent.json'),reviewFile=join(directory,'review.json');
  const hash=(value:string)=>createHash('sha256').update(value).digest('hex'),digest='7'.repeat(64);
  const target={database:'SYNTHETIC_ONLY',databaseOid:'123',actingRole:'SYNTHETIC_ONLY',sessionUser:'SYNTHETIC_ONLY',serverAddress:null,serverPort:null,postmasterStart:'2026-10-23 00:00:00+00'};
  const receipt=JSON.stringify({result:'PASS',notice:'NEW_SYNTHETIC_V8_DRIVER_PROTOCOL_ONLY_NOT_ACTUAL_CATALOG_OR_APPROVAL'});writeFileSync(independent,receipt,{mode:0o600});
  const review={version:'C_NATIVE_RUNTIME26_REVIEW_V1',decision:'ACCEPT_EXACT_RUNTIME26_TARGET_METADATA',target,
-  catalog:{format:'EXACT26_RUNTIME_CATALOG_EXPORT_V8',patchLevel:'26_hv2_live_pairs_complete_write_acl_v8_from_v7',sha256:digest},purposes,
+  catalog:{format:historyDraft?'EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1':'EXACT26_RUNTIME_CATALOG_EXPORT_V8',patchLevel:historyDraft?'26_hv2_history_draft_line_set_from_v8':'26_hv2_live_pairs_complete_write_acl_v8_from_v7',sha256:digest},purposes,
   scope:'EXACT_TARGET_METADATA_ONLY',independentReview:{path:independent,sha256:hash(receipt),result:'PASS'},realImportExecutionAuthorized:false};
  const body=JSON.stringify(review);writeFileSync(reviewFile,body,{mode:0o600});
  const configuration:ProductionRuntime26Configuration={...config(),profile:'source-confirmed-native-exact26-r1-v1',documentCommands:'DISABLED',runtime26Review:{reviewFile,trustedReviewSha256:hash(body)}};
  const observation={identity:{database:target.database,database_oid:target.databaseOid,database_owner:'synthetic_owner',current_user:target.actingRole,session_user:target.sessionUser,
   server_version_num:'170011',server_addr:null,server_port:null,postmaster_start:target.postmasterStart,replication_role:'origin'},migration_versions:Array.from({length:26},(_,i)=>i+1),
   catalog_sha256:digest,source_routines_match:true,complete_write_system_acl_match_v8:true,normal_delete_acl_match_v8:true,recorded_live_balance_contract_match:true};
- newLivePairObservations.add(observation);
+ if(historyDraft)draftHistoryObservations.add(observation);else newLivePairObservations.add(observation);
  return {configuration,observation,cleanup:()=>rmSync(directory,{recursive:true,force:true})};
 }
 
@@ -401,6 +403,7 @@ function exact26Driver(observation: ReturnType<typeof exact26Fixture>["observati
       calls.push({ lease, sql, values }); let rows: Record<string, unknown>[] = [];
       const supplied = extra?.(sql, values);
       if (supplied !== undefined) rows = supplied;
+      else if (draftHistoryObservations.has(observation) && sql === draftHistoryProbe) rows = [structuredClone(observation)];
       else if (newLivePairObservations.has(observation) && sql === newLivePairProbe) rows = [structuredClone(observation)];
       else if (sql === NATIVE_RUNTIME26_METADATA_PROBE) rows = [structuredClone(observation)];
       else if (sql === NATIVE_RUNTIME26_IDENTITY_PROBE) rows = [{ identity: structuredClone(observation.identity) }];
@@ -447,9 +450,8 @@ test("production B07 host: read-only runtime metadata cannot enable HISTORY writ
     }, p.factory, null, syntheticCapacity()), { code: "NATIVE_RUNTIME26_NOT_READY" });
     const counts = p.counts(); assert.equal(counts.allocations, 1); assert.equal(counts.ends, 1);
     assert.equal(counts.connects, counts.releases); assert.equal(authorizationCalls, 0);
-    assert.ok(p.calls.some(call => call.sql === newLivePairProbe));
-    assert.equal(p.calls.filter(call => /^(BEGIN|INSERT|UPDATE|DELETE|TRUNCATE)\b/.test(call.sql)
-      || call.sql.includes("history-revise:")).length, 0);
+    assert.equal(counts.connects,0);assert.deepEqual(p.calls,[]);
+
   } finally { f.cleanup(); }
 });
 test("production exact26: separate closed selector refuses legacy, command, pin and provider widening before pool allocation", async () => {
@@ -1062,12 +1064,12 @@ test('v16 B07 production host: old exact HISTORY successor refuses new-column fu
  const p=exact26Driver(f.observation,sql=>sql===V16HistoryProbe?[structuredClone(f.observation)]:undefined);let grants=0;
  try{
   await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(config,{authorization:{async authorize(actor,command){grants++;return{dataset:'HISTORY',kind:command.kind,documentId:command.documentId,actorAccountId:actor.accountId};}}},p.factory, null, syntheticCapacity()),
-   {code:'NATIVE_RUNTIME26_NOT_READY',message:'Complete normal writes require the exact independently reviewed V8 catalog'});
+   {code:'NATIVE_RUNTIME26_NOT_READY',message:'Historical draft line sets require the exact independently reviewed successor catalog'});
   assert.deepEqual(p.calls,[]);assert.deepEqual(p.counts(),{allocations:1,connects:0,releases:0,ends:1});assert.equal(grants,0);
  }finally{f.cleanup();}
 });
-test('explicit new synthetic V7 HISTORY graph mounts original protected routes without enabling LIVE commands',async()=>{
- const f=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','HISTORY_REVISION']);
+test('explicit new synthetic HISTORY draft successor graph mounts original protected routes without enabling LIVE commands',async()=>{
+ const f=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','HISTORY_REVISION'],true);
  const p=exact26Driver(f.observation);let grants=0;
  const config=f.configuration;
  const api=await createProductionRuntime26HistoryRevisionApplicationApi(config,{authorization:{async authorize(actor,command){grants++;return{dataset:'HISTORY',kind:command.kind,documentId:command.documentId,actorAccountId:actor.accountId};}}},p.factory, null, syntheticCapacity());
@@ -1754,7 +1756,7 @@ function mixedProductionFixture(historyPurpose: boolean) {
   return { ...f, configuration: { ...f.configuration, ...mixedMaintenance, runtime26Review: { ...f.configuration.runtime26Review, trustedReviewSha256: createHash('sha256').update(body).digest('hex') } } };
 }
 function newLivePairMixedFixture(historyPurpose:boolean) {
- const f=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE',...(historyPurpose?['HISTORY_REVISION']:[])]);
+ const f=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','PRODUCT_MAINTENANCE',...(historyPurpose?['HISTORY_REVISION']:[])],historyPurpose);
  return {...f,configuration:{...f.configuration,...mixedMaintenance}};
 }
 test('unified original R2 and HISTORY hosts retain five private maintenance selections without duplicate routes or cross-granting document commands', async () => {
@@ -3166,4 +3168,13 @@ test('V8 compiled non-CORE consumers reject even complete old V7 before any driv
    assert.deepEqual(f.p.calls,[]);assert.equal(f.p.counts().connects,0);assert.equal(f.p.counts().ends,1);
   }finally{f.cleanup();}
  }
+});
+
+test('HISTORY draft successor API requires new exact capability before borrow; old V8 still mounts ordinary readonly graph',async()=>{
+ const history={authorization:{async authorize():Promise<never>{throw Error('No business request in startup check');}}};
+ const old=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','HISTORY_REVISION']),p=exact26Driver(old.observation);
+ try{await assert.rejects(createProductionRuntime26HistoryRevisionApplicationApi(old.configuration,history,p.factory,null,syntheticCapacity()),{code:'NATIVE_RUNTIME26_NOT_READY',message:'Historical draft line sets require the exact independently reviewed successor catalog'});assert.equal(p.counts().connects,0);assert.deepEqual(p.calls,[]);assert.equal(p.counts().ends,1);}finally{old.cleanup();}
+ const fresh=newLivePairFixture(['PRODUCT_SEASONS_READ','CURRENT_CUSTOMER_READ_WRITE','CURRENT_FORM_READ','HISTORY_READ','INVENTORY_ADMISSION','HISTORY_REVISION'],true),q=exact26Driver(fresh.observation);
+ try{const api=await createProductionRuntime26HistoryRevisionApplicationApi(fresh.configuration,history,q.factory,null,syntheticCapacity());try{assert.equal(q.calls[0]?.sql,draftHistoryProbe);assert.ok(api.app.hasRoute({method:'POST',url:'/imported-history/transfers/revise'}));assert.equal(api.app.hasRoute({method:'POST',url:'/transfers/commands'}),false);}finally{await api.close();}}finally{fresh.cleanup();}
+ const normal=newLivePairFixture(),r=exact26Driver(normal.observation);try{const api=await createProductionRuntime26ApplicationApi(normal.configuration,r.factory,null,syntheticCapacity());try{assert.equal(r.calls[0]?.sql,newLivePairProbe);assert.equal(api.app.hasRoute({method:'POST',url:'/imported-history/transfers/revise'}),false);}finally{await api.close();}}finally{normal.cleanup();}
 });

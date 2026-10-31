@@ -72,4 +72,23 @@ class Tests(unittest.TestCase):
                 continue
             try:self.assertEqual(m.compare(a,e)['decision'],'REFUSE')
             except ValueError:pass
+    def test_history_draft_successor_exact_four_bodies_and_v8_proofs(self):
+        e=fixture();o=e['observation'];o['manifest']['format']='EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1'
+        bodies={
+            'history_numeric_current_facts(text,uuid)':'e9b62d95e68633c4fa2e0d5de8ba8d4fd5a577fa863941332553818ff01de8dc',
+            'history_revision_not_enabled()':'5d66ae3f7ad2dd49fe1d935299e44386923dfcc073d9485b992f03980c661a7c',
+            'history_effective_set_guard()':'324d469b4452aa8a5b37cc51cf2e41ad50fdd94718738dbb59d6796dfbdb83a1',
+            'validate_history_numeric_revision_commit()':'a73089ea7b30cfdb43f616ee1e8ae5fbc2f9a47d4c713b322b4012a28c6fe01c'}
+        o['manifest']['routines']=o['manifest']['routines'][:133]+[dict(signature='naijue_erp.'+k,body_sha256=v,definition_sha256='b'*64) for k,v in bodies.items()]
+        del o['complete_write_xmin_acl_match'];o.update(complete_write_system_acl_match_v8=True,normal_delete_acl_match_v8=True,recorded_live_balance_contract_match=True)
+        self.assertEqual(m.compare(copy.deepcopy(e),e)['decision'],'EXACT_METADATA_ONLY_NOT_UPGRADE_AUTHORIZATION')
+        for field in ['source_routines_match','complete_write_system_acl_match_v8','normal_delete_acl_match_v8','recorded_live_balance_contract_match']:
+            a=copy.deepcopy(e);del a['observation'][field];self.assertEqual(m.compare(a,e)['decision'],'REFUSE')
+        a=copy.deepcopy(e);a['observation']['manifest']['routines'][-1]['body_sha256']='f'*64;self.assertEqual(m.compare(a,e)['decision'],'REFUSE')
+        a=copy.deepcopy(e);a['observation']['manifest']['format']='EXACT26_RUNTIME_CATALOG_EXPORT_V8';self.assertEqual(m.compare(a,e)['decision'],'REFUSE')
+        for mutation in ['wrong','missing']:
+            wrong=copy.deepcopy(e)
+            if mutation=='wrong':wrong['observation']['manifest']['routines'][-1]['body_sha256']='f'*64
+            else:wrong['observation']['manifest']['routines'].pop()
+            with self.assertRaises(ValueError):m.compare(copy.deepcopy(wrong),wrong)
 if __name__=='__main__':unittest.main()

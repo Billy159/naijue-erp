@@ -62,3 +62,9 @@ test('PREPARATION13 extension retains original V4/V6/V7/V8 probe and V6/V7/V8 re
  const digest=s=>createHash('sha256').update(s).digest('hex');for(let i=0;i<keys.length;i++)assert.equal(digest(original[keys[i]]),expected[i]);
  const outputs={V6:'06dca8e1104936da1f6bab9093be9a532a6637a06450cc404c741dde6e6ef23e',V7:'ebadb239a8518b4d9a22fde945ff4d9c0c40b7c85c26752858a932b12b0d69f1',V8:'98d179b0f2ee12c87f999d17aa95185782877ab9fa7c50b3ecd8b18d69a7c34d'};for(const profile of Object.keys(outputs))assert.equal(digest(await renderReadOnlyCheck({...plan(),profile})),outputs[profile]);
 });
+
+test('HISTORY draft successor renders only exact new four-body SELECT probe; original V8 still selects old probe',async()=>{
+ const p=plan();p.profile='HISTORY_DRAFT_LINESET_V1';const sql=await renderReadOnlyCheck(p);assert.ok(sql.includes(original.NATIVE_RUNTIME26_HISTORY_DRAFT_LINESET_METADATA_PROBE.replace(anchor,replacement)+';'));
+ assert.ok(sql.includes("'format','EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1'"));assert.ok(sql.includes("jsonb_array_length(manifest->'routines')=137"));assert.ok(sql.endsWith('ROLLBACK;\n'));
+ p.profile='V8';const old=await renderReadOnlyCheck(p);assert.ok(old.includes(original.NATIVE_RUNTIME26_COMPLETE_WRITE_ACL_V8_METADATA_PROBE.replace(anchor,replacement)+';'));assert.ok(!old.includes('EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1'));
+});

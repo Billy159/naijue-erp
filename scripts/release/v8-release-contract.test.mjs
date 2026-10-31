@@ -14,7 +14,7 @@ test('V8 has its own system and DELETE proofs while retaining recorded live bala
  assert.deepEqual(contract.full.catalogProfiles[name],descriptor);
  assert.equal(contract.full.catalogProfiles['recorded-live-ledger-v7'].aclProofField,'complete_write_xmin_acl_match');
  assert.equal(contract.full.patchLevel,contract.full.catalogProfiles['legacy-v1'].patchLevel);
- assert.equal(contract.runtimeSqlPatches.length,12); // ACL successor adds no storage DDL.
+ assert.equal(contract.runtimeSqlPatches.length,13); // Existing V8 remains patch12; draft-line-set adds patch13.
  const deploy=read('scripts/release/deploy-candidate.py');
  assert.ok(deploy.includes(contractBlock(contract)),'generated descriptor must match editable contract');
 });
@@ -38,4 +38,13 @@ test('V8 source generation does not self-approve boot or rollback helpers',()=>{
  // Reapproval is external; rollback must share the original pinned helper with boot.
  const pin=s=>s.match(/^DEPLOYMENT_CAPACITY_SHA256 = '([a-f0-9]{64})'$/m)?.[1];
  assert.equal(pin(read('scripts/release/rollback-candidate.py')),pin(read('scripts/release/boot-entry.py')));
+});
+
+test('HISTORY draft successor is explicit and includes its SQL without reinterpreting V8 or self-approving helper',()=>{
+ const profile='history-draft-line-set-v1',d=contract.full.catalogProfiles[profile];
+ assert.deepEqual(d,{format:'EXACT26_RUNTIME_CATALOG_EXPORT_HISTORY_DRAFT_LINESET_V1',patchLevel:'26_hv2_history_draft_line_set_from_v8',aclProofField:'complete_write_system_acl_match_v8',deleteAclProofField:'normal_delete_acl_match_v8',observationProofField:'recorded_live_balance_contract_match',requiredObservation:'HISTORY_DRAFT_TRANSFER_LINE_SET_FROM_V8',runtimeSqlPatch:'adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql'});
+ assert.deepEqual(contract.runtimeSqlPatches[11],{source:descriptor.runtimeSqlPatch,member:'patches/0026-live-ledger-balance-pairs.sql'});assert.deepEqual(contract.runtimeSqlPatches[12],{source:d.runtimeSqlPatch,member:'patches/0026-history-draft-transfer-line-set-successor.sql'});
+ for(const key of Object.keys(d)){const c=structuredClone(contract);delete c.full.catalogProfiles[profile][key];assert.throws(()=>contractBlock(c),/INVALID_RELEASE_CATALOG_PROFILE/);}
+ const missing=structuredClone(contract);missing.runtimeSqlPatches.pop();assert.throws(()=>contractBlock(missing),/INVALID_RELEASE_HISTORY_DRAFT_PATCH/);
+ const oldFormat=structuredClone(contract);oldFormat.full.catalogProfiles[profile].format='EXACT26_RUNTIME_CATALOG_EXPORT_V8';assert.throws(()=>contractBlock(oldFormat),/INVALID_RELEASE_CATALOG_PROFILE/);
 });
