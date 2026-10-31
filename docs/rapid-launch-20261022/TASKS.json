@@ -20379,7 +20379,8 @@
       "driverConfigFix": {
         "sha256": "3a5c761a304ebd9cb7a2ba7e632b0cafdcb02945246d81ca49de7482079b2cad",
         "cause": "Driver compared raw C config to producer-normalized config; two default false routes",
-        "status": "FIXED_SINGLE_LEAF_OWNER_CHECKS_PASS_BROWSER_RETRY_PENDING"
+        "status": "FIXED_SINGLE_LEAF_OWNER_CHECKS_PASS_BROWSER_RETRY_PENDING",
+        "browser": "CONFIG_PRECHECK_PASS_BLOCKED_MISSING_PLAYWRIGHT_BEFORE_BROWSER"
       }
     },
     "documentFollowup": {
@@ -20552,7 +20553,13 @@
         "cancelAndList": "2b52+3f3 partial current visible PASS, save/list actual pending"
       },
       "selectorCorrection": "Sales nonhall blanket disable distinct from transfer; preserve busy/idempotency/permissions/samehall-save contract; missing context explicit",
-      "barcodeBeforeSave": "Confirmed interaction discrepancy; preview must not claim persisted SKU/barcode; server owns uniqueness, old IDs untouched"
+      "barcodeBeforeSave": "Confirmed interaction discrepancy; preview must not claim persisted SKU/barcode; server owns uniqueness, old IDs untouched",
+      "salesPickerIncrement": {
+        "status": "SOURCE_FIXED_DIRECTED_FORM_MODEL_TESTS_PASS_NOT_BROWSER_OR_PG",
+        "scope": "Three nonhall buttons actionable when scope active; absent hall explicit message without unscoped HTTP; busy guard kept",
+        "notClaimed": "Salesperson candidates before hall not yet enabled; customer/warehouse existing HTTP requires true hall",
+        "next": "Reuse existing nullable-hall salesperson protocol with minimal model/UI adapter; no new API or relaxed save contract"
+      }
     }
   }
 }
