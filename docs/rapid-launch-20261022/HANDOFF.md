@@ -1,3 +1,7 @@
+## 2026-10-31 C source/transport admission payloads issued
+
+C independently adopted fixedQB source evidence,37 source-file exactbytes and sourceStages digest plus actualA0 job276 observed transport/cluster, then issued two fixed local payloads for originalT45 root-owned installation within approvedA1. SOURCE SHA835461ffd4f13d0d690b982d263d3897d4173a147bc324d4ffdb1adfd633c29e; TRANSPORT SHA8d1b1e28ff235c368e958ce88755f33ad28cc188c8a66d83c84822784b2702b2. No actionApproval, controllerarmed, targetcatalog, slotbudget or businessPASS was issued. Actualfinite controller proof and exactstage/job/PLAN still required before C actionadmission. Originaldeadline unchanged; installation not yet observed.
+
 ## 2026-10-31 actual A0 job276 and finite-exit gap
 
 Original276 COMPLETED/exit0, metadata-only repeatable-read rollback. ExactQA178 identity/Unix/new2DB+3role absent confirmed; systemIdentifier7701337335828107278, PG170011,postmaster2026-10-27 13:22:19.696753+00; max16/superreserved3/reserved0, client1/newrole sessions0; free46846803968B. Facts file pin recorded inTASKS. This is not pool/slot admission or businessPASS. OriginalT45 found no actualQA178 armed finite-exit controller; other helper hardcodes wrongtarget. Minimal original-channel target-specific wiring assigned, retaining05guard and original deadline; no general control platform, no fictitious armed/PASS, no foreign cleanup. A1 private files preparation may continue; no role/DB/ACL writes at this receipt.

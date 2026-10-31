@@ -20145,6 +20145,21 @@
       "scope": "Existing original control channel, fixed QA178/new objects only; source pins then QB affected review, actual arm before referencing05",
       "sourceApprovalAndArmedEvidence": "No fabricated PASS/armed allowed",
       "deadline": "Original T0/deadlines unchanged"
+    },
+    "independentSourceTransportAdmission": {
+      "owner": "C",
+      "status": "TWO_FIXED_C_APPROVAL_PAYLOADS_DELIVERED_TO_ORIGINAL_T45_FOR_AUTHORIZED_ROOT_INSTALL",
+      "sourceApprovalSha256": "835461ffd4f13d0d690b982d263d3897d4173a147bc324d4ffdb1adfd633c29e",
+      "transportApprovalSha256": "8d1b1e28ff235c368e958ce88755f33ad28cc188c8a66d83c84822784b2702b2",
+      "basis": "Human exactscope approval, adopted QB fixed source increments,37 source file byte closure, actualA0 job276 transport/cluster facts",
+      "notIssued": [
+        "actionApproval",
+        "controllerArmedReceipt",
+        "actualCatalogReview",
+        "connectionCapacityBudget",
+        "businessAcceptance"
+      ],
+      "serverInstallation": "NOT_YET_OBSERVED"
     }
   }
 }
