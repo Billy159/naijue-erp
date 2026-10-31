@@ -289,7 +289,7 @@ try:
                 return read_after(start)
 
             def select_audit(label, text):
-                host = drawer.locator('.runtime-settings-select').filter(has=drawer.locator('.arco-select[aria-label=' + json.dumps(label) + ']'))
+                host = drawer.locator('.runtime-settings-select').filter(has=page.locator('.arco-select[aria-label=' + json.dumps(label, ensure_ascii=False) + ']'))
                 host.locator('.arco-select-view').click()
                 host.locator('.arco-select-option').filter(has_text=re.compile('^' + re.escape(text) + '$')).click()
 
