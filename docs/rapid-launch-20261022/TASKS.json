@@ -20223,6 +20223,18 @@
       "finding": "Closed on new caller only; base128ef3 failure retained; actual Linux/Docker/PG NOT_RUN",
       "fixedCallerSha256": "ba42edff64cc50850f2e0ea2b99fef66c9aab45c48835e86c3784c453065f214",
       "fixQbSha256": "3fed525cc9f9f7824a18e6e2fd6bd9fad9584ddea035c183fe7a10ce8c15dade"
+    },
+    "newEnvironmentScope03": {
+      "status": "HUMAN_APPROVED_ORIGINAL_T45_CURRENT_FACTS_A0_DISPATCHED",
+      "resultSha256": "96eafac6f2515a7349244a21d67e77026b943bef496b1a61ebefb3a8d9803b94",
+      "confirmationSha256": "e56b1c53a14828c560b9e4213eeb60487919243f449719c79628e89fee30e145",
+      "scope": "Original QA178 2DB/3roles/ACL/recovery preserved; dedicated Node24/existingdeps/source path+bounded child+new90min actions15min cleanup",
+      "notAuthorized": "Production/realdata/public/deployment/oldwindow replay; no response is not approval",
+      "next": "OriginalT45 actual current identity/resources/deps facts and real newT0/deadlines; original independent source/window/action bindings, no oldwindow replay",
+      "humanApproval": {
+        "source": "Main controller human async reply call_cae24f4344a34772bf9027a769388bd5/0",
+        "text": "确认差异03及本批新隔离窗口"
+      }
     }
   },
   "r1LatestFullUserScope20261031": {
@@ -20370,6 +20382,18 @@
       "scope": "Category typed notice/product defaultA/create list reset/clean-dirty cancel; does not include57a warehouse successor",
       "browserOwner": "Released; both dedicated tabs closed, test drafts discarded, user tabs preserved",
       "browserStatus": "QF2_AND_QF_AFFECTED_VISIBLE_PARTIAL_CAPABILITY_LIMITED"
+    },
+    "sharedProductCategoryHost": {
+      "status": "D1_EXACT2_FIXED_8_UNIQUE_SERVICE_CHECKS_PASS_QB_PENDING",
+      "resultSha256": "9d7d58f46eb117a1d38b1ace9bcb7ddbea5ddccc58917db7e2fca15b32d84a3f",
+      "files": [
+        "tests/support/product-entry-service-host-fixture.mjs",
+        "tests/product-entry-service-host.test.mjs"
+      ],
+      "meaning": "Original PRODUCTv2/COLOR/CATEGORY services/HTTP with same finite memory state and private media stage; no second business service or production change",
+      "newPublicConfig": "apps/web/demo-replica/tests/product-entry-service-public-config.json",
+      "next": "Original stdio finite profile and headed driver pairing, frontend browser actual save/media/category still pending",
+      "realPg": "NOT_RUN"
     }
   }
 }

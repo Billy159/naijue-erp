@@ -8213,7 +8213,7 @@
     },
     "D1": {
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-      "current": "Existing synthetic product service host CATEGORY port/readback exact2",
+      "current": "Host category exact2 frozen handed back, next original stdio profile exact leaves pending registration",
       "soleWriter": [
         "tests/support/product-entry-service-host-fixture.mjs",
         "tests/product-entry-service-host.test.mjs"
@@ -8221,6 +8221,11 @@
       "boundary": "Explicit categoryWrite false by default; original catalogue service/HTTP and shared fixture transaction state only; no production source/rules/SQL/ACL/bridge/service start",
       "next": "Hand fixed backend hint to original F1 consumer; no backend-only UI PASS",
       "frozenPrevious": "57a528846e6ebe066fbe4beeeef757da10cea499"
+    },
+    "C_syntheticConfig": {
+      "soleWriter": "C",
+      "file": "apps/web/demo-replica/tests/product-entry-service-public-config.json",
+      "scope": "Explicit synthetic-product-entry origin; exact existing service host profile only, no production configuration or capability bypass"
     }
   }
 }
