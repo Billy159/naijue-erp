@@ -20981,12 +20981,21 @@
   },
   "r1ProductReadonlyNormalEntry": {
     "owner": "QF2",
-    "status": "QF2_NORMAL_VIEW_FIVE_TABS_PASS_STOCK_PROFILE_GAP_D1_DIAGNOSED_D3_FACT_SEAM_CHECK",
+    "status": "D3_FINITE_SYNTHETIC_FACT_DESIGN_ADOPTED_D1_EXACT3_IMPLEMENTING",
     "setup": "One necessary synthetic CREATE200 only, onSaved normal VIEW route; old full CREATE/media/11SKU suite not rerun",
     "actual": "Basic/spec/barcode/prices/emptyimages200; stock failure UI without newHTTP observed, no fabricated501",
     "notClaimed": "Not production defect or zero stock; fixed48 stock capability off and originalhost stockReader:null are source clues",
-    "next": "D3 original only read existing authorized finite stock source/port and exact zero/UNKNOWN/admission semantics; D1 host implementation not started, C config remains unchanged.",
+    "next": "D1 original host opt-in inventory port with actualCREATE SKU snapshots and independent bounded authority; C pairs flag only after checks; T45 successor build; QF2 P13 only recheck",
     "realPg": false,
     "diagnosis": "Capped48 config lacks readOverview, host stockReader null; single flag would only503. Formal stock reader/API exist; no production defect proved."
+  },
+  "r1StaffNameContactReadback": {
+    "owner": "QF2",
+    "status": "ACTUAL_SYNTHETIC_EDIT_200_V1_TO_V2_FINAL_REOPEN_INVARIANTS_CHECK_IN_PROGRESS",
+    "application": "b33829a6f34202916906959589e97920ff0aa8fa",
+    "profile": "Original fixed49 --staff-edit, restricted name/contact only",
+    "scope": "Clean cancel0write then singleEDIT, detail/list/reopen and unchanged role/hall/status/account metadata; no credentials or access actions",
+    "report": "reports/qa-frontend/rapid-launch-20261022/QF2/STAFF49-NAME-CONTACT-EDIT-20261031-01",
+    "notClaimed": "No CREATE/account/permission/realPG or whole-page acceptance"
   }
 }

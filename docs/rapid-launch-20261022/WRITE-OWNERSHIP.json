@@ -8419,5 +8419,19 @@
       "apps/web/demo-replica/tests/transfer-chain-browser.py"
     ],
     "scope": "Opt-in bounded synthetic SAVE headers >20 and faithful query pagination/sort; production SQL/API unchanged. This lease supersedes D1 transfer and F3 shared production bridge after their fixed handback. No actual browser before C slot handover."
+  },
+  "r1ProductStockHostSeam": {
+    "owner": "D1",
+    "status": "ASSIGNED_EXACT3_AFTER_D3_READONLY_DESIGN",
+    "files": [
+      "tests/support/product-entry-service-host-fixture.mjs",
+      "tests/support/product-entry-stock-fixture.mjs",
+      "tests/product-entry-service-host.test.mjs"
+    ],
+    "scope": "Opt-in bounded synthetic original stock port and independent inventory authorization; default null unchanged; explicit0 versusUNKNOWN/admission/failure differentiated; no SQL/API/DTO/pool/production change",
+    "configurationOwner": "C",
+    "configuration": "apps/web/demo-replica/tests/product-entry-service-public-config.json",
+    "sharedBridge": "No writer assigned until exact necessary opt-in line identified; not concurrently modified",
+    "buildOwner": "T45"
   }
 }

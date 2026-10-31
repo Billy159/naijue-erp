@@ -3420,3 +3420,6 @@ V7准备推进：C已按原QB PRODUCT1/PAYMENT3静态PASS签发原格式三份so
 
 
 原QF候选52数量方向问题限定独验PASS，check780f1987/6240B：RETURN/EXCHANGE已审核逐行退回-1真实computed红178,61,66、换出2原色35,42,54、原footer/重入保持，0browsercommands/错误，ownprocess0。该问题关闭，不冒整页/PG/正式。应用513cf763、manifest93b0d4ac、config284705，明确复用原51six fixture，非52新bridge。D1已核商品48库存无HTTP是缺readOverview且hostnull两层载体缺口，单开flag只503；原D3仅核既有授权/准入/基线/UNKNOWN与明确0的有限source接缝，不造值/不改正式接口。新隔离窗口确认仍未答，未操作实际环境。
+
+
+D3有限合成库存事实/授权三叶方案已交原D1实施，默认hostnull不变，opt-in各状态明确声明、原service/HTTP/DTO复用，C配置待真实定向结果后成对。QF2员工49同版旧证据去重后，仅姓名/联系方式一EDIT已200v2，列表新名可见，最终重开及角色/厅/状态/账号不变核对在途，尚未登记完整PASS；不测账号/权限/真实PG。
