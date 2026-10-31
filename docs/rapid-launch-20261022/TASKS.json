@@ -21078,10 +21078,22 @@
   },
   "r1ColourMaintenanceFollowup": {
     "owner": "QF2",
-    "status": "RESUMED_LIGHTWEIGHT_DRIVER_PREPARATION_ONLY_AFTER_RESOURCE_RECOVERY",
+    "status": "PREPARED_SYNTAX_ONLY_WAITING_RESOURCE_NOT_BROWSER_PASS",
     "candidate": "fixed53/source0a2fa82d/manifest046d01bd/config764d4978",
     "scope": "Standalone color normal CREATE-save-list-EDIT-save-reopen F03 targetId/version; cancel0write; at most2 COLOR commands",
     "browser": "NOT_STARTED_ENOSPC zero requests; no launch until resource revalidated",
-    "notRepeated": "Old inlinecolor/productSKU/media/stock suites; source/fixture remain read-only"
+    "notRepeated": "Old inlinecolor/productSKU/media/stock suites; source/fixture remain read-only",
+    "driver": {
+      "path": "reports/qa-frontend/rapid-launch-20261022/QF2/COLOR53-STANDALONE-EDIT-F03-20261031-01-PREP/directed-color-page.py",
+      "bytes": 9039,
+      "sha256": "a90d42ca84b4d2cf4b4ee7df489496088a0bcde3a7bb2bcf9a9b6b8db880dca0"
+    },
+    "command": {
+      "bytes": 6122,
+      "sha256": "08f8d21ab01a01c7a35d2b2f2467ce18d0ec282caed593993870a9589b02b778"
+    },
+    "actualRequests": 0,
+    "actualCommands": 0,
+    "next": "Revalidate resource availability and original browser lease before sole existing QF2 launch; not a new task; no fixture/source edits."
   }
 }
