@@ -21183,9 +21183,9 @@
   },
   "r1UnifiedSyntheticHostComposition": {
     "owner": "D1",
-    "status": "QF2_DATA56_PASS_QB_PAYMENT_SOURCE_PASS_BUILD57_PASS_F1_DOCUMENT_RUNNING",
+    "status": "FIXED57_SALES_SELF_CHECK_PASS_QF_RUNNING_TRANSFER_SIZE_GROUP_500_D1",
     "scope": "Unify actual existing synthetic constructors/current facts and posting transaction seams; no fake independent balances; exact files in WRITE-OWNERSHIP",
-    "next": "OriginalF1 fixed57 document affected flow, then originalQF independent limited closure; data56 not repeated",
+    "next": "D1 reproduce exact dictionary500 and correct same-file seam; QF independently close fixed57 sales only; preserve56data",
     "notClaimed": "No real PG or production; source-ready not fully writable",
     "source": "bf59bac78119097328de24ed615b03fc56cf75f6",
     "report": "reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/UNIFIED-SERVICE-COMPOSITION-RESULT.json",
@@ -21301,6 +21301,16 @@
       "inputs": 1310,
       "producerSeconds": 0.727,
       "status": "BUILD_ONLY_PASS_NOT_BROWSER"
+    },
+    "document57": {
+      "status": "PARTIAL_SALES_LINKAGE_PASS_TRANSFER_SIZE_GROUP_READ_500",
+      "resultSHA": "99f941c191465db05cb0bfc9687dde2a7a7d7c226ead014032c0beafdb6b37a4",
+      "receiptSHA": "f55571187bcd57364dacf8689cd477ef1662ff2e6b833cdf1b6dbab4e9278870",
+      "actualCommands": "productCREATE/accountCREATE/salesSAVE three200;0transferSAVE/approval",
+      "sales": "DRAFTv1 qty1,reference/deal/net56800, settlement same newaccount",
+      "transfer": "MAINFOUND;sizegroups POST search empty page1 size100 ->500 INTERNAL_ERROR; actual group unavailable UI retained; no fakeothergroup",
+      "owner": "D1 original exact2 host/test; QF fixed57 sales only",
+      "resources": "ownprocess0"
     }
   },
   "r1UnifiedAuditReadback": {
