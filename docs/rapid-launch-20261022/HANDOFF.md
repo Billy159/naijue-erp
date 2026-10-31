@@ -1,3 +1,5 @@
+2026-10-31 原QB仅F01后继复验PASS已采用：QB-F01-SUCCESSOR02-RESULT.json3985B/SHAed44ba7594e3ce1505f497cf905e1081c2a5c69320745b42a8d65116ced5cb25。准确script9a5e5f52只一处连接参数后继关闭F01；旧01 NEED_FIX保留，不记实际server timeout/remote结算/普通PG业务/退出通过。下一实际前置为目标专属准备器、场景/来源封装、备份恢复载体与准确执行确认，未放行环境操作。
+
 2026-10-31 安装载体F01修复交回：原T45 successor02 script29330B/SHA9a5e5f52c81f5115c8b44bab909f7c2d83c295efb03d1d39ce32a3e82e8883d0，仅共同psql连接增加server lock3s/statement60s；4个受影响offline及syntax通过，已交原QB只复该delta，旧01 NEED_FIX保留。备份/兼容接缝清单13952B/SHA1b51a07e已核，旧备份固定prod/QA不能挪用，原T45继续本批最小可执行恢复载体；新写/UNKNOWN后不得旧快照覆盖，旧app×V8兼容未证。全部仍源码准备/0环境执行。
 
 2026-10-31 安装载体新增F01/P2：原QB已实证部分变更分支未把PLAN声明lock3s/statement60s送入PG；client90s不证明远端SQL结束。原载体暂NEED_FIX，待本包审查收尾后由原T45统一连接级最小修复，不改37原事务/CREATE DATABASE边界；断链仍UNKNOWN，禁止原样重放。D1新目标fixture/provider仍在途，备份恢复及配套应用回滚接缝由原T45只作执行准备；未实际建库、权限或部署。

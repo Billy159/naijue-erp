@@ -19922,7 +19922,7 @@
     },
     "isolatedInstaller": {
       "owner": "T45",
-      "status": "F01_FIXED_SUCCESSOR02_QB_TARGETED_REVIEW_PENDING_NOT_EXECUTED",
+      "status": "QB_F01_CLOSED_SUCCESSOR02_SOURCE_ONLY_REAL_PG_NOT_RUN",
       "contentsSha256": "118c49fb92436200d0af2fb12cd3e83b888da4f996527d640f534e12349b57b0",
       "bundleFilesVerified": 42,
       "scriptSha256": "9900b4aac22fb3874da2af2d01bb8f7b7c5c7c8fb7fd1f23258bb3275c854d60",
@@ -19931,7 +19931,8 @@
       "finding": "F01 P2: some psql mutation branches omit declared server lock/statement timeout; client timeout does not prove remote SQL termination",
       "successorScriptSha256": "9a5e5f52c81f5115c8b44bab909f7c2d83c295efb03d1d39ce32a3e82e8883d0",
       "successorReportSha256": "da9dac0a8c1c78b67999f86fc92d5c255d05520fd5ce61692a56a5cbda71e69c",
-      "affectedOfflinePass": 4
+      "affectedOfflinePass": 4,
+      "qbSuccessorReportSha256": "ed44ba7594e3ce1505f497cf905e1081c2a5c69320745b42a8d65116ced5cb25"
     },
     "backupRecovery": {
       "status": "TARGET_SPECIFIC_EXECUTABLE_PREPARATION_IN_PROGRESS_NO_ENVIRONMENT_ACTION",

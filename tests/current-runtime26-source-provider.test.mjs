@@ -109,3 +109,15 @@ test('QA22 sales header rejects a reviewed native ID differing from the original
  const review=await f.save({...originalReview,nativeBindings,independentReview});
  await assert.rejects(module.openReviewedQa22Capture({...f.recipe,nativeBindings,review},f.b,new AbortController().signal),/NATIVE_BINDING/);
 });
+
+test('new exact V7R1 binding is finite and cannot open legacy21551 capture/money/producer authority',async()=>{
+ const {CURRENT_LIVE_LEDGER_QA_TARGET,CURRENT_LIVE_LEDGER_QA_NAMESPACE,CURRENT_LIVE_LEDGER_QA_BATCH}=await import('./integration/current-runtime26-sales-fixture.ts');
+ const b={...binding(),batchId:CURRENT_LIVE_LEDGER_QA_BATCH,fixedSourceNamespace:CURRENT_LIVE_LEDGER_QA_NAMESPACE,target:{...binding().target,database:CURRENT_LIVE_LEDGER_QA_TARGET}};
+ assert.equal(module.validateQa22Binding(b),undefined);
+ for(const bad of [{...b,batchId:binding().batchId},{...b,fixedSourceNamespace:binding().fixedSourceNamespace},{...b,target:{...b.target,database:'erp_prod'}}])assert.throws(()=>module.validateQa22Binding(bad),/TARGET/);
+ let reads=0,activated=0;const files={async json(){reads++;throw Error('MUST_NOT_READ_OLD_APPROVAL');}};
+ await assert.rejects(module.readQa22Money(files,{},b),/V7_R1_FRESH_CAPTURE_MONEY_REVIEW_AND_ACTUAL_TARGET_ENVELOPE_REQUIRED/);
+ await assert.rejects(module.openReviewedQa22Capture({},b,new AbortController().signal),/V7_R1_FRESH_CAPTURE_MONEY_REVIEW_AND_ACTUAL_TARGET_ENVELOPE_REQUIRED/);
+ await assert.rejects(module.createQa22SourceSession({binding:b,database:{ready(){activated++;throw Error('MUST_NOT_ACTIVATE');}},signal:new AbortController().signal}),/V7_R1_FRESH_CAPTURE_MONEY_REVIEW_AND_ACTUAL_TARGET_ENVELOPE_REQUIRED/);
+ assert.equal(reads,0);assert.equal(activated,0);
+});

@@ -36,7 +36,10 @@ import type { HistoryClosureRow } from '../../packages/application/src/history-t
 import { HISTORY_COUNT_KEYS } from '../../packages/application/src/history-storage-contract.ts';
 import type { ImportSourceEvidence, JsonObject, HistorySalesHeader } from '../../packages/application/src/history-storage-contract.ts';
 import type { CurrentSalesBlueprint } from './current-runtime26-sales-fixture.ts';
-import { CURRENT_SALES_QA_TARGET, CURRENT_SALES_QA_NAMESPACE } from './current-runtime26-sales-fixture.ts';
+import { currentRuntime26SyntheticScope } from './current-runtime26-sales-fixture.ts';
+
+import type {LiveLedgerBalancePairsScenario} from './live-ledger-balance-pairs.integration.test.ts';
+import type {HistoryRevisionCommand,HistoryRevisionReceipt} from '../../packages/application/src/history-revision-contracts.ts';
 
 const sha=(s:string)=>createHash('sha256').update(s,'utf8').digest('hex');
 const table=(entity:string)=>{const t=IMPORT_V2_TABLES.find(t=>t.entity===entity);assert.ok(t);return t;};
@@ -57,9 +60,9 @@ const sourceRow=(s:ImportSourceEvidence,field_provenance:JsonObject):JsonObject=
  * the remaining21 are individually explicit zero targets, not absent evidence.
  */
 export async function buildCurrentRuntime26FullSourceFixture(blueprint:CurrentSalesBlueprint){
- assert.equal(blueprint.database,CURRENT_SALES_QA_TARGET);assert.equal(blueprint.namespace,CURRENT_SALES_QA_NAMESPACE);
+ const scope=currentRuntime26SyntheticScope(blueprint.database,blueprint.batchId),tag=scope.tag;assert.equal(blueprint.namespace,scope.namespace);
  assert.equal(blueprint.parties.length,115);assert.equal(blueprint.accountIdentities.length,49);
- const b=structuredClone(blueprint),id=(kind:string,key:string)=>stableImportId(kind,b.namespace,'SYNTHETIC_QA897_FULL',key);
+ const b=structuredClone(blueprint),id=(kind:string,key:string)=>stableImportId(kind,b.namespace,`SYNTHETIC_${tag}_FULL`,key);
  const warehouses=b.parties.filter(r=>r.source.entityType==='WAREHOUSE');assert.equal(warehouses.length,22);
  const first=warehouses.find(w=>w.nativeSnapshot.id===b.refs.warehouseId)!;assert.ok(first);
  const second=warehouses.find(w=>w.nativeSnapshot.id!==first.nativeSnapshot.id)!;assert.ok(second);
@@ -70,7 +73,7 @@ export async function buildCurrentRuntime26FullSourceFixture(blueprint:CurrentSa
  };
  const sources:Record<string,ReturnType<typeof csv>>={},sourceFiles:Record<string,{utf8:string;sha256:string;bytes:number}>={},rawArtifacts:Record<string,{utf8:string;sha256:string;rows:number}>={};
  const source=(entity:string,key:string,row:Record<string,string>,normalized:Record<string,string>=row,index=1)=>{
-  const file=`synthetic:qa897/full/${entity}/${entity==='PAYMENT_ACCOUNT_HALL'?'recommendation-1':key}.json`,physical=JSON.stringify(row)+'\n';
+  const file=`${scope.root}/full/${entity}/${entity==='PAYMENT_ACCOUNT_HALL'?'recommendation-1':key}.json`,physical=JSON.stringify(row)+'\n';
   const raw={entity,sourceId:entity==='PAYMENT_ACCOUNT_HALL'?'':key,file,sheet:entity,row:index,sourceSha256:sha(physical),data:row};
   sourceFiles[file]={utf8:physical,sha256:sha(physical),bytes:Buffer.byteLength(physical)};
   const line=JSON.stringify(raw);
@@ -81,22 +84,22 @@ export async function buildCurrentRuntime26FullSourceFixture(blueprint:CurrentSa
   rawArtifacts[entity+':'+key]={utf8:line+'\n',sha256:sha(line+'\n'),rows:1};return evidence;
  };
  const selection=(entity:string,csvSha256:string)=>({baseManifestSha256:b.pins.baseManifestSha256,selectionSha256:b.pins.selectionSha256,approvalSha256:b.pins.approvalSha256,csvSha256,source:'BASE_V2' as const,entity,path:table(entity).file});
- const productKey='SYNTHETIC-QA897-IMPORTED-PRODUCT',skuKey='SYNTHETIC-QA897-IMPORTED-SKU',stockKey='SYNTHETIC-QA897-STOCK',transferKey='SYNTHETIC-QA897-DRAFT-TRANSFER';
- const p={...blank('PRODUCT'),来源编号:productKey,款号:'SYNTHETIC-QA897-IMPORT',商品名称:'SYNTHETIC QA897 imported source product',分类路径:String(category.nativeSnapshot.name),尺码组:String(group.nativeSnapshot.name),状态:'正常',零售价:'1.25',采购价:'0',年份:'2026',系统货号:'QA897-IMPORT'};
+ const productKey=`SYNTHETIC-${tag}-IMPORTED-PRODUCT`,skuKey=`SYNTHETIC-${tag}-IMPORTED-SKU`,stockKey=`SYNTHETIC-${tag}-STOCK`,transferKey=`SYNTHETIC-${tag}-${scope.isNew?'APPROVED':'DRAFT'}-TRANSFER`;
+ const p={...blank('PRODUCT'),来源编号:productKey,款号:`SYNTHETIC-${tag}-IMPORT`,商品名称:`SYNTHETIC ${tag} imported source product`,分类路径:String(category.nativeSnapshot.name),尺码组:String(group.nativeSnapshot.name),状态:'正常',零售价:'1.25',采购价:'0',年份:'2026',系统货号:`${tag}-IMPORT`};
  sources.PRODUCT=csv('PRODUCT',[p]);
  const productInput:NativeProductImportChunk26={batchId:b.batchId,fixedSourceNamespace:b.namespace,schemaProfile:'EXACT26',validatorVersion:NATIVE_PRODUCT_IMPORT_VERSION_26,
   selection:{...selection('PRODUCT',sources.PRODUCT.sha256),entity:'PRODUCT',path:'business/01商品.csv'},rows:[{source:source('PRODUCT',productKey,p),product:{sourceKey:productKey,nativeId:id('product','product'),expectedVersion:1},blankPricePolicy:'V03_EXACT_PRICE_COLUMN_BLANK_IS_UNSET',nullableFieldPolicy:NATIVE_PRODUCT_NULLABLE_POLICY,
    references:{category:{sourceValue:p.分类路径,mappingSha256:requestHash(category.nativeSnapshot),path:[{nativeId:String(category.nativeSnapshot.id),name:String(category.nativeSnapshot.name),expectedVersion:1}]},sizeGroup:{sourceValue:p.尺码组,nativeId:String(group.nativeSnapshot.id),code:String(group.nativeSnapshot.code),name:String(group.nativeSnapshot.name),mappingSha256:requestHash(group.nativeSnapshot)},supplier:null,season:null},
    seasonSelection:{version:'NATIVE_PRODUCT_SEASON_SELECTION_V1',mapping_sha256:requestHash({sourceKey:productKey,season:''}),source_key:productKey,source_season:'',state:'UNKNOWN',season_ids:null,references:[]}}]};
  const product=prepareNativeProductImportChunk26(productInput);
- const sk={...blank('SKU'),来源编号:skuKey,SKU编码:'SYNTHETIC-QA897-IMPORT-SKU',商品来源编号:productKey,颜色编码:String(color.nativeSnapshot.code),颜色名称:String(color.nativeSnapshot.name),版型编码:String(fit.nativeSnapshot.code),完整尺码:String(size.nativeSnapshot.name),状态:'正常',切换范围:'本次完整核准',新尺码字典ID:size.source.sourceKey,新尺码组ID:group.source.sourceKey,新尺码组名称:String(group.nativeSnapshot.name),合并来源SKU数:'1'};
+ const sk={...blank('SKU'),来源编号:skuKey,SKU编码:`SYNTHETIC-${tag}-IMPORT-SKU`,商品来源编号:productKey,颜色编码:String(color.nativeSnapshot.code),颜色名称:String(color.nativeSnapshot.name),版型编码:String(fit.nativeSnapshot.code),完整尺码:String(size.nativeSnapshot.name),状态:'正常',切换范围:'本次完整核准',新尺码字典ID:size.source.sourceKey,新尺码组ID:group.source.sourceKey,新尺码组名称:String(group.nativeSnapshot.name),合并来源SKU数:'1'};
  sources.SKU=csv('SKU',[sk]);const ss=source('SKU',skuKey,sk);
  const alias={oldSourceSkuId:skuKey,canonicalSourceSkuId:skuKey,isRepresentative:'true' as const,canonicalMemberCount:'1',productSourceId:productKey,newSizeDictionaryId:size.source.sourceKey,newSizeGroupId:group.source.sourceKey,newSizeGroupName:String(group.nativeSnapshot.name),newSizeCode:'',newSizeName:String(size.nativeSnapshot.name),colorCodeIdentity:String(color.nativeSnapshot.code),fitCode:String(fit.nativeSnapshot.code),canonicalState:'正常',oldSkuCode:sk.SKU编码,oldState:'正常',sourceFile:ss.fileRef,sourceSheet:ss.sheet,sourceRow:ss.rowNo,sourceSha256:ss.sourceFileSha256,mappingBasis:'EXACT_SYNTHETIC_SINGLE_CANONICAL_MEMBER'};
  const aliasArtifact=mappingCsv('mappings/old-to-canonical-sku-15121.csv',[alias]);
- const skuInput:NativeSkuImportInput26={batchId:b.batchId,fixedSourceNamespace:b.namespace,schemaProfile:'EXACT26',validatorVersion:NATIVE_SKU_IMPORT_VERSION_26,selection:{...selection('SKU',sources.SKU.sha256),entity:'SKU',path:'business/02合法SKU.csv',aliasCsvSha256:aliasArtifact.sha256},canonicalSource:ss,nativeSkuId:id('sku','sku'),references:{product:{sourceKey:productKey,nativeId:product.nativeProducts[0]!.id,nativeSnapshot:product.nativeProducts[0]! as unknown as JsonObject},color:{sourceKey:color.source.sourceKey,nativeId:String(color.nativeSnapshot.id),nativeSnapshot:color.nativeSnapshot},fit:{sourceKey:fit.source.sourceKey,nativeId:String(fit.nativeSnapshot.id),nativeSnapshot:fit.nativeSnapshot},size:{sourceKey:size.source.sourceKey,nativeId:String(size.nativeSnapshot.id),nativeSnapshot:size.nativeSnapshot},sizeGroup:{sourceKey:group.source.sourceKey,nativeId:String(group.nativeSnapshot.id),nativeSnapshot:group.nativeSnapshot}},aliases:[{source:ss,mapping:alias}],importRecord:{id:id('source','sku-record'),reviewedAt:b.now,decisionReason:'SYNTHETIC_QA897_EXPLICIT_SINGLE_SKU_MAPPING_CANDIDATE'}};
+ const skuInput:NativeSkuImportInput26={batchId:b.batchId,fixedSourceNamespace:b.namespace,schemaProfile:'EXACT26',validatorVersion:NATIVE_SKU_IMPORT_VERSION_26,selection:{...selection('SKU',sources.SKU.sha256),entity:'SKU',path:'business/02合法SKU.csv',aliasCsvSha256:aliasArtifact.sha256},canonicalSource:ss,nativeSkuId:id('sku','sku'),references:{product:{sourceKey:productKey,nativeId:product.nativeProducts[0]!.id,nativeSnapshot:product.nativeProducts[0]! as unknown as JsonObject},color:{sourceKey:color.source.sourceKey,nativeId:String(color.nativeSnapshot.id),nativeSnapshot:color.nativeSnapshot},fit:{sourceKey:fit.source.sourceKey,nativeId:String(fit.nativeSnapshot.id),nativeSnapshot:fit.nativeSnapshot},size:{sourceKey:size.source.sourceKey,nativeId:String(size.nativeSnapshot.id),nativeSnapshot:size.nativeSnapshot},sizeGroup:{sourceKey:group.source.sourceKey,nativeId:String(group.nativeSnapshot.id),nativeSnapshot:group.nativeSnapshot}},aliases:[{source:ss,mapping:alias}],importRecord:{id:id('source','sku-record'),reviewedAt:b.now,decisionReason:`SYNTHETIC_${tag}_EXPLICIT_SINGLE_SKU_MAPPING_CANDIDATE`}};
  const sku=prepareNativeSkuImport26(skuInput);
  const signed=[12,-2];const contributors=signed.map((quantity,i)=>{
-  const key=`SYNTHETIC-QA897-STOCK-CONTRIBUTION-${i+1}`,raw={来源编号:key,SKU来源编号:skuKey,仓库来源编号:first.source.sourceKey,核准库存数量:String(quantity)};
+  const key=`SYNTHETIC-${tag}-STOCK-CONTRIBUTION-${i+1}`,raw={来源编号:key,SKU来源编号:skuKey,仓库来源编号:first.source.sourceKey,核准库存数量:String(quantity)};
   const s=source('INVENTORY_BASELINE',key,raw,raw,i+1);
   return {source:s,lineage:{validator_version:'STOCK_CONTRIBUTOR_LINEAGE_V1' as const,oldStockSourceId:key,canonicalStockRowSourceId:stockKey,warehouseSourceId:first.source.sourceKey,oldSkuSourceId:skuKey,canonicalSkuSourceId:skuKey,productSourceId:productKey,signedQuantity:String(quantity),sourceUnit:'件',sourceFile:s.fileRef,sourceSheet:s.sheet,sourceRow:s.rowNo,sourceSha256:s.sourceFileSha256}};
  });
@@ -105,43 +108,43 @@ export async function buildCurrentRuntime26FullSourceFixture(blueprint:CurrentSa
  const lineageArtifact=mappingCsv('mappings/stock-contributor-lineage-38314.csv',contributors.map(c=>{const {validator_version:_version,...row}=c.lineage;return row;}));
  const stockInput:NativeStockGroupInput={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('INVENTORY_BASELINE',sources.INVENTORY_BASELINE.sha256),entity:'INVENTORY_BASELINE',path:'business/12切换库存.csv',lineageCsvSha256:lineageArtifact.sha256},canonicalStock:stockRow,warehouse:{sourceKey:first.source.sourceKey,nativeId:String(first.nativeSnapshot.id)},sku:{canonicalSourceKey:skuKey,nativeId:sku.nativeSku.id},contributors};
  const stock=prepareNativeStockGroup(stockInput);
- const hn={...blank('TRANSFER_HEADER'),来源编号:transferKey,原单号:'SYNTHETIC-QA897-DRAFT-001',业务日期:b.now.slice(0,10),调出仓来源编号:first.source.sourceKey,调入仓来源编号:second.source.sourceKey,原审核状态:'未审核',备注:'SYNTHETIC: unapproved history, no stock effect',创建厅归属来源:'UNKNOWN',创建厅归属原因:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'};
+ const hn={...blank('TRANSFER_HEADER'),来源编号:transferKey,原单号:`SYNTHETIC-${tag}-${scope.isNew?'APPROVED':'DRAFT'}-001`,业务日期:b.now.slice(0,10),调出仓来源编号:first.source.sourceKey,调入仓来源编号:second.source.sourceKey,原审核状态:scope.isNew?'已审核':'未审核',备注:scope.isNew?'SYNTHETIC: approved original transfer included in cutoff baseline':'SYNTHETIC: unapproved history, no stock effect',创建厅归属来源:'UNKNOWN',创建厅归属原因:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'};
  const hr={...hn};delete (hr as Record<string,string>).创建厅归属来源;delete (hr as Record<string,string>).创建厅归属原因;
  sources.TRANSFER_HEADER=csv('TRANSFER_HEADER',[hn]);const hs=source('TRANSFER_HEADER',transferKey,hr,hn);
- const headerInput:HistoryHeaderInput={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('TRANSFER_HEADER',sources.TRANSFER_HEADER.sha256),entity:'TRANSFER_HEADER',path:'business/16历史调拨单头.csv'},source:hs,bindings:{调出仓来源编号:{sourceKey:first.source.sourceKey,nativeId:String(first.nativeSnapshot.id)},调入仓来源编号:{sourceKey:second.source.sourceKey,nativeId:String(second.nativeSnapshot.id)}},creatorHallOverlay:{evidenceRef:'synthetic:qa897/full/explicit-unknown-creator.csv#1',file:hs.fileRef,sheet:hs.sheet,row:hs.rowNo,sourceId:transferKey,documentNumber:hn.原单号,personField:'原制单账号编号',personId:'',uploadedWarehouseDerivedHall:'',candidateCreatorHall:'',provenance:'UNKNOWN',reason:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'}};
+ const headerInput:HistoryHeaderInput={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('TRANSFER_HEADER',sources.TRANSFER_HEADER.sha256),entity:'TRANSFER_HEADER',path:'business/16历史调拨单头.csv'},source:hs,bindings:{调出仓来源编号:{sourceKey:first.source.sourceKey,nativeId:String(first.nativeSnapshot.id)},调入仓来源编号:{sourceKey:second.source.sourceKey,nativeId:String(second.nativeSnapshot.id)}},creatorHallOverlay:{evidenceRef:`${scope.root}/full/explicit-unknown-creator.csv#1`,file:hs.fileRef,sheet:hs.sheet,row:hs.rowNo,sourceId:transferKey,documentNumber:hn.原单号,personField:'原制单账号编号',personId:'',uploadedWarehouseDerivedHall:'',candidateCreatorHall:'',provenance:'UNKNOWN',reason:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'}};
  const headers=prepareV3HistoryHeaderChunk([headerInput]);const header=headers.rows[0]!.prepared;
- const ln={...blank('TRANSFER_LINE'),来源编号:'SYNTHETIC-QA897-TRANSFER-LINE-1',单据来源编号:transferKey,原行号:'1',SKU来源编号:skuKey,原数量:'1',原款号:p.款号,原品名:p.商品名称,原颜色名称:sk.颜色名称,原版型名称:String(fit.nativeSnapshot.name),原完整尺码:sk.完整尺码};
+ const ln={...blank('TRANSFER_LINE'),来源编号:`SYNTHETIC-${tag}-TRANSFER-LINE-1`,单据来源编号:transferKey,原行号:'1',SKU来源编号:skuKey,原数量:'1',原款号:p.款号,原品名:p.商品名称,原颜色名称:sk.颜色名称,原版型名称:String(fit.nativeSnapshot.name),原完整尺码:sk.完整尺码};
  sources.TRANSFER_LINE=csv('TRANSFER_LINE',[ln]);
  const transferInput:V3HistoryChunk={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('TRANSFER_LINE',sources.TRANSFER_LINE.sha256),entity:'TRANSFER_LINE',path:'business/17历史调拨明细.csv'},rows:[{source:source('TRANSFER_LINE',ln.来源编号,ln),header:{sourceKey:transferKey,nativeId:header.header.id},sku:{sourceKey:skuKey,nativeId:sku.nativeSku.id}}]};
  const transfers=prepareV3HistoryChunk(transferInput);
  const hall=b.parties.find(p=>p.source.entityType==='HALL'&&p.nativeSnapshot.id===first.nativeSnapshot.hall_id);assert.ok(hall);
- const methodKey='SYNTHETIC-QA897-IMPORTED-PAYMENT-METHOD',accountKey='SYNTHETIC-QA897-IMPORTED-PAYMENT-ACCOUNT';
+ const methodKey=`SYNTHETIC-${tag}-IMPORTED-PAYMENT-METHOD`,accountKey=`SYNTHETIC-${tag}-IMPORTED-PAYMENT-ACCOUNT`;
  const paymentRows:{entity:NativePaymentEntity;key:string;raw:Record<string,string>;nativeId:string|null;references:Record<string,NativePaymentReference>}[]=[];
- const pm={来源编号:methodKey,方式名称:'SYNTHETIC QA897 IMPORT METHOD',状态:'正常'};
- const pa={来源编号:accountKey,账户显示名称:'SYNTHETIC QA897 IMPORT ACCOUNT',收款方式来源编号:methodKey,状态:'正常'};
+ const pm={来源编号:methodKey,方式名称:`SYNTHETIC ${tag} IMPORT METHOD`,状态:'正常'};
+ const pa={来源编号:accountKey,账户显示名称:`SYNTHETIC ${tag} IMPORT ACCOUNT`,收款方式来源编号:methodKey,状态:'正常'};
  const ph={账户来源编号:accountKey,厅来源编号:hall.source.sourceKey};
  const methodSnapshot={id:id('paymentMethod','source-payment-method'),name:pm.方式名称,enabled:true,version:1};
  const accountSnapshot={id:id('paymentAccount','source-payment-account'),name:pa.账户显示名称,payment_method_id:methodSnapshot.id,enabled:true,version:1};
  paymentRows.push({entity:'PAYMENT_METHOD',key:methodKey,raw:pm,nativeId:methodSnapshot.id,references:{}},
   {entity:'PAYMENT_ACCOUNT',key:accountKey,raw:pa,nativeId:accountSnapshot.id,references:{收款方式来源编号:{entity:'PAYMENT_METHOD',sourceKey:methodKey,nativeId:methodSnapshot.id,nativeSnapshot:methodSnapshot}}},
   {entity:'PAYMENT_ACCOUNT_HALL',key:JSON.stringify([accountKey,hall.source.sourceKey]),raw:ph,nativeId:null,references:{账户来源编号:{entity:'PAYMENT_ACCOUNT',sourceKey:accountKey,nativeId:accountSnapshot.id,nativeSnapshot:accountSnapshot},厅来源编号:{entity:'HALL',sourceKey:hall.source.sourceKey,nativeId:String(hall.nativeSnapshot.id),nativeSnapshot:hall.nativeSnapshot}}});
- const paymentInputs:NativePaymentImportChunk[]=paymentRows.map(row=>{const artifact=csv(row.entity,[row.raw]);sources[row.entity]=artifact;return {batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection(row.entity,artifact.sha256),entity:row.entity},rows:[{source:source(row.entity,row.key,row.raw),nativeId:row.nativeId,enabledMapping:row.nativeId===null?null:{raw:'正常',native:true,evidenceRef:'synthetic:qa897/full/explicit-payment-state-map'},references:row.references}]};});
+ const paymentInputs:NativePaymentImportChunk[]=paymentRows.map(row=>{const artifact=csv(row.entity,[row.raw]);sources[row.entity]=artifact;return {batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection(row.entity,artifact.sha256),entity:row.entity},rows:[{source:source(row.entity,row.key,row.raw),nativeId:row.nativeId,enabledMapping:row.nativeId===null?null:{raw:'正常',native:true,evidenceRef:`${scope.root}/full/explicit-payment-state-map`},references:row.references}]};});
  const payments=paymentInputs.map(prepareNativePaymentImportChunk);
  const paymentPreparedRows=payments.flatMap(p=>p.rows);
  const approvedScheme=nativeBarcodeSchemeInitializationRows26().find(r=>r.native.status==='CURRENT')!;assert.ok(approvedScheme);
- const bn={...blank('BARCODE'),来源编号:'SYNTHETIC-QA897-EXPLICIT-BARCODE',条码:'897000000000001',SKU来源编号:skuKey,条码性质:'主码',原条码方案:approvedScheme.native.name,状态:'正常',绑定范围:'SKU',合并前SKU来源编号:skuKey,原始条码性质快照:'主码',主旧码归一化依据:'EXISTING_MAIN_REPRESENTATIVE_THEN_STABLE_SOURCE_ID'};
+ const bn={...blank('BARCODE'),来源编号:`SYNTHETIC-${tag}-EXPLICIT-BARCODE`,条码:scope.isNew?'831000000000001':'897000000000001',SKU来源编号:skuKey,条码性质:'主码',原条码方案:approvedScheme.native.name,状态:'正常',绑定范围:'SKU',合并前SKU来源编号:skuKey,原始条码性质快照:'主码',主旧码归一化依据:'EXISTING_MAIN_REPRESENTATIVE_THEN_STABLE_SOURCE_ID'};
  sources.BARCODE=csv('BARCODE',[bn]);
  const barcodeInput:NativeBarcodeInput={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('BARCODE',sources.BARCODE.sha256),source:'V3_BARCODE_REPLACEMENT',entity:'BARCODE',path:'business/03历史条码.csv',excludedSourceIdsSetSha256:requestHash([])},source:source('BARCODE',bn.来源编号,bn),nativeBarcodeId:id('barcode','explicit-imported-barcode'),sku:{canonicalSourceKey:skuKey,nativeId:sku.nativeSku.id,oldSourceSkuKey:skuKey},scheme:{id:approvedScheme.native.id,snapshot:approvedScheme.native as unknown as JsonObject}};
  const barcode=prepareNativeBarcode(barcodeInput);
  const customer=b.parties.find(r=>r.nativeSnapshot.id===b.refs.customerId)!,salesperson=b.parties.find(r=>r.nativeSnapshot.id===b.refs.salesperson.nativeStaffId)!;assert.ok(customer&&salesperson);
- const salesKey='SYNTHETIC-QA897-DRAFT-SALES',sn={...blank('SALES_HEADER'),来源编号:salesKey,原单号:'SYNTHETIC-QA897-SALES-001',业务日期:b.now.slice(0,10),单据类型:'销售',所属厅来源编号:hall.source.sourceKey,客户来源编号:customer.source.sourceKey,仓库来源编号:first.source.sourceKey,营业员来源编号:salesperson.source.sourceKey,优惠前金额:'16.00',整单优惠:'0.00',应结金额:'16.00',原审核状态:'未审核',创建厅归属来源:'UNKNOWN',创建厅归属原因:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'};
+ const salesKey=`SYNTHETIC-${tag}-DRAFT-SALES`,sn={...blank('SALES_HEADER'),来源编号:salesKey,原单号:`SYNTHETIC-${tag}-SALES-001`,业务日期:b.now.slice(0,10),单据类型:'销售',所属厅来源编号:hall.source.sourceKey,客户来源编号:customer.source.sourceKey,仓库来源编号:first.source.sourceKey,营业员来源编号:salesperson.source.sourceKey,优惠前金额:'16.00',整单优惠:'0.00',应结金额:'16.00',原审核状态:'未审核',创建厅归属来源:'UNKNOWN',创建厅归属原因:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'};
  const sr={...sn};delete (sr as Record<string,string>).创建厅归属来源;delete (sr as Record<string,string>).创建厅归属原因;
  sources.SALES_HEADER=csv('SALES_HEADER',[sn]);const shSource=source('SALES_HEADER',salesKey,sr,sn);
- const salesHeaderInput:HistoryHeaderInput={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('SALES_HEADER',sources.SALES_HEADER.sha256),entity:'SALES_HEADER',path:'business/13历史销货单头.csv'},source:shSource,bindings:{所属厅来源编号:{sourceKey:hall.source.sourceKey,nativeId:String(hall.nativeSnapshot.id)},客户来源编号:{sourceKey:customer.source.sourceKey,nativeId:String(customer.nativeSnapshot.id)},仓库来源编号:{sourceKey:first.source.sourceKey,nativeId:String(first.nativeSnapshot.id)},营业员来源编号:{sourceKey:salesperson.source.sourceKey,nativeId:String(salesperson.nativeSnapshot.id)}},creatorHallOverlay:{evidenceRef:'synthetic:qa897/full/explicit-unknown-sales-creator#1',file:shSource.fileRef,sheet:shSource.sheet,row:shSource.rowNo,sourceId:salesKey,documentNumber:sn.原单号,personField:'营业员来源编号',personId:salesperson.source.sourceKey,uploadedWarehouseDerivedHall:'',candidateCreatorHall:'',provenance:'UNKNOWN',reason:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'}};
+ const salesHeaderInput:HistoryHeaderInput={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('SALES_HEADER',sources.SALES_HEADER.sha256),entity:'SALES_HEADER',path:'business/13历史销货单头.csv'},source:shSource,bindings:{所属厅来源编号:{sourceKey:hall.source.sourceKey,nativeId:String(hall.nativeSnapshot.id)},客户来源编号:{sourceKey:customer.source.sourceKey,nativeId:String(customer.nativeSnapshot.id)},仓库来源编号:{sourceKey:first.source.sourceKey,nativeId:String(first.nativeSnapshot.id)},营业员来源编号:{sourceKey:salesperson.source.sourceKey,nativeId:String(salesperson.nativeSnapshot.id)}},creatorHallOverlay:{evidenceRef:`${scope.root}/full/explicit-unknown-sales-creator#1`,file:shSource.fileRef,sheet:shSource.sheet,row:shSource.rowNo,sourceId:salesKey,documentNumber:sn.原单号,personField:'营业员来源编号',personId:salesperson.source.sourceKey,uploadedWarehouseDerivedHall:'',candidateCreatorHall:'',provenance:'UNKNOWN',reason:'UNKNOWN_ORIGINAL_CREATOR_UNMATCHED'}};
  const salesHeaders=prepareV3HistoryHeaderChunk([salesHeaderInput]),salesHeader=salesHeaders.rows[0]!.prepared,h=salesHeader.header as HistorySalesHeader;
  const headerBinding={sourceKey:salesKey,nativeId:h.id,sourceRowId:shSource.id,sourceFileSha256:shSource.sourceFileSha256,rowSha256:shSource.rowSha256,version:1 as const};
- const salesRows=Array.from({length:16},(_,i)=>({...blank('SALES_LINE'),来源编号:`SYNTHETIC-QA897-SALES-LINE-${i+1}`,单据来源编号:salesKey,原行号:String(i+1),SKU来源编号:skuKey,原数量:'1',原参考价:'1.00',原成交单价:'1.00',原行金额:'1.00',原分摊优惠:'0.00',原赠品标记:'否',原定价方式:'UNIT_PRICE',原普通零价确认:'否',原款号:p.款号,原品名:p.商品名称,原颜色名称:sk.颜色名称,原版型名称:String(fit.nativeSnapshot.name),原完整尺码:sk.完整尺码,原使用条码:bn.条码}));
- const settlementRows=Array.from({length:16},(_,i)=>({...blank('SETTLEMENT'),来源编号:`SYNTHETIC-QA897-SETTLEMENT-${i+1}`,单据来源编号:salesKey,原收退行号:String(i+1),账户来源编号:accountKey,方向:'收款',金额:'1.00',原账户显示名:pa.账户显示名称,原方式显示名:pm.方式名称,原收款方式来源编号:methodKey}));
+ const salesRows=Array.from({length:16},(_,i)=>({...blank('SALES_LINE'),来源编号:`SYNTHETIC-${tag}-SALES-LINE-${i+1}`,单据来源编号:salesKey,原行号:String(i+1),SKU来源编号:skuKey,原数量:'1',原参考价:'1.00',原成交单价:'1.00',原行金额:'1.00',原分摊优惠:'0.00',原赠品标记:'否',原定价方式:'UNIT_PRICE',原普通零价确认:'否',原款号:p.款号,原品名:p.商品名称,原颜色名称:sk.颜色名称,原版型名称:String(fit.nativeSnapshot.name),原完整尺码:sk.完整尺码,原使用条码:bn.条码}));
+ const settlementRows=Array.from({length:16},(_,i)=>({...blank('SETTLEMENT'),来源编号:`SYNTHETIC-${tag}-SETTLEMENT-${i+1}`,单据来源编号:salesKey,原收退行号:String(i+1),账户来源编号:accountKey,方向:'收款',金额:'1.00',原账户显示名:pa.账户显示名称,原方式显示名:pm.方式名称,原收款方式来源编号:methodKey}));
  sources.SALES_LINE=csv('SALES_LINE',salesRows);sources.SETTLEMENT=csv('SETTLEMENT',settlementRows);
  const salesSources=salesRows.map((row,i)=>source('SALES_LINE',row.来源编号,{...row,原行金额:'1.00000000000001'},row,i+1));
  const settlementSources=settlementRows.map((row,i)=>source('SETTLEMENT',row.来源编号,{...row,金额:'1.00000000000001'},row,i+1));
@@ -149,7 +152,7 @@ export async function buildCurrentRuntime26FullSourceFixture(blueprint:CurrentSa
  // deliberately does NOT construct an approval Map. Only externally supplied
  // reviewed exact cells may enter prepareCurrentRuntime26MoneyBranch below.
  const moneyCellCandidates:MoneyApproval[]=[...salesSources.map(s=>({fileSha256:s.sourceFileSha256,sheet:s.sheet,row:s.rowNo,sourceId:s.sourceKey,field:'原行金额',rawValue:String(s.rawFields.原行金额),exactCentValue:'1.00'})),...settlementSources.map(s=>({fileSha256:s.sourceFileSha256,sheet:s.sheet,row:s.rowNo,sourceId:s.sourceKey,field:'金额',rawValue:String(s.rawFields.金额),exactCentValue:'1.00'}))];
- const moneyCandidateArtifact=mappingCsv('provenance/qa897-money-cell-candidates.csv',moneyCellCandidates.map(c=>({...c})));
+ const moneyCandidateArtifact=mappingCsv(`provenance/${tag.toLowerCase()}-money-cell-candidates.csv`,moneyCellCandidates.map(c=>({...c})));
  const salesInputCandidate={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('SALES_LINE',sources.SALES_LINE.sha256),entity:'SALES_LINE' as const,path:'business/14历史销货明细.csv' as const,aliasCsvSha256:aliasArtifact.sha256},rows:salesSources.map(s=>({source:s,header:headerBinding,sku:{oldSourceSkuKey:skuKey,canonicalSourceKey:skuKey,nativeId:sku.nativeSku.id,aliasSourceRowId:ss.id,importRecordId:sku.importRecord.id}}))};
  const paymentBinding=(row:typeof paymentPreparedRows[number])=>({entity:row.entity as 'PAYMENT_METHOD'|'PAYMENT_ACCOUNT',sourceKey:row.source.sourceKey,nativeId:String(row.nativeSnapshot.id),sourceRowId:row.source.id,sourceFileSha256:row.source.sourceFileSha256,rowSha256:row.source.rowSha256,fingerprint:row.fingerprint,nativeSnapshot:row.nativeSnapshot});
  const settlementInputCandidate={batchId:b.batchId,fixedSourceNamespace:b.namespace,selection:{...selection('SETTLEMENT',sources.SETTLEMENT.sha256),entity:'SETTLEMENT' as const,path:'business/15历史收退记录.csv' as const},rows:settlementSources.map(s=>({source:s,header:headerBinding,account:paymentBinding(paymentPreparedRows[1]!),method:paymentBinding(paymentPreparedRows[0]!)}))};
@@ -178,7 +181,7 @@ export function validateCurrentRuntime26FullSourceFixture(f:CurrentRuntime26Full
  validateNativeStockConservationPlan(f.stockConservation);
  assert.deepEqual(f.stockConservation.warehouses,f.warehouseScope.map(({basis:_basis,...w})=>w));
  assert.equal(f.stockConservation.effectiveStockCsvSha256,f.sources.INVENTORY_BASELINE!.sha256);assert.equal(f.stockConservation.contributorLineageCsvSha256,f.lineageArtifact.sha256);
- assert.equal(f.executionAuthorized,false);assert.equal(f.blueprint.database,CURRENT_SALES_QA_TARGET);
+ assert.equal(f.executionAuthorized,false);const scope=currentRuntime26SyntheticScope(f.blueprint.database,f.blueprint.batchId);assert.equal(f.blueprint.namespace,scope.namespace);
  assert.equal(f.warehouseScope.length,22);assert.equal(new Set(f.warehouseScope.map(w=>w.nativeId)).size,22);
  const expected=new Set(f.blueprint.parties.filter(r=>r.source.entityType==='WAREHOUSE').map(w=>String(w.nativeSnapshot.id)));
  for(const w of f.warehouseScope){assert.ok(expected.has(w.nativeId));const original=f.blueprint.parties.find(p=>p.source.entityType==='WAREHOUSE'&&p.nativeSnapshot.id===w.nativeId)!;assert.equal(w.sourceKey,original.source.sourceKey);assert.equal(w.signedQuantity,w.nativeId===f.prepared.stock.warehouse.nativeId?'10':'0');assert.equal(w.basis,w.signedQuantity==='0'?'EXPLICIT_SYNTHETIC_ZERO_TARGET':'EXACT_SIGNED_CONTRIBUTORS');}
@@ -192,7 +195,7 @@ export function validateCurrentRuntime26FullSourceFixture(f:CurrentRuntime26Full
  if(f.prepared.money){assert.deepEqual(prepareHistorySalesDetailChunk(f.prepared.money.salesDetails.input),f.prepared.money.salesDetails);assert.deepEqual(prepareHistorySettlementChunk(f.prepared.money.settlements.input),f.prepared.money.settlements);}
  assert.equal(f.paymentInputs.length,3);assert.deepEqual(f.paymentInputs.map(prepareNativePaymentImportChunk),f.prepared.payments);
  assert.deepEqual(prepareV3HistoryHeaderChunk([f.headerInput]),f.prepared.headers);assert.deepEqual(prepareV3HistoryChunk(f.transferInput),f.prepared.transfers);
- assert.equal(f.prepared.headers.rows[0]!.prepared.header.sourceStatus,'DRAFT');assert.equal(f.prepared.transfers.rows[0]!.line.quantity,'1');
+ assert.equal(f.prepared.headers.rows[0]!.prepared.header.sourceStatus,scope.isNew?'APPROVED':'DRAFT');assert.equal(f.prepared.transfers.rows[0]!.line.quantity,'1');
  assert.equal(f.prepared.transfers.rows[0]!.line.sku_id,f.prepared.sku.nativeSku.id);
  assert.equal(f.emptySources.length,CURRENT_FULL_EMPTY_ENTITIES.length);
  for(const entity of CURRENT_FULL_EMPTY_ENTITIES){const empty=f.emptySources.find(e=>e.entity===entity);assert.ok(empty);assert.deepEqual(empty,{...csv(entity,[]),reason:'EXPLICIT_EMPTY_SYNTHETIC_SOURCE'});}
@@ -230,4 +233,77 @@ export function prepareCurrentRuntime26MoneyBranch(f:CurrentRuntime26FullSourceF
  const header=next.prepared.salesHeaders.rows[0]!.prepared.header as HistorySalesHeader;
  assert.equal(totalLines,v2Cents(header.grossAmount));assert.equal(totalSettlements,v2Cents(header.netDue));assert.equal(totalLines,1600n);
  validateCurrentRuntime26FullSourceFixture(next);return next;
+}
+
+/** Finite new-scene recipe, not actual setup/readiness or an execution grant.
+ * The original bootstrap/source/PUBLISH factories still consume the same source
+ * inputs and independently supplied reviews. This recipe never signs those.
+ */
+export function buildCurrentRuntime26LiveLedgerRecipe(f:CurrentRuntime26FullSourceFixture){
+ validateCurrentRuntime26FullSourceFixture(f);const b=f.blueprint,scope=currentRuntime26SyntheticScope(b.database,b.batchId);assert.ok(scope.isNew);
+ const header=f.prepared.headers.rows[0]!.prepared.header,line=f.prepared.transfers.rows[0]!.line;
+ assert.ok('fromWarehouseId'in header&&'toWarehouseId'in header&&header.sourceStatus==='APPROVED'&&line.quantity==='1'&&typeof line.id==='string');
+ const requestKey='V7R1-20261031-PREPARE-HISTORY-QUANTITY2';
+ const historyCommand:HistoryRevisionCommand={kind:'transfers',documentId:header.id,expectedVersion:1,requestKey,
+  reason:'Exact new synthetic fixture: original approved transfer1 to2; no historical identity/time changes',
+  lines:[{lineId:line.id,quantity:'2'}],totals:null,settlements:[]};
+ const account=f.prepared.payments.flatMap(p=>p.rows).find(r=>r.entity==='PAYMENT_ACCOUNT')!;
+ const method=f.prepared.payments.flatMap(p=>p.rows).find(r=>r.entity==='PAYMENT_METHOD')!;assert.ok(account&&method);
+ const keys=(family:string)=>({save:`V7R1-${family}-SAVE`,approve:`V7R1-${family}-APPROVE`,unapprove:`V7R1-${family}-UNAPPROVE`,reopen:`V7R1-${family}-REOPEN`,reapprove:`V7R1-${family}-REAPPROVE`,rollback:`V7R1-${family}-ROLLBACK`,unknownCommit:`V7R1-${family}-UNKNOWN-COMMIT`});
+ const proposals:Pick<LiveLedgerBalancePairsScenario,'sales'|'transfers'|'keys'>={
+  sales:{salesId:null,businessType:'SALE',businessDate:b.now.slice(0,10),note:'SYNTHETIC V7R1 ordinary sales',hallId:b.refs.hallId,
+   customerId:b.refs.customerId,salespersonId:b.refs.salesperson.nativeStaffId,warehouseId:header.fromWarehouseId,
+   orderDiscount:'0.00',lines:[{skuId:f.prepared.sku.nativeSku.id,existingLineId:null,quantity:'1',dealPrice:'1.25',pricingRule:'UNIT_PRICE',discountTenths:null,isGift:false,zeroConfirmed:false}],
+   settlements:[{existingSettlementId:null,paymentAccountId:String(account.nativeSnapshot.id),paymentMethodId:String(method.nativeSnapshot.id),direction:'RECEIVE',amount:'1.25'}]},
+  transfers:{transferId:null,businessDate:b.now.slice(0,10),note:'SYNTHETIC V7R1 ordinary transfer',fromWarehouseId:header.fromWarehouseId,toWarehouseId:header.toWarehouseId,
+   responsibleStaffId:b.refs.importer.nativeStaffId,lines:[{skuId:f.prepared.sku.nativeSku.id,existingLineId:null,quantity:'1'}]},
+  keys:{sales:keys('SALES'),transfers:keys('TRANSFER')}};
+ return {version:'SYNTHETIC_V7_R1_LIVE_LEDGER_RECIPE_V1' as const,executionAuthorized:false as const,
+  target:{database:b.database,namespace:b.namespace,batchId:b.batchId,databaseOid:null,runtimeRole:null,postmasterStart:null},
+  originalPublicationRequired:true as const,
+  lifecycle:['Original49 account bootstrap+115parties+9catalogue','Original scheme initialization+prefix+BIND+all11 source groups+ACCOUNT+closure+nonzero PUBLISH','Genuine V8 Full host ordinary DB LOGIN, original synthetic admin login','POST the one original HISTORY revision command; missing second balance is created only by original admitted history posting','Read original request-key revision receipt, original baseline and both history ledger rows, both actual balance quantities/versions','Map these actual rows into original live-ledger runner private scenario; then invoke its real business acceptance'],
+  sourceInputs:{blueprint:b,fixture:f},
+  postPublication:{method:'POST' as const,url:'/imported-history/transfers/revise',command:historyCommand,uncertainCommitRecovery:'Original identical command/requestKey only; original service receipt readback before mapping, never another revision/key'},
+  loginAccountId:b.refs.importer.nativeAccountId,
+  proposals,
+  expectedAfterHistory:{skuId:f.prepared.sku.nativeSku.id,fromWarehouseId:header.fromWarehouseId,toWarehouseId:header.toWarehouseId,
+   quantities:[{warehouseId:header.fromWarehouseId,quantity:'9'},{warehouseId:header.toWarehouseId,quantity:'1'}],totalQuantity:'10',
+   historicalVersion:2,historicalLedgerCount:2,recordedBalances:null},
+  actualState:'UNKNOWN_NOT_EXECUTED' as const,
+  pending:['New-target original private account/source reviews and execution authorization are external','Fresh independent32 source-money decision/entries and new target/OID review envelope required; original QA897 adopted decision never reused','New actual OID/role/postmaster/V8 canonical metadata/transport installation and execution approval remain external']};
+}
+export type CurrentRuntime26LiveLedgerRecipe=ReturnType<typeof buildCurrentRuntime26LiveLedgerRecipe>;
+/** Actual rows must come from T45's original ordinary-login readback after the
+ * original real business method above. Mapping produces only scenario DATA;
+ * it cannot supply an issuer/proof, authorize a write or mark actual readiness.
+ */
+export interface CurrentRuntime26LiveLedgerReadback {
+ readonly database:string;readonly databaseOid:string;readonly runtimeRole:string;readonly postmasterStart:string;
+ readonly login:LiveLedgerBalancePairsScenario['login'];
+ readonly revisionReceipt:HistoryRevisionReceipt;
+ readonly balances:readonly {warehouse_id:string;sku_id:string;quantity:string;version:number;last_operation_id:string}[];
+ readonly baselineLedger:readonly {id:string;event_kind:'CUTOFF_BASELINE';sku_id:string;warehouse_id:string;source_import_batch_id:string;quantity_delta:string;quantity_before:null;quantity_after:null}[];
+ readonly historyLedger:readonly {id:string;operation_id:string;source_history_revision_id:string;sku_id:string;warehouse_id:string;quantity_delta:string;endpoint:'FROM'|'TO';event_kind:'HISTORY_REVISION';source_document_version:number;source_history_transfer_line_id:string;source_history_sales_line_id:null;source_import_batch_id:null;reverses_entry_id:null;quantity_before:null;quantity_after:null}[];
+}
+export function mapCurrentRuntime26LiveLedgerScenario(recipe:CurrentRuntime26LiveLedgerRecipe,actual:CurrentRuntime26LiveLedgerReadback):LiveLedgerBalancePairsScenario{
+ const scope=currentRuntime26SyntheticScope(recipe.target.database,recipe.target.batchId);assert.ok(scope.isNew&&recipe.executionAuthorized===false);
+ assert.equal(actual.database,recipe.target.database);assert.match(actual.databaseOid,/^[1-9]\d*$/);assert.notEqual(actual.databaseOid,'21551');
+ assert.ok(actual.runtimeRole.length>0&&actual.postmasterStart.length>0&&actual.login.accountId===recipe.loginAccountId&&actual.login.loginName.length>0&&actual.login.password.length>0);
+ const r=actual.revisionReceipt,h=recipe.postPublication.command,e=recipe.expectedAfterHistory;
+ assert.ok(r.dataset==='HISTORY'&&r.kind==='transfers'&&r.documentId===h.documentId&&r.version===2&&r.operationId!==r.revisionId&&r.ledgerEntryIds.length===2);
+ assert.equal(actual.historyLedger.length,2);assert.equal(actual.balances.length,2);assert.ok(actual.baselineLedger.length===1);
+ const original=actual.baselineLedger[0]!;assert.ok(original.sku_id===e.skuId&&original.warehouse_id===e.fromWarehouseId&&original.source_import_batch_id===recipe.target.batchId&&original.event_kind==='CUTOFF_BASELINE'&&original.quantity_delta==='10'&&original.quantity_before===null&&original.quantity_after===null);
+ const ledgerIds=new Set(actual.historyLedger.map(l=>l.id));assert.equal(ledgerIds.size,2);assert.ok(r.ledgerEntryIds.every(id=>ledgerIds.has(id)));
+ let total=0n;
+ for(const expected of e.quantities){
+  const balances=actual.balances.filter(v=>v.warehouse_id===expected.warehouseId&&v.sku_id===e.skuId);assert.equal(balances.length,1);const balance=balances[0]!;
+  assert.equal(balance.quantity,expected.quantity);assert.ok(Number.isInteger(balance.version)&&balance.version>0&&balance.last_operation_id===r.operationId);total+=BigInt(balance.quantity);
+  const rows=actual.historyLedger.filter(l=>l.warehouse_id===expected.warehouseId);assert.equal(rows.length,1);const l=rows[0]!;
+  assert.ok(l.operation_id===r.operationId&&l.source_history_revision_id===r.revisionId&&l.sku_id===e.skuId&&l.event_kind==='HISTORY_REVISION'&&l.source_document_version===2&&l.source_history_transfer_line_id===h.lines[0]!.lineId&&l.source_history_sales_line_id===null&&l.source_import_batch_id===null&&l.reverses_entry_id===null&&l.quantity_before===null&&l.quantity_after===null);
+  assert.equal(l.endpoint,expected.warehouseId===e.fromWarehouseId?'FROM':'TO');assert.equal(l.quantity_delta,expected.warehouseId===e.fromWarehouseId?'-1':'1');
+ }
+ assert.equal(total,10n,'Exact per-warehouse source conservation, not summary-only inferred stock');
+ return {syntheticOnly:true,login:structuredClone(actual.login),...structuredClone(recipe.proposals),
+  initialInventory:actual.balances.map(v=>({warehouseId:v.warehouse_id,skuId:v.sku_id,quantity:v.quantity,version:v.version})),
+  unrecordedLedgerIds:{baseline:actual.baselineLedger.map(l=>l.id),historyRevision:actual.historyLedger.map(l=>l.id)}};
 }

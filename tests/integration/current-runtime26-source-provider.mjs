@@ -43,6 +43,8 @@ import { openReviewedTransferLineSource26 } from '../../scripts/import-v3/native
 import { selectProductionContinuation26, stagedPrefixStockRow22, stagedPrefixSkuRecord22 } from '../../scripts/import-v3/production-source-provider26.mjs';
 import { validateExecutableSourceHostJob26 } from '../../scripts/import-v3/production-source-host.mjs';
 
+import {CURRENT_LIVE_LEDGER_QA_TARGET,CURRENT_LIVE_LEDGER_QA_NAMESPACE,CURRENT_LIVE_LEDGER_QA_BATCH} from './current-runtime26-sales-fixture.ts';
+
 export const providerVersion='NATIVE_IMPORT_PRODUCTION_PROVIDERS_26_V1';
 export const sourceGroups=Object.freeze([...HISTORY_CLOSURE_SOURCE_GROUPS]);
 const TARGET='naijue_erp_test_hv2_qa897_20261029_01',NAMESPACE='synthetic.qa897.sales.20261029',BATCH='e2dfa367-7cda-42d2-9726-f7cc52124cf1';
@@ -59,9 +61,17 @@ const revive=(_k,v)=>v&&typeof v==='object'&&Object.keys(v).length===1&&Object.h
 
 export function validateQa22Binding(binding){
  must(binding?.version==='NATIVE_IMPORT_EXECUTION_26_V1'&&binding.phase==='FULL_SOURCE_CONTINUATION_26_V1','BINDING');
- must(binding.batchId===BATCH&&binding.fixedSourceNamespace===NAMESPACE&&binding.target?.database===TARGET,'TARGET');
+ const old=binding.target?.database===TARGET;
+ must(old||binding.target?.database===CURRENT_LIVE_LEDGER_QA_TARGET,'TARGET');
+ must(binding.batchId===(old?BATCH:CURRENT_LIVE_LEDGER_QA_BATCH)&&binding.fixedSourceNamespace===(old?NAMESPACE:CURRENT_LIVE_LEDGER_QA_NAMESPACE),'TARGET');
  must(hash(binding.selectionSha256)&&hash(binding.authorizedPayloadHash)&&hash(binding.coreSourceDigest)&&binding.authorizedPayloadHash!==binding.coreSourceDigest,'FULL_SOURCE_REQUIRED');
  must(typeof binding.coreReceiptId==='string'&&typeof binding.actorAccountId==='string','CORE_BINDING');
+}
+/** This source step does not widen the old QA897 review/OID/32-cell authority.
+ * The new exact scene may be built/selected purely, but opening its factories
+ * needs C's finite fresh-target review envelope successor first. */
+function originalQa897ReviewOnly(binding){
+ must(binding?.target?.database!==CURRENT_LIVE_LEDGER_QA_TARGET&&binding?.fixedSourceNamespace!==CURRENT_LIVE_LEDGER_QA_NAMESPACE&&binding?.batchId!==CURRENT_LIVE_LEDGER_QA_BATCH,'V7_R1_FRESH_CAPTURE_MONEY_REVIEW_AND_ACTUAL_TARGET_ENVELOPE_REQUIRED');
 }
 /** Metadata only; all trusted pins are supplied outside the file being read. */
 class Inputs {
@@ -89,6 +99,7 @@ function headerRows(prepared){const h=prepared.header;const common={id:h.id,sour
  * review binds each ref and independent PASS to the same target/selection.
  */
 export async function openReviewedQa22Capture(recipe,binding,signal){
+ originalQa897ReviewOnly(binding);
  validateQa22Binding(binding);bag(recipe,['mode','review','records','originals','canonicalCsv','nativeBindings']);must(recipe.mode==='QA_CAPTURE','CAPTURE_MODE');
  const files=new Inputs(signal);try{
   const review=await files.json(recipe.review);bag(review,['version','decision','binding','entity','records','originals','canonicalCsv','nativeBindings','independentReview','realImportExecutionAuthorized']);
@@ -112,7 +123,7 @@ const stage={PRODUCTS:['PRODUCT','chunks'],SKUS:['SKU','rows'],STOCK_CONTRIBUTOR
 async function compositeHeaders(transfer,sales){return {async verify(){await transfer.verify();await sales.verify();},async authorize(chunk){return (chunk.selection.entity==='TRANSFER_HEADER'?transfer:sales).authorize(chunk);},async *chunks(){yield* transfer.chunks();yield* sales.chunks();},async openClosure(scope,context){const children=[await transfer.openClosure(scope,context)];try{children.push(await sales.openClosure(scope,context));}catch(e){await children[0].close();throw e;}return {async verify(){for(const c of children)await c.verify();},async *sourceRows(){const rows=[];for(const c of children)for await(const r of c.sourceRows())rows.push(r);yield* sorted(rows);},async *typedRows(){const rows=[];for(const c of children)for await(const r of c.typedRows())rows.push(r);yield* sorted(rows);},async *documents(){for(const c of children)yield* c.documents();},async close(){for(const c of children.reverse())await c.close();}};},async close(){await sales.close();await transfer.close();}};}
 
 /** Actual C-adopted32 restoration. An entries JSON is not itself an approval. */
-export async function readQa22Money(files,money,binding){bag(money,['decision','entries']);const decision=await files.json(money.decision),encoded=await files.json(money.entries);
+export async function readQa22Money(files,money,binding){originalQa897ReviewOnly(binding);bag(money,['decision','entries']);const decision=await files.json(money.decision),encoded=await files.json(money.entries);
  must(decision.version==='C_ADOPTED_SYNTHETIC_MONEY32_DECISION_SNAPSHOT_V1'&&decision.fullSourceExecutionAuthorized===false&&decision.syntheticTarget?.database===TARGET&&decision.syntheticTarget.databaseOid==='21551'&&decision.syntheticTarget.batchId===binding.batchId&&decision.syntheticTarget.namespace===binding.fixedSourceNamespace&&decision.adoptedDecision?.decision==='ADOPT_EXACT_32_SYNTHETIC_SOURCE_CELL_NORMALIZATIONS_FOR_NONEXECUTION_SOURCE_PREPARATION','MONEY_DECISION');
  must(encoded.version==='ORIGINAL_V2_MONEY_APPROVAL_MAP32_ENTRIES_V1'&&encoded.fullSourceExecutionAuthorized===false&&encoded.authorityArtifact?.path===money.decision.path&&encoded.authorityArtifact.sha256===money.decision.sha256&&Array.isArray(encoded.entries),'MONEY_ENTRIES');
  const map=v2MoneyApprovalSet(decision.adoptedDecision.cells,encoded.entries.map(e=>e[1]));must(equal([...map.entries()],[...new Map(encoded.entries).entries()]),'MONEY_ENTRIES_CHANGED');return map;
@@ -149,7 +160,7 @@ export function qa22ContinuationPlan(binding,commands,progress){
 }
 
 export async function createQa22SourceSession({inputFile,trustedInputSha256,executionAuthorizationSha256,binding,sources,database,signal}){
- validateQa22Binding(binding);must(signal instanceof AbortSignal&&!signal.aborted&&typeof database?.ready==='function','CONTEXT');must(hash(trustedInputSha256)&&hash(executionAuthorizationSha256)&&isAbsolute(inputFile),'EXTERNAL_PINS');
+ validateQa22Binding(binding);originalQa897ReviewOnly(binding);must(signal instanceof AbortSignal&&!signal.aborted&&typeof database?.ready==='function','CONTEXT');must(hash(trustedInputSha256)&&hash(executionAuthorizationSha256)&&isAbsolute(inputFile),'EXTERNAL_PINS');
  const files=new Inputs(signal),resources=[];let closed=false,closure,preflight=false,stepped=false,actualCore;
  const active=()=>{files.active();must(!closed,'CLOSED');};const verify=async()=>{active();await files.verify();};
  async function close(){if(closed)return;closed=true;const errors=[];for(const r of [...resources].reverse())try{await r.close();}catch(e){errors.push(e);}files.close();if(errors.length)throw new AggregateError(errors,'QA897 source close failed');}

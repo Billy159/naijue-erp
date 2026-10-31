@@ -21,7 +21,7 @@ import type { NativeCatalogueImportChunk26, PreparedNativeCatalogueImportChunk26
 import type { NativeRuntime26Issuer } from "../../adapters/postgres/src/native-import-accounting-capability.ts";
 import { PostgresCutoffImportStore } from "../../adapters/postgres/src/inventory-cutoff-import-store.ts";
 import type { ImportStageBootstrap26, BarcodeSchemeInitialization26 } from "../../adapters/postgres/src/inventory-cutoff-import-store.ts";
-import { createCutoffImportService, validateCutoffImportCommand } from "../../packages/application/src/inventory-cutoff-import.ts";
+import { createCutoffImportService, validateCutoffImportCommand, stableImportId } from "../../packages/application/src/inventory-cutoff-import.ts";
 import type { CoreStageCommand, CoreImportCommand, BarcodeSchemeInitializationCommand } from "../../packages/application/src/inventory-cutoff-import.ts";
 import { PostgresNativeCatalogueImportStore26 } from "../../adapters/postgres/src/native-catalogue-import.ts";
 import { PostgresMaintenanceCommandUnitOfWork } from "../../adapters/postgres/src/maintenance-command-unit-of-work.ts";
@@ -45,6 +45,22 @@ import type { SalesFactsPgFixture } from "./sales-save-facts-cache.integration.t
 
 export const CURRENT_SALES_QA_TARGET = "naijue_erp_test_hv2_qa897_20261029_01";
 export const CURRENT_SALES_QA_NAMESPACE = "synthetic.qa897.sales.20261029";
+export const CURRENT_LIVE_LEDGER_QA_TARGET = "demo_8877_v7_r1_rehearsal_20261031_01";
+export const CURRENT_LIVE_LEDGER_QA_NAMESPACE = "synthetic.v7r1.ledger.20261031";
+export const CURRENT_LIVE_LEDGER_QA_BATCH = stableImportId('batch', CURRENT_LIVE_LEDGER_QA_NAMESPACE, 'FULL_SOURCE', 'V1');
+/** Exactly two test scenes, never arbitrary databases or production targets.
+ * QA897 keeps its original data/defaults; the new batch has separate identities.
+ */
+export function currentRuntime26SyntheticScope(database: string, batchId?: string) {
+  if (database === CURRENT_SALES_QA_TARGET) return {isNew:false, database:CURRENT_SALES_QA_TARGET,
+    namespace:CURRENT_SALES_QA_NAMESPACE, tag:'QA897', root:'synthetic:qa897',
+    version:'SYNTHETIC_QA897_CURRENT_SALES_BLUEPRINT_V1'} as const;
+  assert.equal(database,CURRENT_LIVE_LEDGER_QA_TARGET,'Only the exact new synthetic candidate is supported');
+  if(batchId!==undefined)assert.equal(batchId,CURRENT_LIVE_LEDGER_QA_BATCH,'New target cannot borrow old batch identity');
+  return {isNew:true,database:CURRENT_LIVE_LEDGER_QA_TARGET,namespace:CURRENT_LIVE_LEDGER_QA_NAMESPACE,
+    tag:'V7R1',root:'synthetic:v7r1-20261031',version:'SYNTHETIC_V7_R1_CURRENT_SALES_BLUEPRINT_V1'} as const;
+}
+
 export interface CurrentSalesSourcePins {
   readonly baseManifestSha256: string;
   readonly selectionSha256: string;
@@ -52,14 +68,14 @@ export interface CurrentSalesSourcePins {
   readonly occurrenceContractSha256: string;
 }
 export interface CurrentSalesBlueprintOptions {
-  readonly database: typeof CURRENT_SALES_QA_TARGET;
+  readonly database: typeof CURRENT_SALES_QA_TARGET | typeof CURRENT_LIVE_LEDGER_QA_TARGET;
   readonly batchId: string;
   readonly now: string;
   /** External real source/review pins; these do not authorize execution alone. */
   readonly pins: CurrentSalesSourcePins;
 }
 const digest = (text: string) => createHash("sha256").update(text, "utf8").digest("hex");
-const provenance = (raw: JsonObject): JsonObject => ({ schema_version: 1, fields: Object.fromEntries(Object.entries(raw).map(([key, value]) =>
+const qa897Provenance = (raw: JsonObject): JsonObject => ({ schema_version: 1, fields: Object.fromEntries(Object.entries(raw).map(([key, value]) =>
   [key, { origin: "ORIGINAL", raw: value, reason: "Exact literal of new all-synthetic QA897 input; not production/legacy data" }])) });
 const label = (kind: string, index: number) => `SYNTHETIC-QA897-${kind}-${String(index + 1).padStart(2, "0")}`;
 const native = <K extends EntityKind>(kind: K, offset: number) => syntheticId(kind, 897000 + offset);
@@ -70,7 +86,13 @@ const native = <K extends EntityKind>(kind: K, offset: number) => syntheticId(ki
  * literal source artifacts and independently bind their original options/grants.
  */
 export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprintOptions) {
-  assert.equal(input.database, CURRENT_SALES_QA_TARGET); entityId("operation", input.batchId);
+  const scope=currentRuntime26SyntheticScope(input.database,input.batchId),tag=scope.tag;
+  const provenance=(raw:JsonObject):JsonObject=>scope.isNew?{schema_version:1,fields:Object.fromEntries(Object.entries(raw).map(([key,value])=>
+    [key,{origin:'ORIGINAL',raw:value,reason:'Exact literal of new all-synthetic V7R1 input; not production/legacy data'}]))}:qa897Provenance(raw);
+  const label=(kind:string,index:number)=>`SYNTHETIC-${tag}-${kind}-${String(index+1).padStart(2,'0')}`;
+  const native=<K extends EntityKind>(kind:K,offset:number)=>scope.isNew
+    ? entityId(kind,stableImportId('synthetic',scope.namespace,kind,String(offset))) : syntheticId(kind,897000+offset);
+  entityId("operation", input.batchId);
   assert.equal(new Date(input.now).toISOString(), input.now);
   for (const pin of Object.values(input.pins)) assert.match(pin, /^[a-f0-9]{64}$/);
   const accountRows = Array.from({ length: 49 }, (_, i) => {
@@ -80,7 +102,7 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
     const sourceEmployeeKey = native("account", 100 + i), hallIndex = i < 2 ? null : (i - 2) % 22;
     return { sourceAccountId: native("account", 100 + i), nativeAccountId: native("account", 200 + i), nativeStaffId: native("staff", 300 + i),
       staffSourceKey: sourceEmployeeKey, sourceAccountVersion: 1, sourceEmployeeNativeId: i < 45 ? sourceEmployeeKey : null,
-      sourceEmployeeCode: i < 45 ? `QA897E${String(i + 1).padStart(3, "0")}` : null,
+      sourceEmployeeCode: i < 45 ? `${tag}E${String(i + 1).padStart(3, "0")}` : null,
       sourceRole: i === 0 ? "ADMIN" as const : i === 1 ? "WAREHOUSE" as const : "SALESPERSON" as const,
       sourceHallId: hallIndex === null ? null : label("HALL-SOURCE", hallIndex),
       nativeHallId: hallIndex === null ? null : native("hall", 400 + hallIndex),
@@ -95,12 +117,12 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
     const raw = { ...Object.fromEntries(table.columns.map(c => [c.name, ""])), ...cells };
     rawRows.push({ entity, raw, snapshot, bindings, mappings });
   };
-  const enabled = { 状态: { raw: "正常", native: true, evidenceRef: "synthetic:qa897-explicit-enabled" } };
+  const enabled = { 状态: { raw: "正常", native: true, evidenceRef: `${scope.root}-explicit-enabled` } };
   for (let i = 0; i < 22; i++) {
     const hallId = native("hall", 400 + i), warehouseId = native("warehouse", 500 + i), customerId = native("customer", 600 + i);
     const hallKey = label("HALL-SOURCE", i), warehouseKey = label("WAREHOUSE-SOURCE", i), customerKey = label("CUSTOMER-SOURCE", i);
-    add("CUSTOMER", { 来源编号: customerKey, 原编码: `QA897C${String(i + 1).padStart(3, "0")}`, 名称: label("CUSTOMER", i), 状态: "正常" },
-      { id: customerId, code: `QA897C${String(i + 1).padStart(3, "0")}`, name: label("CUSTOMER", i), enabled: true, version: 1, created_at: null, updated_at: null }, {}, enabled);
+    add("CUSTOMER", { 来源编号: customerKey, 原编码: `${tag}C${String(i + 1).padStart(3, "0")}`, 名称: label("CUSTOMER", i), 状态: "正常" },
+      { id: customerId, code: `${tag}C${String(i + 1).padStart(3, "0")}`, name: label("CUSTOMER", i), enabled: true, version: 1, created_at: null, updated_at: null }, {}, enabled);
     add("HALL", { 来源编号: hallKey, 厅名称: label("HALL", i), 默认客户来源编号: customerKey, 默认销货仓来源编号: warehouseKey, 状态: "正常" },
       { id: hallId, name: label("HALL", i), default_customer_id: customerId, default_sales_warehouse_id: warehouseId, enabled: true, version: 1 },
       { 默认客户来源编号: { sourceKey: customerKey, nativeId: customerId }, 默认销货仓来源编号: { sourceKey: warehouseKey, nativeId: warehouseId } }, enabled);
@@ -113,7 +135,7 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
     add("STAFF", { 来源编号: a.staffSourceKey, 姓名: label("STAFF", i), 角色: roleCell, 所属厅来源编号: a.sourceHallId ?? "", 联系方式: "", 任职状态: "在职" },
       { id: a.nativeStaffId, name: label("STAFF", i), role: a.sourceRole, hall_id: a.nativeHallId, contact: null, employment_status: "在职", version: 1 },
       a.sourceHallId === null ? {} : { 所属厅来源编号: { sourceKey: a.sourceHallId, nativeId: a.nativeHallId! } },
-      { 角色: { raw: roleCell, native: a.sourceRole, evidenceRef: "synthetic:qa897-explicit-role" }, 任职状态: { raw: "在职", native: "在职", evidenceRef: "synthetic:qa897-explicit-employment" } });
+      { 角色: { raw: roleCell, native: a.sourceRole, evidenceRef: `${scope.root}-explicit-role` }, 任职状态: { raw: "在职", native: "在职", evidenceRef: `${scope.root}-explicit-employment` } });
   }
   const partyArtifacts = ["CUSTOMER", "HALL", "WAREHOUSE", "STAFF"].map(entity => {
     const rows = rawRows.filter(r => r.entity === entity), columns = IMPORT_V2_TABLES.find(t => t.entity === entity)!.columns.map(c => c.name);
@@ -124,7 +146,7 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
   const parties: NativePartyImportInput[] = rawRows.map((r, i) => {
     const artifact = partyArtifacts.find(a => a.entity === r.entity)!;
     const ordinal = rawRows.filter(x => x.entity === r.entity).indexOf(r) + 1;
-    return { batchId: input.batchId, fixedSourceNamespace: CURRENT_SALES_QA_NAMESPACE, schemaProfile: "EXACT26",
+    return { batchId: input.batchId, fixedSourceNamespace: scope.namespace, schemaProfile: "EXACT26",
       selection: { entity: r.entity, source: "BASE_V2", path: IMPORT_V2_TABLES.find(t => t.entity === r.entity)!.file,
         baseManifestSha256: input.pins.baseManifestSha256, selectionSha256: input.pins.selectionSha256, approvalSha256: input.pins.approvalSha256, csvSha256: artifact.sha256 },
       source: { id: native("product", 1000 + i), batchId: input.batchId, entityType: r.entity, sourceKey: r.raw["来源编号"] as string,
@@ -140,42 +162,48 @@ export function buildCurrentRuntime26SalesBlueprint(input: CurrentSalesBlueprint
     if (row.source.entityType === "WAREHOUSE") delete row.nativeSnapshot.created_operation_id;
     prepareNativePartyImportChunk([row]); return row;
   });
-  const template = structuredClone(engineFixtures().catalogue);
+  const originalTemplate=structuredClone(engineFixtures().catalogue);
+  const replacements=new Map(originalTemplate.rows.filter(r=>r.nativeId!==null).map(r=>[r.nativeId!,
+    stableImportId('synthetic-dictionary',scope.namespace,r.source.entityType,r.source.sourceKey)]));
+  const remap=(value:unknown):unknown=>typeof value==='string'?replacements.get(value)??value
+    :Array.isArray(value)?value.map(remap):value!==null&&typeof value==='object'
+      ?Object.fromEntries(Object.entries(value).map(([k,v])=>[k,remap(v)])):value;
+  const template=scope.isNew?remap(originalTemplate) as typeof originalTemplate:originalTemplate;
   const size = template.rows.find(r => r.source.entityType === "SIZE")!, member = template.rows.find(r => r.source.entityType === "SIZE_GROUP_MEMBER")!;
-  const secondSizeId = native("size", 1300), secondSizeKey = "QA897-SIZE-L";
+  const secondSizeId = native("size", 1300), secondSizeKey = `${tag}-SIZE-L`;
   const secondSize = { ...structuredClone(size), nativeId: secondSizeId, source: { ...structuredClone(size.source), sourceKey: secondSizeKey,
-    rawFields: { sourceId: secondSizeKey, code: "QA897L", name: "SYNTHETIC QA897 L" }, normalizedFields: { sourceId: secondSizeKey, code: "QA897L", name: "SYNTHETIC QA897 L" } } };
-  const secondMemberKey = "QA897-MEMBER-L", secondMember = { ...structuredClone(member), references: { ...member.references,
-    size_id: { entity: "SIZE" as const, sourceKey: secondSizeKey, nativeId: secondSizeId, nativeSnapshot: { id: secondSizeId, code: "QA897L", name: "SYNTHETIC QA897 L" } } },
+    rawFields: { sourceId: secondSizeKey, code: `${tag}L`, name: `SYNTHETIC ${tag} L` }, normalizedFields: { sourceId: secondSizeKey, code: `${tag}L`, name: `SYNTHETIC ${tag} L` } } };
+  const secondMemberKey = `${tag}-MEMBER-L`, secondMember = { ...structuredClone(member), references: { ...member.references,
+    size_id: { entity: "SIZE" as const, sourceKey: secondSizeKey, nativeId: secondSizeId, nativeSnapshot: { id: secondSizeId, code: `${tag}L`, name: `SYNTHETIC ${tag} L` } } },
     source: { ...structuredClone(member.source), sourceKey: secondMemberKey, rawFields: { sourceId: secondMemberKey, display_order: "1" }, normalizedFields: { sourceId: secondMemberKey, display_order: "1" } } };
-  const seasonKey = "QA897-SEASON", seasonId = native("season", 1301);
+  const seasonKey = `${tag}-SEASON`, seasonId = native("season", 1301);
   const season = { source: { ...structuredClone(size.source), entityType: "SEASON", sourceKey: seasonKey,
-    rawFields: { sourceId: seasonKey, code: "QA897", name: "SYNTHETIC QA897 SEASON", display_order: "0" }, normalizedFields: { sourceId: seasonKey, code: "QA897", name: "SYNTHETIC QA897 SEASON", display_order: "0" } },
+    rawFields: { sourceId: seasonKey, code: `${tag}`, name: `SYNTHETIC ${tag} SEASON`, display_order: "0" }, normalizedFields: { sourceId: seasonKey, code: `${tag}`, name: `SYNTHETIC ${tag} SEASON`, display_order: "0" } },
     sourceKeyField: "sourceId", nativeId: seasonId, decisions: { code: { kind: "SOURCE_FIELD" as const, field: "code" }, name: { kind: "SOURCE_FIELD" as const, field: "name" }, display_order: { kind: "SOURCE_FIELD" as const, field: "display_order" } }, references: {} };
   const dictionaryRows = [...template.rows, secondSize, secondMember, season];
   const dictionaryUtf8 = dictionaryRows.map(r => JSON.stringify(r.source.rawFields)).join("\n") + "\n", dictionarySha = digest(dictionaryUtf8);
-  const catalogue: NativeCatalogueImportChunk26 = { batchId: input.batchId, fixedSourceNamespace: CURRENT_SALES_QA_NAMESPACE,
+  const catalogue: NativeCatalogueImportChunk26 = { batchId: input.batchId, fixedSourceNamespace: scope.namespace,
     schemaProfile: "EXACT26", validatorVersion: NATIVE_CATALOGUE_IMPORT_VERSION_26,
     selection: { ...template.selection, ...input.pins }, rows: dictionaryRows.map((row, i) => ({ ...row,
-      source: { ...row.source, id: native("product", 1400 + i), batchId: input.batchId, fileRef: "synthetic:qa897/catalogue.ndjson", sheet: row.source.entityType, rowNo: String(i + 1),
+      source: { ...row.source, id: native("product", 1400 + i), batchId: input.batchId, fileRef: `${scope.root}/catalogue.ndjson`, sheet: row.source.entityType, rowNo: String(i + 1),
         sourceFileSha256: dictionarySha, rowSha256: digest(JSON.stringify(row.source.rawFields)), fieldProvenance: provenance(row.source.rawFields) } })) };
   // Safe mapping INPUT for the original factory, not a technical review or a
   // prepared authorization. T45 supplies actual absolute paths and outside pins.
   const catalogueMappingCandidate = { version: "NATIVE_CATALOGUE_OCCURRENCE_CANDIDATE_V1", batchId: input.batchId,
-    fixedSourceNamespace: CURRENT_SALES_QA_NAMESPACE, selectionSha256: input.pins.selectionSha256,
+    fixedSourceNamespace: scope.namespace, selectionSha256: input.pins.selectionSha256,
     baseManifestSha256: input.pins.baseManifestSha256, groups: [catalogue.rows.map(row => ({
       entity: row.source.entityType, sourceKey: row.source.sourceKey, nativeId: row.nativeId,
       values: Object.fromEntries(Object.entries(row.decisions).map(([field, decision]) => {
         assert.equal(decision.kind, "SOURCE_FIELD", "This finite synthetic mapping preserves explicit literal cells");
         return [field, row.source.rawFields[(decision as { field: string }).field]];
-      })), references: structuredClone(row.references), originalEvidence: { syntheticOnly: true, target: CURRENT_SALES_QA_TARGET,
+      })), references: structuredClone(row.references), originalEvidence: { syntheticOnly: true, target: scope.database,
         fileRef: row.source.fileRef, rowNo: row.source.rowNo, sourceFileSha256: row.source.sourceFileSha256, rawFields: row.source.rawFields }
     }))] };
   const preparedCatalogue = prepareNativeCatalogueImportChunk26(catalogue);
   const find = (entity: string) => preparedCatalogue.rows.find(r => r.entity === entity)!.nativeSnapshot;
-  return { version: "SYNTHETIC_QA897_CURRENT_SALES_BLUEPRINT_V1" as const, database: input.database, batchId: input.batchId, now: input.now, pins: structuredClone(input.pins),
-    namespace: CURRENT_SALES_QA_NAMESPACE, accountIdentities: accountRows, parties, partySourceCandidates, partyArtifacts,
-    catalogue, catalogueMappingCandidate, catalogueArtifact: { fileRef: "synthetic:qa897/catalogue.ndjson", utf8: dictionaryUtf8, sha256: dictionarySha },
+  return { version: scope.version, database: input.database, batchId: input.batchId, now: input.now, pins: structuredClone(input.pins),
+    namespace: scope.namespace, accountIdentities: accountRows, parties, partySourceCandidates, partyArtifacts,
+    catalogue, catalogueMappingCandidate, catalogueArtifact: { fileRef: `${scope.root}/catalogue.ndjson`, utf8: dictionaryUtf8, sha256: dictionarySha },
     counts: { HALL: 22, WAREHOUSE: 22, STAFF: 49, CUSTOMER: 22, SUPPLIER: 0, accounts: 49, directLinks: 45, planLinks: 4 },
     refs: { importer: accountRows[0]!, businessActor: accountRows[1]!, salesperson: accountRows[2]!, hallId: native("hall", 400), warehouseId: native("warehouse", 500), customerId: native("customer", 600),
       category: find("CATEGORY"), color: find("COLOR"), fit: find("FIT"), size: find("SIZE"), sizeGroup: find("SIZE_GROUP"), secondSizeId, seasonId },
@@ -289,7 +317,7 @@ async function openCurrentSalesPublication(options: CurrentSalesPublicationOptio
       try {
         await original.executor.runtime26.assertReady(client, "IMPORT_STAGE");
         const rows = (await client.query("SELECT current_database() AS db,(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()) AS oid")).rows;
-        assert.equal(rows.length, 1); assert.equal(rows[0]!.db, CURRENT_SALES_QA_TARGET); assert.equal(rows[0]!.oid, expectedDatabaseOid);
+        assert.equal(rows.length, 1); assert.equal(rows[0]!.db, blueprint.database); assert.equal(rows[0]!.oid, expectedDatabaseOid);
       } finally { client.release(); }
       // The approved source owns the exact prefix -> BIND -> remaining stage ->
       // ACCOUNT -> CLOSURE -> PUBLISH order and continuation filtering. No local
@@ -346,15 +374,17 @@ export interface CurrentSalesFixtureHost {
  * publish fake source batches or recover/retry an uncertain command. Its output
  * deliberately excludes private bootstrap reports and normal-login material.
  */
-export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixtureHost) {
+async function prepareCurrentRuntime26SalesFixtureShared(host: CurrentSalesFixtureHost, publishedOnly: boolean) {
   assert.ok(host?.issuer?.runtime26 && host.issuer.pool && host.blueprint && host.bootstrapOptions && host.coreAuthorization && host.catalogueSource && host.schemes && host.publication,
     "Current issuer, full synthetic blueprint, original full11 publication job and independently reviewed source factories/grants required");
   validateCurrentSalesPublicationOptions(host.publication);
   const b = structuredClone(host.blueprint), { pool, runtime26 } = host.issuer;
-  assert.equal(b.database, CURRENT_SALES_QA_TARGET); assert.match(host.expectedDatabaseOid, /^[1-9]\d*$/);
+  const scope=currentRuntime26SyntheticScope(b.database,b.batchId);
+  assert.match(host.expectedDatabaseOid, /^[1-9]\d*$/);
+  if(scope.isNew)assert.notEqual(host.expectedDatabaseOid,"21551","New target OID must be independently observed, not QA897");
   const binding = host.bootstrapOptions.binding as { target: { database: string }; batchId: string; actorAccountId: string; fixedSourceNamespace: string; selectionSha256: string; phase: string };
-  assert.equal(binding?.target?.database, CURRENT_SALES_QA_TARGET); assert.equal(binding.batchId, b.batchId);
-  assert.equal(binding.actorAccountId, b.refs.importer.nativeAccountId); assert.equal(binding.fixedSourceNamespace, CURRENT_SALES_QA_NAMESPACE);
+  assert.equal(binding?.target?.database, b.database); assert.equal(binding.batchId, b.batchId);
+  assert.equal(binding.actorAccountId, b.refs.importer.nativeAccountId); assert.equal(binding.fixedSourceNamespace, b.namespace);
   assert.equal(binding.selectionSha256, b.pins.selectionSha256); assert.equal(binding.phase, "CORE_INITIALIZATION_26_V1");
   const publication = await openCurrentSalesPublication(host.publication, b, binding.target);
   try {
@@ -369,7 +399,7 @@ export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixt
     finally { client.release(); }
   };
   const target = await read("SELECT current_database() AS db,(SELECT oid::text FROM pg_catalog.pg_database WHERE datname=current_database()) AS oid");
-  assert.equal(target.length, 1); assert.equal(target[0]!.db, CURRENT_SALES_QA_TARGET); assert.equal(target[0]!.oid, host.expectedDatabaseOid);
+  assert.equal(target.length, 1); assert.equal(target[0]!.db, b.database); assert.equal(target[0]!.oid, host.expectedDatabaseOid);
   // The ORIGINAL bootstrap rechecks all empty-domain/source/target/49+115
   // invariants on its own original callback client before committing CORE.
   const module = await import(new URL("../../scripts/import-v3/native-bootstrap.mjs", import.meta.url).href) as {
@@ -399,7 +429,7 @@ export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixt
     // independently check all supplied authorities and actual locked references.
     const schemeCommand = host.schemes.command; validateCutoffImportCommand(schemeCommand);
     assert.equal(schemeCommand.batchId, b.batchId); assert.equal(schemeCommand.actorAccountId, b.refs.importer.nativeAccountId);
-    assert.equal(schemeCommand.schemeInitialization.target.database, CURRENT_SALES_QA_TARGET);
+    assert.equal(schemeCommand.schemeInitialization.target.database, b.database);
     assert.ok(schemeCommand.schemeInitialization.schemes.some(s => s.native.id === host.schemes.defaultSchemeId));
     await createCutoffImportService({ now: () => b.now,
       store: new PostgresCutoffImportStore(pool, { runtime26, barcodeSchemeInitialization26: host.schemes.source }),
@@ -412,6 +442,7 @@ export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixt
     }
     await host.catalogueSource.verify();
     const publicationResult = await publication.publish(coreResult, host.expectedDatabaseOid);
+    if(publishedOnly)return {publicationOnly:true as const,blueprint:b,coreResult,actualCoreCounts,publicationResult};
     // All ordinary maintenance begins only after the original real publication
     // and readback. No STAGED/core success is treated as runtime SKU readiness.
     const importer: ActorContext = { accountId: entityId("account", b.refs.importer.nativeAccountId), hallId: null };
@@ -481,4 +512,16 @@ export async function prepareCurrentRuntime26SalesFixture(host: CurrentSalesFixt
       scope: "Actual source/stores and readback only when invoked by T45; no password/credential exported, no production acceptance" };
   } finally { await bootstrap.close(); }
   } finally { await publication.original.close(); }
+}
+
+/** Original QA897 adapter remains unchanged in target, output and post-publish work. */
+export async function prepareCurrentRuntime26SalesFixture(host:CurrentSalesFixtureHost){
+  assert.equal(host?.blueprint?.database,CURRENT_SALES_QA_TARGET);
+  const value=await prepareCurrentRuntime26SalesFixtureShared(host,false);assert.ok('fixture'in value);return value;
+}
+/** New exact target shares the original bootstrap/scheme/prefix/import/PUBLISH
+ * implementation. No new source grant/review or money authority is fabricated. */
+export async function prepareCurrentRuntime26PublishedFixture(host:CurrentSalesFixtureHost){
+  const scope=currentRuntime26SyntheticScope(host?.blueprint?.database,host?.blueprint?.batchId);assert.ok(scope.isNew);
+  const value=await prepareCurrentRuntime26SalesFixtureShared(host,true);assert.ok('publicationOnly'in value);return value;
 }

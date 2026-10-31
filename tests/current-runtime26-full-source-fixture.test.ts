@@ -111,3 +111,54 @@ test('QA897 original money mappers close16.00 using external structural test par
  const bad=new Map(externalUnitMap);bad.delete(bad.keys().next().value!);assert.throws(()=>prepareCurrentRuntime26MoneyBranch(f,bad,f.moneyCandidateArtifact.sha256));
  const mismatch=structuredClone(f);mismatch.moneyCellCandidates[0]!.sourceId='missing-cell';assert.throws(()=>prepareCurrentRuntime26MoneyBranch(mismatch,externalUnitMap,f.moneyCandidateArtifact.sha256));
 });
+
+// New target tests use syntax-only source pins. No generated grant/review or PG.
+test('V7R1 exact new target shares pure source implementation without borrowing old identity or32-cell decision',async()=>{
+ const module=await import('./integration/current-runtime26-sales-fixture.ts');
+ const b=module.buildCurrentRuntime26SalesBlueprint({database:module.CURRENT_LIVE_LEDGER_QA_TARGET,batchId:module.CURRENT_LIVE_LEDGER_QA_BATCH,now:'2026-10-31T00:00:00.000Z',pins:blueprint().pins});
+ const f=await buildCurrentRuntime26FullSourceFixture(b),old=await fixture;
+ assert.equal(b.namespace,'synthetic.v7r1.ledger.20261031');assert.notEqual(b.batchId,old.blueprint.batchId);
+ assert.equal(f.prepared.headers.rows[0]!.prepared.header.sourceStatus,'APPROVED');assert.equal(old.prepared.headers.rows[0]!.prepared.header.sourceStatus,'DRAFT');
+ assert.equal(f.prepared.transfers.rows[0]!.line.quantity,'1');assert.equal(f.prepared.headers.rows[0]!.prepared.header.createdInstant,null);
+ assert.equal(f.prepared.stock.signedQuantity,'10');assert.equal(f.prepared.money,null);assert.equal(f.executionAuthorized,false);
+ assert.equal(b.parties.length,115);assert.equal(b.accountIdentities.length,49);assert.equal(b.catalogue.rows.length,9);
+ const oldIds=new Set(old.blueprint.parties.map(p=>p.source.id));assert.ok(b.parties.every(p=>!oldIds.has(p.source.id)));
+ assert.notEqual(f.prepared.sku.nativeSku.id,old.prepared.sku.nativeSku.id);assert.notEqual(b.refs.sizeGroup.id,old.blueprint.refs.sizeGroup.id);
+ assert.equal(f.moneyCellCandidates.length,32);assert.ok(f.moneyCellCandidates.every(c=>!old.moneyCellCandidates.some(o=>o.fileSha256===c.fileSha256)));
+ const oldMap=v2MoneyApprovalSet(old.moneyCellCandidates,structuredClone(old.moneyCellCandidates));
+ assert.throws(()=>prepareCurrentRuntime26MoneyBranch(f,oldMap,old.moneyCandidateArtifact.sha256),'Old32 Map cannot authorize fresh source cells');
+ // Fresh Map is a UNIT structural parameter, never a C approval or runtime proof.
+ const freshUnitMap=v2MoneyApprovalSet(f.moneyCellCandidates,structuredClone(f.moneyCellCandidates));
+ const prepared=prepareCurrentRuntime26MoneyBranch(f,freshUnitMap,f.moneyCandidateArtifact.sha256);
+ assert.equal(prepared.prepared.money!.salesDetails.rows.length,16);assert.equal(prepared.prepared.money!.settlements.rows.length,16);
+ assert.equal(prepared.executionAuthorized,false);assert.equal(f.prepared.money,null);
+ for(const database of ['erp_prod','other_qa','demo_8877_arbitrary'])assert.throws(()=>module.buildCurrentRuntime26SalesBlueprint({...b,database} as never));
+ assert.throws(()=>module.buildCurrentRuntime26SalesBlueprint({database:module.CURRENT_LIVE_LEDGER_QA_TARGET,batchId:old.blueprint.batchId,now:b.now,pins:b.pins}));
+});
+test('V7R1 recipe and scenario mapping need actual target rows, exact history deltas and NULL old balances; no inferred zero',async()=>{
+ const module=await import('./integration/current-runtime26-sales-fixture.ts');
+ const tools=await import('./integration/current-runtime26-full-source-fixture.ts');
+ const {parseHistoryRevisionCommand}=await import('../packages/application/src/history-revision-service.ts');
+ const b=module.buildCurrentRuntime26SalesBlueprint({database:module.CURRENT_LIVE_LEDGER_QA_TARGET,batchId:module.CURRENT_LIVE_LEDGER_QA_BATCH,now:'2026-10-31T00:00:00.000Z',pins:blueprint().pins});
+ const f=await buildCurrentRuntime26FullSourceFixture(b),recipe=tools.buildCurrentRuntime26LiveLedgerRecipe(f);
+ assert.equal(recipe.actualState,'UNKNOWN_NOT_EXECUTED');assert.equal(recipe.executionAuthorized,false);assert.equal(recipe.target.databaseOid,null);
+ assert.deepEqual(parseHistoryRevisionCommand(recipe.postPublication.command),recipe.postPublication.command);
+ assert.equal(recipe.proposals.sales.salesId,null);assert.equal(recipe.proposals.transfers.transferId,null);
+ assert.ok('skuId'in recipe.proposals.sales.lines[0]!);assert.equal(recipe.proposals.sales.lines[0]!.skuId,f.prepared.sku.nativeSku.id);
+ assert.equal(new Set([...Object.values(recipe.proposals.keys.sales),...Object.values(recipe.proposals.keys.transfers)]).size,14);
+ const id=(n:number)=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`,e=recipe.expectedAfterHistory;
+ // Structural unit input only, NOT actual readback/canonical metadata/approval.
+ const readback:import('./integration/current-runtime26-full-source-fixture.ts').CurrentRuntime26LiveLedgerReadback={
+  database:module.CURRENT_LIVE_LEDGER_QA_TARGET,databaseOid:'30001',runtimeRole:'SYNTHETIC_UNIT_NOT_LOGIN',postmasterStart:'SYNTHETIC_UNIT_NOT_PG',
+  login:{accountId:recipe.loginAccountId,loginName:'SYNTHETIC_UNIT_ONLY',password:'NOT_AN_ACTUAL_CREDENTIAL'},
+  revisionReceipt:{operationId:id(1),revisionId:id(2),dataset:'HISTORY',kind:'transfers',documentId:recipe.postPublication.command.documentId,version:2,ledgerEntryIds:[id(3),id(4)]},
+  balances:e.quantities.map(q=>({warehouse_id:q.warehouseId,sku_id:e.skuId,quantity:q.quantity,version:2,last_operation_id:id(1)})),
+  baselineLedger:[{id:id(5),event_kind:'CUTOFF_BASELINE',warehouse_id:e.fromWarehouseId,sku_id:e.skuId,source_import_batch_id:b.batchId,quantity_delta:'10',quantity_before:null,quantity_after:null}],
+  historyLedger:e.quantities.map((q,i)=>({id:id(3+i),operation_id:id(1),source_history_revision_id:id(2),sku_id:e.skuId,warehouse_id:q.warehouseId,quantity_delta:i===0?'-1':'1',endpoint:i===0?'FROM':'TO',event_kind:'HISTORY_REVISION',source_document_version:2,source_history_transfer_line_id:recipe.postPublication.command.lines[0]!.lineId,source_history_sales_line_id:null,source_import_batch_id:null,reverses_entry_id:null,quantity_before:null,quantity_after:null}))};
+ const mapped=tools.mapCurrentRuntime26LiveLedgerScenario(recipe,readback);assert.deepEqual(mapped.initialInventory.map(b=>b.quantity),['9','1']);assert.deepEqual(mapped.unrecordedLedgerIds,{baseline:[id(5)],historyRevision:[id(3),id(4)]});
+ type MutableReadback={-readonly[K in keyof typeof readback]:(typeof readback)[K]};
+ for(const change of [(a:MutableReadback)=>{a.databaseOid='21551';},(a:MutableReadback)=>{a.balances=[];},(a:MutableReadback)=>{a.balances[0]!.quantity='0';},(a:MutableReadback)=>{a.historyLedger[0]!.source_history_transfer_line_id=id(99);},(a:MutableReadback)=>{a.historyLedger[1]!.quantity_delta='2';},(a:MutableReadback)=>{a.revisionReceipt={...a.revisionReceipt,ledgerEntryIds:[id(3),id(99)]};}]){
+  const bad:MutableReadback=structuredClone(readback);change(bad);assert.throws(()=>tools.mapCurrentRuntime26LiveLedgerScenario(recipe,bad));
+ }
+ const old=await fixture;assert.throws(()=>tools.buildCurrentRuntime26LiveLedgerRecipe(old));
+});
