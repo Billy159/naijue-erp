@@ -1,6 +1,9 @@
 // Closed synthetic stdio profiles. Never a production fallback or listener.
 import {createInterface} from 'node:readline';
 import {createReplicaPreviewTransport} from '../frontend/runtime-preview-transport.ts';
+const unifiedProfile=process.argv.includes('--unified-service');
+if(unifiedProfile&&(process.argv.slice(2).length!==1||process.argv[2]!=='--unified-service'))throw Error('Unified service requires its own exact isolated composition');
+const unified=unifiedProfile?await(await import('./unified-service-fixture.mjs')).createUnifiedServiceFixture():null;
 const documentPagination=process.argv.includes('--document-pagination');
 if(documentPagination&&(process.argv.filter(flag=>['--sales-chain','--transfer-chain'].includes(flag)).length!==1||process.argv.slice(2).some(flag=>!['--document-pagination','--sales-chain','--transfer-chain'].includes(flag))))throw Error('Document pagination requires exactly one original document chain');
 const productEntryProfile=process.argv.includes('--product-entry-service');
@@ -10,7 +13,7 @@ if(process.argv.includes('--customer-recommendation')){const {installCustomerRec
 if(process.argv.includes('--sales-chain')&&process.argv.includes('--transfer-chain'))throw Error('Independent sales and transfer stores cannot share a preview');
 if(process.argv.includes('--product-edit')&&['--sales-chain','--transfer-chain','--staff-edit','--product-editor-read'].some(flag=>process.argv.includes(flag)))throw Error('Product edit fixture requires its own consistent isolated profile');
 const productEntry=productEntryProfile?await(await import('../../../../tests/support/product-entry-service-host-fixture.mjs')).createProductEntryServiceHost({syntheticOnly:true,productWrite:true,colorWrite:true,categoryWrite:true,mediaStage:true,syntheticStock:true}):null;
-const transport=productEntryProfile?null:createReplicaPreviewTransport();
+const transport=productEntryProfile||unifiedProfile?null:createReplicaPreviewTransport();
 const productEdit=process.argv.includes('--product-edit')?await(await import('./product-edit-fixture.mjs')).createProductEditFixture():null;
 const productRead=process.argv.includes('--product-editor-read')?(await import('./product-editor-read-fixture.mjs')).createProductEditorReadFixture():null;
 const transfer=process.argv.includes('--transfer-chain')?await(await import('./transfer-chain-fixture.mjs')).createTransferChainFixture({responsibleStaffValidation:true,pagination:documentPagination}):null;
@@ -23,6 +26,7 @@ try{
 for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity})){
  try{
   const request=JSON.parse(line),url=new URL(request.url),method=request.method??'GET';
+  if(unified){process.stdout.write(JSON.stringify(await unified.request(request))+'\n');continue;}
   if(productEntry){
    // This profile never consults the static transport, including unknown routes.
    if(url.origin!=='https://synthetic-product-entry.invalid'||url.username||url.password||!url.pathname.startsWith('/api/')||url.search||url.hash){process.stdout.write(JSON.stringify({status:501,headers:{'content-type':'application/json'},body:JSON.stringify({error:'SYNTHETIC_PRODUCT_ENTRY_ONLY'})})+'\n');continue;}
@@ -50,5 +54,5 @@ for await(const line of createInterface({input:process.stdin,crlfDelay:Infinity}
 }
 
 }finally{
- try{await productEntry?.close();}finally{await productEdit?.close();await payment?.close();await staff?.close();await sales?.close();await transfer?.close();}
+ try{await unified?.close();await productEntry?.close();}finally{await productEdit?.close();await payment?.close();await staff?.close();await sales?.close();await transfer?.close();}
 }

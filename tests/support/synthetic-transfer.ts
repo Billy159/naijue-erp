@@ -1,3 +1,5 @@
+import { SharedSyntheticInventory } from './synthetic-store.ts';
+import type { SharedSyntheticInventoryTables } from './synthetic-store.ts';
 /** SYNTHETIC ONLY: no SQL engine, locks, real accounts, dictionaries, or storage durability evidence. */
 import { requireDomain } from "../../packages/domain/src/errors.ts";
 import { businessDate, quantity, version } from "../../packages/domain/src/values.ts";
@@ -29,18 +31,20 @@ interface Tables {
 export class SyntheticTransferStore implements TransferUnitOfWork {
   private tables: Tables = { identities: new Map(), transfers: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), warehouses: new Map(), skus: new Map() };
   private tail: Promise<unknown> = Promise.resolve();
+  constructor(private readonly sharedInventory?: SharedSyntheticInventory) {}
   failNextAt: string | undefined;
-  snapshot(): Tables { return structuredClone(this.tables); }
+  snapshot(): Tables { return structuredClone({ ...this.tables, ...(this.sharedInventory?.snapshot() ?? {}) }); }
   seedIdentity(row: TransferCurrentIdentity): void { this.tables.identities.set(row.accountId, structuredClone(row)); }
-  seedBalance(row: InventoryBalanceRow): void { this.tables.balances.set(balanceKey(row.warehouseId,row.skuId), structuredClone(row)); }
-  removeBalance(warehouse: EntityId<"warehouse">, sku: EntityId<"sku">): void { this.tables.balances.delete(balanceKey(warehouse,sku)); }
+  seedBalance(row: InventoryBalanceRow): void { if (this.sharedInventory) this.sharedInventory.seed(row); else this.tables.balances.set(balanceKey(row.warehouseId,row.skuId), structuredClone(row)); }
+  removeBalance(warehouse: EntityId<"warehouse">, sku: EntityId<"sku">): void { if (this.sharedInventory) this.sharedInventory.remove(warehouse,sku); else this.tables.balances.delete(balanceKey(warehouse,sku)); }
   seedWarehouse(row: TransferWarehouseFact): void { this.tables.warehouses.set(row.id, structuredClone(row)); }
   seedSku(row: TransferSkuFact): void { this.tables.skus.set(row.id, structuredClone(row)); }
   seedDocument(document: TransferDocument, stockBasis: StoredTransfer["stockBasis"] = "RUNTIME_LEDGER"): void { this.tables.transfers.set(document.header.id, structuredClone({ document, stockBasis })); }
-  replaceLedger(rows: readonly InventoryLedgerRow[]): void { this.tables.ledger = structuredClone([...rows]); }
+  replaceLedger(rows: readonly InventoryLedgerRow[]): void { if (this.sharedInventory) this.sharedInventory.replaceLedger(rows); else this.tables.ledger = structuredClone([...rows]); }
   transaction<T>(work: (tx: TransferTransaction) => Promise<T>): Promise<T> {
-    const run = async (): Promise<T> => {
-      const tables = structuredClone(this.tables); let active = true; let loaded: EntityId<"transfer"> | undefined; let locked: Set<string> | undefined;
+    const run = async (inventory?: SharedSyntheticInventoryTables): Promise<T> => {
+      const tables = structuredClone(this.tables);
+      if (inventory) { tables.balances = inventory.balances; tables.ledger = inventory.ledger; } let active = true; let loaded: EntityId<"transfer"> | undefined; let locked: Set<string> | undefined;
       let receiptActor: EntityId<"account"> | undefined;
       const counts = new Map<string,number>();
       const point = (name: string): void => { requireDomain(active,"TRANSACTION_CLOSED","Closed synthetic transaction"); const n=(counts.get(name)??0)+1; counts.set(name,n);
@@ -66,9 +70,10 @@ export class SyntheticTransferStore implements TransferUnitOfWork {
           requireDomain(row.reversesEntryId===null || !tables.ledger.some(old=>old.reversesEntryId===row.reversesEntryId),"REVERSAL_UNIQUE","Duplicate reversal"); tables.ledger.push(structuredClone(row)); },
         async appendAudit(row) { point("audit"); tables.audit.push(structuredClone(row)); }
       };
-      try { const value=await work(tx); active=false; this.tables=tables; return structuredClone(value); } catch(error) { active=false; throw error; }
+      try { const value=await work(tx); const result=structuredClone(value); active=false; this.tables=tables; return result; } catch(error) { active=false; throw error; }
     };
-    const result=this.tail.then(run); this.tail=result.catch(()=>undefined); return result;
+    if (this.sharedInventory) return this.sharedInventory.transaction(run);
+    const result=this.tail.then(()=>run()); this.tail=result.catch(()=>undefined); return result;
   }
 }
 export function fixture(options: { readonly authorization?: TransferDependencies["authorization"]; readonly references?: TransferDependencies["references"] } = {}) {

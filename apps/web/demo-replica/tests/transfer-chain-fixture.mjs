@@ -19,23 +19,25 @@ export async function createTransferChainFixture(options={}){
  const pagination=options.pagination===true;let seeding=pagination,documentSequence=0;
  let clock='2026-10-29T12:00:00.000000Z';
  const newId=kind=>pagination&&kind==='transfer'?`${(seeding?0x20000000-++documentSequence:0xf0000000+ ++documentSequence).toString(16)}-0000-4000-8000-000000000001`:randomUUID();
- const store=new SyntheticTransferStore(),actor={accountId:qaPrincipal.accountId,hallId:null,role:'ADMIN'},identity={...actor,staffId:qaPrincipal.staffId,loginEnabled:true,employmentStatus:'在职',hallEnabled:null};store.seedIdentity(identity);
+ const store=new SyntheticTransferStore(options.sharedInventory),actor={accountId:qaPrincipal.accountId,hallId:null,role:'ADMIN'},identity={...actor,staffId:qaPrincipal.staffId,loginEnabled:true,employmentStatus:'在职',hallEnabled:null};store.seedIdentity(identity);
  const baseline=new Map();for(const p of qaInventory({}))for(const group of p.colorFits)for(const row of group.rows)for(const cell of Object.values(row.cells)){
   requireDomain(cell.state==='known','INVENTORY_NOT_READY','Only explicit known seed cells');const key=balanceKey(row.warehouse.id,cell.skuId),value=quantity(cell.quantity);requireDomain(!baseline.has(key)||baseline.get(key)===value,'INVENTORY_NOT_READY','Conflicting seed');baseline.set(key,value);store.seedBalance({warehouseId:row.warehouse.id,skuId:cell.skuId,quantity:value,version:version(1),lastOperationId:null,updatedAt:'2026-10-29T00:00:00Z'});
  }
  for(const w of qaWarehouses)store.seedWarehouse({id:w.id,hallId:w.hall.id,enabled:w.enabled,hallEnabled:w.hall.enabled,hasNonzeroInventory:[...store.snapshot().balances.values()].some(b=>b.warehouseId===w.id&&b.quantity!==0n)});
  const skuMap=new Map(qaSkus.map(row=>[row.id,structuredClone(row)]));for(const sku of qaSkus)store.seedSku({id:sku.id,enabled:true});
- const getSku=id=>{const row=skuMap.get(id);requireDomain(row,'SKU_UNAVAILABLE','Only predeclared synthetic SKU');requireDomain(typeof row.barcode==='string'&&row.barcode.length>0,'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE','Declared MAIN required');return row;};
+ const currentSkus=()=>options.references?.skus()??[...skuMap.values()],currentStaff=()=>options.references?.staff()??qaStaff;
+ const getSku=id=>{const row=currentSkus().find(row=>row.id===id);requireDomain(row,'SKU_UNAVAILABLE','Only predeclared synthetic SKU');requireDomain(typeof row.barcode==='string'&&row.barcode.length>0,'NATIVE_TRANSFER_SNAPSHOT_UNAVAILABLE','Declared MAIN required');return row;};
  const dependencies={now:()=>pagination?clock:'2026-10-29T12:00:00Z',newId,authorization:createSourceConfirmedTransferAuthorization(),references:createNativeManualTransferReferences(),unitOfWork:{transaction(work){return store.transaction(tx=>work({...tx,
+  async getSkuFact(id){if(options.references){const row=currentSkus().find(row=>row.id===id);return row?{id:row.id,enabled:row.enabled!==false}:undefined;}return tx.getSkuFact(id);},
   async putRuntimeTransfer(document){
    if(responsibleStaffValidation){
     const selected=document.header.responsibleStaffId,previous=store.snapshot().transfers.get(document.header.id)?.document;
-    requireDomain(selected===null||qaStaff.some(row=>row.id===selected),'RESPONSIBLE_STAFF_UNAVAILABLE','Actual finite QA staff required');
+    requireDomain(selected===null||currentStaff().some(row=>row.id===selected),'RESPONSIBLE_STAFF_UNAVAILABLE','Actual finite QA staff required');
     if(previous&&selected!==previous.header.responsibleStaffId)requireDomain(previous.header.status==='DRAFT'&&document.header.status==='DRAFT'&&selected!==null,'INVALID_STATE','Existing responsible change requires draft SAVE and actual staff, matching the SQL boundary');
    }
    return tx.putRuntimeTransfer(document);
   },
-  async resolveDocumentSkus(input){requireDomain(input.scope.kind==='TRANSFER','FORBIDDEN','Transfer-only scenario');return input.selections.map(selection=>{if('skuId'in selection)return getSku(selection.skuId).id;const matches=[...skuMap.values()].filter(row=>['productId','colorId','fitId','sizeId'].every(k=>row[k]===selection.spec[k]));requireDomain(matches.length===1,'SKU_UNAVAILABLE','Exact predeclared specification required');return getSku(matches[0].id).id;});},
+  async resolveDocumentSkus(input){requireDomain(input.scope.kind==='TRANSFER','FORBIDDEN','Transfer-only scenario');return input.selections.map(selection=>{if('skuId'in selection)return getSku(selection.skuId).id;const matches=currentSkus().filter(row=>['productId','colorId','fitId','sizeId'].every(k=>row[k]===selection.spec[k]));requireDomain(matches.length===1,'SKU_UNAVAILABLE','Exact predeclared specification required');return getSku(matches[0].id).id;});},
   async getCurrentTransferSnapshots(ids){return new Map(ids.map(id=>{const row=getSku(id);return [id,{productCode:row.productCode,productName:row.productName,colorName:row.colorName,fitName:row.fitName,sizeName:row.sizeName,barcode:row.barcode}];}));}
  }));}}};
  const app=Fastify({logger:false});app.register(createTransferHttpPlugin({authenticate:async()=>actor,dependencies,preparation:createNativeTransferPreparation(dependencies),existingPreparation:createNativeTransferExistingPreparation(dependencies)}));await app.ready();
@@ -66,13 +68,13 @@ export async function createTransferChainFixture(options={}){
    const stored=state.transfers.get(q.transferId);if(!stored)return json({error:{code:'DOCUMENT_NOT_FOUND',message:'Only documents actually saved by this scenario'}},404);
    const {document}=stored,header=document.header,from=qaWarehouses.find(w=>w.id===header.fromWarehouseId),to=qaWarehouses.find(w=>w.id===header.toWarehouseId);requireDomain(from&&to,'WAREHOUSE_UNAVAILABLE','Finite directory required');
    const currentDocument={...structuredClone(document),lines:structuredClone(document.lines.filter(line=>line.isCurrent))};
-   return json({...stored,document:currentDocument,references:{fromWarehouseName:from.name,toWarehouseName:to.name,fromHallName:from.hall.name,toHallName:to.hall.name,createdByName:qaStaff.find(s=>s.id===identity.staffId)?.name??null,approvedByName:header.approvedByAccountId===actor.accountId?qaStaff.find(s=>s.id===identity.staffId)?.name??null:null,responsibleName:header.responsibleStaffId?qaStaff.find(s=>s.id===header.responsibleStaffId)?.name??null:null},catalog:qaTransferCatalog(currentDocument.lines)});
+   return json({...stored,document:currentDocument,references:{fromWarehouseName:from.name,toWarehouseName:to.name,fromHallName:from.hall.name,toHallName:to.hall.name,createdByName:currentStaff().find(s=>s.id===identity.staffId)?.name??null,approvedByName:header.approvedByAccountId===actor.accountId?currentStaff().find(s=>s.id===identity.staffId)?.name??null:null,responsibleName:header.responsibleStaffId?currentStaff().find(s=>s.id===header.responsibleStaffId)?.name??null:null},catalog:options.references?options.references.catalog(currentDocument.lines):qaTransferCatalog(currentDocument.lines)});
   }
   if(path==='/transfers/history/query'){
    const query=parseTransferHistoryQuery(q);requireDomain(state.transfers.has(query.transferId),'DOCUMENT_NOT_FOUND','No stored target');const rows=state.audit.filter(row=>row.transferId===query.transferId).reverse().map(({id,operationId,actorAccountId,action,occurredAt,before,after})=>({id,operationId,actorAccountId,action,occurredAt,oldVersion:before?.header.version??null,newVersion:after.header.version}));return json({transferId:query.transferId,page:query.page,pageSize:query.pageSize,exactTotal:String(rows.length),items:rows.slice((query.page-1)*query.pageSize,query.page*query.pageSize)});
   }
   if(path==='/inventory/query'||path==='/product-management/query')return qaReferenceRead(path,q,false,null,(warehouse,sku)=>{const row=state.balances.get(balanceKey(warehouse,sku));requireDomain(row,'INVENTORY_NOT_READY','Missing balance is unknown');return String(row.quantity);});
-  return base.http.fetch(input,{...init,credentials:'same-origin'});
+  return options.references?.fetch?options.references.fetch(input,init):base.http.fetch(input,{...init,credentials:'same-origin'});
  };
  const canHandle=(path,method)=>method==='POST'&&['/api/transfers/commands','/api/transfers/prepare-create','/api/transfers/prepare-existing','/api/transfers/query','/api/transfers/detail/query','/api/transfers/history/query','/api/inventory/query','/api/inventory/output/query','/api/product-management/query','/api/products/stock/query','/api/products/stock-overview/query'].includes(path)||method==='GET'&&path.startsWith('/api/transfers/receipts/');
  async function request(request){

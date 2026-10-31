@@ -132,3 +132,12 @@ test('synthetic stock current inventory denial and source faults remain HTTP fai
  host.setSyntheticInventoryAccess({allowed:true});host.faultSyntheticStock('NOT_READY');assert.equal((await request()).status,503);host.faultSyntheticStock('FAIL');assert.equal((await request()).status,500);host.faultSyntheticStock(null);
  host.setIdentity({enabled:false});assert.equal((await request()).status,401);
 });
+
+test('explicit finite FIT writer uses original service receipt/readback and preserves referenced identities',async t=>{
+ const {host,scope,read}=await setup(t,{productWrite:true,colorWrite:false,fitWrite:true,mediaStage:false});
+ const client=createCatalogueMaintenanceHttpClient(host.http,'FIT'),input={action:'CREATE',requestKey:'SYN-REAL-FIT-B',values:{name:'SYNTHETIC B fit',code:'B',enabled:true}},created=await client.execute(input,scope.signal);
+ assert.deepEqual(await client.execute(input,scope.signal),created);assert.equal(host.frontendRoutes.maintenance.fits,true);
+ const body=await(await host.http.fetch(ORIGIN+'/api/catalogue-settings-read/fits/query',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({search:'SYNTHETIC B fit',page:1,pageSize:20}),signal:scope.signal})).json();assert.equal(body.items[0].id,created.targetId);
+ const saved=await createProductMaintenanceHttpClientV2(host.http).execute({...command('SYN-WITH-FIT-B'),skuSelection:{colorIds:[REF.color],fitIds:[created.targetId]}},scope.signal);assert.equal((await createProductHttpReader(host.http).readProductSpecifications(read({productId:saved.targetId}))).fits[0].id,created.targetId);
+ await assert.rejects(client.execute({action:'DELETE',requestKey:'SYN-DELETE-REFERENCED-FIT',id:created.targetId,expectedVersion:1},scope.signal));assert.equal(host.snapshot().state.fits.get(created.targetId).deletedAt,null);
+});

@@ -17,14 +17,31 @@ interface SyntheticTables {
 }
 export const balanceKey = (warehouseId: string, skuId: string): string => JSON.stringify([warehouseId, skuId]);
 const receiptKey = (actorId: string, key: string): string => JSON.stringify([actorId, key]);
+/** One TEST ONLY copy-on-write inventory owner shared by the original two service stores. */
+export interface SharedSyntheticInventoryTables { balances: Map<string, InventoryBalanceRow>; ledger: InventoryLedgerRow[] }
+export class SharedSyntheticInventory {
+  private state: SharedSyntheticInventoryTables = { balances: new Map(), ledger: [] };
+  private tail: Promise<unknown> = Promise.resolve();
+  snapshot(): SharedSyntheticInventoryTables { return structuredClone(this.state); }
+  seed(row: InventoryBalanceRow): void { const k = balanceKey(row.warehouseId, row.skuId), old = this.state.balances.get(k);
+    requireDomain(old === undefined || (old.quantity === row.quantity && old.version === row.version && old.lastOperationId === row.lastOperationId), "INVENTORY_NOT_READY", "Conflicting shared synthetic seed");
+    if (!old) this.state.balances.set(k, structuredClone(row)); }
+  remove(warehouse: string, sku: string): void { this.state.balances.delete(balanceKey(warehouse, sku)); }
+  replaceLedger(rows: readonly InventoryLedgerRow[]): void { this.state.ledger = structuredClone([...rows]); }
+  transaction<T>(work: (state: SharedSyntheticInventoryTables) => Promise<T>): Promise<T> {
+    const run = async (): Promise<T> => { const next = structuredClone(this.state); const value = await work(next); this.state = next; return value; };
+    const result = this.tail.then(()=>run()); this.tail = result.catch(() => undefined); return result;
+  }
+}
 /** Synthetic-only serialized copy-on-write reference adapter. NOT a database or evidence of SQL isolation. */
 export class SyntheticStore implements SalesUnitOfWork {
   private tables: SyntheticTables = { identities: new Map(), headers: new Map(), lines: new Map(), settlements: new Map(), balances: new Map(), ledger: [], audit: [], receipts: new Map(), stockBasis: new Map() };
   private tail: Promise<unknown> = Promise.resolve();
+  constructor(private readonly sharedInventory?: SharedSyntheticInventory) {}
   failNextAt: string | undefined;
-  snapshot(): SyntheticTables { return structuredClone(this.tables); }
+  snapshot(): SyntheticTables { return structuredClone({ ...this.tables, ...(this.sharedInventory?.snapshot() ?? {}) }); }
   seedIdentity(identity: SalesCurrentIdentity): void { this.tables.identities.set(identity.accountId, structuredClone(identity)); }
-  seedBalance(row: InventoryBalanceRow): void { this.tables.balances.set(balanceKey(row.warehouseId, row.skuId), structuredClone(row)); }
+  seedBalance(row: InventoryBalanceRow): void { if (this.sharedInventory) this.sharedInventory.seed(row); else this.tables.balances.set(balanceKey(row.warehouseId, row.skuId), structuredClone(row)); }
   seedCutoffHistory(document: SalesDocument): void {
     this.tables.headers.set(document.header.id, structuredClone(document.header));
     for (const row of document.lines) this.tables.lines.set(row.id, structuredClone(row));
@@ -32,8 +49,9 @@ export class SyntheticStore implements SalesUnitOfWork {
     this.tables.stockBasis.set(document.header.id, "CUTOFF_HISTORY");
   }
   transaction<T>(work: (tx: SalesTransaction) => Promise<T>): Promise<T> {
-    const run = async (): Promise<T> => {
+    const run = async (inventory?: SharedSyntheticInventoryTables): Promise<T> => {
       const draft = structuredClone(this.tables);
+      if (inventory) { draft.balances = inventory.balances; draft.ledger = inventory.ledger; }
       const counts = new Map<string, number>();
       const point = (name: string): void => {
         const count = (counts.get(name) ?? 0) + 1; counts.set(name, count);
@@ -87,11 +105,12 @@ export class SyntheticStore implements SalesUnitOfWork {
       };
       try {
         const result = await work(tx);
-        this.tables = draft;
-        return structuredClone(result);
+        const returned = structuredClone(result); this.tables = draft;
+        return returned;
       } finally { active = false; }
     };
-    const result = this.tail.then(run);
+    if (this.sharedInventory) return this.sharedInventory.transaction(run);
+    const result = this.tail.then(()=>run());
     this.tail = result.catch(() => undefined);
     return result;
   }
