@@ -3388,3 +3388,6 @@ C41已经真正R1 runtime TCP认证并捕获完整目录，canonical f62de0a301d
 ### 未审核单据编辑同新增字段：当前增量
 
 原 F1 保持四个 chain 测试/浏览器文件唯一 writer，正在补已有 DRAFT 的字段操作及准备、保存、重读。新增两项原合成宿主接口用例已通过，但不代表整页或真实 PG 通过。当前候选50销货 existingEdit 已开；调拨 existingEdit 未开、负责人能力未接齐，不能登记完成。D1 沿原 bridge 文件补真实原员工候选接缝，先回报准确 lease，禁止与 F1 同文件修改。C 待能力验证后配对配置，T45 统一构建；QF 仅验新候选受影响状态。
+
+
+固定增量 2848f0283fe3f7b5c577cc873607df05494c99e5 已推送并远端回读。F1 已交还四叶，合成接口两项通过，另实际销售改退货版本3、负量/退款/幂等/CAS 检查通过；不是实际 PG。D1 原员工读取本来有效，只补原 transfer profile 负责人保存校验，9项定向证据采用。C 新增 document-existing-fields-public-config.json，保留50配置；原parser通过，transferExistingEdit/documentResponsibleReady只在合成候选打开。T45正在构建51，后续原QF仅复验已有未审核字段和扫码排队保存。整页浏览器仍未测，跨厅及历史编辑不借此称通过。

@@ -20776,11 +20776,15 @@
   "r1UnreviewedDocumentEditableParity": {
     "userDirective": "Existing DRAFT sales/transfer must expose corresponding create-form editable business fields, preserving original number/creation/source/audit/permissions/version and controlled historical revision",
     "owner": "F1",
-    "status": "F1_EXISTING_FIELDS_INTERFACE_INCREMENT_PASS_BROWSER_INCREMENT_IN_PROGRESS_D1_RESPONSIBLE_BRIDGE_ASSIGNED",
+    "status": "INTERFACE_PASS_FIXED_2848F028_BROWSER_CANDIDATE51_BUILDING",
     "actual50": "Sales existingEdit true uses same SalesProposalForm; transferExistingEdit false and documentResponsibleReady absent. Existing native prepare/save interface present; cannot mark all fields or history verified.",
-    "next": "Original F1 exact fixture/browser increment; C paired config only after original employee reference and existing preparation capability verified; T45 only build",
-    "coveredInterface": "Original synthetic host prepare-existing→SAVE→fresh detail for sales/date/note/customer/salesperson/warehouse/pricing/settlements and transfer/date/note/warehouse/quantity; preserved original pointers/CAS/idempotence/no SAVE ledger effects. Not PG or full browser PASS.",
+    "next": "T45 fixed51 building; original QF only affected existing-fields and existing-pending, including original responsible choices; preserve full field gaps and single-hall limit.",
+    "coveredInterface": "F1 actual synthetic existing-fields2 PASS including sales SALE→RETURN version3, negative quantity/refund, exact replay and stale CAS409; no SAVE ledger effect. No real PG/full browser PASS.",
     "remaining": "Actual existing-page full field browser operation; transfer feature/config activation after capabilities; responsible original staff provider; multi-hall selection; approved/void restrictions and controlled history remain separately verified.",
-    "seamOwner": "D1 original production browser fixture only, exact lease pending; F1 retains four chain test/browser files; C alone owns public config; T45 alone builds."
+    "seamOwner": "D1 original production browser fixture only, exact lease pending; F1 retains four chain test/browser files; C alone owns public config; T45 alone builds.",
+    "fixedSource": "2848f0283fe3f7b5c577cc873607df05494c99e5",
+    "configuration": "apps/web/demo-replica/tests/document-existing-fields-public-config.json",
+    "configurationMeaning": "Original synthetic configuration only; transferExistingEdit and documentResponsibleReady enabled with original protocol/profile validation. No production config or deployment change.",
+    "bridgeEvidence": "Original employee read baseline already works; 779b3fc9 only transfer responsible validation opt-in, original bridge6 and responsibility3 PASS. No new staff service/store."
   }
 }

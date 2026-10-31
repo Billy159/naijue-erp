@@ -8364,11 +8364,25 @@
   },
   "r1ExistingResponsibleBrowserSeam": {
     "owner": "D1",
-    "status": "IN_PROGRESS",
+    "status": "FROZEN_779B3FC9_ORIGINAL_READ_REUSED",
     "files": [
       "apps/web/demo-replica/tests/production-browser-fixture.mjs",
       "apps/web/demo-replica/tests/staff-edit-bridge.test.mjs"
     ],
     "scope": "Existing transfer-chain profile opt-in responsible validation, original QA staff read route only; no implicit staff commands, app contracts or SQL. F1 retains four chain tests/browser leaves."
+  },
+  "r1ExistingFieldBrowserPackage": {
+    "owner": "F1",
+    "status": "FROZEN_2848F028",
+    "files": [
+      "apps/web/demo-replica/tests/transfer-chain-fixture.test.mjs",
+      "apps/web/demo-replica/tests/sales-chain-fixture.test.mjs",
+      "apps/web/demo-replica/tests/transfer-chain-browser.py",
+      "apps/web/demo-replica/tests/sales-chain-browser.py"
+    ],
+    "configurationOwner": "C",
+    "configuration": "apps/web/demo-replica/tests/document-existing-fields-public-config.json",
+    "buildOwner": "T45",
+    "independentBrowserOwner": "QF"
   }
 }
