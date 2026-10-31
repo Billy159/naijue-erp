@@ -20179,14 +20179,21 @@
     }
   },
   "qa178FiniteExitCurrent": {
-    "status": "QB_SOURCE_PASS_C_REVIEW_ISSUED_ACTUAL_ARM_PENDING",
+    "status": "ACTUAL285_EXIT_CONFIRMED_NO_DB_ROLE_WRITES_LOCAL_SUCCESSOR_PREPARATION",
     "qbReceiptSha256": "362d1293b0406162751452f4643d833de4f4bfc86ee512e9c6aae136fe41621f",
     "cSourceReviewSha256": "0dac62a1bcf371ece8f0e2c09407dcb23666e937d046cdcf456119d29bec0863",
     "owner": "T45",
-    "next": "Actual279ARM/280 bind; C exact281 plan action approval after real armed fact",
+    "next": "T45 exact local runtime/receipt successor preparation; QB new increment only; precise new finite scope before environment effects",
     "humanApproval": "call_fb7f059ae86a4506a8b9ef7f0366a7e8/0",
     "actionDeadline": "2026-10-31T15:32:50+08:00",
     "cleanupDeadline": "2026-10-31T15:47:50+08:00",
-    "productionExecuted": false
+    "productionExecuted": false,
+    "armedReceiptSha256": "7c3718b37f2dfbaba5cd608833db384eb208e4748455d53e8575d71eac9e4f54",
+    "firstActionSha256": "33ff7b7388638063da2c88319ca4256d300d4049a45ee9f3df02306cba25b0b4",
+    "failure": "ORIGINAL_RECEIPT_PIN_FORMATTED_EXPORT_USED_FOR_SERVER_ORIGINAL",
+    "original281Sha256": "72507ae34874b798b3e9bb25309ecda77d36bb8e4438f3d9bb7ce84d1825403a",
+    "observedDatabaseRoleAclMutations": 0,
+    "closedWindowResultSha256": "d4bdc2dbc6c557fdd94c19113ccae3cf3efacea1ae160acb0275f89e15448939",
+    "businessAcceptance": false
   }
 }
