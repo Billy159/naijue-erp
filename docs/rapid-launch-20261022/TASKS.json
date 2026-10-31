@@ -20197,17 +20197,17 @@
     "businessAcceptance": false
   },
   "qa178PrivateProcessSuccessor": {
-    "status": "MATERIALIZED_ACTUAL_296_298_299_ABI_294_ADMITTED_NOT_YET_OBSERVED",
+    "status": "ACTUAL_ABI_AND_EMPTY_DATABASE_CREATED_BUSINESS_NOT_RUN",
     "owner": "T45",
     "reviewer": "originalQB",
     "resultSha256": "8b8c8ad3ed81f61afdf06e1c39b7777342be8a80bbe827ba6b6fb720e816cd35",
     "sourceCommit": "b8fd9e14a9b3453951ac21442263e79fc00467ef",
     "sourcePacketSha256": "8cee451f3a6b270e411b1aac81f43ff9f1c8cf9d215347b54156b02e7e78900a",
     "offlineChecks": "7PASS",
-    "targetRuntimeAbi": "NOT_RUN",
-    "dockerLifetime": "NOT_RUN",
+    "targetRuntimeAbi": "PASS_ACTUAL_294",
+    "dockerLifetime": "PASS_EOF_AND_HARD_CEILING_ACTUAL_294",
     "environmentExecutionAuthorized": true,
-    "next": "T45 actual294 noDB probes then original05 creation; QA22 provider adapter fix independently source-reviewed; never reset17:59:34/18:14:34 deadlines",
+    "next": "Original05 DATABASE_ACCESS/BIND_DATABASE/schema; QA22 execution successor exact preparation only pending approval; pairedUI47 build then originalQF2 visible checks",
     "qbReceiptSha256": "1c9e23eff04801784abdc9d67bb3b26eb9c64ccfe049eabf54d1160381fe759c",
     "activeFindings": [],
     "withdrawnFinding": "F01 wrong consumer reference; correct production-provider env retained",
@@ -20278,7 +20278,7 @@
         "singleModeCorrection": "light-my-request/types/index.d.ts0600to0444 bytes unchanged",
         "reviewSha256": "82d8858d5d21fbda125355f27b230ad6d768a47f26b1b43e7166636aeefb01f2",
         "abi294ActionSha256": "c823966b7c722a9f1d9d7b67c04b31cd4c2c998f4b0274333ab73822ef7c1865",
-        "actualAbi": "NOT_YET_OBSERVED",
+        "actualAbi": "PASS_ACTUAL_294",
         "actualPg": "NOT_RUN"
       },
       "providerAlignment": {
@@ -20286,7 +20286,30 @@
         "D1ReadOnlyEvidence": "QA22-PROVIDER-MINIMUM-SEAM-01.json",
         "cause": "caller selected production53 provider but existing synthetic factory requires22",
         "fix": "Reuse original QA22 provider and env, preserve production guard; exact successor source/pins, originalQB affected increment only",
-        "status": "SOURCE_ADAPTATION_AUTHORIZED_NOT_YET_DELIVERED"
+        "status": "QB_SOURCE_PASS_EXECUTION_BINDINGS_PENDING",
+        "qbSha256": "f55ee642981f640e90aeccc49c8e7444bbee9750bbe08908bd6f5962c83b8657",
+        "runtimeRestriction": "Original owner/window pin ba42+251 closure; new8d274/ee71+252 source cannot borrow old ABI/action; exact successor execution scope must be prepared and confirmed before runtime use"
+      },
+      "actualCreatedIdentity": {
+        "databaseOid": "393218",
+        "ownerOid": "393216",
+        "runtimeOid": "393217",
+        "evidenceJobs": [
+          301,
+          306
+        ],
+        "schemaInstalled": false,
+        "businessRows": false,
+        "ordinaryPgAcceptance": "NOT_RUN"
+      },
+      "pairedFrontend47": {
+        "source": "d76a54ac68db8dd2bd775df2f9c30bbfb3149e28",
+        "manifestSha256": "6694593fefaab103a2e0180fb91bb07079fc6192885597997644814450953fec",
+        "outputs": 186,
+        "inputs": 1310,
+        "status": "BUILD_PASS_ORIGINAL_QF2_VISIBLE_DRIVER_DISPATCHED",
+        "browser": "NOT_YET_OBSERVED",
+        "realPg": "NOT_RUN"
       }
     }
   },
