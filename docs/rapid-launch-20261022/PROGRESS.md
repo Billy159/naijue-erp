@@ -3533,3 +3533,5 @@ T45统一58闭包PASS采用：固定32da52f6/manifest388493ce…/原config064bc2
 audit58 attempt01真实两账户写及操作记录200/total2，operation/target/version/实际actor/名称前后值通过；driver筛选中文CSS定位失败，raw5912374a…/PNG/DOM保留，筛选/日期/关闭重入未测、自有进程0。仅一行定位修正固定ed7aef0c/hashbda2c968…，原F1同58 freshattempt02继续；不改应用或夹具/不重构建。
 
 audit58 attempt02原F1实际限定自检PASS，raw4977908b…/回执60d452c3…/4PNG。两账户CREATE/EDIT真实operation/target/version/actor/名称beforeafter/UI匹配；五次audit200 totals2/1/2/0/2、日期筛选/未执行条件关闭不查询/重入/重置通过，自有进程0。原QF2已接同58+fixeddriver独立一次，不重后台21写/资料/单据；真实PG/其他模块/完整Demo布局仍未测。
+
+原QF2 audit58限定独立实际PASS采用：raw19c5cc52…/QF2RESULT943acc43…/4PNG；18响应200、恰2账户CREATE/EDIT、真实operation/target/version/actor/beforeafter/UI、filter/date/关闭重入及totals2/1/2/0/2通过，自有资源0。原F1下一仅接扫码明确未测UNAVAILABLE/transport错误准备，复用已过NOT_FOUND/超时/FIFO/保存，不重全套。PG/真实ACL/全站及新03批准仍未完成。

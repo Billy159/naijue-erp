@@ -8483,7 +8483,7 @@
   },
   "r1SalesScannerBrowserDriver": {
     "owner": "F1",
-    "status": "DELIVERED_FROZEN_55A7AFD9_QF_PASS",
+    "status": "UNAVAILABLE_ONLY_INCREMENT_PREPARATION_F1",
     "paths": [
       "apps/web/demo-replica/tests/sales-chain-browser.py"
     ],
@@ -8511,7 +8511,7 @@
   },
   "r1UnifiedCrossPageBrowser": {
     "owner": "F1",
-    "status": "AUDIT_DRIVER_FIXED_1E707AD4_ACTUAL_RUNNING",
+    "status": "AUDIT_ED7AEF0C_QF2_LIMITED_BROWSER_PASS_READONLY",
     "paths": [
       "apps/web/demo-replica/tests/unified-cross-page-browser.py"
     ],

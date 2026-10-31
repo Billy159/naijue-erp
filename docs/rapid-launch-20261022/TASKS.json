@@ -21179,6 +21179,12 @@
         "wholepage"
       ],
       "ownProcessesRemaining": 0
+    },
+    "unavailableIncrement": {
+      "owner": "F1",
+      "status": "CHECK_EXISTING_EVIDENCE_OR_PREPARE_ONLY",
+      "path": "apps/web/demo-replica/tests/sales-chain-browser.py",
+      "scope": "only explicitly remaining UNAVAILABLE/transport failure visible pause/recovery/cancel/no late resurrection; no repeats of accepted NOT_FOUND/timeout/FIFO/save cases"
     }
   },
   "r1UnifiedSyntheticHostComposition": {
@@ -21359,7 +21365,7 @@
   },
   "r1UnifiedAuditReadback": {
     "owner": "D1",
-    "status": "FIXED58_AUDIT_NORMAL_BROWSER_SELF_CHECK_PASS_QF2_RUNNING",
+    "status": "QF2_LIMITED_ACTUAL_AUDIT58_BROWSER_PASS",
     "basis": "Current production SQL id=operationId; no independently generated different audit ID required; original committed producer facts via original HTTP/service/projector",
     "notClaimed": "No PG/production, no old records backfill/static samples; audit in56 remains unconnected",
     "source": "b47dd07acd179b1031f1d07b2c49405ce4fe2423",
@@ -21386,7 +21392,7 @@
       "case": "audit-linkage",
       "scope": "normal accountCREATE/EDIT two writes -> real audit operation/target/version/actor/name-before-after/filter/date/close-reentry;no21writes"
     },
-    "next": "originalQF2 same58/latestfixeddriver one limited audit independent browser; PG/othermodules/fullDemo remain separate",
+    "next": "Reuse limited account-audit consumer result; othermodules/PG/actualACL/fullDemo/21paginationbrowser remain unmeasured",
     "browserAttempt01": {
       "status": "PARTIAL_ACTUAL_AUDIT_READBACK_PASS_DRIVER_FILTER_SELECTOR_FAIL",
       "rawSHA": "5912374a2e5add30da89caa9b9a477955e8c7d93cb8f457cca21dc54ff9e991f",
@@ -21403,6 +21409,14 @@
       "actual": "two normal accountCREATE/EDIT200;operation,target,versions,actualactor,namebeforeafter andUI;fiveauditquery200totals[2,1,2,0,2]",
       "scope": "filter/date/unappliedclose-noquery/reentry/no-match/reset;no21writes",
       "resources": "ownprocess0"
+    },
+    "independentBrowserReview": {
+      "owner": "QF2",
+      "status": "PASS_LISTED_UNIFIED_AUDIT_LINKAGE_STEPS",
+      "report": "reports/qa-frontend/rapid-launch-20261022/QF2/UNIFIED58-AUDIT-LINKAGE-20261101-01/QF2-RESULT.json",
+      "sha256": "943acc43d6f97f398e583f360bd787763998ed17c3777e2a239089047477be45",
+      "rawSHA": "19c5cc52651fa354d7a2aa13feb8a98b2c58c2e01d87f520749f7724d014a5c9",
+      "actual": "18responses200/twoaccountCREATEEDIT/audit2,1,2,0,2/operation-target-version-actor-beforeafter/UI/4PNG/ownprocess0"
     }
   }
 }
