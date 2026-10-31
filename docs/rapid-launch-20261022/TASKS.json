@@ -19975,7 +19975,9 @@
       "minimalSourceLeaf": "tests/integration/current-runtime26-preparation-host.ts",
       "proposedPreparationRole": "v7_r1_prepare_20261031_01",
       "actualRoleAclApproval": "NOT_GRANTED_MUST_BIND_FINAL_EXACT_EXECUTION_CONFIRMATION",
-      "reason": "Full provider is continuation-only; ordinary V8 must not gain inventory_ledger.xmin or preparation import permissions"
+      "reason": "Full provider is continuation-only; ordinary V8 must not gain inventory_ledger.xmin or preparation import permissions",
+      "executionScopeDraftSha256": "93f4c1b8b9ad86252bb25c34a9bd55682304235e492aa45925a09783fbc75312",
+      "installerSuccessor": "T45 pending D1 exact prepared host and role ACL; existing installer02 cannot create preparation role"
     }
   }
 }
