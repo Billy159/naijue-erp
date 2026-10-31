@@ -68,3 +68,30 @@ test('common origin original HTTP clients read actual new product and staged ori
  const receipts=h.inventory.snapshot();h.revokeInventory();const stock=await call(h,'/products/stock-overview/query',{productId:saved.targetId,warehouseMode:'ALL'});assert.equal(stock.status,403);assert.deepEqual(h.inventory.snapshot(),receipts);assert.equal((await call(h,'/products/basics/query',{productId:saved.targetId})).status,200);
  h.revoke();assert.equal((await call(h,'/products/basics/query',{productId:saved.targetId})).status,403);
 });
+
+test('followup organization native menus and party query use original same directory; missing audit is explicit',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());const q={search:'',status:'all',hallId:null,page:1,pageSize:20};
+ for(const [path,rows]of [['halls',qaHalls],['warehouses',qaWarehouses]]){
+  const list=await call(h,'/organization/'+path+'/query',q);assert.equal(list.status,200,JSON.stringify(list));assert.deepEqual([...list.body.items].sort((a,b)=>a.id.localeCompare(b.id)),[...rows].sort((a,b)=>a.id.localeCompare(b.id)));
+  const detail=await call(h,'/organization/'+path+'/detail/query',{id:rows[0].id});assert.equal(detail.status,200);assert.deepEqual(detail.body,rows[0]);
+  assert.equal((await call(h,'/organization/'+path+'/commands',{action:'CREATE',requestKey:'no-new-org',values:{}})).status,501);
+ }
+ const fetch=async(url,init={})=>{const r=await h.request({url:String(url),method:init.method??'GET',headers:Object.fromEntries(new Headers(init.headers)),...(init.body===undefined?{}:{body:String(init.body)})});return new Response(r.body,{status:r.status,headers:r.headers});};const http={origin:h.origin,basePath:'/api',fetch};
+ const {createOrganizationStoreSettingsReader}=await import('../../src/settings/stores/maintenance-http-client.ts'),reader=createOrganizationStoreSettingsReader(http),signal=new AbortController().signal;const stores=await reader.readList('stores',{parameters:q,signal});assert.equal(stores.items[0].id,qaHalls[0].id);const warehouse=await reader.readDetail('warehouses',{parameters:{id:qaWarehouses[0].id},signal});assert.equal(warehouse.item.id,qaWarehouses[0].id);
+ const {createPartyHttpClient}=await import('../../src/parties/http-client.ts');assert.ok((await createPartyHttpClient(http).candidates('CUSTOMER',{search:'',page:1,pageSize:20},signal)).items.length>0);
+ const audit={module:'ALL',objectId:null,objectSearch:'',actorSearch:'',action:'ALL',dateFrom:null,dateTo:null,page:1,pageSize:20};const unavailable=await call(h,'/settings/audit/query',audit);assert.equal(unavailable.status,501,'no static audit samples can replace missing actual audit read port');
+ const party=await h.request({url:h.origin+'/api/customers/candidates?search=&page=1&pageSize=20',method:'GET'});assert.equal(party.status,200,party.body);
+ assert.equal((await call(h,'/organization/halls/query',{...q,unknown:true})).status,400);
+ h.revoke();assert.equal((await call(h,'/organization/halls/query',q)).status,403);
+});
+
+test('followup original payment empty hall relations remain unrestricted through current candidate, preparation and SAVE; explicit scoped account and foreign hall authorization remain enforced',async t=>{
+ const h=await createUnifiedServiceFixture();t.after(()=>h.close());const method=await call(h,'/payment/methods/commands',{action:'CREATE',requestKey:'empty-hall-method',values:{name:'SYNTHETIC unrestricted method',enabled:true}});assert.equal(method.status,200);
+ const create=(key,hallIds)=>call(h,'/payment/accounts/commands',{action:'CREATE',requestKey:key.replaceAll(' ','-'),values:{name:key,enabled:true,paymentMethodId:method.body.targetId,hallIds}});
+ const account=await create('SYNTHETIC unrestricted account',[]);assert.equal(account.status,200,JSON.stringify(account));
+ const query={kind:'paymentAccount',hallId:qaHalls[0].id,paymentMethodId:method.body.targetId,search:'',page:1,pageSize:20},refs=await call(h,'/current-form/sales-references/query',query);assert.equal(refs.status,200);assert.deepEqual(refs.body.items.map(r=>r.id),[account.body.targetId]);
+ const {salesId,...proposal}=sale(qaSkus[0].id,account.body.targetId,method.body.targetId),intent={...proposal,lines:proposal.lines.map(({existingLineId,...r})=>r),settlements:proposal.settlements.map(({existingSettlementId,...r})=>r)};
+ const prepared=await call(h,'/sales/prepare-create',intent);assert.equal(prepared.status,200,JSON.stringify(prepared));const saved=await call(h,'/sales/commands',{action:'SAVE',requestKey:'unrestricted-sales-save',expectedVersion:null,draft:prepared.body});assert.equal(saved.status,200,JSON.stringify(saved));
+ const read=await call(h,'/sales/detail/query',{salesId:saved.body.salesId});assert.equal(read.status,200);assert.equal(read.body.document.settlements[0].paymentAccountId,account.body.targetId);assert.deepEqual(h.payment.snapshot().rows.get(account.body.targetId).hallIds,[]);
+ const scoped=await create('SYNTHETIC scoped account',[qaHalls[0].id]);assert.equal(scoped.status,200);const same=await call(h,'/current-form/sales-references/query',query);assert.ok(same.body.items.some(r=>r.id===scoped.body.targetId));const outside=await call(h,'/current-form/sales-references/query',{...query,hallId:'00000000-0000-4000-8000-000000999999'});assert.equal(outside.status,403);
+});
