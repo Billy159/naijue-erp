@@ -1,3 +1,7 @@
+## F05 six exact LIVE proxy budgets source closure
+
+OriginalQB exact3 source PASS adopted. C updated only boot/rollback CAPACITY mirrors to independently reviewed helper7dde28550e9f4eaed427c6e1a57929d70cd11dc5c0866e79a87151bc5ebd7ff2; historical FULL pins unchanged. Generator --check PASS; directed checks 2 proxy +7 contract/approval +6 rollback +3 affected boot pins PASS, zero skipped. No server/proxy/PG/production execution; actual body-boundary/SAVE proof remains untested, no claim screenshot empty-list cause. Fixed source checkpoint next integrates frontend increments once through originalT45; previous824/48 product PASS remains bound to that version.
+
 ## Product actual synthetic service loop completed; precise remaining boundary
 
 OriginalQF2 new PRODUCT-only diagnostic on unchanged824667c8/build48 PASS: create/save200, list and fresh edit reopen, 11SKU/11MAIN, oneSAVE. Expected PNG/upload/originalbridge/browser-fulfilled original all74B SHA f0dc2ad1567e988ac4108decf3c5eadef6674f7fcdd2842cd7ca8b74f1f90cdf; thumbnail60B WebP. OriginalD1 independently read this evidence and makes no speculative application patch. Earlier48 image assertion failure retained, cause remains undetermined. CATEGORY original listedsteps PASS reused. This is visible synthetic original-service/memory transaction evidence, not ordinary-role realPG/production/performance.

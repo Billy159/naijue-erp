@@ -20641,9 +20641,12 @@
         "fixedSource": "b3a18d37309da789cd5730ef17693d5961001460"
       },
       "F05": {
-        "status": "C_EXACT6_BUDGETS_GENERATED_QB_SOURCE_REVIEW_PENDING_CAPACITY_PIN_UNCHANGED",
+        "status": "QB_EXACT3_SOURCE_PASS_C_ADOPTED_HELPER_PIN_AND_DIRECTED_CHECKS_PASS_REAL_PROXY_NOT_RUN",
         "scope": "six exact LIVE proxy request budgets and independently approved helper pins",
-        "owner": "T45"
+        "owner": "T45",
+        "helperSha256": "7dde28550e9f4eaed427c6e1a57929d70cd11dc5c0866e79a87151bc5ebd7ff2",
+        "checks": "2 proxy +7 contract/approval +6 rollback +3 affected boot pins PASS; generator --check PASS; no actual proxy/PG",
+        "review": "reports/qa-backend/rapid-launch-20261022/QB/F05-PROXY-BUDGET-20261031/QB-F05-PROXY-BUDGET-RESULT.json"
       },
       "F06": {
         "status": "QF_SOURCE_PASS_BROWSER_REAL_BUSINESS_NOT_RUN",
