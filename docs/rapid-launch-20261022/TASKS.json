@@ -20948,11 +20948,11 @@
     },
     "currentQF": {
       "owner": "QF",
-      "status": "PARTIAL_ACTUAL_REMAINING_STATES_WITH_LONG_TABLE_DEFECT",
+      "status": "PARTIAL_PAGE_FIXED60_POPUP_DEFECT_CLOSED_DEMO_PAIR_PENDING",
       "scope": "only normal new-sales SALE full-page uncovered states vs frozenb8bc;reuse accepted identical evidence;no oldv14/normal34/PG/save/scanner repeats",
       "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
       "denominator": "37pages+68overlays unchanged",
-      "next": "Original QF only long table/multiple products, actual readonly product view/line replacement identity, multiple-account search/clear/Enter/Esc; reuse 17 accepted states. Demo same-state pairs wait existing login request.",
+      "next": "Reuse 17states/product-view-replacement/accounts and closed60popup evidence; real-time Demo same-state pairs remain blocked on existing user login request. No new whole-page PASS.",
       "demoPairing": {
         "observed": "original8877 settings/stores login expired and own new sales/new tab loginpage; own newtab closed, original not refreshed, no credentials read",
         "baselineEvidenceZip": "8877-ui-evidence-b8bcfe3.zip README says0screens;exact source-layout evidence only, not paired screenshot",
@@ -21543,12 +21543,12 @@
   },
   "r1LongTableSizePopup": {
     "owner": "F1",
-    "status": "FIXED60_BUILD_CLOSURE_PASS_QF_ACTUAL_RETEST_IN_PROGRESS",
+    "status": "CLOSED_QF_FIXED60_LIMITED_ACTUAL_PASS",
     "issue": "QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01",
     "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
     "reproduction": "12 independent manual product/size rows; row13 full11 member menu extends below1440x1000,195/4XL normal click outside viewport. No force/SAVE.",
     "evidence": "reports/qa-frontend/rapid-launch-20261022/QF/APP59-SALES-REMAINING-UI-05/",
-    "next": "F1 minimum leased source repair/selfcheck -> T45 fixed successor -> QF only row12-to13 popup and preserved draft/shared affected consumers; no old suites.",
+    "next": "Reuse limited closed evidence; no repeat long-table/keyboard/shared-scroll checks without affected changes.",
     "checkSha256": "94bd6d1b69be524a68dfab2b826c1ab63f868e8f0f9b0deb937fc7408844f211",
     "sourceReceipt": "reports/qa-frontend/rapid-launch-20261022/F1/QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01/RESULT.json",
     "sourceReceiptSha256": "94a388d01b85983432f699d012e883a9472a9c4b9989a6b72ee9bf5cd1eb2373",
@@ -21561,14 +21561,24 @@
       "configSha256": "064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711",
       "handoffSha256": "87a2c6fac1abbfc502ce10a5a4059783aa66b4508ae7aed1c77095a91d1b3747",
       "scope": "T45 only build closure190outputs/1310inputs/0.882s; no headed/PG/production claim"
+    },
+    "actualPartial": "QF60 long-table first case exit0 normal195/4XL click at row13,13 independent drafts/old12 preserved/Esc/footer. Geometry loading transients distinguished from stable screenshot; shared spec keyboard/transfer scroll still running, final receipt pending.",
+    "independentResult": {
+      "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP60-POPUP-MINIMAL-RECHECK.json",
+      "sha256": "1326c2d31a6241b68db39d10c99d588bf98abd1431803a2bb2b99efe500bb927",
+      "actual": "Natural1440x1000/12->13 normal1954XL click; original12keys/qty/rawprice/note retained; footer13qty7384.00. Spec ArrowDown/Enter/Esc focus. Shared transfer color/fit actual horizontal scroll0->17/18 and usable menu;11 size inputs retained. All document SAVE/approval0/ownprocesses0.",
+      "limits": "Not fullpage/Demo paired/PG/production; initial loading bounds not stable geometry proof. Old59 FAIL and QA script failures preserved."
     }
   },
   "r1TransferDraftScreenshotFollowup": {
-    "status": "USER_CONTRACT_CONFIRMED_CANDIDATE_ID_UNKNOWN_NO_NEW_DEFECT_PASS",
+    "status": "READONLY_DEDUP_COMPLETE_OLD50_SAMPLE_LIVE_EDIT51_PASS_HISTORY_GAP_SEPARATE",
     "owner": "C coordinate original F1 after popup package",
     "scope": "Unaudited transfer with actual edit permission should expose same applicable editable fields as new; system identifiers readonly, approved/void permissions retained. Reuse fixed51 LIVE DRAFT edits, distinguish history and actual screenshot candidate before repair.",
     "screenshot": "/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/codex-clipboard-868492d8-25a0-4610-b355-19f34961dc7f.png",
     "visibleFacts": "qa-demo-1 administrator, V2-DB-bdb6fb86, note QF50-R01-PENDING-RECHECK-SYNTHETIC; no visible URL/candidate; source unknown.",
-    "next": "Original F1 readonly exact current transfer branch/fixture/evidence dedup while popup QF runs; no write lease or screenshot-based current-version claim."
+    "next": "D1 readonly exact already-approved B07/v16/P04 versus historical note/add/delete/replace-line contract delta; no new source/SQL/permission lease. Historical dates/warehouses/responsible/original-line quantity already supported; no LIVE SAVE substitution.",
+    "sourceReceipt": "reports/qa-frontend/rapid-launch-20261022/F1/TRANSFER-DRAFT-EDIT-READONLY-20261101-01/RESULT.json",
+    "sourceReceiptSha256": "d885d806b4007ef264fe7a127031ba8c3a838771c165f3565e7ec7677b189500",
+    "finding": "Exact id/note/1+6 rows match original normal50 receipt: LIVE DRAFT RUNTIME_LEDGER; fixed50 transferExistingEdit false. Screenshot lacks URL, so not current-version proof. Fixed51 independent full existing-field SAVE1->2->3 evidence reused; current526ca normal branch present."
   }
 }

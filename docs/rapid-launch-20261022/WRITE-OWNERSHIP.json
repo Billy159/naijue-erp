@@ -8555,7 +8555,7 @@
   "r1LongTableSizePopup": {
     "owner": "F1",
     "model": "gpt-6.1-sol/medium",
-    "status": "DELIVERED_EXACT_TWO_LEAVES_READONLY_PENDING_T45_BUILD_QF",
+    "status": "526CA75E_FIXED60_QF_LIMITED_ACTUAL_PASS_READONLY",
     "issue": "QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01",
     "paths": [
       "apps/web/demo-replica/frontend/runtime/documents/proposal-picker.tsx",
