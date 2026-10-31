@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import {qaStaff} from '../frontend/qa-reference-fixtures.mts';
 const staff=qaStaff[1],values={name:staff.name+' 已编辑',contact:'合成联系方式',role:staff.role,hallId:null};
 const command={action:'EDIT',id:staff.id,expectedVersion:staff.version,requestKey:'qa-basic-edit-1',values,account:null};
-function run(requests,enabled=true){
- const child=spawnSync(process.execPath,['--experimental-transform-types',new URL('./production-browser-fixture.mjs',import.meta.url).pathname,...(enabled?['--staff-edit']:[])],{input:requests.map(r=>JSON.stringify({url:'https://synthetic-management.invalid/api'+r.path,method:r.method??'POST',headers:{'content-type':'application/json'},...(r.body?{body:JSON.stringify(r.body)}:{})})).join('\n')+'\n',encoding:'utf8',timeout:10000});
+function run(requests,enabled=true,flags=[]){
+ const child=spawnSync(process.execPath,['--experimental-transform-types',fileURLToPath(new URL('./production-browser-fixture.mjs',import.meta.url)),...(enabled?['--staff-edit']:[]),...flags],{input:requests.map(r=>JSON.stringify({url:'https://synthetic-management.invalid/api'+r.path,method:r.method??'POST',headers:{'content-type':'application/json'},...(r.body?{body:JSON.stringify(r.body)}:{})})).join('\n')+'\n',encoding:'utf8',timeout:10000});
  assert.equal(child.status,0,child.stderr);return child.stdout.trim().split('\n').map(x=>{const r=JSON.parse(x);return {...r,body:JSON.parse(r.body)};});
 }
 test('explicit staff fixture executes real EDIT, receipt, replay, CAS, and coherent list/detail reads',()=>{
@@ -62,4 +63,11 @@ test('staff-edit preview CLOSED alignment preserves persistent all-open rows, fi
   const denied=await request('/staff/commands',{...command,requestKey:'qa-preview-no-access-edit',expectedVersion:2,account:{id:staff.account.id,expectedVersion:1,loginName:staff.account.loginName,loginEnabled:false,password:null}});assert.equal(denied.status,403);assert.deepEqual(fixture.snapshot(),saved);
   fixture.revoke();const revoked=await request('/staff/query',query);assert.equal(revoked.status,403);assert.deepEqual(fixture.snapshot(),saved);
  }finally{await fixture.close();}
+});
+
+test('transfer stdio uses original staff list for responsible selection without enabling staff writes',()=>{
+ const responses=run([{path:'/staff/query',body:{search:'',status:'all',hallId:null,role:'',loginStatus:'',page:1,pageSize:20}},
+ {path:'/staff/commands',body:command}],false,['--transfer-chain']);
+ assert.equal(responses[0].status,200);assert.ok(responses[0].body.items.some(row=>row.id===staff.id));
+ assert.equal(responses[1].status,501);
 });

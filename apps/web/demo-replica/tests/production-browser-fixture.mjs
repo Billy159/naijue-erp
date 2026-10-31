@@ -11,7 +11,7 @@ const productEntry=productEntryProfile?await(await import('../../../../tests/sup
 const transport=productEntryProfile?null:createReplicaPreviewTransport();
 const productEdit=process.argv.includes('--product-edit')?await(await import('./product-edit-fixture.mjs')).createProductEditFixture():null;
 const productRead=process.argv.includes('--product-editor-read')?(await import('./product-editor-read-fixture.mjs')).createProductEditorReadFixture():null;
-const transfer=process.argv.includes('--transfer-chain')?await(await import('./transfer-chain-fixture.mjs')).createTransferChainFixture():null;
+const transfer=process.argv.includes('--transfer-chain')?await(await import('./transfer-chain-fixture.mjs')).createTransferChainFixture({responsibleStaffValidation:true}):null;
 const sales=process.argv.includes('--sales-chain')?await(await import('./sales-chain-fixture.mjs')).createSalesChainFixture():null;
 if(process.argv.includes('--sales-preview')){if(!sales)throw Error('Sales preview requires actual service chain');await(await import('./sales-preview-seed.mjs')).seedSalesPreview(sales);}
 const staff=process.argv.includes('--staff-edit')?await(await import('./staff-edit-fixture.mjs')).createStaffEditFixture():null;
