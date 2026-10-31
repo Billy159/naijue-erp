@@ -9,6 +9,7 @@ import mimetypes
 import re
 import subprocess
 import sys
+import time
 from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -131,9 +132,13 @@ try:
             result['screens'].append(name + '.png'); persist()
 
         def latest(path, predicate=lambda value: True):
-            matches = [r for r in result['responses'] if r['path'] == path and predicate(r)]
-            assert matches, 'Missing actual response ' + path
-            return matches[-1]
+            deadline = time.monotonic() + 5
+            while True:
+                matches = [r for r in result['responses'] if r['path'] == path and predicate(r)]
+                if matches:
+                    return matches[-1]
+                assert time.monotonic() < deadline, 'Missing actual response ' + path
+                page.wait_for_timeout(50)  # Pump original lazy-page request/response events; never synthesize data.
 
         def menu(route):
             page.locator('.sidebar a[data-route=' + json.dumps(route) + ']').click()
