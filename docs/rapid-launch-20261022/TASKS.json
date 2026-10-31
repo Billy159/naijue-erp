@@ -20310,6 +20310,15 @@
           "apps/web/demo-replica/frontend/runtime/documents/document-leave-dialog.test.mjs": "ea1c85bdba875b18b739906be0dd8f8b8f2fbbf4d6377310cc315a0020f54bde"
         },
         "meaning": "Clean cancels directly; dirty uses original model including pending/query; uncertain/submitting/invalid scope cannot discard, no save/replay"
+      },
+      "browser": {
+        "task": "QF01-R1-NORMAL45-DOCUMENT-CANCEL-01",
+        "source": "2b52b2b0c99b071e3f444a5cf10538eeea636191",
+        "resultSha256": "e5d0b054d79d8285401fdc850d22085bdbeaa276dd1ec80dcf23fb3bdd5f19eb",
+        "passed": "Both document clean edit cancellation first+2 repetitions without extra dialog; dirty continue preserves and discard restores; new clean/dirty navigation",
+        "unreachable": "Confirmed save/list reset/new saved document visibility; original key unknown write requires provider",
+        "timingLimits": "Synthetic tool-wall only; sales first cold heading wait invalid, no PG SLO claim",
+        "production": "NOT_TESTED"
       }
     },
     "defaultWarehouseRead": {
@@ -20359,8 +20368,8 @@
       "missingClosure": 0,
       "boundary": "In-memory demo-reference-v1, connect-src none; no actual backend/PG/persistence/auth/posting/business acceptance",
       "scope": "Category typed notice/product defaultA/create list reset/clean-dirty cancel; does not include57a warehouse successor",
-      "browserOwner": "QF exclusive afterQF2 tabclosed/draftdiscarded",
-      "browserStatus": "QF2_PARTIAL_CAPABILITY_LIMITED_QF_DOCUMENTS_IN_PROGRESS"
+      "browserOwner": "Released; both dedicated tabs closed, test drafts discarded, user tabs preserved",
+      "browserStatus": "QF2_AND_QF_AFFECTED_VISIBLE_PARTIAL_CAPABILITY_LIMITED"
     }
   }
 }

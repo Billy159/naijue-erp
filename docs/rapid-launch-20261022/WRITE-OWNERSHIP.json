@@ -8213,15 +8213,14 @@
     },
     "D1": {
       "threadId": "01a16161-e65d-7742-8471-4b3c786ed314",
-      "current": "Hall authoritative default warehouse read hint; legacy response compatibility",
+      "current": "Existing synthetic product service host CATEGORY port/readback exact2",
       "soleWriter": [
-        "adapters/postgres/src/current-form-reader.ts",
-        "apps/api/src/current-form-http.ts",
-        "tests/current-form-reader.test.ts",
-        "apps/api/src/current-form-http.test.ts"
+        "tests/support/product-entry-service-host-fixture.mjs",
+        "tests/product-entry-service-host.test.mjs"
       ],
-      "boundary": "Existing optional hints, warehouse-v1 opt-in only; no new API/SQL/ACL/write-contract changes; C Git/records",
-      "next": "Hand fixed backend hint to original F1 consumer; no backend-only UI PASS"
+      "boundary": "Explicit categoryWrite false by default; original catalogue service/HTTP and shared fixture transaction state only; no production source/rules/SQL/ACL/bridge/service start",
+      "next": "Hand fixed backend hint to original F1 consumer; no backend-only UI PASS",
+      "frozenPrevious": "57a528846e6ebe066fbe4beeeef757da10cea499"
     }
   }
 }
