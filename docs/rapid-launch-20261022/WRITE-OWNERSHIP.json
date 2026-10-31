@@ -8164,6 +8164,7 @@
     "T45": {
       "soleWriter": "Original controlled installer/boundary/ACL/inverse/collector carrier successors in control reports only; fixed03 currently read-only in QB; no concurrent D1 source edits"
     },
-    "C": "Git and existing records only"
+    "C": "Git and existing records only",
+    "currentStatus": "D1 exact11 handed back; fixed b8fd9e14a9b3453951ac21442263e79fc00467ef; QB read-only incremental review; no further writer until directed findings"
   }
 }

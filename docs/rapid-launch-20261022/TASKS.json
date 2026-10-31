@@ -19994,6 +19994,30 @@
         "actualEnvironmentActions": 0
       },
       "preparation13Approval": "Human call_2636564572514a74923a34deeeddf9b9/0 APPROVED_SOURCE_ONLY"
+    },
+    "preparation13Source": {
+      "status": "FIXED_AWAITING_QB_INCREMENTAL",
+      "commit": "b8fd9e14a9b3453951ac21442263e79fc00467ef",
+      "approval": "human call_2636564572514a74923a34deeeddf9b9/0",
+      "files": 11,
+      "directedChecks": {
+        "pass": 10,
+        "fail": 0,
+        "skip": 0
+      },
+      "owner": "D1",
+      "reviewOwner": "QB",
+      "report": "reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/PREPARATION13-SOURCE-RESULT.json",
+      "next": "QB fixed-source incremental review; T45 original carrier successor exact ACL/apply/inverse/collector/host composition",
+      "environmentExecuted": false
+    },
+    "installer03LifecycleReview": {
+      "status": "SCOPED_SOURCE_PASS_CHAIN_PARTIAL",
+      "owner": "T45",
+      "reviewOwner": "QB",
+      "report": "reports/qa-backend/rapid-launch-20261022/QB/INSTALLER-PREPARATION-LIFECYCLE-20261031/QB-INSTALLER-PREPARATION-LIFECYCLE-RESULT.json",
+      "sha256": "f02e17e564379bbbe6a9c0eb37179b52f0ffd946e9258312e12eeaea534fa377",
+      "actualLoginOrGrant": false
     }
   }
 }

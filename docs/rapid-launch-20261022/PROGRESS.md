@@ -1,3 +1,9 @@
+## 2026-10-31 preparation13 fixed-source continuation
+
+Human call_2636564572514a74923a34deeeddf9b9/0 approved source/contract preparation only. D1 exact11 file pins were independently matched to its handoff and frozen at `b8fd9e14a9b3453951ac21442263e79fc00467ef`. Targeted10/0/0, strict two TS roots and syntax checks passed per owner evidence; no full-suite rerun. QB now reviews only this fixed increment. PREPARATION13_V1 is separate from oldV4 and ordinaryV6/V7/V8; no ordinary permission expansion or trigger change.
+
+QB installer03 lifecycle scoped source PASS adopted (receipt SHA f02e17e564379bbbe6a9c0eb37179b52f0ffd946e9258312e12eeaea534fa377). It does not implement the preparation ACL application or actual host/login execution. T45 continues its existing successor carrier with precise ACL/apply/inverse, collector and new host entry binding; old03 remains frozen. No actual new roles, grants, database creation, publication, ordinary business run, backup/restore or deployment occurred. Final environment execution still requires the concrete reviewed target/script/privileges/window/cleanup confirmation. Goal remains ACTIVE.
+
 2026-10-31 用户human call_2636564572514a74923a34deeeddf9b9/0明确确认本批准准备合同及源码修订：preparation13/独立准备role history_revision15正列+xmin只读候选，旧V4/普通V6-V8/原SQL保持。C登记D1精确5实现+6对应测试唯一writer、T45原control载体ACL/inverse，03在QB只读保留。仅源码/定向验收获批，第三role/实际GRANT/PG/凭据/运行/部署未授权。原pending提案由本条替代，不重复确认。
 
 2026-10-31 D1准确preparation13提案9707B/SHA93874f36已核并提交用户source-only集中确认：只独立准备role history_revision15正列+xmin只读及新版本观察/consumer，旧V4/普通V8/guard保持；未获答复前不实施。T45已交不依赖此项的installer03局部生命周期（script44204B/SHA958e5cca；report3776B/SHA803b145d；6新offline+syntax），明确没有PREPARATION_ACL应用分支/host实际调用，不能记整链ready。0真实环境，旧源/回执保护。
