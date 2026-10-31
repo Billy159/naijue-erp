@@ -1,3 +1,9 @@
+## 2026-10-31 actual A0 facts and independent C source/window payloads
+
+OriginalT45 s1-a0-286 actual COMPlETED exit0/1.922sec16:33:02–04+08: same QA178 identity; proposed2DB/3roles absent,16connections/3superreserve/1adminbackend observed, free46.833GB. ExistingNode24 hash matched; actual99locked packages74present/25optionalabsent/no requiredmissing or versionmismatch per metadata. Per-file closure/ABI and actualpoolN still unverified; no write/materialization/ARM yet. C issued three exact metadata payloads: source0aa9f39e,window2dc35c97,controller0ef29a6e in originalP/ACTUAL-ISOLATED-SUCCESSOR-01/C-INDEPENDENT-ADMISSION-01 for originalT45 controlled install/readback. Not action/armed/materialABI/business approval. Deadlines unchanged.
+
+OriginalQB stdio exact2 SOURCE_ONLY PASS4744B SHAe5389a0ddb4dfb5f9e9efa2173376967592cff782812a7f1d01c730ec014a9e3 adopted; no new finding, originalhost acceptance reused. OriginalF1 single existingheadeddriver consumer development independent, actualbrowser/PG still pending.
+
 ## 2026-10-31 original stdio exact2 source ready for paired headed consumer
 
 D1 originalstdio profile --product-entry-service fixed, RESULT5022B SHA03f0a4eebe13588396b1f64953c0b9c5743819c0e8d84bca5977cd0cd4459010; exactfixturea23c894f/testf5d148a1 matched. Four finite stdio tests PASS per original owner: original frontend clients via realchild CATEGORY/COLOR/PRODUCTv2/media/11SKU/receipts/readbacks, originalPNG bytes and generatedWebP; legacy stdout unchanged, badflags/scope/binary reject. Explicitprofile uses one originalhost state, no staticfallback; binaryBase64 preserves realbytes/status/headers and actualstage close. No listener/browser/PG/durability or production changes. OriginalF1 registered solewriter of one existingheadeddriver leaf to consume this fixedprofile; T45 stays only build/service/actualQA owner.

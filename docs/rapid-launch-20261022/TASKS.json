@@ -20244,6 +20244,13 @@
         "cleanupDeadlineEpoch": 1793441674,
         "evidence": "ACTUAL-ISOLATED-SUCCESSOR-01/ACTUAL-START-AND-HUMAN-SOURCE.json",
         "meaning": "Actual original-channel status began, not Cwindow approval or actualPG business"
+      },
+      "cIndependentSourceWindow": {
+        "sourceSha256": "0aa9f39e3d0d4b9a6a3097539f099928a8204b45a5caef141cb8cbc7f88187fe",
+        "windowSha256": "2dc35c977e4c338d7c05c0452dfb268d23404f442097dfeda193199cdb4d3e28",
+        "controllerSha256": "0ef29a6e09a84d75cb1fb524116ab4ccd696c0bb7cefc7f4742175129c5f5912",
+        "status": "ISSUED_FOR_ORIGINAL_EXACT_CONTENT_INSTALL_NOT_YET_OBSERVED",
+        "meaning": "Human boundedwindow and independent source adoption only, no action/armed/actualOID/materialABI/PGPASS"
       }
     }
   },
@@ -20419,7 +20426,12 @@
         "resultSha256": "03f0a4eebe13588396b1f64953c0b9c5743819c0e8d84bca5977cd0cd4459010",
         "profile": "--product-entry-service",
         "binary": "request/response binaryBase64 canonical, response no body when binary; actual source PNG bytes and WebP transport",
-        "next": "Original headed driver consumes explicitprofile; no actualPG/browser yet"
+        "next": "Original headed driver consumes explicitprofile; no actualPG/browser yet",
+        "independentReview": {
+          "status": "PASS_EXACT2_SOURCE_ONLY_DRIVER_BROWSER_PENDING",
+          "sha256": "e5389a0ddb4dfb5f9e9efa2173376967592cff782812a7f1d01c730ec014a9e3",
+          "findings": 0
+        }
       }
     }
   }
