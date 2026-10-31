@@ -21581,7 +21581,7 @@
     "sourceReceiptSha256": "d885d806b4007ef264fe7a127031ba8c3a838771c165f3565e7ec7677b189500",
     "finding": "Exact id/note/1+6 rows match original normal50 receipt: LIVE DRAFT RUNTIME_LEDGER; fixed50 transferExistingEdit false. Screenshot lacks URL, so not current-version proof. Fixed51 independent full existing-field SAVE1->2->3 evidence reused; current526ca normal branch present.",
     "contractSupplement": {
-      "status": "D3_F1_D1_SOURCE_DELIVERED_EXACT_PROFILE_CLOSURE_IN_PROGRESS",
+      "status": "FIXED_SOURCE_QB_PASS_EXACT_PROFILE_CLOSURE_IN_PROGRESS",
       "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/HISTORY-DRAFT-TRANSFER-EXACT-SUPPLEMENT-20261101.md",
       "sha256": "ce965aea06e0f1ea08f9b185fd994554cd1f36dfe799eb8b5a3886eefa0b5ffc",
       "scope": "DRAFT/EXCLUDED transfer only; optionalnote and complete lineSet with retained original/source/revision identity,duplicateSKU independentrows,200positive rows10k note/newformat V2; oldsignedquantity branch preserved.0newtable/column/ACL,4existingSQLfunction successors/readprojection closure.",
@@ -21686,7 +21686,7 @@
           "id": "HISTORY-LINESET-F01",
           "owner": "F1",
           "version": "499f9e52",
-          "status": "SOURCE_FIXED_DIRECTED4_PASS_PENDING_QB_RECHECK",
+          "status": "CLOSED_SOURCE_FIXED17cb_QB_TARGETED_PASS_NOT_BROWSER_OR_PG",
           "finding": "V2 SOURCE origin.sourceLineId must equal effective source item.lineId; D3 rejects but frontend decoder accepted contradictory source identity.",
           "retest": "Only malformed SOURCE identity case and impacted V1/V2 decoder compatibility",
           "files": {
@@ -21696,7 +21696,111 @@
           "selfcheck": "New SOURCE mismatch reproduced red; corrected source then four affected V1/V2 cases pass; no browser/PG"
         }
       ],
-      "independentReview": "QB fixed499f9e52 original13 leaves NEED_FIX only F01, 47b732394e2b62af725d880863d63239d5faf1e3e4946a4346f8138d2230c216; D1 fixede195 four-leaf review continuing"
+      "independentReview": "QB fixed499f9e52 original13 leaves NEED_FIX only F01, 47b732394e2b62af725d880863d63239d5faf1e3e4946a4346f8138d2230c216; D1 fixede195 four-leaf review continuing",
+      "adoptedIndependentReports": {
+        "QB-D1-FOUR-LEAF-SOURCE-RESULT.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/HISTORY-DRAFT-LINESET-SEAM-20261101/QB-D1-FOUR-LEAF-SOURCE-RESULT.json",
+          "sha256": "23662a8108ecc9348633e46b1550dc1f65922d6498ba506771b2fae4526a9e46",
+          "result": {
+            "taskID": "QB_HISTORY_DRAFT_LINESET_D1_20261101",
+            "result": "PASS",
+            "scope": "FIXED_e1954086_EXACT4_SOURCE_PROTOCOL_REVIEW_AND_SQL_TEXT_ONLY",
+            "createdAt": "2026-10-31T18:51:19.863568+00:00",
+            "sourceCommit": "e1954086b57aad24364cdea1ed8b350018ffee00",
+            "artifacts": [
+              {
+                "repositoryPath": "adapters/postgres/src/history-revision-store.ts",
+                "bytes": 34008,
+                "sha256": "67fb25d55a33b5f98bc42449c6a53d2806a1ab237e46d5ff4b4fc2964fa1a767"
+              },
+              {
+                "repositoryPath": "adapters/postgres/patches/0026-history-draft-transfer-line-set-successor.sql",
+                "bytes": 46713,
+                "sha256": "eb5937320e017b89790a5dd5aa2d08601087e21b35b771f902f55b02ad6f4aaa"
+              },
+              {
+                "repositoryPath": "tests/history-revision-postgres-protocol.test.ts",
+                "bytes": 31330,
+                "sha256": "4a7bb13af2e4a0b908b1b2ab15e813e453b8fd49c45ea09434c3f4839f06b73f"
+              },
+              {
+                "repositoryPath": "tests/history-revision-set-guards.test.ts",
+                "bytes": 4991,
+                "sha256": "be5446a28f2279fa423f5cf9916c8541d5e74af24afd338b6a36657365c5beac"
+              }
+            ],
+            "adoptedEvidence": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/HISTORY-DRAFT-LINESET-D1-IMPLEMENTATION-RESULT.json",
+              "bytes": 5346,
+              "sha256": "64eaeb8161bfacc7d129ca53e892f80a7f07510e9e808827d1b8341bd337c094"
+            },
+            "checks": [
+              "All four fixed blobs match delivery bytes/SHA; no current WIP/capability/API/release read as candidate.",
+              "Original same-client identity/publication/source/head locks and original hash/key replay remain before expectedVersion CAS and new ID/native read. Duplicate original keys return prior receipt before any new transferLine allocation.",
+              "New line allocator runs original transaction after CAS, distinguishes keep/new/replacement and rejects collisions with current/source line IDs,document,operation,revision,previoushead. Actual snapshots use original loadNativeTransferSnapshots SHARE locking; enabled/soft-delete/published identities and full groups queried on same client.",
+              "Full set preserves exact ordered individual IDs and immutable prior origins/groups; sameSKU retained old ID, replacement gets new REVISION origin; no new SKU/source writes or missing balance defaults. Marked subsequent numeric edits retain JSON metadata and skip old line_effective FK writes.",
+              "Original revision/head/audit/receipt and empty original posting leaf remain atomic; unknown COMMIT discards connection and uses original key recovery, no rollback/retry claim.",
+              "SQL only four same-signature function replacements with exact old-body parent gate. Extracted new four prosrc byte counts/SHA match report and four old parent pins independently match original source SQL bodies. Legacy numeric guard tail byte-identical to old body after size_before anchor. No table/column/sequence/trigger/ACL expansion or SECURITY DEFINER.",
+              "SQL new marked branch constrains DRAFT/EXCLUDED,nonempty1..200 positiveint64/distinct IDs,native reference+snapshot/fullgroup/compound origin preservation,non-downgrade,empty effects and ledger; same-transaction deferred receipt/audit/current-facts closure and no marked FK/ledger writes retained.",
+              "Owner protocol24 plus later1/final7, strict narrow type evidence adopted; not rerun. These are scripted query/text evidence, not SQL execution."
+            ],
+            "findings": [],
+            "notTested": [
+              "SQL parse/install/PLpgSQL execution, actual trigger behavior/locks/nonowner ACL/performance",
+              "Current successor profile/prosrc capability/canonical probes and real combined C metadata",
+              "Actual PG/historySAVE/readback/unknownCOMMIT recovery/UI/browser/build/QA03/production"
+            ],
+            "next": "Freeze matching C profile and full combined source before separate necessary joint checks. No installed/activated profile or PG PASS inferred. F01 frontend fix tracked separately.",
+            "executionAuthorized": false,
+            "actualModelAndFast": "UNVERIFIED"
+          }
+        },
+        "QB-F01-FIXED17cb-RETEST-RESULT.json": {
+          "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/HISTORY-DRAFT-LINESET-SEAM-20261101/QB-F01-FIXED17cb-RETEST-RESULT.json",
+          "sha256": "3cccb1d9537d5d064d244b751839aa13d5f84be3f432a90f748c1b953259c482",
+          "result": {
+            "taskID": "QB_HISTORY_LINESET_F01_RETEST_20261101",
+            "result": "PASS",
+            "scope": "HISTORY_LINESET_F01_EXACT2_AFFECTED_V2_V1_SOURCE_RETEST_ONLY",
+            "sourceCommit": "17cb446f676a769448bda77c54f12f0d4fabaf94",
+            "artifacts": [
+              {
+                "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/history-reader.ts",
+                "gitBlob": "e0c745bdd43ebb8b3e276c2a593de4cc2a23c27f",
+                "bytes": 20561,
+                "sha256": "86d4f5cc6c948c543b91c7b24c18c1e88b1d2090357dd353b5923ed21f2ece2f"
+              },
+              {
+                "repositoryPath": "apps/web/demo-replica/frontend/runtime/documents/history-catalog.test.mjs",
+                "gitBlob": "bc62e97c3571e220a3f1af5d49159bfb7a9a0d32",
+                "bytes": 13103,
+                "sha256": "6e36b70a24698d3262840636a823e06c97db5ca5ec1f68398b951a156a7e233d"
+              }
+            ],
+            "priorReport": {
+              "path": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-backend/rapid-launch-20261022/QB/HISTORY-DRAFT-LINESET-SEAM-20261101/QB-HISTORY-DRAFT-LINESET-SEAM-RESULT.json",
+              "bytes": 8603,
+              "sha256": "47b732394e2b62af725d880863d63239d5faf1e3e4946a4346f8138d2230c216"
+            },
+            "finding": "HISTORY-LINESET-F01",
+            "findingStatus": "CLOSED_FOR_FIXED17cb_SOURCE_ONLY",
+            "checks": [
+              "Only history-reader and history-catalog.test changed versus e1954086. Accurate requested blobs match.",
+              "SOURCE branch now checks origin.sourceLineId equals item.lineId, which already equals actual page line.id; new exact counterexample test added.",
+              "Original fixed499f9e52 failure independently replayed against fixed17cb in-memory git source: contradictorySOURCE...999 for actual...001 now throws. ValidV2 SOURCE remains accepted; originalV1 function symbol/shape accepted. No file copy/source edit/DB/browser.",
+              "Owner4 affected V1/V2 checks adopted; unrelated13leaf/old50/audit/regressions not rerun. Original NEED_FIX report/reproduction preserved unchanged."
+            ],
+            "findings": [],
+            "jointNotVerified": [
+              "D1 store/SQL actual PostgreSQL behavior and current matching C profile closure",
+              "Actual combined HISTORY note/full lineSet SAVE/readback/UI and inventory zero-effect runtime"
+            ],
+            "next": "C can adopt F01 closure and limited D1 source/text PASS; full combined profile/runtime/PG acceptance remains separate.",
+            "executionAuthorized": false,
+            "actualModelAndFast": "UNVERIFIED"
+          }
+        }
+      }
     }
   }
 }

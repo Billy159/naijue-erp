@@ -8608,7 +8608,9 @@
         "config/release-contract.json",
         "scripts/release/v8-release-contract.test.mjs",
         "apps/api/src/production-provider-composition.test.ts",
-        "scripts/release/deploy-candidate.py"
+        "scripts/release/deploy-candidate.py",
+        "scripts/release/v6-release-contract.test.mjs",
+        "scripts/release/v7-release-contract.test.mjs"
       ]
     },
     "constraints": "Original D3/F1/D1 package leases returned. C delegates required finite metadata/API/release profile closure to original D1, sole writer; exact additional leaves recorded before edits. No SQL installation, actual permission, build/service or QA03 authority.",
