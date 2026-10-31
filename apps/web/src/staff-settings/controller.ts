@@ -224,6 +224,7 @@ export function staffRejectionMessage(code: string): string {
     INVALID_STAFF_STATE: '员工状态已改变，请重新读取。', INVALID_STAFF_ACCOUNT_STATE: '员工或关联账号状态已改变，请重新读取。',
     STAFF_REFERENCE_UNAVAILABLE: '所选营业厅已不可用，请重新选择。', NO_STAFF_CHANGE: '资料没有变化，无需提交。',
     VERSION_STORAGE_OVERFLOW: '资料版本已达技术上限，不能变更。', IDEMPOTENCY_CONFLICT: '操作身份已被其他内容使用，请核实后重新准备。',
+    AUTHENTICATION_BUSY: '密码处理繁忙，本次未保存。请稍后重新输入密码并点击确定；也可取消本次编辑。',
     INVALID_ACCOUNT_PASSWORD: '密码不符合当前要求，请重新输入。', ACCOUNT_CREDENTIALS_NOT_READY: '账号服务暂未就绪，本次保存未执行。',
     STAFF_NOT_FOUND: '员工不存在或已不可访问，请重新读取。', HTTPS_REQUIRED: '请通过安全连接提交密码。' } as Readonly<Record<string, string>>)[code] ?? '请求未被接受，请检查填写内容后再提交。';
 }

@@ -70,7 +70,7 @@ export class PaymentSettingsController {
     let command: PaymentCommand;
     try {
       const values = this.kind === 'methods' ? { name: draft.name, enabled: draft.enabled }
-        : { name: draft.name, enabled: draft.enabled, paymentMethodId: draft.method?.id, hallIds: draft.halls.map(hall => hall.id) };
+        : { name: draft.name, enabled: draft.enabled, paymentMethodId: draft.method?.id, hallIds: this.record?.kind === 'accounts' ? this.record.halls.map(hall => hall.id) : [] };
       command = immutable(validatePaymentCommand(this.kind, this.record
         ? { action: 'EDIT', requestKey: options.newRequestKey(), id: this.record.id, expectedVersion: this.record.version, values }
         : { action: 'CREATE', requestKey: options.newRequestKey(), values }));

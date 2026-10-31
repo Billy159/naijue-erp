@@ -4,7 +4,6 @@ import type { LatestQuery } from '../../../../src/loading/latest-query.ts';
 import type { PaymentSettingsKind, PaymentSettingsProps, PaymentSettingsRecord } from '../../../../src/payment-settings/contracts.ts';
 import { PaymentSettingsController, paymentRejectionMessage } from '../../../../src/payment-settings/controller.ts';
 import { ReferenceSelect, readMessage } from './controls.tsx';
-import PaymentHalls from './payment-halls.tsx';
 interface Props extends PaymentSettingsProps{kind:PaymentSettingsKind;editor:PaymentSettingsController|null;detail:LatestQuery<{id:string},PaymentSettingsRecord|null>|null;onRecord:(record:PaymentSettingsRecord)=>void;close:(readbackConfirmed?:true)=>void;}
 const names={methods:'收款方式',accounts:'资金账户'} as const;
 function Field(props:{title:string;required?:boolean;error?:string|undefined;children:ReactNode}){return <div className="bs-field iw-form-field" role="group" aria-label={props.title}><span>{props.title}{props.required&&<i> *</i>}</span>{props.children}{props.error&&<small className="bs-error" role="alert">{props.error}</small>}</div>;}
@@ -28,7 +27,7 @@ function Editor(props:Props&{editor:PaymentSettingsController}){
  return <Modal visible className="bs-modal iw-arco-modal iw-arco-controls runtime-settings" title={`${editing?'编辑':'新增'}${names[kind]}`} maskClosable={false} closable={state.write.phase!=='committed'} autoFocus={false} onCancel={cancel} onOk={()=>{void editor.submit();}} confirmLoading={['submitting','recovering'].includes(state.write.phase)} okText="确定" cancelText="取消" cancelButtonProps={{disabled:state.write.phase==='committed'}} okButtonProps={{disabled:!editor.writesEnabled||locked}}>
  <div className="bs-form-fields iw-form-fields"><Field title={kind==='accounts'?'账户名称':'名称'} required error={state.errors.name}><Input className="iw-arco-input" aria-label={kind==='accounts'?'账户名称':'名称'} value={draft.name} disabled={locked} autoComplete="off" onChange={name=>editor.update({name})}/></Field>
  {kind==='accounts'&&<><Field title="所属收款方式" required={!editing} error={state.errors.method}>{editing?<div className="bs-readonly">{draft.method?.name??'名称未提供'}</div>:<ReferenceSelect scope={props.scope} reader={props.directory} kind="payment-methods" label="所属收款方式" selected={draft.method} required disabled={locked} onChange={method=>editor.update({method})}/>}</Field>
- <Field title="适用营业厅" error={state.errors.halls}><PaymentHalls scope={props.scope} reader={props.directory} selected={draft.halls} disabled={locked} onChange={halls=>editor.update({halls})}/>{draft.halls.length===0&&<small>未关联营业厅。</small>}</Field></>}
+ </>}
  {editing&&<Field title="使用状态"><div className="bs-switch"><Switch aria-label="使用状态" checked={draft.enabled} disabled={locked} onChange={enabled=>editor.update({enabled})}/><span>{draft.enabled?'正常':'已停用'}</span></div></Field>}</div>
  {!editor.writesEnabled&&<p className="runtime-settings-note" role="status">维护保存尚未接入，填写内容不会提交。</p>}{state.write.phase==='rejected'&&<p className="bs-error" role="alert">{paymentRejectionMessage(state.write.error?.code??'')}</p>}
  {state.write.phase==='uncertain'&&<section className="bs-error" role="alert"><p>提交结果尚未确认，原请求身份与填写内容已保留，不能重新提交或放弃。</p><Button onClick={()=>{void editor.recover();}}>查询原操作回执</Button></section>}

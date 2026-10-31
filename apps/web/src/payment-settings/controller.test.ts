@@ -44,13 +44,13 @@ test('production gate defaults closed; dirty close and workspace replacement req
   assert.equal(f.workspace.close('methods'), false); assert.equal(f.workspace.open('methods', null), null); assert.equal(c.getSnapshot().closePrompt, true);
   c.keepEditing(); assert.equal(c.discard(), true); assert.equal(f.workspace.close('methods'), true); assert.equal(f.workspace.canLeave(), true); f.owner.dispose();
 });
-test('one immutable native account command preserves complete/empty hall set and serializes double click', async () => {
+test('one immutable native account command preserves original hall set and serializes double click', async () => {
   const f = fixture(); f.enable(); let finish!: (result: PaymentCommandResult) => void;
   f.execute(() => new Promise(resolve => { finish = resolve; }));
   const record: PaymentAccountRecord = { kind: 'accounts', id: id(2), name: '账户', enabled: true, version: 3, paymentMethod: { id: id(3), name: null }, halls: [{ id: id(5), name: '旧停用厅' }, { id: id(4), name: null }] };
   const c = f.workspace.open('accounts', record)!; c.update({ name: ' 修改 ', enabled: false, halls: [] });
   const pending = c.submit(); await c.submit(); assert.equal(f.sent.length, 1); assert.equal(f.keys(), 1);
-  assert.deepEqual(f.sent[0], { action: 'EDIT', requestKey: 'payment-test-1', id: id(2), expectedVersion: 3, values: { name: ' 修改 ', enabled: false, paymentMethodId: id(3), hallIds: [] } });
+  assert.deepEqual(f.sent[0], { action: 'EDIT', requestKey: 'payment-test-1', id: id(2), expectedVersion: 3, values: { name: ' 修改 ', enabled: false, paymentMethodId: id(3), hallIds: [id(4),id(5)] } });
   assert.equal(Object.isFrozen(f.sent[0]), true); assert.equal(Object.isFrozen((f.sent[0] as Extract<PaymentCommand, { action: 'EDIT' }>).values), true);
   c.update({ name: '不能改', halls: [{ id: id(8), name: '新厅' }] }); assert.equal(c.getSnapshot().draft?.name, ' 修改 ');
   assert.equal(c.requestClose(), false); assert.equal(c.discard(), false); finish(saved('accounts', f.sent[0]!)); await pending;
@@ -90,3 +90,5 @@ test('401 clears the session; a later 403 on another editor cannot erase an unre
   f.execute(async () => { throw new PaymentClientError('forbidden', 'FORBIDDEN', 'rejected', 403); }); await other.submit(); assert.equal(f.owner.active, true); assert.equal(c.getSnapshot().write.phase, 'uncertain');
   f.receipt(async () => { throw new PaymentClientError('unauthenticated', 'UNAUTHENTICATED', 'read', 401); }); await c.recover(); assert.equal(f.owner.active, false); assert.equal(f.failures(), 1); assert.equal(c.getSnapshot().write.command, null);
 });
+
+test('D01 new account ignores hall draft and creates no recommendation relations',async()=>{const f=fixture();f.enable();const c=f.workspace.open('accounts',null)!;c.update({name:'全厅账户',method:{id:id(3),name:'方式'},halls:[{id:id(9),name:'草稿厅'}]});await c.submit();const command=f.sent[0]!;assert.equal(command.action,'CREATE');if(command.action!=='CREATE')throw Error('CREATE required');assert.deepEqual(command.values,{name:'全厅账户',enabled:true,paymentMethodId:id(3),hallIds:[]});f.owner.dispose();});

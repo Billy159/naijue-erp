@@ -47,7 +47,7 @@ const commandCodes: Readonly<Record<number, readonly string[]>> = {
   400: ['INVALID_STAFF_COMMAND', 'INVALID_ACCOUNT_COMMAND', 'INVALID_ACCOUNT_PASSWORD', 'INVALID_PARTY_INPUT', 'INVALID_ID', 'INVALID_HTTP_INPUT', 'INVALID_REQUEST', 'INVALID_JSON'],
   401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN'], 404: ['STAFF_NOT_FOUND'],
   409: ['VERSION_CONFLICT', 'IDEMPOTENCY_CONFLICT', 'VERSION_STORAGE_OVERFLOW', 'NO_STAFF_CHANGE', 'INVALID_STAFF_STATE', 'INVALID_STAFF_ACCOUNT_STATE', 'STAFF_REFERENCE_UNAVAILABLE', 'LAST_AVAILABLE_ADMIN', 'ACCOUNT_LOGIN_CONFLICT'],
-  413: ['BODY_TOO_LARGE'], 415: ['UNSUPPORTED_MEDIA_TYPE'], 503: ['ACCOUNT_CREDENTIALS_NOT_READY'], 500: ['INTERNAL_ERROR'],
+  429: ['AUTHENTICATION_BUSY'], 413: ['BODY_TOO_LARGE'], 415: ['UNSUPPORTED_MEDIA_TYPE'], 503: ['ACCOUNT_CREDENTIALS_NOT_READY'], 500: ['INTERNAL_ERROR'],
 };
 const receiptCodes: Readonly<Record<number, readonly string[]>> = {
   400: commandCodes[400]!, 401: ['UNAUTHENTICATED'], 403: ['FORBIDDEN'], 404: ['RECEIPT_NOT_FOUND'], 500: ['INTERNAL_ERROR'],
@@ -200,7 +200,9 @@ export function createStaffSettingsCommandClient(options: HttpQueryOptions): Sta
           throw fail('malformed-response', 'INVALID_ERROR_RESPONSE');
         }
         // Frozen W8 checks credential availability before opening the write transaction.
-        const rejected = response.status >= 400 && response.status < 500 || response.status === 503 && code === 'ACCOUNT_CREDENTIALS_NOT_READY';
+        const rejected = response.status >= 400 && response.status < 500 && response.status !== 429
+          || write && response.status === 429 && code === 'AUTHENTICATION_BUSY'
+          || response.status === 503 && code === 'ACCOUNT_CREDENTIALS_NOT_READY';
         throw new StaffClientError(statusKind(response.status), code, write ? (rejected ? 'rejected' : 'uncertain') : 'read', response.status);
       }
       if (response.status !== 200) { cancelBody(response); throw fail('malformed-response', 'INVALID_RESPONSE'); }
