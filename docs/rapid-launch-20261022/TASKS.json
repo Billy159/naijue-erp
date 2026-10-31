@@ -20629,7 +20629,7 @@
         "fixedSource": "b3a18d37309da789cd5730ef17693d5961001460"
       },
       "F03": {
-        "status": "ORIGINAL_OWNER_CURRENT_SOURCE_PREFLIGHT",
+        "status": "CURRENT_CONFIRMED_F4_EXACT3_RED_THEN_FIX",
         "scope": "targetId/version catalogue readback through authorized pages",
         "owner": "F4"
       },
@@ -20640,11 +20640,12 @@
         "fixedSource": "b3a18d37309da789cd5730ef17693d5961001460"
       },
       "F05": {
-        "status": "VERIFY_CURRENT_THEN_REPRODUCE",
-        "scope": "six exact LIVE proxy request budgets and independently approved helper pins"
+        "status": "NEXT_AFTER_FIXED48_BUILD_CURRENT_SOURCE_PREFLIGHT",
+        "scope": "six exact LIVE proxy request budgets and independently approved helper pins",
+        "owner": "T45"
       },
       "F06": {
-        "status": "NEXT_ORIGINAL_OWNER_REPRODUCTION_AND_BOUNDARY",
+        "status": "CURRENT_CONFIRMED_F1_EXACT4_RED_THEN_FIX",
         "scope": "atomic transfer scanned real SKU and pending matrix coordinate reconciliation",
         "owner": "F1"
       },
@@ -20655,17 +20656,17 @@
         "fixedSource": "1759546b501bb30d2c012922c3e938e8bde6354c"
       },
       "F08": {
-        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_F3_EXACT9_FIX",
+        "status": "CURRENT_CONFIRMED_F3_EXACT10_RED_THEN_FIX",
         "scope": "strict known 429 AUTHENTICATION_BUSY rejected-before-write; unknown remains uncertain",
         "owner": "F3"
       },
       "R01": {
-        "status": "WAIT_VISIBLE_KEYBOARD_REPRODUCTION_NO_BUG_PASS",
+        "status": "SOURCE_RISK_ONLY_VISIBLE_KEYBOARD_REPRODUCTION_PENDING",
         "scope": "visible keyboard scanner-pending save reachability first; pending blocks save without implicit cancel",
         "owner": "F1"
       },
       "D01": {
-        "status": "CURRENT_SOURCE_CONFIRMED_ORIGINAL_F3_EXACT9_FIX",
+        "status": "CURRENT_CONFIRMED_F3_EXACT10_RED_THEN_FIX",
         "scope": "remove editable payment account hall UI; preserve original edit associations and unrestricted enabled account candidates",
         "owner": "F3"
       }

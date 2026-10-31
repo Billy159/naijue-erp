@@ -8299,7 +8299,7 @@
   },
   "r1SettingsF08D01Combined": {
     "owner": "F3",
-    "status": "ACTIVE_EXACT9",
+    "status": "ACTIVE_EXACT10",
     "files": [
       "apps/web/src/staff-settings/http-client.ts",
       "apps/web/src/staff-settings/controller.ts",
@@ -8309,9 +8309,32 @@
       "apps/web/demo-replica/frontend/runtime/settings/payment-form.tsx",
       "apps/web/src/payment-settings/controller.ts",
       "apps/web/src/payment-settings/controller.test.ts",
-      "apps/web/demo-replica/frontend/runtime/settings/payments-runtime.test.mjs"
+      "apps/web/demo-replica/frontend/runtime/settings/payments-runtime.test.mjs",
+      "apps/web/src/payment-settings/payment-account-form.tsx"
     ],
     "scope": "Strict existing prewrite429 AUTHENTICATION_BUSY classification and payment hall UI removal, EDIT retains original record IDs CREATE[]; no new permissions/API production/SQL; other shared old form read-only until exact separate lease",
     "sharedApiTest": "staff-maintenance-http.test only F3; D1 inventory API tests disjoint"
+  },
+  "r1CatalogueReadbackF03": {
+    "owner": "F4",
+    "status": "ACTIVE_EXACT3",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/catalogue/dictionary-page.tsx",
+      "apps/web/demo-replica/frontend/runtime/catalogue/source-controls.tsx",
+      "apps/web/demo-replica/frontend/runtime/catalogue/tests/normal-entry.test.mjs"
+    ],
+    "scope": "Existing authorized sequential page20 targetId/version readback, retained receipt, no new write/API/helper platform; finally reset finish guard; cancel/403/late/DELETE unchanged"
+  },
+  "r1TransferMatrixScanF06": {
+    "owner": "F1",
+    "status": "ACTIVE_EXACT4",
+    "files": [
+      "apps/web/src/current-form/transfer-proposal.ts",
+      "apps/web/src/current-form/transfer-proposal.test.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/transfer-scanner.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/transfer-matrix-scan-edit.test.mjs"
+    ],
+    "scope": "Atomic same real coordinate matrix+scan reconciliation and accurate before/after feedback; preserve raw, exact IDs, snapshots and limits, no API/controller/FIFO/timeout change",
+    "R01": "Not modified; visible native keyboard reproduction still needed, no risk relabeled actual failure"
   }
 }
