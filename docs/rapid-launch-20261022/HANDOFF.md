@@ -1,3 +1,5 @@
+2026-10-31 QB采用：19d6e5b9准确16叶V8 issuer/API/工具的独立源码限定PASS，回执12464B/SHA23adeaa47eec8248b9a25232daea91406f767da93d977d878c88459b96af0c0d；0新阻塞。243离线及strict直接复用，不重技术验收。旧20probe逐字节不变，137body=原V7，API在连接前实际拒旧V7，五atom范围未扩大；release侧前有效PASS继续采用。当前真实PG/ordinaryLOGIN/保存读回冲销恢复/部署均未验，integration新叶和T45安装载体在途；QA Unix源码扩展等准确用户答复，不冒执行授权。
+
 2026-10-31 V8接线包固定：D1准确16叶已固定19d6e5b9a1c753603840bd68625b8de1eefb3385并远端回读。离线243定向检查/新issuer及四API严格类型通过；原QB已接该新增量独立审，未回结论。前已审release8叶及boot/rollback精确pin接线结论复用。D1当前继续原新integration叶，T45当前实现原通道的新空合成目标安装载体（仅本地准备）；QA有限Unix目标源码扩展仍待用户答复，未建库/角色/GRANT/启动/上线。
 
 2026-10-31 V8发布侧：cc70d8ff八叶已固定推GitHub；原QB独立限定PASS，准确deploy helper b313cf274ad50f47e5652bd23e24efcd41d3de92457d94934d40e0f3bf204485已由原T45仅更新boot/rollback对应capacity pin，历史pins/guard不变。generator--check通过，原受影响boot14/rollback6通过，原32定向PASS复用。D1 issuer/API/工具仍在途，不计整合通过；QA有限Unix目标扩展新提案已提交用户，仅待对应源码范围确认，不执行环境变更。

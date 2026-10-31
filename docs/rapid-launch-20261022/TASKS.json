@@ -19841,7 +19841,7 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "QB reviews fixed V8 source; D1 real ordinary-login business integration entry; T45 concrete isolated installer carrier source; QA finite Unix source extension awaiting confirmation",
+    "current": "V8 source/release independent scoped acceptance adopted; D1 real-business integration entry and T45 concrete isolated installer in progress; finite QA Unix source confirmation pending",
     "next": "Target-specific repair script and concrete isolated execution confirmation",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
@@ -19907,9 +19907,11 @@
         "offlineUniquePass": 243,
         "strictIssuerAndFourApiRoots": "PASS"
       },
-      "qbReview": "DISPATCHED_NEW_INCREMENT_ONLY_PENDING",
+      "qbReview": "PASS_EXACT_16_LEAF_SOURCE_OFFLINE_CONTRACT_ONLY",
       "realPg": "NOT_RUN",
-      "qaUnix": "NOT_IMPLEMENTED_PENDING_HUMAN_CONFIRMATION"
+      "qaUnix": "NOT_IMPLEMENTED_PENDING_HUMAN_CONFIRMATION",
+      "qbReportSha256": "23adeaa47eec8248b9a25232daea91406f767da93d977d878c88459b96af0c0d",
+      "qbReportBytes": 12464
     }
   }
 }
