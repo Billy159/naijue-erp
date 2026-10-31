@@ -1,3 +1,5 @@
+2026-10-31 初始化真实组合2叶已固定0b772c0e并交原QB增量：原工厂/真实boundedPool与V4准备issuer，CORE写前先fullsource Cgrant/preflight，CORE→INIT→catalogue→原full续导→实际publishedpredicate/三facts/反序关闭；strict及4routing早拒离线PASS，尚未实际PG成功路径。report2777B/SHA3b8c78ed。原T45仅据源权限边界实现第三准备role准确列ACL/12xmin/EXEC/seq/DB入口及收口inverse的原installer后继，禁止normal矩阵盲合/普通V8扩权/实际创建或GRANT。最终环境确认尚未到可执行状态。
+
 2026-10-31 实际host接缝已定向核实：原full provider仅续导/无CORE，generic host未传scheme init能力，普通V8禁止原CORE必读ledger.xmin。C采用最小135前置阶段独立准备LOGIN+原V4 exact12/准备ACL→合成PUBLISH→封闭准备访问→V7/V8→普通真LOGIN路线，不新增137issuerprofile/不扩大普通V8。D1独占登记单test-only preparation-host叶复用原factory/service，T45精确最终安装清单承接新增准备身份及权限，当前未获任何实际环境批准。恢复02 source已QB PASS，普通PG/backup/restore/线上全部未验。
 
 2026-10-31 原QB恢复F02/F03后继02窄复验PASS采用（report4226B/SHA8a494c78130e022119568c92550c07e44ffb55b1c9945b4544a2df6d0cd6fcb5；script36532B/SHA4a1661a1）。原两literal修正/3affected检查复用，不重复旧套；旧01 NEED_FIX及撤回F01保留。精确restore/安装载体源检查完成不代表实际backup/restore/cleanup通过，均未执行。当前D1原宿主角色/CORE/方案初始化实际接缝技术判断在途，禁止普通V8补IMPORT_PREPARATION/xmin绕过。
