@@ -8499,7 +8499,7 @@
   },
   "r1UnifiedOrganizationReadSuccessor": {
     "owner": "D1",
-    "status": "ACTIVE_EXACT_TWO_LEAVES",
+    "status": "DELIVERED_FIXED_5A505A12_QB_INCREMENT_PASS",
     "paths": [
       "apps/web/demo-replica/tests/unified-service-fixture.mjs",
       "apps/web/demo-replica/tests/unified-service-fixture.test.mjs",
@@ -8511,11 +8511,25 @@
   },
   "r1UnifiedCrossPageBrowser": {
     "owner": "F1",
-    "status": "ACTIVE_SINGLE_NEW_DRIVER_LEAF",
+    "status": "DELIVERED_FIXED_DA3E57F5_STATIC_ONLY",
     "paths": [
       "apps/web/demo-replica/tests/unified-cross-page-browser.py"
     ],
     "scope": "Bounded data-linkage/document-linkage cases; immutable build/fixture args; real normal UI CREATE/payment/picker/scanner/save/readback, not API seeding to fake normal UI; no source/host changes",
+    "model": "gpt-6.1-sol/medium"
+  },
+  "r1UnifiedAuditReadback": {
+    "owner": "D1",
+    "status": "ACTIVE_EXACT_FIVE_TEST_LEAVES",
+    "paths": [
+      "tests/support/product-entry-service-host-fixture.mjs",
+      "apps/web/demo-replica/tests/payment-maintenance-fixture.mjs",
+      "apps/web/demo-replica/tests/staff-edit-fixture.mjs",
+      "apps/web/demo-replica/tests/unified-service-fixture.mjs",
+      "apps/web/demo-replica/tests/unified-service-fixture.test.mjs"
+    ],
+    "scope": "Actual committed synthetic maintenance audit producer/read route via original HTTP/service/projector; match current PostgreSQL contract id=operationId in separate fields, no new independent allocator or read-time invented IDs/static samples",
+    "constraints": "No production SQL/DTO/contracts/permissions changes, no old backfill, failed/replay records not duplicated; original receipt/actor/version closure retained",
     "model": "gpt-6.1-sol/medium"
   }
 }
