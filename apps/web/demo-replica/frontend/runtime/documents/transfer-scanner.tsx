@@ -6,14 +6,14 @@ import {transferProposalLineIdentity} from '../../../../src/current-form/transfe
 
 /** Original nonmodal transfer-scan-drawer structure. Exact lookup and draft
  * mutation remain exclusively in the existing DocumentScanController/session. */
-export default function TransferScanner(p:{controller:DocumentScanController;session:TransferProposalSession;anchor:HTMLElement;number?:string;busy:boolean;close:()=>void}){
+export default function TransferScanner(p:{controller:DocumentScanController;session:TransferProposalSession;anchor:HTMLElement;number?:string;busy:boolean;close:()=>void;onPendingChange?:(count:number)=>void}){
  const state=useSyncExternalStore(p.controller.subscribe,p.controller.getSnapshot,p.controller.getSnapshot),proposal=useSyncExternalStore(p.session.subscribe,p.session.getSnapshot,p.session.getSnapshot);
  const [raw,setRaw]=useState(''),[feedback,setFeedback]=useState<'idle'|'success'|'error'>('idle'),[success,setSuccess]=useState<{key:string;before:string|null;after:string;code:string;name:string;color:string;fit:string;size:string}|null>(null),[failedCode,setFailedCode]=useState(''),[failedReason,setFailedReason]=useState(''),[pendingCount,setPendingCount]=useState(0);
  const input=useRef<HTMLInputElement>(null),list=useRef<HTMLDivElement>(null),composing=useRef(false),attached=useRef(false),retry=useRef<HTMLButtonElement>(null);
  const rawRef=useRef(''),paused=useRef(false),epoch=useRef(0),pending=useRef(0),queue=useRef<Promise<void>>(Promise.resolve()),expectedDraft=useRef<typeof proposal.draft|null>(null),latest=useRef(p);latest.current=p;
  const changeRaw=(value:string)=>{rawRef.current=value;setRaw(value);};
  const pause=(code:string,reason:string)=>{epoch.current++;paused.current=true;setFailedCode(code);setFailedReason(reason);changeRaw('');setFeedback('error');};
- useLayoutEffect(()=>{attached.current=true;document.body.classList.add('transfer-scan-open');input.current?.focus({preventScroll:true});return()=>{attached.current=false;epoch.current++;p.controller.dispose();document.body.classList.remove('transfer-scan-open');if(p.anchor.isConnected)p.anchor.focus({preventScroll:true});};},[p.controller,p.anchor]);
+ useLayoutEffect(()=>{attached.current=true;document.body.classList.add('transfer-scan-open');input.current?.focus({preventScroll:true});return()=>{attached.current=false;epoch.current++;p.controller.dispose();latest.current.onPendingChange?.(0);document.body.classList.remove('transfer-scan-open');if(p.anchor.isConnected)p.anchor.focus({preventScroll:true});};},[p.controller,p.anchor]);
  useEffect(()=>{if(state.phase==='disposed')p.close();},[state.phase]);
  useEffect(()=>{if(feedback!=='success')return;const timer=window.setTimeout(()=>setFeedback('idle'),2700);return()=>window.clearTimeout(timer);},[feedback,success]);
  useLayoutEffect(()=>{if(feedback==='error')retry.current?.focus({preventScroll:true});if(feedback==='success'&&success){const node=Array.from(list.current?.querySelectorAll<HTMLElement>('[data-transfer-sku]')??[]).find(row=>row.dataset.transferSku===success.key);if(node&&list.current){const bounds=node.getBoundingClientRect(),viewport=list.current.getBoundingClientRect();if(bounds.top<viewport.top)list.current.scrollTop+=bounds.top-viewport.top;else if(bounds.bottom>viewport.bottom)list.current.scrollTop+=bounds.bottom-viewport.bottom;}}},[feedback,success]);
@@ -24,7 +24,7 @@ export default function TransferScanner(p:{controller:DocumentScanController;ses
   const submitted=rawRef.current.trim();if(!submitted)return;
   const run=epoch.current,hadInputFocus=document.activeElement===input.current;
   if(pending.current===0)expectedDraft.current=p.session.getSnapshot().draft;
-  changeRaw('');pending.current++;setPendingCount(pending.current);
+  changeRaw('');pending.current++;latest.current.onPendingChange?.(pending.current);setPendingCount(pending.current);
   queue.current=queue.current.catch(()=>{}).then(async()=>{
    if(!attached.current||run!==epoch.current)return;
    const owner=latest.current,draft=owner.session.getSnapshot().draft;
@@ -40,7 +40,7 @@ export default function TransferScanner(p:{controller:DocumentScanController;ses
     if(changed?.sku){const identity=transferProposalLineIdentity(changed),labels=changed.sourceSnapshot;setSuccess({key:changed.sku.id,before:previous(changed.sku)??null,after:changed.quantity,code:labels?.productCode??identity.productCode,name:labels?.productName??identity.productName,color:labels?.colorName??identity.colorName,fit:labels?.fitName??identity.fitName,size:labels?.sizeName??identity.sizeName});setFeedback('success');}
     requestAnimationFrame(()=>{if(attached.current&&hadInputFocus&&!paused.current&&(document.activeElement===input.current||document.activeElement===document.body))input.current?.focus({preventScroll:true});});
    }else pause(submitted,owner.controller.getSnapshot().message);
-  }).catch(()=>{if(attached.current&&run===epoch.current)pause(submitted,'本次扫码未完成，未自动重试，请核对后重新扫描。');}).finally(()=>{pending.current=Math.max(0,pending.current-1);if(attached.current)setPendingCount(pending.current);if(pending.current===0)expectedDraft.current=null;});
+  }).catch(()=>{if(attached.current&&run===epoch.current)pause(submitted,'本次扫码未完成，未自动重试，请核对后重新扫描。');}).finally(()=>{pending.current=Math.max(0,pending.current-1);if(attached.current){setPendingCount(pending.current);latest.current.onPendingChange?.(pending.current);}if(pending.current===0)expectedDraft.current=null;});
  };
  const rows=proposal.draft.lines.flatMap(line=>line.sku?[line]:[]),locked=p.busy,failed=feedback==='error';
  if(state.phase==='disposed')return null;
