@@ -8257,5 +8257,34 @@
       "apps/web/demo-replica/frontend/runtime/products/editor-runtime.test.mjs"
     ],
     "scope": "F07 exact VERSION_CONFLICT baseline gate only; preserve explicit reject draft correction, staged image request key and all uncertain recovery; no new API or write contract"
+  },
+  "r1SalesF02F04Combined": {
+    "owner": "F1",
+    "status": "ACTIVE_EXACT7",
+    "files": [
+      "apps/web/demo-replica/frontend/runtime/documents/sales-session.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/sales-feature.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/responsibility-default-page.test.mjs",
+      "apps/web/src/current-form/sales-proposal.ts",
+      "apps/web/src/current-form/sales-proposal.test.ts",
+      "apps/web/demo-replica/frontend/runtime/documents/proposal-form.tsx",
+      "apps/web/demo-replica/frontend/runtime/documents/sales-display-regression.test.mjs"
+    ],
+    "scope": "F02 safe clean EXISTING idle owner fresh-create boundary and F04 exact effective-price zero confirmation. Preserve raw/dirty/unresolved/default/lowestprice/list view/current key protections; no API/SQL/root changes.",
+    "basis": "original owner verified both current and all seven clean; no duplicate same-scope work"
+  },
+  "r1InventoryRetainedCategoryF01": {
+    "owner": "D1",
+    "status": "ACTIVE_DIRECTED_RED_THEN_FIX",
+    "files": [
+      "adapters/postgres/src/inventory-query-reader.ts",
+      "tests/inventory-query-postgres-protocol.test.ts",
+      "apps/api/src/postgres-read-api.ts",
+      "apps/api/src/postgres-application-api.test.ts",
+      "tests/inventory-membership-rewrite.test.ts"
+    ],
+    "sharedApiBoundary": "Only two existing PostgresInventoryQueryReader constructor fourth arguments; no other API composition/root/capacity change",
+    "optionalTest": "inventory-membership-rewrite only if existing call-shape assertion affected",
+    "scope": "Original trusted same-pool retained-delete capability; active tree and exact candidates; oldschema branch identical; no DDL/ACL/SQL files or runtime effects"
   }
 }
