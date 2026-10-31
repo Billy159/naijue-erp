@@ -220,9 +220,9 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
           order = `(r.id = $${values.length + 1}::uuid) DESC, ${order}`;
           columns = `r.id, r.name, NULL::text AS code, r.hall_id, h.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
         case "warehouse":
-          from = "FROM naijue_erp.warehouse r JOIN naijue_erp.hall h ON h.id = r.hall_id"; values.push(parameters.hallId);
+          from = "FROM naijue_erp.warehouse r JOIN naijue_erp.hall h ON h.id = r.hall_id"; values.push(parameters.hallId); order = `is_recommended DESC, ${order}`;
           where = `r.enabled AND h.enabled AND r.hall_id = $${values.length}::uuid AND ${match("r.name")}`;
-          columns = `r.id, r.name, NULL::text AS code, r.hall_id, h.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name`; break;
+          columns = `r.id, r.name, NULL::text AS code, r.hall_id, h.name AS hall_name, NULL::uuid AS payment_method_id, NULL::text AS payment_method_name, COALESCE(r.id=h.default_sales_warehouse_id,FALSE) AS is_recommended`; break;
         case "paymentMethod":
           from = "FROM naijue_erp.payment_method r";
           // Online methodOptions shows enabled native methods with at least one
@@ -254,11 +254,11 @@ export class PostgresCurrentFormReader implements CurrentFormReader {
         requireDomain((paymentMethodId === null) === (paymentMethodName === null)
           && (parameters.kind === "paymentAccount" ? paymentMethodId === parameters.paymentMethodId : paymentMethodId === null), "INVALID_DATABASE_VALUE", "Native payment method identity/label mismatch");
         requireDomain(parameters.kind === "customer" ? row.code !== null : row.code === null, "INVALID_DATABASE_VALUE", "Unexpected native reference code shape");
-        return Object.freeze({ id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName, ...(parameters.kind==="customer"?{isRecommended:booleanValue(row.is_recommended)}:{}) });
+        return Object.freeze({ id: nativeId, name: text(row.name), code: nullableText(row.code), hallId, hallName, paymentMethodId, paymentMethodName, ...((parameters.kind==="customer"||parameters.kind==="warehouse")?{isRecommended:booleanValue(row.is_recommended)}:{}) });
       };
       if (parameters.kind === "paymentAccount") return this.paymentAccounts(query, parameters, signal, from, where, columns, values, decode);
       const result=await this.page(query, parameters, from, where, columns, order, values, decode, orderValues);
-      return parameters.kind==="customer"?Object.freeze({...result,recommendationAvailability:"AVAILABLE" as const}):result;
+      return (parameters.kind==="customer"||parameters.kind==="warehouse")?Object.freeze({...result,recommendationAvailability:"AVAILABLE" as const}):result;
     });
   }
   readTransferWarehouses(actor: ActorContext, input: CurrentTransferWarehouseQuery, signal: AbortSignal): Promise<CurrentFormPage<CurrentTransferWarehouse>> {

@@ -616,3 +616,22 @@ test('customer recommendation joins authorized hall once and keeps exact native 
   page(ids.map((id,i)=>item({id,name:'相同名字',code:'C'+i,hall_id:null,hall_name:null,is_recommended:i===1})),(values,sql)=>{assert.deepEqual(values,['',hall,20,0]);assert.match(sql,/r.id=selected_hall.default_customer_id/);assert.match(sql,/ORDER BY is_recommended DESC/);}),commit()]);
  const result=await reader(client).readSalesReferences(actor,reference('customer'),signal());assert.equal(result.recommendationAvailability,'AVAILABLE');assert.deepEqual(result.items.map(x=>[x.id,x.isRecommended]),[[ids[0],false],[ids[1],true]]);client.done();readonly(client);
 });
+
+test('default warehouse read: real current-hall ID recommendation keeps nondefault same-name candidates',async()=>{
+ const ids=[sid('warehouse',3101),sid('warehouse',3102)];const client=new Client([begin(),identity(),selectedHall(),total('2'),page(ids.map((id,i)=>item({id,name:'同名仓库',is_recommended:i===1}))),commit()]);
+ const result=await reader(client).readSalesReferences(actor,reference('warehouse'),signal());
+ assert.equal(result.recommendationAvailability,'AVAILABLE');assert.deepEqual(result.items.map(x=>[x.id,x.isRecommended]),[[ids[0],false],[ids[1],true]]);assert.equal(result.items.length,2);
+ const sql=client.calls.find(c=>/current-form:page/.test(c.sql))!;assert.match(sql.sql,/COALESCE\(r.id=h.default_sales_warehouse_id,FALSE\) AS is_recommended/);assert.match(sql.sql,/ORDER BY is_recommended DESC, r.name COLLATE "C", r.id/);assert.deepEqual(sql.values,['',hall,20,0]);readonly(client);client.done();
+});
+
+test('default warehouse read: no eligible default never invents a fallback and preserves search pagination',async()=>{
+ const warehouse=sid('warehouse',3110),query={...reference('warehouse'),search:'仓_%',page:2};
+ const client=new Client([begin(),identity(),selectedHall(),total('21',(values,sql)=>{assert.deepEqual(values,['仓_%',hall]);assert.match(sql,/r.enabled AND h.enabled AND r.hall_id = \$2::uuid AND strpos\(lower\(r.name\), lower\(\$1::text\)\) > 0/);assert.ok(!sql.includes('default_sales_warehouse_id'));}),page([item({id:warehouse,is_recommended:false})],(values,sql)=>{assert.deepEqual(values,['仓_%',hall,20,20]);assert.match(sql,/COALESCE\(r.id=h.default_sales_warehouse_id,FALSE\)/);assert.ok(!/OR r.id|OR h.default_sales_warehouse_id/.test(sql));}),commit()]);
+ const result=await reader(client).readSalesReferences(actor,query,signal());assert.equal(result.exactTotal,21n);assert.equal(result.page,2);assert.deepEqual(result.items.map(x=>[x.id,x.isRecommended]),[[warehouse,false]]);assert.equal(result.recommendationAvailability,'AVAILABLE');client.done();readonly(client);
+});
+test('default warehouse read: wrong hall grant or unknown recommendation cannot become a warehouse recommendation',async()=>{
+ const unauthorized=new Client([begin(),identity(),rollback()]);await assert.rejects(reader(unauthorized,{async authorize(){return {kind:'halls',hallIds:[foreignHall]};}}).readSalesReferences(actor,reference('warehouse'),signal()),{code:'FORBIDDEN'});unauthorized.done();
+ for(const is_recommended of [null,'true',undefined]){
+  const client=new Client([begin(),identity(),selectedHall(),total(),page([item({id:sid('warehouse',3111),is_recommended})]),rollback()]);await assert.rejects(reader(client).readSalesReferences(actor,reference('warehouse'),signal()),{code:'INVALID_DATABASE_VALUE'});client.done();readonly(client);
+ }
+});

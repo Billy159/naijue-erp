@@ -136,3 +136,10 @@ test('customer recommendation wire is explicitly negotiated and legacy shape sta
   assert.equal(Object.hasOwn(body,'recommendationAvailability'),version==='customer-v1');assert.equal(Object.hasOwn(body.items[0],'isRecommended'),version==='customer-v1');
  }
 });
+
+test('default warehouse read: warehouse-v1 negotiates hints and strict legacy clients retain original shape',async t=>{
+ const app=Fastify({logger:false});t.after(()=>app.close());const warehouse={id,name:'同名仓库',code:null,hallId:entityId('hall',id),hallName:'当前厅',paymentMethodId:null,paymentMethodName:null,isRecommended:true};const result={page:1,pageSize:20 as const,exactTotal:1n,items:[warehouse],recommendationAvailability:'AVAILABLE' as const};const unused=async()=>{throw Error('unused');};app.register(createCurrentFormHttpPlugin({authenticate:async()=>actor,reader:{readSalesReferences:async()=>result,readTransferWarehouses:unused,readProducts:unused,readProductSkus:unused,readSkuBatch:unused}}));
+ for(const version of [undefined,'customer-v1','unknown','warehouse-v1']){
+  const response=await app.inject({method:'POST',url:'/current-form/sales-references/query',headers:{'content-type':'application/json',...(version?{'x-naijue-current-form-recommendation':version}:{})},payload:{kind:'warehouse',hallId:id,search:'',page:1,pageSize:20}});assert.equal(response.statusCode,200);const body=response.json();assert.equal(Object.hasOwn(body,'recommendationAvailability'),version==='warehouse-v1');assert.equal(Object.hasOwn(body.items[0],'isRecommended'),version==='warehouse-v1');assert.equal(body.items[0].id,id);
+ }
+});

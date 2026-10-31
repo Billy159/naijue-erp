@@ -8,9 +8,9 @@ import { checkedCurrentFormActor, activeCurrentFormRead, parseCurrentSalesRefere
 import { DomainError } from "../../../packages/domain/src/errors.ts";
 import { exactJson } from "./sales-http.ts";
 
-/** Opt-in hints preserve the strict legacy customer page shape. No client grant. */
+/** Kind-specific opt-in hints preserve strict legacy page shapes. No client grant. */
 export function currentCustomerRecommendationWire(value:unknown,kind:unknown,version:unknown):unknown {
- if(kind!=='customer'||version==='customer-v1'||!value||typeof value!=='object'||Array.isArray(value))return value;
+ if((kind!=='customer'&&kind!=='warehouse')||version===(kind==='customer'?'customer-v1':'warehouse-v1')||!value||typeof value!=='object'||Array.isArray(value))return value;
  const {recommendationAvailability:_availability,items,...legacy}=value as Record<string,unknown>;
  return {...legacy,items:Array.isArray(items)?items.map(item=>{if(!item||typeof item!=='object'||Array.isArray(item))return item;const {isRecommended:_recommended,...legacyItem}=item;return legacyItem;}):items};
 }

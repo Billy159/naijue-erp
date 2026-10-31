@@ -20300,6 +20300,19 @@
         },
         "meaning": "Clean cancels directly; dirty uses original model including pending/query; uncertain/submitting/invalid scope cannot discard, no save/replay"
       }
+    },
+    "defaultWarehouseRead": {
+      "owner": "originalD1",
+      "status": "EXACT4_FIXED_8_DIRECTED_PROTOCOL_CHECKS_PASS_FRONTEND_PG_PENDING",
+      "files": {
+        "adapters/postgres/src/current-form-reader.ts": "20b75a3327f450f9d1bb76fd94069a6fa3db26bfc7e1ac8844766b99c2dcfa3e",
+        "apps/api/src/current-form-http.ts": "fa9e4c03b4cde247ab39d582b62a416424cec432a7520b4bc2836e6bff9bc139",
+        "tests/current-form-reader.test.ts": "282a61613f25cb17a4b63e4c34e844e00399d0c0d34fe4b4abc34550a7ed437b",
+        "apps/api/src/current-form-http.test.ts": "6d4c599233d12dfe2d28e4bd49a7ef5bd38d8188b5f3f071af8d0f42d37a00a2"
+      },
+      "negotiation": "x-naijue-current-form-recommendation: warehouse-v1",
+      "meaning": "Existing optional AVAILABLE/isRecommended true only for actual hall.default_sales_warehouse_id within authorized eligible candidates; old wire strips hints; no new ACL/schema/write contract",
+      "next": "OriginalF1 negotiated consumer and originalQB affected review"
     }
   }
 }
