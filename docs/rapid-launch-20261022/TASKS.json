@@ -21183,9 +21183,9 @@
   },
   "r1UnifiedSyntheticHostComposition": {
     "owner": "D1",
-    "status": "DATA56_SALES57_LIMITED_INDEPENDENT_PASS_T45_BUILD58_RUNNING",
+    "status": "LIMITED_SYNTHETIC_CROSSPAGE_DATA56_SALES57_TRANSFER58_INDEPENDENT_PASS",
     "scope": "Unify actual existing synthetic constructors/current facts and posting transaction seams; no fake independent balances; exact files in WRITE-OWNERSHIP",
-    "next": "T45 fixed58 then F1 transfer-only actual selfcheck; originalQF only affected independent transfer",
+    "next": "Reuse accepted cross-page evidence; actual PG/permissions/approval/history/fullsite and audit browser remain separate open scopes; no claim production",
     "notClaimed": "No real PG or production; source-ready not fully writable",
     "source": "bf59bac78119097328de24ed615b03fc56cf75f6",
     "report": "reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/UNIFIED-SERVICE-COMPOSITION-RESULT.json",
@@ -21323,13 +21323,38 @@
       "source": "4bad620e694729656f99f67f4f05eeb6f02f5782",
       "status": "QB_LIMITED_SOURCE_PASS",
       "scope": "reuse canonical group projection; original blank100 query and client full11members, no validator relaxation",
-      "qbSHA": "e10bca19f2eba35295439d6e09878f3b435e53eb0158b53061a4c95dd7b8e409"
+      "qbSHA": "e10bca19f2eba35295439d6e09878f3b435e53eb0158b53061a4c95dd7b8e409",
+      "browserStatus": "CLOSED_AFFECTED_CONSUMER_BY_QF_FIXED58"
     },
     "transferOnlyDriver": {
       "source": "32da52f6d4bf37de85d01e4d039ef5a0f2b12203",
       "sha256": "3fbb21202fbaca10043ee874e9f79893d4e86f69f2db73fc104bb385e73d50cd",
       "status": "STATIC_PREP_ONLY",
       "scope": "original single driver; productCREATE+transferSAVE only;11 actual group sizes;0sales/account writes"
+    },
+    "build58": {
+      "source": "32da52f6d4bf37de85d01e4d039ef5a0f2b12203",
+      "manifest": "388493ce894dcab489cc22c994a48056dabef7aa2a58e21e33473a1138ebe52c",
+      "config": "064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711",
+      "outputs": 190,
+      "inputs": 1310,
+      "producerSeconds": 0.961,
+      "status": "BUILD_ONLY_PASS"
+    },
+    "transfer58": {
+      "status": "PASS_LISTED_UNIFIED_TRANSFER_LINKAGE_STEPS_SELF_CHECK",
+      "rawSHA": "0a4709f523e2134c6758a032d3416387d57afbfb5f11abe4c15181fc01a1f7a6",
+      "receiptSHA": "f5762b047133d3cc5118749efa84ec86595cc23c38ef1ddc489d6c0a0773fb4a",
+      "scope": "normal productCREATE/MAINFOUND/actualgroup11sizeIds&matrix/qty1/transferSAVE200/detailDRAFTv1;0account/sales/approval",
+      "resources": "ownprocess0",
+      "next": "originalQF limited independent transfer only",
+      "independentReview": {
+        "owner": "QF",
+        "status": "PASS_LIMITED_ACTUAL_TRANSFER_CROSSPAGE_SIZE_GROUP_FIX",
+        "report": "reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP58-TRANSFER-LINKAGE-CHECK.json",
+        "sha256": "ed7a50051cd273cfbac5a2a9c86da404e38236b020874459e111c5f95bf9ee72",
+        "scope": "fresh productCREATE+transferSAVE, sameSKU/actualgroup11matrix/DRAFTv1qty1,0account/sales/approval,ownprocess0"
+      }
     }
   },
   "r1UnifiedAuditReadback": {

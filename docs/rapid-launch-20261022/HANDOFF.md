@@ -3538,3 +3538,9 @@ D1原审计5叶固定b47dd07a，交付报告SHAabbf5d9981070814a5a7aa665908f7a5a
 原QF固定57销货跨页限定实际独立PASS采用（check31efe881…）：fresh商品/账户/销货三写200、DRAFTv1qty1/net56800，调拨仍OPEN、自有资源0。原D1字典严格投影复用最小修4bad620e定向1PASS，原QB只验增量；原F1原driver准备transfer-only，下一新候选仅补调拨，不重销货及资料。GitHub已精确回读4bad620e；无PG/发布PASS。
 
 原QB 4bad字典两叶SOURCE限定PASS采用（e10bca19…），原F1同一driver新增transfer-only固定32da52f6/hash3fbb2120…静态准备。原T45已接统一58一次必要构建，下一仅调拨实际复验，不重复56资料/57销货。无新DB窗口授权或生产动作。
+
+T45统一58闭包PASS采用：固定32da52f6/manifest388493ce…/原config064bc2ab…，190输出1310输入/0.961s；原F1已接58 transfer-only前台实际复验，不重资料或销货。build通过不等于调拨保存通过。
+
+固定58原F1调拨实际限定自检PASS：新商品/MAIN扫码/实际组11尺码及矩阵一致/qty1→SAVE200/detailDRAFTv1。恰2命令商品CREATE+调拨SAVE，0账户/销货/审核，自有进程0；raw0a4709f5…/回执f5762b04…保留，原QF已接58仅调拨独立短验。非PG/正式发布通过。
+
+2026-11-01 原QF固定58调拨限定独立实际PASS采用（APP58-TRANSFER-LINKAGE-CHECK ed7a5005…）：fresh正常商品CREATE+调拨SAVE两写，同SKU/原实际组11成员与矩阵/qty1/DRAFTv1读回，0账户/销货/审核，自有进程0。57字典500受影响consumer关闭，旧FAIL保留；资料56/销货57有效结论复用。三段跨页为隔离合成限定验收，不是整页全站/真实PG/权限事务/正式发布。下一独立未完成范围仍按原台账，QA178新窗口不得借本PASS启动。
