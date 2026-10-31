@@ -312,3 +312,15 @@ test('F04 zero confirmation follows exact effective price without changing raw i
   ];
   for(const [patch,expected] of cases){const row={...base,...patch};const before=JSON.stringify(row);assert.equal(needs(row),expected,JSON.stringify(patch));assert.equal(JSON.stringify(row),before);}
 });
+
+test('normal scanner budget: sales timeout settles ignored-abort reader; late result never duplicates deliberate retry',async()=>{
+ let release:((value:Awaited<ReturnType<NonNullable<SalesProposalReader['readBarcode']>>>)=>void)|undefined,signal:AbortSignal|undefined,calls=0;
+ const result=(barcode:string)=>({state:'FOUND' as const,barcode,binding:{id:uuid(80),kind:'MAIN' as const},sku});
+ const h=setup({readBarcode(query,readSignal){signal=readSignal;return calls++===0?new Promise(resolve=>{release=resolve;}):Promise.resolve(result(query.barcode));}});const scanner=h.session.createScanner('OUT');
+ try{await fill(h.session);const before=h.session.getSnapshot().draft;assert.equal(await scanner.scan('TIMEOUT'),false);assert.equal(scanner.getSnapshot().phase,'error');assert.match(scanner.getSnapshot().message,/超时/);assert.equal(signal?.aborted,true);assert.equal(h.session.getSnapshot().draft,before);release!(result('TIMEOUT'));await new Promise(resolve=>setImmediate(resolve));assert.equal(h.session.getSnapshot().draft,before);assert.equal(await scanner.scan('RETRY'),true);assert.equal(h.session.getSnapshot().draft.lines[0]!.quantity,'2');assert.equal(h.session.getSnapshot().draft.lines[0]!.dealPrice,before.lines[0]!.dealPrice);}finally{scanner.dispose();h.context.clear();}
+});
+test('normal scanner cancellation: explicit dispose settles a sales read and ignores late exact SKU',async()=>{
+ let release:((value:Awaited<ReturnType<NonNullable<SalesProposalReader['readBarcode']>>>)=>void)|undefined,signal:AbortSignal|undefined;
+ const h=setup({readBarcode(_query,readSignal){signal=readSignal;return new Promise(resolve=>{release=resolve;});}});const scanner=h.session.createScanner('OUT');
+ try{await fill(h.session);const before=h.session.getSnapshot().draft,pending=scanner.scan('CANCEL');await new Promise(resolve=>setImmediate(resolve));scanner.dispose();assert.equal(await pending,false);assert.equal(signal?.aborted,true);release!({state:'FOUND',barcode:'CANCEL',binding:{id:uuid(81),kind:'MAIN'},sku});await new Promise(resolve=>setImmediate(resolve));assert.equal(h.session.getSnapshot().draft,before);}finally{scanner.dispose();h.context.clear();}
+});

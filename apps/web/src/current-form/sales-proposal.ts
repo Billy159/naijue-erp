@@ -414,10 +414,10 @@ export class SalesProposalSession {
   clearSalesperson(): boolean { return this.clearReference('salesperson'); }
   get canScan(): boolean { return !this.#state.disposed && !!this.#reader.readBarcode && !!this.#state.draft.hall && !!this.#state.draft.warehouse; }
   createScanner(direction: 'IN' | 'OUT'): DocumentScanController {
-    return new DocumentScanController({ scope: this.#scope, ...(this.#onAccessFailure ? { onAccessFailure: this.#onAccessFailure } : {}),
+    return new DocumentScanController({ timeoutMs: 3_000, scope: this.#scope, ...(this.#onAccessFailure ? { onAccessFailure: this.#onAccessFailure } : {}),
       target: () => {
         const { hall, warehouse, businessType } = this.#state.draft;
-        return this.canScan && hall && warehouse && !(direction === 'IN' && businessType === 'SALE')
+        return this.canScan && !this.#state.lineEdit && hall && warehouse && !(direction === 'IN' && businessType === 'SALE')
           ? { key: `${this.#revision}:${direction}`, context: { kind: 'SALES', hallId: entityId('hall', hall.id), warehouseId: entityId('warehouse', warehouse.id) } } : null;
       },
       resolve: (query, signal) => this.#reader.readBarcode!(query, signal),
