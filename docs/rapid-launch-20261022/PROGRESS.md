@@ -3519,3 +3519,5 @@ D1原审计5叶固定b47dd07a，交付报告SHAabbf5d9981070814a5a7aa665908f7a5a
 固定57实际销货联动自检PASS：新商品/主码/新空厅账户→SAVE200/detailDRAFTv1qty1金额56800；交原QF限定独立验收。调拨扫码FOUND后size-groups/query500，矩阵未生成/0调拨SAVE，原D1同两叶接缝修复中，不改断言/不借其他组。三实际命令200，自有资源0；partial回执f5557118…/raw99f941c1…保留。未称整项通过/PG/上线。
 
 原QF固定57销货跨页限定实际独立PASS采用（check31efe881…）：fresh商品/账户/销货三写200、DRAFTv1qty1/net56800，调拨仍OPEN、自有资源0。原D1字典严格投影复用最小修4bad620e定向1PASS，原QB只验增量；原F1原driver准备transfer-only，下一新候选仅补调拨，不重销货及资料。GitHub已精确回读4bad620e；无PG/发布PASS。
+
+原QB 4bad字典两叶SOURCE限定PASS采用（e10bca19…），原F1同一driver新增transfer-only固定32da52f6/hash3fbb2120…静态准备。原T45已接统一58一次必要构建，下一仅调拨实际复验，不重复56资料/57销货。无新DB窗口授权或生产动作。

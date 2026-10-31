@@ -21183,9 +21183,9 @@
   },
   "r1UnifiedSyntheticHostComposition": {
     "owner": "D1",
-    "status": "FIXED57_SALES_SELF_CHECK_PASS_QF_RUNNING_TRANSFER_SIZE_GROUP_500_D1",
+    "status": "DATA56_SALES57_LIMITED_INDEPENDENT_PASS_T45_BUILD58_RUNNING",
     "scope": "Unify actual existing synthetic constructors/current facts and posting transaction seams; no fake independent balances; exact files in WRITE-OWNERSHIP",
-    "next": "F1 original single driver transfer-only case preparation; QB exact2; then T45 immutable successor and only transfer affected browser",
+    "next": "T45 fixed58 then F1 transfer-only actual selfcheck; originalQF only affected independent transfer",
     "notClaimed": "No real PG or production; source-ready not fully writable",
     "source": "bf59bac78119097328de24ed615b03fc56cf75f6",
     "report": "reports/backend/rapid-launch-20261022/D1/V6-V7-R1-PREPARATION-20261031/UNIFIED-SERVICE-COMPOSITION-RESULT.json",
@@ -21321,8 +21321,15 @@
     },
     "transferDictionarySuccessor": {
       "source": "4bad620e694729656f99f67f4f05eeb6f02f5782",
-      "status": "D1_TARGETED1_PASS_QB_PENDING",
-      "scope": "reuse canonical group projection; original blank100 query and client full11members, no validator relaxation"
+      "status": "QB_LIMITED_SOURCE_PASS",
+      "scope": "reuse canonical group projection; original blank100 query and client full11members, no validator relaxation",
+      "qbSHA": "e10bca19f2eba35295439d6e09878f3b435e53eb0158b53061a4c95dd7b8e409"
+    },
+    "transferOnlyDriver": {
+      "source": "32da52f6d4bf37de85d01e4d039ef5a0f2b12203",
+      "sha256": "3fbb21202fbaca10043ee874e9f79893d4e86f69f2db73fc104bb385e73d50cd",
+      "status": "STATIC_PREP_ONLY",
+      "scope": "original single driver; productCREATE+transferSAVE only;11 actual group sizes;0sales/account writes"
     }
   },
   "r1UnifiedAuditReadback": {
