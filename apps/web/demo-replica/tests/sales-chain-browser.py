@@ -6,17 +6,18 @@ import argparse, json, mimetypes, subprocess, sys, time, re
 from contextlib import contextmanager
 from pathlib import Path
 from urllib.parse import urlsplit, unquote
-p=argparse.ArgumentParser();p.add_argument('--return-mode',action='store_true');p.add_argument('--exchange-mode',action='store_true');p.add_argument('--staff-edit',action='store_true');p.add_argument('--keyboard-preview',action='store_true');p.add_argument('--draft-money',action='store_true');p.add_argument('--customer-recommendation',action='store_true');p.add_argument('--hall-confirm',action='store_true');p.add_argument('--drop-save-response',action='store_true');p.add_argument('--drop-unapprove-response',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');p.add_argument('--existing-fields',action='store_true');p.add_argument('--pagination',action='store_true');p.add_argument('--scan-recovery',action='store_true');p.add_argument('--fixture-tests');args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--return-mode',action='store_true');p.add_argument('--exchange-mode',action='store_true');p.add_argument('--staff-edit',action='store_true');p.add_argument('--keyboard-preview',action='store_true');p.add_argument('--draft-money',action='store_true');p.add_argument('--customer-recommendation',action='store_true');p.add_argument('--hall-confirm',action='store_true');p.add_argument('--drop-save-response',action='store_true');p.add_argument('--drop-unapprove-response',action='store_true');p.add_argument('build');p.add_argument('out');p.add_argument('--node',default='node');p.add_argument('--chromium',default='/usr/bin/chromium');p.add_argument('--existing-fields',action='store_true');p.add_argument('--pagination',action='store_true');p.add_argument('--scan-recovery',action='store_true');p.add_argument('--scan-unavailable',action='store_true');p.add_argument('--fixture-tests');args=p.parse_args()
 if args.existing_fields and (args.return_mode or args.exchange_mode or args.drop_save_response or args.drop_unapprove_response):p.error('--existing-fields is an independent SALE/DRAFT edit case; do not combine lifecycle variants')
 if args.pagination and (args.existing_fields or args.return_mode or args.exchange_mode or args.drop_save_response or args.drop_unapprove_response):p.error('--pagination is an independent DRAFT list case')
-if args.scan_recovery and any([args.existing_fields,args.pagination,args.return_mode,args.exchange_mode,args.staff_edit,args.keyboard_preview,args.draft_money,args.customer_recommendation,args.hall_confirm,args.drop_save_response,args.drop_unapprove_response]):p.error('--scan-recovery is an independent normal sales new/edit case')
-if args.scan_recovery and not args.fixture_tests:p.error('--scan-recovery requires explicit frozen --fixture-tests')
+if args.scan_recovery and any([args.scan_unavailable,args.existing_fields,args.pagination,args.return_mode,args.exchange_mode,args.staff_edit,args.keyboard_preview,args.draft_money,args.customer_recommendation,args.hall_confirm,args.drop_save_response,args.drop_unapprove_response]):p.error('--scan-recovery is an independent normal sales new/edit case')
+if args.scan_unavailable and any([args.existing_fields,args.pagination,args.return_mode,args.exchange_mode,args.staff_edit,args.keyboard_preview,args.draft_money,args.customer_recommendation,args.hall_confirm,args.drop_save_response,args.drop_unapprove_response]):p.error('--scan-unavailable is an independent transport fault-injection case; business UNAVAILABLE is not covered')
+if (args.scan_recovery or args.scan_unavailable) and not args.fixture_tests:p.error('scanner cases require explicit frozen --fixture-tests')
 fixture_tests=Path(args.fixture_tests).resolve() if args.fixture_tests else Path(__file__).parent
 build=Path(args.build).resolve();out=Path(args.out).resolve();out.mkdir(parents=True,exist_ok=False)
 manifest=json.loads((build/'production-build.json').read_text());config=manifest['configuration'];origin=config['http']['origin'];base=config['assets']['basePath']
 if origin!='https://synthetic-management.invalid':raise SystemExit('Smoke requires the declared synthetic-only build configuration')
 allowed={x['path'] for x in manifest['outputs']};allowed.add('index.html')
-result={'commands':[],'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'categoryResponses':[],'case':'scan-recovery' if args.scan_recovery else 'pagination' if args.pagination else 'existing-fields' if args.existing_fields else 'original-lifecycle','readbacks':[]}
+result={'commands':[],'sourceCheckpoint':manifest['sourceCheckpoint'],'syntheticOnly':True,'status':'BLOCKED_ENV','checks':[],'screens':[],'requests':[],'categoryResponses':[],'case':'scan-transport-fault-injection' if args.scan_unavailable else 'scan-recovery' if args.scan_recovery else 'pagination' if args.pagination else 'existing-fields' if args.existing_fields else 'original-lifecycle','readbacks':[]}
 result['fixtureTests']=str(fixture_tests)
 bridge=None;browser=None;page=None
 held=[];hold_next={'active':False}
@@ -50,7 +51,7 @@ try:
    if request_origin!=origin:route.abort();return
    if url.path.startswith('/api/'):
     bridge.stdin.write(json.dumps({'url':request.url,'method':request.method,'headers':request.headers,'body':request.post_data})+'\n');bridge.stdin.flush();response=json.loads(bridge.stdout.readline())
-    if args.scan_recovery and url.path=='/api/current-form/barcode/query':
+    if (args.scan_recovery or args.scan_unavailable) and url.path=='/api/current-form/barcode/query':
      payload=json.loads(response['body']);result.setdefault('barcodeResponses',[]).append({'request':json.loads(request.post_data),'status':response['status'],'body':payload,'observedAt':time.monotonic(),'held':hold_next['active']})
      if hold_next['active']:
       assert response['status']==200 and payload['state']=='FOUND','hold an original successful exact lookup only'
@@ -136,6 +137,52 @@ try:
    filters=result['listResponses'][-1]['request']['filter'];assert all(value is None or value==[] for value in filters.values()),filters
    if number.count():expect(number).to_have_value('')
    shot('pagination-07-new-save-first');result['coverage']=['25 original SAVE drafts','page2 detail return retains page','equal-time stable repeat boundary','size50 and20 reset page1','reset frompage2','filtered page2 new original UI SAVE','new saved ID first; filters reset; page size retained'];result['notTested']=['PG','production','whole page Demo parity','approval'];assert not errors;result['status']='PASS_LISTED_PAGINATION_STEPS';result['errors']=errors;(out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));browser.close();browser=None
+  elif args.scan_unavailable:
+   from playwright.sync_api import expect
+   # The frozen host has no declared business UNAVAILABLE input. Abort one real
+   # FOUND lookup at the transport boundary; never rewrite its response body.
+   assert config['routes'].get('salesManualCreate') is True
+   code='530000001721203';expected_sku='00000000-0000-4000-8000-000000010002'
+   result['scanUnavailable']={'faultSource':'Playwright route.abort(failed) of one held original FOUND response','businessUnavailable':'NOT_TESTED_NO_DECLARED_HOST_INPUT','checkpoints':[]}
+   scan=page.locator('.document-scan-input input');feedback=page.locator('.document-scan-feedback')
+   def read_count():return len(result.get('barcodeResponses',[]))
+   def enter():expect(scan).to_be_enabled();scan.fill(code);scan.press('Enter')
+   def units(expected,label):
+    field=page.locator('.document-scan-grid input');expect(field).to_have_count(1);expect(field).to_have_value(str(expected));assert not result['commands']
+    result['scanUnavailable']['checkpoints'].append({'step':label,'quantity':field.input_value(),'barcodeResponses':read_count(),'commands':0})
+   def open_scan():page.get_by_role('button',name='扫码录入',exact=True).click();expect(scan).to_be_focused()
+   def close_scan():page.get_by_role('button',name='关闭扫码抽屉',exact=True).click();expect(scan).to_have_count(0)
+   page.locator('.sidebar a[data-route="sales/new"]').click();page.get_by_role('textbox',name='整单优惠 / 抹零',exact=True).wait_for()
+   pick('业务类型','销售');pick('营业厅','网点营业厅');pick('客户','零售客户');pick('出库仓','备货仓')
+   note=page.get_by_label('备注',exact=True);note.fill('SYN transport-failure draft; no SAVE')
+   open_scan();enter();units(1,'original-found-baseline')
+   original=result['barcodeResponses'][-1]['body'];assert original['state']=='FOUND' and original['sku']['id']==expected_sku
+   hold_next['active']=True;enter();enter();assert read_count()==2 and len(held)==1
+   save=page.get_by_role('button',name='保存',exact=True);expect(save).to_be_disabled(timeout=1000)
+   failed=held[0];assert time.monotonic()-failed['started']<3,'inject transport failure before scanner timeout'
+   failed['route'].abort('failed');aborted_at=time.monotonic()
+   expect(feedback).to_contain_text('核对未完成',timeout=2500);expect(feedback).to_contain_text('已暂停');expect(scan).to_be_disabled()
+   result['scanUnavailable']['failureFeedbackObservedSeconds']=time.monotonic()-aborted_at
+   result['scanUnavailable']['abortedOriginal']=json.loads(failed['response']['body']);units(1,'transport-failure-keeps-draft-and-drops-tail');assert read_count()==2
+   shot('scan-transport-01-paused')
+   page.get_by_role('button',name='重新扫码',exact=True).click();expect(scan).to_have_value(code);expect(scan).to_be_focused();assert read_count()==2,'restore must not submit'
+   scan.press('Enter');units(2,'one-intentional-original-retry');assert read_count()==3
+   # Only cancellation after this recovery is new coverage: an in-flight original
+   # response cannot revive the closed scanner or add another unit.
+   hold_next['active']=True;enter();assert read_count()==4 and len(held)==2;close_scan();note.focus()
+   late=held[1];response=late['response'];delivery={'body':json.loads(response['body'])}
+   try:late['route'].fulfill(status=response['status'],headers=response['headers'],body=response['body']);delivery['status']='FULFILLED'
+   except Exception as error:
+    delivery.update(status='BROWSER_REJECTED_AFTER_ABORT',errorType=type(error).__name__,requestFailure=late['request'].failure);assert delivery['requestFailure'],'do not swallow unrelated release failure'
+   result['scanUnavailable']['lateOriginalAfterCancel']=delivery;page.wait_for_timeout(200)
+   expect(scan).to_have_count(0);expect(note).to_be_focused();expect(note).to_have_value('SYN transport-failure draft; no SAVE')
+   row=page.locator('tr[data-entry-row]').filter(has=page.locator('.sale-product-identity'));expect(row).to_have_count(1)
+   expect(row.get_by_role('textbox',name='本行数量',exact=True)).to_have_value('2');expect(row.get_by_role('textbox',name='本行成交单价',exact=True)).to_have_value('')
+   assert len(result['barcodeResponses'])==4 and all(x['body']['state']=='FOUND' and x['body']['sku']['id']==expected_sku for x in result['barcodeResponses'])
+   assert not result['commands'] and not errors;shot('scan-transport-02-cancel-keeps-draft')
+   result['coverage']=['new normal consumer transport fault injection only','prompt error/pause leaves actual qty1 and drops queued tail without SAVE','restore original code does not submit; explicit original retry adds exactly one','cancel after recovery rejects late original response and preserves note, qty2, unknown price']
+   result['notTested']=['business UNAVAILABLE','existing edit headed case (shared consumer only)','hardware','PG','production','SAVE/readback (accepted prior evidence reused)','precise first-paint/P95'];result['status']='PASS_LISTED_TRANSPORT_FAULT_INJECTION_ONLY';result['errors']=errors
+   (out/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2));browser.close();browser=None
   elif args.scan_recovery:
    from playwright.sync_api import expect
    assert args.fixture_tests,'scan-recovery must explicitly bind frozen fixture tests'
