@@ -1,3 +1,7 @@
+## 2026-10-31 installer04 scoped review adopted
+
+QB04 SOURCE PASS, no new finding; receipt9386B SHA a70488da523d3717a1d3fad345bc4a2c217c4ab7068745c0906394b463853f40. Exact matrix, quoted authorization INSERT/SELECT, minimal row-lock UPDATE,15 private calls/zero sequences and original-receipt inverse accepted within source scope. Real privilege sufficiency/collector/PUBLISH remain untested. T45 final concrete environment scope continues. D1 was verified idle and assigned the original next preparation package: reuse/prepare physical synthetic files,32 monetary fact candidates and manifest without actual target/private approval fabrication or shared-source changes. Physical content ownerD1, environment/installer ownerT45, C records/Git, QB fixed increments only. No new environment approval or operations.
+
 ## 2026-10-31 installer04 fixed artifact handoff
 
 T45 original successor04 delivered; C verified its eight artifact pins against RESULT9063B SHA9b85b3ed2c01b117cbcda5807ec78de46168753fade765fc09cf99fa187b5d5f. OriginalQB reviews only this delta. Candidate is149 column groups/950 atoms,15 import private EXECUTE,0sequence/0table-level data privileges; seven new offline checks reportedPASS. Counts do not prove privilege sufficiency or realPG. Collector/host call plans remain NOT_READY; no actual role/grant/database/host execution. T45 continues the existing final exact environment scope and input gap list in parallel; source approval is not environment approval.

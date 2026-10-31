@@ -19841,8 +19841,8 @@
       "T45": "Sole server database execution owner",
       "QB": "Existing independent backend review"
     },
-    "current": "Preparation13 source QB PASS; T45 installer04 eight artifact pins matched, original QB incremental review in progress",
-    "next": "T45 final concrete environment scope preparation in parallel with QB04; no environment changes before exact human approval",
+    "current": "Preparation13 exact11 and installer04 carrier scoped QB source PASS adopted; T45 final environment scope and D1 physical synthetic content preparation active",
+    "next": "Bind reviewed carrier and independently prepared content; final exact environment confirmation; then actual isolated operations, no source PASS substituted for PG",
     "environmentMutations": "NOT_EXECUTED",
     "production": "NOT_DEPLOYED",
     "approvedHistoricalBalanceRule": "NULL_UNKNOWN_NO_BACKFILL",
@@ -20024,7 +20024,7 @@
     "r1AdoptionCheckpoint": "56bc305a4812574cbdfef9a27e4c3ac552b92c2d",
     "lastVerifiedRemoteCheckpoint": "0fd2ad0197e44359054a0514ca1910069db9a283",
     "installer04": {
-      "status": "FIXED_ARTIFACTS_QB_INCREMENTAL_REVIEW",
+      "status": "QB_PASS_SCOPED_CARRIER_SOURCE_ONLY",
       "owner": "T45",
       "reviewOwner": "QB",
       "report": "reports/controller/rapid-launch-20261022/T45-V7-LIVE-CONTRACT-READONLY-20261031-01/ISOLATED-CREATE-REHEARSE-EXIT-DRAFT-01/INSTALLER-SUCCESSOR-04/RESULT.json",
@@ -20043,7 +20043,16 @@
         "sequences": 0,
         "tableDataPrivileges": 0
       },
-      "executionEnabled": false
+      "executionEnabled": false,
+      "qbReportSha256": "a70488da523d3717a1d3fad345bc4a2c217c4ab7068745c0906394b463853f40",
+      "qbReportBytes": 9386
+    },
+    "physicalSyntheticSourcePreparation": {
+      "owner": "D1",
+      "status": "IN_PROGRESS_ORIGINAL_TASK_NEXT_PACKAGE",
+      "scope": "Reuse or prepare existing-format synthetic source files, money32 fact candidates and manifest only; target/private envelope stays unbound until actual facts and independent authorization",
+      "sourceMutation": false,
+      "environmentExecution": false
     }
   }
 }
