@@ -3568,3 +3568,5 @@ QF实际发现QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01：12独立手工行后第13�
 采用QF2图片59限定实际PASS（333216a0…/raw6df98af3…/7PNG）：1CREATE+1真实74B PNG上传，VIEW/EDIT metadata单次失败→原重试200，原图单次失败→重点击成功/preview关闭，EDIT缓存未冒新GET；26原响应/4注入单列/0EDIT/own0。旧attemptcheckbox mask定位FAIL保留，不判app错。QF销货剩余最终check94bd6d1b…仍PARTIAL，长表真实FAIL准确证据为QF根APP59-SALES-REMAINING-UI-05；实际查看/改选和账户限定已到，14行/汇总未完。另收到用户未审核调拨同新增编辑合同，截图无URL/候选，待与fixed51已过LIVE DRAFT和历史分支去重，不凭单号登记当前59新缺陷。
 
 F1两叶定向源码交付采用（回执94a388d0…）：销货fixed菜单脱离Arco测高，改用原相对布局及spec滚动重定位；原5键盘/Portal加新增真实Portal-jsdom几何检查PASS/runtime types0，未冒实际click通过。两叶已交还只读，下一原T45同固定候选闭包→QF原1440×1000底行正常选择195/4XL及共享受影响滚动/焦点，旧资料/扫码/SAVE不重。
+
+T45固定60构建闭包PASS采用：source526ca75e/manifest6c3d382c…/原config064bc2ab…/190输出1310输入/0.882s，原依赖与fixture不变，首次checker误拒原data:image仅修checker接续不重构建。原QF已接60准确handoff87a2c6fa…，开始原12→13尺码正常click及滚动/焦点最小复验，QF2已释放；未记实际clickPASS。原F1下一只读去重未知候选调拨截图与fixed51DRAFT/当前分支，不擅自解只读或改guard。

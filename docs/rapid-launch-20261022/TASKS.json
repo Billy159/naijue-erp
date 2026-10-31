@@ -21543,7 +21543,7 @@
   },
   "r1LongTableSizePopup": {
     "owner": "F1",
-    "status": "F1_SOURCE_FIXED_DIRECTED_DOM_TYPE_PASS_PENDING_FIXED_BUILD_QF",
+    "status": "FIXED60_BUILD_CLOSURE_PASS_QF_ACTUAL_RETEST_IN_PROGRESS",
     "issue": "QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01",
     "candidateSource": "f06a009094a30a6cf05fbe1422f83fed8ec146d8",
     "reproduction": "12 independent manual product/size rows; row13 full11 member menu extends below1440x1000,195/4XL normal click outside viewport. No force/SAVE.",
@@ -21553,7 +21553,15 @@
     "sourceReceipt": "reports/qa-frontend/rapid-launch-20261022/F1/QF59-S02-LONG-SIZE-POPUP-OFFSCREEN-01/RESULT.json",
     "sourceReceiptSha256": "94a388d01b85983432f699d012e883a9472a9c4b9989a6b72ee9bf5cd1eb2373",
     "cause": "Sales mx-spec-menu fixed positioned inside existing Arco Trigger escaped layout height, preventing viewport flip; transfer already relative. Reuse Arco placement and spec-only updateOnScroll, no alternate positioning system.",
-    "checks": "Original5 keyboard/Portal cases and new real Arco Portal jsdom geometry case PASS; runtime types0/diffcheck0. No actual headed or save/PG/whole-page PASS."
+    "checks": "Original5 keyboard/Portal cases and new real Arco Portal jsdom geometry case PASS; runtime types0/diffcheck0. No actual headed or save/PG/whole-page PASS.",
+    "candidate": {
+      "source": "526ca75eb61f0a21fa818e3e3fa4765aa7009d6c",
+      "root": "reports/controller/rapid-launch-20261022/ui-preview-526ca75e-unified-cross-page-60",
+      "manifestSha256": "6c3d382cbd8de5f92bf9585493f3ec543dfa892c61321d4edb27ebe670823481",
+      "configSha256": "064bc2abdf3f3d8479071942cc8e9c006ce6be3880365c4d2f9810e33b2b9711",
+      "handoffSha256": "87a2c6fac1abbfc502ce10a5a4059783aa66b4508ae7aed1c77095a91d1b3747",
+      "scope": "T45 only build closure190outputs/1310inputs/0.882s; no headed/PG/production claim"
+    }
   },
   "r1TransferDraftScreenshotFollowup": {
     "status": "USER_CONTRACT_CONFIRMED_CANDIDATE_ID_UNKNOWN_NO_NEW_DEFECT_PASS",
@@ -21561,6 +21569,6 @@
     "scope": "Unaudited transfer with actual edit permission should expose same applicable editable fields as new; system identifiers readonly, approved/void permissions retained. Reuse fixed51 LIVE DRAFT edits, distinguish history and actual screenshot candidate before repair.",
     "screenshot": "/var/folders/hl/zp7q7nns6_76dfxy0fc0c4j40000gn/T/codex-clipboard-868492d8-25a0-4610-b355-19f34961dc7f.png",
     "visibleFacts": "qa-demo-1 administrator, V2-DB-bdb6fb86, note QF50-R01-PENDING-RECHECK-SYNTHETIC; no visible URL/candidate; source unknown.",
-    "next": "Do not infer actual state/source from V2 number or old screenshot; exact existing branch/valid evidence dedup before assigning same file."
+    "next": "Original F1 readonly exact current transfer branch/fixture/evidence dedup while popup QF runs; no write lease or screenshot-based current-version claim."
   }
 }
