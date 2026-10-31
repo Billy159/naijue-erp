@@ -3482,3 +3482,7 @@ F1固定5fc29047+app52完成调拨恢复自检：8条码请求、0SAVE，错误�
 ### 销货扫码源码与候选54
 F1精确7叶交付已固定ebbd7d2e1c7e0469b98493b6670f2f5a488e08c7并远端核实；normal新建/未审核编辑/退回换出挂现有DocumentScan，pending同步保护/3000ms/取消迟到，7DOM+2模型及root/runtime类型检查通过。T45单次构建54通过，190outputs/1310inputs，manifest b095ca7764c1d8ef7a4d7d6bcf56c8a21dab5a266dc078348c6a1ec4299c9180；原52配置，非所有模块统一可写或PG通过。F1下一唯一sales浏览器driver用54不可变fixture目录，避免原D1并行host修改混入本次输入。
 T45只读证实统一合成host缺同事实/库存事务接缝，原D1精确9测试host叶获租约补原constructor组合/FIT/跨模块当前事实及共享过账事务，不改生产SQL/API，不把独立ledger或UNKNOWN称共享余额。详细文件归属在WRITE-OWNERSHIP，未完成不称全站可写。
+
+
+### 候选54正常销货扫码新增与未审核编辑独立通过
+采用原QF01-R1-APP54-NORMAL-SALES-SCAN-55A7AFD9-01限定结论。固定app ebbd7d2e/test55a7afd9，D54不可变fixture，CHECK SHA756defbe34f4f1dcc6ddfffd18518f50978b90907716fafee02f171323bb8b9c。10条码响应、仅2原SAVE、新key无重放；新建v1再编辑v2，OUT4/IN-2、单价239元、应收已收478元，原单据/两lineID/snapshot/settlementID保持；错误恢复、超时迟到、关闭取消和pending禁保存通过。首次观察超时3.914秒为单次实值，不称精确3秒/P95。自有进程0；UNAVAILABLE、硬件、PG、生产、审核与整页仍未测。已过字段/分页/调拨/模型未重验。D1统一host接缝继续在途。

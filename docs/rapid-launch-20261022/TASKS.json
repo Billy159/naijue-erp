@@ -21112,12 +21112,12 @@
   },
   "r1ScannerRemainingFollowup": {
     "owner": "F1",
-    "status": "SALES_BUILD54_READY_F1_BROWSER_DRIVER_SINGLE_LEAF",
+    "status": "SALES_QF_LIMITED_HTTP_BROWSER_NEW_EXISTING_SAVE_PASS",
     "model": "gpt-6.1-sol/medium",
     "fast": "UNVERIFIED_TOOL_NO_SWITCH",
     "baseline": "80b56347; app0a2fa82d; fixed52/53 profiles separately bound",
     "scope": "Only remaining software error pause/resume/cancel, timeout feedback, late response isolation and equivalent sales consumers; reuse pendingM6, repeated quantity, paging results",
-    "next": "F1 exact one driver then C fixed test version; immutable54 fixtures prevent D1 WIP mixing; headed exchange new/savev1/edit/scans/savev2/detail, then QF incremental review",
+    "next": "Reuse accepted scanner increments; unified synthetic host D1 remains in progress; no hardware/PG/production or full-page claim",
     "hardware": "NOT_TESTED_KEYBOARD_NOT_HARDWARE",
     "findings": "Transfer source/DOM already covers recovery/3s/late; remaining headed errors and timeout not covered by 2s pending case. Normal sales proposal has no scanner mount; old Arco path is not current proof.",
     "transferSelfCheck": "F1/SCAN-RECOVERY-52-20261031-01/SUMMARY.json; 8 barcode requests,0commands,late/reopen quantity1→2→3→4; observed timeout3.881s not exact3s SLO",
@@ -21152,6 +21152,33 @@
       "outputs": 190,
       "inputs": 1310,
       "scope": "Document profile; not unified all writers or PG"
+    },
+    "independentSales": {
+      "taskId": "QF01-R1-APP54-NORMAL-SALES-SCAN-55A7AFD9-01",
+      "report": "/Users/billy/Desktop/Workspace/project-007-业务管理系统/work/local-takeover-20261021-control/reports/qa-frontend/rapid-launch-20261022/QF/phase2-source468-sales-visual-actual-01/APP54-SALES-SCAN-CHECK.json",
+      "sha256": "756defbe34f4f1dcc6ddfffd18518f50978b90907716fafee02f171323bb8b9c",
+      "application": "ebbd7d2e1c7e0469b98493b6670f2f5a488e08c7",
+      "test": "55a7afd93e6711ad692eca56a8410498f93d06ca",
+      "barcodeResponses": 10,
+      "saveCommands": 2,
+      "versions": [
+        1,
+        2
+      ],
+      "finalOUT": "4",
+      "finalIN": "-2",
+      "priceMinor": "23900",
+      "netAndPaidMinor": "47800",
+      "observedTimeoutSeconds": 3.9138720420887694,
+      "notTested": [
+        "UNAVAILABLE top-level",
+        "hardware",
+        "PG",
+        "production",
+        "approval",
+        "wholepage"
+      ],
+      "ownProcessesRemaining": 0
     }
   },
   "r1UnifiedSyntheticHostComposition": {

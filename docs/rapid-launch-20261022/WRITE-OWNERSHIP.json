@@ -8483,7 +8483,7 @@
   },
   "r1SalesScannerBrowserDriver": {
     "owner": "F1",
-    "status": "ACTIVE_SINGLE_TEST_LEAF",
+    "status": "DELIVERED_FROZEN_55A7AFD9_QF_PASS",
     "paths": [
       "apps/web/demo-replica/tests/sales-chain-browser.py"
     ],
